@@ -1,0 +1,13 @@
+{
+ "project_code": "LGIC_ENFORCE",
+ "home": "org/missions/D14/LGIC/LGIC_ENFORCE",
+ "directive": "D14",
+ "macro_code": "LGIC",
+ "fabric": "laptop",
+ "dep_stage": "REGISTERED",
+ "status": "active",
+ "name": "Platform Logic executable layer -- one registry, two builders (key and name) off the identity spine, and one flagger at safe-commit/safe-apply that refuses a change the builder would not have produced",
+ "generated_from": "org/missions/D14/LGIC/LGIC_ENFORCE/project.json",
+ "generated_by": ".tools/missions-tree-index.py",
+ "generated_at": "2026-09-13T21:44:59Z"
+}

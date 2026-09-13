@@ -1,0 +1,48 @@
+{
+  "project_code": "ADVI_FIRMBKTS",
+  "macro_code": "ADVI",
+  "directive": "D8",
+  "fabric": "laptop",
+  "pipeline": null,
+  "status": "active",
+  "dep_stage": "REGISTERED",
+  "created": "2026-09-13",
+  "registered_under_tree": "2026-09-13",
+  "placement": "LAPTOP",
+  "pods": [],
+  "related": [
+    "MDPF_CANON",
+    "IRPT_BCKEND",
+    "LGIC_ENFORCE",
+    "LGIC_NAMING"
+  ],
+  "name": "The first migration: three legacy firm buckets (opal-data-bd, -inf, -cot) into the spelled-out firm buckets under the ruled key string, each firm cut over so its users cannot tell, and each legacy bucket retired only on a proven quiet window",
+  "description": "The first D14 migration project, commissioned by Andrew 2026-09-13 ~01:4xZ (relayed 4.0.0_SA_CRO~D) and homed in D8 on his ~02:3xZ word. It owns the canonical path strings and the legacy-to-canonical mapping, the repoint of every firm-naming consumer to the D14 registry (the registry itself is LGIC_ENFORCE's, ruling (a) ~03:5xZ), the three per-firm cutovers of gold, platinum, state and code, the bronze/silver moves out to opal-data-assets, the decommission proofs, and the Terraform for the two firm buckets that do not yet exist, on the s3-49financial.tf template. MDPF and IRPT slices in the same buckets are moved by MDPF_CANON and IRPT_BCKEND, not here.",
+  "phase": "L3 REGISTERED UNDER THE PROJECT TREE 2026-09-13 by 1.0.0_SA_CTO, on the D8 macro ADVI ratified @464c1096d5. dep_stage REGISTERED, NOT PRD. || L2 ENDPOINT org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_D8_LEGACY_FIRM_BUCKETS_MIGRATION_20260913.md (cut @dfcf7c416b; amendments @653a21c519; rulings stamped @e2210bf34c) -- FWD-1..FWD-8; DONE WHEN confirmed by Andrew ~18:4xZ. || L1 BRIEF docs/briefs/d8-legacy-firm-buckets-migration-brief-20260913.md @fc2a1ba75f, author 4.0.0_SA_CRO~D. || NEXT: L4 at 1.0.0_SA_CTO -- the PRD with its ENDPOINT section, then the L4-R sign-off.",
+  "blocking": "NOTHING HERE IS A GATE THIS SEAT INVENTED; each line names whose it is. (1) 1.0.0_SA_CTO: the L4 PRD is not yet written. (2) NO COO LANE IS SEATED for L5 (the Tier-2 one-project-per-seat rule). (3) FWD-3 WAITS ON LGIC_ENFORCE's REGISTRY (the second D14-before-D8 item, scoped to one outcome). (4) THE FENCE CHANGE (LGIC_ENFORCE, ruled ~18:4xZ on three conditions) lands on the template BEFORE this project mints opal-data-inflection and opal-data-cottonwood. (5) FWD-6's 45-DAY QUIET WINDOW STARTS ONLY WHEN READ LOGGING IS LIVE: approved ~18:4xZ card 3, its order to be written by a COO lane Andrew approved seating ~21:3xZ, applied by 0.7.0_AE_CloudOps (seated ~20:0xZ).",
+  "brief_ref": "docs/briefs/d8-legacy-firm-buckets-migration-brief-20260913.md@fc2a1ba75f",
+  "prds": [],
+  "prd_lineage": [],
+  "decompositions": [],
+  "decomposition_lineage": [],
+  "leads": {
+    "cto": "1.0.0_SA_CTO",
+    "coo": null,
+    "cvo": "3.0.0_SA_CVO",
+    "cro": "4.0.0_SA_CRO",
+    "workers": "the worker subagents a future COO's L6 issuance names (spine v3 L7: 0.9.0_WK_ADVI_FIRMBKTS~<n>)"
+  },
+  "coo_lane": null,
+  "fabric_ruling": "laptop -- INHERITED FROM THE DIRECTIVE, not asserted here. D8's placement reads LAPTOP on Andrew-direct 2026-09-01 ~03:0xZ at the 0.0.0_AB_MSTR terminal, VERBATIM: 'This is all correct but D8 on laptop'.",
+  "rulings": [
+    "MACRO ADVI RATIFIED FOR D8 -- Andrew-direct 2026-09-13 ~21:3xZ at the 1.0.0_SA_CTO terminal, VERBATIM: 'yes 2 all' (record ANDREW_DIRECT_20260913_213xZ_MACROS_RATIFIED_COO_SEAT_FIRMSEP_DROP_COT.md, flip @464c1096d5). ADVI was chosen on what these buckets predominantly hold (advisor-intelligence serving stacks); an infrastructure-shaped macro was offered and not asked for.",
+    "DONE WHEN CONFIRMED AS CUT -- Andrew-direct 2026-09-13 ~18:4xZ, VERBATIM: 'recs approved' (record @e2210bf34c).",
+    "QUIET WINDOW -- Andrew-direct 2026-09-13 ~18:4xZ card 2: 45 days, counted from when read logging is live on the bucket (FWD-6). Rule 27's essential-wait clause is satisfied by name.",
+    "READ LOGGING -- Andrew-direct 2026-09-13 ~18:4xZ card 3: opal-data-cot added to the organisation trail's read logging, the selector moved into Terraform, the firm-bucket template given read logging. And ~21:3xZ card 3 remedy (a): opal-data-cot is DROPPED from FIRMSEP-s3-direct-access-bypass in the SAME change; the rule's future is not ruled.",
+    "THE FENCE -- Andrew-direct 2026-09-13 ~18:4xZ card 1: re-derived from the scope token on three conditions (LGIC_ENFORCE carries them). FWD-6's 'fence unbent' reads as 'replaced by derivation', not worked around by naming.",
+    "CANONICAL KEY STRING -- Andrew-direct 2026-09-13 ~03:2xZ ('all recs approved', relayed 96332): SOURCE-FIRST {source}/{scope}/{tier}/{table}/{partition}, the same string in every bucket.",
+    "KEPT -- opal-data-demo is a provisioning firmId Andrew kept ~01:3xZ 2026-09-13; it is not a retirement candidate and this project does not touch it."
+  ],
+  "thread_counter": 0,
+  "threads": []
+}

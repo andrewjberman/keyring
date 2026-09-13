@@ -1,0 +1,45 @@
+{
+  "project_code": "LGIC_CANON",
+  "macro_code": "LGIC",
+  "directive": "D14",
+  "fabric": "laptop",
+  "pipeline": null,
+  "status": "active",
+  "dep_stage": "REGISTERED",
+  "created": "2026-09-12",
+  "registered_under_tree": "2026-09-13",
+  "placement": "LAPTOP",
+  "pods": [],
+  "related": [
+    "LGIC_NAMING",
+    "LGIC_ENFORCE",
+    "ADVI_FIRMBKTS",
+    "MDPF_CANON"
+  ],
+  "name": "Platform Logic canon -- one document a seat can answer from: the rules, the conformance ledger and the identity spine, every part of the estate carrying a decision",
+  "description": "D14's first brief, the pipeline canon. D14 'Platform Logic' was minted by Andrew 2026-09-12 (~17:2xZ placement LAPTOP; ~17:5xZ title), and this brief was authored by 4.0.0_SA_CRO~D under his tensions-first method. The canon is the RULE; enforcing it mechanically is delivered by the sibling LGIC_ENFORCE (Andrew's ~03:2xZ 2026-09-13 commission of the executable-layer brief), not as a seventh outcome here.",
+  "phase": "L3 REGISTERED UNDER THE PROJECT TREE 2026-09-13 by 1.0.0_SA_CTO, on the D14 macro [LGIC] ratified @464c1096d5. dep_stage REGISTERED, NOT PRD: no purpose-level PRD exists yet. || L2 ENDPOINT org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_D14_PIPELINE_CANON_20260912.md (v2 re-cut @ddf93b2165; rulings stamped @e2210bf34c) -- FWD-1..FWD-6; DONE WHEN confirmed by Andrew ~18:4xZ; FWD-6 graded at APPLIED (ruled (a)). || L1 BRIEF docs/briefs/d14-pipeline-canon-brief-20260912.md @a4cc0cb681, author 4.0.0_SA_CRO~D. || NEXT: L4 at 1.0.0_SA_CTO -- the PRD with its ENDPOINT section, then the L4-R sign-off (3.0.0_SA_CVO ratified-text half; 4.0.0_SA_CRO brief half).",
+  "blocking": "NOTHING HERE IS A GATE THIS SEAT INVENTED; each line names whose it is. (1) 1.0.0_SA_CTO: the L4 PRD is not yet written. (2) NO COO LANE IS SEATED for L5: a 2.0.0_SA_COO instance not holding open orders on another pipeline project (the Tier-2 one-project-per-seat rule, .tools/to-decomp-ref-lint.py).",
+  "brief_ref": "docs/briefs/d14-pipeline-canon-brief-20260912.md@a4cc0cb681",
+  "prds": [],
+  "prd_lineage": [],
+  "decompositions": [],
+  "decomposition_lineage": [],
+  "leads": {
+    "cto": "1.0.0_SA_CTO",
+    "coo": null,
+    "cvo": "3.0.0_SA_CVO",
+    "cro": "4.0.0_SA_CRO",
+    "workers": "the worker subagents a future COO's L6 issuance names (spine v3 L7: 0.9.0_WK_LGIC_CANON~<n>)"
+  },
+  "coo_lane": null,
+  "fabric_ruling": "laptop -- INHERITED FROM THE DIRECTIVE, not asserted here. D14's placement reads LAPTOP on Andrew-direct 2026-09-12 ~17:2xZ at the 4.0.0_SA_CRO~D terminal, VERBATIM: 'we put that at d fourteen. And and it's owned by the laptop.' Placement attaches to the directive, never to a member.",
+  "rulings": [
+    "MACRO LGIC RATIFIED -- Andrew-direct 2026-09-13 ~21:3xZ at the 1.0.0_SA_CTO terminal, VERBATIM: 'yes 2 all' (record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260913_213xZ_MACROS_RATIFIED_COO_SEAT_FIRMSEP_DROP_COT.md, flip @464c1096d5; proposal MACRO_ENUM_RULE24_D8_ADVI_D14_LGIC_20260913.md @b672b3301c).",
+    "DONE WHEN CONFIRMED AS CUT, and FWD-6 graded at APPLIED (a) -- Andrew-direct 2026-09-13 ~18:4xZ, VERBATIM: 'recs approved' (record ANDREW_DIRECT_20260913_184xZ_OPEN_CALLS_ALL_SEVEN_RECS_APPROVED.md @e2210bf34c).",
+    "REMEDIATION SHAPE (a) -- Andrew-direct 2026-09-13 ~03:5xZ (relayed 4.0.0_SA_CRO~D, @38f2268d48): D14 owns the rule, the registry, the builders and the flagger; every fix goes where the resource lives (D8, D12). This project owns no remediation.",
+    "PRIORITY -- Andrew-direct 2026-09-13 ~19:2xZ (relayed 4.0.0_SA_CRO~D msg 96400), VERBATIM: 'they are getting all wrapped up in NFRA_SUBSTRATECARDING for some reason. That stuff doesnt matter. I want to proceed with the Logic projects into the MDPF and so on'."
+  ],
+  "thread_counter": 0,
+  "threads": []
+}

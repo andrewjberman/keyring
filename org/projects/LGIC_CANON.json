@@ -1,0 +1,13 @@
+{
+ "project_code": "LGIC_CANON",
+ "home": "org/missions/D14/LGIC/LGIC_CANON",
+ "directive": "D14",
+ "macro_code": "LGIC",
+ "fabric": "laptop",
+ "dep_stage": "REGISTERED",
+ "status": "active",
+ "name": "Platform Logic canon -- one document a seat can answer from: the rules, the conformance ledger and the identity spine, every part of the estate carrying a decision",
+ "generated_from": "org/missions/D14/LGIC/LGIC_CANON/project.json",
+ "generated_by": ".tools/missions-tree-index.py",
+ "generated_at": "2026-09-13T21:44:59Z"
+}
