@@ -6,7 +6,7 @@
   "fabric": "site-z",
   "pipeline": null,
   "status": "active",
-  "dep_stage": "EXECUTING",
+  "dep_stage": "ROUND_CLOSE",
   "created": "2026-09-10",
   "registered_under_tree": "2026-09-10",
   "last_updated": "2026-09-11",
