@@ -2039,3 +2039,142 @@ all seven mechanical criteria were measured and the verdict is NO-GO.
   }
 ]
 ```
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-W16-S1",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~16",
+    "surfaced_at": "2026-09-13T05:52:35Z",
+    "one_line": "TO-U3-1's <paths> GRANT NAMES A FILE THAT HAS NEVER EXISTED ON ANY REF, AND THE FILE THE CELL IS ABOUT IS OUTSIDE THE GRANT: the order grants infra/aws/lambda/v2_portal/yang_pipeline/seed_canonical_securities.py (0 commits across --all; 0 entries in a 33,731-entry index), while the subject W14-S3 actually measured and cited is data/black_diamond/scripts/classification/seed_canonical_securities.py (4 commits, blob fbbc7165d3). The granted path is the round-3 subject's DIRECTORY joined to the round-4 subject's FILENAME. U3-AC1 is unaffected and was executed to completion; U3-AC2/AC3/AC4 cannot be executed without writing outside the grant, so they are BLOCKED and the order stays open.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE GRANT, verbatim, at org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-U3-1.extend-preserve-dont-clobber-to-the-seed-script.md@72f241749946d2956d03bee23e917dfe2305fcd5, <paths> line 4: `infra/aws/lambda/v2_portal/yang_pipeline/seed_canonical_securities.py`.",
+        "THE GRANTED PATH HAS NEVER EXISTED, with a firing positive control at 72f241749946d2956d03bee23e917dfe2305fcd5: `git log --all --oneline -- infra/aws/lambda/v2_portal/yang_pipeline/seed_canonical_securities.py` returns 0 commits; the SAME command over `data/black_diamond/scripts/classification/seed_canonical_securities.py` returns 4. `ls` of the granted directory lists seed-etf-classifications.py and seed-etf-constituents.py (hyphens) and no seed_canonical_securities.py.",
+        "THE FILENAME CENSUS IS OVER THE FULL INDEX, NOT THE SPARSE CONE: `git ls-files` reports 33,731 entries (the whole index; only ~3,270 are readable on disk in this cone-mode worktree, which is row Z-W14-S6's blindness). Exact-basename match on `seed_canonical_securities.py` over all 33,731 yields EXACTLY ONE path: data/black_diamond/scripts/classification/seed_canonical_securities.py. comp-find was NOT used for this census because its denominator here certifies a 3,270-file sweep, not the 33,731-file population.",
+        "THE ROW THE CELL IS BUILT ON NAMES THE OTHER PATH, AND NAMES IT THROUGHOUT: POSN_ASTTAX-Z-W14-S3 grounds every one of its line cites at 3ce0c0e372 against `data/black_diamond/scripts/classification/seed_canonical_securities.py` (:30 YANG_TABLE, :210 yang_table = dynamodb.Table(...), :262-272 the update_item), and its fourth evidence bullet says in terms that the round-3 subject was a DIFFERENT FILE: 'AT3-s-4 / TO-T4-1's grant and its measured subject are infra/aws/lambda/v2_portal/yang_pipeline/seed-etf-classifications.py'.",
+        "THE DECOMP DOES NOT SUPPLY A DIRECTORY, SO THE GRANT'S DIRECTORY WAS ADDED AT THE CUT: org/missions/D4/POSN/POSN_ASTTAX/decompositions/POSN_ASTTAX_DECOMP_round4.md@72f241749946d2956d03bee23e917dfe2305fcd5 has exactly 1 occurrence of the token (line 103, PROSE band): \"`AT4-s-3` | FWD-5, FWD-1 | durability: extend preserve-don't-clobber to `seed_canonical_securities.py` (`W14-S3`) | POSN-owned seed script |\" -- bare filename, no path.",
+        "WHAT IS STILL TRUE AND WAS MEASURED ANYWAY: U3-AC1 ran to completion against the REAL bytes (read from the git object store, blob sha asserted equal to HEAD:data/black_diamond/... before the run) on an in-process scratch target with boto3 replaced in sys.modules and boto3.client raising. 4 of 4 retag members present in the seeder were clobbered: VXX 'Structured'->'equity', UVXY 'Structured'->'equity', QBER 'Structured'->'fixed_income', PDBC 'Commodities'->'equity'; mint control CASH_USD absent->present, so the seeder was writing. Evidence: org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~16/u3_ac1_before_control.py and its recorded output.",
+        "NOT CLAIMED, and deliberately not done: this worker did NOT edit, check out or create data/black_diamond/scripts/classification/seed_canonical_securities.py, and did NOT create the granted path to make the order executable. The <paths> block IS the write grant; a path the order lacks is a blocking row, never an override. NOT CLAIMED: that the data/black_diamond path is POSN-owned -- the decomp calls the subject a 'POSN-owned seed script' and whether that file is in POSN's lane is the issuer's call, not this worker's."
+      ]
+    },
+    "spec_asserts": "TO-U3-1's <paths> block grants infra/aws/lambda/v2_portal/yang_pipeline/seed_canonical_securities.py and U3-AC2's named invocation is `git diff -- <that path>`, so the order asserts that the file the cell must patch exists at that path and is inside the worker's write surface.",
+    "world_is": "No file has ever existed at that path on any ref. The second registry writer the cell exists to harden is data/black_diamond/scripts/classification/seed_canonical_securities.py, which is outside the <paths> grant AND outside this worktree's sparse cone. U3-AC1 is executable without the grant (it only needs to READ the bytes, which the object store supplies) and was executed: the premise HOLDS, 4 of 4 present retag members clobbered. U3-AC2, U3-AC3 and U3-AC4 each require writing the out-of-grant file and are BLOCKED.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "THE FORM OF THE ID: the order's text says to mint `POSN_ASTTAX-W16-S<k>`. This row is filed as `POSN_ASTTAX-Z-W16-S1` because .tools/surprise-row-gate.py:100-101 rules that 'the fabric coordinate Z- stays and nests first', its _self_test:1964 refuses a Z- id carrying fabric 'laptop', this project's fabric is site-z, and 60 of 60 rows already in this channel carry the Z- segment. Both shapes satisfy the schema pattern; the fabric-composed one is the one the gate and the channel agree on. <k> restarts per coordinate, so S1. WHAT WOULD DISARM THIS: one issuer act -- re-cut U3-AC2's <paths> to the measured path (or confirm the intended subject is a different file), after which AC2/AC3/AC4 are straightforwardly executable; the AC1 measurement above already supplies the BEFORE arm and the AC3 negative-control arm, and the sibling's mechanism is read and documented in this worker's result.md, so no measurement is lost. NOTHING IS ASKED OF ANY OTHER SEAT."
+  }
+]
+```
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-W16-S2",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~16",
+    "surfaced_at": "2026-09-13T05:57:57Z",
+    "one_line": "THE COMMIT GATE CANNOT RUN IN THIS WORKTREE, SO IT REFUSES EVERY .py RATHER THAN GRADING ONE -- AND safe-commit.sh IS FAIL-CLOSED ON IT: .tools/commit_gate_runner.py:78 resolves GRAPH_DIR = <workspace>/org/modules/graph and :96 imports comp_constants_cli from it, but this worktree's sparse cone is {.tools, infra/aws/lambda/v2_portal, org/missions, org/projects, org/ref, org/standards} -- org/modules is NOT in it. `bash .tools/commit-gate.sh <any .py>` exits 1 with ModuleNotFoundError before any check runs, and safe-commit.sh:652-658 treats rc!=0 as BLOCKED and unstages. This is U3-AC4's named invocation, and it cannot produce the named result here.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE INVOCATION AND ITS VERBATIM OUTPUT at 72f241749946d2956d03bee23e917dfe2305fcd5, rc=1: `timeout 180 bash .tools/commit-gate.sh org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~16/u3_ac1_before_control.py` -> 'Traceback (most recent call last): File \"C:\\\\tmp\\\\wk-posn-u3\\\\.tools\\\\commit_gate_runner.py\", line 96, in <module> / import comp_constants_cli / ModuleNotFoundError: No module named comp_constants_cli'.",
+        "THE CAUSE, read from the gate's own source at .tools/commit_gate_runner.py@72f241749946d2956d03bee23e917dfe2305fcd5: ':78 GRAPH_DIR = WORKSPACE / \"org\" / \"modules\" / \"graph\"', then ':91-93' inserts GRAPH_DIR and GRAPH_DIR/compproof into sys.path, then ':96-100' imports comp_constants_cli, manifest_check_cli, shell_cli, log_open_lint and ses_sender_lint_cli from there. `git sparse-checkout list` in C:/tmp/wk-posn-u3 prints exactly six cones -- .tools, infra/aws/lambda/v2_portal, org/missions, org/projects, org/ref, org/standards -- and org/modules is not among them, so GRAPH_DIR does not exist on disk.",
+        "POSITIVE CONTROL, AND IT FIRES: the gate's IN-CONE dependency loaded fine. commit_gate_runner.py:87 loads ds-precommit-check.py from SCRIPT_DIR (.tools/, which IS in the cone) via importlib and did not raise -- the traceback's frame is line 96, nine lines LATER. So the failure is specific to the out-of-cone import and is not a broken gate, a broken python or a bad argument.",
+        "NEGATIVE CONTROL ON THE OBJECT, not just the disk: `ls .tools/comp_constants_cli.py` -> 'No such file or directory'; an exact-basename match for comp_constants_cli.py over all 33,731 `git ls-files` entries returns exactly ONE path, org/modules/graph/comp_constants_cli.py. The module exists in the repo and is absent from this checkout -- it is a CONE fact, not a missing file.",
+        "THE CONSEQUENCE IS A REFUSED COMMIT, NOT A WARNING: .tools/safe-commit.sh@72f241749946d2956d03bee23e917dfe2305fcd5 :652 runs `GATE_OUT=\"$(bash \"$SCRIPT_DIR/commit-gate.sh\" \"${GATE_FILES[@]}\" 2>&1)\" || GATE_RC=$?`, :653 tests `if [ \"$GATE_RC\" -ne 0 ]`, :656 unstages every gate file and :657 prints 'ERROR: BLOCKED -- commit-gate failed (py_compile / ruff / lint). Commit aborted; files unstaged.' The gate's rc=1 here means 'the gate could not evaluate itself', but safe-commit reads it as 'a check FAILED'.",
+        "IT IS A CONE DIFFERENCE FROM THE ROUND-3 WORKTREES, WHICH IS WHY NO PRIOR WORKER HIT IT: row POSN_ASTTAX-Z-W14-S6 records /c/tmp/wk-posn-t5's cone as EIGHT entries including org/modules and org/surprise_channel. This worktree has SIX and lacks both. 0.9.0_WK_POSN_ASTTAX~13 committed four .py deliverables under this same project, so the gate demonstrably ran for that worker.",
+        "NOT CLAIMED, and deliberately not done: this worker did NOT widen the sparse cone, did NOT set PYTHONPATH at another tree's org/modules/graph, and did NOT run the primary workspace's commit-gate.sh against this worktree's file. Each would make the order executable by reconstructing or importing across the tree, and grading THIS tree's bytes with ANOTHER tree's checks is a wrong-grain reading even when it returns clean. Whether this worktree's cone should be widened is the issuer's call."
+      ]
+    },
+    "spec_asserts": "U3-AC4 names `timeout 180 bash .tools/commit-gate.sh` as its invocation and expects 'clean on the changed .py, output cited', with both ASCII limbs checked -- i.e. it asserts the gate RUNS in the worker's worktree and returns a per-file check verdict.",
+    "world_is": "In this worktree the gate exits 1 from an ImportError raised at module scope, before any file is dispatched to any check. No limb runs: not py_compile, not ds-precommit, not ruff, and neither ASCII arm -- so the BLOCKING commit-MESSAGE arm and the WARN-ONLY staged-.py arm are both UNMEASURED here rather than clean. Because safe-commit.sh is fail-closed on the gate's rc, any commit whose file set includes a .py is refused in this worktree, independent of that .py's contents.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "SECOND ROW OF THIS COORDINATE; S1 is the <paths>-grant defect and is a DIFFERENT finding with a different remedy -- S1 is a defect in the ORDER's text, S2 is a defect in the WORKTREE's provisioning, and fixing either leaves the other standing. SCOPE: this row says nothing about whether the .py it was run on is clean; that is exactly what could not be measured. WHAT WOULD DISARM THIS: adding org/modules (at minimum org/modules/graph and org/modules/graph/compproof) to this worktree's sparse cone, which is a provisioning act the issuer owns. NOTHING IS ASKED OF ANY OTHER SEAT."
+  }
+]
+```
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-W16-S3",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~16",
+    "surfaced_at": "2026-09-13T06:20:03Z",
+    "one_line": "MY OWN W16-S2 UNDERSTATED ITS OWN BLAST RADIUS, AND THE UNDERSTATEMENT IS THE DANGEROUS DIRECTION: S2 says 'no .py can be committed from this worktree'. Measured since: .tools/commit-gate.sh is `exec python commit_gate_runner.py \"$@\"` with NO bash-side filtering (:59), and the runner raises at IMPORT scope, so the gate exits 1 on an .md-only file list AND on an EMPTY argument list. safe-commit.sh:640-657 has no rc=2 'gate is broken' branch and no audited override, so NOTHING CAN BE COMMITTED FROM THIS WORKTREE AT ALL. This worker's deliverables and both prior rows are LOCAL AND UNCOMMITTED as a result.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE DISCRIMINATING PAIR, at 72f241749946d2956d03bee23e917dfe2305fcd5. (a) `bash .tools/commit-gate.sh <a .md path>` -> same ModuleNotFoundError traceback, rc=1. (b) `bash .tools/commit-gate.sh` with NO ARGUMENTS AT ALL -> same traceback, rc=1. A gate that refuses an empty file list is not grading files; it is failing before it reaches them.",
+        "WHY THERE IS NO FILE-TYPE ESCAPE: .tools/commit-gate.sh@72f241749946d2956d03bee23e917dfe2305fcd5 is 59 lines and its last line is `exec python \"$SCRIPT_DIR_WIN/commit_gate_runner.py\" \"$@\"`. There is no extension filter in bash -- its own header says it 'delegates ALL files to ONE python process' (:8-9). The filtering the header describes (.py/.sh/.tf/org/projects/*.json) happens INSIDE the runner, which never starts.",
+        "WHY THERE IS NO rc ESCAPE: .tools/safe-commit.sh@72f241749946d2956d03bee23e917dfe2305fcd5 :652 captures the rc, :653 is `if [ \"$GATE_RC\" -ne 0 ]`, :656 unstages, :657-659 print and :660 `exit 1`. There is no rc=2 branch. The file DOES carry an 'UNVERIFIABLE (rc=2) = THE GATE ITSELF IS BROKEN' concept at :600, but that is the coverage-check limb, not this one -- so a gate that cannot evaluate itself is read here as 'a check FAILED'. An enumeration of SKIP/BYPASS/OVERRIDE over the file returns 21 hits and FOUR audited overrides -- SENSITIVE, LOG-SWEEP, SURPRISE-ROW, SYSTEM-CURRENT -- and NONE of them is a commit-gate override. The gate's own refusal text says so: '--force does NOT bypass a gate failure'.",
+        "MEASURED ON THE REAL DELIVERY, not on a probe: `bash .tools/safe-commit.sh --author \"0.9.0_WK_POSN_ASTTAX~16 <...>\" -F <msg> -- <deliverables dir> <channel>` -- a file set containing ZERO .py files (.md, .json, .diff, .txt only) -- returned SAFECOMMIT_RC=1 with 'ERROR: BLOCKED -- commit-gate failed'. `git log --oneline -1` unchanged at 72f241749946d2956d03bee23e917dfe2305fcd5.",
+        "WHAT IS THEREFORE AT RISK, stated plainly: this worker's result.md, proof-of-spec instance (proof-of-spec-check rc=0, VALID), proposed patch diff, two control outputs, AND rows W16-S1 and W16-S2 exist ONLY in C:/tmp/wk-posn-u3's working tree. They are not on any branch and no drain can see them. Site Z's own banked lesson is that a shared tree loses uncommitted work.",
+        "NOT CLAIMED: that S2 is wrong. S2's cause (org/modules outside the cone) and its disarm (widen the cone) are both unchanged and correct. This row refines S2's SCOPE only -- and it does not disarm it."
+      ]
+    },
+    "spec_asserts": "This worker's own row POSN_ASTTAX-Z-W16-S2 states 'any commit whose file set includes a .py is refused in this worktree, independent of that .py's contents' -- which implies, by contrast, that a commit WITHOUT a .py would land.",
+    "world_is": "The gate refuses independent of the file set, including an EMPTY one, because it fails at import scope before any filtering. So the contrast S2 invites is false: a .py-free commit is refused identically. The remedy is the same one S2 names (widen the cone), but the exposure is every commit from this worktree rather than every .py.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "FILED AGAINST MY OWN PRIOR ROW. The channel is append-only, so S2 is not edited and not disarmed; this row corrects its GRAIN, the way Z-S41 refined Z-S37. The direction matters: an understatement reads as all-clear for the case it excludes, and a reader of S2 alone would reasonably conclude that dropping the .py files was a sufficient workaround. It is not, and this worker tried it and was refused. NO WORKAROUND WAS MANUFACTURED: the cone was not widened, PYTHONPATH was not re-pointed, no bare `git commit` was used, and no gate was bypassed. NOTHING IS ASKED OF ANY OTHER SEAT; the disarm is the same provisioning act S2 names."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-W16-S4",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~16",
+    "surfaced_at": "2026-09-13T06:54:42Z",
+    "one_line": "THE COMMIT GATE'S NON-ASCII LIMB IS SCOPED TO infra/ AND .tools/ ONLY, SO IT CAN NEVER FIRE ON THIS CELL'S SUBJECT -- and its silence is indistinguishable from a clean pass. U3-AC4 tells the worker a staged .py arm is 'WARN-ONLY and ships', which reads as: it runs and may warn. On data/black_diamond/** it does not run at all. A probe .py carrying 5 non-ASCII bytes passed the gate rc=0 with 'All checks passed!' and zero WARN lines. The failure mode is a GREEN: a reader clears the limb and learns nothing, because a non-run and a clean verdict print identically.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/commit_gate_runner.py:427-429 @220d09901b67ab7e49ea321886ba3941c63868d6 -- _nonascii_lint_one() opens with `norm = f.replace(chr(92),'/')` then `if not (norm.startswith('infra/') or norm.startswith('.tools/')): return 0`. The early return is unconditional on path and precedes the byte read, so no file outside those two prefixes is ever scanned.",
+        "MEASURED PAIR, same gate, same invocation shape, at 220d09901b67ab7e49ea321886ba3941c63868d6: (a) `timeout 180 bash .tools/commit-gate.sh .scratch/run/u3_gate_ascii_probe.py` where the probe carries 5 bytes >127 (counted independently in python) -> 'All checks passed! / OK: pre-commit gate clean for 1 of 1 file(s)', rc=0, ZERO WARN lines. (b) the same gate on a deliberately broken .py -> 'BLOCKED: py_compile failed', rc=1. So the gate IS live and DOES refuse -- the ASCII silence in (a) is a NON-RUN, not a tolerant pass.",
+        "SCOPE OF THE CONSEQUENCE FOR THIS CELL: the subject is data/black_diamond/scripts/classification/seed_canonical_securities.py (blob fbbc7165d331 @220d09901b67ab7e49ea321886ba3941c63868d6), which starts with neither prefix. So when POD4 applies the handed-off patch under its own gate run, this limb will be silent there too. This worker therefore byte-scanned the patched bytes and every deliverable itself: 0 bytes >127."
+      ]
+    },
+    "spec_asserts": "U3-AC4 @8e67653049 instructs: 'Check BOTH ASCII limbs and say so: the commit-MESSAGE arm is BLOCKING while a staged .py arm is WARN-ONLY and ships, so clearing the one that stopped you teaches nothing about the other.' That presents the staged-.py arm as an arm that RUNS on the changed .py and whose verdict is merely non-blocking.",
+    "world_is": "The staged-.py arm runs on a PREFIX-SCOPED subset of files: infra/ and .tools/ only (commit_gate_runner.py:427-429). For every other path -- including this cell's entire subject tree data/black_diamond/** and including the scratch paths a worker would naturally probe with -- the function returns 0 before reading a single byte. 'WARN-ONLY' is accurate about its SEVERITY and silent about its COVERAGE, and the coverage is the half that decides whether checking it means anything. The order's own warning applies one level deeper than it was written: clearing the staged-.py limb on an out-of-scope path teaches nothing about that path either.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "NOT A DEFECT IN THE ORDER'S INSTRUCTION, which is correct as far as it goes, and not a request for any act. Filed because the instruction's purpose is to stop a worker citing one limb as evidence about another, and this worker could have cited a NON-RUN as a clean staged-.py limb with no way for a reader to tell. Nothing was widened to work around it: no probe file was written under infra/ or .tools/ (both outside this worker's <paths> grant), so the in-scope branch of this function is UNEXERCISED by this worker and is stated as such rather than assumed. The commit-MESSAGE limb is a separate mechanism entirely -- .tools/git-hooks/commit-msg-ascii-check.sh, installed at the shared git-common hooks/commit-msg and therefore APPLIED to this linked worktree -- and is graded separately in the proof instance."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-W16-S5",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~16",
+    "surfaced_at": "2026-09-13T06:54:42Z",
+    "one_line": "THE RE-CUT RETIRED U3-AC2's EDIT BUT LEFT U3-AC4 NAMING ITS OUTPUT: AC4 still expects the gate 'clean on the changed .py', and after the re-cut this cell changes NO .py in the repo by construction -- the patch is RECORDED, and the file it targets is POD4's. `git diff HEAD --name-only -- '*.py'` = 0. The clause has no repo-resident subject, so it was graded against the .py BYTES the cell actually produces (the patched seeder, materialized in scratch by applying the recorded diff), and that scoping is disclosed rather than passed over.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The order @8e67653049: U3-AC2's <expect> reads 'RECORDED as a unified diff in this cell's deliverables dir -- NOT applied to the file, which is POD4-owned', while U3-AC4's <expect> reads 'clean on the changed .py, output cited'. The first forbids the object the second names.",
+        "MEASURED at 220d09901b67ab7e49ea321886ba3941c63868d6: `git diff HEAD --name-only -- '*.py'` -> 0 line(s). `git status --porcelain -- data/black_diamond/` -> 0 line(s), against `git ls-files -- data/black_diamond/` = 176, so the empty status is CLEAN and not MATCHED-NOTHING.",
+        "HOW IT WAS GRADED INSTEAD: the recorded diff was applied to the HEAD blob in a scratch mirror (git apply rc=0; a one-line corruption of the same diff is REFUSED rc=1, so the check discriminates), the result reproduced the exact bytes U3-AC3 exercised (sha256 dde708491f6fa73d, both sides), and `timeout 180 bash .tools/commit-gate.sh` over those bytes returned 'OK: pre-commit gate clean for 1 of 1 file(s)', rc=0."
+      ]
+    },
+    "spec_asserts": "U3-AC4 @8e67653049 expects the commit gate 'clean on the changed .py', which presupposes that this cell leaves a changed .py somewhere the gate can be pointed at.",
+    "world_is": "Under the same order's U3-AC2, this cell changes no .py anywhere: the patch is a deliverable and the target file belongs to lane POD4 (.owned-paths.yaml:1712). The re-cut converted AT4-s-3 from EDIT to DISCLOSE-AND-HAND-OFF and updated AC2 and AC3 to match, but AC4's wording still describes the pre-re-cut world. The gate limb itself is in no way broken -- it runs and refuses -- there is simply no repo-resident object of the kind the clause names.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "NOT BLOCKING and no act is asked of any seat. Raised so the L9 grader sees exactly WHICH bytes carried the U3-AC4 verdict and can reject the scoping if it disagrees, rather than reading a bare PASS that silently re-defined 'the changed .py'. The alternative readings were considered and are recorded in the proof instance: grading the worker-authored control scripts instead would clear the clause on files the cell does not hand to anyone, which is weaker evidence about the thing being handed off. Note also that the path-keyed limbs of the gate are NOT exercised at the real path by this method -- see W16-S4 for one limb where that distinction is load-bearing."
+  }
+]
+```
