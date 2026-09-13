@@ -1645,6 +1645,32 @@ all seven mechanical criteria were measured and the verdict is NO-GO.
     "spec_asserts": "A seat's stated obligation count is a count of OBLIGATIONS.",
     "world_is": "Z-S37 stated 54 ids and let them stand as the obligation figure. 21 of them are the same obligation counted twice, once on each plane, and the join was available in the rows' own adjudicates field the whole time. The id is the item only when the ids are distinct items -- here an obligation can wear two.",
     "notes": "DOES NOT DISARM Z-S37 and does not contradict it: that row said explicitly that 39 was a CANDIDATE count and that the live figure was unknown. It refines the GRAIN, which Z-S37 never stated. NOTHING IS ASKED OF ANY SEAT. 1.0.0_SA_CTO~Z owns Z-S38/S39/S40 and its own collapse; this is the same read run on this seat's set because the method was demonstrated, not because anyone requested it."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-S42",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-09-13T03:29:55Z",
+    "one_line": "Z-C-S55 IS SETTLED AND THIS ROW IS ITS DISARM. The additional ETF publisher is OUT of POSN_ASTTAX's WRITE scope and IN its DISCLOSURE scope: this project does not rewrite another project's publisher, and it does not get to omit a third surface a retagged value can reach. The PRD's two-sibling surface set is INCOMPLETE AS WRITTEN and is corrected by DISCLOSURE, not by a cell. Settled now rather than at L10 because Andrew's 03:21Z work direction reaches it and nothing blocks it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE DECISION, and it is a SCOPE decision, which is why it sat with this seat rather than in a cell. THREE FACTS FROM Z-C-S55's OWN TEXT DECIDE IT AND THEY POINT DIFFERENT WAYS, WHICH IS THE WHOLE DIFFICULTY. (a) The publisher COPIES gold holding class values and emits a four-key book allocation at its source lines 469-472, so it IS reached by a retag -- it is a genuine positive counterexample to the PRD's closed two-sibling set and that enumeration is wrong as written. (b) Its live artifact carried 189 rows over four books and ZERO candidate members, so its CURRENT bytes cannot exercise post-retag loss -- there is nothing there to lose today. (c) It belongs to another project and NO POSN WORKER IS AUTHORIZED TO REWRITE IT.",
+        "WHY THE ANSWER IS DISCLOSURE AND NOT A CELL. (c) forecloses a write outright, so the only live question is whether POSN may stay SILENT about a surface it cannot touch. It may not: (a) makes the PRD's surface enumeration factually incomplete, and Rule 24's subtraction is over the surfaces a retagged value REACHES, not over the surfaces this project may EDIT. A surface list that silently drops members on the ground that they are somebody else's is a subtraction over the wrong domain, and it reads as MEASURED because it still prints a denominator.",
+        "AND (b) IS THE PART THAT MUST NOT BE MISREAD AS SAFETY. Zero candidate members is a STATE, not a property: it is true of the bytes measured and it flips the first time a candidate member appears in any of that publisher's four books. So the disclosure carries its own falsifier -- the measured zero WITH the condition that ends it -- rather than a reassurance. A zero recorded without its expiry is the same shape as a criterion that returns the same answer in both worlds.",
+        "WHAT IS NOT DECIDED HERE, said plainly so no one reads this wider. This settles COVERAGE at the project boundary and nothing else. It does not rule on the retag itself, which is NO-GO and Andrew's. It does not authorize any POSN write outside the two siblings. It does not classify the other project's publisher as defective -- it is behaving correctly and is simply a third reader of the same values."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "POSN_ASTTAX-Z-C-S55"
+    ],
+    "spec_asserts": "POSN_ASTTAX-Z-C-S55 records, as its notes: 'The CTO must settle this existing owning surface coverage at the project boundary.' Its disarm_owner is 1.0.0_SA_CTO~Z and no other act discharges it.",
+    "world_is": "SETTLED. The ruling, in one line for whoever cuts from it: the additional ETF publisher is a THIRD SURFACE a retagged value reaches, is NOT POSN's to write, and MUST be named in the PRD s.4 C-RETAG-SAFETY surface list as a disclosed non-owned reader carrying its measured state (189 rows, four books, ZERO candidate members, at the pin Z-C-S55 cites) and the condition that ends that state (any candidate member appearing in those books).",
+    "notes": "CARRIER, AND THIS IS THE PART THAT IS NOT DONE. The ruling is made and is durable here, but its LANDING is one line in PRD s.4, and that section is inside the RATIFIED-TEXT half signed by 3.0.0_SA_CVO~Z and current at 5840cc12ac. POSN is MID-ROUND-3 with four orders open, and Rule 27 freezes the spec mid-round. So the line lands in the round-3 L10 addendum, which is the carrier the law already provides for exactly this, and the ruling is recorded here so that addendum cannot be written without it. THIS IS NOT THE SAME AS DEFERRING THE DECISION. The decision is made and any seat may cut from this row today; what waits is only the sentence's home. AND THE HOLD IS NAMED RATHER THAN ABSORBED: POSN's L10 is itself gated on Andrew's undecided four-of-fifteen carry-forward call. That is being put in front of him as a gating item in the same breath as this row, because his 03:21Z direction says finish the work now and this is a piece of work whose only remaining blocker is his own open call."
   }
 ]
 ```
