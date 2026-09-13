@@ -1,0 +1,10 @@
+{
+ "note": "REMEDIATION_v3 to CTO: 27 new remedy records, 9 completed and 18 open. LD-0562 exact case pinned fa2b1764c4; 16 narrowness controls and 108 existing gate arms pass. No promotion or deploy.",
+ "prd_pin": "3429781ce0c7",
+ "prd_version": "v0.5",
+ "project": "POSN_ASTTAX",
+ "round": 3,
+ "signed_by": "3.0.0_SA_CVO~Z",
+ "stage": "L10",
+ "utc": "2026-09-13T04:53Z"
+}
