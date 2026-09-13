@@ -232,4 +232,94 @@ a day.
 
 ---
 
+## 7. ADDENDUM -- 3.0.0_SA_CVO's LATE SLUG FOR ROUNDS 2-3 (msg 96389, record @49ef1fd1b1), READ BEFORE ROUND 5 ISSUED
+
+The slug landed after this analysis (@23af9479ab), so C-S65's three live defects are not in s.5. **Round 5 has not been
+issued:** `git log 23af9479ab..HEAD` over `org/missions/D9/IRPT/IRPT_FNTEND` and `org/projects/IRPT_FNTEND.json` reads 4
+commits, all rows and a step log, no task order and no decomposition. So they join s.5's list now instead of waiting a
+round. **Nothing here changes the PRD** -- every ruling below applies ratified text -- so no L4-R half re-opens.
+
+### RULING O -- RULING K REACHES THE ANALYSIS TAB. ADOPTED. (C-S65, W1-S46)
+Measured at portal c2eb8eb4: `formatSourceAge(` has **3 call sites across the 76 non-test files** of the tab tree.
+One is `state/status.ts:465`, inside `formatSourceAgeForState` -- the fixed path. The other two are
+`tabs/analysis/StageDisplay.tsx:51` and `tabs/analysis/VariantSelector.tsx:61`, both still
+`formatSourceAge(envelope.sourceAsOf)`: they age the `as_of` instant, not the `business_date` the clause governs.
+FE-s-25's grant reached one consumer of three, as W1-S46 said at the time. **Remedy:** both panels render through
+`formatSourceAgeForState` and carry RULING K's label. **Outcome:** zero `formatSourceAge(` call sites outside
+`state/status.ts`, with the denominator printed, and a fixture whose `as_of` and `business_date` differ shows the
+business-date age on both panels. **One cell, not two** -- s.5 item 6 widens to take a `tabs/analysis/` grant.
+
+### RULING P -- A BODY CARRYING NO ENVELOPE IDENTITY IS REFUSED. ADOPTED. (C-S65, W2-S11, W1-S39)
+C-S65 asked: refused, or adapted by design? **Refused.** Four reasons:
+
+1. **The contract already rules.** `docs/contracts/investor-reporting/v1/CONTRACT.md:142` -- *"ONE ENVELOPE FOR EVERY
+   ROUTE"*; `routes.json:171` -- *"Every response on every DECLARED route is {contract_version, operation, firm_id, data,
+   status?} with additionalProperties false"*. A body carrying none of the three identifiers is not a v1 answer on any
+   declared route.
+2. **The adapted path serves the tests, not the producer.** `contracts/envelope.ts:34-40` names it: *"the plane FE-s-13
+   shipped and the plane four round-1 test suites outside this order's write grant still drive `LiveClient` with."* An
+   unscoped read of `isEnvelopeShaped` over all **1,421 files** of the portal tree @c2eb8eb4 finds **one** non-test
+   caller: `src/api/endpoints/investor-reporting.ts:907`. There, a body with none of the three skips `parseIrEnvelope`
+   and takes `:935-942`: counted, adapted, returned as a view, never refused.
+3. **As written, no declared producer route emits such a body.** All **7 of 7** served entry points (directory, export,
+   holdings, narrative, ops, performance, ycharts/generate; Terraform `handler = "entry.lambda_handler"` in each root)
+   end in `lambda_handler = _entry.lambda_entry(ENTRY)` and return through `_authz/served.py` `Entry.handle`: success at
+   `:641` via `response_envelope`, every refusal via `refuse` (`:571-628`). `intake/poller` and `directory/refresh` are
+   schedule-driven, not routes. **STATE:** DESIRED plane only (source plus Terraform); the deployed handlers were NOT
+   read. The ruling does not depend on them: a live answer without the envelope is exactly what should render as a
+   named refusal.
+4. **W2-S11's hazard is the case the envelope exists for:** an unmigrated handler, a proxy that strips the body, a
+   cached pre-v1 response -- each is accepted today without a word.
+
+**Remedy (2.0.0_SA_COO~F's cut):** the pre-envelope branch at `investor-reporting.ts:935-942` refuses with
+`EnvelopeMismatch` naming `body`. That refusal renders as a state through `envelopeFromRefusal`, like F19-AC6's three,
+and `preEnvelopeResponses` reads 0. The round-1 suites that serve bare bodies are re-based onto enveloped ones.
+W1-S39 measured three tests red in two suites. At c2eb8eb4, 7 of the 84 test files construct `LiveClient`, and two
+round-1 suites carry no `contract_version` at all: `fe-s-1/adapter.test.ts` and `fe-s-13/no-route.test.ts`. **Grant:**
+`fe-s-1/`, `fe-s-13/` and the endpoint file. **Outcome:** F19-AC6 gains a fourth body carrying none of the three,
+refused by name, with its whole-envelope positive control unchanged. This closes C-S65's second half by its own disarm
+condition (*"a no-identity body is refused"*).
+
+### RULING Q -- S42's SUBSTRATE HALF STAYS ARMED. 3.0.0_SA_CVO's C-S67 IS RIGHT; THIS SEAT'S S57 OVERSTATED. (C-S67, S42)
+S57 (@bf92c169ac) disarmed S42 on its blocking arm -- the fixture half, F18-AC3 passing after FE-s-26 -- and said *"its
+instrument lesson is carried into RULING I."* **A lesson carried in prose is not a disarm.** C-S67 measured at portal
+c2eb8eb4: `package.json` names neither happy-dom nor jsdom, and `bunfig.toml` is absent (rc=128). A `bun test` here still
+cannot tell mounting from seeding. What protects the project is round 2's RULING 2, refusing seeded criteria at the cut
+-- a ruling an issuer has to remember. **S42's substrate half stays ARMED; its disarm owner stays this seat.**
+
+**Disarm route:** RULING 2 becomes a limb, cut with RULING M's checker limbs at the head of round 5. A DOM test
+environment is not the route: it means a new dependency in a frozen portal, on a surface this seat does not own.
+**Outcome, stated so the cell cannot grade its own key:** the limb REFUSES the round-2 seeded criteria S42 names
+(positive controls: the suite that passed 420 tests over a seam that could not mount), and PASSES the fe-s-19
+browser-driven criteria (negative controls). A limb that cannot tell those two sets apart is not the limb.
+
+### THE REST OF THE SLUG
+- **C-S68 (S27):** RULING J already rules it (s.3); C-S68 is its carrier. Disarms under s.5 item 5 when the frozen
+  print's header agrees with its own account table.
+- **C-S71, nine INERT wire gaps.** Two are consumer-side and cheap, and **join round 5**:
+  - W2-S12 / W3-S5: `export/submit.ts:87` types `submitExport` to return the StatusEnvelope ack, not the ExportReceipt
+    the producer answers in `data`.
+  - W1-S20: `contracts/adapt.ts:1097` types `report_title` as `string` while `tabs/analysis/composer.ts:106` sends
+    `string | null` -- two builders of one body.
+
+  The other seven either need v1 to carry something it does not, or were not re-read (W1-S22, W3-S6). v1 has no
+  published fixtures, no profile or comparison catalogue, no narrative coverage date, and five WIRE_ABSENT mappings.
+  All seven **stay INERT, not round 5's.** Their carrier is C-S71 itself. This seat does **not** claim to carry them to
+  IRPT_BCKEND -- that takes a row in its channel, and a promise without one is how S40 sat for a day.
+- **C-S72.** W1-S36 **joins round 5**: `scripts/ui-smoke.mjs:341` compares `pathname` (`:332`) with the full route
+  string, so every query-bearing route prints 'DID NOT LAND' whether or not it landed, and a real failure reads the
+  same. The criterion carries both arms: a query-bearing route that lands reads as landed; one that does not reads DID
+  NOT LAND. The file sits outside every IRPT grant so far, and this seat did not census its other consumers; the cut
+  says. W1-S35 goes with s.5 item 3 (the Holdings cell), whose real render is the first capture able to show it.
+  W2-S16 (a content pin blind to ADDED fields) stays INERT.
+
+### ROUND-5 INPUTS, AMENDED -- s.5 stands; these are added
+6. **THE RELABEL** (RULING K) -- widened to `tabs/analysis/` (RULING O).
+8. **THE ENVELOPE REFUSAL** (RULING P).
+9. **THE SEEDED-CRITERION LIMB**, cut with item 1 (RULING Q).
+10. **TWO CHEAP WIRE FIXES** -- W2-S12/W3-S5 and W1-S20 (C-S71).
+11. **THE SMOKE CHECK** -- W1-S36 (C-S72). Item 3 also carries W1-S35.
+
+---
+
 **Push state:** LOCAL at commit; stated as measured in the commit report, not here, because it ages.
