@@ -154,13 +154,24 @@ An audit run at the laptop said, fairly, that it could not tell whether the "som
 done this" bars were set up front or added afterwards. They were set up front. Measured:
 
 ```
-2026-09-10 14:57   the outcome cards land: 14 bars -- 13 "someone has used it", 1 "it is in place"
-2026-09-10 16:35   THE FIRST WORK ORDER IS CUT -- ninety-eight minutes later
+2026-09-10 14:32   the outcome list lands: all 14 outcomes, and the bar line already reads
+                   "13 of 14 are EXERCISED; only FWD-9 is APPLIED" -- the PRD's FIRST commit
+2026-09-10 16:35   THE FIRST WORK ORDER IS CUT -- two hours and four minutes later
                    (and the first commit is a literal ancestor of the second, with a control)
 2026-09-11 08:36   the bars change ONCE: 14 -> 15. The added one is FWD-15, the Lead Panel,
                    from your own frontend walkthrough -- and it arrived with the same hard bar.
 today             15 bars, unchanged since.
 ```
+> **CORRECTION made 2026-09-13 03:3xZ, before you had to find it.** This block first said `14:57`
+> and *"ninety-eight minutes"*. **That was wrong, and the corrected gap is LARGER.** It timed the
+> commit where each outcome's bar was written out one by one, and called it the moment the outcomes
+> landed -- but all fourteen outcomes and the bar line were already in the specification's very
+> first commit, twenty-six minutes earlier. `4.0.0_SA_CRO~Z` measured it from that first commit and
+> reported the bigger gap; that seat is right and this one was not. Nothing about the conclusion
+> changes except its strength: the bars pre-date the first work order by longer than this seat
+> first told you. The explanation brief quotes the old figure in its own words, and its author has
+> been told in the same breath as this edit.
+
 **No bar was ever lowered, swapped or quietly rewritten.** One outcome was added, on your word, and
 it came in at the same standard as the rest.
 
