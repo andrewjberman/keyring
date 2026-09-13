@@ -340,6 +340,17 @@ last, when their buckets are gone.
 - Every served key that moves has a never-widen sign-off naming its rollback (NEVER#3); the old bucket stays unmodified
   through the rollback window.
 - Decommission of a bucket is preceded by a zero-reader census over a declared window on a named instrument (O6).
+  ⛔ **AND THE INSTRUMENT MUST COVER THE PREFIXES AND THE DIRECTION THE OUTCOME CLAIMS BEFORE THE WINDOW OPENS** — added
+  2026-09-13 ~03:1xZ from `3.0.0_SA_CVO` 96326 + `1.0.0_SA_CTO` 96328 (`cloudtrail get-event-selectors`, both trails,
+  selectors printed in full): READS are recorded for `opal-data-bd` and `-inf` (whole bucket, ReadOnly data selector) and
+  for `opal-data-cot` NOWHERE; WRITES on all three are recorded ONLY under `platinum/firm/` (the served-key write trail,
+  StartsWith); S3 server access logging is off on all three (CVO's limb). So "nothing read cot for N days" and "reads on
+  cot were never recorded" are the same zero, and a write to `gold/`, `bronze/`, `silver/`, `code/` or `state/` during the
+  window is invisible. ⚠ The trap: "is the bucket in CloudTrail" answers YES for all three (the write trail names them) —
+  the discriminator is `readOnly`, not presence. CloudTrail data events are not retroactive: **the quiet-window clock
+  cannot start before the selectors cover the buckets and prefixes**, which puts a start-date consequence on the window
+  Andrew is asked to size (CTO 96323). Not measured: a third read instrument on cot (VPC flow, app logs, CloudWatch
+  request metrics). Amending a trail selector is a shared audit surface — named as a precondition, not proposed as an act.
 - The per-version delete on a versioned bucket is its own Andrew-class act (IRPT_BCKEND-S41 precedent).
 - Each firm is its own cutover under R19; **49F first** is a dependency claim (its bucket exists; its gold is there;
   the advi half folds in), not an order.
@@ -369,6 +380,8 @@ last, when their buckets are gone.
 - **The 11 pattern rules' TARGET Lambdas were read from the map; their live state was not re-read.**
 - **The S3 notification configurations' targets were counted, not read.**
 - **The 08-18 template's clauses beyond the header comment were not read** (the file was read to line 80).
+- **CloudTrail coverage of the three buckets was not measured by this seat** — the CVO/CTO measurement is carried in
+  Part V with its instrument named; this list held its absence when the brief was cut.
 - **No lifecycle rule was read** (counts only): a rule that expires or transitions objects in a legacy bucket is a
   hazard to the rollback window and must be read at MAP.
 - **`opal-data-inf`'s and `-cot`'s policies were read; the role-side belts were not** (`bd:534`, `cot:192`, inf
