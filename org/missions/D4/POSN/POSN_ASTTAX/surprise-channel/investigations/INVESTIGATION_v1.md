@@ -1592,6 +1592,29 @@ all seven mechanical criteria were measured and the verdict is NO-GO.
     "spec_asserts": "POSN_ASTTAX-Z-S38 records that reading the nine certainly-live rows to a condition each, and the eight cited pairs to a standing each, is this seat's next act and its own disarm.",
     "world_is": "The nine are read. Z-S38's disarm is HALF discharged: the nine have conditions, the eight cited pairs do not yet. THE USEFUL RESULT IS NOT THE COUNT -- it is that only TWO of the nine are acts this seat can take, both are small, and neither is blocked on anyone. Seven are standing tooling and gate observations whose remedy is a tool change nobody has authorized and which Andrew's 02:22Z priority ruling explicitly subordinates to the work of the fabric.",
     "notes": "WHAT THIS SEAT WILL DO AND WHEN, stated as a commitment rather than an intention: Z-W10-S1's PRD sentence is corrected the next time this seat opens the POSN PRD, which is at POSN's L10 -- opening a PRD mid-round to fix a sentence is the disruption the ruling names, and the correction is one line whenever the file is legitimately open. Z-C-S55's boundary decision belongs in the POSN round-3 L10 analysis, where scope questions are answered, and is recorded here so it cannot be missed there. NOT DONE: the eight cited pairs. Each needs its citing row read before any is called discharged, and this seat's screen has produced a false close twice tonight. NOT CLAIMED: that the seven tooling rows are unimportant. Z-C-S10 (a commit-wide override boolean escaping six violations under one reason) and Z-C-S24 (a VALID proof instance that never checked the datastore) are both real gate weaknesses and both would matter to any seat relying on those gates. They are parked, not dismissed, and this row is the place a future reader finds them stated in one line each rather than spread over three adjudication documents. DISARM OF THIS ROW: the eight cited pairs read, plus the two acts above taken."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-S40",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-09-13T02:23:01Z",
+    "one_line": "THE EIGHT CITED PAIRS ARE READ, WHICH FULLY DISARMS Z-S38 -- AND THE COUNT COLLAPSES. SEVEN of the eight are the INVESTIGATION-PLANE ORIGINALS of adjudication rows already read at Z-S39, linked by the rows' own `adjudicates` field, not by a screen. THE EIGHTH, Z-C-S21, is superseded by Z-C-S33 under Andrew's call-1 YES. So this seat's TWENTY-SIX ids on POSN_ASTTAX are NINE obligations counted on two planes, plus eight inert and two meta-rows of this seat's own.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE LINK IS THE ROWS' OWN `adjudicates` FIELD, READ RATHER THAN INFERRED FROM A TOKEN SCREEN. Z-W2-S3 -> Z-C-S7; Z-W2-S4 -> Z-C-S8; Z-S1 -> Z-C-S10; Z-W8-S2 -> Z-C-S21 AND Z-C-S33; Z-W8-S4 -> Z-C-S23; Z-W8-S5 -> Z-C-S24; Z-S7 -> Z-C-S38. Every one of those adjudication targets except Z-C-S38 is among the nine read at Z-S39, and Z-C-S38 is INERT at surfacing.",
+        "POSITIVE CONTROL, so the field is a real link and not a sparse one: 54 of 134 rows in this project's channel carry an `adjudicates` field. It discriminates.",
+        "THE EIGHTH IS SUPERSEDED, ON ITS SUCCESSOR'S OWN WORDS. Z-C-S33: 'Releases proposed POSN_ASTTAX-Z-C-S21 from aa571c521c under Andrew call 1 YES, relayed by CTO 21533. Supersedes the pending disposition by a NEW row; the original worker and CVO rows remain unchanged.' So Z-C-S21's standing follows Z-C-S33's, which is read and recorded at Z-S39 as tied to the four open orders.",
+        "THE RECONCILIATION, stated so the 26 is not quietly abandoned: 8 INERT at surfacing + 9 armed adjudication-plane obligations + 7 investigation-plane originals of those same nine + Z-C-S21 (superseded) + Z-S38 and Z-S39 (this seat's own meta-rows) = 26. Nothing is dropped and nothing is double-counted as an obligation."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "POSN_ASTTAX-Z-S38 reports 25 distinct ids naming this seat -- 8 inert, 9 with no candidate disarm, 8 with a citing twin needing a read -- and names that reading as its disarm.",
+    "world_is": "Read, and the structure is two planes rather than two populations. THE HONEST OBLIGATION COUNT FOR THIS SEAT ON POSN_ASTTAX IS NINE, not twenty-six -- and of those nine, exactly TWO are acts this seat can take (Z-W10-S1's PRD sentence, Z-C-S55's boundary decision), one is tied to the four open orders (Z-C-S33), one is a caution for a future cell (Z-W1-S1), and five are standing tooling and gate observations.",
+    "notes": "\u2b50 THE TRANSFERABLE HALF IS 4.0.0_SA_CRO~Z's LINE, NOW MEASURED ON A SECOND PROJECT: THE ID IS THE ITEM, THE PLANE IS A FACET, AND A ROW COUNT IS NOT AN OBLIGATION COUNT. Twenty-six ids, nine obligations. Every seat that published an armed count tonight -- nine, thirty, fifty-three, five, 104, 149 -- published a FACET count, and none of us said so at the time. This is the first of them converted, and only for one seat on one project. AND THE CONVERSION HAS A CHEAP INSTRUMENT: the `adjudicates` field. It is present on 54 of 134 rows here and it states the plane link authoritatively, so nobody needs a token screen to collapse a facet count into an item count. This seat used a DISARM-token screen twice tonight and it produced a false close both times; the structural field produced none. NOT CLAIMED: that nine is a LIVE count. Two of the nine may already be satisfied by work this seat has not checked, and the conditions recorded at Z-S39 are conditions, not verdicts. NOT CLAIMED: that this collapse applies to other seats' counts -- each would need its own `adjudicates` read, which is one command and is not run here on their behalf. Z-S38 IS DISARMED BY THIS ROW: both halves of its condition are met."
   }
 ]
 ```
