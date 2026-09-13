@@ -761,6 +761,166 @@ Accumulating CVO review as round-two evidence arrives. This is NOT an L10 slug a
     },
     "hazard_standing": "INERT",
     "dismissal_reason": "Each remedy is read in the tree at c2eb8eb4 or on a round-4 capture. The Holdings body mounts empty (W1-S52, C-S57) -- a fixture defect, not the mount these rows concerned."
+  }  ,
+  {
+    "id": "IRPT_FNTEND-C-S71",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-13T09:55:02Z",
+    "one_line": "INERT BACKLOG, GRADUATED to 1.0.0_SA_CTO at L10: nine places where the v1 wire and the consumer do not meet -- none armed, each honest on screen, and each still a contract question no round has ruled.",
+    "class": "OBSERVATION",
+    "adjudicates": [
+      "IRPT_FNTEND-W1-S17",
+      "IRPT_FNTEND-W2-S9",
+      "IRPT_FNTEND-W2-S12",
+      "IRPT_FNTEND-W3-S5",
+      "IRPT_FNTEND-W1-S19",
+      "IRPT_FNTEND-W1-S20",
+      "IRPT_FNTEND-W1-S22",
+      "IRPT_FNTEND-W3-S6",
+      "IRPT_FNTEND-W3-S8"
+    ],
+    "disposition": "GRADUATED",
+    "spec_asserts": "Each row records a producer/consumer gap a cell could only disclose, not close, inside its grant.",
+    "world_is": "Re-read at the drained round-4 vintage where a read was cheap. STILL AS RECORDED: export/submit.ts:87 types submitExport to return the StatusEnvelope ack, not the ExportReceipt v1 answers in data (W2-S12, W3-S5 -- on a live plane the receipt follow-up asks for an id the producer did not mint); contracts/adapt.ts:1097 types report_title as string while tabs/analysis/composer.ts:106 sends string | null, so two builders of one body remain (W1-S20); docs/contracts/investor-reporting/v1/ publishes schemas, responses, routes.json and CONTRACT.md and no fixtures (W2-S9); the composer still renders the prepared-for / prepared-by / contacts absence (GenerateComposer.tsx:311-312) because the wire scope carries no profile and no comparison catalogue (W1-S19); NarrativePacket coverage carries no date, so the print names the earliest cited-evidence cutoff instead, labelled as such (render/narrative/compose.ts:25; W3-S8); and FIELD_MAP still names the five WIRE_ABSENT mappings (adapt.ts:1341-1356; W1-S17). NOT RE-READ HERE, stated as the rows recorded them: the corpus's snapshot_id binding (W1-S22) and the second ExportAnchorSlot's report reference (W3-S6).",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal c2eb8eb4:src/pages/InvestorReporting/export/submit.ts:87",
+        "portal c2eb8eb4:src/pages/InvestorReporting/contracts/adapt.ts:1097,1341-1356",
+        "portal c2eb8eb4:src/pages/InvestorReporting/tabs/analysis/composer.ts:106",
+        "portal c2eb8eb4:src/pages/InvestorReporting/tabs/analysis/GenerateComposer.tsx:311-312",
+        "portal c2eb8eb4:src/pages/InvestorReporting/render/narrative/compose.ts:25",
+        "git ls-tree HEAD docs/contracts/investor-reporting/v1/ -- no fixtures entry"
+      ]
+    },
+    "notes": "Routed to 1.0.0_SA_CTO in this seat's rounds 2-3 slug. None is armed: each gap renders as a named absence or a loud typed refusal, never a silent wrong value. Two are cheap and consumer-side (W1-S20's one-character type; W2-S12/W3-S5's submitExport return); the rest need v1 to carry something it does not."
+  },
+  {
+    "id": "IRPT_FNTEND-C-S72",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-13T09:55:02Z",
+    "one_line": "INERT BACKLOG, GRADUATED to 1.0.0_SA_CTO: three limits on the project's own evidence -- a smoke check that cries wolf, a content pin blind in one direction, and a clip nobody can see until the Holdings tree renders.",
+    "class": "OBSERVATION",
+    "adjudicates": [
+      "IRPT_FNTEND-W1-S36",
+      "IRPT_FNTEND-W2-S16",
+      "IRPT_FNTEND-W1-S35"
+    ],
+    "disposition": "GRADUATED",
+    "spec_asserts": "Evidence instruments report what they claim: a landing check reports landing, a pin catches drift in what the client reads, a layout repair is observable in its capture.",
+    "world_is": "W1-S36, STILL LIVE at portal c2eb8eb4: scripts/ui-smoke.mjs:341 compares window.location.pathname (:332) with the full route string, so every query-bearing route prints 'DID NOT LAND' whether or not it landed -- and a real failure on such a route reads identically; the round-2 analysis listed it as a round-3 input and no cell took it. W2-S16: the content pin (__tests__/fe-s-13/gen-consumed.ts) is derived once and committed, so a field REMOVED from an adapter leaves a harmlessly wide pin but a field ADDED leaves an unpinned read until someone re-runs the derivation. W1-S35: the pie-label clip is a chart-geometry property no LAYOUT-ONLY grant reaches, and it cannot be observed at round 4 because the READY Holdings tree renders empty (W1-S52).",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal c2eb8eb4:scripts/ui-smoke.mjs:332,341",
+        "org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_IRPT_FNTEND_ROUND2_20260912.md@f819d7cb7d section 3 -- W1-S36 listed as a round-3 input",
+        "portal c2eb8eb4:src/pages/InvestorReporting/__tests__/fe-s-13/gen-consumed.ts",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/fe-s-18_holdings_observed_390.png@887b183a2a -- empty donut"
+      ]
+    },
+    "notes": "Routed in this seat's rounds 2-3 slug. W1-S36 is a one-line fix outside every IRPT grant so far; W1-S35 belongs with RULING I's Holdings cell, whose real render is the first capture able to show it."
+  },
+  {
+    "id": "IRPT_FNTEND-C-S73",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-13T09:55:02Z",
+    "one_line": "INERT BACKLOG, DISMISSED: thirteen rows whose subject a later round remediated -- the font package, the narrative citations, the job states, the source age, the wire generator, the capture collision, refusal states, the export mount and the print route -- each read at c2eb8eb4 or on a round-4 run.",
+    "class": "OBSERVATION",
+    "adjudicates": [
+      "IRPT_FNTEND-W2-S8",
+      "IRPT_FNTEND-W1-S29",
+      "IRPT_FNTEND-W1-S30",
+      "IRPT_FNTEND-W1-S31",
+      "IRPT_FNTEND-W1-S32",
+      "IRPT_FNTEND-W3-S7",
+      "IRPT_FNTEND-W1-S21",
+      "IRPT_FNTEND-S29",
+      "IRPT_FNTEND-W1-S26",
+      "IRPT_FNTEND-W1-S34",
+      "IRPT_FNTEND-W2-S14",
+      "IRPT_FNTEND-W3-S4",
+      "IRPT_FNTEND-W2-S13"
+    ],
+    "disposition": "DISMISSED_WITH_REASON",
+    "spec_asserts": "Each row records a defect or gap its cell could not close in its own grant.",
+    "world_is": "FONTS (W2-S8, W1-S29, W1-S30, W1-S32): render/manifest.ts:156 names the four Lato faces, and fonts.manifest.json records each with its own weight and sha256, stand_ins {} and not_packaged ['italic'] -- 600 is now its own face. W1-S31: the Bold's per-face source records it as fetched 2026-09-11 by 1.0.0_SA_CTO from the Lato OFL upstream on Andrew's word ('Yes fetch lato'), so the provenance and its authority sit at the file's grain; the staged directory's sources.json still lacks the URL, and recovering it would need a re-fetch, which is egress nobody authorised. W3-S7: render/narrative/compose.ts:257 builds citations from the packet's cited evidence and PeriodInContextPage.tsx:192-194 renders them. W1-S21: the two nines read 36 of 36 pairs distinguishable (F25-AC12, C-S59) behind round 3's seam. S29: state/status.ts:455 formatSourceAgeForState, used by StatusPanel.tsx:61. W1-S26: the generator refuses a construct it cannot render (F25-AC12). W1-S34: F18-AC3 passes at round 4 -- the three Holdings PNGs differ (887b183a2a). W2-S14: the NO-HANDLER route is past tense (contracts/envelope.ts:141) and a refusal is now a state (__tests__/fe-s-19/pre-envelope.test.ts:17-21). W3-S4: __tests__/fe-s-16/mounted-states.test.ts:133-135 asserts both panels mounted. W2-S13: the print route renders the report at round 4.",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal c2eb8eb4:src/pages/InvestorReporting/render/manifest.ts:156; render/assets/fonts/fonts.manifest.json (Lato-Bold source)",
+        "portal c2eb8eb4:src/pages/InvestorReporting/render/narrative/compose.ts:257; render/narrative/PeriodInContextPage.tsx:192-194",
+        "portal c2eb8eb4:src/pages/InvestorReporting/state/status.ts:455; tabs/StatusPanel.tsx:61",
+        "portal c2eb8eb4:src/pages/InvestorReporting/contracts/envelope.ts:141; __tests__/fe-s-19/pre-envelope.test.ts:17-21",
+        "portal c2eb8eb4:src/pages/InvestorReporting/__tests__/fe-s-16/mounted-states.test.ts:133-135",
+        "IRPT_FNTEND-C-S59 -- F25-AC12",
+        "887b183a2a -- the three Holdings PNGs now differ",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/fe-s-18_print_frozen_1440.png@887b183a2a"
+      ]
+    },
+    "dismissal_reason": "Remediated and read in the tree or on a round-4 capture. Two things travel elsewhere rather than close here: W2-S13's recorded CAUSE for the print header's zero was contested by S27/C-S45 on the round-2 capture, and the zero itself is RULING J's (C-S68), whose disarm -- the header agreeing with its own account table -- settles the cause question with it; and W1-S31's missing URL is a record gap, not a provenance gap."
+  },
+  {
+    "id": "IRPT_FNTEND-C-S74",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-13T09:55:02Z",
+    "one_line": "INERT BACKLOG, DISMISSED: twenty-eight process, cut and correction rows from rounds 1-3 -- round records, issuer slips, criteria cut on a wrong premise, and self-corrections -- every order terminal and every correction carried by its own later row.",
+    "class": "OBSERVATION",
+    "adjudicates": [
+      "IRPT_FNTEND-W1-S15",
+      "IRPT_FNTEND-S18",
+      "IRPT_FNTEND-S19",
+      "IRPT_FNTEND-W1-S16",
+      "IRPT_FNTEND-W3-S11",
+      "IRPT_FNTEND-W3-S12",
+      "IRPT_FNTEND-W1-S18",
+      "IRPT_FNTEND-W1-S23",
+      "IRPT_FNTEND-W1-S24",
+      "IRPT_FNTEND-W1-S25",
+      "IRPT_FNTEND-W1-S27",
+      "IRPT_FNTEND-S34",
+      "IRPT_FNTEND-S35",
+      "IRPT_FNTEND-W4-S3",
+      "IRPT_FNTEND-W4-S4",
+      "IRPT_FNTEND-W3-S13",
+      "IRPT_FNTEND-W3-S15",
+      "IRPT_FNTEND-W3-S16",
+      "IRPT_FNTEND-S36",
+      "IRPT_FNTEND-W1-S37",
+      "IRPT_FNTEND-S39",
+      "IRPT_FNTEND-W1-S40",
+      "IRPT_FNTEND-W2-S17",
+      "IRPT_FNTEND-W1-S44",
+      "IRPT_FNTEND-S46",
+      "IRPT_FNTEND-W2-S19",
+      "IRPT_FNTEND-W1-S47",
+      "IRPT_FNTEND-W2-S7"
+    ],
+    "disposition": "DISMISSED_WITH_REASON",
+    "spec_asserts": "Each records a round event, an issuer or worker slip, a wrong premise in a face, or a correction to an earlier row.",
+    "world_is": "Every order they concern is terminal: 28 of 28 task orders read <status>complete at this read. The corrections are carried by later rows, not by edits: S35 corrects S33, S46 corrects S44, W2-S19 carries W2-S17's removal, W1-S47 carries W1-S44's supersession, W3-S15 corrects a preflight fact. The mechanisms asked for were ruled and built: RULING F, the face at the named commit (W3-S12, W1-S23, W1-S40); FE-s-28 made <placeholders> mandatory, the element W3-S16 disclosed adding to its own order; RULING 3's content pin (S39). W1-S24 and W1-S25 record what v1 cannot express -- a per-section support verdict, a consumer-side revision counter -- as consequences of the contract, not consumer defects. S34 is the issuer's own round-2 disarm sweep, now carried per ID by C-S61, C-S62, C-S69 and C-S70. W2-S7: the print document's faces are local; the external request it measured is the portal shell's global stylesheet, src/index.css:16 at portal c2eb8eb4, which imports Google Fonts' Inter on every route -- outside every IRPT grant.",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/ -- 28 of 28 read <status>complete",
+        "org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_IRPT_FNTEND_ROUND3_20260912.md@b453306a65 RULING F",
+        "org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_IRPT_FNTEND_ROUND2_20260912.md@f819d7cb7d RULING 3",
+        "portal c2eb8eb4:src/index.css:16",
+        "IRPT_FNTEND-C-S61, C-S62, C-S69, C-S70 -- S34's rows, per ID"
+      ]
+    },
+    "dismissal_reason": "Repaired within their rounds, or recorded consequences of the wire. The class of cut defects is carried once, by C-S58 and RULING N (ROUND_ANALYSIS_IRPT_FNTEND_ROUND4_20260913.md). W2-S7's shell request is the portal's, named here, not carried by this project."
   }
 ]
 ```
