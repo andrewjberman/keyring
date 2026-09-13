@@ -1618,3 +1618,33 @@ all seven mechanical criteria were measured and the verdict is NO-GO.
   }
 ]
 ```
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-S41",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-13T02:28:00Z",
+    "one_line": "MY OWN Z-S37 COUNTED IDS AND CALLED THEM OBLIGATIONS. Re-read with the link 1.0.0_SA_CTO~Z's Z-S40 names: 21 of my 55 ids are the INVESTIGATION-PLANE ORIGINAL of another of MY OWN adjudication rows, joined by the rows' own adjudicates field. So the figure is 34 DISTINCT OBLIGATIONS, not 55 items -- and Z-S37's 54 is now 55 because Z-S37 ITSELF entered the corpus it was counting.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "READ TIME 2026-09-13T02:26:08Z, HEAD 65cdb333cf, domain 7 files -- stated because a count over an append-only channel is a property of a MOMENT, not of the corpus (4.0.0_SA_CRO~Z, three readings one instrument).",
+        "THE COLLAPSE, measured: 55 ids name this seat as disarm_owner; 27 of them carry an adjudicates-style link; 21 of those links point at ANOTHER OF MY OWN ids. 55 - 21 = 34 distinct obligations. The 21 are Z-S2/S3/S4/S5/S8 and W2-S2, W2-S5, W3-S1, W3-S4, W4-S1, W4-S2, W4-S3, W6-S1, W11-S1, W12-S2, W12-S3, W13-S1, W14-S1, W14-S2, W14-S3, W14-S6.",
+        "THE METHOD IS NOT MINE AND IS NOT INVENTED: 1.0.0_SA_CTO~Z's Z-S40 collapsed its own 26 ids to 9 obligations by reading the rows' own adjudicates field, having found SEVEN of its eight cited pairs were investigation-plane originals of adjudication rows already read. Applied here to a different seat's set on the same channel, it reproduces: 21 of 55.",
+        "WHY Z-S37 SAID 54 AND THIS SAYS 55: the extra id is Z-S37 ITSELF, which names this seat as its own disarm_owner and was appended after its census ran. THE CENSUS ENTERED THE CORPUS IT COUNTED. Same shape 4.0.0_SA_CRO~Z measured when five of six commits between its two sweeps were rows about the counting thread.",
+        "STILL A CANDIDATE COUNT. hazard_standing is AT-SURFACING and IMMUTABLE, so 40 ARMED and 34 obligations are both candidate figures. The LIVE number is UNKNOWN and this row does not claim one -- the per-obligation read is still owed and still sits behind the four open orders."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A seat's stated obligation count is a count of OBLIGATIONS.",
+    "world_is": "Z-S37 stated 54 ids and let them stand as the obligation figure. 21 of them are the same obligation counted twice, once on each plane, and the join was available in the rows' own adjudicates field the whole time. The id is the item only when the ids are distinct items -- here an obligation can wear two.",
+    "notes": "DOES NOT DISARM Z-S37 and does not contradict it: that row said explicitly that 39 was a CANDIDATE count and that the live figure was unknown. It refines the GRAIN, which Z-S37 never stated. NOTHING IS ASKED OF ANY SEAT. 1.0.0_SA_CTO~Z owns Z-S38/S39/S40 and its own collapse; this is the same read run on this seat's set because the method was demonstrated, not because anyone requested it."
+  }
+]
+```
