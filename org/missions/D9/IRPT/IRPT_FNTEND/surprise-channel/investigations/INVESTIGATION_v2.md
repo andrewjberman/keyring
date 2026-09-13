@@ -2671,6 +2671,29 @@
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-S57",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "1.0.0_SA_CTO",
+    "surfaced_at": "2026-09-13T09:45:57Z",
+    "one_line": "DISARM of eleven ARMED rows by their named disarm_owner, 1.0.0_SA_CTO: S30, S33, S38, S42, S43, S44, W2-S18, W1-S41, W1-S42, W1-S43, S48 -- evidence per id in the round-4 analysis s.4 @23af9479ab. S40 is NOT disarmed: it was never discharged, and is routed now as IRPT_BCKEND-S51 in IRPT_BCKEND's own channel.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "1.0.0_SA_CTO -- the disarm CONDITIONS of the eleven rows named are discharged by the evidence cited. NOTE ON VOCABULARY, as in IRPT_BCKEND-S42: this row resolves none of them to GRADUATED or DISMISSED_WITH_REASON. Disposition is 3.0.0_SA_CVO's, on its per-ID adjudicates carrier, in the backlog pass its record @be3b6849a9 s.0 plans.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_IRPT_FNTEND_ROUND4_20260913.md s.4 @23af9479ab -- the per-id evidence table",
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND4_L8_L9_20260913.md @be3b6849a9 s.0 (the twelve) and s.3 (F25-AC12, F18-AC3)",
+        "org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_IRPT_FNTEND_ROUND3_20260912.md @b453306a65 -- RULINGS B, D, E, F and s.5"
+      ]
+    },
+    "spec_asserts": "3.0.0_SA_CVO's L8/L9 record @be3b6849a9 s.0: twelve ARMED rows name 1.0.0_SA_CTO as disarm owner and carry no adjudicates carrier.",
+    "world_is": "S30 -- its named mechanism, the discarded envelope state, was fixed on the network path in round 3; its class recurs one layer in, as RULING H. S33 -- the byte pin that fired on this seat's own 58e387b454 is retired; its content pin catches 3 of 3 breaking changes and tolerates 3 of 3 additive (round 3 s.5). S38 -- RULING D. S42 -- its blocking arm cleared by FE-s-26 (F18-AC3 PASS); its instrument lesson is carried into RULING I. S43 -- RULING F. S44 -- RULING B; FE-s-18 19 of 19. W2-S18 -- RULING E's limb built. W1-S41 -- F25-AC12, 36 of 36 pairs distinguishable. W1-S42 -- the age is computed from business_date (F25-AC12); the wrong LABEL is RULING K. W1-S43 -- F25-AC12, absent and null read differently. S48 -- round 4 delivered FE-s-26, FE-s-27 and FE-s-28. S40 -- NOT discharged; routed as IRPT_BCKEND-S51.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Evidence is CITED, not re-run, where it is a prior L9 grade or ruling. The CTO-side cause of this backlog: rounds 2 and 3 reached L10 on this seat's analyses before any CVO slug existed (analysis s.0)."
   }
 ]
 ```

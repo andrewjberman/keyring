@@ -4542,6 +4542,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "The order names `comp-iam service` as the preflight that grades an IAM change in this cell.",
     "world_is": "That preflight reads statements: 0 for a role whose policy resource demonstrably exists, so it cannot grade the very change the order names it for.",
     "notes": "TWO ESTATE-WIDE FINDINGS, BOTH VERIFIED BY THIS SEAT RATHER THAN RELAYED. (1) W2-S50: S3 ANSWERS 403, NOT 404, FOR A MISSING KEY WHEN THE CALLER HAS NO ListBucket. The deployed refresh's FIRST read of its own memory therefore arrived as a DENIAL for 3 of 3 firms and the cell could not bootstrap. The worker's offline fixture returned 404 and COULD NEVER HAVE SEEN IT -- a fixture that cannot represent the failure cannot score it. Fixed in lane WITHOUT loosening the classifier: absence is established by a prefix LIST before any GET, under a ListBucket grant conditioned to exactly the prefix the role could already read, with a negative control (s3:prefix=gold/ -> implicitDeny). ⭐ THE GENERAL FORM IS THE VALUABLE PART AND IT IS NOT ABOUT THIS CELL: EVERY LEAST-PRIVILEGE ROLE IN THIS ESTATE THAT READS A COMPUTED S3 KEY WITHOUT ListBucket HAS THIS PROPERTY -- a first read of a not-yet-written key is indistinguishable from a permissions failure, and the more correctly scoped the role, the more certain the confusion. (2) W2-S53, and the issuer verified the MECHANISM rather than just the symptom: comp-iam service reads statements: 0 because the policy is `data.aws_iam_policy_document.irpt_directory_refresh.json` -- A DATA-SOURCE INDIRECTION THE PARSER DOES NOT FOLLOW. It is not specific to this role: ANY role whose policy comes from a data source rather than an inline document reads ZERO, and that is the idiomatic Terraform pattern. The tool's own startup NOTEs already disclose a related FALSE-MISSING class from reused module labels, so this is a second blindness beside a known one. THIRD INSTANCE TONIGHT of one shape: A NAMED ENFORCEMENT SURFACE IS A CLAIM UNTIL SOMEONE RUNS IT -- after the IB-s-18 battery pinned at rc=1 and the obligation routed into it, this is a preflight that reads zero for exactly the change it is named to grade."
+  },
+  {
+    "id": "IRPT_BCKEND-S51",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "1.0.0_SA_CTO",
+    "surfaced_at": "2026-09-13T09:45:57Z",
+    "one_line": "CROSS-PROJECT ROUTING from IRPT_FNTEND by 1.0.0_SA_CTO, a day late. (1) The producer side of the smoke-map seam is RED: _contracts/tests/test_seam_paired.py reads 14 failed, 39 passed. (2) The producer's copy of the StatusEnvelope contract never received the v0.14 amendment the consumer's copy carries.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO -- routing both items into IRPT_BCKEND's next L4 amendment packet: re-base the paired test to the v1 declared paths and the grown route table, and regenerate the producer's contract copies from the v0.14 source. The remedy cells are 2.0.0_SA_COO~B's to cut once that L4 lands. DISARMS when both carriers agree and the paired test is green on a named portal commit.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "pytest over infra/aws/lambda/investor-reporting/_contracts/tests/test_seam_paired.py @49035683d1, run by this seat 2026-09-13: 14 failed, 39 passed -- ten test_paired_consumer_request_through_the_real_dispatcher cases fail on /api/scoped/investor-reporting/<op> keys, and test_every_declared_route_has_a_response_contract_whose_refs_resolve asserts 12 == 11",
+        "docs/contracts/investor-reporting/v1/StatusEnvelope.schema.json: source_pin b8e98d5a4d, allOf makes business_date REQUIRED on READY/PARTIAL/STALE/NEEDS_CORRECTION/UNCERTAIN only",
+        "infra/aws/lambda/investor-reporting/_contracts/StatusEnvelope.schema.json: source_pin 62301f71e0, no allOf, source_dates.required ['business_date'] unconditionally",
+        "IRPT_FNTEND-S40 and IRPT_FNTEND-W2-S15; round-3 analysis RULING G @b453306a65; round-4 analysis s.6 @23af9479ab"
+      ]
+    },
+    "spec_asserts": "IRPT_FNTEND round 3 (RULING G @b453306a65) retired the consumer-side byte pin for a content pin and said this seat would carry the producer side to IRPT_BCKEND. IRPT_BCKEND PRD v0.14 (@b8e98d5a4d) made StatusEnvelope.business_date state-conditional.",
+    "world_is": "(1) The consumer's smoke map now carries v1 DECLARED paths; the producer's paired test still asserts the flat-slug keys, so all ten paired-request cases fail, and one more fails on a route table that grew from 11 to 12. The worker measured 2 failed, 51 deselected on 2026-09-12; nothing carried it here since. (2) Two carriers of one contract disagree: the consumer copy is state-conditional at b8e98d5a4d, the producer copy requires business_date on every state at 62301f71e0. A producer omitting business_date on a no-answer state, as v0.14 permits, fails its own copy and passes the consumer's. GRAIN CAVEAT: the pytest run read the portal WORKING TREE's smoke map, which the CVO recorded as carrying uncommitted paths.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "This seat is half the cause of (2): its v0.14 amendment reached one carrier of two. ARMED because any IRPT_BCKEND proof that runs the _contracts tests reads red -- or, under the open count-bar checker defect (IRPT_FNTEND-S56), could read a match it should not."
   }
 ]
 ```
