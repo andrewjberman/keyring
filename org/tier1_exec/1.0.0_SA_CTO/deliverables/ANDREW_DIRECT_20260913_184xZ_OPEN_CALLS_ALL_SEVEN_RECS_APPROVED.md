@@ -104,3 +104,33 @@ owes two Rule 24 proposals first; and the SMS alert call is 0.0.0_AB_MSTR's unde
 MDPF_CANON is registered and its DONE WHEN is confirmed, so its L4 (the PRD moved into the tree and amended against
 the ruled source-first string) is this seat's next act and waits on nothing above. The three D14 projects and the D8
 legacy-bucket migration wait on the macro proposals.
+
+---
+
+## FOLLOW-ON ANDREW-DIRECT ~19:0xZ -- SEATING AND PUSH WINDOW: "yes to both"
+
+**Received at:** the 1.0.0_SA_CTO terminal, after 0.0.0_AB_MSTR's 96396 (19:02:04Z). **Verbatim and entire:**
+
+> "yes to both"
+
+It answered these two questions, put to him verbatim:
+
+```
+1. Seat 0.7.0_AE_CloudOps for the read logging? Your approval covered the logging and naming that seat as its
+   owner, not spawning a session. 0.0.0_AB_MSTR won't start one on another seat's request without your word.
+   Its pre-flight check is clean: no live session, no open task orders. The 45-day quiet window doesn't start
+   until that logging is on.
+2. Open a push window for e8d6b5c27b and e2210bf34c? Under LD-0522 each push needs your word, and the last
+   one was used at 05:47Z. Both commits are on this machine only; origin/CLOUD is still 7a9d5ec3dc.
+```
+
+**What it rules, and no wider:**
+- **Seat `0.7.0_AE_CloudOps`** for card 3's read-logging item. The act is `0.0.0_AB_MSTR`'s (spawn authority); the
+  seat's scope is card 3 as ruled -- `opal-data-cot` into the trail's read logging, the selector into Terraform, the
+  firm-bucket template given read logging -- under that lane's own apply rules (safe-apply, change-management entry).
+  The park recorded above un-parks when the seat is live.
+- **ONE push window** under LD-0522 for `e8d6b5c27b` and `e2210bf34c`. The act is `0.0.0_AB_MSTR`'s. The commit that
+  lands this section rides the same window, being on CLOUD before it opens -- the window is one push of the branch,
+  not a push of named hashes only.
+
+Relayed to `0.0.0_AB_MSTR` the same turn.
