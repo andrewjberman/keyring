@@ -5,7 +5,7 @@
  "project": "POSN_ASTTAX",
  "directive": "D4",
  "fabric": "site-z",
- "prd_version": "v0.5",
+ "prd_version": "v0.6",
  "step": 4,
  "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260911_ASSET_CLASS_TAXONOMY_BRIEF.md@03f1d00ec4",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6"],
@@ -13,7 +13,38 @@
 }
 ```
 
-**Version:** v0.5, 2026-09-11 -- v0.1 first PRD; v0.2 folded in Andrew's Cottonwood satellite components (s.4 C-SATELLITE-DATA), on his direct "read the satellite file and fold it in as its necessary data for POSN_ASTTAX"; **v0.3 disambiguates C-VOL-HEDGE-STRUCTURED's "hedge products" from the legacy served value `asset_class=hedge`** -- a latent defect where the constraint, read against the live data, said the whole `hedge` bucket goes to Structured (found by 2.0.0_SA_COO~Z + 3.0.0_SA_CVO~Z); **v0.4 folds in Andrew's ETFClassifier PURPOSE ruling as C-CLASSIFIER-PURPOSE (s.4)** -- the registry is a curated tagging list, so the served TABLE is the one place, the dict a retired seed input, and equity-as-class must be distinguishable from equity-as-unknown-default (carried via 3.0.0_SA_CVO~Z C-S3 @`4275402ec2`); **v0.5 folds in the `0.4.0_DT_ClientPlatform` GLD/VXX positioning brief as C-RETAG-SAFETY (s.4)** -- the retag of the commodity/hedge tickers is a production landmine (a fixed-key allocation dict KeyErrors in the DEPLOYED generator, establishing an UNSAFE GENERATION PRECONDITION -- page-blanking is the brief's PREDICTED consequence and is NOT measured; see s.4) until the positioning generator is hardened; Andrew-direct 2026-09-11 ~07:2xZ to fold it into POSN_ASTTAX. Each bump re-opens the two L4-R sign-offs. **Author** `1.0.0_SA_CTO~Z` (L4). **Brief:** the nomenclature
+## s.0 ADDENDUM v0.6 -- THE ROUND-3 L10 ANSWER
+
+**Author** `1.0.0_SA_CTO~Z`, 2026-09-13, answering `3.0.0_SA_CVO~Z`'s round-3 slug
+`surprise-channel/remediations/REMEDIATION_v3.md` @`c89c0e45a2`. Full reasoning and denominators:
+`ledger/ROUND_ANALYSIS.round3.md`.
+
+**FOUR CHANGES, AND EVERY ONE IS A DEFECT IN TEXT THIS SEAT AUTHORED AT L4.**
+
+1. ⛔ **TWO DECLARED OUTCOMES HAVE BEEN SERVED BY ZERO CUT ORDERS ACROSS THREE ROUNDS.** Measured
+   over the 15 cut orders: declared 6, covered 4, **UNCOVERED = { `FWD-4`, `FWD-6` }**, with a
+   run-time-generated synthetic control verified absent from the corpus before use. `FWD-4` is
+   *"each class has one color, the same everywhere"*; `FWD-6` is *"the places that show asset classes
+   agree with each other"* -- **which is the ASTTAX frontend outcome Andrew named on 2026-09-13
+   03:21:46Z.** Not deprioritised and not blocked: never issued. **Round 4 must cover both.**
+2. **The MECE check's "0 uncovered" is qualified** where it appears -- it is about ASSIGNMENT to a
+   surface row, never about issuance, and reading it as coverage is what hid item 1 for three rounds.
+3. **s.4's live-mechanism sentence is corrected** -- the weight is lost at the served view and the
+   delta/spread rows, NOT in the allocation dict, which serves 2.5. The line states what it used to
+   say. Its consumer is `AT3-s-5`, the bar that gates the retag.
+4. **The surface list discloses a third, non-owned reader** of class values, with its measured
+   zero-candidate state and the condition that ends it.
+
+**WHAT THIS ADDENDUM DOES NOT DO:** it does not change the endpoint -- the outcome set is still
+FWD-1..FWD-6 and no bar is weakened, added or renumbered. It does not authorize the retag (NO-GO), the
+positioning deploy (approved 2026-09-13 04:08:22Z LD-0562 **conditional on a two-seat never-widen
+sign-off that has not landed**), or any portal act (**frozen**). It grades no outcome REALIZED.
+
+⚠ **THIS BUMP RE-OPENS BOTH L4-R HALVES**, and LIMB 6 refuses a newly-added task order against a
+half not SIGNED at current bytes -- so the re-signs sit directly in front of round 4's FWD-4/FWD-6
+cells. Stated here rather than discovered there.
+
+**Version:** v0.5, 2026-09-11 -- v0.1 first PRD; v0.2 folded in Andrew's Cottonwood satellite components (s.4 C-SATELLITE-DATA), on his direct "read the satellite file and fold it in as its necessary data for POSN_ASTTAX"; **v0.3 disambiguates C-VOL-HEDGE-STRUCTURED's "hedge products" from the legacy served value `asset_class=hedge`** -- a latent defect where the constraint, read against the live data, said the whole `hedge` bucket goes to Structured (found by 2.0.0_SA_COO~Z + 3.0.0_SA_CVO~Z); **v0.4 folds in Andrew's ETFClassifier PURPOSE ruling as C-CLASSIFIER-PURPOSE (s.4)** -- the registry is a curated tagging list, so the served TABLE is the one place, the dict a retired seed input, and equity-as-class must be distinguishable from equity-as-unknown-default (carried via 3.0.0_SA_CVO~Z C-S3 @`4275402ec2`); **v0.5 folds in the `0.4.0_DT_ClientPlatform` GLD/VXX positioning brief as C-RETAG-SAFETY (s.4)** -- the retag of the commodity/hedge tickers is a production landmine (a fixed-key allocation dict KeyErrors in the DEPLOYED generator, establishing an UNSAFE GENERATION PRECONDITION -- page-blanking is the brief's PREDICTED consequence and is NOT measured; see s.4) until the positioning generator is hardened; Andrew-direct 2026-09-11 ~07:2xZ to fold it into POSN_ASTTAX. **v0.6 is the round-3 L10 ADDENDUM (`ledger/ROUND_ANALYSIS.round3.md`) -- see s.0 ADDENDUM below.** ⛔ **THIS LINE USED TO READ "Each bump re-opens the two L4-R sign-offs" AND THAT IS FALSE -- CORRECTED AT v0.6.** A bump re-opens ONLY the half whose SECTION BYTES changed. `prd_signoff_lib.RATIFIED_SECTIONS` is `("ENDPOINT", "CONTRACTS")` matched on a heading's FIRST WORD, so in THIS document exactly one section -- `ENDPOINT` -- is ratified-text and everything else, s.4 included, is the brief half. The library's own self-test asserts it: *"an ENDPOINT edit re-opens the CVO half only"*. Measured at v0.6: these edits touched no ENDPOINT byte, so `3.0.0_SA_CVO~Z`'s half stayed SIGNED/current and only `4.0.0_SA_CRO~Z`'s went STALE. ⚠ **The old wording stated a rule STRONGER than the tool behaves, and this seat quoted it as authority in its own round-3 analysis before the gate contradicted it** -- the same shape CLAUDE.md Rule 27 records against LIMB 6. **Author** `1.0.0_SA_CTO~Z` (L4). **Brief:** the nomenclature
 transcript's substance, `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260911_ASSET_CLASS_TAXONOMY_BRIEF.md@03f1d00ec4`.
 **Endpoint confirmed by Andrew** 2026-09-11 (see s.5). **Home note:** tree-homed at
 `org/missions/D4/POSN/POSN_ASTTAX/prd/` as `POSN_ASTTAX` (macro POSN), renamed from
@@ -188,7 +219,17 @@ changes WHERE a holding is classified and HOW that flows, not what the holdings 
   **THE LIVE MECHANISM (measured by `TO-S7-1`, round 2): SILENT ZEROING, NOT BLANKING.**
   `AT2-s-6` hardened the generator and KILLED the KeyError -- **0 of 17 hops RAISE**. A retag today
   does NOT blank the page. It renders `Commodities`/`Structured` as the literal string `'Unknown'`
-  **and silently zeroes the weight.** ⛔ **THE HAZARD GOT QUIETER, NOT SAFER** -- strictly WORSE for
+  **and the weight is lost -- but NOT in the allocation dict.**
+  > ⚠ **CORRECTED AT v0.6 (round-3 L10). THIS LINE USED TO READ "and silently zeroes the
+  > weight", AND THAT HALF WAS FALSE AT HEAD.** `AT2-s-1` added an `else` to all three
+  > `asset_class` chains, so a Commodities holding served allocation **2.5, not 0.000**
+  > (measured by `Z-W10-S1` on the real generator at base commit `651ffd4f16`, with a probe
+  > ticker at weight 0.025). The loss is real and sits ELSEWHERE: at the **five-class served
+  > view** (the label is `'Unknown'`, so the Commodities line holds nothing and reads 0.000)
+  > and at the **delta and benchmark-spread rows, which carried NO ROW AT ALL** rather than a
+  > zero. ⛔ **A BAR WRITTEN AS "confirm the weight zeroes in the allocation dict" RETURNS
+  > THE SAME ANSWER BEFORE AND AFTER A RETAG** and cannot gate it -- which matters because
+  > `AT3-s-5` is the gating bar and reads this paragraph. ⛔ **THE HAZARD GOT QUIETER, NOT SAFER** -- strictly WORSE for
   detection than the blanking it replaced, because a blank page is noticed in seconds and a zeroed
   allocation line looks like a real allocation. The retag remains UNSAFE; the reason changed.
   ⚠ **VINTAGE:** the 17-hop figures are pinned to `TO-S7-1`'s run and `3.0.0_SA_CVO~Z` records that
@@ -359,8 +400,13 @@ Coverage by SUBTRACTION from the printed denominator (rule 24(i)): **endpoint_ou
 | **S2** | **Class registry** -- order + color | the single definition of the five classes' canonical order and their colors, read by every surface | **FWD-3, FWD-4** |
 | **S3** | **The two surfaces** -- Positioning; Philosophy/CMA | the views that render the breakdown, reading class + order + color from S1 and S2 rather than re-deriving them | **FWD-6** |
 
+> ⛔ **S3 IS SCOPED TO TWO SURFACES AND THE WORLD HAS AT LEAST THREE READERS -- DISCLOSED AT v0.6 per the CTO ruling `POSN_ASTTAX-Z-S42` @`9d7b09987f`, which settles `Z-C-S55`.** An ADDITIONAL ETF publisher outside this two-sibling set copies gold holding class values and emits a four-key book allocation at its source lines 469-472. **It is OUT of POSN's WRITE scope** -- it belongs to another project and no POSN worker may rewrite it -- **and IN this project's DISCLOSURE scope**, because Rule 24's subtraction is over the surfaces a class value REACHES, not the surfaces this project may EDIT.
+> **MEASURED STATE, WITH THE CONDITION THAT ENDS IT:** 189 rows over four books and **ZERO candidate members** at the pin `Z-C-S55` cites, so its current bytes cannot exercise post-retag loss. ⚠ **That zero is a STATE, not a property.** It flips the first time a candidate member appears in any of those four books, and a zero recorded without its expiry is the same shape as a criterion that returns the same answer in both worlds.
+> ⭐ **AND THIS IS THE SAME DEFECT AS FWD-6's EMPTY COVERAGE, SEEN FROM THE OTHER SIDE:** a row scoped to two surfaces cannot generate a cell that checks three.
+
 **MECE check:** FWD-1 -> S1 · FWD-2 -> S1 · FWD-3 -> S2 · FWD-4 -> S2 · FWD-5 -> S1 · FWD-6 -> S3.
-**6 of 6 outcomes carried by exactly one row, 0 uncovered.** (The surfaces DISPLAY S1/S2's results, but
+**6 of 6 outcomes carried by exactly one row, 0 uncovered.**
+> ⛔ **READ THAT AS ASSIGNMENT, NEVER AS ISSUANCE -- QUALIFIED AT v0.6 AFTER IT MISLED THREE SEATS FOR THREE ROUNDS.** Its domain is *outcomes assigned to a surface row*, and it is true of that domain. It says NOTHING about whether a cell was ever cut. Measured at the round-3 L10 over the 15 cut orders: **`FWD-4` and `FWD-6` are named by ZERO orders.** Assigned and unserved. **A surface row owning an outcome is not a cell serving it**, and this line's "0 uncovered" is exactly the green that made the gap invisible -- an empty subtraction gets acted on rather than argued with, and this one printed a denominator so it read as measured. (The surfaces DISPLAY S1/S2's results, but
 each outcome is owned by the layer that DETERMINES the result: classification outcomes at S1, the
 order/color definition at S2, and cross-surface agreement -- the only outcome the surfaces themselves
 own -- at S3.)
