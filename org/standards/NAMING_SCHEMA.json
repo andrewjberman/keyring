@@ -1,10 +1,11 @@
 {
  "title": "NAMING_SCHEMA -- the D14 Platform Logic naming schema's CLOSED ENUMERATIONS, as data",
- "version": "v1.1",
- "ratified_by": "org/missions/D14/LGIC/LGIC_NAMING/prd/LGIC_NAMING_PRD.md v1.1 (L4, 1.0.0_SA_CTO). Spine L4: a decision that is an enumeration is closed as data in org/standards/ and cited.",
+ "version": "v1.2",
+ "ratified_by": "org/missions/D14/LGIC/LGIC_NAMING/prd/LGIC_NAMING_PRD.md v1.2 (L4, 1.0.0_SA_CTO). Spine L4: a decision that is an enumeration is closed as data in org/standards/ and cited.",
  "changelog": [
   "v1.0 -- first issue with LGIC_NAMING_PRD v1.0 @c65a169ba0.",
-  "v1.1 -- on 4.0.0_SA_CRO~D's REFUSED brief half (review @1e4e3e10fd): kind.by_type keys are the live plane's node_type strings (CODEBUILD -> CODEBUILD_PROJECT, ECS_TASK -> ECS_TASK_DEFINITION); every node type not graded by kind is enumerated by subtraction; lb and cluster added for the two minted types that had no kind."
+  "v1.1 -- on 4.0.0_SA_CRO~D's REFUSED brief half (review @1e4e3e10fd): kind.by_type keys are the live plane's node_type strings (CODEBUILD -> CODEBUILD_PROJECT, ECS_TASK -> ECS_TASK_DEFINITION); every node type not graded by kind is enumerated by subtraction; lb and cluster added for the two minted types that had no kind.",
+  "v1.2 -- on 3.0.0_SA_CVO's ratified-text review (@48eab96ed5): key.grammar is the ruled five-segment string verbatim; the bucket (container) and the object (leaf) are separate fields, so a key builder never writes a bucket name into a key."
  ],
  "authority": [
   "SOURCE-FIRST key string -- Andrew-direct 2026-09-13 ~03:2xZ card 1, 'all recs approved' (relayed 4.0.0_SA_CRO~D 96332)",
@@ -20,7 +21,11 @@
   "partition": "kind.by_type (18) + types_not_graded_by_kind (15) = 33, disjoint"
  },
  "key": {
-  "grammar": "{bucket}/{source}/{scope}/{tier}/{table}/{partition}/{object}",
+  "grammar": "{source}/{scope}/{tier}/{table}/{partition}",
+  "ruled": "Andrew-direct 2026-09-13 ~03:2xZ card 1, verbatim; the five segments and their order are the ruling",
+  "container": "{bucket} -- the bucket that holds the key; NEVER a segment of the key",
+  "leaf": "{object} -- the file under {partition}; not part of the ruled string",
+  "full_address": "s3://{bucket}/{source}/{scope}/{tier}/{table}/{partition}/{object}",
   "same_string_in_every_bucket": true,
   "source": "a registry VENDOR key (a feed) or, for derived tiers, a PRODUCT or SYSTEM key",
   "scope_classes": ["FIRM", "PRODUCT", "MASTER", "GLOBAL"],

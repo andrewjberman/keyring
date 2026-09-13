@@ -5,7 +5,7 @@
  "project": "LGIC_NAMING",
  "directive": "D14",
  "fabric": "laptop",
- "prd_version": "v1.1",
+ "prd_version": "v1.2",
  "step": 4,
  "brief_ref": "docs/briefs/d14-naming-schema-brief-20260913.md@1b42dbe758",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6"],
@@ -86,7 +86,7 @@ long in the ruled source-first string).
                     cannot place is treated as a flaw in the rule to be fixed, never quietly
                     filed under one of the three answers -- so that whatever machine is
                     later built to apply it has something exact to copy
-         SOURCE     brief Part I O5; bar Part III O5
+         SOURCE     brief Part I O5
          PIN        ENDPOINT_FWD_D14_NAMING_SCHEMA_20260913.md@e2210bf34c
 
   FWD-6  The worst naming problems in the estate are ranked, and anyone can point at
@@ -96,7 +96,7 @@ long in the ruled source-first string).
                     naming problems, each with a plain statement of what it costs today --
                     what breaks, what someone has to do by hand, or what it blocks -- and
                     starts from the top instead of from whatever name they tripped over
-         SOURCE     brief Part I O6; bar Part III O6
+         SOURCE     brief Part I O6
          PIN        ENDPOINT_FWD_D14_NAMING_SCHEMA_20260913.md@e2210bf34c
 ```
 
@@ -107,7 +107,7 @@ long in the ruled source-first string).
 | `org/standards/NAMING_SCHEMA.json` | **produced** | the closed enumerations: key grammar and tiers, bucket forms, resource grammar and last-slot rule, kind list by resource type, cadence list, secret / log-group / policy forms, firm long and short forms, refused tokens, system classes and exclusions, the grade signature and its three verdicts | consumed by `LGIC_ENFORCE` (its `key()`, `name()` and `grade()` builders and the registry-derived deny patterns), and read by every seat minting a name |
 | the grading rule, `(name, type) -> (verdict, canonical_form)` | **produced** (as a written, hand-applicable specification; cell N2) | three verdicts CONFORMANT / ALIAS / OUT-OF-PATTERN and no fourth; an unplaceable name or an unresolved token RAISES | consumed by `LGIC_ENFORCE`, whose flagger executes it |
 | the identity registry's ROWS (firms, products, vendors, platform subsystems, their keys and aliases) | **consumed** | rows only; this project fixes their shape and mints none | produced by `LGIC_ENFORCE` (ruling (a)); seed `infra/logic/05_IDENTITY_SPINE.md` until it exists |
-| the source-first key string | **consumed** (ruled) | `{bucket}/{source}/{scope}/{tier}/{table}/{partition}/{object}` | ruled by Andrew ~03:2xZ; first applied by `ADVI_FIRMBKTS` and `MDPF_CANON` |
+| the source-first key string | **consumed** (ruled) | `{source}/{scope}/{tier}/{table}/{partition}`, verbatim; the bucket is the key's CONTAINER and never a segment of it, and `{object}` is the LEAF under `{partition}` (data file `key.container`, `key.leaf`) | ruled by Andrew ~03:2xZ; first applied by `ADVI_FIRMBKTS` and `MDPF_CANON` |
 
 `LGIC_ENFORCE`'s PRD must state these same four rows from its side; until it is written there is no counterpart text to
 compare, and this section is the one both will be read against.
@@ -117,7 +117,9 @@ compare, and this section is the one both will be read against.
 Each line below is closed; every enumeration it names is data in `org/standards/NAMING_SCHEMA.json` and is not restated
 as a second copy here.
 
-- **S1 Keys (ruled).** `{bucket}/{source}/{scope}/{tier}/{table}/{partition}/{object}`, the same string in every bucket.
+- **S1 Keys (ruled).** The key is `{source}/{scope}/{tier}/{table}/{partition}` -- the ruled string, verbatim, the same in every bucket. The
+  bucket is the key's CONTAINER and is never written into the key; the object is the LEAF under `{partition}`. A full
+  address is therefore `s3://{bucket}/{source}/{scope}/{tier}/{table}/{partition}/{object}`.
   `{source}` is a registry VENDOR key, or a PRODUCT/SYSTEM key for derived tiers. `{scope}` is a FIRM, PRODUCT, MASTER
   or `global`, in the LONG form, never an entity id (doctrine R2; a vendor MASTER is valid, R3). `{tier}` is one of
   bronze, silver, gold, platinum, state (R21), code (R16). Tables are snake_case; a platinum leaf is a kebab `.json`.
