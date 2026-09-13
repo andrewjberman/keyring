@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_FNTEND~1</issued_to>
 <issued_by>2.0.0_SA_COO~F</issued_by>
 <issued_date>2026-09-12</issued_date>
-<status>pending</status>
+<status>complete</status>
 
 **Directive:** D9 | **Fabric:** laptop | **PRD:** `../prd/IRPT_FNTEND_PRD.md` v0.6 @d1479bc5f0 (F1, F7, F12; CONTRACTS `StatusEnvelope` consumed) | **Decomp cell:** `FE-s-25` (round 4, v0.4 @1d9839797c) | **outcome_ref:** FWD-1, FWD-5, FWD-6 | **depends_on:** none -- READY ROOT | **slot:** ~1 | **rows:** W1-S26, W1-S41, W1-S42, W1-S43, C-S50
 
@@ -79,6 +79,7 @@ The producer contract STANDS and is NOT re-cut (ruling A). Everything below is t
 - ⛔ **DO NOT TOUCH `docs/contracts/investor-reporting/v1/`.** Ruling A stands the producer contract and this cell is the consumer's half only. A genuine contract defect is a surprise row for `1.0.0_SA_CTO`, never an edit.
 - ⛔ **AND INSIDE `contracts/wire/`, THREE FILES ARE NOT YOURS: `AnalysisReport.ts`, `AnalysisRequest.ts`, `ExportReceipt.ts`.** Your grant on that directory exists so `F25-AC8` can regenerate `StatusEnvelope.ts`; it is not a licence over the directory. Those three declare `storage_bucket` / `storage_key` -- **storage locators that sit under `IRPT_BCKEND`'s PENDING L4 amendments** (the `platinum/` prefix and a gold parquet artifact, `infra/logic/03_CONTRADICTION_REPORTS/IRPT_BCKEND.md` rows 1b and 2). A frontend edit there collides with another project's in-flight amendment. If your work genuinely needs one, that is a BLOCKING row naming the file and the criterion -- never an edit. Measured and recorded as row `IRPT_FNTEND-S52` @`d8908a3ca6`; this bound is the only thing round 4 changed after its issuance, and it NARROWS a write surface without touching any criterion.
 - **No derivation.** You render what the wire carries or you render its absence, distinguishably. Never fabricate a value to make a distinction visible.
+- ⛔ **`tabs/StatusPanel.tsx` IS NOW YOURS, FOR ONE PURPOSE -- added by the issuer after your refusal (row `W1-S49`).** **The issuer's ruling on your two fixes: DISPLAY the state; do NOT add a view state.** A tenth `EnvelopeState` would change a closed view contract, its labels, `TabShell.tsx`'s three gates and `fe-s-3/status.test.ts:31`'s DELIBERATE denominator of 9 -- a contract change riding on a cell that ruling A scoped to the consumer's half. So: `StatusPanel` renders, **visibly and in words a reader understands**, which producer state it received whenever the view label alone does not distinguish it, using the `producerState` your change already carries. **Do NOT** change `ENVELOPE_STATES`, `STATE_FOR_WIRE`, any label or any view state, and do not touch `fe-s-3/`. ⛔ **`StatusPanel` is rendered by every tab, so a check scoped to your own folder cannot see what you break in it (Rule 22).** Before you flip, PRINT the UNSCOPED denominator -- every file under `src/pages/InvestorReporting/` that renders or tests `StatusPanel` -- run each of their test files, and report pass/fail per file; name any that need a dev server rather than letting them skip silently. A test that now fails because it asserted the OLD panel text is a ROW naming the file and the assertion, never an edit. **Your criteria are unchanged, and `F25-AC6` must read `9 of 9` with the reason code still HELD CONSTANT** -- a distinction that depends on the producer choosing different codes is not one the view guarantees.
 - **Every criterion here is a pure bun test by design.** If you believe one needs a server or a browser, DECLARE it and file a row -- do not add an undeclared dependency (ruling C).
 - **Two repos, one worktree pair.** `<WS>` / `<WS>/portal`. Portal commit pathspec: the files you changed under `src/`, named individually. Workspace records under `org/` only. Never push, merge, rebase, `checkout --` or `clean`. Never stage `portal` in the workspace repo.
 - **Bound every invocation** with `timeout` as written. **Scratch:** `<WS>/.scratch/` only. `node_modules` is a junction; do not run `bun install`.
@@ -91,6 +92,7 @@ portal/src/pages/InvestorReporting/contracts/adapt.ts
 portal/src/pages/InvestorReporting/contracts/index.ts
 portal/src/pages/InvestorReporting/contracts/wire/
 portal/src/pages/InvestorReporting/state/status.ts
+portal/src/pages/InvestorReporting/tabs/StatusPanel.tsx
 portal/src/pages/InvestorReporting/__tests__/fe-s-13/gen-wire.ts
 portal/src/pages/InvestorReporting/__tests__/fe-s-25/
 org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md
