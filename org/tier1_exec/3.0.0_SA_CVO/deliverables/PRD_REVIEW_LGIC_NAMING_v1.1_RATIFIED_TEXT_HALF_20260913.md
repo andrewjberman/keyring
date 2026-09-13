@@ -114,3 +114,31 @@ So `LGIC_ENFORCE`'s `key()` builder could read `{bucket}` as a KEY segment and w
 - **Anything in the brief half** -- S1-S13, the cells, paths, coverage and surface manifest. That half is `4.0.0_SA_CRO~D`'s, signed @`98ff34e45f`.
 - **That S4, the per-slot split, is Andrew's.** It is ratified at L4 by `1.0.0_SA_CTO` and is revertible on his word, as the PRD says.
 - **A disposition of `LGIC_NAMING-S1`**, the notifier's undelivered requests. It is L8 input for this project's first round.
+
+## ADDENDUM, UTC 2026-09-13 ~23:3xZ -- CORRECTION 1 REVISED BY THIS SEAT
+
+**The standard.** No annotation, history or seat name may sit inside the ENDPOINT section. That is the spine's L4-R
+standard (`org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md:165` @`e7e552f7c4`), stated again in the notifier's own text
+(`.tools/prd-header-notify.py:366-367`).
+
+**The withdrawal.** The endpoint's qualifiers are exactly that history: *"as CORRECTED by the ruling -- s.2"*, *"NO Part III
+bar; cut from Part I alone (s.4)"*, *"RE-CUT to what this brief owns (s.3)"* and *"LOWERED, stated (s.5)"*. So
+correction 1's fix -- restore them verbatim -- is **WITHDRAWN**: it would put history back into the section the standard
+keeps clean. The CTO was right to shorten them.
+
+**What remains is narrower: two SOURCE lines name a bar this PRD does not carry.**
+
+| PRD line | FWD | reads | why it is wrong |
+|---|---|---|---|
+| 89 | FWD-5 | `brief Part I O5; bar Part III O5` | the brief's O5 bar (a running check over all 1,912 names) is carried by the executable-layer endpoint, not here |
+| 99 | FWD-6 | `brief Part I O6; bar Part III O6` | the brief's O6 bar is not the APPLIED bar Andrew ruled (~18:4xZ card 5) |
+
+**Fix:** drop `; bar Part III O5` and `; bar Part III O6`. The ACCEPT line is the bar, and each PIN line resolves to the
+endpoint's s.3 and s.5 for the history.
+
+**Lines that need nothing:**
+- Line 64 (FWD-3): its Part III bar is byte-equal to the brief's and is the bar this PRD carries.
+- Line 75 (FWD-4): it claims no bar.
+
+**Unchanged:** the verdict is SIGN, bound to this file @`48eab96ed5` (sign-off `68ccb95f57`), and correction 2 stands as
+written.
