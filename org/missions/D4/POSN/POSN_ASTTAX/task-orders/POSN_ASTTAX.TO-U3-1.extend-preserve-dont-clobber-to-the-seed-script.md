@@ -12,6 +12,37 @@
 
 ---
 
+> ⛔ **RE-CUT 2026-09-13 ~06:2xZ, AFTER `0.9.0_WK_POSN_ASTTAX~16` RAN IT AND CORRECTLY REFUSED TO
+> PROCEED. TWO ISSUER DEFECTS, BOTH THIS SEAT'S, BOTH CONFIRMED AT SOURCE.**
+>
+> **(1) THE `<paths>` GRANT NAMED A FILE THAT HAS NEVER EXISTED.** The first cut granted
+> `infra/aws/lambda/v2_portal/yang_pipeline/seed_canonical_securities.py`: **0 of 33,731 index
+> entries, 0 commits across every ref.** It was round-3's subject DIRECTORY joined to round-4's
+> FILENAME -- and that directory's seeders are even hyphenated (`seed-etf-classifications.py`), so
+> the name matched nothing anywhere. The worker caught it with a POSITIVE CONTROL rather than reading
+> `rc=0, 0 bytes` as clean, which is the only reason it surfaced at all.
+>
+> **(2) THE REAL FILE IS NOT POSN'S TO WRITE, AND THAT CHANGES THE CELL.** The only file of that
+> basename in the repo is `data/black_diamond/scripts/classification/seed_canonical_securities.py`,
+> and `.owned-paths.yaml:1712` maps `data/black_diamond/**` to lane **POD4** (DS-owned, Rule 13/14).
+> **So the decomposition's premise for `AT4-s-3` -- "write surface: POSN-owned seed script" -- IS
+> FALSE.** This is `Z-S42`'s shape one surface over: a place a retagged value REACHES that this
+> project may not EDIT.
+>
+> ⭐ **THE MEASUREMENT SURVIVES INTACT AND IS NOT RE-RUN.** `U3-AC1` PASSED on the first cut and its
+> evidence stands: on a scratch copy with the live table never opened, one re-seed reverts **4 of 4**
+> carried members (`VXX`/`UVXY` `Structured`->`equity`, `QBER` `Structured`->`fixed_income`, `PDBC`
+> `Commodities`->`equity`), `W14-S3`'s "4 of 11" reproduces exactly over the seeder's own 57-row list,
+> and the seeder's vocabulary is 2 values intersecting the five ratified classes **0 of 5** -- it
+> cannot preserve a ratified class even by accident. The mutant control discriminates across three
+> arms. **Nothing measured is discarded; only the ACT changes, from EDIT to DISCLOSE-AND-HAND-OFF.**
+>
+> ⚠ **AND A SECOND, UNRELATED ISSUER DEFECT IS ALREADY FIXED:** the worktree's sparse cone omitted
+> `org/modules`, so `commit-gate.sh` raised `ModuleNotFoundError` at import scope and **no commit of
+> any kind could be made from it.** `org/modules` was added to ALL THREE round-4 worktrees, not only
+> the one that hit it, and the gate now runs. The worker's uncommitted work was verified intact after
+> the change.
+
 ## THE CELL
 
 Round 3's `AT3-s-4` proved the classification list survives a re-seed for ONE writer, and surfaced
@@ -67,7 +98,7 @@ Off-cell findings: ONE row as `POSN_ASTTAX-W16-S<k>`, then keep working.
 
 <criterion id="U3-AC1" cell_refs="AT4-s-3"><invocation>timeout 300 python &lt;your BEFORE control on a SCRATCH copy&gt;</invocation><expect>on a SCRATCH copy only -- never the live table -- seed a record carrying a five-class value, re-run the seeding path, read the value back, and state the BEFORE result as a VALUE, not a description. If it does NOT clobber, say so plainly and stop here: a cell that finds its premise false has done its job. Name the scratch target explicitly so a reader can see the live table was untouched.</expect></criterion> `U3-AC1` -- MEASURE BEFORE CHANGING. W14-S3 asserts the clobber; this clause TESTS that premise rather than confirming it.
 
-<criterion id="U3-AC2" cell_refs="AT4-s-3"><invocation>timeout 180 git diff -- infra/aws/lambda/v2_portal/yang_pipeline/seed_canonical_securities.py</invocation><expect>the diff implementing preserve-don-t-clobber, matching the mechanism the SIBLING writer already uses -- read that writer and reuse its pattern rather than inventing a second one. Plus one line naming what the change does NOT alter: a first mint must still mint.</expect></criterion> `U3-AC2` -- THE CHANGE, AND WHAT IT DELIBERATELY LEAVES ALONE.
+<criterion id="U3-AC2" cell_refs="AT4-s-3"><invocation>timeout 120 python &lt;write the proposed patch as a deliverable&gt;</invocation><expect>the preserve-don-t-clobber change RECORDED as a unified diff in this cell's deliverables dir -- NOT applied to the file, which is POD4-owned. It must reuse the mechanism the SIBLING writer already uses (seed-etf-classifications.py merge_item()) rather than inventing a second pattern, and must state in one line which existing behaviour it does NOT change: a first mint must still mint. Name the owning lane (POD4, .owned-paths.yaml:1712) and state plainly that POSN measured this and does not own the fix.</expect></criterion> `U3-AC2` -- THE PATCH AS A DELIVERABLE, NOT AN EDIT. The surface belongs to another lane.
 
 <criterion id="U3-AC3" cell_refs="AT4-s-3"><invocation>timeout 300 python &lt;your AFTER control, same scratch exercise&gt;</invocation><expect>the five-class value SURVIVES the re-seed. POSITIVE CONTROL, REQUIRED: the same run still MINTS a record that did not previously exist -- a script that preserves everything by refusing to write at all would pass this clause and be worthless. NEGATIVE CONTROL, REQUIRED: the pre-patch script on the same input still reverts. If both arms read the same, the control is not discriminating and you report that rather than the result.</expect></criterion> `U3-AC3` -- THE PROOF, WITH BOTH CONTROLS FIRING.
 
@@ -79,7 +110,6 @@ Off-cell findings: ONE row as `POSN_ASTTAX-W16-S<k>`, then keep working.
 org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-U3-1.extend-preserve-dont-clobber-to-the-seed-script.md
 org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~16/
 org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/investigations/INVESTIGATION_v1.md
-infra/aws/lambda/v2_portal/yang_pipeline/seed_canonical_securities.py
 </paths>
 
 <decomp_ref>
