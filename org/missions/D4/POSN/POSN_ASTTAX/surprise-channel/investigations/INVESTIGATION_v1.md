@@ -2238,3 +2238,134 @@ all seven mechanical criteria were measured and the verdict is NO-GO.
   }
 ]
 ```
+
+## 0.9.0_WK_POSN_ASTTAX~18 -- POSN_ASTTAX.TO-U2-1 (cell AT4-s-2, outcome FWD-4)
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-W18-S1",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~18",
+    "surfaced_at": "2026-09-13T07:05:00Z",
+    "one_line": "THE ORDER'S OWN SURPRISE-ROW SECTION NAMES AN ID FORM THAT CANNOT BE FILED ON THIS FABRIC. TO-U2-1 says to mint rows as POSN_ASTTAX-W18-S<k> (no Z-); the gate derives fabric FROM the id and refuses any row whose fabric field disagrees, so a worker obeying the prose literally is refused at the last act of the order or files fabric=laptop on a site-z project.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE ORDER, verbatim. org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-U2-1.one-colour-per-class-the-same-everywhere.md @e622962cf5, section '## SURPRISE ROWS': \"Off-cell findings: ONE row as `POSN_ASTTAX-W18-S<k>`, then keep working.\" The Z- infix is absent from the named form.",
+        "THE GATE, READ AT SOURCE, three lines in one limb. .tools/surprise-row-gate.py @e622962cf5 :104 `ID_RE = re.compile(r\"^(?P<project>[A-Z0-9_]+)-(?P<z>Z-)?(?:W(?P<w>[0-9]+)-|(?P<c>C-))?S(?P<k>[0-9]+)$\")` -- the Z- group is OPTIONAL, so the bare id PARSES and no regex refuses it. :1162 `id_fabric = \"site-z\" if (m and m.group(\"z\")) else \"laptop\"` -- the FABRIC IS DERIVED FROM THE ID. :1171 `if row.get(\"fabric\") and row[\"fabric\"] != id_fabric:` appends the refusal \"fabric=%r but the id %s the Z- infix ... site-z iff the id carries Z-\".",
+        "SO THE TWO INSTRUCTIONS ARE JOINTLY UNSATISFIABLE on this project. The row must carry project+fabric (same limb, :1163-1167, both GATE-REQUIRED on new rows). The project is on site-z. A bare id forces id_fabric='laptop', which contradicts fabric='site-z' and is refused at :1171; declaring fabric='laptop' to match would file a site-z finding under the wrong fabric.",
+        "THE POPULATION, denominator printed. This channel file parsed with json.loads over its 32 fenced blocks yields 64 rows, 0 unparseable. 64 of 64 ids carry the Z- infix and 64 of 64 rows that declare a fabric declare 'site-z'. The convention is unanimous; the order's prose is the outlier.",
+        "IT ALREADY BIT ONCE, on the sibling order. This worker's spawn instruction records that 0.9.0_WK_POSN_ASTTAX~15 minted the bare form its order named and had all four rows refused. That is reported, not measured by this worker -- the four rows now IN the file carry the Z- form, which is consistent with a re-mint but does not by itself prove the refusal."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "POSN_ASTTAX.TO-U2-1's '## SURPRISE ROWS' section instructs the worker to file off-cell findings as `POSN_ASTTAX-W18-S<k>` -- the bare form, carrying no Z- fabric coordinate.",
+    "world_is": "On this fabric that id cannot be filed with a correct fabric field. surprise-row-gate.py:104 makes Z- optional so the bare id parses; :1162 DERIVES the fabric from the presence of Z-; :1171 refuses any row whose declared fabric disagrees with that derivation. All 64 rows already in this channel carry both the Z- infix and fabric='site-z'. This worker therefore used POSN_ASTTAX-Z-W18-S<k> and is recording the deviation rather than silently conforming.",
+    "notes": "NOT CLAIMED: that the gate is wrong -- its derivation is self-consistent, is documented in its own docstring at :693-708 as deliberately replacing a fabric constant, and 64 of 64 existing rows satisfy it. On the measured evidence the ORDER'S PROSE is the outlier. ARMED because the harm is silent and lands at the most expensive moment: the worker has answered every criterion before the row it was told to file is refused, and the refusal text names the fabric mismatch rather than the sentence that caused it. disarm_owner is the issuing seat because the disarm is a one-token edit at the cut. NOT AUDITED: whether TO-U3-1 and TO-U4-1 carry the same prose -- this worker does not read sibling orders."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-W18-S2",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~18",
+    "surfaced_at": "2026-09-13T07:05:00Z",
+    "one_line": "THE COLOUR LEVERAGE SITE IS NOT ONE FILE, IT IS TWO, AND THEY HAVE ALREADY DRIFTED. AT4-s-1's census names chartColors.ts as THE shared dependency; the three Attribution readers bind colour through a SECOND registry the census does not name, holdings-shared.tsx, whose sub-asset map disagrees with chartColors.ts on 1 of the 21 keys they share.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE PREMISE. AT4-s-1's result (deliverables/0.9.0_WK_POSN_ASTTAX~15/POSN_ASTTAX.TO-U1-1.result.md, 'The reader set' table) carries exactly ONE shared-dependency row: 'S* | SHARED DEPENDENCY beneath A1, A2, B2, C2, C3 | src/lib/chartColors.ts'. This order's spawn instruction repeats it: chartColors.ts 'is imported by 5 of the 11 readers -- which makes it the likely leverage site for colour and worth checking first.'",
+        "THE SECOND REGISTRY, read by content at the pin e85f6eb84f. src/pages/Attribution/constants/holdings-shared.tsx:67-71 defines its OWN `ASSET_CLASS_COLORS` ('Fixed Income', 'Equity', 'Cash') and :77-102 its OWN `SUB_ASSET_CLASS_COLORS` (21 keys), and :105-110 `getAssetClassBgColor`. C1 imports getAssetClassBgColor at SelectionTab.tsx:15 and calls it at :359 and :374; C2 imports ASSET_CLASS_COLORS at AssetAllocationSummary.tsx:17 and uses it at :206; C3 imports it at StylePolicyComparison.tsx:17 and uses it at :255.",
+        "IT IS REACHED, NOT MERELY DEFINED. C2:206 is `backgroundColor: ASSET_CLASS_COLORS[assetClass.name] || PALETTE.gray500` and C3:255 is the same expression -- both read at the pin and anchor-checked at run time.",
+        "THE DRIFT, with its denominator. Both sub-asset maps parsed at the pin and compared key by key: 21 keys compared, 1 DIFFERS -- 'International' is PALETTE.blue600 at holdings-shared.tsx:97 and PALETTE.blue700 at chartColors.ts:304. The other 20 agree, which is what makes the single divergence a drift rather than two independent designs.",
+        "WHY THE CENSUS COULD NOT SEE IT AND IS NOT AT FAULT. AT4-s-1's subtraction removed 23 files as 'not a renderer: no JSX and no value reaching the DOM (type unions, API contracts, config, COLOUR REGISTRIES, adapters)'. holdings-shared.tsx is a colour registry and was correctly excluded from the READER set by that rule. The rule is right for a reader census; it is exactly wrong for a COLOUR census, because the object being enumerated is the thing the rule discards.",
+        "A THIRD COPY EXISTS. HoldingsTab.tsx:225-232 defines its own `getAssetClassBgColor`, duplicating holdings-shared.tsx:105-110 -- in a file whose header at :1-4 states it was 'Extracted to eliminate ~400 lines of duplication between the two tabs'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AT4-s-1's census names ONE shared colour dependency beneath the reader set -- src/lib/chartColors.ts -- and this order inherits that census as its domain, naming chartColors.ts as the likely leverage site for colour.",
+    "world_is": "Three of the eleven readers (C1, C2, C3 -- the whole Attribution family) bind class colour through a SECOND registry the census does not name: src/pages/Attribution/constants/holdings-shared.tsx:67-110. It is a near-duplicate of chartColors.ts:113-120 and :284-309, and over the 21 sub-asset keys the two share, 1 has already drifted ('International' blue600 vs blue700). A colour remediation applied only at chartColors.ts would silently miss 3 of 11 readers.",
+    "notes": "ARMED because it harms through FUTURE NORMAL operation and the failure is a GREEN: a fix landed at the named leverage site, verified at that site, reads as complete while the Attribution family still renders the old colours -- the per-member check passes and the shared-dependency assumption is what is broken (CLAUDE.md Rule 22). disarm_owner is the seat that cuts the remediation cell, because the disarm is a scope edit on that cell's <paths>, not a code change; the portal is FROZEN and this worker wrote nothing. NOT CLAIMED: that holdings-shared.tsx is the LAST such registry -- this worker enumerated the import graph of the 11 census readers only, and did not widen the domain."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-W18-S3",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~18",
+    "surfaced_at": "2026-09-13T07:05:00Z",
+    "one_line": "A CLASS->COLOUR MAP INSIDE THE SHARED REGISTRY CONTRADICTS THE REGISTRY'S OWN ASSET_CLASS MAP, AND NO CENSUS READER IMPORTS IT. chartColors.ts:375-381 CMA_CATEGORY paints 'Fixed Income' amber500 (the Cash colour), 'Intl Equity' green500 (the Fixed Income colour) and 'Alternatives' violet500 -- so its consumers, wherever they are, already violate FWD-4.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE MAP, read by content at pin e85f6eb84f. src/lib/chartColors.ts:375-381 `export const CMA_CATEGORY: Record<string, string> = {` :376 `'US Equity': PALETTE.blue500,` :377 `'Intl Equity': PALETTE.green500,` :378 `'Fixed Income': PALETTE.amber500,` :379 `'Real Assets': PALETTE.orange500,` :380 `'Alternatives': PALETTE.violet500,`.",
+        "THE CONTRADICTION IS INTRA-FILE. The same file at :113-120 defines ASSET_CLASS with fixedIncome=green500, equity=blue500, cash=amber500, alternatives=orange500. So within ONE file, 'Fixed Income' is green500 at :114 and amber500 at :378; 'Alternatives' is orange500 at :117 and violet500 at :380; and green500 -- the Fixed Income colour -- is given to an EQUITY key at :377.",
+        "WHY IT IS NOT IN THIS CELL'S AC2/AC3 GRADES, stated rather than implied. The import line of all 11 census readers was read at the pin: 0 of 11 name CMA_CATEGORY. A1 imports {PALETTE, ASSET_CLASS, SUB_ASSET_COLORS, getSubAssetTextColor, PERF}; A2 {ASSET_CLASS, PALETTE}; B2 {PALETTE, ASSET_CLASS}; B3 {SURFACE}; C1/C2/C3 {PALETTE}; D2 {PALETTE, GRO, CATEGORY, SURFACE, NNA_BAR, MIX_PIE, withOpacity}; D3 {PALETTE, mixPieColor}; B1 and D1 import from chartColors at all. Counting it would have widened the inherited domain, which the order forbids.",
+        "THE SAME READ FOUND A SECOND UNCONSUMED MAP: FIRM_MIX at :151-156, also imported by 0 of 11. Unlike CMA_CATEGORY it AGREES with ASSET_CLASS on all three classes it holds, so it is recorded here for completeness and is not part of the contradiction.",
+        "WHAT IS NOT KNOWN, and why the standing is ARMED rather than INERT. A consumer census for CMA_CATEGORY over the whole portal repo was NOT run -- it is outside this cell's inherited domain. So this row cannot say whether the map is dead code or is serving a live surface. If it has any consumer, that surface renders Fixed Income in the Cash colour today."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "FWD-4, PRD v0.6 @ae66157381: 'Each class has one color, the same everywhere', over the ratified table binding Fixed Income/Cash to green, Equity to blue and Alternatives to orange (C-FIVE-CLASSES).",
+    "world_is": "src/lib/chartColors.ts:375-381 (CMA_CATEGORY) binds 'Fixed Income' to PALETTE.amber500 -- the colour the same file gives Cash at :116 -- 'Intl Equity' to PALETTE.green500 -- the colour it gives Fixed Income at :114 -- and 'Alternatives' to PALETTE.violet500 against orange500 at :117. No reader in AT4-s-1's census imports it (0 of 11, import lines read at the pin), so it is excluded from this cell's uniqueness and agreement grades; its consumers outside the census were NOT enumerated, because widening the inherited domain is forbidden by this order.",
+    "notes": "The disarm is ONE consumer census over the portal repo for CMA_CATEGORY and FIRM_MIX, which converts this row to either 'dead code, retire' or 'live surface, FWD-4 already violated there'. It belongs to whoever scopes the next colour cell, not to this worker -- running it here would be the wrong-domain widening the order explicitly forbids. NOT CLAIMED: that CMA_CATEGORY is dead. NOT CLAIMED: that it is live. The read that would settle it was deliberately not run, and this row says so rather than leaving the gap implicit."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-W18-S4",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~18",
+    "surfaced_at": "2026-09-13T07:05:00Z",
+    "one_line": "A QUALIFIER ON A NEIGHBOURING CELL'S GRADE, NOT A CONTRADICTION OF IT: B3 (CMA > Opal Views) is graded PASS on all five classes because it renders assetClass as free text, and it also carries a hardcoded THREE-OPTION view selector at OpalViewsTab.tsx:212-214 offering only 'overall', 'equity' and 'fixed-income'.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE GRADE BEING QUALIFIED. AT4-s-1's U1-AC3 table grades B3 PASS on all five ratified classes, and its control paragraph names why: 'READERS PASSING ALL FIVE: 2/11 -- B3 CMA > Opal Views and D1 AI > Perfrp allocation card ... they carry no vocabulary. B3 renders view.assetClass as free text'.",
+        "THE FREE-TEXT RENDER IS REAL, so the grade is not refuted. OpalViewsTab.tsx:136 at pin e85f6eb84f: `label={labelKey === 'pair' ? (view as { pair: string }).pair : (view as { assetClass: string }).assetClass}` -- whatever the payload carries is rendered.",
+        "THE SELECTOR, read at the same pin. :212 `<option value=\"overall\" ...>Overall</option>` :213 `<option value=\"equity\" ...>Equity</option>` :214 `<option value=\"fixed-income\" ...>Fixed Income</option>`. Three options, two of them ratified classes. There is no Structured, Commodities or Alternatives entry.",
+        "AND IT IS THE ONLY ENUMERATION IN THE FILE. Every colour-carrier line in OpalViewsTab.tsx was listed: colour there keys on Strategic (bg-blue-500, :99/:129) vs Tactical (bg-purple-500, :103/:148) vs Combined (bg-amber-400, :108), never on asset class, and all three <option> elements share `backgroundColor: SURFACE.dropdown`. So B3 binds NO colour to any class -- which is this cell's own finding about B3, recorded here only to show the file was read whole."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AT4-s-1's reader x class table grades B3 (CMA > Opal Views) PASS on all five ratified classes on the ground that it carries no class vocabulary and renders view.assetClass as free text.",
+    "world_is": "The free-text render is real at OpalViewsTab.tsx:136 and the PASS stands on it. The same file also carries a hardcoded view selector at :212-214 whose three options are 'overall', 'equity' and 'fixed-income' -- an enumeration of two of the five ratified classes, which the census does not name. A user cannot select a Structured, Commodities or Alternatives view on this reader even though a payload carrying one would render.",
+    "notes": "Filed as a QUALIFIER, explicitly not as a refutation: the FWD-6 bar AT4-s-1 graded is 'can that class reach the screen on that reader', and the free-text path means it can. Whether a selector that enumerates two classes is a separate FWD-3/FWD-6 defect is a judgment for the adjudicating seat, not for this worker, whose cell is colour. INERT: the state is static, nothing degrades through normal operation, and no act of this worker armed it."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-W18-S5",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~18",
+    "surfaced_at": "2026-09-13T07:05:00Z",
+    "one_line": "THE RATIFIED GOLD DOES NOT EXIST. PRD s.3 binds Commodities to gold; the portal palette holds 65 tokens and ZERO are gold, and the amber family's BASE token -- the only candidate anyone would reach for -- is already bound to Cash and reaches six readers. FWD-4 cannot be served for Commodities without a colour decision no cell in this project owns.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE SPEC. PRD v0.6 @ae66157381 s.3 'The five classes -- the ratified taxonomy (BINDS the decomposition)': row 4 is '| 4 | Commodities | gold | physical (gold, nickel, silver), crypto, and commodity indices (e.g. GSCI) |'. s.4 C-FIVE-CLASSES: 'the classes are exactly the five in s.3, in that canonical order, WITH THOSE COLORS. This is Andrew + Young's ruling (the brief), not a decomposition choice.'",
+        "THE PALETTE, enumerated at pin e85f6eb84f with its denominator. src/lib/chartColors.ts:16-106 PALETTE holds 65 named tokens. Tokens whose NAME is in the gold/amber/yellow family: 4 -- amber500 #f59e0b (:45), amber400 #fbbf24 (:46), amber600 #d97706 (:47), yellow500 #eab308 (:78). Tokens named literally 'gold': 0 of 65.",
+        "THE ONE OBVIOUS CANDIDATE IS TAKEN. amber500 is bound to Cash at :116 (ASSET_CLASS.cash) and at :408 (MIX_PIE.cash), and this cell measured that binding reaching six of the eleven readers: A1, C1, C2, C3, D2, D3. Pointing Commodities at amber500 would put two ratified classes on one pixel colour -- the exact second clause of FWD-4's ACCEPT ('no place shows a class in a color another uses for something else').",
+        "amber500 IS ALSO THE BUSIEST TOKEN IN THE FILE: 20 occurrences, including FLOW.net (:126), GRO.nna (:146), FACTOR_COLORS.volatility (:344), YIELD_CURVE.quarter (:352), PERCENTILE.p50 (:369) and CMA_CATEGORY['Fixed Income'] (:378).",
+        "THE CONTRAST THAT MAKES THIS SPECIFIC TO GOLD. Structured's ratified PINK does exist: PALETTE.pink500 #ec4899 at :61, bound to no ratified class. It is not free either -- it already carries GRO.total (:147) and FACTOR_COLORS.size (:343) -- but the TOKEN exists and needs no minting. Gold needs a token created or one of the three non-base ambers repurposed, and that is a design choice with no owner in this decomposition."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD v0.6 @ae66157381 s.3 ratifies one colour per class and C-FIVE-CLASSES binds the decomposition to those colours: Fixed Income/Cash green, Equity blue, Structured pink, Commodities GOLD, Alternatives orange.",
+    "world_is": "At pin e85f6eb84f the portal palette (chartColors.ts:16-106) holds 65 tokens and 0 are named gold. The nearest family is 4 tokens and its base, amber500 #f59e0b, is already bound to Cash at :116/:408 and reaches 6 of the 11 readers, so it cannot take Commodities without colliding with another ratified class. Realizing the ratified gold therefore requires minting a new palette token or repurposing amber400/amber600/yellow500 -- a colour decision, not a wiring change, and no cell in this decomposition owns it.",
+    "notes": "This is the reason the AC4 price for Commodities cannot be written as a one-line re-key: every other priced cell says 'point this key at the right token', and for Commodities there is no right token to point at. ARMED because a remediation cell cut without settling it will either stall at the edit or silently pick a colour, and a silently picked colour is a ratified-taxonomy change made by a worker. disarm_owner is the CTO as the PRD's owner -- the disarm is a named hex in s.3, or Andrew's word, before any FWD-4 remediation cell is cut. NOT CLAIMED: that amber400/amber600/yellow500 are free of other meanings -- this worker checked only that they are bound to no RATIFIED CLASS."
+  }
+]
+```
