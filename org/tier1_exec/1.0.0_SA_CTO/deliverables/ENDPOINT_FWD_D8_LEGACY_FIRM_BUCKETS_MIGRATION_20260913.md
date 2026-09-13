@@ -202,6 +202,26 @@ returns an empty set and calls it an endpoint.
 ⚠ **Part VII in particular names what the brief does not claim, and an endpoint cut without reading
 it can promise something the substrate cannot support.** It is the first thing to read before the PRD.
 
+⛔ **READ SINCE THE CUT -- Part VII, all eleven bullets, 2026-09-13 ~04:0xZ.** The line above was true
+when written and is no longer. Two bullets bear directly on outcomes, and one on the brief itself:
+
+- **FWD-4 -- A LIFECYCLE RULE CAN SILENTLY FALSIFY ITS ACCEPT LINE.** Part VII: *"No lifecycle rule was
+  read (counts only): a rule that expires or transitions objects in a legacy bucket is a hazard to the
+  rollback window."* FWD-4 promises the old copy is *"still sitting there untouched for the agreed
+  period."* **An expiry or transition rule on a legacy bucket breaks that promise with no act by anyone,
+  and nothing in the comparison FWD-4 grades on would notice.** Reading every lifecycle rule on the
+  three legacy buckets is therefore a precondition of FWD-4, not a MAP-step detail.
+- **FWD-5 -- THE BRIEF'S SCHEDULE COUNT IS DECLARED-PLANE, AND ONE INSTRUMENT IS BLIND TO PART OF IT.**
+  Part VII: the ~45 schedules were read from `trigger-map.json`, not the live scheduler, and *"EventBridge
+  SCHEDULER schedules are invisible to `describe-rule`."* FWD-5's ACCEPT already demands the live settings
+  over any written procedure; **its proof must also read the Scheduler service itself, because
+  `describe-rule` returns a clean not-found for a Scheduler schedule -- a wrong instrument that reads as
+  "nothing fires this."**
+- **THE BRIEF'S OWN REFS BLOCK CITES A FILE THAT DOES NOT EXIST.** Its `BRIEF PATH` reads
+  `docs/briefs/d14-legacy-firm-buckets-migration-brief-20260913.md`; the file is `d8-...`, renamed before
+  its first commit. The same class of defect as Rule 17b's D8 citation tonight, in the carry-forward block
+  a later seat is most likely to copy. Reported to `4.0.0_SA_CRO~D`; not edited here.
+
 **NOT CLAIMED:** that these are the outcomes Andrew wants -- that is his confirmation, per his
 2026-09-03 word. **Nor that the eight are complete against his commission**: he asked for the swap
 "end to end, including decommissioning of legacy resources," and whether eight outcomes cover
