@@ -121,7 +121,7 @@ criterion cannot be met, leave the order OPEN and file a row.**
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
-<status>staged</status>
+<status>complete</status>
 <round>8</round>
 <slot>~14</slot>
 <fabric>site-z</fabric>
