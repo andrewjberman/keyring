@@ -74,9 +74,9 @@ producers name SIX buckets and gold code has three homes. R16, one code home. �
 
 ### O6 — The dedicated MDPF runner writes each firm's slice into that firm's bucket, and the cross-firm fence never had to bend
 Per-firm runs on a DEDICATED runner (Andrew, 09-12) land `platinum/mdpf/` slices in `opal-data-{firm}` — and the runner's
-role NAME sits outside every `ArnLike` pattern the firm buckets deny (`cot-*`, `inf-*`, `mdpf-*`, `opal-assets-mdpf-*`), on
-the estate's own precedent (`irpt-directory-refresh-role` writes all three firm buckets today, unconditioned; IV.8) —
-where today the shared `mdpf-daily-runner` would be refused `s3:*` at `opal-data-49financial` BY DESIGN. Route (a) stays closed.
+role NAME is the schema's (`mdpf-{scope}-runner-role`) while the firm buckets' Deny keys on the SCOPE slot derived from the
+registry instead of the `mdpf-*` prefix (IV.8, corrected ~04:2xZ) -- where today the shared `mdpf-daily-runner` would be
+refused `s3:*` at `opal-data-49financial` BY DESIGN. The refused exception route stays closed; the list is replaced, not carved.
 
 ### O7 — MDPF's bronze is in the ingest bucket like everyone else's
 `opal-data-mdpf/mdpf/bronze/` (830 JSON objects, written daily 12:52Z) lands under `opal-data-assets/mdpf/{scope}/bronze/`
@@ -225,9 +225,10 @@ same instrument — transcription confirmed, not corroborated). Andrew 09-12: ro
 mdpf runner for this also not reusing a firm specific runner."* Precedent (CVO 96315, `comp-iam refresh-census`
 2026-09-13T02:02:58Z, 250 roles): `irpt-directory-refresh-role` writes `investor-reporting/directory/_refresh/*` in all
 three current firm buckets; `bd-exporter-ec2-role` and `opal-advi-stitch-landing-role` write inside `opal-data-49financial`
-past the fence. **Finding:** the dedicated runner is a NEW principal whose name is chosen outside the four patterns —
-the option with estate evidence; amending the fence is route (a), refused by name; a per-firm principal is legal but
-contradicts "dedicated." NOT MEASURED: whether the two buckets the sibling creates will carry the same four patterns
+past the fence. **Finding (CORRECTED ~04:2xZ, see the sibling's IV.11):** the dedicated runner is a NEW principal named by the D14
+schema -- `mdpf-{scope}-runner-role` -- and the fence must key on the SCOPE slot (derived from the registry) rather than
+on the `mdpf-*` prefix, landed on the firm-bucket template before the sibling mints the two new buckets. "Outside the
+four patterns" is withdrawn as non-conformant; the fence re-derivation is for `1.0.0_SA_CTO` at L4. NOT MEASURED: whether the two buckets the sibling creates will carry the same four patterns
 (they will if built on the template — and they should; the runner's name is what makes that safe).
 
 ### IV.9 — The hold names a key that no longer exists; the producer already reads the successor

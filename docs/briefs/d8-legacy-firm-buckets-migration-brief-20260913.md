@@ -299,8 +299,16 @@ that blocks the swap sits on the DESTINATION bucket, which a census over the sou
 inside `opal-data-49financial`, past the fence, unconditioned: `bd-exporter-ec2-role` (`AdviChainGoldRW`, Get+Put on
 `gold/advi/*`) and `opal-advi-stitch-landing-role` (Put on `gold/advi/reference/`); and **`irpt-directory-refresh-role`
 ALREADY writes `investor-reporting/directory/_refresh/*` in all three CURRENT firm buckets** — none of the three
-matches an ArnLike pattern. So "name the runner outside the four patterns" is the option with estate evidence; a
-per-firm principal is unaffected; amending the fence is the route Andrew refused by name. ⛔ **W2-S49's "grants
+matches an ArnLike pattern. **CORRECTED 2026-09-13 ~04:2xZ (Andrew: "get this sorted out with CTO"):** "name the runner outside the four
+patterns" is WITHDRAWN -- under the D14 naming schema (`d14-naming-schema-brief-20260913.md` IV.2, system-first) the
+runner is `mdpf-{scope}-runner-role`, which `role/mdpf-*` denies by design; a name outside the patterns would be
+NON-CONFORMANT. The fence's pattern list (`cot-*`, `inf-*`, `mdpf-*`, `opal-assets-mdpf-*`) is the OLD firm-as-system
+grammar baked into IAM. **The resolution is D14's, and it is the ONE hard D14-before-D8 item:** the Deny keys on the
+SCOPE slot (any principal whose scope token is not the bucket's firm), derived from the registry (executable-layer brief
+O2), replacing the enumerated prefixes -- landed on `s3-49financial.tf` BEFORE this project mints the two new buckets
+from it. This is NOT the exception route Andrew refused ("C", 09-12): it replaces the list, it does not carve a
+principal out of it -- a distinction for `1.0.0_SA_CTO` at L4, back to Andrew as one card if the CTO reads it as the
+refused route. ⛔ **W2-S49's "grants
 PutObject on no firm bucket" (09-12 09:41Z, 26 statements) is a DEAD VINTAGE** — 33 statements this turn incl.
 `IrptDirectoryFirmDestWrite`; C-S87 is the live row. NOT MEASURED: whether any of those grants would reach the two
 buckets this project CREATES (nothing can hold a grant on a bucket that does not exist).

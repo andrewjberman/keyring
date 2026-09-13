@@ -182,6 +182,15 @@ remediation project to exist. Nothing needs the full ontology.
 
 # PART V — WHAT MUST BE TRUE (named, not sequenced)
 
+- **THE ONE D14-BEFORE-D8 DEPENDENCY (Andrew ~04:2xZ, "get this sorted out with CTO"):** the firm-bucket fence
+  (`DenyForeignFirmPrincipals` on `s3-49financial.tf`) is re-derived from the registry to key on the SCOPE slot -- deny
+  any principal whose scope token is not the bucket's firm -- replacing the enumerated system prefixes (`cot-*`, `inf-*`,
+  `mdpf-*`, `opal-assets-mdpf-*`), BEFORE the D8 migration mints `opal-data-inflection` / `-cottonwood` from that
+  template. Otherwise the schema-named MDPF runner (`mdpf-{scope}-runner-role`) is denied on all three firms by design.
+  D8's KEYS need nothing from this brief (they are already canonical); the builders and the flagger are PARALLEL to D8,
+  not a gate on it. Order: (1) L4 ratifies the naming schema; (2) spine v0.2 rows + the derived fence on the template;
+  (3) D8 migrations; (4) builders/flagger alongside, D8 the first `key()` caller if timing allows.
+
 - The schema (naming brief IV.2) is ratified at L4 before `grade()`'s slot rules are written — the grader encodes law,
   it does not make it.
 - The registry YAMLs exist and are the ONLY source for the five generated files before any consumer is repointed (O3).
