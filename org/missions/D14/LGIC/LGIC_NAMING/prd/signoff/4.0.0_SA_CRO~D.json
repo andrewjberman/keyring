@@ -1,0 +1,12 @@
+{
+  "prd": "LGIC_NAMING_PRD.md",
+  "prd_version": "v1.0",
+  "prd_pin": "c65a169ba0b28d86e3547bd0d1182f444bcb3719",
+  "half": "brief",
+  "half_hash": "45ffd5fc3dc15e9dfa689047dfefac5bde613ad1739377a348280529c142eed7",
+  "verdict": "REFUSED",
+  "review_ref": "org/tier1_exec/4.0.0_SA_CRO/deliverables/PRD_REVIEW_LGIC_NAMING_v1.0_BRIEF_HALF_20260913.md@1e4e3e10fd",
+  "signed_by": "4.0.0_SA_CRO~D",
+  "signed_at": "2026-09-13T22:31:10Z",
+  "reason": "R1: NAMING_SCHEMA.json kind.by_type keys CODEBUILD/ECS_TASK are not CloudNode node_type strings; graders RAISE by construction. R2: enumerate the 17 types not graded by kind. Bump v1.1 touches the data file + S7 only."
+}
