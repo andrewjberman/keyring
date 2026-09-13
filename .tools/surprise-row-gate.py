@@ -1470,10 +1470,13 @@ def check_file(root, rel):
                 _o, _t, _n = _open_tos_for_project(root, folder_project)
                 _l, _u, _nf, _ = _latest_dispositions(root, folder_project)
                 if _o:
-                    notes.append("%s: L10 NAMED EXCEPTION for %s -- Andrew call 1 YES / CTO 21533 / %s; "
+                    _basis = ("LD-0562 / COO 22245 / " + POSN_R3_EXCEPTION_PIN
+                              if _posn_round3_terminal_exception(root, rel, row, folder_project, _o, _t)
+                              else "Andrew call 1 YES / CTO 21533 / " + POSN_R2_EXCEPTION_PIN)
+                    notes.append("%s: L10 NAMED EXCEPTION for %s -- %s; "
                                  "%d of %d orders STILL OPEN, explicitly unrun: %s. Exact row and order "
                                  "content matched; other limbs passed. NOT the broad override."
-                                 % (rel, rid, POSN_R2_EXCEPTION_PIN, len(_o), _t, ", ".join(_o)))
+                                 % (rel, rid, _basis, len(_o), _t, ", ".join(_o)))
                 else:
                     notes.append("%s: L10 precondition for %s -- %d task order(s) at HEAD on both roots, 0 open; %d "
                              "investigation item(s) across %d channel file(s) in the index, 0 undispositioned; "
