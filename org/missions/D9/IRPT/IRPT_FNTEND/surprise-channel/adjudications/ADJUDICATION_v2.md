@@ -361,6 +361,63 @@ Accumulating CVO review as round-two evidence arrives. This is NOT an L10 slug a
         "9ab6043728, bf95fb7b9a, 49f4026218, 913706a898, c44180ab9b, 6177717ce0 -- the six modifications, subjects read"
       ]
     }
+  }  ,
+  {
+    "id": "IRPT_FNTEND-C-S59",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-13T09:37:45Z",
+    "one_line": "ROUND-4 L9 GRADE RECORD: the five JUDGMENT verdicts of the L8/L9 record (be3b6849a9, section 3) moved into the `grades` carrier so a consumer can reject on them -- 4 PASS (three with a named qualification), 1 FAIL (F18-AC18).",
+    "class": "OBSERVATION",
+    "spec_asserts": "Spine v3 L9: a JUDGMENT criterion is graded by the CVO, and the verdict lives in the `grades` carrier, one entry per criterion, on a row of the CVO's -- never as free text.",
+    "world_is": "At be3b6849a9 the five verdicts landed in the record's prose only; C-S52..C-S58 carry dispositions, not grades. This row carries them, each bound to its proof-of-spec instance at a commit. Vocabulary mapped, no verdict changed: MET -> PASS; MET WITH A NAMED QUALIFICATION -> PASS with the qualification in `reason`; NOT MET -> FAIL.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND4_L8_L9_20260913.md@be3b6849a9 section 3 -- the five verdicts and their evidence",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/IRPT_FNTEND.TO-FE-s-25.consumer-boundary.proof_of_spec.json@86f2959ab1",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~2/IRPT_FNTEND.TO-FE-s-26.holdings-fixtures.proof_of_spec.json@55887ce562",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~3/IRPT_FNTEND.TO-FE-s-27.declared-preconditions.proof_of_spec.json@10093a2dff",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~4/IRPT_FNTEND.TO-FE-s-28.mandatory-placeholders.proof_of_spec.json@c0eb49d1e1",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/IRPT_FNTEND.TO-FE-s-18.evidence-mobile-captures.proof_of_spec.json@85259e922e"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A grade record: it adjudicates no item and opens nothing (schema, `grades`). The qualifications it names are carried to 1.0.0_SA_CTO in the round-4 slug, items 1 and 4-6.",
+    "hazard_standing": "INERT",
+    "grades": [
+      {
+        "criterion": "F25-AC12",
+        "instance": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/IRPT_FNTEND.TO-FE-s-25.consumer-boundary.proof_of_spec.json@86f2959ab1",
+        "verdict": "PASS",
+        "reason": "MET WITH A NAMED QUALIFICATION (graded from consumer-boundary.result.md and portal fbc5699c). Bar: the four fixes preserve what the contract distinguishes without inventing a distinction the contract does not make. Absent-vs-null, the two nines (36 of 36 pairs distinguishable), the generator's coordinate refusal and the two OPTIONAL Availability members all carry a contract distinction through and invent none. Qualification: the panel still reads 'Updated 4d ago' (fe-s-18_holdings_target_390.png, fe-s-18_holdings_missing_attribution_390.png) while it now measures the age of business_date, the date the answer is for -- a label that misnames what it measures."
+      },
+      {
+        "criterion": "F26-AC9",
+        "instance": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~2/IRPT_FNTEND.TO-FE-s-26.holdings-fixtures.proof_of_spec.json@55887ce562",
+        "verdict": "PASS",
+        "reason": "MET WITH A NAMED QUALIFICATION (graded from holdings-fixtures.result.md and the v1 StatusEnvelope schema). Bar: each fixture's state is one the wire may genuinely carry for that basis, and none was chosen merely to force a difference. observed READY, missing-attribution PARTIAL and target UNCERTAIN are each genuine for their basis, and the three-way difference was required by F26-AC3. Qualification: target's UNCERTAIN rests on a basis-relative rule (a TARGET snapshot without a named model revision is UNCERTAIN) that the contract does not state -- the worker's own named weakest case."
+      },
+      {
+        "criterion": "F27-AC8",
+        "instance": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~3/IRPT_FNTEND.TO-FE-s-27.declared-preconditions.proof_of_spec.json@10093a2dff",
+        "verdict": "PASS",
+        "reason": "MET (graded from declared-preconditions.result.md). Bar: a reader of a run can tell 'this was not exercised' from 'this was exercised and held' without knowing the port. Three independent signals, any one sufficient: the runner's skip count, each 'SKIPPED ... PRECONDITION ABSENT: <measured reason>' notice, and the 'BODIES MOUNTED: N of 2' bar that only an exercised run emits; the precondition line prints the port; and precondition MET with a broken seam reads FAIL, not SKIPPED."
+      },
+      {
+        "criterion": "F28-AC8",
+        "instance": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~4/IRPT_FNTEND.TO-FE-s-28.mandatory-placeholders.proof_of_spec.json@c0eb49d1e1",
+        "verdict": "PASS",
+        "reason": "MET WITH A NAMED QUALIFICATION (graded from mandatory-placeholders.result.md and .tools/to-pipeline-gate.py @d0c28a59be). Bar: the boundary between what the gate binds and what it grandfathers is defensible and stated, not chosen to make the tests pass. Stated in the refusal a seat receives (:884-889 appends PLACEHOLDERS_BOUNDARY); defensible (reuses _newly_added, rejects corpus and date grandfathering on their mechanics); proven by identical bytes refused as an ADD and admitted as a MODIFY in one run. Qualification: the MODIFY exemption is wider than either stated reason -- an amendment adding a <TOKEN> to an order that already declares is never checked. No instance this round."
+      },
+      {
+        "criterion": "F18-AC18",
+        "instance": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/IRPT_FNTEND.TO-FE-s-18.evidence-mobile-captures.proof_of_spec.json@85259e922e",
+        "verdict": "FAIL",
+        "reason": "NOT MET on clause 2 (graded from the 11 manifest PNGs tracked at 887b183a2a and portal c2eb8eb4). Bar: nothing clips or overlaps at 390; screen, preview and print of the frozen report agree figure for figure; the screens and the export read as one Opal product. Clause 1 MET. Clause 2 NOT MET: the screen (fe-s-18_reporting_frozen_390.png) shows a StatusPanel 'Uncertain / Source time unknown' and no figures while preview and print render the report; ReportingTab.tsx:14-18 mounts the body only on READY or STALE, PrintEntry.tsx carries no report-state check, and the print reads 'Report availability UNCERTAIN' beside 'Bundle availability READY'. Clause 3 MET visually, qualified by clause 2."
+      }
+    ]
   }
 ]
 ```
