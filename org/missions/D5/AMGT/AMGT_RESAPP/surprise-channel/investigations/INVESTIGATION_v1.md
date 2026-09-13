@@ -3049,6 +3049,105 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "Rule 22 DISCRIMINATION: a control is sound when the evidence would differ if the claim were false. The round-8 analysis asserted FWD-99 as that control for the coverage subtraction and printed its zero.",
     "world_is": "The control token now occurs in the corpus, so its zero is unreachable and its firing carries no information about coverage. THE SUBTRACTION'S RESULT IS UNAFFECTED -- 15 of 15 declared outcomes are still named by a cut order and UNCOVERED is still EMPTY. What was lost is the ability to demonstrate that the reader works, not the answer it gave.",
     "notes": "THE GENERAL SHAPE, which is the reason this is a row and not a footnote: A NEGATIVE CONTROL THAT IS A LITERAL TOKEN MUST NOT BE PUBLISHED INTO THE CORPUS IT SCREENS. An analysis is written precisely to be quoted into orders, so publishing a token control in one is a slow-acting self-contamination -- the control survives the document it is written in and dies at the first citation. This seat did it to itself and the citing seat behaved correctly throughout. REMEDY, prospective and cheap: before using a literal token as a control, census it over the corpus and require zero AT THAT MOMENT; and in any document intended for citation, describe the control rather than printing its token, or use a token that cannot survive a quote. DISARM: the next coverage subtraction over this project runs with a control whose absence from the corpus is measured at run time rather than assumed, and says so. NOT CLAIMED: that round 9's order is defective -- it is not, and its own AC3 carries a real negative control (a nonsense route against the dev server, with a STOP instruction saying what a 200 on every path would mean). NOT CLAIMED: that the round-8 verdict moves. NO PRD ADDENDUM stands on a subtraction whose result is unchanged."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W15-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~15",
+    "surfaced_at": "2026-09-13T04:48:15Z",
+    "one_line": "AC3's invocation curls 127.0.0.1:5175 but vite binds [::1]:5175 ONLY on this device, so the criterion as written reads HTTP 000 for a perfectly healthy server -- it cannot tell a working dev server from a dead one, and its failure arm is the ONLY arm it can reach.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE INVOCATION AS WRITTEN, run verbatim from org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rh-1.the-served-route-end-to-end.md@e2ff1ae12f: 'curl: (7) Failed to connect to 127.0.0.1:5175 after 2013 ms: Could not connect to server' / 'HTTP 000 bytes 0' / 'NEG 000'. Both arms 000.",
+        "THE SERVER WAS HEALTHY AT THAT MOMENT, from the same run's own log tail: 'VITE v7.3.5 ready in 427 ms' and 'Local: http://localhost:5175/'. The criterion's own sub-requirement -- 'the vite log's first lines must show the server bound to the port' -- was SATISFIED in the same breath as its main probe returned 000.",
+        "THE DISCRIMINATOR, netstat -ano at that moment: 'TCP [::1]:5175 [::]:0 LISTENING 9184' and NO 127.0.0.1:5175 listener of any kind. vite's default host is 'localhost', which this Node resolves to the IPv6 loopback first and binds there exclusively.",
+        "REPRODUCED ON A SECOND, INDEPENDENT SERVER START (pid 26404): 'TCP [::1]:5175 [::]:0 LISTENING 26404'. Not a flake, and not a strictPort collision -- the port bound is 5175 exactly, so the order's 'something else holds 5175' reading is FALSIFIED rather than merely untested.",
+        "THE SAME SERVER ANSWERS ON THE ADDRESS IT ACTUALLY BOUND: 'ROOT(localhost) HTTP 200 bytes 826'. One address reads 000 and the other 200, same server, same second.",
+        "PRE-STATE CONTROL, run BEFORE any server start: 'PRE 000' with 'Could not connect' and no listener on 5175 -- so the later 200 is caused by this worker's server and not by a pre-existing one."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC3 asserts that curling http://127.0.0.1:5175/ against a locally started vite dev server yields 'HTTP 200 with a non-zero byte count on the root', and treats a failure to connect as evidence about the server (its only named failure reading is a strictPort collision: 'something else holds 5175 and that is a row, not a retry on another port').",
+    "world_is": "vite binds the IPv6 loopback [::1]:5175 ONLY, so 127.0.0.1:5175 refuses the connection no matter how healthy the server is. THE CRITERION IS THE 'ALWAYS-FAILS' SHAPE: its output is HTTP 000 for a healthy server, for a dead one, and for a crashed one alike, so nothing it prints carries information. STAR: THE FAILURE IS NOT THE SERVER AND IT IS NOT THE PORT -- IT IS THE ADDRESS, and the order's only offered reading of a non-200 (a strictPort collision) points at the one cause that was measurably absent. A worker following the order literally would have filed 'the dev server does not serve' about a server that was serving.",
+    "notes": "REMEDY, cheap and prospective: curl http://localhost:5175/ rather than the literal 127.0.0.1, or start vite with --host 127.0.0.1 so the bind matches the probe. GENERAL SHAPE, which is why this is a row rather than a footnote: A HARDCODED LOOPBACK LITERAL IS A BIND-ADDRESS ASSUMPTION WEARING THE COSTUME OF A NEUTRAL PROBE. 'localhost' and '127.0.0.1' are the same host to a human and different sockets to Node on this device. WHAT THIS ROW DOES NOT CLAIM: that the route does not serve -- it does, measured separately and recorded in the instance; and that AC3 would pass if the address were fixed -- it would not, for the SEPARATE and more interesting reason filed at AMGT_RESAPP-Z-W15-S2. DISARM: not required; nothing is armed. The defect is confined to one criterion's text in one order and the served-route fact is established by other evidence in the same instance."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W15-S2",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~15",
+    "surfaced_at": "2026-09-13T04:48:15Z",
+    "one_line": "AC3's negative control CANNOT discriminate for ANY single-page app: the vite dev server serves the SPA fallback index.html for every unmatched path, so the nonsense route returns HTTP 200 with BYTE-IDENTICAL content to the root -- and by AC3's own STOP clause that voids the root 200 as evidence the route exists.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED against the address the server actually bound: 'ROOT(localhost) HTTP 200 bytes 826' and 'NEG (localhost) HTTP 200 bytes 826'. Same status, same byte count.",
+        "AND THE ROUTE PATH ITSELF IS THE SAME DOCUMENT: 'ROUTE /security-analysis HTTP 200 bytes 826'. All three paths -- root, the real route, and a route that cannot exist -- return the identical 826-byte shell, because react-router resolves routes in the BROWSER and the server never sees a route at all.",
+        "AC3'S OWN WORDS MAKE THIS DECISIVE RATHER THAN A QUIBBLE, quoted from org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rh-1.the-served-route-end-to-end.md@e2ff1ae12f: 'a dev server that answers 200 for EVERY path, including the nonsense route, is a server that cannot discriminate, and in that case the 200 on the root is not evidence the route exists.' The condition it names is exactly the condition that obtains.",
+        "THE SERVER IS NOT UNDISCRIMINATING EVERYWHERE, which is what makes the diagnosis specific rather than a shrug: on the MODULE graph it discriminates sharply. /src/main.tsx -> 13880 bytes, SecurityAnalysis.tsx -> 16291, components/LeadPanel.tsx -> 41762, components/RankedChart.tsx -> 36168, /src/api/endpoints/amgt-lead-panel.ts -> 15732, while a module that does not exist (/src/pages/SecurityAnalysis/zzznosuchmodule.tsx) falls back to the same 826-byte shell.",
+        "So the discriminating instrument was available in the same server on the same second; it is the HTTP-status-on-a-route-path instrument, specifically, that carries no signal."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC3 offers a request to /zzz-no-such-route-rh1 as the negative control that makes the root's HTTP 200 mean something, and instructs the worker to 'say what it means' if the server answers 200 for every path.",
+    "world_is": "SPA FALLBACK IS CORRECT, INTENDED VITE BEHAVIOUR, NOT A DEFECT IN THE APPLICATION -- a dev server MUST return index.html for client-routed paths or client-side routing cannot work at all. The consequence is that AC3's negative control is the 'always-passes' shape and is unsatisfiable BY CONSTRUCTION for this class of application: there is no path, nonsense or real, for which this control could ever return anything but 200. STAR: A NEGATIVE CONTROL THAT THE SYSTEM UNDER TEST IS ARCHITECTURALLY OBLIGED TO DEFEAT IS NOT A WEAK CONTROL, IT IS A NON-CONTROL -- and it reads as rigour on the page, which is why it survived the cut.",
+    "notes": "REMEDY, and it needs no new instrument because the order's own worktree already contains one: grade the route through the MODULE GRAPH, where a real module returns transformed source and an absent one returns the 826-byte fallback (a >15x byte separation with a firing negative control), or drive a browser -- which this cell explicitly and correctly excludes from worker scope. WHAT THIS ROW DOES NOT CLAIM: that the assembled route fails to serve. The opposite is measured and recorded -- the server binds, the root serves, the served document references the entry module /src/main.tsx, and every one of the route's own modules including both round-8 repairs is served with a discriminating negative control. WHAT IT DOES CLAIM: AC3 AS WRITTEN CANNOT CERTIFY THAT, so the clause is left unmet rather than passed on a substituted instrument. Filed alongside AMGT_RESAPP-Z-W15-S1, which is a DIFFERENT defect in the same criterion with a DIFFERENT remedy (address vs control); fixing either one alone still leaves AC3 unable to discriminate."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W15-S3",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~15",
+    "surfaced_at": "2026-09-13T04:48:15Z",
+    "one_line": "AC2 asks for the SecurityAnalysis chunk's NAME 'by searching the build output or the emitted manifest', but this build emits NO manifest and names every route chunk by content hash (index-<hash>.js), so both named instruments return zero on a build that does contain the route.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE BUILD SUCCEEDED: exit 0, 'built in 9.02s', 63 asset lines in the log and 72 files on disk under dist/.",
+        "INSTRUMENT 1 RETURNS ZERO: a case-insensitive search of the full build output for 'securityanalysis' matches 0 lines. Chunk names in this build are content-hashed -- index-D6E5p8za.js, index-8tfuHmFU.js and so on -- with only a few name-preserving chunks (print-, ModelPortfolios-, CapitalMarketAssumptions-).",
+        "INSTRUMENT 2 DOES NOT EXIST: 'ls -la dist/.vite/' -> 'No such file or directory'. Manifest generation is not enabled for this build, so there is no manifest to search.",
+        "THE ROUTE IS NEVERTHELESS IN THE BUNDLE, established by content over a printed denominator of 72 emitted files scanned: 'amgt-lead' -> 1 file (dist/assets/index-D6E5p8za.js); 'CHATTER' -> 1 file (same); 'Breakout' -> 2 files (index-D6E5p8za.js, index-Cj-9027n.js); '/security-analysis' -> 1 file (dist/assets/index-8tfuHmFU.js, the router chunk); 'SecurityAnalysis' -> 2 files.",
+        "THE CONTENT INSTRUMENT DISCRIMINATES: a token that should appear nowhere ('zzznosuchtoken-rh1') matches 0 of the same 72 files, so 'contains' is a real read and not a matcher that says yes to everything.",
+        "THE SEARCH TOKENS ARE THE ROUTE'S OWN, taken from granted source portal/src/pages/SecurityAnalysis/constants.ts: AMGT_LEAD_PANEL_ROUTE = '/security-analysis', the 'amgt-lead' React Query key namespace, and the SUBJECT_OPTIONS/MOVEMENT_OPTIONS labels."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC2 requires the worker to print 'the name of the chunk that contains the Security Analysis route, established by searching the build output or the emitted manifest', and declares that 'a missing SecurityAnalysis chunk is NOT met'.",
+    "world_is": "NEITHER NAMED INSTRUMENT CAN ANSWER, while the underlying fact the criterion is guarding -- that the build is not vacuous and really contains this route -- is TRUE and measurable by a third instrument the criterion does not name. The chunk is dist/assets/index-D6E5p8za.js (29.64 kB, gzip 9.07 kB) and the router reference lives in dist/assets/index-8tfuHmFU.js (330.89 kB). STAR: 'MISSING CHUNK' AND 'CHUNK NOT IDENTIFIABLE BY NAME' ARE DIFFERENT WORLDS THAT THIS CRITERION'S INSTRUMENT RENDERS IDENTICAL -- a name search returns zero in both, and only one of them is a defect.",
+    "notes": "GRADED AS MET on the substance, with the instrument substitution DISCLOSED rather than silent: the criterion's own phrase 'searching the build output' is satisfied by searching dist/, which IS the build output, and the vacuity guard the clause exists to enforce is discharged with a firing negative control and a printed denominator. This is recorded because the substitution was the worker's choice and not the order's instruction. REMEDY if the issuer wants the NAME instrument to work prospectively: enable build.manifest in the vite config, or give the route a named chunk via manualChunks -- neither is in this cell's grant and neither is proposed as work. WHAT THIS ROW DOES NOT CLAIM: any defect in the application, the build, or the chunking strategy. Content-hashed chunk names are normal, correct vite output."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W15-S4",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~15",
+    "surfaced_at": "2026-09-13T04:48:15Z",
+    "one_line": "The order instructs this worker to mint row ids as AMGT_RESAPP-W15-S<k>, but the surprise-row gate REFUSES that form outright on this fabric -- fabric 'site-z' and the Z- infix are COUPLED ('site-z iff the id carries Z-'), a limb entirely separate from the id grammar, which does admit both. Four rows were refused at commit and renumbered to AMGT_RESAPP-Z-W15-S<k>; the order's instruction is the defect and the channel header was right.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE REFUSAL, verbatim from the aborted commit: 'ERROR: BLOCKED -- surprise-channel row gate (steps 7/10). Commit aborted; files unstaged.' then four violations, one per row, each reading \"fabric='site-z' but the id lacks the Z- infix, which means 'laptop'. site-z iff the id carries Z-.\"",
+        "THE ORDER'S INSTRUCTION that produced them, verbatim from org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rh-1.the-served-route-end-to-end.md@e2ff1ae12f: 'Mint your ids as AMGT_RESAPP-W15-S<k>.'",
+        "WHY 'BOTH FORMS ARE LEGAL' LOOKED TRUE BEFOREHAND, and this is the instructive half: the id GRAMMAR admits both. .tools/surprise-row-gate.py:104 ID_RE is '^(?P<project>[A-Z0-9_]+)-(?P<z>Z-)?(?:W(?P<w>[0-9]+)-|(?P<c>C-))?S(?P<k>[0-9]+)$' and org/surprise_channel/schemas/investigation_item.schema.json's id pattern carries the same optional (Z-). Both were read before writing, and both are irrelevant to the limb that refused.",
+        "THE CHANNEL'S OWN HEADER SAID IT ALL ALONG and was treated as mere convention: 'a worker's row is AMGT_RESAPP-Z-W<n>-S<k> with <n> its slot'. So did the gate's comment at :101: 'the fabric coordinate Z- stays and nests first'.",
+        "PRECEDENT, over a printed denominator: 126 of 126 pre-existing rows in this block carry the Z-, 0 do not, counted by json.loads over the first fenced block. Round 8's two workers filed AMGT_RESAPP-Z-W13-S1 and AMGT_RESAPP-Z-W14-S1.",
+        "THE FIX, applied and re-verified: the four rows were renumbered to AMGT_RESAPP-Z-W15-S1..S4 and the commit re-run. No override was used."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The task order's worker face instructs, verbatim: 'Mint your ids as AMGT_RESAPP-W15-S<k>.' That form omits the site-z fabric coordinate, and nothing in the order qualifies it.",
+    "world_is": "THAT FORM IS UNCOMMITTABLE ON THIS FABRIC AND THE GATE SAYS SO IN ONE LINE. Measured by running it: .tools/safe-commit.sh aborted with 'BLOCKED -- surprise-channel row gate (steps 7/10)' and four identical violations, one per row: \"AMGT_RESAPP-W15-S1: fabric='site-z' but the id lacks the Z- infix, which means 'laptop'. site-z iff the id carries Z-.\" THE ID IS NOT A LABEL, IT IS A SECOND DECLARATION OF THE FABRIC, and it must agree with the fabric field. STAR: I READ THE GRAMMAR LIMB AND CONCLUDED 'BOTH FORMS ARE LEGAL', AND THE GRAMMAR LIMB WAS NOT THE ONLY LIMB. ID_RE at .tools/surprise-row-gate.py:104 really does make (Z-)? optional, and org/surprise_channel/schemas/investigation_item.schema.json really does carry the same optional group -- so two independent surfaces agreed with each other and BOTH WERE BLIND to a third limb that couples the infix to the fabric enum. Two instruments agreeing is repetition, not corroboration, when they share the blind spot.",
+    "notes": "RESOLVED BY RENUMBERING, NOT BY OVERRIDE. The gate offers an audited '# surprise-row-override:' path and it was NOT taken: this refusal is CORRECT, it cost one retry, and overriding a correct gate to satisfy a defective instruction would have put a laptop-coordinate row in a site-z channel permanently. All four rows now read AMGT_RESAPP-Z-W15-S1..S4, matching the channel header, the gate comment at :101 ('the fabric coordinate Z- stays and nests first'), and 126 of 126 pre-existing rows in this block. WHAT THE ISSUER SHOULD CHANGE, and it is one word in one line: the worker face of AMGT_RESAPP.TO-AMGT-rh-1 should instruct AMGT_RESAPP-Z-W<n>-S<k>. Round 8's orders evidently got this right -- its workers filed AMGT_RESAPP-Z-W13-S1 and AMGT_RESAPP-Z-W14-S1 without incident -- so this is a regression in one order's text, not a standing fabric ambiguity. WHY THIS IS WORTH A ROW RATHER THAN A SILENT FIX: a worker that followed the order literally and hit this refusal has three exits available -- renumber (correct), override (available, audited, and wrong here), or read the refusal as 'my rows are malformed' and start deleting content. The second and third are both reachable from a worker's context, and the override path is the dangerous one precisely because it is offered in the refusal text itself. NOT CLAIMED: any defect in the gate. The gate caught exactly what it exists to catch and its message named the fix precisely enough to apply without further reading."
   }
 ]
 ```
