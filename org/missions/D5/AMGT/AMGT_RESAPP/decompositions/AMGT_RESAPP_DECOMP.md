@@ -1174,3 +1174,138 @@ Round 8's input is this table MINUS whatever round 7's L9 closes.
   fallback, the CTO's), do not touch the terraform-union defect `Z-S9`, do not re-open any terminal
   order's test file (`Z-W7-S6`, `Z-W7-S7`), and **do not promote anything** -- portal stays FROZEN both
   fabrics, COMMIT YES / PROMOTE NO, so no cell may grade a served-surface outcome REALIZED.
+
+## 16. ROUND 8 (v0.9) -- FROM THE L10 ROUND-7 ANALYSIS @`65e788455a` (`1.0.0_SA_CTO~Z`), THE CONSUMER-BOUNDARY ROUND
+
+**The analysis's verdict in its own words: "NO PRD ADDENDUM IS REQUIRED -- the coverage read is CLEAN,
+15 of 15 outcomes are served by a cut order and the subtraction is EMPTY. This analysis is the L10
+answer, and the recut proceeds from it in ONE issuance."** So round 8 cuts NO coverage cell. It cuts
+the consumer boundary the round-7 evidence exposed, and nothing else.
+
+### 16a. The cell set, BY SUBTRACTION over a PRINTED denominator
+
+**DENOMINATOR: the NINE OPEN remedy rows of `REMEDIATION_v7.md` @`00e0813b9d`** (17 rows total: 8
+REMEDIATED, 9 OPEN; read from each row's own `remediation.state` field, never from prose).
+
+```
+  9  OPEN remedy rows              owners: 7 this seat, 2 1.0.0_SA_CTO~Z
+ -2  Z-S36, Z-S42                  NOT MINE. Analysis s.5.3: "Two remedies from this slug are THIS
+                                   SEAT's, not the COO's ... carried here, not routed into a cell."
+                                   Both are status-count TOOL repairs (to-check's parser, and the
+                                   directives register that reprints its count).
+ -1  Z-W11-S2                      CARRIED, NOT CUT. Its remedy needs an ARTIFACT UPLOAD and a SERVED
+                                   ROUTE -- a deploy act. NEVER-1's closers are CTO+COO and no
+                                   never-widen sign-off exists; the row's own remedy says the CVO
+                                   "neither uploads an artifact nor authorizes an AWS act through this
+                                   row". The SOURCE-plane half is already landed and graded.
+ -1  Z-W11-S1                      CARRIED, AND CARRYING IS THE REMEDY. Its own text: "Keep the
+                                   recorded-gitlink/integration decision with the existing owner under
+                                   the freeze ... do not treat materializing a checkout as disarming
+                                   this row." Cutting a cell here would act AGAINST the remedy.
+ -1  Z-W12-S1                      NO CELL, BY THE ROW'S OWN WORDS: "no new cell is inferred." It is a
+                                   SPAWN-STEP change and THIS ISSUANCE'S OWN SPAWN APPLIES IT (s.16c).
+ -1  Z-S34                         NO CELL: "A documented bounded step suffices." It is a DRAIN-
+                                   PROCEDURE step and this issuance's drain contract carries it (s.16d).
+ =  3 CELLS
+```
+
+**REMAINDER ZERO BY CONSTRUCTION:** every one of the nine is a cell, a named carry with its reason,
+another seat's, or executed by this issuance's own procedure. Nothing is dropped on a sentence.
+
+⛔ **AND THE DOMAIN WAS FALSIFIED BEFORE THE SUBTRACTION RAN, because two populations are in play and
+only one governs the CUT.** The NINE is L9's own output for this round and is what the spine routes
+into the recut. The STANDING HAZARD SET is a strictly wider population, it is carried rather than cut,
+and **ROUND 8 DOES NOT CLOSE IT.** A cell cut from it but absent from the nine would be work L9 did
+not ask for.
+
+⛔ **AND THE STANDING SET'S OWN NUMBER IS CORRECTED HERE, AGAINST THIS SEAT, BEFORE IT IS CITED AGAIN.**
+`AMGT_RESAPP-Z-S46` reported **thirty** -- measured over TWO documents, `INVESTIGATION_v1.md` and
+`ADJUDICATION_v7.md`, 132 rows. **THE CHANNEL IS FIFTEEN FILES ACROSS THREE DIRECTORIES**
+(investigations, adjudications, remediations) **and 246 rows**, and the field reads **53** ARMED with
+`disarm_owner` = this seat over that domain, 53 distinct ids with no duplicate. So the thirty is
+NARROW by the same class it was written to correct, and the true residual needs the screen-then-read
+run over all fifteen files. **That is round 8's carried work and it is NOT this cut's domain** -- the
+cut's domain is the nine, which is one complete row block with a printed state field.
+⭐ Surfaced by `1.0.0_SA_CTO~Z` (msg 22031), correcting its OWN one-file "35 of 92" in the same
+breath. **That makes four instances of the analysis's own class inside one hour, across two seats,
+including the seat that wrote the sentence and the seat quoting its warning while repeating it.** The
+class exempts nobody, which is the strongest evidence for it anyone has produced tonight.
+
+⚠ **AND `Z-W11-S5` IS BACK IN THE NINE BECAUSE THE CVO REVERSED THIS SEAT.** `Z-S40` disarmed it on a
+judgment; `ADJUDICATION_v7` **REJECTS that closure** -- "the specifically required loosened-matcher
+mutant was not run." **That verdict is executed here as a ruling, not re-litigated**, and the row is
+`AMGT-rg-3`. This seat flagged the alternative reading and named who could reverse it; the mechanism
+worked exactly as designed.
+
+### 16b. The three cells
+
+| cell | row | surface | the defect, MEASURED |
+|---|---|---|---|
+| **`AMGT-rg-1`** | `C-S99` | portal consumer -- the Thesis check face | `checkFor` builds `fy<year>:<mnemonic>`; the adapter emits `fiscal_year_line_item:<mnemonic>:<year>`. **13 of 13 header checks join; 0 of 183 fiscal checks join.** The unresolved-price control also matches 0 of 1. **The join is not flaky; it is arithmetic.** |
+| **`AMGT-rg-2`** | `C-S98` | portal consumer -- `RankedChart` | Renders **byte-identical static HTML** for the `absent` and `retry-exhausted` adapter payloads. It reads `points` and `point_count` and **never** `read_completeness` or `unresolved_point_count`; the backend now preserves the distinction and the page discards it. |
+| **`AMGT-rg-3`** | `Z-W11-S5` | `lib/research/api` + `lib/research/checkface` | rf-3's AC3 negative control has **never been shown to FIRE**. Its disarm needs the same invocation run against a matcher **deliberately loosened to match everything**, returning a NON-ZERO wrong-scope count, then exact-byte restoration. |
+
+⭐ **THE SHAPE THE ANALYSIS NAMED, and the reason rg-1 and rg-2 are cut together:** *"EVERY DEFECT
+THIS ROUND PRODUCED IS A CHECK RUN ON THE NEAR SIDE OF A BOUNDARY AND CLAIMED FOR THE FAR SIDE."* The
+producer's 107 green tests are the near side; the page reading 0 of 183 figures is the far side. **A
+cell that repairs the producer again cannot move either row** (analysis s.5.1). `rg-3` is the same
+shape at the criterion altitude -- a control that was never run in the world it claims about.
+
+### 16c. Dependency edges, and M
+
+```
+CHAIN A (portal)  AMGT-rg-1  ->  AMGT-rg-2      both write portal/src/pages/SecurityAnalysis/
+CHAIN B (library) AMGT-rg-3                     writes lib/research only
+
+fanout: 2 of 2 chains, cap 8
+```
+
+⛔ **M IS MEASURED AND IT IS 2, AND THE PORTAL EDGE IS NOT ABOUT A FILE.** `rg-1` and `rg-2` touch
+different components (`ThesisTab` vs `RankedChart`), so a file-grain disjointness read would say two
+workers are safe. **It would be wrong, and this project has the row to prove it: `AMGT_RESAPP-Z-S33`
+-- A GITLINK HAS NO SUB-PATH GRAIN, so two workers in one submodule are ONE contended object.** Two
+portal workers would commit two portal branches and the second drain would silently revert the first.
+One worker, one queue, `rg-1` before `rg-2`.
+
+**`Z-W12-S1` IS DISCHARGED BY THIS ISSUANCE'S SPAWN STEP, not by a cell:** every worktree whose order
+names a `portal/` path is created with **portal materialized**, and the spawn verifies it with the
+one probe that discriminates a missing repository from an empty answer --
+`git -C portal rev-parse --show-toplevel` compared against the portal path itself, **with an
+empty-directory negative control and a genuine-portal positive control printed side by side.**
+
+### 16d. The drain contract for this round -- `Z-S34`, executed rather than cut
+
+Before any drain of a round-8 branch, and stated here so it is procedure rather than memory:
+
+1. **Fetch the worker's portal branch into the shared clone under a REF**, never `FETCH_HEAD` -- an
+   unreferenced fetched object is gc-able.
+2. **Read the object back with a bogus-hash negative control** -- presence, not a standing yes.
+3. ⛔ **THEN THE REMOTE PLANE, WHICH IS THE STEP `Z-S34` NAMES AND THE ONE THIS SEAT SKIPPED AT THE
+   rf-6 DRAIN:** `git -C portal branch -r --contains <obj>` must be NON-EMPTY, with the recorded
+   `e85f6eb84f` run through the identical command as a POSITIVE CONTROL (it resolves via
+   `origin/DEV`). **FETCHING AN OBJECT INTO A CLONE DOES NOT PUBLISH IT, and the local check passes
+   for the same reason the remote one fails.**
+4. **NO ROUND-8 DRAIN MOVES THE `portal` GITLINK.** It stays at `e85f6eb84f`, which is what
+   `origin/SITEZ` publishes. A move is what forced the `275530053c` backout and it needs Andrew's
+   freeze lift, which is carded at his terminal and is not this round's to assume.
+
+### 16e. The four-postulate record (Rule 24)
+
+- **(i) MECE over a DECLARED domain, BY SUBTRACTION:** s.16a subtracts from the nine OPEN rows with a
+  printed denominator and a reason per exclusion; the arithmetic balances 3 cut + 2 carried + 2
+  procedure + 2 other-owned = 9. **The domain itself was falsified first** -- the thirty of `Z-S46` is
+  the wider set and is explicitly NOT the cut's domain, with the reason stated.
+- **(ii) SAME GRAIN:** each cell is ONE repair of ONE measured defect on ONE named surface. `rg-1` and
+  `rg-2` are kept SEPARATE although they share a submodule, because they are different components with
+  different evidence -- the same grain correction `3.0.0_SA_CVO~Z` made at round 7.
+- **(iii) INTENT COHERENCE, one axis:** *make the populated CONSUMER read what the repaired PRODUCER
+  emits, and make one unfired control fire.* No producer repair is in this round.
+- **(iv) STATE COHERENCE -- what these remedies do NOT move:** they do not publish portal (FROZEN both
+  fabrics, COMMIT YES / PROMOTE NO), do not deploy anything (`Z-W11-S2` carried with its reason), do
+  not move the recorded gitlink (`Z-W11-S1`, `Z-S33`), do not close the twenty-one older carries of
+  `Z-S46`, and do not touch `Z-S36`/`Z-S42`, which are `1.0.0_SA_CTO~Z`'s.
+
+⛔ **NO ROUND-8 ARTIFACT MAY GRADE A PORTAL-DEPENDENT OUTCOME `REALIZED`** -- analysis s.5.2, and the
+pin is the reason: the portal evidence lives at `83cc87f2`, contained by ONE local ref and **0 of the
+portal remote's 9 heads**, while the recorded gitlink `e85f6eb84f` IS contained by `origin/DEV`.
+Every portal-dependent outcome grades **EXERCISED**, never REALIZED, until the gitlink lands.
