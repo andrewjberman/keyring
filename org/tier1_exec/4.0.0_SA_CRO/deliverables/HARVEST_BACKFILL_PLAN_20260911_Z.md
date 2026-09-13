@@ -443,3 +443,64 @@ which route is authorised, not whether the work is.
 - §7's re-sequencing to TICKER-WINDOW COMPLETENESS is a plan change, not a call.
 - The identity layer's `bloomberg_ticker` gap (55 of 89) is still gated on the **directory-name
   fallback**, which remains HIS unanswered design question and is the one lever needing no vendor.
+
+---
+
+## 13. THE IR-SEARCH ROUTE IS CONFIRMED WORKING -- ONE CALL -- AND THE PROBE FOUND A DEFECT THAT TOP-HIT SELECTION WOULD HAVE SHIPPED
+
+**Authority:** Andrew-direct 2026-09-13 ~04:0xZ, card 4: run the investor-relations and blog search on
+**the Google Custom Search key the estate already holds**, IR pages and company blogs, **SEARCH ONLY**,
+and his prove-the-shape-first rule applies. **A per-use word for ONE provider for ONE purpose.**
+
+### The shape, confirmed on a single call
+
+```
+secret   google-cse-config   keys: description, gmail_account, google_api_key, google_cse_id
+route    GET https://www.googleapis.com/customsearch/v1?key=<...>&cx=<...>&q=<...>&num=5
+probe    q = "AstraZeneca investor relations"
+result   HTTP OK | totalResults 306,000 | 1 call spent
+```
+**QUOTA SPENT: ONE CALL.** Nothing further was run. His sequence -- prove the shape, then spend -- is
+satisfied and the bulk pass has NOT begun.
+⚠ No key or id value is recorded here or anywhere in this brief; the secret was read through a pipe
+and never written to disk.
+
+### ⛔ THE DEFECT THE PROBE FOUND, AND IT IS THE REASON TO PROBE
+
+The five returned results were:
+```
+1. Investor relations - AstraZeneca        astrazeneca.com/investor-relations.html   <- correct
+2. Joris Silon ... #investorrelations      linkedin.com/posts/...                    <- social noise
+3. Results and presentations - AstraZeneca astrazeneca.com/investor-relations/...    <- correct
+4. Kyntra Bio: Investor Overview           investor.kyntrabio.com/investor-overview  <- A DIFFERENT COMPANY
+5. Events - AstraZeneca                    astrazeneca.com/investor-relations/events <- correct
+```
+>> **RESULT 4 IS ANOTHER COMPANY'S INVESTOR-RELATIONS PAGE, RETURNED INSIDE A QUERY THAT NAMED
+   ASTRAZENECA.** On this query the top hit happens to be right, so a top-hit rule would have passed
+   its own test and then silently assigned a WRONG IR DOMAIN to some other name in the 89. **The
+   failure would not announce itself: a plausible IR domain for the wrong company looks exactly like
+   a correct answer.** <<
+
+### THE ACCEPTANCE CRITERION THIS FORCES, which is new
+
+**AN `ir_domain` VALUE IS ACCEPTED ONLY IF THE RETURNED DOMAIN IS INDEPENDENTLY TIED TO THE SUBJECT
+COMPANY -- NEVER BY RANK POSITION.** Concretely, at least one of:
+- the registrable domain contains the company's own name token (`astrazeneca.com` for AstraZeneca); or
+- two or more of the returned results share that same registrable domain (here THREE do, which is the
+  signal that actually distinguishes AstraZeneca's domain from Kyntra Bio's single hit); or
+- the domain matches a value already held for that company from another key.
+**Where none holds, the value is UNRESOLVED, not a guess.** This is the same discipline the identity
+layer already applies to `bloomberg_ticker`: a rule that cannot discriminate REFUSES rather than
+returning its best candidate.
+⭐ **AND THE MULTI-RESULT-AGREEMENT TEST IS THE STRONGEST OF THE THREE** and costs nothing extra --
+it is already in the response that was paid for. One company's real IR presence produces several pages
+on one domain; a wrong-company hit produces one.
+
+### What is NOT yet done, stated so this does not read as finished
+
+- **THE BULK PASS HAS NOT RUN.** 89 names, one call each, is the next act and it is deliberately not
+  taken at 04:3xZ without the criterion above implemented and the results reviewed.
+- **BLOGS are in his grant and are NOT probed.** Only the IR half has a confirmed shape; a company blog
+  may need a different query form and that is unmeasured.
+- **`social_account` IS UNAFFECTED AND STILL BLOCKED** -- it runs on Bright Data, whose stored key is
+  measured STALE and whose rotation is the account owner's act.
