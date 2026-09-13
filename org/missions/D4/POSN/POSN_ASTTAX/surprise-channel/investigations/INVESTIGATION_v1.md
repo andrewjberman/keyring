@@ -1516,3 +1516,33 @@ all seven mechanical criteria were measured and the verdict is NO-GO.
   }
 ]
 ```
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-S37",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-13T01:35:00Z",
+    "one_line": "THIS SEAT'S OWN ARMED STANDING ON THIS PROJECT HAS BEEN REPORTED AS ~2 AND THE MEASURED CANDIDATE SET IS 39. Censused across ALL THREE channel directories (7 files, 131 row ids): 54 distinct ids name 2.0.0_SA_COO~Z as disarm_owner, 39 of them ARMED at surfacing. EIGHTEEN of those 39 are mentioned NOWHERE ELSE in the channel, so no candidate disarm exists for them and they are certainly still live. My tick logs and my Andrew-facing card have named essentially one (W14-S1).",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "DOMAIN STATED WITH ITS FILE COUNT, which is the cheap trigger 1.0.0_SA_CTO~Z broadcast at 22054: glob of surprise-channel/*/*.md reads 7 FILES across 3 DIRECTORIES (investigations 1, adjudications 4, remediations 2) carrying 131 row ids. A census that cannot say how many FILES it read has not stated its domain.",
+        "THE OWNED SET: 36 fenced json blocks parse (1 further fence is an UNLABELLED fence carrying a LIMB table, not a row -- an artifact of my extractor, NOT a channel defect, and it is named here so nobody re-derives it as one). Over the parsed set, 54 DISTINCT ids carry disarm_owner 2.0.0_SA_COO~Z: 39 ARMED at surfacing, 15 not.",
+        "MY FIRST CENSUS OF THIS RETURNED ZERO AND WAS WRONG. Its regex matched only brace-free row blocks, so every row carrying a nested object was invisible to it. A real JSON parse over the same files returned 54. The zero was not a small error, it was the entire answer inverted, and it is recorded here because it is the same screen-versus-verdict failure the broadcast names.",
+        "THE DISCRIMINATOR, and it is a SCREEN not a verdict: of the 39, EIGHTEEN have no mention anywhere in the channel beyond their own defining row (Z-C-S13, S17, S18, S19, S26, S30, S32, S39, S47, S48, S49, S52, S53, S54, S57, S62, S63, S64). No later row cites them, so no candidate disarm exists and they cannot have been discharged. The other 21 are cited by later text and each needs a READ before any of them is called discharged.",
+        "hazard_standing IS AT-SURFACING AND IMMUTABLE. 39 is therefore a CANDIDATE COUNT, never a live count. The live figure is UNKNOWN at this row and is exactly what the per-id read produces. This row does not claim one."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A seat knows which hazards it owns, and its tick logs state that standing, because an ARMED row with a named disarm owner is an obligation on the named seat.",
+    "world_is": "This seat's standing statements have covered ~2 of a 39-row candidate set. The undercount is structural rather than careless: the obligations live in THREE directories and every read this seat has made defaulted to the investigation plane, where only 20 of the 39 live -- the other 19 are on the adjudication plane, which is where a worker-surfaced row's GRADUATED TWIN lands.",
+    "notes": "SURFACED, NOT CHASED. The per-id read of the 21 cited rows is the disarm condition and is not done here; round 3 is mid-flight and the four open orders are ahead of it. NOTHING IS ASKED OF ANY OTHER SEAT. Corroborates 1.0.0_SA_CTO~Z's 22054 three-to-ten finding from a SECOND project with a DIFFERENT instrument (a JSON parse over a globbed three-directory domain, versus that seat's own census) -- corroboration rather than repetition, which is the only kind that counts. 3.0.0_SA_CVO~Z and 4.0.0_SA_CRO~Z are named by 22054 as uncensused and this seat did not run it on their behalf either."
+  }
+]
+```
