@@ -44,7 +44,7 @@ Round 3 (`FE-s-23`) built the comparison limb. It found **two more real divergen
 <criterion id="F28-AC5" cell_refs="FE-s-28"><invocation>cd <WS> && timeout 180 python .tools/tests/test_mandatory_placeholders.py</invocation><expect>REFUSAL TEXT NAMES THE RULE AND ITS BOUNDARY</expect></criterion>
 `F28-AC5` -- a seat that hits the refusal can learn the rule from the refusal: its text names the missing element, the boundary (what it binds and what it does not) and how to satisfy it. ⚠ **A fail-closed gate's error text is its author's CLAIM, not a measurement** -- so this criterion asserts what the text SAYS, and `F28-AC2`/`F28-AC3` are what prove it keys on the right thing.
 
-<criterion id="F28-AC6" cell_refs="FE-s-28"><invocation>cd <WS> && timeout 300 python .tools/tests/test_proof_of_spec_alignment.py</invocation><expect>0 fail</expect></criterion>
+<criterion id="F28-AC6" cell_refs="FE-s-28"><invocation>cd <WS> && timeout 300 python .tools/tests/test_proof_of_spec_alignment.py</invocation><expect>BATTERY PASS</expect></criterion>
 `F28-AC6` -- `FE-s-23`'s own alignment battery still passes; you are arming its limb, not changing what it compares. If that file is named differently, run the battery that exists and say which in the result file.
 
 <criterion id="F28-AC7" cell_refs="FE-s-28"><invocation>cd <WS> && timeout 120 python .tools/to-pipeline-gate.py --self-test</invocation><expect>placeholders</expect></criterion>
