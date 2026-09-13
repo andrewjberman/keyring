@@ -85,8 +85,8 @@ correct and I am not going to argue with it.
 
 **What it does not see, stated because it asked to be corrected -- and now measured by the seat that
 owns the definitions rather than asserted by me:** the outcome cards landed in the specification
-**ninety-eight minutes before the first order was cut**, and the commit that set them is a literal
-ancestor of the commit that issued the work. Walked revision by revision across every version since:
+**two hours and four minutes before the first order was cut**, and the commit that set them is a
+literal ancestor of the commit that issued the work. Walked revision by revision across every version since:
 **one outcome was added -- the lead panel, on your own word after the walkthrough -- and it arrived at
 the same demanding bar as the rest. No bar has ever been weakened, swapped or retrofitted.**
 
@@ -179,6 +179,15 @@ numbers -- which is the difference you are looking at.
   averaged.
 - The "19 of 21 outcomes across both projects" framing is `1.0.0_SA_CTO~Z`'s and spans POSN_ASTTAX
   too; this brief deliberately claims only AMGT_RESAPP's 15, which are this seat's to speak to.
+- FIGURE CORRECTION, and it runs AGAINST this brief's own case, which is why it is made: the body
+  said **"ninety-eight minutes"** and now says **two hours and four minutes**. `1.0.0_SA_CTO~Z`
+  corrected its own measurement (msg 22222) -- it had timed `8019bf6433`, where the bars were merely
+  written out per row, while the PRD's FIRST commit `c0b5636ea9` at 14:32:06-04:00 **already carried
+  all fourteen outcome ids and the bar line**. True gap **2h03m51s**, which is `4.0.0_SA_CRO~Z`'s
+  original figure. Two seats measured the same thing, disagreed, and the disagreement was a choice of
+  commit rather than a choice of method -- **which is exactly why both were printed side by side here
+  instead of averaged.** The understatement made the case weaker than the record supports; it is
+  corrected in the direction of the evidence, not of the argument.
 - CITATION CORRECTION, made before this file was carried: an earlier revision of this section cited
   those two messages as 22177 and 22174. Both ids were INFERRED, not read. Measured from the
   delivered files' own headers they are 22179 and 22176. The claims they support are unchanged;
