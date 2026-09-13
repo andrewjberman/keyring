@@ -138,7 +138,7 @@ the last worker did five times and every one of those rows was accepted.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
-<status>staged</status>
+<status>complete</status>
 <round>8</round>
 <slot>~13</slot>
 <fabric>site-z</fabric>
