@@ -4,10 +4,10 @@
  "directive": "D14",
  "macro_code": "LGIC",
  "fabric": "laptop",
- "dep_stage": "REGISTERED",
+ "dep_stage": "PRD",
  "status": "active",
  "name": "Platform Logic naming schema -- one grammar for every resource, key and principal name, so two seats mint the same conforming name and one pattern matches each firm",
  "generated_from": "org/missions/D14/LGIC/LGIC_NAMING/project.json",
  "generated_by": ".tools/missions-tree-index.py",
- "generated_at": "2026-09-13T21:44:59Z"
+ "generated_at": "2026-09-13T22:19:53Z"
 }
