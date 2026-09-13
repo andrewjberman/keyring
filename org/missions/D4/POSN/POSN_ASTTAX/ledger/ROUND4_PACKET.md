@@ -93,7 +93,7 @@ grader should read them together.
 ## 5. WHAT IS NOT CLOSED, STATED SO IT IS NOT DISCOVERED AT L10
 
 - ⛔ **`Z-S46` STANDS: round 4 can be CUT but not CLOSED on today's terms.** The round-3 L10 exception
-  is pinned to `total != 15`; the project now carries **20** orders, so it is dead by its own guard, and
+  is pinned to `total != 15`; the project now carries **19** orders (15 + 4; an earlier draft of this packet said 20 and that was this seat's arithmetic slip, caught by 1.0.0_SA_CTO~Z's independent census at 22328), so it is dead by its own guard, and
   the four carried orders remain non-terminal. **`_open_tos_for_project` will return 4 open and refuse
   the round-4 slug on the same limb.** Nothing in round 4 terminates them: `TO-T6-1` is the retag, held
   by a NO-GO, and the others sit behind that retag and the portal freeze.
