@@ -1,0 +1,520 @@
+{
+  "artifact": "DIRECTORY-NAME IDENTITY FALLBACK -- INFERRED bloomberg_ticker values",
+  "author": "4.0.0_SA_CRO~Z",
+  "generated_at": "2026-09-13T04:13Z",
+  "authority": "Andrew-direct 2026-09-13 ~04:0xZ, 'all recs approved', card 6: the directory-name fallback, with every inferred value MARKED AS INFERRED.",
+  "source_universe": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~4/universe.json",
+  "source_universe_note": "READ ONLY. That file is a worker proof artifact and is NOT edited by this pass.",
+  "rule_validation": {
+    "fixture": "the 15 expected outputs tabulated in DESIGN_QUESTION_identity_fallback.md",
+    "result": "15 of 15 reproduced exactly, including the doc's named AMBIGUOUS refusal (Nokia FH)",
+    "note": "the rule was validated against the ratified table BEFORE being applied to the wider population"
+  },
+  "denominator": {
+    "universe": 89,
+    "already_MEASURED": 34,
+    "unresolved_examined": 55,
+    "INFERRED_by_this_pass": 49,
+    "still_UNRESOLVED": 6
+  },
+  "scope_discrepancy": "THE RELAY OF THE APPROVAL SAID 'up to 15 of the 89'. THIS RULE YIELDS 49. The 15 came from the design question document, which tabulated only the SHARED-PLACEHOLDER directories -- the 15 that HAD a workbook carrying the AAPL US default. It never applied the rule to the 40 directories with NO workbook at all, which carry the same name shape. So 15 was a yield over a SUBSET, not a cap Andrew stated. Every value here is INFERRED and therefore rejectable on its status field; narrowing this to the original 15 is a one-word instruction and nothing downstream should consume these as MEASURED.",
+  "inferred": [
+    {
+      "folder": "Adobe ADBE US",
+      "bloomberg_ticker": {
+        "value": "ADBE US",
+        "status": "INFERRED",
+        "evidence": "DIRECTORY-NAME FALLBACK, approved by Andrew-direct 2026-09-13 ~04:0xZ ('all recs approved', card 6) WITH THE CONDITION that every inferred value is MARKED AS INFERRED. Rule: ROOT + exchange code read off the directory's trailing tokens. Source: the research directory's own display name 'Adobe ADBE US' -- this is a read of WHOEVER NAMED THE DIRECTORY's belief about the identity, NOT an independent confirmation of it.",
+        "resolved_at": "2026-09-13T04:13Z"
+      }
+    },
+    {
+      "folder": "Air Liquide AI FP",
+      "bloomberg_ticker": {
+        "value": "AI FP",
+        "status": "INFERRED",
+        "evidence": "DIRECTORY-NAME FALLBACK, approved by Andrew-direct 2026-09-13 ~04:0xZ ('all recs approved', card 6) WITH THE CONDITION that every inferred value is MARKED AS INFERRED. Rule: ROOT + exchange code read off the directory's trailing tokens. Source: the research directory's own display name 'Air Liquide AI FP' -- this is a read of WHOEVER NAMED THE DIRECTORY's belief about the identity, NOT an independent confirmation of it.",
+        "resolved_at": "2026-09-13T04:13Z"
+      }
+    },
+    {
+      "folder": "America Movil AXMB MM",
+      "bloomberg_ticker": {
+        "value": "AXMB MM",
+        "status": "INFERRED",
+        "evidence": "DIRECTORY-NAME FALLBACK, approved by Andrew-direct 2026-09-13 ~04:0xZ ('all recs approved', card 6) WITH THE CONDITION that every inferred value is MARKED AS INFERRED. Rule: ROOT + exchange code read off the directory's trailing tokens. Source: the research directory's own display name 'America Movil AXMB MM' -- this is a read of WHOEVER NAMED THE DIRECTORY's belief about the identity, NOT an independent confirmation of it.",
+        "resolved_at": "2026-09-13T04:13Z"
+      }
+    },
+    {
+      "folder": "AstraZeneca AZN",
+      "bloomberg_ticker": {
+        "value": "AZN",
+        "status": "INFERRED",
+        "evidence": "DIRECTORY-NAME FALLBACK, approved by Andrew-direct 2026-09-13 ~04:0xZ ('all recs approved', card 6) WITH THE CONDITION that every inferred value is MARKED AS INFERRED. Rule: bare ROOT read off the directory's trailing token, no exchange code present. Source: the research directory's own display name 'AstraZeneca AZN' -- this is a read of WHOEVER NAMED THE DIRECTORY's belief about the identity, NOT an independent confirmation of it.",
+        "resolved_at": "2026-09-13T04:13Z"
+      }
+    },
+    {
+      "folder": "BNP Paribas BNP FP",
+      "bloomberg_ticker": {
+        "value": "BNP FP",
+        "status": "INFERRED",
+        "evidence": "DIRECTORY-NAME FALLBACK, approved by Andrew-direct 2026-09-13 ~04:0xZ ('all recs approved', card 6) WITH THE CONDITION that every inferred value is MARKED AS INFERRED. Rule: ROOT + exchange code read off the directory's trailing tokens. Source: the research directory's own display name 'BNP Paribas BNP FP' -- this is a read of WHOEVER NAMED THE DIRECTORY's belief about the identity, NOT an independent confirmation of it.",
+        "resolved_at": "2026-09-13T04:13Z"
+      }
+    },
+    {
+      "folder": "Bunzl BNZL GB",
+      "bloomberg_ticker": {
+        "value": "BNZL GB",
+        "status": "INFERRED",
+        "evidence": "DIRECTORY-NAME FALLBACK, approved by Andrew-direct 2026-09-13 ~04:0xZ ('all recs approved', card 6) WITH THE CONDITION that every inferred value is MARKED AS INFERRED. Rule: ROOT + exchange code read off the directory's trailing tokens. Source: the research directory's own display name 'Bunzl BNZL GB' -- this is a read of WHOEVER NAMED THE DIRECTORY's belief about the identity, NOT an independent confirmation of it.",
+        "resolved_at": "2026-09-13T04:13Z"
+      }
+    },
+    {
+      "folder": "Cadence CDNS US",
+      "bloomberg_ticker": {
+        "value": "CDNS US",
+        "status": "INFERRED",
+        "evidence": "DIRECTORY-NAME FALLBACK, approved by Andrew-direct 2026-09-13 ~04:0xZ ('all recs approved', card 6) WITH THE CONDITION that every inferred value is MARKED AS INFERRED. Rule: ROOT + exchange code read off the directory's trailing tokens. Source: the research directory's own display name 'Cadence CDNS US' -- this is a read of WHOEVER NAMED THE DIRECTORY's belief about the identity, NOT an independent confirmation of it.",
+        "resolved_at": "2026-09-13T04:13Z"
+      }
+    },
+    {
+      "folder": "Canadian National Railway CNR",
+      "bloomberg_ticker": {
+        "value": "CNR",
+        "status": "INFERRED",
+        "evidence": "DIRECTORY-NAME FALLBACK, approved by Andrew-direct 2026-09-13 ~04:0xZ ('all recs approved', card 6) WITH THE CONDITION that every inferred value is MARKED AS INFERRED. Rule: bare ROOT read off the directory's trailing token, no exchange code present. Source: the research directory's own display name 'Canadian National Railway CNR' -- this is a read of WHOEVER NAMED THE DIRECTORY's belief about the identity, NOT an independent confirmation of it.",
+        "resolved_at": "2026-09-13T04:13Z"
+      }
+    },
+    {
+      "folder": "Celsius CELH",
+      "bloomberg_ticker": {
+        "value": "CELH",
+        "status": "INFERRED",
+        "evidence": "DIRECTORY-NAME FALLBACK, approved by Andrew-direct 2026-09-13 ~04:0xZ ('all recs approved', card 6) WITH THE CONDITION that every inferred value is MARKED AS INFERRED. Rule: bare ROOT read off the directory's trailing token, no exchange code present. Source: the research directory's own display name 'Celsius CELH' -- this is a read of WHOEVER NAMED THE DIRECTORY's belief about the identity, NOT an independent confirmation of it.",
+        "resolved_at": "2026-09-13T04:13Z"
+      }
+    },
+    {
+      "folder": "Clorox CLX",
+      "bloomberg_ticker": {
+        "value": "CLX",
+        "status": "INFERRED",
+        "evidence": "DIRECTORY-NAME FALLBACK, approved by Andrew-direct 2026-09-13 ~04:0xZ ('all recs approved', card 6) WITH THE CONDITION that every inferred value is MARKED AS INFERRED. Rule: bare ROOT read off the directory's trailing token, no exchange code present. Source: the research directory's own display name 'Clorox CLX' -- this is a read of WHOEVER NAMED THE DIRECTORY's belief about the identity, NOT an independent confirmation of it.",
+        "resolved_at": "2026-09-13T04:13Z"
+      }
+    },
+    {
+      "folder": "Copa CPA",
+      "bloomberg_ticker": {
+        "value": "CPA",
+        "status": "INFERRED",
+        "evidence": "DIRECTORY-NAME FALLBACK, approved by Andrew-direct 2026-09-13 ~04:0xZ ('all recs approved', card 6) WITH THE CONDITION that every inferred value is MARKED AS INFERRED. Rule: bare ROOT read off the directory's trailing token, no exchange code present. Source: the research directory's own display name 'Copa CPA' -- this is a read of WHOEVER NAMED THE DIRECTORY's belief about the identity, NOT an independent confirmation of it.",
+        "resolved_at": "2026-09-13T04:13Z"
+      }
+    },
+    {
+      "folder": "GSK LN",
+      "bloomberg_ticker": {
+        "value": "GSK LN",
+        "status": "INFERRED",
+        "evidence": "DIRECTORY-NAME FALLBACK, approved by Andrew-direct 2026-09-13 ~04:0xZ ('all recs approved', card 6) WITH THE CONDITION that every inferred value is MARKED AS INFERRED. Rule: ROOT + exchange code read off the directory's trailing tokens. Source: the research directory's own display name 'GSK LN' -- this is a read of WHOEVER NAMED THE DIRECTORY's belief about the identity, NOT an independent confirmation of it.",
+        "resolved_at": "2026-09-13T04:13Z"
+      }
+    },
+    {
+      "folder": "Global Payments GPN",
+      "bloomberg_ticker": {
+        "value": "GPN",
+        "status": "INFERRED",
+        "evidence": "DIRECTORY-NAME FALLBACK, approved by Andrew-direct 2026-09-13 ~04:0xZ ('all recs approved', card 6) WITH THE CONDITION that every inferred value is MARKED AS INFERRED. Rule: bare ROOT read off the directory's trailing token, no exchange code present. Source: the research directory's own display name 'Global Payments GPN' -- this is a read of WHOEVER NAMED THE DIRECTORY's belief about the identity, NOT an independent confirmation of it.",
+        "resolved_at": "2026-09-13T04:13Z"
+      }
+    },
+    {
+      "folder": "Grupo Aeroportuario del Centro OMAB MM",
+      "bloomberg_ticker": {
+        "value": "OMAB MM",
+        "status": "INFERRED",
+        "evidence": "DIRECTORY-NAME FALLBACK, approved by Andrew-direct 2026-09-13 ~04:0xZ ('all recs approved', card 6) WITH THE CONDITION that every inferred value is MARKED AS INFERRED. Rule: ROOT + exchange code read off the directory's trailing tokens. Source: the research directory's own display name 'Grupo Aeroportuario del Centro OMAB MM' -- this is a read of WHOEVER NAMED THE DIRECTORY's belief about the identity, NOT an independent confirmation of it.",
+        "resolved_at": "2026-09-13T04:13Z"
+      }
+    },
+    {
+      "folder": "HEICO Corporation HEI US",
+      "bloomberg_ticker": {
+        "value": "HEI US",
+        "status": "INFERRED",
+        "evidence": "DIRECTORY-NAME FALLBACK, approved by Andrew-direct 2026-09-13 ~04:0xZ ('all recs approved', card 6) WITH THE CONDITION that every inferred value is MARKED AS INFERRED. Rule: ROOT + exchange code read off the directory's trailing tokens. Source: the research directory's own display name 'HEICO Corporation HEI US' -- this is a read of WHOEVER NAMED THE DIRECTORY's belief about the identity, NOT an independent confirmation of it.",
+        "resolved_at": "2026-09-13T04:13Z"
+      }
+    },
+    {
+      "folder": "Iberdrola IBE SM",
+      "bloomberg_ticker": {
+        "value": "IBE SM",
+        "status": "INFERRED",
+        "evidence": "DIRECTORY-NAME FALLBACK, approved by Andrew-direct 2026-09-13 ~04:0xZ ('all recs approved', card 6) WITH THE CONDITION that every inferred value is MARKED AS INFERRED. Rule: ROOT + exchange code read off the directory's trailing tokens. Source: the research directory's own display name 'Iberdrola IBE SM' -- this is a read of WHOEVER NAMED THE DIRECTORY's belief about the identity, NOT an independent confirmation of it.",
+        "resolved_at": "2026-09-13T04:13Z"
+      }
+    },
+    {
+      "folder": "Idexx IDXX",
+      "bloomberg_ticker": {
+        "value": "IDXX",
+        "status": "INFERRED",
+        "evidence": "DIRECTORY-NAME FALLBACK, approved by Andrew-direct 2026-09-13 ~04:0xZ ('all recs approved', card 6) WITH THE CONDITION that every inferred value is MARKED AS INFERRED. Rule: bare ROOT read off the directory's trailing token, no exchange code present. Source: the research directory's own display name 'Idexx IDXX' -- this is a read of WHOEVER NAMED THE DIRECTORY's belief about the identity, NOT an independent confirmation of it.",
+        "resolved_at": "2026-09-13T04:13Z"
+      }
+    },
+    {
+      "folder": "Intesa Sanpaolo ISP IM",
+      "bloomberg_ticker": {
+        "value": "ISP IM",
+        "status": "INFERRED",
+        "evidence": "DIRECTORY-NAME FALLBACK, approved by Andrew-direct 2026-09-13 ~04:0xZ ('all recs approved', card 6) WITH THE CONDITION that every inferred value is MARKED AS INFERRED. Rule: ROOT + exchange code read off the directory's trailing tokens. Source: the research directory's own display name 'Intesa Sanpaolo ISP IM' -- this is a read of WHOEVER NAMED THE DIRECTORY's belief about the identity, NOT an independent confirmation of it.",
+        "resolved_at": "2026-09-13T04:13Z"
+      }
+    },
+    {
+      "folder": "Intuitive Surgical ISRG US",
+      "bloomberg_ticker": {
+        "value": "ISRG US",
+        "status": "INFERRED",
+        "evidence": "DIRECTORY-NAME FALLBACK, approved by Andrew-direct 2026-09-13 ~04:0xZ ('all recs approved', card 6) WITH THE CONDITION that every inferred value is MARKED AS INFERRED. Rule: ROOT + exchange code read off the directory's trailing tokens. Source: the research directory's own display name 'Intuitive Surgical ISRG US' -- this is a read of WHOEVER NAMED THE DIRECTORY's belief about the identity, NOT an independent confirmation of it.",
+        "resolved_at": "2026-09-13T04:13Z"
+      }
+    },
+    {
+      "folder": "JD.com 9618 HK",
+      "bloomberg_ticker": {
+        "value": "9618 HK",
+        "status": "INFERRED",
+        "evidence": "DIRECTORY-NAME FALLBACK, approved by Andrew-direct 2026-09-13 ~04:0xZ ('all recs approved', card 6) WITH THE CONDITION that every inferred value is MARKED AS INFERRED. Rule: ROOT + exchange code read off the directory's trailing tokens. Source: the research directory's own display name 'JD.com 9618 HK' -- this is a read of WHOEVER NAMED THE DIRECTORY's belief about the identity, NOT an independent confirmation of it.",
+        "resolved_at": "2026-09-13T04:13Z"
+      }
+    },
+    {
+      "folder": "MSCI Inc MSCI US",
+      "bloomberg_ticker": {
+        "value": "MSCI US",
+        "status": "INFERRED",
+        "evidence": "DIRECTORY-NAME FALLBACK, approved by Andrew-direct 2026-09-13 ~04:0xZ ('all recs approved', card 6) WITH THE CONDITION that every inferred value is MARKED AS INFERRED. Rule: ROOT + exchange code read off the directory's trailing tokens. Source: the research directory's own display name 'MSCI Inc MSCI US' -- this is a read of WHOEVER NAMED THE DIRECTORY's belief about the identity, NOT an independent confirmation of it.",
+        "resolved_at": "2026-09-13T04:13Z"
+      }
+    },
+    {
+      "folder": "Manila MER PER",
+      "bloomberg_ticker": {
+        "value": "MER PER",
+        "status": "INFERRED",
+        "evidence": "DIRECTORY-NAME FALLBACK, approved by Andrew-direct 2026-09-13 ~04:0xZ ('all recs approved', card 6) WITH THE CONDITION that every inferred value is MARKED AS INFERRED. Rule: ROOT + exchange code read off the directory's trailing tokens. Source: the research directory's own display name 'Manila MER PER' -- this is a read of WHOEVER NAMED THE DIRECTORY's belief about the identity, NOT an independent confirmation of it.",
+        "resolved_at": "2026-09-13T04:13Z"
+      }
+    },
+    {
+      "folder": "MercadoLibre MELI US",
+      "bloomberg_ticker": {
+        "value": "MELI US",
+        "status": "INFERRED",
+        "evidence": "DIRECTORY-NAME FALLBACK, approved by Andrew-direct 2026-09-13 ~04:0xZ ('all recs approved', card 6) WITH THE CONDITION that every inferred value is MARKED AS INFERRED. Rule: ROOT + exchange code read off the directory's trailing tokens. Source: the research directory's own display name 'MercadoLibre MELI US' -- this is a read of WHOEVER NAMED THE DIRECTORY's belief about the identity, NOT an independent confirmation of it.",
+        "resolved_at": "2026-09-13T04:13Z"
+      }
+    },
+    {
+      "folder": "Michelin ML FP",
+      "bloomberg_ticker": {
+        "value": "ML FP",
+        "status": "INFERRED",
+        "evidence": "DIRECTORY-NAME FALLBACK, approved by Andrew-direct 2026-09-13 ~04:0xZ ('all recs approved', card 6) WITH THE CONDITION that every inferred value is MARKED AS INFERRED. Rule: ROOT + exchange code read off the directory's trailing tokens. Source: the research directory's own display name 'Michelin ML FP' -- this is a read of WHOEVER NAMED THE DIRECTORY's belief about the identity, NOT an independent confirmation of it.",
+        "resolved_at": "2026-09-13T04:13Z"
+      }
+    },
+    {
+      "folder": "Mitsubishi UFJ Financial Group 8306 JP",
+      "bloomberg_ticker": {
+        "value": "8306 JP",
+        "status": "INFERRED",
+        "evidence": "DIRECTORY-NAME FALLBACK, approved by Andrew-direct 2026-09-13 ~04:0xZ ('all recs approved', card 6) WITH THE CONDITION that every inferred value is MARKED AS INFERRED. Rule: ROOT + exchange code read off the directory's trailing tokens. Source: the research directory's own display name 'Mitsubishi UFJ Financial Group 8306 JP' -- this is a read of WHOEVER NAMED THE DIRECTORY's belief about the identity, NOT an independent confirmation of it.",
+        "resolved_at": "2026-09-13T04:13Z"
+      }
+    },
+    {
+      "folder": "Monster MNST",
+      "bloomberg_ticker": {
+        "value": "MNST",
+        "status": "INFERRED",
+        "evidence": "DIRECTORY-NAME FALLBACK, approved by Andrew-direct 2026-09-13 ~04:0xZ ('all recs approved', card 6) WITH THE CONDITION that every inferred value is MARKED AS INFERRED. Rule: bare ROOT read off the directory's trailing token, no exchange code present. Source: the research directory's own display name 'Monster MNST' -- this is a read of WHOEVER NAMED THE DIRECTORY's belief about the identity, NOT an independent confirmation of it.",
+        "resolved_at": "2026-09-13T04:13Z"
+      }
+    },
+    {
+      "folder": "Nestle NESN SW",
+      "bloomberg_ticker": {
+        "value": "NESN SW",
+        "status": "INFERRED",
+        "evidence": "DIRECTORY-NAME FALLBACK, approved by Andrew-direct 2026-09-13 ~04:0xZ ('all recs approved', card 6) WITH THE CONDITION that every inferred value is MARKED AS INFERRED. Rule: ROOT + exchange code read off the directory's trailing tokens. Source: the research directory's own display name 'Nestle NESN SW' -- this is a read of WHOEVER NAMED THE DIRECTORY's belief about the identity, NOT an independent confirmation of it.",
+        "resolved_at": "2026-09-13T04:13Z"
+      }
+    },
+    {
+      "folder": "Netflix NFLX",
+      "bloomberg_ticker": {
+        "value": "NFLX",
+        "status": "INFERRED",
+        "evidence": "DIRECTORY-NAME FALLBACK, approved by Andrew-direct 2026-09-13 ~04:0xZ ('all recs approved', card 6) WITH THE CONDITION that every inferred value is MARKED AS INFERRED. Rule: bare ROOT read off the directory's trailing token, no exchange code present. Source: the research directory's own display name 'Netflix NFLX' -- this is a read of WHOEVER NAMED THE DIRECTORY's belief about the identity, NOT an independent confirmation of it.",
+        "resolved_at": "2026-09-13T04:13Z"
+      }
+    },
+    {
+      "folder": "Nike NKE US",
+      "bloomberg_ticker": {
+        "value": "NKE US",
+        "status": "INFERRED",
+        "evidence": "DIRECTORY-NAME FALLBACK, approved by Andrew-direct 2026-09-13 ~04:0xZ ('all recs approved', card 6) WITH THE CONDITION that every inferred value is MARKED AS INFERRED. Rule: ROOT + exchange code read off the directory's trailing tokens. Source: the research directory's own display name 'Nike NKE US' -- this is a read of WHOEVER NAMED THE DIRECTORY's belief about the identity, NOT an independent confirmation of it.",
+        "resolved_at": "2026-09-13T04:13Z"
+      }
+    },
+    {
+      "folder": "Orange ORA FP",
+      "bloomberg_ticker": {
+        "value": "ORA FP",
+        "status": "INFERRED",
+        "evidence": "DIRECTORY-NAME FALLBACK, approved by Andrew-direct 2026-09-13 ~04:0xZ ('all recs approved', card 6) WITH THE CONDITION that every inferred value is MARKED AS INFERRED. Rule: ROOT + exchange code read off the directory's trailing tokens. Source: the research directory's own display name 'Orange ORA FP' -- this is a read of WHOEVER NAMED THE DIRECTORY's belief about the identity, NOT an independent confirmation of it.",
+        "resolved_at": "2026-09-13T04:13Z"
+      }
+    },
+    {
+      "folder": "QXO",
+      "bloomberg_ticker": {
+        "value": "QXO",
+        "status": "INFERRED",
+        "evidence": "DIRECTORY-NAME FALLBACK, approved by Andrew-direct 2026-09-13 ~04:0xZ ('all recs approved', card 6) WITH THE CONDITION that every inferred value is MARKED AS INFERRED. Rule: bare ROOT read off the directory's trailing token, no exchange code present. Source: the research directory's own display name 'QXO' -- this is a read of WHOEVER NAMED THE DIRECTORY's belief about the identity, NOT an independent confirmation of it.",
+        "resolved_at": "2026-09-13T04:13Z"
+      }
+    },
+    {
+      "folder": "Rio Tinto RIO LN",
+      "bloomberg_ticker": {
+        "value": "RIO LN",
+        "status": "INFERRED",
+        "evidence": "DIRECTORY-NAME FALLBACK, approved by Andrew-direct 2026-09-13 ~04:0xZ ('all recs approved', card 6) WITH THE CONDITION that every inferred value is MARKED AS INFERRED. Rule: ROOT + exchange code read off the directory's trailing tokens. Source: the research directory's own display name 'Rio Tinto RIO LN' -- this is a read of WHOEVER NAMED THE DIRECTORY's belief about the identity, NOT an independent confirmation of it.",
+        "resolved_at": "2026-09-13T04:13Z"
+      }
+    },
+    {
+      "folder": "Sanofi SAN FP",
+      "bloomberg_ticker": {
+        "value": "SAN FP",
+        "status": "INFERRED",
+        "evidence": "DIRECTORY-NAME FALLBACK, approved by Andrew-direct 2026-09-13 ~04:0xZ ('all recs approved', card 6) WITH THE CONDITION that every inferred value is MARKED AS INFERRED. Rule: ROOT + exchange code read off the directory's trailing tokens. Source: the research directory's own display name 'Sanofi SAN FP' -- this is a read of WHOEVER NAMED THE DIRECTORY's belief about the identity, NOT an independent confirmation of it.",
+        "resolved_at": "2026-09-13T04:13Z"
+      }
+    },
+    {
+      "folder": "ServiceNow NOW US",
+      "bloomberg_ticker": {
+        "value": "NOW US",
+        "status": "INFERRED",
+        "evidence": "DIRECTORY-NAME FALLBACK, approved by Andrew-direct 2026-09-13 ~04:0xZ ('all recs approved', card 6) WITH THE CONDITION that every inferred value is MARKED AS INFERRED. Rule: ROOT + exchange code read off the directory's trailing tokens. Source: the research directory's own display name 'ServiceNow NOW US' -- this is a read of WHOEVER NAMED THE DIRECTORY's belief about the identity, NOT an independent confirmation of it.",
+        "resolved_at": "2026-09-13T04:13Z"
+      }
+    },
+    {
+      "folder": "Shopify SHOP CA",
+      "bloomberg_ticker": {
+        "value": "SHOP CA",
+        "status": "INFERRED",
+        "evidence": "DIRECTORY-NAME FALLBACK, approved by Andrew-direct 2026-09-13 ~04:0xZ ('all recs approved', card 6) WITH THE CONDITION that every inferred value is MARKED AS INFERRED. Rule: ROOT + exchange code read off the directory's trailing tokens. Source: the research directory's own display name 'Shopify SHOP CA' -- this is a read of WHOEVER NAMED THE DIRECTORY's belief about the identity, NOT an independent confirmation of it.",
+        "resolved_at": "2026-09-13T04:13Z"
+      }
+    },
+    {
+      "folder": "Spotify SPOT US",
+      "bloomberg_ticker": {
+        "value": "SPOT US",
+        "status": "INFERRED",
+        "evidence": "DIRECTORY-NAME FALLBACK, approved by Andrew-direct 2026-09-13 ~04:0xZ ('all recs approved', card 6) WITH THE CONDITION that every inferred value is MARKED AS INFERRED. Rule: ROOT + exchange code read off the directory's trailing tokens. Source: the research directory's own display name 'Spotify SPOT US' -- this is a read of WHOEVER NAMED THE DIRECTORY's belief about the identity, NOT an independent confirmation of it.",
+        "resolved_at": "2026-09-13T04:13Z"
+      }
+    },
+    {
+      "folder": "Sumitomo Mitsui Financial Group 8316 JP",
+      "bloomberg_ticker": {
+        "value": "8316 JP",
+        "status": "INFERRED",
+        "evidence": "DIRECTORY-NAME FALLBACK, approved by Andrew-direct 2026-09-13 ~04:0xZ ('all recs approved', card 6) WITH THE CONDITION that every inferred value is MARKED AS INFERRED. Rule: ROOT + exchange code read off the directory's trailing tokens. Source: the research directory's own display name 'Sumitomo Mitsui Financial Group 8316 JP' -- this is a read of WHOEVER NAMED THE DIRECTORY's belief about the identity, NOT an independent confirmation of it.",
+        "resolved_at": "2026-09-13T04:13Z"
+      }
+    },
+    {
+      "folder": "Synopsys SNPS US",
+      "bloomberg_ticker": {
+        "value": "SNPS US",
+        "status": "INFERRED",
+        "evidence": "DIRECTORY-NAME FALLBACK, approved by Andrew-direct 2026-09-13 ~04:0xZ ('all recs approved', card 6) WITH THE CONDITION that every inferred value is MARKED AS INFERRED. Rule: ROOT + exchange code read off the directory's trailing tokens. Source: the research directory's own display name 'Synopsys SNPS US' -- this is a read of WHOEVER NAMED THE DIRECTORY's belief about the identity, NOT an independent confirmation of it.",
+        "resolved_at": "2026-09-13T04:13Z"
+      }
+    },
+    {
+      "folder": "Taiwan Semiconductor Manufacturing TSM US",
+      "bloomberg_ticker": {
+        "value": "TSM US",
+        "status": "INFERRED",
+        "evidence": "DIRECTORY-NAME FALLBACK, approved by Andrew-direct 2026-09-13 ~04:0xZ ('all recs approved', card 6) WITH THE CONDITION that every inferred value is MARKED AS INFERRED. Rule: ROOT + exchange code read off the directory's trailing tokens. Source: the research directory's own display name 'Taiwan Semiconductor Manufacturing TSM US' -- this is a read of WHOEVER NAMED THE DIRECTORY's belief about the identity, NOT an independent confirmation of it.",
+        "resolved_at": "2026-09-13T04:13Z"
+      }
+    },
+    {
+      "folder": "Telefonica Brazil VIVT3 BZ",
+      "bloomberg_ticker": {
+        "value": "VIVT3 BZ",
+        "status": "INFERRED",
+        "evidence": "DIRECTORY-NAME FALLBACK, approved by Andrew-direct 2026-09-13 ~04:0xZ ('all recs approved', card 6) WITH THE CONDITION that every inferred value is MARKED AS INFERRED. Rule: ROOT + exchange code read off the directory's trailing tokens. Source: the research directory's own display name 'Telefonica Brazil VIVT3 BZ' -- this is a read of WHOEVER NAMED THE DIRECTORY's belief about the identity, NOT an independent confirmation of it.",
+        "resolved_at": "2026-09-13T04:13Z"
+      }
+    },
+    {
+      "folder": "Tokyo Electron 8035 JP",
+      "bloomberg_ticker": {
+        "value": "8035 JP",
+        "status": "INFERRED",
+        "evidence": "DIRECTORY-NAME FALLBACK, approved by Andrew-direct 2026-09-13 ~04:0xZ ('all recs approved', card 6) WITH THE CONDITION that every inferred value is MARKED AS INFERRED. Rule: ROOT + exchange code read off the directory's trailing tokens. Source: the research directory's own display name 'Tokyo Electron 8035 JP' -- this is a read of WHOEVER NAMED THE DIRECTORY's belief about the identity, NOT an independent confirmation of it.",
+        "resolved_at": "2026-09-13T04:13Z"
+      }
+    },
+    {
+      "folder": "Tokyo Marine 8766 JP",
+      "bloomberg_ticker": {
+        "value": "8766 JP",
+        "status": "INFERRED",
+        "evidence": "DIRECTORY-NAME FALLBACK, approved by Andrew-direct 2026-09-13 ~04:0xZ ('all recs approved', card 6) WITH THE CONDITION that every inferred value is MARKED AS INFERRED. Rule: ROOT + exchange code read off the directory's trailing tokens. Source: the research directory's own display name 'Tokyo Marine 8766 JP' -- this is a read of WHOEVER NAMED THE DIRECTORY's belief about the identity, NOT an independent confirmation of it.",
+        "resolved_at": "2026-09-13T04:13Z"
+      }
+    },
+    {
+      "folder": "Total Energies TTE FP",
+      "bloomberg_ticker": {
+        "value": "TTE FP",
+        "status": "INFERRED",
+        "evidence": "DIRECTORY-NAME FALLBACK, approved by Andrew-direct 2026-09-13 ~04:0xZ ('all recs approved', card 6) WITH THE CONDITION that every inferred value is MARKED AS INFERRED. Rule: ROOT + exchange code read off the directory's trailing tokens. Source: the research directory's own display name 'Total Energies TTE FP' -- this is a read of WHOEVER NAMED THE DIRECTORY's belief about the identity, NOT an independent confirmation of it.",
+        "resolved_at": "2026-09-13T04:13Z"
+      }
+    },
+    {
+      "folder": "UBS",
+      "bloomberg_ticker": {
+        "value": "UBS",
+        "status": "INFERRED",
+        "evidence": "DIRECTORY-NAME FALLBACK, approved by Andrew-direct 2026-09-13 ~04:0xZ ('all recs approved', card 6) WITH THE CONDITION that every inferred value is MARKED AS INFERRED. Rule: bare ROOT read off the directory's trailing token, no exchange code present. Source: the research directory's own display name 'UBS' -- this is a read of WHOEVER NAMED THE DIRECTORY's belief about the identity, NOT an independent confirmation of it.",
+        "resolved_at": "2026-09-13T04:13Z"
+      }
+    },
+    {
+      "folder": "Uber Technologies UBER US",
+      "bloomberg_ticker": {
+        "value": "UBER US",
+        "status": "INFERRED",
+        "evidence": "DIRECTORY-NAME FALLBACK, approved by Andrew-direct 2026-09-13 ~04:0xZ ('all recs approved', card 6) WITH THE CONDITION that every inferred value is MARKED AS INFERRED. Rule: ROOT + exchange code read off the directory's trailing tokens. Source: the research directory's own display name 'Uber Technologies UBER US' -- this is a read of WHOEVER NAMED THE DIRECTORY's belief about the identity, NOT an independent confirmation of it.",
+        "resolved_at": "2026-09-13T04:13Z"
+      }
+    },
+    {
+      "folder": "Universal Music Group UMG NL",
+      "bloomberg_ticker": {
+        "value": "UMG NL",
+        "status": "INFERRED",
+        "evidence": "DIRECTORY-NAME FALLBACK, approved by Andrew-direct 2026-09-13 ~04:0xZ ('all recs approved', card 6) WITH THE CONDITION that every inferred value is MARKED AS INFERRED. Rule: ROOT + exchange code read off the directory's trailing tokens. Source: the research directory's own display name 'Universal Music Group UMG NL' -- this is a read of WHOEVER NAMED THE DIRECTORY's belief about the identity, NOT an independent confirmation of it.",
+        "resolved_at": "2026-09-13T04:13Z"
+      }
+    },
+    {
+      "folder": "Visa V",
+      "bloomberg_ticker": {
+        "value": "V",
+        "status": "INFERRED",
+        "evidence": "DIRECTORY-NAME FALLBACK, approved by Andrew-direct 2026-09-13 ~04:0xZ ('all recs approved', card 6) WITH THE CONDITION that every inferred value is MARKED AS INFERRED. Rule: bare ROOT read off the directory's trailing token, no exchange code present. Source: the research directory's own display name 'Visa V' -- this is a read of WHOEVER NAMED THE DIRECTORY's belief about the identity, NOT an independent confirmation of it.",
+        "resolved_at": "2026-09-13T04:13Z"
+      }
+    },
+    {
+      "folder": "Workday WDAY US",
+      "bloomberg_ticker": {
+        "value": "WDAY US",
+        "status": "INFERRED",
+        "evidence": "DIRECTORY-NAME FALLBACK, approved by Andrew-direct 2026-09-13 ~04:0xZ ('all recs approved', card 6) WITH THE CONDITION that every inferred value is MARKED AS INFERRED. Rule: ROOT + exchange code read off the directory's trailing tokens. Source: the research directory's own display name 'Workday WDAY US' -- this is a read of WHOEVER NAMED THE DIRECTORY's belief about the identity, NOT an independent confirmation of it.",
+        "resolved_at": "2026-09-13T04:13Z"
+      }
+    },
+    {
+      "folder": "Zoetis ZTS US",
+      "bloomberg_ticker": {
+        "value": "ZTS US",
+        "status": "INFERRED",
+        "evidence": "DIRECTORY-NAME FALLBACK, approved by Andrew-direct 2026-09-13 ~04:0xZ ('all recs approved', card 6) WITH THE CONDITION that every inferred value is MARKED AS INFERRED. Rule: ROOT + exchange code read off the directory's trailing tokens. Source: the research directory's own display name 'Zoetis ZTS US' -- this is a read of WHOEVER NAMED THE DIRECTORY's belief about the identity, NOT an independent confirmation of it.",
+        "resolved_at": "2026-09-13T04:13Z"
+      }
+    }
+  ],
+  "still_unresolved": [
+    {
+      "folder": "British American Tobacco",
+      "bloomberg_ticker": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "DIRECTORY-NAME FALLBACK, approved by Andrew-direct 2026-09-13 ~04:0xZ ('all recs approved', card 6) WITH THE CONDITION that every inferred value is MARKED AS INFERRED. Rule: no Bloomberg-shaped trailing token in the directory name. Source: the research directory's own display name 'British American Tobacco' -- this is a read of WHOEVER NAMED THE DIRECTORY's belief about the identity, NOT an independent confirmation of it.",
+        "resolved_at": "2026-09-13T04:13Z"
+      }
+    },
+    {
+      "folder": "China Construction Bank",
+      "bloomberg_ticker": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "DIRECTORY-NAME FALLBACK, approved by Andrew-direct 2026-09-13 ~04:0xZ ('all recs approved', card 6) WITH THE CONDITION that every inferred value is MARKED AS INFERRED. Rule: no Bloomberg-shaped trailing token in the directory name. Source: the research directory's own display name 'China Construction Bank' -- this is a read of WHOEVER NAMED THE DIRECTORY's belief about the identity, NOT an independent confirmation of it.",
+        "resolved_at": "2026-09-13T04:13Z"
+      }
+    },
+    {
+      "folder": "Coca Cola Femsa",
+      "bloomberg_ticker": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "DIRECTORY-NAME FALLBACK, approved by Andrew-direct 2026-09-13 ~04:0xZ ('all recs approved', card 6) WITH THE CONDITION that every inferred value is MARKED AS INFERRED. Rule: no Bloomberg-shaped trailing token in the directory name. Source: the research directory's own display name 'Coca Cola Femsa' -- this is a read of WHOEVER NAMED THE DIRECTORY's belief about the identity, NOT an independent confirmation of it.",
+        "resolved_at": "2026-09-13T04:13Z"
+      }
+    },
+    {
+      "folder": "International Container Terminals",
+      "bloomberg_ticker": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "DIRECTORY-NAME FALLBACK, approved by Andrew-direct 2026-09-13 ~04:0xZ ('all recs approved', card 6) WITH THE CONDITION that every inferred value is MARKED AS INFERRED. Rule: no Bloomberg-shaped trailing token in the directory name. Source: the research directory's own display name 'International Container Terminals' -- this is a read of WHOEVER NAMED THE DIRECTORY's belief about the identity, NOT an independent confirmation of it.",
+        "resolved_at": "2026-09-13T04:13Z"
+      }
+    },
+    {
+      "folder": "Mastercard MA",
+      "bloomberg_ticker": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "DIRECTORY-NAME FALLBACK, approved by Andrew-direct 2026-09-13 ~04:0xZ ('all recs approved', card 6) WITH THE CONDITION that every inferred value is MARKED AS INFERRED. Rule: AMBIGUOUS: a bare 2-letter trailing token is indistinguishable from an exchange code (the design question's own named failure mode, e.g. Nokia FH). Source: the research directory's own display name 'Mastercard MA' -- this is a read of WHOEVER NAMED THE DIRECTORY's belief about the identity, NOT an independent confirmation of it.",
+        "resolved_at": "2026-09-13T04:13Z"
+      }
+    },
+    {
+      "folder": "Nokia FH",
+      "bloomberg_ticker": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "DIRECTORY-NAME FALLBACK, approved by Andrew-direct 2026-09-13 ~04:0xZ ('all recs approved', card 6) WITH THE CONDITION that every inferred value is MARKED AS INFERRED. Rule: AMBIGUOUS: a bare 2-letter trailing token is indistinguishable from an exchange code (the design question's own named failure mode, e.g. Nokia FH). Source: the research directory's own display name 'Nokia FH' -- this is a read of WHOEVER NAMED THE DIRECTORY's belief about the identity, NOT an independent confirmation of it.",
+        "resolved_at": "2026-09-13T04:13Z"
+      }
+    }
+  ]
+}
