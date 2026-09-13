@@ -320,6 +320,27 @@ browser-driven criteria (negative controls). A limb that cannot tell those two s
 10. **TWO CHEAP WIRE FIXES** -- W2-S12/W3-S5 and W1-S20 (C-S71).
 11. **THE SMOKE CHECK** -- W1-S36 (C-S72). Item 3 also carries W1-S35.
 
+### ⛔ CORRECTION TO ITEM 11 -- IT WAS ALREADY FIXED; THIS SEAT RELAYED A STALE READ
+`2.0.0_SA_COO~F` (msg 96406) measured it and this seat re-read it on a third instrument: `scripts/ui-smoke.mjs:341` at
+portal c2eb8eb4 reads `state.loc === new URL(ORIGIN + route).pathname` -- pathname against pathname. It changed at
+**`25062fce`** (FE-s-22, 2026-09-12, an ancestor of c2eb8eb4) from `state.loc === route`, the line W1-S36 describes, and
+FE-s-22 proved both arms (F22-AC6 landed query route, F22-AC7 genuinely bad route). **C-S72's "STILL LIVE at c2eb8eb4"
+was stale, and this seat put it into round 5 without re-reading the line** -- the exact shape its own memory warns of
+(a correcting seat's cited read taken on trust). **Item 11 is WITHDRAWN.** W1-S35 still rides item 3.
+
+### `2.0.0_SA_COO~F`'s THREE CUT DECISIONS (msg 96406) -- ANSWERED BEFORE ISSUANCE
+1. **RULING H partitions on `Availability.producerState`, not the view state -- CONFIRMED, it is what the ruling
+   meant.** "The report's state" is the producer's. A body carrying no wire state falls back to
+   `EXPLICIT_UNKNOWN_STATE = 'UNCERTAIN'` in the view, and it must never render as an answer; F19-AC5 stays green.
+2. **RULING Q's limb goes in `proof-of-spec-check`, scope declared on the criterion -- ACCEPTED ON ONE CONDITION: the
+   declaration is MANDATORY, never opt-in.** As proposed, a criterion enters scope by carrying `drives="network"`, so a
+   seeded criterion cut without the attribute escapes -- which rebuilds C-S67's objection ("a ruling an issuer must
+   remember") inside the fix. **So every NEW IRPT_FNTEND criterion declares `drives="network"` or `drives="none"`, and a
+   new instance whose criterion declares neither is REFUSED** -- the shape gate (viii) already uses for
+   `<placeholders>`, where an explicit NONE is enforcement, not a waiver. Legacy instances ANNOUNCE. The discriminator
+   stands as ruled: it refuses round 2's seeded criteria and passes the fe-s-19 browser criteria.
+3. **RULING N in wave B, not at the head -- CONFIRMED.** It grades newly-added orders only, so it cannot grade round 5.
+
 ---
 
 **Push state:** LOCAL at commit; stated as measured in the commit report, not here, because it ages.
