@@ -1,12 +1,12 @@
 {
   "prd": "LGIC_NAMING_PRD.md",
-  "prd_version": "v1.0",
-  "prd_pin": "c65a169ba0b28d86e3547bd0d1182f444bcb3719",
+  "prd_version": "v1.1",
+  "prd_pin": "b75a62552de35b352d18b05c157cec9ef21fa050",
   "half": "brief",
-  "half_hash": "45ffd5fc3dc15e9dfa689047dfefac5bde613ad1739377a348280529c142eed7",
-  "verdict": "REFUSED",
-  "review_ref": "org/tier1_exec/4.0.0_SA_CRO/deliverables/PRD_REVIEW_LGIC_NAMING_v1.0_BRIEF_HALF_20260913.md@1e4e3e10fd",
+  "half_hash": "66f3385876b513a598e3e32abe331947d0ff8306390c6b32d8f07498fe03ee59",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/4.0.0_SA_CRO/deliverables/PRD_REVIEW_LGIC_NAMING_v1.1_BRIEF_HALF_20260913.md@98ff34e45f",
   "signed_by": "4.0.0_SA_CRO~D",
-  "signed_at": "2026-09-13T22:31:10Z",
-  "reason": "R1: NAMING_SCHEMA.json kind.by_type keys CODEBUILD/ECS_TASK are not CloudNode node_type strings; graders RAISE by construction. R2: enumerate the 17 types not graded by kind. Bump v1.1 touches the data file + S7 only."
+  "signed_at": "2026-09-13T22:51:02Z",
+  "reason": "v1.1: R1/R2 fixed as named; lb/cluster accepted (subtraction, not widening); bump scope verified from the diff"
 }
