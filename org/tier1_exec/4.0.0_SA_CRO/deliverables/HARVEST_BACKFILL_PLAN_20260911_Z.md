@@ -316,3 +316,69 @@ cover a local site-Z backfill"*. The corrected picture is that **every remaining
 identity step this brief offered as free -- sits behind that word or behind the design call above.**
 There is no longer a "start here while deciding" item, and §7's ordering still holds: identity first,
 because a backfill against 10 of 89 names is the more expensive mistake.
+
+---
+
+## 11. THE ANALYTICS HALF (Andrew-direct 2026-09-13 ~03:2xZ) -- WHAT THE BACKFILL MUST DELIVER FOR THE `*harvest` ANALYTICS TO MEAN ANYTHING
+
+⛔ **ADDED BECAUSE HIS DIRECTION NAMES TWO THINGS AND §1-10 SPEC ONLY ONE.** Verbatim: *"the backfill
+for the news in the opal-data-harvest and assocaited \*harvest analytics need to be figured out"*.
+Sections 1-10 spec ACQUISITION. This section specs what the analytics REQUIRE of it -- read from the
+producer's own constants, not proposed.
+
+### The consumer's ratified constants, read at source
+
+`lib/research/metrics/chatter_gate.py`: **`WINDOW_DAYS = 30`**, `TOP_N = 10`, `SCORE_MIN/MAX 0..100`.
+`lib/research/metrics/chatter_axis.py` computes **TWO ranking products every run**:
+
+| product | ranks by | what it needs from the store |
+|---|---|---|
+| `TRENDING_CHATTER#<as_of>` | absolute chatter volume **ON the as-of day** | that ONE day populated |
+| `BREAKOUT_CHATTER#<as_of>` | percentage jump of that day **against the trailing baseline** | the as-of day **AND the 29 days before it** |
+
+⛔ **AND BREAKOUT CARRIES A RATIFIED FLOOR: a minimum ABSOLUTE jump of 3 RAW MENTIONS.** The module's
+own words: against an all-zero baseline *"no ticker gains the ratified minimum absolute jump (3 raw
+mentions) ... so NO ticker"* ranks. **A perfect 30-day backfill that yields 1-2 mentions for a ticker
+produces NOTHING for that ticker on the breakout axis.**
+
+### ⭐ SO ANDREW'S OWN INSTRUCTION ALREADY MATCHED THE CODE, AND NOBODY HAD CONNECTED THEM
+
+His original words for this brief were *"at least a month, preferably as far back as jan 1"*. Measured
+against `WINDOW_DAYS = 30`:
+- **"AT LEAST A MONTH" IS EXACTLY THE MINIMUM VIABLE BACKFILL** -- it is the smallest history that
+  makes ONE day's BREAKOUT computable, because the baseline is the 29 days before the as-of day.
+  One day short and breakout ranks on a truncated baseline; a month gives exactly one valid as-of day.
+- **"PREFERABLY BACK TO JAN 1" IS WHAT MAKES THE AXIS RECOMPUTABLE FOR ANY PAST DATE.** With ~8 months
+  of history the axis can be run for any historical `as_of_date`, so the ranking becomes a time series
+  rather than a single snapshot -- and a wrong ranking today can be re-derived rather than re-harvested.
+**His month/Jan-1 pair was not a rough preference. It is the minimum and the useful target of the
+consumer's own ratified window, and the two land on the same numbers.**
+
+### THE THREE THINGS THE BACKFILL MUST DELIVER, in acceptance terms
+
+1. **DATE COVERAGE >= 30 CONSECUTIVE DAYS per ticker**, ending at the intended as-of date. Below that
+   BREAKOUT is not merely weak, it is **uncomputable** -- the baseline does not exist.
+2. **PER-TICKER DENSITY >= 3 MENTIONS on any day expected to rank.** Date range alone is insufficient:
+   a sparse ticker with full date coverage still ranks nowhere. **Density is a separate axis from
+   coverage and the brief's §7 pacing plan optimises only coverage.**
+3. **`published_at` PRESENT AND CORRECT ON EVERY ROW.** The producer reads the window by
+   `published_at` via the GSI and never reads an article body. **A row with a wrong or missing
+   `published_at` is invisible to the axis no matter what else it carries** -- so a backfill that
+   captures content but loses the date is worth nothing to this consumer.
+
+### WHAT THIS CHANGES IN §7's PLAN, AND IT IS ONE LINE
+
+§7 sequences acquisition by publication and paces by rate limit. **It should sequence by TICKER-WINDOW
+COMPLETENESS instead**: a ticker with 30 unbroken days is worth more than three tickers with ten days
+each, because the first produces a rankable signal and the second produces none. **Finish a ticker's
+window before starting the next.** Same total calls, same pacing, different order, and the difference
+is whether the analytics can run at all before the sweep completes.
+⚠ NOT CHANGED: §0's identity finding still binds and is upstream of all of this. **A perfect backfill
+against 10 resolvable SA symbols of 89 still feeds the axis 10 tickers.** Density and coverage are
+requirements on names we can already identify; they do not substitute for the identity work.
+
+### PRECONDITION, NAMED AS 22186 ASKS
+
+**This section needs no harvester box and no vendor word.** It is read from the consumer's committed
+constants and is executable as an acceptance spec the day acquisition begins. **The DESIGN is not
+blocked; only the EXECUTION is**, and by exactly the items in §8 plus the box.
