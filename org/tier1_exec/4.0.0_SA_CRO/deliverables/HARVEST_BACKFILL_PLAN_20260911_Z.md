@@ -382,3 +382,64 @@ requirements on names we can already identify; they do not substitute for the id
 **This section needs no harvester box and no vendor word.** It is read from the consumer's committed
 constants and is executable as an acceptance spec the day acquisition begins. **The DESIGN is not
 blocked; only the EXECUTION is**, and by exactly the items in §8 plus the box.
+
+---
+
+## 12. ANDREW'S RULINGS (2026-09-13 ~03:3xZ) FOLDED IN -- AND THE GRANTED ROUTE IS MEASURED DOWN
+
+### What he cleared, verbatim-scoped
+
+| his item | ruling | what it unblocks here |
+|---|---|---|
+| social data trigger | **GRANTED, on BRIGHT DATA SPECIFICALLY.** *"They can do that ... i was expecting that they would use bright data"* | `social_account` 0/89 |
+| another provider | *"could be ok but need more details on who that is"* -- **a FRESH ASK naming the provider, not a granted one** | -- |
+| drafting model | **`5.6-Sol`** | out of this brief's lane |
+| terminal count | **89**, *"they do have egress for 89"* | the classification pass |
+| the condition on it | *"be parsimonious about pulls until the shape and info is confirmed so we dont waste data quota on broken calls"* -- **A SEQUENCE, NOT A CAP** | §7 pacing |
+| publications | **FT, WSJ, SA, BBG** -- "the four harvest publications" | §2's set, confirmed |
+| ⭐ **SCOPE ADDITION he volunteered** | SERP to find these companies' **INVESTOR RELATIONS pages and any blogs on their own sites**; *"scraping that stuff is fine and in scope"* | **`ir_domain` 0/89, and a SOURCE this brief did not have** |
+
+⛔ **WHAT HE DID NOT ANSWER AND THIS BRIEF DOES NOT INFER:** who OWNS the publisher list and the
+company-to-social map. He gave the list's CONTENTS and named no owner. **A list with four correct
+entries and no owner is exactly what FWD-14 exists to catch.**
+⚠ **AND THE HARVESTER BOX IS STILL THE CLOCK ON THE FOUR-PUBLICATION PERMISSION.** These rulings do
+not re-scope that, and this brief does not read them as doing so.
+
+### ⛔ THE GRANTED ROUTE IS DOWN. MEASURED, TWO ARMS, ZERO QUOTA SPENT.
+
+His words assume the capability is in hand: *"for which they should have the mcp and should be able to
+figure it out."* Tested immediately, on the smallest possible probe, exactly as his parsimony
+instruction directs:
+```
+mcp__brightdata__search_engine   "AstraZeneca investor relations official site"
+   -> HTTP 400 dialing https://mcp.brightdata.com/sse?token=REDACTED
+mcp__brightdata__scrape_as_markdown   https://www.astrazeneca.com/investor-relations.html
+   -> HTTP 400 dialing https://mcp.brightdata.com/sse?token=REDACTED
+```
+**TWO DIFFERENT TOOLS, IDENTICAL FAILURE AT THE DIAL STAGE.** That isolates it to the TRANSPORT or the
+TOKEN, not to a malformed query or one broken tool.
+⭐ **AND THE FAILURE COST NOTHING, WHICH IS THE POINT OF HIS OWN INSTRUCTION.** The call never reached
+the API, so no data quota was consumed. **"Be parsimonious until the shape is confirmed" earned its
+keep on the first probe: a 1-call test found a broken route before an 89-name sweep could waste
+anything on it.**
+⚠ **NOT DIAGNOSED AND NOT THIS SEAT'S SURFACE:** whether the token is expired, the endpoint moved, or
+the account is unprovisioned. Reported as a state, not a cause.
+
+### THE ONE NARROW QUESTION THIS RAISES, WHICH IS HIS AND IS NOT ASSUMED
+
+The estate holds an **official Google Custom Search API key and engine id** (`google-cse-config`) --
+a DIFFERENT provider from Bright Data. His social-trigger grant names Bright Data and says another
+provider needs *"more details on who that is"*; his SERP/IR-pages sentence names no provider at all.
+⛔ **THOSE ARE TWO DIFFERENT SENTENCES AND THIS SEAT WILL NOT MERGE THEM.** Reading "use SERP" as
+covering a provider he did not name would be exactly the widening the estate forbids.
+**THE ASK, one line: does the IR-page/blog SERP work run on the Google CSE key the estate already
+holds, or does it wait for Bright Data to be repaired?** Either answer unblocks it; the question is
+which route is authorised, not whether the work is.
+
+### What proceeds WITHOUT any further word, right now
+
+- §11's acceptance requirements -- coverage >= 30 days, density >= 3 mentions, `published_at` correct
+  -- are read from committed constants and need no vendor at all.
+- §7's re-sequencing to TICKER-WINDOW COMPLETENESS is a plan change, not a call.
+- The identity layer's `bloomberg_ticker` gap (55 of 89) is still gated on the **directory-name
+  fallback**, which remains HIS unanswered design question and is the one lever needing no vendor.
