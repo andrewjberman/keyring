@@ -219,7 +219,17 @@ the exact moment both runs would have said STALLED, the owner was mid-adjudicati
 ⛔ **AND IT IS NOT COSMETIC. A LABEL THAT IS MERELY IMPRECISE IN A REPORT BECOMES A WRONG PREMISE WHEN
 A LATER SEAT ACTS ON IT** -- the natural next act on `STALLED-AT-OWNER` is a nudge, then an
 escalation, then a kill, and `2.0.0_SA_COO~ZZZ` had already fired that ladder to `[STUCK]` before a
-worktree probe overturned it. A kill on that reading would have destroyed 189 KB of uncommitted work.
+worktree probe overturned it. A kill on that reading would have destroyed the seat's IN-FLIGHT
+CONTEXT mid-adjudication.
+⛔ **CORRECTED 2026-09-13 BY `1.0.0_SA_CTO~Z`, DISCHARGING `AMGT_RESAPP-Z-S22`'s RESIDUAL: THIS LINE
+USED TO SAY A KILL "WOULD HAVE DESTROYED 189 KB OF UNCOMMITTED WORK" AND THAT IS FALSE.** Process
+termination loses in-flight context; **on-disk bytes persist absent a separate deletion**, and the
+189 KB was already written to four untracked files when the probe read them (`0.0.0_AB_MSTR~Z`
+21664, correcting its own earlier framing). ⚠ **THE CORRECTED CLAIM IS STILL A REASON NOT TO KILL,
+and the precision is the point: what a kill destroys is the UNFINISHED REASONING, which is
+unrecoverable, not the written bytes, which are not. A seat that believes a kill deletes FILES will
+also refuse a kill that is CORRECT** -- a false belief that an act destroys data is worse than a
+false belief that it is safe, because it removes a legitimate recovery from the menu.
 ⭐ **THE TWO HALVES ARE ONE CHANGE:** without the probe the value is unfalsifiable; without the value
 the probe has nowhere to report. Neither lands alone.
 ⛔ **A PLANE READ IS `MOVING` | `COLD` | `INCONCLUSIVE`, AND "DIRECTORY ABSENT" IS **INCONCLUSIVE**,
