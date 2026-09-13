@@ -139,3 +139,47 @@ is.**
 
 Two outcomes are the exception and neither is waiting on a person: **RESAPP's FWD-9** needs only
 the page served, and **ASTTAX's FWD-4** needs only a decision that it is still in scope.
+
+---
+
+## ADDENDUM, 2026-09-13 02:52Z -- ANSWERING "43 WORKORDERS, 0 OUTCOMES"
+
+**You asked how site Z has done 43+ work orders and achieved 0 outcomes.** The explanation brief is
+the operations seat's to write and it is coming. This addendum carries only the two facts that are
+this seat's to state, because the outcome list is this seat's artifact.
+
+### 1. The bars were set BEFORE the work, and none has ever been weakened
+
+An audit run at the laptop said, fairly, that it could not tell whether the "someone has actually
+done this" bars were set up front or added afterwards. They were set up front. Measured:
+
+```
+2026-09-10 14:57   the outcome cards land: 14 bars -- 13 "someone has used it", 1 "it is in place"
+2026-09-10 16:35   THE FIRST WORK ORDER IS CUT -- ninety-eight minutes later
+                   (and the first commit is a literal ancestor of the second, with a control)
+2026-09-11 08:36   the bars change ONCE: 14 -> 15. The added one is FWD-15, the Lead Panel,
+                   from your own frontend walkthrough -- and it arrived with the same hard bar.
+today             15 bars, unchanged since.
+```
+**No bar was ever lowered, swapped or quietly rewritten.** One outcome was added, on your word, and
+it came in at the same standard as the rest.
+
+### 2. The 43 and the 0 are measuring two different things, and both numbers are right
+
+The work orders measure **what was built**. The outcomes measure **whether a person has used it**.
+Nineteen of the twenty-one outcomes across both projects were written -- before any order existed --
+to close only when an analyst, or Adam, or a PM actually does the thing. **No quantity of finished
+orders can move them.**
+
+⚠ **AND THERE IS A REAL FINDING UNDERNEATH, WHICH THIS SEAT IS NOT GOING TO SOFTEN.** The audit's
+central point looks correct: the acceptance criteria were largely satisfiable on the *producing*
+side, so orders could all pass while the page still could not read what they produced. Round 7
+measured exactly that -- 107 producer-side tests passing, and the page joining **nought of 183**
+figures. This seat's own round-close read named it as that round's whole lesson before the audit
+existed, and the round now running is three pieces of work aimed squarely at it.
+
+**So the honest answer to your question is two sentences.** The orders built the system and the
+outcomes measure a person using it, which nobody can yet do because publishing is frozen and one
+decision is pending. And separately, until this week our acceptance bar mostly stopped at the
+producer's edge rather than at the screen -- that one is a real gap, it is being closed now, and it
+is not what the 43-to-0 gap is made of.
