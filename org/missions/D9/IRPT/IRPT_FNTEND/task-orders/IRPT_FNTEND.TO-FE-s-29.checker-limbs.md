@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_FNTEND~4</issued_to>
 <issued_by>2.0.0_SA_COO~F</issued_by>
 <issued_date>2026-09-13</issued_date>
-<status>blocked</status>
+<status>pending</status>
 
 **Directive:** D9 | **Fabric:** laptop | **PRD:** `../prd/IRPT_FNTEND_PRD.md` v0.6 @d1479bc5f0 (FIXTURES AND EVIDENCE) | **Decomp cell:** `FE-s-29` (round 5, v0.5 @a4ac61a1cf) | **outcome_ref:** the evidence plane | **depends_on:** none -- READY ROOT | **slot:** ~4 | **rows:** S53, S56, W4-S7, S42 (substrate half), C-S67
 
