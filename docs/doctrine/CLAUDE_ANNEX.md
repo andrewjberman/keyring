@@ -445,9 +445,14 @@ Doctrine: `docs/doctrine/A_VALUE_MUST_CARRY_ITS_CLAIM.md`.
     ⚠ **THIS CITATION READ `D8_...` UNTIL 2026-09-13 AND RESOLVED TO NOTHING** -- the file was
     renamed D8 -> D10 and the pointer was not, so Rule 17b's amendment history was unreachable from
     the law that cites it. Andrew ruled 2026-09-13 ~01:3xZ that D10's canon content FOLDS INTO D14,
-    so this path MOVES AGAIN when `0.0.0_AB_MSTR` lands that fold. It is pinned to the file that
-    EXISTS TODAY, never to the D14 path that does not yet -- a law pointer aimed at a future file is
-    the same dead citation with a later date. ⛔ The target's OWN text still says "superseded by
+    and that fold LANDED @`f8e647f026` -- **and this citation did NOT move, which is the point.**
+    ⛔ **THE TRIGGER IS THE ARTIFACT, NEVER THE REGISTER EVENT.** This path moves when a **D14 PRD
+    EXISTS** (`docs/architecture/` held none at the fold, measured) -- never when a register row says
+    the content folded. **A register row can record a move the FILE has not made, and 17b binds on
+    the file.** It is pinned to the file that EXISTS, never to a path that does not yet -- a law
+    pointer aimed at a future file is the same dead citation with a later date. ⚠ This line's FIRST
+    wording named the fold as the trigger and would have re-broken the citation minutes after it was
+    fixed; caught by `0.0.0_AB_MSTR` @96313 and corrected here. ⛔ The target's OWN text still says "superseded by
     D8" and "D8-1/D8-2" (:63, :249): the rename left stale references INSIDE it too, and that is
     the D10 PRD's to fix, not this law's.
 15. **Every gold/silver/bronze `.py` begins with `from __future__ import annotations`** (PEP-604 on py3.9 runners). **Gate-enforced ON EDIT** -- the gate fires on files you touch, NOT over the tree, so untouched legacy files are uncovered (measured 2026-08-25: 441 of 537 carry it, 82%; the residue is migration debt, not live violation).
