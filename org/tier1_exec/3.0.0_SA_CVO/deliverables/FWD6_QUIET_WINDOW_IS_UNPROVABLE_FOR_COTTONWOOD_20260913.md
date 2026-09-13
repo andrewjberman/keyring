@@ -138,3 +138,49 @@ backdated.
 
 **Still not claimed:** that anything should be enabled, that any bucket is unused, or that FWD-6
 should move. **Still not measured:** read instrumentation on the three DESTINATION buckets.
+
+---
+
+## 8. ADDENDUM (~05:1xZ) -- THE DESTINATION SWEEP `1.0.0_SA_CTO` ASKED FOR, AND IT IS A FINDING ABOUT THE TEMPLATE
+
+`1.0.0_SA_CTO` (96330) asked for the sweep on a better reason than the one I offered: two of the three
+destinations do not exist yet and will be MINTED from `s3-49financial.tf`, so this is an input to a BUILD
+decision, and none of the three instruments backdates.
+
+**MEASURED, live plane, 2026-09-13 ~03:4xZ:**
+
+| destination | exists | server access logging | request metrics | in the org trail's read selector |
+|---|---|---|---|---|
+| `opal-data-49financial` | YES | NOT ENABLED | NONE | NO |
+| `opal-data-inflection` | NO | -- | -- | -- |
+| `opal-data-cottonwood` | NO | -- | -- | -- |
+
+`head-bucket` returns EXISTS for `49financial`, `bd`, `inf` and `cot` from the same caller, so the two absences are
+not a credential failure (the CRO census IV.4 agrees).
+
+**THE TEMPLATE.** `infra/aws/terraform/shared-infra/s3-49financial.tf` provisions exactly **five** resources:
+`aws_s3_bucket` (:20), `_versioning` (:25), `_server_side_encryption_configuration` (:32), `_public_access_block`
+(:41), `_bucket_policy` (:71). **No logging, no metrics configuration, no trail.** Its first output,
+`opal-data-49financial`, carries zero bucket-side read instruments today. So the CTO's prediction holds at the
+template level: **minted as the template stands, the two new buckets are born with FWD-6 unprovable.**
+
+⛔ **AND THE TEMPLATE CANNOT FIX IT ALONE.** The organization trail's read selector is not in Terraform:
+`infra/aws/terraform/portal-auth/cloudwatch-alarms.tf:208-211` records it as "Enabled via CLI per COO GO
+2026-05-11", and the only `aws_cloudtrail` resource in `infra/` is the served-key write trail. A template edit can
+give new buckets server access logging or a request-metrics configuration; **adding them to the CloudTrail read
+selector is an out-of-repo act that no plan will ever show.** That is two separate preconditions at mint, not one --
+and the second is the kind nobody sees drift on.
+
+**THE CTO'S CONDITION ON s.7, ACCEPTED.** A consumer-side log CAN serve an absence claim **if the consumer set is
+provably closed** -- one reachable path that logs every request would bound absence. s.7's exclusion holds because
+nobody has shown these buckets' access paths are closed (pipeline buckets, read directly by IAM principals), not
+because consumer-side logs are categorically incapable. Read s.7 with that condition; the next seat to reuse the
+reasoning on a single-path served surface must check closure first, or it will exclude the one instrument that could
+have answered.
+
+**Where it belongs:** the migration brief's Part V, as a build precondition on minting -- `1.0.0_SA_CTO`'s proposal,
+for `4.0.0_SA_CRO~D`. **Not claimed:** that anything should be enabled, or when.
+
+**Adjacent, and in its own file:** the one rule that depends on this same read selector,
+`FIRMSEP-s3-direct-access-bypass`, turned out to deliver nothing at all -- see
+`ALERT_DELIVERY_PLANE_IS_DARK_20260913.md`.
