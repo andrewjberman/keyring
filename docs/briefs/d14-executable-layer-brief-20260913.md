@@ -227,7 +227,7 @@ remediation project to exist. Nothing needs the full ontology.
 ## REFS TO CARRY
 ```
   BRIEF PATH        docs/briefs/d14-executable-layer-brief-20260913.md
-  PROJECT           NONE-YET (a D14 member; L3 is 1.0.0_SA_CTO's)
+  PROJECT           LGIC_ENFORCE  (D14 / LGIC) (REGISTERED @f25395446e, Andrew ~21:3xZ "yes 2 all", record @464c1096d5; dep_stage REGISTERED, L4 next)
   EXISTING PRD      NONE. Consumes: d14-naming-schema-brief-20260913.md @bf21181208 (IV.2 schema, IV.6 vocabulary, IV.7 ranking)
   THE REFERENCE SET infra/logic/09_NAMING_CENSUS.md · 05_IDENTITY_SPINE @45160b1525 · 02_DOCTRINE @a49a7dca18 · 07_ROUTING_REDERIVATION
   RULINGS CARRIED   ANDREW_DIRECT_20260913_030xZ (commission) · 032xZ (source-first; two briefs; (b)-minimal; authoring-time) ·

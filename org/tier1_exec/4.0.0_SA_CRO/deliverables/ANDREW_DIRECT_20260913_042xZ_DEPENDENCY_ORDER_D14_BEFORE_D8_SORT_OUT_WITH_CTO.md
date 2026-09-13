@@ -48,3 +48,10 @@ builds the dedicated MDPF runner's host.
 
 **So the dependency order stands as sorted (s.2): (0) is down to the macro enums; (2) the derived fence may start on the
 three conditions; (3) waits on the D8 macro; D8 keys need nothing from D14; FWD-3 waits on the D14 registry.**
+
+## 5. STEP (0) CLOSED -- Andrew-direct ~21:3xZ at the `1.0.0_SA_CTO` terminal, "yes 2 all" (record `@464c1096d5`, relayed 96411)
+Macros RATIFIED as recommended: D14 = [LGIC]; D8 += [ADVI]. REGISTERED `@f25395446e`: LGIC_CANON, LGIC_NAMING,
+LGIC_ENFORCE (D14/LGIC) and ADVI_FIRMBKTS (D8/ADVI); MDPF_CANON was registered earlier `@003034456d`. Nothing in the
+order waits on his word any more; L4 is the CTO's, starting where his ~19:2xZ priority points ("the Logic projects into
+the MDPF and so on"). Also ruled the same frame: a COO lane seated for ONE order (read logging + FIRMSEP drops cot in
+the same change, remedy (a)); FIRMSEP's future NOT ruled.

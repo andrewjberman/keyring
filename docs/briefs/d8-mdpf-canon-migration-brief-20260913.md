@@ -315,7 +315,7 @@ producer's output. O1 retires it by REPLACING the producer's output, which no ki
 
 ```
   BRIEF PATH        docs/briefs/d8-mdpf-canon-migration-brief-20260913.md
-  PROJECT           MDPF_CANON is the PRD's name and is UNREGISTERED; the CODE is 1.0.0_SA_CTO's at L3
+  PROJECT           MDPF_CANON  (D8 / MDPF) -- REGISTERED @003034456d (CTO L3, ~04:4xZ); its L4 runs in parallel with LGIC_NAMING's for five of eight outcomes
   EXISTING PRD      docs/architecture/MDPF_CANON_PRD.md v1.0 (TARGET half; carries A-1/A-2/A-3, B1/B2, s.5b obligations)
                     + docs/architecture/MDPF_PIPELINE_RESOURCE_INVENTORY.md @3fae717c83 (the CURRENT half, vintage 08-25)
   SIBLING BRIEF     docs/briefs/d8-legacy-firm-buckets-migration-brief-20260913.md @2ffcf91342 (IV.5 path string,

@@ -224,7 +224,7 @@ closed registry (IV.6); a project code is never a system; `opal` is reserved for
 ## REFS TO CARRY
 ```
   BRIEF PATH        docs/briefs/d14-naming-schema-brief-20260913.md
-  PROJECT           NONE-YET (a D14 member; L3 is 1.0.0_SA_CTO's)
+  PROJECT           LGIC_NAMING  (D14 / LGIC) (REGISTERED @f25395446e, Andrew ~21:3xZ "yes 2 all", record @464c1096d5; dep_stage REGISTERED, L4 next)
   EXISTING PRD      NONE. Law inherited: infra/logic/02_DOCTRINE.md R1-R3, R16, R21; the ~03:2xZ source-first ruling
   SUBSTRATE         infra/logic/09_NAMING_CENSUS.md (2,531 nodes / 33 types; per-type table; first-token vocabulary)
   THE REFERENCE SET 05_IDENTITY_SPINE @45160b1525 (gains a SYSTEM axis) · 01_CENSUS · 06_CONFORMANCE_LEDGER · 08_TENSION_MAP

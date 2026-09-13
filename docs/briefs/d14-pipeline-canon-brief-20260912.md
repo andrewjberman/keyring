@@ -237,7 +237,7 @@ SmartX (12,432 planes, one design decision). The debt is concentrated, not diffu
 ```
   BRIEF PATH        docs/briefs/d14-pipeline-canon-brief-20260912.md   (this file; v1 @2659d45788)
   DIRECTIVE         D14 "Platform Logic"  @ff4dfaf23e (+@b0bc31483c verbatim repair)  LAPTOP
-  PROJECT           NONE-YET  (D14 members empty by design; L3 is 1.0.0_SA_CTO's)
+  PROJECT           LGIC_CANON  (D14 / LGIC) (REGISTERED @f25395446e, Andrew ~21:3xZ "yes 2 all", record @464c1096d5; dep_stage REGISTERED, L4 next)
   EXISTING PRD      NONE for this project
 
   THE REFERENCE SET  infra/logic/   lane PLATFORM_LOGIC_DOCS @df27878bfe

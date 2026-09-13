@@ -425,7 +425,7 @@ last, when their buckets are gone.
 
 ```
   BRIEF PATH        docs/briefs/d8-legacy-firm-buckets-migration-brief-20260913.md
-  PROJECT           NONE-YET  (a MEMBER project of D8 "Data Pipelines", by his ~02:3xZ word; L3 is 1.0.0_SA_CTO's)
+  PROJECT           ADVI_FIRMBKTS  (D8 / ADVI -- the macro minted for it) (REGISTERED @f25395446e, Andrew ~21:3xZ "yes 2 all", record @464c1096d5; dep_stage REGISTERED, L4 next)
   LAW IT EXECUTES   D14 "Platform Logic" -- infra/logic/02_DOCTRINE.md (the canon); D14 owns the rules, not this project
   EXISTING PRD      NONE for this project.  Inherited as law: infra/logic/02_DOCTRINE.md (R1, R4-R7, R9, R11, R12,
                     R16, R17, R18, R19, R21) · MDPF_CANON_PRD.md s.4 (B1 repoint, B2 STAYS) · s3-49financial.tf
