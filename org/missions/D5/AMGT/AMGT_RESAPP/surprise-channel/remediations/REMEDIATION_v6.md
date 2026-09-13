@@ -98,15 +98,15 @@ Late intake during validation: **S27** raises the final census to **65 originals
     "owner": "2.0.0_SA_COO~ZZZ",
     "round": "v6",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~ZZZ",
       "round": "v6"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~ZZZ",
-      "at": null
+      "at": "2026-09-13T00:01:49Z"
     }
   },
   {
@@ -162,11 +162,11 @@ Late intake during validation: **S27** raises the final census to **65 originals
     "owner": "2.0.0_SA_COO~ZZZ",
     "round": "v6",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~ZZZ",
       "round": "v6"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "AMGT_RESAPP-Z-S26",
@@ -264,15 +264,15 @@ Late intake during validation: **S27** raises the final census to **65 originals
     "owner": "2.0.0_SA_COO~ZZZ",
     "round": "v6",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~ZZZ",
       "round": "v6"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~ZZZ",
-      "at": null
+      "at": "2026-09-13T00:01:49Z"
     }
   },
   {

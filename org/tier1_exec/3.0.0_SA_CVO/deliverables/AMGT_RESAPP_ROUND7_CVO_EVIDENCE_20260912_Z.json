@@ -1,0 +1,1210 @@
+{
+  "utc": "2026-09-12T23:47:19Z",
+  "pin": "d359728e66b294dc77149c1a4749237606638b01",
+  "source_sha256": {
+    "infra/aws/lambda/ci/lambda-source-map.json": "59640c0b17565578ea4299b40f81761a8d51ae64d4e84898b2dff8bc2ac6fa24",
+    "infra/aws/lambda/research/scoped_amgt_api/lambda_function.py": "e511374b691b8799b5bfb04fc7839a4e6f5c55fc759ae6c7327a0e3bd5c39489",
+    "infra/aws/terraform/amgt-resapp/lambda_src/build_zip.py": "97e13fff1881c23e2469f4d148e17730e795208cf7a364468bd797306c8dd4ad",
+    "infra/aws/terraform/harvest/scoped-amgt-api.tf": "0f075d7c13ef6f7fff5eca96e46770e17fc2fd20562e921a7aa8cea269bc3939",
+    "integrations/bloomberg/research/price_axis_pull.py": "fa50283ee063b520f95615f102c9ff9ae75a7cf1a294b89f0706ad8955c36979",
+    "lib/research/api/scoped_amgt.py": "67ff2052c34a8a14a06667cd8526f02a979b666904981540b8d505b4fbd5b585",
+    "lib/research/api/tests/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "lib/research/api/tests/test_corrected_overlay_wiring.py": "4e72d9e0e6641682d8dc727f665d6585ae9f246329f101dff2dfd1c4667d6a02",
+    "lib/research/api/tests/test_fiscal_scope_contract.py": "f4540ef3bf3e4d2a646aea5bed16a6396616380fc50d94bbfe19aa025b889003",
+    "lib/research/api/tests/test_scoped_amgt.py": "69469afa004e135ae83c6eae4b351c3e415fd0ab93e9a6d73ac9cb9c4ad06d40",
+    "lib/research/api/tests/test_scoped_amgt_mount.py": "c9d33734b06077904ef469ab984ae4ea838694053c27cb9ce0bab267f2fa0cd9",
+    "lib/research/api/tests/test_unprocessed_keys.py": "a647eb7a28525cee18beda066408c56f4d9f9352ea6a632a46135019e53ce6c4",
+    "lib/research/checkface/run_checks.py": "a7df2edce9811df3462f7a4d2bf7133c133b8abab4eeff7f2cc1c544f7ea696d",
+    "lib/research/checkface/scopes.py": "7d87d8cc663fa23276c3442e55406f0036497fd2791b201889ab2d2e512eb500",
+    "lib/research/metrics/chatter_axis.py": "31679cace92214ee2489c2717e7a7557a2e4ca0331950421ab37e8a004969728",
+    "lib/research/metrics/movement_gate.py": "19259d5081d503cbf380e109fd17d956be5bf1ba42cd605a5dcad416ed1b6011",
+    "lib/research/metrics/tests/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "lib/research/metrics/tests/test_chatter_axis.py": "c6a3d65b7c43067afbf7c571f4ba3db5a0c81a95ea0f0ee2b43a20b67d20501f",
+    "lib/research/metrics/tests/test_movement_gate.py": "0448c798efd1aaba542bd2cf0a2aec02fb9bcd717403eb9e3ea11d6222f65bc5",
+    "lib/research/metrics/tests/test_producer_axis_registry.py": "57e3c41e5bab46f97ee33cf5300636d2278b9dccc0657aea9959a36cbc347bb0",
+    "lib/research/provenance/render_print.py": "b1fcdd915b63924ffaa48c0c5cafd3d8fb515ec06ab367cafd58bb5d6fdbbce0",
+    "lib/research/rules/tests/test_corrected_overlay_qualification.py": "113201de416c48cbcf0971f9505036ef262f1988ee7e77d42c6dc07e6f411016",
+    "lib/research/rules/tests/test_rules.py": "2c94fabb667c73a87454b7585469bfff3c7f37053dc2a57a4d20a22ff2abee9a",
+    "lib/research/watchlist/store.py": "741ac74b4f89a7676d82c365e25ac9913f0d7e88f0d6dfe83e39915317606afc"
+  },
+  "source_matches_pin": {
+    "infra/aws/lambda/ci/lambda-source-map.json": true,
+    "infra/aws/lambda/research/scoped_amgt_api/lambda_function.py": true,
+    "infra/aws/terraform/amgt-resapp/lambda_src/build_zip.py": true,
+    "infra/aws/terraform/harvest/scoped-amgt-api.tf": true,
+    "integrations/bloomberg/research/price_axis_pull.py": true,
+    "lib/research/api/scoped_amgt.py": true,
+    "lib/research/api/tests/__init__.py": true,
+    "lib/research/api/tests/test_corrected_overlay_wiring.py": true,
+    "lib/research/api/tests/test_fiscal_scope_contract.py": true,
+    "lib/research/api/tests/test_scoped_amgt.py": true,
+    "lib/research/api/tests/test_scoped_amgt_mount.py": true,
+    "lib/research/api/tests/test_unprocessed_keys.py": true,
+    "lib/research/checkface/run_checks.py": true,
+    "lib/research/checkface/scopes.py": true,
+    "lib/research/metrics/chatter_axis.py": true,
+    "lib/research/metrics/movement_gate.py": true,
+    "lib/research/metrics/tests/__init__.py": true,
+    "lib/research/metrics/tests/test_chatter_axis.py": true,
+    "lib/research/metrics/tests/test_movement_gate.py": true,
+    "lib/research/metrics/tests/test_producer_axis_registry.py": true,
+    "lib/research/provenance/render_print.py": true,
+    "lib/research/rules/tests/test_corrected_overlay_qualification.py": true,
+    "lib/research/rules/tests/test_rules.py": true,
+    "lib/research/watchlist/store.py": true
+  },
+  "limits": "No shared-source mutation; no AWS, vendor, deployment, portal checkout or publication. All tests and calls use a socket guard. Recorded worker mutants are attributed, not re-run.",
+  "tests": {
+    "rc": 0,
+    "output": "........................................................................ [ 67%]\n...................................                                      [100%]\n107 passed in 0.25s\n"
+  },
+  "cross": [
+    {
+      "requested_axis": "TRENDING_CHATTER",
+      "served_axis": "TRENDING_CHATTER",
+      "resolution": "CROSSED",
+      "movement_basis": "MEASURED",
+      "movement_measure": "ABSOLUTE_COUNT_ON_AS_OF_DAY",
+      "producer": "lib.research.metrics.chatter_axis",
+      "availability_basis": "PRODUCER_DECLARED"
+    },
+    {
+      "requested_axis": "TRENDING_PRICE",
+      "served_axis": "TRENDING_PRICE",
+      "resolution": "CROSSED",
+      "movement_basis": "MEASURED",
+      "movement_measure": "WINDOW_RETURN_PCT",
+      "producer": "integrations.bloomberg.research.price_axis_pull",
+      "availability_basis": "PRODUCER_DECLARED"
+    },
+    {
+      "requested_axis": "BREAKOUT_CHATTER",
+      "served_axis": "BREAKOUT_CHATTER",
+      "resolution": "CROSSED",
+      "movement_basis": "MEASURED",
+      "movement_measure": "PCT_JUMP_VS_TRAILING_BASELINE",
+      "producer": "lib.research.metrics.chatter_axis",
+      "availability_basis": "PRODUCER_DECLARED"
+    },
+    {
+      "requested_axis": "BREAKOUT_PRICE",
+      "served_axis": "BREAKOUT_PRICE",
+      "resolution": "CROSSED",
+      "movement_basis": "MEASURED",
+      "movement_measure": "PCT_JUMP_VS_TRAILING_BASELINE",
+      "producer": "integrations.bloomberg.research.price_axis_pull",
+      "availability_basis": "PRODUCER_DECLARED"
+    }
+  ],
+  "invalid_domains": [
+    {
+      "pair": [
+        "sideways",
+        "chatter"
+      ],
+      "refused": 400,
+      "reason": "movement must be one of TRENDING, BREAKOUT (got 'sideways')"
+    },
+    {
+      "pair": [
+        "trending",
+        "volume"
+      ],
+      "refused": 400,
+      "reason": "subject must be one of CHATTER, PRICE (got 'volume')"
+    }
+  ],
+  "thesis": {
+    "BABA_US_Equity": {
+      "header": 13,
+      "fiscal": 183,
+      "checks": 196,
+      "prices": [
+        {
+          "scope": "fiscal_year_line_item",
+          "fiscal_year": "2016",
+          "mnemonic": "PX_LAST",
+          "value": 79.03,
+          "unit": "PRICE (local trading currency, per share/unit)",
+          "sign": "POSITIVE",
+          "basis": {
+            "mnemonic": "PX_LAST",
+            "definition": "Last traded/closing price, in the security's trading currency."
+          },
+          "vintage": "2026-09-10T23:20:19Z",
+          "source": "bloomberg-dapi (fiscal-period join, model_block_fye)",
+          "currency_caveat": null,
+          "observation_date": "2016-03-31",
+          "derivation_key": "derived/model_block_fye/BABA_US_Equity/20260911T073934Z/model_block_fye.json",
+          "corrected_overlay_status": "RESOLVED"
+        },
+        {
+          "scope": "fiscal_year_line_item",
+          "fiscal_year": "2017",
+          "mnemonic": "PX_LAST",
+          "value": 107.83,
+          "unit": "PRICE (local trading currency, per share/unit)",
+          "sign": "POSITIVE",
+          "basis": {
+            "mnemonic": "PX_LAST",
+            "definition": "Last traded/closing price, in the security's trading currency."
+          },
+          "vintage": "2026-09-10T23:20:19Z",
+          "source": "bloomberg-dapi (fiscal-period join, model_block_fye)",
+          "currency_caveat": null,
+          "observation_date": "2017-03-31",
+          "derivation_key": "derived/model_block_fye/BABA_US_Equity/20260911T073934Z/model_block_fye.json",
+          "corrected_overlay_status": "RESOLVED"
+        },
+        {
+          "scope": "fiscal_year_line_item",
+          "fiscal_year": "2018",
+          "mnemonic": "PX_LAST",
+          "value": 183.54,
+          "unit": "PRICE (local trading currency, per share/unit)",
+          "sign": "POSITIVE",
+          "basis": {
+            "mnemonic": "PX_LAST",
+            "definition": "Last traded/closing price, in the security's trading currency."
+          },
+          "vintage": "2026-09-10T23:20:19Z",
+          "source": "bloomberg-dapi (fiscal-period join, model_block_fye)",
+          "currency_caveat": null,
+          "observation_date": "2018-03-29",
+          "derivation_key": "derived/model_block_fye/BABA_US_Equity/20260911T073934Z/model_block_fye.json",
+          "corrected_overlay_status": "RESOLVED"
+        },
+        {
+          "scope": "fiscal_year_line_item",
+          "fiscal_year": "2019",
+          "mnemonic": "PX_LAST",
+          "value": 182.45,
+          "unit": "PRICE (local trading currency, per share/unit)",
+          "sign": "POSITIVE",
+          "basis": {
+            "mnemonic": "PX_LAST",
+            "definition": "Last traded/closing price, in the security's trading currency."
+          },
+          "vintage": "2026-09-10T23:20:19Z",
+          "source": "bloomberg-dapi (fiscal-period join, model_block_fye)",
+          "currency_caveat": null,
+          "observation_date": "2019-03-29",
+          "derivation_key": "derived/model_block_fye/BABA_US_Equity/20260911T073934Z/model_block_fye.json",
+          "corrected_overlay_status": "RESOLVED"
+        },
+        {
+          "scope": "fiscal_year_line_item",
+          "fiscal_year": "2020",
+          "mnemonic": "PX_LAST",
+          "value": 194.48,
+          "unit": "PRICE (local trading currency, per share/unit)",
+          "sign": "POSITIVE",
+          "basis": {
+            "mnemonic": "PX_LAST",
+            "definition": "Last traded/closing price, in the security's trading currency."
+          },
+          "vintage": "2026-09-10T23:20:19Z",
+          "source": "bloomberg-dapi (fiscal-period join, model_block_fye)",
+          "currency_caveat": null,
+          "observation_date": "2020-03-31",
+          "derivation_key": "derived/model_block_fye/BABA_US_Equity/20260911T073934Z/model_block_fye.json",
+          "corrected_overlay_status": "RESOLVED"
+        },
+        {
+          "scope": "fiscal_year_line_item",
+          "fiscal_year": "2021",
+          "mnemonic": "PX_LAST",
+          "value": 226.73,
+          "unit": "PRICE (local trading currency, per share/unit)",
+          "sign": "POSITIVE",
+          "basis": {
+            "mnemonic": "PX_LAST",
+            "definition": "Last traded/closing price, in the security's trading currency."
+          },
+          "vintage": "2026-09-10T23:20:19Z",
+          "source": "bloomberg-dapi (fiscal-period join, model_block_fye)",
+          "currency_caveat": null,
+          "observation_date": "2021-03-31",
+          "derivation_key": "derived/model_block_fye/BABA_US_Equity/20260911T073934Z/model_block_fye.json",
+          "corrected_overlay_status": "RESOLVED"
+        },
+        {
+          "scope": "fiscal_year_line_item",
+          "fiscal_year": "2022",
+          "mnemonic": "PX_LAST",
+          "value": 108.8,
+          "unit": "PRICE (local trading currency, per share/unit)",
+          "sign": "POSITIVE",
+          "basis": {
+            "mnemonic": "PX_LAST",
+            "definition": "Last traded/closing price, in the security's trading currency."
+          },
+          "vintage": "2026-09-10T23:20:19Z",
+          "source": "bloomberg-dapi (fiscal-period join, model_block_fye)",
+          "currency_caveat": null,
+          "observation_date": "2022-03-31",
+          "derivation_key": "derived/model_block_fye/BABA_US_Equity/20260911T073934Z/model_block_fye.json",
+          "corrected_overlay_status": "RESOLVED"
+        },
+        {
+          "scope": "fiscal_year_line_item",
+          "fiscal_year": "2023",
+          "mnemonic": "PX_LAST",
+          "value": 102.18,
+          "unit": "PRICE (local trading currency, per share/unit)",
+          "sign": "POSITIVE",
+          "basis": {
+            "mnemonic": "PX_LAST",
+            "definition": "Last traded/closing price, in the security's trading currency."
+          },
+          "vintage": "2026-09-10T23:20:19Z",
+          "source": "bloomberg-dapi (fiscal-period join, model_block_fye)",
+          "currency_caveat": null,
+          "observation_date": "2023-03-31",
+          "derivation_key": "derived/model_block_fye/BABA_US_Equity/20260911T073934Z/model_block_fye.json",
+          "corrected_overlay_status": "RESOLVED"
+        },
+        {
+          "scope": "fiscal_year_line_item",
+          "fiscal_year": "2024",
+          "mnemonic": "PX_LAST",
+          "value": 72.36,
+          "unit": "PRICE (local trading currency, per share/unit)",
+          "sign": "POSITIVE",
+          "basis": {
+            "mnemonic": "PX_LAST",
+            "definition": "Last traded/closing price, in the security's trading currency."
+          },
+          "vintage": "2026-09-10T23:20:19Z",
+          "source": "bloomberg-dapi (fiscal-period join, model_block_fye)",
+          "currency_caveat": null,
+          "observation_date": "2024-03-28",
+          "derivation_key": "derived/model_block_fye/BABA_US_Equity/20260911T073934Z/model_block_fye.json",
+          "corrected_overlay_status": "RESOLVED"
+        },
+        {
+          "scope": "fiscal_year_line_item",
+          "fiscal_year": "2025",
+          "mnemonic": "PX_LAST",
+          "value": 132.23,
+          "unit": "PRICE (local trading currency, per share/unit)",
+          "sign": "POSITIVE",
+          "basis": {
+            "mnemonic": "PX_LAST",
+            "definition": "Last traded/closing price, in the security's trading currency."
+          },
+          "vintage": "2026-09-10T23:20:19Z",
+          "source": "bloomberg-dapi (fiscal-period join, model_block_fye)",
+          "currency_caveat": null,
+          "observation_date": "2025-03-31",
+          "derivation_key": "derived/model_block_fye/BABA_US_Equity/20260911T073934Z/model_block_fye.json",
+          "corrected_overlay_status": "RESOLVED"
+        }
+      ],
+      "price_checks": [
+        {
+          "figure_id": "fiscal_year_line_item:PX_LAST:2016",
+          "value": 79.03,
+          "verdict": "PASS",
+          "reason": "PX_LAST: unit/sign convention MEASURED (basis=\"Last traded/closing price, in the security's trading currency.\")",
+          "marker": {
+            "verdict": "PASS",
+            "colour_token": "green",
+            "icon": "OK"
+          }
+        },
+        {
+          "figure_id": "fiscal_year_line_item:PX_LAST:2017",
+          "value": 107.83,
+          "verdict": "PASS",
+          "reason": "PX_LAST: unit/sign convention MEASURED (basis=\"Last traded/closing price, in the security's trading currency.\")",
+          "marker": {
+            "verdict": "PASS",
+            "colour_token": "green",
+            "icon": "OK"
+          }
+        },
+        {
+          "figure_id": "fiscal_year_line_item:PX_LAST:2018",
+          "value": 183.54,
+          "verdict": "PASS",
+          "reason": "PX_LAST: unit/sign convention MEASURED (basis=\"Last traded/closing price, in the security's trading currency.\")",
+          "marker": {
+            "verdict": "PASS",
+            "colour_token": "green",
+            "icon": "OK"
+          }
+        },
+        {
+          "figure_id": "fiscal_year_line_item:PX_LAST:2019",
+          "value": 182.45,
+          "verdict": "PASS",
+          "reason": "PX_LAST: unit/sign convention MEASURED (basis=\"Last traded/closing price, in the security's trading currency.\")",
+          "marker": {
+            "verdict": "PASS",
+            "colour_token": "green",
+            "icon": "OK"
+          }
+        },
+        {
+          "figure_id": "fiscal_year_line_item:PX_LAST:2020",
+          "value": 194.48,
+          "verdict": "PASS",
+          "reason": "PX_LAST: unit/sign convention MEASURED (basis=\"Last traded/closing price, in the security's trading currency.\")",
+          "marker": {
+            "verdict": "PASS",
+            "colour_token": "green",
+            "icon": "OK"
+          }
+        },
+        {
+          "figure_id": "fiscal_year_line_item:PX_LAST:2021",
+          "value": 226.73,
+          "verdict": "PASS",
+          "reason": "PX_LAST: unit/sign convention MEASURED (basis=\"Last traded/closing price, in the security's trading currency.\")",
+          "marker": {
+            "verdict": "PASS",
+            "colour_token": "green",
+            "icon": "OK"
+          }
+        },
+        {
+          "figure_id": "fiscal_year_line_item:PX_LAST:2022",
+          "value": 108.8,
+          "verdict": "PASS",
+          "reason": "PX_LAST: unit/sign convention MEASURED (basis=\"Last traded/closing price, in the security's trading currency.\")",
+          "marker": {
+            "verdict": "PASS",
+            "colour_token": "green",
+            "icon": "OK"
+          }
+        },
+        {
+          "figure_id": "fiscal_year_line_item:PX_LAST:2023",
+          "value": 102.18,
+          "verdict": "PASS",
+          "reason": "PX_LAST: unit/sign convention MEASURED (basis=\"Last traded/closing price, in the security's trading currency.\")",
+          "marker": {
+            "verdict": "PASS",
+            "colour_token": "green",
+            "icon": "OK"
+          }
+        },
+        {
+          "figure_id": "fiscal_year_line_item:PX_LAST:2024",
+          "value": 72.36,
+          "verdict": "PASS",
+          "reason": "PX_LAST: unit/sign convention MEASURED (basis=\"Last traded/closing price, in the security's trading currency.\")",
+          "marker": {
+            "verdict": "PASS",
+            "colour_token": "green",
+            "icon": "OK"
+          }
+        },
+        {
+          "figure_id": "fiscal_year_line_item:PX_LAST:2025",
+          "value": 132.23,
+          "verdict": "PASS",
+          "reason": "PX_LAST: unit/sign convention MEASURED (basis=\"Last traded/closing price, in the security's trading currency.\")",
+          "marker": {
+            "verdict": "PASS",
+            "colour_token": "green",
+            "icon": "OK"
+          }
+        }
+      ]
+    },
+    "BABACVOCTRL_US_Equity": {
+      "header": 1,
+      "fiscal": 1,
+      "checks": 2,
+      "prices": [
+        {
+          "scope": "fiscal_year_line_item",
+          "fiscal_year": "2025",
+          "mnemonic": "PX_LAST",
+          "value": 146.58,
+          "unit": "PRICE (local trading currency, per share/unit)",
+          "sign": "POSITIVE",
+          "basis": {
+            "mnemonic": "PX_LAST",
+            "definition": "Last traded/closing price, in the security's trading currency."
+          },
+          "vintage": "2025-12-31",
+          "source": "bloomberg-dapi",
+          "currency_caveat": null,
+          "corrected_overlay_status": "UNRESOLVED",
+          "derivation_key": null
+        }
+      ],
+      "price_checks": [
+        {
+          "figure_id": "fiscal_year_line_item:PX_LAST:2025",
+          "value": 146.58,
+          "verdict": "REFUSE",
+          "reason": "PX_LAST: corrected fiscal-period overlay is UNRESOLVED (the corrected lane covers this fiscal year but has no valid price for it -- never silently kept as the old value, C-S19)",
+          "marker": {
+            "verdict": "REFUSE",
+            "colour_token": "red",
+            "icon": "BLOCKED"
+          }
+        }
+      ]
+    },
+    "BABA US Equity": {
+      "header": 0,
+      "fiscal": 0,
+      "checks": 0,
+      "prices": [],
+      "price_checks": []
+    }
+  },
+  "raw_artifact": {
+    "path": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~1\\model_block_BABA_US_Equity.json",
+    "sha256": "d20c0ee5fc7e1be0ae25b3e8118fe6a8dfd71781f5aa0e6574b6b12f4cabe01a",
+    "scopes": {
+      "header": 13,
+      "fiscal_year_line_item": 183
+    },
+    "raw_prices": [
+      {
+        "scope": "fiscal_year_line_item",
+        "fiscal_year": "2016",
+        "mnemonic": "PX_LAST",
+        "value": 87.81,
+        "unit": "PRICE (local trading currency, per share/unit)",
+        "sign": "POSITIVE",
+        "basis": {
+          "mnemonic": "PX_LAST",
+          "definition": "Last traded/closing price, in the security's trading currency."
+        },
+        "vintage": "2026-09-10T23:20:19Z",
+        "source": "bloomberg-dapi",
+        "currency_caveat": null
+      },
+      {
+        "scope": "fiscal_year_line_item",
+        "fiscal_year": "2017",
+        "mnemonic": "PX_LAST",
+        "value": 172.43,
+        "unit": "PRICE (local trading currency, per share/unit)",
+        "sign": "POSITIVE",
+        "basis": {
+          "mnemonic": "PX_LAST",
+          "definition": "Last traded/closing price, in the security's trading currency."
+        },
+        "vintage": "2026-09-10T23:20:19Z",
+        "source": "bloomberg-dapi",
+        "currency_caveat": null
+      },
+      {
+        "scope": "fiscal_year_line_item",
+        "fiscal_year": "2018",
+        "mnemonic": "PX_LAST",
+        "value": 137.07,
+        "unit": "PRICE (local trading currency, per share/unit)",
+        "sign": "POSITIVE",
+        "basis": {
+          "mnemonic": "PX_LAST",
+          "definition": "Last traded/closing price, in the security's trading currency."
+        },
+        "vintage": "2026-09-10T23:20:19Z",
+        "source": "bloomberg-dapi",
+        "currency_caveat": null
+      },
+      {
+        "scope": "fiscal_year_line_item",
+        "fiscal_year": "2019",
+        "mnemonic": "PX_LAST",
+        "value": 212.1,
+        "unit": "PRICE (local trading currency, per share/unit)",
+        "sign": "POSITIVE",
+        "basis": {
+          "mnemonic": "PX_LAST",
+          "definition": "Last traded/closing price, in the security's trading currency."
+        },
+        "vintage": "2026-09-10T23:20:19Z",
+        "source": "bloomberg-dapi",
+        "currency_caveat": null
+      },
+      {
+        "scope": "fiscal_year_line_item",
+        "fiscal_year": "2020",
+        "mnemonic": "PX_LAST",
+        "value": 232.73,
+        "unit": "PRICE (local trading currency, per share/unit)",
+        "sign": "POSITIVE",
+        "basis": {
+          "mnemonic": "PX_LAST",
+          "definition": "Last traded/closing price, in the security's trading currency."
+        },
+        "vintage": "2026-09-10T23:20:19Z",
+        "source": "bloomberg-dapi",
+        "currency_caveat": null
+      },
+      {
+        "scope": "fiscal_year_line_item",
+        "fiscal_year": "2021",
+        "mnemonic": "PX_LAST",
+        "value": 118.79,
+        "unit": "PRICE (local trading currency, per share/unit)",
+        "sign": "POSITIVE",
+        "basis": {
+          "mnemonic": "PX_LAST",
+          "definition": "Last traded/closing price, in the security's trading currency."
+        },
+        "vintage": "2026-09-10T23:20:19Z",
+        "source": "bloomberg-dapi",
+        "currency_caveat": null
+      },
+      {
+        "scope": "fiscal_year_line_item",
+        "fiscal_year": "2022",
+        "mnemonic": "PX_LAST",
+        "value": 88.09,
+        "unit": "PRICE (local trading currency, per share/unit)",
+        "sign": "POSITIVE",
+        "basis": {
+          "mnemonic": "PX_LAST",
+          "definition": "Last traded/closing price, in the security's trading currency."
+        },
+        "vintage": "2026-09-10T23:20:19Z",
+        "source": "bloomberg-dapi",
+        "currency_caveat": null
+      },
+      {
+        "scope": "fiscal_year_line_item",
+        "fiscal_year": "2023",
+        "mnemonic": "PX_LAST",
+        "value": 77.51,
+        "unit": "PRICE (local trading currency, per share/unit)",
+        "sign": "POSITIVE",
+        "basis": {
+          "mnemonic": "PX_LAST",
+          "definition": "Last traded/closing price, in the security's trading currency."
+        },
+        "vintage": "2026-09-10T23:20:19Z",
+        "source": "bloomberg-dapi",
+        "currency_caveat": null
+      },
+      {
+        "scope": "fiscal_year_line_item",
+        "fiscal_year": "2024",
+        "mnemonic": "PX_LAST",
+        "value": 84.79,
+        "unit": "PRICE (local trading currency, per share/unit)",
+        "sign": "POSITIVE",
+        "basis": {
+          "mnemonic": "PX_LAST",
+          "definition": "Last traded/closing price, in the security's trading currency."
+        },
+        "vintage": "2026-09-10T23:20:19Z",
+        "source": "bloomberg-dapi",
+        "currency_caveat": null
+      },
+      {
+        "scope": "fiscal_year_line_item",
+        "fiscal_year": "2025",
+        "mnemonic": "PX_LAST",
+        "value": 146.58,
+        "unit": "PRICE (local trading currency, per share/unit)",
+        "sign": "POSITIVE",
+        "basis": {
+          "mnemonic": "PX_LAST",
+          "definition": "Last traded/closing price, in the security's trading currency."
+        },
+        "vintage": "2026-09-10T23:20:19Z",
+        "source": "bloomberg-dapi",
+        "currency_caveat": null
+      }
+    ]
+  },
+  "scope_control": {
+    "header": 13,
+    "fiscal_year_line_item": 183,
+    "fiscal_year": 0,
+    "not_a_real_scope_NOPE_xyz": 0
+  },
+  "thesis_handler": {
+    "status": 200,
+    "keys": [
+      "security_key",
+      "header_figures",
+      "fiscal_year_figures",
+      "check_face",
+      "drafted_sections",
+      "generated_at"
+    ],
+    "fiscal": 183
+  },
+  "batch_controls": {
+    "processed": {
+      "result": {
+        "resolution": {
+          "requested_axis": "TRENDING_CHATTER",
+          "served_axis": "TRENDING_CHATTER",
+          "resolution": "CROSSED",
+          "movement_basis": "MEASURED",
+          "movement_measure": "ABSOLUTE_COUNT_ON_AS_OF_DAY",
+          "producer": "lib.research.metrics.chatter_axis",
+          "availability_basis": "PRODUCER_DECLARED"
+        },
+        "as_of_date": "2026-09-12",
+        "window_days": 1,
+        "series": [
+          {
+            "ticker": "AAA US",
+            "points": [
+              {
+                "as_of_date": "2026-09-12",
+                "rank": 1,
+                "rank_sort": "00001",
+                "score": 20
+              }
+            ],
+            "point_count": 1,
+            "unresolved_point_count": 0
+          },
+          {
+            "ticker": "BBB US",
+            "points": [
+              {
+                "as_of_date": "2026-09-12",
+                "rank": 2,
+                "rank_sort": "00002",
+                "score": 21
+              }
+            ],
+            "point_count": 1,
+            "unresolved_point_count": 0
+          }
+        ],
+        "read_completeness": {
+          "complete": true,
+          "requested_key_count": 2,
+          "resolved_key_count": 2,
+          "unresolved_key_count": 0,
+          "attempts_used": 1,
+          "max_attempts": 4,
+          "basis": "measured",
+          "reason": null
+        },
+        "generated_at": "2026-09-12T23:47Z"
+      },
+      "call_count": 1,
+      "requested_per_call": [
+        [
+          {
+            "axis_date": "TRENDING_CHATTER#2026-09-12",
+            "ticker": "AAA US"
+          },
+          {
+            "axis_date": "TRENDING_CHATTER#2026-09-12",
+            "ticker": "BBB US"
+          }
+        ]
+      ]
+    },
+    "absent": {
+      "result": {
+        "resolution": {
+          "requested_axis": "TRENDING_CHATTER",
+          "served_axis": "TRENDING_CHATTER",
+          "resolution": "CROSSED",
+          "movement_basis": "MEASURED",
+          "movement_measure": "ABSOLUTE_COUNT_ON_AS_OF_DAY",
+          "producer": "lib.research.metrics.chatter_axis",
+          "availability_basis": "PRODUCER_DECLARED"
+        },
+        "as_of_date": "2026-09-12",
+        "window_days": 1,
+        "series": [
+          {
+            "ticker": "AAA US",
+            "points": [],
+            "point_count": 0,
+            "unresolved_point_count": 0
+          },
+          {
+            "ticker": "BBB US",
+            "points": [],
+            "point_count": 0,
+            "unresolved_point_count": 0
+          }
+        ],
+        "read_completeness": {
+          "complete": true,
+          "requested_key_count": 2,
+          "resolved_key_count": 2,
+          "unresolved_key_count": 0,
+          "attempts_used": 1,
+          "max_attempts": 4,
+          "basis": "measured",
+          "reason": null
+        },
+        "generated_at": "2026-09-12T23:47Z"
+      },
+      "call_count": 1,
+      "requested_per_call": [
+        [
+          {
+            "axis_date": "TRENDING_CHATTER#2026-09-12",
+            "ticker": "AAA US"
+          },
+          {
+            "axis_date": "TRENDING_CHATTER#2026-09-12",
+            "ticker": "BBB US"
+          }
+        ]
+      ]
+    },
+    "mixed": {
+      "result": {
+        "resolution": {
+          "requested_axis": "TRENDING_CHATTER",
+          "served_axis": "TRENDING_CHATTER",
+          "resolution": "CROSSED",
+          "movement_basis": "MEASURED",
+          "movement_measure": "ABSOLUTE_COUNT_ON_AS_OF_DAY",
+          "producer": "lib.research.metrics.chatter_axis",
+          "availability_basis": "PRODUCER_DECLARED"
+        },
+        "as_of_date": "2026-09-12",
+        "window_days": 1,
+        "series": [
+          {
+            "ticker": "AAA US",
+            "points": [
+              {
+                "as_of_date": "2026-09-12",
+                "rank": 1,
+                "rank_sort": "00001",
+                "score": 20
+              }
+            ],
+            "point_count": 1,
+            "unresolved_point_count": 0
+          },
+          {
+            "ticker": "BBB US",
+            "points": [
+              {
+                "as_of_date": "2026-09-12",
+                "rank": 1,
+                "rank_sort": "00001",
+                "score": 20
+              }
+            ],
+            "point_count": 1,
+            "unresolved_point_count": 0
+          }
+        ],
+        "read_completeness": {
+          "complete": true,
+          "requested_key_count": 2,
+          "resolved_key_count": 2,
+          "unresolved_key_count": 0,
+          "attempts_used": 2,
+          "max_attempts": 4,
+          "basis": "measured",
+          "reason": null
+        },
+        "generated_at": "2026-09-12T23:47Z"
+      },
+      "call_count": 2,
+      "requested_per_call": [
+        [
+          {
+            "axis_date": "TRENDING_CHATTER#2026-09-12",
+            "ticker": "AAA US"
+          },
+          {
+            "axis_date": "TRENDING_CHATTER#2026-09-12",
+            "ticker": "BBB US"
+          }
+        ],
+        [
+          {
+            "axis_date": "TRENDING_CHATTER#2026-09-12",
+            "ticker": "BBB US"
+          }
+        ]
+      ]
+    },
+    "exhaust": {
+      "result": {
+        "resolution": {
+          "requested_axis": "TRENDING_CHATTER",
+          "served_axis": "TRENDING_CHATTER",
+          "resolution": "CROSSED",
+          "movement_basis": "MEASURED",
+          "movement_measure": "ABSOLUTE_COUNT_ON_AS_OF_DAY",
+          "producer": "lib.research.metrics.chatter_axis",
+          "availability_basis": "PRODUCER_DECLARED"
+        },
+        "as_of_date": "2026-09-12",
+        "window_days": 1,
+        "series": [
+          {
+            "ticker": "AAA US",
+            "points": [],
+            "point_count": 0,
+            "unresolved_point_count": 1
+          },
+          {
+            "ticker": "BBB US",
+            "points": [],
+            "point_count": 0,
+            "unresolved_point_count": 1
+          }
+        ],
+        "read_completeness": {
+          "complete": false,
+          "requested_key_count": 2,
+          "resolved_key_count": 0,
+          "unresolved_key_count": 2,
+          "attempts_used": 4,
+          "max_attempts": 4,
+          "basis": "measured",
+          "reason": "BatchGetItem returned 2 of 2 requested keys as UnprocessedKeys after 4 attempt(s); those points are MISSING FROM THIS RESPONSE and their absence is NOT evidence that the producer wrote nothing"
+        },
+        "generated_at": "2026-09-12T23:47Z"
+      },
+      "call_count": 4,
+      "requested_per_call": [
+        [
+          {
+            "axis_date": "TRENDING_CHATTER#2026-09-12",
+            "ticker": "AAA US"
+          },
+          {
+            "axis_date": "TRENDING_CHATTER#2026-09-12",
+            "ticker": "BBB US"
+          }
+        ],
+        [
+          {
+            "axis_date": "TRENDING_CHATTER#2026-09-12",
+            "ticker": "AAA US"
+          },
+          {
+            "axis_date": "TRENDING_CHATTER#2026-09-12",
+            "ticker": "BBB US"
+          }
+        ],
+        [
+          {
+            "axis_date": "TRENDING_CHATTER#2026-09-12",
+            "ticker": "AAA US"
+          },
+          {
+            "axis_date": "TRENDING_CHATTER#2026-09-12",
+            "ticker": "BBB US"
+          }
+        ],
+        [
+          {
+            "axis_date": "TRENDING_CHATTER#2026-09-12",
+            "ticker": "AAA US"
+          },
+          {
+            "axis_date": "TRENDING_CHATTER#2026-09-12",
+            "ticker": "BBB US"
+          }
+        ]
+      ]
+    }
+  },
+  "batch_105_keys": {
+    "completeness": {
+      "complete": true,
+      "requested_key_count": 105,
+      "resolved_key_count": 105,
+      "unresolved_key_count": 0,
+      "attempts_used": 2,
+      "max_attempts": 4,
+      "basis": "measured",
+      "reason": null
+    },
+    "point_count": 105,
+    "batch_sizes": [
+      100,
+      99,
+      5
+    ]
+  },
+  "sources_unchanged_after": {
+    "infra/aws/lambda/ci/lambda-source-map.json": true,
+    "infra/aws/lambda/research/scoped_amgt_api/lambda_function.py": true,
+    "infra/aws/terraform/amgt-resapp/lambda_src/build_zip.py": true,
+    "infra/aws/terraform/harvest/scoped-amgt-api.tf": true,
+    "integrations/bloomberg/research/price_axis_pull.py": true,
+    "lib/research/api/scoped_amgt.py": true,
+    "lib/research/api/tests/__init__.py": true,
+    "lib/research/api/tests/test_corrected_overlay_wiring.py": true,
+    "lib/research/api/tests/test_fiscal_scope_contract.py": true,
+    "lib/research/api/tests/test_scoped_amgt.py": true,
+    "lib/research/api/tests/test_scoped_amgt_mount.py": true,
+    "lib/research/api/tests/test_unprocessed_keys.py": true,
+    "lib/research/checkface/run_checks.py": true,
+    "lib/research/checkface/scopes.py": true,
+    "lib/research/metrics/chatter_axis.py": true,
+    "lib/research/metrics/movement_gate.py": true,
+    "lib/research/metrics/tests/__init__.py": true,
+    "lib/research/metrics/tests/test_chatter_axis.py": true,
+    "lib/research/metrics/tests/test_movement_gate.py": true,
+    "lib/research/metrics/tests/test_producer_axis_registry.py": true,
+    "lib/research/provenance/render_print.py": true,
+    "lib/research/rules/tests/test_corrected_overlay_qualification.py": true,
+    "lib/research/rules/tests/test_rules.py": true,
+    "lib/research/watchlist/store.py": true
+  },
+  "portal": {
+    "e85f6eb84f": {
+      "full": "e85f6eb84f3a1771a37011a7e77e372570bad02a",
+      "files": 0,
+      "nonascii": 0,
+      "affected": {},
+      "tokens": {},
+      "local_refs": {
+        "args": [
+          "git",
+          "-C",
+          "portal",
+          "branch",
+          "--contains",
+          "e85f6eb84f3a1771a37011a7e77e372570bad02a"
+        ],
+        "rc": 0,
+        "stdout": "  wk-amgt_resapp-5-8-portal\n  wk-amgt_resapp-7-2-portal\n",
+        "stderr": ""
+      },
+      "remote_tracking_refs": {
+        "args": [
+          "git",
+          "-C",
+          "portal",
+          "branch",
+          "-r",
+          "--contains",
+          "e85f6eb84f3a1771a37011a7e77e372570bad02a"
+        ],
+        "rc": 0,
+        "stdout": "  origin/DEV\n",
+        "stderr": ""
+      }
+    },
+    "c67281460a": {
+      "full": "c67281460a2651430798c9a4c3e68233d81a6e96",
+      "files": 18,
+      "nonascii": 10,
+      "affected": {
+        "src/pages/SecurityAnalysis/components/PrintExportAction.tsx": 1,
+        "src/pages/SecurityAnalysis/components/ProvenanceLine.tsx": 2,
+        "src/pages/SecurityAnalysis/components/SecurityOverlay.tsx": 3,
+        "src/pages/SecurityAnalysis/tabs/CoverageTab.tsx": 1,
+        "src/pages/SecurityAnalysis/tabs/PeersTab.tsx": 1,
+        "src/pages/SecurityAnalysis/tabs/ThesisTab.tsx": 2
+      },
+      "tokens": {
+        "requested_axis": [
+          "src/pages/SecurityAnalysis/components/LeadPanel.tsx",
+          "src/pages/SecurityAnalysis/types.ts"
+        ],
+        "served_axis": [
+          "src/pages/SecurityAnalysis/components/LeadPanel.tsx",
+          "src/pages/SecurityAnalysis/components/RankedList.tsx",
+          "src/pages/SecurityAnalysis/types.ts"
+        ]
+      },
+      "local_refs": {
+        "args": [
+          "git",
+          "-C",
+          "portal",
+          "branch",
+          "--contains",
+          "c67281460a2651430798c9a4c3e68233d81a6e96"
+        ],
+        "rc": 0,
+        "stdout": "  wk-amgt_resapp-5-8-portal\n  wk-amgt_resapp-7-2-portal\n",
+        "stderr": ""
+      },
+      "remote_tracking_refs": {
+        "args": [
+          "git",
+          "-C",
+          "portal",
+          "branch",
+          "-r",
+          "--contains",
+          "c67281460a2651430798c9a4c3e68233d81a6e96"
+        ],
+        "rc": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    },
+    "83cc87f2": {
+      "full": "83cc87f29d92462ce54ae8b230bb4c9f05a4dc64",
+      "files": 18,
+      "nonascii": 0,
+      "affected": {},
+      "tokens": {
+        "requested_axis": [
+          "src/pages/SecurityAnalysis/components/LeadPanel.tsx",
+          "src/pages/SecurityAnalysis/types.ts"
+        ],
+        "served_axis": [
+          "src/pages/SecurityAnalysis/components/LeadPanel.tsx",
+          "src/pages/SecurityAnalysis/components/RankedList.tsx",
+          "src/pages/SecurityAnalysis/types.ts"
+        ]
+      },
+      "local_refs": {
+        "args": [
+          "git",
+          "-C",
+          "portal",
+          "branch",
+          "--contains",
+          "83cc87f29d92462ce54ae8b230bb4c9f05a4dc64"
+        ],
+        "rc": 0,
+        "stdout": "  wk-amgt_resapp-7-2-portal\n",
+        "stderr": ""
+      },
+      "remote_tracking_refs": {
+        "args": [
+          "git",
+          "-C",
+          "portal",
+          "branch",
+          "-r",
+          "--contains",
+          "83cc87f29d92462ce54ae8b230bb4c9f05a4dc64"
+        ],
+        "rc": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    },
+    "e6057f26": {
+      "full": "e6057f26c57fc6ff6c223f1c73cc29be3c7f51d6",
+      "files": 18,
+      "nonascii": 13,
+      "affected": {
+        "src/pages/SecurityAnalysis/components/PrintExportAction.tsx": 1,
+        "src/pages/SecurityAnalysis/components/ProvenanceLine.tsx": 2,
+        "src/pages/SecurityAnalysis/components/RankedChart.tsx": 1,
+        "src/pages/SecurityAnalysis/components/RankedList.tsx": 1,
+        "src/pages/SecurityAnalysis/components/SecurityOverlay.tsx": 3,
+        "src/pages/SecurityAnalysis/components/StarredList.tsx": 1,
+        "src/pages/SecurityAnalysis/tabs/CoverageTab.tsx": 1,
+        "src/pages/SecurityAnalysis/tabs/PeersTab.tsx": 1,
+        "src/pages/SecurityAnalysis/tabs/ThesisTab.tsx": 2
+      },
+      "tokens": {},
+      "local_refs": {
+        "args": [
+          "git",
+          "-C",
+          "portal",
+          "branch",
+          "--contains",
+          "e6057f26c57fc6ff6c223f1c73cc29be3c7f51d6"
+        ],
+        "rc": 0,
+        "stdout": "  wk-amgt_resapp-5-8-portal\n  wk-amgt_resapp-7-2-portal\n",
+        "stderr": ""
+      },
+      "remote_tracking_refs": {
+        "args": [
+          "git",
+          "-C",
+          "portal",
+          "branch",
+          "-r",
+          "--contains",
+          "e6057f26c57fc6ff6c223f1c73cc29be3c7f51d6"
+        ],
+        "rc": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    },
+    "5b959f63ca": {
+      "full": "5b959f63ca5e51214fe1e605b04b82b2bbf60ef4",
+      "files": 0,
+      "nonascii": 0,
+      "affected": {},
+      "tokens": {},
+      "local_refs": {
+        "args": [
+          "git",
+          "-C",
+          "portal",
+          "branch",
+          "--contains",
+          "5b959f63ca5e51214fe1e605b04b82b2bbf60ef4"
+        ],
+        "rc": 0,
+        "stdout": "  wk-amgt_resapp-5-8-portal\n  wk-amgt_resapp-7-2-portal\n",
+        "stderr": ""
+      },
+      "remote_tracking_refs": {
+        "args": [
+          "git",
+          "-C",
+          "portal",
+          "branch",
+          "-r",
+          "--contains",
+          "5b959f63ca5e51214fe1e605b04b82b2bbf60ef4"
+        ],
+        "rc": 0,
+        "stdout": "  origin/DEV\n",
+        "stderr": ""
+      }
+    }
+  },
+  "portal_hygiene_diff": {
+    "args": [
+      "git",
+      "-C",
+      "portal",
+      "diff",
+      "c67281460a",
+      "83cc87f2",
+      "--",
+      "src/pages/SecurityAnalysis"
+    ],
+    "rc": 0,
+    "stdout": "diff --git a/src/pages/SecurityAnalysis/components/PrintExportAction.tsx b/src/pages/SecurityAnalysis/components/PrintExportAction.tsx\nindex 55f398c1..35adad9e 100644\n--- a/src/pages/SecurityAnalysis/components/PrintExportAction.tsx\n+++ b/src/pages/SecurityAnalysis/components/PrintExportAction.tsx\n@@ -87,7 +87,7 @@ export const PrintExportAction: FC<PrintExportActionProps> = ({ securityKey }) =\n               {state === 'generating' && (\n                 <div className=\"flex flex-col items-center gap-2 text-white/60\">\n                   <Loader2 size={24} className=\"animate-spin\" />\n-                  <span className=\"text-sm\">Generating pack\u2026</span>\n+                  <span className=\"text-sm\">Generating pack...</span>\n                 </div>\n               )}\n               {state === 'failed' && (\ndiff --git a/src/pages/SecurityAnalysis/components/ProvenanceLine.tsx b/src/pages/SecurityAnalysis/components/ProvenanceLine.tsx\nindex 7663d729..9990c3aa 100644\n--- a/src/pages/SecurityAnalysis/components/ProvenanceLine.tsx\n+++ b/src/pages/SecurityAnalysis/components/ProvenanceLine.tsx\n@@ -35,7 +35,7 @@ function formatProvenanceLine(figure: ModelFigure): string {\n     figure.currency_caveat ?? undefined,\n   ]\n     .filter(Boolean)\n-    .join(' \u2022 ')\n+    .join(' | ')\n }\n \n export const ProvenanceLine: FC<ProvenanceLineProps> = ({ figure, verdict, reason, className }) => {\n@@ -45,7 +45,7 @@ export const ProvenanceLine: FC<ProvenanceLineProps> = ({ figure, verdict, reaso\n   return (\n     <div className={cn('flex items-baseline gap-2', className)} title={line}>\n       <span className=\"text-sm font-medium text-white\">\n-        {isRefused ? `[REFUSED: ${reason ?? 'see check face'}]` : String(figure.value ?? '\u2014')}\n+        {isRefused ? `[REFUSED: ${reason ?? 'see check face'}]` : String(figure.value ?? '--')}\n       </span>\n       {figure.unit && !isRefused && (\n         <span className=\"text-xs text-white/50\">{figure.unit}</span>\ndiff --git a/src/pages/SecurityAnalysis/components/SecurityOverlay.tsx b/src/pages/SecurityAnalysis/components/SecurityOverlay.tsx\nindex 7f65604d..11de1c3f 100644\n--- a/src/pages/SecurityAnalysis/components/SecurityOverlay.tsx\n+++ b/src/pages/SecurityAnalysis/components/SecurityOverlay.tsx\n@@ -38,7 +38,7 @@ const SESSION_BADGE: Record<\n \n export const SecurityOverlay: FC<SecurityOverlayProps> = ({ bundle, isLoading, onClose }) => {\n   if (isLoading) {\n-    return <div className=\"text-sm text-white/50 py-4\">Loading {bundle?.security_key ?? 'security'}\u2026</div>\n+    return <div className=\"text-sm text-white/50 py-4\">Loading {bundle?.security_key ?? 'security'}...</div>\n   }\n \n   if (!bundle) {\n@@ -86,7 +86,7 @@ export const SecurityOverlay: FC<SecurityOverlayProps> = ({ bundle, isLoading, o\n           <div className=\"text-[10px] uppercase tracking-wide text-white/40\">Trending (chatter)</div>\n           {bundle.chatter ? (\n             <div className=\"text-sm text-white\">\n-              #{bundle.chatter.rank} \u00b7 {bundle.chatter.score.toFixed(0)}/100\n+              #{bundle.chatter.rank} | {bundle.chatter.score.toFixed(0)}/100\n             </div>\n           ) : (\n             <div className=\"text-xs text-white/40\">not in today's chatter rows</div>\n@@ -96,7 +96,7 @@ export const SecurityOverlay: FC<SecurityOverlayProps> = ({ bundle, isLoading, o\n           <div className=\"text-[10px] uppercase tracking-wide text-white/40\">Breakout (price)</div>\n           {bundle.price ? (\n             <div className=\"text-sm text-white\">\n-              #{bundle.price.rank} \u00b7 {bundle.price.score >= 0 ? '+' : ''}\n+              #{bundle.price.rank} | {bundle.price.score >= 0 ? '+' : ''}\n               {bundle.price.score.toFixed(2)}%\n             </div>\n           ) : (\ndiff --git a/src/pages/SecurityAnalysis/tabs/CoverageTab.tsx b/src/pages/SecurityAnalysis/tabs/CoverageTab.tsx\nindex 09a52256..293989da 100644\n--- a/src/pages/SecurityAnalysis/tabs/CoverageTab.tsx\n+++ b/src/pages/SecurityAnalysis/tabs/CoverageTab.tsx\n@@ -88,7 +88,7 @@ export const CoverageTab: FC<CoverageTabProps> = ({ securityKey }) => {\n         }\n       />\n       <PanelContent>\n-        {isLoading && <p className=\"text-sm text-white/50\">Loading\u2026</p>}\n+        {isLoading && <p className=\"text-sm text-white/50\">Loading...</p>}\n         {!isLoading && data && data.store_item_count === 0 && (\n           <EmptyState\n             icon={Newspaper}\ndiff --git a/src/pages/SecurityAnalysis/tabs/PeersTab.tsx b/src/pages/SecurityAnalysis/tabs/PeersTab.tsx\nindex 5446c2b0..43a0c5aa 100644\n--- a/src/pages/SecurityAnalysis/tabs/PeersTab.tsx\n+++ b/src/pages/SecurityAnalysis/tabs/PeersTab.tsx\n@@ -37,7 +37,7 @@ export const PeersTab: FC<PeersTabProps> = ({ securityKey }) => {\n     <Panel variant=\"mixed\">\n       <PanelHeader title=\"Peers\" subtitle=\"Comparable to this company, or absent with a reason\" timestamp={data?.vintage ?? null} />\n       <PanelContent>\n-        {isLoading && <p className=\"text-sm text-white/50\">Loading\u2026</p>}\n+        {isLoading && <p className=\"text-sm text-white/50\">Loading...</p>}\n         {!isLoading && data && data.basis === 'absent' && (\n           <p className=\"text-sm text-white/70\">{data.reason}</p>\n         )}\ndiff --git a/src/pages/SecurityAnalysis/tabs/ThesisTab.tsx b/src/pages/SecurityAnalysis/tabs/ThesisTab.tsx\nindex e4f7a23d..78f9407f 100644\n--- a/src/pages/SecurityAnalysis/tabs/ThesisTab.tsx\n+++ b/src/pages/SecurityAnalysis/tabs/ThesisTab.tsx\n@@ -83,7 +83,7 @@ export const ThesisTab: FC<ThesisTabProps> = ({ securityKey }) => {\n       <Panel variant=\"mixed\">\n         <PanelHeader title=\"Model figures\" subtitle=\"Rehomed from the cut Model tab\" timestamp={data?.generated_at ?? null} />\n         <PanelContent>\n-          {isLoading && <p className=\"text-sm text-white/50\">Loading\u2026</p>}\n+          {isLoading && <p className=\"text-sm text-white/50\">Loading...</p>}\n           {!isLoading && data && (\n             <div className=\"space-y-4\">\n               <div>\n@@ -124,7 +124,7 @@ export const ThesisTab: FC<ThesisTabProps> = ({ securityKey }) => {\n       <Panel variant=\"mixed\">\n         <PanelHeader title=\"Thesis\" subtitle=\"Investment thesis -- machine sentences marked, evidence beside them\" />\n         <PanelContent>\n-          {isLoading && <p className=\"text-sm text-white/50\">Loading\u2026</p>}\n+          {isLoading && <p className=\"text-sm text-white/50\">Loading...</p>}\n           {!isLoading && data && (\n             <div className=\"space-y-4\">\n               {data.drafted_sections.map((section) => (\n",
+    "stderr": ""
+  },
+  "portal_negative_object": {
+    "args": [
+      "git",
+      "-C",
+      "portal",
+      "cat-file",
+      "-t",
+      "0000000000000000000000000000000000000000"
+    ],
+    "rc": 128,
+    "stdout": "",
+    "stderr": "fatal: git cat-file: could not get object info\n"
+  },
+  "portal_pointer": {
+    "args": [
+      "git",
+      "ls-tree",
+      "d359728e66b294dc77149c1a4749237606638b01",
+      "portal"
+    ],
+    "rc": 0,
+    "stdout": "160000 commit e85f6eb84f3a1771a37011a7e77e372570bad02a\tportal\n",
+    "stderr": ""
+  }
+}

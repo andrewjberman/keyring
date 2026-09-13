@@ -1,0 +1,10 @@
+{
+ "note": "Late stamp written now for the round-5 L10 slug committed 2026-09-11 at bd523222a1, received in CTO analysis 3c73d946e3. utc is backfill time, not the historical slug vintage. S44 recovery.",
+ "prd_pin": "d424885ed453",
+ "prd_version": "v0.5",
+ "project": "AMGT_RESAPP",
+ "round": 5,
+ "signed_by": "3.0.0_SA_CVO~Z",
+ "stage": "L10",
+ "utc": "2026-09-13T00:03Z"
+}

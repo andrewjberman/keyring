@@ -1,0 +1,85 @@
+{
+  "utc": "2026-09-13T00:05:24.659578+00:00",
+  "head": "618bf4f75201787bef7d3a8b06e73bd42a4f4673",
+  "new_rows": {
+    "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/adjudications/ADJUDICATION_v7.md": 38,
+    "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v7.md": 17
+  },
+  "row_violations": {
+    "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/adjudications/ADJUDICATION_v7.md": [],
+    "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v7.md": []
+  },
+  "originals": 94,
+  "pending": [],
+  "unknown_targets": [],
+  "duplicate_remediation_ids": [],
+  "duplicate_investigation_or_adjudication_ids": [],
+  "clock_changes": {
+    "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v5.md": {
+      "AMGT_RESAPP-Z-S12": true,
+      "AMGT_RESAPP-Z-S16": true
+    },
+    "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v6.md": {
+      "AMGT_RESAPP-Z-W10-S2": true,
+      "AMGT_RESAPP-Z-W10-S4": true,
+      "AMGT_RESAPP-Z-C-S63": true
+    }
+  },
+  "orders": [
+    [],
+    43,
+    ""
+  ],
+  "pending_intake_covered_once": true,
+  "judgment_grades": [
+    {
+      "criterion": "AMGTrf1-AC5",
+      "instance": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~11/AMGT_RESAPP.TO-AMGT-rf-1.the-cross-at-the-producer.proof_of_spec.json@d359728e66b294dc77149c1a4749237606638b01",
+      "verdict": "PASS",
+      "reason": "Producer repair passes in the source and controlled-execution scope: the actual chatter and price producer paths emit crossed identities, all four resolutions preserve requested=served, and two invalid-domain controls refuse. Source availability is PRODUCER_DECLARED, not a dated live DynamoDB landing. No browser rank is invented. This closes the implemented producer remedy but does not establish deployed producer freshness or FWD-15 realization."
+    },
+    {
+      "criterion": "AMGTrf2-AC5",
+      "instance": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~11/AMGT_RESAPP.TO-AMGT-rf-2.the-mount-and-its-iam.proof_of_spec.json@d359728e66b294dc77149c1a4749237606638b01",
+      "verdict": "FAIL",
+      "reason": "The full AC5 explicitly owns SERVED-plane exercise. Eleven Terraform routes, an entrypoint and source-map binding exist; fake-header tests and three named comp-iam sites improve source coverage. No uploaded package, applied mount, edge-JWT/origin-isolation exercise or served Print path is established. comp-iam still reports three unresolved-resource UNGRANTED sites and does not census transitive watchlist writes or the new resource-style batch call. The source fix is credited; this is neither an outage claim nor permission to deploy."
+    },
+    {
+      "criterion": "AMGTrf2-AC2",
+      "instance": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~11/AMGT_RESAPP.TO-AMGT-rf-2.the-mount-and-its-iam.proof_of_spec.json@d359728e66b294dc77149c1a4749237606638b01",
+      "verdict": "FAIL",
+      "reason": "rf-2 AC2 literally FAILS: its route-bearing .tf is HEAD in the printed tool vocabulary, not CONFIG or DEF; the sole CONFIG hit is the source map, not a route_key declaration. Sixteen hits over a nonzero infra denominator and the actual eleven routes demonstrate the intended source existence."
+    },
+    {
+      "criterion": "AMGTrf3-AC5",
+      "instance": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~11/AMGT_RESAPP.TO-AMGT-rf-3.the-fiscal-row-matcher.proof_of_spec.json@d359728e66b294dc77149c1a4749237606638b01",
+      "verdict": "FAIL",
+      "reason": "The API scope repair passes: 13 headers, 183 fiscal rows and 196 checks, with a wrong-scope zero control. The full cell also requires the populated real consumer and its checks. Executing the actual pinned ThesisTab checkFor against the actual bundle matches 13/13 header checks but 0/183 fiscal checks because fyYEAR:MNEMONIC differs from fiscal_year_line_item:MNEMONIC:YEAR. W11-S5 also lacks its named matcher mutant. Passing backend counts do not meet the whole cell."
+    },
+    {
+      "criterion": "AMGTrf4-AC5",
+      "instance": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~11/AMGT_RESAPP.TO-AMGT-rf-4.the-corrected-overlay-bypass.proof_of_spec.json@d359728e66b294dc77149c1a4749237606638b01",
+      "verdict": "FAIL",
+      "reason": "The shared overlay repair passes locally for ten corrected fiscal prices and a preserved unresolved/refusal arm. The full cell requires both arms through the real populated Thesis route. Its actual checkFor drops the unresolved fiscal REFUSE, and ProvenanceLine displays a raw value when verdict is undefined. Thus a concrete downstream defect remains in addition to the missing full route-render proof. No historical model artifact was rewritten."
+    },
+    {
+      "criterion": "AMGTrf5-AC5",
+      "instance": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~11/AMGT_RESAPP.TO-AMGT-rf-5.the-incomplete-read-signal.proof_of_spec.json@d359728e66b294dc77149c1a4749237606638b01",
+      "verdict": "PASS",
+      "reason": "The bounded adapter repair passes independently: processed, genuine absence, mixed processed/unprocessed and exhausted cases retain distinct completeness and unresolved denominators. A 105-key control returns all 105 points in batches 100,99,5. Worker behavior-mutant failures are attributed separately from CVO calls. The old adapter omission is repaired; the separately measured portal consumer still ignores the new fields, so this is not an end-to-end outcome PASS."
+    },
+    {
+      "criterion": "AMGTrf5-AC2",
+      "instance": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~11/AMGT_RESAPP.TO-AMGT-rf-5.the-incomplete-read-signal.proof_of_spec.json@d359728e66b294dc77149c1a4749237606638b01",
+      "verdict": "FAIL",
+      "reason": "rf-5 AC2 literally FAILS because CODE is not a comp-find band. Nine hits are five SURFACED plus four TEST in the bounded adapter scope; independent execution establishes the actual retry behavior. This is a criterion vocabulary error, not missing retry code."
+    },
+    {
+      "criterion": "AMGTrf6-AC4",
+      "instance": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~12/AMGT_RESAPP.TO-AMGT-rf-6.the-named-hygiene-edit.proof_of_spec.json@d359728e66b294dc77149c1a4749237606638b01",
+      "verdict": "PASS",
+      "reason": "The named INERT display edit passes at portal 83cc87f2: 18 files, ten punctuation occurrences reduced to zero, and a six-file diff containing only the named display substitutions. The worker compiler sees 2069 source files and catches its type-error control with byte-identical restoration. The CVO independently reads both objects and the complete diff. This is an object-scoped hygiene grade, not publication at the recorded e85f6eb84f gitlink."
+    }
+  ],
+  "limits": "Prospective current working-file census; safe-commit repeats checks against its index. No overrides; current source pin and offline/composed evidence are in the intake and audits."
+}
