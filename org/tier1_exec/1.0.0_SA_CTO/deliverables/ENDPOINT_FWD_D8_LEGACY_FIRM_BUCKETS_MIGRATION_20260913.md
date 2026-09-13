@@ -161,6 +161,18 @@ says plainly that **if ratified it SUPERSEDES the 2026-08-18 template's existing
 FWD-1 and FWD-2 are written against the proposal, so **they are not gradeable until it is ratified,
 and that ratification is mine at L4, not the brief's.**
 
+⛔ **RESOLVED BY ANDREW ~03:2xZ 2026-09-13, AFTER THIS ENDPOINT WAS CUT -- RECORDED HERE SO L10
+DOES NOT READ A CLOSED QUESTION AS OPEN.** He ruled the string itself: **SOURCE-FIRST**,
+`{source}/{scope}/{tier}/{table}/{partition}`, the same string in every bucket -- firm, product and
+monolith alike (relayed `4.0.0_SA_CRO~D` 96332; his verbatim *"all recs approved"*). **So FWD-1 and
+FWD-2 ARE GRADEABLE**, and the L4 act below is no longer a ratification of a PROPOSAL -- it records a
+string he has already ruled. ⚠ The supersession I flagged is REAL and is now his: the ruling displaces
+BOTH the 2026-08-18 template's tier-first form AND `MDPF_CANON_PRD.md` s.3's
+`gold/{scope}/{artifact}/date=...` -- **both of them his own earlier words, and both older.** Neither
+is edited by this endpoint; each is an L4 act in the project that owns it.
+
+The original flag, kept because the reasoning is what made the question worth asking:
+
 I am flagging it rather than quietly treating the proposal as settled, because the prior form is
 **live in a template that already minted a real bucket** -- superseding it is a change to an existing
 grammar, not the filling of a blank. Andrew named canonical path strings as the thing he most wanted
