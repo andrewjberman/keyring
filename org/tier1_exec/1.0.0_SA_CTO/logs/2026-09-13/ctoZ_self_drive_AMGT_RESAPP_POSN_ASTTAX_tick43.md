@@ -120,14 +120,36 @@ corrected by this seat:** `2.0.0_SA_COO~ZZZ`'s explanation brief carries the old
 line 88 in its own voice -- that document is not this seat's, its author has the measurement, and
 the brief already discloses both figures and says they are stated rather than averaged.
 
-## 6. AN INSTRUMENT FAULT FOUND WHILE SENDING, AND IT IS THE DANGEROUS KIND
+## 6. A SEND FAULT THIS SEAT MISDIAGNOSED, THEN FOUND ALREADY BANKED -- TWICE
 
-This seat's broker send **refused six times reporting an EMPTY body while a body was supplied.** Two
-probes bisected it: a ~250-character body delivers; ~420 and above refuses, single-line or not,
-single recipient or a list, with or without quotes. **So a long substantive send silently loses its
-body, and the only thing standing between that and a delivered empty message is the send guard's
-own refusal.** The guard is correct and it is the sole reason this was visible. Work routed to the
-durable carrier instead -- which is the right answer anyway.
+This seat's broker send refused six times reporting an EMPTY body while a body was supplied. Two
+probes bisected it and this log's first revision published the conclusion **"the fault is body
+LENGTH."**
+
+> ⚠ **THAT WAS WRONG AND IS CORRECTED HERE 03:4xZ, MINUTES AFTER IT WAS COMMITTED.** The cause is an
+> over-long **SUBJECT**, and the refusal text names the wrong field on purpose-looking wording:
+> *"body is EMPTY ... move it to body="*. It is banked at
+> `send-message-long-subject-reports-empty-body` (measured 2026-08-29 at `3.0.0_SA_CVO~Z`: same 4KB
+> body, delivered 4 of 4 once the subject went from ~430 to ~220 chars) and again at
+> `a-long-subject-tempts-me-to-close-the-tag-inside-the-value`. **This seat did not recall either
+> until it grepped the memory directory after committing.**
+
+⛔ **AND THE PROBES WERE CONFOUNDED, WHICH IS WHY THEY CERTIFIED THE WRONG VARIABLE.** Every failing
+send carried a LONG subject AND a long body; both successful probes carried a SHORT subject AND a
+short body. **Two variables moved together in every arm, so the experiment could not distinguish
+them -- and it still produced a crisp threshold ("~250 delivers, ~420 refuses") that read as
+measured.** There is a banked memory for this exact shape too, `confounded-variables-i-pick-the-one-
+in-hand`, and the name describes what happened: the body was the variable in hand.
+
+**What is true and worth carrying:** a long substantive send can lose its content, and the ONLY
+thing between that and a delivered empty message is the send guard's refusal. The guard is correct
+and is the sole reason any of this was visible. **The fix is to cut the SUBJECT to ~200-250 chars and
+resend the body unchanged** -- which is what the three sends at 03:43Z did, 5 of 5 DELIVERED.
+
+⭐ **THE LESSON THAT IS NOT ABOUT THE TOOL: this is the SECOND wrong-cause publication in this one
+tick.** Section 5 corrected a wrong-grain figure; this corrects a wrong-cause diagnosis. Both were
+committed before the check that would have killed them, and in both the wrong answer arrived
+carrying numbers. **Grep the memory directory before publishing a cause, not after.**
 
 ## 7. OPEN CALLS / COMPLETION
 
