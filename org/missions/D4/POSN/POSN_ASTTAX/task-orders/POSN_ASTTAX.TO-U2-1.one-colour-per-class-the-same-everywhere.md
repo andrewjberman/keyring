@@ -14,6 +14,16 @@
 
 ## THE CELL
 
+> ⛔ **ISSUER CORRECTION BEFORE SPAWN (2026-09-13 ~06:4xZ), FOUND BY `0.9.0_WK_POSN_ASTTAX~15` ON THE
+> SIBLING ORDER AND FIXED HERE BEFORE IT COULD BITE A SECOND WORKER.** The `<proof_of_spec>` block
+> first named the SHORT form `POSN_ASTTAX.TO-U2-1.proof_of_spec.json`. **The convention is the FULL TO
+> FILENAME STEM, measured 12 of 12 over every POSN proof instance at HEAD**, and it is what the L6
+> gate derives. `~15` deviated from the written path deliberately and said so; that was correct and
+> the order was wrong. `TO-U3-1` and `TO-U4-1` still carry the short form and are NOT edited, because
+> their workers are LIVE and changing a face mid-read is a silent modification a worker never sees
+> refused -- they are handled at the drain instead.
+
+
 **FWD-4, verbatim from the PRD v0.6 endpoint block: "Each class has one color, the same everywhere."**
 Zero cells in three rounds. This is that cell.
 
@@ -93,5 +103,5 @@ three", that is a finding for a surprise row -- it is NOT licence to widen the d
 </preflight>
 
 <proof_of_spec>
-org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~18/POSN_ASTTAX.TO-U2-1.proof_of_spec.json
+org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~18/POSN_ASTTAX.TO-U2-1.one-colour-per-class-the-same-everywhere.proof_of_spec.json
 </proof_of_spec>
