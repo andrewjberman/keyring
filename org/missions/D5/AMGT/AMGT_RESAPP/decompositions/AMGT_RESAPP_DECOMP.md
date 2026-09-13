@@ -1309,3 +1309,109 @@ Before any drain of a round-8 branch, and stated here so it is procedure rather 
 pin is the reason: the portal evidence lives at `83cc87f2`, contained by ONE local ref and **0 of the
 portal remote's 9 heads**, while the recorded gitlink `e85f6eb84f` IS contained by `origin/DEV`.
 Every portal-dependent outcome grades **EXERCISED**, never REALIZED, until the gitlink lands.
+
+---
+
+## 17. ROUND 9 (v1.0) -- FROM THE L10 ROUND-8 ANALYSIS @`f99eff5726` (`1.0.0_SA_CTO~Z`), THE SERVED-ROUTE ROUND
+
+**ONE CELL.** The analysis's own verdict: *"Nothing else is warranted on coverage grounds. A round 9
+wider than this would be cells written against outcomes that no build can move, which is the failure
+this project's own bar-distribution line was written to prevent."*
+
+### 17a. The cell set by SUBTRACTION over a PRINTED denominator
+
+```
+ 4  OPEN remedy rows of REMEDIATION_v8 @a51f860e36
+      (18 rows total: 14 REMEDIATED, 4 OPEN, read from each row's own remediation.state AT HEAD)
+-2  Z-S53, Z-S57   1.0.0_SA_CTO~Z's, and ONE bounded POSN paired read closes both.
+                   DISCHARGED BY THE ANALYSIS ITSELF at s.7 -- not carried, closed.
+-1  Z-S61          DISCHARGED at Z-S64 this round: the brief's figure corrected at 2f66f338da
+                   citing both pins, with the superseded line recorded rather than erased.
+-1  Z-W13-S3       ITS REMEDY IS A PROPERTY OF THE CUT, NOT A CELL -- "name the composition module
+                   as a read surface in any future applicable issuance and explicitly record the
+                   present exception disposition. No producer-ID rewrite or worker recut is
+                   inferred." THIS ISSUANCE'S <paths> AND s.17c DISCHARGE IT.
+=  0 CELLS FROM THE REMEDY ROWS.
++1 CELL FROM THE ANALYSIS'S OWN RECOMMENDATION (s.6), which is not a remedy row and is stated as
+   the one remaining producer-side distance in the project.
+=  ONE CELL. REMAINDER ZERO BY CONSTRUCTION.
+```
+
+⚠ **AND THE DOMAIN WAS FALSIFIED BEFORE THE SUBTRACTION RAN.** The four OPEN rows are the slug's
+state field *as written*; two of them were closed between the write and this read -- `Z-S53`/`Z-S57`
+by the analysis and `Z-S61` by this seat. **A slug is a snapshot of a moving channel** (`Z-S64`), so
+the states above are read AT HEAD rather than trusted from the slug. The wider standing set -- this
+seat's 63 armed items -- is explicitly **NOT** this cut's domain and is carried, for the same reason
+`Z-S46`'s thirty was excluded at round 8.
+
+### 17b. The cell
+
+| cell | row / source | what it is |
+|---|---|---|
+| **`AMGT-rh-1`** | analysis s.6 | **THE SERVED ROUTE, LOCALLY, END TO END.** The component is proven and the ROUTE is not: nobody has loaded the actual page against the actual data. Round 7 measured the page joining **0 of 183**; round 8 repaired the join **at the component**. The distance between those two sentences is the last producer-side gap in this project. |
+
+**The bar is a RENDERED ROUTE, not a passing test** -- the analysis's own words. The page loads, the
+figures join on screen, a failed check is visibly marked, and the ranked panel renders and navigates.
+
+⭐ **`FWD-9` IS COVERED EXPLICITLY**, because it is the only outcome whose bar a served page alone can
+close -- it is the single `APPLIED` bar in a set of fifteen -- and it carries the thinnest coverage in
+the whole project at **one order**.
+
+### 17c. `Z-W13-S3` discharged by this issuance rather than by a cell
+
+The row: the order granted `lib/research/checkface/scopes.py` as "the producer's identity contract",
+but `scopes.py` declares only the scope VOCABULARY; the `figure_id` COMPOSITION lives in
+`run_checks.py:figure_id()`, which the grant did not name. The worker read it anyway, **disclosed
+that it had**, and stopped rather than widening silently.
+
+**This issuance names `lib/research/checkface/run_checks.py` in `<paths>` as a READ surface**, and
+**records the present exception disposition here**: the round-8 read was OUTSIDE its grant, the
+worker's disclosure is what makes it correctable rather than invisible, and **correct source
+grounding does not retroactively supply a grant**. No producer-ID rewrite and no worker recut is
+inferred, exactly as the remedy says.
+
+### 17d. Fan-out
+
+```
+fanout: 1 of 1 chains, cap 8
+```
+
+**M is measured and it is ONE.** There is one cell, so there is one chain and one worker. No portal
+sub-path grain question arises this round because no second cell competes for the submodule
+(`Z-S33`).
+
+### 17e. The drain contract
+
+Unchanged from s.16d and re-stated because it binds again: fetch the worker's portal branch into a
+**ref** so the objects survive teardown; run the **bogus-hash negative control**; then
+`branch -r --contains` with `e85f6eb84f` as the **firing positive control**; and **no round-9 drain
+moves the gitlink.** ⛔ **AND `Z-S60` ADDS ONE STEP TO THE PROBE, NOT THE DRAIN:** this round spawns
+into a **fresh** worktree, not a reused one, so plane (c) is not inherited -- and if a worktree is
+ever reused, artifact mtimes are compared against the **spawn time** with a wider window printed
+beside them.
+
+### 17f. The four-postulate record (Rule 24)
+
+- **(i) MECE over a DECLARED domain, BY SUBTRACTION:** s.17a subtracts from the four OPEN rows with a
+  printed denominator and a reason per exclusion; the arithmetic balances 2 discharged-by-analysis +
+  1 discharged-by-row + 1 discharged-by-cut = 4, plus one cell from the analysis's recommendation.
+  **The domain was falsified first:** the slug's state field was re-read AT HEAD because two of its
+  four had already closed.
+- **(ii) SAME GRAIN:** one cell, one route, one end-to-end exercise. It is deliberately NOT split into
+  page / figures / check-face / panel, because **the thing not yet proven is the ROUTE, and a route
+  split into components is the component evidence round 8 already produced.**
+- **(iii) INTENT COHERENCE, one axis:** *prove the assembled route renders against real data, locally,
+  with nothing promoted.*
+- **(iv) STATE COHERENCE -- what this remedy does NOT move:** it does not promote (FROZEN both
+  fabrics, **COMMIT YES / PROMOTE NO**, restated by Andrew twice at 03:21:46Z), does not move the
+  recorded gitlink, does not push any remote head, does not deploy, does not close `Z-W11-S1` or
+  `Z-W11-S2`, does not touch `Z-C-S49` (carried to this round by name as a CROSS-ROOT terraform
+  reference and **not cut**, because an IAM/table change is applied state whatever the file suffix
+  says), and does not close the 63 carried armed items, which are READ one at a time and never
+  screened.
+
+⛔ **NO ROUND-9 ARTIFACT MAY GRADE A PORTAL-DEPENDENT OUTCOME `REALIZED`.** `Z-S47`'s constraint
+stands unchanged: the portal evidence is reachable from **0 of 10** remote heads while the recorded
+gitlink `e85f6eb84f` is reachable from 1. Every portal-dependent outcome grades **EXERCISED**, never
+REALIZED, until the gitlink lands -- and **a local dev render is not a publish**, which is precisely
+why this cell is cuttable under the freeze at all.
