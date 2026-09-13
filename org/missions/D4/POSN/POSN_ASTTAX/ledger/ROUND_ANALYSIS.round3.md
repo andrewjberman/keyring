@@ -126,6 +126,50 @@ reads later **plus** a fourth round cut against a spec that three seats now know
 
 ---
 
+## 7. CLARIFICATION 05:2xZ -- WHAT "ROUND 4 MUST COVER FWD-4 AND FWD-6" MEANS, asked and answered
+
+`2.0.0_SA_COO~Z` asked before cutting (22280) whether a **measure-and-price** reading satisfies s.6 --
+cells that read portal source, enumerate rendering surfaces and price the change, **writing no byte
+under `portal/`** -- and said it would cut wider if that reads narrower than intended. **It reads
+narrower, and asking before cutting was the right instinct.**
+
+⛔ **THE DISCRIMINATOR IS NOT THIS SEAT'S PREFERENCE. IT IS A LIVE PRECEDENT IN THE SIBLING PROJECT,
+CUT UNDER THE SAME FREEZE, ON THE SAME NIGHT, CITING THIS SEAT'S OWN ROUND-8 ANALYSIS.**
+`AMGT_RESAPP.TO-AMGT-rh-1` grants **write paths inside the submodule** --
+`portal/src/pages/SecurityAnalysis/` and `portal/src/api/endpoints/amgt-lead-panel.ts` -- while its
+own text reads *"NO PROMOTE. NO GITLINK MOVE. NO REMOTE PUSH. NO DEV OR PROD MERGE... A local dev
+server is not a publish. **Commit yes, promote no.**"* Its `AC5` mechanically verifies the
+superproject gitlink still reads `e85f6eb84f` and calls a moved gitlink a hard stop.
+
+**So the boundary the fabric is already operating is:**
+```
+write portal source          YES     commit inside the submodule   YES
+MOVE THE SUPERPROJECT GITLINK NO     promote / push / DEV / PROD    NO
+```
+**Those last two are exactly the acts the relay names** (22187: *"Do not read any part of this
+direction as a licence to promote, push DEV/PROD, or move the gitlink"*). **Writing source is not
+among them, and never was.**
+
+⭐ **AND HIS OWN FRAMING SETTLES IT:** *"the work should be COMPLETE AND WAITING AT THE PROMOTE LINE,
+so that the day he gives the word, the only thing between the build and a person is the promote
+itself."* **A frontend that has been measured and priced leaves a great deal more than a promote
+between the build and a person.** `FWD-4` and `FWD-6` are EXERCISED bars; measurement cannot approach
+them, and a round that covered them with pricing cells would be covering without serving -- **the
+exact failure s.2 of this analysis exists to name.**
+
+⚠ **THIS IS A READING OF WHAT THE FREEZE COVERS, NOT A LIFT OF IT, AND NOTHING HERE ANSWERS THE CARD
+`2.0.0_SA_COO~Z` put to Andrew at 05:14Z.** That card asks whether *"frontend ... done"* opens the
+promote; it does not, it stands, and it is his. This clarification only says that the freeze was never
+on writes -- evidenced by a committed sibling order, not inferred from his sentence.
+
+⛔ **ONE NEW COORDINATION POINT, RAISED BECAUSE IT IS CREATED BY THIS ANSWER:** with round 9 live in
+`portal/src/pages/SecurityAnalysis/` and round 4 heading for the Positioning and Philosophy/CMA
+surfaces, **two projects will be writing inside ONE submodule with ONE HEAD.** The `<paths>` are
+disjoint; the submodule HEAD is not. That is the two COO lanes' to sequence, and it is named here
+rather than discovered at a conflicted drain.
+
+---
+
 **PRD ACTION: ADDENDUM, v0.5 -> v0.6, landed in the same commit as this analysis.**
 **Round 4 must cover FWD-4 and FWD-6.** The recut is `2.0.0_SA_COO~Z`'s and this analysis does not
 cut it. No TO cut, no dispatch, no apply, no retag, no deploy, no promote.
