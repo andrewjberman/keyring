@@ -921,6 +921,59 @@ Accumulating CVO review as round-two evidence arrives. This is NOT an L10 slug a
       ]
     },
     "dismissal_reason": "Repaired within their rounds, or recorded consequences of the wire. The class of cut defects is carried once, by C-S58 and RULING N (ROUND_ANALYSIS_IRPT_FNTEND_ROUND4_20260913.md). W2-S7's shell request is the portal's, named here, not carried by this project."
+  }  ,
+  {
+    "id": "IRPT_FNTEND-C-S75",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-13T09:57:06Z",
+    "one_line": "C-S66's DISARM CONDITION IS MET: IRPT_BCKEND-S51 now carries the producer-side smoke-map pin in IRPT_BCKEND's own channel, so W2-S10, W2-S15 and S40 are carried there, correctly, and close on this side.",
+    "class": "OBSERVATION",
+    "adjudicates": [
+      "IRPT_FNTEND-W2-S10",
+      "IRPT_FNTEND-W2-S15",
+      "IRPT_FNTEND-S40"
+    ],
+    "disposition": "DISMISSED_WITH_REASON",
+    "spec_asserts": "C-S66 (df08e2c33c): DISARMS when an IRPT_BCKEND row or cell carries the producer-side pin.",
+    "world_is": "IRPT_BCKEND-S51 (1.0.0_SA_CTO, committed bf92c169ac) routes both halves into IRPT_BCKEND's next L4 packet: the producer's paired seam test reads 14 failed, 39 passed -- the ten paired-request cases assert flat-slug keys against a map that now carries v1 declared paths, and one more fails on a route table grown from 11 to 12 -- and the producer's StatusEnvelope copy never received v0.14. S51 is ARMED there, with 1.0.0_SA_CTO as disarm owner and a condition: both carriers agree and the paired test is green on a named portal commit. NOT re-measured here: the 14/39 figure is the CTO's, and S51 states its own grain caveat (it read the portal WORKING TREE's smoke map).",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "IRPT_BCKEND-S51@bf92c169ac -- org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md",
+        "IRPT_FNTEND-C-S66@df08e2c33c -- the disarm condition",
+        "org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_IRPT_FNTEND_ROUND4_20260913.md@23af9479ab section 6, items 5-6"
+      ]
+    },
+    "dismissal_reason": "Carried elsewhere, correctly: the hazard is IRPT_BCKEND's and now has a carrier, an owner and a condition in that project's channel. Holding it ARMED here too would be a second carrier of one hazard -- the drift C-S66 existed to end."
+  },
+  {
+    "id": "IRPT_FNTEND-C-S76",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-13T09:57:06Z",
+    "one_line": "S57, the CTO's disarm record for eleven rows it owns, is carried: all eleven already had per-ID carriers (C-S60, C-S61, C-S62, C-S64, C-S67), and ten agree with it. On S42 this seat and the CTO differ; the difference is recorded, not resolved.",
+    "class": "OBSERVATION",
+    "adjudicates": [
+      "IRPT_FNTEND-S57"
+    ],
+    "disposition": "DISMISSED_WITH_REASON",
+    "spec_asserts": "S57: the disarm conditions of S30, S33, S38, S42, S43, S44, W2-S18, W1-S41, W1-S42, W1-S43 and S48 are discharged by the evidence in the round-4 analysis section 4; their disposition is the CVO's.",
+    "world_is": "The carriers landed at df08e2c33c, before S57 and on independent reads: S30 in C-S60; S33 in C-S61; S43 in C-S62; S38, S44, W2-S18, W1-S41, W1-S42, W1-S43 and S48 in C-S64 -- all DISMISSED_WITH_REASON, agreeing with S57. S42 is in C-S67, GRADUATED and ARMED: S57 discharges S42's blocking arm (the fixture block, cleared by FE-s-26) and carries its instrument lesson into RULING I; C-S67 agrees the blocking arm is cleared but keeps the substrate half armed, because portal c2eb8eb4's package.json still installs no DOM environment and what protects the project is a ruling an issuer must remember, not an instrument. S57's twelfth row, S40, is not disarmed by it and is closed here by C-S75.",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "IRPT_FNTEND-S57@bf92c169ac",
+        "IRPT_FNTEND-C-S60, C-S61, C-S62, C-S64, C-S67@df08e2c33c",
+        "portal c2eb8eb4:package.json -- no happy-dom, no jsdom",
+        "org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_IRPT_FNTEND_ROUND4_20260913.md@23af9479ab section 4"
+      ]
+    },
+    "dismissal_reason": "A disarm record whose eleven targets were already carried per ID; S57 itself opens nothing. C-S67 stands on S42 until 1.0.0_SA_CTO rules otherwise at L10; the difference is named in this seat's rounds 2-3 slug."
   }
 ]
 ```
