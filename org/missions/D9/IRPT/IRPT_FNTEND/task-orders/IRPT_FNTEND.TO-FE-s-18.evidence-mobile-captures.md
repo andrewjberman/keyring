@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_FNTEND~1</issued_to>
 <issued_by>2.0.0_SA_COO~F</issued_by>
 <issued_date>2026-09-11</issued_date>
-<status>pending</status>
+<status>complete</status>
 
 **Directive:** D9 | **Fabric:** laptop | **PRD:** `../prd/IRPT_FNTEND_PRD.md` v0.6 @d1479bc5f0 (F4, F5, F6, F8, F11, F13; FIXTURES AND EVIDENCE) | **Decomp cell:** `FE-s-18` (round 2, v0.2) | **outcome_ref:** FWD-3, FWD-5, FWD-8, FWD-11, FWD-12 | **depends_on:** `FE-s-14`, `FE-s-15`, `FE-s-16`, `FE-s-17` (all terminal) | **slot:** ~1, queue position 4, last | **slug rows:** C-S43, W3-S1, W4-S1, W1-S12 (retained control)
 
@@ -111,6 +111,7 @@ MEASURED BY THE ISSUER on the main checkout at portal DEV `774c595b`: `bun test 
   2. **ROW IDS ARE ALLOCATED ACROSS THE WHOLE CHANNEL PLANE.** Read `INVESTIGATION_v1.md` AND `_v2.md` for the last W1 id before minting -- not only the file the Surprise line below names (row S36).
   3. **Write the channel with `newline='\n'` and READ THE DIFFSTAT of every commit that touches it.** An append that touches lines it did not write is doing something else (row S47; this round a worker's first append re-serialised 16 existing rows and only this check caught it).
   4. **EVIDENCE HYGIENE (1.0.0_SA_CTO 96370): each row's `output_evidence` carries the DECIDING invocation's output and nothing else.** Earlier runs, baselines and BEFORE notes go in `status_reason`. It matters most on `F18-AC16` and `F18-AC17`: their `0 fail` bars are graded by an unanchored search, so a second summary anywhere in the evidence can satisfy them whatever the deciding run said (row S56). The issuer reads their deciding lines by hand at the drain.
+  5. **(Added by the issuer after your refusal, row `W1-S54`.) Two older tests that make claims about the ROUND-2 capture set are now in your `<paths>` -- `__tests__/fe-s-22/capture-hash.test.ts` and `__tests__/fe-s-26/not-defective.test.ts` -- plus one NEW file, `__tests__/fe-s-22/round2-captures.frozen.json`.** They read your LIVE deliverables folder (`DELIVERABLES_R2`) as their stand-in for 'the round-2 PNGs', and your re-capture correctly replaced those PNGs, so `F18-AC17` could not pass as carried. **That is the issuer's miss, not yours:** the reseat checked stale mechanisms but not what other cells' tests assert about your captures. Re-point the CAPTURE (PNG digest) input of every assertion that makes a claim about the ROUND-2 set -- `capture-hash.test.ts`'s ROUND-2 COLLISION test and its INDEPENDENCE arm, and `not-defective.test.ts`'s DISCLOSURE test -- to a frozen round-2 digest set written to that new file, **derived from the round-2 `captures.manifest.json` at workspace commit `c44180ab9b` by `git show`, never re-typed**, with that commit recorded in the file. **Move each verdict WHOLE:** every assertion that reads one verdict reads the same input (splitting a pair was this round's `W2-S22` defect). **Change no claim, and do not touch `capture-hash.ts` or FE-s-22's claims model** -- that question is `W2-S21`'s and is decided at L10. Show it BOTH WAYS in the run's own output: the frozen round-2 set gives the old readings (1 distinct digest, 3 refused pairs, refused); your live round-4 set gives 3 distinct, 0 refused pairs, not refused. Then re-run `F18-AC17` and every criterion your change can reach.
 
 - **Grant.** Your write surface is the `<paths>` block below, plus `org/missions/D9/IRPT/IRPT_FNTEND/deliverables/<your serial>/` and this order's own file. Under `tabs/`, `header/`, `export/`, `global/`, `render/`: LAYOUT ONLY (class attributes, wrappers, order of siblings), with ONE exception the amendment names -- the Lato Bold packaging under `render/assets/fonts/`, `render/print.css`, `render/manifest.ts` and `__tests__/fe-s-17/`; any other change to a prop, state, data read, adapter call or text is a surprise row on the owning cell, never an edit here. A path you need that is not named is a BLOCKING row on that criterion; never an override.
 - **R3 IS THE SECOND NON-LAYOUT EXCEPTION** (the Lato packaging is the first). The re-pin surfaces named in R3 are granted for the re-pin alone. Everything else under `tabs/`, `header/`, `export/`, `global/`, `render/` stays LAYOUT ONLY.
@@ -133,6 +134,9 @@ portal/src/pages/InvestorReporting/contracts/
 portal/src/pages/InvestorReporting/__tests__/fe-s-13/
 portal/src/pages/InvestorReporting/__tests__/fe-s-18/
 portal/src/pages/InvestorReporting/__tests__/fe-s-17/
+portal/src/pages/InvestorReporting/__tests__/fe-s-22/capture-hash.test.ts
+portal/src/pages/InvestorReporting/__tests__/fe-s-26/not-defective.test.ts
+portal/src/pages/InvestorReporting/__tests__/fe-s-22/round2-captures.frozen.json
 org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md
 </paths>
 
