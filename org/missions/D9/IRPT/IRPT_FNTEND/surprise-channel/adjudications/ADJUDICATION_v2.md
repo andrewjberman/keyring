@@ -974,6 +974,32 @@ Accumulating CVO review as round-two evidence arrives. This is NOT an L10 slug a
       ]
     },
     "dismissal_reason": "A disarm record whose eleven targets were already carried per ID; S57 itself opens nothing. C-S67 stands on S42 until 1.0.0_SA_CTO rules otherwise at L10; the difference is named in this seat's rounds 2-3 slug."
+  }  ,
+  {
+    "id": "IRPT_FNTEND-C-S77",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-13T20:54:45Z",
+    "one_line": "CORRECTION TO C-S72: W1-S36 is NOT live at portal c2eb8eb4. scripts/ui-smoke.mjs:341 already compares a pathname with a pathname -- fixed at portal 25062fce by FE-s-22, both arms proven (F22-AC6, F22-AC7). C-S72 was written from the row's description, not from the line.",
+    "class": "OBSERVATION",
+    "spec_asserts": "C-S72 (a7187bac85): 'W1-S36, STILL LIVE at portal c2eb8eb4: scripts/ui-smoke.mjs:341 compares window.location.pathname (:332) with the full route string'.",
+    "world_is": "At portal c2eb8eb4, scripts/ui-smoke.mjs:341 reads `state.loc === new URL(ORIGIN + route).pathname` -- a pathname against a pathname, not the route string W1-S36 describes. The change is portal 25062fce (0.9.0_WK_IRPT_FNTEND~2, FE-s-22, 2026-09-12), whose own diff removes `state.loc === route` and adds the pathname comparison, and which is an ancestor of c2eb8eb4. __tests__/fe-s-22/smoke-detector.test.ts proves both arms: a landed query route prints no DID NOT LAND (F22-AC6), and a genuinely bad route prints it (F22-AC7). THIS SEAT'S OWN READ of line 341, printed while C-S72 was being written, showed the corrected line; the row followed W1-S36's prose instead. Raised by 2.0.0_SA_COO~F (96407); re-derived here from the line, the commit's diff and the test.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal c2eb8eb4:scripts/ui-smoke.mjs:341 -- `state.loc === new URL(ORIGIN + route).pathname`",
+        "portal 25062fce -- diff removes `state.loc === route`, adds the pathname comparison; ancestor of c2eb8eb4",
+        "portal c2eb8eb4:src/pages/InvestorReporting/__tests__/fe-s-22/smoke-detector.test.ts -- F22-AC6 and F22-AC7",
+        "2.0.0_SA_COO~F msg 96407"
+      ]
+    },
+    "adjudicates": [
+      "IRPT_FNTEND-W1-S36"
+    ],
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Remediated in round 3 and proven on both arms, so W1-S36's latest disposition moves from C-S72's GRADUATED to this row. C-S72 stands for its other two rows, W2-S16 and W1-S35. The round-5 input C-S72 produced (1.0.0_SA_CTO's round-4 addendum, section 7, item 11) rests on this seat's error; 2.0.0_SA_COO~F has told 1.0.0_SA_CTO, and the round-5 decomposition records the item as done.",
+    "hazard_standing": "INERT"
   }
 ]
 ```
