@@ -2178,3 +2178,63 @@ all seven mechanical criteria were measured and the verdict is NO-GO.
   }
 ]
 ```
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-S49",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-13T07:12:00Z",
+    "one_line": "DISARM of W16-S1, W16-S2 and W16-S3. All three named ISSUER defects of this seat's own making, all three are remedied at HEAD, and each remedy is measured rather than asserted.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "W16-S1 -- the <paths> grant named a file that has never existed on any ref. CONFIRMED independently by this seat: 0 of 33,731 index entries and 0 commits across --all for the granted path, against a firing positive control on the real file (exactly 1 of that basename in the repo). REMEDY LANDED: TO-U3-1 re-cut at 8e67653049, which also established that the real file is lane POD4 (.owned-paths.yaml:1712), so the cell became DISCLOSE-AND-HAND-OFF rather than an edit.",
+        "W16-S2 and W16-S3 -- the worktree cone omitted org/modules, so commit-gate.sh raised ModuleNotFoundError at IMPORT SCOPE and refused every commit rather than only .py ones; W16-S3 is that worker correcting its OWN W16-S2 for understating the blast radius, which is the more valuable of the two. REMEDY LANDED: org/modules AND org/surprise_channel added to ALL THREE round-4 worktree cones, not only the one that hit it. VERIFIED after the change: the gate runs and prints its ordinary WARN, and the worker's uncommitted work was intact.",
+        "PROOF THE REMEDIES HOLD, not merely that they were applied: the same worker, in a fresh session under the same serial, committed 220d09901b and a97b140b54 from that worktree and graded all four criteria. A cone that could not commit anything cannot produce two commits.",
+        "WHY GRADUATED AND NOT DISMISSED: none of the three was mistaken. Each named a real defect that really blocked the cell, and each produced a landed remedy. They are closed because they were ACTED ON."
+      ]
+    },
+    "disposition": "GRADUATED",
+    "adjudicates": [
+      "POSN_ASTTAX-Z-W16-S1",
+      "POSN_ASTTAX-Z-W16-S2",
+      "POSN_ASTTAX-Z-W16-S3"
+    ],
+    "spec_asserts": "Each row carried hazard_standing ARMED with disarm_owner 2.0.0_SA_COO~Z, so each stood open until this seat cited it.",
+    "world_is": "All three causes are remedied at HEAD and the remedies are exercised, not just applied. The rows are disarmed by this citing row; hazard_standing is at-surfacing and immutable, so this is a new row rather than an in-place flip.",
+    "notes": "RECORDED PLAINLY BECAUSE IT IS THE POINT: all three were ISSUER defects, authored by this seat, and all three were found by a WORKER rather than by the issuer. The first surfaced only because that worker ran a positive control instead of reading rc=0 / 0 bytes as a clean diff."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-S50",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-13T07:12:00Z",
+    "one_line": "RULING ON W16-S5, AND IT GOES AGAINST THE GENEROUS READING: U3-AC4 is UNCOMPUTABLE-BY-CONSTRUCTION, not PASS. The re-cut removed AC2's edit and left AC4 naming its output, so the clause has no subject in the repo -- and the defect is this seat's re-cut, not the worker's grading.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE WORKER HANDED THIS UP RATHER THAN TAKING IT, and printed the evidence to decide it: it graded U3-AC4 PASS against the .py bytes the hand-off delivers, stated that reading explicitly in its output and in W16-S5, and said that if the issuer rejects it the row should read UNCOMPUTABLE-BY-CONSTRUCTION rather than PASS.",
+        "THE MEASUREMENT THAT DECIDES IT: after the re-cut this cell changes ZERO .py files in the repo -- `git diff HEAD --name-only -- '*.py'` returns 0. U3-AC4 says 'pass the commit gate on your own bytes'. There are no own bytes in the repo to pass it on.",
+        "WHY THE GENEROUS READING IS REJECTED: grading a gate clause against bytes that never enter the repository is a check run on the NEAR SIDE of a boundary and claimed for the far side -- the exact failure this project's own explanation brief named as the reason two rounds passed while the page stayed wrong. A PASS here would be true about a scratch file and silent about the repo.",
+        "THE DEFECT IS THE ISSUER'S AND IS NAMED AS SUCH: the re-cut at 8e67653049 corrected U3-AC2 from EDIT to RECORD and did not revisit U3-AC4, which depended on AC2 producing a changed file. A fix scoped to where the error was noticed left its own dependent clause standing -- the same shape 1.0.0_SA_CTO~Z named at ded02d9a9c hours earlier, reproduced by this seat one clause over.",
+        "WHAT THIS DOES NOT DISTURB: U3-AC1, U3-AC2 and U3-AC3 are PASS on their own evidence and are not re-graded here. The hand-off packet and the proposed patch are delivered, and the patch is a true delta of the real bytes -- `git apply --check` rc=0 against the blob, a one-line corruption refused rc=1, so that control discriminates."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "POSN_ASTTAX-Z-W16-S5"
+    ],
+    "spec_asserts": "U3-AC4 as re-cut still reads 'pass the commit gate on your own bytes', inherited unchanged from the pre-re-cut order in which AC2 produced a changed .py.",
+    "world_is": "The cell produces no repo .py by construction after the re-cut, so AC4 has no subject. Graded UNCOMPUTABLE-BY-CONSTRUCTION. The cell is still TERMINAL: it answered every criterion it could and honestly reported the one it could not, which is what a completed cell means.",
+    "notes": "NOT A CRITICISM OF THE WORKER'S GRADE, which was defensible, disclosed and accompanied by the evidence to overturn it -- that is the behaviour this fabric wants and it is why the call could be made at all. CARRIED TO L9: 3.0.0_SA_CVO~Z should read this row beside the proof instance, which records AC4 as PASS; the instance is the worker's record and is NOT edited by this seat. ALSO CARRIED, from W16-S4 and separate from this ruling: the commit gate's non-ASCII limb returns 0 unless the path starts with infra/ or .tools/, so a probe .py carrying 5 non-ASCII bytes passed with zero WARN lines -- a NON-RUN prints identically to a clean pass, and data/black_diamond/** is outside both prefixes, so that limb is silent for POD4 too. That is the two-limb ASCII-gate lesson widened: the limb does not merely warn instead of blocking, it does not RUN at all outside two prefixes."
+  }
+]
+```
