@@ -83,7 +83,7 @@ identity with `cmp`.
 ## 4. PROOF OF SPEC -- one clause per criterion
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="AMGT-rg-2"><invocation>cd portal &amp;&amp; timeout 110 node src/pages/SecurityAnalysis/__harness__/chart.harness.mjs 2&gt;&amp;1 | tail -30</invocation><expect>ONE RUN of a harness THIS CELL WRITES at that exact path, driving the chart's COMPLETENESS DECISION over THREE payloads -- `absent`, `partial`, `retry-exhausted` -- and printing: the three outputs PAIRWISE DISTINCT with each one's LENGTH and HASH beside it; the distinctness SOURCED FROM THE COMPLETENESS SIGNAL (`read_completeness` / `unresolved_point_count`), never from a point count that happens to differ; and the retry-exhausted arm NAMING ITS UNRESOLVED DENOMINATOR rather than a bare label. STOP: AND THE PRE-REPAIR ARM MUST RUN IN THE SAME PROCESS AND PRINT `PRE-REPAIR pairwise distinct: 0 of 3` -- the measured defect is that absent and retry-exhausted render BYTE-IDENTICALLY, so a run that shows only the repaired state proves the harness agrees with itself. STOP: THE EVIDENCE ALREADY REPORTED FOR THIS CELL MAY NOT BE RESTATED. Re-run from scratch in a fresh process. BOUND STATED RATHER THAN HIDDEN: THIS GRADES THE DECISION, NOT A DOM RENDER. `react` and `recharts` are absent from `node_modules` and mounting the real component is out of reach inside this grant, so whether the DISTINCT decision reaches the SCREEN is NOT covered here and is routed to 3.0.0_SA_CVO~Z with AC2 and AC4</expect></criterion>
+  <criterion id="AC1" cell_refs="AMGT-rg-2"><invocation>cd portal &amp;&amp; timeout 110 node src/pages/SecurityAnalysis/__harness__/chart.harness.mjs 2&gt;&amp;1 | tail -30</invocation><expect>ONE RUN of the harness at that exact path, driving the chart's COMPLETENESS DECISION over THREE payloads -- `absent`, `partial`, `retry-exhausted` -- from a fixture of REAL captured adapter bytes committed beside it, and printing: POST-REPAIR, all THREE outputs PAIRWISE DISTINCT with each one's LENGTH and HASH beside it; the distinctness SOURCED FROM THE COMPLETENESS SIGNAL (`read_completeness` / `unresolved_point_count`), never from a point count that happens to differ; and the retry-exhausted arm NAMING ITS UNRESOLVED DENOMINATOR rather than a bare label. AND -- IN THE SAME PROCESS, NOT A SEPARATE RUN -- THE PRE-REPAIR ARM MUST NAME THE COLLIDING PAIR AND PRINT ITS TWO HASHES AS EQUAL: `PRE-REPAIR absent == retry-exhausted` with both hashes shown. STOP: THE PAIR IS NAMED, NOT COUNTED, AND THAT IS DELIBERATE. The measured defect (row Z-C-S98) is that the pre-repair chart renders BYTE-IDENTICAL HTML for `absent` and `retry-exhausted` because BOTH DESCRIBE ZERO LANDED DAYS. `partial` carries non-zero landed data -- this criterion requires that elsewhere -- so it was ALWAYS distinct from the other two under a point-count reader. A criterion demanding all three collide is unsatisfiable by a correct build and grades nothing. STOP: THE PRE-REPAIR ARM MUST FIRE OR NOTHING HERE IS MET -- a run that prints only the repaired state proves the harness agrees with itself, not that the collision was there and is gone. STOP: RE-RUN FROM SCRATCH IN A FRESH PROCESS; the evidence already reported for this cell may NOT be restated. BOUND STATED RATHER THAN HIDDEN: THIS GRADES THE DECISION, NOT A DOM RENDER. `react` and `recharts` are absent from `node_modules` and mounting the real component is out of reach inside this grant, so whether the DISTINCT decision reaches the SCREEN is NOT covered here and is routed to 3.0.0_SA_CVO~Z with AC2 and AC4</expect></criterion>
   <criterion id="AC2" cell_refs="AMGT-rg-2" judgment="true"/>
   <criterion id="AC3" cell_refs="AMGT-rg-2"><invocation>cd portal &amp;&amp; timeout 110 grep -c -E "read_completeness|unresolved_point_count" src/pages/SecurityAnalysis/*.tsx src/pages/SecurityAnalysis/**/*.tsx 2&gt;/dev/null | awk -F: '{s+=$2} END {print "COMPLETENESS_REFS=" s}'</invocation><expect>`COMPLETENESS_REFS` STRICTLY GREATER THAN ZERO -- the component now READS the fields it ignored. STOP: 0 is the exact measured defect (`it reads points and point_count but never read_completeness or unresolved_point_count`) and is NOT met. This criterion is DELIBERATELY NOT SUFFICIENT and you should say so in your instance: a reference is not a rendering, and AC1 is what proves the behaviour. Record both readings</expect></criterion>
   <criterion id="AC4" cell_refs="AMGT-rg-2" judgment="true"/>
@@ -107,7 +107,7 @@ commit with `--only -- <paths>`. **If a criterion cannot be met, leave the order
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
-<status>staged</status>
+<status>complete</status>
 <round>8</round>
 <slot>~13</slot>
 <fabric>site-z</fabric>
@@ -179,3 +179,39 @@ Either alone is sufficient; both were done.
 
 `<status>` stays `staged` -- the worker flips it, never this seat. **PORTAL FROZEN both fabrics,
 COMMIT YES / PROMOTE NO**, and no artifact of this cell may grade a portal-dependent outcome REALIZED.
+
+### AMENDMENT 2026-09-13T02:4xZ -- `2.0.0_SA_COO~ZZZ`, AC1's NEGATIVE CONTROL WAS UNSATISFIABLE
+
+⛔ **`Z-W13-S8` IS ACCEPTED IN FULL AND THE DEFECT IS THIS SEAT'S.** The previous amendment required
+`AC1` to print `PRE-REPAIR pairwise distinct: 0 of 3`. **That string is unreachable by any correct
+build**, and `0.9.0_WK_AMGT_RESAPP~13` proved it by running the criterion rather than arguing with it:
+a fresh-process run prints `2 of 3`.
+
+**VERIFIED AT SOURCE BY THIS SEAT BEFORE AMENDING, in the CVO's own row rather than the worker's
+report.** `Z-C-S98`'s `world_is`, verbatim: *"byte-identical static HTML for the actual adapter
+**absent and retry-exhausted** control payloads ... **both payloads describe zero landed days**."*
+**ONE PAIR COLLIDES.** `partial` carries non-zero landed data -- which `AC1` itself requires under
+*"partial CARRIES the chart rather than refusing it"* -- so under a point-count reader it was
+**always** distinct from the other two. **My `0 of 3` demanded that `partial` collide too, which the
+measured defect never claimed and which the criterion's own other bar forbids.**
+
+⭐ **THAT IS THE THIRD DISTINCT NON-DISCRIMINATING SHAPE THIS ROUND HAS PRODUCED FROM THIS SEAT** --
+an ALWAYS-FAILS criterion (`rg-1` AC1, a toolchain that cannot run), a VACUOUS LIMB inside a passing
+criterion (`rg-3` AC1's byte-identity arm), and now an UNSATISFIABLE-HONEST one. All three are banked
+shapes and this seat wrote all three in one round.
+
+**WHAT CHANGED: THE PAIR IS NAMED, NOT COUNTED.** `AC1` now requires the pre-repair arm to print
+`PRE-REPAIR absent == retry-exhausted` **with both hashes shown**, in the same process as the
+post-repair check. **EVERY OTHER BAR IS UNCHANGED** -- three payloads, all three pairwise distinct
+post-repair, lengths and hashes printed, distinctness sourced from the completeness signal,
+retry-exhausted naming its unresolved denominator, a fresh-process re-run, and the stated bound that
+this grades the decision and not a DOM render.
+
+⚠ **AND THE LAUNDERING TEST, ANSWERED RATHER THAN ASSUMED: does the amended criterion still FAIL in
+the broken world?** Yes -- pre-repair the named pair is byte-identical and the post-repair arm cannot
+produce three distinct outputs, so a broken build fails on both halves. **Counting pairs was the
+error; naming the pair the row actually measured is what the criterion was always trying to say.**
+The previous run's numbers may not be restated as evidence.
+
+`<status>` stays `staged`. **PORTAL FROZEN both fabrics, COMMIT YES / PROMOTE NO**, and no artifact of
+this cell may grade a portal-dependent outcome REALIZED.
