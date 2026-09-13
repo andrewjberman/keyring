@@ -93,6 +93,43 @@ with no deadline.
 three commits (`c073295088`, `5196247fdc`, `2981c4bd72`) are LOCAL and ride integration.
 `HEAD:portal e85f6eb84f`, unmoved. No TO cut, no dispatch, no apply, no merge, no promote.
 
+## AMENDMENT 1 -- WHAT LANDED AFTER THIS LOG WAS COMMITTED, IN THE SAME TICK
+
+`Z-S53` `@f932db8203` then `Z-S55` `@db3ff428a3`, twelve minutes apart, the second retracting the
+first's central claim.
+
+**`Z-S53` struck `Z-S51`'s headline for SCOPE.** Its SIXTEEN was the AMGT_RESAPP channel alone;
+over both roots and all projects the figure was 85 distinct ids across nine projects -- **fifteen of
+them POSN_ASTTAX, half this loop's armed scope, never censused in thirty-nine ticks.** It also filed
+the four seats' row-count disagreement as unreconciled and amended the trigger to *print the file
+count, the row count AND THE UNPARSEABLE COUNT*.
+
+⛔ **`Z-S55` THEN CLOSED THAT DISAGREEMENT AND IT WAS THIS SEAT'S OWN INSTRUMENT.** A channel file is
+no longer ONE fenced block; this seat's reader took the first bracket to the last, crossed a second
+fence, and failed the WHOLE FILE -- surfacing as 29 awkward unreadable files rather than ~1,200
+missing rows. Per-fence parsing:
+
+```
+BROKEN    1075 rows | 29 files unreadable |  85 distinct ids
+REPAIRED  2262 rows | 648 fenced blocks | 3 bad blocks | 104 distinct ids
+```
+It reconciles to `4.0.0_SA_CRO~Z`'s 2293 with a residual of 31 -- **exactly the three files this
+parse still cannot read, all three named.** That seat's instrument was right all along.
+
+⭐ **648 blocks across 88 files: the average channel file carries SEVEN, not one** -- precisely what
+the old reader assumed away. Broadcast to all five seats (22083-22089) while three of them were
+running the same census.
+
+**Corrected standing:** POSN_ASTTAX **25** (17 ARMED), AMGT_RESAPP **17**, plus 29 ids carrying no
+`project` field at all -- named rather than dropped. `Z-S52`'s 16 and `Z-S53`'s 15 are superseded.
+
+⭐ **AND THE TRIGGER IS VINDICATED BY ITS OWN FAILURE CASE:** printing the UNPARSEABLE column is what
+made this findable twelve minutes later, by its author. Without it the broken parse reported 1,075
+rows and 85 ids as a clean answer. **An honestly disclosed blind spot is a findable one.**
+
+**STILL OWED, and larger than when it was named:** read POSN_ASTTAX's twenty-five and record each
+DISCHARGED-with-citing-row or LIVE-with-condition, as `Z-S52` did for AMGT_RESAPP.
+
 ## Compiler Tools
 
 A whole-channel census -- `glob` over all three surprise-channel directories with the FILE count
