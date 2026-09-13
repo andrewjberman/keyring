@@ -40,9 +40,19 @@ FWD-1..FWD-6 and no bar is weakened, added or renumbered. It does not authorize 
 positioning deploy (approved 2026-09-13 04:08:22Z LD-0562 **conditional on a two-seat never-widen
 sign-off that has not landed**), or any portal act (**frozen**). It grades no outcome REALIZED.
 
-⚠ **THIS BUMP RE-OPENS BOTH L4-R HALVES**, and LIMB 6 refuses a newly-added task order against a
-half not SIGNED at current bytes -- so the re-signs sit directly in front of round 4's FWD-4/FWD-6
-cells. Stated here rather than discovered there.
+⚠ **THIS BUMP RE-OPENS THE BRIEF HALF ONLY**, and LIMB 6 refuses a newly-added task order against a
+half not SIGNED at current bytes -- so that ONE re-sign sits in front of round 4's FWD-4/FWD-6 cells.
+> ⛔ **CORRECTED 05:4xZ. THIS LINE SHIPPED SAYING "BOTH L4-R HALVES" IN THE SAME COMMIT AS THE
+> VERSION-LINE CORRECTION THAT CALLS THAT CLAIM FALSE** -- the two statements sat four lines apart and
+> contradicted each other. Found by `4.0.0_SA_CRO~Z` on review. **The gate settles it:** only the
+> brief half went STALE; `3.0.0_SA_CVO~Z`'s ratified-text half was never touched and owes nothing.
+> The cost of the contradiction was precise and worth naming -- a reader of this section chases a
+> signature that is not outstanding.
+> ⭐ **AND IT IS THE SHARPEST FORM OF A SHAPE THIS DOCUMENT HAS NOW PRODUCED TWICE:** the v0.5
+> changelog went stale by omission across five amendments; this one shipped the correction and the
+> stale claim **in one diff.** Correcting a rule is not finished until every place that RESTATES it
+> has been re-read -- a fix scoped to where the error was noticed leaves its own restatements
+> standing.
 
 **Version:** v0.5, 2026-09-11 -- v0.1 first PRD; v0.2 folded in Andrew's Cottonwood satellite components (s.4 C-SATELLITE-DATA), on his direct "read the satellite file and fold it in as its necessary data for POSN_ASTTAX"; **v0.3 disambiguates C-VOL-HEDGE-STRUCTURED's "hedge products" from the legacy served value `asset_class=hedge`** -- a latent defect where the constraint, read against the live data, said the whole `hedge` bucket goes to Structured (found by 2.0.0_SA_COO~Z + 3.0.0_SA_CVO~Z); **v0.4 folds in Andrew's ETFClassifier PURPOSE ruling as C-CLASSIFIER-PURPOSE (s.4)** -- the registry is a curated tagging list, so the served TABLE is the one place, the dict a retired seed input, and equity-as-class must be distinguishable from equity-as-unknown-default (carried via 3.0.0_SA_CVO~Z C-S3 @`4275402ec2`); **v0.5 folds in the `0.4.0_DT_ClientPlatform` GLD/VXX positioning brief as C-RETAG-SAFETY (s.4)** -- the retag of the commodity/hedge tickers is a production landmine (a fixed-key allocation dict KeyErrors in the DEPLOYED generator, establishing an UNSAFE GENERATION PRECONDITION -- page-blanking is the brief's PREDICTED consequence and is NOT measured; see s.4) until the positioning generator is hardened; Andrew-direct 2026-09-11 ~07:2xZ to fold it into POSN_ASTTAX. **v0.6 is the round-3 L10 ADDENDUM (`ledger/ROUND_ANALYSIS.round3.md`) -- see s.0 ADDENDUM below.** ⛔ **THIS LINE USED TO READ "Each bump re-opens the two L4-R sign-offs" AND THAT IS FALSE -- CORRECTED AT v0.6.** A bump re-opens ONLY the half whose SECTION BYTES changed. `prd_signoff_lib.RATIFIED_SECTIONS` is `("ENDPOINT", "CONTRACTS")` matched on a heading's FIRST WORD, so in THIS document exactly one section -- `ENDPOINT` -- is ratified-text and everything else, s.4 included, is the brief half. The library's own self-test asserts it: *"an ENDPOINT edit re-opens the CVO half only"*. Measured at v0.6: these edits touched no ENDPOINT byte, so `3.0.0_SA_CVO~Z`'s half stayed SIGNED/current and only `4.0.0_SA_CRO~Z`'s went STALE. ⚠ **The old wording stated a rule STRONGER than the tool behaves, and this seat quoted it as authority in its own round-3 analysis before the gate contradicted it** -- the same shape CLAUDE.md Rule 27 records against LIMB 6. **Author** `1.0.0_SA_CTO~Z` (L4). **Brief:** the nomenclature
 transcript's substance, `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260911_ASSET_CLASS_TAXONOMY_BRIEF.md@03f1d00ec4`.
