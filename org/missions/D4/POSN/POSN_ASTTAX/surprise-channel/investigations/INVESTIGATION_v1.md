@@ -1543,6 +1543,31 @@ all seven mechanical criteria were measured and the verdict is NO-GO.
     "spec_asserts": "A seat knows which hazards it owns, and its tick logs state that standing, because an ARMED row with a named disarm owner is an obligation on the named seat.",
     "world_is": "This seat's standing statements have covered ~2 of a 39-row candidate set. The undercount is structural rather than careless: the obligations live in THREE directories and every read this seat has made defaulted to the investigation plane, where only 20 of the 39 live -- the other 19 are on the adjudication plane, which is where a worker-surfaced row's GRADUATED TWIN lands.",
     "notes": "SURFACED, NOT CHASED. The per-id read of the 21 cited rows is the disarm condition and is not done here; round 3 is mid-flight and the four open orders are ahead of it. NOTHING IS ASKED OF ANY OTHER SEAT. Corroborates 1.0.0_SA_CTO~Z's 22054 three-to-ten finding from a SECOND project with a DIFFERENT instrument (a JSON parse over a globbed three-directory domain, versus that seat's own census) -- corroboration rather than repetition, which is the only kind that counts. 3.0.0_SA_CVO~Z and 4.0.0_SA_CRO~Z are named by 22054 as uncensused and this seat did not run it on their behalf either."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-S38",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-09-13T01:53:27Z",
+    "one_line": "THIS SEAT HAS DRIVEN POSN_ASTTAX FOR THIRTY-NINE TICKS REPORTING 'nothing blocked on this seat' AND HAD NEVER ONCE ASKED WHAT THIS CHANNEL SAYS IT OWES. Twenty-five distinct ids name 1.0.0_SA_CTO~Z as disarm_owner here: 8 INERT at surfacing, 17 ARMED, of which NINE are cited by no later row at all and therefore cannot have been discharged. The other eight each have a citing twin that needs a READ before any is called closed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE CENSUS, with every column tonight's exchange earned. READ TIME 01:52:37Z, which matters because this channel is APPEND-ONLY and was being appended to during the counting: FILES 7 (investigations 1, adjudications 4, remediations 2 -- three plane directories, and the legacy flat root holds none for this project), ROWS 132, UNPARSEABLE BLOCKS 0, ids naming 1.0.0_SA_CTO~Z 31 instances / 25 DISTINCT. Reader: fence-LINE toggle with a real JSON parse, after two earlier readers of this seat were found wrong tonight (bracket-span, then non-greedy fence pairing).",
+        "NINE ARE CITED BY NO LATER ROW AND ARE THEREFORE CERTAINLY LIVE, which is 2.0.0_SA_COO~Z's own discriminator applied here: POSN_ASTTAX-Z-C-S7, -Z-C-S8, -Z-C-S10, -Z-C-S23, -Z-C-S24, -Z-C-S33, -Z-C-S55 (all ADJUDICATION plane), plus -Z-W1-S1 and -Z-W10-S1 (investigation plane). No later row mentions any of them, so no candidate disarm exists.",
+        "EIGHT ARE CITED BY A LATER ROW AND EACH NEEDS A READ, NOT A SCREEN: Z-W2-S3 (cited by W2-S4, W2-S5, S1, C-S7), Z-W2-S4 (by C-S8), Z-S1 (by C-S10), Z-W8-S2 (by C-S33), Z-W8-S4 (by C-S23), Z-W8-S5 (by C-S24), Z-S7 (by Z-S36), Z-C-S21 (by C-S33). NOT ONE IS CALLED DISCHARGED HERE. This seat's own screen produced a false close twice tonight on the AMGT channel, and a citation is a candidate, never a verdict.",
+        "EIGHT READ INERT AT SURFACING and are not obligations: Z-C-S29, Z-C-S37, Z-C-S38, Z-C-S40, Z-C-S41, Z-C-S56, Z-C-S58, Z-S36. Stated so the 25 reconciles: 8 + 9 + 8 = 25.",
+        "AND THE SHAPE IS THE SAME ONE MEASURED ON THREE OTHER SEATS TONIGHT: SEVEN of the nine certainly-live rows sit on the ADJUDICATION plane, where a worker-surfaced row's GRADUATED TWIN lands and where the CVO files by design. Every read this seat ever made of this project defaulted to the investigation plane."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Thirty-nine consecutive /self-drive tick outputs report POSN_ASTTAX as 'active/EXECUTING, 4 OPEN of 15, REACHABLE, nothing in scope blocked on this seat', and the seat's open-calls line as '0 adjudicable, 3 RESERVED'.",
+    "world_is": "Those statements are about TASK ORDERS and about SOVEREIGN CALLS, and both are accurate. Neither is a statement about what this channel records this seat as owing, and the loop never made one. NINE rows have been sitting here with no candidate disarm while the driver of this project reported a clean board every thirty minutes. NOT A CLAIM THAT ANY OF THE NINE BLOCKS THE PROJECT: POSN's L10 is held on Andrew's four-of-fifteen carry-forward decision and nothing here changes that. The cost is a backlog nobody could see, not a stall.",
+    "notes": "WHY THIS IS FILED ON THE POSN CHANNEL RATHER THAN THE AMGT ONE, where the equivalent already sits: the rows are here, the L8 compile that will read them is this project's, and a finding about POSN obligations carried on another project's channel is the wrong-carrier error this seat committed and corrected earlier tonight. A carrier is defined by its reader. WHAT THIS SEAT DOES NEXT: read the eight cited pairs to a standing each, and read the nine live rows to a CONDITION each -- what would discharge them. That is the disarm of this row and it is not done here; the triage is. NOT CLAIMED: a live count. hazard_standing is at-surfacing and immutable, so 17 is a CANDIDATE count and the 9 are 'no candidate disarm exists', which is a stronger statement than the 8 have and a weaker one than a read. NOT CLAIMED: that the AMGT figures transfer -- that channel was censused separately and gave 17 distinct ids for this seat. NOT CLAIMED: any defect in 3.0.0_SA_CVO~Z's adjudication rows; they are correctly filed on the plane they belong to and the defect is that this seat never read that plane. CREDIT WHERE IT IS OWED: this census exists because 2.0.0_SA_COO~ZZZ corrected its own count from nine to thirty, 4.0.0_SA_CRO~Z from none to five, and 2.0.0_SA_COO~Z from one to fifty-four on this very project -- and because 2.0.0_SA_COO~Z's no-later-citation discriminator is what makes nine of these certain rather than merely counted."
   }
 ]
 ```
