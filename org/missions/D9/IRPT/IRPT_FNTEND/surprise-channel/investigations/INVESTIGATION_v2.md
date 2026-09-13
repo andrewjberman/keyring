@@ -2306,6 +2306,30 @@
     "spec_asserts": "TO-FE-s-28 cell: 'AND THE RETROACTIVITY QUESTION IS THE WHOLE DIFFICULTY, SO MEASURE IT BEFORE YOU CHOOSE. 0 of 2554 existing task orders carry the element.'",
     "world_is": "2 of 2559 carry it at f3b42b1e0b (2554 -> 2559 files, 0 -> 2 carriers). Measured before choosing, as the cell instructs; the boundary chosen is unchanged and the refusal text, the gate's block comment and the battery's census line all carry the RE-MEASURED numbers with their denominator.",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W4-S7",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~4",
+    "surfaced_at": "2026-09-13T03:24:18Z",
+    "one_line": "A PROSE MENTION OF <placeholders> BEFORE THE REAL ELEMENT SWALLOWS EVERYTHING BETWEEN THEM, AND THE DECLARATION THEN MEANS ALMOST NOTHING. proof-of-spec-check.py's PLACEHOLDERS_TAG_RE is `<placeholders>(.*?)</placeholders>` with re.S and no line anchoring, so on TO-FE-s-28 -- which discusses the element in its cell text at line 22 and declares it at line 72 -- the match spans 6,958 characters and _declared_placeholders() returns 367 names instead of 1. Every one of those 367 becomes a wildcard under ENFORCE: a recorded invocation may differ from its criterion at ANY <TOKEN> whose name appears anywhere in that span and the limb still reads ALIGNED. This is the SAME class the sibling <paths> limb already fixed with a line-anchored block regex (to-pipeline-gate.py PATHS_BLOCK_RE, '94157 gap (a)'), rediscovered on the element that arms the alignment check itself. GATE (viii), landed this turn, MIRRORS the defect DELIBERATELY -- byte-identical regexes are what stop the gate admitting an element the checker cannot read -- so the gate does not make it worse and does not fix it either.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE READER: .tools/proof-of-spec-check.py@f3b42b1e0b:1125 `PLACEHOLDERS_TAG_RE = re.compile(r\"<placeholders>(.*?)</placeholders>\", re.S)` and :1146-1156 `_declared_placeholders`, which takes the FIRST match and harvests `re.findall(r\"[A-Za-z][A-Za-z0-9_]*\", m.group(1))` from it.",
+        "MEASURED ON THIS ORDER'S OWN FACE, org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-28.mandatory-placeholders.md@f3b42b1e0b: the opening tag the regex finds is the PROSE mention on line 22 ('REFUSAL opt-in via a `<placeholders>` declaration in the task order'); the closing tag is the real element's on line 72. span=(1529, 8516), body=6958 chars, len(_declared_placeholders(text)) = 367 -- including ACCEPTANCE, BOUNDARY, PYTHON, TIMEOUT and every other capitalised word of the cell text. The intended declaration is ONE name: WS.",
+        "THE RUN THAT SHOWED IT: `python .tools/proof-of-spec-check.py <this order's instance> F28-AC1,...,F28-AC8` -> VALID (rc=0), and its own frame line prints the 367-name list verbatim: 'invocation-frame: governing TO=...; placeholders DECLARED [...] -> ENFORCE'. The frame is not hidden -- it is printed on every run -- but it reads as a long declaration rather than as a parse defect.",
+        "BLAST RADIUS, BOUNDED BY MEASUREMENT RATHER THAN ASSERTED: the tokens TO-FE-s-28's <invocation> strings actually carry are exactly ['WS']. Re-running the alignment with the MINIMAL correct set {WS} -- _invocation_pattern(criterion, {'WS'}) fullmatched against each recorded invocation -- gives 7 of 7 rows matching and 0 diverging, identical to the 367-name run. So THIS instance's VALID does not rest on the over-declaration; the hazard is that a future order's genuinely-changed <TOKEN> would be normalised away silently, which is the divergence the limb exists to catch.",
+        "WHY NO FIX IS ATTEMPTED HERE, on two independent grounds: (1) .tools/proof-of-spec-check.py is NOT in TO-FE-s-28's <paths> grant, so editing it is outside the write surface; (2) the obvious repair -- the line-anchored BLOCK form the <paths> limb uses -- would REFUSE the INLINE one-line element that both orders carrying the element today use (TO-FE-s-23 and TO-FE-s-28 both write '<placeholders>WS</placeholders>' on one line), so the correct repair is a bounded one (anchor the OPENING tag to a line whose match contains no newline, or take the LAST match) and that is a cut, not a worker act."
+      ]
+    },
+    "spec_asserts": "TO-FE-s-28's cell: the <placeholders> declaration is what ARMS the invocation-alignment limb, and making it mandatory is what turns a courtesy into an enforcement; and F28-AC3's bar treats a DECLARED order as one whose substitution set is KNOWN ('Present -> the substitution set is KNOWN, comparison is exact modulo exactly those tokens', .tools/proof-of-spec-check.py:1106-1109).",
+    "world_is": "On any task order that MENTIONS <placeholders> in prose before declaring it -- which every order explaining the rule will do, including this one -- the substitution set the checker reads is not the declared one but every word between the prose mention and the real element's closing tag: 367 names instead of 1 here. The declaration is still present, still ENFORCE, and materially looser than it reads. Measured inert for this instance (7/7 rows match under the minimal set {WS} too) and left ARMED for the next one.",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
