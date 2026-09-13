@@ -1,0 +1,185 @@
+{
+  "schema_version": 1,
+  "project": "POSN_ASTTAX",
+  "round": 3,
+  "authority_message_id": 22245,
+  "authority_sender": "2.0.0_SA_COO~Z",
+  "authority_record": "org/tier1_exec/2.0.0_SA_COO~Z/deliverables/ANDREW_DIRECT_20260913T0408Z_POSN_ASTTAX_CARRY_FORWARD_YES_DEPLOY_CONDITIONAL_BRIEF_YES.md",
+  "authority_pin": "b75f5a805a",
+  "authority_record_sha256": "cbdc3dedabc5176c0e60a37fe6942db7f27f4643ef491fd76b071cb5ac18f2ee",
+  "authority_record_verbatim": "# ANDREW-DIRECT 2026-09-13 ~04:08Z \u2014 the three cards that bind POSN_ASTTAX\n\n**Seat:** `2.0.0_SA_COO~Z` \u00b7 **Scope:** POSN_ASTTAX \u00b7 **Recorded:** 2026-09-13T04:10Z\n**Relay:** `0.0.0_AB_MSTR~Z` msg 22240, cross-fabric bus `6e641d5b-bba0-4365-bbd6-0bcce1624468`,\nAndrew-direct at the laptop terminal 04:08:22Z, recorded there as **LD-0562**.\n**HIS WORD, VERBATIM AND ENTIRE:** *\"all recs approved\"*.\n\n\u26d4 **THIS FILE IS THE DURABLE CARRIER FOR POSN'S HALF.** The broadcast is not one, and it says so.\n\u26d4 **EACH APPROVED REC BINDS AT EXACTLY ITS OWN SCOPE. Where a rec carried a CONDITION, the condition\nis PART OF the approval and is not waived by it.**\n\n---\n\n## CARD 1 \u2014 ASTTAX CARRY-FORWARD: **YES**\n\n**Round 3 CLOSES with its four open orders carried forward.** The four are `TO-S2-1`, `TO-S3-1`,\n`TO-T6-1`, `TO-T7-1` \u2014 4 open of 15, measured, and the same four this seat corrected the record to\non 2026-09-12 after msg 21817 had understated the set as \"5 of 7\".\n\n**WHAT IT RELEASES, IN THE FIXED ORDER THE SPINE REQUIRES:**\n```\nround 3 CLOSES  ->  the SLUG (3.0.0_SA_CVO~Z)  ->  the ROUND-3 ANALYSIS (1.0.0_SA_CTO~Z)\n                ->  the ROUND-4 RECUT, ONE ISSUANCE (this seat)\n```\n\u26d4 **THIS SEAT DOES NOT CUT ROUND 4 ON THIS RULING ALONE.** The L10 order is load-bearing: a round\nN+1 issuance cut before round N's slug deadlocks round N's L10 until N+1 fully drains, because\n`surprise-row-gate.py`'s `_open_tos_for_project` counts open orders **per project with no round\nfilter** \u2014 re-read at source 2026-09-13T03:26Z. The ruling removes the *reason* round 3 could not\nclose; it does not reorder the limbs.\n\n\u26a0 **THE REC ALSO SAID \"consider making it standing\". APPROVING A SUGGESTION TO CONSIDER SOMETHING IS\nNOT A STANDING RULE.** Only this carry-forward is ruled. LD-0521 is unamended and still binds every\nother round on both fabrics. **Nobody writes a standing rule from this, including this seat.**\n\n---\n\n## CARD 5 \u2014 POSITIONING GENERATOR DEPLOY: **YES, CONDITIONAL**\n\nDeploy the committed repairs **ONLY AFTER the two-seat never-widen sign-off lands.**\n\n\u26d4 **THE SIGN-OFF IS A CONDITION OF THE APPROVAL, NOT WAIVED BY IT.** The act moves SERVED OUTPUT to\nfour partner firms, which is a CLAUDE.md hard stop **regardless of who approved it. NO SIGN-OFF, NO\nDEPLOY.** Both halves must print the act's **blast radius** and the **per-key rollback**; closers are\n`1.0.0_SA_CTO` and `2.0.0_SA_COO`.\n\u26a0 **AND THE BLAST-RADIUS HALF MUST COUNT THE WRITERS OF EACH NAMED PROPERTY** \u2014 a property with N\nwriters needs N rules read, and N is a number the half prints. POSN has a measured second registry\nwriter (`seed_canonical_securities.py`, row `W14-S3`, carrying 4 of the 11 members on a two-value\nvocabulary), so N is **not 1** here and a half that assumes it is would be the shared-dependency\nblindness Rule 22 names, moved up to the signature.\n\n\u2b50 This is bar change-group **(1)** \u2014 the largest single item, already-committed code that already\npasses on HEAD bytes while the deployed version raises `KeyError` on the ratified labels. Once\ndeployed it turns card 1's four carried orders into finishable ones.\n\n---\n\n## CARD 7 \u2014 ASTTAX EXPLANATION BRIEF: **YES**\n\nBrief the position project **the same way the research project was briefed** \u2014 same method, same\naudience, same plain-language rule. His own framing of what he is reaching for: *the nature of the\norders, what they accomplished, and **how that proceeds the project to the outcomes***.\n\n\u2b50 **The two outcomes with no work cut in three rounds must be legible in it** \u2014 that is FWD-4\n(colour), which no round-3 cell served at all, and it is named rather than absorbed.\n**This seat correctly started nothing before the word, and says so.**\n\n---\n\n## \u26d4 NOT RULED HERE \u2014 NOBODY READS IT THERE\n\n- **THE PORTAL FREEZE IS UNCHANGED.** He answered it NO earlier and nothing in this ruling touches\n  it. Bar change-groups **(6)\u2013(10)** remain frozen and priced-not-attempted.\n- **Change-group (4) remains OUT of POSN's write scope** per `1.0.0_SA_CTO~Z`'s `Z-S42` @`9d7b09987f`\n  \u2014 disclosure, not a cell. Unaffected by this ruling.\n- The list-ownership question, and the Bright Data repair, are other seats' and not POSN's.\n\n## WHAT THIS SEAT DOES NEXT, IN ORDER\n\n1. Tell `3.0.0_SA_CVO~Z` the carry-forward is ruled, so the slug is cuttable \u2014 it owns that act.\n2. Write the explanation brief (card 7).\n3. Draft this seat's half of the never-widen sign-off (card 5) \u2014 **and not deploy on it.**\n4. Cut round 4 in ONE issuance **when the round-3 analysis is in hand**, carrying the corrected\n   change-group split, `Z-S42`'s disclosure obligation, and the two durability items.\n\nPush state: LOCAL at write time; `0.0.0_AB_MSTR~Z` publishes.\n\u26a0 A cross-fabric merge may land on `origin/SITEZ` shortly; heads will be read **from the remote**,\nnever from a report.\n",
+  "recorded_by": "3.0.0_SA_CVO~Z",
+  "scope": "LD-0562 round 3 only; terminality limb only; exact filing paths, canonical row hashes and four unchanged order blobs. No general waiver or terminal-status authority.",
+  "expected_total_orders": 15,
+  "orders": [
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-S2-1.retag-the-hedge-bucket.md",
+      "open_label": "POSN_ASTTAX.TO-S2-1.retag-the-hedge-bucket.md [staged]",
+      "sha256": "dc765ff2d04a20e7e59e466072ef5569f6fbd94bfb0b3c66fd6b5fe828e33963"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-S3-1.is-hedge-reconciliation.md",
+      "open_label": "POSN_ASTTAX.TO-S3-1.is-hedge-reconciliation.md [staged]",
+      "sha256": "c2e28c8a1f328f2c40a8bae83cb2ce21f781b7c86840824d80e48b30ff27bd3f"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-T6-1.the-retag-with-a-criterion-that-fails-in-the-broken-world.md",
+      "open_label": "POSN_ASTTAX.TO-T6-1.the-retag-with-a-criterion-that-fails-in-the-broken-world.md [staged]",
+      "sha256": "7ce60e4691dcf78297f347eb43125d8ac4931c7052ffdee832cff557f3c64a60"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-T7-1.is-hedge-reconciliation.md",
+      "open_label": "POSN_ASTTAX.TO-T7-1.is-hedge-reconciliation.md [staged]",
+      "sha256": "e0aa459c2c50dbe3baea2583c2d1aa2fdeb0b2c3b94934c5427ad9425aeb57aa"
+    }
+  ],
+  "rows": [
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/adjudications/ADJUDICATION_v5.md",
+      "id": "POSN_ASTTAX-Z-C-S65",
+      "sha256": "1f7c36e63ab36327a0ff1b70119d606f273036496492a34818761795235dc602"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/adjudications/ADJUDICATION_v5.md",
+      "id": "POSN_ASTTAX-Z-C-S66",
+      "sha256": "aa6a20d0cafd1f1f11ab5749af065ff1a3a9762ef3af4ffe13d43bbaf5c29eb8"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/remediations/REMEDIATION_v3.md",
+      "id": "POSN_ASTTAX-Z-C-S37",
+      "sha256": "168ad3dae86e8d4523a985542002c0aad926c3e5546e13ad90a1b0dba41b8cc8"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/remediations/REMEDIATION_v3.md",
+      "id": "POSN_ASTTAX-Z-C-S38",
+      "sha256": "f2d15abe882ddc625cba0ca3a3e8d64b0902fae2e68aac9bfa695d96954f90f9"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/remediations/REMEDIATION_v3.md",
+      "id": "POSN_ASTTAX-Z-C-S39",
+      "sha256": "9af38fe5c7eb773dd61d1eb786d6eaf3a538d2efd637a02906a47c3c59730694"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/remediations/REMEDIATION_v3.md",
+      "id": "POSN_ASTTAX-Z-C-S40",
+      "sha256": "e7f4f31ce86bf184302c1fcf7248e543ccc0a91f481f579fbdf1946467dc1018"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/remediations/REMEDIATION_v3.md",
+      "id": "POSN_ASTTAX-Z-C-S41",
+      "sha256": "5a6db488edf034494a717cb07e46ffb6c3d6b0f9c99ccd85203feb6492693a71"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/remediations/REMEDIATION_v3.md",
+      "id": "POSN_ASTTAX-Z-C-S42",
+      "sha256": "dbe9c04df072c11c4a690b40d1424fe89592d3a566313d565e3353f6cfef6b83"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/remediations/REMEDIATION_v3.md",
+      "id": "POSN_ASTTAX-Z-C-S43",
+      "sha256": "169ca0d21f140e64dcf104596fcd779dfb66971f1c77aa41d48d38bf1315b13b"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/remediations/REMEDIATION_v3.md",
+      "id": "POSN_ASTTAX-Z-C-S47",
+      "sha256": "a8b466c503122b18afbed1f6c30cf9dd9b88f9c27c2025733a98a35863e098ce"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/remediations/REMEDIATION_v3.md",
+      "id": "POSN_ASTTAX-Z-C-S48",
+      "sha256": "a46d6319ae1794307728d81ea0fecce8666b35ec310b12325933be01dbbaf402"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/remediations/REMEDIATION_v3.md",
+      "id": "POSN_ASTTAX-Z-C-S49",
+      "sha256": "e5a07f2c5a453b1d4c06b80ecd947888ce5ea72d2c091a06d920cca141ebd6f4"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/remediations/REMEDIATION_v3.md",
+      "id": "POSN_ASTTAX-Z-C-S50",
+      "sha256": "078cbc702fb36c72eac34be0ab13c2d7ce21ade349048efd78f448ee8a7b0689"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/remediations/REMEDIATION_v3.md",
+      "id": "POSN_ASTTAX-Z-C-S53",
+      "sha256": "da8c288f33bf37519b6d912790a3427433a6664615f4a94112bf96a5083f4085"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/remediations/REMEDIATION_v3.md",
+      "id": "POSN_ASTTAX-Z-C-S54",
+      "sha256": "451c0f86cc4ea41a9d962d4f21dd6575ec4e7af6f6a2fb1d0f0f8f8ae5879462"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/remediations/REMEDIATION_v3.md",
+      "id": "POSN_ASTTAX-Z-C-S55",
+      "sha256": "0f78200872521808ae8f8558a928fd5de03be6c18419a89f8e45bc57c086471d"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/remediations/REMEDIATION_v3.md",
+      "id": "POSN_ASTTAX-Z-C-S56",
+      "sha256": "9627f71f49dbb1490cc5e83de3345ec68141ddd9d403be60cb36f1fa9aeb69f7"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/remediations/REMEDIATION_v3.md",
+      "id": "POSN_ASTTAX-Z-C-S57",
+      "sha256": "ce045abd4ca63c1ee39198bd781578f1e6cb8972a8e385ea9098c9623076f893"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/remediations/REMEDIATION_v3.md",
+      "id": "POSN_ASTTAX-Z-C-S58",
+      "sha256": "cc92891acd1c241efd7744accba197daea28959349c13f9bf1d8ae295a37ce6b"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/remediations/REMEDIATION_v3.md",
+      "id": "POSN_ASTTAX-Z-C-S60",
+      "sha256": "038a6e29b3f158736db506c74fee113d24d29fe6b2a13076aa7b275697860784"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/remediations/REMEDIATION_v3.md",
+      "id": "POSN_ASTTAX-Z-C-S62",
+      "sha256": "74418b45a0f95dcf3371db1f15e6f860c4fe5ca7ca30d46b6b6d953397334436"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/remediations/REMEDIATION_v3.md",
+      "id": "POSN_ASTTAX-Z-C-S63",
+      "sha256": "1eb5d1dd486f1b29b77996d2d7503a262921274bb3df6675aa68833d01f0711d"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/remediations/REMEDIATION_v3.md",
+      "id": "POSN_ASTTAX-Z-C-S65",
+      "sha256": "cf9021347a8b001e736dc3d7ac07190186f73a70473e23b914be7c5003b37b32"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/remediations/REMEDIATION_v3.md",
+      "id": "POSN_ASTTAX-Z-C-S66",
+      "sha256": "0a59aedd54cca81a25105699ed65f8f7d1dc0901c68d3cc2336271e737586a42"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/remediations/REMEDIATION_v3.md",
+      "id": "POSN_ASTTAX-Z-C-S67",
+      "sha256": "6d0a82a7850940b34a0d32acbd5ed076b4c0ebced84b7940686f6c891b5b6f75"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/remediations/REMEDIATION_v3.md",
+      "id": "POSN_ASTTAX-Z-C-S68",
+      "sha256": "add4376c99cb94661162dc811bc5eadd3bf9bd1d00af2b7287feb8626d3cbadd"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/remediations/REMEDIATION_v3.md",
+      "id": "POSN_ASTTAX-Z-C-S72",
+      "sha256": "34bd416bb1a6ba9b61f71efc6ba921e01529427c244b9d97c69e688d16d32f2d"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/remediations/REMEDIATION_v3.md",
+      "id": "POSN_ASTTAX-Z-C-S73",
+      "sha256": "2432b4a24d591b119e18999fa1c37b9f6f54702af172b56f4340ec40fa34322e"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/remediations/REMEDIATION_v3.md",
+      "id": "POSN_ASTTAX-Z-C-S75",
+      "sha256": "dcdb82298140aa8d2d1ba58110b2fa7e449787248cc552a1d77081362c76df50"
+    }
+  ],
+  "package": "org/tier1_exec/3.0.0_SA_CVO/deliverables/POSN_ASTTAX_ROUND3_RELEASE_PACKAGE_20260913_Z.json",
+  "package_sha256": "3a8f585819c0f0f8eba2a7ebef5463669d22f6e29f054933828bacdb80d50cef"
+}
