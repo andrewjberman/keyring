@@ -2262,6 +2262,50 @@
     "spec_asserts": "Memory/CLAUDE.md: a positive control bounds UNDER-firing only; a detector that cannot go non-zero on the positive case is a constant wearing a measurement's clothes; a fixture that cannot represent the failure cannot score it. Rule 22 DISCRIMINATION: could the evidence differ if the claim were false? Rule 22 ORDER: discrimination passes INSIDE a wrong GRAIN -- here the grain was the token pattern, and every downstream instrument then agreed about the same wrong thing.",
     "world_is": "THE WIRE CONTRACT DECLARES A BUCKET AND A KEY, AND THIS SEAT REPORTED THAT IT DECLARED NONE. The retraction is whole: the sentence 'no surface on the governed plane' is withdrawn. \u26d4 WHAT IS *NOT* ASSERTED IS THAT THESE CONTRADICT A RULE -- a `storage_bucket: string` TYPE DECLARATION names no bucket, and conformance depends on the runtime VALUE the producer writes, which is IRPT_BCKEND's surface, not this project's. Regrading is 4.0.0_SA_CRO's and this seat does not regrade its own project. ONE LEAD OFFERED WITHOUT LEANING ON IT: ExportReceipt.ts:22 declares `server_only: true` and :38 declares `vendor_signed_url_exposed: false`, both LITERAL types, reading as a design in which the bucket and key never reach a browser -- but A LITERAL TYPE IS A DECLARATION, NOT A STATE, and the runtime is unverified. PRECISION ON THIS ROUND: round 4's WORK touches StatusEnvelope, adapt.ts, the state planes and the generator, NONE of these three files; FE-s-25's GRANT is the whole `contracts/wire/` directory, so all three sit inside the write surface. Grant and work differ and both numbers are recorded rather than the flattering one. \u2b50 THE SHAPE IS THE ONE THIS SEAT SPENT THE EVENING FINDING IN OTHERS: it told 0.0.0_AB_MSTR its D14 discriminator was self-defeating and told 4.0.0_SA_CRO~D a term check would false-positive, while its own instrument was blind to the dominant naming convention of the fourteen files it was aimed at, certified by a control it had built so that it could not fail. 0.0.0_AB_MSTR's own sentence from 96227 lands here four hours later: CORRECTING AN ERROR IS NOT THE SAME AS BEING RIGHT, AND THE CORRECTING SEAT GETS THE LEAST SCRUTINY PRECISELY WHEN IT HAS JUST EARNED SOME.",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W4-S5",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~4",
+    "surfaced_at": "2026-09-13T03:02:27Z",
+    "one_line": "TO-FE-s-28 F28-AC6 carries <expect>0 fail</expect> against `python .tools/tests/test_proof_of_spec_alignment.py`, and that battery emits the string `0 fail` on NO run, pass or fail: its summary is `proof-of-spec alignment battery: 35/35 arms as expected` followed by `BATTERY PASS` (clean) or `BATTERY FAILED -- the gate does not behave as specified.` (dirty). The battery PASSES as written -- rc=0, 35/35 arms -- so the criterion's SUBSTANCE ('FE-s-23's own alignment battery still passes') is met, but the criterion cannot PASS BY OUTPUT because its bar matches no output the instrument can produce. The row is filed rather than the bar re-read loosely: this is the SAME defect the issuer caught and corrected on F28-AC1 before issuing ('this tool does NOT print the same shape as proof-of-spec-check ... Never assume two tools in .tools/ report alike'), uncorrected one criterion later.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE BAR: org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-28.mandatory-placeholders.md@f3b42b1e0b, line 47 verbatim: '<criterion id=\"F28-AC6\" cell_refs=\"FE-s-28\"><invocation>cd <WS> && timeout 300 python .tools/tests/test_proof_of_spec_alignment.py</invocation><expect>0 fail</expect></criterion>'.",
+        "THE INSTRUMENT: .tools/tests/test_proof_of_spec_alignment.py@f3b42b1e0b lines 455-462 are the only summary writer -- `failed = [r for r in results if r[1] == FAIL]`; `print(f\"\\nproof-of-spec alignment battery: {len(results) - len(failed)}/{len(results)} arms as expected\")`; then either `BATTERY FAILED -- the gate does not behave as specified.` (return 1) or `BATTERY PASS -- conformant reads VALID, every mutant flips, and the negative controls keep it from being a brick.` (return 0). Neither branch, and no per-arm line, contains the substring '0 fail'.",
+        "THE RUN, AS THE CRITERION WRITES IT: `cd /c/tmp/wk-irpt_fntend-4-4-fe-s-28 && timeout 300 python .tools/tests/test_proof_of_spec_alignment.py` -> EXIT=0, last two lines 'proof-of-spec alignment battery: 35/35 arms as expected' / 'BATTERY PASS ...'. re.search(r'0 fail', output, re.S) -> False.",
+        "COVERAGE, because the criterion's own text allows for the battery being named differently ('If that file is named differently, run the battery that exists and say which in the result file'): the named file EXISTS, and FE-s-23's other battery .tools/tests/test_invocation_limb.py@f3b42b1e0b was run too -- EXIT=0, 'invocation-limb battery: 17/17 arms as expected', 'BATTERY PASS ...', and re.search(r'0 fail', ...) -> False there as well. DENOMINATOR: 2 of 2 candidate batteries PASS; 0 of 2 emit the bar.",
+        "WHAT THIS WORKER DID NOT DO, stated because it is the tempting repair and the order forbids it: test_proof_of_spec_alignment.py sits inside this order's <paths> grant (`.tools/tests/`), so adding a '0 fail' line to its summary would make the criterion pass. Editing an instrument so that a bar matches it is grading the tool instead of the world, and the order's BOUNDS say a real trip of the boundary is a FINDING, never a reason to edit the corpus. The battery is unchanged."
+      ]
+    },
+    "spec_asserts": "F28-AC6: '<invocation>cd <WS> && timeout 300 python .tools/tests/test_proof_of_spec_alignment.py</invocation><expect>0 fail</expect>' -- and the worker contract: a mechanical criterion PASSES BY OUTPUT when the recorded output matches the <expect> pattern, and the status flips to complete only when every mechanical criterion does.",
+    "world_is": "The battery passes (rc=0, 35/35 arms) and its output contains no substring '0 fail' on any branch, so no run of the invocation the criterion names can satisfy the pattern the criterion names. F28-AC6 is recorded FAIL by output with its full measurement, the <status> is NOT flipped, and TO-FE-s-28 stays open on this one criterion. The bar is satisfiable by a one-character-class change the ISSUER owns (e.g. '0 fail|arms as expected' or 'BATTERY PASS'), which is an L6 re-cut, not a worker act.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W4-S6",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~4",
+    "surfaced_at": "2026-09-13T03:02:27Z",
+    "one_line": "TO-FE-s-28's cell text and its RECORD FACE both assert '0 of 2554 existing task orders carry the element', and that is the number the retroactivity argument rests on. Re-measured at f3b42b1e0b over the tracked corpus with the gate's own TO_PATH_RE: 2559 task-order files, 305 tree / 2254 flat-root, and 2 DO carry <placeholders> -- FE-s-23 (which invented the element) and FE-s-28 itself (which mandates it). The conclusion is unchanged (303 tree orders still lack it, so a corpus-grading limb would still refuse work nobody can now edit), but the gate's block comment and the battery's census line carry the RE-MEASURED numbers rather than the inherited ones, because an inherited N-of-M reads as measured and is a subset measurement until someone asks what population it enumerated.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE CLAIM: org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-28.mandatory-placeholders.md@f3b42b1e0b, cell text: '0 of 2554 existing task orders carry the element'; and the same file's RECORD FACE preflight line: '0 of 2554 task orders carry the <placeholders> element'.",
+        "THE RE-MEASUREMENT: `git ls-files` (33337 tracked paths) filtered by to-pipeline-gate.py's TO_PATH_RE -> 2559 task-order files; TREE_TO_RE -> 305 tree, 2254 flat-root; substring '<placeholders>' present in 2 of the 2559: org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-23.checker-invocation-limb.md and .../IRPT_FNTEND.TO-FE-s-28.mandatory-placeholders.md. The same census runs inside .tools/tests/test_mandatory_placeholders.py and prints its denominator on every run.",
+        "WHY THE DIFFERENCE IS BENIGN AND STILL WORTH A ROW: FE-s-23's declaration landed AFTER the census the face quotes, and this order's own face declares <placeholders>WS</placeholders> by construction -- so the two carriers are exactly the two files that created the rule. Both are ADMITTED by the new limb (arms 'REAL DECLARING ORDER ADMITTED' in the battery), so the corpus number moving from 0 to 2 does not touch the boundary choice."
+      ]
+    },
+    "spec_asserts": "TO-FE-s-28 cell: 'AND THE RETROACTIVITY QUESTION IS THE WHOLE DIFFICULTY, SO MEASURE IT BEFORE YOU CHOOSE. 0 of 2554 existing task orders carry the element.'",
+    "world_is": "2 of 2559 carry it at f3b42b1e0b (2554 -> 2559 files, 0 -> 2 carriers). Measured before choosing, as the cell instructs; the boundary chosen is unchanged and the refusal text, the gate's block comment and the battery's census line all carry the RE-MEASURED numbers with their denominator.",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```

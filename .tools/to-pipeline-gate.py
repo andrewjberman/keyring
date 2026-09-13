@@ -109,6 +109,53 @@ WORKER_SERIAL_RE = re.compile(r"^0\.9\.0_WK_[A-Z0-9_]+?[~_][0-9]+$")
 # line; a prose mention of `<paths>` earlier in the file is not the block and is not graded as one.
 PATHS_BLOCK_RE = re.compile(r"^[ \t]*<paths>[ \t]*\r?\n(.*?)^[ \t]*</paths>[ \t]*$", re.S | re.I | re.M)
 
+# GATE (viii) -- THE PLACEHOLDER DECLARATION IS MANDATORY ON A NEW TREE ORDER (1.0.0_SA_CTO ruling D,
+# closing by name the weakness FE-s-23 shipped with; decomp cell FE-s-28, rows S31/S38/S43).
+#
+# WHAT IT ARMS, AND WHY ONLY THE ISSUER CAN ARM IT. .tools/proof-of-spec-check.py compares each
+# acceptance row's RECORDED invocation against the same-id <invocation> in the governing TO and
+# normalises EXACTLY two things: whitespace at the ends, and expansion of the placeholders THE TO
+# DECLARES. Its _declared_placeholders() returns None when the <placeholders> element is absent, and
+# None means ANNOUNCE -- the divergence prints and refuses nothing. So the enforcement is switched on
+# by the ISSUER: the exact party whose prompt-only correction the limb exists to catch (round 2, row
+# S31 -- two criteria corrected in a SPAWN PROMPT and never in the file; the checker then read VALID
+# over 20 rows and 0 violations). An integrity check the checked party may decline to arm is a
+# courtesy, not an enforcement. NON-APPLICATION: none -- an opt-in integrity check has no honest scope.
+#
+# THE BOUNDARY, AND WHY IT IS THIS ONE. Measured over the tracked corpus at the cut: 2559 task-order
+# files, 305 of them TREE orders, and 2 carry <placeholders> (FE-s-23, which invented the element, and
+# FE-s-28, which mandates it). Refusing the corpus would block 2557 files; grandfathering by DATE or by
+# PROJECT is the opt-in again under a new name and drifts the moment the date passes. So this limb binds
+# exactly WHAT AN ISSUANCE ADDS, which is the prospective scope this gate already owns and states once,
+# in _newly_added: main() sends only newly-added (git A/R) paths through check_file, so a MODIFICATION of
+# an existing order -- a status flip, an amendment -- is never graded and the 2557 stay committable BY
+# CONSTRUCTION. No second vintage mechanism is added here: a duplicate control with its own drift is
+# worse than the one that already works (same finding as the criterion-grammar limb above). The boundary
+# is written into the refusal TEXT so a seat that hits it learns the rule instead of guessing at it.
+#
+# CASE-SENSITIVE ON PURPOSE, AND MIRRORED FROM THE CONSUMER. The two regexes below are byte-identical to
+# proof-of-spec-check.py's PLACEHOLDERS_TAG_RE / PLACEHOLDER_TOKEN_RE. A tolerant reader here (re.I, say)
+# would ADMIT a <PLACEHOLDERS> element the checker cannot see -- an order that passes the gate arming
+# nothing, which is precisely the state this limb exists to end. .tools/tests/test_mandatory_placeholders.py
+# holds the cross-tool arm that keeps the two readers equal.
+PLACEHOLDERS_TAG_RE = re.compile(r"<placeholders>(.*?)</placeholders>", re.S)
+PLACEHOLDER_TOKEN_RE = re.compile(r"<([A-Z][A-Z0-9_]*)>")
+INVOCATION_TAG_RE = re.compile(r"<invocation>(.*?)</invocation>", re.S)
+PLACEHOLDERS_BOUNDARY = (
+    "BOUNDARY (what this binds and what it does not): it binds a task order STAGED AS ADDED (git status "
+    "A or R) under org/missions/D<n>/<MACRO>/<CODE>/task-orders/ -- what an ISSUANCE ADDS, nothing else. "
+    "It does NOT bind a MODIFICATION of an existing order (a status flip, an amendment), and it does NOT "
+    "bind the flat-root legacy population under org/**/task_orders/. Measured at the cut: 2559 task-order "
+    "files tracked, 305 tree, 2 carrying the element -- the other 2557 stay committable because none of "
+    "them is ever newly-added again."
+)
+PLACEHOLDERS_HOWTO = (
+    "SATISFY IT with one line in the worker face: <placeholders>WS, PORT</placeholders> naming every "
+    "<TOKEN> the order's own <invocation> strings carry, or <placeholders>NONE</placeholders> when they "
+    "are literal (an explicit NONE is ENFORCE over an EMPTY substitution set, not a waiver). The element "
+    "is lowercase and exact -- proof-of-spec-check.py reads it case-sensitively."
+)
+
 
 # GATE (iv) -- LD-0521 Amendment 3 (Andrew at the 0.0.0_AB_MSTR terminal 2026-09-03 ~04:0xZ: "COO is the only agent
 # that does task orders"). A NEWLY ADDED tree task order commits only under 2.0.0_SA_COO or one of its ~lanes, read
@@ -565,6 +612,11 @@ def _self_test():
     SO = lambda files, ver="v0.4", last="abc123def456": _signoff_violations("t", "X_PRJ", "prd/X_PRJ_PRD.md", ver, last, files)  # noqa: E731
     _cro = {"signed_by": "4.0.0_SA_CRO", "verdict": "SIGNED", "prd_version": "v0.4", "prd_pin": "abc123de"}
     _cvo = {"signed_by": "3.0.0_SA_CVO~Z", "verdict": "SIGNED", "prd_version": "v0.4", "prd_pin": "abc123de"}
+    ph_inv = ('<criterion id="C1" cell_refs="CE-a-1"><invocation>cd <WS> && timeout 120 python x.py'
+              '</invocation><expect>OK</expect></criterion>')
+    ph_lit = ('<criterion id="C1" cell_refs="CE-a-1"><invocation>timeout 120 python x.py</invocation>'
+              '<expect>OK</expect></criterion>')
+    ph = _placeholder_declaration_violations
     arms = [
         # LIMB 6 -- the PRD sign-off gate (L4-R), pure arms; the tilde signer counts for its base serial
         ("signoff RED: no files -> refused naming BOTH reviewers",
@@ -686,6 +738,31 @@ def _self_test():
         ("grant: a seat's order without <paths> is not graded (its grant is its lanes); a flat-root worker order is not graded",
          lambda: _worker_grant_violations(tree, "<issued_to>0.8.0_AE_CloudComp~J</issued_to>\n" + v3) == []
          and _worker_grant_violations("org/tier2_senior/A/task_orders/X.TO-1.md", "<issued_to>0.9.0_WK_X_PRJ~2</issued_to>\n") == []),
+        # GATE (viii): the <placeholders> declaration is MANDATORY on a NEW tree order (ruling D, cell FE-s-28).
+        # BOTH DIRECTIONS, because a limb that cannot admit is a brick and a limb that cannot refuse is a constant.
+        # The REAL-BYTES arms (this estate's own corpus, the end-to-end git states, and the cross-tool agreement
+        # with proof-of-spec-check's reader) live in .tools/tests/test_mandatory_placeholders.py.
+        ("placeholders RED: a new tree order with NO <placeholders> element -> refused",
+         lambda: any("NO <placeholders> element" in x for x in ph(tree, ph_inv))),
+        ("placeholders GREEN: <placeholders>WS</placeholders> covering the order's own <WS> -> admitted",
+         lambda: ph(tree, "<placeholders>WS</placeholders>\n" + ph_inv) == []),
+        ("placeholders GREEN: an explicit NONE over literal invocations -> admitted (ENFORCE, empty set)",
+         lambda: ph(tree, "<placeholders>NONE</placeholders>\n" + ph_lit) == []),
+        ("placeholders RED: an EMPTY <placeholders></placeholders> element -> refused (an oversight and an intentional NONE must differ)",
+         lambda: any("EMPTY" in x for x in ph(tree, "<placeholders></placeholders>\n" + ph_lit))),
+        ("placeholders RED: a declaration that omits a token its OWN <invocation> carries -> refused, naming <WS>",
+         lambda: any("<WS>" in x and "does not declare" in x for x in ph(tree, "<placeholders>PORT</placeholders>\n" + ph_inv))),
+        ("placeholders RED: an UPPERCASE <PLACEHOLDERS> element is not the element -- refused, because the checker's reader is case-sensitive too",
+         lambda: any("NO <placeholders> element" in x for x in ph(tree, "<PLACEHOLDERS>WS</PLACEHOLDERS>\n" + ph_inv))),
+        ("placeholders: a flat-root order is NOT graded (the legacy population, same scope as every limb here)",
+         lambda: ph("org/tier2_senior/A/task_orders/X.TO-1.md", ph_inv) == []),
+        ("placeholders: the refusal TEXT names the element, the boundary it binds, what it does NOT bind, and how to satisfy it",
+         lambda: all(k in ph(tree, ph_inv)[0] for k in ("<placeholders>", "BOUNDARY", "STAGED AS ADDED",
+                                                        "MODIFICATION", "org/**/task_orders/",
+                                                        "<placeholders>NONE</placeholders>"))),
+        ("placeholders: the element regex is BYTE-IDENTICAL to proof-of-spec-check's (a tolerant reader would admit an order arming nothing)",
+         lambda: PLACEHOLDERS_TAG_RE.pattern == r"<placeholders>(.*?)</placeholders>"
+         and PLACEHOLDER_TOKEN_RE.pattern == r"<([A-Z][A-Z0-9_]*)>"),
     ]
     failed = 0
     for name, fn in arms:
@@ -793,6 +870,44 @@ def _worker_grant_violations(rel, text):
         if n.startswith("/") or re.match(r"^[A-Za-z]:", n) or ".." in n.split("/"):
             out.append("%s: <paths> entry %r is not a repo-relative path (no leading /, no drive letter, no '..')." % (rel, e))
     return out
+
+
+def _placeholder_declaration_violations(rel, text):
+    """GATE (viii): a NEW tree order declares the substitution set that arms the invocation-alignment
+    limb of .tools/proof-of-spec-check.py on its own issuance. [] for flat-root orders (legacy
+    population). See the block comment at PLACEHOLDERS_TAG_RE for the authority and the boundary."""
+    rel = rel.replace("\\", "/")
+    if not TREE_TO_RE.search(rel):
+        return []
+    m = PLACEHOLDERS_TAG_RE.search(text)
+    if m is None:
+        return ["%s: NO <placeholders> element. The invocation-alignment limb of proof-of-spec-check.py "
+                "ENFORCES only when the governing TO declares its substitution set; undeclared, it ANNOUNCES "
+                "and refuses nothing -- so an issuance without this element arms no check on itself, and the "
+                "divergence it exists to catch (a criterion corrected in the SPAWN PROMPT and never in this "
+                "file, round 2 row S31) reads VALID. 1.0.0_SA_CTO ruling D: the declaration is MANDATORY at "
+                "L6. %s %s" % (rel, PLACEHOLDERS_BOUNDARY, PLACEHOLDERS_HOWTO)]
+    names = {n.upper() for n in re.findall(r"[A-Za-z][A-Za-z0-9_]*", m.group(1))}
+    if not names:
+        return ["%s: the <placeholders> element is EMPTY. An empty element and an intentional "
+                "<placeholders>NONE</placeholders> read IDENTICALLY to proof-of-spec-check.py (both ENFORCE "
+                "over an empty set), so the empty form cannot be told from an oversight by any reader. "
+                "Declare the tokens, or write NONE and mean it. %s" % (rel, PLACEHOLDERS_HOWTO)]
+    declared = set(names)
+    declared.discard("NONE")
+    used = set()
+    for i in INVOCATION_TAG_RE.finditer(text):
+        used |= set(PLACEHOLDER_TOKEN_RE.findall(i.group(1)))
+    missing = sorted(used - declared)
+    if missing:
+        return ["%s: <placeholders> declares {%s} but this order's own <invocation> strings carry %s, which "
+                "it does not declare. An UNDECLARED token is NOT expanded under ENFORCE -- it stays literal, "
+                "so every recorded run of that criterion will diverge from the criterion and the worker "
+                "cannot fix it (editing the issuance half to make its own proof validate is refused). "
+                "Declare every token the invocations carry. %s"
+                % (rel, ", ".join(sorted(declared)) or "nothing",
+                   ", ".join("<%s>" % t for t in missing), PLACEHOLDERS_HOWTO)]
+    return []
 
 
 def _repo_root():
@@ -1501,6 +1616,10 @@ def check_file(root, rel):
     v.extend(_issued_by_violations(rel, text))
     # GATE (v) -- a NEW tree TO issued to a worker carries its grant, the <paths> block (RULING 1 @9ef9a40aae).
     v.extend(_worker_grant_violations(rel, text))
+    # GATE (viii) -- a NEW tree TO DECLARES its placeholder substitution set, which is what ARMS the
+    # invocation-alignment limb of proof-of-spec-check.py on the issuance being cut (1.0.0_SA_CTO ruling D,
+    # cell FE-s-28). Opt-in enforcement is armed by the party the check exists to catch.
+    v.extend(_placeholder_declaration_violations(rel, text))
     # GATE (iv) -- a NEW tree TO commits only under 2.0.0_SA_COO (LD-0521 A3).
     v.extend(_issuer_identity_violations(rel, _committer_serial(root)))
     # CELL REFERENCES resolve against the named decomposition at the cut (S5's class, 2026-09-03).
