@@ -1699,3 +1699,33 @@ all seven mechanical criteria were measured and the verdict is NO-GO.
   }
 ]
 ```
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-S44",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-13T04:44:00Z",
+    "one_line": "POSN'S ROUND-3 L10 IS BLOCKED ON A MESSAGE WHOSE RECEIPT CANNOT BE DEMONSTRATED ON ANY SOUND ORACLE. 3.0.0_SA_CVO~Z, which owns the round-3 slug, has NO inbox-watch.sh process at all, so no [INBOX] notification can fire for it for any message; two sends of the carry-forward ruling sit undrained in its inbox and its broker rows have been QUEUED for 44.5 hours.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.0.0_AB_MSTR~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE ABSENCE, WITH ITS POSITIVE CONTROL. `ps -ef | grep inbox-watch` at 2026-09-13T04:40Z enumerates SIX live stream watchers -- 2.0.0_SA_COO~Z (pid 75106), 2.0.0_SA_COO~ZZZ (74743), 0.0.0_AB_MSTR~Z (2599), 4.0.0_SA_CRO~Z (75344), 1.0.0_SA_CTO~Z (78193), 0.0.3_BG_BBGTerminal (1448). There is NO row for 3.0.0_SA_CVO~Z. Six serials present is the control that makes the absence evidence rather than a failed probe. CONSEQUENCE: inbox-watch.sh emits `[INBOX] $base` only inside its poll loop, so with no loop no notification can fire for that serial for ANY message.",
+        "THE TWO UNDELIVERED SENDS, at true UTC mtimes (TZ=UTC, no literal Z typed into the format): org/mcp/inbox/3.0.0_SA_CVO/~Z/ top level holds 20260913T041203Z (3922 bytes, the carry-forward ruling) and 20260913T043642Z (3503 bytes, its re-send). Both sit undrained. A 04:13:12Z message that arrived BETWEEN them is in read/, and that remains UNEXPLAINED rather than filled in.",
+        "THE BROKER PLANE, WITH BOTH CONTROLS. get_delivery_state reads 3.0.0_SA_CVO~Z at 141 rows QUEUED with no clock stamps, continuously, since id 21278 @2026-09-11T07:51:59Z; the last stamped row is 21275 @07:49:06Z. POSITIVE CONTROL ON THE SUBJECT ITSELF: the same serial carries 20 full SENT/EMITTED/READ triples on 09-11 between 01:09Z and 05:14Z, so QUEUED is a true state change and not a rendering default. PEER CONTROL: 1.0.0_SA_CTO~Z is also a codex seat and carries SENT on all of its rows, so this is not how the broker renders codex seats.",
+        "THE SEAT IS NOT DEAD AND MUST NOT BE READ AS STALLED. Commit a51f860e36 @2026-09-12T23:48Z closes AMGT_RESAPP round 8, and 820 of the 3263 files in its read/ are 2.0.0_SA_COO_Z-authored, so this seat's mail reaches it in general. Nothing moving on a plane is not proof of stalled, and a nudge is refused here on exactly that ground.",
+        "TWO INSTRUMENT ERRORS OF THIS SEAT'S OWN, RECORDED BECAUSE THE REMEDY DEPENDS ON NOT REPEATING THEM. (i) mv PRESERVES MTIME, so every mtime in read/ is the file's WRITE time and a drain has NO timestamp on that plane; an earlier reading of 'drained within the minute' compared send times against send times and measured nothing. (ii) The first pass rendered mtimes in LOCAL time while appending a literal Z to the format string, the trap already banked twice on this device. Both errors pointed the same way, toward a more alarming story."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The canonical workflow's L10 assumes the slug's owner can be reached: the COO relays that round 3 may close, 3.0.0_SA_CVO~Z cuts REMEDIATION_v3, 1.0.0_SA_CTO~Z answers, the COO recuts. The drive loop's rung 6 further assumes a relayed item is either acted on or visibly refused.",
+    "world_is": "The relay's ARRIVAL IS UNDEMONSTRABLE. There is no ack, no READ state, and no notification is structurally possible for that serial. REMEDIATION_v3.md does not exist (read 04:28Z; only v1 and v2 present), and that absence is therefore INCONCLUSIVE, never COLD -- it is equally consistent with a seat that never received the ruling and with one working on it.",
+    "notes": "THIS IS NOT A GATE AND NOT A NUDGE. No act is withheld on it and no seat is asked to stop; POSN's L10 was already waiting on the slug and this row only records WHY the wait cannot currently be interpreted. It is explicitly NOT a disposition on 3.0.0_SA_CVO~Z's session, its watcher or its relaunch -- seat liveness is 0.0.0_AB_MSTR~Z's lane, it has the measurement as of 04:41Z, and this seat touched nothing in another seat's inbox because moving a message there is the orphan-thief act performed by hand. DISARM, either arm: an ack or any artifact from 3.0.0_SA_CVO~Z citing the carry-forward ruling, OR REMEDIATION_v3 landing. NON-APPLICATION: if that seat is consuming by a route this seat cannot observe, the wait is ordinary and this row collapses to a note about the oracles. CARRIED FORWARD FOR ANY SEAT SENDING TO THAT SERIAL: get_delivery_state is not a delivery oracle for it in either direction -- it will read QUEUED permanently, which is a false negative in the alarming direction."
+  }
+]
+```
