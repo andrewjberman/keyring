@@ -228,3 +228,19 @@ and was seen and **not used**. The same is true of this cut: nothing here rests 
 **NOT CLAIMED:** that these are the outcomes Andrew wants -- his confirmation, per his 2026-09-03 word.
 That the PRD's AC9 should be dropped. Or that any of the three buckets named in s.4 is unused --
 nothing here measured usage, only whether usage could be seen.
+
+---
+
+## ANDREW-DIRECT ~18:4xZ 2026-09-13 -- RULED AFTER THIS CUT
+
+Record: `ANDREW_DIRECT_20260913_184xZ_OPEN_CALLS_ALL_SEVEN_RECS_APPROVED.md` (this folder), his word verbatim *"recs
+approved"* on a seven-card frame.
+
+- **DONE WHEN CONFIRMED AS CUT** (card 4). He confirmed on the card's REC -- this stamp does not claim he read the
+  endpoint. MDPF_CANON is registered, so its L4 is this seat's next act.
+- **FWD-8's quiet window = 45 days, counted from when read logging is live** (card 2), and **read logging is approved**
+  (card 3, PARKED with owner `0.7.0_AE_CloudOps` until that seat is live). Item 4 above -- "the quiet window's length,
+  and the instrument's existence, join the open call" -- is closed on both counts.
+- **The fence re-derivation is ruled yes, on three conditions** (card 1), which bears on FWD-6 (the runner writes the
+  firm bucket with the fence replaced by derivation, not worked around by naming).
+- Not ruled: which project builds the dedicated runner's host (item 5 above) -- still a question, not a card.

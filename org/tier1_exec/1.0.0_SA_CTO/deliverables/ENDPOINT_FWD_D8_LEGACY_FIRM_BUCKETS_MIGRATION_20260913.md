@@ -249,3 +249,22 @@ when written and is no longer. Two bullets bear directly on outcomes, and one on
 2026-09-03 word. **Nor that the eight are complete against his commission**: he asked for the swap
 "end to end, including decommissioning of legacy resources," and whether eight outcomes cover
 everything he meant by that sentence is a question for his read, not a claim of this cut.
+
+---
+
+## ANDREW-DIRECT ~18:4xZ 2026-09-13 -- RULED AFTER THIS CUT
+
+Record: `ANDREW_DIRECT_20260913_184xZ_OPEN_CALLS_ALL_SEVEN_RECS_APPROVED.md` (this folder), his word verbatim *"recs
+approved"* on a seven-card frame.
+
+- **DONE WHEN CONFIRMED AS CUT** (card 4). He confirmed on the card's REC -- this stamp does not claim he read the
+  endpoint.
+- **FWD-6's QUIET WINDOW = 45 DAYS, COUNTED FROM WHEN READ LOGGING IS LIVE on the bucket** (card 2). "Four things"
+  item 1 above is closed: the essential wait now carries its reason and Andrew's word by name, as Rule 27 requires.
+- **READ LOGGING APPROVED** (card 3): `opal-data-cot` added to the organisation trail's read logging; the selector moved
+  into Terraform; the firm-bucket template given read logging. **PARKED with owner `0.7.0_AE_CloudOps`** until that
+  seat is live -- and the 45-day clock does not start before it lands.
+- **THE FENCE RE-DERIVATION IS RULED YES, ON THREE CONDITIONS** (card 1), so FWD-6's "fence unbent" reads as
+  "replaced by derivation" -- see the D14 executable-layer endpoint's stamp for the conditions.
+- Still blocking, NOT ruled: this project's macro. It fits none of D8's three; the Rule 24 proposal is 1.0.0_SA_CTO's
+  debt.

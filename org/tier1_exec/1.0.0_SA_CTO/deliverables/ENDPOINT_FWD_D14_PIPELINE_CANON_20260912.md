@@ -210,3 +210,16 @@ cut from Parts I and III, which is where the skill says to cut from.
 in `infra/logic/` are unaffected. They were built against v1's O3 and O6 enumerations; whether the
 two added values reach them is `4.0.0_SA_CRO~D`'s read of its own artifacts, not mine, and I have
 told it what I measured rather than telling it what to do about it.
+
+---
+
+## ANDREW-DIRECT ~18:4xZ 2026-09-13 -- RULED AFTER THIS CUT
+
+Record: `ANDREW_DIRECT_20260913_184xZ_OPEN_CALLS_ALL_SEVEN_RECS_APPROVED.md` (this folder), his word verbatim *"recs
+approved"* on a seven-card frame.
+
+- **DONE WHEN CONFIRMED AS CUT** (card 4). His 2026-09-03 confirmation step is done for this endpoint; the loop runs
+  from here without him. He confirmed on the card's REC -- this stamp does not claim he read the endpoint.
+- **FWD-6 is graded at APPLIED -- RULED (a)** (card 5). "Two things for Andrew" item 1 above is CLOSED: D14 closes on
+  its own, and the first D8 migration's use of the ledger is a confirming read, never a gate on D14. Item 2 was already
+  closed by his ~03:2xZ commission.

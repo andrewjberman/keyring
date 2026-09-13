@@ -225,3 +225,17 @@ figures come from a regex pass with a hypothesised slot vocabulary), and **the "
 **NOT CLAIMED:** that these are the outcomes Andrew wants -- his confirmation, per his 2026-09-03 word. Nor that
 the form split in s.1 is settled -- the REC follows the executable-layer brief, the choice is
 ratified at L4 as one document, and any part of it that would narrow his ruling is his to say.
+
+---
+
+## ANDREW-DIRECT ~18:4xZ 2026-09-13 -- RULED AFTER THIS CUT
+
+Record: `ANDREW_DIRECT_20260913_184xZ_OPEN_CALLS_ALL_SEVEN_RECS_APPROVED.md` (this folder), his word verbatim *"recs
+approved"* on a seven-card frame.
+
+- **DONE WHEN CONFIRMED AS CUT** (card 4). He confirmed on the card's REC -- this stamp does not claim he read the
+  endpoint.
+- **FWD-6 is graded at APPLIED -- RULED (a)** (card 5). The question this endpoint left "still open at Andrew" is
+  closed: a remediation project citing a row is a confirming read, never a gate on D14.
+- Unchanged by his word: the per-slot short/long split stays **PROPOSED -- ratified at L4 by 1.0.0_SA_CTO, revertible
+  on Andrew's word**; the cards did not put it to him.

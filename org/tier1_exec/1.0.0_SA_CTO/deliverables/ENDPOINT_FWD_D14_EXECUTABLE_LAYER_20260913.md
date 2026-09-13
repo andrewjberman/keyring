@@ -194,3 +194,18 @@ internals were not read** -- so where the refusal is inserted is L5's read, not 
 **NOT CLAIMED:** that these are the outcomes Andrew wants -- his confirmation, per his 2026-09-03 word. That the
 form split in s.1 is settled. Or that the moratorium is at risk: every refusal here is a gate's exit and a printed
 line; nothing in these seven outcomes sends a message to anyone.
+
+---
+
+## ANDREW-DIRECT ~18:4xZ 2026-09-13 -- RULED AFTER THIS CUT
+
+Record: `ANDREW_DIRECT_20260913_184xZ_OPEN_CALLS_ALL_SEVEN_RECS_APPROVED.md` (this folder), his word verbatim *"recs
+approved"* on a seven-card frame.
+
+- **DONE WHEN CONFIRMED AS CUT** (card 4). He confirmed on the card's REC -- this stamp does not claim he read the
+  endpoint.
+- **THE FENCE RE-DERIVATION IS RULED YES, ON THREE CONDITIONS** (card 1). FWD-2's "DEPENDS: the fence re-derivation,
+  open at Andrew" is closed as a question and becomes acceptance: (1) the branch for principals carrying no scope token
+  is decided in writing before the Deny lands; (2) every existing writer holds a scoped identity or a named exemption
+  first, under never-widen sign-off; (3) the service-principal exemption list is registry-derived. Route (a) of
+  2026-09-12 -- a carve-out for one principal -- stays closed; this replaces the list.
