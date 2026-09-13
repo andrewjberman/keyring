@@ -2582,5 +2582,95 @@
     "world_is": "The match decides, and the match is a substring search over free text. No false PASS has happened anywhere in the estate; what has kept it clean is workers writing FAIL honestly and bar authors being careful, which is a description of luck and diligence, not of a control. \u26d4 THE CORRECTING SEAT'S FIX WAS ITSELF WRONG: `\\b` would have traded a LATENT false PASS for a LIVE false FAIL on every coloured runner -- caught because 1.0.0_SA_CTO tested with the gate's exact call instead of accepting the reasoning. The same class this seat recorded in S52, one more time: a check built from a string chosen rather than from the real shape. THIS SEAT'S RULE FROM NOW: every count bar it cuts is left-anchored `(?<![0-9])` and every bound right-anchored `(?![0-9])`; every face it cuts carries the evidence-hygiene rule; carried `0 fail` rows whose evidence holds more than one summary are graded by reading the DECIDING line by hand -- F18-AC16 and F18-AC17 at the FE-s-18 re-run first. disarm_owner 1.0.0_SA_CTO for the checker limb.",
     "disposition": "UNDER_INVESTIGATION"
   }
+,
+  {
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-13T07:33:19Z",
+    "id": "IRPT_FNTEND-W1-S51",
+    "one_line": "F18-AC4 passes its bar while the SCREEN third of the frozen pair shows StatusPanel 'Uncertain': fe-s-18-frozen.json carries a status member on 0 of its 9 envelopes (FE-s-26 gave one to the three Holdings maps only)",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "TO-FE-s-18 WORKER FACE @c44180ab9b: `fixtures/smoke/fe-s-18-frozen.json` serves one performance report at one revision to the Reporting tab (screen), the export modal's preview and the print route. F18-AC4 = 'the Reporting tab on the frozen report at 390 (screen view of the pair)'. F18-AC18 grades 'screen, preview and print of the frozen report agree figure for figure'.",
+    "world_is": "At portal 4ee0d105 the Reporting tab mounts its PeriodControls card and then StatusPanel 'Uncertain / Source time unknown / Reload' where the report body should be (fe-s-18_reporting_frozen_390.png, sha256 3ad7f5e5f3c0805965e4227df3b69656c3d2d30e569c66de84b049a8776933a2). The performance body DOES arrive -- the card prints 'Answered 2026-01-02 to 2026-09-09' -- but none of the map's nine envelopes carries a `status` member, and a response with no status has told the browser nothing about its state, so the seam yields UNCERTAIN (the mechanism FE-s-26 named at portal ed90ce2d). The preview (F18-AC5) and print (F18-AC6) views render the report. The bar `CLICKED: Reporting` is met by output, so no mechanical criterion sees this; the L9 read of F18-AC18 has no screen third to compare. NOT EDITED HERE: the fix is one status member on the frozen map's performance envelope, and choosing its state from the document's own fields is the judgment FE-s-26's F26-AC9 was graded on at L9 -- not one to make inside a LAYOUT ONLY order.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED (python json read) portal src/pages/InvestorReporting/fixtures/smoke/fe-s-18-frozen.json @4ee0d105: 9 envelopes, a top-level `status` key on 0 of 9. fe-s-18-holdings-observed.json @4ee0d105: `status` on the holdings envelope only (state READY), inserted by portal ed90ce2d.",
+        "CAPTURE, F18-AC4 run exactly as written, ui-smoke.mjs --port 5186 --width 390, dev server UP: 'CLICKED: Reporting', 'FIXTURES: 9 declared; 3 matched >=1 URL', rc=0.",
+        "PAIRED BODY: F18-AC2 prints sha256(data) 9c8b821b4aeb176313d12e6e008a2ff2102e3d297d2b68e47517230985d09a25 for all three views, PAIRED: 1 report, 3 views -- the test hashes `data`, and a status member sits beside `data` in the envelope.",
+        "WRITER: portal src/pages/InvestorReporting/__tests__/fe-s-18/gen-fixtures.ts @4ee0d105 lines 115-121 build the frozen map by cloning fe-s-13-wire.json's keys and replacing the performance body; it emits no status member, and its header (lines 38-45) still carries round 2's 'bodies do not mount' paragraph."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-13T07:33:19Z",
+    "id": "IRPT_FNTEND-W1-S52",
+    "one_line": "The Holdings body now mounts, but its donut and slice table are EMPTY at 390 AND at 1440: this order's generator emits all three nodes with parent_node_id null and level 0, so no node has children -- the pie and table clipping the face names remains unverifiable by capture",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "TO-FE-s-18 WORKER FACE @c44180ab9b: at 390 'the slice table and the pie labels clip' -- fix each with the portal's own utilities; Holdings observed / target / missing-attribution are 'three fixtures built from FE-s-13's wire holdings fixture'. F18-AC18 grades 'nothing clips or overlaps at 390' from the manifest's PNGs.",
+    "world_is": "fe-s-18_holdings_observed_390.png (sha256 77bea87b141f1fba4ce8f60d722ae73f53d44e227176c28613f26b220181c51a) shows the body MOUNTED -- the stacked summary card (USD 5,000,000.00), the ASSET CATEGORY VIEWS card, breadcrumb 'Models', the slice-table header inside its scroll container -- with an EMPTY donut area and ZERO table rows. A same-map probe at 1440 (scratch, not a manifest entry) shows the same, so this is not a 390 clip and no layout edit reaches it. So round 2's two unverified repairs (SliceTable min-w, the stacked summary card) are now half verified: the summary card is seen stacked at 390; the slice table is seen only as a header. The target and missing-attribution maps render StatusPanel (FE-s-26's UNCERTAIN / PARTIAL), so only the observed capture reaches the tree. NOT EDITED HERE: re-shaping the tree changes the three maps FE-s-26's and FE-s-22's batteries assert on, and re-running the generator would silently DROP FE-s-26's status members, which exist only in the committed JSON.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CAPTURE, F18-AC9 run exactly as written, --port 5186 --width 390: 'CLICKED: Holdings', 'FIXTURES: 9 declared; 3 matched >=1 URL', rc=0; the PNG shows the empty donut area and a header-only table.",
+        "PROBE at 1440, same map, same server: ui-smoke.mjs ... --width 1440 --fixtures fe-s-18-holdings-observed.json --click Holdings, rc=0, 'CLICKED: Holdings' -- donut area empty, table header only. Width-independent.",
+        "CAUSE BY READING, NOT EXECUTED: portal __tests__/fe-s-18/gen-fixtures.ts @4ee0d105 nodesFor() (lines 134-172) sets parent_node_id: null and level: 0 on N-MODELS, N-SMA and N-CLIENT; tabs/holdings/DrillTree.tsx @4ee0d105 mdpfResultFromSnapshot() takes rootNode(snapshot.nodes) then childrenOf(snapshot.nodes, root.nodeRef), and the slice rows come from buildSliceRows(snapshot.nodes, currentRef). The breadcrumb reads 'Models', the first node.",
+        "portal ed90ce2d's diffstat touches the three JSON maps and __tests__/fe-s-26/ only -- not gen-fixtures.ts -- so the status members exist in the committed JSON and nowhere in the generator."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-13T07:33:19Z",
+    "id": "IRPT_FNTEND-W1-S53",
+    "one_line": "F18-AC14 'Global with two firms at 1440' renders the Holdings body as Failed / IR-REQUEST-FAILED and shows no second firm: fe-s-14-global.json declares 2 keys, directory/resolve and performance, and no holdings key",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-FE-s-18 WORKER FACE @c44180ab9b: 'Global at 1440 with two firms (FE-s-14's fixture)'. F18-AC14 clicks Holdings on src/pages/InvestorReporting/fixtures/smoke/fe-s-14-global.json.",
+    "world_is": "The page reads Firm 'Global (All)' with the full-width scope strip and the 1440 tab strip unmoved -- the layout control the capture exists for. The Holdings body reads 'Failed / No source age yet / IR-REQUEST-FAILED / Retry', and no second firm name appears anywhere on the page. The map carries no holdings key, so nothing answers the request the clicked tab makes. The bar `CLICKED: Holdings` is met; what the capture does or does not show about 'two firms' is for the L9 read of F18-AC18. The fixture is FE-s-14's, not one this order adds, so it is named and not edited.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CAPTURE, F18-AC14 run exactly as written, --port 5186 --width 1440: 'CLICKED: Holdings', 'FIXTURES: 2 declared; 2 matched >=1 URL', rc=0; fe-s-18_global_two_firms_1440.png sha256 ead397909d7b32a86bc297d18e95f12d8be0457cfcfd2930b327ce54158e3334.",
+        "MEASURED (python json read) portal src/pages/InvestorReporting/fixtures/smoke/fe-s-14-global.json @4ee0d105: 2 keys -- /api/scoped/investor-reporting/directory/resolve and /api/scoped/investor-reporting/performance/."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-13T07:33:19Z",
+    "id": "IRPT_FNTEND-W1-S54",
+    "one_line": "F18-AC17 REFUSED: 483 pass / 1 skip / 3 fail -- all three are fe-s-22 and fe-s-26 assertions that pin THIS order's round-2 byte-identical Holdings PNGs, which this order's round-4 re-capture correctly replaced; both folders are outside the grant",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "F18-AC17: `bun test src/pages/InvestorReporting` expect '0 fail', carried untouched (1.0.0_SA_CTO ruling 1: re-run, never re-issued). The order's <paths> do not include __tests__/fe-s-22/ or __tests__/fe-s-26/. The captures are re-taken into the deliverables folder under the exact names the criteria give.",
+    "world_is": "Deciding run, dev server on 5181 (PRECONDITION MET): 483 pass, 1 skip, 3 fail, rc=1. The three: (1) __tests__/fe-s-22/capture-hash.test.ts:257 expect(verdict.distinctDigests).toBe(1) received 3, printing 'ROUND-2 COLLISION REPRODUCED: 0 of 3'; (2) the same file :295 expect(stripped.refusedPairs).toHaveLength(3) received 0; (3) __tests__/fe-s-26/not-defective.test.ts:170 expect(verdict.refused).toBe(true) received false, whose own log line reads 'the round-2 PNGs are byte-identical. That is FE-s-18`s re-capture, carried, not this cell`s.' Each reads the Holdings PNGs in this order's deliverables folder and asserts their DEFECTIVE round-2 state. The round-4 re-capture made them distinct (F18-AC3: DISTINCT HASHES 11 of 11, COLLIDING SETS 0) -- the outcome both cells were waiting for -- and that is exactly what turns them red. There is no other failure in the suite. Not edited here; the order stays open on F18-AC17 alone.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "DECIDING RUN: cd <WS>/portal && timeout 120 bun test src/pages/InvestorReporting, dev server on 5181 MET: '483 pass', '1 skip', '3 fail', 'Ran 487 tests across 84 files', rc=1. The 1 skip is F27's deliberately-absent-port arm (localhost:54021).",
+        "EARLIER RUN, dev server on 5186 only (fe-s-19's default 5181 ABSENT): 480 pass, 4 skip, 3 fail, rc=1 -- the SAME three failures, so they do not depend on the server.",
+        "ASSERTION SITES @portal 4ee0d105: src/pages/InvestorReporting/__tests__/fe-s-22/capture-hash.test.ts:257 and :295; src/pages/InvestorReporting/__tests__/fe-s-26/not-defective.test.ts:170 -- file:line as printed by bun in the deciding run.",
+        "PRIOR NOTICE: portal ed90ce2d's own message (FE-s-26) records that its disclosure arm leaves the set 'STILL REFUSED ... which is FE-s-18's re-capture after this drain', and files IRPT_FNTEND-W2-S20 (BLOCKING) for two fe-s-22 assertions pinning the defective state."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  }
 ]
 ```
