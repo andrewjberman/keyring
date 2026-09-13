@@ -418,6 +418,349 @@ Accumulating CVO review as round-two evidence arrives. This is NOT an L10 slug a
         "reason": "NOT MET on clause 2 (graded from the 11 manifest PNGs tracked at 887b183a2a and portal c2eb8eb4). Bar: nothing clips or overlaps at 390; screen, preview and print of the frozen report agree figure for figure; the screens and the export read as one Opal product. Clause 1 MET. Clause 2 NOT MET: the screen (fe-s-18_reporting_frozen_390.png) shows a StatusPanel 'Uncertain / Source time unknown' and no figures while preview and print render the report; ReportingTab.tsx:14-18 mounts the body only on READY or STALE, PrintEntry.tsx carries no report-state check, and the print reads 'Report availability UNCERTAIN' beside 'Bundle availability READY'. Clause 3 MET visually, qualified by clause 2."
       }
     ]
+  }  ,
+  {
+    "id": "IRPT_FNTEND-C-S60",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-13T09:41:48Z",
+    "one_line": "BACKLOG (rounds 2-3), DISMISSED: the round-2 seam defect -- tab bodies that could not mount from any network response -- was fixed in round 3 and proven on the network path, then re-exercised in round 4.",
+    "class": "OBSERVATION",
+    "adjudicates": [
+      "IRPT_FNTEND-W1-S33",
+      "IRPT_FNTEND-S30"
+    ],
+    "disposition": "DISMISSED_WITH_REASON",
+    "spec_asserts": "W1-S33 and S30 (both BLOCKING): the Reporting and Holdings bodies gate on an availability no adapter sets, so no network response can mount them.",
+    "world_is": "Fixed in round 3 as RULING 2 ordered: 1.0.0_SA_CTO's round-3 analysis (section 0) reads NETWORK STATES CARRIED 9 of 9 against 1 of 9 pre-fix and BODIES MOUNTED 2 of 2 against 0 of 2, in a real browser, with the new tests recorded RED first. Round 4 re-exercised it: F18-AC17 ran the fe-s-19 browser tests with the dev server up (96384 section 5), and fe-s-18_holdings_observed_390.png shows the Holdings body mounted.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_IRPT_FNTEND_ROUND3_20260912.md@b453306a65 section 0 -- 9 of 9 states, 2 of 2 bodies, red-first",
+        "2.0.0_SA_COO~F msg 96384 section 5 -- F18-AC17 486 pass / 1 skip / 0 fail, dev server up on 5181",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/fe-s-18_holdings_observed_390.png@887b183a2a -- the body mounted"
+      ]
+    },
+    "hazard_standing": "INERT",
+    "dismissal_reason": "Remediated and re-exercised in a later round, on the path that could not fake it. The Holdings body mounts EMPTY at round 4 -- that is W1-S52, a fixture defect graduated in C-S57, not this seam."
+  },
+  {
+    "id": "IRPT_FNTEND-C-S61",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-13T09:41:48Z",
+    "one_line": "BACKLOG, DISMISSED: four producer moves under seated consumer cells and the merged-DEV red they caused -- the byte pin they broke was retired for a content pin, which is in the tree with both arms, and DEV is green.",
+    "class": "OBSERVATION",
+    "adjudicates": [
+      "IRPT_FNTEND-S20",
+      "IRPT_FNTEND-S21",
+      "IRPT_FNTEND-S28",
+      "IRPT_FNTEND-S33"
+    ],
+    "disposition": "DISMISSED_WITH_REASON",
+    "spec_asserts": "S20/S21: merged DEV red while each branch was green alone; S28/S33: producer commits landed under a seated consumer cell, the fourth fourteen minutes after the cut and while its worker ran.",
+    "world_is": "RULING 3 of the round-2 analysis retired the byte pin for consumer cells, and round 3 built the replacement: at portal c2eb8eb4, __tests__/fe-s-13/content-pins.test.ts pins the operations, route keys and required fields the client consumes (:21) and prints 'CONSUMED CONTENT PINNED: operations, route keys, required fields' (:297); the round-3 analysis reads 12 of 12 operations, 12 of 12 route keys, 78 of 78 fields, additive tolerated 3 of 3, breaking caught 3 of 3. The suite reads 486 pass / 1 skip / 0 fail at round 4.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_IRPT_FNTEND_ROUND2_20260912.md@f819d7cb7d RULING 3",
+        "org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_IRPT_FNTEND_ROUND3_20260912.md@b453306a65 section 5",
+        "portal c2eb8eb4:src/pages/InvestorReporting/__tests__/fe-s-13/content-pins.test.ts:21,297",
+        "2.0.0_SA_COO~F msg 96384 section 5"
+      ]
+    },
+    "hazard_standing": "INERT",
+    "dismissal_reason": "The mechanism that turned a producer move into a red consumer is replaced, and the replacement carries its negative arm; DEV is green. The rows stand as the history of why."
+  },
+  {
+    "id": "IRPT_FNTEND-C-S62",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-13T09:41:48Z",
+    "one_line": "BACKLOG, DISMISSED: fourteen rows recording round-2 and round-3 cut defects, issuer amendments and seating slips -- each repaired inside its round and every order now terminal; the CLASS recurred in round 4 and is carried by C-S58.",
+    "class": "OBSERVATION",
+    "adjudicates": [
+      "IRPT_FNTEND-W3-S9",
+      "IRPT_FNTEND-W3-S10",
+      "IRPT_FNTEND-S22",
+      "IRPT_FNTEND-S23",
+      "IRPT_FNTEND-S24",
+      "IRPT_FNTEND-S25",
+      "IRPT_FNTEND-S26",
+      "IRPT_FNTEND-S31",
+      "IRPT_FNTEND-S32",
+      "IRPT_FNTEND-S37",
+      "IRPT_FNTEND-S41",
+      "IRPT_FNTEND-S43",
+      "IRPT_FNTEND-S45",
+      "IRPT_FNTEND-W1-S38"
+    ],
+    "disposition": "DISMISSED_WITH_REASON",
+    "spec_asserts": "Each records an order whose criterion, premise, sequencing or amendment was wrong as cut or issued: W3-S9/S25 (F16-AC8's invocation stale), W3-S10/S23 (F16-AC9 against six pre-existing failures), S24 (F15-AC8 unsatisfiable in its grant), S26 (worktrees cut before the seating flip), S22 (the round-2 resumption), S31 (F18-AC6's URL), S32 (a criterion patched through a message), S37 (a face premise true in 5 of 7), S41/W1-S38 (F19-AC8's bar cut on a prediction), S43 (a hole in RULING 5a), S45 (a bar fixed in one face of three).",
+    "world_is": "Every order is terminal: 28 of 28 task orders under task-orders/ read <status>complete at this read. The mechanisms asked for were ruled -- RULING 5.1 and 5.2 of the round-2 analysis for S31 and S32, RULING F of the round-3 analysis for S43 -- and the failure counts are gone: 1 fail at round 3's drain (round-3 analysis section 3), 486 pass / 1 skip / 0 fail at round 4. S37's disarm was discharged in prose by C-S47, and the instance it concerned is superseded by FE-s-18's round-4 run. What does NOT close is the class -- a criterion or premise cut against an assumption -- which recurred three times in round 4 and is graduated in C-S58.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_IRPT_FNTEND_ROUND2_20260912.md@f819d7cb7d RULING 5",
+        "org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_IRPT_FNTEND_ROUND3_20260912.md@b453306a65 RULING F and section 3",
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/ -- 28 of 28 read <status>complete",
+        "IRPT_FNTEND-C-S47@d25488815d -- S37's rule and disarm",
+        "2.0.0_SA_COO~F msg 96384 section 5"
+      ]
+    },
+    "hazard_standing": "INERT",
+    "dismissal_reason": "Each instance was repaired within its round and its order is terminal. The recurring class is carried once, by C-S58, rather than re-opened fourteen times."
+  },
+  {
+    "id": "IRPT_FNTEND-C-S63",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-13T09:41:48Z",
+    "one_line": "BACKLOG, DISMISSED: the channel line-ending re-render (a worker's append and the issuer's union resolver) has not recurred -- every non-merge commit touching INVESTIGATION_v2.md since round 3's drain deletes 0 lines.",
+    "class": "OBSERVATION",
+    "adjudicates": [
+      "IRPT_FNTEND-W1-S48",
+      "IRPT_FNTEND-S47"
+    ],
+    "disposition": "DISMISSED_WITH_REASON",
+    "spec_asserts": "W1-S48: a 140-line append landed as a 3618-line rewrite; S47: the issuer's union resolver re-renders every row's line ending at each drain.",
+    "world_is": "Measured with git log --numstat over INVESTIGATION_v2.md since 2026-09-12T10:30Z: 18 commits, 15 with a numstat line, 0 deletions in every one. The merge commits carry no numstat under this instrument and are NOT certified by it. The issuer's round-4 packet reports three channel conflicts resolved by a byte-preserving union with CLOUD's rows kept verbatim.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git log --since=2026-09-12T10:30:00Z --numstat -- INVESTIGATION_v2.md: 18 commits, 15 numstat lines, 0 deletions",
+        "2.0.0_SA_COO~F msg 96384 section 1 -- 'resolved by a byte-preserving union'"
+      ]
+    },
+    "hazard_standing": "INERT",
+    "dismissal_reason": "The defect was an append rendered as a rewrite; the append-only property it broke holds on every commit this instrument can read since. The merge path is named as uncertified, not claimed."
+  },
+  {
+    "id": "IRPT_FNTEND-C-S64",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-13T09:41:48Z",
+    "one_line": "BACKLOG, DISMISSED: ten rows whose remedy a ruling ordered and a round-3 or round-4 cell built -- checker arming, the fixture cell, declared preconditions, the consumer boundary, the fonts list, and round 3's own close.",
+    "class": "OBSERVATION",
+    "adjudicates": [
+      "IRPT_FNTEND-W3-S14",
+      "IRPT_FNTEND-S38",
+      "IRPT_FNTEND-S44",
+      "IRPT_FNTEND-W2-S18",
+      "IRPT_FNTEND-W1-S45",
+      "IRPT_FNTEND-W1-S41",
+      "IRPT_FNTEND-W1-S42",
+      "IRPT_FNTEND-W1-S43",
+      "IRPT_FNTEND-S48",
+      "IRPT_FNTEND-W1-S28"
+    ],
+    "disposition": "DISMISSED_WITH_REASON",
+    "spec_asserts": "W3-S14/S38: the checker limb's enforcement is opt-in; S44/W2-S18: FE-s-18 cannot close in round 3; W1-S45: the failure count is port-conditional; W1-S41/S42/S43: the v0.14 distinctions do not survive the consumer; W1-S28: RENDER_PACKAGE.fonts names 3 of 4 faces; S48: round 3 drained with FE-s-18 open.",
+    "world_is": "W3-S14/S38 -> RULING D, built by FE-s-28 (to-pipeline-gate.py GATE (viii) at d0c28a59be). S44/W2-S18 -> RULINGS B and E, built by FE-s-26; FE-s-18 is complete at 2527062737 with F18-AC3 passing. W1-S45 -> RULING C, built by FE-s-27 (F27-AC8 PASS, C-S59). W1-S41/S42/S43 -> RULING A, built by FE-s-25 (F25-AC12 PASS with a named qualification, C-S59). W1-S28 -> at portal c2eb8eb4, render/manifest.ts:156 names all four Lato faces and __tests__/fe-s-4/manifest.test.ts:287 asserts the flat list names every packaged face. S48 recorded round 3's drain; round 4 has drained.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_IRPT_FNTEND_ROUND3_20260912.md@b453306a65 RULINGS A-E",
+        "d0c28a59be:.tools/to-pipeline-gate.py GATE (viii)",
+        "IRPT_FNTEND-C-S59 -- F25-AC12, F27-AC8 grades",
+        "2527062737 -- FE-s-18 complete",
+        "portal c2eb8eb4:src/pages/InvestorReporting/render/manifest.ts:156; __tests__/fe-s-4/manifest.test.ts:287"
+      ]
+    },
+    "hazard_standing": "INERT",
+    "dismissal_reason": "Built and graded. What each build left behind is carried elsewhere and not re-opened here: the <placeholders> reader's false-admits (C-S56), the 'Updated N ago' label (round-4 slug item 4), and the two Analysis panels FE-s-25's grant did not reach (C-S65)."
+  },
+  {
+    "id": "IRPT_FNTEND-C-S65",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-13T09:41:48Z",
+    "one_line": "BACKLOG, GRADUATED to 1.0.0_SA_CTO: three consumer defects still LIVE at the drained round-4 vintage -- two Analysis panels age the wrong date, and a body carrying no envelope identity still bypasses every refusal.",
+    "class": "OBSERVATION",
+    "adjudicates": [
+      "IRPT_FNTEND-W1-S46",
+      "IRPT_FNTEND-W2-S11",
+      "IRPT_FNTEND-W1-S39"
+    ],
+    "disposition": "GRADUATED",
+    "spec_asserts": "W1-S46: the source-age fix must reach every panel that consumes it; W2-S11/W1-S39: a body that is not a v1 envelope is refused with a named reason.",
+    "world_is": "Read at portal c2eb8eb4: tabs/analysis/StageDisplay.tsx:51 and tabs/analysis/VariantSelector.tsx:61 still render formatSourceAge(envelope.sourceAsOf) -- the as_of instant, not the business_date the clause governs -- while StatusPanel.tsx:61 uses formatSourceAgeForState; FE-s-25's grant reached one consumer of three, as W1-S46 said. And contracts/envelope.ts:164-167 still returns false for a body carrying none of contract_version, operation and firm_id, so such a body never reaches parseIrEnvelope's refusals (:178-183); F19-AC6 graded only bodies carrying two of the three (__tests__/fe-s-19/pre-envelope.test.ts:5-9), and no round-4 criterion touched the remainder.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal c2eb8eb4:src/pages/InvestorReporting/tabs/analysis/StageDisplay.tsx:51",
+        "portal c2eb8eb4:src/pages/InvestorReporting/tabs/analysis/VariantSelector.tsx:61",
+        "portal c2eb8eb4:src/pages/InvestorReporting/contracts/envelope.ts:164-167,178-183",
+        "portal c2eb8eb4:src/pages/InvestorReporting/__tests__/fe-s-19/pre-envelope.test.ts:5-9"
+      ]
+    },
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F as issuer -- each needs a grant no round-4 cell held (tabs/analysis/ for W1-S46; the fe-s-1 adapter test W2-S11 names) -- with 1.0.0_SA_CTO at L10 to rule whether a no-identity body is refused or adapted by design. DISARMS when both Analysis panels age business_date, and when a no-identity body is refused or the contract names its adapted path as intended."
+  },
+  {
+    "id": "IRPT_FNTEND-C-S66",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-13T09:41:48Z",
+    "one_line": "BACKLOG, GRADUATED and left ARMED on 1.0.0_SA_CTO: RULING G routed the producer-side smoke-map pin to IRPT_BCKEND -- and no IRPT_BCKEND row carries it; the routing lives only in the analysis's prose.",
+    "class": "OBSERVATION",
+    "adjudicates": [
+      "IRPT_FNTEND-W2-S10",
+      "IRPT_FNTEND-W2-S15",
+      "IRPT_FNTEND-S40"
+    ],
+    "disposition": "GRADUATED",
+    "spec_asserts": "RULING G (round-3 analysis section 4): W2-S15 is the CTO's, carried to IRPT_BCKEND's round as a routing item; no round-4 FNTEND cell owns it.",
+    "world_is": "Scanned all 4 IRPT_BCKEND channel files, 304 rows: none names IRPT_FNTEND-W2-S10, -W2-S15 or -S40, and none contains 'byte pin' or 'byte-pin'. The consumer side is content-pinned (fe-s-13/content-pins.test.ts); the producer side's current bytes were not re-read here, so its pin is stated as W2-S15 recorded it, not as measured.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_IRPT_FNTEND_ROUND3_20260912.md@b453306a65 RULING G",
+        "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/ -- 4 files, 304 rows, 0 naming these ids, 0 'byte pin'"
+      ]
+    },
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO, per RULING G. DISARMS when an IRPT_BCKEND row or cell carries the producer-side pin, or the producer pin is made content-bound like the consumer's."
+  },
+  {
+    "id": "IRPT_FNTEND-C-S67",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-13T09:41:48Z",
+    "one_line": "BACKLOG, GRADUATED to 1.0.0_SA_CTO: S42's fixture half is closed and its substrate half is not -- the portal still installs no DOM test environment, and what protects the project is a cut-time ruling, not an instrument.",
+    "class": "OBSERVATION",
+    "adjudicates": [
+      "IRPT_FNTEND-S42"
+    ],
+    "disposition": "GRADUATED",
+    "spec_asserts": "S42: a suite with no DOM environment cannot distinguish mounting from seeding; and F18-AC3 cannot pass until the Holdings fixtures carry distinct status members.",
+    "world_is": "Fixture half: F18-AC3 passes in round 4 after FE-s-26 gave the three Holdings maps distinct status members. Substrate half, read at portal c2eb8eb4: package.json names neither happy-dom nor jsdom, and bunfig.toml is not in the tree (git show rc=128). A bun test here still cannot tell mounting from seeding; the property is proven only by criteria that drive a real browser (fe-s-19, precondition-declared since FE-s-27) and by RULING 2's refusal of seeded criteria at the cut -- a ruling an issuer must remember.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal c2eb8eb4:package.json -- no happy-dom, no jsdom; bunfig.toml absent (rc=128)",
+        "org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_IRPT_FNTEND_ROUND2_20260912.md@f819d7cb7d RULING 2",
+        "2527062737 -- FE-s-18 complete, F18-AC3 passing"
+      ]
+    },
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO, as S42 names: the owner of the test environment. DISARMS when the portal suite can observe a mount, or when the cut-time refusal of seeded criteria becomes a gate limb."
+  },
+  {
+    "id": "IRPT_FNTEND-C-S68",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-13T09:41:48Z",
+    "one_line": "BACKLOG, GRADUATED to 1.0.0_SA_CTO: S27's silent zero -- '0 account(s) in scope' printing an absent field as a count -- is still on the frozen print at round 4. C-S45 discharged the disarm in prose; this is its carrier.",
+    "class": "OBSERVATION",
+    "adjudicates": [
+      "IRPT_FNTEND-S27"
+    ],
+    "disposition": "GRADUATED",
+    "spec_asserts": "S27: the print header's account count contradicts the account table on the same document.",
+    "world_is": "The round-4 frozen print (fe-s-18_print_frozen_1440.png) heads all three pages '0 account(s) in scope' while page 2 lists A-0001 and A-0002; on page 3 the report-scope line names both accounts and the bundle-scope line names none. C-S45 located the zero as bundle.scope.accountIds absent on the wire and defaulted to an empty array; 1.0.0_SA_CTO's round-2 analysis left it with this seat. It is item 3 of the round-4 slug.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/fe-s-18_print_frozen_1440.png@887b183a2a -- pages 1-3",
+        "IRPT_FNTEND-C-S45@79561ebb71",
+        "org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_IRPT_FNTEND_ROUND2_20260912.md@f819d7cb7d section 3"
+      ]
+    },
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO at L10, with 2.0.0_SA_COO~F to cut the cell: the wire carries the scope's account set on this route, or the header renders UNAVAILABLE with its reason. DISARMS when the frozen print's header agrees with its own account table. C-S45's second item -- the correction to W2-S13's recorded cause -- is carried in this seat's INERT backlog pass."
+  },
+  {
+    "id": "IRPT_FNTEND-C-S69",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-13T09:41:48Z",
+    "one_line": "ROUND-1 ARMED ROWS (RULING 7), DISMISSED 7 of 16 with the rows they graduated: the harness, type and test-mechanics findings, each re-read against the drained round-4 tree rather than carried on a round ending.",
+    "class": "OBSERVATION",
+    "adjudicates": [
+      "IRPT_FNTEND-C-S1",
+      "IRPT_FNTEND-W1-S1",
+      "IRPT_FNTEND-C-S5",
+      "IRPT_FNTEND-W1-S4",
+      "IRPT_FNTEND-C-S17",
+      "IRPT_FNTEND-W1-S5",
+      "IRPT_FNTEND-C-S25",
+      "IRPT_FNTEND-W1-S7",
+      "IRPT_FNTEND-C-S29",
+      "IRPT_FNTEND-W1-S8",
+      "IRPT_FNTEND-C-S40",
+      "IRPT_FNTEND-W1-S14",
+      "IRPT_FNTEND-C-S41",
+      "IRPT_FNTEND-S17"
+    ],
+    "disposition": "DISMISSED_WITH_REASON",
+    "spec_asserts": "RULING 7 (round-2 analysis): the ARMED round-1 adjudication rows on 2.0.0_SA_COO~F's serial are this seat's to carry, per row, with evidence -- never swept on the strength of a round ending.",
+    "world_is": "C-S1/W1-S1: __tests__/fe-s-3/ambient-shims.d.ts supplies the ambient declarations, and the whole-program typecheck reads rc=0 (F26-AC1 at portal 346d2b90). C-S17/W1-S5: tsconfig.json carries baseUrl and the '@/*' path at c2eb8eb4. C-S41/S17: the eight FE-s-11 type errors are gone by the same rc=0. C-S5/W1-S4 and C-S25/W1-S7: __tests__/fe-s-3/dropdown-class.test.ts is tracked at c2eb8eb4 and runs in the suite. C-S29/W1-S8 and C-S40/W1-S14: their tests run in the same suite, which reads 486 pass / 1 skip / 0 fail at round 4. RULING 7 names thirteen such rows; ADJUDICATION_v1.md holds sixteen ARMED at this read, and all sixteen are dispositioned here and in C-S70.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal c2eb8eb4:src/pages/InvestorReporting/__tests__/fe-s-3/ -- ambient-shims.d.ts, dropdown-class.test.ts",
+        "portal c2eb8eb4:tsconfig.json -- baseUrl and '@/*'",
+        "IRPT_FNTEND.TO-FE-s-26.holdings-fixtures.proof_of_spec.json F26-AC1 -- tsc -b --noEmit rc=0 at portal 346d2b90",
+        "2.0.0_SA_COO~F msg 96384 section 5 -- 486 pass / 1 skip / 0 fail",
+        "org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_IRPT_FNTEND_ROUND2_20260912.md@f819d7cb7d RULING 7"
+      ]
+    },
+    "hazard_standing": "INERT",
+    "dismissal_reason": "Each remedy is present in the tree at the drained vintage and exercised by a round-4 run; none rests on a round ending. The typecheck vintage is 346d2b90, the last whole-program typecheck on record, not c2eb8eb4 itself -- stated rather than assumed."
+  },
+  {
+    "id": "IRPT_FNTEND-C-S70",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-13T09:41:48Z",
+    "one_line": "ROUND-1 ARMED ROWS (RULING 7), DISMISSED the other 9 of 16 with the rows they graduated: the product-surface findings, each read in the tree at c2eb8eb4 or on a round-4 capture.",
+    "class": "OBSERVATION",
+    "adjudicates": [
+      "IRPT_FNTEND-C-S7",
+      "IRPT_FNTEND-W2-S2",
+      "IRPT_FNTEND-C-S42",
+      "IRPT_FNTEND-C-S8",
+      "IRPT_FNTEND-W2-S3",
+      "IRPT_FNTEND-C-S9",
+      "IRPT_FNTEND-W2-S4",
+      "IRPT_FNTEND-C-S15",
+      "IRPT_FNTEND-W2-S6",
+      "IRPT_FNTEND-C-S21",
+      "IRPT_FNTEND-W3-S1",
+      "IRPT_FNTEND-C-S23",
+      "IRPT_FNTEND-W4-S1",
+      "IRPT_FNTEND-C-S37",
+      "IRPT_FNTEND-W1-S11",
+      "IRPT_FNTEND-C-S38",
+      "IRPT_FNTEND-W1-S12"
+    ],
+    "disposition": "DISMISSED_WITH_REASON",
+    "spec_asserts": "RULING 7 (round-2 analysis): the ARMED round-1 adjudication rows are this seat's to carry, per row, with evidence.",
+    "world_is": "C-S8/W2-S3: four Lato faces are tracked under render/assets/fonts/ and named by render/manifest.ts:156. C-S37/W1-S11: AppliedBranding and ReceiptPanel are mounted in export/ExportModal.tsx:255-256 and asserted by __tests__/fe-s-16/mounted-states.test.ts:133-134. C-S15/W2-S6: the round-1 guesses are gone -- trendingTopics and topicCloud read 0 hits in src/, and historyCutoff appears only in two tests, one asserting its absence from render/narrative/ (fe-s-16/narrative-wire.test.ts:140). C-S7/W2-S2 and C-S42: every route parses through parseIrEnvelope and the client pins the operations, route keys and required fields it consumes (fe-s-13/content-pins.test.ts). C-S9/W2-S4: the round-4 frozen print carries the cumulative-return chart. C-S21/W3-S1, C-S23/W4-S1 and C-S38/W1-S12: the round-4 captures reach the Analysis composer in both states and the Holdings body (AC7, AC8, AC9), with the seam fixed in round 3 (C-S60).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal c2eb8eb4:src/pages/InvestorReporting/render/assets/fonts/Lato-{Regular,Light,SemiBold,Bold}.ttf; render/manifest.ts:156",
+        "portal c2eb8eb4:src/pages/InvestorReporting/export/ExportModal.tsx:255-256; __tests__/fe-s-16/mounted-states.test.ts:133-134",
+        "portal c2eb8eb4:src/pages/InvestorReporting/__tests__/fe-s-16/narrative-wire.test.ts:140",
+        "portal c2eb8eb4:src/pages/InvestorReporting/contracts/envelope.ts:178; __tests__/fe-s-13/content-pins.test.ts",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/fe-s-18_print_frozen_1440.png@887b183a2a -- the chart; fe-s-18_analysis_{clean,correction}_390.png, fe-s-18_holdings_observed_390.png"
+      ]
+    },
+    "hazard_standing": "INERT",
+    "dismissal_reason": "Each remedy is read in the tree at c2eb8eb4 or on a round-4 capture. The Holdings body mounts empty (W1-S52, C-S57) -- a fixture defect, not the mount these rows concerned."
   }
 ]
 ```
