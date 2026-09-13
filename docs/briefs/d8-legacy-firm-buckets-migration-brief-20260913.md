@@ -93,8 +93,11 @@ home under `state/` with the ruling that moved it, or the sentence that keeps `o
 
 # PART II — WHERE THE BOUNDARY SITS
 
-**This project OWNS:** the canonical path strings and the legacy→canonical mapping (O1, O2); the identity-spine RUNTIME
-and the repoint of every firm-naming consumer to it (O3); the three per-firm cutovers of gold + platinum + state + code
+**This project OWNS:** the canonical path strings and the legacy→canonical mapping (O1, O2); ~~the identity-spine RUNTIME
+and~~ the repoint of every firm-naming consumer to ~~it~~ the D14 registry (O3) — ⛔ **the RUNTIME claim is SUPERSEDED by
+Andrew's ~03:5xZ ruling (a): D14 owns the registry and its generated views (`d14-executable-layer-brief-20260913.md` O3);
+this project owns only the REPOINT. Consequence (CTO 96353): FWD-3 cannot be met until the D14 registry exists — the
+SECOND D14-before-D8 item, scoped to this one outcome; the other seven stay independent.** the three per-firm cutovers of gold + platinum + state + code
 (O4, O5); the bronze/silver moves OUT of the legacy buckets INTO `opal-data-assets` (R4) for these three firms; the
 decommission proofs and acts for the three legacy buckets (O6, O7, O8); the Terraform for the two firm buckets that do not
 exist (`opal-data-inflection`, `opal-data-cottonwood`) on the `s3-49financial.tf` template.

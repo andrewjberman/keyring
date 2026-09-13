@@ -34,10 +34,12 @@ where today 118 different first tokens have been used as "the system" and one fi
 already know it; under the schema the same information is positional and the reader needs no history. `bd` stops
 meaning both Black Diamond and 49 Financial.
 
-### O3 — Every name that spells a firm or product spells it ONE way, and the alias table is the only place the other spellings survive
-`49financial` / `inflection` / `cottonwood` (and the sanctioned short forms, one each) appear in new names; `bd`, `49f`,
-`inf`, `cot`, `mockadv` live in the spine's alias table as history — where today the cross-firm fence denies `role/mdpf-*`
-by a name pattern, and a pattern over three spellings of one firm is three patterns.
+### O3 — Every name that spells a firm or product spells it ONE way PER SLOT, and the alias table is the only place the other spellings survive
+**RULED ~03:5xZ (card 2) and stated as the rule (CTO 96353 finding 3 — the first cut left it implicit):** the sanctioned
+SHORT form (`49f` / `inf` / `cot`, one each) is the firm token in EVERY RESOURCE NAME; the LONG form (`49financial` /
+`inflection` / `cottonwood`) is the firm token in BUCKET NAMES and in the `{scope}` SEGMENT OF KEYS. One spelling per slot,
+never a choice. `bd` and `mockadv` live in the spine's alias table as history and are never minted — where today the
+cross-firm fence denies `role/mdpf-*` by a name pattern, and a pattern over three spellings of one firm is three patterns.
 
 ### O4 — A key reads the same string in the monolith, a firm bucket and a product bucket
 `{source}/{scope}/{tier}/{table}/{partition}` everywhere (ruled). A consumer that learned `opal-data-assets` has learned
@@ -114,16 +116,20 @@ are allowed in each slot.
              vendor when the resource IS the vendor integration (blackdiamond, schwab, ycharts, fred)
   scope      the spine SCOPE key when the resource is tenant- or product-scoped; OMITTED when shared
              (a shared resource has NO scope token, not a fake one)
+             ⛔ SHORT form here (49f | inf | cot | demo | global) -- the LONG form belongs to bucket names
+             and key {scope} segments only (ruled ~03:5xZ; one spelling per slot)
   function   what it does: session, silver-chain, gold, publisher, exporter, runner, fetch, download, ...
   qualifier  optional narrowing: a table, a leg (backstop, floor, accelerator), an environment (dev|prod)
   kind       the resource-type suffix, closed list: role | policy | profile | sg | api | table | queue | dlq |
-             topic | alerts | secret | alarm | layer | runner (EC2) | build | document (SSM)
+             topic | alerts | secret | alarm | layer | runner (EC2) | build | document (SSM) |
+             lambda (a function; the measured suffixes -trigger/-publisher/-scanner/-api are FUNCTION tokens
+             that today double as kinds -- the closed list makes `lambda` the kind and keeps them as functions)
              + cadence for rules/schedules: daily | weekly | monthly | hourly | on-<event>
 ```
 **Secrets (keep the live grammar — 86/96 already conform):** `{system}/{scope}/{purpose}` slash-path.
 **Log groups:** derived — `/aws/{service}/{resource-name}`; conform automatically once the resource does.
-**Buckets:** `opal-data-{scope}` for tenant/product data buckets; `opal-{account-id}-{purpose}` for platform buckets;
-no new bucket carries a vendor name (`opal-data-bd` is the counter-example).
+**Buckets:** `opal-data-{scope}` for tenant/product data buckets — LONG form (`opal-data-49financial`); `opal-{account-id}-{purpose}`
+for platform buckets; no new bucket carries a vendor name (`opal-data-bd` is the counter-example).
 **IAM policies:** SAME rule as resources with `-policy` kind; purpose-first names (`cross-firm-deny-…`, `s3-read-…`)
 become `{system}-{scope}-{purpose}-policy` — the purpose moves to the function slot; ⛔ **a policy name is never
 duplicated** (`CloudWatchLogs` exists SIX times today, distinguishable only by ARN).

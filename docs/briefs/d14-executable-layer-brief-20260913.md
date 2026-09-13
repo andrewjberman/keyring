@@ -33,7 +33,8 @@ Inflection's producer was handed `opal-data-inf` by a human. **Your example ends
 
 ### O2 — A Terraform author never spells a resource name; a local derives it
 `local.name = opal_name(system="mdpf", scope="cottonwood", function="publisher", kind="role")` → `mdpf-cot-publisher-role`
-(short form from the registry, `bd` impossible) — and the cross-firm Deny's principal patterns are derived from the same
+(the builder takes the LONG key and emits the SHORT form — resource names carry short forms, bucket names and key
+`{scope}` segments carry long forms, one spelling per slot, ruled ~03:5xZ and stated in the naming brief O3/IV.2; `bd` impossible) — and the cross-firm Deny's principal patterns are derived from the same
 call, so the fence follows the spelling instead of enumerating it.
 
 ### O3 — Every pointer that names a firm reads ONE registry file, and cutting a firm over is one row
