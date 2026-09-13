@@ -189,6 +189,9 @@ remediation project to exist. Nothing needs the full ontology.
   any principal whose scope token is not the bucket's firm -- replacing the enumerated system prefixes (`cot-*`, `inf-*`,
   `mdpf-*`, `opal-assets-mdpf-*`), BEFORE the D8 migration mints `opal-data-inflection` / `-cottonwood` from that
   template. Otherwise the schema-named MDPF runner (`mdpf-{scope}-runner-role`) is denied on all three firms by design.
+  **RULED ~18:4xZ (`@e2210bf34c` card 1): YES, on three conditions (no-scope branch decided in writing; existing writers
+  scoped or exempted first under sign-off; service-principal exemptions registry-derived).** The derived fence is this
+  brief's O2 output and may start on those conditions; the D8 macro still gates the minting.
   D8's KEYS need nothing from this brief (they are already canonical); the builders and the flagger are PARALLEL to D8,
   not a gate on it. Order: (1) L4 ratifies the naming schema; (2) spine v0.2 rows + the derived fence on the template;
   (3) D8 migrations; (4) builders/flagger alongside, D8 the first `key()` caller if timing allows.

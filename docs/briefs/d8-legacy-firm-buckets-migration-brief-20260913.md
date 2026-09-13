@@ -312,8 +312,10 @@ grammar baked into IAM. **The resolution is D14's, and it is the ONE hard D14-be
 SCOPE slot (any principal whose scope token is not the bucket's firm), derived from the registry (executable-layer brief
 O2), replacing the enumerated prefixes -- landed on `s3-49financial.tf` BEFORE this project mints the two new buckets
 from it. This is NOT the exception route Andrew refused ("C", 09-12): it replaces the list, it does not carve a
-principal out of it -- a distinction for `1.0.0_SA_CTO` at L4, back to Andrew as one card if the CTO reads it as the
-refused route. ⛔ **W2-S49's "grants
+principal out of it. **RULED by Andrew ~18:4xZ ("recs approved", CTO card 1, `@e2210bf34c`): YES, on three conditions
+— (i) the no-scope-token branch decided in writing before the Deny lands; (ii) every existing writer (bd-exporter-ec2-role,
+opal-advi-stitch-landing-role, irpt-directory-refresh-role — CVO census) scoped or exempted first under never-widen
+sign-off; (iii) the service-principal exemption list registry-derived. Route (a) stays closed.** ⛔ **W2-S49's "grants
 PutObject on no firm bucket" (09-12 09:41Z, 26 statements) is a DEAD VINTAGE** — 33 statements this turn incl.
 `IrptDirectoryFirmDestWrite`; C-S87 is the live row. NOT MEASURED: whether any of those grants would reach the two
 buckets this project CREATES (nothing can hold a grant on a bucket that does not exist).
@@ -360,6 +362,9 @@ last, when their buckets are gone.
 - Every served key that moves has a never-widen sign-off naming its rollback (NEVER#3); the old bucket stays unmodified
   through the rollback window.
 - Decommission of a bucket is preceded by a zero-reader census over a declared window on a named instrument (O6).
+  **RULED ~18:4xZ (`@e2210bf34c` cards 2, 3): the window is 45 DAYS, counted from when read logging is LIVE on the
+  bucket; read logging (cot added to the trail; the selector moved into Terraform; the template given read logging) is
+  APPROVED, PARKED on `0.7.0_AE_CloudOps` until an infra seat is live — the clock does not start until it lands.**
   ⛔ **AND THE INSTRUMENT MUST COVER THE PREFIXES AND THE DIRECTION THE OUTCOME CLAIMS BEFORE THE WINDOW OPENS** — added
   2026-09-13 ~03:1xZ from `3.0.0_SA_CVO` 96326 + `1.0.0_SA_CTO` 96328 (`cloudtrail get-event-selectors`, both trails,
   selectors printed in full): READS are recorded for `opal-data-bd` and `-inf` (whole bucket, ReadOnly data selector) and

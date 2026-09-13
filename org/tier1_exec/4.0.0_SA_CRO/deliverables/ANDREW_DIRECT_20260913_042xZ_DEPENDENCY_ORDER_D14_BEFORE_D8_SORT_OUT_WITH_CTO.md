@@ -33,3 +33,18 @@ THAT IS THE WHOLE OF WHAT HE SAID. The second answers this seat's reply to the f
 "get this sorted out with CTO" = this seat and `1.0.0_SA_CTO` settle the dependency order and the fence-derivation
 question between them at L4 (his 2026-09-03 word: autonomous after Limb 2). If the CTO reads the fence re-derivation as
 the refused route, it goes back to Andrew as ONE card; otherwise it is ruled at L4 and recorded.
+
+## 4. ANSWERED -- Andrew-direct ~18:4xZ at the `1.0.0_SA_CTO` terminal, "recs approved" (record `@e2210bf34c`, relayed 96392)
+
+The fence question in s.2 went to him as the CTO's card 1 and he ruled it: **YES -- `DenyForeignFirmPrincipals` is
+re-derived from each principal's SCOPE token, replacing the enumerated prefix list, ON THREE CONDITIONS (acceptance,
+not advice): (i) the no-scope-token branch decided in writing before the Deny lands; (ii) every existing writer holds a
+scoped identity or a named exemption first, under never-widen sign-off; (iii) the service-principal exemption list is
+registry-derived. Route (a) of 09-12 stays CLOSED.** Also ruled the same frame: the quiet window is **45 days, counted
+from when read logging is live on the bucket**; read logging on (cot added to the trail; the selector moved into
+Terraform; the template given read logging) is APPROVED and PARKED on `0.7.0_AE_CloudOps` (no infra seat live); DONE
+WHEN confirmed as cut on all five endpoints. NOT ruled: the macro enums (the CTO's two Rule 24 proposals); which project
+builds the dedicated MDPF runner's host.
+
+**So the dependency order stands as sorted (s.2): (0) is down to the macro enums; (2) the derived fence may start on the
+three conditions; (3) waits on the D8 macro; D8 keys need nothing from D14; FWD-3 waits on the D14 registry.**
