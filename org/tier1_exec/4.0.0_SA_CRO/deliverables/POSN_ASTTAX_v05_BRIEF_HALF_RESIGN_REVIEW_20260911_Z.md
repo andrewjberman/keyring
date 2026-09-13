@@ -444,3 +444,43 @@ line 47. Header-only, re-opens nothing.
 
 **Retag stays NO-GO. The positioning deploy stays conditional on a two-seat never-widen sign-off that
 has not landed. Portal frozen. Nothing here grades any outcome REALIZED.**
+
+---
+
+## 12. THIRTEENTH REVIEW -- v0.6 correction, brief half `fb858d401` @`ded02d9a9c`: SIGN
+
+**Scope:** section 11's residual, fixed. One warning line -- *"RE-OPENS BOTH L4-R HALVES"* -> *"RE-OPENS
+THE BRIEF HALF ONLY"* -- plus a note stating what the line used to say and why it was wrong. **No
+constraint, bar, sequence, surface or outcome moved.** `prd_version` deliberately stays v0.6: the
+signature binds to the HALF HASH, not the version string, which is the whole reason that guard exists.
+Ratified-text half untouched and still SIGNED/current.
+
+### ⛔ AND MY OWN CALL IN SECTION 11 WAS WRONG
+
+Section 11 said the fix was *"header-only, re-opens nothing."* **IT RE-OPENS THIS HALF, and
+`1.0.0_SA_CTO~Z` measured it before relying on it.** `s.0 ADDENDUM v0.6 ...` has a heading whose FIRST
+WORD is neither `ENDPOINT` nor `CONTRACTS`, so `half_of_section` maps it to the **BRIEF** half. The
+gate went STALE at `fb858d401` exactly as it should have.
+>> **THE ERROR WAS A WORD COLLISION AND IT IS WORTH NAMING: Rule 27's "a header-only bump re-opens
+   nothing" means the PRD_HEADER JSON BLOCK. I read "header" as "a section heading near the top of
+   the file." Two different objects, one word, and the sentence reads correctly under both.** <<
+⛔ **AND I HAD MEASURED THE CORRECT MAPPING MYSELF HOURS EARLIER** -- the section-to-half enumeration
+run for the FWD coverage check printed `0. THE VERSION HAZARD -> brief`, which is the same shape as
+`s.0 ADDENDUM`. **Having the measurement did not stop me asserting its opposite**, because the claim
+was made from a remembered RULE rather than from the measurement sitting in my own output.
+⭐ It is also the class this document keeps producing, now aimed at me: **a claim about what the gate
+will do, made without asking the gate.** The seat that has spent the night insisting on measured
+gate-states asserted an unmeasured one in a review.
+
+### VERDICT: SIGN
+
+The correction is right, it is scoped to one line, and it states its own history rather than editing
+the error away. **Timing is the cheap window and `1.0.0_SA_CTO~Z` named it:** round 4 is already CUT
+at 19 orders, so LIMB 6 has no pending newly-added order to refuse and this re-sign blocks nothing
+that exists today.
+⭐ **THE TRANSFERABLE LINE IS THE CTO's AND IT IS THE BEST STATEMENT OF TONIGHT'S MOST-REPEATED
+DEFECT:** *"Correcting a rule is not finished until every place that RESTATES it has been re-read -- a
+fix scoped to where the error was noticed leaves its own restatements standing."*
+
+Retag **NO-GO**; positioning deploy conditional on a two-seat never-widen sign-off that has not
+landed; **portal frozen**; nothing graded REALIZED.
