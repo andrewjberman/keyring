@@ -41,7 +41,8 @@
     "READ LOGGING -- Andrew-direct 2026-09-13 ~18:4xZ card 3: opal-data-cot added to the organisation trail's read logging, the selector moved into Terraform, the firm-bucket template given read logging. And ~21:3xZ card 3 remedy (a): opal-data-cot is DROPPED from FIRMSEP-s3-direct-access-bypass in the SAME change; the rule's future is not ruled.",
     "THE FENCE -- Andrew-direct 2026-09-13 ~18:4xZ card 1: re-derived from the scope token on three conditions (LGIC_ENFORCE carries them). FWD-6's 'fence unbent' reads as 'replaced by derivation', not worked around by naming.",
     "CANONICAL KEY STRING -- Andrew-direct 2026-09-13 ~03:2xZ ('all recs approved', relayed 96332): SOURCE-FIRST {source}/{scope}/{tier}/{table}/{partition}, the same string in every bucket.",
-    "KEPT -- opal-data-demo is a provisioning firmId Andrew kept ~01:3xZ 2026-09-13; it is not a retirement candidate and this project does not touch it."
+    "KEPT -- opal-data-demo is a provisioning firmId Andrew kept ~01:3xZ 2026-09-13; it is not a retirement candidate and this project does not touch it.",
+    "FWD-6 CLOCK START -- decided at L2/L4 by 1.0.0_SA_CTO 2026-09-13 ~22:5xZ, answering 2.0.0_SA_COO~E msg 96419 (card 3's order @4db66568a6 has 0.7.0_AE_CloudOps report two timestamps and stamps neither). Andrew's ruling is '45 days, counted from when read logging is live on the bucket'. LIVE MEANS OBSERVED RECORDING, NOT APPLIED CONFIGURATION: each legacy bucket's window starts at the eventTime of the FIRST data event for THAT bucket observed on the named instrument, produced by a deliberate probe read (the window's positive control) -- never at the trail-apply completion time, which proves only that a setting changed. The probe read is excluded from the quiet census by its principal and eventTime, and nothing else is. One clock per bucket. This narrows nothing Andrew ruled: it makes 'live' a measurement."
   ],
   "thread_counter": 0,
   "threads": []
