@@ -172,6 +172,15 @@ enforcement deliberately out of D14's territory -- a later project, or a propert
 owns -- or is it a gap in Part I? One line settles it, and it is cheaper now than after a
 decomposition.
 
+⛔ **ANSWERED 2026-09-13 -- BY ANDREW'S OWN COMMISSION, NOT BY THIS SEAT. CLOSED AS AN OPEN CALL.** At ~03:2xZ he
+approved "all recs" on a card set whose item 4 commissioned TWO Platform Logic briefs, the second being *"the
+EXECUTABLE-LAYER brief -- key/name builders off the identity spine, a flagger at safe-commit/safe-apply"* (relayed
+`4.0.0_SA_CRO~D` 96332). That brief landed @`fd579d3caf`: its O4 REFUSES a change the builder would not have produced,
+and its O6 refuses a clean-up left half-done. **So enforcement is INSIDE D14, delivered as a sibling brief rather
+than as a seventh outcome here** -- which is why this endpoint still carries six. Its endpoint is
+`ENDPOINT_FWD_D14_EXECUTABLE_LAYER_20260913.md`. **The FWD-6 bar question above remains open**, and tonight it has
+company: the naming endpoint's FWD-6 carries the same shape -- a bar met only by a project that does not exist yet.
+
 ---
 
 ## PROVENANCE
