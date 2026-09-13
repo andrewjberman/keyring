@@ -71,8 +71,10 @@ The owner reads this from `trigger-map.json` and the live rules, not from a runb
 ### O6 — An operator retires a legacy bucket and can prove nothing read or wrote it for the whole quiet window
 
 Before `opal-data-bd` is deleted, the operator shows: zero writers (every producer repointed, verified by the served-key
-write trail), zero readers over a declared window (CloudTrail `GetObject` census — the `FIRMSEP` detector already watches
-exactly these three buckets and emits to SNS), every rule and notification retired or repointed, the bucket policy
+write trail — PREFIX-SCOPED to `platinum/firm/` today, Part V), zero readers over a declared window (CloudTrail `GetObject`
+census — ⛔ NOT the `FIRMSEP` detector: `FIRMSEP-s3-direct-access-bypass` has been FAILING at EventBridge → SNS on every
+invocation since 2026-05-11, its certification having counted invocations and never read failures (`3.0.0_SA_CVO`
+`@3e9200d8f1`, relayed CTO 96374); its SNS emission is evidence of nothing, and this sentence said the opposite at v1), every rule and notification retired or repointed, the bucket policy
 removed, every hold and ledger that names it re-pointed or closed SUPERSEDED, the Terraform resources removed from state,
 and the per-version delete on a versioned bucket taken as its own Andrew-class act (IRPT_BCKEND-W4-S20: "deleted" on a
 versioned bucket means hidden). **Decommissioning is a proof, not a button.**
@@ -338,6 +340,13 @@ last, when their buckets are gone.
 - The canonical path strings are ratified at L4 before any key is written to a new bucket (IV.5 is a PROPOSAL).
 - The two missing buckets exist on the `s3-49financial.tf` template with born-with controls, AND carry the two serving
   grants (IV.9), before their firm's cutover.
+  ⛔ **TWO PRECONDITIONS AT MINT, NOT ONE (`3.0.0_SA_CVO` 96373 s.8 `@614423c438`, relayed CTO 96374):** the template
+  provisions FIVE resources and NO read instrument — `opal-data-49financial`, its first output, has no server access
+  logging, no metrics configuration, and is absent from the organisation trail's read selector — so `opal-data-inflection`
+  and `opal-data-cottonwood` would be born with O6 unprovable. And the template CANNOT fix it alone: the trail's read
+  selector is CLI-applied (`cloudwatch-alarms.tf:208-211`) and absent from Terraform, so no plan ever shows drift on it.
+  Both the bucket-side instrument (template) and the trail selector (CLI, a shared audit surface) must cover a new bucket
+  BEFORE it is minted, or the quiet-window clock for that bucket cannot start.
 - The scoped router's tenant assertion is re-derived at TENANT grain (bucket + `{scope}`) in the same change that moves
   `platinum/advi/{firm}/` (LD-0442's remedy; `1.0.0_SA_CTO`'s granularity call).
 - The origin-response guard learns the new buckets by INDEPENDENT re-derivation, not by importing the router's decision.
@@ -395,6 +404,8 @@ last, when their buckets are gone.
   Part V with its instrument named; this list held its absence when the brief was cut.
 - **No lifecycle rule was read** (counts only): a rule that expires or transitions objects in a legacy bucket is a
   hazard to the rollback window and must be read at MAP.
+- **`FIRMSEP-s3-direct-access-bypass` was cited as a working detector at v1 without reading its invocation failures** —
+  it is dark (Part I O6, corrected); the CVO's measurement is the instrument.
 - **`opal-data-inf`'s and `-cot`'s policies were read; the role-side belts were not** (`bd:534`, `cot:192`, inf
   `cross-firm-deny.tf` cited from the template's comment). The identity-plane grants in IV.11 are the CVO's
   measurement (instrument named there), not this seat's.

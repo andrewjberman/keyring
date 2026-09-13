@@ -35,8 +35,11 @@ already know it; under the schema the same information is positional and the rea
 meaning both Black Diamond and 49 Financial.
 
 ### O3 — Every name that spells a firm or product spells it ONE way PER SLOT, and the alias table is the only place the other spellings survive
-**RULED ~03:5xZ (card 2) and stated as the rule (CTO 96353 finding 3 — the first cut left it implicit):** the sanctioned
-SHORT form (`49f` / `inf` / `cot`, one each) is the firm token in EVERY RESOURCE NAME; the LONG form (`49financial` /
+**PROPOSED — ratified at L4 by `1.0.0_SA_CTO` (96374), revertible on Andrew's word.** ⛔ Attribution corrected 06:0xZ: card 2
+(~03:5xZ, `@38f2268d48`) ruled WHICH short forms exist (`49f`/`inf`/`cot`, one each, alongside the long forms; `bd` refused)
+— it did NOT rule WHERE each is used; the per-slot split is the CTO's 96353 finding 3, decidable at L4 because it narrows
+nothing he ruled (both forms stay sanctioned; buckets long by D10-2; key scope long by the source-first string). The
+sanctioned SHORT form (`49f` / `inf` / `cot`, one each) is the firm token in EVERY RESOURCE NAME; the LONG form (`49financial` /
 `inflection` / `cottonwood`) is the firm token in BUCKET NAMES and in the `{scope}` SEGMENT OF KEYS. One spelling per slot,
 never a choice. `bd` and `mockadv` live in the spine's alias table as history and are never minted — where today the
 cross-firm fence denies `role/mdpf-*` by a name pattern, and a pattern over three spellings of one firm is three patterns.
@@ -117,7 +120,8 @@ are allowed in each slot.
   scope      the spine SCOPE key when the resource is tenant- or product-scoped; OMITTED when shared
              (a shared resource has NO scope token, not a fake one)
              ⛔ SHORT form here (49f | inf | cot | demo | global) -- the LONG form belongs to bucket names
-             and key {scope} segments only (ruled ~03:5xZ; one spelling per slot)
+             and key {scope} segments only (the per-slot split: PROPOSED, L4-ratified by the CTO 96374;
+             WHICH short forms: ruled ~03:5xZ. One spelling per slot)
   function   what it does: session, silver-chain, gold, publisher, exporter, runner, fetch, download, ...
   qualifier  optional narrowing: a table, a leg (backstop, floor, accelerator), an environment (dev|prod)
   kind       the resource-type suffix, closed list: role | policy | profile | sg | api | table | queue | dlq |
