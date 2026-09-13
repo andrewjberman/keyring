@@ -90,6 +90,13 @@ literal ancestor of the commit that issued the work. Walked revision by revision
 **one outcome was added -- the lead panel, on your own word after the walkthrough -- and it arrived at
 the same demanding bar as the rest. No bar has ever been weakened, swapped or retrofitted.**
 
+⭐ **And the finding does not depend on which commit you count.** Two seats timed this differently --
+the specification's first commit, which already carried every outcome and its bar, and a later commit
+that merely wrote the bars out row by row. **Both precede the first order** -- by 2h03m51s and
+1h38m57s respectively. **So "the bars were set before any work was ordered" is true on either
+reading, and only the size of the gap moves.** That is worth more than the number: the point cannot
+be unpicked by arguing about which commit counts.
+
 ⭐ **Which removes one explanation and sharpens the real one.** The bars were never gradeable from
 producer-side work, *by design, from the first day*. An "exercised" bar closes when the thing is
 **used**. So forty-three orders of correct producer-side capability can all be real and still move no
