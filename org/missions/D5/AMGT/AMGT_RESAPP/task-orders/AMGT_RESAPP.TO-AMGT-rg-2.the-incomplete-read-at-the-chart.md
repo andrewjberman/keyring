@@ -107,7 +107,7 @@ commit with `--only -- <paths>`. **If a criterion cannot be met, leave the order
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
-<status>staged</status>
+<status>complete</status>
 <round>8</round>
 <slot>~13</slot>
 <fabric>site-z</fabric>
