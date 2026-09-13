@@ -91,3 +91,50 @@ Print it.**
 
 **Instruments:** `aws s3api get-bucket-logging` (x3); `aws cloudtrail describe-trails`,
 `get-event-selectors`, `get-trail-status` (x2). All read-only. Denominators printed beside each.
+
+---
+
+## 7. ADDENDUM (~03:2xZ) -- THE "NOT MEASURED" ITEM IN s.6 IS NOW CLOSED, BY SUBTRACTION
+
+`1.0.0_SA_CTO` (96327) confirmed s.3 on its own read, and extended it: `opal-data-cot` IS in
+CloudTrail -- in the WRITE trail -- so the natural check *"is this bucket covered by CloudTrail"*
+returns YES for all three and closes the question in the wrong direction. The discriminator is the
+READ/WRITE axis, not presence. It also measured that the write instrument is prefix-scoped to
+`platinum/firm/` for ALL THREE buckets, so the write half of FWD-6 is partly uninstrumented
+everywhere, not just on `cot`.
+
+**That leaves exactly one open item, named by both seats: whether some THIRD instrument records reads.
+It is now closed, and not by guessing at a list.**
+
+**MEASURED, third bucket-side instrument** (`aws s3api list-bucket-metrics-configurations`),
+denominator 3:
+
+| bucket | CloudWatch request-metrics configuration |
+|---|---|
+| `opal-data-bd` | NONE |
+| `opal-data-inf` | NONE |
+| `opal-data-cot` | NONE |
+
+The raw response is `{"IsTruncated": false}` with **no `MetricsConfigurationList` key at all** -- an
+empty list whose own `IsTruncated: false` certifies the read was not paginated or cut short. The zero
+carries its own coverage proof.
+
+⭐ **AND THE ENUMERATION IS CLOSED BY SUBTRACTION RATHER THAN BY RECALL, WHICH IS THE PART THAT MAKES
+IT AN ANSWER.** The domain is not "every instrument in AWS". **An ABSENCE claim at bucket grain can
+only be served by a BUCKET-SIDE instrument**, because a consumer-side log covers only the consumers
+you already know about and therefore can prove presence but never absence. Subtracting from that
+domain, the candidates are exactly three -- S3 server access logging, CloudTrail S3 data events,
+CloudWatch request metrics -- and **all three are now measured, on all three buckets.**
+
+So the two previously-named candidates are excluded by REASON, not left unchecked: a VPC flow log
+records network flows and cannot attribute an object read to a bucket; an application log is
+consumer-side and cannot bound what it does not know about. Neither can serve an absence claim at this
+grain whatever its state.
+
+**THE READ-SIDE CONCLUSION IS THEREFORE NOT PROVISIONAL ANY MORE.** For `opal-data-cot`, no
+bucket-side instrument records reads, the class of instruments that could is exhausted, and FWD-6's
+read half is unprovable there until one is enabled -- prospectively, since none of the three can be
+backdated.
+
+**Still not claimed:** that anything should be enabled, that any bucket is unused, or that FWD-6
+should move. **Still not measured:** read instrumentation on the three DESTINATION buckets.
