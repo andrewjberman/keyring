@@ -2307,6 +2307,30 @@
     "spec_asserts": "The task order requires the port to be taken from the environment 'so the tests are runnable from any slot', and F27-AC3 requires the absent arm to be DRIVEN deliberately rather than waited for: 'The test drives that state deliberately rather than waiting to observe it.'",
     "world_is": "On this runtime the ordinary way to drive a child's environment (mutate `process.env`, spawn, inherit) does not work, and its failure is invisible to any assertion that does not name the value being set. The remedy is in-tree and cited rather than left as advice: portal/src/pages/InvestorReporting/__tests__/fe-s-27/precondition.test.ts, function childRunAtPort, builds the env block explicitly and says why in its header. THIS ROW IS INERT because the pattern is now demonstrated in this project's own tree with the reason beside it; it is filed because the failure mode is a GREEN, and a green is the kind of finding that does not resurface on its own.",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-S53",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-13T03:10:00Z",
+    "one_line": "W4-S7 UNDER-STATES ITS OWN FINDING. The <placeholders> reader FE-s-28 made MANDATORY at L6 is not merely 'looser than it reads' -- it is a FALSE-ADMIT on two of its three refusal branches, measured by calling the SHIPPED `_placeholder_declaration_violations` on REAL task-order bytes. (C) an invocation token the real element does NOT declare is admitted whenever the criteria sit between a prose mention and the element -- the standard face layout -- because the token lands inside the captured span and declares itself, so the 'omits a token' branch cannot fire. (D) an order with NO element is admitted if its prose quotes the gate's OWN help text, which contains a complete inline <placeholders>WS, PORT</placeholders>. A LINE-ANCHORED reader closes both, and still admits both orders that declare.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "INSTRUMENT: the gate's own function, imported from C:/tmp/wk-irpt_fntend-4-4-fe-s-28/.tools/to-pipeline-gate.py and called directly -- not a re-derivation of its rule. Inputs are REAL: FE-s-28's and FE-s-27's order files as they stand, FE-s-23's (the order that invented the element), and `tpg.PLACEHOLDERS_HOWTO`, the text the gate itself emits on refusal.",
+        "SHIPPED reader `<placeholders>(.*?)</placeholders>` with re.S, first match via .search(): A FE-s-28 as issued -> ADMITTED (first-match span = 368 names for a 1-token declaration); B FE-s-27 with no element -> REFUSED; C FE-s-28 + an invocation using <PORT>, element declaring WS only -> ADMITTED; D FE-s-27 + a prose paragraph quoting PLACEHOLDERS_HOWTO, still no element -> ADMITTED.",
+        "LINE-ANCHORED reader `^[ \\t]*<placeholders>(.*?)</placeholders>[ \\t]*$` with re.M, swapped into the same function and nothing else changed: A ADMITTED, E (FE-s-23 as issued) ADMITTED, B REFUSED, C REFUSED, D REFUSED. Zero regressions on the two orders that carry the element; both bypasses closed.",
+        "WHY THE WORKER'S BATTERY PASSED IT: the self-test fixture for the 'omits a token' arm builds `<placeholders>PORT</placeholders>\\n` + invocations, putting the element ABOVE the invocations, so the invocation is never inside the span. The fixture cannot represent the layout that fails. Its real-order arms test orders LACKING the element, which is branch B -- the branch that works.",
+        "WHY IT CANNOT BE FIXED INSIDE FE-s-28: the gate's reader is byte-identical to .tools/proof-of-spec-check.py:1125 by design (self-test arm at to-pipeline-gate.py:763), so that a tolerant gate never admits an order the checker cannot read. Both must change in ONE change. proof-of-spec-check.py is outside FE-s-28's grant, and adding the fix would add criteria to a frozen round. The worker was told not to act on it."
+      ]
+    },
+    "spec_asserts": "1.0.0_SA_CTO ruling D: the <placeholders> declaration is MANDATORY at L6, so that the invocation-alignment limb ENFORCES on every issuance and the S31 divergence (a criterion corrected in the spawn prompt and never in the file) cannot read VALID. The gate's refusal text claims three refusals: no element, an empty element, and a declaration that omits a token its own invocations carry.",
+    "world_is": "TWO OF THE THREE CLAIMED REFUSALS DO NOT HOLD ON A REAL FACE. The mandatory check is satisfiable by pasting its own help text into the face's prose, and its token-omission refusal is structurally dead for the layout every face in this project uses. The checker reads the same way, so under ENFORCE it expands the whole prose span as placeholders and a genuine divergence can read VALID -- the S31 class ruling D exists to prevent. \u26d4 NOT A REGRESSION: before FE-s-28 no declaration was required at all, and the plain omission (B) IS now refused, so draining FE-s-28 widens no hazard; it ships a check weaker than its own text. The disarm is ONE next-round cell: line-anchor the reader in BOTH files in one change, with the five cases above as its battery and a fixture that puts the element BELOW the criteria. disarm_owner is 1.0.0_SA_CTO because it is fabric infrastructure reached through the L10 slug, not through this round.",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
