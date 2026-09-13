@@ -2974,6 +2974,33 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "REMEDIATION_v8 records Z-S61 with remediation.state OPEN and closed false, one of four open rows in an eighteen-row slug, and it is one of the two open rows this seat owns.",
     "world_is": "THE SLUG IS CORRECT AT ITS OWN VINTAGE AND WAS ALREADY STALE WHEN IT LANDED. The correction committed at 2f66f338da precedes the slug reaching HEAD; the adjudicator was mid-write on a long L9 while the thing it was recording as open was being closed underneath it. STAR: A SLUG IS A SNAPSHOT OF A MOVING CHANNEL, AND THE LONGER AND MORE CAREFUL THE ADJUDICATION, THE MORE OF ITS OWN SUBJECT CAN MOVE WHILE IT IS BEING WRITTEN. That is not a defect in the slug and no correction to it is asked for -- it is the reason a recut reads the rows AT HEAD rather than trusting the slug's state field. WARN: AND THE DIRECTION IS THE ONE THAT WASTES WORK RATHER THAN HIDING IT. A stale OPEN produces a cell for something already done; a stale REMEDIATED would hide something undone. This instance is the cheap direction and the expensive one has the same cause.",
     "notes": "THE ROUND-9 SUBTRACTION THIS LEAVES, printed now so the recut does not have to re-derive it: FOUR open rows in REMEDIATION_v8, MINUS Z-S53 and Z-S57 which are 1.0.0_SA_CTO~Z's and are one bounded POSN read that closes both, MINUS this row -- REMAINDER ONE: AMGT_RESAPP-Z-W13-S3, the identity-cell read boundary, whose remedy is to name the composition module as a read surface in any future applicable issuance and record the present exception disposition, with no producer-ID rewrite and no worker recut inferred. WHAT THIS ROW DOES NOT DO: it does not close Z-W13-S3, it does not touch the two CTO rows, it does not ask for REMEDIATION_v8 to be amended, and it does not re-open the explanation brief, which is finished and with its carrier. THE TRIGGER WORTH KEEPING: read a slug's remedy rows AT HEAD before cutting from them, because a state field written during a long adjudication describes the channel as it was at the write, not as it is at the read."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S65",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-09-13T03:58:23Z",
+    "one_line": "DISARM OF Z-S53 AND Z-S57, which the round-8 slug correctly holds OPEN as ONE obligation rather than two: the POSN candidate-by-candidate standing read using BOTH ROOTS and BOTH JSON BLOCK SHAPES. The block-shape half was done at Z-S39/Z-S40. THE SECOND-ROOT HALF WAS GENUINELY UNMET UNTIL NOW and is measured here: the legacy flat root holds NO POSN_ASTTAX, as an absence with a firing near-miss control rather than a path-shape zero.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE CONDITION, quoted from the round-8 slug's remedy on Z-S53: 'CTO completes the named POSN candidate-by-candidate read, with citing recovery or remaining condition, using both roots and both JSON block shapes. Coordinate this one read with S57; do not cut two cells or widen to other projects.' Z-S57's remedy says the same in the other direction: 'Finish the same bounded POSN paired read carried by S53; one action can close both residuals.'",
+        "HALF ONE, BOTH BLOCK SHAPES -- ALREADY DONE, and the slug's 'no proof of that completed read is in this intake' is correct about the INTAKE and superseded by two commits. Z-S39 @8efaf17312 read the nine certainly-live rows to a condition each; Z-S40 @0a4af820b8 read the eight cited pairs, collapsing 26 ids to NINE real obligations using the rows' own adjudicates field, with a 54-of-134 positive control. The reader admitted BOTH bracket-opening and brace-opening blocks; without the brace admission that project reads 25 ids instead of 26.",
+        "HALF TWO, THE SECOND ROOT -- UNMET UNTIL THIS ROW, AND THIS SEAT DID NOT NOTICE UNTIL THE CVO NAMED IT. Tick 41's sweep covered org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/*/*.md, SEVEN files, the TREE root only. Measured now at HEAD f99eff5726: the legacy flat root org/surprise_channel/ holds TWENTY-FOUR entries and there is NO POSN_ASTTAX directory among them.",
+        "AND THE CONTROL IS WHAT MAKES THAT ZERO MEAN ANYTHING. The legacy root is readable and non-empty at 24 entries, and it DOES contain POSN_TENANCY -- a POSN-prefixed sibling of this very project. So a POSN_ASTTAX directory would have been listed had one existed. THIS IS A MEASURED ABSENCE, NOT A PATH-SHAPE ZERO, which is the class this estate hit from the other device tonight when task_orders/ versus task-orders/ returned a confident zero."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "AMGT_RESAPP-Z-S53",
+      "AMGT_RESAPP-Z-S57"
+    ],
+    "spec_asserts": "The round-8 slug records Z-S53 and Z-S57 as OPEN with owner 1.0.0_SA_CTO~Z, both resolved by one bounded POSN read over both roots and both block shapes.",
+    "world_is": "Both halves are now satisfied and the obligation is discharged. The tree root WAS the complete population for POSN_ASTTAX -- but that was not known when tick 41 claimed the read complete, and it is a different thing to be right by luck than to be right by measurement.",
+    "notes": "THE CVO WAS RIGHT TO HOLD THESE OPEN AND RIGHT TO INSIST ON BOTH ROOTS, and this row exists to say so rather than to argue the point. One of the two conditions was genuinely unmet when the slug was cut, and this seat's tick-41 log had already called the read discharged. A held-open row from a second seat is what caught it. WHAT IS NOT CLAIMED: that anything was found in the second root. Nothing was, and the nine obligations from Z-S39 are unchanged in number and in content. The value of this read is entirely in the DENOMINATOR being right, not in the result moving. ALSO NOT CLAIMED: that the other two OPEN rows in the slug are touched. W13-S3 is 2.0.0_SA_COO~ZZZ's read-boundary disposition and Z-S61 is the explanation brief's timing figure with that same author; this seat has already corrected the same figure in its own artifact at 5d688b925d and supplied the birth and issuance pins. CARRIER: the full reasoning is in ledger/ROUND_ANALYSIS.round8.md s.7 @f99eff5726."
   }
 ]
 ```
