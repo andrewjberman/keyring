@@ -3,9 +3,17 @@
 **Author:** `4.0.0_SA_CRO~D` · **UTC:** v1 2026-09-12 ~17:5xZ (`@2659d45788`) · **v2 ~18:4xZ**
 **Mode:** NEW (greenfield). No project exists under D14 yet; no Part 0.
 **What changed v1 → v2:** the reference set now EXISTS. v1 described six outcomes and pointed at a
-census; v2 points at seven landed artifacts in `infra/logic/` and cites each by hash. **The outcome
-territory (Part I) is UNCHANGED — that is a finding, not an omission:** the artifacts were built
-against v1's outcomes and none of them moved. Parts IV, V, VI, VII and REFS are re-issued.
+census; v2 points at seven landed artifacts in `infra/logic/` and cites each by hash.
+⛔ **v2.1 CORRECTION (2026-09-13 ~00:5xZ): v2's headline "Part I is UNCHANGED — a finding" was FALSE**, and
+`1.0.0_SA_CTO` measured it (96279: `git show` at both vintages, sections sliced, sha256 + unified diff, with a
+control slice that differs). The SET is unchanged — six outcomes, same order, nothing added, retired or
+renumbered. **The CONTENT is not: two outcomes each gained a value in an enumeration, which under Rule 24
+is a schema change:** O3 CONFORMS / CONTRADICTS / OUT OF PLANE → **+ DERIVED FROM another project's row**;
+O6 CONFORMANT / MIGRATE / RETIRE / DECLARED EXCEPTION → **+ AWAITING a named word**. Both values are already
+USED by the artifacts (IRPT_FNTEND's four surfaces grade DERIVED; the ledger carries 10 AWAITING rows), so the
+artifacts are right and the claim was wrong. The endpoint was re-cut on this at `ddf93b2165` (FWD-3 and FWD-6
+ACCEPT lines re-tested; no id renumbered). Parts IV, V, VI, VII and REFS re-issued at v2; v2.1 joins the
+row-state column and adds the routing re-derivation.
 **Directive:** D14 "Platform Logic", minted `@ff4dfaf23e`, LAPTOP, members empty by design.
 **Commissioned by:** Andrew-direct, this session — *"let's start with the census let's start breaking
 this down"* → *"a brief that effectively becomes the principal priority project"* → *"Persist this
@@ -22,7 +30,7 @@ stands until Andrew lifts it by name.
 
 ---
 
-# PART I — THE OUTCOME TERRITORY (unchanged from v1)
+# PART I — THE OUTCOME TERRITORY (set unchanged from v1; O3 and O6 enumerations widened — see header)
 
 Written as what a named kind of person can DO that they cannot do today. Each is qualitative and
 disputable; no number is invented in this part. Step 2 cuts from here and nowhere else.
@@ -200,10 +208,16 @@ SmartX (12,432 planes, one design decision). The debt is concentrated, not diffu
 
 # PART VII — WHAT THIS BRIEF DOES NOT CLAIM
 
-- **The O3 row-state column is empty.** 188 + 96 dispositioned rows sit at `3.0.0_SA_CVO`; a surface
-  the projects already dispositioned differently would change a line. v2.1 of the reports lands when
-  the compile does; this brief does not wait on a held seat.
-- **The ADVI routing clause is unverified** against live CloudFront or the deployed edge version.
+- ~~The O3 row-state column is empty.~~ **JOINED at v2.1** from `3.0.0_SA_CVO`'s compile `@ac907356c8`
+  (re-derived exact by `1.0.0_SA_CTO`): IRPT_BCKEND 188 rows / **71** dispositioned (not 188 — the CVO
+  corrected its own offer), 28 storage-plane rows of which **15 are undispositioned**; IRPT_FNTEND 138 rows /
+  41 dispositioned, **2** touch the four surfaces, both undispositioned. Denominators are perishable
+  (shared append-only channels).
+- ~~The ADVI routing clause is unverified~~ **RE-DERIVED at v2.1 on the applied plane**
+  (`infra/logic/07_ROUTING_REDERIVATION.md`): TRUE for every scoped S3 path class but `platinum/advi/{firm}/`,
+  which the deployed router routes to the shared bucket **by ruled design** (LD-0442) — a collision with R6/R7
+  that Andrew's ruling resolves in the security-positive direction. Not exercised through CloudFront; read from
+  associations and bytes.
 - **No producer was traced to any plane;** liveness is `LastModified`. No RETIRE was checked for a live
   reader (`comp-blast` not run).
 - **The two SmartX subtrees are characterized, not counted per plane.**
@@ -236,7 +250,10 @@ SmartX (12,432 planes, one design decision). The debt is concentrated, not diffu
     03_CONTRADICTION_REPORTS/IRPT_FNTEND.md  (O3)  v0.2 regraded, 4 surfaces        @5288666762
     04_SCOPE_TICKLIST.md    (O2)      19 rows by subtraction, 16 to tick            @54a764cb28
     05_IDENTITY_SPINE.md    (O4 seed) 4 firms / 3 products / 8 vendors / 2 masters  @45160b1525
-    06_CONFORMANCE_LEDGER.md (O6)     every plane's disposition + register X1-X6    @4faf061126
+    06_CONFORMANCE_LEDGER.md (O6)     every plane's disposition + register X1-X6    @4faf061126 (+ v2.1 platinum/advi correction)
+    07_ROUTING_REDERIVATION.md        the ADVI routing clause on the APPLIED plane  (v2.1)
+  ROW-STATE INPUT   org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_ROW_STATE_COMPILE_FOR_LOGIC_ROW8_20260912.md @ac907356c8
+  ENDPOINT          ENDPOINT_FWD_D14_PIPELINE_CANON_20260912.md @ddf93b2165 (re-cut on the Part I correction)
 
   RULINGS CARRIED   e29a895ce3 (client platinum per-firm; gold parquet; D10-1 default; D10-2 deferred)
                     697a457a6d (the pause)  ·  ed3f6b32e4 + 392052b751 (scope law; 2x2 grid; A-1 supersession)
