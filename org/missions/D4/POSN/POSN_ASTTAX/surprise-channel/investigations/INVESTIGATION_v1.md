@@ -1671,6 +1671,31 @@ all seven mechanical criteria were measured and the verdict is NO-GO.
     "spec_asserts": "POSN_ASTTAX-Z-C-S55 records, as its notes: 'The CTO must settle this existing owning surface coverage at the project boundary.' Its disarm_owner is 1.0.0_SA_CTO~Z and no other act discharges it.",
     "world_is": "SETTLED. The ruling, in one line for whoever cuts from it: the additional ETF publisher is a THIRD SURFACE a retagged value reaches, is NOT POSN's to write, and MUST be named in the PRD s.4 C-RETAG-SAFETY surface list as a disclosed non-owned reader carrying its measured state (189 rows, four books, ZERO candidate members, at the pin Z-C-S55 cites) and the condition that ends that state (any candidate member appearing in those books).",
     "notes": "CARRIER, AND THIS IS THE PART THAT IS NOT DONE. The ruling is made and is durable here, but its LANDING is one line in PRD s.4, and that section is inside the RATIFIED-TEXT half signed by 3.0.0_SA_CVO~Z and current at 5840cc12ac. POSN is MID-ROUND-3 with four orders open, and Rule 27 freezes the spec mid-round. So the line lands in the round-3 L10 addendum, which is the carrier the law already provides for exactly this, and the ruling is recorded here so that addendum cannot be written without it. THIS IS NOT THE SAME AS DEFERRING THE DECISION. The decision is made and any seat may cut from this row today; what waits is only the sentence's home. AND THE HOLD IS NAMED RATHER THAN ABSORBED: POSN's L10 is itself gated on Andrew's undecided four-of-fifteen carry-forward call. That is being put in front of him as a gating item in the same breath as this row, because his 03:21Z direction says finish the work now and this is a piece of work whose only remaining blocker is his own open call."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-S43",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-09-13T04:16:23Z",
+    "one_line": "ANDREW APPROVED THE POSITIONING DEPLOY CONDITIONAL ON A TWO-SEAT NEVER-WIDEN SIGN-OFF, AND A HALF ASSEMBLED FROM THE PRD ALONE WILL PRINT THE WRONG WRITER COUNT. The PRD's surface set reads CLOSED at two siblings; the measured world has at least THREE producers of a holding-class value. N=2 is wrong by one, and it will look immaculate because it prints a denominator.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE RULING THAT CREATES THE OBLIGATION. Andrew-direct 2026-09-13 04:08:22Z, relayed as 22243 and recorded LD-0562, VERBATIM: 'all recs approved'. Card 5 approves deploying the three committed positioning repairs ONLY AFTER the two-seat never-widen sign-off lands, and 22243 states in terms that the sign-off is 'a condition of the approval, not waived by it'. 1.0.0_SA_CTO~Z holds one of the two halves.",
+        "THE LAW CLAUSE THAT BITES. CLAUDE.md NEVER#1: 'FIRST COUNT THE WRITERS OF THE NAMED PROPERTY: a property with N writers needs N rules read, and N is a number the half PRINTS.'",
+        "THE COUNT, measured at HEAD 254127bd2b in this project's own PRD, with a POSITIVE CONTROL so the read is not a vacuous zero (the token RETAG appears 6 times, so the section exists). :205 the generator writes positioning_data.json. :254-256 'A DIFFERENT ARTIFACT (W12-S2/S3): yang-generate-allocation-summary carries Commodities ... and writes holdings_attribution_data.json, NOT positioning_data.json'. :261 the measuring worker's own words, 'Data reaches three lambdas; the code hardening reaches one'.",
+        "AND A THIRD PRODUCER OUTSIDE THAT SET, ruled by this seat at POSN_ASTTAX-Z-S42 @9d7b09987f: Z-C-S55's additional ETF publisher copies gold holding class values and emits a four-key book allocation at its source lines 469-472. That ruling put it OUT of POSN's write scope and IN its disclosure scope, carrying its measured state (189 rows, four books, ZERO candidate members) and the condition that ends that state.",
+        "THE PRECEDENT THIS IS AN INSTANCE OF, so it is not treated as a technicality. NFRA_CLDGRPH W2-S67/S98: both halves read the FOLD's rule, correctly, on a property a SECOND writer also set; the served count did not move and BOTH HALVES WERE SIGNED. That is the same shape and it is why the writer-census clause was added to NEVER#1."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD s.4 C-RETAG-SAFETY presents the surfaces a holding-class value reaches as a closed set of two sibling producers plus a portal tab. A sign-off half assembled from that section would print N=2 and read two producers' rules.",
+    "world_is": "At least THREE producers write or copy the property: the positioning generator (positioning_data.json), yang-generate-allocation-summary (holdings_attribution_data.json), and the additional ETF publisher of Z-C-S55. THREE IS A FLOOR AND NOT AN ANSWER -- this row does not claim the census is complete, only that the PRD's closed set is not it.",
+    "notes": "WHAT THIS ROW IS NOT. It is NOT a gate: the condition is Andrew's own word plus a standing CLAUDE.md hard stop, and nothing here adds anything he did not ask for. It is NOT a pre-signature and NOT a refusal -- no act has been specified to this seat, and a half names the act's blast radius, so there is nothing yet to sign or refuse. It does NOT rule on whether this deploy's blast radius names a holding-class property at all; that is the producer lane's to state, and if it does not, this row does not apply to the act. NON-APPLICATION carried from the rule itself: a verified DELTA=0 needs no hold, so if the act's measured served delta is empty with its instrument named, this collapses. DISARM: the writer census PRINTED in both halves with each named writer's own rule read, or a measured DELTA=0 on the served artifact. ALSO RECORDED: no change-management entry is open for this deploy. The newest positioning entry on this device is 20260825/20260829-era; NEVER#2 requires the entry OPENED at the start of the act, not written after it."
   }
 ]
 ```
