@@ -115,7 +115,7 @@ five times and every one of those refusals found a defect in the order rather th
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
-<status>staged</status>
+<status>complete</status>
 <round>9</round>
 <slot>~15</slot>
 <fabric>site-z</fabric>
