@@ -83,10 +83,10 @@ identity with `cmp`.
 ## 4. PROOF OF SPEC -- one clause per criterion
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="AMGT-rg-2"><invocation>cd portal &amp;&amp; timeout 110 npx vitest run src/pages/SecurityAnalysis --reporter=basic 2&gt;&amp;1 | tail -20</invocation><expect>a test you ADD that renders the REAL `RankedChart` against THREE payloads -- `absent`, `partial`, `retry-exhausted` -- and asserts the three rendered outputs are PAIRWISE DISTINCT, with the three lengths or hashes PRINTED. STOP: any two identical is the measured defect and is NOT met. STOP: AND A SPINNER FOR ALL THREE IS NOT MET EITHER -- distinctness must come from the completeness signal, so at least the `retry-exhausted` case must name its unresolved denominator in the output</expect></criterion>
-  <criterion id="AC2" cell_refs="AMGT-rg-2"><invocation>cd portal &amp;&amp; timeout 110 npx --package typescript tsc -b --force --listFiles --pretty false 2&gt;&amp;1 | grep -c -E "^[A-Za-z]:|^/"</invocation><expect>a printed integer STRICTLY GREATER THAN 1000 and no `error TS` lines. STOP: a small number or 0 is the VACUITY defect round 6 shipped -- a references-only root examined ZERO files and could not fail -- and is NOT met. Record the tail verbatim beside the count</expect></criterion>
+  <criterion id="AC1" cell_refs="AMGT-rg-2"><invocation>cd portal &amp;&amp; timeout 110 node src/pages/SecurityAnalysis/__harness__/chart.harness.mjs 2&gt;&amp;1 | tail -30</invocation><expect>ONE RUN of a harness THIS CELL WRITES at that exact path, driving the chart's COMPLETENESS DECISION over THREE payloads -- `absent`, `partial`, `retry-exhausted` -- and printing: the three outputs PAIRWISE DISTINCT with each one's LENGTH and HASH beside it; the distinctness SOURCED FROM THE COMPLETENESS SIGNAL (`read_completeness` / `unresolved_point_count`), never from a point count that happens to differ; and the retry-exhausted arm NAMING ITS UNRESOLVED DENOMINATOR rather than a bare label. STOP: AND THE PRE-REPAIR ARM MUST RUN IN THE SAME PROCESS AND PRINT `PRE-REPAIR pairwise distinct: 0 of 3` -- the measured defect is that absent and retry-exhausted render BYTE-IDENTICALLY, so a run that shows only the repaired state proves the harness agrees with itself. STOP: THE EVIDENCE ALREADY REPORTED FOR THIS CELL MAY NOT BE RESTATED. Re-run from scratch in a fresh process. BOUND STATED RATHER THAN HIDDEN: THIS GRADES THE DECISION, NOT A DOM RENDER. `react` and `recharts` are absent from `node_modules` and mounting the real component is out of reach inside this grant, so whether the DISTINCT decision reaches the SCREEN is NOT covered here and is routed to 3.0.0_SA_CVO~Z with AC2 and AC4</expect></criterion>
+  <criterion id="AC2" cell_refs="AMGT-rg-2" judgment="true"/>
   <criterion id="AC3" cell_refs="AMGT-rg-2"><invocation>cd portal &amp;&amp; timeout 110 grep -c -E "read_completeness|unresolved_point_count" src/pages/SecurityAnalysis/*.tsx src/pages/SecurityAnalysis/**/*.tsx 2&gt;/dev/null | awk -F: '{s+=$2} END {print "COMPLETENESS_REFS=" s}'</invocation><expect>`COMPLETENESS_REFS` STRICTLY GREATER THAN ZERO -- the component now READS the fields it ignored. STOP: 0 is the exact measured defect (`it reads points and point_count but never read_completeness or unresolved_point_count`) and is NOT met. This criterion is DELIBERATELY NOT SUFFICIENT and you should say so in your instance: a reference is not a rendering, and AC1 is what proves the behaviour. Record both readings</expect></criterion>
-  <criterion id="AC4" cell_refs="AMGT-rg-2"><invocation>cd portal &amp;&amp; ls src/pages/SecurityAnalysis/RankedChart.tsx &gt; /dev/null 2&gt;&amp;1 &amp;&amp; cp src/pages/SecurityAnalysis/RankedChart.tsx /tmp/rg2.pre &amp;&amp; printf "\nexport const BROKEN_SENTINEL_RG2: number = \"x\";\n" &gt;&gt; src/pages/SecurityAnalysis/RankedChart.tsx; timeout 110 npx --package typescript tsc -b --force --pretty false 2&gt;&amp;1 | grep -c "error TS"; cp /tmp/rg2.pre src/pages/SecurityAnalysis/RankedChart.tsx; cmp -s /tmp/rg2.pre src/pages/SecurityAnalysis/RankedChart.tsx &amp;&amp; echo RESTORED_BYTE_IDENTICAL || echo RESTORE_FAILED</invocation><expect>the error count STRICTLY GREATER THAN ZERO while the sentinel is present, AND the final line `RESTORED_BYTE_IDENTICAL`. STOP: a ZERO count means AC2's build is BLIND to this file, which would make AC2 unfailable for the very component this cell repairs -- that is the round-6 defect exactly, and is NOT met. If the component lives at a different path, use THAT path and record the substitution verbatim. The restore is from a WORKING-TREE snapshot, never `git checkout --`</expect></criterion>
+  <criterion id="AC4" cell_refs="AMGT-rg-2" judgment="true"/>
   <criterion id="AC5" cell_refs="AMGT-rg-2" judgment="true"/>
 </proof_of_spec>
 
@@ -143,3 +143,39 @@ a WEAKER neighborhood and that is recorded. Freshness returned `verdict: BEHIND`
 no cell in this round consumes; written down because a BEHIND verdict noticed and not recorded is the
 same as one never run.
 </preflight>
+
+### AMENDMENT 2026-09-13T02:0xZ -- `2.0.0_SA_COO~ZZZ`, AC2 + AC4 ROUTED, AC1 RE-INSTRUMENTED
+
+**SAME DEFECT AS `rg-1`, IN THE ORDER CUT BESIDE IT, AND IT IS THIS SEAT'S.** `0.9.0_WK_AMGT_RESAPP~13`
+ran all three and filed `Z-W13-S5`, `Z-W13-S6`, `Z-W13-S7`. Measured independently before amending:
+`vitest` reads **0 hits in `portal/package.json` and 0 in `bun.lock`** (`react` reads 1, a never-used
+name reads 0, so the instrument discriminates) and `node_modules` holds **1 entry**.
+
+- **`AC2` and `AC4` are converted to JUDGMENT criteria and routed to `3.0.0_SA_CVO~Z`. NOT deleted.**
+  ⛔ **AND THEY ARE DELIBERATELY *NOT* RE-INSTRUMENTED ONTO `node`, which is the trap this amendment
+  had to avoid: node's type stripping EXECUTES TypeScript and CHECKS NO TYPE**, so a node-based `AC4`
+  could never catch the planted `const x: number = "x"` -- **a green that proves nothing, which is
+  worse than the honest red it replaces.** The worker named that trap; this seat is executing it, not
+  improving on it.
+  ⛔ **SO IT IS STATED PLAINLY: NOTHING IN EITHER ROUND-8 PORTAL ORDER IS TYPECHECKED**, and its
+  falsifier is lost with it. The CVO grades that absence.
+- **`AC1` keeps every bar it carried** -- three payloads, pairwise distinct, lengths and hashes
+  printed, distinctness sourced from the completeness signal, retry-exhausted naming its unresolved
+  denominator. **Only the instrument moved**, onto plain `node` over a harness inside the granted path.
+  **It now also requires a FIRING NEGATIVE CONTROL in the same process** (`PRE-REPAIR pairwise
+  distinct: 0 of 3`), which the original did not have. **The bound is stated in the criterion itself:
+  this grades the DECISION, not a DOM render.**
+- **`<paths>` IS UNCHANGED.** Arm B of `Z-W13-S5` -- widening to `portal/package.json` + `bun.lock` --
+  is **REFUSED**: installing a test runner needs registry egress, and a `*.test.ts` importing it would
+  be swept into `tsconfig.app.json`'s program (`include: ["src"]`, no exclude) and break
+  `bun run typecheck` portal-wide. **A cell may not widen its own blast radius to pass a criterion.**
+
+⭐ **`Z-W13-S7` IS DISARMED BY THIS AMENDMENT AND BY A SECOND, INDEPENDENT ACT.** Its trigger was
+`AC4`'s invocation at a path that does not exist, whose `&&` chain skipped the snapshot while running
+the restore unguarded -- so a stale `/tmp/rg2.pre` would **create a spurious component file and still
+print `RESTORED_BYTE_IDENTICAL`**. (a) `AC4` is now a judgment and **the invocation no longer exists**;
+(b) the stale `/tmp/rg2.pre` was **measured present (10761 bytes) and removed**, verified absent after.
+Either alone is sufficient; both were done.
+
+`<status>` stays `staged` -- the worker flips it, never this seat. **PORTAL FROZEN both fabrics,
+COMMIT YES / PROMOTE NO**, and no artifact of this cell may grade a portal-dependent outcome REALIZED.
