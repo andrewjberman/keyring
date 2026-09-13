@@ -99,6 +99,10 @@ are allowed in each slot.
 
 ### IV.2 — THE SCHEMA (PROPOSAL for L4; one rule per plane, the same vocabulary in all of them)
 
+⛔ **NOTE (L1 touch, 2026-09-13 ~23:5xZ, after LGIC_NAMING_PRD v1.2 S1):** the RULED string is the FIVE segments
+`{source}/{scope}/{tier}/{table}/{partition}`; the bucket is the key's CONTAINER and is never written into the key, and
+`{object}` is the LEAF under `{partition}`. The folded seven-segment line below is how this brief wrote it before the PRD
+separated them; `org/standards/NAMING_SCHEMA.json` `key.grammar` / `key.container` / `key.leaf` is the authority.
 **Keys (ruled):**
 ```
 {bucket}/{source}/{scope}/{tier}/{table}/{partition}/{object}

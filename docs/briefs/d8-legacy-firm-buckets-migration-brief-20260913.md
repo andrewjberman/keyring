@@ -187,6 +187,10 @@ dates; today's is later and names its reason. IV.5 proposes the monolith form an
 one it supersedes, for L2/L4 to ratify.
 
 ### IV.5 — THE CANONICAL PATH STRINGS (PROPOSAL, for L4 to ratify; the reason for each is stated)
+⛔ **NOTE (L1 touch, 2026-09-13 ~23:5xZ, after LGIC_NAMING_PRD v1.2 S1):** the RULED string is the FIVE segments
+`{source}/{scope}/{tier}/{table}/{partition}`; the bucket is the key's CONTAINER and is never written into the key, and
+`{object}` is the LEAF under `{partition}`. The folded seven-segment line below is how this brief wrote it before the PRD
+separated them; `org/standards/NAMING_SCHEMA.json` `key.grammar` / `key.container` / `key.leaf` is the authority.
 **The rule: the bucket is a TENANCY boundary, never a grammar boundary. One string, everywhere.**
 
 ```
