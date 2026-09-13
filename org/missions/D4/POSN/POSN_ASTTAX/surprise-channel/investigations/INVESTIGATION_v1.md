@@ -1815,6 +1815,101 @@ all seven mechanical criteria were measured and the verdict is NO-GO.
     "spec_asserts": "POSN_ASTTAX-Z-W10-S1 records that the PRD's s.4 statement of the live mechanism -- 'renders Unknown AND silently zeroes the weight' -- is half false at HEAD, and names amending that text as its only disarm, owned by the PRD's author.",
     "world_is": "Corrected at PRD v0.6, landed with the round-3 L10 analysis at ae66157381. The label half of the mechanism stood and is unchanged; the weight half is replaced with where the loss actually sits -- the five-class served view and the delta/spread rows, which carried no row at all rather than a zero.",
     "notes": "WHY IT WAITED, stated because a reader will otherwise see a two-tick-old row disarmed by a one-sentence edit and wonder why it took two ticks. Rule 27 freezes the spec mid-round, and POSN was mid-round-3 with four orders open. The correct carrier for a mid-round spec defect is the round's L10 addendum, which is exactly where it landed the moment that L10 existed. Opening a frozen PRD to fix a sentence would have been the disruption Andrew's 2026-09-13 02:22Z priority ruling names, and the hazard was separately mitigated in the meantime by routing the corrected reading to the round owner. NOT CLAIMED: that the retag is safe. It is NO-GO and that is unchanged by this row. NOT CLAIMED: that AT3-s-5 has been cut or that its bar is written; only that whoever writes it now meets the correct mechanism in the spec. SIBLING, DISCHARGED EARLIER: Z-C-S55's boundary decision, ruled at Z-S42 @9d7b09987f and landed in the same v0.6 addendum as a disclosed third surface. With this row, BOTH POSN acts this seat carried into the round-3 L10 are complete."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-W15-S1",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~15",
+    "surfaced_at": "2026-09-13T06:40:00Z",
+    "one_line": "The shared tree's portal checkout is 14 commits BEHIND the gitlink pin e85f6eb84f, so reading portal working-tree files and stamping them '@e85f6eb84f' -- which is what this worker was instructed to do -- produces a citation whose vintage is false by 8 days.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The TO's spawn instruction: 'READ portal source from the SHARED tree at C:/Users/Opal Bloomberg/Desktop/ajb_workspace/portal/ ... Record the portal gitlink pin e85f6eb84f as the VINTAGE of every portal citation.' The two halves are only jointly true if that checkout IS at the pin.",
+        "MEASURED in the portal repo: `git rev-parse HEAD` = 30ca034bbaa4b9d2864d3acce826e3c2fa59be0a on branch DEV, working tree clean (`git status --porcelain` empty). The worktree's gitlink `git ls-tree HEAD portal` = 160000 commit e85f6eb84f3a1771a37011a7e77e372570bad02a. The two are different objects.",
+        "DIRECTION AND SIZE, with a firing positive control: `git merge-base --is-ancestor e85f6eb84f HEAD` -> rc=1 (pin is NOT an ancestor of the checkout); `git merge-base --is-ancestor HEAD e85f6eb84f` -> rc=0; positive control `--is-ancestor HEAD HEAD` -> rc=0. `git rev-list --count HEAD..e85f6eb84f` = 14. The checkout is 14 commits BEHIND the pin. Checkout tip is 1.0.0_SA_CTO~Z 'fix(auth/MFA)...' dated Sep 2; pin is 0.9.0_WK_IRPT_FNTEND~1 'feat(irpt-fntend): FE-s-5 Reporting tab...' dated Sep 10.",
+        "SIZE OF THE INVISIBLE REGION: `git diff --stat 30ca034bba e85f6eb84f` = 126 files changed, 18600 insertions(+), 6 deletions(-), almost all of it a new src/pages/InvestorReporting/ page that DOES NOT EXIST in the checkout a working-tree read would have seen."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "That portal source may be read from the shared tree's working files and that the gitlink pin e85f6eb84f is the correct vintage to stamp on what is read there.",
+    "world_is": "The shared tree's portal checkout is at 30ca034bba, 14 commits behind e85f6eb84f. Working-tree bytes are NOT the pin's bytes and a citation stamped with the pin would be false. This worker did NOT read working-tree bytes: every citation in its deliverable was resolved by CONTENT with `git show e85f6eb84f:<path>` from that same repo, which does hold the pin's objects (`git cat-file -t e85f6eb84f` -> commit).",
+    "notes": "NO FINDING IN THIS CELL CHANGED, and that is measured rather than assumed: the set of src/ files matching the asset-class term is IDENTICAL at both commits -- 59 files at the pin, 59 at the checkout, `comm` on the two sorted lists returns EMPTY in both directions. So the 14-commit gap adds no reader and removes none, and the InvestorReporting page introduces no asset-class vocabulary. ARMED rather than INERT for one reason: the instruction is a SPAWN-PROMPT pattern, not a fact about this cell, so any sibling worker handed the same two sentences will stamp stale bytes with a fresh-looking pin and nothing in the tooling will say so. disarm_owner is the issuing seat because only the issuer can amend the spawn text; the disarm is one sentence -- read portal source with `git show <pin>:<path>`, not from the working tree. NOT CLAIMED: that any sibling actually made this error; this worker did not audit other deliverables. ID FORM, CORRECTED AFTER A REFUSAL, AND THE CORRECTION IS THE FINDING: this row and its three siblings were first minted as the bare POSN_ASTTAX-W15-S<k> form THE TASK ORDER AND THE SPAWN INSTRUCTION BOTH NAME, on a reading of .tools/surprise-row-gate.py:104 where ID_RE makes the Z- group optional. ID_RE does make it optional -- and a SEPARATE limb of the same gate then refused all four, in its words: fabric='site-z' but the id lacks the Z- infix, which means 'laptop'; site-z iff the id carries Z-. So on a site-z project the -Z- infix is not a convention, it is the only valid form, and the order names a form its own gate rejects. READING A PARSER AND CALLING IT THE RULE IS THE ERROR HERE: ID_RE certifies that a string is WELL-FORMED, never that it is ADMISSIBLE, and the admissibility limb lives elsewhere in the same file -- a two-limb guard where witnessing one limb teaches nothing about the other. The ids were re-minted as POSN_ASTTAX-Z-W15-S1..S4, matching 60 of 60 pre-existing rows in this channel. The order's text is left unedited, for the same reason as Z-W15-S4: the issuer decides whether the order or the gate is the defect."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-W15-S2",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~15",
+    "surfaced_at": "2026-09-13T06:40:00Z",
+    "one_line": "C-TWO-SURFACES asserts there are TWO surfaces that show asset classes and that FWD-6 is 'graded over the two'; a derived census at the pin finds ELEVEN renderers across FOUR surface families, and the two families the constraint does not name (Attribution, AdvisorIntelligence) hold 6 of the 11 and fail the five-class bar in 15 of their 30 cells.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE SPEC: PRD @ae66157381 s.4 C-TWO-SURFACES -- 'there are TWO surfaces that show asset classes: Positioning, and the combined Philosophy / Capital-Market-Assumptions view. ... Both must agree; FWD-6 is graded over the two.' Surface row S3 (s.7) says 'The two surfaces.' The v0.6 addendum widens this to 'at least three' by disclosing ONE additional non-owned ETF publisher, which is a data producer, not a renderer.",
+        "THE CENSUS, at portal pin e85f6eb84f with its denominator printed: 1201 files in the tree, 557 under src/, 484 src/ code files; 89 match the asset-class term OR one of the five ratified class literals; 46 of those carry a multi-class vocabulary within a 6-line window; the surviving RENDERER set after subtraction is 11 files across 4 families.",
+        "THE TWO UNNAMED FAMILIES ARE RENDERERS, NOT PRODUCERS. Attribution: SelectionTab.tsx:321 `const assetClassOrder = ['Fixed Income', 'Equity']` -- a byte-for-byte twin of the Positioning literal at HoldingsTab.tsx:1392 that round 2 already measured; AssetAllocationSummary.tsx:92 and StylePolicyComparison.tsx:156 each `const requiredAssetClasses = ['Fixed Income', 'Equity']` then .map over it. AdvisorIntelligence: ConsolidatedOverviewPanel.tsx:399 renders a hardcoded `['cash','fixed_income','equity','alternatives']`, PartnerAnalytics.tsx:1644-1645 a four-key label map fed by composition.ts:32 CANONICAL_CLASSES whose :100 `if (!classes.includes(item.asset_class)) continue` hard-drops any other class. All cited @e85f6eb84f.",
+        "WHY AN AGREEMENT BAR CANNOT SEE THIS: the four two-class literals above are IDENTICAL, so Positioning and Attribution AGREE today and will still agree after a retag -- both showing the same wrong two classes. The PRD's own FWD-6 ACCEPT ('an analyst ... cannot find a disagreement between them') reads SATISFIED on the broken system across all four sites."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "That the population FWD-6 is graded over is TWO surfaces (Positioning; Philosophy/CMA), widened at v0.6 to 'at least three' by one disclosed non-owned ETF publisher.",
+    "world_is": "Eleven renderers across four surface families render a portfolio asset-class label at the pin. Positioning holds 2, Philosophy/CMA holds 3, and two families the constraint never names -- Attribution (3) and AdvisorIntelligence (3, plus adjacent members not graded here) -- hold the remaining 6. Nine of the eleven cannot display all five ratified classes.",
+    "notes": "THIS IS THE CELL'S OWN QUESTION, SO WHY A ROW: AC1 ordered this worker to DERIVE the reader set and not inherit it, so finding more than two is the deliverable, not a surprise. What is off-cell is that C-TWO-SURFACES is a CONSTRAINT THAT BINDS THE DECOMPOSITION and is still written as a count -- so the next FWD-6 bar cut from it will again be scoped to two surfaces, and this worker may not edit the PRD. The PRD itself names this shape at s.7: 'a row scoped to two surfaces cannot generate a cell that checks three.' The same sentence now reads 'cannot generate a cell that checks eleven.' disarm_owner is the PRD's author because amending a binding constraint is the only disarm. NOT CLAIMED: that Attribution or AdvisorIntelligence are IN POSN's write scope -- this worker holds no view on scope and its <paths> grant contains no portal path. NOT CLAIMED: that the AdvisorIntelligence family renders the SAME taxonomy -- its data arrives from a different lineage (advisor-intelligence.ts:1536 names a '4-bucket from Orion native classifier'), and whether that makes it one population with Positioning or two is a judgment recorded under U1-AC6 and left to L9. NOT CLAIMED: that eleven is the complete set -- see the instrument limits recorded in the deliverable and under U1-AC6."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-W15-S3",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~15",
+    "surfaced_at": "2026-09-13T06:40:00Z",
+    "one_line": "The v0.6 addendum's disclosed non-owned ETF publisher is cited at 'source lines 469-472', but at this worktree's HEAD those lines are inside serve_s3_json_nocache(); the file's actual class vocabulary sits at :1012-1034 and :1491-1492, where it also declares 'structured_notes' as a SUB-CLASS OF ALTERNATIVES -- a placement the ratified taxonomy contradicts.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE SPEC: PRD @ae66157381 s.7 -- 'An ADDITIONAL ETF publisher outside this two-sibling set copies gold holding class values and emits a four-key book allocation at its source lines 469-472.'",
+        "AT THIS WORKTREE'S HEAD 72f241749946d2956d03bee23e917dfe2305fcd5, infra/aws/lambda/v2_portal/partners/lambdas/opal-partners-data/lambda_function.py is 1924 lines and :460-480 is the body and docstring of `serve_s3_json_nocache(bucket, key)` -- 'Structural copy of serve_s3_json -- only difference is all cors_response calls are replaced with cors_response_nocache.' No allocation dict, no class vocabulary.",
+        "WHERE THE VOCABULARY ACTUALLY IS at the same HEAD: :1012 '# Top-level: equity | fixed_income | alternatives | cash | hedge | other'; :1028 \"Returns: 'equity' | 'fixed_income' | 'alternatives' | 'other'\"; :1491-1492 the emitted shape '{advisor_id, data_as_of, data: [{date, total_aua, equity, fixed_income, structured_notes, cash, other}]}'.",
+        "THE TAXONOMY CONFLICT, verbatim at :1013 and :1018: ':1013 # structured_notes sits under alternatives (Halo Shield products, buffer ETFs,' and \":1018 'structured_notes': 'Structured Notes',  # sub-class of alternatives\". PRD @ae66157381 s.3 ratifies Structured as TOP-LEVEL class 3 of 5, colored pink, holding 'options, VIX futures, volatility overlays, VXX and the like'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "That the disclosed additional publisher emits its four-key book allocation at source lines 469-472, and that its measured state is 189 rows over four books with ZERO candidate members.",
+    "world_is": "At this worktree's HEAD the cited lines hold an unrelated S3 helper; the class vocabulary is 900+ lines further down. That vocabulary is six-valued (equity, fixed_income, alternatives, cash, hedge, other) and it explicitly nests structured_notes UNDER alternatives, so the ratified top-level class Structured has no representation in it even as a name.",
+    "notes": "INERT, and the reasons are stated rather than assumed. (1) The object is OUT of POSN's write scope by the CTO's own ruling POSN_ASTTAX-Z-S42 @9d7b09987f -- disclosure scope only -- and is outside this worker's <paths> grant entirely. (2) The PRD already carries the zero-candidate state AND the condition that ends it, so the state is not being reported as news. (3) The line drift is a navigation cost, not a wrong claim: the publisher does emit a fixed-key book allocation, exactly as disclosed, just not at those coordinates -- this worker did not establish WHICH pin the PRD's :469-472 was true at, only that it is not true at 72f2417499. NOT CLAIMED: that the vintage of the PRD's citation was wrong when written. NOT CLAIMED: that this publisher is a RENDERER -- it is a data producer and was subtracted from the reader set on exactly that proof, so it appears in no row of this cell's READER x CLASS table. The structured_notes-under-alternatives placement is recorded because it is a FIFTH distinct asset-class vocabulary in the estate and the only one that resolves Structured by nesting it, which is a merge hazard for any future single-source work under FWD-5."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-W15-S4",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~15",
+    "surfaced_at": "2026-09-13T07:05:00Z",
+    "one_line": "TO-U1-1's <proof_of_spec> block names an instance path the L6 pipeline gate cannot resolve: the gate derives the required filename from the FULL TO filename stem, so a TO whose filename carries a descriptive suffix after the TO id must name the LONG form -- and 11 of 11 pre-existing instances in this project do, while this order's block names the short form.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE SPEC: TO-U1-1's <proof_of_spec> block reads 'org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~15/POSN_ASTTAX.TO-U1-1.proof_of_spec.json', and the spawn instruction repeats that path.",
+        "THE REFUSAL, verbatim from the first safe-commit attempt with the instance present at exactly that path: '[to-pipeline-gate] REFUSED -- 1 violation(s) across 0 newly-added TO file(s): ...POSN_ASTTAX.TO-U1-1.derive-the-readers-and-grade-the-five-class-bar.md: flips to complete on PIPELINE-REGISTERED project POSN_ASTTAX, and NO proof-of-spec instance was found beside it. Layer 1: no VALID instance, no complete flip.'",
+        "THE MECHANISM, read at the gate rather than inferred from the message: .tools/to-pipeline-gate.py:1603 `stem = os.path.basename(rel).rsplit('.md', 1)[0]` then :1604 `names = (stem + '.proof_of_spec.json', stem + '_PROOF_OF_SPEC.json')`, globbed at :1607-1608 under deliverables/*/. The TO file is named POSN_ASTTAX.TO-U1-1.derive-the-readers-and-grade-the-five-class-bar.md, so the ONLY names the gate will accept carry the full descriptive suffix. The gate never reads the <proof_of_spec> block.",
+        "THE POPULATION, so this is not read as one order's typo: comp-find --name '*proof_of_spec.json' over org/missions/D4/POSN/POSN_ASTTAX/deliverables printed 'DENOMINATOR: 12 hit(s) across 46 file(s) scanned'. Of the 12, ELEVEN are pre-existing and ALL ELEVEN use the full stem (TO-S1A-1.which-one-place-survives-the-seed, TO-S6-1.harden-the-generator, TO-T1-1.carry-five-classes-through-the-generator, and so on). The twelfth was this worker's, and it was the only short-form name in the project."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "That the proof-of-spec instance for TO-U1-1 belongs at .../deliverables/0.9.0_WK_POSN_ASTTAX~15/POSN_ASTTAX.TO-U1-1.proof_of_spec.json.",
+    "world_is": "At that path the L6 gate refuses the complete flip, because it resolves the instance by the TO FILENAME STEM and not by the <proof_of_spec> block. The instance was renamed to POSN_ASTTAX.TO-U1-1.derive-the-readers-and-grade-the-five-class-bar.proof_of_spec.json, which is both what the gate requires and what 11 of 11 sibling instances in this project already use; the flip then passed.",
+    "notes": "WHAT WAS DONE AND WHAT WAS NOT. Done: ONE instance, renamed to the gate's and the project's convention. NOT done: a second copy at the order's named path -- two instances for one TO would distort any '*proof_of_spec.json' census by exactly the file this row is about, and the gate reads only one of them anyway. NOT done: editing the order's <proof_of_spec> block. That block is inside this cell's <paths> grant, but this order's only sanctioned edit to its own face is the status flip, and rewriting a spec field to match what a worker did is the wrong direction of repair -- the issuer decides whether the block or the gate is the defect. ARMED because it harms through FUTURE NORMAL operation and the harm is silent at cut time: any TO whose filename carries a descriptive suffix after the TO id, cut with a <proof_of_spec> block naming the short form, produces a worker who does exactly as instructed and is then refused at the last act of the order -- after every criterion is answered, which is the most expensive moment to discover it. The refusal text names the symptom ('no instance found beside it') and not the cause (a stem derivation that ignores the block), so the natural first reading is that the instance is missing or invalid rather than misnamed. disarm_owner is the issuing seat because the disarm is a one-line change at the CUT -- name the full-stem path in <proof_of_spec>, or name the TO file by its id alone. NOT CLAIMED: that the gate is wrong; its derivation is self-consistent and 11 of 11 instances already satisfy it, so on the measured evidence the ORDER is the outlier, not the tool. NOT CLAIMED: that any sibling worker in round 4 hit this; this worker did not audit the other round-4 orders' blocks."
   }
 ]
 ```
