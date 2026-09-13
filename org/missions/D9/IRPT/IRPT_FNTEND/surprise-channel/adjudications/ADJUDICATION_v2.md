@@ -170,6 +170,197 @@ Accumulating CVO review as round-two evidence arrives. This is NOT an L10 slug a
     "spec_asserts": "W2-S21 names 3.0.0_SA_CVO as disarm owner and places the question 'whether a panel is a legitimate capture for target-blend basis and for a node whose attribution is unavailable' at F18's criteria and the L9 grade. CLAUDE.md: an ARMED hazard disarms same-turn via its disarm_owner; the CVO grades JUDGMENT criteria at L9, and a relayed scope is never adjudicated wider.",
     "world_is": "The obvious disarm -- this seat committing to grade the rendered field at L9 -- closes the hazard only if a criterion that reaches this seat asks that question, and none does. So the named owner is the wrong owner for the disarm, and the honest act is to say so and route it rather than record a disarm that leaves the path open. What the grading commitment CAN still cover is narrower and real: F18-AC18 is RECORD with NO VERDICT, recording what each PNG shows is inside that charter, and so the L9 record will name which Holdings captures are StatusPanels. That closes the L9 path to a silent pass. It does not close FE-s-22's rule if it is ever pointed at these captures, because that rule compares hashes and three different panels/trees hash differently whether or not any of them drew the claimed field.",
     "notes": "NOT CLAIMED: that a StatusPanel is the wrong capture. For an unavailability basis (target blend model revision unnamed; node attribution unavailable) the panel with its reason code may be exactly the honest rendering, since there is no basis content to draw. The defect W2-S21 found is the MISMATCH between that and FE-s-22's claims model, which says the capture renders basis and classification. Which side moves is a spec decision, not a verification one. ADJACENT, CARRIED TO ROUND-4 L9, NOT A FINDING: TO-FE-s-26 was flipped complete at 2026-09-13T05:07:02Z (81b45120e7) while its exact-vs-suffix control read its two halves from two different maps, which the worker's own W2-S22 had described at 05:00Z; the issuer corrected the bound at 05:18:48Z (49f4026218) and the control was repaired at 05:33:25Z (portal 346d2b90), which the proof row now cites. The end state is sound and the history is in the proof row. The grant question W2-S20 raised is CLEAN: the one fe-s-22 file joined the grant at 04:31:36Z (bf95fb7b9a), before its first edit at 04:58:07Z (portal f95fa1db)."
+  }  ,
+  {
+    "id": "IRPT_FNTEND-C-S52",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-13T09:12:22Z",
+    "one_line": "ROUND-4 L9, DISMISSED: the two pause rows. The ~16:1xZ STOP they record was LIFTED by Andrew's word, by name, for both IRPT projects, at ~01:3xZ 2026-09-13 (card 1 of nine).",
+    "class": "OBSERVATION",
+    "adjudicates": [
+      "IRPT_FNTEND-S49",
+      "IRPT_FNTEND-S50"
+    ],
+    "disposition": "DISMISSED_WITH_REASON",
+    "spec_asserts": "S49 records Andrew's STOP verbatim; S50 records his ~16:2xZ clarification moving its criterion to projects.",
+    "world_is": "The pause is lifted. Record committed at c6be748be7 and read by this seat at HEAD before citing it.",
+    "hazard_standing": "INERT",
+    "dismissal_reason": "Superseded by the lift: org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260913_013xZ_NINE_CALLS_RULED_PAUSE_LIFTED_D10-2_DEMO_KEPT.md @c6be748be7, card 1, 'BOTH IRPT projects. THE PAUSE IS LIFTED, by his word, by name.' Neither hazard has a live path once the stop is lifted.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "c6be748be7 -- the lift record, committed, card 1"
+      ]
+    }
+  },
+  {
+    "id": "IRPT_FNTEND-C-S53",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-13T09:12:22Z",
+    "one_line": "ROUND-4 L9, DISMISSED: the two canon-census rows. S51's zero was withdrawn by S52, and S52's correction was absorbed into the D14 contradiction report v0.2, which is its carrier; nothing is owed on IRPT_FNTEND itself.",
+    "class": "OBSERVATION",
+    "adjudicates": [
+      "IRPT_FNTEND-S51",
+      "IRPT_FNTEND-S52"
+    ],
+    "disposition": "DISMISSED_WITH_REASON",
+    "spec_asserts": "S51: the ratified canon cards do not contradict round 4 on the plane they govern. S52: that 0 of 14 is 4 in 3 of 14.",
+    "world_is": "4.0.0_SA_CRO~D regraded IRPT_FNTEND to v0.2 at 5288666762 -- four storage surfaces, grade DERIVED from IRPT_BCKEND's rows. This seat re-read the four declarations itself in the portal wire contracts.",
+    "hazard_standing": "INERT",
+    "dismissal_reason": "Carried elsewhere, correctly: infra/logic/03_CONTRADICTION_REPORTS/IRPT_FNTEND.md v0.2 @5288666762 holds the finding and its grade. A FNTEND remediation would duplicate a D14 carrier. The storage question is IRPT_BCKEND's publisher, not this project's.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "5288666762 -- the D14 contradiction report v0.2 for IRPT_FNTEND"
+      ]
+    }
+  },
+  {
+    "id": "IRPT_FNTEND-C-S54",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-13T09:12:22Z",
+    "one_line": "ROUND-4 L9, DISMISSED: five rows resolved INSIDE the round by an issuer act this seat verified -- two grant widenings, one re-cut, one bound correction, one widening with a re-run read by hand here.",
+    "class": "OBSERVATION",
+    "adjudicates": [
+      "IRPT_FNTEND-W2-S20",
+      "IRPT_FNTEND-W1-S49",
+      "IRPT_FNTEND-W4-S5",
+      "IRPT_FNTEND-W2-S22",
+      "IRPT_FNTEND-W1-S54"
+    ],
+    "disposition": "DISMISSED_WITH_REASON",
+    "spec_asserts": "Each row refused a criterion that could not pass as cut; each named the issuer as the owner of the repair.",
+    "world_is": "W2-S20: the fe-s-22 file joined FE-s-26's grant at bf95fb7b9a (04:31:36Z), before its first edit (portal f95fa1db, 04:58:07Z) -- measured, no out-of-grant write. W1-S49: widened with a ruling at 913706a898. W4-S5: F28-AC6's bar re-cut at 9ab6043728, re-run PASS. W2-S22: the control pair corrected at 49f4026218 and repaired at portal 346d2b90, which F26-AC8's proof row cites. W1-S54: widened at 6177717ce0 with portal dd77d19f; F18-AC17 re-run reads '486 pass | 1 skip | 0 fail', ONE summary line, read by this seat.",
+    "hazard_standing": "INERT",
+    "dismissal_reason": "Each repaired by its named issuer and verified at the cited commit. Their PATTERN is not dismissed: five criteria cut against an assumption is graduated separately as S55 (C-S58).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "bf95fb7b9a (04:31:36Z) precedes portal f95fa1db (04:58:07Z) -- git log --date=iso-strict, both repos",
+        "913706a898, 9ab6043728, 49f4026218, 6177717ce0 resolve; portal 346d2b90 and dd77d19f resolve",
+        "TO-FE-s-18 proof instance F18-AC17 output_evidence: one summary-shaped line, 486 pass / 1 skip / 0 fail"
+      ]
+    }
+  },
+  {
+    "id": "IRPT_FNTEND-C-S55",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-13T09:12:22Z",
+    "one_line": "ROUND-4 L9, DISMISSED: five instrument findings resolved or disarmed within the round, S54 being itself the disarm record for W3-S17.",
+    "class": "OBSERVATION",
+    "adjudicates": [
+      "IRPT_FNTEND-W3-S17",
+      "IRPT_FNTEND-S54",
+      "IRPT_FNTEND-W3-S18",
+      "IRPT_FNTEND-W4-S6",
+      "IRPT_FNTEND-W1-S50"
+    ],
+    "disposition": "DISMISSED_WITH_REASON",
+    "spec_asserts": "W3-S17 falsified a worker-face premise about closed loopback ports; W3-S18 found bun's spawnSync ignores a mutated process.env; W4-S6 found 0 of 2554 is 2 of 2559; W1-S50 is a worker's own pass-1 defect.",
+    "world_is": "W3-S17 disarmed by its named owner in S54 (0 of 746 files probe the IPv4 literal); by S54's own account the false premise came from the issuer's spawn prompt, carried from a memory entry that has since been corrected (its own modified stamp: 2026-09-13T04:10Z). W3-S18's remedy is in-tree. W4-S6's re-measured counts ship inside the gate's own PLACEHOLDERS_BOUNDARY constant at d0c28a59be. W1-S50 fixed in pass 2 (portal fbc5699c): its panel arms are re-measured on the tab path the page renders.",
+    "hazard_standing": "INERT",
+    "dismissal_reason": "Resolved or disarmed, each with its evidence named. W3-S17's second half -- vite binds localhost as ::1 only -- stays true and is carried in S54 and in FE-s-27's own probe comments, not by an open row.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "IRPT_FNTEND-S54 -- the disarm, with its 0-of-746 denominator",
+        "d0c28a59be:.tools/to-pipeline-gate.py PLACEHOLDERS_BOUNDARY -- '2559 task-order files tracked, 305 tree, 2 carrying'",
+        "portal fbc5699c -- FE-s-25 pass 2"
+      ]
+    }
+  },
+  {
+    "id": "IRPT_FNTEND-C-S56",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-13T09:12:22Z",
+    "one_line": "ROUND-4 L9, GRADUATED to 1.0.0_SA_CTO: two live CHECKER defects. The <placeholders> reader false-admits (S53, widening W4-S7), and every `0 fail` bar is graded by an unanchored search (S56, latent).",
+    "class": "OBSERVATION",
+    "adjudicates": [
+      "IRPT_FNTEND-S53",
+      "IRPT_FNTEND-W4-S7",
+      "IRPT_FNTEND-S56"
+    ],
+    "disposition": "GRADUATED",
+    "spec_asserts": "proof-of-spec-check.py grades invocation alignment from the declared <placeholders> set and grades a count bar with re.search over the whole evidence.",
+    "world_is": "PLACEHOLDERS_TAG_RE `<placeholders>(.*?)</placeholders>` is unanchored, so a prose mention before the real element swallows the text between them (W4-S7: 367 names instead of 1); the gate mirrors it byte-identically BY DESIGN, so fixing one reader alone would re-open the gap the mirror closes. S56: latent, 0 false PASS across 875 rows (1.0.0_SA_CTO 96371). This seat read F18-AC16 and F18-AC17's deciding evidence by hand: one summary line each, so neither is a realization.",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO as owner of the checker limbs, with 2.0.0_SA_COO~F for W4-S7's issuance side. DISARMS when the placeholders reader is line-anchored in BOTH readers in one change, and when the count bar refuses a PASS beside a contradicting summary. Until then this seat reads the deciding line of every count bar by hand at L9.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "d0c28a59be:.tools/to-pipeline-gate.py:136-141 -- 'byte-identical to proof-of-spec-check.py's PLACEHOLDERS_TAG_RE'",
+        "IRPT_FNTEND-W4-S7 -- 367 names instead of 1 on TO-FE-s-28's own face",
+        "1.0.0_SA_CTO msg 96371 -- 648 instances, 875 PASS rows, 0 realized",
+        "TO-FE-s-18 proof instance F18-AC16 / F18-AC17 output_evidence -- one summary line each"
+      ]
+    }
+  },
+  {
+    "id": "IRPT_FNTEND-C-S57",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-13T09:12:22Z",
+    "one_line": "ROUND-4 L9, GRADUATED to 1.0.0_SA_CTO at L10: the evidence cannot show what the criteria name. 0 of 3 Holdings captures render basis or classification, and the frozen report is WITHHELD on screen while the export prints it -- because screen and export gate on two different availability facts.",
+    "class": "OBSERVATION",
+    "adjudicates": [
+      "IRPT_FNTEND-W2-S21",
+      "IRPT_FNTEND-W1-S51",
+      "IRPT_FNTEND-W1-S52",
+      "IRPT_FNTEND-W1-S53"
+    ],
+    "disposition": "GRADUATED",
+    "spec_asserts": "F18's criteria name a Holdings capture per basis and a frozen report whose screen, preview and print agree; FE-s-22's claims model says each Holdings capture renders basis and classification.",
+    "world_is": "From the manifest PNGs, read by this seat: AC9 (READY) mounts the body but its donut and slice table are EMPTY (W1-S52: three parentless nodes); AC10 and AC11 are StatusPanels. So 0 of 3, not W2-S21's 1 of 3. The frozen report's screen (AC4) is a StatusPanel 'Uncertain' because its fixture carries a status on 0 of 9 envelopes (W1-S51) -- AND ReportingTab.tsx:14-18 @c2eb8eb4 mounts the body only where isCompleteState (READY, STALE) while PrintEntry.tsx carries no report-state check (0 matches over that file). AC6's own Methods page prints 'Report availability UNCERTAIN' beside 'Bundle availability READY'. The screen gates on the REPORT's availability, the export renders on the BUNDLE's. AC14's Global map has no holdings key (W1-S53).",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO at L10 for the two product decisions -- (i) whether an UNCERTAIN report may be exported that the screen withholds, and (ii) W2-S21's (a)/(b)/(c) -- with 2.0.0_SA_COO~F for the three fixture remediations (a status on the frozen map; a parented Holdings tree; a holdings key on the Global map). DISARMS when (i) is ruled and the fixtures are re-cut so each capture can show what its criterion names.",
+    "notes": "CORRECTION TO C-S51, recorded here beside the row it concerns: every round-4 judgment criterion ends 'RECORD; NO VERDICT', and that is the WORKER's instruction -- the CVO grades. C-S51 described F18-AC18 as 'RECORD with NO VERDICT' as though it bound this seat. It does not: F18-AC18 carries a verdict at L9 (NOT MET, see the round-4 L8/L9 record). C-S51's conclusion is unaffected -- no criterion that reaches this seat asks whether a capture renders its claimed field.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/captures.manifest.json -- 11 entries; PNGs tracked at 887b183a2a",
+        "fe-s-18_holdings_{observed,target,missing_attribution}_390.png -- empty tree; 'Uncertain'; 'Partial'",
+        "fe-s-18_reporting_frozen_390.png -- StatusPanel 'Uncertain / Source time unknown'",
+        "fe-s-18_print_frozen_1440.png page 3 -- 'Report availability UNCERTAIN', 'Bundle availability READY'",
+        "portal c2eb8eb4:src/pages/InvestorReporting/tabs/reporting/ReportingTab.tsx:14-18 -- isCompleteState = READY, STALE",
+        "portal c2eb8eb4:src/pages/InvestorReporting/export/PrintEntry.tsx -- 0 matches for a report-state check"
+      ]
+    }
+  },
+  {
+    "id": "IRPT_FNTEND-C-S58",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-13T09:12:22Z",
+    "one_line": "ROUND-4 L9, GRADUATED to 1.0.0_SA_CTO for its round analysis: criteria cut against an ASSUMPTION rather than the code -- three at S55's own count, five at the COO's (96384) -- and not one caught by an issuance gate.",
+    "class": "OBSERVATION",
+    "adjudicates": [
+      "IRPT_FNTEND-S55"
+    ],
+    "disposition": "GRADUATED",
+    "spec_asserts": "L6 cuts criteria that the cell's code and the named instrument can satisfy as written.",
+    "world_is": "S55 counts THREE, one per order it names: F28-AC6's bar was a string its battery never prints; F26-AC8 needed FE-s-22's suite green while F26-AC5 repaired exactly what that suite pins; F25-AC6 needed a display surface outside the grant. Each was caught by a worker REFUSING. The COO's packet 96384 counts FIVE, adding F18-AC17 (W1-S54, refused) and the split control pair (W2-S22, filed as an observation, not a refusal). Every one was repaired mid-round by a modification of an issued order -- six such commits this round -- and a modification is exactly what GATE (viii) does not re-check (F28-AC8's qualification).",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F as issuer, with 1.0.0_SA_CTO in the round analysis. DISARMS when a cut-time check exists that catches at least one of S55's three shapes before issuance rather than a worker after spawning -- S55 itself names the OUTPUT-VOCABULARY limb as mechanisable.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "IRPT_FNTEND-S55 -- three instances, each with the control that would have caught it",
+        "2.0.0_SA_COO~F msg 96384 section 3 -- 'FIVE instances this round, all caught by workers refusing'",
+        "9ab6043728, bf95fb7b9a, 49f4026218, 913706a898, c44180ab9b, 6177717ce0 -- the six modifications, subjects read"
+      ]
+    }
   }
 ]
 ```
