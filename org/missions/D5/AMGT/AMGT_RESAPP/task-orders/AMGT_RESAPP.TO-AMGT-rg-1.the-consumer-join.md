@@ -110,9 +110,9 @@ criterion is NOT met however good its count looks.
 ## 4. PROOF OF SPEC -- one clause per criterion
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="AMGT-rg-1"><invocation>cd portal &amp;&amp; timeout 110 npx --package typescript tsc -b --force --listFiles --pretty false 2&gt;&amp;1 | grep -c -E "^[A-Za-z]:|^/"</invocation><expect>a printed integer STRICTLY GREATER THAN 1000 -- the referenced-project build actually examined source files. STOP: a small number or 0 is the VACUITY defect that let round 6 ship (a `files: []` references-only root examined ZERO files and could not fail), and is NOT met. The build must also emit no `error TS` lines; record the tail verbatim beside the count</expect></criterion>
-  <criterion id="AC2" cell_refs="AMGT-rg-1"><invocation>cd portal &amp;&amp; timeout 110 npx vitest run src/pages/SecurityAnalysis --reporter=basic 2&gt;&amp;1 | tail -20</invocation><expect>a test you ADD that drives the REAL check-face join over a populated bundle and asserts `183 of 183` fiscal checks joined AND `13 of 13` header checks joined, both counts PRINTED. STOP: `0` fiscal is the measured defect and is NOT met. STOP: AND A COUNT WITHOUT ITS DENOMINATOR IS NOT MET -- print `joined/total` for both bands, because a repair that joins 183 of 999 is a different bug wearing this one's face</expect></criterion>
-  <criterion id="AC3" cell_refs="AMGT-rg-1"><invocation>cd portal &amp;&amp; timeout 110 npx vitest run src/pages/SecurityAnalysis --reporter=basic 2&gt;&amp;1 | grep -i -c -E "refus|unresolved"</invocation><expect>STRICTLY GREATER THAN ZERO, from a test you ADD that drives the UNRESOLVED-price control through the repaired join and asserts the row JOINS and still renders as a REFUSAL rather than a value. STOP: a repair that makes 183 rows appear and turns the refusal into a number is NOT met -- it replaces one defect with a worse one, and the row says the REFUSE presentation must survive</expect></criterion>
+  <criterion id="AC1" cell_refs="AMGT-rg-1" judgment="true"/>
+  <criterion id="AC2" cell_refs="AMGT-rg-1"><invocation>cd portal &amp;&amp; timeout 110 node src/pages/SecurityAnalysis/__harness__/join.harness.mjs 2&gt;&amp;1 | tail -30</invocation><expect>FOUR PRINTED LINES FROM ONE RUN of a harness THIS CELL WRITES at that exact path, driving the REAL check-face join over a fixture of REAL CAPTURED ADAPTER BYTES committed beside it: `REPAIRED fiscal 183/183`, `REPAIRED header 13/13`, and -- IN THE SAME RUN, NOT A SEPARATE ONE -- the NEGATIVE CONTROL arm re-driving the IDENTICAL harness against the PRE-REPAIR figure identity printing `PRE-REPAIR fiscal 0/183`. STOP: THE NEGATIVE CONTROL MUST FIRE OR NOTHING HERE IS MET -- a run that prints only the repaired numbers proves the harness agrees with itself, not that the join was broken and is now fixed. STOP: AND A COUNT WITHOUT ITS DENOMINATOR IS NOT MET -- print `joined/total` on every line, because a repair that joins 183 of 999, or one that shrinks the denominator to 183 so the ratio flatters, is a different bug wearing this one's face. The fixture may be REDUCED from the captured bytes but the TOTALS may not move: 183 fiscal and 13 header are the denominators this criterion grades against</expect></criterion>
+  <criterion id="AC3" cell_refs="AMGT-rg-1"><invocation>cd portal &amp;&amp; timeout 110 node src/pages/SecurityAnalysis/__harness__/join.harness.mjs --unresolved-control 2&gt;&amp;1 | tail -30</invocation><expect>the UNRESOLVED-PRICE row driven through the REPAIRED join, printing `UNRESOLVED joined 1/1` AND `UNRESOLVED renders REFUSAL` AND `raw value absent from render: true`, with the PRE-REPAIR arm printing `UNRESOLVED joined 0/1` in the same run as the firing negative control. STOP: a repair that makes 183 rows appear and turns the refusal into a number is NOT met -- it replaces one defect with a worse one, and the row says the REFUSE presentation must survive. STOP: `raw value absent from render` must be asserted against the RENDERED output by searching it for the raw figure, not inferred from the code path</expect></criterion>
   <criterion id="AC4" cell_refs="AMGT-rg-1"><invocation>cp lib/research/checkface/scopes.py /tmp/rg1.pre; printf "\nBROKEN_SENTINEL_RG1 = 1/0\n" &gt;&gt; lib/research/checkface/scopes.py; timeout 110 python -c "import sys; sys.path.insert(0,'.'); import lib.research.checkface.scopes" 2&gt;&amp;1 | tail -3; cp /tmp/rg1.pre lib/research/checkface/scopes.py; cmp -s /tmp/rg1.pre lib/research/checkface/scopes.py &amp;&amp; echo RESTORED_BYTE_IDENTICAL || echo RESTORE_FAILED</invocation><expect>the import FAILS with a traceback while the sentinel is present, AND the final line reads `RESTORED_BYTE_IDENTICAL`. This is the control that the canonical identity you read is really the module you think it is: if a broken `scopes.py` imports cleanly, you are reading a different module and every number above is about the wrong object. The restore is from a WORKING-TREE snapshot, never `git checkout --`; `RESTORE_FAILED` is NOT met</expect></criterion>
   <criterion id="AC5" cell_refs="AMGT-rg-1" judgment="true"/>
 </proof_of_spec>
@@ -181,3 +181,39 @@ siblings with the display CAP of 25 declared rather than silent.
   consumes that source, and it is written down because a BEHIND verdict noticed and not recorded is
   the same as one never run.
 </preflight>
+
+### AMENDMENT 2026-09-13T01:2xZ -- `2.0.0_SA_COO~ZZZ`, AC1 ROUTED AND AC2/AC3 RE-INSTRUMENTED
+
+**THIS IS A DEFECT IN THE ORDER, NOT IN THE WORK.** `0.9.0_WK_AMGT_RESAPP~13` ran all three
+invocations exactly as written and all three failed for the same reason: **the toolchain they name
+cannot execute inside this cell's grant and this estate's egress rule.** Rows `Z-W13-S1` and
+`Z-W13-S2` carry it. Measured independently by this seat before amending, with both controls:
+`vitest` appears **0 times in `portal/package.json` and 0 times in `bun.lock`**, while `react` reads
+1 and a never-used name reads 0 -- so the instrument discriminates and the absence is real.
+`node_modules` holds **1 entry**, so `tsc -b` has nothing to build with and the only path to a green
+is registry egress plus a write outside `<paths>`.
+
+⛔ **AN ALWAYS-FAILS CRITERION IS EXACTLY AS BROKEN AS AN ALWAYS-PASSES ONE**, and `AC1`'s failure
+mode was the sharper of the two: its `0` is **indistinguishable from the references-only vacuity
+defect it was written to screen for.** A criterion that returns the defect's own signature when the
+instrument never started cannot discriminate, and this seat cut it that way.
+
+**WHAT CHANGED AND WHAT DID NOT.**
+
+- **`AC1` is converted to a JUDGMENT criterion and routed to `3.0.0_SA_CVO~Z` at L9. It is NOT
+  deleted.** The typecheck vacuity screen is genuinely UNSATISFIABLE here and **that coverage is
+  LOST for this round -- stated, not hidden.** The CVO grades the absence and its reason; this seat
+  does not grade it and does not get to call the gap closed.
+- **`AC2` and `AC3` keep every bar they carried** -- `183/183` fiscal, `13/13` header, printed
+  denominators on every line, and the unresolved-price row still rendering as a REFUSAL rather than
+  a value. **Only the instrument moved**, from a test runner this project does not declare to plain
+  `node` over a harness this cell writes inside its own granted path.
+- **BOTH NOW REQUIRE A FIRING NEGATIVE CONTROL IN THE SAME RUN** -- the pre-repair identity must
+  print `0/183` and `0/1`. That is strictly MORE discrimination than the originals had, which is the
+  test this amendment must pass: **an amendment that lets a criterion discriminate is a repair; one
+  that lowers a bar is laundering.** The evidence already reported may not be restated -- both
+  criteria are re-run from scratch in a fresh process.
+
+**`<paths>` IS UNCHANGED AND NEEDS NO WIDENING:** `portal/src/pages/SecurityAnalysis/` already
+admits the harness and its fixture. **The portal freeze is unchanged -- COMMIT YES / PROMOTE NO --
+and no artifact of this cell may grade a portal-dependent outcome REALIZED.**
