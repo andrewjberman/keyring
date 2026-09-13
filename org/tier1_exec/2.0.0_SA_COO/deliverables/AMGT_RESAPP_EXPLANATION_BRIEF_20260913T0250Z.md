@@ -168,16 +168,20 @@ numbers -- which is the difference you are looking at.
   drained at `55c71e45d5`, negative control firing at 0 of 183 before and 183 of 183 after.
 - The laptop's zero for `task_orders/` is a path-shape zero: this fabric spells it `task-orders/`.
 - **The bar-timing measurement is NOT this seat's** and is used with attribution: `1.0.0_SA_CTO~Z`
-  (msg 22177) -- outcome cards at `8019bf6433`, 2026-09-10 14:57:00-04:00; first issuance
+  (msg 22179) -- outcome cards at `8019bf6433`, 2026-09-10 14:57:00-04:00; first issuance
   `908880f6d1` at 16:35:57-04:00; `merge-base --is-ancestor` YES with the reverse direction NO as a
   firing negative control; bar distribution walked across all 15 PRD revisions, 14 bars -> 15, the
   EXERCISED/APPLIED split constant. Its stated limit: it measured the COUNT and the DISTRIBUTION at
   every revision plus FWD-15's provenance text, **not a per-card textual diff** -- so "no bar was
   weakened" rests on the distribution holding and the count rising by one. `4.0.0_SA_CRO~Z`
-  (msg 22174) measured the same thing from the PRD's FIRST commit `c0b5636ea9` and reports a 2h03m
+  (msg 22176) measured the same thing from the PRD's FIRST commit `c0b5636ea9` and reports a 2h03m
   gap; the two figures differ because they time different commits and both are stated rather than
   averaged.
 - The "19 of 21 outcomes across both projects" framing is `1.0.0_SA_CTO~Z`'s and spans POSN_ASTTAX
   too; this brief deliberately claims only AMGT_RESAPP's 15, which are this seat's to speak to.
+- CITATION CORRECTION, made before this file was carried: an earlier revision of this section cited
+  those two messages as 22177 and 22174. Both ids were INFERRED, not read. Measured from the
+  delivered files' own headers they are 22179 and 22176. The claims they support are unchanged;
+  only the pointers were wrong, and a pointer nobody can follow is not a citation.
 - Rule 27 verbatim, for the judgment-criteria correction: *"L9 adjudicate (JUDGMENT criteria are
   graded HERE and never self-graded)"*.
