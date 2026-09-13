@@ -1117,3 +1117,173 @@ This is the only cell writing the workspace repo and it touches no portal path.
 ⚠ **NO CVO SLUG HAS BEEN CUT FOR ROUNDS 2 OR 3.** `surprise-channel/remediations/` holds `REMEDIATION_v1.md` only. Both round-2 and round-3 analyses answered the COO's DRAIN-END READ instead, which the spine's L10 does not describe. `ADJUDICATION_v2.md` exists, the CVO's watermark is CURRENT (v2 at 91 of 93) and it has dispositioned every row it owns -- so the rows ARE compiled and adjudicated in substance, and no round-2 or round-3 JUDGMENT criterion (`F15-AC12`, `F16-AC10`, `F18-AC18`, `F19-AC10`, `F20-AC9`, `F21-AC8`, `F22-AC9`, `F23-AC7`) has been GRADED. Round 4 inherits no L9 disposition and no cell waits on one.
 
 ⚠ **`FE-s-18` IS NOW CARRIED INTO ITS THIRD ROUND.** Cut in round 2, non-terminal at the round-2 close, non-terminal at the round-3 close, and its blocker is `FE-s-26` in this one. Recorded so that the length of the carry is visible as a fact rather than as an accident.
+
+---
+
+# ROUND 5 -- v0.5 -- the recut on the CTO's ROUND-4 ANALYSIS
+
+```json
+{
+ "round": 5,
+ "decomp_version": "v0.5",
+ "prd_ref": "org/missions/D9/IRPT/IRPT_FNTEND/prd/IRPT_FNTEND_PRD.md@d1479bc5f0",
+ "prd_version": "v0.6 -- UNCHANGED; every round-5 ruling applies ratified PRD text (analysis s.2, s.7), so no L4-R half re-opens",
+ "analysis_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_IRPT_FNTEND_ROUND4_20260913.md@4f6c7abc7b (s.5 inputs 1-7; s.7 addendum items 6, 8-11; s.7 answer to 96406)",
+ "slug_ref": "3.0.0_SA_CVO msg 96386, record org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND4_L8_L9_20260913.md@be3b6849a9 -- the FIRST IRPT_FNTEND round to reach L10 in spine order; late rounds 2-3 slug msg 96389 @49ef1fd1b1",
+ "andrew_direct": "card 6, ~18:4xZ 2026-09-13, recs approved @e2210bf34c -- gate (viii) grades a MODIFICATION of an order that already declares the element",
+ "round4_cells": "FE-s-25..FE-s-28 ALL COMPLETE and drained; FE-s-18 COMPLETE and drained after three rounds carried",
+ "cells": 8,
+ "cell_id_shape": "FE-s-<n> continuing from 29",
+ "code_repo": "portal (gitlink in the workspace; branch DEV @c2eb8eb4, measured)",
+ "record_repo": "workspace (branch CLOUD)"
+}
+```
+
+Round 4's finding, one layer further in than round 2's: **round 3 fixed the seam, and the gate behind it withholds what the seam now delivers.** HoldingsTab mounts its body on READY only (`HoldingsTab.tsx:90`), ReportingTab only where `isCompleteState` admits READY and STALE (a designed, tested choice), and PrintEntry checks no report state at all. The PRD already rules the direction: FWD-3 (a PARTIAL result, and the PDF carries the same values), FWD-5 (missing attribution stays VISIBLE), FWD-6 (incomplete never shown as complete). Rounds 1-4 above are unchanged and keep their statuses; round-5 cells are additive.
+
+## R5.1 THE RECTANGLE -- eight cells, and the checker limbs first
+
+| cell | ruling | write surface (portal unless stated) | serves | rows | wave | slot |
+|---|---|---|---|---|---|---|
+| `FE-s-29` | M(i), M(ii), Q, card 6 -- the checker limbs | **workspace** `.tools/to-pipeline-gate.py`; `.tools/proof-of-spec-check.py`; `.tools/tests/` | the evidence plane | S53, S56, W4-S7, S42 (substrate half), C-S67 | A | ~4 |
+| `FE-s-30` | H -- one availability gate, and Reporting under it | `state/availability.ts` (NEW); `tabs/reporting/`; `__tests__/fe-s-5/states.test.ts`; `__tests__/fe-s-30/` | FWD-3, FWD-6 | C-S57, S30 (class) | B | ~1 |
+| `FE-s-33` | the fixture cell | three smoke maps + the Holdings maps + `__tests__/fe-s-18/gen-fixtures.ts`; `__tests__/fe-s-33/` | FWD-3, FWD-5, FWD-11 (evidence) | W1-S51, W1-S52, W1-S53 | B | ~2 |
+| `FE-s-34` | K + O -- the relabel | `state/status.ts`; `tabs/analysis/StageDisplay.tsx`; `tabs/analysis/VariantSelector.tsx`; `__tests__/fe-s-34/` | FWD-4, FWD-6 | F25-AC12, W1-S46, C-S65 | B | ~3 |
+| `FE-s-35` | P + W1-S20 -- the wire boundary | `src/api/endpoints/investor-reporting.ts`; `contracts/envelope.ts`; `contracts/adapt.ts` (report_title only); `tabs/analysis/composer.ts` (report_title only); `__tests__/fe-s-1/`; `__tests__/fe-s-13/`; `__tests__/fe-s-19/pre-envelope.test.ts`; `__tests__/fe-s-35/` | FWD-1, FWD-4, FWD-6 | W1-S39, W2-S11, C-S65, W1-S20 | B | ~5 |
+| `FE-s-36` | N -- the output-vocabulary limb at L6 | **workspace** `.tools/to-pipeline-gate.py`; `.tools/tests/` | the evidence plane | S55, C-S58 | B | ~4 |
+| `FE-s-31` | H (export) + J + W2-S12/W3-S5 | `render/PrintEntry.tsx`; `render/Page.tsx`; `render/performance/PerformanceDocument.tsx`; `render/analysis/AnalysisDocument.tsx`; `export/Preview.tsx`; `export/ExportButton.tsx`; `export/submit.ts`; `__tests__/fe-s-31/` | FWD-3, FWD-4, FWD-6, FWD-8 | C-S57, S27, C-S68, W2-S12, W3-S5 | C | ~1 |
+| `FE-s-32` | I -- Holdings under the gate, (a) as its check | `tabs/holdings/`; `__tests__/fe-s-26/renders-differently.test.ts`; `__tests__/fe-s-22/capture-hash.test.ts` (DISTINCTION verdict only); `__tests__/fe-s-32/` | FWD-5, FWD-6 | W2-S21, W1-S35, C-S57 | C | ~2 |
+
+**Coverage by subtraction, three domains.**
+(1) The round-5 inputs (denominator 13: s.5 items 1-7; s.7 items 8, 9, 10a, 10b, 11; card 6; the FE-s-18 bound-5 DISTINCTION freeze) MINUS what covers each: 1=FE-s-29; 2=FE-s-30+FE-s-31; 3=FE-s-32; 4=FE-s-33; 5=FE-s-31; 6 (K widened by O)=FE-s-34; 7=FE-s-36; 8=FE-s-35; 9=FE-s-29; 10a (`export/submit.ts:87`)=FE-s-31; 10b (`report_title`)=FE-s-35; card 6=FE-s-29; the DISTINCTION freeze=FE-s-32; **11 = WITHDRAWN, already fixed** (`scripts/ui-smoke.mjs:341` changed at portal `25062fce` by FE-s-22, both arms proven by F22-AC6/AC7; measured by this seat, confirmed by 1.0.0_SA_CTO @4f6c7abc7b) = **0 uncovered**.
+(2) The PRD header's outcomes (denominator 8: FWD-1, 3, 4, 5, 6, 8, 11, 12) MINUS those round 5 moves: FWD-1 {35}, FWD-3 {30,31,33}, FWD-4 {31,34,35}, FWD-5 {32,33}, FWD-6 {30,31,32,34,35}, FWD-8 {31}, FWD-11 {33} = **1 NOT MOVED AND NAMED**: FWD-12 (design conformity), served in rounds 2-3.
+(3) The rows the analysis routes here MINUS their carrying cell: W2-S21 -> FE-s-32 (ruling I is its disposition); W1-S51/S52/S53 -> FE-s-33; W1-S35 -> FE-s-32; W1-S39 + W2-S11 -> FE-s-35; W1-S46 -> FE-s-34; W2-S12 + W3-S5 -> FE-s-31; W1-S20 -> FE-s-35; S53 + S56 + W4-S7 -> FE-s-29; S42's substrate half -> FE-s-29 (ruling Q's route); S55 -> FE-s-36; C-S68 -> FE-s-31; W1-S36 -> none, WITHDRAWN = **0 uncovered**.
+
+**NOT ROUND 5's:** ruling L (the target-basis UNCERTAIN rule belongs in the producer's contract -- IRPT_BCKEND's L4, carried by 1.0.0_SA_CTO); the producer side of the smoke-map seam (IRPT_BCKEND-S51); C-S71's seven INERT wire gaps; W2-S16.
+
+## R5.2 BOUNDS -- ALL ROUND-5 CELLS (rounds 1-4 bounds stand)
+
+```
+checker    ⛔ RULING M's SEQUENCING. FE-s-29 lands before any other round-5 cell's proof is checked, so
+first      no round-5 grade moves under it: every wave-B and wave-C worktree is cut AFTER FE-s-29 is
+           drained, so the checker a worker validates with is the new one. Until then the hand-read of
+           every count bar's deciding line stands.
+anchors    ⛔ every count bar is LEFT-anchored `(?<![0-9])` and every bound RIGHT-anchored `(?![0-9])`,
+           NEVER `\b` -- a `\b`-anchored bar false-FAILS coloured output (1.0.0_SA_CTO 96370, tested with
+           the grader's own call). Measured at the cut: proof-of-spec-check grades <expect> with
+           re.search(expect, output_evidence, S|M) (`:106`).
+evidence   `output_evidence` carries the DECIDING invocation's output and nothing else; earlier runs and
+           BEFORE notes go in `status_reason` (96370). No anchor closes shape (b); hygiene does.
+drives     ⛔ 1.0.0_SA_CTO @4f6c7abc7b: EVERY round-5 criterion declares `drives="network"` or
+           `drives="none"`. A criterion whose proof requires a response to travel the real network path
+           or a real browser is `network`; everything else is `none`. An explicit `none` is enforcement,
+           not a waiver. FE-s-29 builds the limb; these faces declare ahead of it.
+plane      ⛔ RULING H PARTITIONS ON THE PRODUCER PLANE (confirmed 96408). A body with NO wire state falls
+           back to `EXPLICIT_UNKNOWN_STATE = 'UNCERTAIN'` (`contracts/adapt.ts:103`) -- the SAME view state
+           as a producer's UNCERTAIN -- and must NEVER render as an answer. Gate on
+           `Availability.producerState` (`contracts/index.ts:127`), never on the view's EnvelopeState
+           alone. F19-AC5 ("UNCERTAIN WITHOUT A WIRE STATE: 2 of 2") stays green.
+overturn   ⛔ A test that asserts the behaviour a ruling OVERTURNS is granted to the cell that overturns it,
+           with a bound: change only the claim the ruling changes, cite the ruling, show it both ways.
+           Measured at the cut (S55 control 2): fe-s-5/states.test.ts asserts PARTIAL -> StatusPanel
+           (its own docstring) -> FE-s-30; fe-s-26/renders-differently.test.ts classifies Holdings
+           panels -> FE-s-32. fe-s-3's `isCompleteState('PARTIAL') === false` STAYS (ruling H keeps that
+           predicate for "shown complete"); fe-s-10's Holdings negative control is LOADING and stays a
+           panel. No test asserts "Updated" or "account(s) in scope" literally.
+grant      a grant is a <paths> entry, never prose (96381); a retraction is a <paths> removal before the
+           cut. Every face names its surfaces by FILE where a directory would reach another cell's.
+instrument `scripts/ui-smoke.mjs` is granted to NO round-5 cell (item 11 withdrawn). Browser criteria
+           drive the page under NODE (chromium under bun fails on this box -- S42) and read their port
+           through FE-s-27's declared-precondition helper; an absent server reports SKIPPED, never FAILED.
+refusal    every face instructs its worker to REFUSE a criterion it cannot satisfy as written and report
+           the refusal with its measurement. Round 4: every refusal was right (S55 counts five).
+typecheck  EVERY portal order carries `bun run typecheck; echo rc=$?` -> rc=0.
+channel    round-5 rows go to INVESTIGATION_v2.md; READ THE WHOLE PLANE (v1 AND v2) before minting; write
+           with `newline='\n'` and READ THE DIFFSTAT of the commit (S36, S47).
+gitlink    never stage `portal` in the workspace repo. PORTAL IS FROZEN: local DEV commits only.
+```
+
+## R5.3 THE CELLS
+
+### `FE-s-29` -- the checker limbs, at the head (WORKSPACE cell)
+Four limbs, one cell, because M(i) must change BOTH readers in one change and the other three live in the same two files. (i) The `<placeholders>` reader line-anchored in `to-pipeline-gate.py` and `proof-of-spec-check.py` together -- S53 measured the shipped reader false-admitting on two branches and the line-anchored one closing both with zero regressions. (ii) `proof-of-spec-check` refuses a count-bar PASS whose evidence carries a contradicting nonzero count for the bar's noun: REFUSE new instances, ANNOUNCE legacy (S56). (iii) Ruling Q with the CTO's condition: the discriminator reads the invoked TEST FILE (a seeded criterion and a browser criterion both invoke `bun test <file>`), and the `drives=` declaration is MANDATORY for new IRPT_FNTEND criteria. (iv) Card 6: gate (viii) also grades a MODIFICATION of an order that already declares `<placeholders>`; nothing is back-filled.
+
+### `FE-s-30` -- one availability gate, on the report, and Reporting under it
+The predicate lives in ONE new module over ONE object: the REPORT's availability, partitioned on the producer plane. The five answer-bearing states (READY, PARTIAL, STALE, NEEDS_CORRECTION, UNCERTAIN) render the body with state, reason and `business_date` visible and never styled complete; the four no-answer states render the panel; a body with no wire state renders the panel. `isCompleteState` stays the predicate for "shown complete" and stops being the predicate for "rendered at all". The body-mount claims are browser criteria of necessity (S42: no DOM environment here, so mounting and seeding are indistinguishable under `renderToStaticMarkup`).
+
+### `FE-s-33` -- the fixture cell: maps that can actually show what is claimed
+W1-S51: `fe-s-18-frozen.json` carries a status on 0 of its 9 envelopes (measured), so the frozen report's screen view is a StatusPanel. W1-S52: `gen-fixtures.ts:143` emits `parent_node_id: null` for every node, so the READY Holdings tree is parentless and its donut and table render empty. W1-S53: `fe-s-14-global.json` carries 2 keys and no holdings key (measured), so Global's Holdings reads Failed. ⛔ **The Holdings maps carry FE-s-26's hand-authored statuses that the generator does not emit** -- regenerating them from a fixed generator must not silently strip FE-s-26's repair.
+
+### `FE-s-34` -- the relabel
+`formatSourceAge` labels its figure "Updated N ago" (`state/status.ts:280-287`) while it now measures a business-date age. And 2 of its 3 call sites (`StageDisplay.tsx:51`, `VariantSelector.tsx:61`) still age `envelope.sourceAsOf`, the `as_of` instant, not the `business_date` the clause governs (measured; the CTO's census). One cell: both analysis panels render through `formatSourceAgeForState` and carry the corrected label.
+
+### `FE-s-35` -- the wire boundary
+Ruling P: a body carrying none of `contract_version` / `operation` / `firm_id` is REFUSED. Today `investor-reporting.ts:907` admits only envelope-shaped bodies and everything else takes `:936-943` -- counted, adapted, returned as a view (measured). The fix refuses there with `EnvelopeMismatch` naming `body`, rendered as a state through `envelopeFromRefusal`. Round-1 suites that serve bare bodies are re-based (measured: 2 of the 6 `LiveClient` suites carry no `contract_version`, `fe-s-1/adapter` and `fe-s-13/no-route`; `fe-s-19/network-state` builds v1 envelopes and is safe). W1-S20 rides here: `contracts/adapt.ts` types `report_title` as `string` while `tabs/analysis/composer.ts` sends `string | null` -- two builders of one body.
+
+### `FE-s-36` -- the output-vocabulary limb at L6 (WORKSPACE cell)
+S55's control (1), installed: at issuance, a criterion whose `<expect>` its named tool can never print is refused. Real positive control: F28-AC6 as issued (`0 fail` against a battery that prints only `BATTERY PASS` / `BATTERY FAILED`). Prospective -- it grades newly added orders only, so it cannot grade round 5 and runs in wave B, not at the head (confirmed 96408).
+
+### `FE-s-31` -- the export under the gate, and the print scope line
+The export gates on the BUNDLE today: the bundle's own envelope is the composer's hard-coded READY (`export/resolveBundle.ts:137`) while PrintEntry checks no report state (measured). Feasible without a producer change: the report view carries `availability` (`contracts/index.ts:222`) and `resolveBundle` fetches it through the typed client. Answer-bearing states export with state, reason and `business_date` on every page -- the chrome renders in exactly three places, `render/Page.tsx` plus the two documents that feed it (measured; the narrative page builds no Page of its own). No-answer states refuse to produce a document. Ruling J: `PerformanceDocument.tsx:45` prints `{accountIds.length} account(s) in scope`, an absent field printed as zero. W2-S12/W3-S5: `submitExport` is typed to the StatusEnvelope ack (`export/submit.ts:87`) instead of the ExportReceipt the producer answers.
+
+### `FE-s-32` -- Holdings under the gate, with (a) as its check
+Ruling I: none of W2-S21's (a)/(b)/(c) is the fix; the gate is. PARTIAL renders the holdings with the classification gap visible as unknown; UNCERTAIN renders the weights with the unnamed model revision stated; (a) is then the check, read from a REAL render. (b) is REJECTED (it ratifies a FWD-5 violation) -- the claims model is not edited. (c) holds for no-answer states only. W1-S35 rides here: the pie labels clip at `DrillTree.tsx:194` (`outerRadius={100}`), a prop the round-2 layout bound excluded. And the FE-s-18 bound-5 DISTINCTION verdict, still reading live digests, is frozen to one map here -- this is the next cell that changes those digests.
+
+## R5.4 DEPENDENCY EDGES, SLOTS, FAN-OUT
+
+```
+  FE-s-29 <- (none)              READY ROOT   workspace .tools/ (both checker files)
+  FE-s-30 <- FE-s-29             wave B       the predicate + tabs/reporting/
+  FE-s-33 <- FE-s-29             wave B       fixtures + the generator
+  FE-s-34 <- FE-s-29             wave B       state/status.ts + two analysis panels
+  FE-s-35 <- FE-s-29             wave B       the endpoint + round-1 suites
+  FE-s-36 <- FE-s-29             wave B       workspace .tools/to-pipeline-gate.py (same file as FE-s-29)
+  FE-s-31 <- FE-s-30             wave C       consumes the predicate
+  FE-s-32 <- FE-s-30, FE-s-33    wave C       consumes the predicate and the parented tree
+
+  weakly connected components: M = 1     ready roots at issuance: R = 1
+  waves by depth: A={29}  B={30,33,34,35,36}  C={31,32}      max concurrent width: 5
+  ~1 FE-s-30 then FE-s-31   ~2 FE-s-33 then FE-s-32   ~3 FE-s-34   ~4 FE-s-29 then FE-s-36   ~5 FE-s-35
+```
+
+Every wave-B edge on FE-s-29 is a SEQUENCING edge, not a data edge: ruling M requires the new checker in every later worktree. FE-s-36's edge is also a FILE edge (to-pipeline-gate.py). Wave-B pairs are disjoint by FILE: FE-s-30 writes a NEW module and never `state/status.ts` (FE-s-34's); FE-s-34 writes `StageDisplay.tsx` and `VariantSelector.tsx` and FE-s-35 writes `composer.ts` -- three files under `tabs/analysis/`, granted by file.
+
+**Fan-out: `1 of 1 ready roots at issuance, widening to 5 of 5 at wave B and 2 of 2 at wave C, cap 8, reason: ruling M puts the checker limbs ahead of every other proof, and the wave-B surfaces are disjoint by file`.**
+
+## R5.5 RULE 24 RECORD (round 5)
+
+| postulate | how |
+|---|---|
+| (i) MECE | three domains by subtraction in R5.1: inputs 13-13=0 (item 11 WITHDRAWN with evidence, not dropped); outcomes 8-7=1 NOT MOVED AND NAMED (FWD-12); routed rows 0 uncovered. Cells partition by FILE; the two `.tools` cells share `to-pipeline-gate.py` and are SERIALIZED (FE-s-36 after FE-s-29), never concurrent. |
+| (ii) same grain | (write region, ruling) per cell; FE-s-29 and FE-s-36 are at the FABRIC grain and stated as such. |
+| (iii) intent | one axis for the product cells: a qualified answer is SHOWN, qualified, and never hidden or styled complete -- on screen and in the export alike. The fabric cells' axis is the record's integrity. The fixture cell's axis is the evidence's reach. |
+| (iv) state | moves FWD-3/4/5/6/8/11 and FWD-1 toward EXERCISABLE. Does NOT move: any grade to REALIZED (the evidence stays fixture-bound; seven of eight outcomes cross IRPT_BCKEND for their EXERCISED proof); FWD-12; the producer's contract (ruling L is IRPT_BCKEND's); the claims model (ruling I rejects (b)); `isCompleteState` (kept for "shown complete"); the portal freeze. |
+
+**The DOMAIN claims this record rests on were each measured at portal DEV c2eb8eb4, not inherited:** the gate's plane (producer, `contracts/index.ts:127`) against the view's `EXPLICIT_UNKNOWN_STATE` (`adapt.ts:103`); the chrome's three render sites; the 6 `LiveClient` suites; the 6 seeded suites; the 3 `formatSourceAge(` call sites.
+
+## R5.6 BATTERY DISPOSITION (round 5)
+
+| lens | disposition | denominator / reason |
+|---|---|---|
+| comp-schedule / comp-iam | DECLARED-NOT-APPLICABLE | no scheduled producer, no IAM-gated resource among these surfaces |
+| comp-adversary | RUN at L4 on v0.6 (both halves SIGNED) | carried; PRD unchanged -- every ruling applies ratified text |
+| the gate's plane | RUN | `HoldingsTab.tsx:90` READY-only; `ReportingTab.tsx:175` via `isCompleteState` (`status.ts:144`); PrintEntry: three phases, no report-state check; `EXPLICIT_UNKNOWN_STATE='UNCERTAIN'` at `adapt.ts:103` |
+| export feasibility | RUN | report view carries `availability` (`contracts/index.ts:222`); `resolveBundle.ts:137` hard-codes the bundle's own READY; chrome at `Page.tsx` + two documents; narrative page builds no Page |
+| overturned-behaviour tests | RUN, 19 files by census, then read | fe-s-5/states (granted to FE-s-30); fe-s-26/renders-differently (granted to FE-s-32); fe-s-3, fe-s-10, fe-s-19 safe as measured |
+| the fixture gaps | RUN | frozen map 9 envelopes / 0 status; Global map 2 keys / 0 holdings; generator `parent_node_id: null` at `:143` |
+| the wire | RUN | `investor-reporting.ts:907` / `:936-943`; 6 LiveClient suites, 2 bare; `pre-envelope.test.ts` prints `PRE-ENVELOPE BODIES REFUSED: 3 of 3` and `CONTROL: ... ACCEPTED` at DEV |
+| item 11 | RUN -- WITHDRAWN | `ui-smoke.mjs:341` pickaxe -> `25062fce`; F22-AC6/AC7 both arms |
+| instruments at the cut | RUN | proof-of-spec-check --self-test `RESULT: 18 of 18 arm(s) behaved`; to-pipeline-gate --self-test `RESULT: 0 arm(s) failed of 51`; alignment battery `BATTERY PASS`; placeholders battery green |
+
+## R5.7 REFUSES TO ASSUME (round 5)
+
+1. That a view state names a producer state. `UNCERTAIN` is both the producer's answer and the consumer's "no state at all" (ruling H, confirmed 96408).
+2. That a carried row describes the code it names. C-S72 re-described W1-S36 a day after the line was fixed; the CTO put it into round 5 on that grounding (item 11, withdrawn).
+3. That a ruling an issuer must remember is a control. Ruling Q's declaration is MANDATORY (96408).
+4. That a generator and the maps it once emitted agree. FE-s-26 hand-repaired the Holdings maps the generator does not know about.
+5. That the evidence a round certified still stands after the next repair. Two tests read the live artifact a later cell was ordered to overwrite, twice in round 4.
+6. That a positive control proves a detector fires. It must be built from the real shape (S52); a control that passes on a commit after the retirement proves nothing (the WIRE_SCHEMA_PINS control, rerun at 774c595b).
+
+## R5.8 HOLDS
+
+**None blocking.** One owed act, recorded so it is not lost: when FE-s-29 lands card 6, CLAUDE.md Rule 27's "widening it is HIS call and is carded" and the gate's own docstring go stale, so a LAW EDIT is owed at FE-s-29's drain (1.0.0_SA_CTO 96394). FE-s-29 updates the gate's docstring inside its grant; the CLAUDE.md edit is this seat's at the drain, as a three-surface law edit.
