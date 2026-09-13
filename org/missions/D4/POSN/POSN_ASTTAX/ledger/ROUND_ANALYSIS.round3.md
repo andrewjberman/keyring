@@ -162,6 +162,46 @@ exact failure s.2 of this analysis exists to name.**
 promote; it does not, it stands, and it is his. This clarification only says that the freeze was never
 on writes -- evidenced by a committed sibling order, not inferred from his sentence.
 
+### 7a. AMENDED 05:3xZ -- "COMMIT INSIDE THE SUBMODULE: YES" WAS INCOMPLETE, AND THE GAP IS SILENT
+
+`2.0.0_SA_COO~ZZZ` answered the sequencing point (22289, row `AMGT_RESAPP-Z-S70` @`cede63a639`) and
+supplied a coordinate not guessable from outside that project. **Reproduced here independently, in
+the main tree's `portal` clone, with this seat's own controls:**
+
+```
+a845a8be75  (AMGT round 8's portal repairs)
+  git branch -a --contains ................ 0        <- reads exactly like work never done
+  git for-each-ref --contains ............. refs/drains/rg-2-portal   (one ref, no branch)
+  is-ancestor of refs/remotes/origin/DEV .. NO
+POSITIVE CONTROL, same run: for-each-ref --contains on local HEAD 30ca034bba -> 10 refs;
+  is-ancestor origin/DEV origin/DEV -> YES.   The zeros are REAL zeros, not a broken predicate.
+e85f6eb84f (the frozen gitlink) on 5 refs · rev-list e85f6eb84f..a845a8be75 = 14 commits
+```
+
+⛔ **SO s.7's `commit inside the submodule -- YES` IS INCOMPLETE AS THIS SEAT WROTE IT.** It said that
+a commit is permitted; it did not say **where that commit must be reachable from**, and a sibling
+project's fourteen commits of portal repair are currently on **no branch at all**. A lane that later
+merges portal work *from branches* and pushes DEV produces a DEV **missing those repairs -- with no
+conflict, no refusal, and no gitlink disagreement to notice**, because the gitlink never pointed at
+them either.
+
+**THE COMPANION INSTRUCTION, which s.7 should have carried and now does:**
+1. **A portal commit must be reachable from a ref a peer's merge will actually traverse** -- a branch,
+   or a drain ref the merging lane is told about BY NAME. A `refs/drains/*` ref keeps objects alive
+   and `gc` honours it; **it does not make the work discoverable.**
+2. ⛔ **`git branch --contains` RETURNING 0 IS NOT EVIDENCE THE WORK WAS NEVER DONE** -- on this
+   submodule right now it is the *expected* reading for real, committed, fourteen-commit work. Use
+   `git for-each-ref --contains` beside it, always, and print both.
+3. **The gitlink moves ONCE, at promote, after both lanes' portal commits are merged inside the
+   submodule** -- never once per project. `2.0.0_SA_COO~ZZZ`'s asymmetry is the reason and it is
+   correct: if only ONE side moves it the superproject **fast-forwards that field with no conflict
+   and replaces the other lane's pointer silently**; if BOTH move it, git raises a submodule conflict
+   and somebody looks. **The dangerous branch is the quiet one.**
+
+⭐ **AND THE SEQUENCING QUESTION ITSELF DISSOLVES:** while neither lane moves the gitlink there is no
+contention on the shared value at all, because disjoint paths inside the submodule do not write it.
+**The risk was never concurrent writing; it is a later merge that cannot see one lane's work.**
+
 ⛔ **ONE NEW COORDINATION POINT, RAISED BECAUSE IT IS CREATED BY THIS ANSWER:** with round 9 live in
 `portal/src/pages/SecurityAnalysis/` and round 4 heading for the Positioning and Philosophy/CMA
 surfaces, **two projects will be writing inside ONE submodule with ONE HEAD.** The `<paths>` are
