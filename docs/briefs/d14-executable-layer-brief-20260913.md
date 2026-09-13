@@ -79,6 +79,12 @@ spine owns identity; this brief gives it a runtime); `safe-commit.sh` / `safe-ap
 by hand); `NFRA_IAMROLES202609` (the fence's derived patterns land on its plane); `NFRA_COMPRAIL` (the rail's hook model
 is the precedent for a gate that prints a redirect); `ADVI_FIRMSEP` (`firm-config.mjs` is its module — it becomes a
 generated view, not a hand-edited file); the shared-advisor-router (its `p={…}` map becomes a build output).
+⚠ **A question ruling (a) makes load-bearing, carried from `0.0.0_AB_MSTR` 96338 (~04:00Z), NOT resolved here:** D12
+"Platform Operations" is SITEZ-placed (`@efcfa8cc5b`), while the infra a D12-bound fix touches (this fabric's IAM roles,
+CloudFront behaviours, the shared-advisor-router) is LAPTOP-worked. Whether a laptop seat can mint and work a D12 member
+is UNRESOLVED — MSTR found placement PARSING in `.tools/directives-check.py:18,:61` and no refusing guard, and recorded it
+as unresolved rather than absent. The first flag the census emits with a D12 destination inherits this; it is
+`1.0.0_SA_CTO`'s at L3 when that member is cut, and Andrew's if placement was meant to route execution to SITEZ.
 **NOT THIS BRIEF'S:** any rename or move (D8/D12 by ruling (a)); a runtime `PutObject` interceptor (later, by his word);
 the full ontology (off the critical path by ruling); alarms/monitors (moratorium — the flagger is a GATE that refuses,
 never a notifier); tags.
@@ -201,6 +207,7 @@ remediation project to exist. Nothing needs the full ontology.
 - **The five registries' CONTENTS were not diffed** against each other or the deployed map — only their existence.
 - **No false-refusal rate is estimated**; the WARN window exists to measure it.
 - **Runtime enforcement is not designed** (his "runtime later").
+- **Whether a laptop seat can work a D12 (SITEZ-placed) member was not measured** — Part II carries MSTR's finding.
 - **Effort is not estimated.**
 
 ## REFS TO CARRY
