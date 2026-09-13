@@ -45,6 +45,39 @@
 
 ## THE CELL
 
+> ⛔ **SECOND RE-CUT, 2026-09-13 ~07:3xZ -- `<proof_of_spec>` MOVED TO THE GATE-DERIVED NAME, AND THE
+> PIN IS AUTHORISED. `0.9.0_WK_POSN_ASTTAX~16` REFUSED THE ISSUER'S FIRST INSTRUCTION AND WAS RIGHT.**
+>
+> The issuer asked for a byte-identical copy at the derived name. The worker produced it, measured it
+> on four instruments (md5 `947606c9e5`, sha256 `4dd9ef7372`, `wc -c` 37964, `cmp` rc=0 -- **not one
+> byte changed**), and then **declined to commit it**, because:
+> **THE SAME BYTES VALIDATE AT ONE PATH AND FAIL AT THE OTHER.** `proof-of-spec-check.py:279-282`
+> grades a PENDING artifact row against the COMMIT HISTORY OF THE INSTANCE PATH, not its content:
+> the artifact must be TOUCHED by the instance's own commit. `a97b140b54` carried the instance AND
+> both PENDING artifacts together, which is why the ORIGINAL passes. Those artifacts are now committed
+> and clean, therefore UNSTAGEABLE -- **so no commit anyone can make would ever touch them, and no
+> committed copy at the derived name can ever be VALID.**
+> ⭐ **AND IT WOULD NOT HAVE UNBLOCKED THE FLIP ANYWAY.** `to-pipeline-gate.py:1626-1634` does not test
+> presence -- it RUNS the validator and refuses on `rc != 0`. The copy would have moved the refusal
+> from *"no instance found"* to *"instance NOT VALID"*, while planting a permanently-INVALID second
+> instance that is **the only candidate the gate's glob can see.** Obeying the instruction would have
+> made the order strictly harder to close. The worker held the copy untracked and filed `W16-S6`.
+> ⚠ **The `~17` precedent does NOT transfer and the worker said so:** `~17` could commit both paths
+> alongside its artifacts because they had not landed yet. `~16`'s had.
+>
+> **AUTHORISED NOW, and it is the checker's OWN prescribed fix:** produce the derived-name instance
+> with its two PENDING artifact rows **PINNED to `a97b140b54`** (the commit that in fact carries them),
+> so the PENDING rule no longer applies. **That is a FACTUAL CORRECTION, not a re-grade** -- the
+> artifacts genuinely are at that commit. ⛔ **NO VERDICT, NO CRITERION AND NO EVIDENCE MAY CHANGE.**
+> ⚠ Consequence accepted and stated rather than discovered: the two paths will **no longer be
+> byte-identical**, so the recorded `~17` two-path workaround shape does not survive this and should
+> not be cited as if it did.
+>
+> ROOT CAUSE, recorded as the issuer's: this order named the SHORT `<to_id>` form while the gate
+> derives the FULL TO stem (`:1600-1609`). Had the block named the derived form at the first cut, the
+> instance would have been written there once and none of this would exist.
+
+
 Round 3's `AT3-s-4` proved the classification list survives a re-seed for ONE writer, and surfaced
 row `W14-S3` naming a SECOND: **`seed_canonical_securities.py`, with 4 of its 11 members carrying a
 two-value vocabulary.** That row was left in no triple at the close of round 3. This cell closes it.
@@ -131,5 +164,5 @@ figure and is to be re-measured, not inherited.
 </preflight>
 
 <proof_of_spec>
-org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~16/POSN_ASTTAX.TO-U3-1.proof_of_spec.json
+org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~16/POSN_ASTTAX.TO-U3-1.extend-preserve-dont-clobber-to-the-seed-script.proof_of_spec.json
 </proof_of_spec>
