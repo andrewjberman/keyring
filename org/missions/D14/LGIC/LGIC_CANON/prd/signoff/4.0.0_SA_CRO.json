@@ -1,11 +1,12 @@
 {
   "prd": "LGIC_CANON_PRD.md",
-  "prd_version": "v1.1",
-  "prd_pin": "56608aadd493d738330e5b9324683019cf5417e3",
+  "prd_version": "v1.2",
+  "prd_pin": "d9977a0f40a2a25b42a42271c0fad58aa7e07044",
   "half": "brief",
-  "half_hash": "ef2339f180c10169817df8a1aca23789b358781c02c073cf10f30b20fce77fd7",
-  "verdict": "SIGNED",
-  "review_ref": "docs/briefs/sources/LGIC_CANON_L4_BRIEF_REVIEW_v1_1_20260914.md@ff2766b31663f1c1cb526be5a1afd8b5ba5b8b2c",
+  "half_hash": "5443fa0e7bc0a448e80ca0423e1bc701d61280bb226d0eb699dd7bc175fd326a",
+  "verdict": "REFUSED",
+  "review_ref": "docs/briefs/sources/LGIC_CANON_L4_BRIEF_REVIEW_v1_2_20260914.md@ae94166ac24109bcf93360b05b78f19cead1adef",
   "signed_by": "4.0.0_SA_CRO",
-  "signed_at": "2026-09-14T07:41:33Z"
+  "signed_at": "2026-09-14T18:42:46Z",
+  "reason": "R1: C2 at v1.2:272 still carries v1.1's unmeetable CONTRADICTS criterion while DEC-2 at v1.2:171-173 was restated; restate C2 in DEC-2's words and correct v1.2:66"
 }
