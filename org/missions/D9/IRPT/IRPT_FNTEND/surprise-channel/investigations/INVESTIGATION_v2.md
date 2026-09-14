@@ -3544,6 +3544,71 @@
     },
     "disposition": "UNDER_INVESTIGATION",
     "hazard_standing": "INERT"
+  },
+  {
+    "id": "IRPT_FNTEND-W4-S13",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~4",
+    "surfaced_at": "2026-09-14T14:28:50Z",
+    "one_line": "THE to_id CROSS-CHECK CANNOT BE EXACT. The binding refuses an instance whose to_ref or to_id names another order; to_ref has one exact form estate-wide, to_id does not -- matched exactly against the flipped order's <to_id>, it would refuse 119 of 337 committed instances whose to_ref names their own order.",
+    "class": "OBSERVATION",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-37 THE BINDING: 'An instance whose decomp_ref.to_ref (or to_id) names a DIFFERENT order is REFUSED, before any limb runs'; BOUNDS: 'The binding must not refuse an instance whose to_ref names its own order.' The order does not say which spellings of a to_id name the same order.",
+    "world_is": "Census at CLOUD 62f3adb8ca over every tracked *.proof_of_spec.json whose sibling order exists where check_complete_flip looks (337 of 576 tracked instances): to_ref equals that order in 336, is absent in 1, names another order in 0. to_id equals the order's <to_id> tag in 218 and does not in 119 -- a '.'-delimited slug on one side (instance NFRA_CLDGRPH.TO-CG-I-2 vs order tag NFRA_CLDGRPH.TO-CG-I-2.edge-side-drop-and-the-blind-check; instance NFRA_COMPEFFICACY.TO-CE-T-1.comp-find-s4-audit vs tag NFRA_COMPEFFICACY.TO-CE-T-1; the NFRA_OUTSET orders), or an order that carries no <to_id> tag at all (the NFRA_IAMROLES202609 and NFRA_REPORT orders). An exact to_id cross-check would have refused those 119 flips. So the binding keeps to_ref EXACT and matches to_id slug-tolerantly: equal to the order's <to_id> tag, its filename stem or an id=\"...\" declaration, or one is the other plus a '.'-delimited suffix with '.TO' in the shorter (IRPT_FNTEND.TO-FE-s-2 never matches ...FE-s-29; a bare project code matches nothing). Measured after: the binding's cross-check refuses 0 of the estate's orders that have an instance beside them (test_governing_binding.py, ESTATE line). Residual, stated: a to_id that differs from its order only by a slug is admitted, so to_id is a weaker cross-check than to_ref -- and the governing order no longer comes from either field, so neither can steer a limb.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/proof-of-spec-check.py (the commit carrying this row): the GOVERNING-ORDER BINDING block, _same_order_id, _order_id_forms, governing_binding_check",
+        "census at 62f3adb8ca: git ls-files *.proof_of_spec.json -> 576; sibling order exists -> 337; to_ref == order 336, absent 1, another 0; to_id exact against the <to_id> tag: 218 match, 119 do not",
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~2/NFRA_CLDGRPH.TO-CG-I-2.edge-side-drop-and-the-blind-check.proof_of_spec.json@62f3adb8ca",
+        "org/missions/D12/NFRA/NFRA_REPORT/deliverables/0.9.0_WK_NFRA_REPORT~1/NFRA_REPORT.TO-RP-s-1.state-model-two-axis-vocabulary.proof_of_spec.json@62f3adb8ca"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "hazard_standing": "INERT"
+  },
+  {
+    "id": "IRPT_FNTEND-W4-S14",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~4",
+    "surfaced_at": "2026-09-14T15:08:44Z",
+    "one_line": "THE L8 RECEIVING SIDE STILL GRADES A PROOF UNBOUND. After FE-s-37 the complete flip is bound, but every other executing caller of proof-of-spec-check.py passes the instance alone -- receiving-check.py's L7->L8 route and 3.0.0_SA_CVO's own intake/audit scripts -- so their verdicts are still resolved from the instance's own to_ref.",
+    "class": "OBSERVATION",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-37 THE CELL: 'the checker can be steered by the party it grades, and this cell binds it'; F37-AC9 re-grades F29-AC15 clause 3, 'no limb of the checker can be steered by the party it grades'. The face binds check_complete_flip and grants .tools/to-pipeline-gate.py, .tools/proof-of-spec-check.py and .tools/tests/ only.",
+    "world_is": "Unscoped caller census at da3e61889d (Grep for 'proof-of-spec-check.py' over *.py, *.sh, *.ps1, *.js, *.mjs, *.ts, *.cmd, *.bat in the worktree: 64 files; 17 are this worker's own .scratch; 47 in the corpus -- 15 under .tools/, 22 under workflows/, 10 under org/). EXECUTING callers: .tools/to-pipeline-gate.py check_complete_flip (BOUND by FE-s-37); .tools/receiving-check.py -- .tools/receiving-check.py:71 @adfbe65590 routes every proof_of_spec*.json to the checker with argv [p], and run_one runs [sys.executable, tp] + argv (:117); 3.0.0_SA_CVO's intake/audit scripts -- org/tier1_exec/3.0.0_SA_CVO/deliverables/amgt_round5_cvo_audit.py:54 and :84, amgt_round6_cvo_audit.py:41, amgt_round7_cvo_intake.py:80, amgt_round8_cvo_intake.py:107, posn_round3_cvo_intake.py:47, each [sys.executable, '.tools/proof-of-spec-check.py', <instance>, <ids>]; and org/standards/test_artifact_coverage_both_grammars.py:67 (a battery). None passes --governing-order, so each prints 'governing-binding: UNBOUND' and its verdict can still be moved by the instance's to_ref -- including on an instance edited AFTER its flip, because check_complete_flip grades only a commit that stages the order (to-pipeline-gate.py main: flip_targets are the dispatched task-order paths). The 22 workflows/ files and the other 4 org/ files name the checker in comments, docstrings or emitted face text. A .tools-scoped census (19 files) had found receiving-check.py alone; the unscoped read found the CVO's scripts. Not exercised: no committed instance names another order (the binding's estate cross-check refuses 0 of 335). Remedy: each caller derives the sibling order from the instance path (the inverse of check_complete_flip's search) and passes --governing-order -- outside this order's grant (receiving-check.py) or another seat's own deliverables (the CVO's scripts).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/receiving-check.py:71 and :117 @adfbe65590",
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/amgt_round5_cvo_audit.py:54,:84; amgt_round6_cvo_audit.py:41; amgt_round7_cvo_intake.py:80; amgt_round8_cvo_intake.py:107; posn_round3_cvo_intake.py:47 @da3e61889d",
+        "org/standards/test_artifact_coverage_both_grammars.py:30,:67 @da3e61889d",
+        ".tools/to-pipeline-gate.py check_complete_flip and main (flip_targets) @da3e61889d"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "hazard_standing": "INERT"
+  },
+  {
+    "id": "IRPT_FNTEND-W4-S15",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~4",
+    "surfaced_at": "2026-09-14T15:08:45Z",
+    "one_line": "A CHECKER BATTERY OUTSIDE .tools/tests/ IS RED AT THE CUT. org/standards/test_artifact_coverage_both_grammars.py runs proof-of-spec-check.py and reads 3/6 PASS (rc=1) both at CLOUD 62f3adb8ca and with FE-s-37 applied -- the same failing arms (A-DS-GRAMMAR-STILL-PASSES, B-WP1-GRAMMAR-FLIPS, E-EXPLICIT-FIELD-PASSES) -- a pre-existing red that F37-AC8's census domain cannot see.",
+    "class": "OBSERVATION",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-37 F37-AC8: 'every file under .tools/tests/ that calls proof-of-spec-check.py or to-pipeline-gate.py is run once with your change applied' -- the census domain is .tools/tests/.",
+    "world_is": "org/standards/test_artifact_coverage_both_grammars.py (last touched @ba59c67ada) runs the checker at :67 ([sys.executable, str(CHECKER), str(f)]; CHECKER = .tools/proof-of-spec-check.py at :30). Found by this worker's unscoped caller census (row W4-S14). Run once with FE-s-37 applied (da3e61889d): 'ARTIFACT-COVERAGE BATTERY: 3/6 PASS', rc=1, failing A-DS-GRAMMAR-STILL-PASSES, B-WP1-GRAMMAR-FLIPS, E-EXPLICIT-FIELD-PASSES. Run once against the cut's checker in a borrowed-objects scratch repo at 62f3adb8ca: the same 3/6, rc=1, the same arms. So FE-s-37 neither caused nor changed it. The failing arms are the ones whose fixture must read VALID (A: the DS grammar, no regression; B: the WP1-N grammar; E: an explicit artifact_covered_by field); the passing arms are its must-FAIL controls, so the battery now reads as a rule that refuses everything. Not diagnosed -- outside this order's grant and not its question.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/standards/test_artifact_coverage_both_grammars.py:30,:67 @ba59c67ada",
+        "run with FE-s-37 applied (checker at da3e61889d): rc=1, 3/6 PASS, FAIL A-DS-GRAMMAR-STILL-PASSES, B-WP1-GRAMMAR-FLIPS, E-EXPLICIT-FIELD-PASSES",
+        "run against the checker at 62f3adb8ca (borrowed-objects scratch repo at the cut): rc=1, the same arms"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "hazard_standing": "INERT"
   }
 ]
 ```

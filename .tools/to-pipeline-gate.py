@@ -859,6 +859,13 @@ def _self_test():
         ("vocabulary: check_file wires the limb, and the limb reads the tool from the INDEX (`git show :<path>`)",
          lambda: "_output_vocabulary_violations(root, rel, text)" in inspect.getsource(check_file)
          and '":" + rel' in inspect.getsource(_ov_tool)),
+        # FE-s-37 -- THE GOVERNING ORDER IS THE ORDER BEING FLIPPED (RULING S, row S61). Source arms; the REAL-SHAPE arms
+        # (FE-s-29's instance doctored to FE-s-28 in a real index, its positive control, the committed corpus) live in
+        # .tools/tests/test_governing_binding.py.
+        ("binding: check_complete_flip hands the checker the flipped order (`--governing-order`, rel), not the instance alone",
+         lambda: '"--governing-order", rel' in inspect.getsource(check_complete_flip)),
+        ("binding: a refused flip names the checker's VIOLATION lines, not only its verdict line",
+         lambda: '"VIOLATION: "' in inspect.getsource(check_complete_flip)),
     ]
     failed = 0
     for name, fn in arms:
@@ -2526,16 +2533,31 @@ def check_complete_flip(root, rel):
     if not os.path.isfile(chk):
         return ["%s: proof-of-spec-check.py is MISSING -- fail-closed rather than pass a flip "
                 "whose validator cannot run" % rel]
+    # THE GOVERNING ORDER IS THE ORDER BEING FLIPPED (FE-s-37; 1.0.0_SA_CTO RULING S @942e4ff992 s.2; row
+    # IRPT_FNTEND-S61). This call used to hand the checker the instance ALONE, and the checker then read its governing
+    # order from the instance's own decomp_ref.to_ref -- a field the graded party writes -- so pointing to_ref at a real
+    # pre-ruling order moved the count-bar and drives limbs to LEGACY and nothing named the mismatch. The flip knows
+    # which order it closes; it says so, and the checker binds every limb to it and refuses an instance whose to_ref or
+    # to_id names another order, before any limb runs.
     try:
-        r = subprocess.run(["python", chk, inst], cwd=root,
+        r = subprocess.run(["python", chk, inst, "--governing-order", rel], cwd=root,
                            capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=180)
     except Exception as exc:  # noqa: BLE001
         return ["%s: could not run the validator (%s) -- fail-closed" % (rel, exc)]
     if r.returncode != 0:
         head = (r.stdout or r.stderr or "").strip().splitlines()
         why = head[-1][:160] if head else "rc=%d" % r.returncode
-        return ["%s: flips to '%s' but its instance is NOT VALID (rc=%d) -- %s"
-                % (rel, m.group(1), r.returncode, why)]
+        out = ["%s: flips to '%s' but its instance is NOT VALID (rc=%d) -- %s"
+               % (rel, m.group(1), r.returncode, why)]
+        # NAME WHAT REFUSED, not only the verdict line: the verdict reads "INVALID (rc=1)" for every cause, so a seat
+        # reading this refusal could not tell a binding refusal from any other (FE-s-37).
+        viol = [ln.strip()[len("VIOLATION: "):] for ln in (r.stdout or "").splitlines()
+                if ln.strip().startswith("VIOLATION: ")]
+        out.extend("%s: instance VIOLATION: %s" % (rel, x[:700]) for x in viol[:12])
+        if len(viol) > 12:
+            out.append("%s: ... and %d more instance violation(s) -- run the checker on %s to read them"
+                       % (rel, len(viol) - 12, os.path.relpath(inst, root).replace("\\", "/")))
+        return out
     return []
 
 
