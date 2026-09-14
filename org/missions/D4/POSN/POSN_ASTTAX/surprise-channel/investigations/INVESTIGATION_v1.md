@@ -4452,6 +4452,31 @@ Andrew asked for (msg 22917); it concerns this project's portal files meeting an
   "spec_asserts": "TO-V9-1 V9-AC11 @51731e2a10: 'the two new leaves admitted and an unlisted leaf refused by the NEW version only (the negative control)'.",
   "world_is": "nope.json refused 404 unknown_satellites_resource by BOTH versions on both identities (4 of 4); read literally the clause puts 2 of 16 rows outside the bound and commands a rollback of a correct deploy; read as the bound it describes (the allowlist widened by exactly two leaves, the refusal branch intact) it is met.",
   "notes": "Not amended post-PASS (Z-S81's rule)."
+},
+{
+  "id": "POSN_ASTTAX-Z-W20-S9",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~20",
+  "surfaced_at": "2026-09-14T20:56:14Z",
+  "one_line": "V2-AC13's amended note names 97fe1221bd as 'the commit the helper would have named' for deployed_commit; the helper's own derivation is COMMIT_SHA = rev-parse HEAD AT RECORD TIME (record-terraform-deploy.sh:203) and VERSION_LABEL = untagged-${COMMIT_SHORT} (:442), which at 2026-09-14T20:04:00Z was f4e4f6ef620bbe8aa1498991e9f2c44a1ad1c385 / untagged-f4e4f6ef -- the recorder printed both in its own commit message at 707f6ad8fb and stamped deploy_ledger f4e4f6ef62 into the map row. The ordered value (the deployed CODE commit, the build pin, the map's last_deployed_commit) was written as instructed and the entry is internally consistent on it; the consequence is that the version label this entry carries is NOT the label a fixed recorder re-recording this deploy would compute, so the issuer's de-duplicate-on-the-version-label ruling has a different key than it expects.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE HELPER'S DERIVATION, READ AT THE BYTES: record-terraform-deploy.sh:203-206 COMMIT_SHA=$(git rev-parse HEAD), COMMIT_SHORT=${COMMIT_SHA:0:8}, TIMESTAMP, BRANCH; :442 VERSION_LABEL=\"${VERSION:-untagged-${COMMIT_SHORT}}\"; :700 entry.deployed_commit = commit. CORROBORATED BY THE RECORDER'S OWN OUTPUT, not only by reading it: commit 707f6ad8fb's message prints 'Version: untagged-f4e4f6ef' and 'Commit: f4e4f6ef620bbe8aa1498991e9f2c44a1ad1c385', and the map row it wrote carries deploy_ledger f4e4f6ef62. f4e4f6ef62 is this worker's LEDGER leg-L6 commit (15:57 EDT), not a code commit and not the recorder's own commit 707f6ad8fb (16:04 EDT); the deployed code is 97fe1221bd (15:13 EDT), the pin fed to build_package.py and the value in the map's last_deployed_commit.",
+      "WHAT WAS WRITTEN AND WHY IT IS SELF-CONSISTENT: deployed_commit 97fe1221bd..., deployed_commit_short 97fe1221 (the helper's ${COMMIT_SHA:0:8} form), version untagged-97fe1221 (the helper's untagged-${COMMIT_SHORT} formula applied to the ordered commit). Writing the ordered commit under the label the recorder published (untagged-f4e4f6ef) would have made version and deployed_commit_short disagree inside one entry, so the two fields move together.",
+      "MEASURED INVARIANT -- THE DIVERGENCE IS CONFINED TO THREE FIELDS: git log 13ed1ab7751b..<commit> over the 5-path pipeline pathspec returns the SAME 2 records for either candidate commit (97fe1221bd and f4e4f6ef62), so commits[] is identical either way; previous_commit 42dd9e8c812474745f8f2dd97b8ff962c5183fa7 is get_previous_commit() (:447-481) replayed over the PRE-record map at 707f6ad8fb^ (cot-etf-ownership-daily, the first cot-pipeline row carrying a non-null last_deployed_commit; this function's row was null then) and does not depend on the choice.",
+      "A SECOND DERIVATION THE FACE'S SHAPE OVERRIDES, DISCLOSED: the helper's artifacts loop (:668-686) admits a function only if its map row carries artifact_s3_key AND artifact_sha256. The cot-satellites-registry-producer row carries NEITHER (it carries deployed_code_sha256), while the three sibling cot-pipeline rows carry both -- so the helper's own rule would have written ZERO artifact rows for the function this cell deployed and THREE for functions this apply never touched. The face's ordered artifact row {cot-pipeline/cot-satellites-registry-producer.zip, eFToEJ0FNu1sMO7cJ1WNdRoGSVuNuHSM9ToBzHGkF1I=} is the true one and passes the helper's own base64 read-guard regex.",
+      "WHY ARMED RATHER THAN INERT: nothing is harmed now -- the entry is landed, scoped and true about this apply. The future-normal path is the issuer's own ruling ('a later fixed recorder de-duplicates on the version label'): a fixed recorder re-recording this deploy computes its label from HEAD at ITS run time and will not match untagged-97fe1221, so it appends a SECOND entry for one deploy instead of de-duplicating. One line from the disarm owner settles which label the round wants."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-V2-1 V2-AC13 (amended) and its hand-over notes: write the CHANGELOG entry 'in the helper's exact shape (the entry object built at record-terraform-deploy.sh:600-700)', with 'deployed_commit is the commit the helper would have named (your code commit 97fe1221bd, not the recorder's own commit)'.",
+  "world_is": "The helper would have named f4e4f6ef620bbe8aa1498991e9f2c44a1ad1c385 with version untagged-f4e4f6ef (:203/:442, printed by the recorder itself at 707f6ad8fb); 97fe1221bd is the deployed code commit, which is the better record of what was deployed but is not what the helper's rule produces. The ordered value was written, self-consistently across version/deployed_commit/deployed_commit_short, and the divergence is recorded here rather than silently absorbed.",
+  "notes": "Two shapes exist in this round for the same class: slot ~23's portal-auth entry at 4fd5ce488f used the helper's COMMIT_SHA (HEAD at record time) for deployed_commit and disclosed its functions_updated scoping; this entry uses the deployed code commit. If the round wants ONE convention, that is the issuer's call and both entries are one-field edits."
 }
 ]
 ```
