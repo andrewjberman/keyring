@@ -1,9 +1,11 @@
 {
   "prd": "IRPT_BCKEND_PRD.md",
-  "prd_version": "v0.13",
-  "prd_pin": "e6ba5d98782a2c367f7306c88b5c9915333599da",
+  "prd_version": "v0.14",
+  "prd_pin": "b8e98d5a4d9fd4004e6e8d2300dc7883866deef0",
+  "half": "ratified-text",
+  "half_hash": "4ff7d52709c9a39ad8e04fa06e200dd67f63ad58ffe65ac656c4977376e12eac",
   "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_L4R_CORRECTION_REVIEW_20260911.md@39bdc72308815cc75e1f205155dc854d94d39bc6",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_BCKEND_L4R_V014_RATIFIED_TEXT_REVIEW_20260912.md@341e576e6a",
   "signed_by": "3.0.0_SA_CVO",
-  "signed_at": "2026-09-11T04:46:10Z"
+  "signed_at": "2026-09-12T02:41:54Z"
 }

@@ -12,10 +12,10 @@
 
 | leg | kind | target | proof required | proof | state |
 |---|---|---|---|---|---|
-| A | activation | toll-free number phone-0e98f7739a16415c83d951336a7da12a (+18664067943) requested TRANSACTIONAL/SMS | describe-phone-numbers Status=ACTIVE |  | OPEN |
+| A | activation | toll-free number phone-0e98f7739a16415c83d951336a7da12a (+18664067943) requested TRANSACTIONAL/SMS | describe-phone-numbers Status=ACTIVE | describe-phone-numbers 2026-09-13T06:2xZ by 0.0.0_AB_MSTR: phone-0e98f7739a16415c83d951336a7da12a Status=ACTIVE NumberType=TOLL_FREE MessageType=TRANSACTIONAL, ends 7943 | CLOSED 20260913T062910Z |
 | B | activation | US_TOLL_FREE_REGISTRATION registration-3721e9ded2cd4adaa831a42ba6d60e4c: 18 fields put, attachment-4cf99cb640da4060b0148f8250c43e01 attached, number associated, version submitted | describe-registrations RegistrationStatus in SUBMITTED/REVIEWING with CurrentVersionNumber and the version's SUBMITTED timestamp | describe-registrations 2026-09-09T15:44Z: RegistrationStatus=SUBMITTED, CurrentVersionNumber=1; describe-registration-versions: version 1 REVIEWING, SubmittedTimestamp=1788968676 ReviewingTimestamp=1788968680; 22 of 22 field values on file (describe-registration-field-values); association ResourceId=phone-0e98f7739a16415c83d951336a7da12a (+18664067943); attachment-4cf99cb640da4060b0148f8250c43e01 UPLOAD_COMPLETE | CLOSED 20260909T154516Z |
 | C | activation | service-quotas sms-voice L-2325465C desired 50, request 3f0cd234bd99405ab57967d9e4c96e8dO5rvrxd2 | get-requested-service-quota-change Status=PENDING or CASE_OPENED | request-service-quota-increase 2026-09-09T15:39Z: RequestedQuota.Id=3f0cd234bd99405ab57967d9e4c96e8dO5rvrxd2 QuotaCode=L-2325465C DesiredValue=50.0 Status=PENDING Requester=arn:aws:iam::313476888478:user/Andrew_Berman | CLOSED 20260909T154516Z |
-| V1 | verify | carrier verification COMPLETE | describe-registrations RegistrationStatus=COMPLETE and the TFN's registration association read from describe-phone-numbers |  | OPEN |
+| V1 | verify | carrier verification COMPLETE | describe-registrations RegistrationStatus=COMPLETE and the TFN's registration association read from describe-phone-numbers | describe-registrations 2026-09-13T06:2xZ by 0.0.0_AB_MSTR: registration-3721e9ded2cd4adaa831a42ba6d60e4c US_TOLL_FREE_REGISTRATION RegistrationStatus=COMPLETE ApprovedVersionNumber=1; describe-phone-numbers shows the TFN RegistrationId=registration-3721e9ded2cd4adaa831a42ba6d60e4c | CLOSED 20260913T062911Z |
 | V2 | verify | account leaves the sandbox | describe-account-attributes ACCOUNT_TIER=PRODUCTION and describe-spend-limits TEXT_MESSAGE_MONTHLY_SPEND_LIMIT EnforcedLimit=50 |  | OPEN |
 | V3 | verify | SP-3 of .open_deploys/d12-sms-origination-identity-activation.json: SMS_VERIFIED_DESTINATIONS + SMS_ALLOW_UNVERIFIED re-read in a reviewed commit BEFORE or WHEN V2 lands | commit hash under 0.7.0_AE_CloudOps author line |  | OPEN |
 
@@ -24,3 +24,5 @@
 - 20260909T154003Z OPENED by 0.0.0_AB_MSTR with 6 leg(s)
 - 20260909T154516Z LEG B closed: describe-registrations 2026-09-09T15:44Z: RegistrationStatus=SUBMITTED, CurrentVersionNumber=1; describe-registration-ve
 - 20260909T154516Z LEG C closed: request-service-quota-increase 2026-09-09T15:39Z: RequestedQuota.Id=3f0cd234bd99405ab57967d9e4c96e8dO5rvrxd2 QuotaCode=L
+- 20260913T062910Z LEG A closed: describe-phone-numbers 2026-09-13T06:2xZ by 0.0.0_AB_MSTR: phone-0e98f7739a16415c83d951336a7da12a Status=ACTIVE NumberTy
+- 20260913T062911Z LEG V1 closed: describe-registrations 2026-09-13T06:2xZ by 0.0.0_AB_MSTR: registration-3721e9ded2cd4adaa831a42ba6d60e4c US_TOLL_FREE_RE

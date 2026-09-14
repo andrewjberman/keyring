@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_FNTEND~3</issued_to>
 <issued_by>2.0.0_SA_COO~F</issued_by>
 <issued_date>2026-09-11</issued_date>
-<status>blocked</status>
+<status>complete</status>
 
 **Directive:** D9 | **Fabric:** laptop | **PRD:** `../prd/IRPT_FNTEND_PRD.md` v0.6 @d1479bc5f0 (F8, F10; CONTRACTS `ExportBundle`, `ExportReceipt`, `StatusEnvelope`, `NarrativePacket`) | **Decomp cell:** `FE-s-16` (round 2, v0.2) | **outcome_ref:** FWD-8, FWD-4 | **depends_on:** `FE-s-13`, `FE-s-14` (R1: the v1 client) | **slot:** ~3, queue position 1 | **slug rows:** W1-S11, W2-S6
 
@@ -44,8 +44,8 @@
 <criterion id="F16-AC7" cell_refs="FE-s-16"><invocation>cd <WS>/portal && timeout 120 node scripts/ui-smoke.mjs investor-reporting <WS>/org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~3/fe-s-16_export_ready_390.png --port <PORT> --width 390 --fixtures src/pages/InvestorReporting/fixtures/smoke/fe-s-16-ready.json --click Export --console "Maximum update depth"; echo rc=$?</invocation><expect>CLICKED: Export</expect></criterion>
 `F16-AC7` -- the same at 390.
 
-<criterion id="F16-AC8" cell_refs="FE-s-16"><invocation>cd <WS>/portal && timeout 120 node scripts/ui-smoke.mjs "investor-reporting/print?bundle=fe-s-16-narrative" <WS>/org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~3/fe-s-16_print_narrative_1440.png --port <PORT> --width 1440 --fixtures src/pages/InvestorReporting/fixtures/smoke/fe-s-16-print-narrative.json --console "REFS RESOLVED"; echo rc=$?</invocation><expect>REFS RESOLVED: 1 of 1</expect></criterion>
-`F16-AC8` -- the print route with the narrative page on, served in wire shape at the declared paths (performance report and narrative packet), resolves its references (ui-smoke prints `DID NOT LAND` for the query-string route; the resolver line is the bar).
+<criterion id="F16-AC8" cell_refs="FE-s-16"><invocation>cd <WS>/portal && timeout 120 node scripts/ui-smoke.mjs "investor-reporting/print?bundle=fe-s-16-narrative&narrative=1&tenant=F-49F&scope=fp-49f-0824&revision=rev-49f-000091" <WS>/org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~3/fe-s-16_print_narrative_1440.png --port <PORT> --width 1440 --fixtures src/pages/InvestorReporting/fixtures/smoke/fe-s-16-print-narrative.json --console "REFS RESOLVED"; echo rc=$?</invocation><expect>REFS RESOLVED: 1 of 1</expect></criterion>
+`F16-AC8` (INVOCATION AMENDED BY THE ISSUER at the round-2 drain, row IRPT_FNTEND-S25 -- the URL now carries `&narrative=1&tenant=&scope=&revision=`, which the criterion was written before FE-s-14 made required; row `IRPT_FNTEND-W2-S13` recorded that change and this criterion was not re-cut for it. **The bar is UNCHANGED at `REFS RESOLVED: 1 of 1`** -- only the URL is corrected, and the control capture the worker took beside the refusal already proves the page, the fixtures and the resolver are all correct.) -- the print route with the narrative page on, served in wire shape at the declared paths (performance report and narrative packet), resolves its references (ui-smoke prints `DID NOT LAND` for the query-string route; the resolver line is the bar).
 
 <criterion id="F16-AC9" cell_refs="FE-s-16"><invocation>cd <WS>/portal && timeout 120 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting</invocation><expect>0 fail</expect></criterion>
 `F16-AC9` -- the whole Investor Reporting set is green.

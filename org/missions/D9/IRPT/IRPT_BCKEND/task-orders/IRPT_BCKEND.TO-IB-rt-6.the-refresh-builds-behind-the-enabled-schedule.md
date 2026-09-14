@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~2</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-11</issued_date>
-<status>staged -- assigned to slot ~2; becomes pending when the COO hands it over after IB-rt-2 (this slot), IB-rt-3 (slot ~1) and IB-rt-5 (the DS lane) are terminal and merged.</status>
+<status>pending -- HANDED by 2.0.0_SA_COO~B at 2026-09-12T05:48:29Z. Its gate ('after IB-rt-2, IB-rt-3 and IB-rt-5 are terminal and merged') is SATISFIED on all three, each proof-of-spec instance re-graded VALID rc=0 at HEAD by the issuer rather than taken from a report. Third order of slot ~2.</status>
 
 **Directive:** D9 | **Fabric:** laptop | **Round:** 2 | **PRD:** `../prd/IRPT_BCKEND_PRD.md` v0.13 @e6ba5d9878 (ADMITTED, both L4-R halves SIGNED) | **Round-1 analysis:** `../ledger/ROUND_ANALYSIS.round1.md` @0d57ceb2f9, ruling 3(a) | **Slug rows this cell closes:** C-S73 (refresh half) | **Decomp cell:** `IB-rt-6` (`../decompositions/IRPT_BCKEND_DECOMP.md` v0.2, s.1 + s.2) | **outcome_ref:** FWD-7 (own), FWD-1 | **PRD candidate:** B4
 
@@ -56,6 +56,63 @@
 - **NOTHING CONSUMES THE TARBALL YET** (the DS lane's census: 9 hits across 31,208 files, none a consumer): this cell is the first consumer, and the ledger entry of the first real build names the tarball's ETag it ran.
 
 ---
+
+
+---
+
+## ISSUER AMENDMENT -- 2026-09-12T05:48:29Z (`2.0.0_SA_COO~B`): THE HAND-OFF. Governs over every line above it.
+
+### G1. YOUR GATE IS SATISFIED ON ALL THREE AND THIS ORDER IS PENDING.
+`IB-rt-2`, `IB-rt-3` and `IB-rt-5` are all terminal and merged, each instance re-graded `VALID rc=0` at HEAD by the
+issuer rather than taken from its report. Round 2 stands at 10 of 12. **Begin immediately.** `IB-rtb-1` -- the last
+cell of the round -- is gated on THIS order, so nothing else in the round moves until it closes.
+
+### G2. NEW WORKTREE. Whatever IDENTITY names above, it is not where you work.
+- **Worktree:** `/c/tmp/wk-irpt-2-2c` on branch `wk-irpt_bckend-2-2c`, cut from CLOUD at `3dce524340`.
+- Every path in this face is relative to that root; prefix `/c/tmp/wk-irpt-2-2c/` to make one absolute.
+- ⛔ **`/c/tmp/wk-irpt-2-2b` IS GONE** -- IB-rt-2 is terminal and its worktree and branch are removed. Do not look
+  for it.
+- First act: `git rev-parse --abbrev-ref HEAD`, then `test -d org && test -d .tools && echo TREE-OK`.
+
+### G3. YOU CARRY IB-rt-2's CONTEXT, AND THAT CUTS BOTH WAYS.
+You are the subagent that ran IB-rt-2, so you are not cold. What transfers:
+- **The deploy discipline you just executed three times**: one root at a time, each function verified on SERVED
+  bytes by extract-and-import in the flat `/var/task` layout in a fresh interpreter with the repo off `sys.path`,
+  three-way hash equality, ledger opened only with room to close it and its OPEN sentinel committed BEFORE the act.
+- **Your own five hard-won rules**, all of which apply here: a duplicated fact is a defect whose latency ends at the
+  next grant, and the fix is to DELETE a copy rather than sync it; a post-apply `No changes` is PERISHABLE in two
+  directions (another cell's commit, or your own stale worktree over a shared state) and the plan output is
+  identical either way; `git log -- <path>` answers *what last touched this path*, never *what changed this thing*
+  (use `-S<token>`); a green arm is not licence for the prose beside it; and print `0 subject file(s) differ from
+  HEAD` beside your token.
+⛔ **What does NOT transfer is any grant.** IB-rt-2's `<paths>` retired when it went terminal. **This order's
+`<paths>` block is the whole of your write surface** -- read it, and if a path you need is missing, that is a
+BLOCKING row to me and NOT a prose sentence you can act on. I made exactly that mistake on IB-rt-2 (amendment 3's
+C1 granted `holdings/` in prose the gate cannot read) and it cost you a blocked commit. **A grant is only real in
+the surface the enforcer reads.**
+
+### G4. THE CELL'S OWN LAW: THE SCHEDULE IS ENABLED, SO THE BUILD MUST BE TRUE BEFORE IT FIRES.
+This cell is about the refresh building BEHIND an enabled schedule. Two things follow and both are measured, never
+asserted:
+- **Read the trigger state LIVE, never from the `.tf`.** `aws events describe-rule` is the instrument; a rule's
+  declared state and its live state are different claims. This round has already paid for that twice -- the
+  ycharts probe rule reads ENABLED while its function serves a retired predicate, and a capture rule reads DISABLED
+  while its source still carries the legacy body.
+- **An ENABLED schedule means the world can fire your code before you are finished.** If any step of this cell
+  leaves a window where the scheduled run would produce a wrong artifact, that window is a BLOCKING row before it
+  is a design choice. Say which steps have one.
+
+### G5. STANDING MECHANICS, UNCHANGED.
+Prove each criterion by RUNNING the invocation the face names and showing the expectation met by OUTPUT. **The
+acceptance token enters the battery output ONLY in the edit that makes every arm pass, never negated** -- the
+`<expect>` is a REGEX and a "NOT ASSERTED" line MATCHES. `PENDING-THIS-COMMIT` is ONE-SHOT; pin each artifact row to
+the commit that CARRIES it. A judgment criterion gets its output and NO verdict, with a `status_reason` naming
+`3.0.0_SA_CVO`. **The flip is the LAST act** -- after it, re-run the invocation and read `git status --porcelain`,
+because two cells tonight flipped on a run that did not reproduce. Rows are `IRPT_BCKEND-W2-S<k>`; re-read the
+channel at HEAD immediately before minting (176 rows and moving). `safe-commit.sh` with explicit FILE paths and a
+Write-tool message file; your branch only; never push, merge, rebase, `checkout --` or `clean`. A rail denial aborts
+the WHOLE Bash call and silently no-ops every later segment.
+
 
 ## DELIVERABLE
 
@@ -114,6 +171,7 @@ infra/aws/lambda/investor-reporting/PATH_MANIFEST.json
 org/critical_paths/change_management/
 org/critical_paths/.open_deploys/irpt-bckend-rt6.json
 infra/aws/lambda/ci/lambda-source-map.json
+.tools/safe_deploy_core.py
 </paths>
 
 
@@ -140,3 +198,82 @@ The grant is read from HEAD of your branch and only while this order is NON-TERM
 </proof_of_spec>
 
 **REPORT:** your FINAL MESSAGE, once, in the `WORKER REPORT` shape. You cannot send or receive messages -- anything you would ask is a surprise row.
+
+---
+
+## ISSUER AMENDMENT H -- 2026-09-12T06:38:56Z (`2.0.0_SA_COO~B`). Governs over every line above it. **FOUR RULINGS AND A REDIRECT.**
+
+Your G4 reading is accepted and it is the kind of thing that should never be inferred: the trigger is an EventBridge
+**Scheduler schedule**, not a Rule, so `describe-rule` returns `ResourceNotFoundException` -- **a false absence if
+read carelessly** -- and `scheduler get-schedule` reads ENABLED, `cron(0 9 ? * MON-FRI *)` America/New_York. You also
+said the right thing about the 55-hour window: **that is calendar luck, not a property of any plan.** Do not build on
+it.
+
+### H1. ⛔ THE FOURTH OPTION IS REFUSED. You were right not to take it, and it is refused by LAW, not by preference.
+Having the host extract `ids.py` out of an existing Lambda artifact zip is **a shadow distribution channel** --
+bytes reaching a runtime by a route nothing declares. CLAUDE.md carries Andrew's COMPLETE VETO on shadow and
+build-alongside channels. **Never raise it again and do not let a later cell rediscover it as clever.** That you
+named it and handed it up instead of taking it is the correct handling of an option you can see is out of bounds.
+
+### H2. THE BLOCKER IS MINE TO CLEAR AND I AM CLEARING IT IN THE `<paths>` BLOCK, NOT IN PROSE.
+**Your lane reading was wrong, and the error is understandable:** you said the member list in
+`.tools/safe_deploy_core.py` is out of lane. **Measured at `.owned-paths.yaml:2003-2009`: `.tools/**` is lane `ANY`**
+-- "Shared .tools/ -- any agent may contribute tooling" -- and the only narrower entries under `.tools/` are
+`git-hooks/**`, `tests/**`, `surprise-row-gate.py` and `to-pipeline-gate.py`, none of which match. So
+`safe_deploy_core.py` was never out of LANE. It was out of **this order's `<paths>`**, which is a different thing.
+
+**GRANTED, in the block, in this amendment's commit:**
+```
+.tools/safe_deploy_core.py
+```
+I put it in the BLOCK because I granted `holdings/` to IB-rt-2 in a PROSE SENTENCE the gate cannot read and it cost
+that order a blocked commit on four finished files. **A grant is only real in the surface the enforcer reads.**
+
+### H3. ⛔ AND DECLARING `ids.py` AS A BUNDLE MEMBER IS **NOT** A SECOND COPY. This is the distinction the cell turns on.
+You declined to copy `ids.py` into the in-lane bundle directory because that would be a second copy of THE ONE
+opaque-id normalizer, which `irpt-holdings`' own BUILD_MANIFEST forbids in those words. **Correct -- a FILE COPY
+would be a second definition.** But adding `ids.py` to the member list so the packager RESOLVES IT FROM `_ids/ids.py`
+at build time is a **DISTRIBUTION**, not a definition. There is one source of truth and the bundle carries a copy of
+it the way every zip does.
+**Two precedents, both already in this estate and one of them inside this very bundle:**
+- `lambda-source-map.json` declares `ids.py` as a FLAT BUILD INPUT for three functions -- that is the mechanism I
+  ruled on for IB-rt-2, and it is the same shape.
+- **`trading_calendar` already resolves from its real distribution on that host**, which you measured yourself. The
+  bundle already carries a module it does not define.
+So: **declare the member, resolve it from `_ids/`, copy no file.** If the packager cannot resolve it from `_ids/`
+without a copy, that is a BLOCKING row -- not a copy you make anyway.
+
+### H4. W2-S46 IS RESOLVED BY READING THIS FACE'S OWN SOURCE, NOT BY CHANGING A TIMEOUT. **SEND AND RETURN.**
+You found the named pattern does not wait -- `mdpf-accrual-trigger` sends and returns -- and that a bounded wait
+cannot fit a 60s function. **The face agrees with you and against the wait**, in its own words:
+- line 36: *"no real-calendar wait"*
+- line 127: *"The schedule stays ENABLED; its first REAL fire is OBSERVED, NOT WAITED FOR: the battery drives the
+  trigger's handler directly with a controlled clock and reads the same artifacts the scheduled fire would produce."*
+
+**RULING: the dispatch SENDS AND RETURNS, exactly like the pattern the face names. Build no in-function wait and do
+not raise the timeout.** Completion is OBSERVED by reading the artifacts, which is what line 127 already requires.
+⛔ And do not let "observed" become "polled on a real clock" -- the controlled clock is the instrument.
+
+### H5. ⭐ W2-S45 IS THE CELL'S REAL WORK, IT IS IN LANE, AND IT IS WHAT YOU DO NOW.
+You called it that yourself and you are right. `refresh.py` calls the manifest *"the ONLY memory this cell has
+between fires"* and contains **0 hits across 1 file** for `put_object|boto3|s3` -- all five hits in the package are
+in the SEARCH handler. `last_manifest_as_of` has exactly one caller and it is a TEST, so **the MISSED-trigger
+detector is unreachable in production**, `_refresh/` is empty in all three buckets though the function has run, and
+the IAM grants a write NO CODE PERFORMS.
+**That is a cell whose central claim -- it remembers between fires -- is false today, and it needs no external
+dependency to fix.** Build it while H2's grant lets you clear the import. A MISSED-trigger arm that cannot detect a
+missed trigger in production is the false green this round has been finding all night, and this one is findable
+before it ships.
+
+### H6. W2-S47 ACCEPTED, AND SAY IT ON THE ARM RATHER THAN AROUND IT.
+All three production `latest.json` read 404 with only `qa/` present, positive-controlled. So arm (b)'s `r -> r+1` is
+a **FIRST MINT**, *"previous revision retained"* is **VACUOUS until a second build**, and the revision is a STRING
+(`irpt-dir/<firm>/<date>/1.0`) and not an integer. **Write all three facts onto the arm.** An arm that reads PASS on
+a vacuous condition is exactly what `W4-S28` caught in round 1.
+
+### H7. ⛔ THE HOST YOU LEFT RUNNING: DO NOT STOP IT, AND DO NOT START IT AGAIN WITHOUT TELLING ME FIRST.
+`i-02448edb624a7a7cf` is `running` because you started it at 06:07Z for the import check. **Stopping EC2 requires
+human confirmation and is NOT yours or mine to take** -- you were right to leave it. The mdpf chain's own 15:00Z run
+self-stops it, so it is bounded rather than indefinite, and I am surfacing it to Andrew rather than acting. **Record
+the start, the reason and the self-stop in your report.** Any further start is a line to me BEFORE you take it, not
+after -- a started host is a cost nobody else can see.

@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~2</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-11</issued_date>
-<status>pending -- handed by 2.0.0_SA_COO~B at 2026-09-11 ~14:3xZ after IB-rt-1 drained COMPLETE at 8abcb1563b (v1 frozen at c22f179bbf). Second order of slot ~2.</status>
+<status>complete -- 2026-09-12. RT2-AC1 PASSES BY OUTPUT: the battery prints IBRT2-SIX-GUARDED with 15 of 15 arms, over a population whose every byte is in the record (`0 subject file(s) differ from HEAD`). SEVEN functions deployed and verified on their SERVED bytes across three acts, one root at a time, each verified before the next was touched; three ledgers CLOSED with their sentinels gone; the route census reads 0 of 12 unguarded on committed bytes with the guard MARK earned and the instrument never loosened. RT2-AC2 is RECORDED for 3.0.0_SA_CVO at L9 under UNVERIFIABLE-BY-INSTRUMENT and is NOT self-graded. TWO ARMS ARE HUMAN-GATED RATHER THAN MEASURED -- arm (f) the test principal and arm (g2) served success-response conformance, both waiting on one principal a worker may not mint, each graded by READING its record (9 of 9 and 10 of 10 elements, 0 secret values) per this face's own rule as ruled at amendment 3 C2 and re-confirmed at amendments 4 and 6. 0 of 12 success responses are MEASURED and none is claimed. 23 surprise rows filed in this coordinate; proof-of-spec-check rc=0. The flip is the LAST act: it was withheld at 15 of 15 twice before -- once while four deliverables sat at no commit under a prose-only grant, once while one function still served a defect this cell introduced -- because a terminal flip retires the &lt;paths&gt; grants the order carries.</status>
 
 **Directive:** D9 | **Fabric:** laptop | **Round:** 2 | **PRD:** `../prd/IRPT_BCKEND_PRD.md` v0.13 @e6ba5d9878 (ADMITTED, both L4-R halves SIGNED) | **Round-1 analysis:** `../ledger/ROUND_ANALYSIS.round1.md` @0d57ceb2f9, ruling 2 | **Slug rows this cell closes:** W1-S10, W2-S7 (served-path half), W2-S9 (handler half) | **Decomp cell:** `IB-rt-2` (`../decompositions/IRPT_BCKEND_DECOMP.md` v0.2, s.1 + s.2) | **outcome_ref:** FWD-2 (own), FWD-11 | **PRD candidate:** B3
 
@@ -77,6 +77,124 @@
 - **THE 'ABSENT BUILD INPUTS' PREMISE IS CONTESTED BY TWO INSTRUMENTS AND THE FACE NO LONGER ASSERTS IT.** Slot ~2 measured (W2-S21) that irpt-ycharts-generate declared 7 of 25 inputs that never existed and irpt-status 5 of 7; slot ~3 measured at a later tip (W3-S24) 26 declared, 26 resolving, 0 absent -- the 8 outside `source_dir` are flat-packaged SHARED libraries (`enforce`, `gate`, `keys`, `resolve`, `firm_registry.json`), and removing them strips the function's imports. The drain resolved irpt-status's file list in `lambda-source-map.json` as the UNION of both sides (the shared libraries slot ~3 declares plus the `entry.py` slot ~2 added), which is the non-destructive reading. RULE FOR THE SUCCESSOR: before removing ANY declared build input, resolve it the way the builder does (`source_dir` first, then the flat-packaged shared library roots), print `N of N resolve`, and remove only what resolves NOWHERE; an input that resolves outside `source_dir` is a shared library, not an absence.
 - **A DEPLOY IS OWED (W3-S25), first act of the successor run of IB-rt-9, which holds the ycharts functions; this order rebuilds only the functions it deploys:** `_scope/resolve.py` gained `import ids` and the packaging followed only in the declaration -- the three functions shipping `resolve.py` are REBUILT from the tree and deployed under a ledger; `CodeSha256` equality cannot see this defect by construction, the import-closure check in the `/var/task` + `/opt/python` layout can.
 - **THE LIVE PROBE STILL RUNS THE RETIRED PREDICATE** (`ycharts-session-probe`, LastModified 2026-05-22, rule ENABLED, every 6 hours): the rewrite is in the tree at 22f2238cd7, not in the world. Its redeploy rides IB-rt-9's arm (e) ledger; until then `SessionFresh=1` from that probe is not evidence of anything.
+
+---
+
+## ISSUER AMENDMENT -- 2026-09-11 ~22:5xZ (`2.0.0_SA_COO~B`, post-reboot re-entry). THIS BLOCK GOVERNS OVER EVERY LINE ABOVE IT.
+
+**Authority:** Andrew-direct ~22:25Z at the `1.0.0_SA_CTO` terminal, VERBATIM AND ENTIRE: *"load up and get
+/canonical-flow driving for COO~B (IRPT_BCKEND) and COO~F (IRPT_FNTEND)."* Relayed as msg 96019; recorded at
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260911_2225Z_RESUME_AFTER_REBOOT_DRIVE_BOTH_IRPT_LANES.md`
+@4a90ec8d2f. It lifts exactly ONE thing: MSTR 95994's instruction 2, "start nothing new". **The round stays FROZEN
+(Rule 27)** -- no re-cut, no PRD re-open; an off-spec finding is a surprise ROW and you keep working.
+
+### A1. YOU ARE A COLD START. The IDENTITY section's *"the same subagent as round 1, continued with its context intact"* is FALSE and is STRUCK.
+This device rebooted at ~22:0xZ. **Every worker subagent of this round is DEAD and cannot be resumed.** You carry no
+prior context and must assume none. Your whole context is: THIS FACE (the newest amendment governs), and the WIP hand-off written for exactly this moment: `org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~2/WIP_IB-rt-2_winddown.md`. **READ THAT FILE BEFORE YOU READ ANYTHING ELSE IN THIS FACE'S BODY** -- it names what is done, what must not be re-done, and the traps this cell already paid for.
+
+### A2. NEW WORKTREE -- the pair named in IDENTITY IS GONE.
+- **Worktree:** `/c/tmp/wk-irpt-2-2b` on branch `wk-irpt_bckend-2-2b`, cut by the issuer from CLOUD HEAD `7d6db9bcfa`.
+- The old pair (`/c/tmp/wk-irpt-2-2 on wk-irpt_bckend-2-2`) was REMOVED after its branch was verified an ancestor of the tip. Do not look for it, and
+  **never spawn into an old worktree.**
+- **Every path in this face is relative to the NEW worktree root**; make it absolute by prefixing `/c/tmp/wk-irpt-2-2b/`.
+- First act unchanged: `git rev-parse --abbrev-ref HEAD`, then `test -d org && test -d .tools && echo TREE-OK`.
+
+### A3. FRESH-WORKTREE TRAPS THIS ROUND HAS ALREADY PAID FOR -- none of these is yours to rediscover.
+- **`.tools/terraform.exe` is gitignored and therefore ABSENT here.** Four roots read `rc 1` for want of
+  `terraform init`, and **an rc is not a reading.** Resolve the binary by path; `init` each root before any plan.
+- **`safe-apply.sh` has TWO identity gates.** `export OPAL_AGENT_SERIAL=...` satisfies only the commit-lane one; the
+  halt gate reads `org/mcp/sessions/$CLAUDE_CODE_SESSION_ID.serial`, gitignored per-session state **you must write
+  yourself BEFORE any apply** (row W4-S2). Write it before you need it.
+- **A rail denial ABORTS THE WHOLE BASH CALL**, so every later segment of an `&&` chain is a SILENT no-op --
+  including your commit. Put a gated read in its own call, or verify the later segment's EFFECT.
+- **`safe-commit.sh` force-adds gitignored files under a DIRECTORY pathspec** (it once staged a 685 MB provider
+  binary). Always pass explicit FILE paths.
+- **Heredoc backslashes arrive HALVED** in the Bash tool. Write scripts and commit messages with the Write tool.
+- A raw `grep`/`find` over a directory is denied and routed to `comp-find`; a `cmd | grep` pipe RECEIVER is free.
+
+### A4. THE DEPLOY PREREQUISITE IN THE WIP HAND-OFF's SECTION 5 IS **RULED**. DO NOT RE-OPEN IT AS A CHOICE.
+The WIP frames it as *"attach the `irpt-common` layer to the functions that lack it, OR vendor the modules per
+function"*. **Both halves rest on a premise the issuer measured FALSE at `7d6db9bcfa`, and the layer is the WRONG
+CARRIER.**
+
+**Measured, `infra/aws/lambda/ci/lambda-layer-map.json`, `layers["irpt-common"]` at HEAD:** irpt-common:5 carries
+jsonschema 4.26.0 with transitive pins, the IRPT contract schemas, `bd_helpers`, and
+`python/{ids.py,raw_keys.json,firm_registry.json,keys.py}`. **It does NOT carry `served.py`, `loaders.py`,
+`enforce.py`, `errors.py` or `resolve.py`.** Attaching it to `directory` and `ops` would therefore NOT fix the
+ImportError the WIP predicts -- it would publish a change that LOOKS like a remedy and leaves the gap standing.
+
+**Measured, `infra/aws/lambda/ci/lambda-source-map.json` at HEAD** -- the shared modules each IRPT function already
+declares as FLAT build inputs (denominator: 9 irpt-* functions of 214 declared):
+
+```
+irpt-status               enforce, errors, resolve, keys, ids     <- THE SHAPE TO COPY
+irpt-ycharts-generate     enforce, errors, resolve, keys, ids
+irpt-export-render        enforce, errors, resolve, ids
+irpt-holdings             enforce, errors, resolve
+irpt-directory-refresh    errors
+irpt-directory-search     (none declared; 2 files total)
+irpt-narrative            (none)
+irpt-performance-adapter  (none)
+```
+
+**THE RULING: declare the shared modules as FLAT BUILD INPUTS in `lambda-source-map.json`, per function, exactly the
+way `irpt-status` already does.** That is the estate's existing mechanism (BUILD LADDER rung 2 -- the estate already
+has it), it is how four functions already resolve `enforce`/`resolve` today, and it needs neither a layer attachment
+nor a vendor manifest. `infra/aws/lambda/layers/irpt-common/` and `lambda-layer-map.json` remain granted, but **you
+are NOT to publish a layer version for this.** If you come to believe you must, that is a BLOCKING row to me, not an
+act.
+
+**AND `served.py` AND `loaders.py` ARE DECLARED BY NOBODY** -- you created them in this cell, so the gap is UNIFORM
+across all six functions your entry modules touch, not confined to the two that read `layers = []`. Census the SIX,
+print the denominator.
+
+- **RESOLVE THE WAY THE BUILDER DOES, AND PRINT `N of N`.** This is the same trap slot ~3 paid for on W3-S24: a naive
+  *does `source_dir/<name>` exist* check calls flat-packaged shared libraries ABSENT and invites you to delete them.
+  A module is PRESENT if the builder resolves it from its home package at build time. **Remove only what resolves
+  NOWHERE; add only what resolves nowhere.**
+- **THE ONLY INSTRUMENT THAT CATCHES A MISSING MODULE IS AN EXTRACT-AND-IMPORT IN THE FLAT `/var/task` LAYOUT WITH
+  THE REPO STRIPPED FROM `sys.path`, IN A FRESH INTERPRETER.** `CodeSha256` equality cannot see this by construction:
+  a hash certifies bytes and nothing in the deploy path ever imports them. A saved-and-restored `sys.modules` is not
+  isolation either -- only a new interpreter is.
+- My `layers=` probe returned `?` for most rows because I probed a key name I did not confirm. **The
+  layer-ATTACHMENT facts are UNMEASURED BY ME and are yours to measure from Terraform**, as the WIP did at
+  `bebcab6315`. Do not quote my table for attachment.
+
+### A5. THE `_authz/dispatch.py` RENAME IS UNBLOCKED. WIP section 6.5 is STALE.
+It says *"do not start the rename until `_contracts/` is granted"*. **`_contracts/` WAS granted at `db1be7e127`**
+(issuer amendment, same session). The rename's only importer is `_contracts/tests/test_seam_paired.py:41` and that
+path is in lane. Do it, in one commit with its importer, leaving no shim at the old basename.
+
+### A6. DEPLOY SEQUENCING -- YOU ARE SECOND, AND THIS IS NOT NEGOTIABLE.
+Slot ~3 (IB-rt-9) owes a rebuild-and-deploy of `irpt-export-render`, `irpt-status` and `irpt-ycharts-generate` for
+the `ids.py` packaging gap (row W3-S25), and that is ITS first ledgered act. **Three of those overlap your six.**
+- **rt-9 deploys those three FIRST. You do NOT deploy them until I tell you its deploy has landed.** Ask me; do not
+  read its branch and decide for yourself.
+- Your own deploy of the guarded entries (arm (e)) re-points the Terraform `handler =` strings. Until that apply,
+  the world runs the OLD handlers, which do not import `served`/`loaders` -- **so rt-9's deploy is safe ahead of
+  yours, and yours is unsafe ahead of its declaration landing.** That asymmetry is the reason for the order.
+- NEVER-2 stands: open the change-management ledger only with the room to CLOSE it in-session; commit the OPEN
+  sentinel BEFORE the act and the CLOSE before the reads that grade it. Print
+  `artifact_sha256 == S3 content-sha256 == live CodeSha256` for every function you deploy (W3-S18).
+
+### A7. FIRST ACTS, IN ORDER (the WIP's section 4 stands, with A4 folded in).
+1. Add `"irpt-status"` to `IN_LANE_FUNCTIONS` in `_authz/tests/test_guarded_entries.py` (ONE line; the census
+   test's own copy of that set is already updated -- the two lists are separate).
+2. Re-run `timeout 600 python -m pytest infra/aws/lambda/investor-reporting/_authz/tests/ -q` (104 passing before
+   the line; expect 36 swaps after) and then `timeout 900 python
+   org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~2/battery_ib_rt_2.py`.
+3. **Rewrite `battery_ib_rt_2.result.md` and the proof-of-spec instance FROM THAT OUTPUT.** Both currently record
+   pre-amendment numbers and say so in their own text. **Do not hand-edit their numbers** -- that is a new vintage,
+   not a correction.
+4. Then the packaging census and declaration of A4; then the rename of A5; then, only after A6 clears, the deploy.
+
+### A8. EVERYTHING IN THE WIP's SECTIONS 6 AND 7 STILL BINDS.
+Do not re-measure the "6 of 11 unguarded" the face inherits (the real census at the cut was 11 of 11, row W2-S20).
+Do not add a guard inside a wrapped handler module. Do not wire `ops`'s status loader to make an arm pass. Do not
+add `expiry.py`/`refresh.py` to `irpt-directory-search`'s files. Do not re-derive the protected-string set as a flat
+list. Do not assert REFUSED for the advisor swap -- the bar is that it never WIDENS. Read the `PUBLIC_REASONS` enum
+before reaching for `CONTRACT_VERSION`.
+
 
 ## DELIVERABLE
 
@@ -153,6 +271,8 @@ infra/aws/terraform/investor-reporting/ops/
 infra/aws/lambda/layers/irpt-common/
 infra/aws/lambda/ci/lambda-layer-map.json
 infra/aws/lambda/investor-reporting/_contracts/
+infra/aws/lambda/investor-reporting/holdings/
+infra/aws/terraform/investor-reporting/holdings/
 </paths>
 
 
@@ -179,3 +299,323 @@ The grant is read from HEAD of your branch and only while this order is NON-TERM
 </proof_of_spec>
 
 **REPORT:** your FINAL MESSAGE, once, in the `WORKER REPORT` shape. You cannot send or receive messages -- anything you would ask is a surprise row.
+
+---
+
+## ISSUER AMENDMENT 2 -- 2026-09-12T00:03:10Z (`2.0.0_SA_COO~B`). **SECTION A6 ABOVE IS STRUCK AND REVERSED.** This block governs over it and over every line above it.
+
+**A6 SAID:** slot ~3 deploys `irpt-export-render`, `irpt-status` and `irpt-ycharts-generate` FIRST, and this cell is
+held off those three until the issuer confirms the landing.
+
+**A6 WAS WRONG, AND THE TREE REFUSED IT.** Slot ~3 measured the consequence and filed row `IRPT_BCKEND-W3-S26`
+(BLOCKING; landed on CLOUD at `670092d321`) rather than overriding the order. **That refusal is ACCEPTED IN FULL and
+the row is DISARMED at the issuer** by seat row `IRPT_BCKEND-S38`.
+
+**THE MEASUREMENT THAT KILLED IT.** All three roots ALREADY carry this cell's committed, unapplied
+`handler -> entry.lambda_handler` flip, and `terraform apply` is per-ROOT, not per-attribute -- so the apply that
+lands the `ids.py` packaging fix also lands the handler flip, and the `entry` module is in no zip:
+
+```
+plan investor-reporting/ycharts  ~ handler "job.lambda_handler"     -> "entry.lambda_handler"   0 add, 1 change, 0 destroy
+plan investor-reporting/ops      ~ handler "status.lambda_handler"  -> "entry.lambda_handler"   0 add, 1 change, 0 destroy
+plan investor-reporting/export   ~ handler "handler.lambda_handler" -> "entry.lambda_handler"   0 add, 1 change, 0 destroy
+```
+
+EXERCISED, not asserted -- each zip extracted to a flat `/var/task`, imported in a FRESH python3.12 interpreter with
+the repo stripped from `sys.path`, negative control armed: all three read
+`IMPORT-FAIL entry: ModuleNotFoundError: No module named 'served'`. Nothing was deployed; all three functions are
+`Active` on their live bytes and each live zip re-measured CLOSED under its own live handler.
+
+### A9. THE NEW SEQUENCING -- THE WHOLE ACT IS THIS CELL'S, AND IT IS ATOMIC.
+**`entry.py` + `served.py` + `loaders.py` + (where genuinely needed) `ids.py` MUST LAND IN ONE ARTIFACT PER FUNCTION,
+and the apply that flips the `handler` is the SAME apply that ships them.** There is no first-in-line cell, nothing to
+wait for, and no hold on any function. A6 split an atomic act across two cells; you are not inheriting a delay, you
+are inheriting the whole act across all six roots.
+
+### A10. FIVE MEASURED GIFTS FROM SLOT ~3 -- DO NOT RE-DERIVE ANY OF THEM.
+1. **THE BUILD RECIPE IS PROVEN.** Rebuilding each live artifact from its own live member bytes reproduces the S3
+   object BYTE-FOR-BYTE (3 of 3 REPRODUCED): sorted arcnames, `ZIP_DEFLATED` at zlib default,
+   `date_time=(2026,9,11,0,0,0)`, `external_attr=0o644<<16`, and **`create_system=0`** -- that last is the
+   non-obvious member.
+2. **RESOLUTION THE WAY THE BUILDER DOES IT** -- `source_dir` first, then the flat shared roots -- reads
+   **14 of 14, 10 of 10, 27 of 27; NOTHING RESOLVES NOWHERE.** This independently confirms W3-S24 and the drain's
+   union rule: **REMOVE NOTHING.** (`handler.py` for `irpt-status` resolves from `.../directory/`, which looks wrong
+   and is not.)
+3. **DO NOT ADD `ids.py` TO `irpt-export-render`** (row W3-S27). That function was NEVER armed by the `ids.py` gap:
+   `irpt-common:5` carries `python/ids.py` byte-identical to `_ids/ids.py` (14173 B, sha `fc1017b2523f2340...`) and
+   that function mounts the layer. Difference control: rebuilt WITHOUT `ids.py`, layer mounted -> 13 of 13 CLOSED;
+   without the layer -> 10 of 13. **W3-S25's armed reading was the NO-LAYER reading.** Adding it there is the second
+   definition the entry's own note refuses for `keys.py`. The gap IS real for the two layer-less functions (armed
+   control 5 of 8 CLOSED, `No module named 'ids'`).
+4. **THE IMPORT DERIVATION IS THE ROOT CAUSE, AND NO IN-REPO TEST CAN SEE IT.** `entry.py:34-43` derives `_authz`
+   from the file's PARENT DIRECTORY, which at `/var/task` is `/var`. It resolves in the tree and cannot resolve in
+   the runtime. **Verification for this arm is therefore extract-and-import in the flat layout, fresh interpreter,
+   repo off `sys.path`** -- an in-tree pytest passes on a zip that dies at cold start, and `CodeSha256` equality
+   cannot see it by construction.
+5. **A SHARED-DEPENDENCY DEFECT SITS BENEATH ALL OF THIS AND IS NOT YOURS TO FIX** (row W3-S28): the layer's
+   `python/keys.py` is **21320 B** against the tree's `_keys/keys.py` **29894 B** (also `raw_keys.json` 5990/6064,
+   `firm_registry.json` 5094/5229). `irpt-export-render` ships no `keys.py` and therefore runs the LAYER's OLDER key
+   grammar -- **two grammars are live at once.** Do not repair it and do not let your packaging make it worse. If
+   your work forces a choice about which `keys.py` a function resolves, that is a BLOCKING row to me.
+
+Slot ~3 also built and import-verified corrected zips (`irpt-ycharts-generate`
+`gU4v6NbjxbygxEDLdYURjAgeGPGx3Xc2qzKGldjnbnE=`, `irpt-export-render` `6S29BGvKhG6O1T4TmR1b3bMlkyOZ50RlKWAY2fi/wMg=`,
+`irpt-status` `/wihp7Lgum/nlmFMP6kNAqp039rWrvaqfOyXvvl6lPs=`). They sit on ITS branch, are NOT uploaded, and
+`irpt-status` still read 9 of 10 with `entry` OPEN -- a reference point, never a substitute for your own build.
+
+**UNCHANGED:** NEVER-2 (a ledger opens only with the room to close it in-session; OPEN sentinel committed BEFORE the
+act, CLOSE before the reads that grade it), `safe-apply.sh` only, and
+`artifact_sha256 == S3 content-sha256 == live CodeSha256` printed per function.
+
+---
+
+## ISSUER AMENDMENT 3 -- 2026-09-12T02:00:09Z (`2.0.0_SA_COO~B`), on the FAIL report. This block governs over every line above it.
+
+**THE DEPLOY IS ACCEPTED.** Six roots, one at a time, `artifact_sha256 == S3 content-sha256 == live CodeSha256` on
+6 of 6, guarded entry live on 6 of 6, every post-apply plan `No changes`, ledger `irpt-bckend-rt2` CLOSED with its
+12 legs and its sentinel gone from `org/critical_paths/.open_deploys/` -- verified by the issuer at HEAD, not taken
+from the report. The proof-of-spec instance re-grades `VALID (rc=0)` with 17 of 17 surprise rows resolving. **The
+`<status>` correctly stays open on a FAIL.**
+
+**AND THE TWO RUNTIME-ONLY DEFECTS ARE THE RESULT OF THIS CELL, not a footnote to it.** Neither was visible to any
+in-tree test, and either alone meant none of the six could have served a production event: the package roots
+derived from the parent of `/var/task`, and `served.Entry.operation_of` resolving the operation by READING
+`routes.json` while `api/integrations.tf:57` declares `payload_format_version = "2.0"` with no request template --
+so every production request carried exactly the shape that triggers it. **A guard that cannot import is not a
+guard, and a deploy that matches three hashes says nothing about either.**
+
+### C1. W2-S30 -- THE HOLDINGS PATHS ARE GRANTED. The census is not wrong and must not be loosened.
+Arm (a)'s whole-file denominator moved 11 -> 12 while this cell was dead, because IB-rt-7's `irpt-holdings` went
+live on its published route. The census reads **1 of 12**, the remedy paths sat outside `<paths>`, and W2-S31
+records that the census grades the `__irpt_guarded__` MARK while that handler enforces the same `FirmBinding`
+inline -- **so this is a MARK gap, not a live cross-firm hole.**
+
+**GRANTED, additive, for this cell only:** `infra/aws/lambda/investor-reporting/holdings/` and the holdings
+Terraform root. **DO NOT loosen the census to make 1 of 12 read 0 of 12** -- the mark is the census's contract and
+an inline enforcement that the instrument cannot see is exactly the gap worth keeping visible. Bring the handler
+under the same mark the other eleven carry.
+
+### C2. g2 IS RULED **HUMAN-GATED**, under this face's OWN rule, and is no longer a FAIL.
+The face already says: *"If none exists, the arm is written HUMAN-GATED naming the exact operator act (which
+console, which user, which claim) and its expected reading -- never skipped silently."* Arm (f) was recorded that
+way and accepted. **g2 depends on the SAME principal and therefore takes the SAME treatment** -- write it
+HUMAN-GATED with the exact operator act and its expected reading. This is the face's stated rule applied to a
+dependent arm, NOT a bar being lowered: nothing is asserted that was not exercised, and the arm reads
+HUMAN-GATED rather than PASS.
+
+### C3. g3 -- THE POST-READ HALF IS NOT SHIPPED ALONE, AND YOUR REASONING FOR THAT IS ACCEPTED.
+You declined to ship the post-read half because it leaves 11 of 11 version refusals non-conforming and costs a
+second six-root deploy to move nothing. **That is correct and it is the same rule I applied to myself tonight:
+do not take an expensive or irreversible act that does not achieve its stated purpose.**
+The pre-read half needs an amendment to the FROZEN v1 contract (`source_dates.required = ['business_date']`, and a
+pre-read refusal has no artifact while v1 admits no null). **A frozen-contract amendment is NOT mine mid-round and
+NOT yours.** It is with `1.0.0_SA_CTO` as the ONE ask blocking this cell. Do not work around it, do not emit a
+placeholder date, and do not relax the validator.
+
+### C4. WHEN THE CONTRACT ANSWER ARRIVES, EVERYTHING REMAINING LANDS IN **ONE** DEPLOY.
+C1's mark, g3's post-read half and whatever the contract answer permits for the pre-read half are ONE act, on the
+roots they actually touch, under ONE ledger. **Do not deploy for C1 alone.** Sequencing discipline from amendment
+2 section A9 stands unchanged: one root at a time, verify each before the next, the ledger enumerating every root
+and its rollback before the first apply, and a hard stop on the first failing verify.
+
+### C5. UNTIL THEN THIS ORDER IS PARKED, NOT ABANDONED, AND YOU ARE NOT WAITING IDLE.
+`IB-rt-6` and `IB-rtb-1` both gate on THIS order being terminal, so three cells of the round sit behind it. The
+issuer is carrying the one contract question to `1.0.0_SA_CTO` now. **Do the C1 mark and the g2 HUMAN-GATED
+record as tree work (no deploy), commit them, and report.** That leaves exactly one thing outstanding when the
+answer lands.
+
+---
+
+## ISSUER AMENDMENT 4 -- 2026-09-12T02:38:27Z (`2.0.0_SA_COO~B`): **g3 IS UNBLOCKED.** This block governs over every line above it.
+
+`1.0.0_SA_CTO` ruled the frozen-contract question and LANDED it: **PRD v0.13 -> v0.14 @`b8e98d5a4d`**, CONTRACTS row
+`StatusEnvelope`, item 3 "source dates", plus the generated
+`docs/contracts/investor-reporting/v1/StatusEnvelope.schema.json`. Amendment 3's C3 is discharged.
+
+### D1. THE ENVELOPE SHAPE, AND IT IS A STATE-CONDITIONAL -- NOT A NULLABLE FIELD.
+```
+source_dates              STAYS REQUIRED at the top level. The key is ALWAYS present, so no consumer
+                          ever branches on its existence.
+business_date REQUIRED    on the ANSWER-BEARING states: READY, PARTIAL, STALE, NEEDS_CORRECTION, UNCERTAIN
+business_date MAY BE      on the NO-ANSWER states:       QUEUED, RUNNING, UNAVAILABLE, FAILED
+  ABSENT -- NEVER NULL    an ABSENT field says "no value exists"; a NULL invites "we had one and lost it".
+                          `source_completion_date` and `as_of` are already ["string","null"] because they
+                          can be genuinely unknown BEHIND a real answer. business_date is a different
+                          question and does NOT get that treatment.
+```
+Mechanically an `allOf` with an `if`/`then` on `state`; the sub-object's unconditional `required` is gone. Exercised
+by the CTO, not asserted: 11 of 11 cases across all nine states, every answer-bearing state REFUSING a missing
+`business_date`, every no-answer state ADMITTING it, and a negative control on a bogus state firing so the
+validator is not inert.
+
+**WHY NOT NULLABLE, which was option (a) in my own framing of the question:** making `business_date` nullable
+weakens EVERY envelope including a READY success -- a served READY carrying a null date would then validate, and
+the one thing this contract must not permit is a successful answer omitting the date it is an answer FOR. The
+0-of-11 failure was real; that fix would have traded a validation gap for a semantic hole in the success path.
+
+### D2. ⚠ THE CUT IS WIDER THAN THE TWO HALVES I GAVE YOU. **FOUR** STATES, NOT TWO.
+I cut this POST-READ vs PRE-READ. That was right as far as it went and **it was short by two.** The enum has NINE
+states, and **QUEUED and RUNNING also carry no `business_date` by construction -- and neither is a refusal at
+all.** A fix scoped to "refusals" leaves both failing validation exactly as before.
+**So the boundary must satisfy all FOUR no-answer states, not the two refusal ones.** The amendment is cut as a
+SUBTRACTION from the printed nine-state enum (9 MINUS the 5 answer-bearing = 4), never forward from the cases in
+hand -- Rule 24, and the same class as the issuer error in S38, the zip-ownership error in S39, W4-S28's
+certification coordinate and S41's version count. **Write your own check the same way: from the enum, minus the
+answer-bearing five.** Do not enumerate the states you happen to be thinking about.
+
+### D3. ⛔ THE POST-READ OBLIGATION IS NOT EXCUSED -- IT MOVED FROM THE SCHEMA TO THE BATTERY. NAME IT IN THE CELL.
+The conditional makes `business_date` OPTIONAL on `UNAVAILABLE` and `FAILED`. **It does NOT bless omitting it
+there.** A POST-READ refusal HAS an artifact and therefore HAS a business date and MUST emit it. **The schema can
+no longer catch that omission, so the obligation is now the BATTERY's:** a post-read refusal that omits
+`business_date` is a BATTERY FAILURE, not a schema failure. Write that into the cell explicitly so the weakening
+is PAID FOR rather than granted, and so a later reader finds the rule instead of a hole where one used to be.
+
+### D4. ⛔ DO NOT HAND-EDIT THE SCHEMA, AND DO NOT TRY TO REGENERATE IT.
+- **The schema is GENERATED, not authored.** Its own header names the PRD CONTRACTS table row as the source of
+  record, every property description quotes that table VERBATIM, and a property whose quoted source string does
+  not appear in the section at the pin **IS A FABRICATION AND IS REFUSED BY THE IB-s-18 BATTERY.** A hand-edit
+  does not land; it makes that battery right to refuse it. The schema already moved as part of the CTO's L4 act --
+  it is not yours to touch.
+- **The generator is ABSENT from this device.** The header names `.scratch/gen_contracts.py`; `.scratch/` is
+  gitignored and the file is on no device here. **"Regenerate the schema" is NOT an executable instruction for
+  anyone right now** -- do not attempt it and do not treat a failure to run it as your defect.
+
+### D5. WHAT THIS MEANS FOR YOUR ARMS, AND WHAT STILL STANDS.
+g3 is now satisfiable: the boundary emits an envelope with no `business_date` on all four no-answer states and it
+validates. **Amendment 3 is otherwise unchanged** -- C1's holdings mark granted with the census NOT loosened, C2's
+g2 HUMAN-GATED (the CTO confirmed explicitly this is the face's own rule applied, not a bar lowered, and told me
+not to put it back), and **C4's ONE-DEPLOY rule**: the mark, the post-read emission and the envelope work all land
+in a single deploy under one ledger, one root at a time, verified before the next, roster and rollbacks printed
+before the first apply, hard stop on the first failing verify.
+
+---
+
+## ISSUER AMENDMENT 5 -- 2026-09-12T03:56:10Z (`2.0.0_SA_COO~B`). Governs over every line above it.
+
+### E1. ⛔ THE C1 GRANT WAS PROSE-ONLY. THAT IS MY DEFECT AND IT IS NOW FIXED IN THE `<paths>` BLOCK.
+Amendment 3 C1 granted `holdings/` "additively" in a prose sentence and **never added it to the `<paths>` block**.
+The owned-paths lane gate reads the BLOCK, not the prose, so it refused your four holdings files and **the gate was
+right**. Row `IRPT_BCKEND-W2-S41` is correct and it is mine.
+
+Added to `<paths>` in this amendment's commit:
+```
+infra/aws/lambda/investor-reporting/holdings/
+infra/aws/terraform/investor-reporting/holdings/
+```
+**Commit C1's four files now.** Nothing else about C1 changes: `holdings/entry.py` composes the same triple, and
+`make_holdings_enforcer` keeps defaulting ownership to `_no_grant`. ⭐ Your reasoning there was exactly right and I
+want it on the record: handing `Entry` the shared loaders -- what the other six do -- would have turned a route
+that serves nothing into one that serves real holdings, and that is IB-rt-7's decision, not this cell's. **A mark
+must not widen what it marks.**
+
+### E2. ⭐ AND YOUR REFUSAL TO FLIP `<status>` WAS CORRECT. I am recording it as a finding, not as a delay.
+You did not flip on 15 of 15 because **the `<paths>` grant is live only while the order is NON-TERMINAL**, so
+flipping would have retired the grant and permanently orphaned C1's work. That is a real property of the gate that
+no face states, and reading it correctly under a passing token is the opposite of the failure mode this round has
+been full of. It goes in the round-close slug: **A TERMINAL FLIP REVOKES THE GRANTS THE ORDER CARRIES, so the flip
+is the LAST act and never the act that frees you to finish.**
+
+### E3. W2-S38 RULED: THE YCHARTS RIDER IS **IN**. Deploy it.
+IB-rt-11's `intake/settings.json` edit is a declared build input of `irpt-ycharts-generate` and your deploy will
+carry it. It is **INERT** on measurement -- the cell read the SERVED artifact (5104 B) against the tree (9670 B) and
+showed the delta is ONLY an added sibling key, with the `settings` subtree and `cautions` byte-identical -- and it is
+that cell's committed, accepted, in-lane work. Ship it.
+**NAME IT IN THE LEDGER ENTRY as a rider on the `irpt-ycharts-generate` leg**, so the entry states what the apply
+actually carries rather than only what this cell authored. ⚠ If your zip for that function picks up
+`settings.json` without `fixtures/holdings/security_mapping.json`, or either without `parse.py`, that is a BLOCKING
+row to me and a stop -- row `W3-S36` says the parser refuses at its first money column otherwise.
+
+### E4. TAKE THE ONE DEPLOY NOW. C4 is satisfied, and the cost of waiting has changed.
+Everything remaining is one atomic act and all of it is finally in lane: C1's holdings mark, the v0.14 envelope
+work, the post-read `business_date` emission, the `W2-S39` cache-lifetime fix, and the ycharts rider.
+⛔ **`W2-S39` IS THE REASON THIS IS NOW URGENT RATHER THAN MERELY READY.** You introduced a stale-payload defect and
+removed it in the tree, and it is **STILL ARMED ON THE SIX LIVE FUNCTIONS until a deploy ships the fix** -- a
+snapshot that must be refused was SERVED from a prior request's payload. Authorization was never at risk and you
+say so plainly, which is the right disclosure; but a known armed serving defect sitting in production while we
+sequence is a worse trade than any sequencing benefit. **You were right to stop rather than split the atomic act I
+defined -- that was my sequencing to fix, and E1 fixes it.**
+
+Sequencing discipline UNCHANGED and it binds hardest here: ONE ledger, opened only with the room to CLOSE it
+in-session, OPEN sentinel committed BEFORE the act and CLOSE before the reads that grade it; **one root at a time,
+each function verified by extract-and-import in the flat `/var/task` layout in a fresh interpreter with the repo off
+`sys.path` BEFORE the next root**; the full root roster and each root's rollback printed before the first apply;
+`artifact_sha256 == S3 content-sha256 == live CodeSha256` per function; and a HARD STOP on the first failing verify
+with N-of-M applied stated in the ledger. If any root's plan shows anything beyond your own changes and the named
+rider, that is a BLOCKING row and a stop.
+
+### E5. THE FLIP IS THE LAST ACT.
+After the deploy verifies: re-run the battery, rewrite the instance FROM that run, re-pin every artifact row to the
+commit that CARRIES it, re-grade with `proof-of-spec-check`, and only then flip `<status>`. IB-rt-6 and IB-rtb-1
+both gate on this order being terminal, so the flip releases two cells -- but not one moment before the deploy is
+verified and the record matches the bytes.
+
+---
+
+## ISSUER AMENDMENT 6 -- 2026-09-12T05:07:38Z (`2.0.0_SA_COO~B`). Governs over every line above it. **TWO RULINGS; THE SECOND IS A HARD BOUNDARY.**
+
+Six roots applied one at a time with each function verified on SERVED bytes before the next, ledger closed with 13
+legs and its sentinel gone, C1 committed at `4758ec3dd1` with the census reading **0 of 12 on COMMITTED bytes** --
+the mark earned, the instrument not loosened. Accepted. And `"0 subject file(s) differ from HEAD: every byte above
+is IN THE RECORD"` printed beside the token is the direct answer to IB-rt-11's false green; it belongs in every
+battery from here.
+
+### F1. ⛔ THE E3 GUARD IS RELEASED. I WROTE THE CONDITION BACKWARDS AND IT BLOCKED A DEPLOY IT WAS NEVER MEANT TO STOP.
+E3 said: *"If that zip picks up `settings.json` without `fixtures/holdings/security_mapping.json`, or either without
+`parse.py`, that is a BLOCKING row to me and a STOP."* You measured the literal condition TRUE -- `parse.py` is in 0
+of 214 functions, so no zip can carry it -- and stopped. **Correct reading of what I wrote. What I wrote was wrong.**
+
+Row `W3-S36`'s obligation runs in ONE direction: *whoever ships `parse.py`* must ship `settings.json` and
+`security_mapping.json` beside it, or the parser refuses at its first money column. **Nobody ships `parse.py`.** So
+the converse -- `settings.json` riding along WITHOUT `parse.py` -- is not the hazard; it is the normal and inert
+case, and `W3-S34` measured exactly that (served 5104 B vs tree 9670 B, the delta an added sibling key, the
+`settings` subtree and `cautions` byte-identical). **Data that no shipped code reads cannot refuse anything.**
+
+**The guard is released. Ship the rider.** The corrected guard, which still stands: if a future zip carries
+`parse.py`, it must carry `settings.json` AND `fixtures/holdings/security_mapping.json` with it. That is not this
+deploy.
+
+### F2. ⛔⛔ W2-S42 RULED -- AND NO PLAN CARRYING A DESTROY IS APPLIED TO THAT ROOT. NOT ONE.
+I verified your finding on my own instrument rather than taking the row:
+```
+aws secretsmanager describe-secret --secret-id ycharts/session/research-20260911   -> rc=0
+  DeletedDate  ABSENT  (the secret is LIVE, not scheduled for deletion)   VersionIdsToStages  2 versions
+```
+So the root really does plan to destroy a **live** secret plus a log group, because `IB-rt-9` removed both from
+config at `f83f73ce6c` and never applied. **Your row is right and you were right that no cell can apply that root as
+it stands.**
+
+**THE RULING: RESTORE THE TWO DECLARATIONS to the ycharts root so the plan reads `No changes`, and apply only
+then.** Non-destructive, reversible, and it preserves a live secret with two versions in it.
+- ⛔ **Do NOT apply a plan with any `destroy` line on that root.** Destroying a live secret is unrecoverable-class
+  and needs Andrew's own word, which has not been given and which I am not seeking tonight for two pieces of
+  research debris.
+- ⛔ **Do NOT `state rm` them instead.** That leaves them live but managed by nothing, which trades a visible
+  hazard for an invisible one.
+- **If re-declaring cannot produce `No changes`** -- the live shape differs from anything you can write, or the
+  restore itself plans a change -- **STOP and report. Do not improvise a third option.**
+- **Whether those two SHOULD eventually be retired is NOT this round's question.** It is carried to `1.0.0_SA_CTO`
+  at L10 and it needs Andrew's word if the answer is yes. Say nothing in your record about their future; record only
+  that they are preserved and why.
+
+### F3. THEN THE LAST ROOT, THEN THE FLIP.
+With F1 released and F2 restored: apply `irpt-ycharts-generate`'s root ALONE, verify it on served bytes the way you
+verified the other six (extract-and-import in the flat `/var/task` layout, fresh interpreter, repo off `sys.path`,
+plus the three-way hash equality), and confirm the post-apply plan reads `No changes`. **That apply is what disarms
+`W2-S39` on the last function and what finally puts the v0.14 envelope and the post-read `business_date` on it.**
+Then re-run the battery, rewrite the instance FROM that run, re-pin every artifact row to the commit that carries
+it, re-grade, and **flip last.**
+
+### F4. ⭐ WHAT YOUR VERIFIER FOUND IS A ROUND-LEVEL FINDING AND I AM CARRYING IT AS ONE.
+A verify read RED on a sound zip (`No module named 'keys'`) because the verifier kept **its own** layer list beside
+the packager's. That is the FOURTH divergence of two hand-maintained copies of one fact in this cell, **and every
+one appeared the moment a function was granted** -- the grant is the event that exposes the duplicate. Each was
+fixed by DELETING a copy, never by syncing it: the layer read from the live function, the function list imported
+from the packager. The two defects found in the same read (`join` raising on a null `Layers`; `--output text` plus
+`strip()` losing an empty trailing field) are exactly the kind a ONE-FUNCTION probe reports clean. **A DUPLICATED
+FACT IS A DEFECT WITH A LATENCY, AND THE LATENCY ENDS AT THE NEXT GRANT.**
+
+### F5. AND A `No changes` IS PERISHABLE -- THAT IS THE OTHER ROUND-LEVEL FINDING.
+The ycharts root read clean after your first apply and now plans two destroys, and you found it only because arm (e)
+**re-read the plan instead of trusting the record**. A post-apply `No changes` is a measurement with a timestamp,
+not a property of the root. Re-read it immediately before any later apply to the same root, and never carry a clean
+plan forward across another cell's commits.

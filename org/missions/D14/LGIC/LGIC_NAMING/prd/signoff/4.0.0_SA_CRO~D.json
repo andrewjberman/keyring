@@ -1,0 +1,12 @@
+{
+  "prd": "LGIC_NAMING_PRD.md",
+  "prd_version": "v1.2",
+  "prd_pin": "d6e0c3b74a9ab8de449b87e6ec4580642d7a1abe",
+  "half": "brief",
+  "half_hash": "42bd38a9ed8a1baab7a1b7f3c89aeb7a7263bc99fe47b675f8256fd51f447d98",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/4.0.0_SA_CRO/deliverables/PRD_REVIEW_LGIC_NAMING_v1.2_BRIEF_HALF_20260913.md@050d396d06",
+  "signed_by": "4.0.0_SA_CRO~D",
+  "signed_at": "2026-09-13T23:50:20Z",
+  "reason": "v1.2: S1 five-segment key with container/leaf separated -- concurred; rest of the half byte-identical to v1.1"
+}

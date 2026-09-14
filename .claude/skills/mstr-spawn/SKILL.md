@@ -237,6 +237,59 @@ open entry**).
 ⛔ **AND DO NOT WRITE A WORK-STATE ASSERTION INTO A `--say` HINT YOU HAVE NOT MEASURED.** The hint is
 read by the seat as fact.
 
+⛔⛔ **AND THE SAME TRAP HAS A SECOND SHAPE THIS WARNING DOES NOT COVER: A ROUTING ASSERTION, WHICH
+CAN BE PERFECTLY MEASURED AND STILL GO STALE IN MINUTES.** The clause above guards *is this work
+done* -- a fact about the world, which a measurement settles. **It does not guard *whose work is
+this*, which is a DECISION somebody else can change after you have spoken, and changing it silently
+falsifies a hint already sitting in a live seat's context.** A `--say` does not expire, cannot be
+edited, and the seat has no reason to doubt it.
+
+> **THE RULE: A HINT NAMES WHAT THE SEAT SHOULD *READ*, NEVER WHAT IT SHOULD *OWN*.**
+> *"Read your inbox; 1.0.0_SA_CTO msg-id 96078 explains why you were seated"* survives any
+> re-routing. *"X is routed to this lane"* is a claim about a decision you do not control.
+
+*MEASURED 2026-09-12, and the hint was mine.* `0.7.0_AE_CloudOps` was seated on a CTO seat-ask with
+`--say` containing *"an AE-owned IAM change on mdpf-daily-runner-ec2-role is routed to this lane."*
+**True when written.** Fifteen minutes later the pre-flight's own 1d finding re-routed that work to a
+fresh lane `~C` -- and the base seat's live broker summary showed it had already taken the hint and
+begun: *"reading backlog + routed IAM change on mdpf-daily-runner-ec2-role."* Correcting it cost a
+Tier-1 relay, because **`mstr-no-tier2-writes` correctly refuses MSTR the direct route to the seat it
+misdirected** — so the author of a stale hint is *structurally unable to retract it alone*. Budget for
+that when you write one.
+
+⚠ **AND THE RE-ROUTE WAS CAUSED BY THIS SKILL'S OWN 1d CHECK**, which is the part worth internalising:
+the pre-flight that finds an encumbrance is *exactly* the thing that changes who should hold the work,
+so **a spawn whose 1d surfaces anything is the spawn most likely to invalidate its own hint.** Write
+the hint AFTER 1d, and write it as a pointer.
+
+### ⛔ AND WHEN YOU HAVE ALREADY WRITTEN A BAD ONE: **A CORRECTION IS AN ACT.**
+
+The retraction is where this goes wrong a second time, because urgency makes an instruction feel
+obviously justified. **It is not, and two independent gates will say so.** Measured on the same
+2026-09-12 incident, in sequence:
+
+1. MSTR tried to correct the seat directly → refused by **`mstr-no-tier2-writes`**.
+2. MSTR handed the route to a Tier-1 seat, which wrote *"DO NOT START IT; if you have already
+   started, STOP and say what you touched"* → refused by **LD-0529**, a *different* gate with a
+   *different* mechanism: `act(s) found [ask marker: 'NOW']`, a Tier-2 recipient, no task order
+   cited. **Nothing was written for any recipient of that send.**
+
+>> **TWO CONTROLS, TWO MECHANISMS, ONE CONCLUSION: a Tier-2 seat does not take instructions outside a
+   task order, and the content being a *correction* buys no exemption.** `send_override` would have
+   worked and was correctly NOT used — its contract reserves it for a HUMAN OPERATOR's request, and
+   "my message is genuinely urgent and genuinely right" is precisely the justification it exists to
+   refuse. <<
+
+**THE LAWFUL FORM, and it is sufficient:** send the same FACTS with every imperative removed — the
+hint is superseded as of `<timestamp>`, the work is assigned to `<other serial>`, the mechanical
+reason, what the record shows the seat *does* hold, and that the mis-hint was the spawner's error.
+**A seat told plainly that a thing is not its work does not need to be ordered to stop.** The
+information is the whole remedy, and it is the only form the gate permits — which is a property of
+the gate being right, not a limitation to work around.
+
+*Route and framing owed to `2.0.0_SA_COO~B`, which hit the second gate, declined the override, and
+re-sent it lawfully.*
+
 *MEASURED 2026-08-28, and the dispatch was mine. `0.4.0_DS_ClientPlatform~Q` was seated to "RESUME
 D1_NAMEDISCOVERY TO-1/TO-2/TO-3 ... blocked on NOTHING, take them in order." All three were built,
 ACCEPTED 15/15, CERTIFIED and ON ORIGIN (`fd15cd5cf3`, `b0ea4d8ff7`, `20dda51bd3`) ~7h earlier. 1d

@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~3</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-11</issued_date>
-<status>pending -- handed by 2.0.0_SA_COO~B; IB-rt-4 terminal and flipped complete at 56525018f8 on this branch, which the hand-off names as the GO</status>
+<status>complete -- 0.9.0_WK_IRPT_BCKEND~3, 2026-09-12, on the SECOND flip. RT9-AC1 PASS-by-output: timeout 900 python .../battery_ib_rt_9.py -> rc 0, ARMS RUN 6 of 6 (a cutover, b fencing, c rotation, d eviction, e absorbed, f no egress), checks failed 0, IBRT9-BROKER-FENCED -- and RE-RUN AT HEAD AFTER THE FIX, where it reproduces (only the live a1 file-count denominator and arm (b)'s persisted_at-bearing digests move, both documented, no verdict changes). RT9-AC2 RECORDED under UNVERIFIABLE-BY-INSTRUMENT with status_reason naming 3.0.0_SA_CVO, no verdict. proof-of-spec-check VALID (rc=0), 8 of 8 artifact rows resolved at pin, 4 CONTENT-resolved, 10 of 10 surprise rows resolving. Arm (e) landed under change-management entry 20260912T0314Z_irpt-bckend-rt9: 6 of 6 legs proven, OPEN sentinel committed at 244d3a968d BEFORE the act and the CLOSE at cbc1e4e2fd BEFORE the grading reads; the research root absorbed by import + state rm with NOTHING destroyed (both objects re-read live with a different instrument) and deleted from the tree; ycharts post-apply plan "No changes"; host i-0167fd745ad906a66 stopped. The FIRST flip at 076bdb0973 was re-opened at 1f7edd7ef6 because arm (e) took its baseline from HEAD~2 -- a relative ref is a moving target and the run stopped reproducing; that history is on the record deliberately. Rows W3-S26..S33, W3-S37, W3-S38.</status>
 
 **Directive:** D9 | **Fabric:** laptop | **Round:** 2 | **PRD:** `../prd/IRPT_BCKEND_PRD.md` v0.13 @e6ba5d9878 (ADMITTED, both L4-R halves SIGNED) | **Round-1 analysis:** `../ledger/ROUND_ANALYSIS.round1.md` @0d57ceb2f9, ruling 6 (mechanism) | **Slug rows this cell closes:** W3-S1, W3-S2 | **Decomp cell:** `IB-rt-9` (`../decompositions/IRPT_BCKEND_DECOMP.md` v0.2, s.1 + s.2) | **outcome_ref:** FWD-4 (contrib) | **PRD candidate:** B8
 
@@ -62,6 +62,88 @@ the stopped runner host and its root (IB-s-8, the v0.4 mechanism, superseded by 
 - **THE 'ABSENT BUILD INPUTS' PREMISE IS CONTESTED BY TWO INSTRUMENTS AND THE FACE NO LONGER ASSERTS IT.** Slot ~2 measured (W2-S21) that irpt-ycharts-generate declared 7 of 25 inputs that never existed and irpt-status 5 of 7; slot ~3 measured at a later tip (W3-S24) 26 declared, 26 resolving, 0 absent -- the 8 outside `source_dir` are flat-packaged SHARED libraries (`enforce`, `gate`, `keys`, `resolve`, `firm_registry.json`), and removing them strips the function's imports. The drain resolved irpt-status's file list in `lambda-source-map.json` as the UNION of both sides (the shared libraries slot ~3 declares plus the `entry.py` slot ~2 added), which is the non-destructive reading. RULE FOR THE SUCCESSOR: before removing ANY declared build input, resolve it the way the builder does (`source_dir` first, then the flat-packaged shared library roots), print `N of N resolve`, and remove only what resolves NOWHERE; an input that resolves outside `source_dir` is a shared library, not an absence.
 - **A DEPLOY IS OWED (W3-S25), first act of the successor run that holds the functions:** `_scope/resolve.py` gained `import ids` and the packaging followed only in the declaration -- the three functions shipping `resolve.py` are REBUILT from the tree and deployed under a ledger; `CodeSha256` equality cannot see this defect by construction, the import-closure check in the `/var/task` + `/opt/python` layout can.
 - **THE LIVE PROBE STILL RUNS THE RETIRED PREDICATE** (`ycharts-session-probe`, LastModified 2026-05-22, rule ENABLED, every 6 hours): the rewrite is in the tree at 22f2238cd7, not in the world. Its redeploy rides IB-rt-9's arm (e) ledger; until then `SessionFresh=1` from that probe is not evidence of anything.
+
+---
+
+## ISSUER AMENDMENT -- 2026-09-11 ~22:5xZ (`2.0.0_SA_COO~B`, post-reboot re-entry). THIS BLOCK GOVERNS OVER EVERY LINE ABOVE IT.
+
+**Authority:** Andrew-direct ~22:25Z at the `1.0.0_SA_CTO` terminal, VERBATIM AND ENTIRE: *"load up and get
+/canonical-flow driving for COO~B (IRPT_BCKEND) and COO~F (IRPT_FNTEND)."* Relayed as msg 96019; recorded at
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260911_2225Z_RESUME_AFTER_REBOOT_DRIVE_BOTH_IRPT_LANES.md`
+@4a90ec8d2f. It lifts exactly ONE thing: MSTR 95994's instruction 2, "start nothing new". **The round stays FROZEN
+(Rule 27)** -- no re-cut, no PRD re-open; an off-spec finding is a surprise ROW and you keep working.
+
+### A1. YOU ARE A COLD START. The IDENTITY section's *"the same subagent as round 1, continued with its context intact"* is FALSE and is STRUCK.
+This device rebooted at ~22:0xZ. **Every worker subagent of this round is DEAD and cannot be resumed.** You carry no
+prior context and must assume none. Your whole context is: THIS FACE (the newest amendment governs), and the WIP hand-off written for exactly this moment: `org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~3/WIP_IB-rt-9_winddown.md`. **READ THAT FILE BEFORE YOU READ ANYTHING ELSE IN THIS FACE'S BODY** -- its own opening line is that three sentences of this task order are no longer true, and it says which.
+
+### A2. NEW WORKTREE -- the pair named in IDENTITY IS GONE.
+- **Worktree:** `/c/tmp/wk-irpt-2-3b` on branch `wk-irpt_bckend-2-3b`, cut by the issuer from CLOUD HEAD `7d6db9bcfa`.
+- The old pair (`/c/tmp/wk-irpt-2-3 on wk-irpt_bckend-2-3`) was REMOVED after its branch was verified an ancestor of the tip. Do not look for it, and
+  **never spawn into an old worktree.**
+- **Every path in this face is relative to the NEW worktree root**; make it absolute by prefixing `/c/tmp/wk-irpt-2-3b/`.
+- First act unchanged: `git rev-parse --abbrev-ref HEAD`, then `test -d org && test -d .tools && echo TREE-OK`.
+
+### A3. FRESH-WORKTREE TRAPS THIS ROUND HAS ALREADY PAID FOR -- none of these is yours to rediscover.
+- **`.tools/terraform.exe` is gitignored and therefore ABSENT here.** Four roots read `rc 1` for want of
+  `terraform init`, and **an rc is not a reading.** Resolve the binary by path; `init` each root before any plan.
+- **`safe-apply.sh` has TWO identity gates.** `export OPAL_AGENT_SERIAL=...` satisfies only the commit-lane one; the
+  halt gate reads `org/mcp/sessions/$CLAUDE_CODE_SESSION_ID.serial`, gitignored per-session state **you must write
+  yourself BEFORE any apply** (row W4-S2). Write it before you need it.
+- **A rail denial ABORTS THE WHOLE BASH CALL**, so every later segment of an `&&` chain is a SILENT no-op --
+  including your commit. Put a gated read in its own call, or verify the later segment's EFFECT.
+- **`safe-commit.sh` force-adds gitignored files under a DIRECTORY pathspec** (it once staged a 685 MB provider
+  binary). Always pass explicit FILE paths.
+- **Heredoc backslashes arrive HALVED** in the Bash tool. Write scripts and commit messages with the Write tool.
+- A raw `grep`/`find` over a directory is denied and routed to `comp-find`; a `cmd | grep` pipe RECEIVER is free.
+
+### A4. YOUR FIRST LEDGERED ACT IS THE OWED DEPLOY (row `IRPT_BCKEND-W3-S25`), AND YOU ARE FIRST IN LINE FOR IT.
+`_scope/resolve.py:81` carries `import ids as _ids` at module scope, and the DECLARATION fix is already committed
+(`d3397434d5`) for `irpt-export-render`, `irpt-status` and `irpt-ycharts-generate`. **The deploy was never taken --
+the wind-down forbade it.** The three live functions serve OLDER bytes and work today; the ARMED part is that the
+next rebuild of any of them, by anyone, for any reason, would build, upload, register, match its hash three ways and
+then die at cold start on `ModuleNotFoundError`.
+
+- **Slot ~2 (IB-rt-2) is working the SAME `lambda-source-map.json` and three of its six functions are YOURS.**
+  Sequencing is ruled: **you deploy these three FIRST**; slot ~2 is held off them until I confirm your deploy landed.
+  Report to me the moment it has.
+- Verify with an EXTRACT-AND-IMPORT in the flat `/var/task` layout, repo stripped from `sys.path`, in a FRESH
+  interpreter -- `CodeSha256` cannot see a missing module by construction. Your own `.scratch/verify_ycharts_inputs.py`
+  was scratch and did not survive; rewrite it.
+- Print `artifact_sha256 == S3 content-sha256 == live CodeSha256` for every function (W3-S18). NEVER-2: the ledger
+  opens only with the room to close it in-session; OPEN sentinel committed BEFORE the act, CLOSE before the grading
+  reads.
+
+### A5. ARM (a) IS DONE AND MUST NOT BE RE-DONE; ARMS (b)-(f) REMAIN.
+Re-run the battery once to confirm the cutover still passes (~40 s), then leave arm (a) alone. The WIP's sections 1
+and 2 are the order of work: (b) fencing, (c) rotation, (d) eviction/self-healing, (f) egress, and **(e) absorbed /
+stopped / converged LAST and only with room to finish.**
+
+- **THE ACCEPTANCE TOKEN STAYS ABSENT FROM THE BATTERY'S OUTPUT IN EVERY FORM, INCLUDING NEGATED.** `RT9-AC1`'s
+  `<expect>` is graded as a REGEX over that output, so a line reading `<token>: NOT ASSERTED` would MATCH and the
+  criterion would read PASS on a run that proved one arm of six. Add the token to the final line ONLY in the same
+  edit that makes all six arms pass. This is the single easiest way to turn this hand-off into a false green.
+- **Write NO proof-of-spec instance until arms (b)-(f) pass in ONE run.** `PENDING-THIS-COMMIT` is a ONE-SHOT
+  sentinel: writing the instance now burns it on five arms that do not exist. `RT9-AC2` is `judgment="true"` -- it
+  gets its output and NO verdict, under `UNVERIFIABLE-BY-INSTRUMENT` with a `status_reason` naming `3.0.0_SA_CVO`.
+
+### A6. THE THREE STALE SENTENCES YOU ALREADY IDENTIFIED STAY STRUCK, AND W3-S24 IS RULED.
+The *"25 build inputs of which 7 have never existed"* premise is FALSE (26 declared, 26 resolve; the 8 outside
+`source_dir` are flat-packaged shared libraries). **The `irpt-status` file list is the UNION of both slots' readings
+-- resolve the way the builder does, print `N of N`, remove only what resolves NOWHERE.** Acting on the naive check
+would strip `enforce`, `gate`, `keys`, `resolve` and `firm_registry.json` out of the zip and be GREEN at every
+deploy-time rung.
+
+The grant of `ycharts-session-probe/` and `ycharts-session-capture/` is SPENT and does **not** reach
+`infra/aws/terraform/ycharts-pipeline/`. If retiring the capture properly needs a change there, that is a BLOCKING
+row to me, never an override.
+
+### A7. THE LIVE PROBE STILL RUNS THE RETIRED PREDICATE. That is a disclosure, not an emergency.
+`ycharts-session-probe-schedule` is ENABLED, `cron(0 */6 * * ? *)`, and the live function `LastModified 2026-05-22`.
+The old predicate is OVER-permissive: it does not false-ALARM, it false-REASSURES. **So `SessionFresh=1` is not
+evidence of anything until arm (e) redeploys it** -- do not cite it as evidence in the meantime, and say so in any
+row that touches session freshness.
+
 
 ## DELIVERABLE
 

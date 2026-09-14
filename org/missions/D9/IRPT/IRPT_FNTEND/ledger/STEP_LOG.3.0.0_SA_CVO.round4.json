@@ -1,0 +1,201 @@
+{
+  "schema_version": "1.0",
+  "project": "IRPT_FNTEND",
+  "round": 4,
+  "seat": "3.0.0_SA_CVO",
+  "written_utc": "2026-09-13T09:46Z",
+  "trigger": "The round-4 L10 slug to 1.0.0_SA_CTO, delivered 2026-09-13T09:18:23Z as org/mcp/inbox/1.0.0_SA_CTO/20260913T091823Z_3.0.0_SA_CVO_L10_SLUG_IRPT_FNTEND_round_4__be3b6849a9.md (UNTRACKED device-local file: org/mcp/inbox/* is gitignored; it moves under read/ when read; NO commit vintage exists for this carrier), citing the L8/L9 record at be3b6849a9. Written the same morning as the slug, not late.",
+  "rows": [
+    {
+      "seq": 1,
+      "limb": "L8",
+      "started_utc": "2026-09-13T04:03Z",
+      "ended_utc": "2026-09-13T06:41Z",
+      "act": "Mid-round intake of W2-S21, the one round-4 row naming this seat as its disarm owner: recorded that grading cannot disarm it and re-routed it ARMED to its issuer 2.0.0_SA_COO~F, with 1.0.0_SA_CTO at L10",
+      "inputs": [
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md row IRPT_FNTEND-W2-S21"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/adjudications/ADJUDICATION_v2.md@58231fae20 (IRPT_FNTEND-C-S51)"
+        }
+      ],
+      "spine_clause": "L8: the CVO's engagement with the project begins HERE, not at L9",
+      "gate_or_notifier_touched": "safe-commit gates passed (the commit exists); their output was not retained",
+      "note": "started_utc is W2-S21's surfaced_at, the trigger, not a recorded start. C-S51 read 'RECORD; NO VERDICT' as binding this seat; that misreading is corrected in C-S57 at be3b6849a9 and C-S51's conclusion stands"
+    },
+    {
+      "seq": 2,
+      "limb": "L8",
+      "started_utc": "2026-09-13T08:24Z",
+      "ended_utc": "2026-09-13T09:17Z",
+      "act": "Compiled round 4's channel: the new rows are those at HEAD absent at the issuance commit b6062ad2a2 -- 156 minus 134 = 22, 0 lost, 0 ARMED without an owner, every JSON fence parsed with an independent id count",
+      "inputs": [
+        {
+          "kind": "MESSAGE",
+          "ref": "96384"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v{1,2}.md@b6062ad2a2 and @be3b6849a9"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND4_L8_L9_20260913.md@be3b6849a9 sections 1-2"
+        }
+      ],
+      "spine_clause": "L8 compile: input new investigation rows and no others; output the compiled channel",
+      "note": "L8 and L9 landed in ONE commit and the boundary between them in time was not recorded, so rows 2 and 3 both carry the packet's arrival and the commit time rather than an invented split"
+    },
+    {
+      "seq": 3,
+      "limb": "L9",
+      "started_utc": "2026-09-13T08:24Z",
+      "ended_utc": "2026-09-13T09:17Z",
+      "act": "Graded the five JUDGMENT criteria (F25-AC12, F26-AC9, F28-AC8 MET with a named qualification; F27-AC8 MET; F18-AC18 NOT MET on clause 2) and dispositioned all 22 round-4 rows through seven grouped adjudication rows C-S52..C-S58, each id carried exactly once (14 DISMISSED_WITH_REASON, 8 GRADUATED)",
+      "inputs": [
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~*/IRPT_FNTEND.TO-FE-s-25.consumer-boundary.proof_of_spec.json@86f2959ab1"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~*/IRPT_FNTEND.TO-FE-s-26.holdings-fixtures.proof_of_spec.json@55887ce562"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~*/IRPT_FNTEND.TO-FE-s-27.declared-preconditions.proof_of_spec.json@10093a2dff"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~*/IRPT_FNTEND.TO-FE-s-28.mandatory-placeholders.proof_of_spec.json@c0eb49d1e1"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~*/IRPT_FNTEND.TO-FE-s-18.evidence-mobile-captures.proof_of_spec.json@85259e922e"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/ (11 manifest PNGs)@887b183a2a"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "portal c2eb8eb4:src/pages/InvestorReporting/tabs/reporting/ReportingTab.tsx:14-18"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "d0c28a59be:.tools/to-pipeline-gate.py:112-141,874-912"
+        },
+        {
+          "kind": "MESSAGE",
+          "ref": "96371"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/adjudications/ADJUDICATION_v2.md@be3b6849a9 (C-S52..C-S58)"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND4_L8_L9_20260913.md@be3b6849a9 sections 3-4"
+        }
+      ],
+      "spine_clause": "L9 adjudicate: JUDGMENT criteria are graded HERE and never self-graded",
+      "gate_or_notifier_touched": "safe-commit: surprise-row-gate OK on 7 new rows; to-pipeline-gate OK; commit-gate checked 0 of 2 files (non-code suffixes -- not evidence of a check)",
+      "note": "the S56 interim control applied: the two carried `0 fail` deciding lines (F18-AC16, F18-AC17) were read by hand. The verdicts landed in the record's prose only; row 5 moves them into the `grades` carrier"
+    },
+    {
+      "seq": 4,
+      "limb": "L10",
+      "started_utc": "2026-09-13T09:17Z",
+      "ended_utc": "2026-09-13T09:18Z",
+      "act": "Cut the ONE round-4 slug for this project and sent it to 1.0.0_SA_CTO as this seat's single send for the round",
+      "inputs": [
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND4_L8_L9_20260913.md@be3b6849a9"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/adjudications/ADJUDICATION_v2.md@be3b6849a9"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/mcp/inbox/1.0.0_SA_CTO/20260913T091823Z_3.0.0_SA_CVO_L10_SLUG_IRPT_FNTEND_round_4__be3b6849a9.md (UNTRACKED device-local file: org/mcp/inbox/* is gitignored; it moves under read/ when read; NO commit vintage exists for this carrier)"
+        }
+      ],
+      "spine_clause": "L10 ONE SLUG to the CTO, ALWAYS, only after every TO is terminal and every row dispositioned",
+      "gate_or_notifier_touched": "none refused",
+      "note": "delivered through the broker (filesystem + broker + channel push), unlike round 1's off-ledger send; send_message returned no Msg-ID, so the slug is cited as its delivered file"
+    },
+    {
+      "seq": 5,
+      "limb": "L9",
+      "started_utc": "2026-09-13T09:20Z",
+      "ended_utc": "2026-09-13T09:38Z",
+      "act": "Moved the five round-4 verdicts into the schema's `grades` carrier (IRPT_FNTEND-C-S59), each bound to its proof-of-spec instance at a commit -- 4 PASS, three with a named qualification, and 1 FAIL",
+      "inputs": [
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND4_L8_L9_20260913.md@be3b6849a9 section 3"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/surprise_channel/schemas/investigation_item.schema.json (`grades`)"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/adjudications/ADJUDICATION_v2.md@0dbd3f96a4 (IRPT_FNTEND-C-S59)"
+        }
+      ],
+      "spine_clause": "L9: a judgment grade lives in the `grades` carrier on a row of the CVO's",
+      "gate_or_notifier_touched": "safe-commit: surprise-row-gate OK on 1 new row",
+      "note": "A CARRIER GAP FOUND AFTER THE SLUG, by re-reading the closed schema: a grade held in prose is what the `grades` field exists to replace. No verdict changed, so nothing was re-sent -- the CVO's one send per round is the slug. started_utc is approximate (the gap was found after the slug; no start was recorded)"
+    },
+    {
+      "seq": 6,
+      "limb": "X",
+      "started_utc": "2026-09-13T09:38Z",
+      "ended_utc": "2026-09-13T09:42Z",
+      "act": "Began the rounds 2-3 backlog this seat owes (record section 0), ARMED first: C-S60..C-S70 disposition the 40 ARMED carrier-less rows predating round 4's L6 and the 16 ARMED round-1 adjudication rows RULING 7 left with this seat, each id set asserted against the channel before writing",
+      "inputs": [
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND4_L8_L9_20260913.md@be3b6849a9 section 0"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_IRPT_FNTEND_ROUND2_20260912.md@f819d7cb7d"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_IRPT_FNTEND_ROUND3_20260912.md@b453306a65"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "portal c2eb8eb4 (the drained round-4 vintage), read through git show"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/adjudications/ADJUDICATION_v2.md@df08e2c33c (C-S60..C-S70)"
+        }
+      ],
+      "spine_clause": "NONE (rounds 2 and 3's L9 debt, recorded here because this seat has no round-2 or round-3 step log)",
+      "gate_or_notifier_touched": "safe-commit gates on the commit",
+      "note": "the 53 INERT carrier-less rows are the next pass and are NOT covered by this row"
+    }
+  ]
+}

@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_FNTEND~1</issued_to>
 <issued_by>2.0.0_SA_COO~F</issued_by>
 <issued_date>2026-09-11</issued_date>
-<status>blocked</status>
+<status>complete</status>
 
 **Directive:** D9 | **Fabric:** laptop | **PRD:** `../prd/IRPT_FNTEND_PRD.md` v0.6 @d1479bc5f0 (F4, F5, F6, F8, F11, F13; FIXTURES AND EVIDENCE) | **Decomp cell:** `FE-s-18` (round 2, v0.2) | **outcome_ref:** FWD-3, FWD-5, FWD-8, FWD-11, FWD-12 | **depends_on:** `FE-s-14`, `FE-s-15`, `FE-s-16`, `FE-s-17` (all terminal) | **slot:** ~1, queue position 4, last | **slug rows:** C-S43, W3-S1, W4-S1, W1-S12 (retained control)
 
@@ -27,6 +27,20 @@
 
 - The census and the colour-law scan re-run on the round-2 tree (`bun run census.ts` from `deliverables/0.9.0_WK_IRPT_FNTEND~1/`, the FE-s-11 script; its outputs overwrite `component-census.json` / `.md`).
 
+### R3 -- RE-PIN TO THE CURRENT v1 VINTAGE FIRST (AMENDED BY THE ISSUER at the FE-s-16 drain, row IRPT_FNTEND-S28)
+
+⛔ **SUPERSEDED IN PART by the ROUND-4 ISSUER AMENDMENT at the top of BOUNDS -- read it before acting on anything in this section. `WIRE_SCHEMA_PINS` is RETIRED and must not be re-pinned by hand.**
+
+**This is the THIRD time this round the producer has moved `docs/contracts/investor-reporting/v1/` under a consumer cell** (S20, then S21, now this). FE-s-15 re-pinned to `d9c940244a`; since that drain the counterpart landed `98d579cd1b` (the optional `date_claim` enum on AnalysisReport, both published copies) and `b8e98d5a4d` (IRPT_BCKEND PRD v0.14: `StatusEnvelope.business_date` becomes STATE-CONDITIONAL -- REQUIRED on the five answer-bearing states, MAY BE ABSENT and NEVER NULL on QUEUED / RUNNING / UNAVAILABLE / FAILED).
+
+MEASURED BY THE ISSUER on the main checkout at portal DEV `774c595b`: `bun test src/pages/InvestorReporting` reads **406 pass, 1 skip, 1 fail**, the single failure being `__tests__/fe-s-13/producer-fixtures.test.ts:104` -- `expect(stale).toEqual([])` receiving **4** stale fixture copies. `F18-AC17` ('0 fail') cannot pass until those are refreshed, and no surface that carries them was in this order's original grant.
+
+**BEFORE ANY CAPTURE:** refresh `WIRE_SCHEMA_PINS` and the `fixtures/wire/` copies to the artifact at `<WS>/docs/contracts/investor-reporting/v1/` as your worktree carries it, and record that vintage (`git log -1 --format=%h -- docs/contracts/investor-reporting/v1`) in the result file. Regenerate the wire types if any schema body changed. Then re-run `bun test src/pages/InvestorReporting/__tests__/fe-s-13` and record it.
+
+**Grant for R3 ONLY:** `src/pages/InvestorReporting/fixtures/` (widened from `fixtures/smoke/`), `src/pages/InvestorReporting/contracts/`, `src/pages/InvestorReporting/__tests__/fe-s-13/`. These are granted for the re-pin and for nothing else; beyond R3 they are READ only.
+
+⛔ **AND THE CAPTURES COME AFTER IT, NOT BEFORE.** Every PNG this order produces is the round's EVIDENCE. A capture taken against a stale pin is evidence of a tree that will not exist once the pin is refreshed, and it would be indistinguishable from a good one. Do R3, prove it, then capture.
+
 ### ACCEPTANCE
 
 <criterion id="F18-AC1" cell_refs="FE-s-18"><invocation>cd <WS>/portal && timeout 180 /c/Users/AndrewBerman/.bun/bin/bun run typecheck; echo rc=$?</invocation><expect>rc=0</expect></criterion>
@@ -44,8 +58,8 @@
 <criterion id="F18-AC5" cell_refs="FE-s-18"><invocation>cd <WS>/portal && timeout 120 node scripts/ui-smoke.mjs investor-reporting <WS>/org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/fe-s-18_preview_frozen_1440.png --port <PORT> --width 1440 --fixtures src/pages/InvestorReporting/fixtures/smoke/fe-s-18-frozen.json --click Export --console "Maximum update depth"; echo rc=$?</invocation><expect>CLICKED: Export</expect></criterion>
 `F18-AC5` -- the export modal's preview of the same frozen report at 1440 (preview view of the pair).
 
-<criterion id="F18-AC6" cell_refs="FE-s-18"><invocation>cd <WS>/portal && timeout 120 node scripts/ui-smoke.mjs "investor-reporting/print?bundle=fe-s-18-frozen" <WS>/org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/fe-s-18_print_frozen_1440.png --port <PORT> --width 1440 --fixtures src/pages/InvestorReporting/fixtures/smoke/fe-s-18-frozen.json --console "REFS RESOLVED"; echo rc=$?</invocation><expect>REFS RESOLVED: 1 of 1</expect></criterion>
-`F18-AC6` -- the print route on the same frozen report (print view of the pair).
+<criterion id="F18-AC6" cell_refs="FE-s-18"><invocation>cd <WS>/portal && timeout 120 node scripts/ui-smoke.mjs "investor-reporting/print?bundle=fe-s-18-frozen&narrative=0&tenant=F-49F&scope=fp-49f-0824&revision=rev-49f-000091" <WS>/org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/fe-s-18_print_frozen_1440.png --port <PORT> --width 1440 --fixtures src/pages/InvestorReporting/fixtures/smoke/fe-s-18-frozen.json --console "REFS RESOLVED"; echo rc=$?</invocation><expect>REFS RESOLVED: 1 of 1</expect></criterion>
+`F18-AC6` (INVOCATION AMENDED BY THE ISSUER, row IRPT_FNTEND-S31 -- the URL now carries `&tenant=&scope=&revision=`, exactly the params the worker's own CONTROL used. THE BAR IS UNCHANGED at `REFS RESOLVED: 1 of 1`.) -- the print route on the same frozen report (print view of the pair).
 
 <criterion id="F18-AC7" cell_refs="FE-s-18"><invocation>cd <WS>/portal && timeout 120 node scripts/ui-smoke.mjs investor-reporting <WS>/org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/fe-s-18_analysis_clean_390.png --port <PORT> --width 390 --fixtures src/pages/InvestorReporting/fixtures/smoke/fe-s-15-clean.json --click Analysis --console "Maximum update depth"; echo rc=$?</invocation><expect>CLICKED: Analysis</expect></criterion>
 `F18-AC7` -- Analysis clean at 390 after the layout repairs.
@@ -62,10 +76,10 @@
 <criterion id="F18-AC11" cell_refs="FE-s-18"><invocation>cd <WS>/portal && timeout 120 node scripts/ui-smoke.mjs investor-reporting <WS>/org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/fe-s-18_holdings_missing_attribution_390.png --port <PORT> --width 390 --fixtures src/pages/InvestorReporting/fixtures/smoke/fe-s-18-holdings-missing-attribution.json --click Holdings --console "Maximum update depth"; echo rc=$?</invocation><expect>CLICKED: Holdings</expect></criterion>
 `F18-AC11` -- Holdings with a node whose attribution is unavailable, at 390.
 
-<criterion id="F18-AC12" cell_refs="FE-s-18"><invocation>cd <WS>/portal && timeout 120 node scripts/ui-smoke.mjs "investor-reporting/print?bundle=fe-s-16-narrative" <WS>/org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/fe-s-18_print_narrative_on_1440.png --port <PORT> --width 1440 --fixtures src/pages/InvestorReporting/fixtures/smoke/fe-s-16-print-narrative.json --console "REFS RESOLVED"; echo rc=$?</invocation><expect>REFS RESOLVED: 1 of 1</expect></criterion>
+<criterion id="F18-AC12" cell_refs="FE-s-18"><invocation>cd <WS>/portal && timeout 120 node scripts/ui-smoke.mjs "investor-reporting/print?bundle=fe-s-16-narrative&narrative=1&tenant=F-49F&scope=fp-49f-0824&revision=rev-49f-000091" <WS>/org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/fe-s-18_print_narrative_on_1440.png --port <PORT> --width 1440 --fixtures src/pages/InvestorReporting/fixtures/smoke/fe-s-16-print-narrative.json --console "REFS RESOLVED"; echo rc=$?</invocation><expect>REFS RESOLVED: 1 of 1</expect></criterion>
 `F18-AC12` -- print with the narrative page on, with the packaged font.
 
-<criterion id="F18-AC13" cell_refs="FE-s-18"><invocation>cd <WS>/portal && timeout 120 node scripts/ui-smoke.mjs "investor-reporting/print?bundle=fe-s-16-prehistory" <WS>/org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/fe-s-18_print_prehistory_1440.png --port <PORT> --width 1440 --fixtures src/pages/InvestorReporting/fixtures/smoke/fe-s-16-print-prehistory.json --console "REFS RESOLVED"; echo rc=$?</invocation><expect>REFS RESOLVED: 1 of 1</expect></criterion>
+<criterion id="F18-AC13" cell_refs="FE-s-18"><invocation>cd <WS>/portal && timeout 120 node scripts/ui-smoke.mjs "investor-reporting/print?bundle=fe-s-16-prehistory&narrative=1&tenant=F-49F&scope=fp-49f-0824&revision=rev-49f-000091" <WS>/org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/fe-s-18_print_prehistory_1440.png --port <PORT> --width 1440 --fixtures src/pages/InvestorReporting/fixtures/smoke/fe-s-16-print-prehistory.json --console "REFS RESOLVED"; echo rc=$?</invocation><expect>REFS RESOLVED: 1 of 1</expect></criterion>
 `F18-AC13` -- print with a pre-history window (MISSING HISTORY on the page). If FE-s-16 left no `fe-s-16-print-prehistory.json`, build it from FE-s-16's pre-history bun fixture and say so in the result file.
 
 <criterion id="F18-AC14" cell_refs="FE-s-18"><invocation>cd <WS>/portal && timeout 120 node scripts/ui-smoke.mjs investor-reporting <WS>/org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/fe-s-18_global_two_firms_1440.png --port <PORT> --width 1440 --fixtures src/pages/InvestorReporting/fixtures/smoke/fe-s-14-global.json --click Holdings --console "Maximum update depth"; echo rc=$?</invocation><expect>CLICKED: Holdings</expect></criterion>
@@ -92,8 +106,15 @@
 <expected_criteria>F18-AC1, F18-AC2, F18-AC3, F18-AC4, F18-AC5, F18-AC6, F18-AC7, F18-AC8, F18-AC9, F18-AC10, F18-AC11, F18-AC12, F18-AC13, F18-AC14, F18-AC15, F18-AC16, F18-AC17, F18-AC18, F18-AC19, F18-AC20</expected_criteria>
 
 ## BOUNDS
+- ⛔ **ROUND-4 ISSUER AMENDMENT -- BOUNDS ONLY. Every criterion is carried UNTOUCHED (1.0.0_SA_CTO ruling 1: `F18-AC3` and `F18-AC17` re-run, never re-issued). Where this block and anything above it differ, THIS BLOCK GOVERNS.** This order was cut in round 2; what sits beneath it has moved since, and four bounds from later rounds are added:
+  1. **`WIRE_SCHEMA_PINS` IS RETIRED -- do not look for it and do not re-pin by hand.** Measured by the issuer: present at portal `774c595b` (`contracts/wire/index.ts:48`), ABSENT at `237a9027` and at current DEV; portal `2991992e` ("FE-s-20: the consumer pins CONTENT, not the producer's bytes") removed it. R3's "refresh `WIRE_SCHEMA_PINS` and the `fixtures/wire/` copies" is replaced by: **BEFORE ANY CAPTURE, run `__tests__/fe-s-13/content-pins.test.ts` and `__tests__/fe-s-13/producer-fixtures.test.ts` at your worktree's vintage and record the producer vintage the latter PRINTS.** If either fails, that is a BLOCKING row naming the failing assertion -- never a hand edit. `contracts/` and `fixtures/wire/` were granted for the R3 re-pin ALONE and that re-pin no longer exists, so **do not edit either**. R3's '406 pass, 1 skip, 1 fail at `774c595b`' is round-2 context; measure your own baseline at your cut. The rule that CAPTURES COME AFTER the pin check still stands.
+  2. **ROW IDS ARE ALLOCATED ACROSS THE WHOLE CHANNEL PLANE.** Read `INVESTIGATION_v1.md` AND `_v2.md` for the last W1 id before minting -- not only the file the Surprise line below names (row S36).
+  3. **Write the channel with `newline='\n'` and READ THE DIFFSTAT of every commit that touches it.** An append that touches lines it did not write is doing something else (row S47; this round a worker's first append re-serialised 16 existing rows and only this check caught it).
+  4. **EVIDENCE HYGIENE (1.0.0_SA_CTO 96370): each row's `output_evidence` carries the DECIDING invocation's output and nothing else.** Earlier runs, baselines and BEFORE notes go in `status_reason`. It matters most on `F18-AC16` and `F18-AC17`: their `0 fail` bars are graded by an unanchored search, so a second summary anywhere in the evidence can satisfy them whatever the deciding run said (row S56). The issuer reads their deciding lines by hand at the drain.
+  5. **(Added by the issuer after your refusal, row `W1-S54`.) Two older tests that make claims about the ROUND-2 capture set are now in your `<paths>` -- `__tests__/fe-s-22/capture-hash.test.ts` and `__tests__/fe-s-26/not-defective.test.ts` -- plus one NEW file, `__tests__/fe-s-22/round2-captures.frozen.json`.** They read your LIVE deliverables folder (`DELIVERABLES_R2`) as their stand-in for 'the round-2 PNGs', and your re-capture correctly replaced those PNGs, so `F18-AC17` could not pass as carried. **That is the issuer's miss, not yours:** the reseat checked stale mechanisms but not what other cells' tests assert about your captures. Re-point the CAPTURE (PNG digest) input of every assertion that makes a claim about the ROUND-2 set -- `capture-hash.test.ts`'s ROUND-2 COLLISION test and its INDEPENDENCE arm, and `not-defective.test.ts`'s DISCLOSURE test -- to a frozen round-2 digest set written to that new file, **derived from the round-2 `captures.manifest.json` at workspace commit `c44180ab9b` by `git show`, never re-typed**, with that commit recorded in the file. **Move each verdict WHOLE:** every assertion that reads one verdict reads the same input (splitting a pair was this round's `W2-S22` defect). **Change no claim, and do not touch `capture-hash.ts` or FE-s-22's claims model** -- that question is `W2-S21`'s and is decided at L10. Show it BOTH WAYS in the run's own output: the frozen round-2 set gives the old readings (1 distinct digest, 3 refused pairs, refused); your live round-4 set gives 3 distinct, 0 refused pairs, not refused. Then re-run `F18-AC17` and every criterion your change can reach.
 
 - **Grant.** Your write surface is the `<paths>` block below, plus `org/missions/D9/IRPT/IRPT_FNTEND/deliverables/<your serial>/` and this order's own file. Under `tabs/`, `header/`, `export/`, `global/`, `render/`: LAYOUT ONLY (class attributes, wrappers, order of siblings), with ONE exception the amendment names -- the Lato Bold packaging under `render/assets/fonts/`, `render/print.css`, `render/manifest.ts` and `__tests__/fe-s-17/`; any other change to a prop, state, data read, adapter call or text is a surprise row on the owning cell, never an edit here. A path you need that is not named is a BLOCKING row on that criterion; never an override.
+- **R3 IS THE SECOND NON-LAYOUT EXCEPTION** (the Lato packaging is the first). The re-pin surfaces named in R3 are granted for the re-pin alone. Everything else under `tabs/`, `header/`, `export/`, `global/`, `render/` stays LAYOUT ONLY.
 - **Two repos, one worktree pair.** `<WS>` / `<WS>/portal` as in your identity line. Portal commit pathspec: the files you changed under `src/pages/InvestorReporting/` (name each) plus `src/pages/InvestorReporting/fixtures/smoke/ src/pages/InvestorReporting/__tests__/fe-s-18/`. Workspace records under org/ only. Never push, merge, rebase, `checkout --` or `clean`. Never stage `portal` in the workspace repo.
 - **Dev server.** `node_modules` is a junction; do not run `bun install`. Start once in the background from `<WS>/portal`: `/c/Users/AndrewBerman/.bun/bin/bun run dev --port <PORT>`; use the port it prints; kill it before your final report. Routes without a leading slash; quote a route carrying `?`.
 - **Fixture maps name the whole page's needs and are v1 envelopes** (keys = DECLARED paths; bodies `{contract_version: v1, operation, firm_id, data}` per `docs/contracts/investor-reporting/v1/`; AMENDED at the FE-s-14 R1 repair). Files you add: `fe-s-18-frozen.json`, `fe-s-18-holdings-observed.json`, `fe-s-18-holdings-target.json`, `fe-s-18-holdings-missing-attribution.json` (and `fe-s-16-print-prehistory.json` only if absent).
@@ -108,9 +129,14 @@ portal/src/pages/InvestorReporting/header/
 portal/src/pages/InvestorReporting/export/
 portal/src/pages/InvestorReporting/global/
 portal/src/pages/InvestorReporting/render/
-portal/src/pages/InvestorReporting/fixtures/smoke/
+portal/src/pages/InvestorReporting/fixtures/
+portal/src/pages/InvestorReporting/contracts/
+portal/src/pages/InvestorReporting/__tests__/fe-s-13/
 portal/src/pages/InvestorReporting/__tests__/fe-s-18/
 portal/src/pages/InvestorReporting/__tests__/fe-s-17/
+portal/src/pages/InvestorReporting/__tests__/fe-s-22/capture-hash.test.ts
+portal/src/pages/InvestorReporting/__tests__/fe-s-26/not-defective.test.ts
+portal/src/pages/InvestorReporting/__tests__/fe-s-22/round2-captures.frozen.json
 org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md
 </paths>
 

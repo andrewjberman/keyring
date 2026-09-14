@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~3</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-11</issued_date>
-<status>staged -- assigned to slot ~3; becomes pending when the COO hands it over after IB-rt-10 is terminal and merged.</status>
+<status>complete -- 0.9.0_WK_IRPT_BCKEND~3, 2026-09-12, on the SECOND flip and the first honest one. RT11-AC1 PASS-by-output (timeout 300 python .../battery_ib_rt_11.py -> rc 0, checks failed: 0, ARMS: 5 of 5, IBRT11-INTAKE-CONTROLLED; two full runs diff byte-identical). RT11-AC2 RECORDED under UNVERIFIABLE-BY-INSTRUMENT, status_reason naming 3.0.0_SA_CVO, no verdict. proof-of-spec-check VALID (rc=0) with parse.py CONTENT-resolved at 51db4a7d66 (the refusal token present at the pin and ABSENT at its parent). Mutant control FIRED-AS-EXPECTED on both mutants; determinism STABLE. The first flip at 3c28723d20 was REVERTED at 3db8d67f17 because it pinned a parse.py that did not carry the behaviour arm (e) proves -- that history is on the record deliberately. Rows W3-S34, W3-S35, W3-S36 filed. No deploy, by this cell's bounds.</status>
 
 **Directive:** D9 | **Fabric:** laptop | **Round:** 2 | **PRD:** `../prd/IRPT_BCKEND_PRD.md` v0.13 @e6ba5d9878 (ADMITTED, both L4-R halves SIGNED) | **Round-1 analysis:** `../ledger/ROUND_ANALYSIS.round1.md` @0d57ceb2f9, ruling 7 (intake) | **Slug rows this cell closes:** C-S74 | **Decomp cell:** `IB-rt-11` (`../decompositions/IRPT_BCKEND_DECOMP.md` v0.2, s.1 + s.2) | **outcome_ref:** FWD-9 (own), FWD-4 | **PRD candidate:** B7
 
@@ -49,6 +49,71 @@
 the deterministic parser, the correction state and `settings.json` (IB-s-7, 6 of 6 arms; the judgment that `USD` is a unit in the contract, not a currency); the intake poller and its offline transport (IB-s-6).
 
 ---
+
+
+---
+
+## ISSUER AMENDMENT -- 2026-09-12T01:14:33Z (`2.0.0_SA_COO~B`): THE HAND-OFF. This block governs over every line above it.
+
+### B1. YOUR GATE IS SATISFIED AND THIS ORDER IS NOW PENDING.
+The `<status>` above read *"staged ... becomes pending when the COO hands it over after IB-rt-10 is terminal and
+merged."* IB-rt-10 is terminal -- `<status>` complete, and the issuer re-graded its proof-of-spec instance
+`VALID (rc=0)` at HEAD rather than taking the worker's word -- and its branch is drained to CLOUD at `08962bd2ea`.
+**Begin immediately.**
+
+### B2. NEW WORKTREE. Whatever the IDENTITY section names, it is NOT where you work.
+- **Worktree:** `/c/tmp/wk-irpt-2-3c` on branch `wk-irpt_bckend-2-3c`, cut by the issuer from CLOUD at `08962bd2ea`.
+- Every path in this face is relative to that root; make it absolute by prefixing `/c/tmp/wk-irpt-2-3c/`.
+- **Do NOT work in `/c/tmp/wk-irpt-2-3b`.** That is IB-rt-9's worktree, its order is still OPEN on arm (e), and
+  its branch is a different one. Two orders must not share a branch.
+- First act: `git rev-parse --abbrev-ref HEAD`, then `test -d org && test -d .tools && echo TREE-OK`.
+
+### B3. YOU CARRY IB-rt-9's CONTEXT, AND EXACTLY TWO THINGS FROM IT TRANSFER.
+You are the same subagent that ran IB-rt-9, so you are not cold -- but that cell's WORKTREE, BRANCH and OPEN ARM
+are not yours here and must not be touched from this order.
+- **The build/packaging knowledge does NOT apply to this cell.** IB-rt-11 deploys nothing. Do not reach for the
+  zip recipe, the source map or any Terraform root.
+- **What DOES transfer is the discipline:** name the instrument, print the denominator, and give every detector a
+  POSITIVE and a NEGATIVE control. Your arm (a) census on IB-rt-9 was wrong twice before it was right, both times
+  because the discriminator was looser than the question -- that lesson is the one to carry.
+
+### B4. THE CELL'S OWN LAW: QUARANTINE OVER RELABELING.
+The title is the rule. A value whose currency or unit cannot be established is **QUARANTINED, never relabeled to
+the expected one** -- and a quarantine is a legitimate, reportable outcome, not a failure to handle the case.
+Specifically:
+- **Never infer a currency from a symbol, a locale, a column header or a neighbouring row.** If the document does
+  not establish it, the row is quarantined and says why.
+- **Human correction provenance is PRESERVED, not overwritten.** A corrected value carries who corrected it and
+  what it was; a correction that erases its own prior value destroys the audit the cell exists to create.
+- **Subtotal, multi-sheet and ambiguous-total controls are the point, not edge cases.** An ambiguous total that
+  silently picks one reading is the exact defect; picking none and saying so is correct.
+
+### B5. THE ADJACENT CELL'S MEASURED LESSON, SO YOU DO NOT REPEAT IT ONE CELL OVER.
+IB-rt-10 filed row `IRPT_BCKEND-W4-S28`: round 1 dated **15 of 61** overview rows and **12 of 108** multi-comparison
+rows from a NEIGHBOURING block, and **every one of them passed all three of round 1's certification legs** -- because
+a date sits at none of the coordinates those legs inspect. **A certification that does not inspect the coordinate
+where the defect lives passes it every time.** Before you certify a currency or a unit, state WHICH COORDINATE your
+check reads and satisfy yourself that a wrong value would actually be visible there. Say so in the arm.
+
+### B6. FIXTURES AND HONESTY ABOUT THEM.
+If the specimens available to you are synthetic, say so ON THE ARM and do not describe the result as certification
+against real client input. **Do not manufacture a representative real-client specimen.** An arm that can only be
+exercised on synthetic input is a real result with a stated boundary; an arm that pretends otherwise is not.
+
+### B7. THE SAME STANDING MECHANICS AS EVERY ORDER THIS ROUND.
+- Prove each criterion by RUNNING the invocation the face names and showing the expectation met by OUTPUT.
+- **The acceptance token goes into the battery's output ONLY in the edit that makes every arm pass**, never
+  negated, never as "NOT ASSERTED" -- `<expect>` is graded as a REGEX and a negated line MATCHES.
+- Write the proof-of-spec instance only when the mechanical criteria pass; `PENDING-THIS-COMMIT` is ONE-SHOT.
+  A judgment criterion gets its output and NO verdict, under `UNVERIFIABLE-BY-INSTRUMENT` with a `status_reason`
+  naming `3.0.0_SA_CVO`. Flip `<status>` only on `rc=0` plus every mechanical criterion PASS-by-output.
+- Rows are `IRPT_BCKEND-W3-S<k>`; **re-read the channel at HEAD immediately before minting** (it moved to 148 rows
+  and is moving). Never edit an existing row. A surprise is a ROW and you keep working.
+- `safe-commit.sh` with explicit FILE paths and a Write-tool message file; your branch only; never push, merge,
+  rebase, `checkout --` or `clean`.
+- A rail denial aborts the WHOLE Bash call and silently no-ops every later segment -- put gated reads in their own
+  call. Heredoc backslashes arrive HALVED. Raw `grep`/`find` over a directory routes to `comp-find`.
+
 
 ## DELIVERABLE
 

@@ -55,7 +55,20 @@ sentences are yours; every sentence traces to a packet line, a commit, or a reco
       had carried the wrong weekday, each one day early, from a hand-typed field beside the ISO date. **The JSON maps 1:1 to the visual —
       author to the shape checklist below.**
 
-   b-i. ⛔ **EVERY DIRECTIVE IN THE REGISTER GETS A CARD IN `projects[]`, WORKED OR NOT.**
+   b-i. ⛔ **EVERY DIRECTIVE IN THE REGISTER GETS A ROW IN *BOTH* `projects[]` AND `process[]`,
+      WORKED OR NOT — EXACTLY ONCE IN EACH.**
+      Andrew-direct 2026-09-11 ~21:5xZ, VERBATIM: *"i notice that \"Process\" seems to be kind of
+      random and haphazard with what is displayed. It should list every single directive."*
+      ⚠ **`process[]` WAS THE HALF NOBODY ENFORCED.** The PROCESS/BLOCKED bullet below has always
+      said "the same 1:1 register mapping", but `check_directive_coverage()` read `projects[]` and
+      nothing else, so the section drifted to whatever subset the author happened to pick and it
+      LOOKED arbitrary because it WAS. Measured 2026-09-11: `projects[]` carried 14 of 14 while
+      `process[]` carried 5, and the report rendered clean. A rule stated in prose and checked
+      nowhere is a convention, and conventions decay silently.
+      A quiet `process` row carries `state: "idle"` and a short no-work note (the `projects`
+      equivalent is `quiet: true`); `state` is one of `ok|act|hold|idle` and nothing else.
+      **The check now covers BOTH sections and also refuses a DUPLICATE row** — two cards for one
+      directive passes a set-based check while the section still misreads its own denominator.
       Andrew-direct 2026-09-10 ~21:2xZ, VERBATIM: *"we need to display \*ALL\* Directives cards on
       'Projects' segment, regardless if work was done or not. This is important to see what did not
       get work done (greyed out with short 'no work on this today'-style bullet\" because it shows
@@ -149,7 +162,11 @@ frozen). A /daily-sprint run AUTHORS, it never styles. What the runner is lookin
   `commits` — the renderer asserts it). Colors are stable: project N is always the same color.
 - **PROJECTS:** one card per DIRECTIVES.yaml row, name = the register `title:` verbatim, short
   subtext against the headliner; `quiet: true` for no-movement rows.
-- **PROCESS / BLOCKED:** the same 1:1 register mapping; blocked = genuine external blocks only.
+- **PROCESS:** the same 1:1 register mapping as PROJECTS — **every directive, exactly once, worked
+  or not** (b-i; enforced by `check_directive_coverage()`, fail-closed). A no-movement row is
+  `state: "idle"` with a one-line note, never an omission.
+  **BLOCKED:** genuine external blocks or human-only acts only — never the register mapping, and
+  an inter-item dependency is Process, not a Block.
 - All prose fields obey the FIRST–FOURTH RULES (layman, highlight reel, Andrew's voice, volume).
 
 **SUPERSEDED 2026-08-26 ~23:0xZ — THE DELIVERABLE IS AN IMAGE, NOT TEXT.** Every Teams-text

@@ -1,0 +1,45 @@
+{
+  "project_code": "LGIC_ENFORCE",
+  "macro_code": "LGIC",
+  "directive": "D14",
+  "fabric": "laptop",
+  "pipeline": null,
+  "status": "active",
+  "dep_stage": "REGISTERED",
+  "created": "2026-09-13",
+  "registered_under_tree": "2026-09-13",
+  "placement": "LAPTOP",
+  "pods": [],
+  "related": [
+    "LGIC_CANON",
+    "LGIC_NAMING",
+    "ADVI_FIRMBKTS",
+    "MDPF_CANON"
+  ],
+  "name": "Platform Logic executable layer -- one registry, two builders (key and name) off the identity spine, and one flagger at safe-commit/safe-apply that refuses a change the builder would not have produced",
+  "description": "D14's executable-layer brief, the second of Andrew's two Platform Logic briefs commissioned ~03:2xZ 2026-09-13 (relayed 96332): 'key/name builders off the identity spine, a flagger at safe-commit/safe-apply'. It is D14's ENFORCEMENT -- the canon's readability made mechanical. It consumes LGIC_NAMING's schema and owns the firm registry and its generated views (Andrew's ruling (a) ~03:5xZ), including the registry-derived deny patterns the firm-bucket fence will key on.",
+  "phase": "L3 REGISTERED UNDER THE PROJECT TREE 2026-09-13 by 1.0.0_SA_CTO, on the D14 macro [LGIC] ratified @464c1096d5. dep_stage REGISTERED, NOT PRD. || L2 ENDPOINT org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_D14_EXECUTABLE_LAYER_20260913.md (cut @033b41c089; rulings stamped @e2210bf34c) -- FWD-1..FWD-7; DONE WHEN confirmed by Andrew ~18:4xZ. || L1 BRIEF docs/briefs/d14-executable-layer-brief-20260913.md @fc2a1ba75f, author 4.0.0_SA_CRO~D. || NEXT: L4 at 1.0.0_SA_CTO, the PRD carrying the fence conditions as acceptance, then the L4-R sign-off.",
+  "blocking": "NOTHING HERE IS A GATE THIS SEAT INVENTED; each line names whose it is. (1) 1.0.0_SA_CTO: the L4 PRD is not yet written. (2) NO COO LANE IS SEATED for L5 (the Tier-2 one-project-per-seat rule, .tools/to-decomp-ref-lint.py). (3) THE FENCE CHANGE IS THE ONE D14-BEFORE-D8 ITEM: it lands on the firm-bucket template before ADVI_FIRMBKTS mints the new buckets, and ADVI_FIRMBKTS FWD-3 (every firm-naming consumer reads one place) waits on this project's registry.",
+  "brief_ref": "docs/briefs/d14-executable-layer-brief-20260913.md@fc2a1ba75f",
+  "prds": [],
+  "prd_lineage": [],
+  "decompositions": [],
+  "decomposition_lineage": [],
+  "leads": {
+    "cto": "1.0.0_SA_CTO",
+    "coo": null,
+    "cvo": "3.0.0_SA_CVO",
+    "cro": "4.0.0_SA_CRO",
+    "workers": "the worker subagents a future COO's L6 issuance names (spine v3 L7: 0.9.0_WK_LGIC_ENFORCE~<n>)"
+  },
+  "coo_lane": null,
+  "fabric_ruling": "laptop -- INHERITED FROM THE DIRECTIVE, not asserted here. D14's placement reads LAPTOP on Andrew-direct 2026-09-12 ~17:2xZ at the 4.0.0_SA_CRO~D terminal, VERBATIM: 'we put that at d fourteen. And and it's owned by the laptop.'",
+  "rulings": [
+    "MACRO LGIC RATIFIED -- Andrew-direct 2026-09-13 ~21:3xZ, VERBATIM: 'yes 2 all' (record ANDREW_DIRECT_20260913_213xZ_MACROS_RATIFIED_COO_SEAT_FIRMSEP_DROP_COT.md, flip @464c1096d5).",
+    "DONE WHEN CONFIRMED AS CUT -- Andrew-direct 2026-09-13 ~18:4xZ, VERBATIM: 'recs approved' (record @e2210bf34c).",
+    "THE FENCE -- Andrew-direct 2026-09-13 ~18:4xZ, card 1 of that frame: DenyForeignFirmPrincipals is re-derived from each principal's SCOPE token, replacing the enumerated prefix list, ON THREE CONDITIONS that are ACCEPTANCE: (i) the branch for principals carrying no scope token is decided in writing before the Deny lands; (ii) every existing writer holds a scoped identity or a named exemption first, under never-widen sign-off; (iii) the service-principal exemption list is registry-derived. Route (a) of 2026-09-12, a carve-out for one principal, stays CLOSED.",
+    "REMEDIATION SHAPE (a) -- Andrew-direct 2026-09-13 ~03:5xZ: D14 owns the rule, the REGISTRY, the builders and the flagger; every fix goes where the resource lives."
+  ],
+  "thread_counter": 0,
+  "threads": []
+}

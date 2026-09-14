@@ -1,0 +1,123 @@
+{
+  "_meta": {
+    "artifact": "org/critical_paths/change_management/20260912T0215Z_irpt-bckend-w4s20-nine-version-delete_receipts.json",
+    "act": "per-version delete of the NINE noncurrent versions of the four synthetic export report.pdf keys",
+    "bucket": "opal-data-ycharts",
+    "grain": "delete-object WITH --version-id: PERMANENT. The bytes are gone. This is not a delete marker.",
+    "word": "Approved all 9",
+    "word_source": "1.0.0_SA_CTO 96050 carrying Andrew-direct 2026-09-12 ~01:5xZ",
+    "ledger": "org/critical_paths/change_management/20260912T0215Z_irpt-bckend-w4s20-nine-version-delete_deploy_completion.md",
+    "sentinel_commit": "89d9b2965d -- ledger and sentinel committed BEFORE the act",
+    "acted_by": "2.0.0_SA_COO~B",
+    "acted_at": "2026-09-12T02:33:06Z",
+    "authorized_set": "the printed denominator (10 versions / 5 markers / 5 keys) MINUS probe/probe.txt = NINE. Written as a subtraction, never as a list."
+  },
+  "deletes": [
+    {
+      "n": 1,
+      "key": "firms/49financial/generations/GENIBS14SYN/attempts/1/exports/r1/report.pdf",
+      "version_id": "wl2x4Z9vSi31.i.TUVq__pjfcz0U4qFK",
+      "size": 43848,
+      "delete_response": {
+        "VersionId": "wl2x4Z9vSi31.i.TUVq__pjfcz0U4qFK"
+      },
+      "post_head": "An error occurred (404) when calling the HeadObject operation: Not Found"
+    },
+    {
+      "n": 2,
+      "key": "firms/49financial/generations/GENIBS14SYN/attempts/1/exports/r1/report.pdf",
+      "version_id": "s_LqtLL.7NyHWh7PCsLjmPXHObELMa0h",
+      "size": 43848,
+      "delete_response": {
+        "VersionId": "s_LqtLL.7NyHWh7PCsLjmPXHObELMa0h"
+      },
+      "post_head": "An error occurred (404) when calling the HeadObject operation: Not Found"
+    },
+    {
+      "n": 3,
+      "key": "firms/49financial/generations/GENIBS14SYN/attempts/1/exports/r1/report.pdf",
+      "version_id": "pL4dWRj_B3iqOFL6oQv9zul6bjjN6PVH",
+      "size": 43848,
+      "delete_response": {
+        "VersionId": "pL4dWRj_B3iqOFL6oQv9zul6bjjN6PVH"
+      },
+      "post_head": "An error occurred (404) when calling the HeadObject operation: Not Found"
+    },
+    {
+      "n": 4,
+      "key": "firms/49financial/generations/GENIBS14SYN/attempts/1/exports/v0-11-comparison/report.pdf",
+      "version_id": "NO5Dioo.m.mOZs4JjR2GsZHXKmhI6nVE",
+      "size": 41859,
+      "delete_response": {
+        "VersionId": "NO5Dioo.m.mOZs4JjR2GsZHXKmhI6nVE"
+      },
+      "post_head": "An error occurred (404) when calling the HeadObject operation: Not Found"
+    },
+    {
+      "n": 5,
+      "key": "firms/49financial/generations/GENIBS14SYN/attempts/1/exports/v0-11-comparison/report.pdf",
+      "version_id": "oGHsMqXnNL2spjyDJS__bCvGz9STP5gO",
+      "size": 41859,
+      "delete_response": {
+        "VersionId": "oGHsMqXnNL2spjyDJS__bCvGz9STP5gO"
+      },
+      "post_head": "An error occurred (404) when calling the HeadObject operation: Not Found"
+    },
+    {
+      "n": 6,
+      "key": "firms/49financial/generations/GENIBS14SYN/attempts/1/exports/v0-11-multicomp/report.pdf",
+      "version_id": "arZTAfWafyUSzIQRYcctzEswDuMxmOlv",
+      "size": 41859,
+      "delete_response": {
+        "VersionId": "arZTAfWafyUSzIQRYcctzEswDuMxmOlv"
+      },
+      "post_head": "An error occurred (404) when calling the HeadObject operation: Not Found"
+    },
+    {
+      "n": 7,
+      "key": "firms/49financial/generations/GENIBS14SYN/attempts/1/exports/v0-11-multicomp/report.pdf",
+      "version_id": "jP5Eyb1i37eUj3qeDlgbobbQcT2lIMzE",
+      "size": 41859,
+      "delete_response": {
+        "VersionId": "jP5Eyb1i37eUj3qeDlgbobbQcT2lIMzE"
+      },
+      "post_head": "An error occurred (404) when calling the HeadObject operation: Not Found"
+    },
+    {
+      "n": 8,
+      "key": "firms/49financial/generations/GENIBS14SYN/attempts/1/exports/v0-11-overview/report.pdf",
+      "version_id": "Jg9agZs3W5xchqyD8bH3UCQTCMQ8Z2HS",
+      "size": 41859,
+      "delete_response": {
+        "VersionId": "Jg9agZs3W5xchqyD8bH3UCQTCMQ8Z2HS"
+      },
+      "post_head": "An error occurred (404) when calling the HeadObject operation: Not Found"
+    },
+    {
+      "n": 9,
+      "key": "firms/49financial/generations/GENIBS14SYN/attempts/1/exports/v0-11-overview/report.pdf",
+      "version_id": "HX6MJ2aw0ax_Q.9mEA48slsgCQberVPA",
+      "size": 41859,
+      "delete_response": {
+        "VersionId": "HX6MJ2aw0ax_Q.9mEA48slsgCQberVPA"
+      },
+      "post_head": "An error occurred (404) when calling the HeadObject operation: Not Found"
+    }
+  ],
+  "positive_control": {
+    "key": "firms/49financial/generations/GENIBS14SYN/attempts/1/exports/probe/probe.txt",
+    "version_id": "HoC7IAl6vkSq8u2D0v6bYbvmxTVskw8h",
+    "must_still_resolve": true,
+    "post_head_rc": 0,
+    "post_head_contentlength": 5,
+    "why": "same credential, same operation, same bucket -- it resolving while the nine 404 rules out a permissions or network explanation for the nine"
+  },
+  "delta": {
+    "versions_before": 10,
+    "versions_after": 1,
+    "markers_before": 5,
+    "markers_after": 5,
+    "markers_untouched": true,
+    "note": "the five delete markers were NOT deleted -- deleting a delete marker RESTORES a current object, the opposite of the intent"
+  }
+}

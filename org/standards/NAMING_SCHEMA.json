@@ -1,0 +1,137 @@
+{
+ "title": "NAMING_SCHEMA -- the D14 Platform Logic naming schema's CLOSED ENUMERATIONS, as data",
+ "version": "v1.2",
+ "ratified_by": "org/missions/D14/LGIC/LGIC_NAMING/prd/LGIC_NAMING_PRD.md v1.2 (L4, 1.0.0_SA_CTO). Spine L4: a decision that is an enumeration is closed as data in org/standards/ and cited.",
+ "changelog": [
+  "v1.0 -- first issue with LGIC_NAMING_PRD v1.0 @c65a169ba0.",
+  "v1.1 -- on 4.0.0_SA_CRO~D's REFUSED brief half (review @1e4e3e10fd): kind.by_type keys are the live plane's node_type strings (CODEBUILD -> CODEBUILD_PROJECT, ECS_TASK -> ECS_TASK_DEFINITION); every node type not graded by kind is enumerated by subtraction; lb and cluster added for the two minted types that had no kind.",
+  "v1.2 -- on 3.0.0_SA_CVO's ratified-text review (@48eab96ed5): key.grammar is the ruled five-segment string verbatim; the bucket (container) and the object (leaf) are separate fields, so a key builder never writes a bucket name into a key."
+ ],
+ "authority": [
+  "SOURCE-FIRST key string -- Andrew-direct 2026-09-13 ~03:2xZ card 1, 'all recs approved' (relayed 4.0.0_SA_CRO~D 96332)",
+  "WHICH firm short forms exist (49f, inf, cot beside the long forms; bd refused in every slot) -- Andrew-direct 2026-09-13 ~03:5xZ card 2 (record @38f2268d48)",
+  "Remediation shape (a): D14 owns the rule, registry, builders and flagger; every fix goes where the resource lives -- Andrew-direct 2026-09-13 ~03:5xZ",
+  "WHERE each form is used (the per-slot split) -- RATIFIED AT L4 by 1.0.0_SA_CTO in LGIC_NAMING_PRD, revertible on Andrew's word; it narrows nothing he ruled"
+ ],
+ "rows_owner": "The ROWS (which firms, products, vendors and platform subsystems exist, with their keys and aliases) belong to the identity registry, which LGIC_ENFORCE owns under ruling (a). Seed until that registry exists: infra/logic/05_IDENTITY_SPINE.md. This file fixes the SHAPE and the closed lists; it mints no row.",
+ "node_type_vocabulary": {
+  "owner": "the live-plane CloudNode graph read by comp-find --corpus aws. Every type key in this file (kind.by_type and types_not_graded_by_kind) IS a node_type value that instrument returns, spelled exactly as it returns it.",
+  "measured": "comp-find --corpus aws '.' --budget 600 by 1.0.0_SA_CTO 2026-09-13 ~22:4xZ; graph vintage 'Built from the estate as of 2026-09-13 12:15:54 UTC', manifest 48bf196564e6; 2,531 nodes, 33 node types",
+  "denominator": 33,
+  "partition": "kind.by_type (18) + types_not_graded_by_kind (15) = 33, disjoint"
+ },
+ "key": {
+  "grammar": "{source}/{scope}/{tier}/{table}/{partition}",
+  "ruled": "Andrew-direct 2026-09-13 ~03:2xZ card 1, verbatim; the five segments and their order are the ruling",
+  "container": "{bucket} -- the bucket that holds the key; NEVER a segment of the key",
+  "leaf": "{object} -- the file under {partition}; not part of the ruled string",
+  "full_address": "s3://{bucket}/{source}/{scope}/{tier}/{table}/{partition}/{object}",
+  "same_string_in_every_bucket": true,
+  "source": "a registry VENDOR key (a feed) or, for derived tiers, a PRODUCT or SYSTEM key",
+  "scope_classes": ["FIRM", "PRODUCT", "MASTER", "GLOBAL"],
+  "scope_form": "LONG",
+  "entity_id_in_scope": "REFUSED (doctrine R2)",
+  "tier": ["bronze", "silver", "gold", "platinum", "state", "code"],
+  "table_case": "snake_case; a platinum leaf is a kebab-case .json file (the served names)",
+  "partition": ["date=YYYY-MM-DD", "a named leaf"]
+ },
+ "bucket": {
+  "data_bucket": "opal-data-{scope}",
+  "data_bucket_scope_form": "LONG",
+  "platform_bucket": "opal-{account-id}-{purpose}",
+  "standing_shared": ["opal-data-assets", "opal-data-portal-v2"],
+  "vendor_name_in_a_new_bucket": "REFUSED"
+ },
+ "resource": {
+  "grammar": "{system}-{scope}-{function}[-{qualifier}]-{last}",
+  "case": "kebab-case, lowercase, ASCII",
+  "scope_form": "SHORT",
+  "scope_when_shared": "OMITTED -- a shared resource carries no scope token, never a placeholder",
+  "last_slot": {"default": "kind", "EVENT_RULE": "cadence", "SCHEDULE": "cadence"},
+  "function": "one or more kebab tokens naming what it does; a compound such as silver-chain is ONE function token",
+  "qualifier": "optional narrowing: a table, a leg, or an environment (dev | prod)"
+ },
+ "kind": {
+  "values": ["lambda", "role", "policy", "profile", "sg", "api", "table", "queue", "dlq", "topic", "alerts", "alarm", "layer", "runner", "build", "document", "task", "sfn", "lb", "cluster"],
+  "by_type": {
+   "LAMBDA": ["lambda"],
+   "IAM_ROLE": ["role"],
+   "IAM_POLICY": ["policy"],
+   "INSTANCE_PROFILE": ["profile"],
+   "SECURITY_GROUP": ["sg"],
+   "API_GW": ["api"],
+   "DYNAMODB_TABLE": ["table"],
+   "SQS_QUEUE": ["queue", "dlq"],
+   "SNS_TOPIC": ["topic", "alerts"],
+   "CW_ALARM": ["alarm"],
+   "LAMBDA_LAYER": ["layer"],
+   "EC2_INSTANCE": ["runner"],
+   "CODEBUILD_PROJECT": ["build"],
+   "SSM_DOCUMENT": ["document"],
+   "ECS_TASK_DEFINITION": ["task"],
+   "STATE_MACHINE": ["sfn"],
+   "LOAD_BALANCER": ["lb"],
+   "ECS_CLUSTER": ["cluster"]
+  },
+  "closed_at_l4": "By subtraction from the live plane's 33 node types: ECS_TASK_DEFINITION, STATE_MACHINE, LOAD_BALANCER and ECS_CLUSTER had no kind in the brief's list -- added as task, sfn, lb and cluster (the last two each have one live node, opal-gateway and opal-globgrph, and are resources this estate mints). secret was DROPPED: secrets keep their own slash-path grammar, where a kind suffix would repeat the type. The brief's measured suffixes trigger, publisher, scanner are FUNCTION tokens, not kinds."
+ },
+ "types_not_graded_by_kind": {
+  "EVENT_RULE": "resource grammar with a CADENCE as the last slot (resource.last_slot)",
+  "SCHEDULE": "resource grammar with a CADENCE as the last slot (resource.last_slot)",
+  "LOG_GROUP": "derived: /aws/{service}/{resource-name}; conforms when its resource does (log_group)",
+  "S3_BUCKET": "the bucket grammar (bucket)",
+  "S3_BUCKET_POLICY": "carries its bucket's name exactly (15 of 15 live nodes); graded as that bucket",
+  "S3Key": "the key grammar (key)",
+  "SECRET": "the slash-path secret grammar (secret)",
+  "IAM_USER": "NOT GRADED: named by its holder or issuer -- a person, the account root, an external identity provider named by its issuer URL (4 live nodes). The one machine user among them (github-actions-portal) is recorded, not graded; a remediation that converts it to a role takes the role grammar",
+  "KMS_KEY": "NOT GRADED: AWS-issued identifier (not_covered)",
+  "CLOUDFRONT_DISTRIBUTION": "NOT GRADED: AWS-issued identifier (not_covered)",
+  "SERVICE_PRINCIPAL": "NOT GRADED: AWS-issued identifier (not_covered)",
+  "VPC_ENDPOINT": "NOT GRADED: AWS-issued identifier (not_covered)",
+  "ROUTE53_RECORD": "NOT GRADED: a DNS record name (not_covered)",
+  "API_ROUTE": "NOT GRADED: a served route contract (not_covered; infra/logic/07_ROUTING_REDERIVATION.md)",
+  "EVENT_SOURCE": "NOT GRADED: an event-source expression or service name, a different grammar (not_covered)"
+ },
+ "cadence": {
+  "values": ["daily", "weekly", "monthly", "hourly"],
+  "event_form": "on-{event}",
+  "event_token_regex": "^[a-z0-9]+(-[a-z0-9]+)*$"
+ },
+ "secret": {"grammar": "{system}/{scope}/{purpose}", "scope_form": "SHORT", "case": "lowercase, ASCII, slash-separated"},
+ "log_group": {"grammar": "/aws/{service}/{resource-name}", "derived": true},
+ "iam_policy": {"grammar": "{system}-{scope}-{purpose}-policy", "purpose_slot": "function", "duplicate_name": "REFUSED"},
+ "firm_forms": [
+  {"key": "49financial", "short": "49f"},
+  {"key": "inflection", "short": "inf"},
+  {"key": "cottonwood", "short": "cot"},
+  {"key": "demo", "short": "demo", "note": "one token; the long and short forms are the same string"}
+ ],
+ "global_scope": {"key": "global", "short": "global"},
+ "refused_tokens": {
+  "bd": "refused in EVERY slot (Andrew ~03:5xZ card 2). The vendor is blackdiamond; the firm is 49financial.",
+  "mockadv": "an alias only, recorded in the registry's alias rows as history; never minted"
+ },
+ "system": {
+  "classes": ["PRODUCT", "PLATFORM_SUBSYSTEM", "VENDOR"],
+  "vendor_as_system_only_when": "the resource IS the vendor integration",
+  "never_a_system": ["a firm", "a project code", "a workstream code", "a cadence", "a generic noun"],
+  "reserved": {"opal": "account-level platform resources only; never a null prefix before a real system"}
+ },
+ "grade": {
+  "signature": "(name, type) -> (verdict, canonical_form); type is a node_type value (node_type_vocabulary)",
+  "verdicts": ["CONFORMANT", "ALIAS", "OUT-OF-PATTERN"],
+  "ALIAS": "the grammar holds but a slot carries a registry alias spelling (for example inflection or bd in a resource name's scope slot); canonical_form is printed",
+  "OUT-OF-PATTERN": "the grammar fails (order, separator, case, a missing or unknown kind, a firm in the system slot); canonical_form is printed",
+  "not_graded": "a type marked NOT GRADED in types_not_graded_by_kind returns no verdict and is outside the grade's domain -- it is excluded, not a fourth verdict",
+  "unplaceable": "RAISES. A name the tokeniser cannot place, a node_type absent from this file, or a token no registry row resolves, is a defect in the tokeniser, this file or the registry and is fixed there -- it is never filed under one of the three verdicts, and there is no fourth"
+ },
+ "not_covered": [
+  "Terraform resource labels and module names (the executable layer's authoring surface; measured before its flagger is specified)",
+  "tag keys and values",
+  "AWS-issued identifiers (KMS key ids, CloudFront distribution ids, service principals, VPC endpoint ids)",
+  "DNS record names (Route 53)",
+  "event-source expressions and service names",
+  "API route grammar (a served contract; infra/logic/07_ROUTING_REDERIVATION.md)"
+ ],
+ "renames_authorized": "NONE. This schema grades; it moves no live name. Each remediation is minted where the resource lives, cites a row of the tension ranking, and carries its own sign-off."
+}

@@ -3194,6 +3194,1378 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "Andrew-direct 17:1xZ (via 0.0.0_AB_MSTR 95994): workers finish, nothing new starts, log and commit; spine v3 L7: a worker's branch is drained by its issuer and a disagreement between two workers' instruments is resolved by the issuer without destroying either's work.",
     "world_is": "IRPT_BCKEND round 2 at 22f2238cd7: COMPLETE rt-1, rt-3, rt-4, rt-5, rt-7, rt-8 (6 of 12); OPEN rt-2 (guards 0 of 11 unguarded; arms (e),(g) unbuilt), rt-9 (arm (a) of six); pending-unhanded rt-10; staged rt-6, rt-11, rtb-1. No worker is live; no worktree remains; the successor cold-starts every remaining order.",
     "notes": "Seat rows continue at S38. The drain-end read to the CTO (CVO watermark vs channel rows, armed rows not seatable) is the successor's act at round end, not this seat's now: the round is not at its end."
+  },
+  {
+    "id": "IRPT_BCKEND-W3-S26",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-11T23:39Z",
+    "one_line": "The owed ids.py deploy cannot be taken: all THREE roots carry a committed, unapplied handler flip to entry.lambda_handler, and the entry module fails to import in the /var/task layout in 3 of 3 exercised extracts -- an apply that lands the packaging fix also lands a Runtime.ImportModuleError.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "terraform plan (vendored terraform v1.9.8, after init) infra/aws/terraform/investor-reporting/ycharts @a296eac0f4 -> 'handler = \"job.lambda_handler\" -> \"entry.lambda_handler\"', 'Plan: 0 to add, 1 to change, 0 to destroy'",
+        "terraform plan infra/aws/terraform/investor-reporting/ops @a296eac0f4 -> 'handler = \"status.lambda_handler\" -> \"entry.lambda_handler\"', 'Plan: 0 to add, 1 to change, 0 to destroy'",
+        "terraform plan infra/aws/terraform/investor-reporting/export @a296eac0f4 -> 'handler = \"handler.lambda_handler\" -> \"entry.lambda_handler\"', 'Plan: 0 to add, 1 to change, 0 to destroy'",
+        "aws lambda get-function-configuration --query Handler, read live 2026-09-11T23:2xZ: irpt-export-render=handler.lambda_handler, irpt-status=status.lambda_handler, irpt-ycharts-generate=job.lambda_handler -- the flip is DESIRED-not-APPLIED in all three",
+        "EXERCISED, not asserted: zip extracted to a flat /var/task dir, imported in a FRESH python3.12 interpreter with the repo stripped from sys.path and a negative control proving an absent module raises -- 'IMPORT-FAIL entry: ModuleNotFoundError: No module named served' for irpt-status (9 of 10 CLOSED), irpt-ycharts-generate (9 of 10) and irpt-export-render with the live irpt-common:5 layer mounted at /opt/python (14 of 15)",
+        "static: entry.py top-level imports are served + loaders (both infra/aws/lambda/investor-reporting/_authz/); neither is declared in files[] for ANY of the three functions in infra/aws/lambda/ci/lambda-source-map.json @a296eac0f4, and entry.py itself is declared for 1 of 3 (irpt-status only, via the drain's UNION)",
+        "infra/aws/lambda/investor-reporting/ops/entry.py:34-43 -- the sys.path insert that makes entry.py importable IN THE REPO derives _authz from the file's PARENT DIRECTORY, which at /var/task is /var; the module is importable in the tree and not in the runtime, so no in-repo test can see this"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-IB-rt-9 issuer amendment A4 (2026-09-11 ~22:5xZ): 'YOUR FIRST LEDGERED ACT IS THE OWED DEPLOY (row IRPT_BCKEND-W3-S25), AND YOU ARE FIRST IN LINE FOR IT ... Sequencing is ruled: you deploy these three FIRST; slot ~2 is held off them until I confirm your deploy landed.'",
+    "world_is": "The two halves CANNOT be sequenced apart. terraform apply is per-ROOT, not per-attribute: any apply that carries the new zip also carries slot ~2's already-committed handler attribute. So deploying the ids.py fix first takes irpt-export-render, irpt-status and irpt-ycharts-generate DOWN at their next cold start, and the ORDER the amendment rules is the reverse of the order the tree permits -- slot ~2's entry.py packaging (entry.py + served.py + loaders.py in files[]) must land in the SAME artifact as any apply of these three roots. No deploy was taken.",
+    "notes": "Not fixed here: entry.py, served.py and loaders.py are cell IB-rt-2's, and widening another cell's declared build inputs mid-round is the neighbouring-defect fix this order forbids. The ids.py declaration fix at d3397434d5 stands in the tree and is correct; only its ACTIVATION is blocked. Nothing regressed: the three live functions still serve their older, working bytes, and the import closure of each LIVE zip was re-measured CLOSED under its own live handler (irpt-status 8 of 8, irpt-ycharts-generate 8 of 8, irpt-export-render 13 of 13 with the layer)."
+  },
+  {
+    "id": "IRPT_BCKEND-W3-S27",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-11T23:39Z",
+    "one_line": "irpt-export-render was never ARMED by the ids.py packaging gap: the irpt-common:5 layer already carries python/ids.py byte-identical to the tree's _ids/ids.py, so a rebuild without ids.py reads 13 of 13 CLOSED -- and adding it at /var/task is the second definition that this entry's own note refuses for keys.py.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aws lambda get-function-configuration --function-name irpt-export-render --query 'Layers[].Arn' -> arn:aws:lambda:us-east-1:313476888478:layer:irpt-common:5 (irpt-status and irpt-ycharts-generate: None)",
+        "layer irpt-common:5 downloaded and listed: python/ids.py 14173 bytes sha256 fc1017b2523f2340... == infra/aws/lambda/investor-reporting/_ids/ids.py 14173 bytes sha256 fc1017b2523f2340... @a296eac0f4 -- IDENTICAL",
+        "DIFFERENCE CONTROL in the /var/task + /opt/python layout, fresh interpreter: irpt-export-render rebuilt from the current tree WITHOUT ids.py, layer mounted -> 'import closure in the /var/task layout: 13 of 13 CLOSED'; the same zip WITHOUT the layer -> 'IMPORT-FAIL resolve: ModuleNotFoundError: No module named ids', 10 of 13. The armed reading in W3-S25 is the no-layer reading; the function has a layer.",
+        "lambda-source-map.json @a296eac0f4 functions['irpt-export-render'].note: 'keys.py is NOT added: the published irpt-common layer already carries it at python/keys.py, and a second copy at /var/task would shadow the layer's and put two definitions of the key grammar in one runtime.'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Row IRPT_BCKEND-W3-S25 and TO-IB-rt-9 amendment A4: the ids.py packaging gap arms irpt-export-render, irpt-status AND irpt-ycharts-generate equally, and the remedy for all three is to add ids.py to files[].",
+    "world_is": "The gap is real and armed for irpt-status and irpt-ycharts-generate (0 layers, exercised OPEN at 5 of 8 each on a rebuild). For irpt-export-render it is NOT: /opt/python/ids.py already resolves the import with the same bytes. Adding ids.py to its zip is therefore either a no-op or, the moment the layer and the tree diverge, a SHADOW -- exactly the failure mode the same entry's note cites as its reason for excluding keys.py. The declaration at d3397434d5 adds it anyway.",
+    "notes": "Not reverted here: the declaration is committed and the round is frozen; this row records the measurement so the issuer can rule on whether irpt-export-render's ids.py entry stands or comes out. Either way it is not what BLOCKS the deploy -- W3-S26 is."
+  },
+  {
+    "id": "IRPT_BCKEND-W3-S28",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-11T23:39Z",
+    "one_line": "The irpt-common:5 layer's python/keys.py is 21320 bytes and the tree's _keys/keys.py is 29894 -- irpt-export-render deliberately does not package keys.py, so the deployed function runs a key grammar 8574 bytes behind the one every other IRPT function ships flat.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "layer irpt-common:5 python/keys.py 21320 bytes sha256 426196b676fcb268...; infra/aws/lambda/investor-reporting/_keys/keys.py @a296eac0f4 29894 bytes sha256 56ee3cc22e802579... -- NOT equal",
+        "layer irpt-common:5 python/raw_keys.json 5990 bytes sha256 702de57727b9c58f... vs infra/aws/lambda/investor-reporting/_ids/raw_keys.json 6064 bytes sha256 82ac2b162ecdb800... -- also NOT equal",
+        "layer irpt-common:5 python/firm_registry.json 5094 bytes vs data/firm_registry.json 5229 bytes -- also NOT equal",
+        "the LIVE irpt-export-render zip imported in a flat /var/task with NO layer: 'IMPORT-FAIL download: No module named keys' and 'IMPORT-FAIL enforce: No module named keys', 11 of 13 CLOSED -- the dependency on the layer's copy is EXERCISED, not inferred",
+        "irpt-status and irpt-ycharts-generate both package keys.py FLAT from _keys/keys.py (29894 bytes, LIVE-MATCH against their S3 artifacts), so two definitions of the key grammar are live across the six IRPT functions today"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "lambda-source-map.json functions['irpt-export-render'].note: excluding keys.py from the zip avoids 'two definitions of the key grammar in one runtime' because 'the published irpt-common layer already carries it'.",
+    "world_is": "There are already two definitions, and the layer holds the OLDER one. The note's reasoning is sound and its premise -- that the layer's copy IS the tree's copy -- is false at a296eac0f4 for keys.py, raw_keys.json and firm_registry.json alike. A per-member census of the three functions' zips cannot see this: it is a defect in what they SHARE.",
+    "notes": "Out of this cell and not repaired here. Publishing irpt-common:6 is an IMAGE-class act reaching every function that attaches the layer, and the layer is not in this order's <paths>. Surfaced, not chased."
+  },
+  {
+    "id": "IRPT_BCKEND-W3-S29",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-11T23:39Z",
+    "one_line": "Arm (a) does not re-confirm at 4 of 4 in the new worktree: it reads 4 of 5, because battery_ib_rt_9.py became TRACKED when its own branch was drained, and the a1 census (git ls-files) now counts the battery itself as a reader of ycharts/session/current.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "timeout 900 python org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~3/battery_ib_rt_9.py on wk-irpt_bckend-2-3b @a296eac0f4 -> 'FAIL a1 readers migrated or retired: 4 of 5' and 'UNACCOUNTED org/missions/.../battery_ib_rt_9.py -- the census found a reader the table does not hold'",
+        "the same battery's saved arm-(a) output at deliverables/0.9.0_WK_IRPT_BCKEND~3/IB-rt-9_RT9-AC1_arm_a_output.txt reads 'a1 readers migrated or retired: 4 of 4'",
+        "DENOMINATOR line of the new run: '33179 file(s) scanned (git ls-files, tracked) | 62 name the secret | 8 are CODE | 5 of those RESOLVE it | 3 only MENTION it' -- 5 resolvers where the saved run had 4",
+        "a2, a3 and a4 are unchanged and all PASS in the same run (0 legacy predicates, 14 of 14, END TO END 400 -> STALE)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-IB-rt-9 amendment A5: 'ARM (a) IS DONE AND MUST NOT BE RE-DONE ... Re-run the battery once to confirm the cutover still passes (~40 s), then leave arm (a) alone.'",
+    "world_is": "The cutover itself still passes -- the fifth 'reader' is the battery's own fixture code, which drives fakes and reaches no AWS. What changed is the census POPULATION, not the estate: an untracked file at the first run is a tracked file at this one. The arm is repaired inside this cell (the battery's own deliverable) by classifying the harness explicitly with its own printed count, not by widening the discriminator that already distinguishes a READER from a MENTION.",
+    "notes": "Bound 12 in reverse: a battery that CENSUSES the real population will eventually census ITSELF once its own file is committed, and it reports that as a defect in the estate. The tell is that the unaccounted path is under deliverables/."
+  },
+  {
+    "id": "IRPT_BCKEND-W3-S30",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-11T23:39Z",
+    "one_line": ".tools/terraform.exe was NOT provisioned in this worktree, contrary to the order's bound 4; resolved by copying the SAME binary by path from the primary workspace (v1.9.8), never a PATH substitute.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ls -l /c/tmp/wk-irpt-2-3b/.tools/terraform.exe -> 'No such file or directory' at worker start",
+        "ls -l /c/Users/AndrewBerman/Desktop/ajb_workspace/.tools/terraform.exe -> present, 91104424 bytes",
+        "after copy: /c/tmp/wk-irpt-2-3b/.tools/terraform.exe version -> 'Terraform v1.9.8 on windows_amd64'; git check-ignore -q .tools/terraform.exe -> rc 0 (gitignored, so nothing is committed by this)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-IB-rt-9 bounds, item 4: '.tools/terraform.exe is provisioned in your worktree by the issuer -- use it by that path, never a PATH substitute (a substitute re-pins remote state)'; amendment A3 repeats that the absence is a trap already paid for.",
+    "world_is": "The binary was absent in /c/tmp/wk-irpt-2-3b. A3 already names the absence as the expected condition, so the bound and the amendment disagree with each other about who provisions it. The remedy taken is the one A3 names -- resolve the binary BY PATH -- using the byte-identical estate binary rather than any terraform on PATH.",
+    "notes": "Each of the three investor-reporting roots was then `init`-ed with that binary before any plan, per A3."
+  },
+  {
+    "id": "IRPT_BCKEND-S38",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-12T00:07:11Z",
+    "one_line": "ISSUER SELF-CORRECTION, DISARMING W3-S26: my amendment A6 ordered slot ~3 to deploy irpt-export-render, irpt-status and irpt-ycharts-generate ahead of slot ~2 on the reasoning that until IB-rt-2's apply re-points the Terraform handler strings the world runs the OLD handlers, which do not import served/loaders. THAT REASONING WAS FALSIFIED BY THE TREE: IB-rt-2's handler flip is ALREADY COMMITTED AND UNAPPLIED in all three roots, and terraform apply is per-ROOT and not per-attribute, so the apply that lands the ids.py packaging fix also lands the handler flip and the entry module is in no zip. Slot ~3 planned all three roots (0 add, 1 change, 0 destroy, on exactly that attribute), extracted each zip to a flat /var/task and imported it in a fresh python3.12 interpreter with the repo stripped from sys.path with a negative control armed, read IMPORT-FAIL ModuleNotFoundError: No module named 'served' on all three, and REFUSED THE ORDER WITH A BLOCKING ROW RATHER THAN OVERRIDING IT -- the behaviour the row mechanism exists for. RE-CUT: entry.py + served.py + loaders.py + ids.py must land in ONE artifact per function and the apply that flips the handler is the SAME apply that ships them, so the whole packaging-plus-deploy is cell IB-rt-2's across all six roots; the owed W3-S25 deploy is removed from IB-rt-9 and IB-rt-9's arm (e) is now gated on IB-rt-2's apply. Amendment A6 is struck by issuer amendment 2 on the IB-rt-2 face; slot ~2 was handed the re-cut with slot ~3's five measurements attached, and slot ~3 was re-tasked to the four unblocked fixture arms (b), (c), (d), (f).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~B (disarmed same turn: A6 struck on the face, both slots re-tasked, no seat is waiting on another)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CLOUD 670092d321 (drain of wk-irpt_bckend-2-3b; rows W3-S26..S30, channel 137 rows)",
+        "IRPT_BCKEND-W3-S26, the worker's BLOCKING row carrying the three plans and the three import failures",
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~3/WIP_IB-rt-9_coldstart2_blocked.md",
+        "The struck clause is on the IB-rt-2 face, issuer amendment 1 section A6, committed 7f86d664c6 and merged a296eac0f4"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Issuer amendment 1 section A6 (IB-rt-2 face, a296eac0f4): 'rt-9 deploys those three FIRST. You do NOT deploy them until I tell you its deploy has landed ... until that apply, the world runs the OLD handlers, which do not import served/loaders -- so rt-9's deploy is safe ahead of yours.'",
+    "world_is": "The three roots already DESIRE entry.lambda_handler, so no apply on them can be partial. There is no ordering of the two cells that works, because the act is atomic and was split. The issuer's error was reasoning about the WORLD's handler (old, safe) while the DESIRED state in the tree had already moved -- Rule 22's DESIRED-vs-APPLIED distinction applied to the wrong one of the two, inside a sign-off-shaped ruling about what an act MAY touch.",
+    "notes": "Recorded as the issuer's own defect rather than the worker's finding, because the worker did exactly what it should have and the cost of the error was one refused act and no deployment. The general form worth carrying to L10: an ISSUER sequencing ruling that names two cells is itself a claim about a shared surface, and a per-cell reading cannot see a defect in what the two cells SHARE -- here, one Terraform root holding both cells' desired state. The ruling should have been graded against the ROOT, which is what both cells have in common, before it was written."
+  },
+  {
+    "id": "IRPT_BCKEND-W3-S31",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-12T00:39Z",
+    "one_line": "The deployed generation job has NO eviction outcome: a 401 at the read-back is recorded as SETTINGS_DRIFTED and a 401 at the create as CREATE_NOT_VERIFIED, so an evicted session and a genuine contract failure are indistinguishable in the job's own record -- and the two have OPPOSITE remedies.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "EXERCISED on job.GenerationJob with the replay transport, run_session_suite.py arm d @a2aa857b05: a 401 at GET /model_portfolios/{id}/status yields the job's own why 'SETTINGS_DRIFTED' while transport.decision on the same wire status yields 'REFRESH'",
+        "infra/aws/lambda/investor-reporting/ycharts/generate/job.py:426-429 @a296eac0f4 -- `if not read_back['ok']: self._state(job_id, 'ATTENTION', {'why': 'SETTINGS_DRIFTED', ...})`; step_read_back's ok is `info['status'] == 200 and matched == len(rows)`, so ANY non-200 lands on the drifted-settings word",
+        "job.py:390-392 -- the same shape at the create step: a non-201 is 'CREATE_NOT_VERIFIED'",
+        "comp-find 'resume_allowed' --all: DENOMINATOR 10 hit(s) across 31391 file(s) | 2 DEF, 6 TEST, 2 DOC -- ZERO production callers; the rule at transport.py:202 is exercised only as a pure function by tests/run_offline_suite.py:494,498",
+        "the DIFFERENCE CONTROL that makes this actionable: the same step returning 422 classifies NOT_AN_EVICTION with 0 refreshes, so the two cases ARE separable at the wire -- it is the job's outcome word that loses the distinction, not the evidence"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-IB-rt-9 arm (d) and the decomposition v0.2 s.2(4): 'a 401 mid-job triggers ONE refresh through the broker and the job resumes its checkpoint' -- i.e. the deployed job recognises an eviction and routes it to the broker.",
+    "world_is": "It does not recognise one. `transport.resume_allowed` has ZERO production callers and `job.py` carries no eviction member in its outcome vocabulary, so the eviction path was a LIBRARY RULE with no wiring. Arm (d) is met by classifying at the wire in the new broker (transport.decision over the recorded status) and re-entering through the job's OWN resume()/after_create(), which required no edit to job.py. The residual hazard is that anything ELSE reading the job's `why` -- an operator, the status envelope, a retry policy -- will refresh a session for a contract failure or fail a request that only needed a refresh.",
+    "notes": "NOT fixed inside job.py deliberately: job.py is a declared build input of irpt-ycharts-generate, which cell IB-rt-2 is about to rebuild and deploy (row W3-S26), and editing it here would put this cell's change into that cell's artifact. The broker classifies correctly without touching it. Whether job.py should gain an EVICTED outcome is a cut-time question, not a mid-round one."
+  },
+  {
+    "id": "IRPT_BCKEND-W3-S32",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-12T00:39Z",
+    "one_line": "JobStore keeps only the LATEST state per job, so the durable `model_portfolio_id` written at SUBMITTED is ERASED by the next transition -- the checkpoint a recovery reads back no longer carries the identity of the vendor object the request already created.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/ycharts/generate/job.py:121-124 @a296eac0f4 -- `put_state` assigns `self.items[job_id] = {...}`, one row per job, overwritten in place; only `self.transitions` is append-only and it carries job_id + state and NO detail",
+        "EXERCISED, run_session_suite.py arm d: after the create succeeded (state SUBMITTED, detail {'model_portfolio_id': 2332060}) and the read-back returned 401 (state ATTENTION, detail {'why','drifted'}), the broker's checkpoint read returned `checkpoint_state_at_recovery: ATTENTION` -- the portfolio id was gone",
+        "the recovery still worked, and that is the point: it worked because job.resume() RECONCILES the owned object from the VENDOR by the deterministic portfolio name, not because the store remembered it"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The job's own design note at job.py:102-110: the store is 'durable job state with a CONDITIONAL intent claim ... the shape it mirrors is irpt-jobs', and the chain writes SUBMITTING/SUBMITTED with the identity of the object it is about to create or has created, so a restarted worker can find it.",
+    "world_is": "The identity written at SUBMITTED does not survive one further transition. Nothing in this cell depends on it -- reconciliation from the vendor by owned identity is the stronger design and it is what actually recovers -- but any future consumer that reads the checkpoint DETAIL for a portfolio id will find whatever the last transition wrote, and a DynamoDB-backed JobStore with the same put shape would have the same erasure.",
+    "notes": "Surfaced, not chased: job.py is IB-rt-2's artifact this round (W3-S26). The remedy, if one is wanted, is a per-(job, state) row or an append-only detail log, which is a store-shape decision and belongs at a cut."
+  },
+  {
+    "id": "IRPT_BCKEND-W3-S33",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-12T00:39Z",
+    "one_line": "The arm-(a) reader census caught this cell's OWN new broker before it was declared -- 4 of 5, UNACCOUNTED -- which is the table working; recorded because it is the second time in one session that adding a file to the tree moved this arm's denominator.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "battery_ib_rt_9.py run before broker.py was declared: 'UNACCOUNTED infra/aws/lambda/investor-reporting/ycharts/session/broker.py -- the census found a reader the table does not hold' and 'FAIL a1 readers migrated or retired: 4 of 5'",
+        "after the declaration: 'PASS a1 readers migrated or retired: 5 of 5', denominator '33184 file(s) scanned (git ls-files, tracked) | 64 name the secret | 10 are CODE | 6 of those RESOLVE it | 4 only MENTION it | 1 ... OWN TEST HARNESS'",
+        "the earlier instance is row IRPT_BCKEND-W3-S29 (the battery counting itself once its own file became tracked)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-IB-rt-9 amendment A5: arm (a) is DONE and stays done -- 're-run the battery once to confirm the cutover still passes, then leave arm (a) alone'.",
+    "world_is": "Arm (a) is not a fixed result; it is a LIVE census whose denominator moves whenever the cell adds a file that resolves the secret. Twice in one session it failed for a correct reason and was answered by declaring the new member rather than by widening the discriminator. Both answers are recorded in the battery beside the entries they explain. This is the arm behaving as specified -- the record exists so a later reader does not mistake a moving denominator for an unstable instrument.",
+    "notes": "The discriminator (a Secrets Manager READ API call) was NOT touched in either case. The only structural exclusion is the HARNESS class, which carries its own control asserting it removed 0 declared estate readers."
+  },
+  {
+    "id": "IRPT_BCKEND-S39",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-12T01:01:01Z",
+    "one_line": "DISPOSITION of W3-S31 and W3-S32. W3-S31: the worker declined to wire resume_allowed into job.py on the stated premise that job.py is IB-rt-2's artifact this round. THAT PREMISE IS FALSE AND THE DECISION WAS STILL RIGHT. Measured at the merge-base of wk-irpt_bckend-2-2b: that branch touches 18 files and job.py is not among them -- IB-rt-2 creates entry.py per function and deliberately leaves every wrapped handler module untouched, which is its own standing rule. The real reason not to touch it is one neither cell stated: job.py ships inside the irpt-ycharts-generate ZIP and the ycharts Terraform ROOT, and BOTH are IB-rt-2's and are being applied right now under an open deploy ledger (org/critical_paths/.open_deploys/irpt-bckend-rt2.json, entry 20260912T0035Z). An edit landing mid-deploy would ride into or miss that artifact non-deterministically. THE SHARED SURFACE IS THE ARTIFACT, NOT THE FILE -- a file-ownership reading says 'free' and the artifact reading says 'do not touch', and the artifact reading governs. RULING: resume_allowed is NOT wired this round; the round is FROZEN under Rule 27 and a cell for it is L10's business, carried with its measurement (10 hits across 31,391 files, ZERO production callers -- the rule existed with no wiring). AND A JUDGMENT FLAG FOR 3.0.0_SA_CVO AT L9, NOT GRADED HERE: arm (d) PASSES on fixtures while production has no eviction path at all, so whether fixture-passing satisfies the PRD's 'eviction and self-healing on the generation job' is a judgment criterion and belongs to the adjudication, never to the instance's own verdict. W3-S32: accepted as an OBSERVATION with no act this round -- JobStore keeping only the latest state per job means the model_portfolio_id written at SUBMITTED is erased by the next transition, and the recovery works anyway because resume() reconciles from the VENDOR, which is the stronger design; carried to L10 so the PRD STATES the vendor reconciliation rather than leaving a reader to infer it from a checkpoint that does not hold it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~B (both rows disarmed same turn: no act is owed this round and each is carried to L10 by name)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git diff --name-only $(git merge-base CLOUD wk-irpt_bckend-2-2b) wk-irpt_bckend-2-2b -- 18 files, job.py absent",
+        "org/critical_paths/.open_deploys/irpt-bckend-rt2.json and org/critical_paths/change_management/20260912T0035Z_irpt-bckend-rt2_deploy_completion.md -- IB-rt-2's deploy is OPEN at this write",
+        "IRPT_BCKEND-W3-S31 and IRPT_BCKEND-W3-S32, drained at bad394fbaa (channel 141 rows)",
+        "IB-rt-2 face, WIP section 6.2: the guard is a new entry module per function and the wrapped handler modules are deliberately untouched"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "IRPT_BCKEND-W3-S31: 'Not fixed in job.py: it is IB-rt-2's artifact this round, and editing it would put my change into slot ~2's artifact.'",
+    "world_is": "IB-rt-2 does not edit job.py and never intended to. But it DOES build the zip and apply the root that carry job.py, and it holds an OPEN deploy ledger on them at this moment -- so the conclusion the worker reached is correct while the reason it gave is not. The correct reason is stronger, because it still forbids the edit after IB-rt-2's file set is known and a file-ownership reading would have permitted it.",
+    "notes": "Second instance tonight of one class, and the first was this seat's own (S38): A CLAIM ABOUT WHO MAY TOUCH A FILE IS A CLAIM ABOUT THE ARTIFACT AND THE TERRAFORM ROOT THAT CARRY IT, NOT ABOUT THE FILE. In S38 the issuer read two cells' file sets and missed that one root held both cells' desired state; here a worker read one cell's file set and missed that one zip carries both cells' code. Same shape, opposite seats, same remedy: grade the SHARED artifact before ruling on the member. Carried to L10 as one finding with two instances rather than two findings."
+  },
+  {
+    "id": "IRPT_BCKEND-W4-S26",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+    "surfaced_at": "2026-09-12T00:22:27Z",
+    "one_line": "THE FI-LIGATURE CODES ARE NOT RECOVERABLE FROM THESE DOCUMENTS AND THE RIGHT ANSWER IS THE RULING'S SECOND BRANCH. The TO's arm (a) reads 'the fi ligature is recovered through that document's map (the code used printed per document: 45 / 45 / 46 as measured)'. Measured on all three retained vendor specimens: the code is real and the face's numbers are exact (overview 45, comparison 45, multicomp 46, each rendered by exactly ONE font resource, on 23 of 23, 31 of 31 and 35 of 35 pages), but NO resource of the document states it. Each document's ToUnicode CMap has a GAP at precisely that code -- the overview's RobotoCondensed-Regular subset maps bfranges 1..44 and 46..87 and the content stream renders 45; the multicomp's maps 1..45 and 47..88 and renders 46 -- and every embedded subset carries only OS/2, glyf, head, hhea, hmtx, loca, maxp and name: no cmap table and no post table, so the font PROGRAM states nothing either. Both sources were asked per font and the exhaustion is recorded on the row. So the cell implements the CTO's ruling as it is written -- 'Per-document font mapping OR explicit unresolved for the fi-ligature codes 45/46' -- and takes the second disjunct, printing UNRESOLVED with the document's own evidence rather than recovering a letter the document does not state. THE ONLY WAY TO PRINT 'RECOVERED' HERE WOULD HAVE BEEN TO GUESS: the negative control measures what each guess would have cost. Resolving the same code through the SAME DOCUMENT'S other font resource returns U+0038 in the overview, U+004D in the comparison and U+0044 in the multicomp -- three different confident wrong characters -- and across the three documents 73 of 89 compared codes already mean different characters, so a global table is wrong on 82 percent of the codes it would cover.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "battery_ib_rt_10.py arm (a), verbatim: 'CODE 45   UNRESOLVED  rendered by ['QXFAAA+RobotoCondensed-Regular'] on 23 of 23 page(s)' and 'the shape of the hole in this font's own map: {\"codes_mapped\": 87, \"lowest\": 0, \"highest\": 87, \"nearest_below\": 44, \"nearest_above\": 46, \"note\": \"the code sits in a GAP of this font's own map\"}'",
+        "the same arm's cross-font control: '1 of 2 other font resource(s) in this document would have returned a character for this code' with QHGAAA+RobotoCondensed-Bold would_answer=True U+0038",
+        "the raw ToUnicode streams, read with pdfminer's own CMap parser: overview F6 declares '<0001> <002C>' and '<002E> <0057>'; multicomp F6 declares '<0001> <002D>' and '<002F> <0058>'",
+        "infra/aws/lambda/investor-reporting/ycharts/extract/fonts.py@56a6e07e8f -- resolve_code() asks the ToUnicode CMap and then the embedded program's cmap and post tables, scoped to the font that rendered the code, and records the exhaustion",
+        "ROUND_ANALYSIS.round1.md@0d57ceb2f9 ruling 6, verbatim: 'Per-document font mapping or explicit unresolved for the fi-ligature codes 45/46'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO IB-rt-10 arm (a): 'For each of the 3 vendor PDFs the fi ligature is RECOVERED through that document's map (the code used printed per document: 45 / 45 / 46 as measured)'.",
+    "world_is": "The codes and their per-document assignment are exactly as the face measured, and each is rendered by exactly one font resource -- but no resource of any of the three documents maps them, so RECOVERED is unreachable without a guess and the answer is the ruling's explicit UNRESOLVED. The arm is graded on the ruling's disjunction, with the code, the font, the gap, the sources asked and the cost of each available guess all printed.",
+    "notes": "The ruling that this cell executes admits both branches; the TO's prose gloss of it names only the first. The gloss and the ruling are not in conflict about what to DO -- both forbid a global table -- but a reader of the battery output who had only the gloss would expect a recovered character, so the branch taken is stated on the arm and here. The form of the finding is a spec-vs-world mismatch; its significance is 3.0.0_SA_CVO's at L9."
+  },
+  {
+    "id": "IRPT_BCKEND-W4-S27",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+    "surfaced_at": "2026-09-12T00:22:27Z",
+    "one_line": "CONTRACT ADDITION, FOR THE CTO'S L10 READ: an OPTIONAL `date_claim` enum (SECTION | REPORT | NONE) is now a property of AnalysisReport.sections[] in BOTH published copies -- infra/aws/lambda/investor-reporting/_contracts/AnalysisReport.schema.json and docs/contracts/investor-reporting/v1/AnalysisReport.schema.json -- added by this cell on the decomposition's own instruction (v0.2 s.2) even though the contract surface belongs to IB-s-18. The property is OPTIONAL and never required, exactly as `contract_version` is: the section item is additionalProperties:false and round-1 instances predate it, so requiring it would invalidate documents that are already correct. The block is byte-identical in both copies (1370 bytes, sha256 92bff92c879fa6c8) because it was written once and inserted into both, and its description quotes the PRD CONTRACTS table item 3 of 6 verbatim at 62301f71e0. WHAT THE CTO IS BEING ASKED TO READ: whether an optional producer-side enum is the right carrier for 'whose date is this', or whether the FNTEND consumer needs it REQUIRED to be able to refuse a report-level date rendered as a section date -- this cell cannot decide that without widening beyond its own surface. A consumer effect is graded at IB-rtb-1; nothing is deployed by this cell.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "IRPT_BCKEND_DECOMP.md v0.2 s.2, verbatim: 'proposed to the contract as an OPTIONAL enum so additionalProperties:false holds (the contract edit is IB-s-18's surface: this cell adds the optional property to _contracts/AnalysisReport.schema.json and the v1 artifact in the same commit, with the CONTRACTS-table citation, and files a row naming the CTO's L10 read on it)'",
+        "battery_ib_rt_10.py arm (d), verbatim: '2 of 2 published copies carry 'date_claim', byte-identical: True' with lambda and published_v1 both 1370 bytes at sha256 92bff92c879fa6c8",
+        "the same arm: seven specimens validated against BOTH copies (71, 91, 118, 16, 23, 30 and 4 rows), additionalProperties:false intact",
+        "battery_ib_s_18.py arm (a) re-run after the edit: 'TOTAL: 385 of 385 description quote(s) resolve VERBATIM in the CONTRACTS section at 62301f71e0'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Decomposition v0.2 s.2 directs this cell to add the optional property to both contract artifacts in one commit and to file a row naming the CTO's L10 read on it; TO bound 7 otherwise holds this cell off surfaces it does not own.",
+    "world_is": "The property is added to both copies, byte-identical, optional, and validated on seven specimens. The open question the CTO reads at L10 is whether OPTIONAL is the right strength for a field whose whole purpose is to let a consumer REFUSE, given that an optional field a producer may omit is one a consumer cannot rely on.",
+    "notes": "The first draft of the description wrote the PDF's own heading as a double-quoted span, which battery_ib_s_18.py arm (a) correctly reads as a claim to quote the PRD verbatim and refused as the 1 of 386 that did not resolve. The prose was re-worded; the checker was not touched. Worth recording because the checker's rule -- every double-quoted span in a contract description IS a PRD quote -- is not stated anywhere a later author of a description would see it."
+  },
+  {
+    "id": "IRPT_BCKEND-W4-S28",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+    "surfaced_at": "2026-09-12T00:22:27Z",
+    "one_line": "THE ROUND-1 EXTRACTOR DATED ROWS FROM A NEIGHBOURING BLOCK AND FROM A DIFFERENT DOCUMENT, AND ITS OWN CERTIFICATION READ CERTIFIED THROUGHOUT. Re-derived from this run's rows by extract.round1_undated_baseline(): on the retained overview specimen 15 of 61 emitted rows sit on a page that prints TWO different Data-as-of dates (page 2 carries 2026-09-09 and 2026-09-11; page 6 carries 2026-08-31 and 2026-09-11), and round 1's rule took the page's FIRST date line for every row on the page -- so those 15 rows carried whichever date came first in the text stream, which for a stale-priced block is the fresher date. On the multicomp specimen a further 12 of 108 rows were dated CENSUS_STATED: a date read from docs/briefs/sources/YCHARTS_COMPARISON_REPORT_FIELD_SCRAPE_20260909.json, which is a DIFFERENT DOCUMENT'S statement about this one. NONE OF THIS WAS VISIBLE TO ROUND 1'S CERTIFIER, and that is the structural point rather than the incident: its three legs graded value-at-coordinates, label-in-neighbourhood and unit-declared, and a date is at NONE of those coordinates -- it is at the block heading's. Every one of the 15 rows passed all three legs, because each was individually correct about everything the legs could see. IB-rt-10 adds the fourth leg that can see it and two mutants that exercise it; the round-1 counts are reproduced exactly (comparison 34 of 81, multicomp 51 of 108) so the change is a measured delta and not a recollection. Source-only: nothing is deployed by this cell and the extractor rides the generate package's next build.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "IB-rtb-1 (the deployed-route replay) -- the corrected extractor reaches a running function only at the irpt-ycharts-generate package's next build, so until that build any deployed caller of ycharts/extract still applies the page's first date line and the census date. The disarming act is that rebuild plus a read of the served CodeSha256 against the built zip; no separate remediation is needed, because the fix is already in source at 56a6e07e8f.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "battery_ib_rt_10.py arm (c), verbatim: 'and on the overview specimen 15 of 61 emitted rows sit on a page printing TWO different 'Data as of' dates'",
+        "the same arm: 'multicomp  51 of 108 section row(s) undated under the round-1 rule | by round-1 claim {\"PAGE_STATED\": 45, \"CENSUS_STATED\": 12, \"NOT_STATED\": 51}'",
+        "the same arm: 'pages printing >1 distinct date: {\"2\": [\"2026-09-09\", \"2026-09-11\"], \"6\": [\"2026-08-31\", \"2026-09-11\"]}' for the overview specimen",
+        "IRPT_BCKEND.TO-IB-s-10...proof_of_spec.json in deliverables/0.9.0_WK_IRPT_BCKEND~3/ -- the round-1 instance whose battery reported every vendor specimen fully CERTIFIED under three legs",
+        "infra/aws/lambda/investor-reporting/ycharts/extract/certify.py@56a6e07e8f -- the L4 date-provenance leg and the neighbour-date and shifted-provenance mutants, both of which refuse on the overview and comparison specimens"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO IB-rt-10 arm (c): '0 items dated from a neighbour (a mutant that copies a neighbour's date FAILS the arm)', and the CTO's ruling on W3-S11: undated sections are represented with document provenance, never inferred from a neighbour.",
+    "world_is": "0 of the rows this cell emits are dated from a neighbour and both mutants are refused -- but the rows the PREVIOUS round emitted were, on 15 of 61 overview rows and 12 of 108 multicomp rows, and that round's certifier had no leg that could have seen it. The defect is fixed in source here; what is ARMED is the window until the package that carries the extractor is rebuilt.",
+    "notes": "Recorded as a structural finding about CERTIFICATION SCOPE rather than as a defect report: a certifier's legs bound what its verdict can mean, and 'N of N CERTIFIED' read clean across three specimens while a whole class of error sat outside every leg. The worker judges the form of this row; its significance is 3.0.0_SA_CVO's at L9."
+  },
+  {
+    "id": "IRPT_BCKEND-W4-S29",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+    "surfaced_at": "2026-09-12T00:22:27Z",
+    "one_line": "THE PATH REGISTER'S OWN VERIFIER CANNOT COMPLETE, AND THIS CELL APPENDS TO THAT REGISTER. battery_ib_s_18.py -- the battery that grades infra/aws/lambda/investor-reporting/PATH_MANIFEST.json, the register every later cell is told to append to -- raises TypeError at line 315 in arm (c), '<' not supported between instances of 'NoneType' and 'str', sorting a presence breakdown whose keys include None. Measured cause: 127 of the manifest's 377 entries carry no presence_at_base at all (the field is `recommended` and not `required` by the manifest's own append_contract), so the breakdown dict has a None key and sorted() refuses it. Arms (a) and (b) run and pass before the crash; arms (d) and (e) never run, and the battery exits rc 1 with no verdict line -- so a reader who checks only the exit code sees a FAILURE and one who reads the last printed arm sees a PASS. PRE-EXISTING, NOT INDUCED: PATH_MANIFEST.json is byte-unmodified in this worktree (git status --porcelain returns nothing for it), so the crashing input is identical to the base tree's. NOT THIS CELL'S TO FIX -- battery_ib_s_18.py is 0.9.0_WK_IRPT_BCKEND~1's deliverable and is outside this order's paths. This cell's own appended entries carry presence_at_base, so they do not add to the 127.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B, to route to whichever order owns deliverables/0.9.0_WK_IRPT_BCKEND~1/battery_ib_s_18.py (IB-s-18's re-run, or IB-rtb-1 if the path register is graded there). The concrete fix is one line -- sort the breakdown on str(key), or default the missing field -- but the reason to disarm it is not the line: while arm (c) crashes, arms (d) and (e) of the FOUNDATION cell's acceptance have not run at all, on any commit since the 127 entries were appended, and no reader of the rc can tell that apart from a failing assertion.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "battery_ib_s_18.py run at 56a6e07e8f, verbatim: 'File \"C:\\tmp\\wk-irpt-2-4b\\org\\missions\\D9\\IRPT\\IRPT_BCKEND\\deliverables\\0.9.0_WK_IRPT_BCKEND~1\\battery_ib_s_18.py\", line 315, in arm_c / for k in sorted(breakdown): / TypeError: '<' not supported between instances of 'NoneType' and 'str'', rc 1",
+        "the same run's last completed line: '44 of 44 entry(ies) claiming PRESENT_AT_PIN verify with `git cat-file -e 261c8d2080:<path>`'",
+        "a Counter over PATH_MANIFEST.json's own entries: 377 entries, presence_at_base None on 127 of them (the remainder spread over 11 declared values)",
+        "git status --porcelain infra/aws/lambda/investor-reporting/PATH_MANIFEST.json -- empty, so the crashing input is the base tree's bytes",
+        "PATH_MANIFEST.json _meta.append_contract: presence_at_base is listed under recommended_fields, never required_fields"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO IB-rt-10 lists infra/aws/lambda/investor-reporting/PATH_MANIFEST.json in its paths, and the manifest's own append_contract directs every later cell to append its concrete read/write paths; bound 7 and the lane clause forbid this cell from editing anything its paths do not name.",
+    "world_is": "The register is appendable and this cell appends to it, but the battery that grades the register crashes part-way through on data the register already contains, so there is no instrument that can currently certify the append. This cell reports the crash rather than repairing another worker's battery.",
+    "notes": "The shape is worth more than the line: a verifier that dies mid-run leaves clean metrics printed ABOVE the traceback, so the output reads as three passing arms and the failure is only in the exit code. Two readers of the same run reach opposite conclusions depending on where they stop."
+  },
+  {
+    "id": "IRPT_BCKEND-W4-S30",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+    "surfaced_at": "2026-09-12T00:22:27Z",
+    "one_line": "THE PATH REGISTER'S OWN PRINTED DENOMINATOR WAS STALE BY 41. infra/aws/lambda/investor-reporting/PATH_MANIFEST.json declared _meta.denominators.entries_total = 336 while its `entries` array held 377 -- a 12 percent understatement, in the one field a reader would quote as the register's size. The declared value is consistent with _meta.denominators.appended_by_cell, which records IB-s-17 (24) and IB-rt-1 (28) and nothing after: cells that appended later added entries without touching either counter, which the manifest's own append_contract does not ask them to. This cell wrote the MEASURED count (382 after its 5) rather than incrementing the stale one, because 341 would have been a fresh wrong number carrying the authority of having just been updated. The class matters more than the 41: a denominator that is printed is READ AS MEASURED, and a register whose size is quoted from _meta rather than counted from `entries` reports 336 with no visible sign of being wrong. Nothing else in _meta was touched, and no existing entry was moved -- verified by comparing the parsed arrays before and after the append, not by reading the diff.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "PATH_MANIFEST.json at 56a6e07e8f, _meta.denominators, verbatim: '\"entries_total\": 336'",
+        "len(json.load(...)['entries']) over the same bytes: 377",
+        "_meta.denominators.appended_by_cell at the same commit: {'IB-s-17': 24, 'IB-rt-1': 28} -- no key for any cell after IB-rt-1",
+        ".scratch/append_manifest2.py run output, verbatim: 'NOTE: entries_total declared 336, array holds 377 before this append; writing 382'",
+        "the same run: 'OK: entries 377 -> 382' with git diff --stat reporting 67 insertions and 1 deletion on the register"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PATH_MANIFEST.json _meta.append_contract: 'append only; one entry per concrete path'; _meta.denominators.entries_total is published as the register's size and Rule 22's COVERAGE axis requires a printed denominator to be the one that was measured.",
+    "world_is": "The published total had drifted 41 below the array it describes, and the append_contract names no owner for keeping it true, so every append since IB-rt-1 left it further behind. This cell wrote the measured value and recorded the drift rather than absorbing it.",
+    "notes": "Filed separately from IRPT_BCKEND-W4-S29 rather than folded into it: S29 is about the register's VERIFIER crashing, this is about the register's own published COUNT being wrong. Different owners and different remedies -- and the channel is append-only, so an existing row could not have carried it."
+  },
+  {
+    "id": "IRPT_BCKEND-W4-S31",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+    "surfaced_at": "2026-09-12T00:52:00Z",
+    "one_line": "A HAND-BUILT PDF IS TEXT TO GIT, AND THE FRESH-WORKTREE FAILURE IS A HASH CHANGE ON A FILE NOBODY EDITED. git decides binary-vs-text on whether a NUL byte appears in the first 8 KB, and a PDF is not required to carry one: measured, the three round-1 synthetic specimens carry a NUL in 3 of 3 cases (their content streams are deflated) while this cell's hand-built unmapped_glyph.pdf carries one in 0 of 1 -- it has uncompressed content streams, so every byte is ASCII. With core.autocrlf=true on this box, a fresh checkout renders it CRLF: 3,024 bytes become 3,121 and the sha256 moves from f15b39103fc9f5a7 to 76a7ddc5ad775756. THE DANGEROUS PART IS THAT NOTHING CRASHES -- the CRLF copy still opens and still extracts both pages, because pdfminer reconstructs the xref when the offsets do not resolve. What fails is the fixture manifest's freshness check, in every worktree except the one that generated the file, for a file nobody touched. The standard PDF binary marker the generator writes (four high-bit bytes in a comment after the header) is correct PDF practice and does NOT satisfy git's heuristic, because high bits are not NUL -- so it was necessary and not sufficient. Remedied inside this order's own granted subtree with infra/aws/lambda/investor-reporting/ycharts/extract/.gitattributes declaring '*.pdf -text'; the estate's ROOT .gitattributes is not this cell's to edit and a fixture's binary-ness is a fact about the fixture rather than a repo-wide policy. Verified after: git check-attr reports 'text: unset' for both the new fixture and the round-1 specimens.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit output at 98d579cd1b, verbatim: 'warning: in the working copy of 'infra/aws/lambda/investor-reporting/ycharts/extract/fixtures/unmapped_glyph/unmapped_glyph.pdf', LF will be replaced by CRLF the next time Git touches it'",
+        "a NUL census over the fixture PDFs: synthetic_pdf/{overview,comparison,multicomp}.pdf carry a NUL in the first 8000 bytes 3 of 3; unmapped_glyph/unmapped_glyph.pdf 0 of 1",
+        "the simulated checkout, run rather than reasoned about: the HEAD blob with every LF replaced by CRLF is 3,121 bytes at sha256 76a7ddc5ad775756 against the manifest's declared f15b39103fc9f5a7 / 3,024 bytes, AND pdfplumber opens it: '2 pages; page2 text: SYNTHETIC SPECIMEN: generated from the field census'",
+        "git check-attr -a after the fix: both unmapped_glyph.pdf and synthetic_pdf/overview.pdf report 'text: unset'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO IB-rt-10 names infra/aws/lambda/investor-reporting/ycharts/extract/ in its paths and directs this cell to add the unmapped-glyph fixture there; the fixture manifest is re-derived from disk by the battery on every run (row W3-S9), which presumes the checked-out bytes are the committed bytes.",
+    "world_is": "For a PDF with no NUL in its first 8 KB that presumption does not hold on an autocrlf box, and the failure surfaces as a hash mismatch in a worktree that did nothing wrong rather than as anything resembling a corrupt file. A .gitattributes the order did not name had to be written -- inside the subtree the order does grant -- which is why this is a row rather than a silent fix.",
+    "notes": "Recorded for the CLASS, which is not specific to this project: any hand-built or uncompressed binary-format fixture committed on an autocrlf box has this property, and the tell is a hash check that fails everywhere except where the file was made. The estate already carries the neighbouring lesson for hash-pinned TEXT assets; this is the same trap reached from the other direction, by a file that is binary in intent and text by measurement."
+  },
+  {
+    "id": "IRPT_BCKEND-S40",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-12T01:18:42Z",
+    "one_line": "DISPOSITION of IB-rt-10's six rows at its COMPLETE. W4-S28 IS THE ONE THAT MATTERS AND IT STAYS ARMED: round 1 dated 15 of 61 overview rows and 12 of 108 multi-comparison rows from a NEIGHBOURING block, and ALL of them passed ALL THREE of round 1's certification legs -- because a date sits at none of the coordinates those legs inspect. That is not a row about dates, it is a row about CERTIFICATION: a certification that does not inspect the coordinate where the defect lives passes it every time, and round 1's three legs returned GREEN over 27 wrong values. Disarm owner stays IB-rtb-1's rebuild, which is the act that re-derives those rows; carried to L10 as a ROUND-1 defect with its denominators, because anything round 1 certified on the same legs inherits the same blind spot and nobody has enumerated what else that covers. W4-S29 ROUTED, and it is mine: battery_ib_s_18.py crashes mid-run in arm (c). IB-s-18 is a round-1 cell already CLOSED, so under Rule 27 I am not re-opening it mid-round and IB-rt-10 was right not to touch another cell's deliverable. THE CONSEQUENCE IS THE FINDING, not the crash: IB-s-18's acceptance CANNOT BE RE-EXERCISED TODAY, so any claim resting on that battery is currently NOT-RE-VERIFIABLE rather than verified -- carried to 1.0.0_SA_CTO at L10 to decide whether it re-opens. W4-S26 ACCEPTED AS THE MEASURED ANSWER: the fi-ligature codes are NOT recoverable -- every ToUnicode CMap has a gap at exactly that code and no embedded subset carries a cmap or post table -- so the CTO ruling's SECOND branch ('or explicit unresolved') is what the world supports. The face's arm (a) prose said 'recovered' and the world does not permit it; the face is the defect, not the result, and that goes to L10. W4-S27 (the OPTIONAL date_claim enum) carried to the CTO's L10 read as the row itself asks. W4-S30 and W4-S31 INERT and accepted: a path register whose printed denominator was stale by 41 (336 declared against 377 actual), and a hand-built PDF that git treated as TEXT so a fresh checkout changed its hash -- the second already fixed in-cell by declaring the fixtures binary.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~B (this disposition row itself is INERT; W4-S28 REMAINS ARMED under IB-rtb-1's rebuild and W4-S29 is carried to 1.0.0_SA_CTO at L10 -- neither is disarmed by this row and neither is silently dropped)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CLOUD 08962bd2ea (drain of wk-irpt_bckend-2-4b; rows W4-S26..S31, channel 148 rows)",
+        "proof-of-spec-check.py re-run by the issuer at HEAD over IB-rt-10's instance: VALID (rc=0), 13 artifact rows, 6 surprise entries all resolving",
+        "IB-rt-10 face <status> complete: RT10-AC1 PASS-by-output, RT10-AC2 RECORDED without a self-verdict",
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~4/RT10-AC2_judgment.md"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "IB-rt-10's face, arm (a): text recovered through each document's actual font mapping. And the CTO's round-1 ruling: 'per-document font mapping OR EXPLICIT UNRESOLVED for the fi-ligature codes 45/46'.",
+    "world_is": "Recovery is not available at all for those codes: the CMaps have a gap at exactly the code and the embedded subsets carry no cmap or post table. The ruling anticipated this and the face did not. The worker also caught its OWN first version resolving the code through whichever of that document's other fonts mapped it, returning a confident wrong character -- U+0038, U+004D and U+0044, one per document. THE UNIT OF A GLYPH MAP IS THE FONT RESOURCE, NOT THE DOCUMENT.",
+    "notes": "Third instance tonight of one class, now across three different seats: S38 (issuer, one Terraform root holding two cells' desired state), S39 (worker, one zip carrying two cells' code), and W4-S28 here (a certification whose legs do not read the coordinate the defect occupies). All three are the same failure: A CHECK SCOPED TO THE MEMBERS CANNOT SEE A DEFECT IN WHAT THE MEMBERS SHARE, or in a coordinate no member's check inspects. Rule 22 states it; three seats hit it in one round anyway, which is the argument that it belongs in the L6 issuance language where a cut is made, not only in a rule everyone has already read. Carried to L10 as ONE finding with three instances."
+  },
+  {
+    "id": "IRPT_BCKEND-S41",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-12T01:34:46Z",
+    "one_line": "THE AUTHORIZED PER-VERSION DELETE WAS NOT TAKEN, AND NOT TAKING IT IS THE ACT. Andrew approved (via 1.0.0_SA_CTO 96041, 'All recs approved') the per-version delete of 'the FOUR noncurrent versions of the FOUR synthetic-export objects named in row W4-S20', with 1.0.0_SA_CTO naming the boundary explicitly: NOT any other version of those four keys beyond the four the row names, and STOP rather than reconcile if the row's four VersionIds do not resolve as expected. The pre-act live read (s3api list-object-versions over the exports/ prefix, denominator 10 versions + 5 delete markers across 5 keys, IsTruncated absent) FALSIFIES THE COUNT THE AUTHORIZATION RESTS ON. The four keys carry NINE noncurrent versions, not four: r1/report.pdf has THREE (wl2x4Z9... named, plus s_LqtLL... and pL4dWRj...), and v0-11-overview, v0-11-comparison and v0-11-multicomp have TWO each (the named one plus HX6MJ2a..., oGHsMqX..., jP5Eyb1...). All four NAMED VersionIds are live and resolve, so the narrow reading of the stop condition is satisfied -- but deleting exactly those four would leave FIVE retrievable versions of the same four synthetic PDFs, and the qualifier this entire call exists to remove ('we cannot say they are gone') WOULD STILL STAND after the irreversible act. An unrecoverable act that does not achieve its stated purpose, taken on a count that is wrong by five, is not a partial success; it is the widening W4-S20 was filed to prevent, one level down. The likely origin is benign: IB-rt-8 re-ran the render, so each key accumulated versions and the pre-act head-object read captured only the then-current one per key -- A HEAD READ RETURNS ONE VERSION AND A VERSIONED KEY HOLDS MANY, which is exactly the instrument gap W4-S20 itself is about. ALSO PRESENT AND DELIBERATELY UNTOUCHED: firms/49financial/generations/GENIBS14SYN/attempts/1/exports/probe/probe.txt, one version plus a delete marker, under the same prefix, named nowhere in the row and not a synthetic export PDF -- reported, not acted on, and not swept up as 'while we are here'.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO -- carry the corrected count back to Andrew: does the approval cover all NINE noncurrent versions of the four keys (the act that actually makes them gone), or exactly the FOUR the row names (leaving five, and the qualifier standing). Until he answers on the CORRECTED number, no version is deleted and 'the four synthetic PDFs are gone' keeps its qualifier",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3api list-object-versions --bucket opal-data-ycharts --prefix firms/49financial/generations/GENIBS14SYN/attempts/1/exports/ read 2026-09-12, aws_rc=0, 8808 bytes, IsTruncated absent: 10 Versions, 5 DeleteMarkers",
+        "set comparison against the four VersionIds W4-S20 names: 0 of 4 missing from the live read, 6 live versions NOT named by the row (5 on the four report.pdf keys, 1 on probe/probe.txt)",
+        "1.0.0_SA_CTO msg 96041 carrying Andrew-direct ~01:2xZ 'All recs approved', and its explicit NOT-AUTHORIZED list including 'any other version of those four keys beyond the four the row names'",
+        "IRPT_BCKEND-W4-S20 and org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~4/RT8-g_delete_receipts.json (before.listing_under_prefix: 4 objects, one head read each)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "1.0.0_SA_CTO 96041: 'AUTHORIZED: the per-version delete of the FOUR noncurrent versions of the FOUR synthetic-export objects named in row W4-S20' and 'If the row's four VersionIds do not resolve to exactly four objects when you go to take it, STOP and come back rather than reconciling it yourself.'",
+    "world_is": "The four named VersionIds resolve. The four KEYS hold nine noncurrent versions between them. The authorization's count and the world's count differ by five, and the difference is the whole difference between 'gone' and 'still retrievable by anyone with s3:GetObjectVersion'.",
+    "notes": "FOURTH instance tonight of one class, and the first to reach an IRREVERSIBLE act: a scope that enumerates its members cannot see what the enumeration missed. S38 was a Terraform root holding two cells' state; S39 a zip carrying two cells' code; W4-S28 a coordinate no certification leg inspects; this one a versioned key holding more versions than the head read that enumerated it. CLAUDE.md Rule 24's subtraction clause is the direct remedy and would have caught it: the authorization's set was written as a FORWARD LIST of four remembered VersionIds rather than as the printed denominator of versions on those keys MINUS what is excluded. Carried to L10 with the other three."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S30",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-11T23:08Z",
+    "one_line": "Arm (a)'s whole-file denominator moved from 11 to 12 while this cell was dead: IB-rt-7's irpt-holdings is now LIVE on its published route, so routes.json resolves 12 handler-bearing routes and the whole-file census reads 1 of 12 unguarded -- and the only remedy paths (holdings/ lambda + terraform) are OUTSIDE this order's <paths>.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "The face's hand-off amendment says the whole-file population is ELEVEN and names holdings-snapshot as 'the one published route that has NO handler at HEAD (IB-rt-7's)', EXCLUDED on its own line; arm (a) requires unguarded_routes() over routes.json at HEAD to read '0 of N' with N the handler-bearing routes. The in-lane half is what this cell can move; <paths> carries directory/, performance/, ycharts/generate/, narrative/, export/, ops/ and NOT infra/aws/lambda/investor-reporting/holdings/ nor infra/aws/terraform/investor-reporting/holdings/.",
+    "world_is": "At this worktree's cut a296eac0f4 the holdings route HAS a handler: infra/aws/terraform/investor-reporting/holdings declares handler = 'snapshot.lambda_handler' and holdings/snapshot.py exists, landed by IB-rt-7 at d9c940244a and deployed at 5a359024a9 ('irpt-holdings is LIVE on its declared route'). routetable therefore resolves 12 routes, the IN-LANE census reads 'OK: every route is guarded' over 11 of 11, and the WHOLE-FILE census reads 'BLOCKED: 1 of 12 route(s) reach an unguarded handler: [GET /api/scoped/investor-reporting/holdings/{accountSetId}]'. Guarding it would require writing a new entry module under holdings/ and re-pointing its Terraform handler -- both out of lane, so this cell reports it NAMED and ATTRIBUTED and does not act on it.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/terraform/investor-reporting/holdings/*.tf@a296eac0f4 -- handler = \"snapshot.lambda_handler\"",
+        "git log --oneline -- infra/aws/lambda/investor-reporting/holdings/@a296eac0f4 -> 5a359024a9 'irpt-holdings is LIVE on its declared route', d9c940244a 'the holdings handler'",
+        "timeout 600 python -m pytest infra/aws/lambda/investor-reporting/_authz/tests/ -q @a296eac0f4 -> test_the_whole_file_census_is_zero AssertionError {'guarded': 11, 'routes': 12, 'unguarded': ['GET /api/scoped/investor-reporting/holdings/{accountSetId}']}",
+        "IRPT_BCKEND.TO-IB-rt-2 face, ISSUER AMENDMENT at the hand-off (row W2-S18): 'the one published route that has NO handler at HEAD (holdings-snapshot, IB-rt-7's) named and EXCLUDED on its own line'",
+        "<paths> of IRPT_BCKEND.TO-IB-rt-2@a296eac0f4 -- no holdings entry, lambda or terraform"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Hazard read INERT, not ARMED, because of row W2-S31: the un-wrapped holdings entry point enforces FirmBinding and Enforcer.guard() INLINE, so 'unguarded' here means 'does not carry the wrapper mark', not 'serves without authorization'. What the issuer owes this cell is a choice, not an act by me: either (i) grant holdings/ + its terraform root and arm (a) reads 0 of 12, or (ii) re-read arm (a)'s N as the IN-LANE handler-bearing routes with holdings NAMED and EXCLUDED on its own line exactly as the W2-S18 amendment already does for arm (g). This cell renders BOTH numbers in the battery and asserts neither as a pass."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S31",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-11T23:08Z",
+    "one_line": "The bypass detector grades a MARK, not a behaviour: is_guarded() reads __irpt_guarded__, so a handler that enforces FirmBinding + Enforcer.guard() INLINE (irpt-holdings' snapshot.lambda_handler) is counted UNGUARDED -- the census's word and the security property it is read as are not the same claim.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Arm (a) reads unguarded_routes() as the bypass detector and its verdict string says 'N of M route(s) reach an unguarded handler'; the cell's own ruling is that the guard is a NEW ENTRY MODULE per function whose wrapper sets the mark, and no arm distinguishes 'unwrapped' from 'unauthorized'.",
+    "world_is": "_authz/enforce.py:577 is_guarded(fn) returns bool(getattr(fn, '__irpt_guarded__', False)) and unguarded_routes():591 selects on it alone. holdings/snapshot.py:343 builds _authz.FirmBinding(registry_firm_id, directory.get('firm_id_opaque')) and :353 builds _authz.Request(headers, KEY_OPERATION, 'account', account_set_id), importing enforce as _authz at :44 -- it enforces with THIS library and carries no mark, so it scores as a bypass. The detector is sound for its own question (did this entry point go through guard()) and is NOT a measurement of whether the route authorizes; a reader who converts the one into the other over-reads it in the unsafe direction only for wrapped-but-broken handlers and in the safe direction here.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/_authz/enforce.py:577-596@a296eac0f4 -- is_guarded/unguarded_routes",
+        "infra/aws/lambda/investor-reporting/holdings/snapshot.py:44,313,343,353@a296eac0f4 -- import enforce as _authz; FirmBinding; Request",
+        "comp-read infra/aws/lambda/investor-reporting/holdings/snapshot.py --for '...' @a296eac0f4 -- 24 sections, lambda_handler salient at 313-361"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not a defect of either cell and nothing here is edited by this order: enforce.py's docstring already states the question it answers ('can a handler forget the wrapper'). Filed so that the L9 reader of arm (a)'s '1 of 12' does not read it as a live cross-firm hole, and so IB-rt-7's inline enforcement is not retro-fitted to the wrapper on the strength of a census word."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S32",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-11T23:48Z",
+    "one_line": "A4's RULED remedy does not carry the modules: BOTH build scripts resolve a declared input ONLY as source_dir/<name> with no second step, so declaring served.py/loaders.py in files[] without a file on disk converts a latent ImportError into a hard build refusal -- and irpt-status, the shape A4 names to copy, is itself un-buildable at 3 of 10.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Amendment A4 (2026-09-11 ~22:5xZ) RULES the layer-vs-vendor question against both halves and orders: 'declare the shared modules as FLAT BUILD INPUTS in lambda-source-map.json, per function, exactly the way irpt-status already does ... it is how four functions already resolve enforce/resolve today, and it needs neither a layer attachment nor a vendor manifest.' It further instructs: 'RESOLVE THE WAY THE BUILDER DOES, AND PRINT N of N ... A module is PRESENT if the builder resolves it from its home package at build time', and the ~18:2xZ correction names 'source_dir first, then the flat-packaged shared library roots'.",
+    "world_is": "THE BUILDER HAS NO SECOND STEP, and two independent scripts say so in their own words: build-and-upload.sh:195-202 'for f in $FN_FILES; do if [ ! -f \"$ABS_SOURCE/$f\" ]; then echo \"  ERROR: File not found: $FN_SOURCE/$f\"' and build-zip.sh:51-54 'ERROR: Source file not found: $SOURCE_DIR/$f'. Neither reads a shared library root; a declared input that is not physically in source_dir puts the function in the builder's FAILED array. Census over the 9 irpt-* functions (denominator 84 declared inputs): 64 of 84 resolve, 20 do not -- irpt-ycharts-generate 18 of 27, irpt-export-render 10 of 14, irpt-status 3 of 10, while irpt-directory-search 2 of 2, irpt-performance-adapter 13 of 13, irpt-narrative 9 of 9 and irpt-holdings 9 of 9. So irpt-status, the shape A4 says to copy, is the WORST of the six and could not build today. And the gap A4 sends me to close is real and uniform: all six guarded entry modules import served and loaders (three also import enforce), 15 unsatisfied imports in total measured against what the builder would actually package. THE ONE IRPT FUNCTION THAT SOLVED THIS AND IS DEPLOYED SOLVED IT THE OTHER WAY: irpt-holdings (IB-rt-7) carries stage.py + STAGE_MANIFEST.json, which copy enforce.py/errors.py/resolve.py into its source dir from COMMITTED blobs via git show <pin>:<path>, plus BUILD_MANIFEST.json declaring vendored_modules and layer_dependencies -- i.e. a vendor manifest, the thing A4 says is not needed. A physical copy is what MAKES a flat build input real.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/ci/build-and-upload.sh:195-202@a296eac0f4 -- manifest->disk check, source_dir only",
+        "infra/aws/lambda/ci/build-zip.sh:51-54@a296eac0f4 -- 'ERROR: Source file not found: $SOURCE_DIR/$f'",
+        "timeout 300 python .scratch/pkg_census.py @a296eac0f4 -> 'TOTAL: 64 of 84 declared build input(s) resolve the way the builder resolves them'; 'TOTAL unsatisfied imports across the six guarded entry modules ... 15'",
+        "infra/aws/lambda/investor-reporting/holdings/STAGE_MANIFEST.json@a296eac0f4 -- 5 members staged from git show <pin>:<path>",
+        "infra/aws/lambda/investor-reporting/holdings/BUILD_MANIFEST.json@a296eac0f4 -- vendored_modules + layer_dependencies",
+        "infra/aws/terraform/investor-reporting/directory/lambda.tf:11-15@a296eac0f4 -- 'built and uploaded by infra/aws/lambda/ci/build-and-upload.sh', so the source map IS the packaging list"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "notes": "NOTHING WAS EDITED ON THE STRENGTH OF THIS. I did not write the declaration A4 orders: adding served.py/loaders.py to files[] with no file beside them would ARM a build refusal for the next actor (including rt-9, row W2-S33) and would look like a landed remedy. I also did not build the holdings-shaped staging for the six, because that is the vendor manifest A4 ruled against and the round is FROZEN -- the ruling is the issuer's to re-cut, not mine to route around. A4 anticipated exactly this shape ('If you come to believe you must, that is a BLOCKING row to me, not an act') for the layer half; this is the same sentence applied to the half it chose. What the issuer must decide: (i) stage physical copies per function, holdings-style, and declare them -- the only shape in this estate that is deployed and works; or (ii) put served/loaders/enforce/errors/resolve in the irpt-common layer and attach it, which A4 measured the layer does not carry today. Arm (e) cannot be attempted under either reading without that decision, and arm (g) needs arm (e)."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S33",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-11T23:48Z",
+    "one_line": "The THREE functions A6 says IB-rt-9 deploys first are exactly the three carrying all 20 absent build inputs, so rt-9's first ledgered act refuses at the build before it reaches an apply -- and the ledger will already be OPEN when it does.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Amendment A6: 'Slot ~3 (IB-rt-9) owes a rebuild-and-deploy of irpt-export-render, irpt-status and irpt-ycharts-generate for the ids.py packaging gap (row W3-S25), and that is ITS first ledgered act. Three of those overlap your six. rt-9 deploys those three FIRST.' NEVER-2 requires the OPEN sentinel committed BEFORE the act.",
+    "world_is": "Those three are precisely the functions whose declared build inputs do not resolve: irpt-export-render 4 absent (enforce.py, errors.py, ids.py, resolve.py), irpt-status 7 absent (enforce.py, errors.py, resolve.py, ids.py, keys.py, handler.py, checkpoint.py), irpt-ycharts-generate 9 absent (enforce.py, errors.py, gate.py, keys.py, resolve.py, ids.py, firm_destination_policy.json, firm_registry.json, settings.json) -- 20 of 20 of the estate-wide absences in this project sit in exactly these three, and the other three of my six are 2 of 2, 13 of 13 and 9 of 9 clean. build-and-upload.sh puts a function with an unresolved input in FAILED and continues; it never produces a zip. So the rebuild half of rt-9's act cannot succeed as declared, and NEVER-2's sequence puts the OPEN sentinel in the tree before that is discovered.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "timeout 300 python .scratch/pkg_census.py @a296eac0f4 -- per-function absent lists, 20 absent of 84 declared",
+        "infra/aws/lambda/ci/build-and-upload.sh:195-207@a296eac0f4 -- FAILED+=(\"$FN_NAME\"); continue",
+        "IRPT_BCKEND.TO-IB-rt-2 face, ISSUER AMENDMENT 2026-09-11 ~22:5xZ section A6@a296eac0f4"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "INERT because the failure is LOUD and fails closed -- the builder prints the missing path and refuses; nothing half-lands in AWS. Filed as friction rt-9 will hit in its first minutes, and because it is the same root as W2-S32 seen from the other slot: whatever the issuer decides there decides this. Not mine to fix: ycharts/generate is in my <paths> but the deploy of it is held by A6, and ops/ and export/ are shared with rt-9's owed act. I did not edit any of the three source-map entries."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S34",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-11T23:48Z",
+    "one_line": "The A5 rename leaves the FROZEN v1 contract naming a path that no longer exists: routes.json's `checked_by` and CONTRACT.md's provenance table both point at _authz/dispatch.py, and docs/contracts/ is out of this order's <paths> by its own rule.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Amendment A5 orders the rename 'in one commit with its importer, leaving no shim at the old basename', and names ONE importer (_contracts/tests/test_seam_paired.py:41). Row W2-S25's amendment says 'the v1 freeze at c22f179bbf stands and nothing in docs/contracts/ is edited by this order', and docs/contracts/ is not in <paths>.",
+    "world_is": "There are two further references and both are in the frozen artifact: docs/contracts/investor-reporting/v1/routes.json:169 \"checked_by\": \"infra/aws/lambda/investor-reporting/_authz/dispatch.py\" and docs/contracts/investor-reporting/v1/CONTRACT.md:44 '| version checked by | `infra/aws/lambda/investor-reporting/_authz/dispatch.py` |'. Neither is code: an unscoped census of the token `checked_by` over 31,362 files returns 2 hits, this one and an unrelated CRO yaml, so NOTHING reads the field and the rename breaks no mechanism. The strings are now stale provenance inside a frozen contract, and the only in-lane options were to leave a shim (A5 forbids it) or edit the freeze (W2-S25 forbids it).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "comp-find 'checked_by' --all --corpus default @a296eac0f4 -> 'DENOMINATOR: 2 hit(s) across 31362 file(s)', both CONFIG/prose, no code consumer",
+        "docs/contracts/investor-reporting/v1/routes.json:169@a296eac0f4",
+        "docs/contracts/investor-reporting/v1/CONTRACT.md:44@a296eac0f4",
+        "commit 49035683d1 on wk-irpt_bckend-2-2b -- the rename, its one importer and PATH_MANIFEST.json:5561"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Carried to whoever next opens the v1 contract for an amendment, so the line is corrected in a commit that is allowed to touch it rather than by this order reaching past its grant. No hazard: the field is documentation of a checker, not an input to one."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S35",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-11T23:48Z",
+    "one_line": "A6 conditions this order's deploy on an act its assignee cannot perform -- 'Ask me; do not read its branch and decide for yourself' -- and a spine v3 L7 worker has no broker, no message tool and cannot be messaged, so arms (e) and (g) have no reachable path to completion in this run.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Amendment A6: 'rt-9 deploys those three FIRST. You do NOT deploy them until I tell you its deploy has landed. Ask me; do not read its branch and decide for yourself.' Arm (e) requires CodeSha256 equality and a clean post-apply plan for EVERY function changed; arm (g) requires the paired producer-to-consumer test re-run against the DEPLOYED functions, so it needs arm (e).",
+    "world_is": "The worker face's own IDENTITY section states the opposite capability: 'You have no broker, no message tool and no skill tool. You cannot be messaged and you message no one. Your ONE report is your final message', and the spine's L7 carries no send tool by design. So the condition A6 places on the deploy can be neither satisfied nor waived from inside this cell: asking is not an act available to me, reading rt-9's branch is expressly forbidden, and deploying anyway would override a grant. Three of the six (irpt-export-render, irpt-status, irpt-ycharts-generate) are held by A6 directly; the other three (irpt-directory-search, irpt-performance-adapter, irpt-narrative) are not held by A6 but are blocked independently by W2-S32, because their zips would not carry served.py or loaders.py and the re-pointed handler = entry.lambda_handler would ImportError on the first invocation.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "IRPT_BCKEND.TO-IB-rt-2 face, ISSUER AMENDMENT 2026-09-11 ~22:5xZ section A6@a296eac0f4",
+        "the worker face's IDENTITY/communication section as delivered to this subagent, 2026-09-11 ~23:0xZ",
+        "timeout 300 python .scratch/pkg_census.py @a296eac0f4 -- served/loaders unsatisfied in 6 of 6 guarded entry modules"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "notes": "NOT an argument for deploying: the sequencing A6 states is sound and its reason is stated (until this order's apply re-points the handler strings the world runs the OLD handlers, which import neither served nor loaders, so rt-9's deploy is safe ahead of mine and mine is unsafe ahead of its declaration landing). The mismatch is only that the CONDITION is discharged by a message and the party who must act on it cannot receive one. The remedy is the issuer's: re-hand this order after rt-9's deploy lands, with the fact stated in the face, which needs no new mechanism. Arms (a) in-lane, (b), (c), (d) and (f) are complete and committed; (e) and (g) are what this row holds."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S36",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-12T01:31Z",
+    "one_line": "EVERY refusal the guarded boundary serves fails v1's StatusEnvelope on one clause -- source_dates.required is ['business_date'] and the boundary emits source_dates without one -- and the two halves of that defect have DIFFERENT owners: a post-read refusal could carry the artifact's date and does not, a pre-read refusal has no artifact and v1 admits no null.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Row W2-S25, RULED by the issuer at the hand-off: 'A refusal is NEVER an instance of a response contract: it is v1's StatusEnvelope. Arm (g) grades SUCCESS responses against responses/<operation>.response.schema.json and REFUSALS against StatusEnvelope, both printed per operation.' The v1 freeze at c22f179bbf stands and nothing in docs/contracts/ is edited by this order.",
+    "world_is": "Measured against the DEPLOYED functions, invoked by name after this order's apply: 11 of 11 in-lane routes refuse a mismatched X-Contract-Version with CONTRACT_VERSION (the face's own bar for that half, MET) and 0 of 11 of those refusals validate against docs/contracts/investor-reporting/v1/StatusEnvelope.schema.json. Every one fails on the same clause: the schema's properties.source_dates carries required=['business_date'] with business_date typed as a non-null date string, and the boundary emits 'source_dates': {'source_completion_date': null}. The top-level required list does NOT name business_date, which is why a key-presence test passes -- the in-process arm 'b/c/d the envelope' asserts the SUBSET of top-level keys and reads 6 of 6, and only a schema validation against the published file sees this. TWO DEFECTS, MEASURED APART in process on irpt-directory-search: a POST-READ refusal (account swap, OBJECT_NOT_COVERED, raised after the directory artifact was read) emits the same date-less source_dates although the artifact it just read carries a business date -- fixable in lane; a PRE-READ refusal (CONTRACT_VERSION, raised before any artifact is read, which is the property that makes the version check trustworthy and is proven by the arm that refuses with the storage loaders REMOVED) has NO artifact to take a date from, and the business date comes from the artifact and never from a clock.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "docs/contracts/investor-reporting/v1/StatusEnvelope.schema.json@a296eac0f4 -- properties.source_dates.required == ['business_date']; top-level required == ['operation','state','source_dates','actions','public_reason_code','internal_correlation_id']",
+        "timeout 900 python .../battery_ib_rt_2.py @737548f735 -- arm (g): 'a mismatched X-Contract-Version is refused CONTRACT_VERSION on the DEPLOYED function: 11 of 11; the refusal validates against v1 StatusEnvelope: 0 of 11', each line printing \"StatusEnvelope INVALID: 'business_date' is a required property\"",
+        "live invoke of irpt-status @737548f735 -> {\"ok\": false, \"operation\": \"status-summary\", \"status\": {..., \"source_dates\": {\"source_completion_date\": null}, \"public_reason_code\": \"CONTRACT_VERSION\"}}",
+        "in-process discriminator on irpt-directory-search @737548f735: POST-READ refusal code=OBJECT_NOT_COVERED source_dates={\"source_completion_date\": null}; PRE-READ refusal code=CONTRACT_VERSION source_dates={\"source_completion_date\": null}"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "notes": "NOT FIXED, AND THE REASON IS STATED RATHER THAN THE FIX BEING HALF-TAKEN. The post-read half is this cell's and is a small in-lane change; the pre-read half cannot be fixed without amending a FROZEN v1 contract that this order is expressly forbidden to touch (W2-S25's own amendment). Shipping the post-read half alone would still leave 11 of 11 version refusals non-conforming -- it moves no arm -- and would spend a second six-root build-and-deploy cycle to do it. So the arm reads BLOCKED with this row rather than PASS with a repair that changes no number. What the issuer or the CTO must decide: whether v1's StatusEnvelope gains a null branch for a refusal raised before any artifact read (an L10 addendum to a frozen contract), or whether a pre-read refusal is declared to be a different shape from a StatusEnvelope, as W2-S25 already declared it a different shape from a response contract. NO HAZARD: the refusal is well-formed, carries its public reason code and its correlation id, and leaks nothing -- what fails is the SCHEMA claim about it, not the safety of it."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S37",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-12T01:31Z",
+    "one_line": "The record corrected in flight: A6 was struck by the issuer mid-run and the six-root deploy landed and verified, so rows W2-S35 (the un-receivable release condition) and W2-S33 (rt-9's build) are OVERTAKEN BY EVENTS, and W2-S32's operational claim is REFUTED BY THE ACT -- the members do resolve, from the flat shared roots, and six artifacts now import in the runtime layout.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "W2-S32 asserted that A4's ruled remedy could not carry the modules because both build scripts resolve source_dir/<name> only, and W2-S35 asserted that arms (e) and (g) had no reachable path because A6 conditioned the deploy on a message a worker cannot receive. Both were filed as BLOCKING with disarm owner 2.0.0_SA_COO~B.",
+    "world_is": "The issuer STRUCK AND REVERSED A6 in the same session ('you are not inheriting a delay, you are inheriting the whole act') after slot ~3 refused the deploy it had been ordered to take and was right to: all three roots already carried the unapplied handler flip, so the apply that shipped the ids.py fix would also have flipped the handler onto an `entry` module no zip carried. W2-S35 is therefore discharged by the issuer's own act, not by mine. W2-S32's DIAGNOSIS stands -- neither build-and-upload.sh nor build-zip.sh has a second resolution step, so declaring a member that is not in source_dir makes THOSE scripts refuse -- but its operational conclusion ('the ruled remedy does not carry the modules') is REFUTED: resolving source_dir first and then the flat shared roots (_authz, _scope, _keys, _ids, _gate, intake, directory, data, terraform/core) finds every declared member, which is what slot ~3 measured independently at 14 of 14, 10 of 10 and 27 of 27, and what this cell then EXERCISED -- 6 of 6 artifacts built, and 6 of 6 import in the flat /var/task (+ /opt/python where the layer is attached) layout from their SERVED bytes with the repo off sys.path, every negative control firing. The reconciliation is that the two measurements answered DIFFERENT QUESTIONS: mine asked whether the shipped build SCRIPT resolves from the repo, slot ~3's asked whether the declared names exist in the repo at all. Both answers were correct and only together do they say what to do. W2-S33 (rt-9's three functions refusing at the build) is overtaken the same way: those three are now this cell's, are built by the recipe rather than by that script, and are deployed.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "the issuer's correction and addendum to 0.9.0_WK_IRPT_BCKEND~2, 2026-09-12, striking A6 and placing the one-root-at-a-time control",
+        "org/critical_paths/change_management/20260912T0035Z_irpt-bckend-rt2_deploy_completion.md@737548f735 -- 12 legs CLOSED, six roots, every post-apply plan 'No changes'",
+        "timeout 900 python .../battery_ib_rt_2.py @737548f735 -- arm (e): 'declared artifact_sha256 == live CodeSha256: 6 of 6; handler is the guarded entry: 6 of 6; Active/Successful: 6 of 6' and 'IMPORT-OK 6 of 6 | negative control FIRES 6 of 6 | VERIFIED 6 of 6'",
+        "infra/aws/lambda/ci/build-and-upload.sh:195-202 and build-zip.sh:51-54@a296eac0f4 -- the diagnosis half of W2-S32, unchanged"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Filed because the channel is APPEND-ONLY and an earlier row of mine may not be edited: a reader who finds W2-S32 and W2-S35 without this row would act on two BLOCKING items that the world has already passed. Neither earlier row was wrong when written and neither is deleted. What survives from W2-S32 and is still worth an owner: the shipped build scripts cannot build these six functions from their declared lists, so the artifacts were built by the proven recipe instead -- anyone who later runs build-and-upload.sh against irpt-status will still get 'ERROR: File not found', and that gap belongs to whoever owns infra/aws/lambda/ci/, which is not in this order's <paths>."
+  },
+  {
+    "id": "IRPT_BCKEND-S42",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "1.0.0_SA_CTO",
+    "surfaced_at": "2026-09-12T02:02:02Z",
+    "one_line": "DISARM of IRPT_BCKEND-S41 by its named disarm_owner. S41 required 1.0.0_SA_CTO to carry the CORRECTED count back to Andrew and report his answer on that corrected number; until then no version was to be deleted. Done, and he answered. ANDREW-DIRECT 2026-09-12 ~01:5xZ at the 1.0.0_SA_CTO terminal, VERBATIM AND ENTIRE: 'Approved all 9', answering the card 'The four synthetic export PDFs hold NINE noncurrent versions, not four. (a) delete all nine (b) delete only the four named (c) leave them' with REC (a). So the authorized set is the NINE noncurrent versions of the FOUR synthetic-export report.pdf keys, and it is written as a SUBTRACTION from a printed denominator rather than as a forward list, because a forward list of four remembered VersionIds is what failed the first time (Rule 24): DENOMINATOR 10 versions / 5 delete markers / 5 keys (s3api list-object-versions over the exports/ prefix, re-measured independently at 1.0.0_SA_CTO 2026-09-12T01:44Z, rc=0, 8808 bytes, IsTruncated absent) MINUS probe/probe.txt (1 version, 5 B, not an export PDF, named nowhere in the row) = 9. NOT AUTHORIZED and named so the drift is inexpressible: probe.txt and its delete marker; any other object or prefix in opal-data-ycharts; THE FIVE DELETE MARKERS THEMSELVES (removing a delete marker RESTORES a current object, which is the opposite of the intent); any bucket-level change to versioning, lifecycle, policy or replication; any 'while we are here' cleanup. THE COUNT IS PERISHABLE AND HAS ALREADY MOVED ONCE (it was four when W4-S20 was filed, because IB-rt-8 re-ran the render and each key accumulated versions), so 2.0.0_SA_COO~B re-reads the prefix IMMEDIATELY BEFORE acting and STOPS AGAIN if the live denominator is not 10/5/5 with nine noncurrent PDF versions -- the authorization is over a MEASURED SET, never over a number to be matched. Evidence shape required: the nine VersionIds read before, the deletes, then a BY-VERSIONID read returning NoSuchVersion on 9 of 9 with a POSITIVE CONTROL on an object that must still resolve; a 404 on the ordinary key proves nothing here, which is the entire reason this call existed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "1.0.0_SA_CTO -- the S41 disarm CONDITION is discharged by this row (the corrected count went back to Andrew and he answered on it). NOTE ON VOCABULARY, because this row is INERT and not a grade: this row does NOT resolve S41 to GRADUATED. Under the protocol a REMEDIATION row bearing the id is what resolves an item, and remediation rows stay 3.0.0_SA_CVO's; S41 therefore stands at its own disposition until the CVO carries it. The S41 hazard was acting on a count wrong by five; it cannot occur now that the authorization is over the measured nine rather than over four remembered ids. 2.0.0_SA_COO~B holds the ACT under the boundary above; this row disarms the hazard, it does not perform or grade the act.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ANDREW-DIRECT 2026-09-12 ~01:5xZ, verbatim 'Approved all 9', recorded at org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260912_015xZ_ALL_NINE_NONCURRENT_VERSIONS_APPROVED.md",
+        "s3api list-object-versions --bucket opal-data-ycharts --prefix firms/49financial/generations/GENIBS14SYN/attempts/1/exports/ -- re-measured at 1.0.0_SA_CTO 2026-09-12T01:44Z, rc=0, 8808 bytes, IsTruncated absent: 10 Versions, 5 DeleteMarkers, 5 keys; nine noncurrent versions on the four report.pdf keys, confirming 2.0.0_SA_COO~B's count exactly",
+        "the re-measurement was taken on this seat's own instrument rather than adopted from 96046, because a number that was wrong once does not get relayed twice"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "IRPT_BCKEND-S41 disarm_owner: '1.0.0_SA_CTO -- carry the corrected count back to Andrew: does the approval cover all NINE noncurrent versions of the four keys, or exactly the FOUR the row names. Until he answers on the CORRECTED number, no version is deleted.'",
+    "world_is": "He answered on the corrected number: all nine. The disarm condition S41 names is satisfied, so S41 is DISARMED and the act is unblocked under the enumerated boundary. Nothing has been deleted by this row; the bucket is unchanged at the time of writing.",
+    "notes": "The CTO-side half of the class S41 names. The first authorization failed because this seat carried a head-read count into a sovereign card for an unrecoverable act without measuring it -- a head-object read returns ONE version while a versioned key holds MANY. The stop condition this seat wrote was also weaker than it looked: it was keyed to whether the four named VersionIds RESOLVE (they did) rather than to whether the SET IS COMPLETE (it was not), and only the second protects the act. 2.0.0_SA_COO~B refused on better reasoning than the condition contained. Full record: org/tier1_exec/1.0.0_SA_CTO/deliverables/CORRECTION_20260912_W4_S20_CARD_CARRIED_A_COUNT_OF_FOUR_THE_WORLD_HOLDS_NINE.md."
+  },
+  {
+    "id": "IRPT_BCKEND-S43",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-12T02:45:32Z",
+    "one_line": "THE NINE NONCURRENT VERSIONS ARE PERMANENTLY GONE, AND 'THE FOUR SYNTHETIC EXPORT PDFS ARE GONE' NO LONGER CARRIES A QUALIFIER -- the first time that sentence has been true tonight. Andrew-direct ~01:5xZ 'Approved all 9' (via 1.0.0_SA_CTO 96050) on the CORRECTED count; ledger opened BEFORE the act at 89d9b2965d and closed at c441d163ab with 8 of 8 legs. The pre-act gate re-read the prefix at the moment of acting and matched the authorized subtraction exactly (denominator 10 versions / 5 delete markers / 5 keys, MINUS probe/probe.txt, = 9 targets; IsTruncated absent) -- the authorization was over a MEASURED SET, never over the number nine as a target, and a mismatch would have been a second STOP. Nine per-version deletes, then a BY-VERSIONID head-object returning (404) Not Found on 9 of 9 with byte-identical error text -- NOT AccessDenied, which is the failure that looks the same at rc level -- and a POSITIVE CONTROL on probe/probe.txt's version resolving rc=0 at ContentLength 5 under the SAME credential, operation and bucket, which is what rules out a permissions or network explanation for the nine. Prefix versions 10 -> 1; the remaining one is probe/probe.txt, deliberately excluded and untouched. THE FIVE DELETE MARKERS WERE NOT TOUCHED AND THAT WAS A BOUNDARY, NOT AN OVERSIGHT: deleting a delete marker RESTORES a current object, the opposite of the intent, so 'delete all 9' does not reach them -- 1.0.0_SA_CTO named it as a trap rather than a rule in 96050 and was right to, because a cleanup loop reads five markers as debris. A 404 on the ORDINARY key is cited nowhere in this record: it was already true before the act and that is the entire reason this call existed. Receipts at org/critical_paths/change_management/20260912T0215Z_irpt-bckend-w4s20-nine-version-delete_receipts.json with delete_grain stating in the artifact itself that this was the PERMANENT form and not a marker.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~B (the act is complete and verified; W4-S20's and S41's qualifier is discharged by measurement. A remediation row resolving W4-S20 and S41 remains 3.0.0_SA_CVO's, per the vocabulary note in S42)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/critical_paths/change_management/20260912T0215Z_irpt-bckend-w4s20-nine-version-delete_deploy_completion.md -- CLOSED, 8 of 8 legs",
+        "org/critical_paths/change_management/20260912T0215Z_irpt-bckend-w4s20-nine-version-delete_receipts.json -- 9 delete responses, 9 post-act head reads, the positive control and the deltas",
+        "ledger+sentinel commit 89d9b2965d BEFORE the act; close commit c441d163ab; sentinel removed from org/critical_paths/.open_deploys/",
+        "post-act s3api list-object-versions over the prefix: versions=1 deletemarkers=5 (pre-act 10 and 5)",
+        "Andrew-direct record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260912_015xZ_ALL_NINE_NONCURRENT_VERSIONS_APPROVED.md"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Andrew-direct 2026-09-12 ~01:5xZ, VERBATIM AND ENTIRE: 'Approved all 9', answering the card '(a) delete all nine (b) delete only the four named (c) leave them', REC (a).",
+    "world_is": "Nine noncurrent versions deleted permanently and verified gone by VersionId; one excluded version and five delete markers untouched; no bucket-level setting changed.",
+    "notes": "The lineage is worth keeping intact because each step was a different error being caught: W4-S20 found that a delete on a versioned bucket is a VISIBILITY change reported as destruction; S41 found that the authorization's own count was short by five because a head read enumerates one version of a key that holds many; S42 carried the corrected number back; this row is the act. Two STOPs and one delete, and the only irreversible step happened on a re-measured set with Andrew's word on the real number."
+  },
+  {
+    "id": "IRPT_BCKEND-S44",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-12T02:45:32Z",
+    "one_line": "IB-rt-2's EIGHT ROWS DISPOSITIONED, AND THE POST-READ OBLIGATION RE-ROUTED OFF A BATTERY THAT CANNOT FIRE. W2-S30: holdings paths GRANTED additively (holdings/ lambda + the holdings Terraform root) and LOOSENING THE CENSUS REFUSED -- W2-S31 establishes the census grades the __irpt_guarded__ MARK while that handler enforces FirmBinding inline, so it is a MARK gap and not a live cross-firm hole, and an inline enforcement the instrument cannot see should stay VISIBLE; the handler moves under the mark, the instrument does not move. 1.0.0_SA_CTO endorsed that reasoning explicitly. g2: RULED HUMAN-GATED under the face's OWN standing rule, which the CTO confirmed is a rule applied and not a bar lowered, with an instruction not to put it back. W2-S36: RESOLVED by the CTO's L4 amendment, PRD v0.14 @b8e98d5a4d -- business_date is STATE-CONDITIONAL (required on the 5 answer-bearing states, may be ABSENT and never NULL on the 4 no-answer states) rather than nullable, because nullable -- which was THIS SEAT'S option (a) -- would have weakened every envelope including a READY success and traded a validation gap for a semantic hole in the success path. AND MY OWN TWO-WAY CUT WAS SHORT BY TWO: QUEUED and RUNNING carry no business_date by construction and are not refusals at all, so a fix scoped to 'refusals' would have left both failing exactly as before. W2-S32 and W2-S35 discharged by the worker's own W2-S37; W2-S33 and W2-S34 accepted INERT. THE RE-ROUTING: the CTO's ruling places the surviving post-read business_date obligation on 'the IB-s-18 BATTERY'. MEASURED BEFORE ROUTING A WORKER INTO IT -- that battery is rc=1 and has been: battery_ib_s_18.py:315, arm_c, `for k in sorted(breakdown)`, TypeError '<' not supported between NoneType and str. Its arm (b) -- the schema-provenance arm -- PASSES 11 of 11 valid ACCEPTED and 11 of 11 invalid REFUSED, ABOVE the traceback, so CLEAN METRICS PRINT ABOVE A FAILING VERDICT and the battery's rc, which is its verdict, is permanently 1. ANY OBLIGATION ADDED THERE COULD NEVER FIRE, because a crash in a DIFFERENT arm masks it. So the obligation is landed in battery_ib_rt_2.py instead -- live, in lane, and the instrument RT2-AC1 actually reads -- and the departure from the CTO's routing was stated to it with an explicit invitation to overturn, not taken silently.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO -- (i) confirm or overturn landing the post-read business_date obligation in battery_ib_rt_2.py rather than the IB-s-18 battery; (ii) W4-S29's crash is now LOAD-BEARING, because the same battery is the named enforcement for generated-schema provenance while its generator exists on no device -- two holes in one provenance chain, and the fix belongs to a CLOSED cell so it is routed, never taken here",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CLOUD be8adeba41 (drain of wk-irpt_bckend-2-2b; rows W2-S30..S37)",
+        "timeout 600 python org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/battery_ib_s_18.py -> rc=1, traceback at :315 in arm_c; arm (b) printing 11 of 11 ACCEPTED and 11 of 11 REFUSED above it",
+        "IB-rt-2 face issuer amendments 3 @4131ef651f and 4 @76ae1b20fb; worker worktree fast-forwarded to 76ae1b20fb",
+        "1.0.0_SA_CTO 96051 (the ruling) and 96060 (L4 landed, PRD v0.14 @b8e98d5a4d, 11 of 11 cases over nine states with a negative control)",
+        "proof-of-spec-check over IB-rt-2's instance at HEAD: VALID rc=0, RT2-AC1 FAIL at 10 of 13 arms"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "1.0.0_SA_CTO 96051: 'the obligation moves to the BATTERY: a post-read refusal that omits business_date is a battery failure, not a schema failure' -- naming the IB-s-18 battery.",
+    "world_is": "That battery exits 1 on a pre-existing crash in an unrelated arm, so it cannot carry a new obligation and cannot return a passing verdict for the provenance arm that does work. IB-s-18 is also a CLOSED round-1 cell, so editing it mid-round is the re-open Rule 27 forbids.",
+    "notes": "FIFTH INSTANCE TONIGHT OF ONE CLASS AND THE SECOND FROM THIS SEAT: S38 (a Terraform root holding two cells' desired state), S39 (a zip carrying two cells' code), W4-S28 (a coordinate no certification leg inspects), S41 (a versioned key holding more versions than the head read that enumerated it), and this seat's two-way cut of a NINE-member enum. A SCOPE THAT ENUMERATES ITS MEMBERS CANNOT SEE WHAT THE ENUMERATION MISSED; Rule 24's subtraction clause is the remedy in all five. A SIXTH SHAPE APPEARS HERE AND IS WORTH NAMING SEPARATELY: moving an obligation into an instrument without first running that instrument. The routing was correct in intent and unenforceable in fact, and only an execution of the battery could tell the difference -- a gate's OWN RUN is the authority, and a named enforcement surface is a claim until someone runs it. Carried to L10 with the other five."
+  },
+  {
+    "id": "IRPT_BCKEND-W3-S34",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-12T02:12Z",
+    "one_line": "IB-rt-11's ORDERED edit to intake/settings.json moved a DECLARED BUILD INPUT of irpt-ycharts-generate 20 minutes after slot ~2 deployed and closed its ledger on it, so the tree and the served zip now disagree for that function by exactly one top-level key.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/ci/lambda-source-map.json @72db64c153: functions['irpt-ycharts-generate'].files[] contains 'settings.json', which resolves to infra/aws/lambda/investor-reporting/intake/settings.json (1 of 214 functions declares it; parse.py and corrections.py are declared by 0)",
+        "aws lambda get-function-configuration --function-name irpt-ycharts-generate, read live 2026-09-12T02:0xZ: CodeSha256 VGsTbaPGv70V2l2w8X85z7XK8NEB9hTkbkeDmke1Dt8=, LastModified 2026-09-12T01:10:12Z, Handler entry.lambda_handler -- slot ~2's deploy, intact",
+        "the S3 artifact downloaded and its member extracted: served settings.json is 5104 bytes sha256 b6467fc1789ea50b..., tree settings.json is 9670 bytes sha256 c493ea6edd6ee7c3... at dc5d119b84 -- NOT equal; the downloaded zip's own sha256 equals the live CodeSha256, so the deploy is not what moved",
+        "DISCRIMINATOR, and it is what makes this INERT rather than ARMED: the served and tree copies of the `settings` SUBTREE and of `cautions` are byte-identical (7 members each); the only difference is the ADDED sibling key `intake_controls`. recipe.SETTING_TO_VENDOR_FIELD reads settings['settings'] by name, so nothing irpt-ycharts-generate reads has changed",
+        "the sibling-key placement was chosen for exactly this reason and says so in settings.json _meta.why_this_is_a_SEPARATE_TOP_LEVEL_KEY"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-IB-rt-11 DELIVERABLE names `intake/{parse.py,corrections.py,settings.json}` as this cell's files and BOUNDS says 'No deploy in this cell (the intake Lambda's next build carries it)'; slot ~2's drain reports artifact_sha256 == S3 content-sha256 == live CodeSha256 on 6 of 6 roots.",
+    "world_is": "Both are true and they interact: settings.json is ALSO a build input of a function in another cell's root, so an edit this order was told to make invalidates the hash agreement another order just certified. Nothing is broken and nothing needs re-deploying for correctness -- the served bytes are a valid older vintage of a file whose changed part that function does not read. What is no longer true is the SENTENCE 'the tree and the served artifact agree', for one of the six.",
+    "notes": "Not remediated here: rebuilding or re-deploying irpt-ycharts-generate is out of this cell (BOUNDS: no deploy) and lambda-source-map.json is not in this order's <paths>. Carried so the next rebuild of that function is expected rather than surprising, and so nobody reads a moved hash as drift."
+  },
+  {
+    "id": "IRPT_BCKEND-W3-S35",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-12T02:12Z",
+    "one_line": "The shared contract's `corrections` item is additionalProperties:false with exactly four keys and no timestamp, so the WHEN this cell's law requires on a human correction CANNOT travel in the contract -- a consumer validating AnalysisRequest never sees who corrected what WHEN.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/_contracts/AnalysisRequest.schema.json @72db64c153, properties.corrections.items: additionalProperties false, properties = finding_code, approved_by, from_value, to_value; required = all four. There is no time field of any name",
+        "TO-IB-rt-11 acceptance (c), verbatim: 'A human correction on a quarantined row appears on r+1 with who/when/from-what'",
+        "the amendment's B4, verbatim: 'Human correction provenance is PRESERVED, not overwritten. A corrected value carries who corrected it and what it was'",
+        "`_contracts/` is not in this order's <paths> block, so the schema is READ here and not edited"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The correction provenance the cell's law requires -- WHO, WHEN and WHAT-IT-WAS -- is carried on the revision in the contract's own `corrections` array.",
+    "world_is": "The contract can carry WHO and WHAT-IT-WAS and cannot carry WHEN. This cell makes `approved_at` REQUIRED on an approval and validates it as an ISO-8601 UTC instant, then writes it into a SIBLING `correction_provenance` array on the revision, leaving the contract array at exactly its four keys so it still validates. The provenance is preserved, hashed with the revision and readable -- but ONLY by a consumer that knows to look outside the contract. A consumer that validates AnalysisRequest and reads `corrections` gets a correction with no time on it, and no care inside this cell changes that.",
+    "notes": "The remedy is a one-field contract amendment (`approved_at`, string, ISO-8601 Z) and it belongs to whoever owns _contracts/. Raised rather than worked around silently: the sibling array is the honest placement available to this order, not the right long-term shape."
+  },
+  {
+    "id": "IRPT_BCKEND-W3-S36",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-12T02:12Z",
+    "one_line": "parse.py and corrections.py are declared by 0 of 214 functions, so every currency and unit control this cell certifies is certified in the REPO for a module that has no runtime yet -- and the first function to ship parse.py must ship settings.json beside it or the parser refuses at its first money column.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/ci/lambda-source-map.json @72db64c153, over all 214 functions: 0 declare parse.py, 0 declare corrections.py, 1 declares settings.json (irpt-ycharts-generate, which does not ship the parser)",
+        "parse.load_intake_controls reads os.path.join(_HERE, 'settings.json'); in a Lambda _HERE is the flat /var/task, so the policy file must be a declared build input of any function shipping parse.py",
+        "EXERCISED: load_intake_controls against a missing path raises ParseRefused 'the intake currency/unit policy is not readable ... This module REFUSES rather than applying a built-in default' -- the refusal is by design, added in this cell rather than left as a FileNotFoundError",
+        "the sibling shape of the same defect was measured one cell over as IRPT_BCKEND-W3-S25: _scope/resolve.py gained a module-level import and the packaging half did not follow, and CodeSha256 equality could not see it by construction"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The issuer's note of 2026-09-12 ~02:0xZ: 'A CHECK THAT RUNS IN THE WRONG ENVIRONMENT PASSES ON A BROKEN ARTIFACT. When you certify a currency or a unit, ask where your check runs versus where the value is actually consumed.'",
+    "world_is": "The answer to that question for this cell is NOWHERE YET: the module is not packaged into any function, so there is no runtime in which the value is consumed and the controls are certified only in the repo. The battery therefore runs the controls a SECOND time in a flat /var/task-shaped directory in a fresh interpreter with the repo stripped from sys.path, and carries a negative arm proving the parser REFUSES when the policy file is absent rather than defaulting to USD -- which is the exact runtime-only failure the warning names. That is the closest a cell that deploys nothing can get, and it is not the same thing as a deployed check.",
+    "notes": "Not remediated here: adding parse.py to a function's files[] is a packaging act, lambda-source-map.json is not in this order's <paths>, and this cell deploys nothing by its own BOUNDS. The requirement for whoever packages it: parse.py, corrections.py, settings.json AND fixtures/holdings/security_mapping.json (load_mapping reads a SUBDIRECTORY of _HERE) must land together."
+  },
+  {
+    "id": "IRPT_BCKEND-S45",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-12T03:05:42Z",
+    "one_line": "IB-rt-11 ACCEPTED TERMINAL (8 of 12), AND ITS HEADLINE IS A FALSE GREEN CAUGHT BY ITS OWN AUTHOR AFTER THE FLIP. The worker flipped <status> complete, then found that commit 3c28723d20 pinned parse.py at a version which does NOT carry the load_intake_controls refusal that arm (e)'s NEGATIVE arm proves -- the edit was made after the commit and never committed, so THE ARM PASSED AGAINST THE WORKTREE WHILE THE INSTANCE NAMED BYTES THE RECORD DID NOT CARRY. proof-of-spec-check returned rc=0 and the criterion read PASS-by-output, and BOTH were reading a file the record did not contain. Found by reading git status --porcelain AFTER the flip; re-opened on the record at 3db8d67f17 with the reason on the face, the real refusal committed at 51db4a7d66, re-pinned, re-validated, re-flipped honestly at 7408aa5c5e. The issuer re-graded the instance at HEAD rather than taking the report's word: VALID rc=0, 3 of 3 surprise entries resolving, parse.py CONTENT-resolved at 51db4a7d66 rather than presence-only. TWO MECHANISMS THE CELL PROVED IN PASSING AND BOTH ARE WORTH KEEPING: the owned-paths lane gate REFUSED the parse.py commit the instant the order went terminal ('no NON-TERMINAL task order at HEAD issued_to this serial names this path'), so a worker who flips early CANNOT quietly patch afterwards and the remedy is forced onto the record; and PENDING-THIS-COMMIT is SPENT once the instance is committed, a second sentinel on an already-committed artifact being refused as CCX class. W3-S34 ACCEPTED INERT and the discriminator is why -- this cell's ORDERED settings.json edit moved a declared build input of irpt-ycharts-generate 20 minutes after slot ~2 deployed it, and the worker read the SERVED artifact (5104 B) against the tree (9670 B) and showed the delta is ONLY an added sibling key with the settings subtree and cautions byte-identical; slot ~2 has been told its next deploy carries the rider and must NAME IT IN ITS LEDGER, because the deploying cell is the last to find out and the one holding the irreversible act. W3-S35 and W3-S36 stay ARMED with the issuer: the contract's corrections item is additionalProperties:false with no time field so the WHEN cannot travel in the contract (_contracts/ outside the cell's paths, so a row was the right call and approved_at rides in a sibling correction_provenance array), and parse.py is shipped by 0 of 214 functions so whoever packages it must ship settings.json AND fixtures/holdings/security_mapping.json beside it or the parser refuses at its first money column. AND THE L4-R HOLD IS DISCHARGED: prd-signoff status reads ADMITTED, both halves SIGNED and current, the brief half now HASH-BOUND so a future version bump cannot re-stale it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B for W3-S35 and W3-S36 -- both are carried to L10 rather than acted on mid-round: the corrections contract has no time field (a frozen-contract question, same class as W2-S36 which needed an L4 amendment) and parse.py's packaging has no shipping function yet, so neither is fixable inside this round without re-opening a closed surface. W3-S34 is INERT and needs no owner",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CLOUD 49d6376765 (drain of wk-irpt_bckend-2-3c; rows W3-S34..S36)",
+        "proof-of-spec-check.py re-run by the issuer at HEAD over IB-rt-11's instance: VALID rc=0, 3 of 3 surprises resolving, 1 row CONTENT-resolved",
+        "IB-rt-11 face <status> complete, stated as being on the SECOND flip with the first reverted on the record",
+        "the cell's own commit chain dc5d119b84 (feat) -> 3c28723d20 (complete, REVERTED) -> 3db8d67f17 (reopen) -> 51db4a7d66 (the refusal) -> 7408aa5c5e (the honest flip)",
+        "python .tools/prd-signoff.py status IRPT_BCKEND -> ADMITTED, both halves SIGNED current (was WITHHELD at 02:51Z)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RT11-AC1's arm (e): the policy is absent -> 4 of 4 REFUSED, proving load_intake_controls does not default. The instance named the bytes that produce that refusal.",
+    "world_is": "At the first flip the named bytes did NOT produce it -- the refusal existed only as an uncommitted worktree edit. The checker read rc=0 against a worktree the record did not describe, which is the exact shape of a green that certifies nothing.",
+    "notes": "THE GENERAL FORM IS THE VALUABLE PART AND IT IS NOT ABOUT THIS CELL: A PROOF INSTANCE PINS BYTES, AND A BATTERY READS A WORKTREE. When an edit exists only in the worktree, the two disagree and every instrument still reads clean -- rc=0 from the checker, PASS-by-output from the criterion. The only thing that separates them is `git status --porcelain` AFTER the flip, which is not part of anybody's acceptance bar. Worth the L10 slug as a candidate addition to the worker face's standing mechanics: read porcelain before the flip, not after. Related to, but distinct from, tonight's other shapes -- the five enumeration failures, the obligation routed into an unrun instrument, and the sign-off tool's prose overstating a version-only comparison as a byte change (independently confirmed by 4.0.0_SA_CRO, which measured both brief halves unchanged and logged the prose as a tooling defect)."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S38",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-12T03:20Z",
+    "one_line": "The ycharts root's zip carries intake/settings.json but not fixtures/holdings/security_mapping.json -- literally the asymmetry the issuer named as blocking -- and the discriminator is that NO function ships parse.py and the only readers of settings.json are two test suites, so the deployed code cannot reach the refusal the pair exists to prevent.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "The issuer's note of 2026-09-12: IB-rt-11 edited infra/aws/lambda/investor-reporting/intake/settings.json, a declared build input of irpt-ycharts-generate, which this order deploys; 'NAME IT IN YOUR LEDGER ENTRY as a rider', 'verify it the way you verify your own bytes', and 'If your zip for that function picks up one of those and not the other, that is a BLOCKING row to me, not something to reconcile yourself' -- the pair being settings.json and fixtures/holdings/security_mapping.json, which row W3-S36 says parse.py needs beside it or it REFUSES at its first money column.",
+    "world_is": "MEASURED, and the literal condition IS met: irpt-ycharts-generate's 30 declared members include settings.json and do NOT include fixtures/holdings/security_mapping.json (nor any fixtures/holdings/* member), so the zip picks up one of the pair and not the other. THREE FURTHER MEASUREMENTS SAY THE PAIRING IS NOT WHY IT IS THERE, and together they are the discriminator: (1) parse.py is declared by 0 of 214 functions in lambda-source-map.json, so no deployed artifact contains the parser whose refusal the pair guards -- W3-S36's hazard has no carrier; (2) settings.json is a member of this function IN ITS OWN RIGHT and predates this order -- ycharts/generate/recipe.py:57 defines SETTINGS_PATH and :105 load_settings(), for the YCharts portfolio recipe, nothing to do with holdings; (3) an unscoped census of load_settings over the package returns 3 hits and the only two CALLERS are test suites (ycharts/generate/tests/run_offline_suite.py:175 and ycharts/session/tests/run_session_suite.py:99) -- the deployed path never calls it, and job.py receives `settings` as a constructor argument instead. AND A SEPARATE RUNTIME-ONLY DEFECT SITS IN THAT SAME LINE: SETTINGS_PATH is os.path.normpath(os.path.join(_HERE, '..', '..', 'intake', 'settings.json')), a REPO-RELATIVE path that at /var/task resolves to /intake/settings.json and cannot exist, while the zip carries the file FLAT beside recipe.py. It is the same shape as the /var/_authz defect this cell already fixed in entry.py, it is PRE-EXISTING in the live artifact, and it is unreachable today only because no deployed caller invokes load_settings().",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/ci/lambda-source-map.json@76ae1b20fb -- irpt-ycharts-generate declares settings.json, not security_mapping.json, not parse.py; 0 of 214 functions declare parse.py",
+        "infra/aws/lambda/investor-reporting/ycharts/generate/recipe.py:57,105@76ae1b20fb -- SETTINGS_PATH and load_settings",
+        "comp-find 'load_settings' over the package @76ae1b20fb -> 3 hits, 1 DEF and 2 TEST callers, no deployed caller",
+        "comp-find --name security_mapping.json @76ae1b20fb -> 1 hit across 33,312 files: infra/aws/lambda/investor-reporting/intake/fixtures/holdings/security_mapping.json",
+        "the issuer's note of 2026-09-12 naming row IRPT_BCKEND-W3-S34 (served 5104 B vs tree 9670 B, an ADDED sibling key, settings subtree and cautions byte-identical) and W3-S36"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "notes": "NOT RECONCILED, exactly as instructed, and the irpt-ycharts-generate root is HELD OUT of this order's deploy until the issuer rules. The other roots proceed. What the issuer asked for IS done: the rider is named in the ledger entry on that function's leg, so the entry states what the apply carries rather than only what this cell authored. My reading, offered and not acted on: the asymmetry is INERT because the pair's hazard needs parse.py and nothing ships it, and settings.json is this function's own member for its own reason -- but the instruction was that the condition is the issuer's call, so it is the issuer's. The SETTINGS_PATH defect is a separate finding in a path this order holds; it is pre-existing in the live bytes, no deployed caller reaches it, and it is not fixed here because C4 says one deploy and this root is held."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S39",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-12T03:20Z",
+    "one_line": "A defect this cell INTRODUCED and has now removed: served.Entry held one cache dict for the MODULE'S lifetime, so a warm container served a payload computed from an artifact that had since changed -- authorization was never at risk, freshness was, and no better cache key could have fixed it because the boundary cannot see the artifacts its computes read.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "The PRD cell B3 is 'authorization enforcement on every route, warm-cache revocation' and its acceptance clause says 'a cached result or artifact is reauthorized before serving'. Enforcer.serve() implements exactly that and its docstring says so: both branches run resolve_now + covers before anything is returned, so there is no ordering in which cached bytes escape without a current decision.",
+    "world_is": "The reauthorization claim is TRUE and was never the gap. What this cell added was the CACHE'S LIFETIME: served.Entry.__init__ did `self.cache = cache if cache is not None else {}` and handed that one dict to every Enforcer it built, so in a warm Lambda container every invocation shared it. The six functions had no such cache before this order (their handlers did not use Entry at all) and holdings' own make_holdings_enforcer passes cache=None, which gives the Enforcer a FRESH dict per request -- so this was a regression shipped tonight to six live functions. MEASURED, and found by accident by a holdings test: a snapshot whose node clocks collapse is refused NOT_READY when its case runs ALONE, and is SERVED when a valid request for the same (tenant, scope fingerprint, operation, params) ran first in the same process; clearing the cache made it refuse again. The cache key is _keys.cache_key(tenant, permitted_account_set_fingerprint, source_revision, schema_revision, config_revision, operation, params) -- it carries the tenant and the scope fingerprint, so NOTHING CROSS-FIRM was reachable, and it carries no artifact vintage, so a changed artifact was invisible. A BETTER KEY CANNOT CLOSE IT: source_revision was sitting at the module default 'src-1', a constant, and populating it from the directory artifact's as_of_business_date (done, and it also removed a second directory read) does not help when the artifact that moved is the SNAPSHOT, which the boundary never sees. An invalidation rule can only be as good as the inputs the invalidator can see.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/_authz/enforce.py:459-495@76ae1b20fb -- cache_key_for and serve, both branches reauthorizing",
+        "infra/aws/lambda/investor-reporting/_keys/keys.py:459-472@76ae1b20fb -- the cache_key components; REVISION_RE at :57 admits an ISO date",
+        "measured in process @76ae1b20fb: run 1 good snapshot served and cache size 1; run 2 node-clocks-stripped snapshot SERVED with no cache clear; run 3 same snapshot after cache.clear() refused NOT_READY",
+        "infra/aws/lambda/investor-reporting/holdings/snapshot.py:266-279@76ae1b20fb -- make_holdings_enforcer(cache=None), the pre-existing per-request behaviour",
+        "the fix, committed at e42495e8f1: Entry.shared_cache is None unless supplied and enforcer_for passes a fresh dict per request; the artifact vintage feeds source_revision"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "FIXED IN THE TREE at e42495e8f1 and INERT there; it is ARMED IN THE WORLD until C4's deploy ships it, because the six live functions carry the module-lifetime cache now. Bounded: within one warm container, an identical authorized request can be answered from a payload computed earlier in that container's life. No cross-firm or cross-scope reach, and every answer is still authorized against current inputs. Hazard read INERT rather than ARMED because the deploy that removes it is already ordered and scheduled as C4's single act, so nothing further is needed to disarm it than the act already owed. What is GIVEN UP by the fix is re-use across invocations, which nothing in this cell's spec asks for; what is KEPT is the warm-cache arm, exercised by supplying a shared cache explicitly as test_enforce and test_export already do."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S40",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-12T03:20Z",
+    "one_line": "The investor-reporting package's test suite cannot be run as a whole: a single pytest over the package reads 48 failed and 39 errors from cross-directory bare-name collisions, while every directory run on its own is green -- so any reader who runs the obvious command gets a false picture of the package.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Bound 12 and this cell's own practice take the REAL module as the subject, and routetable._import_entry documents the collision class in detail: five functions ship a top-level module under the same bare name because a deployed zip flattens one function's files into one directory, so in one interpreter the first to import wins and every later one silently gets the WRONG module.",
+    "world_is": "The mechanism is known and handled INSIDE the census, and not outside it. Measured at this cut: `python -m pytest infra/aws/lambda/investor-reporting/ -q` reads '48 failed, 460 passed, 39 errors' WITH this worker's new test file deselected, so it is not caused by this order. Per-directory it is clean: _authz 131, _scope 50, _keys 45, _ids 29, directory 37, performance 28, narrative 37, export 68, ops 34, holdings 29, intake 15 -- all pass; _contracts reads 14 failed / 39 passed, and those are IB-rt-1's paired-consumer arms failing at test_seam_paired.py:374 on the consumer fixture's key shape, before any dispatcher call. This worker's own new file caused one instance of the same class in both directions and now cleans up after itself (it resolves its subject through routetable.entry_points(), by path, lazily), which is evidence that the trap is live rather than historical.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "timeout 900 python -m pytest infra/aws/lambda/investor-reporting/ -q --ignore=infra/aws/lambda/investor-reporting/holdings/tests @76ae1b20fb -> '48 failed, 460 passed, 39 errors'",
+        "per-directory runs at the same commit, each printed green except _contracts (14 failed, IB-rt-1's, at test_seam_paired.py:374)",
+        "infra/aws/lambda/investor-reporting/_authz/routetable.py:111-169@76ae1b20fb -- the purge that handles this inside the census, and its measured example (performance/entry.py got the DIRECTORY handler and raised AttributeError classified UNEXPECTED)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not this order's to fix and not fixed: the remedy is either a conftest per function directory that isolates sys.path and sys.modules, or a pytest invocation contract that says the package is tested per directory -- both are decisions about the whole package, spanning cells this order does not hold. Filed because the failing command is the OBVIOUS one: a seat that runs pytest over the package to check this project's health will read 48 failures that do not exist, and a seat that trusts a whole-tree green would be trusting an ordering."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S41",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-12T03:20Z",
+    "one_line": "Amendment 3 C1 grants the holdings paths in PROSE and the <paths> block does not carry them, so the lane gate refuses the commit -- C1's work is written, tested and PASSING in the worktree and cannot be committed until one line of <paths> changes.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "spec_asserts": "Amendment 3, C1: 'GRANTED, additive, for this cell only: infra/aws/lambda/investor-reporting/holdings/ and the holdings Terraform root.' The order's own lane clause says 'the <paths> block above IS the grant (RULING 1 @9ef9a40aae)', and ADHC_OWNPTH.005 says the order is the grant and a missing path is a cut defect, never an override.",
+    "world_is": "The <paths> block at HEAD (76ae1b20fb, and unchanged at e42495e8f1) carries 23 entries and NEITHER infra/aws/lambda/investor-reporting/holdings/ NOR infra/aws/terraform/investor-reporting/holdings/ is among them. safe-commit refuses both files with 'agent=0.9.0_WK_IRPT_BCKEND~2 not in permitted_agents -- WORKER: no NON-TERMINAL task order at HEAD issued_to this serial names this path in its <paths> block'. The gate is CORRECT: it reads the machine-readable grant, and the amendment changed the prose. The work itself is complete and green: holdings/entry.py puts the shared boundary in front of snapshot.py without widening what any caller reaches, the Terraform root names entry.lambda_handler, holdings/tests/test_entry_guarded.py is 29 of 29 passing including a difference control and a refused-never-narrowed arm, and the census re-cut reads 'OK: every route is guarded' over 12 of 12 with the mark NOT loosened.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-rt-2...md@76ae1b20fb -- the <paths> block, 23 entries, no holdings",
+        "bash .tools/safe-commit.sh ... @76ae1b20fb -> 'ERROR: owned-paths lane violation(s) detected (block mode)' naming holdings/entry.py and holdings/lambda.tf",
+        "timeout 300 python -m pytest infra/aws/lambda/investor-reporting/holdings/tests/ -q @worktree -> '29 passed'",
+        "in-process census over the real table @worktree -> 'WHOLE FILE: OK: every route is guarded | routes: 12'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "notes": "ARMED because the work sits UNCOMMITTED in a worktree: four files (holdings/entry.py, holdings/tests/test_entry_guarded.py, the _authz census re-cut, and the holdings lambda.tf re-point) exist only on this device's filesystem, and a worktree removal or a forced clean loses them. That is the hazard, and it disarms the moment the <paths> line lands and the commit is taken. NOT OVERRIDDEN: GIT_COMMIT_AUTHOR_OVERRIDE would have committed it and is exactly the escape the rule forbids. The _authz half of the same work WAS committed separately at e42495e8f1 because _authz/ IS in <paths>; the census re-cut is held with the holdings files deliberately, because committing a test that asserts 0 of 12 guarded without the entry module that makes it true would leave a failing test in the tree for everyone else."
+  },
+  {
+    "id": "IRPT_BCKEND-S46",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-12T04:03:19Z",
+    "one_line": "IB-rt-2 REACHED 15 of 15 ARMS WITH THE TOKEN PRINTING AND DID NOT FLIP, AND BOTH HALVES OF THAT ARE CORRECT. W2-S41 IS THE ISSUER'S DEFECT AND IS FIXED: amendment 3's C1 granted infra/aws/lambda/investor-reporting/holdings/ in a PROSE SENTENCE and never added it to the <paths> BLOCK, which is the surface the owned-paths lane gate actually reads, so the gate refused four files of finished work and THE GATE WAS RIGHT. Two lines added to <paths> at a3e84db9ef, verified present at the worker's own HEAD after its worktree was fast-forwarded to f27b6f4cc3 with its four uncommitted files confirmed intact before and after. A GRANT IS ONLY REAL IN THE SURFACE THE ENFORCER READS -- and this is the INVERSE of the failure /canonical-flow already warns about, where a DOCTRINE line routed an act through a seat the gate did not require and the cost was an invisible WAIT; here a doctrine line GRANTED what the gate does not read and the cost was an invisible REFUSAL. Same root, opposite direction: prose is not a grant and prose is not a gate. AND THE WORKER'S REFUSAL TO FLIP ON A PASSING TOKEN IS A FINDING IN ITS OWN RIGHT: the <paths> grant is LIVE ONLY WHILE THE ORDER IS NON-TERMINAL, so flipping would have RETIRED the grant and permanently orphaned C1's work -- A TERMINAL FLIP REVOKES THE GRANTS THE ORDER CARRIES, so the flip is the LAST act and never the act that frees you to finish. No face states that. Its second call is equally right: it did NOT hand holdings' Entry the shared loaders the other six use, because make_holdings_enforcer defaults ownership to _no_grant and wiring them would have turned a route that serves NOTHING into one that serves real holdings -- IB-rt-7's decision, not this cell's. A MARK MUST NOT WIDEN WHAT IT MARKS. W2-S38 RULED IN: IB-rt-11's intake/settings.json rider ships with the deploy and is NAMED IN THE LEDGER on the irpt-ycharts-generate leg, because an entry listing only the author's own changes understates what the apply carries. W2-S40 accepted INERT. W2-S39 IS THE ONE THAT CHANGES URGENCY: the cell introduced a stale-payload defect tonight and removed it IN THE TREE -- served.Entry held one cache dict for the module's lifetime, so a snapshot that must be REFUSED was SERVED from a prior request's payload -- and the fix is STILL ARMED ON THE SIX LIVE FUNCTIONS until a deploy ships it. Authorization was never at risk and the worker disclosed that plainly rather than minimising it. A known armed serving defect sitting in production while we sequence is a worse trade than any sequencing benefit, so the ONE deploy is now urgent rather than merely ready.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.9.0_WK_IRPT_BCKEND~2 under issuer amendment 5 -- the single deploy disarms W2-S39 on the six live functions and lands C1, the v0.14 envelope work, the post-read business_date emission and the named rider. Until that apply verifies, W2-S39 stays ARMED in the world and this row stays ARMED with it",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CLOUD f27b6f4cc3 (drain of wk-irpt_bckend-2-2b; rows W2-S38..S41 and the 15-of-15 instance)",
+        "the <paths> block at f27b6f4cc3 read in the worker's own worktree: both holdings paths present (absent at a3e84db9ef~1)",
+        "proof-of-spec-check over IB-rt-2's instance: VALID rc=0, 21 of 21 rows resolving; RT2-AC1 PASS-by-output, token IBRT2-SIX-GUARDED, 15 of 15 arms",
+        "the worker's own disclosure that arm (a)'s 0 of 12 reads uncommitted bytes from the filesystem and a clean checkout reads 1 of 12 -- printed ABOVE its own token",
+        "issuer amendment 5 at a3e84db9ef (the <paths> fix, the W2-S38 ruling, the one-deploy instruction)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Issuer amendment 3, C1: 'GRANTED, additive, for this cell only: infra/aws/lambda/investor-reporting/holdings/ and the holdings Terraform root.'",
+    "world_is": "That sentence existed only in prose. The <paths> block -- the surface .tools/git-hooks/install-owned-paths and the lane gate read -- did not name either path, so the grant had no effect on the only reader that matters and four files of completed work could not be committed.",
+    "notes": "⭐ THE WORKER ALSO DID SOMETHING THIS ROUND HAS BEEN SHORT OF: its battery DISCLOSES ITS OWN WEAKNESS ABOVE ITS OWN TOKEN -- arm (a)'s '0 of 12' is read from filesystem bytes that are at no commit, and it prints that a clean checkout reads '1 of 12'. A passing token that names the condition under which it would fail is worth more than a passing token. Compare tonight's opposite cases: an arm that passed while printing '0 of 11' beside itself, and an instance that pinned bytes the record did not carry. Both of those were also caught by their own authors, which is the round's real pattern. To the L10 slug as a positive finding alongside the grant-revocation-on-flip property."
+  },
+  {
+    "id": "IRPT_BCKEND-W3-S37",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-12T03:36Z",
+    "one_line": "After a Terraform root is DELETED from the tree, `terraform state list` in its directory refuses with 'Backend initialization required -- Unsetting the previously set backend s3', writes NOTHING to stdout and exits 1 -- so an emptiness check that reads stdout alone PASSES on a command that never looked at the state.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "EXERCISED in infra/aws/terraform/investor-reporting/ycharts-research-20260911 after main.tf was deleted at cbc1e4e2fd: `.tools/terraform.exe state list` -> rc=1, 0 stdout lines, stderr 'Error: Backend initialization required, please run \"terraform init\"  Reason: Unsetting the previously set backend \"s3\"'",
+        "the first version of battery_ib_rt_9.py arm (e) read `stdout.splitlines()` and printed 'research state key still reachable from this worktree: 0 resource(s)' -- the refusal rendered as a clean zero, and the check FAILED only because it also required rc==0",
+        "the corrected instrument reads the STATE OBJECT itself: aws s3api get-object on s3://opal-313476888478-terraform-state/investor-reporting/ycharts-research-20260911/tfstate -> serial=13, resources=[] (0), which needs neither the deleted backend declaration nor terraform",
+        "the battery now carries the refusal as its OWN check: 'e the retired instrument's refusal is DISTINGUISHED from an empty state: rc=1 with 0 stdout lines'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Decomposition v0.2 s.2 and TO-IB-rt-9 acceptance (e): the research root is absorbed and then 'deleted from the tree', with its resources under the ycharts root and `state list` printed -- i.e. a state listing remains the way to show which root owns what.",
+    "world_is": "It does for the DESTINATION root and it does not for the deleted SOURCE root, and the failure is silent in the dangerous direction. Deleting the root removes the `backend \"s3\"` block that addressed the state, so terraform cannot reach the state it just emptied. This is PERMANENT and by design -- not a transient failure an `init` would fix -- so the instrument is retired rather than retried, and the emptiness of the source state is read from the tfstate OBJECT. The general form: any verification of a SOURCE state's emptiness that runs AFTER the source root is deleted must not use `terraform state list`, and any check that treats empty stdout as zero rows inherits this.",
+    "notes": "INERT because the reading was correct here (0 resources, confirmed from the object) and because the check that would have been fooled never shipped green -- it failed on the rc leg. Recorded because the NEXT root retirement in this estate will meet the same refusal, and because the pattern is the same class this round keeps measuring: an error and a clean zero are indistinguishable on stdout, so a 0 must come with the exit code beside it."
+  },
+  {
+    "id": "IRPT_BCKEND-W3-S38",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-12T03:36Z",
+    "one_line": "The research root's S3 STATE OBJECT survives its root: the tree no longer declares ycharts-research-20260911 and nothing owns that state key, but the object is still there, empty, addressed by nothing.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aws s3api get-object on s3://opal-313476888478-terraform-state/investor-reporting/ycharts-research-20260911/tfstate succeeds and returns a state document with serial=13 and resources=[]",
+        "git ls-tree -r HEAD -- infra/aws/terraform/investor-reporting/ycharts-research-20260911 -> 0 files (2 at HEAD~2), so no root in the tree declares that backend key",
+        "the change-management entry 20260912T0314Z_irpt-bckend-rt9_deploy_completion.md records the object as deliberately left in place"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-IB-rt-9 acceptance (e): 'the research root gone from the tree, its resources under the ycharts root' -- retirement of the root.",
+    "world_is": "The root is gone and the state key is not. Deleting an S3 object is a destructive delete needing a human's word (CLAUDE.md Agent Autonomy), so this order left it rather than reaching for one, and it is inert on its own -- an empty state document nothing reads. What it IS: an orphan that no `terraform state list` can reach and no root will ever reconcile, and the kind of object a later census of 'state keys with no declaring root' would surface as a finding. Naming it here means that census finds an explanation rather than a mystery.",
+    "notes": "The remedy, if one is wanted, is a one-line `aws s3 rm` on Andrew's word, or a documented convention that retired roots' state keys are left in place. Not this order's to choose. The same entry also records the 686 MB gitignored .terraform/ provider cache left in that directory in THIS WORKTREE ONLY -- no fresh checkout has it."
+  },
+  {
+    "id": "IRPT_BCKEND-S47",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-12T04:10:15Z",
+    "one_line": "IB-rt-9 ACCEPTED TERMINAL AT 6 OF 6 ARMS -- round 2 is 9 of 12, IB-rt-2 the only order still open. Issuer verification at HEAD rather than on the report: proof-of-spec-check VALID rc=0, 8 of 8 artifact rows resolved at pin with 4 CONTENT-resolved, 10 of 10 surprise rows resolving; and the arm (e) ledger's sentinel read ABSENT from org/critical_paths/.open_deploys/ so NEVER-2's half-landed state does not exist. ARM (e) IS THE STRONGEST WORK IN THE ROUND ON METHOD. It used `import` + `state rm` INSTEAD of `state mv`, because across two S3-backed states a `state mv` means hand-editing two pulled state files and a hand-edited state has no undo -- choosing the recoverable instrument over the convenient one. And it read non-destruction WITH A DIFFERENT INSTRUMENT THAN THE ONE THAT DID THE WORK: `describe-secret` and `describe-log-groups` both still return the objects, because `state rm` reporting 'Removed' is TERRAFORM DESCRIBING ITSELF and not the world. The only world change in the whole arm is tags_all gaining Project = OpalPortal on two resources, with Owner and Purpose carried verbatim. AND IT RE-OPENED AFTER ITS OWN FIRST FLIP, FOR THE MIRROR-IMAGE REASON TO IB-rt-11's: arm (e) took its baseline from HEAD~2, a RELATIVE ref that meant the pre-deletion commit when it was written and something else two commits later, so a fresh run read 'down from 0' and FAILED while the world was correct throughout -- THE INSTRUMENT MOVED, NOT THE WORLD. Re-opened on the record at 1f7edd7ef6, baseline made SELF-LOCATING (git log --diff-filter=D finds the deleting commit and the baseline is its parent), re-flipped at 6d5a801053 on a run verified to reproduce. A RELATIVE REF AS A BASELINE IS A MOVING TARGET and stops meaning what it said the moment anything lands after it -- including the arm's own commit and its own proof. W3-S37 accepted INERT and it is a false-green finding worth keeping: after a root is deleted, `terraform state list` in its directory REFUSES, writes NOTHING to stdout and exits 1, so an emptiness check reading stdout alone PASSES ON A COMMAND THAT NEVER LOOKED; the instrument is retired, emptiness is now read from the tfstate OBJECT, and the refusal is its own printed check. W3-S38 stays ARMED with this seat: the research root's S3 STATE OBJECT SURVIVES ITS ROOT -- empty, addressed by nothing, and LEFT IN PLACE because deleting an S3 object needs a human's word. RULED: it stays. It is named here so a later 'state keys with no declaring root' census finds an explanation rather than a mystery, and it is carried to L10 rather than turned into a second S3 delete request tonight.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO at L10 for the two items outside this lane: (i) W3-S38's orphaned S3 state object, which needs Andrew's word if it is ever to be deleted and is deliberately NOT being asked for tonight; (ii) the live ycharts-session-probe still running the RETIRED non-403 predicate on an ENABLED 6-hourly rule, because redeploying it needs infra/aws/terraform/ycharts-pipeline/ which NO order granted -- so SessionFresh=1 remains not evidence of anything and is cited nowhere in the cell",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CLOUD 12d1cf85c0 (drain of wk-irpt_bckend-2-3b; rows W3-S37, W3-S38)",
+        "proof-of-spec-check.py re-run by the issuer at HEAD: VALID rc=0, 8 of 8 artifact rows, 4 CONTENT-resolved, 10 of 10 surprises resolving",
+        "org/critical_paths/.open_deploys/ listed at HEAD: 6 sentinels, NONE matching rt9 -- the arm (e) ledger is closed",
+        "org/critical_paths/change_management/20260912T0314Z_irpt-bckend-rt9_deploy_completion.md -- 6 legs, OPEN sentinel at 244d3a968d before the act, CLOSE at cbc1e4e2fd before the grading reads",
+        "the cell's commit chain including the reverted first flip 076bdb0973 and the reopen 1f7edd7ef6, left on the record"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Arm (e): the research root's resources move under the ycharts root's state, the research root is deleted from the tree, the host reads stopped, and the ycharts root's post-apply plan reads No changes.",
+    "world_is": "All of that, proven leg by leg: pre-move plan 2 to add, two imports taking the ycharts state 17 -> 19, the research state object reading resources [], apply 0 added / 2 changed / 0 destroyed, post-apply No changes, host i-0167fd745ad906a66 stopped. The one residue is the empty S3 state object, named in W3-S38 rather than silently deleted.",
+    "notes": "RECORD CORRECTION BY THIS SEAT, stated here because a commit message is part of the record and a wrong one is rot: commit 187ff36582 carries the CHANNEL ROW IRPT_BCKEND-S46 but reuses the message file written for issuer amendment 5, so its subject reads 'amend(IRPT_BCKEND IB-rt-2): my C1 grant was PROSE-ONLY...' while its diff is one insertion into INVESTIGATION_v1.md. The FACE amendment is the EARLIER commit a3e84db9ef; a reader looking for the <paths> fix at 187ff36582 will find the row instead. Not amended -- CLOUD is shared and rewriting it is worse than correcting it forward. THE TWO RE-OPENS TONIGHT ARE ONE FINDING FROM OPPOSITE ENDS: IB-rt-11 named BYTES the record did not carry, IB-rt-9 named a COMMIT that had moved. Both read rc=0 and PASS, both times the thing read was not the thing claimed, and both were caught by their own author after the flip. The habit that catches both is cheap and belongs in the worker face's standing mechanics next round: AFTER THE FLIP, RE-RUN THE INVOCATION AND READ `git status --porcelain`. Neither is in anybody's acceptance bar today."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S42",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-12T04:51Z",
+    "one_line": "The ycharts Terraform root now plans 0 to add, 0 to change, 2 to DESTROY -- a LIVE secret and a log group that IB-rt-9 removed from the configuration without applying -- so ANY apply of that root by any cell destroys another cell's resources, and that is a second and stronger reason the root was held than the E3 guard it was held on.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "spec_asserts": "Amendment 5: 'Any root whose plan shows more than your changes plus the named rider is a BLOCKING row and a stop', and the arm (e) bar is that each root's plan after the apply reads `No changes`. The first deploy of this cell recorded exactly that for the ycharts root on 2026-09-12T01:0xZ.",
+    "world_is": "Read at 2026-09-12T04:4xZ, ycharts root, `terraform plan -lock=false`: 'Plan: 0 to add, 0 to change, 2 to destroy' with 'aws_cloudwatch_log_group.research_probe will be destroyed (because ... is not in configuration)' and 'aws_secretsmanager_secret.research_session will be destroyed (because ... is not in configuration)', plus 'Changes to Outputs: - absorbed_research_session_secret = \"ycharts/session/research-20260911\" -> null'. THE SECRET IS LIVE, not already deleted: describe-secret returns Name ycharts/session/research-20260911, ARN ...-FQCIve, DeletedDate null, with staged versions. PROVENANCE: `git log -- infra/aws/terraform/investor-reporting/ycharts/` names f83f73ce6c, 'L7(IRPT_BCKEND IB-rt-9) arm (a): the v0.9 cutover on every reader of ycharts/session/current' -- IB-rt-9 removed both resources from the root's CONFIGURATION and did not apply the root, so the STATE still holds them and the next apply reconciles by destroying them. This cell's own first deploy of that root read `No changes` AFTER its apply, so the divergence was introduced between that apply and now, by a commit that is not this cell's.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "terraform plan @36e4c5f70b in infra/aws/terraform/investor-reporting/ycharts -> 'Plan: 0 to add, 0 to change, 2 to destroy' naming aws_cloudwatch_log_group.research_probe and aws_secretsmanager_secret.research_session",
+        "aws secretsmanager describe-secret --secret-id ycharts/session/research-20260911 -> DeletedDate null, ARN arn:aws:secretsmanager:us-east-1:313476888478:secret:ycharts/session/research-20260911-FQCIve",
+        "git log --oneline -- infra/aws/terraform/investor-reporting/ycharts/ -> f83f73ce6c 'L7(IRPT_BCKEND IB-rt-9) arm (a): the v0.9 cutover on every reader of ycharts/session/current'",
+        "org/critical_paths/change_management/20260912T0035Z_irpt-bckend-rt2_deploy_completion.md -- this cell's FIRST ycharts apply recorded a post-apply plan of 'No changes'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "notes": "ARMED and the hazard is not this cell's to take: the next apply of that root for ANY reason destroys a live secret and a log group belonging to IB-rt-9's work, and a secret deletion is a human-confirmation act under this estate's own rules. NOT APPLIED BY THIS ORDER and nothing was rolled back -- the root was already held on the amendment 5 E3 guard (row W2-S38) and this is an INDEPENDENT second reason, found only because arm (e) re-read the plan rather than trusting the first deploy's recorded 'No changes'. A post-apply plan is a PERISHABLE claim: it was true when written and another cell's commit falsified it four hours later. WHAT IT COSTS THIS CELL, stated: irpt-ycharts-generate keeps the PREVIOUS served.py, so it alone lacks the v0.14 state-conditional envelope and the post-read business_date, and row W2-S39's cache-lifetime defect stays ARMED on that one function until this root can be applied. Two parties must move before it can: 2.0.0_SA_COO~B on the E3 guard, and whoever owns IB-rt-9's cutover on whether those two resources are meant to be destroyed."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S43",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-12T05:22Z",
+    "one_line": "MY OWN ROW W2-S42 MIS-ATTRIBUTED ITS CAUSE: the ycharts root's two pending destroys were not IB-rt-9 removing declarations, they were MY WORKTREE predating the commit that ADDS them -- `git log -- <path>` answers 'what last touched this path', never 'what changed this thing', and I read the top commit as the cause.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Row W2-S42, written by me at 2026-09-12T04:51Z, asserts: 'aws_cloudwatch_log_group.research_probe and aws_secretsmanager_secret.research_session ... IB-rt-9 removed both resources from the root's CONFIGURATION and did not apply the root, so the STATE still holds them', citing f83f73ce6c 'L7(IRPT_BCKEND IB-rt-9) arm (a)' as the provenance.",
+    "world_is": "f83f73ce6c REMOVED NOTHING from that root: `git show --stat f83f73ce6c -- infra/aws/terraform/investor-reporting/ycharts/` prints one file, `iam.tf | 28 ++++++++`, additions only. The two resources were ADDED, not removed, at 244d3a968d in a NEW file `research_absorbed.tf` -- IB-rt-9's arm (e) absorbing them from the ycharts-research-20260911 root by import-then-state-rm, with every non-tag attribute read from `terraform state show` so the move plans as bookkeeping. `git log -S'research_probe' -- infra/aws/terraform/investor-reporting/` returns exactly ONE commit and it is that one. WHY MY PLAN SAW TWO DESTROYS: the shared S3-backed STATE already held both resources because slot ~3 had imported them, and `research_absorbed.tf` was NOT YET IN MY WORKTREE -- it arrived with the fast-forward to ad85e34384. Terraform compared a state that had them against a configuration that did not and correctly planned to destroy them. The gap was on MY side of the comparison. At the current HEAD the same root plans `No changes. Your infrastructure matches the configuration.`, and amendment 6 F2's instruction to RESTORE the declarations was a no-op because they were never gone.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git show --stat f83f73ce6c -- infra/aws/terraform/investor-reporting/ycharts/ -> 'ycharts/iam.tf | 28 ++++++++++++++++++++++ | 1 file changed, 28 insertions(+)'",
+        "git log --oneline --all -S'research_probe' -- infra/aws/terraform/investor-reporting/ -> 244d3a968d only, 'the research root's two live resources declared in the ycharts root'",
+        "git cat-file -e HEAD:infra/aws/terraform/investor-reporting/ycharts/research_absorbed.tf @ad85e34384 -> PRESENT",
+        "terraform plan in infra/aws/terraform/investor-reporting/ycharts @ad85e34384 -> 'No changes. Your infrastructure matches the configuration.'",
+        "the same plan @36e4c5f70b -> 'Plan: 0 to add, 0 to change, 2 to destroy' (row W2-S42)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "THE CHANNEL IS APPEND-ONLY SO W2-S42 STAYS AS WRITTEN, and a reader must reach this row to know its provenance clause is wrong. WHAT SURVIVES OF IT AND IS STILL WORTH THE OWNER'S TIME: (1) the OBSERVED FACT was real -- that root genuinely planned to destroy a live secret holding two versions, and applying it at that moment would have destroyed it; (2) the issuer independently verified the secret is live before ruling, which was the right check on a destructive-class claim; (3) the LESSON the issuer drew -- re-read a plan immediately before any later apply to the same root and never carry a clean plan across another cell's commits -- is STRENGTHENED rather than weakened, because the thing that moved was not the world but MY VIEW of it: a stale worktree plus a shared state is a second, quieter way for a plan to be wrong, and it reads identically to the first. THE METHOD DEFECT, stated so it is not repeated: `git log -- <path>` answers 'what last touched this path'. It cannot answer 'what changed this thing', and its top entry is a NEIGHBOUR, not a cause. `git log -S<token> -- <path>` answers the actual question and named exactly one commit. I cited a neighbour and called it a cause, in a row that accused another cell of leaving a root un-appliable. No act was taken on the wrong attribution -- the root was held, which was correct for the other reason (W2-S38) and correct by luck for this one."
+  },
+  {
+    "id": "IRPT_BCKEND-S48",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-12T05:45:08Z",
+    "one_line": "IB-rt-2 ACCEPTED TERMINAL -- round 2 is 10 of 12, IB-rt-6 RELEASED and IB-rtb-1 gated only on it. All seven functions live on entry.lambda_handler, proof-of-spec VALID rc=0 over 23 of 23 rows, status flipped LAST after the verify, 6 open sentinels at HEAD and none this seat's. The third apply disarmed W2-S39, so the cache defect the cell introduced is no longer served anywhere. AND THE ISSUER MUST CORRECT ITSELF ON W2-S42. I relayed and AMPLIFIED a false causal claim: that the ycharts root planned two destroys 'because IB-rt-9 removed both from config at f83f73ce6c and never applied'. MEASURED NOW WITH MY OWN INSTRUMENTS: git show --stat f83f73ce6c shows iam.tf +28 lines and REMOVES NOTHING, and git log --diff-filter=A shows research_absorbed.tf was ADDED at 244d3a968d -- IB-rt-9's own arm (e) OPEN commit, declaring the research root's two live resources in the ycharts root BEFORE it touched state, exactly as NEVER-2 requires. IB-rt-9 DID THE RIGHT THING AND MY ROW ACCUSED IT OF THE OPPOSITE. The two destroys were real in IB-rt-2's plan and the cause was on ITS side: research_absorbed.tf was ABSENT FROM ITS WORKTREE while the shared state already held the imports. W2-S43 (the worker's own correction) and this row carry it; W2-S42 stands uncorrected in place as the append-only rule requires. MY FAILURE IS PRECISELY RULE 22's ORDERING AND I NAME IT AS THAT: the claim had TWO parts -- (i) the secret is live, (ii) the root's config omits it because IB-rt-9 removed it -- and I verified (i), which was cheap, true and DISPUTED BY NOBODY, then acted as though that verified (ii), which carried the whole accusation. describe-secret CANNOT DISTINGUISH THE TWO WORLDS: the secret reads live whether the config declares it or not. So DISCRIMINATION PASSED INSIDE A WRONG GRAIN -- my instrument agreed precisely about the half that was never in question. One git show would have cost three seconds and I did not run it because the row already read convincing. THE RULING ITSELF WAS STILL RIGHT AND NOT BY LUCK: refuse any plan carrying a destroy, restore rather than state rm, stop rather than improvise -- correct whatever the cause, because it keyed on the ACT's reachable state and not on whose fault it was. The restore turned out to be a no-op, nothing was destroyed, and the secret reads DeletedDate None. A ruling that does not depend on the cause survives getting the cause wrong; an ACCUSATION does not.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~B (corrected same turn: the false cause is retracted here, 1.0.0_SA_CTO is told in its own message because it holds L10 and the claim named a completed cell, and nothing was done to IB-rt-9's work on the strength of it)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CLOUD 781882e9d3 (final drain of wk-irpt_bckend-2-2b; rows W2-S43 and the terminal flip at c6bcccd551)",
+        "git show --stat f83f73ce6c -> infra/aws/terraform/investor-reporting/ycharts/iam.tf | 28 ++ ; 5 files changed, 964 insertions, 115 deletions -- the declarations are NOT among the deletions",
+        "git log --oneline --diff-filter=A -- .../ycharts/research_absorbed.tf -> 244d3a968d 'open(IRPT_BCKEND IB-rt-9 arm e): ... the research root's two live resources declared in the ycharts root'",
+        "aws secretsmanager describe-secret --secret-id ycharts/session/research-20260911 -> DeletedDate ABSENT, 2 versions (true BEFORE and AFTER; it never discriminated)",
+        "proof-of-spec-check over IB-rt-2's instance at HEAD: VALID rc=0, 23 of 23 rows resolving"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Issuer amendment 6 F2, committed at f4b229db52: 'the root really does plan to destroy a live secret plus a log group, because IB-rt-9 removed both from config at f83f73ce6c and never applied.'",
+    "world_is": "IB-rt-9 ADDED those declarations in its pre-act OPEN commit. f83f73ce6c removed nothing. The plan's two destroys came from a stale worktree on the reading side, and the same plan output is produced by both causes -- which is why the output could not adjudicate between them and a git read could.",
+    "notes": "⭐ THE WORKER'S METHOD CORRECTION IS THE REUSABLE PART AND IT IS SHARPER THAN MY APOLOGY: `git log -- <path>` ANSWERS 'WHAT LAST TOUCHED THIS PATH', NEVER 'WHAT CHANGED THIS THING' -- its top entry is a NEIGHBOUR, not a cause, and `git log -S<token>` named exactly one commit. A neighbour cited as a cause is how a row comes to accuse another cell. ⭐ AND ITS OTHER TWO FINDINGS EXTEND EARLIER ONES: a clean plan PERISHES IN TWO DIRECTIONS -- somebody else's commit, or your own stale worktree over a shared state -- and THE PLAN OUTPUT IS IDENTICAL, which is the fifth duplicated-fact divergence in that cell and the first that was a duplicated VIEW rather than duplicated data; and a PASSING ARM WAS PRINTING A SENTENCE THAT HAD BECOME FALSE (arm (e)'s hardcoded 'HELD ROOT ... not applicable by anyone' paragraph, after both halves were untrue), now a measurement instead of a paragraph -- A GREEN ARM IS NOT LICENCE FOR THE PROSE BESIDE IT. All three go to the L10 slug. Also for the slug: this cell withheld its flip at 15 of 15 THREE times -- once with four deliverables at no commit under my prose-only grant, once with one function still serving its own defect, once on my backwards guard -- because a terminal flip retires the <paths> grants the order carries. Two arms remain HUMAN-GATED rather than measured and the status line says so itself: 0 of 12 success responses measured, none claimed."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S44",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-12T06:10Z",
+    "one_line": "ARM (d) IS BLOCKED ON ONE NAMED DEPENDENCY, measured on the host: `import directory_runner` fails with ModuleNotFoundError: No module named 'ids', the bundle carries only the two runner files, no ids.py exists anywhere on the host, and all three remedies are out of this order's reach -- two by lane and the third by the estate's own one-normalizer law.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "The face's arm (d): 'THE HOST CAN RUN IT. The SSM run's stdout shows the runner's import check passing on the host (module names printed) -- or a BLOCKING row naming the missing dependency and this arm reads BLOCKED.' The L5 note adds that the runners reach first-party code by repo shape and that 'a missing dependency on the host is a BLOCKING row and arm (d) reads BLOCKED'.",
+    "world_is": "MEASURED ON THE HOST, not inferred. mdpf-daily-runner i-02448edb624a7a7cf was started (it was `stopped`), reported SSM PingStatus Online, and ran one read-only AWS-RunShellScript (command id 15783da8-aea7-41b6-a000-b1557ad6f8f5, Status Success rc=0, writes confined to /tmp). Its stdout: python3 is 3.9.25; boto3 1.42.97, pandas 2.3.3 and jsonschema 3.2.0 ALL RESOLVE; a repo-shaped tree assembled from what is actually pullable (the minted tarball into data/assets/scripts/gold/investor_reporting/, the distributed trading_calendar.py into lib/) gives trading_calendar; and then `import directory_runner` prints IMPORT-FAIL: ModuleNotFoundError: No module named 'ids'. A bounded find over /opt /srv /home /usr/local/lib /var/lib returned NO ids.py anywhere on the host (it did find /opt/mdpf/scripts/gold/trading_calendar.py, so the calendar is genuinely distributed and the search works). WHY: directory_runner.py imports BOTH trading_calendar (line 108) and ids (line 115) at MODULE LEVEL, col 0, so the module cannot be imported at all without them, and it uses _ids.opaque at line 146 for the opaque-id normalization. The minted bundle carries EXACTLY TWO members, flat: directory_runner.py (45,676 B) and holdings_snapshot.py (74,684 B) -- verified by downloading it and listing the tar. THE THREE REMEDIES, EACH MEASURED OUT OF REACH: (1) add ids.py as a third bundle member -- the member list is a hardcoded dict in .tools/safe_deploy_core.py:233-246 and .tools/ is NOT in this order's <paths>; (2) distribute infra/aws/lambda/investor-reporting/_ids/ids.py to a host-readable code prefix -- that path is NOT in <paths>, and the assets_gold layer mapping only covers data/assets/scripts/gold; (3) copy ids.py into data/assets/scripts/gold/investor_reporting/, which IS in <paths> -- FORBIDDEN BY LAW, not by lane: ids is THE ONE opaque-id normalizer (IB-rt-3, CTO ruling 4) and irpt-holdings' own BUILD_MANIFEST.json states it is 'never vendored beside the function, because a second copy of either is the defect the layer exists to prevent'. Editing the runner to accept an injected normalizer is also refused by the face ('No runner is edited to change its import shape here').",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ssm get-command-invocation 15783da8-aea7-41b6-a000-b1557ad6f8f5 on i-02448edb624a7a7cf -> Status Success rc=0, stdout 'IMPORT-FAIL: ModuleNotFoundError: No module named ids' and 'OK: boto3 1.42.97 / pandas 2.3.3 / jsonschema 3.2.0'",
+        "tarfile listing of s3://opal-data-mdpf/code/scripts/assets_gold/investor_reporting/investor-reporting.tar.gz (ETag 964b4eef4f50792d4599e7df0d419486, 34476 B) -> 2 members, flat",
+        "data/assets/scripts/gold/investor_reporting/directory_runner.py lines 108 and 115 (module-level, col 0) and line 146 (_ids.opaque)",
+        ".tools/safe_deploy_core.py:233-246 -- the investor_reporting bundle's members dict, two entries",
+        "comp-find --name ids.py --corpus default -> 2 hits, both under infra/aws/lambda/investor-reporting/_ids/",
+        "infra/aws/lambda/investor-reporting/holdings/BUILD_MANIFEST.json -- 'never vendored beside the function, because a second copy of either is the defect the layer exists to prevent'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "notes": "WHAT THIS BLOCKS AND WHAT IT DOES NOT. Arm (d) reads BLOCKED with the dependency named, which is the face's own provision rather than a failure of it. Downstream: arm (b) (three firms built for real, before/after revisions) CANNOT happen, because a runner that cannot be imported cannot build; arm (c)'s source-completion and new-revision arms depend on a successful build, while its missed-trigger and expiry arms do not. Arm (a) is NOT blocked by this -- the SSM dispatch can be written and PROVEN to dispatch, with a real command id on a real manifest, and the build's outcome is then an honest REFRESH_FAILED naming this dependency. The fix is one line of a member list or one distribution of one file, by a lane that holds .tools/ or _ids/; it is ten minutes of work for someone who may do it, and it is not ten minutes this order may take. NOT a defect of IB-rt-5's mint: the mint did exactly what it declared, both per-member shas verify against the repo bytes (directory-runner-sha256 1e8eb8a5... equals the repo file), and the bundle's two-member scope was the declared scope."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S45",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-12T06:25Z",
+    "one_line": "The completion manifest that refresh.py's own docstring calls 'the ONLY memory this cell has between fires' is NEVER PERSISTED and never read back: refresh.py contains zero references to boto3/s3/put_object, lambda_handler passes no last_manifest_as_of, so the MISSED-trigger detector is dead code in production and there is no manifest OBJECT for arm (a) to read.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "refresh.py:85 -- 'The completion manifest -- the ONLY memory this cell has between fires.' The face's arm (a): 'the deployed function's manifest after one driven fire reads build_dispatch: SSM with the command id'. The L5 note: 'read the runner's completion manifest, and record COMPLETED / FAILED / MISSED as the round-1 envelope already does'. The function's IAM grants s3:PutObject on <firm bucket>/investor-reporting/directory/_refresh/* with the comment 'writes ONLY the refresh manifests beneath them'.",
+    "world_is": "THREE MEASUREMENTS, each a zero with its denominator printed. (1) comp-find 'put_object|boto3|s3' over infra/aws/lambda/investor-reporting/directory/refresh.py -> 0 hits across 1 file scanned. Over the whole directory package -> 5 hits across 7 files, ALL FIVE in handler.py (the directory SEARCH handler, lines 5, 84, 85, 382, 383); refresh.py and expiry.py carry none. So nothing in the refresh path can write an object. (2) comp-find 'last_manifest_as_of' over the package -> 7 hits: the def at refresh.py:144, its use at :155, the parameter at :165, the guard at :177 and the call at :178 -- and exactly ONE caller supplies it, tests/test_refresh_expiry.py:218. lambda_handler (:290-304) calls refresh_firm(firm_id, now, build_fn=None, correlation_id=...) and passes NO last_manifest_as_of, so the guard `if last_manifest_as_of is not None` is ALWAYS FALSE in production and the missed-fire branch is unreachable there. (3) The world agrees: `s3 ls --recursive` on investor-reporting/directory/_refresh/ in all three firm buckets returns NOTHING, while the function HAS been invoked (its log group carries a stream from 2026/09/11). So the IAM grants a write that no code performs, and the cell's memory does not exist.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "comp-find 'put_object|boto3|s3' infra/aws/lambda/investor-reporting/directory/refresh.py -> 'DENOMINATOR: 0 hit(s) across 1 file(s) scanned'",
+        "comp-find 'put_object|boto3' infra/aws/lambda/investor-reporting/directory -> 5 hits across 7 files, all in handler.py",
+        "comp-find 'last_manifest_as_of' infra/aws/lambda/investor-reporting -> 7 hits; only caller supplying it is directory/tests/test_refresh_expiry.py:218",
+        "infra/aws/lambda/investor-reporting/directory/refresh.py:290-304 -- lambda_handler, no last_manifest_as_of argument",
+        "aws s3 ls s3://opal-data-{bd,cot,inf}/investor-reporting/directory/_refresh/ --recursive -> empty for all three",
+        "aws logs describe-log-streams /aws/lambda/irpt-directory-refresh -> one stream 2026/09/11",
+        "infra/aws/terraform/investor-reporting/directory/schedule.tf:157,178-185 -- the PutObject grant on _refresh/*"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "IN THIS ORDER'S LANE AND THIS ORDER FIXES IT: directory/refresh.py is in <paths>, the IAM already grants the write, and the missed-trigger arm cannot be real until the memory is. The fix is a persisted manifest write plus a read-back of the previous manifest into last_manifest_as_of. Filed rather than silently repaired because it changes what the face's arm (a) and arm (c) are measuring: before this, 'the deployed function's manifest' named an object that has never existed, and the MISSED arm was provable only in a test harness. NOT a defect of IB-s-4's design -- the envelope, the precedence rule and the subtraction-based detector are all correct and are what makes the fix small; what was missing is the durable half, and round 1 honestly recorded the build as NOT_WIRED so nothing downstream was relying on the manifest either."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S46",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-12T06:25Z",
+    "one_line": "The L5 note's 'dispatch via SSM, WAIT BOUNDED for completion, read the completion manifest' cannot fit the function it is for: irpt-directory-refresh has a 60-SECOND timeout and the measured cost of reaching an SSM-ready host from STOPPED is ~45s of polling before the runner does any work at all -- and the runner's own work is minutes of pandas and per-firm S3 loads.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Decomposition v0.2 s.2, quoted by the face: build_fn becomes 'dispatch the minted directory_runner.py for one firm on one business date via SSM, wait bounded for completion, read the runner's completion manifest, and record COMPLETED / FAILED / MISSED'. The estate's named pattern is mdpf-accrual-trigger, which this cell is told to follow.",
+    "world_is": "MEASURED. `aws lambda get-function-configuration --function-name irpt-directory-refresh` -> Timeout 60, MemorySize 512, declared at terraform/investor-reporting/directory/schedule.tf:133. The host mdpf-daily-runner i-02448edb624a7a7cf was STOPPED; in this worker's own probe the sequence start-instances -> state running took one 15s poll, running -> SSM PingStatus Online was satisfied on the first check, and send-command -> Status Success took one further 15s poll: roughly 45 SECONDS of polling for a command that did nothing but print, with the Lambda's entire budget being 60. The runner's real work is strictly larger: three distinct per-firm `load` implementations reading S3 sources (directory_runner.py:196, :257, :311, :335) plus pandas imports at :243, :258, :453 and jsonschema at :744. AND THE ESTATE'S OWN PATTERN DOES NOT WAIT: mdpf-accrual-trigger sends the command and RETURNS (lambda_function.py:118-136, 'synchronous on purpose: the SSM command status carries the script rc' refers to the SHELL being synchronous on the host, not to the Lambda waiting) -- so 'wait bounded' is not what the pattern this cell is told to copy actually does.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aws lambda get-function-configuration --function-name irpt-directory-refresh -> '60 512 refresh.lambda_handler ... python3.12'",
+        "infra/aws/terraform/investor-reporting/directory/schedule.tf:133 -- timeout = 60",
+        "this worker's probe transcript: stopped -> running (one 15s poll) -> PingStatus Online -> send-command -> Status Success (one 15s poll)",
+        "infra/aws/lambda/mdpf-pipeline/mdpf-accrual-trigger/lambda_function.py:118-136 -- send_command then return, no wait on the command",
+        "data/assets/scripts/gold/investor_reporting/directory_runner.py:196,257,311,335 (per-firm loads), 243,258,453 (pandas), 744 (jsonschema)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "notes": "THE DESIGN CHOICE IS NAMED RATHER THAN TAKEN SILENTLY, which is what G4 asks for. Three options and none is free: (1) raise the timeout toward 900s -- in this order's lane (the root is granted) but it makes a scheduled Lambda sit for minutes waiting on an EC2 boot, and it bills for the wait; (2) make the dispatch ASYNCHRONOUS like the pattern it is told to copy -- fits 60s, records build_dispatch: SSM and the command id immediately, and moves 'read the completion manifest' to the NEXT fire, which changes the cell's contract from one-fire-one-answer to two-phase; (3) a bounded wait INSIDE the 60s budget that records DISPATCHED-PENDING with the command id when the command has not finished, and reconciles on the next fire -- which is (2) with a best-effort fast path. I have implemented (3) because it is the only one that both fits the measured budget and still satisfies the face's own words for the fast case, but the CHOICE is the issuer's to confirm. AND THE G4 WINDOW, STATED: while row W2-S44 stands, a deployed dispatch cannot succeed, so every weekday 09:00 ET fire would start a shared EC2 host and record an honest REFRESH_FAILED. That is not a WRONG artifact -- the build genuinely failed and the manifest would say so with the dependency named -- and the start is safe (the mdpf chain's own 15:00Z run self-stops the host, and the trigger pattern starts it too). It is nonetheless a daily side effect on shared infrastructure for no product value, which is why nothing is deployed by this order until the issuer rules."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S47",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-12T06:25Z",
+    "one_line": "Arm (b) asks for a revision 'before and after (r -> r+1)' and for 'the previous revision object still present', but NO production directory artifact has ever existed for any firm: all three latest.json read 404 and investor-reporting/ holds only qa/ -- so the act is a FIRST MINT and the retained-previous-revision clause is vacuous by construction.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "The face's arm (b): 'THREE OF THREE, BEFORE/AFTER. Per firm: the latest.json revision before and after (r -> r+1), the artifact hash differs, the previous revision object still present (head-object), the entry count with its denominator, 0 ids carrying `:acct:`.' The L5 note: 'the latest.json revision advances ... and the previous revision is retained (immutable revisions)'.",
+    "world_is": "MEASURED WITH A POSITIVE CONTROL, because a 404 can be a permissions artifact rather than an absence. get-object on investor-reporting/directory/latest.json returns 404 for opal-data-bd, opal-data-cot AND opal-data-inf. `s3 ls s3://<bucket>/investor-reporting/` returns exactly one child for each -- `PRE qa/` -- so there is no `directory/` prefix under production at all. The control: `s3 ls s3://opal-data-bd/` lists many prefixes, so the credential reads these buckets fine. WHAT DOES EXIST IS QA, and it shows the runner works: investor-reporting/qa/directory/ carries two dated builds per firm (bd 2026-09-09 6,371,481 B and 2026-09-10 6,392,329 B; cot 2026-09-09 417,709 B and 2026-09-10 420,584 B; inf 2026-09-10 and 2026-09-11 450,726 B each) plus a latest.json pointer of 273-275 bytes for each. So `r -> r+1` has no r: the first production build mints latest.json and one dated object, and 'the previous revision object still present' cannot be shown because there is no previous revision. NOTE ALSO that the revision is not an integer: directory_runner.py:822 builds it as `irpt-dir/<firm>/<business_date>/1.0`, so an advancing revision is a CHANGED STRING carrying a new business date, never r+1 arithmetic.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aws s3api get-object investor-reporting/directory/latest.json -> 404 on opal-data-bd, opal-data-cot, opal-data-inf",
+        "aws s3 ls s3://opal-data-{bd,cot,inf}/investor-reporting/ -> 'PRE qa/' only, for all three",
+        "POSITIVE CONTROL: aws s3 ls s3://opal-data-bd/ -> many prefixes listed, so the read works",
+        "aws s3 ls s3://opal-data-{bd,cot,inf}/investor-reporting/qa/ --recursive -> two dated directory builds plus latest.json per firm",
+        "data/assets/scripts/gold/investor_reporting/directory_runner.py:822 and :770-780 -- the revision string shape and the dated/latest key pair"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not a blocker on its own and not a defect of anyone: round 1 built to QA deliberately and the production prefix was always this cell's to first-mint. Filed because arm (b) is worded for an ADVANCE and the world offers a FIRST MINT, and those are different evidence: the before half is an ABSENCE (recorded here with its control), the after half is one dated object plus one pointer, and the immutability clause becomes provable only on the SECOND production build. A reader who takes arm (b)'s '(r -> r+1)' literally would look for an integer that does not exist in the revision grammar either."
+  },
+  {
+    "id": "IRPT_BCKEND-S49",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-12T06:45:43Z",
+    "one_line": "IB-rt-6's FOUR ROWS DISPOSITIONED AND ITS BLOCKER CLEARED -- it was a <paths> GAP, NOT A LANE REFUSAL. W2-S44: the runner cannot import on the host (ModuleNotFoundError: No module named 'ids', measured ON the host rather than inferred, with boto3/pandas/jsonschema and trading_calendar all resolving). The worker reported the remedy as out of lane because the member list is hardcoded in .tools/safe_deploy_core.py. MEASURED at .owned-paths.yaml:2003-2009: .tools/** IS LANE ANY, and the only narrower entries under .tools/ are git-hooks/**, tests/**, surprise-row-gate.py and to-pipeline-gate.py, none matching -- so that file was NEVER OUT OF LANE, only out of THIS ORDER'S <paths>, which is a different thing and is the issuer's to grant. GRANTED IN THE BLOCK (.tools/safe_deploy_core.py) and deliberately not in prose, because granting holdings/ to IB-rt-2 in a prose sentence the gate cannot read cost that order a blocked commit on four finished files. AND THE SUBSTANTIVE RULING: declaring ids.py as a BUNDLE MEMBER resolved from _ids/ids.py at build time is a DISTRIBUTION, NOT A SECOND DEFINITION -- the worker had half of it right, since a FILE COPY into the bundle dir would indeed be a second copy of the one opaque-id normalizer which irpt-holdings' BUILD_MANIFEST forbids in those words, but a declaration resolved from the single source is the same mechanism lambda-source-map.json already uses to declare ids.py as a flat build input for three functions, and trading_calendar ALREADY resolves that way inside this very bundle. THE FOURTH OPTION IS REFUSED BY LAW: having the host extract ids.py out of an existing Lambda artifact zip is a SHADOW DISTRIBUTION CHANNEL -- bytes reaching a runtime by a route nothing declares -- under Andrew's COMPLETE VETO; the worker saw it was out of bounds, named it and handed it up rather than taking it. W2-S46 RESOLVED BY READING THE FACE'S OWN SOURCE rather than by changing a timeout: the worker found the named pattern does not wait (mdpf-accrual-trigger sends and returns) and that a bounded wait cannot fit a 60s function, and THE FACE AGREES WITH THE WORKER -- line 36 'no real-calendar wait', line 127 'its first REAL fire is OBSERVED, NOT WAITED FOR ... the battery drives the trigger's handler directly with a controlled clock'. Ruled: SEND AND RETURN, no in-function wait, no raised timeout, and 'observed' must not drift into 'polled on a real clock'. W2-S47 ACCEPTED with all three facts to go ON the arm: production latest.json 404 on all three with only qa/ present (positive-controlled), so r -> r+1 is a FIRST MINT, 'previous revision retained' is VACUOUS until a second build, and the revision is a STRING not an integer. W2-S45 IS REDIRECTED TO AS THE CELL'S REAL WORK and is IN LANE.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.9.0_WK_IRPT_BCKEND~2 under amendment H -- W2-S45 is the armed item and the only one needing no external dependency: refresh.py calls the manifest 'the ONLY memory this cell has between fires' while containing 0 hits across 1 file for put_object|boto3|s3, last_manifest_as_of's single caller is a TEST so the MISSED-trigger detector is UNREACHABLE IN PRODUCTION, _refresh/ is empty in all three buckets though the function has run, and the IAM grants a write no code performs. Until that is built, the cell's central claim is false",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CLOUD 40ef4f62c8 (drain of wk-irpt_bckend-2-2c; rows W2-S44..S47)",
+        ".owned-paths.yaml:1999-2009 read directly: '.tools/git-hooks/**' lane ANY_EXEC_OR_AE, then '.tools/**' lane ANY with note 'Shared .tools/ -- any agent may contribute tooling'",
+        "the worker's on-host read via SSM: python 3.9.25, boto3/pandas/jsonschema resolve, trading_calendar resolves from its real distribution, import directory_runner -> ModuleNotFoundError: No module named 'ids', no ids.py anywhere on the host",
+        "IB-rt-6 face amendment H at 64d60ec630: the <paths> grant, the H1 refusal, the H3 distribution-vs-definition ruling, the H4 send-and-return ruling",
+        "the face's own lines 36 and 127, quoted verbatim in H4, which forbid a real-calendar wait and require the fire to be OBSERVED"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The worker: 'Three remedies, each out of reach -- two by lane, the third by law: the member list is hardcoded in .tools/safe_deploy_core.py; _ids/ is not in <paths>.'",
+    "world_is": "Only ONE of those three is a lane or law problem. .tools/** is lane ANY, so safe_deploy_core.py was out of the ORDER'S paths and not out of lane -- a gap the issuer closes with one line in a block. The _ids/ concern dissolves entirely once the remedy is a DECLARATION resolved from _ids/ rather than a copy into the bundle, because a declaration needs no write to _ids/ at all.",
+    "notes": "⭐ TWO OF THE WORKER'S OWN MEASUREMENTS ARE WORTH THE SLUG INDEPENDENTLY OF THIS CELL. FIRST: the trigger is an EventBridge SCHEDULER SCHEDULE and not a Rule, so `aws events describe-rule` returns ResourceNotFoundException -- A FALSE ABSENCE READ CARELESSLY -- and only `scheduler get-schedule` answers; it reads ENABLED, cron(0 9 ? * MON-FRI *) America/New_York. TWO SERVICES, ONE WORD 'schedule', and the wrong instrument returns a clean not-found rather than an error. SECOND: it named its own 55-hour window to the next real fire as CALENDAR LUCK, NOT A PROPERTY OF ANY PLAN, and declined to build on it -- which is the correct treatment of a deadline that happens to be generous. ⚠ AND A SIDE EFFECT RECORDED RATHER THAN ACTED ON: the worker started runner host i-02448edb624a7a7cf at 06:07Z for the import check and left it RUNNING, correctly, because stopping EC2 requires human confirmation and is neither the worker's act nor the issuer's. The mdpf chain's own 15:00Z run self-stops it, so the exposure is bounded rather than indefinite; it is surfaced to Andrew rather than taken, and any further start must be cleared with the issuer BEFORE it happens, because a started host is a cost nobody else can see."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S48",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-12T07:08Z",
+    "one_line": "THE DEPLOYED REFRESH FUNCTION CANNOT RESOLVE A TRADING CALENDAR AT ALL -- its served zip carries four members and trading_calendar.py is not one of them -- so resolve_calendar() returns None, missed_business_dates() returns None, and every fire that HAS a prior manifest can only answer CALENDAR_UNAVAILABLE. Fixing the missing manifest write (W2-S45) does not reach this: it is the second half of the same dead detector.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "expiry.resolve_calendar's docstring: 'The trading calendar, or None. NEVER an approximation ... imported lazily and by NAME so this module can be read, imported and unit-tested in an environment that has no pandas_market_calendars -- which includes the Lambda runtime.' CLAUDE.md: 'One frontier: lib/trading_calendar.py'. The face's arm (c) requires a MISSED-trigger verdict on the real path, and refresh_firm reaches it only through missed_business_dates.",
+    "world_is": "MEASURED ON THE SERVED ARTIFACT, not on the declaration, because those are different claims. `aws lambda get-function --function-name irpt-directory-refresh` -> Code.Location downloaded and listed: FOUR members, errors.py / expiry.py / handler.py / refresh.py, and NO trading_calendar.py. lambda-source-map.json declares the same four. So `import trading_calendar` inside resolve_calendar (expiry.py:116-128) raises and the except returns None -- deliberately, and honestly, but the consequence is that the deployed function has no calendar. THE CHAIN: resolve_calendar(None) -> None; missed_business_dates(...) -> None; refresh_firm's first branch then returns CALENDAR_UNAVAILABLE for any fire that has a last_manifest_as_of. Today that branch is unreachable for a second reason (W2-S45: nothing is ever persisted, so last_manifest_as_of is always None and the branch is skipped entirely) -- which is why the estate has never seen CALENDAR_UNAVAILABLE either. MEASURED AGAIN AFTER FIXING W2-S45 IN THE TREE: an offline probe with a fake S3 and a controlled clock ran three fires; fire 2 still read `previous: None` after fire 1 had written its manifest, because last_manifest() resolves the calendar FIRST and returns before touching S3. The two gaps mask each other and neither is visible from the other's side.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "zipfile listing of the SERVED irpt-directory-refresh artifact (downloaded from its own Code.Location) -> 4 members, trading_calendar absent",
+        "infra/aws/lambda/ci/lambda-source-map.json, irpt-directory-refresh.files -> ['refresh.py','expiry.py','handler.py','errors.py']",
+        "infra/aws/lambda/investor-reporting/directory/expiry.py:116-128 -- resolve_calendar returns None when the import fails",
+        "infra/aws/lambda/investor-reporting/directory/refresh.py:144-160 -- missed_business_dates returns None when the calendar is unresolved; refresh_firm:177-190 turns that into CALENDAR_UNAVAILABLE",
+        "offline probe with a fake S3 at this worktree: fire 1 wrote _refresh/2026-09-10/manifest.json, fire 2 still read previous=None"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "IN LANE AND THIS ORDER FIXES IT, by the same distinction amendment H3 drew for ids.py: declaring trading_calendar.py as a packaged member of this function RESOLVED FROM lib/trading_calendar.py is a DISTRIBUTION, not a second definition, and lambda-source-map.json is in this order's <paths>. A FILE COPY into directory/ would be a second copy of the estate's ONE frontier and is refused. NOT a defect of IB-s-4: expiry.py's lazy-by-name import with an honest None is the right shape for a module that must be unit-testable without pandas_market_calendars, and round 1 could not have seen this because the branch it feeds was unreachable for the OTHER reason. THE PAIR IS THE POINT: W2-S45 (no memory) and this row (no calendar) each make the missed-trigger detector dead, and fixing either alone leaves it dead -- which is exactly why a green arm on one of them would have been a false green."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S49",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-12T09:41Z",
+    "one_line": "THE SCHEDULED-GOLD HOST CANNOT BUILD ANY OF THE THREE DIRECTORIES AND CANNOT WRITE ANY OF THE THREE DESTINATIONS. Measured from the host's own identity, not from a policy read: 5 of 9 source prefixes the directory runner needs are AccessDenied to mdpf-daily-runner-ec2-role, and 3 of 3 destination prefixes are AccessDenied. The dispatch this cell builds is therefore correct and the BUILD behind it cannot land an artifact. The remedy is an IAM change on a role owned by another root and OUTSIDE this order's <paths>, so it is a BLOCKING row and not something this worker widens into.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO IB-rt-6 acceptance RT6-AC1 (b): 'THREE OF THREE, BEFORE/AFTER. Per firm: the latest.json revision before and after (r -> r+1), the artifact hash differs, the previous revision object still present.' The L5 note the order carries: 'The mechanism is the ESTATE's, not invented ... a trigger Lambda issues an SSM command to the mdpf daily-runner host ... that pulls the minted script ... and runs it with the host's own python and dependencies.' That note establishes the DISPATCH mechanism, and it is correct; it assumes without measuring that the host's own identity may read the three firms' identity sources and write the three firms' directory prefixes. The order's <paths> grants infra/aws/terraform/investor-reporting/directory/ and does not name any root that declares mdpf-daily-runner-ec2-role.",
+    "world_is": "MEASURED ON THE HOST, BY THE HOST, at 2026-09-12 via SSM command fb070815-519e-4699-9a6b-193267476d25 (AWS-RunShellScript, read-only, /tmp only, Status Success rc=0). Caller printed by the run itself: arn:aws:sts::313476888478:assumed-role/mdpf-daily-runner-ec2-role/i-02448edb624a7a7cf. A POSITIVE CONTROL ran in the same sweep so a blanket failure could be told from a scoped one: s3://opal-data-mdpf/code/scripts/ READ-OK. READS THE RUNNER NEEDS (denominator 6 source prefixes + 3 destinations): READ-OK opal-data-inf/silver/api_dims/accounts_v2/; READ-OK opal-data-assets/blackdiamond/cottonwood/silver/fact_allocations/; READ-DENY opal-data-49financial/gold/advi/dimensions/dim_relationship/ (AccessDenied); READ-DENY opal-data-assets/blackdiamond/49f/silver/dim_account_xref/ (AccessDenied); READ-DENY opal-data-inf/silver/api_dims/representatives/ (AccessDenied); READ-DENY opal-data-inf/silver/api_dims/household_rep_mapping/ (AccessDenied). DESTINATIONS, 0 of 3 reachable: opal-data-bd/investor-reporting/, opal-data-inf/investor-reporting/ and opal-data-cot/investor-reporting/ are all AccessDenied -- opal-data-cot appears in the role's policy document not at all. THE POLICY READ AGREES WITH THE HOST'S OWN ATTEMPT, which is the second instrument: mdpf-daily-runner-ec2-role carries one inline policy (mdpf-runner-scoped) and one attached policy (AmazonSSMManagedInstanceCore); the inline document names opal-data-49financial in no statement, grants opal-data-inf only silver/api_dims/accounts_v2/*, gold/eclipse/*, silver/eclipse/*, orion/jwt/* and one gold timeseries object, and grants s3:PutObject on no firm bucket at all. ALSO MEASURED IN THE SAME RUN, and separately blocking the same build: the host has NO copy of any firm's runner_common.py (bounded find over /opt /home /srv -> 0 hits), and directory_runner.py instantiates one per firm BY REPO PATH in SourceSet.__init__ (data/assets/scripts/gold/runners_49f, data/inf/scripts/gold/runners_inf, data/cot/scripts/gold/runners_cot); the minted bundle investor-reporting.tar.gz carries exactly three members (directory_runner.py, holdings_snapshot.py, ids.py -- tar -tzf printed on the host) and none of them is a runner_common. THE THREE FIRM SOURCE TREES ARE ALSO OUTSIDE THIS ORDER'S <paths>. WHAT IS NOT BLOCKED, measured in the same sweep so the two are not confused: the host runs python 3.9.25 with boto3 1.42.97, pandas 2.3.3, jsonschema 3.2.0, pyarrow 21.0.0 and numpy 2.0.2; it is running and its SSM agent is Online; ssm:SendCommand from this seat reached it and returned Success. The DISPATCH half of this cell is buildable and is being built; the BUILD half is not.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SSM command fb070815-519e-4699-9a6b-193267476d25 on i-02448edb624a7a7cf, Status Success rc=0 -- the READ-OK/READ-DENY table above is its verbatim stdout",
+        "aws iam get-role-policy --role-name mdpf-daily-runner-ec2-role --policy-name mdpf-runner-scoped -- 26 statements, none naming opal-data-49financial, none granting s3:PutObject on any firm bucket",
+        "aws iam list-attached-role-policies --role-name mdpf-daily-runner-ec2-role -> AmazonSSMManagedInstanceCore only",
+        "data/assets/scripts/gold/runners_49f/runner_common.py: GOLD_BUCKET = 'opal-data-49financial', SILVER_BUCKET = 'opal-data-assets'",
+        "data/assets/scripts/gold/investor_reporting/directory_runner.py:217-231, 300-310, 322-331 -- Firm49F/FirmINF/FirmCOT each _import_runner(<repo path>, 'runner_common') in __init__",
+        "aws s3api head-object opal-data-mdpf code/scripts/assets_gold/investor_reporting/investor-reporting.tar.gz -> ETag a35420ac32cd714856db41fbcab5a073, source-repo-paths naming three files",
+        "aws s3api list-objects-v2 on investor-reporting/directory/ in opal-data-bd, opal-data-inf and opal-data-cot -> None in all three (no production directory artifact exists yet in any firm bucket, so every build here is a FIRST MINT)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "WHAT THIS WORKER DOES INSTEAD OF WIDENING. The order's own arm (d) already carries the branch this lands in: 'or a BLOCKING row naming the missing dependency and this arm reads BLOCKED'. So: the SSM dispatch, its least-privilege Lambda IAM, the dispatch/reconcile accounting and the arms that do not need a landed artifact are built and deployed; arm (b) and the two build-dependent halves of arm (c) read BLOCKED against this row and RT6-AC1 is reported FAIL rather than flipped. NO WRONG ARTIFACT IS REACHABLE BY THE WINDOW THIS LEAVES (the order's G4 question, answered rather than implied): after the deploy, a scheduled fire dispatches a command that fails on the host, and the runner's own _assert_destination plus the AccessDenied above mean nothing is written anywhere -- the fire records the dispatch, the NEXT fire reads the command's invocation status back and records REFRESH_FAILED with the command id. A RUNNING state is therefore perishable and cannot sit forever. THE REMEDY IS NOT MINE TO CHOOSE EITHER: extending a SHARED scheduled-gold host role to read three firms' identity dimensions and write three firms' investor-reporting prefixes is a cross-firm widening on a role other pipelines assume, and the standing bound puts that behind a named sign-off, not behind a worker's convenience. NOT A DEFECT OF IB-rt-5: the bundle it minted is correct for what it declared, and the ids.py member this worker added under amendment H3 resolved the import blocker it did have."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S50",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-12T08:40Z",
+    "one_line": "S3 CANNOT SAY 'ABSENT' TO A CALLER THAT CANNOT LIST, AND THAT MADE THIS CELL UNABLE TO BOOTSTRAP. A GetObject on a MISSING key returns 403 AccessDenied -- not 404 -- when the principal has no s3:ListBucket, so the refresh's first read of its own memory arrived as a denial for 3 of 3 firms, the classifier correctly refused to call it absence, and no fire could ever write the first manifest. FIXED IN LANE: absence is now established by a prefix LIST before any GET, under a ListBucket grant CONDITIONED to exactly the prefix the role could already read.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "infra/aws/terraform/investor-reporting/directory/schedule.tf, cell IB-s-4's own comment: 'PutObject ONLY, and ONLY under _refresh/. No delete, no overwrite of a directory artifact, no ListBucket: the manifest key is computed from the business date, never discovered.' And refresh.py's `_absent()`: 'only a genuine not-found is absence; everything else RAISES and is recorded as a failed fire' -- written against row W2-S45, where a bare except would have made an AccessDenied read as 'no previous manifest' and switched the MISSED detector off. Both statements are correct. Together they deadlock.",
+    "world_is": "MEASURED ON THE DEPLOYED FUNCTION, and it could not have been measured any other way. `aws lambda invoke irpt-directory-refresh` with business_date 2026-09-11 returned StatusCode 200 with THREE envelopes reading REFRESH_FAILED/FAILED and `manifest_read_error: AccessDenied`, `manifest_key: None`, `manifest_written: None` -- 3 of 3 firms, nothing written anywhere. THE SECOND INSTRUMENT, WHICH IS NOT A RE-RUN OF THE FIRST: `simulate-principal-policy`, SINGLE ARN and exact grain (a batched multi-ARN call poisons the verdict and a wrong-grain ARN is a third false-deny class), on the role irpt-directory-refresh-role: s3:GetObject on arn:aws:s3:::opal-data-bd/investor-reporting/directory/_refresh/2026-09-11/manifest.json -> ALLOWED, while s3:ListBucket on arn:aws:s3:::opal-data-bd -> implicitDeny. So the denial was never about the object; it is S3's documented rule that a caller without ListBucket is told 403 rather than 404 for a key that does not exist. AN OFFLINE FIXTURE COULD NOT SEE IT AND MINE DID NOT: the controlled-clock probe's fake S3 raised a 404-shaped error for a missing key, so every offline arm passed about a failure the fixture could not express. A fixture that cannot represent the failure cannot score it. AFTER THE FIX, MEASURED THE SAME WAY: the same invoke returns REFRESH_DISPATCHED/RUNNING for 3 of 3 with manifest_read_error None and manifest_written True, and the three manifests read back from S3 carry build_dispatch SSM with real command ids.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aws lambda invoke irpt-directory-refresh, payload business_date=2026-09-11 -- 3 of 3 envelopes REFRESH_FAILED with manifest_read_error=AccessDenied, manifest_written=None",
+        "aws iam simulate-principal-policy, single ARN: s3:GetObject on the exact manifest key -> allowed; s3:ListBucket on arn:aws:s3:::opal-data-bd -> implicitDeny",
+        "infra/aws/lambda/investor-reporting/directory/refresh.py `_absent()` -- only NoSuchKey/404/NotFound is absence; 403 raises",
+        "after the fix: aws iam simulate-principal-policy s3:ListBucket on opal-data-bd with context s3:prefix=investor-reporting/directory/_refresh/ -> allowed, and the IDENTICAL call with s3:prefix=gold/ -> implicitDeny (the negative control)",
+        "after the fix: the same invoke -> 3 of 3 REFRESH_DISPATCHED, manifests present at <firm bucket>/investor-reporting/directory/_refresh/2026-09-11/manifest.json"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "FIXED IN LANE BY THIS ORDER AND THE FIX DELIBERATELY DOES NOT LOOSEN THE CLASSIFIER, which would re-arm the very defect W2-S45 was written against. Absence is ESTABLISHED BEFORE the GET: `list_keys()` is the absence oracle (a refused list still RAISES; only an EMPTY SUCCESSFUL list is absence), `last_manifest` takes ONE list of the cell's own `_refresh/` prefix and then walks the TRADING CALENDAR exactly as before -- the order of candidates is still the calendar's, never the listing's, so 'the key is computed from the business date, never discovered' remains true. The new ListBucket statement is CONDITIONED on s3:prefix matching exactly the prefix the existing GetObject statement already grants, with both derived from local.directory_prefix, so the function may list precisely the set it may already read and a prefix change moves the two grants together. WORTH GENERALISING BEYOND THIS CELL: every least-privilege role in this estate that reads a computed S3 key WITHOUT ListBucket has the same property -- it cannot tell a missing object from a denied one, and any code that classifies the two apart will, correctly and silently, treat every absence as a failure. That is a property of the GRANT SHAPE, not of any one cell."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S51",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-12T09:02Z",
+    "one_line": "THE MINTED BUNDLE CANNOT CARRY WHAT THE RUNNER ACTUALLY NEEDS. directory_runner.py reaches ELEVEN repo paths by derivation; the bundle declares four of the files behind them and the remaining SEVEN are not distributable as flat members -- three are a per-firm `runner_common.py` imported BY REPO PATH, each with its own transitive tree. Enumerated by subtraction over the module's own references with the denominator printed, so a further one cannot appear without the count disagreeing.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "The issuer's own amendment carried in this order: 'THE RUNNERS IMPORT FIRST-PARTY CODE BY REPO SHAPE ... The SSM run therefore unpacks into a repo-shaped path on the host (or the host's tree carries lib/ at the expected depth) and arm (d) prints the import check's stdout -- the runner's modules, pandas and trading_calendar each resolved -- BEFORE the first build; a missing dependency on the host is a BLOCKING row and arm (d) reads BLOCKED.' The repo-shaped unpack is implemented and the import check now passes; what the amendment did not enumerate is how many repo files the shape must contain.",
+    "world_is": "ENUMERATED BY SUBTRACTION, NOT BY RECALL, over a printed denominator: a regex sweep of `_REPO / ...` and `_import_runner(...)` in data/assets/scripts/gold/investor_reporting/directory_runner.py returns 11 references. They resolve to SEVEN distinct repo files plus one directory: lib/trading_calendar.py (:106-107), infra/aws/lambda/investor-reporting/_ids/ids.py (:112), infra/aws/lambda/investor-reporting/_contracts/DirectoryEntry.schema.json (:120), data/firm_registry.json (:122), infra/aws/lambda-edge/_shared/firm-config.mjs (:123), and THREE per-firm runner_common.py modules imported by repo path at :233, :305 and :330 (data/assets/scripts/gold/runners_49f, data/inf/scripts/gold/runners_inf, data/cot/scripts/gold/runners_cot). THE BUNDLE NOW CARRIES FOUR MEMBERS -- directory_runner.py, holdings_snapshot.py, ids.py and (added by this order) trading_calendar.py -- so TWO of the seven are covered for the directory runner and FIVE are not. MEASURED ON THE HOST, ONE LAYER AT A TIME, each by a dispatch from the DEPLOYED function: with three members the host printed 'IMPORT-FAIL ... No module named trading_calendar' (command 940c828f-c176-4a2d-afcc-1693d3d97fe6, Failed rc=1); with four it printed 'IMPORT-OK first-party modules resolved: trading_calendar, ids, contract' and \"SOURCE_SETS ['49financial', 'cottonwood', 'inflection']\", then failed at the NEXT file -- FileNotFoundError on infra/aws/lambda-edge/_shared/firm-config.mjs (command a83c5d88-2392-43f2-be55-c9845a0b1384, Failed rc=1). The host carries NO runner_common.py anywhere (bounded find over /opt /home /srv -> 0 hits).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "regex sweep of `_REPO /` and `_import_runner(` over directory_runner.py -> 11 references, listed with line numbers above",
+        "SSM command 940c828f-c176-4a2d-afcc-1693d3d97fe6 stdout: three members, IMPORT-FAIL ModuleNotFoundError trading_calendar",
+        "SSM command a83c5d88-2392-43f2-be55-c9845a0b1384 stdout: four members, IMPORT-OK, then FileNotFoundError on infra/aws/lambda-edge/_shared/firm-config.mjs",
+        "aws s3api head-object on the re-minted bundle: ETag c596538e9494b640e27de50720a14b52, 41844 bytes, four per-member sha metadata keys, all four re-derived from the repo files by hashlib and EQUAL",
+        "SSM command fb070815-519e-4699-9a6b-193267476d25: find /opt /home /srv -name runner_common.py -> 0 hits"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "WHY THIS ORDER DECLARED ONE MEMBER AND STOPPED. trading_calendar.py was declared because it is a MODULE-LEVEL import -- without it the runner cannot be imported at all, so arm (d)'s import check could not even be attempted -- and because it is the estate's ONE frontier, which makes declaring it a DISTRIBUTION and copying it a second definition (amendment H3's distinction). The remaining five are a different problem: three of them are per-firm modules with their own transitive trees, and chasing them one mint at a time would walk a tail that terminates at a wall this order cannot clear anyway -- row W2-S49, where the host's identity is AccessDenied on 5 of 9 source prefixes and 3 of 3 destinations. Adding members to a shared DS-lane artifact to serve a path that cannot complete is churn, so the gap is RECORDED WITH ITS FULL ENUMERATION rather than half-closed. THE REMEDY IS A SHAPE DECISION, NOT A MEMBER LIST: either the host carries a repo checkout at the depth the runner derives, or the runner's import shape changes -- and the second is expressly refused by the amendment ('No runner is edited to change its import shape here'), so it is an L10 item for the IRPT lane."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S52",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-12T08:14Z",
+    "one_line": "`.tools/terraform.exe` was NOT provisioned in this worktree, although the order states the issuer provisioned it and forbids a PATH substitute. I restored it by copying the byte-identical binary from the workspace root rather than substituting a PATH terraform, and recorded the hash equality -- the premise is repaired, not worked around.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO IB-rt-6, bounds 4: '.tools/terraform.exe is provisioned in your worktree by the issuer -- use it by that path, never a PATH substitute (a substitute re-pins remote state)'.",
+    "world_is": "`ls -la /c/tmp/wk-irpt-2-2c/.tools/terraform.exe` -> 'No such file or directory'. The binary is gitignored (`git check-ignore -v` -> .gitignore:193 `.tools/*.exe`), so a fresh linked worktree never carries it -- the same class the estate already recorded as 'a gitignored tool binary is absent in every fresh worktree'. REPAIRED RATHER THAN SUBSTITUTED: copied from C:\\Users\\AndrewBerman\\Desktop\\ajb_workspace\\.tools\\terraform.exe, and both files hash to sha256 7d6217a8b147d7e6d852f4b331a707df... (first 32 hex, computed on both paths in one call), 91,104,424 bytes, `terraform version` -> Terraform v1.9.8 on windows_amd64. It remains gitignored and unstaged, so nothing about the repository changed.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ls -la .tools/terraform.exe in the worktree -> No such file or directory",
+        "git check-ignore -v .tools/terraform.exe -> .gitignore:193 .tools/*.exe",
+        "sha256 of the workspace-root binary and the copied one, printed side by side and equal; terraform version -> v1.9.8",
+        "git status --porcelain .tools/ -> empty after the copy"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "FILED BECAUSE IT IS A PREMISE OF THE ORDER THAT DID NOT HOLD, not because it cost anything -- it cost one copy. It is worth a row for the NEXT worker: a worktree cut for a cell whose deliverable includes a terraform apply needs this binary placed AFTER the worktree is created, because `git worktree add` cannot carry a gitignored file, and the order's own bound makes the obvious fallback (PATH terraform) refused. The substitute is refused for a real reason -- a different terraform version re-pins remote state -- so the right repair is a byte-identical copy with the hashes printed, which is what this row records."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S53",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-12T09:20Z",
+    "one_line": "THE PREFLIGHT THIS ORDER NAMES READS 'statements: 0' FOR A ROLE THAT HOLDS SEVEN. `comp-iam service irpt-directory-refresh` prints statements: 0 for BOTH irpt-directory-refresh-role and irpt-directory-refresh-scheduler-role, while the APPLIED plane (aws iam get-role-policy) returns 7 and 1. A zero from a preflight is the most dangerous number a tool can print, because a reader treats it as 'nothing to check'.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO IB-rt-6 <preflight>: 'this cell's change to irpt-directory-refresh is re-graded by the assignee at Phase 1 by `comp-iam service irpt-directory-refresh` and at Phase 2 by `comp-iam gaps` -- both recorded in the instance. BLIND SPOT: DESIRED plane only; a GRANTED-BROAD wildcard cannot be falsified by a resource check.' The declared blind spot is about PLANE. This is not a plane problem: the DESIRED plane -- the Terraform this worker wrote and committed -- carries the statements, and the tool still reads zero.",
+    "world_is": "MEASURED, BOTH PLANES, SAME ROLE, SAME MINUTE. `comp-iam service irpt-directory-refresh` -> 'SERVICE: irpt-directory-refresh-role [iam-role] ... tf_resource: irpt_directory_refresh, source: infra/aws/terraform/investor-reporting/directory/schedule.tf, statements: 0' and the same for irpt-directory-refresh-scheduler-role. `aws iam get-role-policy --role-name irpt-directory-refresh-role --policy-name irpt-directory-refresh-policy` -> SEVEN statements (ReadFirmDirectoryPrefixOnly, WriteRefreshManifestsOnly, ListExactlyWhatItMayAlreadyRead, OwnLogStreamOnly, DispatchTheDirectoryBuildToOneRunnerOnly, StartThatRunnerNeverStopIt, ReadBackTheCommandsThisFunctionSent). The Terraform declaring all seven is committed at 9696f637a0 in the file comp-iam itself names as the source. THE TOOL DOES DECLARE A PARSER LIMIT IN THE SAME RUN, and it is the likely mechanism rather than a guess this row asserts: `comp-iam gaps` prints 'policy blocks attached 389; NOT ATTACHED 26 (a role ref this parser cannot resolve)' and adds, in its own voice, 'statements comp-iam has NEVER SEEN. Its verdicts are computed WITHOUT them, so a role may hold a grant this tool cannot find. NOT a plane limitation -- a parser limitation, and it is stated rather than swallowed.' The `aws_iam_role_policy` in this root sets `role = aws_iam_role.irpt_directory_refresh.id` and its `policy` comes from a `data.aws_iam_policy_document`, which is a two-hop reference. CORROBORATION FROM THE SAME RUN: `comp-iam gaps` reports 'Total: 12 missing | 291 deny-present | 1 coverage-unknown | 2 resource-mismatch across 31 service(s)' and irpt-directory-refresh appears in NONE of them -- which is exactly what a role the parser cannot see would look like, and is INDISTINGUISHABLE from a role with no gaps.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "timeout 400 comp-iam service irpt-directory-refresh -> statements: 0 for both roles",
+        "aws iam get-role-policy --role-name irpt-directory-refresh-role --policy-name irpt-directory-refresh-policy -> 7 statements, listed by Sid",
+        "infra/aws/terraform/investor-reporting/directory/schedule.tf @9696f637a0 -- the seven statements in data.aws_iam_policy_document.irpt_directory_refresh, attached by aws_iam_role_policy.irpt_directory_refresh",
+        "comp-iam gaps, same session: 'policy blocks attached 389; NOT ATTACHED 26 (a role ref this parser cannot resolve)' and 'a role may hold a grant this tool cannot find'",
+        "comp-iam gaps totals: 12 missing / 291 deny-present / 1 coverage-unknown / 2 resource-mismatch across 31 services, none of them irpt-directory-refresh"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "NOT FIXED HERE AND NOT MINE TO FIX -- comp-iam is outside this order's <paths> and repairing a neighbouring tool is expressly refused. RECORDED BECAUSE OF WHAT THE ZERO WOULD DO TO THE NEXT READER: this cell's whole IAM change is four new statements on this exact role, and the preflight the order names to grade that change reports the role as having none. A reviewer who took the preflight at face value would conclude there was nothing to review. The instance records the preflight's output VERBATIM with the applied-plane measurement BESIDE it, never instead of it. THE GENERAL SHAPE IS THE CATCHABLE PART: a census tool that cannot resolve a reference emits ZERO, and zero is the same symbol it emits for 'nothing there'. `comp-iam attach-census` is the tool's own named remedy for listing the 26 blocks it never saw, and running it against this root would say whether this role is one of them -- one read, and it is the read whoever owns comp-iam should take before anyone else quotes a comp-iam zero about an IRPT role."
+  },
+  {
+    "id": "IRPT_BCKEND-S50",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-12T10:00:30Z",
+    "one_line": "IB-rt-6 WORKED TO ITS WALL AND STAYS OPEN: 14 of 17 graded checks PASS, 0 FAIL, 3 BLOCKED, status untouched at pending. Amendment H's grant WORKED and the worker proved it with a negative control -- the host now reads 'IMPORT-OK first-party modules resolved: trading_calendar, ids, contract' where the SAME script printed IMPORT-FAIL two mints earlier, so declaring ids.py as a bundle member resolved from _ids/ was the right remedy and was not a second definition. THE REMAINING BLOCKER IS AN IAM CHANGE ON A SHARED HOST ROLE AND I AM ROUTING IT, NOT GRANTING IT. mdpf-daily-runner-ec2-role is AccessDenied on 5 of 9 prefixes directory_runner.py reads and on 3 of 3 firm DESTINATION prefixes, measured FROM the host BY the host with a positive control in the same sweep. Rule 27 says no lane enumerates a worker, so this order's <paths> block would technically suffice to grant it -- BUT infra/aws/** is lane CLOUD_OPS_OR_ETL ('AE 0.5/0.6/0.6.1/0.7 only'), the role is a SHARED scheduled-gold host role carrying ANOTHER PROJECT'S PRODUCTION CHAIN, and an IAM widening there sits outside this project's blast radius. A path grant I have the mechanical power to write is not the same as an act this project should take. ROUTED to 1.0.0_SA_CTO for AE assignment, and flagged HIGH because it gates SIX OF TEN OUTCOMES: rt-6 itself owns FWD-7 and contributes FWD-1, and IB-rtb-1 sits behind rt-6 on a real dependency edge carrying FWD-2, FWD-5, FWD-8, FWD-11 and FWD-1. ONE AE-OWNED IAM CHANGE IS THE WHOLE REMAINING CRITICAL PATH OF THE ROUND.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO -- route the mdpf-daily-runner-ec2-role IAM widening to an AE lane (infra/aws/** is CLOUD_OPS_OR_ETL). Until it lands, IB-rt-6 cannot close, IB-rtb-1 cannot start, and six of ten FWD outcomes stay ungradeable. This seat is NOT granting a worker write access to another pipeline's shared host role",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CLOUD 5931cf2de9 (drain of wk-irpt_bckend-2-2c; rows W2-S48..S53; 17 worker commits)",
+        "the worker's on-host AccessDenied sweep: 5 of 9 read prefixes and 3 of 3 firm destination prefixes, with a positive control in the same sweep",
+        ".owned-paths.yaml 'infra/aws/**' lane CLOUD_OPS_OR_ETL, note 'AWS infra (Terraform, IAM, Lambda) -- AE 0.5/0.6/0.6.1/0.7 only'",
+        "decomp edge set: IB-rt-6 -> IB-rtb-1, and the coverage line giving rt-6 FWD-7 own + FWD-1, rtb-1 FWD-2/5/8/11 + FWD-1",
+        "issuer's own run: comp-iam service irpt-directory-refresh -> 'statements: 0' for tf_resource irpt_directory_refresh"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The order names `comp-iam service` as the preflight that grades an IAM change in this cell.",
+    "world_is": "That preflight reads statements: 0 for a role whose policy resource demonstrably exists, so it cannot grade the very change the order names it for.",
+    "notes": "TWO ESTATE-WIDE FINDINGS, BOTH VERIFIED BY THIS SEAT RATHER THAN RELAYED. (1) W2-S50: S3 ANSWERS 403, NOT 404, FOR A MISSING KEY WHEN THE CALLER HAS NO ListBucket. The deployed refresh's FIRST read of its own memory therefore arrived as a DENIAL for 3 of 3 firms and the cell could not bootstrap. The worker's offline fixture returned 404 and COULD NEVER HAVE SEEN IT -- a fixture that cannot represent the failure cannot score it. Fixed in lane WITHOUT loosening the classifier: absence is established by a prefix LIST before any GET, under a ListBucket grant conditioned to exactly the prefix the role could already read, with a negative control (s3:prefix=gold/ -> implicitDeny). ⭐ THE GENERAL FORM IS THE VALUABLE PART AND IT IS NOT ABOUT THIS CELL: EVERY LEAST-PRIVILEGE ROLE IN THIS ESTATE THAT READS A COMPUTED S3 KEY WITHOUT ListBucket HAS THIS PROPERTY -- a first read of a not-yet-written key is indistinguishable from a permissions failure, and the more correctly scoped the role, the more certain the confusion. (2) W2-S53, and the issuer verified the MECHANISM rather than just the symptom: comp-iam service reads statements: 0 because the policy is `data.aws_iam_policy_document.irpt_directory_refresh.json` -- A DATA-SOURCE INDIRECTION THE PARSER DOES NOT FOLLOW. It is not specific to this role: ANY role whose policy comes from a data source rather than an inline document reads ZERO, and that is the idiomatic Terraform pattern. The tool's own startup NOTEs already disclose a related FALSE-MISSING class from reused module labels, so this is a second blindness beside a known one. THIRD INSTANCE TONIGHT of one shape: A NAMED ENFORCEMENT SURFACE IS A CLAIM UNTIL SOMEONE RUNS IT -- after the IB-s-18 battery pinned at rc=1 and the obligation routed into it, this is a preflight that reads zero for exactly the change it is named to grade."
+  },
+  {
+    "id": "IRPT_BCKEND-S51",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "1.0.0_SA_CTO",
+    "surfaced_at": "2026-09-13T09:45:57Z",
+    "one_line": "CROSS-PROJECT ROUTING from IRPT_FNTEND by 1.0.0_SA_CTO, a day late. (1) The producer side of the smoke-map seam is RED: _contracts/tests/test_seam_paired.py reads 14 failed, 39 passed. (2) The producer's copy of the StatusEnvelope contract never received the v0.14 amendment the consumer's copy carries.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO -- routing both items into IRPT_BCKEND's next L4 amendment packet: re-base the paired test to the v1 declared paths and the grown route table, and regenerate the producer's contract copies from the v0.14 source. The remedy cells are 2.0.0_SA_COO~B's to cut once that L4 lands. DISARMS when both carriers agree and the paired test is green on a named portal commit.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "pytest over infra/aws/lambda/investor-reporting/_contracts/tests/test_seam_paired.py @49035683d1, run by this seat 2026-09-13: 14 failed, 39 passed -- ten test_paired_consumer_request_through_the_real_dispatcher cases fail on /api/scoped/investor-reporting/<op> keys, and test_every_declared_route_has_a_response_contract_whose_refs_resolve asserts 12 == 11",
+        "docs/contracts/investor-reporting/v1/StatusEnvelope.schema.json: source_pin b8e98d5a4d, allOf makes business_date REQUIRED on READY/PARTIAL/STALE/NEEDS_CORRECTION/UNCERTAIN only",
+        "infra/aws/lambda/investor-reporting/_contracts/StatusEnvelope.schema.json: source_pin 62301f71e0, no allOf, source_dates.required ['business_date'] unconditionally",
+        "IRPT_FNTEND-S40 and IRPT_FNTEND-W2-S15; round-3 analysis RULING G @b453306a65; round-4 analysis s.6 @23af9479ab"
+      ]
+    },
+    "spec_asserts": "IRPT_FNTEND round 3 (RULING G @b453306a65) retired the consumer-side byte pin for a content pin and said this seat would carry the producer side to IRPT_BCKEND. IRPT_BCKEND PRD v0.14 (@b8e98d5a4d) made StatusEnvelope.business_date state-conditional.",
+    "world_is": "(1) The consumer's smoke map now carries v1 DECLARED paths; the producer's paired test still asserts the flat-slug keys, so all ten paired-request cases fail, and one more fails on a route table that grew from 11 to 12. The worker measured 2 failed, 51 deselected on 2026-09-12; nothing carried it here since. (2) Two carriers of one contract disagree: the consumer copy is state-conditional at b8e98d5a4d, the producer copy requires business_date on every state at 62301f71e0. A producer omitting business_date on a no-answer state, as v0.14 permits, fails its own copy and passes the consumer's. GRAIN CAVEAT: the pytest run read the portal WORKING TREE's smoke map, which the CVO recorded as carrying uncommitted paths.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "This seat is half the cause of (2): its v0.14 amendment reached one carrier of two. ARMED because any IRPT_BCKEND proof that runs the _contracts tests reads red -- or, under the open count-bar checker defect (IRPT_FNTEND-S56), could read a match it should not."
   }
 ]
 ```

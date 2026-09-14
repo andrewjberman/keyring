@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~4</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-11</issued_date>
-<status>pending -- RE-SEATED by 2.0.0_SA_COO~B at 2026-09-11 ~17:3xZ from slot ~3 to slot ~4 (a head with no incoming edge; slot ~4 freed by IB-rt-8's second COMPLETE at f20bebd15d; slot ~3 stays on IB-rt-9 then IB-rt-11). Handed now.</status>
+<status>complete -- RT10-AC1 PASS-by-output (rc 0, IBRT10-GLYPHS-DATES-PROVENANCED, arms 4 of 4, two runs byte-identical); RT10-AC2 is the JUDGMENT criterion and carries its output with NO verdict under UNVERIFIABLE-BY-INSTRUMENT, naming 3.0.0_SA_CVO as the oracle at L9. proof-of-spec-check rc 0 VALID over RT10-AC1,RT10-AC2 (13 artifact rows, 11 resolved at pin, 6 surprise entries all resolving to channel rows). Six rows filed: IRPT_BCKEND-W4-S26 (the fi-ligature codes are UNRESOLVED, not recoverable -- the CTO ruling's second branch, taken on measurement), W4-S27 (the OPTIONAL date_claim enum, for the CTO's L10 read), W4-S28 ARMED (round 1 dated 15 of 61 overview rows from a neighbouring block and 12 of 108 multicomp rows from the field census, all certifying under three legs), W4-S29 ARMED (battery_ib_s_18.py crashes mid-run on the path register's own data -- pre-existing, another cell's deliverable, not touched), W4-S30 (the register's printed denominator was stale by 41) and W4-S31 (a hand-built PDF is TEXT to git). NO DEPLOY in this cell, per its own BOUNDS: the extractor rides the irpt-ycharts-generate package's next build and the schema change's consumer effect is graded at IB-rtb-1. THE FIXTURES ARE SYNTHETIC -- real vendor output on synthetic holdings plus census-generated specimens; no representative real-client PDF exists, none was manufactured, and nothing here is a certification against real client input (FWD-4, FWD-8). Completed by 0.9.0_WK_IRPT_BCKEND~4 on branch wk-irpt_bckend-2-4b. HISTORY: RE-SEATED by 2.0.0_SA_COO~B at 2026-09-11 ~17:3xZ from slot ~3 to slot ~4 (a head with no incoming edge; slot ~4 freed by IB-rt-8's second COMPLETE at f20bebd15d; slot ~3 stays on IB-rt-9 then IB-rt-11), then cold-started per the ~22:5xZ amendment.</status>
 
 **Directive:** D9 | **Fabric:** laptop | **Round:** 2 | **PRD:** `../prd/IRPT_BCKEND_PRD.md` v0.13 @e6ba5d9878 (ADMITTED, both L4-R halves SIGNED) | **Round-1 analysis:** `../ledger/ROUND_ANALYSIS.round1.md` @0d57ceb2f9, ruling 6 (extraction) | **Slug rows this cell closes:** W3-S10, W3-S11 | **Decomp cell:** `IB-rt-10` (`../decompositions/IRPT_BCKEND_DECOMP.md` v0.2, s.1 + s.2) | **outcome_ref:** FWD-4 (contrib), FWD-3 (contrib) | **PRD candidate:** B10
 
@@ -51,6 +51,67 @@ the extractor and certifier with cid refusal and undated holdouts (IB-s-10); the
 ---
 
 **ISSUER AMENDMENT (2.0.0_SA_COO~B, 2026-09-11 ~17:3xZ, at the hand-off):** this order is executed by slot ~4 (`0.9.0_WK_IRPT_BCKEND~4`, the subagent that built and deployed the export worker); every serial in this face reads ~4 accordingly and the deliverables home is `deliverables/0.9.0_WK_IRPT_BCKEND~4/`. The decomposition's seating table (v0.2 s.5) is descriptive; the fanout is unchanged at five chains. Two facts from IB-rt-8's judgment bear on glyphs: the four round-1 PDFs embedded SegoeUI/TimesNewRoman against a package declaring Lato (0 of 3 declared fonts embedded, 4 of 4 artifacts), and the live render fetched its typefaces from `fonts.googleapis.com` (2 foreign of 12 requests) -- the font mapping this cell writes is per document and provenanced, never a fetch.
+
+---
+
+## ISSUER AMENDMENT -- 2026-09-11 ~22:5xZ (`2.0.0_SA_COO~B`, post-reboot re-entry). THIS BLOCK GOVERNS OVER EVERY LINE ABOVE IT.
+
+**Authority:** Andrew-direct ~22:25Z at the `1.0.0_SA_CTO` terminal, VERBATIM AND ENTIRE: *"load up and get
+/canonical-flow driving for COO~B (IRPT_BCKEND) and COO~F (IRPT_FNTEND)."* Relayed as msg 96019; recorded at
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260911_2225Z_RESUME_AFTER_REBOOT_DRIVE_BOTH_IRPT_LANES.md`
+@4a90ec8d2f. It lifts exactly ONE thing: MSTR 95994's instruction 2, "start nothing new". **The round stays FROZEN
+(Rule 27)** -- no re-cut, no PRD re-open; an off-spec finding is a surprise ROW and you keep working.
+
+### A1. YOU ARE A COLD START. The IDENTITY section's *"the same subagent as round 1, continued with its context intact"* is FALSE and is STRUCK.
+This device rebooted at ~22:0xZ. **Every worker subagent of this round is DEAD and cannot be resumed.** You carry no
+prior context and must assume none. Your whole context is: THIS FACE (the newest amendment governs), and nothing else -- no WIP hand-off exists for this cell (see A5).
+
+### A2. NEW WORKTREE -- the pair named in IDENTITY IS GONE.
+- **Worktree:** `/c/tmp/wk-irpt-2-4b` on branch `wk-irpt_bckend-2-4b`, cut by the issuer from CLOUD HEAD `7d6db9bcfa`.
+- The old pair (`/c/tmp/wk-irpt-2-3 on wk-irpt_bckend-2-3, which the IDENTITY section names and which was never yours`) was REMOVED after its branch was verified an ancestor of the tip. Do not look for it, and
+  **never spawn into an old worktree.**
+- **Every path in this face is relative to the NEW worktree root**; make it absolute by prefixing `/c/tmp/wk-irpt-2-4b/`.
+- First act unchanged: `git rev-parse --abbrev-ref HEAD`, then `test -d org && test -d .tools && echo TREE-OK`.
+
+### A3. FRESH-WORKTREE TRAPS THIS ROUND HAS ALREADY PAID FOR -- none of these is yours to rediscover.
+- **`.tools/terraform.exe` is gitignored and therefore ABSENT here.** Four roots read `rc 1` for want of
+  `terraform init`, and **an rc is not a reading.** Resolve the binary by path; `init` each root before any plan.
+- **`safe-apply.sh` has TWO identity gates.** `export OPAL_AGENT_SERIAL=...` satisfies only the commit-lane one; the
+  halt gate reads `org/mcp/sessions/$CLAUDE_CODE_SESSION_ID.serial`, gitignored per-session state **you must write
+  yourself BEFORE any apply** (row W4-S2). Write it before you need it.
+- **A rail denial ABORTS THE WHOLE BASH CALL**, so every later segment of an `&&` chain is a SILENT no-op --
+  including your commit. Put a gated read in its own call, or verify the later segment's EFFECT.
+- **`safe-commit.sh` force-adds gitignored files under a DIRECTORY pathspec** (it once staged a 685 MB provider
+  binary). Always pass explicit FILE paths.
+- **Heredoc backslashes arrive HALVED** in the Bash tool. Write scripts and commit messages with the Write tool.
+- A raw `grep`/`find` over a directory is denied and routed to `comp-find`; a `cmd | grep` pipe RECEIVER is free.
+
+### A4. SLOT CORRECTION -- YOU ARE SLOT ~4, FIRST IN YOUR CHAIN. The IDENTITY line *"Queue: third in slot ~3"* is STRUCK.
+`<issued_to>` is `0.9.0_WK_IRPT_BCKEND~4` and governs. This cell was RE-SEATED from slot ~3 to slot ~4 at
+2026-09-11 ~17:3xZ as **a head with no incoming edge**; slot ~4 was freed by IB-rt-8's second COMPLETE at
+`f20bebd15d`, and slot ~3 stays on IB-rt-9 then IB-rt-11. **Nothing is queued ahead of you. Begin immediately.**
+The wind-down landed between the re-seat and the spawn, which is the only reason this order never started.
+
+### A5. NO WIP HAND-OFF EXISTS FOR THIS CELL, BECAUSE NO WORKER EVER STARTED IT.
+That absence is a MEASUREMENT, not a gap you should hunt for. Build from this face, the PRD row it quotes, the CTO's
+ruling it executes and the decomposition cell -- nothing of this cell is half-done anywhere.
+
+### A6. THE FIXTURES ARE SYNTHETIC, AND THE PROOF GAP IS NAMED, NOT HIDDEN.
+The three SYNTHETIC vendor PDFs and their receipts (Overview 23 pp / Comparison 31 pp / Multi-Comp 35 pp,
+`pdf_validation.json`, `verification.json`, hashes; SPY/AGG on synthetic portfolio 2332257) are real vendor output on
+synthetic holdings -- **sufficient to BUILD and exercise the extractor and its certification harness with a
+difference control.** REPRESENTATIVE REAL-CLIENT specimens do NOT exist and their absence is the standing proof gap
+on FWD-4 and FWD-8. **Do not manufacture a real-client specimen, and do not report certification against real inputs
+that you did not have.** Where an arm can only be exercised on synthetic input, say so on the arm.
+
+- **Section extraction is NEVER marked complete on the generator's 201 or on a PDF's existence.** The acceptance
+  clause says so in terms; the paired SECTION certification (units, dates, page/coordinates) is this cell's own work.
+- **No number is inferred from a visual guess.** A chart without reliable underlying data or an identified
+  source-chart representation is UNRESOLVED, and unresolved is a legitimate answer here.
+- The CTO's ruling this cell executes: per-document font mapping or an explicit UNRESOLVED for the fi-ligature codes
+  45 and 46 (W3-S10), and undated sections carrying **document provenance, never a neighbour's date** (W3-S11). Test
+  a negative unmapped glyph, not only the two ligature codes.
+
 
 ## DELIVERABLE
 

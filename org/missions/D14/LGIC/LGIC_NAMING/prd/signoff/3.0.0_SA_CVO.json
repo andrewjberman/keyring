@@ -1,0 +1,12 @@
+{
+  "prd": "LGIC_NAMING_PRD.md",
+  "prd_version": "v1.2",
+  "prd_pin": "d6e0c3b74a9ab8de449b87e6ec4580642d7a1abe",
+  "half": "ratified-text",
+  "half_hash": "2f54ae7edbee09c9ad4a1bb561043e5903998d6aad9b7ce546d2c43c9bf6b81f",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/PRD_REVIEW_LGIC_NAMING_v1.2_RATIFIED_TEXT_HALF_20260913.md@80da4e7aa4",
+  "signed_by": "3.0.0_SA_CVO",
+  "signed_at": "2026-09-13T23:57:26Z",
+  "reason": "SIGN -- both v1.1 corrections landed as asked; nothing else in the half moved"
+}

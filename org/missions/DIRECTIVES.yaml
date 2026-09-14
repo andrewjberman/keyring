@@ -332,7 +332,7 @@ directives:
     placement: "LAPTOP -- MOVED BACK 2026-09-01 ~03:0xZ by Andrew-direct at the 0.0.0_AB_MSTR terminal, VERBATIM: \"This is all correct but D8 on laptop\" -- answering a full read of the register's placement column that he confirmed as otherwise correct. SUPERSEDES the 2026-08-26 SITEZ placement preserved verbatim below. THIS IS THE SECOND PLACEMENT ON THIS ROW, BOTH HIS; a reader takes the latest and must not read this flip as reopening the one beneath it. SCOPE -- READ THIS BEFORE MOVING ANYTHING ELSE: he named D8 AND ONLY D8. The 2026-08-26 word that sent it away bundled it with 'all model portfolio stuff' (D1), but THIS word names one directive, so D1 DOES NOT MOVE WITH IT and stays SITEZ. Reading the bundle backwards out of a single-directive sentence would be adjudicating wider, which a relay may not do in either direction. D3 is likewise untouched and was already LAPTOP. WHY THE REGISTER WAS ALREADY BEHIND REALITY HERE, recorded because it makes the move a correction rather than a disruption: all three D8 members -- MDPF_COTREMEDIATION, MDPF_HEALGAP and AUTH_SELFHEAL -- were being worked ON THE LAPTOP through the night of 2026-08-31. AUTH_SELFHEAL was minted (LD-0492), its stage-2 PRD authored by 0.6.2_AE_PartnerETL and accepted by 1.0.0_SA_CTO, its stage-3 decomp authored by 2.0.0_SA_COO, and the cot --date 2026-08-31 one-shot fired from this fabric on his own word. The placement said SITEZ while every act happened here. SEQUENCING PRECEDENT, CARRIED NOT INVENTED: the superseded row records 1.0.0_SA_CTO's rule for the outbound move -- NOTHING SERVING MOVES MID-SERVE, work in flight completes under its current seat, new TOs cut at the destination, Rule 26 rides, zero spawns. That shape is on the record for a D8 move and is the obvious read for this one, but the DIRECTION is reversed and I am not restating it as though it were ruled for this move. 1.0.0_SA_CTO sequences; site Z's exec-sum listed this workstream as NOT STARTED and waiting on a planning breakdown, so there is little in flight to strand. CREATES ZERO SPAWNS. Placement attaches to the DIRECTIVE, never to a member. --- PRIOR PLACEMENT, PRESERVED VERBATIM AND UNMODIFIED --- SITEZ -- MOVED 2026-08-26 from LAPTOP by Andrew-direct 2026-08-26 ~23:52Z, VERBATIM: 'I would say agent infra, advi, substrate, global pipeline, all stays here. can push d8 and all model portfolio stuff over to sitez.' Relayed by 1.0.0_SA_CTO 74105, record @0a96a52989. D8 is named EXPLICITLY in his words. \u26d4 NOTHING SERVING MOVES MID-SERVE (1.0.0_SA_CTO sequencing): the 08-27 13:30Z fire COMPLETES on the laptop-applied chain under his 20:15Z arm-(a) word; the DIRECTIVE transfers on the register NOW and the fire's ACCEPTANCE READ re-routes to the sitez CVO seat with it. Work in flight completes under its current seat; NEW D8 TOs cut at sitez. Rule 26 rides; no ferried applies. ZERO spawns."
     members:
       subgroups: [PORTAL.MODEL_PORTFOLIOS]
-      projects: [MDPF_COTREMEDIATION, MDPF_HEALGAP, AUTH_SELFHEAL, ETFS_GUARDRAIL, GLOBALALARM]
+      projects: [MDPF_COTREMEDIATION, MDPF_HEALGAP, AUTH_SELFHEAL, ETFS_GUARDRAIL, GLOBALALARM, MDPF_CANON, ADVI_FIRMBKTS]
     stance: "RE-MINT, not an edit: the prior D8 ('Philosophy + benchmark modal live-edit') was CUT to
       DIRECTIVES_RETIRED.yaml 2026-08-20T20:32:35Z and carries nothing into this one -- the code is
       reused, the directive is new. Authority Andrew-direct 2026-08-25 ~14:20Z at the CTO terminal
@@ -394,7 +394,7 @@ directives:
         ⚠ EXPLICITLY EMPTY, NOT SILENTLY EMPTY: the Canterbury call is next week and nothing is
         registered here yet."
     stance: "MINTED BY ANDREW HIMSELF 2026-08-25 ~18:4xZ at the CTO terminal (relayed 1.0.0_SA_CTO
-      71188; PRD @afcac062ce). VERBATIM: 'Ok let''s create this under Directive 10, this will be
+      71188; PRD @afcac062ce). VERBATIM: 'Ok let's create this under Directive 10, this will be
       Global Pipeline Structure. The premise is canonizing how things are ingested, taxonomy of
       ingestion/bucket structure/naming, bronze always raw, silver always event triggered typed
       parquet, both of which are staying in opal-data-assets. gold is always a per product or per
@@ -404,7 +404,7 @@ directives:
       will be a json serving file format. I want to essentially go pipeline by pipeline, terraform
       by terraform, and canonize every single thing, in this exact pattern. If there are exceptions,
       then I will acknowledge what those are and we keep some kind of record of that with details.'
-      And, widening it himself: 'It''s actually bigger than gold, its a global taxonomy and structure
+      And, widening it himself: 'It's actually bigger than gold, its a global taxonomy and structure
       directive.'
       MEMBER SET IS EMPTY AND THAT IS CORRECT, NOT A DEFECT. D10 is a MACRO -- several projects, one
       per pipeline family -- and the first cannot be scoped until he answers D10-1. This row follows
@@ -435,7 +435,7 @@ directives:
       the vehicle for the gold-home question CLAUDE.md Rule 17b currently answers differently. The
       PRD isolates the amendment to ONE clause -- gold's HOME and gold's CODE-HOME -- and everything
       else in D10 is EXISTING LAW BEING ENFORCED. ANDREW MAKES THAT AMENDMENT. Nothing here amends
-      Rule 17b, authorizes a migration, or moves a served key (NEVER#3 unchanged)."
+      Rule 17b, authorizes a migration, or moves a served key (NEVER#3 unchanged). *** SUPERSEDED IN PART 2026-09-13 ~01:3xZ BY ANDREW: THE CANON CONTENT OF THIS ROW FOLDS INTO D14, Platform Logic. *** VERBATIM AND COMPLETE, answering a nine-card set at the 4.0.0_SA_CRO~D terminal: 'agree with all but keep opal-data-demo, that one serves prospective users for whom we create demo accounts so there is some information in the advisor intelligence page.' Card 7 was reading (a): fold D10's canon content into D14; D10 becomes Partner Implementations cleanly. Relay msg-id 96290; register act by 0.0.0_AB_MSTR. HIS 2026-08-25 VERBATIM ABOVE IS NOT DELETED AND MUST NOT BE -- it is the founding authority for the canon and it now reads as D14's provenance rather than this row's live scope. D10-1/2/3 are ANSWERED or MOVED by the same nine-card set (D10-1 defaults ticked; D10-2 ruled (a), the legacy buckets retire after per-firm migration; D10-3 still deferred) and they travel with the canon to D14. THE MDPF_GLOBAL ABSORPTION QUESTION RECORDED ABOVE IS STILL OPEN at 1.0.0_SA_CTO -- do not read this fold as closing it; the warning above stands, that closing MDPF_GLOBAL without recording the absorption loses the 2026-08-03 sovereign authority. NOT DONE HERE, because it is not the register owner's: the directive field above still points at docs/architecture/D10_GLOBAL_PIPELINE_STRUCTURE_PRD.md and is LEFT AS IS. Whether that file re-homes to a D14 path, is superseded, or is absorbed section-wise is an L4 act (Rule 27), and Rule 17b's dangling citation resolves on that same choice. Routed, not guessed."
   D11:
     title: "Substrate & Tooling"
     directive: "docs/architecture/D11_SUBSTRATE_ANALYSIS_PRD.md"
@@ -498,13 +498,14 @@ directives:
   D13:
     title: "Design"
     directive: "docs/architecture/D13_DESIGN_PRD.md"
-    placement: "LAPTOP -- DEFAULTED BY 0.0.0_AB_MSTR (register owner), NOT RULED BY ANDREW. He minted the
-      directive without naming a fabric, and placement is a REQUIRED field, so a value had to be written
-      rather than left blank. LAPTOP is the defensible default on measurement rather than taste: the design
-      surfaces this estate actually has are the portal (laptop working branch CLOUD, submodule DEV/PROD) and
-      the IRPT_FNTEND frontend round, both laptop. ONE WORD FROM HIM CHANGES IT -- he moved D9 whole to
-      LAPTOP on 2026-09-10 with a single sentence, and placement attaches to the DIRECTIVE, never to a
-      member (LD-0498, LD-0502), so a move is one row and not N."
+    placement: "LAPTOP -- RULED BY ANDREW 2026-09-11, VERBATIM AND ENTIRE: 'Also ive had MSTR create D13
+      for Design, it will be laptop fabric'. His word CONFIRMS the value this row carried as a register-owner
+      DEFAULT, and the caveat that stood here until 2026-09-11 ('NOT RULED BY ANDREW ... ONE WORD FROM HIM
+      CHANGES IT') is DISCHARGED by that sentence. Restated by 0.0.0_AB_MSTR (register owner) on the surfacing
+      of 0.1.1_RD_MarketPerformance (msg-id 95901), the seat that received the word and recorded it; the
+      verbatim is read at docs/briefs/portal-visual-elevation-brief-20260911.md:31 and :367-368, record
+      org/tier3_junior/0.1.1_RD_MarketPerformance/deliverables/ANDREW_DIRECT_20260911_PORTAL_VISUAL_ELEVATION_FIVE_RULINGS.md.
+      Placement attaches to the DIRECTIVE, never to a member (LD-0498, LD-0502), so a future move is one row and not N."
     members:
       subgroups: []
       projects: [DSGN_REBRND]
@@ -524,7 +525,70 @@ directives:
       ENTIRE: 'It is design system, branding, aesthetic frontend'. That closes the scope gap this row
       opened at mint and it is HIS WORDS, not a paraphrase. FIRST MACRO RATIFIED IN THE SAME BREATH,
       VERBATIM: 'First macro will be DSGN, obviously' -- MACROS.yaml directives.D13.macros [DSGN],
-      record LD-0552. STILL NOT RULED BY HIM AND STILL NOT INFERRED HERE: the DONE definition, the
-      first project, and whether those three words are three projects or one. NO PRD EXISTS -- the
-      `directive` path above is the slot the L1/L2 owners write into, and directives-check reports
-      prd_exists false, which is legal at this stage. THE NEXT ACT IS 4.0.0_SA_CRO's L1 brief."
+      record LD-0552. SHAPE RULED BY HIM 2026-09-12 ~01:2xZ, answering 1.0.0_SA_CTO's
+      /open-calls card 3 with 'All recs approved' -- the approved text: D13 has ONE MEMBER PROJECT,
+      DSGN_REBRND is the WHOLE of the directive, and 'design system, branding, aesthetic frontend' is
+      ONE DOMAIN, NOT THREE. That closes both of the questions this row still carried about the first
+      project and the three-or-one split; record
+      org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260912_012xZ_ALL_FOUR_OPEN_CALLS_APPROVED.md,
+      relayed to this seat as msg-id 96040 and restated in the register by 0.0.0_AB_MSTR as the field's
+      owner. STILL NOT RULED BY HIM AND STILL NOT INFERRED HERE: the DONE definition, and it is the ONLY
+      open item left in this block -- his word named the shape and did not name done. NO PRD EXISTS -- the
+      `directive` path above is the slot the L4 owner writes into (Rule 27: L4 is 1.0.0_SA_CTO's alone,
+      and that seat holds it as of 2026-09-11), and directives-check reports prd_exists false, which is
+      legal at this stage. L1 and L2 are DONE: brief docs/briefs/portal-visual-elevation-brief-20260911.md,
+      endpoint org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_D13_PORTAL_VISUAL_ELEVATION_20260911.md."
+  D14:
+    title: "Platform Logic"
+    directive: "docs/architecture/D14_PLATFORM_LOGIC_PRD.md"
+    placement: "LAPTOP -- RULED BY ANDREW 2026-09-12 ~17:2xZ at the 4.0.0_SA_CRO~D terminal, VERBATIM:
+      'we put that at d fourteen. And and it's owned by the laptop.' SUPERSEDES his own placement of this
+      same work in D12 minutes earlier: he replaced it once 4.0.0_SA_CRO~D surfaced that D12 is SITEZ-placed,
+      and both words are preserved verbatim in that seat's record (relay msg-ids 96206 then 96211). The later
+      governs. Placement attaches to the DIRECTIVE, never to a member (LD-0498, LD-0502)."
+    members:
+      subgroups: []
+      projects: [LGIC_CANON, LGIC_NAMING, LGIC_ENFORCE]
+      members_note: "EMPTY AT MINT, AND THAT IS CORRECT RATHER THAN INCOMPLETE -- the D5/D10 precedent
+        (LD-0454): an empty member set is honest where a plausible one is not, and must NOT be filled to make
+        a row look finished. Rule 27 also makes the DIRECTIVES.yaml members line the CTO's L3 carrier
+        (0.0.0_AB_MSTR is PERMIT only as an integrator fallback), so the register owner mints the row on
+        Andrew's title word and does not invent a member set. L1 IS DONE: brief
+        docs/briefs/d14-pipeline-canon-brief-20260912.md @2659d45788, authored by 4.0.0_SA_CRO~D under his
+        ~17:2xZ tensions-first method. L2 endpoint, the PRD and the first member are 1.0.0_SA_CTO's."
+    stance: "MINTED BY 0.0.0_AB_MSTR (register owner) 2026-09-12 ~17:5xZ on Andrew's word, relayed by
+      4.0.0_SA_CRO~D as msg-id 96234, VERBATIM: 'Platform Logic is it , let mstr know and then give me the
+      order of operations that need to be compiled in order to create the foundational brief and references'.
+      WHAT IT IS FOR, in his own earlier words (~16:2xZ): a canon for how data pipelines are structured, so
+      that projects are not built against a structure that is about to change -- 'we're going to come up with
+      a structure that could directly contradict them'. The ~16:1xZ pause on projects actively building data
+      pipelines exists to protect exactly that, and this row does not lift it.
+      TITLE HISTORY, recorded so it is not re-opened as new: he offered 'ontology', then 'canin' (heard as
+      CANON), then 'Logic' / 'platform logic', before ruling. Measured before he chose -- 0 of 14 directive
+      titles carried 'logic', and no slash command, comp-tool, graph carrier, registered project or top-level
+      directory did either, on two independent instruments (4.0.0_SA_CRO~D filename census; 0.0.0_AB_MSTR
+      surface enumeration, msg-id 96232). SURFACED TO HIM BEFORE THE RULING AND RULED ANYWAY: 'Platform Logic'
+      sits beside D12 'Platform Operations'. That is a CONFUSABILITY note at the directive-title grain, never
+      a name collision -- the strings differ and nothing breaks. He chose it with the note in front of him;
+      it is settled and is not a defect to re-raise.
+      NOT RULED BY HIM AND NOT INFERRED HERE: the PRD's content; the member set; migration sequencing (the
+      brief's Part II holds that migrations are SEPARATE projects, one per pipeline family); and the
+      disposition of D10 below. The `directive` path above is the canonical SLOT the L4 owner writes into,
+      and directives-check reporting prd_exists false is legal and expected at mint.
+      *** THE D10 CONSEQUENCE -- RULED BY ANDREW 2026-09-13 ~01:3xZ; it was surfaced-not-resolved at mint. *** D10 was minted BY ANDREW on
+      2026-08-25 ~18:4xZ for THIS WORK -- its stance carries his verbatim 'canonizing how things are ingested,
+      taxonomy of ingestion/bucket structure/naming' and its `directive` field points at
+      docs/architecture/D10_GLOBAL_PIPELINE_STRUCTURE_PRD.md, which EXISTS (15,951 B, measured with a positive
+      control). Its title nonetheless reads 'Partner Implementations', so that row already disagrees with its
+      own stance and its own PRD path. Now that the canon work is D14, D10's disposition is a SOVEREIGN
+      question with at least two readings and I take neither: (a) D10 re-scopes to Partner Implementations
+      proper and its canon content, PRD included, folds into D14; (b) D10 keeps the structural PRD and D14
+      carries only the new canon. Related and NOT fixed here: CLAUDE_ANNEX.md:444 (Rule 17b) cites
+      docs/architecture/D8_GLOBAL_PIPELINE_STRUCTURE_PRD.md, which DOES NOT EXIST on disk. That is a LAW
+      surface and therefore 1.0.0_SA_CTO's, and fixing a pointer to a missing file by guessing which file was
+      meant is how a wrong cause becomes durable. RESOLVED 2026-09-13 ~01:3xZ: answering a nine-card set at the 4.0.0_SA_CRO~D terminal, VERBATIM AND COMPLETE: 'agree with all but keep opal-data-demo, that one serves prospective users for whom we create demo accounts so there is some information in the advisor intelligence page.' Card 7 was reading (a): D10 FOLDS ITS CANON CONTENT INTO D14, and D10 becomes Partner Implementations cleanly. Relay msg-id 96290. So D14 carries the pipeline canon and D10 keeps only its partner-implementation scope. WHAT THIS ROW DELIBERATELY DOES NOT DO, because it is not the register owner's: it does NOT re-point the directive field above, and it does NOT decide whether docs/architecture/D10_GLOBAL_PIPELINE_STRUCTURE_PRD.md (which EXISTS, 15,951 B) is re-homed to a D14 path, superseded by a fresh D14 PRD, or absorbed section-wise. That is an L4 act and Rule 27 gives L4 to 1.0.0_SA_CTO alone; CLAUDE_ANNEX.md:444 (Rule 17b) cites a D8 path that does not exist, and its correct target DEPENDS on that same choice. Choosing it here would be the register owner answering an architecture question in order to tidy a field. Routed to 1.0.0_SA_CTO."
+    title_provenance: "NAMED 'Platform Logic' at mint 2026-09-12 ~17:5xZ by Andrew-direct at the
+      4.0.0_SA_CRO~D terminal, VERBATIM: 'Platform Logic is it , let mstr know'. Register act by
+      0.0.0_AB_MSTR; relay msg-id 96234. Two earlier candidates he raised and did not rule -- 'ontology' and
+      'canin'/CANON -- are preserved in 4.0.0_SA_CRO~D's record; both were measured to collide with live
+      instruments and neither was chosen."
