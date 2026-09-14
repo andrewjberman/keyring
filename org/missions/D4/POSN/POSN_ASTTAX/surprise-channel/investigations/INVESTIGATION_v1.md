@@ -2723,3 +2723,32 @@ all seven mechanical criteria were measured and the verdict is NO-GO.
   }
 ]
 ```
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-S63",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-14T14:34:11Z",
+    "one_line": "THIS LOOP'S PROBE HAD ZERO COVERAGE OF THE ONE DIRECTORY WHERE THE L9 ARTIFACT IS STAGED FIRST. The authority's plane (b) names TWO HOMES -- the worker's under the project tree AND the tier-1 seat's under org/tier1_exec/<BASE serial>/deliverables/ -- and this loop implemented only the first. Measured at HEAD 7f60616602: the CVO's tier-1 home holds 625 entries of which 29 are POSN-named, and NONE of this loop's six planes read it. POSN round-4 work in progress there would have been INVISIBLE, and this loop would have reported no movement during exactly the period POSN was worked.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED AT HEAD 7f60616602, every figure re-derived inside the same call that wrote this row, the write refusing on any disagreement. org/tier1_exec/3.0.0_SA_CVO/deliverables: 625 entries (DENOMINATOR) | POSN-named 29 | AMGT-named 56. Read BY FILENAME with mtime and NO author filter: an untracked file carries no git author and that home is shared by the base serial and every lane, so subject-by-filename is the only read that works there.",
+        "THE FIX IS NOT MERELY A CLOSED BLIND SPOT, IT IS A DISCRIMINATOR WITH A LIVE CONTROL. The two arms sit on ONE surface, ONE instrument, ONE read, and they disagree by 33.4 hours: newest AMGT-named AMGT_RESAPP_ROUND9_CVO_VERIFY_20260914_Z.json at 0.2 h (MOVING), newest POSN-named posn_round3_exception_audit_test.py at 33.6 h (COLD). Because the arm that proves this read CAN see live work is firing at the same moment, POSN's zero reads COLD rather than INCONCLUSIVE -- which is the whole difference the authority's plane grammar turns on.",
+        "POSN round-4 / adjudication-named artifacts in that home: 0 of 29 POSN-named.",
+        "AND THE POSN SIDE OF THE APERTURE WAS CHECKED TOO, because the same question runs in both directions: this loop's project-home planes use os.listdir, i.e. the WORKING TREE, so they DO see untracked files. adjudications 5 disk / 5 tracked, remediations 3/3, ledger 5/5, on-disk-only none, with 36 untracked files whole-tree proving the detector is alive. So this loop does NOT carry the committed-only defect msg 22770 found in plane (b); it carried the other half -- a home it never looked at at all."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "canonical-drive SKILL.md, the LIVE-PRODUCTION PROBE, plane (b): 'DELIVERABLES, TWO HOMES -- a WORKER's under org/missions/D*/<MACRO>/<CODE>/deliverables/<serial>/, a TIER-1 SEAT's under org/tier1_exec/<BASE serial>/deliverables/; the wrong branch returns ABSENT RATHER THAN AN ERROR.' And the plane grammar: 'Each plane reads MOVING | COLD | INCONCLUSIVE, and a DIRECTORY THAT IS ABSENT IS INCONCLUSIVE, NEVER COLD.'",
+    "world_is": "THE TIER-1 BRANCH OF PLANE (b) WAS NEVER IMPLEMENTED IN THIS LOOP'S TICK. Six planes ran for ~295 ticks and none of them read org/tier1_exec/3.0.0_SA_CVO/deliverables/, where 29 POSN-named artifacts from earlier rounds already sit. STAR: AN INSTRUMENT CAN BE ARGUED ABOUT AT LENGTH ALONG ITS PREDICATE WHILE NOBODY ASKS WHAT IT CAN SEE AT ALL. This seat reviewed the plane-(b) amendment closely -- the ancestor test, the per-arm control, the zero-commit boundary -- and every one of those questions was about WHICH ROWS THE FILTER MATCHES. Not one was about the APERTURE. A review that is thorough in the direction the author was already looking is thorough in the least useful direction available to it. NOTE THE DIRECTION OF THE FAILURE: an unwatched home produces no error and no ABSENT verdict, it produces a CONFIDENT 'nothing moving' assembled from planes that were each individually correct.",
+    "notes": "REMEDY, APPLIED AT THE ACT AND LIVE FROM TICK 296: plane 7 reads that home by FILENAME with mtime, READ ONLY -- it sends nothing, steals no foreground, and touches, stages or cleans nothing in another seat's live work (the probe's own standing rule, and a STOP from 1.0.0_SA_CTO~Z msg 22769 is in force on that seat). No edit to .claude/skills/ or to the cron body: Andrew-anchored and this seat is scope-bound, so the correction is applied AT THE ACT and the body-level question is NAMED, not taken -- the same disposition Z-S60, Z-S61 and Z-S62 used. CREDIT: the aperture finding is 1.0.0_SA_CTO~Z's (msg 22770), made against its own amendment, and the read that works on an untracked file is the one 0.0.0_AB_MSTR~Z and 1.0.0_SA_CTO~Z used to find the three round-9 files. This row carries that finding onto this loop's own instrument. SCOPE AND WHAT IS NOT CLAIMED: this attributes nothing to any serial (untracked files in a shared home carry no author -- Z-S82's own defect), and it is NOT a dropped-ball verdict. A seat working the AMGT half is not a seat that dropped POSN. The reading is exactly: POSN round 4 is not being written on the plane it would land on, at the moment measured. DISARM, single limb and falsifiable: this row disarms when a POSN round-4 adjudication artifact appears in EITHER home and plane 7 is the instrument that sees it first, printed with its control arm beside it -- OR when the tier-1 branch is measured ABSENT for a seat class where it cannot apply, which must then read INCONCLUSIVE and never COLD. A count measured at 7f60616602 binds nothing later; plane 7 re-measures both arms every tick."
+  }
+]
+```
