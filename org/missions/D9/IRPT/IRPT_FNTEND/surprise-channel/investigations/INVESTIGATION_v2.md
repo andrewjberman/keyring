@@ -3715,6 +3715,28 @@
     "spec_asserts": "IRPT_FNTEND.TO-FE-s-39 BOUNDS: 'Grant. The <paths> block below, plus org/missions/D9/IRPT/IRPT_FNTEND/deliverables/<your serial>/ and this order's own file.' F39-AC8's invocation is 'bun test src/pages/InvestorReporting/__tests__/fe-s-32/holdings-in-a-browser.test.ts'.",
     "world_is": "Running the criterion as written rewrites FE-s-32's captures in ~2's folder with renders of FE-s-39's code, which show the flagged advisory. This worker has not staged or committed any of the 9. They are left modified in the worktree and not restored, because restoring them would also be a write outside the grant.",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S32",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-14T18:08:00Z",
+    "one_line": "AMENDMENT 1 grants fe-s-32/holdings-in-a-browser.test.ts for F32-AC5's classification reader only ('Change nothing else in that file'), but the reader can recognise the RULING W flag only by its words, and the order's 'ONE RULE, NEVER A SECOND COPY' bound forbids re-typing them. So the worker added one name, ADVISORY_OUT_OF_ENUM_WORDS, to the file's existing import from tabs/holdings/slices. That import line is outside the two elements named.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-39.adapter-states-what-the-document-states.md:79 @0294183b65: 'F32-AC5's classification reader only (the ADVISORY list and CLAIM_READERS.classification) ... Change nothing else in that file.'",
+        "same order :66 @0294183b65: 'ONE RULE, NEVER A SECOND COPY.'",
+        "portal@20545436 src/pages/InvestorReporting/__tests__/fe-s-32/holdings-in-a-browser.test.ts:56 imports only HOLDINGS_BASIS_LABELS from '../../tabs/holdings/slices'; portal@794d4899 tabs/holdings/slices.ts:98 exports ADVISORY_OUT_OF_ENUM_WORDS, the words SliceTable.tsx:38 renders as the flag.",
+        "holdings-driver.mjs:84,100 @portal 20545436 reads the Advisory cell as whitespace-collapsed textContent only, so the flag's words in the text are the only flag the reader receives."
+      ]
+    },
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-39 AMENDMENT 1: in __tests__/fe-s-32/holdings-in-a-browser.test.ts, change F32-AC5's classification reader only (the ADVISORY list and CLAIM_READERS.classification) and nothing else in the file; BOUNDS: one rule, never a second copy.",
+    "world_is": "The two instructions cannot both hold literally. Recognising a flagged cell needs the flag's text, and the file did not import it. The worker kept the rule single by importing it, and changed one import line beside the two named elements. The alternative, a typed copy of the words in the test, would be a second copy that drifts silently if slices.ts changes. Nothing else in the file changed: the portal diff touches only the import line and CLAIM_READERS.classification.",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
