@@ -6,10 +6,10 @@
  "directive": "D14",
  "macro": "LGIC",
  "fabric": "laptop",
- "decomp_version": "v2",
+ "decomp_version": "v3",
  "step": 5,
- "prd_ref": "org/missions/D14/LGIC/LGIC_NAMING/prd/LGIC_NAMING_PRD.md@7bd4ef6f27",
- "prd_half_hashes": {"ratified-text": "SIGNED 3.0.0_SA_CVO (half unchanged since v1.2, current at v1.3)", "brief": "SIGNED 4.0.0_SA_CRO @81c9fdb639 (v1.3)"},
+ "prd_ref": "org/missions/D14/LGIC/LGIC_NAMING/prd/LGIC_NAMING_PRD.md@e04b802fe9",
+ "prd_half_hashes": {"ratified-text": "SIGNED 3.0.0_SA_CVO, current at v1.4 (half unchanged since v1.2)", "brief": "SIGNED 4.0.0_SA_CRO @254ac1f2ab (v1.4)"},
  "author": "2.0.0_SA_COO~G",
  "cells": 14,
  "chains": 5,
@@ -27,6 +27,8 @@ notifier's COO delivery was still addressed to the base serial.
 **Sequence:** stage 1 of `org/missions/SEQUENCE.yaml`, `sequence-check --project LGIC_NAMING` flags none.
 **v2, cut before any L6 issuance** on `1.0.0_SA_CTO`'s ask (96570), after PRD v1.3 re-opened and re-closed the brief
 half; section 0 is the re-read, and v1's text below is amended in place where v1.3 reaches it.
+**v3, cut before any L6 issuance** on `1.0.0_SA_CTO`'s ruling of row S10 into PRD v1.4 (96578); section 0b is that
+re-read, amended in place where v1.4 reaches (3 cells).
 **Frozen at the cut.** A cell that looks wrong mid-round is a **surprise row, never an edit**
 (`org/missions/D14/LGIC/LGIC_NAMING/surprise-channel/investigations/INVESTIGATION_v1.md`).
 
@@ -87,6 +89,63 @@ second clause no longer waits on another project.
 
 ---
 
+## 0b. v3 -- THE RE-READ AGAINST PRD v1.4
+
+**What moved** (`git diff 7bd4ef6f27 e04b802fe9`): one clause of S1 and `prd_version`. In `NAMING_SCHEMA.json`:
+`key.legacy_served_path` gains "MEMBERSHIP is data"; `key.legacy_served_paths` is new -- home
+`deliverables/LEGACY_SERVED_PATHS.json`, producer cell LN-g-1, claim "absent until LN-g-1 lands it", and a RAISE until
+then; `key.code` gains a legacy root `code/` key's verdict (OUT-OF-PATTERN, its canonical form the code-tier key). It is
+`1.0.0_SA_CTO`'s answer to row `LGIC_NAMING-S10` (96578, record @e04b802fe9). **Unchanged:** ENDPOINT, CONTRACTS, the
+grade's signature `(name, type)` and its three verdicts. `comp-adversary` was not re-run: the diff adds no cited path or
+commit, only field names inside the data file already cited.
+
+**Which cells v1.4 reaches, by subtraction** (the 14 cells, minus those whose inputs never read legacy membership or the
+legacy-root verdict):
+
+```
+  cells ........................................................ 14
+  minus cells that never read membership ....................... -11
+      LN-e-1, LN-e-2          mint NEW names; the list governs only paths that already exist
+      LN-e-3, LN-e-5          compare and score strings
+      LN-e-4                  the names only
+      LN-l-2, LN-l-3          label segment roles; a legacy bare-id path and a hive path both put the id in
+                              the partition slot, so membership moves no label
+      LN-l-1                  a comment citing S1
+      LN-f-1                  IAM roles: the resource grammar
+      LN-h-3                  compares two gradings; reads neither the rule nor the list
+      LN-t-1                  the brief's IV.7 at its pin
+  ------------------------------------------------------------
+  cells v1.4 reaches ........................................... 3
+      LN-g-1                  writes the list; grades a legacy root code/ key as ruled
+      LN-h-1, LN-h-2          grade with the rule AND the list
+```
+
+**`1.0.0_SA_CTO` asked about LN-e-1, LN-e-2, LN-l-2 and LN-l-3 by name (96578). None is reached.** Membership decides
+whether an EXISTING served path keeps its bytes, and none of those four cells grades an existing path.
+
+**What the three gain** (in place in section 3, each marked (v1.4)):
+- LN-g-1 gains its second write surface, `deliverables/LEGACY_SERVED_PATHS.json`: every served path below
+  `{source}/{scope}/platinum/` that the frozen portal requests, with the portal vintage it read and the denominator
+  printed. `GRADING_RULE.md` cites the file and carries no second copy of the list. Its worked cases gain a
+  **discriminating pair**: two same-shaped platinum paths, one on the list and one off it, graded CONFORMANT and
+  OUT-OF-PATTERN respectively. The pair proves that membership CHANGES the verdict, not merely that the list exists.
+  The legacy root `code/` worked case carries the ruled verdict.
+- LN-h-1 and LN-h-2 grade with `GRADING_RULE.md` and `LEGACY_SERVED_PATHS.json`.
+
+**The RAISE window never opens for the graders.** `grade.unplaceable` RAISES on a membership-turning key until the list
+lands. LN-h-1 and LN-h-2 are spawned only after LN-g-1's branch is merged (section 5), so the list is at HEAD before
+either starts.
+
+**Nothing structural moved:** the same 14 cells, edges, 5 chains and distinct-worker constraint. Section 1's domain
+holds, because the list sits inside manifest row 2 (`deliverables/`). Rectangle row 6 stays "unchanged": the standards
+file names the list's home, and no worker writes the standards file.
+
+**L4-R at the cut:** ADMITTED at v1.4. `prd-signoff.py status LGIC_NAMING` (read ~11:4xZ) reads both halves SIGNED
+current; the brief half was re-signed by `4.0.0_SA_CRO` @254ac1f2ab. The only open call on L6 is Andrew's (tree-row
+blocking item 5).
+
+---
+
 ## 1. THE DOMAIN, BY SUBTRACTION (Rule 24(i))
 
 Written as the printed denominator MINUS what is excluded, never as a forward list.
@@ -144,6 +203,7 @@ probes for the S1-S13 enumerations are present (`key.grammar`, `bucket.data_buck
 | # | write surface | current state | target state | collision set | evidence at cut | cell |
 |---|---|---|---|---|---|---|
 | 1 | `deliverables/GRADING_RULE.md` | `MEASURED` absent (comp-adversary GONE; `git ls-files` on the project folder lists `prd/`, `project.json`, `surprise-channel/` only) | the written, hand-applicable rule with worked cases | none, sole writer | `MEASURED` | LN-g-1 |
+| 1b | `deliverables/LEGACY_SERVED_PATHS.json` (v1.4) | `MEASURED` absent at HEAD; the data file's own claim is "absent until LN-g-1 lands it" | a closed list of every served path below `{source}/{scope}/platinum/` that the frozen portal requests, with the portal vintage read and the denominator printed | none, sole writer | `MEASURED` | LN-g-1 |
 | 2 | `deliverables/TENSION_RANKING.md` | `MEASURED` absent | the ten IV.7 rows, each with a cost line | none, sole writer | `MEASURED` | LN-t-1 |
 | 3 | `deliverables/exercises/` (11 files, one per cell, named in §3) | `MEASURED` absent | exercise inputs, answers, scorings | none: no file has two writers | `MEASURED` | LN-e-1..5, LN-f-1, LN-l-2, LN-l-3, LN-h-1..3 |
 | 4 | `s3-49financial.tf`, the `# Grammar (template = opal-data-{firm_id} ...)` comment | `MEASURED` at HEAD: the block spans `:8-14`. The PRD's `:8-13` omits the continuation line `:14`. Lines 1-16 are unchanged since the PRD's pin; the file moved after it at `:17-19` and `:24-38` (`37931439cf`, `0.7.0_AE_CloudOps`, the read-logging postcondition). | the comment states it is replaced by S1, citing this PRD; the diff is comment lines only | **three writers of one file:** `0.7.0_AE_CloudOps` (landed); `LGIC_ENFORCE` cell E5 (the bucket policy near `:93`, an APPLIED change, not yet cut); LN-l-1 (comment `:8-14`). Disjoint line ranges; only E5 is applied | `MEASURED` | LN-l-1 |
@@ -170,7 +230,7 @@ Each acceptance line below is **one criterion**. `J` marks a judgment criterion:
 
 | cell | what it is | PRD candidate | serves | writes | acceptance, one clause per line |
 |---|---|---|---|---|---|
-| `LN-g-1` | the written grading rule and its worked cases | N2 | FWD-5 | `deliverables/GRADING_RULE.md` | every worked case carries exactly one of CONFORMANT / ALIAS / OUT-OF-PATTERN with its canonical form, or a stated RAISE, or NOT-GRADED for an excluded type · a worked case for each of the **25 graded types** (§3a.5) · a worked case for each of the 3 verdicts · a worked case for each of the 5 census residue classes (camel IAM names, purpose-first policies, library-first layers, `default` security groups, workstream-coded schedules) · every worked case is a live name at a stated vintage · no worked case is a name in the N6 discriminating sample (§3a.4) · (v1.3) a worked case for each of the four v1.3 key forms -- a new family's entity partition `{entity}={id}`, a legacy served path (a bare entity-id segment and a snake_case leaf), a code-tier key `{source}/{scope}/code/{built_tier}/{file}`, and a legacy root `code/` key -- each with its verdict stated · (v1.3) the rule enumerates the legacy served set it applies, its source named and its denominator printed (row `LGIC_NAMING-S10`) |
+| `LN-g-1` | the written grading rule, its worked cases, and (v1.4) the legacy served list | N2 | FWD-5 | `deliverables/GRADING_RULE.md`; (v1.4) `deliverables/LEGACY_SERVED_PATHS.json` | every worked case carries exactly one of CONFORMANT / ALIAS / OUT-OF-PATTERN with its canonical form, or a stated RAISE, or NOT-GRADED for an excluded type · a worked case for each of the **25 graded types** (§3a.5) · a worked case for each of the 3 verdicts · a worked case for each of the 5 census residue classes (camel IAM names, purpose-first policies, library-first layers, `default` security groups, workstream-coded schedules) · every worked case is a live name at a stated vintage · no worked case is a name in the N6 discriminating sample (§3a.4) · (v1.3) a worked case for each of the four v1.3 key forms -- a new family's entity partition `{entity}={id}`, a legacy served path (a bare entity-id segment and a snake_case leaf), a code-tier key `{source}/{scope}/code/{built_tier}/{file}`, and a legacy root `code/` key -- each with its verdict stated · (v1.4) `LEGACY_SERVED_PATHS.json` lists every served path below `{source}/{scope}/platinum/` that the frozen portal requests, with the portal vintage it read and the denominator printed · (v1.4) `GRADING_RULE.md` cites that file and carries no second copy of the list · (v1.4) a discriminating pair of same-shaped platinum paths, one on the list graded CONFORMANT and one off it graded OUT-OF-PATTERN · (v1.4) the legacy root `code/` worked case is graded OUT-OF-PATTERN with the code-tier key as its canonical form, as ruled |
 | `LN-e-1` | namer A | N3 | FWD-1 | `exercises/n3-namer-a.tsv` | one name for every item of the fixed item set (§3a.1), briefed only with `NAMING_SCHEMA.json` and `infra/logic/05_IDENTITY_SPINE.md` · the record states its worktree base commit |
 | `LN-e-2` | namer B | N3 | FWD-1 | `exercises/n3-namer-b.tsv` | as LN-e-1, blind to it |
 | `LN-e-3` | the namers' comparison | N3 | FWD-1 | `exercises/n3-compare.md` | the two answer files are identical on every item · neither namer's recorded base commit contains the other's answer file |
@@ -180,7 +240,7 @@ Each acceptance line below is **one criterion**. `J` marks a judgment criterion:
 | `LN-l-1` | the template's replacement notice | N5, the `.tf` half | FWD-4 | `s3-49financial.tf` | the comment block states it is replaced by S1 and cites this PRD · the diff against the base touches comment lines only |
 | `LN-l-2` | the cross-bucket reader | N5, the reading exercise | FWD-4 | `exercises/n5-reader.tsv` | a segment role on every segment of every address in the address set (§3a.3), briefed only with the `opal-data-assets` layout |
 | `LN-l-3` | the cross-bucket scoring | N5 | FWD-4 | `exercises/n5-reader-score.md` | every label equals the ruled string's role for that segment · the legacy negative-control address is marked as not fitting the layout |
-| `LN-h-1` | grader A | N6 | FWD-5 | `exercises/n6-grader-a.tsv` | a verdict, RAISE or NOT-GRADED, and a canonical form, for every name in the sample (§3a.4), using `GRADING_RULE.md` only · the record states its worktree base commit |
+| `LN-h-1` | grader A | N6 | FWD-5 | `exercises/n6-grader-a.tsv` | a verdict, RAISE or NOT-GRADED, and a canonical form, for every name in the sample (§3a.4), using `GRADING_RULE.md` and (v1.4) `LEGACY_SERVED_PATHS.json` only · the record states its worktree base commit |
 | `LN-h-2` | grader B | N6 | FWD-5 | `exercises/n6-grader-b.tsv` | as LN-h-1, blind to it |
 | `LN-h-3` | the grading agreement | N6 | FWD-5 | `exercises/n6-compare.md` | the two gradings agree on every name, verdict and canonical form · the discriminating sample and LN-g-1's worked cases share no name · neither grader's base commit contains the other's answer file · `J`: every disagreement or RAISE is traced to the line of `GRADING_RULE.md` it exposes |
 | `LN-t-1` | the costed ranking | N7 | FWD-6 | `deliverables/TENSION_RANKING.md` | ten rows in the brief's IV.7 order at `@1b42dbe758`, each with one cost line (what breaks, what someone does by hand, or what it blocks) · `J`: each cost line is one a reader can dispute |
@@ -362,7 +422,7 @@ tool's failure mode. The re-run at `--budget 540` scanned **5 of 5 carriers** (C
 | gate | owner | the condition that clears it |
 |---|---|---|
 | **G-A** the `MDPF_CANON_PRD.md` s.3 replacement notice. **DISCHARGED @3514843a12** (96551; measured at HEAD: `docs/architecture/MDPF_CANON_PRD.md:16-18`) | `1.0.0_SA_CTO` (owner of that file, lane `docs/architecture/**` ANY_CTO) | s.3 states it is replaced by S1, citing this PRD. **FWD-4's second clause cannot grade REALIZED before it**, and MDPF_CANON reads `dep_stage: REGISTERED`, held in sequence stage 2. Row `LGIC_NAMING-S4`. |
-| **G-B** `LGIC_ENFORCE` E9's comparison half | `LGIC_ENFORCE`'s COO lane (not seated; the request is at Andrew, per 96538) | LN-g-1's and LN-h-3's records land. Not a gate on this project; recorded so the consumer's wait is visible from the producer's side. |
+| **G-B** `LGIC_ENFORCE` E9's comparison half | `LGIC_ENFORCE`'s COO lane (not seated; the request is at Andrew, per 96538) | LN-g-1's records land -- the rule and, since v1.4, `LEGACY_SERVED_PATHS.json`, which `grade()` itself reads -- and LN-h-3's. Not a gate on this project; recorded so the consumer's wait is visible from the producer's side. |
 | **G-C** worker admission on `infra/aws/**` and on files directly under `deliverables/` | `2.0.0_SA_COO~G` | after the issuance commit, `owned-paths-validate --check-agent` on HEAD bytes PERMITs each slot on a path its order names and REFUSES it on one it does not |
 | **G-D** the three-writer `.tf` | whoever cuts `LGIC_ENFORCE` E5 | nothing orders the two edits (disjoint lines); recorded so E5's cut reads LN-l-1's comment edit |
 
@@ -427,8 +487,11 @@ Each is this seat's call at L5, stated so it can be argued with, and revertible 
 5. Every exercise input is fixed here and cut at L6 (§3a).
 6. The fan-out may exceed the chain count, on the distinct-worker constraint (§5, row `LGIC_NAMING-S3`).
 7. N5's `MDPF_CANON_PRD.md` half is a gate, not a cell (§6 G-A, row `LGIC_NAMING-S4`).
-8. (v2) LN-g-1's rule must enumerate the legacy served set it applies, because v1.3 makes a platinum key's verdict
-   depend on it and the data file does not list it (section 0, row `LGIC_NAMING-S10`).
+8. (v2) LN-g-1's rule must enumerate the legacy served set it applies (row `LGIC_NAMING-S10`). **Superseded at v3:**
+   `1.0.0_SA_CTO` ruled it into PRD v1.4, so the list is now the PRD's requirement, landing as
+   `LEGACY_SERVED_PATHS.json`, and no longer this decomposition's choice.
+9. (v3) LN-g-1's worked cases include a discriminating pair (on the list / off it), so the list is proved to CHANGE a
+   verdict, not merely to exist.
 
 ---
 
@@ -445,5 +508,6 @@ Each is this seat's call at L5, stated so it can be argued with, and revertible 
    and the distinct-worker table from the PRD's fixture text. Both are written out so they can be argued with.
 6. **No cell has been exercised.** Every target state is a specification. No effort or duration estimate appears here,
    deliberately.
-7. **The legacy served set is not in the data file** (row `LGIC_NAMING-S10`). v2 moves it into LN-g-1's written rule,
-   which makes the two graders read one list, but does not settle what `grade()` will read.
+7. **(v3) The legacy served set is resolved at v1.4** (row `LGIC_NAMING-S10`, ruled): it lands as data at
+   `LEGACY_SERVED_PATHS.json` and `grade()` reads it. Until LN-g-1 lands it, a membership-turning key RAISES. This
+   decomposition does not claim the list's completeness: that is LN-g-1's measurement, with its denominator.
