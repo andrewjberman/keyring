@@ -3365,6 +3365,28 @@
     "spec_asserts": "F32-AC9: 'a reader can tell a qualified holdings answer from a complete one', graded at L9 from FE-s-32's captures. FE-s-32 reuses FE-s-30's AnswerStatus unedited.",
     "world_is": "The qualified band, its state and its qualifier read clearly at 390. The one long reason code may touch or cross the band's edge. The same component renders Reporting's answers, so any Reporting reason code of that length would do the same. Not measured and not changed here.",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-S60",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-14T08:41:00Z",
+    "one_line": "RESOLUTION RECORD for the four ARMED rows on IRPT_FNTEND.TO-FE-s-34 whose disarm owner is 2.0.0_SA_COO~F -- W3-S19, W3-S21, W3-S23, W3-S24 -- each closed by an amendment on the worker's branch and drained at workspace de65e2d559 / portal DEV 0b41bb2f, re-verified by this seat before the drain. Disposition stays 3.0.0_SA_CVO's.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "W3-S19 (BLOCKING): amendment 1 @12eef1910c granted __tests__/fe-s-21/source-age.test.ts:166 and __tests__/fe-s-25/source-age-field.test.ts:65, one purpose each (the literal 'Updated ' prefix ruling K removes); replaced at portal f7b2d986. My cut-time claim 'no test asserts the literal Updated' was false.",
+        "W3-S21: 1.0.0_SA_CTO RULING R (96485, round-4 analysis s.8 @3f3b5337a1), option (1) -- on the no-status path the panel ages the document's own business date, never an instant. Built by amendment 2 @1df5ac405f (portal fa9cbee2).",
+        "W3-S23 and W3-S24: amendment 3 @7fd807ab76, confirmed within ruling R by 1.0.0_SA_CTO (96523) -- FixtureAdapter's view-fixture branch carries the document's own reading through adapt.ts's builder (carryDocumentReading), __tests__/fe-s-3/status.test.ts:121 asserts no timestamp is handed over, businessDateOf keys provenance on producerState (W3-S25). Portal c6ee044e.",
+        "Issuer re-verification before the drain, on the worker's tree: grant 4 of 4 workspace and 13 of 13 portal paths IN; investor-reporting.ts diff = FixtureAdapter serve branch + one import only; typecheck rc=0; F34-AC2..AC5 and AC8..AC11 lines reproduced; whole InvestorReporting suite with IRPT_FE_DEV_PORT=5259 (closed): 512 pass / 6 skip / 0 fail across 90 files; proof-of-spec-check VALID rc=0 on eleven ids."
+      ]
+    },
+    "spec_asserts": "Each of the four rows names 2.0.0_SA_COO~F as disarm owner: W3-S19 and W3-S24 as BLOCKING refusals of F34-AC6 under the grant as cut; W3-S21 as a false label on the no-status path; W3-S23 as F34-AC8's premise failing on the path the tab renders.",
+    "world_is": "All four are closed in the drained code: the order met ten of ten mechanical criteria after three amendments, each committed on the worker's branch before the worker resumed. NOT closed here: W3-S22 (fe-s-21's test-built as_of envelope carries the new label) and W3-S26 (a view document's null businessAsOf now reads 'Source date malformed'; 3 of 134 view documents, all in the smoke-only fe-s-3-loading map) -- both INERT and carried to the drain-end packet.",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
