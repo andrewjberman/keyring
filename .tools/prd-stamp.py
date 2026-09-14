@@ -81,6 +81,14 @@ def utc_now() -> str:
 
 
 def content_pin(md_bytes: bytes) -> str:
+    """The pin of the PRD's RECORDED bytes: CRLF is normalised to LF before hashing, so a stamp written from an
+    autocrlf checkout pins the committed record -- the same pin every checkout computes (LGIC_NAMING-S5)."""
+    return hashlib.sha256(md_bytes.replace(b"\r\n", b"\n")).hexdigest()[:PIN_LEN]
+
+
+def raw_pin(md_bytes: bytes) -> str:
+    """The pre-S5 pin: the hash of the checked-out bytes as read. `status` still accepts it, so a stamp written
+    before the normalisation does not read STALE on a checkout like the one that wrote it."""
     return hashlib.sha256(md_bytes).hexdigest()[:PIN_LEN]
 
 
@@ -301,7 +309,7 @@ def _signed_reviewers(signoff_files: dict, prd_version: str) -> set:
     return out
 
 
-def render_status(header, cur_pin, stamps, signoffs, dep_stage=None):
+def render_status(header, cur_pin, stamps, signoffs, dep_stage=None, alt_pins=()):
     """PURE. -> (lines, next_stage_or_None). `stamps`/`signoffs` = {basename: doc}. `cur_pin` is the
     PRD's current content pin; a stamp whose prd_pin != cur_pin is STALE (PRD changed after stamping).
     `dep_stage` is the register's own state (REGISTERED/EXECUTING/CLOSED) -- an instrument the stamp
@@ -340,7 +348,8 @@ def render_status(header, cur_pin, stamps, signoffs, dep_stage=None):
             if not doc:
                 continue
             shown = True
-            stale = doc.get("prd_pin") and doc.get("prd_pin") != cur_pin
+            # alt_pins: pre-S5 raw-byte pins of the same PRD bytes, accepted so no old stamp reads falsely STALE
+            stale = doc.get("prd_pin") and doc.get("prd_pin") != cur_pin and doc.get("prd_pin") not in alt_pins
             rlabel = " r%d" % key[1] if key[1] is not None else ""
             lines.append("  %-4s%-3s %-11s %-18s %s  %s  %s"
                          % (stage, rlabel, STAGE_LABEL[stage], doc.get("signed_by"), doc.get("utc"),
@@ -407,8 +416,9 @@ def cmd_status(args) -> int:
     stamps = _load_json_dir(stamps_dir)
     signoffs = _load_json_dir(signoff_dir)
     cur_pin = content_pin(raw)
+    alt_pins = {raw_pin(raw)} - {cur_pin}   # a pre-S5 stamp pinned the checkout's bytes; accept it
     dep = _dep_stage(_root(), (header or {}).get("project"))
-    lines, nxt = render_status(header or {}, cur_pin, stamps, signoffs, dep)
+    lines, nxt = render_status(header or {}, cur_pin, stamps, signoffs, dep, alt_pins)
     if args.json:
         print(json.dumps({"project": (header or {}).get("project"),
                           "prd_version": (header or {}).get("prd_version"),
@@ -439,6 +449,8 @@ def _self_test() -> int:
     check("content_pin is deterministic and 12 hex", lambda: content_pin(b"abc") == content_pin(b"abc")
           and len(content_pin(b"abc")) == 12 and re.match(r"^[0-9a-f]{12}$", content_pin(b"abc")))
     check("content_pin moves with the bytes", lambda: content_pin(b"abc") != content_pin(b"abd"))
+    check("content_pin normalises CRLF, so two checkouts of one record agree (LGIC_NAMING-S5)",
+          lambda: content_pin(b"a\r\nb\r\n") == content_pin(b"a\nb\n") and raw_pin(b"a\r\nb\r\n") != raw_pin(b"a\nb\n"))
     check("stamp_name: recurring stage carries the round", lambda: stamp_name("L10", 3) == "L10.r3.json")
     check("stamp_name: per-version stage has no round", lambda: stamp_name("L4", None) == "L4.json")
     check("predecessor: L4 has none, L5<-L4, L8<-L6, L10<-L9",
@@ -465,6 +477,10 @@ def _self_test() -> int:
     lines, nxt = render_status(hdr, pin, {"L4.json": l4}, {})
     check("render_status: only L4 stamped, no sign-offs -> NEXT L5 waiting on both reviewers",
           lambda: nxt == "L5" and any("waiting on sign-off from 4.0.0_SA_CRO, 3.0.0_SA_CVO" in x for x in lines))
+    # a pre-S5 raw pin passed as an alt pin is accepted, not flagged
+    lines3, _ = render_status(hdr, "deadbeefdead", {"L4.json": l4}, {}, None, {pin})
+    check("render_status: a stamp whose pin is in alt_pins -> pin OK, not STALE-PIN",
+          lambda: any("pin OK" in x for x in lines3) and not any("STALE-PIN" in x for x in lines3))
     # a stale pin is flagged
     lines2, _ = render_status(hdr, "deadbeefdead", {"L4.json": l4}, {})
     check("render_status: a stamp whose pin != current -> STALE-PIN",
