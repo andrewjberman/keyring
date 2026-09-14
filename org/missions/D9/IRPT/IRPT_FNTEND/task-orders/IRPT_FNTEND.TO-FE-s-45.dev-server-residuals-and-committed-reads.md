@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_FNTEND~1</issued_to>
 <issued_by>2.0.0_SA_COO~F</issued_by>
 <issued_date>2026-09-14</issued_date>
-<status>complete</status>
+<status>pending</status>
 
 **Directive:** D9 | **Fabric:** laptop | **PRD:** `../prd/IRPT_FNTEND_PRD.md` v0.6 @d1479bc5f0 (FIXTURES AND EVIDENCE) | **Decomp cell:** `FE-s-45` (round 7, v0.7 @0ad0ea1fa9) | **outcome_ref:** FWD-1, FWD-11 (evidence) | **depends_on:** none | **slot:** ~1 | **rows:** C-S91 (W1-S63, W1-S64, W1-S65), C-S90 (W5-S7)
 
@@ -65,7 +65,19 @@ Measured by the issuer at portal DEV 35797660:
 <criterion id="F45-AC8" cell_refs="FE-s-45" judgment="true" drives="none"/>
 `F45-AC8` -- graded at L9: RULING U leaves no residual, and F41-AC5 grades what is committed. RECORD; NO VERDICT.
 
-<expected_criteria>F45-AC1, F45-AC2, F45-AC3, F45-AC4, F45-AC5, F45-AC6, F45-AC7, F45-AC8</expected_criteria>
+<criterion id="F45-AC9" cell_refs="FE-s-45" drives="network"><invocation>cd <WS>/portal && timeout 600 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting/__tests__/fe-s-45/residuals.test.ts</invocation><expect>EVERY CONFIG LOADER IN THE REACH WRITES NOTHING THROUGH THE JUNCTION: (\d+) of \1(?![0-9])</expect></criterion>
+`F45-AC9` -- AMENDMENT 1, RULING (B).
+- There are 0 new entries in `portal/node_modules/.vite-temp` (through the junction) across every loader the reach keeps: dev start, preview start, build (if it takes runner) and each kept programmatic loader.
+- The old-script control on the same tree shows at least 1.
+- The test prints each loader's disposition, including the retired and the residual ones.
+
+<criterion id="F45-AC10" cell_refs="FE-s-45" drives="network"><invocation>cd <WS>/portal && timeout 600 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting/__tests__/fe-s-45/residuals.test.ts</invocation><expect>THE DEV SERVER RUNS ON NODE: yes</expect></criterion>
+`F45-AC10` -- the dev script's server reports `process.release.name` = `node`, and the test prints it.
+
+<criterion id="F45-AC11" cell_refs="FE-s-45" drives="network"><invocation>cd <WS>/portal && timeout 600 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting/__tests__/fe-s-45/residuals.test.ts</invocation><expect>A PROXIED /api ROUTE ANSWERS THE SAME STATUS UNDER THE NEW AND OLD DEV SCRIPTS: yes</expect></criterion>
+`F45-AC11` -- one route the vite config proxies under `/api`, requested through a server started by each script on its own measured-closed port. The test prints both HTTP statuses.
+
+<expected_criteria>F45-AC1, F45-AC2, F45-AC3, F45-AC4, F45-AC5, F45-AC6, F45-AC7, F45-AC8, F45-AC9, F45-AC10, F45-AC11</expected_criteria>
 
 ## BOUNDS
 
@@ -91,9 +103,29 @@ Measured by the issuer at portal DEV 35797660:
 - **Surprise.** ONE row per finding, id `IRPT_FNTEND-W1-S<k>`. Read the WHOLE channel PLANE (`INVESTIGATION_v1.md` AND `_v2.md`) before minting; an INERT row OMITS the `disarm_owner` key; write with `newline='\n'` and READ THE DIFFSTAT of your commit.
 - **REFUSE** any criterion you cannot satisfy as written and report the refusal with its measurement.
 - Report push state as LOCAL. **PORTAL IS FROZEN**: local commits only.
+- ⛔ **AMENDMENT 1 (2.0.0_SA_COO~F, 2026-09-14 ~23:5xZ; 1.0.0_SA_CTO RULING (B), msg 96783, record @46664e15f4; this order is REOPENED; three criteria added, none removed).** RULING (B) REJECTS the first run's mechanism (`"dev": "bun --bun vite --configLoader native"`, portal df3a3353, row W1-S67), because it moves every dev server from node to the bun runtime. The loaders fail under node only because `vite.config.ts` uses `path.resolve(__dirname, ...)` at `:13` and `:16` in a `"type": "module"` package. There, `__dirname` exists only under the BUNDLE loader, and that is the loader that writes `.vite-temp`.
+  - **`vite.config.ts` is now yours for ONE purpose:** `path.dirname(fileURLToPath(import.meta.url))` at every former `__dirname` site, and nothing else in the file. Use `fileURLToPath`, NOT `import.meta.dirname`: `engines` declares node >=18.0.0, and `import.meta.dirname` needs 20.11.
+  - **`package.json` is yours for the config-loading scripts only:** `dev`, `build` and `preview`.
+    - The runtime STAYS NODE: no `bun --bun`. Revert the first run's `dev` line.
+    - Never touch the `overrides` block.
+  - **`fe-s-38/resolve-config.mjs` (row W1-S68) is yours for the same load,** so it loads the config the way the dev script names and F38-AC3's "the dev server's own loader" stays true. Nothing else in `fe-s-38/` is yours.
+  - **THE REACH, BY SUBTRACTION.** This is the CTO's census at DEV 35797660. Re-run it at your own vintage and print both.
+    - package.json's 8 scripts, minus the 5 that do not load the config, leaves 3: dev, build and preview.
+    - The programmatic loaders are the hits for `resolveConfig|loadConfigFromFile|configLoader|createServer(` outside node_modules: 4 hits, minus 1 plain `http.createServer`, leaves 3.
+      - `fe-s-38/resolve-config.mjs:59`.
+      - `fe-s-32/vite.worktree.config.ts:48` and `fe-s-39/vite.worktree.config.mjs:33`, both retired by your W1-S65 limb.
+    - Each of the 6 takes the runner loader (`loadConfigFromFile` takes it as its 6th argument) or is retired. Print a disposition for each.
+    - Any caller left on the bundle loader is a NAMED residual.
+  - **`build` is the production build path.**
+    - It takes runner ONLY IF a `dist/` file-hash manifest built under each loader on one tree is EQUAL.
+    - Otherwise `build` stays on the default loader, as the one named residual.
+    - Build into `<WS>/.scratch/` only.
+  - **Your portal branch now carries portal DEV 0d075808** (FE-s-42 drained), synced @f504ab7c. The whole suite (F45-AC7) runs again with this amendment applied.
 
 <paths>
 portal/package.json
+portal/vite.config.ts
+portal/src/pages/InvestorReporting/__tests__/fe-s-38/resolve-config.mjs
 portal/src/pages/InvestorReporting/__tests__/fe-s-19/mounted-from-wire.test.ts
 portal/src/pages/InvestorReporting/__tests__/fe-s-31/vite.worktree.config.mjs
 portal/src/pages/InvestorReporting/__tests__/fe-s-32/vite.worktree.config.ts
@@ -110,10 +142,10 @@ org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: `F45-AC1` .. `F45-AC8`. Instance at
+Criterion ids: `F45-AC1` .. `F45-AC11`. Instance at
 `org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/IRPT_FNTEND.TO-FE-s-45.dev-server-residuals-and-committed-reads.proof_of_spec.json`
 (phase `BUILD-GENERAL`, firm `FABRIC`, spec_ref.group `OTHER`), validated with
-`python .tools/proof-of-spec-check.py <instance> F45-AC1,F45-AC2,F45-AC3,F45-AC4,F45-AC5,F45-AC6,F45-AC7,F45-AC8` BEFORE the `complete` flip. `F45-AC8` recorded `UNVERIFIABLE-BY-INSTRUMENT`, `status_reason` naming the CVO at L9. Result file `dev-server-residuals-and-committed-reads.result.md` beside it. Flip only when every mechanical criterion PASSES by output.
+`python .tools/proof-of-spec-check.py <instance> F45-AC1,F45-AC2,F45-AC3,F45-AC4,F45-AC5,F45-AC6,F45-AC7,F45-AC8,F45-AC9,F45-AC10,F45-AC11` BEFORE the `complete` flip. `F45-AC8` recorded `UNVERIFIABLE-BY-INSTRUMENT`, `status_reason` naming the CVO at L9. Result file `dev-server-residuals-and-committed-reads.result.md` beside it. Flip only when every mechanical criterion PASSES by output.
 </proof_of_spec>
 
 **REPORT:** your FINAL MESSAGE, once, in the `WORKER REPORT` shape.
