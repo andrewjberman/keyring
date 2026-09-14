@@ -5048,3 +5048,195 @@ Andrew asked for (msg 22917); it concerns this project's portal files meeting an
 }
 ]
 ```
+
+```json
+[
+{
+  "id": "POSN_ASTTAX-Z-W22-S16",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~22",
+  "surfaced_at": "2026-09-14T23:12:11Z",
+  "one_line": "V7-AC5 asks the render to show GLD 8.34 UNDER THE COMMODITIES BUCKET, but the served holdings tag GLD `hedge` (R1 has not run) and the holdings table EXCLUDES every class outside the ratified five by design -- so GLD renders in NO bucket at all: 15 of 16 rows render for Opal Satellite 15 and the visible subtotals (74.16 + 17.50 = 91.66) sit under the table's own GRAND TOTAL of 100.00, the 8.34 gap being exactly GLD. The unblocking act is AT5-s-8 (R1), which THIS order gates -- so the criterion cannot be met before the cell it is a precondition for.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "SERVED, READ BACK: s3://opal-data-cot/platinum/satellites/holdings.json VersionId BRjqyqnB0pIdLUHOvDY3B_Sh9b0EXIPw, LastModified 2026-09-14T19:53:59Z, as_of 2026-09-14. Opal Satellite 15 / GLD: weight=8.34, asset_class=\"hedge\", sub_asset_class=\"Gold\". Opal Satellite 80 / VXX: weight=1.87, asset_class=\"equity\", sub_asset_class=\"Volatility\". Class vocabulary over all 177 served rows: {fixed_income:74, equity:96, hedge:7}; 0 rows carry a null asset_class.",
+      "THE EXCLUSION IS THE RENDERER'S, DELIBERATE, AND PRE-DATES THIS CELL: HoldingsTab.tsx:239 ASSET_CLASS_ORDER = ['Fixed Income','Equity','Structured','Commodities','Alternatives'], consumed at :1438-1440 as `.filter(ac => groupedHoldings[ac])`. Its own note at :1425-1428 (landed by AT5-s-6/F2): \"'Hedge' -> 'Equity' is DROPPED (R1) ... After R1 no served top-level asset_class is 'Hedge'; if a stale payload still carries one it now falls through unmapped and is EXCLUDED by ASSET_CLASS_ORDER, which is visible (a missing group) rather than silent (a wrong group).\"",
+      "RENDERED, MEASURED TWO WAYS at portal wk-posn-5-22c-portal ea64113ba9: DOM read of the holdings table -- Opal Satellite 15 renders 15 rows, GLD absent, subtotals 'Fixed Income Total 74.16' + 'Equity Total 17.50' under 'Grand Total 100.00'; Opal Satellite 80 renders 15 rows, VXX 1.87 present under Equity / Volatility, GLD 2.11 absent, subtotals 10.09 + 87.80 under Grand Total 100.00. Screenshot portal/.scratch/v7_satellites.png read: the same, and GLD DOES appear in the Portfolio Composition treemap at 8.3% painted in the UNMAPPED GREY (getAssetClassBgColor falls through to PALETTE.gray500 for a class with no registry entry).",
+      "THE ADAPTER IS NOT THE CAUSE AND DOES NOT GUESS: probe of the running modules -- adapter output for Opal Satellite 15 carries the GLD row as {ticker:'GLD', weight:0.0834, asset_class:'Hedge', sub_asset_class:'Gold'} and allocation {..., hedge:8.34}, summing to 100.00. SatelliteRenderCoverage reports offRatified ['GLD:hedge'] for 7 of 9 satellites; 7 of 177 served rows are outside the ratified five.",
+      "THE ORDERING IS CIRCULAR AS WRITTEN: TO-V7-1's header says 'GATES AT5-s-8 (R1)' and its decomp_ref says 'DOWNSTREAM: AT5-s-8 (R1) reads your rendered Satellites mode after the retag'. V7-AC5's GLD clause describes the POST-retag world, so it is unreachable while this order is the retag's precondition. The VXX half of the same criterion is written across the boundary ('equity before R1, Structured after; state which') and IS satisfied at the pre-R1 arm; the GLD half asserts the bucket flatly and varies only the sub-asset."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-V7-1 V7-AC5 @4e81f4e1c1: \"`Opal Satellite 15` shows GLD at 8.34 under the Commodities bucket (its sub-asset as SERVED -- 'Gold' before R1, 'Metals' after; state which)\" and \"served rows == rendered rows for the satellite you read (count both)\". THE CELL: \"`asset_class`/`sub_asset_class` as served -- a null label renders as an 'unlabelled' bucket, disclosed, never guessed\".",
+  "world_is": "GLD is served as `hedge`/`Gold` pre-R1. Rendering it as served puts it outside the table's ratified five, where the table drops it: served 16, rendered 15, for both satellites read. Rendering it under Commodities would require the adapter to re-classify a label the producer did not serve, which the same cell forbids. STATED AS ASKED: the observed sub-asset is 'Gold' (pre-R1) and the observed class is 'hedge' (pre-R1), not Commodities.",
+  "notes": "V7-AC5 is recorded FAIL against its own text, with the full reading. No repair attempted: the two available repairs are a guess in the adapter (forbidden by the cell) or an edit to HoldingsTab.tsx (outside <paths>). The remedy that costs nothing else is AT5-s-8 running first, or V7-AC5's GLD clause being re-cut across the R1 boundary the way its VXX clause already is."
+},
+{
+  "id": "POSN_ASTTAX-Z-W22-S17",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~22",
+  "surfaced_at": "2026-09-14T23:12:11Z",
+  "one_line": "V7-AC2 ORDERS the portal-proxy hunk that tightens structured/commodities/alternatives to REQUIRED; V7-AC4 ORDERS `bun run tsc -b` to exit 0. Both cannot hold: the tightening breaks ONE site, etfAdapter.ts:134, because EtfPositioningBook.allocation is a SEPARATE inline four-key type and the ETF payload is still pre-B1 -- and the fix needs either etfAdapter.ts (outside <paths>, and V7-AC2 requires it UNCHANGED at 0 lines) or a SECOND portal-proxy hunk (outside the hand-over's 'exactly ONE hunk' grant). The ordered act was performed and the branch is left NOT TYPECHECKING.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE FAILING RUN, VERBATIM: `cd portal && bun run tsc -b` exits 2 with exactly one line -- src/pages/Positioning/shared/etfAdapter.ts(134,7): error TS2739: Type '{ cash: number; fixed_income: number; equity: number; hedge: number; }' is missing the following properties from type 'PositioningAllocation': structured, commodities, alternatives.",
+      "DISCRIMINATING CONTROL ARM -- THE HUNK IS THE SOLE CAUSE: with the three keys reverted to optional and NOTHING else changed, the same command exits 0 over the 481 .ts/.tsx files under src (tsconfig.app.json include:['src']; 557 tracked files under src in total). So the three satellites files added by this cell compile clean and the single error is the tightening meeting a pre-existing type.",
+      "POSITIVE CONTROL -- THE INSTRUMENT CAN FAIL ON THIS CELL'S OWN FILE: a one-line `const AC4_POSITIVE_CONTROL: number = \"not a number\"` injected into satelliteAdapter.ts made the same command exit 2 with satelliteAdapter.ts(138,7): error TS2322; reverting it returned exit 0. The instrument is not blind to this worker's files.",
+      "THE SITE, AT ITS SOURCE: portal-proxy.ts:1287-1292 declares EtfPositioningBook.allocation as an INLINE literal {cash; fixed_income; equity; hedge} -- it does not reference PositioningAllocation. etfAdapter.ts:134 assigns `book.allocation ?? { ...ZERO_ALLOCATION }` into PositioningPortfolio.allocation; ZERO_ALLOCATION (etfAdapter.ts:111) ALREADY carries the five keys, so only the non-null branch fails.",
+      "THE CLAIM A SECOND PORTAL-PROXY HUNK WOULD HAVE TO MAKE IS FALSE TODAY: s3://opal-data-portal-v2/platinum/etfs/positioning_data.json VersionId MkASX8obEltFZpHHzNa81cuAVXKf7wR2 carries allocation keys ['cash','fixed_income','equity','hedge'] on every book -- no structured/commodities/alternatives. Typing EtfPositioningBook.allocation as the tightened PositioningAllocation would declare three keys the served payload does not have, which is exactly the claim AT5-s-6 refused when it made them optional (portal-proxy.ts:980-993).",
+      "THE ORDER'S OWN TEXT ON BOTH SIDES: hand-over fact (a) in the face -- 'YOU DO: once your literals carry the five keys, tighten the three to REQUIRED in portal-proxy.ts (one line ...) and let `tsc` name every site that still owes them'; the cell's act 4 -- 'Models and ETFs modes: UNTOUCHED (`etfAdapter.ts`, `bookSet.ts` unchanged -- V7-AC2)'; V7-AC4 -- 'exit 0 with the checked-file count'."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-V7-1 @4e81f4e1c1, HAND-OVER FACTS (a): the tightening is a 'one line' change and `tsc` will 'name every site that still owes them' -- with V7-AC2 requiring etfAdapter.ts UNCHANGED at 0 lines and V7-AC4 requiring exit 0.",
+  "world_is": "tsc names exactly ONE such site and it is etfAdapter.ts, the file V7-AC2 requires unchanged and which <paths> does not carry. There is no state of the world reachable inside this cell's grant in which V7-AC2 and V7-AC4 are both satisfied.",
+  "notes": "DISARM, either half, both one line: (i) grant etfAdapter.ts for `allocation: { ...ZERO_ALLOCATION, ...(book.allocation ?? {}) }` at :134 -- which is also the honest read of a pre-B1 payload, since the spread fills the three absent classes with the measured 0 the page already takes via `?? 0`; or (ii) drop the tightening from V7-AC2 and re-cut it onto the cell that owns etfAdapter.ts. The hunk was NOT reverted unilaterally: it is an ordered act with its own path grant, and dropping it silently would have left the next worker to rediscover this."
+},
+{
+  "id": "POSN_ASTTAX-Z-W22-S18",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~22",
+  "surfaced_at": "2026-09-14T23:12:11Z",
+  "one_line": "The Satellites mode's FETCH WIRING is not in any of the three files the cell names -- the react-query call and the adapter call both live in Positioning.tsx:411/:437, outside <paths> -- so the two new reads could not be given their own query keys and are COMPOSED into getSatelliteRegistry() instead. This is the preflight's own open item (1), answered by measurement rather than by a silent widening.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE ENTRY POINT, CENSUSED: comp-find 'satellitesToPositioningShape|getSatelliteRegistry' over portal/src returns 7 hits across 557 files scanned -- Positioning.tsx:55, :56, :412 (queryFn), :437 (the adapter call), satelliteAdapter.ts:98 (the definition), satelliteRegistry.ts:145 (the definition), satelliteSet.ts:88 (a comment). Every CALL is in Positioning.tsx; <paths> carries satelliteAdapter.ts, satelliteSet.ts, satelliteRegistry.ts and portal-proxy.ts, and not Positioning.tsx.",
+      "THE ADAPTER CANNOT FETCH: satellitesToPositioningShape is a synchronous function called during render (Positioning.tsx:437), so a read cannot be moved into it. The only seam inside the grant that the page already awaits is getSatelliteRegistry's query.",
+      "WHAT THE COMPOSITION DOES, MEASURED: the probe of the running modules shows getSatelliteRegistry('cottonwood') returning 9 books of which 9 carry a joined `served` block, and the network trace shows all three scoped URLs fetched once per load -- 200 /api/scoped/satellites/registry.json?firm=cot, 200 .../holdings.json?firm=cot, 200 .../characteristics.json?firm=cot.",
+      "THE COST IS STATED AT THE CALL, NOT DISCOVERED LATER: satelliteRegistry.ts's own block comment records that a holdings failure now fails the REGISTRY read, that Promise.all rejects on the first rejection by design, and that the thrown message names the artifact even though the on-screen copy is cause-agnostic."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-V7-1 <preflight> comp-adversary (1) @4e81f4e1c1: 'the issuer has not read how the page's mode switch chooses the adapter -- if the Satellites mode's entry point is outside the three files, that is a row and a grant question, not a silent widening.'",
+  "world_is": "It is outside the three files. Filed as the row the preflight asks for; the reads were composed inside the granted file rather than wiring them from Positioning.tsx.",
+  "notes": "If a later cell wants three independent query keys (so a holdings failure can be told from a registry failure ON SCREEN), that is a Positioning.tsx edit plus a fourth notice value, and it is a scope with a different owner. The two reads are exported and callable today; nothing about the composition blocks that."
+},
+{
+  "id": "POSN_ASTTAX-Z-W22-S19",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~22",
+  "surfaced_at": "2026-09-14T23:12:11Z",
+  "one_line": "V7-AC5 expects 'nine satellites selectable'; EIGHT are, and the ninth is hidden by a DELIBERATE pre-existing display filter -- SATELLITES_HIDDEN_FROM_DISPLAY = {'Opal Satellite 98'} at Positioning.tsx:156, applied at :434, landed by ETFS_SATELLITES.TO-10-DE AC1 to remove the ninth column that made POSITIONING SUMMARY clip. The registry serves nine and the adapter produces nine; only the page's view of it narrows.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "SERVED: registry.json VersionId XaX6zaVWH7ybXnRBu2jeF2PNABUhezuM lists 9 books -- Opal Satellite 15, 30, 40, 50, 60, 70, 80, 90, 98.",
+      "ADAPTER OUTPUT: the probe returns 9 portfolios, including 'Opal Satellite 98', with 0 problems and 0 unresolved. So nothing in this cell drops it.",
+      "RENDERED: the DOM read enumerates the selectable satellite tabs as exactly 8 -- 15, 30, 40, 50, 60, 70, 80, 90 -- in both the passing arm and the control arm. 98 is absent.",
+      "THE FILTER, AT ITS SOURCE: Positioning.tsx:156 `const SATELLITES_HIDDEN_FROM_DISPLAY: ReadonlySet<string> = new Set(['Opal Satellite 98'])`, applied at :434 `(b) => !SATELLITES_HIDDEN_FROM_DISPLAY.has(b.code)`. Its header note at :150-155 records Andrew withdrawing the width problem rather than accepting a scroll: 'that would solve the issue with the width and no need for arrows'."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-V7-1 V7-AC5 @4e81f4e1c1: 'nine satellites selectable'.",
+  "world_is": "Eight are selectable, by a ruled display filter that predates this TO and lives outside its <paths>. Nine are served, nine are adapted.",
+  "notes": "Raising the count to nine would mean deleting a filter Andrew asked for, not fixing a defect -- so nothing was changed. Recorded so the criterion's number can be re-cut against the filter rather than against the registry."
+},
+{
+  "id": "POSN_ASTTAX-Z-W22-S20",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~22",
+  "surfaced_at": "2026-09-14T23:12:11Z",
+  "one_line": "V7-AC5 expects 'the as-of shown is holdings.json's date', but the Positioning page RENDERS NO DATE AT ALL, in any mode -- measured on both arms, zero occurrences of `20\\d\\d` in the whole body text of Models mode and of Satellites mode. The payload's as-of IS holdings.json's (data_as_of = 2026-09-14, Black Diamond's partition date); it is simply not a thing this page displays, and satellites deliberately register nothing to the one carrier that would.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "DISCRIMINATING CONTROL, BOTH MODES THROUGH ONE INSTRUMENT: full document.body.innerText read after load and mode click -- Satellites 2501 characters, Models 2985 characters; pattern `20\\d\\d` 0 hits in each, `2026-09-1[0-9]` 0, `\\bas of\\b` 0. So the absence is a property of the PAGE, not of the satellites path, and not of the reader's regex.",
+      "THE PAYLOAD DOES CARRY IT: the probe of the running adapter reads data_as_of = '2026-09-14', data_date = '2026-09-14', generated_at = '2026-09-14', and as_of_date = '2026-09-14' on all nine portfolios -- equal to holdings.json's served as_of, and NOT to the models payload's 2026-09-11 that the previous adapter inherited.",
+      "WHY NOTHING DISPLAYS IT: Positioning.tsx:481 computes dataAsOf and passes it to exactly one consumer, useYangDataAsOf at :496, gated by REGISTERS_YANG_AS_OF where satellites is FALSE (:491-494) with a stated reason. bookSet.ts:387-391 PER_BOOK_AS_OF is false for all three modes, so no per-book date renders either. All of these are outside this TO's <paths>."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-V7-1 V7-AC5 @4e81f4e1c1: 'the as-of shown is holdings.json's date'. THE CELL: 'its `as_of` is `holdings.json`'s (Black Diamond's partition date)'.",
+  "world_is": "The cell's half is MET in the payload and is measurable there. The criterion's 'shown' half is unobservable: the page shows no date in any mode, so there is no rendering that could be right or wrong.",
+  "notes": "Recorded rather than fixed: displaying a satellites as-of means editing Positioning.tsx or flipping REGISTERS_YANG_AS_OF.satellites, both outside <paths>, and the second would register a Black Diamond date into a registry named for yang's clock."
+},
+{
+  "id": "POSN_ASTTAX-Z-W22-S21",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~22",
+  "surfaced_at": "2026-09-14T23:12:11Z",
+  "one_line": "THE TWO PRODUCERS SPEAK DIFFERENT CLASS VOCABULARIES AND NOTHING COMPARES THEM: satellites holdings.json serves snake_case class IDs (`fixed_income`, `equity`, `hedge`) while the models and ETF producers serve PRD display names (`Fixed Income`, `Equity`) -- and the holdings table groups on the display names. A faithful pass-through of the served token therefore renders NOTHING rather than rendering it differently: all 177 rows would have been dropped by ASSET_CLASS_ORDER with no error anywhere.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED ON THREE SERVED ARTIFACTS: satellites holdings.json (VersionId BRjqyqnB0pIdLUHOvDY3B_Sh9b0EXIPw) asset_class vocabulary over 177 rows = {fixed_income:74, equity:96, hedge:7}. json/positioning/positioning_data.json (VersionId OuevyO7kCIJdEqzGlJWd.z.8S8pqiXJk) current_holdings vocabulary = {'Equity','Fixed Income'} over 110 rows. platinum/etfs/positioning_data.json (VersionId MkASX8obEltFZpHHzNa81cuAVXKf7wR2) = {'Equity','Fixed Income'}.",
+      "THE RENDERER'S SIDE: HoldingsTab.tsx:239 ASSET_CLASS_ORDER is the display-name list and :1438-1440 filters the groups by it; :628-629 already carries a hand-written both-spellings special case for Fixed Income ('Fixed Income' || 'fixed_income') inside the SORT, which is the same mismatch surfacing once before, handled locally.",
+      "WHAT THIS CELL DID: satelliteAdapter.ts declares SERVED_CLASS_DISPLAY, a map over the ratified five plus cash plus the transitional hedge, with an unknown token falling through VERBATIM and a null label going to a disclosed 'Unlabelled' bucket. It is stated in the file as a transliteration between two vocabularies for the same class, explicitly not a classification.",
+      "THE ALTERNATIVE WAS MEASURED, NOT ASSUMED: with the served tokens passed through untranslated the table's group filter matches none of them, so the satellites holdings panel would render zero rows while the producer ran correctly -- the same shape as the defect ETFS_SATELLITES.TO-8-DE existed to remove."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-V7-1 THE CELL @4e81f4e1c1: 'the Satellites mode's HOLDINGS come from `holdings.json` rows (one row per ticker, `weight` as served, `asset_class`/`sub_asset_class` as served ...)'.",
+  "world_is": "'As served' has two possible referents here -- the served TOKEN and the served CLASS -- and they are not the same string on this plane. The adapter renders the served CLASS in the renderer's vocabulary and never re-decides which class a row is in.",
+  "notes": "The durable fix is one vocabulary on the plane (either the satellites producer emits display names, or the renderer keys on the PRD class IDs), which is a producer/renderer decision for a cell that owns one of them. Until then the map is the seam, and it is one declared object in one file."
+},
+{
+  "id": "POSN_ASTTAX-Z-W22-S22",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~22",
+  "surfaced_at": "2026-09-14T23:12:11Z",
+  "one_line": "FOUR PIECES OF LIVE COPY AND REASONING NOW DESCRIBE A MECHANISM THIS CELL REMOVED -- the satellites no longer blend the model books, but the page still tells the reader they do: the mode description renders 'across Opal Satellites, each a weighted blend of Opal model portfolios' on screen, the unresolved notice says 'blended over their remaining legs only', HOLDING_NOUN and SECTOR_SORT_FALLBACK both justify their satellites value from 'satellites blend the MODELS holdings', and the fetch-failed headline names only the 'registry' for what is now a three-artifact read. All four are outside this TO's <paths>.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ON SCREEN, READ FROM THE CAPTURE portal/.scratch/v7_satellites.png: the page subtitle reads 'Asset allocation and holdings breakdown across Opal Satellites, each a weighted blend of Opal model portfolios.' Source: Positioning.tsx:123-125 MODE_DESCRIPTIONS.satellites.",
+      "Positioning.tsx:617-620, the `unresolved` notice: 'Unresolved constituent: ... not present in the served models data. Those satellites are blended over their remaining legs only.' After this cell `unresolved` means 'a registry code the served HOLDINGS artifact does not carry' and nothing is blended over anything. Measured today: unresolved is EMPTY (9 of 9 codes present), so the copy is unreachable rather than wrong-on-screen.",
+      "bookSet.ts:404-412 HOLDING_NOUN.satellites = 'ETFs', reasoned as 'A satellite is a weighted blend of MODEL books, and a model book's holdings genuinely ARE ETFs'. bookSet.ts:148-152 SECTOR_SORT_FALLBACK.satellites = false, reasoned as 'Satellites blend the MODELS holdings, so they are models-shaped'. Both VALUES remain correct against the served rows (the served sub_asset_class values are the models vocabulary -- Short Duration, US Large Cap, Developed -- not GICS sectors, measured over 177 rows); only their stated REASONS are now false.",
+      "Positioning.tsx:211-214 SATELLITE_NOTICE_COPY['fetch-failed'].headline = 'Satellite registry could not be loaded.' -- verified on screen in the V7-AC6 forced-failure capture, where the read that actually failed was holdings.json."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-V7-1 THE CELL @4e81f4e1c1: 'The B) union blend and the A) measures blend are REMOVED for the Satellites mode'; <paths> lists satelliteAdapter.ts, satelliteSet.ts, satelliteRegistry.ts and portal-proxy.ts.",
+  "world_is": "The blend is removed from the adapter and still asserted by four artifacts outside the grant, one of which renders to the user on every satellites page view.",
+  "notes": "Not edited: each is a one-line change in a file this TO does not name, and the mode description is user-visible copy. The values of HOLDING_NOUN and SECTOR_SORT_FALLBACK are re-measured above and still hold, so this is a stale-reasoning finding, not a behaviour one -- except the subtitle, which a reader reads."
+},
+{
+  "id": "POSN_ASTTAX-Z-W22-S23",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~22",
+  "surfaced_at": "2026-09-14T23:12:11Z",
+  "one_line": "V7-AC6 asks for 'an error notice, not \"no holdings\"'; under the forced failure the page shows BOTH -- the red 'Satellite registry could not be loaded' notice at the top AND the two panels' pre-existing 'No holdings data available' placeholder beneath it. The placeholder is HoldingsTab.tsx:1120/:1200, fires for a null payload in EVERY mode, and is not adapter output; the criterion's own STOP condition (an EMPTY SATELLITE rendered) is not met -- zero satellites are selectable and zero rows render.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FORCED-FAILURE ARM, holdings.json 503 via ui-smoke's own --fail route: getSatelliteHoldings THROWS 'API request failed: 503 Service Unavailable', getSatelliteRegistry throws the same, 0 satellite tabs, 0 holding rows, and the only canvas notice is 'Satellite registry could not be loaded. Try reloading. If it persists, the registry is unavailable rather than empty.' Read on screen in portal/.scratch/v7_ac6_forced_fail.png.",
+      "THE SAME BODY ALSO CONTAINS 'No holdings data available' TWICE -- once in PORTFOLIO COMPOSITION and once in HOLDINGS BREAKDOWN, both the panels' own empty state, enumerated at HoldingsTab.tsx:1120 and :1200 as `{isDesignedShell ? 'Book-level metrics only' : 'No holdings data available'}`.",
+      "POSITIVE CONTROL, NOTHING FORCED, SAME SCRIPT AND SAME FIXTURE BYTES: 15 rows, 8 satellite tabs, zero notices, 'could not be loaded' false. So the notice in the failing arm is caused by the forced failure and not by the harness.",
+      "ARM 4 RAN THE REAL INSTRUMENT: portal/scripts/ui-smoke.mjs with --fail printed 'FORCED-FAIL: /api/scoped/satellites/holdings.json' and then reported the holdings fixture as FIXTURE-DEAD -- the served bytes were declared and never matched, because the forced failure is evaluated first (ui-smoke.mjs:160-200). The registry and characteristics fixtures still served 200."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-V7-1 V7-AC6 @4e81f4e1c1: 'the page shows an error notice, not \"no holdings\" -- the honest branch. If the adapter renders an empty satellite instead, the fallback that was removed @24a8435642 has been re-created one layer up: STOP and fix it in this cell.'",
+  "world_is": "The error notice is shown and no empty satellite is rendered, so the criterion's named STOP condition is absent. The phrase 'no holdings' is nevertheless on the page, from a panel placeholder that predates this cell and lives outside its <paths>.",
+  "notes": "V7-AC6 is recorded PASS on its stated discriminator with this coexistence disclosed rather than omitted. Suppressing the panel placeholder when a mode-level error notice is present would be a HoldingsTab.tsx or Positioning.tsx edit and is a different cell's."
+}
+]
+```
