@@ -2693,3 +2693,33 @@ all seven mechanical criteria were measured and the verdict is NO-GO.
   }
 ]
 ```
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-S62",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-14T12:48:00Z",
+    "one_line": "THIS LOOP'S LADDER NAMES TWO WORKER SERIALS THAT ARE ALREADY CONSUMED. Rung 3 reads SPAWN AT3-s-6 (TO-T6-1, worker ~15) and rung 4 reads SPAWN AT3-s-7 (TO-T7-1, ~16). Measured at HEAD a3036c7d66 on two independent instruments that agree exactly: ~15 and ~16 are BOTH ALLOCATED, to round-4 orders TO-U1-1 and TO-U3-1, with populated deliverables homes. Allocated set is ~1 ~2 ~3 ~4 ~6 ~8 ~10 ~11 ~12 ~13 ~14 ~15 ~16 ~17 ~18; NEXT FREE IS ~19. A serial is part of the <paths> grant, so spawning per the ladder's remembered number would point a new worker at a home already holding another order's proof instance and result.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED BY THIS SEAT at HEAD a3036c7d66, every figure re-derived inside the same call that wrote this row, the write refusing on any disagreement. INSTRUMENT A, deliverables homes on disk (the WORKER home is per-serial BY PATH): 15 homes -> ~1 ~2 ~3 ~4 ~6 ~8 ~10 ~11 ~12 ~13 ~14 ~15 ~16 ~17 ~18. INSTRUMENT B, git authorship over --all, a DIFFERENT plane rather than a re-run: the same set exactly. Two instruments, different methods, identical answer.",
+        "THE COLLISION IS CONCRETE, not nominal: deliverables/0.9.0_WK_POSN_ASTTAX~15/ holds POSN_ASTTAX.TO-U1-1.derive-the-readers-and-grade-the-five-class-bar.proof_of_spec.json, POSN_ASTTAX.TO-U1-1.result.md -- TO-U1-1's proof instance and result, a round-4 order that is complete. ~16 likewise holds TO-U3-1's artifacts, 4 commits under that serial.",
+        "NEGATIVE CONTROL, and it fires: ~99 is absent from the path plane AND from the author plane, so the census can return NOT-ALLOCATED and is not a detector that says yes to everything.",
+        "WHY THE LADDER'S NUMBERS WENT STALE WITHOUT ANYONE EDITING THEM: worker serials are allocated PER SPAWN, not per cell. The ladder's ~15 and ~16 were a PLAN made when round 3 was cut; the retag never spawned against its NO-GO, and rounds 4's spawns consumed those numbers in the meantime. Nothing was overwritten and no rule was broken -- the plan simply aged while the counter advanced, and a plan that names a mutable allocation ages silently.",
+        "AND THE BANKED RULE THIS WOULD BREACH IS EXPLICIT: a spawn prompt may restate a face but never invent an IDENTITY -- THE SERIAL IS PART OF THE <paths> GRANT. A worker spawned as ~15 would receive a grant naming a directory that is not empty and is not its own."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "This loop's standing ladder, rung 3: 'SPAWN AT3-s-6 (TO-T6-1, worker ~15) -- the RETAG, in a cone worktree from CURRENT HEAD'; rung 4: 'AT3-s-6 terminal? SPAWN AT3-s-7 (TO-T7-1, ~16).' Rule 27: a worker's write surface is exactly the <paths> its non-terminal order names, and its rows mint <CODE>-W<n>-S<k>. The spine's L7: WORKER SUBAGENTS 0.9.0_WK_<CODE>~<n>, one worktree each, deliverables at org/missions/D*/<MACRO>/<CODE>/deliverables/<serial>/.",
+    "world_is": "~15 AND ~16 ARE BOTH CONSUMED. ~15 = TO-U1-1 (AT4-s-1, the reader derivation, complete); ~16 = TO-U3-1 (AT4-s-3, complete, 4 commits). Allocated: ~1 ~2 ~3 ~4 ~6 ~8 ~10 ~11 ~12 ~13 ~14 ~15 ~16 ~17 ~18. NEXT FREE: ~19. STAR: A PLAN THAT NAMES A MUTABLE ALLOCATION AGES SILENTLY -- the ladder's numbers were correct when written and were invalidated by spawns the ladder itself does not mention, with no edit to the ladder and no error at any step. The failure needs no mistake; it needs only time and a counter that advances elsewhere. NOTE THE DIRECTION: this does not block a spawn, it makes a spawn SUCCEED against the wrong home, and the worker would find artifacts already present and could read them as its own predecessor state.",
+    "notes": "SCOPE AND WHAT IS NOT DONE: no spawn is made or planned -- the retag remains NO-GO, so rung 3's precondition is unmet and this row changes nothing that is happening now. No edit to .claude/skills/ or to the cron body (Andrew-anchored, scope-bound: applied AT THE ACT, the body-level question NAMED not taken, the same disposition Z-S60 and Z-S61 used). No task order cut, modified or re-staged; no deliverables directory touched or created. DISARM CONDITION, single limb and falsifiable: the NEXT spawn on this project RE-MEASURES the allocated set at the moment of spawning -- both instruments, negative control printed -- and takes the next free serial from that measurement, never a number carried in the ladder or in this row. A count measured at a3036c7d66 does not bind a spawn that has not happened; ~19 is this row's reading, not a reservation. HOW IT SURFACED: running 2.0.0_SA_COO~ZZZ's PER-ARM control test from msg 22732 against this loop's own instrument. That test's answer here was clean -- this loop's subject line has ONE arm, a pathspec, so one anchor certifies it and there is no uncertified author arm. The collision was found by the boundary probe run alongside it, asking which serials have no commit in history. CREDIT: the per-arm test is 2.0.0_SA_COO~ZZZ's (Z-S84) built on the ancestor test, and neither was looking for this."
+  }
+]
+```
