@@ -3491,6 +3491,156 @@ all seven mechanical criteria were measured and the verdict is NO-GO.
   "spec_asserts": "CLAUDE.md section 4: 'No non-ASCII in production code/logs/AWS', and the qualifier that governs exactly this case -- 'NON-APPLICATION: a file that is ALREADY pure ASCII (keep it that way)'. The same rule measures the cost: a default text-mode read on this device is cp1252, which RAISES only on a byte undefined there and otherwise decodes every other non-ASCII character to the WRONG character while reporting success. The section sign U+00A7 is defined in cp1252, so all 28 of these bytes are in the SILENT class. CLAUDE.md also records that .owned-paths.yaml -- another shared control file -- is already in that silent class at 204 characters.",
   "world_is": "A ONE-VALUE WRITE RE-ENCODED A SHARED CONTROL FILE. The semantic change is correct and is the one this cell asked for; the collateral is 8 unrelated entries' bytes and the loss of the file's pure-ASCII property. THE DIRECTION IS THE DANGEROUS ONE: nothing fails, no gate fires, the JSON stays valid and every consumer keeps working -- the only casualty is that the next reader of a git diff sees 9 changed lines for 1 changed value, and that a file which used to raise loudly on a bad decode now decodes silently wrong on a cp1252 reader. IT IS NOT THIS DEPLOY'S DEFECT AND IT IS NOT LOCAL TO THIS PROJECT: any lane that runs build-and-upload.sh for any pipeline re-encodes whatever escapes happen to be in the file at that moment, so the property is lost on whichever deploy happens next and is re-lost after every restoration.",
   "notes": "WHAT THIS WORKER DID, inside its own granted path and stated so it is not mistaken for a wider edit: infra/aws/lambda/ci/lambda-source-map.json IS in this order's paths, so the file was rewritten from HEAD's own bytes with a single textual substitution of the one sha256 value (occurrence count asserted == 1 before substituting), restoring 0 non-ASCII and reducing the commit to a 1-line diff that carries exactly the real change. NO entry belonging to another project was modified, and nothing was normalised. WHAT WAS NOT DONE: no edit to build-and-upload.sh (not in paths, and it is the same file row POSN_ASTTAX-Z-W19-S1 is about), and no repair of the eight entries -- they are already pure ASCII at HEAD and stay that way by this restoration, so there is nothing to fix as long as the next writer does not re-encode them again. THE DURABLE FIX belongs to the CI lane and is one option among the three the script already has: make the node writer emit ASCII-escaped JSON, or prefer the python3 writer (json.dump defaults to ensure_ascii=True), or stop round-tripping the whole document to set one key."
+},
+{
+  "id": "POSN_ASTTAX-Z-S74",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T20:01:05Z",
+  "one_line": "DISARM of W19-S1 (BLOCKING): build-and-upload.sh's manifest gate cannot reach its ABSENT arm under set -e (:33; the probe at :300 is a bare command), so every package whose BUILD_MANIFEST.json declares no blobs dies at the build with 'OK: import-closure' as its last line. RULED by the issuer: V1-AC5 runs under the script's OWN documented per-build override BAU_MANIFEST_SKIP=1 (:286-287, 'justify in the commit message'), which on THIS package skips a SKIP and never a check -- the worker prints the standalone probe (readable manifest, declared_blobs absent, rc=1) as the discriminator BEFORE the build, and an rc=2 refuses. The one-line control-flow fix belongs to CLOUD_OPS_OR_ETL (infra/aws/** AE-only) and rides the round analysis.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE RULING'S GRAIN: the override is the script author's own escape for exactly this arm ('Override per-build: BAU_MANIFEST_SKIP=1 (justify in the commit message)', :286); on a package whose manifest parses and declares no blobs, the gate's designed terminal state is SKIP-with-notice and the override reaches the same terminal state minus the notice. The one arm the override could hide (UNREADABLE) is closed by ordering the standalone probe FIRST and making rc=2 a refusal of the criterion.",
+      "NOT FIXED IN THIS ROUND, STATED: infra/aws/lambda/ci/build-and-upload.sh is outside every POSN cell and outside this seat's lane (.owned-paths.yaml: infra/aws/** CLOUD_OPS_OR_ETL; only lambda-source-map.json is carved out to YANG_PIPELINE_DEPLOY). Mid-round the spec and the decomposition are frozen; the fix is carried on W19-S1 for 1.0.0_SA_CTO~Z's round analysis: make :300 an if-condition (or `|| MANIFEST_DECL=$?`) so rc=1 reaches the dispatcher at :311. Class by the script's own count: every manifest-carrying package without declared_blobs.",
+      "WHY GRADUATED: the blocker is remedied on the order by the script's own documented mechanism with its discriminator printed; the durable fix has an owner and a carrier."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W19-S1"
+  ],
+  "spec_asserts": "TO-V1-1 V1-AC5 as cut: the script's own gate passes and the artifact uploads. The script's block comment at :295-297 promises three outcomes (DECLARED check / ABSENT skip with notice / UNREADABLE refuse).",
+  "world_is": "Two outcomes are reachable; the ABSENT arm exits the script. The worker measured the mechanism with a discriminating pair (set -e vs not) and the negative control (the sibling package with NO manifest built and uploaded in the same session). yang-generate-positioning.zip is UNMOVED at the rollback VersionId xN0rrqJbABARS6vz9NqOS1zYfjxcIsFw.",
+  "notes": "The escape is used ONCE, on one package, justified in the worker's commit message per the script's instruction; it is not a pattern for the next cut."
+},
+{
+  "id": "POSN_ASTTAX-Z-S75",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T20:01:05Z",
+  "one_line": "DISARM of W19-S2: `terraform -chdir=<dir> plan -out=.scratch/b1.tfplan` resolves -out inside the -chdir target, so V1-AC7 computed the plan and then failed to write it; V1-AC8 and V1-AC12 consume the same path. AMENDED: the three criteria name the ABSOLUTE native path C:/tmp/wk-posn-5-19/.scratch/b1.tfplan.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "WHY ABSOLUTE AND WHY DRIVE-LETTER: a chdir-relative form (../../../../.scratch/...) works for terraform but not for a consumer that runs without -chdir; a POSIX-absolute /c/... form is converted by MSYS before a native exe sees it; C:/... is untouched by MSYS and unambiguous under -chdir. safe-apply.sh forwards argv and parses only -chdir (:105-110); record-terraform-deploy.sh hands --plan to record-deploy-scope.py (:495), native python.",
+      "SAME CLASS ELSEWHERE IN THE ROUND: worker ~23 hit it on V9-AC7 (W23-S3) and reached the plan with a chdir-relative path; adjudicated at that drain.",
+      "WHY GRADUATED: one edit, three criteria, the same shape."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W19-S2"
+  ],
+  "spec_asserts": "TO-V1-1 V1-AC7/AC8/AC12 as cut: a plan path relative to the worktree root, read as if -chdir did not re-base it.",
+  "world_is": "terraform (native windows_amd64 v1.15.8) re-bases every relative path on its command line to the -chdir target; the worker's diagnostic plan without -out read 0 add / 1 change / 0 destroy (only the allocation-summary artifact had moved).",
+  "notes": "A future cut writes every -out/--plan path absolute when the invocation carries -chdir."
+},
+{
+  "id": "POSN_ASTTAX-Z-S76",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T20:01:05Z",
+  "one_line": "DISARM of W19-S3 and W19-S4 (INERT): two classes already ruled this round -- the bare commit-gate call that checks 0 of 0 (Z-S67) and the ledger sentinel under org/critical_paths/.open_deploys/ the registry's ANY grant admits (Z-S72). TO-V1-1 is now amended in both (the worker's run is complete, so the mid-run bar no longer binds): V1-AC3 names both files; <paths> names the sentinel dir; the worker commits the staged sentinel on the respawn.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "DISCLOSED, NOT HIDDEN: SITEZ at 5de98e278a carries the B1 ledger .md OPEN (1 of 7 legs closed, RED by design) WITHOUT its sentinel until the worker's next commit drains -- the 'unindexed open ledger' state deploy_ledger.py:987-1003 warns about; `check --red` is blind to it for that window. The honest reading of the .md is 'this deploy is blocked and in flight', not 'someone forgot to close a ledger'.",
+      "WHY GRADUATED: nothing new to rule; both remedies are landed on the order the respawned worker reads."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W19-S3",
+    "POSN_ASTTAX-Z-W19-S4"
+  ],
+  "spec_asserts": "TO-V1-1 V1-AC3 invocation bare; <paths> without org/critical_paths/.open_deploys/.",
+  "world_is": "The worker ran both commit-gate arms and graded on the two-file arm (2 of 2 clean); it left the sentinel STAGED and uncommitted rather than commit outside its enumeration, and said so.",
+  "notes": "Same disposition as Z-S67 / Z-S72; one row for two ids because the disposition is one."
+},
+{
+  "id": "POSN_ASTTAX-Z-S77",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T20:01:05Z",
+  "one_line": "DISARM of W19-S5 (INERT): a predicted change class measured EMPTY -- both halves name the b0e1f33471 display-name beautification as one of three classes the B1 deploy shows on the served bytes; the 69b867c4eb-vs-HEAD delta carries 0 display-name differences across 203 name keys while the other two classes account for all 250. Nothing to act on; carried for L9's V1-AC13 read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "WHY THIS CANNOT WIDEN THE RADIUS: Branch A is bounded by what the delta may NOT contain (OTHER = 0), not by what it must; a permitted class costing zero rows is the harmless direction. The halves' predictions were CHECKED, which is their value.",
+      "WHY GRADUATED: recorded so the next reader knows b0e1f33471 rode this deploy served-inert on this input rather than assuming the beautification landed and was verified."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W19-S5"
+  ],
+  "spec_asserts": "NEVER_WIDEN_ROUND5_COO_HALF.md @f381f6f402 and the CTO half @af667548d1: three change classes on the served bytes, display names among them.",
+  "world_is": "An empty permitted class on this input (62 tickers, 2026-09-11). The instrument was validated against the LIVE served artifact (3987 of 3987 leaf keys reproduced, generated_at the only difference), so the zero is an absence, not a blind spot.",
+  "notes": "No act requested; no PRD byte moves."
+},
+{
+  "id": "POSN_ASTTAX-Z-S78",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T20:01:05Z",
+  "one_line": "DISARM of W19-S6: V1-AC11's served label ('no benchmark') was unreachable from the cell's named write regions -- the global benchmarks block emits a row only when the characteristics lookup is non-empty, and ticker None matches nothing. RULED: the cell WIDENS by ONE emit in that block so benchmarks.etf.structured|commodities|alternatives are SERVED as labelled zero rows (ticker null, label 'no benchmark', characteristics null); allocation_summary.json keeps the code-level label (its row shape at :233 stays reserved and its served bytes do not move today, which becomes AC11's control).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED BY THIS SEAT BEFORE WIDENING, the live consumer: comp-find 'benchmarks\\.etf|benchmarks\\?\\.etf|\\.etf\\[' over portal/src at the pin (e85f6eb84f / drain ref c475e31e70) -> 0 hits across 557 files, corpus all. The live Positioning page reads benchmarks.etf nowhere, so three new keys under it are inert to the served page today and available to F2 (AT5-s-6), which is told at its hand-over to read benchmarks.etf[<class>].label.",
+      "INSIDE THE SIGNED RADIUS: the COO half names 'labelled-zero benchmark rows for the three new classes' as a permitted change class on positioning_data.json; a labelled row keyed by the class under benchmarks.etf IS that class. The worker's delta classifier admits the new path shape by name for exactly those three keys; OTHER remains the discriminator and V1-AC4 is re-run on the widened HEAD before any apply.",
+      "NOT WIDENED, STATED: allocation_summary.json's served row shape is aggregate_by_asset_class's (:233), reserved; a served label there would be a new field in a row shape another page reads, and no holding carries the three classes today, so its bytes do not move -- V1-AC11 now prints that as the control rather than asserting 'likewise'.",
+      "WHY GRADUATED: the endpoint's word is 'labelled'; a label no consumer can read is not served; the widening is one emit inside the same function the cell already owns."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W19-S6"
+  ],
+  "spec_asserts": "PRD v0.7 C-BENCHMARK and the aligned breakdown: the three new classes' benchmark rows are an explicit zero LABELLED 'no benchmark'; TO-V1-1 THE CELL reserved every line outside BENCHMARK_ETFS / benchmark_etf_info / benchmark_allocation_for.",
+  "world_is": "The explicit zeros land (60 leaf keys across four path shapes, measured); the label lives in the code and reaches the served bytes only when one of the three wins the primary-benchmark selection, i.e. after R1. The exclusion clause and the gap were the same sentence.",
+  "notes": "The stale comment at :1122-1127 and the WARN loop stay reserved; the round analysis may name them."
+},
+{
+  "id": "POSN_ASTTAX-Z-S79",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T20:01:05Z",
+  "one_line": "DISARM of W19-S7: build-and-upload.sh's source-map writer (node JSON.stringify round-trip) re-encodes every \\u00a7 escape in the shared lambda-source-map.json, turning a pure-ASCII file (0 non-ASCII at HEAD) into 28 silent-class bytes across eight unrelated entries for one changed value. ORDERED on V1-AC5 and V1-AC12: restore the file to pure ASCII from HEAD's bytes with only the changed values substituted, detector printed at 0 before each commit. The durable fix (ensure_ascii on the writer, or the python writer, or a keyed write) belongs to the CI lane and rides the round analysis.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE ORDER NOW CARRIES THE RESTORATION AS A BAR, not a habit: V1-AC5 expects the detector at 0 and a 1-insertion/1-deletion diff; V1-AC12 expects one follow-up commit if the recorder re-encoded.",
+      "NOT FIXED HERE: infra/aws/lambda/ci/build-and-upload.sh and record-terraform-deploy.sh are the CI lane's; carried on W19-S7 for the round analysis alongside W19-S1 (same file, same lane).",
+      "WHY GRADUATED: the property is protected on this deploy by a printed detector; the durable fix has an owner and a carrier."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W19-S7"
+  ],
+  "spec_asserts": "CLAUDE.md s.4: no non-ASCII in production code; NON-APPLICATION 'a file that is ALREADY pure ASCII (keep it that way)'. The recorder and the build script both write this file on every yang deploy (.owned-paths.yaml:1901 note).",
+  "world_is": "The worker restored the file (1-line diff, 0 non-ASCII) inside its own granted path at ac1eed675a; the next writer re-encodes it again unless the restoration is repeated after every write. U+00A7 is defined in cp1252, so every one of the 28 bytes is in the SILENT class.",
+  "notes": "A future writer of a pure-ASCII shared file prints the detector beside its diff stat."
 }
 ]
 ```
