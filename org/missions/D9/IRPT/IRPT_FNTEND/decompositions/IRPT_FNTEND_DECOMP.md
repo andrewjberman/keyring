@@ -1,4 +1,4 @@
-# IRPT_FNTEND -- L5 decomposition -- rounds 1 through 6 -- v0.6
+# IRPT_FNTEND -- L5 decomposition -- rounds 1 through 7 -- v0.7
 
 ```json
 {
@@ -6,7 +6,7 @@
  "directive": "D9",
  "fabric": "laptop",
  "round": 2,
- "decomp_version": "v0.6",
+ "decomp_version": "v0.7",
  "round_1_header_retained_below": true,
  "prd_ref": "org/missions/D9/IRPT/IRPT_FNTEND/prd/IRPT_FNTEND_PRD.md@62301f71e0",
  "prd_version": "v0.4",
@@ -1486,3 +1486,173 @@ the graph is one component with one ready root; it widens to 4 of 4 at wave B, d
 
 **None blocking.** Interim control while FE-s-37 runs, stated so nobody reads it as a gap: every round-6 wave-B cut
 waits on FE-s-37's drain, and 3.0.0_SA_CVO reads each instance's to_ref against its own order at L9.
+
+# ROUND 7 -- v0.7 -- the recut on the CTO's ROUND-6 ANALYSIS
+
+```json
+{
+ "round": 7,
+ "decomp_version": "v0.7",
+ "prd_ref": "org/missions/D9/IRPT/IRPT_FNTEND/prd/IRPT_FNTEND_PRD.md@d1479bc5f0",
+ "prd_version": "v0.6 -- UNCHANGED; the analysis owes no addendum (s.1), so no L4-R half re-opens",
+ "analysis_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_IRPT_FNTEND_ROUND6_20260914.md@4713211d87 (msg 96739); s.3 RULINGS X, Y, Z, AA, AB, AC and RULING U's residuals",
+ "slug_ref": "3.0.0_SA_CVO msg 96737, record org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND6_L8_L9_20260914.md@3d8fda2d73, carriers C-S87..C-S92 @158e88fbac, remediation rows @74d8d21a09 -- 5 judgment criteria graded, 4 MET (3 qualified), F39-AC10 NOT MET",
+ "round6_cells": "FE-s-37..FE-s-41 ALL COMPLETE and drained (last: FE-s-41 amendment 2 @999f08609b, portal DEV 35797660)",
+ "cells": 4,
+ "cell_id_shape": "FE-s-<n> continuing from 42",
+ "code_repo": "portal (gitlink in the workspace; branch DEV @35797660, measured)",
+ "record_repo": "workspace (branch CLOUD @edac45e48c, measured)"
+}
+```
+
+Round 6's lesson, in the CTO's words: **the cut's reach is a subtraction, never a recall.** Twice running, tests and
+fixtures carrying a ruling's removed behaviour sat outside the cut (W3-S27, W3-S28, W5-S5), and an issuer's re-run in
+the worker's own worktree let a checkout-dependent red into DEV (S64). RULINGS X, Y and AC make those remedies bounds on
+this cut (R7.2). The four cells close the ten rows the slug graduated: RULING W reaching every site it names, the
+receiving route's binding, the red battery, and RULING U's residuals.
+
+## R7.1 THE RECTANGLE -- four cells, one wave, disjoint by file
+
+| cell | ruling | write surface | serves | rows | slot |
+|---|---|---|---|---|---|
+| `FE-s-42` | Z -- RULING W at every site it names | portal `contracts/adapt.ts` (`:585`); `contracts/index.ts` (`CohortValue`); `contracts/validate.ts`; `header/ScopeSummary.tsx`; `export/ReceiptPanel.tsx`; the capture writers `__tests__/fe-s-32/{holdings-in-a-browser.test.ts,holdings-driver.mjs}` and `__tests__/fe-s-40/{band-at-390.test.ts,band-driver.mjs}`; the census-named tests `__tests__/fe-s-1/fixtures.test.ts`, `__tests__/fe-s-9/receipt.test.ts`, `__tests__/fe-s-16/mounted-states.test.ts`; `__tests__/fe-s-42/` | FWD-5, FWD-6 | C-S92 (W3-S29 = F39-AC10, W3-S30, W2-S33, W3-S31) | ~3 |
+| `FE-s-43` | AA -- the L7->L8 receiving route binds the order | workspace `.tools/receiving-check.py`; `.tools/tests/test_receiving_binding.py` (NEW) | the evidence plane | C-S90 (W4-S14) | ~4 |
+| `FE-s-44` | AB -- the red battery diagnosed, not inherited | workspace `org/standards/test_artifact_coverage_both_grammars.py`; `.tools/proof-of-spec-check.py` ONLY if the checker is the wrong side | the evidence plane | C-S90 (W4-S15) | ~6 |
+| `FE-s-45` | U's residuals + AC's instance | portal `package.json` (the `dev` line only); `__tests__/fe-s-19/mounted-from-wire.test.ts` (`:56`); the four overrides `__tests__/fe-s-{31,39,40}/vite.worktree.config.mjs` and `__tests__/fe-s-32/vite.worktree.config.ts` (retired); `__tests__/fe-s-41/one-writer.test.ts` (F41-AC5's read); `__tests__/fe-s-45/` | FWD-1, FWD-11 (evidence) | C-S91 (W1-S63, W1-S64, W1-S65), C-S90 (W5-S7) | ~1 |
+
+**Coverage by subtraction, three domains.**
+(1) The analysis's round-7 inputs, s.3 (denominator 7: X, Y, Z, AA, AB, AC, U's residuals) MINUS where each lands:
+X, Y and AC are bounds on the cut and on the issuer (R7.2); Z = 42; AA = 43; AB = 44; U's residuals and AC's instance
+W5-S7 = 45. **0 uncovered.**
+(2) The rows the slug graduated (denominator 10: C-S90's W4-S14, W4-S15, W5-S7; C-S91's W1-S63, W1-S64, W1-S65;
+C-S92's W3-S29, W3-S30, W2-S33, W3-S31) MINUS their carrying cell: W3-S29, W3-S30, W2-S33, W3-S31 -> 42; W4-S14 -> 43;
+W4-S15 -> 44; W1-S63, W1-S64, W1-S65, W5-S7 -> 45. **0 uncovered.** The 11 dismissed rows (C-S88, C-S89) are closed and
+not re-cut.
+(3) The PRD header's outcomes (denominator 8: FWD-1, 3, 4, 5, 6, 8, 11, 12) MINUS those round 7 moves: FWD-5 and FWD-6
+{42}; FWD-1 and FWD-11 {45, evidence}. **4 NOT MOVED AND NAMED: FWD-3, FWD-4, FWD-8, FWD-12.** Nothing in this round's
+rulings touches their surfaces, and no FWD is uncovered (analysis s.1).
+
+**RULING X's census, run at this cut over the corpus, not a folder** (portal DEV 35797660, workspace CLOUD edac45e48c):
+- `CohortFact` values outside `__tests__/`: 2 consumers, `validate.ts:164-171` and `ScopeSummary.tsx:79`. Both are in
+  42's surface.
+- "cohort" under `__tests__/`: 2 files, a netlog and `fe-s-32/holdings-no-answer.json`. Neither asserts the directory
+  advisory, so no existing test is turned red by 42's directory change.
+- Tests importing `validate`: 1, `fe-s-1/fixtures.test.ts`.
+- Tests rendering ReceiptPanel: 2, `fe-s-9/receipt.test.ts` and `fe-s-16/mounted-states.test.ts`.
+- Tests naming a deliverables folder: 6. Minus the 2 writer pairs (fe-s-32, fe-s-40) = 4 readers, which are not
+  granted.
+- `cacheDir` under `__tests__/`: 6 files. Minus FE-s-38's 2 readers = **4 overrides, not the row's 2**.
+- `receiving-check` across `.tools/`, `.claude/` and 3.0.0_SA_CVO's folder: the tool, one mention in
+  `prd-manifest-gate.py`, the canonical-flow skill's documented call, and historical records. **0 batteries.**
+- The battery: a script, invoked `python <file>`. Under pytest it collects zero.
+
+Every census-named test is granted BY NAME for the ruling's claims only. The whole-suite run stays each cell's census of
+record, because a read census seeds a grant and the run closes it.
+
+## R7.2 BOUNDS -- ALL ROUND-7 CELLS (rounds 1-6 bounds stand)
+
+```
+X  reach     the cut's reach is a subtraction over the corpus (R7.1's census); every test, fixture and map a
+             ruling's change turns red is granted BY NAME; the domain is the corpus, never a folder.
+Y  re-run    the issuer never re-runs a worker's bars in the worker's worktree: a branch synced with DEV or an
+             untouched pair (workspace + nested portal, so cross-repo paths resolve), with `git ls-files --eol`
+             printed beside any byte-compare.
+AC reads     a criterion that reads a file reads `git cat-file blob HEAD:<path>` (or the committed tree), or its
+             bound says why it reads the working copy (42's AC7/AC8 and 45's AC2 do, by design).
+census       the whole-suite run is the census of record for every behaviour-changing cell (the InvestorReporting
+             suite for 42 and 45; FE-s-37's .tools census battery for 43 and 44).
+servers      FE-s-38 has drained: vite caches inside the worktree by config; `bun run dev --port <p> --strictPort`
+             directly; IRPT_FE_DEV_PORT on EVERY bun test run; 42 on 5263, 45 on 5261.
+drives       every criterion declares drives="network" or drives="none".
+anchors      count bars left `(?<![0-9])`, right `(?![0-9])`, never `\b`.
+rows         round-7 rows go to INVESTIGATION_v2.md; read the WHOLE plane (v1 and v2) before minting; an INERT row
+             OMITS disarm_owner. Row starts at the cut: W3-S33, W4-S16, W6-S1, W1-S67.
+gitlink      never stage `portal` in the workspace repo. PORTAL IS FROZEN: local DEV commits only.
+```
+
+## R7.3 THE CELLS
+
+### `FE-s-42` -- RULING W at every site it names (RULING Z)
+The directory cohort renames an out-of-enum advisory onto 'unknown' (`adapt.ts:585`), and the Holdings path does not
+(`:464-466`). `CohortValue` is shared by three axes, and its two consumers are validate and ScopeSummary. validate pins
+three values (`:448`). ReceiptPanel prints an unnamed code bare (`:47`), beside FE-s-40's one rule in `render/Page.tsx`
+(`:95`), which is imported and never copied. Two browser tests write committed captures on every run. The bar:
+verbatim and flagged at every use site, F39-AC10's clause re-graded at the directory site, and captures outside every
+committed deliverables folder by default.
+
+### `FE-s-43` -- the receiving route binds the governing order (RULING AA)
+`receiving-check.py:71` builds `[instance]`. The checker already takes `--governing-order` (FE-s-37). The route
+passes the order the receiving seat is handed; an unbound instance reads NOT-BOUND, never ACCEPT; the other five routes
+keep their current behaviour. The canonical-flow skill documents the call; the change it needs is named for its owner,
+not edited.
+
+### `FE-s-44` -- the red battery, diagnosed (RULING AB)
+3/6 at the cut: A, B and E are refused where rc=0 is owed, and C, D and F "pass" only as blanket refusals. The worker
+diagnoses which limb refuses and which side is wrong before fixing, keeps every correct limb, and proves with a mutant
+that the controls can fail again.
+
+### `FE-s-45` -- RULING U's residuals and AC's instance
+The dev script loads the config without writing through the junction (W1-S63); fe-s-19's comment follows the helper
+(W1-S64); four overrides are retired (W1-S65, a census of 4); F41-AC5 reads the committed blob (W5-S7).
+
+## R7.4 DEPENDENCY EDGES, SLOTS, FAN-OUT
+
+```
+  FE-s-42 <- (none)   READY ROOT   portal: contracts, header, ReceiptPanel, the two capture writers
+  FE-s-43 <- (none)   READY ROOT   workspace: .tools/receiving-check.py + its new battery
+  FE-s-44 <- (none)   READY ROOT   workspace: the org/standards battery (+ the checker only if wrong)
+  FE-s-45 <- (none)   READY ROOT   portal: package.json dev line, fe-s-19 comment, four overrides, fe-s-41 AC5
+
+  weakly connected components: M = 4     ready roots at issuance: R = 4
+  waves: A={42,43,44,45}      max concurrent width: 4
+  ~3 FE-s-42   ~4 FE-s-43   ~6 FE-s-44   ~1 FE-s-45
+```
+
+The cells are disjoint by FILE. 42 and 45 share folders, but no file: 42 writes fe-s-32's and fe-s-40's tests and
+drivers, and 45 deletes their `vite.worktree.config` files. 43 and 44 share `.tools/`, but no file: 43 writes
+`receiving-check.py` and a new battery; 44 writes the org/standards battery and, only if it is the wrong side, the
+checker. 43 CALLS the checker and never edits it. So if 44 changes the checker, 43's branch is synced with CLOUD before
+43 drains.
+
+**Fan-out: `4 of 4 chains, cap 8, reason: the round-6 analysis's four cells have no dependency edge between them and
+no shared file, so each is its own chain and its own ready root`.**
+
+## R7.5 RULE 24 RECORD (round 7)
+
+| postulate | how |
+|---|---|
+| (i) MECE | three domains by subtraction in R7.1: inputs 7-7=0; graduated rows 10-10=0; outcomes 8-4=4 NOT MOVED AND NAMED. RULING X's census is itself a subtraction over the corpus, with denominators printed (R7.1). Cells partition by FILE. |
+| (ii) same grain | (write region, ruling) per cell; 43 and 44 are at the FABRIC grain, stated as such. |
+| (iii) intent | 42: the adapter and every surface state what the document states, and no test rewrites committed evidence. 43: the receiver grades against the order it was handed. 44: a battery that cannot fail is repaired so it can. 45: one server per worktree leaves nothing behind, and a committed read reads what is committed. |
+| (iv) state | moves FWD-5, FWD-6, and FWD-1/FWD-11 (evidence) toward EXERCISABLE, and the evidence plane. Does NOT move: any grade to REALIZED (fixture-bound evidence; the EXERCISED proofs need IRPT_BCKEND, last in SEQUENCE.yaml); FWD-3, 4, 8 and 12; FWD-11's second firm (W2-S23); the contract's reason-code list (W2-S32, IRPT_BCKEND's); 3.0.0_SA_CVO's own intake scripts (that seat binds its own); the portal freeze. |
+
+## R7.6 BATTERY DISPOSITION (round 7)
+
+| lens | disposition | denominator / reason |
+|---|---|---|
+| comp-schedule / comp-iam | DECLARED-NOT-APPLICABLE | no scheduled producer, no IAM-gated resource |
+| comp-adversary | RUN at L4 on v0.6 (both halves SIGNED) | carried; PRD unchanged (analysis s.1) |
+| the advisory sites | RUN | `adapt.ts:585`, `:464-466`; `CohortValue` at `index.ts:310`; `validate.ts:448`, `:164-171`; `ScopeSummary.tsx:79`; `ReceiptPanel.tsx:47`; `render/Page.tsx:95` |
+| RULING X's census | RUN | R7.1: the cohort consumers 2; "cohort" in tests 2; validate importers 1; ReceiptPanel renderers 2; deliverables-naming tests 6 (2 writer pairs); cacheDir files 6 (4 overrides) |
+| the receiving route | RUN | `receiving-check.py:71` `[instance]`; `--governing-order` in the checker since 13a3e28b95; 0 batteries call receiving-check |
+| the battery | RUN | 3/6 rc=1 at 8f4106a7f2; a script (`sys.exit` at `:128`) |
+| the dev script and the drain | RUN | `package.json:13` `"dev": "vite"`; the main portal checkout's uncommitted overrides-block edit (+2/-1, another seat's) |
+| instruments at the cut | RUN | to-pipeline-gate --self-test 0 of 72 failed; proof-of-spec-check --self-test 42 of 42 (CLOUD edac45e48c) |
+
+## R7.7 REFUSES TO ASSUME (round 7)
+
+1. That a folder is the corpus. W4-S15 sat red in `org/standards/`, where no folder-scoped census of the checker's batteries looked.
+2. That a row's own count is the population. W1-S65 named two overrides and there are four, and W3-S31 named one capture writer and there are two.
+3. That a re-run in the worker's tree corroborates the worker. S64 was green there, and red on every fresh checkout.
+4. That a battery whose controls pass is discriminating. W4-S15's controls pass because everything is refused.
+5. That the working copy is the committed state. W5-S7 and S64 read the working copy; the bars now read the blob.
+6. That a drain touching a file another seat has modified will merge. git refuses, cleanly, and the owner is a seat, not a tool.
+
+## R7.8 HOLDS
+
+- **FE-s-45's PORTAL DRAIN** waits on the main portal checkout's uncommitted `package.json` edit, which is another
+  seat's. git refuses a merge that touches a locally modified file. If the edit still stands when FE-s-45 is ready, the
+  drain is surfaced to 0.0.0_AB_MSTR to find the edit's owner; this seat never touches it. Everything else in round 7
+  drains without it.
+- **The seat question is at Andrew, not ruled** (analysis s.5). The CTO's rec is to free this seat after round 7
+  drains. Until he answers, round 7 proceeds.
