@@ -281,6 +281,30 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     "spec_asserts": "TO-EN-c-2 WORKER FACE: 'GRANTED: every principal an identity policy grants any s3:* action on the bucket or its objects, plus every principal the bucket's own policy names, plus the role-side belts.'",
     "world_is": "A Deny-only row under granted would be graded as a writer by the issuer's own consumer. FENCE_WRITER_CENSUS.md records them under buckets.<bucket>.belt_only (each with its Deny statement and token) and buckets.opal-data-49financial.bucket_policy_deny. A granted principal that also carries a belt lists that belt in its own belts field.",
     "notes": "The C2 criteria read granted and seen only (check_en.py:283-309), so this placement moves no C2 verdict. Whether belts belong under granted is the issuer's call."
+  },
+  {
+    "id": "LGIC_ENFORCE-S2",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G",
+    "surfaced_at": "2026-09-14T22:07Z",
+    "one_line": "Issuer's disarm of LGIC_ENFORCE-W1-S3 (comp-find's default corpus reads a worker's own .scratch/). No recorded denominator in this round includes scratch output, and EN-s-1, the one census cell still to run, is spawned with its census output directed outside its worktree.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ROW: LGIC_ENFORCE-W1-S3@e0171ca585 is ARMED, with disarm_owner 2.0.0_SA_COO~G, naming this round's census cells EN-t-1 and EN-s-1.",
+        "EN-c-1 was drained @7625f537b4. Its recorded denominator is its third run, over 38 explicit top-level pathspecs that leave .scratch out, as W1-S3 says. The issuer's re-run of c1-denominator on the slot's bytes printed PASS-DENOMINATOR.",
+        "EN-t-1 was drained @dedf3bb3f9. Its denominator is `git ls-files infra/aws/terraform` restricted to .tf (468), which reads the index and never an untracked folder. The issuer's re-run of t1-denominators printed PASS-DENOMINATORS.",
+        "EN-c-2 (drained @03062fcea1) read comp-iam, the IAM authorization dump and the org trail's data events; it ran no comp-find census over the repo.",
+        "EN-s-1 (census mode over the repo and the live plane) is not yet spawned. It sits at level 3, after EN-b-1."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": ".claude/agents/worker.md: 'Scratch: <your worktree>/.scratch/ only'. CLAUDE.md Rule 21: comp-find's default corpus is all -- tracked, untracked and gitignored, minus a printed ephemeral floor.",
+    "world_is": "The worker's scratch convention puts census output inside the corpus comp-find reads by default. A census that saves its output there and then reads the repo again counts its own output, and comp-find's :(exclude) form scans nothing rather than excluding one folder.",
+    "notes": "DISARM, per W1-S3's own clause, by its disarm owner. (1) The recorded denominators of EN-c-1, EN-t-1 and EN-c-2 are shown above to carry no scratch output. (2) EN-s-1's identity line at spawn directs its census output to a slot-unique folder outside its worktree and cites W1-S3; its face is not edited mid-round. (3) The structural remedies W1-S3 lists -- a .gitignore entry for .scratch/, comp-find honouring an exclude pathspec, a worker-definition line -- are outside this round's grants. They are carried to the round's drain-end read for 1.0.0_SA_CTO. INERT: no measurement in this round rests on a scratch-inflated count, and the one exposure left is closed at its spawn."
   }
 ]
 ```
