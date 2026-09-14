@@ -48,7 +48,17 @@ stable, citations resolve there. DS/AE seats read their sections before touching
     number and the vintage were both CORRECT, so every citation test passed; only the QUOTED
     BYTES were stale, and they denied an exception this same rule states four sentences later.
     ⛔ **A CITATION AGES SEPARATELY FROM THE TEXT IT QUOTES** -- re-reading the rule catches
-    neither; only opening the source at the cited vintage does. Found by `2.0.0_SA_COO~Z`
+    neither. ⛔ **AND SEARCHING FOR A QUOTE IS NOT CHECKING IT: PRINT THE BYTES AT THE CITED
+    LINE.** A rewritten passage does NOT delete its own old words from the file -- they survive
+    in the comment that quotes them. Measured at BOTH vintages: the superseded phrase *"this
+    gate never refuses an existing TO"* occurs exactly ONCE in `to-pipeline-gate.py`, at
+    `:374` of 2072 @`cd399d339d` and `:377` of 2764 at HEAD, **inside a comment quoting the old
+    docstring, closing quote mark and all** -- while the live text sits at `:1019` / `:1706`.
+    **So a reader who greps the file to verify this rule's quote gets ONE CLEAN HIT IN QUOTATION
+    MARKS and concludes the law quoted accurately.** The search confirms the wrong object.
+    Found by `2.0.0_SA_COO~Z`, which ran it as a NEGATIVE control expecting ABSENT and got
+    TRUE. COST: one `cat-file -p | sed -n '<line>p'` instead of a grep. NON-APPLICATION: a
+    citation with no quoted text -- there is nothing to stale. Found by `2.0.0_SA_COO~Z`
     (`POSN_ASTTAX-Z-S61` @`2299206da6`) on the SAME class one level down, in a loop body citing
     a bare `:809-831` that now lands on gate (viii)'s own self-test table. Measured 2026-09-11 by `2.0.0_SA_COO~ZZZ` as a discriminating pair on
     ONE project in ONE hour: the add path refused its new order **three times** (missing
