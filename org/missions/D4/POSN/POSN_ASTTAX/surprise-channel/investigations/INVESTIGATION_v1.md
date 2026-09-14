@@ -2480,3 +2480,33 @@ all seven mechanical criteria were measured and the verdict is NO-GO.
   }
 ]
 ```
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-S54",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-14T03:10:00Z",
+    "one_line": "SELF-CORRECTION AGAINST A COMMITTED L8 ARTIFACT THE ADJUDICATOR IS READING RIGHT NOW: ROUND4_PACKET.md s.5 states 'FWD-4 and FWD-6 cannot be SERVED until [Andrew's 05:14Z card] is answered.' THAT IS FALSE AND WAS FALSE WHEN WRITTEN. Portal SOURCE WRITES were never frozen; the answer had been in this project's own ledger since 05:2xZ.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE FALSE STATEMENT: ledger/ROUND4_PACKET.md s.5, committed at 7a1a38fdbf and handed to 3.0.0_SA_CVO~Z, reads 'Andrew's RESERVED card is open (05:14Z via 0.0.0_AB_MSTR~Z): whether the freeze forbids portal SOURCE WRITES or only promote/gitlink/push. FWD-4 and FWD-6 cannot be SERVED until it is answered.' The second sentence does not follow and the first mis-states the card.",
+        "THE ANSWER, AND IT PREDATES THE PACKET BY TWO HOURS: ledger/ROUND_ANALYSIS.round3.md s.7 (line 128 of 215, landed @d7261cf29c, amended s.7a @29978b9399) states the operating boundary as a table -- 'write portal source YES / commit inside the submodule YES / MOVE THE SUPERPROJECT GITLINK NO / promote-push-DEV-PROD NO'. Read at source by this seat at 03:0xZ, path-qualified to org/missions/D4/POSN/POSN_ASTTAX/ledger/ because an identically-named ROUND_ANALYSIS.round3.md exists in AMGT_RESAPP and 3.0.0_SA_CVO~Z hit that wrong-object trap first.",
+        "THE DISCRIMINATOR IS A LIVE PRECEDENT, NOT A READING: AMGT_RESAPP.TO-AMGT-rh-1 was cut under this same freeze on the same night, granting portal/src/pages/SecurityAnalysis/ and portal/src/api/endpoints/amgt-lead-panel.ts as WRITE paths, its own text reading 'NO PROMOTE. NO GITLINK MOVE. NO REMOTE PUSH ... Commit yes, promote no', with an AC that mechanically verifies the gitlink still reads e85f6eb84f.",
+        "WHAT IS STILL OPEN, AND THE PACKET CONFLATED IT WITH THE ABOVE: s.7's own closing paragraph says 'THIS IS A READING OF WHAT THE FREEZE COVERS, NOT A LIFT OF IT, AND NOTHING HERE ANSWERS THE CARD 2.0.0_SA_COO~Z put to Andrew at 05:14Z. That card asks whether frontend ... done opens the promote; it does not, it stands, and it is his.' So the PROMOTE card is RESERVED and untouched; only the source-write question was ever settled. 0.0.0_AB_MSTR~Z's 22369 said 'the card is settled' and 1.0.0_SA_CTO~Z corrected that at 22381 against its own written refusal to close it.",
+        "HOW THE ERROR SURVIVED: this seat searched for the answer in its INBOX -- 55 message files from 09-13/09-14, 6 mentioning the freeze, negative control fired at 0 -- a well-controlled search of the WRONG CORPUS, because the answer lives in the project RECORD, not in mail. A denominator certifies the SWEEP, never the SET. Same class 1.0.0_SA_CTO~Z named against itself the same hour: not a missing instrument, a missing read."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "ROUND_ANALYSIS.round3 s.6 required round 4 to COVER FWD-4 and FWD-6, and s.7 -- answering this seat's own question at 22280 -- ruled that a measure-and-price reading 'reads narrower than intended', that both are EXERCISED bars measurement cannot approach, and that a round covering them with pricing cells would be 'covering without serving -- the exact failure s.2 exists to name'.",
+    "world_is": "Round 4 measured and priced both outcomes and served neither: FWD-6 PRICE 9 edit sites / 23 cells, FWD-4 PRICE 14 cells, FROZEN 37 / OWNED 0, and ROUND4_PACKET.md s.2 says in terms 'these cells COVER their outcomes and do not SERVE them'. The packet attributed that to the portal freeze. The freeze was never on writes.",
+    "notes": "THE FINDING ITSELF IS MEASURED AND CLOSED; WHAT REMAINS OPEN IS THE REMEDY, WHICH IS WHY THIS ROW IS ARMED RATHER THAN GRADUATED. DISARM CONDITION, STATED SO IT IS NOT A JUDGEMENT CALL LATER: this row disarms when a round-5 issuance cuts cells that WRITE portal source against FWD-4's 14 cells and FWD-6's 9 edit sites. It does NOT disarm on a further measurement round. THIS ROW CLAIMS NOTHING ABOUT ROUND 4's GRADE -- that is 3.0.0_SA_CVO~Z's at L9 and this seat does not pre-empt it; the row exists so the grader is not working from a false premise this seat put in front of it. AUTHORSHIP IS RECORDED RATHER THAN ELIDED: this is an ISSUER defect of 2.0.0_SA_COO~Z, in an artifact this seat wrote, about a question this seat itself asked and whose answer this seat did not read. NOT AN EDIT TO THE PACKET: the packet is a committed L8 artifact under active adjudication and is left byte-identical deliberately -- a correction that mutates the artifact under its reader is worse than one that sits beside it. AND THE FORWARD CONSTRAINT s.7a CARRIES: a portal commit must be reachable from a ref a peer's merge will TRAVERSE ('git branch --contains' returning 0 is the EXPECTED reading for real committed work on this submodule); the gitlink moves ONCE at promote after both lanes' commits are merged inside the submodule, never once per project; and round 5 in Positioning/Philosophy-CMA beside AMGT round 9 in SecurityAnalysis/ means TWO projects in ONE submodule with ONE HEAD -- disjoint paths, shared HEAD -- to be sequenced with 2.0.0_SA_COO~ZZZ before either writes."
+  }
+]
+```
