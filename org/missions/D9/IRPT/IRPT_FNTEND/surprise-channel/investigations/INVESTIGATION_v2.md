@@ -3110,6 +3110,176 @@
     "spec_asserts": "FE-s-33 face: 'fe-s-14-global.json carries 2 keys and no holdings key ... Add Holdings envelopes for both firms the map already names.' The map remains FE-s-14's evidence.",
     "world_is": "The added envelopes survive only as long as nobody regenerates the map with FE-s-14's generator. That act is in no round-5 order, and if it happens the fe-s-33 folder turns red rather than passing on a stripped map. What is NOT closed: the two-writer shape itself, and row W2-S23's finding that the page reaches 1 of the 2 envelopes (one resolve-scope answer), so FWD-11's second firm is still not visible. Both go to the round-5 drain-end packet.",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S19",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-14T02:52:00Z",
+    "one_line": "F34-AC5 and F34-AC6 cannot both pass under TO-FE-s-34's <paths> grant: two committed tests OUTSIDE the grant assert that a business-date age STARTS WITH 'Updated ' -- fe-s-21/source-age.test.ts:166 and fe-s-25/source-age-field.test.ts:65 -- so the relabel ruling K requires turns both red, and F34-AC6 reads 59 pass / 2 fail.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal@c2eb8eb4 (the cut): src/pages/InvestorReporting/__tests__/fe-s-21/source-age.test.ts:165-171 builds `ok = pure.startsWith('Updated ') && ...` over formatSourceAgeForState(...) for the five answer-bearing states and :174 expects all five to pass; src/pages/InvestorReporting/__tests__/fe-s-25/source-age-field.test.ts:65 is `expect(pure.startsWith('Updated ')).toBe(true)`. Found by the native Grep tool for the literal 'Updated' over src/pages/InvestorReporting/: 7 hits, 5 in state/status.ts:280-287 (the labels) and these 2 in tests.",
+        "MEASURED after the FE-s-34 edit (portal@944499a9b4, LOCAL on wk-irpt_fntend-5-3-fe-s-34), the F34-AC6 invocation as the order writes it: `59 pass / 2 fail`, the failures being `F21-AC3 -- an answer-bearing state still renders a real age` (source-age.test.ts:174) and `F25-AC4 -- a READY envelope carrying business_date renders an age` (source-age-field.test.ts:65, Expected: true, Received: false). Before the edit the same four pre-existing folders ran 57 pass / 0 fail.",
+        "THE CONTRADICTION IS STRUCTURAL, NOT A CHOICE OF WORDING: F34-AC5 requires zero 'Updated' on any rendered business-date age, and both failing lines require formatSourceAgeForState's output for a PRESENT business date to begin with 'Updated '. No label satisfies both, and the grant names neither file."
+      ]
+    },
+    "spec_asserts": "The worker face, F34-AC6: 'FE-s-21 and FE-s-25 compute their expected strings through formatSourceAge itself, so the label flows through them rather than breaking them (measured at the cut: no test asserts the literal \"Updated\")'. The <paths> grant names neither __tests__/fe-s-21/ nor __tests__/fe-s-25/.",
+    "world_is": "Two tests assert the literal prefix, one in each folder. The label DOES flow through fe-s-25:66 (`toBe(expected)`, expected computed via formatSourceAge) exactly as the face says, but :65 and fe-s-21:166 name the old word directly. The remedy is a two-line edit in files this order does not grant -- replace each `startsWith('Updated ')` with a check that does not spell the label (for instance equality with formatSourceAge of the same date and clock) -- and it was NOT made here, per BOUNDS: 'A path you need that is not named is a BLOCKING row; never an override.' The FE-s-34 portal commit turns both suites red if it is drained without that edit.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S20",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-14T02:52:00Z",
+    "one_line": "Ruling O's premise that StageDisplay and VariantSelector 'age the as_of instant, not the business_date' holds only where no status arrived: on an envelope carrying a reading, formatSourceAge(envelope.sourceAsOf) ALREADY aged business_date, because both formatters take their basis from sourceAgeBasis. The re-route changed the ABSENCE wording, not the field.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal@c2eb8eb4 src/pages/InvestorReporting/state/status.ts:71-75: sourceAgeBasis returns slot[GOVERNED_SOURCE_DATE.view] (businessAsOf) for a reading and the slot itself for a bare instant; formatSourceAge (:275) and formatSourceAgeForState (:460) both call it, so on a reading the two cannot age different fields.",
+        "MEASURED, fe-s-34/label.test.ts run against the UNMODIFIED source (portal@c2eb8eb4 plus the new test file only): with source_dates.business_date=2026-09-10 and as_of=2026-09-05T00:00:00Z on a READY status, StageDisplay rendered 'Ready -- Updated 2d ago (STATE_REPORTED)' and VariantSelector 'Ready -- Updated 2d ago' -- the business-date age (the as_of age is 7d). In the same run both absence arms FAILED: QUEUED with business_date ABSENT rendered 'Loading -- Source time unknown' where StatusPanel says 'No source age yet', and READY with business_date null rendered 'Ready -- Source time unknown' where StatusPanel says 'Source date malformed'. Printed: 'ANALYSIS PANELS AGE THE BUSINESS DATE: 0 of 2'.",
+        "CONSEQUENCE FOR THE GRADE: F34-AC3 is therefore built with THREE arms per panel and a panel counts only if all three hold -- the age arm alone passes before any edit and would certify nothing. After the edit (portal@944499a9b4): 'ANALYSIS PANELS AGE THE BUSINESS DATE: 2 of 2', every arm yes."
+      ]
+    },
+    "spec_asserts": "THE CELL, ruling O: the call sites tabs/analysis/StageDisplay.tsx:51 and tabs/analysis/VariantSelector.tsx:61 'still call formatSourceAge(envelope.sourceAsOf): they age the as_of instant, not the business_date the clause governs.'",
+    "world_is": "On the status path they already aged business_date; what differed from StatusPanel was the absent-state and null wording, which the re-route does fix. On the no-status path they age the document's availability instant, and they still do after the re-route, because formatSourceAgeForState ages whatever slot it is handed (row IRPT_FNTEND-W3-S21). The outcome 1.0.0_SA_CTO named is met; the mechanism the premise describes is not the one the edit moved.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S21",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-14T02:52:00Z",
+    "one_line": "On the path the analysis tab renders today -- fixture documents that carry no status -- the panel envelope holds availability.sourceAsOf (an instant), not the business date, and after ruling K's relabel that instant's age is SHOWN as 'Business date age'. fixtures/fe-s-6/request.overview.json at 2026-09-12T00:00Z: 'Business date age: 1d' (from 2026-09-10T18:05:00Z) while the document's own businessAsOf 2026-09-08 is 4d old.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal@c2eb8eb4 src/pages/InvestorReporting/state/status.ts:222, envelopeFromAvailability: `sourceAsOf: availability.sourceDate === undefined ? availability.sourceAsOf : availability.sourceDate` -- with no status the slot is the Availability instant. __tests__/fe-s-25/source-age-field.test.ts:121 pins that exact expression by regex. contracts/envelope.ts:225-230's own comment: status_required is false on ten of the twelve response contracts, 'so this branch is the COMMON one, not an edge'.",
+        "portal@c2eb8eb4: the network 'analysis-requests' adapter, contracts/adapt.ts:1006-1017 adaptAnalysisSubmission, returns a view with NO availability, so carryAvailabilityFromStatus (adapt.ts:280-281) returns it unchanged. The analysis tab's only renderable AnalysisRequest today is therefore a fixture document; fixtures/fe-s-6/*.json carry availability.sourceAsOf and sourceTimestamps.businessAsOf, and no sourceDate.",
+        "MEASURED BEFORE THE EDIT, a scratch probe at a pinned 2026-09-12T12:00:00Z: request.overview.json and request.uncertain.json give the slot '2026-09-10T18:05:00Z' / '2026-09-10T18:09:00Z'; formatSourceAge AND formatSourceAgeForState both said 'Updated 2d ago'; businessAsOf 2026-09-08 would have said 5d. So the re-route cannot move this path.",
+        "MEASURED AFTER THE EDIT (portal@944499a9b4), printed and NOT graded by fe-s-34/label.test.ts: 'the same fixture with NO status hands the panels availability.sourceAsOf=2026-09-10T18:05:00Z, not sourceTimestamps.businessAsOf=2026-09-08 -> StageDisplay \"Ready -- Business date age: 1d\"'."
+      ]
+    },
+    "spec_asserts": "Ruling K: 'the figure now measures a business-date age. Relabel it to name the business date and its age.' BOUNDS: 'Where the business date is absent, render its absence the way formatSourceAgeForState already does -- never an as_of fallback' and 'isCompleteState, the state labels, STATE_FOR_WIRE and every other function in that file stay as they are.'",
+    "world_is": "The figure measures a business date only when a status carried one. Otherwise envelopeFromAvailability hands the formatter the document's instant -- the fallback the bound forbids -- in a function the same bound forbids this order to touch, and which fe-s-25 pins by regex. Before FE-s-34 that misread was labelled 'Updated', which at least described an instant; after it the label asserts a business date. The remedy is a ruling, not a worker's edit: either the no-status envelope carries the document's own sourceTimestamps.businessAsOf as a reading (one is already built at contracts/adapt.ts:231 and then dropped), or a bare instant is labelled as what it is.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S22",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-14T03:20:00Z",
+    "one_line": "fe-s-21's F21-AC3 grades an age computed from the as_of INSTANT, not the business date: its panelFor builds the envelope from StatusEnvelope.sourceAsOf (source_dates.as_of), so after ruling K it prints 'business_date=2026-09-11 -> \"Business date age: 1d\"' where the business date's own age on that clock is 2d. The amended check therefore equals formatSourceAge of AS_OF -- the date `pure` is actually computed from -- not of the business date.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED, fe-s-21/source-age.test.ts run after the FE-s-34 relabel and before the amendment edit (portal@944499a9): '  WIRE READY -> view READY business_date=2026-09-11 -> \"Business date age: 1d\" (kind=age: true)', the same for all five answer-bearing states, then 'ANSWER-BEARING STATES: 0 of 5'. On the file's clock 2026-09-12T12:00:00Z the business date 2026-09-11 is 36h old (formatSourceAge rounds it to 2d) and AS_OF 2026-09-11T12:00:00Z is 24h old (1d).",
+        "portal@c2eb8eb4 __tests__/fe-s-21/source-age.test.ts:80: panelFor sets the envelope's `sourceAsOf: status.sourceAsOf`; contracts/adapt.ts:471 `const asOf = wire.source_dates.as_of ?? null` and :489 `sourceAsOf: asOf`; the test's `pure` at :156 is formatSourceAgeForState(status.state, status.sourceAsOf, now). The file's own header discloses the as_of basis (rows W1-S42 / W1-S43)."
+      ]
+    },
+    "spec_asserts": "Amendment bound (2.0.0_SA_COO~F, TO-FE-s-34 @12eef1910c): replace fe-s-21:166 'with a check that does not spell the label (for instance equality with formatSourceAge of the same date and clock)' -- read naturally as the business date, the field ruling K says the figure measures.",
+    "world_is": "In fe-s-21 'the same date' is AS_OF. Equality with formatSourceAge(BUSINESS_DATE, now) reads false there (2d vs 1d) and would have kept F21-AC3 red, so the replacement compares with formatSourceAge(AS_OF, now) and says why beside it. The test's printed line now puts a business-date label on an as_of age -- the shape of row IRPT_FNTEND-W3-S21, here confined to a test-built envelope rather than a production path. Nothing else in the file was changed: the bound grants the one check only. INERT: no production path reads this envelope.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S23",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-14T04:10:00Z",
+    "one_line": "F34-AC8's fixture cannot exist as written: on the v1 plane a no-status document's availability.sourceAsOf is always null (its only writer is a status's as_of), and the instant/business-date pair the criterion names (2026-09-10T18:05:00Z / 2026-09-08) is the fe-s-6 VIEW fixture, which the FixtureAdapter serves as it stands and ruling R's adapter remedy never reaches. After ruling R that view fixture's panels name an absence ('Ready -- Source time unknown') although the fixture carries businessAsOf 2026-09-08.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal@c18a2aab src/pages/InvestorReporting/contracts/adapt.ts: `availabilitySourceAsOf` occurs 3 times -- the type member :190, the read :227 in wireEnvelope (`sourceAsOf: parts.availabilitySourceAsOf ?? null`), and its ONE write, :482 in adaptStatusEnvelope, from `wire.source_dates.as_of`; carryAvailabilityFromStatus :284 is `sourceAsOf: status?.sourceAsOf ?? current.sourceAsOf`. So without a status the availability instant is null on every v1 document.",
+        "portal@c18a2aab contracts/wire/responses.ts:240 `'analysis-requests': true` (status required; envelope.ts:187 refuses a body without one), so no AnalysisRequest can be the no-status document. src/api/endpoints/investor-reporting.ts:1256-1260, FixtureAdapter.serve: a producer fixture goes through adaptWireInstance; 'A round-1 VIEW fixture is already in view shape and is served as it stands.'",
+        "MEASURED before the ruling-R source edit (portal@c18a2aab plus the new tests): fe-s-34/no-status.test.ts printed 'StageDisplay -> \"Uncertain -- Source time unknown\"' on the v1 path (a null slot, no age of anything) and, for the VIEW fixture request.overview.json (availability.sourceAsOf=2026-09-10T18:05:00Z, no reading, businessAsOf 2026-09-08), 'StageDisplay \"Ready -- Business date age: 1d\"'. After it (portal@fa9cbee21b): the v1 path reads 'Uncertain -- Business date age: 4d' on both panels, and the view fixture 'Ready -- Source time unknown'."
+      ]
+    },
+    "spec_asserts": "F34-AC8: 'a document with NO status whose availability instant is 2026-09-10T18:05:00Z and whose own business date is 2026-09-08, parsed from a whole v1 body through the real adapter (never a hand-built envelope)'. AMENDMENT 2: the no-status document's own reading is 'built today in contracts/adapt.ts from sourceTimestamps.businessAsOf and then dropped'.",
+    "world_is": "There are two no-status paths and the criterion joins them. (1) The v1 plane -- parseIrEnvelope, IR_DATA_ADAPTER, wireEnvelope -- where the reading is indeed built and dropped (adapt.ts:231). Ruling R's remedy lands there, and F34-AC8 is graded there, on the committed no-status Holdings body with its own instant (clocks.as_of_timestamp, carried as sourceTimestamps.sourceAsOf) set to 2026-09-10T18:05:00Z and its business date to 2026-09-08; its availability.sourceAsOf is null, as on every no-status v1 document. (2) The VIEW-fixture plane, where the criterion's dates come from: the availability carries the instant and no reading, and nothing between it and the panel can see its sourceTimestamps. Ruling R's bound now holds there -- envelopeFromAvailability hands the stated absence, so no instant is aged -- but outcome (a), ageing the document's own business date, does not reach it; that needs the FixtureAdapter or the fixtures, neither granted. ARMED: in fixture mode every view-fixture Analysis request now reads 'Source time unknown', the anomaly wording, for a document that has a business date.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S24",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-14T04:10:00Z",
+    "one_line": "F34-AC6 reads 84 pass / 2 skip / 1 fail after ruling R: __tests__/fe-s-3/status.test.ts:121 asserts that envelopeFromAvailability hands an availability's INSTANT through as the panel slot (`expect(built.sourceAsOf).toBe('2026-09-10T10:00:00Z')`) -- the exact behaviour ruling R ends ('never an instant, on any path') -- and __tests__/fe-s-3/ is not in the order's <paths> grant.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED, F34-AC6 as the order writes it, with IRPT_FE_DEV_PORT=54034 (measured closed on localhost, 127.0.0.1 and [::1]), at portal@fa9cbee21b: the failure is 'envelopeFromAvailability carries state, sourceAsOf and reason through, and derives actions' at fe-s-3/status.test.ts:121:30, 'Expected: \"2026-09-10T10:00:00Z\"', 'Received: { fact: \"ABSENT\", businessAsOf: null }'; totals ' 84 pass', ' 2 skip' (fe-s-30's two dev-server tests, precondition absent), ' 1 fail', 'Ran 87 tests across 19 files.'",
+        "Before the ruling-R source edit (portal@c18a2aab) the same battery ran 83 pass / 2 skip / 0 fail across 18 files, and the whole InvestorReporting suite 509 pass / 6 skip / 0 fail across 89 files. After it: 510 / 6 / 1 across 90 (the new no-status.test.ts adds a file) -- this one line is the only failure anywhere in the suite."
+      ]
+    },
+    "spec_asserts": "AMENDMENT 2: \"`state/status.ts`'s `envelopeFromAvailability` is yours for its no-status branch too\" and 'Nothing labelled a business date may measure an instant, on any path.' F34-AC6: 'the folders that render or compute source ages stay green.' The <paths> grant names fe-s-21/source-age.test.ts, __tests__/fe-s-25/ and __tests__/fe-s-34/, not __tests__/fe-s-3/.",
+    "world_is": "fe-s-3/status.test.ts:114-125 builds an availability with an instant and no reading and asserts at :121 that the envelope's sourceAsOf IS that instant. Under ruling R the builder hands the stated absence ({fact:'ABSENT', businessAsOf:null}), so that one assertion fails; the test's other assertions (:120 state, :122 reason, :123-124 actions) are unaffected. Keeping :121 green would mean leaving the no-reading branch handing the instant, so every view fixture's instant is aged under 'Business date age', which is what the bound forbids. The other in-tree alternative, a formatter that refuses to age a bare instant, turns fe-s-21's F21-AC3 red instead, because its envelope is built from status.sourceAsOf (row IRPT_FNTEND-W3-S22). The remedy is a one-line edit in a file this order does not grant: make :121 assert the ABSENT reading, or assert that no instant is handed, citing ruling R. Not made here. ARMED: the FE-s-34 portal commit turns that suite red if drained without it.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S25",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-14T04:10:00Z",
+    "one_line": "FE-s-30's businessDateOf (state/availability.ts:102-104) reads ANY availability.sourceDate as the STATUS's reading. Under ruling R a no-status document now carries its own reading there, so businessDateOf reports from:'status' for a document date and passes a document null through as fact NULL, where FE-s-30 reads the document plane's null as ABSENT. Measured. It is latent today: the gate sends every no-status wire payload to the panel, not to AnswerStatus.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED, scratch probe on the portal@fa9cbee21b bytes, whole no-status Holdings v1 bodies through parseIrEnvelope: business_date 2026-09-08 -> availability.producerState=undefined, availability.sourceDate={fact:PRESENT, businessAsOf:2026-09-08} -> businessDateOf {fact:PRESENT, businessDate:2026-09-08, from:status}; business_date null -> sourceDate {fact:NULL, businessAsOf:null} -> businessDateOf {fact:NULL, businessDate:null, from:status}. Read from state/availability.ts:103-108, the same bodies took the document branch before ruling R (they carried no sourceDate): from:'document', with a null read as ABSENT.",
+        "One consumer, found with the native Grep tool for businessDateOf and `.from` across the non-test tree: tabs/reporting/AnswerStatus.tsx:24, :45 and :75 (`data-source-date-from={date.from}`); the definition is availability.ts:102. The full InvestorReporting suite after the edit has no failure in fe-s-30 or anywhere else except row W3-S24's line."
+      ]
+    },
+    "spec_asserts": "AMENDMENT 2 names the carrier: 'the no-status document's availability carries that reading (Availability.sourceDate, typed SourceDateReading at contracts/index.ts:133)'. FE-s-30, state/availability.ts:92-100: 'When a status arrived, its reading rides on availability.sourceDate ... Only when NO status arrived ... is the view document's sourceTimestamps.businessAsOf read.'",
+    "world_is": "The two carriers now disagree about what the presence of availability.sourceDate means. It is INERT today: every no-status wire document arrives as EXPLICIT_UNKNOWN_STATE with no producer token, and isAnswerBearing (availability.ts:64-68) sends it to the status panel, so AnswerStatus never renders one and no test fails. It becomes a provenance mislabel the day a no-status document can be answer-bearing. availability.ts is not in this order's grant. The discriminator FE-s-30's own gate already uses is producerState, not the presence of sourceDate.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S26",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-14T05:05:00Z",
+    "one_line": "The one reading rule amendment 3 mandates for VIEW fixtures (adapt.ts readingFromValue) turns a view document's null businessAsOf into fact NULL, shown as 'Source date malformed'. But the view contract defines that null as 'no clock' (contracts/index.ts:147), and FE-s-30's businessDateOf reads it as ABSENT. Census: 3 of 134 view documents carry a null, all in smoke/fe-s-3-loading.json; no FixtureAdapter default fixture does.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED, a census over every JSON file under portal src/pages/InvestorReporting/fixtures/ (125 files): 134 VIEW documents (an availability object, not a producer `instance`); businessAsOf present on 131, null on 3, missing on 0. The three nulls: smoke/fe-s-3-loading.json at investor-reporting/performance-report, analysis-requests[0] and holdings-snapshot. No file in the portal outside node_modules names fe-s-3-loading (native Grep, 0 matches); smoke maps are handed to scripts/ui-smoke.mjs by `--fixtures`.",
+        "portal@c18a2aab contracts/adapt.ts:159-163 readingFromValue: undefined -> ABSENT, null -> NULL, a value -> PRESENT. contracts/index.ts:147 on SourceTimestamps: 'Source clocks. A missing clock is null, never a synthesised `now`.' state/availability.ts:98-100: 'On that plane a null means \"no clock\" ... so it is reported as ABSENT, never as the wire's NULL'.",
+        "MEASURED at portal@c6ee044e7a, fe-s-34/no-status.test.ts, F34-AC9 path 1: a fe-s-6-ready view document with businessAsOf set to null renders 'Ready -- Source date malformed' on both panels, as the one rule dictates; with businessAsOf removed it renders 'Ready -- Source time unknown'."
+      ]
+    },
+    "spec_asserts": "AMENDMENT 3: FixtureAdapter's VIEW-fixture branch gives a served document's availability 'the SAME business-date reading contracts/adapt.ts builds on the wire path, from the document's own sourceTimestamps.businessAsOf, through adapt.ts's own reading builder (one rule, never a second copy)'.",
+    "world_is": "On the wire path readingFromValue sees a producer field, where a null IS the defect the NULL fact names. On the view plane the same null is the contract's ordinary missing clock. So under one rule, a view document with no clock is named a producer defect: a LOADING document from fe-s-3-loading.json would read 'Source date malformed' rather than 'No source age yet'. Built as ordered, with no second rule. INERT: no FixtureAdapter default fixture carries a null, no test fails, and the three nulls sit in a smoke map only ui-smoke serves. A ruling is needed only if a view null should read as absence, and that would be a second rule, which the amendment forbids.",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
