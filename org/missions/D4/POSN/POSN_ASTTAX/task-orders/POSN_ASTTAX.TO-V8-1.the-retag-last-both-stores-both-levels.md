@@ -22,7 +22,9 @@ You are `0.9.0_WK_POSN_ASTTAX~19`. Every Bash call begins `export OPAL_AGENT_SER
 `git rev-parse --abbrev-ref HEAD` and `test -d org && test -d .tools && echo TREE-OK`. Commit only via
 `bash .tools/safe-commit.sh --author "0.9.0_WK_POSN_ASTTAX~19 <0.9.0_WK_POSN_ASTTAX~19@opal.agent>" -F <msgfile> -- <paths>`,
 msgfile by the Write tool, PURE ASCII. Never push, merge, rebase, `checkout --`, `clean`. **Your portal clone is READ-ONLY in this
-order** (`git diff --stat` under portal/ must read 0 at your report -- FWD-5's bar is "no portal edit").
+order** (`git diff --stat` under portal/ must read 0 at your report -- FWD-5's bar is "no portal edit"): it is a LINKED WORKTREE of the
+portal repository at `/c/tmp/wk-posn-5-19/portal`, cut by the COO at hand-over DETACHED at `refs/drains/posn-5-portal` (F1-F3 landed),
+with `node_modules` junctioned from the estate's checkout (playwright-core included, W22-S9); do not create, switch or fetch it.
 
 ## THE CELL
 
@@ -128,7 +130,7 @@ Attribution's per-class groups after this retag is Andrew's ACCEPTED consequence
 
 <criterion id="V8-AC15" cell_refs="AT5-s-8"><invocation>timeout 600 .tools/aws lambda invoke --function-name cot-satellites-registry-producer --payload '{}' deliverables/0.9.0_WK_POSN_ASTTAX~19/r1_registry_invoke.json</invocation><expect>StatusCode 200 and no FunctionError; then the same for cot-satellites-characteristics-producer into r1_characteristics_invoke.json; then s3api head-object on registry.json, holdings.json and characteristics.json: LastModified AFTER the retag time (printed beside the pre-retag heads); registry.json's body BYTE-IDENTICAL to its prior version (sha256 both printed -- the registry carries no labels); holdings.json's rows for every retagged ticker any satellite holds read the TARGET asset_class AND sub_asset_class (print them: GLD under Commodities / Metals in Sat 15, VXX under Structured / Hedge in Sat 80, and every other member present), every satellite's total weight EQUAL to its prior version's total; characteristics.json's nine coverage pairs unchanged from its prior version. Any other difference: Branch B.</expect></criterion> `V8-AC15` -- THE SATELLITES PLANE REFRESHED ON DEMAND, RELABELLED AND NOTHING ELSE.
 
-<criterion id="V8-AC10" cell_refs="AT5-s-8"><invocation>timeout 900 bash -c "cd portal && node scripts/ui-smoke.mjs positioning .scratch/v8_sat15.png --port <PORT>"</invocation><expect>AFTER V8-AC14 and V8-AC15 (the served plane is refreshed, never pre-retag): a READ render per mode: Satellites (Sat 15: GLD 8.34 under Commodities / Metals; Sat 80: VXX 1.87 under Structured / Hedge; all NINE satellites read, each with served rows == rendered rows and class subtotals == total to 0.1, and each satellite's total weight EQUAL to its pre-retag total from holdings.json's prior version -- weight unchanged), Models and ETFs (five classes, canonical order, one colour each). Print the nine (satellite, rows served, rows rendered, subtotal sum, total) lines.</expect></criterion> `V8-AC10` -- THE BAR ON THE LOCAL BUILD, NINE SATELLITES AND BOTH OTHER MODES, READ.
+<criterion id="V8-AC10" cell_refs="AT5-s-8"><invocation>timeout 900 bash -c "cd portal && node scripts/ui-smoke.mjs positioning .scratch/v8_sat15.png --port <PORT> --fixtures <FIXTURES> --click 'Satellites'"</invocation><expect>AFTER V8-AC14 and V8-AC15 (the served plane is refreshed, never pre-retag): the fixtures file built from the SERVED bytes read AFTER the driven refresh and never hand-written (s3api get-object of the refreshed positioning keys and of platinum/satellites/registry.json, holdings.json, characteristics.json, keyed by the URL substrings the page fetches; each key's VersionId printed beside the file -- the smoke's inert token gets 401 on every /api/* fetch and the mode and the satellite picker are in-page controls, rows W22-S10/W22-S15); every further capture is the SAME command with its clicks stated and its outfile named (each satellite through the picker; Models with --click 'Expand Details'; ETFs with --click 'ETFs' --click 'Expand Details'); a READ render per mode: Satellites (Sat 15: GLD 8.34 under Commodities / Metals; Sat 80: VXX 1.87 under Structured / Hedge; all NINE satellites read, each with served rows == rendered rows and class subtotals == total to 0.1, and each satellite's total weight EQUAL to its pre-retag total from holdings.json's prior version -- weight unchanged), Models and ETFs (five classes, canonical order, one colour each). Print the nine (satellite, rows served, rows rendered, subtotal sum, total) lines.</expect></criterion> `V8-AC10` -- THE BAR ON THE LOCAL BUILD, NINE SATELLITES AND BOTH OTHER MODES, READ.
 
 <criterion id="V8-AC11" cell_refs="AT5-s-8"><invocation>timeout 60 git -C portal diff --stat refs/drains/posn-5-portal</invocation><expect>0 files changed under portal/ in THIS order (your clone is at the drain ref and untouched): the thirteen rows changed in ONE place and every Positioning mode reflected it with NO portal edit -- FWD-5 exercised on the retag itself.</expect></criterion> `V8-AC11` -- FWD-5: ONE PLACE CHANGED, EVERYTHING FOLLOWED, NO PORTAL EDIT.
 
@@ -138,7 +140,7 @@ Attribution's per-class groups after this retag is Andrew's ACCEPTED consequence
 
 <expected_criteria>V8-AC1, V8-AC2, V8-AC3, V8-AC4, V8-AC5, V8-AC6, V8-AC7, V8-AC8, V8-AC9, V8-AC10, V8-AC11, V8-AC12, V8-AC13, V8-AC14, V8-AC15</expected_criteria>
 
-<placeholders>DRIVE_YANG_GENERATORS_RECORDED_EVENTS, PORT, V3_1_S_GUARDED</placeholders>
+<placeholders>DRIVE_YANG_GENERATORS_RECORDED_EVENTS, FIXTURES, PORT, V3_1_S_GUARDED</placeholders>
 
 <paths>
 org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-V8-1.the-retag-last-both-stores-both-levels.md
