@@ -2782,3 +2782,33 @@ all seven mechanical criteria were measured and the verdict is NO-GO.
   }
 ]
 ```
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-S65",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "4.0.0_SA_CRO~Z",
+    "surfaced_at": "2026-09-14T16:47:55Z",
+    "one_line": "THE SATELLITES TOGGLE BLENDS THE WRONG VERSION OF THE MODELS. Black Diamond's five Opal models and Yang's five served books are TWO OBJECTS WITH ONE NAME: BD's carry GLD (ST 8.34%, INT 3.99%, LT 2.11%), VXX (INT 1.40%, LT 1.87%, ULT 1.87%) and a CASH line in every book; Yang's carry no GLD, VXX only in LT 1.50% / ULT 2.00%, no CASH, and ICSH in 5 of 5 books that 0 of 5 BD models hold. Every Opal Satellite in the rebalancer is a pure blend of BD's models (0 root securities on 9 of 9; 13 of 13 sleeve ids resolve to the standalone BD model ids), and the portal builds satellites by blending YANG's. Measured today: the served satellites toggle is wrong on gold for 7 of 9 books and on VXX for 6 of 9, in both directions.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RAW REBALANCER, s3://opal-data-assets/blackdiamond/cottonwood/bronze/rebalancer_model_detail/2026-09-14/ (81 files, landed 06:00:54Z), parsed at hierarchy grain: every 'Opal Satellite N' is rebalanceModelType=Strategy with root components=0 and children[] of type Model; the child ids equal the standalone model ids on 13 of 13 satellite legs. GLD/VXX/CASH sit ONLY on the Model nodes (components[], metadata.symbol) and at the same relativeAllocation on the standalone node and inside every satellite that references it.",
+        "SERVED MODELS, s3://opal-data-portal-v2/json/positioning/positioning_data.json data_as_of 2026-09-11 generated 2026-09-12T11:05Z: GLD in 0 of 5 books; VXX in LT 0.015 and ULT 0.020 only; CASH line in 0 of 5; ICSH in 5 of 5 (UST 0.0092, ST 0.0146, INT 0.0081, LT 0.0142, ULT 0.0116) where BD holds it in 0 of 5.",
+        "PER-BOOK WEIGHT DIFFERENCES beyond the overlay, Yang vs BD as fraction of book: ST BIV 0.1903 vs 0.1118; INT BIV 0.0843 vs 0.0423; LT BIV 0.0207 vs absent; INT SPYM not compared (the known duplicate-row defect, DT brief 2026-09-11). Denominators: BD leaves UST 14 / ST 16 / INT 20 / LT 16 / ULT 16; Yang holdings 14 / 15 / 19 / 16 / 16.",
+        "PER-SATELLITE, registry as_of 2026-09-14 (s3://opal-data-cot/platinum/satellites/registry.json, 9 books) blended from the served Yang books vs the same legs blended from BD: GLD portal 0.00% on all 9 vs BD 8.34 / 7.25 / 6.17 / 5.08 / 3.99 / 3.05 / 2.11 / 0 / 0 (Sat 15..98); VXX portal 0 / 0 / 0 / 0 / 0 / 0.75 / 1.50 / 2.00 / 2.00 vs BD 0 / 0.35 / 0.70 / 1.05 / 1.40 / 1.64 / 1.87 / 1.87 / 1.87.",
+        "CONTROLS: the leaf reader returned symbols on every Model node and none on every Strategy node (the schema's own children-vs-components split, rebalancer_schemas.py); the name-to-book map is the ruled one in data/assets/scripts/gold/satellites_weights.py NAME_TO_BOOK; the Yang-blend arm reproduces the DT brief's VXX figures for Sat 70/80/90/98 (0.75 / 1.50 / 2.00 / 2.00), so the instrument agrees with a prior independent read where the two overlap."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD v0.6 @ae66157381 s.4 C-SATELLITE-DATA: the Cottonwood satellite components (228 rows) are the classifier's NECESSARY DATA input and 'every one of the 228 components MUST sort into exactly one of the five classes (FWD-1) and be VISIBLE as such on the surfaces (FWD-6)'; and, same section: 'VXX is ALREADY correctly flowing into Satellites 70/80/90/98 via the MODELS path (LT 1.5% / ULT 2.0%, sub_asset_class Volatility); POSN only retags VXX's served top-level asset_class, and touches NO holding, weight or satellite placement.'",
+    "world_is": "THE MODELS PATH CANNOT MAKE THE 228 COMPONENTS VISIBLE, because the components are BD's model sleeves and the path blends Yang's. GLD is in 0 of 5 Yang books, so no retag of any registry row puts a gram of gold on a satellite column; VXX 'already flowing' is true of the models toggle and false on 6 of 9 satellites. The constraint's visibility requirement and its 'touches no holding, weight or placement' clause cannot both hold under the current satellite path -- that is a SCOPE gap at L4, not a code defect in any cell. STAR: two objects with one name, measured on two planes that never disagree with themselves -- the DT brief measured the blend and was right about the blend; the satellite is not the blend.",
+    "notes": "REMEDY PROPOSED, NOT APPLIED: org/tier1_exec/4.0.0_SA_CRO~Z/briefs/POSN_ASTTAX_COMPLETION_BRIEF_20260914_Z.md s.2 -- source the Satellites toggle from Black Diamond's flattened holdings coalesced by ticker (group by metadata.symbol, sum absoluteAllocation), keep the Models toggle on Yang, disclose the per-ticker overlay (BD minus Yang-blend) and NEVER sum the two sources (LT VXX 1.87 vs 1.50 is one holding on two planes, not two holdings); classify every coalesced ticker through ETFClassifier. Extends the existing cot-satellites-registry-producer and satelliteAdapter.ts; no new pipeline. Pitched to Andrew at this seat's terminal 2026-09-14 ~17:0xZ on his ~16:34Z word that the GLD/VXX 'outside the models' question is the primary challenge. WHAT IS NOT CLAIMED: no ruling on which version of a model is 'right' -- that is Yang's and Andrew's; the ICSH / BIV drift is surfaced for that reconciliation and is NOT a POSN cell; no cell is cut, no PRD byte is changed, no retag is admitted. DISARM, one limb: the PRD carries a satellite-source constraint (or Andrew rules the satellites toggle stays on the Yang blend with the gap disclosed on the surface) -- either lands as an L4 act by the disarm owner and this row is disarmed by a citing row."
+  }
+]
+```
