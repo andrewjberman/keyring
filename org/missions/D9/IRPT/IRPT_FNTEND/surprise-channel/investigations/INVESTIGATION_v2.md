@@ -3544,6 +3544,28 @@
     },
     "disposition": "UNDER_INVESTIGATION",
     "hazard_standing": "INERT"
+  },
+  {
+    "id": "IRPT_FNTEND-W4-S13",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~4",
+    "surfaced_at": "2026-09-14T14:28:50Z",
+    "one_line": "THE to_id CROSS-CHECK CANNOT BE EXACT. The binding refuses an instance whose to_ref or to_id names another order; to_ref has one exact form estate-wide, to_id does not -- matched exactly against the flipped order's <to_id>, it would refuse 119 of 337 committed instances whose to_ref names their own order.",
+    "class": "OBSERVATION",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-37 THE BINDING: 'An instance whose decomp_ref.to_ref (or to_id) names a DIFFERENT order is REFUSED, before any limb runs'; BOUNDS: 'The binding must not refuse an instance whose to_ref names its own order.' The order does not say which spellings of a to_id name the same order.",
+    "world_is": "Census at CLOUD 62f3adb8ca over every tracked *.proof_of_spec.json whose sibling order exists where check_complete_flip looks (337 of 576 tracked instances): to_ref equals that order in 336, is absent in 1, names another order in 0. to_id equals the order's <to_id> tag in 218 and does not in 119 -- a '.'-delimited slug on one side (instance NFRA_CLDGRPH.TO-CG-I-2 vs order tag NFRA_CLDGRPH.TO-CG-I-2.edge-side-drop-and-the-blind-check; instance NFRA_COMPEFFICACY.TO-CE-T-1.comp-find-s4-audit vs tag NFRA_COMPEFFICACY.TO-CE-T-1; the NFRA_OUTSET orders), or an order that carries no <to_id> tag at all (the NFRA_IAMROLES202609 and NFRA_REPORT orders). An exact to_id cross-check would have refused those 119 flips. So the binding keeps to_ref EXACT and matches to_id slug-tolerantly: equal to the order's <to_id> tag, its filename stem or an id=\"...\" declaration, or one is the other plus a '.'-delimited suffix with '.TO' in the shorter (IRPT_FNTEND.TO-FE-s-2 never matches ...FE-s-29; a bare project code matches nothing). Measured after: the binding's cross-check refuses 0 of the estate's orders that have an instance beside them (test_governing_binding.py, ESTATE line). Residual, stated: a to_id that differs from its order only by a slug is admitted, so to_id is a weaker cross-check than to_ref -- and the governing order no longer comes from either field, so neither can steer a limb.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/proof-of-spec-check.py (the commit carrying this row): the GOVERNING-ORDER BINDING block, _same_order_id, _order_id_forms, governing_binding_check",
+        "census at 62f3adb8ca: git ls-files *.proof_of_spec.json -> 576; sibling order exists -> 337; to_ref == order 336, absent 1, another 0; to_id exact against the <to_id> tag: 218 match, 119 do not",
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~2/NFRA_CLDGRPH.TO-CG-I-2.edge-side-drop-and-the-blind-check.proof_of_spec.json@62f3adb8ca",
+        "org/missions/D12/NFRA/NFRA_REPORT/deliverables/0.9.0_WK_NFRA_REPORT~1/NFRA_REPORT.TO-RP-s-1.state-model-two-axis-vocabulary.proof_of_spec.json@62f3adb8ca"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "hazard_standing": "INERT"
   }
 ]
 ```
