@@ -654,6 +654,29 @@ new row on 3.0.0_SA_CVO's ask 96495), both 1.0.0_SA_CTO; `LGIC_NAMING-S3`, `LGIC
     "spec_asserts": "LGIC_NAMING decomposition v3 section 5: 'a cold start is a fresh context. The constraint binds on context, never on the slot number'; the LN-e-4 face: 'You have never seen this estate, and you read the names alone.'",
     "world_is": "A fresh subagent context is not an empty one. Every worker loads the workspace law file and the memory index before its first tool call, so a requirement that a worker not know the estate's vocabulary cannot be met by spawn timing or by instruction inside this fabric.",
     "notes": "DISARM of W6-S1, done per that row's own disarm clause: (1) DISCLOSED here, on the L8 compile's input, so 3.0.0_SA_CVO grades FWD-1, FWD-2, FWD-4 and FWD-5 at L9 with it in view -- no blind cell's PASS is REALIZED evidence of an unaided reader or namer while this stands; (2) the re-run remedy (seat readers and graders in a context that loads neither file, or state that the measure cannot be taken inside this fabric) is the round-N analysis's, carried to 1.0.0_SA_CTO in this round's drain-end read. The spec is frozen, so LN-h-1 and LN-h-2 run as cut, under this disclosure. W6-S3's second exposure (the channel a blind cell must read to mint a row) reaches LN-h-1 and LN-h-2 as well, once LN-g-1's rows are merged. INERT because the harm W6-S1 names -- an undisclosed non-blind measurement graded as REALIZED -- now has its disclosure on the grader's input."
+  },
+  {
+    "id": "LGIC_NAMING-W1-S5",
+    "project": "LGIC_NAMING",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_NAMING~1",
+    "surfaced_at": "2026-09-14T17:44Z",
+    "one_line": "LN-f-1's output shape has two dispositions for a firm-token role, attributed (with a canonical form) or excluded (as no firm's principal); wp5-49f-feeder-scheduler-role fits neither -- its 49f token names 49 Financial, and GRADING_RULE R1.f RAISEs it (wp5 is in no vocabulary), so it has no canonical form. It is filed under excluded with a reason saying exactly that.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "LIVE_NAMES.json (vintage 2026-09-14 12:13:53 UTC), counted by python over by_type.IAM_ROLE: 240 roles, 69 carry a firm alias token split on - and _; graded by GRADING_RULE.md R1-R6: 68 to a canonical form, 1 RAISE (wp5-49f-feeder-scheduler-role).",
+        "RULE: org/missions/D14/LGIC/LGIC_NAMING/deliverables/GRADING_RULE.md@3d671ff59c R1.f 'Any other t1 is in no vocabulary. RAISE'; V3 lists the workstream codes wsb and wsd only; V1 and V2 do not carry wp5.",
+        "ORDER: org/missions/D14/LGIC/LGIC_NAMING/task-orders/LGIC_NAMING.TO-LN-f-1.firm-patterns.md@3d671ff59c:24-29 -- attributed entries carry 'canonical: its canonical form by the rule'; excluded entries carry 'reason: why it is no firm's principal'; no third list.",
+        "CHECKER: fixed_inputs/check_ln.py@3d671ff59c f1_covered counts a population name as covered only when it is attributed or excluded with a non-empty reason, so a separate RAISE list would read as uncovered."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO LN-f-1: 'Grade each by GRADING_RULE.md to its canonical form and its firm ... A role that is no firm's principal goes to excluded, with its reason.'",
+    "world_is": "One of the 69 grades RAISE, not a canonical form: wp5-49f-feeder-scheduler-role. Its firm is legible (49f) but the rule cannot place its system slot, so it can be neither attributed with a canonical form nor honestly called no firm's principal.",
+    "notes": "OBSERVATION, INERT: the patterns and the other 68 attributions do not depend on it, and its live name already matches *-49f-*-role. Remedy options, not chosen here: (a) the rule's owner adds wp5 to V3 as a workstream code (S6 never a system), which gives {system}-49f-wp5-feeder-scheduler-role, caught by *-49f-*-role; or (b) the order shape gains a RAISE disposition beside attributed and excluded."
   }
 ]
 ```
