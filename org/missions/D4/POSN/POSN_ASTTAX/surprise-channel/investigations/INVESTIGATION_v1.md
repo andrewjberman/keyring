@@ -2752,3 +2752,33 @@ all seven mechanical criteria were measured and the verdict is NO-GO.
   }
 ]
 ```
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-S64",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-14T15:11:50Z",
+    "one_line": "THE TWO ARTIFACTS THIS ROUND IS WAITING ON WILL PROBABLY LAND AS WHOLE-FILE DIFFS, AND THE REAL CHANGE WILL BE INVISIBLE IN THEM. Measured at HEAD e9d1c6e6a5: 6 of 44 tracked .md under POSN are CRLF in the blob, and ALL SIX are record-class files (ADJUDICATION_v2..v5, REMEDIATION_v2..v3) written by ONE author, 3.0.0_SA_CVO~Z -- whose v1 pair is LF and who, on AMGT_RESAPP four hours ago, wrote a round-9 cut that flipped REMEDIATION_v8 from CRLF to LF and rendered 504 of 504 lines changed when FOURTEEN had. POSN's round-4 close is the same author, the same document class and the same shape.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED AT HEAD e9d1c6e6a5 on the BLOB (git show HEAD:<path>), not the working tree, every figure re-derived inside the call that wrote this row and the write refusing on any disagreement. POSN_ASTTAX tracked .md: 44 (DENOMINATOR). CRLF in the blob: 6. LF-only: 38.",
+        "THE SPLIT IS NOT SCATTERED, IT IS EXACTLY ONE DOCUMENT CLASS: every CRLF file under this project is an adjudication or a remediation -- ADJUDICATION_v2.md, ADJUDICATION_v3.md, ADJUDICATION_v4.md, ADJUDICATION_v5.md, REMEDIATION_v2.md, REMEDIATION_v3.md -- and no other .md under POSN is CRLF at all. The record class is 8 files; the 2 LF members are ADJUDICATION_v1.md, REMEDIATION_v1.md.",
+        "ONE AUTHOR, AND THE FLIP IS INSIDE ITS OWN SEQUENCE: all 8 record files were first committed by 3.0.0_SA_CVO~Z. v1 of each is LF; v2 onward are CRLF. So the same serial's writer changed line endings between v1 and v2 and held CRLF through v5/v3 -- and on AMGT_RESAPP at 14:47Z today the same serial wrote LF, flipping that project's REMEDIATION_v8 the other way. The behaviour is not stable across time and is invisible at every step.",
+        "THIS SEAT CHECKED ITSELF FIRST, because a finding about another writer needs it: the investigations channel this seat appends to has 62 commits in its history and ZERO of them carry a CR. This seat's appenders pass newline='\\n' explicitly. The outlier is not this loop, and that was measured rather than assumed.",
+        "THE ROOT IS REPO CONFIG AND IT IS ALREADY WRITTEN DOWN FOR A DIFFERENT FILE TYPE, found by 0.0.0_AB_MSTR~Z (msg 22802): .gitattributes rules *.tf, *.tfvars, *.tf.json, *.hcl and some *.js -- after false drift STOPPED TWO ETFS_GUARDRAIL ORDERS -- and its own comment states the principle 'THE DOMAIN IS DECLARED RATHER THAN THE ONE MEMBER THAT BIT US'. *.md is not covered, and core.autocrlf is false on this device, so whichever writer last touched a record decides its endings."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Rule 27: the three tracks share FILES, never messages -- the CVO's one send is the slug and the CTO's one send is the analysis, so a remediation/adjudication FILE is the carrier a human and a gate both read. .gitattributes at the repo root, written 2026-09-05 by 1.0.0_SA_CTO on 3.0.0_SA_CVO's ETFS_GUARDRAIL-S2: an eol rule exists precisely so a file does not 'read as MODIFIED against an LF index -- FALSE DRIFT that is indistinguishable from a real edit', and the domain is declared rather than the one member that bit us.",
+    "world_is": "THE DECLARED DOMAIN STOPS AT TERRAFORM AND THE RECORD CLASS IS *.md. Under POSN_ASTTAX the record class is split 6 CRLF / 2 LF by one author across six months of rounds. STAR: A WHOLE-FILE DIFF ON A RECORD IS INDISTINGUISHABLE AT --stat FROM A RE-ADJUDICATION, AND BOTH WRONG READINGS ARE CONFIDENT -- 'the whole slug was re-adjudicated' and 'noise, skip it'. On AMGT_RESAPP today the second reading would have skipped a round's closure: fourteen lines, OPEN->REMEDIATED, ARMED->DISARMED, closed false->true, at null->timestamp, buried in 1008. NOTE THE DIRECTION: nothing fails, no gate fires, the commit is correct, and the only casualty is the reviewability of the one document class this workflow reads to decide anything.",
+    "notes": "THE PREDICTION, STATED BEFORE THE FACT SO IT CAN BE WRONG: POSN's round-4 close is written by 3.0.0_SA_CVO~Z, and a round-N cut on this project has historically touched the previous round's rows (that is exactly what AMGT's round-9 commit did to REMEDIATION_v8). If ADJUDICATION_v6 lands LF while ADJUDICATION_v5 (324 lines, CRLF) or REMEDIATION_v3 (681 lines, CRLF) is modified in the same commit, those render 324/324 and 681/681 and this loop's L10 read is a wall of noise with the closure inside it. WHAT THIS LOOP DOES ABOUT IT, AT ZERO COST AND WITH NO INTERVENTION: when round 4's artifacts land, read the diff with --ignore-all-space and record BOTH numbers, the plain and the whitespace-insensitive, before forming any view of what changed. WHAT IS NOT DONE AND WILL NOT BE: no .gitattributes edit -- it is 1.0.0_SA_CTO's file and a law-adjacent surface, and 0.0.0_AB_MSTR~Z has already surfaced the *.md gap with its blast radius (adding an eol rule rewrites endings across a large share of the tree on next touch, which is the same reviewability cost paid deliberately instead of accidentally -- that needs an owner, a window and a decision). No normalising of any file, here or anywhere. No disposition on 3.0.0_SA_CVO~Z, whose commits are correct: this is about what the NEXT READER sees, not about the writer. No round cut, no status flip. The STOP on that seat is untouched. DISARM, single limb and falsifiable: POSN's round-4 artifacts land, and this seat records the plain and the -w diff numbers for every record-class file the commit touches. If they agree, the prediction was wrong and the row says so."
+  }
+]
+```
