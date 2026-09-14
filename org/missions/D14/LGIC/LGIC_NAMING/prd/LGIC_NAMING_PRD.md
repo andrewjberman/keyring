@@ -5,7 +5,7 @@
  "project": "LGIC_NAMING",
  "directive": "D14",
  "fabric": "laptop",
- "prd_version": "v1.3",
+ "prd_version": "v1.4",
  "step": 4,
  "brief_ref": "docs/briefs/d14-naming-schema-brief-20260913.md@1b42dbe758",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6"],
@@ -124,7 +124,7 @@ as a second copy here.
   or `global`, in the LONG form, never an entity id (doctrine R2; a vendor MASTER is valid, R3). `{tier}` is one of
   bronze, silver, gold, platinum, state (R21), code (R16); a code home's form is the data file's `key.code` (row S7,
   ruled). Tables are snake_case; a NEW platinum leaf is a kebab `.json`, and a LEGACY served path keeps its bytes
-  (`key.legacy_served_path`; rows S6 and S8, ruled). The partition forms, the entity partition among them (row S6;
+  (`key.legacy_served_path`; rows S6 and S8, ruled), and a path is legacy only if `key.legacy_served_paths` lists it (row S10, ruled at v1.4: membership is data, so the grade stays a function of `(name, type)` over this file; until the list lands, a key whose verdict turns on it RAISES). The partition forms, the entity partition among them (row S6;
   doctrine R2), are `key.partition`. The three rows were ruled at v1.3 by the CTO adjudication `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ADJUDICATION_LGIC_NAMING_20260914T103xZ_S6_S7_S8_ENTITY_PARTITION_CODE_TIER_LEGACY_SERVED_PATHS.md`.
 - **S2 Buckets.** Tenant and product data buckets are `opal-data-{scope}` in the LONG form; platform buckets are
   `opal-{account-id}-{purpose}`; `opal-data-assets` and `opal-data-portal-v2` stand. No new bucket carries a vendor name.
