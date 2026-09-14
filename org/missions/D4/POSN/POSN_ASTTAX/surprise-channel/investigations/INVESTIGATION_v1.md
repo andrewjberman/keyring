@@ -3323,6 +3323,123 @@ all seven mechanical criteria were measured and the verdict is NO-GO.
   "spec_asserts": "TO-V2-1 V2-AC3 invokes commit-gate.sh bare while its expectation names every changed .py and .tf.",
   "world_is": "Bare it printed NOTHING WAS CHECKED rc=0; with the six changed files it printed OK: pre-commit gate clean for 6 of 6 file(s). The worker recorded both arms.",
   "notes": "The bare form must not be copied into a future cut; the gate's WARN is the only tell."
+},
+{
+  "id": "POSN_ASTTAX-Z-W20-S4",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~20",
+  "surfaced_at": "2026-09-14T20:16:14Z",
+  "one_line": "V2-AC8's invocation writes -out=.scratch/b2.tfplan, but under -chdir terraform resolves that path relative to the TERRAFORM directory, not the worktree root -- so it targets infra/aws/terraform/cot-pipeline/.scratch/, which does not exist. The plan COMPUTED and then died writing it: rc=1, Failed to write plan file: open .scratch/b2.tfplan: The system cannot find the path specified. I created the directory and re-ran the invocation VERBATIM; it then passed. The order is internally consistent -- V2-AC9 reads the same relative path through the same -chdir, so both land in the same place, and V2-AC13's --plan value is correct too because record-deploy-scope.py runs terraform -chdir=<tf_dir> show -json <plan>. Only the directory was missing.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Run 1, verbatim from the order: rc=1; terraform printed the refresh, the targeting warning, then Error: Failed to write plan file / The plan file could not be written: open .scratch/b2.tfplan: The system cannot find the path specified.",
+      "Run 2, byte-identical invocation after one mkdir: rc=0, Saved the plan to: .scratch/b2.tfplan.",
+      "git check-ignore -v infra/aws/terraform/cot-pipeline/.scratch/b2.tfplan -> .gitignore:415:**/*.tfplan (rc=0), so the artifact is ignored wherever it lands."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "V2-AC8 names -out=.scratch/b2.tfplan and expects a saved plan that the later criteria consume.",
+  "world_is": "First run rc=1 with no plan written; after one mkdir -p of infra/aws/terraform/cot-pipeline/.scratch the same invocation returned rc=0 and Plan: 0 to add, 2 to change, 0 to destroy. The plan file is gitignored by the **/*.tfplan rule, confirmed by git check-ignore -v, so it cannot pollute the tree or enter a commit.",
+  "notes": "A future cut can pre-create the directory or write -out=../../../../.scratch/b2.tfplan. Nothing about the plan's CONTENT is affected; this is purely where the file lands."
+},
+{
+  "id": "POSN_ASTTAX-Z-W20-S5",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~20",
+  "surfaced_at": "2026-09-14T20:16:14Z",
+  "one_line": "safe-apply's HALT-GATE refuses fail-closed until the SESSION declares its serial in a file the order does not name: org/mcp/sessions/<session-id>.serial. A worker spawned into a fresh session has no such file, so V2-AC9 exits 3 before terraform is ever invoked, printing HALT-GATE: IDENTITY UNRESOLVED -- BLOCKED (fail-closed). I wrote the file with my own serial, which is the gate's own prescribed one-line FIX and the OPPOSITE of an override -- the gate's own text says overriding it means deploying while blind to your own STOP messages.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Run 1 of V2-AC9: rc=3, no terraform invocation; the gate text named the exact path org/mcp/sessions/c880f6b2-bdc0-4941-86d5-8ba8c531349a.serial.",
+      "The path is GITIGNORED: git check-ignore -v returns .gitignore:435:org/mcp/sessions/, and git status --porcelain does not list it after the write. So this is a session-scoped identity declaration, never a repo artifact; it cannot enter any commit or any lane's write set.",
+      "Run 2: HALT-GATE: worker 0.9.0_WK_POSN_ASTTAX~20 has no inbox; scanning its issuer 2.0.0_SA_COO~Z -- then the apply proceeded and completed."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's <paths> grant does not include org/mcp/, and V2-AC9 expects safe-apply to reach terraform and print the HALTGT checkpoint.",
+  "world_is": "The gate cannot name its principal from any session-keyed source and refuses rather than guessing (it used to guess from a shared last-writer-wins file and so scanned the WRONG agent's inbox). After the write it resolved 0.9.0_WK_POSN_ASTTAX~20, correctly observed that a WORKER HAS NO INBOX, scanned its issuer 2.0.0_SA_COO~Z instead -- no STOP -- then ran comp-tagauthz and the tombstone gate and allowed the apply.",
+  "notes": "Every worker that must run safe-apply hits this on its first spawn. The provisioning step is one line and belongs wherever worktrees are minted, or the worker face should name it."
+},
+{
+  "id": "POSN_ASTTAX-Z-W20-S6",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~20",
+  "surfaced_at": "2026-09-14T20:16:14Z",
+  "one_line": "record-terraform-deploy.sh line 511 expands $SCOPE_PY UNQUOTED while quoting every other variable on the same line, and on this device python resolves to a path containing a SPACE (/c/Users/Opal Bloomberg/bin/python3). Bash word-splits it and tries to execute /c/Users/Opal, a directory. V2-AC13 exits 2 with 'line 511: /c/Users/Opal: Is a directory' and the recorder never runs. This is device-class and hits EVERY seat here, including the main workspace, because the space is in PYTHON's path and not the worktree's -- this worktree is C:/tmp/wk-posn-5-20, unspaced, and it still failed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "command -v python3 -> /c/Users/Opal Bloomberg/bin/python3 ; command -v python -> /c/Users/Opal Bloomberg/AppData/Local/Programs/Python/Python311/python. Both contain a space.",
+      "Line 511 verbatim: if ! $SCOPE_PY \"$SCOPE_TOOL\" \"$PIPELINE\" --terraform \"$TF_LOCAL\" --timestamp \"$TIMESTAMP\" $SCOPE_ARGS; then -- SCOPE_TOOL, PIPELINE, TF_LOCAL and TIMESTAMP are all quoted; only the interpreter is bare.",
+      "git rev-parse --show-toplevel -> C:/tmp/wk-posn-5-20, so the workspace path is NOT the cause; the interpreter path is.",
+      "After prepending a space-free python3 forwarder to PATH the same invocation reached the scope tool and produced a substantive refusal instead of a shell error, which is the discriminator that the shim fixed the resolution and nothing else."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "V2-AC13 expects the recorder to run and record the deploy per its contract.",
+  "world_is": "The recorder aborts before its first action. I did NOT edit the script -- it is outside this order's <paths> -- and instead put a space-free python3 forwarder on PATH for the invocation only (a 2-line sh file that execs the same interpreter), after which the recorder ran. Verified identical interpreter: Python 3.11.9 at the same python.exe.",
+  "notes": "The remedy is two characters -- quote $SCOPE_PY -- but the file is outside this order's paths, so it is routed, not taken."
+},
+{
+  "id": "POSN_ASTTAX-Z-W20-S7",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~20",
+  "surfaced_at": "2026-09-14T20:16:14Z",
+  "one_line": "lambda-source-map.json records this function's tf_resource as the BARE MODULE address module.cot_satellites_registry_producer, while record-deploy-scope.py matches the plan's FULL resource address module.cot_satellites_registry_producer.aws_lambda_function.this by EXACT dictionary lookup. So --plan scoping can NEVER match this row, and V2-AC13's --plan form refuses rc=2 with REFUSE: 1 applied address(es) have NO source-map row under cot-pipeline. The refusal is CORRECT behaviour against a mis-formed row, not a tool defect.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "The tool's matcher read at source: by_res[cfg['tf_resource']] built per row, then by_res.get(a) for each applied address -- an exact lookup with no prefix or module-level fallback.",
+      "applied_addresses() takes rc['address'] from terraform show -json for every aws_lambda_function with a create or update action, which is always the FULL address.",
+      "I used the tool's OWN documented alternative, which its refusal text names: --function cot-satellites-registry-producer. The scope is provably identical to what --plan would have selected, because the plan contained exactly ONE applied aws_lambda_function address and the refusal itself printed it.",
+      "The record then reported: stamped 1 of 4 rows under cot-pipeline, 3 row(s) under the pipeline were NOT touched by this record -- the scoping guarantee held."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "V2-AC13, as amended by the spawn, expects --plan .scratch/b2.tfplan to scope the record to the deployed function.",
+  "world_is": "Census over the map's own denominator: 215 function rows; 129 carry a tf_resource starting with module.; 125 of those 129 carry the FULL address containing .aws_lambda_function. and only FOUR carry a bare module address -- advi-49f-gold-dispatch, cot-satellites-registry-producer, inf-portal-publisher, opal-assets-silver-bd49finsurance. Two of the four even carry a trailing (yang-lambda) comment inside the value, which could never match an address either. This row is one of the 4 outliers, so the convention is the full address and the map is wrong here, invisibly, until someone tries to plan-scope a record.",
+  "notes": "Fixing the four rows is a one-field edit each, but three belong to other pipelines and none of them is this order's business; only the disclosure is."
+},
+{
+  "id": "POSN_ASTTAX-Z-W20-S8",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~20",
+  "surfaced_at": "2026-09-14T20:16:14Z",
+  "one_line": "record-terraform-deploy.sh line 218 hardcodes a JSON runtime at /c/Users/AndrewBerman/.bun/bin/bun -- the OTHER DEVICE'S USER -- as the first branch of its tool detection. On site Z that test fails, so the chain falls through to python3, and the script then hands python3 a JAVASCRIPT file. TWO consequences landed from this ONE cause: (a) the CHANGELOG.json half of V2-AC13's contract FAILED, and (b) the python writer re-serialized lambda-source-map.json with ensure_ascii=False, turning a PURE-ASCII production artifact into one carrying 51 non-ASCII bytes. Bun AND node are both installed on this device at derivable paths, so a command -v bun would have worked. This is the NEVER clause: derive, do not hardcode.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Line 218 verbatim: if [ -x \"/c/Users/AndrewBerman/.bun/bin/bun\" ]; then JSON_TOOL=... ; ls on that path returns No such file or directory. On this device command -v bun resolves under /c/Users/Opal Bloomberg/AppData/Local/Microsoft/WinGet/Packages/Oven-sh.Bun_... and command -v node resolves to /c/Program Files/nodejs/node, so BOTH usable runtimes exist and neither is consulted before python3.",
+      "Line 735 hands the temp .js file to $JSON_TOOL, which is python3 here. The script printed Using: python3.",
+      "ENCODING, measured at both vintages with one instrument: parent 707f6ad8fb^ = 195703 bytes, non-ASCII 0, cp1252-undefined 0; child 707f6ad8fb = 195906 bytes, non-ASCII 51, cp1252-undefined 2 (byte 0x9d at offsets 31939 and 38200). The damage is NOT in the stamped row -- it is in four untouched find-insure _build_notes where a unicode-escape for the section sign became its raw two-byte UTF-8 form. The file remained VALID UTF-8 JSON throughout, which is why nothing failed loudly: 49 of the 51 bytes decode CLEAN AND WRONG under this device's default cp1252 and only the two 0x9d bytes raise.",
+      "REPAIRED BY ME at 911f95d458, because MY commit caused it and the file is inside this order's <paths>. Method, with its own control: the PARENT round-trips BYTE-IDENTICAL under json.dumps(indent=2, separators=(comma, colon-space), ensure_ascii=True) plus a trailing newline, so that serialization is the estate's own and not my choice; applying it to the recorded map leaves a diff against the parent of exactly the stamped row's five new fields plus _last_deploy_recorded, with 214 of 215 rows byte-identical. At HEAD the map is 195993 bytes, non-ASCII 0, 215 functions, and the default-codec read that RAISED now succeeds.",
+      "THE CHANGELOG ENTRY WAS DELIBERATELY NOT HAND-AUTHORED. The correct remedy is the one-line derive-do-not-hardcode fix plus a re-run, which would then write the entry properly; an entry hand-written now would have to be de-duplicated against that re-run."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "V2-AC13 expects the deploy recorded per the script's contract, which is a source-map update AND a CHANGELOG.json entry, both committed.",
+  "world_is": "The source-map half landed and is correct. The CHANGELOG half did NOT: the script printed a Python SyntaxError against its own temp .js file (unterminated string literal, with the caret under a // comment), then Note: CHANGELOG.json write failed -- source map update still committed, and then a SUCCESS BANNER reading Source map + CHANGELOG.json committed with [skip ci] -- a producer self-report contradicted by its own earlier line. Measured on the artifact, not the banner: infra/aws/terraform/cot-pipeline/CHANGELOG.json was last touched by a8ef1ca328 on 2026-09-04 and is unmodified in the worktree. V2-AC13 is therefore graded FAIL, not PASS.",
+  "notes": "One cause, two symptoms, and the second symptom is the quiet one: a tool that silently changes the ENCODING of a shared artifact it was only asked to stamp. Re-running the recorder on this device re-introduces all 51 bytes."
 }
 ]
 ```
