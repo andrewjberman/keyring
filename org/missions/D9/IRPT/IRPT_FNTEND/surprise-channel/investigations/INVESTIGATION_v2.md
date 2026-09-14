@@ -3954,6 +3954,28 @@
     "spec_asserts": "W3-S27, W3-S28 and W5-S5 each name 2.0.0_SA_COO~F as disarm owner, as BLOCKING refusals of the whole-suite census under the grant as cut.",
     "world_is": "All three are closed in the drained code. F39-AC9's suite, run on FE-s-39's own branch, read 532/14/0. NOT closed here: row S64, a checkout line-ending defect in F41-AC4 found by the same integrated re-run. It is ARMED and owned by this seat.",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W5-S7",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~5",
+    "surfaced_at": "2026-09-14T18:53:00Z",
+    "one_line": "F41-AC5 says it reads the COMMITTED frozen map, but its test reads the five frozen-map descendants AS CHECKED OUT (loadJson of the working copy). This is the same gap between the working copy and the committed object that row S64 found in F41-AC4, on a second criterion. JSON.parse ignores line endings, so a CRLF checkout cannot turn it red. An UNCOMMITTED in-place edit of those maps is read as if it were committed. Amendment 2 scoped the fix to F41-AC4 and its CONTROL, so AC5 was left as it is.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-41 F41-AC5: 'W2-S27, read from the committed frozen map and from each Holdings map generated from it.' AMENDMENT 2 (on row S64): 'F41-AC4 and its CONTROL compare against the COMMITTED bytes, whatever the checkout's line endings.' AC5 is not named.",
+    "world_is": "__tests__/fe-s-41/one-writer.test.ts reads every map in FROZEN_MAPS with loadJson(`${SMOKE}${name}`), i.e. readFileSync of the working copy (:71-73, called at :600 @portal 87f83b86; unchanged by this run's commit, which touches F41-AC4 and its CONTROL only). On this worktree all 5 paths read i/lf w/crlf and git status reports none of them modified, so the working copy parses equal to the committed blob and AC5's verdict (rev-49f-000091, 5 of 5) is also the committed maps' verdict. The path where the two differ is a map rewritten in place and not yet committed. The generators write in place by default, and the order tells a worker to run gen-fixtures.ts and commit what it writes. On that path AC5 grades the uncommitted bytes. Left as found: widening the fix to AC5 is outside Amendment 2.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-41/one-writer.test.ts @portal 87f83b86: loadJson = JSON.parse(readFileSync(path, 'utf8')) at :71-73; the AC5 BOUND test maps FROZEN_MAPS through loadJson(`${SMOKE}${name}`) at :600; SMOKE is fixtures/smoke/ of the checkout (:50).",
+        "git -C portal ls-files --eol over fixtures/smoke/ and __tests__/fe-s-32/holdings-no-answer.json on this worktree: every map reads i/lf w/crlf, the five FROZEN_MAPS among them; core.autocrlf=true; portal/.gitattributes absent.",
+        "git -C portal status --short before and after this run's whole suite: only fe-s-41/one-writer.test.ts and fe-s-41/ambient-shims.d.ts modified; no map modified.",
+        "IRPT_FNTEND.TO-FE-s-41 AMENDMENT 2 (workspace 78b011df6a): the fix is scoped to 'F41-AC4 and its CONTROL'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
