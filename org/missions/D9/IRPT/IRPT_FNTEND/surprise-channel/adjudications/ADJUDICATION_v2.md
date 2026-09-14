@@ -1295,6 +1295,31 @@ Accumulating CVO review as round-two evidence arrives. This is NOT an L10 slug a
     "disposition": "DISMISSED_WITH_REASON",
     "dismissal_reason": "The conditions C-S56 and C-S67 named are met as written, so neither stays open as its own hazard. What they protected is not yet safe: limbs 2 and 3 can be moved to LEGACY by the graded party, and that hazard is carried ARMED on S61 under 1.0.0_SA_CTO (C-S84) rather than left on these two rows.",
     "hazard_standing": "INERT"
+  },
+  {
+    "id": "IRPT_FNTEND-C-S86",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-14T12:16:37Z",
+    "one_line": "W4-S9 REMEDIATED: CLAUDE.md Rule 27's L4-R clause now quotes to-pipeline-gate.py's _newly_added docstring as the source reads it (law edit 727c4e7c2b), so W4-S9's latest disposition moves from C-S84's GRADUATED to this row. C-S84 stands for S61, W4-S11 and W4-S12.",
+    "class": "OBSERVATION",
+    "spec_asserts": "C-S84 (d50d0e6d87): CLAUDE.md:42 quotes 'A modification (M) does not: this gate never refuses an existing TO' while .tools/to-pipeline-gate.py:1706 reads 'A modification (M) does not: no limb that reads THIS set refuses an existing TO'.",
+    "world_is": "At 727c4e7c2b (1.0.0_SA_CTO, law(CLAUDE.md Rule 27), broadcast 96589), CLAUDE.md:42 reads '... A modification (M) does not: no limb that reads' and continues with 'THIS set refuses an existing TO.' -- the same sentence as .tools/to-pipeline-gate.py:1706. The clause now cites the docstring at :1702-1710 @942e4ff992 and names GATE (viii) as its one exception. Read at HEAD by this seat with a line search of both files; no rule changed (96589).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CLAUDE.md:42 @727c4e7c2b",
+        ".tools/to-pipeline-gate.py:1706 @727c4e7c2b",
+        "msg 96589 (the law edit's same-turn broadcast)"
+      ]
+    },
+    "adjudicates": [
+      "IRPT_FNTEND-W4-S9"
+    ],
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Remediated at 727c4e7c2b: the law quotes its source verbatim again, and the two lines were read equal at HEAD. Nothing else in C-S84 moves: S61 stays ARMED under 1.0.0_SA_CTO, and W4-S11 and W4-S12 stay GRADUATED.",
+    "hazard_standing": "INERT"
   }
 ]
 ```
