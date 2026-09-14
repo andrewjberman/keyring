@@ -1,12 +1,11 @@
 {
   "prd": "NFRA_OPLGTW_PRD.md",
-  "prd_version": "v0.1",
-  "prd_pin": "2af252cb3961c0c7d9529af3d6f5e754faff4c43",
+  "prd_version": "v0.2",
+  "prd_pin": "059526828b2d0393c181b1294f64bb6e5205333f",
   "half": "brief",
-  "half_hash": "999a3219dcea83c1a5a2119d069868c1025a000f504c28e938913e44962450b7",
-  "verdict": "REFUSED",
-  "review_ref": "docs/briefs/sources/NFRA_OPLGTW_L4_BRIEF_REVIEW_v0_1_20260914.md@51c7fc7f51b69a711118770077e1f8ec93f303fb",
+  "half_hash": "04461a4925dc40dcbe06c85962f6cd200dd819bacdf1a6c2251885281c798dc1",
+  "verdict": "SIGNED",
+  "review_ref": "docs/briefs/sources/NFRA_OPLGTW_L4_BRIEF_REVIEW_v0_2_20260914.md@afb7d65af443e8f9a50ad75fbacbbcd492e0254a",
   "signed_by": "4.0.0_SA_CRO",
-  "signed_at": "2026-09-14T20:02:44Z",
-  "reason": "R1 SPEC network checks and 60s ALB idle absent (v0.1:239); R2 A6/A16/A19/A20 narrow SPEC items 6/16/19/20; R3 retention and bucket-settings disclosures absent (v0.1:235,241)"
+  "signed_at": "2026-09-14T20:15:08Z"
 }
