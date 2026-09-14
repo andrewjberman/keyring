@@ -4,7 +4,8 @@
 **On:** Andrew-direct ~16:5xZ, record `ANDREW_DIRECT_20260914_165xZ_SITEZ_POSN_ASTTAX_ONLY_BREAKDOWN_BEFORE_WORKERS.md` @`f529179076`
 **Built from:** `4.0.0_SA_CRO~Z` brief v0.1 @`ee4b7e5539` (+ row `Z-S65`); round-4 packet `ledger/ROUND4_PACKET.md`;
 worker results U1 (`~15`), U3 (`~16`), U4 (`~17`); PRD v0.6 @`ded02d9a9c`; portal pin `e85f6eb84f`.
-**Status:** PROPOSAL. Nothing here is cut, signed, deployed or ruled. Andrew's gate: no worker until he aligns.
+**Status:** PROPOSAL **v0.2** -- folds `4.0.0_SA_CRO~Z`'s four flags N1-N4 (msg 22839; brief v0.2 @`f846dd72da` s.8).
+Nothing here is cut, signed, deployed or ruled. Andrew's gate: no worker until he aligns.
 
 ---
 
@@ -40,14 +41,14 @@ labelled from ETFClassifier. One existing producer extended, one adapter changed
 
 | cell | what | where | depends on |
 |---|---|---|---|
-| **B1** | Deploy the already-committed hardened positioning generator (running bytes are 2026-08-18 and crash on a retag); set the three new classes' benchmark rows to an explicit, labelled zero | `yang-generate-positioning` (+ `BENCHMARK_ALLOCATIONS` in `yang-generate-allocation-summary`); never-widen halves CTO+COO with the writer census printed | -- |
-| **B2** | Satellite holdings: emit `holdings.json` beside `registry.json` -- per satellite, BD components summed by ticker, `weight` / `weight_models_blend` / `overlay`, class labels from ETFClassifier | `cot-satellites-registry-producer`, `s3://opal-data-cot/platinum/satellites/`; deploy | -- |
+| **B1** | Deploy the already-committed hardened positioning generator (running bytes are 2026-08-18 and crash on a retag); set the three new classes' benchmark rows to an explicit, labelled zero | TWO functions, TWO served artifacts: `yang-generate-positioning` (the deploy Andrew approved 2026-09-13) **and** `yang-generate-allocation-summary` `BENCHMARK_ALLOCATIONS` (NEW code; N1). ONE never-widen sign-off (CTO+COO) that names both functions and both artifacts, writer census printed | -- |
+| **B2** | Satellite holdings: emit `holdings.json` beside `registry.json` -- per satellite, BD components summed by ticker, the per-sleeve breakdown, class labels from ETFClassifier. BD facts + labels only; the Yang comparison is NOT computed here (N2) | `cot-satellites-registry-producer` + its IAM in `infra/aws/terraform/cot-pipeline/satellites-registry-producer.tf` (a second pinned PutObject key and a DynamoDB read on `etf-classifications`; N2); deploy | -- |
 | **B3** | Seeder guard: apply the round-4 preserve-don't-clobber patch (+57/-2, `git apply --check` rc=0) so a re-seed cannot revert the retag (measured: it reverts 4 of 4) | `data/black_diamond/scripts/classification/seed_canonical_securities.py` (lane POD4) | -- |
 | **F1** | Colour registry: add `structured` (pink) and `commodities` (a NEW gold token); fix `'Commodities'` currently a shade of equity blue (`:308`) | `portal/src/lib/chartColors.ts` | -- |
 | **F2** | Positioning renders five classes: order literal `HoldingsTab.tsx:1392`, colour map `:215`, drop the Hedge->Equity fold `:1381-1383`; one row per class `PositioningSummary.tsx:545-546`; allocation type widened to five keys | `portal/src/pages/Positioning/` | F1 token name fixed in the order |
-| **F3** | Satellites mode reads B2's `holdings.json`; Models and ETFs modes untouched | `portal/src/pages/Positioning/shared/satelliteAdapter.ts` (+ endpoint) | B2 schema fixed in the order |
+| **F3** | Satellites mode reads B2's `holdings.json` and computes `weight_models_blend` / `overlay` against the models payload it already holds (N2); per-ticker fee/yield/duration/beta/returns from the models payload's `current_holdings` where a Yang book holds the ticker, NULL otherwise, book-level blends kept as the fallback (R4, N3); the satellite's as-of becomes `holdings.json`'s BD date (N3). Models and ETFs modes untouched | `portal/src/pages/Positioning/shared/satelliteAdapter.ts` (+ endpoint) | B2 schema fixed in the order |
 | **F4** | No-regression guard, Attribution page: the same two-class literal in three files, extended to five -- ONLY so the retag does not silently drop rows there (card 2) | `SelectionTab.tsx:321`, `AssetAllocationSummary.tsx:92`, `StylePolicyComparison.tsx:156` | card 2 |
-| **R1** | THE RETAG, last: the 12 tickers in BOTH stores (DynamoDB `etf-classifications` + `ETF_CLASSIFICATIONS`), VNQ `management_style` fixed; then the bar on the local build over all 9 satellites and both other modes: served label right, weight unchanged, served rows = rendered rows, class subtotals = total; plus one boundary flip (PDBC) proving FWD-5 with no portal edit | both stores; local build | B1 deployed, B3 landed, F1-F3 built |
+| **R1** | THE RETAG, last: the 12 tickers in BOTH stores (DynamoDB `etf-classifications` + `ETF_CLASSIFICATIONS`), VNQ `management_style` fixed; then the bar on the local build over all 9 satellites and both other modes: served label right, weight unchanged, served rows = rendered rows, class subtotals = total. **FWD-5 is graded on the retag itself** -- twelve rows changed in the one place, every Positioning mode reflecting it with no portal edit; no extra PDBC flip, because PDBC is itself a membership call (N4) | both stores; local build | B1 deployed, B3 landed, F1-F3 built |
 
 **Sequencing:** B1, B2, B3, F1, F4 run in parallel; F2 and F3 in parallel once their order fixes the token name and
 the `holdings.json` schema up front; **R1 strictly last** -- a retag into a two-class page hides the row while its
@@ -79,7 +80,8 @@ Structured -- VXX, VIXY, UVXY, QBER; Alternatives -- VNQ. BIPC stays Equity.
 3. **Retag set = the 12 above; BIPC stays Equity.** **REC: yes.**
 4. **Gold colour:** no gold token exists and amber already means Cash. **REC: mint a new gold token.**
 5. **Benchmark rows for Structured / Commodities / Alternatives:** today a 10% position reads as a 10% bet against
-   an implicit zero. **REC: explicit zero, labelled "no benchmark".**
+   an implicit zero. **REC: explicit zero, labelled "no benchmark".** A yes also widens your 2026-09-13 deploy approval
+   from one function to two (`yang-generate-allocation-summary` gets new code), under one sign-off naming both.
 6. **Cut from this close-out:** reconciling the dormant `is_hedge()` helper (no live caller) and reconciling the
    second classification table `bd-securities` (9,631 rows, disagrees on 13 of 13 retag tickers). Keep only B3,
    which stops that seeder undoing the retag. **REC: yes** -- neither changes what the Positioning page shows.
