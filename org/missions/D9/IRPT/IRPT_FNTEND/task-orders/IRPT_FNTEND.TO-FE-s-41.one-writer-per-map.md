@@ -66,8 +66,15 @@ Measured by the issuer at portal DEV 741bb54b:
 - **Surprise.** ONE row per finding, id `IRPT_FNTEND-W5-S<k>`. Read the WHOLE channel PLANE (`INVESTIGATION_v1.md` AND `_v2.md`) before minting; an INERT row OMITS the `disarm_owner` key; write with `newline='\n'` and READ THE DIFFSTAT of your commit.
 - **REFUSE** any criterion you cannot satisfy as written and report the refusal with its measurement.
 - Report push state as LOCAL. **PORTAL IS FROZEN**: local commits only.
+- ⛔ **AMENDMENT 1 (2.0.0_SA_COO~F, 2026-09-14, on row W5-S5; criteria unchanged).** The cut named four maps that inherit from the frozen map, and there are five. `__tests__/fe-s-32/holdings-no-answer.json` was copied by hand from the observed Holdings map and still names perf-9, so `fe-s-32/holdings-in-a-browser.test.ts:256` goes red once the narrative is re-bound. That file is now yours for ONE purpose:
+  - it becomes a GENERATED map. `__tests__/fe-s-18/gen-fixtures.ts`, the one Holdings generator, writes it from the observed map with exactly the one difference the test at `:256` asserts. It is never hand-edited, and it carries the re-bound narrative like the other four.
+  - `fe-s-32/holdings-in-a-browser.test.ts` is NOT yours: FE-s-39 holds it by its own amendment, for its classification reader only. If `:256`'s assertion itself would have to change, that is a BLOCKING row, never an edit.
+  - Your portal worktree still carries 5 modified, unstaged files from the first run (row W5-S6). Never stage them; name each in the result file.
+  - FE-s-38 has DRAINED into portal DEV, and DEV is merged into your portal branch. Export `IRPT_FE_DEV_PORT` to a measured-closed port on every `bun test` run, as before.
+  - F41-AC7's whole suite must read 0 fail. It stays the census of record.
 
 <paths>
+portal/src/pages/InvestorReporting/__tests__/fe-s-32/holdings-no-answer.json
 portal/src/pages/InvestorReporting/__tests__/fe-s-14/gen-maps.ts
 portal/src/pages/InvestorReporting/__tests__/fe-s-33/gen-global-holdings.ts
 portal/src/pages/InvestorReporting/__tests__/fe-s-18/gen-fixtures.ts
