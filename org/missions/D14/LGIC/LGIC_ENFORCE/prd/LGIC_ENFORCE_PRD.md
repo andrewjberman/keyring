@@ -5,7 +5,7 @@
  "project": "LGIC_ENFORCE",
  "directive": "D14",
  "fabric": "laptop",
- "prd_version": "v1.0",
+ "prd_version": "v1.1",
  "step": 4,
  "brief_ref": "docs/briefs/d14-executable-layer-brief-20260913.md@fc2a1ba75f",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7"],
@@ -39,6 +39,25 @@
 - Three `(s.N)` pointers into the endpoint file's findings, which this PRD does not carry.
 
 The precedent is `3.0.0_SA_CVO`'s revised correction 1 on LGIC_NAMING v1.2.
+
+**v1.1 (2026-09-14) answers both v1.0 refusals.**
+
+The brief half, refused by `4.0.0_SA_CRO` (review `docs/briefs/sources/LGIC_ENFORCE_L4_BRIEF_REVIEW_20260914.md`
+@`a536283f71`, stamp @`298b956315`):
+- **R1** carries the brief's firm/product-token and general resource-name inputs into DEC-6, E7 and E11, with the rule
+  that separates a builder or registry input from a hand-kept carrier.
+- **R2** gives `systems.json` its row fields (DEC-1, E2).
+- **R3** binds E5's probes to scope identities, with the system family held constant (DEC-4, E5).
+
+The ratified-text half, refused by `3.0.0_SA_CVO` (review
+`org/tier1_exec/3.0.0_SA_CVO/deliverables/PRD_REVIEW_LGIC_ENFORCE_v1.0_RATIFIED_TEXT_HALF_20260914.md` @`06985bd8c0`,
+stamp @`bbfa9a28c8`):
+- **R1** puts Andrew's three fence conditions in the CONTRACTS fence row, which a grader of FWD-2 reads.
+- **R2** gives one answer for `key()`: it returns exactly the ruled key string, and `address()` composes the full
+  address (CONTRACTS rows 4 and `lib/opal_naming.py`, DEC-2, E3).
+- **N1** names the deny patterns among the schema's consumers (CONTRACTS row 1).
+
+The ENDPOINT section is unchanged. Both halves are owed again.
 
 ## ENDPOINT (step 2, /endpoint --forward)
 
@@ -126,13 +145,13 @@ The precedent is `3.0.0_SA_CVO`'s revised correction 1 on LGIC_NAMING v1.2.
 
 | contract | direction | shape | consumer / producer |
 |---|---|---|---|
-| `org/standards/NAMING_SCHEMA.json` | **consumed** | the closed enumerations: the key grammar, container and leaf; bucket forms; resource grammar and last-slot rule; `kind.by_type` and `types_not_graded_by_kind`; cadences; secret, log-group and policy forms; `firm_forms`; `refused_tokens`; system classes; the grade signature and its three verdicts | produced by `LGIC_NAMING` (v1.2, admitted). `key()`, `name()`, `grade()` and the generator read it at run time and never copy it, so an enumeration has one owner |
+| `org/standards/NAMING_SCHEMA.json` | **consumed** | the closed enumerations: the key grammar, container and leaf; bucket forms; resource grammar and last-slot rule; `kind.by_type` and `types_not_graded_by_kind`; cadences; secret, log-group and policy forms; `firm_forms`; `refused_tokens`; system classes; the grade signature and its three verdicts | produced by `LGIC_NAMING` (v1.2, admitted). `key()`, `address()`, `name()`, `grade()` and the generator read it at run time and never copy it, so an enumeration has one owner. The generator derives the registry-derived deny patterns from it: the fence patterns row below |
 | the grading rule, `(name, type) -> (verdict, canonical_form)` | **consumed and EXECUTED** | three verdicts, CONFORMANT / ALIAS / OUT-OF-PATTERN, and no fourth. An unplaceable name or an unresolved token RAISES | produced by `LGIC_NAMING` as a written, hand-applied rule (its cell N2). This project's `grade()` is its machine. A disagreement between them on any of N2's worked cases is a defect in one of the two, graded against N2 |
 | the identity registry's ROWS | **produced** | `infra/logic/registry/*.json` (DEC-1): systems, scopes with their long and short forms and aliases, the tier home rule, exemptions, remediations. Their shape is the schema's; this project mints the rows | consumed by the builders, the generated views, the fence and the flagger. Seeded from `infra/logic/05_IDENTITY_SPINE.md`, which stays the human-readable view |
-| the source-first key string | **consumed** (ruled) | `{source}/{scope}/{tier}/{table}/{partition}`, verbatim. The bucket is the key's CONTAINER and never a segment of it, and `{object}` is the LEAF under `{partition}` | ruled by Andrew ~03:2xZ. `key()` produces exactly it. The first callers are `ADVI_FIRMBKTS` and `MDPF_CANON` |
-| `lib/opal_naming.py` | **produced** | `key(source, scope, tier, table, partition)` returns a full address, with the bucket taken from the tier home rule and the scope's tenancy, never from an argument. `name(system, scope, function, kind, qualifier=None)` takes the LONG scope and emits the SHORT form (S4); `scope=None` is a shared resource (S5). `grade(name, type)`. The standard library only | producers (pipelines), the Terraform module (through a shared vector file), the flagger, census mode |
+| the source-first key string | **consumed** (ruled) | `{source}/{scope}/{tier}/{table}/{partition}`, verbatim. The bucket is the key's CONTAINER and never a segment of it, and `{object}` is the LEAF under `{partition}` | ruled by Andrew ~03:2xZ. `key()` returns exactly it and nothing more, and `address()` composes the full address around it. The first callers are `ADVI_FIRMBKTS` and `MDPF_CANON` |
+| `lib/opal_naming.py` | **produced** | `key(source, scope, tier, table, partition)` returns exactly the ruled key string, `{source}/{scope}/{tier}/{table}/{partition}`. `address(source, scope, tier, table, partition, object=None)` returns `s3://{bucket}/{key}`, with the object as its leaf and the bucket taken from the tier home rule and the scope's tenancy, never from an argument. `name(system, scope, function, kind, qualifier=None)` takes the LONG scope and emits the SHORT form (S4); `scope=None` is a shared resource (S5). `grade(name, type)`. The standard library only | producers (pipelines), the Terraform module (through a shared vector file), the flagger, census mode |
 | the generated views | **produced** | one file per carrier at the carrier's existing path, headed GENERATED with its registry hash. The first generation is byte-equivalent in what it exports | the edge router, the IRPT scripts, the IR authz loader, the perfrp pin and the precommit's cross-firm lists (DEC-5) |
-| the fence patterns | **produced** | per firm bucket, the registry-derived allow set of DEC-4 | `infra/aws/terraform/shared-infra/s3-49financial.tf`, the template; and every bucket minted from it by `ADVI_FIRMBKTS` |
+| the fence patterns | **produced** | per firm bucket, a Deny on every principal except two kinds: principals whose name carries that firm in its scope slot, and the principals the registry's exemption list names for that bucket. A principal whose name carries no firm is therefore denied unless it is named. The Deny lands only after every principal that reads or writes the bucket today holds a firm-scoped identity or a named exemption, under the never-widen sign-off. The exemption list, service principals included, is generated from the registry and never typed | `infra/aws/terraform/shared-infra/s3-49financial.tf`, the template; and every bucket minted from it by `ADVI_FIRMBKTS` |
 | the flagger's verdict line and kill switch | **produced** | `NAMING <verdict> <file>:<line> <string> -> <canonical>`. `org/mcp/naming-gate.enforce`: present means enforce, absent means warn only. Every verdict is logged | every committing seat, through `safe-commit`; every applying seat, through `safe-apply` |
 | the census report | **produced** | ranked rows of (current, canonical, verdict, type, plane), with denominators | the remediation projects minted under ruling (a): D8 for keys, D12 for infrastructure |
 
@@ -145,6 +164,12 @@ The one change of direction is intended: the registry rows are consumed there an
   standard library in the commit gate, the Lambda runtime and the edge build, with no dependency. Bare python on this
   shell has no PyYAML, and that is how a gate fails at import.
   - The files are `systems.json`, `scopes.json`, `tiers.json`, `exemptions.json` and `remediations.json`:
+    - `systems.json` rows: `key`; `class`, one of the schema's ratified `system.classes` (`PRODUCT`,
+      `PLATFORM_SUBSYSTEM`, `VENDOR`), which are the brief's product, platform and vendor; `long`; `short`, present only
+      where the system has a sanctioned short form; and `owner_directive`, the D-code of the directive that owns the
+      system, which must resolve in `org/missions/DIRECTIVES.yaml`. A row whose key `system.never_a_system` excludes (a
+      firm, a project code, a workstream code, a cadence, a generic noun) is refused, and `opal` is never a row
+      (`system.reserved`).
     - `scopes.json` rows: key, class, long, short, tenancy, bucket, aliases.
     - `tiers.json`: tier to home rule per tenancy (R4-R7, R16, R21).
     - `exemptions.json`: per firm bucket, each exempt principal with its reason and sign-off reference.
@@ -152,7 +177,9 @@ The one change of direction is intended: the registry rows are consumed there an
   - **There is no kinds file.** Kinds and cadences are closed enumerations owned by `NAMING_SCHEMA.json`, and a copy
     here would be a second carrier.
 - **DEC-2 The builders.** `lib/opal_naming.py`, standard library only.
-  - `key()` has no bucket parameter, so the per-firm fork the brief's O1 describes cannot be written.
+  - `key()` returns exactly the ruled key string. `address()` composes the full address, taking the bucket from the
+    tier home rule and the scope's tenancy. Neither has a bucket parameter, so the per-firm fork the brief's O1
+    describes cannot be written.
   - `name()` raises on a refused token and omits the scope slot when `scope=None`.
   - `grade()` implements the written rule exactly.
   - `generate` writes the views, and `census` is DEC-7.
@@ -185,6 +212,15 @@ The one change of direction is intended: the registry rows are consumed there an
   - Route (a) of 2026-09-12, a carve-out for one principal, stays closed.
   - The four legacy patterns leave the template only when the derived set covers them.
   - **It is proved by REAL probes, never by `simulate-principal-policy`, which does not evaluate a resource policy.**
+  - **The probes bind each arm to a SCOPE identity, with the system family held constant** (`4.0.0_SA_CRO` R3).
+    - The regression the brief's Part V names is a scoped MDPF role, `mdpf-{scope}-runner-role`, which the old
+      system-prefix list denies on every firm. A proof that tests only "an allowed 49financial principal" and "a denied
+      mdpf principal" can pass while that regression stands.
+    - Measured: 10 of 10 live MDPF roles carry no scope token (`comp-find --corpus aws`, `IAM_ROLE`, 240 nodes,
+      vintage 2026-09-14 05:29:53 UTC). So no scoped MDPF principal exists to probe with.
+    - E5 therefore mints its probe principals, named by `name()`, under the same ledger entry: `mdpf-49f-fenceprobe-role`,
+      `mdpf-cot-fenceprobe-role`, and an unscoped `mdpf-fenceprobe-role`. Each can read only the probed bucket, and
+      exactly those three are removed at the entry's close.
 - **DEC-5 The carriers become generated views.** Measured at HEAD @`3f3b5337a1`, `comp-find` returned 5 definitions
   across 14,242 files:
   - `data/firm_registry.json`
@@ -218,10 +254,29 @@ The one change of direction is intended: the registry rows are consumed there an
   | a hand edit to a generated file | -- | REFUSE: its bytes must equal the generator's output |
   | any | RAISE | printed as a rule or registry defect, never as a verdict, and refused like any refusal once enforcing |
 
-  - **Inputs:**
+  - **Inputs, over graded code and config files** (Python, JavaScript, Terraform, JSON, YAML):
     - S3 key and bucket literals
-    - the resource-name attributes of changed `.tf` files, including those the Terraform-label census names
+    - resource-name literals: the resource-name attributes of changed `.tf` files, including those the Terraform-label
+      census names; and a string literal in any graded file that the schema's resource grammar places as a name
     - secret paths
+    - **firm and product tokens** (the brief's O4). This is a string literal whose whole value, or a whole segment of it
+      delimited by `-`, `_`, `/` or `.`, is a registry scope's long form, short form or alias, or a product system's key.
+      Only whole segments count, never substrings: `inf` inside `info` is not a token. The `\b`-blind regex is the
+      measured failure.
+  - **THE CONTEXT RULE: a permitted input, or a hand-kept carrier.** A firm or product token is PERMITTED in four
+    places:
+    - (a) the registry files themselves;
+    - (b) a generated file, which is graded by byte-equality instead;
+    - (c) an argument to a builder or a registry lookup. In Python, that is a literal passed to `key()`, `address()`,
+      `name()` or the registry's lookup, read from the syntax tree. In Terraform, it is an argument to the `opal_name` module;
+    - (d) the exclusions below.
+
+    **Anywhere else it is a HAND-KEPT CARRIER**: a dict key or value, a list member, a constant, a comparison, or a map
+    in a config file. Each of these is a second copy of a registry row.
+    - A NEW hand-kept carrier is REFUSED, with the registry lookup that replaces it printed.
+    - An EXISTING one WARNs and is counted as a carrier (E1, E6). Repointing that consumer is `ADVI_FIRMBKTS`'s job.
+
+    This is the brief's O4 requirement, not a ban on every string: a token passed into a builder mints nothing by hand.
   - **NOT graded:** prose, comments, and fixtures under `*/tests/*`, because a test must be able to hold a known-bad
     string as its positive control.
   - **The printed canonical fills every slot the grader can resolve, and names the slot it cannot.** For
@@ -257,8 +312,8 @@ The one change of direction is intended: the registry rows are consumed there an
   - tags
   - Terraform labels, before the label census is read
 
-  **The one applied-plane act is DEC-4's bucket policy,** which Andrew ruled (the brief itself builds nothing on the
-  applied plane).
+  **The applied-plane acts are DEC-4's bucket policy and E5's three transient probe roles.** The probe roles are the
+  proof the fence's ruling requires. The brief itself builds nothing on the applied plane.
 - **DEC-12 The D12 placement question** (the brief's Part II, `0.0.0_AB_MSTR` 96338) is carried, not resolved. The
   first census flag with a D12 destination inherits it, at that member's L3.
 
@@ -291,16 +346,16 @@ One row per candidate cell. The decomposition at L5 is the COO lane's, and it ma
 | cell | serves | brief sections consumed | contracts consumed (C) / produced (P) | paths: reuse | paths: new home | fixtures / evidence | acceptance clause draft |
 |---|---|---|---|---|---|---|---|
 | E1 the carrier census and the fence-writer census | FWD-3, FWD-2 (DEC-4 ii) | IV.1; IV.2; Part VII bullet 3 | C `NAMING_SCHEMA.json` | `comp-find` over the corpus; CloudTrail data events on opal-data-bd, -inf, -cot and -49financial | `org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/CARRIER_CENSUS.md`, `FENCE_WRITER_CENSUS.md` | an unscoped read of every firm long and short form and legacy bucket name, with the denominator; every principal seen on each firm bucket, with its evidence line and scope token or `none` | every carrier the unscoped read finds is listed or excluded with a reason; every principal seen on a firm bucket is listed with its token |
-| E2 the registry rows and the generator | FWD-3, FWD-7 | IV.7; IV.8 | P the registry rows | `infra/logic/05_IDENTITY_SPINE.md` | `infra/logic/registry/*.json`; `lib/opal_naming.py` (`generate`) | the files parse; every scope row carries long, short, tenancy and bucket; `bd` appears only as an alias or a refused token | the generator reproduces each E1 carrier's exported content byte for byte |
-| E3 the builders | FWD-1, FWD-2, FWD-4, FWD-5 | O1; O2; IV.3 | C `NAMING_SCHEMA.json`, the grading rule; P `lib/opal_naming.py` | -- | `lib/opal_naming.py`, `lib/tests/test_opal_naming.py` | IV.3's controls: `cot-bd-session-daily-et` OUT-OF-PATTERN; `blackdiamond/49f/credentials` CONFORMANT; `CloudWatchLogs` OUT-OF-PATTERN; `opal-data-inf/silver/x` OUT-OF-PATTERN with `{source}` named as unfilled. A test a `\b`-style regex would fail. N2's worked cases once they exist | every control yields its stated verdict; `key()` has no bucket parameter; `name("mdpf", "cottonwood", "publisher", "role")` returns `mdpf-cot-publisher-role` |
+| E2 the registry rows and the generator | FWD-3, FWD-7 | IV.7; IV.8 | P the registry rows | `infra/logic/05_IDENTITY_SPINE.md` | `infra/logic/registry/*.json`; `lib/opal_naming.py` (`generate`) | the files parse. Every systems row carries `key`, a `class` from the ratified vocabulary, `long` and an `owner_directive` that resolves, with `short` only where sanctioned; no systems row is a firm, a project code, a workstream code, a cadence or a generic noun. Every scope row carries long, short, tenancy and bucket. `bd` appears only as an alias or a refused token | the generator reproduces each E1 carrier's exported content byte for byte; the validator refuses a planted systems row missing `owner_directive`, and a planted systems row whose key is a firm |
+| E3 the builders | FWD-1, FWD-2, FWD-4, FWD-5 | O1; O2; IV.3 | C `NAMING_SCHEMA.json`, the grading rule; P `lib/opal_naming.py` | -- | `lib/opal_naming.py`, `lib/tests/test_opal_naming.py` | IV.3's controls: `cot-bd-session-daily-et` OUT-OF-PATTERN; `blackdiamond/49f/credentials` CONFORMANT; `CloudWatchLogs` OUT-OF-PATTERN; `opal-data-inf/silver/x` OUT-OF-PATTERN with `{source}` named as unfilled. A test a `\b`-style regex would fail. N2's worked cases once they exist | every control yields its stated verdict. `key("orion", "inflection", "bronze", "positions", "date=2026-09-13")` returns exactly `orion/inflection/bronze/positions/date=2026-09-13`, and `address()` over the same arguments returns it under `s3://opal-data-assets/`; neither has a bucket parameter; `name("mdpf", "cottonwood", "publisher", "role")` returns `mdpf-cot-publisher-role` |
 | E4 the Terraform module | FWD-2 | O2 | C the registry; P the module | -- | `infra/aws/terraform/modules/opal_name/` | the vector file from E3's builder; the module's outputs over the same vectors | every vector matches; the module has no `external` data source |
-| E5 the fence | FWD-2; the sequence's manual gate on `ADVI_FIRMBKTS` | Part V bullet 1 | C `exemptions.json`, E1's writer census; P the fence patterns | `infra/aws/terraform/shared-infra/s3-49financial.tf` | -- | a change-management ledger entry opened at start; never-widen sign-off (CTO and COO); a plan showing only the policy change; four real probe arms | an allowed 49financial principal reads the bucket; a cot, inf or mdpf principal is denied; an unscoped principal not exempted is denied; an exempted one is allowed; the prior policy is kept for rollback |
+| E5 the fence | FWD-2; the sequence's manual gate on `ADVI_FIRMBKTS` | Part V bullet 1 | C `exemptions.json`, E1's writer census; P the fence patterns | `infra/aws/terraform/shared-infra/s3-49financial.tf` | -- | a change-management ledger entry opened at start; never-widen sign-off (CTO and COO); a plan showing only the policy change and the three probe roles; the scope-bound probe arms | on opal-data-49financial, with the system family held constant: `mdpf-49f-fenceprobe-role` reads the bucket, and `mdpf-cot-fenceprobe-role` is denied. The unscoped, non-exempt `mdpf-fenceprobe-role` is denied, and a principal `exemptions.json` names is allowed. Every principal in E1's writer census holds a scope token or an exemption before the apply. The never-widen sign-off and the prior policy, for rollback, are on the ledger entry, and the three probe roles are removed at its close |
 | E6 the generated views | FWD-3 | O3; IV.1; IV.7 | C the registry; P the views | the six carrier paths and the two precommit lists (DEC-5) | -- | DELTA=0 per view (exports identical before and after); each consumer's existing tests | every view is byte-equivalent in its exports; a hand edit to one is refused by E7 |
-| E7 the commit limb, the kill switch and the WARN window | FWD-4, FWD-6, FWD-7 | O4; IV.5; Part V bullets 4-5 | C `grade()`; P the verdict line and the kill switch | the `safe-commit` path (L5 reads the insertion point) | `org/mcp/naming-gate.enforce`; the verdict log | the WARN window's log with its denominator; the flip announcement | on a practice copy, a commit adding `opal-data-inf/silver/...` is refused with the canonical printed; the canonical form passes; an existing permitted alias passes with the canonical printed beside it |
+| E7 the commit limb, the kill switch and the WARN window | FWD-4, FWD-6, FWD-7 | O4; IV.5; Part V bullets 4-5 | C `grade()`; P the verdict line and the kill switch | the `safe-commit` path (L5 reads the insertion point) | `org/mcp/naming-gate.enforce`; the verdict log | the WARN window's log with its denominator; the flip announcement | on a practice copy: a commit adding `opal-data-inf/silver/...` is refused with the canonical printed, and the canonical form passes. An existing permitted alias passes with the canonical printed beside it. A NEW hand-kept firm mapping in a Python or JSON config (a firm's long form as a dict key) is refused with the registry lookup printed, while the same value read through the lookup passes. A NEW resource-name literal the builder would not produce is refused with the canonical printed, while `name()` producing it passes. A firm's long form passed as `key(scope=...)` passes |
 | E8 the Terraform-label census and the `safe-apply` limb | FWD-4 | IV.2 row 2; Part V bullet 6 | C `grade()` | `.tools/safe-apply.sh` | `org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/TF_LABEL_CENSUS.md` | the label census, read before the limb is specified | a plan adding a resource whose name the module would not produce is refused before plan, with the canonical printed |
 | E9 census mode | FWD-5 | O5; IV.6 | C `grade()`; C LGIC_NAMING N2 and N6 | `comp-find --corpus aws`; `infra/logic/09_NAMING_CENSUS.md` | `org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/NAMING_CENSUS_REPORT.md` | the repo and the live plane, denominators printed; totals set beside IV.7 and N6 | every nameable live name is judged; the totals agree with the hand ranking; a RAISE stops the run loudly |
 | E10 FWD-6 on a practice copy | FWD-6 | O6 | C `remediations.json` | a linked worktree on a scratch branch | -- | a planted remediation row that owns one surface holding an old-style name | a change touching the surface without removing the name is refused; the change removing it passes |
-| E11 FWD-7 and FWD-1 on a practice copy | FWD-7, FWD-1 | O1; O7; Part III O1, O7 | C the registry, `key()` | a linked worktree on a scratch branch | -- | one fictitious firm row (DEC-9); the expected diff set computed before the run | the actual diff equals the expected set; a hand-typed address for that firm is refused; a new pipeline for it holds no storage-location literal, by a second worker's search |
+| E11 FWD-7 and FWD-1 on a practice copy | FWD-7, FWD-1 | O1; O7; Part III O1, O7 | C the registry, `key()` | a linked worktree on a scratch branch | -- | one fictitious firm row (DEC-9); the expected diff set computed before the run | the actual diff equals the expected set. A hand-typed address for that firm is refused. **A hand-typed occurrence of the firm's NAME, its long or short form, added to an ordinary code or config carrier outside the registry (a firm list in a config map) is refused, while adding the registry row and letting the generator produce the file succeeds.** A new pipeline for the firm holds no storage-location literal, by a second worker's search |
 | E12 FWD-2 on a real resource | FWD-2 | O2 | C the module, the fence patterns | the real Terraform tree | -- | a plan with the resource named by the module; the fence patterns for its firm from the same row; on a practice copy, one short-form change | the resource's name and its firm's fence pattern both move on that one change |
 
 ## PATHS
@@ -308,7 +363,7 @@ One row per candidate cell. The decomposition at L5 is the COO lane's, and it ma
 | kind | path | cell | use |
 |---|---|---|---|
 | new | `infra/logic/registry/systems.json`, `scopes.json`, `tiers.json`, `exemptions.json`, `remediations.json` | E2, E5, E10 | the registry rows |
-| new | `lib/opal_naming.py` | E2, E3, E9 | `key()`, `name()`, `grade()`, `generate`, `census` |
+| new | `lib/opal_naming.py` | E2, E3, E9 | `key()`, `address()`, `name()`, `grade()`, `generate`, `census` |
 | new | `lib/tests/test_opal_naming.py` | E3 | the positive and negative controls |
 | new | `infra/aws/terraform/modules/opal_name/` | E4 | the generated locals and the name output |
 | new | `org/mcp/naming-gate.enforce` and its verdict log | E7 | the kill switch and the audit |
@@ -331,32 +386,33 @@ One row per candidate cell. The decomposition at L5 is the COO lane's, and it ma
 |---|---|---|---|
 | 1 | title / preamble (the commission, the rulings executed, "builds nothing on the applied plane and renames nothing") | DEC-11; the preamble above | all |
 | 2 | PART I heading | structural | -- |
-| 3 | O1 a producer asks for a key | DEC-2; E3, E11 | FWD-1 |
-| 4 | O2 a Terraform local derives a name, and the fence comes from the same call | DEC-2, DEC-3, DEC-4; E3, E4, E5, E12 | FWD-2 |
+| 3 | O1 a producer asks for a key | DEC-2 (`key()` and `address()`); E3, E11 | FWD-1 |
+| 4 | O2 a Terraform local derives a name, and the fence comes from the same call | DEC-2, DEC-3, DEC-4; the CONTRACTS fence row, with its three conditions; E3, E4, E5, E12 | FWD-2 |
 | 5 | O3 one registry, generated views | DEC-1, DEC-5; E2, E6 | FWD-3 |
-| 6 | O4 a refusal that prints the canonical string | DEC-6; E7, E8 | FWD-4 |
+| 6 | O4 a refusal that prints the canonical string, over every key, resource-name literal and firm/product token | DEC-6 (the inputs and the context rule); E7, E8 | FWD-4 |
 | 7 | O5 the ranked census | DEC-7; E9 | FWD-5 |
 | 8 | O6 a remediation cannot go quiet | DEC-8; E10 | FWD-6 |
-| 9 | O7 firm N+1 is one row | DEC-9; E2, E11 | FWD-7 |
+| 9 | O7 firm N+1 is one row, and a hand-typed firm name is refused | DEC-9; DEC-6's context rule; E2, E11 (the non-address negative) | FWD-7 |
 | 10 | PART II the boundary (OWNS / RELIES ON / SIBLINGS / NOT THIS BRIEF'S) | CONTRACTS; DEC-5's repoint boundary; DEC-11; DEC-12; the SURFACE MANIFEST's excluded row | all |
 | 11 | PART III the qualitative bar | the ENDPOINT's ACCEPT lines; the acceptance drafts of E3, E7, E9 and E11 | all |
 | 12 | PART IV heading | structural | -- |
 | 13 | IV.1 no key builder; the registry exists five times | DEC-5 (re-measured at HEAD); E1, E6 | FWD-3 |
-| 14 | IV.2 the minting points and their gates | DEC-6; E7, E8. The Lambda artifact key row stays UNCHANGED: the source-map tie holds (GAP-2) and only the key's grammar is graded | FWD-4 |
+| 14 | IV.2 the minting points and their gates | DEC-6 (every minting point's input; the pointer/map row through the context rule); E7, E8. The Lambda artifact key row stays UNCHANGED: the source-map tie holds (GAP-2) and only the key's grammar is graded | FWD-4 |
 | 15 | IV.3 the grader's signature, three verdicts, the positive controls | DEC-2, DEC-6; E3 | FWD-4, FWD-5 |
 | 16 | IV.4 why authoring time is where it sticks | the placement of E7 and E8 at the minting points | FWD-4 |
 | 17 | IV.5 refuse against warn | DEC-6, ratified with its grain stated | FWD-4, FWD-6 |
 | 18 | IV.6 what authoring time cannot reach | DEC-7 (census mode reads the live plane); DEC-11 | FWD-5 |
-| 19 | IV.7 the registry's shape | DEC-1 (JSON, no kinds file); E2 | FWD-3, FWD-7 |
+| 19 | IV.7 the registry's shape | DEC-1 (JSON, no kinds file; the systems row's fields, `owner_directive` included); E2 (their validation) | FWD-3, FWD-7 |
 | 20 | IV.8 the order of dependence | the ARC | all |
-| 21 | PART V what must be true | bullet 1 is DEC-4 and E5; bullet 2 is met (LGIC_NAMING admitted); bullet 3 is DEC-5; bullets 4 and 5 are DEC-6; bullet 6 is E8; bullet 7 names `ADVI_FIRMBKTS` and `MDPF_CANON` as `key()`'s first callers (CONTRACTS); bullet 8 is DEC-11 | all |
+| 21 | PART V what must be true | bullet 1 is DEC-4 and E5, whose probes hold the system family constant so the named MDPF regression is exercised; bullet 2 is met (LGIC_NAMING admitted); bullet 3 is DEC-5; bullets 4 and 5 are DEC-6; bullet 6 is E8; bullet 7 names `ADVI_FIRMBKTS` and `MDPF_CANON` as `key()`'s first callers (CONTRACTS); bullet 8 is DEC-11 | all |
 | 22 | PART VI status | NOT CONSUMED: not outcome-bearing. Its figures are re-measured at HEAD in DEC-5 | -- |
 | 23 | PART VII what the brief does not claim | the unread gates are read at L5 (E7, E8); the carriers' contents are graded by E1 and E6's DELTA=0; the false-refusal rate is DEC-6's WARN window; runtime is out (DEC-11); D12 is DEC-12. Effort: NOT CONSUMED, and no estimate is made here either | FWD-4 |
 | 24 | REFS TO CARRY | NOT CONSUMED as work: a link list. Its WAITING-ON items are closed. The schema is ratified (LGIC_NAMING v1.2 admitted); the refuse/warn matrix and the WARN window are DEC-6; the label census precedes the `safe-apply` limb (E8) | -- |
 
 ## SURFACE MANIFEST
 
-Surfaces this project writes, reads or executes. The one applied-plane change is the firm-bucket template's policy (E5).
+Surfaces this project writes, reads or executes. The applied-plane changes are the firm-bucket template's policy and
+E5's three transient probe roles.
 
 | surface | kind | cell | owner |
 |---|---|---|---|
@@ -364,6 +420,7 @@ Surfaces this project writes, reads or executes. The one applied-plane change is
 | `lib/opal_naming.py`, `lib/tests/test_opal_naming.py` | new code | E2, E3, E9 | LGIC_ENFORCE |
 | `infra/aws/terraform/modules/opal_name/` | new Terraform module: locals and outputs only, no resources | E4 | LGIC_ENFORCE |
 | `infra/aws/terraform/shared-infra/s3-49financial.tf`, the bucket policy only | an APPLIED change to a live bucket policy | E5 | applied by the infrastructure lane through `safe-apply`, under never-widen sign-off (CTO and COO) and a change-management ledger entry |
+| three probe IAM roles: `mdpf-49f-fenceprobe-role`, `mdpf-cot-fenceprobe-role`, `mdpf-fenceprobe-role` | APPLIED and transient: created for E5's proof, each able to read only the probed bucket, and removed at the ledger entry's close | E5 | the infrastructure lane, under the same entry |
 | the six carrier paths and `.tools/ds-precommit-check.py`'s two lists | generated replacements, DELTA=0 | E6 | written by LGIC_ENFORCE; any deploy rides its owner's deploy path (Rule 13), byte-equivalent |
 | the `safe-commit` path and `.tools/safe-apply.sh` | gate limbs | E7, E8 | LGIC_ENFORCE |
 | `org/mcp/naming-gate.enforce` and its verdict log | the kill switch and the audit | E7 | LGIC_ENFORCE |
