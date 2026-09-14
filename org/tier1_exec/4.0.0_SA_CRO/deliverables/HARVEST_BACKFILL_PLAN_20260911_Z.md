@@ -1287,3 +1287,68 @@ Both runs cost **6 calls each** instead of 216. The consecutive-refusal stop fir
 first printed `REFUSED 1 of 18` for the identical data -- the print had been using a different formula
 from the JSON and was booking a NOT-ASKED as a REFUSAL. **One formula now, and the corrected line is
 the one a reader sees.**
+
+---
+
+## 24. THE BLOG HALF IS COMPLETE: 52 OF 88 -- and 9 accepted roots were RECRUITING sites, which both tests passed and which a chatter axis must not eat
+
+**The CSE quota reset at ~07:00Z exactly as s.15 predicted, which is why that card was WITHDRAWN
+rather than carried to Andrew.** 83 calls, inside one day's 100. **Card 4 is now discharged in full --
+IR pages and company blogs, both halves.**
+
+```
+universe                                   89
+eligible (a held ir_domain is required)    88     <- was 79 before s.21 closed nine more
+ASKED                                      88     <- 5 carried + 83 this run
+blog_roots INFERRED                        52
+REFUSED on evidence                        36
+calls, both runs                           88
+```
+⭐ **THE ELIGIBLE SET GREW FROM 79 TO 88 WITHOUT A SINGLE EXTRA CALL**, because s.21 closed nine
+`ir_domain` refusals from evidence already on disk. **Improving one key widened the other** -- the
+blog rule can only read a name whose domain is known.
+
+### ⛔ THE DEFECT: NINE ACCEPTED ROOTS WERE RECRUITING SITES, AND BOTH TESTS PASSED THEM HONESTLY
+
+```
+careers.mastercard.com/us/en/blog      jobs.uber.com/en/people-stories
+careers.msci.com/articles              careers.sse.com/blogs
+careers.kimberly-clark.com/en/blog     careers.intuitive.com/en/employee-stories
+www.ubs.com/global/en/careers/about-us/stories
+```
+Every one is **on the company's own domain** (the identity constraint holds) and **carries a genuine
+blog marker** (`blog`, `stories`, `articles`). **The rule worked exactly as specified and the answer
+was still wrong for the purpose.**
+>> **A RECRUITING BLOG IS REAL COMPANY CONTENT OF THE WRONG KIND. Employee stories do not move a
+   security, and feeding them into s.11's chatter axis is a CORRECTNESS defect, not untidiness.** <<
+⚠ **INVESTOR-RELATIONS PATHS ARE DELIBERATELY KEPT** -- `investors.intuit.com/news-events` stays,
+because a press release IS market-relevant. The exclusion is scoped to recruiting, and saying which
+side of the line each sits on is the point.
+⭐ **AND THE EXCLUSION COST NOTHING: ACCEPTED STAYED AT 52.** All seven affected companies had ANOTHER
+legitimate root, so nine noise roots were removed and **not one name became a refusal.**
+
+### ⭐ THE REPAIR COST ZERO CALLS, WHICH IS THE POINT s.17 PAID SEVEN CALLS TO LEARN
+
+The blog branch stores `on_domain_links` -- **the rule's INPUT, not just its answer** -- because s.17
+lost 7 calls to a repair that could not be replayed. **This repair was replayed entirely offline over
+all 88 records, with a control:** re-deriving the ORIGINAL verdicts with the recruiting set emptied
+gave **drift 0**, so the replay is faithful and the 7 changes are the rule's, not the harness's.
+>> **STORE THE INPUT TO A RULE YOU MAY HAVE TO FIX. It was true when it cost 7 calls and it is truer
+   now that it saved 88.** <<
+
+### WHERE THE FOUR KEYS AND THE TWO CONTENT LAYERS STAND
+
+| layer | at session start | now |
+|---|---|---|
+| `bloomberg_ticker` | 34 MEASURED | **83 of 89** |
+| `ir_domain` | **0 of 89** | **88 of 89** |
+| `sa_symbol` | 10 INFERRED | 17 answered; 72 NOT ASKED behind an escalating block (s.23) |
+| `social_account` | **0 of 89** | **61 of 88**, 263 handles |
+| `blog_roots` | did not exist | **52 of 88** |
+
+⛔ **EVERY VALUE IN EVERY LAYER IS `INFERRED`, NOT `MEASURED`.** No page was fetched to confirm a
+domain is operated by its company, no social account was visited, no ticker was checked against a
+security master, no blog root was opened. **These are rejectable values, and a consumer refusing them
+on the status field is the rule working, not a failure.**
+⛔ **NO DATA WAS LANDED ANYWHERE IN ANY OF IT** -- no S3, no DynamoDB, no pipeline run, no applied
+state, no terraform. Landing is DS/COO lane at L6/L7. **The portal freeze is untouched.**
