@@ -17,6 +17,14 @@ WHAT IT FLAGS, per project:
   DRIFT            the file and the repo disagree (a code the register lacks, a fabric the register contradicts)
   UNMEASURED       a manual gate with no `confirmed` line: no tool can check it
   UNREADABLE       a source that could not be read -- never rendered as a pass
+  NEEDS-SLOT       its PRD is admitted and its next step is a COO's (L5), but its tree row names no coo_lane. While the
+                   box is at its COO cap it waits for a slot, and slots go in the file's order (not a violation)
+
+CAPACITY (Andrew-direct 2026-09-14 ~07:0xZ, "We can only have 3 COOs running their respective projects/subagents at
+any one time"): the live COO lanes on THIS box, read from the broker's org/mcp/liveness.json (a 2.0.0_SA_COO lane seen
+within LIVE_SECONDS, the broker's own LIVE threshold), set beside the file's per-fabric cap. The box's fabric comes
+from the checked-out branch (CLOUD -> laptop, SITEZ -> sitez). A liveness row is the broker's claim, not process
+truth, and the line says which instrument it read.
 
 A VIEWER, NOT A CHECKER: findings never change the exit code (the monitor moratorium; Andrew ~01:xxZ card 1 chose
 TRACK). Exit 0 rendered; 1 nothing rendered (the sequence file unreadable); 2 rendered with >=1 UNREADABLE source.
@@ -44,10 +52,13 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SEQ_REL = "org/missions/SEQUENCE.yaml"
 IDLE_DAYS = 7
 STAGES = ("REGISTERED", "PRD", "DECOMP", "EXECUTING", "ROUND_CLOSE", "CLOSED")
-TOP_KEYS = {"version", "owners", "enforcement", "stages", "projects", "parked", "pending_placement", "supersedes",
-            "change_log"}
+TOP_KEYS = {"version", "owners", "enforcement", "capacity", "stages", "projects", "parked", "pending_placement",
+            "supersedes", "change_log"}
 PROJECT_KEYS = {"fabric", "stage", "waits_on", "hold", "why", "notes"}
 GATE_FORMS = ("prd_admitted", "dep_stage_at_least", "status", "manual")
+LIVE_SECONDS = 120          # org/mcp/server.py STALE_THRESHOLD: a registration older than this is not LIVE
+COO_BASE = "2.0.0_SA_COO"
+BRANCH_FABRIC = {"CLOUD": "laptop", "SITEZ": "sitez"}
 
 
 def _gate_enum_matches():
@@ -110,6 +121,34 @@ class Reader:
             return None, "prd_signoff_lib.evaluate failed (%s)" % exc
         halves = ", ".join("%s %s" % (h, v["state"]) for h, v in sorted(res["halves"].items()) if not h.startswith("_"))
         return bool(res["admitted"]), "%s %s (%s)" % (res.get("prd_version") or "?", "ADMITTED" if res["admitted"] else "WITHHELD", halves)
+
+    def tree_row(self, row):
+        home = (row or {}).get("home")
+        if not home:
+            return None, "no tree home"
+        p = os.path.join(self.root, home, "project.json")
+        try:
+            return json.load(open(p, encoding="utf-8")), "%s/project.json" % home
+        except Exception as exc:  # noqa: BLE001
+            return None, "tree row unreadable (%s)" % exc
+
+    def coo_sessions(self):
+        """Live COO lanes on THIS box, from the broker's liveness file. None means UNREADABLE, never zero."""
+        p = os.path.join(self.root, "org", "mcp", "liveness.json")
+        try:
+            d = json.load(open(p, encoding="utf-8"))
+        except Exception as exc:  # noqa: BLE001
+            return None, "org/mcp/liveness.json unreadable (%s)" % exc
+        now = datetime.datetime.now(datetime.timezone.utc).timestamp()
+        live = sorted(k for k, v in d.items() if isinstance(v, dict) and k.split("~")[0] == COO_BASE
+                      and isinstance(v.get("last_seen_epoch"), (int, float)) and now - v["last_seen_epoch"] <= LIVE_SECONDS)
+        return live, "org/mcp/liveness.json (%d registrations; LIVE = seen within %ds)" % (len(d), LIVE_SECONDS)
+
+    def box_fabric(self):
+        r = subprocess.run(["git", "rev-parse", "--abbrev-ref", "HEAD"], cwd=self.root, capture_output=True, text=True,
+                           encoding="utf-8", errors="replace")
+        branch = r.stdout.strip()
+        return BRANCH_FABRIC.get(branch), "branch %s" % (branch or "?")
 
     def last_activity(self, row):
         home = (row or {}).get("home")
@@ -222,6 +261,16 @@ def evaluate(doc, reader, idle_days=IDLE_DAYS, now=None):
                 notes.append("dep_stage %s is past the hold's cap %s while a hold gate is unmet" % (row.get("dep_stage"), hold.get("max_dep_stage")))
             else:
                 flags.append("HELD")
+        # NEEDS-SLOT: admitted, at PRD (so L5 is next, and L5 is a COO's), no lane seated, not waiting, and any open
+        # hold still lets it reach DECOMP.
+        if ok and row.get("dep_stage") == "PRD" and "WAITING" not in flags:
+            cap_ok = not hold_open or (_stage_index(hold.get("max_dep_stage")) or 0) >= _stage_index("DECOMP")
+            trow, tnote = reader.tree_row(row)
+            if trow is None:
+                notes.append("tree row: " + tnote)
+            elif cap_ok and not trow.get("coo_lane"):
+                flags.append("NEEDS-SLOT")
+                notes.append("PRD admitted; L5 is next and is a COO's; no coo_lane on the tree row")
         all_met = all(s == "MET" for s in states)
         if all_met and row.get("status") != "complete" and act:
             try:
@@ -233,6 +282,32 @@ def evaluate(doc, reader, idle_days=IDLE_DAYS, now=None):
                 pass
         rows.append(entry)
     return rows
+
+
+def capacity(doc, reader, rows):
+    """The COO-capacity read. It never changes a flag and never refuses anything; it says what the slots are."""
+    caps = {k: v for k, v in ((doc.get("capacity") or {}).get("coo_sessions") or {}).items() if isinstance(v, int)}
+    live, note = reader.coo_sessions()
+    fabric, fnote = reader.box_fabric()
+    order = {code: i for i, code in enumerate((doc.get("projects") or {}))}
+    queue = sorted((r for r in rows if "NEEDS-SLOT" in r["flags"]), key=lambda r: (r.get("stage") or 0, order.get(r["project"], 0)))
+    cap = caps.get(fabric) if fabric else None
+    return {"caps": caps, "box_fabric": fabric, "box_note": fnote, "cap": cap, "live": live, "note": note,
+            "at_cap": (live is not None and cap is not None and len(live) >= cap),
+            "queue": [r["project"] for r in queue]}
+
+
+def render_capacity(c):
+    caps = ", ".join("%s %d" % kv for kv in sorted(c["caps"].items())) or "none declared"
+    if c["live"] is None:
+        print("\nCAPACITY: COO lanes UNREADABLE (%s) | caps: %s" % (c["note"], caps))
+    else:
+        state = "AT CAP" if c["at_cap"] else ("no cap ruled for this box" if c["cap"] is None else "%d free" % (c["cap"] - len(c["live"])))
+        print("\nCAPACITY: %d live COO lane(s) on this box (%s, %s): %s | cap %s | %s | source: %s" % (
+            len(c["live"]), c["box_fabric"] or "fabric unknown", c["box_note"], ", ".join(c["live"]) or "-",
+            c["cap"] if c["cap"] is not None else "-", state, c["note"]))
+    if c["queue"]:
+        print("  NEXT COO SLOT, in the sequence's order: %s" % " -> ".join(c["queue"]))
 
 
 def render(doc, rows, only_flags=False):
@@ -275,15 +350,31 @@ def self_test():
         def last_activity(self, row):
             return row.get("_act"), "fake"
 
+        def tree_row(self, row):
+            return row.get("_tree", {}), "fake"
+
+        def coo_sessions(self):
+            return self.live, "fake"
+
+        def box_fabric(self):
+            return "laptop", "fake"
+
     now = datetime.datetime(2026, 9, 20, tzinfo=datetime.timezone.utc)
     rows = {
-        "A": {"dep_stage": "PRD", "status": "active", "fabric": "laptop", "_act": "abc 2026-09-19T00:00:00+00:00"},
+        "A": {"dep_stage": "PRD", "status": "active", "fabric": "laptop", "_act": "abc 2026-09-19T00:00:00+00:00",
+              "_tree": {"coo_lane": "2.0.0_SA_COO~A"}},
+        "G": {"dep_stage": "PRD", "status": "active", "fabric": "laptop", "_act": "abc 2026-09-19T00:00:00+00:00",
+              "_tree": {"coo_lane": None}},
+        "H": {"dep_stage": "PRD", "status": "active", "fabric": "laptop", "_act": "abc 2026-09-19T00:00:00+00:00",
+              "_tree": {"coo_lane": "2.0.0_SA_COO~H"}},
         "B": {"dep_stage": "EXECUTING", "status": "active", "fabric": "laptop", "_act": "abc 2026-09-19T00:00:00+00:00"},
         "C": {"dep_stage": "REGISTERED", "status": "active", "fabric": "laptop", "_act": "abc 2026-09-01T00:00:00+00:00"},
         "D": {"dep_stage": "REGISTERED", "status": "active", "fabric": "site-z", "_act": "abc 2026-09-19T00:00:00+00:00"},
     }
-    prd = {"A": True}
-    doc = {"stages": [{"id": 1, "name": "s"}], "projects": {
+    prd = {"A": True, "G": True, "H": True}
+    doc = {"capacity": {"coo_sessions": {"laptop": 3}}, "stages": [{"id": 1, "name": "s"}], "projects": {
+        "G": {"fabric": "laptop", "stage": 1, "waits_on": []},
+        "H": {"fabric": "laptop", "stage": 1, "waits_on": []},
         "A": {"fabric": "laptop", "stage": 1, "waits_on": []},
         "B": {"fabric": "laptop", "stage": 1, "hold": {"max_dep_stage": "DECOMP", "until": [{"manual": "x"}]}},
         "B2": {"fabric": "laptop", "stage": 1},
@@ -294,7 +385,11 @@ def self_test():
     }}
     rows["E"] = {"dep_stage": "REGISTERED", "status": "active", "fabric": "laptop", "_act": None}
     rows["F"] = {"dep_stage": "REGISTERED", "status": "active", "fabric": "laptop", "_act": None}
-    got = {r["project"]: set(r["flags"]) for r in evaluate(doc, Fake(rows, prd), now=now)}
+    fake = Fake(rows, prd)
+    fake.live = ["2.0.0_SA_COO~A", "2.0.0_SA_COO~H", "2.0.0_SA_COO~X"]
+    evaluated = evaluate(doc, fake, now=now)
+    got = {r["project"]: set(r["flags"]) for r in evaluated}
+    cap = capacity(doc, fake, evaluated)
     cases = [
         ("A: no gates, active 1 day ago -> no flag", got["A"] == set()),
         ("B: manual hold unconfirmed, EXECUTING past cap DECOMP -> OUT-OF-SEQUENCE + UNMEASURED", {"OUT-OF-SEQUENCE", "UNMEASURED"} <= got["B"]),
@@ -305,6 +400,10 @@ def self_test():
         ("F: gate not in the vocabulary -> UNREADABLE", "UNREADABLE" in got["F"]),
         ("the dep_stage order equals to-pipeline-gate.py's DEP_STAGE_ENUM (read by AST)", _gate_enum_matches()[0]),
         ("validate: an unknown top-level key is refused", validate({"stagez": 1, "projects": {}}) != []),
+        ("G: PRD admitted, at PRD, no coo_lane -> NEEDS-SLOT only", got["G"] == {"NEEDS-SLOT"}),
+        ("H: PRD admitted, at PRD, a coo_lane seated -> no flag", got["H"] == set()),
+        ("capacity: 3 live against a laptop cap of 3 -> AT CAP, and the queue is [G]", cap["at_cap"] and cap["queue"] == ["G"]),
+        ("validate: the capacity key is accepted", validate({"capacity": {"coo_sessions": {"laptop": 3}}, "projects": {}}) == []),
     ]
     fails = 0
     for name, ok in cases:
@@ -339,22 +438,25 @@ def main():
     enum_ok, enum_note = _gate_enum_matches()
     r = subprocess.run(["git", "log", "-1", "--format=%h %aI %an", "--", SEQ_REL], cwd=ROOT, capture_output=True,
                        text=True, encoding="utf-8", errors="replace")
-    rows = evaluate(doc, Reader(ROOT))
+    reader = Reader(ROOT)
+    rows = evaluate(doc, reader)
+    cap = capacity(doc, reader, rows)
     if a.project:
         rows = [x for x in rows if x["project"] in set(a.project)]
     if a.json:
-        print(json.dumps({"sequence": SEQ_REL, "file_last_commit": r.stdout.strip() or None, "rows": rows}, indent=1))
+        print(json.dumps({"sequence": SEQ_REL, "file_last_commit": r.stdout.strip() or None, "capacity": cap, "rows": rows}, indent=1))
     else:
         print("sequence-check | %s | file last commit: %s | enforcement: %s | projects: %d | stage enum: %s" % (
             SEQ_REL, r.stdout.strip() or "UNCOMMITTED", doc.get("enforcement"), len(rows),
             "OK" if enum_ok else "MISMATCH (" + enum_note + ")"))
         render(doc, rows, only_flags=a.flags)
+        render_capacity(cap)
         counts = {}
         for x in rows:
             for f in x["flags"]:
                 counts[f] = counts.get(f, 0) + 1
         print("\nFLAGS (denominator %d projects): %s" % (len(rows), ", ".join("%s=%d" % kv for kv in sorted(counts.items())) or "none"))
-    unreadable = any("UNREADABLE" in x["flags"] for x in rows) or not enum_ok
+    unreadable = any("UNREADABLE" in x["flags"] for x in rows) or not enum_ok or cap["live"] is None
     return 2 if unreadable else 0
 
 

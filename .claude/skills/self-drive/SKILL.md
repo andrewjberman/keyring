@@ -72,6 +72,11 @@ order by way of dependencies or design, across BOTH fabrics, with the gates betw
    no status, so a gate flip never requires editing it; only an order change does, and only on Andrew's word, by either CTO.
 5. **TRACK, not a gate** (Andrew ~01:xxZ card 1): the driver raises; it refuses nothing. A task-order gate limb is
    approved to follow once the order has held about a week, announced before it is armed.
+6. **COO CAPACITY** (Andrew-direct 2026-09-14 ~07:0xZ: *"We can only have 3 COOs running their respective
+   projects/subagents at any one time ... This is why the sequence function is important, so that chronology is
+   managed in line with available resources."*). The reader's CAPACITY line counts the live COO lanes on this box
+   against the file's cap. A tick never asks for a COO lane past the cap. When a slot frees, the next one goes to the
+   first `NEEDS-SLOT` project in the sequence's order, and the tick names that project to `0.0.0_AB_MSTR`, who seats it.
 
 ## Step 1 — `/open-calls`, restricted to the scope
 

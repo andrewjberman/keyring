@@ -27,13 +27,24 @@
 # waits_on  -- the project may not START (reach PRD) until every gate is met.
 # hold      -- the project may advance up to max_dep_stage while the hold's gates are unmet; past that is OUT OF SEQUENCE.
 #
+# CAPACITY: at most N COO sessions run their projects and subagents at once on a box (capacity.coo_sessions, per
+# fabric). Andrew-direct 2026-09-14 ~07:0xZ: "We can only have 3 COOs running their respective projects/subagents at any one time, otherwise it gets too overloaded on the box. This is why the sequence function is important, so that chronology is managed in line with available resources." (record org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20260914_070xZ_THREE_COO_CAP_AND_PUSH_WINDOW.md @f21c5d8290).
+# The reader counts the live COO lanes on the box and flags NEEDS-SLOT on a project whose PRD is admitted, whose next
+# step is a COO's, and which has no lane. At the cap, the next slot goes to the first NEEDS-SLOT project in this
+# file's order. 0.0.0_AB_MSTR seats lanes; no driver asks for a lane past the cap; Andrew's word overrides the order.
+#
 # ENFORCEMENT: TRACK. Andrew ~01:xxZ card 1: the reader flags and the CTO raises. A task-order gate limb refusing new
 # orders for a project whose stage is not open is approved to follow once this order has held about a week; it is
 # announced before it is armed.
 
-version: 1
+version: 2
 owners: ["1.0.0_SA_CTO", "1.0.0_SA_CTO~Z"]
 enforcement: TRACK
+
+capacity:
+  coo_sessions:
+    laptop: 3
+  why: "Andrew-direct 2026-09-14 ~07:0xZ (org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20260914_070xZ_THREE_COO_CAP_AND_PUSH_WINDOW.md @f21c5d8290): 'We can only have 3 COOs running their respective projects/subagents at any one time, otherwise it gets too overloaded on the box. This is why the sequence function is important, so that chronology is managed in line with available resources.' Site Z's cap is not ruled."
 
 stages:
   - id: 1
@@ -105,3 +116,7 @@ change_log:
     by: "1.0.0_SA_CTO"
     change: "v1 -- the sequence created. Stage 1 Platform Logic (LGIC_NAMING, LGIC_ENFORCE, LGIC_CANON); stage 2 the D8 migrations on it (ADVI_FIRMBKTS held at DECOMP, MDPF_CANON held at REGISTERED, until LGIC_ENFORCE's PRD is admitted and its fence is on the template). NFRA_SUBSTRATECARDING parked."
     word: "'recs approved' and the three words that followed it (record @cc79b6191a)"
+  - at: "2026-09-14"
+    by: "1.0.0_SA_CTO"
+    change: "v2 -- capacity: at most three COO sessions on the laptop at once. The reader flags NEEDS-SLOT and names the next COO slot in this file's order. No order changed."
+    word: "'We can only have 3 COOs running their respective projects/subagents at any one time, otherwise it gets too overloaded on the box. This is why the sequence function is important, so that chronology is managed in line with available resources.' (org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20260914_070xZ_THREE_COO_CAP_AND_PUSH_WINDOW.md @f21c5d8290)"
