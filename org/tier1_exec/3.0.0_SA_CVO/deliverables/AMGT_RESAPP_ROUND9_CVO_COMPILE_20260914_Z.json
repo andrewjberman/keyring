@@ -1,0 +1,36 @@
+{
+  "at": "2026-09-14T14:36:00.181113Z",
+  "seat": "3.0.0_SA_CVO~Z",
+  "project": "AMGT_RESAPP",
+  "round": 9,
+  "initial_investigation_denominator": 151,
+  "late_row": "AMGT_RESAPP-Z-S87",
+  "late_pin": "008c6206d280e74399485760e4659387e40a2f63",
+  "final_investigation_denominator": 152,
+  "cvo_reviewed_this_round": 30,
+  "adjudication_rows_this_round": 32,
+  "remediation_rows_this_round": 17,
+  "terminal_orders": {
+    "total": 47,
+    "complete": 44,
+    "superseded": 3
+  },
+  "proof_instances_checked": 45,
+  "proof_criterion_sets_matched": 45,
+  "judgment": {
+    "criterion": "AMGTrh1-AC6",
+    "grade": "FAIL"
+  },
+  "new_product_finding": "AMGT_RESAPP-Z-C-S169",
+  "late_owner_correction": "Direct read of canonical-flow plane (2) at 008c6206d2 confirms working-tree read, tracked-file discriminator, repeat and attribution limit. CVO confirms the named artifacts are its own current work.",
+  "first_commit_attempt": {
+    "safe_commit_row_gate": "PASS: 31 adjudication rows, 17 remediation rows; 47 orders and 152 final investigation items, zero open or undispositioned; standing corpus 68 documents, 2118 rows, four exact legacy failures, zero new.",
+    "result": "NO COMMIT, rc1 after cancellation of this attempt's env.exe hook launcher PID40688.",
+    "limit": "The Win32 process snapshot showed no child or CPU progress, but buffered output after cancellation showed the hook was checking rows. The apparent stall was not established. Its post-cancellation zero-document corpus refusal is not evidence of a repaired baseline. Full canonical checks are rerun without cancellation or override."
+  },
+  "limits": [
+    "No fresh browser or live route exercise.",
+    "No endpoint realization claimed.",
+    "No push, promotion, gitlink change, worker release, runtime helper change, or portal source write."
+  ]
+}

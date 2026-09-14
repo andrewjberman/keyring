@@ -170,15 +170,15 @@ CTO: perform the canonical L10 per-outcome DONE_WHEN/artifact coverage analysis 
     "owner": "1.0.0_SA_CTO~Z",
     "round": "v8",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO~Z",
       "round": "v8"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "1.0.0_SA_CTO~Z",
-      "at": null
+      "at": "2026-09-14T14:25:02Z"
     }
   },
   {
@@ -250,11 +250,11 @@ CTO: perform the canonical L10 per-outcome DONE_WHEN/artifact coverage analysis 
     "owner": "2.0.0_SA_COO~ZZZ",
     "round": "v8",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~ZZZ",
       "round": "v8"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "AMGT_RESAPP-Z-W13-S4",
@@ -380,15 +380,15 @@ CTO: perform the canonical L10 per-outcome DONE_WHEN/artifact coverage analysis 
     "owner": "1.0.0_SA_CTO~Z",
     "round": "v8",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO~Z",
       "round": "v8"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "1.0.0_SA_CTO~Z",
-      "at": null
+      "at": "2026-09-14T14:25:02Z"
     }
   },
   {
@@ -465,15 +465,15 @@ CTO: perform the canonical L10 per-outcome DONE_WHEN/artifact coverage analysis 
     "owner": "2.0.0_SA_COO~ZZZ",
     "round": "v8",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~ZZZ",
       "round": "v8"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~ZZZ",
-      "at": null
+      "at": "2026-09-14T14:25:02Z"
     }
   },
   {

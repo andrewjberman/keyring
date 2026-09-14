@@ -1,0 +1,40 @@
+{
+  "at": "2026-09-14T14:18:35.750Z",
+  "portal_pin": "a845a8be7522c20ebc3dad896933c5cc84a8f332",
+  "method": "Actual LeadPanel and RankedList TypeScript transpiled with installed TypeScript; actual React static rendering; deterministic query-result stubs, layout/auth stubs; no browser, HTTP, credentials, AWS, or source writes",
+  "hashes": {
+    "src/pages/SecurityAnalysis/components/RankedList.tsx": "04fe4fe39771fee2d5c83f0803eeed6296e654047b26f8012ee01d8e29e1ef1e",
+    "src/pages/SecurityAnalysis/components/LeadPanel.tsx": "2971edffd5ca0cd442b889e5779668a55241c0fb49b1543e07e4a259498bc93d",
+    "src/pages/SecurityAnalysis/constants.ts": "29c4c6b8e20db761eb42f54980291d9e4cbbd93232db666f578582735a3fa683"
+  },
+  "results": {
+    "successful_empty": {
+      "html": "<section><section></section><section><div class=\"text-sm text-white/50 py-4\">No ranked names for this combination yet -- the daily job has not written a row for today&#x27;s date.</div></section></section>",
+      "bytes": 205,
+      "sha256": "010993b7002fa22790db5a71505549ecbe520434970ee900a818d687e9e70f9b"
+    },
+    "failed_request": {
+      "html": "<section><section></section><section><div class=\"text-sm text-white/50 py-4\">No ranked names for this combination yet -- the daily job has not written a row for today&#x27;s date.</div></section></section>",
+      "bytes": 205,
+      "sha256": "010993b7002fa22790db5a71505549ecbe520434970ee900a818d687e9e70f9b"
+    },
+    "loading": {
+      "html": "<section><section></section><section><div class=\"text-sm text-white/50 py-4\">Loading ranked names...</div></section></section>",
+      "bytes": 126,
+      "sha256": "2cd44de4126f53aa76d12bdcf1ef4b4fdc5c6946e4dffd4f3c73fb97665a9e71"
+    },
+    "populated": {
+      "html": "<section><section></section><section><ol class=\"divide-y divide-white/10\"><li class=\"flex items-center gap-3 py-2 group cursor-pointer\"><span class=\"w-8 text-right text-xs text-white/40 tabular-nums\">#1</span><button type=\"button\" class=\"flex-shrink-0 text-white/30 hover:text-amber-400 transition-colors\" aria-label=\"Star\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-star\" aria-hidden=\"true\"><path d=\"M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z\"></path></svg></button><div class=\"flex-1 min-w-0\"><div class=\"text-sm font-medium text-white truncate\">CVO-CONTROL</div><div class=\"text-xs text-white/50 truncate\">chatter 50/100 (2 mentions)</div></div><span class=\"text-[10px] text-white/30 whitespace-nowrap\">no headline yet</span></li></ol></section></section>",
+      "bytes": 1239,
+      "sha256": "95f7c1d87763ec2d48b6047bf83ba7d79f6d8b629271512e81994fa50138f630"
+    }
+  },
+  "checks": {
+    "error_equals_empty": true,
+    "loading_differs": true,
+    "populated_differs": true,
+    "error_claims_no_daily_row": true,
+    "populated_names_security": true
+  },
+  "limits": "This proves a frontend error/empty collision, not which response the historical browser received. Fixture names and ranked values are synthetic controls, not live data or FWD realization."
+}
