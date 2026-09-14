@@ -46,7 +46,12 @@ and say which. ⛔ **(3) DOES NOT RUN NAKED: a nudge is authorized ONLY after `/
 ALL FOUR planes:** (a) **COMMITS** `git log --author "<serial> <" --since=` -- cheapest and most reliable;
 (b) **DELIVERABLES, TWO HOMES** -- a WORKER's under `org/missions/D*/<MACRO>/<CODE>/deliverables/<serial>/`, a
 TIER-1 SEAT's under `org/tier1_exec/<BASE serial>/deliverables/`; ⛔ the wrong branch returns ABSENT RATHER
-THAN AN ERROR, failing silently in the exact direction the rung exists to prevent; (c) the seat's OWN worktree
+THAN AN ERROR, failing silently in the exact direction the rung exists to prevent. ⛔ **AND THAT TIER-1 HOME IS
+SHARED BY THE BASE AND EVERY LANE, SO AN UNSCOPED MTIME READ ANSWERS ABOUT THE HOME AND NEVER THE QUERIED LANE
+-- scope it `git log -1 --author "<serial> <" -- <home>`** (anchored; a lane serial is a PREFIX of its siblings),
+base-serial newest as the positive control. ⚠ **MOVING IS THE BRANCH THAT *ENDS* THE PROBE, so this error
+SUPPRESSES a warranted nudge and nobody follows it up.** COST: one author filter. NON-APPLICATION: the WORKER
+home is per-serial BY PATH. Measured `AMGT_RESAPP-Z-S82`; why in `DRIVE.md`; (c) the seat's OWN worktree
 -- ⛔ **A CODEX SEAT HAS NO WORKTREE**, so this plane is structurally blind to that whole seat class;
 (d) `.runtime/codex-seats/<serial>/` **ARTIFACTS ONLY** -- subtract the runtime logs (`turn-bridge.stdout.log`
 and friends): the `[HARD-NUDGE] [deduplicated]` loop SPINS ON ITS OWN and reports MOVING about a seat

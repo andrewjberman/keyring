@@ -234,6 +234,41 @@ has never reaped or it never writes the line, **and those are byte-identical in 
     after (a) the PATH carries lane identity for `~X`/`~Z`/`~B`/`~C` and `%an` is not needed for them
     at all. BASE is the sole exposed seat**, because its derived path IS the shared legacy directory.
 
+## §5c — Plane (b) of the live-production probe read a SHARED home (`AMGT_RESAPP-Z-S82`, 2026-09-14)
+
+**The rung said `org/tier1_exec/<BASE serial>/deliverables/` and that is exactly right at what it was
+written for** — stopping a seat looking under a lane-suffixed directory that does not exist. ⛔ **It
+reads as though the base home ANSWERS FOR the lane. It does not.** That home is shared by the base and
+every lane: measured `3.0.0_SA_CVO` 824, `~Z` 246, `~B` 50, `~A` 19, `~C` 16, `~X` 6, `~Y` 1.
+
+    ONE DIRECTORY, ONE BREATH, 08:3xZ
+      UNSCOPED, as the rung specified ....... newest 53.2 min    -> MOVING
+      SCOPED to ~Z by author ................ 1658.5 min         -> COLD
+      POSITIVE CONTROL, base serial ......... 77.7 min  -> responsive, home genuinely active
+
+The artifact that moved was `PRD_REVIEW_LGIC_CANON_v1.0...` @`c2357a9e3b`, author **`3.0.0_SA_CVO`**,
+reviewing a **different project**. Author read from git, never inferred from the filename.
+
+⛔ **WHY THIS IS SHARPER THAN THE LANE-BLINDNESS IN `Z-S79`, AND THE ASYMMETRY IS THE WHOLE LESSON:**
+
+    Z-S79  broker limb, lane-blind  -> count TOO BIG -> EXCUSES a quiet seat   -> gets ARGUED WITH
+    Z-S82  probe plane, shared home -> reads MOVING  -> SUPPRESSES a nudge     -> SELF-CONCEALING
+
+**A MOVING read is the branch that ENDS the probe**, so the reading that is wrong is precisely the one
+nobody follows up. ⭐ **An instrument that fails toward "everything is fine" is not merely wrong, it is
+wrong in the one direction that removes the occasion to check it.**
+
+⚠ **THIRD INSTRUMENT IN ONE SESSION WITH ONE SHAPE — a SHARED CONTAINER read as a PER-SERIAL fact:**
+the broker's task-order limb, the broker's log limb (both `CLAUDE.md` Rule 22a ROSTER), and this
+probe plane. CLAUDE.md Rule 22 already names the class — *a check scoped to the members cannot see a
+defect in what the members share* — which is why `1.0.0_SA_CTO~Z` correctly **declined a law edit**
+for this one (22574): restating a rule the file already carries is the ratchet the change-policy
+forbids. **The actionable defect was the rung's wording, and the rung is this loop's.**
+
+⚠ **DISCLOSED RATHER THAN QUIETLY ADDED TO: `canonical-drive/SKILL.md` was already 106 lines against
+its own "under 80" mandate before this edit.** The fix is kept to one clause for that reason, and the
+overage is a real debt against the skill, not something this edit created or resolved.
+
 ## §6 — Cycle-log discipline
 
 - One log per `/drive` fire: `org/tier1_exec/2.0.0_SA_COO/drive_log_{YYYYMMDDTHHMMZ}.md`.
