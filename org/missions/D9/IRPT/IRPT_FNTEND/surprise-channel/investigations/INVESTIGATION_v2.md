@@ -2911,6 +2911,27 @@
     "spec_asserts": "AMENDMENT 2 names the carrier: 'the no-status document's availability carries that reading (Availability.sourceDate, typed SourceDateReading at contracts/index.ts:133)'. FE-s-30, state/availability.ts:92-100: 'When a status arrived, its reading rides on availability.sourceDate ... Only when NO status arrived ... is the view document's sourceTimestamps.businessAsOf read.'",
     "world_is": "The two carriers now disagree about what the presence of availability.sourceDate means. It is INERT today: every no-status wire document arrives as EXPLICIT_UNKNOWN_STATE with no producer token, and isAnswerBearing (availability.ts:64-68) sends it to the status panel, so AnswerStatus never renders one and no test fails. It becomes a provenance mislabel the day a no-status document can be answer-bearing. availability.ts is not in this order's grant. The discriminator FE-s-30's own gate already uses is producerState, not the presence of sourceDate.",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S26",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-14T05:05:00Z",
+    "one_line": "The one reading rule amendment 3 mandates for VIEW fixtures (adapt.ts readingFromValue) turns a view document's null businessAsOf into fact NULL, shown as 'Source date malformed'. But the view contract defines that null as 'no clock' (contracts/index.ts:147), and FE-s-30's businessDateOf reads it as ABSENT. Census: 3 of 134 view documents carry a null, all in smoke/fe-s-3-loading.json; no FixtureAdapter default fixture does.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED, a census over every JSON file under portal src/pages/InvestorReporting/fixtures/ (125 files): 134 VIEW documents (an availability object, not a producer `instance`); businessAsOf present on 131, null on 3, missing on 0. The three nulls: smoke/fe-s-3-loading.json at investor-reporting/performance-report, analysis-requests[0] and holdings-snapshot. No file in the portal outside node_modules names fe-s-3-loading (native Grep, 0 matches); smoke maps are handed to scripts/ui-smoke.mjs by `--fixtures`.",
+        "portal@c18a2aab contracts/adapt.ts:159-163 readingFromValue: undefined -> ABSENT, null -> NULL, a value -> PRESENT. contracts/index.ts:147 on SourceTimestamps: 'Source clocks. A missing clock is null, never a synthesised `now`.' state/availability.ts:98-100: 'On that plane a null means \"no clock\" ... so it is reported as ABSENT, never as the wire's NULL'.",
+        "MEASURED at portal@c6ee044e7a, fe-s-34/no-status.test.ts, F34-AC9 path 1: a fe-s-6-ready view document with businessAsOf set to null renders 'Ready -- Source date malformed' on both panels, as the one rule dictates; with businessAsOf removed it renders 'Ready -- Source time unknown'."
+      ]
+    },
+    "spec_asserts": "AMENDMENT 3: FixtureAdapter's VIEW-fixture branch gives a served document's availability 'the SAME business-date reading contracts/adapt.ts builds on the wire path, from the document's own sourceTimestamps.businessAsOf, through adapt.ts's own reading builder (one rule, never a second copy)'.",
+    "world_is": "On the wire path readingFromValue sees a producer field, where a null IS the defect the NULL fact names. On the view plane the same null is the contract's ordinary missing clock. So under one rule, a view document with no clock is named a producer defect: a LOADING document from fe-s-3-loading.json would read 'Source date malformed' rather than 'No source age yet'. Built as ordered, with no second rule. INERT: no FixtureAdapter default fixture carries a null, no test fails, and the three nulls sit in a smoke map only ui-smoke serves. A ruling is needed only if a view null should read as absence, and that would be a second rule, which the amendment forbids.",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
