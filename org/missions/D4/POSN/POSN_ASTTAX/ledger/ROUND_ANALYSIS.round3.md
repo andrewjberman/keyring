@@ -243,6 +243,52 @@ reader already believed.
 
 NOTE: s.7b adds no permission and lifts nothing. The freeze stands: **no promote, no DEV/PROD push, no
 gitlink move.** It constrains only how a permitted source write is RECORDED.
+## 7c. PRECONDITION 05:4xZ -- THE SHARED SUBMODULE CHECKOUT IS 14 COMMITS BEHIND THE POINTER, AND s.7a's ONE PERMITTED MOVE IS THE ACT THAT WOULD REWIND IT
+
+Measured by `0.0.0_AB_MSTR~Z` with a firing negative control, the direction unambiguous in both
+directions rather than asserted from one:
+
+```
+gitlink recorded by the superproject ... e85f6eb84f
+shared submodule ACTUAL checkout ....... 30ca034bba, branch DEV, dated 2026-09-02
+is-ancestor 30ca034bba -> e85f6eb84f ... TRUE      reverse ... FALSE   <- control fires
+missing from the checkout .............. 14 commits, the IRPT_FNTEND frontend, ~140 files
+corroboration, DIFFERENT instrument .... ls-tree -r FILE COUNT: 1201 at the pin, 1079 at the
+                                         submodule HEAD -- 122 fewer (2.0.0_SA_COO~Z, reached
+                                         while censusing readers, not while looking for this)
+```
+
+**RULING: NO PORTAL-SOURCE CELL IS CUT AGAINST THE SHARED CHECKOUT UNTIL IT IS ALIGNED TO THE
+RECORDED POINTER.** This binds the CUT, not a conversation, so it does not depend on anyone
+remembering a thread.
+
+⛔ **A CELL WRITTEN AGAINST THAT TREE IS WRITTEN AGAINST A SEPTEMBER 2 PORTAL.** Components, routes
+and a rendering package that ARE in the recorded pointer are ABSENT from the tree a worker opens.
+Work may duplicate them, conflict with them, or silently assume their absence -- and **a cell whose
+premise is a stale tree can grade REALIZED against a surface that is not the served one**, which is
+the failure s.7 exists to prevent from the other direction.
+
+⭐ **AND IT IS THE MIRROR OF s.7a's OWN HAZARD, WHICH IS WHY IT BELONGS HERE AND NOT IN A MESSAGE.**
+s.7a warns that one lane's portal commits can go MISSING at a merge with no conflict. This is the
+same quiet mechanism pointed the other way: **a gitlink move from this checkout would REWIND fourteen
+commits of another fabric's SHIPPED frontend**, and `git diff --submodule=log` prints that word
+itself. **The act s.7a permits exactly once -- the gitlink move at promote -- is the act that would
+do it. s.7a's "moves ONCE at promote" is safe only if the thing it moves TO is not behind.**
+
+**TWO OPERATIONAL POINTS THAT TRAVEL INTO THE CELL TEXT, because a worker never reads this ledger:**
+1. ⚠ **WORKER CLONES ARE SEPARATE.** Each `wk-*/portal` carries its own checkout and aligning the
+   shared tree aligns nothing else. **A task order granting portal paths states that the worker
+   verifies its OWN clone against the recorded pointer before writing** -- a `<paths>`-adjacent
+   precondition, not a courtesy.
+2. ⚠ **`git status` PRINTS THIS AS A BARE `M portal` AND SAYS NOTHING ABOUT DIRECTION**, which is why
+   it sat unremarked while it was harmless. **Any check prints the is-ancestor test BOTH WAYS**; a
+   one-direction read cannot distinguish behind from ahead.
+
+NOTE: aligning the working copy is **not a fenced portal act** -- no promote, no push, no DEV/PROD
+merge, and **it does not move the gitlink**; it moves the WORKING COPY to the commit the superproject
+already records. It is an INTEGRATOR act. Nothing was at risk when found: nothing staged, gitlink
+`e85f6eb84f` unmoved on every tick including after the cross-fabric merge, submodule worktree clean.
+**A do-it-in-the-right-order finding, caught in the one window where the order was still free.**
 ---
 
 **PRD ACTION: ADDENDUM, v0.5 -> v0.6, landed in the same commit as this analysis.**
