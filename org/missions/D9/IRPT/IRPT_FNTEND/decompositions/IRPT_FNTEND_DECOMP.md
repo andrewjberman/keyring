@@ -1,4 +1,4 @@
-# IRPT_FNTEND -- L5 decomposition -- rounds 1 through 4 -- v0.4
+# IRPT_FNTEND -- L5 decomposition -- rounds 1 through 6 -- v0.6
 
 ```json
 {
@@ -6,7 +6,7 @@
  "directive": "D9",
  "fabric": "laptop",
  "round": 2,
- "decomp_version": "v0.4",
+ "decomp_version": "v0.6",
  "round_1_header_retained_below": true,
  "prd_ref": "org/missions/D9/IRPT/IRPT_FNTEND/prd/IRPT_FNTEND_PRD.md@62301f71e0",
  "prd_version": "v0.4",
@@ -1287,3 +1287,202 @@ Every wave-B edge on FE-s-29 is a SEQUENCING edge, not a data edge: ruling M req
 ## R5.8 HOLDS
 
 **None blocking.** One owed act, recorded so it is not lost: when FE-s-29 lands card 6, CLAUDE.md Rule 27's "widening it is HIS call and is carded" and the gate's own docstring go stale, so a LAW EDIT is owed at FE-s-29's drain (1.0.0_SA_CTO 96394). FE-s-29 updates the gate's docstring inside its grant; the CLAUDE.md edit is this seat's at the drain, as a three-surface law edit.
+
+---
+
+# ROUND 6 -- v0.6 -- the recut on the CTO's ROUND-5 ANALYSIS
+
+```json
+{
+ "round": 6,
+ "decomp_version": "v0.6",
+ "prd_ref": "org/missions/D9/IRPT/IRPT_FNTEND/prd/IRPT_FNTEND_PRD.md@d1479bc5f0",
+ "prd_version": "v0.6 -- UNCHANGED; the analysis owes no addendum (s.1), so no L4-R half re-opens",
+ "analysis_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_IRPT_FNTEND_ROUND5_20260914.md@942e4ff992 (one citation corrected @727c4e7c2b); s.5 RULINGS S, U, V, T (renderer half), W",
+ "slug_ref": "3.0.0_SA_CVO msg 96576, record org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND5_L8_L9_20260914.md@366a0b4103 -- 8 judgment criteria graded, 7 MET (6 qualified), F29-AC15 NOT MET on clause 3",
+ "round5_cells": "FE-s-29..FE-s-36 ALL COMPLETE and drained (last: FE-s-31 @6462e98cc6, portal DEV 741bb54b)",
+ "cells": 5,
+ "cell_id_shape": "FE-s-<n> continuing from 37",
+ "code_repo": "portal (gitlink in the workspace; branch DEV @741bb54b, measured)",
+ "record_repo": "workspace (branch CLOUD)"
+}
+```
+
+Round 5's finding, in the CTO's words: **the checker can be steered by the party it grades.** Limbs 2 and 3 of
+proof-of-spec-check read their NEW/LEGACY boundary from the governing order, and the governing order came from
+`decomp_ref.to_ref`, a field the worker writes; the flip gate passed the checker neither the flipped order nor a
+criterion list (row S61, F29-AC15 NOT MET). Round 6 binds that first, then closes the environment, business-date,
+window and fixture gaps the slug graduated. The header of this document reads v0.6 from this recut (analysis s.1:
+it read v0.4 through round 5).
+
+## R6.1 THE RECTANGLE -- five cells, the checker binding first
+
+| cell | ruling | write surface (portal unless stated) | serves | rows | wave | slot |
+|---|---|---|---|---|---|---|
+| `FE-s-37` | S -- the governing order is the order being flipped | **workspace** `.tools/to-pipeline-gate.py`; `.tools/proof-of-spec-check.py`; `.tools/tests/` | the evidence plane | S61, C-S84 | A | ~4 |
+| `FE-s-38` | U -- one server per worktree, every browser verdict names it | `vite.config.ts`; `tsconfig.app.json`; `tsconfig.node.json`; `.gitignore`; `__tests__/fe-s-27/`; `__tests__/fe-s-38/` | FWD-1, FWD-6 (evidence) | C-S81, W1-S56, W1-S57, W5-S1, W5-S4, F35-AC6's browser arm | B | ~1 |
+| `FE-s-39` | V + W's W2-S29 -- the adapter never substitutes a value the document did not state | `contracts/adapt.ts`; `contracts/index.ts`; `state/status.ts` (wording); `tabs/holdings/`; `__tests__/fe-s-21/source-age.test.ts`; `__tests__/fe-s-39/` | FWD-5, FWD-6 | C-S83 (W3-S22, W3-S25, W3-S26), W2-S29 | B | ~3 |
+| `FE-s-40` | T (renderer half) + W's W2-S31 -- the window by trading day, the band's code as the contract names it | `render/performance/MethodsAndSources.tsx`; `tabs/reporting/PeriodControls.tsx`; `tabs/reporting/AnswerStatus.tsx`; `render/Page.tsx`; `tabs/StatusPanel.tsx`; `state/tradingCalendar.ts` (NEW); `__tests__/fe-s-40/` | FWD-3, FWD-6, FWD-8, FWD-12 | S62, W2-S31 | B | ~2 |
+| `FE-s-41` | W -- one writer per fixture map, the narrative bound to its own revision | `__tests__/fe-s-14/gen-maps.ts`; `__tests__/fe-s-33/gen-global-holdings.ts`; `__tests__/fe-s-18/gen-fixtures.ts`; `fixtures/smoke/fe-s-14-global.json`; `fixtures/smoke/fe-s-18-frozen.json`; the three `fixtures/smoke/fe-s-18-holdings-*.json`; `__tests__/fe-s-41/` | FWD-3, FWD-11 (evidence) | W2-S24, W2-S27 | B | ~5 |
+
+**Coverage by subtraction, three domains.**
+(1) The analysis's round-6 inputs, s.5, taken to their sub-items (denominator 17): S {binding}; U {helper refuses
+a default, cacheDir in the worktree, tsbuildinfo in the worktree, every browser run records port and worktree,
+F35-AC6's browser arm carried}; V {W3-S22, W3-S25, W3-S26}; T {trading-day comparator, the calendar named and 01-01
+proved, an unnamed code verbatim and flagged}; W {W2-S24, W2-S27, W2-S31, W2-S29}; and the header bump. MINUS the
+cells: S=37; U=38 (5 of 5); V=39 (W3-S25 is ALREADY MET at portal DEV 741bb54b, `state/availability.ts:108` keys on
+producerState since FE-s-34 amendment 3 @c6ee044e, so FE-s-39 carries only its guarding test); T=40 (3 of 3);
+W2-S24 and W2-S27=41; W2-S31=40 (the band is FE-s-40's file); W2-S29=39 (the mapping is in `contracts/adapt.ts`,
+FE-s-39's file); the header bump = this L5 commit. **0 uncovered.**
+(2) The PRD header's outcomes (denominator 8: FWD-1, 3, 4, 5, 6, 8, 11, 12) MINUS those round 6 moves: FWD-1 {38},
+FWD-3 {40, 41}, FWD-5 {39}, FWD-6 {38, 39, 40}, FWD-8 {40}, FWD-11 {41}, FWD-12 {40 -- W2-S31, the band at 390} =
+**1 NOT MOVED AND NAMED: FWD-4** (its cells landed in round 5; nothing this round's rulings name touches the
+analysis tab's own surfaces).
+(3) The rows the analysis routes to round 6 MINUS their carrying cell: S61 -> 37; C-S81 (with W1-S56, W1-S57,
+W5-S1, W5-S4) -> 38; C-S83 (W3-S22, W3-S25, W3-S26) -> 39; S62 (renderer half) -> 40; C-S82's frontend rows W2-S24,
+W2-S27 -> 41, W2-S31 -> 40, W2-S29 -> 39 = **0 uncovered.**
+
+**NOT ROUND 6's (analysis s.5, s.6):** the five contract gaps -- window reason codes, report_title and the
+analysis-POST schema (W5-S2), scope node_kind (W2-S25), Global's second firm (W2-S23), the ADVISORY enum -- carried by
+row IRPT_BCKEND-S52 @d4fe023415; W4-S12 (AMGT_RESAPP's issuer); W4-S9 (fixed by 1.0.0_SA_CTO @727c4e7c2b).
+
+## R6.2 BOUNDS -- ALL ROUND-6 CELLS (rounds 1-5 bounds stand)
+
+```
+checker    RULING S's SEQUENCING. FE-s-37 lands before any other round-6 proof is checked: every wave-B
+first      worktree is cut AFTER FE-s-37 drains, so the checker a worker validates with is the bound one.
+           Until it drains, 3.0.0_SA_CVO reads each instance's to_ref against its own order at L9 (the
+           analysis's interim control), and no order the checker grades flips on the unbound checker.
+census     THE WHOLE-SUITE RUN IS THE CENSUS OF RECORD (W4-S11, adopted by 1.0.0_SA_CTO in the analysis
+           s.3): every cell that changes behaviour runs the whole affected suite ONCE with its change applied
+           (the InvestorReporting suite for portal cells; every .tools battery that calls either tool for
+           FE-s-37), IRPT_FE_DEV_PORT exported to a measured-closed port. A failure OUTSIDE the grant is a
+           BLOCKING row with the list, never an edit. A grep can seed a grant; it cannot close it.
+servers    Until FE-s-38 drains, every browser criterion in a wave-B cell other than FE-s-38 runs vite on a
+           worktree-local cache through a `.mjs` override LOADED at runtime inside the cell's own __tests__
+           folder (rows W1-S59, W2-S28: a `.ts` under src/ breaks the portal typecheck), and exports
+           IRPT_FE_DEV_PORT on EVERY bun test run -- never unset (W1-S57, W5-S1). Kill the server before the
+           report.
+drives     every criterion declares drives="network" or drives="none" (the checker refuses a new instance
+           otherwise); a drives="network" PASS must not be satisfied by seeding initial* props.
+anchors    count bars left `(?<![0-9])`, right `(?![0-9])`, never `\b`; one line per bar with `[^\n]*` where a
+           bar spans words; output_evidence carries the deciding run only (the count-bar limb refuses a
+           contradicting count).
+rows       round-6 rows go to INVESTIGATION_v2.md; read the WHOLE plane (v1 and v2) before minting; an INERT
+           row OMITS the disarm_owner key (a null is refused by the corpus pass); write with newline='\n'
+           and read the diffstat.
+gitlink    never stage `portal` in the workspace repo. PORTAL IS FROZEN: local DEV commits only.
+```
+
+## R6.3 THE CELLS
+
+### `FE-s-37` -- the governing order is the order being flipped (WORKSPACE cell)
+`check_complete_flip` (`.tools/to-pipeline-gate.py:2469` at CLOUD) runs `subprocess.run(["python", chk, inst])` --
+the instance and nothing else. The checker resolves its governing order from `decomp_ref.to_ref` when present
+(`.tools/proof-of-spec-check.py:614-641`, "An explicit decomp_ref.to_ref wins when present"; `_governing_rel`
+`:1300`). RULING S: the gate hands the checker the flipped order's path, the checker takes THAT as the governing
+order, and an instance whose `to_ref` names a different order is refused before any limb runs, by a violation naming
+both paths; `to_ref` is a cross-check only. The battery doctors `to_ref` to a real round-4 order through the gate's
+own flip path, keeps FE-s-29's committed instance VALID, and reads limb 1's frame on the doctored arm.
+
+### `FE-s-38` -- one server per worktree
+The fe-s-27 helper defaults to port `'5181'` (`__tests__/fe-s-27/_dev-server.ts:40`), and its own
+`precondition.test.ts` pins that default (`:40`, `:216`, `:251`). vite sets no cacheDir (`vite.config.ts`), so its
+cache is `node_modules/.vite` -- through the junction, the main checkout's; `.gitignore:17` already ignores `.vite`.
+Both tsconfigs write `tsBuildInfoFile` to `./node_modules/.tmp/` (`tsconfig.app.json:3`, `tsconfig.node.json:3`),
+through the same junction. RULING U: the helper refuses without IRPT_FE_DEV_PORT or a worktree-derived port;
+cacheDir and tsbuildinfo live inside the worktree by CONFIG; every browser run's precondition line names its port
+AND its worktree. F35-AC6's browser arm is carried here and re-run on this worktree's own server (its round-5
+deciding run met no server and SKIPPED F19-AC4/AC5 by name).
+
+### `FE-s-39` -- the adapter never substitutes a value the document did not state
+One axis for three findings. W3-S26: `readingFromValue(null)` returns fact NULL (`contracts/adapt.ts:161`), and
+`carryDocumentReading` (`:316`) applies it to VIEW documents, where the view contract defines a null
+`businessAsOf` as "no clock" (`contracts/index.ts:147`), so 3 of 134 view documents (all in
+`smoke/fe-s-3-loading.json`) read "Source date malformed" (`state/status.ts:332`, `:476`); on the WIRE plane a null
+stays a producer defect. W3-S22: `__tests__/fe-s-21/source-age.test.ts` builds its envelope from the status's
+`sourceAsOf` (`panelFor`, `:77-81`) and grades that instant under the business-date label (`:171`). W2-S29:
+`ADVISORY_FOR_WIRE[...] ?? 'unknown'` (`contracts/adapt.ts:558`, `:865`) maps an out-of-enum `advisory_status`
+(`'ADVISORY'`, emitted by `__tests__/fe-s-18/gen-fixtures.ts:317`) to "unknown" -- on the READY observed answer, 3
+of 3 rows, with nothing qualifying it (F32-AC9's qualification). RULING W: shown verbatim and flagged. W3-S25 is
+already met at DEV (above); this cell guards it with a test.
+
+### `FE-s-40` -- the window by trading day, the band's code as the contract names it
+`MethodsAndSources.tsx:58` decides "the same window" by calendar strings; `tabs/reporting/PeriodControls.tsx` prints
+the same sentence on screen. So the frozen READY print (fe-s-31_print_frozen-as-committed_1440.png) says "a different
+window" on page 3 -- a request starting 2026-01-01, a market holiday, answered from 2026-01-02 -- while its band says
+REQUESTED_WINDOW_ANSWERED (row S62). The portal has no trading calendar (a census of `src/`: `ModelPortfolios.tsx`
+keeps a render-axis holiday list that names `lib/trading_calendar.py` as the canonical one; `BenchmarkHeatmap.tsx`
+counts weekdays). RULING T: compare by trading day, name the calendar, prove 01-01; the table is DERIVED from the
+estate's one frontier, `lib/trading_calendar.py`, never hand-typed. REQUESTED_WINDOW_ANSWERED is defined nowhere
+(0 hits in `docs/contracts/investor-reporting/v1`), so until the contract names its codes a code it does not name is
+shown verbatim and flagged, on the band surfaces this cell owns (`AnswerStatus.tsx`, which Holdings also uses;
+`render/Page.tsx`; `tabs/StatusPanel.tsx`; `MethodsAndSources.tsx`). W2-S31: the band fits its reason code at 390.
+
+### `FE-s-41` -- one writer per fixture map
+`fe-s-14-global.json` has two writers: `__tests__/fe-s-14/gen-maps.ts:94` rewrites it whole with no holdings, and
+`__tests__/fe-s-33/gen-global-holdings.ts:57` adds them; run alone, the first strips the second's envelopes (W2-S24;
+S59 disarmed it by detection only, which the CTO calls the defect). W2-S27: the frozen map's narrative names `perf-9`
+while the frozen report is `rev-49f-000091`. RULING W: one writer; the narrative re-bound to its own performance
+fixture. The three Holdings maps are generated from the frozen map (`gen-fixtures.ts`, W2-S26), so the narrative's
+re-binding reaches them through the one generator.
+
+## R6.4 DEPENDENCY EDGES, SLOTS, FAN-OUT
+
+```
+  FE-s-37 <- (none)          READY ROOT   workspace .tools/
+  FE-s-38 <- FE-s-37         wave B       portal root config + fe-s-27/
+  FE-s-39 <- FE-s-37         wave B       contracts/adapt.ts, contracts/index.ts, tabs/holdings/, fe-s-21 test
+  FE-s-40 <- FE-s-37         wave B       the band surfaces, the window comparator, the calendar
+  FE-s-41 <- FE-s-37         wave B       the generators and the maps they write
+
+  weakly connected components: M = 1     ready roots at issuance: R = 1
+  waves: A={37}  B={38,39,40,41}      max concurrent width: 4
+  ~4 FE-s-37   ~1 FE-s-38   ~3 FE-s-39   ~2 FE-s-40   ~5 FE-s-41
+```
+
+Every wave-B edge on FE-s-37 is a SEQUENCING edge (RULING S: nothing the checker grades flips on the unbound
+checker). Wave B is disjoint by FILE: FE-s-39 holds `contracts/adapt.ts` (both its V half and the advisory mapping);
+FE-s-40 holds every band surface, including `AnswerStatus.tsx`, which Holdings renders; FE-s-41 holds the generators
+and the maps; FE-s-38 holds the portal root config and the fe-s-27 helper. Cells READ each other's surfaces at their
+base (FE-s-39 and FE-s-40 read the Holdings maps FE-s-41 regenerates; the rows those two assert on do not move).
+
+**Fan-out: `1 of 1 chains, cap 8, reason: RULING S puts the checker binding ahead of every other round-6 proof, so
+the graph is one component with one ready root; it widens to 4 of 4 at wave B, disjoint by file`.**
+
+## R6.5 RULE 24 RECORD (round 6)
+
+| postulate | how |
+|---|---|
+| (i) MECE | three domains by subtraction in R6.1: inputs 17-17=0 (W3-S25 already met, guarded not rebuilt); outcomes 8-7=1 NOT MOVED AND NAMED (FWD-4); routed rows 0 uncovered. Cells partition by FILE; no two wave-B cells share a written path. |
+| (ii) same grain | (write region, ruling) per cell; FE-s-37 at the FABRIC grain, stated as such. |
+| (iii) intent | FE-s-37: the grader cannot be steered by the graded. FE-s-38: a verdict names the server it hit. FE-s-39: the adapter never substitutes a value the document did not state. FE-s-40: the page never contradicts itself about its window or presents an undefined code as a known one. FE-s-41: one writer per map. |
+| (iv) state | moves FWD-1/3/5/6/8/11/12 toward EXERCISABLE. Does NOT move: any grade to REALIZED (fixture-bound evidence; seven outcomes need IRPT_BCKEND); FWD-4; FWD-11's second firm (W2-S23, the producer's); the contract's code list and enums (IRPT_BCKEND-S52); the portal freeze. |
+
+## R6.6 BATTERY DISPOSITION (round 6)
+
+| lens | disposition | denominator / reason |
+|---|---|---|
+| comp-schedule / comp-iam | DECLARED-NOT-APPLICABLE | no scheduled producer, no IAM-gated resource |
+| comp-adversary | RUN at L4 on v0.6 (both halves SIGNED) | carried; PRD unchanged (analysis s.1) |
+| the checker's governing order | RUN | `check_complete_flip` passes only the instance (`subprocess.run(["python", chk, inst])`); `to_ref` wins at `proof-of-spec-check.py:614-641`; 3 of 63 `.tools/tests` files reference `to_ref` (count-bar, alignment, seeded) |
+| the dev-server environment | RUN | helper default `'5181'` (`:40`) pinned by its own test (`:40`, `:216`, `:251`); vite cacheDir absent; `.gitignore:17` `.vite`; tsBuildInfoFile `./node_modules/.tmp/` in both tsconfigs |
+| the business-date plane | RUN | `availability.ts:108` keys on producerState at DEV (W3-S25 met); `readingFromValue(null)` NULL at `adapt.ts:161`; `fe-s-21` `panelFor` `:77-81`, `:171` |
+| the advisory mapping | RUN | `adapt.ts:558`, `:865` `?? 'unknown'`; `'ADVISORY'` at `gen-fixtures.ts:317` |
+| the window and the codes | RUN | `MethodsAndSources.tsx:58` calendar-string comparator; no trading calendar in `src/` (3 files mention holidays; none is the canonical one); reason codes render in `AnswerStatus.tsx`, `render/Page.tsx`, `tabs/StatusPanel.tsx`, `MethodsAndSources.tsx` |
+| the fixture writers | RUN | `gen-maps.ts:94` and `gen-global-holdings.ts:57` both write `fe-s-14-global.json`; `perf-9` 1 and `rev-49f-000091` 1 in the frozen map |
+| instruments at the cut | RUN | to-pipeline-gate --self-test 0 of 70 failed; proof-of-spec-check --self-test 32 of 32 (CLOUD 6462e98cc6) |
+
+## R6.7 REFUSES TO ASSUME (round 6)
+
+1. That a boundary the grader reads is the grader's. S61: the graded party wrote the field that decided ENFORCE or LEGACY, and every battery was green.
+2. That a census by grep closes a grant. Three misses on one cell in round 5; the whole-suite run is the census of record.
+3. That a verdict names the server it graded. W5-S1: another project's page answered on the default port and was graded.
+4. That a null means the same thing on two planes. The view contract's null is "no clock"; the wire's is a producer defect.
+5. That two calendar strings that differ are two windows. 2026-01-01 is not a trading day.
+6. That detection is a disarm. S59 made the two-writer map loud; RULING W removes the second writer.
+
+## R6.8 HOLDS
+
+**None blocking.** Interim control while FE-s-37 runs, stated so nobody reads it as a gap: every round-6 wave-B cut
+waits on FE-s-37's drain, and 3.0.0_SA_CVO reads each instance's to_ref against its own order at L9.
