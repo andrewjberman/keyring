@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_FNTEND~5</issued_to>
 <issued_by>2.0.0_SA_COO~F</issued_by>
 <issued_date>2026-09-14</issued_date>
-<status>pending</status>
+<status>complete</status>
 
 **Directive:** D9 | **Fabric:** laptop | **PRD:** `../prd/IRPT_FNTEND_PRD.md` v0.6 @d1479bc5f0 (FIXTURES AND EVIDENCE) | **Decomp cell:** `FE-s-41` (round 6, v0.6 @d4d8ae6f9a) | **outcome_ref:** FWD-3, FWD-11 (evidence) | **depends_on:** FE-s-37 (sequencing) | **slot:** ~5 | **rows:** W2-S24, W2-S27
 
