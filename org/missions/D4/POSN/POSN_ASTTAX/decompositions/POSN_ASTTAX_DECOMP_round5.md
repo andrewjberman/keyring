@@ -11,10 +11,13 @@ the moment of drafting. **Gate at draft time:** `prd-signoff.py status POSN_ASTT
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/POSN_ASTTAX_CLOSEOUT_BREAKDOWN_20260914_Z.md` **v0.5** @`0949f2d53d`, ALIGNED by
 Andrew ~17:3xZ (*"All recs approved ... we do not touch Attribution"*, record by `4.0.0_SA_CRO~Z` @`727b82e8d2` family).
 
-> **STATUS OF THIS FILE: DRAFT.** Eight cells are aligned. A NINTH (`AT5-s-9`, the edge-router leaf allowlist) is
-> **PROPOSED-PENDING-ANDREW**: accepted at L4 by `1.0.0_SA_CTO~Z` (msg 22884) as essential, put to Andrew because it
-> deviates from breakdown s.3 (s.4 step 4). **Nothing is cut until his word lands and both never-widen halves are
-> committed and cited** (s.4 step 3b). The decomposition freezes at the cut; this draft may still move.
+> **STATUS OF THIS FILE: NINE CELLS ALIGNED.** The ninth (`AT5-s-9`, the edge-router leaf allowlist) was PROPOSED at
+> `f381f6f402`, accepted at L4 by `1.0.0_SA_CTO~Z` (msg 22884) and **APPROVED BY ANDREW ~18:1xZ at the `1.0.0_SA_CTO~Z`
+> terminal** -- VERBATIM *"I am fine with the recs as youve listed them but have questions on call 2"* (call 1 = B5; call 2 is
+> the ad-hoc Bloomberg pull, NOT closed, no pull runs; record
+> `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_181xZ_OPEN_CALLS_RECS_APPROVED_B5_YES_CALL2_QUESTIONED.md`,
+> relayed as msg 22888). **The cut follows B5's two never-widen halves** (s.4 step 3b now covers B5). The decomposition
+> freezes at the cut.
 
 ---
 
@@ -63,7 +66,7 @@ FWD-5); **S2** the class registry, order + colour (FWD-3, FWD-4); **S3** the Pos
 | `AT5-s-6` | **F2** Positioning renders five classes (order, colour map, rows, five-key allocation) | S3 -> FWD-6; S2 -> FWD-3/FWD-4 applied | NOT_EVALUATED | site-z |
 | `AT5-s-7` | **F3** Satellites mode reads `holdings.json` + characteristics; no computation | S3 -> FWD-6 on Satellites; S1 outcomes rendered | NOT_EVALUATED | site-z |
 | `AT5-s-8` | **R1** THE RETAG, both stores, both levels, then the bar on the local build | S1 -> FWD-1, FWD-2, FWD-5 EXERCISED; S3 -> FWD-6 EXERCISED | NOT_EVALUATED | site-z |
-| `AT5-s-9` | **B5** edge router leaf allowlist {registry, holdings, characteristics}.json + Lambda@Edge deploy | S3 -> the READ PATH for FWD-6 on Satellites (no outcome of its own) | **PROPOSED-PENDING-ANDREW** | site-z |
+| `AT5-s-9` | **B5** edge router leaf allowlist {registry, holdings, characteristics}.json + Lambda@Edge deploy | S3 -> the READ PATH for FWD-6 on Satellites (no outcome of its own) | NOT_EVALUATED (APPROVED by Andrew ~18:1xZ, msg 22888) | site-z |
 
 **Every cell is served by a worker at L7; no cell is owned by a seat.** The seat acts that precede the issuance (the halves,
 s.4 step 3b) are not cells.
