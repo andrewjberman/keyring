@@ -265,6 +265,98 @@ new row on 3.0.0_SA_CVO's ask 96495), both 1.0.0_SA_CTO; `LGIC_NAMING-S3`, `LGIC
     "spec_asserts": "Decomposition v3 section 3a.4: the N6 sample is 86 discriminating + 3 OVERLAP names at the stated vintage.",
     "world_is": "The rule as written, applied to distinct names at the issuance pull, yields 85 discriminating + 3 OVERLAP. The issuance's N6_SAMPLE.json carries 85 + 3 and a count_note naming this row. The frozen decomposition is not edited.",
     "notes": "OBSERVATION, INERT: the rule binds and it is applied as written; only the derived count moved. No cell's criterion depends on the number 86 -- the checker reads the sample file's own denominator. For 3.0.0_SA_CVO's L8 disposition."
+  },
+  {
+    "id": "LGIC_NAMING-W1-S1",
+    "project": "LGIC_NAMING",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_NAMING~1",
+    "surfaced_at": "2026-09-14T17:01Z",
+    "one_line": "The portal census TO-LN-g-1 names, git grep -n platinum <sha> -- src (case-sensitive), prints 122 lines but shows a request line for only 7 of the 39 served platinum paths the frozen portal requests: the rest are built on PLATINUM_BASE, advisorBase, clientBase or perfrpLeafBase, or reach platinum/ through a router rewrite of /api/general/mdpf|etfs or /api/scoped/satellites, and none of those lines spells lowercase 'platinum'.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "NAMED INSTRUMENT, portal @e85f6eb84f (git ls-tree HEAD portal at workspace 6a5b276f8b): git -C <workspace>/portal grep -n platinum e85f6eb84f -- src -> 122 lines; its request lines are advisor-intelligence.ts:302, :380, :397, :419, :456, :1366 and the platinum-summary route :957 -- 7 templates.",
+        "WIDENED: git grep -n -i platinum e85f6eb84f -- src -> 401 lines across 33 files; git grep -n -E 'api/general/mdpf|PLATINUM_BASE|platinum-summary|/api/scoped/[a-z-]+/platinum' -> 47 lines; a third census for request builders without the token (advisors/${, clients/${, accounts/${, mix.json, /api/scoped/satellites, /api/general/(mdpf|etfs)) -> 30 lines.",
+        "EXAMPLES the named census cannot print: advisor-intelligence.ts:725 const advisorBase = `${PLATINUM_BASE}/advisors/${advisorId}` and :736 `${advisorBase}/book.json`; aum.ts:614 `/api/general/mdpf/${firmId}/aum-metrics.json` (rewritten to platinum/mdpf/* per aum.ts:509); satelliteRegistry.ts:86 '/api/scoped/satellites/registry.json' (resolved to platinum/satellites/registry.json per :74-76).",
+        "RESULT: org/missions/D14/LGIC/LGIC_NAMING/deliverables/LEGACY_SERVED_PATHS.json lists 39 templates, each with its request site, and 8 exclusions with reasons, from the widened census."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-LN-g-1, Deliverable 2: 'src/api/endpoints/adviKeyRepoint.ts is the known request site ...; census the rest with git -C .../portal grep -n platinum <sha> -- src and print the denominator.'",
+    "world_is": "The named census finds only request lines that spell the token. In the frozen portal most platinum requests are assembled from a constant (PLATINUM_BASE = '/api/scoped/advisor-intelligence/platinum', advisor-intelligence.ts:489) or from a route the CDN router rewrites to platinum/, so a list built from that census alone would hold 7 of 39 entries and wrongly grade 32 legacy served paths OUT-OF-PATTERN. The list was built from the widened census; both denominators are printed in its census field.",
+    "notes": "OBSERVATION, INERT: the list landed from the wider read. Recorded so the list's completeness can be judged against both instruments, and so a later re-read of the portal does not repeat the narrower one. Not measured: the router source (shared-advisor-router, public-data-router) that performs the rewrites; the mappings are the portal's own comments."
+  },
+  {
+    "id": "LGIC_NAMING-W1-S2",
+    "project": "LGIC_NAMING",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_NAMING~1",
+    "surfaced_at": "2026-09-14T17:01Z",
+    "one_line": "The system slot has no registry to resolve against: the seed 05_IDENTITY_SPINE.md holds 2 products and 8 vendors, no PLATFORM_SUBSYSTEM row, and marks find/harvest/imo UNRESOLVED, while the census's first-token table lumps platform subsystems with project codes; GRADING_RULE.md therefore grades against an INTERIM system table (seed + census s.3's products-and-feeds row) and RAISEs 14 tokens.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SEED: infra/logic/05_IDENTITY_SPINE.md s.3 @6a5b276f8b: PRODUCTS mdpf, etfs, and harvest/find 'UNRESOLVED: tick-list row 18' (imo with them); VENDORS schwab, blackdiamond, orion, eclipse, smartx, pathfinder, trueshares, ycharts; s.2 names four entity types (FIRM, PRODUCT, VENDOR, MASTER) and no PLATFORM_SUBSYSTEM.",
+        "DATA: org/standards/NAMING_SCHEMA.json v1.4 system.classes = [PRODUCT, PLATFORM_SUBSYSTEM, VENDOR]; rows_owner: 'Seed until that registry exists: infra/logic/05_IDENTITY_SPINE.md'.",
+        "CENSUS: infra/logic/09_NAMING_CENSUS.md s.3 row 3 calls irpt, mdpf, etfs, advi, smartx, yang, news, find, astn, amgt, trade, seeking, fred, ycharts 'the real {system} values'; row 4 lists estate, globgrph, semantic, agentbus, cmtque, opsec, firmsep, consolidation, canonical, gldinc, quartz as 'PLATFORM subsystems and PROJECT CODES used as systems' without saying which is which.",
+        "EFFECT in the worked cases: globgrph-serving (ECS_TASK_DEFINITION) and opal-globgrph (ECS_CLUSTER) RAISE; every eligible live ECS_TASK_DEFINITION name begins globgrph."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD S6: 'Which systems exist is the registry's rows, not this document'; S11: 'a token no registry row resolves, RAISES as a defect in the rule or the registry'; the data file's rows_owner names the seed as the registry until it exists.",
+    "world_is": "Read strictly against the seed, the rule would RAISE on most live names, because irpt, advi, yang, news, astn, amgt, trade, fred and seeking-alpha -- the census's own 'real {system} values' -- have no seed row. The rule admits them as INTERIM systems (V1 of GRADING_RULE.md, provenance stated, and its product-or-feed split is this worker's reading), and RAISEs the census's unsplit subsystem-or-project-code tokens and the seed's UNRESOLVED products (V2). LN-h-1 and LN-h-2 grade with the same table, so they can agree, but the table is not the registry.",
+    "notes": "OBSERVATION, INERT for this round. The registry rows are LGIC_ENFORCE's (PRD CONTRACTS row 3, ruling (a)); a platform-subsystem row for each V2 token, or a word that a token is a project code, turns that token's RAISE into a verdict without changing the rule's text."
+  },
+  {
+    "id": "LGIC_NAMING-W1-S3",
+    "project": "LGIC_NAMING",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_NAMING~1",
+    "surfaced_at": "2026-09-14T17:01Z",
+    "one_line": "grade.OUT-OF-PATTERN prints a canonical form, but three live name classes do not carry a slot that form needs -- a firm or other non-system first token with no system token anywhere in the name, an S3Key node name that carries no bucket (so no source or scope), and an event rule or schedule with no cadence token -- so GRADING_RULE.md prints those canonical forms with a {system}, {source}, {scope} or {cadence} placeholder.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "DATA: org/standards/NAMING_SCHEMA.json v1.4 grade.OUT-OF-PATTERN: 'the grammar fails (order, separator, case, a missing or unknown kind, a firm in the system slot); canonical_form is printed'.",
+        "CENSUS: infra/logic/09_NAMING_CENSUS.md s.1 item 3(c): a firm token at position 0 'as if the firm were the system' in Lambda 47, role 55, rule 45, log 57 names; header: 'the live graph's 382 S3Key nodes are name-grain served-graph nodes without bucket ARNs'.",
+        "LIVE_NAMES.json (vintage 2026-09-14 12:13:53 UTC): LAMBDA inf-silver-chain (no token is a system), S3Key platinum/firm/header_metrics.json (no bucket; the bucket decides scope, SEED s.3), EVENT_RULE bd-49f-session-complete (no cadence token).",
+        "WORKED CASES in GRADING_RULE.md @ this commit: {system}-inf-silver-chain-lambda, advi/{scope}/platinum/firm/header_metrics.json, blackdiamond-49f-session-complete-{cadence}, {source}/{scope}/code/gold/*."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "NAMING_SCHEMA grade.OUT-OF-PATTERN: 'canonical_form is printed'; PRD FWD-5 ACCEPT: 'including the correct name for each one that breaks the pattern'.",
+    "world_is": "From (name, type) alone, the canonical form of these names cannot be completed. The missing slot lives in the registry (which system a firm pipeline belongs to), in the bucket that holds the key, or in the rule's schedule expression or event pattern, and none of those is an input to grade(). A placeholder canonical form is deterministic, so two hand graders agree on it (G6 V-2 makes it OUT-OF-PATTERN), but it is not the full correct name FWD-5 asks for.",
+    "notes": "OBSERVATION, INERT: nothing breaks and the verdict is decided. The open question, not chosen here, is the contract's (1.0.0_SA_CTO's, the author of CONTRACTS row 2): whether a placeholder canonical form satisfies FWD-5, or grade() needs more than (name, type) -- the bucket for a key, the registry's system for a principal -- as v1.4 did for legacy membership by making it data."
+  },
+  {
+    "id": "LGIC_NAMING-W1-S4",
+    "project": "LGIC_NAMING",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_NAMING~1",
+    "surfaced_at": "2026-09-14T17:01Z",
+    "one_line": "Names AWS fixes sit inside three graded types with no exclusion in NAMING_SCHEMA.json -- the VPC default security group 'default' (1 of 26 SECURITY_GROUP), 9 of 417 IAM_POLICY names beginning AWS or Amazon, and 4 of 264 LOG_GROUP names (aws-waf-logs-*, RDSOSMetrics, /aws/ecs/containerinsights/*) -- so GRADING_RULE.md RAISEs them by name shape, and cannot see an AWS-managed policy without the prefix (ReadOnlyAccess is live).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "DATA: org/standards/NAMING_SCHEMA.json v1.4 types_not_graded_by_kind and not_covered exclude AWS-issued identifiers by TYPE only (KMS_KEY, CLOUDFRONT_DISTRIBUTION, SERVICE_PRINCIPAL, VPC_ENDPOINT); SECURITY_GROUP and IAM_POLICY are kind.by_type keys, and LOG_GROUP is graded as derived.",
+        "LIVE_NAMES.json (vintage 2026-09-14 12:13:53 UTC), counted by python over by_type: SECURITY_GROUP 'default' 1 of 26; IAM_POLICY AWSDataLifecycleManagerServiceRole, AWSLambdaBasicExecutionRole, AWSLambdaVPCAccessExecutionRole, AmazonDynamoDBFullAccess, AmazonEC2ContainerRegistryFullAccess, AmazonECSTaskExecutionRolePolicy, AmazonRDSEnhancedMonitoringRole, AmazonS3ReadOnlyAccess, AmazonSSMManagedInstanceCore = 9 of 417; LOG_GROUP /aws/ecs/containerinsights/opal-globgrph/performance, RDSOSMetrics, aws-waf-logs-opal-cloudfront, aws-waf-logs-opal-gateway = 4 of 264; ReadOnlyAccess present in IAM_POLICY with no prefix.",
+        "CENSUS: infra/logic/09_NAMING_CENSUS.md s.2 lists 'the two default SGs' in the residue, and PRD N2's fixture requires the 'default security groups' residue class graded.",
+        "N6 SAMPLE: fixed_inputs/N6_SAMPLE.json carries IAM_POLICY AWSDataLifecycleManagerServiceRole and LOG_GROUP aws-waf-logs-opal-gateway among the 85 discriminating names, so LN-h-1 and LN-h-2 meet this class."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "NAMING_SCHEMA grade.unplaceable: 'A name the tokeniser cannot place ... is a defect in the tokeniser, this file or the registry and is fixed there'; types_not_graded_by_kind excludes AWS-issued identifiers type by type.",
+    "world_is": "These names are fixed by AWS (a VPC's default group cannot be renamed; AWS-managed policy names and service-mandated log-group names are AWS's), so no canonical form can be minted for them, yet their types are graded. The rule RAISEs them (G2) as a data-file defect. The name is its only evidence: an AWS-managed policy without the AWS/Amazon prefix, such as ReadOnlyAccess, cannot be told from a camel-case customer policy and is graded OUT-OF-PATTERN.",
+    "notes": "OBSERVATION, INERT. Remedy options, not chosen here, the data file's author's (1.0.0_SA_CTO): exclude AWS-owned names within graded types by an enumerated rule in NAMING_SCHEMA.json (an AWS-managed ARN prefix, the default group, the service-mandated log-group forms), or accept the RAISE as their standing output."
   }
 ]
 ```
