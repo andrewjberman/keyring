@@ -815,6 +815,30 @@ new row on 3.0.0_SA_CVO's ask 96495), both 1.0.0_SA_CTO; `LGIC_NAMING-S3`, `LGIC
     "spec_asserts": "PRD FWD-1 ACCEPT: two people each write 'the identical name' from the schema. Decomposition v3 s.3a.1: the items are 'described in plain words that never spell a schema token'.",
     "world_is": "The schema, which is the namers' ratified briefing, now spells one item's full answer as a worked example, and the registry seed spells another's. The items themselves still spell no token; the briefing does.",
     "notes": "Filed by the issuer at the round-2 cut, for 3.0.0_SA_CVO at L9 (FWD-1) and for the schema's author, 1.0.0_SA_CTO. The cut does not edit the schema: it is ratified data and the namers' whole briefing. The round-2 namers run on it as it stands, and FWD-1's agreement is read as 16 items plus these two under this disclosure. INERT: nothing breaks, and the grader has the disclosure on its input."
+  },
+  {
+    "id": "LGIC_NAMING-W1-S6",
+    "project": "LGIC_NAMING",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_NAMING~1",
+    "surfaced_at": "2026-09-14T22:04:44Z",
+    "one_line": "The e1 seat files are committed LF under core.autocrlf=true with no eol attribute, and check_ln_r2.py hashes e1.prompt.txt and e1.answer.txt byte-exact, so a checkout that git renders CRLF fails E1R-AC1 and E1R-AC2 on a seat that was clean.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~G",
+    "spec_asserts": "TO-LN-e-1-r2 BOUNDS: the checker re-derives the prompt and re-parses the reply, so a hand edit FAILs the seat criterion; a proof row's invocation is re-runnable by a verifier (PROOF_OF_SPEC.schema.json acceptance.invocation). The criteria are meant to fail on an edit, not on a checkout.",
+    "world_is": "check_ln_r2.py:107-109 @619dec559f reads seats/<cell>.prompt.txt and .answer.txt with exact=True (newline='' keeps CR), then compares their sha256 to the seat record at :133-136 and :152. The blobs at eaafb46486 are LF (git ls-files --eol: i/lf w/lf), core.autocrlf=true, git check-attr shows no text/eol attribute. In this same worktree the tracked INVESTIGATION_v1.md is checked out i/lf w/crlf (820 CRLF of 820 LF), so git does render CRLF here; the seat files read LF only because blind_seat.py wrote them and git has not re-checked them out. In-memory test on the HEAD blobs: as-is matches result_sha256 / prompt_sha256 = True for both files; the same blob rendered CRLF = False for both. A verifier re-running E1R-AC1 (prompt and reply conditions) and E1R-AC2 (FAIL-NO-CANARY) on a checkout git wrote reads FAIL with no edit. The same read path serves the e2, e4 and l2 seat files.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D14/LGIC/LGIC_NAMING/deliverables/2.0.0_SA_COO~G/fixed_inputs/r2/check_ln_r2.py:42-46,107-109,133-136,152 @619dec559f",
+        "org/missions/D14/LGIC/LGIC_NAMING/deliverables/exercises/r2/seats/e1.seat.json @eaafb46486 (prompt_sha256 84ac10b1..., result_sha256 47cda3fa...)",
+        "git ls-files --eol in worktree wk-lgic-naming-2-1 @eaafb46486: seat files i/lf w/lf; INVESTIGATION_v1.md i/lf w/crlf; git config core.autocrlf = true",
+        "in-memory hash of git show HEAD:<seat file>: LF as-is matches the record (2 of 2), CRLF-rendered matches (0 of 2)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Filed as form, not significance. The fixed inputs are read-only to this worker, so nothing was changed. The candidate disarms belong to the issuer: an eol/-text attribute on exercises/r2/seats/, or the checker reading the committed blob or normalizing CR. Not exercised: the checker run on a fresh checkout (no extra worktree was made); the CRLF-render half is grounded by the channel file's own checkout in this worktree."
   }
 ]
 ```
