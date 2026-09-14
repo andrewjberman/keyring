@@ -97,3 +97,27 @@ porcelain · mtimes via `date -u -r`, after I had typed a literal `Z` into an `l
 previous call and got LOCAL time back -- the trap CLAUDE.md names, caught by the numbers disagreeing
 with a reading I already had · attribution stated as a **limit** (an untracked file has no author, the
 home is shared seven ways) with the operative conclusion shown not to depend on it.
+
+
+---
+
+## ADDENDUM -- MTIME IS NOT ARRIVAL TIME, AND MY OWN s.2 INVITES THAT INFERENCE
+
+A fourth read at **14:30:34Z** put the porcelain count at **4**. The new entry is
+`AMGT_RESAPP_ROUND9_CVO_RENDER_20260914_Z.cjs`, 4,245 B -- **mtime `14:18:35Z`.**
+
+⛔ **That mtime PREDATES two reads that did not show the file.** The porcelain listing at ~14:21Z
+printed three lines and the count at 14:22Z was three; at 14:30Z it is four, and the newcomer is
+stamped twelve minutes earlier than the read that missed it.
+>> ⭐ **So on this surface MTIME DOES NOT DATE APPEARANCE.** A file can arrive in the working tree
+   carrying an older stamp -- a move preserves mtime, and I am naming that as the likely mechanism
+   without asserting it, because I did not watch it happen. **An mtime-ordered listing therefore
+   MISORDERS ARRIVAL, and pairing "the count changed" with "and its mtime is 14:21" invites exactly
+   the inference that the stamp says when it showed up.** <<
+
+**WHAT SURVIVES UNCHANGED:** the count moving 2 -> 3 -> 4 across three reads is activity, and s.2's
+conclusion and the rung clause at `008c6206d2` rest on the COUNT, not on any stamp. **WHAT IS
+CORRECTED:** s.2 reads as though `VERIFY`'s 14:21:25Z stamp is what places it between two reads. It
+does not; the *visibility change* placed it there and the stamp merely agreed. ⚠ **No row is
+filed** -- `Z-S87`'s operative claim is untouched and this corrects a supporting inference inside the
+same document; minting a fourth row this hour for it would be ceremony over a sentence.
