@@ -1,12 +1,12 @@
 {
   "prd": "LGIC_CANON_PRD.md",
-  "prd_version": "v1.0",
-  "prd_pin": "4d65f28d36293eaf80a1aea46e08928ead1e4b40",
+  "prd_version": "v1.1",
+  "prd_pin": "56608aadd493d738330e5b9324683019cf5417e3",
   "half": "ratified-text",
-  "half_hash": "0a3d88594e6a8f38ffefe6d5440655621e95f13c6b060863014914f5c06a3e66",
+  "half_hash": "43fa46d2a86f5474d6600060010bdf51a99d449299cb0a0415008df3faa1620b",
   "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/PRD_REVIEW_LGIC_CANON_v1.0_RATIFIED_TEXT_HALF_20260914.md@c2357a9e3b",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/PRD_REVIEW_LGIC_CANON_v1.1_RATIFIED_TEXT_HALF_20260914.md@abf61890f2",
   "signed_by": "3.0.0_SA_CVO",
-  "signed_at": "2026-09-14T07:28:14Z",
-  "reason": "SIGN -- 6 of 6 outcomes verbatim, every consumed anchor resolves; three non-blocking notes"
+  "signed_at": "2026-09-14T07:49:17Z",
+  "reason": "SIGN -- ENDPOINT byte-unchanged; generated naming section coherent; N4 non-blocking"
 }
