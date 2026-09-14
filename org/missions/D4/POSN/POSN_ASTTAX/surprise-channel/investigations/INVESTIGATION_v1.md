@@ -3740,6 +3740,56 @@ all seven mechanical criteria were measured and the verdict is NO-GO.
   "spec_asserts": "CLAUDE.md s.4: no non-ASCII in production code; NON-APPLICATION 'a file that is ALREADY pure ASCII (keep it that way)'. The recorder and the build script both write this file on every yang deploy (.owned-paths.yaml:1901 note).",
   "world_is": "The worker restored the file (1-line diff, 0 non-ASCII) inside its own granted path at ac1eed675a; the next writer re-encodes it again unless the restoration is repeated after every write. U+00A7 is defined in cp1252, so every one of the 28 bytes is in the SILENT class.",
   "notes": "A future writer of a pure-ASCII shared file prints the detector beside its diff stat."
+},
+{
+  "id": "POSN_ASTTAX-Z-S80",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T20:11:29Z",
+  "one_line": "DISARM of W23-S2 (INERT): the ledger sentinel under org/critical_paths/.open_deploys/ that V9-AC2's tool stages and V9's <paths> did not name -- the Z-S72 class. This cell opened and CLOSED its entry in one session (2713aec236), so the sentinel was unlinked at close and nothing crossed a commit boundary; the residual (a forced worktree removal between open and close) is exactly what naming the path in <paths> covers, and every order still to be handed (V4, V6, V7, V8 where a ledger opens) names it. V9 is not amended for a closed ledger.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RULED at Z-S72 (@f8a85ea77f): the registry's ANY grant on org/critical_paths/** admits the sentinel to every worker whether or not <paths> enumerates it; the enumeration is the order's own carrier of that fact, and it is now present in TO-V1-1 and TO-V4-1 at HEAD.",
+      "NOTHING TO ACT ON FOR V9: the entry is CLOSED with all 8 legs proven; there is no sentinel to commit.",
+      "WHY GRADUATED: same finding, same ruling, third order in one round; the class is closed at the cut for every unhanded order."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W23-S2"
+  ],
+  "spec_asserts": "TO-V9-1 <paths> names org/critical_paths/change_management/ only; deploy_ledger.py:213-216 says the L6 cut names the sentinel.",
+  "world_is": "The worker committed the .md inside its grant, left the sentinel staged, closed the entry, and the tool unlinked the sentinel -- net repo effect zero, no override.",
+  "notes": "The next issuance names org/critical_paths/.open_deploys/ in every order that opens a ledger, at the cut."
+},
+{
+  "id": "POSN_ASTTAX-Z-S81",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T20:11:29Z",
+  "one_line": "DISARM of W23-S3 (INERT): V9-AC7's -out=.scratch/b5.tfplan resolved under the -chdir target and could not be written; the worker reached the same bounded plan with a chdir-relative path and DISCLOSED it, and V9-AC8/AC12 consumed it the same way. RULED: the PASSED criteria are NOT rewritten after the fact (editing a passed criterion's invocation post hoc manufactures a record); the instance's output carries the path actually used and this row plus W23-S3 are the disclosure 3.0.0_SA_CVO~Z grades with. The class is remedied where it can be: TO-V1-1 (Z-S75) and TO-V4-1 (this commit) name ABSOLUTE native plan paths; TO-V2-1 is live on ~20 and is disclosed, not amended.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE ALIGNMENT QUESTION, STATED FOR L9: the instance's V9-AC7 and V9-AC12 rows record the face's invocation strings (the checker's alignment limb passed, rc=0) and carry the actually-run path in their output; the divergence is one path token, disclosed twice (row + instance). The alternative -- amending the face so the string matches what ran -- would make the file describe a command the worker never received, which is the S31 shape in the other direction.",
+      "REMEDY LANDED FOR THE UNHANDED ORDERS: TO-V4-1 V4-AC8/AC9/AC13 now carry C:/tmp/wk-posn-5-20/.scratch/b4.tfplan; TO-V1-1 already carries C:/tmp/wk-posn-5-19/.scratch/b1.tfplan (Z-S75). V6/V7/V8 open no terraform plan.",
+      "WHY GRADUATED: the deviation cost nothing in the world, was disclosed at the moment it happened, and its class is closed for every order that has not yet run the command."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W23-S3"
+  ],
+  "spec_asserts": "TO-V9-1 V9-AC7/AC8/AC12 as cut: a worktree-relative plan path under a -chdir invocation.",
+  "world_is": "terraform -chdir re-bases every relative path; the worker's verbatim run failed on the WRITE after a successful refresh, its corrected run produced the bounded plan (0 add / 3 change / 0 destroy) and the apply landed on it.",
+  "notes": "A -chdir invocation carries an absolute plan path from the cut onward."
 }
 ]
 ```
