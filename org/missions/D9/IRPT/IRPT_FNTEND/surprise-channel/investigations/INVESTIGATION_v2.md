@@ -3693,6 +3693,49 @@
     },
     "disposition": "UNDER_INVESTIGATION",
     "hazard_standing": "INERT"
+  },
+  {
+    "id": "IRPT_FNTEND-W2-S32",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~2",
+    "surfaced_at": "2026-09-14T17:41:16Z",
+    "one_line": "THE CONTRACT'S NAMED REASON-CODE SET HAS NO GRANTED HOME IN THE PORTAL. The order derives it 'from the contract files, not typed' for four surfaces but grants one new module, state/tradingCalendar.ts, named for the calendar; the set was generated into a marked region of render/Page.tsx instead.",
+    "class": "OBSERVATION",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-40 THE REMEDY: 'The contract's named set is read from the contract files, not typed'; BOUNDS: 'THE CONTRACT'S NAMED SET IS READ, NEVER TYPED'. <paths> grants MethodsAndSources.tsx, PeriodControls.tsx, AnswerStatus.tsx, render/Page.tsx, tabs/StatusPanel.tsx, state/tradingCalendar.ts and __tests__/fe-s-40/ -- one new portal module, and it is the calendar's. The order states no rule for which contract text 'names' a code.",
+    "world_is": "The renderer needs the set at runtime and cannot read docs/contracts/ (outside the portal repo). The portal already carries a TYPED copy, contracts/envelope.ts:115 IR_REFUSAL_REASON_CODES = ['CONTRACT_VERSION', 'ROUTE_UNKNOWN'] (outside this grant, and typed). The contract has no structured list of codes: StatusEnvelope.schema.json leaves public_reason_code the free pattern ^[A-Z0-9_]+$ and the codes appear only in prose. Done: __tests__/fe-s-40/gen-named-codes.mjs reads all 25 files under docs/contracts/investor-reporting/v1/ and admits a code-shaped token written directly after 'public_reason_code', 'return(s)' or 'refused with' -> CONTRACT_VERSION (CONTRACT.md:45, routes.json:170) and ROUTE_UNKNOWN (CONTRACT.md:98, routes.json:176); 39 distinct code-shaped tokens in those files, 37 not admitted. It writes the set between BEGIN/END GENERATED markers in render/Page.tsx beside the flag helpers, and tabs/reporting/AnswerStatus.tsx and tabs/StatusPanel.tsx now import from render/Page.tsx. reason-codes.test.ts (F40-AC7) re-reads the contract and requires equality; the set also equals the typed IR_REFUSAL_REASON_CODES. The admission rule is this worker's reading, not the contract's; the contract naming its codes (IRPT_BCKEND-S52) would replace it.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal src/pages/InvestorReporting/contracts/envelope.ts:115 @741bb54b (IR_REFUSAL_REASON_CODES, typed)",
+        "docs/contracts/investor-reporting/v1/CONTRACT.md:45 and :98, routes.json:170 and :176 @58e387b454",
+        "docs/contracts/investor-reporting/v1/StatusEnvelope.schema.json properties.public_reason_code, pattern ^[A-Z0-9_]+$ @58e387b454",
+        "portal src/pages/InvestorReporting/render/Page.tsx GENERATED region, written by __tests__/fe-s-40/gen-named-codes.mjs on portal branch wk-irpt_fntend-6-2-fe-s-40 (this order's portal commit)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "hazard_standing": "INERT"
+  },
+  {
+    "id": "IRPT_FNTEND-W2-S33",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~2",
+    "surfaced_at": "2026-09-14T17:41:16Z",
+    "one_line": "ONE EXPORT SCREEN CAN SHOW THE SAME CODE FLAGGED AND UNFLAGGED. tabs/StatusPanel.tsx, granted and now flagging every code the contract does not name, is rendered inside export/ReceiptPanel.tsx, whose own 'Reason: <code>' line the order puts outside this cell.",
+    "class": "OBSERVATION",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-40 BOUNDS: 'THE BAND SURFACES ARE YOURS FOR THIS PURPOSE ONLY ... The other surfaces that print a code (TabShell, StageDisplay, RequestList, AnalysisTab, ReceiptPanel, AnalysisDocument, GenerateComposer) are NOT in this cell -- RULING T names the band.' The order treats tabs/StatusPanel.tsx and ReceiptPanel as separate surfaces.",
+    "world_is": "export/ReceiptPanel.tsx:44 renders <StatusPanel tabId=\"export\" envelope={envelopeFromReceipt(receipt)} /> and :45-48 prints its own 'Reason: <span>{reasonCode}</span>' (data-slot public-reason-code) from publicReasonCodeFor(receipt, status). After this order StatusPanel prints any code outside {CONTRACT_VERSION, ROUTE_UNKNOWN} with '[code not defined by the v1 contract]' beside it, so where the panel's envelope carries the code the Reason line also prints, the receipt shows it flagged once and bare once. StatusPanel has three callers at portal 741bb54b: tabs/reporting/ReportingTab.tsx:231, tabs/holdings/HoldingsTab.tsx:163, export/ReceiptPanel.tsx:44. The panel also now flags the portal's own transport code IR-REQUEST-FAILED (state/status.ts REQUEST_FAILED_ENVELOPE), which the contract does not name either. Not changed here: ReceiptPanel is outside the grant; whether envelopeFromReceipt carries the same code as publicReasonCodeFor was not measured.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal src/pages/InvestorReporting/export/ReceiptPanel.tsx:44-48 @741bb54b",
+        "portal src/pages/InvestorReporting/tabs/reporting/ReportingTab.tsx:231, tabs/holdings/HoldingsTab.tsx:163 @741bb54b (the other StatusPanel callers)",
+        "portal src/pages/InvestorReporting/state/status.ts REQUEST_FAILED_ENVELOPE (publicReasonCode 'IR-REQUEST-FAILED') @741bb54b"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "hazard_standing": "INERT"
   }
 ]
 ```
