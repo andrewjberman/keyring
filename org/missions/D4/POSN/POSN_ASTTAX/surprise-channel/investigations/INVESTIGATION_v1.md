@@ -3248,6 +3248,81 @@ all seven mechanical criteria were measured and the verdict is NO-GO.
   "spec_asserts": "TO-V2-1 V2-AC8: <invocation>timeout 600 terraform -chdir=infra/aws/terraform/cot-pipeline plan -target=module.cot_satellites_registry_producer -target=aws_iam_role_policy.cot_satellites_registry_producer_s3 -out=.scratch/b2.tfplan</invocation> <expect>0 to add, exactly 2 to change ... 0 to destroy</expect>; and the spawn prompt: 'before the first plan run `terraform -chdir=infra/aws/terraform/cot-pipeline init -input=false` once in your worktree' and 'If a path your order names is not in your cone ... that is a BLOCKING row on that criterion, never a cone widening by you.'",
   "world_is": "The init succeeded and the plan cannot be reached at all -- not 'a different resource in the plan' (the AC8 STOP condition the order anticipated), but NO PLAN OUTPUT, on an error in a resource neither target names. The cell's deploy half is unexecutable from the worktree it was issued into, and the defect is in the WORKTREE PROVISIONING rather than in the order, the code or the stack. NOTE THE DIRECTION: this fails LOUD and early, before any apply -- the dangerous variant would have been a cone that omitted a file terraform reads only at APPLY time.",
   "notes": "REFUSED, NOT ROUTED AROUND: no `git sparse-checkout add`, no plan from the main tree (the spawn prompt forbids operating there), no -refresh=false or -lock=false variant, no hand-written plan. WHAT WAS COMPLETED AND IS UNAFFECTED: AC1 (both halves at HEAD), AC2 (ledger, 8 legs), AC3 (gate clean 6 of 6), AC4 (nine satellites on the live partition, every clause), AC5 (Yang-never-added, arms 1.87 vs 3.37), AC6 (package built from the pin, 6 members, moving-ref control REFUSED), AC7 and AC12 (reads that need no deploy). THE STANDING HAZARD, stated because it is a consequence of stopping rather than of the code: the new zip is the CURRENT version of that artifact key, and module.cot_satellites_registry_producer reads `data.aws_s3_object.artifact.version_id` AT PLAN TIME -- so the next apply of cot-pipeline BY ANYONE picks it up, deploying this code without AC9-AC11's verification. It is inside the signed blast radius (COO half @f381f6f402 / CTO half @af667548d1 both cover exactly this function and this key), the ledger entry is OPEN with L3-L8 unproven and `deploy_ledger.py check --red` blares past its 4h window, and this worker does not roll the artifact back unilaterally -- upload-then-plan is the module's own documented sequence ('Upload a new zip with build-and-upload.sh BEFORE running terraform plan'), and a second unverified world act by a blocked worker is worse than a disclosed one. DISARM, one limb, falsifiable: the cone gains infra/aws/ec2 (or the one file) and the deploy legs are run to completion by a worker in a worktree that can evaluate the stack -- OR the artifact is re-pointed to VersionId qXzZE63fhPXwG2dXU86eLbTh48cFn0vQ. Either is an act by the disarm owner and a citing row disarms this one."
+},
+{
+  "id": "POSN_ASTTAX-Z-S71",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T19:38:45Z",
+  "one_line": "DISARM of W20-S3 (BLOCKING): the cot-pipeline stack reads infra/aws/ec2/cot-exporter/user-data.sh at EVALUATION time (ec2.tf:68, a resource no target names) and slot ~20's sparse cone omitted infra/aws/ec2, so the B2 deploy could not be planned. REMEDIED: `git sparse-checkout add infra/aws/ec2` on /c/tmp/wk-posn-5-20 (15 -> 16 cone entries; the file is present); the worker is respawned on the deploy legs AC8-AC13 with its landed artifacts named.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE ISSUER'S CONE, NOT THE ORDER OR THE CODE: the worktrees were cut as sparse cones by this seat and the cot-pipeline cone listed infra/aws/terraform/cot-pipeline without the sibling directory its ec2.tf reads. Census at the cut, taken NOW: comp-find 'file(|templatefile(|filebase64(' over the three deploy stacks -> 3 hits across 58 files; ONLY the cot-pipeline hit reaches outside its own module dir (../../ec2/cot-exporter/user-data.sh); portal-auth's spa-fallback-function.js and yang-pipeline's yang-pipeline-definition.json are inside their cones, so slots ~19 and ~23 are not exposed to this defect.",
+      "REMEDY LANDED: cone widened on the worker's own worktree (its index, not the main tree); the branch wk-posn_asttax-5-20 is fast-forwarded to HEAD after this commit so the worker's tree carries these rows; the worker is respawned under the same serial with the artifact coordinates (producer commit 97fe1221bd, artifact VersionId mgzFeamx2_MIO_R.lBF6IYGUNM5aXcir, the 14-row instance with 9 PASS, ledger legs L3-L6 OPEN) and does not redo AC1-AC7 or AC12.",
+      "THE STANDING HAZARD THE ROW NAMED, carried until AC9 lands: the uploaded zip is the CURRENT version of the artifact key and the module reads data.aws_s3_object.artifact.version_id at plan time, so any cot-pipeline apply by anyone deploys B2's bytes without AC9-AC11's verification. Inside the signed radius (both halves name the key and the rollback VersionId qXzZE63fhPXwG2dXU86eLbTh48cFn0vQ); closed the moment V2-AC9 applies deliberately.",
+      "WHY GRADUATED: the row named a real provisioning defect, refused rather than routed around, and the remedy is one measured cone entry."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W20-S3"
+  ],
+  "spec_asserts": "TO-V2-1 V2-AC8: a scoped `terraform plan -target=...` producing 0 add / 2 change / 0 destroy.",
+  "world_is": "terraform evaluates the whole root module before -target narrows anything; the plan exits 1 on a file() the cone did not carry. Init had succeeded, so nothing upstream flagged it.",
+  "notes": "Recorded for every future cone: a Terraform stack's cone must include every path its file()/templatefile() calls reach at evaluation time, censused per stack before the worktree is cut."
+},
+{
+  "id": "POSN_ASTTAX-Z-S72",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T19:38:45Z",
+  "one_line": "DISARM of W20-S1: deploy_ledger.py open writes TWO files -- the entry under org/critical_paths/change_management/ (granted) and a sentinel at org/critical_paths/.open_deploys/<slug>.json (not named in <paths>) -- and demands both in one commit. RULED by the issuer: the lane registry's ANY grant on org/critical_paths/** IS the authority for mechanism-written files, and the worker committing both was correct; TO-V4-1's <paths> now names org/critical_paths/.open_deploys/ explicitly.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE RULING, with its instrument: .owned-paths.yaml grants org/critical_paths/** to ANY (the reason the registry gives is mechanism-writes-under-the-agent's-author); the worker grant is ADDITIVE and never revokes (owned-paths-validate.py:112-147), so a path the registry admits to ANY is admitted to the worker whether or not <paths> enumerates it. The enumeration in <paths> is the worker's WRITE GRANT for paths the registry does NOT already open; it is not an exhaustive list of every byte a named mechanism writes.",
+      "REMEDY LANDED IN THIS COMMIT: TO-V4-1 (unspawned) <paths> gains org/critical_paths/.open_deploys/ so the next deploy order says it. TO-V1-1 and TO-V9-1 are LIVE with the same shape and are not amended mid-run; their workers are expected to commit both files as ~20 did, and this row is the disclosure.",
+      "WHY GRADUATED: the row named a real gap between a mechanism's contract and an order's enumeration; the ruling and the amendment are both landed and falsifiable."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W20-S1"
+  ],
+  "spec_asserts": "TO-V2-1 <paths> grants org/critical_paths/change_management/ and V2-AC2 names deploy_ledger.py open, whose own output prints a REQUIRED COMMIT PATHSPEC of two files including org/critical_paths/.open_deploys/<slug>.json.",
+  "world_is": "A worker reading <paths> literally would commit the entry without its sentinel and manufacture exactly the false-clean state the tool warns about (an unindexed open ledger). The worker committed both under the registry's ANY grant and filed the row.",
+  "notes": "No change proposed to the ledger tool or to .owned-paths.yaml; the tool prints its contract clearly and the registry already admits the path."
+},
+{
+  "id": "POSN_ASTTAX-Z-S73",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T19:38:45Z",
+  "one_line": "DISARM of W20-S2: the same class as W21-S2 (Z-S67) -- V2-AC3's bare `bash .tools/commit-gate.sh` checks 0 of 0; the worker ran the subject arm (6 of 6 files clean) and graded on it. V2-AC3 was live when Z-S67 landed and is now complete on its evidence; TO-V4-1 and TO-V8-1 carry the subject in their invocations at HEAD.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Same finding, same disposition as Z-S67 (W21-S2): the unspawned orders were amended at 7e4c3c01bb; the live ones were disclosed. V2-AC3 is now a completed criterion whose deciding output is the subject arm, and 3.0.0_SA_CVO~Z grades it with both arms in the instance.",
+      "WHY GRADUATED: nothing remains to act on for this criterion; the class is already remedied where it could be."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W20-S2"
+  ],
+  "spec_asserts": "TO-V2-1 V2-AC3 invokes commit-gate.sh bare while its expectation names every changed .py and .tf.",
+  "world_is": "Bare it printed NOTHING WAS CHECKED rc=0; with the six changed files it printed OK: pre-commit gate clean for 6 of 6 file(s). The worker recorded both arms.",
+  "notes": "The bare form must not be copied into a future cut; the gate's WARN is the only tell."
 }
 ]
 ```

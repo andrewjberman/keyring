@@ -120,6 +120,7 @@ infra/aws/terraform/cot-pipeline/satellites-characteristics-producer.tf
 infra/aws/terraform/cot-pipeline/CHANGELOG.json
 infra/aws/lambda/ci/lambda-source-map.json
 org/critical_paths/change_management/
+org/critical_paths/.open_deploys/
 </paths>
 
 <decomp_ref>
