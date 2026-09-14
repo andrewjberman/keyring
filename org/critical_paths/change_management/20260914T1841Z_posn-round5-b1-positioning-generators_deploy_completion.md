@@ -12,7 +12,7 @@
 
 | leg | kind | target | proof required | proof | state |
 |---|---|---|---|---|---|
-| L1 | git | SITEZ commit of both lambda_function.py | commit hash |  | OPEN |
+| L1 | git | SITEZ commit of both lambda_function.py | commit hash | commit e89fca26e2 on wk-posn_asttax-5-19 (LOCAL), author 0.9.0_WK_POSN_ASTTAX~19 -- both lambda_function.py, commit-gate clean 2 of 2, msg-verify MATCH len=2335 | CLOSED 20260914T191633Z |
 | L2 | s3-prefix | opal-313476888478-lambda-artifacts yang-pipeline/ both zips | build-and-upload sha256 lines |  | OPEN |
 | L3 | verify | plan scoped to the two modules | plan summary 0 add 2 change 0 destroy |  | OPEN |
 | L4 | activation | safe-apply | apply summary |  | OPEN |
@@ -23,3 +23,4 @@
 ## Log
 
 - 20260914T184156Z OPENED by 0.9.0_WK_POSN_ASTTAX~19 with 7 leg(s)
+- 20260914T191633Z LEG L1 closed: commit e89fca26e2 on wk-posn_asttax-5-19 (LOCAL), author 0.9.0_WK_POSN_ASTTAX~19 -- both lambda_function.py, commit-gate

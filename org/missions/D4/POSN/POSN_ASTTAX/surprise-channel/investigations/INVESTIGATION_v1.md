@@ -2812,3 +2812,181 @@ all seven mechanical criteria were measured and the verdict is NO-GO.
   }
 ]
 ```
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-W19-S1",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~19",
+    "surfaced_at": "2026-09-14T19:20Z",
+    "one_line": "build-and-upload.sh CANNOT BUILD yang-generate-positioning, AND THE DEFECT IS ONE LINE OF CONTROL FLOW, NOT THIS PACKAGE: set -e (:33) kills the BARE manifest-gate probe on the very rc=1 the block's own comment designs as the SKIP arm, so the script dies before the dispatcher at :311 ever reads it. The gate declares three outcomes (DECLARED->check, ABSENT->skip with a printed notice, UNREADABLE->refuse) and only two are reachable. Measured on BOTH arms in one session: yang-generate-positioning (BUILD_MANIFEST.json, no declared_blobs) rc=1 with no artifact; yang-generate-allocation-summary (NO BUILD_MANIFEST.json, so the block is skipped by its own -f guard) rc=0, uploaded, write VERIFIED. The script's own comment at :278 says 1 of 14 BUILD_MANIFEST.json in the estate carries declared_blobs -- so the bricked class is every OTHER manifest-carrying package, and nothing in the failure names the manifest gate.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "INVOCATION AS WRITTEN (V1-AC5): bash infra/aws/lambda/ci/build-and-upload.sh yang-pipeline yang-generate-positioning -> rc=1, last line printed 'OK: import-closure -- 2 packaged .py file(s)'; no SHA256 line, no upload, no source-map write. A bash -x trace ends on the manifest probe invocation followed immediately by the cleanup trap.",
+        "THE BYTES AT THE CITED LINES, PRINTED at vintage dbbbfb89b2 (2026-08-30, 0.7.0_AE_CloudOps) by git show of that commit piped to sed -n '33p;300p;311p' -- :33 is 'set -e'; :300 is the python probe invoked as a BARE command (not an if-condition); :311 is the assignment that reads its exit code into MANIFEST_DECL. The three-outcome design is stated in the block's own comment at :295-297.",
+        "THE PROBE'S OWN VERDICT, run standalone on the same package: BUILD_MANIFEST.json parses clean (keys authority, function, layer_dependencies, memory_mb, runtime, timeout_s, vendored_modules, vendoring), declared_blobs present: False, rc=1 -- i.e. the ABSENT arm the script says it wants to SKIP, never the UNREADABLE arm it says it wants to REFUSE.",
+        "DISCRIMINATING CONTROL on set -e, both arms: a one-line bash with set -e, a command exiting 1, then an assignment reading the exit code and an echo -- prints nothing and exits 1; the identical line WITHOUT set -e prints 'REACHED: RC=1' and exits 0. So the mechanism is measured, not inferred, and it is bash semantics rather than anything about this device.",
+        "NEGATIVE CONTROL that the script and the device are otherwise healthy: the sibling function in the SAME directory built and uploaded in the same session -- SHA256 8ok3+P8z/w2hDmcnMSLPWTmSlp5pXBEqY86hDiPl3A4=, s3://opal-313476888478-lambda-artifacts/yang-pipeline/yang-generate-allocation-summary.zip VersionId BxWpvrT9AKAV4p6Bl1o9vPYcz98NESHc, 'write VERIFIED: size=4774, sha256 metadata match'.",
+        "WORLD STATE AFTER THE REFUSAL, s3api head-object: yang-pipeline/yang-generate-positioning.zip is UNMOVED at VersionId xN0rrqJbABARS6vz9NqOS1zYfjxcIsFw, LastModified 2026-08-18T18:33:23Z, Metadata content-sha256 PRg64EGzQtLw7/HAhyN/jNP6rd01PrcLK4wKqCHAKfQ= -- byte-identical to the LIVE CodeSha256 and to the rollback VersionId the COO half names, so the rollback target is still the running artifact and nothing needs undoing."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "POSN_ASTTAX.TO-V1-1 V1-AC5 (@945d1ddd95) names the invocation bash infra/aws/lambda/ci/build-and-upload.sh yang-pipeline yang-generate-positioning and expects 'the script's own gate passes (no uncommitted source under infra/aws/lambda/), the artifact uploaded to yang-pipeline/yang-generate-positioning.zip with its base64 sha256 printed, and lambda-source-map.json updated'. The TO's preflight comp-adversary already declared it NOT covered that 'the issuer has not exercised build-and-upload.sh on this device since the reboot'. build-and-upload.sh:295-297 declares its own contract: 'Three outcomes now, never two: DECLARED -> check; ABSENT -> skip with a printed notice; UNREADABLE -> REFUSE'.",
+    "world_is": "THE ABSENT ARM IS UNREACHABLE. The probe at :300 is a BARE command under set -e, so its rc=1 terminates the script at :300 and the dispatcher at :311 is dead code for that arm; the printed-notice SKIP at :346-347 can never execute. The uncommitted-source gate V1-AC5 names is a header COMMENT (:17-19), not a runtime check, and it passed independently (git status --porcelain infra/aws/lambda/ empty against 6716 tracked files under that pathspec). STAR: THE FAILURE IS SILENT ABOUT ITS OWN CAUSE -- the script exits 1 with its LAST line reading 'OK: import-closure', so the reader's eye lands on a PASS and the next plausible story is a packaging problem in the function being built. It is not the function; the same script built its sibling minutes later. NO CELL CAN REPAIR THIS FROM INSIDE: infra/aws/lambda/ci/build-and-upload.sh is NOT in this order's paths grant (which carries lambda-source-map.json only), and the one-line fix (make :300 an if-condition, or let its rc reach :311) belongs to the lane that owns infra/aws/lambda/ci/. BAU_MANIFEST_SKIP=1 IS A LIVE ESCAPE AT :298 AND WAS DELIBERATELY NOT USED: satisfying a refused criterion by another route is exactly what this order's refusal clause forbids, and the escape also skips the UNREADABLE refusal arm.",
+    "notes": "WHAT THIS BLOCKS, NAMED SO THE COST IS NOT GUESSED: V1-AC5 (refused as written), and with it V1-AC7/AC8/AC9/AC10/AC11/AC12 for yang-generate-positioning -- the whole B1 deploy of function 1, and therefore AT5-s-8 (R1), which this cell GATES. WHAT IS NOT BLOCKED AND IS DONE: the code change itself is committed (e89fca26e2, commit-gate clean 2 of 2) and the branch rule is EXERCISED and lands Branch A (V1-AC4, OTHER=0 over 4237 leaf keys) -- so the moment the script can build, the deploy has its evidence already in hand and does not need re-measuring. THE DEPLOY LEDGER IS LEFT OPEN AND RED ON PURPOSE: deploy_ledger.py hold REFUSED the entry ('open APPLY/DEPLOY leg(s) L2, L4, L6 -- a half-landed deploy cannot be HELD'), which is the tool being right; L1 is closed with its proof, L2-L7 stay open, and org/critical_paths/change_management/20260914T1841Z_posn-round5-b1-positioning-generators_deploy_completion.md blares to the COO rather than ageing quietly. NOTHING IS HALF-LANDED IN THE WORLD: no apply ran, both Lambdas still run their pre-cell bytes, and the only artifact that moved is the allocation-summary zip, which is INERT until an apply points a function at it. ONE SUGGESTION, NOT AN ACT: the fix is one line and its blast radius is every yang/schwab/blackdiamond package with a manifest, so it wants the owning lane's hand, not this worker's."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-W19-S2",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~19",
+    "surfaced_at": "2026-09-14T19:20Z",
+    "one_line": "V1-AC7's plan invocation CANNOT WRITE ITS OWN PLAN FILE: terraform -chdir=infra/aws/terraform/yang-pipeline resolves -out RELATIVE TO THE -chdir TARGET, so -out=.scratch/b1.tfplan tries infra/aws/terraform/yang-pipeline/.scratch/b1.tfplan and errors 'The plan file could not be written: open .scratch/b1.tfplan: The system cannot find the path specified.' The plan COMPUTES fine and then throws the result away -- and V1-AC8 and V1-AC12 both consume that same path.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "INVOCATION AS WRITTEN (V1-AC7) -> rc=1. Terraform read both data.aws_s3_object.artifact sources and refreshed both aws_lambda_function resources, then: 'Error: Failed to write plan file / The plan file could not be written: open .scratch/b1.tfplan: The system cannot find the path specified..'",
+        "The worker's .scratch/ EXISTS at the worktree root (/c/tmp/wk-posn-5-19/.scratch/, created at the first act and holding the delta-harness artefacts); the directory terraform actually tried is infra/aws/terraform/yang-pipeline/.scratch/, which does not exist and is NOT in this order's paths grant.",
+        "Same plan WITHOUT -out, run as a labelled diagnostic and NOT as the criterion: rc=0, 'Plan: 0 to add, 1 to change, 0 to destroy'.",
+        "terraform -chdir semantics: -chdir switches the working directory before any other flag is interpreted, so every relative path on the command line -- including -out -- is resolved from the target directory."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "POSN_ASTTAX.TO-V1-1 @945d1ddd95: V1-AC7's invocation is terraform -chdir=infra/aws/terraform/yang-pipeline plan -target=module.generate_positioning -target=module.generate_allocation_summary -out=.scratch/b1.tfplan, expecting 'Plan: 0 to add, 2 to change, 0 to destroy'. V1-AC8 then applies .scratch/b1.tfplan and V1-AC12 passes --plan .scratch/b1.tfplan to record-terraform-deploy. The spawn prompt tells the worker its scratch is /c/tmp/wk-posn-5-19/.scratch/, i.e. the WORKTREE ROOT's .scratch.",
+    "world_is": "THE PATH IN THE ORDER AND THE PATH TERRAFORM USES ARE DIFFERENT DIRECTORIES, and the order reads as if they were the same one. The criterion fails on a FILESYSTEM error AFTER a successful plan -- the expensive part ran, the state was refreshed, and the only thing lost is the artifact the next two criteria consume. STAR: A -chdir PLAN IS NOT WHERE YOU ARE STANDING. Three criteria in one order share this path and all three inherit the same wrong directory, so the defect is not local to AC7. It is INDEPENDENT of this order's other blocker: fixing build-and-upload.sh would not make AC7 pass, and the error would surface at the APPLY instead, which is a worse place to find it.",
+    "notes": "NOT REPAIRED AND NOT WORKED AROUND: writing to infra/aws/terraform/yang-pipeline/.scratch/ is outside this order's paths grant, and re-writing the criterion's own invocation is what the refusal clause forbids. RECORDED SO THE RE-CUT IS ONE EDIT: either an absolute -out or a path relative to the -chdir target, consistently across AC7, AC8 and AC12. The diagnostic plan's OWN reading is evidence the re-cut will want: with only the allocation-summary artifact moved, the true count is 1 to change, not 2 -- and that is a consequence of S1, not of this row."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-W19-S3",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~19",
+    "surfaced_at": "2026-09-14T19:20Z",
+    "one_line": "V1-AC3's invocation is bash .tools/commit-gate.sh with NO FILE ARGUMENTS, and that gate checks the files you hand it -- so as written it returns rc=0 having checked NOTHING, while the criterion's expectation grades 'clean on BOTH changed .py files'. The gate itself prints the warning that names the trap: 'commit-gate checked 0 of 0 file(s) -- NOTHING WAS CHECKED. This line is NOT evidence of a clean gate.'",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "INVOCATION AS WRITTEN: timeout 180 bash .tools/commit-gate.sh -> rc=0, output: 'WARN: commit-gate checked 0 of 0 file(s) -- NOTHING WAS CHECKED. / This line is NOT evidence of a clean gate. This gate reads only .py / .sh / .tf / org/projects/*.json; every other suffix falls through unexamined.'",
+        "THE SAME GATE WITH THE TWO CHANGED FILES (what the expectation grades): 'All checks passed! / OK: no unguarded strict-utf8 log reads.' twice, then 'OK: pre-commit gate clean for 2 of 2 file(s)', rc=0.",
+        "commit-gate.sh's own Usage block (:41-44) takes paths as argv. Its documented rc=0 meaning is explicit that 'nothing was dispatched at all' is one of the two states it covers.",
+        "INDEPENDENT CONFIRMATION that the files are genuinely clean: safe-commit.sh ran the same gate on its own dispatched set during the L1 commit -- '[commit-gate] OK: pre-commit gate clean for 2 of 3 file(s)' (the third path is the .md ledger entry, not a gate subject)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "POSN_ASTTAX.TO-V1-1 @945d1ddd95 V1-AC3: the invocation is timeout 180 bash .tools/commit-gate.sh, with the expectation 'clean on BOTH changed .py files, output cited; both ASCII limbs checked'.",
+    "world_is": "THE INVOCATION AND THE EXPECTATION GRADE DIFFERENT THINGS, and the invocation's answer is an rc=0 that means the opposite of what a hurried reader takes it for. This one is SELF-DEFENDING -- the tool prints its own denominator and refuses to be cited as a pass -- which is exactly why it is worth a row rather than a silent fix: the same shape in a tool that printed nothing would have been a clean vacuous PASS. BOTH FORMS WERE RUN AND BOTH ARE RECORDED in this worker's proof instance; the criterion is graded on the two-file form, which is what the expectation names, and the bare form's verbatim output is carried beside it so the grader can see the difference rather than take this worker's word for it.",
+    "notes": "NO REPAIR PROPOSED TO THE GATE -- it is behaving exactly as documented and its warning is the reason this was caught in seconds. The re-cut is one edit to the ORDER: name the two paths in the invocation. ASCII LIMBS, both read as the criterion asks: the staged-.py arm is WARN-ONLY and both files measure PURE ASCII by the len(bytes) minus len(decoded) detector returning 0 (and pure LF, 0 CRLF); the commit-MESSAGE arm is BLOCKING and passed inside safe-commit at the L1 commit ('[msg-verify] MATCH len=2335')."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-W19-S4",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~19",
+    "surfaced_at": "2026-09-14T19:20Z",
+    "one_line": "deploy_ledger.py open PRINTS A 'REQUIRED COMMIT PATHSPEC' naming org/critical_paths/.open_deploys/<slug>.json, and that path is NOT in this order's paths grant -- so the receipt instructs the worker to commit a file its write grant does not cover. The tool's own docstring (:215) says the fix is 'the L6 cut naming org/critical_paths/.open_deploys/<slug>.json in the order's paths', which is precisely what this cut does not do.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "V1-AC2 output: 'REQUIRED COMMIT PATHSPEC (both, in the same commit -- the sentinel is the gate's only input and a worktree removed without it destroys the OPEN state, leaving the .md as an unindexed open ledger)', naming org/critical_paths/.open_deploys/posn-round5-b1-positioning-generators.json and the change_management .md.",
+        "The order's paths grant carries org/critical_paths/change_management/ and NOT org/critical_paths/.open_deploys/; the .md half was committed at e89fca26e2, the sentinel half was not.",
+        "deploy_ledger.py:215 states the remedy as an L6 duty: 'the L6 cut naming org/critical_paths/.open_deploys/<slug>.json in the order's paths'. :248 and :442 state that close UNLINKS the sentinel, so an entry opened and closed inside one session leaves nothing to commit.",
+        "The tool STAGED both files itself at open (git status --porcelain showed 'A' on both), which is also how a worker that never runs git add ends up with a staged path outside its grant."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "POSN_ASTTAX.TO-V1-1 @945d1ddd95 grants org/critical_paths/change_management/ (and seven other paths), and the worker contract states that the paths block IS the write grant -- 'a path you need that it lacks is a BLOCKING row on that criterion, never an override'. V1-AC2's invocation is python .tools/deploy_ledger.py open, whose receipt requires committing the sentinel.",
+    "world_is": "THE ORDER COMMANDS AN ACT WHOSE RECEIPT REQUIRES A PATH THE ORDER DOES NOT GRANT. It did not become BLOCKING here only because of a second, unrelated fact: this deploy never reached the world, the entry stays OPEN in this worktree, and close would have unlinked the sentinel anyway -- so the uncommitted sentinel costs nothing THIS time. The exposure it names is real and is stated in the tool's own receipt: if this worktree is force-removed before the entry closes, the sentinel dies and the committed .md survives as an OPEN ledger with NO sentinel -- the exact 'unindexed open ledger' class that deploy_ledger.py:987-1003 exists to catch, and one the sentinel-only check --red scan is blind to.",
+    "notes": "NOT OVERRIDDEN: the sentinel was left uncommitted rather than committed outside the grant. It sits in the worktree at org/critical_paths/.open_deploys/posn-round5-b1-positioning-generators.json, STAGED by the tool. The re-cut adds one line to the paths block. FLAGGED FOR WHOEVER DRAINS THIS BRANCH: the committed ledger .md reads OPEN (correctly -- the deploy is blocked by S1), so a drain that lands it without the sentinel lands an unindexed open ledger; the honest reading of that .md is 'this deploy is blocked and RED', not 'someone forgot to close a ledger'."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-W19-S5",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~19",
+    "surfaced_at": "2026-09-14T19:20Z",
+    "one_line": "THE DISPLAY-NAME CHANGE CLASS IS EMPTY ON THIS INPUT. Both never-widen halves name b0e1f33471 (ETFS_INGEST TO-9-DS, the ETFClassifier display-name beautification) as one of THREE change classes the B1 deploy will show on the served bytes; the measured 69b867c4eb-vs-HEAD delta shows ZERO display-name differences -- 203 name leaf keys present in both payloads, 0 differing -- while the other two classes account for all 250 differences.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "V1-AC4 delta, both builds run locally against the SAME cached live input (s3://opal-data-portal-v2/benchmarks/model_20260911_v1.pkl VersionId jcG67EudvJWQd0.cguenteFECbQNJMa1, data_as_of_date 2026-09-11, plus 62 cached DynamoDB get_item responses and the cached json/portfolios/aum-metrics.json): added=250, removed=0, changed=1. CLASS display-name count=0; unrecognised-security-label 190; benchmark-row/allocation-key 60; volatile-run-clock 1 (generated_at); OTHER 0.",
+        "NEGATIVE CONTROL for the empty class (a class can read empty because the instrument cannot see it): name leaf keys present in BOTH payloads = 203, differing = 0, sample values non-trivial ('State Street SPDR Bloomberg 1-3 Month T-Bill ETF', 'iShares Core S&P 500 ETF', 'iShares Core U.S. Aggregate Bond ETF'). The classifier has a display-name rule and it fired on nothing because nothing moved.",
+        "INSTRUMENT VALIDATION: the local 69b867c4eb arm reproduces the LIVE SERVED artifact (VersionId 4Q1qjgD52FSKZ38EfHGqdKGHyJ_ktlka) at 3987 of 3987 leaf keys -- 0 added, 0 removed, 1 changed, and that one is generated_at. So the harness is faithful to the bytes actually running, and an absent difference is an absence rather than a blind spot.",
+        "b0e1f33471 IS in the shipped package: the vendored etf_classifications_dynamodb.py moved 6452 -> 14027 bytes between the two builds (+152 lines in the base..HEAD diff), so the beautification code is present in the HEAD arm and simply changes no served value for these 62 tickers."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "NEVER_WIDEN_ROUND5_COO_HALF.md (org/missions/D4/POSN/POSN_ASTTAX/ledger/, @f381f6f402): 'Three change classes on the served bytes: display names, the unrecognised-security label, the labelled-zero benchmark rows for the three new classes.' NEVER_WIDEN_ROUND5_CTO_HALF.md (@af667548d1): 'Expected served delta on positioning_data.json: display names per b0e1f33471, any holding the registry does not recognise moving from Equity to its unknown label, and the benchmark rows gaining labelled zeros.'",
+    "world_is": "TWO OF THE THREE PREDICTED CLASSES FIRED; THE DISPLAY-NAME CLASS PRODUCED NOTHING. This is a prediction that was safe rather than wrong -- a named class costing zero rows is the harmless direction, and Branch A holds either way because Branch A is bounded by what the delta may NOT contain. It is filed because the halves' value is that their predictions are CHECKED: an unchecked predicted class is indistinguishable from a class nobody measured, and the next reader of these halves should know that b0e1f33471 rode this deploy served-INERT on this input rather than assume the beautification landed and was verified. NOT CLAIMED: that b0e1f33471 is inert in general -- 62 tickers on one date is the denominator, and a ticker whose registry name differs from its PKL fallback on some other input would still move.",
+    "notes": "NO ACT REQUESTED. This does not change the deploy's authorization: the halves cover BOTH branches and an empty permitted class cannot widen the radius. Recorded for the L9 read of V1-AC13 (whether V1-AC4's classification was honest), where the useful fact is that the classifier's display-name rule EXISTED, had 203 keys in range, and returned zero -- rather than that display-name never came up."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-W19-S6",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~19",
+    "surfaced_at": "2026-09-14T19:20Z",
+    "one_line": "V1-AC11 expects the SERVED payload to carry 'benchmark rows for those three reading an explicit 0 labelled no benchmark', but NO edit inside the cell's named write regions can put that LABEL into positioning_data.json: the only served structure keyed by asset class is the global benchmarks etf block at :2311-2325, its row emit is guarded by a not-empty test on the characteristics lookup (a ticker of None matches no row, so nothing is emitted), and THE CELL RESERVES every line outside BENCHMARK_ETFS / benchmark_etf_info / benchmark_allocation_for. The explicit ZERO is reachable and lands; the LABEL is not.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED on both local builds: benchmarks.etf keys are ['cash','equity','fixed_income'] in the 69b867c4eb arm AND in the HEAD arm -- the three no-benchmark classes produce no row there even with the three classes added to BENCHMARK_ETFS, because the characteristics lookup is empty for a ticker of None.",
+        "MEASURED, the explicit zero DOES land: 60 new leaf keys, all value 0 or 0.0 (30 at '0.0', 30 at '0'), across exactly four path shapes times three classes times five models -- allocation, benchmark.allocation, benchmark.spread.allocation and delta.",
+        "THE CELL'S OWN BOUND: 'Replace the fallback for structured, commodities, alternatives with an explicit zero row carrying the label no benchmark; benchmark_allocation_for (:513) carries the three keys at 0.0. Every other line of that file is NOT yours.'",
+        "CALL-SITE CENSUS of benchmark_etf_info in the HEAD file (2 sites, both read): :1140 is reached only with a class selected from BENCHMARK_ETFS, and :2312 iterates BENCHMARK_ETFS -- so before this change neither site could ever pass one of the three, and the cash fallback the cell calls 'a silent wrong' was UNREACHABLE from the served path. After this change the label reaches the served bytes only when one of the three wins the primary-benchmark selection, which needs a non-zero weight in that class -- i.e. after the R1 retag (AT5-s-8), which this cell gates.",
+        "For yang-generate-allocation-summary the same shape holds one layer down: BENCHMARK_ALLOCATIONS gains the three at an explicit 0.0, but the served row is built in aggregate_by_asset_class (:233), which the cell also reserves, and that function only emits rows for classes PRESENT in the holdings -- none today."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "POSN_ASTTAX.TO-V1-1 @945d1ddd95 V1-AC11 expects '...and benchmark rows for those three reading an explicit 0 labelled no benchmark; allocation_summary.json likewise'. THE CELL: BENCHMARK_ETFS (:178), benchmark_etf_info (:186-203) and benchmark_allocation_for (:513) are the worker's; 'Every other line of that file is NOT yours'; in the second function BENCHMARK_ALLOCATIONS (:46) is the worker's and aggregate_by_asset_class (:233) 'is NOT yours'.",
+    "world_is": "THE WRITE-BOUND AND THE SERVED EXPECTATION DO NOT MEET. Inside the named regions the label is carried in the CODE (a NO_BENCHMARK_LABEL constant, and each of the three entries carrying ticker None / allocation 0.0 / label 'no benchmark') and it becomes SERVED the moment one of the three is selected as a model's primary benchmark -- which is a real, durable fix to the gap the file's own comment at :1122-1127 names ('a portfolio whose LARGEST class is Structured, Commodities or Alternatives is benchmarked against something smaller than itself'). What it is NOT is a label visible in TODAY's payload, because today all three classes are 0.0 in all five models. V1-AC11 was never reached in this session (the deploy is blocked by S1), so this is a reading of the criterion against the code, not a failed served read.",
+    "notes": "WHAT WAS BUILT, stated plainly so the grader is not guessing at intent: the three classes were added to BENCHMARK_ETFS as explicit zero rows rather than to a sibling dict, because BENCHMARK_ETFS's membership is what the file's own design uses as the primary-benchmark candidate list (:1110 'the difference is that adding a benchmark is now ONE edit') -- a sibling dict would have left the three unable to win the selection and the label unreachable forever. KNOWN CONSEQUENCE, not hidden: the WARN loop at :1128-1137 now skips the three, because the condition it warns about (largest class has no benchmark ETF) is answered by the explicit row instead; its comment at :1122-1127 is therefore stale in the HEAD file and this worker did NOT edit it, the cell having reserved those lines. RESOLVED BY, if the CVO wants the label served today: either widen the cell by three lines at :2318 (emit a row when the returned has_benchmark is False) or accept the code-level label and grade V1-AC11 on the explicit zeros, which ARE measured present."
+  }
+]
+```
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-W19-S7",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~19",
+    "surfaced_at": "2026-09-14T19:45Z",
+    "one_line": "build-and-upload.sh's source-map writer SILENTLY RE-ENCODES THE WHOLE FILE: writing ONE function's artifact_sha256 also converted every \\u00a7 escape in eight UNRELATED entries (FIND_INSURE, news-semantic-clustering and others) into literal UTF-8 bytes, turning infra/aws/lambda/ci/lambda-source-map.json from PURE ASCII (0 non-ASCII at HEAD) into 28 non-ASCII bytes -- a 9-line byte diff carrying a 1-value semantic change, in the shared file every pipeline's deploys write.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED both ways on the same pair of files. BYTES: git show HEAD:infra/aws/lambda/ci/lambda-source-map.json -> 195313 bytes, non-ASCII 0; the worktree file after build-and-upload.sh -> 195226 bytes, non-ASCII 28. git diff --stat: 1 file changed, 9 insertions(+), 9 deletions(-).",
+        "SEMANTICS, parsed rather than diffed: exactly ONE leaf value differs across the whole document -- functions.yang-generate-allocation-summary.artifact_sha256, 'o7os25TtKP9rkS9WYzCcnIsagXfKrJ7hWuGEF7/iPfM=' -> '8ok3+P8z/w2hDmcnMSLPWTmSlp5pXBEqY86hDiPl3A4='. 0 added, 0 removed. So the other 8 changed lines carry NO semantic change at all: they are the same text re-encoded.",
+        "THE EIGHT ENTRIES TOUCHED belong to other projects entirely: find_insure_crawl_web, find_insure_serving_companies, find_insure_serving_employees, find_insure_serving_scoring, find_insure_serving_consolidate, the FIND_INSURE scraping-browser lambda, and further entries beyond line 416. Each changed line is a _build_note whose section sign moved from the \\u00a7 escape to the literal character.",
+        "DETECTOR, one expression and zero cost, the one CLAUDE.md names: len(b) - len(b.decode('utf-8')) reads 0 on the HEAD blob and 28 on the tool's output.",
+        "The JSON tool the script selected is printed in its own output: 'JSON tool: node'. The write is node's JSON.stringify round-trip, which does not preserve non-ASCII as escapes."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CLAUDE.md section 4: 'No non-ASCII in production code/logs/AWS', and the qualifier that governs exactly this case -- 'NON-APPLICATION: a file that is ALREADY pure ASCII (keep it that way)'. The same rule measures the cost: a default text-mode read on this device is cp1252, which RAISES only on a byte undefined there and otherwise decodes every other non-ASCII character to the WRONG character while reporting success. The section sign U+00A7 is defined in cp1252, so all 28 of these bytes are in the SILENT class. CLAUDE.md also records that .owned-paths.yaml -- another shared control file -- is already in that silent class at 204 characters.",
+    "world_is": "A ONE-VALUE WRITE RE-ENCODED A SHARED CONTROL FILE. The semantic change is correct and is the one this cell asked for; the collateral is 8 unrelated entries' bytes and the loss of the file's pure-ASCII property. THE DIRECTION IS THE DANGEROUS ONE: nothing fails, no gate fires, the JSON stays valid and every consumer keeps working -- the only casualty is that the next reader of a git diff sees 9 changed lines for 1 changed value, and that a file which used to raise loudly on a bad decode now decodes silently wrong on a cp1252 reader. IT IS NOT THIS DEPLOY'S DEFECT AND IT IS NOT LOCAL TO THIS PROJECT: any lane that runs build-and-upload.sh for any pipeline re-encodes whatever escapes happen to be in the file at that moment, so the property is lost on whichever deploy happens next and is re-lost after every restoration.",
+    "notes": "WHAT THIS WORKER DID, inside its own granted path and stated so it is not mistaken for a wider edit: infra/aws/lambda/ci/lambda-source-map.json IS in this order's paths, so the file was rewritten from HEAD's own bytes with a single textual substitution of the one sha256 value (occurrence count asserted == 1 before substituting), restoring 0 non-ASCII and reducing the commit to a 1-line diff that carries exactly the real change. NO entry belonging to another project was modified, and nothing was normalised. WHAT WAS NOT DONE: no edit to build-and-upload.sh (not in paths, and it is the same file row POSN_ASTTAX-Z-W19-S1 is about), and no repair of the eight entries -- they are already pure ASCII at HEAD and stay that way by this restoration, so there is nothing to fix as long as the next writer does not re-encode them again. THE DURABLE FIX belongs to the CI lane and is one option among the three the script already has: make the node writer emit ASCII-escaped JSON, or prefer the python3 writer (json.dump defaults to ensure_ascii=True), or stop round-tripping the whole document to set one key."
+  }
+]
+```
