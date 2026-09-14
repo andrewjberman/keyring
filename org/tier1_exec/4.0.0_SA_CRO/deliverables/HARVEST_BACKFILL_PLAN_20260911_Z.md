@@ -921,3 +921,118 @@ s.11 sets three bars. Against them:
 **NOT DONE AND NOT CLAIMED:** no data was landed anywhere. **No S3 write, no DynamoDB write, no
 pipeline run** -- landing harvest data is DS/COO lane at L6/L7, not L1's, and this section is the
 route and its measured limits, not the harvest itself.
+
+---
+
+## 19. `sa_symbol` RESOLVES 17 OF 17 ASKED -- AND ONLY 8 OF THEM CLEAR THE DENSITY BAR. s.18's PREDICTION HOLDS: DENSITY, NOT ACCESS, IS THE BINDING CONSTRAINT
+
+**Artifacts:** `scripts/sa_symbol_resolve_pass.py` and
+`deliverables/IDENTITY_SA_SYMBOL_DENSITY_PASS_20260913_Z.json`, marked **PARTIAL** in its own `state`.
+Free, direct, unauthenticated, **no vendor** -- 121 calls, no quota consumed anywhere.
+
+### THE RULE, AND WHY IT RESOLVES IDENTITY AND DENSITY IN ONE SWEEP
+
+The news call that corroborates a symbol is the same call that measures its density, so both come
+from one read. A symbol is accepted only when **(a)** SA's own company name for it matches ours AND
+**(b)** a returned article **title** names the company. Rank and relevance score are recorded and
+**never decide** -- s.18's `ROG` is Rogers Corporation with 50 immaculate records.
+
+### THE PARTITION, WHICH IS THE FIRST THING TO READ
+
+```
+universe                                  89
+ASKED                                     17
+NOT ASKED -- HTTP 403 from the vendor     72   <- NOT a finding about those names
+RESOLVED of asked                         17
+REFUSED ON EVIDENCE of asked               0
+CLEARING THE DENSITY BAR                   8 of 17
+```
+⛔ **THE SEARCH ENDPOINT SERVED 17 QUERIES AND THEN RETURNED HTTP 403 FOR EVERY REMAINING NAME.** The
+first run of this pass printed *"RESOLVED 17 of 89 / REFUSED 72 of 89"* -- **which reads as "Costco,
+Netflix, Visa and Mastercard have no SA symbol".** They were never asked. The artifact now partitions
+the two and every not-asked record says so in its own evidence field.
+⚠ **AND THE GUARD THAT WOULD HAVE CAUGHT IT EXISTED -- IN THE OTHER SCRIPT.** `ir_domain_bulk_pass.py`
+stops after 3 consecutive vendor failures. This pass was written later, without it, and spent **72
+pointless calls recording absences it never asked about.** *A control does not travel between scripts
+on its own; it has to be carried.* Added here now.
+⭐ **The per-symbol NEWS endpoint was NOT rate-limited** -- only the name-to-symbol SEARCH was. **A
+name whose symbol is already known can still be harvested**, so the 403 does not block the backfill,
+only the resolution of the remaining 72.
+
+### ⛔ TWO DEFECTS THE FIRST BATCH CAUGHT, BOTH MINE, AND ONE SHIPPED A WRONG COMPANY
+
+**1. SA marks the matched substring with `<b>` IN EVERY FIELD, INCLUDING `name`.** A search for "ASML"
+returned the symbol as `<b>ASML</b>`, so the news URL became `/symbols/%3Cb%3EASML%3C/b%3E/news` and
+404'd. **It produced FALSE REFUSALS on precisely the EASIEST names** -- the ones where the query
+matched the ticker itself. ASML and BNP Paribas both read UNRESOLVED for this reason alone.
+
+**2. THE ACCEPTANCE RULE ACCEPTED A WRONG COMPANY, AND THE REASON IS THE ONE THIS PLAN KEEPS
+RE-LEARNING.** `America Movil` was matched to **`LILA` -- Liberty Latin America Ltd.** -- on the token
+`america`, and **48 of 50 returned titles "confirmed" it**, because test (b) uses THE SAME TOKENS as
+test (a).
+>> **TWO TESTS THAT SHARE A DEPENDENCY ARE ONE TEST.** s.14's criterion worked because its two tests
+   were INDEPENDENT (a name token vs. multi-result domain agreement). Here both read one weak
+   geographic word, so they failed together and the second one's agreement was worthless
+   corroboration. **This is Rule 22's shared-dependency blindness, inside the acceptance rule, one
+   section after this plan wrote about it.** <<
+⚠ **AND THE CORRECT ANSWER WAS REJECTED FOR HAVING ACCENTS:** SA names it *"América Móvil, S.A.B. de
+C.V."*, which the ASCII strip turned into `amricamvil`, matching none of our tokens. **The right
+answer failed and the wrong one passed, in the same comparison.**
+✅ **THE FIX IS NOT A LONGER STOPWORD LIST WRITTEN FROM RECALL** -- that is the Rule 24 trap. It is a
+**SYMMETRIC measure derived from the two names themselves**: jaccard(our distinctive words, SA's
+distinctive words) >= 0.5, plus accent folding and a containment escape for concatenated forms.
+```
+America Movil vs Liberty Latin America Ltd.        j = 0.25  REFUSED
+America Movil vs America Movil, S.A.B. de C.V.     j = 1.0   ACCEPTED
+Roche         vs Rogers Corporation                j = 0.0   REFUSED
+Air Liquide   vs L'Air Liquide S.A.                j = 1.0   ACCEPTED
+```
+**Fixture: 9 of 9, including both failures that had shipped.**
+
+### THE DENSITY MEASUREMENT -- and it is the reason this section matters
+
+```
+folder                         symbol  recs  in-30d  oldest       s.11 density bar
+Adobe                          ADBE    50    26      2026-06-15   MET
+Alibaba                        BABA    50    35      2026-07-20   MET
+AstraZeneca                    AZN     50    12      2026-04-29   MET
+Boeing                         BA      50    24      2026-07-24   MET
+BP                             BP      50     5      2026-05-13   MET
+Cadence                        CDNS    50     5      2025-09-06   MET
+Celsius                        CELH    50     4      2025-06-04   MET
+Clorox                         CLX     50     4      2025-05-04   MET
+--------------------------------------------------------------------------------
+ASML                           ASML    50     2      2026-05-13   NOT MET
+British American Tobacco       BTI     50     2      2025-02-13   NOT MET
+Air Liquide                    AIQUF   50     1      2020-09-02   NOT MET
+America Movil                  AMX     50     1      2020-07-14   NOT MET
+BNP Paribas                    BNPQF   50     1      2022-10-01   NOT MET
+Canadian National Railway      CNI     50     1      2024-10-23   NOT MET
+BB Seguridade                  BBSEY   17     1      2022-02-07   NOT MET
+Bunzl                          BZLFF   18     1      2018-08-28   NOT MET
+China Construction Bank        CICHY   25     0      2011-01-05   NOT MET
+```
+>> **THE 30-DAY WINDOW IS COVERED IN ALL SEVENTEEN -- every `oldest` predates the cut. THE WINDOW WAS
+   NEVER THE PROBLEM. NINE OF SEVENTEEN SIMPLY DO NOT GENERATE THREE ARTICLES IN THIRTY DAYS.** <<
+⭐ **AND THE MISSES CLUSTER, WHICH MAKES THIS ACTIONABLE RATHER THAN JUST DISAPPOINTING:** they are
+overwhelmingly the **foreign-ordinary / unsponsored tickers** -- `AIQUF`, `BNPQF`, `BZLFF`, `BBSEY`,
+`CICHY`. Those lines carry a trickle of coverage while the same company's **sponsored ADR** is where
+the articles land.
+⛔ **SO THIS PASS HAS A SELECTION DEFECT OF ITS OWN, NAMED RATHER THAN HIDDEN:** where several tickers
+are the same company, it picks the one with the most **TOTAL** records. **It should pick the one with
+the most records IN THE WINDOW**, which is the quantity the bar is actually about. Not re-run because
+the search endpoint is currently 403; the fix is one comparison key and the resume command is in the
+artifact.
+
+### WHAT THIS SETTLES, AND THE ONE NUMBER NOT TO QUOTE YET
+
+- **`sa_symbol` is resolvable for free and the Bloomberg root is not the key** -- SA's own search maps
+  company NAME to symbol, and the rule corroborates on SA's company name plus its article titles.
+- **The binding constraint is DENSITY**, exactly as s.18 predicted, and it is now measured: **8 of 17.**
+- ⚠ **DO NOT EXTRAPOLATE 8/17 TO THE 89.** The 17 asked are alphabetically the first 17, not a sample
+  drawn to represent the universe, and they skew toward names whose folder happens to sort early. The
+  honest statement is *8 of the 17 measured*, and the remaining 72 need the 403 to lift.
+- ⚠ **"REFUSED ON EVIDENCE: 0 of 17" IS NOT A CLEAN BILL FOR THE RULE.** The rule discriminates at the
+  CANDIDATE level -- it rejected Liberty Latin America, Rogers, Sony and Xanadu Quantum by name -- but
+  a 0% name-level refusal over 17 large caps means the rule has not yet been tested where it will
+  actually bite: a name with NO SA listing at all.

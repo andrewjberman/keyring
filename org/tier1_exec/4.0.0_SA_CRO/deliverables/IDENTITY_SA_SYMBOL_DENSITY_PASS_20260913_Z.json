@@ -1,0 +1,1901 @@
+{
+  "artifact": "sa_symbol RESOLUTION + ARTICLE DENSITY PASS",
+  "author": "4.0.0_SA_CRO~Z",
+  "generated_at": "2026-09-14T03:35Z",
+  "provider": "seekingalpha.com/api/v3 -- DIRECT, unauthenticated, NO VENDOR, no quota",
+  "criterion": "HARVEST_BACKFILL_PLAN_20260911_Z.md s.18: accepted only when SA's own company name carries a distinctive token (a) AND a returned article title names the company (b). Never by rank, never by relevance score.",
+  "bars": {
+    "window_days": 30,
+    "density_min": 3
+  },
+  "status_note": "INFERRED, not MEASURED: SA's own naming plus its own article titles are two readings of ONE source. An independent confirmation would be a second provider.",
+  "denominator": {
+    "universe": 89,
+    "ASKED": 17,
+    "NOT_ASKED_vendor_refusal": 72,
+    "resolved_of_asked": 17,
+    "refused_on_evidence_of_asked": 0,
+    "serveable_at_the_density_bar": 8,
+    "partition_note": "A VENDOR REFUSAL AND A REFUSAL ON EVIDENCE ARE DIFFERENT FACTS. The first run printed \"RESOLVED 17 of 89 / REFUSED 72 of 89\" when those 72 were never asked -- which reads as \"Costco, Netflix, Visa and Mastercard have no SA symbol\"."
+  },
+  "records": [
+    {
+      "folder": "ASML NA",
+      "company_name": "ASML",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "ASML",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED ASML -- SA names it 'ASML Holding N.V.' (test a) and 36 of 50 returned titles name the company (test b). Window: 2026-05-13 .. 2026-09-08, 2 in the last 30 days -- density bar (>=3) NOT MET.",
+        "resolved_at": "2026-09-14T03:29Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "ASML",
+          "sa_company": "ASML Holding N.V.",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 36,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 2,
+          "oldest": "2026-05-13",
+          "newest": "2026-09-08",
+          "distinct_days": 30,
+          "covers_window": true
+        },
+        {
+          "symbol": "ASMLF",
+          "sa_company": "ASML Holding N.V.",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 44,
+          "title_of": 47,
+          "records": 47,
+          "in_window": 0,
+          "oldest": "2022-06-17",
+          "newest": "2026-07-16",
+          "distinct_days": 24,
+          "covers_window": true
+        }
+      ],
+      "candidates_rejected_on_name": [
+        {
+          "symbol": "XNDU",
+          "sa_company": "Xanadu Quantum Technologies Limited",
+          "score": 1046.5148,
+          "name_overlap": 0.0
+        }
+      ]
+    },
+    {
+      "folder": "Adobe ADBE US",
+      "company_name": "Adobe",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "ADBE",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED ADBE -- SA names it 'Adobe Inc.' (test a) and 26 of 50 returned titles name the company (test b). Window: 2026-06-15 .. 2026-09-13, 26 in the last 30 days -- density bar (>=3) MET.",
+        "resolved_at": "2026-09-14T03:29Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "ADBE",
+          "sa_company": "Adobe Inc.",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 26,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 26,
+          "oldest": "2026-06-15",
+          "newest": "2026-09-13",
+          "distinct_days": 34,
+          "covers_window": true
+        },
+        {
+          "symbol": "ADBE:CA",
+          "sa_company": "Adobe Inc.",
+          "name_overlap": 1.0,
+          "http": 404,
+          "title_hits": 0,
+          "title_of": 0,
+          "records": 0,
+          "in_window": 0,
+          "oldest": null,
+          "newest": null,
+          "distinct_days": 0,
+          "covers_window": false
+        }
+      ],
+      "candidates_rejected_on_name": [
+        {
+          "symbol": "IBM",
+          "sa_company": "International Business Machines Corporation",
+          "score": 1394.3208,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "NEGG",
+          "sa_company": "Newegg Commerce, Inc.",
+          "score": 1069.4747,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "IBM:CA",
+          "sa_company": "International Business Machines Corporation",
+          "score": 664.89813,
+          "name_overlap": 0.0
+        }
+      ]
+    },
+    {
+      "folder": "Air Liquide AI FP",
+      "company_name": "Air Liquide",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "AIQUF",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED AIQUF -- SA names it \"L'Air Liquide S.A.\" (test a) and 46 of 50 returned titles name the company (test b). Window: 2020-09-02 .. 2026-08-31, 1 in the last 30 days -- density bar (>=3) NOT MET.",
+        "resolved_at": "2026-09-14T03:29Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "AIQUF",
+          "sa_company": "L'Air Liquide S.A.",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 46,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 1,
+          "oldest": "2020-09-02",
+          "newest": "2026-08-31",
+          "distinct_days": 45,
+          "covers_window": true
+        },
+        {
+          "symbol": "AIQUY",
+          "sa_company": "L'Air Liquide S.A.",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 48,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 1,
+          "oldest": "2022-06-21",
+          "newest": "2026-08-31",
+          "distinct_days": 47,
+          "covers_window": true
+        }
+      ],
+      "candidates_rejected_on_name": [
+        {
+          "symbol": "APD",
+          "sa_company": "Air Products and Chemicals, Inc.",
+          "score": 37054.8,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "FDX",
+          "sa_company": "FedEx Corporation",
+          "score": 33981.535,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "WAB",
+          "sa_company": "Westinghouse Air Brake Technologies Corporation",
+          "score": 33654.668,
+          "name_overlap": 0.0
+        }
+      ]
+    },
+    {
+      "folder": "Alibaba BABA",
+      "company_name": "Alibaba",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "BABA",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED BABA -- SA names it 'Alibaba Group Holding Limited' (test a) and 33 of 50 returned titles name the company (test b). Window: 2026-07-20 .. 2026-09-10, 35 in the last 30 days -- density bar (>=3) MET.",
+        "resolved_at": "2026-09-14T03:29Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "BABA",
+          "sa_company": "Alibaba Group Holding Limited",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 33,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 35,
+          "oldest": "2026-07-20",
+          "newest": "2026-09-10",
+          "distinct_days": 29,
+          "covers_window": true
+        },
+        {
+          "symbol": "BABAF",
+          "sa_company": "Alibaba Group Holding Limited",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 41,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 6,
+          "oldest": "2024-06-11",
+          "newest": "2026-09-10",
+          "distinct_days": 46,
+          "covers_window": true
+        }
+      ],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "America Movil AXMB MM",
+      "company_name": "America Movil",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "AMX",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED AMX -- SA names it 'Am\u00e9rica M\u00f3vil, S.A.B. de C.V.' (test a) and 36 of 50 returned titles name the company (test b). Window: 2020-07-14 .. 2026-09-12, 1 in the last 30 days -- density bar (>=3) NOT MET.",
+        "resolved_at": "2026-09-14T03:29Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "AMX",
+          "sa_company": "Am\u00e9rica M\u00f3vil, S.A.B. de C.V.",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 36,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 1,
+          "oldest": "2020-07-14",
+          "newest": "2026-09-12",
+          "distinct_days": 49,
+          "covers_window": true
+        },
+        {
+          "symbol": "AMXOF",
+          "sa_company": "Am\u00e9rica M\u00f3vil, S.A.B. de C.V.",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 1,
+          "title_of": 1,
+          "records": 1,
+          "in_window": 0,
+          "oldest": "2025-02-12",
+          "newest": "2025-02-12",
+          "distinct_days": 1,
+          "covers_window": true
+        }
+      ],
+      "candidates_rejected_on_name": [
+        {
+          "symbol": "LILA",
+          "sa_company": "Liberty Latin America Ltd.",
+          "score": 26651.33,
+          "name_overlap": 0.25
+        },
+        {
+          "symbol": "LILAK",
+          "sa_company": "Liberty Latin America Ltd.",
+          "score": 26079.791,
+          "name_overlap": 0.25
+        },
+        {
+          "symbol": "LILAB",
+          "sa_company": "Liberty Latin America Ltd.",
+          "score": 17077.67,
+          "name_overlap": 0.25
+        }
+      ]
+    },
+    {
+      "folder": "AstraZeneca AZN",
+      "company_name": "AstraZeneca",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "AZN",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED AZN -- SA names it 'AstraZeneca PLC' (test a) and 36 of 50 returned titles name the company (test b). Window: 2026-04-29 .. 2026-09-11, 12 in the last 30 days -- density bar (>=3) MET.",
+        "resolved_at": "2026-09-14T03:29Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "AZN",
+          "sa_company": "AstraZeneca PLC",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 36,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 12,
+          "oldest": "2026-04-29",
+          "newest": "2026-09-11",
+          "distinct_days": 37,
+          "covers_window": true
+        },
+        {
+          "symbol": "AZNH",
+          "sa_company": "AstraZeneca PLC ADRhedged ETF",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 3,
+          "title_of": 3,
+          "records": 3,
+          "in_window": 0,
+          "oldest": "2026-04-29",
+          "newest": "2026-07-27",
+          "distinct_days": 2,
+          "covers_window": true
+        }
+      ],
+      "candidates_rejected_on_name": [
+        {
+          "symbol": "MRK",
+          "sa_company": "Merck & Co., Inc.",
+          "score": 1709.6339,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "NKTR",
+          "sa_company": "Nektar Therapeutics",
+          "score": 1315.2881,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "VYGR",
+          "sa_company": "Voyager Therapeutics, Inc.",
+          "score": 1153.4614,
+          "name_overlap": 0.0
+        }
+      ]
+    },
+    {
+      "folder": "BB Seguridade BBSE3 BZ",
+      "company_name": "BB Seguridade",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "BBSEY",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED BBSEY -- SA names it 'BB Seguridade Participa\u00e7\u00f5es S.A.' (test a) and 12 of 17 returned titles name the company (test b). Window: 2022-02-07 .. 2026-09-10, 1 in the last 30 days -- density bar (>=3) NOT MET.",
+        "resolved_at": "2026-09-14T03:29Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "BBSEY",
+          "sa_company": "BB Seguridade Participa\u00e7\u00f5es S.A.",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 12,
+          "title_of": 17,
+          "records": 17,
+          "in_window": 1,
+          "oldest": "2022-02-07",
+          "newest": "2026-09-10",
+          "distinct_days": 15,
+          "covers_window": true
+        }
+      ],
+      "candidates_rejected_on_name": [
+        {
+          "symbol": "<b>BB</b>",
+          "sa_company": "BlackBerry Limited",
+          "score": 9255.106,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "<b>BBY</b>",
+          "sa_company": "Best Buy Co., Inc.",
+          "score": 7612.8027,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "<b>BBAI</b>",
+          "sa_company": "BigBear.ai Holdings, Inc.",
+          "score": 6946.7974,
+          "name_overlap": 0.0
+        }
+      ]
+    },
+    {
+      "folder": "BNP Paribas BNP FP",
+      "company_name": "BNP Paribas",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "BNPQF",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED BNPQF -- SA names it 'BNP Paribas SA' (test a) and 30 of 50 returned titles name the company (test b). Window: 2022-10-01 .. 2026-08-26, 1 in the last 30 days -- density bar (>=3) NOT MET.",
+        "resolved_at": "2026-09-14T03:29Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "BNPQF",
+          "sa_company": "BNP Paribas SA",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 30,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 1,
+          "oldest": "2022-10-01",
+          "newest": "2026-08-26",
+          "distinct_days": 47,
+          "covers_window": true
+        },
+        {
+          "symbol": "BNPQY",
+          "sa_company": "BNP Paribas SA",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 29,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 1,
+          "oldest": "2022-10-18",
+          "newest": "2026-08-26",
+          "distinct_days": 47,
+          "covers_window": true
+        }
+      ],
+      "candidates_rejected_on_name": [
+        {
+          "symbol": "PDRDX",
+          "sa_company": "Principal Diversified Real Asset Fund; Inst",
+          "score": 13076.059,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "ESEFF",
+          "sa_company": "BNPPE FTSEEPRA/NAREITEurozone Capped UCITS ETF QDD",
+          "score": 12799.679,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "PRDAX",
+          "sa_company": "Principal Diversified Real Asset Fund; A",
+          "score": 9920.551,
+          "name_overlap": 0.0
+        }
+      ]
+    },
+    {
+      "folder": "BP PLC",
+      "company_name": "BP",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "BP",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED BP -- SA names it 'BP p.l.c.' (test a) and 47 of 50 returned titles name the company (test b). Window: 2026-05-13 .. 2026-09-09, 5 in the last 30 days -- density bar (>=3) MET.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "BP",
+          "sa_company": "BP p.l.c.",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 47,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 5,
+          "oldest": "2026-05-13",
+          "newest": "2026-09-09",
+          "distinct_days": 35,
+          "covers_window": true
+        },
+        {
+          "symbol": "BPAQF",
+          "sa_company": "BP p.l.c.",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 30,
+          "title_of": 30,
+          "records": 30,
+          "in_window": 0,
+          "oldest": "2022-02-08",
+          "newest": "2026-08-04",
+          "distinct_days": 18,
+          "covers_window": true
+        }
+      ],
+      "candidates_rejected_on_name": [
+        {
+          "symbol": "<b>BPOP</b>",
+          "sa_company": "Popular, Inc.",
+          "score": 22153.553,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "<b>BPTH</b>",
+          "sa_company": "Bio-Path Holdings, Inc.",
+          "score": 22111.195,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "<b>BPTRX</b>",
+          "sa_company": "Baron Partners Fund; Retail",
+          "score": 19618.754,
+          "name_overlap": 0.0
+        }
+      ]
+    },
+    {
+      "folder": "Boeing BA",
+      "company_name": "Boeing",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "BA",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED BA -- SA names it 'The Boeing Company' (test a) and 40 of 50 returned titles name the company (test b). Window: 2026-07-24 .. 2026-09-12, 24 in the last 30 days -- density bar (>=3) MET.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "BA",
+          "sa_company": "The Boeing Company",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 40,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 24,
+          "oldest": "2026-07-24",
+          "newest": "2026-09-12",
+          "distinct_days": 27,
+          "covers_window": true
+        },
+        {
+          "symbol": "BA:CA",
+          "sa_company": "The Boeing Company",
+          "name_overlap": 1.0,
+          "http": 404,
+          "title_hits": 0,
+          "title_of": 0,
+          "records": 0,
+          "in_window": 0,
+          "oldest": null,
+          "newest": null,
+          "distinct_days": 0,
+          "covers_window": false
+        }
+      ],
+      "candidates_rejected_on_name": [
+        {
+          "symbol": "ALK",
+          "sa_company": "Alaska Air Group, Inc.",
+          "score": 1818.8315,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "LUV",
+          "sa_company": "Southwest Airlines Co.",
+          "score": 1623.3632,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "ANZFF",
+          "sa_company": "Air New Zealand Limited",
+          "score": 1226.7632,
+          "name_overlap": 0.0
+        }
+      ]
+    },
+    {
+      "folder": "British American Tobacco",
+      "company_name": "British American Tobacco",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "BTI",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED BTI -- SA names it 'British American Tobacco p.l.c.' (test a) and 38 of 50 returned titles name the company (test b). Window: 2025-02-13 .. 2026-09-11, 2 in the last 30 days -- density bar (>=3) NOT MET.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "BTI",
+          "sa_company": "British American Tobacco p.l.c.",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 38,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 2,
+          "oldest": "2025-02-13",
+          "newest": "2026-09-11",
+          "distinct_days": 49,
+          "covers_window": true
+        },
+        {
+          "symbol": "BTAFF",
+          "sa_company": "British American Tobacco p.l.c.",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 7,
+          "title_of": 9,
+          "records": 9,
+          "in_window": 0,
+          "oldest": "2015-06-03",
+          "newest": "2026-04-21",
+          "distinct_days": 8,
+          "covers_window": true
+        }
+      ],
+      "candidates_rejected_on_name": [
+        {
+          "symbol": "FXB",
+          "sa_company": "Invesco CurrencyShares British Pound Strlng Tr ETF",
+          "score": 10342.753,
+          "name_overlap": 0.143
+        },
+        {
+          "symbol": "JAPAF",
+          "sa_company": "Japan Tobacco Inc.",
+          "score": 9392.139,
+          "name_overlap": 0.25
+        },
+        {
+          "symbol": "JAPAY",
+          "sa_company": "Japan Tobacco Inc.",
+          "score": 9112.31,
+          "name_overlap": 0.25
+        }
+      ]
+    },
+    {
+      "folder": "Bunzl BNZL GB",
+      "company_name": "Bunzl",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "BZLFF",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED BZLFF -- SA names it 'Bunzl plc' (test a) and 18 of 18 returned titles name the company (test b). Window: 2018-08-28 .. 2026-09-01, 1 in the last 30 days -- density bar (>=3) NOT MET.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "BZLFF",
+          "sa_company": "Bunzl plc",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 18,
+          "title_of": 18,
+          "records": 18,
+          "in_window": 1,
+          "oldest": "2018-08-28",
+          "newest": "2026-09-01",
+          "distinct_days": 15,
+          "covers_window": true
+        },
+        {
+          "symbol": "BZLFY",
+          "sa_company": "Bunzl plc",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 10,
+          "title_of": 10,
+          "records": 10,
+          "in_window": 1,
+          "oldest": "2017-02-27",
+          "newest": "2026-09-01",
+          "distinct_days": 10,
+          "covers_window": true
+        }
+      ],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "Cadence CDNS US",
+      "company_name": "Cadence",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "CDNS",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED CDNS -- SA names it 'Cadence Design Systems, Inc.' (test a) and 36 of 50 returned titles name the company (test b). Window: 2025-09-06 .. 2026-09-05, 5 in the last 30 days -- density bar (>=3) MET.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "CDNS",
+          "sa_company": "Cadence Design Systems, Inc.",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 36,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 5,
+          "oldest": "2025-09-06",
+          "newest": "2026-09-05",
+          "distinct_days": 37,
+          "covers_window": true
+        },
+        {
+          "symbol": "RARMF",
+          "sa_company": "Cadence Minerals Plc",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 0,
+          "title_of": 0,
+          "records": 0,
+          "in_window": 0,
+          "oldest": null,
+          "newest": null,
+          "distinct_days": 0,
+          "covers_window": false
+        }
+      ],
+      "candidates_rejected_on_name": [
+        {
+          "symbol": "GSIT",
+          "sa_company": "GSI Technology, Inc.",
+          "score": 1171.4158,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "PL",
+          "sa_company": "Planet Labs PBC",
+          "score": 1168.518,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "VCLD",
+          "sa_company": "Verecloud, Inc.",
+          "score": 522.42676,
+          "name_overlap": 0.0
+        }
+      ]
+    },
+    {
+      "folder": "Canadian National Railway CNR",
+      "company_name": "Canadian National Railway",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "CNI",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED CNI -- SA names it 'Canadian National Railway Company' (test a) and 36 of 50 returned titles name the company (test b). Window: 2024-10-23 .. 2026-09-03, 1 in the last 30 days -- density bar (>=3) NOT MET.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "CNI",
+          "sa_company": "Canadian National Railway Company",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 36,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 1,
+          "oldest": "2024-10-23",
+          "newest": "2026-09-03",
+          "distinct_days": 38,
+          "covers_window": true
+        },
+        {
+          "symbol": "CNR:CA",
+          "sa_company": "Canadian National Railway Company",
+          "name_overlap": 1.0,
+          "http": 404,
+          "title_hits": 0,
+          "title_of": 0,
+          "records": 0,
+          "in_window": 0,
+          "oldest": null,
+          "newest": null,
+          "distinct_days": 0,
+          "covers_window": false
+        }
+      ],
+      "candidates_rejected_on_name": [
+        {
+          "symbol": "CP",
+          "sa_company": "Canadian Pacific Kansas City Limited",
+          "score": 10268.595,
+          "name_overlap": 0.2
+        },
+        {
+          "symbol": "FNMA",
+          "sa_company": "Federal National Mortgage Association",
+          "score": 9365.93,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "CNQ",
+          "sa_company": "Canadian Natural Resources Limited",
+          "score": 8937.976,
+          "name_overlap": 0.333
+        }
+      ]
+    },
+    {
+      "folder": "Celsius CELH",
+      "company_name": "Celsius",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "CELH",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED CELH -- SA names it 'Celsius Holdings, Inc.' (test a) and 39 of 50 returned titles name the company (test b). Window: 2025-06-04 .. 2026-09-11, 4 in the last 30 days -- density bar (>=3) MET.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "CELH",
+          "sa_company": "Celsius Holdings, Inc.",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 39,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 4,
+          "oldest": "2025-06-04",
+          "newest": "2026-09-11",
+          "distinct_days": 40,
+          "covers_window": true
+        },
+        {
+          "symbol": "CEL-USD",
+          "sa_company": "Celsius",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 14,
+          "title_of": 14,
+          "records": 14,
+          "in_window": 0,
+          "oldest": "2022-04-22",
+          "newest": "2025-05-09",
+          "distinct_days": 13,
+          "covers_window": true
+        }
+      ],
+      "candidates_rejected_on_name": [
+        {
+          "symbol": "CDNS",
+          "sa_company": "Cadence Design Systems, Inc.",
+          "score": 1222.5911,
+          "name_overlap": 0.0
+        }
+      ]
+    },
+    {
+      "folder": "China Construction Bank",
+      "company_name": "China Construction Bank",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "CICHY",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED CICHY -- SA names it 'China Construction Bank Corporation' (test a) and 21 of 25 returned titles name the company (test b). Window: 2011-01-05 .. 2026-03-27, 0 in the last 30 days -- density bar (>=3) NOT MET.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "CICHY",
+          "sa_company": "China Construction Bank Corporation",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 21,
+          "title_of": 25,
+          "records": 25,
+          "in_window": 0,
+          "oldest": "2011-01-05",
+          "newest": "2026-03-27",
+          "distinct_days": 25,
+          "covers_window": true
+        },
+        {
+          "symbol": "CICHF",
+          "sa_company": "China Construction Bank Corporation",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 9,
+          "title_of": 11,
+          "records": 11,
+          "in_window": 0,
+          "oldest": "2010-12-22",
+          "newest": "2025-03-30",
+          "distinct_days": 11,
+          "covers_window": true
+        }
+      ],
+      "candidates_rejected_on_name": [
+        {
+          "symbol": "CIGI",
+          "sa_company": "Colliers International Group Inc.",
+          "score": 20877.186,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "CFTLF",
+          "sa_company": "Chinasoft International Limited",
+          "score": 17250.129,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "YMAIF",
+          "sa_company": "Yoma Strategic Holdings Ltd.",
+          "score": 15469.104,
+          "name_overlap": 0.0
+        }
+      ]
+    },
+    {
+      "folder": "Clorox CLX",
+      "company_name": "Clorox",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "CLX",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED CLX -- SA names it 'The Clorox Company' (test a) and 38 of 50 returned titles name the company (test b). Window: 2025-05-04 .. 2026-09-13, 4 in the last 30 days -- density bar (>=3) MET.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "CLX",
+          "sa_company": "The Clorox Company",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 38,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 4,
+          "oldest": "2025-05-04",
+          "newest": "2026-09-13",
+          "distinct_days": 38,
+          "covers_window": true
+        }
+      ],
+      "candidates_rejected_on_name": [
+        {
+          "symbol": "HBB",
+          "sa_company": "Hamilton Beach Brands Holding Company",
+          "score": 1117.942,
+          "name_overlap": 0.0
+        }
+      ]
+    },
+    {
+      "folder": "Coca Cola Femsa",
+      "company_name": "Coca Cola Femsa",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "Copa CPA",
+      "company_name": "Copa",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "Costco COST",
+      "company_name": "Costco",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "Enel SpA ENEL IM",
+      "company_name": "Enel SpA",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "GSK LN",
+      "company_name": "GSK",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "Global Payments GPN",
+      "company_name": "Global Payments",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "Grupo Aeroportuario del Centro OMAB MM",
+      "company_name": "Grupo Aeroportuario del Centro",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "HEICO Corporation HEI US",
+      "company_name": "HEICO Corporation",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "HSBC HSBA LN",
+      "company_name": "HSBC",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "Haliburton HAL",
+      "company_name": "Haliburton",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "Hermes RMS",
+      "company_name": "Hermes",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "Home Depot HD",
+      "company_name": "Home Depot",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "Hon Hai 2317 TT",
+      "company_name": "Hon Hai",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "ICICI Bank ICICIBC IN",
+      "company_name": "ICICI Bank",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "Iberdrola IBE SM",
+      "company_name": "Iberdrola",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "Idexx IDXX",
+      "company_name": "Idexx",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "Imperial Brands IMB LN",
+      "company_name": "Imperial Brands",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "International Container Terminals",
+      "company_name": "International Container Terminals",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "Intesa Sanpaolo ISP IM",
+      "company_name": "Intesa Sanpaolo",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "Intuit INTU",
+      "company_name": "Intuit",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "Intuitive Surgical ISRG US",
+      "company_name": "Intuitive Surgical",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "JD.com 9618 HK",
+      "company_name": "JD.com",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "KDDI",
+      "company_name": "KDDI",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "Kimberly Clark KMB",
+      "company_name": "Kimberly Clark",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "Koninklijke KPN NA",
+      "company_name": "KPN",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "Lenovo 992 HK",
+      "company_name": "Lenovo",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "MSCI Inc MSCI US",
+      "company_name": "MSCI Inc",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "Manila MER PER",
+      "company_name": "Manila Electric",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "Mastercard MA",
+      "company_name": "Mastercard",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "MercadoLibre MELI US",
+      "company_name": "MercadoLibre",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "Michelin ML FP",
+      "company_name": "Michelin",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "Mitsubishi UFJ Financial Group 8306 JP",
+      "company_name": "Mitsubishi UFJ Financial Group",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "Monster MNST",
+      "company_name": "Monster",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "National Grid NG LN",
+      "company_name": "National Grid",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "Nestle NESN SW",
+      "company_name": "Nestle",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "Netflix NFLX",
+      "company_name": "Netflix",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "Nike NKE US",
+      "company_name": "Nike",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "Nokia FH",
+      "company_name": "Nokia",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "Novartis NOVN SW",
+      "company_name": "Novartis",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "Nubank NU",
+      "company_name": "Nubank",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "Orange ORA FP",
+      "company_name": "Orange",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "Petrobras PETR3 BZ",
+      "company_name": "Petrobras",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "QXO",
+      "company_name": "QXO",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "RWE AG RWE GY",
+      "company_name": "RWE",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "Reckitt Benckiser RKT LN",
+      "company_name": "Reckitt Benckiser",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "Rio Tinto RIO LN",
+      "company_name": "Rio Tinto",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "Roche ROG SW",
+      "company_name": "Roche",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "SAP GY",
+      "company_name": "SAP",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "SSE plc SSE LN",
+      "company_name": "SSE plc",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "Sanofi SAN FP",
+      "company_name": "Sanofi",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "Schlumberger SLB",
+      "company_name": "Schlumberger",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "ServiceNow NOW US",
+      "company_name": "ServiceNow",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "Shopify SHOP CA",
+      "company_name": "Shopify",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "Singapore Telecom ST SP",
+      "company_name": "Singapore Telecom",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "Spotify SPOT US",
+      "company_name": "Spotify",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "Sumitomo Mitsui Financial Group 8316 JP",
+      "company_name": "Sumitomo Mitsui Financial Group",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "Synopsys SNPS US",
+      "company_name": "Synopsys",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "Taiwan Semiconductor Manufacturing TSM US",
+      "company_name": "Taiwan Semiconductor Manufacturing",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "Telefonica Brazil VIVT3 BZ",
+      "company_name": "Telefonica Brazil",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "Tokyo Electron 8035 JP",
+      "company_name": "Tokyo Electron",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "Tokyo Marine 8766 JP",
+      "company_name": "Tokyo Marine",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "Total Energies TTE FP",
+      "company_name": "Total Energies",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "UBS",
+      "company_name": "UBS",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "Uber Technologies UBER US",
+      "company_name": "Uber Technologies",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "Unilever ULVR LN",
+      "company_name": "Unilever",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "Universal Music Group UMG NL",
+      "company_name": "Universal Music Group",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "Valero Energy VLO",
+      "company_name": "Valero Energy",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "Visa V",
+      "company_name": "Visa",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "Walmart de Mexico WALMEX MM",
+      "company_name": "Walmart de Mexico",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "Workday WDAY US",
+      "company_name": "Workday",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "Zoetis ZTS US",
+      "company_name": "Zoetis",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "Zurich Insurance ZURN SW",
+      "company_name": "Zurich Insurance",
+      "search_http": 403,
+      "sa_symbol": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [],
+      "candidates_rejected_on_name": []
+    }
+  ],
+  "state": "PARTIAL -- the search endpoint served 17 queries then returned HTTP 403 for the remaining 72. NOT a defect and NOT a finding about those 72 names.",
+  "blocker": {
+    "what": "HTTP 403 from seekingalpha.com/api/v3/searches after 17 queries",
+    "still_refusing_at": "2026-09-14T03:3xZ (re-probed with Costco and Netflix; both 403)",
+    "note": "the per-symbol NEWS endpoint was NOT rate-limited in this run -- only the name->symbol SEARCH was. A name whose symbol is already known can still be harvested.",
+    "resume": "python sa_symbol_resolve_pass.py --out <next> -- the pass now STOPS after 3 consecutive vendor refusals instead of spending the rest of the batch recording absences it never asked about."
+  }
+}
