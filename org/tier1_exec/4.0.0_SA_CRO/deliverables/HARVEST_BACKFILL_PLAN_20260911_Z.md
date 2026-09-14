@@ -628,3 +628,58 @@ of the 89 that need a human.**
 - **`sa_symbol` is unmoved at 10 INFERRED / 79 UNRESOLVED** -- it needs the SA fetch path, not search.
 - **The identity layer as a whole now reads:** `bloomberg_ticker` 34 MEASURED + 49 INFERRED = 83 of
   89; `ir_domain` 79 INFERRED of 89; `sa_symbol` 10 of 89; `social_account` 0 of 89.
+
+---
+
+## 15. THE BLOG HALF IS BUILT, PROVEN AND THEN STOPPED BY A QUOTA WALL -- AND THE WALL IS AN OPEN CALL, NOT A DEFECT
+
+**Artifact:** `deliverables/IDENTITY_BLOG_ROOTS_PASS_20260913_Z.json`, marked **PARTIAL** in its own
+`state` field. `scripts/ir_domain_bulk_pass.py --mode blog` carries the rule.
+
+### ⭐ THE BLOG RULE IS STRICTER THAN THE IR RULE, AND THAT IS THE WHOLE POINT
+
+By the time this runs the company's registrable domain is already held. So **test (c) -- dead on the
+IR pass, recorded there as a measured null -- becomes the PRIMARY AND ONLY test:**
+>> **A BLOG ROOT IS ACCEPTED ONLY IF ITS REGISTRABLE DOMAIN EQUALS THE HELD `ir_domain`. Everything
+   else is discarded, whatever its rank.** That is not a heuristic. It is an identity constraint, and
+   it makes the wrong-company failure mode -- the one that forced this entire criterion --
+   **STRUCTURALLY IMPOSSIBLE here rather than merely unlikely.** <<
+⚠ **THE PRICE IS RECALL, AND IT IS REAL:** a company whose newsroom lives on a SEPARATE domain
+(Alibaba's is `alizila.com`, not `alibabagroup.com`) is refused. **The denominator is 79, not 89** --
+a name with no `ir_domain` cannot have a blog resolved at all, and the pass drops those 10 rather than
+paying for them.
+
+### ⛔ THE FIRST BATCH OF 7 WAS SPENT ON A DEFECT, FOUND BY READING THE OUTPUT INSTEAD OF THE COUNT
+
+The header line said *"ACCEPTED 4 of 7"*. The values under it were `www.asml.com/en`,
+`www.astrazeneca.com/content` and `www.airliquide.com/group`. **The root extractor took the FIRST path
+segment, which on a localized site is the LOCALE, not the blog.** Every one is a real URL prefix, so
+nothing errored and nothing looked wrong. Repaired to take the prefix **up to and including the marker
+segment**, and the marker test now reads a hyphenated segment as the words it is made of --
+`press-releases` and `media-centre` are unmistakably editorial and failed an exact match, while a bare
+substring test would accept `newsagents`. **Fixture: 7 of 7 including two negative controls.**
+⭐ **AND THE SECOND-ORDER FIX MATTERS MORE THAN THE FIRST:** the blog branch stored only its OUTPUT,
+so the repair could not be replayed and the 7 calls were lost. **The IR pass stored its result domains
+and its equivalent repair cost ZERO calls.** The branch now stores `on_domain_links`. *Store the
+INPUT to a rule you may have to fix, not just the rule's answer.*
+
+### THE WALL, MEASURED
+
+```
+HTTP 429 from customsearch/v1 -- the daily query cap
+104 calls today: 1 probe + 90 IR + 7 discarded blog + 5 blog + 1 diagnostic
+partition, eligible 79:  ASKED 5 | INFERRED 3 | REFUSED 2 | NOT ASKED 74
+```
+⛔ **A REFUSAL AND A NEVER-ASKED ARE DIFFERENT FACTS AND THE ARTIFACT PARTITIONS THEM.** Collapsing
+them would report 74 companies as having no blog when nothing was ever asked about them -- the
+`0 hits across 0 files scanned` trap, on a vendor quota instead of a corpus.
+⭐ **THE QUOTA WAS NOT WASTED.** It went on the IR pass, which is the prerequisite the blog rule cannot
+run without, and which is COMPLETE at 79 of 89. Spending it in that order was the right sequence and
+would be again.
+
+>> **THE OPEN CALL, AND IT IS ANDREW'S BECAUSE IT IS A VENDOR SPEND CAP:** the `google-cse-config` key
+   behaves as the Custom Search **free tier, 100 queries/day**. The blog half needs either
+   **tomorrow's reset** (free, costs a day) or **billing enabled on that GCP project** (immediate).
+   **No seat raises a vendor spend cap.** Nothing else is asked, and nothing else waits on it --
+   the IR half is done and the resume command is recorded in the artifact's `blocker.resume`, with an
+   `--exclude-done` limb so no name is ever paid for twice. <<

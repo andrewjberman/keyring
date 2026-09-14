@@ -1,0 +1,357 @@
+{
+  "artifact": "blog_roots DISCOVERY PASS -- Google Custom Search",
+  "author": "4.0.0_SA_CRO~Z",
+  "generated_at": "2026-09-14T01:20Z",
+  "authority": "Andrew-direct 2026-09-13 ~04:0xZ, card 4 of 'all recs approved': the Google Custom Search key for IR and blog search, SEARCH ONLY.",
+  "criterion": "HARVEST_BACKFILL_PLAN_20260911_Z.md s.13",
+  "provider": "googleapis.com/customsearch/v1 -- ONE provider, ONE purpose. No result page was fetched.",
+  "universe": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~4\\universe.json",
+  "name_derivation": "the company name is the folder name with its trailing Bloomberg-shaped tokens removed -- the complement of the identity fallback rule that reads those same tokens as a ticker.",
+  "name_overrides": {
+    "Koninklijke KPN NA": {
+      "name": "KPN",
+      "reason": "'Koninklijke' is a Dutch honorific shared by many listed companies; 'KPN' is the name"
+    },
+    "Manila MER PER": {
+      "name": "Manila Electric",
+      "reason": "'Manila' alone is a city; the company is Manila Electric (Meralco)"
+    }
+  },
+  "name_overrides_note": "found by the zero-call dry run over all 89 derived queries, not by recall: in two folders the stripped token WAS the company's identity and the residual was not a company name.",
+  "excluded_non_company_domains": [
+    "accesswire.com",
+    "annualreports.com",
+    "barrons.com",
+    "bing.com",
+    "bloomberg.com",
+    "businesswire.com",
+    "cnbc.com",
+    "companiesmarketcap.com",
+    "craft.co",
+    "crunchbase.com",
+    "einpresswire.com",
+    "facebook.com",
+    "finance.yahoo.com",
+    "fool.com",
+    "ft.com",
+    "glassdoor.com",
+    "globenewswire.com",
+    "google.com",
+    "gurufocus.com",
+    "hl.co.uk",
+    "ii.co.uk",
+    "indeed.com",
+    "instagram.com",
+    "investing.com",
+    "investor.gov",
+    "investorrelations.com",
+    "irmagazine.com",
+    "linkedin.com",
+    "londonstockexchange.com",
+    "macrotrends.net",
+    "marketscreener.com",
+    "morningstar.com",
+    "msn.com",
+    "nasdaq.com",
+    "newsfilecorp.com",
+    "notifyir.com",
+    "nyse.com",
+    "pitchbook.com",
+    "prnewswire.co.uk",
+    "prnewswire.com",
+    "q4inc.com",
+    "quartr.com",
+    "reddit.com",
+    "reuters.com",
+    "sec.gov",
+    "sec.report",
+    "seekingalpha.com",
+    "sharesmagazine.co.uk",
+    "simplywall.st",
+    "stockanalysis.com",
+    "tiktok.com",
+    "tipranks.com",
+    "twitter.com",
+    "wikipedia.org",
+    "wikiwand.com",
+    "wsj.com",
+    "x.com",
+    "yahoo.com",
+    "youtube.com",
+    "zacks.com"
+  ],
+  "excluded_note": "test (b) as written in s.13 says only 'two or more results share that same registrable domain'. Run literally it would elect linkedin.com for a company with three LinkedIn hits. Aggregators, exchanges, social networks and news are excluded before the tests run. THIS IS A CORRECTION TO THE CRITERION, disclosed rather than folded in.",
+  "denominator": {
+    "universe": 89,
+    "eligible_for_blog_search": 79,
+    "eligible_note": "a name with no resolved ir_domain cannot have a blog resolved -- the only test is domain equality",
+    "ASKED": 5,
+    "blog_roots_INFERRED": 3,
+    "REFUSED_on_evidence": 2,
+    "NOT_ASKED_quota": 74,
+    "not_asked_note": "A REFUSAL AND A NEVER-ASKED ARE DIFFERENT FACTS AND ARE PARTITIONED HERE DELIBERATELY. Collapsing them would report 67 companies as having no blog when nothing was ever asked about them.",
+    "calls_succeeded_this_pass": 5
+  },
+  "records": [
+    {
+      "folder": "ASML NA",
+      "company_name": "ASML",
+      "query": "ASML blog",
+      "blog_roots": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the Google CSE daily quota was exhausted before this name was reached (HTTP 429). THIS IS NOT A FINDING ABOUT THIS COMPANY. It carries no evidence either way about whether it runs a blog.",
+        "resolved_at": "2026-09-14T01:19Z"
+      }
+    },
+    {
+      "folder": "Adobe ADBE US",
+      "company_name": "Adobe",
+      "query": "Adobe blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": [
+          "blog.adobe.com",
+          "business.adobe.com/blog",
+          "news.adobe.com",
+          "www.adobe.com/uk/express/learn/blog",
+          "coldfusion.adobe.com/blogs"
+        ],
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Adobe blog', 10 result(s) returned of 271000000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. ACCEPTED -- 5 blog root(s) on the held domain adobe.com, out of 9 result(s) that were on it at all.",
+        "resolved_at": "2026-09-14T01:19Z"
+      },
+      "adjudication": {
+        "held_domain": "adobe.com",
+        "results_on_held_domain": 9,
+        "results_off_held_domain": [
+          "linkedin.com"
+        ],
+        "on_domain_links": [
+          "https://blog.adobe.com/",
+          "https://business.adobe.com/blog/",
+          "https://blog.adobe.com/en/publish/2025/04/09/our-vision-for-accelerating-creativity-productivity-with-agentic-ai",
+          "https://news.adobe.com/",
+          "https://blog.adobe.com/en/publish/2026/04/15/introducing-firefly-ai-assistant-new-way-create-with-our-creative-agent",
+          "https://www.adobe.com/uk/express/learn/blog",
+          "https://blog.adobe.com/en/publish/2025/09/04/adobe-premiere-bringing-pro-quality-video-editing-to-your-iphone",
+          "https://coldfusion.adobe.com/blogs/",
+          "https://helpx.adobe.com/adobe-connect/using/webinar/get-started-with-ai-generated-blogs.html"
+        ],
+        "blog_roots": [
+          "blog.adobe.com",
+          "business.adobe.com/blog",
+          "news.adobe.com",
+          "www.adobe.com/uk/express/learn/blog",
+          "coldfusion.adobe.com/blogs"
+        ],
+        "verdict": "ACCEPTED -- 5 blog root(s) on the held domain adobe.com, out of 9 result(s) that were on it at all."
+      }
+    },
+    {
+      "folder": "Air Liquide AI FP",
+      "company_name": "Air Liquide",
+      "query": "Air Liquide blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": [
+          "www.airliquide.com/group/press-releases-news",
+          "www.airliquide.com/stories"
+        ],
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Air Liquide blog', 10 result(s) returned of 14800000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. ACCEPTED -- 2 blog root(s) on the held domain airliquide.com, out of 7 result(s) that were on it at all.",
+        "resolved_at": "2026-09-14T01:19Z"
+      },
+      "adjudication": {
+        "held_domain": "airliquide.com",
+        "results_on_held_domain": 7,
+        "results_off_held_domain": [
+          "apmdelivers.com",
+          "ftc.gov"
+        ],
+        "on_domain_links": [
+          "https://www.airliquide.com/group/press-releases-news/2026-07-28/h1-2026-results-acceleration-second-quarter-air-liquide-combines-growth-continuous-performance",
+          "https://usa.airliquide.com/",
+          "https://www.airliquide.com/group/press-releases-news/2026-04-16/air-liquide-invests-200-million-euros-japan-support-leading-semiconductor-manufacturer-production",
+          "https://ca.healthcare.airliquide.com/academy",
+          "https://www.airliquide.com/stories/industry/renewable-electricity-boosting-power-supply",
+          "https://ca.healthcare.airliquide.com/solutions/equipment/medical-gas-systems/pipeline-equipment/gas-outlets",
+          "https://eg.airliquide.com/Superior-Liquid-Nitrogen-Supplies"
+        ],
+        "blog_roots": [
+          "www.airliquide.com/group/press-releases-news",
+          "www.airliquide.com/stories"
+        ],
+        "verdict": "ACCEPTED -- 2 blog root(s) on the held domain airliquide.com, out of 7 result(s) that were on it at all."
+      }
+    },
+    {
+      "folder": "Alibaba BABA",
+      "company_name": "Alibaba",
+      "query": "Alibaba blog",
+      "blog_roots": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the Google CSE daily quota was exhausted before this name was reached (HTTP 429). THIS IS NOT A FINDING ABOUT THIS COMPANY. It carries no evidence either way about whether it runs a blog.",
+        "resolved_at": "2026-09-14T01:19Z"
+      }
+    },
+    {
+      "folder": "America Movil AXMB MM",
+      "company_name": "America Movil",
+      "query": "America Movil blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": [],
+        "status": "UNRESOLVED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'America Movil blog', 10 result(s) returned of 25800000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. REFUSED -- 1 result(s) landed on the held domain americamovil.com but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap.",
+        "resolved_at": "2026-09-14T01:19Z"
+      },
+      "adjudication": {
+        "held_domain": "americamovil.com",
+        "results_on_held_domain": 1,
+        "results_off_held_domain": [
+          "blog.google",
+          "harvey.ai",
+          "lla.com",
+          "luxse.com",
+          "wolterskluwer.com"
+        ],
+        "on_domain_links": [
+          "https://www.americamovil.com/Spanish/overview/"
+        ],
+        "blog_roots": [],
+        "verdict": "REFUSED -- 1 result(s) landed on the held domain americamovil.com but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap."
+      }
+    },
+    {
+      "folder": "AstraZeneca AZN",
+      "company_name": "AstraZeneca",
+      "query": "AstraZeneca blog",
+      "blog_roots": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the Google CSE daily quota was exhausted before this name was reached (HTTP 429). THIS IS NOT A FINDING ABOUT THIS COMPANY. It carries no evidence either way about whether it runs a blog.",
+        "resolved_at": "2026-09-14T01:19Z"
+      }
+    },
+    {
+      "folder": "BB Seguridade BBSE3 BZ",
+      "company_name": "BB Seguridade",
+      "query": "BB Seguridade blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": [],
+        "status": "UNRESOLVED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'BB Seguridade blog', 10 result(s) returned of 45000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. REFUSED -- 0 result(s) landed on the held domain bbseguridaderi.com.br but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap.",
+        "resolved_at": "2026-09-14T01:19Z"
+      },
+      "adjudication": {
+        "held_domain": "bbseguridaderi.com.br",
+        "results_on_held_domain": 0,
+        "results_off_held_domain": [
+          "bbseguros.com.br",
+          "divvydiary.com",
+          "finanzero.com.br",
+          "helloleads.io",
+          "mapfre.com",
+          "precojusto.ai",
+          "thebanker.com",
+          "traders.com.br",
+          "yahoo.com"
+        ],
+        "on_domain_links": [],
+        "blog_roots": [],
+        "verdict": "REFUSED -- 0 result(s) landed on the held domain bbseguridaderi.com.br but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap."
+      }
+    },
+    {
+      "folder": "Boeing BA",
+      "company_name": "Boeing",
+      "query": "Boeing blog",
+      "blog_roots": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the Google CSE daily quota was exhausted before this name was reached (HTTP 429). THIS IS NOT A FINDING ABOUT THIS COMPANY. It carries no evidence either way about whether it runs a blog.",
+        "resolved_at": "2026-09-14T01:19Z"
+      }
+    },
+    {
+      "folder": "British American Tobacco",
+      "company_name": "British American Tobacco",
+      "query": "British American Tobacco blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": [
+          "www.bat.com/media"
+        ],
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'British American Tobacco blog', 10 result(s) returned of 6060000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. ACCEPTED -- 1 blog root(s) on the held domain bat.com, out of 1 result(s) that were on it at all.",
+        "resolved_at": "2026-09-14T01:19Z"
+      },
+      "adjudication": {
+        "held_domain": "bat.com",
+        "results_on_held_domain": 1,
+        "results_off_held_domain": [
+          "ash.org.uk",
+          "bath.ac.uk",
+          "bmj.com",
+          "exposetobacco.org",
+          "ftc.gov",
+          "ictd.ac",
+          "profglantz.com",
+          "theguardian.com",
+          "wolterskluwer.com"
+        ],
+        "on_domain_links": [
+          "https://www.bat.com/media/news-and-stories"
+        ],
+        "blog_roots": [
+          "www.bat.com/media"
+        ],
+        "verdict": "ACCEPTED -- 1 blog root(s) on the held domain bat.com, out of 1 result(s) that were on it at all."
+      }
+    },
+    {
+      "folder": "Bunzl BNZL GB",
+      "company_name": "Bunzl",
+      "query": "Bunzl blog",
+      "blog_roots": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the Google CSE daily quota was exhausted before this name was reached (HTTP 429). THIS IS NOT A FINDING ABOUT THIS COMPANY. It carries no evidence either way about whether it runs a blog.",
+        "resolved_at": "2026-09-14T01:19Z"
+      }
+    },
+    {
+      "folder": "Cadence CDNS US",
+      "company_name": "Cadence",
+      "query": "Cadence blog",
+      "blog_roots": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the Google CSE daily quota was exhausted before this name was reached (HTTP 429). THIS IS NOT A FINDING ABOUT THIS COMPANY. It carries no evidence either way about whether it runs a blog.",
+        "resolved_at": "2026-09-14T01:19Z"
+      }
+    },
+    {
+      "folder": "Canadian National Railway CNR",
+      "company_name": "Canadian National Railway",
+      "query": "Canadian National Railway blog",
+      "blog_roots": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED -- the Google CSE daily quota was exhausted before this name was reached (HTTP 429). THIS IS NOT A FINDING ABOUT THIS COMPANY. It carries no evidence either way about whether it runs a blog.",
+        "resolved_at": "2026-09-14T01:19Z"
+      }
+    }
+  ],
+  "state": "PARTIAL -- BLOCKED ON THE GOOGLE CSE DAILY QUOTA, NOT ON ANY DEFECT. 67 of the 79 eligible names were never asked.",
+  "blocker": {
+    "what": "HTTP 429 from customsearch/v1 -- the daily query cap",
+    "tier": "consistent with the Custom Search free tier, 100 queries/day, reset daily. 104 calls were made across the IR and blog passes today and the wall fell between them.",
+    "spent_on": "the IR pass, which is the higher-value half and is COMPLETE at 79 of 89. The quota was not wasted -- it was spent on the prerequisite, and the blog rule cannot run without it.",
+    "unblocks_by": "either tomorrow's quota reset, or billing enabled on the GCP project behind google-cse-config. NEITHER IS THIS SEAT'S ACT: raising a vendor spend cap is the account owner's.",
+    "resume": "python ir_domain_bulk_pass.py --mode blog --held-domains <IR pass json> --exclude-done <this file> --out <next>  -- the exclude-done limb skips every name already answered, so no call is paid for twice."
+  }
+}
