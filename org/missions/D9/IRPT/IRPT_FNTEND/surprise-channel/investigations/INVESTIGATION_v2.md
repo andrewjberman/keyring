@@ -4109,6 +4109,28 @@
     "spec_asserts": "contracts/validate.ts:76 @35797660: 'A non-READY state without a reason is a payload a screen cannot explain.' contracts/envelope.ts:225-232 @35797660: a response with no status gets the explicit unknown, never READY.",
     "world_is": "The two rules disagree on the no-status path. The adapter's explicit unknown (UNCERTAIN, with no reason) is exactly what validate's availability check refuses, so a no-status directory body run through the real adapter makes a document the portal's own validator calls invalid. Whether any production path runs validateContract on an adapted document was not read. FE-s-42's test gives its directory body a READY status, so that F42-AC4 grades the cohort and nothing else. Outside the grant; not investigated further.",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W6-S1",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~6",
+    "surfaced_at": "2026-09-14T23:02:00Z",
+    "one_line": "At base 4d11c008c2 the census of record (F44-AC5, FE-s-37's test_governing_binding.py) read 11 of 12 green. test_seeded_limb.py hit the census's own 560 s per-battery bound (rc=124) while the box was shared. Run alone on 051379eac7, the same battery took 275 s and the census read 12 of 12, with neither tool changed. A load timeout prints RED in the same row shape as a regression.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-44 F44-AC5: 'the whole-suite census of record ... run once with your change applied', expect 'EVERY .tools BATTERY THAT CALLS EITHER TOOL: (\\d+) of \\1 green'. The worker definition: a timeout (rc 124) IS the recorded output, retried once at most.",
+    "world_is": "At base, with the checker and the gate as this cell leaves them (checker blob 7e324c78c2 at both commits): 'RED rc=124 560 s test_seeded_limb.py TIMEOUT after 560 s', 'EVERY .tools BATTERY THAT CALLS EITHER TOOL: 11 of 12 green', governing-binding 18 of 19, 621 s wall. That run was concurrent with this worker's own checker runs (a 373-blob census, both self-tests) and with sibling round-7 workers. At 051379eac7, alone on this worker: 'GREEN rc=0 275 s test_seeded_limb.py', 12 of 12, 19 of 19, 277 s wall. FE-s-29 recorded the same battery at 137 s. The 560 s bound is about 2x its lone runtime here, so a loaded box can turn the census red with no change to either tool. The row shape does not separate load from regression; rc=124 is the only tell. Nothing to disarm: a re-run on a quiet box reads green, and the timeout is loud.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/tests/test_governing_binding.py @4d11c008c2 :272 bat_futs = [(p, pool.submit(_run, [sys.executable, str(p)], WORKSPACE, 560)) for p in run] -- the per-battery bound; :85 returns 124, 'TIMEOUT after %d s'.",
+        "base run at 4d11c008c2, concurrent: '  RED   rc=124  560 s  test_seeded_limb.py   TIMEOUT after 560 s' / 'EVERY .tools BATTERY THAT CALLS EITHER TOOL: 11 of 12 green' / 'governing-binding battery: 18 of 19 arm(s) as expected (621 s wall)', rc=1.",
+        "committed-bytes run at 051379eac7, 22:54:43Z-22:59:20Z, alone: '  GREEN rc=0    275 s  test_seeded_limb.py   seeded-limb battery: 18 of 18 arm(s) as expected' / 'EVERY .tools BATTERY THAT CALLS EITHER TOOL: 12 of 12 green' / 'governing-binding battery: 19 of 19 arm(s) as expected (277 s wall)', rc=0.",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~4/IRPT_FNTEND.TO-FE-s-29.checker-limbs.proof_of_spec.json @9e6ed6c236 F29-AC8 status_reason: 'rc=0, 137 s of the 300 s bound (run beside seven other criterion runs)'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
