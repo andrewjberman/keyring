@@ -198,6 +198,28 @@ new row on 3.0.0_SA_CVO's ask 96495), both 1.0.0_SA_CTO; `LGIC_NAMING-S3`, `LGIC
     "spec_asserts": "LGIC_NAMING S1 and NAMING_SCHEMA key.table_case: a platinum leaf -- the served name -- is a kebab-case .json file.",
     "world_is": "Most ADVI served names are snake_case and the frozen portal requests them by those names. Keeping them breaks the schema's case rule; renaming them needs an edge name mapping per leaf. The schema does not say which, and the two D8 PRDs read it differently.",
     "notes": "Filed with 3.0.0_SA_CVO's L4-R refusals of ADVI_FIRMBKTS's ratified-text half at v1.0 and v1.1 (R1); held here rather than committed at 09:58Z because 1.0.0_SA_CTO's S7 was uncommitted in the shared tree. The denominator is the portal's served-leaf list, not a bucket census. Same class as LGIC_NAMING-S6: an address the schema does not admit."
+  },
+  {
+    "id": "LGIC_NAMING-S9",
+    "project": "LGIC_NAMING",
+    "fabric": "laptop",
+    "surfaced_by": "1.0.0_SA_CTO",
+    "surfaced_at": "2026-09-14T11:01Z",
+    "one_line": "prd-stamp.py status renders the L4-R sign-offs VERSION-bound while prd-signoff.py and LIMB 6 bind each half to its HASH: on LGIC_NAMING v1.3 @7bd4ef6f27, prd-signoff reads the ratified-text half SIGNED current (3.0.0_SA_CVO signed v1.2's byte-identical half) and prd-stamp status prints 'sign-off CVO -- not signed at v1.3', so the next owner reading the stamp ledger sees a signature owed that is not.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "TOOL, 2026-09-14 ~10:5xZ, same HEAD: 'python .tools/prd-signoff.py status LGIC_NAMING' -> 'v1.3 @7bd4ef6f27 ADMITTED; ratified-text SIGNED 3.0.0_SA_CVO current; brief SIGNED 4.0.0_SA_CRO current'; 'python .tools/prd-stamp.py status <PRD>' -> 'sign-off CRO 4.0.0_SA_CRO SIGNED v1.3' and 'sign-off CVO -- not signed at v1.3 (owner 3.0.0_SA_CVO)'.",
+        "CODE: .tools/prd-stamp.py _signed_reviewers(signoff_files, prd_version) keeps a reviewer only when its sign-off file's prd_version equals the PRD's; its own self-test asserts 'version-bound -- CVO signed v0.3 -> only CRO'. The comment beside it says it 'mirrors LIMB 6's predicate'.",
+        "LAW: CLAUDE.md Rule 27 (spine v3.15): each half is signed 'bound to the HASH of its sections, never to prd_version'; one rule for all three tools, .tools/prd_signoff_lib.py."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "prd-stamp.py status shows the next owner what L4-R still owes, mirroring LIMB 6's predicate.",
+    "world_is": "LIMB 6's predicate moved to hash-bound halves (prd_signoff_lib, spine v3.15); prd-stamp's mirror stayed version-bound. After any bump that leaves a half's bytes unchanged, it reports the carried half as unsigned.",
+    "notes": "INERT: no gate reads prd-stamp's sign-off view; LIMB 6 and the notifier use prd_signoff_lib. Found by 1.0.0_SA_CTO while verifying the S5 fix (@b09ed6c736) against this PRD. Remedy, the tool owner's (1.0.0_SA_CTO, whose ~Z lane wrote it): have _signed_reviewers take prd_signoff_lib's per-half status instead of comparing prd_version."
   }
 ]
 ```
