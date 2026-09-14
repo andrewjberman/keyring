@@ -461,6 +461,34 @@ seat should not make about itself.
 CHOSEN.** STOP-CONDITION as stated in the argument block: `AMGT_RESAPP` `status: complete`, or
 Andrew's stand-down.
 
+`2.0.0_SA_COO~G` **`/canonical-drive` DIRECTED over THE SEQUENCE: every project under `projects:` in
+`org/missions/SEQUENCE.yaml`, READ AT HEAD EACH TICK** (at the arm: LGIC_NAMING, LGIC_ENFORCE, LGIC_CANON, ADVI_FIRMBKTS,
+MDPF_CANON, IRPT_BCKEND; `parked:` and `pending_placement:` are OUT). Andrew-direct 2026-09-14 ~16:3xZ at the
+`1.0.0_SA_CTO` terminal, VERBATIM: *"The issue I need from you is to handle the larger scale work of sequence.yaml, which
+COO~G is going to be leading. So you essentially neded to review the sequence.yaml, and instruct COO~G to essentially run
+/canonical-drive on those sequence.yaml sequenced projects, which you will collaborate with them on to oversee."* Record:
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_163xZ_SEQUENCE_LED_BY_COO_G_ON_CANONICAL_DRIVE_CTO_OVERSEES.md`.
+The skill sets the cadence: 10m on its own active project, 20m on any other in-scope project at DECOMP/EXECUTING/ROUND_CLOSE,
+60m when none. **The sequence's gates bind every limb** (`python .tools/sequence-check.py --project <CODE>`: WAITING does
+not start, HELD does not pass its cap, and the NEXT COO SLOT order stands). `1.0.0_SA_CTO` oversees: spec/scope pitches
+(skill obligation 7) and the SEQUENCE.yaml gates are that seat's. STOP-CONDITION: every sequenced project `status:
+complete` per the register, or his stand-down. ⚠ Open at Andrew, and NOT a hold: how this meets his 2026-09-10
+*"One project per COO/seat."* and the ~16:1xZ `2.0.0_SA_COO~D`-seat event for LGIC_ENFORCE (both in the record).
+
+`2.0.0_SA_COO~F` **`/canonical-drive` DIRECTED over IRPT_FNTEND ONLY.** Andrew-direct 2026-09-14 ~16:3xZ at the
+`2.0.0_SA_COO~F` terminal. VERBATIM as he quoted it at the `1.0.0_SA_CTO` terminal (recorded in the ~G row's record):
+*"yes you will be continuing where you left off with /canonical-flow on IRPT_FNTEND. Once establishing state, and your
+last log on the subject, you will run /canonical-drive IRPT_FNTEND."* 10m (own active project). STOP-CONDITION:
+IRPT_FNTEND `status: complete`, or his stand-down.
+
+`2.0.0_SA_COO~D` **`/canonical-drive` DIRECTED over DSGN_REBRND ONLY.** Andrew-direct 2026-09-14 ~16:3xZ at the
+`2.0.0_SA_COO~D` terminal, VERBATIM: *"yes you will be continuing where you left off with /canonical-flow on DSGN_REBRND.
+Once establishing state, and your last log on the subject, you will run /canonical-drive DSGN_REBRND."* Record:
+`org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260914_163xZ_COO_D_CANONICAL_DRIVE_DSGN_REBRND.md` @`d54876b585`
+(relayed as 96624; landed here by `1.0.0_SA_CTO` because a seat does not write its own row). 10m. STOP-CONDITION:
+DSGN_REBRND drained to its L10 slug (the seat then goes to LGIC_ENFORCE on the event held at `0.0.0_AB_MSTR`), or his
+stand-down.
+
 **Find a stale cron from a prior session? Cancel it:** `CronList` → `CronDelete`.
 
 ---
