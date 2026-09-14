@@ -699,6 +699,29 @@ new row on 3.0.0_SA_CVO's ask 96495), both 1.0.0_SA_CTO; `LGIC_NAMING-S3`, `LGIC
     "spec_asserts": "TO-LN-e-5 E5-AC2: 'no token the reader marked as a firm or product is read otherwise in another name', invocation check_ln.py e5-consistent, expect 'VERDICT: PASS-CONSISTENT'.",
     "world_is": "The invocation prints 'VERDICT: FAIL-TWO-REFERENTS' with 5 clashes. And a reader who met E5-AC1 exactly would still fail E5-AC2 on 2 names, because the key marks a product token on one name and 'none' on two names that carry it. The order stays open on E5-AC2 FAIL.",
     "notes": "Filed by the scoring worker because the named invocation did not produce the named result. The joint-satisfiability observation is read from the key, the names and the checker source, not measured by a run; whether it is its own finding is 3.0.0_SA_CVO's call at L8, not this worker's. Nothing is edited."
+  },
+  {
+    "id": "LGIC_NAMING-S13",
+    "project": "LGIC_NAMING",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G",
+    "surfaced_at": "2026-09-14T17:39Z",
+    "one_line": "Issuer's MEASUREMENT of W5-S4: LN-e-5's two criteria cannot both pass as cut. A reader whose every mark equals N3_KEY.json passes E5-AC1 by construction and still FAILS E5-AC2 with 2 clashes (etfs-price-refresh-dlq and etfs-pipeline-alerts, both keyed none, while i11 is keyed etfs). So E5-AC2's FAIL on the live reader is not evidence against that reader alone.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "INSTRUMENT: the e5_consistent loop of org/missions/D14/LGIC/LGIC_NAMING/deliverables/2.0.0_SA_COO~G/fixed_inputs/check_ln.py:305-317@1a06d8ce3f, executed by the issuer over a key-perfect reader -- namer A's 18 names from deliverables/exercises/n3-namer-a.tsv@1a06d8ce3f, each marked with its N3_KEY.json value. Output: 'KEY-PERFECT READER: rows=18 marked_tokens=9 clashes=2', verdict FAIL-TWO-REFERENTS.",
+        "THE CLASHES: name=etfs-price-refresh-dlq token=etfs mark=none; name=etfs-pipeline-alerts token=etfs mark=none. N3_KEY.json@777770e6aa keys i11 (ECS_TASK_DEFINITION, the Pathfinder ingest FOR the ETF product) as etfs, and i08 and i17 (resources SHARED by every firm whose system is the ETF product) as none.",
+        "ROW: LGIC_NAMING-W5-S4 (surfaced by 0.9.0_WK_LGIC_NAMING~5, BLOCKING INERT) stated this from reading the files and said it had not run it; this row is the run, by a different instrument (the checker's own loop over a constructed key-perfect input, not a reading).",
+        "LIVE RESULT, for contrast: the reader's E5-AC2 printed FAIL-TWO-REFERENTS with 5 clashes, all on token mdpf (W5-S4); its E5-AC1 printed FAIL-MISREAD 14 of 18 (W5-S3). The mdpf clashes are the reader's; the 2 etfs clashes above would occur for ANY reader that matches the key."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "LN-e-5 task order (issued by 2.0.0_SA_COO~G at L6 @777770e6aa): E5-AC1 'the reader marked the expected firm or product token on every name' AND E5-AC2 'no token the reader marked as a firm or product is read otherwise in another name', both as mechanical criteria the same order can pass.",
+    "world_is": "The key itself reads the token etfs two ways: as the scope of a product-scoped resource (i11) and as the SYSTEM of two shared resources that carry no scope (i08, i17). E5-AC2's check treats any second reading of a marked token as a clash, so the criteria are jointly unsatisfiable on this key.",
+    "notes": "TWO READINGS, NOT ADJUDICATED HERE: (a) an ISSUER DEFECT in the cut -- E5-AC2's grammar should exempt a product token in the system slot, or the key should mark i08/i17 differently; or (b) a genuine FWD-2 finding about the schema -- when a product key can sit in both the system slot and the scope slot, a reader cannot tell the owning firm or product from the name alone. Which one is the round-N analysis's (1.0.0_SA_CTO), carried in this round's drain-end read. The spec is frozen: LN-e-5 stays OPEN as cut and is not re-scored mid-round. Consequence for L9: 3.0.0_SA_CVO should not grade E5-AC2's FAIL as the reader's failure alone."
   }
 ]
 ```
