@@ -3050,6 +3050,131 @@ all seven mechanical criteria were measured and the verdict is NO-GO.
   "spec_asserts": "TO-V5-1 criterion V5-AC1 <invocation> `timeout 60 git -C portal rev-parse HEAD` <expect> 'e85f6eb84f3a1771a37011a7e77e372570bad02a, and `git -C portal merge-base --is-ancestor HEAD e85f6eb84f` AND the reverse both exit 0 (both directions printed). Otherwise detach to the pin and re-run; if it still fails, STOP with a row.'",
   "world_is": "The expectation is TRUE exactly once -- before the order's own mandated write -- and FALSE ever after, on a correct execution. It was measured TRUE at that moment and is recorded PASS on that reading, with the post-commit reading printed beside it so the instance cannot be mistaken for a stale claim. WHY THIS IS INERT AND NOT ARMED, stated rather than assumed: L9's normal operation is the CVO reading the proof-of-spec INSTANCE against the specification (schema investigation_item.grades: 'the CVO reads the proof-of-spec instance against the specification that issued it'), and this instance carries BOTH readings, the vintage of each, and the independent parent-hash proof from V5-AC5. Left alone, the row's own disclosure is what a grader reads. It is filed because the alternative -- a grader re-running the command cold, seeing a foreign hash and rc 1, and taking the criterion's 'detach to the pin' branch -- is a route to DESTROYING the deliverable, and no criterion in this order warns of it.",
   "notes": "SIBLING, NAMED BECAUSE IT SHARES THE MECHANISM AND NOT THE RESOLUTION: POSN_ASTTAX-Z-W22-S2 records V5-AC5's gitlink limb, which is the same class -- a criterion whose instrument is invalidated by the act the order mandates -- but has NO moment at which it reads clean, so it is recorded FAIL where this one is recorded PASS. The discriminator between the two is whether the order's own body supplies the missing scope: for V5-AC1 it does ('Before writing'), for V5-AC5 it does not. NOT CLAIMED: no proposal to amend V5-AC1; a precondition criterion is a legitimate shape and the fix is a scope word, which is the issuer's byte to write. F2 (AT5-s-6) and F3 are cut on this same slot against this same pin and will inherit the shape."
+},
+{
+  "id": "POSN_ASTTAX-Z-S66",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T19:28:48Z",
+  "one_line": "DISARM of W21-S1: R1's durability bar (V8-AC9) named the seeder's DRY RUN, whose conflict list is [] before any comparison, so 0 PRESERVED was the only value it could emit. AMENDED: V8-AC9 now names the UPLOAD arm against a scratch copy with boto3 faked in-process -- the arm TO-V3-1 itself proved discriminates (rc=1, 8 [PRESERVED], 57 get_item).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE DEFECT IS THE ISSUER'S CUT, not the guard: the guard is round 4's patch applied verbatim and works on its upload arm.",
+      "REMEDY LANDED IN THIS COMMIT: TO-V8-1 V8-AC9 rewritten to the upload arm on a scratch copy (boto3 faked, the V3 harness under deliverables/0.9.0_WK_POSN_ASTTAX~21/), expecting rc=1 and a [PRESERVED] line per disagreeing member and a get_item count > 0. TO-V8-1 is unspawned; the amendment reaches its worker as the file at HEAD.",
+      "WHY GRADUATED: the row named a real non-discriminating bar, the cost would have landed on another cell, and the fix is measured against the same three-arm probe the worker ran."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W21-S1"
+  ],
+  "spec_asserts": "TO-V8-1 V8-AC9 as cut: TO-V3-1's guarded seeder dry run against a SCRATCH copy of the post-retag table, expecting 0 PRESERVED.",
+  "world_is": "seed_canonical_securities.py:295 @8cad052620 reads `conflicts = _yang_conflicts(yang_table, sec) if upload else []`; the dry-run path makes 0 get_item calls and cannot fail. Measured three ways by the worker on the applied bytes.",
+  "notes": "The worker deliberately did not edit the guard's `if upload` -- correct: a read-only conflict preview on the dry-run path would be a second pattern; the cheap option (a) the row named is the one taken."
+},
+{
+  "id": "POSN_ASTTAX-Z-S67",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T19:28:48Z",
+  "one_line": "DISARM of W21-S2: `timeout 180 bash .tools/commit-gate.sh` with no argv dispatches 0 of 0 files and exits 0 -- an instrument that examined nothing. AMENDED where the order is unspawned (V4-AC5, V8-AC7 now name their subject files); V1-AC3 and V2-AC3 are LIVE on ~19/~20 and are NOT amended mid-run -- carried to L9 with this row in hand.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "REMEDY LANDED IN THIS COMMIT: TO-V4-1 V4-AC5 names its four changed files; TO-V8-1 V8-AC7 names etf_classification.py. Both orders are unspawned, so their workers receive the amended file.",
+      "NOT AMENDED, STATED: TO-V1-1 V1-AC3 and TO-V2-1 V2-AC3 are held by live workers whose worktrees carry the cut bytes; amending HEAD mid-run would make the instance's invocation and the governing file disagree at the drain (the S31 class). Their workers are expected to do what ~21 did -- run both arms and grade on the subject -- and 3.0.0_SA_CVO~Z grades those two criteria with this row in hand.",
+      "WHY GRADUATED: the mismatch is real and the same shape recurs in five orders of one cut; the two reachable ones are fixed and the two live ones are disclosed rather than silently left."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W21-S2"
+  ],
+  "spec_asserts": "TO-V3-1 V3-AC2 (and its siblings V1-AC3, V2-AC3, V4-AC5, V8-AC7) invoke `bash .tools/commit-gate.sh` bare while the expectation names a changed .py.",
+  "world_is": "The gate takes its subjects from argv; bare it prints WARN: commit-gate checked 0 of 0 file(s) -- NOTHING WAS CHECKED and rc=0. The worker ran both arms and graded on the subject arm (1 of 1).",
+  "notes": "A bare `bash .tools/commit-gate.sh` in a future cut is the same defect; the gate's own WARN line is the only tell, and it is a WARN."
+},
+{
+  "id": "POSN_ASTTAX-Z-S68",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T19:28:48Z",
+  "one_line": "DISARM of W22-S1: 'Hedge' already exists in SUB_ASSET_COLORS at chartColors.ts:294 bound to green900 under the Fixed Income gradient, while C-SUB-ASSET puts Hedge under Structured. MEASURED BY THIS SEAT: 0 of 285 served rows carry sub_asset_class Hedge today (filtered scan, no LastEvaluatedKey) -- the binding is DEAD. AMENDED: TO-V5-1 now orders the RE-BIND to a pink-family token.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE CENSUS THAT DECIDES IT, by this seat's instrument: dynamodb scan with filter sub_asset_class IN (Hedge, Volatility, Metals) -> Count 4 of ScannedCount 285, all four are Volatility (QBER, UVXY, VIXY, VXX); Hedge 0; Metals 0. So no live holding renders through the green Hedge binding today, and after R1 the four volatility tickers WILL carry Hedge -- under the stale binding they would render FI-green.",
+      "REMEDY LANDED IN THIS COMMIT: TO-V5-1 THE CELL and V5-AC2 amended to RE-BIND 'Hedge' to a pink-family token (pink600 exists at :62; pink500 is the class base), 'Volatility' left as is (dead at R1, not this cell's). The worker is resumed on the amended file.",
+      "WHY GRADUATED: the row named a real mis-filed binding the issuer's premise had read as a missing feature; the fix is bounded by a census, not a guess."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W22-S1"
+  ],
+  "spec_asserts": "TO-V5-1 THE CELL and V5-AC2: the sub-asset map gains Metals and Hedge -- asserting neither key exists at the pin.",
+  "world_is": "'Hedge' is present at :294 (green900, FI gradient); 'Metals' is absent. The worker refused the re-bind per the refusal clause and filed the row.",
+  "notes": "No PRD byte moves: C-SUB-ASSET's encoding stands; the portal's stale map is a code fact the cell now corrects."
+},
+{
+  "id": "POSN_ASTTAX-Z-S69",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T19:28:48Z",
+  "one_line": "DISARM of W22-S2: V5-AC5's gitlink instrument (`git diff --submodule=log -- portal` reading empty) compares the index to the submodule's WORKING-TREE HEAD and is non-empty by construction once the mandated portal commit exists -- it failed exactly the compliant worker. AMENDED in V5-AC5, V6-AC7 and V7-AC7: `git ls-tree HEAD -- portal` == the pin AND `git diff --cached -- portal` empty.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "REMEDY LANDED IN THIS COMMIT: the three criteria now read the INDEX and HEAD (`git ls-tree HEAD -- portal` printing 160000 commit e85f6eb84f... and `git diff --cached -- portal` EMPTY), exactly the worker's own four-way proof, cited by W22-S2.",
+      "MEASURED AT THE DRAIN by this seat: the superproject gitlink at 92cc84fab9 reads e85f6eb84f3a1771a37011a7e77e372570bad02a (ls-tree), so the drain moved no gitlink; refs/drains/posn-5-portal now points at c475e31e70 with the pin as its ancestor.",
+      "WHY GRADUATED: an instrument that passes only the worker who did not do the work is the failure the row named, and the replacement instrument is the one the worker measured."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W22-S2"
+  ],
+  "spec_asserts": "TO-V5-1 V5-AC5 (and the same clause inherited by TO-V6-1 V6-AC7 and TO-V7-1 V7-AC7): git diff --submodule=log -- portal shows NO gitlink change (printed, empty).",
+  "world_is": "The gitlink at HEAD reads e85f6eb84f (ls-tree, ls-files -s) and nothing is staged; the working-tree read prints Submodule portal e85f6eb84f..c475e31e70 the instant the commit exists. A wrong instrument on a correct bar, anti-correlated with compliance.",
+  "notes": "The order's BODY bar (staged or committed) was always met; only the criterion's stdout bar was unsatisfiable."
+},
+{
+  "id": "POSN_ASTTAX-Z-S70",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T19:28:48Z",
+  "one_line": "DISARM of W22-S4: getSubAssetTextColor branches on the background VALUE; moving 'Commodities'/'Metals' to yellow500 flipped their chip text to white-on-yellow (1.92:1, computed) while 'touches nothing else' barred the one-line fix. AMENDED: TO-V5-1 widened to the function (yellow500 into lightBackgrounds; pink only if measured below 4.5) and a new mechanical bar V5-AC8 prints the contrast per touched colour.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "REMEDY LANDED IN THIS COMMIT: TO-V5-1 THE CELL widened to add PALETTE.yellow500 to lightBackgrounds (and the pink token only if its white-text contrast measures below 4.5), and V5-AC8 added: a (key, background, text, ratio) table for every colour this cell touched, every ratio >= 4.5, with the 1.92 reading printed as the negative control. The placeholders declaration gains CONTRAST_CHECK.",
+      "NOT READ, CARRIED: the figures are COMPUTED (WCAG relative luminance), not observed on a rendered swatch -- no page shows a Commodities chip until R1; V5-AC7 (judgment) records that and L9 grades it.",
+      "WHY GRADUATED: the exclusion clause and the defect were the same sentence; the cell now names the coupled function instead of excluding it."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W22-S4"
+  ],
+  "spec_asserts": "TO-V5-1: Nothing else in the file moves / V5-AC2 touches nothing else -- treating SUB_ASSET_COLORS as a leaf value table.",
+  "world_is": "SUB_ASSET_COLORS feeds getSubAssetTextColor (:313-320 at the pin), whose lightBackgrounds set holds 8 green/blue/white entries and zero yellow, pink, orange or amber. Contrast computed by the worker: white on #eab308 1.92, gray900 on #eab308 9.25.",
+  "notes": "portal/CLAUDE.md:15-17 calls light-on-light the #1 recurring portal UI defect; this cut would have shipped one behind the freeze."
 }
 ]
 ```

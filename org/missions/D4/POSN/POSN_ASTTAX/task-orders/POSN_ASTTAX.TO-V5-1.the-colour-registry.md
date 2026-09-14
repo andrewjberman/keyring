@@ -49,8 +49,17 @@ export const ASSET_CLASS = { fixedIncome: PALETTE.green500, equity: PALETTE.blue
 **Your edit, in that one file:**
 - `ASSET_CLASS` gains `structured: PALETTE.pink500` and `commodities: PALETTE.yellow500` -- **never amber** (amber is Cash on six
   readers; Andrew: *"mint some yellow color, yes"*).
-- The sub-asset map (`:283-309`) gains `'Metals'` and `'Hedge'` (Andrew's ruled sub-assets) and `'Commodities'` leaves the blue
-  family for the yellow one.
+- The sub-asset map (`:283-309`) gains `'Metals'` (yellow family) and `'Commodities'` leaves the blue family for the yellow one.
+- **AMENDED ~19:0xZ by the issuer (rows W22-S1, W22-S4):** `'Hedge'` ALREADY EXISTS at `:294`, bound to `PALETTE.green900` inside
+  the Fixed Income gradient. C-SUB-ASSET encodes `Hedge` under STRUCTURED. The issuer measured the binding DEAD: a filtered scan of
+  the served table (285 rows, no LastEvaluatedKey) found **0 rows** with `sub_asset_class = Hedge` (the four volatility tickers
+  carry `Volatility` until R1 moves them to `Hedge`). So RE-BIND `'Hedge'` to a PINK-family token (`PALETTE.pink600` exists at
+  `:62`; a shade distinct from the class base `pink500` where one exists). Leave `'Volatility'` as it is (it goes dead at R1;
+  not this cell's).
+- **AMENDED ~19:0xZ (row W22-S4):** `getSubAssetTextColor` (`:314-320` at the pin) branches on the background VALUE; moving
+  `'Commodities'`/`'Metals'` to `yellow500` flips their chip text to white-on-yellow (measured 1.92:1). ADD `PALETTE.yellow500` to
+  its `lightBackgrounds` set so those chips read dark-on-yellow (measured 9.25:1). The pink family stays white-on-pink only if it
+  measures >= 4.5:1; else add it to the light set too, and print the reading.
 - Nothing else in the file moves. The token NAMES `ASSET_CLASS.structured`, `ASSET_CLASS.commodities` are the CONTRACT F2 binds:
   print them in your report exactly.
 
@@ -69,23 +78,25 @@ ONE row per off-cell finding, `POSN_ASTTAX-Z-W22-S<k>`, appended to
 
 ## CRITERIA -- structured, one clause each
 
-<criterion id="V5-AC1" cell_refs="AT5-s-5"><invocation>timeout 60 git -C portal rev-parse HEAD</invocation><expect>e85f6eb84f3a1771a37011a7e77e372570bad02a, and `git -C portal merge-base --is-ancestor HEAD e85f6eb84f` AND the reverse both exit 0 (both directions printed). Otherwise detach to the pin and re-run; if it still fails, STOP with a row.</expect></criterion> `V5-AC1` -- YOUR OWN CLONE, AT THE PIN, PROVED BOTH WAYS.
+<criterion id="V5-AC1" cell_refs="AT5-s-5"><invocation>timeout 60 git -C portal rev-parse HEAD</invocation><expect>e85f6eb84f3a1771a37011a7e77e372570bad02a, and `git -C portal merge-base --is-ancestor HEAD e85f6eb84f` AND the reverse both exit 0 (both directions printed). Otherwise detach to the pin and re-run; if it still fails, STOP with a row.</expect></criterion> `V5-AC1` -- YOUR OWN CLONE, AT THE PIN, PROVED BOTH WAYS. (A PRE-WRITE precondition, recorded ONCE before the first edit; never re-run after your commit -- its detach branch would abandon your work. Row W22-S5.)
 
-<criterion id="V5-AC2" cell_refs="AT5-s-5"><invocation>timeout 60 git -C portal diff --stat e85f6eb84f -- src/lib/chartColors.ts</invocation><expect>exactly one file changed; the diff (printed) adds `structured: PALETTE.pink500` and `commodities: PALETTE.yellow500` to ASSET_CLASS, adds 'Metals' and 'Hedge' to the sub-asset map, moves 'Commodities' off PALETTE.blue950 to a yellow-family value, and touches nothing else.</expect></criterion> `V5-AC2` -- THE EDIT, NO WIDER THAN THE CELL.
+<criterion id="V5-AC2" cell_refs="AT5-s-5"><invocation>timeout 60 git -C portal diff --stat e85f6eb84f -- src/lib/chartColors.ts</invocation><expect>exactly one file changed; the diff (printed) adds `structured: PALETTE.pink500` and `commodities: PALETTE.yellow500` to ASSET_CLASS, adds 'Metals' to the sub-asset map, RE-BINDS the existing 'Hedge' from PALETTE.green900 to a pink-family token, moves 'Commodities' off PALETTE.blue950 to a yellow-family value, adds PALETTE.yellow500 to getSubAssetTextColor's lightBackgrounds set (and the pink token only if the contrast reading requires it), and touches nothing else.</expect></criterion> `V5-AC2` -- THE EDIT, NO WIDER THAN THE CELL.
 
 <criterion id="V5-AC3" cell_refs="AT5-s-5"><invocation>timeout 120 node -e "<LOAD_ASSET_CLASS_MAP>"</invocation><expect>ZERO ratified classes share a value (fixedIncome, equity, structured, commodities, alternatives are five DISTINCT values, printed); the pre-existing alternatives/realEstate pair is printed and disclosed as a class and its own sub-asset, unchanged by you.</expect></criterion> `V5-AC3` -- EXCLUSIVITY: ONE COLOUR PER CLASS, THE SAME EVERYWHERE THIS REGISTRY REACHES.
 
 <criterion id="V5-AC4" cell_refs="AT5-s-5"><invocation>timeout 600 bash -c "cd portal && bun run tsc -b"</invocation><expect>exit 0 with the file count it checked printed (tsc -b, NEVER tsc --noEmit against the root tsconfig, which typechecks ZERO files -- AMGT rd-8 AC2's measured vacuity). POSITIVE CONTROL, REQUIRED: inject a one-line type error into chartColors.ts, re-run, observe the failure (error TS printed), revert -- an instrument that cannot fail proves nothing.</expect></criterion> `V5-AC4` -- THE BUILD, WITH AN INSTRUMENT THAT CAN FAIL.
 
-<criterion id="V5-AC5" cell_refs="AT5-s-5"><invocation>timeout 60 git -C portal log -1 --format='%H %an %s' wk-posn-5-22-portal</invocation><expect>one commit on wk-posn-5-22-portal authored 0.9.0_WK_POSN_ASTTAX~22, parent e85f6eb84f; and `git diff --submodule=log -- portal` in the worktree root shows NO gitlink change (printed, empty).</expect></criterion> `V5-AC5` -- COMMITTED INSIDE THE SUBMODULE; THE GITLINK UNMOVED.
+<criterion id="V5-AC5" cell_refs="AT5-s-5"><invocation>timeout 60 git -C portal log -1 --format='%H %an %s' wk-posn-5-22-portal</invocation><expect>one commit on wk-posn-5-22-portal authored 0.9.0_WK_POSN_ASTTAX~22, parent e85f6eb84f; and the superproject gitlink UNMOVED, read two ways at the worktree root: `git ls-tree HEAD -- portal` prints `160000 commit e85f6eb84f3a1771a37011a7e77e372570bad02a portal`, and `git diff --cached -- portal` is EMPTY (nothing staged). (Amended ~19:0xZ, row W22-S2: the first cut's `git diff --submodule=log -- portal` compares the index to the submodule's working-tree HEAD and is non-empty BY CONSTRUCTION once the mandated commit exists -- it failed exactly the compliant worker.)</expect></criterion> `V5-AC5` -- COMMITTED INSIDE THE SUBMODULE; THE GITLINK UNMOVED.
 
 <criterion id="V5-AC6" cell_refs="AT5-s-5"><invocation>timeout 60 cat org/missions/D4/POSN/POSN_ASTTAX/ledger/PORTAL_REFS.md</invocation><expect>one line naming wk-posn-5-22-portal, its head hash from V5-AC5, and the pin e85f6eb84f, with the drain ref refs/drains/posn-5-portal named as the destination -- written at your first portal commit and committed in the workspace under your serial.</expect></criterion> `V5-AC6` -- THE REF IS WRITTEN DOWN WHERE THE PROMOTE WILL READ IT.
 
+<criterion id="V5-AC8" cell_refs="AT5-s-5"><invocation>timeout 120 node -e "<CONTRAST_CHECK>"</invocation><expect>for EACH sub-asset background this cell added or moved ('Metals', 'Commodities', 'Hedge') the text colour getSubAssetTextColor returns for it, and the WCAG contrast ratio of that text on that background, printed as a (key, background, text, ratio) table with every ratio >= 4.5; the pre-amendment white-on-yellow reading (1.92) printed as the negative control the amendment fixed.</expect></criterion> `V5-AC8` -- THE CHIP TEXT READS ON EVERY COLOUR THIS CELL TOUCHED (added ~19:0xZ, row W22-S4).
+
 <criterion id="V5-AC7" cell_refs="AT5-s-5" judgment="true"><invocation>JUDGMENT -- no invocation; graded at L9</invocation><expect>Whether yellow500 beside amber500 is distinguishable on the silver canvas (the design law in portal/CLAUDE.md), read from a rendered swatch if one is available, else stated as unread. Record the readings and offer NO verdict.</expect></criterion> `V5-AC7` -- **JUDGMENT, GRADED BY `3.0.0_SA_CVO~Z` AT L9.**
 
-<expected_criteria>V5-AC1, V5-AC2, V5-AC3, V5-AC4, V5-AC5, V5-AC6, V5-AC7</expected_criteria>
+<expected_criteria>V5-AC1, V5-AC2, V5-AC3, V5-AC4, V5-AC5, V5-AC6, V5-AC7, V5-AC8</expected_criteria>
 
-<placeholders>LOAD_ASSET_CLASS_MAP</placeholders>
+<placeholders>CONTRAST_CHECK, LOAD_ASSET_CLASS_MAP</placeholders>
 
 <paths>
 org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-V5-1.the-colour-registry.md
