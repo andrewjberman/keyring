@@ -3999,6 +3999,54 @@
     "spec_asserts": "Row S64 names 2.0.0_SA_COO~F as disarm owner, to disarm when FE-s-41's amended re-run reads 0 fail on a fresh checkout and drains.",
     "world_is": "Met: the fresh-checkout re-run read 0 fail at the worker and at the issuer's untouched pair, and DEV's own checkout reads green after the drain. NOT closed here: row W5-S7 (INERT), where F41-AC5 reads the working copy where its criterion says committed. JSON parsing ignores line endings, so no checkout can turn AC5 red, but it would grade an uncommitted in-place edit as committed. Carried to the drain-end packet.",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W1-S67",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-14T23:00:46Z",
+    "one_line": "The dev line alone cannot stop vite's config write under NODE. The installed vite has three config loaders. The default writes the temp file through the junction, and runner and native both FAIL on the committed vite.config.ts, because it uses __dirname. The one mechanism inside the granted line that works runs vite under the BUN runtime (`bun --bun vite --configLoader native`). So FE-s-45 moves every `bun run dev` user's dev server from node to bun, a consequence the order did not name.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-45 THE CELL, W1-S63: 'No config setting moves it. package.json:13 reads \"dev\": \"vite\", and the dev script is the one lever, so it is granted.' BOUNDS: 'Choose the mechanism from the vite that is installed (node_modules/vite, its --help and its own docs), and say which one and why.'",
+    "world_is": "vite 7.3.5 `--help`: --configLoader bundle (default) | runner (experimental) | native (experimental). bundle: loadConfigFromBundledFile writes node_modules/.vite-temp/vite.config.ts.timestamp-*.mjs, imports it, unlinks it (3-4 watch events per start, a listing before and after reads [] either way). runner: ReferenceError on __dirname. native under node: 'ReferenceError: __dirname is not defined in ES module scope' at vite.config.ts:13, no server. portal/vite.config.ts @35797660 uses __dirname at :13 (cacheDir, FE-s-38) and :16 (alias). Only the bundle loader injects it. Under bun, native imports the config with bun's own loader, which defines __dirname in ES modules: HTTP 200, 0 .vite-temp writes, the dependency cache written under the worktree's portal/.vite (node_modules/.vite untouched since 18:19Z). Chosen: `bun --bun vite --configLoader native` (portal df3a3353, local on wk-irpt_fntend-7-1-fe-s-45). Costs the order did not name: (1) `bun run dev` now runs the dev server under bun for every user. The /api proxy entries (http-proxy under bun) are exercised by no FE-s-45 criterion. F45-AC6 drives the served page with routed maps. (2) Startup measured 1.7-14.7 s under bun (the first, cold start 14.7 s) against 0.5-2.7 s under node. (3) native returns no config dependencies, so an edit to vite.config.ts no longer restarts the server. The alternative that keeps node is `__dirname` -> `import.meta.dirname` at vite.config.ts:13 and :16 plus `vite --configLoader runner` or `native`; vite.config.ts is not in this order's grant. Across the whole node_modules tree during two new-script starts: 0 files created or deleted; 5 `change` events on 3 packages (@tailwindcss/postcss, autoprefixer, @esbuild/win32-x64) that a read-only control could not attribute either way (it produced 0 events).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "node node_modules/vite/bin/vite.js --help -> vite/7.3.5, '--configLoader <loader> ... bundle ... runner (experimental) ... native (experimental) ... (default: bundle)'",
+        "node_modules/vite/dist/node/chunks/config.js:35983-35999 (vite 7.3.5): loadConfigFromBundledFile -> fsp.writeFile(path.resolve(nodeModulesDir, '.vite-temp/<name>.timestamp-*.mjs')), import, fs.unlink",
+        "loadConfigFromFile(..., 'runner') on portal/vite.config.ts @35797660 -> ReferenceError 'Cannot determine intended module format because both __dirname and top-level await are present' (ERR_AMBIGUOUS_MODULE_SYNTAX)",
+        "bun run vite --configLoader native --port 5292 --strictPort -> 'failed to load config ... ReferenceError: __dirname is not defined in ES module scope at .../vite.config.ts?t=...:13:26'; port 5292 stayed ECONNREFUSED; .vite-temp events 0",
+        "bun --bun vite --configLoader native --port 5293 -> HTTP 200 after 16056 ms ('VITE v7.3.5 ready in 14714 ms'); .vite-temp events 0",
+        "bun run vite --port 5291 (the old script) -> HTTP 200 after 2716 ms; .vite-temp events 3 (rename/change/rename of vite.config.ts.timestamp-1789423207054-c8a9eb6413fef.mjs)",
+        "F45-AC2 debug run: new script on 5900 'ready in 1986 ms', 0 writes, PROBE REACHABLE served from this worktree; old script on 5901, 4 writes",
+        "nm-classify, server on 5296: EVENTS 5: rename 0, change 5 (@tailwindcss/postcss 2, autoprefixer 2, @esbuild/win32-x64 1); read-only control: EVENTS 0",
+        "bun dev on 5295: portal/.vite 191 events, BABEL note naming C:\\tmp\\wk-irpt_fntend-7-1-fe-s-45\\portal\\.vite\\deps\\react-dom_client.js; node_modules/.vite/deps/_metadata.json mtime 2026-09-14 14:19:48 -0400"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W1-S68",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-14T23:00:46Z",
+    "one_line": "FE-s-38's resolve-config.mjs loads vite.config.ts with vite's default bundle loader. So every run of fe-s-38/isolation.test.ts, and so every whole-suite census, still writes a temp file through the junction into the main checkout's node_modules/.vite-temp. After FE-s-45 the reason its header gives ('the loader the dev server uses') is no longer true.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-45 THE REMEDY: 'The dev script loads vite's config without writing through the junction.' F45-AC8: 'RULING U leaves no residual.' portal/src/pages/InvestorReporting/__tests__/fe-s-38/resolve-config.mjs:5-7 @portal 35797660: \"`resolveConfig(...)` with the portal's own vite.config.ts, the default (bundle) loader -- the loader the dev server uses\".",
+    "world_is": "node src/pages/InvestorReporting/__tests__/fe-s-38/resolve-config.mjs <portal> under an fs.watch of node_modules/.vite-temp, which resolves through the junction to the main checkout: 3 events (rename/change/rename of vite.config.ts.timestamp-1789423987503-59798768beba6.mjs), the same write the old dev script made. From FE-s-45 the dev script loads with `native` under bun and writes nothing there (F45-AC2). The resolver is therefore the one writer of it that the suite still drives, once per run of isolation.test.ts. The cacheDir it resolves (portal/.vite) is also where the bun server put its cache, so F38-AC3's verdict does not move. Only its stated reason does. fe-s-38/ is outside FE-s-45's grant (BOUNDS, NOT YOURS), so it is left as found.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "watch-run of `node .../fe-s-38/resolve-config.mjs C:/tmp/wk-irpt_fntend-7-1-fe-s-45/portal` -> rc 0; VITE-TEMP events 3 [rename, change, rename of vite.config.ts.timestamp-1789423987503-59798768beba6.mjs]",
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-38/resolve-config.mjs:59-63 @portal 35797660: resolveConfig({ root, configFile: vite.config.ts, logLevel: 'silent' }, 'serve', 'development') -- no configLoader, so the default 'bundle'",
+        "the same run's RESOLVED_JSON: cacheDir C:/tmp/wk-irpt_fntend-7-1-fe-s-45/portal/.vite inside=yes; the bun dev server's optimizer wrote portal/.vite/deps (react-dom_client.js named by the BABEL note on port 5295)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
