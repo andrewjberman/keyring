@@ -311,8 +311,58 @@ def is_read(message_id: int) -> bool:
     return delivery_state(message_id) == "READ"
 
 
+_TIER_DIRS = ("tier0_exec", "tier0_utility", "tier1_exec", "tier2_senior", "tier3_junior")
+
+
+def _inbox_dir(root, to):
+    """The recipient's inbox folder, routed as org/mcp/server.py routes it (_resolve_agent_folder + _deliver_to_one):
+    the agent folder found by BASE serial across the tier dirs, an exact name first and then a prefix, and a ~suffix
+    send nested at inbox/<folder>/~<suffix>/ -- never the dead flat inbox/<base>~<suffix>/ (LD-0202). None when the
+    serial resolves to no folder."""
+    base, _, suffix = to.partition("~")
+    org = os.path.join(root, "org")
+    for exact in (True, False):
+        for tier in _TIER_DIRS:
+            tdir = os.path.join(org, tier)
+            if not os.path.isdir(tdir):
+                continue
+            for name in sorted(os.listdir(tdir)):
+                if os.path.isdir(os.path.join(tdir, name)) and (name == base if exact else name.startswith(base)):
+                    inbox = os.path.join(org, "mcp", "inbox", name)
+                    return os.path.join(inbox, "~" + suffix) if suffix else inbox
+    return None
+
+
+def _write_inbox_file(root, to, subject, body, sender, mid):
+    """THE FILE PLANE, written beside the ledgered send under the SAME message id (row LGIC_NAMING-S1).
+
+    The HTTP /send-message path writes a ledger row and no inbox file, and a seat's persistent inbox monitor watches
+    FILES -- so from 2026-09-11 every [L4-R REVIEW] this notifier sent reached the ledger and no reviewer: measured
+    on LGIC_NAMING 2026-09-13, 96415 and 96421 to 3.0.0_SA_CVO OFFER-EXHAUSTED unread, and both halves moved only on
+    the author's hand relay. The broker's own send_message writes both planes; this writes the one the HTTP path
+    skips, in the broker's file shape, with the Msg-ID line the reader acks by, so its ack lands on the ledger row
+    the re-offer loop reads. Written to a dot-named temp file and renamed, so a watcher never moves a partial file."""
+    inbox = _inbox_dir(root, to)
+    if not inbox:
+        raise RuntimeError("recipient %s resolves to no agent folder under org/tier*" % to)
+    os.makedirs(os.path.join(inbox, "read"), exist_ok=True)
+    ts = time.strftime("%Y%m%dT%H%M%SZ", time.gmtime())
+    name = "%s_%s_%s.md" % (ts, re.sub(r"[^a-zA-Z0-9._-]", "_", sender),
+                            re.sub(r"[^a-zA-Z0-9._-]", "_", subject)[:40])
+    path = os.path.join(inbox, name)
+    if os.path.exists(path):
+        path = path[:-3] + "_%d.md" % mid
+    text = ("# Message from %s\n**To:** %s\n**Date:** %s\n**Msg-ID:** %d\n**Subject:** %s\n\n%s\n"
+            % (sender, to, ts, mid, subject, body))
+    tmp = os.path.join(inbox, "." + os.path.basename(path) + ".part")
+    with open(tmp, "w", encoding="utf-8", newline="\n") as fh:
+        fh.write(text)
+    os.replace(tmp, path)
+    return path
+
+
 def send(root, to, subject, body, sender=None) -> int:
-    """Deliver through the broker's HTTP /send-message and return its message_id, or raise.
+    """Deliver through the broker's HTTP /send-message AND the recipient's inbox file; return the message_id, or raise.
 
     NOT codex-send.py. That path delivers through the broker LIBRARY in-process (its receipt says
     "(filesystem)"), and the ledger that /delivery-state and /ack-messages read never sees the
@@ -320,7 +370,10 @@ def send(root, to, subject, body, sender=None) -> int:
     A notifier whose whole point is a READ-ack must send on the plane the ack lives on. The
     identity control codex-send carried (OPAL_AGENT_SERIAL names a live seat) is kept as the
     refusal below; the broker stamps the row's from_serial from the same value. Payload keys per
-    the broker's own tests (org/mcp/test_d0_t1_delivery_clocks.py:131)."""
+    the broker's own tests (org/mcp/test_d0_t1_delivery_clocks.py:131).
+
+    AND THE FILE PLANE (_write_inbox_file, row LGIC_NAMING-S1): the ledger alone reaches no reader. A file-plane
+    failure WARNs and does not raise -- the ledger row exists, and the next re-offer writes the file again."""
     # `sender` is the ROW's original author on a re-offer. The post-commit hook is device-wide: it
     # fires on every seat's commit in this worktree (measured 2026-09-02 20:51-20:56Z: three reoffer
     # firings, two on 3.0.0_SA_CVO's commits), so a re-offer that falls due during another seat's
@@ -333,6 +386,11 @@ def send(root, to, subject, body, sender=None) -> int:
     mid = data.get("message_id") if isinstance(data, dict) else None
     if not isinstance(mid, int):
         raise RuntimeError("broker /send-message returned no message_id: %s" % json.dumps(data)[:300])
+    try:
+        _write_inbox_file(root, to, subject, body, sender, mid)
+    except Exception as exc:  # noqa: BLE001 -- the ledger row exists; the next re-offer writes the file again
+        print("WARN: prd-notify message %d is on the ledger but NOT in %s's inbox folder: %s"
+              % (mid, to, str(exc)[:200]), file=sys.stderr)
     return mid
 
 
@@ -765,6 +823,20 @@ def selftest(root):
     except Exception as exc:  # noqa: BLE001
         print("  DEFECT  probe send failed: %s" % str(exc)[:200])
         return 1
+    # ---- the FILE plane, LIVE (row LGIC_NAMING-S1): the probe is a file carrying its ledger id ----
+    # Top level OR read/: the seat's own stream monitor moves it within seconds, and either place proves it landed.
+    _box = _inbox_dir(root, me)
+    _hits = []
+    for _d in ([_box, os.path.join(_box, "read")] if _box else []):
+        for _n in (os.listdir(_d) if os.path.isdir(_d) else []):
+            if _n.endswith(".md") and "prd-notify_selftest" in _n:
+                with open(os.path.join(_d, _n), encoding="utf-8", errors="replace") as fh:
+                    if ("**Msg-ID:** %d\n" % mid) in fh.read():
+                        _hits.append(_n)
+    ok = len(_hits) == 1
+    print("  %-7s file plane: %d inbox file(s) carry Msg-ID %d under %s (must be exactly 1)"
+          % ("OK" if ok else "DEFECT", len(_hits), mid, _box))
+    fails += int(not ok)
     st = delivery_state(mid)
     ok = st != "READ" and st != "UNKNOWN"
     print("  %-7s before ack: delivery_state=%s (must be a transport state, NOT READ, NOT UNKNOWN)" % ("OK" if ok else "DEFECT", st))
