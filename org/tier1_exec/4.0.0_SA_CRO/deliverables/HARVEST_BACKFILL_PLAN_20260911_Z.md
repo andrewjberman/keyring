@@ -828,3 +828,96 @@ The first article fetch failed on **URL validation**: the extracted link carried
 (`...#scroll_comments#source=...`), which is not a valid URI. **The vendor returned that refusal as
 438 bytes of successful CONTENT**, not as an error. Fix: strip from the first `#`. It also collapsed
 47 raw links to **25 distinct articles** -- so the same bug was inflating the link count by 88%.
+
+---
+
+## 18. THE SA BACKFILL NEEDS NO VENDOR AT ALL -- and the constraint is NOT the window, it is DENSITY and IDENTITY. A SYMBOL THAT RESOLVES IS NOT A SYMBOL THAT IS RIGHT
+
+**This supersedes s.17's route and most of s.3.** `seekingalpha.com/api/v3/symbols/<SYM>/news` is
+**directly fetchable from this device**: HTTP 200, **342,550 bytes of CLEAN JSON, 50 records, 50
+`publishOn` timestamps**, no login, no captcha, no browser, **and no vendor egress at all.**
+
+### THE VENDOR PATH WAS STRICTLY WORSE, WHICH IS THE PART TO CARRY FORWARD
+
+The same endpoint through Bright Data's `scrape_as_markdown` came back **234,727 bytes** -- SMALLER
+than the direct 342,550 -- and **STRUCTURALLY UNPARSEABLE.** The markdown transform did two things:
+```
+1. escaped markdown metacharacters INSIDE the JSON    "data":\[{...}]      (2,009 of them)
+2. REWROTE MARKDOWN LINK SYNTAX INSIDE JSON STRINGS, injecting bare quotes:
+   "content":"\n\nASML ([ASML]("https://see...          <- the quote ends the JSON string
+```
+Unescaping fixes (1). **Nothing fixes (2)** -- the payload is not recoverable as JSON, only as regex
+scrapings. **A MARKDOWN CONVERTER IS A LOSSY, CORRUPTING TRANSFORM FOR A JSON ENDPOINT, AND THE
+RESULT STILL LOOKS LIKE JSON.** 235 KB of visibly-correct data that `json.loads` cannot read.
+>> **THE RULE: BEFORE BUILDING ON A VENDOR, TEST WHETHER THE DIRECT FETCH WORKS. Here the vendor was
+   not merely unnecessary -- it DEGRADED the payload**, and the degradation was invisible until a
+   parser was pointed at it. <<
+
+### THE MEASUREMENT, over a jurisdiction-spanning sample, with its negative control
+
+```
+symbol  http recs oldest      newest        note
+ASML    200   50  2026-05-13  2026-09-08    US-listed ADR
+ADBE    200   50  2026-06-15  2026-09-13    US
+BA      200   50  2026-07-24  2026-09-12    US
+NFLX    200   50  2026-06-16  2026-09-13    US
+NESN    404    0  -           -             SWISS ROOT -- SA DOES NOT KNOW IT
+NSRGY   200   50  2024-03-26  2026-09-10    the US ADR for the same company
+ROG     200   50  2023-04-27  2026-07-28    <- RESOLVES. WRONG COMPANY. See below.
+RHHBY   200   50  2026-02-07  2026-09-09    the real Roche
+PBR     200   50  2026-02-04  2026-09-10    Petrobras US ADR
+8035    404    0  -           -             JP NUMERIC ROOT -- SA DOES NOT KNOW IT
+TOELY   200   21  2017-07-27  2026-07-30    Tokyo Electron ADR -- 21 ARTICLES IN 9 YEARS
+ZZQQXX  404    0  -           -             NEGATIVE CONTROL -- fires
+```
+
+### FINDING 1 -- A SYMBOL THAT RESOLVES IS NOT A SYMBOL THAT IS RIGHT. THIRD INSTANCE TONIGHT.
+
+`ROG` returns HTTP 200 with 50 clean records spanning three years. **It is ROGERS CORPORATION, not
+Roche.** Verified by reading its own titles: *"Rogers forecasts Q3 revenue of $233M-$243M"*,
+*"Rogers Non-GAAP EPS of $0.92 misses"*. The real Roche is `RHHBY`, whose titles name Roche.
+>> **A 200 WITH FIFTY WELL-FORMED RECORDS IS NOT EVIDENCE OF THE RIGHT COMPANY**, and this would have
+   landed three years of another firm's earnings news under Roche in the harvest estate. It is the
+   same failure as s.14's `mitsubishi-hc-capital.com` and `taiwansemi.com`, on the SYMBOL axis
+   instead of the DOMAIN axis. **A name is not a unique key; neither is a ticker root.** <<
+**THE ACCEPTANCE RULE THIS FORCES:** an `sa_symbol` is accepted only when the returned articles' own
+text ties them to the subject company -- the same corroboration discipline s.14 landed, and it is
+**free**, because the titles arrive in the payload already paid for.
+
+### FINDING 2 -- THE BACKFILL IS GATED ON THE IDENTITY LAYER, EXACTLY AS s.7 SEQUENCED IT
+
+**The Bloomberg root does NOT work for non-US names.** `NESN` 404s, `8035` 404s; only the **US ADR
+ticker** resolves (`NSRGY`, `TOELY`). And `sa_symbol` stands at **10 INFERRED of 89**, all ten of them
+US names where the root happens to be the symbol.
+>> **SO ~79 OF 89 NAMES HAVE NO KNOWN SA SYMBOL, AND THE ROOT WE HOLD IS THE WRONG KEY FOR THEM.**
+   s.7's ordering -- identity first, because a backfill against 10 of 89 is the more expensive mistake
+   -- is now measured rather than argued. <<
+
+### FINDING 3 -- THE WINDOW IS SATISFIED. THE DENSITY IS THE REAL CONSTRAINT.
+
+s.11 sets three bars. Against them:
+- **`published_at` correct: SATISFIED.** Full ISO-8601 with offset, e.g. `2026-09-08T12:22:49-04:00`.
+- **>=30-day window: SATISFIED BY ONE CALL, for every symbol that resolved.** The oldest record is
+  older than the 30-day cut in 9 of 9 cases; spans ran 51 to 3,291 days.
+  **AND s.11's OWN WORDING IS AMBIGUOUS, WHICH IS THIS SEAT'S DEFECT TO NAME:** *">=30 consecutive
+  days per ticker"* can mean *the window SPANS 30 consecutive days* (satisfied) or *there is an
+  article on each of 30 consecutive days* (**not satisfied by anything** -- ASML has 50 articles
+  across 119 days, i.e. news on ~25% of days). **The first is the reading `WINDOW_DAYS = 30` supports
+  and the one this section measures against.** Stated rather than silently chosen.
+- **>=3 mentions in the window: NOT SATISFIED FOR THIN NAMES.** `TOELY` has **21 articles in NINE
+  YEARS** -- about two a year. No harvest fixes that; **the coverage does not exist.**
+>> **SO THE BINDING CONSTRAINT IS NOT THE HARVEST AND NOT THE WINDOW. It is that a thinly-covered ADR
+   generates too little to clear the density bar, and s.11's re-sequencing of s.7 BY TICKER-WINDOW
+   COMPLETENESS should be re-sequenced by DENSITY instead.** <<
+
+### WHAT THIS CHANGES, PLAINLY
+
+| was believed | measured |
+|---|---|
+| SA backfill needs an authenticated browser session (s.3) | it needs an unauthenticated GET |
+| Bright Data is the route once the credential is fixed (s.16) | Bright Data is **worse** here than no vendor |
+| the blocker is vendor access | the blockers are **`sa_symbol` identity** and **article density** |
+
+**NOT DONE AND NOT CLAIMED:** no data was landed anywhere. **No S3 write, no DynamoDB write, no
+pipeline run** -- landing harvest data is DS/COO lane at L6/L7, not L1's, and this section is the
+route and its measured limits, not the harvest itself.
