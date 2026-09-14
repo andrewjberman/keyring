@@ -1162,3 +1162,85 @@ between two endpoints of one host.** `sa_symbol_resolve_pass.py` now records a n
 did not. **That is the third time in one session a control failed to travel to the sibling surface it
 obviously applies to** -- the first was `ir_domain_bulk_pass.py`'s consecutive-failure stop, missing
 from the pass written after it.
+
+---
+
+## 22. `social_account` LANDS AT 61 OF 88 AND 263 HANDLES -- the last 0-of-89 key is open, and the 27 misses are a DIAGNOSED instrument limit, not an absence
+
+**Artifacts:** `scripts/social_account_pass.py`,
+`deliverables/IDENTITY_SOCIAL_ACCOUNT_PASS_20260914_Z.json`. 115 Bright Data calls across two runs.
+Read-only. **No data landed anywhere.**
+
+```
+universe                                89
+with a held ir_domain                   88    <- the only names this method can read at all
+RESOLVED                                61
+  handles captured                     263
+  facebook 52 | youtube 51 | linkedin 49 | instagram 46 | x 42 | tiktok 11 | weibo 1
+no links, page arrived                  20    <- client-rendered footer
+no payload, stable across two runs       7
+```
+
+### THE EVIDENCE MODEL, stated as what it is rather than dressed as two tests
+
+**PRIMARY is STRUCTURAL:** the handle was linked **from the company's own domain** -- the `ir_domain`
+already resolved for it. That is the collection method, true by construction, **and it is not claimed
+as a discriminating test.** It is nonetheless the strongest identity tie available here, and immune to
+the wrong-company failure that bit this plan three times tonight, because the company published it
+about itself.
+**The name check is a RECORDED FLAG, NEVER A GATE** -- and s.22's most useful result is why.
+
+### ⭐ THE FLAG VINDICATED ITSELF BY BEING A FLAG. SEVEN RECORDS, FIVE OF THEM CORRECT.
+
+Seven resolved records carried **no** handle containing a company token. Inspected rather than
+counted:
+```
+BB Seguridade   BBSeguros, bb-seguros     CORRECT -- Banco do Brasil's insurance brand
+Grupo Aero.     omaeropuertos             CORRECT -- the company IS OMA Aeropuertos
+Manila          meralco, meralcoph        CORRECT -- Manila Electric IS Meralco
+Schlumberger    slbglobal, WeAreSLBGlobal CORRECT -- the company rebranded to SLB
+Haliburton      halliburton               CORRECT -- THE FOLDER misspells it with one 'l'
+Celsius         2471716                   JUNK -- a bare platform ID
+Telefonica BZ   playlist                  JUNK -- a YouTube /playlist URL
+```
+>> **HAD THE NAME CHECK BEEN A GATE, IT WOULD HAVE DISCARDED FIVE CORRECT ANSWERS TO CATCH TWO JUNK
+   ONES.** A brand name is not the legal name; `Haliburton` failed only because OUR source has the
+   typo. **A flag that is not a gate only pays if someone looks inside it, and this is what looking
+   bought.** The two junk shapes are now filtered at the extractor. <<
+
+### ⛔ THE RETRY RECOVERED ZERO, AND THE HYPOTHESIS IT TESTED WAS WRONG
+
+Six major companies came back empty on the first run, and *retry once before recording an absence* is
+banked estate discipline, so the guard went in. **Re-running all 27 recovered NONE.** The empty set is
+**STABLE AND REPRODUCIBLE**, not transient.
+⭐ **THE GUARD WAS STILL RIGHT TO ADD** -- it is what turned "probably a flake" into a trustworthy
+negative. **A control that disproves your hypothesis has done its job, not failed at it.**
+
+### ⛔ AND THE 20 "NO LINKS" LOOKED LIKE MY BUG. I TESTED THAT INSTEAD OF ASSUMING EITHER WAY.
+
+Nike returned **33,141 bytes** and Boeing **25,332** with zero social links. Both companies plainly
+run social accounts, so the obvious reading was an extractor defect.
+```
+searched both bodies for: twitter | x.com | instagram | facebook | youtube | linkedin
+result: NOT ONE OF THOSE WORDS APPEARS ANYWHERE IN EITHER BODY, IN ANY FORM
+```
+>> **SO THE EXTRACTOR IS NOT AT FAULT AND THE PAGES DO NOT CARRY THE LINKS AT ALL.** Modern corporate
+   footers are client-rendered and `scrape_as_markdown` returns pre-hydration content. First seen on
+   Adobe in s.20, now confirmed on two more and stated as a **property of the tool**, not a mystery. <<
+⚠ **NONE OF THE 27 IS EVIDENCE THAT A COMPANY PUBLISHES NO SOCIAL ACCOUNTS.** Every record says so in
+its own field. Closing that gap needs a **rendered-DOM fetch**, which is a different capability from
+the one in hand -- not more calls of the same kind.
+
+### THE FOUR IDENTITY KEYS AT THE END OF THIS SESSION
+
+| key | at session start | now |
+|---|---|---|
+| `bloomberg_ticker` | 34 MEASURED | **83 of 89** |
+| `ir_domain` | **0 of 89** | **88 of 89** |
+| `sa_symbol` | 10 INFERRED | 17 answered; 72 behind a burst-sensitive limiter |
+| `social_account` | **0 of 89** | **61 of 88, 263 handles** |
+
+⚠ **EVERY VALUE IN ALL FOUR IS `INFERRED`, NOT `MEASURED`.** No page was fetched to confirm a domain
+is operated by its company; no social account page was visited; no ticker was confirmed against a
+security master. **The layer gained rejectable values, not confirmed ones**, and every consumer can
+still refuse on the status field -- which is the whole point of the rule.
