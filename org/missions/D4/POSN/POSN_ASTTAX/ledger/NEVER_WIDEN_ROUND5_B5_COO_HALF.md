@@ -27,7 +27,7 @@ shared-advisor-router-response, origin-response  5   (the same five; NOT touched
 (`cloudfront-distribution.tf:66`), re-points ALL FIVE at once. Behaviors 2, 3, 4 and 16 are the live Advisor Intelligence serving
 path for every partner firm. **So the act is signed ONLY AS BOUNDED** (s.2), exactly as the CTO half bounds it.
 
-⚠ **PLANE, stated:** both halves' censuses are DESIRED (parsed Terraform). The raw live read (`aws cloudfront get-distribution-config`)
+WARN: **PLANE, stated:** both halves' censuses are DESIRED (parsed Terraform). The raw live read (`aws cloudfront get-distribution-config`)
 was rail-routed to `comp-routes` at this seat, correctly -- so the LIVE association set is read by the CELL, before the apply
 (item 2 below), and a live count other than five is Branch B before anything moves.
 
