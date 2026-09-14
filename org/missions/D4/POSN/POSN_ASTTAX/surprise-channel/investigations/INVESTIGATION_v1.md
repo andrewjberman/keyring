@@ -4802,3 +4802,31 @@ Andrew asked for (msg 22917); it concerns this project's portal files meeting an
 }
 ]
 ```
+
+```json
+[
+{
+  "id": "POSN_ASTTAX-Z-W22-S14",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~22",
+  "surfaced_at": "2026-09-14T22:06:00Z",
+  "one_line": "Z-S84's prescribed remedy -- 'commit, then validate, and report the post-commit rc' -- is UNREACHABLE for the commit that ALSO carries the status flip: to-pipeline-gate LIMB (the modified-declaring-TO limb) re-runs proof-of-spec-check and REFUSES a flip to 'complete' against an instance it reads INVALID, and the only thing making this instance invalid is the Z-S84 ordering fact itself (two instruments added this session carry PENDING-THIS-COMMIT and are absent at the instance's LAST commit de993b0e50). So the checker wants the commit first and the gate wants the validation first. Resolved inside the grant without touching either tool and without dropping a deliverable: the two instruments ride their OWN earlier commit on this branch, their artifacts_produced rows then carry that commit-ish (resolved-at-pin, not PENDING), the instance validates rc=0, and the flip commit carries order + instance together exactly as the order says.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED, not reasoned: safe-commit.sh with order + instance + the two instruments in ONE commit returned rc=1 -- 'ERROR: BLOCKED -- pipeline layer 2 (TO issuance gate). Commit aborted; files unstaged.' / '[to-pipeline-gate] REFUSED -- 1 violation(s) across 0 newly-added TO file(s) and 1 modified declaring TO file(s): POSN_ASTTAX.TO-V6-1...md: flips to complete but its instance is NOT VALID (rc=1)'. The gate also printed 'GATE (viii) on a modify: 1 of 1 staged-MODIFIED tree order(s) already declare <placeholders> at HEAD and were graded' -- so this order is inside the one widening Andrew carded, and the refusal is correct.",
+      "THE INSTANCE'S ONLY TWO VIOLATIONS WERE THE Z-S84 ONE: 'build_fixtures_v2.js is PENDING-THIS-COMMIT but is ABSENT at the instance's commit de993b0e50 -- it did not ride the commit that carries this proof' and the same for ac5_subtotals.js. Every mechanical criterion was PASS-by-output before either commit; no criterion and no reading depends on how the instruments are carried.",
+      "WHY NOT THE THREE WORSE PATHS: dropping the two instruments from artifacts_produced is the path Z-S84 itself names as worse (the record loses a real deliverable); '# pipeline-override:' is not a worker's line to write and would be audited as one; and re-validating after a refused commit changes nothing, because safe-commit unstages on refusal so the instance's last commit never moves. Splitting the instruments into their own commit is the only sequence in which BOTH tools read a true world: the instruments exist at a real commit, and the flip is graded against an instance that is genuinely VALID.",
+      "SCOPE, STATED HONESTLY: this is ONE branch's sequencing, not a defect in either tool. It bites exactly the case Z-S84 describes (a RESUMED order that adds a deliverable) AND flips status in the same commit -- i.e. every resumed order in this round that closes, since the closing commit is by definition the flip commit."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's step (5): 'if the checker's pre-commit mode refuses on a tracked-instance ordering fact (Z-S84), commit then validate and report the post-commit rc' -- and Z-S84's own note, 'Every resumed worker in this round is told: commit, then validate, and report the post-commit rc.'",
+  "world_is": "That commit cannot be made when it carries the status flip: to-pipeline-gate runs the checker itself and aborts the commit on rc=1, so there is no post-commit rc to report. Two commits on the branch (instruments first, then order + instance) reach rc=0 pre-commit and satisfy both tools.",
+  "notes": "For the round analysis, one line each: (a) proof-of-spec-check could admit a tracked-and-modified instance to the PRE-COMMIT branch when the working tree carries the artifact (Z-S84 already carries this); (b) until it does, a closing order that adds a deliverable takes two commits, and the issuer may simply say so in the hand-over. Path cited: org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~22/POSN_ASTTAX.TO-V6-1.the-positioning-page-renders-five-classes.proof_of_spec.json @ce71db90ab (the instance as it stood when the gate refused)."
+}
+]
+```
