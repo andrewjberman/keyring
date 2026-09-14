@@ -3566,6 +3566,49 @@
     },
     "disposition": "UNDER_INVESTIGATION",
     "hazard_standing": "INERT"
+  },
+  {
+    "id": "IRPT_FNTEND-W4-S14",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~4",
+    "surfaced_at": "2026-09-14T15:08:44Z",
+    "one_line": "THE L8 RECEIVING SIDE STILL GRADES A PROOF UNBOUND. After FE-s-37 the complete flip is bound, but every other executing caller of proof-of-spec-check.py passes the instance alone -- receiving-check.py's L7->L8 route and 3.0.0_SA_CVO's own intake/audit scripts -- so their verdicts are still resolved from the instance's own to_ref.",
+    "class": "OBSERVATION",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-37 THE CELL: 'the checker can be steered by the party it grades, and this cell binds it'; F37-AC9 re-grades F29-AC15 clause 3, 'no limb of the checker can be steered by the party it grades'. The face binds check_complete_flip and grants .tools/to-pipeline-gate.py, .tools/proof-of-spec-check.py and .tools/tests/ only.",
+    "world_is": "Unscoped caller census at da3e61889d (Grep for 'proof-of-spec-check.py' over *.py, *.sh, *.ps1, *.js, *.mjs, *.ts, *.cmd, *.bat in the worktree: 64 files; 17 are this worker's own .scratch; 47 in the corpus -- 15 under .tools/, 22 under workflows/, 10 under org/). EXECUTING callers: .tools/to-pipeline-gate.py check_complete_flip (BOUND by FE-s-37); .tools/receiving-check.py -- .tools/receiving-check.py:71 @adfbe65590 routes every proof_of_spec*.json to the checker with argv [p], and run_one runs [sys.executable, tp] + argv (:117); 3.0.0_SA_CVO's intake/audit scripts -- org/tier1_exec/3.0.0_SA_CVO/deliverables/amgt_round5_cvo_audit.py:54 and :84, amgt_round6_cvo_audit.py:41, amgt_round7_cvo_intake.py:80, amgt_round8_cvo_intake.py:107, posn_round3_cvo_intake.py:47, each [sys.executable, '.tools/proof-of-spec-check.py', <instance>, <ids>]; and org/standards/test_artifact_coverage_both_grammars.py:67 (a battery). None passes --governing-order, so each prints 'governing-binding: UNBOUND' and its verdict can still be moved by the instance's to_ref -- including on an instance edited AFTER its flip, because check_complete_flip grades only a commit that stages the order (to-pipeline-gate.py main: flip_targets are the dispatched task-order paths). The 22 workflows/ files and the other 4 org/ files name the checker in comments, docstrings or emitted face text. A .tools-scoped census (19 files) had found receiving-check.py alone; the unscoped read found the CVO's scripts. Not exercised: no committed instance names another order (the binding's estate cross-check refuses 0 of 335). Remedy: each caller derives the sibling order from the instance path (the inverse of check_complete_flip's search) and passes --governing-order -- outside this order's grant (receiving-check.py) or another seat's own deliverables (the CVO's scripts).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/receiving-check.py:71 and :117 @adfbe65590",
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/amgt_round5_cvo_audit.py:54,:84; amgt_round6_cvo_audit.py:41; amgt_round7_cvo_intake.py:80; amgt_round8_cvo_intake.py:107; posn_round3_cvo_intake.py:47 @da3e61889d",
+        "org/standards/test_artifact_coverage_both_grammars.py:30,:67 @da3e61889d",
+        ".tools/to-pipeline-gate.py check_complete_flip and main (flip_targets) @da3e61889d"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "hazard_standing": "INERT"
+  },
+  {
+    "id": "IRPT_FNTEND-W4-S15",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~4",
+    "surfaced_at": "2026-09-14T15:08:45Z",
+    "one_line": "A CHECKER BATTERY OUTSIDE .tools/tests/ IS RED AT THE CUT. org/standards/test_artifact_coverage_both_grammars.py runs proof-of-spec-check.py and reads 3/6 PASS (rc=1) both at CLOUD 62f3adb8ca and with FE-s-37 applied -- the same failing arms (A-DS-GRAMMAR-STILL-PASSES, B-WP1-GRAMMAR-FLIPS, E-EXPLICIT-FIELD-PASSES) -- a pre-existing red that F37-AC8's census domain cannot see.",
+    "class": "OBSERVATION",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-37 F37-AC8: 'every file under .tools/tests/ that calls proof-of-spec-check.py or to-pipeline-gate.py is run once with your change applied' -- the census domain is .tools/tests/.",
+    "world_is": "org/standards/test_artifact_coverage_both_grammars.py (last touched @ba59c67ada) runs the checker at :67 ([sys.executable, str(CHECKER), str(f)]; CHECKER = .tools/proof-of-spec-check.py at :30). Found by this worker's unscoped caller census (row W4-S14). Run once with FE-s-37 applied (da3e61889d): 'ARTIFACT-COVERAGE BATTERY: 3/6 PASS', rc=1, failing A-DS-GRAMMAR-STILL-PASSES, B-WP1-GRAMMAR-FLIPS, E-EXPLICIT-FIELD-PASSES. Run once against the cut's checker in a borrowed-objects scratch repo at 62f3adb8ca: the same 3/6, rc=1, the same arms. So FE-s-37 neither caused nor changed it. The failing arms are the ones whose fixture must read VALID (A: the DS grammar, no regression; B: the WP1-N grammar; E: an explicit artifact_covered_by field); the passing arms are its must-FAIL controls, so the battery now reads as a rule that refuses everything. Not diagnosed -- outside this order's grant and not its question.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/standards/test_artifact_coverage_both_grammars.py:30,:67 @ba59c67ada",
+        "run with FE-s-37 applied (checker at da3e61889d): rc=1, 3/6 PASS, FAIL A-DS-GRAMMAR-STILL-PASSES, B-WP1-GRAMMAR-FLIPS, E-EXPLICIT-FIELD-PASSES",
+        "run against the checker at 62f3adb8ca (borrowed-objects scratch repo at the cut): rc=1, the same arms"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "hazard_standing": "INERT"
   }
 ]
 ```
