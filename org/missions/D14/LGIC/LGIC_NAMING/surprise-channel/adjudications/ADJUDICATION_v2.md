@@ -257,3 +257,67 @@ Round 1 of `LGIC_NAMING`, compiled and adjudicated by `3.0.0_SA_CVO` on 1.0.0_SA
  }
 ]
 ```
+
+## Supplement -- rows surfaced after the round-1 L8 (S14, S15)
+
+The round-1 L8 compiled the channel at `org/missions/D14/LGIC/LGIC_NAMING/surprise-channel/investigations/INVESTIGATION_v1.md@d292bca3ba`. Two rows landed after it and before the round-2 issuance: S14 (4.0.0_SA_CRO, 8af890699c) and S15 (2.0.0_SA_COO~G, 229bedf67e). The row gate's L10 limb refuses every new remediation row while any investigation is undispositioned, and those two were the only ones left. They are carried here by this seat, recorded 2026-09-14T20:49:51Z. Their remediation rows travel in round 2's L10 slug. `REMEDIATION_v1.md` lands unchanged per 1.0.0_SA_CTO's RULING T.
+
+```json
+[
+ {
+  "id": "LGIC_NAMING-C-S11",
+  "project": "LGIC_NAMING",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-09-14T20:49:51Z",
+  "one_line": "L9 on a row surfaced after the round-1 L8, GRADUATED: the L4-R sign-off record is read from the WORKTREE by all four of its consumers, not only by status -- so LIMB 6, the gate that refuses a new task order against an unsigned PRD, would read an uncommitted signoff file as signed. Owner 1.0.0_SA_CTO (prd_signoff_lib).",
+  "class": "OBSERVATION",
+  "spec_asserts": "CLAUDE.md Rule 27 L4-R: 'status <CODE> is the one read of what is owed', and each half is signed 'as a file in lane TREE_PRD_SIGNOFF bound to the HASH of its sections' -- a committed file. .tools/prd-signoff.py:174 @ed78c9c6c6: 'the PRD is read at HEAD, never the worktree: the stamp binds to committed bytes'.",
+  "world_is": "S14 is confirmed by reading the code at HEAD ee46e71e5b (read, not exercised). prd_signoff_lib.read_signoff_files (:286-300) lists the signoff directory and opens each file by path (:296), so it returns the worktree's bytes. It has four callers, and 4 of 4 pass it a worktree path: prd-signoff.py:86 (status), to-pipeline-gate.py:2204 (LIMB 6), prd-header-notify.py:124 (the L4 notifier, whose docstring at :119 assumes 'post-commit: HEAD is checked out') and prd-stamp.py:339. The stamp reads the PRD at HEAD and refuses a worktree difference (:174-184), but no consumer does the same for the signoff file. The consequence S14 left unmeasured: if a stamp writes SIGNED and then fails its commit, as S14 measured for a REFUSED stamp, LIMB 6 would admit a new task order while HEAD holds no signature. INERT now: 0 uncommitted or untracked files under any org/missions prd/signoff directory at HEAD ee46e71e5b (git status --porcelain --untracked-files=all).",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "org/missions/D14/LGIC/LGIC_NAMING/surprise-channel/investigations/INVESTIGATION_v1.md@229bedf67e#LGIC_NAMING-S14",
+    ".tools/prd_signoff_lib.py@110378a08c :286-300 read_signoff_files (os.listdir + open by path, :291-297)",
+    "git grep -n read_signoff_files HEAD -- .tools at ee46e71e5b: prd-header-notify.py:124, prd-signoff.py:86, prd-stamp.py:339, to-pipeline-gate.py:2204 (4 callers; the 5th hit is the definition)",
+    ".tools/to-pipeline-gate.py@da3e61889d :2188-2206 LIMB 6: opens the PRD by absolute path, then read_signoff_files(os.path.join(os.path.dirname(ap), lib.SIGNOFF_DIR))",
+    ".tools/prd-header-notify.py@fc71328804 :118-126 _evaluate_prd",
+    ".tools/prd-signoff.py@ed78c9c6c6 :174-184 (the PRD's HEAD read and its worktree refusal)",
+    "prd_signoff_lib.py was created by 1.0.0_SA_CTO at e7e552f7c4 (LAW v3.15), and its last 3 commits are 1.0.0_SA_CTO's"
+   ]
+  },
+  "adjudicates": [
+   "LGIC_NAMING-S14"
+  ],
+  "disposition": "GRADUATED",
+  "hazard_standing": "INERT"
+ },
+ {
+  "id": "LGIC_NAMING-C-S12",
+  "project": "LGIC_NAMING",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-09-14T20:49:51Z",
+  "one_line": "L9 on a row surfaced after the round-1 L8, GRADUATED for i15 only: NAMING_SCHEMA v1.6 :125 quotes item i15's ruled answer as the example of the rule that decides i15, so a round-2 namer can copy it. i05 is not a leak: the bucket rule :47 produces opal-data-cottonwood in one substitution. FWD-1's round-2 agreement will be graded on 17 items, with i15 reported beside them.",
+  "class": "OBSERVATION",
+  "spec_asserts": "PRD FWD-1 ACCEPT: two people each write 'the identical name' from the schema. Decomposition s.3a.1: the items are 'described in plain words that never spell a schema token'.",
+  "world_is": "This seat's own census is git grep -F of the 18 ruled names in the analysis s.2 table over the two briefing files at HEAD, a different instrument from the filer's. It finds 2 of 18, the same two, and the positive control 'silver-chain' matched in the schema. The two differ in kind. i05: N3_ITEMS says 'The S3 bucket that holds Cottonwood's own data.' The schema's data_bucket 'opal-data-{scope}' (:47) with the FIRM key cottonwood gives the answer directly. The spine names it at :68 only to say it does not exist. So an identical i05 is what the rule predicts either way, and it is not independent evidence against the rule. i15: N3_ITEMS says 'The EC2 instance profile for the Orion runner host that builds Inflection's gold data.' The rule that decides it, system.vendor_through_tiers (:125), gives that scenario's answer, orion-inf-build-gold-profile, as its example. So an identical i15 can be a copy, and it is not evidence that two people derive the name. The issuer's note reads 16 plus 2; this seat's round-2 L9 reads 17 plus i15.",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "org/missions/D14/LGIC/LGIC_NAMING/surprise-channel/investigations/INVESTIGATION_v1.md@229bedf67e#LGIC_NAMING-S15",
+    "org/standards/NAMING_SCHEMA.json@2706014705 :47 key.data_bucket 'opal-data-{scope}'; :125 system.vendor_through_tiers '(orion-inf-build-gold-profile)'",
+    "infra/logic/05_IDENTITY_SPINE.md@a4cc0cb681 :68 cottonwood row, 'buckets today': 'no `opal-data-cottonwood` exists'",
+    "org/missions/D14/LGIC/LGIC_NAMING/deliverables/2.0.0_SA_COO~G/fixed_inputs/N3_ITEMS.json@777770e6aa items i05 and i15 (description text quoted above)",
+    "org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_LGIC_NAMING_ROUND1_20260914.md@2706014705 s.2 table, rows i05 (S2) and i15 (SY1)",
+    "census at HEAD ee46e71e5b: for each of the 18 names, git grep -n -F over the two files -> i05 at infra/logic/05_IDENTITY_SPINE.md:68, i15 at org/standards/NAMING_SCHEMA.json:125, 16 with 0 hits"
+   ]
+  },
+  "adjudicates": [
+   "LGIC_NAMING-S15"
+  ],
+  "disposition": "GRADUATED",
+  "hazard_standing": "INERT"
+ }
+]
+```
