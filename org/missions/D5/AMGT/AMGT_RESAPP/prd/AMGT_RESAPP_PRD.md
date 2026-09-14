@@ -74,6 +74,47 @@ which held that L4-R forbids annotation, history and seat names across the whole
   closed by any build" while the section carries FOURTEEN `EXERCISED` outcomes; the reviewer caught
   it and it now reads "Fourteen".
 
+### C-LIST-OWNER -- THE NAMED OWNER, RECORDED 2026-09-14 (a fact, not an amendment)
+
+`C-LIST-OWNER` (`:353`, serves `FWD-14`) requires that each of the publisher allowlist and the
+company-to-social-account map carry **a named owner** and **a rot signal**. **THE NAMED OWNER IS
+`0.5.0_AE_OpalETL~Z`.**
+
+**PROVENANCE, because an assignment with no date and no author is the thing this PRD's own s.0 warns
+about.** Andrew-direct 2026-09-14 ~05:31Z, laptop terminal, relayed by `0.0.0_AB_MSTR~Z` over bus
+`087b3fea-f49e-43db-856f-47fe3c791f4c`, VERBATIM:
+
+> *"The publisher list and company-to-social map i already answered earlier, specifically saying I
+> dont know why this needs an owner and following up with if theres some process architecture that
+> mandates it that they can use `0.5.0_AE_OpalETL~Z`, but I dont see why that would be needed."*
+
+⚠ **THIS IS A CONDITIONAL HE SATISFIED, NOT AN UNCONDITIONAL NAMING**, and the antecedent is met by
+**THIS CONTRACT**, which predates and is independent of any CTO ruling -- `C-LIST-OWNER` mandates an
+owner whether or not the CTO had ruled, and a conditional satisfied by the CTO's own act would be
+this seat bootstrapping its own authority. Adjudication record:
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ADJUDICATION_AMGT_RESAPP_20260914T0300Z_C_LIST_OWNER.md`
+@`7fb0c06c65`.
+
+⛔ **WHAT THIS DOES NOT DO.** It does not amend `C-LIST-OWNER` -- it records WHO, not WHAT IS
+REQUIRED. It **SEATS NOBODY**: an owner-of-record is not a dispatched seat and no task order is
+implied. It does not touch `C-NO-CONTACT` -- an agent serial is not Adam's team. It grants no vendor
+egress.
+
+⛔ **AND `FWD-14` DOES NOT REALIZE ON THIS NOTE.** The delivered lists at
+`deliverables/0.9.0_WK_AMGT_RESAPP~5/lists/` still read `"owner_status": "UNASSIGNED"`. **FWD-14
+realizes when a CELL delivers the owner into the lists with correct provenance** -- a round-N cell,
+the COO's to cut after a slug. The rot-signal half is already delivered and running (90-day and
+30-day review intervals, `reviewed_at` stamps, a separate computed `rot_signal.json`).
+
+⭐ **WHY IT IS RECORDED HERE AND NOT BESIDE THE CONTRACT AT `:353`.** Two reasons, both measured.
+**(1)** `.tools/prd_signoff_lib.py:93-98` -- `half_of_section(None)` returns **None**: the
+pre-heading preamble belongs to NEITHER L4-R half, while `## 3. CONSTRAINTS ON THE CUT` (which holds
+`:353`) is the **brief** half. Writing the fact at `:353` would make a SIGNED half stale for a note
+that changes no requirement. **(2)** `TREE_DELIVERABLES` is **NOBODY by enumeration** -- the gate
+refused `2.0.0_SA_COO~ZZZ` on the lists themselves, and back-filling a ROUND-2 worker's artifact with
+a fact Andrew supplied **two rounds later** would make that file assert a provenance it does not
+have. ⚠ The cost is DISCOVERABILITY: a reader who opens `:353` alone does not see this note. That is
+accepted deliberately, and it is why the note names the contract rather than the reverse.
 ---
 
 ## 0. THE VERSION HAZARD -- BINDING ON EVERY READER OF THIS PRD
