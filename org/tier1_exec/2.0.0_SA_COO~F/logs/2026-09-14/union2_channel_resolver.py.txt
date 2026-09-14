@@ -1,0 +1,112 @@
+"""Byte-preserving union of an append-only surprise channel across a 3-way merge.
+
+OURS is kept BYTE-VERBATIM. Only rows THEIRS added are spliced in, each taken from its own original
+bytes, with its line endings normalised to OURS' convention (the one transformation, and only on rows
+being ADDED). This fixes row S47: the prior resolver re-rendered every surviving row.
+
+REFUSES on: a base row deleted on either side; a base row EDITED on theirs; a new id that collides
+with a DIFFERENT row on ours; any array member that is not a row object; a lossy UTF-8 round trip.
+
+Usage:
+  python union2.py <path> <base-ref> <ours-ref> <theirs-ref>            # dry run, writes nothing
+  python union2.py <path> :1 :2 :3 --write                              # inside a conflicted merge
+"""
+import json, subprocess, sys
+
+
+def show(ref, path):
+    r = subprocess.run(["git", "show", ref + ":" + path], capture_output=True)
+    if r.returncode != 0:
+        sys.exit("REFUSE: git show %s:%s failed: %s" % (ref, path, r.stderr.decode("utf-8", "replace")[:200]))
+    b = r.stdout
+    s = b.decode("utf-8")
+    if s.encode("utf-8") != b:
+        sys.exit("REFUSE: %s is not a lossless UTF-8 round trip" % ref)
+    return s
+
+
+def rows_with_spans(text, label):
+    start, close = text.index("["), text.rindex("]")
+    dec, i, out = json.JSONDecoder(), start + 1, []
+    while True:
+        while i < close and text[i] in " \t\r\n":
+            i += 1
+        if i >= close:
+            break
+        obj, end = dec.raw_decode(text, i)
+        if not isinstance(obj, dict) or "id" not in obj:
+            sys.exit("REFUSE: %s member at char %d is not a row object" % (label, i))
+        out.append((obj["id"], obj, i, end))
+        i = end
+        while i < close and text[i] in " \t\r\n":
+            i += 1
+        if i < close:
+            if text[i] != ",":
+                sys.exit("REFUSE: %s expected ',' at char %d, found %r" % (label, i, text[i]))
+            i += 1
+    ids = [r[0] for r in out]
+    if len(ids) != len(set(ids)):
+        sys.exit("REFUSE: %s already carries duplicate ids" % label)
+    return out
+
+
+def main():
+    a = sys.argv[1:]
+    write = "--write" in a
+    a = [x for x in a if x != "--write"]
+    if len(a) != 4:
+        sys.exit(__doc__)
+    path, bref, oref, tref = a
+    base, ours, theirs = show(bref, path), show(oref, path), show(tref, path)
+    B = {r[0]: r[1] for r in rows_with_spans(base, "BASE")}
+    Orows = rows_with_spans(ours, "OURS")
+    O = {r[0]: r[1] for r in Orows}
+    Trows = rows_with_spans(theirs, "THEIRS")
+    T = {r[0]: r for r in Trows}
+
+    for rid in B:
+        if rid not in O:
+            sys.exit("REFUSE: base row %s DELETED on ours" % rid)
+        if rid not in T:
+            sys.exit("REFUSE: base row %s DELETED on theirs" % rid)
+        if T[rid][1] != B[rid]:
+            sys.exit("REFUSE: base row %s EDITED on theirs -- an append-only channel is not edited" % rid)
+
+    new, already = [], []
+    for rid, obj, s, e in Trows:
+        if rid in B:
+            continue
+        if rid in O:
+            if O[rid] == obj:
+                already.append(rid)
+                continue
+            sys.exit("REFUSE: id %s COLLIDES -- theirs and ours carry different rows under it" % rid)
+        new.append((rid, s, e))
+
+    EOL = "\r\n" if "\r\n" in ours else "\n"
+    last_end = Orows[-1][3]
+    ins = ""
+    for rid, s, e in new:
+        body = theirs[s:e].replace("\r\n", "\n").replace("\n", EOL)
+        ins += "," + EOL + "  " + body
+    result = ours[:last_end] + ins + ours[last_end:]
+
+    R = rows_with_spans(result, "RESULT")
+    assert len(R) == len(Orows) + len(new), "row count arithmetic failed"
+    assert result.startswith(ours[:last_end]) and result.endswith(ours[last_end:]), "OURS not byte-verbatim"
+    assert all(R[i][1] == Orows[i][1] for i in range(len(Orows))), "an OURS row changed"
+
+    print("DENOMINATORS: base=%d ours=%d theirs=%d  |  new-from-theirs=%d  already-present=%d  |  EOL=%r"
+          % (len(B), len(Orows), len(Trows), len(new), len(already), EOL))
+    print("  new ids: %s" % ", ".join(r[0] for r in new) if new else "  new ids: (none)")
+    print("  OURS preserved BYTE-VERBATIM around the splice; bytes added = %d" % len(ins.encode("utf-8")))
+    print("  RESULT parses: %d rows, all ids unique" % len(R))
+    if write:
+        with open(path, "wb") as fh:
+            fh.write(result.encode("utf-8"))
+        print("WROTE %s" % path)
+    else:
+        print("DRY RUN -- nothing written")
+
+
+main()
