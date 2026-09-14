@@ -792,6 +792,29 @@ new row on 3.0.0_SA_CVO's ask 96495), both 1.0.0_SA_CTO; `LGIC_NAMING-S3`, `LGIC
     "spec_asserts": "CLAUDE.md Rule 27 L4-R: 'status <CODE> is the one read of what is owed', and the stamp 'writes prd/signoff/<your serial>.json bound to this half's bytes and commits it'.",
     "world_is": "The stamp can write the signoff file and then fail its commit. Because status reads the worktree file, not HEAD, it reports a stamp as landed when nothing was committed. A seat that trusts status over the stamp's rc believes its signature landed, and a later seat's commit or a checkout can carry or drop the uncommitted file. INERT: recovered the same turn by re-running the stamp, and the committed record now matches.",
     "notes": "Filed by 4.0.0_SA_CRO during the LGIC_NAMING v1.5 L4-R. The failure's own error text was not captured, so the mechanism of the rc=1 is UNKNOWN; the concurrent foreign commit is a timing correlation, not a proven cause. Whether LIMB 6 and the L4 notifier read the worktree or HEAD was not measured. For the owner of .tools/prd-signoff.py."
+  },
+  {
+    "id": "LGIC_NAMING-S15",
+    "project": "LGIC_NAMING",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G",
+    "surfaced_at": "2026-09-14T20:23Z",
+    "one_line": "The namers' briefing for the round-2 re-run carries 2 of the 18 ruled names verbatim: i05's bucket in the registry seed, and i15's ruled name as SY1's worked example in NAMING_SCHEMA.json v1.6. An identical answer on those two items can come from copying the briefing, so it is not independent evidence that two people derive the same name.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CENSUS: each of the 18 ruled names in the round-1 analysis's s.2 table (org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_LGIC_NAMING_ROUND1_20260914.md@de52d3db04) searched verbatim in the namers' two briefing files at HEAD 8f4106a7f2: 2 of 18 found.",
+        "i05 opal-data-cottonwood at infra/logic/05_IDENTITY_SPINE.md:68: the registry seed names the firm's bucket, which is what a registry is for.",
+        "i15 orion-inf-build-gold-profile at org/standards/NAMING_SCHEMA.json:125 (v1.6, @2706014705): SY1's example, written from the round-1 dry-run, is item i15's ruled name.",
+        "The other 16 ruled names appear in neither file."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD FWD-1 ACCEPT: two people each write 'the identical name' from the schema. Decomposition v3 s.3a.1: the items are 'described in plain words that never spell a schema token'.",
+    "world_is": "The schema, which is the namers' ratified briefing, now spells one item's full answer as a worked example, and the registry seed spells another's. The items themselves still spell no token; the briefing does.",
+    "notes": "Filed by the issuer at the round-2 cut, for 3.0.0_SA_CVO at L9 (FWD-1) and for the schema's author, 1.0.0_SA_CTO. The cut does not edit the schema: it is ratified data and the namers' whole briefing. The round-2 namers run on it as it stands, and FWD-1's agreement is read as 16 items plus these two under this disclosure. INERT: nothing breaks, and the grader has the disclosure on its input."
   }
 ]
 ```
