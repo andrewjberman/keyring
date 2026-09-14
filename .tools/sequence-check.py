@@ -27,7 +27,11 @@ from the checked-out branch (CLOUD -> laptop, SITEZ -> sitez). A liveness row is
 truth, and the line says which instrument it read.
 
 A VIEWER, NOT A CHECKER: findings never change the exit code (the monitor moratorium; Andrew ~01:xxZ card 1 chose
-TRACK). Exit 0 rendered; 1 nothing rendered (the sequence file unreadable); 2 rendered with >=1 UNREADABLE source.
+TRACK). Exit 0 rendered; 1 nothing rendered (the sequence file unreadable); 2 rendered with >=1 UNREADABLE source;
+3 a --project code resolves to NOTHING -- neither the sequence nor the register holds it, which is almost always a
+typo, and a typo must never read as a clean pass (1.0.0_SA_CTO~Z msg 22541: a mistyped ADVI_FIRMBKTS read
+"FLAGS: none", rc=0, and a seat would have walked past its HOLD). Every --project code is resolved and named:
+PLACED, PARKED, PENDING-PLACEMENT, UNPLACED (a register project the file does not list) or UNKNOWN.
 
 Usage:
   sequence-check.py              the sequence, stage by stage, with live status and flags
@@ -41,6 +45,7 @@ from __future__ import annotations
 import argparse
 import ast
 import datetime
+import difflib
 import glob
 import importlib.util
 import json
@@ -284,6 +289,34 @@ def evaluate(doc, reader, idle_days=IDLE_DAYS, now=None):
     return rows
 
 
+def _register_codes(root):
+    return {os.path.splitext(os.path.basename(p))[0] for p in glob.glob(os.path.join(root, "org", "projects", "*.json"))}
+
+
+def resolve_codes(doc, codes, register):
+    """PURE. Each --project code -> (code, state, detail), state in PLACED / PARKED / PENDING-PLACEMENT / UNPLACED /
+    UNKNOWN. A code the sequence places reads as before; one it does not is SAID so, never rendered as zero rows."""
+    placed = doc.get("projects") or {}
+    parked = doc.get("parked") or {}
+    pending = {str(p.get("subject")) for p in doc.get("pending_placement") or [] if isinstance(p, dict)}
+    known = sorted(set(placed) | set(parked) | set(register))
+    out = []
+    for code in codes:
+        if code in placed:
+            out.append((code, "PLACED", "stage %s of the sequence" % placed[code].get("stage")))
+        elif code in parked:
+            out.append((code, "PARKED", "not ordered; recorded so no driver takes it up ahead of the sequence"))
+        elif code in pending:
+            out.append((code, "PENDING-PLACEMENT", "a placement question is open in the file; not yet ordered"))
+        elif code in register:
+            out.append((code, "UNPLACED", "a register project the sequence does not list: not sequenced, so its own directive's rules govern it"))
+        else:
+            near = difflib.get_close_matches(code, known, n=3, cutoff=0.8)
+            out.append((code, "UNKNOWN", "neither the sequence nor the register holds this code"
+                        + ("; did you mean %s?" % " or ".join(near) if near else "")))
+    return out
+
+
 def capacity(doc, reader, rows):
     """The COO-capacity read. It never changes a flag and never refuses anything; it says what the slots are."""
     caps = {k: v for k, v in ((doc.get("capacity") or {}).get("coo_sessions") or {}).items() if isinstance(v, int)}
@@ -390,6 +423,9 @@ def self_test():
     evaluated = evaluate(doc, fake, now=now)
     got = {r["project"]: set(r["flags"]) for r in evaluated}
     cap = capacity(doc, fake, evaluated)
+    rdoc = {"projects": {"LGIC_NAMING": {"stage": 1}}, "parked": {"NFRA_X": {}}, "pending_placement": [{"subject": "IRPT_BCKEND"}]}
+    rreg = {"LGIC_NAMING", "AMGT_RESAPP", "IRPT_BCKEND"}
+    _typo = resolve_codes(rdoc, ["LGIC_NAMNIG"], rreg)[0]
     cases = [
         ("A: no gates, active 1 day ago -> no flag", got["A"] == set()),
         ("B: manual hold unconfirmed, EXECUTING past cap DECOMP -> OUT-OF-SEQUENCE + UNMEASURED", {"OUT-OF-SEQUENCE", "UNMEASURED"} <= got["B"]),
@@ -404,6 +440,10 @@ def self_test():
         ("H: PRD admitted, at PRD, a coo_lane seated -> no flag", got["H"] == set()),
         ("capacity: 3 live against a laptop cap of 3 -> AT CAP, and the queue is [G]", cap["at_cap"] and cap["queue"] == ["G"]),
         ("validate: the capacity key is accepted", validate({"capacity": {"coo_sessions": {"laptop": 3}}, "projects": {}}) == []),
+        ("resolve: a placed code -> PLACED", resolve_codes(rdoc, ["LGIC_NAMING"], rreg)[0][1] == "PLACED"),
+        ("resolve: a one-letter TYPO -> UNKNOWN, with the placed code suggested", _typo[1] == "UNKNOWN" and "LGIC_NAMING" in _typo[2]),
+        ("resolve: a register code the file does not list -> UNPLACED, never zero rows", resolve_codes(rdoc, ["AMGT_RESAPP"], rreg)[0][1] == "UNPLACED"),
+        ("resolve: parked and pending-placement codes say which", [s for _, s, _ in resolve_codes(rdoc, ["NFRA_X", "IRPT_BCKEND"], rreg)] == ["PARKED", "PENDING-PLACEMENT"]),
     ]
     fails = 0
     for name, ok in cases:
@@ -441,14 +481,18 @@ def main():
     reader = Reader(ROOT)
     rows = evaluate(doc, reader)
     cap = capacity(doc, reader, rows)
+    res = resolve_codes(doc, a.project, _register_codes(ROOT)) if a.project else []
     if a.project:
         rows = [x for x in rows if x["project"] in set(a.project)]
     if a.json:
-        print(json.dumps({"sequence": SEQ_REL, "file_last_commit": r.stdout.strip() or None, "capacity": cap, "rows": rows}, indent=1))
+        print(json.dumps({"sequence": SEQ_REL, "file_last_commit": r.stdout.strip() or None, "capacity": cap,
+                          "resolution": [{"project": c, "state": s, "detail": d} for c, s, d in res], "rows": rows}, indent=1))
     else:
         print("sequence-check | %s | file last commit: %s | enforcement: %s | projects: %d | stage enum: %s" % (
             SEQ_REL, r.stdout.strip() or "UNCOMMITTED", doc.get("enforcement"), len(rows),
             "OK" if enum_ok else "MISMATCH (" + enum_note + ")"))
+        for c, s, d in res:
+            print("PROJECT %s: %s -- %s" % (c, s, d))
         render(doc, rows, only_flags=a.flags)
         render_capacity(cap)
         counts = {}
@@ -456,6 +500,8 @@ def main():
             for f in x["flags"]:
                 counts[f] = counts.get(f, 0) + 1
         print("\nFLAGS (denominator %d projects): %s" % (len(rows), ", ".join("%s=%d" % kv for kv in sorted(counts.items())) or "none"))
+    if any(s == "UNKNOWN" for _, s, _ in res):
+        return 3
     unreadable = any("UNREADABLE" in x["flags"] for x in rows) or not enum_ok or cap["live"] is None
     return 2 if unreadable else 0
 
