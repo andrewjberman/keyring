@@ -1,14 +1,15 @@
 {
  "title": "NAMING_SCHEMA -- the D14 Platform Logic naming schema's CLOSED ENUMERATIONS, as data",
- "version": "v1.5",
- "ratified_by": "org/missions/D14/LGIC/LGIC_NAMING/prd/LGIC_NAMING_PRD.md v1.5 (L4, 1.0.0_SA_CTO; v1.5 at L10). Spine L4: a decision that is an enumeration is closed as data in org/standards/ and cited.",
+ "version": "v1.6",
+ "ratified_by": "org/missions/D14/LGIC/LGIC_NAMING/prd/LGIC_NAMING_PRD.md v1.6 (L4, 1.0.0_SA_CTO; v1.5 and v1.6 at L10). Spine L4: a decision that is an enumeration is closed as data in org/standards/ and cited.",
  "changelog": [
   "v1.0 -- first issue with LGIC_NAMING_PRD v1.0 @c65a169ba0.",
   "v1.1 -- on 4.0.0_SA_CRO~D's REFUSED brief half (review @1e4e3e10fd): kind.by_type keys are the live plane's node_type strings (CODEBUILD -> CODEBUILD_PROJECT, ECS_TASK -> ECS_TASK_DEFINITION); every node type not graded by kind is enumerated by subtraction; lb and cluster added for the two minted types that had no kind.",
   "v1.2 -- on 3.0.0_SA_CVO's ratified-text review (@48eab96ed5): key.grammar is the ruled five-segment string verbatim; the bucket (container) and the object (leaf) are separate fields, so a key builder never writes a bucket name into a key.",
   "v1.3 -- on 1.0.0_SA_CTO's adjudication of rows LGIC_NAMING-S6, S7 and S8 (org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ADJUDICATION_LGIC_NAMING_20260914T103xZ_S6_S7_S8_ENTITY_PARTITION_CODE_TIER_LEGACY_SERVED_PATHS.md): key.partition gains the entity partition; key.table_case bounds kebab-case to NEW served leaves; key.legacy_served_path and key.code are new. The five ruled segments are unchanged.",
   "v1.4 -- on 1.0.0_SA_CTO's adjudication of row LGIC_NAMING-S10 (org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ADJUDICATION_LGIC_NAMING_20260914T113xZ_S10_LEGACY_MEMBERSHIP_IS_DATA.md): legacy-served membership is data -- key.legacy_served_paths names its home, its producer (cell LN-g-1) and its claim, and grade() RAISES on a key whose verdict turns on it until the list lands, so the grade stays (name, type) over this file; key.code gives a legacy root code/ key its verdict (OUT-OF-PATTERN, the code-tier canonical form).",
-  "v1.5 -- at L10, on 1.0.0_SA_CTO's ROUND-1 ANALYSIS (org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_LGIC_NAMING_ROUND1_20260914.md), ruling the four slots round 1 measured as unruled (carrier C-S5) and two FWD-5 gaps (C-S8): resource.function (FN1), resource.qualifier (FN2, FN3), secret.purpose and iam_policy.purpose_slot (FN4), key.partition's {entity} (P1), key.scope_rule (SC1), system.vendor_through_tiers (SY1), grade.placeholder (PH1) and aws_fixed (AW1). The five ruled key segments are unchanged."
+  "v1.5 -- at L10, on 1.0.0_SA_CTO's ROUND-1 ANALYSIS (org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_LGIC_NAMING_ROUND1_20260914.md), ruling the four slots round 1 measured as unruled (carrier C-S5) and two FWD-5 gaps (C-S8): resource.function (FN1), resource.qualifier (FN2, FN3), secret.purpose and iam_policy.purpose_slot (FN4), key.partition's {entity} (P1), key.scope_rule (SC1), system.vendor_through_tiers (SY1), grade.placeholder (PH1) and aws_fixed (AW1). The five ruled key segments are unchanged.",
+  "v1.6 -- on 4.0.0_SA_CRO's refusal of PRD v1.5's brief half (@3a9a0c2f91, R3): key.scope_rule states the vendor MASTER case. A master keeps its own scope under doctrine R3 (two masters of one firm are two scopes, never commingled), and the audience rule decides FIRM or global for every other key. v1.5 had put a Schwab master under its firm."
  ],
  "authority": [
   "SOURCE-FIRST key string -- Andrew-direct 2026-09-13 ~03:2xZ card 1, 'all recs approved' (relayed 4.0.0_SA_CRO~D 96332)",
@@ -32,7 +33,7 @@
   "same_string_in_every_bucket": true,
   "source": "a registry VENDOR key (a feed) or, for derived tiers, a PRODUCT or SYSTEM key",
   "scope_classes": ["FIRM", "PRODUCT", "MASTER", "GLOBAL"],
-  "scope_rule": "the key's AUDIENCE: a FIRM when the data is one firm's; global when every firm shares it. A PRODUCT key is a scope only beneath a VENDOR source (a feed for the product: pathfinder/etfs), never beneath itself as the source -- mdpf/global/..., never mdpf/mdpf/... (SC1, v1.5)",
+  "scope_rule": "a vendor MASTER keeps its own scope (doctrine R3: two masters of one firm are two scopes, never commingled -- schwab/08242234/, never schwab/49financial/). For every other key the scope is its AUDIENCE: a FIRM when the data is one firm's; global when every firm shares it. A PRODUCT key is a scope only beneath a VENDOR source (a feed for the product: pathfinder/etfs), never beneath itself as the source -- mdpf/global/..., never mdpf/mdpf/... (SC1, v1.5; the master case written at v1.6)",
   "scope_form": "LONG",
   "entity_id_in_scope": "REFUSED (doctrine R2)",
   "tier": ["bronze", "silver", "gold", "platinum", "state", "code"],

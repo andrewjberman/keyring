@@ -63,6 +63,12 @@ derived tier (`W2-S4`, `W3-S3`: i15).
   PRODUCT key is a scope only beneath a VENDOR source (a feed for the product: `pathfinder/etfs`), never beneath
   itself as the source: `mdpf/global/...`, never `mdpf/mdpf/...`. This agrees with the spine's seed, where a product is
   a scope only beneath a vendor source.
+- **CORRECTION to SC1, 2026-09-14 ~19:4xZ (PRD v1.6 / NAMING_SCHEMA v1.6).** As written above, SC1 would put a Schwab
+  master under its firm (`schwab/49financial/`). That breaks S1 ("a vendor MASTER is valid, R3") and doctrine R3
+  (`infra/logic/02_DOCTRINE.md:118-119`: "Two masters of one firm are two scopes, never commingled"; `schwab/08242234/`
+  is CONFORMANT). The correct rule: a vendor MASTER keeps its own scope, and the audience rule decides FIRM or `global`
+  for every other key. Found by `4.0.0_SA_CRO`'s refusal of v1.5's brief half (R3, @3a9a0c2f91). The dry-run table
+  below is unaffected: no N3 item carries a vendor master.
 - **SY1 -- a one-vendor build.** A resource that builds a firm's data from ONE vendor's feed is that vendor's
   integration at every tier it builds (`orion-inf-build-gold-profile`). A resource that combines feeds takes the
   PRODUCT or PLATFORM_SUBSYSTEM that owns the combination.
