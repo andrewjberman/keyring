@@ -5,7 +5,7 @@
  "project": "LGIC_NAMING",
  "directive": "D14",
  "fabric": "laptop",
- "prd_version": "v1.4",
+ "prd_version": "v1.5",
  "step": 4,
  "brief_ref": "docs/briefs/d14-naming-schema-brief-20260913.md@1b42dbe758",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6"],
@@ -165,6 +165,19 @@ as a second copy here.
   and module names (measured before `LGIC_ENFORCE` specifies its flagger), tags, AWS-issued identifiers, API routes.
 - **S13 No rename.** The schema grades and moves no live name. A remediation is minted where the resource lives (D8 for
   keys, D12 for infrastructure), cites a row of the tension ranking, and carries its own sign-off.
+
+- **S14 The round-1 rulings (L10, v1.5).** These come from `1.0.0_SA_CTO`'s ROUND-1 ANALYSIS
+  (`org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_LGIC_NAMING_ROUND1_20260914.md`) and rule the slots round 1
+  measured as unruled. Each is data in `org/standards/NAMING_SCHEMA.json` v1.5 and is not restated here:
+  - the function is the verb, or the process as the item names it (FN1);
+  - the qualifier is a tier or a named table, and an alarm's condition is always written (FN2, FN3);
+  - a secret's purpose is its credential kind, after the interface it opens (FN4);
+  - `{entity}` is the key column (P1);
+  - a key's scope is its audience, `global` when every firm shares it (SC1);
+  - a one-vendor build is that vendor's integration at every tier (SY1);
+  - a placeholder is a typed gap filled from its source (PH1);
+  - AWS-fixed names are outside the grade's domain (AW1).
+  The five ruled key segments are unchanged, and the grade stays `(name, type)`.
 
 ## PROJECT ARC AND DEFINED OUTCOME
 
