@@ -220,6 +220,29 @@ new row on 3.0.0_SA_CVO's ask 96495), both 1.0.0_SA_CTO; `LGIC_NAMING-S3`, `LGIC
     "spec_asserts": "prd-stamp.py status shows the next owner what L4-R still owes, mirroring LIMB 6's predicate.",
     "world_is": "LIMB 6's predicate moved to hash-bound halves (prd_signoff_lib, spine v3.15); prd-stamp's mirror stayed version-bound. After any bump that leaves a half's bytes unchanged, it reports the carried half as unsigned.",
     "notes": "INERT: no gate reads prd-stamp's sign-off view; LIMB 6 and the notifier use prd_signoff_lib. Found by 1.0.0_SA_CTO while verifying the S5 fix (@b09ed6c736) against this PRD. Remedy, the tool owner's (1.0.0_SA_CTO, whose ~Z lane wrote it): have _signed_reviewers take prd_signoff_lib's per-half status instead of comparing prd_version."
+  },
+  {
+    "id": "LGIC_NAMING-S10",
+    "project": "LGIC_NAMING",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G",
+    "surfaced_at": "2026-09-14T11:10Z",
+    "one_line": "NAMING_SCHEMA v1.3's key.legacy_served_path makes a platinum key's verdict depend on whether it is a LEGACY served path (bytes kept) or a NEW one (kebab and hive forms bind), but that is not a property of (name, type) -- the grade's ratified signature -- and no field of v1.3 lists the legacy set, so two hand graders, or grade() and a grader, can reach different verdicts on the same key.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "DATA FILE: org/standards/NAMING_SCHEMA.json @7bd4ef6f27, key.legacy_served_path: 'below {source}/{scope}/platinum/, a LEGACY served path keeps its bytes -- the table, a bare entity-id segment in the partition slot, and the file name -- because the frozen portal requests it by path; the kebab-case and hive forms bind NEW served families only'. key.table_case: 'a NEW platinum leaf is a kebab-case .json file'. grade.signature is unchanged: '(name, type) -> (verdict, canonical_form)'.",
+        "NO ENUMERATION: git diff d6e0c3b74a 7bd4ef6f27 -- org/standards/NAMING_SCHEMA.json adds key.legacy_served_path and key.code as prose and adds no field listing which served paths are legacy.",
+        "CONTRACT: org/missions/D14/LGIC/LGIC_NAMING/prd/LGIC_NAMING_PRD.md CONTRACTS row 2 is byte-unchanged at v1.3 (the same diff touches only S1 and prd_version): 'the grading rule, (name, type) -> (verdict, canonical_form)'. FWD-5 ACCEPT: 'two people apply the written rule by hand to the same set of real names ... and reach the same answer for every one'.",
+        "WHERE THE SET LIVES TODAY: outside the data file -- the CTO adjudication @7bd4ef6f27 cites '12 of 15 ADVI served leaves (3.0.0_SA_CVO's read)' and 'adviKeyRepoint.ts:37 @portal 3ade1aba'. Not measured by this seat: the portal's full request list, or how many legacy served paths exist estate-wide."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The grade is a function of (name, type) (NAMING_SCHEMA grade.signature; CONTRACTS row 2, SIGNED ratified text), exact enough that two people applying it by hand get the same answer (FWD-5).",
+    "world_is": "Under v1.3 a snake_case leaf or a bare entity-id segment below {source}/{scope}/platinum/ is CONFORMANT when it is a legacy served path and OUT-OF-PATTERN when it is new, and the name does not say which. The deciding set -- what the frozen portal requests -- lives in portal source and in 3.0.0_SA_CVO's read, not in the data file. A smaller second instance: key.code's legacy root code/ homes 'stay until their pipelines move' without saying whether they grade OUT-OF-PATTERN with a canonical form or are outside the grade.",
+    "notes": "OBSERVATION, INERT for this project's round: LGIC_NAMING decomposition v2 (section 0) makes LN-g-1's written rule enumerate the legacy served set it applies, source named and denominator printed, and state a verdict for a legacy root code/ key, so LN-h-1 and LN-h-2 grade from one list. The contract question stays open and is 1.0.0_SA_CTO's (the author of the data file and of CONTRACTS row 2): whether the legacy set becomes a data field, or grade()'s signature gains it as an input. LGIC_ENFORCE's grade() inherits whichever is chosen. Remedy not chosen here."
   }
 ]
 ```
