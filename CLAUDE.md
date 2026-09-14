@@ -38,9 +38,9 @@ stable, citations resolve there. DS/AE seats read their sections before touching
     `.tools/to-pipeline-gate.py` LIMB 6 REFUSES a **NEWLY-ADDED** task order against a PRD with a half
     not SIGNED. ⛔ **IT DOES NOT FIRE ON A MODIFICATION, AND THIS LINE USED TO SAY SO WITHOUT THE
     QUALIFIER -- SO THE LAW READ STRONGER THAN THE TOOL BEHAVES AND THREE SEATS INHERITED THE BELIEF
-    FROM IT IN ONE EVENING.** The gate's own docstring (`_newly_added`, `:1015` @cd399d339d) is explicit: *"A
-    rename (R) counts as added at its new path ... A modification (M) does not: this gate never
-    refuses an existing TO."* Measured 2026-09-11 by `2.0.0_SA_COO~ZZZ` as a discriminating pair on
+    FROM IT IN ONE EVENING.** The gate's own docstring (`_newly_added`, `:1702-1710` @942e4ff992) is explicit: *"A
+    rename (R) counts as added at its new path ... A modification (M) does not: no limb that reads
+    THIS set refuses an existing TO."* It names its ONE exception, GATE (viii), stated below. Measured 2026-09-11 by `2.0.0_SA_COO~ZZZ` as a discriminating pair on
     ONE project in ONE hour: the add path refused its new order **three times** (missing
     `<issued_by>`, missing `<preflight>`, then the preflight's line shapes) while **ten task-order
     MODIFICATIONS went ungraded.** ⚠ **SO ON A RE-CUT OR A MID-FLIGHT AMENDMENT, "do not cut against

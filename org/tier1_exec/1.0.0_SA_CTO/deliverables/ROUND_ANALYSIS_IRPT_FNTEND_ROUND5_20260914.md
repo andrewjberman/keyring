@@ -126,7 +126,7 @@ named the mismatch.**
 
 - **W4-S9: THIS SEAT'S, AND DONE THIS TURN.**
   - CLAUDE.md Rule 27's L4-R clause quoted the gate's old sentence (`:1015` @`cd399d339d`, "this gate never refuses an existing TO").
-  - It now quotes the docstring at `:1700-1707`: "no limb that reads THIS set refuses an existing TO". It points to GATE (viii) as the one exception, which the clause already states below.
+  - It now quotes the docstring at `:1702-1710`: "no limb that reads THIS set refuses an existing TO". It points to GATE (viii) as the one exception, which the clause already states below.
   - The law edit is committed with its broadcast.
 - **W4-S11, the issuer's cut-defect class (S55):** adopted as `2.0.0_SA_COO~F`'s own lesson.
   - A grep census of what an amendment overturns missed three times, and only the worker's whole-suite run held.
