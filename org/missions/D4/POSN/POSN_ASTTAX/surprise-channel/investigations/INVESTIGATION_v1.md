@@ -2812,3 +2812,61 @@ all seven mechanical criteria were measured and the verdict is NO-GO.
   }
 ]
 ```
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-W20-S1",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~20",
+    "surfaced_at": "2026-09-14T19:05:00Z",
+    "one_line": "THE LEDGER TOOL V2-AC2 NAMES WRITES TWO FILES AND DEMANDS BOTH IN ONE COMMIT; THE ORDER'S <paths> GRANTS ONLY ONE OF THEM. `deploy_ledger.py open` writes the entry under org/critical_paths/change_management/ (granted) AND a sentinel at org/critical_paths/.open_deploys/<slug>.json (NOT granted), and prints 'REQUIRED COMMIT PATHSPEC (both, in the same commit -- the sentinel is the gate's only input and a worktree removed without it destroys the OPEN state, leaving the .md as an unindexed open ledger)'. A worker reading <paths> as its whole write surface commits the half that is granted and silently produces exactly the false-clean state the tool warns about.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN, not read: `python .tools/deploy_ledger.py open --slug posn-round5-b2-satellites-holdings ...` at 2026-09-14T18:44:36Z rc=0 in worktree /c/tmp/wk-posn-5-20 (branch wk-posn_asttax-5-20, cut from 945d1ddd95). It printed the entry path org/critical_paths/change_management/20260914T1844Z_posn-round5-b2-satellites-holdings_deploy_completion.md, 8 legs OPEN, AND the REQUIRED COMMIT PATHSPEC block naming org/critical_paths/.open_deploys/posn-round5-b2-satellites-holdings.json beside it. `git status --short -- org/critical_paths/` shows BOTH files staged by the tool itself (A, A) -- the worker did not stage them.",
+        "THE ORDER'S <paths> BLOCK, read at HEAD 945d1ddd95 from the file (git show HEAD:org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-V2-1.holdings-json-beside-registry-json.md), lists 11 entries; the only org/critical_paths entry is the directory `org/critical_paths/change_management/`. `.open_deploys/` is not named, and `_order_grants` (.tools/owned-paths-validate.py:162-174) grants a directory prefix ONLY for an entry ending in '/', so the named entry cannot reach the sibling directory.",
+        "THE MECHANICAL GATE DOES ADMIT IT, AND THAT IS WHY NOTHING REFUSES: check_agent (.tools/owned-paths-validate.py:275-284) resolves the LANE first by longest-match glob, and .owned-paths.yaml:1387 maps `org/critical_paths/**` to lane ANY with the note 'entries are written STRUCTURALLY by the mechanism that fires under the committing agent's author ... so any agent's legitimate ack or scan must not be lane-blocked'. So the two authorities disagree in the safe direction: the registry permits the write the task order's enumeration omits, and no commit-time refusal ever tells anyone.",
+        "THE COST IS ASYMMETRIC AND LANDS ON A THIRD PARTY: deploy_ledger.py's own docstring makes the sentinel the input to `check --red` ('ALSO sweeps change_management/*.md for an OPEN/non-terminal ledger with NO sentinel (the false-clean gate-bypass class) -> BYPASS line'). An entry committed without its sentinel is not merely untracked -- it is the shape the sweeper is built to catch, produced by a worker following its order exactly."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The worker bar: '<paths> IS your write grant (the lane gate admits a worker to exactly the paths its order names; a path you need that it lacks is a BLOCKING row on that criterion, never an override)'; and TO-V2-1 V2-AC2 names `python .tools/deploy_ledger.py open ...` as the criterion's own invocation, expecting 'the entry path printed with 8 legs OPEN'.",
+    "world_is": "The named invocation's contract is TWO files in ONE commit, and <paths> names one. Read strictly, the criterion the order issues cannot be satisfied within the grant the same order gives. This worker committed BOTH -- the lane registry admits org/critical_paths/** to ANY for exactly this mechanism-writes-under-the-agent's-author reason, and committing the entry without its sentinel would have manufactured the gate-bypass state the tool prints a warning about -- and files this row rather than treating the gap as settled. NOTE THE DIRECTION: nothing fails, no gate fires, and the worker who instead honours <paths> literally produces the WORSE outcome silently.",
+    "notes": "NOT WIDENED BEYOND THE ONE FILE THE TOOL WROTE: no other path outside <paths> is touched, and the sentinel is not edited, only committed as the tool staged it. NOT PROPOSED HERE: any change to .owned-paths.yaml (not this lane's file) or to the ledger tool. DISARM, one limb, falsifiable: the next task order that names deploy_ledger.py carries `org/critical_paths/.open_deploys/` in its <paths> block (or the issuer rules that the lane-ANY registry grant is the authority and the enumeration is not meant to be exhaustive for mechanism-written files) -- either lands as an act by the disarm owner and a citing row disarms this one. WHAT IS NOT CLAIMED: no view on whether the ledger tool SHOULD write two files; that is its owner's design and it prints its own contract clearly."
+  }
+]
+```
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-W20-S2",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~20",
+    "surfaced_at": "2026-09-14T19:05:00Z",
+    "one_line": "V2-AC3's INVOCATION AS WRITTEN CHECKS NOTHING AND EXITS 0. `bash .tools/commit-gate.sh` with no file arguments returned rc=0 and printed 'WARN: commit-gate checked 0 of 0 file(s) -- NOTHING WAS CHECKED. This line is NOT evidence of a clean gate.' -- the gate takes its subjects as ARGV (its own Usage block) and does not read the working tree or the index. The criterion's EXPECTATION ('clean on every changed .py and .tf') is therefore reachable only by passing the files; the INVOCATION beside it produces a vacuous pass that a reader comparing rc=0 against the expectation would accept.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN, both forms, same worktree, minutes apart. BARE: `timeout 180 bash .tools/commit-gate.sh` -> rc=0, output verbatim 'WARN: commit-gate checked 0 of 0 file(s) -- NOTHING WAS CHECKED. / This line is NOT evidence of a clean gate. This gate reads only .py / .sh / .tf / org/projects/*.json; every other suffix falls through unexamined.' WITH THE SIX CHANGED FILES AS ARGV: rc=0, 'OK: pre-commit gate clean for 6 of 6 file(s)' -- and on the first such run rc=1, 'BLOCKED: ruff check failed on ...negative_control_yang_not_added.py' (F401, unused import), i.e. the argv form CAN refuse and did refuse this worker.",
+        "THE GATE'S OWN HEADER STATES THE INTERFACE: 'Usage: .tools/commit-gate.sh data/black_diamond/scripts/gold/B_00.py' and '.tools/commit-gate.sh $(find ... -name \"*.py\")'. Nothing in it reads git status or the index, so the bare form has no subject to dispatch.",
+        "EXIT CODE 0 IS DOCUMENTED FOR THIS STATE: the header's own EXIT CODES block says 0 means 'every DISPATCHED file was checked and is clean; OR NOTHING WAS DISPATCHED AT ALL'. The gate already distinguishes the dangerous variant of this (rc=2 when a file whose suffix it DECLARES it reads reached zero checks) -- so the zero-subjects case is a deliberate, disclosed pass, not a gate defect.",
+        "THE DISCRIMINATOR THAT MATTERS: the bare run's output is BYTE-IDENTICAL whether the worktree is clean or carries six broken files, because the subject set is empty either way. It cannot distinguish the two states, which is the definition of a non-discriminating instrument."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-V2-1 V2-AC3: <invocation>timeout 180 bash .tools/commit-gate.sh</invocation> <expect>clean on every changed .py and .tf, output cited, both ASCII limbs read.</expect>",
+    "world_is": "The invocation and the expectation are not the same act. This worker ran BOTH and reports both verbatim, taking the ARGV form (6 of 6 clean, rc=0) as the criterion's evidence because the bare form's own output disclaims being evidence. STAR: THE GATE PRINTS ITS OWN DISCLAIMER, so the vacuous pass is loud here -- the hazard is that the DISCLAIMER, not the rc, is the only thing separating a real pass from an empty one, and a proof-of-spec row that cites 'rc=0' alone loses it.",
+    "notes": "NOT REPAIRED AND NOT WIDENED: no edit to commit-gate.sh (not this lane's file, and the tool is behaving as its header documents). DISARM, one limb, falsifiable: a future criterion naming this gate spells its subjects (`bash .tools/commit-gate.sh <paths>` or `$(git diff --name-only ...)`), or the issuer rules the bare form acceptable with the argv run required by the EXPECT clause -- either is an act by the disarm owner and a citing row disarms this one. SIBLING CHECKED, per the remedy-leaks-one-field-over rule: this same shape would apply to any criterion whose invocation is a subject-taking tool run bare; not censused here, and no claim is made about other orders."
+  }
+]
+```
