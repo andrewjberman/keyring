@@ -3999,6 +3999,49 @@
     "spec_asserts": "Row S64 names 2.0.0_SA_COO~F as disarm owner, to disarm when FE-s-41's amended re-run reads 0 fail on a fresh checkout and drains.",
     "world_is": "Met: the fresh-checkout re-run read 0 fail at the worker and at the issuer's untouched pair, and DEV's own checkout reads green after the drain. NOT closed here: row W5-S7 (INERT), where F41-AC5 reads the working copy where its criterion says committed. JSON parsing ignores line endings, so no checkout can turn AC5 red, but it would grade an uncommitted in-place edit as committed. Carried to the drain-end packet.",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W4-S16",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~4",
+    "surfaced_at": "2026-09-14T22:46:42Z",
+    "one_line": "THE CANONICAL-FLOW SKILL STILL DOCUMENTS THE ONE-ARGUMENT RECEIVING CALL AND THREE VERDICTS. After FE-s-43 (e21a8c6116) a proof-of-spec instance received that way reads NOT-BOUND (rc 1) and nothing runs; the skill needs the --governing-order form for L7->L8 and a NOT-BOUND verdict row. Exact change below, for the skill's owner.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".claude/skills/canonical-flow/SKILL.md:352-354 @4d11c008c2 -- the one documented call, `.tools/receiving-check.py <the artifact your limb consumes>`",
+        ".claude/skills/canonical-flow/SKILL.md:368-374 @4d11c008c2 -- 'THE THREE VERDICTS', table rows ACCEPT / HAND BACK / UNCHECKED",
+        ".tools/receiving-check.py run_one @e21a8c6116 -- a BOUND_TOOLS route with no governing order returns NOT-BOUND without running anything",
+        "python .tools/tests/test_receiving_binding.py @e21a8c6116: 'UNBOUND INSTANCE THROUGH THE RECEIVING ROUTE: NOT-BOUND'; 'receiving-binding battery: 11 of 11 arm(s) as expected'"
+      ]
+    },
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-43 BOUNDS: '.claude/skills/canonical-flow/SKILL.md: it documents the receiving call. Put the exact change it needs in the result file and in ONE row, for that skill's owner.' The skill (Step 3b, :352-354 @4d11c008c2) prescribes `.tools/receiving-check.py <the artifact your limb consumes>` for every handoff, and :368 names 'THE THREE VERDICTS'.",
+    "world_is": "At e21a8c6116 the L7->L8 route takes the order the instance was handed with, and the skill's call on a proof-of-spec instance reads NOT-BOUND, rc 1, with a re-run line (fail-closed: never a false ACCEPT, so INERT). THE EXACT CHANGE, three edits in Step 3b: (1) in the bash block at :352-354, add a second line `.tools/receiving-check.py <instance.proof_of_spec.json> --governing-order <the task order it closes>   # L7 -> L8`; (2) in the verdict table after the HAND BACK row (:373), add `| NOT-BOUND | a proof-of-spec instance was handed over WITHOUT the order it closes. Nothing ran -- its own to_ref would have steered the verdict. Re-run with --governing-order <that order>; never build on it. |`; (3) at :368, 'THE THREE VERDICTS' -> 'THE FOUR VERDICTS'. Not made here: the skill is NOT YOURS in this order.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W4-S17",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~4",
+    "surfaced_at": "2026-09-14T22:46:42Z",
+    "one_line": "THE RECEIVING REPORTER CUT EVERY OWNING-TOOL LINE AT 150 CHARACTERS, SO THE PRINTED HAND-BACK COULD NOT NAME BOTH PATHS. receiving-check.py:133 @edac45e48c printed line[:150]; the binding violation is ~500 chars and FE-s-28's path sits past the cut. FE-s-43 wraps instead (e21a8c6116), with a ':' continuation gutter -- a change the order did not name.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/receiving-check.py:131-133 @edac45e48c -- `for line in body.split(\"\\n\"): print(\"      | %s\" % line[:150])`",
+        ".tools/receiving-check.py _print_body @e21a8c6116 -- textwrap.wrap(line, 150, break_long_words=False), continuation gutter '      :   '",
+        "python .tools/tests/test_receiving_binding.py @e21a8c6116: 'THE HAND-BACK NAMES BOTH PATHS: yes' (the printed violation rejoined from its wrapped lines)"
+      ]
+    },
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-43 F43-AC4: 'the printed hand-back carries the checker's violation naming the order handed over and the order to_ref declared'. The cell names the route's argv (:71) and run_one's verdict, not the reporter.",
+    "world_is": "The cut's reporter truncated each line of the owning tool's output at 150 characters. The checker's governing-binding violation names the bound order first and the to_ref order about 250 characters in, so the printed hand-back dropped the second path. F43-AC4 could not pass without changing the reporter. The fix wraps on whitespace; paths carry none, so each prints whole. It needed a distinct continuation gutter: the checker indents its own lines by two spaces, so a '|' continuation read the same as an indented line (measured on this worker's first battery run, where the parser took the indented VIOLATION line for a continuation). Every other route's classification and argv is unchanged (5 of 5); only the display of long lines differs, for every route.",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
