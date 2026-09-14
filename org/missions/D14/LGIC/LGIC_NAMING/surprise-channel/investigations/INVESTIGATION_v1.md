@@ -538,6 +538,51 @@ new row on 3.0.0_SA_CVO's ask 96495), both 1.0.0_SA_CTO; `LGIC_NAMING-S3`, `LGIC
     "spec_asserts": "TO-LN-e-3 E3-AC1: 'the two namers wrote the identical string for every item', invocation check_ln.py e3-identical, expect 'VERDICT: PASS-IDENTICAL'.",
     "world_is": "The invocation prints 'VERDICT: FAIL-DIFFERENT' on 9 of 18 items identical. The cell compares and does not name, so neither string can be changed inside LN-e-3; the order stays open on E3-AC1 FAIL. n3-compare.md records both strings and the slot where they part for each of the 9.",
     "notes": "Filed by the comparing worker because the named invocation did not produce the named result. No winner is chosen and no answer is edited: both answer files belong to LN-e-1 and LN-e-2 and are outside this order's paths. For 3.0.0_SA_CVO's L8 disposition."
+  },
+  {
+    "id": "LGIC_NAMING-W5-S3",
+    "project": "LGIC_NAMING",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_NAMING~5",
+    "surfaced_at": "2026-09-14T17:25Z",
+    "one_line": "LN-e-5's E5-AC1 invocation (check_ln.py e5-correct) prints VERDICT: FAIL-MISREAD, not the expected PASS-ALL-CORRECT: the blind reader marked the key's token on 14 of 18 N3 names; the 4 misses are all shared rows -- i07, i08 and i17 are 'none' in the key and the reader marked the product token (mdpf, etfs, etfs), and i14 is 'global' in the key and the reader marked mdpf.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "EXERCISED: cd .worktrees/wk-lgic-naming-1-5 && timeout 120 python org/missions/D14/LGIC/LGIC_NAMING/deliverables/2.0.0_SA_COO~G/fixed_inputs/check_ln.py e5-correct, 2026-09-14 ~17:2xZ, worktree HEAD 23beb7751c -> 'WRONG: i07  name=mdpf-gold-read-policy  marked=mdpf  expected=none' / 'WRONG: i08  name=etfs-price-refresh-dlq  marked=etfs  expected=none' / 'WRONG: i14  name=mdpf/global/code/gold/mdpf-accrual-bridge.tar.gz  marked=mdpf  expected=global' / 'WRONG: i17  name=etfs-pipeline-alerts  marked=etfs  expected=none' / 'ITEMS: 18  CORRECT: 14  WRONG: 4' / 'VERDICT: FAIL-MISREAD', rc=0.",
+        "INPUTS: org/missions/D14/LGIC/LGIC_NAMING/deliverables/exercises/n3-namer-a.tsv @254a310135, n3-reader.tsv @3c2910ac09, and deliverables/2.0.0_SA_COO~G/fixed_inputs/N3_KEY.json @777770e6aa, whose key_rule (:4) gives 'global' for the shared product scope of a key and 'none' for a shared resource that carries no scope (S5).",
+        "READER'S RULE: row LGIC_NAMING-W6-S2 states the reader 'marked the firm token whenever one was present and the product token otherwise'; none of i07, i08, i14 or i17 carries a firm token.",
+        "CHECKER: deliverables/2.0.0_SA_COO~G/fixed_inputs/check_ln.py:287-302 @777770e6aa e5_correct compares the reader's mark on each namer-A name with the key's token as exact strings and prints FAIL-MISREAD on any mismatch."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-LN-e-5 E5-AC1: 'the reader marked the expected firm or product token on every name', invocation check_ln.py e5-correct, expect 'VERDICT: PASS-ALL-CORRECT'.",
+    "world_is": "The invocation prints 'VERDICT: FAIL-MISREAD' on 14 of 18 correct. The cell scores and does not read or name, so no mark can be changed inside LN-e-5; the order stays open on E5-AC1 FAIL. n3-reader-score.md records every WRONG line with the name, the mark and the expected token.",
+    "notes": "Filed by the scoring worker because the named invocation did not produce the named result. The task order calls a wrong mark 'the outcome's evidence, not a defect to fix'; nothing is edited. For 3.0.0_SA_CVO's L8 disposition."
+  },
+  {
+    "id": "LGIC_NAMING-W5-S4",
+    "project": "LGIC_NAMING",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_NAMING~5",
+    "surfaced_at": "2026-09-14T17:25Z",
+    "one_line": "LN-e-5's E5-AC2 invocation (check_ln.py e5-consistent) prints VERDICT: FAIL-TWO-REFERENTS, not the expected PASS-CONSISTENT: 5 of 18 names carry a token the reader marked elsewhere, all five the token mdpf (marked on i07 and i14, read as the product prefix on i01, i09, i13, i16, i18); read, not run, the key's own marks would also print 2 clashes (token etfs on i08 and i17), so E5-AC1 and E5-AC2 cannot both pass on this key.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "EXERCISED: cd .worktrees/wk-lgic-naming-1-5 && timeout 120 python org/missions/D14/LGIC/LGIC_NAMING/deliverables/2.0.0_SA_COO~G/fixed_inputs/check_ln.py e5-consistent, 2026-09-14 ~17:2xZ, worktree HEAD 23beb7751c -> 'NAMES: 18  TOKENS MARKED AS A FIRM OR PRODUCT: 9  A MARKED TOKEN READ OTHERWISE ELSEWHERE: 5' with the five pairs (mdpf-cot-exporter-sg, mdpf-cot-publisher-lambda, mdpf-demo-publish-failure-alarm, mdpf-inf-delivery-status-table, mdpf/49financial/platinum/advisor_books/advisor_id=A123), each token 'mdpf' / 'VERDICT: FAIL-TWO-REFERENTS', rc=0. The list is capped at clash[:5] (check_ln.py:317) and the count is 5, so none is hidden.",
+        "CHECKER: deliverables/2.0.0_SA_COO~G/fixed_inputs/check_ln.py:305-317 @777770e6aa e5_consistent collects every mark other than 'none', splits each name on [-/=.], and records a clash wherever a marked token is a token of a name whose own mark differs.",
+        "READ, NOT RUN: deliverables/2.0.0_SA_COO~G/fixed_inputs/N3_KEY.json:8 @777770e6aa has 'etfs' for i11 and 'none' for i08 and i17; the namer-A names for i08 (etfs-price-refresh-dlq) and i17 (etfs-pipeline-alerts), n3-namer-a.tsv:9 and :18 @254a310135, both carry the token etfs. Under check_ln.py:308-314 a reader marking exactly the key's 18 tokens therefore records 2 clashes."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-LN-e-5 E5-AC2: 'no token the reader marked as a firm or product is read otherwise in another name', invocation check_ln.py e5-consistent, expect 'VERDICT: PASS-CONSISTENT'.",
+    "world_is": "The invocation prints 'VERDICT: FAIL-TWO-REFERENTS' with 5 clashes. And a reader who met E5-AC1 exactly would still fail E5-AC2 on 2 names, because the key marks a product token on one name and 'none' on two names that carry it. The order stays open on E5-AC2 FAIL.",
+    "notes": "Filed by the scoring worker because the named invocation did not produce the named result. The joint-satisfiability observation is read from the key, the names and the checker source, not measured by a run; whether it is its own finding is 3.0.0_SA_CVO's call at L8, not this worker's. Nothing is edited."
   }
 ]
 ```
