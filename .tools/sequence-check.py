@@ -19,6 +19,9 @@ WHAT IT FLAGS, per project:
   UNREADABLE       a source that could not be read -- never rendered as a pass
   NEEDS-SLOT       its PRD is admitted and its next step is a COO's (L5), but its tree row names no coo_lane. While the
                    box is at its COO cap it waits for a slot, and slots go in the file's order (not a violation)
+  LANE-DARK        in flight (DECOMP to ROUND_CLOSE) on this box's fabric, but the coo_lane its tree row names is not a
+                   live COO lane here: its round waits for a seat, queued with NEEDS-SLOT in the file's order (not a
+                   violation). Without it an in-flight project whose COO session died is invisible to the slot queue.
 
 CAPACITY (Andrew-direct 2026-09-14 ~07:0xZ, "We can only have 3 COOs running their respective projects/subagents at
 any one time"): the live COO lanes on THIS box, read from the broker's org/mcp/liveness.json (a 2.0.0_SA_COO lane seen
@@ -276,6 +279,20 @@ def evaluate(doc, reader, idle_days=IDLE_DAYS, now=None):
             elif cap_ok and not trow.get("coo_lane"):
                 flags.append("NEEDS-SLOT")
                 notes.append("PRD admitted; L5 is next and is a COO's; no coo_lane on the tree row")
+        # LANE-DARK: in flight on THIS box's fabric, and the coo_lane its tree row names is not a live COO lane here, so
+        # its round waits for a seat exactly as a NEEDS-SLOT project does. A project on the other fabric is never
+        # flagged: its lane is never live on this box by construction.
+        if row.get("dep_stage") in ("DECOMP", "EXECUTING", "ROUND_CLOSE") and row.get("status") != "complete":
+            box, _bn = reader.box_fabric()
+            fab = str(p.get("fabric") or row.get("fabric") or "").lower().replace("-", "")
+            mine = bool(box) and fab == str(box).lower().replace("-", "")
+            trow2, _tn = reader.tree_row(row)
+            lane = (trow2 or {}).get("coo_lane")
+            live, _ln = reader.coo_sessions()
+            if mine and lane and live is not None and lane not in live:
+                flags.append("LANE-DARK")
+                notes.append("in flight at %s; its coo_lane %s is not live on this box, so its round waits for a COO seat"
+                             % (row.get("dep_stage"), lane))
         all_met = all(s == "MET" for s in states)
         if all_met and row.get("status") != "complete" and act:
             try:
@@ -323,7 +340,8 @@ def capacity(doc, reader, rows):
     live, note = reader.coo_sessions()
     fabric, fnote = reader.box_fabric()
     order = {code: i for i, code in enumerate((doc.get("projects") or {}))}
-    queue = sorted((r for r in rows if "NEEDS-SLOT" in r["flags"]), key=lambda r: (r.get("stage") or 0, order.get(r["project"], 0)))
+    queue = sorted((r for r in rows if "NEEDS-SLOT" in r["flags"] or "LANE-DARK" in r["flags"]),
+                   key=lambda r: (r.get("stage") or 0, order.get(r["project"], 0)))
     cap = caps.get(fabric) if fabric else None
     return {"caps": caps, "box_fabric": fabric, "box_note": fnote, "cap": cap, "live": live, "note": note,
             "at_cap": (live is not None and cap is not None and len(live) >= cap),
@@ -417,6 +435,15 @@ def self_test():
         "F": {"fabric": "laptop", "stage": 1, "waits_on": [{"project": "A", "bogus": 1}]},
     }}
     rows["E"] = {"dep_stage": "REGISTERED", "status": "active", "fabric": "laptop", "_act": None}
+    rows["L"] = {"dep_stage": "EXECUTING", "status": "active", "fabric": "laptop", "_act": "abc 2026-09-19T00:00:00+00:00",
+                 "_tree": {"coo_lane": "2.0.0_SA_COO~DEAD"}}
+    rows["M"] = {"dep_stage": "EXECUTING", "status": "active", "fabric": "laptop", "_act": "abc 2026-09-19T00:00:00+00:00",
+                 "_tree": {"coo_lane": "2.0.0_SA_COO~A"}}
+    rows["N"] = {"dep_stage": "EXECUTING", "status": "active", "fabric": "site-z", "_act": "abc 2026-09-19T00:00:00+00:00",
+                 "_tree": {"coo_lane": "2.0.0_SA_COO~DEAD"}}
+    doc["projects"]["L"] = {"fabric": "laptop", "stage": 1, "waits_on": []}
+    doc["projects"]["M"] = {"fabric": "laptop", "stage": 1, "waits_on": []}
+    doc["projects"]["N"] = {"fabric": "site-z", "stage": 1, "waits_on": []}
     rows["F"] = {"dep_stage": "REGISTERED", "status": "active", "fabric": "laptop", "_act": None}
     fake = Fake(rows, prd)
     fake.live = ["2.0.0_SA_COO~A", "2.0.0_SA_COO~H", "2.0.0_SA_COO~X"]
@@ -438,7 +465,11 @@ def self_test():
         ("validate: an unknown top-level key is refused", validate({"stagez": 1, "projects": {}}) != []),
         ("G: PRD admitted, at PRD, no coo_lane -> NEEDS-SLOT only", got["G"] == {"NEEDS-SLOT"}),
         ("H: PRD admitted, at PRD, a coo_lane seated -> no flag", got["H"] == set()),
-        ("capacity: 3 live against a laptop cap of 3 -> AT CAP, and the queue is [G]", cap["at_cap"] and cap["queue"] == ["G"]),
+        ("capacity: 3 live against a laptop cap of 3 -> AT CAP, and the queue is [G, L] (NEEDS-SLOT, then LANE-DARK, in file order)",
+         cap["at_cap"] and cap["queue"] == ["G", "L"]),
+        ("L: EXECUTING on this fabric, its coo_lane not live -> LANE-DARK only", got["L"] == {"LANE-DARK"}),
+        ("M: EXECUTING, its coo_lane live -> no flag", got["M"] == set()),
+        ("N: EXECUTING on the other fabric, lane not live here -> never LANE-DARK", "LANE-DARK" not in got["N"]),
         ("validate: the capacity key is accepted", validate({"capacity": {"coo_sessions": {"laptop": 3}}, "projects": {}}) == []),
         ("resolve: a placed code -> PLACED", resolve_codes(rdoc, ["LGIC_NAMING"], rreg)[0][1] == "PLACED"),
         ("resolve: a one-letter TYPO -> UNKNOWN, with the placed code suggested", _typo[1] == "UNKNOWN" and "LGIC_NAMING" in _typo[2]),
