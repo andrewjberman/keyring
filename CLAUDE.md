@@ -244,6 +244,21 @@ another** — verbatim scope; relay, never adjudicate wider OR narrower; if wide
 `comp-which` for code, `comp-estate --layers/--definitions` for infra + ratified terms; (3) stdlib;
 (4) native platform feature; (5) already-installed dependency; (6) one line; (7) only then the MINIMUM
 code that works. **No non-ASCII in production code/logs/AWS** — use `OK:`/`WARN:`/`ERROR:`/`SKIP:`/`BLOCKED:`.
+⛔ **AND IN A FILE THAT ALREADY CARRIES MANY, DO NOT DELETE THE ONE GLYPH THAT MAKES A NAIVE READ
+RAISE — IT IS THE ONLY THING STOPPING SILENT CORRUPTION.** A default text-mode read on this device is
+cp1252, which raises ONLY on a byte undefined there (`0x81 0x8D 0x8F 0x90 0x9D`); every other
+non-ASCII character decodes to the WRONG character and reports success. Measured 2026-09-14 on the
+three files every seat reads at startup: `CLAUDE.md` 213 non-ASCII, `org/XXX.md` 138,
+`docs/doctrine/CLAUDE_ANNEX.md` 252 — **each raises because of a SINGLE `U+2B50`**, and removing just
+that glyph leaves 212 / 135 / 251 characters that decode CLEAN AND WRONG. **Deleting it converts a
+loud failure into silent mojibake, which is strictly worse and looks like compliance.** So the only
+two safe moves are ALL non-ASCII out, or every reader explicit (`encoding='utf-8'`) — **never a
+subset.** ⭐ Detector, one expression and zero cost: `len(b) - len(b.decode('utf-8'))` is 0 on a pure
+ASCII file. **COST: none — a do-not-do.** **NON-APPLICATION: a file that is ALREADY pure ASCII (keep
+it that way), and any file whose every reader is known explicit.** Measured beside it: 29 of 91
+`.tools/*.py` carry non-ASCII (8 raising, 21 silent) and `.owned-paths.yaml` — the LANE-GRANT file —
+is in the SILENT class at 204. `2.0.0_SA_COO~Z` / `2.0.0_SA_COO~ZZZ` / `0.0.0_AB_MSTR~Z`, corroborated
+on three instruments.
 
 ⛔ **A VALUE MUST CARRY ITS CLAIM — in a field a consumer can reject on** (`measured/inferred/held/absent`);
 no such field → you may NOT treat it as measured. **The consuming half is the whole mechanism** — an
