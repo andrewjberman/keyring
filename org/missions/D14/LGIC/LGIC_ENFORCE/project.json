@@ -5,7 +5,7 @@
   "fabric": "laptop",
   "pipeline": null,
   "status": "active",
-  "dep_stage": "REGISTERED",
+  "dep_stage": "PRD",
   "created": "2026-09-13",
   "registered_under_tree": "2026-09-13",
   "placement": "LAPTOP",
@@ -18,11 +18,15 @@
   ],
   "name": "Platform Logic executable layer -- one registry, two builders (key and name) off the identity spine, and one flagger at safe-commit/safe-apply that refuses a change the builder would not have produced",
   "description": "D14's executable-layer brief, the second of Andrew's two Platform Logic briefs commissioned ~03:2xZ 2026-09-13 (relayed 96332): 'key/name builders off the identity spine, a flagger at safe-commit/safe-apply'. It is D14's ENFORCEMENT -- the canon's readability made mechanical. It consumes LGIC_NAMING's schema and owns the firm registry and its generated views (Andrew's ruling (a) ~03:5xZ), including the registry-derived deny patterns the firm-bucket fence will key on.",
-  "phase": "L3 REGISTERED UNDER THE PROJECT TREE 2026-09-13 by 1.0.0_SA_CTO, on the D14 macro [LGIC] ratified @464c1096d5. dep_stage REGISTERED, NOT PRD. || L2 ENDPOINT org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_D14_EXECUTABLE_LAYER_20260913.md (cut @033b41c089; rulings stamped @e2210bf34c) -- FWD-1..FWD-7; DONE WHEN confirmed by Andrew ~18:4xZ. || L1 BRIEF docs/briefs/d14-executable-layer-brief-20260913.md @fc2a1ba75f, author 4.0.0_SA_CRO~D. || NEXT: L4 at 1.0.0_SA_CTO, the PRD carrying the fence conditions as acceptance, then the L4-R sign-off.",
-  "blocking": "NOTHING HERE IS A GATE THIS SEAT INVENTED; each line names whose it is. (1) 1.0.0_SA_CTO: the L4 PRD is not yet written. (2) NO COO LANE IS SEATED for L5 (the Tier-2 one-project-per-seat rule, .tools/to-decomp-ref-lint.py). (3) THE FENCE CHANGE IS THE ONE D14-BEFORE-D8 ITEM: it lands on the firm-bucket template before ADVI_FIRMBKTS mints the new buckets, and ADVI_FIRMBKTS FWD-3 (every firm-naming consumer reads one place) waits on this project's registry.",
+  "phase": "L4 PRD v1.0 (2026-09-14, 1.0.0_SA_CTO) at org/missions/D14/LGIC/LGIC_ENFORCE/prd/LGIC_ENFORCE_PRD.md -- FWD-1..FWD-7 carried; twelve decisions closed at L4 (DEC-1..DEC-12), among them the fence's three conditions closed in writing (DEC-4: a principal with no scope token is denied on a firm bucket unless the registry exempts it) and the flagger's refuse/warn matrix with a WARN-only window first (DEC-6); twelve cell candidates E1..E12. L4-R owed on both halves: ratified text to 3.0.0_SA_CVO, brief to 4.0.0_SA_CRO. || L3 REGISTERED UNDER THE PROJECT TREE 2026-09-13 by 1.0.0_SA_CTO, on the D14 macro [LGIC] ratified @464c1096d5. || L2 ENDPOINT org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_D14_EXECUTABLE_LAYER_20260913.md (cut @033b41c089; rulings stamped @e2210bf34c) -- FWD-1..FWD-7; DONE WHEN confirmed by Andrew ~18:4xZ. || L1 BRIEF docs/briefs/d14-executable-layer-brief-20260913.md @fc2a1ba75f, author 4.0.0_SA_CRO~D. || NEXT: L4 at 1.0.0_SA_CTO, the PRD carrying the fence conditions as acceptance, then the L4-R sign-off.",
+  "blocking": "NOTHING HERE IS A GATE THIS SEAT INVENTED; each line names whose it is. (1) L4-R: the PRD v1.0 is written and owed on both halves -- ratified text (ENDPOINT + CONTRACTS) to 3.0.0_SA_CVO, brief to 4.0.0_SA_CRO (python .tools/prd-signoff.py status LGIC_ENFORCE is the one read). (2) NO COO LANE IS SEATED for L5 (the Tier-2 one-project-per-seat rule, .tools/to-decomp-ref-lint.py). (3) THE FENCE CHANGE IS THE ONE D14-BEFORE-D8 ITEM: it lands on the firm-bucket template before ADVI_FIRMBKTS mints the new buckets, and ADVI_FIRMBKTS FWD-3 (every firm-naming consumer reads one place) waits on this project's registry.",
   "brief_ref": "docs/briefs/d14-executable-layer-brief-20260913.md@fc2a1ba75f",
-  "prds": [],
-  "prd_lineage": [],
+  "prds": [
+    "org/missions/D14/LGIC/LGIC_ENFORCE/prd/LGIC_ENFORCE_PRD.md"
+  ],
+  "prd_lineage": [
+    "org/missions/D14/LGIC/LGIC_ENFORCE/prd/LGIC_ENFORCE_PRD.md v1.0 -- authored by 1.0.0_SA_CTO 2026-09-14, the first PRD of this project, after LGIC_NAMING's v1.2 was ADMITTED (the gate in org/missions/SEQUENCE.yaml). The brief's WAITING-ON items are closed in it: the schema is ratified (LGIC_NAMING), the refuse/warn matrix and the WARN window length (DEC-6), and the Terraform-label census before the safe-apply limb (cell E8). Andrew's fence conditions (~18:4xZ card 1) are closed in writing at DEC-4. The registry is JSON with no kinds file (DEC-1): a narrowing of the brief's YAML proposal, for the stdlib reason stated there."
+  ],
   "decompositions": [],
   "decomposition_lineage": [],
   "leads": {
