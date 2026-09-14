@@ -2762,6 +2762,72 @@
     "spec_asserts": "TO-FE-s-29 limb 3: 'a body SEEDED through initialEnvelope / initialHoldingsEnvelope / initialReport'. F29-AC8: the population is every existing criterion whose invocation runs one of the suites that seed, 'measured at the cut: 6 test files'. F29-AC15: none of the four limbs 'can be satisfied by the party it grades'.",
     "world_is": "A limb that read only the three named props would admit a network-declared test that seeds the same fetched bodies through initialSnapshot, initialHoldingsSnapshot, initialSnapshotEnvelope, initialAnalysisReport, initialAnalysisRequests, initialRequests or initialJob. The graded party could satisfy it. So the limb reads the ten fetched-content props, derived by subtraction from the measured 15. That choice is this worker's, is stated in the checker's block comment, and is L9's to grade. Its only visible effect on the committed corpus is F15-AC7, which no order declares drives=\"network\" today. The cut's six-file census is exact for the three named props and one suite short for the ten.",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S19",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-14T02:52:00Z",
+    "one_line": "F34-AC5 and F34-AC6 cannot both pass under TO-FE-s-34's <paths> grant: two committed tests OUTSIDE the grant assert that a business-date age STARTS WITH 'Updated ' -- fe-s-21/source-age.test.ts:166 and fe-s-25/source-age-field.test.ts:65 -- so the relabel ruling K requires turns both red, and F34-AC6 reads 59 pass / 2 fail.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal@c2eb8eb4 (the cut): src/pages/InvestorReporting/__tests__/fe-s-21/source-age.test.ts:165-171 builds `ok = pure.startsWith('Updated ') && ...` over formatSourceAgeForState(...) for the five answer-bearing states and :174 expects all five to pass; src/pages/InvestorReporting/__tests__/fe-s-25/source-age-field.test.ts:65 is `expect(pure.startsWith('Updated ')).toBe(true)`. Found by the native Grep tool for the literal 'Updated' over src/pages/InvestorReporting/: 7 hits, 5 in state/status.ts:280-287 (the labels) and these 2 in tests.",
+        "MEASURED after the FE-s-34 edit (portal@944499a9b4, LOCAL on wk-irpt_fntend-5-3-fe-s-34), the F34-AC6 invocation as the order writes it: `59 pass / 2 fail`, the failures being `F21-AC3 -- an answer-bearing state still renders a real age` (source-age.test.ts:174) and `F25-AC4 -- a READY envelope carrying business_date renders an age` (source-age-field.test.ts:65, Expected: true, Received: false). Before the edit the same four pre-existing folders ran 57 pass / 0 fail.",
+        "THE CONTRADICTION IS STRUCTURAL, NOT A CHOICE OF WORDING: F34-AC5 requires zero 'Updated' on any rendered business-date age, and both failing lines require formatSourceAgeForState's output for a PRESENT business date to begin with 'Updated '. No label satisfies both, and the grant names neither file."
+      ]
+    },
+    "spec_asserts": "The worker face, F34-AC6: 'FE-s-21 and FE-s-25 compute their expected strings through formatSourceAge itself, so the label flows through them rather than breaking them (measured at the cut: no test asserts the literal \"Updated\")'. The <paths> grant names neither __tests__/fe-s-21/ nor __tests__/fe-s-25/.",
+    "world_is": "Two tests assert the literal prefix, one in each folder. The label DOES flow through fe-s-25:66 (`toBe(expected)`, expected computed via formatSourceAge) exactly as the face says, but :65 and fe-s-21:166 name the old word directly. The remedy is a two-line edit in files this order does not grant -- replace each `startsWith('Updated ')` with a check that does not spell the label (for instance equality with formatSourceAge of the same date and clock) -- and it was NOT made here, per BOUNDS: 'A path you need that is not named is a BLOCKING row; never an override.' The FE-s-34 portal commit turns both suites red if it is drained without that edit.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S20",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-14T02:52:00Z",
+    "one_line": "Ruling O's premise that StageDisplay and VariantSelector 'age the as_of instant, not the business_date' holds only where no status arrived: on an envelope carrying a reading, formatSourceAge(envelope.sourceAsOf) ALREADY aged business_date, because both formatters take their basis from sourceAgeBasis. The re-route changed the ABSENCE wording, not the field.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal@c2eb8eb4 src/pages/InvestorReporting/state/status.ts:71-75: sourceAgeBasis returns slot[GOVERNED_SOURCE_DATE.view] (businessAsOf) for a reading and the slot itself for a bare instant; formatSourceAge (:275) and formatSourceAgeForState (:460) both call it, so on a reading the two cannot age different fields.",
+        "MEASURED, fe-s-34/label.test.ts run against the UNMODIFIED source (portal@c2eb8eb4 plus the new test file only): with source_dates.business_date=2026-09-10 and as_of=2026-09-05T00:00:00Z on a READY status, StageDisplay rendered 'Ready -- Updated 2d ago (STATE_REPORTED)' and VariantSelector 'Ready -- Updated 2d ago' -- the business-date age (the as_of age is 7d). In the same run both absence arms FAILED: QUEUED with business_date ABSENT rendered 'Loading -- Source time unknown' where StatusPanel says 'No source age yet', and READY with business_date null rendered 'Ready -- Source time unknown' where StatusPanel says 'Source date malformed'. Printed: 'ANALYSIS PANELS AGE THE BUSINESS DATE: 0 of 2'.",
+        "CONSEQUENCE FOR THE GRADE: F34-AC3 is therefore built with THREE arms per panel and a panel counts only if all three hold -- the age arm alone passes before any edit and would certify nothing. After the edit (portal@944499a9b4): 'ANALYSIS PANELS AGE THE BUSINESS DATE: 2 of 2', every arm yes."
+      ]
+    },
+    "spec_asserts": "THE CELL, ruling O: the call sites tabs/analysis/StageDisplay.tsx:51 and tabs/analysis/VariantSelector.tsx:61 'still call formatSourceAge(envelope.sourceAsOf): they age the as_of instant, not the business_date the clause governs.'",
+    "world_is": "On the status path they already aged business_date; what differed from StatusPanel was the absent-state and null wording, which the re-route does fix. On the no-status path they age the document's availability instant, and they still do after the re-route, because formatSourceAgeForState ages whatever slot it is handed (row IRPT_FNTEND-W3-S21). The outcome 1.0.0_SA_CTO named is met; the mechanism the premise describes is not the one the edit moved.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S21",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-14T02:52:00Z",
+    "one_line": "On the path the analysis tab renders today -- fixture documents that carry no status -- the panel envelope holds availability.sourceAsOf (an instant), not the business date, and after ruling K's relabel that instant's age is SHOWN as 'Business date age'. fixtures/fe-s-6/request.overview.json at 2026-09-12T00:00Z: 'Business date age: 1d' (from 2026-09-10T18:05:00Z) while the document's own businessAsOf 2026-09-08 is 4d old.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal@c2eb8eb4 src/pages/InvestorReporting/state/status.ts:222, envelopeFromAvailability: `sourceAsOf: availability.sourceDate === undefined ? availability.sourceAsOf : availability.sourceDate` -- with no status the slot is the Availability instant. __tests__/fe-s-25/source-age-field.test.ts:121 pins that exact expression by regex. contracts/envelope.ts:225-230's own comment: status_required is false on ten of the twelve response contracts, 'so this branch is the COMMON one, not an edge'.",
+        "portal@c2eb8eb4: the network 'analysis-requests' adapter, contracts/adapt.ts:1006-1017 adaptAnalysisSubmission, returns a view with NO availability, so carryAvailabilityFromStatus (adapt.ts:280-281) returns it unchanged. The analysis tab's only renderable AnalysisRequest today is therefore a fixture document; fixtures/fe-s-6/*.json carry availability.sourceAsOf and sourceTimestamps.businessAsOf, and no sourceDate.",
+        "MEASURED BEFORE THE EDIT, a scratch probe at a pinned 2026-09-12T12:00:00Z: request.overview.json and request.uncertain.json give the slot '2026-09-10T18:05:00Z' / '2026-09-10T18:09:00Z'; formatSourceAge AND formatSourceAgeForState both said 'Updated 2d ago'; businessAsOf 2026-09-08 would have said 5d. So the re-route cannot move this path.",
+        "MEASURED AFTER THE EDIT (portal@944499a9b4), printed and NOT graded by fe-s-34/label.test.ts: 'the same fixture with NO status hands the panels availability.sourceAsOf=2026-09-10T18:05:00Z, not sourceTimestamps.businessAsOf=2026-09-08 -> StageDisplay \"Ready -- Business date age: 1d\"'."
+      ]
+    },
+    "spec_asserts": "Ruling K: 'the figure now measures a business-date age. Relabel it to name the business date and its age.' BOUNDS: 'Where the business date is absent, render its absence the way formatSourceAgeForState already does -- never an as_of fallback' and 'isCompleteState, the state labels, STATE_FOR_WIRE and every other function in that file stay as they are.'",
+    "world_is": "The figure measures a business date only when a status carried one. Otherwise envelopeFromAvailability hands the formatter the document's instant -- the fallback the bound forbids -- in a function the same bound forbids this order to touch, and which fe-s-25 pins by regex. Before FE-s-34 that misread was labelled 'Updated', which at least described an instant; after it the label asserts a business date. The remedy is a ruling, not a worker's edit: either the no-status envelope carries the document's own sourceTimestamps.businessAsOf as a reading (one is already built at contracts/adapt.ts:231 and then dropped), or a bare instant is labelled as what it is.",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
