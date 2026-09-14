@@ -327,6 +327,117 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     "spec_asserts": "CLAUDE.md rule 27 and RULING 1: 'A worker's write surface is exactly the <paths> its non-terminal order names (.tools/owned-paths-validate.py)'. The faces' lane line: .tools/ refuses by lane.",
     "world_is": "For .tools/ the lane is open to every worker serial, so a worker's .tools/ write outside its <paths> passes the lane gate at commit. What still refuses it is the issuer's per-order grant check at every drain (the changed files against that order's <paths>), which this issuer runs on every drain and which has read 0 outside-grant files on all 12 drains so far.",
     "notes": "INERT: the drain check covers it, and no drain in this round has carried an out-of-grant .tools/ file. Two cells of this round legitimately write .tools/ (EN-g-1 naming-gate.py, EN-t-2 naming-apply-gate.py), both through their <paths>. The faces' lane line overstates the lane for .tools/ and is this issuer's wording; the faces are frozen mid-round, so this row is the correction. Whether the .tools/ lane should enumerate workers is the lane owner's call (the owned-paths lanes' author), carried to the round's drain-end read for 1.0.0_SA_CTO."
+  },
+  {
+    "id": "LGIC_ENFORCE-W1-S4",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~1",
+    "surfaced_at": "2026-09-14T23:22Z",
+    "one_line": "DEC-5's loaders.py:43 bucket_for holds no firm data: it reads IRPT_DIRECTORY_BUCKET_MAP, which Terraform sets from data/firm_registry.json, so its generated view re-emits the function unchanged and no registry fact enters it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "FILE: infra/aws/lambda/investor-reporting/_authz/loaders.py:29 and :43-53 @e0171ca585: bucket_for reads os.environ IRPT_DIRECTORY_BUCKET_MAP and raises BucketUnmapped for a tenant it cannot map.",
+        "FILE: infra/aws/terraform/investor-reporting/directory/iam.tf:20-26 and :40 @e0171ca585: local.firm_bucket_map = { for f in local.client_firms : f.firm_id => f.bucket }, with client_firms read from data/firm_registry.json; lambda.tf:39 and schedule.tf:149 set IRPT_DIRECTORY_BUCKET_MAP = jsonencode(local.firm_bucket_map).",
+        "EXERCISED: check_en.py exports_of on loaders.py at base e0171ca585, copied into a temp dir, returns 'raises BucketUnmapped' for every probe token (the env var unset); python lib/opal_naming.py generate reproduces it (check_en.py r1-generate: 'EXPORTS EQUAL: 7', of 7 carrier files)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EN-r-1 WORKER FACE and LGIC_ENFORCE_PRD.md DEC-5 :224-236 @78128f29ea: loaders.py:43 bucket_for is one of the eight carrier definitions, each to become a generated file of the registry.",
+    "world_is": "The definition carries no registry row: its data path is Terraform, then the env var, then data/firm_registry.json, a carrier that EN-v-1 makes a generated view. lib/opal_naming.py's bucket_for block is a fixed template wrapped in the GENERATED markers, with a comment naming that data path.",
+    "notes": "Whether loaders.py needs a generated view at all, or only the pointer to firm_registry.json it already has, is EN-v-4's and the issuer's call."
+  },
+  {
+    "id": "LGIC_ENFORCE-W1-S5",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~1",
+    "surfaced_at": "2026-09-14T23:22Z",
+    "one_line": "generate's no-target contract includes infra/aws/terraform/modules/opal_name/tests/vectors.json, but the vectors are built over name(), cell EN-b-1's builder, so EN-r-1's generate prints SKIP for that file and writes the other eight.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ORDER: TO-EN-r-1 WORKER FACE, the CLI interface: 'With no --target, it writes the 8 DEC-5 carrier files, the module's generated locals, and infra/aws/terraform/modules/opal_name/tests/vectors.json'; the same face: 'the builders key, address, name and grade are EN-b-1's'.",
+        "PRD: LGIC_ENFORCE_PRD.md DEC-3 :186-189 @78128f29ea: the module is proved against lib/opal_naming.name() on a vector file the Python builder generates.",
+        "EXERCISED: python lib/opal_naming.py generate --out .scratch/gen_try printed 'SKIP infra/aws/terraform/modules/opal_name/tests/vectors.json (vectors are built over name(), cell EN-b-1's builder, which is not in this module yet)' and 'GENERATE: 8 written, 1 skipped', rc 0."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EN-r-1 WORKER FACE: generate with no --target writes the 8 DEC-5 carrier files, the module's generated locals and vectors.json.",
+    "world_is": "vectors.json cannot be written before name() exists. build_vectors() raises NotBuilt, and the vectors CLI verb exits 2. The decomposition's edge EN-b-1 -> EN-m-1 puts the builder before the module that reads the file.",
+    "notes": "EN-b-1 replaces build_vectors(). No R1 criterion reads vectors.json."
+  },
+  {
+    "id": "LGIC_ENFORCE-W1-S6",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~1",
+    "surfaced_at": "2026-09-14T23:22Z",
+    "one_line": "Nine of the sixteen system rows carry an owner_directive the register does not state (owner_claim inferred), and astn, trade and news, which GRADING_RULE.md V1 lists as PRODUCT systems, are held unresolved because no owner can be cited.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CENSUS: org/missions/DIRECTIVES.yaml @e0171ca585, a whole-token case-insensitive read attributed to each D-code block: yang 2 lines (D9), ycharts 4 (D9), smartx 2 (D3, D9), schwab 2 (D2, D3), trueshares 4 (D4); news, astn, trade, fred, seeking, orion, eclipse, blackdiamond and pathfinder 0 each.",
+        "CENSUS: the mission tree org/missions/D<n>/<MACRO>/<CODE> @e0171ca585, 18 project directories: none is a yang, news, astn, trade, fred, seeking-alpha or vendor-feed project.",
+        "EXERCISED: python lib/opal_naming.py validate printed 'VALIDATE: OK 16 system row(s), 9 scope row(s), 9 warning(s)', one WARN per inferred owner (yang, schwab, blackdiamond, orion, eclipse, smartx, pathfinder, fred, seeking-alpha)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EN-r-1 WORKER FACE and LGIC_ENFORCE_PRD.md DEC-1 :167-172 @78128f29ea: every systems.json row carries owner_directive, the D-code of the owning directive, which resolves in org/missions/DIRECTIVES.yaml.",
+    "world_is": "The register names an owner for 7 of the 16 rows (mdpf D8, etfs D4, irpt D9, advi D2, amgt D5, trueshares D4, ycharts D9). The other 9 carry a reading, marked owner_claim inferred with its basis: 7 feeds read as D8 (Data Pipelines), pathfinder as D4 through the etfs product, and yang as D9. astn, trade and news sit in systems.json unresolved rather than under a guessed owner, so grade() will not resolve them as systems; none of GRADING_RULE.md's 43 worked cases names them.",
+    "notes": "Confirming or correcting an owner is a registry edit. The validator prints each inferred owner as a WARN until then."
+  },
+  {
+    "id": "LGIC_ENFORCE-W1-S7",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~1",
+    "surfaced_at": "2026-09-14T23:22Z",
+    "one_line": "check_en.py's _v_delta0 loads each carrier's BASE copy from a temp directory, where directory_runner.py (and, by the same imports, holdings_snapshot.py) cannot import trading_calendar, so EN-v-3's v3-delta0 reads FAIL whatever the view says.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~G",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "FILE: org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/2.0.0_SA_COO~G/fixed_inputs/check_en.py:726-741 @e0171ca585: at_base writes 'git show <base>:<path>' into tempfile.mkdtemp()/<path>, and _compare_carriers loads that copy first.",
+        "FILE: data/assets/scripts/gold/investor_reporting/directory_runner.py:102-108 and holdings_snapshot.py:83-88 @e0171ca585: _REPO = _HERE.parents[4], sys.path gets _REPO/lib, then import trading_calendar. In a temp dir _REPO/lib does not exist; firm_bucket_map() also reads _REPO/infra/aws/lambda-edge/_shared/firm-config.mjs.",
+        "EXERCISED, a discriminating pair on one instrument in one process: check_en.exports_of on the base copy in a temp dir printed 'AT-BASE LOAD FAILS data/assets/scripts/gold/investor_reporting/directory_runner.py ModuleNotFoundError No module named trading_calendar' and 'AT-BASE LOAD OK infra/aws/lambda/investor-reporting/_authz/loaders.py' (every token raises BucketUnmapped)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "LGIC_ENFORCE_DECOMP.md EN-v-3 row @53d221f334: its exported content is byte-equivalent to the pre-image (DELTA=0), graded by check_en.py v3-delta0.",
+    "world_is": "The pre-image side cannot be loaded outside the worktree, so the comparison records directory_runner.py as DIFFER before it reads the view. r1-generate is not affected: it loads the live carrier first, and that load puts lib/ on sys.path.",
+    "notes": "holdings_snapshot.py is read, not exercised. The other v-cells' base copies (the JSON, the mjs, loaders.py, perfrp_firm_pin.py and ds-precommit-check.py) import only the standard library or nothing."
+  },
+  {
+    "id": "LGIC_ENFORCE-W1-S8",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~1",
+    "surfaced_at": "2026-09-14T23:22Z",
+    "one_line": "To generate the eight carriers from the registry, scopes.json rows carry fields DEC-1 does not list (tenant, masters, monolith_scopes, pipeline_trees, trees, bucket_provisioned, and the alias fields planes, routed and provisioned), and a scope's bucket is its ruled opal-data-{long} form with the live legacy bucket an alias.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "PRD: LGIC_ENFORCE_PRD.md DEC-1 :173 @78128f29ea: 'scopes.json rows: key, class, long, short, tenancy, bucket, aliases.'",
+        "FILES @e0171ca585: data/firm_registry.json carries display_name, kind, enabled, email_domain, the portal/mdpf/pipeline scopes, tree_token and five nullable bindings per firm; firm-config.mjs:65-94 a displayName per tenant, mockadv included; perfrp_firm_pin.py:33-42 the ADVI tree; ds-precommit-check.py:68-71 and :110-113 the pipeline-directory separations. None of these is one of DEC-1's seven scope fields.",
+        "EXERCISED: check_en.py r1-bd 'OCCURRENCES OUTSIDE AN alias/refused FIELD: []'; check_en.py r1-generate 'CARRIER FILES: 7  EXPORTS EQUAL: 7  DIFFER: []'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EN-r-1 WORKER FACE: scopes.json rows key, class, long, short, tenancy, bucket and aliases; bd appears only as an alias or a refused token.",
+    "world_is": "Each added field holds one fact a carrier holds today, and each view is rendered from those fields (lib/opal_naming.py _firm_registry_rows, _separations, _blk_firm_trees). The live buckets opal-data-bd, opal-data-inf and opal-data-cot are bucket-plane aliases marked routed, because r1-bd refuses bd anywhere but an alias and GRADING_RULE.md grades opal-data-bd an ALIAS of opal-data-49financial. mockadv is an alias of 49financial with its own tenant block. Each registry file's _about states its fields.",
+    "notes": "DEC-1's field list may be read as a minimum, and this as its extension; that read is the issuer's and 1.0.0_SA_CTO's to make."
   }
 ]
 ```
