@@ -1036,3 +1036,57 @@ artifact.
   CANDIDATE level -- it rejected Liberty Latin America, Rogers, Sony and Xanadu Quantum by name -- but
   a 0% name-level refusal over 17 large caps means the rule has not yet been tested where it will
   actually bite: a name with NO SA listing at all.
+---
+
+## 20. `social_account` HAS A PROVEN ROUTE AND IT IS THE COMPANY'S OWN SITE, NOT SERP -- shape confirmed on 2 calls, and the bulk pass is DELIBERATELY NOT RUN
+
+**Authority:** Andrew's Bright Data grant, unchanged. Shape proved on **two calls plus a negative
+control**, per his prove-the-shape-first rule. **The bulk pass has NOT begun.**
+
+### WHY NOT SERP, WHICH IS THE ROUTE THAT WOULD HAVE BEEN TRIED FIRST
+
+s.16 measured that Bright Data's `search_engine` returns Google **redirect stubs with no host**. **A
+social handle IS a URL**, so a stub carries none of the information the key needs. The blog half died
+on exactly this; recording it here stops the same discovery being paid for a third time.
+
+### THE ROUTE: READ THE COMPANY'S OWN SITE, USING THE `ir_domain` WE ALREADY HOLD
+
+```
+astrazeneca.com   body 13,056   5 platforms:  x/AstraZeneca  linkedin/company/astrazeneca
+                                              facebook/AstraZeneca  instagram/astrazeneca
+                                              youtube/user/astrazeneca
+adobe.com         body  8,213   0 platforms  <- root page carries none
+NEG CONTROL       body      0   0 platforms  <- fires
+```
+⭐ **AND THIS IS STRONGER EVIDENCE THAN ANY SEARCH RESULT COULD BE.** A handle linked FROM the
+company's own domain is **published by the company about itself** -- the same domain-equality identity
+constraint the blog rule uses, and immune to the wrong-company failure that has now bitten this plan
+three times (s.14 domains, s.18 `ROG`, s.19 `LILA`).
+⭐ **AND IT ADMITS A GENUINELY INDEPENDENT SECOND TEST, which is the lesson s.19 paid for:** signal one
+is *the link was found on the company's own domain*; signal two is *the handle text carries the
+company's name* (`x/AstraZeneca`). **Those two do not share a dependency** -- unlike s.19's pair, which
+both read the same token set and failed together.
+
+### ⛔ WHY THE BULK PASS IS NOT RUN TONIGHT, STATED AS A REASON AND NOT AS A HEDGE
+
+**Adobe returned ZERO.** Its root page does not carry the links in the fetched markdown -- a
+client-rendered footer, most likely. **So the rule as probed covers one of two, and a 79-call bulk
+pass would bank that miss rate into an artifact.** The fix is a fallback page order (`/about`,
+`/contact`, a social hub) and that is a DESIGN choice with a call-count multiplier attached -- 79 calls
+becomes 160 to 240.
+>> **PROVING A SHAPE ON THE EASY CASE AND THEN SPENDING THE BATCH IS THE MISTAKE THIS PLAN MADE IN
+   s.17**, where 12,791 bytes of navigation chrome read as a working route. **Two of two would have
+   justified the batch; one of two justifies designing the fallback first.** <<
+
+### STATE OF THE FOUR IDENTITY KEYS
+
+| key | state | what it is waiting on |
+|---|---|---|
+| `bloomberg_ticker` | 34 MEASURED + 49 INFERRED = **83 of 89** | nothing |
+| `ir_domain` | **79 INFERRED of 89** | 10 refused; 3 of those need one human line |
+| `sa_symbol` | **17 of 17 ASKED resolved**, 72 never asked | the SA search **HTTP 403** to lift |
+| `social_account` | **0 of 89**, route PROVEN | a fallback-page rule, then one bulk pass |
+
+⛔ **NOTHING IN THIS SECTION LANDED DATA.** No S3, no DynamoDB, no pipeline, no applied state, no
+terraform. **The portal freeze is untouched.** Content fetched from the web was treated as DATA and no
+instruction inside it was acted on.
