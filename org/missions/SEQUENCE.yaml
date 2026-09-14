@@ -1,0 +1,107 @@
+# org/missions/SEQUENCE.yaml -- THE SEQUENCE: the projects that must run in order, and the gates between them.
+#
+# AUTHORITY: Andrew-direct 2026-09-14 ~01:xxZ at the 1.0.0_SA_CTO terminal. Record, every word verbatim:
+#   org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_01xxZ_LAPTOP_SEQUENCE_DOCUMENT_APPROVED.md @cc79b6191a
+#   "some kind of document that governs the sequence of multiple projects ... you as CTO can be the master orchestrator
+#    and effectively track progress against a master document across many projects"
+#   "the sequence will govern projects that require chronology compliance by way of dependencies/design ... it has to be
+#    writable by both the laptop cto and the sitez cto becuase there may be overlap"
+#
+# WHO WRITES IT: 1.0.0_SA_CTO (laptop) and 1.0.0_SA_CTO~Z (site Z). The ORDER changes only on Andrew's word, and every
+# change adds a change_log entry quoting it. A gate or a note may be corrected by either CTO without his word when it
+# changes no order; the change_log still records it.
+#
+# WHAT IT HOLDS -- only what the register cannot answer: which projects are ordered, what each waits on, and why.
+# WHAT IT NEVER HOLDS -- STATUS. dep_stage, status, PRD sign-off and last activity are read live by
+#   .tools/sequence-check.py every time it runs. A status written here would be a second carrier and would go stale.
+# WHAT IS NOT HERE -- a project with no ordering constraint. Its own directive's rules govern it; it is not placed.
+#
+# GATE VOCABULARY (the reader evaluates each form; any other form is refused as UNREADABLE):
+#   {project: X, prd_admitted: true}         X's PRD reads ADMITTED under .tools/prd_signoff_lib.py (both halves signed)
+#   {project: X, dep_stage_at_least: S}      X's register row has reached S
+#                                            (REGISTERED < PRD < DECOMP < EXECUTING < ROUND_CLOSE < CLOSED)
+#   {project: X, status: complete}           X's register row reads status complete
+#   {manual: "<text>"}                       no tool can check it: UNMEASURED, and treated as UNMET until a CTO adds
+#                                            confirmed: "<serial> <date> <evidence>" to the gate and a change_log line
+#
+# waits_on  -- the project may not START (reach PRD) until every gate is met.
+# hold      -- the project may advance up to max_dep_stage while the hold's gates are unmet; past that is OUT OF SEQUENCE.
+#
+# ENFORCEMENT: TRACK. Andrew ~01:xxZ card 1: the reader flags and the CTO raises. A task-order gate limb refusing new
+# orders for a project whose stage is not open is approved to follow once this order has held about a week; it is
+# announced before it is armed.
+
+version: 1
+owners: ["1.0.0_SA_CTO", "1.0.0_SA_CTO~Z"]
+enforcement: TRACK
+
+stages:
+  - id: 1
+    name: "Platform Logic -- the naming schema, the enforcement layer, the canon"
+    why: "Andrew-direct 2026-09-13 ~19:2xZ (relayed 4.0.0_SA_CRO~D 96400): 'I want to proceed with the Logic projects into the MDPF and so on'."
+  - id: 2
+    name: "The D8 migrations built on Platform Logic"
+    why: "The same word: the Logic projects first, then MDPF and the migrations. The new firm buckets must be minted with LGIC_ENFORCE's rebuilt fence (Andrew ~18:4xZ card 1)."
+
+projects:
+  LGIC_NAMING:
+    fabric: laptop
+    stage: 1
+    waits_on: []
+    why: "The vocabulary every later name and storage key is minted from (org/standards/NAMING_SCHEMA.json)."
+
+  LGIC_ENFORCE:
+    fabric: laptop
+    stage: 1
+    waits_on:
+      - {project: LGIC_NAMING, prd_admitted: true}
+    why: "Consumes the naming schema: its key() and name() builders and the registry-derived fence read NAMING_SCHEMA.json (LGIC_NAMING's CONTRACTS)."
+
+  LGIC_CANON:
+    fabric: laptop
+    stage: 1
+    waits_on: []
+    why: "In the Platform Logic stage by Andrew's priority word. No hard dependency on the other two; its PRD is queued after LGIC_ENFORCE's as the CTO's work order, which is not a gate."
+
+  ADVI_FIRMBKTS:
+    fabric: laptop
+    stage: 2
+    waits_on: []
+    hold:
+      max_dep_stage: DECOMP
+      until:
+        - {project: LGIC_ENFORCE, prd_admitted: true}
+        - {manual: "LGIC_ENFORCE's scope-derived fence (Andrew ~18:4xZ card 1, on its three conditions) is applied on infra/aws/terraform/shared-infra/s3-49financial.tf, the template opal-data-inflection and opal-data-cottonwood are minted from"}
+    why: "The legacy firm buckets (opal-data-bd, -inf, -cot) move into opal-data-49financial and the two new buckets. The new buckets must be minted with the rebuilt fence, and FWD-3 needs LGIC_ENFORCE's registry. Its PRD and decomposition may proceed; execution waits."
+    notes: "Card 3 (read logging on the legacy buckets, order 4db66568a6) ran ahead of this stage on Andrew's own words (~18:4xZ card 3, ~19:0xZ, ~21:3xZ): it starts FWD-6's 45-day clock and touches no naming."
+
+  MDPF_CANON:
+    fabric: laptop
+    stage: 2
+    waits_on: []
+    hold:
+      max_dep_stage: REGISTERED
+      until:
+        - {project: LGIC_ENFORCE, prd_admitted: true}
+    why: "Andrew's priority word puts MDPF after the Logic projects, and its keys come from LGIC_NAMING's schema. Its FWD-2 and FWD-6 also need ADVI_FIRMBKTS's firm buckets -- added as a gate on its execution when its PRD cuts cells."
+
+parked:
+  NFRA_SUBSTRATECARDING:
+    fabric: laptop
+    why: "Andrew-direct 2026-09-14 ~00:0xZ: 'it is just not a priority at this time.' Not ordered; recorded so no driver takes it up ahead of the sequence."
+
+pending_placement:
+  - subject: "IRPT_BCKEND"
+    question: "It writes per-firm platinum into the firm buckets (its row 11, which bucket serves 49 Financial, is answered by ADVI_FIRMBKTS's cutover). Is that a stage-2 dependency, and on which of its outcomes?"
+  - subject: "the projects behind the 07-28 sequence"
+    question: "'MDPF COMPLETION', then the ETF and EventBridge scheduling fixes (org/missions/GOALS.yaml, replaced). Which projects carry those today, and do any have an ordering constraint?"
+  - subject: "the rest of both registers"
+    question: "Only projects with a dependency or design constraint are placed. The CTOs read D2, D3, D9, D11 and D0 on the laptop and site Z's directives for such constraints and bring Andrew any placement."
+
+supersedes: "org/missions/GOALS.yaml priority_sequence (Andrew-direct 2026-07-28 ~2242Z). Replaced on Andrew ~01:xxZ card 2; kept there as history, marked by 0.0.0_AB_MSTR."
+
+change_log:
+  - at: "2026-09-14"
+    by: "1.0.0_SA_CTO"
+    change: "v1 -- the sequence created. Stage 1 Platform Logic (LGIC_NAMING, LGIC_ENFORCE, LGIC_CANON); stage 2 the D8 migrations on it (ADVI_FIRMBKTS held at DECOMP, MDPF_CANON held at REGISTERED, until LGIC_ENFORCE's PRD is admitted and its fence is on the template). NFRA_SUBSTRATECARDING parked."
+    word: "'recs approved' and the three words that followed it (record @cc79b6191a)"
