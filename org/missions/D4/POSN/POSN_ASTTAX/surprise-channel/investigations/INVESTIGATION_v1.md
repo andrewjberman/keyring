@@ -3870,6 +3870,101 @@ all seven mechanical criteria were measured and the verdict is NO-GO.
     "spec_asserts": "The L7 bar: 'Validate: `python .tools/proof-of-spec-check.py <instance> <ids>` -- the ids are positional and ONLY the exit code is the verdict. rc 0 AND every mechanical criterion PASS-by-output, then flip the task order's <status> to `complete` and commit instance, deliverables and flip together.' Read in sequence: rc=0 is a PRECONDITION of the flip and of the commit.",
     "world_is": "For a RESUMED order whose instance is already tracked, rc=0 is reachable only AFTER the commit, because the PENDING-THIS-COMMIT limb resolves a new artifact against the instance's last commit and a file written this session is absent there. The worker therefore commits first and validates second, and the rc it reports is a POST-COMMIT read -- which is the mode the checker itself calls 'a certifier re-run'.",
     "notes": "FORM, NOT SIGNIFICANCE: this row states the mismatch and proposes nothing. WHY INERT: the evidence is not weakened -- the post-commit read is the STRONGER one (it grades the artifacts as they actually landed, not as they were promised), and it is recorded in this worker's report with its rc. The two paths that would have avoided it were both refused as worse: pre-staging with `git add` is barred by Rule 14a ('do NOT pre-git add'), and dropping contrast_check.js from artifacts_produced to please the checker would have hidden a real deliverable. WHAT A READER SHOULD NOT CONCLUDE: that the flip was made without a verdict -- every mechanical criterion was PASS-by-output before the commit, and the single violation standing at that moment named an ordering fact about the CHECKER, not a criterion. GENERALISABLE, offered without a view on scope: every resumed or re-cut order that adds a deliverable meets this, and it is invisible to a first-session worker because an untracked instance takes the other branch."
-  }
+  },
+{
+  "id": "POSN_ASTTAX-Z-S82",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T20:20:51Z",
+  "one_line": "DISARM of W22-S6 (ARMED): the class map minted by F1 has no text-colour guard -- ASSET_CLASS.structured (pink500) 3.527:1 and .commodities (yellow500) 1.918:1 under white text, and V5-AC8's domain was the chip map only. ROUTED to F2 (TO-V6-1, unspawned, same slot): chartColors.ts enters its <paths>; the cell mints getAssetClassTextColor beside getSubAssetTextColor and calls it at every Positioning site that draws text over a class colour; V6-AC9 prints the consumer census with its denominator and the per-site contrast table, every ratio >= 4.5.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "WHY F2 AND NOT A RE-OPENED F1: TO-V5-1 is complete at HEAD (49fc6850f1) and its branch is drained (6c78b40e66); the consumers that draw the labels are F2's own sites (HoldingsTab :215, PositioningSummary :70-71/:91/:545), so the rule and its first callers land in one cell and one commit on the same drain ref.",
+      "THE RULE, NOT A LITERAL: one function on the registry, the shape getSubAssetTextColor already has (:319-326 at 6c0deebd91), with pink500 and yellow500 in its light set (gray900 on pink500 5.029, on yellow500 9.250 -- the worker's own instrument); a per-component literal would be the W18-S2 shape Andrew ruled out for Attribution.",
+      "WHY GRADUATED: the hazard is real, the remedy has a cell, a bar and a denominator, and the worker's instrument (contrast_check.js) is reused rather than rebuilt."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "TO-V5-1 THE CELL mints ASSET_CLASS.structured/.commodities; V5-AC8 scopes the 4.5 floor to the sub-asset backgrounds the cell moved. portal/CLAUDE.md:15-17 names light-on-light the #1 recurring portal UI defect.",
+  "world_is": "The cell cleared its criterion exactly and left two below-floor backgrounds in the registry with no rule to pick their text; the first consumer to label them is F2, behind a freeze that bars a separate fix from promoting.",
+  "notes": "V6's <paths> now carries portal/src/lib/chartColors.ts; V6-AC2's pathspec names it so the diff bound sees it.",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W22-S6"
+  ]
+},
+{
+  "id": "POSN_ASTTAX-Z-S83",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T20:20:51Z",
+  "one_line": "DISARM of W22-S7 (INERT): V5-AC5's 'one commit ... parent e85f6eb84f' limb was left standing by the ~19:0xZ amendment that added work after the first commit had drained -- the singular became unsatisfiable for a compliant worker. The substance (authorship, the pin as the branch's base proved by merge-base and is-ancestor, the gitlink unmoved) is proved and both readings sit in the instance for L9. TO-V5-1 is complete; nothing is re-cut.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE ISSUER'S DEFECT, NAMED: the amendment re-cut the gitlink limb (W22-S2) and not the count limb of the same clause; a count still reads true of the artifact it was written about and is the easiest limb to leave behind.",
+      "WHY GRADUATED: the criterion's protected property is intact and proved by instruments that do not read the tip's parent; the worker printed the literal beside the substance rather than refusing on a clause the spawn had already superseded."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "TO-V5-1 V5-AC5 <expect> @7e4c3c01bb: one commit on wk-posn-5-22-portal authored 0.9.0_WK_POSN_ASTTAX~22, parent e85f6eb84f.",
+  "world_is": "Two commits (c475e31e70 -> 6c0deebd91), both by that serial, base e85f6eb84f; the first already on refs/drains/posn-5-portal and never rewritten.",
+  "notes": "Recorded for the cut: an amendment that adds work to an order whose earlier output is on a shared ref re-cuts every criterion that COUNTED the earlier output.",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W22-S7"
+  ]
+},
+{
+  "id": "POSN_ASTTAX-Z-S84",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T20:20:51Z",
+  "one_line": "DISARM of W22-S8 (INERT): for a RESUMED order that adds a deliverable, proof-of-spec-check takes POST-COMMIT mode (the instance is tracked and modified) and grades a file created this session against the instance's LAST commit, where it is absent -- so the prescribed order 'validate rc=0, then flip, then commit together' is unreachable and the only reachable sequence is commit-then-validate. Nothing to act on in this round; the post-commit read is the stronger one and is recorded with its rc.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "WHY NOT A FIX HERE: the checker is the CVO-lane tool battery's (its docstring says so) and the two rules are individually right; only their order fails for the resumed case. Carried on W22-S8 for the round analysis as a checker-shape item: admit a tracked-and-modified instance to the PRE-COMMIT branch when the working tree carries the artifact.",
+      "WHY GRADUATED: the record is not weakened, the worker took neither of the two worse paths (pre-staging, or dropping a real deliverable from artifacts_produced), and the same shape will recur for every resumed order in this round -- disclosed once here."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "The L7 bar: rc=0 is a precondition of the flip and of the commit. proof-of-spec-check.py's artifact_resolution_check chooses PRE-COMMIT only for a staged-or-untracked instance.",
+  "world_is": "Every mechanical criterion was PASS-by-output before the commit; the single pre-commit violation named an ordering fact about the checker (contrast_check.js PENDING-THIS-COMMIT, absent at 08450f4cac); the post-commit run read rc=0.",
+  "notes": "Every resumed worker in this round is told: commit, then validate, and report the post-commit rc.",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W22-S8"
+  ]
+},
+{
+  "id": "POSN_ASTTAX-Z-S85",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T20:20:51Z",
+  "one_line": "ISSUER ROUTING of Andrew-direct ~19:5xZ (msg 22910, record @edbee96c07 -- 'Structured is going to be a pink base, as all volatility/options/overlay etc assets will be grouped into there'): the CTO's L4 reading resolves V5-AC2 by re-binding BOTH 'Hedge' and 'Volatility' into the pink family on tokens distinct from pink500. TO-V5-1 re-bound 'Hedge' (pink600) and was COMPLETE at HEAD before the word arrived; 'Volatility' (:311, blue900) lands in TO-V6-1 (F2, unspawned, same slot, same drain ref) as a minted pink700 with its contrast bar, rather than re-opening a terminal order.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE ROUTING IS THE ISSUER'S CALL, STATED: a decomposition cell is a scope; the registry edit is three lines in a file F2's consumers already bind, and F2 is the next order on the same portal branch -- one hand-over instead of a re-opened terminal order or a tenth spawn. Retag set unchanged at twelve (the CTO's census: 285 rows, 31 sub-assets, Volatility on exactly four).",
+      "OUT, per the CTO's reading: MIX_PIE (:407 at the pin) and RISK_FACTOR_COLORS (:492) -- the Positioning page imports neither; JEPI is Andrew's separate word (22914) and touches nothing served.",
+      "WHY GRADUATED: the word is landed on an order at HEAD with a mechanical bar (V6-AC9) and a diff bound (V6-AC2 names chartColors.ts); the round analysis records that F2 carried an F1-scope edit and why."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "PRD v0.7 C-SUB-ASSET files Hedge under Structured and C-COLOURS makes Structured pink (no PRD bump per 1.0.0_SA_CTO~Z); the decomposition puts the colour registry in AT5-s-5 (F1).",
+  "world_is": "F1 is complete and drained (49fc6850f1 -> 6c78b40e66; portal 6c0deebd91 on refs/drains/posn-5-portal); the four Volatility tickers (VXX, VIXY, UVXY, QBER) are already Structured at the class level and would render blue900 inside a pink class until re-bound.",
+  "notes": "1.0.0_SA_CTO~Z's L4 reading is the authority for the binding; this row records only where it landed."
+}
 ]
 ```
