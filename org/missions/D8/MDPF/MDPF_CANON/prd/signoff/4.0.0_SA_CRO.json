@@ -1,0 +1,12 @@
+{
+  "prd": "MDPF_CANON_PRD.md",
+  "prd_version": "v2.0",
+  "prd_pin": "3514843a123a72ddafa86e39f35dd179abd7dd6f",
+  "half": "brief",
+  "half_hash": "13cafd35564a53302b95db76c5d97ee809298b2f66508615f02e00799d88497e",
+  "verdict": "REFUSED",
+  "review_ref": "docs/briefs/sources/MDPF_CANON_L4_BRIEF_REVIEW_v2_0_20260914.md@4d08ce88b23328439ddde1db1bac9ee6d04f4484",
+  "signed_by": "4.0.0_SA_CRO",
+  "signed_at": "2026-09-14T08:55:18Z",
+  "reason": "R1: firm-platinum address conflicts with required five-segment builder. R2: M8 writes canonical keys but is exempted from E3. R3: specify existing portal callers transition to scoped authorization. See pinned review."
+}
