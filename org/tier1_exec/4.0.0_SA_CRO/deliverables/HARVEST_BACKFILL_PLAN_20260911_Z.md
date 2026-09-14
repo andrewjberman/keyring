@@ -256,7 +256,7 @@ legible rather than quietly removed.
 
 ### What the code's own bounds say -- and this was readable before the brief was written
 
-`lib/research/identity/resolver.py`, module docstring, BOUNDS:
+`lib/research/identity/resolver.py:23` **@`074d0d1ebe`**, module docstring, BOUNDS -- ⚠ **THE VINTAGE AND LINE WERE ADDED 2026-09-14: this citation carried NEITHER for a day, which fails Rule 22's own test that *a citation without a vintage is not a citation*. The bytes were verified by PRINTING THEM FROM THE BLOB at that pin, not by grepping for the quoted phrase -- Rule 27 @`ef41d40a66`: searching for a quote is not checking it, because a rewritten passage leaves its old words alive in the comment that quotes them and the search returns a clean FALSE CONFIRM.**
 
 > *"ir_domain and social_account are UNRESOLVED at this cut, and the record says so plainly --
 > **resolving them needs a SERP zone request and social lookups, each a vendor call this order does
