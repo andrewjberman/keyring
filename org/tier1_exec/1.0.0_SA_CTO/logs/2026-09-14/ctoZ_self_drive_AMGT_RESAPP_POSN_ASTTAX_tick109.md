@@ -100,3 +100,30 @@ expectation · `get_agent_status` quoted **by limb**, the two base-scoped limbs 
 ROSTER clause · the `Sender-unverified` flag counted across the whole 4711-message inbox with a
 non-CVO control rather than reported as a one-off · the slug's carrier checked to be a FILE before
 concluding the header does not gate L10.
+
+---
+
+## ADDENDUM -- THE ELAPSED-TIME METHOD IN s.1/s.2 FREEZES WHEN THE REPO GOES QUIET
+
+⛔ **Every "h" figure above was computed as `(HEAD commit time - artifact commit time)`. HEAD's commit
+time is a REPO clock, not a wall clock -- so when nothing commits, the figure STOPS ADVANCING.**
+Caught at tick 112 because two gap figures came back **byte-identical** to tick 111's, which they
+cannot be if time passed:
+```
+wall clock ............ 09-14 12:11:43Z
+HEAD commit time ...... 09-14 10:54:16Z      divergence 1.29 h
+AMGT newest adjudication   REPO-CLOCK 31.1 h   |   WALL-CLOCK 32.4 h
+POSN newest adjudication   REPO-CLOCK 30.0 h   |   WALL-CLOCK 31.3 h
+```
+>> ⭐ **A STALENESS DETECTOR WHOSE OWN CLOCK STOPS WHEN THE THING IT MEASURES STOPS.** It reads the
+   same number forever no matter how long the silence runs -- and it fails in the REASSURING
+   direction, understating the gap by exactly as much as the fabric is quiet. **The quieter it gets,
+   the better it looks.** <<
+
+⚠ **WHAT THIS DOES AND DOES NOT DO TO s.2.** At the time this log was written HEAD was moving (this
+seat was committing through the tick), so the `29.7 h` was close to correct and the **`1.3x` multiple
+and the not-alarm conclusion stand** -- and the tick-110 burst finding, which rests on stamp-to-stamp
+intervals between two real commit timestamps, is **unaffected entirely**. ⛔ **The defect is in the
+METHOD, which a future reader would reuse**, not materially in this log's numbers.
+**Corrected practice from tick 112: elapsed is measured against WALL CLOCK; a repo-relative "now" is
+used only for commit-to-commit intervals, where both endpoints are real commit times.**
