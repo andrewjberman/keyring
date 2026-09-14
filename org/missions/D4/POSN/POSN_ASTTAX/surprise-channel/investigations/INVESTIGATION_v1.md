@@ -3178,3 +3178,83 @@ all seven mechanical criteria were measured and the verdict is NO-GO.
 }
 ]
 ```
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-W22-S6",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~22",
+    "surfaced_at": "2026-09-14T19:48Z",
+    "one_line": "THE CLASS TOKEN THIS ORDER MINTED IS ITSELF BELOW THE CONTRAST FLOOR FOR WHITE TEXT: ASSET_CLASS.structured = PALETTE.pink500 #ec4899 reads 3.527:1 against white, and NO function in chartColors.ts picks text for an ASSET_CLASS value -- getSubAssetTextColor only covers SUB_ASSET_COLORS chips, so every consumer that draws a label on a class colour chooses its own text colour with no guard. V5-AC8 scopes the three sub-asset backgrounds this cell moved and is SILENT on the class map, so the order's own contrast criterion cannot see this.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/lib/chartColors.ts@6c0deebd9121d5e955943d5a7507de51a102f480 (branch wk-posn-5-22-portal, base pin e85f6eb84f): ASSET_CLASS.structured = PALETTE.pink500 = '#ec4899'.",
+        "Measured by the V5-AC8 instrument (org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~22/contrast_check.js, WCAG 2.x, self-test white/black = 21.000 and white/white = 1.000 both matching spec): white #ffffff on pink500 #ec4899 = 3.527, BELOW the 4.5 floor the same criterion applies to the chips. gray900 #111827 on pink500 = 5.029, ABOVE it.",
+        "getSubAssetTextColor (chartColors.ts:318-326 at this head) takes a sub-asset background hex and is called with SUB_ASSET_COLORS values; ASSET_CLASS values are never passed through it by this file. The number of CONSUMERS that render text over an ASSET_CLASS value was NOT measured by this worker -- out of cell, and the order's <paths> grant names one portal file.",
+        "Sibling, same mechanism, same read: ASSET_CLASS.commodities = PALETTE.yellow500 #eab308 reads 1.918:1 against white (the very reading the ~19:0xZ amendment fixed for the CHIPS by putting yellow500 into lightBackgrounds). The chip path is now guarded; the CLASS path has no guard to put it in."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-V5-1 THE CELL: 'ASSET_CLASS gains structured: PALETTE.pink500 and commodities: PALETTE.yellow500'; and V5-AC8 (added by the ~19:0xZ amendment): 'for EACH sub-asset background this cell added or moved ... every ratio >= 4.5'. The amendment treats the 4.5 floor as the bar this cell must clear and scopes the check to SUB_ASSET_COLORS.",
+    "world_is": "The two values the cell writes into ASSET_CLASS are 3.527 (pink500) and 1.918 (yellow500) against white text, both below that same floor, and they sit in a map no text-colour function reads. The cell CLEARS its criterion exactly and still leaves two below-floor backgrounds in the registry it minted, because the criterion's domain is the chip map and the cell's write set is larger than the criterion's domain.",
+    "notes": "FORM, NOT SIGNIFICANCE: this row states a spec-vs-world mismatch and takes no view on whether the class map should carry a text-colour guard or whether any consumer is affected. NOT the Attribution holdings-shared.tsx finding (W18-S2, OUT by Andrew's word) -- that row is about a component binding its OWN colours; this one is about the shared registry's class map having no text-colour function at all. WHY ARMED: F2 (AT5-s-6) binds these token NAMES next, so the first consumer to draw a label on ASSET_CLASS.structured ships a 3.527:1 label behind a freeze that bars the fix from being promoted separately, and portal/CLAUDE.md:15-17 calls light-on-light the #1 recurring portal UI defect. DISARM, one read, no new instrument: census the consumers that render text over an ASSET_CLASS value (the registry's importers) and either record that none does, or scope a text-colour rule for the class map the way lightBackgrounds scopes one for the chips. WHY NOT DISARMED HERE: the census reaches files outside this order's <paths> grant (one portal file), and widening the grant is the issuer's act, not the worker's."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-W22-S7",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~22",
+    "surfaced_at": "2026-09-14T19:48Z",
+    "one_line": "V5-AC5 STILL READS 'one commit on wk-posn-5-22-portal ... parent e85f6eb84f' AFTER THE SAME AMENDMENT ORDERED A SECOND EDIT THAT CANNOT LAND IN THAT COMMIT: c475e31e70 is already drained (refs/drains/posn-5-portal points at it) and the worker is instructed never to amend or rewrite it, so the branch necessarily carries TWO commits and the tip's parent is c475e31e70, not the pin. Graded PASS on the SUBSTANCE (authorship, the pin as the branch's BASE proved two ways, the gitlink unmoved), with the literal singular printed beside it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-V5-1.the-colour-registry.md@7e4c3c01bbce942484b8b1e139fed007fce6939a, V5-AC5 <expect>: 'one commit on wk-posn-5-22-portal authored 0.9.0_WK_POSN_ASTTAX~22, parent e85f6eb84f' -- the clause the ~19:0xZ amendment edited (it replaced the gitlink limb, row W22-S2) while leaving the commit-count limb as the first cut wrote it.",
+        "Measured at 2026-09-14T19:4xZ: `git -C portal rev-list --count e85f6eb84f..wk-posn-5-22-portal` -> 2; `git -C portal log --format='%H parent=%P author=%an' e85f6eb84f..wk-posn-5-22-portal` -> 6c0deebd9121d5e955943d5a7507de51a102f480 parent=c475e31e7014cb7e18ccf0c1cb6a335ad0720044 and c475e31e7014cb7e18ccf0c1cb6a335ad0720044 parent=e85f6eb84f3a1771a37011a7e77e372570bad02a, BOTH authored 0.9.0_WK_POSN_ASTTAX~22.",
+        "The pin is still the branch's BASE and this is proved without relying on the tip's parent: `git -C portal merge-base e85f6eb84f wk-posn-5-22-portal` -> e85f6eb84f3a1771a37011a7e77e372570bad02a, and `git -C portal merge-base --is-ancestor e85f6eb84f wk-posn-5-22-portal` rc=0.",
+        "`git -C portal rev-parse refs/drains/posn-5-portal` -> c475e31e7014cb7e18ccf0c1cb6a335ad0720044: the first commit is ALREADY on the round's one drain ref, so rewriting it would move a ref the worker does not own."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "V5-AC5 <expect>: 'one commit on wk-posn-5-22-portal authored 0.9.0_WK_POSN_ASTTAX~22, parent e85f6eb84f'.",
+    "world_is": "Two commits, both authored 0.9.0_WK_POSN_ASTTAX~22, tip parent c475e31e70, branch base (merge-base) e85f6eb84f. The singular is unsatisfiable for any worker that obeys the rest of the amended order: the amendment adds source edits, the first commit is already drained, and the spawn forbids amending it.",
+    "notes": "FORM, NOT SIGNIFICANCE. WHY INERT: the property the criterion exists to protect -- work authored by this serial, cut from the pin, with the superproject gitlink unmoved -- is intact and is proved by instruments that do not read the tip's parent (merge-base + is-ancestor + ls-tree + diff --cached). Nothing degrades if this row is never actioned. WHY PASS AND NOT REFUSE: the issuing agent's own restatement of the amended criterion in the spawn reads 'your commit(s) authored 0.9.0_WK_POSN_ASTTAX~22 with e85f6eb84f as the branch's BASE', so the singular is a clause the amendment superseded in substance and did not re-cut in text; refusing on it would manufacture a blocker the issuer has already answered. BOTH READINGS ARE PRINTED IN THE PROOF INSTANCE's V5-AC5 output_evidence so L9 can grade the literal clause itself if it disagrees. GENERALISABLE SHAPE, offered without a view on scope: an amendment that adds WORK to an order whose earlier output is already on a shared ref has to re-cut every criterion that counted the earlier output, and a count is the easiest limb to leave behind because it still reads true of the artifact it was written about."
+  }
+]
+```
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-W22-S8",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~22",
+    "surfaced_at": "2026-09-14T19:55Z",
+    "one_line": "THE PRESCRIBED L7 ORDER (validate to rc=0, THEN flip the status, THEN commit instance + deliverables + flip together) IS UNREACHABLE FOR A RESUMED ORDER THAT ADDS A NEW DELIVERABLE: proof-of-spec-check picks PRE-COMMIT mode only when the instance file is STAGED OR UNTRACKED, and a resumed order's instance is TRACKED AND MODIFIED, so it takes POST-COMMIT mode and grades every PENDING-THIS-COMMIT artifact against the instance's LAST commit -- where a file created in this session is necessarily ABSENT. rc=1 is therefore guaranteed before the commit and the only reachable sequence is commit-then-validate.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/proof-of-spec-check.py@7e4c3c01bbce942484b8b1e139fed007fce6939a (checker-vintage line printed by the run: 9e6ed6c236 2026-09-13T23:31:23Z), artifact_resolution_check: 'PRE-COMMIT (the instance file is staged or untracked)' / 'POST-COMMIT (the instance is tracked and unstaged; a certifier re-run): the artifact must be TOUCHED by the instance's own commit'; the mode is chosen by `staged_inst`, and `dry_run = not staged_inst` only inside the staged-or-untracked branch.",
+        "Measured 2026-09-14T19:5xZ on TO-V5-1: `python .tools/proof-of-spec-check.py <instance> V5-AC1,...,V5-AC8` -> 'artifact-resolution: ... contrast_check.js is PENDING-THIS-COMMIT but is ABSENT at the instance's commit 08450f4cac -- it did not ride the commit that carries this proof' / INVALID (rc=1), with EVERY OTHER LIMB CLEAN (structural=jsonschema, 8 acceptance rows, 8/8 invocation-alignment, 0 count-bar contradictions, 8 surprises resolving to channel rows).",
+        "The instance path is TRACKED at that commit because this serial already drained session 1 of the same order: `git log -1 --format=%H -- <instance>` -> 08450f4cac7314516e03942f2e1ef37821b69a2b. A FIRST-session worker never meets this: its instance is UNTRACKED, so the checker takes PRE-COMMIT/dry-run and the same artifact resolves as 'rides the commit if staged with the proof'.",
+        "The checker's own docstring names the co-commit as correct rather than as the defect: 'the co-commit that opens the gap is the spine's own prescribed L7 shape (status, proof and artifacts in one commit by the actor)'. So the two rules are individually right and only their ORDER is unsatisfiable."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The L7 bar: 'Validate: `python .tools/proof-of-spec-check.py <instance> <ids>` -- the ids are positional and ONLY the exit code is the verdict. rc 0 AND every mechanical criterion PASS-by-output, then flip the task order's <status> to `complete` and commit instance, deliverables and flip together.' Read in sequence: rc=0 is a PRECONDITION of the flip and of the commit.",
+    "world_is": "For a RESUMED order whose instance is already tracked, rc=0 is reachable only AFTER the commit, because the PENDING-THIS-COMMIT limb resolves a new artifact against the instance's last commit and a file written this session is absent there. The worker therefore commits first and validates second, and the rc it reports is a POST-COMMIT read -- which is the mode the checker itself calls 'a certifier re-run'.",
+    "notes": "FORM, NOT SIGNIFICANCE: this row states the mismatch and proposes nothing. WHY INERT: the evidence is not weakened -- the post-commit read is the STRONGER one (it grades the artifacts as they actually landed, not as they were promised), and it is recorded in this worker's report with its rc. The two paths that would have avoided it were both refused as worse: pre-staging with `git add` is barred by Rule 14a ('do NOT pre-git add'), and dropping contrast_check.js from artifacts_produced to please the checker would have hidden a real deliverable. WHAT A READER SHOULD NOT CONCLUDE: that the flip was made without a verdict -- every mechanical criterion was PASS-by-output before the commit, and the single violation standing at that moment named an ordering fact about the CHECKER, not a criterion. GENERALISABLE, offered without a view on scope: every resumed or re-cut order that adds a deliverable meets this, and it is invisible to a first-session worker because an untracked instance takes the other branch."
+  }
+]
+```
