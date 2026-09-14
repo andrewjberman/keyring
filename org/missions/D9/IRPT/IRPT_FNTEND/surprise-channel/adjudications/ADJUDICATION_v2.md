@@ -1000,6 +1000,301 @@ Accumulating CVO review as round-two evidence arrives. This is NOT an L10 slug a
     "disposition": "DISMISSED_WITH_REASON",
     "dismissal_reason": "Remediated in round 3 and proven on both arms, so W1-S36's latest disposition moves from C-S72's GRADUATED to this row. C-S72 stands for its other two rows, W2-S16 and W1-S35. The round-5 input C-S72 produced (1.0.0_SA_CTO's round-4 addendum, section 7, item 11) rests on this seat's error; 2.0.0_SA_COO~F has told 1.0.0_SA_CTO, and the round-5 decomposition records the item as done.",
     "hazard_standing": "INERT"
+  },
+  {
+    "id": "IRPT_FNTEND-C-S78",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-14T11:26:58Z",
+    "one_line": "ROUND-5 L9 GRADE RECORD: the eight JUDGMENT verdicts, one per order, bound to each proof instance at its commit -- 7 PASS (6 with a named qualification) and 1 FAIL, F29-AC15 on its third clause (row S61).",
+    "class": "OBSERVATION",
+    "spec_asserts": "Spine v3 L9: a JUDGMENT criterion is graded by the CVO and never self-graded; its verdict lives in `grades`, one entry per criterion, on a row of the CVO's.",
+    "world_is": "8 of 8 judgment rows in the round-5 instances read UNVERIFIABLE-BY-INSTRUMENT with a status_reason naming this seat. Their evidence (18 captures, the result files, the portal at DEV 741bb54b, the checkers at HEAD 26774b2cdc and three doctored-instance arms) is in the record, section 3. Vocabulary as round 4: MET -> PASS; MET WITH A NAMED QUALIFICATION -> PASS with the qualification in `reason`; NOT MET -> FAIL.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~4/IRPT_FNTEND.TO-FE-s-29.checker-limbs.proof_of_spec.json@6ad371c88e",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/IRPT_FNTEND.TO-FE-s-30.availability-gate.proof_of_spec.json@71d47eb8cf",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/IRPT_FNTEND.TO-FE-s-31.export-under-the-gate.proof_of_spec.json@09c82ae177",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~2/IRPT_FNTEND.TO-FE-s-32.holdings-under-the-gate.proof_of_spec.json@c271e0d702",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~2/IRPT_FNTEND.TO-FE-s-33.fixture-reach.proof_of_spec.json@e46121f301",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~3/IRPT_FNTEND.TO-FE-s-34.business-date-label.proof_of_spec.json@af28a2e3d2",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~5/IRPT_FNTEND.TO-FE-s-35.envelope-refusal.proof_of_spec.json@6cd734e28f",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~4/IRPT_FNTEND.TO-FE-s-36.output-vocabulary.proof_of_spec.json@534051a974",
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND5_L8_L9_20260914.md@366a0b4103 section 3"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A grade record: it adjudicates no item and opens nothing (schema, `grades`). The FAIL's defect is row S61, graduated ARMED in C-S84; every qualification goes to 1.0.0_SA_CTO in the round-5 slug.",
+    "hazard_standing": "INERT",
+    "grades": [
+      {
+        "criterion": "F29-AC15",
+        "instance": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~4/IRPT_FNTEND.TO-FE-s-29.checker-limbs.proof_of_spec.json@6ad371c88e",
+        "verdict": "FAIL",
+        "reason": "NOT MET ON ITS THIRD CLAUSE. Clauses 1-2 MET: limb 1 5 of 5 S53 cases through both readers; limb 2 2 of 2 contradicting shapes refused, 3 of 3 genuine zeros admitted; limb 3 6 of 6 seeded refused, 2 of 2 browser admitted; limb 4 4 of 4 broken modifies refused; this seat's runs at HEAD 26774b2cdc read proof-of-spec-check --self-test 32 of 32 and to-pipeline-gate --self-test 0 of 70 failed (the issuer's instrument re-run, not a different one). Clause 3 fails for limbs 2 and 3: their NEW/LEGACY boundary is read from decomp_ref.to_ref, which the graded worker writes, and the flip gate binds nothing to the flipped order; pointed at TO-FE-s-28 both limbs read ANNOUNCE/LEGACY with no violation naming the mismatch (row S61)."
+      },
+      {
+        "criterion": "F30-AC9",
+        "instance": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/IRPT_FNTEND.TO-FE-s-30.availability-gate.proof_of_spec.json@71d47eb8cf",
+        "verdict": "PASS",
+        "reason": "MET WITH A NAMED QUALIFICATION (fe-s-30_reporting_partial_qualified_1440.png, portal fcc91358). An amber band -- 'Partial -- Qualified answer -- not a complete report', business date, reason code -- heads the body, an amber rule runs its length, and every summary figure prints UNAVAILABLE with its reason, never 0. Qualification: the band and rule carry the whole qualification; the blocks inside keep the complete path's styling, so below the fold the rule is the only cue."
+      },
+      {
+        "criterion": "F31-AC10",
+        "instance": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/IRPT_FNTEND.TO-FE-s-31.export-under-the-gate.proof_of_spec.json@09c82ae177",
+        "verdict": "PASS",
+        "reason": "MET WITH A NAMED QUALIFICATION (three prints, portal 51518c8e). The Partial print states its state, business date and reason on 3 of 3 pages; the Unavailable print is a named refusal with state, reason and date; page 3's one READY is the row 'Bundle envelope (not the report)', which says in words that the report is Partial. Qualifications: the pages print the business DATE and no generation time, so the age is the reader's subtraction; and the frozen READY print states REQUESTED_WINDOW_ANSWERED beside its own 'a different window' note (row S62)."
+      },
+      {
+        "criterion": "F32-AC9",
+        "instance": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~2/IRPT_FNTEND.TO-FE-s-32.holdings-under-the-gate.proof_of_spec.json@c271e0d702",
+        "verdict": "PASS",
+        "reason": "MET WITH A NAMED QUALIFICATION (14 of 14 manifest captures, portal 7df6b4a2, own server 5213). Each renders its declared slot; Uncertain and Partial carry the amber 'Qualified answer -- not a complete report' band, rule and gap sentence, Ready a neutral band, no-answer the Unavailable panel; the classification columns show in 6 of 6 scrolled captures; pie labels equal the table's percent-of-parent in the six 1440 captures that show that column. Qualification: the READY observed answer prints Advisory 'unknown' on 3 of 3 rows unqualified -- an out-of-enum fixture value mapped silently (W2-S29) -- and the 390 target reason code reaches its band edge (W2-S31, by eye)."
+      },
+      {
+        "criterion": "F33-AC8",
+        "instance": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~2/IRPT_FNTEND.TO-FE-s-33.fixture-reach.proof_of_spec.json@e46121f301",
+        "verdict": "PASS",
+        "reason": "MET WITH A NAMED QUALIFICATION (fixture-reach.result.md, maps at portal 5067c254, StatusEnvelope.schema.json). Every state is one of the nine and every reason matches the only rule the contract gives, the pattern ^[A-Z0-9_]+$; the frozen READY is legitimate for a whole report (2 of 2 accounts, the absent 3Y outside the window, a start differing only by an NYSE holiday). Qualifications: REQUESTED_WINDOW_ANSWERED is defined nowhere and the renderer compares windows by calendar string, so the frozen print says both (row S62); Global F-CW is READY on F-49F's re-bound document, backed by no Cottonwood data, unreachable today (W2-S23)."
+      },
+      {
+        "criterion": "F34-AC7",
+        "instance": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~3/IRPT_FNTEND.TO-FE-s-34.business-date-label.proof_of_spec.json@af28a2e3d2",
+        "verdict": "PASS",
+        "reason": "MET (labels at portal c6ee044e, status.ts at DEV 741bb54b). 'Business date age: 3d', 'Ready -- Business date age: 3d (STATE_REPORTED)', 'under 1m' and '5h' read as the age of a business date and name no refresh; the basis is sourceAgeBasis(slot), the governed business_date whenever the slot carries a reading (status.ts:71, :283-295); the no-status view path ages the document's own 2026-09-08, not its instant. Before: 'Ready -- Updated 3d ago'. W3-S22 and W3-S26 lie outside the label's production path and are carried in C-S83."
+      },
+      {
+        "criterion": "F35-AC7",
+        "instance": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~5/IRPT_FNTEND.TO-FE-s-35.envelope-refusal.proof_of_spec.json@6cd734e28f",
+        "verdict": "PASS",
+        "reason": "MET WITH A NAMED QUALIFICATION (envelope-refusal.result.md, portal 357b4055 / DEV 741bb54b). A no-envelope body is refused as EnvelopeMismatch('body') in LiveClient.send (investor-reporting.ts:954) on 8 of 8 reached operations; envelopeFromRefusal makes it UNAVAILABLE carrying ENVELOPE_BODY (status.ts:258-267), never a view and never the generic FAILED; that state's panel is seen in fe-s-32_holdings_no_answer_1440.png. Qualification: ENVELOPE_BODY itself was never observed in a mounted page, and F35-AC6's deciding browser run met no server and SKIPPED its browser arms by name."
+      },
+      {
+        "criterion": "F36-AC8",
+        "instance": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~4/IRPT_FNTEND.TO-FE-s-36.output-vocabulary.proof_of_spec.json@534051a974",
+        "verdict": "PASS",
+        "reason": "MET WITH A NAMED QUALIFICATION (output-vocabulary.result.md, gate (ix) @8aa00e60fb). F28-AC6 as issued is refused in a real index and its re-cut admitted; runners, compound lines, absent targets and relayed output are ANNOUNCED or NOT EVALUATED, never refused, and the estate census refuses 6 of 1235, all AMGT_RESAPP sentence bars no regex can match; the block 'WHAT IT CANNOT KNOW, STATED RATHER THAN GUESSED' (:1061-1075) states assumptions A and B. Qualifications: it judges few bars (17 admitted, 6 refused, of 1235), and its refusal side rests on assumption B, which refused one honest bar (NFRA_CLDGRPH F5-AC1) before landing."
+      }
+    ]
+  },
+  {
+    "id": "IRPT_FNTEND-C-S79",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-14T11:26:58Z",
+    "one_line": "ROUND-5 L8: fourteen rows CLOSED INSIDE THE ROUND by an amendment or a drain, each read against its drained evidence -- DISMISSED_WITH_REASON.",
+    "class": "OBSERVATION",
+    "spec_asserts": "Spine L8: every new row is dispositioned before L10; a row closed in the round is dismissed with the evidence that closed it.",
+    "world_is": "W3-S19, W3-S21, W3-S23, W3-S24: closed by TO-FE-s-34's amendments 12eef1910c, 1df5ac405f and 7fd807ab76, drained de65e2d559 (portal 0b41bb2f); F34 10 of 10 mechanical PASS by output (proof @af28a2e3d2); the whole suite 512/6/0 on the issuer's re-run (96556); S60 is their resolution record. W1-S58, W1-S62: amendment 2 (7a186aeb96) granted the receipt's regions; F31 10 of 10 mechanical PASS incl. AC8 (proof @09c82ae177). W1-S59, W2-S28: the worktree override took the .mjs / loadConfigFromFile shape; F31-AC1 and F32-AC1 typecheck PASS. W1-S60: page 3 reads 'Bundle envelope (not the report)' in fe-s-31_print_partial_1440.png and the frozen print. W1-S61: FE-s-33 gave the frozen map its status and the print as committed renders 3 pages, '2 account(s) in scope' over A-0001/A-0002 -- C-S68's disarm observed holding. W5-S3: a miscounted premise; the worker's run found 1 red test and a third bare-body file, both inside its grant; F35 6 of 6. W4-S8: the battery fixture was corrected, the pattern was not; self-test 32 of 32 at HEAD 26774b2cdc. W2-S30: six classification-scrolled captures close the evidence gap; a table that scrolls sideways at 390 is the layout, not a defect.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~3/IRPT_FNTEND.TO-FE-s-34.business-date-label.proof_of_spec.json@af28a2e3d2",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/IRPT_FNTEND.TO-FE-s-31.export-under-the-gate.proof_of_spec.json@09c82ae177",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~2/IRPT_FNTEND.TO-FE-s-32.holdings-under-the-gate.proof_of_spec.json@c271e0d702",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~5/IRPT_FNTEND.TO-FE-s-35.envelope-refusal.proof_of_spec.json@6cd734e28f",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/fe-s-31_print_frozen-as-committed_1440.png@09c82ae177",
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND5_L8_L9_20260914.md@366a0b4103 section 2"
+      ]
+    },
+    "adjudicates": [
+      "IRPT_FNTEND-W3-S19",
+      "IRPT_FNTEND-W3-S21",
+      "IRPT_FNTEND-W3-S23",
+      "IRPT_FNTEND-W3-S24",
+      "IRPT_FNTEND-S60",
+      "IRPT_FNTEND-W1-S58",
+      "IRPT_FNTEND-W1-S62",
+      "IRPT_FNTEND-W1-S59",
+      "IRPT_FNTEND-W2-S28",
+      "IRPT_FNTEND-W1-S60",
+      "IRPT_FNTEND-W1-S61",
+      "IRPT_FNTEND-W5-S3",
+      "IRPT_FNTEND-W4-S8",
+      "IRPT_FNTEND-W2-S30"
+    ],
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Each is closed in the drained code or evidence, read here: the four FE-s-34 rows by three amendments and 10 of 10; W1-S58/W1-S62 by amendment 2 and F31-AC8 PASS; W1-S59/W2-S28 by the override's shape and a green typecheck; W1-S60 and W1-S61 in the captured prints; W5-S3 and W4-S8 inside their grants; W2-S30 by the second captures. The four ARMED rows here stand INERT from this row.",
+    "hazard_standing": "INERT"
+  },
+  {
+    "id": "IRPT_FNTEND-C-S80",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-14T11:26:58Z",
+    "one_line": "ROUND-5 L8: six rows ACCEPTED AT L9 OR READ AS RECORDS -- a worker reading, a worker choice, a corrected premise, a generator side effect, and two issuer disarm records -- DISMISSED_WITH_REASON.",
+    "class": "OBSERVATION",
+    "spec_asserts": "Spine L9: a worker judgment within a grant and an issuer's disarm record are weighed by the CVO; accepted, each is dismissed with its reason.",
+    "world_is": "W1-S55: on the network plane an absent producerState means no status arrived, the view state is then EXPLICIT_UNKNOWN (UNCERTAIN) and the gate sends it to the panel -- ruling H exactly; the fixture branch honours view states the ruling never addressed; its one divergence is W3-S25 (C-S83). W4-S10: ten fetched-content props, by subtraction from the measured 15, are what keep limb 3 from being satisfied by its worker; three would not; F15-AC7 declares no network today; the cut's one-suite-short census is S55's class (C-S84). W3-S20: the outcome 1.0.0_SA_CTO named is met; the premise was wrong only on the no-status path (W3-S21), closed by ruling R. W2-S26: by the generator's design each Holdings map is the whole page around one report; 0 differing keys apart from nodes and the one status; the suite green before and after. S58: a prospective disarm record, verified -- FE-s-32's manifest records its own port 5213 and the issuer re-ran 5247/5261/5265; its residuals are live and graduated in C-S81. S59: a detection record; the detector exists (__tests__/fe-s-33/fixtures-reach.test.ts, F33-AC6 grades the Global map's holdings per firm, DEV 741bb54b); prevention is graduated with W2-S24 in C-S82.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/IRPT_FNTEND.TO-FE-s-30.availability-gate.proof_of_spec.json@71d47eb8cf",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~4/IRPT_FNTEND.TO-FE-s-29.checker-limbs.proof_of_spec.json@6ad371c88e",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~3/IRPT_FNTEND.TO-FE-s-34.business-date-label.proof_of_spec.json@af28a2e3d2",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~2/IRPT_FNTEND.TO-FE-s-33.fixture-reach.proof_of_spec.json@e46121f301",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~2/fe-s-32_captures.manifest.json@c271e0d702",
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND5_L8_L9_20260914.md@366a0b4103 sections 2 and 6"
+      ]
+    },
+    "adjudicates": [
+      "IRPT_FNTEND-W1-S55",
+      "IRPT_FNTEND-W4-S10",
+      "IRPT_FNTEND-W3-S20",
+      "IRPT_FNTEND-W2-S26",
+      "IRPT_FNTEND-S58",
+      "IRPT_FNTEND-S59"
+    ],
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Accepted or verified at L9: W1-S55's reading is ruling H on the network plane; W4-S10's ten props are the stricter and correct set; W3-S20's outcome is met; W2-S26 is the generator's design; S58 and S59 are records whose open halves are graduated in C-S81 and C-S82.",
+    "hazard_standing": "INERT"
+  },
+  {
+    "id": "IRPT_FNTEND-C-S81",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-14T11:26:58Z",
+    "one_line": "ROUND-5, GRADUATED to 1.0.0_SA_CTO: the DEV-SERVER RESIDUALS S58 names -- the fe-s-27 helper still defaults to port 5181, vite's cacheDir is portal-wide and written through the node_modules junction, and tsc -b writes tsbuildinfo through the same junction. FE-s-31/32 were amended around them; the next browser cell is not.",
+    "class": "OBSERVATION",
+    "spec_asserts": "S58: FE-s-31 and FE-s-32 run vite on a worktree-local cache and export IRPT_FE_DEV_PORT on every run.",
+    "world_is": "The amendment bound two cells, not the helper: W5-S1 measured fe-s-19's browser criteria grading a DSGN worktree's vite (PID 11144) on 5181 (0 of 2, 0 of 2), and F35-AC6's deciding run met no server on 5181 and SKIPPED its browser arms by name (envelope-refusal.result.md:51). W1-S56/W5-S4 measured a worktree dev server rewriting the main checkout's shared node_modules/.vite; S58 names the portal-wide cacheDir and tsbuildinfo as NOT closed.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md rows W1-S56, W1-S57, W5-S1, W5-S4, S58",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~5/envelope-refusal.result.md@6cd734e28f :51-55",
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND5_L8_L9_20260914.md@366a0b4103 section 5"
+      ]
+    },
+    "adjudicates": [
+      "IRPT_FNTEND-W1-S56",
+      "IRPT_FNTEND-W1-S57",
+      "IRPT_FNTEND-W5-S1",
+      "IRPT_FNTEND-W5-S4"
+    ],
+    "disposition": "GRADUATED",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO, as owner of the test environment: DISARMS when the dev-server helper refuses to run without IRPT_FE_DEV_PORT (or chooses and prints a free port), vite's cacheDir is worktree-local by config, and tsbuildinfo stays inside the worktree -- each in a granted cell. Until then every browser cut must carry the S58 amendment by hand."
+  },
+  {
+    "id": "IRPT_FNTEND-C-S82",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-14T11:26:58Z",
+    "one_line": "ROUND-5, GRADUATED to 1.0.0_SA_CTO: EIGHT FIXTURE, CONTRACT AND PRESENTATION GAPS the round surfaced and could not close in its grants -- FWD-11's second firm, a two-writer map, a scope root with no node_kind, a narrative for another revision, an out-of-enum advisory value, a reason code at the band edge, a contract with no report_title, and an undefined window reason (S62).",
+    "class": "OBSERVATION",
+    "spec_asserts": "The IRPT_FNTEND PRD and the v1 contract: every fixture state and every rendered field is one the contract defines, and FWD-11 shows each firm's holdings.",
+    "world_is": "W2-S23: the page issues one holdings request for the one scope resolve-scope answers, so it reaches F-49F's envelope and never F-CW's -- FWD-11 PARTIAL. W2-S24 (with S59): fe-s-14/gen-maps.ts rewrites fe-s-14-global.json whole; detection only. W2-S25: HoldingsSnapshot has no scope-level node_kind, so the root is an ACCOUNT node while custody_totals.unique_account_count reads 3. W2-S27: the frozen map's narrative names perf-9, not rev-49f-000091; a narrative-on print would pair them. W2-S29: advisory_status 'ADVISORY' is outside ADVISED|RESIDUAL|UNKNOWN and is mapped to unknown with authoritative=true -- seen on 3 of 3 rows of the READY observed captures (F32-AC9's qualification). W2-S31: TARGET_BLEND_MODEL_REVISION_UNNAMED reaches its band's right edge at 390 (fe-s-32_holdings_target_390.png, by eye). W5-S2: 0 of 25 v1 files name report_title and routes.json carries no analysis-POST request schema. S62: REQUESTED_WINDOW_ANSWERED is defined nowhere and the renderer compares windows by calendar string.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~2/fe-s-32_holdings_observed_1440_table_scrolled.png@c271e0d702",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~2/fe-s-32_holdings_target_390.png@c271e0d702",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~2/fixture-reach.result.md@e46121f301",
+        "docs/contracts/investor-reporting/v1/",
+        "portal 741bb54b:src/pages/InvestorReporting/render/performance/MethodsAndSources.tsx:58",
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND5_L8_L9_20260914.md@366a0b4103 sections 2-3"
+      ]
+    },
+    "adjudicates": [
+      "IRPT_FNTEND-W2-S23",
+      "IRPT_FNTEND-W2-S24",
+      "IRPT_FNTEND-W2-S25",
+      "IRPT_FNTEND-W2-S27",
+      "IRPT_FNTEND-W2-S29",
+      "IRPT_FNTEND-W2-S31",
+      "IRPT_FNTEND-W5-S2",
+      "IRPT_FNTEND-S62"
+    ],
+    "disposition": "GRADUATED",
+    "hazard_standing": "INERT"
+  },
+  {
+    "id": "IRPT_FNTEND-C-S83",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-14T11:26:58Z",
+    "one_line": "ROUND-5, GRADUATED to 1.0.0_SA_CTO: THREE BUSINESS-DATE PLANE DEFECTS outside the label's production path -- a test that asserts an instant's age under the new label, a helper that reads the presence of sourceDate as a status, and a null that renders as malformed.",
+    "class": "OBSERVATION",
+    "spec_asserts": "Ruling K and ruling R: the panel ages the business date, never an instant, on any path; the view contract's null businessAsOf means 'no clock'.",
+    "world_is": "W3-S22: fe-s-21's panelFor builds its envelope from StatusEnvelope.sourceAsOf, so F21-AC3 grades an as_of instant's age printed as 'Business date age' -- a test asserting the mislabel; a repair must re-point it. W3-S25: businessDateOf (state/availability.ts:102-104) reads any availability.sourceDate as the status's reading; latent while every no-status wire document goes to the panel; the discriminator the gate already uses is producerState. W3-S26: adapt.ts readingFromValue turns a view document's null businessAsOf into fact NULL, shown as 'Source date malformed', where the view contract defines null as 'no clock' (contracts/index.ts:147); 3 of 134 view documents, all in smoke/fe-s-3-loading.json.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md rows W3-S22, W3-S25, W3-S26",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~3/IRPT_FNTEND.TO-FE-s-34.business-date-label.proof_of_spec.json@af28a2e3d2",
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND5_L8_L9_20260914.md@366a0b4103 section 3, F34-AC7"
+      ]
+    },
+    "adjudicates": [
+      "IRPT_FNTEND-W3-S22",
+      "IRPT_FNTEND-W3-S25",
+      "IRPT_FNTEND-W3-S26"
+    ],
+    "disposition": "GRADUATED",
+    "hazard_standing": "INERT"
+  },
+  {
+    "id": "IRPT_FNTEND-C-S84",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-14T11:26:58Z",
+    "one_line": "ROUND-5, GRADUATED to 1.0.0_SA_CTO: THE CHECKER, THE LAW TEXT AND THE CUT -- the graded party can move limbs 2 and 3 to LEGACY (S61, ARMED), CLAUDE.md quotes a docstring sentence its source dropped (W4-S9), the issuer's ninth cut defect joins S55's class (W4-S11), and six AMGT_RESAPP bars can never match (W4-S12).",
+    "class": "OBSERVATION",
+    "spec_asserts": "F29-AC15; CLAUDE.md Rule 27 quotes the gate's own docstring; S55: a cut is checked against what it overturns before it is issued.",
+    "world_is": "S61: as that row measures. W4-S9: CLAUDE.md:42 still reads 'A modification (M) does not: this gate never refuses an existing TO' while .tools/to-pipeline-gate.py:1706 now reads 'A modification (M) does not: no limb that reads THIS set refuses an existing TO' -- read at HEAD 26774b2cdc; the law edit cb87fdd6fb did not touch it. W4-S11: F36-AC4 named a criterion shape no committed order has, the issuer's defect (9) of 9 this round (96556), with W4-S10's one-suite-short census beside it; the issuer's own lesson is that the census that held was the worker's whole-suite run with the patch applied. W4-S12: 6 AMGT_RESAPP criteria carry English-sentence <expect> bars that proof-of-spec-check searches as a regex, so none can ever PASS by output.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND5_L8_L9_20260914.md@366a0b4103 sections 3 and 4",
+        "CLAUDE.md:42 and .tools/to-pipeline-gate.py:1706 at 26774b2cdc",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~4/output-vocabulary.result.md@534051a974",
+        "msg 96556 section 3"
+      ]
+    },
+    "adjudicates": [
+      "IRPT_FNTEND-S61",
+      "IRPT_FNTEND-W4-S9",
+      "IRPT_FNTEND-W4-S11",
+      "IRPT_FNTEND-W4-S12"
+    ],
+    "disposition": "GRADUATED",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO: S61 disarms as that row names; W4-S9 by one law edit to CLAUDE.md:42; W4-S12 by routing to AMGT_RESAPP's issuer. Until S61 disarms, this seat reads each new instance's decomp_ref.to_ref against its own order at L9."
+  },
+  {
+    "id": "IRPT_FNTEND-C-S85",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-14T11:26:58Z",
+    "one_line": "ROUND-4 DISARMS CHECKED: C-S56's two named conditions are met and C-S67's second branch is met in substance -- both DISMISSED; the exposure they guarded is not closed and is carried ARMED as S61 (C-S84).",
+    "class": "OBSERVATION",
+    "spec_asserts": "C-S56 DISARMS when the placeholders reader is line-anchored in BOTH readers in one change and the count bar refuses a PASS beside a contradicting summary. C-S67 DISARMS when the portal suite can observe a mount, or when the cut-time refusal of seeded criteria becomes a gate limb.",
+    "world_is": "C-S56: 9e6ed6c236 line-anchors PLACEHOLDERS_TAG_RE in both proof-of-spec-check.py and to-pipeline-gate.py in one change, and limb 2 (count_bar_check) refuses a PASS beside a contradicting summary -- F29's batteries, and this seat's self-test runs at HEAD 26774b2cdc (32 of 32; 0 of 70 failed). C-S67: seeded criteria are refused by an instrument, drives_check (proof-of-spec-check.py:1712, wired at :2069) -- at the complete flip, not at the cut, and the portal still installs no DOM environment. Both limbs' NEW/LEGACY boundary is readable from the instance the graded worker writes (S61).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~4/IRPT_FNTEND.TO-FE-s-29.checker-limbs.proof_of_spec.json@6ad371c88e",
+        ".tools/proof-of-spec-check.py@9e6ed6c236 :1712, :2069",
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND5_L8_L9_20260914.md@366a0b4103 section 4"
+      ]
+    },
+    "adjudicates": [
+      "IRPT_FNTEND-C-S56",
+      "IRPT_FNTEND-C-S67"
+    ],
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "The conditions C-S56 and C-S67 named are met as written, so neither stays open as its own hazard. What they protected is not yet safe: limbs 2 and 3 can be moved to LEGACY by the graded party, and that hazard is carried ARMED on S61 under 1.0.0_SA_CTO (C-S84) rather than left on these two rows.",
+    "hazard_standing": "INERT"
   }
 ]
 ```

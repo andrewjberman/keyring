@@ -3496,6 +3496,54 @@
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-S61",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-14T11:26:58Z",
+    "one_line": "THE GRADED PARTY WRITES THE CHECKER'S NEW/LEGACY BOUNDARY. Limbs 2 and 3 of proof-of-spec-check decide ENFORCE vs ANNOUNCE from the governing order's add commit, and the governing order is read from the instance's decomp_ref.to_ref -- a field the worker writes. Naming a real pre-ruling order moves both limbs to LEGACY with no violation naming the mismatch.",
+    "class": "OBSERVATION",
+    "spec_asserts": "F29-AC15 (TO-FE-s-29): none of the four limbs can be satisfied by the party it grades. checker-limbs.result.md:30-31 @6ad371c88e: 'a worker cannot reach it through anything written in the instance'.",
+    "world_is": "proof-of-spec-check.py:614-641 @9e6ed6c236 resolves the governing order from decomp_ref.to_ref when present ('An explicit decomp_ref.to_ref wins'). to-pipeline-gate.py check_complete_flip (:2525-2531 @8aa00e60fb) finds the instance beside the flipped order and runs the checker on it alone -- it passes neither the flipped order nor a criterion list, so nothing binds to_ref to the order being flipped. Measured on FE-s-29's own instance, by the CLI: as committed VALID (rc=0), limbs 2/3 ENFORCE/NEW; to_ref -> a missing order: INVALID (the unresolved citation is refused); to_ref -> TO-FE-s-28 (a real round-4 order): count-bar-frame and drives-frame both ANNOUNCE/LEGACY, the alignment frame raised no violation for F29 criteria under an F28 order, and the one violation was a PENDING-THIS-COMMIT artifact sentinel of the copy -- which a real flip that stages its result file would not raise (inferred, not exercised through a gated commit). The legacy arm ran inside the workspace; its temporary file was removed.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~4/IRPT_FNTEND.TO-FE-s-29.checker-limbs.proof_of_spec.json@6ad371c88e",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~4/checker-limbs.result.md@6ad371c88e :30-31, :107-122 (named weakness 4)",
+        ".tools/proof-of-spec-check.py@9e6ed6c236 :614-641",
+        ".tools/to-pipeline-gate.py@8aa00e60fb :2469-2531 (check_complete_flip)",
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND5_L8_L9_20260914.md@366a0b4103 section 3, F29-AC15"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO, as owner of the checker limbs (C-S56): DISARMS when the governing order is bound to the order being flipped -- check_complete_flip passes the flipped order to the checker and the checker refuses an instance whose declared to_ref or to_id names a different order -- with a battery arm that doctors to_ref to a real legacy order and reads REFUSED."
+  },
+  {
+    "id": "IRPT_FNTEND-S62",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-14T11:26:58Z",
+    "one_line": "THE FROZEN READY PRINT CONTRADICTS ITSELF ABOUT ITS WINDOW. Its band states reason REQUESTED_WINDOW_ANSWERED while its own page 3 says 'The source answered a different window from the one requested'. The reason code is defined nowhere, and the renderer compares windows as calendar strings.",
+    "class": "OBSERVATION",
+    "spec_asserts": "FE-s-33 (F33-AC8's material): the frozen performance report is READY / REQUESTED_WINDOW_ANSWERED, because actual_start 2026-01-02 differs from requested_start 2026-01-01 only by an NYSE holiday.",
+    "world_is": "REQUESTED_WINDOW_ANSWERED: 0 hits in docs/contracts/investor-reporting/v1/ (StatusEnvelope public_reason_code is a free pattern ^[A-Z0-9_]+$) and 0 in the portal's non-test code at DEV 741bb54b. The renderer's comparator is windowNarrowed = actualDates.start !== requestedDates.start || actualDates.end !== requestedDates.end (render/performance/MethodsAndSources.tsx:58), a calendar-string comparison with no trading calendar; tabs/reporting/PeriodControls.tsx:122 prints the same sentence on screen. So fe-s-31_print_frozen-as-committed_1440.png shows 'Reason: REQUESTED_WINDOW_ANSWERED' on every page band and 'The source answered a different window' in page 3's Limitations. Either the contract names what each reason code means, or the comparator counts trading days, or the fixture carries a narrowed reason -- three different fixes, the CTO's to choose.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "docs/contracts/investor-reporting/v1/StatusEnvelope.schema.json (public_reason_code: pattern only)",
+        "portal 741bb54b:src/pages/InvestorReporting/render/performance/MethodsAndSources.tsx:58, :103-104",
+        "portal 741bb54b:src/pages/InvestorReporting/tabs/reporting/PeriodControls.tsx:122",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/fe-s-31_print_frozen-as-committed_1440.png@09c82ae177",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~2/IRPT_FNTEND.TO-FE-s-33.fixture-reach.proof_of_spec.json@e46121f301",
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND5_L8_L9_20260914.md@366a0b4103 section 3, F33-AC8"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "hazard_standing": "INERT"
   }
 ]
 ```
