@@ -64,18 +64,22 @@ Measured by the issuer at portal DEV `c2eb8eb4`:
 <criterion id="F31-AC10" cell_refs="FE-s-31" judgment="true" drives="none"/>
 `F31-AC10` -- graded at L9: a reader of any exported page can tell what state its report is in and how old its business date is, and a qualified report is never presented as complete. RECORD; NO VERDICT.
 
-<expected_criteria>F31-AC1, F31-AC2, F31-AC3, F31-AC4, F31-AC5, F31-AC6, F31-AC7, F31-AC8, F31-AC9, F31-AC10</expected_criteria>
+<criterion id="F31-AC11" cell_refs="FE-s-31" drives="none"><invocation>cd <WS>/portal && timeout 120 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting/__tests__/fe-s-31/every-page.test.ts</invocation><expect>PAGE 3 BUNDLE ROWS AGREE WITH THE REPORT: yes</expect></criterion>
+`F31-AC11` -- AMENDMENT, row W1-S60: on the methods-and-sources page of a PARTIAL report, no row presents the bundle's own READY as the report's state, and the bundle-scope line agrees with the report's scope line. The test prints both rows as rendered.
+
+<expected_criteria>F31-AC1, F31-AC2, F31-AC3, F31-AC4, F31-AC5, F31-AC6, F31-AC7, F31-AC8, F31-AC9, F31-AC10, F31-AC11</expected_criteria>
 
 ## BOUNDS
 
 - **Grant.** The `<paths>` block below, plus `org/missions/D9/IRPT/IRPT_FNTEND/deliverables/<your serial>/` and this order's own file. A path you need that is not named is a BLOCKING row; never an override.
 - ⛔ **CONSUME THE PREDICATE, DO NOT COPY IT.** FE-s-30 built it in `state/availability.ts`. Read it; never edit it. If it cannot answer an export question, that is a BLOCKING row, not a second predicate.
 - ⛔ **A TEST YOUR CHANGE BREAKS BECAUSE IT ASSERTED THE OLD PAGE IS A ROW, NOT AN EDIT.** Measured at the cut: no test asserts "account(s) in scope" literally. If one in fe-s-4, 8, 9 or 16 asserts the old chrome or the old gate, name the file and the assertion in a row.
+- ⛔ **AMENDMENT (2.0.0_SA_COO~F, on rows W1-S58, W1-S60 and W1-S61, after your first run): TWO SURFACES MY CUT MISSED JOIN THE GRANT, ONE PURPOSE EACH.** (1) `src/api/endpoints/investor-reporting.ts`, for W2-S12/W3-S5 ONLY: `submitExport` returns the `ExportReceipt` the producer answers in `data`, not the StatusEnvelope ack -- in the `InvestorReportingApi` interface, in `LiveClient.submitExport` and in `FixtureAdapter.submitExport`, and nowhere else in that file. FE-s-34 holds `FixtureAdapter`'s VIEW-fixture serving branch (`serve`) in the same file this round: touch no other region. Your `test.failing` arm for F31-AC8 becomes an ordinary test. (2) `render/performance/MethodsAndSources.tsx`, for rulings H and J on page 3 ONLY: the page must not present the bundle's own availability as if it were the report's state, and its bundle-scope line must agree with the report's scope line (an absent count renders as unavailable). F31-AC11 is ADDED for it; F31-AC1..AC10 are byte-identical. YOUR PORTAL BRANCH NOW CARRIES portal DEV e85498be (the issuer's merge 364dc0d1): FE-s-35's LiveClient (no-identity bodies refused) and FE-s-33's frozen report, which now carries a READY status -- so row W1-S61's refusal of the frozen print no longer holds; re-run what it touched.
 - ⛔ **`render/narrative/` IS NOT YOURS.** The narrative page takes its chrome from the document that mounts it.
 - ⛔ **`scripts/ui-smoke.mjs` IS NOT YOURS.** Drive the print route from your own test, under node.
 - **The precondition is declared, never silent** (ruling C).
 - **Two repos, one worktree pair.** `<WS>` / `<WS>/portal`. Portal commit pathspec: the files you changed, named individually. Workspace records under `org/` only. Never push, merge, rebase, `checkout --` or `clean`. Never stage `portal` in the workspace repo.
-- **Dev server.** `node_modules` is a junction; do not run `bun install`. Start once in the background from `<WS>/portal`, ON A WORKTREE-LOCAL VITE CACHE (AMENDMENT on rows W1-S56 and W1-S57, 2.0.0_SA_COO~F, before this order was cut): write `__tests__/fe-s-31/vite.worktree.config.ts`, which imports the portal's `vite.config.ts` and `mergeConfig`s ONLY `cacheDir`, set to `<WS>/.scratch/vite-cache-fe-s-31` (derived from the config file's own location, never a hardcoded drive), and launch `/c/Users/AndrewBerman/.bun/bin/bun run dev --port <a free port> --strictPort --config src/pages/InvestorReporting/__tests__/fe-s-31/vite.worktree.config.ts`. Vite's default cache is `node_modules/.vite`, which through the junction is the MAIN checkout's and is rebuilt for every dev server on the box (W1-S56). If vite refuses the override, file a row with the measurement and launch without it. Export `IRPT_FE_DEV_PORT` for EVERY `bun test` run you make -- your own server's port while it is up, a port you have measured closed while it is down -- and NEVER leave it unset: the helper's default 5181 can be another seat's server, so an unset run can grade someone else's page (W1-S57). **Kill the server before your final report.** Say which criteria were measured with it up and which with it down.
+- **Dev server.** `node_modules` is a junction; do not run `bun install`. Start once in the background from `<WS>/portal`, ON A WORKTREE-LOCAL VITE CACHE (AMENDMENT on rows W1-S56 and W1-S57, 2.0.0_SA_COO~F, before this order was cut): write `__tests__/fe-s-31/vite.worktree.config.mjs` (AMENDED on row W1-S59: a `.ts` file under `src/` is typechecked and broke the portal typecheck), which imports the portal's `vite.config.ts` and `mergeConfig`s ONLY `cacheDir`, set to `<WS>/.scratch/vite-cache-fe-s-31` (derived from the config file's own location, never a hardcoded drive), and launch `/c/Users/AndrewBerman/.bun/bin/bun run dev --port <a free port> --strictPort --config src/pages/InvestorReporting/__tests__/fe-s-31/vite.worktree.config.mjs`. Vite's default cache is `node_modules/.vite`, which through the junction is the MAIN checkout's and is rebuilt for every dev server on the box (W1-S56). If vite refuses the override, file a row with the measurement and launch without it. Export `IRPT_FE_DEV_PORT` for EVERY `bun test` run you make -- your own server's port while it is up, a port you have measured closed while it is down -- and NEVER leave it unset: the helper's default 5181 can be another seat's server, so an unset run can grade someone else's page (W1-S57). **Kill the server before your final report.** Say which criteria were measured with it up and which with it down.
 - ⚠ **`chromium.launch` fails under bun on this box**; the identical launch under node returns in seconds.
 - **Anchors and evidence.** Counts your tests print are anchorable; each row's `output_evidence` carries the deciding run only.
 - **Bound every invocation** with `timeout` as written. **Scratch:** `<WS>/.scratch/` only.
@@ -88,6 +92,8 @@ portal/src/pages/InvestorReporting/render/PrintEntry.tsx
 portal/src/pages/InvestorReporting/render/Page.tsx
 portal/src/pages/InvestorReporting/render/performance/PerformanceDocument.tsx
 portal/src/pages/InvestorReporting/render/analysis/AnalysisDocument.tsx
+portal/src/pages/InvestorReporting/render/performance/MethodsAndSources.tsx
+portal/src/api/endpoints/investor-reporting.ts
 portal/src/pages/InvestorReporting/export/Preview.tsx
 portal/src/pages/InvestorReporting/export/ExportButton.tsx
 portal/src/pages/InvestorReporting/export/submit.ts
@@ -101,10 +107,10 @@ org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: `F31-AC1` .. `F31-AC10`. Instance at
+Criterion ids: `F31-AC1` .. `F31-AC11`. Instance at
 `org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/IRPT_FNTEND.TO-FE-s-31.export-under-the-gate.proof_of_spec.json`
 (phase `BUILD-GENERAL`, firm `FABRIC`, spec_ref.group `OTHER`), validated with
-`python .tools/proof-of-spec-check.py <instance> F31-AC1,F31-AC2,F31-AC3,F31-AC4,F31-AC5,F31-AC6,F31-AC7,F31-AC8,F31-AC9,F31-AC10` BEFORE the `complete` flip. `F31-AC10` recorded `UNVERIFIABLE-BY-INSTRUMENT`, `status_reason` naming the CVO at L9. Result file `export-under-the-gate.result.md` beside it. Flip only when every mechanical criterion PASSES by output.
+`python .tools/proof-of-spec-check.py <instance> F31-AC1,F31-AC2,F31-AC3,F31-AC4,F31-AC5,F31-AC6,F31-AC7,F31-AC8,F31-AC9,F31-AC10,F31-AC11` BEFORE the `complete` flip. `F31-AC10` recorded `UNVERIFIABLE-BY-INSTRUMENT`, `status_reason` naming the CVO at L9. Result file `export-under-the-gate.result.md` beside it. Flip only when every mechanical criterion PASSES by output.
 </proof_of_spec>
 
 **REPORT:** your FINAL MESSAGE, once, in the `WORKER REPORT` shape.
