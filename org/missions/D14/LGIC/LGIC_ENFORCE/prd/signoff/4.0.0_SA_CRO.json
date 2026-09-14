@@ -1,0 +1,12 @@
+{
+  "prd": "LGIC_ENFORCE_PRD.md",
+  "prd_version": "v1.0",
+  "prd_pin": "1118c45aefc5f59e01d84e63acc885acdcc15be3",
+  "half": "brief",
+  "half_hash": "903d40b5b30f2058698c0ac2489694677ade061b887388a598e508069e4c2eaf",
+  "verdict": "REFUSED",
+  "review_ref": "docs/briefs/sources/LGIC_ENFORCE_L4_BRIEF_REVIEW_20260914.md@a536283f71f314fbf2d5ce68edb24aaaa69a7bd7",
+  "signed_by": "4.0.0_SA_CRO",
+  "signed_at": "2026-09-14T05:20:40Z",
+  "reason": "R1 gate name/token coverage; R2 systems-row fields; R3 scope-specific MDPF fence proof"
+}
