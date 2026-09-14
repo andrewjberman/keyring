@@ -2664,3 +2664,32 @@ all seven mechanical criteria were measured and the verdict is NO-GO.
   }
 ]
 ```
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-S61",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-14T09:55:00Z",
+    "one_line": "THIS LOOP'S OWN STANDING BODY CARRIES A STALE CITATION THAT NOW LANDS ON CONFIRMING-LOOKING TEXT. Its Z-S7 correction cites .tools/to-pipeline-gate.py:809-831 for 'LIMB 6 refuses only a NEWLY-ADDED task order, never a MODIFICATION, so there is NO mechanical backstop on a re-cut'. Measured at HEAD 5ef0f32832: the file is 2765 lines, _newly_added now sits at :1702, and lines 809-831 hold the PLACEHOLDERS MODIFY SELF-TEST TABLE. Andrew has since carded exactly ONE widening -- gate (viii) DOES grade a task order staged as MODIFIED, if and only if that order ALREADY DECLARES <placeholders> AT HEAD. POSN_ASTTAX declares <placeholders> in 0 of 19 orders, so gate (viii) is INERT for this project and Z-S7's operative conclusion still holds HERE -- now by measurement rather than by a blanket claim.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED BY THIS SEAT at HEAD 5ef0f32832, every figure re-derived inside the same call that wrote this row and the write REFUSED on any disagreement: .tools/to-pipeline-gate.py is 2765 lines (DENOMINATOR); 'def _newly_added' resolves to line 1702; the loop body's cited range 809-831 contains the strings 'placeholders MODIFY RED' / 'placeholders MODIFY GREEN' / 'placeholders MODIFY: an order that does NOT declare at HEAD is NOT graded', i.e. the gate's own self-test table for the widened limb.",
+        "THE WIDENING IS REAL AND IS READ FROM THE TOOL, NOT FROM THE LAW FILE: the gate's own text at :26, :147, :152 and :171 states that a <placeholders> declaration ALSO grades a TO staged as MODIFIED ONLY WHEN THE ORDER ALREADY DECLARES <placeholders> AT HEAD (Andrew-direct card 6, ~18:4xZ 2026-09-13, record @e2210bf34c, built as IRPT_FNTEND FE-s-29 limb 4, drained @cd399d339d). Nothing is back-filled and LIMB 6 itself stays NEWLY-ADDED only.",
+        "NEGATIVE CONTROL ON THE PROJECT ARM, AND IT IS THE ARM THAT DECIDES THE ACT: 0 of 19 POSN_ASTTAX task orders declare <placeholders> (DENOMINATOR 19, whole-element match). A zero here is EVIDENCE rather than an out-of-corpus read because this folder IS the population the gate reads for a tree project's TO -- unlike the earlier error in this same channel, where a clean read of this folder was offered against a claim about the BROKER's seat-folder population, which it could not express.",
+        "WHY THE STALE CITATION IS WORSE THAN AN ABSENT ONE: 809-831 no longer points at nothing, it points at the SELF-TEST TABLE FOR THE VERY EXCEPTION THE CLAIM DENIES. A reader who follows it finds text about modifications being graded and about an order that does NOT declare being NOT graded, in a file whose docstring they were told would say 'this gate never refuses an existing TO'. A citation that drifts onto TOPICALLY ADJACENT text reads as confirmation; one that drifts onto nothing reads as an error."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "This loop's standing body, Z-S7 @e68cf979b8, VERBATIM: 'to-pipeline-gate.py LIMB 6 refuses only NEWLY-ADDED (A/R) task orders, never a MODIFICATION (docstring :809-831)' and 'SO THERE IS NO MECHANICAL BACKSTOP ON A RE-CUT.' CLAUDE.md Rule 27 at HEAD carries the same LIMB 6 scoping and now cites the docstring at :1015 @cd399d339d. CLAUDE.md Rule 22 GRAIN: the object read IS the object claimed at the VINTAGE claimed, and 'a citation without a vintage is not a citation'. Rule 27: 'WHERE THIS RULE AND THE SPINE DIFFER, THE SPINE WINS AND THIS RULE IS THE DEFECT' -- Rule 27 is a REPRESENTATION of the tool, never an independent source, and the same subordination applies to this loop's body.",
+    "world_is": "BOTH HALVES OF THE LOOP BODY'S Z-S7 SENTENCE HAVE MOVED, IN OPPOSITE DIRECTIONS. (1) THE CITATION IS STALE: _newly_added is at :1702 of 2765, and :809-831 now holds the placeholders MODIFY self-test table. (2) THE CLAIM IS NOW OVERBROAD AS A GENERAL STATEMENT: gate (viii) grades a MODIFICATION of an order that already declares <placeholders> at HEAD, so 'there is no mechanical backstop on a re-cut' is FALSE fabric-wide as of card 6. (3) AND IT IS STILL TRUE FOR THIS PROJECT: 0 of 19 POSN_ASTTAX orders declare <placeholders>, so gate (viii) is INERT here and the only thing between a round-5 re-cut and a stale premise remains this seat's own fresh read of 'python .tools/prd-signoff.py status POSN_ASTTAX' at the moment of acting. STAR: A CITATION AND THE CLAIM IT SUPPORTS AGE SEPARATELY, AND NEITHER AGEING ANNOUNCES ITSELF. The line number decayed because the file grew; the claim decayed because Andrew widened the tool. A single re-read of the loop body would have caught neither -- only opening the tool at HEAD does, which is what Rule 27's own 'the spine wins and this rule is the defect' clause exists to force.",
+    "notes": "SCOPE AND WHAT IS NOT DONE: no edit to .claude/skills/, no edit to CLAUDE.md, no edit to the cron body -- the loop body is Andrew-anchored and this seat is scope-bound, so the correction is APPLIED AT THE ACT and the body-level question is NAMED, not taken, exactly as Z-S60 disposed of the /self-drive Step 4 gap. No task order is cut, modified or re-staged by this row. DISARM CONDITION, both limbs: (a) the round-5 issuance RE-MEASURES <placeholders> across its own cut orders at the moment of the cut rather than citing this row's zero, since a zero measured at 5ef0f32832 does not bind an order that does not exist yet; and (b) whatever restates Z-S7 for the next tick carries the gate (viii) exception and a line reference re-derived at HEAD, or no line reference at all. A count is re-derivable and a mechanism is not, so the mechanism is what this row asks a future reader to carry. WHY A ROW AND NOT A MESSAGE: the hazard is inherited by every tick of a standing loop, and a broker message is never the carrier for that -- Z-S7 itself is a row on this channel, so this is its citing successor. CREDIT: found while re-reading CLAUDE.md at HEAD after a compaction, not while looking for it; the gate (viii) widening and its card are 1.0.0_SA_CTO~Z's record and 2.0.0_SA_COO~ZZZ's measurement, neither of which this row re-litigates."
+  }
+]
+```
