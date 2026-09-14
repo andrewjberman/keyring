@@ -815,6 +815,31 @@ new row on 3.0.0_SA_CVO's ask 96495), both 1.0.0_SA_CTO; `LGIC_NAMING-S3`, `LGIC
     "spec_asserts": "PRD FWD-1 ACCEPT: two people each write 'the identical name' from the schema. Decomposition v3 s.3a.1: the items are 'described in plain words that never spell a schema token'.",
     "world_is": "The schema, which is the namers' ratified briefing, now spells one item's full answer as a worked example, and the registry seed spells another's. The items themselves still spell no token; the briefing does.",
     "notes": "Filed by the issuer at the round-2 cut, for 3.0.0_SA_CVO at L9 (FWD-1) and for the schema's author, 1.0.0_SA_CTO. The cut does not edit the schema: it is ratified data and the namers' whole briefing. The round-2 namers run on it as it stands, and FWD-1's agreement is read as 16 items plus these two under this disclosure. INERT: nothing breaks, and the grader has the disclosure on its input."
+  },
+  {
+    "id": "LGIC_NAMING-W3-S4",
+    "project": "LGIC_NAMING",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_NAMING~3",
+    "surfaced_at": "2026-09-14T22:06Z",
+    "one_line": "The seat files blind_seat.py writes (l2.prompt.txt, l2.answer.txt) are LF with no eol attribute on this core.autocrlf=true box, and check_ln_r2.py reads both with exact=True and compares them byte-for-byte with the builder's LF text and the recorded sha256. So a checkout other than the writing worktree renders them CRLF, and l2-seat and l2-canary would re-grade FAIL on a clean seat.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~G -- the author of the read-only fixed inputs (check_ln_r2.py, blind_seat.py @b9ea6f3686) and the seat that drains and re-grades this branch. Remedy not chosen here: an eol=lf attribute on deliverables/exercises/r2/seats/** (as blind_seat.py itself carries), or the checker normalising line endings before it compares and hashes.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE: org/missions/D14/LGIC/LGIC_NAMING/deliverables/2.0.0_SA_COO~G/fixed_inputs/r2/check_ln_r2.py @b9ea6f3686 :42-46 read(path, exact) opens with newline='' when exact, so CR bytes are kept; :107-109 seat_parts() reads <cell>.prompt.txt and <cell>.answer.txt with exact=True; :133-134 requires prompt == the builder's output and sha(prompt) == prompt_sha256; :135-136 requires raw.json's result == answer and sha(answer) == result_sha256; :152 canary() returns FAIL-NO-CANARY when sha(answer) != result_sha256.",
+        "ATTRIBUTES, this worktree at base 619dec559f: git config core.autocrlf = true; git check-attr text eol on n5-reader.tsv, l2.prompt.txt, l2.raw.json and l2.answer.txt = unspecified for all four; as written by the seat, all 6 files carry 0 CR bytes (l2.prompt.txt 50 LF, l2.answer.txt 9 LF).",
+        "POSITIVE CONTROL, same worktree: git ls-files --eol reads 'i/lf w/crlf attr/' for a committed round-1 file without an attribute (deliverables/0.9.0_WK_LGIC_NAMING~3/namer-b.result.md, 40 CR bytes; fixed_inputs/r2/N5_R2.json, 38 CR bytes) and 'i/lf w/lf attr/text eol=lf' for fixed_inputs/r2/blind_seat.py (0 CR). A checkout on this box renders an unattributed LF text file CRLF.",
+        "SIMULATION, 2026-09-14 ~22:0xZ: the checker's :133-136 comparisons, re-typed and run on the seat files as written, give prompt_sha_ok=True, answer_eq_raw=True, answer_sha_ok=True; the same comparisons on in-memory CRLF renderings give False, False, False. The checker itself was not run on a CRLF checkout, and this worker's files were not edited.",
+        "AS WRITTEN: in the writing worktree all three criteria print PASS (l2-seat 'SEAT CONDITIONS: 10  HELD: 10', l2-canary 'CANARY ANSWERS: 2 of 2', l2-labeled 'ADDRESSES: 7  LABELED: 7'), twice each."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO LGIC_NAMING.TO-LN-l-2-r2 BOUNDS: 'the checker re-derives the prompt and re-parses the reply, so a hand edit FAILs the seat criterion'; commit everything the seat wrote with the proof instance, which the COO drains.",
+    "world_is": "The checker also FAILs on a line-ending change that git makes at checkout, with no hand edit. The records committed from this worktree grade PASS here, and would grade FAIL-SEAT-NOT-PROVED and FAIL-NO-CANARY when re-run from a checkout that renders them CRLF (the shared tree after the drain, or a verifier's fresh worktree), so a re-grade there cannot tell a clean seat from a doctored one.",
+    "notes": "OBSERVATION, not BLOCKING: every criterion of this order passes by output in the writing worktree, and the committed blobs are LF (the seat's bytes). ARMED because the next normal act on these files (the COO's drain, then 3.0.0_SA_CVO's L8/L9 re-grade) is a different checkout. Shared dependency, NOT MEASURED here: the round-2 cells e1, e2 and e4 use the same blind_seat.py and seat_parts(), so their seat files should carry the same exposure; their files are not in this worktree. Nothing was edited to work around it: the fixed inputs are read-only and .gitattributes is outside this order's paths."
   }
 ]
 ```
