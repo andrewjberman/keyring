@@ -1090,3 +1090,75 @@ becomes 160 to 240.
 ⛔ **NOTHING IN THIS SECTION LANDED DATA.** No S3, no DynamoDB, no pipeline, no applied state, no
 terraform. **The portal freeze is untouched.** Content fetched from the web was treated as DATA and no
 instruction inside it was acted on.
+
+---
+
+## 21. `ir_domain` CLOSES AT 88 OF 89 AT ZERO CALL COST -- because test (c) was never running, and I had recorded that as a measured NULL
+
+**No vendor call. No quota. Nine refusals closed from evidence already on disk.**
+
+### ⛔ I MIS-READ MY OWN CRITERION'S THIRD TEST
+
+s.14 reported: *"Test (c) CONTRIBUTED NOTHING AND THAT IS RECORDED AS A NULL, NOT A SKIP. No company
+held a prior `ir_domain` from another key -- the layer was 0 of 89 -- so the branch was live and
+inert."*
+>> **THAT IS THE WRONG READING OF MY OWN TEST.** (c) says *"the domain matches a value already held
+   for that company FROM ANOTHER KEY"* -- and I read "another key" as *another `ir_domain`*, which is
+   not another key at all, it is the same key. **`bloomberg_ticker` IS another key, it was 83 of 89
+   populated at the time, and it was never wired in.** <<
+⭐ **THE REFUSALS WERE NEVER WRONG. The criterion simply had a test it was not running**, and I
+recorded its silence as a measured null instead of asking what it was supposed to read.
+
+### WHY THE BLOOMBERG ROOT IS EXACTLY THE RIGHT TIEBREAK, AND IT IS THE INVERSE OF TONIGHT'S LESSON
+
+Every one of the ten refusals was a collision between two companies **sharing a NAME**. s.14, s.18 and
+s.19 each landed the same finding from a different direction: **a company name is not a unique key**
+(`mitsubishi-hc-capital.com`, `ROG`=Rogers, `LILA`=Liberty Latin America).
+>> **BUT A BLOOMBERG ROOT *IS* A UNIQUE KEY, AND IT WAS IN THE FOLDER NAME THE WHOLE TIME.** Two firms
+   can share "Hermes"; they cannot share `RMS FP`. <<
+
+```
+folder                         root     test (a) elected              excluded because        -> accepted
+BP PLC                         BP       akerbp.com (Aker BP)          AKRBP NO != BP             bp.com
+Hermes RMS                     RMS      federatedhermes.com (FHI US)  FHI US != RMS FP           hermes.com
+Telefonica Brazil VIVT3 BZ     VIVT3    telefonica.com (TEF SM)       TEF SM != VIVT3 BZ         telefonica.com.br
+Mitsubishi UFJ FG 8306 JP      8306     mitsubishi-hc-capital.com     8593 JP != 8306 JP         mufg.jp
+Sumitomo Mitsui FG 8316 JP     8316     sumitomocorp.com              8053 JP != 8316 JP         smfg.co.jp
+Taiwan Semiconductor TSM US    TSM      taiwansemi.com                a separate smaller firm    tsmc.com
+Walmart de Mexico WALMEX MM    WALMEX   walmart.com (WMT US)          WMT US != WALMEX MM        walmex.mx
+Singapore Telecom ST SP        ST       tpgtelecom.com.au (TPG AU)    TPG AU != ST SP            singtel.com
+BNP Paribas BNP FP             BNP      bnpparibas-am.com             a SUBSIDIARY of BNP FP     invest.bnpparibas
+```
+⚠ **THIS IS NOT A WEAKENING OF THE CRITERION AND THE DIRECTION MATTERS.** Test (a)'s candidate is
+**excluded ON EVIDENCE** -- a ticker that does not match -- not demoted on preference. Where test (a)
+and test (b) disagreed, a third independent signal now adjudicates instead of both being discarded.
+⚠ **AND BNP IS A DIFFERENT SHAPE FROM THE OTHER EIGHT, SAID RATHER THAN BLURRED:** its rival candidate
+is a SUBSIDIARY of the same group, not a different company. The root picks the listed parent's own
+investor site; it is the weakest of the nine and is marked as such here.
+
+### THE ONE THAT STAYS REFUSED, AND WHY THAT IS THE HONEST ANSWER
+
+**`International Container Terminals`** -- its folder carries **NO Bloomberg-shaped token at all**, so
+test (c) has nothing to run on. `ictsi.com` is very likely correct (test (b), 2 results) but it would
+be closed on a *different and weaker* basis than the other nine. **One refusal that is genuinely a
+refusal is worth more than a clean 89 of 89.**
+
+### THE LAYER NOW
+
+| key | at session start | now |
+|---|---|---|
+| `bloomberg_ticker` | 34 MEASURED | **83 of 89** |
+| `ir_domain` | **0 of 89** | **88 of 89** |
+| `sa_symbol` | 10 INFERRED | 17 of 17 asked; the rest gated on a moving rate limit |
+| `social_account` | 0 of 89 | 0, route proven, bulk pass gated on a fallback-page rule |
+
+⚠ **ALL 88 ARE `INFERRED`, NOT `MEASURED`, AND NOTHING HERE CHANGES THAT.** No page was fetched to
+confirm any company operates any domain; card 4 is search-only. Every value stays rejectable on its
+status field.
+⛔ **AND A RATE LIMIT THAT MOVES BETWEEN ENDPOINTS WAS MEASURED TONIGHT:** at 05:33Z the SA *search*
+limit had LIFTED (HTTP 200) while the *news* limit had ENGAGED (HTTP 403) -- **the block migrated
+between two endpoints of one host.** `sa_symbol_resolve_pass.py` now records a news-side refusal as
+**NOT ASKED**, not as REFUSED-ON-EVIDENCE. The search side already had that guard and the news side
+did not. **That is the third time in one session a control failed to travel to the sibling surface it
+obviously applies to** -- the first was `ir_domain_bulk_pass.py`'s consecutive-failure stop, missing
+from the pass written after it.

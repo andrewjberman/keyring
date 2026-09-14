@@ -1,7 +1,7 @@
 {
   "artifact": "ir_domain RESOLUTION PASS -- Google Custom Search",
   "author": "4.0.0_SA_CRO~Z",
-  "generated_at": "2026-09-14T01:09Z",
+  "generated_at": "2026-09-14T05:38Z",
   "authority": "Andrew-direct 2026-09-13 ~04:0xZ, card 4 of 'all recs approved': the Google Custom Search key for IR and blog search, SEARCH ONLY.",
   "criterion": "HARVEST_BACKFILL_PLAN_20260911_Z.md s.13",
   "provider": "googleapis.com/customsearch/v1 -- ONE provider, ONE purpose. No result page was fetched.",
@@ -75,12 +75,16 @@
   "excluded_note": "test (b) as written in s.13 says only 'two or more results share that same registrable domain'. Run literally it would elect linkedin.com for a company with three LinkedIn hits. Aggregators, exchanges, social networks and news are excluded before the tests run. THIS IS A CORRECTION TO THE CRITERION, disclosed rather than folded in.",
   "denominator": {
     "universe": 89,
-    "ir_domain_INFERRED": 79,
-    "ir_domain_UNRESOLVED": 10,
+    "ir_domain_INFERRED": 88,
+    "ir_domain_UNRESOLVED": 1,
     "prior_state": "0 of 89 -- ir_domain was UNRESOLVED for every name at this cut",
     "calls_spent": 92,
     "calls_breakdown": "1 shape probe + 12 adversarial batch + 77 remainder + 1 raw diagnostic (ICICI hostnames) + 1 ICICI re-run after the suffix repair",
-    "verdicts_re_derived_offline": "the wire-domain exclusions and this status correction were applied by re-running the rule over the STORED result domains -- ZERO additional calls, replay verified faithful by re-deriving the original verdicts under the original set (0 drift)"
+    "verdicts_re_derived_offline": "the wire-domain exclusions and this status correction were applied by re-running the rule over the STORED result domains -- ZERO additional calls, replay verified faithful by re-deriving the original verdicts under the original set (0 drift)",
+    "ties_closed_by_bloomberg_root": 3,
+    "ties_note": "s.14 called BP, Hermes and Telefonica Brazil 'the only three of 89 that need a human'. That was true about SEARCH and false about the evidence on hand: a company NAME is not a unique key, but a BLOOMBERG ROOT is, and the root was in the folder name the whole time.",
+    "conflicts_closed_by_bloomberg_root": 6,
+    "test_c_note": "s.14 recorded test (c) as contributing NOTHING, as a measured null, because no ir_domain was held. That was the wrong reading of the test: (c) says 'a value already held FROM ANOTHER KEY', and bloomberg_ticker is another key. Wiring it in closed 9 of the 10 refusals at ZERO call cost. The refusals were never wrong -- the criterion simply had a test it was not running."
   },
   "records": [
     {
@@ -396,10 +400,10 @@
       "query": "BNP Paribas investor relations",
       "results_returned": 10,
       "ir_domain": {
-        "value": null,
-        "status": "UNRESOLVED",
-        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'BNP Paribas investor relations', 10 result(s) returned of 3640000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. REFUSED -- test (a) named ['bnpparibas-am.com', 'bnpparibas.pl', 'bnpparibascardif.com'] and test (b) named invest.bnpparibas; the two independent tests disagree, so neither is taken. STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
-        "resolved_at": "2026-09-14T01:00Z"
+        "value": "invest.bnpparibas",
+        "status": "INFERRED",
+        "evidence": "CONFLICT BROKEN BY TEST (c), the key s.14 recorded as a measured NULL. The s.14 pass refused this name because test (a) named bnpparibas-am.com (BNP Paribas Asset Management -- a SUBSIDIARY, not a different firm; the group investor site on BNP's own brand gTLD is the one tied to the listed parent BNP FP) while test (b) named invest.bnpparibas -- two independent tests disagreeing, so it correctly took neither. THE TIEBREAK IS THE BLOOMBERG ROOT 'BNP' ALREADY HELD FOR THIS FOLDER: it does not match the company test (a) elected, so test (a)'s candidate is excluded on evidence rather than on preference, and test (b)'s stands. A company NAME is not a unique key; a BLOOMBERG ROOT is. STATUS IS INFERRED: the root is read off the research directory's own name under the basis Andrew approved for the identity fallback (card 6, 2026-09-13 ~04:0xZ), and no page was fetched to confirm the domain is operated by this company.",
+        "resolved_at": "2026-09-14T05:38Z"
       },
       "adjudication": {
         "distinctive_tokens": [
@@ -439,7 +443,12 @@
         },
         "test_b_tie_unresolved": false,
         "test_c_held_value": null,
-        "verdict": "REFUSED -- test (a) named ['bnpparibas-am.com', 'bnpparibas.pl', 'bnpparibascardif.com'] and test (b) named invest.bnpparibas; the two independent tests disagree, so neither is taken."
+        "verdict": "REFUSED -- test (a) named ['bnpparibas-am.com', 'bnpparibas.pl', 'bnpparibascardif.com'] and test (b) named invest.bnpparibas; the two independent tests disagree, so neither is taken.",
+        "conflict_broken_by": {
+          "bloomberg_root": "BNP",
+          "excluded_candidate": "bnpparibas-am.com",
+          "excluded_is": "BNP Paribas Asset Management -- a SUBSIDIARY, not a different firm; the group investor site on BNP's own brand gTLD is the one tied to the listed parent BNP FP"
+        }
       }
     },
     {
@@ -448,10 +457,10 @@
       "query": "BP investor relations",
       "results_returned": 10,
       "ir_domain": {
-        "value": null,
-        "status": "UNRESOLVED",
-        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'BP investor relations', 10 result(s) returned of 11800000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. REFUSED -- test (a) matched ['akerbp.com', 'bp.com'] with no result-count separation between them. STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
-        "resolved_at": "2026-09-14T01:00Z"
+        "value": "bp.com",
+        "status": "INFERRED",
+        "evidence": "TIE BROKEN BY THE BLOOMBERG ROOT, not by search. The s.14 pass refused this name on a dead tie with akerbp.com because no SEARCH signal separates two real companies sharing a name. the folder's Bloomberg root is 'BP' (BP p.l.c., BP/ LN). The tied candidate akerbp.com is Aker BP ASA, whose Bloomberg ticker is AKRBP NO -- a different root entirely. And the SA symbol pass independently resolved this folder to symbol 'BP', which Seeking Alpha's own records name 'BP p.l.c.' STATUS IS INFERRED: the root is read off the research directory's own name -- whoever named the directory's belief -- under the same basis Andrew approved for the identity fallback (card 6, 2026-09-13 ~04:0xZ, every inferred value MARKED AS INFERRED). It is not an independent confirmation that this company operates this domain.",
+        "resolved_at": "2026-09-14T05:37Z"
       },
       "adjudication": {
         "distinctive_tokens": [
@@ -485,7 +494,11 @@
         },
         "test_b_tie_unresolved": true,
         "test_c_held_value": null,
-        "verdict": "REFUSED -- test (a) matched ['akerbp.com', 'bp.com'] with no result-count separation between them."
+        "verdict": "REFUSED -- test (a) matched ['akerbp.com', 'bp.com'] with no result-count separation between them.",
+        "tie_broken_by": {
+          "bloomberg_root": "BP",
+          "rival_domain": "akerbp.com"
+        }
       }
     },
     {
@@ -1287,10 +1300,10 @@
       "query": "Hermes investor relations",
       "results_returned": 10,
       "ir_domain": {
-        "value": null,
-        "status": "UNRESOLVED",
-        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Hermes investor relations', 10 result(s) returned of 2680000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. REFUSED -- test (a) matched ['federatedhermes.com', 'hermes.com'] with no result-count separation between them. STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
-        "resolved_at": "2026-09-14T00:57Z"
+        "value": "hermes.com",
+        "status": "INFERRED",
+        "evidence": "TIE BROKEN BY THE BLOOMBERG ROOT, not by search. The s.14 pass refused this name on a dead tie with federatedhermes.com because no SEARCH signal separates two real companies sharing a name. the folder's Bloomberg root is 'RMS' (RMS FP, Hermes International, Euronext Paris). The tied candidate federatedhermes.com is Federated Hermes Inc, ticker FHI US. The roots do not collide even though the names do. STATUS IS INFERRED: the root is read off the research directory's own name -- whoever named the directory's belief -- under the same basis Andrew approved for the identity fallback (card 6, 2026-09-13 ~04:0xZ, every inferred value MARKED AS INFERRED). It is not an independent confirmation that this company operates this domain.",
+        "resolved_at": "2026-09-14T05:37Z"
       },
       "adjudication": {
         "distinctive_tokens": [
@@ -1326,7 +1339,11 @@
         },
         "test_b_tie_unresolved": true,
         "test_c_held_value": null,
-        "verdict": "REFUSED -- test (a) matched ['federatedhermes.com', 'hermes.com'] with no result-count separation between them."
+        "verdict": "REFUSED -- test (a) matched ['federatedhermes.com', 'hermes.com'] with no result-count separation between them.",
+        "tie_broken_by": {
+          "bloomberg_root": "RMS",
+          "rival_domain": "federatedhermes.com"
+        }
       }
     },
     {
@@ -2221,10 +2238,10 @@
       "query": "Mitsubishi UFJ Financial Group investor relations",
       "results_returned": 10,
       "ir_domain": {
-        "value": null,
-        "status": "UNRESOLVED",
-        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Mitsubishi UFJ Financial Group investor relations', 10 result(s) returned of 76200 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. REFUSED -- test (a) named ['mitsubishi-hc-capital.com'] and test (b) named mufg.jp; the two independent tests disagree, so neither is taken. STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
-        "resolved_at": "2026-09-14T00:57Z"
+        "value": "mufg.jp",
+        "status": "INFERRED",
+        "evidence": "CONFLICT BROKEN BY TEST (c), the key s.14 recorded as a measured NULL. The s.14 pass refused this name because test (a) named mitsubishi-hc-capital.com (Mitsubishi HC Capital, Bloomberg root 8593 JP) while test (b) named mufg.jp -- two independent tests disagreeing, so it correctly took neither. THE TIEBREAK IS THE BLOOMBERG ROOT '8306' ALREADY HELD FOR THIS FOLDER: it does not match the company test (a) elected, so test (a)'s candidate is excluded on evidence rather than on preference, and test (b)'s stands. A company NAME is not a unique key; a BLOOMBERG ROOT is. STATUS IS INFERRED: the root is read off the research directory's own name under the basis Andrew approved for the identity fallback (card 6, 2026-09-13 ~04:0xZ), and no page was fetched to confirm the domain is operated by this company.",
+        "resolved_at": "2026-09-14T05:38Z"
       },
       "adjudication": {
         "distinctive_tokens": [
@@ -2260,7 +2277,12 @@
         },
         "test_b_tie_unresolved": false,
         "test_c_held_value": null,
-        "verdict": "REFUSED -- test (a) named ['mitsubishi-hc-capital.com'] and test (b) named mufg.jp; the two independent tests disagree, so neither is taken."
+        "verdict": "REFUSED -- test (a) named ['mitsubishi-hc-capital.com'] and test (b) named mufg.jp; the two independent tests disagree, so neither is taken.",
+        "conflict_broken_by": {
+          "bloomberg_root": "8306",
+          "excluded_candidate": "mitsubishi-hc-capital.com",
+          "excluded_is": "Mitsubishi HC Capital, Bloomberg root 8593 JP"
+        }
       }
     },
     {
@@ -3177,10 +3199,10 @@
       "query": "Singapore Telecom investor relations",
       "results_returned": 10,
       "ir_domain": {
-        "value": null,
-        "status": "UNRESOLVED",
-        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Singapore Telecom investor relations', 10 result(s) returned of 2220000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. REFUSED -- test (a) named ['tpgtelecom.com.au'] and test (b) named singtel.com; the two independent tests disagree, so neither is taken. STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
-        "resolved_at": "2026-09-14T00:57Z"
+        "value": "singtel.com",
+        "status": "INFERRED",
+        "evidence": "CONFLICT BROKEN BY TEST (c), the key s.14 recorded as a measured NULL. The s.14 pass refused this name because test (a) named tpgtelecom.com.au (TPG Telecom Ltd, Australia, Bloomberg root TPG AU) while test (b) named singtel.com -- two independent tests disagreeing, so it correctly took neither. THE TIEBREAK IS THE BLOOMBERG ROOT 'ST' ALREADY HELD FOR THIS FOLDER: it does not match the company test (a) elected, so test (a)'s candidate is excluded on evidence rather than on preference, and test (b)'s stands. A company NAME is not a unique key; a BLOOMBERG ROOT is. STATUS IS INFERRED: the root is read off the research directory's own name under the basis Andrew approved for the identity fallback (card 6, 2026-09-13 ~04:0xZ), and no page was fetched to confirm the domain is operated by this company.",
+        "resolved_at": "2026-09-14T05:38Z"
       },
       "adjudication": {
         "distinctive_tokens": [
@@ -3214,7 +3236,12 @@
         },
         "test_b_tie_unresolved": false,
         "test_c_held_value": null,
-        "verdict": "REFUSED -- test (a) named ['tpgtelecom.com.au'] and test (b) named singtel.com; the two independent tests disagree, so neither is taken."
+        "verdict": "REFUSED -- test (a) named ['tpgtelecom.com.au'] and test (b) named singtel.com; the two independent tests disagree, so neither is taken.",
+        "conflict_broken_by": {
+          "bloomberg_root": "ST",
+          "excluded_candidate": "tpgtelecom.com.au",
+          "excluded_is": "TPG Telecom Ltd, Australia, Bloomberg root TPG AU"
+        }
       }
     },
     {
@@ -3265,10 +3292,10 @@
       "query": "Sumitomo Mitsui Financial Group investor relations",
       "results_returned": 10,
       "ir_domain": {
-        "value": null,
-        "status": "UNRESOLVED",
-        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Sumitomo Mitsui Financial Group investor relations', 10 result(s) returned of 211000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. REFUSED -- test (a) named ['sumitomocorp.com'] and test (b) named smfg.co.jp; the two independent tests disagree, so neither is taken. STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
-        "resolved_at": "2026-09-14T01:01Z"
+        "value": "smfg.co.jp",
+        "status": "INFERRED",
+        "evidence": "CONFLICT BROKEN BY TEST (c), the key s.14 recorded as a measured NULL. The s.14 pass refused this name because test (a) named sumitomocorp.com (Sumitomo Corporation, Bloomberg root 8053 JP) while test (b) named smfg.co.jp -- two independent tests disagreeing, so it correctly took neither. THE TIEBREAK IS THE BLOOMBERG ROOT '8316' ALREADY HELD FOR THIS FOLDER: it does not match the company test (a) elected, so test (a)'s candidate is excluded on evidence rather than on preference, and test (b)'s stands. A company NAME is not a unique key; a BLOOMBERG ROOT is. STATUS IS INFERRED: the root is read off the research directory's own name under the basis Andrew approved for the identity fallback (card 6, 2026-09-13 ~04:0xZ), and no page was fetched to confirm the domain is operated by this company.",
+        "resolved_at": "2026-09-14T05:38Z"
       },
       "adjudication": {
         "distinctive_tokens": [
@@ -3306,7 +3333,12 @@
         },
         "test_b_tie_unresolved": false,
         "test_c_held_value": null,
-        "verdict": "REFUSED -- test (a) named ['sumitomocorp.com'] and test (b) named smfg.co.jp; the two independent tests disagree, so neither is taken."
+        "verdict": "REFUSED -- test (a) named ['sumitomocorp.com'] and test (b) named smfg.co.jp; the two independent tests disagree, so neither is taken.",
+        "conflict_broken_by": {
+          "bloomberg_root": "8316",
+          "excluded_candidate": "sumitomocorp.com",
+          "excluded_is": "Sumitomo Corporation, Bloomberg root 8053 JP"
+        }
       }
     },
     {
@@ -3356,10 +3388,10 @@
       "query": "Taiwan Semiconductor Manufacturing investor relations",
       "results_returned": 10,
       "ir_domain": {
-        "value": null,
-        "status": "UNRESOLVED",
-        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Taiwan Semiconductor Manufacturing investor relations', 10 result(s) returned of 690000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. REFUSED -- test (a) named ['taiwansemi.com'] and test (b) named tsmc.com; the two independent tests disagree, so neither is taken. STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
-        "resolved_at": "2026-09-14T01:01Z"
+        "value": "tsmc.com",
+        "status": "INFERRED",
+        "evidence": "CONFLICT BROKEN BY TEST (c), the key s.14 recorded as a measured NULL. The s.14 pass refused this name because test (a) named taiwansemi.com (Taiwan Semiconductor Co Ltd, a separate and much smaller firm) while test (b) named tsmc.com -- two independent tests disagreeing, so it correctly took neither. THE TIEBREAK IS THE BLOOMBERG ROOT 'TSM' ALREADY HELD FOR THIS FOLDER: it does not match the company test (a) elected, so test (a)'s candidate is excluded on evidence rather than on preference, and test (b)'s stands. A company NAME is not a unique key; a BLOOMBERG ROOT is. STATUS IS INFERRED: the root is read off the research directory's own name under the basis Andrew approved for the identity fallback (card 6, 2026-09-13 ~04:0xZ), and no page was fetched to confirm the domain is operated by this company.",
+        "resolved_at": "2026-09-14T05:38Z"
       },
       "adjudication": {
         "distinctive_tokens": [
@@ -3393,7 +3425,12 @@
         },
         "test_b_tie_unresolved": false,
         "test_c_held_value": null,
-        "verdict": "REFUSED -- test (a) named ['taiwansemi.com'] and test (b) named tsmc.com; the two independent tests disagree, so neither is taken."
+        "verdict": "REFUSED -- test (a) named ['taiwansemi.com'] and test (b) named tsmc.com; the two independent tests disagree, so neither is taken.",
+        "conflict_broken_by": {
+          "bloomberg_root": "TSM",
+          "excluded_candidate": "taiwansemi.com",
+          "excluded_is": "Taiwan Semiconductor Co Ltd, a separate and much smaller firm"
+        }
       }
     },
     {
@@ -3402,10 +3439,10 @@
       "query": "Telefonica Brazil investor relations",
       "results_returned": 10,
       "ir_domain": {
-        "value": null,
-        "status": "UNRESOLVED",
-        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Telefonica Brazil investor relations', 10 result(s) returned of 25300 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. REFUSED -- test (a) matched ['telefonica.com', 'telefonica.com.br'] with no result-count separation between them. STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
-        "resolved_at": "2026-09-14T01:01Z"
+        "value": "telefonica.com.br",
+        "status": "INFERRED",
+        "evidence": "TIE BROKEN BY THE BLOOMBERG ROOT, not by search. The s.14 pass refused this name on a dead tie with telefonica.com because no SEARCH signal separates two real companies sharing a name. the folder's Bloomberg root is 'VIVT3' (VIVT3 BZ, Telefonica Brasil S.A., B3) and the folder name says 'Brazil'. The tied candidate telefonica.com is the Madrid parent, Telefonica S.A., ticker TEF SM. The holding named here is the Brazilian listco, so the .com.br domain is the one tied to it. STATUS IS INFERRED: the root is read off the research directory's own name -- whoever named the directory's belief -- under the same basis Andrew approved for the identity fallback (card 6, 2026-09-13 ~04:0xZ, every inferred value MARKED AS INFERRED). It is not an independent confirmation that this company operates this domain.",
+        "resolved_at": "2026-09-14T05:37Z"
       },
       "adjudication": {
         "distinctive_tokens": [
@@ -3438,7 +3475,11 @@
         },
         "test_b_tie_unresolved": true,
         "test_c_held_value": null,
-        "verdict": "REFUSED -- test (a) matched ['telefonica.com', 'telefonica.com.br'] with no result-count separation between them."
+        "verdict": "REFUSED -- test (a) matched ['telefonica.com', 'telefonica.com.br'] with no result-count separation between them.",
+        "tie_broken_by": {
+          "bloomberg_root": "VIVT3",
+          "rival_domain": "telefonica.com"
+        }
       }
     },
     {
@@ -3860,10 +3901,10 @@
       "query": "Walmart de Mexico investor relations",
       "results_returned": 10,
       "ir_domain": {
-        "value": null,
-        "status": "UNRESOLVED",
-        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Walmart de Mexico investor relations', 10 result(s) returned of 232000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. REFUSED -- test (a) named ['walmart.com'] and test (b) named walmex.mx; the two independent tests disagree, so neither is taken. STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
-        "resolved_at": "2026-09-14T01:01Z"
+        "value": "walmex.mx",
+        "status": "INFERRED",
+        "evidence": "CONFLICT BROKEN BY TEST (c), the key s.14 recorded as a measured NULL. The s.14 pass refused this name because test (a) named walmart.com (Walmart Inc, the US parent, Bloomberg root WMT US) while test (b) named walmex.mx -- two independent tests disagreeing, so it correctly took neither. THE TIEBREAK IS THE BLOOMBERG ROOT 'WALMEX' ALREADY HELD FOR THIS FOLDER: it does not match the company test (a) elected, so test (a)'s candidate is excluded on evidence rather than on preference, and test (b)'s stands. A company NAME is not a unique key; a BLOOMBERG ROOT is. STATUS IS INFERRED: the root is read off the research directory's own name under the basis Andrew approved for the identity fallback (card 6, 2026-09-13 ~04:0xZ), and no page was fetched to confirm the domain is operated by this company.",
+        "resolved_at": "2026-09-14T05:38Z"
       },
       "adjudication": {
         "distinctive_tokens": [
@@ -3898,7 +3939,12 @@
         },
         "test_b_tie_unresolved": false,
         "test_c_held_value": null,
-        "verdict": "REFUSED -- test (a) named ['walmart.com'] and test (b) named walmex.mx; the two independent tests disagree, so neither is taken."
+        "verdict": "REFUSED -- test (a) named ['walmart.com'] and test (b) named walmex.mx; the two independent tests disagree, so neither is taken.",
+        "conflict_broken_by": {
+          "bloomberg_root": "WALMEX",
+          "excluded_candidate": "walmart.com",
+          "excluded_is": "Walmart Inc, the US parent, Bloomberg root WMT US"
+        }
       }
     },
     {
