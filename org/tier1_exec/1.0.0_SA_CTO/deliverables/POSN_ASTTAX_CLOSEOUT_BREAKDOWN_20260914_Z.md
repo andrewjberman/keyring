@@ -1,10 +1,16 @@
 # POSN_ASTTAX -- CLOSE-OUT BREAKDOWN (for Andrew's alignment, BEFORE any worker)
 
-**Author:** `1.0.0_SA_CTO~Z` (L2/L4 owner) - **Date:** 2026-09-14, v0.4 ~17:4xZ
+**Author:** `1.0.0_SA_CTO~Z` (L2/L4 owner) - **Date:** 2026-09-14, v0.5 ~17:5xZ
 **On:** Andrew-direct ~16:5xZ, record `ANDREW_DIRECT_20260914_165xZ_SITEZ_POSN_ASTTAX_ONLY_BREAKDOWN_BEFORE_WORKERS.md` @`f529179076`
 **Built from:** `4.0.0_SA_CRO~Z` brief (v0.1 @`ee4b7e5539`, v0.2 @`f846dd72da`, v0.3 @`727b82e8d2`; row `Z-S65`); round-4
 packet `ledger/ROUND4_PACKET.md`; worker results U1 (`~15`), U3 (`~16`), U4 (`~17`); PRD v0.6 @`ded02d9a9c`; portal pin `e85f6eb84f`.
-**Status:** PROPOSAL **v0.4** (folds `2.0.0_SA_COO~Z`'s review, msgs 22857 / 22860). v0.2 folded `4.0.0_SA_CRO~Z`'s flags N1-N4 (msg 22839). **v0.3 folds Andrew's six rulings
+**Status:** **v0.5 -- ALIGNED BY ANDREW ~17:3xZ** at the `4.0.0_SA_CRO~Z` terminal (msg 22861; record
+`org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/ANDREW_DIRECT_20260914_173xZ_POSN_ASTTAX_BREAKDOWN_ALIGNED_ALL_RECS_APPROVED_ATTRIBUTION_UNTOUCHED.md`),
+VERBATIM: *"All recs approved. Keep in mind that attribution, for now at least, is staying to just Equities and Fixed
+Income on asset classes, because those are the only ones Yang uses, and we stick to his layout. Eventually that may
+change, but need to keep in mind that the work we're doing here is very much contained to "Positioning", we do not
+touch "Attribution""*. **The worker gate is RELEASED on the eight cells below.** v0.4 folded `2.0.0_SA_COO~Z`'s
+review (22857 / 22860). v0.2 folded `4.0.0_SA_CRO~Z`'s flags N1-N4 (msg 22839). **v0.3 folds Andrew's six rulings
 at the `4.0.0_SA_CRO~Z` terminal ~17:2xZ** (msg 22842; record
 `org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/ANDREW_DIRECT_20260914_172xZ_POSN_ASTTAX_SIX_CARDS_RULED.md` @`727b82e8d2`)
 and the card-4 routing (msgs 22850, 22852, 22855).
@@ -46,7 +52,7 @@ characteristics computed server-side by an additional lambda. No Yang-vs-residua
 WARN: "summed" must not add Yang's copy of a model on top of BD's -- BD's per-sleeve figure already includes what sits
 inside the model (LT VXX: BD 1.87; adding Yang's 1.50 would read 3.37). Open item A in s.5 until he confirms.
 
-## 3. THE WORK -- round 5, one issuance, 9 cells
+## 3. THE WORK -- round 5, one issuance, 8 cells (F4 removed by Andrew's "we do not touch Attribution")
 
 | cell | what | where | depends on |
 |---|---|---|---|
@@ -57,10 +63,9 @@ inside the model (LT VXX: BD 1.87; adding Yang's 1.50 would read 3.37). Open ite
 | **F1** | Colour registry: `structured` (pink) and `commodities` (a NEW **yellow** token, ruled; not amber, which is Cash); fix `'Commodities'` currently a shade of equity blue (`:308`); sub-asset colours for `Metals` and `Hedge` | `portal/src/lib/chartColors.ts` | -- |
 | **F2** | Positioning renders five classes: order literal `HoldingsTab.tsx:1392`, colour map `:215`, drop the Hedge->Equity fold `:1381-1383`; one row per class `PositioningSummary.tsx:545-546`; allocation type widened to five keys | `portal/src/pages/Positioning/` | F1 token names fixed in the order |
 | **F3** | Satellites mode reads `holdings.json` (totals + labels) and B4's characteristics artifact and renders them; no computation in the adapter; the satellite's as-of is BD's partition date; Models and ETFs modes untouched | `portal/src/pages/Positioning/shared/satelliteAdapter.ts` (+ `src/api/endpoints/satelliteRegistry.ts`) | B2 + B4 schemas fixed in the order |
-| **F4** | No-regression guard, Attribution page: the same two-class literal in three files, extended to five -- ONLY so the retag does not silently drop rows there (open item D) | `SelectionTab.tsx:321`, `AssetAllocationSummary.tsx:92`, `StylePolicyComparison.tsx:156`, **plus the two colour keys (structured, commodities) in `src/pages/Attribution/constants/holdings-shared.tsx:67-110`** -- those three readers bind colour there, not in `chartColors.ts`, so a literal without the keys renders an undefined swatch | item D |
 | **R1** | THE RETAG, last: the 12 tickers' `asset_class` AND the ruled `sub_asset_class` values (Metals / Hedge, item B) in BOTH stores (DynamoDB `etf-classifications` + `ETF_CLASSIFICATIONS`); every write level-explicit; VNQ `management_style` fixed; then the bar on the local build over all 9 satellites and both other modes: served labels right, weight unchanged, served rows = rendered rows, class subtotals = total. FWD-5 graded on the retag itself (rows changed in the one place, every mode reflecting it with no portal edit) | both stores; local build | B1, B2, B4 deployed; B3 landed; F1-F3 built |
 
-**Sequencing (three waves, max concurrency 5):** B1, B2, B3, F1, F4 in parallel; B4, F2, F3 in parallel once their orders
+**Sequencing (three waves, max concurrency 4):** B1, B2, B3, F1 in parallel; B4, F2, F3 in parallel once their orders
 fix the token names and the two artifact schemas up front; orders carry full paths at the pin; **R1 strictly last** -- a retag into a two-class page hides the row while its weight stays
 in the total (the Cash defect PROD v2.1.167 already shipped once).
 
@@ -83,7 +88,7 @@ every R1 write names its level.
 3b. The deploy preconditions land BEFORE the issuance (a worker cannot wait on a sign-off): CTO+COO never-widen halves
    for B1 (both functions, both served artifacts, writer census N printed) and B2 (the re-deployed registry producer
    plus the new key), cited in the orders; B4's non-application stated in its order.
-4. `2.0.0_SA_COO~Z` decomposes round 5 to s.3's nine cells. **Any deviation from s.3 comes back to Andrew before the
+4. `2.0.0_SA_COO~Z` decomposes round 5 to s.3's eight cells. **Any deviation from s.3 comes back to Andrew before the
    issuance.** Portal commits land on ONE drain ref, `refs/drains/posn-5-portal`, cut from `e85f6eb84f` and recorded in
    `ledger/PORTAL_REFS.md`; the gitlink does not move.
 
@@ -101,21 +106,23 @@ same-day ad-hoc Bloomberg pull -- **Andrew's trade** (open item H).
 the Positioning page; 3 a new yellow token; 4 GLD + VXX into the Bloomberg daily pull; 5 labelled-zero benchmark rows;
 6 models untouched, an additional lambda for weighted characteristics.
 
-**STILL OPEN -- each with the recommendation:**
+**A-G APPROVED by Andrew ~17:3xZ ("All recs approved"), with D overridden to OUT. H below is being confirmed:**
 - **A. "Summed" = BD's total across the satellite's sleeves, NOT Yang's number added on top.** **REC: yes** (adding
   Yang's copy double-counts: LT VXX would read 3.37 instead of 1.87). Also put by `4.0.0_SA_CRO~Z` at its terminal.
-- **B. Sub-asset mapping for the rest of the 12.** **REC:** Metals = GLD, IAU, SLV; Hedge = VXX, VIXY, UVXY, QBER;
-  DBC, GSG, USO, PDBC keep their current sub-asset (broad commodity index / oil); VNQ keeps its own.
+- **B. Sub-asset mapping for the rest of the 12.** **APPROVED:** Metals = GLD, IAU, SLV; Hedge = VXX, VIXY, UVXY, QBER;
+  DBC, GSG, USO, PDBC keep their current sub-asset (broad commodity index / oil); **VNQ -> Real Estate**.
 - **C. Retag set = the 12:** Commodities -- DBC, GLD, GSG, IAU, SLV, USO, PDBC; Structured -- VXX, VIXY, UVXY, QBER;
   Alternatives -- VNQ; BIPC stays Equity. **REC: yes.**
-- **D. F4, three one-line guards on the Attribution page.** **REC: yes** -- without them the retag makes Attribution
-  silently drop commodity rows while keeping their weight in the total.
+- **D. F4 -- OUT.** Andrew: *"we do not touch Attribution"*; Attribution stays two-class on Yang's layout. ACCEPTED
+  CONSEQUENCE, not a defect to file: after R1, VXX (and any retagged ticker Yang's models hold) drops out of
+  Attribution's per-class groups while its weight stays in the totals.
 - **E. Cut from this close-out:** the dormant `is_hedge()` helper and reconciling the second table `bd-securities`
   (9,631 rows; disagrees on 13 of 13). Keep only B3. **REC: yes.**
 - **F. Done = backend deployed + frontend built and committed behind the freeze; promote on your separate word; the
   "yes" to labelled-zero benchmarks widens the 2026-09-13 deploy approval to `yang-generate-allocation-summary`.**
   **REC: yes.**
-- **G. Alignment on this breakdown releases the worker gate** -- `2.0.0_SA_COO~Z` then issues the nine cells.
+- **G. RELEASED.** `2.0.0_SA_COO~Z` issues the eight cells after the round-4 slug, `ROUND_ANALYSIS.round4` and PRD v0.7
+  signed (s.4).
 - **H. Bloomberg pull "today":** land the edit today and take 2026-09-15 as the first captured day, or ALSO run a
   same-day ad-hoc pull to capture 2026-09-14 (a download-class Bloomberg act, your per-use word). **REC: land today;
   the ad-hoc pull only if the 2026-09-14 characteristics matter to you** -- B4 renders NULL until data exists either way.
@@ -123,7 +130,7 @@ the Positioning page; 3 a new yellow token; 4 GLD + VXX into the Bloomberg daily
 ## 6. OUT OF SCOPE -- named so no worker picks them up
 
 - Changes to the Models mode or Yang's model data (ruled); any Yang-vs-BD comparison column (ruled).
-- CMA/Philosophy frontend (Yang's sheet, later); AdvisorIntelligence readers; Attribution beyond F4.
+- CMA/Philosophy frontend (Yang's sheet, later); AdvisorIntelligence readers; **the Attribution page, entirely** (ruled).
 - `bd-securities` reconciliation; retiring the 136-entry seed dict (only the 12 rows change in it).
 - The Yang-vs-BD model drift beyond GLD/VXX (ICSH, BIV) -- a Yang/Andrew reconciliation, not a defect.
 - The SPYM duplicate row, VXX beta anomaly, the `opal-partners-data` ETF publisher.
