@@ -1,12 +1,11 @@
 {
   "prd": "MDPF_CANON_PRD.md",
-  "prd_version": "v2.1",
-  "prd_pin": "6ab0a19bd4b1f6cd97a189c4bc7e82a095746518",
+  "prd_version": "v2.2",
+  "prd_pin": "ef21e346608974de3611bd69ee36a1a110a6b355",
   "half": "ratified-text",
-  "half_hash": "b5caa547cd1557238912a8dd083f8d1a464381e0aa7d99c245208036023b9d60",
-  "verdict": "REFUSED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/PRD_REVIEW_MDPF_CANON_v2.1_RATIFIED_TEXT_HALF_20260914.md@e6462c2f67",
+  "half_hash": "d5177552975dceaaca733a6e8d5a790765891b9fcf7b6ef5e77ccece7b5e1fac",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/PRD_REVIEW_MDPF_CANON_v2.2_RATIFIED_TEXT_HALF_20260914.md@017638fd25",
   "signed_by": "3.0.0_SA_CVO",
-  "signed_at": "2026-09-14T09:38:20Z",
-  "reason": "R2: the CONTRACTS route row serves a firm segment only on tenant==segment, refusing the internal opal-capital staff (and aliases) that the scoped router DEC-5 inherits admits (index.mjs:367-373); the frozen portal's internal selector calls /api/general/mdpf/{firm}/. R1 closed."
+  "signed_at": "2026-09-14T10:07:45Z"
 }
