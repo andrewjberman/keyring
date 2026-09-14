@@ -4477,6 +4477,32 @@ Andrew asked for (msg 22917); it concerns this project's portal files meeting an
   "spec_asserts": "TO-V2-1 V2-AC13 (amended) and its hand-over notes: write the CHANGELOG entry 'in the helper's exact shape (the entry object built at record-terraform-deploy.sh:600-700)', with 'deployed_commit is the commit the helper would have named (your code commit 97fe1221bd, not the recorder's own commit)'.",
   "world_is": "The helper would have named f4e4f6ef620bbe8aa1498991e9f2c44a1ad1c385 with version untagged-f4e4f6ef (:203/:442, printed by the recorder itself at 707f6ad8fb); 97fe1221bd is the deployed code commit, which is the better record of what was deployed but is not what the helper's rule produces. The ordered value was written, self-consistently across version/deployed_commit/deployed_commit_short, and the divergence is recorded here rather than silently absorbed.",
   "notes": "Two shapes exist in this round for the same class: slot ~23's portal-auth entry at 4fd5ce488f used the helper's COMMIT_SHA (HEAD at record time) for deployed_commit and disclosed its functions_updated scoping; this entry uses the deployed code commit. If the round wants ONE convention, that is the issuer's call and both entries are one-field edits."
+},
+{
+  "id": "POSN_ASTTAX-Z-S97",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T21:13:44Z",
+  "one_line": "DISARM of W20-S9 (ARMED): the by-hand CHANGELOG entry's deployed_commit. RULED, one convention for the round: deployed_commit / deployed_commit_short / version key on the DEPLOYED CODE COMMIT the artifact was built from (the build pin, the map's last_deployed_commit) -- the entry ~20 wrote (97fe1221bd, untagged-97fe1221) and the entry ~23 wrote (0f946931b5, its code commit) already share it; the helper's own HEAD-at-record-time rule would have named a ledger commit (f4e4f6ef62) that shipped no byte. The issuer's 'de-duplicate on the version label' phrase was loose and is withdrawn: a fixed recorder run at a later HEAD mints a different label regardless; the de-dup key for one deploy is (function, artifact sha256), which every by-hand entry in this round carries and the helper's own artifacts loop would have omitted for this function.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE TWO CANDIDATES, BOTH MEASURED BY THE WORKER AT THE BYTES: the helper's COMMIT_SHA = rev-parse HEAD at record time (:203) with VERSION_LABEL untagged-${COMMIT_SHORT} (:442) -- f4e4f6ef62 / untagged-f4e4f6ef at 20:04:00Z, a LEDGER leg commit; versus the deployed code commit 97fe1221bd, the pin fed to build_package.py and the map row's last_deployed_commit. commits[] (2 records over the pipeline pathspec) and previous_commit (42dd9e8c81) are identical under either candidate, so the divergence is confined to three fields.",
+      "WHY THE CODE COMMIT IS THE CONVENTION: a CHANGELOG entry answers 'what was deployed'; the helper's HEAD-at-record-time is an accident of commit ORDER inside one worktree (a ledger commit landed between the code and the record) and can name a commit that shipped no byte. The map's last_deployed_commit already carries the code commit for the same deploy; one key for both carriers.",
+      "THE ARTIFACTS ROW: the helper's loop (:668-686) admits a function only when its map row carries artifact_s3_key AND artifact_sha256; the cot row carries deployed_code_sha256 instead, so the helper would have written zero artifact rows for the deployed function and three for untouched siblings. The by-hand entries carry the true artifact (key + sha256) -- the de-dup key that survives a recorder fix.",
+      "WHY GRADUATED: both entries in the round already follow the convention; nothing is edited; the withdrawn phrase is replaced by a key that discriminates."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W20-S9"
+  ],
+  "spec_asserts": "TO-V2-1 V2-AC13 hand-over note: deployed_commit is the commit the helper would have named (your code commit 97fe1221bd); Z-S90: a later fixed recorder de-duplicates on the version label.",
+  "world_is": "The helper would have named the ledger commit f4e4f6ef62 (its rule is HEAD at record time); the worker wrote the ordered code commit self-consistently across the three fields and filed the divergence; a fixed recorder's future label cannot equal either.",
+  "notes": "For the round analysis: the recorder's fix (CI lane) should key deployed_commit on the build pin, not on HEAD at record time, and admit deployed_code_sha256 in its artifacts loop."
 }
 ]
 ```
