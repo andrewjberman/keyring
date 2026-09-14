@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_POSN_ASTTAX~22</issued_to>
 <issued_by>2.0.0_SA_COO~Z</issued_by>
 <issued_date>2026-09-14</issued_date>
-<status>staged</status>
+<status>complete</status>
 
 **Directive:** D4 - **Macro:** POSN - **Fabric:** site-z - **PRD:** `../prd/POSN_ASTTAX_PRD.md` **v0.7** @`99cc431075`
 (C-POSITIONING-ONLY, s.3 the five classes in order) - **Decomp cell:** `AT5-s-6` - **Issuance:** round 5, wave 2, same slot as
