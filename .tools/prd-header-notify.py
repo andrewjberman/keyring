@@ -556,7 +556,14 @@ def post_commit(root, at=None):
                   "the L6 gate refuses a task order against it meanwhile"
                   % (rel, sha[:10], now_h["prd_version"], ", ".join("%s (%s)" % (h, ev["halves"][h]["state"]) for h in missing)))
         else:
-            sent += _dispatch(root, state, dict(base_row, to=RECIPIENT, history=[]))
+            lane = _coo_target(root, rel)
+            row = dict(base_row, to=lane, history=[], **{"from": _prd_author(root, rel)})
+            if lane:
+                sent += _dispatch(root, state, row)
+            else:
+                row["held"] = "no coo_lane on the tree row; held until a lane is seated"
+                state.append(row)
+                print("[prd-notify] %s @%s: COO delivery HELD -- %s" % (rel, sha[:10], row["held"]))
     # ---- L4-R: a sign-off landed in this commit -> re-check its PRD and release the COO delivery if complete ----
     for so_rel in [f for f in touched if SIGNOFF_RE.match(f)]:
         prd_dir = SIGNOFF_RE.match(so_rel).group(1)
@@ -581,9 +588,9 @@ def post_commit(root, at=None):
         # The release goes to the project's ROUND HOLDER (project.json coo_lane) when the tree row names one; the base
         # serial is a hole when only lanes are live (measured 2026-09-11: ten IRPT rows QUEUED to 2.0.0_SA_COO, attempts=6,
         # while ~B/~F did the work off the CTO's own messages; DSGN_REBRND's release UNSENT to the base).
-        recipient = _coo_lane_of(root, prd_rel) or RECIPIENT
+        recipient = _coo_target(root, prd_rel)
         already = [r for r in state if r.get("kind") == "prd" and r.get("path") == prd_rel
-                   and r.get("prd_version") == h.get("prd_version") and r.get("to") == recipient]
+                   and r.get("prd_version") == h.get("prd_version")]
         if already:
             print("[prd-notify] %s: both sign-offs present; COO delivery for %s at %s already recorded (id=%s)"
                   % (so_rel, prd_rel, h.get("prd_version"), already[-1].get("msg_id")))
@@ -591,8 +598,14 @@ def post_commit(root, at=None):
         row = {"kind": "prd", "project": h["project"], "directive": h.get("directive"), "fabric": h.get("fabric"),
                "prd_version": h["prd_version"], "status": h.get("status"), "sha": sha, "path": prd_rel,
                "brief_ref": h.get("brief_ref"), "outcomes": h.get("endpoint_outcomes"), "to": recipient,
-               "from": os.environ.get("OPAL_AGENT_SERIAL", ""), "attempts": 0, "msg_id": None, "sent_at": None,
+               "from": _prd_author(root, prd_rel), "attempts": 0, "msg_id": None, "sent_at": None,
                "history": [], "released_by": so_rel}
+        if not recipient:
+            row["held"] = "no coo_lane on the tree row; held until a lane is seated"
+            state.append(row)
+            print("[prd-notify] %s: BOTH sign-offs present at %s -> COO delivery RELEASED but HELD: %s"
+                  % (so_rel, h.get("prd_version"), row["held"]))
+            continue
         print("[prd-notify] %s: BOTH sign-offs present at %s -> COO delivery RELEASED (L4-R)" % (so_rel, h.get("prd_version")))
         sent += _dispatch(root, state, row)
     # ---- R7: remediation rows NEW in this commit, on either root -> the loop_target's owner ----
@@ -617,6 +630,36 @@ def post_commit(root, at=None):
             sent += _dispatch(root, state, row)
     _save_state(root, state)
     return sent
+
+
+def _prd_author(root, prd_rel):
+    """The seat a COO delivery is sent AS: the PRD's author -- the author of the last commit that touched the PRD.
+
+    NOT the committing seat. A release fires on the commit that lands the LAST sign-off, which is usually
+    3.0.0_SA_CVO's, and the broker's L8 guard refuses every 3.0.0_SA_CVO -> Tier-2 send while a tree project is
+    EXECUTING. Measured 2026-09-14: all six released COO deliveries in the state file read from=3.0.0_SA_CVO,
+    last_error 'HTTP Error 403: Forbidden', attempts 0 -- no L4->L5 handoff had gone through on a CVO release."""
+    who = _git(root, "log", "-1", "--format=%an", "--", prd_rel).stdout.strip()
+    return who if who.split("~")[0] == "1.0.0_SA_CTO" else _seat("1.0.0_SA_CTO")
+
+
+def _coo_target(root, prd_rel):
+    """The COO a release goes to: PRD_NOTIFY_TO when set, else the tree row's coo_lane, else None (HOLD)."""
+    return os.environ.get("PRD_NOTIFY_TO") or _coo_lane_of(root, prd_rel)
+
+
+def _release_decision(row, head_version, dep_stage, lane):
+    """PURE. What happens to an unsent COO delivery: ('retire', why) | ('hold', why) | ('send', lane).
+
+    A delivery for a superseded version, or for a project already past PRD, is retired rather than sent stale. With
+    no lane on the tree row it is HELD -- never sent to the base serial, which is a hole when only lanes are live."""
+    if head_version and head_version != row.get("prd_version"):
+        return "retire", "superseded: the PRD is at %s" % head_version
+    if dep_stage and dep_stage not in ("REGISTERED", "PRD"):
+        return "retire", "overtaken: the project is at %s, so its L5 has started" % dep_stage
+    if not lane:
+        return "hold", "no coo_lane on the tree row; held until a lane is seated"
+    return "send", lane
 
 
 def _dispatch(root, state, row):
@@ -708,6 +751,22 @@ def reoffer(root):
             retired += 1
             print("[prd-notify] RETIRED %s -- %s" % (_label(row), row["_retire"]))
             continue
+        if row.get("kind", "prd") == "prd" and not row.get("msg_id"):
+            head_h = _header(_blob(root, "HEAD", row["path"]))
+            verdict, arg = _release_decision(row, (head_h or {}).get("prd_version"),
+                                             _project_doc_of(root, row["path"]).get("dep_stage"), _coo_target(root, row["path"]))
+            if verdict == "retire":
+                retired += 1
+                print("[prd-notify] RETIRED %s -- %s" % (_label(row), arg))
+                continue
+            if verdict == "hold":
+                row["held"] = arg
+                keep.append(row)
+                continue
+            row.pop("held", None)
+            row["to"] = arg
+            if (row.get("from") or "").split("~")[0] != "1.0.0_SA_CTO":
+                row["from"] = _prd_author(root, row["path"])
         mid = row.get("msg_id")
         if mid and is_read(mid):
             retired += 1
@@ -816,6 +875,15 @@ def selftest(root):
     ok = _lb.route_half("brief", {"2.0.0_SA_COO~F"}, coo_lane_of_project="2.0.0_SA_COO~B")[0] == "2.0.0_SA_COO~F"
     print("  %-7s route_half: no CRO live -> a live COO not holding the round" % ("OK" if ok else "DEFECT"))
     fails += int(not ok)
+    # ---- the COO release decision, PURE (2026-09-14: six releases stuck at 403, sent as 3.0.0_SA_CVO) ----
+    _r = {"prd_version": "v1.2"}
+    for _name, _ok in (
+            ("a superseded version is retired, never sent stale", _release_decision(_r, "v1.3", "PRD", "2.0.0_SA_COO~G")[0] == "retire"),
+            ("a project already past PRD is retired as overtaken", _release_decision(_r, "v1.2", "EXECUTING", "2.0.0_SA_COO~G")[0] == "retire"),
+            ("no coo_lane -> HELD, never sent to the base serial", _release_decision(_r, "v1.2", "PRD", None)[0] == "hold"),
+            ("current version, at PRD, lane seated -> sent to that lane", _release_decision(_r, "v1.2", "PRD", "2.0.0_SA_COO~G") == ("send", "2.0.0_SA_COO~G"))):
+        print("  %-7s release: %s" % ("OK" if _ok else "DEFECT", _name))
+        fails += int(not _ok)
     # ---- delivery, LIVE: delivered is not read (the RC7 property) ----
     try:
         mid = send(root, me, "[prd-notify selftest] probe", "probe body -- delivered is not read")
