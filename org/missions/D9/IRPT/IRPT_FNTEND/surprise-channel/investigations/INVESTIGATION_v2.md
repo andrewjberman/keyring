@@ -2762,6 +2762,71 @@
     "spec_asserts": "TO-FE-s-29 limb 3: 'a body SEEDED through initialEnvelope / initialHoldingsEnvelope / initialReport'. F29-AC8: the population is every existing criterion whose invocation runs one of the suites that seed, 'measured at the cut: 6 test files'. F29-AC15: none of the four limbs 'can be satisfied by the party it grades'.",
     "world_is": "A limb that read only the three named props would admit a network-declared test that seeds the same fetched bodies through initialSnapshot, initialHoldingsSnapshot, initialSnapshotEnvelope, initialAnalysisReport, initialAnalysisRequests, initialRequests or initialJob. The graded party could satisfy it. So the limb reads the ten fetched-content props, derived by subtraction from the measured 15. That choice is this worker's, is stated in the checker's block comment, and is L9's to grade. Its only visible effect on the committed corpus is F15-AC7, which no order declares drives=\"network\" today. The cut's six-file census is exact for the three named props and one suite short for the ten.",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-14T03:15:33Z",
+    "id": "IRPT_FNTEND-W1-S55",
+    "one_line": "Ruling H partitions on Availability.producerState, but the view-fixture plane carries NO producerState on any availability -- a strict partition would send every fixture READY/STALE report to the panel; the gate reads the producer token when present and, when absent, the view state minus UNCERTAIN",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-FE-s-30 THE PLANE: 'Partition on `Availability.producerState` (contracts/index.ts:127, added by FE-s-25), never on the view's `EnvelopeState` alone.' BOUNDS: in fe-s-5/states.test.ts 'leave every other assertion as written' -- including its READY and STALE body assertions.",
+    "world_is": "FixtureAdapter.serve (portal src/api/endpoints/investor-reporting.ts, class at :1221) serves a round-1 VIEW fixture as it stands, and no view fixture carries producerState (e.g. fixtures/performance.partial-scope.json availability = {state, sourceAsOf, partialReason, publicReasonCode}). A gate that returned PANEL whenever producerState is absent would turn fe-s-5's READY (unsupported-benchmark, 49f-bd) and STALE (differing-dates) body assertions, and fe-s-10's parity body, red. On the network plane producerState is absent ONLY when no status arrived, and then the view state is always EXPLICIT_UNKNOWN_STATE (carryAvailabilityFromStatus, contracts/adapt.ts:275-292). So state/availability.ts reads producerState when present; when absent it honours the view state EXCEPT UNCERTAIN, the one view value the explicit unknown shares. On the network plane that is exactly 'absent -> panel'. This worker's reading of 'never on the view state alone'; L9's to grade.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal fcc91358 src/pages/InvestorReporting/state/availability.ts: isAnswerBearing -- producerState branch first, then EXPLICIT_UNKNOWN_STATE excluded, then ANSWER_BEARING_STATES.",
+        "predicate.test.ts deciding run: 'NO WIRE STATE      view=UNCERTAIN        producerState=(absent) -> PANEL' beside 'PRODUCER UNCERTAIN view=UNCERTAIN        producerState=UNCERTAIN -> BODY'; 'VIEW-FIXTURE PLANE AGREES WITH THE HAND-WRITTEN PARTITION: 9 of 9'.",
+        "Full suite after the change, server pointed at a closed port: 491 pass / 6 skip / 0 fail across 86 files (baseline 483 / 4 / 0 across 84) -- the READY/STALE fixture body assertions stayed green."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-14T03:15:33Z",
+    "id": "IRPT_FNTEND-W1-S56",
+    "one_line": "The prescribed dev-server launch re-optimized vite's dependency cache THROUGH the node_modules junction -- it rewrites the main checkout's shared node_modules/.vite, which every seat's dev server on this box reads",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "TO-FE-s-30 BOUNDS, Dev server: '`node_modules` is a junction; do not run `bun install`. Start once in the background from `<WS>/portal`: `/c/Users/AndrewBerman/.bun/bin/bun run dev --port <a free port>`'. The issuer's prompt: 'never delete through the junction'.",
+    "world_is": "vite.config.ts sets no cacheDir, so vite uses node_modules/.vite -- through the junction, the MAIN checkout's cache. On first start vite printed '(client) Re-optimizing dependencies because vite config has changed', i.e. it discarded and rebuilt that shared deps cache. Any worktree whose vite config differs from the last writer's triggers the same rewrite for every other dev server on the box. Not remedied here (vite.config.ts is outside the grant); the launch was run exactly as the order says.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "<WS>/.scratch/devserver.log, first lines after '$ vite --port \"5230\" --strictPort': '[vite] (client) Re-optimizing dependencies because vite config has changed', then 'VITE v7.3.5 ready in 1170 ms'.",
+        "portal c2eb8eb4 vite.config.ts: no cacheDir key (the server block at :28 sets port discipline, polling watch and proxy only).",
+        "The junction: <WS>/portal/node_modules -> C:/Users/AndrewBerman/Desktop/ajb_workspace/portal/node_modules (issuer's measured facts at the cut)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-14T03:15:33Z",
+    "id": "IRPT_FNTEND-W1-S57",
+    "one_line": "F30-AC8's invocation sets no IRPT_FE_DEV_PORT, so its browser arm drives WHATEVER answers on the default 5181 -- at this worker's port census a server this worker did not start answered there, so a bare re-run can grade a foreign worktree's page",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "F30-AC8: `cd <WS>/portal && timeout 240 bun test .../fe-s-3 .../fe-s-5 .../fe-s-30` -- 'PRECONDITION: none required -- your browser test reports SKIPPED without a server. Record which way you ran it.'",
+    "world_is": "The precondition helper (fe-s-27/_dev-server.ts:40, DEFAULT_DEV_PORT '5181') falls back to 5181 when the variable is unset. At this worker's port census `node dev-server-probe.mjs 5181 3000` printed 'PROBE REACHABLE HTTP 200 from http://localhost:5181/' -- not this worker's server (its own ran on 5230) -- and a later bare run read 'ABSENT (ECONNREFUSED from http://localhost:5181/)'. So whether AC8's browser arm SKIPS, or runs against another seat's bytes and fails or passes on them, depends on who holds 5181 at run time. This worker ran AC8 with IRPT_FE_DEV_PORT set explicitly both ways (5230 up: 48 pass / 0 fail; 5239 closed: 46 pass / 2 skip / 0 fail). A grader re-running the invocation as written inherits the ambiguity.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Port census, this worktree: 'PROBE UNREACHABLE ECONNREFUSED from http://localhost:5230/' then 'PROBE REACHABLE HTTP 200 from http://localhost:5181/' (before this worker started any server).",
+        "Bare run later (IRPT_FE_DEV_PORT unset): 'PRECONDITION: dev server on http://localhost:5181 -- ABSENT (ECONNREFUSED from http://localhost:5181/) [port from default; ...]', 0 pass, 0 fail.",
+        "portal c2eb8eb4 src/pages/InvestorReporting/__tests__/fe-s-27/_dev-server.ts:40 DEFAULT_DEV_PORT = '5181'; :43-46 devPort() env first, default second."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
