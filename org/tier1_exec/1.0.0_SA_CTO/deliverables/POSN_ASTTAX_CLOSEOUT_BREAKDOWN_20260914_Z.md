@@ -1,10 +1,10 @@
 # POSN_ASTTAX -- CLOSE-OUT BREAKDOWN (for Andrew's alignment, BEFORE any worker)
 
-**Author:** `1.0.0_SA_CTO~Z` (L2/L4 owner) - **Date:** 2026-09-14, v0.3 ~17:3xZ
+**Author:** `1.0.0_SA_CTO~Z` (L2/L4 owner) - **Date:** 2026-09-14, v0.4 ~17:4xZ
 **On:** Andrew-direct ~16:5xZ, record `ANDREW_DIRECT_20260914_165xZ_SITEZ_POSN_ASTTAX_ONLY_BREAKDOWN_BEFORE_WORKERS.md` @`f529179076`
 **Built from:** `4.0.0_SA_CRO~Z` brief (v0.1 @`ee4b7e5539`, v0.2 @`f846dd72da`, v0.3 @`727b82e8d2`; row `Z-S65`); round-4
 packet `ledger/ROUND4_PACKET.md`; worker results U1 (`~15`), U3 (`~16`), U4 (`~17`); PRD v0.6 @`ded02d9a9c`; portal pin `e85f6eb84f`.
-**Status:** PROPOSAL **v0.3**. v0.2 folded `4.0.0_SA_CRO~Z`'s flags N1-N4 (msg 22839). **v0.3 folds Andrew's six rulings
+**Status:** PROPOSAL **v0.4** (folds `2.0.0_SA_COO~Z`'s review, msgs 22857 / 22860). v0.2 folded `4.0.0_SA_CRO~Z`'s flags N1-N4 (msg 22839). **v0.3 folds Andrew's six rulings
 at the `4.0.0_SA_CRO~Z` terminal ~17:2xZ** (msg 22842; record
 `org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/ANDREW_DIRECT_20260914_172xZ_POSN_ASTTAX_SIX_CARDS_RULED.md` @`727b82e8d2`)
 and the card-4 routing (msgs 22850, 22852, 22855).
@@ -53,15 +53,15 @@ inside the model (LT VXX: BD 1.87; adding Yang's 1.50 would read 3.37). Open ite
 | **B1** | Deploy the already-committed hardened positioning generator (running bytes are 2026-08-18 and crash on a retag); set the three new classes' benchmark rows to an explicit, labelled zero (ruled yes) | TWO functions, TWO served artifacts: `yang-generate-positioning` (the deploy Andrew approved 2026-09-13) **and** `yang-generate-allocation-summary` `BENCHMARK_ALLOCATIONS` (new code). ONE never-widen sign-off (CTO+COO) naming both functions and both artifacts, writer census printed | -- |
 | **B2** | Satellite holdings: emit `holdings.json` beside `registry.json` -- per satellite, one total weight per ticker (BD components summed across sleeves), the per-sleeve breakdown, `asset_class` + `sub_asset_class` from ETFClassifier. No Yang comparison | `cot-satellites-registry-producer` + its IAM in `infra/aws/terraform/cot-pipeline/satellites-registry-producer.tf` (second pinned PutObject key; DynamoDB read on `etf-classifications`); deploy | -- |
 | **B3** | Seeder guard: apply the round-4 preserve-don't-clobber patch (+57/-2, `git apply --check` rc=0) so a re-seed cannot revert the retag (measured: it reverts 4 of 4) | `data/black_diamond/scripts/classification/seed_canonical_securities.py` (lane POD4) | -- |
-| **B4** | **The additional lambda (ruled):** per satellite, weighted aggregates of fee / yield / duration / beta / returns = `holdings.json` weights x per-ticker characteristics (from Yang's `positioning_data.json` `current_holdings` where a Yang book holds the ticker; from the Bloomberg daily pull once GLD/VXX land there; NULL otherwise -- the null-weight share printed as coverage, never silently renormalised); writes one characteristics artifact beside `holdings.json`. A separate function, per his word "an additional lambda" | new function + Terraform + IAM (read `holdings.json`, read the positioning JSON on `opal-data-portal-v2`, read the ETF pull output, write one pinned key); runs after B2 on its schedule; no monitor | B2 schema fixed in the order |
+| **B4** | **The additional lambda (ruled):** per satellite, weighted aggregates of fee / yield / duration / beta / returns = `holdings.json` weights x per-ticker characteristics (from Yang's `positioning_data.json` `current_holdings` where a Yang book holds the ticker; from the Bloomberg daily pull once GLD/VXX land there; NULL otherwise -- the null-weight share printed as coverage, never silently renormalised); writes one characteristics artifact beside `holdings.json`. A separate function, per his word "an additional lambda" | new function + Terraform + IAM (read `holdings.json`, read the positioning JSON on `opal-data-portal-v2`, read the ETF pull output, write one pinned key); its OWN EventBridge schedule offset after B2's, never success-of-upstream as the only trigger; no monitor. New key only, so never-widen is a stated non-application; ledger entry, `safe-apply`, `comp-iam gaps`. The cross-firm gate enumeration (`.tools/ds-precommit-check.py`) is read at the cut -- if it refuses the portal-bucket read, that comes back to Andrew before issuance | B2 schema fixed in the order |
 | **F1** | Colour registry: `structured` (pink) and `commodities` (a NEW **yellow** token, ruled; not amber, which is Cash); fix `'Commodities'` currently a shade of equity blue (`:308`); sub-asset colours for `Metals` and `Hedge` | `portal/src/lib/chartColors.ts` | -- |
 | **F2** | Positioning renders five classes: order literal `HoldingsTab.tsx:1392`, colour map `:215`, drop the Hedge->Equity fold `:1381-1383`; one row per class `PositioningSummary.tsx:545-546`; allocation type widened to five keys | `portal/src/pages/Positioning/` | F1 token names fixed in the order |
-| **F3** | Satellites mode reads `holdings.json` (totals + labels) and B4's characteristics artifact and renders them; no computation in the adapter; the satellite's as-of is BD's partition date; Models and ETFs modes untouched | `portal/src/pages/Positioning/shared/satelliteAdapter.ts` (+ endpoint) | B2 + B4 schemas fixed in the order |
-| **F4** | No-regression guard, Attribution page: the same two-class literal in three files, extended to five -- ONLY so the retag does not silently drop rows there (open item D) | `SelectionTab.tsx:321`, `AssetAllocationSummary.tsx:92`, `StylePolicyComparison.tsx:156` | item D |
-| **R1** | THE RETAG, last: the 12 tickers' `asset_class` AND the ruled `sub_asset_class` values (Metals / Hedge, item B) in BOTH stores (DynamoDB `etf-classifications` + `ETF_CLASSIFICATIONS`); every write level-explicit; VNQ `management_style` fixed; then the bar on the local build over all 9 satellites and both other modes: served labels right, weight unchanged, served rows = rendered rows, class subtotals = total. FWD-5 graded on the retag itself (rows changed in the one place, every mode reflecting it with no portal edit) | both stores; local build | B1 deployed, B3 landed, F1-F3 built |
+| **F3** | Satellites mode reads `holdings.json` (totals + labels) and B4's characteristics artifact and renders them; no computation in the adapter; the satellite's as-of is BD's partition date; Models and ETFs modes untouched | `portal/src/pages/Positioning/shared/satelliteAdapter.ts` (+ `src/api/endpoints/satelliteRegistry.ts`) | B2 + B4 schemas fixed in the order |
+| **F4** | No-regression guard, Attribution page: the same two-class literal in three files, extended to five -- ONLY so the retag does not silently drop rows there (open item D) | `SelectionTab.tsx:321`, `AssetAllocationSummary.tsx:92`, `StylePolicyComparison.tsx:156`, **plus the two colour keys (structured, commodities) in `src/pages/Attribution/constants/holdings-shared.tsx:67-110`** -- those three readers bind colour there, not in `chartColors.ts`, so a literal without the keys renders an undefined swatch | item D |
+| **R1** | THE RETAG, last: the 12 tickers' `asset_class` AND the ruled `sub_asset_class` values (Metals / Hedge, item B) in BOTH stores (DynamoDB `etf-classifications` + `ETF_CLASSIFICATIONS`); every write level-explicit; VNQ `management_style` fixed; then the bar on the local build over all 9 satellites and both other modes: served labels right, weight unchanged, served rows = rendered rows, class subtotals = total. FWD-5 graded on the retag itself (rows changed in the one place, every mode reflecting it with no portal edit) | both stores; local build | B1, B2, B4 deployed; B3 landed; F1-F3 built |
 
-**Sequencing:** B1, B2, B3, F1, F4 in parallel; B4, F2, F3 in parallel once their orders fix the token names and the
-two artifact schemas up front; **R1 strictly last** -- a retag into a two-class page hides the row while its weight stays
+**Sequencing (three waves, max concurrency 5):** B1, B2, B3, F1, F4 in parallel; B4, F2, F3 in parallel once their orders
+fix the token names and the two artifact schemas up front; orders carry full paths at the pin; **R1 strictly last** -- a retag into a two-class page hides the row while its weight stays
 in the total (the Cash defect PROD v2.1.167 already shipped once).
 
 **Encoding ruled here at L4 (this seat's call, per 22842/22849):** `Hedge` is a `sub_asset_class` value under
@@ -71,16 +71,21 @@ every R1 write names its level.
 ## 4. BEFORE THE ISSUANCE -- seat steps, no workers
 
 1. `2.0.0_SA_COO~Z` closes the four carried round-2/3 orders: `TO-S2-1`/`TO-S3-1` superseded by `TO-T6-1`/`TO-T7-1`
-   (their own headers say so); `TO-T6-1` cancelled as written, re-cut as R1; `TO-T7-1` cancelled (item E). Until
+   (their own headers say so) -- **DONE @`93135eb5b9`**; `TO-T6-1` cancelled as written, re-cut as R1; `TO-T7-1` cancelled (item E). Until
    these four are terminal, the round-4 slug is refused (open orders count per project).
 2. `3.0.0_SA_CVO~Z` adjudicates round 4 (`ROUND4_PACKET.md`) and cuts the slug. **In progress.**
 3. `1.0.0_SA_CTO~Z` writes `ROUND_ANALYSIS.round4` and PRD v0.7 carrying the rulings: FWD-6 narrowed to the Positioning
    page (ENDPOINT change -> `3.0.0_SA_CVO~Z` re-signs); `C-TWO-SURFACES` replaced; `C-SATELLITE-SOURCE` (one total per
    ticker from BD, labelled, characteristics by the additional lambda) and surface row S4; the sub-asset encoding;
-   the retag set; the scope-outs in s.6; disarms `Z-S65`, settles `Z-W15-S2` / `Z-W17-S3`. `4.0.0_SA_CRO~Z` re-signs the
+   the retag set; the scope-outs in s.6; disarms `Z-S65`, settles `Z-W15-S2` / `Z-W17-S3`, and dispositions `Z-W1-S1` / `Z-C-S1` (the `is_hedge` row, served
+   by no cell once item E cuts it). `4.0.0_SA_CRO~Z` re-signs the
    brief half.
+3b. The deploy preconditions land BEFORE the issuance (a worker cannot wait on a sign-off): CTO+COO never-widen halves
+   for B1 (both functions, both served artifacts, writer census N printed) and B2 (the re-deployed registry producer
+   plus the new key), cited in the orders; B4's non-application stated in its order.
 4. `2.0.0_SA_COO~Z` decomposes round 5 to s.3's nine cells. **Any deviation from s.3 comes back to Andrew before the
-   issuance.** Portal commits land on ONE named POSN drain ref cut from `e85f6eb84f`; the gitlink does not move.
+   issuance.** Portal commits land on ONE drain ref, `refs/drains/posn-5-portal`, cut from `e85f6eb84f` and recorded in
+   `ledger/PORTAL_REFS.md`; the gitlink does not move.
 
 **Card 4 (GLD + VXX into the Bloomberg daily pull) is NOT a round-5 cell.** It is a two-string edit to
 `integrations/bloomberg/pipeline/etf_daily_pull.py:45` `FUNDS`, lane `ANY_EXEC_OR_AE`. On this device the scheduled
