@@ -4379,6 +4379,79 @@ Andrew asked for (msg 22917); it concerns this project's portal files meeting an
   "spec_asserts": "TO-V9-1 V9-AC11 <expect> @51731e2a10 (SECOND AMENDMENT, the ISSUER'S RULING clause): '... the two new leaves admitted and an unlisted leaf refused by the NEW version only (the negative control), N of N comparisons printed with 0 outside the bound.'",
   "world_is": "nope.json is refused 404 unknown_satellites_resource by BOTH the prior published version (v25) and the new one (v26), on both synthetic identities -- 4 of 4 reads IDENTICAL. The pre-edit router refuses every leaf except registry.json, so 'refused by the NEW version only' describes a state no vintage of this function produces; the satisfiable control is 'still refused by the NEW version', which passed.",
   "notes": "Nothing is blocked and nothing is re-run: the flip proceeds on V9-AC11's operative clause under Z-S92. Adjudication is the issuer's/L9's. This row is prospective only -- it changes no recorded output."
+},
+{
+  "id": "POSN_ASTTAX-Z-S94",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T21:06:14Z",
+  "one_line": "DISARM of W19-S8 (BLOCKING): V1-AC11 named a re-run of the yang state machine with its last SUCCEEDED input -- an input the pipeline CONSUMES (MoveToProcessed, CleanupUploads; 3 of 3 absent), on a run whose write set (28 Task states, an S3 delete, a CDN invalidation) exceeds the two signed keys. The worker refused correctly. RE-CUT: V1-AC11 (and V8-AC14, which this seat had cut with the SAME defect an hour earlier) invoke the generators DIRECTLY with their recorded events, then the pipeline's own invalidation lambda; both halves' R1 amendments now say so in the same words; the placeholder is renamed DRIVE_YANG_GENERATORS_RECORDED_EVENTS.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE ISSUER'S DEFECT, NAMED TWICE: the same wrong mechanism was cut into V1-AC11 (~18:5xZ) and again into V8-AC14 and the COO half (~20:3xZ) after the CTO's guidance -- the CTO half's own words were 'invokes, once each and in dependency order' the producers, and this seat rendered them as a state-machine run. All three are corrected in this commit; the CTO half needs no change.",
+      "THE RE-CUT'S RADIUS: one lambda invoke per generator with the event the state machine recorded (the worker holds GeneratePositioning's at .scratch/sfn_history.json event #83), writing exactly the signed keys; the second control is a list-objects of json/positioning/ before and after (no other key moves); the invalidation lambda moves no key and is the fire's own step -- stated in the COO half so the halves describe one act.",
+      "WHY GRADUATED: the refusal was the order working as designed; the corrected act is inside both halves and the worker already holds its inputs."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W19-S8"
+  ],
+  "spec_asserts": "TO-V1-1 V1-AC11 @acfd6e9b28 and TO-V8-1 V8-AC14 @c0fb96275f: start the state machine with the last SUCCEEDED input; the COO half R1 AMENDMENT (1) said the same.",
+  "world_is": "The named invocation cannot produce the named result today (the first state's Catch routes to PipelineFailed on the 404 manifest), and on the counterfactual branch the act is wider than the sign-off; the deploy itself is LANDED (V1-AC8/AC9/AC10) and the two served keys are unmoved at their pre-deploy VersionIds -- the covered no-regeneration state.",
+  "notes": "A refresh criterion names the PRODUCER and its recorded event, never a pipeline whose input it cannot replay."
+},
+{
+  "id": "POSN_ASTTAX-Z-S95",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T21:06:14Z",
+  "one_line": "DISARM of W19-S9 (INERT): this seat's mid-run note told the worker its tree carried 28 inherited non-ASCII bytes in lambda-source-map.json; the premise was FALSE for that worktree -- its branch had been fast-forwarded to acfd6e9b28 BEFORE the ~23 drain (866c69817f) landed those bytes on SITEZ, and none of the three commits the note named is an ancestor of the branch. The worker measured its own bytes, met the stricter original bar, and filed the premise. The drain then merged both sides semantically (15e269a4f0: 2090 leaves, pure ASCII).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE LESSON, THIS SEAT'S: a claim about a worker's tree is a claim about ITS ANCESTRY and is checked with `git merge-base --is-ancestor <commit> <branch>` before it is sent -- SITEZ's state after a later drain says nothing about a branch cut before it. The note cost nothing (the stricter bar was met and the relaxed form unused) and could have cost a downgraded grade.",
+      "WHY GRADUATED: no act is owed; the drain's semantic merge handled the true state of both sides and the detector reads 0 at HEAD."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W19-S9"
+  ],
+  "spec_asserts": "The issuer's note: the file at YOUR HEAD carries 28 non-ASCII bytes inherited from 7403e8c0e9 merged at 866c69817f.",
+  "world_is": "Detector 0 at acfd6e9b28 and at every commit of the branch; merge-base --is-ancestor non-zero for all three named commits. The note described SITEZ's state, not the worker's tree.",
+  "notes": "Ancestry first, then the note."
+},
+{
+  "id": "POSN_ASTTAX-Z-S96",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T21:06:14Z",
+  "one_line": "DISARM of W23-S6 (INERT): the SECOND AMENDMENT of TO-V9-1 wrote the deployed-bytes arm's negative control as 'an unlisted leaf refused by the NEW version only' -- unsatisfiable by construction, because the PRIOR version (v25) refuses every leaf but registry.json by design, the very refusal branch the cell was told to KEEP. The satisfiable control -- the unlisted leaf STILL refused by the new version (the allowlist did not widen) -- fired 2 of 2, both versions, both identities, and the ruling row Z-S92 states it without the word. TO-V9-1 is COMPLETE (bcfc6483e1); the wording is recorded, not rewritten after a PASS.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE ISSUER'S DEFECT, THE Z-S91 SHAPE AGAIN: a bar describing the OUTPUT's form by a word the world cannot produce ('only'), where the operative clause (the two new leaves admitted, the refusal branch kept) is exactly what was proved. Three form defects in one order's amendments (Z-S91, this row, the plan-path token of Z-S81) -- the next cut has its own clauses proof-read against what the instrument can print.",
+      "WHY GRADUATED: the bound is proved on both readings that matter, the order is terminal, and the two carriers (the criterion and Z-S92) are reconciled by this row for L9."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W23-S6"
+  ],
+  "spec_asserts": "TO-V9-1 V9-AC11 @51731e2a10: 'the two new leaves admitted and an unlisted leaf refused by the NEW version only (the negative control)'.",
+  "world_is": "nope.json refused 404 unknown_satellites_resource by BOTH versions on both identities (4 of 4); read literally the clause puts 2 of 16 rows outside the bound and commands a rollback of a correct deploy; read as the bound it describes (the allowlist widened by exactly two leaves, the refusal branch intact) it is met.",
+  "notes": "Not amended post-PASS (Z-S81's rule)."
 }
 ]
 ```

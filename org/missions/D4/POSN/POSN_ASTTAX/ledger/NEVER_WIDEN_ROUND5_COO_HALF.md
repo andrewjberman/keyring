@@ -93,11 +93,14 @@ all 12 x 3 values -- two instruments, one table.
 labels until then -- a wait (Rule 27). The mechanism is driven on demand; the scheduled fire stays as the organic confirmation leg.
 **NEVER#1 names the new reachable state (an off-clock producer run), and this half now covers it, line for line with the CTO half:**
 
-- **The act, in dependency order, once each:** (1) the yang data pipeline state machine started with its LAST SUCCEEDED input
-  (`infra/aws/terraform/yang-pipeline/yang-pipeline-definition.json`: `GeneratePositioning` runs in the both-PKLs branch,
-  `GenerateHoldingsAttribution -> GenerateAllocationSummaryAfterAttribution` serially in the attribution branch, the same code on
-  the same inputs as the scheduled fire) -- any generator the last input's branches skip is invoked directly with the event the
-  state machine passed it on the last execution that ran it (`get-execution-history`), never a hand-written event;
+- **The act, in dependency order, once each (amended ~21:1xZ on W19-S8):** (1) the three yang generators invoked DIRECTLY --
+  `yang-generate-positioning`, `yang-generate-holdings-attribution`, `yang-generate-allocation-summary` -- each with the event the
+  state machine passed it on the last execution that ran it (`get-execution-history`), never a hand-written event; the STATE MACHINE
+  IS NEVER STARTED: it consumes its own input (`MoveToProcessed`, `CleanupUploads`), so the last input is 3 of 3 absent, and its
+  write set of 28 Task states, an S3 delete and a CDN invalidation exceeds the signed keys; then `yang-invalidate-cloudfront`
+  invoked with its recorded event -- the pipeline's own step, whose write set is the CloudFront cache of the keys just written and
+  NO key -- so the render bars read the new bytes (the CTO half names the generators and the keys; this invalidation moves no key
+  and is stated here so the halves describe the same act);
   (2) `cot-satellites-registry-producer` invoked directly (`{}`, the trigger passes no date); (3) `cot-satellites-characteristics-producer`
   invoked directly (`{}`), after (2) because it reads holdings.json.
 - **The keys, and nothing else:** `json/positioning/positioning_data.json`, `json/positioning/allocation_summary.json`,
@@ -106,8 +109,8 @@ labels until then -- a wait (Rule 27). The mechanism is driven on demand; the sc
   on `opal-data-cot`. The ETF publisher (`etf_positioning_publisher.py`, `platinum/etfs/positioning_data.json`) is NOT invoked and
   stays on its own schedule, disclosed.
 - **Writers of the property: N = 6, UNCHANGED** -- the off-clock run is the same six writers' own code on the same inputs; no new
-  writer, no new key, no code change. The state machine's other steps (manifest, cleanup, capture-output-versions, CloudFront
-  invalidation) run as they do on every scheduled fire; the invalidation is the same one the fire issues.
+  writer, no new key, no code change. The state machine's other steps (manifest, cleanup, capture-output-versions) do NOT run --
+  only the generators and the invalidation, which are the fire's own steps on the same inputs.
 - **Expected outcome, both branches.** **A:** every invocation returns success; each key's `generated`/`as_of` stamp and S3
   LastModified move past the retag time; `registry.json`'s body is byte-identical to its prior version; the per-ticker per-level
   target comparison reads the REFRESHED artifacts; the next scheduled fire is recorded as the organic leg, not waited on.
