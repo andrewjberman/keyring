@@ -476,10 +476,12 @@ complete` per the register, or his stand-down. ⚠ Open at Andrew, and NOT a hol
 *"One project per COO/seat."* and the ~16:1xZ `2.0.0_SA_COO~D`-seat event for LGIC_ENFORCE (both in the record).
 
 `2.0.0_SA_COO~F` **`/canonical-drive` DIRECTED over IRPT_FNTEND ONLY.** Andrew-direct 2026-09-14 ~16:3xZ at the
-`2.0.0_SA_COO~F` terminal. VERBATIM as he quoted it at the `1.0.0_SA_CTO` terminal (recorded in the ~G row's record):
-*"yes you will be continuing where you left off with /canonical-flow on IRPT_FNTEND. Once establishing state, and your
-last log on the subject, you will run /canonical-drive IRPT_FNTEND."* 10m (own active project). STOP-CONDITION:
-IRPT_FNTEND `status: complete`, or his stand-down.
+`2.0.0_SA_COO~F` terminal, VERBATIM: *"yes you will be continuing where you left off with /canonical-flow on IRPT_FNTEND.
+Once establishing state, and your last log on the subject, you will run /canonical-drive IRPT_FNTEND."* Record:
+`org/tier1_exec/2.0.0_SA_COO~F/deliverables/ANDREW_DIRECT_20260914_163xZ_COOF_CANONICAL_DRIVE_IRPT_FNTEND.md` @`428b4019e9`
+(relayed as 96634; the same words also reached the `1.0.0_SA_CTO` terminal, in the ~G row's record). 10m (own active
+project). STOP-CONDITION: IRPT_FNTEND `status: complete`, the project leaving DECOMP/EXECUTING/ROUND_CLOSE, or his
+stand-down.
 
 `2.0.0_SA_COO~D` **`/canonical-drive` DIRECTED over DSGN_REBRND ONLY.** Andrew-direct 2026-09-14 ~16:3xZ at the
 `2.0.0_SA_COO~D` terminal, VERBATIM: *"yes you will be continuing where you left off with /canonical-flow on DSGN_REBRND.
