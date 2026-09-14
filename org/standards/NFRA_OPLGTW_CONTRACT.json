@@ -1,0 +1,290 @@
+{
+  "contract_version": "1.0",
+  "project": "NFRA_OPLGTW",
+  "authority": "org/missions/D9/NFRA/NFRA_OPLGTW/prd/NFRA_OPLGTW_PRD.md#contracts",
+  "activation": "DESIGN_ONLY_NOT_A_GRANT",
+  "masters": {
+    "08242234": "SmartX",
+    "08335338": "BlackDiamond"
+  },
+  "datasets": [
+    "dim_position",
+    "dim_balance",
+    "dim_asset"
+  ],
+  "operations": [
+    "list",
+    "describe",
+    "query",
+    "download_filtered"
+  ],
+  "disabled_operations": [
+    "download_original",
+    "write"
+  ],
+  "tools": [
+    "schwab_get_access",
+    "schwab_list_files",
+    "schwab_describe_dataset",
+    "schwab_query",
+    "schwab_prepare_download"
+  ],
+  "principal_key": [
+    "tid",
+    "oid"
+  ],
+  "profile_statuses": [
+    "pending",
+    "active",
+    "revoked"
+  ],
+  "catalog_statuses": [
+    "complete",
+    "incomplete",
+    "unavailable"
+  ],
+  "grant_date_modes": [
+    "rolling_complete_window",
+    "fixed_dates"
+  ],
+  "query_modes": [
+    "rows",
+    "aggregate"
+  ],
+  "filter_operators": [
+    "eq",
+    "in",
+    "lt",
+    "lte",
+    "gt",
+    "gte",
+    "is_null"
+  ],
+  "aggregate_operators": [
+    "sum",
+    "min",
+    "max",
+    "count"
+  ],
+  "order_directions": [
+    "asc",
+    "desc"
+  ],
+  "error_codes": [
+    "AUTHENTICATION_REQUIRED",
+    "INSUFFICIENT_SCOPE",
+    "ENTITLEMENT_DENIED",
+    "UNAVAILABLE",
+    "INCOMPLETE_SNAPSHOT",
+    "INVALID_REQUEST",
+    "LIMIT_EXCEEDED",
+    "BUSY",
+    "EXPIRED_REFERENCE",
+    "SOURCE_CHANGED",
+    "DEPENDENCY_UNAVAILABLE",
+    "INTERNAL_ERROR"
+  ],
+  "proposed_initial_profile": {
+    "display_email": "menachem@opalinvest.com",
+    "tid": null,
+    "oid": null,
+    "status": "pending",
+    "all_accounts_proposed": true,
+    "approved_account_ids": [],
+    "date_mode": "rolling_complete_window",
+    "calendar_days": 30,
+    "anchor": "latest_complete_business_date_per_master_and_dataset",
+    "originals_enabled": false
+  },
+  "limits": {
+    "query_deadline_seconds": 30,
+    "source_objects": 12,
+    "source_compressed_bytes": 67108864,
+    "response_rows": 500,
+    "response_unicode_codepoints": 100000,
+    "response_utf8_bytes": 131072,
+    "export_rows": 250000,
+    "export_utf8_bytes": 52428800,
+    "ticket_seconds": 300,
+    "cursor_seconds": 300,
+    "per_principal_jobs": 1,
+    "global_jobs": 2,
+    "queue_size": 0,
+    "job_memory_bytes": 268435456,
+    "export_deadline_seconds": 30,
+    "auth_endpoint_seconds": 10,
+    "refresh_endpoint_seconds": 30,
+    "source_cache_seconds": 300,
+    "access_token_seconds": 900,
+    "refresh_absolute_seconds": 2592000,
+    "refresh_idle_seconds": 604800,
+    "filter_count": 20,
+    "filter_in_values": 100,
+    "group_fields": 10,
+    "aggregates": 10,
+    "order_fields": 10
+  },
+  "fields": {
+    "dim_position": [
+      "account_ref",
+      "business_date",
+      "cusip",
+      "ticker_symbol",
+      "l_s",
+      "quantity_settled_unsettled",
+      "quantity_settled",
+      "quantity_unsettled_long",
+      "quantity_unsettled_short",
+      "market_value_settled_unsettled",
+      "closing_price"
+    ],
+    "dim_balance": [
+      "account_ref",
+      "business_date",
+      "mkt_value_long",
+      "mkt_value_short",
+      "net_mv_positions",
+      "net_mv_plus_cash",
+      "cash_balance_settled_only",
+      "bank_sweep_ibf",
+      "bank_cash"
+    ],
+    "dim_asset": [
+      "cusip",
+      "ticker_symbol",
+      "security_description_line_1",
+      "security_description_line_2",
+      "security_description_line_3",
+      "closing_price",
+      "maturity_date",
+      "prod_code",
+      "prodcatg_code"
+    ]
+  },
+  "additive_fields": {
+    "dim_position": [
+      "quantity_settled_unsettled",
+      "quantity_settled",
+      "quantity_unsettled_long",
+      "quantity_unsettled_short",
+      "market_value_settled_unsettled"
+    ],
+    "dim_balance": [
+      "mkt_value_long",
+      "mkt_value_short",
+      "net_mv_positions",
+      "net_mv_plus_cash",
+      "cash_balance_settled_only",
+      "bank_sweep_ibf",
+      "bank_cash"
+    ],
+    "dim_asset": []
+  },
+  "quantity_sum_required_groups": [
+    "cusip",
+    "l_s"
+  ],
+  "forbidden_field_classes": [
+    "raw_account_id",
+    "account_title",
+    "tax_identifier",
+    "mailing_address",
+    "hidden_filter_operand",
+    "hidden_group_operand",
+    "hidden_sort_operand"
+  ],
+  "state_store": {
+    "service": "dynamodb",
+    "table": "opal-gateway-access-state",
+    "region": "us-east-1",
+    "account": "313476888478",
+    "record_types": [
+      "principal_profile",
+      "data_entitlement",
+      "oauth_client",
+      "oauth_code",
+      "oauth_refresh_family",
+      "download_ticket",
+      "catalog_snapshot",
+      "oauth_pending_authorization",
+      "operator_audit"
+    ],
+    "consistency": "strong_reads_and_conditional_transactions",
+    "ttl": "cleanup_only_never_authorization",
+    "key_namespaces": {
+      "POLICY": "profile/grant/approval/operator audit; operator writes only; no TTL or ordinary delete",
+      "RUNTIME": "client/pending-auth/code/refresh/ticket/catalog; runtime conditional writes and expiring records"
+    },
+    "runtime_policy_access": "strong read only; write actions require all LeadingKeys match RUNTIME#*"
+  },
+  "reader_role": "opal-mcp-emp-menachem-schwab-read",
+  "catalog_role": "opal-mcp-schwab-catalog-read",
+  "source_bucket": "opal-data-assets",
+  "data_prefixes": [
+    "schwab/08242234/silver/dim_position/",
+    "schwab/08242234/silver/dim_balance/",
+    "schwab/08242234/silver/dim_asset/",
+    "schwab/08335338/silver/dim_position/",
+    "schwab/08335338/silver/dim_balance/",
+    "schwab/08335338/silver/dim_asset/"
+  ],
+  "completion_prefixes": [
+    "schwab/08242234/meta/complete/",
+    "schwab/08335338/meta/complete/"
+  ],
+  "surface_ids": [
+    "S1",
+    "S2",
+    "S3",
+    "S4",
+    "S5",
+    "S6",
+    "S7",
+    "S8",
+    "S9",
+    "S10"
+  ],
+  "acceptance_ids": [
+    "A1",
+    "A2",
+    "A3",
+    "A4",
+    "A5",
+    "A6",
+    "A7",
+    "A8",
+    "A9",
+    "A10",
+    "A11",
+    "A12",
+    "A13",
+    "A14",
+    "A15",
+    "A16",
+    "A17",
+    "A18",
+    "A19",
+    "A20"
+  ],
+  "capacity": {
+    "target_instance_type": "t4g.small",
+    "target_architecture": "arm64",
+    "target_memory_mib": 2048,
+    "admission_existing_peak_rss_multiplier": 1.25,
+    "admission_os_reserve_bytes": 134217728,
+    "existing_workflow_p95_regression_max_fraction": 0.2,
+    "activation_requires_benchmark": true
+  },
+  "download_ticket_transport": "URL fragment to same-origin Origin/CSRF checked POST; never request URI or referrer",
+  "download_artifacts_per_ticket": 1,
+  "download_metadata": "same authenticated page, no second ticket redemption",
+  "audit_acknowledgment": "successful awaited S3 PutObject receipt in opal-mcp-audit Schwab prefix before data release",
+  "audit_event_types": [
+    "release_authorized",
+    "delivery_finished",
+    "denied",
+    "cancelled",
+    "failed",
+    "operator_revision"
+  ]
+}

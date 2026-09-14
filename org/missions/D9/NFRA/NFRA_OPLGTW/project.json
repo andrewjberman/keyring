@@ -1,0 +1,35 @@
+{
+  "project_code": "NFRA_OPLGTW",
+  "macro_code": "NFRA",
+  "directive": "D9",
+  "fabric": "laptop",
+  "pipeline": null,
+  "status": "scoping",
+  "dep_stage": "PRD",
+  "created": "2026-09-14",
+  "registered_under_tree": "2026-09-14",
+  "placement": "LAPTOP",
+  "pods": [],
+  "related": [],
+  "name": "Opal Gateway: authorized Schwab questions and CSV downloads in Claude",
+  "description": "Read-only Schwab access for a verified Opal employee through the existing Gateway, with separate masters, per-user entitlements, bounded queries, and authenticated filtered CSV downloads.",
+  "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_1511ET_NFRA_OPLGTW_D9_REGISTRATION_AND_PRD.md@45ce4e5b73",
+  "source_brief_ref": "org/tier2_senior/0.7.0_AE_CloudOps/deliverables/MENACHEM_SCHWAB_CLAUDE_ACCESS_20260914/SPEC.md@39a8c5eeca03666d3ef81dbccce6859506b572af",
+  "prds": [
+    "org/missions/D9/NFRA/NFRA_OPLGTW/prd/NFRA_OPLGTW_PRD.md"
+  ],
+  "decompositions": [],
+  "leads": {
+    "cto": "1.0.0_SA_CTO~A",
+    "coo": "2.0.0_SA_COO",
+    "cvo": "3.0.0_SA_CVO",
+    "cro": "4.0.0_SA_CRO"
+  },
+  "coo_lane": null,
+  "blocking": "L4 authored; L4-R signatures and independent ground-truth certification pending. Not decomposable until admitted. No task orders, implementation, deployment, or active user grant issued by this registration.",
+  "endpoint_ref": "org/missions/D9/NFRA/NFRA_OPLGTW/prd/NFRA_OPLGTW_PRD.md#endpoint-step-2-endpoint---forward",
+  "endpoint_approval_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_1524ET_NFRA_OPLGTW_ENDPOINT_APPROVED.md",
+  "fabric_ruling": "laptop inherited from D9 placement; current commission explicitly selects D9 / Opal Workflows.",
+  "thread_counter": 0,
+  "threads": []
+}
