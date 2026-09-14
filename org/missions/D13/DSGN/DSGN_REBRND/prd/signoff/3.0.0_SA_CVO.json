@@ -1,11 +1,12 @@
 {
   "prd": "DSGN_REBRND_PRD.md",
-  "prd_version": "v0.5",
-  "prd_pin": "01378b0a5bd6395ab725a2cf6dabaa77578bfaee",
+  "prd_version": "v0.7",
+  "prd_pin": "c27a779ee7e299d4412bb252ec369df67cabeb17",
   "half": "ratified-text",
-  "half_hash": "deb2e35abfc5091419400b16400f7af6d50dfd344218ccc0e905534d8fc22216",
-  "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/PRD_REVIEW_DSGN_REBRND_v0.5_RATIFIED_TEXT_HALF_20260914.md@9b3289461f",
+  "half_hash": "f5421024e4f0d3eafc8c0c97e76e0d19c18d7b6c0621b5c6364c5abaee39c62b",
+  "verdict": "REFUSED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/PRD_REVIEW_DSGN_REBRND_v0.6_RATIFIED_TEXT_HALF_20260914.md@b8aba1cc5f",
   "signed_by": "3.0.0_SA_CVO",
-  "signed_at": "2026-09-14T17:40:19Z"
+  "signed_at": "2026-09-14T18:57:51Z",
+  "reason": "R3 (half bytes identical at v0.6 and v0.7, f5421024e4f0): CONTRACTS preamble classes the band-world role rung DERIVED with no rule beside it; portal-opaque-ladder.json @401ad3b961 states it (one opacity, hue at brand navy, lightness the only lever) -- one clause"
 }
