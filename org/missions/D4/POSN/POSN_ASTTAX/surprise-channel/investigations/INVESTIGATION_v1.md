@@ -3644,3 +3644,58 @@ all seven mechanical criteria were measured and the verdict is NO-GO.
 }
 ]
 ```
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-W19-S8",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~19",
+    "surfaced_at": "2026-09-14T20:41Z",
+    "one_line": "V1-AC11 IS REFUSED, NOT FAILED-ON-A-BUG: the pipeline it tells the cell to re-run CONSUMES ITS OWN INPUT, so 'start the state machine with the LAST SUCCEEDED execution's input' names three S3 objects that no longer exist (3 of 3 read 404), and the first state's Catch would route the run straight to PipelineFailed with nothing regenerated; on the counterfactual branch where the input DID exist, the run's write set is 28 Task states -- including an S3 DELETE (CleanupUploads) and a CDN invalidation -- against a sign-off that names TWO served keys and says 'anything else -- NOT SIGNED'. The deploy itself is LANDED and verified (V1-AC8/AC9/AC10); what is stranded is the served-read leg L7.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE PREMISE, MEASURED PER OBJECT, DENOMINATOR PRINTED (the criterion's own invocation, timeout 900 python org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~19/regenerate_start_yangdatapipeline_last.py -> rc=2): the last SUCCEEDED execution is YangDataPipeline:20260911_v1-1c95bba7 (2026-09-12T11:03:26Z -> 11:07:23Z) and its input names s3://opal-data-portal-v2/uploads/manifest.json plus 'uploads/data 20260911 v1.pkl' and 'uploads/model 20260911 v1.pkl'. head_object on each: 404, 404, 404 -- 3 of 3 ABSENT. Independent second instrument: list-objects-v2 on the uploads/ prefix returns 13 objects and NONE of the three (the newest pkl there is 'data 20251231 v1.pkl').",
+        "WHY THEY ARE GONE, from the machine's own definition rather than a guess: state 2 is MoveToProcessed (yang-move-to-processed) and a later state is CleanupUploads (yang-cleanup-uploads). A SUCCEEDED execution moves and then deletes the very objects its input names, so its input is not replayable BY CONSTRUCTION -- this is not a stale-fixture accident, it is the pipeline's shape.",
+        "WHAT A RUN WOULD ACTUALLY DO: ReadManifest calls yang-validate-files with bucket=$.detail.bucket.name and manifest_key=$.detail.object.key -- the 404 key -- with Retry MaxAttempts 1 and Catch States.ALL -> PipelineFailed. So the named invocation produces a FAILED execution and NO regeneration: the criterion's named RESULT is unreachable by its named INVOCATION today, which is the definition of a failed premise rather than a failed act.",
+        "THE RADIUS, ON THE OTHER BRANCH, COUNTED: the state machine carries 28 Task states (census walked THROUGH the Parallel branches -- a top-level-only read returns 10 and misses GeneratePositioning entirely, which is the state this criterion is about; the first version of this worker's census made exactly that error and is corrected in the committed script). They invoke yang-generate-valuation, -risk-premium, -correlation, -macro, -macro-timeseries, -factor-tilts, -etf-returns, -model-portfolio-benchmarks, -cma, -peer-performance, -holdings-attribution, -canon-interlock, -latest, -manifest, opal-market-overview-tiered-generator, opal-market-rsi-tiered-generator, opal-market-regime-classifier, yang-capture-output-versions, yang-invalidate-cloudfront, yang-move-to-processed, yang-cleanup-uploads and yang-varflag-check, besides the two this cell deployed.",
+        "AGAINST THE SIGN-OFF, QUOTED: NEVER_WIDEN_ROUND5_CTO_HALF.md @af667548d1, the B1 table's last row -- 'anything else -- NOT SIGNED' -- under two named keys (json/positioning/positioning_data.json, json/positioning/allocation_summary.json); and its preamble, 'Anything a plan, a diff or a served read shows outside these bounds is NOT SIGNED: the cell STOPs before the deploy/write and re-arms a row with the observation verbatim.' The COO half @f381f6f402 does name 'the SFN regeneration after the apply' for the two keys, but neither half names any other key the run writes, and CleanupUploads is an S3 delete (CLAUDE.md Agent Autonomy: human confirmation for S3 deletes).",
+        "NOT REPAIRED, BY THE ORDER'S OWN CLAUSE: 'A criterion you cannot satisfy as written is REFUSED with its measurement, never repaired, widened or satisfied by another route.' Re-uploading an input, hand-building a manifest, or invoking the two producers directly are each a DIFFERENT act from the one V1-AC11 names, so none of them was taken and none may be read as AC11 satisfied.",
+        "WHAT IS UNAFFECTED, so the refusal is not read wider than it is: V1-AC8 applied (0 added, 2 changed, 0 destroyed), V1-AC9 re-planned to 'No changes', V1-AC10 reads both live CodeSha256 values equal to the built zips (yCdQVNMOoSqvTvWIc+d3RjDqe7yy25dCs/h50Ge9K9s= and 8ok3+P8z/w2hDmcnMSLPWTmSlp5pXBEqY86hDiPl3A4=, LastModified 2026-09-14T20:19:41Z). The served keys are UNMOVED at their pre-deploy versions (positioning_data.json VersionId 4Q1qjgD52FSKZ38EfHGqdKGHyJ_ktlka, 8168 B, 2026-09-12T11:05:33Z; allocation_summary.json VersionId FiY95KdKcmtt5els.v44XVZciDBtUDrw, 969 B) -- the exact state both halves describe as covered on the branch where the regeneration does not happen: 'the keys are NOT rewritten and the served bytes stay at the VersionIds above'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-V1-1 V1-AC11 as cut, and the spawn face's definition of its placeholder: a script that 'starts the yang data pipeline Step Functions state machine ... with the LAST SUCCEEDED execution's input, polls to a terminal status, and prints the execution ARN, status and the served keys' new LastModified/VersionId', after which the served positioning_data.json carries the five-class keys and the three labelled-zero benchmarks.etf rows. The preflight's comp-adversary anticipated the width ('the SFN regeneration rewrites keys beyond the two named -- V1-AC11's control reads them byte-identical or you file a row') but not the replay.",
+    "world_is": "The input is not replayable and the act is wider than the sign-off. 3 of 3 named objects are 404; the machine that would consume them has 28 Task states and deletes uploads; the halves sign 2 served keys and refuse the rest. So the criterion cannot be run as written today, and running it anyway would produce a FAILED execution rather than a served read.",
+    "notes": "WHAT THE ISSUER CAN RE-CUT THIS TO, already covered by its own paper and requiring no new sign-off: the CTO half's R1 AMENDMENT (2026-09-14 ~20:0xZ) sanctions the DRIVEN refresh as 'invokes, once each and in dependency order' the producers -- yang-generate-positioning, then yang-generate-holdings-attribution, then yang-generate-allocation-summary -- 'The keys: exactly the served keys listed above for B1 and B2 ... Nothing else.' That is one lambda invoke per producer with the payload the SFN hands GeneratePositioning (this worker has that payload cached: the event at LambdaFunctionScheduled #83 of execution 20260911_v1-1c95bba7, .scratch/sfn_history.json), and it lands V1-AC11's named reads inside the signed radius. THE LEDGER IS LEFT OPEN AND RED ON PURPOSE: entry 20260914T1841Z_posn-round5-b1-positioning-generators, L1-L6 CLOSED, L7 stranded, window 4.0h. A deploy_ledger.py hold would mute the one signal that carries this to the issuer, so it was not used."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-W19-S9",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~19",
+    "surfaced_at": "2026-09-14T20:41Z",
+    "one_line": "A mid-run issuer note states that lambda-source-map.json at THIS worktree's HEAD carries 28 inherited non-ASCII bytes and prescribes a looser grading bar for V1-AC5; measured on this branch the file is PURE ASCII (detector 0) at acfd6e9b28, at both of this run's commits and at HEAD, and the three commits the note names (7403e8c0e9, 866c69817f, 3fd61fc8cc) are NOT ancestors of this branch -- so the note describes SITEZ's state, not this worktree's, and the stricter original bar was met rather than the relaxed one.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "DETECTOR AT FOUR VINTAGES, one expression, same instrument the note names: git show <ref>:infra/aws/lambda/ci/lambda-source-map.json | len(b) - len(b.decode('utf-8')) -> acfd6e9b28 195703 bytes / 0; dbe34de7b0 195703 / 0; acf74be32a 195703 / 0; HEAD-at-the-time 195703 / 0.",
+        "ANCESTRY, the discriminator that separates 'my tree' from 'SITEZ': git cat-file -t says all three named commits EXIST in the shared object store (so this is not a typo or a missing fetch), and git merge-base --is-ancestor <c> HEAD returns non-zero for 7403e8c0e9, 866c69817f and 3fd61fc8cc alike -- none of them is in this branch's history. The branch was fast-forwarded to acfd6e9b28 and has only this worker's commits on top.",
+        "CONSEQUENCE FOR THE GRADE, stated so no one re-grades it downward: V1-AC5's restoration met the ORIGINAL bar exactly -- git diff --stat read '1 insertion, 1 deletion', the parsed-value diff read ONE differing leaf (functions.yang-generate-positioning.artifact_sha256) and the detector read 0. The relaxed allowance ('the diff may read more than 1/1') was not needed and was not used.",
+        "WHERE THE RELAXED FORM WAS USED, and why it is not the same thing: after the RECORDER (V1-AC12) the file did carry 28 non-ASCII bytes -- written by that run, not inherited -- and the restoration there is a re-serialisation of HEAD's own parsed object with ensure_ascii=True (detector 0, semantic diff 0 leaves of 2399), preceded by a round-trip control proving json.dumps(indent=2, ensure_ascii=True)+newline reproduces the pure-ASCII base BYTE-IDENTICALLY."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Issuer note, 2026-09-14 mid-run: 'infra/aws/lambda/ci/lambda-source-map.json at YOUR HEAD (acfd6e9b28) carries 28 non-ASCII bytes inherited from another slot's recorder commit (7403e8c0e9, merged at 866c69817f); SITEZ HEAD 3fd61fc8cc has since restored it.'",
+    "world_is": "At acfd6e9b28 and on every commit of this branch the file is pure ASCII (0 non-ASCII, 195703 bytes) and none of the three named commits is an ancestor. The note is true of SITEZ and not of this worktree; a worker grading its own bytes on the note's premise would have accepted a diff shape it did not need to.",
+    "notes": "Filed for the DRAIN, not for the grade: the issuer's note says its drain 'merges the source map semantically'. This branch's copy is pure ASCII at 195805 bytes with the two functions' last_deployed_commit set; a merge that expects 28 inherited bytes on this side will not find them. No act is requested of anyone and no row was asked for -- the note said none was needed for the ASCII handling, and this row is about the PREMISE, not the handling."
+  }
+]
+```
