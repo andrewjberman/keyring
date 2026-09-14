@@ -2827,6 +2827,28 @@
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-S58",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-14T04:05:00Z",
+    "one_line": "DISARM, prospective, of rows W1-S56 and W1-S57 (and W5-S1, W5-S4 of the same two classes) for round 5's two remaining browser cells: FE-s-31 and FE-s-32 are amended BEFORE either is cut to run vite on a worktree-local cache and to export IRPT_FE_DEV_PORT on every test run, never unset.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal DEV fd91bea1 package.json:13 \"dev\": \"vite\"; vite.config.ts sets no cacheDir (read at DEV). So vite caches in node_modules/.vite, which in every worker worktree is the junction to the MAIN checkout's node_modules; the main checkout's node_modules/.vite/deps was last rewritten 2026-09-13 23:46 local.",
+        "portal c2eb8eb4 src/pages/InvestorReporting/__tests__/fe-s-27/_dev-server.ts:40 DEFAULT_DEV_PORT = '5181'; devPort() reads the env first and the default second. Row W1-S57: a server not the worker's answered 5181. Row W5-S1: 5181 was held by C:/tmp/wk-dsgn-1e/portal's vite and F19-AC4/AC5 graded that tree (0 of 2), then read 2 of 2 on the worker's own server.",
+        "The control, in the same commit as this row: FE-s-31's and FE-s-32's dev-server bound amended before either worktree is cut -- a --config override file inside each cell's own __tests__ folder that mergeConfigs ONLY cacheDir to <WS>/.scratch/vite-cache-fe-s-<n>; IRPT_FE_DEV_PORT exported on EVERY bun test run (own server's port while up, a measured-closed port while down).",
+        "The issuer's own drain re-runs already pin the port: FE-s-30 re-run with IRPT_FE_DEV_PORT=5247 (own server, 4 of 4) and =5249 (closed, 46 pass / 2 skip / 0 fail)."
+      ]
+    },
+    "spec_asserts": "FE-s-31 and FE-s-32 as issued @b4d1b8bfef, BOUNDS: 'Start once in the background from <WS>/portal: bun run dev --port <a free port>, export it as IRPT_FE_DEV_PORT (the variable __tests__/fe-s-27/_dev-server.ts reads; its default is 5181), and kill it before your final report.'",
+    "world_is": "Launched as issued, a worktree dev server rebuilds the main checkout's shared vite cache (W1-S56, W5-S4), and any run that leaves IRPT_FE_DEV_PORT unset can grade whichever page holds 5181 -- measured twice in round 5, once on another project's worktree (W1-S57, W5-S1). Both remaining browser cells are amended before their cuts. NOT closed here, carried to the drain-end packet for 1.0.0_SA_CTO: the helper's default port itself (fe-s-27/_dev-server.ts, in no round-5 grant), a portal-wide cacheDir in vite.config.ts, and tsc -b's tsbuildinfo written through the junction (W5-S4).",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```

@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_FNTEND~1</issued_to>
 <issued_by>2.0.0_SA_COO~F</issued_by>
 <issued_date>2026-09-13</issued_date>
-<status>blocked</status>
+<status>pending</status>
 
 **Directive:** D9 | **Fabric:** laptop | **PRD:** `../prd/IRPT_FNTEND_PRD.md` v0.6 @d1479bc5f0 (F4, F8, F9; CONTRACTS `ExportReceipt`, `RenderPackage` consumed) | **Decomp cell:** `FE-s-31` (round 5, v0.5 @a4ac61a1cf) | **outcome_ref:** FWD-3, FWD-4, FWD-6, FWD-8 | **depends_on:** FE-s-30 (its predicate module) | **slot:** ~1 | **rows:** C-S57, S27, C-S68, W2-S12, W3-S5
 
@@ -75,7 +75,7 @@ Measured by the issuer at portal DEV `c2eb8eb4`:
 - ⛔ **`scripts/ui-smoke.mjs` IS NOT YOURS.** Drive the print route from your own test, under node.
 - **The precondition is declared, never silent** (ruling C).
 - **Two repos, one worktree pair.** `<WS>` / `<WS>/portal`. Portal commit pathspec: the files you changed, named individually. Workspace records under `org/` only. Never push, merge, rebase, `checkout --` or `clean`. Never stage `portal` in the workspace repo.
-- **Dev server.** `node_modules` is a junction; do not run `bun install`. Start once in the background from `<WS>/portal`: `/c/Users/AndrewBerman/.bun/bin/bun run dev --port <a free port>`, export it as `IRPT_FE_DEV_PORT` (the variable `__tests__/fe-s-27/_dev-server.ts` reads; its default is 5181), and **kill it before your final report**. Say which criteria were measured with it up and which with it down.
+- **Dev server.** `node_modules` is a junction; do not run `bun install`. Start once in the background from `<WS>/portal`, ON A WORKTREE-LOCAL VITE CACHE (AMENDMENT on rows W1-S56 and W1-S57, 2.0.0_SA_COO~F, before this order was cut): write `__tests__/fe-s-31/vite.worktree.config.ts`, which imports the portal's `vite.config.ts` and `mergeConfig`s ONLY `cacheDir`, set to `<WS>/.scratch/vite-cache-fe-s-31` (derived from the config file's own location, never a hardcoded drive), and launch `/c/Users/AndrewBerman/.bun/bin/bun run dev --port <a free port> --strictPort --config src/pages/InvestorReporting/__tests__/fe-s-31/vite.worktree.config.ts`. Vite's default cache is `node_modules/.vite`, which through the junction is the MAIN checkout's and is rebuilt for every dev server on the box (W1-S56). If vite refuses the override, file a row with the measurement and launch without it. Export `IRPT_FE_DEV_PORT` for EVERY `bun test` run you make -- your own server's port while it is up, a port you have measured closed while it is down -- and NEVER leave it unset: the helper's default 5181 can be another seat's server, so an unset run can grade someone else's page (W1-S57). **Kill the server before your final report.** Say which criteria were measured with it up and which with it down.
 - ⚠ **`chromium.launch` fails under bun on this box**; the identical launch under node returns in seconds.
 - **Anchors and evidence.** Counts your tests print are anchorable; each row's `output_evidence` carries the deciding run only.
 - **Bound every invocation** with `timeout` as written. **Scratch:** `<WS>/.scratch/` only.
