@@ -42,3 +42,11 @@ Filtered CSVs initially; expand original-file access later
 ```
 
 Resulting specification uses the existing opal-gateway, a per-user Schwab data entitlement, and a dedicated assumed read role. Filtered CSVs initially and later expansion of original-file access are confirmed. Initial fields/date range/account scope remain proposed defaults. This record does not authorize implementation, grant expansion, or unrelated task orders.
+
+Follow-up review request, direct Codex user channel; recorded 2026-09-14 after 18:41Z (exact user submission time unavailable):
+
+```text
+C:\Users\AndrewBerman\Downloads\Claude_Remote_MCP_Requirements_Brief.docx Here is the doc on requirements from GPT, take a look at it and see if theres anything we're forgetting or if we're good to go with the brief as you've laid it out thus far.
+```
+
+Reviewed the exact document and updated the local specification. This request does not authorize deployment, access provisioning or outbound messages.
