@@ -1,12 +1,12 @@
 {
   "prd": "DSGN_REBRND_PRD.md",
-  "prd_version": "v0.4",
-  "prd_pin": "4ebd24684b3a37b07abb652f485b44f9821ca917",
+  "prd_version": "v0.5",
+  "prd_pin": "01378b0a5bd6395ab725a2cf6dabaa77578bfaee",
   "half": "brief",
-  "half_hash": "c1bc0896e75a1f82c9b289dfef0de3ce26136c9f17a14f9d4f1f23911e647a39",
+  "half_hash": "2ff743682880647e19c1966a2beb9261b1016897f24312cad4ce5d2a695d9b72",
   "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/2.0.0_SA_COO/deliverables/laneD_L4R_BRIEF_HALF_REVIEW_DSGN_REBRND_v0.4.md@dbde53ad1c",
+  "review_ref": "org/tier1_exec/2.0.0_SA_COO/deliverables/laneD_L4R_BRIEF_HALF_REVIEW_DSGN_REBRND_v0.5.md@0d16cc34cb",
   "signed_by": "2.0.0_SA_COO~D",
-  "signed_at": "2026-09-14T17:18:51Z",
+  "signed_at": "2026-09-14T17:44:37Z",
   "designated_by": "designated by org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260911_080xZ_DSGN_REBRND_COO_D_SIGNS_CVO_ADVERSARIAL_SELF_DRIVE_WIDENED.md@2daf4d8b85"
 }
