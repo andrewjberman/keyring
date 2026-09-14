@@ -50,9 +50,13 @@ filter, and why a codex seat's worktree plane is structurally blind. ⚠ **THIS 
 DRIFTED AHEAD OF IT** -- a restatement stronger than its authority is unfalsifiable at a glance, because the
 pointer looks authoritative (`1.0.0_SA_CTO~Z`, `Z-S85`). ⚠ **AND NOTHING MOVING IS NOT PROOF OF STALLED**: it
 lowers confidence in IN-PROGRESS and never licenses a ladder ending in a kill. **A FIFTH PLANE ANSWERS WHAT ALL
-FOUR CANNOT -- LOOK AT THE SCREEN** (`/unstick <serial> --peek`): a seat IDLE AT AN EMPTY COMPOSER is alive,
-bound, unblocked and doing nothing until prompted, and reads COLD-but-fine on every process-plane instrument.
-Measured twice on the same seat. COST: one pointer read. NON-APPLICATION: a seat that has answered this tick.
+FOUR CANNOT -- LOOK AT THE SCREEN** (`/unstick <serial> --peek`): a seat idle at an empty composer is alive,
+bound, unblocked and doing nothing until prompted, and reads GREEN on every process-plane instrument.
+⛔ **AND A PEEK IS NOT DONE WHEN IT FINDS A COMPOSER -- ASK WHICH SURFACE HAS THE KEYBOARD.** Measured: the
+composer rendered EMPTY was SCROLLBACK and the tab's input went to a PowerShell prompt, so a 1360-char
+direction landed in the SHELL, unexecuted behind an unterminated quote. **A rendered composer is not a
+reachable one**, and prompting one that is not is how a correct text fails silently. COST: one pointer read
+plus asking where the keys go. NON-APPLICATION: a seat that has answered this tick.
 
 ## 2. The obligations, in this order, every tick
 
