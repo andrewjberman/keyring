@@ -768,3 +768,63 @@ extraction. It is `scrape_as_markdown`, which returns actual page content -- whi
 | the blog half, 74 not-asked | Google CSE daily quota | **STILL BLOCKED**, and Bright Data cannot substitute (above) |
 ⚠ **NOTHING HERE WIDENS ANY GRANT.** Andrew's Bright Data word covers this work and his card 4 covers
 the Google key; the two stay separate, as they have all night.
+
+---
+
+## 17. SEEKING ALPHA IS READABLE WITHOUT A LOGIN, WITHOUT A CAPTCHA AND WITHOUT A BROWSER -- BUT THE PER-TICKER ACCESS THE ANALYTICS HALF NEEDS IS STILL UNPROVEN. AND EVERY FAILURE SHAPE HERE RETURNS `isError=False`
+
+**This corrects s.3's premise.** s.3 said *"SA IS THE TEMPLATE, AND BACKFILL THERE IS A PARAMETER
+SWEEP"* -- of the authenticated browser session. With the Bright Data transport repaired, the content
+comes back over `scrape_as_markdown` with **no sign-in, no captcha solve, no screenshot, no
+press-and-hold**. Measured end to end:
+
+```
+https://seekingalpha.com/news          28,510 bytes   47 raw links -> 25 DISTINCT article URLs
+https://seekingalpha.com/news/<slug>   14,038 bytes   title, tickers, and 'Sep 13, 2026'
+```
+⭐ **THE ARTICLE PAGE CARRIES ITS DATE, which is s.11's third acceptance requirement** (`published_at`
+correct), and it arrives on the LOGGED-OUT view -- the page even renders *"Create Free Account"*.
+**If this holds at scale, the entire authenticated-harvest apparatus is unnecessary for SA content.**
+
+### ⛔ BUT THE HALF THE ANALYTICS ACTUALLY NEEDS IS NOT PROVEN, AND SAYING SO IS THE POINT
+
+s.11's acceptance is **>=30 consecutive days PER TICKER**. What was proven is the **market-wide front
+page**, one day deep.
+- `https://seekingalpha.com/symbol/ASML/news` -- **the per-ticker page -- returned 12,791 bytes of
+  PURE NAVIGATION CHROME**: zero dates, zero article links, every link a relative nav entry. It is
+  client-rendered and the scraper gets the pre-hydration shell.
+- **Pagination / date-ranged access is unattempted.** 25 articles of one day is not 30 days of one
+  ticker.
+>> **SO: SA CONTENT IS REACHABLE. SA CONTENT *FOR A GIVEN TICKER OVER A GIVEN WINDOW* IS NOT YET
+   REACHABLE BY ANY ROUTE THIS SEAT HAS PROVEN.** That is the gap the next step closes, and it is a
+   narrower and more useful statement than either "SA works" or "SA is blocked". <<
+
+### ⛔⛔ THE INSTRUMENT TRAP, AND IT IS THE MOST TRANSFERABLE THING IN THIS SECTION
+
+**FOUR DIFFERENT OUTCOMES WERE OBSERVED. ALL FOUR RETURNED `isError=False`.**
+
+| what actually happened | `isError` | body | what it looks like |
+|---|---|---|---|
+| transient failure on a good URL | **false** | **0 bytes** | identical to a dead host |
+| NEGATIVE CONTROL: nonexistent host | **false** | **0 bytes** | -- |
+| client-rendered page, shell only | **false** | 12,791 | **a solid success** |
+| a JSON VALIDATION ERROR from the vendor | **false** | 438 | content |
+| genuine content | **false** | 14,038 | a solid success |
+
+⛔ **THE SUCCESS FLAG IS CONSTANT ACROSS EVERY OUTCOME, SO IT CARRIES NO INFORMATION. AND SIZE IS NOT
+A PROXY: 12,791 BYTES OF NAVBAR OUTRANKS 438 BYTES OF ERROR AND BOTH OUTRANK THE EMPTY ONE.**
+⚠ **THIS SEAT WAS ONE SENTENCE FROM TWO OPPOSITE WRONG CONCLUSIONS IN FIVE MINUTES.** The very first
+probe returned 0 bytes and would have been reported as *"Bright Data cannot unlock Seeking Alpha"* --
+a false negative that would have kept the whole backfill on the fragile browser route. A re-run of the
+IDENTICAL URL returned 12,791 bytes. Then that 12,791 would have been reported as *"SA scrapes fine"*
+-- a false positive, because it was entirely chrome.
+>> **THE ONLY SOUND ORACLE IS A CONTENT ASSERTION: does the payload contain the FIELDS THE WORK NEEDS**
+   -- here, article links and a date. Zero of each on the per-ticker page; 25 links on the listing; a
+   date on the article. **Assert on the field, never on the flag and never on the length**, and
+   **retry once before recording an absence**, because a transient and a dead host are byte-identical.
+
+### One defect of this seat's own, kept because it produced a fifth shape
+The first article fetch failed on **URL validation**: the extracted link carried TWO `#` fragments
+(`...#scroll_comments#source=...`), which is not a valid URI. **The vendor returned that refusal as
+438 bytes of successful CONTENT**, not as an error. Fix: strip from the first `#`. It also collapsed
+47 raw links to **25 distinct articles** -- so the same bug was inflating the link count by 88%.
