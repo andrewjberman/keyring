@@ -48,5 +48,7 @@ priority_sequence:
       and EVENTBRIDGE SCHEDULES, because if that timing is wrong or if things are not scheduled that
       is our entire problem... weird freshness rules that are confounding us based on a backwards
       ingestion versus consumption trigger schedule."
-priority_sequence_status: RECORDED
+priority_sequence_status: SUPERSEDED
+priority_sequence_superseded_by: "org/missions/SEQUENCE.yaml"
+priority_sequence_superseded_ref: "Andrew-direct 2026-09-14 ~01:xxZ at the 1.0.0_SA_CTO terminal, card 2, REC approved by his 'recs approved': replace it with the new document and keep the 07-28 wording as history. Record @cc79b6191a; LD-0563. The block above is kept unchanged as that history."
 priority_sequence_source: "Andrew-direct ~2242Z, CTO-recorded @c57200bd8b. Custody copy to MSTR."
