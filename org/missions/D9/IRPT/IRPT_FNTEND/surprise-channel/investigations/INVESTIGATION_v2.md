@@ -2694,6 +2694,74 @@
     "world_is": "S30 -- its named mechanism, the discarded envelope state, was fixed on the network path in round 3; its class recurs one layer in, as RULING H. S33 -- the byte pin that fired on this seat's own 58e387b454 is retired; its content pin catches 3 of 3 breaking changes and tolerates 3 of 3 additive (round 3 s.5). S38 -- RULING D. S42 -- its blocking arm cleared by FE-s-26 (F18-AC3 PASS); its instrument lesson is carried into RULING I. S43 -- RULING F. S44 -- RULING B; FE-s-18 19 of 19. W2-S18 -- RULING E's limb built. W1-S41 -- F25-AC12, 36 of 36 pairs distinguishable. W1-S42 -- the age is computed from business_date (F25-AC12); the wrong LABEL is RULING K. W1-S43 -- F25-AC12, absent and null read differently. S48 -- round 4 delivered FE-s-26, FE-s-27 and FE-s-28. S40 -- NOT discharged; routed as IRPT_BCKEND-S51.",
     "disposition": "UNDER_INVESTIGATION",
     "notes": "Evidence is CITED, not re-run, where it is a prior L9 grade or ruling. The CTO-side cause of this backlog: rounds 2 and 3 reached L10 on this seat's analyses before any CVO slug existed (analysis s.0)."
+  },
+  {
+    "id": "IRPT_FNTEND-W4-S8",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~4",
+    "surfaced_at": "2026-09-13T23:26:00Z",
+    "one_line": "Limb 1's line-anchored reader turned FE-s-28's own battery red (DECLARED NEW TO ADMITTED: 1 of 3). The cause was not a real declaring order: the battery's _declare fixture wrote the element mid-line, after a PROSE mention of `<paths>`, a form no real order uses. The fixture was corrected; the pattern was not changed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Base run before any edit, worktree wk-irpt_fntend-5-4-fe-s-29 @8666e6701e: `python .tools/tests/test_mandatory_placeholders.py` -> 'mandatory-placeholders battery: 26/26 arms as expected', rc=0.",
+        "Run after the line-anchored PLACEHOLDERS_TAG_RE landed in both readers, before the fixture changed: rc=1, 'DECLARED NEW TO ADMITTED: 1 of 3'. The FAIL arms were NFRA_COMPEFFICACY.TO-CE-E-1 and NFRA_OUTSET.TO-OS-s-1, each refused with 'NO <placeholders> element'; 'mandatory-placeholders battery: 24/26 arms as expected'.",
+        "Where each of the battery's three real specimens first carries the text `<paths>`, read @8666e6701e: NFRA_CLDGRPH.TO-CG-D-1 at col 0 (the block itself); NFRA_COMPEFFICACY.TO-CE-E-1 at col 31 ('- **Your write surface is the `<paths>` block below'); NFRA_OUTSET.TO-OS-s-1 at col 168, inside its <status> line. .tools/tests/test_mandatory_placeholders.py @8666e6701e _declare() inserted the element at text.find('<paths>'), i.e. mid-sentence for two of the three.",
+        "Every REAL declaring order writes the element on a line of its own and is admitted by the line-anchored reader. The same battery's ARM 6 reads 'REAL DECLARING ORDER ADMITTED' for 10 of 10: FE-s-23 and FE-s-28 through FE-s-36.",
+        "After _declare() was changed to insert at the start of the real <paths> BLOCK (gate.PATHS_BLOCK_RE), else at the start of the <preflight> line: rc=0, 'DECLARED NEW TO ADMITTED: 3 of 3', 'mandatory-placeholders battery: 26/26 arms as expected'."
+      ]
+    },
+    "spec_asserts": "TO-FE-s-29 F29-AC13: 'FE-s-28's battery still green, on the corpus it counts'. BOUNDS: 'If you find the line-anchored pattern rejects a form a real declaring order uses, that is a BLOCKING row with the measurement -- not a looser pattern.'",
+    "world_is": "The pattern rejects no form that a real declaring order uses. What it rejected was FE-s-28's own test fixture, which put the element mid-sentence in two of its three specimens. So this is not the BLOCKING case the bound names, and no pattern was loosened. The order did not say to edit FE-s-28's battery. The edit is to the fixture helper only, it sits inside this order's .tools/tests/ grant, and it is recorded here rather than done silently. The battery's printed boundary sentence was also brought in line with limb 4.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W4-S9",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~4",
+    "surfaced_at": "2026-09-13T23:26:00Z",
+    "one_line": "CLAUDE.md Rule 27's L4-R clause quotes to-pipeline-gate.py's _newly_added docstring: 'A modification (M) does not: this gate never refuses an existing TO'. After FE-s-29 limb 4 (Andrew-direct card 6), gate (viii) DOES grade a modification of an order that already declares <placeholders>, and that quoted sentence was amended. The law now quotes a sentence the source no longer carries. Its claim about LIMB 6 is unchanged.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CLAUDE.md @8666e6701e, Rule 27, the L4-R clause: 'The gate's own docstring (`_newly_added`, `:813`) is explicit: \"A rename (R) counts as added at its new path ... A modification (M) does not: this gate never refuses an existing TO.\"' It also says a modification can change a <paths> grant or a face 'and the worker never sees a refusal'.",
+        ".tools/to-pipeline-gate.py @8666e6701e _newly_added docstring: 'A modification (M) does not: this gate never refuses an existing TO.' In this worktree's change it reads: 'no limb that reads THIS set refuses an existing TO', and it names the one exception, gate (viii) on an order that already declares <placeholders> at HEAD. The module docstring's PROSPECTIVE ONLY paragraph names the same exception with its authority, @e2210bf34c.",
+        "The exception, exercised in a real git index through the gate's own CLI: .tools/tests/test_gate_viii_modify.py -> 'MODIFIED DECLARING ORDER, BROKEN DECLARATION: REFUSED 4 of 4' (FE-s-28 and FE-s-23 at rc=1), with 'MODIFIED ORDER WITHOUT THE ELEMENT: NOT GRADED' for FE-s-27.",
+        "CLAUDE.md is not in TO-FE-s-29's <paths> grant, so the law text is unchanged by this cell."
+      ]
+    },
+    "spec_asserts": "TO-FE-s-29 limb 4: gate (viii) also grades an order staged as MODIFIED, only if that order already declares <placeholders>; 'Update the gate's own docstring (:21-24, PROSPECTIVE ONLY) to state the rule and its authority.'",
+    "world_is": "The ruling moves exactly one limb. A seat reading CLAUDE.md's L4-R clause would still expect that no task-order modification is ever graded. After this cell, an amendment that deletes or under-declares the <placeholders> element of an order that declared it IS refused. What the clause says about LIMB 6 (PRD sign-off refuses only a newly-added order) remains true. The refusal a seat would meet is loud, never silent, so the hazard is INERT. The stale part is the quoted sentence and the general reading of it.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W4-S10",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~4",
+    "surfaced_at": "2026-09-13T23:26:00Z",
+    "one_line": "The drives limb reads TEN seeding props, not the three the cell names. The Investor Reporting (IR) components declare 15 initial* props, and 5 of them seed only UI state. Under the ten, a seventh suite also seeds (fe-s-15/job-states.test.ts:78 initialJob, reached by F15-AC7), and the cell's six-file population does not list it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Prop census, Grep over portal src/pages/InvestorReporting excluding __tests__, main worktree portal checkout @c2eb8eb4. TabShell.tsx:90-98: initialTab, initialHoldingsSnapshot, initialHoldingsEnvelope, initialAnalysisRequests, initialAnalysisReport. ReportingTab.tsx:119-121: initialReport, initialEnvelope, initialPeriod. HoldingsTab.tsx:56-58: initialSnapshot, initialEnvelope. Preview.tsx:147: initialPhase. GenerateComposer.tsx:73-83: initialJob, initialComparisonKeys, initialVariantChoice. AnalysisTab.tsx:73-85: initialRequests, initialReport, initialSnapshot, initialSnapshotEnvelope. That is 15 distinct names.",
+        "Subtraction written into .tools/proof-of-spec-check.py (this worktree's change) as SEED_PROPS_RULED + SEED_PROPS_MEASURED: 15 props minus the 5 UI-state props (initialTab, initialPeriod, initialPhase, initialComparisonKeys, initialVariantChoice) = 10.",
+        "Unscoped read, .tools/tests/test_seeded_limb.py in this worktree: '192 bun-test criteria in the committed IRPT_FNTEND orders, 159 naming test FILES; beyond the six-suite population, 1 more would be refused as SEEDED if declared network (F15-AC7); 0 unreadable here'.",
+        "The deciding hit on F15-AC7, read by the limb's own reader from TO-FE-s-15 @8666e6701e: 'job-states.test.ts 78 initialJob' (one of the seven measured props; no ruled prop appears there).",
+        "The six AC8 criteria each also carry a hit on a RULED prop, so AC8 does not depend on the widening: parity.test.ts:54 initialReport; tabs-mounted.test.ts:90 initialHoldingsEnvelope; renders-differently.test.ts:68 initialEnvelope; fields.test.ts:99 initialReport; states.test.ts:45 initialReport; controls.test.ts:44 initialReport."
+      ]
+    },
+    "spec_asserts": "TO-FE-s-29 limb 3: 'a body SEEDED through initialEnvelope / initialHoldingsEnvelope / initialReport'. F29-AC8: the population is every existing criterion whose invocation runs one of the suites that seed, 'measured at the cut: 6 test files'. F29-AC15: none of the four limbs 'can be satisfied by the party it grades'.",
+    "world_is": "A limb that read only the three named props would admit a network-declared test that seeds the same fetched bodies through initialSnapshot, initialHoldingsSnapshot, initialSnapshotEnvelope, initialAnalysisReport, initialAnalysisRequests, initialRequests or initialJob. The graded party could satisfy it. So the limb reads the ten fetched-content props, derived by subtraction from the measured 15. That choice is this worker's, is stated in the checker's block comment, and is L9's to grade. Its only visible effect on the committed corpus is F15-AC7, which no order declares drives=\"network\" today. The cut's six-file census is exact for the three named props and one suite short for the ten.",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```

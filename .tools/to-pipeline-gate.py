@@ -21,6 +21,12 @@ WHAT THIS GATES, AND WHY IT IS THE KEYSTONE
   PROSPECTIVE ONLY (Andrew-direct, same terminal): this fires on NEWLY ADDED TO files. Existing
   TOs are not back-filled and are not refused. A gate that retroactively refuses 2,103 files
   would be ignored wholesale, which is the failure mode CLAUDE.md rule 21 limb (iii) records.
+  ONE EXCEPTION, AND ONLY ONE (Andrew-direct card 6, ~18:4xZ 2026-09-13, "recs approved", record
+  @e2210bf34c, on 1.0.0_SA_CTO's REC in the IRPT_FNTEND round-4 analysis s.6): GATE (viii), the
+  <placeholders> declaration, ALSO grades a TO staged as MODIFIED -- if and only if that TO ALREADY
+  DECLARES <placeholders> at HEAD. Nothing is back-filled: an order that declares the element is by
+  construction not one of the legacy files the rule above protects, and a modify of an order that does
+  not declare it is graded by nothing here. Every other limb stays newly-added only.
 
 THE THREE-VALUE PREFLIGHT ENUM, AND WHY NOT TWO
   RUN | DECLARED-NOT-APPLICABLE | (absent -> refused). A two-value RUN/SKIPPED enum forces a
@@ -133,21 +139,38 @@ PATHS_BLOCK_RE = re.compile(r"^[ \t]*<paths>[ \t]*\r?\n(.*?)^[ \t]*</paths>[ \t]
 # worse than the one that already works (same finding as the criterion-grammar limb above). The boundary
 # is written into the refusal TEXT so a seat that hits it learns the rule instead of guessing at it.
 #
+# ONE NARROW EXTENSION OF THAT BOUNDARY (2026-09-13, FE-s-29 limb 4; Andrew-direct card 6 ~18:4xZ, "recs
+# approved", record @e2210bf34c, on 1.0.0_SA_CTO's REC in the IRPT_FNTEND round-4 analysis s.6): a task
+# order staged as MODIFIED is ALSO graded by this limb -- ONLY IF THE ORDER ALREADY DECLARES <placeholders>
+# AT HEAD. An amendment could otherwise delete or break the declaration that armed the checker on a live
+# order and nothing would say so (the modify exemption 3.0.0_SA_CVO qualified). An order that does not
+# already declare is still never graded on a modify -- nothing is back-filled, and the 2,103-file
+# back-fill the PROSPECTIVE ONLY rule exists to prevent is untouched, because an order that declares is by
+# construction not a legacy file. _placeholder_modify_violations() below; main() feeds it _staged_modified().
+#
+# LINE-ANCHORED (2026-09-13, FE-s-29 limb 1; 1.0.0_SA_CTO RULING M(i) @23af9479ab; rows S53, W4-S7): the
+# element is the tag STANDING ON ITS OWN LINE. The unanchored `<placeholders>(.*?)</placeholders>` under
+# re.S read from the FIRST prose mention of the tag to the real element's close, so S53 measured, by calling
+# this function on real bytes, (C) an undeclared invocation token ADMITTED when the criteria sat inside that
+# span and (D) an order with NO element ADMITTED when its prose quoted this gate's own help text.
+#
 # CASE-SENSITIVE ON PURPOSE, AND MIRRORED FROM THE CONSUMER. The two regexes below are byte-identical to
 # proof-of-spec-check.py's PLACEHOLDERS_TAG_RE / PLACEHOLDER_TOKEN_RE. A tolerant reader here (re.I, say)
 # would ADMIT a <PLACEHOLDERS> element the checker cannot see -- an order that passes the gate arming
 # nothing, which is precisely the state this limb exists to end. .tools/tests/test_mandatory_placeholders.py
-# holds the cross-tool arm that keeps the two readers equal.
-PLACEHOLDERS_TAG_RE = re.compile(r"<placeholders>(.*?)</placeholders>", re.S)
+# and .tools/tests/test_placeholders_reader.py hold the cross-tool arms that keep the two readers equal.
+PLACEHOLDERS_TAG_RE = re.compile(r"^[ \t]*<placeholders>(.*?)</placeholders>[ \t]*$", re.M)
 PLACEHOLDER_TOKEN_RE = re.compile(r"<([A-Z][A-Z0-9_]*)>")
 INVOCATION_TAG_RE = re.compile(r"<invocation>(.*?)</invocation>", re.S)
 PLACEHOLDERS_BOUNDARY = (
     "BOUNDARY (what this binds and what it does not): it binds a task order STAGED AS ADDED (git status "
-    "A or R) under org/missions/D<n>/<MACRO>/<CODE>/task-orders/ -- what an ISSUANCE ADDS, nothing else. "
-    "It does NOT bind a MODIFICATION of an existing order (a status flip, an amendment), and it does NOT "
-    "bind the flat-root legacy population under org/**/task_orders/. Measured at the cut: 2559 task-order "
-    "files tracked, 305 tree, 2 carrying the element -- the other 2557 stay committable because none of "
-    "them is ever newly-added again."
+    "A or R) under org/missions/D<n>/<MACRO>/<CODE>/task-orders/ -- what an ISSUANCE ADDS -- and a "
+    "MODIFICATION of such an order ONLY WHEN THE ORDER ALREADY DECLARES <placeholders> AT HEAD (Andrew-direct "
+    "card 6, 2026-09-13, record @e2210bf34c). It does NOT bind a MODIFICATION of an existing order that does "
+    "not already declare the element (a status flip, an amendment), and it does NOT bind the flat-root legacy "
+    "population under org/**/task_orders/. Measured at the FE-s-28 cut: 2559 task-order files tracked, 305 "
+    "tree, 2 carrying the element -- the others stay committable because none of them is ever newly-added "
+    "again and none of them declares. The element is read LINE-ANCHORED: the tag must stand on its own line."
 )
 PLACEHOLDERS_HOWTO = (
     "SATISFY IT with one line in the worker face: <placeholders>WS, PORT</placeholders> naming every "
@@ -761,8 +784,34 @@ def _self_test():
                                                         "MODIFICATION", "org/**/task_orders/",
                                                         "<placeholders>NONE</placeholders>"))),
         ("placeholders: the element regex is BYTE-IDENTICAL to proof-of-spec-check's (a tolerant reader would admit an order arming nothing)",
-         lambda: PLACEHOLDERS_TAG_RE.pattern == r"<placeholders>(.*?)</placeholders>"
+         lambda: PLACEHOLDERS_TAG_RE.pattern == r"^[ \t]*<placeholders>(.*?)</placeholders>[ \t]*$"
+         and PLACEHOLDERS_TAG_RE.flags & re.M and not PLACEHOLDERS_TAG_RE.flags & re.S
          and PLACEHOLDER_TOKEN_RE.pattern == r"<([A-Z][A-Z0-9_]*)>"),
+        # LIMB 1 (RULING M(i), S53): LINE-ANCHORED. Pure arms here; the five REAL-BYTES cases live in
+        # .tools/tests/test_placeholders_reader.py.
+        ("placeholders RED (S53 D): a PROSE line quoting the element mid-sentence is NOT a declaration -> refused",
+         lambda: any("NO <placeholders> element" in x for x in ph(tree, "the help says " + PLACEHOLDERS_HOWTO + "\n" + ph_inv))),
+        ("placeholders RED (S53 C): an element BELOW its criteria still grades their tokens -- a prose mention above cannot widen the set",
+         lambda: any("<PORT>" in x for x in ph(tree, "a `<placeholders>` mention\n" + ph_inv.replace("<WS>", "<WS> <PORT>")
+                                                  + "\n<placeholders>WS</placeholders>\n"))),
+        ("placeholders GREEN: the element on its own line BELOW a prose mention is read as exactly its own tokens",
+         lambda: ph(tree, "a `<placeholders>` mention\n" + ph_inv + "\n  <placeholders>WS</placeholders>  \n") == []),
+        # LIMB 4 (Andrew-direct card 6): a MODIFY is graded ONLY when the order already declares at HEAD.
+        ("placeholders MODIFY RED: a declaring order whose amendment DELETES the element -> refused, naming the modify",
+         lambda: any("MODIFIED" in x and "NO <placeholders> element" in x
+                     for x in _placeholder_modify_violations(tree, "<placeholders>WS</placeholders>\n" + ph_inv, ph_inv))),
+        ("placeholders MODIFY GREEN: a declaring order amended with its declaration intact -> admitted",
+         lambda: _placeholder_modify_violations(tree, "<placeholders>WS</placeholders>\n" + ph_inv,
+                                                "<placeholders>WS</placeholders>\n" + ph_inv + "\namended\n") == []),
+        ("placeholders MODIFY: an order that does NOT declare at HEAD is NOT graded, whatever it stages (no back-fill)",
+         lambda: _placeholder_modify_violations(tree, ph_inv, ph_inv + "\namended\n") == []
+         and _placeholder_modify_violations(tree, ph_inv, "<placeholders>PORT</placeholders>\n" + ph_inv) == []),
+        ("placeholders MODIFY: a flat-root order is NOT graded on a modify either",
+         lambda: _placeholder_modify_violations("org/tier2_senior/A/task_orders/X.TO-1.md",
+                                                "<placeholders>WS</placeholders>\n" + ph_inv, ph_inv) == []),
+        ("placeholders MODIFY: main() reads the MODIFIED set from its own function, and the ADDED set's contract is unchanged",
+         lambda: "_staged_modified(root)" in inspect.getsource(main)
+         and 'code.startswith("A") or code.startswith("R")' in inspect.getsource(_newly_added)),
     ]
     failed = 0
     for name, fn in arms:
@@ -910,6 +959,48 @@ def _placeholder_declaration_violations(rel, text):
     return []
 
 
+def _placeholder_modify_violations(rel, head_text, staged_text):
+    """GATE (viii) ON A MODIFY (FE-s-29 limb 4; Andrew-direct card 6, record @e2210bf34c). PURE.
+
+    `head_text` is the order as committed at HEAD, `staged_text` as staged. [] when the order is not a
+    tree order, or when it does NOT ALREADY DECLARE <placeholders> at HEAD -- a modify of an undeclared
+    order is never graded, so nothing is back-filled. Otherwise the STAGED bytes are graded exactly as a
+    newly-added order's are: an amendment that deletes, empties or under-declares the element of an order
+    that armed the checker is refused, naming that it is a MODIFY of a declaring order."""
+    rel = rel.replace("\\", "/")
+    if not TREE_TO_RE.search(rel) or head_text is None or PLACEHOLDERS_TAG_RE.search(head_text) is None:
+        return []
+    if staged_text is None:
+        return ["%s: staged as MODIFIED and ALREADY DECLARES <placeholders> at HEAD, but its staged bytes are "
+                "unreadable -- refusing; a gate that cannot read its subject must not pass it" % rel]
+    return ["%s [MODIFIED; the order already declares <placeholders> at HEAD, so GATE (viii) grades the "
+            "amendment -- Andrew-direct card 6, record @e2210bf34c]: %s" % (rel, x.split(": ", 1)[-1])
+            for x in _placeholder_declaration_violations(rel, staged_text)]
+
+
+def _staged_modified(root):
+    """The set of paths STAGED AS MODIFIED (git status M), or None when the index cannot be read."""
+    try:
+        out = subprocess.run(["git", "diff", "--cached", "--name-status"],
+                             cwd=root, capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=30)
+    except Exception:  # noqa: BLE001
+        return None
+    if out.returncode != 0:
+        return None
+    return {ln.split("\t")[-1].strip() for ln in out.stdout.splitlines()
+            if len(ln.split("\t")) >= 2 and ln.split("\t")[0].strip().startswith("M")}
+
+
+def _head_blob(root, rel):
+    """The content of rel at HEAD, or None (absent at HEAD, or unreadable)."""
+    try:
+        out = subprocess.run(["git", "show", "HEAD:" + rel.replace("\\", "/")], cwd=root, capture_output=True,
+                             text=True, encoding="utf-8", errors="replace", timeout=30)
+    except Exception:  # noqa: BLE001
+        return None
+    return out.stdout if out.returncode == 0 else None
+
+
 def _repo_root():
     try:
         out = subprocess.run(["git", "rev-parse", "--show-toplevel"],
@@ -925,7 +1016,10 @@ def _newly_added(root):
     """The set of paths STAGED AS ADDED. Prospective-only scoping lives here.
 
     A rename (R) counts as added at its new path -- moving a TO into task_orders/ is an
-    issuance. A modification (M) does not: this gate never refuses an existing TO.
+    issuance. A modification (M) does not: no limb that reads THIS set refuses an existing TO.
+    The ONE limb that grades a modification -- GATE (viii), and only on an order that ALREADY
+    DECLARES <placeholders> at HEAD (Andrew-direct card 6, record @e2210bf34c) -- reads its own
+    set, _staged_modified(), so this set's contract is unchanged.
     """
     try:
         out = subprocess.run(["git", "diff", "--cached", "--name-status"],
@@ -1931,12 +2025,32 @@ def main(argv):
     for rel in flip_targets:
         all_v.extend(check_complete_flip(root, rel))
 
+    # GATE (viii) ON A MODIFY (FE-s-29 limb 4; Andrew-direct card 6, record @e2210bf34c): a tree TO staged as
+    # MODIFIED is graded by the <placeholders> limb ONLY IF it already declares the element at HEAD. The
+    # staged bytes are read from the INDEX (never the worktree), and HEAD decides "already declares".
+    modified = _staged_modified(root)
+    if modified is None:
+        print("[to-pipeline-gate] REFUSED: could not read the staged index for modified orders. Fail-closed.",
+              file=sys.stderr)
+        return 1
+    mod_targets = sorted(p for p in dispatched if TREE_TO_RE.search(p) and p in modified)
+    n_mod_graded = 0
+    for rel in mod_targets:
+        head = _head_blob(root, rel)
+        if head is not None and PLACEHOLDERS_TAG_RE.search(head) is not None:
+            n_mod_graded += 1
+        all_v.extend(_placeholder_modify_violations(rel, head, _staged_blob(root, rel)))
+    if mod_targets:
+        all_notes.append("GATE (viii) on a modify: %d of %d staged-MODIFIED tree order(s) already declare "
+                         "<placeholders> at HEAD and were graded; the other %d do not and are not graded "
+                         "(Andrew-direct card 6)." % (n_mod_graded, len(mod_targets), len(mod_targets) - n_mod_graded))
+
     for n in all_notes:
         print("[to-pipeline-gate] NOTE: %s" % n)
 
     if all_v:
-        print("[to-pipeline-gate] REFUSED -- %d violation(s) across %d newly-added TO file(s):"
-              % (len(all_v), len(targets)), file=sys.stderr)
+        print("[to-pipeline-gate] REFUSED -- %d violation(s) across %d newly-added TO file(s) and %d modified "
+              "declaring TO file(s):" % (len(all_v), len(targets), n_mod_graded), file=sys.stderr)
         for x in all_v:
             print("    %s" % x, file=sys.stderr)
         print("  FIX: add the two blocks to the TO face, or -- if this TO genuinely stands "
