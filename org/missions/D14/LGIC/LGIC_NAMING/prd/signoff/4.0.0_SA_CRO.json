@@ -1,12 +1,11 @@
 {
   "prd": "LGIC_NAMING_PRD.md",
-  "prd_version": "v1.5",
-  "prd_pin": "de52d3db04d3ee97b12f92aea4047f4d5bf69b04",
+  "prd_version": "v1.6",
+  "prd_pin": "2706014705552bf1144ea0b015e1ebaca476030b",
   "half": "brief",
-  "half_hash": "be7cb62cffccee990cf6f0f5d421b6f3204f63e118735e3934620fdb79a4619b",
-  "verdict": "REFUSED",
-  "review_ref": "docs/briefs/sources/LGIC_NAMING_L4_BRIEF_REVIEW_v1_5_20260914.md@f6172f7dfa73afd000f81e42691a9648703ebf02",
+  "half_hash": "58898a0565b729c044b1cd125bf017c5949224652c9e4d8f55f57769e4bfc051",
+  "verdict": "SIGNED",
+  "review_ref": "docs/briefs/sources/LGIC_NAMING_L4_BRIEF_REVIEW_v1_6_20260914.md@d60eefad0023e8387cbbc24083f77340928434c2",
   "signed_by": "4.0.0_SA_CRO",
-  "signed_at": "2026-09-14T19:30:23Z",
-  "reason": "R1 AW1 vs N2 v1.5:201 + coverage 17; R2 PH1 ENFORCE dependency absent from arc v1.5:192 and N6 v1.5:205; R3 SC1 v1.5:176 omits MASTER vs S1 v1.5:124 and doctrine R3"
+  "signed_at": "2026-09-14T19:49:24Z"
 }
