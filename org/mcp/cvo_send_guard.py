@@ -150,10 +150,19 @@ def cvo_worker_send_refusal(from_agent: str, recipients, executing: tuple, subje
 #           refuse, a COO dispatch citing its order and a worker ack must pass; the battery below carries them as
 #           real bytes read from the worker's inbox where present.
 #   CITE  = a token <PROJECT>.TO-<id> whose task-order file exists under either root and whose <issued_to> is the
-#           recipient (base serial). A citation of an order assigned to SOMEONE ELSE does not admit the send.
+#           recipient (base serial) -- OR the task-order file's repo-relative PATH, under the same test (below).
+#           A citation of an order assigned to SOMEONE ELSE does not admit the send, in either form.
+#   THE PATH FORM -- Andrew-direct 2026-09-14 ~04:xxZ at the 2.0.0_SA_COO~E terminal, "recs approved" (call 3 of that
+#           lane's /open-calls; record org/tier1_exec/2.0.0_SA_COO/deliverables/
+#           ANDREW_DIRECT_20260914_04xxZ_COOE_OPEN_CALLS_RECS_APPROVED_NEXT_STEPS_APPROVED_LANE_CLOSE_MANUAL.md).
+#           TASK_ORDER_PROTOCOL permits a code-less ad-hoc order, which carries no <PROJECT>.TO-<id> token, so its
+#           issuer's GO was refused and had to ride the order's own face (card3-read-logging, 2026-09-13 ~22:4xZ).
+#           Same test, one more token form: the path must resolve to a task_orders/ or task-orders/ file under the
+#           repo root, a path with a '..' segment is never resolved, and <issued_to> must be the recipient.
 # Not decided by his words and NOT built here: a Tier-2 seat refusing an actless ask itself (item 1) and /open-calls
 # refusing a Tier-2 serial at Step 0 (item 3) -- both stay proposals at Andrew.
 TO_ID_RE = re.compile(r"\b([A-Z][A-Z0-9_]*\.TO-[A-Za-z0-9][A-Za-z0-9-]*)")
+TO_PATH_CITE_RE = re.compile(r"\b(org/[A-Za-z0-9_.~/-]+/task[_-]orders/[A-Za-z0-9_.~-]+\.md)")
 ISSUED_TO_RE = re.compile(r"<issued_to>\s*([^<\n]+?)\s*</issued_to>", re.I)
 _ACT_VERBS = ("open", "write", "apply", "run", "cut", "fix", "revert", "investigate", "measure", "file", "commit",
               "deploy", "land", "remove", "add", "re-run", "rerun", "state", "seat", "spawn", "dispatch", "build",
@@ -211,7 +220,19 @@ def cited_orders_for(recipient: str, subject: str, body: str, repo_root) -> tupl
             if m and base_serial(m.group(1)) == base_serial(recipient):
                 assigned.append(tok)
                 break
-    return assigned, cited
+    # THE PATH FORM (Andrew-direct 2026-09-14 ~04:xxZ, call 3): the same <issued_to> test on a cited repo path.
+    paths = sorted(set(TO_PATH_CITE_RE.findall(text)))
+    for rel in paths:
+        if ".." in rel.split("/"):
+            continue  # never resolve a traversal; a citation must name the file where it lives
+        p = root / rel
+        try:
+            m = ISSUED_TO_RE.search(p.read_text(encoding="utf-8", errors="replace")) if p.is_file() else None
+        except OSError:
+            continue
+        if m and base_serial(m.group(1)) == base_serial(recipient):
+            assigned.append(rel)
+    return assigned, cited + paths
 
 
 def tier2_act_send_refusal(from_agent: str, recipients, subject: str, body: str, repo_root,
@@ -247,7 +268,8 @@ def tier2_act_send_refusal(from_agent: str, recipients, subject: str, body: str,
     return ("SEND REFUSED (LD-0529, Andrew-direct 2026-09-03: a Tier-2 seat acts only on a task order in its own home): "
             "%s -> a Tier-2 seat with an ACT in the body and no task order assigned to that recipient cited.\n%s\n"
             "A worker hears an act only as a task order from its issuer: cut the order (2.0.0_SA_COO, L6) and cite its id "
-            "(<PROJECT>.TO-<id>) in the GO; information with no act, and acks, pass as they are. Nothing was written for "
+            "(<PROJECT>.TO-<id>) or its repo path (org/.../task_orders/<file>.md) in the GO; information with no act, and "
+            "acks, pass as they are. Nothing was written for "
             "ANY recipient of this send (%d named)." % (from_agent, "\n".join(lines), len(recipients or [])))
 
 
@@ -330,6 +352,8 @@ def _self_test() -> int:
         arms.append(("falsifier %s (%s -> 0.8.0_AE_CloudComp, an act, no order) -> REFUSED" % (mid, sender),
                      lambda s_=s_, b_=b_, sender=sender: tier2_act_send_refusal(sender, ["0.8.0_AE_CloudComp"], s_, b_, root) is not None))
     go = _msg("92913")
+    _CARD3_REL = "org/tier2_senior/0.7.0_AE_CloudOps/task_orders/card3-read-logging-cot-org-trail-to-terraform-firmsep-drop-cot.md"
+    _CARD3 = root / _CARD3_REL
     if go is not None:
         arms.append(("the COO's GO dispatch 92913 (cites NFRA_COMPEFFICACY.TO-CE-T-1, issued to the recipient) -> admitted",
                      lambda: tier2_act_send_refusal("2.0.0_SA_COO", ["0.8.0_AE_CloudComp"], go[0], go[1], root) is None))
@@ -342,6 +366,23 @@ def _self_test() -> int:
         ("an act citing an order assigned to ANOTHER recipient -> refused",
          lambda: tier2_act_send_refusal("1.0.0_SA_CTO", ["0.7.0_AE_CloudOps"], "x",
                                         "0.7.0_AE_CloudOps opens the ledger entry NOW; see NFRA_COMPEFFICACY.TO-CE-T-1.", root) is not None),
+        # ---- THE PATH FORM (Andrew-direct 2026-09-14 ~04:xxZ, call 3): same test, one more token form ----
+        ("PATH FORM: an act citing a code-less order's PATH, issued to the recipient -> admitted (card3's GO shape)",
+         lambda: (not _CARD3.is_file()) or tier2_act_send_refusal("2.0.0_SA_COO~E", ["0.7.0_AE_CloudOps"], "GO: card3",
+                                        "GO. ORDER: %s @4db66568a6. Apply S3 NOW." % _CARD3_REL, root) is None),
+        ("PATH FORM difference: the SAME act with the path removed -> refused (the path is what admits it)",
+         lambda: tier2_act_send_refusal("2.0.0_SA_COO~E", ["0.7.0_AE_CloudOps"], "GO: card3",
+                                        "GO. Apply S3 NOW.", root) is not None),
+        ("MUTANT: the same path cited to ANOTHER recipient -> refused (issued_to decides, not the citation)",
+         lambda: tier2_act_send_refusal("2.0.0_SA_COO~E", ["0.8.0_AE_CloudComp"], "GO",
+                                        "GO. ORDER: %s. Apply it NOW." % _CARD3_REL, root) is not None),
+        ("MUTANT: a path to a file that does not exist -> refused",
+         lambda: tier2_act_send_refusal("2.0.0_SA_COO~E", ["0.7.0_AE_CloudOps"], "GO",
+                                        "GO. ORDER: org/tier2_senior/0.7.0_AE_CloudOps/task_orders/no-such-order.md. Apply it NOW.", root) is not None),
+        ("MUTANT: a '..' traversal path onto the real order -> refused (never resolved)",
+         lambda: tier2_act_send_refusal("2.0.0_SA_COO~E", ["0.7.0_AE_CloudOps"], "GO",
+                                        "GO. ORDER: org/tier2_senior/x/../0.7.0_AE_CloudOps/task_orders/%s. Apply it NOW."
+                                        % _CARD3_REL.rsplit("/", 1)[1], root) is not None),
         ("a Tier-2 sender with an act -> out of scope (its route up is the point)",
          lambda: tier2_act_send_refusal("0.8.0_AE_CloudComp", ["0.7.0_AE_CloudOps"], "x", "Please apply the fix now.", root) is None),
         ("a Tier-1 -> Tier-1 act -> out of scope",
