@@ -4855,6 +4855,53 @@ Andrew asked for (msg 22917); it concerns this project's portal files meeting an
   "spec_asserts": "The order's step (4)-(5): validate to rc=0, then flip and commit -- with the checker's rc treated as ONE verdict.",
   "world_is": "The checker returns TWO verdicts on identical bytes depending on whether the instance is staged, the gate reads the staged one, and a worker validating by hand reads the other. Four stale PENDING pins from the first run were invisible in the hand read and fatal in the gate read.",
   "notes": "For the round analysis: every resumed order in this round carries first-run artifacts_produced rows that are now stale in the same way. The instruction to workers is one line -- re-pin, then validate STAGED. This row supersedes W22-S14's causal claim; W22-S14's remedy stands as taken."
+},
+{
+  "id": "POSN_ASTTAX-Z-S104",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T22:14:54Z",
+  "one_line": "DISARM of W22-S14 (INERT): the worker's first reading of a refused flip commit -- that to-pipeline-gate and the checker's post-commit branch demand opposite orders -- was WRONG ON CAUSE and RIGHT ON REMEDY (the two new instruments ride their own commit 7aed2a52b9; their rows cite it; valid in both checker modes). The worker's own W22-S15 supersedes the causal claim; this row graduates S14 on that basis and records nothing further.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "WHY GRADUATED: superseded by the author's own correction on the same channel (append-only, so a second row is the honest form); the remedy stands as taken and TO-V6-1 is COMPLETE at 7072302729."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W22-S14"
+  ],
+  "spec_asserts": "Z-S84's carried remedy: commit, then validate, report the post-commit rc.",
+  "world_is": "The refused commit's real defect was four stale PENDING-THIS-COMMIT pins from the first run (W22-S15), not the ordering fact; the remedy taken is sound either way.",
+  "notes": "A row that names a cause it could not discriminate from a sibling cause is corrected by a new row, never by an edit -- the worker did exactly that."
+},
+{
+  "id": "POSN_ASTTAX-Z-S105",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T22:14:54Z",
+  "one_line": "DISARM of W22-S15 (INERT): proof-of-spec-check returns TWO verdicts on identical bytes -- the PRE-COMMIT branch (instance STAGED, the read the gate performs) refuses a PENDING-THIS-COMMIT row whose artifact is already committed at HEAD (CCX), while the POST-COMMIT branch (instance unstaged, the read a worker performs by hand) accepts it as co-committed. A PENDING pin silently expires when its commit lands, and a hand read of rc=0 does not predict the gate. RULED for every remaining order in the round (V4 live, V7 and V8 unspawned): after every commit, re-pin every PENDING-THIS-COMMIT row to the hash that carried it, and validate with the instance STAGED (stage, read, unstage) before the flip commit -- written into each hand-over. Carried with Z-S84 for the round analysis as one checker-shape item.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE SHAPE, ADOPTED FROM THE WORKER: a claim with an expiry nobody re-reads. The cheap fix is procedural (re-pin, validate staged) and costs one stage-read-unstage per closing commit; the durable fix is the checker's (Z-S84: admit a tracked-and-modified instance to the PRE-COMMIT branch when the working tree carries the artifact, and print BOTH modes' verdicts).",
+      "WHY GRADUATED: the mechanism is measured on a discriminating pair, the procedural remedy is landed in the hand-overs this seat controls, and the tool item has its carrier."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W22-S15"
+  ],
+  "spec_asserts": "The L7 bar treats the checker's rc as one verdict; to-pipeline-gate.py:2530-2538 runs the checker with the instance staged and no ids; proof-of-spec-check's artifact_resolution_check branches on staged/untracked.",
+  "world_is": "The discriminating pair on the same bytes minutes apart: unstaged VALID (4 PENDING co-committed), staged INVALID (4 CCX violations); four first-run pins had expired when de993b0e50 landed; pinned to that hash, both reads agree.",
+  "notes": "For the round analysis: proof-of-spec-check should print its mode and, for a tracked instance, both modes' artifact-resolution verdicts so a hand read predicts the gate."
 }
 ]
 ```
