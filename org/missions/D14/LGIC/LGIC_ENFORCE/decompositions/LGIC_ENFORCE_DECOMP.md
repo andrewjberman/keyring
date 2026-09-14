@@ -6,7 +6,7 @@
  "directive": "D14",
  "macro": "LGIC",
  "fabric": "laptop",
- "decomp_version": "v1",
+ "decomp_version": "v1.1",
  "step": 5,
  "prd_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/prd/LGIC_ENFORCE_PRD.md@78128f29ea",
  "prd_half_hashes": {"ratified-text": "SIGNED 3.0.0_SA_CVO @daeeb1f437 (review @9879d45fdc)", "brief": "SIGNED 4.0.0_SA_CRO @bb99f5f03f (review @93b7a4664e)"},
@@ -29,6 +29,12 @@ LGIC_ENFORCE first. L5 is the COO's; no seat certifies this document before L6.
 **manual gate on `ADVI_FIRMBKTS`** (hold `max_dep_stage: DECOMP`), so the fence chain is this decomposition's critical path.
 **Frozen at the cut.** A cell that looks wrong mid-round is a **surprise row, never an edit**
 (`org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md`, which the first row mints).
+
+**v1.1 (2026-09-14, before any order was issued).** Only the ten citations of LGIC_NAMING's cells changed: each is written
+`LGIC_NAMING cell <x-n>` (its id there is `LN-<x-n>`) instead of in the cell-id form. The L6 coverage limb of
+`.tools/to-pipeline-gate.py` reads every cell id in this document as one of this project's own (`_coverage_gap`,
+`:414-419` @`a67425668b`), so it refused the issuance for four LGIC_NAMING cells that no LGIC_ENFORCE order owns. No cell,
+edge, gate, criterion or count moved: 22 cells, 7 levels. The freeze above binds from the issuance, which had not happened.
 
 **The rulings every cell carries, from the PRD preamble:** the SOURCE-FIRST key string
 `{source}/{scope}/{tier}/{table}/{partition}`, with the bucket as container and never a segment; the short forms `49f`, `inf`
@@ -73,7 +79,7 @@ The PRD defers four reads to L5 by name. Each was read at this cut, and the resu
    - its four enumerated patterns sit at `:109-112`;
    - `bd-gold-layer-runner` is named at `:76`.
 
-   The 5-line shift is LGIC_NAMING cell LN-l-1's replacement notice at `:16-20`, merged @`4d8219e3e6`. That is gate G-D of
+   The 5-line shift is LGIC_NAMING cell l-1's replacement notice at `:16-20`, merged @`4d8219e3e6`. That is gate G-D of
    LGIC_NAMING's decomposition, now read: its hunk and `EN-f-1`'s policy lines are disjoint.
 
 **Two measurements at this cut change what E5 is, and neither is in the PRD:**
@@ -86,7 +92,7 @@ The PRD defers four reads to L5 by name. Each was read at this cut, and the resu
   bucket policy and the role-side belts), UNIONED with the reads and the served-prefix writes the trail does see. Andrew's
   ruling 6 (write logging on `opal-data-bd`, `-inf` and `-cot`) is routed to `0.0.0_AB_MSTR`'s infra lane and is not live;
   that is gate G-W.
-- **Most live firm principals would be DENIED by a scope-derived fence.** LGIC_NAMING's LN-f-1 (merged @`d9ccd9babd`,
+- **Most live firm principals would be DENIED by a scope-derived fence.** LGIC_NAMING's cell f-1 (merged @`d9ccd9babd`,
   `exercises/n4-firm-patterns.md`) measured this: of 240 live IAM roles, 69 carry a firm alias token, and the canonical
   patterns catch only **12 of the 68** attributed live roles. The rest put the firm first, or do not end in `-role`. A fence
   derived from scope slots therefore denies roughly 56 live firm principals unless each is named in `exemptions.json`. That
@@ -154,9 +160,9 @@ No flagged path falls outside the manifest.
 | # | surface | current state | target state | collision set | evidence at cut | cells |
 |---|---|---|---|---|---|---|
 | 1 | S1 `infra/logic/registry/*.json` | `MEASURED` absent (comp-adversary GONE) | five JSON files per DEC-1, seeded from `infra/logic/05_IDENTITY_SPINE.md`; a validator refusing the planted bad rows | **two writers, serialised:** `EN-r-1` mints all five; `EN-f-1` appends `exemptions.json` rows (edge r-1 → f-1). Practice-copy plants (`EN-p-1`, `EN-d-1`) never merge | `MEASURED` | EN-r-1, EN-f-1 |
-| 2 | S2 `lib/opal_naming.py` + tests | `MEASURED` absent | `key()`, `address()`, `name()`, `grade()` (DEC-2), `generate` (DEC-5), `census` (DEC-7); stdlib only | **three writers of one file, serialised by edges** r-1 (`generate`) → b-1 (builders, `grade`) → s-1 (`census`). ⚠ The schema they execute is **v1.4 at HEAD** (entity partition, code tier, legacy served paths, `LEGACY_SERVED_PATHS.json` as data). The PRD cites v1.2 as "the schema this project executes", but CONTRACTS row 1 says the builders *"read it at run time and never copy it"*, so v1.4 is what they execute. `grade()` must agree with LN-g-1's written rule | `MEASURED` (absent); `DECLARED` (behaviour) | EN-r-1, EN-b-1, EN-s-1 |
+| 2 | S2 `lib/opal_naming.py` + tests | `MEASURED` absent | `key()`, `address()`, `name()`, `grade()` (DEC-2), `generate` (DEC-5), `census` (DEC-7); stdlib only | **three writers of one file, serialised by edges** r-1 (`generate`) → b-1 (builders, `grade`) → s-1 (`census`). ⚠ The schema they execute is **v1.4 at HEAD** (entity partition, code tier, legacy served paths, `LEGACY_SERVED_PATHS.json` as data). The PRD cites v1.2 as "the schema this project executes", but CONTRACTS row 1 says the builders *"read it at run time and never copy it"*, so v1.4 is what they execute. `grade()` must agree with LGIC_NAMING cell g-1's written rule | `MEASURED` (absent); `DECLARED` (behaviour) | EN-r-1, EN-b-1, EN-s-1 |
 | 3 | S3 `modules/opal_name/` | `MEASURED` absent | a generated locals file (DEC-3) and a `format()` name output; no `external` data source; vectors match `name()` | none; sole writer | `MEASURED` | EN-m-1 |
-| 4 | S4 `s3-49financial.tf` policy `:98-112` | `MEASURED` enumerated Deny on 4 patterns; LN-l-1's notice at `:16-20` (disjoint) | the scope-derived Deny with a generated exemption list, applied, and proved by real probes | **three writers of one file:** `0.7.0_AE_CloudOps` (landed `:17-19`, `:24-38`), LN-l-1 (landed `:16-20`), EN-f-1 (`:98-112`). Disjoint line ranges. Only EN-f-2 applies | `MEASURED` | EN-f-1, EN-f-2 |
+| 4 | S4 `s3-49financial.tf` policy `:98-112` | `MEASURED` enumerated Deny on 4 patterns; LGIC_NAMING cell l-1's notice at `:16-20` (disjoint) | the scope-derived Deny with a generated exemption list, applied, and proved by real probes | **three writers of one file:** `0.7.0_AE_CloudOps` (landed `:17-19`, `:24-38`), LGIC_NAMING cell l-1 (landed `:16-20`), EN-f-1 (`:98-112`). Disjoint line ranges. Only EN-f-2 applies | `MEASURED` | EN-f-1, EN-f-2 |
 | 5 | S5 three probe roles | `MEASURED` absent. **13** IAM roles match `mdpf` in the live plane (`comp-find --corpus aws 'mdpf' IAM_ROLE`: 13 hits across 240 nodes, vintage 2026-09-14 12:13:53 UTC, manifest `b578e47d733f`). The **10** `mdpf`-named ones carry no firm token; **3** roles owned by the MDPF pipeline DO carry one (`wp5-49f-feeder-scheduler-role`, `wsb-49f-model-aua-daily-role`, `wsd-49f-partner-held-etf-daily-role`) | `mdpf-49f-fenceprobe-role`, `mdpf-cot-fenceprobe-role`, `mdpf-fenceprobe-role`, named by the module, each able to read only the probed bucket; created, probed, removed | none | `MEASURED` | EN-f-1, EN-f-2 |
 | 6 | S6 the carriers | `MEASURED` 8 definitions at HEAD (§0.3) | each a generated file headed GENERATED with its registry hash; exports byte-equivalent (DELTA=0) | one writer each; none shares a file with another cell. `.tools/ds-precommit-check.py`'s two lists (EN-v-6) and the commit limb (EN-g-1, in `safe-commit.sh`) do not share a file, per §0.1 | `MEASURED` | EN-v-1..EN-v-6 |
 | 7 | S7 `safe-commit.sh`, `safe-apply.sh` | `MEASURED` stages at `:652`, `:686`, `:708`; `safe-apply.sh` `:72`, `:80` | a naming stage in each at the §0 insertion points | none inside the project. ⚠ **`safe-commit.sh` is on EVERY seat's commit path**, so the limb's WARN mode must never change its exit code (§8 choice 5) | `MEASURED` | EN-g-1, EN-t-2 |
@@ -206,7 +212,7 @@ Each acceptance line below is **one criterion**. `J` marks a judgment criterion,
 | `EN-t-1` | the Terraform-label census | E8 (half) | FWD-4 | `TF_LABEL_CENSUS.md` | every resource-name attribute and every resource label in `infra/aws/terraform/**/*.tf` is listed with its grade, denominator printed · labels and name attributes are reported apart |
 | `EN-t-2` | the safe-apply limb | E8 (half) | FWD-4 | `.tools/safe-apply.sh` (one new stage, §0.2) | on a practice copy: an `apply` over a tree adding a resource whose name the module would not produce is refused before any plan runs, the canonical printed · the same tree with the module-produced name passes the stage · the existing halt and tag-authz stages still run, in order |
 | `EN-s-1` | census mode, the run | E9 (half) | FWD-5 | `lib/opal_naming.py` (`census`); `NAMING_CENSUS_REPORT.md` | the run covers the repo (Terraform, `lib/config.py`-class files, Lambda sources) and the live plane (`comp-find --corpus aws`, vintage printed) · every nameable live name is judged, denominator printed · each row is (current, canonical, verdict, type, plane) · a RAISE stops the run with the string printed |
-| `EN-s-2` | census mode, the comparison | E9 (half) | FWD-5 | `NAMING_CENSUS_COMPARISON.md` | the report's totals are set beside LGIC_NAMING's worked cases (N2), its two-grader sample (N6, LN-h-3) and the census's IV.7 ranking, each with its denominator · every disagreement names the name and the two verdicts · `J`: the totals agree with the hand ranking, or every difference is explained |
+| `EN-s-2` | census mode, the comparison | E9 (half) | FWD-5 | `NAMING_CENSUS_COMPARISON.md` | the report's totals are set beside LGIC_NAMING's worked cases (N2), its two-grader sample (N6, LGIC_NAMING cell h-3) and the census's IV.7 ranking, each with its denominator · every disagreement names the name and the two verdicts · `J`: the totals agree with the hand ranking, or every difference is explained |
 | `EN-p-1` | FWD-6 on a practice copy | E10 | FWD-6 | `EXERCISE_FWD6.md` | on a practice copy, a planted `remediations.json` row owns one surface holding an OUT-OF-PATTERN name (§3a.4) · a change touching that surface without removing the name is refused · the change removing it passes · the scratch branch's commits are cited by hash |
 | `EN-d-1` | FWD-7 and FWD-1 on a practice copy | E11 (half) | FWD-7, FWD-1 | `EXERCISE_FWD7.md`; the expected-diff file | the expected diff set is committed BEFORE the generator runs (two commits, in that order, cited) · one fictitious firm row (§3a.3) is added, and the generator's actual diff equals the expected set · a hand-typed address for that firm is refused · a hand-typed occurrence of the firm's long or short form in an ordinary config carrier is refused · a new pipeline for the firm is written holding no storage-location literal |
 | `EN-d-2` | the second worker's search | E11 (half) | FWD-1 | `EXERCISE_FWD1_SEARCH.md` | a search of EN-d-1's new pipeline for every storage-location literal (bucket names, `s3://`, key prefixes), denominator printed, returns zero · the search's own positive control (a planted literal on a scratch copy) returns one |
@@ -302,7 +308,7 @@ Edges are keyed to **observed completion**: `A -> B` means B's acceptance cannot
                       |             |             +-------------------------------------------+
                       |             +--> EN-g-1 --+--> EN-p-1
                       |             |             +--> EN-d-1 --> EN-d-2
-                      |             +--> EN-s-1 --> EN-s-2 <== [G-B: LGIC_NAMING LN-h-3 merged]
+                      |             +--> EN-s-1 --> EN-s-2 <== [G-B: LGIC_NAMING cell h-3 merged]
                       +--> EN-v-1 .. EN-v-6 --> EN-d-1
                       +--> EN-f-1, EN-g-1, EN-p-1, EN-d-1   (the registry rows; drawn once)
 ```
@@ -387,7 +393,7 @@ other sequenced project.**
 
 | gate | owner | the condition that clears it |
 |---|---|---|
-| **G-B** (carried from LGIC_NAMING) | this project's COO lane | LGIC_NAMING LN-h-3 merged. **Its first half is DISCHARGED:** LN-g-1's rule and list merged @`ce7349b7cc`, which EN-b-1 reads. Only EN-s-2 waits on the second half. |
+| **G-B** (carried from LGIC_NAMING) | this project's COO lane | LGIC_NAMING cell h-3 merged. **Its first half is DISCHARGED:** LGIC_NAMING cell g-1's rule and list merged @`ce7349b7cc`, which EN-b-1 reads. Only EN-s-2 waits on the second half. |
 | **G-C** worker admission | `2.0.0_SA_COO~G` | after the issuance commit, `owned-paths-validate --check-agent` on HEAD bytes PERMITs each slot on a path its order names and REFUSES it on one it does not |
 | **G-E** never-widen sign-off | `1.0.0_SA_CTO` and `2.0.0_SA_COO~G` (NEVER #1) | both halves written on EN-f-1's ledger entry, naming the act's blast radius (every principal whose access changes, the rollback per key), with both branches covered. Only then is EN-f-2 spawned |
 | **G-F** the live REFUSE flip | this project's COO lane, announced to live seats | 7 days AND at least 200 graded strings in WARN mode (DEC-6), the false-refusal count printed with its denominator. **Outside this round's acceptance:** FWD-4 is exercised on a practice copy, so no FWD waits on the window |
@@ -465,7 +471,7 @@ Each is this seat's call at L5, stated so it can be argued with, and revertible 
 ## 9. WHAT THIS DECOMPOSITION DOES NOT CLAIM
 
 1. **The carrier set is re-measured only by definition pattern** (§0.3). The unscoped population is EN-c-1's.
-2. **No principal census was run at L5.** The ~56 figure in §0 is LN-f-1's measurement over IAM roles carrying a firm token,
+2. **No principal census was run at L5.** The ~56 figure in §0 is LGIC_NAMING cell f-1's measurement over IAM roles carrying a firm token,
    not a census of opal-data-49financial's actual readers and writers. That is EN-c-2's.
 3. **Worker admission is not exercised** (G-C). It cannot be until an order is at HEAD.
 4. **The WARN window is not part of this round** (G-F). FWD-4's DONE WHEN is exercised on a practice copy.
