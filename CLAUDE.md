@@ -267,8 +267,9 @@ unenforced provenance field drifts to unpopulated. `docs/doctrine/A_VALUE_MUST_C
     count of what is open. To ask what a LANE owes, parse `<issued_to>` from the order files. ⚠ **The
     one limb that needs no disclaimer carries one, and the two that do carry none**, so the careful
     sentence certifies the silent limbs. Measured 2026-09-14: 6 of 6 orders reported for
-    `3.0.0_SA_CVO~Z` were lane `~Y`'s; across **2278** seat orders **679** carry prose `<status>` and
-    **116** carry none, leaving **31** open orders invisible -- exact-match PROVEN at
+    `3.0.0_SA_CVO~Z` were lane `~Y`'s; across **2237** seat orders (88 folders, `.md` only -- a first
+    count said 2278 by admitting 41 `.gitkeep`) **679** carry prose `<status>` and **75** carry none,
+    leaving **31** open orders invisible -- exact-match PROVEN at
     `0.7.0_AE_CloudOps` (3 reported, 5 genuinely pending). **COST: none -- a reading rule.**
     **NON-APPLICATION:** the lane half does not bind a query on a BASE serial; the free-text half binds
     every query, base or lane. `AMGT_RESAPP-Z-S79`/`Z-S80` @`e1a4e917f2`. Annex §22a.
