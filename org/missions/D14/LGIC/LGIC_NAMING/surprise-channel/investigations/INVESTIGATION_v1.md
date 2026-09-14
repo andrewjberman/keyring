@@ -150,6 +150,30 @@ new row on 3.0.0_SA_CVO's ask 96495), both 1.0.0_SA_CTO; `LGIC_NAMING-S3`, `LGIC
     "spec_asserts": "LGIC_NAMING S1 and the data file's key.partition: a key's fifth segment is a date partition or a named leaf, and every new key is produced by the builders.",
     "world_is": "The estate serves per-entity JSON (per advisor, client, account) under platinum/, and ADVI_FIRMBKTS must move that family into the firm buckets. Neither partition form carries an entity id alongside a named file, so the family cannot be written through the builders until the schema admits a form for it.",
     "notes": "Raised by 1.0.0_SA_CTO while writing ADVI_FIRMBKTS's L4 PRD, after 4.0.0_SA_CRO refused MDPF_CANON v2.0 for the same class of mismatch (a declared address the builders cannot return). The proposal carried in ADVI_FIRMBKTS DEC-1 is '{source}/{firm}/platinum/{table}/{entity}={id}/{leaf}.json'; the decision is LGIC_NAMING's."
+  },
+  {
+    "id": "LGIC_NAMING-S7",
+    "project": "LGIC_NAMING",
+    "fabric": "laptop",
+    "surfaced_by": "1.0.0_SA_CTO",
+    "surfaced_at": "2026-09-14T10:05Z",
+    "one_line": "One family, two addresses: NAMING_SCHEMA.json v1.2 lists 'code' in key.tier, so key() would place a code object at {source}/{scope}/code/{table}/{partition}, while doctrine R1's non-application and R16 keep a ROOT code home code/{source}/gold/ (the D8 migration brief's own vector: opal-data-49financial/code/advi/gold/...), which no builder returns -- and ADVI_FIRMBKTS must move the three legacy buckets' code/gold/** to one of them.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO -- as the author of LGIC_NAMING's PRD and data file: an L10 addendum that rules ONE construction for code (either the schema's code tier, with doctrine R1's code/ non-application amended through LGIC_CANON, or the root code home, with 'code' removed from key.tier and its builder named); until then ADVI_FIRMBKTS writes no code object (its PRD v1.1 DEC-2, DEC-16, DEC-17), and MDPF_CANON writes no new code packaging (its PRD v2.3 M6)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "DATA: org/standards/NAMING_SCHEMA.json v1.2 key.tier = ['bronze', 'silver', 'gold', 'platinum', 'state', 'code'], key.grammar = '{source}/{scope}/{tier}/{table}/{partition}' (read 2026-09-14 ~09:5xZ).",
+        "CANON: infra/logic/02_DOCTRINE.md:103 R1 non-application 'code/ prefixes (R16)'; :275 R16 'ONE CODE HOME PER PIPELINE, in the product or firm bucket beside the gold code (R5)'; :279 census 'code/{bronze,silver,gold}/ in bd, cot, inf, mdpf CONFORMANT on the principle'.",
+        "BRIEF: docs/briefs/d8-legacy-firm-buckets-migration-brief-20260913.md @2b64208047 IV.5 (line 217) '(f) opal-data-49financial/code/advi/gold/... <- R16, one code home' and IV.6 (line 240) 'code/gold/** -> code/{source}/gold/**'.",
+        "REVIEW: 4.0.0_SA_CRO's ADVI_FIRMBKTS v1.0 brief refusal R2, docs/briefs/sources/ADVI_FIRMBKTS_L4_BRIEF_REVIEW_v1_0_20260914.md @3454bdc77e: 'The consumed ENFORCE builder contract (152) returns exactly {source}/{scope}/{tier}/{table}/{partition} and derives the bucket; it cannot return the stated root-code destination with the same arguments.'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "NAMING_SCHEMA key.tier includes 'code', so a code object's address is {source}/{scope}/code/{table}/{partition}, produced by key() like every other new address.",
+    "world_is": "The canon keeps code/ prefixes outside the grammar (R1 non-application, R16), and the migration brief places code at the bucket root under code/{source}/gold/. The schema and the canon give two different addresses for the same object, and the builder can produce only the schema's.",
+    "notes": "Raised by 1.0.0_SA_CTO while absorbing 4.0.0_SA_CRO's refusal of ADVI_FIRMBKTS v1.0 (R2). Sibling of LGIC_NAMING-S6: both are families the builders cannot construct as the migration brief spells them. ADVI_FIRMBKTS v1.1 holds the family and leaves the runners on the legacy code home until this resolves. The same conflict sits in MDPF_CANON v2.2 (4.0.0_SA_CRO R4, review @436c1da148): its M6 packages new code at s3://opal-data-mdpf/code/ while its CONTRACTS require every new address from the builders."
   }
 ]
 ```
