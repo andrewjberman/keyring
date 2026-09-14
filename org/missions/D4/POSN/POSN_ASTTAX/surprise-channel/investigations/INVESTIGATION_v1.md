@@ -3790,6 +3790,30 @@ all seven mechanical criteria were measured and the verdict is NO-GO.
   "spec_asserts": "TO-V9-1 V9-AC7/AC8/AC12 as cut: a worktree-relative plan path under a -chdir invocation.",
   "world_is": "terraform -chdir re-bases every relative path; the worker's verbatim run failed on the WRITE after a successful refresh, its corrected run produced the bounded plan (0 add / 3 change / 0 destroy) and the apply landed on it.",
   "notes": "A -chdir invocation carries an absolute plan path from the cut onward."
+},
+{
+  "id": "POSN_ASTTAX-Z-W23-S5",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~23",
+  "surfaced_at": "2026-09-14T20:30:11Z",
+  "one_line": "V9-AC9's amended bar tells the worker to print the WAF no-op's diff lines as 'every changed attribute a rule `version` \"\" -> null on the web ACL'. Terraform renders no such line: the three managed-rule-group rules re-render as WHOLE BLOCKS (- name / - priority / - vendor_name / - metric_name ... -> null) and the `version` attribute is the one thing NOT printed -- it is collapsed into '# (1 unchanged attribute hidden)'. The bar's operative clauses (exactly one resource, the two cell resources absent, the classification) all hold and V9-AC9 is recorded PASS; only the bar's description of the OUTPUT's FORM is unmatchable, so a later seat that greps the plan for `version` \"\" -> null to re-verify this no-op gets ZERO and can read it as a different diff.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE BAR: task-orders/POSN_ASTTAX.TO-V9-1.the-edge-router-admits-the-two-new-leaves.md V9-AC9 <expect> @cce010f2fd -- 'print its diff lines: every changed attribute a rule `version` \"\" -> null on the web ACL and nothing else'.",
+      "WHAT THE PLAN PRINTS (timeout 900 terraform -chdir=infra/aws/terraform/portal-auth plan, rc=0, 281 lines, 2026-09-14T20:17:30Z): one resource header, '# aws_wafv2_web_acl.opal_cloudfront_protection will be updated in-place', and 'Plan: 0 to add, 1 to change, 0 to destroy.'. Its 28 change-marked lines are three whole '- rule { ... }' blocks (common-rule-set p4, ip-reputation p3, known-bad-inputs p5), each carrying '- name', '- priority', '- vendor_name', '- metric_name', '- cloudwatch_metrics_enabled', '- sampled_requests_enabled' -> null. The string 'version' does not occur in the diff at all.",
+      "WHY IT IS STILL THE VERSION NORMALISATION, PROVED FROM THE CONFIG NOT FROM THE PLAN: infra/aws/terraform/portal-auth/waf-cloudfront.tf:183-186, 202-205, 221-224 @cce010f2fd declare each managed_rule_group_statement with vendor_name and name ONLY -- no version attribute. The plan prints those two attributes plus '# (1 unchanged attribute hidden)' inside each block; the AWS provider's managed_rule_group_statement carries exactly one further scalar, version, so the hidden attribute is version by subtraction over the block's declared attribute set. The three rules that diff are exactly the three that use a managed rule group; the other three (BlockedIPs, RateLimitRule, AuthLoginRateLimit) do not diff.",
+      "INERT, MEASURED ON THE LIVE PLANE AT THE FIRST RUN, NOT ARGUED FROM THE PLAN THAT MAKES THE CLAIM: .tools/aws wafv2 get-web-acl --scope CLOUDFRONT read BEFORE and AFTER the apply returned 6 rules both times, normalized rule-set sha256 43858bfcf7b9b51b1f3043f70c4207c7 identical, same names and priorities. No apply clears this diff (the config declares no version), which is why the amendment made it perpetual and admissible.",
+      "NOT A REPAIR AND NOT A WIDENING: nothing in this cell touches waf-cloudfront.tf; the two resources this cell moved are absent from the re-plan (0 of 2)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-V9-1 V9-AC9 @cce010f2fd: the admitted residue prints as 'every changed attribute a rule `version` \"\" -> null on the web ACL and nothing else'.",
+  "world_is": "Terraform prints the three managed-rule-group rule blocks re-rendered field-for-field to null with the `version` attribute HIDDEN as an unchanged attribute; no line matching the bar's description exists in the output. The classification is recoverable only from waf-cloudfront.tf, by subtracting the two declared attributes from the block's attribute set -- not by reading the plan.",
+  "notes": "For the next order that admits a classified no-op: describe the residue by its RESOURCE and its CAUSE (which the plan prints) rather than by an attribute line the renderer collapses (which it does not). A bar that names bytes the tool never emits cannot be matched by the seat re-verifying it later."
 }
 ]
 ```
