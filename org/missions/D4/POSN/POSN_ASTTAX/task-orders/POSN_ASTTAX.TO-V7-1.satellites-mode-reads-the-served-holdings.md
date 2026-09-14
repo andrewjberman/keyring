@@ -59,7 +59,7 @@ load-bearing). `SatelliteBook {code, displayName, constituents}` at `shared/sate
 five-key `PositioningAllocation` at `portal-proxy.ts` with `structured?`, `commodities?`, `alternatives?` OPTIONAL beside `hedge?` --
 W22-S11: `satelliteAdapter.ts:143-148` and `:157-162` CONSTRUCT four-key literals annotated with that type, so F2 could not make
 the three required without touching your file. YOU DO: once your literals carry the five keys, tighten the three to REQUIRED in
-`portal-proxy.ts` (one line, in your grant) and let `tsc` name every site that still owes them -- `hedge?` stays optional for the
+`portal-proxy.ts` (one line; `portal/src/api/portal-proxy.ts` is in your `<paths>` for exactly that hunk) and let `tsc` name every site that still owes them -- `hedge?` stays optional for the
 transition). (b) `portal/scripts/ui-smoke.mjs` imports `playwright-core`, undeclared in `portal/package.json` (W22-S9); the
 estate's installed 1.62.1 is already copied into this worktree's gitignored `node_modules` -- do not touch package.json. (c) The
 smoke's inert token gets 401 from every `/api/*` fetch and the mode is an in-page button (W22-S10): `V7-AC5` carries `--fixtures`
@@ -81,7 +81,7 @@ ONE row per off-cell finding, `POSN_ASTTAX-Z-W22-S<k>` (continue your sequence),
 
 <criterion id="V7-AC1" cell_refs="AT5-s-7"><invocation>timeout 60 bash -c "for t in TO-V2-1 TO-V4-1 TO-V9-1; do f=\$(ls org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.\$t.*.md); printf '%s ' \$t; grep -o -m1 '<status>[^<]*</status>' \$f; done"</invocation><expect>all three read `complete` at HEAD, and `git -C portal show refs/drains/posn-5-portal:src/api/portal-proxy.ts` carries the five-key PositioningAllocation (TO-V6-1 drained). Any other reading: STOP with a row.</expect></criterion> `V7-AC1` -- FOUR DEPENDENCIES, READ BACK.
 
-<criterion id="V7-AC2" cell_refs="AT5-s-7"><invocation>timeout 60 git -C portal diff --stat refs/drains/posn-5-portal -- src/pages/Positioning src/api/endpoints/satelliteRegistry.ts</invocation><expect>exactly three files changed: shared/satelliteAdapter.ts, shared/satelliteSet.ts, src/api/endpoints/satelliteRegistry.ts; etfAdapter.ts and bookSet.ts UNCHANGED (0 lines); nothing under src/pages/Attribution/.</expect></criterion> `V7-AC2` -- THREE FILES, MODELS AND ETFS UNTOUCHED.
+<criterion id="V7-AC2" cell_refs="AT5-s-7"><invocation>timeout 60 git -C portal diff --stat refs/drains/posn-5-portal -- src/pages/Positioning src/api/endpoints/satelliteRegistry.ts src/api/portal-proxy.ts</invocation><expect>exactly four files changed: shared/satelliteAdapter.ts, shared/satelliteSet.ts, src/api/endpoints/satelliteRegistry.ts, and src/api/portal-proxy.ts with ONE hunk (the three class keys tightened from optional to required on PositioningAllocation; hedge? stays optional); etfAdapter.ts and bookSet.ts UNCHANGED (0 lines); nothing under src/pages/Attribution/.</expect></criterion> `V7-AC2` -- FOUR FILES, MODELS AND ETFS UNTOUCHED.
 
 <criterion id="V7-AC3" cell_refs="AT5-s-7"><invocation>timeout 60 comp-read portal/src/pages/Positioning/shared/satelliteAdapter.ts --enumerate 'blendByIndex|weighted|renormal|current_holdings|positioning_data'</invocation><expect>ZERO hits for blendByIndex / renormal / positioning_data in the Satellites path (the ENUMERATE denominator printed); any remaining 'weighted' hit is a comment or a display aggregation over served rows, each cited by line. The adapter computes no holding.</expect></criterion> `V7-AC3` -- NO COMPUTATION IN THE ADAPTER, MEASURED BY ENUMERATION.
 
@@ -107,6 +107,7 @@ org/missions/D4/POSN/POSN_ASTTAX/ledger/PORTAL_REFS.md
 portal/src/pages/Positioning/shared/satelliteAdapter.ts
 portal/src/pages/Positioning/shared/satelliteSet.ts
 portal/src/api/endpoints/satelliteRegistry.ts
+portal/src/api/portal-proxy.ts
 </paths>
 
 <decomp_ref>
