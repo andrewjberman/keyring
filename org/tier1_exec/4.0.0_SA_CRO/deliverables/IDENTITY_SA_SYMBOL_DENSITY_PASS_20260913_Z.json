@@ -1,7 +1,7 @@
 {
   "artifact": "sa_symbol RESOLUTION + ARTICLE DENSITY PASS",
   "author": "4.0.0_SA_CRO~Z",
-  "generated_at": "2026-09-14T03:35Z",
+  "generated_at": "2026-09-14T08:23Z",
   "provider": "seekingalpha.com/api/v3 -- DIRECT, unauthenticated, NO VENDOR, no quota",
   "criterion": "HARVEST_BACKFILL_PLAN_20260911_Z.md s.18: accepted only when SA's own company name carries a distinctive token (a) AND a returned article title names the company (b). Never by rank, never by relevance score.",
   "bars": {
@@ -11,9 +11,9 @@
   "status_note": "INFERRED, not MEASURED: SA's own naming plus its own article titles are two readings of ONE source. An independent confirmation would be a second provider.",
   "denominator": {
     "universe": 89,
-    "ASKED": 17,
-    "NOT_ASKED_vendor_refusal": 72,
-    "resolved_of_asked": 17,
+    "ASKED": 18,
+    "NOT_ASKED_vendor_refusal": 71,
+    "resolved_of_asked": 18,
     "refused_on_evidence_of_asked": 0,
     "serveable_at_the_density_bar": 8,
     "partition_note": "A VENDOR REFUSAL AND A REFUSAL ON EVIDENCE ARE DIFFERENT FACTS. The first run printed \"RESOLVED 17 of 89 / REFUSED 72 of 89\" when those 72 were never asked -- which reads as \"Costco, Netflix, Visa and Mastercard have no SA symbol\"."
@@ -983,14 +983,43 @@
     {
       "folder": "Costco COST",
       "company_name": "Costco",
-      "search_http": 403,
+      "search_http": 200,
       "sa_symbol": {
-        "value": null,
-        "status": "UNRESOLVED",
-        "evidence": "NOT ASKED -- the seekingalpha.com search endpoint returned HTTP 403. THIS IS NOT A FINDING ABOUT THIS COMPANY and carries no evidence either way about whether it has an SA symbol.",
-        "resolved_at": "2026-09-14T03:30Z"
+        "value": "COST",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED COST -- SA names it 'Costco Wholesale Corporation' (test a) and 34 of 50 returned titles name the company (test b). Window: 2026-03-25 .. 2026-09-12, 6 in the last 30 days -- density bar (>=3) MET.",
+        "resolved_at": "2026-09-14T08:21Z"
       },
-      "candidates_probed": [],
+      "candidates_probed": [
+        {
+          "symbol": "COST",
+          "sa_company": "Costco Wholesale Corporation",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 34,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 6,
+          "oldest": "2026-03-25",
+          "newest": "2026-09-12",
+          "distinct_days": 39,
+          "covers_window": true
+        },
+        {
+          "symbol": "COST:CA",
+          "sa_company": "Costco Wholesale Corporation",
+          "name_overlap": 1.0,
+          "http": 403,
+          "title_hits": 0,
+          "title_of": 0,
+          "records": 0,
+          "in_window": 0,
+          "oldest": null,
+          "newest": null,
+          "distinct_days": 0,
+          "covers_window": false
+        }
+      ],
       "candidates_rejected_on_name": []
     },
     {
@@ -1893,9 +1922,10 @@
   ],
   "state": "PARTIAL -- the search endpoint served 17 queries then returned HTTP 403 for the remaining 72. NOT a defect and NOT a finding about those 72 names.",
   "blocker": {
-    "what": "HTTP 403 from seekingalpha.com/api/v3/searches after 17 queries",
-    "still_refusing_at": "2026-09-14T03:3xZ (re-probed with Costco and Netflix; both 403)",
-    "note": "the per-symbol NEWS endpoint was NOT rate-limited in this run -- only the name->symbol SEARCH was. A name whose symbol is already known can still be harvested.",
-    "resume": "python sa_symbol_resolve_pass.py --out <next> -- the pass now STOPS after 3 consecutive vendor refusals instead of spending the rest of the batch recording absences it never asked about."
+    "what": "HTTP 403 from seekingalpha.com/api/v3 -- INTERMITTENT, not a clean per-window budget",
+    "decay_measured": "blocked at 06:08Z; a single probe per endpoint at 08:19Z (131 min later) returned 200 on BOTH. The block DECAYS over hours.",
+    "intermittency_measured": "a 6-name run at 20s spacing from the decayed state: name 2 refused, name 3 (Costco) SUCCEEDED, names 4-6 refused. A success AFTER a refusal means the 403s are PROBABILISTIC, not a wall.",
+    "correction_to_s23": "s.23 concluded the limiter was \"sustained and escalating\" because an 8s-paced run died on call 1. THAT TEST WAS CONTAMINATED -- the block from 13 minutes earlier was still active, so pacing was never cleanly measured, only re-measured under an existing block. The operational advice (stop, do not hammer) was still right; the stated reason was partly wrong.",
+    "practical_rate": "roughly 1 name resolved per 6 attempted at 20s spacing. Finishing the remaining names by this route is possible but slow, and each burst risks re-extending the block."
   }
 }
