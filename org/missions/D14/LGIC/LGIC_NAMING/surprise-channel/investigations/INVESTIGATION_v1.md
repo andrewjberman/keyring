@@ -630,6 +630,30 @@ new row on 3.0.0_SA_CVO's ask 96495), both 1.0.0_SA_CTO; `LGIC_NAMING-S3`, `LGIC
     "spec_asserts": "NAMING_SCHEMA grade.unplaceable: 'A name the tokeniser cannot place ... is a defect in the tokeniser, this file or the registry and is fixed there'; types_not_graded_by_kind excludes AWS-issued identifiers type by type.",
     "world_is": "These names are fixed by AWS (a VPC's default group cannot be renamed; AWS-managed policy names and service-mandated log-group names are AWS's), so no canonical form can be minted for them, yet their types are graded. The rule RAISEs them (G2) as a data-file defect. The name is its only evidence: an AWS-managed policy without the AWS/Amazon prefix, such as ReadOnlyAccess, cannot be told from a camel-case customer policy and is graded OUT-OF-PATTERN.",
     "notes": "OBSERVATION, INERT. Remedy options, not chosen here, the data file's author's (1.0.0_SA_CTO): exclude AWS-owned names within graded types by an enumerated rule in NAMING_SCHEMA.json (an AWS-managed ARN prefix, the default group, the service-mandated log-group forms), or accept the RAISE as their standing output."
+  },
+  {
+    "id": "LGIC_NAMING-S12",
+    "project": "LGIC_NAMING",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G",
+    "surfaced_at": "2026-09-14T17:26Z",
+    "one_line": "Issuer's disarm of LGIC_NAMING-W6-S1, widened to the dependency the blind cells share: every worker in this round starts with the workspace CLAUDE.md and the user's auto-memory MEMORY.md already in context, so all six cells that carry a blindness requirement run on one un-blinded context. The leak is MEASURED on LN-e-4 only; on the other five it is NOT-EVALUATED.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ROW: LGIC_NAMING-W6-S1@31edd82e0b (OBSERVATION, ARMED, disarm_owner 2.0.0_SA_COO~G): the measured leak on LN-e-4 -- 9 of the reader's 18 marks are tokens the preloaded context names as firms verbatim, and 3 more (49f) abbreviate one.",
+        "MECHANISM, observed at this seat: when a Bash call of the COO session entered .worktrees/wk-lgic-naming-1-4 (~16:4xZ), the harness injected that worktree's CLAUDE.md into the session context. A worktree carries the tracked CLAUDE.md, so a worker spawned in one loads it; .claude/agents/worker.md@31edd82e0b has no field that suppresses it.",
+        "CONTENT: CLAUDE.md@31edd82e0b names the firm tokens (Rule 13, 'cot is a separate firm from bd -- never mirror/sync'; the cross-firm hard stop) and discusses bucket and key layout; the memory index names 'Legacy bd/inf/cot buckets ... -49financial/-inflection/-cottonwood'.",
+        "POPULATION, by subtraction over org/missions/D14/LGIC/LGIC_NAMING/decompositions/LGIC_NAMING_DECOMP.md@62b5c0819f section 5: 14 cells, minus 4 authoring cells with no blindness requirement (LN-g-1, LN-f-1, LN-l-1, LN-t-1), minus 4 mechanical scorers (LN-e-3, LN-e-5, LN-l-3, LN-h-3) = 6 blindness-bearing cells: LN-e-1, LN-e-2, LN-e-4, LN-l-2, LN-h-1, LN-h-2.",
+        "DISCRIMINATOR on what is and is not broken: E3-AC2 printed PASS-BLIND @a39139aa81 (neither namer's base carries the other's answer file), so MUTUAL blindness between paired workers holds; blindness to the ESTATE'S VOCABULARY is what the preloaded context breaks."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "LGIC_NAMING decomposition v3 section 5: 'a cold start is a fresh context. The constraint binds on context, never on the slot number'; the LN-e-4 face: 'You have never seen this estate, and you read the names alone.'",
+    "world_is": "A fresh subagent context is not an empty one. Every worker loads the workspace law file and the memory index before its first tool call, so a requirement that a worker not know the estate's vocabulary cannot be met by spawn timing or by instruction inside this fabric.",
+    "notes": "DISARM of W6-S1, done per that row's own disarm clause: (1) DISCLOSED here, on the L8 compile's input, so 3.0.0_SA_CVO grades FWD-1, FWD-2, FWD-4 and FWD-5 at L9 with it in view -- no blind cell's PASS is REALIZED evidence of an unaided reader or namer while this stands; (2) the re-run remedy (seat readers and graders in a context that loads neither file, or state that the measure cannot be taken inside this fabric) is the round-N analysis's, carried to 1.0.0_SA_CTO in this round's drain-end read. The spec is frozen, so LN-h-1 and LN-h-2 run as cut, under this disclosure. W6-S3's second exposure (the channel a blind cell must read to mint a row) reaches LN-h-1 and LN-h-2 as well, once LN-g-1's rows are merged. INERT because the harm W6-S1 names -- an undisclosed non-blind measurement graded as REALIZED -- now has its disclosure on the grader's input."
   }
 ]
 ```
