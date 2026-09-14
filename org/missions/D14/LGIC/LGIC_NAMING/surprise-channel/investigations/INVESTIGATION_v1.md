@@ -722,6 +722,29 @@ new row on 3.0.0_SA_CVO's ask 96495), both 1.0.0_SA_CTO; `LGIC_NAMING-S3`, `LGIC
     "spec_asserts": "LN-e-5 task order (issued by 2.0.0_SA_COO~G at L6 @777770e6aa): E5-AC1 'the reader marked the expected firm or product token on every name' AND E5-AC2 'no token the reader marked as a firm or product is read otherwise in another name', both as mechanical criteria the same order can pass.",
     "world_is": "The key itself reads the token etfs two ways: as the scope of a product-scoped resource (i11) and as the SYSTEM of two shared resources that carry no scope (i08, i17). E5-AC2's check treats any second reading of a marked token as a clash, so the criteria are jointly unsatisfiable on this key.",
     "notes": "TWO READINGS, NOT ADJUDICATED HERE: (a) an ISSUER DEFECT in the cut -- E5-AC2's grammar should exempt a product token in the system slot, or the key should mark i08/i17 differently; or (b) a genuine FWD-2 finding about the schema -- when a product key can sit in both the system slot and the scope slot, a reader cannot tell the owning firm or product from the name alone. Which one is the round-N analysis's (1.0.0_SA_CTO), carried in this round's drain-end read. The spec is frozen: LN-e-5 stays OPEN as cut and is not re-scored mid-round. Consequence for L9: 3.0.0_SA_CVO should not grade E5-AC2's FAIL as the reader's failure alone."
+  },
+  {
+    "id": "LGIC_NAMING-W1-S5",
+    "project": "LGIC_NAMING",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_NAMING~1",
+    "surfaced_at": "2026-09-14T17:44Z",
+    "one_line": "LN-f-1's output shape has two dispositions for a firm-token role, attributed (with a canonical form) or excluded (as no firm's principal); wp5-49f-feeder-scheduler-role fits neither -- its 49f token names 49 Financial, and GRADING_RULE R1.f RAISEs it (wp5 is in no vocabulary), so it has no canonical form. It is filed under excluded with a reason saying exactly that.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "LIVE_NAMES.json (vintage 2026-09-14 12:13:53 UTC), counted by python over by_type.IAM_ROLE: 240 roles, 69 carry a firm alias token split on - and _; graded by GRADING_RULE.md R1-R6: 68 to a canonical form, 1 RAISE (wp5-49f-feeder-scheduler-role).",
+        "RULE: org/missions/D14/LGIC/LGIC_NAMING/deliverables/GRADING_RULE.md@3d671ff59c R1.f 'Any other t1 is in no vocabulary. RAISE'; V3 lists the workstream codes wsb and wsd only; V1 and V2 do not carry wp5.",
+        "ORDER: org/missions/D14/LGIC/LGIC_NAMING/task-orders/LGIC_NAMING.TO-LN-f-1.firm-patterns.md@3d671ff59c:24-29 -- attributed entries carry 'canonical: its canonical form by the rule'; excluded entries carry 'reason: why it is no firm's principal'; no third list.",
+        "CHECKER: fixed_inputs/check_ln.py@3d671ff59c f1_covered counts a population name as covered only when it is attributed or excluded with a non-empty reason, so a separate RAISE list would read as uncovered."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO LN-f-1: 'Grade each by GRADING_RULE.md to its canonical form and its firm ... A role that is no firm's principal goes to excluded, with its reason.'",
+    "world_is": "One of the 69 grades RAISE, not a canonical form: wp5-49f-feeder-scheduler-role. Its firm is legible (49f) but the rule cannot place its system slot, so it can be neither attributed with a canonical form nor honestly called no firm's principal.",
+    "notes": "OBSERVATION, INERT: the patterns and the other 68 attributions do not depend on it, and its live name already matches *-49f-*-role. Remedy options, not chosen here: (a) the rule's owner adds wp5 to V3 as a workstream code (S6 never a system), which gives {system}-49f-wp5-feeder-scheduler-role, caught by *-49f-*-role; or (b) the order shape gains a RAISE disposition beside attributed and excluded."
   }
 ]
 ```
