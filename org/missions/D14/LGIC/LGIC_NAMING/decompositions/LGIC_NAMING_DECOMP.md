@@ -6,10 +6,10 @@
  "directive": "D14",
  "macro": "LGIC",
  "fabric": "laptop",
- "decomp_version": "v1",
+ "decomp_version": "v2",
  "step": 5,
- "prd_ref": "org/missions/D14/LGIC/LGIC_NAMING/prd/LGIC_NAMING_PRD.md@d6e0c3b74a",
- "prd_half_hashes": {"ratified-text": "SIGNED 3.0.0_SA_CVO @0255660cae", "brief": "SIGNED 4.0.0_SA_CRO~D @0114f04692"},
+ "prd_ref": "org/missions/D14/LGIC/LGIC_NAMING/prd/LGIC_NAMING_PRD.md@7bd4ef6f27",
+ "prd_half_hashes": {"ratified-text": "SIGNED 3.0.0_SA_CVO (half unchanged since v1.2, current at v1.3)", "brief": "SIGNED 4.0.0_SA_CRO @81c9fdb639 (v1.3)"},
  "author": "2.0.0_SA_COO~G",
  "cells": 14,
  "chains": 5,
@@ -25,6 +25,8 @@ L5 is the COO's; no seat certifies this before L6.
 ~06:5xZ: both halves SIGNED, current). The L4 to L5 handoff arrived as `1.0.0_SA_CTO`'s hand relay (96538), because the
 notifier's COO delivery was still addressed to the base serial.
 **Sequence:** stage 1 of `org/missions/SEQUENCE.yaml`, `sequence-check --project LGIC_NAMING` flags none.
+**v2, cut before any L6 issuance** on `1.0.0_SA_CTO`'s ask (96570), after PRD v1.3 re-opened and re-closed the brief
+half; section 0 is the re-read, and v1's text below is amended in place where v1.3 reaches it.
 **Frozen at the cut.** A cell that looks wrong mid-round is a **surprise row, never an edit**
 (`org/missions/D14/LGIC/LGIC_NAMING/surprise-channel/investigations/INVESTIGATION_v1.md`).
 
@@ -33,6 +35,55 @@ notifier's COO delivery was still addressed to the base serial.
 forms, and `bd` refused in every slot (~03:5xZ card 2); the per-slot split (S4, ratified at L4 by `1.0.0_SA_CTO`);
 remediation shape (a). **S13 binds every cell: no cell renames a live name, and no cell creates, changes or applies an
 AWS resource.**
+
+---
+
+## 0. v2 -- THE RE-READ AGAINST PRD v1.3
+
+**What moved** (`git diff d6e0c3b74a 7bd4ef6f27`): the PRD's S1 paragraph and its `prd_version`; in
+`NAMING_SCHEMA.json`, four `key` fields -- `partition` gains the entity form `{entity}={id}`, `table_case` bounds
+kebab-case to NEW served leaves, and `legacy_served_path` and `code` are new -- plus the version, `ratified_by` and
+changelog lines. The rulings behind them are `1.0.0_SA_CTO`'s adjudication of rows S6, S7 and S8 (96570, record @7bd4ef6f27).
+**Nothing else moved:** not the SURFACE MANIFEST, the CELL CANDIDATES, ENDPOINT, CONTRACTS, the resource grammar, the
+kind list or the 33-type partition. So section 1's domain, the 14 cells, the edges, the 5 chains and the distinct-worker
+constraint all stand as cut in v1.
+
+`comp-adversary` re-run on v1.3 (read-vintage HEAD `@b09ed6c736`, 2026-09-14T10:57:58Z): 6 of 6 cited commits verified;
+11 cited paths, 9 stable and 2 GONE (`GRADING_RULE.md` and `TENSION_RANKING.md`, which this project mints). The brief and
+the `.tf` no longer read as moved. L4-R: ADMITTED at v1.3 (`prd-signoff.py status LGIC_NAMING`, read ~10:5xZ; the brief
+half re-signed by `4.0.0_SA_CRO` @81c9fdb639, the ratified-text half carried from v1.2).
+
+**Which cells a v1.3 field reaches, by subtraction** (the 14 cells, minus those whose face or acceptance never reads
+the changed `key` block):
+
+```
+  cells ........................................................ 14
+  minus cells whose inputs never read the key block ............ -9
+      LN-e-3, LN-e-5          compare and score strings; read no schema field
+      LN-e-4                  the names only, by construction
+      LN-f-1                  IAM roles: the resource grammar, unchanged
+      LN-l-1                  a comment citing S1; S1's five-segment string is unchanged
+      LN-h-1, LN-h-2, LN-h-3  grade from GRADING_RULE.md only; reached THROUGH LN-g-1
+      LN-t-1                  the brief's IV.7 at its pin
+  ------------------------------------------------------------
+  cells a v1.3 field reaches ................................... 5
+      LN-g-1                  grades S3Key names: the four new key forms need worked cases
+      LN-e-1, LN-e-2          name items from the data file: the item set gains the two new forms
+      LN-l-2, LN-l-3          read and score key segments: the address set gains the two new forms
+```
+
+What each of the five gains is written into section 3 and section 3a in place, each marked (v1.3).
+
+**The one v1.3 change that is more than new forms.** `key.legacy_served_path` makes a platinum key's verdict depend on
+whether it is a LEGACY served path, and nothing in `(name, type)` -- the grade's signature, CONTRACTS row 2 -- says
+which. No field of v1.3 lists the legacy set. Two graders reading the same rule could therefore differ on the same key,
+which is FWD-5's failure. v2 closes it for this round by requiring LN-g-1's written rule to **enumerate the legacy served
+set it applies**, source named and denominator printed, so LN-h-1 and LN-h-2 grade from one list. Whether the set
+becomes a data field, or `grade()` gains it as an input, is the contract's question: row `LGIC_NAMING-S10`, for
+`1.0.0_SA_CTO`.
+
+**Gate G-A is DISCHARGED** (@3514843a12, 96551; measured at HEAD, `docs/architecture/MDPF_CANON_PRD.md:16-18`). FWD-4's
+second clause no longer waits on another project.
 
 ---
 
@@ -119,7 +170,7 @@ Each acceptance line below is **one criterion**. `J` marks a judgment criterion:
 
 | cell | what it is | PRD candidate | serves | writes | acceptance, one clause per line |
 |---|---|---|---|---|---|
-| `LN-g-1` | the written grading rule and its worked cases | N2 | FWD-5 | `deliverables/GRADING_RULE.md` | every worked case carries exactly one of CONFORMANT / ALIAS / OUT-OF-PATTERN with its canonical form, or a stated RAISE, or NOT-GRADED for an excluded type · a worked case for each of the **25 graded types** (§3a.5) · a worked case for each of the 3 verdicts · a worked case for each of the 5 census residue classes (camel IAM names, purpose-first policies, library-first layers, `default` security groups, workstream-coded schedules) · every worked case is a live name at a stated vintage · no worked case is a name in the N6 discriminating sample (§3a.4) |
+| `LN-g-1` | the written grading rule and its worked cases | N2 | FWD-5 | `deliverables/GRADING_RULE.md` | every worked case carries exactly one of CONFORMANT / ALIAS / OUT-OF-PATTERN with its canonical form, or a stated RAISE, or NOT-GRADED for an excluded type · a worked case for each of the **25 graded types** (§3a.5) · a worked case for each of the 3 verdicts · a worked case for each of the 5 census residue classes (camel IAM names, purpose-first policies, library-first layers, `default` security groups, workstream-coded schedules) · every worked case is a live name at a stated vintage · no worked case is a name in the N6 discriminating sample (§3a.4) · (v1.3) a worked case for each of the four v1.3 key forms -- a new family's entity partition `{entity}={id}`, a legacy served path (a bare entity-id segment and a snake_case leaf), a code-tier key `{source}/{scope}/code/{built_tier}/{file}`, and a legacy root `code/` key -- each with its verdict stated · (v1.3) the rule enumerates the legacy served set it applies, its source named and its denominator printed (row `LGIC_NAMING-S10`) |
 | `LN-e-1` | namer A | N3 | FWD-1 | `exercises/n3-namer-a.tsv` | one name for every item of the fixed item set (§3a.1), briefed only with `NAMING_SCHEMA.json` and `infra/logic/05_IDENTITY_SPINE.md` · the record states its worktree base commit |
 | `LN-e-2` | namer B | N3 | FWD-1 | `exercises/n3-namer-b.tsv` | as LN-e-1, blind to it |
 | `LN-e-3` | the namers' comparison | N3 | FWD-1 | `exercises/n3-compare.md` | the two answer files are identical on every item · neither namer's recorded base commit contains the other's answer file |
@@ -155,19 +206,20 @@ FWD-5 LN-g-1, LN-h-1/2/3 · FWD-6 LN-t-1.
 
 Decided here, so no worker chooses its own test. L6 inlines each one verbatim, in the faces named, and nowhere else.
 
-1. **N3 item set** (identical in the LN-e-1 and LN-e-2 faces; the answer key only in LN-e-5's face). At least 14 items,
+1. **N3 item set** (identical in the LN-e-1 and LN-e-2 faces; the answer key only in LN-e-5's face). At least 16 items,
    each described in plain words that never spell a schema token (no `cot`, `49f`, `-role`), covering: each of the 4
    firms in a resource's scope slot; at least one shared (unscoped) resource; at least one product-scoped resource;
    **the resource that publishes Cottonwood's model-portfolio figures** (FWD-1's own example); a Black Diamond
    integration resource for 49 Financial (the `bd` trap); an EVENT_RULE or SCHEDULE (cadence in the last slot); a
-   SECRET; an S3 bucket; a full S3 key address; an IAM policy; an IAM role; a dead-letter queue. **Systems only from the
+   SECRET; an S3 bucket; a full S3 key address; (v1.3) a new per-entity served file (the entity partition); (v1.3) a code bundle in its code
+   home (the code tier); an IAM policy; an IAM role; a dead-letter queue. **Systems only from the
    registry seed** (products `mdpf`, `etfs`; vendors `schwab`, `blackdiamond`, `orion`, `eclipse`, `smartx`,
    `pathfinder`, `trueshares`, `ycharts`). The seed has no system axis for platform subsystems (`05_IDENTITY_SPINE.md`
    §5; brief Part VI), so such an item would only RAISE and none is included.
 2. **N3 reader set** (LN-e-4's whole face). Namer A's names only, item ids removed, order shuffled by a stated seed.
 3. **N5 address set** (LN-l-2's face; the expected labels only in LN-l-3's face). At least six addresses conforming to
    the ruled string, in `opal-data-49financial` and in `opal-data-mdpf`. They are **target-state specimens, stated as
-   such**: both buckets are tier-first today (`09_NAMING_CENSUS.md` §5; `01_CENSUS.md`). Plus **one live legacy
+   such**: both buckets are tier-first today (`09_NAMING_CENSUS.md` §5; `01_CENSUS.md`). (v1.3) At least one specimen uses the entity partition and at least one the code tier. Plus **one live legacy
    tier-first address** from the 2026-08-18 template layout as the negative control. The reader's briefing is the
    `opal-data-assets` layout, explained with at least three real `opal-data-assets` addresses.
 4. **N6 sample** (identical in the LN-h-1 and LN-h-2 faces; LN-g-1's face lists the discriminating names as forbidden
@@ -309,7 +361,7 @@ tool's failure mode. The re-run at `--budget 540` scanned **5 of 5 carriers** (C
 
 | gate | owner | the condition that clears it |
 |---|---|---|
-| **G-A** the `MDPF_CANON_PRD.md` s.3 replacement notice | `1.0.0_SA_CTO` (owner of that file, lane `docs/architecture/**` ANY_CTO) | s.3 states it is replaced by S1, citing this PRD. **FWD-4's second clause cannot grade REALIZED before it**, and MDPF_CANON reads `dep_stage: REGISTERED`, held in sequence stage 2. Row `LGIC_NAMING-S4`. |
+| **G-A** the `MDPF_CANON_PRD.md` s.3 replacement notice. **DISCHARGED @3514843a12** (96551; measured at HEAD: `docs/architecture/MDPF_CANON_PRD.md:16-18`) | `1.0.0_SA_CTO` (owner of that file, lane `docs/architecture/**` ANY_CTO) | s.3 states it is replaced by S1, citing this PRD. **FWD-4's second clause cannot grade REALIZED before it**, and MDPF_CANON reads `dep_stage: REGISTERED`, held in sequence stage 2. Row `LGIC_NAMING-S4`. |
 | **G-B** `LGIC_ENFORCE` E9's comparison half | `LGIC_ENFORCE`'s COO lane (not seated; the request is at Andrew, per 96538) | LN-g-1's and LN-h-3's records land. Not a gate on this project; recorded so the consumer's wait is visible from the producer's side. |
 | **G-C** worker admission on `infra/aws/**` and on files directly under `deliverables/` | `2.0.0_SA_COO~G` | after the issuance commit, `owned-paths-validate --check-agent` on HEAD bytes PERMITs each slot on a path its order names and REFUSES it on one it does not |
 | **G-D** the three-writer `.tf` | whoever cuts `LGIC_ENFORCE` E5 | nothing orders the two edits (disjoint lines); recorded so E5's cut reads LN-l-1's comment edit |
@@ -375,6 +427,8 @@ Each is this seat's call at L5, stated so it can be argued with, and revertible 
 5. Every exercise input is fixed here and cut at L6 (§3a).
 6. The fan-out may exceed the chain count, on the distinct-worker constraint (§5, row `LGIC_NAMING-S3`).
 7. N5's `MDPF_CANON_PRD.md` half is a gate, not a cell (§6 G-A, row `LGIC_NAMING-S4`).
+8. (v2) LN-g-1's rule must enumerate the legacy served set it applies, because v1.3 makes a platinum key's verdict
+   depend on it and the data file does not list it (section 0, row `LGIC_NAMING-S10`).
 
 ---
 
@@ -391,3 +445,5 @@ Each is this seat's call at L5, stated so it can be argued with, and revertible 
    and the distinct-worker table from the PRD's fixture text. Both are written out so they can be argued with.
 6. **No cell has been exercised.** Every target state is a specification. No effort or duration estimate appears here,
    deliberately.
+7. **The legacy served set is not in the data file** (row `LGIC_NAMING-S10`). v2 moves it into LN-g-1's written rule,
+   which makes the two graders read one list, but does not settle what `grade()` will read.
