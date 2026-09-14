@@ -18,6 +18,8 @@ The reporting compiler returned eight open originals, while the canonical resolv
 
 Successor direction received after the initial review commit: C-S120 records the 17:29:43Z alignment approval and explicit Attribution exclusion. It supersedes the earlier hold for forward work; the earlier source and authorization statements above retain their original vintage. The index check confirms zero undispositioned originals out of 97.
 
+Final release check at `9e6e72ea8b27b181fd0fdf7c28a480295aee94e9` (2026-09-14T17:35:41Z): **0 nonterminal of 19 orders, 0 undispositioned of 97 originals**. C-S121 releases the pending missing-cell finding and the round-4 slug. Earlier nonterminal counts above are historical measurements, not the release state.
+
 ```json
 [
   {
@@ -1174,6 +1176,32 @@ Successor direction received after the initial review commit: C-S120 records the
     "spec_asserts": "The original v0.3 breakdown names nine cells with F4 an Attribution guard, pending Andrew alignment. The earlier CRO message preserves the no-workers gate and treats BD-only summation as a reading awaiting confirmation.",
     "world_is": "Msg 22864 relays All recs approved plus the explicit later qualifier we do not touch Attribution: F4 is removed, leaving B1-B4/F1-F3/R1. BD totals across sleeves exclude adding Yang; VNQ sub-asset is Real Estate; BIPC stays Equity; is_hedge and bd-securities reconciliation are excluded. Worker alignment hold is released, with L4 v0.7 and L5/L6 ownership/preconditions still applying. The same-day Bloomberg pull is approved under the stated CTO working-tree-deploy boundary.",
     "notes": "Do not carry the earlier no-workers or unresolved-summation wording forward as current state. Attribution remains on Yang two-class layout under the explicit user restriction; the CRO states the VXX grouping consequence was put back to Andrew. Indexed confirmation at e406e99122 after e9216254ae: 97/97 original dispositions resolved, no phantom ids; TWO of nineteen orders still staged (T6/T7). S2/S3 have become terminal. The prior five-file commit passed all 42 new surprise rows, with zero new standing-corpus failures; code-gate suffix exclusions and stale risk-reflex output are not reported as clean checks."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-C-S121",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-14T17:35:41Z",
+    "one_line": "At the now-terminal round-4 boundary, measurement and a proposed seed patch remain insufficient for the issued applied/exercised endpoints. The decomposition lacks the implementation cells that would make those outcomes true.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/POSN_ASTTAX_ROUND4_CVO_RELEASE_CHECK_20260914_Z.json",
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/POSN_ASTTAX_ROUND4_CVO_SOURCE_CHECK_20260914_Z.json@e9216254ae",
+        "org/missions/D4/POSN/POSN_ASTTAX/ledger/ROUND4_PACKET.md@937e8f727debc8fd40ef44d60d80819666651af8"
+      ]
+    },
+    "disposition": "DECOMP_INVALIDATING",
+    "adjudicates": [
+      "POSN_ASTTAX-Z-C-S118"
+    ],
+    "spec_asserts": "Issued PRD v0.6 FWD-4 is applied class colors; FWD-6 is exercised agreement. The four U cells enumerate, price, record a proposed diff and measure a retag member set.",
+    "world_is": "All nineteen orders are now terminal, with the four carried orders ended by supersession/cancellation, not unperformed work marked complete. The four U cells leave source repairs unapplied, a source-only reader/color census, and no performed retag. The original round-3 count exception is unnecessary.",
+    "notes": "Release C-S118 into the one round-4 slug. The approved eight-cell plan is the next issuance basis after CTO analysis and signed v0.7; it explicitly excludes Attribution, CMA/Philosophy, AdvisorIntelligence, is_hedge and bd-securities reconciliation. Do not convert v0.6 failures into permission to edit those excluded surfaces. No endpoint is declared REALIZED."
   }
 ]
 ```
