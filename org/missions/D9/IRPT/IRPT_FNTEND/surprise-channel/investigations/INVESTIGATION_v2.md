@@ -2849,6 +2849,96 @@
     "spec_asserts": "FE-s-31 and FE-s-32 as issued @b4d1b8bfef, BOUNDS: 'Start once in the background from <WS>/portal: bun run dev --port <a free port>, export it as IRPT_FE_DEV_PORT (the variable __tests__/fe-s-27/_dev-server.ts reads; its default is 5181), and kill it before your final report.'",
     "world_is": "Launched as issued, a worktree dev server rebuilds the main checkout's shared vite cache (W1-S56, W5-S4), and any run that leaves IRPT_FE_DEV_PORT unset can grade whichever page holds 5181 -- measured twice in round 5, once on another project's worktree (W1-S57, W5-S1). Both remaining browser cells are amended before their cuts. NOT closed here, carried to the drain-end packet for 1.0.0_SA_CTO: the helper's default port itself (fe-s-27/_dev-server.ts, in no round-5 grant), a portal-wide cacheDir in vite.config.ts, and tsc -b's tsbuildinfo written through the junction (W5-S4).",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W5-S1",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~5",
+    "surfaced_at": "2026-09-14T03:49:51Z",
+    "one_line": "fe-s-19's two browser criteria (F19-AC4, F19-AC5) graded ANOTHER PROJECT'S TREE: the fe-s-27 precondition probe reads MET on any HTTP 200 at the default port 5181, and when this worker's first post-refusal run went out 5181 was held by `node \"C:\\tmp\\wk-dsgn-1e\\portal\\node_modules\\vite\\bin\\vite.js\" --port 5181` (PID 11144, a DSGN worktree) -- BODIES MOUNTED 0 of 2 and UNCERTAIN WITHOUT A WIRE STATE 0 of 2. The same test against THIS worktree's own dev server (IRPT_FE_DEV_PORT=5197) read 2 of 2 and 2 of 2.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "netstat -ano: `TCP [::1]:5181 [::]:0 LISTENING 11144`; Get-CimInstance Win32_Process 11144: ParentProcessId 25984, CreationDate 9/13/2026 9:54:49 PM (local), CommandLine `node \"C:\\tmp\\wk-dsgn-1e\\portal\\node_modules\\vite\\bin\\vite.js\" --port 5181` -- not this worktree (C:/tmp/wk-irpt_fntend-5-5-fe-s-35).",
+        "The F35-AC6 folder set, run after the one-line refusal and before the fe-s-1 re-base: 273 pass / 3 fail; 2 of the 3 were fe-s-19/mounted-from-wire.test.ts:126 and :136 under `PRECONDITION: dev server on http://localhost:5181 -- MET (HTTP 200 ...) [port from default]`, both tabs `slot=status-panel state=FAILED`, `served(ready): ` EMPTY.",
+        "The same file with IRPT_FE_DEV_PORT=5197 against a vite started from this worktree's own portal (PID 21736, stopped afterwards): `BODIES MOUNTED: 2 of 2`, `UNCERTAIN WITHOUT A WIRE STATE: 2 of 2`, `served(ready): .../directory/resolve, .../holdings/, .../performance/`, 2 pass 0 fail.",
+        "portal c2eb8eb4 src/pages/InvestorReporting/__tests__/fe-s-27/_dev-server.ts:40 `DEFAULT_DEV_PORT = '5181'`, :63 `probeDevServer` -- MET is an HTTP 200 on the port; nothing identifies the tree being served.",
+        "The deciding F35-AC6 run (portal 357b4055) read `PRECONDITION ... -- ABSENT (ECONNREFUSED ...)`: 277 pass / 2 skip / 0 fail -- the foreign server had exited."
+      ]
+    },
+    "spec_asserts": "F35-AC6: \"PRECONDITION: none required -- fe-s-19's browser tests report SKIPPED without a server. Record which way you ran it.\" The face knows two states: ABSENT (skipped) or MET by this portal's dev server.",
+    "world_is": "A third state exists: MET by a FOREIGN tree. The probe only establishes that something answers on the port, so with another seat's vite on 5181 the F35-AC6 invocation as written graded code this order never touched -- red here, and just as able to read a false GREEN whenever the foreign tree happens to mount. ARMED because it recurs on the future normal path: every worker in this project shares the one default port with every other project's dev server. Disarm is a probe that identifies the served tree, or a per-worker port by construction. `_dev-server.ts` is outside this order's <paths>.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W5-S2",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~5",
+    "surfaced_at": "2026-09-14T03:49:51Z",
+    "one_line": "The v1 contract names no `report_title` anywhere -- 0 of 25 files under docs/contracts/investor-reporting/v1/ -- and declares no REQUEST schema for the analysis POST (routes.json carries `response_schema` only), so \"the contract's schema for that field\" does not exist in v1. The type was read from UI_CONTRACT.md S10's \"Browser request\" block (`\"report_title\": null`) plus its table row \"Report title | Optional override\": string | null.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal 357b4055 __tests__/fe-s-35/no-identity.test.ts, deciding run: `CONTRACT v1 FILES NAMING report_title: 0 of 25 (docs/contracts/investor-reporting/v1/, recursive)`.",
+        "docs/contracts/investor-reporting/v1/routes.json @0a74710f33, route `POST /api/scoped/investor-reporting/analysis`: keys route_key, handler, cell, status, note, operation, consumer_operation, response_schema -- no request schema.",
+        "docs/research/investor_reporting_ycharts_variants_20260911/UI_CONTRACT.md @72acd16e66, \"## Browser request\": `\"report_title\": null`; UI table: `| Report title | Optional override | Otherwise derive from client/account label and comparison names. ...`.",
+        "org/missions/D9/IRPT/IRPT_FNTEND/prd/IRPT_FNTEND_PRD.md @0a74710f33 :116 names `report_title` in AnalysisRequest's browser request half \"per S10\" -- the PRD routes the field to S10, not to a v1 schema."
+      ]
+    },
+    "spec_asserts": "Cell FE-s-35: \"`contracts/adapt.ts` types the analysis request's `report_title` as `string` ... Make them agree with the contract's schema for that field.\" F35-AC5: \"The test reads the contract schema's type for `report_title` and both builders' types and prints all three.\"",
+    "world_is": "No schema types the field. The one contract carrier naming it is UI_CONTRACT.md S10 (4.0.0_SA_CRO's research packet, cited by the PRD), which sends null for no override and names an override. no-identity.test.ts reads THAT file for the contract's type and prints the v1 census beside it, so the gap stays visible rather than papered over. Both builders now type `string | null`. Should v1 later publish a request schema, the test's source should move to it. A v1 request-schema gap is the contract owner's (1.0.0_SA_CTO), and docs/contracts/ is outside this grant.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W5-S3",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~5",
+    "surfaced_at": "2026-09-14T03:49:51Z",
+    "one_line": "The cell's measured premise about the bare-body suites did not hold as stated. With the refusal in place ONE test went red across fe-s-1/ and fe-s-13/ (fe-s-1/adapter.test.ts:231, 'targets the DECLARED route'), not three. And a THIRD file serves a bare body -- fe-s-13/routes.test.ts:164 `{ instance: null }` -- which the '2 of 6 carry no contract_version' census missed because that file carries the token `_contract_version` (:62, :73-74).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "After the one-line refusal only (portal c2eb8eb4 + investor-reporting.ts edit), the F35-AC6 folder set: 273 pass / 3 fail. fe-s-1/adapter.test.ts:231 threw `EnvelopeMismatch ... field 'body'`; the other two reds were fe-s-19/mounted-from-wire.test.ts:126/:136 driving a foreign dev server (row IRPT_FNTEND-W5-S1). fe-s-13: 0 red.",
+        "fe-s-13/no-route.test.ts @c2eb8eb4: every LiveClient call (submitCorrection, previewExportBundle, listAnalysisRequests) is refused by NoDeclaredRoute before the transport, so its three `{}` stubs are never served; it asserts `issued` is [].",
+        "fe-s-13/routes.test.ts @c2eb8eb4 :164 `return Promise.resolve({ instance: null } as unknown as T)` -- reached by getHoldingsSnapshot; green only because the test catches every error and asserts `not NotYetExercisable`.",
+        "Row IRPT_FNTEND-W1-S39 world_is: \"closing the clause would red three tests in two suites this order may not write\"."
+      ]
+    },
+    "spec_asserts": "Cell FE-s-35: \"of the 6 test files that construct `LiveClient`, 2 carry no `contract_version` -- `__tests__/fe-s-1/adapter.test.ts` and `__tests__/fe-s-13/no-route.test.ts`. W1-S39 measured three tests red in those two when the branch refuses. Re-base them onto enveloped bodies.\"",
+    "world_is": "Red in those two: 1, not 3. Bare bodies actually served: 3 stubs in 2 files (adapter.test.ts: the performance fixture and the holdings `{}`; routes.test.ts: the holdings `{ instance: null }`), not the 2 named files. Re-based: all 3 served stubs are now v1 envelopes carrying their old payload as `data`, and every assertion is unchanged. The never-served stubs (no-route.test.ts x3, adapter.test.ts's route-refused calls) are unchanged. routes.test.ts was edited although the cell did not name it; fe-s-13/ is inside <paths>. A token census cannot tell a file that SERVES a v1 body from one that merely mentions `contract_version`.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W5-S4",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~5",
+    "surfaced_at": "2026-09-14T03:49:51Z",
+    "one_line": "To separate the foreign-server red (W5-S1) from a real one, this worker started a vite dev server from its own worktree on port 5197 -- an act the order did not name -- and vite re-optimized dependencies into its cache under node_modules. That node_modules is a JUNCTION to the main checkout's portal/node_modules, so the write landed in the shared tree. `bun run typecheck` (tsc -b) likewise writes its tsbuildinfo into node_modules/.tmp through the same junction on every F35-AC1 run.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "vite v7.3.5 started from C:/tmp/wk-irpt_fntend-5-5-fe-s-35/portal with `node node_modules/vite/bin/vite.js --port 5197 --strictPort` printed `(client) Re-optimizing dependencies because vite config has changed`; portal/vite.config.ts sets no `cacheDir` (vite's default is node_modules/.vite -- INFERRED location, not listed).",
+        "The issuer's facts at the cut: `<WS>/portal/node_modules = a JUNCTION to C:/Users/AndrewBerman/Desktop/ajb_workspace/portal/node_modules`.",
+        "portal tsconfig.app.json @c2eb8eb4: `\"tsBuildInfoFile\": \"./node_modules/.tmp/tsconfig.app.tsbuildinfo\"`.",
+        "Server stopped (Stop-Process 21736); netstat afterwards: no listener on 5197. No package was installed or removed; `bun install` was never run."
+      ]
+    },
+    "spec_asserts": "BOUNDS: \"`node_modules` is a junction; do not run `bun install`\"; the write grant is <paths> plus the deliverables folder; F35-AC6 \"PRECONDITION: none required\".",
+    "world_is": "Two writes outside the grant happen through the junction without any install. (1) The dev server's dependency re-optimization, which this worker chose to run to discriminate W5-S1. (2) tsc -b's build-info file, written by the order's OWN F35-AC1 invocation -- so every wave-B worker's AC1 writes the same shared file. Both are caches a later run rebuilds; no source file was touched.",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
