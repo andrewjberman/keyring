@@ -4356,6 +4356,29 @@ Andrew asked for (msg 22917); it concerns this project's portal files meeting an
     "spec_asserts": "The round-5 breakdown (1.0.0_SA_CTO~Z, relayed in msg 22837) scopes the Positioning page as the 14 files at portal pin e85f6eb84f, and cuts round 5's portal drain refs/drains/posn-5-portal from that pin, with F2 editing HoldingsTab and PositioningSummary.",
     "world_is": "Those files are not only the pin's. A parallel, unpushed laptop rebrand line (DSGN_REBRND, feature/d13-visual-elevation) modifies HoldingsTab.tsx and PositioningSummary.tsx, plus Positioning.tsx. So F2's edits and the rebrand's edits land on the same two files from different bases, and meet at the cross-fabric portal integration.",
     "notes": "Filed by the site-Z integrator, not a round seat, while building the portal integration plan Andrew asked for (msg 22917): org/tier0_exec/0.0.0_AB_MSTR~Z/deliverables/PORTAL_REPO_CROSS_FABRIC_INTEGRATION_PLAN_20260914.md. No act is asked of round 5 and nothing in it changes. Consumers: 1.0.0_SA_CTO~Z (L10 analysis, the next cut, and the plan's POSN leg) and 2.0.0_SA_COO~Z (the F2/F3 drain). Per-hunk BASE ranges get measured when the POSN integration leg is real; the plan already sequences POSN after its round-5 L10."
-  }
+  },
+{
+  "id": "POSN_ASTTAX-Z-W23-S6",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~23",
+  "surfaced_at": "2026-09-14T20:52:50Z",
+  "one_line": "V9-AC11's SECOND-AMENDMENT negative control names a state the PRIOR version cannot produce: 'an unlisted leaf refused by the NEW version only'. v25 refuses EVERY leaf but registry.json by design -- that is the refusal branch this cell was told to KEEP -- so nope.json is refused by BOTH versions, and 'NEW version only' is unobtainable at any vintage. Read literally the clause would put 2 of 16 comparisons outside the bound and command a same-turn re-association of the prior version on all five behaviors, i.e. a rollback of a correct deploy. The control the clause is AFTER did fire: the NEW version still refuses the unlisted leaf, so the allowlist did not widen. Recorded as a FORM defect in the bar, not a failure; V9-AC11 is PASS on its operative clause (16 of 16 comparisons, 0 outside the bound).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED THIS TURN by the admitted instrument, re-run bare (a read of the two committed captures, no live-plane touch): 'SAT-unlisted 49financial REFUSED 404 unknown_satellites_res REFUSED 404 unknown_satellites_res IDENTICAL' and the same for identity opal-capital+firm=cot -- 4 reads, BEFORE=v25 and AFTER=v26 both refusing; footer 'ARM B denominator: 16 of 16 comparisons' / 'ARM B rows outside the signed bound: 0'.",
+      "WHY THE CLAUSE AND NOT THE WORLD: the refusal branch is the one the cell FORBADE widening and it is present unchanged at HEAD -- infra/aws/lambda-edge/shared-advisor-router/index.mjs:355-370 @51731e2a10 (rule satellites_unknown_leaf, 404 {error: unknown_satellites_resource}), 1 of 1 whole-value hit in 435 lines. A version that admitted nope.json would be the DEFECT, so no vintage of this function can satisfy 'refused by the NEW version only'.",
+      "TWO CARRIERS OF ONE BOUND DISAGREE BY ONE WORD: the issuer's own ruling row POSN_ASTTAX-Z-S92 @51731e2a10 writes the control WITHOUT it -- 'the unlisted leaf refused by the new version' -- and that reading is exactly what the output shows. The criterion's carrier is the one a worker grades against, which is why the word is recorded rather than silently read past.",
+      "NOT REPAIRED, BY THE ISSUER'S OWN PRECEDENT: Z-S91 ruled that a bar's FORM clause found defective after a PASS is recorded for the next cut, never rewritten after the fact. This row is that record; the next differential arm cut on this project states its negative control as 'refused by the new version' (what must still hold), not as 'by the new version only' (a difference the prior version cannot show)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-V9-1 V9-AC11 <expect> @51731e2a10 (SECOND AMENDMENT, the ISSUER'S RULING clause): '... the two new leaves admitted and an unlisted leaf refused by the NEW version only (the negative control), N of N comparisons printed with 0 outside the bound.'",
+  "world_is": "nope.json is refused 404 unknown_satellites_resource by BOTH the prior published version (v25) and the new one (v26), on both synthetic identities -- 4 of 4 reads IDENTICAL. The pre-edit router refuses every leaf except registry.json, so 'refused by the NEW version only' describes a state no vintage of this function produces; the satisfiable control is 'still refused by the NEW version', which passed.",
+  "notes": "Nothing is blocked and nothing is re-run: the flip proceeds on V9-AC11's operative clause under Z-S92. Adjudication is the issuer's/L9's. This row is prospective only -- it changes no recorded output."
+}
 ]
 ```
