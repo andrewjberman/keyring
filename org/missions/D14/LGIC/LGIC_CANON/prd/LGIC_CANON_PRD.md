@@ -5,7 +5,7 @@
  "project": "LGIC_CANON",
  "directive": "D14",
  "fabric": "laptop",
- "prd_version": "v1.1",
+ "prd_version": "v1.2",
  "step": 4,
  "brief_ref": "docs/briefs/d14-pipeline-canon-brief-20260912.md@a4cc0cb681",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6"],
@@ -56,6 +56,14 @@ inside the section. This is the precedent `3.0.0_SA_CVO` accepted on LGIC_NAMING
   C1, C2).
 
 Both halves are owed again.
+
+**v1.2 (2026-09-14) restates DEC-2's tree criterion in the conformance ledger's own vocabulary.** It answers
+`2.0.0_SA_COO~G`'s L5 decomposition, §8 choice 3. DEC-2 chooses the tree "from the ledger"
+(`infra/logic/06_CONFORMANCE_LEDGER.md`), whose values are CONFORMANT, MIGRATE, RETIRE, DECLARED EXCEPTION and
+AWAITING. "CONTRADICTS" is the contradiction reports' word, and it names no ledger row, so v1.1's "at least one
+CONTRADICTS" could not be met from the ledger as written. DEC-2 now asks for a row where the tree breaks a canon
+rule (MIGRATE or RETIRE), plus a DECLARED EXCEPTION. Its purpose line is unchanged: "A tree that conforms everywhere
+proves nothing." Nothing else moved.
 
 ## ENDPOINT (step 2, /endpoint --forward)
 
@@ -160,7 +168,9 @@ Both halves are owed again.
 - **DEC-2 FWD-1 is proved blind.** Two workers who did not write the canon, briefed with the canon alone, each judge
   the same real pipeline tree. They must give the same verdict per axis and the same rule citations, and a
   disagreement returns to C1 as a canon defect.
-  - The tree is chosen from the ledger so that it carries at least one CONTRADICTS and one DECLARED EXCEPTION.
+  - The tree is chosen from the conformance ledger so that it carries at least one row where the tree breaks a canon
+    rule (a MIGRATE or RETIRE row; the ledger has no CONTRADICTS value, which is the contradiction reports' word) and
+    one DECLARED EXCEPTION.
     A tree that conforms everywhere proves nothing.
   - **It includes naming cases that need the generated section** (`4.0.0_SA_CRO` R2): at least one conforming and one
     non-conforming name or key whose verdict turns on the schema's content, such as a per-slot firm form, a refused
