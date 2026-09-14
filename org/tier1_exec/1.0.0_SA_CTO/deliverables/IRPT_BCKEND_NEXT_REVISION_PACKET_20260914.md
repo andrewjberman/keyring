@@ -71,6 +71,7 @@ Today's LGIC_NAMING rulings (v1.4, ADMITTED) turn two of the three into direct a
   Every new address comes from `LGIC_ENFORCE`'s builders, so the key-bearing cells wait on its E3, as ADVI_FIRMBKTS and MDPF_CANON already do.
 - **`ADVI_FIRMBKTS` v1.2's tenant boundary** (DEC-3; CONTRACTS, SIGNED): a scoped request is served when the path's firm resolves, through the registry, to the caller's validated tenant bucket, the staff `?firm=` proxy included. Investor Reporting's `/api/scoped/` behaviour inherits it.
 - **Andrew ~13:4xZ:** ruling 8(b), W4-S20, above.
+- **Andrew ~14:5xZ, verbatim:** *"No, we need the logic projects done first because that will establish the patterns for the new backend properly"* (record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_145xZ_LOGIC_FIRST_THE_BACKEND_FOLLOWS_ITS_PATTERNS.md`). The backend waits for Platform Logic, and v0.15 is built ON its patterns: the ruled key string from `LGIC_ENFORCE`'s builders, the identity registry and its generated views, and the canon's tier and home rules. It never works around them. Every s.1 answer above is written to that rule, and any item round 2's slug adds is held to it.
 
 ---
 
