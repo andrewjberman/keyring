@@ -1,11 +1,12 @@
 {
   "prd": "POSN_ASTTAX_PRD.md",
-  "prd_version": "v0.4",
-  "prd_pin": "65844d868c42c0c58c4c7264fe1a337d7d95d9ce",
+  "prd_version": "v0.7",
+  "prd_pin": "3c42ed05d0ee0c05d37a2c3b5cb0f6d4be3f5293",
   "half": "ratified-text",
-  "half_hash": "1c60358b916ed6f395a38a1ed74dabe5641e41ee9b02a9c464e94e27f0a0d503",
-  "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/cvoZ_ASSETCLASS_TAXONOMY_PRD_v0.1_ENDPOINT_SIGNOFF_REVIEW_20260911.md@24f15b52d5",
+  "half_hash": "95310bc7fedfe35a00dbf61f527f49472ee5f6c15679d3b531ec35c315ea7c2d",
+  "verdict": "REFUSED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/POSN_ASTTAX_V07_RATIFIED_TEXT_REVIEW_20260914_Z.md@4ca2dff1db",
   "signed_by": "3.0.0_SA_CVO~Z",
-  "signed_at": "2026-09-11T07:48:50Z"
+  "signed_at": "2026-09-14T17:41:37Z",
+  "reason": "Move new provenance/history lines 185-186 outside the ENDPOINT section; outcome wording is accepted."
 }
