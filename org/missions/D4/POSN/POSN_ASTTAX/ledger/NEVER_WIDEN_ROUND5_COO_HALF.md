@@ -52,7 +52,8 @@ resource (`platinum/satellites/holdings.json` ONLY, never the prefix) and `dynam
 ### R1 -- THE RETAG (AT5-s-8) -- the served-output move NEVER#1 names
 
 **Store 1, the served DynamoDB table `etf-classifications`:** 285 rows (ScannedCount, filtered scan, no LastEvaluatedKey);
-**12 rows move**, each at BOTH levels where the target differs, plus one `management_style`. **Prior values, printed so the
+**13 rows move** (12 at the ~18:0xZ signing; JEPI added at PRD v0.8, R1 AMENDMENT 2 below), each at BOTH levels where the target
+differs, plus one `management_style`. **Prior values, printed so the
 rollback is one script and not a memory:**
 
 ```
@@ -69,16 +70,17 @@ VIXY    hedge          Volatility        passive
 UVXY    equity         Volatility        passive
 QBER    fixed_income   Volatility        active
 VNQ     equity         US Large Cap      unknown
+JEPI    equity         US Large Cap      active      (added ~20:4xZ; CTO batch-get 2026-09-14T20:03:01Z; PRD v0.8 @709d7b4221)
 ```
 Targets (C-RETAG-SET + C-SUB-ASSET): Commodities for DBC/GLD/GSG/IAU/SLV/USO/PDBC with sub Metals for GLD/IAU/SLV and their current
 sub kept for DBC/GSG/USO/PDBC; Structured / Hedge for VXX/VIXY/UVXY/QBER; Alternatives / Real Estate for VNQ, `management_style`
-set from `unknown`. **Radius = 12 of 285 rows (4.2%)**; `hedge` as a top-level value goes to ZERO rows (7 today, all in the set).
-**Store 2, `infra/aws/lambda/v2_portal/_shared/etf_classification.py` `ETF_CLASSIFICATIONS`:** the same 12 rows; the seeder's
+set from `unknown`; Structured / Options Income for JEPI (management_style active, unchanged). **Radius = 13 of 285 rows (4.6%)**; `hedge` as a top-level value goes to ZERO rows (7 today, all in the set).
+**Store 2, `infra/aws/lambda/v2_portal/_shared/etf_classification.py` `ETF_CLASSIFICATIONS`:** the same 13 rows; the seeder's
 `merge_item()` (`seed-etf-classifications.py:72-120`) reports 0 conflicts after, so the two stores agree and a later seed changes
 nothing. **Downstream, on their next scheduled fires and with NO code change:** the four property writers above and the B2
 producer read the new labels; `bd-securities` (the second table, C-CUTS) is NOT written and keeps disagreeing on purpose. **Rollback:**
-the 12 prior rows restored by one `update-item` script from the table above, both levels + VNQ's style; the dict reverted by one
-commit. **Both branches:** a partial write (k of 12) is detectable by the same scan and reverted by the same script. **Order of
+the 13 prior rows restored by one `update-item` script from the table above, both levels + VNQ's style; the dict reverted by one
+commit. **Both branches:** a partial write (k of 13) is detectable by the same scan and reverted by the same script. **Order of
 writes (matching the CTO half):** VNQ's `management_style` is set BEFORE its class write, so `C-RETAG-SAFETY`'s guard is never armed
 mid-retag. **Writers of the property AFTER R1: N = 6** (the four positioning-plane writers above + the B2 producer + the B4 lambda),
 each reading the same served table on its next scheduled fire. The CTO half point-read the same 12 rows by `batch-get-item` at
@@ -110,13 +112,25 @@ labels until then -- a wait (Rule 27). The mechanism is driven on demand; the sc
   LastModified move past the retag time; `registry.json`'s body is byte-identical to its prior version; the per-ticker per-level
   target comparison reads the REFRESHED artifacts; the next scheduled fire is recorded as the organic leg, not waited on.
   **B:** any invocation fails, or a key's content differs beyond the retagged labels and the weights they regroup (a holding
-  appearing or vanishing, a total moving, a non-set ticker relabelled): STOP; the 12 prior values are written back to BOTH stores by
+  appearing or vanishing, a total moving, a non-set ticker relabelled): STOP; the 13 prior values are written back to BOTH stores by
   `r1_rollback.py`; the same invocations are re-issued so every served key returns to pre-retag labels; the row is filed.
 - **Rollback per key:** the prior values table above re-written, then the same invocations; where the bucket versions the key
   (`opal-data-portal-v2` does; the VersionIds are printed by the worker before the retag), the prior object version is the
   second, independent restore.
 
 COO half for this amendment: `2.0.0_SA_COO~Z`, GIVEN, 2026-09-14 ~20:3xZ.
+
+### R1 AMENDMENT 2 2026-09-14 ~20:4xZ -- JEPI, the thirteenth member (matching the CTO half @d3f0c3b79c; PRD v0.8 @709d7b4221)
+
+Andrew ~20:0xZ *"Also JEPI I would put in Structured, yes."* and ~20:2xZ *"b, Options Income"*. **Prior values** (CTO batch-get
+2026-09-14T20:03:01Z, one instrument for this row; this half adopts the CTO's point read and names it as such): JEPI `equity` /
+`US Large Cap` / `active`. **Target:** `structured` / `Options Income` (a NEW sub_asset_class value under Structured), `management_style`
+UNCHANGED. **Radius:** 13 of 285 rows (4.6%). **Served effect:** JEPI is held by no satellite component (holdings.json, 9 satellites,
+177 rows at as_of 2026-09-14) and no Yang served book, so no served Positioning figure moves on its account; the writers of the
+property (N = 6) read the new row on their driven run and their next fires. **Rollback:** the same script, the JEPI row restored
+to the three prior values above. **Store 2:** the JEPI dict entries at `etf_classification.py:180` and `:495`; the 'US Dividend' map
+at `:633` untouched. **Both branches** as above; `C-RETAG-SAFETY`'s guard is not armed (management_style is already a real value).
+COO half for this amendment: `2.0.0_SA_COO~Z`, GIVEN, 2026-09-14 ~20:4xZ.
 
 ### B4 -- the additional characteristics lambda (AT5-s-4) -- NEVER-WIDEN NON-APPLICATION, stated
 
@@ -142,7 +156,7 @@ page; every served key outside the six named in the decomposition's (iv); the ET
 ```
 NEVER#1   "never move served output without never-widen sign-off (CTO+COO)"
 ACTS      B1 (two functions, two keys, one sign-off -- Andrew item F)  B2 (one function, one existing key + one new key)
-          R1 (12 of 285 rows, two levels, one style field; the dict)
+          R1 (13 of 285 rows -- 12 signed ~18:0xZ + JEPI ~20:4xZ -- two levels, one style field; the dict)
 DELTA     NOT 0 -- moving the labels and carrying five classes IS the purpose
 N         positioning-plane class property: 4 writers, 4 rules read above (2 re-deployed, 2 untouched)
           registry.json: 1 writer;  holdings.json: 0 -> 1;  characteristics.json: 0 -> 1 (non-application)
