@@ -4227,6 +4227,52 @@ all seven mechanical criteria were measured and the verdict is NO-GO.
   "spec_asserts": "V2-AC13: the deploy recorded per the recorder's contract -- a source-map update AND a CHANGELOG entry.",
   "world_is": "The source-map half landed (correct, one row stamped); the CHANGELOG half did not, behind a success banner its own earlier line contradicts; infra/aws/terraform/cot-pipeline/CHANGELOG.json untouched since a8ef1ca328.",
   "notes": "A shared control file that a tool re-encodes silently needs the detector printed beside every diff stat of it."
+},
+{
+  "id": "POSN_ASTTAX-Z-S91",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T20:43:42Z",
+  "one_line": "DISARM of W23-S5 (INERT): the amended V9-AC9 bar described the WAF no-op's residue as a diff line (`version` \"\" -> null) that terraform never renders -- the managed-rule-group blocks re-render whole and `version` collapses into '(1 unchanged attribute hidden)'. The bar's operative clauses (one resource, the two cell resources absent, the classification proved from waf-cloudfront.tf by subtraction, the live web ACL sha256 identical before/after) hold and V9-AC9 is recorded PASS with both readings; the bar's FORM clause is the issuer's defect, recorded for the next cut and not rewritten after a PASS.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE LESSON, THE WORKER'S OWN WORDS ADOPTED: describe an admitted residue by its RESOURCE and its CAUSE (which the plan prints) rather than by an attribute line the renderer collapses. And the discriminator '0 of 2 cell resources in the plan' is true only in the PLAN-HEADER band -- a naive substring count reads both resources in the refresh log.",
+      "WHY GRADUATED: the criterion discriminates on its operative clauses and passed; the defective clause is a description of output form, disclosed twice (row + instance) for L9."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "TO-V9-1 V9-AC9 @cce010f2fd: 'print its diff lines: every changed attribute a rule version \"\" -> null on the web ACL'.",
+  "world_is": "281 plan lines, one resource header, 28 change-marked lines in three whole rule blocks, the string 'version' absent from the diff; the classification recoverable from the config, not the plan.",
+  "notes": "Not amended post-PASS (Z-S81's rule); the next 0-diff bar with an admitted residue is cut by resource and cause.",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W23-S5"
+  ]
+},
+{
+  "id": "POSN_ASTTAX-Z-S92",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T20:43:42Z",
+  "one_line": "ISSUER'S RULING on V9-AC11 (references W23-S1, which stays ARMED for 1.0.0_SA_CTO~Z and is NOT adjudicated here): no authenticated session is obtainable on this fabric (3 of 3 committed credential fixtures MFA-gated; a second factor is credential-equivalent and unauthorized), so the criterion's authenticated arm is not an act any seat can take on demand. The DEPLOYED-BYTES arm the worker ran -- the prior and the new published versions invoked with the same synthetic origin-request events on all five behaviors' paths, 16 of 16 comparisons inside the signed bound, the unlisted leaf refused by the new version -- is ADMITTED as V9-AC11's instrument; the criterion is re-recorded PASS-by-output on it with the authenticated arm stated NOT EXERCISED, and TO-V9-1 may flip.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "WHAT THE ADMITTED ARM GRADES AND WHAT IT CANNOT: it grades the deployed bytes' behavior at a named version on every path the bound names -- the never-widen question. It bypasses the viewer-request auth gate and so proves nothing about authorization; this deploy did not touch that gate (auth-validator-edge is a different function on the same behaviors), so the ungraded surface is outside the act's radius. Stated in the instance, not hidden.",
+      "WHY THE RULING IS THE ISSUER'S: the criterion's expectation is the issuer's text; Rule 27 (no FWD is a wait; a proof is an act a seat can take on demand) is the authority for substituting the on-demand instrument for one no seat holds; the credential gap itself is W23-S1's and its remedy (a designated MFA-exempt probe identity, Andrew's card) is 1.0.0_SA_CTO~Z's to carry.",
+      "WHY GRADUATED: the act is landed, bounded and recorded; the criterion now says what it grades; the open item has an owner and a carrier."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "TO-V9-1 V9-AC11 as cut: an AUTHENTICATED five-path verify; the order's own preflight (3) anticipated the gap and named PARTIAL-never-faked as the recording.",
+  "world_is": "The worker withheld the status flip because a PARTIAL arm is an adjudication above a worker; the deploy itself is landed and bounded on every instrument available (deployed-bytes 16 of 16; envelope probes 9 of 9 identical; live association 5 of 5 on one ARN; web ACL sha256 identical).",
+  "notes": "Every future edge deploy on the five behaviors is verified at the deployed-bytes rung until a probe identity exists; TO-7-AE's historical authenticated evidence pre-dates the MFA rollout."
 }
 ]
 ```
