@@ -6,10 +6,10 @@
  "directive": "D14",
  "macro": "LGIC",
  "fabric": "laptop",
- "decomp_version": "v1",
+ "decomp_version": "v2",
  "step": 5,
- "prd_ref": "org/missions/D14/LGIC/LGIC_CANON/prd/LGIC_CANON_PRD.md@56608aadd4",
- "prd_half_hashes": {"brief": "SIGNED 4.0.0_SA_CRO @0749183a0c (review @ff2766b316)", "ratified-text": "SIGNED 3.0.0_SA_CVO (current at v1.1)"},
+ "prd_ref": "org/missions/D14/LGIC/LGIC_CANON/prd/LGIC_CANON_PRD.md@5b2336a5e4",
+ "prd_half_hashes": {"brief": "STALE at v1.3 -- owed by 4.0.0_SA_CRO (refused v1.2 @04dace74d6 on R1, answered by v1.3)", "ratified-text": "SIGNED 3.0.0_SA_CVO, current at v1.3 (ENDPOINT and CONTRACTS unchanged)"},
  "author": "2.0.0_SA_COO~G",
  "cells": 12,
  "candidates_not_cut": ["C6 -- FWD-5 held on Andrew's ~13:4xZ word"],
@@ -20,7 +20,9 @@
 
 **Author:** `2.0.0_SA_COO~G`, the lane leading the sequence. The authority is Andrew-direct 2026-09-14 ~16:3xZ, record @`507864b842`,
 with the DIRECTED Step 1b-F row. `1.0.0_SA_CTO` set the L5 order in msg 96640; this project is second.
-**Input:** the PRD's SURFACE MANIFEST at v1.1 @`56608aadd4`, ADMITTED on both halves.
+**Input:** the PRD's SURFACE MANIFEST at v1.1 @`56608aadd4` (v1), re-read at v1.3 @`5b2336a5e4` (v2, section 0b).
+**v2, cut before any L6 issuance** (LGIC_CANON has no issuer: Andrew-direct ~18:2xZ, 96673 item 3). It changes one choice: the
+judged tree for C2 (row LGIC_CANON-S2, 4.0.0_SA_CRO @48146fdd10; 1.0.0_SA_CTO's correction 96693).
 **Sequence:** stage 1, no gate. `sequence-check --project LGIC_CANON` flags NEEDS-SLOT, which this cut and its row flip answer.
 **Frozen at the cut.** A cell that looks wrong mid-round is a **surprise row, never an edit**
 (`org/missions/D14/LGIC/LGIC_CANON/surprise-channel/investigations/INVESTIGATION_v1.md`, 1 row at the cut).
@@ -56,13 +58,35 @@ with the DIRECTED Step 1b-F row. `1.0.0_SA_CTO` set the L5 order in msg 96640; t
      own stamp.
    - CN-k-1 names the trigger and makes it refusable: `render_naming_section.py --check` compares the section's stamped hash
      with the live schema's, and exits non-zero when they differ.
-5. **The judged tree for C2 is chosen here, by measurement** (§3a.1). The ledger's vocabulary has no CONTRADICTS value; its
+5. **The judged tree for C2 is chosen here, by measurement** (§3a.1). ⚠ **v1's choice below was WRONG on grain and is
+   corrected in v2 to MDPF (section 0b).** The v1 text is kept, struck, because the reading of DEC-2 it states is right and
+   the tree it names is not. The ledger's vocabulary has no CONTRADICTS value; its
    values are CONFORMANT, MIGRATE, RETIRE, DECLARED EXCEPTION and AWAITING. And the only contradiction reports are IRPT_BCKEND's
    and IRPT_FNTEND's, which carry no exception. So DEC-2's *"chosen from the ledger so that it carries at least one CONTRADICTS
    and one DECLARED EXCEPTION"* is read as **a ledger row where the tree breaks a rule, plus a DECLARED EXCEPTION**. The ETFs
    tree has both:
    - `opal-data-etfs/gold/` holds 32 JSON objects against R11's parquet rule (`06_CONFORMANCE_LEDGER.md:102`, MIGRATE-format);
    - X4 is GRANTED and PERMANENT (`:133`, Pathfinder and TrueShares), with X3 and X5 OWED (`:101`, `:103`, `:132`, `:134`).
+
+---
+
+## 0b. v2 -- THE RE-READ AGAINST PRD v1.3, AND THE TREE CORRECTED
+
+**What moved in the PRD** (`git show d9977a0f40` and `git show 5b2336a5e4`): DEC-2 (v1.2) and C2's inputs column (v1.3) now
+read *"at least one row where the tree breaks a canon rule (a MIGRATE or RETIRE row) and one DECLARED EXCEPTION"*. That is
+this decomposition's own reading (v1's s.8 choice 3), now PRD text, ruled to stand by `1.0.0_SA_CTO` (96677). **Nothing else
+moved:** ENDPOINT and CONTRACTS are byte-unchanged. So the cells, edges and constraints stand as cut in v1.
+
+**What v1 got wrong, and this cut corrects: the TREE, on GRAIN.** v1 chose the ETFs tree on the strength of X4 (ledger `:133`).
+But X4 is Pathfinder and TrueShares (*"no gold, no platinum"*), whose planes are in the monolith (`:52-54`), not a departure of
+`opal-data-etfs`. The ETFs tree's own exceptions, X3 (`:132`) and X5 (`:134`), are both OWED, and `:101-103` read AWAITING. So
+the ETFs tree carries no DECLARED exception and fails DEC-2. It was found by `4.0.0_SA_CRO` (row LGIC_CANON-S2 @48146fdd10) and
+confirmed by `1.0.0_SA_CTO` (96693). **The corrected tree is MDPF**, because inside one pipeline it carries:
+- MIGRATE rows at `infra/logic/06_CONFORMANCE_LEDGER.md:98` (bronze) and `:100` (the gold destination);
+- X1, GRANTED and PERMANENT, at `:130` (the Orion JWT credential artifact).
+
+This seat re-reads those three lines at HEAD before the cut, and L6 re-reads them again at the issuance base. Nothing was cut
+on the wrong tree.
 
 ---
 
@@ -174,10 +198,10 @@ criterion**. `J` marks a judgment criterion, graded by `3.0.0_SA_CVO` at L9.
 
 ### 3a. THE FIXED INPUTS L6 CUTS INTO THE FACES
 
-1. **The judged tree** (CN-j-1 and CN-j-2, identically). The ETFs pipeline: `data/etfs/` and `opal-data-etfs`, with its
-   vendors Pathfinder and TrueShares.
-   - Chosen for the rule-breaking row at `06_CONFORMANCE_LEDGER.md:102` (gold JSON against R11) and the GRANTED exception X4
-     (`:133`), with X3 and X5 OWED (§0.5).
+1. **The judged tree** (CN-j-1 and CN-j-2, identically). **v2: the MDPF pipeline** (section 0b). It has the MIGRATE rows at
+   `06_CONFORMANCE_LEDGER.md:98` (bronze) and `:100` (gold destination), and X1 GRANTED and PERMANENT at `:130`.
+   - ~~v1: the ETFs pipeline, on `:102` and X4 at `:133`.~~ It fails DEC-2, because X4 is not a departure of `opal-data-etfs`,
+     and that tree's own X3 and X5 are OWED.
    - L6 re-reads those rows at the issuance HEAD and states the exact path set. If CN-l-1 has already changed them, L6 takes
      them at the base the two judges share.
    - The five axes are the canon's §2.
@@ -330,8 +354,8 @@ Each is this seat's call at L5, revertible at the round-N analysis.
    finds it here.
 2. **The exception register gets one home for its entries (the ledger's §6) and one for its schema (the canon's §4).** Today
    the canon's §4 carries the first entries and the ledger's §6 carries them again: two carriers of one list.
-3. **DEC-2's tree is the ETFs pipeline**, reading *"CONTRADICTS"* as a ledger row that breaks a rule, because the ledger's
-   vocabulary has no CONTRADICTS value (§0.5). If `1.0.0_SA_CTO` reads it otherwise, that is a spec question and a row.
+3. **DEC-2's READING is a ledger row that breaks a rule plus a DECLARED EXCEPTION.** It was ruled to stand (96677) and is
+   written into PRD v1.2 and v1.3. **The TREE is MDPF (v2, section 0b).** v1's ETFs choice failed on grain (row LGIC_CANON-S2).
 4. **FWD-4's *"on different days"* is read as two workers in separate contexts, CN-n-2 spawned only after CN-n-1 drains**, so
    the two never run at once. It is not read as a calendar day, which would be a wait with no stated reason, forbidden by
    Rule 27. If Andrew or `1.0.0_SA_CTO` means a calendar day, it is a qualified wait and a row.
@@ -346,7 +370,7 @@ Each is this seat's call at L5, revertible at the round-N analysis.
 1. **FWD-5 is not covered by this round.** Its instrument is; its grade waits on G-N by Andrew's word.
 2. **Blindness to the estate is NOT-EVALUATED** for the judges and the naming workers (§5). The base-commit checks cover
    only mutual blindness.
-3. **The ETFs tree's rows were read at this cut** (`:101-103`, `:132-134`). CN-l-1 may change them in the same round, and L6
+3. **The MDPF tree's rows were read at the v2 cut** (`:98`, `:100`, `:130`). CN-l-1 may change them in the same round, and L6
    pins the base the judges share.
 4. **Worker admission is not exercised** (G-C).
 5. **No cell has been exercised.** No effort or duration estimate appears here, deliberately.

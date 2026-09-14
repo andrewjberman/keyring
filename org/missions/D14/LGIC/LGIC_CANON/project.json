@@ -32,7 +32,8 @@
     "org/missions/D14/LGIC/LGIC_CANON/decompositions/LGIC_CANON_DECOMP.md"
   ],
   "decomposition_lineage": [
-    "org/missions/D14/LGIC/LGIC_CANON/decompositions/LGIC_CANON_DECOMP.md@v1 -- authored by 2.0.0_SA_COO~G 2026-09-14 from the PRD at 56608aadd4 (v1.1, ADMITTED), as the lane leading the sequence; 12 cells over 4 surfaces, 3 DAG levels; C6 NOT CUT on Andrew's ~13:4xZ word (FWD-5 held until a true new firm exists); frozen at the cut. The L6 seat is Andrew's to name (96667)."
+    "org/missions/D14/LGIC/LGIC_CANON/decompositions/LGIC_CANON_DECOMP.md@v1 -- authored by 2.0.0_SA_COO~G 2026-09-14 from the PRD at 56608aadd4 (v1.1, ADMITTED), as the lane leading the sequence; 12 cells over 4 surfaces, 3 DAG levels; C6 NOT CUT on Andrew's ~13:4xZ word (FWD-5 held until a true new firm exists); frozen at the cut. The L6 seat is Andrew's to name (96667).",
+    "org/missions/D14/LGIC/LGIC_CANON/decompositions/LGIC_CANON_DECOMP.md@v2 -- re-cut by 2.0.0_SA_COO~G 2026-09-14 before any L6 issuance, against the PRD at 5b2336a5e4 (v1.3): the C2 tree corrected from ETFs to MDPF on grain (row LGIC_CANON-S2, 4.0.0_SA_CRO @48146fdd10; 1.0.0_SA_CTO 96693) -- ledger :98 and :100 MIGRATE, X1 GRANTED at :130; cells, edges and constraints unchanged."
   ],
   "leads": {
     "cto": "1.0.0_SA_CTO",
