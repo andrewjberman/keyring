@@ -263,7 +263,20 @@ legible rather than quietly removed.
 > not carry the word for.**"*
 
 So **two of the three keys named in step 1 are vendor-gated at the source**, stated by the module this
-brief cited as evidence that the work was free. `sa_symbol` to MEASURED is likewise not local: the
+brief cited as evidence that the work was free.
+
+⚠ **SUPERSEDED IN PART BY s.21, AND THIS POINTER IS ADDED 2026-09-14 BECAUSE ITS ABSENCE IS ITSELF THE
+DEFECT.** The quote above is BYTE-ACCURATE and still matches `resolver.py` at HEAD. **But its claim
+that resolving these keys NEEDS a SERP zone request is a CAPABILITY claim, and s.21 falsified it for
+nine names: they were closed from the `bloomberg_ticker` ALREADY HELD, with ZERO vendor calls.** The
+source's binding constraint was AUTHORITY -- *"this order does not carry the word for"* -- and this
+section relayed it as though authority and capability were the same thing.
+>> **A READER OF s.10 ALONE INHERITS A BELIEF s.21 KILLS.** That is the defect `CLAUDE.md` Rule 27 was
+   corrected for on the same day: a citation can be accurate in its BYTES and wrong in its SCOPE, and
+   a section that states a constraint is not finished until every later section that narrows it is
+   pointed at from here. **Correcting a rule is not finished until every place that restates it has
+   been re-read** -- this plan wrote that sentence about someone else's document at s.14 and then left
+   its own s.10 standing unqualified for a day. `sa_symbol` to MEASURED is likewise not local: the
 numeric `sa_id` comes from the SA fetch path (AMGT-s-b4), also a vendor call. The module resolves
 `sa_symbol` at most to INFERRED, and only from an already-MEASURED US ticker.
 
