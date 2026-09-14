@@ -4,10 +4,10 @@
  "directive": "D8",
  "macro_code": "ADVI",
  "fabric": "laptop",
- "dep_stage": "REGISTERED",
+ "dep_stage": "PRD",
  "status": "active",
  "name": "The first migration: three legacy firm buckets (opal-data-bd, -inf, -cot) into the spelled-out firm buckets under the ruled key string, each firm cut over so its users cannot tell, and each legacy bucket retired only on a proven quiet window",
  "generated_from": "org/missions/D8/ADVI/ADVI_FIRMBKTS/project.json",
  "generated_by": ".tools/missions-tree-index.py",
- "generated_at": "2026-09-13T21:44:59Z"
+ "generated_at": "2026-09-14T09:37:38Z"
 }
