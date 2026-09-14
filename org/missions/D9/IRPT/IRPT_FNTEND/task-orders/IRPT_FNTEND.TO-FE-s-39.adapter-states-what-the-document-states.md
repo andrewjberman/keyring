@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_FNTEND~3</issued_to>
 <issued_by>2.0.0_SA_COO~F</issued_by>
 <issued_date>2026-09-14</issued_date>
-<status>pending</status>
+<status>complete</status>
 
 **Directive:** D9 | **Fabric:** laptop | **PRD:** `../prd/IRPT_FNTEND_PRD.md` v0.6 @d1479bc5f0 (F6, F7; CONTRACTS consumed) | **Decomp cell:** `FE-s-39` (round 6, v0.6 @d4d8ae6f9a) | **outcome_ref:** FWD-5, FWD-6 | **depends_on:** FE-s-37 (sequencing) | **slot:** ~3 | **rows:** C-S83 (W3-S22, W3-S25, W3-S26), W2-S29
 
@@ -74,6 +74,11 @@ Measured by the issuer at portal DEV 741bb54b:
 - **Surprise.** ONE row per finding, id `IRPT_FNTEND-W3-S<k>`. Read the WHOLE channel PLANE (`INVESTIGATION_v1.md` AND `_v2.md`) before minting; an INERT row OMITS the `disarm_owner` key; write with `newline='\n'` and READ THE DIFFSTAT of your commit.
 - **REFUSE** any criterion you cannot satisfy as written and report the refusal with its measurement.
 - Report push state as LOCAL. **PORTAL IS FROZEN**: local commits only.
+- ⛔ **AMENDMENT 1 (2.0.0_SA_COO~F, 2026-09-14, on rows W3-S27 and W3-S28; criteria unchanged).** Two tests outside the first grant assert exactly what RULINGS V and W remove, and each is now yours for ONE purpose:
+  - `__tests__/fe-s-34/no-status.test.ts`: F34-AC9's path 1 NULL arm (the VIEW plane) only. It expects the absence wording RULING V names in place of `SOURCE_DATE_MALFORMED`. Path 2, the WIRE arm, stays exactly as written and must still read malformed. Cite RULING V beside the change and show the arm both ways.
+  - `__tests__/fe-s-32/holdings-in-a-browser.test.ts`: F32-AC5's classification reader only (the `ADVISORY` list and `CLAIM_READERS.classification`). It accepts an Advisory cell that shows an out-of-enum value VERBATIM AND FLAGGED (RULING W), and still rejects an out-of-enum value shown without the flag. Cite RULING W and prove both arms. Change nothing else in that file. `holdings-no-answer.json` beside it is FE-s-41's, not yours.
+  - F39-AC8's run must end with 0 fail, not only print its anchor; report its pass and fail counts. The whole suite (F39-AC9) stays the census of record.
+  - FE-s-38 has DRAINED into portal DEV, and DEV is merged into your portal branch. vite now caches inside the worktree by config, so run `bun run dev` directly on a measured-free port with `--strictPort`; the `.mjs` override is no longer needed. Export `IRPT_FE_DEV_PORT` on every `bun test` run, as before.
 
 <paths>
 portal/src/pages/InvestorReporting/contracts/adapt.ts
@@ -82,6 +87,8 @@ portal/src/pages/InvestorReporting/state/status.ts
 portal/src/pages/InvestorReporting/tabs/holdings/
 portal/src/pages/InvestorReporting/__tests__/fe-s-21/source-age.test.ts
 portal/src/pages/InvestorReporting/__tests__/fe-s-39/
+portal/src/pages/InvestorReporting/__tests__/fe-s-34/no-status.test.ts
+portal/src/pages/InvestorReporting/__tests__/fe-s-32/holdings-in-a-browser.test.ts
 org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md
 </paths>
 

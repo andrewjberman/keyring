@@ -3781,6 +3781,134 @@
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S27",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-14T17:24:00Z",
+    "one_line": "RULING V turns a test outside FE-s-39's grant red. fe-s-34/no-status.test.ts F34-AC9 path 1 requires a VIEW document whose businessAsOf is null to render 'Source date malformed', which is exactly what RULING V removes. With FE-s-39 applied it reads 'Ready -- Source time unknown' on both panels, so F34-AC9 reads 0 of 2 and the whole suite has 1 fail (F39-AC9).",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal@741bb54b src/pages/InvestorReporting/__tests__/fe-s-34/no-status.test.ts: the path 1 NULL arm serves the fe-s-6-ready view document with businessAsOf set to null (setBusinessAsOf(null), :235), renders it (:250), and at :271 requires text.includes(SOURCE_DATE_MALFORMED) on every NULL arm.",
+        "Whole-suite run, portal@794d4899 (FE-s-39 applied), IRPT_FE_DEV_PORT=5273 measured closed: 527 pass, 13 skip, 1 fail, 541 tests across 95 files, rc=1. The one fail is 'F34-AC9 -- a no-status document without a business date: the absence is named and no age is shown' at no-status.test.ts:280. Its lines: 'StageDisplay path 1 NULL -> \"Ready -- Source time unknown\" [named as \"Source date malformed\", no age: NO]', the same for VariantSelector, then 'NO-STATUS DOCUMENT WITHOUT A BUSINESS DATE -> ABSENCE NAMED, NO AGE: 0 of 2'.",
+        "Baseline: the same invocation at portal@741bb54b, before any FE-s-39 edit: 523 pass, 13 skip, 0 fail, 536 tests across 94 files, rc=0.",
+        "The same F34-AC9 run shows path 2 (the WIRE plane: a no-status v1 Holdings body with clocks.business_date null) still reading 'Uncertain -- Source date malformed' on both panels. RULING V's wire half holds; only the view arm flips."
+      ]
+    },
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-39 W3-S26: 'RULING V: it renders as \"no clock\" -- the panel names the absence (RULING R), never \"malformed\". On the WIRE plane a null business date stays a producer defect and keeps reading malformed.' BOUNDS: 'Any test outside your grant that your change turns red is a BLOCKING row with the list, never an edit.' The grant does not name __tests__/fe-s-34/.",
+    "world_is": "fe-s-34/no-status.test.ts F34-AC9 was written by FE-s-34 amendment 3, before RULING V, and it asserts the behaviour RULING V removes. Its 'path 1 NULL' arm cannot pass under RULING V without a second rule, and the order forbids a second rule. Tests turned red, 1: fe-s-34/no-status.test.ts, 'F34-AC9 ... both paths, the business date ABSENT and, separately, NULL'. Not edited. The remedy is outside this grant: the path 1 NULL arm expects the absence wording and no age ('Source time unknown' on this READY document), citing RULING V, and path 2 NULL keeps its malformed expectation. ARMED: if the FE-s-39 portal commit drains without that amendment, the suite goes red.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S28",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-14T17:24:30Z",
+    "one_line": "RULING W turns FE-s-32's browser arm red in F39-AC8's own run. F32-AC5's classification reader (fe-s-32/holdings-in-a-browser.test.ts:388, :401-407) accepts an Advisory cell only if its text is advised, residual or unknown, so the verbatim, flagged ADVISORY on the observed and target maps reads NOT FOUND: claimed fields 4 of 6, 1 fail, rc=1.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal@741bb54b src/pages/InvestorReporting/__tests__/fe-s-32/holdings-in-a-browser.test.ts:388 ADVISORY = ['advised', 'residual', 'unknown']. :401-407 CLAIM_READERS.classification finds a claim only when every row's advisory text is in that list. The driver reads the text of [data-slot=\"slice-advisory\"] (holdings-driver.mjs:100).",
+        "F39-AC8 run, portal@794d4899, against this worker's own server on 5263 (worktree-local cache .scratch/vite-cache-fe-s-39), PRECONDITION MET. Passing lines: 'HOLDINGS UNDER THE GATE, IN A BROWSER: 4 of 4', 'PARTIAL: CLASSIFICATION GAP SHOWN AS UNKNOWN', 'UNCERTAIN: MODEL REVISION STATED AS UNNAMED', 'PIE LABELS INSIDE THE CHART: 18 of 18'. Failing: F18-AC9 and F18-AC10 read 'classification: NOT FOUND [opal-supervised/ADVISORY (not a contract advisory value -- shown as sent) | ...]', while F18-AC11 reads FOUND [unknown/unknown ...]. 'CLAIMED FIELD PRESENT IN THE RENDERED DOM: 4 of 6'. 6 pass, 1 fail (F32-AC5), rc=1.",
+        "portal@741bb54b fixtures/smoke/fe-s-18-holdings-observed.json and -target.json each carry advisory_status 'ADVISORY' on 4 of 4 nodes, authoritative true. -missing-attribution.json carries no classification. The producer enum in docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json is ADVISED, RESIDUAL, UNKNOWN."
+      ]
+    },
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-39 F39-AC8: 'FE-s-32's browser arm still holds with the advisory rendered verbatim, in a real browser on your own server'. W2-S29: 'RULING W: an out-of-enum value on a READY answer is shown VERBATIM and FLAGGED, never as \"unknown\"'. BOUNDS: the 'ADVISORY' token stays in the maps (FE-s-41's), and __tests__/fe-s-32/ is not in the grant.",
+    "world_is": "F32-AC2, AC3, AC4 and AC6 hold, and the F39-AC8 anchor line prints 4 of 4. F32-AC5 is red: its classification reader pins the Advisory text to the view's three partitions, and RULING W puts a fourth, flagged verbatim token in that cell on two of the three claimed captures. On these maps RULING W and that reader cannot both hold. Tests turned red, 1: fe-s-32/holdings-in-a-browser.test.ts, 'F32-AC5 ... FE-s-22 claims model (unedited), joined by criterion through the round-2 manifest'. It shows only when a dev server is up: with the port closed it SKIPS under ruling C, so the whole-suite census cannot see it. Not edited. The remedy is outside this grant: the reader accepts a flagged out-of-enum cell (data-advisory-out-of-enum=\"true\" with a verbatim span) as a classification that IS stated, citing RULING W. ARMED: the next browser run of FE-s-32 is red.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S29",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-14T17:25:00Z",
+    "one_line": "RULING W is applied at ONE of the two ADVISORY_FOR_WIRE use sites. The DirectoryEntry cohort (contracts/adapt.ts:558 at 741bb54b) still maps an out-of-enum advisory_status to 'unknown'. Its view type is CohortValue, which the supervision, billing and advisory axes share and which is not 'the advisory view type', and it is displayed by header/ScopeSummary.tsx, outside the grant.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal@741bb54b contracts/adapt.ts:558 'value: ADVISORY_FOR_WIRE[wire.cohort.advisory_status] ?? \"unknown\"' fills CohortFact.value, typed CohortValue (contracts/index.ts:310-326), one union for the supervision, billing and advisory axes. header/ScopeSummary.tsx renders '{c.axis}: {c.value}'. contracts/validate.ts:167 checks a cohort value against COHORT_VALUES.",
+        "Measured at the FE-s-39 edit: typing the advisory view value as AdvisoryPartition | OutOfEnumAdvisory through ADVISORY_FOR_WIRE failed the typecheck at this site: 'adapt.ts(583,7): error TS2322: Type AdvisoryValue is not assignable to type CohortValue', rc=2. The table is now typed to its partition members (portal@794d4899), so the directory site behaves as before. Typecheck rc=0 after.",
+        "INERT: DirectoryEntryWire.cohort.advisory_status is the closed enum (contracts/wire/DirectoryEntry.ts:42), and no committed fixture or generator emits an out-of-enum directory advisory. The one 'ADVISORY' emitter is __tests__/fe-s-18/gen-fixtures.ts:317, and it writes Holdings nodes only."
+      ]
+    },
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-39 W2-S29 names both use sites: 'ADVISORY_FOR_WIRE[...] ?? \"unknown\" (contracts/adapt.ts:558, :865)'. BOUNDS: 'contracts/index.ts: the advisory view type, so a verbatim value can travel -- nothing else.'",
+    "world_is": "Carrying the verbatim token at :558 would need CohortFact.value (CohortValue, a type three axes share) to hold it, and a flag in ScopeSummary.tsx, which the grant does not name. So the Holdings site (:865 at 741bb54b) carries the token verbatim and flagged, and the Directory site (:558) is left as it was. Nothing emits an out-of-enum directory advisory today.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S30",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-14T17:25:30Z",
+    "one_line": "A second carrier of the Holdings advisory contract disagrees with the new view type. contracts/validate.ts:448 (validateHoldingsSnapshot) refuses any classification.advisory outside advised, residual and unknown, so validateContract would refuse an adapted snapshot that carries a flagged verbatim token. Its only caller validates committed VIEW fixtures, not adapted output.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal@741bb54b contracts/validate.ts:448 \"oneOf(c, cp, 'advisory', ['advised', 'residual', 'unknown'], p)\"; :627 validateContract.",
+        "Native Grep for imports of contracts/validate across portal/src at portal@794d4899: 1 importer, __tests__/fe-s-1/fixtures.test.ts:23. The whole-suite run with FE-s-39 applied has no failure in fe-s-1."
+      ]
+    },
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-39 BOUNDS: 'contracts/index.ts: the advisory view type, so a verbatim value can travel'. The grant does not name contracts/validate.ts.",
+    "world_is": "contracts/index.ts HoldingsClassification.advisory is now AdvisoryValue (a partition, or { outOfEnum }), while validate.ts keeps the three-value list. INERT today: no view fixture carries an out-of-enum value, and nothing validates an adapted document. It bites the first time an adapted Holdings view is passed to validateContract.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S31",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-14T17:26:00Z",
+    "one_line": "F39-AC8's invocation writes outside this order's grant. The fe-s-32 browser test's driver writes its PNGs and manifest to deliverables/0.9.0_WK_IRPT_FNTEND~2/ (holdings-in-a-browser.test.ts:66-68), so the deciding run modified 9 files in another worker's deliverables folder in this worktree.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal@741bb54b src/pages/InvestorReporting/__tests__/fe-s-32/holdings-in-a-browser.test.ts:68 CAPTURES = DELIVERABLES + '0.9.0_WK_IRPT_FNTEND~2/'; :204 hands it to holdings-driver.mjs.",
+        "git status after the run, workspace worktree on 1f5d387e17: modified org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~2/fe-s-32_captures.manifest.json and 8 PNGs, fe-s-32_holdings_{observed,target}_{390,1440}.png and the same four with _table_scrolled."
+      ]
+    },
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-39 BOUNDS: 'Grant. The <paths> block below, plus org/missions/D9/IRPT/IRPT_FNTEND/deliverables/<your serial>/ and this order's own file.' F39-AC8's invocation is 'bun test src/pages/InvestorReporting/__tests__/fe-s-32/holdings-in-a-browser.test.ts'.",
+    "world_is": "Running the criterion as written rewrites FE-s-32's captures in ~2's folder with renders of FE-s-39's code, which show the flagged advisory. This worker has not staged or committed any of the 9. They are left modified in the worktree and not restored, because restoring them would also be a write outside the grant.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S32",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-14T18:08:00Z",
+    "one_line": "AMENDMENT 1 grants fe-s-32/holdings-in-a-browser.test.ts for F32-AC5's classification reader only ('Change nothing else in that file'), but the reader can recognise the RULING W flag only by its words, and the order's 'ONE RULE, NEVER A SECOND COPY' bound forbids re-typing them. So the worker added one name, ADVISORY_OUT_OF_ENUM_WORDS, to the file's existing import from tabs/holdings/slices. That import line is outside the two elements named.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-39.adapter-states-what-the-document-states.md:79 @0294183b65: 'F32-AC5's classification reader only (the ADVISORY list and CLAIM_READERS.classification) ... Change nothing else in that file.'",
+        "same order :66 @0294183b65: 'ONE RULE, NEVER A SECOND COPY.'",
+        "portal@20545436 src/pages/InvestorReporting/__tests__/fe-s-32/holdings-in-a-browser.test.ts:56 imports only HOLDINGS_BASIS_LABELS from '../../tabs/holdings/slices'; portal@794d4899 tabs/holdings/slices.ts:98 exports ADVISORY_OUT_OF_ENUM_WORDS, the words SliceTable.tsx:38 renders as the flag.",
+        "holdings-driver.mjs:84,100 @portal 20545436 reads the Advisory cell as whitespace-collapsed textContent only, so the flag's words in the text are the only flag the reader receives."
+      ]
+    },
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-39 AMENDMENT 1: in __tests__/fe-s-32/holdings-in-a-browser.test.ts, change F32-AC5's classification reader only (the ADVISORY list and CLAIM_READERS.classification) and nothing else in the file; BOUNDS: one rule, never a second copy.",
+    "world_is": "The two instructions cannot both hold literally. Recognising a flagged cell needs the flag's text, and the file did not import it. The worker kept the rule single by importing it, and changed one import line beside the two named elements. The alternative, a typed copy of the words in the test, would be a second copy that drifts silently if slices.ts changes. Nothing else in the file changed: the portal diff touches only the import line and CLAIM_READERS.classification.",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
