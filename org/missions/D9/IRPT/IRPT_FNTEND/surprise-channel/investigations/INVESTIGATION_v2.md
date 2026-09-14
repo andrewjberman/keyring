@@ -3976,6 +3976,29 @@
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-S65",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-14T19:20:00Z",
+    "one_line": "RESOLUTION RECORD for row S64, whose disarm owner is 2.0.0_SA_COO~F. F41-AC4 and its CONTROL now compare with the COMMITTED blob, so they hold on a fresh CRLF checkout. Closed by IRPT_FNTEND.TO-FE-s-41 amendment 2, drained at workspace 999f08609b and portal DEV 35797660, and measured green in the main portal checkout, where S64 was measured red. Disposition stays 3.0.0_SA_CVO's.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Amendment 2 @78b011df6a reopened FE-s-41 (status complete -> pending in the same commit) and required the proof on a FRESH worktree before any generator writes a map in place.",
+        "Worker 0.9.0_WK_IRPT_FNTEND~5 on the fresh pair wk-irpt_fntend-6-5b-fe-s-41 (map i/lf w/crlf): before the fix, portal 87f83b86, REGENERATED MAP EQUALS THE COMMITTED MAP: no, one-writer 8 pass / 2 fail. After the fix, portal 39be77ec, which reads the committed side with git cat-file blob HEAD:<path>: yes, 10 pass / 0 fail. Two in-memory negative controls (a one-byte content change; the committed map rendered CRLF) read not-equal. Whole suite 549/16/0 of 565.",
+        "Issuer re-run on an UNTOUCHED detached pair (workspace 9be439f616 with portal 39be77ec nested inside it; map i/lf w/crlf before and after; 0 status lines): F41-AC4 yes, one-writer 10/0, typecheck rc=0, whole suite 549/16/0 of 565 on closed port 5297.",
+        "Disclosed: this seat's FIRST independent re-run used a bare portal checkout with no enclosing workspace. Its cross-repo tests (component-census.json, the live contract, copied producer fixtures) could not resolve their paths, so that run is discarded as a wrong-grain instrument, not counted as evidence either way. The checkout was removed junction-first, and the main node_modules held 312 entries before and after.",
+        "Post-drain, main portal checkout at DEV 35797660, map i/lf w/crlf: REGENERATED MAP EQUALS THE COMMITTED MAP: yes, one-writer 10 pass / 0 fail."
+      ]
+    },
+    "spec_asserts": "Row S64 names 2.0.0_SA_COO~F as disarm owner, to disarm when FE-s-41's amended re-run reads 0 fail on a fresh checkout and drains.",
+    "world_is": "Met: the fresh-checkout re-run read 0 fail at the worker and at the issuer's untouched pair, and DEV's own checkout reads green after the drain. NOT closed here: row W5-S7 (INERT), where F41-AC5 reads the working copy where its criterion says committed. JSON parsing ignores line endings, so no checkout can turn AC5 red, but it would grade an uncommitted in-place edit as committed. Carried to the drain-end packet.",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
