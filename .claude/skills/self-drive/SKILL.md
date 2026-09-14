@@ -49,6 +49,30 @@ A selector that resolves to ZERO projects is not an error — it is an UNMEASURA
 
 **0.6 PAIRED ARMING (default) — the drive pair, `org/ref/DRIVE_PAIR_PROTOCOL.md`.** At arm time the driver OFFERS the COO half: `/drive <scope>` at `2.0.0_SA_COO`, offset +15m, consuming this loop's verdict ledger. **DEFAULT YES when the scope has dispatchable lanes** (any member project with open TOs or seatable classes); a pure-own-lane scope may run solo. The choice lands in the carrier clause as `paired_with: /drive <scope> @ 2.0.0_SA_COO` or `paired_with: solo`, and the COO half arms on the SAME operator word — one word, one scope, two instruments (his 2026-08-27 word: engaging self-drive on CTO means instituting /drive on COO tied to the same target). ONE stop-condition covers both; whichever half reads it struck first strikes the shared clause for both.
 
+**0.7 THE SEQUENCE — `org/missions/SEQUENCE.yaml`, EVERY TICK, ON EITHER FABRIC.** Andrew-direct 2026-09-14 ~01:xxZ at
+the 1.0.0_SA_CTO terminal (record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_01xxZ_LAPTOP_SEQUENCE_DOCUMENT_APPROVED.md`
+@`cc79b6191a`), VERBATIM: *"then make the /self-drive skill tie in to that document, so it both checks state of that
+document vs state of the repo, and makes sure that the driving is aligned with the sequence chronology and that docs are
+properly updated"* and *"yeah the skill should be device agnostic."* The sequence places the projects that must run in
+order by way of dependencies or design, across BOTH fabrics, with the gates between them; it holds no status. Before Step 1:
+1. **Read it against the repo:** `python .tools/sequence-check.py` (with `--project <CODE>` per in-scope project).
+   Print its header line and every flag for the projects in scope. A `DRIFT` or `UNREADABLE` line is a finding the tick
+   prints and raises to the owning CTO (`1.0.0_SA_CTO` laptop, `1.0.0_SA_CTO~Z` site Z) — never silently absorbed. If the
+   file is unreadable or uncommitted, the tick reads the sequence as UNKNOWN and drives nothing the sequence places.
+2. **Drive in the sequence's order.** A project the sequence places is driven only while it carries no `WAITING` flag
+   and stays within any hold: `HELD` means it may advance up to its cap (`max_dep_stage`), not past it. Work that would
+   start a `WAITING` project or take a `HELD` one past its cap is NOT driven; the tick names it and raises it. An
+   `OUT-OF-SEQUENCE` flag goes to Andrew as a card the same tick. A project the sequence does not place is driven exactly
+   as before — the sequence governs dependency-bound projects only.
+3. **Across fabrics:** a gate that names the other fabric's project is read from the shared file and the register and
+   WAITED ON, never driven. 0.2 stands: work is never routed across fabrics.
+4. **Docs updated:** when a tick sees a gate flip (a PRD admitted, a stage reached), it checks that the documents
+   recording it moved with it — the gated project's register row (`phase`, `blocking`), and, where the ORDER itself
+   changed, `SEQUENCE.yaml`'s `change_log` carrying Andrew's words — and names any that did not. `SEQUENCE.yaml` holds
+   no status, so a gate flip never requires editing it; only an order change does, and only on Andrew's word, by either CTO.
+5. **TRACK, not a gate** (Andrew ~01:xxZ card 1): the driver raises; it refuses nothing. A task-order gate limb is
+   approved to follow once the order has held about a week, announced before it is armed.
+
 ## Step 1 — `/open-calls`, restricted to the scope
 
 Run the `/open-calls` sweep exactly as that skill specifies (own record only, verify each candidate is still open, card format), **filtered to calls whose project is in the scope.** Then classify each open call on ONE axis — *who may close it*:

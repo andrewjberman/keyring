@@ -206,6 +206,13 @@ python .tools/to-check.py --all --assignee {your_FULL_suffixed_serial}
   query returns the whole base folder's work. Use it for liveness and messages; **it is not the
   authority on what you hold.**
 
+⛔ **THEN CHECK THE SEQUENCE before starting work on any project** (Andrew-direct 2026-09-14 ~01:xxZ, record
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_01xxZ_LAPTOP_SEQUENCE_DOCUMENT_APPROVED.md`).
+`org/missions/SEQUENCE.yaml` places the projects that must run in order across BOTH fabrics, with the gates between
+them. `python .tools/sequence-check.py --project <CODE>`: a `WAITING` project does not start; a `HELD` project does not
+pass its cap; an `OUT-OF-SEQUENCE` flag goes to the owning CTO. A project the file does not list is not sequenced.
+The order changes only on Andrew's word, by `1.0.0_SA_CTO` or `1.0.0_SA_CTO~Z`.
+
 ### C. Arm the persistent inbox Monitor — run `/watcher` (once, at load)
 
 It arms a persistent Monitor running `inbox-watch.sh {serial} stream`; each `[INBOX] <file>` line
