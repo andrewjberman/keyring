@@ -1,0 +1,20 @@
+{
+  "mutantA": {
+    "cell": "S3-data.recorded_observation footer_objects[master=08335338,dataset=dim_position].rows",
+    "class": "SEMANTIC coherence-violating",
+    "expected": "validator 0 violations (blind by design); semantic lens MISMATCH at this cell",
+    "file": "scratch.mutantA.json",
+    "new": "\"rows\": 150074",
+    "old": "\"rows\": 105074"
+  },
+  "mutantB": {
+    "cell": "S6-operations.unverified_boundary key renamed (6th occurrence, byte offset 62726)",
+    "class": "MECHANICAL rectangularity",
+    "expected": "validator RECTANGULARITY violation (MISSING + EXTRA) on S6-operations",
+    "file": "scratch.mutantB.json",
+    "new": "\"unverified_boundarY\": {",
+    "old": "\"unverified_boundary\": {"
+  },
+  "nonce": "fbf9cfa500078def2184f6ae8a96180d",
+  "sealed_by": "3.0.0_SA_CVO (worker fork)"
+}
