@@ -815,6 +815,53 @@ new row on 3.0.0_SA_CVO's ask 96495), both 1.0.0_SA_CTO; `LGIC_NAMING-S3`, `LGIC
     "spec_asserts": "PRD FWD-1 ACCEPT: two people each write 'the identical name' from the schema. Decomposition v3 s.3a.1: the items are 'described in plain words that never spell a schema token'.",
     "world_is": "The schema, which is the namers' ratified briefing, now spells one item's full answer as a worked example, and the registry seed spells another's. The items themselves still spell no token; the briefing does.",
     "notes": "Filed by the issuer at the round-2 cut, for 3.0.0_SA_CVO at L9 (FWD-1) and for the schema's author, 1.0.0_SA_CTO. The cut does not edit the schema: it is ratified data and the namers' whole briefing. The round-2 namers run on it as it stands, and FWD-1's agreement is read as 16 items plus these two under this disclosure. INERT: nothing breaks, and the grader has the disclosure on its input."
+  },
+  {
+    "id": "LGIC_NAMING-W4-S1",
+    "project": "LGIC_NAMING",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_NAMING~4",
+    "surfaced_at": "2026-09-14T22:09Z",
+    "one_line": "LN-f-1-r2's worker face paraphrases the bd step as 'the vendor Black Diamond in a system or source position, and the firm 49 Financial otherwise -- as the rule says', but GRADING_RULE R3's test is ADJACENCY to a firm token, not position; read literally, the paraphrase reverses the reading of the 12 bd-* roles whose bd sits first with no firm token next to it. The r2 record follows R3's text.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ORDER: org/missions/D14/LGIC/LGIC_NAMING/task-orders/LGIC_NAMING.TO-LN-f-1-r2.firm-patterns.md@619dec559f:30 -- '`bd` is the vendor Black Diamond in a system or source position, and the firm 49 Financial otherwise -- as the rule says.'",
+        "RULE: org/missions/D14/LGIC/LGIC_NAMING/deliverables/GRADING_RULE.md@619dec559f:160-163 R3 -- 'It is the VENDOR blackdiamond when a V4 firm token is next to it, before or after, and the FIRM 49financial otherwise. CENSUS s.1 item 4 gives both readings: in bd-49f-session-trigger it is the vendor, in bd-allocations the firm.' bd-allocations carries bd in the first (system) position and the rule reads it as the FIRM.",
+        "EFFECT, counted by python over org/missions/D14/LGIC/LGIC_NAMING/deliverables/2.0.0_SA_COO~G/fixed_inputs/LIVE_NAMES.json (vintage 2026-09-14 12:13:53 UTC, by_type.IAM_ROLE, 69 of 240 in the population): 20 roles carry bd; the two readings agree on the 7 whose bd sits first next to a firm token (bd-49f-* 6, bd-cot-keepalive-role); they part on the 12 whose bd sits first with no firm next to it (bd-allocation-checker-lambda-role ... bd-silver-merge-role). By R3 those 12 are {system}-49f-...-role, attributed to 49financial; by the paraphrase read literally, bd is the vendor in the system slot, the name carries no firm token, and S5 leaves it unscoped.",
+        "DATA: org/standards/NAMING_SCHEMA.json@619dec559f v1.6 refused_tokens.bd ('The vendor is blackdiamond; the firm is 49financial') and PRD S10 give the two readings and no position test."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO LGIC_NAMING.TO-LN-f-1-r2 worker face: '`bd` is the vendor Black Diamond in a system or source position, and the firm 49 Financial otherwise -- as the rule says.'",
+    "world_is": "The rule's test is adjacency to a firm token. The paraphrase states a position test that the rule's own census example (bd-allocations, bd first, read as the firm) contradicts. Under R3, 49financial has 24 attributed roles; under the literal paraphrase it would have 12, and 12 more would be no firm's principal. The r2 record (deliverables/exercises/r2/n4-firm-patterns.md) follows R3, because the same sentence defers to the rule and the order's J1 grades against GRADING_RULE.md.",
+    "notes": "OBSERVATION, INERT: no disposition of this cell is in doubt, since the order defers to the rule. The paraphrase is the issuer's, 2.0.0_SA_COO~G's, to align with R3. Whether R3's firm reading of these 12 is right is the rule's own interim choice (round 1's judgment point 1) and the registry's (LGIC_ENFORCE), and this row does not decide it."
+  },
+  {
+    "id": "LGIC_NAMING-W4-S2",
+    "project": "LGIC_NAMING",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_NAMING~4",
+    "surfaced_at": "2026-09-14T22:09Z",
+    "one_line": "LN-f-1-r2 says both 'grade by GRADING_RULE.md' and 're-grade under NAMING_SCHEMA.json v1.6', and they part on the function slot. v1.6 resource.function (FN1, v1.5) writes an agent noun as its verb and never a kind word in the function. GRADING_RULE.md, written at v1.4 and not re-cut, reads the function as free vocabulary (R5) and keeps another type's kind in it (R6). 31 of LN-f-1's 68 canonical forms carry a kind word there. The r2 record follows the rule.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "DATA: org/standards/NAMING_SCHEMA.json@619dec559f v1.6 resource.function -- 'an agent noun is always written as its verb (publisher -> publish, exporter -> export, scanner -> scan), because the kind names the thing ... A kind word (queue, host, topic, table, alarm) is never written in the function slot (FN1, v1.5)'.",
+        "RULE: org/missions/D14/LGIC/LGIC_NAMING/deliverables/GRADING_RULE.md@619dec559f:173-181 -- R5 'The function is free vocabulary.'; R6 'Otherwise the type's kind is APPENDED, and that token stays in the function. This includes a token that is another type's kind, such as -runner on a LAMBDA.' The header (:7) cites NAMING_SCHEMA v1.4; git log on the file at 619dec559f shows one commit, 51b0952d71.",
+        "DIFF: NAMING_SCHEMA.json v1.4 (git show e04b802fe9) against v1.6 (@619dec559f), top-level field by field, by python: resource.function and resource.qualifier changed; firm_forms, refused_tokens, kind.by_type, resource.scope_form and system.reserved are unchanged.",
+        "EFFECT, counted by python over the 68 canonical forms R1-R6 print for LN-f-1's population (org/missions/D14/LGIC/LGIC_NAMING/deliverables/2.0.0_SA_COO~G/fixed_inputs/LIVE_NAMES.json, vintage 2026-09-14 12:13:53 UTC): 31 carry a kind word of DATA.kind.by_type in the function slot (lambda 18, runner 6, api 5, layer 4, task 1). Agent nouns also appear (exporter, scheduler, processor, checker). Two examples that would read differently under FN1: advi-49f-floor-scheduler-role is CONFORMANT by the rule; bd-49f-runner-role is ALIAS to blackdiamond-49f-runner-role, and runner is EC2_INSTANCE's kind.",
+        "ANALYSIS: org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_LGIC_NAMING_ROUND1_20260914.md@619dec559f s.2 states FN1 for naming 'Where the item DESCRIBES the action'; s.5 rules no re-run for LN-g-1, so the rule's text stands as cut at v1.4."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO LGIC_NAMING.TO-LN-f-1-r2 worker face: 'Grade each by ... GRADING_RULE.md to its canonical form and its firm' and 're-grade under NAMING_SCHEMA.json v1.6'; F1R-J1: 'each attribution and canonical form follows GRADING_RULE.md'.",
+    "world_is": "FN1 is phrased for naming from an item's description, but as data it reads as a constraint on every resource name's function slot, and the grading rule's text does not apply it. For LN-f-1 the two part ONLY in the function slot. No firm, scope slot, attribution or pattern catch moves, because each pattern reads only the firm token after the system. The r2 record prints the rule's canonical forms and states the divergence in its section 4.",
+    "notes": "OBSERVATION, INERT for this cell: FWD-3's patterns and its three dispositions do not depend on the function slot. One question stays open: does a grade's canonical form apply FN1 (the rule gains a step), or does FN1 bind only a namer? That belongs to the rule's owner and the schema's author, 1.0.0_SA_CTO. INFERRED, not counted: the same question reaches the canonical forms the rule prints for any kind-graded type, not only roles."
   }
 ]
 ```
