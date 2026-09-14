@@ -5,13 +5,44 @@
  "project": "POSN_ASTTAX",
  "directive": "D4",
  "fabric": "site-z",
- "prd_version": "v0.7",
+ "prd_version": "v0.8",
  "step": 4,
  "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260911_ASSET_CLASS_TAXONOMY_BRIEF.md@03f1d00ec4",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6"],
  "status": "DRAFT"
 }
 ```
+
+## s.0 ADDENDUM v0.8 -- JEPI IS THE THIRTEENTH MEMBER (Structured / Options Income); STRUCTURED IS THE PINK FAMILY
+
+**Author** `1.0.0_SA_CTO~Z` (L4), 2026-09-14. **Carries** three Andrew-direct words at the `1.0.0_SA_CTO~Z` terminal, VERBATIM:
+- ~19:5xZ: *"Yeah "Structured" is going to be a pink base, as all volatility/options/overlay etc assets will be grouped into
+  there, regardless if its a Fixed Income or an Equity Hedge or etc."* (record
+  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_195xZ_STRUCTURED_IS_PINK_ALL_VOL_OPTIONS_OVERLAY.md` @`edbee96c07`)
+- ~20:0xZ: *"Also JEPI I would put in Structured, yes."* (record `ANDREW_DIRECT_20260914_200xZ_JEPI_TO_STRUCTURED_AND_FRONTEND_VIEW_ON_5173.md`
+  @`114a697fca`)
+- ~20:2xZ: *"b, Options Income"* (record `ANDREW_DIRECT_20260914_202xZ_JEPI_SUB_ASSET_OPTIONS_INCOME.md`)
+
+**SUPERSEDES, in s.0 ADDENDUM v0.7, exactly these three constraints; everything else in v0.7 stands:**
+
+- **C-RETAG-SET is THIRTEEN:** Commodities -- DBC, GLD, GSG, IAU, SLV, USO, PDBC; Structured -- VXX, VIXY, UVXY, QBER,
+  **JEPI**; Alternatives -- VNQ. BIPC stays Equity. Both stores, LAST, and `C-RETAG-SAFETY`'s bar binds unchanged.
+- **C-SUB-ASSET:** `Metals` = GLD, IAU, SLV; `Hedge` = VXX, VIXY, UVXY, QBER; **`Options Income` = JEPI**; `Real Estate` = VNQ;
+  DBC, GSG, USO, PDBC keep their current sub-asset. The encoding rule is unchanged: sub-asset values sit in
+  `sub_asset_class`, the legacy top-level `hedge` dissolves, and every write names its level.
+- **C-COLOURS:** Structured is the PINK family. Every Structured sub-asset (`Hedge`, `Options Income`, and the existing
+  `Volatility` key) renders on a pink token DISTINCT from the class base `pink500`, minted where the palette lacks one. The
+  portal's existing `SUB_ASSET_COLORS` keys `Hedge` (green900, Fixed Income block) and `Volatility` (blue900, Equity block)
+  RE-BIND to that family. Commodities stays the new yellow; amber stays Cash.
+
+**Basis for membership, measured so it is not re-derived:** `etf-classifications` scanned whole (285 rows, one page, 31
+distinct `sub_asset_class`). The only volatility-shaped sub-asset is `Volatility`, on exactly the four `Hedge` members. JEPI is
+the one options-overlay name. `Structured Credit` (JAAA, LONZ) is Fixed Income credit and stays there despite the shared word.
+JEPI is held by no Cottonwood satellite component and no Yang served book, so its retag moves no served Positioning figure today.
+
+**WHAT THIS ADDENDUM CHANGES:** brief half only -- `4.0.0_SA_CRO~Z` re-signs. The `ENDPOINT` section is untouched, so
+`3.0.0_SA_CVO~Z`'s ratified-text signature stands. It cuts no order: `TO-V8-1` (member table) and `TO-V5-1` (the pink
+sub-asset keys) are amended by their issuer before hand-off.
 
 ## s.0 ADDENDUM v0.7 -- ANDREW'S CLOSE-OUT RULINGS (2026-09-14): POSITIONING PAGE ONLY, SATELLITES FROM BLACK DIAMOND
 
