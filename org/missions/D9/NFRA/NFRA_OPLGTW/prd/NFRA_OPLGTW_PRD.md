@@ -16,7 +16,7 @@
     "FWD-7",
     "FWD-8"
   ],
-  "status": "DRAFT"
+  "status": "RATIFIED"
 }
 ```
 

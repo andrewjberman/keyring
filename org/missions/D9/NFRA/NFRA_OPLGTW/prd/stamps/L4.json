@@ -1,9 +1,9 @@
 {
- "note": "v0.2 addresses CRO R1-R3 at 51c7fc7f51; signed ratified-text bytes preserved. Brief re-review and independent ground-truth certification remain pending.",
- "prd_pin": "96f42e0caf8d",
+ "note": "L4 complete: v0.2 RATIFIED; both reviewed half hashes unchanged and SIGNED; documentary evidence CERTIFIED PASS at a5a686e63a with full closure and certified consumable at bc3f6698a8. Next owner is COO for consuming-lane assignment and L5 decomposition.",
+ "prd_pin": "902dcb9ff8c9",
  "prd_version": "v0.2",
  "project": "NFRA_OPLGTW",
  "signed_by": "1.0.0_SA_CTO~A",
  "stage": "L4",
- "utc": "2026-09-14T20:07Z"
+ "utc": "2026-09-14T23:34Z"
 }

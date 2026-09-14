@@ -26,7 +26,7 @@
     "cro": "4.0.0_SA_CRO"
   },
   "coo_lane": null,
-  "blocking": "L4 authored; L4-R signatures and independent ground-truth certification pending. Not decomposable until admitted. No task orders, implementation, deployment, or active user grant issued by this registration.",
+  "blocking": "L4 complete: PRD v0.2 RATIFIED, both L4-R half signatures current, and documentary ground truth CERTIFIED PASS. Next: 2.0.0_SA_COO assigns the consuming lane and performs L5 decomposition. No L5 output or implementation task order exists yet.",
   "endpoint_ref": "org/missions/D9/NFRA/NFRA_OPLGTW/prd/NFRA_OPLGTW_PRD.md#endpoint-step-2-endpoint---forward",
   "endpoint_approval_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_1524ET_NFRA_OPLGTW_ENDPOINT_APPROVED.md",
   "fabric_ruling": "laptop inherited from D9 placement; current commission explicitly selects D9 / Opal Workflows.",
