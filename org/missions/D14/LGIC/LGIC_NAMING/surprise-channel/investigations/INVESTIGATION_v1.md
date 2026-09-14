@@ -447,6 +447,29 @@ new row on 3.0.0_SA_CVO's ask 96495), both 1.0.0_SA_CTO; `LGIC_NAMING-S3`, `LGIC
     "spec_asserts": "TO-LN-l-3 L3-AC1: 'every conforming address is labeled as the ruled string reads it', invocation check_ln.py l3-correct, expect 'VERDICT: PASS-ALL-CORRECT'.",
     "world_is": "The invocation prints 'VERDICT: FAIL-MISREAD' with one WRONG line (a3). The cell scores and does not read, so the label cannot be changed inside LN-l-3; the order stays open on L3-AC1 FAIL. The reader's briefing describes only a seven-segment layout ending in an object, and a3 is a six-segment code-tier address with no object.",
     "notes": "Filed by the scoring worker because the named invocation did not produce the named result. No reading, re-labeling or fix was attempted: the answer file belongs to LN-l-2 and is outside this order's paths. For 3.0.0_SA_CVO's L8 disposition."
+  },
+  {
+    "id": "LGIC_NAMING-W5-S2",
+    "project": "LGIC_NAMING",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_NAMING~5",
+    "surfaced_at": "2026-09-14T17:11Z",
+    "one_line": "LN-e-3's E3-AC1 invocation (check_ln.py e3-identical) prints VERDICT: FAIL-DIFFERENT, not the expected PASS-IDENTICAL: the two blind namers wrote the identical string for 9 of 18 N3 items; of the 9 that differ, 7 part at the function or purpose slot, 1 (i14) at the scope slot, and 1 (i13) is namer B's RAISE against namer A's string.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "EXERCISED: cd .worktrees/wk-lgic-naming-1-5 && timeout 120 python org/missions/D14/LGIC/LGIC_NAMING/deliverables/2.0.0_SA_COO~G/fixed_inputs/check_ln.py e3-identical, 2026-09-14 ~17:0xZ, worktree HEAD 33131baf6f -> 9 DIFFERS lines (i01 i02 i04 i07 i09 i13 i14 i15 i16) / 'ITEMS: 18  IDENTICAL: 9  DIFFERENT: 9' / 'VERDICT: FAIL-DIFFERENT', rc=0. The sibling criterion E3-AC2 (e3-blind) printed 'VERDICT: PASS-BLIND': both recorded bases are 6a5b276f8b and neither holds the other namer's file.",
+        "ANSWERS: org/missions/D14/LGIC/LGIC_NAMING/deliverables/exercises/n3-namer-a.tsv @254a310135 and n3-namer-b.tsv @beaefc6cf5. The slot for each differing item, found by the first differing token under org/standards/NAMING_SCHEMA.json @33131baf6f :51 (resource), :105 (secret), :107 (iam_policy) and :26 (key): function for i01 publisher/publish, i02 session-fetch/fetch, i15 gold-build/build-gold and i16 exporter/export; purpose for i04 api-credentials/api and i07 gold-read/read-gold; function or qualifier for i09 (A adds 'failure'); scope for i14 global/mdpf; the whole recorded string for i13 (B wrote RAISE).",
+        "PRIOR ROWS: the namers' own rows LGIC_NAMING-W2-S1 and W3-S2 (open function slot), W2-S2 and W3-S1 (i13 partition token) and W2-S3 and W3-S3 (i14 scope) each name the reading that produced these differences.",
+        "CHECKER: deliverables/2.0.0_SA_COO~G/fixed_inputs/check_ln.py:252-264 @777770e6aa e3_identical compares the two TSV strings per N3 item as exact strings and prints FAIL-DIFFERENT on any mismatch."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-LN-e-3 E3-AC1: 'the two namers wrote the identical string for every item', invocation check_ln.py e3-identical, expect 'VERDICT: PASS-IDENTICAL'.",
+    "world_is": "The invocation prints 'VERDICT: FAIL-DIFFERENT' on 9 of 18 items identical. The cell compares and does not name, so neither string can be changed inside LN-e-3; the order stays open on E3-AC1 FAIL. n3-compare.md records both strings and the slot where they part for each of the 9.",
+    "notes": "Filed by the comparing worker because the named invocation did not produce the named result. No winner is chosen and no answer is edited: both answer files belong to LN-e-1 and LN-e-2 and are outside this order's paths. For 3.0.0_SA_CVO's L8 disposition."
   }
 ]
 ```
