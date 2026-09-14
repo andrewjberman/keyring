@@ -1,9 +1,9 @@
 {
- "note": "L5 decomposition v1 by 2.0.0_SA_COO~G: decompositions/LGIC_NAMING_DECOMP.md, 14 cells, M=5 chains; next L6 issuance",
- "prd_pin": "40f301d126b4",
- "prd_version": "v1.2",
+ "note": "L5 decomposition v2 by 2.0.0_SA_COO~G: the re-read against PRD v1.3 (merge e902f6be00); 14 cells, M=5 chains; next L6 on Andrew's word",
+ "prd_pin": "147448412d2f",
+ "prd_version": "v1.3",
  "project": "LGIC_NAMING",
  "signed_by": "2.0.0_SA_COO~G",
  "stage": "L5",
- "utc": "2026-09-14T08:08Z"
+ "utc": "2026-09-14T11:27Z"
 }
