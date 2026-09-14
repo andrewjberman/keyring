@@ -126,6 +126,30 @@ new row on 3.0.0_SA_CVO's ask 96495), both 1.0.0_SA_CTO; `LGIC_NAMING-S3`, `LGIC
     "spec_asserts": "A stamp's prd_pin identifies the PRD bytes the stage owner stamped, so the next owner can tell whether the PRD moved since (the prd-stamp.py docstring: a SIGNED, TIMESTAMPED stamp the NEXT owner reads instead of a message; the sign verb's pin is the PRD's last-touching commit).",
     "world_is": "The stamp verb hashes the working-tree bytes. On a core.autocrlf checkout those carry CRLF, so the pin matches neither the record's hash nor another checkout's, and a reader comparing it against the record would see a moved PRD that did not move.",
     "notes": "OBSERVATION, INERT: the stamp is advisory by its own docstring and nothing gates on this pin that this seat knows of. Remedy options, not chosen here, the tool owner's: hash the committed bytes (git show HEAD:<prd>), or normalise line endings before hashing, or pin the last-touching commit as the sign verb does. Found while landing LGIC_NAMING's L5 stamp; the same trap class as hashing a linked worktree's checkout on this box."
+  },
+  {
+    "id": "LGIC_NAMING-S6",
+    "project": "LGIC_NAMING",
+    "fabric": "laptop",
+    "surfaced_by": "1.0.0_SA_CTO",
+    "surfaced_at": "2026-09-14T09:32Z",
+    "one_line": "NAMING_SCHEMA.json key.partition admits only 'date=YYYY-MM-DD' and 'a named leaf', so an ENTITY-KEYED served file -- a book per advisor, a view per client or account, written today at platinum/advisors/{id}/book.json -- has no form the builders can produce, and ADVI_FIRMBKTS's cutovers cannot write that family without a hand-spelled key.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO -- as the author of LGIC_NAMING's PRD and data file: an L10 addendum that admits (or refuses, with the family's alternative stated) a hive entity partition '{entity}={id}' in key.partition; until then ADVI_FIRMBKTS writes no key in that family (its PRD v1.0 DEC-1, DEC-16)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "DATA: org/standards/NAMING_SCHEMA.json v1.2, key.partition = ['date=YYYY-MM-DD', 'a named leaf'], key.leaf = '{object} -- the file under {partition}', key.grammar = '{source}/{scope}/{tier}/{table}/{partition}' (read 2026-09-14 ~09:2xZ).",
+        "BRIEF: docs/briefs/d8-legacy-firm-buckets-migration-brief-20260913.md @2b64208047 IV.5 worked string 'opal-data-49financial/advi/49financial/platinum/advisors/{id}/book.json', and IV.3 class (a) 'platinum/{firm,advisors,clients,accounts}/...' -- per-entity served JSON is a live family in the three legacy buckets.",
+        "CANON: infra/logic/02_DOCTRINE.md R2 non-application -- 'an entity id INSIDE a partition or key (date=.../account_id=...) is correct' -- so a hive entity partition does not break the scope-segment law; it is the schema's enumeration that does not list it.",
+        "CONSEQUENCE: LGIC_ENFORCE's key() returns exactly five segments (its PRD v1.1 CONTRACTS and E3), so with a named leaf the entity id has no slot; the only builder-free form is a hand-spelled key, which that project's gate refuses once enforcing and its brief's Part V forbids in a migration."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "LGIC_NAMING S1 and the data file's key.partition: a key's fifth segment is a date partition or a named leaf, and every new key is produced by the builders.",
+    "world_is": "The estate serves per-entity JSON (per advisor, client, account) under platinum/, and ADVI_FIRMBKTS must move that family into the firm buckets. Neither partition form carries an entity id alongside a named file, so the family cannot be written through the builders until the schema admits a form for it.",
+    "notes": "Raised by 1.0.0_SA_CTO while writing ADVI_FIRMBKTS's L4 PRD, after 4.0.0_SA_CRO refused MDPF_CANON v2.0 for the same class of mismatch (a declared address the builders cannot return). The proposal carried in ADVI_FIRMBKTS DEC-1 is '{source}/{firm}/platinum/{table}/{entity}={id}/{leaf}.json'; the decision is LGIC_NAMING's."
   }
 ]
 ```
