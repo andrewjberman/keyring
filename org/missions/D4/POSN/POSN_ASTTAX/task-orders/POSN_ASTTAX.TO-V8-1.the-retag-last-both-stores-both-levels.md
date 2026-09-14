@@ -64,6 +64,23 @@ twelve, so "is it one of the five" PASSES ON WRONG ROWS and is refused as a bar.
 `/api/*` to the served plane): all NINE satellites and BOTH other modes, served labels == target per level, weight unchanged per
 satellite (sum before == sum after), served rows == rendered rows, class subtotals == total; FWD-5 graded on the retag itself.
 
+**THE SERVED REFRESH IS DRIVEN, NOT WAITED ON (L4 guidance msg 22913; CTO half R1 AMENDMENT @`3311955ebf`; COO half matching lines
+in the same commit as this amendment):** immediately after BOTH stores carry the retag (V8-AC6, V8-AC7), you invoke the writers of
+the retagged property once each, in dependency order -- `V8-AC14` the yang data pipeline state machine started with its LAST
+SUCCEEDED input (the SAME script your `TO-V1-1` `V1-AC11` resolved for `<REGENERATE_START_YANGDATAPIPELINE_LAST>`), which runs
+`yang-generate-positioning`, `yang-generate-holdings-attribution` and `yang-generate-allocation-summary` in its own branch order;
+any of the three the last input's branches SKIP is invoked directly with the event the state machine passed it on the last
+execution that ran it (`stepfunctions get-execution-history`), never a hand-written event -- then `V8-AC15` the two cot producers
+invoked directly (`{}`), registry first, characteristics second. The per-ticker per-level comparison of `V8-AC10` then reads the
+REFRESHED artifacts. The next scheduled fires (07:00Z / 07:20Z / the yang pipeline) are the ORGANIC leg the COO records, never
+waited on. **Branch B, both halves:** any invocation fails, or a key's content differs beyond the retagged labels and the weights
+they regroup (a holding appearing or vanishing, a total moving, a ticker outside the twelve relabelled) -- STOP, run
+`r1_rollback.py` (both stores), re-issue the same invocations so every served key returns to pre-retag labels, file the row.
+Print the six keys' VersionIds BEFORE the retag (the second, independent restore on the versioned bucket). The ETF publisher is
+NOT invoked. **JEPI (Andrew ~20:0xZ, msg 22914) joins the set as a 13th member ONLY when its sub-asset target lands as a PRD
+addendum and the CTO half is amended; until then the member table above is the set** -- the COO amends this order before hand-off
+if it lands.
+
 ### REFUSAL CLAUSE
 
 A criterion you cannot satisfy as written is REFUSED with its measurement, never repaired, widened or satisfied by another route.
@@ -101,17 +118,21 @@ Attribution's per-class groups after this retag is Andrew's ACCEPTED consequence
 
 <criterion id="V8-AC9" cell_refs="AT5-s-8"><invocation>timeout 600 python <V3_1_S_GUARDED></invocation><expect>TO-V3-1's guarded seeder run on its UPLOAD ARM (upload=True) against a SCRATCH copy of the post-retag table built from V8-AC6's read, boto3 faked in-process so the live table is never opened for write (the V3 harness, deliverables/0.9.0_WK_POSN_ASTTAX~21/): the run REFUSES with rc=1 and prints a [PRESERVED] line for EVERY one of the twelve whose seeder value disagrees with the retagged table (its two-value vocabulary vs the five), so the guard PROVABLY stands between a routine re-seed and the retag; print the get_item count (>0) and the [PRESERVED] lines. Amended ~19:1xZ, row W21-S1: the first cut named a DRY RUN, whose conflict list is [] before any comparison (`if upload else []` at :295), so 0 PRESERVED was the only value that arm could emit -- an instrument with no failing branch.</expect></criterion> `V8-AC9` -- DURABILITY: A RE-SEED CANNOT UNDO THIS, PROVED ON THE ARM THAT CAN FAIL.
 
-<criterion id="V8-AC10" cell_refs="AT5-s-8"><invocation>timeout 900 bash -c "cd portal && node scripts/ui-smoke.mjs positioning .scratch/v8_sat15.png --port <PORT>"</invocation><expect>a READ render per mode: Satellites (Sat 15: GLD 8.34 under Commodities / Metals; Sat 80: VXX 1.87 under Structured / Hedge; all NINE satellites read, each with served rows == rendered rows and class subtotals == total to 0.1, and each satellite's total weight EQUAL to its pre-retag total from holdings.json's prior version -- weight unchanged), Models and ETFs (five classes, canonical order, one colour each). Print the nine (satellite, rows served, rows rendered, subtotal sum, total) lines.</expect></criterion> `V8-AC10` -- THE BAR ON THE LOCAL BUILD, NINE SATELLITES AND BOTH OTHER MODES, READ.
+<criterion id="V8-AC14" cell_refs="AT5-s-8"><invocation>timeout 1800 python <REGENERATE_START_YANGDATAPIPELINE_LAST></invocation><expect>the yang data pipeline state machine started with its LAST SUCCEEDED execution's input AFTER V8-AC6/AC7 (execution ARN printed) and polled to SUCCEEDED; the executed states listed, with GeneratePositioning, GenerateHoldingsAttribution and GenerateAllocationSummary (or AfterAttribution) each read as SUCCEEDED -- any of the three the input's branches skipped is invoked directly with the event taken from get-execution-history of the last execution that ran it (event printed, StatusCode 200); then s3api head-object on positioning_data.json, allocation_summary.json and holdings_attribution_data.json: LastModified AFTER the retag time and VersionId different from the pre-retag read (both printed side by side); positioning_data.json's current_holdings for the twelve tickers Yang's books hold read the TARGET asset_class per THE CELL (print each), and the membership per model is IDENTICAL to the pre-retag read. Any failure or any difference beyond the relabelled twelve and the weights they regroup: Branch B.</expect></criterion> `V8-AC14` -- THE YANG PLANE REFRESHED ON DEMAND, THE RETAG READ ON THE SERVED BYTES.
+
+<criterion id="V8-AC15" cell_refs="AT5-s-8"><invocation>timeout 600 .tools/aws lambda invoke --function-name cot-satellites-registry-producer --payload '{}' deliverables/0.9.0_WK_POSN_ASTTAX~19/r1_registry_invoke.json</invocation><expect>StatusCode 200 and no FunctionError; then the same for cot-satellites-characteristics-producer into r1_characteristics_invoke.json; then s3api head-object on registry.json, holdings.json and characteristics.json: LastModified AFTER the retag time (printed beside the pre-retag heads); registry.json's body BYTE-IDENTICAL to its prior version (sha256 both printed -- the registry carries no labels); holdings.json's rows for every retagged ticker any satellite holds read the TARGET asset_class AND sub_asset_class (print them: GLD under Commodities / Metals in Sat 15, VXX under Structured / Hedge in Sat 80, and every other member present), every satellite's total weight EQUAL to its prior version's total; characteristics.json's nine coverage pairs unchanged from its prior version. Any other difference: Branch B.</expect></criterion> `V8-AC15` -- THE SATELLITES PLANE REFRESHED ON DEMAND, RELABELLED AND NOTHING ELSE.
+
+<criterion id="V8-AC10" cell_refs="AT5-s-8"><invocation>timeout 900 bash -c "cd portal && node scripts/ui-smoke.mjs positioning .scratch/v8_sat15.png --port <PORT>"</invocation><expect>AFTER V8-AC14 and V8-AC15 (the served plane is refreshed, never pre-retag): a READ render per mode: Satellites (Sat 15: GLD 8.34 under Commodities / Metals; Sat 80: VXX 1.87 under Structured / Hedge; all NINE satellites read, each with served rows == rendered rows and class subtotals == total to 0.1, and each satellite's total weight EQUAL to its pre-retag total from holdings.json's prior version -- weight unchanged), Models and ETFs (five classes, canonical order, one colour each). Print the nine (satellite, rows served, rows rendered, subtotal sum, total) lines.</expect></criterion> `V8-AC10` -- THE BAR ON THE LOCAL BUILD, NINE SATELLITES AND BOTH OTHER MODES, READ.
 
 <criterion id="V8-AC11" cell_refs="AT5-s-8"><invocation>timeout 60 git -C portal diff --stat refs/drains/posn-5-portal</invocation><expect>0 files changed under portal/ in THIS order (your clone is at the drain ref and untouched): the twelve rows changed in ONE place and every Positioning mode reflected it with NO portal edit -- FWD-5 exercised on the retag itself.</expect></criterion> `V8-AC11` -- FWD-5: ONE PLACE CHANGED, EVERYTHING FOLLOWED, NO PORTAL EDIT.
 
-<criterion id="V8-AC12" cell_refs="AT5-s-8"><invocation>timeout 60 grep -c "positioning_data.json\|holdings.json" deliverables/0.9.0_WK_POSN_ASTTAX~19/r1_after_served_heads.txt</invocation><expect>the served keys' heads recorded AFTER the next scheduled fires are NOT yours to wait on: record instead the heads at your report time (s3api head-object on positioning_data.json, allocation_summary.json, holdings_attribution_data.json, holdings.json, characteristics.json) into that file, so the COO's next-day read (the organic arm) has a baseline; the file lists at least those five keys.</expect></criterion> `V8-AC12` -- THE BASELINE FOR THE ORGANIC ARM, RECORDED, NOT WAITED ON.
+<criterion id="V8-AC12" cell_refs="AT5-s-8"><invocation>timeout 60 grep -c "positioning_data.json\|holdings.json" deliverables/0.9.0_WK_POSN_ASTTAX~19/r1_after_served_heads.txt</invocation><expect>the heads AFTER the DRIVEN refresh (V8-AC14/AC15), recorded at your report time (s3api head-object on positioning_data.json, allocation_summary.json, holdings_attribution_data.json, registry.json, holdings.json, characteristics.json -- LastModified + VersionId each) into that file, so the COO's next-day read of the ORGANIC fires (07:00Z / 07:20Z / the yang pipeline) has a baseline to diff against; the next scheduled fires are NOT waited on; the file lists at least those six keys.</expect></criterion> `V8-AC12` -- THE BASELINE FOR THE ORGANIC ARM, RECORDED, NOT WAITED ON.
 
 <criterion id="V8-AC13" cell_refs="AT5-s-8" judgment="true"><invocation>JUDGMENT -- no invocation; graded at L9</invocation><expect>Whether FWD-1, FWD-2, FWD-5 and FWD-6 are now EXERCISED on the Positioning page in the ENDPOINT's own terms (every holding in exactly one of five buckets; vol/hedge and gold apart from equity; one place changed and everything followed; the three modes agree), and whether anything in V8-AC10's render contradicts the served artifacts. Record the readings and offer NO verdict.</expect></criterion> `V8-AC13` -- **JUDGMENT, GRADED BY `3.0.0_SA_CVO~Z` AT L9.**
 
-<expected_criteria>V8-AC1, V8-AC2, V8-AC3, V8-AC4, V8-AC5, V8-AC6, V8-AC7, V8-AC8, V8-AC9, V8-AC10, V8-AC11, V8-AC12, V8-AC13</expected_criteria>
+<expected_criteria>V8-AC1, V8-AC2, V8-AC3, V8-AC4, V8-AC5, V8-AC6, V8-AC7, V8-AC8, V8-AC9, V8-AC10, V8-AC11, V8-AC12, V8-AC13, V8-AC14, V8-AC15</expected_criteria>
 
-<placeholders>PORT, V3_1_S_GUARDED</placeholders>
+<placeholders>PORT, REGENERATE_START_YANGDATAPIPELINE_LAST, V3_1_S_GUARDED</placeholders>
 
 <paths>
 org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-V8-1.the-retag-last-both-stores-both-levels.md
@@ -134,9 +155,10 @@ comp-iam: DECLARED-NOT-APPLICABLE -- no role or policy; the table writes run und
 worktree's environment, the same instrument every prior POSN measurement used.
 comp-adversary: RUN on the decomposition. NOT covered, stated: (1) the issuer has NOT written r1_retag.py -- V8-AC3/AC5 are the
 first runs and the conditional expressions are the control; (2) the issuer's NOW table is a 17:5xZ read -- V8-AC2 re-reads it at
-your vintage and a mismatch is a STOP, not a merge; (3) the served-plane refresh after the retag depends on the producers' next
-scheduled fires (07:00Z / 07:20Z / the yang pipeline's 11:0xZ), so V8-AC10's Models/ETFs render may still show pre-retag labels
-for tickers Yang's books hold until then -- say so per mode; the Satellites mode reads holdings.json, refreshed at 07:00Z.
+your vintage and a mismatch is a STOP, not a merge; (3) the served-plane refresh after the retag is DRIVEN by V8-AC14/AC15 (amended
+~20:3xZ, msg 22913; the halves cover the off-clock run) -- the issuer has not run the yang state machine off-clock on this device
+before V1-AC11 and does not know which branches the last input exercises; V8-AC14 prints the executed states and invokes any
+skipped generator directly with its recorded event; the organic fires stay the COO's next-day leg.
 </preflight>
 
 <proof_of_spec>

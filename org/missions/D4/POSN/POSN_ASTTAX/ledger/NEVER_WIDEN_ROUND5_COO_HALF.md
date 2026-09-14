@@ -85,6 +85,39 @@ each reading the same served table on its next scheduled fire. The CTO half poin
 2026-09-14T17:53:44Z (13 of 13 with a negative-control key not returned); this half's filtered scan and that point read agree on
 all 12 x 3 values -- two instruments, one table.
 
+### R1 AMENDMENT 2026-09-14 ~20:3xZ -- the served refresh after the retag is DRIVEN, not waited on (matching the CTO half @3311955ebf)
+
+**Why:** as cut, `TO-V8-1` left the served refresh to the producers' next scheduled fires and said the render might show pre-retag
+labels until then -- a wait (Rule 27). The mechanism is driven on demand; the scheduled fire stays as the organic confirmation leg.
+**NEVER#1 names the new reachable state (an off-clock producer run), and this half now covers it, line for line with the CTO half:**
+
+- **The act, in dependency order, once each:** (1) the yang data pipeline state machine started with its LAST SUCCEEDED input
+  (`infra/aws/terraform/yang-pipeline/yang-pipeline-definition.json`: `GeneratePositioning` runs in the both-PKLs branch,
+  `GenerateHoldingsAttribution -> GenerateAllocationSummaryAfterAttribution` serially in the attribution branch, the same code on
+  the same inputs as the scheduled fire) -- any generator the last input's branches skip is invoked directly with the event the
+  state machine passed it on the last execution that ran it (`get-execution-history`), never a hand-written event;
+  (2) `cot-satellites-registry-producer` invoked directly (`{}`, the trigger passes no date); (3) `cot-satellites-characteristics-producer`
+  invoked directly (`{}`), after (2) because it reads holdings.json.
+- **The keys, and nothing else:** `json/positioning/positioning_data.json`, `json/positioning/allocation_summary.json`,
+  `json/positioning/holdings_attribution_data.json` on `opal-data-portal-v2`; `platinum/satellites/registry.json` (content-identical
+  by design -- the registry carries no labels), `platinum/satellites/holdings.json` (relabelled), `platinum/satellites/characteristics.json`
+  on `opal-data-cot`. The ETF publisher (`etf_positioning_publisher.py`, `platinum/etfs/positioning_data.json`) is NOT invoked and
+  stays on its own schedule, disclosed.
+- **Writers of the property: N = 6, UNCHANGED** -- the off-clock run is the same six writers' own code on the same inputs; no new
+  writer, no new key, no code change. The state machine's other steps (manifest, cleanup, capture-output-versions, CloudFront
+  invalidation) run as they do on every scheduled fire; the invalidation is the same one the fire issues.
+- **Expected outcome, both branches.** **A:** every invocation returns success; each key's `generated`/`as_of` stamp and S3
+  LastModified move past the retag time; `registry.json`'s body is byte-identical to its prior version; the per-ticker per-level
+  target comparison reads the REFRESHED artifacts; the next scheduled fire is recorded as the organic leg, not waited on.
+  **B:** any invocation fails, or a key's content differs beyond the retagged labels and the weights they regroup (a holding
+  appearing or vanishing, a total moving, a non-set ticker relabelled): STOP; the 12 prior values are written back to BOTH stores by
+  `r1_rollback.py`; the same invocations are re-issued so every served key returns to pre-retag labels; the row is filed.
+- **Rollback per key:** the prior values table above re-written, then the same invocations; where the bucket versions the key
+  (`opal-data-portal-v2` does; the VersionIds are printed by the worker before the retag), the prior object version is the
+  second, independent restore.
+
+COO half for this amendment: `2.0.0_SA_COO~Z`, GIVEN, 2026-09-14 ~20:3xZ.
+
 ### B4 -- the additional characteristics lambda (AT5-s-4) -- NEVER-WIDEN NON-APPLICATION, stated
 
 `platinum/satellites/characteristics.json` has **0 writers today** (s3api HeadObject 404 NotFound) and B4 is its ONLY writer after;
