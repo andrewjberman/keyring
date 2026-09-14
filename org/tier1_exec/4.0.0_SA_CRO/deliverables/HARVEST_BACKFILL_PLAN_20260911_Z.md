@@ -504,3 +504,127 @@ on one domain; a wrong-company hit produces one.
   may need a different query form and that is unmeasured.
 - **`social_account` IS UNAFFECTED AND STILL BLOCKED** -- it runs on Bright Data, whose stored key is
   measured STALE and whose rotation is the account owner's act.
+
+---
+
+## 14. THE BULK PASS HAS RUN: `ir_domain` GOES 0 OF 89 TO 79 OF 89 -- AND THE TEST s.13 LISTED FIRST IS THE ONE THAT NAMES THE WRONG COMPANY
+
+**Authority:** unchanged -- Andrew-direct 2026-09-13 ~04:0xZ card 4, the Google Custom Search key,
+IR and blog search, SEARCH ONLY. **No other provider was called and no result page was fetched.**
+**Artifacts:** `deliverables/IDENTITY_IR_DOMAIN_PASS_20260913_Z.json` (89 records, each carrying its
+own adjudication) and `scripts/ir_domain_bulk_pass.py` (the rule, runnable and auditable).
+
+### The result, with its denominator
+
+```
+universe                         89
+ir_domain INFERRED               79        <- was 0 of 89 at every prior cut
+ir_domain UNRESOLVED             10
+CALLS SPENT                      92   = 1 shape probe + 12 adversarial + 77 remainder
+                                        + 1 raw diagnostic + 1 re-run after a repair
+```
+⚠ **THE STATUS IS `INFERRED`, NOT `MEASURED`, AND THE SCRIPT WAS CORRECTED TO SAY SO BEFORE THE
+DELIVERABLE LANDED.** These values come from SEARCH METADATA -- result URLs and index titles. **No
+page was read**, because card 4 is search-only. Promotion to MEASURED means fetching the page and
+confirming it names the company; that is a scrape, and its route (Bright Data) is blocked on the key
+rotation. **So the identity layer gains 79 rejectable values, not 79 confirmed ones**, and a consumer
+can refuse them on the status field exactly as the rule intends.
+
+### ⛔ THE FINDING: s.13 ORDERED THE TESTS (a), (b), (c) -- AND (a) IS THE ONE THAT PICKS A DIFFERENT COMPANY
+
+s.13 asserted that multi-result agreement is "the strongest of the three". **That is now MEASURED,
+and the measurement is far stronger than the claim was.** Across the 10 refusals:
+
+| | test (a), the name token | test (b), multi-result agreement |
+|---|---|---|
+| named a DIFFERENT LISTED COMPANY | **8 of 10** | 0 of 10 |
+| named a wrong entity inside the right group | 2 of 10 | 0 of 10 |
+| named the correct domain | **0 of 10** | **7 of 10** (3 were genuine ties) |
+
+Concretely, what test (a) elected: `mitsubishi-hc-capital.com` for Mitsubishi UFJ; `sumitomocorp.com`
+for Sumitomo Mitsui; `taiwansemi.com` for TSMC; `tpgtelecom.com.au` for Singapore Telecom;
+`globalterminals.com` for International Container Terminals; `walmart.com` for Walmart de Mexico;
+`akerbp.com` for BP; `federatedhermes.com` for Hermes. **Every one is a real, separately listed
+company whose name genuinely contains the token.**
+
+>> **THE CONSEQUENCE, STATED PLAINLY: HAD THE THREE TESTS BEEN IMPLEMENTED AS A PRECEDENCE ORDER IN
+   THE ORDER s.13 WRITES THEM, THIS PASS WOULD HAVE SHIPPED EIGHT WRONG COMPANIES' DOMAINS AND EACH
+   WOULD HAVE LOOKED EXACTLY LIKE A CORRECT ANSWER.** The thing that caught all eight is not in
+   s.13's list at all -- it is the **CONFLICT BRANCH**: when (a) and (b) disagree, take NEITHER.
+   A criterion written as "at least one of" invites an OR; the value came from the AND. <<
+⭐ The kyntrabio probe result that forced this criterion was a *rank* defect. **The real defect is not
+rank -- it is that a company name is not a unique key**, and only corroboration across results
+separates two companies that share one.
+
+### The three corrections this pass made to the criterion, all disclosed rather than folded in
+
+1. **NON-COMPANY DOMAINS ARE EXCLUDED BEFORE THE TESTS RUN.** s.13's test (b) says only "two or more
+   results share that same registrable domain". Run literally, three LinkedIn hits elect
+   `linkedin.com` -- with the agreement test firing exactly as specified. Aggregators, exchanges,
+   social networks and news are removed first.
+2. **PRESS-RELEASE WIRES joined that set after the first full pass.** A wire carries the company's own
+   releases, so it clears the agreement test like a real IR site and is the most convincing wrong
+   answer available. `newsfilecorp.com` reached n=2 on Telefonica Brazil, one result from election.
+   ⭐ **The re-adjudication changed ZERO verdicts** -- re-run over the STORED results at zero call
+   cost, with a replay control (re-deriving the original verdicts under the original set: 0 drift).
+   So the result is stable against this repair, which is a measurement, not a hope.
+3. **Test (c) CONTRIBUTED NOTHING AND THAT IS RECORDED AS A NULL, NOT A SKIP.** No company held a
+   prior `ir_domain` from another key -- the layer was 0 of 89 -- so the branch was live and inert.
+
+### ⛔ ONE DEFECT WAS IN THIS PASS'S OWN INSTRUMENT, AND THE CRITERION ABSORBED IT
+
+`.bank.in` is the Reserve Bank of India's exclusive domain for Indian banks, so ICICI's registrable
+domain is `icici.bank.in`. It was missing from the two-label-suffix set, so the extractor returned
+`bank.in` -- **discarding the one label that names the company** -- and four results collapsed onto a
+suffix. Test (b) duly elected it; test (a) named `icicibank.com`; **they disagreed and the pass
+REFUSED.**
+>> **AN EXTRACTOR DEFECT BECAME A REFUSAL INSTEAD OF A WRONG ANSWER.** That is what fail-closed buys,
+   and it is worth more than the 1-in-89 it cost. Repaired; ICICI re-run on ONE call and now
+   `icici.bank.in`, accepted by both tests agreeing. <<
+⚠ **AND IT WAS FINDABLE ONLY BECAUSE IT PRODUCED A REFUSAL.** A suffix collapse that produced an
+ACCEPT would have been silent. The accepted 79 were inspected by eye for that shape and none is a
+bare suffix -- but that is an inspection, not a gate, and a full Public Suffix List is the real fix
+if this layer ever becomes load-bearing.
+
+### The zero-call dry run earned its own existence
+
+The name rule strips trailing Bloomberg-shaped tokens off a folder name -- the exact complement of
+the identity fallback rule that reads those same tokens as a ticker. **Printing all 89 derived
+queries before spending anything found two folders where the stripped token WAS the identity:**
+`Koninklijke KPN NA` -> "Koninklijke" (a Dutch honorific carried by Philips, Ahold and KLM alike) and
+`Manila MER PER` -> "Manila" (a city). Both are recorded as named overrides with their reason.
+**Two wrong queries caught for zero quota**, by inspecting a printed population rather than trusting
+a rule that had already been validated 15-for-15 on a different question.
+
+### THE 10 REFUSALS, WITH THE CANDIDATE ALREADY IN HAND
+
+Converting any of these later costs **ZERO further calls** -- the candidate and its result count are
+in the record's `adjudication` block.
+
+| name | test (b) candidate | why it was refused |
+|---|---|---|
+| Mitsubishi UFJ Financial Group | `mufg.jp` (5 of 10) | (a) named Mitsubishi HC Capital |
+| Sumitomo Mitsui Financial Group | `smfg.co.jp` (4) | (a) named Sumitomo Corporation |
+| Taiwan Semiconductor Manufacturing | `tsmc.com` (7) | (a) named Taiwan Semiconductor Co |
+| Walmart de Mexico | `walmex.mx` (5) | (a) named Walmart Inc, the US parent |
+| Singapore Telecom | `singtel.com` (4) | (a) named TPG Telecom |
+| International Container Terminals | `ictsi.com` (2) | (a) named Global Container Terminals |
+| BNP Paribas | `invest.bnpparibas` (3) | the group's own estate is split across 7 domains |
+| **BP** | tie `bp.com` 4 / `akerbp.com` 4 | **Aker BP is a separate listed company** |
+| **Hermes** | tie `hermes.com` 3 / `federatedhermes.com` 3 | **two real companies share the name** |
+| **Telefonica Brazil** | tie `telefonica.com` 2 / `telefonica.com.br` 2 | parent vs the Brazilian listco |
+
+⭐ **THE LAST THREE ARE A DIFFERENT CLASS AND NO SEARCH HEURISTIC RESOLVES THEM.** A dead tie between
+two genuinely existing companies is not a weakness of the rule -- it is the rule reporting that the
+QUESTION is under-specified. **Each needs one line from whoever owns the holding**, and for Telefonica
+Brazil the folder name itself ("Brazil", VIVT3) already contains the answer. **They are the only three
+of the 89 that need a human.**
+
+### What is STILL not done, so this does not read as finished
+
+- ⛔ **BLOGS ARE IN CARD 4'S GRANT AND ARE STILL UNPROBED.** Only the IR half has a confirmed shape.
+- ⛔ **`social_account` IS STILL 0 OF 89** -- Bright Data, blocked on a rotation that is the account
+  owner's act. Nothing in this pass touches it.
+- **`sa_symbol` is unmoved at 10 INFERRED / 79 UNRESOLVED** -- it needs the SA fetch path, not search.
+- **The identity layer as a whole now reads:** `bloomberg_ticker` 34 MEASURED + 49 INFERRED = 83 of
+  89; `ir_domain` 79 INFERRED of 89; `sa_symbol` 10 of 89; `social_account` 0 of 89.
