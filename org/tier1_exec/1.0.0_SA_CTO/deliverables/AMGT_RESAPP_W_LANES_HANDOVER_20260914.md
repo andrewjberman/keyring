@@ -121,6 +121,23 @@ that ref inside the worker's own worktree; the shared checkout and the gitlink D
 drain contract for a portal-touching round is in the decomposition s.16d / s.17e (Z-S19, Z-S33,
 Z-S34: two superproject branches, one gitlink, a plain safe-merge cannot drain a portal branch).
 
+**Two facts from `1.0.0_SA_CTO~Z` (msg 22931, 23:38Z, answering the broadcast with an explicit CLEAR):**
+- **Scope record alignment.** That seat's record of Andrew ~16:5xZ at its terminal
+  (`ANDREW_DIRECT_20260914_165xZ_SITEZ_POSN_ASTTAX_ONLY_BREAKDOWN_BEFORE_WORKERS.md` @f529179076) reads
+  "this device, this session: POSN_ASTTAX only, no other projects". His ~23:2xZ word at the `~W`
+  terminal is LATER and his own, so AMGT_RESAPP work on this device under the `~W` lanes stands on it;
+  nothing at `1.0.0_SA_CTO~Z` holds or narrows it, and its `/self-drive AMGT & POSN` is NOT armed this
+  session, so there is no loop at that seat for a `~W` loop to collide with.
+- **Portal sequencing the round-10 recut will meet.** `0.0.0_AB_MSTR~Z`'s portal cross-fabric plan v2
+  (`org/tier0_exec/0.0.0_AB_MSTR~Z/deliverables/PORTAL_REPO_CROSS_FABRIC_INTEGRATION_PLAN_20260914.md`
+  @9e0c1080a0, calls C1-C4 open at Andrew) orders: laptop reconcile (IRPT vs d13) -> ONE integration
+  merge off `origin/DEV` carrying site-Z AMGT (`refs/drains/rg-2-portal` @a845a8be, which contains
+  DEV; the cross-fabric overlap measured as `src/App.tsx` only) -> POSN after its round 5. **Any AMGT
+  round-10 portal cell lands on a ref that plan names**; the COO reads the plan before cutting a
+  portal cell. Localhost login on this device needs `VITE_AUTH_API_URL` empty (the dev env has no auth
+  line; the laptop's gitignored `.env.local` sets it) -- the POSN view on :5173 runs with it, and an
+  AMGT view on another port needs the same.
+
 ---
 
 ## 5. RESIDUE THE COO INHERITS (report first, touch by the rules)
