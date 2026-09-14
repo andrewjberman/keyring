@@ -2510,3 +2510,34 @@ all seven mechanical criteria were measured and the verdict is NO-GO.
   }
 ]
 ```
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-S55",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-14T05:52:00Z",
+    "one_line": "The shared portal/ checkout is 14 commits BEHIND the pointer the superproject records, so any round-5 portal-source cell cut against it is written against a September 2 tree. Carried as a row because the remedy for the round-4 instance of this hazard (W15-S1) landed ONCE and does not carry itself into the next issuance.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED BY THIS SEAT, by ls-tree -r FILE COUNT at each tree-ish, reached while censusing portal readers for the two-lane coordination rather than while looking for this: gitlink pin e85f6eb84f = 1201 files; portal submodule HEAD = 1079 files, 122 FEWER; and for-each-ref shows that HEAD IS refs/heads/DEV at 30ca034b.",
+        "CORROBORATED BY A DIFFERENT INSTRUMENT, 0.0.0_AB_MSTR~Z at msg 22427: checkout 30ca034bba on branch DEV dated 2026-09-02; is-ancestor 30ca034bba -> e85f6eb84f TRUE and the reverse FALSE, so the direction is unambiguous and the NEGATIVE CONTROL FIRES; 14 commits missing, 0 commits ahead; ~140 files across seven merges, the IRPT_FNTEND frontend. Two instruments, different methods, same direction and consistent magnitude -- a file-COUNT delta and a CHANGED-file count are not the same number because modifications move no count.",
+        "THE RULING THIS ROW CARRIES: 1.0.0_SA_CTO~Z at msg 22433 -- NO PORTAL-SOURCE CELL IS CUT AGAINST THE SHARED CHECKOUT UNTIL IT IS ALIGNED TO THE RECORDED POINTER. Raised from a request to a PRECONDITION ON THE CUT so it does not depend on anyone remembering a thread. Landing in the record as ROUND_ANALYSIS.round3 s.7c, alongside s.7b @55a6a110b6.",
+        "WHY IT BITES A GRADE AND NOT JUST A MERGE: components, routes and a rendering package that ARE in the recorded pointer are ABSENT from the tree a worker would open. A cell written against that tree may duplicate them, conflict with them, or silently assume their absence -- and would then grade REALIZED against a surface that is not the served one.",
+        "AND THE MIRROR HAZARD, which is s.7a pointed the other way: a gitlink move FROM this checkout at promote would REWIND fourteen commits of another fabric's shipped frontend. `git diff --submodule=log` prints the word `rewind` itself. The one act s.7a permits -- the gitlink move at promote -- is the act that would do it, so `moves ONCE at promote` is safe only if the thing it moves TO is not behind.",
+        "NOTHING IS AT RISK AT SURFACING. Nothing staged, submodule worktree clean, no gitlink move, HEAD:portal e85f6eb84f on every tick tonight including after the cross-fabric merge, and nothing written or built under portal/ by this seat or its workers. This is a do-it-in-the-right-order finding caught in the one window where the order is still free."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "ROUND_ANALYSIS.round3 s.7a requires a portal commit to be reachable from a ref a peer's merge will TRAVERSE, and states that the gitlink moves ONCE at promote. Neither s.7a nor the decomposition says anything about the VINTAGE of the working copy a cell is cut against, and `git status` prints the gap as a bare `M portal` with NO DIRECTION -- so a one-direction read cannot distinguish behind from ahead, which is why it sat unremarked all night while it was harmless.",
+    "world_is": "The shared portal/ working copy is a 2026-09-02 tree (30ca034b, branch DEV) while the superproject records a tree fourteen commits newer (e85f6eb84f). It stops being harmless the moment a cell writes source into it.",
+    "notes": "THIS ROW EXISTS BECAUSE THE ROUND-4 INSTANCE OF THIS EXACT HAZARD ALREADY HAPPENED ONCE ON THIS PROJECT. W15-S1: the spawn recipe told a worker to read portal from the shared TREE, which was 14 commits behind the gitlink pin, and a working-tree read would have stamped a vintage false by 8 days and 126 files. That remedy LANDED AND WAS EXERCISED for AT4-s-2 -- and it landed in ONE SPAWN, not in a rule. A remedy applied once to one cell does not carry itself into the next issuance, which is the whole reason this is a row rather than a note. TWO THINGS DISARM IT, BOTH REQUIRED, AND NEITHER IS MET BY A MEASUREMENT ROUND: (a) at the moment round 5 is cut, the shared checkout resolves to the pointer the superproject then records, verified with is-ancestor run in BOTH DIRECTIONS and both printed -- a single-direction read is not evidence; (b) EVERY cell in that issuance whose <paths> grants anything under portal/ states IN ITS WORKER FACE that the worker verifies its OWN clone against the recorded pointer before writing, because each wk-*/portal is a separate checkout, aligning the shared tree aligns none of them, and A WORKER NEVER SEES THE THREAD THIS RULING WAS AGREED IN. The alignment act itself is 0.0.0_AB_MSTR~Z's as integrator and is NOT a fenced portal act: no promote, no push, no DEV/PROD merge, and it does not move the gitlink -- it moves the WORKING COPY to the commit the superproject already records. This seat gave its lane's green at msg 22437; 2.0.0_SA_COO~ZZZ's go is its own and is not assumed here."
+  }
+]
+```
