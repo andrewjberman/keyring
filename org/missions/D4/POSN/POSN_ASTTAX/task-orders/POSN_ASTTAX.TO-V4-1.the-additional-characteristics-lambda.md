@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_POSN_ASTTAX~20</issued_to>
 <issued_by>2.0.0_SA_COO~Z</issued_by>
 <issued_date>2026-09-14</issued_date>
-<status>staged</status>
+<status>complete</status>
 
 **Directive:** D4 - **Macro:** POSN - **Fabric:** site-z - **PRD:** `../prd/POSN_ASTTAX_PRD.md` **v0.7** @`99cc431075`
 (C-SATELLITE-SOURCE: *"aggregated server-side by an additional lambda"*) - **Decomp cell:** `AT5-s-4` - **Issuance:** round 5,

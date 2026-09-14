@@ -4902,6 +4902,77 @@ Andrew asked for (msg 22917); it concerns this project's portal files meeting an
   "spec_asserts": "The L7 bar treats the checker's rc as one verdict; to-pipeline-gate.py:2530-2538 runs the checker with the instance staged and no ids; proof-of-spec-check's artifact_resolution_check branches on staged/untracked.",
   "world_is": "The discriminating pair on the same bytes minutes apart: unstaged VALID (4 PENDING co-committed), staged INVALID (4 CCX violations); four first-run pins had expired when de993b0e50 landed; pinned to that hash, both reads agree.",
   "notes": "For the round analysis: proof-of-spec-check should print its mode and, for a tracked instance, both modes' artifact-resolution verdicts so a hand read predicts the gate."
+},
+{
+  "id": "POSN_ASTTAX-Z-W20-S10",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~20",
+  "surfaced_at": "2026-09-14T21:59:21Z",
+  "one_line": "V4-AC4's expectation names 'its fee/yield aggregates MOVE' when GLD is removed; the 2026-09-11 GLD row carries FEE ONLY, so yield CANNOT move and did not. The criterion's operative clauses are met exactly -- weight_null rises by 8.34 on every field GLD carried (fee, +8.3400) and the two arms DIFFER (Sat 15 fee 0.211960 -> 0.178600, and 7 of 7 GLD-holding satellites move while 2 of 2 non-holders do not) -- but the 'yield' half of that one phrase is falsified by the INPUT, not by the code: GLD's 8.34 already sits in yield's weight_null in BOTH arms, so an arm-to-arm yield move would have required Bloomberg to carry a dividend yield for a gold trust.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED AT THE PARQUET, NOT ASSUMED (bbg/2026-09-11/characteristics.parquet, 172 rows x 14 columns; run_manifest run_class=adhoc, universe_count=172): the 'GLD US Equity' row carries FUND_EXPENSE_RATIO=0.4, and EQY_DVD_YLD_IND_NET / HB_OAS_EFF_DURTN / BETA_ADJ_OVERRIDABLE are all NaN. The pull carries NO return columns at all, for any security.",
+      "THE CONTROL'S OWN OUTPUT (org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~20/difference_control_gld_removed.py @7c90a973ae, rc=0): fee 0.211960 -> 0.178600 with weight_null 0.8400 -> 9.1800 (+8.3400, GLD's weight to the cent); yield 3.828922 -> 3.828922 with weight_null 9.1800 -> 9.1800 (+0.0000); duration, beta and all eight return windows likewise unchanged.",
+      "WHY THIS IS NOT A DEAD CONTROL: the same run carries a positive AND a negative arm across satellites -- the seven that hold GLD all move on fee (15/30/40/50/60/70/80) and the two that do not (90, 98) are identical to six decimal places. A producer that ignored the Bloomberg leg entirely would have moved NOTHING.",
+      "GRADED PASS-BY-OUTPUT ON WHAT THE CRITERION MAKES DECISIVE: 'the two arms DIFFER. If they do not, the control is not discriminating: report that, not the result.' They differ. The 'every field GLD carried' clause is data-conditioned and is satisfied exactly; 'fee/yield' is the issuer's pre-measurement naming of which aggregates it expected to move."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-V4-1 V4-AC4 @d6754d8338: 'Sat 15's coverage.weight_null RISES by 8.34 on every field GLD carried and its fee/yield aggregates MOVE, while the run on the real partition leaves them where V4-AC3 read them -- the two arms DIFFER.'",
+  "world_is": "weight_null rose by exactly 8.3400 on fee, the ONLY field GLD carried; the fee aggregate moved on all seven GLD-holding satellites; the yield aggregate is identical between arms because GLD's EQY_DVD_YLD_IND_NET is NaN in the 2026-09-11 partition, so its weight was already counted as null for yield in the real arm.",
+  "notes": "Recorded rather than repaired: a criterion is not amended after a pass (the Z-S81 rule). The measurement is printed verbatim in the proof so L9 grades the phrase against the world rather than against the code."
+},
+{
+  "id": "POSN_ASTTAX-Z-W20-S11",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~20",
+  "surfaced_at": "2026-09-14T21:59:21Z",
+  "one_line": "The cell's amendment adds GLD *and VXX* to the Bloomberg pull for this aggregation, but VXX is already in Yang's served current_holdings -- so under the cell's own PER-TICKER precedence (Yang first) the Bloomberg VXX row is never consulted by this producer. Of the 25 distinct tickers the nine satellites hold, 23 resolve from Yang, exactly ONE (GLD) from Bloomberg and one (CASH) from neither, so the Bloomberg leg's entire live contribution today is GLD's expense ratio.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED OVER BOTH SERVED INPUTS: positioning_data.json current_holdings carries 6 books and 30 distinct tickers, VXX among them (fee 0.89, beta 0.9968369003063753, yield null, duration null, all eight return windows populated); holdings.json @VersionId BRjqyqnB0pIdLUHOvDY3B_Sh9b0EXIPw carries 25 distinct tickers across the nine satellites, of which GLD is absent from Yang and CASH is absent from both.",
+      "THE TWO SOURCES AGREE WHERE THEY OVERLAP, SO THE PRECEDENCE COSTS NOTHING FOR VXX TODAY: Bloomberg's BETA_ADJ_OVERRIDABLE for VXX is 0.9967923550068504 against Yang's 0.9968369003063753 -- a delta of 4.5e-5 -- and Yang additionally carries the eight return windows Bloomberg has no columns for. Yang-first is the RICHER source here, not merely the first one.",
+      "WHY THE PULL IS STILL NOT WASTED: Yang's current_holdings is the set of tickers a Yang BOOK holds. A satellite ticker that leaves the Yang books, or a new satellite holding Yang never held, falls through to Bloomberg -- which is exactly GLD's case today. The VXX row is the standing negative arm of that fallback rather than dead weight.",
+      "NOT A DEFECT IN ANYTHING BUILT: the producer implements the precedence the cell specifies, records the resolved source per ticker in satellites.<code>.sources, and the artifact's method block states the grain ('per ticker (a ticker's whole row comes from one source)')."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-V4-1 THE CELL @d6754d8338: 'GLD and VXX enter it as EXTRA_SECURITIES ... already wrote GLD and VXX rows into bbg/2026-09-11/characteristics.* (universe 172 = 166 + 4 + GLD + VXX), so the latest partition today CARRIES them', with 'Source precedence per ticker: Yang's current_holdings where present, else the Bloomberg pull, else NULL.'",
+  "world_is": "Both rows are in the partition, as the cell says. VXX is ALSO in Yang, so per-ticker precedence resolves it from Yang and the Bloomberg VXX row is not read; GLD is the only satellite ticker Bloomberg supplies. A reader of the cell would expect two Bloomberg-sourced tickers; the artifact shows one.",
+  "notes": "Relevant to F3 (AT5-s-7), which binds this schema: satellites.<code>.sources names the resolved source per ticker, so the one-vs-two question is answerable from the served artifact without re-deriving it."
+},
+{
+  "id": "POSN_ASTTAX-Z-W20-S12",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~20",
+  "surfaced_at": "2026-09-14T21:59:21Z",
+  "one_line": "record-terraform-deploy.sh's source-map writer re-serialises lambda-source-map.json with RAW UTF-8, so its own commit f2180794df flipped the file from PURE ASCII (detector 0 -- the state TO-V2-1 V2-AC13 asserted and measured) to 28 raw non-ASCII bytes with NO value change at all, and two of those are U+009D, UNDEFINED in cp1252: a default text-mode read of the estate's lambda source map RAISES on this device while it is unescaped, and read CLEAN before. Re-escaped in this worker's own follow-up commit with the decoded documents proven equal; the WRITER is untouched and will re-arm on the next record of any pipeline.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED AT THE BYTES, BOTH VINTAGES: infra/aws/lambda/ci/lambda-source-map.json at the record commit's parent = 196,171 bytes, detector len(b)-len(b.decode('utf-8')) = 0; at f2180794df = 197,887 bytes, detector 28. The worker's own row addition, written with ensure_ascii=True immediately before the recorder ran, measured 197,653 bytes at detector 0 -- so the flip is the RECORDER's write and not the edit that preceded it.",
+      "VALUE-IDENTITY CONTROL -- NOTHING IN THE RECORD CHANGED: a recursive value-level walk of the decoded documents at the parent vs f2180794df returns 13 differences, ALL of them the new cot-satellites-characteristics-producer row plus _last_deploy_recorded. The 28 characters were already in the data as backslash-u escapes (six U+00A7, one U+2014, and a PRE-EXISTING double-encoded em-dash inside two _note values that reads the same mojibake at BOTH vintages). The recorder un-escaped them; it did not corrupt them.",
+      "THE cp1252 LIMB IS THE PART THAT BITES, AND IT IS CLAUDE.md's OWN DETECTOR: two U+009D characters are in that set. On this device a default text-mode read raises only on a byte undefined in cp1252 and 0x9D is one of the five; before this commit the file was pure ASCII and every reader was safe regardless of its encoding argument.",
+      "REPAIRED IN-FILE, NOT IN THE SCRIPT: the map is inside this task order's <paths> and the damage is this worker's own commit's collateral, so the file was re-serialised with ensure_ascii=True (197,974 bytes, detector 0) and the decoded documents compared EQUAL before and after. record-terraform-deploy.sh is the CI lane's and is NOT edited -- the V2 ruling on W20-S8 ('no recorder fix lands in this round') is read as binding here too.",
+      "WHY ARMED: the next record-terraform-deploy.sh run on ANY pipeline rewrites the same file with the same serializer and re-arms the same state, and nothing in the recorder's output says so -- its closing banner claimed 'Source map + CHANGELOG.json committed' in the very run whose CHANGELOG write FAILED (the W23-S4 defect, reproduced verbatim again here)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-V2-1 V2-AC13 @80a431c546: the map 'reads PURE ASCII (detector 0)'. CLAUDE.md, no-non-ASCII rule, NON-APPLICATION clause: 'a file that is ALREADY pure ASCII (keep it that way)'.",
+  "world_is": "The recorder's writer emits raw UTF-8; one record commit moved the map from detector 0 to detector 28, values unchanged, including two cp1252-undefined bytes that make a naive text-mode read raise. Re-escaped to detector 0 in this worker's commit; the writer will do it again on the next record.",
+  "notes": "The same run also reproduced W23-S4 exactly: the CHANGELOG helper is a .js file handed to python3 ('SyntaxError: unterminated string literal'), then 'Note: CHANGELOG.json write failed', and the closing banner still says the CHANGELOG was committed. The entry for this deploy was written by hand per V4-AC13."
 }
 ]
 ```
