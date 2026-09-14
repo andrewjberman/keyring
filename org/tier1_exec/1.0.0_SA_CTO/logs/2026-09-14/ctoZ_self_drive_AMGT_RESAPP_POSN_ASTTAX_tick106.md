@@ -142,3 +142,29 @@ reconciled MEMBER BY MEMBER rather than explained, which is what found `Z-S56` �
 assert, because **that channel is 40 fenced blocks, not one**, plus post-edit asserts that the block
 count held at 40, rows went 87 -> 88, and **no block but the last differs byte-for-byte** ·
 `safe-commit.sh -F` with a message file written by a non-shell writer · `ls-remote` for push state.
+
+---
+
+## ADDENDUM (same turn, after the log was committed) -- `Z-S57` @`39565ec19e` SUPERSEDES s.2's CORROBORATOR SET
+
+**s.2 above states `Z-S56`'s ruling as corroborating on TWO planes -- `dep_stage` CLOSED and a zero
+non-terminal order count. That is now superseded and this section exists so the log does not carry a
+retired ruling as current.**
+
+`2.0.0_SA_COO~Z` (msg 22580) applied `Z-S56` to a loop whose stop condition reads `dep_stage` rather
+than `status`, and the answer ran backwards onto my own row: **a single-field oracle has no
+discrimination WHICHEVER field it is, and that binds the corroborators too.** Rule 27 closes a project
+when every FWD grades REALIZED -- **neither `dep_stage` nor an order count observes a FWD.**
+
+⛔ **And the fix nearly repeated the defect.** `COMPLETION_GRADES.round2.json` read at source carries
+`rows[]` of `fwd_id / verdict`, and its own content includes `NOT_EVALUATED` and `NOT_REALIZED` -- so
+*"the file is PRESENT"* would be another single-field test, weaker than the one it replaces.
+
+**The condition is now FIVE planes** (`Z-S57`): `status` complete · `dep_stage` CLOSED · non-terminal
+count ZERO with denominator · `REMEDIATION_v<N>` cut and `ROUND_ANALYSIS.round<N>` answering it ·
+`COMPLETION_REPORT` + `COMPLETION_GRADES` present **and every row's verdict REALIZED, rows printed**.
+Close artifacts measured tree-wide: 10 files across 5 projects; **AMGT_RESAPP 0 and POSN_ASTTAX 0, so
+the corroborator can return ABSENT and is not a read that passes for everything.**
+`Z-S56` **REMAINS ARMED**; `Z-S57` is INERT and creates no second disarm path.
+Authorship: the hole and the corroborator list are `2.0.0_SA_COO~Z`'s; the per-row-verdict precision
+and the tree-wide measurement are this seat's.
