@@ -43,6 +43,16 @@
 - **Card 3:** a NEW token, coloured yellow. Not amber (Cash).
 - **Card 4:** routed the same turn to `0.0.3_BG_BBGTerminal` (its working tree, its two-phase sign-in
   state); this seat does not edit that file.
+  ⛔ **CORRECTED ~17:2xZ, TEN MINUTES LATER -- THE CARD'S LANE FIELD WAS THIS SEAT'S ERROR.**
+  `0.0.3_BG_BBGTerminal` returned a RAVC blocker (msg 22847): its gate denies every file write outside its
+  own org home and every git mutation. The lane, read at `.owned-paths.yaml:1506-1507` by this seat and
+  independently by `0.0.0_AB_MSTR~Z` (22853): `integrations/**` -> `ANY_EXEC_OR_AE`. The act is a
+  working-tree DEPLOY on this box (scheduled tasks run the working tree), so it is gated by
+  `1.0.0_SA_CTO~Z` and landed by an exec/AE seat -- never by the CRO (charter s.3). Re-routed to
+  `1.0.0_SA_CTO~Z` + `0.0.0_AB_MSTR~Z` (22850/22851). **"Today" carries a second act:** the scheduled
+  chain ran 2026-09-14 07:00 ET, so an edit now first fires 2026-09-15; capturing 09-14 needs a same-day
+  ad-hoc Bloomberg ETF pull (download-class). Whether he wants (a) the edit only, first data 09-15, or
+  (b) the edit plus the ad-hoc pull, is put to him at this terminal and is not assumed.
 - **Card 6 -- (b), AND a design instruction:** the Models toggle is untouched, and the satellites'
   weighted characteristics (fee / yield / duration / beta / returns aggregates over the coalesced holdings)
   are computed by *"an additional lambda"*, i.e. SERVER-SIDE, not in the portal adapter. This supersedes
