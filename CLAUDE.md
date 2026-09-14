@@ -260,7 +260,18 @@ unenforced provenance field drifts to unpopulated. `docs/doctrine/A_VALUE_MUST_C
     sound oracle; an orphaned watcher reads REACHABLE *because* the agent is deaf (anti-correlated).
     RETRIEVAL: a failed retrieval returns a VALUE; paginated `list-*` + `--query length()` returns the
     PAGE count and `--no-paginate` is the hazard; `aws s3 ls` renders LOCAL time, `s3api` UTC; never type
-    a literal `Z` into a `--date=format` (renders local, stamps UTC). IAM traps: `/cloud-ops`. Annex §22a.
+    a literal `Z` into a `--date=format` (renders local, stamps UTC). IAM traps: `/cloud-ops`.
+    **ROSTER: `get_agent_status(<serial>)` IS THREE LIMBS WITH DIFFERENT SCOPES.** Liveness / PID /
+    `Working on` are per-LANE; ⛔ **`Pending task orders` and `Latest logs`/`Blockers` are BASE-scoped
+    AND exact-string-match a FREE-TEXT `<status>`** -- so they are never a lane's orders and never a
+    count of what is open. To ask what a LANE owes, parse `<issued_to>` from the order files. ⚠ **The
+    one limb that needs no disclaimer carries one, and the two that do carry none**, so the careful
+    sentence certifies the silent limbs. Measured 2026-09-14: 6 of 6 orders reported for
+    `3.0.0_SA_CVO~Z` were lane `~Y`'s; across **2278** seat orders **679** carry prose `<status>` and
+    **116** carry none, leaving **31** open orders invisible -- exact-match PROVEN at
+    `0.7.0_AE_CloudOps` (3 reported, 5 genuinely pending). **COST: none -- a reading rule.**
+    **NON-APPLICATION:** the lane half does not bind a query on a BASE serial; the free-text half binds
+    every query, base or lane. `AMGT_RESAPP-Z-S79`/`Z-S80` @`e1a4e917f2`. Annex §22a.
 28. **THE SUBSTRATE TEST — before you BUILD ON a resource, card it: 7 questions, 3 grains** — PROCESS
     (1 methodology, 2 cadence/trigger DESIRED-vs-APPLIED), ARTIFACT (3 persistence/authority, 4 exact
     location), TRUST (5 coverage + denominator, 6 key/identity space, 7 failure mode distinguishable from
