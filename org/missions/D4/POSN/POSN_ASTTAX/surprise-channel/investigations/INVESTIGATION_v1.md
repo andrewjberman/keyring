@@ -2812,3 +2812,121 @@ all seven mechanical criteria were measured and the verdict is NO-GO.
   }
 ]
 ```
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-W21-S1",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~21",
+    "surfaced_at": "2026-09-14T19:02Z",
+    "one_line": "THE DOWNSTREAM CELL'S ACCEPTANCE INSTRUMENT CANNOT FAIL. AT5-s-8 (R1) is recorded as running this cell's guarded seeder as a DRY RUN after the retag and expecting 0 PRESERVED. The guard computes its conflicts at :295 as 'conflicts = _yang_conflicts(yang_table, sec) if upload else []' -- so on the dry-run path the conflict list is [] BEFORE any comparison happens, the run performs ZERO get_item calls, and 0 PRESERVED / rc=0 is the ONLY value that path can emit. Measured on the applied bytes: a dry run over a store that WOULD lose 4 of 4 five-class values reads byte-identical to a dry run over a store with nothing to lose.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE GATING LINE, AT ITS VINTAGE: data/black_diamond/scripts/classification/seed_canonical_securities.py:295 @8cad052620 reads exactly '            conflicts = _yang_conflicts(yang_table, sec) if upload else []' (printed with cat -n, not grepped). The refusal block it feeds is :296-302 and the rc=1 return is :335-341.",
+        "THREE-ARM PROBE ON THE APPLIED BYTES (blob 803721e2c15464ed4ba054a02aba2311d5506164), same conflicting store, boto3 faked in-process so no live table is opened: A upload=True  -> rc=1, 8 [PRESERVED] lines, 1 REFUSED line, 57 get_item; B upload=False -> rc=0, 0 [PRESERVED], 0 REFUSED, 0 get_item; C upload=False over a store that AGREES with the seeder -> rc=0, 0, 0, 0. ARMS B AND C READ IDENTICALLY on every column, so the dry run does not distinguish 'nothing would be clobbered' from 'four rows would be'.",
+        "THE ZERO IS STRUCTURAL, NOT EMPIRICAL: arm B performs 0 get_item calls against a table whose rows exist. The guard never looks, so no input could make the dry run report a conflict -- this is not a case of the probe happening to find none.",
+        "THE EXPECTATION AS WRITTEN: org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-V3-1.apply-the-seeder-guard.md @8cad052620 <decomp_ref>, verbatim: 'DOWNSTREAM: AT5-s-8 (R1) runs your guarded seeder's dry run after the retag and expects 0 PRESERVED.'",
+        "THE ARM THAT DOES DISCRIMINATE EXISTS AND IS ALREADY MEASURED IN THIS CELL: upload=True refuses with rc=1 and 8 [PRESERVED] lines on the same store (V3-AC4), and --force still overrides (rc=0, CLOBBERED 4 of 4). So the guard is sound; it is the DRY-RUN READING of it that carries no information."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-V3-1 <decomp_ref> @8cad052620: 'DOWNSTREAM: AT5-s-8 (R1) runs your guarded seeder's dry run after the retag and expects 0 PRESERVED.' The same order's V3-AC4 requires this worker to prove the guard by a run that REFUSES with rc=1 and prints [PRESERVED] -- i.e. the order itself uses the upload path as the discriminating one.",
+    "world_is": "THE TWO READINGS ARE NOT THE SAME INSTRUMENT. The upload path refuses (rc=1, 8 [PRESERVED], 57 get_item); the dry-run path emits 0 PRESERVED and rc=0 unconditionally, having made 0 get_item calls. A downstream worker that runs the dry run and records '0 PRESERVED' will record a PASS from an instrument with no failing branch, and the record will be indistinguishable from a real one. NOTE THE DIRECTION: nothing errors, no gate fires, the guard is correct, and the only casualty is that AT5-s-8's acceptance reading would certify durability it never tested.",
+    "notes": "WHAT THIS WORKER DID NOT DO, DELIBERATELY: no edit to the guard (the patch is round 4's and was applied VERBATIM as ordered -- changing 'if upload' here would be repairing a criterion rather than meeting it, and the REFUSAL CLAUSE forbids it); no edit to the round-5 decomposition or to AT5-s-8, which are the issuer's surfaces and outside this order's <paths>; no message to any seat. FOR THE DISARM OWNER, THE CHEAP OPTIONS AS READINGS AND NOT AS A RECOMMENDATION: (a) AT5-s-8's acceptance names the upload arm, which already discriminates and needs no code change; (b) the dry-run path is given a read-only conflict preview, which is a change to a file this cell has now landed and would be a new order. WHICH ONE IS RIGHT IS NOT THIS WORKER'S CALL. DISARM, one falsifiable limb: AT5-s-8 is cut (or amended) so that the reading it records comes from an arm that has a failing branch, and a citing row says so."
+  }
+]
+```
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-W21-S2",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~21",
+    "surfaced_at": "2026-09-14T19:02Z",
+    "one_line": "V3-AC2's INVOCATION, RUN EXACTLY AS WRITTEN, CHECKS NOTHING. 'timeout 180 bash .tools/commit-gate.sh' takes its subjects from argv and the criterion supplies none, so it dispatches 0 files, prints 'WARN: commit-gate checked 0 of 0 file(s) -- NOTHING WAS CHECKED' and exits 0. The gate's own output says the quiet part out loud: 'This line is NOT evidence of a clean gate.' The criterion's <expect> names a subject the invocation cannot reach.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ARM AS WRITTEN, verbatim: $ timeout 180 bash .tools/commit-gate.sh -> 'WARN: commit-gate checked 0 of 0 file(s) -- NOTHING WAS CHECKED. / This line is NOT evidence of a clean gate. This gate reads only .py / .sh / .tf / org/projects/*.json; every other suffix falls through unexamined.' rc=0.",
+        "ARM WITH THE SUBJECT, verbatim: $ timeout 180 bash .tools/commit-gate.sh data/black_diamond/scripts/classification/seed_canonical_securities.py -> 'All checks passed! / OK: no unguarded strict-utf8 log reads. / OK: pre-commit gate clean for 1 of 1 file(s)' rc=0. DENOMINATOR MOVES 0 -> 1, which is the whole difference.",
+        "THE INTERFACE IS DECLARED IN THE TOOL'S OWN HEADER: .tools/commit-gate.sh @8cad052620 'Usage: .tools/commit-gate.sh data/black_diamond/scripts/gold/B_00.py', and its last line is 'exec python commit_gate_runner.py \"$@\"' -- subjects come from argv, never from the index or the working tree.",
+        "rc=0 IS DOCUMENTED AS COVERING BOTH STATES: the same header's exit-code table reads '0  every DISPATCHED file was checked and is clean; or nothing was dispatched at all'. So the exit code cannot separate the two arms either -- only the printed denominator can.",
+        "THE INSTRUMENT DOES FIRE WHEN GIVEN A SUBJECT: a planted 'def broken(:' .py returns 'BLOCKED: py_compile failed' rc=1, so the clean reading on the real subject is a measurement and not an instrument that passes everything."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-V3-1 V3-AC2 @8cad052620: <invocation>timeout 180 bash .tools/commit-gate.sh</invocation> with <expect> 'clean on the CHANGED file data/black_diamond/scripts/classification/seed_canonical_securities.py (py_compile + ds-precommit + ruff py39), output cited; the criterion's subject is that changed .py and nothing else (C-S93)'.",
+    "world_is": "THE INVOCATION AND THE EXPECTATION NAME DIFFERENT SUBJECTS. The invocation as written has an empty subject set; the expectation names exactly one file. Run literally it returns rc=0 over a denominator of ZERO, which satisfies a rc-only reading of the criterion while checking none of py_compile, ds-precommit or ruff against anything. This worker ran BOTH arms and reported both, and grades the criterion on the arm whose subject is the one the <expect> names.",
+    "notes": "FORM, NOT SIGNIFICANCE: this row states the mismatch between an invocation and its expectation and takes no view on whether the criterion should have been cut differently. The worker did not edit the criterion (the order's REFUSAL CLAUSE forbids repairing one, and the task-order file is the issuer's cut). WHY ARMED RATHER THAN INERT: the invocation text survives in the order and is the kind of line a later cut copies; a bare 'bash .tools/commit-gate.sh' in any future order records a pass from an instrument that examined nothing, and nothing in the output or the exit code distinguishes it -- only the 'N of N' line does, and it is a WARN. DISARM, one limb: a citing row (or an amended criterion) carries the invocation with its subject argument."
+  }
+]
+```
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-W21-S3",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~21",
+    "surfaced_at": "2026-09-14T19:02Z",
+    "one_line": "THIS WORKER RAN A THIRD READ-ONLY SCAN OF etf-classifications WHERE THE PREFLIGHT DECLARED TWO. The order's comp-iam preflight reads 'the live table is READ (two scans) and never written'; V3-AC7 asks whether the fields the guard OWNS are the fields R1 WRITES, and the guard owns 'name', which the two declared scans do not project. A third scan (projection ticker + name) was run to ground the judgment on a value rather than an assumption. Read-only, same IAM posture, no write, no --upload.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE DECLARATION: TO-V3-1 <preflight> @8cad052620 'comp-iam: DECLARED-NOT-APPLICABLE -- no role, policy or Terraform touched; the live table is READ (two scans) and never written.'",
+        "WHAT WAS RUN: .tools/aws dynamodb scan --table-name etf-classifications --filter-expression 'ticker IN (:a,:b,:c,:d)' --projection-expression 'ticker, #n' --expression-attribute-names '{\"#n\":\"name\"}' --no-paginate --output json -> Count 4, ScannedCount 285, no LastEvaluatedKey, rc=0. A scan is a READ; no write API was called in this cell at all and --upload was never passed.",
+        "WHY THE TWO DECLARED SCANS COULD NOT ANSWER IT: both carry --projection-expression 'ticker, asset_class, sub_asset_class', so 'name' is absent from their results by construction. The mutant control's baseline sets name=<ticker> (a synthetic value), which is why its output shows name CONFLICTS -- reading the live value was the only way to tell whether that conflict is real or an artifact of the fixture.",
+        "WHAT IT SETTLED, and it is the reassuring answer rather than the alarming one: live name EQUALS the seeder's asserted name on 4 of 4 -- VXX 'iPath Series B S&P 500 VIX Short-Term Futures ETN', UVXY 'ProShares Ultra VIX Short-Term Futures ETF', QBER 'TrueShares Quarterly Bear Hedge ETF', PDBC 'Invesco Optimum Yield Diversified Commodity Strategy No K-1 ETF'. So the guard's ownership of 'name' raises NO spurious refusal for these members, and the fixture's name conflicts were an artifact.",
+        "THE IAM POSTURE IS UNCHANGED BY THE COUNT: three dynamodb:Scan calls need the identical permission one needs. What the third read changes is the stated NUMBER in the preflight, which is why this row exists rather than being folded silently into the result."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-V3-1 <preflight> comp-iam @8cad052620: 'the live table is READ (two scans) and never written' -- a stated count of two.",
+    "world_is": "THREE READS WERE TAKEN: the V3-AC6 before-scan, the V3-AC6 after-scan, and one further projection of ticker+name to ground V3-AC7. The 'never written' half of the declaration holds exactly and was verified by the before/after pair (4 of 4 rows identical, ScannedCount 285 both). The 'two scans' half is now three. Filed because a worker states what it had to do that its order did not say, and judges the form of that rather than whether it mattered.",
+    "notes": "NO REMEDY IS PROPOSED AND NONE IS NEEDED FOR THE ACT ITSELF -- the read is sound, bounded and disclosed in the result and in the proof instance. The row exists so the preflight's count and the cell's actual behaviour are reconciled in the record instead of diverging quietly. INERT: a read leaves nothing armed behind it."
+  }
+]
+```
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-W21-S4",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~21",
+    "surfaced_at": "2026-09-14T19:02Z",
+    "one_line": "THE SEEDER'S MODULE DOCSTRING NOW CONTRADICTS ITS OWN EXIT CONTRACT. The patch this cell applied makes a conflicting --upload --yang run exit 1 and adds a --force flag, but the docstring at :13-19 still reads 'Idempotent: attribute-preserving update_item upserts -- the seeder's own fields are overwritten ... Safe to re-run at any time' and its Usage block lists three invocations, none of them --force. A reader of the header learns neither that the run can refuse nor how to override it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE DOCSTRING AT ITS VINTAGE: data/black_diamond/scripts/classification/seed_canonical_securities.py:13-19 @8cad052620 -- 'Idempotent: attribute-preserving update_item upserts -- the seeder's own fields are overwritten, every field it does not own (rationale, firm_origin, management_style, sector, ...) survives.  Safe to re-run at any time.' followed by 'Usage:' listing the dry run, --upload, and --upload --yang.",
+        "THE CONTRACT IT DESCRIBES CHANGED IN THE SAME FILE, THIS COMMIT: seed() now returns int and __main__ ends 'raise SystemExit(seed(...))' (:347-351); a conflicting run returns 1 (:335-341); --force is parsed at :344-346.",
+        "MEASURED rc VALUES ON THE APPLIED BYTES, same input: guard path rc=1, --force rc=0, dry run rc=0. Pre-patch the function returned None and the script exited 0 unconditionally. So the exit code carries information it did not carry before, and the header does not mention it.",
+        "OPERATIONALLY INERT, MEASURED RATHER THAN ASSUMED: a corpus search for 'seed_canonical_securities' returns 27 files -- the script itself, 4 scratch artifacts of this cell, and 22 record-class files (task orders, decompositions, deliverables, proof instances, an investigations channel, a change-management record). ZERO are invocations: no scheduler, no CI step, no wrapper script calls it. Nothing automated can be broken by the new nonzero exit.",
+        "THE FIRST-MINT HALF OF THE DOCSTRING REMAINS TRUE and was re-measured this cell: 53 rows still MINTED under the guard, identical to the pre-patch arm, because an absent row returns no conflict."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-V3-1 THE CELL @8cad052620 directs this worker to apply the round-4 diff (u3_proposed_patch.diff, +57/-2) and its REFUSAL CLAUSE states that a criterion cannot be 'repaired, widened or satisfied by another route'. The diff's own content is +57/-2 and touches no line of the module docstring.",
+    "world_is": "APPLYING THE DIFF VERBATIM NECESSARILY LEAVES THE HEADER STALE, because the header was never in the diff. The file is now internally inconsistent at the one place a human reads first: the docstring promises an unconditional overwrite and an always-safe re-run, while the code refuses and exits 1. This is a consequence of the instruction, not a defect in it -- and it is exactly the kind of thing a worker must not fix on its own initiative, since editing the docstring would put bytes in the commit that the approved patch does not contain.",
+    "notes": "NOT EDITED, ON PURPOSE. The <paths> grant does include this file, so the edit was POSSIBLE -- it was declined because the cell's instruction is to apply a specific reviewed diff and prove it, and a worker that also rewrites the surrounding prose has widened its own order and made the applied bytes differ from the bytes round 4 measured (they are currently byte-identical, sha256 dde708491f6fa73d, which is itself a V3-AC1 corroboration this row would have destroyed). INERT: no caller exists, so nothing is harmed by future normal operation; the cost is to the next human reader. Whoever next opens this file under an order that grants it can align the header in one hunk."
+  }
+]
+```
