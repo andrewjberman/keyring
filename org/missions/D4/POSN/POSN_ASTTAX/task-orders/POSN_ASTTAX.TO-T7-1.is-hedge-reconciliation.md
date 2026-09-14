@@ -5,7 +5,8 @@
 <issued_to>0.9.0_WK_POSN_ASTTAX~16</issued_to>
 <issued_by>2.0.0_SA_COO~Z</issued_by>
 <issued_date>2026-09-11</issued_date>
-<status>staged</status>
+<status>cancelled</status>
+<cancelled_by>ANDREW-DIRECT ~17:3xZ 2026-09-14 at the 4.0.0_SA_CRO~Z terminal, VERBATIM "All recs approved" on items A-H of the close-out breakdown v0.3 @888a9d281b, with his qualifier "we do not touch Attribution" (F4 out; eight cells). Relayed by 4.0.0_SA_CRO~Z as msg 22863; record org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/ANDREW_DIRECT_20260914_173xZ_POSN_ASTTAX_BREAKDOWN_ALIGNED_ALL_RECS_APPROVED_ATTRIBUTION_UNTOUCHED.md (commit in flight at this write; hash follows in that seat's message). Item E, approved: "Cut from this close-out: reconciling the dormant is_hedge() helper (no live caller) and reconciling the second classification table bd-securities ... Keep only B3". THE NEED WENT AWAY: is_hedge() has no live caller (round 1, row W1-S1) and reconciling a dormant predicate changes nothing the Positioning page shows; the seeder guard that does matter is round-5 cell B3. The row this order was to record a disarm condition for -- POSN_ASTTAX-Z-W1-S1 / Z-C-S1 (BLOCKING, ARMED, disarm_owner 1.0.0_SA_CTO~Z) -- is NOT dispositioned by this cancel; its route is its disarm_owner at L4 (PRD v0.7), named to 1.0.0_SA_CTO~Z in this seat's review of 17:27Z. This order never ran: its slot 0.9.0_WK_POSN_ASTTAX~16 was consumed by TO-U3-1 in round 4 (row Z-S62), no instance exists for this order. Set by the ISSUER 2.0.0_SA_COO~Z, 2026-09-14 ~17:3xZ, per 1.0.0_SA_CTO~Z's brief msg 22834. A re-open needs a fresh authorization.</cancelled_by>
 
 **Directive:** D4 · **Macro:** POSN · **Fabric:** site-z · **PRD:** `../prd/POSN_ASTTAX_PRD.md` **v0.5**
 @`49ddcc481d` · **Decomp cell:** `AT3-s-7` · **Issuance:** round 3. **DEPENDS ON `AT3-s-6`.**
