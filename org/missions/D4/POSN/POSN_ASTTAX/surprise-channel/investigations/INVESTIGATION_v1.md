@@ -4326,3 +4326,36 @@ all seven mechanical criteria were measured and the verdict is NO-GO.
 }
 ]
 ```
+
+## Row appended by `0.0.0_AB_MSTR~Z` (site Z integrator), 2026-09-14 -- cross-fabric portal overlap
+
+One row, one fenced array, appended (never edited in place). Found while building the portal integration plan
+Andrew asked for (msg 22917); it concerns this project's portal files meeting an unpushed laptop line.
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-S93",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.0.0_AB_MSTR~Z",
+    "surfaced_at": "2026-09-14T21:00:57Z",
+    "one_line": "An UNPUSHED laptop portal line, feature/d13-visual-elevation (DSGN_REBRND, 37 commits ahead of origin/DEV), already modifies src/pages/Positioning/tabs/HoldingsTab.tsx and panels/PositioningSummary.tsx (plus Positioning.tsx). Two of those are files round 5's F2 cell edits from pin e85f6eb84f on refs/drains/posn-5-portal, so POSN's portal work WILL meet the rebrand at the cross-fabric integration merge. Nothing in round 5 is wrong today; the collision is latent and lands at a gated integration act, not in this round.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "LAPTOP SIDE, measured by 0.0.0_AB_MSTR on the laptop 2026-09-14 ~21:0xZ against base 5b959f63ca (agentbus message 8cd9dab4): the laptop's 420 local-only portal paths carry exactly 3 under src/pages/Positioning/, all on feature/d13-visual-elevation -- Positioning.tsx, panels/PositioningSummary.tsx, tabs/HoldingsTab.tsx. The IRPT_FNTEND DEV line touches none of them, and neither line touches src/api/portal-proxy.ts or src/lib/chartColors.ts. These are laptop-local refs and CANNOT be re-derived from site Z; the figures carry that seat's serial.",
+        "SITE-Z SIDE, measured by this seat 2026-09-14 ~21:0xZ with git -C portal: refs/drains/posn-5-portal 6c0deebd91 has merge-base e85f6eb84f with origin/DEV (2 ahead, 5 behind) and so far changes only src/lib/chartColors.ts (the F1 cell). The Positioning page files are untouched on it at this vintage.",
+        "F2's write surface naming HoldingsTab and PositioningSummary, AS RELAYED, not read in the decomposition file by this seat: 1.0.0_SA_CTO~Z msg 22837 ('F2 HoldingsTab/PositioningSummary/types five classes'); 2.0.0_SA_COO~Z msg 22887 (the decomposition @f381f6f402 gives satelliteAdapter.ts to F3 and the PositioningAllocation type in src/api/portal-proxy.ts to F2).",
+        "WHY INERT, not ARMED: the laptop line is unpushed; round 5 builds behind the portal freeze on its own drain ref; nothing merges or pushes on the portal until Andrew rules on the integration plan. The collision can only occur inside a gated merge act that does not yet exist."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The round-5 breakdown (1.0.0_SA_CTO~Z, relayed in msg 22837) scopes the Positioning page as the 14 files at portal pin e85f6eb84f, and cuts round 5's portal drain refs/drains/posn-5-portal from that pin, with F2 editing HoldingsTab and PositioningSummary.",
+    "world_is": "Those files are not only the pin's. A parallel, unpushed laptop rebrand line (DSGN_REBRND, feature/d13-visual-elevation) modifies HoldingsTab.tsx and PositioningSummary.tsx, plus Positioning.tsx. So F2's edits and the rebrand's edits land on the same two files from different bases, and meet at the cross-fabric portal integration.",
+    "notes": "Filed by the site-Z integrator, not a round seat, while building the portal integration plan Andrew asked for (msg 22917): org/tier0_exec/0.0.0_AB_MSTR~Z/deliverables/PORTAL_REPO_CROSS_FABRIC_INTEGRATION_PLAN_20260914.md. No act is asked of round 5 and nothing in it changes. Consumers: 1.0.0_SA_CTO~Z (L10 analysis, the next cut, and the plan's POSN leg) and 2.0.0_SA_COO~Z (the F2/F3 drain). Per-hunk BASE ranges get measured when the POSN integration leg is real; the plan already sequences POSN after its round-5 L10."
+  }
+]
+```
