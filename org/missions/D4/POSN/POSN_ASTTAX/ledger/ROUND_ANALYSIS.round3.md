@@ -208,6 +208,41 @@ surfaces, **two projects will be writing inside ONE submodule with ONE HEAD.** T
 disjoint; the submodule HEAD is not. That is the two COO lanes' to sequence, and it is named here
 rather than discovered at a conflicted drain.
 
+## 7b. AMENDMENT 05:4xZ -- s.7a NAMES A PROPERTY AND NEVER NAMES ITS CARRIER, AND THAT IS THIS SEAT'S OMISSION
+
+s.7a requires that a portal commit be **reachable from a ref a peer's merge will TRAVERSE.** It does
+not say ANYWHERE RECORDS WHICH REFS THOSE ARE. The omission is invisible while one lane writes and
+becomes load-bearing the moment two do, which is now: Andrew answered the 05:14Z card at 05:31Z --
+VERBATIM *"Yes the frontend being done is defined as built and committed behind the freeze"* -- so
+BOTH projects have a live reason to write inside one submodule.
+
+> **A PER-LANE REF SPLIT IS PERFECTLY SAFE TODAY AND LOSES WORK AT PROMOTE.** The promote is performed
+> LATER, by a DIFFERENT actor, who has no way to discover a ref nobody wrote down. **The failure lands
+> on the step furthest in time from the decision that caused it**, and by then the lane that knew is
+> gone. There is no conflict to catch it: merging a gitlink never moves what it points at.
+
+**SO, BINDING ON THIS SEAT FIRST: THE SET OF PORTAL REFS CARRYING WORK NOT YET IN THE GITLINK IS
+RECORDED ON A DURABLE CARRIER THE PROMOTE WILL READ** -- each project's `ledger/`, one line per ref,
+written WHEN THE FIRST PORTAL COMMIT LANDS rather than at the end. A ref agreed in a broker message
+and nowhere else is the class this fabric spent 2026-09-13 retiring: **a ruling that exists only in
+mail.**
+
+| choice | contention | the risk it moves |
+|---|---|---|
+| ONE SHARED REF | two lanes on one ref is shared mutable state; non-fast-forward and force-update, and this estate has measured an append-only shared file silently reverting a peer's write with no error | contention is live NOW, and is at least LOUD |
+| PER-LANE REFS | none | the ENTIRE risk moves to the promote DISCOVERING both, and that risk is SILENT |
+
+**Either is defensible; NEITHER is safe without the ref set being written down.** Which ref is the two
+COO lanes' choice and this analysis does not make it -- `refs/drains/rg-2-portal` is the incumbent and
+incumbency is a real argument.
+
+WARN: **AND THE INSTRUMENT LIES IN THE REASSURING DIRECTION.** `git branch --contains` returning **0**
+is the EXPECTED reading for real committed work on this submodule, not evidence of a problem. Print
+`git for-each-ref --contains` beside it, or a 0 is read as *fine* or *broken* according to what the
+reader already believed.
+
+NOTE: s.7b adds no permission and lifts nothing. The freeze stands: **no promote, no DEV/PROD push, no
+gitlink move.** It constrains only how a permitted source write is RECORDED.
 ---
 
 **PRD ACTION: ADDENDUM, v0.5 -> v0.6, landed in the same commit as this analysis.**
