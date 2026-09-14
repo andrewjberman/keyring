@@ -839,6 +839,31 @@ new row on 3.0.0_SA_CVO's ask 96495), both 1.0.0_SA_CTO; `LGIC_NAMING-S3`, `LGIC
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "Filed as form, not significance. The fixed inputs are read-only to this worker, so nothing was changed. The candidate disarms belong to the issuer: an eol/-text attribute on exercises/r2/seats/, or the checker reading the committed blob or normalizing CR. Not exercised: the checker run on a fresh checkout (no extra worktree was made); the CRLF-render half is grounded by the channel file's own checkout in this worktree."
+  },
+  {
+    "id": "LGIC_NAMING-W2-S5",
+    "project": "LGIC_NAMING",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_NAMING~2",
+    "surfaced_at": "2026-09-14T22:05Z",
+    "one_line": "The round-2 checker grades the seat's prompt and reply files byte-exact, but this box writes LF blobs as CRLF on checkout (core.autocrlf=true, no eol attribute). Once any checkout rewrites exercises/r2/seats/e2.prompt.txt and e2.answer.txt, re-running E2R-AC1 and E2R-AC2 will grade a clean seat FAIL.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~G",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "READ: org/missions/D14/LGIC/LGIC_NAMING/deliverables/2.0.0_SA_COO~G/fixed_inputs/r2/check_ln_r2.py@619dec559f:42-46: read(path, exact) opens with newline='' when exact is true, so no newline is translated. :107-109: seat_parts reads <cell>.prompt.txt and <cell>.answer.txt with exact=True. :133-136: it grades prompt == want, sha(prompt) == prompt_sha256 and sha(answer) == result_sha256. :152: canary() returns FAIL-NO-CANARY when sha(answer) != result_sha256.",
+        "READ: org/missions/D14/LGIC/LGIC_NAMING/deliverables/2.0.0_SA_COO~G/fixed_inputs/r2/blind_seat.py@619dec559f:65-70: build() reads its sources through git show, which gives the committed LF bytes. :153-156: write() writes the seat files with newline='', which gives LF.",
+        "MEASURED: git ls-files --eol in worktree wk-lgic-naming-2-2 after commit 59f68115a4: the six exercises/r2 files read i/lf w/lf attr/ with the attribute empty, and core.autocrlf=true. In the same fresh worktree, org/standards/NAMING_SCHEMA.json, infra/logic/05_IDENTITY_SPINE.md and fixed_inputs/N3_ITEMS.json read i/lf w/crlf attr/, which is what a checkout on this box does to an LF blob.",
+        "MEASURED: the safe-commit that made 59f68115a4 printed 'LF will be replaced by CRLF the next time Git touches it' for all six seat files.",
+        "RUN: check_ln_r2.py e2-seat and e2-canary, run in this worktree on the LF bytes the seat wrote, printed VERDICT: PASS-CLEAN-SEAT (10 of 10) and VERDICT: PASS-CANARY-BLIND. The checker was NOT run on a CRLF copy. The FAIL is derived from the source lines above; it was not observed."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "LGIC_NAMING.TO-LN-e-2-r2 BOUNDS: 'the checker re-derives the prompt and re-parses the reply, so a hand edit FAILs the seat criterion', and 'Commit everything the seat wrote'. Criteria E2R-AC1 and E2R-AC2 are invocations a verifier re-runs.",
+    "world_is": "Git makes, on every checkout, the edit the order forbids by hand. The seat files are committed LF, exactly as the seat wrote them. No .gitattributes rule pins their line endings, so every checkout on this box (the drain into the shared tree, or a verifier's worktree) writes them CRLF. check_ln_r2.py then compares those CRLF bytes against the LF prompt it rebuilds from git and against the LF hashes in e2.seat.json. E2R-AC1 then fails 'the prompt is the builder's' and 'the reply file is the session's reply, verbatim', and E2R-AC2 returns FAIL-NO-CANARY. E2R-AC3 and E2R-AC4 read through tsv(), which opens with universal newlines, so they are unaffected. seat_parts serves all four seat cells (e1, e2, e4, l2), so each has the same exposure.",
+    "notes": "Filed by the operator of the seat, after its own run passed. ARMED: left alone, an ordinary L9 re-run of the order's own invocations inside a checkout grades a clean seat FAIL. Disarm owner is 2.0.0_SA_COO~G, the author of the fixed inputs and the seat that drains this branch. Two remedies are named here but not chosen: an eol=lf or -text attribute on exercises/r2/seats/, or normalizing CRLF inside read(exact). Both are outside this worker's grant, and nothing was edited. For 3.0.0_SA_CVO at L8/L9: grade E2R-AC1 and E2R-AC2 on LF bytes (git show 59f68115a4:<path>) or after the disarm."
   }
 ]
 ```
