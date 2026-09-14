@@ -5237,6 +5237,198 @@ Andrew asked for (msg 22917); it concerns this project's portal files meeting an
   "spec_asserts": "TO-V7-1 V7-AC6 @4e81f4e1c1: 'the page shows an error notice, not \"no holdings\" -- the honest branch. If the adapter renders an empty satellite instead, the fallback that was removed @24a8435642 has been re-created one layer up: STOP and fix it in this cell.'",
   "world_is": "The error notice is shown and no empty satellite is rendered, so the criterion's named STOP condition is absent. The phrase 'no holdings' is nevertheless on the page, from a panel placeholder that predates this cell and lives outside its <paths>.",
   "notes": "V7-AC6 is recorded PASS on its stated discriminator with this coexistence disclosed rather than omitted. Suppressing the panel placeholder when a mode-level error notice is present would be a HoldingsTab.tsx or Positioning.tsx edit and is a different cell's."
+},
+{
+  "id": "POSN_ASTTAX-Z-S109",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T23:36:13Z",
+  "one_line": "DISARM of W22-S16 (BLOCKING): V7-AC5's GLD clause ('under the Commodities bucket') was written for the post-R1 world while its VXX clause was written across the boundary; the table serves GLD as hedge/Gold until R1 and F2's HoldingsTab excludes every class outside the ratified five by design, so GLD renders in no bucket (15 of 16 rows; visible subtotals 91.66 under a grand total of 100.00). RE-CUT: V7-AC5 reads the PRE-R1 state with the exclusion counted and named (rendered == the rows whose served class is ratified; the gap equals the excluded weight); the 16-of-16 render with GLD under Commodities / Metals is V8-AC10's bar after the retag. The transition-window exposure Z-S101 named is now MEASURED live on the Satellites mode and is closed by R1 inside the round.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE ISSUER'S DEFECT: one clause of a criterion written on the wrong side of the R1 boundary; the ordering V7 -> V8 is load-bearing (V8-AC1 reads V7 complete) so the fix is to grade V7 on what the world serves before R1 and let V8-AC10 grade the retagged render.",
+      "NOT DONE, STATED: an UNMAPPED bucket in HoldingsTab (a rendering the spec does not name, in F2's file) -- carried for the round analysis with Z-S101; the page is behind the freeze and R1 lands in this round.",
+      "WHY GRADUATED: the re-cut discriminates on the pre-R1 state with the excluded rows counted; nothing served or rendered is wrong about the world."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W22-S16"
+  ],
+  "spec_asserts": "TO-V7-1 V7-AC5 @4e81f4e1c1: GLD 8.34 under the Commodities bucket; served rows == rendered rows.",
+  "world_is": "holdings.json (BRjqyqnB0pIdLUHOvDY3B_Sh9b0EXIPw) serves GLD hedge/Gold; HoldingsTab.tsx:239/:1438 drops the group; GLD paints grey in the treemap and is absent from the table; V7 gates R1 so the criterion could not be met before the cell it precedes.",
+  "notes": "A render bar on a page that gates the retag is cut on the pre-retag served state, with the post-retag bar on the retag's own order."
+},
+{
+  "id": "POSN_ASTTAX-Z-S110",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T23:36:13Z",
+  "one_line": "DISARM of W22-S17 (BLOCKING, ARMED): the ordered tightening of the three class keys to required breaks exactly one site, etfAdapter.ts:134 (EtfPositioningBook.allocation is a separate inline four-key type; the ETF payload is pre-B1), a file outside V7's grant that V7-AC2 required unchanged -- so V7-AC2 and V7-AC4 could not both hold and the branch was left not typechecking, as the refusal clause requires. RULED: etfAdapter.ts enters V7's <paths> for exactly ONE hunk at :134 (`allocation: { ...ZERO_ALLOCATION, ...(book.allocation ?? {}) }`, the honest read of a pre-B1 payload since ZERO_ALLOCATION already carries the five keys); the tightening STAYS (its purpose was to make tsc name that site); V7-AC2 reads five files.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE ISSUER'S DEFECT, THE SECOND TIME ON THIS TYPE: Z-S100 admitted the optional shape because satelliteAdapter constructed literals; the same check on etfAdapter (which the hand-over said carried the five-class zero -- true of ZERO_ALLOCATION, not of the book's own allocation literal) was not run before ordering the tightening. The worker performed the ordered act and refused rather than routing around; the branch at ea64113ba9 is NOT advanced onto the drain ref until it typechecks.",
+      "WHY GRADUATED: one hunk, one file, inside the cell's purpose (the ETF read becomes honest for a pre-B1 payload), and V7-AC4 stays the bar."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W22-S17"
+  ],
+  "spec_asserts": "TO-V7-1 hand-over facts (a) and V7-AC2/V7-AC4: the tightening is one line and tsc names every site that owes the keys; etfAdapter.ts unchanged; tsc exit 0.",
+  "world_is": "tsc exits 2 on exactly one line (etfAdapter.ts(134,7) TS2739); with the hunk reverted, exit 0 over 481 files; the positive control fired on the cell's own file.",
+  "notes": "A type tightening is ordered with the compiler's own enumeration run first on every consumer, not on the ones the issuer remembers."
+},
+{
+  "id": "POSN_ASTTAX-Z-S111",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T23:36:13Z",
+  "one_line": "DISARM of W22-S18 (INERT): the Satellites mode's fetch wiring lives in Positioning.tsx:412/:437 (outside V7's grant), so the two new reads could not receive their own query keys and are COMPOSED inside getSatelliteRegistry() -- the preflight's own open item (1), answered by measurement. ACCEPTED as the cell: the ordered contract (throw on malformed, as_of required, no fallback) holds for both reads (V7-AC6 proves it: 3 of 3 forced 503s throw, the notice renders, zero satellites render); the stated cost -- a holdings outage reads as a registry outage in the notice -- is carried for the round analysis with the Positioning.tsx copy items (Z-S115).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "WHY NOT WIDENED NOW: Positioning.tsx is the page's root and carries the mode switch, the hidden-satellite filter and the copy; giving F3 that file mid-round widens a cell whose bars all pass without it. The round analysis names the wiring and the notice text together.",
+      "WHY GRADUATED: the contract the cell ordered is met and proved on the failing arm."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W22-S18"
+  ],
+  "spec_asserts": "TO-V7-1 preflight (1): if the mode's entry point is outside the three files, that is a row and a grant question.",
+  "world_is": "Every call site is in Positioning.tsx (7 hits across 557 files); the adapter is synchronous; the only awaited seam in the grant is the registry query; all three scoped URLs are fetched once per load.",
+  "notes": "The next cut that adds a served read names the page's query wiring in the grant or names the composition explicitly."
+},
+{
+  "id": "POSN_ASTTAX-Z-S112",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T23:36:13Z",
+  "one_line": "DISARM of W22-S19 (INERT): V7-AC5 expected nine selectable satellites; eight are, because Opal Satellite 98 is hidden by SATELLITES_HIDDEN_FROM_DISPLAY (Positioning.tsx:156, applied :434; ETFS_SATELLITES.TO-10-DE AC1, a ruled display filter that predates the round). Nine are served, nine are adapted. V7-AC5 and V8-AC10 re-cut to eight selectable with the ninth read through the adapter probe.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE ISSUER'S DEFECT: the issuer counted the registry and not the page's filter. The filter is a ruled prior act and is not touched.",
+      "WHY GRADUATED: both bars now count what the page can show and read the ninth where it exists."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W22-S19"
+  ],
+  "spec_asserts": "V7-AC5 and V8-AC10: nine satellites selectable / all nine read.",
+  "world_is": "registry.json lists nine; the adapter returns nine; the DOM enumerates eight tabs in both arms.",
+  "notes": "A count bar on a page is cut on the page's own filters, read at the pin."
+},
+{
+  "id": "POSN_ASTTAX-Z-S113",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T23:36:13Z",
+  "one_line": "DISARM of W22-S20 (INERT): V7-AC5's 'the as-of shown is holdings.json's date' names a rendering the page does not have -- no date renders in any mode (0 hits for a year pattern over the whole body text in both modes; satellites register nothing to useYangDataAsOf by a stated rule; PER_BOOK_AS_OF is false for all three modes). The cell's half (the adapter's as_of is holdings.json's, 2026-09-14) is met and measurable from the probe; V7-AC5 and V8-AC10 re-cut to read it there.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE ISSUER'S DEFECT: 'shown' presumed a date display the page never had. Whether the Positioning page should show the served as-of is a product question for the round analysis, not a render bar.",
+      "WHY GRADUATED: the measurable half is measured; the unmeasurable word is removed from both bars."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W22-S20"
+  ],
+  "spec_asserts": "V7-AC5: the as-of shown is holdings.json's date; THE CELL: its as_of is holdings.json's.",
+  "world_is": "The payload carries it (data_as_of = as_of_date = 2026-09-14 on all nine); the page displays no date anywhere.",
+  "notes": "A 'shown' clause is cut only after the issuer has read the element that shows it."
+},
+{
+  "id": "POSN_ASTTAX-Z-S114",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T23:36:13Z",
+  "one_line": "DISARM of W22-S21 (INERT): the satellites producer serves snake_case class ids (fixed_income, equity, hedge) while the models/ETF producers and the holdings table use PRD display names (Fixed Income, Equity); a faithful pass-through of the served TOKEN would have rendered nothing (177 of 177 rows dropped by ASSET_CLASS_ORDER, silently). The adapter's SERVED_CLASS_DISPLAY -- a transliteration over the ratified five plus cash plus the transitional hedge, unknown tokens verbatim, null to the disclosed Unlabelled bucket -- is ACCEPTED as 'as served': the served CLASS in the renderer's vocabulary, never a re-classification.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "WHY ACCEPTED: the alternative (render nothing) is the silent-drop defect one level up; the transliteration is stated in the file as such and maps the ratified five only. After R1 the table serves structured / commodities / alternatives in the generator's spelling and the same map carries them.",
+      "FOR THE ROUND ANALYSIS: one vocabulary for the class property across producers (the generator's snake_case is the stored spelling per THE CELL of V8; the display names are the page's) -- a producer-side display_name or a shared map, not a per-consumer transliteration."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W22-S21"
+  ],
+  "spec_asserts": "TO-V7-1 THE CELL: asset_class / sub_asset_class as served.",
+  "world_is": "Two vocabularies for one class across three served artifacts; the renderer already carried a hand-written both-spellings case for Fixed Income in its sort (:628-629).",
+  "notes": "The producers' class vocabulary is one item for the next round; the transliteration is the honest bridge this round."
+},
+{
+  "id": "POSN_ASTTAX-Z-S115",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T23:36:13Z",
+  "one_line": "DISARM of W22-S22 (INERT): four pieces of copy and reasoning outside V7's grant still describe the removed blend -- the on-screen mode subtitle ('each a weighted blend of Opal model portfolios', Positioning.tsx:123-125), the unresolved notice (:617-620, unreachable today), and two bookSet.ts rationales whose VALUES stay correct. Carried for the round analysis as one copy item with Z-S111's wiring; not widened mid-round.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "WHY NOT WIDENED: the subtitle is user-visible copy in the page root; changing it is a one-line act the round analysis can name with the wiring and the notice text; nothing it says changes a number.",
+      "WHY GRADUATED: recorded with its sites; the values behind the stale rationales are measured correct against the served rows."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W22-S22"
+  ],
+  "spec_asserts": "TO-V7-1 THE CELL removes the blend; <paths> carries four files.",
+  "world_is": "The blend is removed from the adapter; the subtitle renders the old claim on every satellites view; the notice is unreachable (unresolved empty, 9 of 9); the bookSet rationales are stale text over still-correct values.",
+  "notes": "A cell that removes a mechanism names the copy that asserts it, or the analysis does."
+},
+{
+  "id": "POSN_ASTTAX-Z-S116",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T23:36:13Z",
+  "one_line": "DISARM of W22-S23 (INERT): V7-AC6's phrase 'an error notice, not \"no holdings\"' -- under the forced failure the page shows the error notice AND the two panels' pre-existing 'No holdings data available' placeholder beneath it (HoldingsTab.tsx:1120/:1200, fired by a null payload in every mode). The criterion's STOP condition (an empty satellite rendered) is not met: zero tabs, zero rows, the notice present; the positive control shows 15 rows, 8 tabs, zero notices. V7-AC6 PASS stands; the phrase is the issuer's imprecision, recorded.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "WHY GRADUATED: the discriminating clause (no empty satellite; the read throws; the notice renders) is met on both arms with a positive control; the placeholder is a panel property the round analysis may name with the other copy items."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W22-S23"
+  ],
+  "spec_asserts": "V7-AC6: the read throws and the page shows an error notice, not 'no holdings'.",
+  "world_is": "Both strings are on the page; the notice is the adapter's honest branch; the placeholder is the panels' own empty state outside the grant.",
+  "notes": "A negative-control bar names the ELEMENT that must not render, not a phrase that may appear elsewhere on the page."
 }
 ]
 ```

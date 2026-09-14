@@ -68,6 +68,23 @@ failed URL stays failed even when fixtured -- read `ui-smoke.mjs:160-200`), neve
 (`benchmarks.etf.<class>.label`) and B1's five-class keys are live on `positioning_data.json` once ~19's driven refresh lands;
 state which VersionId your fixtures carry.
 
+**SECOND HAND-OVER (~23:3xZ, after your first run; rows W22-S16..S23, issuer rows Z-S109..Z-S116):** 6 of 8 criteria stand as
+recorded (portal ea64113ba9 on `wk-posn-5-22c-portal`; workspace 83f5745f57). Two change. (a) `V7-AC4` vs the tightening (W22-S17):
+`etfAdapter.ts:134` assigns `EtfPositioningBook.allocation` (a separate inline four-key type, the ETF payload still pre-B1) to
+`PositioningAllocation`; `portal/src/pages/Positioning/shared/etfAdapter.ts` now enters your `<paths>` for EXACTLY ONE hunk at `:134`:
+`allocation: { ...ZERO_ALLOCATION, ...(book.allocation ?? {}) }` (the honest read of a pre-B1 payload; `ZERO_ALLOCATION` already
+carries the five keys) -- the tightening STAYS, its purpose was to make `tsc` name that site; `V7-AC2` reads FIVE files. (b) `V7-AC5`
+was written across the R1 boundary for VXX and not for GLD (W22-S16): the table serves GLD as `hedge`/`Gold` until R1, and
+HoldingsTab excludes every class outside the ratified five by F2's design, so GLD cannot render in a bucket before R1; the criterion
+is re-cut to the PRE-R1 served state with its exclusion COUNTED and NAMED; the post-R1 render (16 of 16, GLD under Commodities /
+Metals) is `V8-AC10`'s bar. Also measured and adopted (W22-S19, W22-S20): EIGHT satellites are selectable (Opal Satellite 98 is
+hidden by `SATELLITES_HIDDEN_FROM_DISPLAY`, Positioning.tsx:156, ETFS_SATELLITES.TO-10-DE, outside this cell; nine served, nine
+adapted) and the page renders NO date in any mode, so the as-of bar reads the ADAPTER's `as_of` from your probe. RULED, your in-grant
+acts (Z-S111, Z-S114): the two reads composed inside `getSatelliteRegistry()` (the wiring is in Positioning.tsx, outside the grant)
+and the `SERVED_CLASS_DISPLAY` transliteration (snake_case served tokens to the renderer's display names, never a classification)
+stand. RE-RECORDED on this face: `V7-AC2`, `V7-AC4`, `V7-AC5`; then the status flip. After every commit re-pin every
+PENDING-THIS-COMMIT row and validate STAGED (Z-S105).
+
 ### REFUSAL CLAUSE
 
 A criterion you cannot satisfy as written is REFUSED with its measurement, never repaired, widened or satisfied by another route.
@@ -81,13 +98,13 @@ ONE row per off-cell finding, `POSN_ASTTAX-Z-W22-S<k>` (continue your sequence),
 
 <criterion id="V7-AC1" cell_refs="AT5-s-7"><invocation>timeout 60 bash -c "for t in TO-V2-1 TO-V4-1 TO-V9-1; do f=\$(ls org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.\$t.*.md); printf '%s ' \$t; grep -o -m1 '<status>[^<]*</status>' \$f; done"</invocation><expect>all three read `complete` at HEAD, and `git -C portal show refs/drains/posn-5-portal:src/api/portal-proxy.ts` carries the five-key PositioningAllocation (TO-V6-1 drained). Any other reading: STOP with a row.</expect></criterion> `V7-AC1` -- FOUR DEPENDENCIES, READ BACK.
 
-<criterion id="V7-AC2" cell_refs="AT5-s-7"><invocation>timeout 60 git -C portal diff --stat refs/drains/posn-5-portal -- src/pages/Positioning src/api/endpoints/satelliteRegistry.ts src/api/portal-proxy.ts</invocation><expect>exactly four files changed: shared/satelliteAdapter.ts, shared/satelliteSet.ts, src/api/endpoints/satelliteRegistry.ts, and src/api/portal-proxy.ts with ONE hunk (the three class keys tightened from optional to required on PositioningAllocation; hedge? stays optional); etfAdapter.ts and bookSet.ts UNCHANGED (0 lines); nothing under src/pages/Attribution/.</expect></criterion> `V7-AC2` -- FOUR FILES, MODELS AND ETFS UNTOUCHED.
+<criterion id="V7-AC2" cell_refs="AT5-s-7"><invocation>timeout 60 git -C portal diff --stat refs/drains/posn-5-portal -- src/pages/Positioning src/api/endpoints/satelliteRegistry.ts src/api/portal-proxy.ts</invocation><expect>exactly five files changed: shared/satelliteAdapter.ts, shared/satelliteSet.ts, src/api/endpoints/satelliteRegistry.ts, src/api/portal-proxy.ts with ONE hunk (the three class keys tightened from optional to required on PositioningAllocation; hedge? stays optional), and shared/etfAdapter.ts with ONE hunk at :134 (`allocation: { ...ZERO_ALLOCATION, ...(book.allocation ?? {}) }` -- the site the tightening names, W22-S17); bookSet.ts UNCHANGED (0 lines); nothing under src/pages/Attribution/; the unscoped `git -C portal status --porcelain` shows the same five and nothing else.</expect></criterion> `V7-AC2` -- FIVE FILES, THE ETF READ MADE HONEST, MODELS AND ETFS OTHERWISE UNTOUCHED.
 
 <criterion id="V7-AC3" cell_refs="AT5-s-7"><invocation>timeout 60 comp-read portal/src/pages/Positioning/shared/satelliteAdapter.ts --enumerate 'blendByIndex|weighted|renormal|current_holdings|positioning_data'</invocation><expect>ZERO hits for blendByIndex / renormal / positioning_data in the Satellites path (the ENUMERATE denominator printed); any remaining 'weighted' hit is a comment or a display aggregation over served rows, each cited by line. The adapter computes no holding.</expect></criterion> `V7-AC3` -- NO COMPUTATION IN THE ADAPTER, MEASURED BY ENUMERATION.
 
 <criterion id="V7-AC4" cell_refs="AT5-s-7"><invocation>timeout 600 bash -c "cd portal && bun run tsc -b"</invocation><expect>exit 0 with the checked-file count; POSITIVE CONTROL: an injected type error fails the same command, then reverted.</expect></criterion> `V7-AC4` -- THE BUILD, WITH AN INSTRUMENT THAT CAN FAIL.
 
-<criterion id="V7-AC5" cell_refs="AT5-s-7"><invocation>timeout 600 bash -c "cd portal && node scripts/ui-smoke.mjs positioning .scratch/v7_satellites.png --port <PORT> --fixtures <FIXTURES> --click 'Satellites'"</invocation><expect>the fixtures file built from the SERVED bytes and never hand-written (s3api get-object of platinum/satellites/registry.json, holdings.json and characteristics.json on opal-data-cot, plus the positioning keys the page also fetches, keyed by the URL substrings the page requests; each key's VersionId printed beside the file); the Satellites mode screenshot READ: nine satellites selectable; `Opal Satellite 15` shows GLD at 8.34 under the Commodities bucket (its sub-asset as SERVED -- 'Gold' before R1, 'Metals' after; state which); `Opal Satellite 80` shows VXX at 1.87 under the class the table SERVES (equity before R1, Structured after; state which); the as-of shown is holdings.json's date; served rows == rendered rows for the satellite you read (count both).</expect></criterion> `V7-AC5` -- THE RENDER, READ, AGAINST THE SERVED KEYS.
+<criterion id="V7-AC5" cell_refs="AT5-s-7"><invocation>timeout 600 bash -c "cd portal && node scripts/ui-smoke.mjs positioning .scratch/v7_satellites.png --port <PORT> --fixtures <FIXTURES> --click 'Satellites'"</invocation><expect>the fixtures file built from the SERVED bytes and never hand-written (s3api get-object of platinum/satellites/registry.json, holdings.json and characteristics.json on opal-data-cot, plus the positioning keys the page also fetches, keyed by the URL substrings the page requests; each key's VersionId printed beside the file); the Satellites mode screenshot READ, PRE-R1 (the table still serves the original labels): EIGHT satellites selectable (Opal Satellite 98 hidden by the page's display filter; nine served, nine adapted -- print the adapter probe's count); for `Opal Satellite 15` and `Opal Satellite 80`: served rows N, rows whose served asset_class is one of the ratified five M, rendered rows == M (the excluded rows NAMED with their served class and weight -- GLD `hedge` 8.34 / 2.11 -- and the visible-subtotals-vs-grand-total gap EQUAL to their weight, printed), VXX 1.87 rendered under the class the table serves (Equity / Volatility pre-R1; Structured / Hedge after) -- state which; the adapter's `as_of` (from the probe) EQUALS holdings.json's served as_of (the page renders no date, W22-S20). GLD under Commodities / Metals with rendered == served is V8-AC10's bar after R1, not this one's.</expect></criterion> `V7-AC5` -- THE RENDER, READ, AGAINST THE SERVED KEYS, PRE-R1.
 
 <criterion id="V7-AC6" cell_refs="AT5-s-7"><invocation>timeout 300 node -e "<NEGATIVE_CONTROL_POINT_GETSATELLITEHOLDINGS>"</invocation><expect>the read THROWS (the 404 unknown_satellites_resource envelope is not turned into an empty satellite) and the page shows an error notice, not "no holdings" -- the honest branch. If the adapter renders an empty satellite instead, the fallback that was removed @24a8435642 has been re-created one layer up: STOP and fix it in this cell.</expect></criterion> `V7-AC6` -- A FETCH FAILURE IS NOT AN EMPTY SATELLITE.
 
@@ -108,6 +125,7 @@ portal/src/pages/Positioning/shared/satelliteAdapter.ts
 portal/src/pages/Positioning/shared/satelliteSet.ts
 portal/src/api/endpoints/satelliteRegistry.ts
 portal/src/api/portal-proxy.ts
+portal/src/pages/Positioning/shared/etfAdapter.ts
 </paths>
 
 <decomp_ref>
