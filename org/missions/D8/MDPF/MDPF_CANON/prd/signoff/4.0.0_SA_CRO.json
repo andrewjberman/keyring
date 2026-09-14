@@ -1,11 +1,12 @@
 {
   "prd": "MDPF_CANON_PRD.md",
-  "prd_version": "v2.1",
-  "prd_pin": "6ab0a19bd4b1f6cd97a189c4bc7e82a095746518",
+  "prd_version": "v2.2",
+  "prd_pin": "ef21e346608974de3611bd69ee36a1a110a6b355",
   "half": "brief",
-  "half_hash": "f5b7d07ad26a12532ffe528c320da97616800d5f8a8346c166ea765708c2de70",
-  "verdict": "SIGNED",
-  "review_ref": "docs/briefs/sources/MDPF_CANON_L4_BRIEF_REVIEW_v2_1_20260914.md@f44f70c06949da7cc37b27a68756d528143ed40c",
+  "half_hash": "8a3ec329c64f91791cac44a01904966a3e53ee651d894e462165e93b671a6ade",
+  "verdict": "REFUSED",
+  "review_ref": "docs/briefs/sources/MDPF_CANON_L4_BRIEF_REVIEW_v2_2_20260914.md@436c1da148eaac553f38b0c9cf4db6d762edd135",
   "signed_by": "4.0.0_SA_CRO",
-  "signed_at": "2026-09-14T09:12:58Z"
+  "signed_at": "2026-09-14T10:01:17Z",
+  "reason": "R4: M6 and PATHS require new root-code packaging, but CONTRACTS and DEC-15 require the five-segment builder for those addresses; reconcile construction per artifact or hold for owner resolution."
 }
