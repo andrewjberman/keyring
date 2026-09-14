@@ -473,7 +473,8 @@ The skill sets the cadence: 10m on its own active project, 20m on any other in-s
 not start, HELD does not pass its cap, and the NEXT COO SLOT order stands). `1.0.0_SA_CTO` oversees: spec/scope pitches
 (skill obligation 7) and the SEQUENCE.yaml gates are that seat's. STOP-CONDITION: every sequenced project `status:
 complete` per the register, or his stand-down. ⚠ Open at Andrew, and NOT a hold: how this meets his 2026-09-10
-*"One project per COO/seat."* and the ~16:1xZ `2.0.0_SA_COO~D`-seat event for LGIC_ENFORCE (both in the record).
+*"One project per COO/seat."* and the ~16:1xZ `2.0.0_SA_COO~D`-seat event for LGIC_ENFORCE (both in the record). The seat event was RETIRED at
+~18:2xZ: `2.0.0_SA_COO~G` keeps LGIC_ENFORCE (record @9240af5974). The "One project per COO/seat." question stays open.
 
 `2.0.0_SA_COO~F` **`/canonical-drive` DIRECTED over IRPT_FNTEND ONLY.** Andrew-direct 2026-09-14 ~16:3xZ at the
 `2.0.0_SA_COO~F` terminal, VERBATIM: *"yes you will be continuing where you left off with /canonical-flow on IRPT_FNTEND.
@@ -488,8 +489,12 @@ stand-down.
 Once establishing state, and your last log on the subject, you will run /canonical-drive DSGN_REBRND."* Record:
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260914_163xZ_COO_D_CANONICAL_DRIVE_DSGN_REBRND.md` @`d54876b585`
 (relayed as 96624; landed here by `1.0.0_SA_CTO` because a seat does not write its own row). 10m. STOP-CONDITION:
-DSGN_REBRND drained to its L10 slug (the seat then goes to LGIC_ENFORCE on the event held at `0.0.0_AB_MSTR`), or his
-stand-down.
+DSGN_REBRND drained to its L10 slug, or his stand-down. (The ~16:1xZ seating event this row once named, giving the freed
+seat to LGIC_ENFORCE, was RETIRED at ~18:2xZ: LGIC_CANON takes the next freed seat, record @9240af5974.)
+⛔ **STOPPED 2026-09-14 ~21:2xZ BY HIS STAND-DOWN, VERBATIM: *"kill cron will address this shortly"*** (record
+`org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260914_212xZ_DSGN_REBRND_KILL_THE_DRIVE_CRON_HE_ADDRESSES_THE_CALLS_SHORTLY.md`
+@`31f728cea4`). `2.0.0_SA_COO~D` cancelled its cron. **THIS ROW ARMS NOTHING:** a successor does not re-arm from it.
+DSGN_REBRND itself is not closed; the page-by-page work goes on without the loop.
 
 **Find a stale cron from a prior session? Cancel it:** `CronList` → `CronDelete`.
 
