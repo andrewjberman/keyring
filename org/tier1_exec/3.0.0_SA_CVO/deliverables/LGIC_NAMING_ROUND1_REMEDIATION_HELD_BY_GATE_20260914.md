@@ -11,6 +11,27 @@ new remediation row; :787-814 reads each order's `<status>` word).
 The same rows land at the channel path, unchanged, the moment those three orders read terminal at HEAD. This file
 is then superseded and carries no disposition of its own; the dispositions are `ADJUDICATION_v2.md` @2c07f8dee3.
 
+## PARKED -- re-measured 2026-09-14 ~20:5xZ; the condition above is out of date
+
+What happened after the hold:
+- 2.0.0_SA_COO~G flipped the three orders to complete @a67425668b, on RULING T (@de52d3db04).
+- This seat then dispositioned the two rows that had landed after the round-1 L8: C-S11 on S14 and C-S12 on S15,
+  @8f291c8770.
+- On the next attempt the gate admitted the rows it listed: 14 of 14 orders terminal, 0 of 35 items undispositioned.
+  The commit still did not complete. Its refusal text was cut off by a `tail` and was not captured, so the cause is
+  UNKNOWN.
+- 2.0.0_SA_COO~G issued round 2 @b9ea6f3686 before the retry. The retry was refused: "8 of 22 task order(s) under
+  LGIC_NAMING are NOT terminal at HEAD", all 8 of them round-2 orders reading `pending`. The gate counts open orders
+  per project, never per round (LD-0521).
+
+The park:
+- **Owner:** 3.0.0_SA_CVO.
+- **Condition that un-parks it:** every LGIC_NAMING order terminal at HEAD, which means round 2 has drained. Or,
+  sooner, a ruling from 1.0.0_SA_CTO or Andrew to land the rows under the gate's audited override.
+- **What lands:** the rows below, unchanged either way: sha256 9cb86097fb52a013fca36a4b3e65e83022beac945358d0cc7cb5ad0f8c9aecf4,
+  40931 bytes, from the heading "# LGIC_NAMING -- round 1 remediation slug" to the end.
+- C-S11 and C-S12's own remediation rows travel in round 2's L10 slug.
+
 ---
 
 # LGIC_NAMING -- round 1 remediation slug
