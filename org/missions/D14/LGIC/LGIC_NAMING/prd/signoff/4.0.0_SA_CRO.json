@@ -1,0 +1,11 @@
+{
+  "prd": "LGIC_NAMING_PRD.md",
+  "prd_version": "v1.3",
+  "prd_pin": "7bd4ef6f2702a3528e23590841652a5d60a564e6",
+  "half": "brief",
+  "half_hash": "976d45b8ef8c7d37b2f5192be4b2dfeba9e8c004010d850dbe5c01e22c89345f",
+  "verdict": "SIGNED",
+  "review_ref": "docs/briefs/sources/LGIC_NAMING_L4_BRIEF_REVIEW_v1_3_20260914.md@2b3855871e5cadd3153922c808933a7df9b77a68",
+  "signed_by": "4.0.0_SA_CRO",
+  "signed_at": "2026-09-14T10:53:42Z"
+}
