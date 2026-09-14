@@ -118,6 +118,76 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     "spec_asserts": "TO-EN-t-1 THE CELL: 'Grade each with the schema's rule ... Apply GRADING_RULE.md (LGIC_NAMING, merged) by its written steps and state which you used.'",
     "world_is": "The merged rule and the schema at the base disagree on at least two rulings: an AWS-fixed name is a RAISE in the rule and an exclusion in the schema, and FN1's verb form is in the schema and not in the rule. The census applied the rule as written, as ordered, and states both in TF_LABEL_CENSUS.md section 1.",
     "notes": "Not measured: how many canonical forms FN1 would change. check_en.py b1-agree grades EN-b-1's grade() against the rule's worked cases, so which of the two grade() follows decides these verdicts. INERT: nothing live moves on a grade."
+  },
+  {
+    "id": "LGIC_ENFORCE-W1-S1",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~1",
+    "surfaced_at": "2026-09-14T20:18Z",
+    "one_line": "The unscoped whole-segment carrier census finds 12,917 hand-kept firm carriers across 1,506 files outside DEC-5's eight definitions; this round's generated views cover only the eight.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CENSUS, exercised at HEAD fd9c9ca174: comp-find -i over the order's whole-segment pattern, 38 top-level pathspecs (the worktree minus .scratch and the .git pointer), --all -> 'DENOMINATOR: 189011 hit(s) across 32448 file(s) scanned in scope [corpus=all]'. Partition: 12,949 token-hit carriers + 176,062 excluded = 189,011, plus 4 definition-pattern carriers (row LGIC_ENFORCE-W1-S2). Record: org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/CARRIER_CENSUS.md, json keys carriers and outside_dec5_rows.",
+        "RULE, read: the carrier test is LGIC_ENFORCE_PRD.md@78128f29ea :266-277 -- a firm token in a string literal outside (a) the registry files, (b) a generated file, (c) a builder or lookup argument, (d) prose, comments and */tests/* fixtures is 'a HAND-KEPT CARRIER ... a second copy of a registry row'. (c) is empty at fd9c9ca174: lib/opal_naming.py does not exist yet.",
+        "NAMED EXAMPLES at fd9c9ca174: comp-constants.config.yaml (170 carrier lines; file_lanes and search_surfaces keyed by cot, bd, inf); .tools/comp-secrets:56, :58, :59 (the firm pattern PRD DEC-5 names at :239); data/mdpf/config/partner_roster.json and its copy infra/aws/lambda/opal-assets/opal-assets-daily-emitter/partner_roster.json; infra/aws/lambda/ci/lambda-source-map.json (340); org/projects/NFRA_GRAPHUNI/NFRA_GRAPHUNI.P1.d_s3key_firm_qualified.json (295; read by infra/aws/globgrph/extract_pipeline_cloud.py:280 and extract_gold_compute.py:31).",
+        "INSIDE DEC-5 FILES: 52 of the 12,917 sit in a DEC-5 file but outside its definition's span, for example data/assets/scripts/gold/runners_49f/perfrp_firm_pin.py:46-50 FOREIGN_FIRM_BUCKETS, a second firm map beside FIRM_TREES; they are listed and mapped to this row too."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO LGIC_ENFORCE.TO-EN-c-1: the hand-kept firm carriers are re-derived by an unscoped read, the eight DEC-5 definitions must be among them, and 'A carrier OUTSIDE those eight is listed AND filed as one surprise row. The generated views of this round cover only the eight, so an extra one is a finding, never a silent extension.' PRD DEC-5 (:224-240) names eight definitions and says at least one carrier outside them (comp-secrets) is already known.",
+    "world_is": "12,917 carriers across 1,506 files fall outside the eight definitions. Every one is listed in CARRIER_CENSUS.md's carriers and mapped to this row in outside_dec5_rows. They are filed as ONE row because they are one finding of one form, a hand-kept carrier this round's views do not generate; a row per carrier would be 12,917 rows with the same spec_asserts.",
+    "notes": "Form only: this row grades no carrier as wrong and says nothing about which must move. Repointing consumers that compute a firm's location in their own code is ADVI_FIRMBKTS FWD-3's (PRD DEC-5 :241). The count applies the PRD's context rule literally, so every firm-token string literal in code or config is counted, including S3 key and resource-name literals, and the population is wide; the named examples are the maps and lists in DEC-5's sense. INERT: nothing in this round moves these carriers, and they stand exactly as at fd9c9ca174."
+  },
+  {
+    "id": "LGIC_ENFORCE-W1-S2",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~1",
+    "surfaced_at": "2026-09-14T20:18Z",
+    "one_line": "Four of DEC-5's eight definitions carry no firm token on or within 3 lines of their definition line, so the ordered token census cannot find them; the census admits them as definition-pattern carriers and counts them as +4 in its hits.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CENSUS, exercised at fd9c9ca174: the whole-segment comp-find read has 0 hits within 3 lines of data/assets/scripts/gold/investor_reporting/directory_runner.py:170, data/assets/scripts/gold/investor_reporting/holdings_snapshot.py:145, infra/aws/lambda/investor-reporting/_authz/loaders.py:43 and data/assets/scripts/gold/runners_49f/perfrp_firm_pin.py:57 (the classifier's DEC-5 check printed 'carriers+-3: 0  token hits+-3: 0' for each of the four).",
+        "CODE, read at fd9c9ca174: firm_bucket_map() (directory_runner.py:170, holdings_snapshot.py:145) parses FIRM_CONFIG out of firm-config.mjs with a regex and holds no firm token itself; bucket_for (loaders.py:43) maps a tenant through the JSON held in the environment variable named by DIRECTORY_BUCKET_ENV, so its firm values are not in the file; resolve_firm (perfrp_firm_pin.py:57) resolves over FIRM_TREES at :33-42, whose tokens are 16 or more lines away.",
+        "CHECKER, read: check_en.py (fixed input, 2.0.0_SA_COO~G) c1_dec5 admits a carrier within 3 lines of each cited line (:246), and c1_partition requires len(carriers) + len(excluded) == denominator.hits (:253-256)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO EN-c-1: 'Read the repo for every firm long form ... as a WHOLE segment ... with comp-find'; 'Classify every hit'; 'The eight DEC-5 definitions ... must appear among your carriers'; 'hits equals the carriers plus the excluded.' PRD DEC-5 :238: 'Cell E1 first re-derives the whole carrier population by an unscoped read'.",
+    "world_is": "The token read yields 4 of the 8 definitions (firm_registry.json, FIRM_CONFIG and the two precommit maps). The other 4 are functions with no token at their definition. To satisfy both 'must appear among your carriers' and 'hits equals the carriers plus the excluded', the record admits the 4 as kind 'function' carriers at their cited lines, taken from the L5 definition-pattern re-measure (decomposition v1.1 @53d221f334 :67-76). It states hits = 189,015 = 189,011 token hits + 4, with denominator.token_hits and denominator.definition_pattern_additions carrying the two halves.",
+    "notes": "The token read and the definition-pattern read are two different instruments over one population, and the carrier population is not token-closed: a function that reads a map, a file or an environment variable carries the registry row without spelling a firm."
+  },
+  {
+    "id": "LGIC_ENFORCE-W1-S3",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~1",
+    "surfaced_at": "2026-09-14T20:18Z",
+    "one_line": "comp-find's default corpus reads a worker's untracked <WS>/.scratch/, so a census saved there is counted by the next census run (198,931 phantom hits here), and an :(exclude) pathspec scans 0 files instead of excluding one.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~G",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN 1, exercised at fd9c9ca174 with .scratch empty: a whole-word boundary pattern over the whole worktree -> 'DENOMINATOR: 374404 hit(s) across 32449 file(s)'; its --all output was saved to .scratch/census_all.txt (77,495,647 bytes).",
+        "RUN 2, exercised: the order's segment pattern over the whole worktree -> 'DENOMINATOR: 387942 hit(s) across 32450 file(s)'; parsing its --all listing, 198,931 of those hits are lines of .scratch/census_all.txt, that is, run 1's output.",
+        "EXCLUDE, exercised: the same pattern with the pathspec ':(exclude).scratch' -> 'DENOMINATOR: 0 hit(s) across 0 file(s) scanned in scope'.",
+        "RUN 3, exercised: the same pattern over 38 positive pathspecs (every top-level entry but .scratch and .git) -> 'DENOMINATOR: 189011 hit(s) across 32448 file(s)', equal to run 2 minus its .scratch hits (189,011).",
+        "STATE, read: git check-ignore .scratch/census_all.txt -> rc=1 (not ignored); .tools/comp-find@fd9c9ca174 docstring :60: 'untracked-not-ignored files IN scope. The boundary is the .gitignore, and only the .gitignore.'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Worker definition: 'Scratch: <your worktree>/.scratch/ only'. TO EN-c-1: 'Read the repo ... with comp-find (the estate's instrument; print its denominator line)'.",
+    "world_is": "Following both, the instrument's denominator includes the worker's own scratch output: the second run of the order's pattern printed 387,942 hits, 198,931 of them from the first run's saved output. The recorded census had to run over 38 explicit top-level pathspecs to keep .scratch out, because comp-find's :(exclude) form returns an empty scope rather than an exclusion.",
+    "notes": "ARMED: any census worker that saves comp-find output under .scratch/ and then reads again gets an inflated denominator that still prints as measured, and the file-count delta is 1 per saved file, which is easy to miss. This round's EN-t-1 and EN-s-1 are census cells. disarm_owner is this round's issuer, who seats workers under the .scratch convention. Candidate remedies, none taken here: a .gitignore entry for .scratch/, comp-find honouring exclude pathspecs, or a worker-definition line saying where to save census output. This census's recorded denominator is run 3's."
   }
 ]
 ```
