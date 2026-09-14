@@ -423,6 +423,30 @@ new row on 3.0.0_SA_CVO's ask 96495), both 1.0.0_SA_CTO; `LGIC_NAMING-S3`, `LGIC
     "spec_asserts": "TO LGIC_NAMING.TO-LN-e-2: name every N3 item from NAMING_SCHEMA.json v1.4 and 05_IDENTITY_SPINE.md only; the outcome is that two namers write the identical string for every item.",
     "world_is": "(1) i14: this worker wrote mdpf/mdpf/code/gold/mdpf-accrual-bridge.tar.gz (scope = the product, per the seed's R2); a namer reading 'shared across all firms' as GLOBAL writes mdpf/global/code/gold/mdpf-accrual-bridge.tar.gz. (2) i11: the Pathfinder ingest is the vendor integration, so system pathfinder with scope etfs: pathfinder-etfs-ingest-task; the product-as-system reading gives etfs-pathfinder-ingest-task or etfs-ingest-task. (3) i15: the item names the host 'the Orion runner', and orion is the only registry system that resolves for a host building Inflection's gold: orion-inf-build-gold-profile; a reading that denies a gold-building host the vendor slot finds no system in the seed and RAISEs.",
     "notes": "Form only. The schema text's owner is 1.0.0_SA_CTO; the registry rows (which products and subsystems exist) are LGIC_ENFORCE's under ruling (a) (NAMING_SCHEMA.json:18). For 3.0.0_SA_CVO at L8."
+  },
+  {
+    "id": "LGIC_NAMING-W5-S1",
+    "project": "LGIC_NAMING",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_NAMING~5",
+    "surfaced_at": "2026-09-14T16:53Z",
+    "one_line": "LN-l-3's L3-AC1 invocation (check_ln.py l3-correct) prints VERDICT: FAIL-MISREAD, not the expected PASS-ALL-CORRECT: 5 of 6 conforming N5 addresses are labeled as N5_KEY reads them, and the one miss is a3, the v1.3 code-tier specimen, which the reader marked DOES-NOT-FIT where the key reads bucket,source,scope,tier,table,partition.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "EXERCISED: cd .worktrees/wk-lgic-naming-1-5 && timeout 120 python org/missions/D14/LGIC/LGIC_NAMING/deliverables/2.0.0_SA_COO~G/fixed_inputs/check_ln.py l3-correct, 2026-09-14 ~16:5xZ, worktree HEAD 179884e46b -> 'WRONG: a3  labeled=DOES-NOT-FIT  expected=bucket,source,scope,tier,table,partition' / 'CONFORMING ADDRESSES: 6  CORRECT: 5  WRONG: 1' / 'VERDICT: FAIL-MISREAD', rc=0. The sibling criterion L3-AC2 (l3-control) printed 'VERDICT: PASS-CONTROL-FLAGGED', 1 of 1.",
+        "ANSWER: org/missions/D14/LGIC/LGIC_NAMING/deliverables/exercises/n5-reader.tsv:3 @15c38055ca 'a3<TAB>DOES-NOT-FIT'; the reader's reason, deliverables/0.9.0_WK_LGIC_NAMING~4/cross-bucket-reader.result.md:18 @15c38055ca: '6 segments. After code in the tier slot, the table slot holds a second tier word (gold), and there is no partition'.",
+        "KEY: deliverables/2.0.0_SA_COO~G/fixed_inputs/N5_KEY.json:9 @777770e6aa 'a3': 'bucket,source,scope,tier,table,partition'; :4 'a3 is the v1.3 code tier (the table slot carries the built tier and the file is the named leaf in the partition slot, with no object)'.",
+        "BRIEFING: deliverables/2.0.0_SA_COO~G/fixed_inputs/N5_ADDRESSES.json:6 @777770e6aa 'the_layout': 's3://opal-data-assets/{source}/{scope}/{tier}/{table}/{partition}/{object}' (seven segments, ending in object); :13 partition 'a date=YYYY-MM-DD, or a named leaf, or an entity=id'. The briefing carries no statement that an address may end at the partition without an object, or that the table slot may carry a tier word.",
+        "CHECKER: deliverables/2.0.0_SA_COO~G/fixed_inputs/check_ln.py:411-420 @777770e6aa l3_correct compares each non-DOES-NOT-FIT key entry to the TSV label as an exact string and prints FAIL-MISREAD on any mismatch."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-LN-l-3 L3-AC1: 'every conforming address is labeled as the ruled string reads it', invocation check_ln.py l3-correct, expect 'VERDICT: PASS-ALL-CORRECT'.",
+    "world_is": "The invocation prints 'VERDICT: FAIL-MISREAD' with one WRONG line (a3). The cell scores and does not read, so the label cannot be changed inside LN-l-3; the order stays open on L3-AC1 FAIL. The reader's briefing describes only a seven-segment layout ending in an object, and a3 is a six-segment code-tier address with no object.",
+    "notes": "Filed by the scoring worker because the named invocation did not produce the named result. No reading, re-labeling or fix was attempted: the answer file belongs to LN-l-2 and is outside this order's paths. For 3.0.0_SA_CVO's L8 disposition."
   }
 ]
 ```
