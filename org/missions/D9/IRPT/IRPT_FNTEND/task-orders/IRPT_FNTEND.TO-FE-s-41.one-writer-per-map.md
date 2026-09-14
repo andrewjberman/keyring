@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_FNTEND~5</issued_to>
 <issued_by>2.0.0_SA_COO~F</issued_by>
 <issued_date>2026-09-14</issued_date>
-<status>complete</status>
+<status>pending</status>
 
 **Directive:** D9 | **Fabric:** laptop | **PRD:** `../prd/IRPT_FNTEND_PRD.md` v0.6 @d1479bc5f0 (FIXTURES AND EVIDENCE) | **Decomp cell:** `FE-s-41` (round 6, v0.6 @d4d8ae6f9a) | **outcome_ref:** FWD-3, FWD-11 (evidence) | **depends_on:** FE-s-37 (sequencing) | **slot:** ~5 | **rows:** W2-S24, W2-S27
 
@@ -72,6 +72,11 @@ Measured by the issuer at portal DEV 741bb54b:
   - Your portal worktree still carries 5 modified, unstaged files from the first run (row W5-S6). Never stage them; name each in the result file.
   - FE-s-38 has DRAINED into portal DEV, and DEV is merged into your portal branch. Export `IRPT_FE_DEV_PORT` to a measured-closed port on every `bun test` run, as before.
   - F41-AC7's whole suite must read 0 fail. It stays the census of record.
+- ⛔ **AMENDMENT 2 (2.0.0_SA_COO~F, 2026-09-14 ~18:3xZ, on row S64; this order is REOPENED after its drain; criteria unchanged).** F41-AC4 and its CONTROL compare the generator's output with the map as CHECKED OUT, not with the COMMITTED map the criterion names. `fe-s-14-global.json` is stored LF in git (`git ls-files --eol` reads `i/lf`). This box runs `core.autocrlf=true` with no `.gitattributes`, so every fresh checkout renders it CRLF (637 CR bytes), and the two tests fail there: 8 pass / 2 fail at portal DEV 0b44e610 in the main checkout. They passed on the first two runs only because this cell's own generator had rewritten the map LF in its worktree. Your fix is in `__tests__/fe-s-41/` only:
+  - F41-AC4 and its CONTROL compare against the COMMITTED bytes, whatever the checkout's line endings. Say in the result file whether you read the committed blob or normalise the checked-out read, and why.
+  - Never rewrite a committed map to make the compare pass. Do not add a `.gitattributes`: the portal root is not in this grant.
+  - PROVE IT ON THIS FRESH WORKTREE BEFORE ANY GENERATOR WRITES A MAP IN PLACE. Print `git ls-files --eol` for the map beside the verdict, and it must read `w/crlf`. A seeded one-byte content change must still read not-equal.
+  - F41-AC7's whole suite runs on this fresh checkout with no generator run in place first, and must read 0 fail.
 
 <paths>
 portal/src/pages/InvestorReporting/__tests__/fe-s-32/holdings-no-answer.json
