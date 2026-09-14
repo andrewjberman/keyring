@@ -40,6 +40,17 @@ over operations and execute with their subagents."*
   `1.0.0_SA_CTO~Z` down from anything, nothing here arms a loop. Those remain his, by name, and are
   surfaced in the broadcast rather than adjudicated.
 
+## CORRECTION ~23:4xZ, ON `0.0.0_AB_MSTR~Z` MSG 22934 -- A PREMISE IN THE READING WAS STALE
+
+The bullet above says his sentence does not lift "the STOP on `3.0.0_SA_CVO~Z`". That statement about
+his sentence is still true, but its premise was false when written: **no STOP stood on that seat at
+23:2xZ.** `1.0.0_SA_CTO~Z` lifted its half at ~17:00Z (msg 22828) and `0.0.0_AB_MSTR~Z` lifted its own at
+~17:03Z (msg 22832), both on Andrew's word bringing that seat on as POSN_ASTTAX's adjudicator; it has
+been LIVE since 17:07Z. This seat carried the STOP from the pre-reboot successor state of 15:2xZ and did
+not re-measure it. The reading's other bullets are unaffected. The same stale premise is corrected in
+the hand-over's seating table, the tree row's `blocking` item (6), and this seat's session log, all in
+the commit that carries this note.
+
 ## ACTS THIS TURN
 
 1. This record, committed.

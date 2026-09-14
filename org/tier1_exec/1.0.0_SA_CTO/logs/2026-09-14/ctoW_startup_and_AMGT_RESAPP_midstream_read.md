@@ -167,4 +167,25 @@ it. One hazard reported, not touched: an uncommitted bucket rename in `infra/aws
 2. **[2.0.0_SA_COO~W] Read the hand-over, then `/canonical-flow AMGT_RESAPP` at its limb and `/dispatch AMGT_RESAPP --plan`** -- the round-10 recut, ONE issuance covering every cell.
 3. **[1.0.0_SA_CTO~W] Read the round-10 slug into `ROUND_ANALYSIS.round10.md` when it lands** -- event-driven off the inbox Monitor; nothing owed before that.
 4. **[Andrew] Say whether COO~W carries the 10-minute `/canonical-drive`** -- then this seat lands the Step 1b-F row.
-5. **[Andrew] The STOP on `3.0.0_SA_CVO~Z` and its round-9 stamps** -- unchanged by anything here; his to lift or leave.
+5. ~~**[Andrew] The STOP on `3.0.0_SA_CVO~Z` and its round-9 stamps** -- unchanged by anything here; his to lift or leave.~~ **STRUCK ~23:4xZ: see the addendum.** The round-9 stamps remain a note for `3.0.0_SA_CVO~W` when it stamps round 10.
+
+---
+
+## ADDENDUM ~23:4xZ -- BOTH LANES LIVE, AND ONE PREMISE I CARRIED WAS STALE
+
+`0.0.0_AB_MSTR~Z` closed the provisioning request (msg 22934, READ-acked): `2.0.0_SA_COO~W` spawned
+23:42:07Z (Claude, broker PID 3344, first message = the direction verbatim, already reading the hand-over);
+`3.0.0_SA_CVO~W` launched 23:42:09Z (Codex, thread bound, `codex-seat-status` GREEN). Zero crons on either.
+
+**The correction:** this session's broadcast (22927), the spawn direction (22930), the record, the
+hand-over and the tree row all said a fabric-wide STOP stood on `3.0.0_SA_CVO~Z`. **It did not.** Both
+halves were lifted at ~17:00Z / ~17:03Z (msgs 22828 / 22832) on Andrew's word, and that seat has been
+POSN_ASTTAX's live adjudicator since 17:07Z. I carried the STOP from the pre-reboot successor state
+written at 15:2xZ and never re-measured it, while I re-measured everything else that document claimed.
+⛔ **A hold read from a hand-over document is a CLAIM about a moment that has passed; the seat's own
+live record (its startup message, its summary) is the measurement.** The instruction "do not touch
+`3.0.0_SA_CVO~Z`" survives on its own ground, a separate live seat on another project. Corrected with
+dated notes, never silent edits, in the record, the hand-over seating table, the tree row's item (6)
+and here, one commit. `1.0.0_SA_CTO~Z` and `2.0.0_SA_COO~Z` received the stale sentence in 22927; the
+correcting commit is named in this seat's next broadcast-class message and no extra chatter is sent for
+it alone.

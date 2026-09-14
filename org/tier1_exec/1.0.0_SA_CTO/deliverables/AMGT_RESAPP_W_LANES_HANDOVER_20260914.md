@@ -19,8 +19,8 @@ subagents."*
 | limb | lane | state |
 |---|---|---|
 | L2 / L4 / L10 (CTO) | `1.0.0_SA_CTO~W` | this seat. `1.0.0_SA_CTO~Z` is LIVE (PID 6552 at 23:0xZ) and is the owner of record on every prior round; it holds POSN_ASTTAX and is informed by broadcast, not stood down by this seat. |
-| L5 / L6 / L7 / the recut (COO) | `2.0.0_SA_COO~W` | to be provisioned by `0.0.0_AB_MSTR~Z`. Replaces `2.0.0_SA_COO~ZZZ`, NOT REGISTERED, closed down on Andrew's word at 15:19Z (msg 22817). One project per Tier-2 seat instance: this lane holds AMGT_RESAPP and nothing else. |
-| L8 / L9 / the slug (CVO) | `3.0.0_SA_CVO~W` | to be provisioned. `3.0.0_SA_CVO~Z` is LIVE (PID 9404) but a fabric-wide STOP on that seat stands from `0.0.0_AB_MSTR~Z` (no respawn, re-attach, keystroke or peek; Andrew directs it himself). Nobody at these lanes touches `~Z`. |
+| L5 / L6 / L7 / the recut (COO) | `2.0.0_SA_COO~W` | PROVISIONED 2026-09-14T23:42:07Z by `0.0.0_AB_MSTR~Z` (Claude seat, broker PID 3344; msg 22934). Replaces `2.0.0_SA_COO~ZZZ`, NOT REGISTERED, closed down on Andrew's word at 15:19Z (msg 22817). One project per Tier-2 seat instance: this lane holds AMGT_RESAPP and nothing else. |
+| L8 / L9 / the slug (CVO) | `3.0.0_SA_CVO~W` | PROVISIONED 2026-09-14T23:42:09Z by `0.0.0_AB_MSTR~Z` (Codex seat, thread bound, status GREEN; msg 22934). `3.0.0_SA_CVO~Z` is LIVE (PID 9404) as POSN_ASTTAX's adjudicator. **CORRECTED ~23:4xZ on msg 22934: NO STOP stands on `3.0.0_SA_CVO~Z`.** Both halves were lifted at ~17:00Z (`1.0.0_SA_CTO~Z`, msg 22828) and ~17:03Z (`0.0.0_AB_MSTR~Z`, msg 22832) on Andrew's word, and the seat has been live since 17:07Z. This table said a STOP stood from its first commit @ce7371d0b3 until this correction; the premise came from the pre-reboot successor state of 15:2xZ and was not re-measured. Nobody at these lanes touches `~Z` because it is a separate live seat on another project, not because of any hold. |
 
 Loops: **zero crons at launch, both lanes.** The `org/XXX.md` Step 1b-F row for the 10-minute
 `/canonical-drive` over AMGT_RESAPP names `2.0.0_SA_COO~ZZZ`. A `~W` arm needs Andrew's word by
