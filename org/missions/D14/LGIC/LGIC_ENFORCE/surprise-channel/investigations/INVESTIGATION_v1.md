@@ -305,6 +305,28 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     "spec_asserts": ".claude/agents/worker.md: 'Scratch: <your worktree>/.scratch/ only'. CLAUDE.md Rule 21: comp-find's default corpus is all -- tracked, untracked and gitignored, minus a printed ephemeral floor.",
     "world_is": "The worker's scratch convention puts census output inside the corpus comp-find reads by default. A census that saves its output there and then reads the repo again counts its own output, and comp-find's :(exclude) form scans nothing rather than excluding one folder.",
     "notes": "DISARM, per W1-S3's own clause, by its disarm owner. (1) The recorded denominators of EN-c-1, EN-t-1 and EN-c-2 are shown above to carry no scratch output. (2) EN-s-1's identity line at spawn directs its census output to a slot-unique folder outside its worktree and cites W1-S3; its face is not edited mid-round. (3) The structural remedies W1-S3 lists -- a .gitignore entry for .scratch/, comp-find honouring an exclude pathspec, a worker-definition line -- are outside this round's grants. They are carried to the round's drain-end read for 1.0.0_SA_CTO. INERT: no measurement in this round rests on a scratch-inflated count, and the one exposure left is closed at its spawn."
+  },
+  {
+    "id": "LGIC_ENFORCE-S3",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G",
+    "surfaced_at": "2026-09-14T23:21Z",
+    "one_line": "Every LGIC_ENFORCE face's preflight says a path under .tools/ 'refuses by lane and is admitted only by this order's <paths>'. The owned-paths lane in fact admits ANY worker serial on .tools/, including a serial that holds no order. So the worker grant binds .tools/ only through the issuer's drain check, not through the lane.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "EXERCISED, owned-paths-validate.py --check-agent at HEAD 94bd0afa97, 4 paths (.tools/naming-gate.py, .tools/naming-apply-gate.py, .tools/some-new-tool.py, lib/some_new_lib.py) for three serials: 0.9.0_WK_LGIC_ENFORCE~1 (six pending orders, none granting .tools/), 0.9.0_WK_LGIC_ENFORCE~9 (no order at all) and 0.9.0_WK_NOPROJECT~1 (no such project). Each printed 1 VIOLATION of 4, on lib/some_new_lib.py only; all three .tools/ paths were admitted.",
+        "Found by G-C for slot ~1 before EN-r-1 spawned: the negative arm (.tools/naming-gate.py plus an infra .tf probe) refused 1 of 2.",
+        "The faces' preflight line: 'A path under deliverables/ with no serial folder, under infra/, lib/, .tools/ or data/ refuses by lane and is admitted only by this order's <paths>' (every LGIC_ENFORCE task order, record face)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CLAUDE.md rule 27 and RULING 1: 'A worker's write surface is exactly the <paths> its non-terminal order names (.tools/owned-paths-validate.py)'. The faces' lane line: .tools/ refuses by lane.",
+    "world_is": "For .tools/ the lane is open to every worker serial, so a worker's .tools/ write outside its <paths> passes the lane gate at commit. What still refuses it is the issuer's per-order grant check at every drain (the changed files against that order's <paths>), which this issuer runs on every drain and which has read 0 outside-grant files on all 12 drains so far.",
+    "notes": "INERT: the drain check covers it, and no drain in this round has carried an out-of-grant .tools/ file. Two cells of this round legitimately write .tools/ (EN-g-1 naming-gate.py, EN-t-2 naming-apply-gate.py), both through their <paths>. The faces' lane line overstates the lane for .tools/ and is this issuer's wording; the faces are frozen mid-round, so this row is the correction. Whether the .tools/ lane should enumerate workers is the lane owner's call (the owned-paths lanes' author), carried to the round's drain-end read for 1.0.0_SA_CTO."
   }
 ]
 ```
