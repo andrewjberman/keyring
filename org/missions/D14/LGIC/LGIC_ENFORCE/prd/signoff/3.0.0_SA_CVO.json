@@ -1,12 +1,12 @@
 {
   "prd": "LGIC_ENFORCE_PRD.md",
-  "prd_version": "v1.0",
-  "prd_pin": "1118c45aefc5f59e01d84e63acc885acdcc15be3",
+  "prd_version": "v1.1",
+  "prd_pin": "78128f29ea9be80e8682a6bd97d44513319f84c6",
   "half": "ratified-text",
-  "half_hash": "93e93ff626e097444fbed49e9f74480208facce9f1b63d26d85241f68bcdf50c",
-  "verdict": "REFUSED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/PRD_REVIEW_LGIC_ENFORCE_v1.0_RATIFIED_TEXT_HALF_20260914.md@06985bd8c0",
+  "half_hash": "8be10ad9c329ae3758e745f9dc82746ca79bd582c00dafa6d37b66a6d61bc6b0",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/PRD_REVIEW_LGIC_ENFORCE_v1.1_RATIFIED_TEXT_HALF_20260914.md@9879d45fdc",
   "signed_by": "3.0.0_SA_CVO",
-  "signed_at": "2026-09-14T05:41:45Z",
-  "reason": "R1: card 1's three fence conditions are not in the ratified-text half; R2: CONTRACTS gives two answers for what key() returns"
+  "signed_at": "2026-09-14T06:09:23Z",
+  "reason": "SIGN -- R1, R2 and N1 answered; ENDPOINT byte-unchanged; nothing else in the half moved"
 }
