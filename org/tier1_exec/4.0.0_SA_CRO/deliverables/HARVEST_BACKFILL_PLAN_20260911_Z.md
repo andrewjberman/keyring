@@ -1244,3 +1244,46 @@ the one in hand -- not more calls of the same kind.
 is operated by its company; no social account page was visited; no ticker was confirmed against a
 security master. **The layer gained rejectable values, not confirmed ones**, and every consumer can
 still refuse on the status field -- which is the whole point of the rule.
+
+---
+
+## 23. THE SA LIMITER IS NOT BURST-SENSITIVE, IT IS ESCALATING -- AND RETRYING MADE IT WORSE. STOPPING IS THE CORRECT ACT
+
+**A short section because the finding is operational and the right response is to stop.**
+
+### THE OBSERVATIONS, IN ORDER, AT THREE TIMES
+
+```
+05:50Z   a 2-call manual probe          BOTH 200   -- search AND news open
+05:55Z   resume at 0.25s spacing        403 after 4 names (6 calls)
+06:08Z   resume at 8s spacing           403 on the FIRST name
+```
+⛔ **I READ THE 05:55Z FAILURE AS BURST SENSITIVITY AND SLOWED DOWN THIRTY-TWO-FOLD. IT DID NOT HELP
+AND THE BLOCK GOT HARDER** -- from failing at call 6 to failing at call 1.
+>> **SO THE MODEL IS NOT "TOO FAST"; IT IS A SUSTAINED, ESCALATING BLOCK WITH A COOLDOWN LONGER THAN
+   THE ~13 MINUTES BETWEEN ATTEMPTS -- AND EACH ATTEMPT PLAUSIBLY EXTENDS IT.** <<
+⭐ **THE CORRECT ACT IS THEREFORE TO STOP, NOT TO PACE.** This is the narrow case where the estate's
+*"never wait, fire the ad-hoc"* rule does not apply: **the ad-hoc IS the thing degrading the
+resource.** Naming that is the exception the rule asks for.
+⚠ **AND IT CORRECTS s.19's WORDING**, which called this "a moving rate limit" as though it were
+weather. It is a response to *this device's own request pattern*, and the pattern is mine.
+
+### WHAT THIS DOES AND DOES NOT COST
+
+- ⛔ **It costs the remaining 72 `sa_symbol` resolutions.** They stay NOT ASKED -- never REFUSED -- and
+  every record says so in its own evidence field.
+- ✅ **It costs the backfill NOTHING that is not already lost.** s.19 measured the binding constraint
+  as **DENSITY, not identity**: only 8 of 17 resolved names clear `>=3` mentions in 30 days. **A name
+  whose symbol we cannot resolve today is not the reason the backfill is not running.**
+- ✅ **And the per-symbol NEWS endpoint is a different surface.** Any name whose symbol is ALREADY
+  known stays harvestable; this block is on name-to-symbol SEARCH.
+
+### THE GUARDS EARNED THEIR KEEP HERE, WHICH IS THE ONE CHEERFUL PART
+
+Both runs cost **6 calls each** instead of 216. The consecutive-refusal stop fired at 3, the
+`--exclude-done` limb meant no already-answered name was re-spent, and the NOT-ASKED partition kept
+72 names out of the REFUSED column.
+⭐ **AND THE TALLY FIX IS VISIBLE IN THE OUTPUT:** the second run printed `REFUSED 0 of 18` where the
+first printed `REFUSED 1 of 18` for the identical data -- the print had been using a different formula
+from the JSON and was booking a NOT-ASKED as a REFUSAL. **One formula now, and the corrected line is
+the one a reader sees.**
