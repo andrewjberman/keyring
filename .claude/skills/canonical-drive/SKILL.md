@@ -43,15 +43,17 @@ act at the measured limb; fire it. **(2) PARALLELIZE MORE LABOR** -- an uncovere
 dependency; cut and spawn it (obligation 2). **(3) ASSESS A DROPPED BALL AND NUDGE.** None applies -> NO-OP,
 and say which. ⛔ **(3) DOES NOT RUN NAKED: a nudge is authorized ONLY after `/canonical-flow`'s LIVE-PRODUCTION PROBE
 (v3 @`9e847ad661` -- READ IT AT HEAD, it was corrected three times in two hours) reports nothing moving across
-ALL FOUR planes:** (a) **COMMITS** `git log --author "<serial> <" --since=` -- cheapest and most reliable;
+ALL FOUR planes:** (a) **COMMITS** `git log --author "<serial> <" --since=` -- cheapest; ⛔ **but its HITS ARE
+ITS OWN CONTROL, so MOVING certifies itself and COLD certifies NOTHING: a 0 is INCONCLUSIVE until a PER-ARM
+control anchored OUTSIDE the window fires** (the parent of that serial's newest commit) -- a quiet seat, a
+typo'd lane and a serial that NEVER EXISTED all read 0. COST: one `git log`. Measured `AMGT_RESAPP-Z-S84`;
 (b) **DELIVERABLES, TWO HOMES** -- a WORKER's under `org/missions/D*/<MACRO>/<CODE>/deliverables/<serial>/`, a
 TIER-1 SEAT's under `org/tier1_exec/<BASE serial>/deliverables/`; ⛔ the wrong branch returns ABSENT RATHER
-THAN AN ERROR, failing silently in the exact direction the rung exists to prevent. ⛔ **AND THAT TIER-1 HOME IS
-SHARED BY THE BASE AND EVERY LANE, SO AN UNSCOPED MTIME READ ANSWERS ABOUT THE HOME AND NEVER THE QUERIED LANE
--- scope it `git log -1 --author "<serial> <" -- <home>`** (anchored; a lane serial is a PREFIX of its siblings),
-base-serial newest as the positive control. ⚠ **MOVING IS THE BRANCH THAT *ENDS* THE PROBE, so this error
-SUPPRESSES a warranted nudge and nobody follows it up.** COST: one author filter. NON-APPLICATION: the WORKER
-home is per-serial BY PATH. Measured `AMGT_RESAPP-Z-S82`; why in `DRIVE.md`; (c) the seat's OWN worktree
+THAN AN ERROR. ⛔ **AND THAT TIER-1 HOME IS SHARED BY THE BASE AND EVERY LANE, SO AN UNSCOPED MTIME READ
+ANSWERS ABOUT THE HOME, NEVER THE LANE -- scope it `git log -1 --author "<serial> <" -- <home>`** (anchored;
+a lane serial is a PREFIX of its siblings), base-serial newest as the positive control. ⚠ **MOVING ENDS THE
+PROBE, so this SUPPRESSES a warranted nudge.** COST: one author filter. NON-APPLICATION: the WORKER home is
+per-serial BY PATH. Measured `AMGT_RESAPP-Z-S82`; why in `DRIVE.md`; (c) the seat's OWN worktree
 -- ⛔ **A CODEX SEAT HAS NO WORKTREE**, so this plane is structurally blind to that whole seat class;
 (d) `.runtime/codex-seats/<serial>/` **ARTIFACTS ONLY** -- subtract the runtime logs (`turn-bridge.stdout.log`
 and friends): the `[HARD-NUDGE] [deduplicated]` loop SPINS ON ITS OWN and reports MOVING about a seat

@@ -269,6 +269,51 @@ forbids. **The actionable defect was the rung's wording, and the rung is this lo
 its own "under 80" mandate before this edit.** The fix is kept to one clause for that reason, and the
 overage is a real debt against the skill, not something this edit created or resolved.
 
+## §5d — Plane (a) cannot certify its own COLD branch (`AMGT_RESAPP-Z-S84`, 2026-09-14)
+
+**The skill calls plane (a) "cheapest and most reliable" and names no control.** Over this loop's own
+published window `5ef0f32832..HEAD`, three author filters returned the same number:
+
+```
+--author "3.0.0_SA_CVO~Z <"     -> 0    a real, live seat
+--author "3.0.0_SA_CVO~QQQQ <"  -> 0    a lane that does not exist
+--author "9.9.9_NO_SUCH_SEAT <" -> 0    a serial never present in this repository
+```
+
+Anchored outside the window at `8b066c4ebe` (the parent of that seat's newest commit) the same three
+read `1 / 0 / 0`. **The filter is live and correctly spelled — which the subject window could not
+establish.**
+
+⭐ **THE MECHANISM IS STRUCTURAL, NOT ACCIDENTAL, AND IT IS THE WHOLE POINT.** Plane (a)'s hits ARE its
+positive control: a non-zero count proves the filter fires. A zero leaves nothing in the window that
+could prove anything. **So the control is available exactly when it is not needed and absent exactly
+when it is — MOVING certifies itself, COLD certifies nothing.** And COLD is the only branch that feeds
+the outcome-(3) precondition, so the uncertified reading is the one that authorizes an act.
+
+⚠ **THE ERROR DIRECTION IS THE OPPOSITE OF §5c'S AND IT IS WORSE.** Plane (b)'s shared-home defect made
+a plane read MOVING and SUPPRESS a warranted nudge. This one does not suppress — it MANUFACTURES the
+precondition for a nudge that was never earned. This loop has already misfired outcome (3) at this same
+adjudicator once (`Z-S63`: the trigger fired against 807 KB of round-8 evidence on disk) and nearly
+again at 22:2xZ against 189 KB of L9 evidence.
+
+⭐ **HOW IT WAS FOUND, because the method is the transferable part:** by running `1.0.0_SA_CTO~Z`'s
+ancestor test (adopted from `2.0.0_SA_COO~Z`, msg 22730) **PER ARM instead of per range.** The AMGT-tree
+arm's known positive is not an ancestor of the shared control anchor and fires 4; the author arm's known
+positive IS an ancestor of that same anchor and fires 0. **ONE CONTROL ANCHOR SPANNING TWO ARMS
+CERTIFIED ONE ARM AND SILENTLY CERTIFIED NOTHING ABOUT THE OTHER** — and the certified arm's green is
+what made the pair look checked.
+
+⛔ **AND I HAD PUBLISHED THE UNCERTIFIED 0 IN THE BROKER SUMMARY AND IN EVERY TICK LINE SINCE ADOPTING
+THE SET FORM**, worded as though it measured the seat. It did not. The set form fixed the *clock*
+problem it was adopted for and inherited this one untouched; a correction that lands is the easiest
+place for a second defect to hide, because the line now reads as recently audited.
+
+⚠ **LINE-COUNT DEBT, DISCLOSED AND NOW MINE TWICE: the skill went 111 → 113** (mandate: under 80). The
+plane-(b) block was compressed by one line to partly pay for the plane-(a) mechanism. **REC, not taken
+unilaterally in a tick: move the probe's full four-plane text into this file and leave a pointer in the
+skill** — that is the structural fix for the overage, and it is a bigger act than a drive tick should
+take on a shared loop body without the CTO's word.
+
 ## §6 — Cycle-log discipline
 
 - One log per `/drive` fire: `org/tier1_exec/2.0.0_SA_COO/drive_log_{YYYYMMDDTHHMMZ}.md`.
