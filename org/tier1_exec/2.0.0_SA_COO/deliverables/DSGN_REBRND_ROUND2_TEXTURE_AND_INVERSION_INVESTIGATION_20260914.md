@@ -132,6 +132,59 @@ largely the same files. Delivered by route family, the three pack routes (`/mark
 4. **Sidebar edge (W2-S19):** keep or drop.
 5. **Tooltips:** which of the four is canonical.
 
+## 5a. ANDREW'S ANSWERS (~18:3xZ, record @0e0e97f75a)
+
+1. Named layers: **yes**.
+2. Text follows its current background: **yes, law**.
+3. **Page by page, starting with Market Overview.** He smoke-tests each page and comments.
+4. **The sidebar's faint indigo edge STAYS** (row W2-S19, ruled KEEP). Keeping the current sidebar or reverting to the
+   DEV-branch sidebar is a later call of his.
+5. **Tooltips:** three types that vary slightly. He will clarify each.
+
+## 5b. THE `/market` SLICE -- preparation (no issuance before round 1's L10 slug)
+
+**Census of the page's own files** (native Grep on the feature worktree @a1d0a7451c). The pattern was light-on-dark
+`bg-white/N`, `border-white/N`, `text-white[/N]`, the container tokens `var(--bg-*)`, and `hover:bg-`.
+
+| home | files | files with a hit | occurrences |
+|---|---|---|---|
+| `src/pages/MarketPerformance/` | 7 | 1 (`EquitiesTab.tsx`) | 4 |
+| `src/components/market-performance/` | 11 | 9 | 293 |
+
+The weight is in the drill-down modals (occurrences per file):
+- `RSIModal` 67;
+- `KeywordSentimentModal` 66;
+- `FearGreedModal` 52;
+- `ExecutiveSummary` 44;
+- `IndexPerformanceModal` 29;
+- `MarketRegimeModal` 27;
+- `MarketRegimeIndicator` 4;
+- `SentimentGauge` 3;
+- `TopicCloud` 1.
+
+The page also draws SHARED primitives that every route uses: `Panel`, `PanelHeader`, `DarkCard`, `NestedCard`,
+`TabNavigation` and the page header.
+
+**The consequence for the plan: page-by-page delivery needs an OPT-IN SCOPE.** The role and state tokens live on shared
+primitives. If flipping them globally is how `/market` flips, every route flips with it, and that defeats his
+page-by-page smoke. So round 2 is recommended to cut as:
+
+1. **Foundation (one cell).**
+   - The named-layer role table as tokens in `index.css`, in both worlds: page, strip, body, tile, inset, hover,
+     selected, tooltip.
+   - The per-role STATE tokens: rest, hover, selected, focus and disabled, each a (ground, ink) pair with its contrast
+     printed.
+   - A scope switch at the page container (for example a `data-surface="light"` attribute) under which the primitives
+     read the light-world rungs.
+   - Default OFF, so no route changes.
+   - A checker proves every (ground, ink) pair in both worlds at the bar: 4.5:1 text, 3:1 non-text.
+2. **`/market` (one or more cells, by the component families above).**
+   - Opt the page in.
+   - Move its 297 idioms onto role and state tokens through the inversion rule.
+   - Render every state his example names: a highlighted row, a selected chip, an open modal.
+   - His visual smoke on `:5173` is the acceptance of record; the cells' renders are evidence for it.
+3. **The next page** follows his comments on `/market`.
+
 ## 6. WHAT IT DOES NOT CLAIM
 
 - **Which rung each specific old component should land on.** That is the round-2 cells' census, per role, with a
