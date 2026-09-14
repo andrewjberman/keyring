@@ -66,6 +66,175 @@ write: **1 row** (`S1`).
     "spec_asserts": "card3-read-logging S2: 'Import the aws_cloudtrail resource ONLY -- its log bucket, bucket policy, KMS key and any other dependency stay unmanaged, referenced by literal. R-AC2 gates S3.' The order bounds the import's write set and requires a 0-diff plan from the importing checkout. It says nothing about checkouts that do not yet carry the new config.",
     "world_is": "The import is a write to a SHARED remote state, so it takes effect for every checkout at once, while the config that makes the state safe travels only by git. Until 9f3fd2cf4a reaches a checkout, a full shared-infra plan there reads the trail as state-without-config and plans its DESTROY. The controls that remain are terraform's interactive apply approval, which -auto-approve skips, and whatever halt-gate-check.sh does, which was not read.",
     "notes": "Surfaced by the order's issuer because the exposure comes from the order's own S2. It lands as an ARMED row rather than a ledger note (no disarm owner) or a broker message (never the carrier). NOT remediated here: no guard is built (CLAUDE.md 'never implement an approval gate unless Andrew explicitly asks') and no push is made (LD-0522). Candidate remedies, NONE adopted, each named with whose it is: (1) the CLOUD push and the CLOUD->SITEZ merge, the disarm owner's act on Andrew's word; (2) removing or refreshing stale linked worktrees that carry shared-infra, each worktree's owner's; (3) a safe-apply refusal of any plan that DESTROYS an aws_cloudtrail, which is an approval gate and so is Andrew's call alone. The order's S3 still proceeds: its trail apply runs from a checkout at or after 9f3fd2cf4a, so it is not exposed."
+  }  ,
+  {
+    "id": "ADVI_FIRMBKTS-S3",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-14T00:44:17Z",
+    "one_line": "L8 INTAKE ON S2, RE-MEASURED: the origin half of S2's exposure is CLOSED -- origin/CLOUD 37931439cf now carries 9f3fd2cf4a and the trail's config -- but 22 linked worktrees on this device still carry shared-infra without it, and neither control S2 left unread refuses a plan that destroys a resource.",
+    "class": "OBSERVATION",
+    "spec_asserts": "ADVI_FIRMBKTS-S2: the exposure covers 'this device's older worktrees, origin/CLOUD until the next push, and SITEZ until the CLOUD->SITEZ merge'; the remaining controls are terraform's interactive approval 'and whatever halt-gate-check.sh does, which was not read'.",
+    "world_is": "Measured 2026-09-14T00:44:17Z. ORIGIN: CLOUD is 37931439cf (ls-remote); 9f3fd2cf4a is its ancestor, and 37931439cf carries exactly 1 aws_cloudtrail block in shared-infra/cloudtrail-organization-trail.tf -- the push window Andrew granted ~00:0xZ (3accded80e) has landed it, so a checkout that pulls CLOUD is no longer exposed. SITEZ: SITEZ 28ccac62c9 is not in this clone, so its ancestry is UNREAD. THIS DEVICE: of 24 linked worktrees, 22 carry infra/aws/terraform/shared-infra at a HEAD that does not contain 9f3fd2cf4a (a further 1 are stale but carry no shared-infra); a full shared-infra apply from any of the 22 plans the organisation trail's DESTROY. THE UNREAD CONTROLS, read: .tools/safe-apply.sh (292 lines) names 'destroy' 1 time(s) and 'auto-approve' 0 time(s); .tools/halt-gate-check.sh (456 lines) names 'destroy' 0 time(s), 'auto-approve' 0 time(s) and 'cloudtrail' 0 time(s). Neither carries a rule that refuses a destroy plan, so terraform's interactive approval is the only control left, and -auto-approve skips it.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git ls-remote origin refs/heads/CLOUD -> 37931439cf; git merge-base --is-ancestor 9f3fd2cf4a 37931439cf -> yes",
+        "git show 37931439cf:infra/aws/terraform/shared-infra/cloudtrail-organization-trail.tf -- 1 aws_cloudtrail block",
+        "git worktree list: 24 trees; 22 exposed, each checked by merge-base --is-ancestor and a shared-infra directory test",
+        ".tools/safe-apply.sh and .tools/halt-gate-check.sh read in full by a word count, printed in world_is"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "hazard_standing": "INERT",
+    "notes": "INERT because the hazard is S2's and stays there, ARMED with 0.0.0_AB_MSTR as disarm owner; this row only re-measures its reach. What S2's disarm still waits on: the 22 exposed worktrees taking CLOUD or being removed (each worktree's owner; removal needs a human OK -- several are held for one), and the SITEZ leg as stated. The 22, by HEAD and path: 544877cc2e C:/tmp/staudt_layerD_T0; f177240b75 C:/tmp/staudt_layerD_T1; ae759bbb32 C:/tmp/staudt_layerD_T2; cd17755343 C:/tmp/staudt_layerD_T3; 1b51bf78a1 C:/tmp/wk-compeff-8-1; 87185ad3f2 C:/tmp/wk-dsgn-1e; b0b0d2202e C:/tmp/wk-etfs-3-21; 8ba3b35a57 C:/tmp/wk-etfs-3-30; 7ba94b5b46 C:/tmp/wk-etfs-3-31; 1082067648 C:/tmp/wk-irpt-2-2c; 86f2959ab1 C:/tmp/wk-irpt_fntend-4-1-fe-s-25; 55887ce562 C:/tmp/wk-irpt_fntend-4-2-fe-s-26; 10093a2dff C:/tmp/wk-irpt_fntend-4-3-fe-s-27; c0eb49d1e1 C:/tmp/wk-irpt_fntend-4-4-fe-s-28; 85259e922e C:/tmp/wk-irpt_fntend-4-5-fe-s-18; 6ad371c88e C:/tmp/wk-irpt_fntend-5-4-fe-s-29; c8cd12b2c0 C:/Users/AndrewBerman/Desktop/ajb_workspace/.worktrees/d13-visual-elevation; 3cbcba4f80 C:/Users/AndrewBerman/Desktop/ajb_workspace/.worktrees/krny-c3-access-pair-fixture-20260910; f303236817 C:/Users/AndrewBerman/Desktop/ajb_workspace/.worktrees/krny-c3-kernel-design-20260910; 32c3ef69b7 C:/Users/AndrewBerman/Desktop/ajb_workspace/.worktrees/krny-c3-offline-fixture-20260910; 985453d506 C:/Users/AndrewBerman/Desktop/ajb_workspace/.worktrees/krny-c3-report-admission-20260910; 8b24cd2bbf C:/Users/AndrewBerman/Desktop/scty-build. Not remediated and no guard built: a refusal of destroy plans would be an approval gate, which is Andrew's call alone (CLAUDE.md)."
+  }
+]
+```
+
+```json
+[
+  {
+    "id": "ADVI_FIRMBKTS-S4",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps",
+    "surfaced_at": "2026-09-14T01:08:00Z",
+    "one_line": "card3-read-logging R-AC8's positive control assumes organic opal-data-bd reads in any 30-minute window ('read about 250K times a day'). Tonight the window T0..T0+30min held ZERO organic bd GetObjects, so the control passed only on a bd read this seat drove at T0 -- a step the order did not name.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "EventBridge AWS/Events MatchedEvents for FIRMSEP-s3-direct-access-bypass (non-CloudFront GetObject on bd/inf), 300-second periods 2026-09-13 21:00Z-24:00Z: 4 datapoints with sums 4, 2, 2, 2 -- against a 14-day daily mean of about 251K (3,520,453 over 2026-08-30..09-13). The daily total is real; the reads arrive in bursts, not evenly",
+        "card3_probe.py events over 2026-09-13 23:00-23:15Z: opal-data-bd n=0 across 37 files / 1,720 records. Over 23:15-23:20Z: opal-data-inf n=2, equal to FIRMSEP's 2 matched events for that 5-minute period -- so the scanner is not blind, and bd was simply not read",
+        "R-AC8 exactly as the order invokes it, run 2026-09-14T01:04:22Z: 'DATA_EVENTS bucket=opal-data-bd n=1 first=2026-09-14T00:37:39Z' across 29 files / 3,770 records. The one event is principal arn:aws:iam::313476888478:user/Andrew_Berman, userAgent aws-cli/1.44.44, key platinum/firm/header_metrics.json -- this seat's driven 1-byte ranged GetObject, started 00:37:31Z by the local clock"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "card3-read-logging R-AC8: 'POSITIVE CONTROL: bd is already logged and read about 250K times a day, so a zero here means the scanner is blind and R-AC9's zero proves nothing.' The order names no bd read of its own; S1 and S4 name test reads on opal-data-cot and opal-data-49financial only.",
+    "world_is": "The daily total holds, but tonight's non-CloudFront bd/inf reads ran 0-4 per 5 minutes, and T0..T0+30min held no organic bd read at all. Without a driven read the criterion would have read n=0, and the order's own gloss would then have called the scanner blind when it was fine. This seat drove one 1-byte GetObject on opal-data-bd at T0 (platinum/firm/header_metrics.json, principal user/Andrew_Berman) so the control could discriminate. The read is listed with the probe reads in the completion report.",
+    "notes": "INERT: nothing live is affected. bd was already read-logged, and the driven read is one ranged GetObject by the operator principal. bd is not a card-3 bucket, but it is a legacy firm bucket under the same 45-day quiet census, so the read is listed as a probe to exclude. For any re-use of this control: drive the positive arm, and never rely on organic traffic in a short window."
+  }
+]
+```
+
+```json
+[
+  {
+    "id": "ADVI_FIRMBKTS-S5",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps",
+    "surfaced_at": "2026-09-14T01:26:00Z",
+    "one_line": "card3-read-logging S4's T1 test reads, made 5 and 13 seconds after the trail's PutEventSelectors, were NEVER recorded -- a new S3 data-event selector does not record from the instant the API returns. Recording on opal-data-cot was first observed at 01:02:35Z (an organic read), and opal-data-49financial's first record is a SECOND probe round this seat drove at 01:11Z.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "card3_probe.py order --since 2026-09-13T23:26:28Z (cloudtrail lookup-events): PutEventSelectors on opal-organization-trail at 2026-09-14T00:46:28Z. The shared-infra apply ran 00:45:02Z-00:46:26Z rc=0, and R-AC6 read the four selector values right after it",
+        "T1 probe reads by arn:aws:iam::313476888478:user/Andrew_Berman (aws-cli, 1-byte ranged GetObject): opal-data-cot platinum/firm/header_metrics.json started 00:46:33Z, and opal-data-49financial _code/POLICY_BLOCK.json started 00:46:41Z, by the local clock. NEITHER appears in the org trail's delivered logs (card3_probe.py events since 00:46:28Z, read at 01:15:57Z across 33 files and at 01:24:49Z across 42 files). The same principal's T0 read on the already-logged opal-data-bd, started 00:37:31Z, was recorded at eventTime 00:37:39Z",
+        "the first recorded opal-data-cot data events: 01:02:35Z and 01:02:37Z, principal arn:aws:sts::313476888478:assumed-role/opal-cot-value-parity/opal-cot-value-parity (a Lambda), keys platinum/firm/header_metrics.json and silver/holdings/2026-09-11.parquet -- ORGANIC",
+        "T1b probe reads by the same principal: opal-data-cot started 01:11:18Z and was recorded at eventTime 01:11:30Z; opal-data-49financial started 01:11:28Z and was recorded at eventTime 01:11:38Z, which is the first and only opal-data-49financial record"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "card3-read-logging S4: 'One test GetObject each on opal-data-cot and opal-data-49financial at T1 after the trail apply', then read the delivered logs for them (R-AC10, R-AC11). The order treats a read made after the apply as a read the trail records.",
+    "world_is": "Reads made seconds after PutEventSelectors returned were not recorded on either new bucket. Recording was first observed about 16 minutes after the change on opal-data-cot (an organic read), and was confirmed on opal-data-49financial only by a second probe round this seat drove 25 minutes after the change. R-AC10 and R-AC11 pass, but on the organic cot reads and the T1b probes -- not on the T1 reads the order names. The propagation delay is only bounded: more than 13 seconds, and at most about 16 minutes on cot and 25 minutes on 49financial.",
+    "notes": "INERT for this order: the criteria pass. It bears on 1.0.0_SA_CTO's clock ruling (96424: 'LIVE MEANS OBSERVED RECORDING, NOT APPLIED CONFIGURATION'), which this measurement supports -- the apply time (00:46:28Z) is NOT when recording began. The T1 reads have no delivered record, so the census has nothing to exclude for them; they are reported with principal and start time, as the T0 read is. A bucket born inside the selector later needs the same care: its first reads may come minutes before recording starts."
+  }
+]
+```
+
+```json
+[
+  {
+    "id": "ADVI_FIRMBKTS-S6",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~E",
+    "surfaced_at": "2026-09-14T05:17:00Z",
+    "one_line": "The LD-0529 send guard admitted an act-bearing GO only if it cited a <PROJECT>.TO-<id> token. A code-less ad-hoc order, which TASK_ORDER_PROTOCOL permits, cannot carry one, so card3-read-logging's GO was refused and the GO had to ride the order's own face.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "2.0.0_SA_COO~E's GO to 0.7.0_AE_CloudOps, 2026-09-13 ~22:4xZ, returned: 'SEND REFUSED (LD-0529 ...) -- cites NO task order ... cite its id (<PROJECT>.TO-<id>) in the GO'. The order was set pending on its face at 6967266949.",
+        "org/mcp/cvo_send_guard.py before the fix: TO_ID_RE was the only citation form, and cited_orders_for globbed org/*/*/task_orders/<tok>*.md, so a filename with no PROJECT.TO- prefix can never match.",
+        "The fix is at ee9a6cf257. The self-test passed 0 failed of 49 (the baseline before the edit was 0 of 44), including a difference pair: the same act admitted WITH the path and refused WITHOUT it."
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Remedied on Andrew-direct 2026-09-14 ~04:xxZ (call 3; record @675eeec895) at ee9a6cf257. The guard also resolves a cited task-order PATH, under the same <issued_to> test. It is APPLIED only at each MCP session's next server load and at the broker's next restart, and no live send has exercised it at this lane.",
+    "spec_asserts": "TASK_ORDER_PROTOCOL: 'Ad-hoc (no registered project): {description-with-dashes}.md' is a legal order with no project code. The LD-0529 refusal text says: 'cite its id (<PROJECT>.TO-<id>) in the GO'.",
+    "world_is": "The two could not both be satisfied. An ad-hoc order has no <PROJECT>.TO-<id>, so no GO for it could pass the guard, and its issuer had to set it to pending on its own face instead."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-S7",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~E",
+    "surfaced_at": "2026-09-14T05:17:00Z",
+    "one_line": "deploy_ledger.py close-leg and close re-render the change_management entry from the ledger's saved state, so notes an operator appended to the entry .md by hand are overwritten. card3's module choice, S3(c) mechanism and copy step were dropped that way, and the assignee had to restate them.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/deploy_ledger.py cmd_close_leg and cmd_close, read at this seat 2026-09-14 ~05:1xZ: each mutates the state and then calls _write_entry(state), and neither reads the existing entry file. _write_entry's own body was NOT read here.",
+        "0.7.0_AE_CloudOps msg 96465, flag 2: its appended notes were dropped at close and restated into the closed entry at 50823af561."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "card3-read-logging S2 and S3: 'record the module chosen and why in the ledger entry'; 'name it and the copy step in the ledger entry'.",
+    "world_is": "The entry is a rendering of the JSON state, so a note written into the .md does not survive the next close-leg or close. The durable places for a note are a --proof string or the state, and the tool's usage text says neither.",
+    "notes": "The owners are the tool's committers; the last three were 0.0.0_AB_MSTR~Z at 119ce3a68e, 0.0.0_AB_MSTR at b32e1018de and 1.0.0_SA_CTO at 4b4d71ee70, all on 2026-09-04. Candidate remedies, none adopted: a --note verb that writes into the state, or preserving a marked notes block on re-render."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-S8",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~E",
+    "surfaced_at": "2026-09-14T05:17:00Z",
+    "one_line": "/cloud-ops names .tools/record-terraform-deploy.sh as part of commit and deploy discipline, but no file exists at that path. So card3-read-logging updated neither portal-auth's nor shared-infra's CHANGELOG.json.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "test -f .tools/record-terraform-deploy.sh returned ABSENT (2026-09-14 ~05:1xZ, main tree). No path outside .tools/ was searched.",
+        ".claude/skills/cloud-ops/SKILL.md:18 lists it under 'Commit + deploy discipline'. :243 already records 'record-terraform-deploy.sh tooling failure: known issue (CHANGELOG.json writer + owned-paths-hook on Andrew identity)'.",
+        "0.7.0_AE_CloudOps msg 96465, flag 3: CHANGELOG.json was not updated for either stack."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "card3-read-logging's <paths> grants portal-auth's and shared-infra's CHANGELOG.json, and /cloud-ops names the tool that writes them.",
+    "world_is": "The named tool is absent at its named path, so the CHANGELOG writes did not happen. The skill's own :243 already calls the tool a known failure, while :18 still lists it as discipline.",
+    "notes": "Owner: the /cloud-ops skill's lane, 0.7.0_AE_CloudOps. No change is made here."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-S9",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~E",
+    "surfaced_at": "2026-09-14T05:17:00Z",
+    "one_line": "comp-find --corpus aws carries no CloudTrail trail node. A search naming opal-organization-trail found only the FIRMSEP rule across 2,531 AWS nodes, so the live plane's drift classes could not show the org trail as CLI-applied and outside Terraform -- the exact case card 3 had to fix.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "comp-find --corpus aws 'opal-organization-trail|FIRMSEP-s3-direct-access-bypass' --limit 30, run at this seat 2026-09-13 ~22:3xZ: 'DENOMINATOR: 1 hit(s) across 2531 aws node(s)', 'BANDS = node_type ... EVENT_RULE=1', vintage 'Built from the estate as of 2026-09-13 12:15:54 UTC'.",
+        "0.7.0_AE_CloudOps msg 96399 and its Phase 1 read (96438): aws cloudtrail describe-trails returns opal-organization-trail, multi-region, home us-east-1, and it was not in Terraform before 9f3fd2cf4a."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CLAUDE.md Rule 21: '--corpus aws: the LIVE AWS plane -- regex over every aws CloudNode's name+arn+props ... drift_class per hit (LIVE-no-DECLARED = in AWS, not in the repo)'.",
+    "world_is": "The trail, a LIVE-no-DECLARED resource until 9f3fd2cf4a, is not in the corpus at all. The census therefore reads out-of-corpus rather than returning a drift class, and a seat relying on the tool alone would not learn that the trail sat outside Terraform.",
+    "notes": "Owner: the comp-find aws corpus and its CloudNode extractors (the served cloud graph, NFRA_GLOBGRPH). Which extractor would carry CloudTrail was not traced here."
   }
 ]
 ```

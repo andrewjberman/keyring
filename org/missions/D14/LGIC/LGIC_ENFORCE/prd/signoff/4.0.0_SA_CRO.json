@@ -1,0 +1,11 @@
+{
+  "prd": "LGIC_ENFORCE_PRD.md",
+  "prd_version": "v1.1",
+  "prd_pin": "78128f29ea9be80e8682a6bd97d44513319f84c6",
+  "half": "brief",
+  "half_hash": "a0a7659c7a624378d80d97a05412fcc298ee7344ef7252eaa0dec2c2f919735d",
+  "verdict": "SIGNED",
+  "review_ref": "docs/briefs/sources/LGIC_ENFORCE_L4_BRIEF_REVIEW_v1_1_20260914.md@93b7a4664eb1198db934dc019246a0ba07c2fdf0",
+  "signed_by": "4.0.0_SA_CRO",
+  "signed_at": "2026-09-14T06:01:52Z"
+}

@@ -2694,6 +2694,422 @@
     "world_is": "S30 -- its named mechanism, the discarded envelope state, was fixed on the network path in round 3; its class recurs one layer in, as RULING H. S33 -- the byte pin that fired on this seat's own 58e387b454 is retired; its content pin catches 3 of 3 breaking changes and tolerates 3 of 3 additive (round 3 s.5). S38 -- RULING D. S42 -- its blocking arm cleared by FE-s-26 (F18-AC3 PASS); its instrument lesson is carried into RULING I. S43 -- RULING F. S44 -- RULING B; FE-s-18 19 of 19. W2-S18 -- RULING E's limb built. W1-S41 -- F25-AC12, 36 of 36 pairs distinguishable. W1-S42 -- the age is computed from business_date (F25-AC12); the wrong LABEL is RULING K. W1-S43 -- F25-AC12, absent and null read differently. S48 -- round 4 delivered FE-s-26, FE-s-27 and FE-s-28. S40 -- NOT discharged; routed as IRPT_BCKEND-S51.",
     "disposition": "UNDER_INVESTIGATION",
     "notes": "Evidence is CITED, not re-run, where it is a prior L9 grade or ruling. The CTO-side cause of this backlog: rounds 2 and 3 reached L10 on this seat's analyses before any CVO slug existed (analysis s.0)."
+  },
+  {
+    "id": "IRPT_FNTEND-W4-S8",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~4",
+    "surfaced_at": "2026-09-13T23:26:00Z",
+    "one_line": "Limb 1's line-anchored reader turned FE-s-28's own battery red (DECLARED NEW TO ADMITTED: 1 of 3). The cause was not a real declaring order: the battery's _declare fixture wrote the element mid-line, after a PROSE mention of `<paths>`, a form no real order uses. The fixture was corrected; the pattern was not changed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Base run before any edit, worktree wk-irpt_fntend-5-4-fe-s-29 @8666e6701e: `python .tools/tests/test_mandatory_placeholders.py` -> 'mandatory-placeholders battery: 26/26 arms as expected', rc=0.",
+        "Run after the line-anchored PLACEHOLDERS_TAG_RE landed in both readers, before the fixture changed: rc=1, 'DECLARED NEW TO ADMITTED: 1 of 3'. The FAIL arms were NFRA_COMPEFFICACY.TO-CE-E-1 and NFRA_OUTSET.TO-OS-s-1, each refused with 'NO <placeholders> element'; 'mandatory-placeholders battery: 24/26 arms as expected'.",
+        "Where each of the battery's three real specimens first carries the text `<paths>`, read @8666e6701e: NFRA_CLDGRPH.TO-CG-D-1 at col 0 (the block itself); NFRA_COMPEFFICACY.TO-CE-E-1 at col 31 ('- **Your write surface is the `<paths>` block below'); NFRA_OUTSET.TO-OS-s-1 at col 168, inside its <status> line. .tools/tests/test_mandatory_placeholders.py @8666e6701e _declare() inserted the element at text.find('<paths>'), i.e. mid-sentence for two of the three.",
+        "Every REAL declaring order writes the element on a line of its own and is admitted by the line-anchored reader. The same battery's ARM 6 reads 'REAL DECLARING ORDER ADMITTED' for 10 of 10: FE-s-23 and FE-s-28 through FE-s-36.",
+        "After _declare() was changed to insert at the start of the real <paths> BLOCK (gate.PATHS_BLOCK_RE), else at the start of the <preflight> line: rc=0, 'DECLARED NEW TO ADMITTED: 3 of 3', 'mandatory-placeholders battery: 26/26 arms as expected'."
+      ]
+    },
+    "spec_asserts": "TO-FE-s-29 F29-AC13: 'FE-s-28's battery still green, on the corpus it counts'. BOUNDS: 'If you find the line-anchored pattern rejects a form a real declaring order uses, that is a BLOCKING row with the measurement -- not a looser pattern.'",
+    "world_is": "The pattern rejects no form that a real declaring order uses. What it rejected was FE-s-28's own test fixture, which put the element mid-sentence in two of its three specimens. So this is not the BLOCKING case the bound names, and no pattern was loosened. The order did not say to edit FE-s-28's battery. The edit is to the fixture helper only, it sits inside this order's .tools/tests/ grant, and it is recorded here rather than done silently. The battery's printed boundary sentence was also brought in line with limb 4.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W4-S9",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~4",
+    "surfaced_at": "2026-09-13T23:26:00Z",
+    "one_line": "CLAUDE.md Rule 27's L4-R clause quotes to-pipeline-gate.py's _newly_added docstring: 'A modification (M) does not: this gate never refuses an existing TO'. After FE-s-29 limb 4 (Andrew-direct card 6), gate (viii) DOES grade a modification of an order that already declares <placeholders>, and that quoted sentence was amended. The law now quotes a sentence the source no longer carries. Its claim about LIMB 6 is unchanged.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CLAUDE.md @8666e6701e, Rule 27, the L4-R clause: 'The gate's own docstring (`_newly_added`, `:813`) is explicit: \"A rename (R) counts as added at its new path ... A modification (M) does not: this gate never refuses an existing TO.\"' It also says a modification can change a <paths> grant or a face 'and the worker never sees a refusal'.",
+        ".tools/to-pipeline-gate.py @8666e6701e _newly_added docstring: 'A modification (M) does not: this gate never refuses an existing TO.' In this worktree's change it reads: 'no limb that reads THIS set refuses an existing TO', and it names the one exception, gate (viii) on an order that already declares <placeholders> at HEAD. The module docstring's PROSPECTIVE ONLY paragraph names the same exception with its authority, @e2210bf34c.",
+        "The exception, exercised in a real git index through the gate's own CLI: .tools/tests/test_gate_viii_modify.py -> 'MODIFIED DECLARING ORDER, BROKEN DECLARATION: REFUSED 4 of 4' (FE-s-28 and FE-s-23 at rc=1), with 'MODIFIED ORDER WITHOUT THE ELEMENT: NOT GRADED' for FE-s-27.",
+        "CLAUDE.md is not in TO-FE-s-29's <paths> grant, so the law text is unchanged by this cell."
+      ]
+    },
+    "spec_asserts": "TO-FE-s-29 limb 4: gate (viii) also grades an order staged as MODIFIED, only if that order already declares <placeholders>; 'Update the gate's own docstring (:21-24, PROSPECTIVE ONLY) to state the rule and its authority.'",
+    "world_is": "The ruling moves exactly one limb. A seat reading CLAUDE.md's L4-R clause would still expect that no task-order modification is ever graded. After this cell, an amendment that deletes or under-declares the <placeholders> element of an order that declared it IS refused. What the clause says about LIMB 6 (PRD sign-off refuses only a newly-added order) remains true. The refusal a seat would meet is loud, never silent, so the hazard is INERT. The stale part is the quoted sentence and the general reading of it.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W4-S10",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~4",
+    "surfaced_at": "2026-09-13T23:26:00Z",
+    "one_line": "The drives limb reads TEN seeding props, not the three the cell names. The Investor Reporting (IR) components declare 15 initial* props, and 5 of them seed only UI state. Under the ten, a seventh suite also seeds (fe-s-15/job-states.test.ts:78 initialJob, reached by F15-AC7), and the cell's six-file population does not list it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Prop census, Grep over portal src/pages/InvestorReporting excluding __tests__, main worktree portal checkout @c2eb8eb4. TabShell.tsx:90-98: initialTab, initialHoldingsSnapshot, initialHoldingsEnvelope, initialAnalysisRequests, initialAnalysisReport. ReportingTab.tsx:119-121: initialReport, initialEnvelope, initialPeriod. HoldingsTab.tsx:56-58: initialSnapshot, initialEnvelope. Preview.tsx:147: initialPhase. GenerateComposer.tsx:73-83: initialJob, initialComparisonKeys, initialVariantChoice. AnalysisTab.tsx:73-85: initialRequests, initialReport, initialSnapshot, initialSnapshotEnvelope. That is 15 distinct names.",
+        "Subtraction written into .tools/proof-of-spec-check.py (this worktree's change) as SEED_PROPS_RULED + SEED_PROPS_MEASURED: 15 props minus the 5 UI-state props (initialTab, initialPeriod, initialPhase, initialComparisonKeys, initialVariantChoice) = 10.",
+        "Unscoped read, .tools/tests/test_seeded_limb.py in this worktree: '192 bun-test criteria in the committed IRPT_FNTEND orders, 159 naming test FILES; beyond the six-suite population, 1 more would be refused as SEEDED if declared network (F15-AC7); 0 unreadable here'.",
+        "The deciding hit on F15-AC7, read by the limb's own reader from TO-FE-s-15 @8666e6701e: 'job-states.test.ts 78 initialJob' (one of the seven measured props; no ruled prop appears there).",
+        "The six AC8 criteria each also carry a hit on a RULED prop, so AC8 does not depend on the widening: parity.test.ts:54 initialReport; tabs-mounted.test.ts:90 initialHoldingsEnvelope; renders-differently.test.ts:68 initialEnvelope; fields.test.ts:99 initialReport; states.test.ts:45 initialReport; controls.test.ts:44 initialReport."
+      ]
+    },
+    "spec_asserts": "TO-FE-s-29 limb 3: 'a body SEEDED through initialEnvelope / initialHoldingsEnvelope / initialReport'. F29-AC8: the population is every existing criterion whose invocation runs one of the suites that seed, 'measured at the cut: 6 test files'. F29-AC15: none of the four limbs 'can be satisfied by the party it grades'.",
+    "world_is": "A limb that read only the three named props would admit a network-declared test that seeds the same fetched bodies through initialSnapshot, initialHoldingsSnapshot, initialSnapshotEnvelope, initialAnalysisReport, initialAnalysisRequests, initialRequests or initialJob. The graded party could satisfy it. So the limb reads the ten fetched-content props, derived by subtraction from the measured 15. That choice is this worker's, is stated in the checker's block comment, and is L9's to grade. Its only visible effect on the committed corpus is F15-AC7, which no order declares drives=\"network\" today. The cut's six-file census is exact for the three named props and one suite short for the ten.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-14T03:15:33Z",
+    "id": "IRPT_FNTEND-W1-S55",
+    "one_line": "Ruling H partitions on Availability.producerState, but the view-fixture plane carries NO producerState on any availability -- a strict partition would send every fixture READY/STALE report to the panel; the gate reads the producer token when present and, when absent, the view state minus UNCERTAIN",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-FE-s-30 THE PLANE: 'Partition on `Availability.producerState` (contracts/index.ts:127, added by FE-s-25), never on the view's `EnvelopeState` alone.' BOUNDS: in fe-s-5/states.test.ts 'leave every other assertion as written' -- including its READY and STALE body assertions.",
+    "world_is": "FixtureAdapter.serve (portal src/api/endpoints/investor-reporting.ts, class at :1221) serves a round-1 VIEW fixture as it stands, and no view fixture carries producerState (e.g. fixtures/performance.partial-scope.json availability = {state, sourceAsOf, partialReason, publicReasonCode}). A gate that returned PANEL whenever producerState is absent would turn fe-s-5's READY (unsupported-benchmark, 49f-bd) and STALE (differing-dates) body assertions, and fe-s-10's parity body, red. On the network plane producerState is absent ONLY when no status arrived, and then the view state is always EXPLICIT_UNKNOWN_STATE (carryAvailabilityFromStatus, contracts/adapt.ts:275-292). So state/availability.ts reads producerState when present; when absent it honours the view state EXCEPT UNCERTAIN, the one view value the explicit unknown shares. On the network plane that is exactly 'absent -> panel'. This worker's reading of 'never on the view state alone'; L9's to grade.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal fcc91358 src/pages/InvestorReporting/state/availability.ts: isAnswerBearing -- producerState branch first, then EXPLICIT_UNKNOWN_STATE excluded, then ANSWER_BEARING_STATES.",
+        "predicate.test.ts deciding run: 'NO WIRE STATE      view=UNCERTAIN        producerState=(absent) -> PANEL' beside 'PRODUCER UNCERTAIN view=UNCERTAIN        producerState=UNCERTAIN -> BODY'; 'VIEW-FIXTURE PLANE AGREES WITH THE HAND-WRITTEN PARTITION: 9 of 9'.",
+        "Full suite after the change, server pointed at a closed port: 491 pass / 6 skip / 0 fail across 86 files (baseline 483 / 4 / 0 across 84) -- the READY/STALE fixture body assertions stayed green."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-14T03:15:33Z",
+    "id": "IRPT_FNTEND-W1-S56",
+    "one_line": "The prescribed dev-server launch re-optimized vite's dependency cache THROUGH the node_modules junction -- it rewrites the main checkout's shared node_modules/.vite, which every seat's dev server on this box reads",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "TO-FE-s-30 BOUNDS, Dev server: '`node_modules` is a junction; do not run `bun install`. Start once in the background from `<WS>/portal`: `/c/Users/AndrewBerman/.bun/bin/bun run dev --port <a free port>`'. The issuer's prompt: 'never delete through the junction'.",
+    "world_is": "vite.config.ts sets no cacheDir, so vite uses node_modules/.vite -- through the junction, the MAIN checkout's cache. On first start vite printed '(client) Re-optimizing dependencies because vite config has changed', i.e. it discarded and rebuilt that shared deps cache. Any worktree whose vite config differs from the last writer's triggers the same rewrite for every other dev server on the box. Not remedied here (vite.config.ts is outside the grant); the launch was run exactly as the order says.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "<WS>/.scratch/devserver.log, first lines after '$ vite --port \"5230\" --strictPort': '[vite] (client) Re-optimizing dependencies because vite config has changed', then 'VITE v7.3.5 ready in 1170 ms'.",
+        "portal c2eb8eb4 vite.config.ts: no cacheDir key (the server block at :28 sets port discipline, polling watch and proxy only).",
+        "The junction: <WS>/portal/node_modules -> C:/Users/AndrewBerman/Desktop/ajb_workspace/portal/node_modules (issuer's measured facts at the cut)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-14T03:15:33Z",
+    "id": "IRPT_FNTEND-W1-S57",
+    "one_line": "F30-AC8's invocation sets no IRPT_FE_DEV_PORT, so its browser arm drives WHATEVER answers on the default 5181 -- at this worker's port census a server this worker did not start answered there, so a bare re-run can grade a foreign worktree's page",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "F30-AC8: `cd <WS>/portal && timeout 240 bun test .../fe-s-3 .../fe-s-5 .../fe-s-30` -- 'PRECONDITION: none required -- your browser test reports SKIPPED without a server. Record which way you ran it.'",
+    "world_is": "The precondition helper (fe-s-27/_dev-server.ts:40, DEFAULT_DEV_PORT '5181') falls back to 5181 when the variable is unset. At this worker's port census `node dev-server-probe.mjs 5181 3000` printed 'PROBE REACHABLE HTTP 200 from http://localhost:5181/' -- not this worker's server (its own ran on 5230) -- and a later bare run read 'ABSENT (ECONNREFUSED from http://localhost:5181/)'. So whether AC8's browser arm SKIPS, or runs against another seat's bytes and fails or passes on them, depends on who holds 5181 at run time. This worker ran AC8 with IRPT_FE_DEV_PORT set explicitly both ways (5230 up: 48 pass / 0 fail; 5239 closed: 46 pass / 2 skip / 0 fail). A grader re-running the invocation as written inherits the ambiguity.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Port census, this worktree: 'PROBE UNREACHABLE ECONNREFUSED from http://localhost:5230/' then 'PROBE REACHABLE HTTP 200 from http://localhost:5181/' (before this worker started any server).",
+        "Bare run later (IRPT_FE_DEV_PORT unset): 'PRECONDITION: dev server on http://localhost:5181 -- ABSENT (ECONNREFUSED from http://localhost:5181/) [port from default; ...]', 0 pass, 0 fail.",
+        "portal c2eb8eb4 src/pages/InvestorReporting/__tests__/fe-s-27/_dev-server.ts:40 DEFAULT_DEV_PORT = '5181'; :43-46 devPort() env first, default second."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-S58",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-14T04:05:00Z",
+    "one_line": "DISARM, prospective, of rows W1-S56 and W1-S57 (and W5-S1, W5-S4 of the same two classes) for round 5's two remaining browser cells: FE-s-31 and FE-s-32 are amended BEFORE either is cut to run vite on a worktree-local cache and to export IRPT_FE_DEV_PORT on every test run, never unset.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal DEV fd91bea1 package.json:13 \"dev\": \"vite\"; vite.config.ts sets no cacheDir (read at DEV). So vite caches in node_modules/.vite, which in every worker worktree is the junction to the MAIN checkout's node_modules; the main checkout's node_modules/.vite/deps was last rewritten 2026-09-13 23:46 local.",
+        "portal c2eb8eb4 src/pages/InvestorReporting/__tests__/fe-s-27/_dev-server.ts:40 DEFAULT_DEV_PORT = '5181'; devPort() reads the env first and the default second. Row W1-S57: a server not the worker's answered 5181. Row W5-S1: 5181 was held by C:/tmp/wk-dsgn-1e/portal's vite and F19-AC4/AC5 graded that tree (0 of 2), then read 2 of 2 on the worker's own server.",
+        "The control, in the same commit as this row: FE-s-31's and FE-s-32's dev-server bound amended before either worktree is cut -- a --config override file inside each cell's own __tests__ folder that mergeConfigs ONLY cacheDir to <WS>/.scratch/vite-cache-fe-s-<n>; IRPT_FE_DEV_PORT exported on EVERY bun test run (own server's port while up, a measured-closed port while down).",
+        "The issuer's own drain re-runs already pin the port: FE-s-30 re-run with IRPT_FE_DEV_PORT=5247 (own server, 4 of 4) and =5249 (closed, 46 pass / 2 skip / 0 fail)."
+      ]
+    },
+    "spec_asserts": "FE-s-31 and FE-s-32 as issued @b4d1b8bfef, BOUNDS: 'Start once in the background from <WS>/portal: bun run dev --port <a free port>, export it as IRPT_FE_DEV_PORT (the variable __tests__/fe-s-27/_dev-server.ts reads; its default is 5181), and kill it before your final report.'",
+    "world_is": "Launched as issued, a worktree dev server rebuilds the main checkout's shared vite cache (W1-S56, W5-S4), and any run that leaves IRPT_FE_DEV_PORT unset can grade whichever page holds 5181 -- measured twice in round 5, once on another project's worktree (W1-S57, W5-S1). Both remaining browser cells are amended before their cuts. NOT closed here, carried to the drain-end packet for 1.0.0_SA_CTO: the helper's default port itself (fe-s-27/_dev-server.ts, in no round-5 grant), a portal-wide cacheDir in vite.config.ts, and tsc -b's tsbuildinfo written through the junction (W5-S4).",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W5-S1",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~5",
+    "surfaced_at": "2026-09-14T03:49:51Z",
+    "one_line": "fe-s-19's two browser criteria (F19-AC4, F19-AC5) graded ANOTHER PROJECT'S TREE: the fe-s-27 precondition probe reads MET on any HTTP 200 at the default port 5181, and when this worker's first post-refusal run went out 5181 was held by `node \"C:\\tmp\\wk-dsgn-1e\\portal\\node_modules\\vite\\bin\\vite.js\" --port 5181` (PID 11144, a DSGN worktree) -- BODIES MOUNTED 0 of 2 and UNCERTAIN WITHOUT A WIRE STATE 0 of 2. The same test against THIS worktree's own dev server (IRPT_FE_DEV_PORT=5197) read 2 of 2 and 2 of 2.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "netstat -ano: `TCP [::1]:5181 [::]:0 LISTENING 11144`; Get-CimInstance Win32_Process 11144: ParentProcessId 25984, CreationDate 9/13/2026 9:54:49 PM (local), CommandLine `node \"C:\\tmp\\wk-dsgn-1e\\portal\\node_modules\\vite\\bin\\vite.js\" --port 5181` -- not this worktree (C:/tmp/wk-irpt_fntend-5-5-fe-s-35).",
+        "The F35-AC6 folder set, run after the one-line refusal and before the fe-s-1 re-base: 273 pass / 3 fail; 2 of the 3 were fe-s-19/mounted-from-wire.test.ts:126 and :136 under `PRECONDITION: dev server on http://localhost:5181 -- MET (HTTP 200 ...) [port from default]`, both tabs `slot=status-panel state=FAILED`, `served(ready): ` EMPTY.",
+        "The same file with IRPT_FE_DEV_PORT=5197 against a vite started from this worktree's own portal (PID 21736, stopped afterwards): `BODIES MOUNTED: 2 of 2`, `UNCERTAIN WITHOUT A WIRE STATE: 2 of 2`, `served(ready): .../directory/resolve, .../holdings/, .../performance/`, 2 pass 0 fail.",
+        "portal c2eb8eb4 src/pages/InvestorReporting/__tests__/fe-s-27/_dev-server.ts:40 `DEFAULT_DEV_PORT = '5181'`, :63 `probeDevServer` -- MET is an HTTP 200 on the port; nothing identifies the tree being served.",
+        "The deciding F35-AC6 run (portal 357b4055) read `PRECONDITION ... -- ABSENT (ECONNREFUSED ...)`: 277 pass / 2 skip / 0 fail -- the foreign server had exited."
+      ]
+    },
+    "spec_asserts": "F35-AC6: \"PRECONDITION: none required -- fe-s-19's browser tests report SKIPPED without a server. Record which way you ran it.\" The face knows two states: ABSENT (skipped) or MET by this portal's dev server.",
+    "world_is": "A third state exists: MET by a FOREIGN tree. The probe only establishes that something answers on the port, so with another seat's vite on 5181 the F35-AC6 invocation as written graded code this order never touched -- red here, and just as able to read a false GREEN whenever the foreign tree happens to mount. ARMED because it recurs on the future normal path: every worker in this project shares the one default port with every other project's dev server. Disarm is a probe that identifies the served tree, or a per-worker port by construction. `_dev-server.ts` is outside this order's <paths>.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W5-S2",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~5",
+    "surfaced_at": "2026-09-14T03:49:51Z",
+    "one_line": "The v1 contract names no `report_title` anywhere -- 0 of 25 files under docs/contracts/investor-reporting/v1/ -- and declares no REQUEST schema for the analysis POST (routes.json carries `response_schema` only), so \"the contract's schema for that field\" does not exist in v1. The type was read from UI_CONTRACT.md S10's \"Browser request\" block (`\"report_title\": null`) plus its table row \"Report title | Optional override\": string | null.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal 357b4055 __tests__/fe-s-35/no-identity.test.ts, deciding run: `CONTRACT v1 FILES NAMING report_title: 0 of 25 (docs/contracts/investor-reporting/v1/, recursive)`.",
+        "docs/contracts/investor-reporting/v1/routes.json @0a74710f33, route `POST /api/scoped/investor-reporting/analysis`: keys route_key, handler, cell, status, note, operation, consumer_operation, response_schema -- no request schema.",
+        "docs/research/investor_reporting_ycharts_variants_20260911/UI_CONTRACT.md @72acd16e66, \"## Browser request\": `\"report_title\": null`; UI table: `| Report title | Optional override | Otherwise derive from client/account label and comparison names. ...`.",
+        "org/missions/D9/IRPT/IRPT_FNTEND/prd/IRPT_FNTEND_PRD.md @0a74710f33 :116 names `report_title` in AnalysisRequest's browser request half \"per S10\" -- the PRD routes the field to S10, not to a v1 schema."
+      ]
+    },
+    "spec_asserts": "Cell FE-s-35: \"`contracts/adapt.ts` types the analysis request's `report_title` as `string` ... Make them agree with the contract's schema for that field.\" F35-AC5: \"The test reads the contract schema's type for `report_title` and both builders' types and prints all three.\"",
+    "world_is": "No schema types the field. The one contract carrier naming it is UI_CONTRACT.md S10 (4.0.0_SA_CRO's research packet, cited by the PRD), which sends null for no override and names an override. no-identity.test.ts reads THAT file for the contract's type and prints the v1 census beside it, so the gap stays visible rather than papered over. Both builders now type `string | null`. Should v1 later publish a request schema, the test's source should move to it. A v1 request-schema gap is the contract owner's (1.0.0_SA_CTO), and docs/contracts/ is outside this grant.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W5-S3",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~5",
+    "surfaced_at": "2026-09-14T03:49:51Z",
+    "one_line": "The cell's measured premise about the bare-body suites did not hold as stated. With the refusal in place ONE test went red across fe-s-1/ and fe-s-13/ (fe-s-1/adapter.test.ts:231, 'targets the DECLARED route'), not three. And a THIRD file serves a bare body -- fe-s-13/routes.test.ts:164 `{ instance: null }` -- which the '2 of 6 carry no contract_version' census missed because that file carries the token `_contract_version` (:62, :73-74).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "After the one-line refusal only (portal c2eb8eb4 + investor-reporting.ts edit), the F35-AC6 folder set: 273 pass / 3 fail. fe-s-1/adapter.test.ts:231 threw `EnvelopeMismatch ... field 'body'`; the other two reds were fe-s-19/mounted-from-wire.test.ts:126/:136 driving a foreign dev server (row IRPT_FNTEND-W5-S1). fe-s-13: 0 red.",
+        "fe-s-13/no-route.test.ts @c2eb8eb4: every LiveClient call (submitCorrection, previewExportBundle, listAnalysisRequests) is refused by NoDeclaredRoute before the transport, so its three `{}` stubs are never served; it asserts `issued` is [].",
+        "fe-s-13/routes.test.ts @c2eb8eb4 :164 `return Promise.resolve({ instance: null } as unknown as T)` -- reached by getHoldingsSnapshot; green only because the test catches every error and asserts `not NotYetExercisable`.",
+        "Row IRPT_FNTEND-W1-S39 world_is: \"closing the clause would red three tests in two suites this order may not write\"."
+      ]
+    },
+    "spec_asserts": "Cell FE-s-35: \"of the 6 test files that construct `LiveClient`, 2 carry no `contract_version` -- `__tests__/fe-s-1/adapter.test.ts` and `__tests__/fe-s-13/no-route.test.ts`. W1-S39 measured three tests red in those two when the branch refuses. Re-base them onto enveloped bodies.\"",
+    "world_is": "Red in those two: 1, not 3. Bare bodies actually served: 3 stubs in 2 files (adapter.test.ts: the performance fixture and the holdings `{}`; routes.test.ts: the holdings `{ instance: null }`), not the 2 named files. Re-based: all 3 served stubs are now v1 envelopes carrying their old payload as `data`, and every assertion is unchanged. The never-served stubs (no-route.test.ts x3, adapter.test.ts's route-refused calls) are unchanged. routes.test.ts was edited although the cell did not name it; fe-s-13/ is inside <paths>. A token census cannot tell a file that SERVES a v1 body from one that merely mentions `contract_version`.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W5-S4",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~5",
+    "surfaced_at": "2026-09-14T03:49:51Z",
+    "one_line": "To separate the foreign-server red (W5-S1) from a real one, this worker started a vite dev server from its own worktree on port 5197 -- an act the order did not name -- and vite re-optimized dependencies into its cache under node_modules. That node_modules is a JUNCTION to the main checkout's portal/node_modules, so the write landed in the shared tree. `bun run typecheck` (tsc -b) likewise writes its tsbuildinfo into node_modules/.tmp through the same junction on every F35-AC1 run.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "vite v7.3.5 started from C:/tmp/wk-irpt_fntend-5-5-fe-s-35/portal with `node node_modules/vite/bin/vite.js --port 5197 --strictPort` printed `(client) Re-optimizing dependencies because vite config has changed`; portal/vite.config.ts sets no `cacheDir` (vite's default is node_modules/.vite -- INFERRED location, not listed).",
+        "The issuer's facts at the cut: `<WS>/portal/node_modules = a JUNCTION to C:/Users/AndrewBerman/Desktop/ajb_workspace/portal/node_modules`.",
+        "portal tsconfig.app.json @c2eb8eb4: `\"tsBuildInfoFile\": \"./node_modules/.tmp/tsconfig.app.tsbuildinfo\"`.",
+        "Server stopped (Stop-Process 21736); netstat afterwards: no listener on 5197. No package was installed or removed; `bun install` was never run."
+      ]
+    },
+    "spec_asserts": "BOUNDS: \"`node_modules` is a junction; do not run `bun install`\"; the write grant is <paths> plus the deliverables folder; F35-AC6 \"PRECONDITION: none required\".",
+    "world_is": "Two writes outside the grant happen through the junction without any install. (1) The dev server's dependency re-optimization, which this worker chose to run to discriminate W5-S1. (2) tsc -b's build-info file, written by the order's OWN F35-AC1 invocation -- so every wave-B worker's AC1 writes the same shared file. Both are caches a later run rebuilds; no source file was touched.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W4-S11",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~4",
+    "surfaced_at": "2026-09-14T03:43:42Z",
+    "one_line": "F36-AC4 describes a real shape -- a `(?<![0-9])0 fail` bar on `bun test <an existing file>` -- that no committed criterion has. At 0a74710f33, the 30 task orders carrying a `0 fail` bar hold 53 single-file bun criteria, all with a BARE `0 fail`, and 0 with the anchored bar. The anchored bar sits only on multi-directory runs, all of them round 5, whose own directories are not yet in the pinned portal commit. The battery grades the two nearest real shapes instead of a joined one it would have had to invent.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/tests/test_output_vocabulary.py _runner_specimens() (this cell): one `git grep -l -F '0 fail</expect>'` at 0a74710f33 over org/missions, filtered to task-orders -> 30 orders; criteria whose invocation is `cd <WS>/portal && timeout N ...bun test <targets>`: single-file with the anchored bar 0, single-file with a bare `0 fail` 53, multi-directory with the anchored bar 6 (F30-AC8 .. F35-AC6).",
+        "Portal pin at 0a74710f33: `git ls-tree 0a74710f33 portal` -> e85f6eb84f; `git --git-dir <main>/portal/.git cat-file -e e85f6eb84f:src/pages/InvestorReporting/__tests__/fe-s-1/keys.test.ts` -> present (F1-AC2's file). F30-AC8's three directories: 2 present, `__tests__/fe-s-30` absent (written by FE-s-30's worker).",
+        "Battery arms, gate CLI in a real index at 0a74710f33: 'RUNNER: F1-AC2 (`bun test src/pages/InvestorReporting/__tests__/fe-s-1/keys.test.ts`, bar `0 fail`) is not refused by this limb' PASS; 'RUNNER: F30-AC8 (... bar `(?<![0-9])0 fail`) is not refused by this limb' PASS."
+      ]
+    },
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-36 worker face, F36-AC4: 'a criterion whose bar comes from the test runner rather than the test file -- a `(?<![0-9])0 fail` bar on `bun test <an existing file>` -- is admitted'; BOUNDS: 'Build the positive and negative controls from real committed orders ... never from strings you chose.'",
+    "world_is": "The two properties the criterion joins never meet in one committed criterion. The limb's decision does not depend on them: it never reads a runner's test file, so any `bun test` criterion is counted as a runner's vocabulary and never refused, whatever its bar. The arm therefore grades F1-AC2 (bare `0 fail`, one file present at the pin) and F30-AC8 (anchored bar, three directories, 2 present at the pin), and prints the 0-of-53 measurement beside them. Joining the two would have meant editing a real order's bar, a string this worker chose.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W4-S12",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~4",
+    "surfaced_at": "2026-09-14T03:43:42Z",
+    "one_line": "Run once over EVERY tracked tree order (359 orders, 1235 mechanical criteria), the new output-vocabulary limb would refuse 6 criteria if they were newly added, all in AMGT_RESAPP: each <expect> is an English sentence (e.g. AMGT-s-1 AC1 `a line containing \"DAPI: UP\" -- the terminal is signed in ...`). proof-of-spec-check grades <expect> as a regex search, so none can ever match its tool's output. The limb is prospective, so none is refused; they are S55's class measured outside IRPT_FNTEND.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Census (this worker, .scratch; the committed function .tools/to-pipeline-gate.py _output_vocabulary_violations called per order, tools read from this worktree's index = 0a74710f33 + this cell): 359 tree orders, 1235 mechanical criteria -> 17 evaluated and admitted, 6 refused, 160 announced, 438 a runner's vocabulary, 614 not one python program's output.",
+        "The 6: AMGT_RESAPP.TO-AMGT-r-1 AC2; TO-AMGT-s-1 AC1, AC2, AC4; TO-AMGT-s-8 AC1; TO-AMGT-s-b4 AC1 (org/missions/D5/AMGT/AMGT_RESAPP/task-orders/ @0a74710f33). Statuses there: TO-AMGT-r-1 <status>complete; TO-AMGT-s-1 <status>complete; TO-AMGT-s-8 <status>complete; TO-AMGT-s-b4 <status>complete.",
+        "Before the one modelled continuation (print(..., end=\"\")), the same census refused a 7th: NFRA_CLDGRPH.TO-CG-F-5 F5-AC1, whose tool prints `UNREACHABLE_REFUSAL_NAMES=` with end=\"\" and its value on the next print -- an honest bar. It was fixed in the limb before landing (it now reads UNDECIDED, announced), and it is recorded in the limb's ASSUMPTION B comment."
+      ]
+    },
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-36 THE CELL: 'five criteria in round 4 were cut against an assumption about a tool's output ... no gate caught any' (S55 counts them within IRPT_FNTEND).",
+    "world_is": "The class is not confined to this project's round 4. Six committed AMGT_RESAPP criteria carry prose where a regex bar belongs. Each reads as satisfiable to a human, and by construction none can match. The limb grades only newly-added orders, so these stay committable and unrefused. Whether any is still open against a worker is for the AMGT_RESAPP issuer; this worker neither reads nor edits that project beyond the census.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W2-S23",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~2",
+    "surfaced_at": "2026-09-14T03:49:56Z",
+    "one_line": "Adding a Holdings envelope for F-CW to fe-s-14-global.json does not make a second firm visible: the page issues ONE holdings request, for the one scope resolve-scope answers, and ui-smoke keys that answer on its URL alone, so from this map the page reaches F-49F's envelope and never F-CW's.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/tabs/TabShell.tsx:158 @portal c2eb8eb4: '.getHoldingsSnapshot(scopeRef)' -- one request per resolved scope",
+        "portal/src/pages/InvestorReporting/index.tsx:54 and :59 @portal c2eb8eb4: resolve-scope keyed on firmId, which travels as a POST body field",
+        "portal/scripts/ui-smoke.mjs:146 @portal c2eb8eb4: 'const k = fixtureKeys.find(key => url.includes(key))' -- URL-only match",
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-33/fixtures-reach.test.ts @portal 5067c254, run from portal: 'PAGE'S HOLDINGS REQUEST FROM THIS MAP: /api/scoped/investor-reporting/holdings/3a7bd3e2... -> key /api/scoped/investor-reporting/holdings/ -> firm F-49F' and 'HOLDINGS ENVELOPES THE PAGE CAN REACH FROM THIS MAP'S ONE RESOLVE ANSWER: 1 of 2'"
+      ]
+    },
+    "spec_asserts": "TO-FE-s-33 WORKER FACE, cell item W1-S53: fe-s-14-global.json 'carries 2 keys and no holdings key, so the Global view's Holdings tab reads Failed and no second firm is visible. Add Holdings envelopes for both firms the map already names.'",
+    "world_is": "Both envelopes are added and each is a valid v1 envelope (F33-AC6: 'GLOBAL MAP CARRIES HOLDINGS FOR BOTH FIRMS: 2 of 2'), and the tab's request now reads F-49F's READY envelope instead of failing. The second firm stays unreachable from this map. TabShell.tsx:158 and HoldingsTab's own effect each call getHoldingsSnapshot(scopeRef) for the ONE scope resolve-scope returned. The resolve request carries the selected firm only in its POST body (index.tsx:54, :59), while ui-smoke.mjs:146 matches a fixture by URL substring alone (:197 fulfils it), so every firm selection receives the same resolve answer (verified_request_firm_id F-49F, fingerprint 3a7bd3e2...). Measured by fixtures-reach.test.ts's REACH arm: 'HOLDINGS ENVELOPES THE PAGE CAN REACH FROM THIS MAP'S ONE RESOLVE ANSWER: 1 of 2'. F-CW's envelope is keyed on its own account-set route (/holdings/ + 64 x 'c') and is served only for that URL. Making the second firm visible needs a per-firm resolve answer, which means a body-aware fixture rule or a second map. Both are outside this order's five maps.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W2-S24",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~2",
+    "surfaced_at": "2026-09-14T03:49:56Z",
+    "one_line": "fe-s-14-global.json now has two writers: fe-s-14/gen-maps.ts rewrites the whole file without holdings, so running it alone silently deletes the two Holdings envelopes FE-s-33 added. This is the regeneration hazard FE-s-33 closed for FE-s-26's statuses, moved to a generator outside this grant.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-14/gen-maps.ts:95 @portal c2eb8eb4: writes '${SMOKE_DIR}fe-s-14-global.json' from mapFor(...)",
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-33/gen-global-holdings.ts @portal 5067c254: header 'WARN: ORDER MATTERS, AND THIS IS THE SECOND WRITER OF ONE FILE'",
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-33/fixtures-reach.test.ts @portal 5067c254: control arm 'CONTROL -- holdings envelopes removed in memory: firms with a valid holdings envelope 0 of 2' -- the shape gen-maps.ts alone writes"
+      ]
+    },
+    "spec_asserts": "TO-FE-s-33 BOUNDS: the <paths> grant names fixtures/smoke/fe-s-14-global.json and not __tests__/fe-s-14/gen-maps.ts. The cell's hazard clause, about the Holdings maps: 'Regenerating them from a fixed generator would silently strip FE-s-26's repair.'",
+    "world_is": "gen-maps.ts:93-97 @portal c2eb8eb4 writes fe-s-14-global.json from mapFor(...), which returns exactly two keys (resolve-scope and performance-report, :77-80) and knows nothing of holdings. FE-s-33 derives the two Holdings envelopes in __tests__/fe-s-33/gen-global-holdings.ts. That script is idempotent: it drops any holdings envelope and re-adds exactly two. Its header states the order 'gen-maps.ts, then gen-fixtures.ts, then this'. Nothing enforces that order. gen-maps.ts run alone produces the round-4 shape, which F33-AC6's own control arm grades 'firms with a valid holdings envelope 0 of 2'. The disarm is a change to gen-maps.ts, either chaining the holdings step or refusing to write without it. That change is outside this order's grant.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W2-S25",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~2",
+    "surfaced_at": "2026-09-14T03:49:56Z",
+    "one_line": "The wire HoldingsSnapshot has no scope-level node_kind, so one tree root over a scope can only be expressed as an ACCOUNT node. FE-s-33's root is the scope's one account (A-0001), while the same maps' custody_totals.unique_account_count reads 3.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json @workspace 0a74710f33: nodes[].node_kind enum has no scope-level member",
+        "portal/src/pages/InvestorReporting/contracts/adapt.ts:389 @portal c2eb8eb4: NODE_KIND_FOR_WIRE -- no wire kind maps to the view's 'scope'",
+        "portal/src/pages/InvestorReporting/fixtures/holdingsSnapshot.success.json @portal c2eb8eb4: root nd-root kind 'scope', displayName 'Selected scope'",
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-18/gen-fixtures.ts:182 @portal c2eb8eb4: 'totals.unique_account_count = 3'"
+      ]
+    },
+    "spec_asserts": "TO-FE-s-33 WORKER FACE, cell item W1-S52: 'Emit a tree with a real parent chain.' HoldingsSnapshot.schema.json nodes[].parent_node_id: 'its parent, null at the root' -- one root.",
+    "world_is": "The wire node_kind enum is ACCOUNT, SLEEVE, MODEL_WRAPPER, MODEL_LEAF, SECURITY, CASH, UNRESOLVED. adapt.ts:389 NODE_KIND_FOR_WIRE maps none of them to the view's 'scope' kind, which the view-level fixture holdingsSnapshot.success.json uses for its root ('Selected scope'). So a multi-account scope's tree has no expressible single root, and the view's rootNode (slices.ts:112) takes the FIRST parentless node. A producer that emits one ACCOUNT root per account would render only the first account's subtree. For the fixtures, FE-s-33 chose the one honest root the source supports: scope.account_ids is ['A-0001'] in fe-s-13-wire.json, so the root is an ACCOUNT node for A-0001, which the view names by its node_id (adapt.ts:821). NOT EDITED: gen-fixtures.ts:182 @portal c2eb8eb4 sets custody_totals.unique_account_count = 3 against that one-account scope. It predates this cell and is left as found.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W2-S26",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~2",
+    "surfaced_at": "2026-09-14T03:49:56Z",
+    "one_line": "The three Holdings maps' performance envelope now carries the frozen report's READY status too. gen-fixtures.ts builds each Holdings map from the WHOLE frozen map, so fixing W1-S51 changes the Holdings maps beyond the trees the order named.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-18/gen-fixtures.ts:176 @portal c2eb8eb4: 'for (const key of Object.keys(frozen)) map[key] = clone(frozen[key])'",
+        "scratch comparison, generated vs committed @portal c2eb8eb4, per Holdings map: 'only-other-difference-is-perf-status: True | perf status == frozen status: True | differing keys after removal: []'",
+        "bun test src/pages/InvestorReporting @portal 5067c254: 494 pass, 4 skip, 0 fail across 85 files (baseline at c2eb8eb4: 483 pass, 4 skip, 0 fail across 84)"
+      ]
+    },
+    "spec_asserts": "TO-FE-s-33 WORKER FACE: W1-S51 names fe-s-18-frozen.json. W1-S52 names the Holdings maps' TREES. The hazard clause names only the Holdings maps' `status` members, which must survive byte for byte.",
+    "world_is": "gen-fixtures.ts:176 @portal c2eb8eb4 copies every key of the frozen map into each Holdings map, so the frozen performance status (READY / REQUESTED_WINDOW_ANSWERED) lands on /performance/ in all three Holdings maps. This was measured by parse against the committed maps at c2eb8eb4. For each of the three, once `nodes` and that one status are removed, the maps are equal (0 differing keys), and the added status equals the frozen map's. FE-s-26's holdings statuses are untouched (F33-AC5 3 of 3, byte-equal). The change was kept, not special-cased: by the generator's own design each Holdings map is the whole page around one report, and a Holdings map's Reporting tab now shows that report instead of StatusPanel. The whole InvestorReporting suite read 0 fail before and after.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W2-S27",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~2",
+    "surfaced_at": "2026-09-14T03:49:56Z",
+    "one_line": "The frozen map's narrative packet names performance revision perf-9, not the frozen report's rev-49f-000091, so it is not the frozen report's narrative. FE-s-33 left it out of the envelopes a view reads, because the narrative is off by default in both preview and print, and gave it no status.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/fixtures/smoke/fe-s-18-frozen.json:250 @portal c2eb8eb4: '\"performance_report_revision\": \"perf-9\"'",
+        "portal/src/pages/InvestorReporting/export/ExportModal.tsx:79 and :123, portal/src/pages/InvestorReporting/render/PrintEntry.tsx:92 @portal c2eb8eb4: narrative default-off in preview and print",
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-33/fixtures-reach.test.ts @portal 5067c254: 'UNCLASSIFIED READS: 0' and 'FROZEN MAP, ENVELOPES A VIEW READS CARRYING status: 1 of 1 (performance-report)'"
+      ]
+    },
+    "spec_asserts": "TO-FE-s-33 WORKER FACE, cell item W1-S51: 'Give the envelopes each view reads a legitimate state and reason.' gen-fixtures.ts header: fe-s-18-frozen.json is 'ONE performance report at ONE revision'.",
+    "world_is": "fe-s-18-frozen.json:250 @portal c2eb8eb4: the narrative's data.performance_revision.performance_report_revision = 'perf-9' (fe-s-13-wire.json's narrative, copied whole). The three paired views read the narrative only when it is switched on. ExportModal.tsx:79 defaults includeNarrative to false, and :123's narrativeAvailable gates the toggle on the current revision. PrintEntry.tsx:92 reads the narrative only for ?narrative=1. So at the captured defaults no view reads it, and F33-AC2's denominator is 1 envelope (performance-report), taken by census of each view's own api calls ('UNCLASSIFIED READS: 0'). A narrative-on preview or print of the frozen map would pair the frozen report with a narrative written for another revision. No status was added to the narrative, because no state would be legitimate for it as the frozen report's narrative.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-S59",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-14T05:10:00Z",
+    "one_line": "DISARM BY DETECTION of row W2-S24: FE-s-14's generator rewrites fe-s-14-global.json whole and would silently delete FE-s-33's two Holdings envelopes. The deletion can no longer be silent -- F33-AC6's test fails on it wherever the fe-s-33 folder runs -- and the prevention (one writer, or a generator that composes the Holdings envelopes) is carried to 1.0.0_SA_CTO.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Row W2-S24 (0.9.0_WK_IRPT_FNTEND~2): since portal 5067c254 the map has two writers -- __tests__/fe-s-14/gen-maps.ts (whole-file rewrite) and __tests__/fe-s-33/gen-global-holdings.ts. No round-5 order grants fe-s-14/gen-maps.ts.",
+        "The detector, re-run by this seat at FE-s-33's drain (workspace aac761ea2d, portal DEV e85498be): bun test __tests__/fe-s-33/fixtures-reach.test.ts prints 'GLOBAL MAP CARRIES HOLDINGS FOR BOTH FIRMS: 2 of 2' (11 pass / 0 fail). A map without the envelopes fails that line.",
+        "Coverage stated, not assumed: FE-s-32's F32-AC8 folder run (fe-s-7, 10, 22, 26, 32) does NOT include fe-s-33, and no round-5 face runs fe-s-14's generator."
+      ]
+    },
+    "spec_asserts": "FE-s-33 face: 'fe-s-14-global.json carries 2 keys and no holdings key ... Add Holdings envelopes for both firms the map already names.' The map remains FE-s-14's evidence.",
+    "world_is": "The added envelopes survive only as long as nobody regenerates the map with FE-s-14's generator. That act is in no round-5 order, and if it happens the fe-s-33 folder turns red rather than passing on a stripped map. What is NOT closed: the two-writer shape itself, and row W2-S23's finding that the page reaches 1 of the 2 envelopes (one resolve-scope answer), so FWD-11's second firm is still not visible. Both go to the round-5 drain-end packet.",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```

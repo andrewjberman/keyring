@@ -441,7 +441,10 @@ Doctrine: `docs/doctrine/A_VALUE_MUST_CARRY_ITS_CLAIM.md`.
     **One home per logical producer is a CORRECTNESS requirement, not tidiness** -- three seats spent
     2026-08-25 deriving "which copy of this code actually runs" by hand from deployed bytes, and the
     first derivation was wrong. Amendment history, the superseded clause, and the measured
-    non-conformance: `docs/architecture/D10_GLOBAL_PIPELINE_STRUCTURE_PRD.md`.
+    non-conformance: `org/missions/D14/LGIC/LGIC_CANON/prd/LGIC_CANON_PRD.md`, the D14 PRD that carries
+    D10's folded canon content (its CONTRACTS row "the folded D10 canon content"). One hop on is
+    `docs/architecture/D10_GLOBAL_PIPELINE_STRUCTURE_PRD.md`, where the superseded clause and the measured
+    non-conformance still live.
     ⚠ **THIS CITATION READ `D8_...` UNTIL 2026-09-13 AND RESOLVED TO NOTHING** -- the file was
     renamed D8 -> D10 and the pointer was not, so Rule 17b's amendment history was unreachable from
     the law that cites it. Andrew ruled 2026-09-13 ~01:3xZ that D10's canon content FOLDS INTO D14,

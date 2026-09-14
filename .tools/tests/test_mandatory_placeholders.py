@@ -145,13 +145,25 @@ def _declaration_for(text: str) -> str:
 
 
 def _declare(text: str) -> str:
-    """Insert the declaration, changing nothing else. Before the <paths> block when there is one
-    (where FE-s-28's own face carries it), else before <preflight>, else appended."""
+    """Insert the declaration ON ITS OWN LINE, changing nothing else. Before the real <paths> BLOCK when
+    there is one (where FE-s-28's own face carries it), else at the start of the line holding <preflight>,
+    else appended.
+
+    ON ITS OWN LINE (FE-s-29 limb 1, RULING M(i)): both readers are line-anchored now, and every declaring
+    order in the estate writes the element on a line of its own. This helper used to insert at the FIRST
+    occurrence of the text `<paths>` -- for 2 of this battery's 3 real specimens that is a PROSE mention
+    (col 31 of a bullet; col 168 of a <status> line), which put the element mid-sentence: a form no real
+    order uses, and exactly the prose span the anchored reader exists to ignore. The fixture is corrected,
+    never the pattern."""
     line = _declaration_for(text) + "\n\n"
-    for anchor in ("<paths>", "<preflight>"):
-        i = text.find(anchor)
-        if i != -1:
-            return text[:i] + line + text[i:]
+    m = gate.PATHS_BLOCK_RE.search(text)
+    if m is not None:
+        i = m.start()
+        return text[:i] + line + text[i:]
+    j = text.find("<preflight>")
+    if j != -1:
+        i = text.rfind("\n", 0, j) + 1
+        return text[:i] + line + text[i:]
     return text + "\n" + line
 
 
@@ -311,10 +323,12 @@ def main() -> int:
         if boundary_ok:
             print("EXISTING CORPUS STILL COMMITTABLE: %d task-order files tracked (%d tree, %d flat-root "
                   "legacy), %d carry <placeholders>, %d tree orders lack it and 0 of them are graded -- "
-                  "BOUNDARY: the limb binds ONLY a file STAGED AS ADDED (git A/R) under "
-                  "org/missions/D*/*/*/task-orders/*.md; a MODIFICATION of an existing order and the whole "
-                  "org/**/task_orders/ population are never graded (measured end-to-end: identical bytes, "
-                  "REFUSED as an add and ADMITTED as a modify, in one gate run)."
+                  "BOUNDARY: the limb binds a file STAGED AS ADDED (git A/R) under "
+                  "org/missions/D*/*/*/task-orders/*.md, and a MODIFICATION only of an order that ALREADY "
+                  "declares the element (FE-s-29 limb 4, Andrew-direct card 6); a MODIFICATION of an existing "
+                  "order that does not declare it, and the whole org/**/task_orders/ population, are never "
+                  "graded (measured end-to-end: identical undeclared bytes, REFUSED as an add and ADMITTED as "
+                  "a modify, in one gate run)."
                   % (len(ALL_TOS), len(TREE_TOS), len(FLAT_TOS), len(DECLARING), len(UNDECLARED_TREE)))
         else:
             print("EXISTING CORPUS: BOUNDARY ARM DID NOT HOLD -- see the FAIL line(s) above.")
