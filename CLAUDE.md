@@ -38,7 +38,7 @@ stable, citations resolve there. DS/AE seats read their sections before touching
     `.tools/to-pipeline-gate.py` LIMB 6 REFUSES a **NEWLY-ADDED** task order against a PRD with a half
     not SIGNED. ⛔ **IT DOES NOT FIRE ON A MODIFICATION, AND THIS LINE USED TO SAY SO WITHOUT THE
     QUALIFIER -- SO THE LAW READ STRONGER THAN THE TOOL BEHAVES AND THREE SEATS INHERITED THE BELIEF
-    FROM IT IN ONE EVENING.** The gate's own docstring (`_newly_added`, `:813`) is explicit: *"A
+    FROM IT IN ONE EVENING.** The gate's own docstring (`_newly_added`, `:1015` @cd399d339d) is explicit: *"A
     rename (R) counts as added at its new path ... A modification (M) does not: this gate never
     refuses an existing TO."* Measured 2026-09-11 by `2.0.0_SA_COO~ZZZ` as a discriminating pair on
     ONE project in ONE hour: the add path refused its new order **three times** (missing
@@ -47,8 +47,13 @@ stable, citations resolve there. DS/AE seats read their sections before touching
     a stale half" IS A HUMAN DISCIPLINE, NOT A GATE** -- and the sharpest exposure is not the signed
     half at all: a modification can change a criterion's grammar, a `<paths>` grant, or the inlined
     cell text of a face **a worker is reading at that moment**, and the worker never sees a refusal.
-    The prospective-only scoping is Andrew's own (`:21`), so widening it is HIS call and is carded,
-    not assumed. One rule for all
+    The prospective-only scoping is Andrew's own (`:21`), and he has widened it EXACTLY ONCE, by card:
+    **GATE (viii) -- the `<placeholders>` declaration -- ALSO grades a task order staged as MODIFIED when
+    that order ALREADY DECLARES `<placeholders>` at HEAD** (Andrew-direct card 6, ~18:4xZ 2026-09-13, *"recs
+    approved"*, record @e2210bf34c; built as `IRPT_FNTEND` FE-s-29 limb 4, drained @cd399d339d; gate docstring
+    `:24-30`). Nothing is back-filled, LIMB 6 and every other limb stay NEWLY-ADDED only, so the human discipline
+    above still binds every modification except that one element's; any further widening is HIS call and is
+    carded, not assumed. One rule for all
     three: `.tools/prd_signoff_lib.py`. Andrew-direct 2026-09-10 ~21:2xZ: *"CRO and CVO should have to sign off on
     PRD before COO gets it"*; 2026-09-11 ~05:3xZ: *"CVO should always be included. If CRO is not online, can do COO
     in their stead"*. Measured 2026-09-10/11: thirteen PRD versions in one night, a half re-signed three times
