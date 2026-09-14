@@ -4973,6 +4973,78 @@ Andrew asked for (msg 22917); it concerns this project's portal files meeting an
   "spec_asserts": "TO-V2-1 V2-AC13 @80a431c546: the map 'reads PURE ASCII (detector 0)'. CLAUDE.md, no-non-ASCII rule, NON-APPLICATION clause: 'a file that is ALREADY pure ASCII (keep it that way)'.",
   "world_is": "The recorder's writer emits raw UTF-8; one record commit moved the map from detector 0 to detector 28, values unchanged, including two cp1252-undefined bytes that make a naive text-mode read raise. Re-escaped to detector 0 in this worker's commit; the writer will do it again on the next record.",
   "notes": "The same run also reproduced W23-S4 exactly: the CHANGELOG helper is a .js file handed to python3 ('SyntaxError: unterminated string literal'), then 'Note: CHANGELOG.json write failed', and the closing banner still says the CHANGELOG was committed. The entry for this deploy was written by hand per V4-AC13."
+},
+{
+  "id": "POSN_ASTTAX-Z-S106",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T22:25:23Z",
+  "one_line": "DISARM of W20-S10 (INERT): V4-AC4's phrase 'its fee/yield aggregates MOVE' was the issuer's pre-measurement naming of which aggregates GLD's removal would move; the 2026-09-11 Bloomberg GLD row carries FEE ONLY (yield, duration, beta NaN; no return columns in the pull), so yield cannot move and did not. The criterion's decisive clause -- the two arms DIFFER, weight_null +8.34 on every field GLD carried, seven GLD holders move on fee and two non-holders do not -- is met exactly; the word 'yield' is data-conditioned and is recorded, not rewritten after a PASS (Z-S81).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE ISSUER'S DEFECT, NAMED: the phrase assumed the Bloomberg row carried a yield for a gold trust; the parquet (172 rows x 14 columns, adhoc run 22900) says otherwise. The control discriminates on the field the data supports and the positive/negative satellite arms show the Bloomberg leg is read.",
+      "WHY GRADUATED: the criterion's discriminating clause passed by output; the data-conditioned word is disclosed twice (row + instance) for L9."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W20-S10"
+  ],
+  "spec_asserts": "TO-V4-1 V4-AC4 @d6754d8338: weight_null rises by 8.34 on every field GLD carried and its fee/yield aggregates MOVE; the two arms DIFFER.",
+  "world_is": "fee moved on 7 of 7 GLD holders (Sat 15: 0.211960 -> 0.178600, weight_null 0.8400 -> 9.1800) and on 0 of 2 non-holders; yield identical between arms because GLD's yield is NaN in the partition and its weight already sat in yield's weight_null on both arms.",
+  "notes": "A control that names WHICH fields move is written after reading the input's field presence, not before."
+},
+{
+  "id": "POSN_ASTTAX-Z-S107",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T22:25:23Z",
+  "one_line": "DISARM of W20-S11 (INERT): VXX is in Yang's served current_holdings, so under the cell's own per-ticker precedence (Yang first) the Bloomberg VXX row the ad-hoc pull added is never consulted by the characteristics producer; of the 25 distinct satellite tickers, 23 resolve from Yang, one (GLD) from Bloomberg, one (CASH) from neither. Recorded: the Bloomberg VXX row is the standing negative arm of the fallback (a ticker that leaves the Yang books falls through to it), the two sources agree on VXX's beta to 4.5e-5, and the artifact names the resolved source per ticker (satellites.<code>.sources) -- the fact L9's V4-AC14 grades on precedence.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "WHY NOTHING IS ACTED ON: the producer implements the precedence the cell specifies and records the resolved source per ticker; Andrew's ad-hoc pull (22900) was approved for GLD and VXX together and costs nothing served by carrying VXX.",
+      "WHY GRADUATED: an observation for the judgment criterion, answerable from the served artifact without re-derivation."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W20-S11"
+  ],
+  "spec_asserts": "TO-V4-1 THE CELL: GLD and VXX enter the Bloomberg pull; source precedence per ticker is Yang, then Bloomberg, then NULL.",
+  "world_is": "Both rows are in the partition; VXX resolves from Yang (the richer source: eight return windows Bloomberg has no columns for); the Bloomberg leg's live contribution today is GLD's expense ratio.",
+  "notes": "F3 (TO-V7-1) can read satellites.<code>.sources to show the per-ticker source if the page ever wants it; not ordered this round."
+},
+{
+  "id": "POSN_ASTTAX-Z-S108",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T22:25:23Z",
+  "one_line": "DISARM of W20-S12 (ARMED): record-terraform-deploy.sh's source-map writer re-serialised lambda-source-map.json with raw UTF-8 on the V4 record (detector 0 -> 28, two U+009D that make a cp1252 default read RAISE, no value change); the worker re-escaped it in its own follow-up commit (197,974 bytes, detector 0, decoded documents equal) and the drain landed it pure ASCII (4e81f4e1c1, semantic merge). The recorder does not run again in this round (V7 and V8 carry no deploy record), so the class is CLOSED for the round; the writer is the CI lane's (W23-S4) and rides the round analysis with W19-S7, W20-S8 and Z-S79/Z-S90.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE FOURTH REPRODUCTION OF ONE DEFECT (W19-S7, W20-S8, W23-S4, W20-S12), each time restored in-file under the worker's grant and never in the script. The durable fix (ensure_ascii on the writer, or the python writer, or a keyed write) has its owner.",
+      "WHY GRADUATED: HEAD reads detector 0 (197,974 bytes), no further recorder run is scheduled in the round, and the drain-side guard is in place."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W20-S12"
+  ],
+  "spec_asserts": "TO-V2-1 V2-AC13 asserted the map pure ASCII; CLAUDE.md s.4 non-application: keep an already-pure-ASCII file that way.",
+  "world_is": "Every recorder run on this device re-encodes the shared map; every worker in this round restored it after its record; the drain prints the detector and merges semantically.",
+  "notes": "The next round's first deploy order states the recorder's three device defects in its preflight rather than discovering them a fifth time."
 }
 ]
 ```
