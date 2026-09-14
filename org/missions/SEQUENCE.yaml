@@ -37,7 +37,7 @@
 # orders for a project whose stage is not open is approved to follow once this order has held about a week; it is
 # announced before it is armed.
 
-version: 2
+version: 3
 owners: ["1.0.0_SA_CTO", "1.0.0_SA_CTO~Z"]
 enforcement: TRACK
 
@@ -53,6 +53,9 @@ stages:
   - id: 2
     name: "The D8 migrations built on Platform Logic"
     why: "The same word: the Logic projects first, then MDPF and the migrations. The new firm buckets must be minted with LGIC_ENFORCE's rebuilt fence (Andrew ~18:4xZ card 1)."
+  - id: 3
+    name: "Projects whose outcomes land in the migrated firm buckets"
+    why: "Placed after everything already ordered so that no existing order moves (Andrew-direct 2026-09-14 ~13:4xZ, 'recs + sequence approved', record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_134xZ_NEXT_CALLS_RECS_AND_SEQUENCE_APPROVED.md). Moving a stage-3 project ahead of Platform Logic is a reorder, and a reorder is Andrew's word."
 
 projects:
   LGIC_NAMING:
@@ -96,14 +99,19 @@ projects:
         - {project: LGIC_ENFORCE, prd_admitted: true}
     why: "Andrew's priority word puts MDPF after the Logic projects, and its keys come from LGIC_NAMING's schema. Its FWD-2 and FWD-6 also need ADVI_FIRMBKTS's firm buckets -- added as a gate on its execution when its PRD cuts cells."
 
+  IRPT_BCKEND:
+    fabric: laptop
+    stage: 3
+    waits_on: []
+    why: "Investor Reporting's backend. Its per-firm platinum lands in the firm buckets (its row 11, which bucket serves 49 Financial, is answered by ADVI_FIRMBKTS's cutover), and IRPT_FNTEND cannot close without it. Round 2 is in flight with its COO lane dark, so it needs a seat to finish."
+    notes: "No hold: the round in flight is not ordered against anything, and a hold would mark it out of sequence. The row-11 dependency is a gate on that OUTCOME, added when its next PRD revision cuts the cell (the MDPF_CANON pattern), not on the project."
+
 parked:
   NFRA_SUBSTRATECARDING:
     fabric: laptop
     why: "Andrew-direct 2026-09-14 ~00:0xZ: 'it is just not a priority at this time.' Not ordered; recorded so no driver takes it up ahead of the sequence."
 
 pending_placement:
-  - subject: "IRPT_BCKEND"
-    question: "It writes per-firm platinum into the firm buckets (its row 11, which bucket serves 49 Financial, is answered by ADVI_FIRMBKTS's cutover). Is that a stage-2 dependency, and on which of its outcomes?"
   - subject: "the projects behind the 07-28 sequence"
     question: "'MDPF COMPLETION', then the ETF and EventBridge scheduling fixes (org/missions/GOALS.yaml, replaced). Which projects carry those today, and do any have an ordering constraint?"
   - subject: "the rest of both registers"
@@ -120,3 +128,7 @@ change_log:
     by: "1.0.0_SA_CTO"
     change: "v2 -- capacity: at most three COO sessions on the laptop at once. The reader flags NEEDS-SLOT and names the next COO slot in this file's order. No order changed."
     word: "'We can only have 3 COOs running their respective projects/subagents at any one time, otherwise it gets too overloaded on the box. This is why the sequence function is important, so that chronology is managed in line with available resources.' (org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20260914_070xZ_THREE_COO_CAP_AND_PUSH_WINDOW.md @f21c5d8290)"
+  - at: "2026-09-14"
+    by: "1.0.0_SA_CTO"
+    change: "v3 -- IRPT_BCKEND placed, answering its pending_placement question: stage 3, after everything already ordered, fifth for a free COO seat. The row-11 dependency on ADVI_FIRMBKTS's cutover binds that outcome, not the project. No existing order changed."
+    word: "'recs + sequence approved' (Andrew-direct ~13:4xZ, answering 1.0.0_SA_CTO's /next-calls OPTION 1, 'place the backend in the sequence'; record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_134xZ_NEXT_CALLS_RECS_AND_SEQUENCE_APPROVED.md)"
