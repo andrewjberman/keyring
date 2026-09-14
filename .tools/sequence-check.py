@@ -17,8 +17,9 @@ WHAT IT FLAGS, per project:
   DRIFT            the file and the repo disagree (a code the register lacks, a fabric the register contradicts)
   UNMEASURED       a manual gate with no `confirmed` line: no tool can check it
   UNREADABLE       a source that could not be read -- never rendered as a pass
-  NEEDS-SLOT       its PRD is admitted and its next step is a COO's (L5), but its tree row names no coo_lane. While the
-                   box is at its COO cap it waits for a slot, and slots go in the file's order (not a violation)
+  NEEDS-SLOT       its PRD is admitted and its next step is a COO's (L5 at PRD, L6 at DECOMP, the drain at EXECUTING,
+                   the recut at ROUND_CLOSE), but its tree row names no coo_lane. While the box is at its COO cap it waits
+                   for a slot, and slots go in the file's order (not a violation)
   LANE-DARK        in flight (DECOMP to ROUND_CLOSE) on this box's fabric, but the coo_lane its tree row names is not a
                    live COO lane here: its round waits for a seat, queued with NEEDS-SLOT in the file's order (not a
                    violation). Without it an in-flight project whose COO session died is invisible to the slot queue.
@@ -269,16 +270,21 @@ def evaluate(doc, reader, idle_days=IDLE_DAYS, now=None):
                 notes.append("dep_stage %s is past the hold's cap %s while a hold gate is unmet" % (row.get("dep_stage"), hold.get("max_dep_stage")))
             else:
                 flags.append("HELD")
-        # NEEDS-SLOT: admitted, at PRD (so L5 is next, and L5 is a COO's), no lane seated, not waiting, and any open
-        # hold still lets it reach DECOMP.
-        if ok and row.get("dep_stage") == "PRD" and "WAITING" not in flags:
-            cap_ok = not hold_open or (_stage_index(hold.get("max_dep_stage")) or 0) >= _stage_index("DECOMP")
+        # NEEDS-SLOT: admitted, and its next step is a COO's -- L5 at PRD, L6 at DECOMP, the drain at EXECUTING, the
+        # recut at ROUND_CLOSE -- with no lane seated, not waiting, and any open hold still letting it take that step.
+        # Until 2026-09-14 only the PRD arm existed, so a decomposed project with no lane (LGIC_CANON: L5 cut, coo_lane
+        # left null for its L6 seat) dropped out of the slot queue while it waited for its issuer.
+        _next_step = {"PRD": "L5", "DECOMP": "L6", "EXECUTING": "the drain", "ROUND_CLOSE": "the recut"}
+        if ok and row.get("dep_stage") in _next_step and row.get("status") != "complete" and "WAITING" not in flags:
+            _have = _stage_index(row.get("dep_stage"))
+            _cap = _stage_index(hold.get("max_dep_stage")) if hold_open else None
+            cap_ok = not hold_open or (_cap is not None and _have is not None and _cap > _have)
             trow, tnote = reader.tree_row(row)
             if trow is None:
                 notes.append("tree row: " + tnote)
             elif cap_ok and not trow.get("coo_lane"):
                 flags.append("NEEDS-SLOT")
-                notes.append("PRD admitted; L5 is next and is a COO's; no coo_lane on the tree row")
+                notes.append("PRD admitted; %s is next and is a COO's; no coo_lane on the tree row" % _next_step[row.get("dep_stage")])
         # LANE-DARK: in flight on THIS box's fabric, and the coo_lane its tree row names is not a live COO lane here, so
         # its round waits for a seat exactly as a NEEDS-SLOT project does. A project on the other fabric is never
         # flagged: its lane is never live on this box by construction.
@@ -445,6 +451,17 @@ def self_test():
     doc["projects"]["M"] = {"fabric": "laptop", "stage": 1, "waits_on": []}
     doc["projects"]["N"] = {"fabric": "site-z", "stage": 1, "waits_on": []}
     rows["F"] = {"dep_stage": "REGISTERED", "status": "active", "fabric": "laptop", "_act": None}
+    # P, Q, R: the stages past PRD whose next step is still a COO's (the 2026-09-14 LGIC_CANON gap).
+    rows["P"] = {"dep_stage": "DECOMP", "status": "active", "fabric": "laptop", "_act": "abc 2026-09-19T00:00:00+00:00",
+                 "_tree": {"coo_lane": None}}
+    rows["Q"] = {"dep_stage": "DECOMP", "status": "active", "fabric": "laptop", "_act": "abc 2026-09-19T00:00:00+00:00",
+                 "_tree": {"coo_lane": None}}
+    rows["R"] = {"dep_stage": "EXECUTING", "status": "active", "fabric": "laptop", "_act": "abc 2026-09-19T00:00:00+00:00",
+                 "_tree": {"coo_lane": None}}
+    doc["projects"]["P"] = {"fabric": "laptop", "stage": 1, "waits_on": []}
+    doc["projects"]["Q"] = {"fabric": "laptop", "stage": 1, "hold": {"max_dep_stage": "DECOMP", "until": [{"manual": "x"}]}}
+    doc["projects"]["R"] = {"fabric": "laptop", "stage": 1, "waits_on": []}
+    prd.update({"P": True, "Q": True, "R": True})
     fake = Fake(rows, prd)
     fake.live = ["2.0.0_SA_COO~A", "2.0.0_SA_COO~H", "2.0.0_SA_COO~X"]
     evaluated = evaluate(doc, fake, now=now)
@@ -465,8 +482,12 @@ def self_test():
         ("validate: an unknown top-level key is refused", validate({"stagez": 1, "projects": {}}) != []),
         ("G: PRD admitted, at PRD, no coo_lane -> NEEDS-SLOT only", got["G"] == {"NEEDS-SLOT"}),
         ("H: PRD admitted, at PRD, a coo_lane seated -> no flag", got["H"] == set()),
-        ("capacity: 3 live against a laptop cap of 3 -> AT CAP, and the queue is [G, L] (NEEDS-SLOT, then LANE-DARK, in file order)",
-         cap["at_cap"] and cap["queue"] == ["G", "L"]),
+        ("P: DECOMP, no coo_lane (L6 is next, a COO's) -> NEEDS-SLOT only", got["P"] == {"NEEDS-SLOT"}),
+        ("Q: DECOMP, no coo_lane, a hold capped AT DECOMP -> HELD, never NEEDS-SLOT (its next step is blocked)",
+         "HELD" in got["Q"] and "NEEDS-SLOT" not in got["Q"]),
+        ("R: EXECUTING, no coo_lane at all -> NEEDS-SLOT (LANE-DARK needs a named lane)", got["R"] == {"NEEDS-SLOT"}),
+        ("capacity: 3 live against a laptop cap of 3 -> AT CAP, and the queue is [G, L, P, R] (every NEEDS-SLOT and LANE-DARK, by stage then file order; Q is HELD, not queued)",
+         cap["at_cap"] and cap["queue"] == ["G", "L", "P", "R"]),
         ("L: EXECUTING on this fabric, its coo_lane not live -> LANE-DARK only", got["L"] == {"LANE-DARK"}),
         ("M: EXECUTING, its coo_lane live -> no flag", got["M"] == set()),
         ("N: EXECUTING on the other fabric, lane not live here -> never LANE-DARK", "LANE-DARK" not in got["N"]),
