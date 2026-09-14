@@ -38,9 +38,19 @@ stable, citations resolve there. DS/AE seats read their sections before touching
     `.tools/to-pipeline-gate.py` LIMB 6 REFUSES a **NEWLY-ADDED** task order against a PRD with a half
     not SIGNED. ⛔ **IT DOES NOT FIRE ON A MODIFICATION, AND THIS LINE USED TO SAY SO WITHOUT THE
     QUALIFIER -- SO THE LAW READ STRONGER THAN THE TOOL BEHAVES AND THREE SEATS INHERITED THE BELIEF
-    FROM IT IN ONE EVENING.** The gate's own docstring (`_newly_added`, `:1015` @cd399d339d) is explicit: *"A
-    rename (R) counts as added at its new path ... A modification (M) does not: this gate never
-    refuses an existing TO."* Measured 2026-09-11 by `2.0.0_SA_COO~ZZZ` as a discriminating pair on
+    FROM IT IN ONE EVENING.** The gate's own docstring (`_newly_added`, `:1015` @cd399d339d) is explicit, AND
+    IT NAMES THE EXCEPTION ITSELF: *"A rename (R) counts as added at its new path ... A
+    modification (M) does not: no limb that reads THIS set refuses an existing TO. The ONE limb
+    that grades a modification -- GATE (viii) ... -- reads its own set, `_staged_modified()`, so
+    this set's contract is unchanged."* ⚠ **THIS LINE QUOTED THAT DOCSTRING AS SAYING "this gate never
+    refuses an existing TO" UNTIL 2026-09-14 -- A CLAIM ABOUT THE WHOLE GATE, WHERE THE SOURCE
+    SCOPES IT TO THE LIMBS THAT READ ONE SET AND THEN NAMES (viii) AS THE EXCEPTION.** The line
+    number and the vintage were both CORRECT, so every citation test passed; only the QUOTED
+    BYTES were stale, and they denied an exception this same rule states four sentences later.
+    ⛔ **A CITATION AGES SEPARATELY FROM THE TEXT IT QUOTES** -- re-reading the rule catches
+    neither; only opening the source at the cited vintage does. Found by `2.0.0_SA_COO~Z`
+    (`POSN_ASTTAX-Z-S61` @`2299206da6`) on the SAME class one level down, in a loop body citing
+    a bare `:809-831` that now lands on gate (viii)'s own self-test table. Measured 2026-09-11 by `2.0.0_SA_COO~ZZZ` as a discriminating pair on
     ONE project in ONE hour: the add path refused its new order **three times** (missing
     `<issued_by>`, missing `<preflight>`, then the preflight's line shapes) while **ten task-order
     MODIFICATIONS went ungraded.** ⚠ **SO ON A RE-CUT OR A MID-FLIGHT AMENDMENT, "do not cut against
