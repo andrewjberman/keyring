@@ -3609,6 +3609,90 @@
     },
     "disposition": "UNDER_INVESTIGATION",
     "hazard_standing": "INERT"
+  },
+  {
+    "id": "IRPT_FNTEND-W1-S63",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-14T17:34:21Z",
+    "one_line": "vite's config loader still writes through the node_modules junction: every dev-server start and every resolveConfig bundles vite.config.ts into the MAIN checkout's portal/node_modules/.vite-temp. That is a third junction write, which RULING U's remedy (cacheDir + tsBuildInfoFile) does not reach and no config key can move.",
+    "class": "OBSERVATION",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-38 THE REMEDY: 'vite's cacheDir and tsbuildinfo live inside the worktree by config, never through the junction, so no cell needs a per-cell override again.'",
+    "world_is": "With cacheDir (<portal>/.vite) and both tsBuildInfoFile (<portal>/.tsbuild/) inside the worktree at portal ac13f8ab, vite 7.3.5's default 'bundle' config loader still mkdirs node_modules/.vite-temp/ and writes '<config>.timestamp-<ms>-<rand>.mjs' there (vite/dist/node/chunks/config.js:35985-35993). In a linked worktree node_modules is the junction, so the file lands in C:/Users/AndrewBerman/Desktop/ajb_workspace/portal/node_modules/.vite-temp. That directory's mtime moved with this worker's own acts: 13:03 -0400 (this worker's server start) and 13:07:03 -0400 (this worker's resolveConfig run). It was empty afterwards, because the loader unlinks the file after import. The 'runner' loader writes no temp file but fails on this config: ERR_AMBIGUOUS_MODULE_SYNTAX on __dirname at vite.config.ts:17. __dirname is used by the pre-existing '@' alias and by the new cacheDir. configLoader is a CLI/inline option, not a config key, so moving it means changing package.json's 'dev' script ('vite'), which is outside this order's grant. The file is uniquely named and deleted after load, so no worktree reads another's. It is a transient write through the junction, not a shared cache.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "C:/Users/AndrewBerman/Desktop/ajb_workspace/portal/node_modules/vite/dist/node/chunks/config.js:35985-35993 (vite 7.3.5): nodeModulesDir = findNearestNodeModules(...); mkdir .vite-temp/; tempFileName under it",
+        "ls --time-style=full-iso .../portal/node_modules/.vite-temp: 2026-09-14 13:03 -0400 after this worker's dev-server start, 13:07:03.534 -0400 after its resolveConfig (bundle) run; empty both times",
+        "node resolveConfig({configLoader:'runner'}) on portal vite.config.ts @ac13f8ab: ReferenceError ERR_AMBIGUOUS_MODULE_SYNTAX at vite.config.ts:17 (__dirname)",
+        "portal/package.json scripts.dev = 'vite' @741bb54b"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "hazard_standing": "INERT"
+  },
+  {
+    "id": "IRPT_FNTEND-W1-S64",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-14T17:34:21Z",
+    "one_line": "fe-s-19/mounted-from-wire.test.ts's header still says the port comes from the helper 'environment first, documented default second'. After RULING U the helper has no default (env, else derived from the worktree, else REFUSED), so the comment now misdescribes it, and the file is outside this order's grant.",
+    "class": "OBSERVATION",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-38 THE REMEDY: 'the helper refuses without IRPT_FE_DEV_PORT or a port derived from its own worktree -- never a fixed default.' BOUNDS: a path outside <paths> is never edited.",
+    "world_is": "portal/src/pages/InvestorReporting/__tests__/fe-s-19/mounted-from-wire.test.ts:55-56 @741bb54b reads 'It now comes from `../fe-s-27/_dev-server.ts` -- environment first, documented default second.' From portal ac13f8ab, fe-s-27/_dev-server.ts has no default: choosePort() returns IRPT_FE_DEV_PORT, else portForWorktree(<git worktree>), else throws 'REFUSED: ...'. The comment is prose only; the file's behaviour is correct under the new helper (F38-AC5/AC6/AC7 PASS on it). Not edited: fe-s-19/ is not in this order's <paths>.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-19/mounted-from-wire.test.ts:55-56 @741bb54b",
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-27/_dev-server.ts choosePort() @ac13f8ab"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "hazard_standing": "INERT"
+  },
+  {
+    "id": "IRPT_FNTEND-W1-S65",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-14T17:34:21Z",
+    "one_line": "Two per-cell vite overrides survive RULING U: fe-s-31/vite.worktree.config.mjs and fe-s-32/vite.worktree.config.ts still merge cacheDir onto <workspace>/.scratch/vite-cache-fe-s-3x. A server started through either one caches in the workspace worktree's .scratch, not in <portal>/.vite where the portal config now puts it, so one worktree can hold two cache homes.",
+    "class": "OBSERVATION",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-38 THE REMEDY: 'vite's cacheDir and tsbuildinfo live inside the worktree by config, never through the junction, so no cell needs a per-cell override again.'",
+    "world_is": "portal/src/pages/InvestorReporting/__tests__/fe-s-31/vite.worktree.config.mjs:39 (mergeConfig(portalConfig, { cacheDir: WORKTREE_CACHE_DIR })) and fe-s-32/vite.worktree.config.ts:50 (vite.mergeConfig(loaded.config, { cacheDir: WORKTREE_CACHE_DIR })) @741bb54b. The comments in both (fe-s-31 :5-8, fe-s-32 :5-10) give the reason as 'vite.config.ts sets no cacheDir'. From portal ac13f8ab it does (<portal>/.vite, read from vite's resolveConfig in F38-AC3). The overrides are no longer needed, but they are not harmless: they still redirect the cache when used. No test in the whole-suite run starts a server through them (0 fail either way). Not edited: fe-s-31/ and fe-s-32/ are outside this order's <paths>.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-31/vite.worktree.config.mjs:5-8,:39 @741bb54b",
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-32/vite.worktree.config.ts:5-10,:50 @741bb54b",
+        "F38-AC3 at portal ac13f8ab: resolveConfig cacheDir = C:/tmp/wk-irpt_fntend-6-1-fe-s-38/portal/.vite"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "hazard_standing": "INERT"
+  },
+  {
+    "id": "IRPT_FNTEND-W1-S66",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-14T17:34:21Z",
+    "one_line": "A closed loopback port on this box REFUSED in well under a second (ECONNREFUSED, 304-464 ms including node start), not the ~2 s the order's BOUNDS state. The probe's own header says a closed port 'does not refuse the connection -- it hangs'. Both premises read otherwise this session.",
+    "class": "OBSERVATION",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-38 BOUNDS: 'A closed loopback port answers after ~2 s on this box, so any probe timeout must exceed 2 s.' Also portal/src/pages/InvestorReporting/__tests__/fe-s-27/dev-server-probe.mjs header @741bb54b: 'On this box a CLOSED loopback port does not refuse the connection -- it hangs until something times out.'",
+    "world_is": "node fe-s-27/dev-server-probe.mjs <port> 4000 (asks http://localhost:<port>/) on 2026-09-14: port 5261 -> 'PROBE UNREACHABLE ECONNREFUSED' in 464 ms wall (node start included); 5271 -> ECONNREFUSED in 304 ms. 5805 (the derived port), 54021 and 5261 after the server was killed also returned ECONNREFUSED inside the test runs. None timed out. The 4000 ms bound exceeds either behaviour, so no verdict changes. The ~2 s may belong to another name (127.0.0.1 vs ::1) or another moment; this session did not measure that. Kept the probe's comment as found: it is not a claim RULING U changes.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "node dev-server-probe.mjs 5261 4000 -> PROBE UNREACHABLE ECONNREFUSED from http://localhost:5261/, ms=464 (before the server started)",
+        "node dev-server-probe.mjs 5271 4000 -> PROBE UNREACHABLE ECONNREFUSED from http://localhost:5271/, ms=304",
+        "F38-AC2 deciding run: 'DERIVED PORT measured before the child run: 5805 -> ABSENT (ECONNREFUSED from http://localhost:5805/)'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "hazard_standing": "INERT"
   }
 ]
 ```
