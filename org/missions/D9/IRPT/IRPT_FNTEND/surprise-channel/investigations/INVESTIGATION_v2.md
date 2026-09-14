@@ -3089,6 +3089,27 @@
     "spec_asserts": "TO-FE-s-33 WORKER FACE, cell item W1-S51: 'Give the envelopes each view reads a legitimate state and reason.' gen-fixtures.ts header: fe-s-18-frozen.json is 'ONE performance report at ONE revision'.",
     "world_is": "fe-s-18-frozen.json:250 @portal c2eb8eb4: the narrative's data.performance_revision.performance_report_revision = 'perf-9' (fe-s-13-wire.json's narrative, copied whole). The three paired views read the narrative only when it is switched on. ExportModal.tsx:79 defaults includeNarrative to false, and :123's narrativeAvailable gates the toggle on the current revision. PrintEntry.tsx:92 reads the narrative only for ?narrative=1. So at the captured defaults no view reads it, and F33-AC2's denominator is 1 envelope (performance-report), taken by census of each view's own api calls ('UNCLASSIFIED READS: 0'). A narrative-on preview or print of the frozen map would pair the frozen report with a narrative written for another revision. No status was added to the narrative, because no state would be legitimate for it as the frozen report's narrative.",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-S59",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-14T05:10:00Z",
+    "one_line": "DISARM BY DETECTION of row W2-S24: FE-s-14's generator rewrites fe-s-14-global.json whole and would silently delete FE-s-33's two Holdings envelopes. The deletion can no longer be silent -- F33-AC6's test fails on it wherever the fe-s-33 folder runs -- and the prevention (one writer, or a generator that composes the Holdings envelopes) is carried to 1.0.0_SA_CTO.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Row W2-S24 (0.9.0_WK_IRPT_FNTEND~2): since portal 5067c254 the map has two writers -- __tests__/fe-s-14/gen-maps.ts (whole-file rewrite) and __tests__/fe-s-33/gen-global-holdings.ts. No round-5 order grants fe-s-14/gen-maps.ts.",
+        "The detector, re-run by this seat at FE-s-33's drain (workspace aac761ea2d, portal DEV e85498be): bun test __tests__/fe-s-33/fixtures-reach.test.ts prints 'GLOBAL MAP CARRIES HOLDINGS FOR BOTH FIRMS: 2 of 2' (11 pass / 0 fail). A map without the envelopes fails that line.",
+        "Coverage stated, not assumed: FE-s-32's F32-AC8 folder run (fe-s-7, 10, 22, 26, 32) does NOT include fe-s-33, and no round-5 face runs fe-s-14's generator."
+      ]
+    },
+    "spec_asserts": "FE-s-33 face: 'fe-s-14-global.json carries 2 keys and no holdings key ... Add Holdings envelopes for both firms the map already names.' The map remains FE-s-14's evidence.",
+    "world_is": "The added envelopes survive only as long as nobody regenerates the map with FE-s-14's generator. That act is in no round-5 order, and if it happens the fe-s-33 folder turns red rather than passing on a stripped map. What is NOT closed: the two-writer shape itself, and row W2-S23's finding that the page reaches 1 of the 2 envelopes (one resolve-scope answer), so FWD-11's second firm is still not visible. Both go to the round-5 drain-end packet.",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
