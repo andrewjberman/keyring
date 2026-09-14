@@ -5,13 +5,83 @@
  "project": "POSN_ASTTAX",
  "directive": "D4",
  "fabric": "site-z",
- "prd_version": "v0.6",
+ "prd_version": "v0.7",
  "step": 4,
  "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260911_ASSET_CLASS_TAXONOMY_BRIEF.md@03f1d00ec4",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6"],
  "status": "DRAFT"
 }
 ```
+
+## s.0 ADDENDUM v0.7 -- ANDREW'S CLOSE-OUT RULINGS (2026-09-14): POSITIONING PAGE ONLY, SATELLITES FROM BLACK DIAMOND
+
+**Author** `1.0.0_SA_CTO~Z` (L4), 2026-09-14. **Carries** Andrew's words of ~16:5xZ (record
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_165xZ_SITEZ_POSN_ASTTAX_ONLY_BREAKDOWN_BEFORE_WORKERS.md`
+@`f529179076`), ~16:34Z, ~17:2xZ and ~17:3xZ (records by `4.0.0_SA_CRO~Z` under
+`org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/ANDREW_DIRECT_20260914_1634Z_*`, `_172xZ_*`, `_173xZ_*`), and the aligned
+breakdown `org/tier1_exec/1.0.0_SA_CTO/deliverables/POSN_ASTTAX_CLOSEOUT_BREAKDOWN_20260914_Z.md` (v0.5), which is the
+CELL-LEVEL authority for round 5. The measured premise is `4.0.0_SA_CRO~Z` brief
+`org/tier1_exec/4.0.0_SA_CRO~Z/briefs/POSN_ASTTAX_COMPLETION_BRIEF_20260914_Z.md` and row `POSN_ASTTAX-Z-S65`.
+
+**HIS WORDS, VERBATIM:**
+- ~17:2xZ: *"Call 1, they should be summed because the goal is not to see what's yangs models versus what's external
+  residuual in the satellite; it is to see total GLD listed as Commodity Asset, Metals Sub-Asset, and to see Total VXX
+  (or whatever hedge securities) as Structured Asset, Hedge Sub-Asset. Call 2 Yes. Call 3, mint some yellow color, yes.
+  Call 4 Yes. Call 5 Yes. Call 6, definitely B, models do not get updated because they are not changing, Satellites
+  simply need to have an additional lambda to do weighted characteristics aggregates ."*
+- ~17:3xZ: *"All recs approved. Keep in mind that attribution, for now at least, is staying to just Equities and Fixed
+  Income on asset classes, because those are the only ones Yang uses, and we stick to his layout. Eventually that may
+  change, but need to keep in mind that the work we're doing here is very much contained to "Positioning", we do not
+  touch "Attribution""*
+
+**CONSTRAINTS THIS ADDENDUM ADDS -- they BIND round 5 and SUPERSEDE the named s.4 text where they differ:**
+
+- **C-POSITIONING-ONLY** (supersedes `C-TWO-SURFACES`). The surfaces are the Positioning page only -- 14 files at portal
+  pin `e85f6eb84f` (`src/pages/Positioning/`) plus the shared colour registry `src/lib/chartColors.ts` it imports, in
+  all three modes (Models, ETFs, Satellites). **The Attribution page is NOT touched** (two classes, Yang's layout);
+  Philosophy/CMA is not a focus (Yang's sheet, later); AdvisorIntelligence is out. ACCEPTED CONSEQUENCE, not a defect:
+  after the retag, a retagged ticker that Yang's models hold (VXX) drops out of Attribution's per-class groups while
+  its weight stays in Attribution's totals. This settles `Z-W15-S2` (eleven readers, four families): the domain is
+  declared as the Positioning page, and the other families are out of scope by Andrew's word, not by omission.
+- **C-SATELLITE-SOURCE** (new; disarm route for `Z-S65`; supersedes the "touches NO holding, weight or satellite
+  placement" clause of `C-SATELLITE-DATA` for the Satellites mode). The Satellites mode shows, per satellite, ONE total
+  weight per ticker from Black Diamond's rebalancer holdings, summed across the satellite's sleeves; **Yang's copy of a
+  model is never added** (LT VXX: BD 1.87, not 1.87 + 1.50). Each ticker carries `asset_class` and `sub_asset_class`
+  from the served ETFClassifier table. Weighted characteristics (fee, yield, duration, beta, returns) are aggregated
+  server-side by **an additional lambda**; per-ticker inputs from Yang's `current_holdings` where a Yang book holds the
+  ticker, from the Bloomberg ETF pull where it does not, NULL otherwise with the null-weight share disclosed. **The
+  Models mode and Yang's model data are unchanged.**
+- **C-SUB-ASSET** (new). Sub-asset labels for the retag set: `Metals` = GLD, IAU, SLV; `Hedge` = VXX, VIXY, UVXY, QBER;
+  `Real Estate` = VNQ; DBC, GSG, USO, PDBC keep their current sub-asset. **ENCODING (L4):** `Hedge` is a
+  `sub_asset_class` value under `Structured`; the legacy TOP-level `asset_class` value `hedge` dissolves. The two never
+  share a field, and every retag write names its level.
+- **C-RETAG-SET** (settles `C-MEMBERSHIP-AT-L5` for this project, on Andrew's approval of the U4 derivation). The retag
+  set is TWELVE: Commodities -- DBC, GLD, GSG, IAU, SLV, USO, PDBC; Structured -- VXX, VIXY, UVXY, QBER; Alternatives --
+  VNQ. BIPC stays Equity. The retag lands in BOTH stores (DynamoDB `etf-classifications` and `ETF_CLASSIFICATIONS`) and
+  runs LAST, after the generator deploy, the seeder guard, the satellite artifacts and the Positioning frontend are in
+  place (`C-RETAG-SAFETY`'s bar still binds).
+- **C-COLOURS** (refines s.3's colour column; no s.3 byte changes). Commodities' gold is rendered by a NEW yellow token,
+  never amber (amber is Cash); Structured is pink; sub-asset colours exist for `Metals` and `Hedge`.
+- **C-BENCHMARK** (new). The three new classes' benchmark rows are an explicit zero labelled "no benchmark", in both
+  `yang-generate-positioning` and `yang-generate-allocation-summary`, under ONE never-widen sign-off naming both
+  functions and both served artifacts (this widens the 2026-09-13 deploy approval to the second function, by Andrew's
+  "Call 5 Yes" / "All recs approved").
+- **C-CUTS** (new). Not in this project: reconciling the dormant `is_hedge()` / `HEDGE_TICKERS` helper -- row
+  `Z-W1-S1` / `Z-C-S1` is dispositioned CARRIED-OUT-OF-SCOPE (no live caller; the helper keys on `asset_class`, which
+  `C-SUB-ASSET` keeps apart from the `Hedge` sub-asset) -- and reconciling the second store `bd-securities` (`Z-W17-S3`
+  settled the same way: the one place stays the served `etf-classifications` table; only the seeder that writes both
+  gets the preserve-don't-clobber guard).
+- **C-DONE** (new). The project is DONE when the backend is deployed and the Positioning frontend is built and committed
+  behind the freeze (Andrew 2026-09-14 05:31Z); the portal promote is Andrew's separate word and is not a bar here.
+
+**SURFACE MANIFEST, as amended:** S1 now includes the satellite holdings producer and the characteristics lambda that
+apply the classification to satellites (they carry FWD-1 / FWD-2 on the Satellites mode; no new outcome); S3 is the
+Positioning page's three modes. MECE unchanged: 6 outcomes, each carried by exactly one row -- and, per the v0.6
+qualifier, that is ASSIGNMENT; round 5's eight cells are what serve them.
+
+**WHAT THIS ADDENDUM CHANGES IN RATIFIED TEXT:** `ENDPOINT` FWD-6 only (narrowed to the Positioning page), so
+`3.0.0_SA_CVO~Z`'s half re-signs; this addendum re-opens `4.0.0_SA_CRO~Z`'s brief half. **WHAT IT DOES NOT DO:** it
+cuts no order, grades no outcome REALIZED, and authorizes no promote.
 
 ## s.0 ADDENDUM v0.6 -- THE ROUND-3 L10 ANSWER
 
@@ -104,13 +174,16 @@ ENDPOINT -- POSN_ASTTAX (confirmed by Andrew 2026-09-11)
                     and everywhere that shows asset classes updates on its own --
                     nobody edits each place by hand.
 
-  FWD-6  The places that show asset classes agree with each other
-         DONE WHEN  EXERCISED -- the Positioning view and the combined Philosophy /
-                    Capital-Market-Assumptions view have each been read and both show
-                    the same classes, in the same order and colors
-         ACCEPT     An analyst opens both views and cannot find a disagreement
-                    between them about what the asset classes are, what order they
-                    come in, or what color each one is.
+  FWD-6  The places on the Positioning page that show asset classes agree
+         with each other
+         DONE WHEN  EXERCISED -- the Positioning page's Models, ETFs and Satellites
+                    modes have each been read and all show the same five classes,
+                    in the same order and colors
+         ACCEPT     An analyst switches between the three Positioning modes and
+                    cannot find a disagreement about what the asset classes are,
+                    what order they come in, or what color each one is.
+         (narrowed 2026-09-14 by Andrew: Positioning only; Philosophy/CMA not a
+         focus; Attribution not touched -- s.0 ADDENDUM v0.7)
 ```
 
 ---
