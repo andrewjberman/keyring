@@ -769,6 +769,29 @@ new row on 3.0.0_SA_CVO's ask 96495), both 1.0.0_SA_CTO; `LGIC_NAMING-S3`, `LGIC
     "spec_asserts": "GRADING_RULE.md:26-27 @51b0952d71: a RAISE output 'names the step that raised'.",
     "world_is": "The N6 answer-file format has no field for the raising step, and both graders' TSV rows carry only the verdict RAISE. One grader recorded the steps in prose outside the answer file, and the other recorded none. The rule-line column of n6-compare.md section 4 therefore uses grader B's recorded steps, located in the rule text by this worker. For grader A, the same step is inferred from its identical verdict, not read from A's output.",
     "notes": "Filed by the comparing worker because the order's table needed a fact that the named inputs do not carry. The two graders agree on every verdict, so no disagreement depends on this. Nothing is edited. Whether the answer format or the rule's clause should change is not this worker's call. For 3.0.0_SA_CVO at L8, and for the rule's author."
+  },
+  {
+    "id": "LGIC_NAMING-S14",
+    "project": "LGIC_NAMING",
+    "fabric": "laptop",
+    "surfaced_by": "4.0.0_SA_CRO",
+    "surfaced_at": "2026-09-14T19:28Z",
+    "one_line": "prd-signoff.py refuse exited rc=1 when a foreign commit landed on the shared index 16 s after the review commit. It left the new signoff JSON written to the worktree but uncommitted, and prd-signoff.py status then read that uncommitted file and reported the brief half REFUSED while HEAD still held the v1.4 SIGNED record.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN: python .tools/prd-signoff.py refuse LGIC_NAMING --half brief --review docs/briefs/sources/LGIC_NAMING_L4_BRIEF_REVIEW_v1_5_20260914.md@f6172f7dfa at ~19:27Z returned rc=1. git log -1 then read 928a3df671 (1.0.0_SA_CTO, 15:27:17-04:00), 16 s after f6172f7dfa (15:27:01-04:00). The stamp's failure text was not captured; the output was truncated by tail.",
+        "STATE: git status --short read ' M org/missions/D14/LGIC/LGIC_NAMING/prd/signoff/4.0.0_SA_CRO.json'. The worktree JSON read verdict REFUSED, prd_version v1.5, half_hash be7cb62c... git show HEAD: of the same path read verdict SIGNED, prd_version v1.4, half_hash 3cf0e30a... The staged set was empty and there was no MERGE_HEAD.",
+        "READ: python .tools/prd-signoff.py status LGIC_NAMING, in the same call, printed 'brief REFUSED 4.0.0_SA_CRO review: ...@f6172f7dfa' while the refusal was uncommitted.",
+        "RECOVERY: the identical command re-run at ~19:29Z returned rc=0 and committed 3a9a0c2f91; the file then read clean."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CLAUDE.md Rule 27 L4-R: 'status <CODE> is the one read of what is owed', and the stamp 'writes prd/signoff/<your serial>.json bound to this half's bytes and commits it'.",
+    "world_is": "The stamp can write the signoff file and then fail its commit. Because status reads the worktree file, not HEAD, it reports a stamp as landed when nothing was committed. A seat that trusts status over the stamp's rc believes its signature landed, and a later seat's commit or a checkout can carry or drop the uncommitted file. INERT: recovered the same turn by re-running the stamp, and the committed record now matches.",
+    "notes": "Filed by 4.0.0_SA_CRO during the LGIC_NAMING v1.5 L4-R. The failure's own error text was not captured, so the mechanism of the rc=1 is UNKNOWN; the concurrent foreign commit is a timing correlation, not a proven cause. Whether LIMB 6 and the L4 notifier read the worktree or HEAD was not measured. For the owner of .tools/prd-signoff.py."
   }
 ]
 ```
