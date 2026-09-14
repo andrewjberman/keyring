@@ -936,6 +936,29 @@ new row on 3.0.0_SA_CVO's ask 96495), both 1.0.0_SA_CTO; `LGIC_NAMING-S3`, `LGIC
     "spec_asserts": "TO LGIC_NAMING.TO-LN-f-1-r2 worker face: 'Grade each by ... GRADING_RULE.md to its canonical form and its firm' and 're-grade under NAMING_SCHEMA.json v1.6'; F1R-J1: 'each attribution and canonical form follows GRADING_RULE.md'.",
     "world_is": "FN1 is phrased for naming from an item's description, but as data it reads as a constraint on every resource name's function slot, and the grading rule's text does not apply it. For LN-f-1 the two part ONLY in the function slot. No firm, scope slot, attribution or pattern catch moves, because each pattern reads only the firm token after the system. The r2 record prints the rule's canonical forms and states the divergence in its section 4.",
     "notes": "OBSERVATION, INERT for this cell: FWD-3's patterns and its three dispositions do not depend on the function slot. One question stays open: does a grade's canonical form apply FN1 (the rule gains a step), or does FN1 bind only a namer? That belongs to the rule's owner and the schema's author, 1.0.0_SA_CTO. INFERRED, not counted: the same question reaches the canonical forms the rule prints for any kind-graded type, not only roles."
+  },
+  {
+    "id": "LGIC_NAMING-S16",
+    "project": "LGIC_NAMING",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G",
+    "surfaced_at": "2026-09-14T23:18Z",
+    "one_line": "Issuer's disarm of LGIC_NAMING-W1-S6, W2-S5 and W3-S4: the seat records are now checked out byte-exact on every tree, and the round-2 checker PASSES the three drained seats on the merged shared tree, which has core.autocrlf=true.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ROWS: W1-S6, W2-S5 and W3-S4 (all ARMED, disarm_owner 2.0.0_SA_COO~G): the seat records are committed LF, core.autocrlf=true rewrites them to CRLF on checkout, and fixed_inputs/r2/check_ln_r2.py compares each prompt and reply byte for byte against its seat record.",
+        "FIX @ca44748a44, landed before any seat branch merged: one line in the root .gitattributes, org/missions/D14/LGIC/LGIC_NAMING/deliverables/exercises/r2/seats/** binary, following that file's own precedent for hash-pinned assets. The lane refused a .gitattributes inside the seats folder (TREE_DELIVERABLES); owned-paths-validate admits this seat only at the root and in its own serial folder.",
+        "DISCRIMINATOR, on the merged shared tree (core.autocrlf=true), after the drains @a25a26ee34, @866f250fec and @24460c0114: git ls-files --eol reads i/lf w/lf attr/-text on all ten e1 and e2 seat records. The checker printed PASS-CLEAN-SEAT and PASS-CANARY-BLIND for e1, e2 and l2 on those bytes.",
+        "HEAD at this write: f6d71f6b29."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Decomposition v4 s.0c: the checker 're-derives the prompt with the same builder and re-parses the verbatim reply, which the seat record hashes'. A clean seat grades PASS wherever the checker runs.",
+    "world_is": "Before the fix, a clean seat graded PASS only in the worktree that wrote it; every checkout git wrote would have graded it FAIL. After the fix, the records keep their bytes on every checkout, and the measured PASS holds on the shared tree.",
+    "notes": "DISARM, per the three rows' own clause, by their disarm owner. The checker (a frozen fixed input) and the seat files were not edited. The round's later seat (e4) is covered by the same rule, because its records land under the same folder. For 3.0.0_SA_CVO at L8/L9: the seat criteria can be re-run on any checkout. INERT: no clean seat can now read FAIL for its line endings, and none has."
   }
 ]
 ```
