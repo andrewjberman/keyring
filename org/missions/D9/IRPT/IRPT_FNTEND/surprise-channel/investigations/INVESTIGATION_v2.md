@@ -3280,6 +3280,91 @@
     "spec_asserts": "AMENDMENT 3: FixtureAdapter's VIEW-fixture branch gives a served document's availability 'the SAME business-date reading contracts/adapt.ts builds on the wire path, from the document's own sourceTimestamps.businessAsOf, through adapt.ts's own reading builder (one rule, never a second copy)'.",
     "world_is": "On the wire path readingFromValue sees a producer field, where a null IS the defect the NULL fact names. On the view plane the same null is the contract's ordinary missing clock. So under one rule, a view document with no clock is named a producer defect: a LOADING document from fe-s-3-loading.json would read 'Source date malformed' rather than 'No source age yet'. Built as ordered, with no second rule. INERT: no FixtureAdapter default fixture carries a null, no test fails, and the three nulls sit in a smoke map only ui-smoke serves. A ruling is needed only if a view null should read as absence, and that would be a second rule, which the amendment forbids.",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W2-S28",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~2",
+    "surfaced_at": "2026-09-14T07:27:13Z",
+    "one_line": "FE-s-32's worktree-cache override cannot take the amendment's literal shape: a vite.worktree.config.ts under src/ that statically imports vite and vite.config.ts breaks the WHOLE-portal typecheck (F32-AC1 rc=2). It loads the portal config through vite's own loadConfigFromFile at runtime instead, still merging only cacheDir.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Baseline, before any edit: cd <WS>/portal && bun run typecheck -> rc=0 at portal e85498be.",
+        "First form, as the amendment words it: `import { defineConfig, mergeConfig } from 'vite'` + `import portalConfig from '../../../../../vite.config'` in src/pages/InvestorReporting/__tests__/fe-s-32/vite.worktree.config.ts. The same typecheck -> rc=2: src/pages/PortfolioManagement/hooks/useAutoSave.ts(31,5) and useOptimizationAutoSave.ts(67,5) error TS2322 Type 'Timeout' is not assignable to type 'number'. Neither file was touched. The file sits in tsconfig.app.json's include (src), and the vite/vite.config imports bring @types/node into the app program, which changes setTimeout's return type.",
+        "Committed form, portal 7df6b4a2: vite is imported at runtime through a string variable (the type checker does not follow it), and the portal config is loaded by vite.loadConfigFromFile(env, <portal>/vite.config.ts) and merged with { cacheDir: <WS>/.scratch/vite-cache-fe-s-32 } only. Typecheck rc=0 at 7df6b4a2.",
+        "Vite accepted the override in both forms: `bun run dev --port 5213 --strictPort --config ...` printed VITE v7.3.5 ready and later \"config changed, restarting server... server restarted\", and <WS>/.scratch/vite-cache-fe-s-32/deps was created. The main checkout node_modules/.vite was not the cache."
+      ]
+    },
+    "spec_asserts": "TO-FE-s-32 BOUNDS, dev server (AMENDMENT on rows W1-S56 and W1-S57, 2.0.0_SA_COO~F): write __tests__/fe-s-32/vite.worktree.config.ts, 'which imports the portal's vite.config.ts and mergeConfigs ONLY cacheDir'; 'If vite refuses the override, file a row with the measurement and launch without it.'",
+    "world_is": "Vite did not refuse the override. The portal typechecker refused the static-import form: a .ts file under src/ joins the app program, and importing vite or vite.config.ts there pulls in node types. That breaks F32-AC1 in two files this order does not own. The config is loaded by vite's own loader at runtime instead of a static import, and only cacheDir is merged. Any later cell told to write the same override under src/ will hit the same refusal. It fails loud (rc=2), not silently.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W2-S29",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~2",
+    "surfaced_at": "2026-09-14T07:27:13Z",
+    "one_line": "The observed and target Holdings maps carry advisory_status 'ADVISORY', which is outside the contract enum (ADVISED | RESIDUAL | UNKNOWN). The adapter silently maps it to 'unknown' and keeps authoritative=true, so the READY render shows advisory 'unknown' on every row, and nothing on the page tells it apart from a real classification gap.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json @workspace 073973ff93: advisory_status enum [ADVISED, RESIDUAL, UNKNOWN].",
+        "src/pages/InvestorReporting/fixtures/smoke/fe-s-18-holdings-observed.json and fe-s-18-holdings-target.json @portal e85498be: 4 of 4 nodes each carry classification.advisory_status 'ADVISORY' with authoritative true.",
+        "src/pages/InvestorReporting/contracts/adapt.ts @portal e85498be: ADVISORY_FOR_WIRE = { ADVISED, RESIDUAL, UNKNOWN }, read as `ADVISORY_FOR_WIRE[node.classification.advisory_status] ?? 'unknown'` beside `authoritative: node.classification.authoritative`.",
+        "F32 browser run at portal 7df6b4a2 (<WS>/.scratch/fe-s-32/ac2-6-deciding.txt): CONTROL observed@390 rows = Models/SMA/Client supervision=opal-supervised advisory=unknown authoritative=true, 3 of 3. The missing-attribution map reads unknown/unknown with authoritative=false, which is the actual gap."
+      ]
+    },
+    "spec_asserts": "FE-s-22's claims model (__tests__/fe-s-22/round-2-holdings.claims.json) claims 'classification' for F18-AC9 (observed) and F18-AC10 (target). The FE-s-32 cell asks that 'a reader can tell a qualified holdings answer from a complete one' (F32-AC9).",
+    "world_is": "On the complete (READY) observed answer, the advisory partition renders 'unknown' on 3 of 3 rows. The cause is an out-of-enum fixture token, not a missing classification, and the shipped parser does not check the enum. F32-AC5 still reads classification FOUND, because 'unknown' is a legal partition value. A reader of the observed capture sees advisory unknown under an authoritative classification. FE-s-32 does not fix this: the fixtures and contracts/adapt.ts are outside this order's paths.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W2-S30",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~2",
+    "surfaced_at": "2026-09-14T07:27:13Z",
+    "one_line": "At 390 the Holdings classification is in the DOM but not visible in a full-page capture. The slice table scrolls sideways (min-w-[640px] in an 855-879px table, shown through a 240-260px box), so Supervision and Advisory sit outside the box in 3 of 3 captures while Basis is inside. FE-s-32 adds a second real capture per render with the table scrolled to those columns.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "src/pages/InvestorReporting/tabs/holdings/SliceTable.tsx @portal e85498be (FE-s-18 layout): `overflow-x-auto` wrapper around `<table className=\"w-full min-w-[640px] ...\">`, nine columns; Supervision and Advisory are the 7th and 8th.",
+        "F32 browser run at portal 7df6b4a2: at 390 the table box is 260px of 879px wide (observed), 240px of 855px (target) and 240px of 876px (missing-attribution). Basis is visible in 3 of 3, supervision in 0 of 3, advisory in 0 of 3. Scrolled to the classification columns, supervision and advisory are visible in 3 of 3. At 1440 all three columns are visible without scrolling, 3 of 3.",
+        "F32-AC5 grades the DOM and reads 6 of 6 claimed fields present at 390. Visibility is printed beside it as recorded, not graded."
+      ]
+    },
+    "spec_asserts": "TO-FE-s-32 cell (a): 'does each Holdings capture render the field its claim declares -- read from a REAL render'. The claims model (F18-AC9..AC11) claims basis AND classification 'at 390'. F32-AC9 is graded at L9 from the captures.",
+    "world_is": "One 390 full-page capture cannot show both claimed fields: basis is visible, and the classification columns are reachable only by scrolling the table sideways. FE-s-32 did not change the table layout, which is FE-s-18's. Instead the driver writes fe-s-32_holdings_<map>_390_table_scrolled.png beside each full-page 390 capture, a real render scrolled to the classification columns. The 390 classification claim is therefore met in the DOM and in the second capture, not in the full-page capture alone.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W2-S31",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~2",
+    "surfaced_at": "2026-09-14T07:32:51Z",
+    "one_line": "At 390, AnswerStatus's reason code line appears to run to or past the right border of its amber band when the code is one long unbroken token (TARGET_BLEND_MODEL_REVISION_UNNAMED, on the Holdings target capture). Read by eye from the capture, not measured.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "INFERRED",
+      "evidence": [
+        "Capture org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~2/fe-s-32_holdings_target_390.png (sha256 446581c0365d7f6390599634e1dbf3571d2bf3e319ac784051530fc89f58fa0b, portal 7df6b4a2): the reason line ends at about the band's right border. NO bounding box was measured; the dev server had already been stopped when this was seen.",
+        "src/pages/InvestorReporting/tabs/reporting/AnswerStatus.tsx @portal e85498be (FE-s-30): the reason is `<p className=\"mt-1 text-xs\" data-slot=\"answer-reason\">` with no break-all or overflow rule. FE-s-32 imports it unedited. The file is outside FE-s-32's paths."
+      ]
+    },
+    "spec_asserts": "F32-AC9: 'a reader can tell a qualified holdings answer from a complete one', graded at L9 from FE-s-32's captures. FE-s-32 reuses FE-s-30's AnswerStatus unedited.",
+    "world_is": "The qualified band, its state and its qualifier read clearly at 390. The one long reason code may touch or cross the band's edge. The same component renders Reporting's answers, so any Reporting reason code of that length would do the same. Not measured and not changed here.",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
