@@ -5,7 +5,7 @@
  "project": "MDPF_CANON",
  "directive": "D8",
  "fabric": "laptop",
- "prd_version": "v2.0",
+ "prd_version": "v2.1",
  "step": 4,
  "brief_ref": "docs/briefs/d8-mdpf-canon-migration-brief-20260913.md@fd579d3caf",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8"],
@@ -66,6 +66,18 @@ final-step obligations -- is carried forward below.
 - the `PRD ACn` pointers to the superseded PRD's acceptance criteria, which are mapped in DEC-3.
 
 This follows the precedent `3.0.0_SA_CVO` accepted on the three D14 PRDs.
+
+**v2.1 (2026-09-14) answers `4.0.0_SA_CRO`'s REFUSED brief half** (review
+`docs/briefs/sources/MDPF_CANON_L4_BRIEF_REVIEW_v2_0_20260914.md` @`4d08ce88b2`, stamp @`61e981a6e3`):
+- **R1:** the firm slice's key is the schema's five-segment form, with the served file in the partition slot the
+  schema calls "a named leaf", and one exact builder vector. The builders cover every NEW address; the historical
+  `global` path is bounded out, not moved (CONTRACTS, M9, M10, PATHS, manifest).
+- **R2:** the bronze move waits on the builders like every other cell that writes a new key (DEC-15, arc, M8).
+- **R3:** the portal's existing requests keep their URLs, because the portal is frozen, and a tenant-asserting
+  compatibility mapping at the edge carries them, proven through the page's own request path before any slice moves
+  (CONTRACTS, DEC-5, M9, PATHS, manifest).
+
+CONTRACTS changed, so both halves are owed again.
 
 ## ENDPOINT (step 2, /endpoint --forward)
 
@@ -162,11 +174,11 @@ This follows the precedent `3.0.0_SA_CVO` accepted on the three D14 PRDs.
 
 | contract | direction | shape | consumer / producer |
 |---|---|---|---|
-| the canonical key string, MDPF's instances | **consumed** (ruled) | `{source}/{scope}/{tier}/{table}/{partition}`, verbatim, with `{source}` = `mdpf` and `{scope}` one of `49financial`, `inflection`, `cottonwood`, `global`, `demo` in the LONG form. The instances: gold `s3://opal-data-mdpf/mdpf/{scope}/gold/{artifact}/date={YYYY-MM-DD}/data.parquet`; state `s3://opal-data-mdpf/mdpf/{scope}/state/...` (R21); bronze `s3://opal-data-assets/mdpf/{scope}/bronze/{feed}/...` (R4); a firm's served slice `s3://opal-data-{firm}/mdpf/{firm}/platinum/{leaf}.json` (R7); the combined slice `s3://opal-data-portal-v2/platinum/mdpf/global/...`, unchanged. Every string comes from `LGIC_ENFORCE`'s `key()` and `address()`, never typed | ruled by Andrew ~03:2xZ and ratified as `LGIC_NAMING` S1; the builders are `LGIC_ENFORCE`'s |
+| the canonical key string, MDPF's instances | **consumed** (ruled) | `{source}/{scope}/{tier}/{table}/{partition}`, verbatim, with `{source}` = `mdpf` and `{scope}` one of `49financial`, `inflection`, `cottonwood`, `global`, `demo` in the LONG form. The instances: gold `s3://opal-data-mdpf/mdpf/{scope}/gold/{artifact}/date={YYYY-MM-DD}/data.parquet`; state `s3://opal-data-mdpf/mdpf/{scope}/state/...` (R21); bronze `s3://opal-data-assets/mdpf/{scope}/bronze/{feed}/...` (R4); a firm's served slice `s3://opal-data-{firm}/mdpf/{firm}/platinum/{table}/{leaf}.json` (R7), where `{table}` is the snake_case artifact and the partition slot holds the schema's "named leaf" form: the kebab-case served file itself. The vector: `key("mdpf", "49financial", "platinum", "aum_metrics", "aum-metrics.json")` returns `mdpf/49financial/platinum/aum_metrics/aum-metrics.json`, and `address()` over the same arguments returns it under `s3://opal-data-49financial/`. **Every NEW address comes from `LGIC_ENFORCE`'s `key()` and `address()`, never typed.** The one exception is the combined slice `s3://opal-data-portal-v2/platinum/mdpf/global/...`: it is historical, tier-first, and stays exactly where it is (X2), so no builder produces it and nothing moves it to satisfy this row | ruled by Andrew ~03:2xZ and ratified as `LGIC_NAMING` S1; the builders are `LGIC_ENFORCE`'s |
 | the gold artifact | **produced** | parquet only; one partition per day, carrying its date in the key; the full history backfilled from the current JSON to the extent it exists; history is never rewritten. The artifacts are `account_distribution`, `account_units`, `aggregate_aua_timeseries` and `aum_metrics` (snake_case) | the publisher; any reader that needs a figure's vintage |
 | the served platinum JSON | **produced**, by the publisher alone | the leaves `aggregate-aua-timeseries`, `account-distribution`, `aum-metrics` and `account-units` (kebab-case), their data-bearing leaves byte-unchanged across every cutover, with `_provenance.written_at` excluded because it advances daily. The publisher is the one place parquet becomes JSON, and it reads only `opal-data-mdpf` | the portal's Model Portfolios page |
 | each firm's bucket and its serving grants | **consumed** | the bucket exists, serves, and carries its serving grants, per firm | produced by `ADVI_FIRMBKTS`, per firm; FWD-2 and FWD-6 wait on it for that firm |
-| the scoped route for a firm's slice | **produced** | a firm's slice is served through the SCOPED router, which asserts the tenant, from that firm's bucket; the general route keeps only `global` | the portal; the router's firm map is `LGIC_ENFORCE`'s generated view |
+| the scoped route for a firm's slice | **produced** | the portal's existing requests keep their URLs (`/api/general/mdpf/{firm}/...`); the portal is frozen, so no caller changes. The edge maps them: `global` keeps its current general handling unchanged, and any firm segment is served ONLY when the viewer's asserted tenant equals that segment, from that firm's bucket at the key above; another firm's session is refused. **Keeping the old URL never keeps general authorization for firm data** | the portal's Model Portfolios page and its wrappers (`aum.ts`, `portal-proxy.ts`); the edge routers and CloudFront behaviours; the router's firm map is `LGIC_ENFORCE`'s generated view |
 | the dedicated runner | **produced** | one principal per firm, named by `name()` (`mdpf-49f-runner-role` and its siblings), whose only write grant is `opal-data-{firm}/mdpf/{firm}/platinum/*` in its own firm's bucket; its host is built by this project | the per-firm slice writes |
 | the separation rule | **consumed** | `LGIC_ENFORCE`'s scope-derived Deny on each firm bucket, which admits a principal whose name carries that firm in its scope slot. **For FWD-6, "word-for-word what it was before" means the run needs NO edit to it: no exemption row, no carve-out, and the rule's bytes are identical before and after the run** | produced by `LGIC_ENFORCE` (its fence row, and its cell E5 on the template) |
 | the decommission standard | **consumed** | for each retiring tree: 45 CONSECUTIVE days in which a named instrument records no data event on the tree except an excluded probe. It starts no earlier than that instrument's observed-live stamp, any other event restarts it, and it counts only once every reader is repointed. Each removal is then its own act | `ADVI_FIRMBKTS`'s FWD-6 window ruling (its tree row @`9819855eda`), on Andrew's ~18:4xZ card 2 and ~03:xxZ word |
@@ -213,14 +225,27 @@ This follows the precedent `3.0.0_SA_CVO` accepted on the three D14 PRDs.
   7. the firm slices, per firm, as each firm's bucket serves;
   8. the runner;
   9. the retirements, each on its own proof.
-- **DEC-5 FWD-2 is a route-class change, not a prefix edit** (finding IV.6).
+- **DEC-5 FWD-2 is a route-class change, not a prefix edit** (finding IV.6), **and the portal's callers do not
+  change** (`4.0.0_SA_CRO` R3).
   - Today every firm's slice is fetched on the GENERAL route from the general bucket, keyed by a firm id the client
-    supplies.
-  - Moving a slice into `opal-data-{firm}` means serving it through the SCOPED router, which asserts the tenant. The
-    general route keeps only `global`. This is a CloudFront behaviour and a router-map change, with never-widen
-    sign-off (CTO and COO) on every served key.
-  - The proof is deliberate: a session signed in as Inflection, holding 49 Financial's exact address, is refused; a
-    49 Financial session sees its own figures exactly as before.
+    supplies. `aum.ts`, `portal-proxy.ts` and the Model Portfolios page ask for `/api/general/mdpf/{firmId}/...`, and
+    `public-data-router` rewrites that to `/platinum/mdpf/*` in `opal-data-portal-v2` (`index.mjs:51-54`).
+  - The portal is frozen, so the transition is a **tenant-asserting compatibility mapping at the edge**, not a caller
+    edit:
+    - `/api/general/mdpf/global/...` keeps its current general handling, unchanged.
+    - Any other firm segment is served only when the viewer's asserted tenant equals that segment. The assertion is the
+      one the scoped router already applies to `/api/scoped/*`. The object comes from that firm's bucket at the
+      five-segment key.
+    - Another firm's session is refused. **Keeping the old URL never keeps general authorization for firm data.**
+  - Which CloudFront behaviour and which router function carry it is read from the live behaviours at L5, because the
+    brief's Part VII says the scoped router was not re-read. It is portal-auth Terraform, applied by the infrastructure
+    lane through `safe-apply`, with never-widen sign-off (CTO and COO) on every served key.
+  - **Readiness precedes the switch, per firm:** the mapping is deployed and proven against the slice where it lives
+    today, and only then does the origin flip to the firm bucket.
+  - The proof runs through the page's own request path:
+    - a 49 Financial session loading the Model Portfolios page sees its figures exactly as before;
+    - an Inflection session requesting 49 Financial's exact URL is refused;
+    - the combined `global` slice still loads for every session that could load it before.
 - **DEC-6 The dedicated runner, and who builds its host.** The endpoint left the host's builder as an open question.
   **This project builds it.**
   - It is additive compute: a new principal and its host. MDPF is its only user, and Andrew asked for it by name.
@@ -278,7 +303,9 @@ This follows the precedent `3.0.0_SA_CVO` accepted on the three D14 PRDs.
 - **DEC-15 The key-bearing cells wait on `LGIC_ENFORCE`'s builders.** The emitter and the repoints take their strings
   from `key()` and `address()` (its cell E3). A hand-spelled canonical key in a migration would be the pattern breaking
   in the project built to fix it (that project's brief, Part V). At the three-COO cap, `LGIC_ENFORCE`'s L5 is first in
-  the sequence's queue, so these cells wait on it and cells M1, M7 and M8 do not.
+  the sequence's queue. **So every cell that writes, repoints or runs against a new address waits on it: M2 to M6, M8,
+  M9 and M10.** Only M1, a read-only census, and M7, a document, do not. The bronze move's read-only part, listing the
+  objects and their receiving step, sits in M1; the move itself waits (`4.0.0_SA_CRO` R2).
 
 ## PROJECT ARC AND DEFINED OUTCOME
 
@@ -291,11 +318,11 @@ This follows the precedent `3.0.0_SA_CVO` accepted on the three D14 PRDs.
 - The two legacy trees are gone, on proof, and the hold is true.
 
 **Arc:**
-1. The reader census, the combined slice's basis and the bronze move (M1, M7, M8), which wait on nothing.
-2. Then, once `LGIC_ENFORCE`'s builders exist: the emitter and backfill (M2, M3), the repoints and seams (M4, M6),
-   and the publisher (M5), last among readers.
-3. Then, per firm as `ADVI_FIRMBKTS` delivers: the route and slice (M9), and the runner (M10), once the fence is
-   applied.
+1. The reader census and the combined slice's basis (M1, M7), which wait on nothing.
+2. Then, once `LGIC_ENFORCE`'s builders exist: the emitter and backfill (M2, M3), the bronze move (M8), the repoints
+   and seams (M4, M6), and the publisher (M5), last among readers.
+3. Then, per firm as `ADVI_FIRMBKTS` delivers: the compatibility route proven first, then the slice (M9); and the
+   runner (M10), once the fence is applied.
 4. Then the retirements (M11), and the stale key (M12).
 
 It closes when every FWD grades REALIZED.
@@ -313,9 +340,9 @@ One row per candidate cell. The decomposition at L5 is the COO lane's, and it ma
 | M5 the publisher | FWD-4 | O4; IV.4; the second final-step obligation | C the gold artifact; P the served JSON | `infra/aws/lambda/opal-assets/opal-assets-mdpf-portal-publisher/` | -- | the served leaves diffed on data-bearing values before and after, with the population named (the brief's three denominators, 522, 492 and 13, reconciled first) | every figure is identical; the publisher reads only `opal-data-mdpf`; it is switched last |
 | M6 the code homes | FWD-5 | IV.4; the third final-step obligation | -- | `EC2_MANIFEST.json` (the accrual bundle); the gold Lambda's Terraform and source map | `s3://opal-data-mdpf/code/` | the packaging declarations changed, never an object hand-copied; the frozen rollback objects listed before and after | no resource pulls code from `opal-data-assets/portal/`; the rollback objects are byte-identical |
 | M7 the combined slice's basis | FWD-3 | O3; IV.7 | P `X2_GLOBAL_BASIS.md` | `infra/logic/06_CONFORMANCE_LEDGER.md` X2 | `org/missions/D8/MDPF/MDPF_CANON/deliverables/X2_GLOBAL_BASIS.md` | the aggregation level, the minimum firm count, and why no per-firm or per-account row survives | a reader asked why `global` did not move points at the paragraph; the ledger's X2 row cites it |
-| M8 the bronze move | FWD-7 | O7; R4 | C the key string | the receiving step | `s3://opal-data-assets/mdpf/{scope}/bronze/` | the step run on demand; its output read where it landed | the output lands beside every other vendor's; the next routine delivery lands there too, as confirmation only |
-| M9 a firm's route and slice | FWD-2 | O2; IV.6; Part V bullet 5 | C the firm's bucket and grants; P the scoped route | the scoped router; the CloudFront behaviours | `s3://opal-data-{firm}/mdpf/{firm}/platinum/` | per firm, after `ADVI_FIRMBKTS` reports that firm's bucket serving; never-widen sign-off (CTO and COO) on every served key | an Inflection session holding 49 Financial's exact address is refused; a 49 Financial session sees its own figures exactly as before; the general route keeps only `global` |
-| M10 the dedicated runner | FWD-6 | O6; IV.8 | C the fence; P the runner | -- | the runner's host and its per-firm roles | a run for one firm, after `LGIC_ENFORCE` E5 applies the fence; the fence's bytes read before and after | the run writes only that firm's `mdpf/{firm}/platinum/*`; the fence's bytes are identical before and after, with no exemption row added |
+| M8 the bronze move | FWD-7 | O7; R4 | C the key string, `key()` and `address()` (waits on `LGIC_ENFORCE` E3) | the receiving step; M1's bronze listing | `s3://opal-data-assets/mdpf/{scope}/bronze/` | every destination key generated by `address()`, never typed; the step run on demand; its output read where it landed | the output lands beside every other vendor's, at builder-generated keys; the next routine delivery lands there too, as confirmation only |
+| M9 a firm's route and slice | FWD-2 | O2; IV.6; Part V bullet 5 | C the firm's bucket and grants, `key()` and `address()`; P the compatibility route | `public-data-router`, the scoped router and the auth validator at the edge; the live CloudFront behaviours; the portal's callers `aum.ts`, `portal-proxy.ts` and the Model Portfolios page (read, not edited) | `s3://opal-data-{firm}/mdpf/{firm}/platinum/{table}/` | per firm, after `ADVI_FIRMBKTS` reports that firm's bucket serving; the mapping deployed and proven against today's location before the origin flips; never-widen sign-off (CTO and COO) on every served key | through the page's own request path: a 49 Financial session sees its figures exactly as before; an Inflection session requesting 49 Financial's exact URL is refused; `global` still loads as before; no portal source is changed |
+| M10 the dedicated runner | FWD-6 | O6; IV.8 | C the fence, `key()` and `address()`; P the runner | -- | the runner's host and its per-firm roles | a run for one firm, after `LGIC_ENFORCE` E5 applies the fence; the fence's bytes read before and after | the run writes only builder-generated keys under that firm's `mdpf/{firm}/platinum/`; the fence's bytes are identical before and after, with no exemption row added |
 | M11 the retirements and the hold | FWD-8 | O8; IV.9; IV.12 | C the decommission standard | the hold file; the three prior cleanups' kill lists (the negative control) | `org/missions/D8/MDPF/MDPF_CANON/deliverables/` | the hold re-pointed or superseded with the producer's read cited; the read instrument's observed-live stamp; the 45-day record per tree, once every reader is repointed | the record shows no reader or writer for the whole stretch on a named instrument; the hold is true; each removal is its own confirmed act |
 | M12 the stale served key | FWD-4, FWD-5 | Part V bullet 10 | P the served JSON | `dim_mdpf_aum_timeseries.py`; the portal's readers of the key | -- | the key's portal readers named; one of the two dispositions chosen | the staged repoint is finished, or the key is retired with its readers named; not both |
 
@@ -326,12 +353,13 @@ One row per candidate cell. The decomposition at L5 is the COO lane's, and it ma
 | new | `s3://opal-data-mdpf/mdpf/{scope}/gold/` and `.../state/` | M2, M3 | the gold artifact and its state |
 | new | `s3://opal-data-mdpf/code/` (the accrual bundle and the gold Lambda's zip, by packaging declaration) | M6 | the code home |
 | new | `s3://opal-data-assets/mdpf/{scope}/bronze/` | M8 | the bronze home |
-| new | `s3://opal-data-{firm}/mdpf/{firm}/platinum/` | M9, M10 | each firm's served slice |
+| new | `s3://opal-data-{firm}/mdpf/{firm}/platinum/{table}/{leaf}.json` | M9, M10 | each firm's served slice, at the five-segment key |
 | new | `org/missions/D8/MDPF/MDPF_CANON/deliverables/` | M1, M7, M11 | the census, the basis, the retirement records |
 | edit | `data/mdpf/scripts/gold/*`, `data/assets/scripts/gold/build_cottonwood_mdpf_*.py`, the SmartX reader of the combined slice | M4 | the repoints |
 | edit | `infra/aws/lambda/opal-assets/opal-assets-mdpf-portal-publisher/` and its Terraform | M5 | the publisher |
 | edit | `infra/aws/ec2/EC2_MANIFEST.json`; `gold-lambda.tf`; `lambda-source-map.json` | M6 | the code homes |
-| edit | the scoped router and the CloudFront behaviours for `/mdpf/{firm}` | M9 | the route |
+| edit | `public-data-router`, the scoped router and the CloudFront behaviours for `/api/general/mdpf/{firm}/...` | M9 | the tenant-asserting compatibility route |
+| read | `portal/src/api/endpoints/aum.ts`, `portal/src/api/portal-proxy.ts`, the Model Portfolios page | M9 | the callers whose URLs stay; not edited, because the portal is frozen |
 | new | the runner's host and its per-firm IAM roles | M10 | the dedicated runner |
 | edit | the hold file | M11 | re-pointed or superseded |
 | edit | `docs/architecture/MDPF_CANON_PRD.md` | DEC-1 | the moved notice (landed with this PRD) |
@@ -353,12 +381,12 @@ Each is an entry. Every entry maps to a decision, a cell and an outcome, or carr
 | 2 | PART 0 how the blind constraint was honoured | NOT CONSUMED as work: a method record. Its one carried fact (MDPF_GLOBAL's grant question seen and not used) is DEC-12 | -- |
 | 3 | PART I heading | structural | -- |
 | 4 | O1 vintage from the key; one bucket | DEC-2; M2, M3 | FWD-1 |
-| 5 | O2 a firm's slice in its own bucket; another firm refused | DEC-5; M9 | FWD-2 |
+| 5 | O2 a firm's slice in its own bucket; another firm refused | DEC-5 (the compatibility route; callers unchanged); M9 | FWD-2 |
 | 6 | O3 the combined slice stays, with its reason | DEC-7; M7 | FWD-3 |
 | 7 | O4 one publisher, reading only the MDPF store | DEC-4 (last); M5 | FWD-4 |
 | 8 | O5 every producer in the MDPF store; no code elsewhere | DEC-3 (AC9 kept); M4, M6 | FWD-5 |
 | 9 | O6 a dedicated runner; the fence untouched | DEC-6; the fence and runner rows in CONTRACTS; M10 | FWD-6 |
-| 10 | O7 bronze in the shared intake | DEC-8; M8 | FWD-7 |
+| 10 | O7 bronze in the shared intake | DEC-8; DEC-15 (M8 waits on the builders); M8 | FWD-7 |
 | 11 | O8 both trees gone; the hold true | DEC-9; M11 | FWD-8 |
 | 12 | PART II the boundary | CONTRACTS; DEC-1 (b); DEC-6 (the host); DEC-12 | all |
 | 13 | PART III the qualitative bar | the ENDPOINT's ACCEPT lines; the acceptance drafts | all |
@@ -367,8 +395,8 @@ Each is an entry. Every entry maps to a decision, a cell and an outcome, or carr
 | 16 | IV.2 378 mentions; 16 definitions and 50 config sites | M1 | FWD-5 |
 | 17 | IV.3 the producers across three trees | M1, M4 | FWD-5 |
 | 18 | IV.4 the publisher and the two code artifacts | M5, M6 | FWD-4, FWD-5 |
-| 19 | IV.5 the canonical path strings | the key-string row in CONTRACTS (ratified as `LGIC_NAMING` S1); DEC-1 (c) | FWD-1, FWD-2 |
-| 20 | IV.6 firm slices on the general route | DEC-5; M9 | FWD-2 |
+| 19 | IV.5 the canonical path strings | the key-string row in CONTRACTS (ratified as `LGIC_NAMING` S1; the firm slice's five-segment form and its vector; the historical `global` path bounded out); DEC-1 (c) | FWD-1, FWD-2 |
+| 20 | IV.6 firm slices on the general route | DEC-5 (the named callers and their tenant-asserting mapping); M9 | FWD-2 |
 | 21 | IV.7 the combined slice's basis owed | DEC-7; M7 | FWD-3 |
 | 22 | IV.8 the runner's name | DEC-6; M10 | FWD-6 |
 | 23 | IV.9 the hold names a missing key | DEC-9; M11 | FWD-8 |
@@ -388,8 +416,9 @@ Surfaces this project writes, reads or executes.
 |---|---|---|---|
 | `s3://opal-data-mdpf/mdpf/{scope}/gold/`, `/state/`, `/code/` | new objects, and packaging declarations for the code | M2, M3, M6 | MDPF_CANON |
 | `s3://opal-data-assets/mdpf/{scope}/bronze/` | new objects (the bronze move) | M8 | MDPF_CANON |
-| `s3://opal-data-{firm}/mdpf/{firm}/platinum/` | APPLIED: the served slices move; never-widen sign-off per served key | M9 | MDPF_CANON, per firm, after `ADVI_FIRMBKTS` delivers that firm |
-| the scoped router and the CloudFront behaviours for `/mdpf/{firm}` | APPLIED: a route-class change | M9 | MDPF_CANON, through the infrastructure lane |
+| `s3://opal-data-{firm}/mdpf/{firm}/platinum/{table}/` | APPLIED: the served slices move to the five-segment key; never-widen sign-off per served key | M9 | MDPF_CANON, per firm, after `ADVI_FIRMBKTS` delivers that firm |
+| `public-data-router`, the scoped router and the CloudFront behaviours for `/api/general/mdpf/{firm}/...` | APPLIED: the tenant-asserting compatibility route; `global` unchanged | M9 | MDPF_CANON, through the infrastructure lane |
+| the portal's callers (`aum.ts`, `portal-proxy.ts`, the Model Portfolios page) | read only: their URLs stay, because the portal is frozen | M9 | -- |
 | the publisher Lambda and its Terraform | APPLIED: the port to parquet | M5 | MDPF_CANON |
 | the producer scripts; `EC2_MANIFEST.json`; `gold-lambda.tf`; `lambda-source-map.json` | edits | M4, M6 | MDPF_CANON; deploys ride their owners' paths (Rule 13) |
 | the runner's host and its per-firm IAM roles | APPLIED: new compute and principals | M10 | MDPF_CANON, through the infrastructure lane |
