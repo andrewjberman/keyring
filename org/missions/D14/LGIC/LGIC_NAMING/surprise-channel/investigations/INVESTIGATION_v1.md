@@ -447,6 +447,74 @@ new row on 3.0.0_SA_CVO's ask 96495), both 1.0.0_SA_CTO; `LGIC_NAMING-S3`, `LGIC
     "spec_asserts": "TO-LN-l-3 L3-AC1: 'every conforming address is labeled as the ruled string reads it', invocation check_ln.py l3-correct, expect 'VERDICT: PASS-ALL-CORRECT'.",
     "world_is": "The invocation prints 'VERDICT: FAIL-MISREAD' with one WRONG line (a3). The cell scores and does not read, so the label cannot be changed inside LN-l-3; the order stays open on L3-AC1 FAIL. The reader's briefing describes only a seven-segment layout ending in an object, and a3 is a six-segment code-tier address with no object.",
     "notes": "Filed by the scoring worker because the named invocation did not produce the named result. No reading, re-labeling or fix was attempted: the answer file belongs to LN-l-2 and is outside this order's paths. For 3.0.0_SA_CVO's L8 disposition."
+  },
+  {
+    "id": "LGIC_NAMING-W6-S1",
+    "project": "LGIC_NAMING",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_NAMING~6",
+    "surfaced_at": "2026-09-14T17:07Z",
+    "one_line": "Blind reader (LN-e-4): the order's premise 'you have never seen this estate' fails before the first tool call -- the worker session loads the workspace CLAUDE.md and the user's auto-memory MEMORY.md, which name cot, bd, inf, 49financial, inflection and cottonwood as firms, so 9 of the reader's 18 marks are tokens its context had already named as firms and 3 more (49f) abbreviate one it named.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~G -- as issuer and spawner of LN-e-4: disclose at this round's L8/L9 that the N3 reader was not blind to the firm vocabulary, and for any re-run either seat the reader in a context that does not load CLAUDE.md or the auto-memory, or state that the reader measure cannot be taken inside this fabric",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CONTEXT: CLAUDE.md:329 @64dd54e67f (Rule 13, loaded into this worker's context by the harness before any tool call): 'cot is a separate firm from bd -- never mirror/sync.'",
+        "CONTEXT: C:/Users/AndrewBerman/.claude/projects/C--Users-AndrewBerman-Desktop-ajb-workspace/memory/MEMORY.md (outside the repo, no commit; loaded at session start 2026-09-14): index line 'Legacy bd/inf/cot buckets are the ACTIVE firm channels until the D14 move to -49financial/-inflection/-cottonwood'.",
+        "OUTPUT: org/missions/D14/LGIC/LGIC_NAMING/deliverables/exercises/n3-reader.tsv (committed with this row): 18 marks -- cot 3, inf 3, inflection 1, 49financial 1, cottonwood 1 (9, named as firms verbatim in the context), 49f 3 (an abbreviation of 49financial), etfs 3, mdpf 2, demo 1.",
+        "INPUT READ: only column 2 of n3-namer-a.tsv @64dd54e67f (cut -f2), 18 names after the '# base' line; check_ln.py was run, not read, and no other fixed input or exercise file was opened before the marks were written."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "LN-e-4 task order: 'You have never seen this estate, and you read the names alone.' and 'Read: column 2 of n3-namer-a.tsv, and nothing else.'",
+    "world_is": "A worker spawned in this workspace starts with the workspace law file and the user's memory index in context, and both spell out which short and long tokens are firms. The reader read nothing but column 2, but it could not un-know that vocabulary, so its firm marks do not measure what a reader who had never seen the estate would mark.",
+    "notes": "OBSERVATION: form only. Whether this moves FWD-2's grade is 3.0.0_SA_CVO's call at L8/L9, not this worker's. The reader's marking rule is stated in deliverables/0.9.0_WK_LGIC_NAMING~6/blind-reader.result.md so the exposure can be read against it."
+  },
+  {
+    "id": "LGIC_NAMING-W6-S2",
+    "project": "LGIC_NAMING",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_NAMING~6",
+    "surfaced_at": "2026-09-14T17:07Z",
+    "one_line": "Blind reader (LN-e-4): the order asks for THE one token that is the firm or the product, but at least 4 of 18 names carry both a recurring product-like prefix (mdpf) and a firm-like token, and the order does not say which to mark; the reader marked the firm token whenever one was present and the product token otherwise.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SPEC: org/missions/D14/LGIC/LGIC_NAMING/task-orders/LGIC_NAMING.TO-LN-e-4.blind-reader.md:22 @64dd54e67f: 'For each name, mark the token that is the firm or the product it belongs to, exactly as it is spelled in the name, or none if no token is.'",
+        "INPUT: n3-namer-a.tsv column 2 @64dd54e67f: mdpf-cot-exporter-sg, mdpf-cot-publisher-lambda, mdpf-inf-delivery-status-table and mdpf/49financial/platinum/advisor_books/advisor_id=A123 each carry mdpf and a firm-like token; mdpf-demo-publish-failure-alarm carries 'demo' in the slot where its mdpf siblings carry the firm token.",
+        "OUTPUT: org/missions/D14/LGIC/LGIC_NAMING/deliverables/exercises/n3-reader.tsv marks cot, cot, inf, 49financial and demo on those five names, and mdpf only on mdpf-gold-read-policy and mdpf/global/code/gold/mdpf-accrual-bridge.tar.gz, whose second segment is a tier word or 'global'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "LN-e-4 task order: mark the one token that is the firm or the product each name belongs to.",
+    "world_is": "Where a name carries both a product token and a firm token there are two candidate marks, and a one-column output holds only one. The reader had to choose a precedence the order does not state (firm over product), so a comparison against a key that prefers the product would read those names as misses.",
+    "notes": "OBSERVATION, INERT: form only. 'demo' is the reader's weakest mark: read as the tenant in the firm slot, not known to be a firm."
+  },
+  {
+    "id": "LGIC_NAMING-W6-S3",
+    "project": "LGIC_NAMING",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_NAMING~6",
+    "surfaced_at": "2026-09-14T17:07Z",
+    "one_line": "Blind reader (LN-e-4): the order says to read column 2 of n3-namer-a.tsv and nothing else, but appending the row its <paths> grants requires reading this channel to mint the next unused id, and the channel quotes N3_ITEMS item text and the namer's per-item choices; the reader fixed every mark before the channel read returned.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SPEC: org/missions/D14/LGIC/LGIC_NAMING/task-orders/LGIC_NAMING.TO-LN-e-4.blind-reader.md:20 and :24 @64dd54e67f ('Do NOT open N3_ITEMS.json ... or any other exercise file'; 'Read: column 2 of n3-namer-a.tsv, and nothing else'), and :48, the <paths> line granting this channel.",
+        "CHANNEL: org/missions/D14/LGIC/LGIC_NAMING/surprise-channel/investigations/INVESTIGATION_v1.md @64dd54e67f, row LGIC_NAMING-W2-S2's grounding quotes N3_ITEMS.json item i13 ('the entity is the advisor keyed advisor_id, and the advisor id is A123'), and rows W2-S1..S4 name the namer's choices for i01-i18.",
+        "ORDER OF ACTS: n3-reader.tsv was written by a Write call issued in the same batch as the first read of this channel, its content fixed in that call; no later act changed a mark (after the mutant control the restored file was cmp-identical to the written one)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "LN-e-4 task order: 'Read: column 2 of n3-namer-a.tsv, and nothing else.'",
+    "world_is": "The worker definition obliges a channel read before a row can be appended, and this project's channel carries the item descriptions and the namers' reasoning. A blind reader that read the channel before marking would no longer be blind to the items.",
+    "notes": "OBSERVATION, INERT for this cell because the marks were fixed first. The same exposure faces any later blind cell granted this channel. Remedy not chosen here."
   }
 ]
 ```
