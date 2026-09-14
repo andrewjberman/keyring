@@ -3387,6 +3387,115 @@
     "spec_asserts": "Each of the four rows names 2.0.0_SA_COO~F as disarm owner: W3-S19 and W3-S24 as BLOCKING refusals of F34-AC6 under the grant as cut; W3-S21 as a false label on the no-status path; W3-S23 as F34-AC8's premise failing on the path the tab renders.",
     "world_is": "All four are closed in the drained code: the order met ten of ten mechanical criteria after three amendments, each committed on the worker's branch before the worker resumed. NOT closed here: W3-S22 (fe-s-21's test-built as_of envelope carries the new label) and W3-S26 (a view document's null businessAsOf now reads 'Source date malformed'; 3 of 134 view documents, all in the smoke-only fe-s-3-loading map) -- both INERT and carried to the drain-end packet.",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W1-S58",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-14T06:31:22Z",
+    "one_line": "F31-AC8 cannot be satisfied inside FE-s-31's grant: submitExport can only return what LiveClient.submitExport returns, and LiveClient takes the envelope's status half and drops the ExportReceipt in data -- in api/endpoints/investor-reporting.ts, which is not in the order's <paths>.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-FE-s-31 WORKER FACE, W2-S12 / W3-S5: \"export/submit.ts:87 types submitExport to return the StatusEnvelope ack ... Type it to what the producer returns.\" F31-AC8: \"through LiveClient and a transport serving an ExportReceipt envelope: submitExport returns the receipt, and the test prints the fields it read.\" The <paths> grant names export/submit.ts and not the typed client.",
+    "world_is": "The receipt never reaches submit.ts. LiveClient.submitExport calls send('submit-export', {body}, adaptStatusEnvelope, ..., 'status') and send returns parsed.status for take='status' -- the adapted data (parseIrEnvelope already runs adaptExportReceipt on it) is discarded. InvestorReportingApi.submitExport is typed Promise<StatusEnvelope>. So retyping submit.ts's wrapper alone would make its type claim a receipt the runtime never delivers; this worker left the wrapper typed to the ack and did not reach into the client. Measured through LiveClient and a transport serving the committed receipt (EXP-1) in data and an ack in status: submitExport returned exportRef=(absent) jobState=(absent) authorizedDownloadRoute=(absent) | operation=submit-export state=LOADING producerState=QUEUED. The F31-AC8 arm is committed as test.failing: it prints that reading, keeps the suite green while the defect stands, and turns red when the client returns the receipt.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal fd91bea1 src/api/endpoints/investor-reporting.ts:765 `submitExport(req: SubmitExportRequest): Promise<StatusEnvelope>` (interface); :1063-1076 LiveClient.submitExport -> send(..., 'status'); :926-932 send returns parsed.status when take === 'status', parsed.data otherwise",
+        "portal fd91bea1 src/pages/InvestorReporting/contracts/envelope.ts:147 IR_DATA_ADAPTER['submit-export'] = adaptExportReceipt -- the receipt IS adapted, then dropped by the take",
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-31.export-under-the-gate.md@a2060c08b5 <paths>: seven source files + __tests__/fe-s-31/ + INVESTIGATION_v2.md; no api/endpoints/",
+        "portal 1f7d84b2 __tests__/fe-s-31/submit.test.ts, deciding run: 'SUBMIT RETURNS THE EXPORT RECEIPT: no', 2 pass / 0 fail"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W1-S59",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-14T06:31:22Z",
+    "one_line": "The dev-server amendment's override file, written as the __tests__/fe-s-31/vite.worktree.config.ts it names, broke F31-AC1: tsc -b --noEmit rc=2 on two files nobody edited. The same override as vite.worktree.config.mjs in the same folder keeps rc=0 and vite honours it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-FE-s-31 BOUNDS, Dev server (amendment on rows W1-S56 / W1-S57): \"write __tests__/fe-s-31/vite.worktree.config.ts, which imports the portal's vite.config.ts and mergeConfigs ONLY cacheDir ... launch ... --config src/pages/InvestorReporting/__tests__/fe-s-31/vite.worktree.config.ts ... If vite refuses the override, file a row with the measurement and launch without it.\"",
+    "world_is": "Vite did not refuse the override; the TYPECHECK did. The file sits under src/, which tsconfig.app.json includes, and importing vite (or ../vite.config) brings vite's Node typings into the APP program, where setTimeout then returns NodeJS.Timeout: with the .ts present `tsc -b --noEmit` printed src/pages/PortfolioManagement/hooks/useAutoSave.ts(31,5) and useOptimizationAutoSave.ts(67,5) \"error TS2322: Type 'Timeout' is not assignable to type 'number'\", rc=2 (rc=0 at base and with the source changes alone). This worker deleted its uncommitted .ts and committed the identical override as vite.worktree.config.mjs: tsconfig.app.json has no allowJs, so tsc never reads it (rc=0), and vite loaded it -- the server on 5237 wrote <WS>/.scratch/vite-cache-fe-s-31/deps at 02:00:57 local while the main checkout's node_modules/.vite/deps kept its 00:56:58 mtime. So the override works; only its FILE NAME in the amendment is unbuildable, and the launch line in BOUNDS names the .ts.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal fd91bea1 tsconfig.app.json: \"include\": [\"src\"], \"types\": [\"vite/client\"], no allowJs",
+        "tsc -b --noEmit with __tests__/fe-s-31/vite.worktree.config.ts present: 2 x TS2322 (useAutoSave.ts:31, useOptimizationAutoSave.ts:67), rc=2; after replacing it with the .mjs: rc=0 (F31-AC1 deciding run at portal 1f7d84b2)",
+        "portal 1f7d84b2 src/pages/InvestorReporting/__tests__/fe-s-31/vite.worktree.config.mjs (mergeConfig(portalConfig, { cacheDir }) with cacheDir from import.meta.url)",
+        "ls --full-time: <WS>/.scratch/vite-cache-fe-s-31/deps 2026-09-14 02:00:57 -0400; portal/node_modules/.vite/deps (junction to main) 2026-09-14 00:56:58 -0400"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W1-S60",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-14T06:31:22Z",
+    "one_line": "Page 3 of every exported performance document still prints the COMPOSED bundle's own envelope as facts -- \"Bundle availability READY\" and a Bundle scope line naming no accounts -- beside the report's PARTIAL and its two accounts, from render/performance/MethodsAndSources.tsx, which is not in FE-s-31's grant.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Ruling J (TO-FE-s-31 face): \"the report's scope line and the bundle's scope line must agree.\" Ruling H: the five answer-bearing states export \"never styled as complete\". The face also says the chrome renders in exactly three places (Page.tsx, PerformanceDocument.tsx, AnalysisDocument.tsx).",
+    "world_is": "FE-s-31 fixed what its grant reaches: every page's band reads the report's state, and the HEADER's count reads the report's scope (2 account(s) in scope, agreeing with the A-0001/A-0002 table). But the body of page 3 is not chrome: MethodsAndSources.tsx prints Row \"Bundle availability\" = the composed bundle's envelope state (READY by construction, composeExportBundle) and Row \"Bundle scope\" = bundle.scope.accountIds.join(', ') (empty for every composed bundle), under the Report availability PARTIAL and Report scope A-0001, A-0002 rows. So on the frozen-fixture print the page-3 bundle and report scope lines still disagree, and a qualified report's page 3 carries the word READY. This worker did not edit the file.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal fd91bea1 src/pages/InvestorReporting/render/performance/MethodsAndSources.tsx:120-121 (Report scope row), :171-172 (Bundle scope row, accounts {bundle.scope.accountIds.join(', ')})",
+        "portal fd91bea1 src/pages/InvestorReporting/export/resolveBundle.ts:137 composeExportBundle -> wireEnvelope({..., state: 'READY'}), no accountIds",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/fe-s-31_print_partial_1440.png (F31-AC6 capture at portal 1f7d84b2) page 3: \"Bundle availability READY\", \"Bundle scope ... accounts\" (empty), beside \"Report availability PARTIAL ...\" and \"Report scope ... accounts A-0001, A-0002\""
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W1-S61",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-14T06:31:22Z",
+    "one_line": "Under the export gate the print route REFUSES the committed frozen map (fixtures/smoke/fe-s-18-frozen.json): its performance envelope carries no status, so the report is the explicit unknown and not answer-bearing -- C-S68's disarm (\"the frozen print's header agrees with its own account table\") can no longer be observed by re-capturing that print as committed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "IRPT_FNTEND-C-S68 disarm_owner (ADJUDICATION_v2.md): \"DISARMS when the frozen print's header agrees with its own account table.\" TO-FE-s-31 face, ruling J: \"(C-S68 disarms when the frozen print's header agrees with its own account table.)\"; F31-AC4 grades it \"on the frozen print fixture\".",
+    "world_is": "The committed map's /api/scoped/investor-reporting/performance/ entry has keys contract_version, operation, firm_id, data -- no status. Through LiveClient the report arrives with availability.state UNCERTAIN and no producerState, which FE-s-30's isAnswerBearing (row W1-S55) sends to the panel; FE-s-31's PrintEntry now produces no document for it. So the frozen print, as FE-s-18 captured it, cannot be re-captured with a header at all. F31-AC4 therefore reads the DOCUMENT the print route's own path renders from that map (composeExportBundle -> resolveBundle through LiveClient), both as committed and with a PARTIAL status added: \"2 account(s) in scope\" on all 3 pages against a table of A-0001, A-0002, and the round-4 rule on the same bundle reads \"0 account(s) in scope\". Whoever grades C-S68 needs a capture with a status carrier, as F31-AC6 serves.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal fd91bea1 src/pages/InvestorReporting/fixtures/smoke/fe-s-18-frozen.json: performance entry keys [contract_version, data, firm_id, operation]",
+        "portal fd91bea1 src/pages/InvestorReporting/state/availability.ts:64-69 isAnswerBearing: no producerState and view UNCERTAIN -> false",
+        "portal 1f7d84b2 __tests__/fe-s-31/every-page.test.ts F31-AC4 run: \"report state UNCERTAIN, answer-bearing=false -- the print route REFUSES this report\"; \"REPORT SCOPE AND BUNDLE SCOPE AGREE: yes (2 / 2 renders ...)\""
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W1-S62",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-14T07:49:41Z",
+    "one_line": "The amendment's W2-S12 fix, made in exactly its three granted regions of investor-reporting.ts, returns the receipt (F31-AC8 read yes) but turns F31-AC1 and F31-AC9 red in tests OUTSIDE the grant that assert the old contract, and FixtureAdapter cannot serve a receipt in-region because IR_FIXTURE_PLAN names the ack for submit-export. Withdrawn; F31-AC8 refused again.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-FE-s-31 BOUNDS, amendment @261a0c923f: \"(1) src/api/endpoints/investor-reporting.ts, for W2-S12/W3-S5 ONLY: submitExport returns the ExportReceipt the producer answers in data ... in the InvestorReportingApi interface, in LiveClient.submitExport and in FixtureAdapter.submitExport, and nowhere else in that file. FE-s-34 holds FixtureAdapter's VIEW-fixture serving branch (serve) ... touch no other region. Your test.failing arm for F31-AC8 becomes an ordinary test.\" Also F31-AC1 \"the whole portal typechecks\" and F31-AC9 \"(?<![0-9])0 fail\" over fe-s-4/8/9/16/31.",
+    "world_is": "Measured with the three regions changed (interface -> Promise<ExportReceipt>; LiveClient.submitExport -> send(..., adaptExportReceipt) taking data; FixtureAdapter.submitExport -> serve('export-receipt')): F31-AC8 printed \"SUBMIT RETURNS THE EXPORT RECEIPT: yes\". But tsc -b --noEmit rc=2 at src/pages/InvestorReporting/__tests__/fe-s-16/mounted-states.test.ts(82,3) \"TS2740: Type 'ExportReceipt' is missing the following properties from type 'StatusEnvelope': operation, state, sourceAsOf, safeActions, and 4 more\" -- statusFromWire (:79-87) is typed Promise<StatusEnvelope>, points FixtureAdapter's submit-export at a STATUS wire fixture, and uses the result as the ack at :148 and :262. At runtime fe-s-16 F16-AC2 (:201) failed with data-reason-code=\"undefined\", and fe-s-1/adapter.test.ts:137 (call log) failed with \"/api/scoped/investor-reporting/export-receipt\" in submit-export's slot. That second failure is the in-region FixtureAdapter route; the honest one needs IR_FIXTURE_PLAN['submit-export'] (:1178, contract StatusEnvelope) to name ExportReceipt, which is outside the three regions and inside FE-s-34's. Every in-region option leaves AC1 red because fe-s-16:82 is typed to the ack. So this worker reverted the three regions (0 diff lines), kept submitExport typed to the ack and kept the AC8 arm as test.failing. The measured patch is reproduced in the FE-s-31 result file.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal 364dc0d1 src/api/endpoints/investor-reporting.ts:1178 `'submit-export': { contract: 'StatusEnvelope', shape: 'one' }` (IR_FIXTURE_PLAN); :1305-1307 FixtureAdapter.submitExport -> this.serve('submit-export', ...)",
+        "portal 364dc0d1 src/pages/InvestorReporting/__tests__/fe-s-16/mounted-states.test.ts:79-87 `async function statusFromWire(fileName: string): Promise<StatusEnvelope>` returning `adapter.submitExport(...)` after `useFixture('submit-export', HERE + fileName)`; uses at :148 and :262",
+        "tsc -b --noEmit with the three regions changed: mounted-states.test.ts(82,3) TS2740 and export/submit.ts(111,3) TS2322 (the latter this worker's own wrapper), rc=2",
+        "bun test fe-s-1* + fe-s-16 + fe-s-31 static files with the change: 279 pass / 2 skip / 3 fail; failing: \"call log > the adapter records EVERY call with method, url and timestamp\" (fe-s-1/adapter.test.ts:137) and \"F16-AC2 -- the five states, on the mounted flow > five wire-fixture states render on the mounted body\" (fe-s-16/mounted-states.test.ts:201)",
+        "after the revert: tsc -b rc=0; git diff -- src/api/endpoints/investor-reporting.ts = 0 lines"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
