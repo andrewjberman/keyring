@@ -168,3 +168,32 @@ the corroborator can return ABSENT and is not a read that passes for everything.
 `Z-S56` **REMAINS ARMED**; `Z-S57` is INERT and creates no second disarm path.
 Authorship: the hole and the corroborator list are `2.0.0_SA_COO~Z`'s; the per-row-verdict precision
 and the tree-wide measurement are this seat's.
+
+---
+
+## ADDENDUM 2 -- s.2's EXHIBIT IS RETIRED: `ETFS_POSITIONING`'s `status` IS **CORRECT**, AND TWO OF MY CITED FIELDS WERE VACUOUS
+
+⛔ **s.2 above presents `ETFS_POSITIONING` as a project whose `status` field is measurably wrong. That
+reading is retired** (`Z-S58` @`c5e714cda7`). `0.0.0_AB_MSTR~Z` read **`phase`** -- a field s.2 never
+opened -- and it carries a **sovereign closure**: Andrew-direct 2026-09-01 ~14:0xZ, verbatim, with the
+two open orders already disposed of there as **stale faces surfaced to their issuers**.
+```
+status='complete' ..... CORRECT, the best-grounded field on that record
+dep_stage='EXECUTING' . THE STALE ONE      2 open orders .. documented stale faces, not live work
+```
+⭐ **I reconciled two fields, named one wrong, and never read the third field that adjudicates them.**
+s.2's negative control (both scoped rows internally coherent) proved the schema *can* be coherent and
+said nothing about which field was wrong in the incoherent case -- **a control at the wrong grain,
+passing cleanly.**
+
+⛔ **AND THE FIELD CENSUS s.2 NEVER RAN** (`Z-S59` @`03b0cbb2c0`): across **366** project records,
+`completed_at` **0 of 366** (cited by s.2 as a signal -- **vacuous**), `status` 366/366, `phase`
+345/366, **`dep_stage` 50 of 366** -- so `Z-S57`'s plane 2 is **UNEVALUABLE for 316 projects**, which
+is not the same verdict as FAILED. **Both scoped projects DO carry `dep_stage`, so all five planes
+remain evaluable where this loop can actually terminate.**
+
+✅ **UNCHANGED:** `Z-S56` **REMAINS ARMED** and its ruling stands -- the single-field-oracle argument
+never rested on `completed_at` and **never needed a wrong exhibit**. Better stated now: **the
+register's fields can disagree and which one is stale is not predictable from the disagreement
+alone.** `Z-S82` disarmed (`Z-S83` @`a54b87a7da`) on both branches of its own OR, verified in the
+served bytes by blob id.
