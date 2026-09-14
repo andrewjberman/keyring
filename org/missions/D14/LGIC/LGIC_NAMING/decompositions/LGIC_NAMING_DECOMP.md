@@ -6,10 +6,10 @@
  "directive": "D14",
  "macro": "LGIC",
  "fabric": "laptop",
- "decomp_version": "v3",
+ "decomp_version": "v4",
  "step": 5,
- "prd_ref": "org/missions/D14/LGIC/LGIC_NAMING/prd/LGIC_NAMING_PRD.md@e04b802fe9",
- "prd_half_hashes": {"ratified-text": "SIGNED 3.0.0_SA_CVO, current at v1.4 (half unchanged since v1.2)", "brief": "SIGNED 4.0.0_SA_CRO @254ac1f2ab (v1.4)"},
+ "prd_ref": "org/missions/D14/LGIC/LGIC_NAMING/prd/LGIC_NAMING_PRD.md@2706014705",
+ "prd_half_hashes": {"ratified-text": "SIGNED 3.0.0_SA_CVO, current at v1.6", "brief": "SIGNED 4.0.0_SA_CRO @8e08704fb0 (v1.6, review @d60eefad00)"},
  "author": "2.0.0_SA_COO~G",
  "cells": 14,
  "chains": 5,
@@ -29,6 +29,9 @@ notifier's COO delivery was still addressed to the base serial.
 half; section 0 is the re-read, and v1's text below is amended in place where v1.3 reaches it.
 **v3, cut before any L6 issuance** on `1.0.0_SA_CTO`'s ruling of row S10 into PRD v1.4 (96578); section 0b is that
 re-read, amended in place where v1.4 reaches (3 cells).
+**v4, the round-2 recut**, on `1.0.0_SA_CTO`'s round-1 analysis (L10, 96705 @`de52d3db04`; SC1 corrected
+@`2706014705`) and PRD v1.6. Section 0c is the cut: 8 cells re-run, 4 of them in a clean-context seat. Round 1's text
+below stands as its record.
 **Frozen at the cut.** A cell that looks wrong mid-round is a **surprise row, never an edit**
 (`org/missions/D14/LGIC/LGIC_NAMING/surprise-channel/investigations/INVESTIGATION_v1.md`).
 
@@ -143,6 +146,106 @@ file names the list's home, and no worker writes the standards file.
 **L4-R at the cut:** ADMITTED at v1.4. `prd-signoff.py status LGIC_NAMING` (read ~11:4xZ) reads both halves SIGNED
 current; the brief half was re-signed by `4.0.0_SA_CRO` @254ac1f2ab. The only open call on L6 is Andrew's (tree-row
 blocking item 5).
+
+---
+
+## 0c. v4 -- THE ROUND-2 RECUT (L10: 1.0.0_SA_CTO's round-1 analysis)
+
+**Input.** `org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_LGIC_NAMING_ROUND1_20260914.md` @`de52d3db04`
+(msg 96705), with its SC1 correction @`2706014705` (96725); PRD v1.6 @`2706014705`, ADMITTED (`prd-signoff.py status
+LGIC_NAMING`: both halves SIGNED current; the brief half by `4.0.0_SA_CRO` @8e08704fb0, review @d60eefad00);
+`NAMING_SCHEMA.json` v1.6. The analysis leaves the cells, their split and their order to the COO (s.7). All 14 of round
+1's orders are terminal: RULING T flipped the last three @`a67425668b`.
+
+**What re-runs: 8 of the 14 cells, by subtraction.**
+
+```
+  cells ........................................................ 14
+  minus cells the analysis rules no re-run for .................. -6
+      LN-g-1                  FWD-5 is exact; no re-run is ruled (s.5)
+      LN-h-1, LN-h-2, LN-h-3  "No re-run is ruled for FWD-5's exactness" (s.5)
+      LN-l-1                  the notice meets its clause (s.1, FWD-4)
+      LN-t-1                  FWD-6 REALIZED (s.1)
+  ------------------------------------------------------------
+  cells round 2 re-runs .......................................... 8
+      LN-e-1, LN-e-2, LN-e-3  FWD-1 on v1.6 (s.2; s.7 item 2)
+      LN-e-4, LN-e-5          FWD-2 under Q, R, B and C (s.3; s.7 item 3)
+      LN-l-2, LN-l-3          FWD-4 on the full layout briefing, K (s.4; s.7 item 4)
+      LN-f-1                  FWD-3's qualification: the RAISE disposition (s.1; s.7 item 6; row W1-S5)
+```
+
+The analysis's item 5, the N6 answer format's step column (row `LGIC_NAMING-W5-S5`), is a FORMAT change with no cell in
+this round, because no N6 grading re-runs. It is written into section 3a.4 for the next N6 run.
+
+**The clean-context seat (RULING B), and where this cut widens it.** A worker subagent preloads the workspace CLAUDE.md
+and the auto-memory (row S12), so a worker cannot be a blind party. The seat is
+`deliverables/2.0.0_SA_COO~G/fixed_inputs/r2/blind_seat.py`. It runs `claude -p` with NO tools (`--tools ""`) in a fresh
+empty folder outside the workspace, with no CLAUDE.md up its parent chain and in no git repository. Its whole input is
+one prompt, built from committed sources at the recorded base.
+- **A worker OPERATES the seat with one command.** It cannot shape the prompt or edit the reply: the checker
+  (`fixed_inputs/r2/check_ln_r2.py`) re-derives the prompt with the same builder and re-parses the verbatim reply,
+  which the seat record hashes. With no tools, the seat cannot read the channel, so RULING C holds by construction.
+- **Widened by this cut, from the reader to all four blind cells.** LN-e-1 and LN-e-2 (the namers, blind to each
+  other) and LN-l-2 (the layout reader, which must meet the other buckets fresh) are seated the same way as LN-e-4.
+  The reason is measured. A worker namer's worktree holds round 1's answer files and the round-1 analysis, whose s.2
+  table prints the ruled name of all 18 items; blindness to those would bind by instruction only. A seat with no tools
+  cannot open either. The analysis seats "the reader, and any cell whose criterion says blind"; section 5 gives
+  LN-e-1, LN-e-2 and LN-l-2 blind constraints. The widening is surfaced to `1.0.0_SA_CTO` with the issuance.
+- **The canary rides in every seat.** Each prompt opens with two questions whose answers exist only in the workspace
+  CLAUDE.md (the Git Bash utilities version) and the auto-memory (the second fabric's broker port). A reply that
+  carries either fact is not blind. That cell's canary criterion then FAILs, and its dependants are not spawned. On a
+  leak in LN-e-4, FWD-2 returns to `1.0.0_SA_CTO` (s.3). One smoke seat with the same flags, run before this cut
+  (session `dca841de`), answered both canaries `unknown`.
+- **The seat is proved in LN-e-1 and LN-e-2 before any FWD-2 cell** (s.7 item 1): LN-e-4 spawns only after both of
+  their canaries read blind.
+
+**The briefing carries two of the 18 answers verbatim** (row `LGIC_NAMING-S15`, filed with this cut): i05 `opal-data-cottonwood`
+at `05_IDENTITY_SPINE.md:68`, where the registry names the bucket, as a registry should; and i15
+`orion-inf-build-gold-profile` at `NAMING_SCHEMA.json:125`, where SY1's example is item i15's ruled name. The schema is
+the namers' ratified input, and this cut does not edit it. L9 reads those two agreements with the row in view.
+
+**The re-run cells.** These replace section 3's rows for round 2; round 1's rows stand as its record. Every file named
+here is under `exercises/r2/`.
+
+| cell | round 2 | acceptance, one clause per line |
+|---|---|---|
+| `LN-e-1` | namer A, in a seat | the seat is proved clean (the record's ten conditions) · the canary finds no workspace-only fact · one name, or RAISE, for every item · the base carries `NAMING_SCHEMA.json` v1.6 |
+| `LN-e-2` | namer B, in a seat | as LN-e-1 |
+| `LN-e-3` | the namers' comparison | the two answer files are identical on every item · the two seats received the identical prompt, in two sessions |
+| `LN-e-4` | the reader, in a seat | the seat is proved clean · the canary finds no workspace-only fact · a mark on every one of namer A's round-2 names: the firm, exactly as spelled, or none (Q) |
+| `LN-e-5` | the reader's scoring | the mark equals `N3_KEY_R2.json` (firm or none) on every item · no token is read as two different referents (R) |
+| `LN-f-1` | the firm patterns, with RAISE | round 1's four criteria, and J1, on `n4-firm-patterns.md` · the shape gains `raise` beside `attributed` and `excluded`: a RAISE carries its GRADING_RULE step, and no exclusion's reason is a RAISE |
+| `LN-l-2` | the layout reader, in a seat | the seat is proved clean · the canary finds no workspace-only fact · a role list or DOES-NOT-FIT on each of the seven addresses, briefed with `N5_R2.json` (every tier's slots, code included; K) |
+| `LN-l-3` | the layout scoring | every label equals round 1's `N5_KEY.json` · the legacy negative control reads DOES-NOT-FIT |
+
+**Edges and slots.** Spawn after drain, as in section 5.
+
+```
+  LN-e-1 --+--> LN-e-3
+  LN-e-2 --+
+  LN-e-1 -----> LN-e-4 -----> LN-e-5
+  LN-l-2 -----> LN-l-3
+  LN-f-1        (no edge)
+```
+
+| slot | cells | spawned |
+|---|---|---|
+| ~1 | LN-e-1 (operates its seat) | at issuance |
+| ~2 | LN-e-2 (operates its seat) | at issuance |
+| ~3 | LN-l-2 (operates its seat) | at issuance |
+| ~4 | LN-f-1 | at issuance |
+| ~5 | LN-e-4 (operates its seat) | after LN-e-1 drains and both namer canaries read blind |
+| ~6 | the scorer: LN-e-3, LN-l-3, LN-e-5, each as its inputs drain | when the first input drains |
+
+**Fan-out:** 4 workers at issuance and at most 5 at once. With LGIC_ENFORCE's 3 level-0 workers, that is 7 of the
+sequence-wide cap of 8. A seat is a process its operator starts, not a worker, so the slot count is the worker count.
+
+**LGIC_ENFORCE.** The analysis orders LN-f-1's RAISE "before LGIC_ENFORCE's E9 consumes the list". No LGIC_ENFORCE task
+order reads `n4-firm-patterns.md` by path. The one citation, in EN-f-1's face, uses round 1's measured 12 of 68 as
+context, and EN-f-1 builds its fence from `fence_patterns()`. LN-f-1 spawns at issuance, and E9 (EN-s-1) sits at
+LGIC_ENFORCE level 3 or later, so the order holds by timing. No edge is added to that frozen decomposition.
+
+**L4-R at the cut:** ADMITTED at v1.6.
 
 ---
 
@@ -288,7 +391,9 @@ Decided here, so no worker chooses its own test. L6 inlines each one verbatim, i
    single name, flagged OVERLAP because LN-g-1 needs it too. At vintage 2026-09-14 05:54:17 UTC that is 27 types x 3 +
    `ROUTE53_RECORD` 2 + `VPC_ENDPOINT` 2 + `CLOUDFRONT_DISTRIBUTION` 1 = **86 discriminating names**, plus **3 OVERLAP**
    (`ECS_CLUSTER`, `LOAD_BALANCER`, `STATE_MACHINE`), reported apart from the agreement denominator. The 8 NOT-GRADED
-   types are in the sample, so both graders must return NOT-GRADED there.
+   types are in the sample, so both graders must return NOT-GRADED there. (v4) **From the next N6 run, the answer format gains a fifth column
+   `step`**, required on every RAISE row: the `GRADING_RULE.md` step that raised (row `LGIC_NAMING-W5-S5`; round-1
+   analysis s.5). Round 2 runs no N6 grading.
 5. **N2's graded-type domain, by subtraction.** 33 node types minus the 8 marked NOT GRADED (`IAM_USER`, `KMS_KEY`,
    `CLOUDFRONT_DISTRIBUTION`, `SERVICE_PRINCIPAL`, `VPC_ENDPOINT`, `ROUTE53_RECORD`, `API_ROUTE`, `EVENT_SOURCE`) =
    **25 graded types**: the 18 of `kind.by_type` plus 7 graded by their own grammar (`EVENT_RULE`, `SCHEDULE`,
