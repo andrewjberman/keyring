@@ -3965,6 +3965,126 @@ all seven mechanical criteria were measured and the verdict is NO-GO.
   "spec_asserts": "PRD v0.7 C-SUB-ASSET files Hedge under Structured and C-COLOURS makes Structured pink (no PRD bump per 1.0.0_SA_CTO~Z); the decomposition puts the colour registry in AT5-s-5 (F1).",
   "world_is": "F1 is complete and drained (49fc6850f1 -> 6c78b40e66; portal 6c0deebd91 on refs/drains/posn-5-portal); the four Volatility tickers (VXX, VIXY, UVXY, QBER) are already Structured at the class level and would render blue900 inside a pink class until re-bound.",
   "notes": "1.0.0_SA_CTO~Z's L4 reading is the authority for the binding; this row records only where it landed."
+},
+{
+  "id": "POSN_ASTTAX-Z-W22-S9",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~22",
+  "surfaced_at": "2026-09-14T21:05:00Z",
+  "one_line": "The instrument V6-AC5/V6-AC6 name (portal/scripts/ui-smoke.mjs) imports 'playwright-core', which is NOT declared anywhere in portal/package.json -- it runs in the estate's main checkout only because that node_modules happens to carry it, and it died with ERR_MODULE_NOT_FOUND in this freshly-cut worktree.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED: `node scripts/ui-smoke.mjs positioning .scratch/v6_models.png --port 5181` -> \"Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'playwright-core' imported from C:\\\\tmp\\\\wk-posn-5-22\\\\portal\\\\scripts\\\\ui-smoke.mjs\", rc=1.",
+      "DENOMINATOR: portal/package.json @6c0deebd91 carries ZERO occurrences of 'playwright' (case-insensitive) in any dependency block; portal/node_modules in this worktree held 257 entries and no playwright*.",
+      "PRESENT ELSEWHERE: the estate's main checkout has portal/node_modules/playwright-core 1.62.1 (14M). The package is installed but UNDECLARED, so `bun install` in a fresh worktree does not reproduce it.",
+      "WHAT I DID, stated because the order did not say it: copied that exact installed 1.62.1 into this worktree's portal/node_modules/. node_modules is gitignored -- NO tracked file, no package.json and no lockfile was touched, and V6-AC2's diff (5 files) is unchanged by it. No network egress: the bytes came from the estate's own disk.",
+      "WHY IT IS NOT A BUILD-LADDER VIOLATION: rung 5, an already-installed dependency, used at the version the estate already runs."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "V6-AC5 and V6-AC6 invoke portal/scripts/ui-smoke.mjs as an instrument any worker can run from its own worktree; the preflight's stated uncertainty was the AUTH STUB, not the dependency.",
+  "world_is": "The script's only hard import is undeclared in the package it lives in. A worker on a fresh worktree gets a module-resolution failure that looks nothing like a render failure, and a worker in the shared checkout never sees it -- so the instrument's availability depends on which tree it is run from.",
+  "notes": "The auth stub itself WORKED (LOC /positioning, no /login bounce), so the preflight's named risk did not fire. Owner for the declaration is whoever owns portal/package.json; I did not edit it -- it is not in my <paths>."
+},
+{
+  "id": "POSN_ASTTAX-Z-W22-S10",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~22",
+  "surfaced_at": "2026-09-14T21:06:00Z",
+  "one_line": "V6-AC5's invocation CANNOT REACH THE STATE IT GRADES: the Asset Class rows sit behind a collapsed 'Expand Details' control, /api/general/* returns 401 to the smoke's inert token so no subtotals exist to sum, and the Models/ETFs toggle is a persisted in-page button the invocation never presses -- so the ETFs outfile renders MODELS.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "LITERAL RUN, exactly as written: `timeout 600 bash -c \"cd portal && node scripts/ui-smoke.mjs positioning .scratch/v6_models.png --port 5181\"` rc=0, printed `LOC   : /positioning` -- NO bounce to /login, so the auth stub holds.",
+      "READ (Read tool) of .scratch/v6_models.png: the ASSET CLASSES block renders FIVE rows in PRD s.3 canonical order, one swatch each (Fixed Income green, Equity blue, Structured pink, Commodities gold, Alternatives orange). BELOW it: a collapsed 'EXPAND DETAILS' button and 'No holdings data available' in both lower panels. There are no value rows, therefore NO SUBTOTALS TO SUM -- the one clause of the expectation that cannot be read off this capture.",
+      "READ of .scratch/v6_etfs.png (same literal invocation, etfs outfile): the mode pill shows MODELS active. The invocation carries no way to press the ETFs button, so the 'same for the ETFs mode' half is unreachable as written.",
+      "WHY NO DATA: `curl --compressed https://d2n2nzpeqf34ge.cloudfront.net/api/general/positioning/positioning_data.json` -> http=401 {\"error\":\"Missing or invalid Authorization header\"}. ui-smoke's session carries the inert 'ui-smoke-token', so every /api/general/* call through the vite proxy 401s. --token exists for a REAL bearer; the invocation does not pass one.",
+      "SUPPLEMENTARY, STATED AS SUPPLEMENTARY AND NOT USED TO CLAIM THE CRITERION: the same script, same browser, same auth stub, plus --fixtures built from THE SERVED BYTES (s3://opal-data-portal-v2 json/positioning/positioning_data.json gz, platinum/etfs/positioning_data.json, json/positioning/holdings_attribution_data.json) and --click. Models: five rows in canonical order, section header 'ASSET CLASS (5)', UST 100+0+0+0+0=100.00, ST 82.60+17.40=100.00, INT 32.80+67.20=100.00, LT 12.70+87.30=100.00, ULT 8.10+91.90=100.00. ETFs: DIVZ 0.62+99.38=100.00, IDVZ 0.95+99.05=100.00, PFDE 0.09+99.90=99.99, PFOE 0.63+99.36=99.99. Every subtotal within 0.1 of the total.",
+      "SO THE PRODUCT IS RIGHT AND THE INSTRUMENT AS INVOKED CANNOT SEE IT. Recorded UNVERIFIABLE-BY-INSTRUMENT, never PASS: the refusal clause bars satisfying a criterion by another route."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "V6-AC5: run ui-smoke at <PORT> (the ONLY placeholder in that invocation), READ the PNG, and see five class rows in canonical order with one swatch per class and subtotals summing to the total to 0.1, in BOTH the Models and the ETFs mode.",
+  "world_is": "Three separate gaps between that invocation and that state: (1) the Asset Class rows are collapsed by default and need a click; (2) the served data needs a real bearer, which the stub does not carry, so subtotals do not exist; (3) the mode is an in-page toggle, so one outfile name cannot select it. Each is a property of the page and the instrument, not of this cell's edit.",
+  "notes": "A re-cut that would be gradeable as written: add --fixtures <served payload> --click 'Expand Details' (and --click 'ETFs' for the second capture) to the invocation, or pass --token with a real bearer. The issuer's preflight named the auth stub as the risk; the stub held and these three did not get named."
+},
+{
+  "id": "POSN_ASTTAX-Z-W22-S11",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~22",
+  "surfaced_at": "2026-09-14T21:07:00Z",
+  "one_line": "The cell's premise that satelliteAdapter.ts 'reads keyof PositioningAllocation and will follow your type' is HALF TRUE and the other half breaks the build: it also CONSTRUCTS four-key object literals annotated `: PositioningAllocation`, so widening the three new keys as REQUIRED fails tsc in a file this cell forbids me to touch.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED: with structured/commodities/alternatives REQUIRED, `bun run tsc -b` rc=2 -> \"src/pages/Positioning/shared/satelliteAdapter.ts(144,11): error TS2739: Type '{ cash: number; fixed_income: number; equity: number; hedge: number; }' is missing the following properties from type 'PositioningAllocation': structured, commodities, alternatives\" and the same at (159,11).",
+      "SOURCE, read not inferred: satelliteAdapter.ts:143-148 `const allocation: PositioningAllocation = { cash: allocField('cash'), fixed_income: ..., equity: ..., hedge: ... }` and :157-162 the identical shape for `delta`. The `keyof PositioningAllocation` the cell cites is the ACCESSOR's parameter type at :133 and :151 -- that half does follow the type; the literals do not.",
+      "THE CELL FORBIDS THE FIX THERE: 'NOT yours: shared/satelliteAdapter.ts (F3 owns it whole)', and it is not in my <paths>. A path I need that my grant lacks is a blocking row, never an override.",
+      "WHAT I DID: declared the three new keys OPTIONAL on PositioningAllocation (hedge already optional per the cell). tsc rc=0. Every read site I own takes `?? 0`, so an absent class renders a ZERO ROW rather than NaN -- which is the pre-B1 state V6-AC5 calls valid.",
+      "IT IS ALSO THE HONEST SHAPE TODAY: both served artifacts carry exactly {cash, fixed_income, equity, hedge} on every book (measured 2026-09-14), so REQUIRED would have been a claim about the payload that is false at this hour.",
+      "etfAdapter.ts:134 failed the same way and IS mine -- ZERO_ALLOCATION now carries the five-class zero."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The cell: widen portal-proxy.ts:969 PositioningAllocation to the five-class keys with `hedge?` optional, and do not touch satelliteAdapter.ts, which 'will follow your type'.",
+  "world_is": "A required-five widening does not propagate to satelliteAdapter -- it REFUSES it, in a file outside this cell's grant. Optional-three is the only shape that satisfies the widening, the build and the boundary at the same time.",
+  "notes": "For AT5-s-7/F3, which owns satelliteAdapter and binds this type: tightening the three to required is a one-line change in portal-proxy.ts and the compiler then names every literal that still owes the keys. Stated in the interface doc comment at the declaration."
+},
+{
+  "id": "POSN_ASTTAX-Z-W22-S12",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~22",
+  "surfaced_at": "2026-09-14T21:08:00Z",
+  "one_line": "Dropping the Hedge->Equity display fold as ordered means a top-level asset_class of 'Hedge' now maps to NO group and is EXCLUDED from the holdings table while still counting toward the grand total -- the exact defect (PFDE 90 rendered rows of 90 served) that the Cash fold beside it was added to fix.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MECHANISM, read at HoldingsTab.tsx: displayClass no longer rewrites 'Hedge', and the grouping renders `ASSET_CLASS_ORDER.filter(ac => groupedHoldings[ac])` -- a group keyed 'Hedge' is not in that order, so its rows never render, while calculateSubtotal's grandTotal is computed over ALL attributionHoldings.",
+      "THE SAME FILE DOCUMENTS THIS CLASS OF DEFECT at the fold it keeps: 'MEASURED by 0.2.0_DT_PortfolioAnalytics~Z on PROD v2.1.167 ... PFDE 90 -> 89, PFOE 24 -> 23 (one cash row each, dropped) ... the panel was inconsistent WITH ITSELF ... 99.98 under its own GRAND TOTAL of 100.01'.",
+      "NOT LIVE TODAY, MEASURED: the served json/positioning/holdings_attribution_data.json carries 110 holdings across 5 books with asset_class histogram {\"Fixed Income\":59,\"Equity\":51} -- ZERO 'Hedge'. The served allocations carry hedge=0.0 on all five model books, all four ETF books, every benchmark and every spread.",
+      "SO THE PREMISE 'after R1 no served value is Hedge at the top level' HOLDS AT MY BAR, and the exposure is confined to a stale payload served between now and B1's retag."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The cell: KEEP 'Cash' -> 'Fixed Income', DROP 'Hedge' -> 'Equity' ('after R1 no served value is Hedge at the top level').",
+  "world_is": "The drop is implemented exactly as ordered. Its consequence, which the cell does not name, is that an unmapped top-level class is silently omitted from the table rather than mis-grouped -- visible as a missing group and a subtotal that does not reach the grand total, not as an error.",
+  "notes": "I did NOT re-point 'Hedge' to 'Structured' -- that would be repairing a criterion by another route. If the transition window matters, the two candidate remedies are a fold to Structured or an explicit UNMAPPED group; both are the issuer's call, not mine."
+},
+{
+  "id": "POSN_ASTTAX-Z-W22-S13",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~22",
+  "surfaced_at": "2026-09-14T21:09:00Z",
+  "one_line": "Two LEGENDS the cell does not name sat beside two surfaces it orders widened, and the ordered edit would have made both of them FALSE -- PositioningSummary's read 'Equities / Stocks & Hedge' next to a five-segment bar, HoldingsTab's listed two classes under a treemap now painting five.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "SITES: PositioningSummary.tsx:1152-1177 at the drain ref -- two hand-written entries, the second captioned 'Stocks & Hedge', beside the stacked bar this cell widens to five keys. HoldingsTab.tsx:1113-1119 -- two entries reading ASSET_CLASS_COLORS['Fixed Income'] and ['Equity'], beside the treemap whose colour map this cell widens to five.",
+      "WHY IT IS NOT A NEIGHBOURING DEFECT I CHOSE TO FIX: both captions become WRONG BY MY OWN EDIT -- the hedge fold this order drops is what 'Stocks & Hedge' describes, and the treemap paints three colours the legend does not list only because I added them.",
+      "WHAT I DID: derived both legends from the single declaration the cell does order (ASSET_CLASSES in PositioningSummary, ASSET_CLASS_ORDER in HoldingsTab), so neither is a second membership claim. Rendered and READ in both modes: five entries, canonical order, one swatch each.",
+      "BLAST RADIUS: both are inside files the cell names and inside my <paths>; V6-AC2's scoped diff and an UNSCOPED `git -C portal status --porcelain` both show the same 5 files and nothing else."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The cell enumerates its measured sites (the colour map, the fold, the order literal, the summary rows, the bucket fold, the render type, the type widening) and says nothing about either legend.",
+  "world_is": "A legend is a membership claim about the surface it labels. Leaving these two would have shipped a page that draws five classes and captions two, with one caption naming a fold this order deletes.",
+  "notes": "Filed because it is an act the order did not name, not because it is contested. If the issuer reads it as widening, the revert is two hunks and neither is load-bearing for any criterion."
 }
 ]
 ```
