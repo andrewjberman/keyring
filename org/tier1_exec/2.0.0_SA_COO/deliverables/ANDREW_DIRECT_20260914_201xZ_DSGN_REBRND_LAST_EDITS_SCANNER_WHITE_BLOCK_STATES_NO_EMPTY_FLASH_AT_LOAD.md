@@ -35,6 +35,36 @@ portfolio yet."
    nothing. While the data is still arriving, the panel shows its loading state. He names the Account Distribution
    bell curve on Model Portfolios, and the rule applies "wherever it appears".
 
+## ADDENDUM ~20:2xZ -- HIS FOLLOW-UP, VERBATIM AND ENTIRE, AND WHAT THE BREAK WAS
+
+> Interesting, the Security Scanner is fine on the PROD build, so it is either localhost or otherwise DEV-specific.
+
+**The cause is localhost only, and it is not this project.**
+- **The backend change.** Workspace 7abe7552b5 (0.7.0_AE_CloudOps~Z, 2026-09-03) made the portal authorizer refuse any
+  request without CloudFront's `X-Opal-Origin-Verify` header.
+- **Why only localhost broke.** The local vite dev-server proxy sent `/api/scoped/security-scanner` straight to API
+  Gateway (`7k3ed8px20.execute-api...`), bypassing CloudFront, so it met a 403 `{"message":"Forbidden"}`. PROD calls
+  same-origin through CloudFront and was unaffected.
+- **No DEV deploy is involved.** No separate DEV deploy exists; `deploy.yml` runs on the PROD branch only.
+- **The branch did not touch the request.** The feature branch's Scanner diff against DEV changes only how the error
+  card is drawn.
+
+**Measured**, in the `opal-portal-authorizer` log. Earlier, "Origin verification FAILED - request did not come through
+CloudFront" appeared every 5 minutes from 19:34Z, and 5 times at 20:08:24-30Z. Then a three-way probe at 20:40:18Z,
+each request carrying a deliberately malformed bearer:
+
+| Path | Log reading |
+|---|---|
+| Direct to API Gateway (20:40:20Z) | Origin verification FAILED |
+| Via CloudFront (20:40:21Z) | Origin passed, then "jwt malformed" |
+| Via the local proxy after the fix (20:40:22Z) | Origin passed, then "jwt malformed" |
+
+**The fix** repoints the dev-proxy entry through CloudFront (`d2n2nzpeqf34ge.cloudfront.net`, the pattern the
+advisor-intelligence and satellites entries already use). It is dev-server only; the PROD build never reads the proxy.
+
+**The same class** covers three sibling proxy entries that still target API Gateway directly: `/api/scoped/partners`,
+`/api/partners` and `/api/scoped/data-refresh`. They were not repointed. They are named here for his call.
+
 ## WHAT IT DOES NOT SETTLE
 
 It does not authorize a promote, and it does not perform the manual close. The portal freeze and the feature branch
