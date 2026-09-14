@@ -98,8 +98,9 @@ labels until then -- a wait (Rule 27). The mechanism is driven on demand; the sc
   state machine passed it on the last execution that ran it (`get-execution-history`), never a hand-written event; the STATE MACHINE
   IS NEVER STARTED: it consumes its own input (`MoveToProcessed`, `CleanupUploads`), so the last input is 3 of 3 absent, and its
   write set of 28 Task states, an S3 delete and a CDN invalidation exceeds the signed keys; then `yang-invalidate-cloudfront`
-  invoked with its recorded event -- the pipeline's own step, whose write set is the CloudFront cache of the keys just written and
-  NO key -- so the render bars read the new bytes (the CTO half names the generators and the keys; this invalidation moves no key
+  invoked with its recorded event -- the pipeline's own step, whose write set is the WHOLE CACHE (`/*`) of the two distribution ids it hardcodes (one of them,
+  `E2LPCXXBLDGWXY`, exists in no distribution -- W19-S10 / Z-S103; the live one, `EVTSA9VEHNZVH`, fronts the bucket that holds the
+  signed keys) and NO key -- so the render bars read the new bytes (the CTO half names the generators and the keys; this invalidation moves no key
   and is stated here so the halves describe the same act);
   (2) `cot-satellites-registry-producer` invoked directly (`{}`, the trigger passes no date); (3) `cot-satellites-characteristics-producer`
   invoked directly (`{}`), after (2) because it reads holdings.json.

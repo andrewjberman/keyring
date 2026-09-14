@@ -4774,6 +4774,31 @@ Andrew asked for (msg 22917); it concerns this project's portal files meeting an
     "spec_asserts": "TO-V1-1 V1-AC11 (THIRD AMENDMENT): 'Then the CDN: yang-invalidate-cloudfront invoked with ITS recorded event from the same history (the pipeline's own step; its write set is the CloudFront cache of the keys just written and NO key; both halves name it), Invalidation Id + Status printed, so the page reads the new bytes.' THE CELL's Branch B trigger set: '(any failure, any other key under json/positioning/ moving, any difference beyond the permitted classes): STOP, file the row'.",
     "world_is": "The invoke returned StatusCode 200 with no FunctionError and the live portal distribution's invalidation reached Status COMPLETED, so the criterion's named result was produced. Inside that same response one of two HARDCODED ids is NoSuchDistribution on 2 of 2 instruments; that id is in no distribution in the account, has been dead for the function's whole deployed life, and cannot front a page. This worker's harness treated it as a failure and printed BRANCH B (rc=3); the criterion names no second distribution, and each member of the cell's Branch B trigger set measures empty (no failed act, no other key moved, no difference beyond the permitted classes).",
     "notes": "WHOSE CALL WHAT, stated so nothing is assumed: (a) whether a dead hardcoded distribution id in the pipeline's own final step is worth an act belongs to the CI / cloud-ops lane -- the function is not in this order's <paths>, was not touched, and no repair was attempted; (b) whether the COO half's 'the CloudFront cache of the keys just written' should read '/* on both distribution ids' is the half's signer's call and is one sentence with no act attached; (c) if the issuer reads the cell's 'any failure' as reaching the dead id, then V1-AC11 is FAILED rather than PASSED and this row is its measurement -- the harness output (rc=3, BRANCH B, the body verbatim) is recorded in the proof instance either way, so a regrade needs no re-run and no second invalidation."
-  }
+  },
+{
+  "id": "POSN_ASTTAX-Z-S103",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T21:42:31Z",
+  "one_line": "DISARM of W19-S10 (INERT): V1-AC11's CDN clause -- yang-invalidate-cloudfront hardcodes two distribution ids and one (E2LPCXXBLDGWXY) exists in no distribution, so the pipeline's own final step reports 1 of 2 on every run by design; the live distribution (EVTSA9VEHNZVH, fronting the bucket with both signed keys) was invalidated to COMPLETED on the recorded event. RULED: V1-AC11 PASS stands -- the cell's Branch B trigger set measures empty on every member (no failed act: StatusCode 200 / FunctionError none / Invalidation COMPLETED; no other key moved 0 of 3; no difference beyond the permitted classes, OTHER 0 of 272); the harness's stricter both-ids arm is disclosed, not graded. The COO half's write-set sentence corrected in the same commit: the step purges '/*' on both ids (the 'NO key' clause was exact; the cache radius was understated). The dead id is the CI/cloud-ops lane's item, carried for the round analysis.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE TRIGGER SET, MEASURED PER MEMBER by the worker's own run: the invoke returned 200 with no FunctionError; the invalidation on EVTSA9VEHNZVH reached Status COMPLETED (CallerReference built from the recorded event's pipeline_execution_id, so the event was the recorded one); 0 of 3 non-signed keys under json/positioning/ moved; the classified diff over 272 differing leaves read OTHER 0; allocation_summary.json differed at one leaf of 298 (generated_at). 'Any failure' names an act that failed; a body-level error for an id that fronts no page is the function's documented steady state ('This step never fails the pipeline'), unchanged since 2026-05-04 and untouched by this deploy.",
+      "THE HALF'S WORDING: 'the CloudFront cache of the keys just written' understated the radius -- the code (invalidate-cloudfront/lambda_function.py:28-31, :44-50) purges '/*' on both ids. Corrected to say so; the NEVER#1-relevant clause (the step moves NO key; comp-iam: cloudfront:CreateInvalidation and nothing else) was exact and stands. The CTO half does not name the step; this half now describes it accurately.",
+      "WHY GRADUATED: the served bytes are what both halves signed and they are what the page now reads; the disclosed anomaly is prior, steady, outside the radius and has an owner."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W19-S10"
+  ],
+  "spec_asserts": "TO-V1-1 V1-AC11 (THIRD AMENDMENT) and THE CELL's Branch B trigger set; the COO half R1 AMENDMENT 'The act' bullet.",
+  "world_is": "The criterion's named result was produced (both heads moved, the served bars met, the live distribution invalidated); the function's second hardcoded id is dead on two instruments and has been for its whole deployed life.",
+  "notes": "For the round analysis (cloud-ops lane): remove or derive the dead distribution id in yang-invalidate-cloudfront; the function's swallow-and-report design hides it from every caller that reads only the status code."
+}
 ]
 ```
