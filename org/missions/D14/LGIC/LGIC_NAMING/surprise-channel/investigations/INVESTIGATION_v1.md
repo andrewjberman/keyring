@@ -722,6 +722,30 @@ new row on 3.0.0_SA_CVO's ask 96495), both 1.0.0_SA_CTO; `LGIC_NAMING-S3`, `LGIC
     "spec_asserts": "LN-e-5 task order (issued by 2.0.0_SA_COO~G at L6 @777770e6aa): E5-AC1 'the reader marked the expected firm or product token on every name' AND E5-AC2 'no token the reader marked as a firm or product is read otherwise in another name', both as mechanical criteria the same order can pass.",
     "world_is": "The key itself reads the token etfs two ways: as the scope of a product-scoped resource (i11) and as the SYSTEM of two shared resources that carry no scope (i08, i17). E5-AC2's check treats any second reading of a marked token as a clash, so the criteria are jointly unsatisfiable on this key.",
     "notes": "TWO READINGS, NOT ADJUDICATED HERE: (a) an ISSUER DEFECT in the cut -- E5-AC2's grammar should exempt a product token in the system slot, or the key should mark i08/i17 differently; or (b) a genuine FWD-2 finding about the schema -- when a product key can sit in both the system slot and the scope slot, a reader cannot tell the owning firm or product from the name alone. Which one is the round-N analysis's (1.0.0_SA_CTO), carried in this round's drain-end read. The spec is frozen: LN-e-5 stays OPEN as cut and is not re-scored mid-round. Consequence for L9: 3.0.0_SA_CVO should not grade E5-AC2's FAIL as the reader's failure alone."
+  },
+  {
+    "id": "LGIC_NAMING-W5-S5",
+    "project": "LGIC_NAMING",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_NAMING~5",
+    "surfaced_at": "2026-09-14T17:58Z",
+    "one_line": "LN-h-3 has to trace each RAISE to the rule line it exposes, but neither N6 answer file records which step raised. The fourth field is empty on all 18 RAISE rows of n6-grader-a.tsv and n6-grader-b.tsv, and the files have no step column. Grader B named the step for each RAISE in its result file, and grader A did not. So n6-compare.md takes its step column from grader B's result file, which is not on the order's read list.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RULE: org/missions/D14/LGIC/LGIC_NAMING/deliverables/GRADING_RULE.md:26-27 @51b0952d71 -- 'RAISE -- the name cannot be placed. This is a defect in this rule, the data file or the registry, and the output names the step that raised (DATA.grade.unplaceable).'",
+        "ANSWER FILES: deliverables/exercises/n6-grader-a.tsv @388b07f486 and n6-grader-b.tsv @40f445d92c are byte-identical (cmp rc=0, sha256 41c3de9d62f9c371b810dfaead0dd6bf4053f50b13e45588842d8e865ffde945). Each row is type, name, verdict, canonical_form. All 18 RAISE rows (17 discriminating and 1 overlap, ECS_CLUSTER opal-globgrph) have an empty canonical_form field, and no row names a step.",
+        "GRADER B: deliverables/0.9.0_WK_LGIC_NAMING~8/grader-b.result.md:25-35 @c17d7d09c9 has a table headed 'The step that raised each RAISE (18)': R1.c 7, R2 1, L3 -> R1.c/R2 2, R1.f 4, G2.2 1, G2.3 1, K1 2.",
+        "GRADER A: deliverables/0.9.0_WK_LGIC_NAMING~7/grader-a.result.md @c17d7d09c9 gives the RAISE count (18) in its tally table and names no raising step.",
+        "ORDER: task-orders/LGIC_NAMING.TO-LN-h-3.grading-agreement.md:22 @c17d7d09c9 lists 'Read: n6-grader-a.tsv, n6-grader-b.tsv, GRADING_RULE.md, N6_SAMPLE.json' and asks for 'a table of every disagreement and every RAISE with the line of GRADING_RULE.md it exposes'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "GRADING_RULE.md:26-27 @51b0952d71: a RAISE output 'names the step that raised'.",
+    "world_is": "The N6 answer-file format has no field for the raising step, and both graders' TSV rows carry only the verdict RAISE. One grader recorded the steps in prose outside the answer file, and the other recorded none. The rule-line column of n6-compare.md section 4 therefore uses grader B's recorded steps, located in the rule text by this worker. For grader A, the same step is inferred from its identical verdict, not read from A's output.",
+    "notes": "Filed by the comparing worker because the order's table needed a fact that the named inputs do not carry. The two graders agree on every verdict, so no disagreement depends on this. Nothing is edited. Whether the answer format or the rule's clause should change is not this worker's call. For 3.0.0_SA_CVO at L8, and for the rule's author."
   }
 ]
 ```
