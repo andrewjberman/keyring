@@ -2762,6 +2762,48 @@
     "spec_asserts": "TO-FE-s-29 limb 3: 'a body SEEDED through initialEnvelope / initialHoldingsEnvelope / initialReport'. F29-AC8: the population is every existing criterion whose invocation runs one of the suites that seed, 'measured at the cut: 6 test files'. F29-AC15: none of the four limbs 'can be satisfied by the party it grades'.",
     "world_is": "A limb that read only the three named props would admit a network-declared test that seeds the same fetched bodies through initialSnapshot, initialHoldingsSnapshot, initialSnapshotEnvelope, initialAnalysisReport, initialAnalysisRequests, initialRequests or initialJob. The graded party could satisfy it. So the limb reads the ten fetched-content props, derived by subtraction from the measured 15. That choice is this worker's, is stated in the checker's block comment, and is L9's to grade. Its only visible effect on the committed corpus is F15-AC7, which no order declares drives=\"network\" today. The cut's six-file census is exact for the three named props and one suite short for the ten.",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W4-S11",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~4",
+    "surfaced_at": "2026-09-14T03:43:42Z",
+    "one_line": "F36-AC4 describes a real shape -- a `(?<![0-9])0 fail` bar on `bun test <an existing file>` -- that no committed criterion has. At 0a74710f33, the 30 task orders carrying a `0 fail` bar hold 53 single-file bun criteria, all with a BARE `0 fail`, and 0 with the anchored bar. The anchored bar sits only on multi-directory runs, all of them round 5, whose own directories are not yet in the pinned portal commit. The battery grades the two nearest real shapes instead of a joined one it would have had to invent.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/tests/test_output_vocabulary.py _runner_specimens() (this cell): one `git grep -l -F '0 fail</expect>'` at 0a74710f33 over org/missions, filtered to task-orders -> 30 orders; criteria whose invocation is `cd <WS>/portal && timeout N ...bun test <targets>`: single-file with the anchored bar 0, single-file with a bare `0 fail` 53, multi-directory with the anchored bar 6 (F30-AC8 .. F35-AC6).",
+        "Portal pin at 0a74710f33: `git ls-tree 0a74710f33 portal` -> e85f6eb84f; `git --git-dir <main>/portal/.git cat-file -e e85f6eb84f:src/pages/InvestorReporting/__tests__/fe-s-1/keys.test.ts` -> present (F1-AC2's file). F30-AC8's three directories: 2 present, `__tests__/fe-s-30` absent (written by FE-s-30's worker).",
+        "Battery arms, gate CLI in a real index at 0a74710f33: 'RUNNER: F1-AC2 (`bun test src/pages/InvestorReporting/__tests__/fe-s-1/keys.test.ts`, bar `0 fail`) is not refused by this limb' PASS; 'RUNNER: F30-AC8 (... bar `(?<![0-9])0 fail`) is not refused by this limb' PASS."
+      ]
+    },
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-36 worker face, F36-AC4: 'a criterion whose bar comes from the test runner rather than the test file -- a `(?<![0-9])0 fail` bar on `bun test <an existing file>` -- is admitted'; BOUNDS: 'Build the positive and negative controls from real committed orders ... never from strings you chose.'",
+    "world_is": "The two properties the criterion joins never meet in one committed criterion. The limb's decision does not depend on them: it never reads a runner's test file, so any `bun test` criterion is counted as a runner's vocabulary and never refused, whatever its bar. The arm therefore grades F1-AC2 (bare `0 fail`, one file present at the pin) and F30-AC8 (anchored bar, three directories, 2 present at the pin), and prints the 0-of-53 measurement beside them. Joining the two would have meant editing a real order's bar, a string this worker chose.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W4-S12",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~4",
+    "surfaced_at": "2026-09-14T03:43:42Z",
+    "one_line": "Run once over EVERY tracked tree order (359 orders, 1235 mechanical criteria), the new output-vocabulary limb would refuse 6 criteria if they were newly added, all in AMGT_RESAPP: each <expect> is an English sentence (e.g. AMGT-s-1 AC1 `a line containing \"DAPI: UP\" -- the terminal is signed in ...`). proof-of-spec-check grades <expect> as a regex search, so none can ever match its tool's output. The limb is prospective, so none is refused; they are S55's class measured outside IRPT_FNTEND.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Census (this worker, .scratch; the committed function .tools/to-pipeline-gate.py _output_vocabulary_violations called per order, tools read from this worktree's index = 0a74710f33 + this cell): 359 tree orders, 1235 mechanical criteria -> 17 evaluated and admitted, 6 refused, 160 announced, 438 a runner's vocabulary, 614 not one python program's output.",
+        "The 6: AMGT_RESAPP.TO-AMGT-r-1 AC2; TO-AMGT-s-1 AC1, AC2, AC4; TO-AMGT-s-8 AC1; TO-AMGT-s-b4 AC1 (org/missions/D5/AMGT/AMGT_RESAPP/task-orders/ @0a74710f33). Statuses there: TO-AMGT-r-1 <status>complete; TO-AMGT-s-1 <status>complete; TO-AMGT-s-8 <status>complete; TO-AMGT-s-b4 <status>complete.",
+        "Before the one modelled continuation (print(..., end=\"\")), the same census refused a 7th: NFRA_CLDGRPH.TO-CG-F-5 F5-AC1, whose tool prints `UNREACHABLE_REFUSAL_NAMES=` with end=\"\" and its value on the next print -- an honest bar. It was fixed in the limb before landing (it now reads UNDECIDED, announced), and it is recorded in the limb's ASSUMPTION B comment."
+      ]
+    },
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-36 THE CELL: 'five criteria in round 4 were cut against an assumption about a tool's output ... no gate caught any' (S55 counts them within IRPT_FNTEND).",
+    "world_is": "The class is not confined to this project's round 4. Six committed AMGT_RESAPP criteria carry prose where a regex bar belongs. Each reads as satisfiable to a human, and by construction none can match. The limb grades only newly-added orders, so these stay committable and unrefused. Whether any is still open against a worker is for the AMGT_RESAPP issuer; this worker neither reads nor edits that project beyond the census.",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```

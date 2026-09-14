@@ -37,10 +37,13 @@ THE THREE-VALUE PREFLIGHT ENUM, AND WHY NOT TWO
 FAIL-CLOSED. An unreadable file, an unparseable block or an unexpected exception REFUSES.
 A gate that fails open is not a gate.
 """
+import ast
 import os
 import inspect
+import posixpath
 import re
 import pathlib
+import shlex
 import subprocess
 import sys
 
@@ -640,6 +643,14 @@ def _self_test():
     ph_lit = ('<criterion id="C1" cell_refs="CE-a-1"><invocation>timeout 120 python x.py</invocation>'
               '<expect>OK</expect></criterion>')
     ph = _placeholder_declaration_violations
+    # GATE (ix) fixture: a battery in the SHAPE of test_proof_of_spec_alignment.py (arms named in check(), printed as
+    # `  {verdict:4s} {name}`, a %d RESULT line, a BATTERY PASS line). Pure; the real bytes are the battery's.
+    _ov_red = ("results = []\n"
+               "def check(name, ok):\n    results.append((name, 'PASS' if ok else 'FAIL'))\n"
+               "check('fail-closed: a bogus ref is a violation', True)\n"
+               "for name, verdict in results:\n    print(f'  {verdict:4s} {name}')\n"
+               "print('[x] RESULT: %d arm(s) failed of %d' % (0, len(results)))\n"
+               "print('BATTERY PASS -- every arm as expected')\n")
     arms = [
         # LIMB 6 -- the PRD sign-off gate (L4-R), pure arms; the tilde signer counts for its base serial
         ("signoff RED: no files -> refused naming BOTH reviewers",
@@ -812,6 +823,42 @@ def _self_test():
         ("placeholders MODIFY: main() reads the MODIFIED set from its own function, and the ADDED set's contract is unchanged",
          lambda: "_staged_modified(root)" in inspect.getsource(main)
          and 'code.startswith("A") or code.startswith("R")' in inspect.getsource(_newly_added)),
+        # GATE (ix) -- the OUTPUT-VOCABULARY limb (FE-s-36). Pure arms; the REAL-SHAPE controls (F28-AC6 as issued and
+        # as re-cut, two runner criteria, an absent target, round 5) live in .tools/tests/test_output_vocabulary.py.
+        ("vocabulary: a `0 fail` bar reduces to one run -- its digit a NUMBER SLOT, its lookbehind dropped",
+         lambda: _ov_bar_runs(r"(?<![0-9])0 fail")[0] == [_OV_SLOT + " fail"]),
+        ("vocabulary: a back-referenced count reduces to number slots, escaped parens to literals",
+         lambda: _ov_bar_runs(r"RESULT: (\d+) of \1 arm\(s\) behaved")[0]
+         == ["RESULT: " + _OV_SLOT + " of " + _OV_SLOT + " arm(s) behaved"]),
+        ("vocabulary: an alternation is not reduced (ANNOUNCE, never refuse)",
+         lambda: _ov_bar_runs(r"BATTERY (PASS|OK)")[0] is None),
+        ("vocabulary: one python program is evaluable; bun is a RUNNER; a `;` list is not one program",
+         lambda: _ov_program("cd <WS> && timeout 300 python .tools/tests/x.py")[:2] == ("PY", ".tools/tests/x.py")
+         and _ov_program("cd <WS>/portal && timeout 120 bun test a.test.ts")[0] == "RUNNER"
+         and _ov_program("cd <WS>/portal && timeout 180 bun run typecheck; echo rc=$?")[0] == "OTHER"),
+        ("vocabulary RED: a battery printing `  {verdict:4s} {name}` lines cannot print `0 fail` -> REFUSED",
+         lambda: _ov_judge(_ov_bar_runs("0 fail")[0], False, _ov_templates(_ov_red)[0])[0][1] == "REFUSED"),
+        ("vocabulary GREEN: the same battery prints `BATTERY PASS` -> ADMITTED",
+         lambda: _ov_judge(["BATTERY PASS"], False, _ov_templates(_ov_red)[0])[0][1] == "ADMITTED"),
+        ("vocabulary GREEN: a %d count beside authored words -> ADMITTED (`RESULT: 0 arm(s) failed of`)",
+         lambda: _ov_judge(_ov_bar_runs(r"RESULT: 0 arm\(s\) failed of")[0], False,
+                           _ov_templates(_ov_red)[0])[0][1] == "ADMITTED"),
+        ("vocabulary: a word only a runtime field carries is UNDECIDED (announced); a conditional of constants resolves",
+         lambda: _ov_judge(["READERS: yes"], False, _ov_templates("import sys\nprint('READERS: %s' % sys.argv[1])\n")[0])[0][1]
+         == "UNDECIDED"
+         and _ov_judge(["READERS: yes"], False,
+                       _ov_templates("s = 1\nprint('READERS: %s' % ('yes' if s else 'no'))\n")[0])[0][1] == "ADMITTED"),
+        ("vocabulary: a line left open with end='' carries on, so its value on the next print is not refused (F5-AC1)",
+         lambda: _ov_judge(["NAMES=served x"], False,
+                           _ov_templates("print('NAMES=', end='')\nprint('served x')\n")[0])[0][1] != "REFUSED"),
+        ("vocabulary: a bare relay, a non-git subprocess and a file printing nothing are OPEN; a git subprocess is not",
+         lambda: _ov_templates("import sys\nprint(sys.argv[1])\n")[1] != ""
+         and _ov_templates("import subprocess, sys\nsubprocess.run([sys.executable, 'x.py'])\nprint('A')\n")[1] != ""
+         and _ov_templates("x = 'A'\n")[1] != ""
+         and _ov_templates("import subprocess\nsubprocess.run(['git', 'status'])\nprint('A')\n")[1] == ""),
+        ("vocabulary: check_file wires the limb, and the limb reads the tool from the INDEX (`git show :<path>`)",
+         lambda: "_output_vocabulary_violations(root, rel, text)" in inspect.getsource(check_file)
+         and '":" + rel' in inspect.getsource(_ov_tool)),
     ]
     failed = 0
     for name, fn in arms:
@@ -976,6 +1023,646 @@ def _placeholder_modify_violations(rel, head_text, staged_text):
     return ["%s [MODIFIED; the order already declares <placeholders> at HEAD, so GATE (viii) grades the "
             "amendment -- Andrew-direct card 6, record @e2210bf34c]: %s" % (rel, x.split(": ", 1)[-1])
             for x in _placeholder_declaration_violations(rel, staged_text)]
+
+
+# GATE (ix) -- THE OUTPUT-VOCABULARY LIMB: A BAR ITS TOOL CAN NEVER PRINT IS REFUSED AT THE CUT (FE-s-36;
+# 1.0.0_SA_CTO ruling N; row S55). Built 2026-09-13 by 0.9.0_WK_IRPT_FNTEND~4 on IRPT_FNTEND.TO-FE-s-36.
+#
+# THE SHAPE. F28-AC6 as issued (@b6062ad2a2) expected `0 fail` from .tools/tests/test_proof_of_spec_alignment.py,
+# which prints only `BATTERY PASS` or `BATTERY FAILED` (:458-460) and `N/M arms as expected`. `0 fail` is a TEST
+# RUNNER's summary word (bun prints ` 0 fail`); the battery never authors it, so the criterion could never pass and
+# nothing said so until a worker ran it. Round 4 cut five criteria against an assumption about a tool's output and a
+# worker's refusal caught every one (S55). This limb reads the tool at the cut and refuses that shape.
+#
+# WHAT IT READS -- and nothing else:
+#   1. the criterion's <invocation>. It is EVALUATED only when it is ONE program: optional leading `cd <WS>` or
+#      `cd <WS>/<sub>`, optional `timeout N` and VAR=value prefixes, then `python|python3|py <path>.py [args]`.
+#      A pipe, a list (`;`, `||`, a second `&&` command), a redirect or a substitution means the evidence is not one
+#      program's output -> NOT EVALUATED. Any other program (bun, pytest, node, npm, a comp-tool, a shell script) is a
+#      RUNNER whose vocabulary this limb does not model -> NOT EVALUATED, and never refused.
+#   2. the named .py file FROM THE INDEX (`git show :<path>`) -- what exists AT THE CUT. Absent there (the ordinary
+#      case: the worker writes the test) -> ANNOUNCED, never refused. It never runs the file, and never runs a test.
+#   3. the file's AUTHORED TEXT, by `ast`: every string literal, every f-string, %-format and .format() template, and
+#      every print() argument list joined by its separator. A field is resolved when the file binds it only to
+#      authored strings (a constant, a conditional of constants, a name assigned only such values); otherwise it is a
+#      FIELD that may carry any text. Digits in a template and any field are NUMBER SLOTS.
+#   4. the <expect> bar, parsed as the regex it is (the checker grades it with an unanchored search): its literal runs,
+#      with every digit run, \d class and digit back-reference as a NUMBER SLOT. Lookarounds and anchors are dropped
+#      (only ever loosening). An alternation, or a bar with no two-letter word, cannot be reduced -> ANNOUNCED.
+#
+# THE DECISION, per literal run of the bar:
+#   ADMITTED   some ONE template authors the run: every letter of it is authored text, counts on number slots.
+#   ANNOUNCED  no template authors it whole, but one authors at least one WORD of it in place while a field could
+#              carry the rest (a label held in a variable) -- the limb cannot tell, says so, and refuses nothing.
+#   REFUSED    no template authors even one word of the run in place -- the bar's words never appear, in that
+#              arrangement, in any line the tool can write. That is F28-AC6: `fail` is authored in the battery (an arm
+#              is named `fail-closed: ...`) but never after a number, and `0 fail` needs a count before it.
+#
+# WHAT IT CANNOT KNOW, STATED RATHER THAN GUESSED (each is an ANNOUNCE or a stated assumption, never a silent pass):
+#   - a tool whose output is not its own: it prints nothing itself, prints a bare value (`print(out)`), runs a
+#     program other than git (sys.executable, bun, a shell), or hands off to a runner or another module's main()
+#     (unittest.main, pytest.main, runpy, exec, X.main()) -> the file is OPEN -> ANNOUNCED.
+#   - ASSUMPTION A (stated): a tool's verdict vocabulary is the text it AUTHORS. Text it relays INSIDE an authored
+#     line (a diagnostic after `<-`) is not credited with a bar's words, and a module it imports as a library is not
+#     read (the limb builds no call graph). A bar that could only ever match relayed text is refused -- it would pass
+#     on a diagnostic, which is its own defect.
+#   - ASSUMPTION B (stated): a bar line is written by ONE template -- with ONE modelled exception. A call that leaves
+#     its line open (print(..., end="") or a write()) is read as continuing into ANY later call, and in such a
+#     file any line may begin mid-way: that only ever loosens. MEASURED before landing, over all 359 tracked tree
+#     orders: NFRA_CLDGRPH F5-AC1 prints `UNREACHABLE_REFUSAL_NAMES=` with end="" and its value on the next
+#     print; without the exception it was the one honest bar refused. A word spliced from fragments at run time
+#     is still not credited.
+#   - it cannot see an interpreter traceback, argparse usage text, or `timeout`'s own output; none is a verdict.
+#
+# BOUNDARY: the scope this gate already owns -- a tree order STAGED AS ADDED (git A/R), mechanical criteria only
+# (judgment="true" is graded at L9). It never grades a MODIFICATION and never grades an existing order.
+OV_TAG = "OUTPUT-VOCABULARY"
+_OV_FIELD = "\x00"      # a template field: any text
+_OV_DIGIT = "\x01"      # a digit run authored in a template
+_OV_SLOT = "\x02"       # a number slot in a bar
+_OV_PYTHONS = ("python", "python3", "py", "python.exe", "python3.exe", "py.exe")
+_OV_MAX_ALTS = 32
+_OV_WORD_RE = re.compile(r"[A-Za-z]+")
+_OV_CACHE = {}
+
+
+def _ov_program(invocation):
+    """(kind, rel, args, why). kind: 'PY' (evaluable: rel is the repo-relative .py path), 'RUNNER' (another program;
+    never evaluated) or 'OTHER' (not one program's output, or a path outside the workspace; never evaluated)."""
+    inv = (invocation or "").strip()
+    probe = PLACEHOLDER_TOKEN_RE.sub("PH", inv)
+    if (re.search(r"\$\(|`|[<>]|\|\||;|\n", probe) or re.search(r"(?<!&)&(?!&)", probe)
+            or re.search(r"(?<!\|)\|(?!\|)", probe)):
+        return "OTHER", None, "", ("a compound shell line (a pipe, a list, a redirect or a substitution): its output "
+                                   "is not one program's")
+    segs = [s.strip() for s in inv.split("&&") if s.strip()]
+    cwd = ""
+    while segs and re.match(r"^cd\s", segs[0]):
+        tgt = segs[0][2:].strip().strip("'\"")
+        if tgt in ("<WS>", "<WS>/", ".", "./"):
+            cwd = ""
+        elif tgt.startswith("<WS>/") and not PLACEHOLDER_TOKEN_RE.search(tgt[5:]) and ".." not in tgt.split("/"):
+            cwd = tgt[5:].strip("/")
+        else:
+            return "OTHER", None, "", "it changes into %s, which is not the workspace root or a directory under <WS>" % tgt
+        segs = segs[1:]
+    if len(segs) != 1:
+        return "OTHER", None, "", "it runs %d commands after its cd, so its output is not one program's" % len(segs)
+    try:
+        tok = shlex.split(segs[0], posix=True)
+    except ValueError as exc:
+        return "OTHER", None, "", "its command does not tokenise (%s)" % exc
+    while tok and re.match(r"^[A-Za-z_][A-Za-z0-9_]*=", tok[0]):
+        tok = tok[1:]
+    if tok and tok[0] == "timeout":
+        tok = tok[1:]
+        while tok and tok[0].startswith("-"):
+            tok = tok[2:] if tok[0] in ("-s", "-k") else tok[1:]
+        if tok and re.match(r"^\d+(\.\d+)?[smhd]?$", tok[0]):
+            tok = tok[1:]
+    if not tok:
+        return "OTHER", None, "", "no program after its prefixes"
+    base = tok[0].replace("\\", "/").rsplit("/", 1)[-1].lower()
+    if base not in _OV_PYTHONS:
+        return "RUNNER", None, "", "the program is %s, a runner whose own vocabulary this limb does not model" % tok[0]
+    if len(tok) < 2 or tok[1].startswith("-") or not tok[1].endswith(".py"):
+        return "OTHER", None, "", "python is not invoked on a .py file directly (a flag, -m or -c)"
+    script = tok[1]
+    if script.startswith("<WS>/"):
+        script = script[5:]
+    if PLACEHOLDER_TOKEN_RE.search(script) or script.startswith("/") or re.match(r"^[A-Za-z]:", script):
+        return "OTHER", None, "", "the script path %s is not relative to the workspace" % tok[1]
+    rel = posixpath.normpath(posixpath.join(cwd, script)) if cwd else posixpath.normpath(script)
+    if rel.startswith(".."):
+        return "OTHER", None, "", "the script path climbs out of the workspace"
+    return "PY", rel, " ".join(tok[2:]), ""
+
+
+def _ov_bar_runs(expect):
+    """(runs, icase, why). runs: the bar's literal runs that carry a two-letter word, digits as _OV_SLOT; None + why
+    when the bar cannot be reduced to required text."""
+    try:
+        import re._parser as _sp  # noqa: PLC0415 -- Python 3.11+
+    except ImportError:  # pragma: no cover
+        import sre_parse as _sp  # noqa: PLC0415
+    try:
+        parsed = _sp.parse(expect)
+    except Exception as exc:  # noqa: BLE001
+        return None, False, "the bar does not compile as a regex (%s)" % exc
+    icase = bool(parsed.state.flags & re.I)
+    runs, dgroups, bad = [[]], set(), []
+
+    def brk():
+        if runs[-1]:
+            runs.append([])
+
+    def slot():
+        if not (runs[-1] and runs[-1][-1] == _OV_SLOT):
+            runs[-1].append(_OV_SLOT)
+
+    def is_digit_in(av):
+        return bool(av) and all((o == _sp.CATEGORY and a == _sp.CATEGORY_DIGIT) or (o == _sp.RANGE and a == (48, 57))
+                                for o, a in av)
+
+    def is_digit_node(items):
+        items = list(items)
+        if len(items) != 1:
+            return False
+        o, a = items[0]
+        if o == _sp.IN:
+            return is_digit_in(a)
+        if o in (_sp.MAX_REPEAT, _sp.MIN_REPEAT):
+            return a[0] >= 1 and is_digit_node(a[2])
+        return False
+
+    def walk(items):
+        for op, av in items:
+            if op == _sp.LITERAL:
+                runs[-1].append(chr(av))
+            elif op == _sp.IN and is_digit_in(av):
+                slot()
+            elif op in (_sp.MAX_REPEAT, _sp.MIN_REPEAT):
+                if av[0] >= 1 and is_digit_node(av[2]):
+                    slot()
+                else:
+                    brk()
+            elif op == _sp.SUBPATTERN:
+                group, add_f, _del_f, sub = av
+                if add_f & re.I:
+                    bad.append("a group carries its own (?i) flag")
+                if group is not None and is_digit_node(sub):
+                    dgroups.add(group)
+                walk(sub)
+            elif op == _sp.GROUPREF:
+                if av in dgroups:
+                    slot()
+                else:
+                    brk()
+            elif op in (_sp.ASSERT, _sp.ASSERT_NOT, _sp.AT):
+                pass
+            elif op == _sp.BRANCH:
+                bad.append("the bar has alternatives")
+            else:
+                brk()
+    walk(parsed)
+    if bad:
+        return None, icase, bad[0]
+    out = []
+    for r in runs:
+        s = re.sub(r"[0-9]+", _OV_SLOT, "".join(r))
+        s = re.sub(_OV_SLOT + "+", _OV_SLOT, s)
+        if any(len(w) >= 2 for w in _OV_WORD_RE.findall(s)):
+            out.append(s)
+    if not out:
+        return None, icase, ("no literal run of the bar carries a two-letter word, so any tool printing a number "
+                             "could satisfy it")
+    return out, icase, ""
+
+
+def _ov_norm(s):
+    """A template skeleton: authored digit runs become _OV_DIGIT, adjacent fields collapse to one."""
+    s = re.sub(r"[0-9]+", _OV_DIGIT, s)
+    return re.sub(_OV_FIELD + "+", _OV_FIELD, s)
+
+
+def _ov_product(parts):
+    """Concatenate lists of alternatives. A part that would push the product past the cap becomes ONE field -- it
+    keeps every other part's authored text (collapsing the whole template would hide authored words)."""
+    acc = [""]
+    for alts in parts:
+        alts = alts or [_OV_FIELD]
+        if len(acc) * len(alts) > _OV_MAX_ALTS:
+            alts = [_OV_FIELD]
+        acc = [a + b for a in acc for b in alts]
+    return list(dict.fromkeys(acc))
+
+
+_OV_PCT_RE = re.compile(r"%(\([^)]*\))?([#0\- +]*)(\*|\d+)?(?:\.(\*|\d+))?[hlL]?([diouxXeEfFgGcrsa%])")
+_OV_NUM_SPEC = "bcdeEfFgGnoxX%,_"
+
+
+class _OvSource:
+    """The authored text of ONE python file: name bindings, and the alternatives an expression can print."""
+
+    def __init__(self, tree):
+        self.binds, self.augs = {}, {}
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Assign):
+                for t in node.targets:
+                    self._bind(t, node.value)
+            elif isinstance(node, ast.AnnAssign):
+                self._bind(node.target, node.value)
+            elif isinstance(node, ast.NamedExpr):
+                self._bind(node.target, node.value)
+            elif isinstance(node, ast.AugAssign):
+                if isinstance(node.target, ast.Name) and isinstance(node.op, ast.Add):
+                    self.augs.setdefault(node.target.id, []).append(node.value)
+                else:
+                    self._unbind(node.target)
+            elif isinstance(node, (ast.For, ast.AsyncFor, ast.comprehension)):
+                self._unbind(node.target)
+            elif isinstance(node, ast.withitem) and node.optional_vars is not None:
+                self._unbind(node.optional_vars)
+            elif isinstance(node, ast.arg):
+                self.binds.setdefault(node.arg, []).append(None)
+            elif isinstance(node, ast.ExceptHandler) and node.name:
+                self.binds.setdefault(node.name, []).append(None)
+            elif isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+                self.binds.setdefault(node.name, []).append(None)
+            elif isinstance(node, (ast.Import, ast.ImportFrom)):
+                for a in node.names:
+                    self.binds.setdefault((a.asname or a.name).split(".")[0], []).append(None)
+
+    def _bind(self, tgt, val):
+        if val is None:
+            self._unbind(tgt)
+        elif isinstance(tgt, ast.Name):
+            self.binds.setdefault(tgt.id, []).append(val)
+        elif (isinstance(tgt, (ast.Tuple, ast.List)) and isinstance(val, (ast.Tuple, ast.List))
+              and len(tgt.elts) == len(val.elts) and not any(isinstance(e, ast.Starred) for e in tgt.elts + val.elts)):
+            for t, v in zip(tgt.elts, val.elts):
+                self._bind(t, v)
+        else:
+            self._unbind(tgt)
+
+    def _unbind(self, tgt):
+        for n in ast.walk(tgt):
+            if isinstance(n, ast.Name):
+                self.binds.setdefault(n.id, []).append(None)
+
+    def alts(self, node, depth=0, seen=frozenset()):
+        """What `node` can print, as alternative skeleton strings; [_OV_FIELD] when the file does not author it."""
+        F = [_OV_FIELD]
+        if node is None or depth > 6:
+            return F
+        if isinstance(node, ast.Constant):
+            v = node.value
+            if isinstance(v, str):
+                return [v]
+            if isinstance(v, bool) or v is None:
+                return [str(v)]
+            if isinstance(v, (int, float)):
+                return [_OV_DIGIT]
+            return F
+        if isinstance(node, ast.JoinedStr):
+            parts = []
+            for p in node.values:
+                if isinstance(p, ast.Constant):
+                    parts.append([str(p.value)])
+                elif isinstance(p, ast.FormattedValue):
+                    parts.append(self._formatted(p, depth, seen))
+                else:
+                    parts.append(F)
+            return _ov_product(parts)
+        if isinstance(node, ast.BinOp):
+            if isinstance(node.op, ast.Add):
+                return _ov_product([self.alts(node.left, depth + 1, seen), self.alts(node.right, depth + 1, seen)])
+            if isinstance(node.op, ast.Mod):
+                args = node.right.elts if isinstance(node.right, ast.Tuple) else [node.right]
+                out = []
+                for left in self.alts(node.left, depth + 1, seen):
+                    out.extend(self._percent(left, args, depth, seen))
+                return list(dict.fromkeys(out))[:_OV_MAX_ALTS] or F
+            return F
+        if isinstance(node, ast.IfExp):
+            return list(dict.fromkeys(self.alts(node.body, depth + 1, seen) + self.alts(node.orelse, depth + 1, seen)))
+        if isinstance(node, ast.BoolOp):
+            out = []
+            for v in node.values:
+                out.extend(self.alts(v, depth + 1, seen))
+            return list(dict.fromkeys(out))[:_OV_MAX_ALTS]
+        if isinstance(node, ast.Name):
+            bs = self.binds.get(node.id)
+            if node.id in seen or not bs or any(b is None for b in bs):
+                return F
+            inner = seen | {node.id}
+            base = []
+            for b in bs:
+                base.extend(self.alts(b, depth + 1, inner))
+            for a in self.augs.get(node.id, []):
+                base = base + _ov_product([base, self.alts(a, depth + 1, inner)])
+            base = list(dict.fromkeys(base))
+            return base if len(base) <= _OV_MAX_ALTS else F
+        if isinstance(node, ast.Call):
+            f = node.func
+            if isinstance(f, ast.Attribute):
+                if f.attr == "format":
+                    return [re.sub(r"\{[^{}]*\}", _OV_FIELD, s.replace("{{", "\x03").replace("}}", "\x04"))
+                            .replace("\x03", "{").replace("\x04", "}") for s in self.alts(f.value, depth + 1, seen)]
+                if f.attr in ("upper", "lower", "title", "capitalize", "casefold", "swapcase"):
+                    return [getattr(s, f.attr)() for s in self.alts(f.value, depth + 1, seen)]
+                if f.attr in ("strip", "lstrip", "rstrip"):
+                    return self.alts(f.value, depth + 1, seen)
+                if f.attr in ("ljust", "rjust", "center", "zfill"):
+                    return _ov_product([F, self.alts(f.value, depth + 1, seen), F])
+            if isinstance(f, ast.Name) and f.id == "str" and len(node.args) == 1:
+                return self.alts(node.args[0], depth + 1, seen)
+            if isinstance(f, ast.Name) and f.id in ("len", "int", "sum", "max", "min", "round", "float", "abs"):
+                return [_OV_DIGIT]
+            return F
+        return F
+
+    def _formatted(self, p, depth, seen):
+        spec = ""
+        if p.format_spec is not None:
+            if not all(isinstance(v, ast.Constant) for v in p.format_spec.values):
+                return [_OV_FIELD]
+            spec = "".join(str(v.value) for v in p.format_spec.values)
+        if spec and spec[-1] in _OV_NUM_SPEC:
+            return [_OV_DIGIT]
+        base = self.alts(p.value, depth + 1, seen)
+        if spec or p.conversion in (ord("r"), ord("a")):
+            return _ov_product([[_OV_FIELD], base, [_OV_FIELD]])
+        return base
+
+    def _percent(self, left, args, depth, seen):
+        parts, i, pos = [], 0, 0
+        for m in _OV_PCT_RE.finditer(left):
+            parts.append([left[pos:m.start()]])
+            pos = m.end()
+            key, _flags, width, prec, conv = m.groups()
+            if conv == "%":
+                parts.append(["%"])
+                continue
+            i += (width == "*") + (prec == "*")
+            if key is not None or i >= len(args):
+                parts.append([_OV_FIELD])
+            elif conv in "diouxXeEfFgG":
+                parts.append([_OV_DIGIT])
+            else:
+                a = self.alts(args[i], depth + 1, seen)
+                parts.append(_ov_product([[_OV_FIELD], a, [_OV_FIELD]]) if (width or conv in "ra") else a)
+            i += 1
+        parts.append([left[pos:]])
+        return _ov_product(parts)
+
+
+def _ov_dotted(f):
+    if isinstance(f, ast.Name):
+        return f.id
+    if isinstance(f, ast.Attribute):
+        head = _ov_dotted(f.value)
+        return (head + "." + f.attr) if head else "?." + f.attr
+    return ""
+
+
+_OV_HANDOFF = ("unittest.main", "pytest.main", "doctest.testmod", "doctest.testfile", "runpy.run_path",
+               "runpy.run_module", "exec", "os.system", "os.popen", "pty.spawn", "subprocess.getoutput",
+               "subprocess.getstatusoutput")
+_OV_SUBPROC = ("run", "call", "check_call", "check_output", "Popen")
+
+
+def _ov_templates(src):
+    """(templates, open_why) for one python source. Raises SyntaxError when it does not parse."""
+    tree = ast.parse(src)
+    s = _OvSource(tree)
+    sub_names = {a.asname or a.name for n in ast.walk(tree) if isinstance(n, ast.ImportFrom) and n.module == "subprocess"
+                 for a in n.names}
+    tmpls, open_why, n_print, continued, line_tmpls = set(), "", 0, False, []
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Constant) and isinstance(node.value, str):
+            v = node.value
+            tmpls.update({v, _OV_PCT_RE.sub(_OV_FIELD, v), re.sub(r"\{[^{}]*\}", _OV_FIELD, v)})
+        elif isinstance(node, (ast.JoinedStr, ast.BinOp)):
+            tmpls.update(s.alts(node))
+        elif isinstance(node, ast.Call):
+            d = _ov_dotted(node.func)
+            if d == "print" or d.endswith(("stdout.write", "stderr.write")):
+                n_print += 1
+                sep = [" "]
+                for kw in node.keywords:
+                    if kw.arg == "sep":
+                        sep = s.alts(kw.value)
+                if any(isinstance(a, ast.Starred) for a in node.args):
+                    open_why = open_why or "it prints an unpacked sequence at line %d (a relay)" % node.lineno
+                    continue
+                arg_alts = [s.alts(a) for a in node.args]
+                if node.args and all(x == [_OV_FIELD] for x in arg_alts):
+                    open_why = open_why or ("it prints a bare value it does not author at line %d (a relay: that "
+                                            "line can be anything)" % node.lineno)
+                parts = []
+                for k, x in enumerate(arg_alts):
+                    if k:
+                        parts.append(sep)
+                    parts.append(x)
+                end = ["\n"]
+                for kw in node.keywords:
+                    if kw.arg == "end":
+                        end = s.alts(kw.value)
+                if d != "print" or any("\n" not in e for e in end):
+                    parts.append([_OV_FIELD])   # the line goes on in a later call (ASSUMPTION B's modelled case)
+                    continued = True
+                made = _ov_product(parts)
+                line_tmpls.extend(made)
+                tmpls.update(made)
+            elif isinstance(node.func, ast.Attribute) and node.func.attr == "format":
+                tmpls.update(s.alts(node))
+            elif d in _OV_HANDOFF or d.startswith("os.exec") or d.startswith("os.spawn"):
+                open_why = open_why or "it hands its output to %s at line %d" % (d, node.lineno)
+            elif (d.startswith("subprocess.") and d.split(".", 1)[1] in _OV_SUBPROC) or d in sub_names:
+                a0 = node.args[0] if node.args else None
+                prog = (a0.elts[0].value if isinstance(a0, (ast.List, ast.Tuple)) and a0.elts
+                        and isinstance(a0.elts[0], ast.Constant) and isinstance(a0.elts[0].value, str) else None)
+                if prog is None or prog.replace("\\", "/").rsplit("/", 1)[-1] not in ("git", "git.exe"):
+                    open_why = open_why or ("it runs %s at line %d, and that program's output may reach its own"
+                                            % (prog or "a program it does not name literally", node.lineno))
+            elif isinstance(node.func, ast.Attribute) and node.func.attr == "main" and not (
+                    isinstance(node.func.value, ast.Name) and node.func.value.id == "self"):
+                open_why = open_why or "it hands off to %s() at line %d" % (d, node.lineno)
+    if continued:   # a line may also BEGIN mid-way, after a call that left its line open
+        tmpls.update(_OV_FIELD + t for t in line_tmpls)
+    if n_print == 0:
+        open_why = open_why or "it prints nothing itself, so its output is produced elsewhere"
+    return sorted({_ov_norm(t) for t in tmpls if _OV_WORD_RE.search(t)}), open_why
+
+
+def _ov_masks(run):
+    m = {}
+    for i, c in enumerate(run):
+        m[c] = m.get(c, 0) | (1 << i)
+    return m
+
+
+def _ov_produce(run, tmpl, at, forward=True):
+    """Can `run` be written by `tmpl` contiguously, starting exactly at `at` (forward) or ending exactly at `at`
+    (backward)? A field carries anything; a number slot needs an authored digit run or a field. The template's own
+    ends are CLOSED (ASSUMPTION B): the run may not continue past them."""
+    if not run:
+        return True
+    if forward:
+        seq = tmpl[at:]
+    else:
+        run, seq = run[::-1], tmpl[:at][::-1]
+    n, mk = len(run), _ov_masks(run)
+    full, goal, slot, m = (1 << (n + 1)) - 1, 1 << n, mk.get(_OV_SLOT, 0), 1
+    for c in seq:
+        if c == _OV_FIELD:
+            m = full & ~((m & -m) - 1)
+        elif c == _OV_DIGIT:
+            m = (m & slot) << 1
+        else:
+            m = (m & mk.get(c, 0)) << 1
+        if m & goal:
+            return True
+        if not m:
+            return False
+    return False
+
+
+def _ov_clean(run, tmpl):
+    """ADMITTED shape: `tmpl` writes `run` with EVERY letter authored; fields carry only counts and punctuation."""
+    n, mk = len(run), _ov_masks(run)
+    goal, slot = 1 << n, mk.get(_OV_SLOT, 0)
+    cf = []
+    for r in range(n + 1):
+        fl = next((j for j in range(r, n) if run[j].isalpha()), n)
+        cf.append(((1 << (fl + 1)) - 1) & ~((1 << r) - 1))
+    m = 0
+    for c in tmpl:
+        m |= 1
+        if c == _OV_FIELD:
+            out, x = 0, m
+            while x:
+                low = x & -x
+                out |= cf[low.bit_length() - 1]
+                x ^= low
+            m = out
+        elif c == _OV_DIGIT:
+            m = (m & slot) << 1
+        else:
+            m = (m & mk.get(c, 0)) << 1
+        if m & goal:
+            return True
+    return False
+
+
+def _ov_anchored(run, tmpl):
+    """UNDECIDED shape: `tmpl` authors at least one WORD (two letters or more) of `run` in place, and fields could
+    carry the rest."""
+    for w in _OV_WORD_RE.finditer(run):
+        if len(w.group(0)) < 2:
+            continue
+        a = tmpl.find(w.group(0))
+        while a != -1:
+            if (_ov_produce(run[:w.start()], tmpl, a, forward=False)
+                    and _ov_produce(run[w.end():], tmpl, a + len(w.group(0)))):
+                return True
+            a = tmpl.find(w.group(0), a + 1)
+    return False
+
+
+def _ov_judge(runs, icase, tmpls):
+    """[(run, 'ADMITTED'|'UNDECIDED'|'REFUSED')] over the tool's templates."""
+    T = [t.lower() for t in tmpls] if icase else list(tmpls)
+    out = []
+    for r in runs:
+        rr = r.lower() if icase else r
+        words = _OV_WORD_RE.findall(rr)
+        verdict = "REFUSED"
+        if any(all(w in t for w in words) and _ov_clean(rr, t) for t in T):
+            verdict = "ADMITTED"
+        elif any(_ov_anchored(rr, t) for t in T):
+            verdict = "UNDECIDED"
+        out.append((r, verdict))
+    return out
+
+
+def _ov_show(s):
+    return s.replace(_OV_SLOT, "<n>").replace(_OV_DIGIT, "<n>").replace(_OV_FIELD, "{...}")
+
+
+def _ov_tool(root, rel):
+    """(templates, open_why, err) for the file at `rel` IN THE INDEX -- what exists at the cut. err 'ABSENT' when the
+    index does not carry it; cached per process."""
+    key = (root, rel)
+    if key not in _OV_CACHE:
+        try:
+            out = subprocess.run(["git", "show", ":" + rel], cwd=root, capture_output=True, timeout=30)
+        except Exception as exc:  # noqa: BLE001
+            _OV_CACHE[key] = (None, "", "the index could not be read (%s)" % exc)
+        else:
+            if out.returncode != 0:
+                _OV_CACHE[key] = (None, "", "ABSENT")
+            else:
+                try:
+                    t, why = _ov_templates(out.stdout.decode("utf-8", errors="replace"))
+                    _OV_CACHE[key] = (t, why, "")
+                except (SyntaxError, ValueError, RecursionError) as exc:
+                    _OV_CACHE[key] = (None, "", "it does not parse as python (%s)" % exc)
+    return _OV_CACHE[key]
+
+
+def _output_vocabulary_violations(root, rel, text):
+    """GATE (ix): (violations, notes) for ONE newly-added tree order. See the block comment at OV_TAG."""
+    rel = rel.replace("\\", "/")
+    if not TREE_TO_RE.search(rel):
+        return [], []
+    v, notes = [], []
+    tally = dict(admitted=0, refused=0, announced=0, runner=0, other=0)
+    n_mech = 0
+
+    def announce(cid, why):
+        tally["announced"] += 1
+        notes.append("%s ANNOUNCE: %s criterion %s -- %s. Not judged, not refused." % (OV_TAG, rel, cid, why))
+
+    for m in CRITERION_BLOCK_RE.finditer(text):
+        attrs = dict(ATTR_RE.findall(m.group(1)))
+        if attrs.get("judgment", "").strip().lower() == "true":
+            continue
+        invs = INVOCATION_TAG_RE.findall(m.group(2))
+        exps = re.findall(r"<expect>(.*?)</expect>", m.group(2), re.S)
+        if len(invs) != 1 or len(exps) != 1:
+            continue   # the criterion-grammar limb owns that shape
+        n_mech += 1
+        cid = attrs.get("id", "<no id>")
+        kind, tool, args, why = _ov_program(invs[0])
+        if kind != "PY":
+            tally["runner" if kind == "RUNNER" else "other"] += 1
+            continue
+        tmpls, open_why, err = _ov_tool(root, tool)
+        if err == "ABSENT":
+            announce(cid, "TARGET ABSENT AT THE CUT: %s is not in the index, so there is no output to read (the "
+                          "ordinary case: the worker writes it)" % tool)
+            continue
+        if err:
+            announce(cid, "%s cannot be read: %s" % (tool, err))
+            continue
+        if open_why:
+            announce(cid, "%s's output is not only its own text: %s" % (tool, open_why))
+            continue
+        runs, icase, bwhy = _ov_bar_runs(exps[0])
+        if runs is None:
+            announce(cid, "the bar cannot be reduced to required text: %s" % bwhy)
+            continue
+        judged = _ov_judge(runs, icase, tmpls + ([_ov_norm(args)] if args else []))
+        bad = [r for r, x in judged if x == "REFUSED"]
+        und = [r for r, x in judged if x == "UNDECIDED"]
+        if bad:
+            tally["refused"] += 1
+            longest = max(_OV_WORD_RE.findall(bad[0]), key=len)
+            near = [t for t in tmpls if (longest.lower() in t.lower() if icase else longest in t)][:2]
+            v.append("%s: criterion %s -- %s: its bar <expect>%s</expect> needs the text %r, and the tool it names, %s "
+                     "(read from the index at the cut; %d authored templates), writes no line that can carry it: no "
+                     "template authors a word of it in place with its counts on a number slot%s. The bar can never "
+                     "match this tool's output (F28-AC6's shape: `0 fail` is a runner's summary, never printed by a "
+                     "python battery). FIX: expect a line the tool itself prints, or name the tool that prints this bar. "
+                     "BOUNDARY: graded only on a tree order STAGED AS ADDED; a runner (bun, pytest, ...), a compound "
+                     "line, a target absent at the cut and a tool whose output is not only its own are ANNOUNCED, never "
+                     "refused -- GATE (ix) in .tools/to-pipeline-gate.py states what the limb reads and cannot know."
+                     % (rel, cid, OV_TAG, exps[0], _ov_show(bad[0]), tool, len(tmpls),
+                        ("; nearest authored lines carrying %r: %s" % (longest, " | ".join(repr(_ov_show(t)[:90]) for t in near)))
+                        if near else "; the word %r is authored nowhere in it" % longest))
+        elif und:
+            announce(cid, "UNDECIDED: %s authors a word of %r in place, but only a field it fills at run time could "
+                          "carry the rest" % (tool, _ov_show(und[0])))
+        else:
+            tally["admitted"] += 1
+    if n_mech:
+        notes.append("%s: %s -- %d mechanical criteria: %d evaluated and admitted, %d refused, %d announced, %d not "
+                     "evaluated (a runner's vocabulary), %d not evaluated (not one python program's output)"
+                     % (OV_TAG, rel, n_mech, tally["admitted"], tally["refused"], tally["announced"], tally["runner"],
+                        tally["other"]))
+    return v, notes
 
 
 def _staged_modified(root):
@@ -1722,6 +2409,11 @@ def check_file(root, rel):
     notes.extend(_cn)
     # spine v3.0 L6 carrier 4: one clause per criterion on a NEW tree order.
     v.extend(_criterion_grammar_violations(rel, text))
+    # GATE (ix) -- a criterion whose bar its named tool can never print is refused; what the limb cannot
+    # evaluate is ANNOUNCED (FE-s-36, 1.0.0_SA_CTO ruling N, row S55). See the block comment at OV_TAG.
+    _ov_v, _ov_n = _output_vocabulary_violations(root, rel, text)
+    v.extend(_ov_v)
+    notes.extend(_ov_n)
 
     # LAYER 3's teeth -- and this is what ACTIVATES the sibling gate above. That gate fires only
     # when the project is "pipeline-registered", whose predicate is `dep_stage` present in the
