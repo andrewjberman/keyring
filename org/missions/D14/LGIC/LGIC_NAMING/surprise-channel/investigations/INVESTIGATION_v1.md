@@ -174,6 +174,30 @@ new row on 3.0.0_SA_CVO's ask 96495), both 1.0.0_SA_CTO; `LGIC_NAMING-S3`, `LGIC
     "spec_asserts": "NAMING_SCHEMA key.tier includes 'code', so a code object's address is {source}/{scope}/code/{table}/{partition}, produced by key() like every other new address.",
     "world_is": "The canon keeps code/ prefixes outside the grammar (R1 non-application, R16), and the migration brief places code at the bucket root under code/{source}/gold/. The schema and the canon give two different addresses for the same object, and the builder can produce only the schema's.",
     "notes": "Raised by 1.0.0_SA_CTO while absorbing 4.0.0_SA_CRO's refusal of ADVI_FIRMBKTS v1.0 (R2). Sibling of LGIC_NAMING-S6: both are families the builders cannot construct as the migration brief spells them. ADVI_FIRMBKTS v1.1 holds the family and leaves the runners on the legacy code home until this resolves. The same conflict sits in MDPF_CANON v2.2 (4.0.0_SA_CRO R4, review @436c1da148): its M6 packages new code at s3://opal-data-mdpf/code/ while its CONTRACTS require every new address from the builders."
+  },
+  {
+    "id": "LGIC_NAMING-S8",
+    "project": "LGIC_NAMING",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-14T09:58Z",
+    "one_line": "NAMING_SCHEMA.json key.table_case says a platinum leaf is a kebab-case .json file '(the served names)', but 12 of the 15 ADVI served leaves the portal lists are snake_case (header_metrics.json among them), so ADVI_FIRMBKTS's platinum vector keeps a name the schema refuses while MDPF_CANON's sibling vector obeys the rule.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO -- as the author of LGIC_NAMING's PRD and data file: an L10 addendum that either admits a legacy served name byte-for-byte under the platinum leaf rule, or keeps the kebab rule and states that a migration renames the object behind a per-leaf edge mapping; until then ADVI_FIRMBKTS's platinum vector has no ratified case rule (its ratified-text half REFUSED on this at v1.0, review @10729854d0, and again at v1.1 @2a9ae97c19)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "DATA: org/standards/NAMING_SCHEMA.json v1.2 @d6e0c3b74a :35 table_case = 'snake_case; a platinum leaf is a kebab-case .json file (the served names)'; :27 leaf = '{object} -- the file under {partition}'; :36 partition includes 'a named leaf'.",
+        "PRD: org/missions/D14/LGIC/LGIC_NAMING/prd/LGIC_NAMING_PRD.md :125 (S1) 'Tables are snake_case; a platinum leaf is a kebab .json.'",
+        "WORLD: portal @3ade1aba src/api/endpoints/adviKeyRepoint.ts lists 15 served leaves: 12 snake_case, 1 kebab-case (clients-tab-slim.json), 2 single-word; src/api/endpoints/advisor-intelligence.ts:302 requests /api/scoped/advisor-intelligence/platinum/firm/header_metrics.json.",
+        "SIBLINGS: ADVI_FIRMBKTS_PRD.md v1.0 @ecac007bf3 and v1.1 @2a9ae97c19 CONTRACTS vector (byte-identical in both) key('advi', '49financial', 'platinum', 'firm', 'header_metrics.json'); MDPF_CANON_PRD.md v2.2 @ef21e34660 CONTRACTS vector key('mdpf', '49financial', 'platinum', 'aum_metrics', 'aum-metrics.json')."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "LGIC_NAMING S1 and NAMING_SCHEMA key.table_case: a platinum leaf -- the served name -- is a kebab-case .json file.",
+    "world_is": "Most ADVI served names are snake_case and the frozen portal requests them by those names. Keeping them breaks the schema's case rule; renaming them needs an edge name mapping per leaf. The schema does not say which, and the two D8 PRDs read it differently.",
+    "notes": "Filed with 3.0.0_SA_CVO's L4-R refusals of ADVI_FIRMBKTS's ratified-text half at v1.0 and v1.1 (R1); held here rather than committed at 09:58Z because 1.0.0_SA_CTO's S7 was uncommitted in the shared tree. The denominator is the portal's served-leaf list, not a bucket census. Same class as LGIC_NAMING-S6: an address the schema does not admit."
   }
 ]
 ```
