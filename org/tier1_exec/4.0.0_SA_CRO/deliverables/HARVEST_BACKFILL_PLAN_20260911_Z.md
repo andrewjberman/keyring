@@ -683,3 +683,88 @@ would be again.
    **No seat raises a vendor spend cap.** Nothing else is asked, and nothing else waits on it --
    the IR half is done and the resume command is recorded in the artifact's `blocker.resume`, with an
    `--exclude-done` limb so no name is ever paid for twice. <<
+
+---
+
+## 16. BRIGHT DATA WAS NEVER A CREDENTIAL FAULT. THE CONFIGURED ENDPOINT IS RETIRED -- FIXED, MEASURED, AND THE ROTATION THIS SEAT'S OWN DECISION TREE SENT TO ANDREW WAS THE WRONG ASK
+
+**Authority:** Andrew-direct 2026-09-14 ~02:49Z, verbatim: *"i don't see why we are required to rotate
+the bright data key, that is not relevant at this stage they have a working key"*, plus his standing
+*"read the api docs and figure it out"* (~04:12Z). **He was right and the measurement now says so.**
+
+### ⛔ THE DEFECT IN THE DIAGNOSIS IS THIS SEAT'S, NOT THE SEAT THAT RAN IT
+
+This seat measured HTTP 400 at the DIAL STAGE for two tools and correctly named **two** candidates:
+*"the transport OR the token"*. It then **authored the decision tree** that `0.0.0_AB_MSTR~Z` executed:
+
+    configured == stored  ->  THE STORED KEY ITSELF IS STALE. Rotation, the account owner's act.
+    configured != stored  ->  the DEVICE CONFIG is out of sync; resync from the secret.
+
+>> **THAT TREE HAS NO TRANSPORT BRANCH. Both of its arms are inside the TOKEN candidate**, so whatever
+   it returned, the answer was going to be about the token. The hash match proved the config and the
+   secret **AGREE**; it never touched **VALIDITY**, and agreement was silently read as guilt. **A
+   two-candidate diagnosis was collapsed to one by an instrument that could only ever see one.** <<
+⚠ `0.0.0_AB_MSTR~Z` has taken this as its own inference. **It is not. The tree is this seat's**, and a
+seat that runs another's tree faithfully is not the author of its blind spot. The cost was real: a
+rotation request reached Andrew, and rotating a working key would have broken the one thing that worked.
+⭐ **THE TRANSFERABLE FORM:** *when you name N candidates, the discriminator must be able to return
+"not this one" for each of them. A test whose every branch lives inside candidate 1 cannot exonerate
+candidate 2 -- and it will still print a confident verdict.* Rule 22's DISCRIMINATION axis at the
+level of the HYPOTHESIS SET rather than the reading.
+
+### THE MEASUREMENT, one JSON-RPC `initialize` POST, same token, three paths
+
+```
+/sse       (the configured endpoint)   HTTP 404   <- retired
+/mcp       (streamable HTTP)           HTTP 200   full initialize result, capabilities, session id
+/nope-xyz  (NEGATIVE CONTROL)          HTTP 404   <- so 404 means "no such endpoint",
+                                                     and /sse is in that class
+```
+>> **THE SAME TOKEN THAT 404s ON `/sse` RETURNS HTTP 200 ON `/mcp`. THE KEY IS FINE. THE CONFIGURED
+   TRANSPORT IS A RETIRED ENDPOINT.** Bright Data moved from SSE to streamable HTTP and the device
+   config still named the old one. Proven end-to-end, not just at the handshake: `tools/list`
+   returned 5 tools and a real `search_engine` call returned a 3.8 KB payload. <<
+
+### THE FIX, AND WHAT IT DOES NOT DO
+
+`~/.claude.json`, node `/mcpServers/brightdata`: `type: "sse"` -> `"http"`, and `/sse?token=` ->
+`/mcp?token=`. **`type: "http"` was already the convention in that same file** -- two other servers
+use it. Backed up first (`.claude.json.bak-brightdata-transport-<stamp>`), both anchors verified
+UNIQUE before any write, the result parsed as JSON before being written, and the other three servers
+confirmed untouched. **A json round-trip was deliberately refused: it would reformat a 68 KB config
+that seven live sessions share, to fix two fields.**
+⚠ **AND IT DOES NOT REPAIR A RUNNING SESSION.** Measured, not assumed: the MCP tool in this session
+still dials the old URL after the edit, because a client reads that config at session start. **Every
+seat gets the working binding at its NEXT session start**; until then the working route is the direct
+JSON-RPC POST to `/mcp`, which this seat has exercised.
+
+### ⛔ BUT BRIGHT DATA CANNOT SUBSTITUTE FOR THE CSE ON THE BLOG HALF, AND THIS IS THE PART TO READ
+
+The obvious next move -- *the CSE quota is gone, so run the blog pass on Bright Data instead* -- **does
+not work, and the reason is not a quota or a permission.** `search_engine` returns Google's SERP with
+the links as **REDIRECT STUBS**:
+```
+{"link":"/goto?url=CAESVQHrOzAVgLcEzlW3FxG2QxlW5W6kjgGTGOuRgZpPrTieUGAQ...",
+ "title":"Boeing Newsroom", "description":"News & Stories | Sep 13, 2026 ..."}
+```
+**THERE IS NO HOST IN THAT LINK.** The blog rule's entire safety is `registrable(link) == held_domain`
+-- an identity constraint. **A stub has no registrable domain, so the only test the blog rule has
+cannot run at all.** The titles are present and tempting; matching on a title instead would throw away
+the exact property that makes s.15's rule safe, and s.14 is a 89-name demonstration of what happens
+when a name is trusted as a key.
+⛔ **SO THE BLOG HALF STAYS ON THE GOOGLE CSE AND STAYS BLOCKED ON ITS QUOTA.** Recorded here
+explicitly so the next seat does not spend the discovery again. Neither weakening the rule to
+title-matching, nor resolving ~740 redirect stubs by scraping them, is a trade worth making.
+⭐ **AND THIS IS A PROPERTY OF THE TOOL, NOT A FAULT:** Bright Data's value was never SERP link
+extraction. It is `scrape_as_markdown`, which returns actual page content -- which is what
+`social_account` and the four publication backfills need, and what neither is blocked on any more.
+
+### WHAT IS NOW UNBLOCKED, AND WHAT THE BLOCKER ACTUALLY WAS
+
+| item | was reported blocked on | true state |
+|---|---|---|
+| `social_account`, 0 of 89 | "Bright Data key rotation, account owner's act" | **NOT BLOCKED.** The key works; the transport was wrong and is fixed |
+| the 4 publication backfills | the same | **NOT BLOCKED** by credentials |
+| the blog half, 74 not-asked | Google CSE daily quota | **STILL BLOCKED**, and Bright Data cannot substitute (above) |
+⚠ **NOTHING HERE WIDENS ANY GRANT.** Andrew's Bright Data word covers this work and his card 4 covers
+the Google key; the two stay separate, as they have all night.
