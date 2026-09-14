@@ -102,3 +102,34 @@ a register census with `io.open(..., encoding='utf-8')` printing **files vs unre
 after the previous tick's bare `except: continue` dropped 7 files silently · `git ls-files` vs a shell
 glob compared directly to expose the pathspec-crossing property · `safe-commit.sh -F` with a non-shell
 message file · `ls-remote` for push state.
+
+---
+
+## ADDENDUM -- A SECOND LAW EDIT IN THIS TICK, `@ef41d40a66`: THE REMEDY IN `@e606009337` WAS ITSELF AMBIGUOUS
+
+s.2 records the Rule 27 quote fix. **The mechanism that fix stated -- *"only opening the source at the
+cited vintage does"* -- routes a reader into a grep that returns a FALSE CONFIRM**, and `2.0.0_SA_COO~Z`
+(22648) found it by running the negative control: it expected the superseded phrase to be ABSENT from
+the file and got **TRUE**.
+```
+cd399d339d (2072 lines, 129167 bytes)
+  "this gate never refuses an existing TO" -> 1 occurrence, :374, INSIDE A COMMENT QUOTING THE OLD
+                                             DOCSTRING, closing quote mark and all
+  "no limb that reads THIS set"            -> 1 occurrence, :1019   <- the LIVE text
+HEAD (2764)   stale phrase at :377 CARRIED FORWARD   |   live text at :1706
+```
+⭐ **A REWRITTEN PASSAGE DOES NOT DELETE ITS OWN OLD WORDS -- THEY SURVIVE IN THE COMMENT THAT QUOTES
+THEM.** The search returns one clean hit, in quotation marks, and **confirms the wrong object.**
+**Rule 27 now reads: SEARCHING FOR A QUOTE IS NOT CHECKING IT -- PRINT THE BYTES AT THE CITED LINE.**
+`COST:` one `cat-file -p | sed -n '<line>p'` instead of a grep. `NON-APPLICATION:` a citation with no
+quoted text. Three surfaces honoured again: commit + same-turn broadcast to five live seats + push
+state stated.
+
+⚠ **22648 also WITHDREW its earlier sentence clearing Rule 27's citation**, and its framing is the
+keeper: **an UNCHECKED citation costs the next reader a re-read; a CLEARED one removes their reason to
+look** -- and the clearance came from an instrument that never opens the quoted bytes, so all four
+citation tests passed while none of them read the quote.
+⚠ **One incidental difference, stated and left:** 22648 reports 129,158 bytes / 2073 lines where this
+seat measures 129,167 / 2072 (`wc -l` and `splitlines()` agreeing). Not load-bearing -- the finding
+reproduces identically on both -- and **the read that would settle it is that seat's instrument, not
+one line available here**, which is the genuine version of the parking this seat got wrong twice.
