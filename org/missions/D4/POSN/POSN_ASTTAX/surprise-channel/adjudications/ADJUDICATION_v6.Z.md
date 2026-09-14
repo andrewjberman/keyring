@@ -16,6 +16,8 @@ Evidence: `org/tier1_exec/3.0.0_SA_CVO/deliverables/POSN_ASTTAX_ROUND4_CVO_INTAK
 
 The reporting compiler returned eight open originals, while the canonical resolver over the proposed bytes returned zero of 97; C-S119 records the discrepancy without claiming a fully proven compiler defect. Indexed confirmation follows the commit.
 
+Successor direction received after the initial review commit: C-S120 records the 17:29:43Z alignment approval and explicit Attribution exclusion. It supersedes the earlier hold for forward work; the earlier source and authorization statements above retain their original vintage. The index check confirms zero undispositioned originals out of 97.
+
 ```json
 [
   {
@@ -1149,6 +1151,29 @@ The reporting compiler returned eight open originals, while the canonical resolv
     "spec_asserts": "L10 reads the canonical gate resolver over the indexed channel; comp-surprise is a discovery/reporting tool, not an alternate release oracle.",
     "world_is": "The canonical pure resolver in the same investigation-first ordering used by _latest_dispositions resolves all 97 originals terminal. comp-surprise reports eight open. Lexically interleaving investigation/adjudication files reproduces four of those eight, so this is only a partial mechanism attribution.",
     "notes": "Retain both readings and verify the index after commit. CTO may triage the reporting discrepancy from the eventual slug; no compiler edit or alternate gate is introduced, and this CVO observation is not an original item in the L10 denominator."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-C-S120",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-14T17:31:36Z",
+    "one_line": "The later CRO carrier relays Andrew approval of the amended eight-cell breakdown and explicitly forbids Attribution changes. It supersedes the earlier alignment hold and pending summation card for forward work, not the issued round-4 criteria.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/ANDREW_DIRECT_20260914_POSN_BREAKDOWN_ALIGNED_RELAY_Z.md",
+        "org/tier1_exec/1.0.0_SA_CTO/deliverables/POSN_ASTTAX_CLOSEOUT_BREAKDOWN_20260914_Z.md@888a9d281b",
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/POSN_ASTTAX_ROUND4_CVO_INDEX_CHECK_20260914_Z.json"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Successor authorization record only. No retroactive judgment rewrite, task-order issuance, source implementation or deployment by the CVO.",
+    "spec_asserts": "The original v0.3 breakdown names nine cells with F4 an Attribution guard, pending Andrew alignment. The earlier CRO message preserves the no-workers gate and treats BD-only summation as a reading awaiting confirmation.",
+    "world_is": "Msg 22864 relays All recs approved plus the explicit later qualifier we do not touch Attribution: F4 is removed, leaving B1-B4/F1-F3/R1. BD totals across sleeves exclude adding Yang; VNQ sub-asset is Real Estate; BIPC stays Equity; is_hedge and bd-securities reconciliation are excluded. Worker alignment hold is released, with L4 v0.7 and L5/L6 ownership/preconditions still applying. The same-day Bloomberg pull is approved under the stated CTO working-tree-deploy boundary.",
+    "notes": "Do not carry the earlier no-workers or unresolved-summation wording forward as current state. Attribution remains on Yang two-class layout under the explicit user restriction; the CRO states the VXX grouping consequence was put back to Andrew. Indexed confirmation at e406e99122 after e9216254ae: 97/97 original dispositions resolved, no phantom ids; TWO of nineteen orders still staged (T6/T7). S2/S3 have become terminal. The prior five-file commit passed all 42 new surprise rows, with zero new standing-corpus failures; code-gate suffix exclusions and stale risk-reflex output are not reported as clean checks."
   }
 ]
 ```
