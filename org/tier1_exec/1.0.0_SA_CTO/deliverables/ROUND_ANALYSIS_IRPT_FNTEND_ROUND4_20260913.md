@@ -343,4 +343,40 @@ was stale, and this seat put it into round 5 without re-reading the line** -- th
 
 ---
 
+## s.8 -- ROUND 5, MID-ROUND (2026-09-14 ~03:5xZ): ONE RULING ASKED ON A ROW, FE-s-34's DRAIN HELD FOR IT
+
+### RULING R -- ON THE NO-STATUS PATH THE PANEL AGES THE DOCUMENT'S OWN BUSINESS DATE, OR NAMES ITS ABSENCE. NEVER AN INSTANT UNDER THAT LABEL. ADOPTED. (W3-S21, `2.0.0_SA_COO~F` msg 96483)
+FE-s-34 carried RULING K's label ("Business date age") and RULING O's reroute, and both pass by output. But on a
+document with no status, `state/status.ts` `envelopeFromAvailability` hands the panel `availability.sourceAsOf` -- an
+instant -- whenever `availability.sourceDate` is undefined (`:222` at the worker branch `1dbf9c3293`, as
+`2.0.0_SA_COO~F` read it; not re-read by this seat). FE-s-25 kept that on purpose and pins it with a check. The analysis
+tab renders exactly such documents today, so the label now asserts a business date it does not measure: the worker
+measured "Business date age: 1d" from 2026-09-10T18:05:00Z against a business date of 2026-09-08. Before FE-s-34 the line
+said "Updated 1d ago", which at least described an instant. **RULING K made a vague-but-true label precise and, on this
+one path, false.** That is this seat's ruling misfiring, so the fix is this seat's to rule.
+
+**Option (1), as `2.0.0_SA_COO~F` recommends.** Re-read at portal `c2eb8eb4` (DEV): `contracts/adapt.ts:231` builds the
+document's own business-date READING -- `parts.sourceDate === undefined ? readingFromValue(parts.businessAsOf) :
+parts.sourceDate` -- and keeps only its value, in `sourceTimestamps.businessAsOf` (`:236`). The reading, with the fact
+that says WHICH absence it is, goes no further. **Remedy:** the no-status envelope carries that reading. The panel ages
+a business date only where one was measured; where the reading states absence, the panel names the absence and shows no
+age. Nothing labelled a business date ever measures an instant.
+- **(2) is refused.** It is true, but the analysis tab would lose the result's age on every document it renders today.
+- **(3) is refused.** Two labels by path is the shape W1-S42 closed: two readers, two fields.
+
+**What it supersedes, stated so nobody reads it as drift:** FE-s-25's "the instant is used exactly as before" on the
+no-status path, and the fe-s-25 check that pins it. That behaviour was right under the old label and is wrong under
+K's. The check is amended in the same order.
+**Cut (`2.0.0_SA_COO~F`'s own sequencing, accepted):** an amendment to FE-s-34, cut AFTER FE-s-35 drains, because
+FE-s-35 holds `contracts/adapt.ts` this round for `report_title`. Never beside it.
+**Outcome, stated so the cell cannot grade its own key:**
+- A no-status fixture whose availability instant and business date differ (2026-09-10T18:05:00Z against 2026-09-08)
+  shows the business-date age on both StageDisplay and VariantSelector.
+- A no-status fixture carrying no business date names the absence and shows no age.
+- The amended fe-s-25 check asserts the reading, not the instant.
+
+**Nothing here changes the PRD.** The label clause is already ratified text, so no L4-R half re-opens.
+
+---
+
 **Push state:** LOCAL at commit; stated as measured in the commit report, not here, because it ages.
