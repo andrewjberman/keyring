@@ -182,8 +182,6 @@ ENDPOINT -- POSN_ASTTAX (confirmed by Andrew 2026-09-11)
          ACCEPT     An analyst switches between the three Positioning modes and
                     cannot find a disagreement about what the asset classes are,
                     what order they come in, or what color each one is.
-         (narrowed 2026-09-14 by Andrew: Positioning only; Philosophy/CMA not a
-         focus; Attribution not touched -- s.0 ADDENDUM v0.7)
 ```
 
 ---
