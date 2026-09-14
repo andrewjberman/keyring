@@ -1,0 +1,9 @@
+{
+ "note": "L6 issuance by 2.0.0_SA_COO~G: 14 task orders over decomposition v3; fanout 8 of 5 chains, cap 8",
+ "prd_pin": "3acdd892b540",
+ "prd_version": "v1.4",
+ "project": "LGIC_NAMING",
+ "signed_by": "2.0.0_SA_COO~G",
+ "stage": "L6",
+ "utc": "2026-09-14T14:42Z"
+}
