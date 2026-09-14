@@ -4623,6 +4623,127 @@ Andrew asked for (msg 22917); it concerns this project's portal files meeting an
   "spec_asserts": "The cell enumerates its measured sites (the colour map, the fold, the order literal, the summary rows, the bucket fold, the render type, the type widening) and says nothing about either legend.",
   "world_is": "A legend is a membership claim about the surface it labels. Leaving these two would have shipped a page that draws five classes and captions two, with one caption naming a fold this order deletes.",
   "notes": "Filed because it is an act the order did not name, not because it is contested. If the issuer reads it as widening, the revert is two hunks and neither is load-bearing for any criterion."
+},
+{
+  "id": "POSN_ASTTAX-Z-S98",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T21:40:18Z",
+  "one_line": "DISARM of W22-S9 (INERT): portal/scripts/ui-smoke.mjs imports playwright-core, undeclared in portal/package.json, so the instrument runs only in a tree whose node_modules happens to carry it; the worker copied the estate's installed 1.62.1 into its gitignored node_modules (rung 5 of the build ladder, no tracked file touched, no egress). ACCEPTED; the declaration is the portal package owner's, carried for the round analysis; V7's hand-over states the copy is in place.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "WHY ACCEPTED: the fix used the version the estate already runs, wrote nothing tracked, and made the instrument reproducible for the two remaining portal orders on the same worktree.",
+      "WHY NOT FIXED IN THE ROUND: package.json is outside every POSN cell and behind the freeze's spirit (a dependency line is a build input); the round analysis carries it."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W22-S9"
+  ],
+  "spec_asserts": "V6-AC5/AC6 name ui-smoke.mjs as an instrument any worker can run from its own worktree.",
+  "world_is": "ERR_MODULE_NOT_FOUND in the fresh worktree; zero 'playwright' in package.json @6c0deebd91; present in the main checkout's node_modules only.",
+  "notes": "A future portal order that names ui-smoke.mjs states the dependency in its preflight."
+},
+{
+  "id": "POSN_ASTTAX-Z-S99",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T21:40:18Z",
+  "one_line": "DISARM of W22-S10 (BLOCKING): V6-AC5 as cut could not reach the state it grades -- the Asset Class rows are behind a collapsed 'Expand Details' control, the smoke's inert token gets 401 from /api/general/* (no value rows, no subtotals), and the Models/ETFs mode is an in-page button one outfile name cannot select. RE-CUT: the invocation carries --fixtures built from the SERVED bytes (VersionIds printed) and --click 'Expand Details'; the ETFs capture adds --click 'ETFs'; the placeholder set gains FIXTURES. The worker's supplementary run on exactly that shape read five rows in canonical order in both modes with every subtotal within 0.1 of its total.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE ISSUER'S DEFECT: the preflight named the auth stub as the risk and not the three properties of the page and the instrument the worker measured; the same three are now written into V7-AC5 (Satellites mode) before its hand-over.",
+      "WHY THE FIXTURES ARE ADMISSIBLE: they are the served bytes themselves (s3api get-object, VersionIds printed), routed to the page by the instrument's own --fixtures mechanism; the auth gate is not bypassed for any write, and the alternative (--token with a real bearer) is the credential gap W23-S1 measured as unavailable on this fabric.",
+      "WHY GRADUATED: one criterion, one edit, the worker already holds the fixtures and the readings."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W22-S10"
+  ],
+  "spec_asserts": "V6-AC5 @e7aa5b7303: run ui-smoke at <PORT>, READ the PNG, five rows, swatches, subtotals to 0.1, both modes.",
+  "world_is": "The literal run reached /positioning (the auth stub held) and rendered the five rows with swatches, but no value rows and the Models pill in both captures; the product is right and the instrument as invoked cannot see it.",
+  "notes": "A render bar names the clicks and the data route the page needs to reach the graded state."
+},
+{
+  "id": "POSN_ASTTAX-Z-S100",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T21:40:18Z",
+  "one_line": "DISARM of W22-S11 (BLOCKING): the cell's premise that satelliteAdapter.ts merely reads keyof PositioningAllocation was half true -- it also constructs four-key literals annotated with the type (:143, :157), so a required-five widening fails tsc in the file the cell forbade. RULED: the worker's OPTIONAL three keys stand (the honest shape today: every served book carries exactly {cash, fixed_income, equity, hedge}); TO-V7-1 (F3), which owns the adapter, tightens the three to REQUIRED once its literals carry them -- written into V7's hand-over facts. etfAdapter.ts's ZERO_ALLOCATION carries the five-class zero (in the cell).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "WHY THE ORDER OF TIGHTENING IS F3'S: the two literals are inside F3's write surface and F3 fills them with the served five-class allocation; the one-line tightening in portal-proxy.ts (in F3's grant) then makes the compiler enumerate every site that still owes the keys -- the instrument the cell wanted, one cell later.",
+      "WHY GRADUATED: the boundary held (no file outside the grant was touched), the build is green, and the follow-through has an owner and a criterion-bearing order."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W22-S11"
+  ],
+  "spec_asserts": "TO-V6-1 THE CELL: widen PositioningAllocation to the five-class keys (hedge? optional); satelliteAdapter.ts is NOT yours and 'will follow your type'.",
+  "world_is": "tsc rc=2 on the required shape at satelliteAdapter.ts(144,11) and (159,11); rc=0 on the optional shape; every read site takes ?? 0 so an absent class renders a zero row.",
+  "notes": "A type-widening cell's premise about a consumer is checked by grepping for LITERALS annotated with the type, not only for keyof reads."
+},
+{
+  "id": "POSN_ASTTAX-Z-S101",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T21:40:18Z",
+  "one_line": "DISARM of W22-S12 (INERT): dropping the Hedge -> Equity display fold as ordered means a top-level asset_class of 'Hedge' would map to no group and be excluded from the holdings table while still counted in the grand total -- the PROD v2.1.167 Cash-row defect's shape. MEASURED not live: the served holdings_attribution_data.json carries zero 'Hedge' (110 holdings, {Fixed Income 59, Equity 51}) and every served allocation reads hedge 0.0. RULED: no fold to Structured and no UNMAPPED group in this round -- the premise 'no served value is Hedge at the top level' holds at the bar and R1 lands inside the round; the exposure is a payload that would carry top-level Hedge between now and R1, and V8-AC10's served-rows == rendered-rows bar is the read that would catch it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "WHY NO REMEDY HERE: a fold to Structured would encode a mapping the PRD assigns to the classification table, not the page; an UNMAPPED group is a new rendering the spec does not name; both are L10 material if the window ever bites.",
+      "WHY GRADUATED: the served state is measured clean at the bar and the last cell's render bar reads the same property after the retag."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W22-S12"
+  ],
+  "spec_asserts": "TO-V6-1 THE CELL: KEEP Cash -> Fixed Income, DROP Hedge -> Equity.",
+  "world_is": "Implemented as ordered; the consequence for an unmapped class is silent omission from the table, disclosed by the worker with the file's own documentation of the sibling defect.",
+  "notes": "The round analysis may name an UNMAPPED group as a defensive rendering for the next round."
+},
+{
+  "id": "POSN_ASTTAX-Z-S102",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T21:40:18Z",
+  "one_line": "DISARM of W22-S13 (INERT): two legends the cell did not name (PositioningSummary 'Stocks & Hedge' beside the widened bar; HoldingsTab's two-entry legend beside the five-colour treemap) would have been made FALSE by the cell's own edits; the worker derived both from the single declarations the cell orders (ASSET_CLASSES, ASSET_CLASS_ORDER) inside files in its grant, rendered and read them in both modes. ACCEPTED as part of the cell: a legend is a membership claim about the surface the cell widened.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "WHY ACCEPTED, NOT WIDENING: the cell's sites and the legends describe one surface; leaving the captions would have shipped a page that draws five and captions two -- the light-on-light class of defect one level up (a caption that lies).",
+      "WHY GRADUATED: nothing to act on; the readings are in the instance for L9."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W22-S13"
+  ],
+  "spec_asserts": "TO-V6-1 THE CELL enumerates its sites; neither legend is among them.",
+  "world_is": "Both legends now derive from the declarations; V6-AC2's scoped diff and an unscoped status show the same five files.",
+  "notes": "The issuer's site enumeration for a widening cell includes every caption of the widened surface."
 }
 ]
 ```

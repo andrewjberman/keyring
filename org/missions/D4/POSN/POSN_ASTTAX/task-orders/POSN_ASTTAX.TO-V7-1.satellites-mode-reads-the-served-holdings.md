@@ -55,6 +55,19 @@ load-bearing). `SatelliteBook {code, displayName, constituents}` at `shared/sate
    `PositioningAllocation` (a sum over served rows is aggregation for display, not computation of a holding -- state it once).
 4. Models and ETFs modes: UNTOUCHED (`etfAdapter.ts`, `bookSet.ts` unchanged -- V7-AC2).
 
+**HAND-OVER FACTS (~21:5xZ, from F2's drain; rows W22-S9..S13):** (a) `refs/drains/posn-5-portal` is `d93e791871` (F2 landed:
+five-key `PositioningAllocation` at `portal-proxy.ts` with `structured?`, `commodities?`, `alternatives?` OPTIONAL beside `hedge?` --
+W22-S11: `satelliteAdapter.ts:143-148` and `:157-162` CONSTRUCT four-key literals annotated with that type, so F2 could not make
+the three required without touching your file. YOU DO: once your literals carry the five keys, tighten the three to REQUIRED in
+`portal-proxy.ts` (one line, in your grant) and let `tsc` name every site that still owes them -- `hedge?` stays optional for the
+transition). (b) `portal/scripts/ui-smoke.mjs` imports `playwright-core`, undeclared in `portal/package.json` (W22-S9); the
+estate's installed 1.62.1 is already copied into this worktree's gitignored `node_modules` -- do not touch package.json. (c) The
+smoke's inert token gets 401 from every `/api/*` fetch and the mode is an in-page button (W22-S10): `V7-AC5` carries `--fixtures`
+built from the SERVED bytes and `--click 'Satellites'`; `V7-AC6`'s negative control uses the script's forced-failure route (a
+failed URL stays failed even when fixtured -- read `ui-smoke.mjs:160-200`), never a hand-edited body. (d) The served label rows
+(`benchmarks.etf.<class>.label`) and B1's five-class keys are live on `positioning_data.json` once ~19's driven refresh lands;
+state which VersionId your fixtures carry.
+
 ### REFUSAL CLAUSE
 
 A criterion you cannot satisfy as written is REFUSED with its measurement, never repaired, widened or satisfied by another route.
@@ -74,7 +87,7 @@ ONE row per off-cell finding, `POSN_ASTTAX-Z-W22-S<k>` (continue your sequence),
 
 <criterion id="V7-AC4" cell_refs="AT5-s-7"><invocation>timeout 600 bash -c "cd portal && bun run tsc -b"</invocation><expect>exit 0 with the checked-file count; POSITIVE CONTROL: an injected type error fails the same command, then reverted.</expect></criterion> `V7-AC4` -- THE BUILD, WITH AN INSTRUMENT THAT CAN FAIL.
 
-<criterion id="V7-AC5" cell_refs="AT5-s-7"><invocation>timeout 600 bash -c "cd portal && node scripts/ui-smoke.mjs positioning .scratch/v7_satellites.png --port <PORT>"</invocation><expect>the Satellites mode screenshot READ: nine satellites selectable; `Opal Satellite 15` shows GLD at 8.34 under the Commodities bucket (its sub-asset as SERVED -- 'Gold' before R1, 'Metals' after; state which); `Opal Satellite 80` shows VXX at 1.87 under the class the table SERVES (equity before R1, Structured after; state which); the as-of shown is holdings.json's date; served rows == rendered rows for the satellite you read (count both).</expect></criterion> `V7-AC5` -- THE RENDER, READ, AGAINST THE SERVED KEYS.
+<criterion id="V7-AC5" cell_refs="AT5-s-7"><invocation>timeout 600 bash -c "cd portal && node scripts/ui-smoke.mjs positioning .scratch/v7_satellites.png --port <PORT> --fixtures <FIXTURES> --click 'Satellites'"</invocation><expect>the fixtures file built from the SERVED bytes and never hand-written (s3api get-object of platinum/satellites/registry.json, holdings.json and characteristics.json on opal-data-cot, plus the positioning keys the page also fetches, keyed by the URL substrings the page requests; each key's VersionId printed beside the file); the Satellites mode screenshot READ: nine satellites selectable; `Opal Satellite 15` shows GLD at 8.34 under the Commodities bucket (its sub-asset as SERVED -- 'Gold' before R1, 'Metals' after; state which); `Opal Satellite 80` shows VXX at 1.87 under the class the table SERVES (equity before R1, Structured after; state which); the as-of shown is holdings.json's date; served rows == rendered rows for the satellite you read (count both).</expect></criterion> `V7-AC5` -- THE RENDER, READ, AGAINST THE SERVED KEYS.
 
 <criterion id="V7-AC6" cell_refs="AT5-s-7"><invocation>timeout 300 node -e "<NEGATIVE_CONTROL_POINT_GETSATELLITEHOLDINGS>"</invocation><expect>the read THROWS (the 404 unknown_satellites_resource envelope is not turned into an empty satellite) and the page shows an error notice, not "no holdings" -- the honest branch. If the adapter renders an empty satellite instead, the fallback that was removed @24a8435642 has been re-created one layer up: STOP and fix it in this cell.</expect></criterion> `V7-AC6` -- A FETCH FAILURE IS NOT AN EMPTY SATELLITE.
 
@@ -84,7 +97,7 @@ ONE row per off-cell finding, `POSN_ASTTAX-Z-W22-S<k>` (continue your sequence),
 
 <expected_criteria>V7-AC1, V7-AC2, V7-AC3, V7-AC4, V7-AC5, V7-AC6, V7-AC7, V7-AC8</expected_criteria>
 
-<placeholders>NEGATIVE_CONTROL_POINT_GETSATELLITEHOLDINGS, PORT</placeholders>
+<placeholders>FIXTURES, NEGATIVE_CONTROL_POINT_GETSATELLITEHOLDINGS, PORT</placeholders>
 
 <paths>
 org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-V7-1.satellites-mode-reads-the-served-holdings.md

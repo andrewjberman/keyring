@@ -84,6 +84,16 @@ ONE row per off-cell finding, `POSN_ASTTAX-Z-W22-S<k>` (continue your sequence),
 `org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/investigations/INVESTIGATION_v1.md`; keep working. VXX dropping out of
 Attribution's groups after R1 is Andrew's ACCEPTED consequence: do not file it.
 
+**AMENDED AFTER YOUR FIRST RUN (rows W22-S9..S13; issuer rows Z-S98..Z-S102):** 8 of 9 criteria stand as recorded (de993b0e50;
+portal d93e791871, now `refs/drains/posn-5-portal`). ONE criterion changes: `V6-AC5` as cut could not reach the state it grades
+(the Asset Class rows sit behind a collapsed 'Expand Details' control; the smoke's inert token gets 401 from /api/general/*, so
+no value rows exist; the Models/ETFs toggle is an in-page button). Its invocation now carries `--fixtures` built from the SERVED
+bytes and `--click`; the ETFs capture adds the mode click. RULED, your in-grant acts: the OPTIONAL three keys on
+PositioningAllocation stand (W22-S11 -- F3 tightens them to required once its literals carry them); the two legends derived
+from the single declarations stand (W22-S13); playwright-core copied from the estate's installed 1.62.1 into your gitignored
+node_modules stands (W22-S9); the Hedge top-level drop stands as ordered with its transition-window exposure disclosed (W22-S12).
+RE-RECORDED on this face: `V6-AC5` only; then the status flip.
+
 ## CRITERIA -- structured, one clause each
 
 <criterion id="V6-AC1" cell_refs="AT5-s-6"><invocation>timeout 60 git -C portal show refs/drains/posn-5-portal:src/lib/chartColors.ts</invocation><expect>the file at the drain ref contains `structured: PALETTE.pink500` and `commodities: PALETTE.yellow500`, and `git -C portal merge-base --is-ancestor e85f6eb84f refs/drains/posn-5-portal` exits 0 (printed). Otherwise STOP with a row: your premise (F1 drained) is false.</expect></criterion> `V6-AC1` -- THE DEPENDENCY, READ BACK FROM THE REF.
@@ -94,7 +104,7 @@ Attribution's groups after R1 is Andrew's ACCEPTED consequence: do not file it.
 
 <criterion id="V6-AC4" cell_refs="AT5-s-6"><invocation>timeout 600 bash -c "cd portal && bun run tsc -b"</invocation><expect>exit 0 with the checked-file count printed; POSITIVE CONTROL, REQUIRED: a one-line injected type error fails the same command (error TS printed), then reverted.</expect></criterion> `V6-AC4` -- THE BUILD, WITH AN INSTRUMENT THAT CAN FAIL.
 
-<criterion id="V6-AC5" cell_refs="AT5-s-6"><invocation>timeout 600 bash -c "cd portal && node scripts/ui-smoke.mjs positioning .scratch/v6_models.png --port <PORT>"</invocation><expect>the Models mode screenshot READ (Read tool): LOC printed by the script is the Positioning route (no bounce to /login), five class rows visible in canonical order, one swatch per class, subtotals summing to the total to 0.1; then the same for the ETFs mode (.scratch/v6_etfs.png). State whether the served payload carried five-class weights (post-B1) or zeros for three classes (pre-B1) -- both are valid observations; a MISSING row is not.</expect></criterion> `V6-AC5` -- THE RENDER, READ, NOT CAPTURED.
+<criterion id="V6-AC5" cell_refs="AT5-s-6"><invocation>timeout 600 bash -c "cd portal && node scripts/ui-smoke.mjs positioning .scratch/v6_models.png --port <PORT> --fixtures <FIXTURES> --click 'Expand Details'"</invocation><expect>the fixtures file built from the SERVED bytes and never hand-written (s3api get-object of json/positioning/positioning_data.json (gzip), json/positioning/holdings_attribution_data.json and platinum/etfs/positioning_data.json, keyed by the URL substrings the page fetches; each key's VersionId printed beside the file); the Models mode screenshot READ (Read tool): LOC printed by the script is the Positioning route (no bounce to /login), the ASSET CLASS block EXPANDED, five class rows visible in canonical order, one swatch per class, subtotals summing to the total to 0.1 (the per-model figures printed); then the same command with `--click 'ETFs' --click 'Expand Details'` into .scratch/v6_etfs.png, READ the same way (the mode pill reads ETFs). State whether the served payload carried five-class weights (post-B1) or zeros for three classes (pre-B1) -- both are valid observations; a MISSING row is not.</expect></criterion> `V6-AC5` -- THE RENDER, READ, NOT CAPTURED.
 
 <criterion id="V6-AC6" cell_refs="AT5-s-6"><invocation>timeout 120 node -e "<RENDERED_DOM_UI_SMOKE>"</invocation><expect>five distinct colours, each EQUAL to the F1 token's hex for that class (pink500 #ec4899 for Structured, yellow500 #eab308 for Commodities, ...), printed as a (class, expected, observed) table with zero mismatches.</expect></criterion> `V6-AC6` -- THE COLOUR ON SCREEN EQUALS THE REGISTRY, PER CLASS.
 
@@ -106,7 +116,7 @@ Attribution's groups after R1 is Andrew's ACCEPTED consequence: do not file it.
 
 <expected_criteria>V6-AC1, V6-AC2, V6-AC3, V6-AC4, V6-AC5, V6-AC6, V6-AC7, V6-AC8, V6-AC9</expected_criteria>
 
-<placeholders>CONTRAST_CHECK_V6, PORT, PRINT_ASSETCLASSORDER_LITERAL_EDITED, RENDERED_DOM_UI_SMOKE</placeholders>
+<placeholders>CONTRAST_CHECK_V6, FIXTURES, PORT, PRINT_ASSETCLASSORDER_LITERAL_EDITED, RENDERED_DOM_UI_SMOKE</placeholders>
 
 <paths>
 org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-V6-1.the-positioning-page-renders-five-classes.md
