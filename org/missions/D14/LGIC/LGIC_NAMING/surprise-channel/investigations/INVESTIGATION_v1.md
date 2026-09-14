@@ -353,6 +353,76 @@ new row on 3.0.0_SA_CVO's ask 96495), both 1.0.0_SA_CTO; `LGIC_NAMING-S3`, `LGIC
     "spec_asserts": "LN-e-1 task order: a name not derivable from NAMING_SCHEMA.json and 05_IDENTITY_SPINE.md is RAISE plus a row, never a guess.",
     "world_is": "orion is the only registry key the item names that can fill {system} (the firm cannot, and no product or platform subsystem is listed), so Namer A took orion, reading the Orion runner as the vendor integration's pipeline. Whether a derived-tier build counts as 'the vendor integration' is not stated; recorded here, not answered RAISE.",
     "notes": "OBSERVATION, INERT: form only. The function token gold-build is the silver-chain pattern (tier + verb as one compound, NAMING_SCHEMA :56) and is covered by row LGIC_NAMING-W2-S1."
+  },
+  {
+    "id": "LGIC_NAMING-W3-S1",
+    "project": "LGIC_NAMING",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_NAMING~3",
+    "surfaced_at": "2026-09-14T16:45Z",
+    "one_line": "N3 item i13 is answered RAISE: NAMING_SCHEMA v1.4 key.partition writes an entity partition as '{entity}={id}' without saying whether {entity} is the entity's name or its key column, and the item states both (the entity 'the advisor', keyed 'advisor_id'), so advisor=A123 and advisor_id=A123 are each a faithful substitution.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SCHEMA: org/standards/NAMING_SCHEMA.json:41 @6a5b276f8b, key.partition: '{entity}={id} -- an entity partition; the file is the object under it (doctrine R2)'. No field names which token fills {entity}; the one worked partition, date=YYYY-MM-DD, is a case where the entity and its key are the same word.",
+        "SCHEMA: org/standards/NAMING_SCHEMA.json:38 @6a5b276f8b, key.legacy_served_path: 'the kebab-case and hive forms bind NEW served families only' -- i13 is a NEW served family, so the hive form binds, but the form's left-hand token is still unnamed.",
+        "ITEM: org/missions/D14/LGIC/LGIC_NAMING/deliverables/2.0.0_SA_COO~G/fixed_inputs/N3_ITEMS.json:19 @6a5b276f8b, i13: 'the table is advisor_books, the entity is the advisor keyed advisor_id, and the advisor id is A123'.",
+        "SEED: infra/logic/05_IDENTITY_SPINE.md:25-26 @6a5b276f8b spells SmartX's live entity trees by the entity's NAME (account/{uuid}, allocation/{uuid}, model/{uuid}); that leans toward advisor=, but it describes a tree ruled a VIOLATION of R2, not the ruled partition form, so it does not decide the slot."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO LGIC_NAMING.TO-LN-e-2 worker face: name every N3 item from NAMING_SCHEMA.json v1.4 and 05_IDENTITY_SPINE.md only; 'If a name cannot be derived from those two files, the answer for that item is RAISE and a surprise row -- never a guess.'",
+    "world_is": "For i13 the two files fix every segment except the partition's left-hand token: mdpf/49financial/platinum/advisor_books/{advisor | advisor_id}=A123. Nothing in either file selects between the two, so org/missions/D14/LGIC/LGIC_NAMING/deliverables/exercises/n3-namer-b.tsv carries 'i13<TAB>RAISE'.",
+    "notes": "Form only; the significance is the grade's call. The rest of the i13 key as this worker derives it: source mdpf (a PRODUCT key for a derived tier, NAMING_SCHEMA.json:32), scope 49financial (LONG, :34), tier platinum (served), table advisor_books (snake_case as the item gives it, :37), partition {entity}=A123, leaf book.json excluded as the item says. The schema text's owner is 1.0.0_SA_CTO (ratified_by, NAMING_SCHEMA.json:4). For 3.0.0_SA_CVO at L8."
+  },
+  {
+    "id": "LGIC_NAMING-W3-S2",
+    "project": "LGIC_NAMING",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_NAMING~3",
+    "surfaced_at": "2026-09-14T16:45Z",
+    "one_line": "NAMING_SCHEMA v1.4 closes the kind and cadence slots but not the function/purpose slot ('one or more kebab tokens naming what it does'), so 14 of the 18 N3 names in n3-namer-b.tsv carry a function or purpose token this worker chose by a stated rule rather than looked up; the schema itself lists the noun 'publisher' as a function token beside the verb reading.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SCHEMA: org/standards/NAMING_SCHEMA.json:56 @6a5b276f8b, resource.function: 'one or more kebab tokens naming what it does; a compound such as silver-chain is ONE function token' -- no enumeration.",
+        "SCHEMA: org/standards/NAMING_SCHEMA.json:57 @6a5b276f8b, resource.qualifier: 'optional narrowing: a table, a leg, or an environment (dev | prod)' -- no rule for whether it is written when an item names none.",
+        "SCHEMA: org/standards/NAMING_SCHEMA.json:81 @6a5b276f8b, kind.closed_at_l4: 'The brief's measured suffixes trigger, publisher, scanner are FUNCTION tokens, not kinds.' -- a noun form admitted as a function token, beside :56's 'naming what it does'.",
+        "SCHEMA: org/standards/NAMING_SCHEMA.json:105 and :107 @6a5b276f8b, secret {purpose} and iam_policy purpose_slot 'function' -- the same open slot under two more grammars.",
+        "SEED: infra/logic/05_IDENTITY_SPINE.md @6a5b276f8b holds firms, products, vendors and masters only (section 2 table, lines 39-44); it has no function vocabulary."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO LGIC_NAMING.TO-LN-e-2: two namers name the same NEW resources without conferring and write the identical string for every one, each deriving names from NAMING_SCHEMA.json v1.4 and 05_IDENTITY_SPINE.md only.",
+    "world_is": "Neither file enumerates function or purpose tokens. This worker applied one rule to every item: the process noun the item names (ingest, publish, export, price-refresh, platform-export, delivery-status, pipeline), otherwise the item's main verb in base form (fetch, download, read, build); a tier word the verb acts on is kept (read-gold, build-gold); generic verbs (runs, starts, fires, holds) and generic nouns (figures, files, data, credentials) are dropped; the optional qualifier is omitted. Items so named: i01 i02 i03 i04 i07 i08 i09 i10 i11 i12 i15 i16 i17 i18 (14 of 18; i05 is a bucket, i06 i13 i14 are keys). A namer applying a different rule (publisher for publish, fetch-sessions for fetch, api-credentials for api, a publish- prefix on i07) writes a different string for the same item.",
+    "notes": "Form only. i04's purpose is 'api' because the generic-noun half of the rule drops 'credentials', read beside NAMING_SCHEMA.json:81's reason for dropping the secret kind (a suffix that repeats the type). The schema text's owner is 1.0.0_SA_CTO. For 3.0.0_SA_CVO at L8."
+  },
+  {
+    "id": "LGIC_NAMING-W3-S3",
+    "project": "LGIC_NAMING",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_NAMING~3",
+    "surfaced_at": "2026-09-14T16:45Z",
+    "one_line": "Three N3 names turn on a scope or system choice the two briefing files leave open, each resolved by this worker by a stated reading: i14's product-shared code key takes scope mdpf (PRODUCT) not global, because GLOBAL has no rule for when it applies; i11 and i15 take the vendor as system (pathfinder, orion) under 'only when the resource IS the vendor integration'.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SCHEMA: org/standards/NAMING_SCHEMA.json:33 and :114 @6a5b276f8b: key.scope_classes ['FIRM', 'PRODUCT', 'MASTER', 'GLOBAL'] and global_scope {key: global}; no field says when a key takes GLOBAL. :54 resource.scope_when_shared 'OMITTED' binds the resource grammar only; the five-segment key grammar (:26-27) has no omission.",
+        "SEED: infra/logic/05_IDENTITY_SPINE.md:30 and :50-51 @6a5b276f8b: R2 'a scope is a firm, a product, or a master'; invariant 1 'every {scope} segment in the census resolves to exactly one FIRM, PRODUCT or MASTER key' -- no GLOBAL.",
+        "SCHEMA: org/standards/NAMING_SCHEMA.json:121 @6a5b276f8b, system.vendor_as_system_only_when: 'the resource IS the vendor integration'; :120 classes PRODUCT, PLATFORM_SUBSYSTEM, VENDOR.",
+        "SEED: infra/logic/05_IDENTITY_SPINE.md:85 and :88 @6a5b276f8b: orion's scope is inflection; pathfinder's scopes resolve to etfs. The seed lists no platform subsystem and no product that owns Inflection's gold."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO LGIC_NAMING.TO-LN-e-2: name every N3 item from NAMING_SCHEMA.json v1.4 and 05_IDENTITY_SPINE.md only; the outcome is that two namers write the identical string for every item.",
+    "world_is": "(1) i14: this worker wrote mdpf/mdpf/code/gold/mdpf-accrual-bridge.tar.gz (scope = the product, per the seed's R2); a namer reading 'shared across all firms' as GLOBAL writes mdpf/global/code/gold/mdpf-accrual-bridge.tar.gz. (2) i11: the Pathfinder ingest is the vendor integration, so system pathfinder with scope etfs: pathfinder-etfs-ingest-task; the product-as-system reading gives etfs-pathfinder-ingest-task or etfs-ingest-task. (3) i15: the item names the host 'the Orion runner', and orion is the only registry system that resolves for a host building Inflection's gold: orion-inf-build-gold-profile; a reading that denies a gold-building host the vendor slot finds no system in the seed and RAISEs.",
+    "notes": "Form only. The schema text's owner is 1.0.0_SA_CTO; the registry rows (which products and subsystems exist) are LGIC_ENFORCE's under ruling (a) (NAMING_SCHEMA.json:18). For 3.0.0_SA_CVO at L8."
   }
 ]
 ```
