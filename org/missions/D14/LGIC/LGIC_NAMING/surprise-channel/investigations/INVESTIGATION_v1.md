@@ -243,6 +243,28 @@ new row on 3.0.0_SA_CVO's ask 96495), both 1.0.0_SA_CTO; `LGIC_NAMING-S3`, `LGIC
     "spec_asserts": "The grade is a function of (name, type) (NAMING_SCHEMA grade.signature; CONTRACTS row 2, SIGNED ratified text), exact enough that two people applying it by hand get the same answer (FWD-5).",
     "world_is": "Under v1.3 a snake_case leaf or a bare entity-id segment below {source}/{scope}/platinum/ is CONFORMANT when it is a legacy served path and OUT-OF-PATTERN when it is new, and the name does not say which. The deciding set -- what the frozen portal requests -- lives in portal source and in 3.0.0_SA_CVO's read, not in the data file. A smaller second instance: key.code's legacy root code/ homes 'stay until their pipelines move' without saying whether they grade OUT-OF-PATTERN with a canonical form or are outside the grade.",
     "notes": "OBSERVATION, INERT for this project's round: LGIC_NAMING decomposition v2 (section 0) makes LN-g-1's written rule enumerate the legacy served set it applies, source named and denominator printed, and state a verdict for a legacy root code/ key, so LN-h-1 and LN-h-2 grade from one list. The contract question stays open and is 1.0.0_SA_CTO's (the author of the data file and of CONTRACTS row 2): whether the legacy set becomes a data field, or grade()'s signature gains it as an input. LGIC_ENFORCE's grade() inherits whichever is chosen. Remedy not chosen here."
+  },
+  {
+    "id": "LGIC_NAMING-S11",
+    "project": "LGIC_NAMING",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G",
+    "surfaced_at": "2026-09-14T14:25Z",
+    "one_line": "Decomposition v3 section 3a.4 states the N6 sample as 86 discriminating + 3 OVERLAP names, computed from per-type NODE counts; the stated rule applied to the type's distinct NAMES gives 85 + 3, because ROUTE53_RECORD's 3 nodes carry 2 distinct names (opalinvest.dev twice). The L6 issuance cuts 85 + 3.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SPEC: org/missions/D14/LGIC/LGIC_NAMING/decompositions/LGIC_NAMING_DECOMP.md v3 @62b5c0819f, section 3a.4: the rule (positions 1, ceil(n/2), n when n >= 4; 1 and n when n = 3; 1 when n = 2; OVERLAP when n = 1) and the line 'At vintage 2026-09-14 05:54:17 UTC that is 27 types x 3 + ROUTE53_RECORD 2 + VPC_ENDPOINT 2 + CLOUDFRONT_DISTRIBUTION 1 = 86 discriminating names, plus 3 OVERLAP'.",
+        "MEASURED: comp-find --corpus aws '.' --all at vintage 'Built from the estate as of 2026-09-14 12:13:53 UTC' (manifest b578e47d733f): 2,531 nodes over 33 types. ROUTE53_RECORD has 3 nodes and 2 unique names (opalinvest.dev appears twice). The rule over node counts gives 86 + 3; over unique names it gives 85 + 3. Other types with duplicate names (API_ROUTE, EC2_INSTANCE, IAM_POLICY, S3Key, SECURITY_GROUP) stay at 3 positions either way.",
+        "WHY UNIQUE NAMES: two nodes with one name grade identically, and the graders' answers are keyed by (type, name), so a duplicate adds no discrimination and could not be told apart in the comparison."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Decomposition v3 section 3a.4: the N6 sample is 86 discriminating + 3 OVERLAP names at the stated vintage.",
+    "world_is": "The rule as written, applied to distinct names at the issuance pull, yields 85 discriminating + 3 OVERLAP. The issuance's N6_SAMPLE.json carries 85 + 3 and a count_note naming this row. The frozen decomposition is not edited.",
+    "notes": "OBSERVATION, INERT: the rule binds and it is applied as written; only the derived count moved. No cell's criterion depends on the number 86 -- the checker reads the sample file's own denominator. For 3.0.0_SA_CVO's L8 disposition."
   }
 ]
 ```
