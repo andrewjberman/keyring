@@ -2762,6 +2762,114 @@
     "spec_asserts": "TO-FE-s-29 limb 3: 'a body SEEDED through initialEnvelope / initialHoldingsEnvelope / initialReport'. F29-AC8: the population is every existing criterion whose invocation runs one of the suites that seed, 'measured at the cut: 6 test files'. F29-AC15: none of the four limbs 'can be satisfied by the party it grades'.",
     "world_is": "A limb that read only the three named props would admit a network-declared test that seeds the same fetched bodies through initialSnapshot, initialHoldingsSnapshot, initialSnapshotEnvelope, initialAnalysisReport, initialAnalysisRequests, initialRequests or initialJob. The graded party could satisfy it. So the limb reads the ten fetched-content props, derived by subtraction from the measured 15. That choice is this worker's, is stated in the checker's block comment, and is L9's to grade. Its only visible effect on the committed corpus is F15-AC7, which no order declares drives=\"network\" today. The cut's six-file census is exact for the three named props and one suite short for the ten.",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W2-S23",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~2",
+    "surfaced_at": "2026-09-14T03:49:56Z",
+    "one_line": "Adding a Holdings envelope for F-CW to fe-s-14-global.json does not make a second firm visible: the page issues ONE holdings request, for the one scope resolve-scope answers, and ui-smoke keys that answer on its URL alone, so from this map the page reaches F-49F's envelope and never F-CW's.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/tabs/TabShell.tsx:158 @portal c2eb8eb4: '.getHoldingsSnapshot(scopeRef)' -- one request per resolved scope",
+        "portal/src/pages/InvestorReporting/index.tsx:54 and :59 @portal c2eb8eb4: resolve-scope keyed on firmId, which travels as a POST body field",
+        "portal/scripts/ui-smoke.mjs:146 @portal c2eb8eb4: 'const k = fixtureKeys.find(key => url.includes(key))' -- URL-only match",
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-33/fixtures-reach.test.ts @portal 5067c254, run from portal: 'PAGE'S HOLDINGS REQUEST FROM THIS MAP: /api/scoped/investor-reporting/holdings/3a7bd3e2... -> key /api/scoped/investor-reporting/holdings/ -> firm F-49F' and 'HOLDINGS ENVELOPES THE PAGE CAN REACH FROM THIS MAP'S ONE RESOLVE ANSWER: 1 of 2'"
+      ]
+    },
+    "spec_asserts": "TO-FE-s-33 WORKER FACE, cell item W1-S53: fe-s-14-global.json 'carries 2 keys and no holdings key, so the Global view's Holdings tab reads Failed and no second firm is visible. Add Holdings envelopes for both firms the map already names.'",
+    "world_is": "Both envelopes are added and each is a valid v1 envelope (F33-AC6: 'GLOBAL MAP CARRIES HOLDINGS FOR BOTH FIRMS: 2 of 2'), and the tab's request now reads F-49F's READY envelope instead of failing. The second firm stays unreachable from this map. TabShell.tsx:158 and HoldingsTab's own effect each call getHoldingsSnapshot(scopeRef) for the ONE scope resolve-scope returned. The resolve request carries the selected firm only in its POST body (index.tsx:54, :59), while ui-smoke.mjs:146 matches a fixture by URL substring alone (:197 fulfils it), so every firm selection receives the same resolve answer (verified_request_firm_id F-49F, fingerprint 3a7bd3e2...). Measured by fixtures-reach.test.ts's REACH arm: 'HOLDINGS ENVELOPES THE PAGE CAN REACH FROM THIS MAP'S ONE RESOLVE ANSWER: 1 of 2'. F-CW's envelope is keyed on its own account-set route (/holdings/ + 64 x 'c') and is served only for that URL. Making the second firm visible needs a per-firm resolve answer, which means a body-aware fixture rule or a second map. Both are outside this order's five maps.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W2-S24",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~2",
+    "surfaced_at": "2026-09-14T03:49:56Z",
+    "one_line": "fe-s-14-global.json now has two writers: fe-s-14/gen-maps.ts rewrites the whole file without holdings, so running it alone silently deletes the two Holdings envelopes FE-s-33 added. This is the regeneration hazard FE-s-33 closed for FE-s-26's statuses, moved to a generator outside this grant.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-14/gen-maps.ts:95 @portal c2eb8eb4: writes '${SMOKE_DIR}fe-s-14-global.json' from mapFor(...)",
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-33/gen-global-holdings.ts @portal 5067c254: header 'WARN: ORDER MATTERS, AND THIS IS THE SECOND WRITER OF ONE FILE'",
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-33/fixtures-reach.test.ts @portal 5067c254: control arm 'CONTROL -- holdings envelopes removed in memory: firms with a valid holdings envelope 0 of 2' -- the shape gen-maps.ts alone writes"
+      ]
+    },
+    "spec_asserts": "TO-FE-s-33 BOUNDS: the <paths> grant names fixtures/smoke/fe-s-14-global.json and not __tests__/fe-s-14/gen-maps.ts. The cell's hazard clause, about the Holdings maps: 'Regenerating them from a fixed generator would silently strip FE-s-26's repair.'",
+    "world_is": "gen-maps.ts:93-97 @portal c2eb8eb4 writes fe-s-14-global.json from mapFor(...), which returns exactly two keys (resolve-scope and performance-report, :77-80) and knows nothing of holdings. FE-s-33 derives the two Holdings envelopes in __tests__/fe-s-33/gen-global-holdings.ts. That script is idempotent: it drops any holdings envelope and re-adds exactly two. Its header states the order 'gen-maps.ts, then gen-fixtures.ts, then this'. Nothing enforces that order. gen-maps.ts run alone produces the round-4 shape, which F33-AC6's own control arm grades 'firms with a valid holdings envelope 0 of 2'. The disarm is a change to gen-maps.ts, either chaining the holdings step or refusing to write without it. That change is outside this order's grant.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W2-S25",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~2",
+    "surfaced_at": "2026-09-14T03:49:56Z",
+    "one_line": "The wire HoldingsSnapshot has no scope-level node_kind, so one tree root over a scope can only be expressed as an ACCOUNT node. FE-s-33's root is the scope's one account (A-0001), while the same maps' custody_totals.unique_account_count reads 3.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json @workspace 0a74710f33: nodes[].node_kind enum has no scope-level member",
+        "portal/src/pages/InvestorReporting/contracts/adapt.ts:389 @portal c2eb8eb4: NODE_KIND_FOR_WIRE -- no wire kind maps to the view's 'scope'",
+        "portal/src/pages/InvestorReporting/fixtures/holdingsSnapshot.success.json @portal c2eb8eb4: root nd-root kind 'scope', displayName 'Selected scope'",
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-18/gen-fixtures.ts:182 @portal c2eb8eb4: 'totals.unique_account_count = 3'"
+      ]
+    },
+    "spec_asserts": "TO-FE-s-33 WORKER FACE, cell item W1-S52: 'Emit a tree with a real parent chain.' HoldingsSnapshot.schema.json nodes[].parent_node_id: 'its parent, null at the root' -- one root.",
+    "world_is": "The wire node_kind enum is ACCOUNT, SLEEVE, MODEL_WRAPPER, MODEL_LEAF, SECURITY, CASH, UNRESOLVED. adapt.ts:389 NODE_KIND_FOR_WIRE maps none of them to the view's 'scope' kind, which the view-level fixture holdingsSnapshot.success.json uses for its root ('Selected scope'). So a multi-account scope's tree has no expressible single root, and the view's rootNode (slices.ts:112) takes the FIRST parentless node. A producer that emits one ACCOUNT root per account would render only the first account's subtree. For the fixtures, FE-s-33 chose the one honest root the source supports: scope.account_ids is ['A-0001'] in fe-s-13-wire.json, so the root is an ACCOUNT node for A-0001, which the view names by its node_id (adapt.ts:821). NOT EDITED: gen-fixtures.ts:182 @portal c2eb8eb4 sets custody_totals.unique_account_count = 3 against that one-account scope. It predates this cell and is left as found.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W2-S26",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~2",
+    "surfaced_at": "2026-09-14T03:49:56Z",
+    "one_line": "The three Holdings maps' performance envelope now carries the frozen report's READY status too. gen-fixtures.ts builds each Holdings map from the WHOLE frozen map, so fixing W1-S51 changes the Holdings maps beyond the trees the order named.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-18/gen-fixtures.ts:176 @portal c2eb8eb4: 'for (const key of Object.keys(frozen)) map[key] = clone(frozen[key])'",
+        "scratch comparison, generated vs committed @portal c2eb8eb4, per Holdings map: 'only-other-difference-is-perf-status: True | perf status == frozen status: True | differing keys after removal: []'",
+        "bun test src/pages/InvestorReporting @portal 5067c254: 494 pass, 4 skip, 0 fail across 85 files (baseline at c2eb8eb4: 483 pass, 4 skip, 0 fail across 84)"
+      ]
+    },
+    "spec_asserts": "TO-FE-s-33 WORKER FACE: W1-S51 names fe-s-18-frozen.json. W1-S52 names the Holdings maps' TREES. The hazard clause names only the Holdings maps' `status` members, which must survive byte for byte.",
+    "world_is": "gen-fixtures.ts:176 @portal c2eb8eb4 copies every key of the frozen map into each Holdings map, so the frozen performance status (READY / REQUESTED_WINDOW_ANSWERED) lands on /performance/ in all three Holdings maps. This was measured by parse against the committed maps at c2eb8eb4. For each of the three, once `nodes` and that one status are removed, the maps are equal (0 differing keys), and the added status equals the frozen map's. FE-s-26's holdings statuses are untouched (F33-AC5 3 of 3, byte-equal). The change was kept, not special-cased: by the generator's own design each Holdings map is the whole page around one report, and a Holdings map's Reporting tab now shows that report instead of StatusPanel. The whole InvestorReporting suite read 0 fail before and after.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W2-S27",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~2",
+    "surfaced_at": "2026-09-14T03:49:56Z",
+    "one_line": "The frozen map's narrative packet names performance revision perf-9, not the frozen report's rev-49f-000091, so it is not the frozen report's narrative. FE-s-33 left it out of the envelopes a view reads, because the narrative is off by default in both preview and print, and gave it no status.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/fixtures/smoke/fe-s-18-frozen.json:250 @portal c2eb8eb4: '\"performance_report_revision\": \"perf-9\"'",
+        "portal/src/pages/InvestorReporting/export/ExportModal.tsx:79 and :123, portal/src/pages/InvestorReporting/render/PrintEntry.tsx:92 @portal c2eb8eb4: narrative default-off in preview and print",
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-33/fixtures-reach.test.ts @portal 5067c254: 'UNCLASSIFIED READS: 0' and 'FROZEN MAP, ENVELOPES A VIEW READS CARRYING status: 1 of 1 (performance-report)'"
+      ]
+    },
+    "spec_asserts": "TO-FE-s-33 WORKER FACE, cell item W1-S51: 'Give the envelopes each view reads a legitimate state and reason.' gen-fixtures.ts header: fe-s-18-frozen.json is 'ONE performance report at ONE revision'.",
+    "world_is": "fe-s-18-frozen.json:250 @portal c2eb8eb4: the narrative's data.performance_revision.performance_report_revision = 'perf-9' (fe-s-13-wire.json's narrative, copied whole). The three paired views read the narrative only when it is switched on. ExportModal.tsx:79 defaults includeNarrative to false, and :123's narrativeAvailable gates the toggle on the current revision. PrintEntry.tsx:92 reads the narrative only for ?narrative=1. So at the captured defaults no view reads it, and F33-AC2's denominator is 1 envelope (performance-report), taken by census of each view's own api calls ('UNCLASSIFIED READS: 0'). A narrative-on preview or print of the frozen map would pair the frozen report with a narrative written for another revision. No status was added to the narrative, because no state would be legitimate for it as the frozen report's narrative.",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
