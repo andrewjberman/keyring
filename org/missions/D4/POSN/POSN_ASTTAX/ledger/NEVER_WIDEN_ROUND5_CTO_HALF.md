@@ -99,6 +99,29 @@ retagged ticker Yang's models hold (VXX) drops out of its per-class groups while
 - **B -- any precondition unmet, or any bar clause fails after the write:** before the write, **NOT COVERED** -- no write. After
   the write, the prior values above are written back to BOTH stores the same turn, and the row is filed with the failing clause.
 
+### R1 AMENDMENT 2 2026-09-14 ~20:2xZ -- JEPI is the THIRTEENTH member (Andrew-direct ~20:0xZ and ~20:2xZ)
+
+**Authority:** Andrew ~20:0xZ, *"JEPI I would put in Structured, yes"*, and ~20:2xZ, *"b, Options Income"* (records
+`ANDREW_DIRECT_20260914_200xZ_JEPI_TO_STRUCTURED_AND_FRONTEND_VIEW_ON_5173.md` @`114a697fca` and
+`ANDREW_DIRECT_20260914_202xZ_JEPI_SUB_ASSET_OPTIONS_INCOME.md`). The act R1 may touch grows by exactly one row in BOTH stores:
+
+| ticker | asset_class NOW -> TARGET | sub_asset_class NOW -> TARGET | management_style |
+|---|---|---|---|
+| JEPI | equity -> Structured | US Large Cap -> **Options Income** | active (unchanged; not a placeholder) |
+
+**Prior values (the rollback):** point-read by this seat on 2026-09-14 at 20:03:01Z with `dynamodb batch-get-item`. 1 of 1 key
+returned, `UnprocessedKeys {}`, negative control not returned: `asset_class equity`, `sub_asset_class US Large Cap`,
+`management_style active`, `last_updated 2026-08-18T19:10:00Z`.
+
+**Seed dict `ETF_CLASSIFICATIONS`** (`infra/aws/lambda/v2_portal/_shared/etf_classification.py`):
+- R1 changes JEPI's class entry (`:180`, `'equity'`) and its sub-asset entry (`:495`, `'US Large Cap'`).
+- It leaves the management entry (`:342`) unchanged.
+- The separate map carrying `'US Dividend'` (`:633`) is not a class or sub-asset store for this retag and is not touched.
+
+**Reach, re-stated with JEPI:** no Cottonwood satellite component and no Yang served book holds JEPI (measured ~19:5xZ). So the
+driven refresh below moves no served Positioning figure on its account. Everything else in this half stands, with "the 12"
+read as "the 13" wherever R1's member set is named.
+
 ### R1 AMENDMENT 2026-09-14 ~20:0xZ -- the served refresh after the retag is DRIVEN, not waited on
 
 **Why:** `TO-V8-1` as cut leaves the served refresh to the producers' next scheduled fires (07:00Z / 07:20Z / the Yang
