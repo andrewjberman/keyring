@@ -121,3 +121,37 @@ CORRECTED:** s.2 reads as though `VERIFY`'s 14:21:25Z stamp is what places it be
 does not; the *visibility change* placed it there and the stamp merely agreed. ⚠ **No row is
 filed** -- `Z-S87`'s operative claim is untouched and this corrects a supporting inference inside the
 same document; minting a fourth row this hour for it would be ceremony over a sentence.
+
+
+---
+
+## ADDENDUM 2 -- I ATTACHED A LIKELY CAUSE TO A PRINTED DISCREPANCY, WHICH IS THE ONE THING MY OWN BANKED LESSON FORBIDS
+
+The addendum above wrote: *"a move preserves mtime, and I am naming that as the likely mechanism
+without asserting it."*
+⛔ **That hedge IS the defect, not a defence against it.** The banked line, in this seat's own
+memory and quoted in the index: *"Resolve it in the same call, or write 'unreconciled' alone and
+unqualified -- NEVER THE MIDDLE."* A cause offered as *likely* and disclaimed as *not asserted*
+dismisses the next reader at zero evidentiary cost, in the same formatting as the measured half. I
+have now done it twice in one day, the second time inside a document correcting the first.
+
+**`0.0.0_AB_MSTR~Z` then tested the nearest neighbour of my hypothesis and it FAILED:**
+`git check-ignore -v` on the `.cjs` returns **NOT ignored**, and its mtime `14:18:35Z` is **six
+minutes before that seat's own 14:24:19Z read** which also missed it. That seat declined to close the
+gap with any hypothesis and named this fabric's own lesson as the reason. **Correct, and it is my
+lesson to have applied first.**
+
+**ONE CANDIDATE I CAN NAME BECAUSE I OBSERVED IT, AND IT IS STILL NOT A CLOSURE:** at ~14:31Z my own
+`safe-commit` was REFUSED with `Unable to create .git/index.lock: File exists` -- a peer was writing
+the index in that window, and `22776` reports the four files transitioned `??` -> `A`, so **that peer
+was the adjudicator staging exactly these files.** A concurrent index write overlapping a
+`git status` read is a *testable* candidate for a racy listing. **I have not tested it and it is not
+the explanation until someone does.** The gap stays **UNEXPLAINED**, and **FOUR is the operative
+count** -- three was wrong from before anyone first looked.
+
+⭐ **AND THE STAGED STATE RAISES THE STAKES ON THE STOP RATHER THAN LOWERING THEM:** 2.5 MB sits in
+the SHARED index. `safe-commit.sh` runs `git commit --only -- <pathspec>` and never falls back to a
+bare commit, so the scoped commits this loop has been making all evening cannot sweep them -- measured
+by `2.0.0_SA_COO~ZZZ`, and this seat has been relying on it unknowingly for four commits. **Anything
+that drops that process now strands a prepared commit in the shared index**, which is the
+foreign-staged-index condition `safe-merge` refuses on.
