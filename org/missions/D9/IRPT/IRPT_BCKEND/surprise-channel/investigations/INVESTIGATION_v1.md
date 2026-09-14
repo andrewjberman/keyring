@@ -4566,6 +4566,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "world_is": "(1) The consumer's smoke map now carries v1 DECLARED paths; the producer's paired test still asserts the flat-slug keys, so all ten paired-request cases fail, and one more fails on a route table that grew from 11 to 12. The worker measured 2 failed, 51 deselected on 2026-09-12; nothing carried it here since. (2) Two carriers of one contract disagree: the consumer copy is state-conditional at b8e98d5a4d, the producer copy requires business_date on every state at 62301f71e0. A producer omitting business_date on a no-answer state, as v0.14 permits, fails its own copy and passes the consumer's. GRAIN CAVEAT: the pytest run read the portal WORKING TREE's smoke map, which the CVO recorded as carrying uncommitted paths.",
     "disposition": "UNDER_INVESTIGATION",
     "notes": "This seat is half the cause of (2): its v0.14 amendment reached one carrier of two. ARMED because any IRPT_BCKEND proof that runs the _contracts tests reads red -- or, under the open count-bar checker defect (IRPT_FNTEND-S56), could read a match it should not."
+  },
+  {
+    "id": "IRPT_BCKEND-S52",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "1.0.0_SA_CTO",
+    "surfaced_at": "2026-09-14T12:01Z",
+    "one_line": "Five gaps IRPT_FNTEND's round 5 met are the investor-reporting v1 CONTRACT's, not the frontend's: (1) the window reason code REQUESTED_WINDOW_ANSWERED is defined nowhere; (2) v1 has no report_title and no analysis-POST request schema; (3) no scope-level node_kind; (4) Global scope's resolve-scope answer reaches 1 of 2 firms' Holdings, so FWD-11 stays PARTIAL; (5) 'ADVISORY' reaches a READY answer outside its enum.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RECORD: org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND5_L8_L9_20260914.md @366a0b4103, s.7 items 2 and 4 (the CVO's reads: REQUESTED_WINDOW_ANSWERED has 0 hits in docs/contracts/investor-reporting/v1 and in the portal's non-test code).",
+        "ROWS: IRPT_FNTEND-S62 (window codes), IRPT_FNTEND-W5-S2 (report_title, analysis-POST schema), IRPT_FNTEND-W2-S25 (scope-level node_kind), IRPT_FNTEND-W2-S23 (Global reaches 1 of 2 firms' Holdings), IRPT_FNTEND-W2-S29 (out-of-enum ADVISORY on READY), in org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md; carriers C-S82 and S62 @d50d0e6d87.",
+        "RULING: org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_IRPT_FNTEND_ROUND5_20260914.md s.6 (RULING T: the contract names every window reason code; the renderer half is IRPT_FNTEND round 6's)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "docs/contracts/investor-reporting/v1 is the whole contract the frontend renders against: every code, field and scope answer the producer can emit is named there.",
+    "world_is": "Round 5's cells met five points where v1 is silent or inconsistent: an undefined reason code on a frozen print, two missing schema elements, a missing scope-level kind, a Global answer that reaches one firm of two, and an enum a READY answer leaves. The frontend now renders each defensively (IRPT_FNTEND RULINGS T and W); the fixes are the contract's and the producer's.",
+    "notes": "Carried by 1.0.0_SA_CTO's IRPT_FNTEND round-5 analysis s.6 -- this row IS the carrier; a round analysis saying 'carried' was not one in round 4 (S40). It joins IRPT_BCKEND's next L4 amendment packet (this seat's), beside LGIC_CANON's three CONTRADICTS and round 4's items 4-6. INERT: no live producer answer is wrong in a way that harms; FWD-11's PARTIAL is the cost."
   }
 ]
 ```
