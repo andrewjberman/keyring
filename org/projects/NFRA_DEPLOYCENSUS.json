@@ -4,7 +4,7 @@
   "name": "deployed-vs-built-from census -- classify, do not fix (Rule 22a CODE layer)",
   "description": "MINTED AT TRUE STATE 2026-08-25 by 0.0.0_AB_MSTR on Andrew-direct ~12:0xZ. D0 member with no project JSON. MINTED complete on the record, not on the instruction: the TO's own status reads 'complete -- census delivered 2026-08-18 (CENSUS_REPORT_20260818.md + proof-of-spec rc=0 VALID; immediate-report clause exercised once: bd merge-daily two-homes, COO-ACKed 161035Z, remedy routed to CTO)'. Delivery commit @7583760f3b (0.8.0_AE_CloudComp, 2026-08-18): 'NFRA_DEPLOYCENSUS COMPLETE: deployed-vs-built-from census, 197 Lambdas + 27 EC2 services classified (Rule 22a CODE layer, classify-only, zero fixes)'. A SECOND TO (T4-DECLARATIONS.fork-or-drift-per-two-homes) is 'staged -- activates at respawn' and is a FOLLOW-ON, not an open leg of the census itself.",
   "status": "complete",
-  "dep_stage": "EXECUTING",
+  "dep_stage": "CLOSED",
   "phase": "census delivered 2026-08-18 @7583760f3b; T4-DECLARATIONS staged as follow-on",
   "blocking": "None for the census. Follow-on T4-DECLARATIONS staged, activates at respawn (COO discretion per Andrew ~13:16Z).",
   "completed": "2026-08-18",

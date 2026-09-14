@@ -5,7 +5,7 @@
   "name": "bd platinum publish-leg restore -- BP-1..BP-6, advisor_assignments_history NaT handling and the 25-stage chain green",
   "description": "MINTED AT TRUE STATE 2026-08-25 by 0.0.0_AB_MSTR on Andrew-direct ~12:0xZ (VERBATIM: 'The 1 and 2 fixes need to be handled immediately and this needs to be reoriented accordingly'). The project was a D2 member with NO project JSON, which is why D2 was structurally unable to report completion. MINTED complete, NOT active: TO-1's own status reads 'complete -- CLOSED 2026-08-19T01:16Z by COO: BP-1..BP-6 ALL PASS, proof instance VALID rc=0 at BOTH DS (@e4a83d1ebb) and COO desks; chain green (25 stages rc=0)'. NOTE ON THE INSTRUCTION: CTO's Fix-1 message described this as '17 commits, TO-1 issued + GO'd 08-18', which reads as ACTIVE. Reading the record per his own instruction ('mint what is TRUE') shows it CLOSED by COO the following day. CTO flagged NFRA_DEPLOYCENSUS as possibly-complete; this is a SECOND already-complete member he did not flag.",
   "status": "complete",
-  "dep_stage": "EXECUTING",
+  "dep_stage": "CLOSED",
   "phase": "P1-SCRIPTS complete; TO-1 closed by COO 2026-08-19T01:16Z",
   "blocking": "None. TO-1 closed complete by COO with proof instance VALID at both desks.",
   "completed": "2026-08-19T01:16Z",
