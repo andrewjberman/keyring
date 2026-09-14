@@ -155,3 +155,43 @@ bare commit, so the scoped commits this loop has been making all evening cannot 
 by `2.0.0_SA_COO~ZZZ`, and this seat has been relying on it unknowingly for four commits. **Anything
 that drops that process now strands a prepared commit in the shared index**, which is the
 foreign-staged-index condition `safe-merge` refuses on.
+
+
+---
+
+## ADDENDUM 3 -- THE GAP IS CLOSED BY MEASUREMENT, AND **THREE WAS RIGHT**
+
+`2.0.0_SA_COO~Z` found the field that answers it: **on NTFS `os.stat` exposes `st_ctime` as CREATION
+time**, so a file written in place has `mtime == ctime` and a file COPIED or MOVED in keeps its source
+mtime and gets a NEW creation time. Re-derived here on this seat's own instrument rather than taken
+from the table, with the same controls:
+```
+file                                          bytes    mtime          ctime(CREATE)   delta
+..._AUDIT_20260914_Z.json                   1,990,425  14:17:05.189   14:17:05.185     -0.0 s
+..._RENDER_20260914_Z.json                      3,553  14:18:35.751   14:18:35.751     +0.0 s
+..._RENDER_20260914_Z.cjs                       4,245  14:18:35.013   14:25:57.226   +442.2 s  <<
+..._VERIFY_20260914_Z.json                    570,919  14:21:25.429   14:21:25.429     +0.0 s
+..._COMPILE_20260914_Z.json                     1,832  14:36:00.186   14:36:00.186     +0.0 s
+CVOZ_ADVERSARY_DECL_LIFECYCLE_20260820.md       2,780  12:55:18.463   12:55:18.463     -0.0 s  [control]
+CVOZ_ADVERSARY_DECL_LIFT_20260820.md            2,789  12:55:18.398   12:55:18.398     +0.0 s  [control]
+```
+**Four files and both controls agree to the millisecond; one file is 442 seconds apart, and it is
+exactly the one in dispute.**
+
+>> ⛔ **SO THE `.cjs` ARRIVED AT 14:25:57Z -- AFTER my 14:21/14:22 reads and after
+   `0.0.0_AB_MSTR~Z`'s 14:24:19Z read. EVERY LISTING WAS CORRECT. THERE WAS NO GAP.** Addendum 2's
+   closing clause -- *"FOUR is the operative count; three was wrong from before anyone first looked"*
+   -- **is FALSE.** Three was right at its vintage. <<
+
+⭐ **AND THE LESSON IS NOT THE ONE I BANKED AN HOUR AGO.** Addendum 2 chose the honest ending --
+`UNEXPLAINED` -- when **a discriminating FIELD was one `os.stat` away and had been there the whole
+time.** "Unexplained" is truthful and it is not free: it parks the work on the next reader, and here
+the next reader simply ran the read I had not thought to run. **Ending (b) is legitimate only AFTER
+you have hunted for the discriminator and failed to find one. I had not hunted.**
+**What addendum 1 got right survives and is now mechanised:** mtime is not arrival time -- **and
+`ctime` is the field that separates them on this device.**
+
+⚠ **One attribution correction in the other direction:** msg 22782/22780 credited the count of FOUR
+to `2.0.0_SA_COO~Z`'s plane-7 message, which contains no such count. The FOUR came from this seat's
+own 14:30:34Z read and from `2.0.0_SA_COO~ZZZ`'s 14:29:38Z read. Noted so the number stays attached to
+the read that produced it.
