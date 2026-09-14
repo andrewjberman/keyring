@@ -4082,6 +4082,127 @@ all seven mechanical criteria were measured and the verdict is NO-GO.
   "spec_asserts": "V2-AC13 expects the deploy recorded per the script's contract, which is a source-map update AND a CHANGELOG.json entry, both committed.",
   "world_is": "The source-map half landed and is correct. The CHANGELOG half did NOT: the script printed a Python SyntaxError against its own temp .js file (unterminated string literal, with the caret under a // comment), then Note: CHANGELOG.json write failed -- source map update still committed, and then a SUCCESS BANNER reading Source map + CHANGELOG.json committed with [skip ci] -- a producer self-report contradicted by its own earlier line. Measured on the artifact, not the banner: infra/aws/terraform/cot-pipeline/CHANGELOG.json was last touched by a8ef1ca328 on 2026-09-04 and is unmodified in the worktree. V2-AC13 is therefore graded FAIL, not PASS.",
   "notes": "One cause, two symptoms, and the second symptom is the quiet one: a tool that silently changes the ENCODING of a shared artifact it was only asked to stamp. Re-running the recorder on this device re-introduces all 51 bytes."
+},
+{
+  "id": "POSN_ASTTAX-Z-S86",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T20:36:53Z",
+  "one_line": "DISARM of W20-S4 (INERT): -out=.scratch/b2.tfplan resolved under the -chdir target (the Z-S75/Z-S81 class); the worker created the missing gitignored scratch directory inside the stack and re-ran the invocation verbatim, which is ruled ACCEPTABLE -- an ignored scratch directory (**/*.tfplan, .gitignore:415) is not a write to the stack's tracked surface and it is the only form that keeps the recorded invocation equal to the face's. The class is closed for every unrun order (TO-V1-1 Z-S75, TO-V4-1 Z-S81 carry absolute paths).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "WHY THIS RESOLUTION IS THE BETTER ONE OF THE THREE SEEN THIS ROUND: ~19 refused (no plan), ~23 re-based the path (a disclosed divergence between the recorded invocation and the run), ~20 provisioned the ignored directory and ran the face's string unchanged -- the instance aligns and the tree is untouched.",
+      "WHY GRADUATED: nothing to act on for V2; the cut-side remedy is landed on the two orders that had not run the command."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W20-S4"
+  ],
+  "spec_asserts": "TO-V2-1 V2-AC8/AC9/AC13: a worktree-relative plan path under -chdir.",
+  "world_is": "Run 1 rc=1 on the write after a successful refresh; one mkdir; run 2 byte-identical invocation rc=0, Plan 0/2/0; the plan file ignored wherever it lands; V2-AC9 and the scope tool read the same path through the same -chdir, so the order was internally consistent.",
+  "notes": "A future -chdir cut carries an absolute plan path (Z-S75)."
+},
+{
+  "id": "POSN_ASTTAX-Z-S87",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T20:36:53Z",
+  "one_line": "DISARM of W20-S5 (INERT): safe-apply's halt-gate refuses fail-closed until the SESSION declares its serial at org/mcp/sessions/<session-id>.serial (gitignored, .gitignore:435); every worker in this session shares the issuer's session id, so the file is LAST-WRITER-WINS across slots -- ~20 wrote its own serial, which is the gate's own prescribed one-line fix and not an override. RULED: every hand-over prompt from now on tells the worker to write ITS OWN serial into that file immediately before its first safe-apply (so the gate's audit line names the actor that applied); the live ~19 is told by message before V1-AC8; the provisioning belongs to the worktree mint and is carried for the round analysis.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE SHARED-FILE HAZARD, NAMED: the session id is this seat's (c880f6b2-...), so ~23's and ~20's applies both wrote to one file; whichever serial is in it when the next worker applies is the actor the gate records. The STOP scan is unaffected (every worker's issuer is this seat), the audit attribution is what moves. One line in each hand-over prompt closes it.",
+      "WHY GRADUATED: the mechanism worked as designed (fail-closed, then resolved), the file cannot enter any commit, and the remedy is a prompt line this seat controls."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W20-S5"
+  ],
+  "spec_asserts": "TO-V2-1 V2-AC9 expects safe-apply to reach terraform and print the HALTGT checkpoint; <paths> does not name org/mcp/.",
+  "world_is": "Run 1 rc=3, HALT-GATE: IDENTITY UNRESOLVED -- BLOCKED, naming the exact path; after the write the gate resolved the worker, noted a worker has no inbox, scanned the issuer's inbox for STOPs (none), ran comp-tagauthz and the tombstone gate, and allowed the apply.",
+  "notes": "The worktree-mint step should write the file; carried for the round analysis."
+},
+{
+  "id": "POSN_ASTTAX-Z-S88",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T20:36:53Z",
+  "one_line": "DISARM of W20-S6 (ARMED): record-terraform-deploy.sh:511 expands $SCOPE_PY unquoted and this device's python3 path carries a space, so the recorder aborts before its first action for every seat here. The environment-only workaround (a space-free python3 forwarder first on PATH for the invocation) is now ORDERED on every recorder criterion of this round (V1-AC12, V2-AC13, V4-AC13, V9-AC12); the two-character fix is the CI lane's (infra/aws/** CLOUD_OPS_OR_ETL) and rides the round analysis beside W23-S4 and W20-S8, the same file.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "SAME FILE, THREE ROWS, ONE OWNER: W23-S4 (owner 0.7.0_AE_CloudOps) already names this defect as its second limb; this row's disarm is the ORDERED workaround, not a fix -- the workers may not edit the script and this seat's lane does not hold it either.",
+      "WHY GRADUATED: every remaining recorder invocation in the round carries the workaround by text; the durable fix has an owner and a carrier."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W20-S6"
+  ],
+  "spec_asserts": "V2-AC13 expects the recorder to run per its contract.",
+  "world_is": "line 511: /c/Users/Opal: Is a directory, rc=2; the worktree path is unspaced (C:/tmp/wk-posn-5-20), the interpreter path is not; with the forwarder the same invocation reached the scope tool.",
+  "notes": "Quote $SCOPE_PY and $SCOPE_ARGS at :511 -- for the CI lane."
+},
+{
+  "id": "POSN_ASTTAX-Z-S89",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T20:36:53Z",
+  "one_line": "DISARM of W20-S7 (ARMED): four of 129 module-form source-map rows carry a BARE module address as tf_resource (this project's cot-satellites-registry-producer among them), so record-deploy-scope.py's exact-lookup --plan scoping can never match them; the worker used the tool's own documented --function form and proved the scope identical (one applied address, printed by the refusal). ORDERED on V2-AC13: the cot row's tf_resource corrected to the full address in the worker's follow-up commit (lambda-source-map.json is in its <paths>); the three foreign rows (advi-49f-gold-dispatch, inf-portal-publisher, opal-assets-silver-bd49finsurance) are disclosed, not touched.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "WHY THE ONE-FIELD FIX IS IN SCOPE HERE AND THE OTHER THREE ARE NOT: the cot row is this project's own function and the file is in the order's grant; the other three belong to other pipelines' deploy records and moving them is a lane act for their owners, disclosed on W20-S7 for the round analysis.",
+      "WHY GRADUATED: the refusal was the tool being right about a mis-formed row; the row is corrected where the project owns it and the next --plan scoping of this function will match."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W20-S7"
+  ],
+  "spec_asserts": "V2-AC13's --plan form expects the scope tool to select the deployed function from the plan.",
+  "world_is": "REFUSE: 1 applied address(es) have NO source-map row under cot-pipeline; the map's own denominator 215 rows / 129 module-form / 125 full / 4 bare; the record then stamped 1 of 4 rows under cot-pipeline with 3 untouched.",
+  "notes": "The convention is the FULL address; a bare module address in tf_resource is invisible until plan-scoped."
+},
+{
+  "id": "POSN_ASTTAX-Z-S90",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T20:36:53Z",
+  "one_line": "DISARM of W20-S8 (BLOCKING): record-terraform-deploy.sh:218 hardcodes the other device's bun path, so python3 is handed the JS CHANGELOG writer -- the CHANGELOG entry is never written and the source map is re-encoded (51 non-ASCII bytes, two cp1252-undefined). ORDERED on V2-AC13 (and already on V1-AC12, V4-AC13, V9-AC12): the CHANGELOG entry written by the worker in the helper's exact shape under its grant; the recorder never re-run. The encoding damage was restored by the worker (911f95d458) and the drain merged the map SEMANTICALLY (HEAD's document + the branch's leaf changes, pure ASCII, 3fd61fc8cc) after a line-level conflict. Z-S71's standing hazard is CLOSED: V2-AC9 applied deliberately.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE ISSUER'S RULING ON THE WORKER'S RESTRAINT: the worker deliberately did not hand-author the entry, expecting a fixed recorder to write it. No recorder fix lands in this round (the script is the CI lane's, the spec and the decomposition are frozen), so the by-hand entry IS the deploy record; a later fixed recorder de-duplicates on the version label. Four deploys in this round share the ruling.",
+      "THE DRAIN-SIDE LESSON, MEASURED: HEAD carried 28 non-ASCII bytes from ~23's recorder commit (merged at 866c69817f before this seat's detector caught it), so the line-level merge conflicted on a file both sides had rewritten; the semantic merge (HEAD's document + the branch's six changed leaves; _last_deploy_recorded taken as the later stamp; the pure-ASCII serialization proved byte-identical on the base) is the resolution, and the detector is printed at every drain of this file from now on.",
+      "WHY GRADUATED: the record is landed by the ordered mechanism, the encoding property is restored at HEAD and guarded at the drain, the standing hazard is closed, and the durable fix has an owner (W23-S4 / 0.7.0_AE_CloudOps) and a carrier."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W20-S8"
+  ],
+  "spec_asserts": "V2-AC13: the deploy recorded per the recorder's contract -- a source-map update AND a CHANGELOG entry.",
+  "world_is": "The source-map half landed (correct, one row stamped); the CHANGELOG half did not, behind a success banner its own earlier line contradicts; infra/aws/terraform/cot-pipeline/CHANGELOG.json untouched since a8ef1ca328.",
+  "notes": "A shared control file that a tool re-encodes silently needs the detector printed beside every diff stat of it."
 }
 ]
 ```
