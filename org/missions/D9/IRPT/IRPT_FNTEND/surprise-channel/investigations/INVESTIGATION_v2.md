@@ -4042,6 +4042,73 @@
     "spec_asserts": "IRPT_FNTEND.TO-FE-s-43 F43-AC4: 'the printed hand-back carries the checker's violation naming the order handed over and the order to_ref declared'. The cell names the route's argv (:71) and run_one's verdict, not the reporter.",
     "world_is": "The cut's reporter truncated each line of the owning tool's output at 150 characters. The checker's governing-binding violation names the bound order first and the to_ref order about 250 characters in, so the printed hand-back dropped the second path. F43-AC4 could not pass without changing the reporter. The fix wraps on whitespace; paths carry none, so each prints whole. It needed a distinct continuation gutter: the checker indents its own lines by two spaces, so a '|' continuation read the same as an indented line (measured on this worker's first battery run, where the parser took the indented VIOLATION line for a continuation). Every other route's classification and argv is unchanged (5 of 5); only the display of long lines differs, for every route.",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S33",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-14T23:08:10Z",
+    "one_line": "Two tests outside FE-s-42's grant sometimes run past bun's 5000 ms default test timeout: F40-AC5 (fe-s-40/window.test.ts) and F41-AC2 (fe-s-41/one-writer.test.ts). Their content passes, but a cell's whole-suite census can then read 1 or 2 fail that it cannot fix inside its own grant.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Baseline whole suite at workspace 4d11c008c2 with portal 35797660 unmodified, IRPT_FE_DEV_PORT=5269 measured closed: 547 pass, 16 skip, 2 fail of 565, in 49.91 s. The two fails: 'F40-AC5 -- the portal calendar agrees with lib/trading_calendar.py, day by day > every day of the covered years, re-derived from the frontier with is_trading_day [5172.00ms] ^ this test timed out after 5000ms.' and 'F41-AC2 -- the Global map has one writer > CONTROL -- a seeded second writer is found, directly and through a wrapper; a seeded reader is not [5875.00ms] ^ this test timed out after 5000ms.' Each first printed a passing reading: 'TRADING CALENDAR AGREES WITH lib/trading_calendar.py: 1461 of 1461 days (2024-2027)', and the seeded controls found 2 of 149 writers.",
+        "Same base, the two files run on their own: 14 pass, 1 fail of 15. F40-AC5 timed out again, at 5735 ms. F41-AC2 passed.",
+        "Census of record at portal e028fb4d (FE-s-42's change), IRPT_FE_DEV_PORT=5263 measured closed: 553 pass, 18 skip, 0 fail of 571 across 101 files, in 11.66 s. Both tests passed, with neither file edited.",
+        "At the base, the F40-AC5 run also printed 'frontier now: blob  (DIFFERS from the blob the module names)', with an empty blob id. Recorded, not investigated."
+      ]
+    },
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-42 F42-AC9: the whole-suite run is the census of record and reads 0 fail. BOUNDS: a red test outside the grant is a BLOCKING row with the list, never an edit.",
+    "world_is": "The census of record read 0 fail, so nothing blocked this order. The same suite at the base read 2 fail, and both were timeouts at the 5000 ms default, in files outside this grant. F40-AC5 also timed out when run alone. The verdict depends on run time, not on the code under test, so a later cell's census can go red on either test with nothing it is allowed to change.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S34",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-14T23:08:10Z",
+    "one_line": "RULING X granted three tests 'for the claims RULING Z changes': fe-s-1/fixtures.test.ts, fe-s-9/receipt.test.ts and fe-s-16/mounted-states.test.ts. None of their claims changed, so none was edited, and the whole suite passes with all three as committed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "IRPT_FNTEND.TO-FE-s-42 BOUNDS, RULING X @4d11c008c2: 'THE CUT'S CENSUS NAMED THESE TESTS, EACH YOURS FOR THE CLAIMS RULING Z CHANGES ONLY ... Cite RULING Z beside each change and show it both ways.'",
+        "fe-s-1/fixtures.test.ts validates the committed view fixtures, and none of them carries the flagged { outOfEnum } shape. Census at portal e028fb4d: 'FIXTURES PARSED AS THEIR CONTRACT: 31 of 31', the same line as the baseline at 35797660.",
+        "fe-s-9/receipt.test.ts renders ReceiptPanel from fixtures/fe-s-9/receipt.ready.json and receipt.running.json, whose publicReasonCode (:24) and reasonCode (:38) are null. So the reason line never renders there, and neither can its flag. Census: 'READY MARKUP: has the download link' and 'RUNNING MARKUP: missing the download link'.",
+        "fe-s-16/mounted-states.test.ts:204 asserts the substring data-reason-code=\"<code>\" on the failed state. The flag is a sibling span after the code, so that substring is unchanged. Census: 'STATES RENDERED: 5 of 5', the same as the baseline.",
+        "Whole suite at portal e028fb4d: 553 pass, 18 skip, 0 fail of 571."
+      ]
+    },
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-42 RULING X: the cut's census named these three tests as the ones whose claims RULING Z changes, and granted each for those claims only.",
+    "world_is": "Every claim in the three tests holds under RULING Z as committed. The changes to the directory cohort, to validate's advisory pin and to ReceiptPanel's reason line reach none of the values they assert. The grant went unused. The both-ways evidence for the three sites is in __tests__/fe-s-42/every-site.test.ts instead.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S35",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-14T23:08:10Z",
+    "one_line": "A whole v1 directory-search body with NO status member, parsed by the real parseIrEnvelope, yields a DirectoryEntry that the portal's own validateContract refuses: 'availability: state UNCERTAIN carries NEITHER partialReason NOR publicReasonCode'. status is optional on this route, so this is the common path.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The first draft of __tests__/fe-s-42/every-site.test.ts built its directory body with no status. Run at workspace 4d11c008c2 with portal 35797660, on the committed wire instance fixtures/wire/DirectoryEntry.valid.json['instance'] with only advisory_status changed, validateContract('DirectoryEntry', <adapted entry>) returned [\"DirectoryEntry.availability: state 'UNCERTAIN' carries NEITHER partialReason NOR publicReasonCode\"].",
+        "portal@35797660 contracts/adapt.ts:167 EXPLICIT_UNKNOWN_STATE = 'UNCERTAIN'. :228-231 wireEnvelope sets state: parts.state ?? EXPLICIT_UNKNOWN_STATE, with partialReason and publicReasonCode ?? null. contracts/envelope.ts:187 reads statusRequired from RESPONSE_STATUS_REQUIRED, and the comment at :229-232 says '`status_required` is false on ten of the twelve response contracts, so this branch is the COMMON one'.",
+        "portal@35797660 contracts/validate.ts:76-79, checkAvailability: a state that is neither READY nor LOADING and carries neither reason is a problem.",
+        "The same body with statusWire('READY') validates with 0 problems: census at portal e028fb4d, F42-AC4's first arm, 'problems []'."
+      ]
+    },
+    "spec_asserts": "contracts/validate.ts:76 @35797660: 'A non-READY state without a reason is a payload a screen cannot explain.' contracts/envelope.ts:225-232 @35797660: a response with no status gets the explicit unknown, never READY.",
+    "world_is": "The two rules disagree on the no-status path. The adapter's explicit unknown (UNCERTAIN, with no reason) is exactly what validate's availability check refuses, so a no-status directory body run through the real adapter makes a document the portal's own validator calls invalid. Whether any production path runs validateContract on an adapted document was not read. FE-s-42's test gives its directory body a READY status, so that F42-AC4 grades the cohort and nothing else. Outside the grant; not investigated further.",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
