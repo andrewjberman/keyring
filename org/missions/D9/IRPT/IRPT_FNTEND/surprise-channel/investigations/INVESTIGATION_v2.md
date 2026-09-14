@@ -2828,6 +2828,26 @@
     "spec_asserts": "Ruling K: 'the figure now measures a business-date age. Relabel it to name the business date and its age.' BOUNDS: 'Where the business date is absent, render its absence the way formatSourceAgeForState already does -- never an as_of fallback' and 'isCompleteState, the state labels, STATE_FOR_WIRE and every other function in that file stay as they are.'",
     "world_is": "The figure measures a business date only when a status carried one. Otherwise envelopeFromAvailability hands the formatter the document's instant -- the fallback the bound forbids -- in a function the same bound forbids this order to touch, and which fe-s-25 pins by regex. Before FE-s-34 that misread was labelled 'Updated', which at least described an instant; after it the label asserts a business date. The remedy is a ruling, not a worker's edit: either the no-status envelope carries the document's own sourceTimestamps.businessAsOf as a reading (one is already built at contracts/adapt.ts:231 and then dropped), or a bare instant is labelled as what it is.",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S22",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-14T03:20:00Z",
+    "one_line": "fe-s-21's F21-AC3 grades an age computed from the as_of INSTANT, not the business date: its panelFor builds the envelope from StatusEnvelope.sourceAsOf (source_dates.as_of), so after ruling K it prints 'business_date=2026-09-11 -> \"Business date age: 1d\"' where the business date's own age on that clock is 2d. The amended check therefore equals formatSourceAge of AS_OF -- the date `pure` is actually computed from -- not of the business date.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED, fe-s-21/source-age.test.ts run after the FE-s-34 relabel and before the amendment edit (portal@944499a9): '  WIRE READY -> view READY business_date=2026-09-11 -> \"Business date age: 1d\" (kind=age: true)', the same for all five answer-bearing states, then 'ANSWER-BEARING STATES: 0 of 5'. On the file's clock 2026-09-12T12:00:00Z the business date 2026-09-11 is 36h old (formatSourceAge rounds it to 2d) and AS_OF 2026-09-11T12:00:00Z is 24h old (1d).",
+        "portal@c2eb8eb4 __tests__/fe-s-21/source-age.test.ts:80: panelFor sets the envelope's `sourceAsOf: status.sourceAsOf`; contracts/adapt.ts:471 `const asOf = wire.source_dates.as_of ?? null` and :489 `sourceAsOf: asOf`; the test's `pure` at :156 is formatSourceAgeForState(status.state, status.sourceAsOf, now). The file's own header discloses the as_of basis (rows W1-S42 / W1-S43)."
+      ]
+    },
+    "spec_asserts": "Amendment bound (2.0.0_SA_COO~F, TO-FE-s-34 @12eef1910c): replace fe-s-21:166 'with a check that does not spell the label (for instance equality with formatSourceAge of the same date and clock)' -- read naturally as the business date, the field ruling K says the figure measures.",
+    "world_is": "In fe-s-21 'the same date' is AS_OF. Equality with formatSourceAge(BUSINESS_DATE, now) reads false there (2d vs 1d) and would have kept F21-AC3 red, so the replacement compares with formatSourceAge(AS_OF, now) and says why beside it. The test's printed line now puts a business-date label on an as_of age -- the shape of row IRPT_FNTEND-W3-S21, here confined to a test-built envelope rather than a production path. Nothing else in the file was changed: the bound grants the one check only. INERT: no production path reads this envelope.",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
