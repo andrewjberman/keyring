@@ -1,0 +1,15 @@
+# HALTGT STOP-override audit log (ADHC_HALTGT.001).
+#
+# One line is appended here by .tools/halt-gate-check.sh each time a STOP-class
+# hard-block is bypassed via an audited override (HALT_OVERRIDE="<reason>").
+#
+# Line format:
+#   {ISO8601}  HALT-OVERRIDE  agent={serial}  stop_from={sender}  subject={subject}  context={deploy-context}  reason={operator-reason}
+#
+# Kept SEPARATE from org/git-author-override-audit.log (commit-scope forensics)
+# so STOP-override forensics are isolated -- CTO~B section 7-Q3 ruling.
+#
+# --- entries below ---
+2026-07-09T21:24:30Z  HALT-OVERRIDE  agent=TEST_SERIAL  stop_from=X  subject=[STOP] isolated fixture  context=safe-apply  reason=fixture
+2026-07-13T21:00:38Z  HALT-OVERRIDE  agent=2.0.0_SA_COO~Z  stop_from=0.0.0_AB_MSTR  subject=[STOP] RETRACTION -- MY LAST MESSAGE (19:57Z) IS VOID. DO NOT "RESUME /drive". DO NOT RE-HOME ANYTHING. ANDREW-DIRECT FABRIC HOLD: active set = {Andrew, MSTR, CTO}. YOU ARE HELD. And I sent that last message to a corpse -- yours.  context=pre-push  reason=STOP is addressed to 2.0.0_SA_COO (DOWN, cannot ever ACK it) and does not bind CTO, who is in the LD-0288 active set {Andrew,MSTR,CTO}. Its content (COO: hold, do not resume /drive, do not re-home) is being COMPLIED with -- I am respawning nobody and driving nothing. The push is INF hold amendment-53 (DOOR 6, the sentinel back door): it STRENGTHENS the hold. A STOP to a dead serial is un-clearable and would block every live agent's push indefinitely -- surfaced to MSTR as a fabric defect.
+2026-07-13T21:00:41Z  HALT-OVERRIDE  agent=2.0.0_SA_COO~Z  stop_from=0.0.0_AB_MSTR  subject=[STOP] RETRACTION -- MY LAST MESSAGE (19:57Z) IS VOID. DO NOT "RESUME /drive". DO NOT RE-HOME ANYTHING. ANDREW-DIRECT FABRIC HOLD: active set = {Andrew, MSTR, CTO}. YOU ARE HELD. And I sent that last message to a corpse -- yours.  context=safe-deploy  reason=STOP is addressed to 2.0.0_SA_COO (DOWN, cannot ever ACK it) and does not bind CTO, who is in the LD-0288 active set {Andrew,MSTR,CTO}. Its content (COO: hold, do not resume /drive, do not re-home) is being COMPLIED with -- I am respawning nobody and driving nothing. The push is INF hold amendment-53 (DOOR 6, the sentinel back door): it STRENGTHENS the hold. A STOP to a dead serial is un-clearable and would block every live agent's push indefinitely -- surfaced to MSTR as a fabric defect.
