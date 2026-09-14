@@ -99,6 +99,34 @@ retagged ticker Yang's models hold (VXX) drops out of its per-class groups while
 - **B -- any precondition unmet, or any bar clause fails after the write:** before the write, **NOT COVERED** -- no write. After
   the write, the prior values above are written back to BOTH stores the same turn, and the row is filed with the failing clause.
 
+### R1 AMENDMENT 2026-09-14 ~20:0xZ -- the served refresh after the retag is DRIVEN, not waited on
+
+**Why:** `TO-V8-1` as cut leaves the served refresh to the producers' next scheduled fires (07:00Z / 07:20Z / the Yang
+pipeline ~11:0xZ) and warns its render may show pre-retag labels "until then". Rule 27: no forward outcome is a wait. The
+mechanism is driven on demand, and the scheduled fire stays as the organic confirmation leg.
+
+**NEVER#1 names the new state this creates:** a scheduled producer run off its own clock is a new reachable state, and a
+sign-off must cover it. **This half now covers it:**
+
+- **The act:** immediately after R1's writes succeed in BOTH stores, the cell invokes, once each and in dependency order,
+  the writers of the retagged property that feed the Positioning page:
+  1. `yang-generate-positioning`
+  2. `yang-generate-holdings-attribution`
+  3. `yang-generate-allocation-summary` (it reads holdings_attribution_data.json)
+  4. `cot-satellites-registry-producer` (registry.json content-identical, holdings.json relabelled)
+  5. `cot-satellites-characteristics-producer`
+- **The keys:** exactly the served keys listed above for B1 and B2, plus `platinum/satellites/characteristics.json`.
+  Nothing else. The ETF publisher (`etf_positioning_publisher.py`) is NOT invoked; it stays disclosed, on its own schedule.
+- **Expected outcome, both branches.**
+  - **A:** each invocation returns success, and each served key's `generated`/`as_of` stamp moves past the retag
+    time. The per-ticker per-level target comparison then reads the refreshed artifacts. The next scheduled fire is
+    recorded as the organic leg in the ledger, not waited on.
+  - **B:** any invocation fails, or a key's content differs beyond the retagged labels and the weights they
+    regroup. STOP. Write the 12 prior values back to both stores, re-invoke the same producers so the served keys
+    return to pre-retag labels, then file the row.
+- **Rollback per key:** the prior values table above, re-written, then the same invocations. Where the bucket versions a
+  key, the prior object version.
+
 ## WHAT THIS HALF DOES NOT COVER
 
 - B5 (the edge router leaf allowlist): its own pair of halves once it exists as a cell and Andrew has approved it.
