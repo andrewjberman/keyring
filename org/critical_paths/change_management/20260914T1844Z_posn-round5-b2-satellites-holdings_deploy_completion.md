@@ -12,15 +12,18 @@
 
 | leg | kind | target | proof required | proof | state |
 |---|---|---|---|---|---|
-| L1 | git | SITEZ commit of producer + trigger + build_package + tf | hash |  | OPEN |
-| L2 | s3-prefix | opal-313476888478-lambda-artifacts cot-pipeline/cot-satellites-registry-producer.zip | sha256 |  | OPEN |
+| L1 | git | SITEZ commit of producer + trigger + build_package + tf | hash | SITEZ worktree branch wk-posn_asttax-5-20 commit 97fe1221bd (git rev-parse HEAD in /c/tmp/wk-posn-5-20); 10 files, 1016 insertions; producer + trigger + build_package + tf + source-map + ledger + 2 rows + 2 deliverable scripts; LOCAL, never pushed by a worker | CLOSED 20260914T191338Z |
+| L2 | s3-prefix | opal-313476888478-lambda-artifacts cot-pipeline/cot-satellites-registry-producer.zip | sha256 | s3://opal-313476888478-lambda-artifacts/cot-pipeline/cot-satellites-registry-producer.zip uploaded 2026-09-14T19:15:56Z VersionId=mgzFeamx2_MIO_R.lBF6IYGUNM5aXcir ContentLength=105484 metadata content-sha256=eFToEJ0FNu1sMO7cJ1WNdRoGSVuNuHSM9ToBzHGkF1I= (hex 7854e8109d0536ed6c30eedc27558d751a06495b8db8748cf53a01cc71a41752); built by build_package.py --pin 97fe1221bd547347113935f87111316f4d57bc47, 6 members from GIT; READ BACK by s3api head-object, not from the put response. PRIOR version for rollback: qXzZE63fhPXwG2dXU86eLbTh48cFn0vQ (content-sha256 WfuD8gLfKN2W9U3DUmk6pxfUDn3QW3tOuopTecNRCv0=) | CLOSED 20260914T191633Z |
 | L3 | verify | plan scoped | summary |  | OPEN |
 | L4 | activation | safe-apply | summary |  | OPEN |
 | L5 | verify | 0-diff | No changes |  | OPEN |
 | L6 | verify | QA invocation lands holdings.json | s3api head + content read |  | OPEN |
-| L7 | verify | schedule enabled with the function as target | describe-rule + list-targets |  | OPEN |
+| L7 | verify | schedule enabled with the function as target | describe-rule + list-targets | events describe-rule cot-satellites-registry-producer-daily -> {state: ENABLED, expr: cron(0 7 * * ? *)}; events list-targets-by-rule -> 1 target Id=CotSatellitesRegistryProducerDaily Arn=arn:aws:lambda:us-east-1:313476888478:function:cot-satellites-registry-producer. Read 2026-09-14 ~19:2xZ. The standing mechanism is INTACT and is NOT altered by this change (no schedule resource edited); it is the arm that would carry L8 | CLOSED 20260914T192254Z |
 | L8 | verify | next scheduled 07:00Z fire lands holdings.json organically (the negative arm; recorded by the COO, not waited on here) | s3api head after the fire |  | OPEN |
 
 ## Log
 
 - 20260914T184436Z OPENED by 0.9.0_WK_POSN_ASTTAX~20 with 8 leg(s)
+- 20260914T191338Z LEG L1 closed: SITEZ worktree branch wk-posn_asttax-5-20 commit 97fe1221bd (git rev-parse HEAD in /c/tmp/wk-posn-5-20); 10 files, 1016 
+- 20260914T191633Z LEG L2 closed: s3://opal-313476888478-lambda-artifacts/cot-pipeline/cot-satellites-registry-producer.zip uploaded 2026-09-14T19:15:56Z 
+- 20260914T192254Z LEG L7 closed: events describe-rule cot-satellites-registry-producer-daily -> {state: ENABLED, expr: cron(0 7 * * ? *)}; events list-ta
