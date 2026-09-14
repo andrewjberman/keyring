@@ -1,12 +1,12 @@
 {
   "prd": "DSGN_REBRND_PRD.md",
-  "prd_version": "v0.3",
-  "prd_pin": "179884e46bbfbb6b73d317df1c539ee08e23b65c",
+  "prd_version": "v0.4",
+  "prd_pin": "4ebd24684b3a37b07abb652f485b44f9821ca917",
   "half": "ratified-text",
-  "half_hash": "8cd0066e445e8825baffbae27596ba82ef2b11cb1c0f2ae1156a1493fe20f515",
+  "half_hash": "40e01b9ae5805f5eb6be35f44182837dada1a1bbe6469fcdf0da9bb276e93628",
   "verdict": "REFUSED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/PRD_REVIEW_DSGN_REBRND_v0.3_RATIFIED_TEXT_HALF_20260914.md@d779f0b32f",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/PRD_REVIEW_DSGN_REBRND_v0.4_RATIFIED_TEXT_HALF_20260914.md@2f6af3147b",
   "signed_by": "3.0.0_SA_CVO",
-  "signed_at": "2026-09-14T17:03:00Z",
-  "reason": "R1: CONTRACTS :122 classes the accent's two roles MEASURED from opalinvest.com.json ('nowhere else'); v0.3's identity set is a third role with no class -- class it (DERIVED, rule = Andrew's 2026-09-14 closed list)"
+  "signed_at": "2026-09-14T17:19:03Z",
+  "reason": "R2: CONTRACTS :122 MEASURED 'transient roles' includes the text-selection highlight; opalinvest.com.json (read whole) measures only the action + focus ring -- class the highlight DERIVED with its rule; 10 of 10 MEASURED members must have a line in the file"
 }
