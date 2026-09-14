@@ -2935,6 +2935,29 @@
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W1-S62",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-14T07:49:41Z",
+    "one_line": "The amendment's W2-S12 fix, made in exactly its three granted regions of investor-reporting.ts, returns the receipt (F31-AC8 read yes) but turns F31-AC1 and F31-AC9 red in tests OUTSIDE the grant that assert the old contract, and FixtureAdapter cannot serve a receipt in-region because IR_FIXTURE_PLAN names the ack for submit-export. Withdrawn; F31-AC8 refused again.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-FE-s-31 BOUNDS, amendment @261a0c923f: \"(1) src/api/endpoints/investor-reporting.ts, for W2-S12/W3-S5 ONLY: submitExport returns the ExportReceipt the producer answers in data ... in the InvestorReportingApi interface, in LiveClient.submitExport and in FixtureAdapter.submitExport, and nowhere else in that file. FE-s-34 holds FixtureAdapter's VIEW-fixture serving branch (serve) ... touch no other region. Your test.failing arm for F31-AC8 becomes an ordinary test.\" Also F31-AC1 \"the whole portal typechecks\" and F31-AC9 \"(?<![0-9])0 fail\" over fe-s-4/8/9/16/31.",
+    "world_is": "Measured with the three regions changed (interface -> Promise<ExportReceipt>; LiveClient.submitExport -> send(..., adaptExportReceipt) taking data; FixtureAdapter.submitExport -> serve('export-receipt')): F31-AC8 printed \"SUBMIT RETURNS THE EXPORT RECEIPT: yes\". But tsc -b --noEmit rc=2 at src/pages/InvestorReporting/__tests__/fe-s-16/mounted-states.test.ts(82,3) \"TS2740: Type 'ExportReceipt' is missing the following properties from type 'StatusEnvelope': operation, state, sourceAsOf, safeActions, and 4 more\" -- statusFromWire (:79-87) is typed Promise<StatusEnvelope>, points FixtureAdapter's submit-export at a STATUS wire fixture, and uses the result as the ack at :148 and :262. At runtime fe-s-16 F16-AC2 (:201) failed with data-reason-code=\"undefined\", and fe-s-1/adapter.test.ts:137 (call log) failed with \"/api/scoped/investor-reporting/export-receipt\" in submit-export's slot. That second failure is the in-region FixtureAdapter route; the honest one needs IR_FIXTURE_PLAN['submit-export'] (:1178, contract StatusEnvelope) to name ExportReceipt, which is outside the three regions and inside FE-s-34's. Every in-region option leaves AC1 red because fe-s-16:82 is typed to the ack. So this worker reverted the three regions (0 diff lines), kept submitExport typed to the ack and kept the AC8 arm as test.failing. The measured patch is reproduced in the FE-s-31 result file.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal 364dc0d1 src/api/endpoints/investor-reporting.ts:1178 `'submit-export': { contract: 'StatusEnvelope', shape: 'one' }` (IR_FIXTURE_PLAN); :1305-1307 FixtureAdapter.submitExport -> this.serve('submit-export', ...)",
+        "portal 364dc0d1 src/pages/InvestorReporting/__tests__/fe-s-16/mounted-states.test.ts:79-87 `async function statusFromWire(fileName: string): Promise<StatusEnvelope>` returning `adapter.submitExport(...)` after `useFixture('submit-export', HERE + fileName)`; uses at :148 and :262",
+        "tsc -b --noEmit with the three regions changed: mounted-states.test.ts(82,3) TS2740 and export/submit.ts(111,3) TS2322 (the latter this worker's own wrapper), rc=2",
+        "bun test fe-s-1* + fe-s-16 + fe-s-31 static files with the change: 279 pass / 2 skip / 3 fail; failing: \"call log > the adapter records EVERY call with method, url and timestamp\" (fe-s-1/adapter.test.ts:137) and \"F16-AC2 -- the five states, on the mounted flow > five wire-fixture states render on the mounted body\" (fe-s-16/mounted-states.test.ts:201)",
+        "after the revert: tsc -b rc=0; git diff -- src/api/endpoints/investor-reporting.ts = 0 lines"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
