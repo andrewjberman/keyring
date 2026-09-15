@@ -490,3 +490,26 @@ that has `1.0.0_SA_CTO~Z` down until Sep 19. Sent to `0.0.0_AB_MSTR~Z` as one po
 remaining eight cells (rj-11 and rj-13 at rj-8's drain; rj-9 at rj-2's; rj-10 after rj-9; rj-12 after rj-9 and rj-11; rj-3 last)
 and the note that the L8 packet will carry the CTO's L10 pre-read @`9ceb811406` beside it. Inbox Monitor re-armed twice more
 (bjxxl3bvw, b551heni1); the drain watch bcwqm13ta still running at baseline 5 / no slug. Push state: LOCAL.
+
+---
+
+## ADDENDUM 16 (15:5x-16:2xZ) -- POSN_ASTTAX closed on Andrew's word; rj-8 into the AMGT pre-read
+
+Andrew, at this terminal ~15:5xZ, VERBATIM: *"Do me a favor and close out POSN_ASTTAX. It is done officially but there is no other
+CTO online but you"* (record `ANDREW_DIRECT_20260915_155xZ_CLOSE_OUT_POSN_ASTTAX_NO_OTHER_CTO_ONLINE.md`). Read narrowly: the CTO
+limb for the CLOSE only; the ~W/~Z split otherwise stands. Measured before writing: the register row (COO~Z's close-out @`1f68ccee7a`
+left dep_stage ROUND_CLOSE and named what the CTO owed: the grades, the R6 flip, C-S177's disarm); the spine's close grammar (two
+reads on two axes; the grades read the EXERCISED ARTIFACT, never the report); the schema's exact key set; the CVO's completeness
+rows; the COO's report map (7 outcomes, 28 distinct proofs). The grader's own reads: 28 of 28 proofs at their cited vintage,
+unchanged, VALID with their own criterion lists; the served models file (gzip on S3 -- the first parse failed on the magic bytes,
+the manifest said so) 110 of 110 current-holdings rows in exactly one class, the 91 classless ticker rows being target-allocation
+lists and benchmark definitions; the served satellites holdings 177 of 177; the served characteristics at the 12:30Z fire 25 of 25;
+origin/PROD contains the POSN leg (the AMGT leg as the control); two DOM reads of the promoted tree. Scope: FWD-3/4 on the
+Positioning page only (PRD C-POSITIONING-ONLY, Andrew's word); the Attribution page's three-class order recorded as outside.
+Written and committed @`e223c78ed5`: `COMPLETION_GRADES.round7.json` (7 of 7 REALIZED, schema-validated), `ROUND_ANALYSIS.round7.md`,
+the C-S177 disarm `Z-S182` (the POSN channel is 61 fenced blocks, not one -- the banked trap; appended into the last list), the
+register row flipped by field substitution (no serializer round-tripped the COO's bytes), the index derived, `check` 0 violations
+(R6 raised nothing; the one pre-derive violation was the expected INDEX-DRIFT). Broadcast to the four ~Z-side seats: MSTR~Z and
+CVO~Z DELIVERED, COO~Z and CRO~Z QUEUED (no live session). A peer merge was open once during the sequence and the run was skipped
+until it cleared. AMGT: rj-8 drained @`eff1b9f6ae` and read into the pre-read @`b39be39d13` (addendum candidate 8: the CEO
+profile limb's SERP contract). Round 11 at 7 of 13. Push state: LOCAL.
