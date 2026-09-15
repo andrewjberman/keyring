@@ -598,6 +598,56 @@ armed as a 20-minute recurring job beside the inbox watch and the stagger tick.
 
 ---
 
+### 20. The browser half filed; Z-S107 found on the served plane; rj-3 drained partial on an issuer cut error; AMENDMENT 3 and ~18 respawned (20:2x-21:4xZ)
+
+**The browser half of rj-3 (this seat).** Vite served portal `0e153399` on `[::1]:5175`. Every scoped route was fulfilled from a
+capture of the DEPLOYED adapter (`9ubWPnhz...`); an uncaptured route was answered 404 and logged.
+- **Arm 0, discarded.** The transport intercepted 0 requests in the tool's own context. Two causes fit and the run cannot separate
+  them: a persisted query cache, or a route handler that threw on the sandbox's missing `URL`.
+- **Arm 1, POPULATED, fresh context.** The served rankings file hashes to rj-10's `698c3915...`. Generation
+  `20260915T200841Z-adf383740a9e`, ten rows in payload order, 0 UNRESOLVED.
+- **Arm 2, the click.** A click on BA US fires overlay and thesis for `BA_US_Equity`, and the thesis file hashes to `f2e7c040...`.
+  The page shows 48 evidence blockquotes and 0 tooltips. Its tab clicks failed on exact-case locators and were re-run as arm 2b.
+- **Arm 2b, the direct key and the five tabs.** The direct key fires the same two requests. Each tab states what it lacks.
+- **Arms 3-5, the controls.** A 503, the genuine EMPTY Breakout generation and the genuine no-pointer read render three different
+  sentences.
+- **Filed @`e31a7cc` (21:20:23Z)** with the records, scripts, screenshots and payloads. Vite was stopped (the port refuses), the nine
+  staged copies were removed after cmp, and the view worktree is clean. The record sat one folder below the path rj-3 names; it
+  moved there @`e8e2e01ce1` (21:26:19Z), before the worker's re-run could list it.
+
+**Z-S107, a seat row, INERT**, found on arm 2b's Posture tab: "UNRESOLVED: DE_US_Equity" and "packs are not carried". Measured on
+four instruments:
+- the served capture's posture keys carry no `comparable_name`, `packs` or memberships;
+- `read_posture` holds 0 occurrences of those fields at the build base `5ae785828e` and 2 each at HEAD, and neither `13191fa180` nor
+  `51297efb9a` is an ancestor of the build base (positive control fired);
+- the live CodeSha256 is unchanged since 19:01:10Z;
+- `PostureTab.tsx:78-79` and `:162` @`0e153399` print exactly those two lines when the fields are absent.
+
+rj-12's route is committed and not applied. Round-12 carry: an adapter redeploy from HEAD under fresh never-widen co-signs.
+
+**rj-3 (`~18`) reported at ~21:1xZ.** The instance is VALID over 6 rows. AC3 passed 13 of 13, AC4 12 of 12 with 3 of 3 pairs, and
+AC6 passed; AC5 was recorded for the CVO. AC1 and AC2 FAIL on one clause: the thesis capture has no `as_of_date` (W18-S19). W18-S20
+records that the header's description and feed ride `/overlay` and Peers reads `/peers`, neither captured by rj-10. The worker
+refused to relabel `generated_at` as the day.
+- **Read by this seat:** `read_thesis_bundle` holds 0 occurrences of `as_of_date` at `5ae785828e` and at HEAD, so the route never
+  emitted it. **This was my cut error: a field bar never read from the object.**
+- **Re-graded** at the worktree and at HEAD, before the amendment, with each tree's own checker: VALID rc=0, 5 of 5 invocations
+  aligned.
+- **Drained PARTIAL @`9738c6c153` (21:34:27Z).** The channel conflicted against Z-S107 and was unioned by row id: 248 + 2 = 250, 0
+  duplicates, all three new rows present. The row gate graded the 2 new rows. `refs/drains/rj-portal` moved `0e153399` ->
+  `b616b759` by fast-forward, with the old value checked.
+- **AMENDMENT 3 @`254fcba914` (21:37:10Z).** AC1 prints `generated_at_day` and `crosswalk_vintage` from the same bytes and bars both
+  equal to the ranked `as_of_date`; AC2 states the thesis `as_of_date` ABSENT as met. The re-cut invocation ran byte-for-byte from
+  the built order before the commit (rc=0; thesis 2026-09-15 and 2026-09-15). Over the pre-act attempt1 captures it prints
+  `crosswalk_vintage None`, which the bar refuses. Gate (viii) graded the modification.
+- **Respawned.** The worker branch fast-forwarded to `254fcba914`, and `~18` was respawned at ~21:4xZ to re-run AC1, AC2 and AC6 and
+  re-record AC5, keeping AC3 and AC4.
+- **Memory widened:** a field bar is read from the object at the cut, exactly as a count bar is read from the store.
+
+**Round 11 at this section:** 12 of 13 orders terminal; rj-3 staged and re-running. The packet draft is filled except rj-3's row, the
+re-grade count, the close commit and the send. The channel census by subtraction: 72 new rows, 3 ARMED with 3 disarms, 3 BLOCKING
+each answered by an amendment.
+
 ## Decisions Made
 
 | Decision | Rationale |
