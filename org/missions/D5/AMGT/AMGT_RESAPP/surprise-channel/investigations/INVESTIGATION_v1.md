@@ -4081,6 +4081,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "No act is asked of anyone by this row: AC12 is met and the artifact is correct. It is filed because AMGT-ri-4's AC2 carries the same text and a reader of ri-4 who packages 'the three modules' instead of running the closure gets a cold-start break that this order's own instrument would have caught."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W16-S2",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~16",
+    "surfaced_at": "2026-09-15T04:23Z",
+    "one_line": "AC5's route-chunk predicate matches on the EMITTED ASSET FILENAME, but App.tsx lazy-imports the route as './pages/SecurityAnalysis/index', so vite names its chunk after the barrel file index.ts -- dist/assets/index-Ldzdo1Wa.js. The predicate therefore returns [] for a build that DID emit the route, and AC5's own expectation reads that [] as 'emitting nothing for this route ... is NOT met'. The criterion cannot be satisfied as written by any correct build of this route.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED, AC5's LITERAL invocation in this worktree (portal 9aef37344cd68c06f37d9d33eb1f2bc886dd6c4c on branch wk-amgt_resapp-10-1-portal, superproject 50064d78f515493a2d5071ec13b03e30190996f6): './node_modules/.bin/vite build --logLevel info' -> rc=0; the named python reader printed 'emitted-assets 63' and 'security-analysis-chunk []'. Two of AC5's three conjuncts are met (rc=0; 63 > 20); the third is empty.",
+        "THE ROUTE IS NEVERTHELESS EMITTED, measured by CONTENT over the emitted bundle with a negative control -- denominator 55 emitted dist/assets/*.js scanned: the repaired error text 'the ranked names could not be read' -> 1 asset; the empty text 'the daily job has not written a row' -> 1 asset; the route path '/lead-panel/rankings/' -> 1 asset; the starred text 'starred name(s) ranked on this combination' -> 1 asset. All four land in the SAME asset, dist/assets/index-Ldzdo1Wa.js (30,655 bytes decoded; the build listing shows it at 30.66 kB). NEGATIVE CONTROL 'zzz-no-such-string-ri3-control' -> 0 of 55 assets, so the scan discriminates.",
+        "THE CAUSE OF THE NAME, cited: portal/src/App.tsx:27 @ portal 9aef37344cd68c06f37d9d33eb1f2bc886dd6c4c -- \"const SecurityAnalysis = lazy(() => import('./pages/SecurityAnalysis/index').then(m => ({ default: m.SecurityAnalysis })))\". The import target is the directory's BARREL, and portal/src/pages/SecurityAnalysis/ does contain index.ts (ls: SecurityAnalysis.tsx, __harness__/, __rendercheck__/, components/, constants.ts, figureIdentity.ts, hooks/, index.ts, readCompleteness.ts, refusalPresentation.ts, tabs/, types.ts). Rollup names a code-split chunk after its entry MODULE FILE (index.ts), never after the directory, which is why the emitted name is index-<hash>.js and why fourteen other anonymous index-<hash>.js chunks appear in the same listing.",
+        "SO THE PREDICATE IS STRUCTURALLY BLIND, not reporting a defect: 'SecurityAnalysis' in the asset-name line, or 'security-analysis' lowercased, cannot match an asset named index-Ldzdo1Wa.js under any correct build of this route. A build that genuinely dropped the route would produce the SAME [] -- the empty list does not discriminate the vacuity AC5 names from the passing case."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT-ri-3 AC5 expects 'rc=0, emitted-assets above 20, and a security-analysis-chunk list naming at least one emitted chunk for the route', and states the reading of an empty list explicitly: 'A build that succeeds while emitting nothing for this route is the vacuity one directory over and is NOT met.' The invocation's filter is [l for l in ls if 'SecurityAnalysis' in l or 'security-analysis' in l.lower()].",
+    "world_is": "rc=0 and 63 emitted assets, but security-analysis-chunk is []. The route IS emitted -- as its own code-split chunk dist/assets/index-Ldzdo1Wa.js carrying four route-unique strings, against a negative control of 0 of 55 -- and the chunk is anonymous because App.tsx:27 lazy-imports the barrel path './pages/SecurityAnalysis/index', so the chunk takes the name of index.ts. AC5's third conjunct is therefore unsatisfiable as written by a correct build, and its stated reading of [] (the route was not emitted) is FALSE here. The worker took the criterion AS WRITTEN: AC5 is recorded FAIL, the order is left OPEN, and no source, config or chunk name was changed to make the predicate match -- that would be the widening the order forbids. Remedy shape for the cut's owner, not taken here: match on CONTENT of the emitted assets (a route-unique string with a negative control), or on the rollup chunk whose facadeModuleId ends 'pages/SecurityAnalysis/index.ts', rather than on the asset filename.",
+    "notes": "Filed by 0.9.0_WK_AMGT_RESAPP~16 on AMGT-ri-3. Form only; no significance claimed and no verdict offered on whether the route 'should' be emitted under a distinguishable name. The other four mechanical criteria (AC1, AC2, AC3, AC4) are PASS-by-output in the same run; AC6 is the browser half's judgment criterion and is left to 3.0.0_SA_CVO~W. The content scan reported here is evidence for THIS row, not a substituted instrument for AC5 -- AC5 is graded on its own named invocation's output, which is []. HAZARD STANDING INERT because nothing in the live world is unsafe: the build is correct and the route ships; the defect is in the criterion's predicate, so the cost is a criterion that cannot pass rather than a broken artifact, and no disarm_owner is therefore named."
   }
 ]
 ```
