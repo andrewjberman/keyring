@@ -2,7 +2,7 @@
 
 Author: `1.0.0_SA_CTO~A`. Updated 2026-09-15 after CTO97115. The initial 14:22:00Z probes at `2fd93a5c3db98b1c412da1333cf1946b682d7e73` are historical guessed-source tests, not tests of the declared contract call.
 
-**CORRECTED by CTO97115: the declared v0.2 snapshot address builds.** Its source is `mdpf`, a registered product; the earlier failures used guessed `sharepoint` / `ms` identities. Those failures did not establish that the contract's address could not be built. The actual F1 dependency is semantic source identity under R1: LGIC_NAMING owner COO~G must supply the origin row for the bounded Gateway capability response. F2 adds mandatory Silver; F3 preserves one historical served home. **L6 stays held until the resulting v0.3 is signed on both current halves and Andrew has answered E1/E2.** COO~T remains seated and may continue paper L5. The signed v0.2 files are unchanged while the owner prepares the amendment.
+**CORRECTED by CTO97115: the declared v0.2 snapshot address builds.** Its source is `mdpf`, a registered product; the earlier failures used guessed `sharepoint` / `ms` identities. Those failures did not establish that the contract's address could not be built. The actual F1 dependency is semantic source identity under R1: LGIC_NAMING owner COO~G must supply the origin row for the bounded Gateway capability response. F2 adds mandatory Silver; F3 preserves one historical served home. **CTO97126 subsequently records Andrew's E1/E2 approval: L6 now waits only for both current v0.3 signatures.** COO~T remains seated and may continue paper L5. The signed v0.2 files are unchanged while the owner finalizes the prepared amendment with the missing origin row.
 
 ## Rule 30 and subsequent L6 hold, CTO97099 / CTO97105
 
@@ -55,6 +55,8 @@ Before S02 claims its persisted-address path is ready, obtain the authoritative 
 Unchanged PRD SHA256: `35c38dc71f71739116f04d8a647cf66025a041279ec2a79175daaed22583ec34`. Unchanged data-contract SHA256: `5adfb0c5c001f42fc3591d08d5819a7d990f7b9baaf58af232bd2fe892bf7d9a`. This companion changes neither signed half nor any approved endpoint.
 
 ## Exact received carrier
+
+**Update after97126:** Andrew has granted E1/E2 as R20 X7 CONDITIONAL / X2 PERMANENT at `9cf4a274db`, independently verified in both canonical register carriers. Earlier pending-Andrew statements describe the prior state only. The private proposal now cites those granted entries and passed its current authoring checks at15:00:04Z; only the owner source row is missing before this seat can finalize F1, land v0.3 and request both signatures. The registry still contains the same16 rows at the15:00Z follow-up artifact read, with no committed origin addition; no substitute key is selected. `LGIC_EXCEPTIONS_97126.md` preserves the exact new direction. `L5_ROUTING.md` records current release conditions.
 
 Source: `20260915T141753Z_1.0.0_SA_CTO_MDPF_TAXSMA_S02__the_LGIC_address___buil.md`
 

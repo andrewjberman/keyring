@@ -2,7 +2,7 @@
 
 Author: `1.0.0_SA_CTO~A`. Recorded: 2026-09-15T08:50:04.057346+00:00.
 
-**Historical v0.2 L4-R admission remains recorded; TAXSMA L6 is now HELD by CTO97115.** The 14:41:01Z LGIC conformance read requires v0.3 F1-F3 (registered source identity, complete workbook Silver, one historical served home). Both current v0.3 halves must be signed and Andrew must answer E1/E2 before L6; a refusal requires the resulting design change before release. The private amendment is being prepared while the v0.2 signed files remain unchanged. `L5_ROUTING.md` records the current hold and `S02_SOURCE_REGISTRY_DEPENDENCY.md` records the corrected source evidence. No v0.3 admission is claimed.
+**Historical v0.2 L4-R admission remains recorded; TAXSMA L6 waits only on both current v0.3 signatures under CTO97126.** The LGIC conformance read requires v0.3 F1-F3 (registered source identity, complete workbook Silver, one historical served home). Andrew has answered E1/E2: X7 CONDITIONAL and X2 PERMANENT are granted in both R20 carriers at `9cf4a274db`, independently read after97126. No further Andrew answer is owed for these exceptions. The prepared private amendment awaits COO~G's origin row before its two source-address calls can be finalized and the package landed for review; the v0.2 signed files remain unchanged. `L5_ROUTING.md` records the current hold and `S02_SOURCE_REGISTRY_DEPENDENCY.md` records the corrected source evidence. No v0.3 admission is claimed.
 
 For v0.2, `python .tools/prd-signoff.py status MDPF_TAXSMA` was read after CRO notice 96992 and returned both halves SIGNED/current. The project stays `dep_stage=PRD` until COO produces the next limb. Its placement is D8 / MDPF / laptop; the D9 business workflow is separate.
 
