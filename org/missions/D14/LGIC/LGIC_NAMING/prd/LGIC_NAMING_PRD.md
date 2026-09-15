@@ -5,7 +5,7 @@
  "project": "LGIC_NAMING",
  "directive": "D14",
  "fabric": "laptop",
- "prd_version": "v1.7",
+ "prd_version": "v1.8",
  "step": 4,
  "brief_ref": "docs/briefs/d14-naming-schema-brief-20260913.md@1b42dbe758",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6"],
@@ -197,6 +197,11 @@ as a second copy here.
     where it and the seed differ (DM);
   - FWD-2's reader may be told what each position holds, because reading "from position" presupposes it (POS);
   - SY1's worked example is a name outside every naming-exercise item set (EX1).
+  v1.8 carries `1.0.0_SA_CTO`'s ROUND-3 ANALYSIS
+  (`org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_LGIC_NAMING_ROUND3_20260915.md`), as data in
+  `NAMING_SCHEMA.json` v1.8:
+  - FN1b and FN1c are one subtraction, and a function it empties RAISES whichever rule removed the last token, so a
+    grade does not depend on the order of two steps (FN1d, row W3-S5).
 
 ## PROJECT ARC AND DEFINED OUTCOME
 
