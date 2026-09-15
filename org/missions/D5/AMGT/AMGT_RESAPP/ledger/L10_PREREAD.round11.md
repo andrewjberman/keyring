@@ -124,12 +124,22 @@ bound is a criterion the order must be able to refuse on, so the FIRST charge co
    contract, @`2778e07199` s.7) -- measured absent on all five drafting objects.
 2. **CSC basis labelling.** A column whose basis (trailing / NTM) differs from its label (fiscal-year P/E) renders as
    an ALTERNATIVE labelled measure, never under the year label (Rule 24(iv)); 5 of 17 columns map today.
-3. **Resolution widening for the union universe** -- the one that unblocks FWD-19: (a) a coverage name whose `name`
-   string carries a Bloomberg form (`"Adobe ADBE US"`) is resolvable by PARSING that form, not by guessing (56 names);
-   (b) a holdings identifier with no exchange is resolvable by a MEASURED join on (ticker, name, listing country)
-   against the scanner's `UniverseDataRow` where name and country agree, else UNRESOLVED (167 names); (c) the ETF
-   plane's producer contract (C-ETF-PLANE-READ's one-sided read) should carry the Bloomberg form on every holding --
-   a POSN-side ask at Andrew, with `1.0.0_SA_CTO~Z` down until Sep 19.
+3. **Resolution widening for the union universe** -- the one that unblocks FWD-19. ⭐ **MEASURED 16:3xZ by this seat, read-only,
+   over the pool's `universe/v1/2026-09-15.json` and rj-7's `load_candidate_universe()` (2,851 rows, vintage 2026-08-06):**
+   (a) COVERAGE -- 35 of the 56 unresolved names END in `<TICKER> <2-letter code>` inside the name string (`"Adobe ADBE US"`,
+   `"Air Liquide AI FP"`); the 21 that do not are bare names or name+ticker with no exchange (`"Mastercard MA"`, `"UBS"`).
+   ⚠ The parse must VALIDATE the code against a declared Bloomberg exchange list, never accept any two letters: 4 codes in the
+   parsed set appear nowhere among the 33 resolved names (`CA`, `GB`, `NL`, `SM`), and three of them are not Bloomberg's own
+   (Bloomberg writes `CN`, `LN`, `NA`; `SM` is Madrid and real). (b) ETF HOLDINGS -- 166 of 167 carry a bare alphabetic
+   ticker, 1 a Bloomberg id (`2602335D`, TPG); a join on ticker to the scanner database with the NAME required to agree yields
+   **112 of 167 UNIQUE + NAME-AGREES** (all United States), 1 UNIQUE + NAME-DISAGREES (`RTX`: "Raytheon Technologies Corp" vs
+   "RTX Corporation" -- a rename, a true match the name rule refuses, so it stays UNRESOLVED and correctly so), 0 ambiguous,
+   54 NO TICKER MATCH (the international books: ADR and home-market tickers in IDVZ/PFOE -- `ASML`, `AZN`, `BBSEY` -- the
+   scanner's ticker space does not carry them). Books over the 167: PFDE 88, DIVZ 29, IDVZ 45, PFOE 24. **So the rule would
+   move the resolved union from 33 to about 145 names without a guess, and Posture's Opal side from 3 names to about 115.**
+   (c) the ETF plane's producer carrying the Bloomberg form on every holding remains the durable fix for the 54 and is a
+   POSN-side contract, outside this project's lanes by Andrew's ~16:3xZ word; the AMGT half is (a) + (b) above, with the
+   exchange list and the name-agreement rule named in C-ONE-IDENTITY.
 4. **A gate must be shown to discriminate on the input it faces** (W20-S5; the round-9 lesson again): the verbatim
    gate's PASS is evidence only beside a count of sentences it COULD have refused.
 5. **The watchlist store keyed by ticker** (W18-S7) and `read_point()`'s upper-casing (W18-S6): C-ONE-IDENTITY's
