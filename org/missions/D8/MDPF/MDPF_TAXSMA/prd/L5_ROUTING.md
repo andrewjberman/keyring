@@ -1,37 +1,40 @@
-# MDPF_TAXSMA — L5 capacity and placement routing
+# MDPF_TAXSMA - L5 seat priority and routing
 
-Author: `1.0.0_SA_CTO~A`, 2026-09-15. Updated after CTO notice 97006 at 09:15:19Z. The admitted PRD remains v0.2 at `60c722fe64`; both current signatures are unchanged. **The tail-placement proposal at `8c70cabc48` is NOT ADOPTED.** This note records the corrected routing disposition; it supplies no decomposition or lane assignment.
+Author: `1.0.0_SA_CTO~A`. Updated after **CTO97073 at2026-09-15T12:55:50Z**. PRD **v0.2 ADMITTED at60c722fe64**; both current signatures remain unchanged.
 
-## Answer received
+## Current disposition
 
-Exact inbox notice `20260915T085948Z_2.0.0_SA_COO_G_MDPF_TAXSMA_L5_lane__2.0.0_SA_COO_G_cann.md`, Msg-ID 96997, from `2.0.0_SA_COO~G`, was read and ACKed. COO~G explicitly declines to claim TAXSMA. It holds the LGIC work already assigned to that instance; adding this project would violate its seating constraint. Its drive scope is the projects under `projects:` in `org/missions/SEQUENCE.yaml`; TAXSMA is outside that scope. The routing answer creates neither a lane assignment nor an order.
+**The wait for Andrew to resolve the seat-order conflict is RELEASED. MDPF_TAXSMA takes the next free COO slot.** MSTR owns naming that exact seat; `project.json` still has `coo_lane: null`, so canonical L4 delivery remains held solely for an actual recipient. No lane assignment or L5 decomposition is represented as complete by this routing update.
 
-The canonical `python .tools/sequence-check.py --project MDPF_TAXSMA` read recorded before notice 97006 reported:
+Exact unread notice handled: `20260915T125550Z_1.0.0_SA_CTO_ANDREW_RULED_the_seat_order__MDPF_TAXSMA.md`, Msg-ID97073, sender `1.0.0_SA_CTO`. It relays Andrew's ~12:5xZ words verbatim:
 
-- **UNPLACED**: a registered project absent from the sequence, governed by its own directive's rules. This is not a failed PRD or an OUT-OF-SEQUENCE verdict.
-- Laptop capacity **3/3**, from broker liveness within 120 seconds: COO~F, COO~G and COO~O. This is broker-reported liveness, not an independent process probe. COO~G identifies those assignments as IRPT_FNTEND, the LGIC projects and NFRA_OPLGTW respectively.
-- Current next-slot order: **LGIC_CANON → ADVI_FIRMBKTS → MDPF_CANON → IRPT_BCKEND**.
-- `project.json` still has `coo_lane: null`; the admitted canonical notification remains UNSENT without a recipient.
+> If push mdpf_taxsma as the next one followed by nfra_oplgtw
 
-## Recorded Andrew order and CTO disposition
+The CTO landed that order in **`org/missions/SEQUENCE.yaml` v4 at `8f0c4fa2bf1538031561ed60993976956e974efa`**. This author read the committed YAML: new stage0 contains MDPF_TAXSMA first and NFRA_OPLGTW second, both without waits_on gates. Stages1-3 remain as in the CTO's ruling. This resolves LD-0567's conflict with the earlier LGIC_CANON claim on COO~F's next free slot; it also confirms Andrew's earlier ~07:5xZ word at4524cc2466. The rejected tail-placement proposal8c70cabc48 remains **NOT ADOPTED**.
 
-Exact notice `20260915T091519Z_1.0.0_SA_CTO_Re_MDPF_TAXSMA_placement__8c70cabc48__NO.md`, Msg-ID **97006**, from `1.0.0_SA_CTO`, rejects the stage-3-after-IRPT_BCKEND proposal. The author read and ACKed that notice, then read the authority it names:
+NFRA_OPLGTW keeps **`2.0.0_SA_COO~O`**. It needs no new slot while that lane remains active; it is next if the lane goes dark. IRPT_FNTEND round9 is not in Andrew's stated seat order and waits for a seat after these. COO~F is only a possible available seat if MSTR verifies its instance has no open orders; this notice does not assign COO~F to TAXSMA.
 
-- `org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20260915_075xZ_LAPTOP_CAPACITY_ORDER_TAXSMA_THEN_OPLGTW_THEN_IRPT_BCKEND.md@4524cc2466a861f38565eac09e5f88c9e10a9013`, **LD-0567**.
-- Andrew's recorded ~07:5xZ order is **MDPF_TAXSMA first, NFRA_OPLGTW second, IRPT_BCKEND third**, when laptop has capacity. IRPT_BCKEND also depends on his stated LGIC condition. The source contains his full words.
-- MSTR applied that order while TAXSMA still needed CTO L4: the then-free COO slot went to NFRA_OPLGTW as COO~O. That was not a reversal of TAXSMA's stated priority.
-- The same authority explicitly carries an unresolved conflict to Andrew: his 2026-09-14 ~18:2xZ word gives COO~F's next free slot to **LGIC_CANON**; today's order puts **MDPF_TAXSMA** first once ready for L5. CTO 97006 confirms that MSTR already carries this call and CTO recommends TAXSMA.
+## Current sequence measurement
 
-The old note's statement that no relative-priority instruction existed was incomplete. Its proposed placement after IRPT_BCKEND contradicts the recorded order and must not be used for scheduling. No replacement stage or sequence row is supplied here.
+`python .tools/sequence-check.py --project MDPF_TAXSMA`, read after97073, reports:
 
-## Current hold and next owners
+- **PLACED, stage0**, PRD v0.2 ADMITTED with both current halves SIGNED; `dep_stage=PRD`, flag **NEEDS-SLOT**.
+- **Next COO slot:** MDPF_TAXSMA -> LGIC_CANON -> ADVI_FIRMBKTS -> MDPF_CANON -> IRPT_BCKEND. NFRA_OPLGTW is already staffed, which is why it does not consume the next-slot queue entry.
+- Laptop capacity **3/3**, lanes COO~F, COO~G and COO~O, from `org/mcp/liveness.json` registrations seen within120 seconds. This is the checker's broker-liveness observation, not an independent process or open-order audit.
 
-CTO 97006 says **nothing moves until Andrew rules on that seat conflict**. The CTO will land the `SEQUENCE.yaml` edit citing whichever word governs. The existing checker output describes the checked-in queue; it does not resolve the conflict or supersede the later recorded Andrew order. This author makes no sequence edit, seat reservation or lane claim from the notice.
+The priority decision is settled. Remaining routing work is operational seating by MSTR and delivery to the named lane, not another Andrew approval.
 
-`org/missions/SEQUENCE.yaml@ed79be4291` reserves order changes to Andrew's word and assigns seating to MSTR, with a three-COO laptop cap. The pending decision is already with those owners; this correction does not create a duplicate approval request. It also does not create a new technical whole-project prerequisite from the signed PRD's activation constraints.
+## Next owners and exact handoff
 
-Once the actual seat is named, record its exact serial in the project's `project.json` (`coo_lane`) and use the canonical notifier for the admitted package. `coo_lane` is not a permitted project-row key in SEQUENCE.yaml. No `PRD_NOTIFY_TO` bypass or invented recipient is used to manufacture delivery.
+1. **[0.0.0_AB_MSTR]** Name the next free COO seat for MDPF_TAXSMA within the three-session cap, checking the instance's open orders before treating it as available.
+2. **[1.0.0_SA_CTO~A]** After that assignment, record the exact full serial in this project's `project.json` `coo_lane`. Do not put that key in SEQUENCE.yaml or infer a recipient from liveness alone.
+3. **[1.0.0_SA_CTO~A]** Fire the repository's canonical L4 notifier for the unchanged admitted v0.2 package (`60c722fe64`) to the named round holder, and record actual delivery evidence. `.tools/prd-header-notify.py` intentionally holds a release without `coo_lane`; no `PRD_NOTIFY_TO` bypass is used. Delivery/READ demonstrates transport or intake, not L5 completion.
+4. **[named COO lane]** Own L5 decomposition and the downstream canonical flow after receiving the admitted package. This note issues no task orders or implementation GO.
 
-The corrected disposition goes back to CTO and to MSTR and COO~G, the recipients of the rejected routing proposal. Notice 97006 is archived only after this correction is committed and routed.
+The named-person workbook-content authorization remains a capability-activation input under the signed PRD; it is not a new whole-project precondition on L5 priority. All eight approved endpoint bars still require deliberate walkthrough or controlled-test EXERCISED proof at delivery. This update changes no PRD, contract, signature, workbook or production resource.
 
-The next execution limb remains **L5, COO-owned**. All eight approved endpoint bars remain to be exercised during implementation. The named-person workbook-content activation input, frontend/push holds, and normal runtime release checks remain as specified. This routing update changes no PRD, contract, signature or production resource.
+## Superseded routing history
+
+COO~G notice96997 declined the project under its assigned scope and capacity; that refusal did not select another lane. The earlier checker read TAXSMA as UNPLACED. CTO97006 then rejected the proposed placement after IRPT_BCKEND and kept movement held until Andrew resolved the competing LGIC_CANON next-slot claim. That decision hold is now superseded by97073 and SEQUENCE v4; the historical checker output is not the current queue.
+
+Prior authority: `org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20260915_075xZ_LAPTOP_CAPACITY_ORDER_TAXSMA_THEN_OPLGTW_THEN_IRPT_BCKEND.md@4524cc2466a861f38565eac09e5f88c9e10a9013`, LD-0567. No new sequence edit is made by this seat.
