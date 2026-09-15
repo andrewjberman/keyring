@@ -5,13 +5,43 @@
  "project": "POSN_ASTTAX",
  "directive": "D4",
  "fabric": "site-z",
- "prd_version": "v0.10",
+ "prd_version": "v0.11",
  "step": 4,
  "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260911_ASSET_CLASS_TAXONOMY_BRIEF.md@03f1d00ec4",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7"],
  "status": "DRAFT"
 }
 ```
+
+## s.0 ADDENDUM v0.11 -- A SATELLITE HOLDING'S NAME AND ACTIVE COME FROM ETFClassifier; THE LABEL KEEPS ITS SERVED PRECISION
+
+**Author** `1.0.0_SA_CTO~Z` (L4), 2026-09-15. **Carries** one Andrew-direct word at the `1.0.0_SA_CTO~Z` terminal, VERBATIM:
+- ~04:0xZ: *"Two things I need you to figure out: 1.) [Image #4] Random floats here in Satellites view, need to understnad why
+  they're not being rounded off. 2.) [Image #5] looks like none of this is going through ETFClassifier + obviously characteristics and
+  performance are blanked [Image #6]"* (screenshots 2026-09-14 235716 / 235735 / 235916). Rows `POSN_ASTTAX-Z-S138`, `POSN_ASTTAX-Z-S139`.
+
+**NEW CONSTRAINT:**
+
+- **C-HOLDING-IDENTITY** (FWD-5, FWD-7; disarm route for `POSN_ASTTAX-Z-S139`). B6's `characteristics.json` `tickers` block ALSO carries, for every
+  ticker any satellite holds, `name` and `management_style` read from ETFClassifier (DynamoDB `etf-classifications`, through its one
+  module) -- independent of the measures' source precedence, which is unchanged. A ticker the table does not carry publishes both NULL,
+  counted. The Satellites Holdings Breakdown renders NAME from it (the ticker only where the table has no row) and ACTIVE from
+  `management_style` (`active` -> YES, `passive` -> NO, `unknown` or NULL -> blank). **Measured basis (~04:0xZ):** full scan, 285 items;
+  all 25 satellite tickers carry `name` and `management_style`; for the 23 Yang also holds, Yang's `name` equals the table's 23 of 23 and
+  Yang's `active` equals the table's style 23 of 23 -- one source, already agreed. The HoldingsTab beta overrides (PFDE, PFOE, UVXY) are
+  Yang's specification in every mode and stay.
+
+**CLARIFIES, in s.0 ADDENDUM v0.9 `C-SUMMARY-COPY`, exactly the rounding clause; everything else in it stands:**
+
+- **The single-bar percent label renders the value at no more than two decimals, trailing zeros dropped** (`PositioningSummary.tsx:1011`;
+  disarm route for `Z-S117` and `POSN_ASTTAX-Z-S138`). The defect is the IEEE float artifact of summing served two-decimal weights
+  (`62.589999999999996%`); the fix keeps the precision the served rows carry. Satellites render `62.59%`, `29.82%`, `90.24%`; Models and
+  ETFs labels are byte-identical to today (`82.6%`, `17.4%`). "Rounds like its two siblings" is withdrawn: the siblings round to whole
+  percents, which would re-format every Models label.
+
+**WHAT THIS ADDENDUM CHANGES:** brief half only -- `4.0.0_SA_CRO~Z` re-signs; `ENDPOINT` untouched, so the ratified-text signature stands.
+It cuts no order: `TO-W1-1` (B6 identity fields and a READ grant on `etf-classifications`, before its deploy leg), `TO-W2-1` (F4 name and
+ACTIVE, before hand-off) and `TO-W3-1` (F5 act 2) are amended by their issuer.
 
 ## s.0 ADDENDUM v0.10 -- THE v0.9 REFUSALS ADOPTED; GLD'S RETURNS SERVED; THE BRIEF COVERAGE MAP
 

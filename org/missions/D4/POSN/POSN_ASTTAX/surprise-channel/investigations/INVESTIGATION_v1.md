@@ -6207,3 +6207,58 @@ Andrew asked for (msg 22917); it concerns this project's portal files meeting an
 }
 ]
 ```
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-S138",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-09-15T04:06:42Z",
+    "one_line": "THE ROUNDING READING IN TO-W3-1 WOULD CHANGE THE MODELS LABELS, AND THE AMBIGUITY IS THIS SEAT'S WORDING: C-SUMMARY-COPY says the third percent label 'rounds like its two siblings'; the order reads that as Math.round(v)% at PositioningSummary.tsx:1011 and tells the worker to implement it even if read otherwise. :1011 is the single-bar label for EVERY mode, so Models' served 82.6 / 17.4 / 32.8 would render 83% / 17% / 33%. Andrew's defect is the float artifacts on Satellites (62.589999999999996%), not the precision the other modes show.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ANDREW-DIRECT 2026-09-15 ~04:0xZ at the 1.0.0_SA_CTO~Z terminal, VERBATIM: 'Two things I need you to figure out: 1.) [Image #4] Random floats here in Satellites view, need to understnad why they're not being rounded off. 2.) [Image #5] looks like none of this is going through ETFClassifier + obviously characteristics and performance are blanked [Image #6]' -- screenshots 2026-09-14 235716.png (Satellites summary), 235735.png (Holdings Breakdown, Characteristics), 235916.png (Performance).",
+        "SOURCE at portal dd1d33c6: PositioningSummary.tsx non-ghost, non-relative branch renders {data[c.key]}% with no formatting (read 04:0xZ); the Custom pair uses Math.round; the relative delta toFixed(1).",
+        "CAUSE OF THE FLOATS: satelliteAdapter.ts:301-307 sums served two-decimal weights per class in IEEE doubles (62.59 arrives as 62.589999999999996); the Models and ETFs payloads arrive already rounded, so the raw render never exposed a float there.",
+        "ORDER TEXT: task-orders/POSN_ASTTAX.TO-W3-1...md act 2 -- ':1011: the label renders Math.round(v)% like the Custom pair ... If you read the constraint otherwise, file a row and implement THIS reading'. Andrew's Image #2 (~02:1xZ) shows Models at one decimal (82.6%, 17.4%, 12.7%, 85.8%, 1.5%).",
+        "PROGRESS AT THE READ: the F5 portal branch wk-posn-6-26-portal still at dd1d33c6 (no commit)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD v0.10 C-SUMMARY-COPY: 'The third percent label rounds like its two siblings (PositioningSummary.tsx:1011, Z-S117)'. TO-W3-1 act 2: Math.round(v)%.",
+    "world_is": "Integer rounding on :1011 fixes Satellites and silently re-formats every Models and ETFs single-bar label to whole percents. The intent is to remove float artifacts at the precision the served rows carry.",
+    "notes": "REMEDY (PRD v0.11 C-SUMMARY-COPY clarified): the label renders the value at NO MORE THAN TWO DECIMALS with trailing zeros dropped (e.g. Number(v.toFixed(2))) -- Satellites 62.59% / 29.82% / 90.24%; Models and ETFs byte-identical to today (their values carry one or two decimals). 2.0.0_SA_COO~Z amends TO-W3-1 act 2 and its bar before the worker commits; the bar adds Models' 82.6% as the unchanged control."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-S139",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-09-15T04:06:42Z",
+    "one_line": "THE SATELLITES HOLDINGS BREAKDOWN DOES NOT TAKE A HOLDING'S NAME OR ACTIVE/PASSIVE FROM ETFClassifier, THOUGH THE TABLE CARRIES BOTH FOR 25 OF 25 SATELLITE TICKERS: the Name column shows the ticker (the adapter's stand-in), ACTIVE shows 'NO' on every row (an undefined value rendered as NO), and PFDE's beta 1.05 is a HoldingsTab hardcode. Round 6 as cut fixes the measures (B6/F4) and the NO chip, but F4 keeps name = ticker and B6's active comes from Yang's row, so GLD and CASH would still have no active and every name would stay a ticker.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ANDREW-DIRECT 2026-09-15 ~04:0xZ at the 1.0.0_SA_CTO~Z terminal, VERBATIM: 'Two things I need you to figure out: 1.) [Image #4] Random floats here in Satellites view, need to understnad why they're not being rounded off. 2.) [Image #5] looks like none of this is going through ETFClassifier + obviously characteristics and performance are blanked [Image #6]' -- screenshots 2026-09-14 235716.png (Satellites summary), 235735.png (Holdings Breakdown, Characteristics), 235916.png (Performance).",
+        "SERVED TABLE, full scan of etf-classifications at 04:0xZ (285 items, no LastEvaluatedKey): attribute census name 285, management_style 283, asset_class 285, sub_asset_class 285, sector 115. All 25 distinct satellite tickers present, each with a name and a management_style (GLD 'SPDR Gold Shares' passive; CASH 'Cash & Cash Equivalents' unknown; DIVZ 'Opal Dividend Income ETF' active).",
+        "AGREEMENT WITH YANG: for the 23 satellite tickers Yang's current_holdings also carries, Yang name == classifier name 23 of 23 and Yang active == classifier management_style (active->1, passive->0) 23 of 23 -- so the classifier is the single source both already express.",
+        "CODE at HEAD / portal dd1d33c6: build_satellites_registry.py build_holdings() emits ticker, weight, asset_class, sub_asset_class, sleeves -- classify() reads the ROW but keeps two fields; satelliteAdapter.ts:277 name: r.ticker; HoldingsTab.tsx:1561-1565 active === 1 ? YES : NO; HoldingsTab.tsx:976-985 hardcoded beta overrides (UVXY -3.2, PFDE 1.05, PFOE 1.22) applied in every mode.",
+        "ROUND 6 AS CUT: TO-W2-1 act 3 attaches fee/aum/active/yield/duration/credit/beta/returns from characteristics.json tickers and act 4 renders a null active as '-'; no act touches name. TO-W1-1 / v0.10 C-HOLDING-MEASURES take active from Yang's row, NULL for a Bloomberg-sourced ticker."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD C-ONE-SOURCE / FWD-5: the classification is defined in one place and flows everywhere. v0.10 C-HOLDING-MEASURES: active from Yang's row, else NULL.",
+    "world_is": "A satellite row's name and active are not read from ETFClassifier at any layer; Yang's copies of both agree with the table where Yang holds the ticker, and nothing serves them for GLD or CASH.",
+    "notes": "REMEDY (PRD v0.11 C-HOLDING-IDENTITY): B6's tickers block ALSO carries, for every ticker, `name` and `management_style` read from ETFClassifier (the same table the holdings labels come from; a READ grant on etf-classifications added to the never-widen halves), independent of the measures' source precedence; F4 renders name from it (ticker only when the table has no row, counted) and ACTIVE from management_style (active YES, passive NO, unknown or absent '-'). Both are issuer amendments inside round 6 (TO-W1-1 before its deploy leg, TO-W2-1 before hand-off). The PFDE/PFOE/UVXY beta hardcodes are Yang's specification in every mode and are NOT changed here; with B6 served, PFDE's beta is Yang's own 1.05 and the override is idempotent."
+  }
+]
+```
