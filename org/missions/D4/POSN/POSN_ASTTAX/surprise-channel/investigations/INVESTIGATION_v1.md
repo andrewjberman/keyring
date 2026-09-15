@@ -7784,6 +7784,27 @@ Andrew asked for (msg 22917); it concerns this project's portal files meeting an
   "spec_asserts": "TO-W2-1 as amended and re-cut; PRD v0.11 FWD-7, C-HOLDING-MEASURES, C-HOLDING-IDENTITY.",
   "world_is": "Round 6's three orders read complete at HEAD.",
   "notes": "For L9: four spawns for one order, three of them on the issuer's invocation defects; the cost is recorded in the round-6 log."
+},
+{
+  "id": "POSN_ASTTAX-Z-S175",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T13:20:36Z",
+  "one_line": "B6's ORGANIC ARM LANDED AND ANSWERS THE VINTAGE QUALIFIER WITHOUT A THIRD DRIVEN RUN: the rescheduled rule cron(30 12 * * ? *) fired at 12:30:54Z after both its inputs of the day (the 11:06Z models publish at positioning_data_as_of 2026-09-14; the 11:07Z scheduled Bloomberg pull rewriting bbg/2026-09-14 as run_class scheduled) and served characteristics.json 02SGBCPDoeVPy7JBJcEHxUw4J0.nQneh with inputs 2026-09-15 / 2026-09-14 / 2026-09-14 -- 25 tickers, identity 25 of 25, GLD's returns at the 2026-09-14 frontier; every count equal to the two driven runs' (04:53Z, 08:10Z). The MSTR's vintage qualifier (23103: 23 of 25 at positioning 2026-09-11) is CLOSED by the schedule itself: 25 of 25 at T-1. The R3/A3 third driven run, armed on the models publish, was NOT fired: this seat's publish watch expired at ~11:04Z and the seat did not wake until 13:16Z (the operator's word), by which time the scheduled fire had done the same work -- recorded as it happened, not as planned. B6 ledger posn-round6-b6-characteristics-tickers L8 CLOSED on this read; the ledger CLOSED 9 of 9. C-B4-SCHEDULE's mechanism is now EXERCISED on the plane: the 12:30Z fire followed its inputs on the first day it existed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "get-object at 13:17Z: VersionId 02SGBCPDoeVPy7JBJcEHxUw4J0.nQneh, LastModified 12:30:54Z, 64556 B; positioning_data.json aJ7nhwRKko3H_AMRzsNvvwkf1NiO9aou at 11:06:20Z with data_as_of 2026-09-14; bbg/2026-09-14/run_manifest.json rewritten 11:07:04Z.",
+      "WHY GRADUATED: the organic case produced the state the driven case was armed for, on schedule, with no act of this seat; the ledger's last leg closes on a read of the served key."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "PRD v0.11 C-B4-SCHEDULE: cron(30 12 * * ? *) after the 07:00 America/New_York pull, never success-of-upstream; the B6 halves R3/A3: a third driven run after the models publish (superseded).",
+  "world_is": "The served satellites block is at T-1 for all 25 holdings by the scheduled fire; no ad-hoc act was needed after 08:10Z.",
+  "notes": "For the MSTR's re-verification: VersionId 02SGBCPD..., the same six-key fixture route; for L10: a seat that arms a clock-bound act must arm a wake that survives a 30-minute monitor expiry -- the gap cost nothing tonight because the schedule covered it."
 }
 ]
 ```
