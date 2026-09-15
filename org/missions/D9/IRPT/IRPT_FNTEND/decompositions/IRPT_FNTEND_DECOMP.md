@@ -1,4 +1,4 @@
-# IRPT_FNTEND -- L5 decomposition -- rounds 1 through 7 -- v0.7
+# IRPT_FNTEND -- L5 decomposition -- rounds 1 through 8 -- v0.8
 
 ```json
 {
@@ -6,7 +6,7 @@
  "directive": "D9",
  "fabric": "laptop",
  "round": 2,
- "decomp_version": "v0.7",
+ "decomp_version": "v0.8",
  "round_1_header_retained_below": true,
  "prd_ref": "org/missions/D9/IRPT/IRPT_FNTEND/prd/IRPT_FNTEND_PRD.md@62301f71e0",
  "prd_version": "v0.4",
@@ -1656,3 +1656,166 @@ no shared file, so each is its own chain and its own ready root`.**
   drains without it.
 - **The seat question is at Andrew, not ruled** (analysis s.5). The CTO's rec is to free this seat after round 7
   drains. Until he answers, round 7 proceeds.
+
+# ROUND 8 -- v0.8 -- the recut on the CTO's ROUND-7 ANALYSIS
+
+```json
+{
+ "round": 8,
+ "decomp_version": "v0.8",
+ "prd_ref": "org/missions/D9/IRPT/IRPT_FNTEND/prd/IRPT_FNTEND_PRD.md@d1479bc5f0",
+ "prd_version": "v0.6 -- UNCHANGED; the analysis owes no addendum, so no L4-R half re-opens",
+ "analysis_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_IRPT_FNTEND_ROUND7_20260915.md (msg 96865; the CTO commits it when the shared index frees and said 'do not wait for the hash')",
+ "slug_ref": "3.0.0_SA_CVO msg 96838, record org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND7_L8_L9_20260915.md@ac41c29ce1, carriers C-S93..C-S98 @aba71991f0, REMEDIATION_v3.md @2d42ebd1b0 -- 4 judgment criteria graded PASS (3 qualified), 5 rows graduated",
+ "round7_cells": "FE-s-42..FE-s-45 ALL COMPLETE and drained (last: FE-s-45 @32855486f0, portal DEV 1f3ce9f0)",
+ "cells": 3,
+ "cell_id_shape": "FE-s-<n> continuing from 46",
+ "code_repo": "portal (gitlink in the workspace; branch DEV @1f3ce9f0, measured)",
+ "record_repo": "workspace (branch CLOUD, measured at this commit)",
+ "seat": "Andrew-direct ~03:2xZ 'both recs approved' (@9e0ee4b49c): 2.0.0_SA_COO~F holds IRPT_FNTEND through round 8, then the seat frees"
+}
+```
+
+Round 7's lesson, from the CTO's own W1-S69: **a bar that names a reading must name one that DIFFERS in the world it
+rules out.** Round 8 closes the slug's three cuttable items as three small cells: timeouts sized to measured cost, the
+adapter's reason on the no-status path, and "withheld" for a cohort the producer does not assert. The CTO fixed W6-S1
+and W4-S16 in its own surfaces, landing with its analysis commit, so no cell is cut for them.
+
+## R8.1 THE RECTANGLE -- three cells, one wave, disjoint by file
+
+| cell | ruling | write surface | serves | rows | slot |
+|---|---|---|---|---|---|
+| `FE-s-46` | W3-S33 -- per-test timeouts sized to measured cost | portal `__tests__/fe-s-40/window.test.ts` and `__tests__/fe-s-41/one-writer.test.ts` (timeout arguments ONLY); `__tests__/fe-s-46/` | FWD-1, FWD-11 (evidence) | C-S96 (W3-S33) | ~1 |
+| `FE-s-47` | W3-S35 -- the ADAPTER supplies the reason; validate unchanged | portal `contracts/adapt.ts` (the explicit-unknown sites + one constant); `__tests__/fe-s-47/` | FWD-5, FWD-6 | C-S97 (W3-S35) | ~3 |
+| `FE-s-48` | F42-AC10's qualification -- a non-authoritative cohort reads "withheld" | portal `header/ScopeSummary.tsx` (the withheld word and its comment); `__tests__/fe-s-48/` | FWD-5, FWD-6 | C-S93 (F42-AC10 qualified) | ~4 |
+
+**Coverage by subtraction, three domains.**
+(1) The analysis's items (denominator 7: W1-S69, W1-S70, W6-S1, W4-S16, W3-S35, F42-AC10, W3-S33) MINUS where each lands:
+W1-S69 is a bound on every criterion cut from now on (R8.2 "runtime"); W1-S70 is taken with no cell, because RULING (B)
+stands on its other two reasons; W6-S1 and W4-S16 are fixed by 1.0.0_SA_CTO in its own surfaces; W3-S35 = 47;
+F42-AC10 = 48; W3-S33 = 46. **0 uncovered.**
+(2) REMEDIATION_v3's OPEN rows (denominator 5: W1-S69, W3-S33, W6-S1, W3-S35, W4-S16) MINUS their disposition: W3-S33 -> 46;
+W3-S35 -> 47; W1-S69 -> bound R8.2; W6-S1 and W4-S16 -> 1.0.0_SA_CTO's own fixes. **0 uncovered.** The 5 dismissed rows
+(C-S94, C-S95) are closed and not re-cut.
+(3) The PRD header's outcomes (denominator 8: FWD-1, 3, 4, 5, 6, 8, 11, 12) MINUS those round 8 moves: FWD-5 and FWD-6
+{47, 48}; FWD-1 and FWD-11 {46, evidence}. **4 NOT MOVED AND NAMED: FWD-3, FWD-4, FWD-8, FWD-12.** No FWD is uncovered.
+
+**RULING X's census, run at this cut BY WHOLE-SUITE PROBE, not by grep.** It used a detached probe pair: workspace at
+CLOUD HEAD and portal at DEV 1f3ce9f0, with its own junction. Each ruling's minimal change was applied alone, the
+InvestorReporting suite was run on a measured-closed port, and the change was reverted:
+- **Run A, "withheld" at `ScopeSummary.tsx:118`: 559 pass, 18 skip, 1 fail of 578.**
+- **Run B, the carry supplying a reason when no status or no stated state arrived (`adapt.ts:292`): 559 pass, 18 skip,
+  1 fail of 578.**
+- **The 1 fail is the SAME test both times, and it is caused by neither change.** It is F41-AC5's control
+  (`fe-s-41/one-writer.test.ts:791`, added by FE-s-45 in round 7), timing out at 5859 ms and 5812 ms under load.
+  - That makes it a THIRD member of W3-S33's class, which the row did not name, and it goes into FE-s-46 by name.
+  - So 47's and 48's changes each turn **0** existing tests red, and neither needs a census-named test grant.
+- A read census of `partialReason`, `: unknown` and `not asserted` under `__tests__/` finds 84 hits in 44 files. The run,
+  not the read, closes the grant; the read is too wide to grant from.
+- `EXPLICIT_UNKNOWN_STATE` into an Availability: `adapt.ts:228` (`wireEnvelope`) and `:290` (`carryAvailabilityFromStatus`,
+  whose `:292` carries the DOCUMENT's partialReason). `envelope.ts:233` is `IrParsedEnvelope.state`, which is not an
+  Availability.
+- Status-optional operations: 11 of 12 (`contracts/wire/responses.ts:236-249`). `envelope.ts:231` says ten, which is stale by
+  one and named in 47, not edited.
+- `partialReason` renderers: `render/Page.tsx:160`, `tabs/reporting/AnswerStatus.tsx:56`,
+  `render/performance/MethodsAndSources.tsx:173` and `:242`. The reason reaches the screen with no UI grant.
+- `CohortFact` render sites: `ScopeSummary.tsx` only; `validate.ts:164-171` checks and does not render (round 7's census).
+
+The whole-suite run stays each cell's census of record, because a probe seeds a grant and the worker's run closes it.
+
+## R8.2 BOUNDS -- ALL ROUND-8 CELLS (rounds 1-7 bounds stand)
+
+```
+X  reach     the cut's reach is a subtraction over the corpus; R8.1's whole-suite probe is this cut's census; every
+             test a ruling's change turns red is granted BY NAME (0 this round).
+Y  re-run    the issuer never re-runs a worker's bars in the worker's worktree: an untouched detached pair (workspace
+             + nested portal + junction), with `git ls-files --eol` printed beside any byte-compare.
+AC reads     a criterion that reads a file reads the committed blob or tree, or its bound says why it reads the
+             working copy (46's load runs do, by design).
+runtime      (W1-S69) a criterion that names a runtime names a reading that DIFFERS under the other runtime: the
+             listener's image name, and process.versions.bun absent. Never process.release.name alone. No round-8
+             criterion names a runtime.
+census       the whole-suite run is the census of record for every cell; F41-AC5's control timing out under load is
+             46's row, so 47 and 48 report it and re-run, never edit it.
+servers      no dev server this round; IRPT_FE_DEV_PORT on EVERY bun test run to a measured-closed port: 46 on 5261,
+             47 on 5263, 48 on 5265.
+timeouts     per-test only; no bunfig.toml or global timeout, because a global value would hide every other slow test.
+drives       every criterion declares drives="network" or drives="none" (all "none" this round).
+anchors      count bars left `(?<![0-9])`, right `(?![0-9])`, never `\b`.
+rows         round-8 rows go to INVESTIGATION_v2.md; read the WHOLE plane (v1 and v2) before minting; an INERT row
+             OMITS disarm_owner. Row starts at the cut: W1-S71, W3-S36, W4-S18.
+gitlink      never stage `portal` in the workspace repo. PORTAL IS FROZEN: local DEV commits only.
+```
+
+## R8.3 THE CELLS
+
+### `FE-s-46` -- timeouts sized to measured cost (W3-S33)
+Three tests pass on their content, but their loaded cost (5172 to 5875 ms) is past bun's 5000 ms default while their
+unloaded cost is under it. So a later cell's census reads red for a reason that cell cannot fix. Each test in the two
+files that can reach the default gets its own third `test()` argument, at least 3 times its highest recorded cost and
+at most 60000 ms. A seeded 1 ms timeout shows bun honours the argument.
+
+### `FE-s-47` -- a response with no status says why its state is unknown (W3-S35; the CTO's RULING)
+With no status, `carryAvailabilityFromStatus` leaves the document UNCERTAIN with no reason. validate refuses that, and
+the screen shows UNCERTAIN with nothing to explain it. The adapter supplies ONE named reason on that path only. A
+stated state never carries it (the `:292` hazard), and validate is unchanged. The class runs over every status-optional
+operation that carries an availability, not the one instance.
+
+### `FE-s-48` -- a non-authoritative cohort reads "withheld" (F42-AC10's qualification; the CTO's RULING)
+`ScopeSummary.tsx:118` renders every withheld axis as `<axis>: unknown`. It becomes `<axis>: withheld`, and the comment
+follows. The assertable path, including a producer's own UNKNOWN token, is unchanged. Text only, so no contrast
+surface moves.
+
+## R8.4 DEPENDENCY EDGES, SLOTS, FAN-OUT
+
+```
+  FE-s-46 <- (none)   READY ROOT   portal: fe-s-40/window.test.ts + fe-s-41/one-writer.test.ts (timeouts only)
+  FE-s-47 <- (none)   READY ROOT   portal: contracts/adapt.ts (explicit-unknown sites + one constant)
+  FE-s-48 <- (none)   READY ROOT   portal: header/ScopeSummary.tsx (the withheld word + comment)
+
+  weakly connected components: M = 3     ready roots at issuance: R = 3
+  waves: A={46,47,48}      max concurrent width: 3
+  ~1 FE-s-46   ~3 FE-s-47   ~4 FE-s-48
+```
+
+The cells are disjoint by FILE: no two cells write the same file, and each new test folder is its cell's own. 47's
+tests read `ScopeSummary`'s neighbours only through the adapter, and 48's tests read no adapter file 47 writes. The
+three drain in any order.
+
+**Fan-out: `3 of 3 chains, cap 8, reason: the round-7 analysis's three cells have no dependency edge between them and
+no shared file, so each is its own chain and its own ready root`.**
+
+## R8.5 RULE 24 RECORD (round 8)
+
+| postulate | how |
+|---|---|
+| (i) MECE | three domains by subtraction in R8.1: analysis items 7-7=0; open remediation rows 5-5=0; outcomes 8-4=4 NOT MOVED AND NAMED. RULING X's census is a whole-suite probe per ruling, with its denominators printed (578 tests, 102 files). Cells partition by FILE. |
+| (ii) same grain | (write region, ruling) per cell; all three are portal cells at the file grain. |
+| (iii) intent | 46: a test's pass depends on its content, never on the box's load. 47: a state the wire did not send carries the reason it is unknown. 48: a value the panel declines to assert says so. |
+| (iv) state | moves FWD-5 and FWD-6 toward EXERCISABLE, and the evidence plane. Does NOT move: any grade to REALIZED (fixture-bound evidence; the EXERCISED proofs need IRPT_BCKEND, last in SEQUENCE.yaml); FWD-3, 4, 8 and 12; the `.tools` census bound (W6-S1, the CTO's); the canonical-flow skill (W4-S16, the CTO's); 3.0.0_SA_CVO's backfill question (at Andrew); the portal freeze. |
+
+## R8.6 BATTERY DISPOSITION (round 8)
+
+| lens | disposition | denominator / reason |
+|---|---|---|
+| comp-schedule / comp-iam | DECLARED-NOT-APPLICABLE | no scheduled producer, no IAM-gated resource |
+| comp-adversary | RUN at L4 on v0.6 (both halves SIGNED) | carried; PRD unchanged (no addendum) |
+| the slow tests | RUN | `window.test.ts:253`, `one-writer.test.ts:424` and `:791`, no timeout argument; unloaded file totals 2.20 s and 7.19 s (3 of 3 runs green); loaded 5172, 5735, 5875, 5859 and 5812 ms |
+| the no-status path | RUN | `validate.ts:95-96`; `adapt.ts:167`, `:228`, `:290`, `:292`; `envelope.ts:219`, `:233`; `responses.ts:236-249` (11 of 12 optional); the reason renderers (4 sites) |
+| the withheld site | RUN | `ScopeSummary.tsx:67-68`, `:117-119`, `:9-12`; `fixtures/directory.unknown-cohort.json` |
+| RULING X's census | RUN | two whole-suite probe runs, 559/18/1 of 578 each, the 1 fail the same unrelated timeout |
+
+## R8.7 REFUSES TO ASSUME (round 8)
+
+1. That a row's own list is the population. W3-S33 named two slow tests; the probe found a third, in the same file.
+2. That a grep of a word sizes a grant. 84 hits in 44 files; the whole-suite probe says 0 tests turn red.
+3. That a fix to one site is safe at the seam. `:292` carries the document's reason forward, so a reason placed in
+   `wireEnvelope` would ride onto a stated state; 47's control arm reads it.
+4. That a named reading discriminates. W1-S69: `process.release.name` reads "node" under bun too.
+5. That a comment's count is the count. `envelope.ts:231` says ten status-optional operations; the table holds 11.
+
+## R8.8 HOLDS
+
+- **The seat.** Andrew-direct ~03:2xZ, "both recs approved" (@9e0ee4b49c): this seat holds IRPT_FNTEND through round 8,
+  then frees. His ~18:2xZ word, relayed, gives the next freed seat to LGIC_CANON.
+- **PORTAL FROZEN:** local DEV commits only. No CLOUD push and no SITEZ merge until Andrew's word (0.0.0_AB_MSTR's).
