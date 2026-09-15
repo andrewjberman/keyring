@@ -31,4 +31,5 @@ in the form `SIGNOFF <serial> <YYYYMMDDTHHMMSSZ> <scope>`, before leg L2 is run.
 1.0.0_SA_CTO:
 
 2.0.0_SA_COO~G:
+SIGNOFF 2.0.0_SA_COO~G 20260915T070844Z scope: the act EN-f-2 performs -- ONE safe-apply of infra/aws/terraform/shared-infra/ per FENCE_PLAN.md s.1, 7 changes: aws_s3_bucket_policy.opal_data_49financial updated to Deny s3:* where aws:PrincipalArn is ArnNotLike 1 derived pattern (role/*-49f-*) and 16 exemption ARNs, and 3 probe roles with 3 inline read policies created; writers of access to opal-data-49financial counted: 16 live IAM grants (census, all exempt, unchanged), 0 AWS service principals delivering into it (live graph 05:56:10Z: 3 nodes, 0 event notifications; repo: 0 logging/replication/inventory/notification targets), 1 declared role family advi-49f-* (derived pattern; denied neither before nor after); narrows every other principal, the account root included (recovery: root may replace the policy); rollback per key: FENCE_PRIOR_POLICY.json via put-bucket-policy and the L1 revert, probes via L4; the applying identity must be an exempt 2a principal
 
