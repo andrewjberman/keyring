@@ -85,8 +85,8 @@
     "ratified-text": "fed0ad5c18f33765a8e3aaf08bb8fcd1018af3a6ee109340b2ec5fa5ca634fd3",
     "brief": "f67f3a541306f2cf09f706e4fbcb5e5529318c4c193a691cd8ad69f614a97a0e"
   },
-  "prd_sha256": "472b1cd5c99c50c52595e0afb890f4811ff18aed8019b915264658c5606358d0",
-  "data_contract_sha256": "0af07aefd485b5bda905caac89b82746a95e8ba2de62e2122198a5a04031a13f",
+  "prd_sha256": "35c38dc71f71739116f04d8a647cf66025a041279ec2a79175daaed22583ec34",
+  "data_contract_sha256": "5adfb0c5c001f42fc3591d08d5819a7d990f7b9baaf58af232bd2fe892bf7d9a",
   "ratified_text_correction": {
     "notice_id": 96985,
     "ground": "R1",
@@ -98,5 +98,26 @@
       "N3": "Desired schedule observation remains desired only",
       "N4": "CANON prose amendment remains owner-pending"
     }
+  },
+  "admission_checked_utc": "2026-09-15T08:50:04.057346+00:00",
+  "reviewed_prd_sha256": "472b1cd5c99c50c52595e0afb890f4811ff18aed8019b915264658c5606358d0",
+  "reviewed_data_contract_sha256": "0af07aefd485b5bda905caac89b82746a95e8ba2de62e2122198a5a04031a13f",
+  "admission": {
+    "status": "ADMITTED",
+    "header_status": "RATIFIED",
+    "signed_halves_unchanged": {
+      "ratified-text": "fed0ad5c18f33765a8e3aaf08bb8fcd1018af3a6ee109340b2ec5fa5ca634fd3",
+      "brief": "f67f3a541306f2cf09f706e4fbcb5e5529318c4c193a691cd8ad69f614a97a0e"
+    },
+    "contract_changed_fields": [
+      "state"
+    ],
+    "contract_normative_content_equal_to_reviewed_pin": true,
+    "reviewed_pin": "8ab2dc2bc63fe8699e01fc33772b6f8523d224f0",
+    "signature_commits": {
+      "ratified-text": "214982df0b",
+      "brief": "905d2df375"
+    },
+    "canonical_shape_violations": []
   }
 }

@@ -2,7 +2,7 @@
   "contract": "MDPF_TAXSMA_DATA_CONTRACT",
   "version": "0.2.0",
   "authority": "org/missions/D8/MDPF/MDPF_TAXSMA/prd/MDPF_TAXSMA_PRD.md",
-  "state": "PROPOSED_L4_REVIEW",
+  "state": "RATIFIED",
   "purpose": "Normative design enumerations; no deployed implementation or observed account population is asserted by this file.",
   "identity": {
     "firm": "49financial",

@@ -404,8 +404,8 @@ components:
   disposition: AUTHORED_NEW_L4_CONTRACT
   existence_check:
     exists: true
-    last_commit: 48befbfcbfbdc78c360f9716dbffadf13c0f6cff
-    source_sha256: 0af07aefd485b5bda905caac89b82746a95e8ba2de62e2122198a5a04031a13f
+    last_commit: 8ab2dc2bc63fe8699e01fc33772b6f8523d224f0
+    source_sha256: 5adfb0c5c001f42fc3591d08d5819a7d990f7b9baaf58af232bd2fe892bf7d9a
   boundary: Source/path inspection only; no deployed parity inferred. Recheck exact path before authoring; if usable
     already, verify/reuse.
 - name: TAXSMA_WORKBOOK_IDENTITY activation record
