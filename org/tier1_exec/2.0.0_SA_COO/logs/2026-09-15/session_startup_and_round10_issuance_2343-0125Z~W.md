@@ -456,6 +456,52 @@ landed object; fixtures from the pool (the `~20` deliverables hold run records, 
 reach this round routed into rj-12; the contract choice among the worker's three remedies left to the CTO's L10 read. Nine of thirteen
 complete; `~20` and `~22` idle with empty queues.
 
+### 17. rj-9 complete and closed; the last three orders read against the live world before their spawns; rj-10 and rj-12 spawned (17:2x-18:2xZ)
+
+**The split of rj-9 went moot at ~17:2xZ:** between 17:06Z and 17:27Z `~18` wrote the pieces a sibling would have taken (ModelTab,
+ExecManagementTab, PostureTab, ThesisDriverChart, the CSC helper, the header brief, a generation caption, fixtures for five names), so
+a split would have duplicated work. The proposal was withdrawn; Andrew never needed to answer it.
+
+**Pre-cut reads of the three orders still to spawn (~17:3x-18:0xZ), each against the live world:**
+- rj-10 AC1 holds (the CTO half @`e1c3cf0cb3` reads `**Verdict:** SIGNED`; the harvest root has no commit since); AC2 / AC6's
+  hard-coded pre-act values hold live (artifact VersionId `bPw__0SXSujjKYX4.zSjvbmXu2PAon8m`, 75917 B, `sSanbq4v...`; the API
+  function `sSanbq4v...` 75917 B; the producer `fj8wqp9j...` 24370 B). **rj-10 AC4's census was DEFECTIVE**: it split `terraform
+  state list` on WHITESPACE, and the eleven `for_each` route keys carry a space, so over the live state (42 addresses, 2 data,
+  32 entries -- the CTO half's census exactly) the order's own parse printed 53 / 44 and would have stopped a correct deploy.
+  Amended to one address per line @`32b225c0fb`; `wc -l` 42 as the independent control. Lesson banked to memory.
+- **rj-3 AC2's bar was BABA's fixture** (`183/183, header 13/13`) while its `--payload` input is the BA thesis bundle rj-10 captures:
+  measured at HEAD through `read_thesis_bundle`, BA 165 fiscal / 14 header / 179 check rows, fiscal joined 165/165; BABA 183 / 13 /
+  196. rj-9's adapter @`ad830b6cb4` keeps `fiscal_year_figures` and `check_face` on the thesis bundle, so rj-10 needs no third
+  capture. Amended to the payload's own printed totals with the BABA fixture as the regression arm @`d37d652bb4`.
+- rj-12 AC3: `read_posture` returns verdict / comparable / basis / marked at the TOP level (BABA worse, HD, 6, machine; control
+  ABSENT), so AC3 stands; the served payload lacks `packs`, which the spawn prompt names as a route defect to row first.
+
+**Andrew-direct ~17:4x-17:5xZ** (msg 23184, record @`1d9d8fd783`): one standardized metric per Security Analysis tab, an absolute figure
+plus a percentile within the pool of ANALYZED companies, stored in opal-data-harvest and appended over time; named: average
+management tenure. **~18:0xZ correction** (msg 23190, @`4eef3ae75a`): the second tenure measure is executive-specific (tenure at the
+company), filings first, Lusha / LinkedIn where the filing is silent. `1.0.0_SA_CTO~W` routes both to the L10 addendum (candidate 13,
+C-TAB-METRIC) and asks no round-11 order change; this seat followed that routing and widened no frozen face. Carried to the packet.
+
+**rj-9 (`~18`) reported at ~18:0xZ:** 6 of 6 PASS-by-output, the checker rc=1 on ONE limb -- the worker recorded AC4's amended
+invocation (@`4f383fc217`, messaged to it) while its worktree held the older order. The issuer re-graded in the finished worktree with
+the amended bytes written in and then restored (sha `82002e80...` before and after, restored byte-identical): **VALID rc=0**. Drained
+@`969addc889` (union 227 + 6 = 233); `refs/drains/rj-portal` moved ffeb4840 -> `38cba6a2` (fast-forward; rj-2 inside as control);
+the order flipped **complete** by the issuer with the checker VALID at HEAD, in one commit with row **Z-S105** @`5ae785828e` (234 rows).
+Rows W18-S10 (no route added: the reads travel in /overlay, /thesis, /peers), **S11 ARMED** (only the chatter producer writes G-1's
+pointer; the live table has none; once rj-10 deploys, every Price list and today's Chatter list read ABSENT), S12 (the thesis chart is
+ABSENT on 5 of 5 -- no driver series matches a model series and F-1 carries segments as prose), S13 (1 of the 5 CSC columns marked
+present carries values), S14 (the posture arm), S15 (the CEO-profile split read from a prose sentence).
+
+**Z-S105, the disarm of W18-S11, ACCEPT-AND-ROUTE:** at rj-10's deploy no PROMOTED page reads the rankings routes (origin/PROD
+edf85ce5: 0 LeadPanel / RankedList, 0 rankings endpoint; ri-1's 9aef3734 not an ancestor); rj-10's own AC7 writes the Chatter pointer
+inside the act and AC8 grades the served list against it; Price already serves 0 rows (the CTO half's finding 2), so ABSENT replaces an
+empty list. The Price producer writing no generation is a contract gap outside every round-11 grant: carried to L8/L9 and L10.
+
+**Spawned ~18:1xZ, two at once:** `~19` on rj-10 in `C:/tmp/wk-amgt-11-2` (fast-forwarded to 5ae785828e; the harvest root in that
+worktree is NOT initialised, so the prompt gives `terraform init -plugin-dir` over the main tree's cached hashicorp/aws 5.100.0; AC5,
+AC6 and AC7 to run in one sitting per Z-S105) and `~18` on rj-12 in `C:/tmp/wk-amgt-11-1` (portal clean at 38cba6a2; next row W18-S16;
+the served posture payload lacks `packs`, a route defect to row first). Ten of thirteen complete.
+
 ---
 
 ## Decisions Made
@@ -494,22 +540,22 @@ None at this lane. The next acts are gated on the workers' final reports (backgr
 
 ## Current State
 
-Round 11 of AMGT_RESAPP is EXECUTING (13 orders): rj-4, rj-1, rj-7, rj-5, rj-6, rj-2, rj-8, rj-11, rj-13 COMPLETE and drained (last
-drain f0d0f09e31; channel at 227 rows with Z-S104). ONE worker LIVE: `~18` on rj-9 in C:/tmp/wk-amgt-11-1 (adapter half under edit,
-portal half untouched; AC4 amended @4f383fc217 and messaged). `~19` idle in wk-amgt-11-2 until rj-9 drains (rj-10); `~20` and `~22`
-queues empty. rj-12 amended pre-spawn @a5358c283c. Andrew's word on splitting rj-9 is OPEN (staged plan in scratch). Andrew-direct
-~16:3xZ: the ~W fabric is AMGT_RESAPP only for the session. PORTAL FROZEN; all commits LOCAL; no push.
+Round 11 of AMGT_RESAPP is EXECUTING (13 orders): rj-4, rj-1, rj-7, rj-5, rj-6, rj-2, rj-8, rj-11, rj-13, rj-9 COMPLETE and drained
+(last commit 5ae785828e; channel at 234 rows with Z-S104 and Z-S105). TWO workers LIVE since ~18:1xZ: `~19` on rj-10 (the deploy)
+in C:/tmp/wk-amgt-11-2 and `~18` on rj-12 (the Posture tab) in C:/tmp/wk-amgt-11-1 (portal @38cba6a2). rj-3 amended pre-spawn
+@d37d652bb4 and waits for both. Andrew-direct ~16:3xZ: the ~W fabric is AMGT_RESAPP only; ~17:4x-18:0xZ: one standardized metric per
+tab (routed to L10). PORTAL FROZEN; all commits LOCAL; no push.
 
 ---
 
 ## Next Steps
 
-1. At rj-9's drain: rj-10 (~19, ff wk-amgt-11-2 first) and rj-12 (~18, carrying Z-S104) in parallel; rj-3 (~18) LAST after both.
-   At the drain, reconcile rj-9's recorded AC4 invocation against the amended order (its worktree predates 4f383fc217).
-   If Andrew says split rj-9: cut the sibling cell per the staged plan, continue ~18 with a message naming what left its order.
-2. Each drain: verify with the worktree's own checker, safe-merge with the channel unioned by row id, read every row, disarm as owner
-   where owed; chain A's portal branch into refs/drains/rj-portal; the gitlink never moves.
-3. The browser half of rj-3 with rj-10's payloads; the L8 packet to 3.0.0_SA_CVO~W carrying the scratch carry notes (W20-S10/S11/S13
-   with Z-S104 and candidate 3 corrected; W22-S1..S8; W18-S6..S9; W19-S8; W20-S4/S5/S8; W21-S3/S6) and the CTO's pre-read; propose
-   round 12 cut wide on the frontend.
+1. rj-10's drain: verify the instance, read the ledger entry CLOSED with its sentinel absent, the live reads and the two captures;
+   safe-merge with the channel union. rj-12's drain: the same, the portal ref moved to chain A's tip.
+2. After both: fast-forward wk-amgt-11-1 and spawn rj-3 (~18) with rj-10's captures named; then the issuer's browser half
+   (org/tier1_exec/2.0.0_SA_COO/deliverables/AMGT_RESAPP_W/ROUND11_BROWSER_EXERCISE.md) over the same two payloads.
+3. The L8 packet to 3.0.0_SA_CVO~W (ROUND11_PACKET.md + one message) from the scratch carry notes: every order's instance and drain,
+   the ARMED rows and their disarms (W20-S11/Z-S104, W18-S11/Z-S105), the contract gaps (the Price producer's generation, the
+   comparables' packs, the thesis chart's numeric series, the CSC values, the held side at 3 of 164), Andrew's metric word, the
+   CTO's pre-read; propose round 12 cut wide on the frontend.
 4. Re-arm the inbox Monitor and the stagger tick on every expiry; ack every broker message on read.
