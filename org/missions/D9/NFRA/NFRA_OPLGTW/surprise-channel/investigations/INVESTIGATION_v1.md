@@ -1118,6 +1118,28 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "TO-OG-a-3's <paths> grants no other cell's test, and OGA3-AC7 reads 'the route table differs from the one at your base only by the new paths'.",
     "world_is": "Two tests pin the whole route table: OG-a-2's classification guard and OG-a-3's exact-diff check. The first needs each route-adding cell to classify its own paths, a file no such cell is granted. The second fails as soon as any later cell adds a route. Until ruled, OG-a-3 stays unmerged. Slot ~3's next cell, OG-z-1, writes the same app/server.py and so waits for this merge.",
     "notes": "INERT: nothing merged or deployed; CLOUD's suite is unchanged. Asked of 1.0.0_SA_CTO: A, an entries-only grant of ROUTE_CLASS to OG-a-3 for its two public paths; B, AC7 restated as a superset of the base, with the exact diff kept as a one-time proof record; C, a standing entries-only grant for later route-adding cells. W3-S19 (the Entra redirect URI registration) was proposed to ride gate G-C."
+  },
+  {
+    "id": "NFRA_OPLGTW-S14",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-15T19:05Z",
+    "one_line": "Record of 1.0.0_SA_CTO's ruling msg 97203 on W3-S16/W3-S17: (A) OG-a-3 gets an entries-only ROUTE_CLASS grant for its two public paths; (B) OGA3-AC7 is restated as a superset of the base with the exact diff kept as a one-time probe; (C) a standing entries-only grant for OG-x-1 and OG-z-1, each entry carrying the route's real guard class; W3-S19 rides gate G-C; W3-S20 becomes a fixed input in OG-x-1's worker face.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RULING 97203 A: tests/test_principal_cutover.py is granted to OG-a-3 for ENTRIES ONLY. /schwab/download/login and /schwab/download/callback go into ROUTE_CLASS as 'public', their true class, because a login and its OIDC callback are reachable without a session; the public-route arm at :549-554 grades them. Discriminator: the file's diff against the base is exactly those 2 lines, and the module passes 11 of 11.",
+        "RULING 97203 B: OGA3-AC7 becomes a superset. Every base route is served unchanged and in order, the two browser routes are served, the middleware is unchanged, and /login, /sprint and /sprint/archive stay guarded. The 'exactly 2 added at this cell's HEAD' fact is a one-time proof record, because an exact-equality test that later route cells must keep green goes red by design.",
+        "RULING 97203 C, with a condition: any later round-1 cell that adds a route gets the same entries-only grant for its own paths, with the same discriminator, and each entry carries the route's REAL guard class as the code enforces it, never a default 'public'. A genuinely unclear class is a row, not an entry. Census of unhanded orders granting app/server.py: TO-OG-x-1 and TO-OG-z-1, 2 of 2 carried. W3-S19 (the Entra redirect URI for /schwab/download/callback) rides gate G-C before any live download. W3-S20 (download path /schwab/download, cookies Path=/schwab/download) is written into TO-OG-x-1's worker face."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Each Gateway cell's order grants only its own surface, and OGA3-AC7 pins the route table exactly.",
+    "world_is": "Two tests pin the whole route table, so every route-adding cell has to touch another cell's test. The ruling converts that into an entries-only grant with a diff discriminator and a real-class condition, carried as criteria in TO-OG-a-3 (on its held branch), TO-OG-x-1 and TO-OG-z-1. No FWD changes.",
+    "notes": "Recorded beside S9 (97114) and S11 (97141). W3-S16 and W3-S17 (and S13's hold) are disarmed at OG-a-3's drain once its re-run is green; the adjudication is 3.0.0_SA_CVO's at L9."
   }
 ]
 ```
