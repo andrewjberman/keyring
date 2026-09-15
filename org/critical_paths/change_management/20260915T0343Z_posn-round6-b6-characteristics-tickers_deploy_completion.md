@@ -20,7 +20,7 @@
 | L6 | verify | driven invoke with explicit bbg_as_of lands the tickers block | VersionId moved + block read back | driven invoke {bbg_as_of: 2026-09-11}: StatusCode 200, no FunctionError, body rc 0; served VersionId MOVED rt61ogajZQy79meUlsY1X_mIdPngxJTZ -> 74d9.pGWF16Ox7cXKGax.zQw.lhwi5yI (54825 -> 67782 B) at 2026-09-15T04:53:42Z; served tickers block DEEP-EQUAL to the local dry run (25 of 25, identity pair 25 of 25, identity_missing 0) and the WHOLE served document DEEP-EQUAL to the local dry run minus as_of; in-Lambda REPORT Duration 39407 ms of 120000 ms, Max Memory Used 270 MB of 512 MB | CLOSED 20260915T045552Z |
 | L7 | verify | rule cron(30 12 * * ? *) ENABLED with the function as target | describe-rule + list-targets | events describe-rule cot-satellites-characteristics-producer-daily: {state: ENABLED, expr: cron(30 12 * * ? *)}; list-targets-by-rule: ONE target CotSatellitesCharacteristicsProducerDaily -> arn:aws:lambda:us-east-1:313476888478:function:cot-satellites-characteristics-producer | CLOSED 20260915T045618Z |
 | L8 | verify | first scheduled 12:30Z fire lands organically (the negative arm; recorded by the COO, not waited on here) | s3api head after the fire |  | OPEN |
-| L9 | git | deploy recorded: source map + CHANGELOG entry by hand | git show --stat |  | OPEN |
+| L9 | git | deploy recorded: source map + CHANGELOG entry by hand | git show --stat | deploy recorded and git-VERIFIED: git show --stat 9633bb9e7e lists infra/aws/lambda/ci/lambda-source-map.json (last_deployed_commit 2a62019b63, deployed_code_sha256 rN/jcmeQk4F/HJsQHfasjdWFgIjWXOrYHeBPkf5TbOU=, deploy_ledger posn-round6-b6-characteristics-tickers; the earlier a031c56c74 left the sha stale and was corrected by a re-run with --code-sha256); the CHANGELOG.json entry written BY HAND in the helper's 10-key shape at commit 3c5c3bba93 (entries 12 -> 13, non-ASCII 18 before and 18 after, trailing newline kept) -- the recorder's own CHANGELOG limb raised SyntaxError because JSON_TOOL fell through to python and was handed its .js | CLOSED 20260915T051903Z |
 
 ## Log
 
@@ -32,3 +32,4 @@
 - 20260915T045551Z LEG L5 closed: unscoped terraform plan on the whole cot-pipeline root: 'No changes. Your infrastructure matches the configuration.'
 - 20260915T045552Z LEG L6 closed: driven invoke {bbg_as_of: 2026-09-11}: StatusCode 200, no FunctionError, body rc 0; served VersionId MOVED rt61ogajZQy79
 - 20260915T045618Z LEG L7 closed: events describe-rule cot-satellites-characteristics-producer-daily: {state: ENABLED, expr: cron(30 12 * * ? *)}; list-ta
+- 20260915T051903Z LEG L9 closed: deploy recorded and git-VERIFIED: git show --stat 9633bb9e7e lists infra/aws/lambda/ci/lambda-source-map.json (last_depl

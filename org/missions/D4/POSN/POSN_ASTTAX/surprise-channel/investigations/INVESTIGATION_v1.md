@@ -6472,6 +6472,28 @@ Andrew asked for (msg 22917); it concerns this project's portal files meeting an
   "spec_asserts": "W1-AC14: 'its CHANGELOG helper cannot run here (W23-S4: a hardcoded bun path) -- write the CHANGELOG.json entry YOURSELF'; W24-S5 and the preflight's comp-adversary item 1 left the in-Lambda wall and peak unread.",
   "world_is": "The helper's failure MODE on this device is a python-reading-javascript SyntaxError, not a missing bun -- same outcome, different cause, and the cause matters because it also silently disables the sha reconcile downstream of it. A recorder run that is not given --code-sha256 therefore writes a record that says the PREVIOUS code is deployed, and nothing in its output says so.",
   "notes": "For the next deploy on this device: pass --code-sha256 <live CodeSha256> and --deploy-ledger <slug> to record-terraform-deploy.sh, then READ the two fields back out of the source map. The wall measurement also gives the next sizing question a number: the backfill sweep is 173 GetObjects for ONE ticker's series, so the wall scales with the backfill prefix, not with this producer's work."
+},
+{
+  "id": "POSN_ASTTAX-Z-W24-S14",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~24",
+  "surfaced_at": "2026-09-15T05:25:00Z",
+  "one_line": "ADDING A DIRECTORY TO A SPARSE CONE ON THIS DEVICE CAN MANUFACTURE 'MODIFIED' FILES THE WORKER NEVER TOUCHED: the moment infra/aws/ec2 entered this worktree's cone (needed for the root's plan, row W24-S12), `git status` reported 12 modified files under infra/aws/ec2/smartx-exporter/smartx-workspace/scripts/*.py -- every line of each, 240 insertions and 240 deletions on config.py alone. The cause is line endings, not content: git prints 'warning: in the working copy of ... CRLF will be replaced by LF the next time Git touches it'. They are NOT this worker's edits and are outside its <paths> grant, so they were left untouched and uncommitted.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git status --porcelain after the cone add: 12 ' M infra/aws/ec2/smartx-exporter/smartx-workspace/scripts/*.py' entries appeared with no edit by this worker in between (the cone add was the only act).",
+      "git diff --stat on one of them: 'config.py | 480 ++++---- 1 file changed, 240 insertions(+), 240 deletions(-)' -- i.e. every line -- preceded by 'warning: in the working copy of ... CRLF will be replaced by LF the next time Git touches it'.",
+      "This worker's four edited files (the producer, build_package.py, the .tf, the task order) are all committed and none is under infra/aws/ec2."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A worker edits only the files its <paths> grant names, and a clean worktree is what lets `git status` be read as a statement about the worker's work.",
+  "world_is": "A cone add is not a neutral read on this device: files whose committed bytes are CRLF (or whose checkout writes CRLF) land in the working tree as whole-file modifications. Every later `git status` in this worktree carries 12 lines of noise a reader must discount, and a drain can refuse with 'local changes would be overwritten' on files the worker never opened.",
+  "notes": "Harmless if left alone -- nothing was staged or committed -- and `git checkout --` on them is forbidden to a worker anyway. Worth knowing before the drain: if a merge refuses on one of these 12 paths, the cause is this, not contention. A .gitattributes text=auto entry for that tree, or a cone that never has to carry it, is the durable fix and belongs to the tree's owner."
 }
 ]
 ```
