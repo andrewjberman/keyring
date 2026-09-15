@@ -972,6 +972,28 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     "spec_asserts": "TO-EN-s-1 WORKER FACE: 'It judges every nameable name in the repo (the Terraform, lib/config.py-class files, and Lambda sources)'.",
     "world_is": "Nothing the order names defines which literal in a config or Lambda source is a nameable name, so the worker defined it and printed the rule and its exclusions in the report and the module.",
     "notes": "Form only. No criterion turns on the repo denominator. The repo plane is never judged in this run, because the run stops in the live plane first (row LGIC_ENFORCE-W7-S1)."
+  },
+  {
+    "id": "LGIC_ENFORCE-W7-S4",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~7",
+    "surfaced_at": "2026-09-15T03:19Z",
+    "one_line": "EN-s-2 sets the census totals beside N2, N6 and IV7, but the census it reads judged 3 of 1805 live names and 0 of 1869 repo names, all API_GW. So the names graded by both are 1 (N2) and 2 (N6), and IV7 grades no name. The comparison holds for those 3 names and says nothing about the estate.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CENSUS: org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/NAMING_CENSUS_REPORT.md@f64b6f35cb json fence: denominators judged_live 3, live_nameable 1805, judged_repo 0, repo 1869; 3 rows, all API_GW live (inf-otp-relay-api OUT-OF-PATTERN, opal-portal-data-proxy-api CONFORMANT, opal-session-analytics-api CONFORMANT); stopped on API_GW sentiment-query-api (row LGIC_ENFORCE-W7-S1).",
+        "RECOUNT (a scratch script in the worktree's .scratch, not a deliverable, matching on (name, type)): 'N2 WORKED CASES: 43', 'N2: graded by both 1  agree 1'; 'N6 GRADER-A ROWS: 88', 'N6: graded by both 2  agree 2'; 'STOP NAME ('sentiment-query-api', 'API_GW') in N2: False  in N6: False'; 'IV7 RANKED ROWS: 10', and IV7 mentions none of the 3 census rows or the stop name.",
+        "HAND PRODUCTS: GRADING_RULE.md@51b0952d71 section 9 (43 worked cases); n6-grader-a.tsv@388b07f486 (88 rows); TENSION_RANKING.md@3497a41c31 (10 ranked surfaces, no per-name verdict, figures from infra/logic/09_NAMING_CENSUS.md over 2,531 live nodes on 2026-09-13)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EN-s-2 WORKER FACE: 'Set NAMING_CENSUS_REPORT.md's totals beside three hand products, each with its own denominator' and 'For every name graded both by the census and by hand, compare the verdicts'. The cell cites DEC-7: 'its comparison half waits for them, and they now exist'.",
+    "world_is": "The hand products exist. The census totals they are set beside come from a stopped run: 3 rows of one type, the first three API_GW names in census order, not a sample. The names graded by both are 1 of N2's 43 and 2 of N6's 88. IV7 ranks 10 surfaces measured on a different census and names none of the 3. The comparison was written on these denominators as they are. No name the census did not judge was graded to fill one.",
+    "notes": "Form only. S2-AC1 checks that each denominator is present and non-zero, and S2-AC2 checks the shape of the disagreement rows, so both can pass on denominators this small. IV7's json denominator is its 10 ranked surfaces, labelled as such, with names_graded_by_both 0 beside it. A census re-run after row W7-S1's registry rows would change the rows NAMING_CENSUS_COMPARISON.md reads."
   }
 ]
 ```
