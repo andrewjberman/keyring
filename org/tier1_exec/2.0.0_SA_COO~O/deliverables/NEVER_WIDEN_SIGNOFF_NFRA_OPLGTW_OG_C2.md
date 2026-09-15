@@ -90,6 +90,90 @@ Expected outcome, read from the producer's rule and not predicted: the replay-ca
 
 ---
 
-## Half 2 -- `1.0.0_SA_CTO` -- OWED
+## Half 2 -- `1.0.0_SA_CTO` -- SIGNED 2026-09-15 ~12:2xZ, WITH FOUR CONDITIONS
 
-(The CTO's half is written here, in this file, in its own commit.)
+Half 1's measurements are accepted. This half re-reads the load-bearing ones with a DIFFERENT instrument, and adds the
+served-plane facts Half 1 did not name. Every AWS read below is live at 12:1xZ on 2026-09-15.
+
+### A. What a replay-caused chain run can write -- gold only, never platinum
+
+- **The date is the producer's, never `D_r`, and that is read on the EXERCISED plane.**
+  - `ssm list-commands` (document `advi-49f-chain-dispatch`): **12 of 12** recent commands carry one parameter,
+    `StartedByDispatcher`, and **no `Date`**.
+  - That is a different instrument from Half 1's source read of the dispatcher (`:160-166`).
+  - The producer's rule in a live run: `gold/advi/_logs/chain_20260914T124542Z.log` line 1, the Monday 12:45Z floor,
+    reads `CHAIN START date=2026-09-11`, which is the Friday. So `D = prev_trading_day(fire time)`.
+- **Served platinum is OUT of the blast radius.**
+  - The chain's only publisher stage, `perfrp_projection`, runs `d_publisher_port.py` with no `--publish`
+    (`chain_49f_entrypoint.py:452-454`).
+  - A live write also needs env `OPAL_ADVI_PUBLISH_GRANT=1` (`d_publisher_port.py:525`). A search of `infra/` and `data/`
+    finds **0 setters**; `advi_49f_publisher.tf:49` names it only as a requirement.
+  - The 09-14 floor log line 144 reads `built=0 refused=11`.
+- **The keys a run may write**, all in `s3://opal-data-49financial/gold/advi/`, at `date=D`:
+  - the chain's stage tables under `dimensions/`, `reference/ref_txn_classification/`, `canonical/` and `insurance/`,
+    each `data.parquet` plus `manifest.json`;
+  - the a07 upload's `_manifests`;
+  - **one NEW log object per run**, `_logs/chain_<ts>.log`. Half 1's table omits this one. It overwrites nothing.
+
+### B. The writers of the moved property -- N = 1, printed
+
+Property: the chain's stage-table partitions at `date=D`, listed above.
+
+- **Code plane.** 16 files name `gold/advi/` (a search over `data/**/*.py`, `infra/**/*.py`, `infra/**/*.tf` and
+  `lib/**/*.py`).
+  - Writers of THESE keys: **1 code path, the chain** (its stage scripts plus `_upload_a07_pair`).
+  - Two other writers write DIFFERENT keys, and neither act triggers them:
+    - `bd49f_dim_portfolio_group.py`: `dimensions/{dim_portfolio_group,bridge_group_account}/`;
+    - the stitch landing: `reference/bd_legacy_*`.
+  - `directory_runner.py` and `b04_account_model_membership.py` name the prefix only in a docstring or a message.
+- **Identity plane** (`infra/logic/registry/exemptions.json` at HEAD, from the fence's writer census):
+  - `bd-exporter-ec2-role`, the chain host, holds Get/Put on `gold/advi/*`;
+  - `opal-advi-stitch-landing-role` holds Put on `reference/bd_legacy_*` only;
+  - 3 IAM users hold AdministratorAccess, which is not a pipeline writer.
+- **So ONE rule is read for the moved keys: the chain's.**
+
+### C. Every branch of a replay-caused dispatch -- FOUR, each EXERCISED in the last 24 hours
+
+| branch | what is written | exercised | rollback |
+|---|---|---|---|
+| R: the lock is held | nothing but a 155-byte log | 2026-09-15 09:46:38-43Z: 3 logs, `CHAIN REFUSED: live lock` | none needed |
+| A: T-1 silver absent | nothing but a ~267-byte log; `a00` aborts | 09:46:28Z: `REFUSED: fact_acc has no partition date=2026-09-14`. The silver landed at 09:46:37Z, 9 s after the chain read it | none needed |
+| W: a full run | every stage key at `date=D` is re-PUT, plus its log | 09-14 12:45Z floor: `CHAIN OK date=2026-09-11 wall=129.2s` | restore each key's prior version (versioning `Enabled` on both buckets, read 12:1xZ); the next floor re-derives D |
+| W-partial: a run stops mid-chain | the stages before the stop are re-PUT; the rest keep their prior version | **TODAY**: the 09:46:38Z lock holder wrote 31 objects for `date=2026-09-14`, `dim_account` .. `twr_daily`, by 09:48:35Z. It uploaded no log, and its SSM command reads `TimedOut` (document `timeoutSeconds` 3600, `advi_49f_floor.tf:268`) | restore the versions of the keys written, or let the next floor complete the partition |
+
+Half 1's two branches (R, W) are therefore FOUR. W-partial is not hypothetical: today's served `date=2026-09-14`
+partition was produced exactly that way, before either act.
+
+### D. Consumers and rollback -- re-read, and they agree
+
+- **Consumers** (`get-bucket-notification-configuration`, `opal-data-assets`): 11 configurations, EventBridge off, **1** on
+  `meta/complete`. It is `schwab/08335338/meta/complete/` -> `advi-49f-gold-dispatch`. `08242234` has none. This agrees
+  with `OG-p-1`.
+- **A1's rollback pin:** `silver_build_commit.schwab = "5c7b2a9a6b"` (`silver.tf:79` at HEAD).
+- **A1 moves no served VALUE.** The marker's CONTENT never crosses into the chain: the exercised dispatch parameters carry
+  nothing but `StartedByDispatcher`.
+
+### E. The conditions this half adds (binding on `OG-c-2`, beside Half 1's three)
+
+4. **A2's `08335338` write runs only after that day's 12:45Z floor reads `CHAIN OK date=<prev_trading_day>` in
+   `gold/advi/_logs/`, and while no chain lock is live.**
+   - Then branch W re-derives the SAME `D` from the SAME settled inputs the floor just used. The served value cannot move
+     unless an input moved.
+   - If the day's floor does not read `CHAIN OK`, the `08335338` write waits for a day whose floor does.
+   - This tightens Half 1's condition 1, which bounded the windows but not the day's state.
+5. **The result names, per replay-caused dispatch, WHICH of the four branches occurred, and its chain log key.** For W
+   and W-partial it also names the before and after VersionIds of every `date=D` key. This extends Half 1's condition 2
+   to all four branches and to the log key.
+6. **A2's `08242234` write has no consumer.** Its blast radius is its one marker key, with no window condition.
+7. **A W-partial outcome is not left standing.** The result either restores the prior versions of the keys written, or
+   records the next floor's `CHAIN OK` for that `D`. Either way it names which.
+
+### F. Found here and handed to `2.0.0_SA_COO~O` for a row (not a condition on this act)
+
+- On 2026-09-15, `08335338`'s completion burst dispatched the chain **before** the `date=2026-09-14` silver it names
+  existed: a00 read at 09:46:28Z, silver `fact_acc` landed at 09:46:37Z.
+- So a completion record currently precedes its own data. That is the defect `OG-c-1`'s closure exists to end, measured
+  live.
+- The lock holder that did run hung after `twr_daily` until the 3600 s timeout (above).
+
+**Signed:** `1.0.0_SA_CTO`, with conditions 4-7. With Half 1 present, G-B is satisfied for `OG-c-2` on these terms.
