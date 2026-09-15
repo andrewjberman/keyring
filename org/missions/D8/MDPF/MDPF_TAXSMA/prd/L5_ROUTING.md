@@ -4,6 +4,8 @@ Author: `1.0.0_SA_CTO~A`. Updated after **CTO97073 at2026-09-15T12:55:50Z**. PRD
 
 ## Current disposition
 
+**L6 issuance is HELD by CTO97115 (2026-09-15T14:41:01Z), following97105.** The conformance read has landed and directs CTO~A to prepare v0.3 F1-F3: registered source identity, complete workbook Silver, and one historical served home. L6 remains held until both current v0.3 halves are signed and Andrew has answered E1/E2; a refused exception requires the resulting design change before release. COO~T may continue paper L5 but must not spawn workers or issue task orders while held. The exact lane stays seated and the seat order stands. The completed v0.2 intake receipts below do not release this later hold.
+
 **The exact lane `2.0.0_SA_COO~T` is LIVE and is now bound in `project.json`.** MSTR97081 confirms its launch after COO~F's exit. The checked-in canonical `org/mcp/server.py:get_agent_status("2.0.0_SA_COO~T")` returned **LIVE at2026-09-15T13:20:53Z**, last seen10s ago, PID26332, working on MDPF_TAXSMA startup and L5 decomposition. This was a direct invocation of the unchanged repository function because no callable MCP status tool was exposed in this Codex session; it did not register a seat or start a server/helper. The canonical L4 notifier sent the unchanged v0.2 release as **97083 at13:22:49Z**; broker readback at13:30:03Z is **READ**, acknowledged by that exact lane at13:26:22.594818Z. The final delivery receipt is below. L5 remains owned by COO~T and is not complete merely because the session is live.
 
 Exact unread notice handled: `20260915T125550Z_1.0.0_SA_CTO_ANDREW_RULED_the_seat_order__MDPF_TAXSMA.md`, Msg-ID97073, sender `1.0.0_SA_CTO`. It relays Andrew's ~12:5xZ words verbatim:
@@ -65,4 +67,20 @@ Canonical `delivery_state(97083)` now returns **READ**. The broker names `to_ser
 
 ## S02 source registry dependency, CTO97095
 
-The14:17:53Z CTO notice identifies a fact for the unchanged v0.2 cut: the workbook source has no systems.json row, so the canonical address builder refuses sharepoint and ms. Independent14:22Z probes reproduce both failures with four registered positive controls. `S02_SOURCE_REGISTRY_DEPENDENCY.md` records the exact evidence and the bounded-payload/raw-source classification question sent to LGIC_NAMING owner COO~G at14:23:19Z. COO~T received the dependency for S02 at14:23:21Z; other surfaces continue. Per-run status is separate firm State, and no retention beyond the admitted minimized Gateway response is authorized. No key/class is invented and no signed PRD, contract, endpoint, seat assignment or project stage changes.
+The14:17:53Z CTO notice initially reported guessed sharepoint/ms source refusals, independently reproduced at14:22Z. **CTO97115 corrects the inference:** the contract's declared source is mdpf, and all seven actual builder calls resolve. This seat reproduced that full declared denominator at14:45:31Z; `LGIC_V02_DECLARED_BUILDER_CHECK.json` carries it. The real F1 dependency is the R1 origin identity, whose registry row COO~G owns; the seven-field capability response is now the ruled raw source boundary. `S02_SOURCE_REGISTRY_DEPENDENCY.md` preserves the original observation and its explicit correction. Per-run status remains separate firm State, with no wider workbook retention. Paper L5 continues under the current L6 hold.
+
+## Rule 30 and LGIC conformance read, CTO97099 / CTO97105
+
+CTO97099 at 14:33:25Z broadcasts `CLAUDE.md` Rule 30 at `a3d77717df`: all new pipelines follow LGIC R1-R21, cite canonical `address()` / `name()` output for every new address and name, and resolve builder refusals through registry additions. LGIC_NAMING owner COO~G owns the missing workbook source row; the seven-field minimized response and the source-boundary question in `S02_SOURCE_REGISTRY_DEPENDENCY.md` remain the inputs. A deliberate departure needs an Andrew-acknowledged R20 entry. Existing pipeline migrations remain separate R19 projects.
+
+CTO97105 at 14:35:08Z held TAXSMA L6 for the conformance read. That read landed as97115 at14:41:01Z and replaced the wait-for-read condition with the explicit v0.3-signatures and E1/E2 conditions above. The signed v0.2 PRD and data contract hashes remain those recorded in the canonical delivery receipt while the concrete amendment is prepared.
+
+Exact carrier: `20260915T143508Z_1.0.0_SA_CTO_ANDREW-DIRECT__hesitant_on_MDPF_TAXSMA_u.md`, sender `1.0.0_SA_CTO`, Msg-ID **97105**. Andrew-direct words relayed in its body:
+
+> im hesitant on taxsma until i know its in pattern with lgic rulings
+
+The notice preserves the seat order, permits reversible paper decomposition, and assigns the resulting addendum to CTO~A. Subsequent97115 owns the current release conditions; these receipts do not assert that the design already conforms.
+
+## v0.3 preparation after CTO97115
+
+The private proposal adds **S19** for complete typed workbook Silver, changes S03's dependency from S02 to S19, packages Silver in the existing MDPF deployment home, and restricts S08 to the two historical served keys with E1/E2 pending. Its checked manifest has **19 owned engines, 49 components and 9 artifacts**; the original eight endpoint cards and all 18 brief headings are retained. At14:52:25Z canonical shape and dependency/coverage checks pass. Two source-address outputs await COO~G's authoritative origin row; no placeholder is installed into the canonical PRD or contract. Base CTO owns obtaining Andrew's E1/E2 answers. This seat then lands the concrete v0.3 and requests the current-half reviews through the canonical notifier. The lane's paper decomposition can absorb these specified changes now; implementation stays held.
