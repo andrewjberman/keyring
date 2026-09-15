@@ -1,0 +1,579 @@
+{
+  "contract": "MDPF_TAXSMA_DATA_CONTRACT",
+  "version": "0.1.0",
+  "authority": "org/missions/D8/MDPF/MDPF_TAXSMA/prd/MDPF_TAXSMA_PRD.md",
+  "state": "PROPOSED_L4_REVIEW",
+  "purpose": "Normative design enumerations; no deployed implementation or observed account population is asserted by this file.",
+  "identity": {
+    "firm": "49financial",
+    "aggregate_scope": "global",
+    "reporting_master": "0008335338",
+    "base_master_control": "0008242234",
+    "trading_master_role": "0804-4932 is operational prior art, never an alias for either reporting master",
+    "accepted_account_forms": [
+      "eight ASCII digits",
+      "ten ASCII digits beginning 00",
+      "four ASCII digits, one hyphen, four ASCII digits"
+    ],
+    "normalization": "Trim outer whitespace; remove the single approved hyphen; require exactly eight digits and prepend 00, or preserve a validated ten-digit 00-prefixed value. Excel numeric values qualify only if finite integral eight-digit values with no lost precision. Never pad a suffix, coerce a float/exponent string, or fuzzy-match.",
+    "rejected_forms": [
+      "masked",
+      "last-four",
+      "nine-digit",
+      "other-length",
+      "scientific-notation string",
+      "fractional",
+      "non-ASCII digits",
+      "blank",
+      "multiple or misplaced separators"
+    ]
+  },
+  "workbook": {
+    "site_id": "opalinvest.sharepoint.com,9332c03f-2ad0-4b84-97fe-7bcd2c9cb90a,18b7f31c-c878-41ea-9b7e-0c103bcb5679",
+    "item_id": "01L6LHKFXVVTRR73M6KZGIHM4FY2ATNK4U",
+    "sheet": "Sheet1",
+    "extent": "All used rows of the named sheet; the current 22-row extent is never a limit or a membership constant.",
+    "expected_headers_after_outer_whitespace_trim": [
+      "Index",
+      "Account Number",
+      "Name",
+      "Advisor Contact",
+      "Strategy",
+      "Leverage",
+      "AUM (Mn)",
+      "Divest Securities",
+      "Ready",
+      "Inception Date",
+      "Last Trade Date",
+      "Traded",
+      "Instruction",
+      "Comment"
+    ],
+    "projected_columns": [
+      "Index",
+      "Account Number",
+      "Strategy",
+      "Ready",
+      "Inception Date",
+      "Last Trade Date",
+      "Traded"
+    ],
+    "row_metadata": [
+      "row_number",
+      "row_kind",
+      "other_business_cells_present"
+    ],
+    "row_kind": [
+      "ACCOUNT_SLOT",
+      "BLANK",
+      "TOTAL",
+      "UNRECOGNIZED"
+    ],
+    "boolean_input_values": {
+      "yes": "YES",
+      "no": "NO",
+      "": "UNKNOWN"
+    },
+    "boolean_normalization": "Trim outer whitespace and casefold; other values are INVALID, never truthy by coercion.",
+    "resource_limits": {
+      "max_used_rows_including_header": 10000,
+      "max_columns": 14,
+      "max_projected_bytes": 5242880,
+      "etag_change_retries": 2,
+      "request_timeout_seconds": 60
+    },
+    "overflow_behavior": "Fail closed with source error and observed extent. Never truncate and label the result complete.",
+    "snapshot_consistency": "Read driveItem ETag before and after complete worksheet acquisition. Publish a snapshot only on equality, complete-page coverage, expected unique headers, and recognized row structure.",
+    "date_input": "Accept ISO YYYY-MM-DD or an actual Excel date cell decoded with the workbook epoch. Reject ambiguous locale strings. Do not equate Inception Date or Last Trade Date with a proven first strategy trade."
+  },
+  "capability": {
+    "method": "GET",
+    "route": "/ms/taxsma-workbook",
+    "pattern": "Gateway-held delegated identity behind one content-specific capability",
+    "identity_configuration": "TAXSMA_WORKBOOK_IDENTITY",
+    "credential_configuration": "TAXSMA_WORKBOOK_BEARER",
+    "identity_selection": "One named Opal person, explicitly approved by Andrew before activation; no default identity",
+    "input_selectors": [],
+    "response_fields": [
+      "schema_version",
+      "snapshot_id",
+      "site_id",
+      "item_id",
+      "sheet",
+      "etag",
+      "source_modified_at",
+      "observed_at",
+      "used_rows",
+      "account_slot_count",
+      "header_fingerprint",
+      "complete",
+      "rows"
+    ],
+    "prohibited_response_fields": [
+      "Name",
+      "Advisor Contact",
+      "AUM (Mn)",
+      "Divest Securities",
+      "Instruction",
+      "Comment",
+      "access_token",
+      "refresh_token",
+      "bearer",
+      "arbitrary Graph fields"
+    ],
+    "errors": [
+      "UNAUTHORIZED_CAPABILITY",
+      "AUTH_REQUIRED",
+      "SOURCE_NOT_FOUND",
+      "SOURCE_CHANGED",
+      "SOURCE_SCHEMA_INVALID",
+      "SOURCE_TOO_LARGE",
+      "SOURCE_THROTTLED",
+      "SOURCE_UNAVAILABLE"
+    ],
+    "credential_boundary": "A separate Secrets Manager capability bearer, constant-time comparison, valid only for this exact route. Existing ms-ingest, OTP and MCP credentials do not authorize it; its bearer authorizes no other route. No delegated token leaves the Gateway.",
+    "audit_fields": [
+      "request_id",
+      "caller_capability_label",
+      "delegated_identity_ref",
+      "operation",
+      "item_id",
+      "sheet",
+      "snapshot_id",
+      "etag",
+      "observed_at",
+      "result",
+      "latency_ms"
+    ],
+    "audit_exclusions": [
+      "account numbers",
+      "account names",
+      "row values",
+      "tokens",
+      "authorization headers"
+    ]
+  },
+  "status_axes": {
+    "business_status": [
+      "TRADED_CLAIM",
+      "UNTRADED",
+      "PROSPECT",
+      "BLANK",
+      "CONFLICT",
+      "REMOVED_UNCONFIRMED",
+      "INACTIVE_CONFIRMED"
+    ],
+    "identity_status": [
+      "EXACT_MATCH",
+      "MISSING_CUSTODIAN",
+      "INVALID_ACCOUNT",
+      "DUPLICATE_ACCOUNT",
+      "MASTER_CONFLICT",
+      "STRATEGY_CONFLICT",
+      "TRANSFER_UNRESOLVED"
+    ],
+    "membership_date_status": [
+      "ATTESTED",
+      "SOURCE_PROVEN",
+      "UNVERIFIED"
+    ],
+    "technical_enrollment": [
+      "ACTIVE",
+      "PENDING_RESOLUTION",
+      "ABSENT",
+      "INACTIVE",
+      "UNAVAILABLE"
+    ],
+    "value_status": [
+      "COMPLETE",
+      "INCOMPLETE",
+      "UNAVAILABLE",
+      "KNOWN_ZERO"
+    ],
+    "freshness": [
+      "CURRENT",
+      "STALE",
+      "AUTH_REQUIRED",
+      "CORRECTION_PENDING",
+      "SOURCE_UNAVAILABLE"
+    ],
+    "run_result": [
+      "COMPLETE",
+      "INCOMPLETE",
+      "FAILED",
+      "NO_CHANGE",
+      "CORRECTION_QUEUED",
+      "DISABLED"
+    ]
+  },
+  "membership": {
+    "denominator": "Every current TRADED_CLAIM plus unresolved previously traded removals/conflicts relevant to the valuation date. Technical enrollment, source absence and missing dates never silently reduce this denominator.",
+    "inclusion": "A dated contribution requires exact identity, verified effective membership for that valuation date, compatible reporting master and strategy, and a valid canonical value. The current workbook is a claim of business status, not independent proof of historical activation.",
+    "exclusion": "Known untraded, prospect and blank rows remain outside value sums even if funded or open at Schwab. Every exclusion has a reason; source failure is never an exclusion.",
+    "disposition_kinds": [
+      "CONFIRM_EFFECTIVE_MEMBERSHIP",
+      "CORRECT_IDENTITY",
+      "CONFIRM_INACTIVE",
+      "CONFIRM_TRANSFER",
+      "RESOLVE_STRATEGY"
+    ],
+    "disposition_fields": [
+      "disposition_id",
+      "kind",
+      "account_key",
+      "effective_date",
+      "supersedes_disposition_id",
+      "workbook_snapshot_id",
+      "evidence_ref",
+      "actor",
+      "recorded_at",
+      "reason"
+    ],
+    "disposition_rule": "Append-only protected data correction with evidence and named actor. No data disposition opens an account, places a trade, grants access or changes a trading master. Corrections do not silently rewrite the workbook."
+  },
+  "valuation": {
+    "basis": "dim_balance.net_mv_plus_cash via b00 canonical_valuation",
+    "units": "USD cents, decimal arithmetic",
+    "accrual": "Use the existing declared canonical basis; the source's zero accrued_income placeholder is not evidence that actual accrual is zero. Preserve the PENDING-RULING limitation; do not redefine basis or add unverified accrual.",
+    "rejected_substitutes": [
+      "workbook AUM estimate",
+      "gross long exposure",
+      "gross short exposure",
+      "sum of absolute holdings",
+      "Black Diamond quarterly value",
+      "missing-to-zero",
+      "leverage-multiplied capital"
+    ],
+    "history_fields": [
+      "observation_id",
+      "account_key",
+      "valuation_date",
+      "knowledge_date",
+      "observed_at",
+      "membership_effective_date",
+      "membership_date_status",
+      "workbook_snapshot_id",
+      "workbook_row_number",
+      "business_status",
+      "identity_status",
+      "technical_enrollment",
+      "canonical_source_ref",
+      "balance_source_ref",
+      "source_hashes",
+      "value_usd",
+      "basis",
+      "value_status",
+      "reason_codes",
+      "supersedes_observation_id"
+    ],
+    "observation_key": "SHA-256 of canonical JSON containing full account key, valuation date, source versions/hashes, workbook snapshot, effective-membership disposition version and basis version; omit ingestion clock and run UUID so retries are stable.",
+    "gold_partition_axis": "knowledge_date",
+    "gold_partition_policy": "One immutable data.parquet per UTC knowledge date. Conditional create; an existing identical observation is NO_CHANGE. Changed knowledge after that object exists is queued for the next UTC date. Never replace it or mint another leaf for the same date.",
+    "correction_resolution": "For each account and valuation date, select the latest knowledge-date observation through an acyclic explicit supersedes chain. Competing corrections or duplicate observation IDs with different payloads are errors, not arbitrary last-row-wins.",
+    "snapshot_aggregation": "Resolve all account observations for a valuation date first, then aggregate. Never select one newest partition and mistake a correction-only partition for a complete cohort."
+  },
+  "categories": {
+    "member": "Tax-Managed SMA",
+    "parent": "SMA",
+    "root": "ALT Strategies",
+    "source_basis": "ADDITIVE",
+    "firm_rule": "49financial base must exclude Tax before Tax is added once. Client remains unchanged. Preserve source_basis in every reconstructed entry; refuse missing or incompatible basis.",
+    "global_rule": "Global folds the completed firm contributions once. Tax is exposed as the sum of firm Tax leaves, never added again on top of firm totals that already include it.",
+    "overlap_rule": "Exact full-ID overlap against the base membership for the same valuation date blocks the affected total until evidence resolves its basis. No inferred netting or automatic Client carve-out.",
+    "incomplete_rule": "Unknown/stale Tax remains a visible dated leaf and makes dependent SMA, ALT Strategies, 49financial and Global complete totals unavailable. An explicitly labelled confirmed subtotal or dated last complete figure may be shown, never as the complete current total. Unrelated firms and Client retain their existing meaning.",
+    "wire_status_fields": [
+      "value_status",
+      "freshness",
+      "valuation_date",
+      "knowledge_date",
+      "source_observed_at",
+      "expected_accounts",
+      "covered_accounts",
+      "unresolved_accounts",
+      "reason_codes",
+      "correction_pending_since",
+      "last_complete_date"
+    ],
+    "wire_privacy": "Aggregate counts/status/date only. No account identifiers, names or row-level evidence in ordinary category JSON or the portal.",
+    "member_id": "tax",
+    "aggregate_basis": "INCLUDES_ADDITIVE",
+    "timeseries_extension_fields": [
+      "aggregate_basis",
+      "base_excluding_tax_aua",
+      "tax_additive_aua",
+      "tax_coverage"
+    ],
+    "wire_extension": {
+      "document_fields": [
+        "taxsma_contract_version",
+        "taxsma_coverage"
+      ],
+      "node_field": "coverage",
+      "nullable_complete_fields": [
+        "sums.gold_plane",
+        "sums.view_plane",
+        "sums.total_aua",
+        "affected node/child aum"
+      ],
+      "version": "0.1.0",
+      "rollout_rule": "Enable new served payload only with a compatible consumer in the same environment; production activation waits for its applicable promotion authorization."
+    }
+  },
+  "operations": {
+    "engineering_fabric": "laptop",
+    "gold_schedule": "Existing mdpf-scheduled-floor at 13:30 UTC every calendar day; acquire/reconcile Tax before the 49financial/Global category stage in that invocation.",
+    "publisher_schedule": "Existing 13:50 UTC daily publisher; reads observed completion/status rather than assuming 20 minutes proves completion.",
+    "freshness_basis": "Existing MDPF trading-calendar binding with the canonical exchange calendar. Compare source valuation dates to the expected completed trading session; weekends and holidays advance knowledge processing, not the valuation date.",
+    "runtime_budget": {
+      "gateway_total_seconds": 180,
+      "source_read_attempts": 3,
+      "source_backoff_seconds": [
+        1,
+        3
+      ],
+      "concurrent_partition_writers": 1
+    },
+    "correction_latency": "Next daily partition after the change is known when today's object already exists; nominal at most one day. Missed executions are operational delay, explicitly STALE with pending_since, never hidden by advancing a date.",
+    "status_control": "Protected versioned control state carries pending changes, auth/source errors and run receipts. Publisher may read this for status only; all numerical business values come from canonical Gold parquet. Status must never supply a second value or membership authority.",
+    "reader_moments": {
+      "pending_corrections": "Tax prelude reads on every scheduled or controlled operator run; publisher reads before each daily publication.",
+      "run_receipts": "COO's existing project/operator review reads the latest receipt at the daily MDPF check and before approving a rerun or close.",
+      "served_status": "Model Portfolios category reader reads on each load and explicit refresh; accessor must not serve a one-hour hidden cached failure.",
+      "audit": "Gateway owner reads the relevant request IDs during access/revocation review and incident recovery; project validation reconciles every controlled call to its audit receipt."
+    },
+    "cache_policy": "Category accessor cache TTL at most five minutes; do not cache failures or incomplete transport responses as successful data. Explicit refresh bypasses accessor and query caches; UI retains truthful source dates and stale status even before refresh.",
+    "recovery": "Idempotent staged computation, conditional Gold creation, publisher destination readback, and repair of missing/corrupt destination despite unchanged source hash. Repair through the same publisher and canonical served key. No standing comparator, alternate served tree, new monitor or trading side effect."
+  },
+  "artifacts": {
+    "workbook_snapshot": {
+      "builder": "address",
+      "args": [
+        "mdpf",
+        "49financial",
+        "bronze",
+        "taxsma_workbook",
+        "date={knowledge_date}",
+        "{snapshot_id}.json"
+      ],
+      "content": "Minimized complete source snapshot, immutable source evidence",
+      "writer": "S02",
+      "readers": [
+        "S03"
+      ]
+    },
+    "membership_dispositions": {
+      "builder": "address",
+      "args": [
+        "mdpf",
+        "49financial",
+        "state",
+        "taxsma_membership",
+        "dispositions.json"
+      ],
+      "content": "Protected append-only versioned membership evidence; conditional updates retain history",
+      "writer": "S03",
+      "readers": [
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    "operational_control": {
+      "builder": "address",
+      "args": [
+        "mdpf",
+        "49financial",
+        "state",
+        "taxsma_control",
+        "current.json"
+      ],
+      "content": "Status/pending/receipt references only; never alternate business values",
+      "writer": "S07",
+      "readers": [
+        "S02",
+        "S05",
+        "S08",
+        "S15"
+      ]
+    },
+    "taxsma_assets": {
+      "builder": "address",
+      "args": [
+        "mdpf",
+        "49financial",
+        "gold",
+        "taxsma_assets",
+        "date={knowledge_date}",
+        "data.parquet"
+      ],
+      "content": "Immutable account-grain observations including unresolved expected rows",
+      "writer": "S05",
+      "readers": [
+        "S06",
+        "S07"
+      ]
+    },
+    "firm_category": {
+      "builder": "address",
+      "args": [
+        "mdpf",
+        "49financial",
+        "gold",
+        "category_views",
+        "date={knowledge_date}",
+        "data.parquet"
+      ],
+      "content": "CANON category Gold with status extension",
+      "writer": "S07",
+      "readers": [
+        "S08"
+      ]
+    },
+    "global_category": {
+      "builder": "address",
+      "args": [
+        "mdpf",
+        "global",
+        "gold",
+        "category_views",
+        "date={knowledge_date}",
+        "data.parquet"
+      ],
+      "content": "Global composite category Gold with status extension",
+      "writer": "S07",
+      "readers": [
+        "S08"
+      ]
+    },
+    "firm_served": {
+      "builder": "address",
+      "args": [
+        "mdpf",
+        "49financial",
+        "platinum",
+        "category_views",
+        "category-views.json"
+      ],
+      "content": "Existing caller route remains; owner CANON handles storage migration",
+      "writer": "S08",
+      "readers": [
+        "S09"
+      ]
+    },
+    "global_served": {
+      "historical_address": "s3://opal-data-portal-v2/platinum/mdpf/global/category-views.json",
+      "content": "Existing historical exception preserved; do not generate a replacement",
+      "writer": "S08",
+      "readers": [
+        "S09"
+      ]
+    }
+  },
+  "runtime_access_matrix": [
+    {
+      "principal": "Gold Tax prelude through a 49financial-scoped role generated by name(mdpf,49financial,taxsma,role)",
+      "actions": [
+        "read exact configured capability secret",
+        "read dated 0833 and 0824 source prefixes",
+        "read existing 49financial canonical valuation",
+        "conditional write/read Tax snapshot, membership and control",
+        "conditional create/read Tax Gold history"
+      ],
+      "denied": [
+        "other firms private sources",
+        "Graph delegated token storage",
+        "workbook mutation",
+        "BD roster mutation",
+        "served JSON writes"
+      ],
+      "boundary": "Use a scoped STS session within the existing handler; the ambient shared Lambda role does not gain broad firm-bucket access. Exact source/version and bucket-policy controls required."
+    },
+    {
+      "principal": "Gateway registered role",
+      "actions": [
+        "read the exact new capability configuration secret",
+        "existing token-broker and audit operations"
+      ],
+      "denied": [
+        "caller-selected identity",
+        "new app-only Graph permission",
+        "delegated token export"
+      ],
+      "boundary": "Existing non-TAXSMA Gateway paths/grants stay unchanged."
+    },
+    {
+      "principal": "CANON publisher firm/composite identities",
+      "actions": [
+        "read canonical per-firm and Global Gold",
+        "read Tax control status only",
+        "read/write matching canonical served destination and publication manifest"
+      ],
+      "denied": [
+        "source workbook/capability secret",
+        "other undeclared firm data",
+        "Gold history overwrite"
+      ],
+      "boundary": "N+1 homes and existing firm fences; source/destination grants validated at exact resources, not a wildcard inference."
+    }
+  ],
+  "reason_codes": [
+    "AUTH_REQUIRED",
+    "SOURCE_NOT_FOUND",
+    "SOURCE_CHANGED",
+    "SOURCE_SCHEMA_INVALID",
+    "SOURCE_TOO_LARGE",
+    "SOURCE_THROTTLED",
+    "SOURCE_UNAVAILABLE",
+    "SOURCE_STALE",
+    "CALENDAR_UNAVAILABLE",
+    "INVALID_ACCOUNT",
+    "DUPLICATE_ACCOUNT",
+    "MISSING_CUSTODIAN",
+    "MASTER_CONFLICT",
+    "STRATEGY_CONFLICT",
+    "TRANSFER_UNRESOLVED",
+    "MEMBERSHIP_CONFLICT",
+    "REMOVED_UNCONFIRMED",
+    "MEMBERSHIP_DATE_UNVERIFIED",
+    "DISPOSITION_REQUIRED",
+    "CANONICAL_MISSING",
+    "CANONICAL_DUPLICATE",
+    "INVALID_VALUE",
+    "BOUNDARY_EXCLUDED",
+    "BASE_OVERLAP",
+    "BASE_OVERLAP_UNVERIFIED",
+    "BASIS_MISMATCH",
+    "CORRECTION_PENDING",
+    "CORRECTION_CONFLICT",
+    "SUPERSEDES_MISSING",
+    "PUBLICATION_INCOMPLETE",
+    "DESTINATION_MISMATCH",
+    "RUNTIME_FAILED",
+    "DISABLED"
+  ],
+  "field_types": {
+    "account_key": "string; validated full canonical form; protected only",
+    "date": "ISO YYYY-MM-DD",
+    "timestamp": "UTC RFC3339 with explicit offset",
+    "value_usd": "nullable parquet decimal128(20,2); JSON finite USD number rounded only at display; reject NaN/Infinity",
+    "counts": "nonnegative integers; expected_accounts nullable only when denominator unknown",
+    "reason_codes": "array of unique reason_codes enum members; compound failures preserved",
+    "snapshot_id": "SHA-256 of stable source identity, ETag and projected payload",
+    "nullable_rule": "Every unavailable complete amount carries its status/reasons; null is never coerced to zero",
+    "technical_enrollment": "status axis only; cannot gate canonical Schwab daily membership"
+  },
+  "canonical_input_mapping": {
+    "account_key": "account_id",
+    "valuation_date": "business_date",
+    "value_usd": "net_mv_plus_cash",
+    "lineage": [
+      "boundary_version",
+      "schema_version",
+      "source_pipeline",
+      "_ingested_at",
+      "accrual_status"
+    ],
+    "clock_limit": "_ingested_at is partition-date provenance here, not actual source-arrival or write time",
+    "boundary": "Use only existing b00 IN_CLIENT_BOOK output; a missing expected member is an explicit boundary/source exception, never a reason to alter b00."
+  }
+}

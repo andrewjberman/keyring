@@ -1,0 +1,664 @@
+project: MDPF_TAXSMA
+prd_version: v0.1
+author: 1.0.0_SA_CTO~A
+scope: Normative target inventory for the PRD extension; distinct from the original 24-unit certified source inventory.
+plane_vocabulary:
+  ec2-module: Source module in the registered Gateway app
+  gold-script: Pipeline source engine
+  lambda-module: Packaged Lambda handler/module
+  consumer-source: Portal repository source, separately pinned
+  package-builder: Source-to-artifact build/deploy carrier
+  infrastructure-source: Terraform/manifest declaration, not applied state
+  config: Machine-readable source configuration
+  test-harness: Controlled proof producer, no deployment claim
+  operator-contract: Supported operational procedure
+  activation-record: Named sovereign activation prerequisite
+  sharepoint-workbook: Fixed authorized external business source
+  data-artifact: Existing protected source or control object
+  source-library: Canonical shared builder
+  schedule: Existing recurring trigger
+  owner-contract: Binding counterpart/ruling
+expected_owned_ids:
+- S01
+- S02
+- S03
+- S04
+- S05
+- S06
+- S07
+- S08
+- S09
+- S10
+- S11
+- S12
+- S13
+- S14
+- S15
+- S16
+- S17
+- S18
+expected_dependency_ids:
+- D01
+- D02
+- D03
+- D04
+- D05
+- D06
+- D07
+- D08
+component_count: 47
+components:
+- name: infra/aws/ec2/opal-gateway/app/taxsma_workbook.py
+  plane: ec2-module
+  authority: org/missions/D8/MDPF/MDPF_TAXSMA/prd/MDPF_TAXSMA_PRD.md §7 S01
+  surface_id: S01
+  role: primary
+  disposition: PROPOSED_NEW
+  existence_check:
+    exists: false
+    last_commit: null
+    source_sha256: null
+  boundary: Source/path inspection only; no deployed parity inferred. Recheck exact path before authoring; if usable
+    already, verify/reuse.
+- name: data/mdpf/scripts/gold/taxsma_snapshot.py
+  plane: gold-script
+  authority: org/missions/D8/MDPF/MDPF_TAXSMA/prd/MDPF_TAXSMA_PRD.md §7 S02
+  surface_id: S02
+  role: primary
+  disposition: PROPOSED_NEW
+  existence_check:
+    exists: false
+    last_commit: null
+    source_sha256: null
+  boundary: Source/path inspection only; no deployed parity inferred. Recheck exact path before authoring; if usable
+    already, verify/reuse.
+- name: data/mdpf/scripts/gold/taxsma_membership.py
+  plane: gold-script
+  authority: org/missions/D8/MDPF/MDPF_TAXSMA/prd/MDPF_TAXSMA_PRD.md §7 S03
+  surface_id: S03
+  role: primary
+  disposition: PROPOSED_NEW
+  existence_check:
+    exists: false
+    last_commit: null
+    source_sha256: null
+  boundary: Source/path inspection only; no deployed parity inferred. Recheck exact path before authoring; if usable
+    already, verify/reuse.
+- name: data/mdpf/scripts/gold/taxsma_reconcile.py
+  plane: gold-script
+  authority: org/missions/D8/MDPF/MDPF_TAXSMA/prd/MDPF_TAXSMA_PRD.md §7 S04
+  surface_id: S04
+  role: primary
+  disposition: PROPOSED_NEW
+  existence_check:
+    exists: false
+    last_commit: null
+    source_sha256: null
+  boundary: Source/path inspection only; no deployed parity inferred. Recheck exact path before authoring; if usable
+    already, verify/reuse.
+- name: data/mdpf/scripts/gold/taxsma_assets.py
+  plane: gold-script
+  authority: org/missions/D8/MDPF/MDPF_TAXSMA/prd/MDPF_TAXSMA_PRD.md §7 S05
+  surface_id: S05
+  role: primary
+  disposition: PROPOSED_NEW
+  existence_check:
+    exists: false
+    last_commit: null
+    source_sha256: null
+  boundary: Source/path inspection only; no deployed parity inferred. Recheck exact path before authoring; if usable
+    already, verify/reuse.
+- name: data/mdpf/scripts/gold/dim_mdpf_aggregate_aua_timeseries.py
+  plane: gold-script
+  authority: org/missions/D8/MDPF/MDPF_TAXSMA/prd/MDPF_TAXSMA_PRD.md §7 S06
+  surface_id: S06
+  role: primary
+  disposition: MODIFY_EXISTING
+  existence_check:
+    exists: true
+    last_commit: 73c2dea263aa31a5b8906e2685902061d1a34d78
+    source_sha256: 9256640cd036aa5dad0d8711ce200e29456ff5118c1dbad929ddf5b47c569f27
+  boundary: Source/path inspection only; no deployed parity inferred. Recheck exact path before authoring; if usable
+    already, verify/reuse.
+- name: data/mdpf/scripts/gold/mdpf_gold_consolidator.py
+  plane: lambda-module
+  authority: org/missions/D8/MDPF/MDPF_TAXSMA/prd/MDPF_TAXSMA_PRD.md §7 S07
+  surface_id: S07
+  role: primary
+  disposition: MODIFY_EXISTING
+  existence_check:
+    exists: true
+    last_commit: 1465fd3f7dba7dedbb2e566ffd13917b55778ec9
+    source_sha256: 90d8a1c6b2332e9150661629b0225f1ecd9762135f98ab46a068703d69d93c2b
+  boundary: Source/path inspection only; no deployed parity inferred. Recheck exact path before authoring; if usable
+    already, verify/reuse.
+- name: infra/aws/lambda/opal-assets/opal-assets-mdpf-portal-publisher/lambda_function.py
+  plane: lambda-module
+  authority: org/missions/D8/MDPF/MDPF_TAXSMA/prd/MDPF_TAXSMA_PRD.md §7 S08
+  surface_id: S08
+  role: primary
+  disposition: MODIFY_EXISTING
+  existence_check:
+    exists: true
+    last_commit: 84fda0fd0455f475cad0f0e7701251288bbe044d
+    source_sha256: 454d073b8edc32bb3b2d1d4df22d7454db3b3387ed5d71b71030c495c541397a
+  boundary: Source/path inspection only; no deployed parity inferred. Recheck exact path before authoring; if usable
+    already, verify/reuse.
+- name: portal/src/api/endpoints/aum.ts
+  plane: consumer-source
+  authority: org/missions/D8/MDPF/MDPF_TAXSMA/prd/MDPF_TAXSMA_PRD.md §7 S09
+  surface_id: S09
+  role: primary
+  disposition: MODIFY_EXISTING
+  existence_check:
+    exists: true
+    last_commit: d3487fc9253b4f83147c2932f50b125391228928
+    source_sha256: f0c190d30334a30aa02cb66cfee196b9832806b483f623857f284e7f2ffb43cb
+  boundary: Source/path inspection only; no deployed parity inferred. Recheck exact path before authoring; if usable
+    already, verify/reuse.
+- name: portal/src/components/CategoryViewTree.tsx
+  plane: consumer-source
+  authority: org/missions/D8/MDPF/MDPF_TAXSMA/prd/MDPF_TAXSMA_PRD.md §7 S10
+  surface_id: S10
+  role: primary
+  disposition: MODIFY_EXISTING
+  existence_check:
+    exists: true
+    last_commit: 0e1c232d5fe1ca0f4ecf28e33fe8fb122266a3c6
+    source_sha256: 0f5aae72310177e827ff0bcc2c68777d564433d566e5566be0dcceb38901f7c4
+  boundary: Source/path inspection only; no deployed parity inferred. Recheck exact path before authoring; if usable
+    already, verify/reuse.
+- name: portal/src/pages/ModelPortfolios.tsx
+  plane: consumer-source
+  authority: org/missions/D8/MDPF/MDPF_TAXSMA/prd/MDPF_TAXSMA_PRD.md §7 S11
+  surface_id: S11
+  role: primary
+  disposition: MODIFY_EXISTING
+  existence_check:
+    exists: true
+    last_commit: 2d64653239f5e0c181e2baee0ae36d8962279802
+    source_sha256: a63983a7e458ee8b30fe981ecec57611be67edf8c385757a07a1650361368657
+  boundary: Source/path inspection only; no deployed parity inferred. Recheck exact path before authoring; if usable
+    already, verify/reuse.
+- name: infra/aws/lambda/mdpf-pipeline/mdpf-gold-lambda/build_package.py
+  plane: package-builder
+  authority: org/missions/D8/MDPF/MDPF_TAXSMA/prd/MDPF_TAXSMA_PRD.md §7 S12
+  surface_id: S12
+  role: primary
+  disposition: MODIFY_EXISTING
+  existence_check:
+    exists: true
+    last_commit: ec8206c1b1072fe0031638edccf2936fb12508be
+    source_sha256: 75c7904eab471fd0ac6c7329314fdbcd3f394685d4dd413fe7cb4a207cb19a9c
+  boundary: Source/path inspection only; no deployed parity inferred. Recheck exact path before authoring; if usable
+    already, verify/reuse.
+- name: infra/aws/terraform/mdpf-pipeline/iam.tf
+  plane: infrastructure-source
+  authority: org/missions/D8/MDPF/MDPF_TAXSMA/prd/MDPF_TAXSMA_PRD.md §7 S13
+  surface_id: S13
+  role: primary
+  disposition: MODIFY_EXISTING
+  existence_check:
+    exists: true
+    last_commit: 585a9d24c0fa150a920b49dc006b8ee0717e15e6
+    source_sha256: e17c5c78acc2ba3f513832aebb4a815e317b17f592b290dd70b3bf1612bd6c4f
+  boundary: Source/path inspection only; no deployed parity inferred. Recheck exact path before authoring; if usable
+    already, verify/reuse.
+- name: data/mdpf/tests/taxsma/test_taxsma_journey.py
+  plane: test-harness
+  authority: org/missions/D8/MDPF/MDPF_TAXSMA/prd/MDPF_TAXSMA_PRD.md §7 S14
+  surface_id: S14
+  role: primary
+  disposition: PROPOSED_NEW
+  existence_check:
+    exists: false
+    last_commit: null
+    source_sha256: null
+  boundary: Source/path inspection only; no deployed parity inferred. Recheck exact path before authoring; if usable
+    already, verify/reuse.
+- name: org/missions/D8/MDPF/MDPF_TAXSMA/operations/RECOVERY.md
+  plane: operator-contract
+  authority: org/missions/D8/MDPF/MDPF_TAXSMA/prd/MDPF_TAXSMA_PRD.md §7 S15
+  surface_id: S15
+  role: primary
+  disposition: PROPOSED_NEW
+  existence_check:
+    exists: false
+    last_commit: null
+    source_sha256: null
+  boundary: Source/path inspection only; no deployed parity inferred. Recheck exact path before authoring; if usable
+    already, verify/reuse.
+- name: infra/aws/lambda/opal-assets/opal-assets-mdpf-portal-publisher/build_package.py
+  plane: package-builder
+  authority: org/missions/D8/MDPF/MDPF_TAXSMA/prd/MDPF_TAXSMA_PRD.md §7 S17
+  surface_id: S17
+  role: primary
+  disposition: MODIFY_EXISTING
+  existence_check:
+    exists: true
+    last_commit: 84fda0fd0455f475cad0f0e7701251288bbe044d
+    source_sha256: ee36b5c5789de6eece880558548e52fe1e873e8bbc2c17c6e70d432f82972ef1
+  boundary: Source/path inspection only; no deployed parity inferred. Recheck exact path before authoring; if usable
+    already, verify/reuse.
+- name: infra/aws/ec2/opal-gateway/deploy-to-ec2.sh
+  plane: package-builder
+  authority: org/missions/D8/MDPF/MDPF_TAXSMA/prd/MDPF_TAXSMA_PRD.md §7 S18
+  surface_id: S18
+  role: primary
+  disposition: MODIFY_EXISTING
+  existence_check:
+    exists: true
+    last_commit: e3a9d207dce9cacd9de60813620c3a2ef8f61a02
+    source_sha256: a303812689d4cb356d8731891ddaab4a6bc746d7b2ac94e576593cd781c86a34
+  boundary: Source/path inspection only; no deployed parity inferred. Recheck exact path before authoring; if usable
+    already, verify/reuse.
+- name: infra/aws/ec2/opal-gateway/app/server.py
+  plane: ec2-module
+  authority: org/missions/D8/MDPF/MDPF_TAXSMA/prd/MDPF_TAXSMA_PRD.md §7 S01
+  surface_id: S01
+  role: companion
+  disposition: MODIFY_EXISTING
+  existence_check:
+    exists: true
+    last_commit: e3a9d207dce9cacd9de60813620c3a2ef8f61a02
+    source_sha256: 16911cf0d89424a04af81d7b82d309c35b910a7bee10aff8eac6bbef69dd1ad7
+  boundary: Source/path inspection only; no deployed parity inferred. Recheck exact path before authoring; if usable
+    already, verify/reuse.
+- name: infra/aws/ec2/opal-gateway/app/config.py
+  plane: ec2-module
+  authority: org/missions/D8/MDPF/MDPF_TAXSMA/prd/MDPF_TAXSMA_PRD.md §7 S01
+  surface_id: S01
+  role: companion
+  disposition: MODIFY_EXISTING
+  existence_check:
+    exists: true
+    last_commit: e3a9d207dce9cacd9de60813620c3a2ef8f61a02
+    source_sha256: b8f7855226c95b8203f90fe4255d91d2f066790c81ac7ca3ec0a2e118ded2b11
+  boundary: Source/path inspection only; no deployed parity inferred. Recheck exact path before authoring; if usable
+    already, verify/reuse.
+- name: infra/aws/ec2/EC2_MANIFEST.json
+  plane: infrastructure-source
+  authority: org/missions/D8/MDPF/MDPF_TAXSMA/prd/MDPF_TAXSMA_PRD.md §7 S18
+  surface_id: S18
+  role: companion
+  disposition: MODIFY_EXISTING
+  existence_check:
+    exists: true
+    last_commit: f9f7b2b122f4efc6a28218709230058c3b5ec5f9
+    source_sha256: afa3dc582a8ed6dc38c168eb3ab35bd9e38901821c6a9e59a453aeff87212171
+  boundary: Source/path inspection only; no deployed parity inferred. Recheck exact path before authoring; if usable
+    already, verify/reuse.
+- name: infra/aws/terraform/mdpf-pipeline/gold-lambda.tf
+  plane: infrastructure-source
+  authority: org/missions/D8/MDPF/MDPF_TAXSMA/prd/MDPF_TAXSMA_PRD.md §7 S12
+  surface_id: S12
+  role: companion
+  disposition: MODIFY_EXISTING
+  existence_check:
+    exists: true
+    last_commit: 8ed668b075f5f316e82335b58365b0e66fb22f9f
+    source_sha256: 14fadd99332e006eab67bf0a4e9144d48e2f8109fe4e650a82885031a7d58796
+  boundary: Source/path inspection only; no deployed parity inferred. Recheck exact path before authoring; if usable
+    already, verify/reuse.
+- name: infra/aws/lambda/mdpf-pipeline/mdpf-gold-lambda/mdpf-gold-lambda.BUILD_MANIFEST.json
+  plane: config
+  authority: org/missions/D8/MDPF/MDPF_TAXSMA/prd/MDPF_TAXSMA_PRD.md §7 S12
+  surface_id: S12
+  role: companion
+  disposition: MODIFY_EXISTING
+  existence_check:
+    exists: true
+    last_commit: 4de9cdd448d01b99e8dc6d8575cfb2e6bc816d6f
+    source_sha256: b97c1211cee5ee836bf5cc64e85976bf95ee718f3e7f550703cf234d38f057d4
+  boundary: Source/path inspection only; no deployed parity inferred. Recheck exact path before authoring; if usable
+    already, verify/reuse.
+- name: infra/aws/lambda/ci/lambda-source-map.json
+  plane: config
+  authority: org/missions/D8/MDPF/MDPF_TAXSMA/prd/MDPF_TAXSMA_PRD.md §7 S12
+  surface_id: S12
+  role: companion
+  disposition: MODIFY_EXISTING
+  existence_check:
+    exists: true
+    last_commit: 7a9d5ec3dcb1cafa30a155f75ac4ee8bcda42fbd
+    source_sha256: 5808aead8f3e10b9cedf290c18ce10742d08a75db3acad55dcf3ea6570af1bec
+  boundary: Source/path inspection only; no deployed parity inferred. Recheck exact path before authoring; if usable
+    already, verify/reuse.
+- name: infra/aws/terraform/opal-assets/mdpf_portal_publisher.tf
+  plane: infrastructure-source
+  authority: org/missions/D8/MDPF/MDPF_TAXSMA/prd/MDPF_TAXSMA_PRD.md §7 S17
+  surface_id: S17
+  role: companion
+  disposition: MODIFY_EXISTING
+  existence_check:
+    exists: true
+    last_commit: 0484d5d0bd501008c401ec1b453417b2b10c8f5f
+    source_sha256: 8b5031c5ddee04e1d403243da9339ae5cdbc6ebf94cfb7954118d39e32453097
+  boundary: Source/path inspection only; no deployed parity inferred. Recheck exact path before authoring; if usable
+    already, verify/reuse.
+- name: infra/aws/terraform/opal-assets/mdpf_egress_publisher.tf
+  plane: infrastructure-source
+  authority: org/missions/D8/MDPF/MDPF_TAXSMA/prd/MDPF_TAXSMA_PRD.md §7 S13
+  surface_id: S13
+  role: companion
+  disposition: MODIFY_EXISTING
+  existence_check:
+    exists: true
+    last_commit: 537b250716c117d48fbdc2c2f60f6cee03e0be50
+    source_sha256: 104ee5a087bbfc39d5f923f38d68da8fbdb0f4ddb9eff73a2349b9d1b2913059
+  boundary: Source/path inspection only; no deployed parity inferred. Recheck exact path before authoring; if usable
+    already, verify/reuse.
+- name: infra/aws/terraform/opal-gateway/taxsma_workbook.tf
+  plane: infrastructure-source
+  authority: org/missions/D8/MDPF/MDPF_TAXSMA/prd/MDPF_TAXSMA_PRD.md §7 S13
+  surface_id: S13
+  role: companion
+  disposition: PROPOSED_NEW
+  existence_check:
+    exists: false
+    last_commit: null
+    source_sha256: null
+  boundary: Source/path inspection only; no deployed parity inferred. Recheck exact path before authoring; if usable
+    already, verify/reuse.
+- name: data/mdpf/tests/taxsma/expected_cases.json
+  plane: test-harness
+  authority: org/missions/D8/MDPF/MDPF_TAXSMA/prd/MDPF_TAXSMA_PRD.md §7 S14
+  surface_id: S14
+  role: companion
+  disposition: PROPOSED_NEW
+  existence_check:
+    exists: false
+    last_commit: null
+    source_sha256: null
+  boundary: Source/path inspection only; no deployed parity inferred. Recheck exact path before authoring; if usable
+    already, verify/reuse.
+- name: portal/src/components/__tests__/taxsma-journey.test.tsx
+  plane: test-harness
+  authority: org/missions/D8/MDPF/MDPF_TAXSMA/prd/MDPF_TAXSMA_PRD.md §7 S14
+  surface_id: S14
+  role: companion
+  disposition: PROPOSED_NEW
+  existence_check:
+    exists: false
+    last_commit: null
+    source_sha256: null
+  boundary: Source/path inspection only; no deployed parity inferred. Recheck exact path before authoring; if usable
+    already, verify/reuse.
+- name: infra/aws/ec2/opal-gateway/tests/test_taxsma_workbook.py
+  plane: test-harness
+  authority: org/missions/D8/MDPF/MDPF_TAXSMA/prd/MDPF_TAXSMA_PRD.md §7 S14
+  surface_id: S14
+  role: companion
+  disposition: PROPOSED_NEW
+  existence_check:
+    exists: false
+    last_commit: null
+    source_sha256: null
+  boundary: Source/path inspection only; no deployed parity inferred. Recheck exact path before authoring; if usable
+    already, verify/reuse.
+- name: org/standards/MDPF_TAXSMA_DATA_CONTRACT.json
+  plane: config
+  authority: org/missions/D8/MDPF/MDPF_TAXSMA/prd/MDPF_TAXSMA_PRD.md §7 S02
+  surface_id: S02
+  role: companion
+  disposition: AUTHORED_NEW_L4_CONTRACT
+  existence_check:
+    exists: true
+    last_commit: null
+    source_sha256: 2cff438e22214da144ba52ecf4559364268d7d4cb50c891bb936e7d95027298f
+  boundary: Source/path inspection only; no deployed parity inferred. Recheck exact path before authoring; if usable
+    already, verify/reuse.
+- name: TAXSMA_WORKBOOK_IDENTITY activation record
+  plane: activation-record
+  authority: org/missions/D8/MDPF/MDPF_TAXSMA/prd/MDPF_TAXSMA_PRD.md §3.9 / S16
+  surface_id: S16
+  role: primary
+  disposition: SOVEREIGN_INPUT_BEFORE_ACTIVATION
+  existence_check:
+    form: CTO disposition 96946; no named-person authorization supplied for this capability
+  boundary: Protected config, not a repository copy of a delegated token.
+- name: Shared/TAX/Tax SMA Accounts.xlsx
+  plane: sharepoint-workbook
+  authority: org/missions/D8/MDPF/MDPF_TAXSMA/prd/MDPF_TAXSMA_PRD.md §3.1 D01
+  dependency_id: D01
+  role: relies-on
+  disposition: READ_ONLY_DEPENDENCY
+  existence_check: Certified S1/S8; exact Gateway workbook item and all used rows in the data contract
+  boundary: No build or mutation from this dependency row.
+- name: 0833 fact_acc/fact_rps/dim_balance; 0824 fact_acc
+  plane: data-artifact
+  authority: org/missions/D8/MDPF/MDPF_TAXSMA/prd/MDPF_TAXSMA_PRD.md §3.1 D02
+  dependency_id: D02
+  role: relies-on
+  disposition: READ_ONLY_DEPENDENCY
+  existence_check: Certified S2/S4; exact dates and complete objects in the run
+  boundary: No build or mutation from this dependency row.
+- name: data/assets/scripts/gold/runners_49f/b00_canonical_valuation.py
+  plane: gold-script
+  authority: org/missions/D8/MDPF/MDPF_TAXSMA/prd/MDPF_TAXSMA_PRD.md §3.1 D03
+  dependency_id: D03
+  role: relies-on
+  disposition: READ_ONLY_DEPENDENCY
+  existence_check: Certified S4; source and measured canonical output
+  boundary: No build or mutation from this dependency row.
+- name: s3://opal-data-assets/blackdiamond/49f/_ops/taxsma_roster.json
+  plane: data-artifact
+  authority: org/missions/D8/MDPF/MDPF_TAXSMA/prd/MDPF_TAXSMA_PRD.md §3.1 D04
+  dependency_id: D04
+  role: relies-on
+  disposition: READ_ONLY_DEPENDENCY
+  existence_check: Certified S3; provider status only; no mutation
+  boundary: No build or mutation from this dependency row.
+- name: lib/opal_naming.py
+  plane: source-library
+  authority: org/missions/D8/MDPF/MDPF_TAXSMA/prd/MDPF_TAXSMA_PRD.md §3.1 D05
+  dependency_id: D05
+  role: relies-on
+  disposition: READ_ONLY_DEPENDENCY
+  existence_check: LGIC_ENFORCE; CTO 96960 resolves R7 firm/product homes; no override
+  boundary: No build or mutation from this dependency row.
+- name: mdpf-scheduled-floor and opal-assets-mdpf-portal-publisher daily schedule
+  plane: schedule
+  authority: org/missions/D8/MDPF/MDPF_TAXSMA/prd/MDPF_TAXSMA_PRD.md §3.1 D06
+  dependency_id: D06
+  role: relies-on
+  disposition: READ_ONLY_DEPENDENCY
+  existence_check: Certified S7; source pin and daily schedule distinction; applied state rechecked before authorized
+    rollout
+  boundary: No build or mutation from this dependency row.
+- name: infra/aws/ec2/opal-gateway/app/token_broker.py
+  plane: ec2-module
+  authority: org/missions/D8/MDPF/MDPF_TAXSMA/prd/MDPF_TAXSMA_PRD.md §3.1 D07
+  dependency_id: D07
+  role: relies-on
+  disposition: READ_ONLY_DEPENDENCY
+  existence_check: NFRA_OPLMCP and CTO 96946; existing sole delegated-token holder
+  boundary: No build or mutation from this dependency row.
+- name: D1_CATVIEWS consumer contracts and frontend freeze
+  plane: owner-contract
+  authority: org/missions/D8/MDPF/MDPF_TAXSMA/prd/MDPF_TAXSMA_PRD.md §3.1 D08
+  dependency_id: D08
+  role: relies-on
+  disposition: READ_ONLY_DEPENDENCY
+  existence_check: Pinned counterpart PRDs and CTO 96939; coordinate active consumer owner
+  boundary: No build or mutation from this dependency row.
+- name: workbook_snapshot
+  plane: data-artifact
+  authority: org/standards/MDPF_TAXSMA_DATA_CONTRACT.json#/artifacts/workbook_snapshot
+  surface_id: S02
+  role: produced-artifact
+  disposition: DECLARED_TARGET
+  address_contract:
+    builder: address
+    args:
+    - mdpf
+    - 49financial
+    - bronze
+    - taxsma_workbook
+    - date={knowledge_date}
+    - '{snapshot_id}.json'
+    content: Minimized complete source snapshot, immutable source evidence
+    writer: S02
+    readers:
+    - S03
+  existence_check: Normative target address/producer declaration; no AWS existence or applied-schema equality inferred.
+    Existing category surfaces are documented by certified S5/S6; new Tax source/observation targets require producer
+    proof.
+  boundary: Minimized complete source snapshot, immutable source evidence
+- name: membership_dispositions
+  plane: data-artifact
+  authority: org/standards/MDPF_TAXSMA_DATA_CONTRACT.json#/artifacts/membership_dispositions
+  surface_id: S03
+  role: produced-artifact
+  disposition: DECLARED_TARGET
+  address_contract:
+    builder: address
+    args:
+    - mdpf
+    - 49financial
+    - state
+    - taxsma_membership
+    - dispositions.json
+    content: Protected append-only versioned membership evidence; conditional updates retain history
+    writer: S03
+    readers:
+    - S03
+    - S04
+    - S05
+  existence_check: Normative target address/producer declaration; no AWS existence or applied-schema equality inferred.
+    Existing category surfaces are documented by certified S5/S6; new Tax source/observation targets require producer
+    proof.
+  boundary: Protected append-only versioned membership evidence; conditional updates retain history
+- name: operational_control
+  plane: data-artifact
+  authority: org/standards/MDPF_TAXSMA_DATA_CONTRACT.json#/artifacts/operational_control
+  surface_id: S07
+  role: produced-artifact
+  disposition: DECLARED_TARGET
+  address_contract:
+    builder: address
+    args:
+    - mdpf
+    - 49financial
+    - state
+    - taxsma_control
+    - current.json
+    content: Status/pending/receipt references only; never alternate business values
+    writer: S07
+    readers:
+    - S02
+    - S05
+    - S08
+    - S15
+  existence_check: Normative target address/producer declaration; no AWS existence or applied-schema equality inferred.
+    Existing category surfaces are documented by certified S5/S6; new Tax source/observation targets require producer
+    proof.
+  boundary: Status/pending/receipt references only; never alternate business values
+- name: taxsma_assets
+  plane: data-artifact
+  authority: org/standards/MDPF_TAXSMA_DATA_CONTRACT.json#/artifacts/taxsma_assets
+  surface_id: S05
+  role: produced-artifact
+  disposition: DECLARED_TARGET
+  address_contract:
+    builder: address
+    args:
+    - mdpf
+    - 49financial
+    - gold
+    - taxsma_assets
+    - date={knowledge_date}
+    - data.parquet
+    content: Immutable account-grain observations including unresolved expected rows
+    writer: S05
+    readers:
+    - S06
+    - S07
+  existence_check: Normative target address/producer declaration; no AWS existence or applied-schema equality inferred.
+    Existing category surfaces are documented by certified S5/S6; new Tax source/observation targets require producer
+    proof.
+  boundary: Immutable account-grain observations including unresolved expected rows
+- name: firm_category
+  plane: data-artifact
+  authority: org/standards/MDPF_TAXSMA_DATA_CONTRACT.json#/artifacts/firm_category
+  surface_id: S07
+  role: produced-artifact
+  disposition: DECLARED_TARGET
+  address_contract:
+    builder: address
+    args:
+    - mdpf
+    - 49financial
+    - gold
+    - category_views
+    - date={knowledge_date}
+    - data.parquet
+    content: CANON category Gold with status extension
+    writer: S07
+    readers:
+    - S08
+  existence_check: Normative target address/producer declaration; no AWS existence or applied-schema equality inferred.
+    Existing category surfaces are documented by certified S5/S6; new Tax source/observation targets require producer
+    proof.
+  boundary: CANON category Gold with status extension
+- name: global_category
+  plane: data-artifact
+  authority: org/standards/MDPF_TAXSMA_DATA_CONTRACT.json#/artifacts/global_category
+  surface_id: S07
+  role: produced-artifact
+  disposition: DECLARED_TARGET
+  address_contract:
+    builder: address
+    args:
+    - mdpf
+    - global
+    - gold
+    - category_views
+    - date={knowledge_date}
+    - data.parquet
+    content: Global composite category Gold with status extension
+    writer: S07
+    readers:
+    - S08
+  existence_check: Normative target address/producer declaration; no AWS existence or applied-schema equality inferred.
+    Existing category surfaces are documented by certified S5/S6; new Tax source/observation targets require producer
+    proof.
+  boundary: Global composite category Gold with status extension
+- name: firm_served
+  plane: data-artifact
+  authority: org/standards/MDPF_TAXSMA_DATA_CONTRACT.json#/artifacts/firm_served
+  surface_id: S08
+  role: produced-artifact
+  disposition: DECLARED_TARGET
+  address_contract:
+    builder: address
+    args:
+    - mdpf
+    - 49financial
+    - platinum
+    - category_views
+    - category-views.json
+    content: Existing caller route remains; owner CANON handles storage migration
+    writer: S08
+    readers:
+    - S09
+  existence_check: Normative target address/producer declaration; no AWS existence or applied-schema equality inferred.
+    Existing category surfaces are documented by certified S5/S6; new Tax source/observation targets require producer
+    proof.
+  boundary: Existing caller route remains; owner CANON handles storage migration
+- name: global_served
+  plane: data-artifact
+  authority: org/standards/MDPF_TAXSMA_DATA_CONTRACT.json#/artifacts/global_served
+  surface_id: S08
+  role: produced-artifact
+  disposition: DECLARED_TARGET
+  address_contract:
+    historical_address: s3://opal-data-portal-v2/platinum/mdpf/global/category-views.json
+    content: Existing historical exception preserved; do not generate a replacement
+    writer: S08
+    readers:
+    - S09
+  existence_check: Normative target address/producer declaration; no AWS existence or applied-schema equality inferred.
+    Existing category surfaces are documented by certified S5/S6; new Tax source/observation targets require producer
+    proof.
+  boundary: Existing historical exception preserved; do not generate a replacement

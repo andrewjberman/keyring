@@ -1,0 +1,45 @@
+{
+  "checked_utc": "2026-09-15T07:54:34.266881+00:00",
+  "author": "1.0.0_SA_CTO~A",
+  "header_and_canonical_shape_violations": [],
+  "endpoint_equal_to_approved_after_heading_layout_only": true,
+  "endpoint_sha256_without_trailing_separators": "296f83b8a122edc5f737ad6247b55716843b94e69d22ee5afb376c2a2f1d06a1",
+  "surface_ids": [
+    "S01",
+    "S02",
+    "S03",
+    "S04",
+    "S05",
+    "S06",
+    "S07",
+    "S08",
+    "S09",
+    "S10",
+    "S11",
+    "S12",
+    "S13",
+    "S14",
+    "S15",
+    "S16",
+    "S17",
+    "S18"
+  ],
+  "dependency_ids": [
+    "D01",
+    "D02",
+    "D03",
+    "D04",
+    "D05",
+    "D06",
+    "D07",
+    "D08"
+  ],
+  "dependency_graph": "ACYCLIC",
+  "owned_components_complete": true,
+  "component_count": 47,
+  "brief_heading_counts": {
+    "top_level": 9,
+    "nested_outcome": 8
+  },
+  "limitations": "Shape, ID-set, dependency and exact ratified-text checks; only outcome heading layout normalized to canonical FWD syntax. Substantive brief/contract review remains independent at L4-R. No implementation tests."
+}

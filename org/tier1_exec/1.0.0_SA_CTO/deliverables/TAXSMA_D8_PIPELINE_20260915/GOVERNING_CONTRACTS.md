@@ -44,6 +44,16 @@ The exact message is `20260915T065013Z_1.0.0_SA_CTO_Re_TAXSMA_identity__reuse_th
 - Every call is audited. Token revocation/expiry and `NeedsLogin` produce a fail-closed `auth-required` / stale result, never zero or silent success. L4 must state the source date and what remains unavailable.
 - This requires a Gateway code change and its normal authorized deployment. The CTO requests naming the reusable pattern for IRPT_BCKEND's later mailbox intake; TAXSMA does not implement or grant that mailbox access.
 
+## CTO disposition 96960: canonical firm Gold/state homes and publisher N+1 reads
+
+Exact message `20260915T073711Z_1.0.0_SA_CTO_Re_TAXSMA_firm_Gold_home__canon_R7_gover.md`, from `1.0.0_SA_CTO`, read in this seat's exact unread inbox and acknowledged. It resolves the measured conflict between MDPF_CANON v2.3:177-179 and the current LGIC address builder/registry:
+
+- Doctrine R7 governs: Andrew's “These work i like it” at `3fd386598f` makes a firm-attributable slice that firm's data at any grain, in its firm bucket for Gold and platinum. Cross-firm composite Gold may use the product bucket; product pipeline code remains in the product bucket.
+- New 49financial Tax Gold and state use the builder's firm-bucket result. The measured example `address('mdpf','49financial','gold','taxsma_assets','date=2026-09-15','data.parquet')` yields `s3://opal-data-49financial/mdpf/49financial/gold/taxsma_assets/date=2026-09-15/data.parquet`. This is a recorded output, never an instruction to hand-type a key.
+- Global composite Gold and MDPF code remain in `opal-data-mdpf`. The publisher reads N+1 homes: each firm's bucket for its slice and the product bucket for Global. Existing caller URLs and the historical Global served path are preserved.
+- MDPF_CANON v2.3's all-Gold/state-in-product and product-only-publisher-source clauses are the **stale carrier**, superseded by R7 for firm-attributable slices. `1.0.0_SA_CTO` owns that PRD and will update its Gold/publisher clauses at its next bump. This seat records the owner's engineering disposition and does not edit the counterpart PRD.
+- No migration or runtime write is authorized by this disposition.
+
 ## Completion boundary
 
 This handoff preserves received contract direction only. The source-grounding certification packet remains unchanged during its open review. The final PRD must incorporate these directions after the required certification and close ingestion scheduling and the concrete correction/endpoint representation at L4. It must not defer architecture choices to L5 allocation. The architecture choices are disposed; the named delegated person's unattended-content authorization remains an explicit sovereign activation prerequisite. No production credential is established by the research session.
