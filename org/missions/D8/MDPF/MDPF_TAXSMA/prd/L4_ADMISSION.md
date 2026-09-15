@@ -17,7 +17,7 @@ Finalization changes only the PRD header status DRAFT→RATIFIED and the data co
 
 ## Handoff artifact set
 
-- PRD: `prd/MDPF_TAXSMA_PRD.md`, with 18 owned surfaces and eight EXERCISED endpoint bars.
+- PRD: `prd/MDPF_TAXSMA_PRD.md`, with 18 owned surfaces and eight approved endpoint bars requiring EXERCISED proof.
 - Normative data contract: `org/standards/MDPF_TAXSMA_DATA_CONTRACT.json` v0.2.0.
 - `prd/component_manifest.yaml`: 47 declared primary, companion, dependency and produced-artifact entries; the underlying owned surface and dependency sets remain S01-S18 / D01-D08.
 - `prd/AUTHORING_CHECKS.md` and `prd/authoring-checks.json`: checked structure, coverage, endpoint equality, unchanged signed halves and metadata-only finalization.
@@ -31,4 +31,4 @@ The notifier has released the v0.2 package after both signatures, but its record
 
 No runtime implementation, workbook mutation, production activation, task-order issuance, merge or push follows from this signature record. The explicit named-person unattended-content authorization still precedes capability activation. Existing deployment and frontend promotion holds remain. The portal promotion and scheduled Cottonwood hotfix verification are separate assignments.
 
-Routing update after COO notice 96997: COO~G explicitly did not claim the project. Capacity is 3/3 and TAXSMA is unplaced in the cross-project sequence. `L5_ROUTING.md` records the measured capacity, existing queue, unapplied tail-placement proposal and correct owner split for placement/seating. The earlier request to a live COO was a request for allocation, not an assignment or a delivered canonical L5 release.
+Routing update after COO notice 96997 and CTO notice 97006: COO~G explicitly did not claim the project; measured capacity was 3/3 and TAXSMA was unplaced in the cross-project sequence. **The tail-placement proposal at `8c70cabc48` is NOT ADOPTED.** Andrew's recorded ~07:5xZ order (LD-0567, `4524cc2466`) puts TAXSMA ahead of NFRA_OPLGTW and IRPT_BCKEND. His earlier assignment of COO~F's next slot to LGIC_CANON conflicts with that order; MSTR already carries the decision to Andrew. CTO owns the sequence correction after the ruling, and MSTR owns seating. `L5_ROUTING.md` records the full disposition. No lane is assigned and no canonical L5 release is delivered by these routing messages. L4 remains ADMITTED.
