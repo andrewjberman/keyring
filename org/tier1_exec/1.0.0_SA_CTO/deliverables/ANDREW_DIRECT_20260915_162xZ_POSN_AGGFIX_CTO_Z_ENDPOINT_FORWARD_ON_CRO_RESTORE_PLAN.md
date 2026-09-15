@@ -4,8 +4,11 @@
 **Channel:** spoken at the `0.0.0_AB_MSTR` terminal (CLOUD) ~16:2xZ; relayed to `0.0.0_AB_MSTR~Z` over the agent bus
 (id d7aa0f67); relayed to this seat as broker msg 23156 (20260915T162837Z), read and acked 16:29:52Z.
 **CLOUD record, as the relay names it:** `org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20260915_162xZ_POSN_AGGFIX_TO_SITEZ_SPAWN_Z_FABRIC_CTO_Z_ENDPOINT_FORWARD.md`.
-ABSENT from origin/CLOUD @2033ff3ea6 at 16:4xZ (git show: "does not exist"), so it is either unpushed on CLOUD or
-at another path. This file is the SITEZ carrier and does not depend on it.
+ABSENT from origin/CLOUD @2033ff3ea6 at 16:4xZ (git show: "does not exist").
+RESOLVED 17:0xZ, relayed by `0.0.0_AB_MSTR~Z` msg 23173 from `0.0.0_AB_MSTR` (bus e305ec40): the path is right;
+the record is commit `bd2fa195c0` on the laptop's LOCAL CLOUD, unpushed under the same hold as SITEZ. Not read
+from this device. Push states differ: the record is LOCAL ON CLOUD; the plan is ON origin/CLOUD @`2033ff3ea6`.
+This file is the SITEZ carrier and does not depend on it.
 
 ## Verbatim, entire (as relayed by `0.0.0_AB_MSTR~Z`, msg 23156)
 
