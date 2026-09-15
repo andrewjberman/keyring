@@ -5,7 +5,7 @@
   "project": "AMGT_RESAPP",
   "directive": "D5",
   "fabric": "site-z",
-  "prd_version": "v0.5",
+  "prd_version": "v0.6",
   "step": 4,
   "brief_ref": "docs/briefs/amgt-resapp-security-analysis-20260910.md@19ce7d5b4d",
   "endpoint_outcomes": [
@@ -23,7 +23,11 @@
     "FWD-12",
     "FWD-13",
     "FWD-14",
-    "FWD-15"
+    "FWD-15",
+    "FWD-16",
+    "FWD-17",
+    "FWD-18",
+    "FWD-19"
   ],
   "status": "RATIFIED"
 }
@@ -278,13 +282,156 @@ disputable, by rule, and carry no technical language.*
                     have made by gut or by scrolling a spreadsheet.
          SOURCE     Andrew's frontend walkthrough (the Lead Panel); his
                     reserved L2 confirmation
+
+  FWD-16 The top of the page tells an analyst what the company is and what
+         is being said about it today, before any tab is opened
+         DONE WHEN  EXERCISED -- an analyst has read the day's items at the
+                    top of a page and followed one out
+         ACCEPT     Above the tabs, beside the ranked list, the page shows a
+                    one-line description of the company and the day's news
+                    and social items about it, newest and most-discussed
+                    first, each one clickable through to its source. An
+                    analyst reads it without opening a tab.
+         SOURCE     Andrew-direct 2026-09-15 ~05:1xZ (the header panel word)
+
+  FWD-17 An analyst sees who runs the company, and how long they have run it
+         DONE WHEN  EXERCISED -- an analyst has used the profile to answer a
+                    question about a management team
+         ACCEPT     One tab lists the company's senior executives, each with
+                    their role, a profile link and how long they have held
+                    the role, and states how the team's average tenure
+                    compares with the average across every company the page
+                    covers. Where a person cannot be confirmed from the
+                    company's own filings, the page says so.
+         SOURCE     Andrew-direct 2026-09-15 ~05:04Z (executive managers),
+                    ~05:1xZ (the Exec Management tab), ~05:4xZ (the whole
+                    C-suite, tenure against the pool), the voice memo of
+                    ~05:5xZ (part two)
+
+  FWD-18 The company's own filings are read for the analyst, and the one
+         chart that matters is drawn from them
+         DONE WHEN  EXERCISED -- an analyst has clicked a filing-derived
+                    figure through to the passage it came from
+         ACCEPT     The Thesis tab says, in the company's own words and with
+                    each sentence linked to the passage in the filing it came
+                    from, what the company is doing now, its biggest
+                    challenges and its biggest bets; and it shows one chart,
+                    chosen for that company, of the thing it lives or dies
+                    on. The Model tab's figures are the plain financial
+                    model, built the same way for every company.
+         SOURCE     Andrew-direct 2026-09-15 ~05:1xZ (four tabs; a filings
+                    analyzer), the voice memo of ~05:5xZ (parts one and four)
+
+  FWD-19 An analyst sees what this company means for Opal
+         DONE WHEN  EXERCISED -- a PM has read a posture and acted on it, or
+                    declined it, on the page
+         ACCEPT     The last tab, and a line in the header, say whether this
+                    company looks like a better or a worse pick than the
+                    most similar name on the other side -- an Opal holding
+                    when the company is not held, a non-Opal name when it is
+                    -- names that comparable, and gives the reasons with each
+                    one linked to what it rests on. It is marked as a
+                    machine's view for a person to accept or reject; it is
+                    never an instruction, and nothing is traded from it.
+         SOURCE     Andrew-direct 2026-09-15 ~05:1x-05:2xZ (Posture, the
+                    union universe, the symmetric comparable), the voice
+                    memo of ~05:5xZ (part five)
 ```
 
-**BAR DISTRIBUTION: 14 of 15 are `EXERCISED`; only `FWD-9` is `APPLIED`.**
+**BAR DISTRIBUTION: 18 of 19 are `EXERCISED`; only `FWD-9` is `APPLIED`.** (v0.6: FWD-16..FWD-19 added,
+every one EXERCISED; the fifteen v0.5 ids and their bars are byte-for-byte unchanged -- an addendum never
+lowers a bar.)
 
 ⚠ **THIS IS THE MOST IMPORTANT SINGLE FACT FOR L5. Fourteen outcomes cannot be closed by any
 build.** **No cell may claim an `EXERCISED` outcome REALIZED on the strength of its own artifact.**
 **Grade the `DONE WHEN` state line, never the `ACCEPT` paragraph beside it.**
+
+---
+
+## CONTRACTS -- v0.6 (ratified text; the reviewer is `3.0.0_SA_CVO`, always)
+
+*Contracts are the shapes every cell must respect. Each one names its owner and the record it comes from.
+None of them is an outcome and none of them is graded; they are what a cell may not silently change.*
+
+**C-PAGE-LAYOUT.** The Security Analysis page is ONE HEADER and FIVE TABS. The header is the discovery
+surface: the Lead Panel's ranking cross (movement Trending | Breakout x subject Price | Chatter, List |
+Chart), the company-level feed (publisher items from the harvest and, once S13 has measured a source,
+social items), a one-line description, and the Posture line. The tabs, in order: **Thesis** (prose over
+cited evidence + the one "big thing" chart), **Exec Management**, **Peers**, **Model**, **Posture**. Print
+is a header export action, never a tab. The Coverage TAB is retired: its content is the header feed. The
+Model tab is RESTORED (round 5 cut it and rehomed its figures in Thesis; v0.6 returns it as its own tab
+carrying the model block in the shape of Adam's `Model` sheet, the same way for every company).
+Source: Andrew-direct ~05:1xZ and the voice memo ~05:5xZ; measured shape: Adam's Boeing one-pager workbook
+(`SUBSTRATE_CARDS.md` card 3 @5007337353).
+
+**C-ONE-STORE (resolves `Z-S96`).** The pool `s3://opal-data-harvest` is THE article store. The chatter
+axis producer and the coverage reader READ the pool (`publication-links/v1/{security_key}/...` for the
+association, the body under `publications/v1/{publisher}/{sha256(identity)}.json`, `published_at` from the
+body); the DynamoDB articles table is RETIRED as a source once both readers are repointed, and nothing
+writes it after that. Inflow to the pool is TRACEABLE: every body carries its publisher, canonical URL,
+stable identity and retrieval receipt. Andrew's ~05:04Z word names the pool as the system of record;
+this contract makes it the only one. Owner of the readers: `2.0.0_SA_COO~W` (the recut); owner of the
+writer: the harvest lane, whose mechanism and cadence stay reserved to Andrew by name.
+
+**C-ETF-PLANE-READ.** AMGT_RESAPP READS the ETF holdings plane `s3://opal-data-etfs` (`config/etf_universe.json`,
+`gold/book/`, `gold/holding/`, `snapshots/snapshot_<date>.json` written daily at 22:00Z) and NEVER writes it.
+That plane, its producers and its vintages belong to the `~Z` fabric's POSN_ASTTAX / ETFS_* projects. Every
+Posture output and every membership claim carries the snapshot date it read. Source: Andrew-direct
+~05:1xZ (Posture) and ~03:5xZ (the fabric split).
+
+**C-UNION-UNIVERSE.** The harvest universe is the UNION of the coverage list (`universe.json`, 89 name
+folders; 32 tickers MEASURED / 57 UNRESOLVED at 2026-09-10) and the current holdings of the four Opal ETFs
+at the snapshot vintage, so every comparable Posture names carries the same model block, feed, filings
+and peers evidence as the target. Source: Andrew-direct ~05:2xZ (the third Posture word).
+
+**C-SIMILARITY-RANKER (the rule for FWD-8's peer set and for FWD-19's comparable; Rule 24 schema).**
+The comparable set of a subject is computed, never copied from a workbook (the F6 defect), by ONE ranker
+over ONE database:
+- the database = the Security Scanner's universe data (`UniverseDataRow`: ticker, name, mktVal, country,
+  sector, industryGroup, universe weight for sp500 / r1000 / r1000v / acwx / eafe / eafev) UNION the
+  harvest universe's model-block header scalars (classification, market cap, country);
+- the rungs, lexicographic, in Andrew's order: same SECTOR, then a SIZE BAND (the existing engine's
+  0.2x-5x market-cap band, `lib/research/peers/engine.py`), then same COUNTRY, then same SUBSECTOR
+  (industry group); a numeric similarity within the last rung breaks ties (log market-cap distance);
+- the four postulates: (i) MECE over the database -- every candidate is in exactly one rung or excluded,
+  written as the database MINUS the excluded, with the denominator printed; (ii) same grain -- one
+  security per row, one classification field named in every emitted set's `test` string; (iii) one
+  intent -- similarity of business and scale, never valuation; (iv) state coherence -- the set carries
+  `basis` = analyst | derived | absent as the engine already does, and a Seeking Alpha comparables list, if
+  its API exposes one, is an INPUT candidate measured first, never the rule.
+The Peers tab then renders Adam's `CSC` shape over that set: per peer Price, Shares, Debt, Preferred,
+Minority, Cash, Market Cap, EV, P/E (three years), leverage ratios, five-year growth of Revenue / EBIT /
+FCF, with Average / Median / Min / Max rows, and the Security Scanner's factor quintiles as the ranking
+half. Source: the voice memo ~05:5xZ (part three); card 3.
+
+**C-POSTURE (FWD-19's shape).** Posture = (1) MEMBERSHIP at the snapshot vintage (held / not held, book,
+weight); (2) the COMPARABLE = the most similar name on the OTHER side by C-SIMILARITY-RANKER (an Opal
+holding for a non-held subject; a non-held name for a held one); (3) the JUDGMENT over the two
+evidence packs (each = Thesis, Exec Management, Peers, Model, all four for both names), producing
+`{verdict: better | worse | hold | steer_clear, comparable: <security_key>, basis: [cited claims],
+as_of: <snapshot date>, marked: machine}`, stored versioned in the pool under `posture/v1/{security_key}/
+{as_of}.json`. A name's factor profile scored under the Opal ETF presets (DIVZ 13 factors, PFOE 16;
+`SecurityScanner/constants.ts`) is the FIT input to (3). Posture is a recommendation surface: nothing in
+the trade pipeline reads it. "The final execution" is a person's act on the page. Source: Andrew-direct
+~05:1x-05:2xZ and the voice memo (part five); card 3.
+
+**C-FILINGS-ANALYZER (FWD-18's shape).** The analyzer reads the filing Bloomberg pulls (a public filing
+stood in for the measurement), through the Claude API with document citations, and writes TYPED rows to the
+pool (`filings/v1/{security_key}/{accession}.analysis.json`): guidance changes, segment revenue, top risks,
+management commentary, big bets, big challenges, and a THESIS DRIVER field naming the series the one chart
+is drawn from. Measured shape (card 1 @5007337353): with a JSON answer requested, citations arrive INLINE as
+cite tags and no citation blocks; structured output and citations cannot be combined; so the cell is TWO
+PASSES or a TAG PARSER, and the cut names which. It runs as a scheduled batch over the union universe,
+never per page view. Every sentence the Thesis tab shows from it is MARKED machine prose beside its cited
+passage (FWD-9's rule). Egress: Andrew's session word @dfa63b6d92; the Bloomberg-terms question is carded and
+open.
+
+**C-EXEC-MANAGEMENT (FWD-17's shape).** The roster and each officer's role start come from the FILING's
+executive-officer section (the authority); Lusha prospecting enriches each CONFIRMED officer with a profile
+link and title (card 2: the `c-suite` filter is loose and carries no tenure); a targeted web search on the
+company's own IR domain fills the CEO's public profile; the pool-average tenure is computed over the union
+universe from the same filing field. No contact data point is stored. Owner of the collection lane: the
+harvest estate under the same loop discipline Andrew set at ~04:3xZ.
 
 ---
 
@@ -812,3 +959,63 @@ It does not grade any `FWD` outcome, does not authorise an apply, and does not s
 harvest consolidation absorbs the orphaned S9/S10 module reconcile -- `4.0.0_SA_CRO~Z` has since
 confirmed it does, and verified the module is genuinely broken first (`terraform validate` -> three
 duplicate-block errors), which is that seat's to carry rather than this PRD's.
+
+---
+
+## 9. ADDENDUM v0.6 -- THE PAGE AS ANDREW DEFINED IT ON 2026-09-15 (the round-10 L10 addendum)
+
+**Author:** `1.0.0_SA_CTO~W` (the L4 owner on Andrew's word @ce7371d0b3). **Trigger:** the round-10 slug
+`REMEDIATION_v10.md@e28f0b546c` and this seat's `ledger/ROUND_ANALYSIS.round10.md`. **What this bump
+changes:** the ENDPOINT gains FWD-16..FWD-19; a CONTRACTS section is added (seven contracts); this
+section. **What it does not change:** the fifteen v0.5 outcomes and their bars; s.2-s.8; the surface
+manifest of s.4 (round 11's decomposition extends the rectangle, this PRD does not pre-cut it).
+
+### 9a. Provenance -- seven Andrew-direct records, one memo, three cards
+
+| record | what it carries |
+|---|---|
+| `1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_232xZ_W_LANES_...md` @ce7371d0b3 | the `~W` lanes take the project; the L4 owner from here |
+| `..._20260915_035xZ_W_FABRIC_IS_AMGT_RESAPP_ONLY_...md` @9dfee40ce0 | `~W` = AMGT_RESAPP only; `~Z` = POSN_ASTTAX |
+| `2.0.0_SA_COO/deliverables/AMGT_RESAPP_W/ANDREW_DIRECT_20260915_0504Z_...md` @7cf62a165f | executive managers; Lusha; the pool as the system of record |
+| `..._20260915_051xZ_SECURITY_ANALYSIS_HEADER_PANEL_FOUR_TABS_FILINGS_ANALYZER.md` @a5c6a066de | six words: header, four tabs, filings analyzer; Posture; union universe; the symmetric comparable; Adam's packs + the Scanner; the whole C-suite + tenure |
+| `..._20260915_052xZ_EGRESS_GRANTED_...md` @473526f738, superseded fabric-wide @dfa63b6d92 | egress for the session; `comp-secrets` as the instrument |
+| `..._20260915_055xZ_TRANSCRIPT_SECURITY_ANALYSIS_PANELS_DRILL_DOWN.md` @fbd5d91431 (JSON beside it) | the voice memo: parts one to five, the ranker, "the RAG is just the four tabs plus comparing with the opal position" |
+| `..._SUBSTRATE_MEASUREMENTS_20260915_W/SUBSTRATE_CARDS.md` @5007337353 | card 1 filings analyzer; card 2 Lusha C-suite; card 3 Adam's workbook + the Scanner registry and presets |
+
+### 9b. Compiler and substrate evidence (what changed this PRD)
+
+| instrument | result | changed the PRD? |
+|---|---|---|
+| Claude API over Boeing's 10-K, citations + schema (card 1) | 76 items, 71 cited inline, USD 1.06, 114.5 s; citations INLINE with JSON, no citation blocks | yes: C-FILINGS-ANALYZER's two-pass-or-parser clause |
+| Lusha prospecting, boeing.com, c-suite (card 2) | 50 of 50 rows, 9 fields, no tenure field, loose filter | yes: C-EXEC-MANAGEMENT puts the filing first, Lusha second |
+| Adam's Boeing workbook (card 3) | `Model` and `CSC` sheets measured; stale telecom set present | yes: C-PAGE-LAYOUT (Model restored), C-SIMILARITY-RANKER's rendered shape |
+| Security Scanner registry + presets (card 3) | 289 factors / 18 categories; DIVZ 13, PFOE 16 | yes: the ranker's database and Posture's fit input |
+| `lib/research/peers/engine.py` at HEAD | sector + 0.2x-5x band, basis analyst/derived/absent, no candidate universe loaded | yes: the ranker's first two rungs are the existing engine |
+| Grep census of `opal-harvest-articles` writers / `publications/v1` readers (row `Z-S96`) | 0 writers of the table; 0 readers of the pool keys outside the harvester | yes: C-ONE-STORE |
+| `s3://opal-data-etfs` layout on the live plane | config (4 tickers), gold/book, gold/holding, 95 daily snapshots | yes: C-ETF-PLANE-READ |
+| receiving-check on the round-10 analysis | UNCHECKED (no checker for a round analysis) | stated, not hidden |
+
+### 9c. What this bump does NOT authorise
+
+No cell, no vendor call by any cell (the session egress word is Andrew's and is recorded where it was
+given), no read of the ETF plane by any AMGT cell before the COO's cut names it, no trade-pipeline
+consumer of Posture, no promote (PORTAL FROZEN: COMMIT YES / PROMOTE NO), no push, no change to the
+harvest collection mechanism or cadence (reserved to Andrew by name @9db2a36cdc), and no grade of any
+outcome. FWD-16..FWD-19 are UNREALIZED at this bump, as every outcome has been at every bump.
+
+### 9d. The round-11 shape the L4 owner RECOMMENDS (the COO cuts)
+
+In dependency order: the three AC6 limbs as recuts of existing seams (`Z-S95` canonical key on the ranked
+click; `C-S196` drafting paired with evidence; `Z-S72` the exact-input exercise); C-ONE-STORE (the two
+readers repointed at the pool); the filings analyzer as one scheduled cell; the ranker over the scanner
+universe data and the Peers tab in the `CSC` shape; the exec-management lane; the header and the Model tab;
+Posture last, since it consumes everything above for two names. The issuer criteria the slug names
+(`W17-S4`, `W17-S5`) are amended at the cut and are not cells.
+
+### 9e. L4-R on this bump
+
+The ENDPOINT and the new CONTRACTS section re-open the ratified-text half (`3.0.0_SA_CVO~W`, the fabric's
+adjudicator on Andrew's ~03:5xZ word); this s.9 re-opens the brief half (`4.0.0_SA_CRO~W`, or a live COO
+not holding the round in its stead). `python .tools/prd-signoff.py status AMGT_RESAPP` is the one read of
+what is owed; the notifier delivers each half; `to-pipeline-gate.py` LIMB 6 refuses a newly-added round-11
+order until both halves are SIGNED at these bytes.
