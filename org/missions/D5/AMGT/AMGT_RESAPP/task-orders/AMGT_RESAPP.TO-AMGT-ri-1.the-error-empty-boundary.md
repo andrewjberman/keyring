@@ -163,7 +163,7 @@ restore from that snapshot if you must. Never `git checkout --`, never `git stas
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
-<status>staged</status>
+<status>complete</status>
 <round>10</round>
 <slot>~16</slot>
 <fabric>site-z</fabric>
