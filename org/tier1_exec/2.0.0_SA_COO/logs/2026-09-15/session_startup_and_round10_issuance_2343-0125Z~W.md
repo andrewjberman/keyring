@@ -319,6 +319,32 @@ refused, so the printed denominators kept their teeth; determinism stable on 3 o
 ids moved). Nothing rebuilt; no new rows (`W19-S12` still the next free id). **Drained** `4faa0123ad` (no conflict: the pass touched
 no channel). **Four of thirteen orders complete** (rj-4, rj-1, rj-7, rj-5); the lesson of the count bars banked to memory.
 
+### 13. rj-6 landed the filings analyzer; one query invocation re-cut; rj-8 and rj-2 spawned (11:1x-11:5xZ)
+
+**rj-6 (`~20`) reported at ~11:1xZ with a VALID instance, 6 of 7 PASS-by-output and the order OPEN on AC6:** the analyzer fetches by
+CIK with qualified headings (card 1's last-heading rule took a CROSS-REFERENCE on 2 of the 5 QA filings and its whitespace-joined
+patterns missed Alibaba's own heading -- fixed by matching on a whitespace-compacted copy with an offset map; row `W20-S4`), two passes
+with citations, a 276-passage map for Boeing, every cited claim resolved or HELD (BA 85 of 85 cited, COST 81 of 81, SAP 20-F 78 of
+84 with 6 held, HD 79 of 79, BABA 20-F 80 of 80), a thesis driver per filing (Boeing: BCA commercial aircraft deliveries), the
+drafting library typed (`evidence_records`, id / association / source-version validation before the gate, the gate against the
+PASSAGE); the first live Boeing draft showed the verbatim gate running VACUOUSLY on 40 of 40 sentences (1 of 85 items carried a
+quotation mark; `W20-S5`) -- the company's own words are now extracted mechanically and 9 sentences across the five filings are
+dropped for citing a paragraph their words did not come from; 10 `filings/v1` and 5 `drafting/v1` objects in the pool, the weekly
+task `OpalResearch-FilingsAnalyzer` defined DISABLED; 13 vendor calls, USD 3.49 of the ~5.5 bound. **AC6 was REFUSED as written and
+the refusal upheld:** MSYS argv conversion rewrites `schtasks /Query` into a Git path so the literal command emits zero lines, and
+`/FO LIST` carries neither `Scheduled Task State` nor `Schedule Type` without `/V` (`W20-S2`, `W20-S3`; the world-state measured
+correct: Weekly, Disabled). Rows `W20-S1..S8` (S1 the 115 s bound vs a cold two-pass run; S6 the drafting schema's top level is now
+an object; S7 `comp-secrets --reveal` prints a labelled block; S8 excerpt coverage 100% to 31% of the named items).
+
+**Acts:** the branch DRAINED partial (`f8b3475c87`, 210 rows) so F-1 and D-1 sit at HEAD for rj-2 and rj-8; AC6's invocation re-cut
+with `MSYS_NO_PATHCONV=1` and `/V` in rj-6 AND in rj-8 (the same shape, before its spawn) @`04b59f883c`; `wk-amgt-11-3` fast-forwarded
+and `~20` RESPAWNED to re-run AC6 and AC7 only (AC1-AC5 carried: their criterion text is unchanged and the five model runs are the
+order's bound), next row `W20-S9`. Then rj-2's AC2 read against its own record: rj-6 kept NO local D-1 copies in its deliverables (0
+of 4 files match the order's glob), so the negative controls would have raised before any arm ran -- re-cut @`8940b7320c` to fetch the
+positive control ONCE from the pool into `.scratch/goodroot/` (now graded as a SERVED arm) and mutate that copy. **Spawned:** `~22` on
+rj-8 in `C:/tmp/wk-amgt-11-5` (cone widened with `integrations/`; the Lusha and SERP clients present; the QA pair named for the
+record) and `~18` on rj-2 in `C:/tmp/wk-amgt-11-1` (both amendments folded into the face; next row `W18-S8`). Three workers live.
+
 ---
 
 ## Decisions Made
@@ -357,20 +383,20 @@ None at this lane. The next acts are gated on the workers' final reports (backgr
 
 ## Current State
 
-Round 11 of AMGT_RESAPP is EXECUTING (13 orders): rj-4, rj-1, rj-7 and rj-5 COMPLETE and drained at 4faa0123ad; `~20` on rj-6 in
-C:/tmp/wk-amgt-11-3 is the one live worker; `~18` idle in C:/tmp/wk-amgt-11-1 (portal @ad275969) until rj-6 drains, then rj-2; `~22`
-(wk-amgt-11-5) takes rj-8 at rj-6's drain; `~19` idle in C:/tmp/wk-amgt-11-2 until rj-9 drains, then rj-10; chain D done. Posture
-QA held key BA_US_Equity. Channel at 202 rows. Both co-sign halves are files. PORTAL FROZEN; all commits LOCAL; no push.
+Round 11 of AMGT_RESAPP is EXECUTING (13 orders): rj-4, rj-1, rj-7, rj-5 COMPLETE and drained; rj-6 drained partial with `~20`
+re-running its amended AC6 in C:/tmp/wk-amgt-11-3; `~22` on rj-8 in C:/tmp/wk-amgt-11-5; `~18` on rj-2 in C:/tmp/wk-amgt-11-1
+(portal @ad275969); `~19` idle in C:/tmp/wk-amgt-11-2 until rj-9 drains, then rj-10; chain D done. SITEZ at 8940b7320c; channel at
+210 rows. Posture QA held key BA_US_Equity. PORTAL FROZEN; all commits LOCAL; no push.
 
 ---
 
 ## Next Steps
 
-1. At rj-6's drain: spawn rj-8 (~22, ff wk-amgt-11-5 first, QA pair named) and rj-2 (~18, ff wk-amgt-11-1 first); at rj-8's drain:
-   rj-13 (~22); at rj-2's drain (rj-5/6/7/8 drained): rj-9 (~18, with W21-S6's CSC gap named); rj-11 (~20) after rj-6 + rj-7/8 with
-   AMGT_QA_HELD_KEY=BA_US_Equity; rj-10 (~19, ff first) after rj-9; rj-12 (~18) after rj-9 + rj-11; rj-3 (~18) LAST after rj-10 + rj-12.
+1. At rj-8's drain: rj-13 (~22). At rj-2's drain (rj-5/6/7/8 drained): rj-9 (~18, with W21-S6's CSC gap and W18-S7 named). rj-11
+   (~20) after rj-6 completes and rj-7/8 drain, with AMGT_QA_HELD_KEY=BA_US_Equity. rj-10 (~19, ff first) after rj-9. rj-12 (~18)
+   after rj-9 + rj-11. rj-3 (~18) LAST after rj-10 + rj-12.
 2. Each drain: verify the instance with the worktree's own checker, safe-merge with the channel unioned by row id, read every row,
    disarm as owner where owed; chain A's portal branch into refs/drains/rj-portal at each of its drains; the gitlink never moves.
 3. The browser half of rj-3 with the exact payloads rj-10 captures (ROUND11_BROWSER_EXERCISE.md); the L8 packet to 3.0.0_SA_CVO~W
-   (ROUND11_PACKET.md + one message) at the end, carrying W18-S6/S7 (live defects), W19-S8 (the pool's size), W21-S3/S6 for L9.
+   (ROUND11_PACKET.md + one message) at the end, carrying W18-S6/S7, W19-S8, W20-S4/S5/S8, W21-S3/S6 for L9.
 4. Re-arm the inbox Monitor on every expiry; ack every broker message on read. Old worktrees stay until Andrew's word.
