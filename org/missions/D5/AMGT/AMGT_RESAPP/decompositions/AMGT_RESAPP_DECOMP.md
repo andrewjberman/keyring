@@ -1,4 +1,4 @@
-# AMGT_RESAPP -- L5 decomposition (COO) -- v0.6
+# AMGT_RESAPP -- L5 decomposition (COO) -- v1.1 (s.18 = round 10; the header read v0.6 through v1.0 and is corrected here)
 
 **Seat:** `2.0.0_SA_COO~ZZZ`, spawned by Andrew 2026-09-10 ~17:4xZ at the `1.0.0_SA_CTO~Z` terminal for this
 project (seating brief msg 21003; `project.json` `seats.coo`). **Directive:** D5 Alternative Research.
@@ -1415,3 +1415,230 @@ stands unchanged: the portal evidence is reachable from **0 of 10** remote heads
 gitlink `e85f6eb84f` is reachable from 1. Every portal-dependent outcome grades **EXERCISED**, never
 REALIZED, until the gitlink lands -- and **a local dev render is not a publish**, which is precisely
 why this cell is cuttable under the freeze at all.
+
+
+## 18. ROUND 10 (v1.1) -- FROM THE L10 ROUND-9 ANALYSIS @`e9d1c6e6a5` (`1.0.0_SA_CTO~Z`), THE POPULATED-ROUTE ROUND
+
+**Cut by `2.0.0_SA_COO~W`** (the lane Andrew named for this project's round-10 recut, ~23:2xZ 2026-09-14 at
+the `1.0.0_SA_CTO~W` terminal, record `ANDREW_DIRECT_20260914_232xZ_W_LANES_FOR_AMGT_RESAPP_CANONICAL_FLOW_AND_COMP_STATE_SPAWN_VIA_MSTRZ.md`
+@`ce7371d0b3`), succeeding `2.0.0_SA_COO~ZZZ` (closed on his word 15:19Z). Sections 1-17 are FROZEN and
+unchanged. `receiving-check.py` on the round-9 analysis and on this decomposition both return **UNCHECKED**
+(no checker exists for either artifact type on this device); accepting both is this lane's JUDGMENT after a
+full read, and is stated as such.
+
+**The analysis's verdict, in its own words:** *"NO PRD ADDENDUM. The coverage subtraction is EMPTY -- 15
+declared outcomes, 0 unserved. The AC6 FAIL is ACCEPTED as graded ... Round 10 is authorized on the COO's
+recut, ONE issuance covering every cell."* And its s.6: *"The substance is `Z-C-S169` ... and `Z-S72` ...
+Together they close exactly the gap AC6 opened: a served route nobody has yet seen populated."*
+
+### 18a. The cell set by SUBTRACTION over a PRINTED denominator -- and two causes MEASURED on the live plane
+
+```
+ 8  OPEN remedy rows of REMEDIATION_v9 @1ae76e9c83
+      (17 rows total: 9 closed, 8 open, read from each row's own remediation.state; the file is
+       byte-identical at HEAD 5b45a17692 to the pin -- `git diff --stat 1ae76e9c83 HEAD` empty)
+-1  Z-S67       1.0.0_SA_CTO~Z's. DISCHARGED by the analysis s.1 (run-time negative controls, the
+                declared field). Its disarm row is the CTO's, not this cut's.
+-1  Z-S68       A PROPERTY OF THIS CUT, not a cell: "print plane, item/row grain and denominator
+                beside every armed count". Discharged in 18b below and by this lane's citing row.
+-1  Z-S69       A PROPERTY OF THE SPAWN, not a cell: "quote the channel header grammar, never invent
+                identity in a prompt". Every round-10 worker face quotes the channel's own id grammar
+                verbatim (18f); the spawn prompt adds only the serial and the worktree path.
+-1  Z-S70       A PROPERTY OF THE DRAIN CONTRACT, not a cell: the for-each-ref enumeration travels
+                (18e) and no drain moves the gitlink.
+-1  Z-S71       CARRIED by the analysis (s.7) as ONE READ this lane now takes: ROUND9_PACKET.md:138
+                records the union as "126 base + 4 issuer + 6 worker = 136"; the literal 134 was the
+                earlier 126+3+5 snapshot. Two vintages, no lost rows. Discharged by a citing row.
+-1  Z-S78       CARRIED, WITH THE REASON: its input is a NAME only Andrew gives (the row's own words:
+                "a named person, from Andrew, before FWD-14 can grade REALIZED"; C-NO-CONTACT fences
+                who may be approached). No cell can mint a name. It rides this lane's drain-end read
+                to the CTO as the one Andrew-reserved item; the alternative disarm the row itself
+                names ("the CTO records that FWD-14 grades on something other than the owner field")
+                is the CTO's at L10.
+-1  Z-S72       -> CELL AMGT-ri-3 (the exercise).
+-1  Z-C-S169    -> CELL AMGT-ri-1 (the error/empty boundary).
+=  2 CELLS FROM THE REMEDY ROWS.
+
++1  Z-S88       (1.0.0_SA_CTO~W, 23:21Z, disarm_owner 2.0.0_SA_COO~W) -- the producer. The empty page's
+                cause was NOT measured at round 9; it is now: the scheduled chatter-axis producer fires
+                daily and FAILS every fire on the DELETED articles table. RE-MEASURED at this cut
+                (00:0x-00:1xZ): live role policy names opal-amgt-articles and opal-amgt-security-metrics
+                (both deleted); deployed zip CodeSha256 TtTSpotkwWuVuMFbPv0RWTv2zqqifa/xfHQtBtuo924=,
+                13572 B, LastModified 2026-09-11T18:13:38Z; HEAD's chatter_axis.py already defaults to
+                the harvest names (:109/:111) -- the traceback's line numbers (153/168/304) do not exist
+                at HEAD (235/243/403), so the DEPLOYED BYTES predate the code flip; the six live
+                resources are tracked in amgt-resapp/rd-2-security-metrics/tfstate (serial 3) beside the
+                deleted table, and in NEITHER harvest/tfstate (serial 25) nor amgt-resapp/tfstate
+                (serial 1). -> CELL AMGT-ri-2, an EXISTING-cell recut of AMGT-rd-5. C-S49 stays at
+                4.0.0_SA_CRO~Z and is CITED, not re-filed (hand-over s.3, endorsed).
++1  Z-W11-S2    (round 7, OPEN at REMEDIATION_v7, carried at rounds 8 and 9 because its remedy is a DEPLOY
+                act) -- the mount. MEASURED at this cut, which no round had done: `aws lambda
+                get-function-configuration opal-amgt-scoped-api` -> ResourceNotFoundException;
+                `apigatewayv2 get-routes --api-id 7k3ed8px20` -> 25 routes, 0 naming amgt; harvest/tfstate
+                carries no scoped_amgt_api module. SO EVERY RANKED READ THE SERVED PAGE HAS EVER MADE
+                RETURNED AN EDGE ERROR, and the boundary defect (Z-C-S169) rendered that error as "the
+                daily job has not written a row". The page was empty for TWO independent reasons, and a
+                round cut on the producer alone would exercise a route that still cannot reach it.
+                -> CELL AMGT-ri-4, the deploy act of AMGT-rf-2, under the never-widen co-sign 16a named.
+=  4 CELLS. REMAINDER ZERO BY CONSTRUCTION over the eight, plus two cells from measured causes the
+   analysis authorized this lane to add ("adds or recuts task orders as its own judgment dictates",
+   spine L10; recorded here and in the issuance commit, never routed).
+```
+
+⚠ **THE DOMAIN WAS FALSIFIED BEFORE THE SUBTRACTION RAN.** The eight is L9's output for round 9 and is what
+the spine routes into the recut. The wider standing set is NOT this cut's domain and is carried; its numbers
+are printed in 18b so that carrying it is a measured act. Two members OUTSIDE the eight (Z-S88, Z-W11-S2)
+entered the cut only because each was RE-MEASURED on the live plane at this cut and each is a precondition
+of Z-S72's exercise -- an exercise against a producer that cannot write and a route that cannot be reached
+would be the round-9 empty render repeated with a different explanation.
+
+### 18b. The standing set, printed with PLANE, GRAIN and DENOMINATOR (Z-S68's condition)
+
+`comp-surprise --project AMGT_RESAPP --json` at HEAD `5b45a17692`, 2026-09-15 ~00:0xZ:
+
+| plane | grain | denominator | armed | open (undispositioned) |
+|---|---|---|---|---|
+| investigations/INVESTIGATION_v1.md | worker + seat rows (items) | **153** rows | -- | **1** (Z-S88, filed 23:21Z, not yet at L8) |
+| adjudications/ADJUDICATION_v1..v9.md | the CVO's rows | **171** rows | -- | -- |
+| remediations/REMEDIATION_v1..v9.md | remedy rows | **111** rows | -- | -- |
+| the three planes, by `_latest` citing row | items | 153 items | **88** ARMED | 1 |
+
+By `disarm_owner` over the rows still reading ARMED at their latest citing row: `2.0.0_SA_COO~ZZZ` 133 mentions
+across the three planes (the same item counted once per plane it appears on), `1.0.0_SA_CTO~Z` 48,
+`4.0.0_SA_CRO~Z` 7, `3.0.0_SA_CVO~Z` 4, `0.0.0_AB_MSTR~Z` 2, `2.0.0_SA_COO~W` 1 (Z-S88). **A `~ZZZ` row is a
+dead lane's row; the successor lane carries it by filing under its own serial** (hand-over s.5), and this
+cut files three: the Z-S68 and Z-S71 disarms and the s3.tf finding (18d).
+
+### 18c. The cells
+
+| cell | row / source | outcome | what it is |
+|---|---|---|---|
+| **`AMGT-ri-1`** | `Z-C-S169` | FWD-15, FWD-9 | **THE ERROR/EMPTY BOUNDARY.** At portal `a845a8be75` `LeadPanel` passes `isLoading` but no error to `RankedList`; `rows = rankingQuery.data?.rows ?? []` turns a settled request ERROR into an empty array, and `RankedList` renders the SAME 205-byte HTML for a failed read and for a successful empty day, asserting "the daily job has not written a row" about a request that never returned. Carry the settled error separately; render an explicit read-failure state that claims nothing about the producer; keep loading and populated as they are; `StarredList` (which composes `RankedList`) carries the same error. Proven on the ACTUAL components by a harness in the CVO's own method (transpile with the installed TypeScript, static-render, stub the query hook) -- run BEFORE the edit to REPRODUCE the collision and AFTER to show error != empty with populated still visible. |
+| **`AMGT-ri-2`** | `Z-S88`, citing `C-S49` and `Z-S12` | FWD-15 | **THE PRODUCER, CONSOLIDATED AND REPOINTED** -- an existing-cell recut of `AMGT-rd-5`. Move `chatter-axis-schedule.tf` + `lambda_src/` into `infra/aws/terraform/harvest/` (the module whose own header says *"ALL worker terraform consolidates into this one harvester tf"*, Andrew-direct 2026-09-11 ~17:3xZ), retire `amgt-resapp/main.tf` (precedent `dc868af89c`: a root whose state tracks a deleted table would RECREATE it), point the two IAM statements at `aws_dynamodb_table.harvest_articles` / `harvest_security_metrics` (resource references, never retyped ARNs), rebuild the zip from HEAD with `build_zip.py`, `terraform import` the six live resources into `harvest/tfstate` (non-destructive), plan with **0 to destroy**, `safe-apply` under a deploy-completion entry, and QA-invoke ONCE so today's rows land. The scheduled 10:00Z fire stays the acceptance and is read from its own log at L10. **AND THE s3.tf GUARD (18d):** `harvest/s3.tf` MUST read `opal-data-harvest` before any plan; the plan MUST print `0 to destroy`. |
+| **`AMGT-ri-4`** | `Z-W11-S2`, the deploy act of `AMGT-rf-2` | FWD-15 | **THE MOUNT, DEPLOYED.** Build and upload the `opal-amgt-scoped-api` artifact (vendoring `lib/research/{api,metrics,checkface,rules,watchlist}` beside the entrypoint, `content-sha256` metadata, the enqueue script's shape), plan the harvest root as a PURE ADD (**0 to change, 0 to destroy**; the add-set is exactly the module's Lambda + log group, the role, its attachment and policy, one integration, eleven routes, one permission, one `terraform_data`), `safe-apply` under a deploy-completion entry, verify the eleven routes live beside the 25 that were there and unchanged, and exercise the deployed adapter DIRECTLY (a synthetic HTTP API v2 event carrying `X-Firm-Id`) for the crossed ranked read with its 401 control. **GATED BY THE NEVER-WIDEN CO-SIGN** (16a's own reading of NEVER-1 for this act): both halves present as files in `ledger/` before the apply; absent, the order stays OPEN on a BLOCKING row. |
+| **`AMGT-ri-3`** | `Z-S72` | FWD-9, FWD-15 | **THE EXERCISE -- the assembled route against traceable actual input.** After ri-1, ri-2 and ri-4: today's rows exist in the live table (count + a failed-day control), the deployed adapter serves them (the exact payload saved as the traceable input, with the `as_of=2026-09-13` control reading 0), the served route on a local dev server discriminates on the MODULE plane with the REPAIRED components, the three harnesses re-run in the assembled checkout unchanged, the production build emits the route's chunk; and the BROWSER half -- populated output, navigation and FWD-9's marking, plus the error arm rendered distinct on the served route -- is the COO's own act with the instrument no worker holds, filed as a row and a deliverable and GRADED BY THE CVO as the cell's judgment criterion. No promote, no gitlink move. |
+
+⭐ **THE SHAPE THIS ROUND CORRECTS, named so the next reader sees it:** round 9 proved the components, the
+compile, the build and the serve, and the page still rendered empty -- and the reason was never on the
+frontend. Two silent failures sat one and two hops upstream (a producer failing inside its own log, a mount
+never applied), and the frontend's one real defect (Z-C-S169) is precisely that it rendered both as "no data
+today". **A round that repaired the boundary and re-rendered would have shown an honest error instead of an
+honest empty, which is better and still not populated.** So the cut goes to the causes.
+
+### 18d. The UNFINISHED-EDITS finding this lane inherited, and what became of it (a ROW, not a discard)
+
+`infra/aws/terraform/harvest/s3.tf` is MODIFIED and uncommitted in the shared tree (mtime 2026-09-11T19:17:02Z,
+two lines: `bucket`/`Name` `opal-data-research` -> `opal-data-harvest`, on NO ref). The hand-over REC'd DISCARD.
+**MEASURED at this cut with three instruments: the Terraform STATE object `s3://opal-313476888478-terraform-state/harvest/tfstate`
+(serial 25) tracks `aws_s3_bucket.harvest -> opal-data-harvest`; the live plane reads `opal-data-research` 404 /
+`opal-data-harvest` exists, versioning Enabled, `derived/model_block/` keys present, bogus name 404; the 1915Z
+migration ledger's own step 2 is "Point s3.tf at opal-data-harvest and apply -- CREATE ONLY -- DONE".** So HEAD's
+committed file names a DELETED bucket, `bucket` is ForceNew, and a plan against HEAD would propose DESTROYING the
+harvest bucket (53 objects, this project's `derived/model_block/`). The uncommitted edit is the migration's own
+step-2 source change, never committed, and it is the live guard. **DISCARD RETRACTED** by `1.0.0_SA_CTO~W` (22942)
+on this evidence; **CONFIRMED** by `4.0.0_SA_CRO~Z` on its own instruments (22945), whose commit of the two lines was
+REFUSED by the lane gate (`infra/aws/**` is `CLOUD_OPS_OR_ETL`, AE-only; its 09-11 commits rode the drain's merge
+exemption). CONVERGENCE, endorsed by both: **`AMGT-ri-2` names `harvest/s3.tf` in its `<paths>` with the guard
+(reads `opal-data-harvest` before any plan; plan prints `0 to destroy`); its branch carries the two lines; the
+drain merges identical content; `4.0.0_SA_CRO~Z` disarms the row when HEAD reads the harvest name.** Filed as
+row `AMGT_RESAPP-Z-S89` (ARMED, disarm_owner `4.0.0_SA_CRO~Z`). The saved patch:
+`org/tier1_exec/2.0.0_SA_COO/deliverables/AMGT_RESAPP_W/UNFINISHED_EDIT_harvest_s3_tf_20260914.patch`.
+
+### 18e. Dependency edges, M, fan-out, and the drain contract
+
+```
+CHAIN A (portal)   AMGT-ri-1  ->  AMGT-ri-3      one worker, one portal checkout (Z-S33: a gitlink has no
+                                                  sub-path grain; ri-3 must see ri-1's repaired components)
+CHAIN B (harvest)  AMGT-ri-2  ->  AMGT-ri-4      one worker, ONE terraform root and ONE state
+                                                  (harvest/tfstate) -- a shared write surface is one chain
+CROSS EDGE         AMGT-ri-4  ->  AMGT-ri-3      the exercise waits for the mount AND the producer;
+                                                  ri-3 is handed to slot ~16 only after ri-4 is terminal
+
+fanout: 2 of 2 chains, cap 8
+```
+
+**M is measured and it is 2**: two roots (ri-1, ri-2), two independent write surfaces (the portal submodule;
+the harvest root), converging at ri-3 exactly as round 5 converged at rd-8 (13g). N = 2. Slots `~16` (ri-1,
+then ri-3) and `~17` (ri-2, then ri-4).
+
+**THE DRAIN CONTRACT (16d/17e restated, Z-S70's enumeration carried):** the portal drain refs at this cut,
+from `git -C portal for-each-ref refs/drains/`: `posn-5-portal d93e7918`, `rg-1-portal 83995ea9`,
+`rg-2-portal a845a8be`. Slot ~16's portal branch is cut FROM `a845a8be75` inside its own worktree and drains
+into a NEW ref `refs/drains/ri-1-portal` (containing rg-2), fetched under a ref never `FETCH_HEAD`, read back
+with a bogus-hash negative control, `branch -r --contains` run with `e85f6eb84f` as the firing positive
+control; **no round-10 drain moves the gitlink** (`e85f6eb84f`, what `origin/SITEZ` publishes) and the shared
+portal checkout does not move. The integration plan `PORTAL_REPO_CROSS_FABRIC_INTEGRATION_PLAN_20260914.md`
+@`9e0c1080a0` orders site-Z AMGT after the laptop reconcile; round 10 lands on a ref that plan can name and
+changes nothing about the freeze. The superproject drain is `safe-merge.sh` per branch; a worker commits with
+`--only -- <paths>` so its `portal` gitlink is never staged.
+
+### 18f. BOUNDS carried onto every round-10 cell
+
+- **PORTAL FROZEN both fabrics, PROD and DEV: COMMIT YES / PROMOTE NO** until Andrew names it. No push, no
+  gitlink move, no portal deployment, no worktree release of `refs/drains/rg-2-portal`.
+- **LD-0521:** no round-11 issuance before the round-10 slug.
+- **`C-SERVER-SIDE-RANKING`**; the standing monitor/alarm moratorium (a scheduled producer is required, a
+  monitor is forbidden; ri-2 adds no alert, SNS, SES or freshness checker); `C-VENDOR-EGRESS` (no vendor call
+  from any cell; the scoped API makes none by construction); **no non-ASCII** in code, logs or AWS.
+- **No cell grades an EXERCISED outcome REALIZED on its own artifact.** Round 10 makes FWD-9 and FWD-15
+  REACHABLE on a populated page; a PERSON must still have used it, which is L9/L10's to grade.
+- **Every world act ORDERS itself** (spine L7, v3.9): open the deploy-completion entry AND commit its
+  `.open_deploys/<slug>.json` sentinel, act, close the entry and COMMIT it BEFORE the grading reads.
+- **The id grammar the workers quote, verbatim from the channel header:** *"a seat's row is
+  `AMGT_RESAPP-Z-S<k>`; a worker's row is `AMGT_RESAPP-Z-W<n>-S<k>` with `<n>` its slot; `<k>` restarts at 1 per
+  coordinate. `"project": "AMGT_RESAPP"` and `"fabric": "site-z"` on every new row."* (Z-S69.)
+- **The refusal clause (spine v3.11)** is on every face: a criterion that cannot be met as written is REFUSED
+  with its measurement, never repaired, widened or satisfied by a route the cut did not name.
+- **Every invocation is bounded** (`timeout`), and the toolchain is the provisioned one: no install.
+
+### 18g. Preflight -- the mandatory core battery, RE-RUN at this cut (2026-09-15 00:3x-00:4xZ)
+
+- `comp-schedule --drift` -- RUN. 5 of 5 carriers within budget (15.2 s of 90). REACHED-DENOMINATORS C1=23,
+  C2=9, C3=12, C4=21, C5=334. C2 reads **9 OPEN deploy-ledger entries = 9 ARMED gates**, none this
+  project's; ri-2 and ri-4 each add one and close it inside the round. C3's 12 standing NEVER clauses are
+  the source of 18f's no-monitor bound. BLIND: C4 (21 scope guards, SEMI-DECIDABLE) and C5 (334, NOT-DECIDABLE),
+  in the tool's own voice.
+- `comp-iam gaps` -- RUN. **838 call(s) verdicted across 98 mapped role(s)**; 629 UNRESOLVABLE-RESOURCE, 142
+  GRANTED, 51 GRANTED-BROAD (EXCLUDED, NOT CLEARED), 14 UNGRANTED, 2 GRANTED-ACTION/UNGRANTED-RESOURCE; totals
+  15 missing, 291 deny-present, 1 coverage-unknown, 2 resource-mismatch across 32 services. BLIND: 266 calls in
+  26 role-UNMAPPED services. **It names `opal-amgt-scoped-api` (role `opal-amgt-scoped-api-role`) at
+  `scoped_amgt.py:312/:334/:691` as UNRESOLVED-RESOURCE** -- the three DynamoDB reads ri-4 mounts; the grants
+  for them are the resource references in `scoped-amgt-api.tf`, and the instrument cannot resolve a table name
+  read from an env var. Stated, not cleared. The chatter-axis role is NOT in its denominator (its package is not
+  in the source map), so the repoint in ri-2 is verified on the LIVE policy, not by this lens.
+- `comp-adversary compose <this decomposition> --no-packet` -- RUN. 32 commit pins, 9 repo paths, 6 file:line
+  cites; 15 hex runs not parsed as pins (named, not dropped); T11 NOT RESOLVED (the artifact IS the
+  decomposition; directory adjacency stands, 236 uncited siblings, CAP 25 declared); stage 4 disabled by the
+  caller (pointers only); its freshness read `BEHIND` on a pinned source no round-10 cell consumes.
+- `comp-cache collisions` -- RUN. 481 of 481 portal files, 119 of 119 `useQuery` sites. ri-1 adds NO query
+  key (it changes props on two components); no AMGT key moves. `comp-blast` -- DECLARED-NOT-APPLICABLE with the
+  reason: ri-1 edits a page that exists on no DEV/PROD head; ri-2 imports and updates resources in place; ri-4
+  is a PURE ADD on the shared portal API whose blast radius is stated in the never-widen halves (the 25
+  existing routes are untouched by construction and the apply prints it).
+
+### 18h. Four-postulate record (Rule 24)
+
+- **(i) MECE over a DECLARED domain, BY SUBTRACTION:** 18a subtracts from the eight OPEN rows with a printed
+  denominator and a reason per exclusion (1 the CTO's, 3 properties of the cut/spawn/drain, 1 discharged by one
+  read, 1 carried with its reason, 2 cells), plus two cells from causes re-measured at the cut and named as
+  additions. The domain was falsified first: the slug's state field was re-read at HEAD and is unchanged.
+- **(ii) SAME GRAIN:** each cell is ONE repair of ONE measured cause on ONE surface -- the boundary (portal),
+  the producer (harvest root, six resources), the mount (harvest root, one module), the exercise (the route).
+  ri-2 and ri-4 share a root and are kept SEPARATE because they are different engines with different
+  acceptance (in-place update with 0 destroy; pure add with 0 change) and different ledger entries.
+- **(iii) INTENT COHERENCE, one axis:** *make the served route populate for a real reason, and make its
+  failure state say what it is.*
+- **(iv) STATE COHERENCE -- what these remedies do NOT move:** the portal gitlink and the shared checkout; any
+  DEV/PROD head; `C-S49`'s ownership (cited, not closed; the CRO adjudicates it against ri-2's outcome);
+  `Z-S78` (a name only Andrew gives); `Z-W11-S1` (the recorded-gitlink decision, still under the freeze); the
+  stale source states `amgt-resapp/tfstate` and `amgt-resapp/rd-2-security-metrics/tfstate` (inert after
+  ri-2, named in its ledger, cleaned up under the CRO's ledger); the standing 88 ARMED items, read one at a
+  time and never screened.
+
+⛔ **NO ROUND-10 ARTIFACT MAY GRADE A PORTAL-DEPENDENT OUTCOME `REALIZED`.** The portal evidence lives on
+drain refs contained by 0 of the portal remote's heads while the recorded gitlink `e85f6eb84f` is contained
+by `origin/DEV`. Every portal-dependent outcome grades **EXERCISED**, never REALIZED, until the gitlink lands --
+and a local dev render is not a publish.
+
+*(v1.1 cut 2026-09-15 by `2.0.0_SA_COO~W` -- the POPULATED-ROUTE round from @e9d1c6e6a5; sections 1-17
+unchanged and FROZEN.)*
