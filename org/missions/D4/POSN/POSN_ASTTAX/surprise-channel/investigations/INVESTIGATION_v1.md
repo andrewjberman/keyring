@@ -6090,6 +6090,55 @@ Andrew asked for (msg 22917); it concerns this project's portal files meeting an
     "spec_asserts": "C-SATELLITE-SOURCE and TO-V7-1: the Satellites mode's MEASURES come from characteristics.json, the additional lambda's per-satellite aggregates. Models and ETFs Holdings Breakdown rows carry per-holding characteristics and returns from their own payloads.",
     "world_is": "The Holdings Breakdown's Characteristics and Performance views are blank for all eight displayed satellites, every row. It is not a render bug and not pre-R1: no served artifact carries a per-ticker measure for a satellite holding, and no cell was cut to produce one. Same screenshot, already carried or transitional: raw floats on the summary labels = Z-S117; each bar short of its full book by GLD's weight (served asset_class 'hedge', 2.11-8.34 in seven satellites; excluded from the five) and VXX counted in Equity (served 'equity' / 'Volatility', 0.35-1.87 in eight) = holdings.json still carrying pre-R1 labels, expected to clear at the registry producer's next fire; footer date and source = Z-S119; subtitle 'weighted blend of Opal model portfolios' = Z-S115.",
     "notes": "REMEDY, for this seat's round-5 analysis (a PRD addendum -- an outcome no cell served): (1) BACKEND, B4: characteristics.json also publishes the per-ticker values it already resolves -- one block per ticker (fee, yield, duration, beta, returns, and the source it came from), once per artifact since a ticker's values do not vary by satellite -- beside the unchanged aggregates; NULL stays NULL. (2) FRONTEND, the adapter: attach each row's served per-ticker values; still no arithmetic. (3) OPEN for the analysis, not guessed here: MC (aum), Active and Credit are panel columns outside B4's field set -- source them, or drop them for Satellites the way ETFs drop Duration (Andrew-direct 2026-08-25). (4) The Positioning Summary's own Characteristics rows for Satellites already read the aggregates; not re-verified here."
-  }
+  },
+{
+  "id": "POSN_ASTTAX-Z-S133",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T02:29:23Z",
+  "one_line": "DISARM of W19-S20 (INERT): the order's prose bar 'git diff --stat under portal/ must read 0' reads 'portal | 2 +-' from the superproject on a clean worktree, because the issuer detached the linked portal worktree at refs/drains/posn-5-portal (dd1d33c6db) while the workspace branch records the gitlink e85f6eb84f -- the hand-over condition, present before the worker's first act; the GRADED instrument (V8-AC11, scoped inside the clone) reads 0 and the clone is clean. The prose was the issuer's imprecision; FWD-5 is exercised on the retag with no portal edit. This is the last worker row of round 5's L7.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Two reads of one phrase about two objects: the superproject's gitlink pointer (e85f6eb84f vs the clone's dd1d33c6db) and the clone's tracked diff against the drain ref (0 lines). Only the second is the bar; ' M portal' was printed at both spawns and nothing in the worker's three commits stages portal.",
+      "WHY GRADUATED: the retag changed one place and every Positioning mode followed with no portal edit (V8-AC11 0 lines; V8-AC10 Models shows Structured 1.50/2.0 from the table write alone). Round 5 L7 closes at nine of nine terminal orders; the CTO's Z-S131/Z-S132 (zero-class rows hidden; the Satellites Holdings Breakdown's missing per-holding measures) are round-analysis items, not L7 gaps."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W19-S20"
+  ],
+  "spec_asserts": "TO-V8-1 identity block: the portal clone is READ-ONLY (git diff --stat under portal/ reads 0); V8-AC11: git -C portal diff --stat refs/drains/posn-5-portal -> 0 files.",
+  "world_is": "The clone is clean and at the ref; the superproject's gitlink differs from the clone's HEAD by design (the freeze bars the gitlink move).",
+  "notes": "A read-only-worktree bar names the scoped instrument and never the superproject's gitlink line."
+},
+{
+  "id": "POSN_ASTTAX-Z-S134",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T02:29:23Z",
+  "one_line": "DISARM of the CTO's Z-S131 (ARMED, owner this seat): Andrew ~02:1xZ (record @65410eedaf, msg 22952) -- a class that no displayed book holds shows NO row (it widens Z-S118's legend rule to the Asset Class rows and the section count: one presence set per render); PositioningSummary.tsx:574-582 renders zero rows BY DESIGN today and Andrew reverses it. RULED: nothing is re-cut mid-round (the CTO's word on the same message; round 5's L7 is closed at nine of nine); the item is CARRIED as a named cell of the round-5 recut -- the ONE Positioning-page frontend cell the CTO recommends (22947), carrying Z-S115 (stale subtitle), Z-S117 (unrounded labels), Z-S118 (legend), Z-S119 (footer date/source), Z-S131 (zero-class rows) together in PositioningSummary.tsx and Positioning.tsx -- cut by this seat from the CTO's round-5 analysis. The Satellites view on Andrew's screenshot (GLD absent, VXX under Equity) is the pre-R1 holdings.json, closed by the 07:00Z fire; the missing per-holding measures are the CTO's spec gap Z-S132 (a PRD addendum).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE CARRIER, NAMED: the round-5 L10 chain (the CVO's slug -> the CTO's round-5 analysis -> this seat's round-6 issuance) is where a spec-level display rule enters as a cell; Andrew's sentence is the L2/L4 word for it and the CTO's record is its pin.",
+      "WHY NOT NOW: L7 is closed at nine terminal orders; a tenth order cut off this word would re-open the round's open-order count (LD-0521) and the decomposition is frozen mid-round; the fix is one file the CTO already scopes.",
+      "WHY GRADUATED: the hazard is a display rule with an owner, a carrier and a pin; no served byte is wrong."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-S131"
+  ],
+  "spec_asserts": "Andrew ~02:1xZ: if none of the models/ETFs/satellites hold a given asset class, no row for it is shown, and its weight does not appear in the coloured bar; the CTO's Z-S131 files it against PositioningSummary.tsx:574-582.",
+  "world_is": "The Models view renders the five classes with zero rows for Commodities and Alternatives by F2's design (a zero row is a row, TO-V6-1's own text); Andrew's word reverses that for classes with no exposure across the displayed books.",
+  "notes": "Round-6 cell candidate: presence-driven rows, legend and bar segments on the Positioning Summary, with the footer, the subtitle and the label formatter in the same file set."
+}
 ]
 ```
