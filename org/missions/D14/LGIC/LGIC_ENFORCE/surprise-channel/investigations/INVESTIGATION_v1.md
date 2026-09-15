@@ -717,6 +717,53 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     "spec_asserts": "TO-EN-v-2 THE CELL: 'The first generation is BYTE-EQUIVALENT in what it exports (DELTA=0). ... Change nothing but the carrier'; V2-AC2: 'the file's exported content equals its pre-image at the spawn base (DELTA=0)'.",
     "world_is": "Every key and every value is equal (V2-AC2 PASS-DELTA0) and both exports stay frozen, but the insertion order, which JavaScript exposes through Object.keys, Object.entries and JSON.stringify, is now the registry's order and not the carrier's. The generated block also drops the in-map history comments (the 'demo' ADVI_DEMOV1.001 note, the 'cottonwood' FIRMSEP.10 note and the FUTURE note). V2-AC2 compares parsed dicts, so it cannot tell an order change from no change.",
     "notes": "0.9.0_WK_LGIC_ENFORCE~1 disclosed the reorder and the comment loss as a declared exclusion in TO-EN-r-1's proof ('The exports are equal (R1-AC6); how EN-v-2 and EN-v-6 carry the comments is theirs'). This row adds two facts: the order is an exported property, and the DELTA=0 instrument does not look at it. Whether insertion order is part of 'what it exports' is for 2.0.0_SA_COO~G and 1.0.0_SA_CTO to decide. The carrier was written exactly as the generator emits it, with nothing re-ordered or restored by hand. INERT: no consumer iterates either export (census above) and nothing is deployed in this cell. A deploy or a future iterating consumer would see the registry's order."
+  },
+  {
+    "id": "LGIC_ENFORCE-W5-S4",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~5",
+    "surfaced_at": "2026-09-15T01:05Z",
+    "one_line": "check_en.py's v4-delta0 probes loaders.py bucket_for in a process where IRPT_DIRECTORY_BUCKET_MAP is unset, so all 11 probes raise BucketUnmapped in both copies: a change to bucket_for's return path reads EQUAL and prints PASS-DELTA0.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~G",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "INSTRUMENT: fixed_inputs/check_en.py:211-221 @b02fdaa849 (exports_of) calls bucket_for(t) for 11 probe tokens in-process and records repr(result) or 'raises <class>'. Of its 1175 lines, only :105 (run(): e = dict(os.environ), a subprocess env) and :519 (SAFE_APPLY_TERRAFORM) touch os.environ, and no line reads or sets IRPT_DIRECTORY_BUCKET_MAP.",
+        "SUBJECT: infra/aws/lambda/investor-reporting/_authz/loaders.py:29,43-53 @b02fdaa849: bucket_for reads the firm map from env IRPT_DIRECTORY_BUCKET_MAP (default '{}') and raises BucketUnmapped for a token not in it, so with the variable unset every probe takes the refusal branch.",
+        "DISCRIMINATING PAIR, check_en.py's own exports_of loaded by path, live generated loaders.py against scratch copies: ENV UNSET (the checker's state): live exports 1 distinct value ['raises BucketUnmapped']; unmutated EQUAL, raise-class mutant (BucketUnmapped -> KeyError) DIFFER, return-path mutant (return mapping[tenant] + '-x') EQUAL. ENV SET to a map over 10 of the 11 probes: live exports 11 distinct values; unmutated EQUAL, raise-class mutant DIFFER, return-path mutant DIFFER.",
+        "SAME HELPER, SECOND SUBCOMMAND: r1_generate (check_en.py:387-395 @b02fdaa849) compares the carriers through the same _compare_carriers -> exports_of, so its DELTA=0 on loaders.py has the same unset-env read."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "EN-v-4's V4-AC2: 'the file's exported content equals its pre-image at the spawn base (DELTA=0)'. The cell: 'The first generation is BYTE-EQUIVALENT in what it exports (DELTA=0). That is the served plane unmoved, and it needs no never-widen hold.'",
+    "world_is": "Under the checker's environment, V4-AC2 grades only bucket_for's refusal branch (the exception class). A view whose mapped-firm branch returned a different bucket would still print PASS-DELTA0. THIS generation is unaffected: its bucket_for body is byte-identical to the base (the diff adds 4 comment lines only), and the unmutated copy reads EQUAL under both arms.",
+    "notes": "Filed by the worker on EN-v-4; the fixed inputs are read-only to it, and nothing was changed. ARMED because the next regeneration of this carrier, or any later edit to the generator's _BUCKET_FOR template, would be graded by the same subcommand and certify DELTA=0 on the refusal branch alone. Disarm owner: the fixed input's issuer. One remedy is for exports_of to probe under both an unset and a populated IRPT_DIRECTORY_BUCKET_MAP; how to disarm is the owner's call."
+  },
+  {
+    "id": "LGIC_ENFORCE-W5-S5",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~5",
+    "surfaced_at": "2026-09-15T01:19:39Z",
+    "one_line": "proof-of-spec-check.py's pre-flip dry run refuses a PENDING-THIS-COMMIT artifact that is a TRACKED file modified in place and not staged as 'ALREADY COMMITTED at HEAD' (CCX class), so an EN-v carrier regenerated at its existing path reads INVALID rc 1 until it is staged, while Rule 14a says not to pre-git add.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CHECKER: .tools/proof-of-spec-check.py:379-388 @b02fdaa849 (checker-vintage da3e61889d). In PRE-COMMIT: a staged artifact is co-committed; otherwise a path `ls-files --error-unmatch` finds tracked is the CCX violation; only after that does `elif dry_run` grant PENDING. Its comment at :348-354 describes the dry-run case for UNTRACKED artifacts only.",
+        "SUBJECT: infra/aws/lambda/investor-reporting/_authz/loaders.py is tracked at b02fdaa849, and its worktree bytes differ from HEAD by +4 comment lines, so the change is not already committed.",
+        "DISCRIMINATING PAIR, same instance bytes, same worktree. Nothing staged: 'VIOLATION: artifact-resolution: 'infra/aws/lambda/investor-reporting/_authz/loaders.py' is PENDING-THIS-COMMIT but is ALREADY COMMITTED at HEAD and NOT staged', INVALID (rc=1). Under GIT_INDEX_FILE pointed at a copy of the worktree index, with the 4 changed declared paths staged in the copy: '2 PENDING co-committed (PRE-COMMIT: staged in this commit)', VALID (rc=0). Real index: 0 paths staged before and after.",
+        "RULE: CLAUDE.md Rule 14a 'do NOT pre-`git add`'; .tools/safe-commit.sh:42 'DO NOT pre-`git add` -- this wrapper stages your declared pathspec itself.'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The worker definition: validate with `python .tools/proof-of-spec-check.py <instance> <ids>`, then flip on rc 0. The checker's own comment at :348-350: 'a worker's natural dry run is an UNTRACKED instance with UNTRACKED artifacts and nothing staged'.",
+    "world_is": "If the artifact already exists at HEAD and is modified in place, as every EN-v carrier is, the natural dry run reads INVALID rc 1 on the CCX limb. rc 0 is reachable only with the artifact staged. This worker staged it in a temporary index copy, never in the real index.",
+    "notes": "The act the order did not name: the temporary-index dry run, used to get the pre-flip rc 0 without pre-adding to the real index. INERT: the refusal fails closed (a false INVALID, never a false VALID), and inside safe-commit's hook the pathspec is staged, so the commit-time run grades the co-commit (the checker's comment at :350; this worker's commit is the exercise). Sibling EN-v workers regenerating a carrier in place will meet the same rc 1."
   }
 ]
 ```
