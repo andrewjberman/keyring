@@ -306,9 +306,17 @@ def read_signoff_files(signoff_dir, ref="HEAD"):
     if not os.path.isdir(parent):
         return files
 
+    # A GIT HOOK EXPORTS ITS REPOSITORY, AND THAT MUST NOT STEER THIS READ. Inside a commit hook, git sets GIT_DIR (and
+    # GIT_INDEX_FILE, and sometimes GIT_WORK_TREE), and a child git honours them over its cwd. In a LINKED worktree that
+    # made --show-prefix answer for the wrong tree, and the read came back empty: to-pipeline-gate LIMB 6 refused a tree
+    # issuance with "PRD has NO sign-off" while status in the same worktree read ADMITTED (2.0.0_SA_COO~G, 2026-09-15).
+    # So the repository is found from the PRD's own directory, and git's location variables are removed for these reads.
+    _env = {k: v for k, v in os.environ.items()
+            if k not in ("GIT_DIR", "GIT_WORK_TREE", "GIT_INDEX_FILE", "GIT_PREFIX", "GIT_COMMON_DIR")}
+
     def _git(args, cwd):
         return subprocess.run(["git"] + args, cwd=cwd, capture_output=True, text=True, encoding="utf-8",
-                              errors="replace", timeout=60)
+                              errors="replace", timeout=60, env=_env)
     try:
         top = _git(["rev-parse", "--show-toplevel"], parent)
         pre = _git(["rev-parse", "--show-prefix"], parent)
@@ -524,6 +532,26 @@ def self_test():
         arm("S14: a signoff dir absent at HEAD reads {}", read_signoff_files(os.path.join(tmp, "prd2", SIGNOFF_DIR)) == {})
         os.makedirs(os.path.join(bare, "prd"))
         arm("S14: a dir outside any repository reads {} (no signature: fails toward the law)", read_signoff_files(os.path.join(bare, "prd", SIGNOFF_DIR)) == {})
+        # THE HOOK ENVIRONMENT (2.0.0_SA_COO~G, 2026-09-15): a commit hook exports GIT_DIR/GIT_INDEX_FILE, and in a
+        # LINKED worktree the read came back empty, so LIMB 6 refused a signed PRD. Both arms set the variables a hook
+        # sets, pointing somewhere else, and the read must still find the PRD's own committed signoff.
+        wt = os.path.join(tmp, "linked")
+        g("worktree", "add", "-q", wt, "HEAD")
+        wt_sd = os.path.join(wt, "prd", SIGNOFF_DIR)
+        saved = {k: os.environ.get(k) for k in ("GIT_DIR", "GIT_INDEX_FILE", "GIT_WORK_TREE")}
+        try:
+            os.environ["GIT_DIR"] = os.path.join(bare, "not-a-repo.git")
+            os.environ["GIT_INDEX_FILE"] = os.path.join(bare, "not-an-index")
+            arm("S14 HOOK ENV: GIT_DIR/GIT_INDEX_FILE exported elsewhere -> the primary checkout still reads its committed signoff",
+                "3.0.0_SA_CVO.json" in read_signoff_files(sd))
+            arm("S14 HOOK ENV, LINKED WORKTREE: the same variables -> the linked worktree reads its committed signoff",
+                "3.0.0_SA_CVO.json" in read_signoff_files(wt_sd))
+        finally:
+            for k, v in saved.items():
+                if v is None:
+                    os.environ.pop(k, None)
+                else:
+                    os.environ[k] = v
     finally:
         shutil.rmtree(tmp, ignore_errors=True)
         shutil.rmtree(bare, ignore_errors=True)

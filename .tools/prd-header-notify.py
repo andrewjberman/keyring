@@ -782,6 +782,10 @@ def reoffer(root):
                 print("[prd-notify] RE-OFFERED %s id=%d attempt %d/%d" % (_label(row), new_mid, row["attempts"], MAX_ATTEMPTS))
             except Exception as exc:  # noqa: BLE001
                 row["last_error"] = str(exc)[:300]
+                # PRINT IT (row AMGT_RESAPP-Z-S102): a re-offer that failed used to store the error and say nothing,
+                # so a release refused 403 sat UNSENT with no line anyone could read.
+                print("[prd-notify] RE-OFFER FAILED %s attempt %d/%d -- %s" % (
+                    _label(row), row.get("attempts", 0) + 1, MAX_ATTEMPTS, row["last_error"][:200]))
         elif due:
             print("[prd-notify] EXHAUSTED %s after %d attempts -- still not READ. This is a finding for the "
                   "loop owner, not something this notifier can fix." % (_label(row), row["attempts"]))
