@@ -648,6 +648,29 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     "spec_asserts": "TO-EN-v-1 V1-AC3: 'its consumers' existing tests pass: the three investor-reporting tests (_keys, _gate, _contracts) and org/modules/graph/tests/test_comp_keys.py', graded by check_en.py v1-tests expecting VERDICT: PASS-CONSUMER-TESTS.",
     "world_is": "The _contracts test fails 14 of 53 at the spawn base with the carrier unchanged, so V1-AC3 cannot read PASS from any view of data/firm_registry.json. Moving it takes an edit to test_seam_paired.py or a different portal state, and neither is in this order's <paths>. V1-AC1 and V1-AC2 pass by output. The order stays pending.",
     "notes": "The failure text of the 11 parametrized test_paired_consumer_request_through_the_real_dispatcher cases was not read; only their names and the shared FAILED set. Whether a worktree whose portal/ is populated at gitlink e85f6eb84f would pass the 13 fixture-reading tests was not exercised: populating portal/ is outside this cell. The same v1-tests invocation graded in the shared tree reads the same primary portal."
+  },
+  {
+    "id": "LGIC_ENFORCE-S5",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "4.0.0_SA_CRO",
+    "surfaced_at": "2026-09-15T02:05Z",
+    "one_line": "The identity registry's demo row sets tenancy FIRM with the note 'a tenant class the doctrine does not define', while the doctrine defines demo as a DEMO-TENANT class, 'neither firm nor general' (02_DOCTRINE.md:60, ruled KEPT at :366-367; ledger X6), so the registry and the canon disagree on demo's tenancy.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "REGISTRY: infra/logic/registry/scopes.json row demo, read at HEAD (last written by LGIC_ENFORCE EN-r-1 @a925c8a642): class FIRM, tenancy FIRM, tenant.kind demo, note 'a tenant class the doctrine does not define (05_IDENTITY_SPINE.md s.3, tick-list row 17)'.",
+        "DOCTRINE: infra/logic/02_DOCTRINE.md:60 '`opal-data-demo`: a tenancy class that is neither firm nor general -- serves prospective users with demo accounts (Andrew ~01:3xZ 09-13, KEPT)'; :366-367 'RULED card 8: KEPT as a DEMO-TENANT class (s.1 vocabulary)'.",
+        "LEDGER: infra/logic/06_CONFORMANCE_LEDGER.md:135 X6 'opal-data-demo | tenancy | a demo tenant, neither firm nor general | a DEMO-TENANT class (doctrine v0.3 s.1) | ... | PERMANENT | GRANTED'.",
+        "NAMING: org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_LGIC_NAMING_ROUND2_20260915.md s.3 RULING DM reads demo as a firm in naming slots from this row's class, and states 'The row answers the naming question'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "02_DOCTRINE.md s.1 (v0.3): opal-data-demo is 'a tenancy class that is neither firm nor general', KEPT as a DEMO-TENANT class (card 8).",
+    "world_is": "The registry row reads tenancy FIRM, and its note says the doctrine does not define the class, which the doctrine at :60 and :366-367 does. Naming is unaffected: LGIC_NAMING RULING DM reads demo as a firm from the row's class, and the naming brief lists demo among the firms. INERT at this seat: no consumer that branches on demo's tenancy was measured, and that census was not run.",
+    "notes": "Surfaced by 4.0.0_SA_CRO during the LGIC_NAMING v1.7 L4-R, which it signed; this is not a ground there. For the registry's owner (LGIC_ENFORCE, EN-r-1) and the canon's author (LGIC_CANON): either the row's tenancy and note change, or the doctrine's s.1 class does. Which plane governs demo's tenancy was not decided here."
   }
 ]
 ```
