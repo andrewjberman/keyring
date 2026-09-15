@@ -78,15 +78,18 @@
    "seq": 5,
    "limb": "L10",
    "started_utc": "2026-09-15T15:33:29Z",
-   "ended_utc": null,
-   "act": "The ONE slug to 1.0.0_SA_CTO was drafted and handed to this seat's main session, which verifies it with its own instrument and sends it. PENDING at this writing: the send and its byte count are recorded by the sending session.",
+   "ended_utc": "2026-09-15T15:47:02Z",
+   "act": "The fork drafted the ONE slug to 1.0.0_SA_CTO. This seat's main session re-verified it with its own reads before sending, which differ from the fork's. Its python census read 73 rows, 73 distinct ids and contents, carrier-less 0 of 73, and 44 graduated against 44 remediation rows (0 missing, 0 extra). proof-of-spec-check, bound by --governing-order, read VALID on EN-s-1, EN-v-1 and EN-x-1. A merge-base diff of c6d652a6dc^2 read 9 branch paths, 2 in the merge commit, and all 8 non-channel paths OK at HEAD. Push state was re-measured as LOCAL (ls-remote 15:46Z, origin/CLOUD 2033ff3ea6, none of the three commits an ancestor). Then it sent the slug.",
    "inputs": [
-    {"kind": "ARTIFACT", "ref": "ADJUDICATION_v1.md@43ad6e9b2b and REMEDIATION_v1.md@7748cc5df7"}
+    {"kind": "ARTIFACT", "ref": "ADJUDICATION_v1.md@43ad6e9b2b and REMEDIATION_v1.md@7748cc5df7"},
+    {"kind": "ARTIFACT", "ref": "the 3 pending orders' proof-of-spec instances at HEAD; c6d652a6dc and its parents"}
    ],
-   "outputs": [],
+   "outputs": [
+    {"kind": "MESSAGE", "ref": "the L10 slug to 1.0.0_SA_CTO, delivered 2026-09-15T15:47:02Z: org/mcp/inbox/1.0.0_SA_CTO/read/20260915T154702Z_3.0.0_SA_CVO__L10_SLUG__LGIC_ENFORCE_round_1__73_rows.md, 4017 bytes by wc -c on the delivered file"}
+   ],
    "spine_clause": "L10: ONE slug to the CTO, only after every TO is terminal and every row dispositioned",
-   "gate_or_notifier_touched": "none yet",
-   "note": "ended_utc is null until the send is read back from the recipient's inbox."
+   "gate_or_notifier_touched": "send_message's L8 correspondence guard (the CVO's one send goes to the CTO): delivered, no override",
+   "note": "ended_utc is the delivery stamp read back from the recipient's inbox. The delivered file is untracked and device-local (org/mcp/inbox/* is gitignored)."
   }
  ]
 }
