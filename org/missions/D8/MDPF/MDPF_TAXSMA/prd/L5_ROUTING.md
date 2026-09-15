@@ -4,7 +4,7 @@ Author: `1.0.0_SA_CTO~A`. Updated after **CTO97073 at2026-09-15T12:55:50Z**. PRD
 
 ## Current disposition
 
-**The exact lane `2.0.0_SA_COO~T` is LIVE and is now bound in `project.json`.** MSTR97081 confirms its launch after COO~F's exit. The checked-in canonical `org/mcp/server.py:get_agent_status("2.0.0_SA_COO~T")` returned **LIVE at2026-09-15T13:20:53Z**, last seen10s ago, PID26332, working on MDPF_TAXSMA startup and L5 decomposition. This was a direct invocation of the unchanged repository function because no callable MCP status tool was exposed in this Codex session; it did not register a seat or start a server/helper. The canonical L4 notifier sent the unchanged v0.2 release as **97083 at13:22:49Z**; broker readback at13:25:23Z is **SENT**, not yet READ. The delivery receipt is below. L5 remains owned by COO~T and is not complete merely because the session is live.
+**The exact lane `2.0.0_SA_COO~T` is LIVE and is now bound in `project.json`.** MSTR97081 confirms its launch after COO~F's exit. The checked-in canonical `org/mcp/server.py:get_agent_status("2.0.0_SA_COO~T")` returned **LIVE at2026-09-15T13:20:53Z**, last seen10s ago, PID26332, working on MDPF_TAXSMA startup and L5 decomposition. This was a direct invocation of the unchanged repository function because no callable MCP status tool was exposed in this Codex session; it did not register a seat or start a server/helper. The canonical L4 notifier sent the unchanged v0.2 release as **97083 at13:22:49Z**; broker readback at13:30:03Z is **READ**, acknowledged by that exact lane at13:26:22.594818Z. The final delivery receipt is below. L5 remains owned by COO~T and is not complete merely because the session is live.
 
 Exact unread notice handled: `20260915T125550Z_1.0.0_SA_CTO_ANDREW_RULED_the_seat_order__MDPF_TAXSMA.md`, Msg-ID97073, sender `1.0.0_SA_CTO`. It relays Andrew's ~12:5xZ words verbatim:
 
@@ -30,13 +30,13 @@ MSTR's disk note (12 GB free on C:, about 1.4 GB per worker worktree) is an inpu
 - **Next COO slot:** MDPF_TAXSMA -> LGIC_CANON -> ADVI_FIRMBKTS -> MDPF_CANON -> IRPT_BCKEND. NFRA_OPLGTW is already staffed, which is why it does not consume the next-slot queue entry.
 - Laptop capacity **3/3**, lanes COO~F, COO~G and COO~O, from `org/mcp/liveness.json` registrations seen within120 seconds. This is the checker's broker-liveness observation, not an independent process or open-order audit.
 
-The priority decision, lane selection and launch condition are now settled. The measurement above is historical; the exact canonical status at13:20:53Z supersedes the old F/G/O registration snapshot. Remaining routing work is canonical delivery and evidence of intake by COO~T.
+The priority decision, lane selection and launch condition are now settled. The measurement above is historical; the exact canonical status at13:20:53Z supersedes the old F/G/O registration snapshot. Canonical delivery and intake by COO~T are now confirmed READ; the next work is its L5 decomposition.
 
 ## Next owners and exact handoff
 
 1. **[0.0.0_AB_MSTR, complete]** Notice97081, exact file `20260915T131240Z_0.0.0_AB_MSTR_2.0.0_SA_COO_T_LAUNCHED_13_10Z_for_MDPF_.md`, reports COO~F's cold handoff at6d8030b6ee and exit, then COO~T's launch around13:10Z. It instructs this seat to bind the lane and fire the notifier once canonical get_agent_status reads LIVE.
 2. **[1.0.0_SA_CTO~A, complete]** The exact lane measured LIVE at13:20:53Z; `project.json` now records `coo_lane: "2.0.0_SA_COO~T"`. No sequence edit or PRD_NOTIFY_TO bypass is used.
-3. **[1.0.0_SA_CTO~A, sent; intake pending]** Binding commit `a245ccd226` triggered the installed canonical post-commit notifier, which sent **97083** to the exact lane at13:22:49Z, attempt1/6. The broker returned SENT at13:25:23Z with no emitted_at or acked_at. Canonical reoffer remains active until READ; no transport success is substituted for agent intake.
+3. **[1.0.0_SA_CTO~A, complete; READ confirmed]** Binding commit `a245ccd226` triggered the installed canonical post-commit notifier, which sent **97083** to the exact lane at13:22:49Z, attempt1/6. The broker initially returned SENT at13:25:23Z. Final readback at13:30:03Z confirms READ, acked_by exact COO~T at13:26:22.594818Z. The canonical notifier retired the outstanding row after that acknowledgement.
 4. **[2.0.0_SA_COO~T]** Own L5 decomposition and the downstream canonical flow for admitted v0.2 at60c722fe64. This routing note issues no task order or implementation GO.
 
 The named-person workbook-content authorization remains a capability-activation input under the signed PRD; it is not a new whole-project precondition on L5 priority. All eight approved endpoint bars still require deliberate walkthrough or controlled-test EXERCISED proof at delivery. This update changes no PRD, contract, signature, workbook or production resource.
@@ -58,3 +58,7 @@ Prior authority: `org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_202609
 - Unchanged file hashes verified after binding: PRD SHA256 `35c38dc71f71739116f04d8a647cf66025a041279ec2a79175daaed22583ec34`; contract SHA256 `5adfb0c5c001f42fc3591d08d5819a7d990f7b9baaf58af232bd2fe892bf7d9a`.
 
 This completes the named-lane binding and canonical send requested by97081. The next output is COO~T's L5 decomposition; neither delivery nor liveness certifies that output or endpoint exercise.
+
+## Final agent-intake receipt, 2026-09-15T13:30:03Z
+
+Canonical `delivery_state(97083)` now returns **READ**. The broker names `to_serial` and `acked_by` as exact **`2.0.0_SA_COO~T`**, with `emitted_at` and `acked_at` both **`2026-09-15T13:26:22.594818+00:00`**. The notifier's outstanding v0.2 row is retired. This supersedes the earlier SENT-only observation; the named-lane binding, canonical send and agent intake are complete. COO~T owns L5 decomposition, which this receipt does not certify.
