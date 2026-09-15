@@ -7736,6 +7736,54 @@ Andrew asked for (msg 22917); it concerns this project's portal files meeting an
   "spec_asserts": "W2-AC1's invocation resolves TO-W1-1 by ls inside the worker's own worktree and greps its <status>; the expect reads that status as the project's CURRENT dependency state (TO-W1-1 reads complete -- OR in_progress with its proof instance on SITEZ carrying W1-AC12 PASS).",
   "world_is": "The worktree copy is a snapshot at branch-cut and prints in_progress; SITEZ prints complete. The invocation therefore measures THIS BRANCH'S VINTAGE of a shared-branch fact, and a criterion that must read a shared-branch fact has to name the ref (git show SITEZ:<path>) rather than a path inside the worktree. Here the difference is benign -- both branches of the expect are met, and the second branch is met at the worktree vintage too -- so the row is OBSERVATION and INERT. Same class as W25-S2 and W25-S6 (a clause anchored to something that moves under a live worker), direction reversed: there the ANCHOR moved ahead of the worker, here the WORKER'S COPY lags the anchor.",
   "notes": "FOURTH SPAWN, ONE CRITERION. Re-ran nothing but W2-AC1, on the limb the issuer re-cut at SITEZ 03a334e357. That re-cut CLOSES W25-S6 by measurement: git -C portal merge-base --is-ancestor 10a2799c67c519288fcd7d4ae6e3b86d5ed48b5a HEAD -> rc=0 and BASE-IS-ANCESTOR is printed, with the inverse at rc=1 as a discriminating negative control. W2-AC1 is recorded PASS and the order's status flips to complete at 9 of 9 (8 PASS by output, W2-AC9 recorded judgment). No portal commit this run: portal HEAD stays 16c5d3593594f40d954493e93b28ccd292e18cd0."
+},
+{
+  "id": "POSN_ASTTAX-Z-S173",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T10:03:14Z",
+  "one_line": "ADJUDICATION of W25-S6 (INERT), the THIRD spawn of TO-W2-1 (09:22-09:44Z, after the second spawn HUNG from 07:35Z while re-running a criterion that already stood -- stopped by the issuer at 09:21Z on the CTO's measurement 23110): W2-AC2/AC4/AC7/AC8 PASS by output on this run's own invocations (4 of 4 files vs the base; tsc 2028 files with the 1-of-1 injected control; base..branch 1 commit, gitlink unmoved two ways; footers/headers Black Diamond 2026-09-15, Bloomberg 0, legends Sat 15 = 3, Sat 80 = 4, Models INT = 2 vs the pre-change 5); W2-AC1 REFUSED on its ancestry limb -- the issuer's re-cut had anchored W2-AC2/W2-AC7 to the base but left W2-AC1 on the moving ref name, which inverts once the ref contains the branch (the worker's BASE->HEAD control read rc=0 in the same run). RULED: the refusal correct, the defect the issuer's (the third of the W25-S2 class); W2-AC1's limb re-cut to the base @03a334e357 and a fourth spawn recorded it. Also from this run: the surprise-row class enum refused SPEC_DEFECT (re-classed OBSERVATION, the ratified axis -- Z-S158); the amended order text stays the issuer's commit on SITEZ, never the worker's (correct).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "The third run's proof instance at 0599f308f7 (W2-AC1 FAIL with both ancestry directions measured; four PASS rows with denominators); the re-cut at 03a334e357; the drain 67bc9a7483.",
+      "WHY GRADUATED: every act is evidenced, the one defect is named as the issuer's and closed by a one-clause re-cut, and the hung run wrote nothing to any branch."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W25-S6"
+  ],
+  "spec_asserts": "TO-W2-1 W2-AC1 as re-cut: the branch BASE is the ancestry anchor.",
+  "world_is": "F4 on the ref at 16c5d359 (inside ebbee2e6); the order's criteria all PASS after the fourth run.",
+  "notes": "A criterion's every limb names the base, never the ref: three defects of one class this round (Z-S167, Z-S173)."
+},
+{
+  "id": "POSN_ASTTAX-Z-S174",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T10:03:14Z",
+  "one_line": "ADJUDICATION of W25-S7 (INERT), the FOURTH spawn of TO-W2-1: one criterion (W2-AC1 as re-cut to the base) run and recorded, the instance re-synced to 9 of 9 invocation alignment, the status flipped to complete by the worker on nine PASS-or-judgment rows. RULED: TO-W2-1 (F4) COMPLETE; nothing else in the run.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "The fourth run's commit(s) on wk-posn_asttax-6-25 and the drain 67bc9a7483; W2-AC1's deciding output (BASE-IS-ANCESTOR; TO-W1-1 complete at SITEZ; the served block's counts).",
+      "WHY GRADUATED: the last open criterion closed on its own invocation's output; the shipped bytes were never in question (two independent 0-mismatch reads)."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W25-S7"
+  ],
+  "spec_asserts": "TO-W2-1 as amended and re-cut; PRD v0.11 FWD-7, C-HOLDING-MEASURES, C-HOLDING-IDENTITY.",
+  "world_is": "Round 6's three orders read complete at HEAD.",
+  "notes": "For L9: four spawns for one order, three of them on the issuer's invocation defects; the cost is recorded in the round-6 log."
 }
 ]
 ```
