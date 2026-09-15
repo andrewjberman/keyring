@@ -75,6 +75,14 @@ def check(name: str, ok: bool, detail: str = "") -> bool:
     return bool(ok)
 
 
+# THE PER-BATTERY BOUND (row IRPT_FNTEND-W6-S1, owner 1.0.0_SA_CTO). It was 560 s. On a shared box
+# test_seeded_limb.py hit it (rc=124) and the census printed the timeout RED, in a regression's row shape,
+# although run alone on 051379eac7 the same battery took 275 s and read green. The bound is sized to ~3x the slowest
+# lone run, because the batteries run in parallel on a box other seats load. A battery that still hits it prints
+# TIMEOUT, never RED: rc=124 is the bound, not the battery's verdict.
+BATTERY_BOUND_S = 900
+
+
 def _run(cmd: list, cwd: Path, timeout: int, env=None):
     t = time.time()
     try:
@@ -269,7 +277,7 @@ def main() -> int:
     try:
         # ---- 1. the whole-suite census is submitted FIRST: it is the long pole ----
         files, named, run = _batteries()
-        bat_futs = [(p, pool.submit(_run, [sys.executable, str(p)], WORKSPACE, 560)) for p in run]
+        bat_futs = [(p, pool.submit(_run, [sys.executable, str(p)], WORKSPACE, BATTERY_BOUND_S)) for p in run]
 
         # ---- 2. the flip fixtures, built from REAL committed bytes ----
         head = _ws_git("rev-parse", "HEAD").strip()
@@ -450,14 +458,20 @@ def main() -> int:
         check("the binding refuses no committed estate instance whose fields name its own order", not refused)
 
         # ================================ the whole-suite census ================================
-        green = 0
+        green = timeouts = 0
         print("CENSUS DOMAIN: %d .py file(s) under .tools/tests/; %d name proof-of-spec-check or to-pipeline-gate; "
               "%d run (this file, the census runner, excluded by name)" % (len(files), len(named), len(run)))
         for p, fut in bat_futs:
             rc, out, secs = fut.result()
             green += rc == 0
-            print("  %-5s rc=%-3d %4.0f s  %-44s %s" % ("GREEN" if rc == 0 else "RED", rc, secs, p.name, _last(out)))
-        print("EVERY .tools BATTERY THAT CALLS EITHER TOOL: %d of %d green" % (green, len(run)))
+            timeouts += rc == 124
+            word = "GREEN" if rc == 0 else ("TIMEOUT" if rc == 124 else "RED")
+            print("  %-7s rc=%-3d %4.0f s  %-44s %s" % (word, rc, secs, p.name, _last(out)))
+        print("EVERY .tools BATTERY THAT CALLS EITHER TOOL: %d of %d green, %d RED, %d TIMEOUT"
+              % (green, len(run), len(run) - green - timeouts, timeouts))
+        if timeouts:
+            print("  TIMEOUT IS NOT A VERDICT: %d battery(ies) hit the %d s bound and were NOT EVALUATED. "
+                  "Re-run each alone before reading this census as red or green." % (timeouts, BATTERY_BOUND_S))
         check("every battery that calls either tool is green with the change applied", green == len(run) and run)
     finally:
         pool.shutdown(wait=True)
