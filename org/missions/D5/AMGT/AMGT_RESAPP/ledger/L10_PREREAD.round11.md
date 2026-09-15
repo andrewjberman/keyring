@@ -20,6 +20,7 @@ read at HEAD or on the live plane, with its vintage.
 | rj-8 executive management (drained 16:10Z, read s.2b) | `~22` | `.../~22/...rj-8...` | VALID rc=0 | 6 of 6 PASS | W22-S1..S2 |
 | rj-11 the Posture call (drained 17:17Z, read s.2b) | `~20` | `.../~20/...rj-11...` | VALID rc=0 | 6 of 6 PASS | W20-S9..S14 |
 | rj-13 the social source, measured (drained 17:18Z, read s.2b) | `~22` | `.../~22/...rj-13...` | VALID rc=0 | 4 of 4 PASS | W22-S3..S8 |
+| rj-9 the header and the five tabs (drained 17:59Z, flipped by the issuer 18:02Z; read s.2b) | `~18` | `.../~18/...rj-9...` | VALID rc=0 | 6 of 6 PASS | W18-S10..S15 |
 
 Channel at HEAD: 210 rows; 32 round-11 worker rows (28 OBSERVATION/INERT, 3 BLOCKING/INERT -- W19-S8 the volume bars,
 W20-S2 and W20-S3 the schtasks invocation -- and 1 OBSERVATION/ARMED, W21-S3 SAP ranked as its own peer, disarmed
@@ -151,6 +152,26 @@ held claim, W22-S7). ⚠ W22-S6: the S-1 key `social/v1/_measurement/{as_of}.jso
 measured on the same day overwrites the first. Net for FWD-16: **one bounded measurement admits nothing for Boeing**, so the header's
 social half has no admitted source; a feed is round-12 material and its admission rule and cost basis are the open inputs.
 
+**rj-9 the header and the five tabs (FWD-16; C-PAGE-LAYOUT; the rendering half of FWD-17/18/8; every ranking reader on G-1).**
+Drained @`969addc889` at 17:59Z by `~18`; instance re-graded here VALID rc=0, 6 of 6 PASS. The order's `<status>` was still `staged` at
+the drain -- the worker had been told not to edit the order file after the issuer's mid-flight AC4 amendment (@`4f383fc217`), so the
+flip that every other cell made in its own L7 commit was not made -- and `2.0.0_SA_COO~W` flipped it complete as issuer at 18:02Z
+(@`5ae785828e`); this seat's note to the issuer crossed that commit. Established: tabs in Andrew's order exactly [thesis,
+exec_management, peers, model, posture], the Coverage tab file gone, the one-chart component present; BA's header feed serves 1 item
+from the pool (store_item_count 2, all four failure states zero, the control identity UNRESOLVED with 0 items), 0 reads of the articles
+table or its GSI; the description SERVED from D-1's first sentence marked machine (0 of 3 model blocks carry a description scalar);
+social "no source measured (S13)"; management 12 officers with the pool average 4.08; peers derived, 12 members; harnesses green
+(round-8 numbers unchanged 183/183 and 13/13; the ranked click sends the canonical key, 12 of 12 checks); build 54 assets, gitlink
+unmoved. Rows that bear on the addendum: **W18-S11** every ranking reader now follows G-1's `_CURRENT` pointer, but only the CHATTER
+producer writes one -- the PRICE producer writes bare partitions and the live table holds no pointer for any axis yet, so served PRICE
+stays the explicit-absent branch the co-sign half covered until rj-10's QA invoke and a PRICE migration; **W18-S12** the Thesis chart
+cannot be drawn for any of the five names without parsing numbers out of prose (D-1's driver names its series in prose, 5 of 5) --
+candidate 1, confirmed; **W18-S13** R-1's CSC map marks 5 of 17 columns PRESENT but its member rows carry a VALUE for only ONE (Mkt
+Cap): Price, EV and both P/E years are registry codes on no member row -- candidate 2 is WORSE than stated, the Peers tab's multiples
+table is one column wide today; **W18-S10** management, posture, model, description and feed ride the existing /overlay, /thesis and
+/peers payloads, so the 11-route mount does not move (rj-10 deploys code and IAM only, as the co-sign half assumed); **W18-S15** M-1
+has no machine field separating "search found nothing" from "links unreadable" (W22-S1), so the adapter parses a sentence.
+
 ## 3. The pool as it stands (14:5xZ, `list-objects-v2`, 121 objects)
 
 | prefix | objects | newest | written by |
@@ -167,7 +188,7 @@ social half has no admitted source; a feed is round-12 material and its admissio
 1. **The chart's numeric points.** C-FILINGS-ANALYZER's THESIS DRIVER names a series; FWD-18's ACCEPT shows a chart.
    The driver product needs `points[{period, value, unit, basis, evidence_ids, source_version}]` (the CRO spec's
    contract, @`2778e07199` s.7) -- measured absent on all five drafting objects.
-2. **CSC basis labelling.** A column whose basis (trailing / NTM) differs from its label (fiscal-year P/E) renders as
+2. **CSC basis labelling -- and CSC VALUES (W18-S13: 5 of 17 columns mapped, 1 of 17 carries a value on the member rows).** A column whose basis (trailing / NTM) differs from its label (fiscal-year P/E) renders as
    an ALTERNATIVE labelled measure, never under the year label (Rule 24(iv)); 5 of 17 columns map today.
 3. **Resolution of Opal's holdings -- CORRECTED 17:0xZ on Andrew's reads; the earlier scanner join is WITHDRAWN as the method.**
    Andrew-direct at this terminal ~16:4x-16:5xZ, verbatim, in order: *"Where are you trying to resolve the Opal Holdings from? We have
@@ -286,7 +307,7 @@ social half has no admitted source; a feed is round-12 material and its admissio
 
 ## 5. What is NOT known yet (the slug read's remaining inputs)
 
-The four staged cells (rj-3, rj-9, rj-10, rj-12); the CVO's adjudication of the 32 rows and
+The three staged cells (rj-3, rj-10, rj-12); the CVO's adjudication of the 32 rows and
 the slug; whether rj-10's plan reads 0/4/0 and the `_CURRENT` pointer carries no `rank_sort` (co-sign half s.4); FWD-16
 ..FWD-19's EXERCISED bars, which no cell can close -- 18 of 19 need a person, and the person is Andrew or Adam through
 Andrew. Push state: LOCAL.
