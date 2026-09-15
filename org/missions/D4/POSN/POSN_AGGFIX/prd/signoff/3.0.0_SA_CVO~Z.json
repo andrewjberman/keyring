@@ -1,0 +1,11 @@
+{
+  "prd": "POSN_AGGFIX_PRD.md",
+  "prd_version": "v0.1",
+  "prd_pin": "d6bee5693c34dc05cc1744d88eb2b6b7e89b5ea6",
+  "half": "ratified-text",
+  "half_hash": "33458b1d300053ff661bce8a04de46a31df475921ede46005348fc839904f260",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/POSN_AGGFIX_V01_RATIFIED_TEXT_REVIEW_20260915_Z.md@1ed70ca48a",
+  "signed_by": "3.0.0_SA_CVO~Z",
+  "signed_at": "2026-09-15T17:44:39Z"
+}
