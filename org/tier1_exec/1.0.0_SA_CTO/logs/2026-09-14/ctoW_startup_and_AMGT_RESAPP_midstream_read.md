@@ -654,3 +654,17 @@ Measured, card `AMGT_RESAPP_SUBSTRATE_MEASUREMENTS_20260915_W/TAB_SCORE_SOURCING
 
 Pre-read candidates 13 and 14 extended, 15 and 16 added. Four decisions surfaced for Andrew: a bounded Lusha enrich; an FCF dispersion
 source; a forecast producer for the Model score; sector against pool percentiles. Push state: LOCAL.
+
+## ADDENDUM 25 (~19:0x-19:2xZ) -- Andrew answers the five calls; research brief to CRO~W; Seeking Alpha crawl to CRO~Z; rj-12 read
+
+Andrew at this terminal answered the five tab-score calls and ordered one structured research brief to 4.0.0_SA_CRO~W, recorded
+verbatim with the brief @`a026de4004`: one bounded Lusha enrich authorized; CFPS or EPS dispersion; the Seeking Alpha authenticated
+crawl to 4.0.0_SA_CRO~Z by name; discovery before absence on every score, reorienting around available data; the Peers subject cap.
+Sent: the brief to 4.0.0_SA_CRO~W (NOT REGISTERED -- no live session, so it waits in the inbox and on its carrier file); the crawl ask
+to 4.0.0_SA_CRO~Z (DELIVERED, id 23221) with 4.0.0_SA_CRO~W copied; the record broadcast (23223-23226, CRO~W QUEUED). The nine
+measurement instruments landed beside the card @`864edfddee` after two gate refusals: the commit gate's undefined-name walk does not
+read While bodies, so the event loops became for-loops over an unbounded iterator.
+
+rj-12 (the Posture tab) drained 19:09Z, VALID 4 of 4 at HEAD; W18-S16 no posture route and a 10-of-20-key served subset, widened by
+the worker; W18-S18 the served reason. Round 11 at 11 of 13 (rj-10, rj-3 staged). Drain watch re-armed on the new baseline. Push
+state: LOCAL.

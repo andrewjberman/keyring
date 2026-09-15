@@ -21,6 +21,7 @@ read at HEAD or on the live plane, with its vintage.
 | rj-11 the Posture call (drained 17:17Z, read s.2b) | `~20` | `.../~20/...rj-11...` | VALID rc=0 | 6 of 6 PASS | W20-S9..S14 |
 | rj-13 the social source, measured (drained 17:18Z, read s.2b) | `~22` | `.../~22/...rj-13...` | VALID rc=0 | 4 of 4 PASS | W22-S3..S8 |
 | rj-9 the header and the five tabs (drained 17:59Z, flipped by the issuer 18:02Z; read s.2b) | `~18` | `.../~18/...rj-9...` | VALID rc=0 | 6 of 6 PASS | W18-S10..S15 |
+| rj-12 the Posture tab and the header line (drained 19:09Z; read s.2b) | `~18` | `.../~18/...rj-12...` | VALID rc=0 | 4 of 4 PASS | W18-S16..S18 |
 
 Channel at HEAD: 210 rows; 32 round-11 worker rows (28 OBSERVATION/INERT, 3 BLOCKING/INERT -- W19-S8 the volume bars,
 W20-S2 and W20-S3 the schtasks invocation -- and 1 OBSERVATION/ARMED, W21-S3 SAP ranked as its own peer, disarmed
@@ -171,6 +172,18 @@ Cap): Price, EV and both P/E years are registry codes on no member row -- candid
 table is one column wide today; **W18-S10** management, posture, model, description and feed ride the existing /overlay, /thesis and
 /peers payloads, so the 11-route mount does not move (rj-10 deploys code and IAM only, as the co-sign half assumed); **W18-S15** M-1
 has no machine field separating "search found nothing" from "links unreadable" (W22-S1), so the adapter parses a sentence.
+
+**rj-12 the Posture tab and the header line (FWD-19; C-POSTURE rendering; the incomplete-comparable line).** Drained @`51297efb9a`
+at 19:09Z by `~18`; the order flipped `complete` in the worker's own commit; instance (@`7ca7300a3b`) re-graded here VALID rc=0,
+4 of 4 PASS, 3 surprises each resolving to a channel row. Established: the tab renders the verdict in words beside the machine
+marker with the comparable linked, posture harness 32 of 32; AC3 on the served route -- verdict worse, comparable HD_US_Equity,
+basis 6, marked machine, control ABSENT; build 54 assets, prior harnesses unchanged (12/12, 8/8, 20/20), gitlink unmoved. Rows
+that bear on the addendum: **W18-S16** there is NO posture route -- O-1 rides /overlay and /thesis, as W18-S10 found -- and
+`read_posture` served 10 of O-1's 20 keys, dropping packs, fit, memberships and the comparable selection the tab renders; the
+worker widened the SERVED arm under its spawn grant, row first; **W18-S17** one rj-9 tabs-harness check asserted the placeholder
+this cell replaces and was inverted in place (20 of 20); **W18-S18** the SERVED arm hard-coded `reason` None, hiding the reason
+rj-11 writes beside an absent verdict -- now served (null on both landed objects). C-POSTURE's readiness rule (candidate 9) is what
+the tab now shows: pending over incomplete packs, never a verdict.
 
 ## 3. The pool as it stands (14:5xZ, `list-objects-v2`, 121 objects)
 
@@ -406,9 +419,19 @@ has no machine field separating "search found nothing" from "links unreadable" (
    mnemonic); and a fiscal-year estimate count for the N_est guard, because the BF count is a fractional blend (COST 38.54).
    **Round-11 reach:** none.
 
+**ANDREW ~19:0xZ ON CANDIDATES 13-16 (record @`a026de4004`, verbatim there).** (13) one bounded Lusha enrich AUTHORIZED -- the 11
+matched officers, no emails or phones, the reveal flag for that call only, contact data never stored. (16) cash-flow-per-share or EPS
+estimate dispersion stands in for the FCF dispersion Bloomberg lacks; Seeking Alpha consensus explored by `4.0.0_SA_CRO~Z` with an
+authenticated crawl; the house-forecast question stays OPEN. (all) discovery before absence -- every missing input classed as the
+source lacking it or our pull missing it -- and the scores reorient around the data that exists; the sector-versus-pool percentile
+basis NOT ruled. (15) the subject's measures capped at the peer bounds, RULED. **He ordered one structured research brief on all
+five, issued to `4.0.0_SA_CRO~W`** (`org/tier1_exec/1.0.0_SA_CTO/deliverables/AMGT_RESAPP_TAB_SCORE_DATA_RESEARCH_BRIEF_20260915_W.md`,
+same commit; findings due at `org/tier1_exec/4.0.0_SA_CRO/deliverables/AMGT_RESAPP_TAB_SCORE_DATA_FINDINGS_20260915_W.md`). The
+addendum's text for candidates 13-16 waits on those findings; the slug read for round 11 does not.
+
 ## 5. What is NOT known yet (the slug read's remaining inputs)
 
-The three staged cells (rj-3, rj-10, rj-12); the CVO's adjudication of the 32 rows and
+The two staged cells (rj-3, rj-10); the CVO's adjudication of the 32 rows and
 the slug; whether rj-10's plan reads 0/4/0 and the `_CURRENT` pointer carries no `rank_sort` (co-sign half s.4); FWD-16
 ..FWD-19's EXERCISED bars, which no cell can close -- 18 of 19 need a person, and the person is Andrew or Adam through
 Andrew. Push state: LOCAL.
