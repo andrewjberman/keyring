@@ -738,6 +738,35 @@ operator as their call rather than taking it. Acked 23275; reply sent to both se
 **Round state unchanged:** round 11 CLOSED @`155105b850`, L8 and L9 in flight at `3.0.0_SA_CVO~W`, no round-12 cell cuttable
 before its slug reaches `1.0.0_SA_CTO~W`.
 
+### 24. Andrew-direct MANAGED WINDDOWN: nothing in flight here, everything parked on a committed carrier (23:5x-00:0xZ)
+
+**Andrew-direct ~23:5xZ**, relayed verbatim by `0.0.0_AB_MSTR~Z` (msg 23300): *"huntress is blowing up again we need managed
+winddown"*. Fabric-wide, effective immediately; it overrides the standing never-self-wind-down rule, which exists until he says
+this. MANAGED is the operative word: start nothing, let what is running finish, park the rest durably, report once.
+
+**THIS LANE HAD NOTHING IN FLIGHT.** No issuance cut, no live worker subagent, no running commit, no gate run, no browser session.
+Round 12 was already blocked behind the round-11 slug, so there was nothing to abandon and nothing had to be killed to wind down.
+
+**PARKED @`f9098a5019`**, `deliverables/AMGT_RESAPP_W/round12_park/`, with `PARK_RECORD.md` naming the owner and ONE un-park
+condition (the slug lands from `3.0.0_SA_CVO~W`, then `1.0.0_SA_CTO~W` answers it; then L5 and ONE issuance -- no round-12 order
+before both):
+- `ROUND12_CELL_SKETCH.md` -- preparation, never cut: four candidate chains, the reported-not-landed note, card 19's consequence
+  for COMPLETION_REPORT, and the commit-time drain hazard.
+- `ROUND11_PACKET_CARRY.md` -- round-11 carries including card 16.
+- `union_rows.py` and `regrade_with_order_at.sh` -- the two working tools this round rebuilt. The first was REFUSED by the
+  universal commit gate (ruff E401, multiple imports on one line); split, re-checked clean, py_compile OK, then committed.
+
+**FOOTPRINT REDUCED, measured:** cron loop `b698f328` CANCELLED (it would have fired at :47 and started new work); the stagger tick
+Monitor STOPPED; the browser session CLOSED; vite was already stopped after the browser half. The inbox stream Monitor stays ARMED
+so `0.0.0_AB_MSTR~Z` can reach this seat while it sequences stops -- one process, and its own expiry notice is a wake.
+
+**WHAT WOULD BE LOST IF THIS SEAT STOPPED NOW: nothing.** Round 11 is durable at HEAD (packet @`155105b850`, 13 of 13 orders
+terminal, channel 250 rows, sections 1-24 of this log). The round-11 slug is not this lane's and is not lost either: it sits STAGED
+in `3.0.0_SA_CVO~W`'s own worktree, and uncommitted files survive a process stop.
+
+**NOT CANCELLED, PARKED:** the goal stands. It ends HELD-AT-STOP on Andrew's promote and one exercise session (card 19), never by
+narrowing the outcome set.
+
 ## Decisions Made
 
 | Decision | Rationale |
