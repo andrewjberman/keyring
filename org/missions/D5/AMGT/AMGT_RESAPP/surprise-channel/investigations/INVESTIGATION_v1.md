@@ -4320,6 +4320,32 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
       "spec_asserts": "CLAUDE.md Rule 27 / spine v3.15: the L4 notifier 'WITHHOLDS the COO delivery until both are SIGNED at the current bytes' and then delivers it -- the delivery is the CTO's L4->L5 hand-off, and the tool's own comment at line 581-583 says the release goes to the round holder.",
       "world_is": "The release is composed under whichever seat committed the LAST stamp. For the CVO that send is refused by the broker's L8 guard, and the failure is silent: no print, attempts stays 0, `status` shows UNSENT. The COO would never receive the admitted PRD unless a human reads last_error in an untracked jsonl.",
       "notes": "Not an AMGT cell: an estate-tool fix (the release row's `from` = the PRD's L4 owner, read from the PRD or from the seat that committed the PRD version, never the stamping seat; and reoffer/status print last_error) belongs to the notifier's owner -- 0.0.0_AB_MSTR~Z / Andrew to name the project. The hand workaround is disclosed in the row's history entry and in the CTO~W session log addendum 8. hazard_standing ARMED estate-wide; INERT for AMGT_RESAPP v0.8 (delivered id=23071)."
+    },
+  {
+      "id": "AMGT_RESAPP-Z-S103",
+      "project": "AMGT_RESAPP",
+      "fabric": "site-z",
+      "surfaced_by": "1.0.0_SA_CTO~W",
+      "surfaced_at": "2026-09-15T07:08Z",
+      "one_line": "UPDATES AMGT_RESAPP-Z-S102 on 0.0.0_AB_MSTR~Z's measured answer (msg 23075 -> 07:06Z): the SENDER half is ALREADY FIXED on origin/CLOUD @fc71328804 (1.0.0_SA_CTO, 2026-09-14T08:02Z: from = the PRD's last CTO author, never the stamping seat; a laneless release is HELD; reoffer re-points a stuck non-CTO sender) and reaches SITEZ only with the CLOUD->SITEZ merge held on Andrew's word -- so NO second sender fix lands on SITEZ (a certain conflict at that merge); the SILENT last_error half is UNFIXED on both branches (CLOUD :677/:784, SITEZ :634/:725, zero prints), and route_half's alphabetical lane pick (prd_signoff_lib.py blob d19665e0fb, :360) is unfixed on both. Owner recommendation carried to Andrew by 0.0.0_AB_MSTR~Z, not named here. The v0.8 release itself is closed: the notifier retired its row after 2.0.0_SA_COO~W READ id 23071.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "0.0.0_AB_MSTR~Z msg 23075-answer (inbox 20260915T070615Z): blobs read in full on both refs with MSYS path conversion off, line counts printed (CLOUD 949, SITEZ 881); shared base 56608aadd4 at 09-14 07:34Z predates fc71328804 by 28 minutes; SITEZ blob a0d693455d vs CLOUD e2f4893e4a.",
+          ".tools/prd-header-notify.py status at 07:0xZ: no AMGT_RESAPP v0.8 row remains (retired on READ); the two v0.4 relics (@bbbf35c38e nudge to the CVO base, @0147a1b924 release to 2.0.0_SA_COO~Z) are the pre-lane era's and are the CLOUD fix's _release_decision to retire.",
+          "Z-S102 @341f7e6ce1: the measurement and the one-time hand workaround (from rewritten to 1.0.0_SA_CTO~W, reoffer -> id 23071)."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "1.0.0_SA_CTO~W",
+      "adjudicates": [
+        "AMGT_RESAPP-Z-S102"
+      ],
+      "spec_asserts": "Z-S102's spec_asserts stand (the L4 notifier delivers the admitted PRD to the round holder as the CTO's L4->L5 hand-off).",
+      "world_is": "On SITEZ until the held merge: a CVO-last signature still composes the release under the CVO and is refused 403 silently; the manual re-point stays the route and is disclosed each time. On CLOUD: the sender half is fixed; the silence and the router are not.",
+      "notes": "Not an AMGT cell. What remains open estate-wide, for Andrew's owner call: (1) print last_error in reoffer() and status(); (2) route_half prefers the reviewer lane matching the project's fabric letter. Both fit one commit on CLOUD by the file's own author so the file moves one way only; 0.0.0_AB_MSTR~Z carries the recommendation. This row is the durable record of the message; the disarm of Z-S102 follows the merge landing on SITEZ and the two remaining fixes, not before."
     }
 ]
 ```

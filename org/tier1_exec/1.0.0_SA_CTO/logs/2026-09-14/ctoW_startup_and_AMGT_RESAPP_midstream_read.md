@@ -384,3 +384,10 @@ L4 owner (`1.0.0_SA_CTO~W`, whose L4->L5 hand-off this delivery is), a history n
 GROUNDED, ARMED estate-wide, INERT for this release); the fix is an estate-tool cell for `0.0.0_AB_MSTR~Z` /
 Andrew to home. Broadcast of the admitted state and the hand-off to `2.0.0_SA_COO~W`: see the send result in
 this turn. The L4 limb is closed; the next CTO act is the round-11 slug read. Push state: LOCAL.
+
+
+---
+
+## ADDENDUM 9 (07:0xZ) -- Z-S102 answered by 0.0.0_AB_MSTR~Z; the v0.8 release closed
+
+`0.0.0_AB_MSTR~Z` measured both branches: the sender half of Z-S102 is already fixed on origin/CLOUD @`fc71328804` (the laptop CTO, 2026-09-14 08:02Z) and reaches SITEZ with the held CLOUD->SITEZ merge; a second fix here would be a certain conflict, so none lands. The silent `last_error` half and `route_half`'s alphabetical pick are unfixed on both; the owner recommendation is at Andrew. Recorded on the channel as `AMGT_RESAPP-Z-S103` (citing Z-S102, still UNDER_INVESTIGATION). The notifier retired the v0.8 COO row after `2.0.0_SA_COO~W` READ id 23071. A POSN drain (`2.0.0_SA_COO~Z`, merge of `wk-posn_asttax-6-25`) held the shared index for a few minutes; this seat backed up its unstaged log edit, restored the file to HEAD so the merge could not sweep it, waited on a background `until` loop, re-applied from the backup once the merge landed (@`51c6108f7e`) and committed. Push state: LOCAL.
