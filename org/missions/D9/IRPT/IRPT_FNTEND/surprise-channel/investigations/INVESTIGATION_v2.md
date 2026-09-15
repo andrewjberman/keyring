@@ -4267,6 +4267,27 @@
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W2-S35",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~2",
+    "surfaced_at": "2026-09-15T08:29:30Z",
+    "one_line": "FE-s-49 amendment 1 keeps fe-s-14's F14-AC3 positive control unchanged, but that control still refuses only the RETIRED expectation (a numstat of '3<TAB>0' against edab15b5), so it no longer bounds the re-pointed diff test, which expects +0 -3 between 1f3ce9f0 and HEAD: a numstat reader stuck at '0<TAB>3' would pass both.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-49, amendment 1 bound: 'F14-AC3's diff test measures +0 -3 against 1f3ce9f0 (F49-AC12) ... The demo / unknown-id refusal test and the positive control stay unchanged.' F49-AC12: 'Its positive control, and its demo and unknown-id refusal arm, stay as they are.' The control's own comment states its purpose: 'A reader that returned +3 -0 for anything would make the test above a decoration.'",
+    "world_is": "Kept byte-unchanged as ordered, the control (portal 0f674aa9, src/pages/InvestorReporting/__tests__/fe-s-14/allowlist.test.ts:120) runs `git diff --numstat edab15b5 -- src/pages/InvestorReporting/index.tsx`, a working-copy diff against FE-s-14's old baseline, and at :126 refuses only an answer starting '3<TAB>0<TAB>', the expectation the re-pointed test no longer has. The re-pointed test (:102) runs a different git form, `git diff --numstat 1f3ce9f0 HEAD -- src/lib/firmAccess.ts` (committed trees), and asserts added 0 (:112) and removed 3 (:113). A reader constant at '0<TAB>3' passes the re-pointed test and the control alike, so the control no longer discriminates the arm it sits beside. INERT: the re-pointed test's reading is confirmed by instruments other than its own reader -- the worker's own `git diff --numstat 1f3ce9f0 0f674aa9 -- src/lib/firmAccess.ts` reads '0<TAB>3', and admin-gate.test.ts F49-AC9 reads each firm's set from the committed firmAccess.ts blobs (0 of 3 remain). Re-pointing the control's refusal value is a one-line edit this order withholds from the worker.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal 0f674aa9:src/pages/InvestorReporting/__tests__/fe-s-14/allowlist.test.ts:126 expect(line.startsWith('3\\t0\\t')).toBe(false) -- the same line as 1f3ce9f0:src/pages/InvestorReporting/__tests__/fe-s-14/allowlist.test.ts:110",
+        "portal 0f674aa9:src/pages/InvestorReporting/__tests__/fe-s-14/allowlist.test.ts:102 the re-pointed test's git form (1f3ce9f0 HEAD, committed trees), against the control's :120 (edab15b5, working copy)",
+        "cd <WS>/portal && git diff --numstat 1f3ce9f0 0f674aa9 -- src/lib/firmAccess.ts -> '0<TAB>3<TAB>src/lib/firmAccess.ts' (the worker's read, a different instrument from the test's reader)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
