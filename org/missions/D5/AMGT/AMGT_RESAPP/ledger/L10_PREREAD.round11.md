@@ -23,6 +23,7 @@ read at HEAD or on the live plane, with its vintage.
 | rj-9 the header and the five tabs (drained 17:59Z, flipped by the issuer 18:02Z; read s.2b) | `~18` | `.../~18/...rj-9...` | VALID rc=0 | 6 of 6 PASS | W18-S10..S15 |
 | rj-12 the Posture tab and the header line (drained 19:09Z; read s.2b) | `~18` | `.../~18/...rj-12...` | VALID rc=0 | 4 of 4 PASS | W18-S16..S18 |
 | rj-10 the deploy and the live read (partial 19:37Z, COMPLETE 20:32Z after AMENDMENT 5; read s.2b) | `~19` | `.../~19/...rj-10...` | VALID rc=0 | 12 rows, 0 violations | W19-S12..S20 |
+| rj-3 the exact-input exercise (partial 21:34Z, COMPLETE 21:51Z after AMENDMENT 3; read s.2b) | `~18` | `.../~18/...rj-3...` | VALID rc=0 | 6 rows, 0 violations | W18-S19..S20 |
 
 Channel at HEAD: 210 rows; 32 round-11 worker rows (28 OBSERVATION/INERT, 3 BLOCKING/INERT -- W19-S8 the volume bars,
 W20-S2 and W20-S3 the schtasks invocation -- and 1 OBSERVATION/ARMED, W21-S3 SAP ranked as its own peer, disarmed
@@ -201,6 +202,19 @@ success line, never run in the same loop as a blocked act (a pre-act invoke re-w
 is gitignored and absent from a sparse worktree; **W19-S19** the CTO half's s.8 reached the worker after the apply (s.8 corrected at
 @`4be2f8be48`; the act stayed inside it); **W19-S20** a capture glob matched the kept pre-act attempt files, so a count bar needs the
 attempt prefix excluded.
+
+**rj-3 the exact-input exercise (the round's last cell; the page run on the DEPLOYED captures).** Drained partial @`9738c6c153`, amended
+by the issuer (AMENDMENT 3 @`254fcba914`), re-run and COMPLETE @`836f39e47b`; instance re-graded here VALID rc=0, 6 acceptance rows, 0
+violations, 2 surprises resolving to channel rows. The browser half is `ROUND11_BROWSER_EXERCISE.md` @`e31a7cc5da` (the exact deployed
+payloads through the assembled page, with error, empty and absent controls). Rows that bear on the addendum: **W18-S19** the deployed
+thesis route has never emitted `as_of_date` (the first run failed AC1/AC2 on it; AMENDMENT 3 read the day from the two day fields the
+bundle carries and stated the key ABSENT as met) -- a served payload needs its own as-of date, a contract line for the addendum;
+**W18-S20** the header's description, feed and posture line ride `/overlay`, and the Peers tab reads `/peers`, neither of which was
+captured, so an exact-input exercise names every route the page it exercises reads.
+
+**ROUND 11 CLOSED by `2.0.0_SA_COO~W`** @`155105b850` (22:02Z): 13 of 13 orders terminal, every instance VALID at HEAD `53e80f58b4`,
+`dep_stage` EXECUTING -> ROUND_CLOSE with the generated flat index, the L8 packet `ledger/ROUND11_PACKET.md` filed and sent to
+`3.0.0_SA_CVO~W` (22:05:42Z). This seat's L10 read waits on that seat's slug.
 
 ## 3. The pool as it stands (14:5xZ, `list-objects-v2`, 121 objects)
 
@@ -446,9 +460,15 @@ five, issued to `4.0.0_SA_CRO~W`** (`org/tier1_exec/1.0.0_SA_CTO/deliverables/AM
 same commit; findings due at `org/tier1_exec/4.0.0_SA_CRO/deliverables/AMGT_RESAPP_TAB_SCORE_DATA_FINDINGS_20260915_W.md`). The
 addendum's text for candidates 13-16 waits on those findings; the slug read for round 11 does not.
 
+**CANDIDATE 16 -- SEEKING ALPHA, RULED at /self-drive tick 6** (`CTO_ADJUDICATION_AMGT_RESAPP_20260915T222xZ.md`, card 16): `4.0.0_SA_CRO~Z`'s
+authenticated crawl @`910dc1bb7e` found EPS and revenue consensus with high, low and analyst count for 5 of 5, EBITDA mean and actual
+only, and FCF and CFPS NOT_CARRIED; the source is an unnamed third-party aggregator with reuse terms unverified. Divergence reads
+Bloomberg only; Seeking Alpha's EPS range and count are a second instrument beside Bloomberg's for the estimate-count guard, never
+substituted. `4.0.0_SA_CRO~W`'s findings @`7bad309f20` and Lusha reference @`ecfe46465e` are in; the addendum's inputs for 13-16 are complete.
+
 ## 5. What is NOT known yet (the slug read's remaining inputs)
 
-The one staged cell (rj-3, amended @`ec3d453f88` to render rj-10's deployed capture); the CVO's adjudication of the 32 rows and
+No staged cell (13 of 13 terminal; round closed @`155105b850`); the CVO's adjudication of the 32 rows and
 the slug; whether rj-10's plan reads 0/4/0 and the `_CURRENT` pointer carries no `rank_sort` (co-sign half s.4); FWD-16
 ..FWD-19's EXERCISED bars, which no cell can close -- 18 of 19 need a person, and the person is Andrew or Adam through
 Andrew. Push state: LOCAL.
