@@ -1,11 +1,12 @@
 {
   "prd": "MDPF_TAXSMA_PRD.md",
-  "prd_version": "v0.3",
-  "prd_pin": "61748ba2e0e31276a6ac84237924508f5df1ac28",
+  "prd_version": "v0.4",
+  "prd_pin": "d317a65ec7dc9240620f33733eacbf16211c4268",
   "half": "ratified-text",
-  "half_hash": "fb75838bf3acbd49c93627f3e9a033defcd11872e5fbd96a00b4803200c92b46",
-  "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/PRD_REVIEW_MDPF_TAXSMA_v0.3_RATIFIED_TEXT_HALF_20260915.md@1a7f21c29e",
+  "half_hash": "da428d318d04535960b84890bc914cecdf4740b135a0ec8764e137071485d44f",
+  "verdict": "REFUSED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/PRD_REVIEW_MDPF_TAXSMA_v0.4_RATIFIED_TEXT_HALF_20260915.md@91875c897c",
   "signed_by": "3.0.0_SA_CVO",
-  "signed_at": "2026-09-15T17:03:20Z"
+  "signed_at": "2026-09-15T19:10:02Z",
+  "reason": "Gateway row: R1 dropped the route's own guard before generic /ms/* handling; R2 names the identity by email with no tid/oid binding (NFRA_OPLGTW v0.2 C1 keys grants by tid/oid)"
 }
