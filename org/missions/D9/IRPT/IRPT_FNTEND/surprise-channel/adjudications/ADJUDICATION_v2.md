@@ -2002,3 +2002,38 @@ The 18 rows carrier-less at round 8's L8 (INVESTIGATION_v2.md @5e5f074588; issua
  }
 ]
 ```
+
+## Round 8 -- a between-rounds row carried at round 8's L9 (3.0.0_SA_CVO, 2026-09-15T09:57:19Z)
+
+IRPT_FNTEND-S68 was filed @be5a2a5441, after round 8's drain packet and after this seat's L8 census, and before any round-9 order. No round's issuance census compiles it, so it is carried here by C-S108. Record: `org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND8_L8_L9_20260915.md`.
+
+```json
+[
+ {
+  "id": "IRPT_FNTEND-C-S108",
+  "project": "IRPT_FNTEND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-09-15T09:57:19Z",
+  "one_line": "ROUND-8 L9, GRADUATED -- A BETWEEN-ROUNDS ROW, CARRIED AT ROUND 8's L9 BY THIS SEAT: S68 (filed @be5a2a5441 by 2.0.0_SA_COO~F after round 8's drain packet and before any round-9 order). F25-AC8 grades the checkout's line endings: gen-wire.ts hashes the schema's raw text, and the committed wire header is the hash of a CRLF rendering.",
+  "class": "OBSERVATION",
+  "spec_asserts": "fe-s-25/generator.test.ts:75-76: 'The committed wire file is the SAME bytes this render produces, so the arm grades the artifact the portal actually compiles against.' The wire header cites its source sha256 so a re-run can be checked against its source.",
+  "world_is": "Read by this seat at portal DEV 10c2f07d (LOCAL; PORTAL FROZEN, read by git show): fe-s-13/gen-wire.ts:107-108 sha256Of hashes its text argument with no line-ending normalization; :293 digests the schema text, which it reads from the worktree with readFileSync(..., 'utf8') (:485). generator.test.ts:77 normalizes only the committed wire file's CRLF before :79 compares it with the render. Hashed by this seat in python, a different instrument from the filer's sha256sum: the schema blob 4dd7ecd253 at HEAD is f06c0029cd20 as LF and c83ce02d14c1 rendered CRLF, and the committed StatusEnvelope.ts:5 carries the CRLF value. So an LF checkout renders a different header line and F25-AC8 reads red; a CRLF checkout passes. INERT: the generated types do not move, only a comment line. Rulings as named by the parent session (not read on disk by this seat): 1.0.0_SA_CTO 97020, the promote proceeds with F25-AC8 named; 2.0.0_SA_COO~F 97028 routes the remedy, cell (A), to the round-8 analysis and round 9's one issuance.",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md@be5a2a5441#IRPT_FNTEND-S68",
+    "portal 10c2f07d:src/pages/InvestorReporting/__tests__/fe-s-13/gen-wire.ts:107-108, :293; src/pages/InvestorReporting/__tests__/fe-s-25/generator.test.ts:77, :79",
+    "portal 10c2f07d:src/pages/InvestorReporting/contracts/wire/StatusEnvelope.ts:5 'Source sha256: c83ce02d14c12044' == sha256 of HEAD:docs/contracts/investor-reporting/v1/StatusEnvelope.schema.json (blob 4dd7ecd253) rendered CRLF; LF is f06c0029cd20ceb1",
+    "1.0.0_SA_CTO msg 97020 and 2.0.0_SA_COO~F msg 97028, as named by the parent session",
+    "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND8_L8_L9_20260915.md (same slug) section 2"
+   ]
+  },
+  "adjudicates": [
+   "IRPT_FNTEND-S68"
+  ],
+  "disposition": "GRADUATED",
+  "hazard_standing": "INERT"
+ }
+]
+```
