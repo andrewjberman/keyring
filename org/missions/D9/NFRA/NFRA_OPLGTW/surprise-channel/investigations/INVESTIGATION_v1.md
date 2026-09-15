@@ -444,6 +444,117 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "TO-OG-q-1 OGQ1-AC13: the pinned PyArrow and DuckDB wheels resolve for linux aarch64 on the host's Python, graded with --platform manylinux2014_aarch64. The cell pins 'compatible PyArrow/DuckDB dependencies' and names no version.",
     "world_is": "No DuckDB release since 1.3.0 publishes a manylinux2014 aarch64 wheel, so a 1.3+ pin, 1.5.0 included, cannot pass AC13 as written. The worker pinned duckdb==1.2.2, the newest release that does, reinstalled .venv-og from the edited file, and ran every OG-q-1 test on 1.2.2; AC9 reads the lockdown settings back from 1.2.2 itself. AC13 passes as written. The cost: the Gateway would ship a DuckDB three minor releases older than the one the cut's interpreter carries, and the grading tag chose the version, not the host.",
     "notes": "INERT: nothing deploys in this order. Whether AC13 should name manylinux_2_28_aarch64 (Amazon Linux 2023 ships glibc 2.34 according to its distribution, not measured here) and allow a newer pin is the issuer's call. A newer pin is one requirements.txt edit plus a re-run of this cell's tests and probe."
+  },
+  {
+    "id": "NFRA_OPLGTW-W4-S5",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~4",
+    "surfaced_at": "2026-09-15T13:12:00Z",
+    "one_line": "The opal-assets root's plan carries two rows outside opal-assets-silver-schwab -- an IAM policy change on the daily emitter's role and an env change on the emitter Lambda, both committed STAGED-NOT-APPLIED by 0.7.0_AE_CloudOps @2740e4de8f -- so the only permitted apply (safe-apply, no -target) would land another seat's held change; no build, upload, apply or replay was done.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "PLAN: .tools/terraform.exe -chdir=infra/aws/terraform/opal-assets plan -out, at 271bab18dc on branch wk-nfra_oplgtw-1-4b, finished before 13:08Z on 2026-09-15: 'Plan: 0 to add, 3 to change, 0 to destroy.' Rows: aws_iam_role_policy.emitter (Resource and the s3:prefix condition gain portal/gold/mdpf/_staging/aggregate_aua/*); module.emitter.aws_lambda_function.this (AGGREGATE_PREFIX 'gold/mdpf_revamp/_aggregate_aua/' -> 'portal/gold/mdpf/_staging/aggregate_aua/'); module.silver_converter[\"schwab\"].aws_lambda_function.this (OPAL_BUILD_COMMIT '5c7b2a9a6b' -> '1f03a3f209'). Saved as org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~4/plans/plan_pre_upload.json.",
+        "SOURCE: git log -- infra/aws/terraform/opal-assets/emitter.tf at 3f94e0a024 -- newest commit 2740e4de8f (0.7.0_AE_CloudOps, 2026-08-11), subject 'infra(mdpf+assets, X-ii-a AE half STAGED-NOT-APPLIED): consumer env repoints + IAM pure-adds for the _staging re-home -- apply held for the act's own window'.",
+        "BOUND: org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-c-2.producer-deploy-replay.md BOUNDS @3f94e0a024 -- 'A plan row for any other family, any IAM change, or any change to the bucket, its notifications or its policy is a BLOCKING row and no apply' and 'Terraform only through .tools/safe-apply.sh, never bare terraform apply, never -target'.",
+        "STATE: lambda get-function-configuration opal-assets-silver-schwab read 2026-09-15 ~12:50Z -- CodeSha256 /Uog2LDpLg42FrCU5MfTrEBaTFJTlVRY97tONxmjhVM=, LastModified 2026-08-30T03:37:41Z, OPAL_BUILD_COMMIT 5c7b2a9a6b; s3://opal-313476888478-lambda-artifacts/opal-assets/opal-assets-silver-schwab.zip latest version RigDVPxrZlvI49kyJJrOMk4vXnxEACzs (2026-08-30T03:31:43Z). This worker changed neither."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-OG-c-2: deploy opal-assets-silver-schwab through module.silver_converter with .tools/safe-apply.sh, never -target, on a plan that 'changes only opal-assets-silver-schwab and shows zero rows for the other five families' (OGC2-AC3); then run the replay.",
+    "world_is": "The root's plan carries another seat's staged-and-held IAM grant and env repoint for opal-assets-daily-emitter. With -target forbidden, no permitted apply of this root can move the schwab function alone until that change is applied in its own window or withdrawn. The order stops at the plan: OGC2-AC3 FAILs by output, and OGC2-AC4, AC5 and AC7-AC10 have no act to grade.",
+    "notes": "Nothing is armed: no artifact uploaded, no ledger entry opened, and the function and every marker are unchanged. Two things unblock it: 0.7.0_AE_CloudOps applies or withdraws the staged emitter change in its window, or the issuer amends the order's apply route. The vendoring and pin commit 271bab18dc stands, so its OPAL_BUILD_COMMIT row is already in the plan; the next attempt re-reads the plan before any upload."
+  },
+  {
+    "id": "NFRA_OPLGTW-W4-S6",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~4",
+    "surfaced_at": "2026-09-15T13:12:30Z",
+    "one_line": "The order routes code under data/*/scripts/silver/ through Rule 13's DS guard (.tools/safe-deploy.sh), but the guard's PIPELINE_MAP holds black_diamond, inf, cot, mdpf and advi -- no assets -- and this Lambda deploys as a zip built from its package dir, so the guard has no path to grade here.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "GUARD: py -3.12 -c 'import safe_deploy_core as s; print(list(s.PIPELINE_MAP))' with .tools on sys.path, at 3f94e0a024 -> ['black_diamond', 'inf', 'cot', 'mdpf', 'advi'].",
+        "MAP: infra/aws/lambda/ci/lambda-source-map.json @3f94e0a024, entry opal-assets-silver-schwab -- source_dir infra/aws/lambda/opal-assets/opal-assets-silver-schwab, tf_file infra/aws/terraform/opal-assets/silver.tf, artifact_s3_key opal-assets/opal-assets-silver-schwab.zip, 12 files.",
+        "MODULE: infra/aws/terraform/modules/yang-lambda/main.tf:17-39 @3f94e0a024 -- the function reads the artifact's S3 object version and its content-sha256 metadata, which infra/aws/lambda/ci/build-and-upload.sh writes."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-OG-c-2 THE CELL: 'Rule 13: code under data/*/scripts/silver/ deploys through the DS lane's .tools/safe-deploy.sh guard; if that guard, or any lane, refuses your serial, file a BLOCKING row and stop'.",
+    "world_is": "The guard was not invoked: it maps no data/assets tree and grades S3 code-prefix copies, not a Lambda zip. Neither the guard nor any lane refused this serial. The path the estate uses for this function is build-and-upload.sh, then safe-apply.",
+    "notes": "INERT: not blocking. Recorded so a re-cut does not seat a DS lane for a guard that does not reach this package."
+  },
+  {
+    "id": "NFRA_OPLGTW-W4-S7",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~4",
+    "surfaced_at": "2026-09-15T13:13:00Z",
+    "one_line": "The named build (infra/aws/lambda/ci/build-and-upload.sh opal-assets opal-assets-silver-schwab) rewrites infra/aws/lambda/ci/lambda-source-map.json after a verified upload, and this order's grant does not name that path; the build was not run here.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "BUILD: infra/aws/lambda/ci/build-and-upload.sh:125-138 and :433-438 @3f94e0a024 -- after the verified upload, a node helper writes artifact_s3_key and artifact_sha256 into SOURCE_MAP_PATH, the source map.",
+        "GRANT: the <paths> block of NFRA_OPLGTW.TO-OG-c-2.producer-deploy-replay.md @3f94e0a024 names 7 paths, none under infra/aws/lambda/ci/."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-OG-c-2: 'Find the build that writes that artifact from the vendored directory, and use it'; BOUNDS 'Grant': the <paths> block is the write surface, and 'A path you need that is not named is a BLOCKING surprise row on that criterion'.",
+    "world_is": "Running the build as written leaves an out-of-grant change to lambda-source-map.json. Unless its owner commits that change, the map's artifact_sha256 stays stale at HEAD. Not exercised: the order stopped at the plan (NFRA_OPLGTW-W4-S5) before any build.",
+    "notes": "INERT (not run). For a re-cut: grant infra/aws/lambda/ci/lambda-source-map.json, or state that the map update stays uncommitted."
+  },
+  {
+    "id": "NFRA_OPLGTW-W4-S8",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~4",
+    "surfaced_at": "2026-09-15T13:13:30Z",
+    "one_line": "The G-B sign-off's conditions 4, 5 and 7 need reads of s3://opal-data-49financial/gold/advi/ (the floor's CHAIN OK log, the date=D VersionIds), but the order's cross-firm bound reads 'Only schwab/08242234/ and schwab/08335338/; no other firm's bucket or prefix'. This worker read that bucket once, for condition 4: one listing and one log object.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SIGNOFF: org/tier1_exec/2.0.0_SA_COO~O/deliverables/NEVER_WIDEN_SIGNOFF_NFRA_OPLGTW_OG_C2.md @65e254cafe, Half 2 section E, conditions 4, 5 and 7 -- the 08335338 write waits for 'that day's 12:45Z floor reads CHAIN OK date=<prev_trading_day> in gold/advi/_logs/', and the result names before/after VersionIds of every date=D key.",
+        "ORDER: NFRA_OPLGTW.TO-OG-c-2.producer-deploy-replay.md BOUNDS @3f94e0a024 -- 'Cross-firm law. Only schwab/08242234/ and schwab/08335338/; no other firm's bucket or prefix.'",
+        "READS: 2026-09-15 ~12:53-12:55Z, s3api list-objects-v2 --bucket opal-data-49financial --prefix gold/advi/_logs/chain_20260915 -> 7 objects; get-object gold/advi/_logs/chain_20260915T124542Z.log (VersionId 3eNJFWhmCUu_orz4If4TQ83BMOdrVHkq) -> line 1 'CHAIN START date=2026-09-14 mode=production ...', last line 'CHAIN OK date=2026-09-14 wall=132.0s'.",
+        "CONSUMER: infra/aws/terraform/opal-assets/silver.tf:755-761 @3f94e0a024 -- the accelerator on schwab/08335338/meta/complete/ targets advi-49f-gold-dispatch, the 49F chain's dispatcher."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The order's cross-firm bound, and sign-off condition 4, which the order makes binding through 'Read: ... the sign-off record'.",
+    "world_is": "The two binding carriers disagree on one read. Meeting condition 4 before the 08335338 replay needs a read of the 49F gold bucket. The order's bound forbids that read, unless 08335338's own firm is 49 Financial; the accelerator wiring suggests it is, but no carrier this worker read says so. Reads only; nothing written.",
+    "notes": "INERT: two read calls, no write. The issuer states which reading binds before any replay runs."
+  },
+  {
+    "id": "NFRA_OPLGTW-W4-S9",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~4",
+    "surfaced_at": "2026-09-15T13:14:00Z",
+    "one_line": "The producer's only replay path for one date is an event naming that date's bronze keys, with force false. That path also PUTs one run manifest per lane at schwab/{master}/meta/conversions/{run_id}.json, which neither 'the replay writes completion records only' nor the sign-off's A2 write set (2 marker keys) names. It would also write any missing projection dim, because the skip needs the fact AND every dim present.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUNTIME: data/assets/scripts/silver/schwab_runtime.py:207-213 @1f03a3f209 -- run_event builds and writes one manifest per lane (cm.write_manifest_verified) before the marker; :385-405 -- lambda_entry accepts only S3 Records or {\"mode\": \"sweep\"}. The sweep (:271-369) converts every shortfall on all dates, writes backfill-status.json and drains the DLQ.",
+        "MANIFEST: data/assets/scripts/silver/conversion_manifest.py:53-56 and :124-129 @1f03a3f209 -- manifest_key = 'schwab/' + master + '/meta/conversions/' + run_id + '.json', written by client.put_object.",
+        "SKIP: data/assets/scripts/silver/schwab_conversion.py:461-469 @1f03a3f209 -- skip = fact_exists and not dims_missing; :489-506 -- each missing dim gets a ChunkedParquetWriter, i.e. a silver write. :248-258 -- existence is head_object on the key."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "BOUNDS 'No source mutation': 'No write, delete or overwrite of any bronze or silver object; the replay writes completion records only'; sign-off Half 1 s.4: A2 writes '2 keys for D_r, one per master'.",
+    "world_is": "An event replay writes 4 objects (2 markers + 2 run manifests), not 2, and no producer path writes the marker alone. A read-only dry run of the same convert_object can decide, before the replay, whether a silver dim would be written for the chosen date. That dry run was not run here, because the order was blocked at NFRA_OPLGTW-W4-S5.",
+    "notes": "INERT (not run). For a re-cut: add the run manifests to the write set, or name a metadata-backfill route instead."
   }
 ]
 ```
