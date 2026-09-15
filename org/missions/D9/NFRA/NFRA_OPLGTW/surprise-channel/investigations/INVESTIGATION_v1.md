@@ -583,6 +583,53 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "OG-a-1's acceptance, and the practice of each Gateway cell, runs the whole Gateway suite in one process as the regression census; this worker needed that census to measure what OG-a-2 changes.",
     "world_is": "The one-process suite hangs at base, so the worker took the census one process per module. Row W3-S6 predicted that a timer-dependent test could fail or pass without waiting; here one waits forever. The same test's lag bar is also sensitive to load on the shared box, independent of this cell's change.",
     "notes": "INERT: test-only. Any cell told to run the whole suite in one process will hit the bound until test_ratelimit.py scopes its clock (the disarm row W3-S6 names) or the suite is run per module."
+  },
+  {
+    "id": "NFRA_OPLGTW-W3-S13",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~3",
+    "surfaced_at": "2026-09-15T15:22:26Z",
+    "one_line": "Under the amended order's fixture-only grant OGA2-AC12 cannot pass as written: with every fixture now signing in through a tid/oid principal and minting from a refresh family, 3 of 31 tests in the three granted modules still fail, each on an untouched assertion that compares the validated token's sub to an email, while OGA2-AC1 requires sub = <tid>/<oid> with no '@' and the bound forbids re-targeting an assertion.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ORDER: org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-a-2.principal-cutover.md @adc6874dea -- the grant is FIXTURE-ONLY: 'edit only how each test obtains a principal or token' and 'no assertion is removed, weakened or re-targeted'; OGA2-AC12 expects '(?m)^[1-9][0-9]* passed' with no 'failed' on that line.",
+        "CRITERION: infra/aws/ec2/opal-gateway/tests/test_principal_cutover.py:410 @d02e73c272 (OGA2-AC1) -- assert claims[\"sub\"] == \"%s/%s\" % (TENANT, oid) and \"@\" not in claims[\"sub\"]. infra/aws/ec2/opal-gateway/app/oauth_as.py:264 and :321 @d02e73c272 -- the token's sub is principal.key, and validate_access_token refuses a token whose sub is not its tid/oid principal.",
+        "ASSERTIONS, unchanged since the cut base: infra/aws/ec2/opal-gateway/tests/test_oauth_durable.py:710 @318e119c4f (:700 @3f94e0a024) validate_access_token(...)[\"sub\"] == email; tests/test_jwt_cve_lock.py:117 @318e119c4f (:66 @3f94e0a024) validate_access_token(tok)[\"sub\"] == \"attacker@opalinvest.com\"; tests/test_schwab_audit.py:342 @318e119c4f (:305 @3f94e0a024) claims[\"sub\"] == \"colleague@opalinvest.com\".",
+        "RUN OGA2-AC12 verbatim at 318e119c4f: '3 failed, 28 passed in 17.08s', rc=1 (at adc6874dea: '16 failed, 15 passed'). Each of the 3 reaches its sub assertion holding a token validate_access_token accepted, e.g. \"assert '7f3a9c1e-2b4d-4e6f-8a0b-1c2d3e4f5a6b/77a75443-83c9-58c3-a508-5eb28fbcefa6' == 'attacker@opalinvest.com'\".",
+        "DIFF: git diff -U0 over the three files before 318e119c4f -- 107 changed lines, 0 of them naming assert, self.assert* or pytest.raises. Probe og_a2.py AC13 at 318e119c4f -- assert counts HEAD == base 123/123, 6/6, 63/63, 'VERDICT: PASS-OGA2-AC13'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OGA2-AC12: the three granted modules pass, count printed -- reached by fixture-only edits (how each test obtains a principal or token), with no assertion removed, weakened or re-targeted. OGA2-AC1: the token's sub is <tid>/<oid>, and email is display metadata only.",
+    "world_is": "The ruling's disarm for row W3-S7 changed how each test obtains its principal and token, and 13 of the 16 failures are gone. It did not reach three assertions that name the email as the token's subject. Each states the pre-cutover identity model rather than a fixture: no fixture makes a validated token's sub an email without the email authorization C1 removes and OGA2-AC1 forbids. Passing them means re-targeting each to the principal key or to the email claim, which the bound forbids. In test_ogo1_ac06 the structural assertions after the sub assertion do not run while it fails. The worker left all three as written and refuses OGA2-AC12.",
+    "notes": "ARMED: left alone, the drain carries 3 red existing tests into CLOUD. Disarm is the issuer's call: an amendment that lets these three assertions compare sub to the principal key (test_oauth_durable.py:710, test_jwt_cve_lock.py:117, test_schwab_audit.py:342 @318e119c4f). The change is one expression per assertion, and the per-module counts OGA2-AC13 grades would not move, so AC13 cannot distinguish that re-target from none."
+  },
+  {
+    "id": "NFRA_OPLGTW-W3-S14",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~3",
+    "surfaced_at": "2026-09-15T15:22:26Z",
+    "one_line": "test_jwt_cve_lock.py's standalone smoke (its __main__ block) calls test_control_valid_token_accepted() with no arguments, and that test now takes the family_store pytest fixture, so running the file directly stops at a TypeError; pytest runs are unaffected.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "INFERRED",
+      "evidence": [
+        "SOURCE: infra/aws/ec2/opal-gateway/tests/test_jwt_cve_lock.py @318e119c4f -- the module docstring offers 'python tests/test_jwt_cve_lock.py for a standalone smoke'; the if __name__ == \"__main__\" block calls every listed test as t(); test_control_valid_token_accepted(family_store) now requires the fixture.",
+        "SOURCE: the same block @d02e73c272 -- the control test called issue_access_token(email, scope, client) without the family id that signature then required, so the smoke already stopped at a TypeError before this commit; @3f94e0a024 it ran.",
+        "NOT RUN: the direct invocation was not executed; the verdict is read from the source."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The fixture-only grant: the control test mints its token from a refresh family, and edits are limited to how each test obtains a principal or token.",
+    "world_is": "A refresh family needs a durable store, which the control test now receives from a pytest fixture (moto DynamoDB). The __main__ runner supplies no fixtures. The worker did not edit the __main__ block: it is not how a test obtains a token, and no criterion names it.",
+    "notes": "INERT: every criterion and the commit gate run the file through pytest, which supplies the fixture."
   }
 ]
 ```
