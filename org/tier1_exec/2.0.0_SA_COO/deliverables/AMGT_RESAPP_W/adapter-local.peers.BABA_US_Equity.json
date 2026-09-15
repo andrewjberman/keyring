@@ -1,0 +1,14 @@
+{
+  "instrument": "lib/research/api/scoped_amgt.py handler, run LOCALLY at 2.0.0_SA_COO~W against the live table and bucket",
+  "route": "/api/scoped/amgt/security/BABA_US_Equity/peers",
+  "query": {},
+  "statusCode": 200,
+  "body": {
+    "security_key": "BABA_US_Equity",
+    "basis": "absent",
+    "test": "comparable = same GICS_SECTOR_NAME (the finest Bloomberg industry-classification field AMGT-s-1's landed record carries for this security; a true subgroup-level field, e.g. GICS_SUB_INDUSTRY_NAME, was not mapped at this cut -- re-derive against a finer field the day one is landed) AND a market-cap band within 0.2x-5.0x of the subject's CUR_MKT_CAP",
+    "members": [],
+    "reason": "candidate universe not classified; a quota decision (F2) precedes derivation -- subject's own GICS_SECTOR_NAME='Consumer Discretionary' is known, but no other covered name in the corpus has been classified by the same field, so no candidate can be tested for membership",
+    "vintage": "2026-09-11T00:22Z"
+  }
+}

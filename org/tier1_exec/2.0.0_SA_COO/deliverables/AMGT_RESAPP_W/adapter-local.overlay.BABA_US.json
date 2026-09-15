@@ -1,0 +1,113 @@
+{
+  "instrument": "lib/research/api/scoped_amgt.py handler, run LOCALLY at 2.0.0_SA_COO~W against the live table and bucket",
+  "route": "/api/scoped/amgt/security/BABA US/overlay",
+  "query": {
+    "as_of": "2026-09-12"
+  },
+  "statusCode": 200,
+  "body": {
+    "security_key": "BABA US",
+    "identity": {
+      "security_key": "BABA US",
+      "bloomberg_ticker": "BABA US",
+      "identity_status": "UNRESOLVED"
+    },
+    "header_figures": [],
+    "axis_reads": [
+      {
+        "movement": "TRENDING",
+        "subject": "CHATTER",
+        "resolution": {
+          "requested_axis": "TRENDING_CHATTER",
+          "served_axis": "TRENDING_CHATTER",
+          "resolution": "CROSSED",
+          "movement_basis": "MEASURED",
+          "movement_measure": "ABSOLUTE_COUNT_ON_AS_OF_DAY",
+          "producer": "lib.research.metrics.chatter_axis",
+          "availability_basis": "PRODUCER_DECLARED"
+        },
+        "row": {
+          "subject": "CHATTER",
+          "movement": "TRENDING",
+          "movement_raw_score": 0,
+          "score": 0,
+          "movement_measure": "ABSOLUTE_COUNT_ON_AS_OF_DAY",
+          "rank": 6,
+          "window_days": 30,
+          "computed_at": "2026-09-12T01:22Z",
+          "movement_basis": "MEASURED",
+          "raw_chatter_count": 0,
+          "axis_date": "TRENDING_CHATTER#2026-09-12",
+          "axis": "TRENDING_CHATTER",
+          "rank_sort": "00006",
+          "as_of_date": "2026-09-12",
+          "window_total_count": 0,
+          "ticker": "BABA US"
+        }
+      },
+      {
+        "movement": "TRENDING",
+        "subject": "PRICE",
+        "resolution": {
+          "requested_axis": "TRENDING_PRICE",
+          "served_axis": "TRENDING_PRICE",
+          "resolution": "CROSSED",
+          "movement_basis": "MEASURED",
+          "movement_measure": "WINDOW_RETURN_PCT",
+          "producer": "integrations.bloomberg.research.price_axis_pull",
+          "availability_basis": "PRODUCER_DECLARED"
+        },
+        "row": null
+      },
+      {
+        "movement": "BREAKOUT",
+        "subject": "CHATTER",
+        "resolution": {
+          "requested_axis": "BREAKOUT_CHATTER",
+          "served_axis": "BREAKOUT_CHATTER",
+          "resolution": "CROSSED",
+          "movement_basis": "MEASURED",
+          "movement_measure": "PCT_JUMP_VS_TRAILING_BASELINE",
+          "producer": "lib.research.metrics.chatter_axis",
+          "availability_basis": "PRODUCER_DECLARED"
+        },
+        "row": null
+      },
+      {
+        "movement": "BREAKOUT",
+        "subject": "PRICE",
+        "resolution": {
+          "requested_axis": "BREAKOUT_PRICE",
+          "served_axis": "BREAKOUT_PRICE",
+          "resolution": "CROSSED",
+          "movement_basis": "MEASURED",
+          "movement_measure": "PCT_JUMP_VS_TRAILING_BASELINE",
+          "producer": "integrations.bloomberg.research.price_axis_pull",
+          "availability_basis": "PRODUCER_DECLARED"
+        },
+        "row": null
+      }
+    ],
+    "chatter": {
+      "subject": "CHATTER",
+      "movement": "TRENDING",
+      "movement_raw_score": 0,
+      "score": 0,
+      "movement_measure": "ABSOLUTE_COUNT_ON_AS_OF_DAY",
+      "rank": 6,
+      "window_days": 30,
+      "computed_at": "2026-09-12T01:22Z",
+      "movement_basis": "MEASURED",
+      "raw_chatter_count": 0,
+      "axis_date": "TRENDING_CHATTER#2026-09-12",
+      "axis": "TRENDING_CHATTER",
+      "rank_sort": "00006",
+      "as_of_date": "2026-09-12",
+      "window_total_count": 0,
+      "ticker": "BABA US"
+    },
+    "price": null,
+    "peers": null,
+    "bloomberg_session_state": "UNKNOWN"
+  }
+}

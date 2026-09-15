@@ -1,0 +1,282 @@
+{
+  "instrument": "lib/research/api/scoped_amgt.py handler, run LOCALLY at 2.0.0_SA_COO~W against the live table and bucket",
+  "route": "/api/scoped/amgt/security/BABA_US_Equity/overlay",
+  "query": {
+    "as_of": "2026-09-12"
+  },
+  "statusCode": 200,
+  "body": {
+    "security_key": "BABA_US_Equity",
+    "identity": {
+      "security_key": "BABA_US_Equity",
+      "bloomberg_ticker": "BABA US Equity",
+      "identity_status": "MEASURED"
+    },
+    "header_figures": [
+      {
+        "scope": "header",
+        "fiscal_year": null,
+        "mnemonic": "NAME",
+        "value": "ALIBABA GROUP HOLDING-SP ADR",
+        "unit": "TEXT (string field)",
+        "sign": "N/A (non-numeric field)",
+        "basis": {
+          "mnemonic": "NAME",
+          "definition": "Bloomberg-maintained legal/short name of the issuer."
+        },
+        "vintage": "2026-09-10T23:20:19Z",
+        "source": "bloomberg-dapi",
+        "currency_caveat": null
+      },
+      {
+        "scope": "header",
+        "fiscal_year": null,
+        "mnemonic": "CRNCY",
+        "value": "USD",
+        "unit": "TEXT (string field)",
+        "sign": "N/A (non-numeric field)",
+        "basis": {
+          "mnemonic": "CRNCY",
+          "definition": "ISO currency code of the security's trading/reporting currency."
+        },
+        "vintage": "2026-09-10T23:20:19Z",
+        "source": "bloomberg-dapi",
+        "currency_caveat": null
+      },
+      {
+        "scope": "header",
+        "fiscal_year": null,
+        "mnemonic": "CNTRY_OF_DOMICILE",
+        "value": "HK",
+        "unit": "TEXT (string field)",
+        "sign": "N/A (non-numeric field)",
+        "basis": {
+          "mnemonic": "CNTRY_OF_DOMICILE",
+          "definition": "ISO country code of the issuer's domicile."
+        },
+        "vintage": "2026-09-10T23:20:19Z",
+        "source": "bloomberg-dapi",
+        "currency_caveat": null
+      },
+      {
+        "scope": "header",
+        "fiscal_year": null,
+        "mnemonic": "GICS_SECTOR_NAME",
+        "value": "Consumer Discretionary",
+        "unit": "TEXT (string field)",
+        "sign": "N/A (non-numeric field)",
+        "basis": {
+          "mnemonic": "GICS_SECTOR_NAME",
+          "definition": "GICS sector classification name, Bloomberg's own taxonomy mapping."
+        },
+        "vintage": "2026-09-10T23:20:19Z",
+        "source": "bloomberg-dapi",
+        "currency_caveat": null
+      },
+      {
+        "scope": "header",
+        "fiscal_year": null,
+        "mnemonic": "PX_LAST",
+        "value": 108.56,
+        "unit": "PRICE (local trading currency, per share/unit)",
+        "sign": "POSITIVE",
+        "basis": {
+          "mnemonic": "PX_LAST",
+          "definition": "Last traded/closing price, in the security's trading currency."
+        },
+        "vintage": "2026-09-10T23:20:19Z",
+        "source": "bloomberg-dapi",
+        "currency_caveat": null
+      },
+      {
+        "scope": "header",
+        "fiscal_year": null,
+        "mnemonic": "CUR_MKT_CAP",
+        "value": 269839299644.40002,
+        "unit": "ABSOLUTE (full currency units)",
+        "sign": "POSITIVE",
+        "basis": {
+          "mnemonic": "CUR_MKT_CAP",
+          "definition": "Current market capitalization, full currency units (not millions)."
+        },
+        "vintage": "2026-09-10T23:20:19Z",
+        "source": "bloomberg-dapi",
+        "currency_caveat": "fiscal-year-2025-merged naive PE (PX_LAST/IS_EPS = 2.6593) disagrees with Bloomberg's own PE_RATIO (15.7545) for the same fiscal-year label by a factor of 0.1688 on BABA US Equity -- consistent with a currency difference between the fundamentals-reporting basis and the header's CRNCY/PX_LAST trading-currency quote, AND/OR the gap between the fiscal-period-end fundamentals sub-row and the calendar-year-end price sub-row this security's raw response always splits into (never a single merged row), AND/OR an ADR share-ratio effect. NOT isolated to one cause; the other MILLIONS/PER-SHARE-scale financial-statement fields on this security carry the same caveat. Recorded as a FINDING, not resolved further (bound (f))."
+      },
+      {
+        "scope": "header",
+        "fiscal_year": null,
+        "mnemonic": "NET_DEBT",
+        "value": -496090.0,
+        "unit": "MILLIONS",
+        "sign": "NEGATIVE (net-cash position)",
+        "basis": {
+          "mnemonic": "NET_DEBT",
+          "definition": "Total debt minus cash and equivalents, millions of the reporting currency; can be negative (a net-cash position)."
+        },
+        "vintage": "2026-09-10T23:20:19Z",
+        "source": "bloomberg-dapi",
+        "currency_caveat": "fiscal-year-2025-merged naive PE (PX_LAST/IS_EPS = 2.6593) disagrees with Bloomberg's own PE_RATIO (15.7545) for the same fiscal-year label by a factor of 0.1688 on BABA US Equity -- consistent with a currency difference between the fundamentals-reporting basis and the header's CRNCY/PX_LAST trading-currency quote, AND/OR the gap between the fiscal-period-end fundamentals sub-row and the calendar-year-end price sub-row this security's raw response always splits into (never a single merged row), AND/OR an ADR share-ratio effect. NOT isolated to one cause; the other MILLIONS/PER-SHARE-scale financial-statement fields on this security carry the same caveat. Recorded as a FINDING, not resolved further (bound (f))."
+      },
+      {
+        "scope": "header",
+        "fiscal_year": null,
+        "mnemonic": "CURR_ENTP_VAL",
+        "value": 1404598.347073142,
+        "unit": "MILLIONS",
+        "sign": "POSITIVE",
+        "basis": {
+          "mnemonic": "CURR_ENTP_VAL",
+          "definition": "Current enterprise value (market cap + net debt + minority interest - equity affiliates), millions of the reporting currency."
+        },
+        "vintage": "2026-09-10T23:20:19Z",
+        "source": "bloomberg-dapi",
+        "currency_caveat": "fiscal-year-2025-merged naive PE (PX_LAST/IS_EPS = 2.6593) disagrees with Bloomberg's own PE_RATIO (15.7545) for the same fiscal-year label by a factor of 0.1688 on BABA US Equity -- consistent with a currency difference between the fundamentals-reporting basis and the header's CRNCY/PX_LAST trading-currency quote, AND/OR the gap between the fiscal-period-end fundamentals sub-row and the calendar-year-end price sub-row this security's raw response always splits into (never a single merged row), AND/OR an ADR share-ratio effect. NOT isolated to one cause; the other MILLIONS/PER-SHARE-scale financial-statement fields on this security carry the same caveat. Recorded as a FINDING, not resolved further (bound (f))."
+      },
+      {
+        "scope": "header",
+        "fiscal_year": null,
+        "mnemonic": "VOLUME_AVG_30D",
+        "value": 11790602.0,
+        "unit": "ABSOLUTE (share count)",
+        "sign": "POSITIVE",
+        "basis": {
+          "mnemonic": "VOLUME_AVG_30D",
+          "definition": "30-trading-day average daily volume, absolute share count."
+        },
+        "vintage": "2026-09-10T23:20:19Z",
+        "source": "bloomberg-dapi",
+        "currency_caveat": null
+      },
+      {
+        "scope": "header",
+        "fiscal_year": null,
+        "mnemonic": "EQY_SH_OUT_REAL",
+        "value": 2485623615.0,
+        "unit": "ABSOLUTE (share count)",
+        "sign": "POSITIVE",
+        "basis": {
+          "mnemonic": "EQY_SH_OUT_REAL",
+          "definition": "Real-time shares outstanding, absolute share count."
+        },
+        "vintage": "2026-09-10T23:20:19Z",
+        "source": "bloomberg-dapi",
+        "currency_caveat": null
+      },
+      {
+        "scope": "header",
+        "fiscal_year": null,
+        "mnemonic": "EQY_BETA",
+        "value": 0.9779356122016907,
+        "unit": "RATIO (dimensionless multiple)",
+        "sign": "POSITIVE",
+        "basis": {
+          "mnemonic": "EQY_BETA",
+          "definition": "Bloomberg-computed equity beta, Bloomberg's default calculation window."
+        },
+        "vintage": "2026-09-10T23:20:19Z",
+        "source": "bloomberg-dapi",
+        "currency_caveat": null
+      },
+      {
+        "scope": "header",
+        "fiscal_year": null,
+        "mnemonic": "EQY_DVD_YLD_IND",
+        "value": 0.9672070305050517,
+        "unit": "PERCENT",
+        "sign": "POSITIVE",
+        "basis": {
+          "mnemonic": "EQY_DVD_YLD_IND",
+          "definition": "Indicated dividend yield, percent."
+        },
+        "vintage": "2026-09-10T23:20:19Z",
+        "source": "bloomberg-dapi",
+        "currency_caveat": null
+      },
+      {
+        "scope": "header",
+        "fiscal_year": null,
+        "mnemonic": "SHORT_INT_RATIO",
+        "value": 2.58157,
+        "unit": "RATIO (dimensionless multiple)",
+        "sign": "POSITIVE",
+        "basis": {
+          "mnemonic": "SHORT_INT_RATIO",
+          "definition": "Short interest ratio (days-to-cover)."
+        },
+        "vintage": "2026-09-10T23:20:19Z",
+        "source": "bloomberg-dapi",
+        "currency_caveat": null
+      }
+    ],
+    "axis_reads": [
+      {
+        "movement": "TRENDING",
+        "subject": "CHATTER",
+        "resolution": {
+          "requested_axis": "TRENDING_CHATTER",
+          "served_axis": "TRENDING_CHATTER",
+          "resolution": "CROSSED",
+          "movement_basis": "MEASURED",
+          "movement_measure": "ABSOLUTE_COUNT_ON_AS_OF_DAY",
+          "producer": "lib.research.metrics.chatter_axis",
+          "availability_basis": "PRODUCER_DECLARED"
+        },
+        "row": null
+      },
+      {
+        "movement": "TRENDING",
+        "subject": "PRICE",
+        "resolution": {
+          "requested_axis": "TRENDING_PRICE",
+          "served_axis": "TRENDING_PRICE",
+          "resolution": "CROSSED",
+          "movement_basis": "MEASURED",
+          "movement_measure": "WINDOW_RETURN_PCT",
+          "producer": "integrations.bloomberg.research.price_axis_pull",
+          "availability_basis": "PRODUCER_DECLARED"
+        },
+        "row": null
+      },
+      {
+        "movement": "BREAKOUT",
+        "subject": "CHATTER",
+        "resolution": {
+          "requested_axis": "BREAKOUT_CHATTER",
+          "served_axis": "BREAKOUT_CHATTER",
+          "resolution": "CROSSED",
+          "movement_basis": "MEASURED",
+          "movement_measure": "PCT_JUMP_VS_TRAILING_BASELINE",
+          "producer": "lib.research.metrics.chatter_axis",
+          "availability_basis": "PRODUCER_DECLARED"
+        },
+        "row": null
+      },
+      {
+        "movement": "BREAKOUT",
+        "subject": "PRICE",
+        "resolution": {
+          "requested_axis": "BREAKOUT_PRICE",
+          "served_axis": "BREAKOUT_PRICE",
+          "resolution": "CROSSED",
+          "movement_basis": "MEASURED",
+          "movement_measure": "PCT_JUMP_VS_TRAILING_BASELINE",
+          "producer": "integrations.bloomberg.research.price_axis_pull",
+          "availability_basis": "PRODUCER_DECLARED"
+        },
+        "row": null
+      }
+    ],
+    "chatter": null,
+    "price": null,
+    "peers": {
+      "security_key": "BABA_US_Equity",
+      "basis": "absent",
+      "test": "comparable = same GICS_SECTOR_NAME (the finest Bloomberg industry-classification field AMGT-s-1's landed record carries for this security; a true subgroup-level field, e.g. GICS_SUB_INDUSTRY_NAME, was not mapped at this cut -- re-derive against a finer field the day one is landed) AND a market-cap band within 0.2x-5.0x of the subject's CUR_MKT_CAP",
+      "members": [],
+      "reason": "candidate universe not classified; a quota decision (F2) precedes derivation -- subject's own GICS_SECTOR_NAME='Consumer Discretionary' is known, but no other covered name in the corpus has been classified by the same field, so no candidate can be tested for membership",
+      "vintage": "2026-09-11T00:22Z"
+    },
+    "bloomberg_session_state": "UNKNOWN"
+  }
+}

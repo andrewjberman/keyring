@@ -1,0 +1,14 @@
+{
+  "instrument": "lib/research/api/scoped_amgt.py handler, run LOCALLY at 2.0.0_SA_COO~W against the live table and bucket",
+  "route": "/api/scoped/amgt/security/2317 TT/thesis",
+  "query": {},
+  "statusCode": 200,
+  "body": {
+    "security_key": "2317 TT",
+    "header_figures": [],
+    "fiscal_year_figures": [],
+    "check_face": [],
+    "drafted_sections": [],
+    "generated_at": "2026-09-15T01:43Z"
+  }
+}

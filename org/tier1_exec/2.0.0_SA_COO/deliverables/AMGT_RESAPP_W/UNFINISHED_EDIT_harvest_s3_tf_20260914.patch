@@ -1,0 +1,17 @@
+diff --git a/infra/aws/terraform/harvest/s3.tf b/infra/aws/terraform/harvest/s3.tf
+index 755bfd588a..08a99843b1 100644
+--- a/infra/aws/terraform/harvest/s3.tf
++++ b/infra/aws/terraform/harvest/s3.tf
+@@ -21,10 +21,10 @@
+ # Nothing is ever written to a path that already exists.
+ 
+ resource "aws_s3_bucket" "harvest" {
+-  bucket = "opal-data-research"
++  bucket = "opal-data-harvest"
+ 
+   tags = {
+-    Name      = "opal-data-research"
++    Name      = "opal-data-harvest"
+     project   = "AMGT_RESAPP"
+     directive = "D5"
+     owner     = "2.0.0_SA_COO"
