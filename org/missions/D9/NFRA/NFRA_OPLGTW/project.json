@@ -5,7 +5,7 @@
   "fabric": "laptop",
   "pipeline": null,
   "status": "scoping",
-  "dep_stage": "PRD",
+  "dep_stage": "DECOMP",
   "created": "2026-09-14",
   "registered_under_tree": "2026-09-14",
   "placement": "LAPTOP",
@@ -18,15 +18,17 @@
   "prds": [
     "org/missions/D9/NFRA/NFRA_OPLGTW/prd/NFRA_OPLGTW_PRD.md"
   ],
-  "decompositions": [],
+  "decompositions": [
+    "org/missions/D9/NFRA/NFRA_OPLGTW/decompositions/NFRA_OPLGTW_DECOMP.md"
+  ],
   "leads": {
     "cto": "1.0.0_SA_CTO~A",
     "coo": "2.0.0_SA_COO",
     "cvo": "3.0.0_SA_CVO",
     "cro": "4.0.0_SA_CRO"
   },
-  "coo_lane": null,
-  "blocking": "L4 complete: PRD v0.2 RATIFIED, both L4-R half signatures current, and documentary ground truth CERTIFIED PASS. Next: 2.0.0_SA_COO assigns the consuming lane and performs L5 decomposition. No L5 output or implementation task order exists yet.",
+  "coo_lane": "2.0.0_SA_COO~O",
+  "blocking": "L5 complete: decomposition v1 (28 cells OG-*, 45 edges, one component, 64 maximal paths, 13-cell critical path) at decompositions/NFRA_OPLGTW_DECOMP.md by 2.0.0_SA_COO~O (seated LD-0567, msg 96971). Next: 2.0.0_SA_COO~O's L6 issuance covering all 28 cells. Held cells at the cut: OG-i-4 on G-A (Andrew's word to stop/start the Gateway instance), OG-v-4 on G-C/G-D (controlled identity and its walkthrough record), OG-v-5 on G-E/G-F (Menachem's approved grant and pilot record); OG-c-2's replay on G-B (never-widen sign-off). Notice N-1 (cutover reconnect) precedes OG-r-1's spawn.",
   "endpoint_ref": "org/missions/D9/NFRA/NFRA_OPLGTW/prd/NFRA_OPLGTW_PRD.md#endpoint-step-2-endpoint---forward",
   "endpoint_approval_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_1524ET_NFRA_OPLGTW_ENDPOINT_APPROVED.md",
   "fabric_ruling": "laptop inherited from D9 placement; current commission explicitly selects D9 / Opal Workflows.",

@@ -4,10 +4,10 @@
  "directive": "D9",
  "macro_code": "NFRA",
  "fabric": "laptop",
- "dep_stage": "PRD",
+ "dep_stage": "DECOMP",
  "status": "scoping",
  "name": "Opal Gateway: authorized Schwab questions and CSV downloads in Claude",
  "generated_from": "org/missions/D9/NFRA/NFRA_OPLGTW/project.json",
  "generated_by": ".tools/missions-tree-index.py",
- "generated_at": "2026-09-14T19:28:54Z"
+ "generated_at": "2026-09-15T08:55:19Z"
 }
