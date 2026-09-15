@@ -1596,6 +1596,99 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     "spec_asserts": "safe-merge.sh reports 'MERGED and committed' only after grading the merged index. The resulting commit is the merged tree.",
     "world_is": "safe-merge graded 8 staged paths and printed 'MERGED and committed -- c6d652a6dc', but the commit recorded 2. The issuer reported the drain on that line without reading the resulting tree. 1.0.0_SA_CTO's ADVI_FIRMBKTS ruling 97031 cited the drain; its evidence (the live policy, the probes) stands independently of the record.",
     "notes": "INERT once the 3 landing commits are in. Carried to 1.0.0_SA_CTO and 0.0.0_AB_MSTR. A merge's first-parent diff should be checked against the branch's own diff before a drain is called landed; this issuer now does so. The census method would show whether other seats' merges were truncated the same way. The writer that restores the index is still not identified (S17)."
+  },
+  {
+    "id": "LGIC_ENFORCE-W1-S19",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~1",
+    "surfaced_at": "2026-09-15T10:21Z",
+    "one_line": "TO-EN-x-1 step 2 asks for 49financial's SHORT form to change in scopes.json and be regenerated. lib/opal_naming.py validate refuses any short that differs from org/standards/NAMING_SCHEMA.json firm_forms, which pins '49f', and generate refuses with it. NAMING_SCHEMA.json is outside the order's <paths>, so no 'after' commit can exist inside the grant and X1-AC3 cannot pass.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~G",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN 2026-09-15T~10:15Z on the practice copy (branch prac-lgic-enforce-x1 @104f092d69), after the change \"short\": \"49f\" -> \"short\": \"f49\" in infra/logic/registry/scopes.json (1 occurrence): 'python lib/opal_naming.py validate' printed \"REFUSED scopes.json[0].short: 'f49': NAMING_SCHEMA.json firm_forms gives '49f'\" and 'VALIDATE: REFUSED 1 refusal(s), 9 warning(s)', rc=1.",
+        "RUN, same tree: 'python lib/opal_naming.py generate --out .scratch/gen_after' printed 'ERROR: the registry is refused (1 refusal(s)); run: python lib/opal_naming.py validate', rc=1. Nothing was generated.",
+        "CODE: lib/opal_naming.py:248 @c6d652a6dc builds firm_forms from NAMING_SCHEMA.json, and :287-288 refuses a scopes.json row whose short differs: refuse(where, \"short\", \"%r: NAMING_SCHEMA.json firm_forms gives %r\" ...).",
+        "FILE: org/standards/NAMING_SCHEMA.json:112-113 @c6d652a6dc: '\"firm_forms\": [' then '{\"key\": \"49financial\", \"short\": \"49f\"},'.",
+        "ORDER: TO-EN-x-1 <paths> names 5 paths (lgic-enforce-fwd2-resource.tf, infra/logic/registry/scopes.json, infra/aws/terraform/modules/opal_name/, deliverables/EXERCISE_FWD2.md, the surprise channel); org/standards/NAMING_SCHEMA.json is not among them. The change was restored byte-for-byte, the practice copy removed clean, and the scratch branch left at 104f092d69."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EN-x-1 THE CELL step 2: 'In the same practice copy, change 49financial's SHORT form in scopes.json (for example 49f to f49) and regenerate. Commit it; that commit is after. The resource's name AND the fence's pattern for the firm must both move on that one change.' BOUNDS: 'A path you need that is not named is a BLOCKING surprise row on that criterion -- never an override.'",
+    "world_is": "The firm short form is written in two places the generator reads: scopes.json and org/standards/NAMING_SCHEMA.json firm_forms. The validator that generate runs first refuses them disagreeing, so 'one change' to scopes.json cannot regenerate, and the exercise needs a second, ungranted change to NAMING_SCHEMA.json. On this order as cut, X1-AC3 reads FAIL-NOT-BOTH."
+  },
+  {
+    "id": "LGIC_ENFORCE-W1-S20",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~1",
+    "surfaced_at": "2026-09-15T10:21Z",
+    "one_line": "CLOUD @c6d652a6dc still declares the three LGIC fence-probe roles and their three policies in infra/aws/terraform/shared-infra/lgic-enforce-fence-probes.tf, which EN-f-2 removed from AWS. A read-only plan of shared-infra from that tree therefore creates 6 resources besides this cell's queue, and an apply of shared-infra from CLOUD would create them again.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~G",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN 2026-09-15T~10:10Z: terraform v1.9.8 plan -lock=false of infra/aws/terraform/shared-infra from the practice copy (base c6d652a6dc plus this cell's .tf), against the real S3 backend: 'Plan: 7 to add, 0 to change, 0 to destroy.' Creates: aws_iam_role.lgic_fence_probe[\"49f\"], [\"cot\"] and [\"unscoped\"]; aws_iam_role_policy.lgic_fence_probe_read[\"49f\"], [\"cot\"] and [\"unscoped\"]; aws_sqs_queue.lgic_enforce_fwd2. Plan JSON: org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/fwd2_plan.json (239 resource_changes, 7 not no-op).",
+        "RUN, check_en.py x1-plan on that JSON, 2026-09-15T~10:22Z, lists the planned create names 'mdpf-49f-fenceprobe-role', 'mdpf-cot-fenceprobe-role', 'mdpf-fenceprobe-role' and three 'fenceprobe-read-opal-data-49financial'.",
+        "TREE: git ls-tree c6d652a6dc -- infra/aws/terraform/shared-infra/lgic-enforce-fence-probes.tf returns blob 7622aae012; the file was last touched by 080e1b97c6 (EN-f-1, authored).",
+        "WORLD, the shared tree C:/Users/AndrewBerman/Desktop/ajb_workspace at ~10:17Z: 'git status --porcelain -- infra/aws/terraform/shared-infra/lgic-enforce-fence-probes.tf' prints ' D', a deletion that is neither staged nor committed."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Spawn note 1 from 2.0.0_SA_COO~G for TO-EN-x-1: 'EN-f-2 is complete and merged @c6d652a6dc. The fence as EN-f-2 left it is live, and it is at your base.' EN-f-2's removal criterion (check_en.py f2_removed) requires the three probe roles to be ABSENT in AWS.",
+    "world_is": "The live plane has no probe roles, while the committed tree at the base still declares them. The removal exists only as an uncommitted deletion in the shared tree, so tree and state differ by 6 resources, and every shared-infra plan from CLOUD carries them until the deletion is committed."
+  },
+  {
+    "id": "LGIC_ENFORCE-W1-S21",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~1",
+    "surfaced_at": "2026-09-15T10:21Z",
+    "one_line": "check_en.py x1-moves-both counts a NAME line as any added diff line carrying the new short form and the text 'role', and a FENCE line as any added line carrying it and '*'. The regenerated fence-pattern line in generated_locals.tf ('arn:aws:iam::313476888478:role/*-<short>-*') satisfies both, so X1-AC3 would read PASS-BOTH-MOVE on a diff in which only the fence pattern moved.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~G",
+    "grounding": {
+      "status": "INFERRED",
+      "evidence": [
+        "CODE: check_en.py:1188 @c6d652a6dc 'name_lines = [ln for ln in out.splitlines() if ln.startswith(\"+\") and new_short and new_short in ln and \"role\" in ln]', and :1189 'fence_lines = [... new_short in ln and \"*\" in ln]'. One line may satisfy both filters.",
+        "FILE: infra/aws/terraform/modules/opal_name/generated_locals.tf:66 @c6d652a6dc '\"49financial\" = [\"arn:aws:iam::313476888478:role/*-49f-*\"]' carries both 'role' and '*', and regenerates with the new short form.",
+        "The order suggests an SQS queue, whose name the module computes at plan time. The name is in no committed file, so no before..after diff can carry it. A regenerated tests/vectors.json would add real 'role' names (for example mdpf-<short>-publisher-role), but those are the module's vectors, not this resource.",
+        "NOT EXERCISED: no 'after' commit could be made (row LGIC_ENFORCE-W1-S19), so this is read from the code and the file, not from a run."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EN-x-1 X1-AC3: 'one change to the short form moves the resource's name and the fence pattern together.' THE CELL: 'The resource's name AND the fence's pattern for the firm must both move on that one change.'",
+    "world_is": "The instrument's two filters are not disjoint, and the fence-pattern line alone satisfies both. The criterion therefore cannot tell a moved resource name from a moved fence pattern. A plan (or show -json) at 'after' would carry the resource's name; the committed diff does not."
+  },
+  {
+    "id": "LGIC_ENFORCE-W1-S22",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~1",
+    "surfaced_at": "2026-09-15T10:42Z",
+    "one_line": "TO-EN-x-1 orders fwd2_plan.json, a terraform show -json, committed under the worker's deliverables folder. The commit-time naming gate graded 151 names in that machine output, 115 NAMING REFUSE (every one on fwd2_plan.json) and 13 NAMING RAISE, and passed the commit only because org/mcp/naming-gate.enforce is absent (WARN mode). With enforce on, the gate would refuse the deliverable the order names.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~G",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN: bash .tools/safe-commit.sh of commit d49089952b on branch wk-lgic-enforce-1-1-x1, 2026-09-15T~10:40Z. Its log (352 lines) prints '[naming-gate] NAMING-GATE: WARN 151 graded', with 115 'NAMING REFUSE' lines and 13 'NAMING RAISE' lines. All 115 REFUSE lines name org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/fwd2_plan.json:1, the one-line JSON.",
+        "RUN, same log: 'NAMING REFUSE .../fwd2_plan.json:1 advi-49f-fwd2-exercise-queue -> advi-49f-fwd2-exercise-queue', why: \"CONFORMANT as SQS_QUEUE, but a NEW hand-kept carrier of '49f' outside every permitted context: read it through lookup('49financial')\". This is the cell's own resource, named by module opal_name.",
+        "RUN, same log: live names read out of the plan's prior state are refused as NEW, e.g. '/aws/lambda/etf-ownership-dashboard -> /aws/lambda/{system}-etf-ownership-dashboard-lambda', why 'NEW and OUT-OF-PATTERN as LOG_GROUP: REFUSE', and 'arn:aws:dynamodb:us-east-1:313476888478:table/bd-securities -> lookup('49financial')'.",
+        "WORLD: org/mcp/naming-gate.enforce is ABSENT in the worktree and not tracked at HEAD ('git ls-files --error-unmatch' says it does not match any file), so the stage ran in WARN mode and the commit landed."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EN-x-1 THE CELL step 1: 'Plan the REAL tree read-only (plan -lock=false -out, then show -json, against the real backend), and save the JSON as org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/<your serial>/fwd2_plan.json.' The slot branch carries the records.",
+    "world_is": "The naming gate grades a generated terraform plan artifact as newly hand-written names and carriers, including this cell's own CONFORMANT, module-built queue name. It passes the commit only because enforce is off. Nothing exempts a plan JSON deliverable from the stage, so once enforce is on, this order's own deliverable, and EN-f-1's fence_plan.json of the same kind, could not be committed as ordered."
   }
 ]
 ```
