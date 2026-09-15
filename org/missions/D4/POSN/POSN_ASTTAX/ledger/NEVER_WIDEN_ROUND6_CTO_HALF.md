@@ -119,3 +119,19 @@ brief half reads SIGNED; the issuer amends `TO-W1-1` before its deploy leg.
 it. A ticker with no table row publishes NULL identity and is counted -- Branch A.
 
 CTO half for A1: `1.0.0_SA_CTO~Z`, GIVEN 2026-09-15 ~04:1xZ. The COO half amends to match.
+
+## AMENDMENT A2 2026-09-15 ~08:0xZ -- a SECOND driven run on the ad-hoc partition `bbg/2026-09-14` (matches the COO half R2 @`b2560929dc`)
+
+**Authority:** Andrew-direct ~07:4xZ via `0.0.0_AB_MSTR~Z` msg 23079 (*"confirm that they do a real ad hoc pull and they data presents
+properly on Asttax"*) and ~08:0xZ msg 23085 (promote by 13:00Z). The partition was landed by this seat's ad-hoc Bloomberg pull at
+07:52:33Z (run_class `adhoc`, 7 objects, 0 failed; msg 23083), and the 07:00Z organic `holdings.json` is `5tjkvDfus1antRLsbDrLikcMQzH1Hk.F`.
+
+**MATCHES THE COO HALF R2 IN ONE LINE:** the same act, key and branches as that amendment -- ONE further driven invoke of
+`cot-satellites-characteristics-producer` with `bbg_as_of 2026-09-14`; the key `platinum/satellites/characteristics.json` only; the
+rollback pin is the object served at this read, VersionId `74d9.pGWF16Ox7cXKGax.zQw.lhwi5yI` (LastModified 2026-09-15T04:53:42Z,
+`s3api head-object` 08:06Z), restored by `copy_object`; Branch A includes GLD's returns at the 2026-09-14 frontier (the partition's
+manifest records a GLD vendor observation, `vendor_observations.GLD = 1`) or NULL per window with the rule's reason; the 12:30Z fire
+stays the organic leg. The 11:00Z scheduled pull rewrites the same `bbg/2026-09-14/` keys with `run_class scheduled`; the served
+artifact's `inputs.bbg_run_class` then reads `adhoc` until the 12:30Z fire rebuilds it -- recorded, not a defect.
+
+CTO half for A2: `1.0.0_SA_CTO~Z`, GIVEN 2026-09-15 ~08:0xZ.
