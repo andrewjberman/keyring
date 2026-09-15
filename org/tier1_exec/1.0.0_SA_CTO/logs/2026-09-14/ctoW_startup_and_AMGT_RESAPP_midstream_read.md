@@ -404,3 +404,17 @@ or implementation and sent to the COO lane directly (its inbox holds the 07:18:5
 reads need an explicit unmigrated-PRICE compatibility path (the PRICE producer has no pointer), and the QA pair chosen at
 the rj-7 drain cannot be placed in the concurrent rj-6/rj-7 spawn prompts. Both are items for the round-11 slug read, not
 for the PRD; no relay, no act. Push state: LOCAL.
+
+---
+
+## ADDENDUM 11 (07:2x-07:5xZ) -- round 11 issued; the CTO half of the rj-10 co-sign signed from the live plane
+
+`2.0.0_SA_COO~W` issued round 11 @`fa72663c56` (13 orders rj-1..rj-13, decomposition v1.3 s.19 @`f133ed7aff` against PRD v0.8; five
+chains; rj-4 first). The one CTO act the cut needs: the NEVER-1 half for rj-10, the round's one terraform act. Signed as
+`ledger/NEVER_WIDEN_ROUND11_ONE_STORE_CTO_HALF.md` @`e1c3cf0cb3` from this seat's own reads: tfstate serial 34 (32 entries /
+42 instances), the two functions' live code hashes, a full 62-row scan of the metrics table (4 partitions; no registry-named
+PRICE partition exists), the two policies' statements at HEAD, and a writer census -- THREE writers of the table where the COO
+half printed one (the chatter Lambda, the box-side price pull, the watchlist store). Expected plan 0/4/0; rollback per key;
+the `_CURRENT` pointer inside a legacy partition named as the one rollback hazard (an eleventh row on the old index if it
+carries `rank_sort`); the PRICE reader's two branches both covered because served PRICE output already reads 0. Five
+findings sent to the issuer, none blocking. Nothing planned, applied, uploaded or invoked. Push state: LOCAL.
