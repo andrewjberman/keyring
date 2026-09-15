@@ -7665,6 +7665,27 @@ Andrew asked for (msg 22917); it concerns this project's portal files meeting an
   "spec_asserts": "Andrew ~07:4xZ: 'confirm that they do a real ad hoc pull and the data presents properly on Asttax'; the B6 halves R2/A2; PRD v0.11 FWD-7, C-HOLDING-MEASURES, C-HOLDING-IDENTITY, C-PRESENT-CLASSES, C-SUMMARY-COPY.",
   "world_is": "The served satellites keys carry today's roster (07:00Z) and the ad-hoc Bloomberg partition (08:10Z); the round-6 portal ref renders them as specified; the 11:00Z scheduled pull rewrites bbg/2026-09-14/ with run_class scheduled and the 12:30Z fire re-serves the block organically (B6 ledger L8).",
   "notes": "For 0.0.0_AB_MSTR~Z's independent verification: run id = bbg/2026-09-14/run_manifest.json generated_utc 07:52:33Z; the six VersionIds above; route /positioning -> Satellites -> Opal Satellite 15 / 80; the portal head to publish is ebbee2e6 unless F4's re-run adds a portal commit (it should not)."
+},
+{
+  "id": "POSN_ASTTAX-Z-S172",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T08:45:33Z",
+  "one_line": "From 0.0.0_AB_MSTR~Z's independent ASTTAX verdict (23103; PASS 544 of 544 cells, mutation arm discriminates, 0 unrounded): the Holdings Breakdown's CREDIT cell renders '-0' for VGSH (served credit -0.1467 through `credit.toFixed(0)`, HoldingsTab.tsx :1583) -- a negative-zero sign artifact of the renderer's own rounding, present in every mode for any credit in (-0.5, 0). Not a float, not a missing measure; the served value is correct. CARRIED to the round-6 analysis as a one-line renderer fix (normalise -0 to 0 after toFixed, or render the sign only when the rounded value is non-zero) in HoldingsTab.tsx -- outside every round-6 cell's text; not re-cut mid-round. Also from 23103, for the record: the VINTAGE qualifier (23 of 25 holdings at positioning_data_as_of 2026-09-11 until the ~11:05Z models publish) is answered by the COO half's R3 -- a third driven characteristics run after that publish, so the served block reads T-1 for 25 of 25 before the 11:00-12:00Z merge window; the 12:30Z fire stays organic.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "23103's verdict record (org/tier0_exec/0.0.0_AB_MSTR~Z/deliverables/asttax_verify_20260915/); this seat's present_cell_compare.txt shows VGSH credit served=-0 rendered=-0 (the compare re-implements toFixed(0), so it agrees with the artifact rather than catching it).",
+      "WHY GRADUATED: cosmetic, correct value, named file and fix, no cell owns the line tonight."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "PRD v0.11 FWD-7 ACCEPT: an analyst sees each fund's fee, size, yield, beta and returns; C-HOLDING-MEASURES: the served values attached without arithmetic.",
+  "world_is": "VGSH's Credit cell shows '-0' in Satellites 15 and in Models; every other cell equals its served value.",
+  "notes": "For 1.0.0_SA_CTO~Z's round-6 analysis with Z-S146 (the clipped label) and Z-S169 (the composition header)."
 }
 ]
 ```

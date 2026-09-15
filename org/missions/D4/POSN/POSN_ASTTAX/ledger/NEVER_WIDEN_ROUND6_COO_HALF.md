@@ -85,6 +85,21 @@ the new partition's own values (a ticker twice or missing, a `satellites` leaf m
 restores the pin above by `copy_object` and files the row. The rule's 12:30Z fire stays the organic leg (B6 ledger L8).
 COO half for this amendment: `2.0.0_SA_COO~Z`, GIVEN, 2026-09-15 ~07:54Z; the CTO half is asked to match in one line on the landing message.
 
+### R3 AMENDMENT 2026-09-15 ~08:45Z -- a THIRD driven run after the ~11:05Z models publish (the MSTR's vintage qualifier, msg 23103)
+
+**Why:** `0.0.0_AB_MSTR~Z`'s independent ASTTAX verdict (23103) passes the presentation and qualifies the VINTAGE: `characteristics.json`
+`PXyBGaqn...` carries `positioning_data_as_of 2026-09-11`, so 23 of 25 holdings' measures ride Yang's positioning file one trading day
+behind T-1 (`prev_trading_day(2026-09-15)` = 2026-09-14) until the box's `OPAL_BBGTML_daily_pull` publishes
+`json/positioning/positioning_data.json` at as_of 2026-09-14 (~11:05Z). No models task is fired early. **This half covers ONE MORE
+driven invoke** of `cot-satellites-characteristics-producer` with `bbg_as_of 2026-09-14`, TRIGGERED by that publish being SERVED
+(the positioning key's VersionId moved off `AqBtm_5o.2QeiCBRP_veC8HV2Xk0OSaj` with `as_of 2026-09-14`, read by this seat), so the block
+reads `positioning_data_as_of 2026-09-14` and `bbg_as_of 2026-09-14` (by then `run_class scheduled` from the 11:00Z pull) -- 25 of 25 at T-1
+before the merge window. **Same act, key, code, grant and rollback shape as R1/R2;** the pin is the served VersionId immediately before
+the invoke, printed by the run. **Both branches** as R2 (A: rc 0, the VersionId moves, the inputs triple reads 2026-09-15 / 2026-09-14 /
+2026-09-14, 25 tickers, identity 25 of 25; B: a refusal writes nothing; a read-back beyond the new inputs' own values restores the pin by
+`copy_object` and files the row). The 12:30Z scheduled fire stays the organic leg (B6 ledger L8).
+COO half for this amendment: `2.0.0_SA_COO~Z`, GIVEN, 2026-09-15 ~08:45Z; the CTO half is asked to match in one line (A3).
+
 ## 4. WHAT THIS HALF DOES NOT COVER
 
 The Bloomberg return-history backfill (a CTO act, its own ledger); the portal cells F4 and F5 (no served key moves); any promote, push
