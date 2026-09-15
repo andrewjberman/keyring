@@ -1,5 +1,11 @@
 # Local session-harvester to HTTP-consumer loop
 
+**2026-09-15 implementation update:** the canonical five-publication local worker
+now lives in `lib/opal_data_harvest/` (README, contracts, encrypted session vault,
+worker and Windows schedule). This document preserves the earlier four-publisher
+test record; its counts and WSJ route are historical. New live results are in
+`.runtime/opal-data-harvest/runs/`. No all-publisher completion is implied by this pointer.
+
 Author: 4.0.0_SA_CRO~W
 Authority: ANDREW_DIRECT_20260914_HARVEST_METHOD_CORRECTION_W.md
 Status: testing; three-ticker requirement NOT yet measured.
