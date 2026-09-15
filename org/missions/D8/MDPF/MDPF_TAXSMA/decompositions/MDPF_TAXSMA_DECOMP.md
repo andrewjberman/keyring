@@ -1,4 +1,4 @@
-# MDPF_TAXSMA -- DECOMPOSITION (L5) -- round 1 -- v1
+# MDPF_TAXSMA -- DECOMPOSITION (L5) -- round 1 -- v2
 
 ```json
 {
@@ -7,13 +7,14 @@
  "macro": "MDPF",
  "fabric": "laptop",
  "round": 1,
- "decomp_version": "v1",
+ "decomp_version": "v2",
+ "supersedes": "v1 @62cf5796fc (frozen, never issued; cut against PRD v0.3)",
  "step": 5,
- "prd_ref": "org/missions/D8/MDPF/MDPF_TAXSMA/prd/MDPF_TAXSMA_PRD.md@8120db1ff9",
- "prd_version": "v0.3",
- "prd_signed_at": "61748ba2e0 (ratified-text 3.0.0_SA_CVO @294bd175ce; brief 4.0.0_SA_CRO @1db20a3624); prd-signoff.py status reads ADMITTED",
- "contract_ref": "org/standards/MDPF_TAXSMA_DATA_CONTRACT.json@8120db1ff9 (version 0.3.0, RATIFIED)",
- "manifest_ref": "org/missions/D8/MDPF/MDPF_TAXSMA/prd/component_manifest.yaml@8120db1ff9 (19 owned surfaces S01-S19, 8 dependencies D01-D08, 49 components)",
+ "prd_ref": "org/missions/D8/MDPF/MDPF_TAXSMA/prd/MDPF_TAXSMA_PRD.md@671925aecc",
+ "prd_version": "v0.5",
+ "prd_signed_at": "5061a43a46 (ratified-text 3.0.0_SA_CVO @2560f51f83; brief 4.0.0_SA_CRO @d4b71666ff; metadata finalized @671925aecc); prd-signoff.py status reads ADMITTED",
+ "contract_ref": "org/standards/MDPF_TAXSMA_DATA_CONTRACT.json@671925aecc (version 0.5.0, RATIFIED)",
+ "manifest_ref": "org/missions/D8/MDPF/MDPF_TAXSMA/prd/component_manifest.yaml@671925aecc (19 owned surfaces S01-S19, 8 dependencies D01-D08, 49 components)",
  "ground_truth_ref": "workflows/atom_decomposition/runs/mdpf-taxsma/20260915T0510Z/rectangle.final.certified.json@4ff8d9bdaa",
  "lgic_exceptions": "R20 X7 (49financial served home, CONDITIONAL) and X2 (Global composite, PERMANENT) GRANTED @9cf4a274db",
  "author": "2.0.0_SA_COO~T",
@@ -24,7 +25,7 @@
  "critical_path_cells": 14,
  "cell_id_shape": "TX-<axis>-<n> (DECOMP_CELL_ID_CONVENTION shape 1)",
  "worker_serial": "0.9.0_WK_MDPF_TAXSMA~<slot>",
- "cut_head": "01189c71e1",
+ "cut_head": "7f1ab996a0",
  "frozen": true
 }
 ```
@@ -33,25 +34,39 @@
 verbatim: *"If push mdpf_taxsma as the next one followed by nfra_oplgtw"* (SEQUENCE.yaml v4 @8f0c4fa2bf, stage 0). One project,
 this seat. L5 is the COO's; no seat certifies this before L6.
 
-**Input, graded before use.** `python .tools/prd-signoff.py status MDPF_TAXSMA` at ~17:2xZ: v0.3 @8120db1ff9 **ADMITTED**, both
-halves SIGNED and current. `.tools/receiving-check.py` on the PRD: **ACCEPT** (`prd-manifest`: manifest, ENDPOINT, header,
+**Input, graded before use.** `python .tools/prd-signoff.py status MDPF_TAXSMA` at ~20:0xZ: v0.5 @671925aecc **ADMITTED**, both
+halves SIGNED and current (v1 was cut at v0.3 @8120db1ff9). `.tools/receiving-check.py` on the PRD: **ACCEPT** (`prd-manifest`: manifest, ENDPOINT, header,
 outcome cards and header/section agreement present). v0.3 is the LGIC conformance addendum (CTO 97115; CLAUDE.md Rule 30
 @a3d77717df): F1 workbook source `gateway`, F2 the Silver surface S19 between S02 and S03, F3 S08 writes only the two
-historical served keys. The v0.2-to-v0.3 diff was read line by line (`git diff 60c722fe64 61748ba2e0`); this decomposition is
-cut against v0.3 only.
+historical served keys. The v0.2-to-v0.3 diff was read line by line (`git diff 60c722fe64 61748ba2e0`); v1 was cut against v0.3;
+this v2 is cut against v0.5.
+
+**v2 against v0.5.** PRD v0.4 (@d317a65ec7, `prd/TRADED_FIELD_ADDENDUM_97192.md`) makes the workbook's existing Traded
+column the live-account key, dates membership FIRST_OBSERVED_UTC, retires the manual CONFIRM_EFFECTIVE_MEMBERSHIP step,
+separates the source-dated `business_active_accounts` from the valuation-dated expected/covered counts, and records the
+named G-A identity. Its own S01-S19 map to v1's cells is the recut's input: the seven-column source interface (TX-g-1,
+TX-b-1, TX-b-2) is unchanged; membership, assets, aggregation, publication, consumer, proof, recovery and activation
+change. This v2 also carries 1.0.0_SA_CTO's two corrections to v1 (97179): TX-i-3's secret is graded by `grade()`, and
+G-R's trigger is LGIC_ENFORCE's EN-r-5 drain. The cell set, edges and chain read are unchanged from v1. PRD v0.5 (@5061a43a46,
+`prd/REVIEW_REPAIR_V05.md`) repairs the Gateway row on 3.0.0_SA_CVO's refusal (@91875c897c): the route's own guard runs
+before generic `/ms/*` handling, and the named account is bound by its validated Entra tid/oid, the email being display and
+audit metadata only (NFRA_OPLGTW v0.2 C1/C2/A3). It also states the UTC-date-to-session comparison.
 
 **Andrew's words in flight, and their class.** ~14:0xZ at this terminal Andrew asked whether Tax SMA needs Gold at all, then said
 *"dont take my word for it, just /draw"* (record @1a133f12c2): a QUESTION, answered on the merits, not a ruling; CTO 96960
 governs placement (1.0.0_SA_CTO~A ACK97091; CVO N6). ~14:3xZ at the CTO terminal: *"im hesitant on taxsma until i know its in
 pattern with lgic rulings"* (97104) -- discharged by the conformance read (97116), "RECS APPROVED" (97127) and both v0.3
-signatures. ~16:2xZ: *"I want to push through MDPF_TAXSMA"* (97153).
+signatures. ~16:2xZ: *"I want to push through MDPF_TAXSMA"* (97153). ~18:0xZ: *"id have the opalbloomberg@opalinvest.com sitez terminal
+account do it"* (G-A, record @f95470f384). ~18:3xZ: *"We dont need a human we use a key ... "Traded" signifies that the account
+is live, thats what we use to count an active account"* (record @1729cef85e), which superseded his ~18:0xZ "active" field.
 
 **Frozen at the cut.** A cell that looks wrong mid-round is a **surprise row, never an edit**
 (`org/missions/D8/MDPF/MDPF_TAXSMA/surprise-channel/investigations/INVESTIGATION_v1.md`).
 
 **What binds every cell, from the PRD and the law.** Every new S3 address is `lib/opal_naming.py address()` output and every new
-resource name is `name()` output (Rule 30); a builder refusal is a registry row, never a typed path. No production activation of
-the workbook read before S16 (Andrew names the one person). Synthetic Gateway responses only until then (PRD §3.9). No client
+resource name is `name()` output (Rule 30); a secret's path is one `grade(<path>, "SECRET")` returns CONFORMANT for (no secret
+builder exists; CTO 97179). A builder refusal is a registry row, never a typed path. No production activation of
+the workbook read before `TX-r-3` measures access for the named identity (`opalbloomberg@opalinvest.com`, G-A @f95470f384). Synthetic Gateway responses only until then (PRD §3.9). No client
 name, full account number, balance or token enters the repository. Unknown deployment facts are measured before they are used.
 
 ---
@@ -73,8 +88,8 @@ named in s.3 (the 9 produced artifacts: `workbook_snapshot` TX-b-1, `workbook_si
 `taxsma_assets` TX-m-4, `operational_control`, `firm_category`, `global_category` TX-a-2, `firm_served`, `global_served` TX-u-1).
 One plane deviation is recorded in s.10 choice 3.
 
-**Falsifier 2: every path the PRD cites.** `comp-adversary compose` on v0.3 (read-vintage @52ea4c8cac, 16:49:51Z): 14 of 14 cited
-commits VERIFIED; 33 cited paths, 25 stable, **8 GONE -- and all 8 are the PRD's own PROPOSED_NEW paths** (the four Tax gold
+**Falsifier 2: every path the PRD cites.** `comp-adversary compose` on v0.5 (read-vintage @7f1ab996a0, 20:05:33Z): 19 of 19 cited
+commits VERIFIED; 38 cited paths, 30 stable, **8 GONE -- and all 8 are the PRD's own PROPOSED_NEW paths** (the four Tax gold
 modules, the Silver module, the journey test, the Gateway module, RECOVERY.md). Absence is their expected state at L5.
 
 **Falsifier 3: the live substrate the addresses land on.** `address()` at HEAD, every artifact the contract declares, called as
@@ -85,14 +100,14 @@ global_category -> `opal-data-mdpf`; the two served keys are historical addresse
 `name("mdpf","49financial","taxsma","role")` = `mdpf-49f-taxsma-role`.
 
 **Falsifier 4: drift of the v0.3 manifest's own pins.** Every component carrying `existence_check.last_commit`, compared with the
-file's last commit at HEAD 01189c71e1 (`git log -1`, portal paths in the portal repo): **19 pinned, 14 SAME, 5 DRIFT.**
-- `infra/aws/ec2/opal-gateway/app/server.py`: pin e3a9d207dc, now d02e73c272. NFRA_OPLGTW is rewriting the Gateway app
+file's last commit at HEAD 7f1ab996a0 (`git log -1`, portal paths in the portal repo): **19 pinned, 14 SAME, 5 DRIFT.**
+- `infra/aws/ec2/opal-gateway/app/server.py`: pin e3a9d207dc, now 6a4e94d734. NFRA_OPLGTW is rewriting the Gateway app
   (@51b0f7d823 `OG-a-1` alone was +3,523/-313), and the file moved again during this cut.
 - the three portal consumer files: `aum.ts` d3487fc925 -> 46d2bc59a1, `CategoryViewTree.tsx` 0e1c232d5f -> c29a8b86a1,
   `ModelPortfolios.tsx` 2d64653239 -> 09309a40f5 (the 12:12Z portal promote). No open portal branch touches them (5 of 5
   `dsgn`/`d13`/`codex` branches diffed against DEV: 0 files).
-- `org/standards/MDPF_TAXSMA_DATA_CONTRACT.json`: pin 61748ba2e0, now 8120db1ff9, the approval-state finalization only (its
-  `state` field; 1.0.0_SA_CTO~A 17:15Z).
+- `org/standards/MDPF_TAXSMA_DATA_CONTRACT.json`: pin 5061a43a46, now 671925aecc, the approval-state finalization only (its
+  `state` field; 1.0.0_SA_CTO~A 20:01Z).
 
 Every cell reads its files at HEAD, never at the manifest pin.
 
@@ -105,8 +120,8 @@ Every cell reads its files at HEAD, never at the manifest pin.
 | `NOT-EVALUATED` | not looked at. Not a pass, not a fail. |
 | `N/A` | the field does not apply |
 
-Cell status takes `OPEN`, `HELD` (a named gate stands, s.6) or `DONE`. At v1: 23 OPEN, 4 HELD (`TX-b-1`, `TX-b-2` on G-R;
-`TX-r-2` on G-O; `TX-r-3` on G-A, G-W, G-P).
+Cell status takes `OPEN`, `HELD` (a named gate stands, s.6) or `DONE`. At v2: 23 OPEN, 4 HELD (`TX-b-1`, `TX-b-2` on G-R;
+`TX-r-2` on G-O; `TX-r-3` on G-W, G-P).
 
 ---
 
@@ -181,7 +196,14 @@ the control disengaged (spine L6); those are marked "(difference)".
 - a caller-supplied site, item, sheet, range, URL, identity or query parameter is refused and never forwarded to Graph (each selector enumerated)
 - the capability bearer is refused on every other Gateway route in the same test client
 - with `TAXSMA_WORKBOOK_IDENTITY` unset, the route returns AUTH_REQUIRED and makes no Graph call
+- (difference) with the same email and otherwise identical valid inputs, a principal whose tid alone differs from the configured pair yields AUTH_REQUIRED with zero token fetches and zero Graph requests, while the configured pair returns 200
+- (difference) with the same email and otherwise identical valid inputs, a principal whose oid alone differs from the configured pair yields AUTH_REQUIRED with zero token fetches and zero Graph requests, while the configured pair returns 200
+- a missing, unvalidated or caller-supplied tid/oid pair yields AUTH_REQUIRED before any token fetch
+- a generic MCP, ms-ingest or OTP credential presented to the route yields UNAUTHORIZED_CAPABILITY
+- a request to `/ms/taxsma-workbook` passes the route's own guard before any generic `/ms/*` handler runs (call-order assertion in the test client)
+- the audit record carries the principal's tid/oid reference, with the email as display metadata only
 - a NeedsLogin or revoked result from the token broker yields AUTH_REQUIRED, never an empty 200
+- a synthetic Graph permission denial on the item maps to one contract error code, recorded in the audit record as distinct from a Gateway guard refusal
 - an ETag change between the before and after reads beyond `etag_change_retries` yields SOURCE_CHANGED
 - a used range over `max_used_rows_including_header` yields SOURCE_TOO_LARGE with the observed extent, never a truncated `complete: true`
 - a duplicate or ambiguous expected header yields SOURCE_SCHEMA_INVALID
@@ -239,15 +261,26 @@ the control disengaged (spine L6); those are marked "(difference)".
 
 **`TX-m-1` acceptance**
 - the module reads only the S19 Silver parquet and its metadata; a harness with the Bronze object deleted still classifies
-- a full-sheet fixture (traded, funded-but-untraded, prospect, blank, conflicting) places each row in exactly one `business_status`, with a count per population printed
-- (difference) flipping only Traded from No to Yes on one row moves it from UNTRADED to TRADED_CLAIM, while changing only a funded-balance input on the same row moves nothing
-- reordering and inserting rows loses no account
-- Ready=Yes alone, a Tax strategy label, an Inception Date or a Last Trade Date never produces ATTESTED membership
-- a new TRADED_CLAIM without a CONFIRM_EFFECTIVE_MEMBERSHIP disposition is UNVERIFIED with MEMBERSHIP_DATE_UNVERIFIED
-- (difference) adding a disposition with effective date D makes the claim ATTESTED from D inclusive and not before, with every other input unchanged
-- CONFIRM_INACTIVE ends membership exclusively on its effective date, and earlier dates keep the account
-- a removed previously traded row is REMOVED_UNCONFIRMED until a dated disposition exists
-- a write that would alter or remove a prior disposition is refused, and a conditional update retains the history
+- a full-sheet fixture (traded, funded-but-untraded, prospect, blank, total, conflicting) places each row in exactly one `business_status`, with a count per population printed
+- Traded is parsed by trim and casefold into YES, NO or blank, and every other value is INVALID (each enumerated in the fixture)
+- (difference) flipping only Traded from No to Yes on one row raises `business_active_accounts` by one, while changing only Ready or a funded balance on the same row leaves it unchanged
+- `business_active_accounts` counts distinct validated full keys with Traded=YES, and the module reads no custodian, master, BD enrollment or value source (call-site census)
+- two rows carrying one full key count once in `business_active_accounts`, and both rows carry CONFLICT
+- a YES row without a valid full identity stays CONFLICT with its YES claim retained, never PROSPECT
+- an invalid identity on a YES claim, an unknown Traded on an identified account and a nonempty unrecognized row each make `business_active_accounts` null with a reason, never a smaller number (each arm enumerated)
+- a source or Traded-schema failure makes the current count null with last-good freshness, never an empty census
+- a YES first observed at UTC time T opens an OBSERVE_TRADED interval inclusive from date(T), with `membership_date_basis` FIRST_OBSERVED_UTC and the S03 service actor
+- (difference) an explicit NO observed on date D closes the interval exclusively on D, while a missing, invalid or disappeared row on D leaves it open
+- a NO-to-YES change opens a new interval and keeps the earlier one
+- an earlier Inception Date, Last Trade Date or `source_modified_at` never moves an interval's start (fixture with each set earlier)
+- an observation at 2026-09-16T00:30Z opens or closes its interval on 2026-09-16, the UTC date, never on the exchange-local 2026-09-15
+- (difference) a valuation date before the account's first observation is TRADED_HISTORY_UNVERIFIED, while the same date covered by a retained earlier complete NO observation reads inactive
+- replaying one logical snapshot twice with different run UUIDs creates no second event and moves no date (`source_event_id` stable)
+- an older unseen snapshot is retained with TRADED_EVENT_ORDER_CONFLICT and does not roll the current state back
+- two conflicting snapshots at one `observed_at` are refused
+- same-UTC-day transitions keep every event, and the latest accepted state governs that day
+- a CORRECT_IDENTITY, CONFIRM_TRANSFER or RESOLVE_STRATEGY record without a source YES leaves the account non-live
+- a legacy CONFIRM_EFFECTIVE_MEMBERSHIP record is read as historical evidence and activates nothing
 - the dispositions key is computed only by `address("mdpf","49financial","state","taxsma_membership","dispositions.json")`
 - the module has no workbook, BD roster or trading write call site
 
@@ -261,6 +294,7 @@ the control disengaged (spine L6); those are marked "(difference)".
 - a workbook and custodian strategy disagreement is STRATEGY_CONFLICT even when the account number matches
 - 0804-4932 is never treated as a reporting master
 - (difference) a Tax-labelled custodian account absent from the workbook stays UNCONFIRMED and outside the expected set, while adding its TRADED_CLAIM row makes it expected in the same harness
+- (difference) an expected claim with no matching 0833 record stays in the expected population with MISSING_CUSTODIAN, while the same claim with its record present is EXACT_MATCH
 - a full-ID overlap against the 0824 base population for the same date yields BASE_OVERLAP
 - an unavailable base source yields BASE_OVERLAP_UNVERIFIED and never passes by absence
 - BD technical enrollment is carried on its own axis and never removes a claim from the denominator
@@ -275,15 +309,21 @@ the control disengaged (spine L6); those are marked "(difference)".
 - J: each stated cause is supported by the evidence the deliverable cites
 
 **`TX-m-4` acceptance**
-- every observation row carries exactly the contract's `valuation.history_fields`
+- every observation row carries exactly the contract's `valuation.history_fields`, `membership_date_basis` and `membership_source_event_id` included
 - values join b00 `canonical_valuation` on `account_id` and `business_date` and equal `net_mv_plus_cash` to the cent under decimal128(20,2), over a fixture with cash, long and short exposure, margin and an actual zero
 - a missing canonical row yields CANONICAL_MISSING and an explicit unavailable row, never zero
 - a duplicate canonical row yields CANONICAL_DUPLICATE
 - each of the contract's `rejected_substitutes`, supplied as an input, is unused (each enumerated)
-- `covered_accounts` counts only rows passing identity, effective membership, source date and value checks, while `expected_accounts` is computed before those filters
+- `covered_accounts` counts only rows passing identity, observed membership, source date and value checks, while `expected_accounts` is computed before those filters
+- wherever `expected_accounts` is known, `covered_accounts` + `unresolved_accounts` equals it
+- a live claim with no custodian record is counted in `unresolved_accounts` with MISSING_CUSTODIAN and is never dropped
+- a valuation date before trustworthy membership history yields TRADED_HISTORY_UNVERIFIED and no covered value, never a zero
+- membership intervals are compared to `valuation_date` as ISO calendar dates, start <= valuation_date < end, never through an exchange-local timestamp
+- `business_active_accounts` is carried into Gold from S03 unchanged and is never derived from covered rows
 - (difference) with one expected claim unresolved `complete_value` is null with reasons, while resolving it in the same harness populates `complete_value`
 - an unknown denominator is `expected_accounts` null with its reason, never 0 of 0
 - `observation_id` is stable across two runs with different run UUIDs and clocks
+- `observation_id` changes when the S03 event it rests on changes, and not otherwise
 - (difference) identical knowledge on an existing date partition is NO_CHANGE, while changed knowledge on the same date enters pending control state for the next date and mints no second leaf
 - a correction carries `supersedes_observation_id`, and the reader resolves an acyclic chain
 - the reader refuses competing corrections, duplicate ids with different payloads and a missing superseded observation
@@ -307,6 +347,7 @@ the control disengaged (spine L6); those are marked "(difference)".
 - (difference) a TAXSMA path missing the `aggregate_basis` declaration is a schema failure, while the declared path in the same harness succeeds
 - (difference) an overlapping full ID blocks the affected total, while the same fixture without the overlap completes
 - unknown or stale Tax makes the SMA, ALT Strategies, 49financial and dependent Global complete totals null with coverage, while unaffected firms keep their values
+- Tax coverage carries `business_active_accounts` and the dated expected, covered and unresolved counts as separate fields, each with its own date
 - the same-vintage before and after arithmetic control is recorded with its input hashes
 
 **`TX-a-2` acceptance**
@@ -316,7 +357,8 @@ the control disengaged (spine L6); those are marked "(difference)".
 - the withhold behavior (lines 646-660 at 1465fd3f7d) withholds an affected scope rather than zero-filling it (regression test)
 - `operational_control` is written only at `address("mdpf","49financial","state","taxsma_control","current.json")` and carries no business value (schema assertion)
 - firm category Gold resolves through `address("mdpf","49financial","gold","category_views",...)` and Global through `address("mdpf","global","gold","category_views",...)`
-- every affected node carries the contract's `categories.wire_status_fields`
+- every affected node carries the contract's `categories.wire_status_fields`, `business_active_accounts` included
+- TRADED_STATUS_UNVERIFIED, TRADED_HISTORY_UNVERIFIED and TRADED_EVENT_ORDER_CONFLICT each propagate to the affected nodes' `reason_codes` (one arm per code)
 - the expected completed session comes from `GOLD/mdpf_calendar_binding.py`, and with the calendar unavailable the run fails closed with CALENDAR_UNAVAILABLE
 - a weekend or holiday run processes corrections without minting a new valuation date
 - with the capability unconfigured the prelude records run_result DISABLED and the rest of the invocation is unchanged
@@ -334,7 +376,8 @@ the control disengaged (spine L6); those are marked "(difference)".
 - (difference) a status-only control change updates the served document while the numeric source bytes are unchanged, and the same run without the status change is NO_CHANGE
 - the control-state version is part of the publication idempotency key
 - (difference) with unchanged source hashes a missing or corrupt destination is repaired through the same key, while a matching destination is skipped
-- the served document carries `taxsma_contract_version`, document `taxsma_coverage` and node `coverage`
+- the served document carries `taxsma_contract_version` 0.4.0, document `taxsma_coverage` and node `coverage`
+- `business_active_accounts` in the served document comes from Gold, never from control state
 - the contract's `nullable_complete_fields` are null only where the complete value is unknown
 - a scan of every fixture output finds no account identifier, name or protected evidence link
 - the only served writes are `s3://opal-data-portal-v2/platinum/mdpf/49financial/category-views.json` and `.../global/category-views.json` (X7, X2), by call-site census and harness write log
@@ -371,10 +414,11 @@ the control disengaged (spine L6); those are marked "(difference)".
 | `TX-i-2` | the publisher's Tax status and firm-bucket category reads | FWD-7 (S13, opal-assets root) | `TFA/mdpf_egress_publisher.tf` | OPEN |
 
 **`TX-i-3` acceptance**
-- the plan creates exactly the capability bearer secret, named by `name()`, and one statement granting `opal-gateway-role` GetSecretValue on exactly that secret ARN
+- the plan creates exactly the capability bearer secret and one statement granting `opal-gateway-role` GetSecretValue on exactly that secret ARN
+- the secret's path is one `grade(<path>, "SECRET")` returns CONFORMANT for, canonical form printed, its system and purpose tokens taken from `NAMING_SCHEMA.json`'s secret grammar (no literal path is named in this order)
 - neither the Terraform source nor the plan output contains a secret value
 - the plan shows zero changes to every other resource in the root, `taxsma_gateway_iam.tf`'s and NFRA_OPLGTW's included
-- the ledger entry's OPEN sentinel is committed before the apply, citing 2.0.0_SA_COO~O's confirmation that no NFRA_OPLGTW apply is in flight in this root (G-S)
+- the ledger entry's OPEN sentinel is committed before the apply, citing both halves of G-S (s.6)
 - the apply runs through `safe-apply`, and the ledger entry is closed and committed before the reads below
 - (difference) from the Gateway host, GetSecretValue on the new secret succeeds for `opal-gateway-role`, while the same call on a secret the role does not hold is AccessDenied
 - DescribeSecret shows no current secret value (the value is set only by `TX-r-3`)
@@ -406,7 +450,7 @@ the control disengaged (spine L6); those are marked "(difference)".
 | `TX-c-3` | honest affected totals and real dates | FWD-5, 6 (S11) | `PSRC/pages/ModelPortfolios.tsx` | OPEN |
 
 **`TX-c-1` acceptance**
-- the accessor's category types carry the contract's value, status and date fields, and `tsc -b --noEmit` exits 0 in the portal
+- the accessor's category types carry the contract's value, status and date fields, `business_active_accounts` and `source_observed_at` included, and `tsc -b --noEmit` exits 0 in the portal
 - a document with a missing or unknown `taxsma_contract_version` yields an explicit unavailable result
 - `bun test` shows the category cache TTL is at most five minutes
 - `bun test` shows a failed or incomplete transport response is not cached
@@ -417,6 +461,8 @@ the control disengaged (spine L6); those are marked "(difference)".
 **`TX-c-2` acceptance**
 - an unknown or stale Tax leaf renders visibly with its date and reason, never hidden and never "$0"
 - a true zero, an unknown denominator and known incomplete coverage render as three different states
+- the source-dated live count and the valuation-dated expected and covered counts render as separately labelled figures, each with its own date
+- TRADED_HISTORY_UNVERIFIED renders as unknown history, never "$0"
 - the L1 zero-bucket amendment and the $10,000 display rounding are preserved for known values
 - no account identifier or name is rendered
 - the `tax` node stays under SMA under ALT Strategies
@@ -427,6 +473,7 @@ the control disengaged (spine L6); those are marked "(difference)".
 - a supplied confirmed subtotal is shown with its label, never in the complete-total field
 - displayed dates are the document's valuation, knowledge and acquisition dates, with no time of day fabricated from a date-only field
 - a missing transport or schema field yields an explicit unavailable display
+- the page never presents the current live count as the dated covered count
 - unaffected firms' figures are unchanged
 - `tsc -b --noEmit` exits 0
 
@@ -451,13 +498,15 @@ the control disengaged (spine L6); those are marked "(difference)".
 - each control arm runs engaged and disengaged in the same harness run and records what differed
 - input, fixture and output SHA-256 are recorded for every arm with the commit the harness ran at
 - a scan of every output and captured log finds no synthetic full account key outside the protected fixture files
-- the A07 route controls (wrong route, wrong method, wrong bearer, other workbook, revoked identity) fail against the Gateway app test client, while the exact-route control succeeds and is audited
+- the A07 route controls (wrong identity, wrong route, wrong method, wrong bearer, other workbook, denied or revoked access) fail against the Gateway app test client, while the exact named-identity and exact-route control succeeds and is audited
+- a Gateway guard refusal and a Graph permission denial are recorded as two distinct results
 
 **`TX-v-3` acceptance**
 - `bun test` over `taxsma-journey.test.tsx` passes the accessor and status-derivation arms
 - the fixture JSON for each display arm is `TX-v-2`'s publisher output, cited by SHA-256, never hand-written
-- for each of the six A05 display states (complete, partial, unknown denominator, stale, unavailable, true zero), the page is rendered headlessly through the installed `playwright` library and one screenshot per state is saved and read
-- the six rendered states are pairwise distinguishable in the captured DOM text
+- for each of the seven A05 display states (complete, partial, unknown denominator, unknown history, stale, unavailable, true zero), the page is rendered headlessly through the installed `playwright` library and one screenshot per state is saved and read
+- the seven rendered states are pairwise distinguishable in the captured DOM text
+- the fixture with a Schwab record removed and Traded still Yes renders an unchanged live count beside an unavailable complete total
 - no rendered page or DOM capture contains an account identifier
 
 ### S15 -- operations
@@ -471,6 +520,8 @@ the control disengaged (spine L6); those are marked "(difference)".
 - each named command is run once against `TX-v-2`'s local artifacts, with its output excerpt recorded
 - the reversal procedure is dry-run against the local harness, with the non-Tax outputs unchanged
 - the runbook commissions no alarm, watcher, email or comparator (text census)
+- the runbook names no manual initial-attestation step and no active-column request (text census)
+- the runbook separates a Gateway guard refusal from a SharePoint permission failure, with the check for each
 - J: an operator can go from a failed receipt to a verified recovery using the runbook alone
 
 ### Release and activation (S16)
@@ -479,7 +530,7 @@ the control disengaged (spine L6); those are marked "(difference)".
 |---|---|---|---|---|
 | `TX-r-1` | the backend release with Tax DISABLED and the rollout switch OFF | FWD-8 | the change-management entry and sentinel; applies `TFM` and `TFA` through `safe-apply` | OPEN |
 | `TX-r-2` | the Gateway release with the capability disabled | FWD-7 | the change-management entry and sentinel; `infra/aws/ec2/EC2_MANIFEST.json` through its deploy path | HELD (G-O) |
-| `TX-r-3` | activation: named identity, bearer value, prelude on, rollout switch on, live authorized readback | FWD-1, 7 (S16) | the protected `TAXSMA_WORKBOOK_IDENTITY` activation record; the change-management entry and sentinel | HELD (G-A, G-W, G-P) |
+| `TX-r-3` | activation: the measured first capability read under the named identity, bearer value, prelude on, rollout switch on, live authorized readback | FWD-1, 7 (S16) | the protected `TAXSMA_WORKBOOK_IDENTITY` activation record; the change-management entry and sentinel | HELD (G-W, G-P) |
 
 **`TX-r-1` acceptance**
 - the change-management entry names both functions and every task family or alias the change reaches, and its OPEN sentinel is committed before the first apply
@@ -500,11 +551,13 @@ the control disengaged (spine L6); those are marked "(difference)".
 - the ledger entry is closed and committed before the grading reads
 
 **`TX-r-3` acceptance**
-- the ledger entry cites Andrew's recorded word naming the one person and authorizing the unattended read (G-A), by path@commit
-- `TAXSMA_WORKBOOK_IDENTITY` holds exactly that person in protected configuration, and the approval reference is recorded in protected deploy evidence
+- the ledger entry cites the G-A record `org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20260915_180xZ_TAXSMA_WORKBOOK_IDENTITY_OPALBLOOMBERG_AND_ACTIVE_FIELD_MEMBERSHIP.md` @f95470f384 by path@commit
+- `TAXSMA_WORKBOOK_IDENTITY` holds the Entra tid/oid principal of `opalbloomberg@opalinvest.com` in protected configuration, with the email as display metadata, and the approval reference is recorded in protected deploy evidence
 - the never-widen sign-off (CTO and COO) naming both served keys, their writer count and each key's rollback is cited before the rollout switch turns ON (G-W)
 - the compatible consumer is promoted under its applicable authorization before the switch turns ON (G-P), cited
-- one controlled live run reads the workbook through the exact route, and the audit record shows one call with exactly the contract's audit fields
+- the configured tid/oid pair is resolved from the validated Entra principal context and recorded before the controlled read, with an email match alone refused as binding
+- one controlled read through `GET /ms/taxsma-workbook` records the identity binding, the item and the result in protected evidence without rows or tokens
+- the capability is enabled only after that controlled read succeeds; a refused read leaves it disabled and is reported, with no scope or grant change
 - the served 49financial and Global documents, read through the authorized consumer route, carry the Tax leaf with its coverage and dates
 - an unauthorized route control is refused
 - the rollback (capability disabled, switch OFF) is exercised once, and the served documents return to the pre-activation shape
@@ -552,9 +605,9 @@ single surface: `TX-p-1` (baseline), `TX-r-1` and `TX-r-2` (releases).
 served by a worker at L7 (`0.9.0_WK_MDPF_TAXSMA~<n>`). The portal cells (`TX-c-*`, `TX-v-3`) work in a portal worktree inside the
 worker's workspace worktree (the portal is a gitlink) on a worker branch; nothing is pushed.
 
-**Sovereign and person-operated acts are not cells.** Naming the workbook identity (S16's input), the never-widen sign-off and
-the consumer's promotion authorization are gates G-A, G-W and G-P (s.6); `TX-r-3` carries them out once each record exists.
-Initial membership attestation (CONFIRM_EFFECTIVE_MEMBERSHIP) is an authorized operator's act and is finding 6 (s.11), not a cell.
+**Sovereign and person-operated acts are not cells.** The workbook identity (G-A, answered), the never-widen sign-off (G-W) and
+the consumer's promotion authorization (G-P) are gates (s.6); `TX-r-3` carries out activation once G-W and G-P exist. Under v0.4
+membership is automatic from the workbook's Traded column; no person attests it.
 
 ---
 
@@ -598,8 +651,8 @@ root creates).
 **THE BINDING FACTS.** (a) The project is **narrow and deep**: one component, four heads, a 14-cell critical path, nowhere
 wider than four. The useful fan-out is the level width, not M. (b) The spine is **capture before membership before value
 before aggregation before publication**: each engine reads the previous engine's typed output. (c) Two waits sit outside any
-worker: **G-R** holds the head of the engine chain (`TX-b-1`) until 2.0.0_SA_COO~G's `gateway` row commits, and **G-A / G-W /
-G-P** hold the single leaf (`TX-r-3`).
+worker: **G-R** holds the head of the engine chain (`TX-b-1`) until LGIC_ENFORCE round 2's cell EN-r-5 drains the `gateway` row to CLOUD, and **G-W / G-P**
+hold the single leaf (`TX-r-3`).
 
 ### The distinct-worker constraint
 
@@ -620,7 +673,7 @@ The constraint binds on context, never on the slot number: a cold start is a fre
 | `~3` publication | `TX-u-1` -> `TX-u-2` -> `TX-i-2` | `TX-u-1` after `TX-a-2` |
 | `~4` consumer | `TX-c-1` -> `TX-c-2` -> `TX-c-3` | `TX-c-1` after `TX-u-1` and notice N-2 |
 | `~5` independent validation | `TX-v-1` -> `TX-v-2` -> `TX-v-3` -> `TX-o-1` | `TX-v-2` after `TX-u-1` and `TX-g-1`; `TX-v-3` after `TX-c-3` |
-| `~6` baseline, evidence, release | `TX-p-1` -> `TX-m-3` -> `TX-r-1` -> `TX-r-3` | `TX-r-1` after `TX-k-1`, `TX-u-2`, `TX-i-1`, `TX-i-2`, `TX-v-2`; `TX-r-3` after G-A, G-W, G-P |
+| `~6` baseline, evidence, release | `TX-p-1` -> `TX-m-3` -> `TX-r-1` -> `TX-r-3` | `TX-r-1` after `TX-k-1`, `TX-u-2`, `TX-i-1`, `TX-i-2`, `TX-v-2`; `TX-r-3` after G-W, G-P |
 
 **The fan-out this supports: 6 workers over M = 21 maximal paths, cap 8**, with 3 spawned at issuance (`~1`, `~5`, `~6`, one
 head each), `~2` when G-R lands, and `~3` and `~4` when their first inputs drain. Each hand-off is a fresh worktree from HEAD
@@ -635,10 +688,10 @@ fact, and its carrier is named.
 
 | id | what must exist | carrier of the rule | owner | cells it holds |
 |---|---|---|---|---|
-| **G-R** | the `gateway` row in `infra/logic/registry/systems.json`, so both source addresses resolve | CLAUDE.md Rule 30; contract `workbook.source_boundary.registry_registration` (CTO 97152: a build prerequisite, not a review wait) | `2.0.0_SA_COO~G` (registry owner) | `TX-b-1`, `TX-b-2` |
-| **G-S** | 2.0.0_SA_COO~O's confirmation that no NFRA_OPLGTW apply is in flight in the `opal-gateway` Terraform root | one Terraform state, one writer at a time (NFRA_OPLGTW decomposition s.5 state edges `OG-i-1` .. `OG-i-4`) | `2.0.0_SA_COO~O` and this seat | `TX-i-3` (its apply) |
+| **G-R** | the `gateway` row in `infra/logic/registry/systems.json`, so both source addresses resolve | CLAUDE.md Rule 30; contract `workbook.source_boundary.registry_registration` (CTO 97152: a build prerequisite, not a review wait) | LGIC_ENFORCE round 2's worker cell EN-r-5, issued by `2.0.0_SA_COO~G`; trigger: EN-r-5's drain to CLOUD, after `4.0.0_SA_CRO` re-signs LGIC_ENFORCE v1.2's brief half (CTO 97179) | `TX-b-1`, `TX-b-2` |
+| **G-S** | (a) 2.0.0_SA_COO~O's confirmation that no NFRA_OPLGTW apply is in flight in the `opal-gateway` Terraform root (given ~20:1xZ, msg 97223); (b) the root's two owner-less in-place diffs, a `description` backfill on `aws_wafv2_ip_set.opal_blocked_ips_regional_v4` and `_v6` (`waf.tf:261`, `:302`; rows NFRA_OPLGTW-W1-S1 and S3), dispositioned by their owner, so a plan shows only TAXSMA's resources | one Terraform state, one writer at a time; no worker applies another project's diff | (a) `2.0.0_SA_COO~O`; (b) `1.0.0_SA_CTO`, who holds the rows (their project NFRA_OPSEC202609 is CLOSED) | `TX-i-3` (its apply) |
 | **G-O** | NFRA_OPLGTW's first release (`OG-r-1`) deployed and read back | one Gateway host, one release in flight; `OG-r-1` carries the OAuth cutover and must not be interleaved | `2.0.0_SA_COO~O` | `TX-r-2` |
-| **G-A** | Andrew's recorded word naming the one Opal person and authorizing the unattended content read | PRD §3.9 / S16; CTO 96946 | Andrew; recorded by the seat he tells | `TX-r-3` |
+| **G-A** | SATISFIED at the cut: Andrew named `opalbloomberg@opalinvest.com` and authorized the unattended read (record @f95470f384). Workbook access is believed but UNMEASURED (@1729cef85e; MSTR 97190) and is first measured by `TX-r-3`'s controlled read | PRD v0.4 §3.9 / S16 | Andrew; recorded by 0.0.0_AB_MSTR | none |
 | **G-W** | the never-widen sign-off (CTO and COO) for turning the new served payload on, naming both keys, the writer count and the rollback | CLAUDE.md HARD STOPS, never move served output without it | `1.0.0_SA_CTO` and `2.0.0_SA_COO~T` | `TX-r-3` |
 | **G-P** | the compatible consumer promoted under its applicable authorization | contract `categories.wire_extension.rollout_rule`; the frontend freeze record @65a535f194 | the portal promotion owner on Andrew's word | `TX-r-3` |
 | **N-1** | a notice, **not a gate**: before `TX-g-1` spawns, this seat sends 2.0.0_SA_COO~O the shared Gateway surfaces (`GW/app/server.py`, the `opal-gateway` state, the release order) | NFRA_OPLGTW has 22 pending orders; 14 of its order files name `GW/app/server.py`, `EC2_MANIFEST.json`, `safe-ec2-deploy` or the `opal-gateway` Terraform root | `2.0.0_SA_COO~T` | none (it precedes a spawn) |
@@ -650,7 +703,7 @@ fact, and its carrier is named.
 
 | lens | disposition | result | what it does NOT cover |
 |---|---|---|---|
-| `comp-adversary` | RUN | `compose` on v0.3 (read-vintage @52ea4c8cac, 16:49:51Z): 14 of 14 cited commits VERIFIED; 33 cited paths, 25 stable, 8 GONE, all 8 the PRD's own PROPOSED_NEW paths; 1,764 uncited siblings, 25 shown (cap declared). The v0.2 run (@c4eeb1bcad) read 13/13 and 29/22/7 | `T11: decomposition neighborhood NOT RESOLVED` (the PRD has no `<decomp_ref>`), so the siblings are filesystem adjacency, not this decomposition's chain; a re-run against each task order at L7 resolves T11 |
+| `comp-adversary` | RUN | `compose` on v0.5 (read-vintage @7f1ab996a0, 20:05:33Z): 19 of 19 cited commits VERIFIED; 38 cited paths, 30 stable, 8 GONE, all 8 the PRD's own PROPOSED_NEW paths; 2,580 uncited siblings, 25 shown (cap declared). Earlier runs: v0.3 14/14 and 33/25/8; v0.2 13/13 and 29/22/7 | `T11: decomposition neighborhood NOT RESOLVED` (the PRD has no `<decomp_ref>`), so the siblings are filesystem adjacency, not this decomposition's chain; a re-run against each task order at L7 resolves T11 |
 | `comp-schedule` | RUN, APPLICABLE | self-test PASS 6/6. View at `--budget 1800`: within budget (507 s), **5 of 5 carriers**, C1 345, C2 6, C3 12, C4 21, C5 334; **25 gates armed, none naming MDPF_TAXSMA, the Gateway capability or a surface here.** Moratoria that bind cells: never-widen (G-15: `TX-r-3`), no half-landed deploy (G-16: `TX-i-*`, `TX-r-*`), no shadow or duplicate output (G-19: `TX-u-1`), no new monitor (G-20: `TX-a-2`, `TX-o-1`), safe-apply and safe-commit (G-22: every writing cell), cross-firm fence (G-23: `TX-i-1`, `TX-i-2`), vendor egress (G-24: no worker calls Graph; `TX-r-3` after G-A), the trading calendar (G-18: `TX-a-2`). The first run at `--budget 540` scanned 0 of 5 carriers (C1 partial over 38 worktrees) and is superseded | C4 and C5 are NOT-DECIDABLE prose carriers: 136 non-null `blocking` fields are a reading list, not gates. The gates this project creates are s.6 |
 | `comp-iam` | RUN | DESIRED plane, 472 `.tf` files. `mdpf-gold-lambda-role`: 11 statements (legacy Gold and 0824 silver reads among them); **no statement on `opal-data-49financial`**. Publisher (`opal-assets-mdpf-egress-publisher-role`): 7 operations, 6 UNRESOLVABLE-RESOURCE, 1 GRANTED-ACTION/UNGRANTED-RESOURCE (GetObject on the portal-v2 latest pointer). `opal-gateway-role`: 21 operations floor, 16 UNGRANTED (NFRA_OPLGTW test call sites), 3 UNRESOLVABLE, 2 GRANTED-ACTION/UNGRANTED-RESOURCE | Terraform only, and blind to deny: 26 policy blocks NOT ATTACHED and 2 deny statements unparsed, among them the cross-firm Deny belts. The APPLIED and EXERCISED planes are `TX-p-1`'s reads and the live arms of `TX-i-1`, `TX-i-2`, `TX-i-3` |
 | `comp-blast` | DECLARED (L4's run, cited) | PRD §5.2: `_shape_category_views` absent from the extracted graph -- a boundary, not zero impact | extracted edges only; `TX-a-1` and `TX-a-2` re-run it on each changed function at Phase 1 |
@@ -673,7 +726,8 @@ on the firm bucket; the manifest drift census (s.1 falsifier 4); the MDPF Gold s
 2. **No private data in the repository.** No client name, full account number, balance, token, cookie or delegated credential
    enters code, fixtures, deliverables or logs; masked labels and aggregate counts only.
 3. **Addresses and names from the builders.** Every new S3 key is `address()` output and every new resource name is `name()`
-   output (Rule 30). A builder refusal is a row, never a typed path.
+   output (Rule 30); a secret's path is one `grade(<path>, "SECRET")` returns CONFORMANT for. A builder refusal is a row,
+   never a typed path.
 4. **Deploy discipline.** A world-changing act opens its change-management entry and commits the OPEN sentinel before the act,
    then closes and commits the entry before the reads that grade it. Terraform through `safe-apply` only, never `-target`; the
    Gateway through `infra/aws/ec2/safe-ec2-deploy.sh` only; no `aws lambda update-function-code`.
@@ -771,17 +825,21 @@ Each is this seat's call at L5, stated so it can be argued with, and revertible 
 4. **No portal unit-test runner or DOM library is installed.** `TX-c-1` and `TX-v-3` use `bun test` for logic and the installed
    `playwright` library for renders; a missing instrument is a refusal, not a new dependency.
 5. **The consumer files moved since their manifest pins** (portal promote 12:12Z); no open branch touches them. Cells read HEAD.
-6. **The "authorized operator" who records CONFIRM_EFFECTIVE_MEMBERSHIP is unnamed.** v1 activates membership only by that
-   attestation, so production Tax reads incomplete until the eight current claims are attested. By design, but it needs a name.
-   A staffing fact for `1.0.0_SA_CTO~A`, distinct from G-A's person.
+6. **SUPERSEDED: v1's unnamed membership attester.** Andrew ~18:3xZ (@1729cef85e) made Traded the key; v0.4 has no manual
+   attestation. Carried instead: **workbook access for `opalbloomberg@opalinvest.com` is believed but UNMEASURED** -- the only
+   probe (MSTR 97190) was refused by the Gateway's per-identity tool guard before Graph. `TX-r-3`'s controlled read is the first
+   measurement, and a refusal there is a reported result, never a grant.
 7. **CRO 97162's index gap is carried:** PRD brief-coverage rows I.O3, I.O5 and I.O8 omit S19; this decomposition's own coverage
    table includes S19 under FWD-3, 5 and 8. The PRD fix waits for its next substantive bump.
 8. **The publisher role's pre-existing GRANTED-ACTION/UNGRANTED-RESOURCE finding** (GetObject on the portal-v2 latest pointer) is
    recorded by `TX-i-2`, not repaired.
 9. **Andrew's Gold-placement question remains a question** (record @1a133f12c2; 1.0.0_SA_CTO~A ACK97091; CVO N6). CTO 96960
    governs. If he rules a change, it arrives as a PRD addendum and this decomposition is recut from the round-N analysis.
-10. **Estimate, as a reading.** The machine critical path is 14 cells. At an inferred 1 to 3 worker-hours per cell, roughly 2 to 4
-    days of serial work, plus G-R (imminent at the cut) and G-A, G-W, G-P, whose timing is Andrew's. Basis INFERRED, not measured;
+10. **The `opal-gateway` Terraform root carries two owner-less in-place diffs** (2.0.0_SA_COO~O, 97223): a `description` backfill on
+    the two regional WAF IP sets, which NFRA_OPLGTW's `OG-i-1` also met and was refused on. `TX-i-3`'s "zero changes to every other
+    resource" criterion stays strict; the disposition is G-S (b), owned by `1.0.0_SA_CTO`. No TAXSMA worker applies that diff.
+11. **Estimate, as a reading.** The machine critical path is 14 cells. At an inferred 1 to 3 worker-hours per cell, roughly 2 to 4
+    days of serial work, plus G-R (EN-r-5's drain, after the LGIC_ENFORCE v1.2 re-sign) and G-W, G-P, whose timing is Andrew's. Basis INFERRED, not measured;
     no delivery date is committed.
 
 ---
@@ -789,11 +847,13 @@ Each is this seat's call at L5, stated so it can be argued with, and revertible 
 ## 12. WHAT THIS DECOMPOSITION DOES NOT CLAIM
 
 1. **No cell has been exercised.** Every target state is a specification.
-2. **The `gateway` registry row had not landed at the cut** (`address("gateway", ...)` raised ValueError at 01189c71e1).
+2. **The `gateway` registry row had not landed at the cut** (`address("gateway", ...)` raised ValueError at 7f1ab996a0).
 3. **The home of b00's `canonical_valuation` output was not re-read at the cut.** `TX-p-1` reads it.
 4. **No live IAM, schedule or served-document state was read at the cut.** `TX-p-1` reads them.
 5. **Whether the estate's rule-13 guard admits a worker serial on `data/mdpf/scripts/gold/` commits is NOT-EVALUATED.** A refusal
    becomes a blocking row and the issuer seats the owning lane for that order alone.
 6. **The boundary questions are the PRD's summary of the certified rectangle,** DECLARED, not re-read from the rectangle.
-7. **The chain count and the constraint table are readings.** M = 21 follows from the 39 edges this document declares; a missing
+7. **Whether the `mdpf-pipeline` and `opal-assets` Terraform roots carry pre-existing plan drift is NOT-EVALUATED.** `TX-i-1`, `TX-i-2`,
+   `TX-k-1`, `TX-u-2` and `TX-r-1` meet it through their "changes nothing else" criteria and refuse; none applies another project's diff.
+8. **The chain count and the constraint table are readings.** M = 21 follows from the 39 edges this document declares; a missing
    edge would show as false width.

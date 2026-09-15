@@ -5,7 +5,7 @@
   "fabric": "laptop",
   "pipeline": "mdpf",
   "status": "scoping",
-  "dep_stage": "PRD",
+  "dep_stage": "DECOMP",
   "created": "2026-09-15",
   "registered_under_tree": "2026-09-15",
   "placement": "LAPTOP",
@@ -35,7 +35,7 @@
     "OPAL_TAXROSTER",
     "OPAL_TAXSMA_REGISTRY"
   ],
-  "blocking": "v0.5 is ADMITTED: both independent halves SIGNED/current against5061a43a46, CVO2560f51f83 and CROd4b71666ff. Header/state metadata alone is finalized to RATIFIED; signed halves and every normative contract field remain unchanged. The L4 signature hold is cleared. Canonical release97212 was READ by exact COO~T at19:53:15.906645Z. COO~T owns the L5 v2 recut and subsequent one L6 issuance; the frozen v1 remains historical. This is requirements admission, not implemented or EXERCISED endpoints. G-A names the existing opalbloomberg account; actual validated tid/oid binding and workbook access remain UNMEASURED until TX-r-3 controlled proof under existing release conditions. No metadata probe, tool widening or access grant is added. CVO N5 carries gateway registry/builder evidence with EN-r-5; N6 leaves the Gold-placement question as a question, preserving96960; N8 carries NFRA_OPLGTW principal-model landing and shared Gateway sequencing. N-1/G-S/G-O/G-W/G-P remain. All seven source fields, Traded/date/count rules, storage addresses and grant scopes remain as signed. See prd/L4_ADMISSION.md and prd/L5_ROUTING.md. No runtime activation or CLOUD push performed by this finalization.",
+  "blocking": "L5 v2 complete: decomposition v2 (27 cells TX-*, 39 edges, one component, 21 maximal paths, 14-cell critical path) at decompositions/MDPF_TAXSMA_DECOMP.md by 2.0.0_SA_COO~T, recut against PRD v0.5 ADMITTED @671925aecc (signed content 5061a43a46: CVO 2560f51f83, CRO d4b71666ff); v1 @62cf5796fc is superseded, never issued. Next: 2.0.0_SA_COO~T's one L6 issuance of all 27 orders. Four cells HELD: TX-b-1 and TX-b-2 on G-R (the gateway systems.json row, via LGIC_ENFORCE EN-r-5's drain); TX-r-2 on G-O (NFRA_OPLGTW OG-r-1 read back); TX-r-3 on G-W (never-widen sign-off) and G-P (consumer promotion). G-A is answered (opalbloomberg@opalinvest.com, bound by validated Entra tid/oid); workbook access stays UNMEASURED until TX-r-3's controlled read. Drive loop armed on Andrew-direct ~19:3xZ (1.0.0_SA_CTO 97213). No task order cut, no runtime implemented and no endpoint EXERCISED by this record.",
   "fabric_ruling": "laptop inherited from D8 placement and explicitly commissioned by Andrew: 'The pipeline aspect is a D8 job, to be handled on this fabric. The workflow D9 aspect is something else.'",
   "thread_counter": 0,
   "threads": [],
