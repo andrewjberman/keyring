@@ -5,13 +5,86 @@
  "project": "POSN_ASTTAX",
  "directive": "D4",
  "fabric": "site-z",
- "prd_version": "v0.8",
+ "prd_version": "v0.9",
  "step": 4,
  "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260911_ASSET_CLASS_TAXONOMY_BRIEF.md@03f1d00ec4",
- "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6"],
+ "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7"],
  "status": "DRAFT"
 }
 ```
+
+## s.0 ADDENDUM v0.9 -- THE SATELLITES MODE, COMPLETE: EACH HOLDING'S MEASURES (FWD-7), ONLY THE CLASSES A VIEW HOLDS, THE SUMMARY'S OWN DATE
+
+**Author** `1.0.0_SA_CTO~Z` (L4, as the L10 answer to `3.0.0_SA_CVO~Z`'s round-5 slug `surprise-channel/remediations/REMEDIATION_v5.Z.md` @`1edf35dbc3`; L9 `ADJUDICATION_v7.Z.md`), 2026-09-15. **Carries** three
+Andrew-direct words at the `1.0.0_SA_CTO~Z` terminal, VERBATIM:
+- ~00:4xZ: *"There is no need to display the different legend categories if they do not appear in the view"* (record
+  `ANDREW_DIRECT_20260915_004xZ_POSITIONING_LEGEND_ONLY_PRESENT_CLASSES_AND_SATELLITES_VIEW_DEFECTS.md` @`85621749e2`)
+- ~02:1xZ: *"if none of the models/ETFs/satellites have a given asset class (e.g. Alternatives) then no Alternatives row should be
+  shown ... the Satellites section is still broken; not displaying data [Image #3] showing all the floats in this case. and no
+  characteristics or performance in the "Holdings Breakdown" panel."* (record `ANDREW_DIRECT_20260915_021xZ_...` @`65410eedaf`)
+- ~02:3xZ: *"i want to do an ad hoc pul on this and just fix it completely, we're not waiting for the next day to deal with ths."*
+  (record `ANDREW_DIRECT_20260915_023xZ_ADHOC_FIX_SATELLITES_TONIGHT_NO_WAITING.md` @`0553548fe2`)
+
+**WHAT THIS ADDENDUM CHANGES:** `ENDPOINT` gains `FWD-7` (appended at the next unused number; nothing renumbered) and the header's
+`endpoint_outcomes` gains it, so `3.0.0_SA_CVO~Z` re-signs the ratified-text half. Four constraints are added below, so
+`4.0.0_SA_CRO~Z` re-signs the brief half. Everything in v0.6 / v0.7 / v0.8 stands.
+
+**THE NEW OUTCOME (appended to ENDPOINT):**
+```
+  FWD-7  The Satellites mode shows each holding's characteristics and performance
+         DONE WHEN  EXERCISED -- the Positioning page's Satellites mode has been read
+                    and every satellite's Holdings Breakdown rows carry the same
+                    characteristic and performance columns a Models row carries,
+                    from the served satellites data, with a value wherever a source
+                    prices the ticker
+         ACCEPT     An analyst opens a satellite's Holdings Breakdown and sees each
+                    fund's fee, size, yield, beta and returns the way a model shows
+                    them -- blank only where nothing prices that holding, never a
+                    blank column.
+```
+
+**NEW CONSTRAINTS:**
+
+- **C-HOLDING-MEASURES** (FWD-7; disarm route for `Z-S132`). B4's `characteristics.json` ALSO publishes, once per artifact, a
+  `tickers` block keyed by ticker for every ticker any satellite holds: `fee`, `aum`, `active`, `yield`, `duration`, `credit`,
+  `beta`, `returns` (the input's windows) and `source`. Precedence is B4's existing per-ticker rule, unchanged: Yang's
+  `current_holdings` row, else the Bloomberg partition, else none (all NULL). Every existing field of the artifact is unchanged
+  for the same inputs. The satellite adapter attaches each row's served values to that row -- no arithmetic, no borrowing from
+  another artifact. **Measured basis (2026-09-15 ~02:5xZ):** 25 distinct tickers across the nine satellites; 23 priced by
+  Yang (all seven panel fields and returns ride its rows), GLD by Bloomberg only, CASH by neither. On the 5 tickers both sources
+  carry (DIVZ, IDVZ, PFDE, PFOE, VXX) Yang's `aum` EQUALS Bloomberg `FUND_TOTAL_ASSETS` and `fee` EQUALS `FUND_EXPENSE_RATIO`,
+  5 of 5, so the Bloomberg fallback maps `aum <- FUND_TOTAL_ASSETS` in the same unit. `active` and `credit` have no Bloomberg
+  column and publish NULL for a Bloomberg-sourced ticker. **DISCLOSED GAP:** B4's `bbg_return_columns` is `{}` -- the ETF pull
+  carries no return field -- so GLD's performance cells publish NULL; closing that is a vendor-pull change and Andrew's word.
+- **C-PRESENT-CLASSES** (FWD-3, FWD-6; disarm route for `Z-S118`, `Z-S131`). The Positioning Summary derives ONE presence set per
+  render -- the classes with a non-zero value in any column the current view draws -- and the legend, the Asset Class rows and
+  the section count list exactly that set, in `ASSET_CLASSES` order and colours. The zero-row design comment goes with the
+  behaviour. Colours stay keyed by class name, so hiding a class shifts no other colour (compatible with the laptop name-keyed
+  colour rule relayed in msg 22957). **FWD-6 READS THROUGH THIS:** its "all show the same five classes" is graded as "no mode
+  shows a class outside the five, and a class shown in two modes has the same order and colour in both"; a class no book in a
+  view holds is not shown in that view, by Andrew's word ~02:1xZ. The ratified text is not edited; this is the grading rule.
+- **C-SUMMARY-COPY** (FWD-6; disarm route for `Z-S115`, `Z-S117`, `Z-S119`). The third percent label rounds like its two siblings
+  (`PositioningSummary.tsx:1011`, `Z-S117`); the Satellites mode's footer names `holdings.json`'s `as_of` and Black Diamond as the
+  source, Models and ETFs unchanged (`Z-S119`); the Satellites subtitle and unresolved notice stop describing the removed blend
+  (`Z-S115`).
+- **C-B4-SCHEDULE** (FWD-7 on schedule; disarm route for `Z-S120` / `Z-S130`). B4's rule fires on its own clock AFTER the
+  07:00 America/New_York Bloomberg pull in both DST states -- `cron(30 12 * * ? *)` UTC (08:30 EDT / 07:30 EST) -- never
+  success-of-upstream. Andrew-direct 2026-09-10's no-wait rule applies: the deploy is followed by a driven run with an explicit
+  `bbg_as_of`, covered by its own never-widen halves; the scheduled fire is the organic leg.
+
+**THE CELLS THIS IMPLIES (guidance for `2.0.0_SA_COO~Z`'s decomposition, not a dispatch):**
+- **B6** -- `data/assets/scripts/gold/build_satellites_characteristics.py` (+ its tests) and the rule in its Terraform: the
+  `tickers` block and the schedule. Deploy through Terraform, then a driven run. Bar: every satellite ticker appears once with its
+  `source`; the prior fields parse-identical on the same inputs; the rule reads `cron(30 12 * * ? *)`.
+- **F4** -- `satelliteAdapter.ts` (+ the served-characteristics type in `satelliteSet.ts` / `satelliteRegistry.ts`): attach the
+  per-ticker values. Bar: in every displayed satellite, every Holdings Breakdown row's Characteristics and Performance cells equal
+  that ticker's served `tickers` values, a NULL rendering blank; CASH blank throughout, GLD's returns blank (the disclosed gap).
+  Depends on B6 DEPLOYED.
+- **F5** -- `PositioningSummary.tsx` and `Positioning.tsx`: C-PRESENT-CLASSES and C-SUMMARY-COPY. Bar: Models lists 3 classes
+  (Fixed Income, Equity, Structured) in the legend and the Asset Class rows; Satellites after the relabel lists 4 (Fixed Income,
+  Equity, Structured, Commodities); no raw float; the Satellites footer reads `2026-09-14` and Black Diamond.
+F4 and F5 are disjoint files and may run in parallel; B6 precedes F4's bar. Portal commits land on the round's own drain ref;
+no promote, push or gitlink move (the freeze).
 
 ## s.0 ADDENDUM v0.8 -- JEPI IS THE THIRTEENTH MEMBER (Structured / Options Income); STRUCTURED IS THE PINK FAMILY
 
@@ -213,6 +286,18 @@ ENDPOINT -- POSN_ASTTAX (confirmed by Andrew 2026-09-11)
          ACCEPT     An analyst switches between the three Positioning modes and
                     cannot find a disagreement about what the asset classes are,
                     what order they come in, or what color each one is.
+
+  FWD-7  The Satellites mode shows each holding's characteristics and performance
+         DONE WHEN  EXERCISED -- the Positioning page's Satellites mode has been read
+                    and every satellite's Holdings Breakdown rows carry the same
+                    characteristic and performance columns a Models row carries,
+                    from the served satellites data, with a value wherever a source
+                    prices the ticker
+         ACCEPT     An analyst opens a satellite's Holdings Breakdown and sees each
+                    fund's fee, size, yield, beta and returns the way a model shows
+                    them -- blank only where nothing prices that holding, never a
+                    blank column.
+         (appended v0.9 at L10 on Andrew-direct ~02:1xZ / ~02:3xZ, records @65410eedaf / @0553548fe2)
 ```
 
 ---
