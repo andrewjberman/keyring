@@ -86,8 +86,8 @@
     "ratified-text": "fb75838bf3acbd49c93627f3e9a033defcd11872e5fbd96a00b4803200c92b46",
     "brief": "4874c5a321c4b14d5482e1773243c8144e041aea6f0819b6570b25b69b0b30ab"
   },
-  "prd_sha256": "468a42dd6b54f01119d5656b7a7c6dd1e36bd749f997b2150c49f150968854fc",
-  "data_contract_sha256": "46f22835b2b91c435781850d08211f2310456dcc4b1207232b39bba77de19d63",
+  "prd_sha256": "6ba07d4682512a78a029537cee14829bfcb1b5ff1d98e5bcf6a32aad0f2a3fe1",
+  "data_contract_sha256": "033a95d97a6e2381eaff6671f365999f407493249b561aca11c87a641d4b1716",
   "ratified_text_correction": {
     "notice_id": 96985,
     "ground": "R1",
@@ -124,9 +124,34 @@
     "reviewed_data_contract_sha256": "0af07aefd485b5bda905caac89b82746a95e8ba2de62e2122198a5a04031a13f"
   },
   "admission": {
-    "status": "PENDING_CURRENT_HALF_REVIEWS",
-    "header_status": "DRAFT",
-    "authority": "CTO97152; both new half hashes need independent review; the author signs neither half."
+    "status": "ADMITTED",
+    "header_status": "RATIFIED",
+    "signed_halves_unchanged": {
+      "ratified-text": "fb75838bf3acbd49c93627f3e9a033defcd11872e5fbd96a00b4803200c92b46",
+      "brief": "4874c5a321c4b14d5482e1773243c8144e041aea6f0819b6570b25b69b0b30ab"
+    },
+    "contract_changed_fields": [
+      "state"
+    ],
+    "contract_normative_content_equal_to_reviewed_pin": true,
+    "reviewed_pin": "61748ba2e0e31276a6ac84237924508f5df1ac28",
+    "signature_commits": {
+      "ratified-text": "294bd175ce1f0cf4affc3a042b7e481aba70d691",
+      "brief": "1db20a36244aafc15ab776d01f6c0030a2263489"
+    },
+    "review_refs": {
+      "ratified-text": "org/tier1_exec/3.0.0_SA_CVO/deliverables/PRD_REVIEW_MDPF_TAXSMA_v0.3_RATIFIED_TEXT_HALF_20260915.md@1a7f21c29e",
+      "brief": "docs/briefs/sources/MDPF_TAXSMA_L4_BRIEF_REVIEW_v0_3_20260915.md@10894fdad147692de31b5fc6a7e4a4b70033c8c8"
+    },
+    "canonical_shape_violations": [],
+    "l6_signature_hold": "CLEARED under CTO97126; both current v0.3 halves are SIGNED",
+    "s02_build_prerequisite": "gateway row plus canonical builder conformance, owned by COO~G and base CTO; not a reopened L4 gate",
+    "activation_prerequisite": "S16 named-person unattended workbook-content authorization remains separate",
+    "nonblocking_followups": {
+      "CRO97161": "Add S19 to I.O3/I.O5/I.O8 coverage indexes at next substantive bump only",
+      "CVO_N5": "Re-run two gateway addresses once registry row lands; CVO grades outputs at L9",
+      "CVO_N6": "Andrew Gold-placement question remains an open question, not a ruling; existing 96960 home governs until an explicit change is ruled"
+    }
   },
   "v03_lgic_checks": {
     "checked_utc": "2026-09-15T16:32:56.309846+00:00",
@@ -157,5 +182,8 @@
     "data_contract_sha256": "46f22835b2b91c435781850d08211f2310456dcc4b1207232b39bba77de19d63",
     "l6_hold": "CTO97126: only both current v0.3 signatures; X7/X2 granted. CTO97152: gateway registration is an S02 build prerequisite, not a PRD landing or review wait."
   },
-  "registry_dependency": "gateway PLATFORM_SUBSYSTEM / D9 row is an S02 build prerequisite only under CTO97152. Pending builder refusal does not hold landing or L4-R."
+  "registry_dependency": "gateway PLATFORM_SUBSYSTEM / D9 row is an S02 build prerequisite only under CTO97152. Pending builder refusal does not hold landing or L4-R.",
+  "admission_checked_utc": "2026-09-15T17:10:49.777890+00:00",
+  "reviewed_prd_sha256": "468a42dd6b54f01119d5656b7a7c6dd1e36bd749f997b2150c49f150968854fc",
+  "reviewed_data_contract_sha256": "46f22835b2b91c435781850d08211f2310456dcc4b1207232b39bba77de19d63"
 }

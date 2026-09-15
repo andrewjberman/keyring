@@ -1,10 +1,10 @@
 # MDPF_TAXSMA - L5 seat priority and routing
 
-Author: `1.0.0_SA_CTO~A`. Updated after **CTO97073 at2026-09-15T12:55:50Z**. PRD **v0.2 ADMITTED at60c722fe64**; both current signatures remain unchanged.
+Author: `1.0.0_SA_CTO~A`. Current v0.3 admission recorded 2026-09-15T17:10:49.777890+00:00. Earlier v0.2 routing is historical.
 
 ## Current disposition
 
-**v0.3 is submitted for both current-half reviews under CTO97152.** The canonical PRD, contract0.3.0 and49-component manifest now include gateway source identity, S19 Silver between S02 and S03, and historical served addresses under granted X7/X2. The missing gateway registry row is an S02 build prerequisite only; it does not delay this landing or review. COO~T remains the round lane and can continue paper L5. L6 requires both current v0.3 signatures. S16 remains the separate named-person capability-activation condition. Earlier statements below that the private proposal waits for the row before landing are superseded by97152.
+**v0.3 is ADMITTED: both current halves SIGNED, CVO at294bd175ce and CRO at1db20a3624, against61748ba2e0. Approval metadata alone is finalized to RATIFIED; signed section bytes and all substantive contract fields remain unchanged. Under CTO97126 the signature hold on L6 is cleared. COO~T owns L5 and its subsequent canonical task-order process. The gateway row and builder readback remain an S02 build prerequisite; S16 remains a separate named-person activation prerequisite. This record does not certify decomposition, runtime implementation or EXERCISED endpoints.** CRO97161's S19 coverage-index correction is deferred to the next substantive PRD bump; CVO N6 remains a question, not a ruling.
 
 **The exact lane `2.0.0_SA_COO~T` is LIVE and is now bound in `project.json`.** MSTR97081 confirms its launch after COO~F's exit. The checked-in canonical `org/mcp/server.py:get_agent_status("2.0.0_SA_COO~T")` returned **LIVE at2026-09-15T13:20:53Z**, last seen10s ago, PID26332, working on MDPF_TAXSMA startup and L5 decomposition. This was a direct invocation of the unchanged repository function because no callable MCP status tool was exposed in this Codex session; it did not register a seat or start a server/helper. The canonical L4 notifier sent the unchanged v0.2 release as **97083 at13:22:49Z**; broker readback at13:30:03Z is **READ**, acknowledged by that exact lane at13:26:22.594818Z. The final delivery receipt is below. L5 remains owned by COO~T and is not complete merely because the session is live.
 
@@ -102,3 +102,9 @@ This supersedes every earlier pending-Andrew E1/E2 statement in the chronologica
 The exact16:30:17Z notice directs the PRD owner to land the checked amendment immediately. It explicitly moves the gateway row out of the PRD-landing path and into S02's build prerequisite. The surface bound says "address() resolves once the systems.json gateway row lands"; source identity/class/directive are closed as gateway / PLATFORM_SUBSYSTEM / D9. `LGIC_LANDING_DIRECTION_97152.md` preserves the exact instruction.
 
 The amendment changes both half hashes; the installed canonical notifier must request both independent reviews, then deliver the signed package to COO~T. This receipt is neither a signature nor L5/L6 completion. Base CTO owns the conformance rerun when the row reaches HEAD. Existing X7/X2 approvals need no further decision from Andrew.
+
+## Current v0.3 admission and release, 2026-09-15T17:10:49.777890+00:00
+
+v0.3 is ADMITTED: both current halves SIGNED, CVO at294bd175ce and CRO at1db20a3624, against61748ba2e0. Approval metadata alone is finalized to RATIFIED; signed section bytes and all substantive contract fields remain unchanged. Under CTO97126 the signature hold on L6 is cleared. COO~T owns L5 and its subsequent canonical task-order process. The gateway row and builder readback remain an S02 build prerequisite; S16 remains a separate named-person activation prerequisite. This record does not certify decomposition, runtime implementation or EXERCISED endpoints.
+
+Both signature pins and their full unchanged hashes are recorded in L4_ADMISSION.md. The canonical notifier released97165 from CTO~A to COO~T at the CVO signature pin294bd175ce. A live read before metadata finalization returned OFFER-EXHAUSTED; READ remains unclaimed. The author will send the finalized metadata pin to the same lane and request acknowledgement of97165. This is the existing canonical handoff, not a new worker dispatch.
