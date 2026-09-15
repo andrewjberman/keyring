@@ -326,6 +326,79 @@ worker's id is `POSN_AGGFIX-Z-W<slot>-S<k>`, a seat's `POSN_AGGFIX-Z-S<k>`.
     "spec_asserts": "TO-C1-1 C1-AC9 and decomposition s.1.2: the plan -target'ed to the function and the distribution reads 'Plan: 0 to add, 2 to change, 0 to destroy' with aws_wafv2_web_acl absent (the whole-root WAF drift 'kept out of your targeted plan'); anything else is Branch B -- STOP, BLOCKING row, the COO half's rollback.",
     "world_is": "While the WAF drift stands, no plan targeted to the distribution can exclude it, so C1-AC9 as written cannot pass. Not run: C1-AC17, C1-AC10, C1-AC11, C1-AC12, C1-AC13, C1-AC14, C1-AC15. The live function and all 25 associations are at version 19; ledger entry posn-aggfix-r1-edge-gate stays OPEN with L1 and L2 closed.",
     "notes": "INERT: left alone, nothing serves differently. Residual of rolling back by copy: the latest artifact VersionId (7AkZ0z...) differs from the one in state (GUSk3...), so the NEXT portal-auth apply by any seat publishes a new version carrying the OLD code, re-points all 25 associations to it, and applies the WAF drift with it. Restoring the exact prior latest version would need a delete of object versions zNqzz... and 7AkZ0z..., an S3 delete this worker does not make without human confirmation. How the plan is re-cut is the issuer's."
+  },
+  {
+    "id": "POSN_AGGFIX-Z-W2-S5",
+    "project": "POSN_AGGFIX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_AGGFIX~2",
+    "surfaced_at": "2026-09-15T21:14:00Z",
+    "one_line": "The order's serial-file line writes org/mcp/sessions/<session>.serial in the MAIN workspace, but safe-apply run from the linked worktree roots the halt gate at the worktree (.tools/..), which has no org/mcp/: C1-AC10 refused rc=3 IDENTITY UNRESOLVED. The same root sets the inbox the gate scans, and an absent inbox reads as no messages. The worker set HALT_GATE_REPO_ROOT to the main workspace; the gate then admitted the worker, scanned issuer 2.0.0_SA_COO~Z, refused rc=1 on 182 routine messages, and passed with HALT_ACK=1 after the worker reviewed all 182.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/halt-gate-check.sh @31995abe76 :38 HALT_GATE_REPO_ROOT defaults to the directory above .tools/ (the worktree); :39 HALT_GATE_INBOX_ROOT = <root>/org/mcp/inbox; :57 the serial file is <root>/org/mcp/sessions/<session>.serial; :248-250 halt_gate_unread_for returns no files when the inbox directory is absent; :400 an empty scan passes silently; :439 HALT_ACK set -- messages acknowledged.",
+        "C1-AC10 run 1, 2026-09-15T20:43:18Z (serial written to the main workspace path, as the order says): 'HALT-GATE: IDENTITY UNRESOLVED -- BLOCKED (fail-closed)', safe-apply rc=3; list-versions after: 19 versions, nothing applied.",
+        "C1-AC10 run 2, 2026-09-15T20:46:35Z, HALT_GATE_REPO_ROOT=/c/Users/Opal Bloomberg/Desktop/ajb_workspace (main HEAD 0c4650dc1c, order <status>staged</status> there): 'worker 0.9.0_WK_POSN_AGGFIX~2 has no inbox; scanning its issuer 2.0.0_SA_COO~Z', 'HALT-GATE: 182 pending message(s)', 'blocked ... re-run with HALT_ACK=1', rc=1 at 20:50:57Z; nothing applied.",
+        "Review of the 182 (parsed from the gate's own listing, cross-checked by a direct subject count over org/mcp/inbox/2.0.0_SA_COO/*.md: 182 unread, 0 subjects starting [STOP] or [HALT]): 171 from deploy_ledger.py (automated RED/WARN/HELD-STALE ledger scans, 16 to 39 days old, 12 distinct ledger slugs, none naming posn, aggfix, portal, auth, edge, waf or cloudfront); 11 from 4.0.0_SA_CRO~W (Andrew-direct harvest items); 0 word-bounded subject hits for POSN, AGGFIX, portal-auth, auth-validator, edge, WAF, cloudfront, STOP, HALT or freeze.",
+        "C1-AC10 run 3, 2026-09-15T20:55:12Z, HALT_ACK=1 with the same root: 'HALT-GATE: HALT_ACK set -- messages acknowledged. Proceeding.', comp-tagauthz gate PASSED, tombstone gate CLEAN, 'Apply complete! Resources: 0 added, 3 changed, 0 destroyed.' rc=0 at 21:05:00Z.",
+        "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~19/rj10.apply.txt @0c4650dc1c :1 then :30: the issuer-scan line for 2.0.0_SA_COO~W, then 'Apply complete!' with no pending-message block, although that issuer's base inbox is the same 2.0.0_SA_COO."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-C1-1 IDENTITY AND THE FIRST ACT: immediately before the first safe-apply, printf the serial to /c/Users/Opal Bloomberg/Desktop/ajb_workspace/org/mcp/sessions/${CLAUDE_CODE_SESSION_ID}.serial; C1-AC10 runs .tools/safe-apply.sh from the worktree with the halt-gate checkpoint output pasted above the apply summary.",
+    "world_is": "From a linked worktree the gate reads its serial, its worker-admission tree and its inbox under the worktree unless HALT_GATE_REPO_ROOT is set. With the serial in the main workspace it refuses; a serial copied into the worktree would give the gate an identity and an absent inbox, so it would pass without reading any STOP. The worker's runs 2 and 3 set the root to the main workspace; run 3 also set HALT_ACK=1 after the review above. The invocation and the plan file were unchanged.",
+    "notes": "Form only. Not measured: which root the AMGT_RESAPP~19 gate used, or whether any other worker's safe-apply from a worktree passed on an absent inbox. HALT_ACK moves no inbox file; the 182 messages remain unread in the issuer's inbox."
+  },
+  {
+    "id": "POSN_AGGFIX-Z-W2-S6",
+    "project": "POSN_AGGFIX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_AGGFIX~2",
+    "surfaced_at": "2026-09-15T21:14:00Z",
+    "one_line": "C1-AC11 cannot read 'No changes': after the apply, the targeted re-plan still reads 'Plan: 0 to add, 1 to change, 0 to destroy', the one change being the same three WAF managed_rule_group_statement version '' -> null leaves the apply carried. The live WebACL did not move (same LockToken, every rule field equal), so the provider re-plans this normalization on every plan of the portal-auth root.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "C1-AC11, 2026-09-15T21:05:42Z, the order's invocation verbatim, rc=0: '# aws_wafv2_web_acl.opal_cloudfront_protection will be updated in-place', 'Plan: 0 to add, 1 to change, 0 to destroy.'; the text diff removes and re-adds the rules common-rule-set, ip-reputation and known-bad-inputs with '(1 unchanged attribute hidden)' in managed_rule_group_statement.",
+        "Supplementary saved re-plan, same targets, 2026-09-15T21:10:12Z, terraform show -json .scratch/c1_replan_after.tfplan: 14 resource_changes, 1 with an action (aws_wafv2_web_acl.opal_cloudfront_protection update); exactly 3 changed leaves /rule/3|4|5/statement/0/managed_rule_group_statement/0/version from \"\" to null; each of the three rules equal before and after once version is masked; aws_lambda_function.auth_validator_edge[0] and aws_cloudfront_distribution.portal no-op.",
+        "C1-AC10 apply 2026-09-15T20:55Z..21:05Z: 'aws_wafv2_web_acl.opal_cloudfront_protection: Modifications complete after 22s' inside 'Apply complete! Resources: 0 added, 3 changed, 0 destroyed.'",
+        "C1-AC19 (20:42:21Z) and C1-AC20 (21:06:16Z), wafv2 get-web-acl: LockToken 848a6d0b-d69f-40e0-876a-cfc0ce40b6b2 on both reads; 'WAF RULES UNCHANGED 6 of 6'; the three managed rules' Version absent on both sides.",
+        "infra/aws/terraform/portal-auth/waf-cloudfront.tf @31995abe76 :183-185, :202-204, :221-223: each managed_rule_group_statement sets vendor_name and name and no version."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-C1-1 C1-AC11: the targeted re-plan after the apply reads 'No changes. Your infrastructure matches the configuration.'; AMENDMENT 2 treats the WAF normalization as a one-time in-place change inside the act.",
+    "world_is": "The apply changed nothing on the live WebACL and the normalization does not converge: while the config leaves version unset and the API returns none, every plan that includes this WebACL (targeted to the distribution, or whole-root) shows the same 1 change. C1-AC11 as written cannot pass. C1-AC12 (25 of 25 at version 20), C1-AC13 (30 of 30) and C1-AC20 (6 of 6) read as expected, so the served act is Branch A under both halves and was not rolled back.",
+    "notes": "Form only. INERT: re-applying it moved no live WAF field on this run. Not measured: the provider version's handling of an absent Version, or whether a whole-root plan shows anything else. How C1-AC11 is re-cut is the issuer's. After this finding the issuer re-cut C1-AC11 (TO-C1-1 AMENDMENT 3 @b2628856f5, on 1.0.0_SA_CTO~Z msg 23255) to accept exactly this one-address, three-leaf residual; the worker records C1-AC11 against that expectation."
+  },
+  {
+    "id": "POSN_AGGFIX-Z-W2-S7",
+    "project": "POSN_AGGFIX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_AGGFIX~2",
+    "surfaced_at": "2026-09-15T21:20:00Z",
+    "one_line": "C1-AC14's recorder refused rc=2 on its first run on this device: record-terraform-deploy.sh:511 runs the scoping tool through an UNQUOTED $SCOPE_PY, and command -v python3 resolves to /c/Users/Opal Bloomberg/bin/python3, so the path splits at the space ('/c/Users/Opal: Is a directory'). The worker re-ran the identical invocation once with the 8.3 form /c/Users/OPALBL~1/bin first on PATH; the record then committed (5419bca04f).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/ci/record-terraform-deploy.sh @31995abe76 :493 SCOPE_PY=\"$(command -v python3 || command -v python)\"; :511 'if ! $SCOPE_PY \"$SCOPE_TOOL\" \"$PIPELINE\" --terraform \"$TF_LOCAL\" --timestamp \"$TIMESTAMP\" $SCOPE_ARGS; then' -- $SCOPE_PY unquoted.",
+        "C1-AC14 run 1, 2026-09-15T21:12:11Z, the order's invocation verbatim: 'record-terraform-deploy.sh: line 511: /c/Users/Opal: Is a directory', 'ERROR: scoped source-map record refused or failed', rc=2; git show --stat HEAD still 31995abe76 (1.0.0_SA_CTO~Z's commit), the auth-validator-edge row unchanged (26ffa22b79).",
+        "Device read 2026-09-15T21:15Z: command -v python3 -> /c/Users/Opal Bloomberg/bin/python3; cygpath -d of its directory -> C:/Users/OPALBL~1/bin (printed with backslashes), which lists python3.",
+        "C1-AC14 retry 1 of 1, 2026-09-15T21:15:31Z, PATH=/c/Users/OPALBL~1/bin:$PATH, same invocation: 'SCOPED DEPLOY RECORD ... + auth-validator-edge 26ffa22b79 -> 240fe36222', 'stamped 1 of 7 rows under portal-auth'; committed [wk-posn_aggfix-1-2 5419bca04f] 'ci: record deploy portal-auth @ 31995abe [skip ci]'; git show --stat HEAD lists infra/aws/lambda/ci/lambda-source-map.json only.",
+        "Same run: the CHANGELOG helper is JavaScript handed to python3 ('SyntaxError: unterminated string literal (detected at line 18)', 'Note: CHANGELOG.json write failed'), the defect row POSN_ASTTAX-Z-W23-S4 already carries; the entry was written by hand."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-C1-1 C1-AC14: timeout 300 bash infra/aws/lambda/ci/record-terraform-deploy.sh portal-auth --plan <c1.tfplan> --author <worker>; the recorder's commit verified by git with auth-validator-edge's last_deployed_commit moved.",
+    "world_is": "On this device the recorder cannot reach its scoping step while python3 resolves under the spaced user profile, so it refuses before writing anything. With PATH rooted at the 8.3 short name the same invocation records the deploy. The recorder's code was not changed.",
+    "notes": "Form only. Not measured: whether any other call site in record-terraform-deploy.sh expands an interpreter path unquoted, or how other devices resolve python3."
   }
 ]
 ```
