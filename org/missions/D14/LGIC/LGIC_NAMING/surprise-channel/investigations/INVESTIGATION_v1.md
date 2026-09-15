@@ -1006,6 +1006,28 @@ new row on 3.0.0_SA_CVO's ask 96495), both 1.0.0_SA_CTO; `LGIC_NAMING-S3`, `LGIC
     "spec_asserts": "1.0.0_SA_CTO's 96826: 'At your issuance commit, the gate reads the signatures committed before it, never a file staged or left on disk' (prd_signoff_lib reads signoff files as committed at HEAD, @3e8cf9e288).",
     "world_is": "In a linked worktree's commit hook, LIMB 6 reads no sign-off for a PRD whose halves are both SIGNED at HEAD. CLAUDE.md Rule 14b sends a multi-file commit to its own worktree, which is exactly where this refuses.",
     "notes": "INERT for this round: the issuance landed from the primary. Owner of the reader: 1.0.0_SA_CTO (row S14's change). Round 2's issuance, before @3e8cf9e288, did not meet it. Cost until fixed: every tree issuance from a linked worktree refuses at LIMB 6."
+  },
+  {
+    "id": "LGIC_NAMING-W1-S7",
+    "project": "LGIC_NAMING",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_NAMING~1",
+    "surfaced_at": "2026-09-15T07:20:57Z",
+    "one_line": "TO-LN-e-1-r3 names its result file namer-a.result.md beside the proof instance in deliverables/0.9.0_WK_LGIC_NAMING~1/, which is the path that already holds round 2's result for the complete order TO-LN-e-1-r2 (@eaafb46486, amended @e8490dcbfb). Writing it as ordered replaces round 2's record at HEAD.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "TASK ORDER: org/missions/D14/LGIC/LGIC_NAMING/task-orders/LGIC_NAMING.TO-LN-e-1-r3.namer-a.md @6705066c68, <proof_of_spec>: 'Result file `namer-a.result.md` beside it.' The instance path it names is deliverables/0.9.0_WK_LGIC_NAMING~1/LGIC_NAMING.TO-LN-e-1-r3.namer-a.proof_of_spec.json.",
+        "EXERCISED: git log --format='%h %an %s' -- org/missions/D14/LGIC/LGIC_NAMING/deliverables/0.9.0_WK_LGIC_NAMING~1/namer-a.result.md at worktree HEAD 6705066c68 printed two commits: 'e8490dcbfb 0.9.0_WK_LGIC_NAMING~1 row(LGIC_NAMING-W1-S6, ...)' and 'eaafb46486 0.9.0_WK_LGIC_NAMING~1 work(LGIC_NAMING.TO-LN-e-1-r2, ...)'. At HEAD the file opened '# LGIC_NAMING.TO-LN-e-1-r2 -- namer A, round 2, in a clean-context seat -- result'.",
+        "PIN: the round-2 instance deliverables/0.9.0_WK_LGIC_NAMING~1/LGIC_NAMING.TO-LN-e-1-r2.namer-a.proof_of_spec.json @6705066c68 lists namer-a.result.md with commit_or_etag eaafb46486, so its pin still resolves to round 2's bytes by commit. TO-LN-e-1-r2's <status> reads complete at HEAD."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-LN-e-1-r3 <proof_of_spec>: 'Result file `namer-a.result.md` beside it', meaning beside the instance in deliverables/0.9.0_WK_LGIC_NAMING~1/.",
+    "world_is": "That path already held a committed record of a different, terminal order (TO-LN-e-1-r2's result, @eaafb46486 and @e8490dcbfb). The order does not say to replace another order's record, but writing the named file does exactly that. The file was written as ordered, so at HEAD it now holds round 3's result, and round 2's text is reachable only by commit.",
+    "notes": "Filed on form only: the order had the worker do a thing it did not say. The next round's result name, and whether round 2's record should have been kept at its own path, are for 2.0.0_SA_COO~G and 3.0.0_SA_CVO. Nothing was renamed or restored."
   }
 ]
 ```
