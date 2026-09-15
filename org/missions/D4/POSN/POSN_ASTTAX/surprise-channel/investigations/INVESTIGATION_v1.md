@@ -6314,6 +6314,29 @@ Andrew asked for (msg 22917); it concerns this project's portal files meeting an
   "spec_asserts": "TO-W3-1 act 1: \"over every column the current view draws -- the books portfolio values; the benchmark values when the Benchmark or Relative view is on; the custom column when the blend is valid\"; PRD v0.9 C-PRESENT-CLASSES: \"the classes with a non-zero value in any column the current view draws\".",
   "world_is": "THE ORDER'S READING IS WHAT IS IMPLEMENTED (its own instruction: never two readings in code). Measured on the served bytes: every benchmark allocation has structured = 0 while the LT and ULT portfolio columns carry 1.5 and 2.0, so the Benchmark view renders a 3-entry legend and a Structured row of five zeros. BENCHMARK-ONLY CLASSES in today's bytes: none (the empty set), which is why W3-AC5's \"a class present only in the benchmark column appears\" has no live witness and W3-AC3 case (a) carries that edge instead.",
   "notes": "For L9/L10: keeping the portfolio columns in the set means a reader in Benchmark view sees the class the BOOK holds even where the benchmark holds none, which is arguably the intent; the narrower reading would hide a class the model is actually exposed to the moment the view is flipped. Named, not decided."
+},
+{
+  "id": "POSN_ASTTAX-Z-W26-S7",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~26",
+  "surfaced_at": "2026-09-15T05:07:00Z",
+  "one_line": "A SPARSE-CONE WORKER WORKTREE CANNOT RUN THE MANDATED COMMIT GATES, and each one fails CLOSED on a path the cone does not carry rather than on anything the commit contains. The round-6 worktree was cut with the cone {.tools, docs/doctrine, org/critical_paths, org/missions/D4/POSN/POSN_ASTTAX, org/standards}; safe-commit.sh refused FOUR times in a row, each time naming a DIFFERENT absent path, and every refusal was correct.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "The four refusal texts are in this worker session log; each names its own missing path and each aborted the commit with \"files unstaged\".",
+      "MEASURED SIZES before widening (git ls-tree -r --long HEAD): org/modules/graph 408 files / 18 MB; org/surprise_channel/schemas 2 files / 19 KB; org/missions 2261 files / 56 MB; org/projects 458 files / 4.4 MB. org in full is 21276 files / 830 MB and was NOT added.",
+      "AFTER: the cone reads .tools, docs/doctrine, org/critical_paths, org/missions, org/modules/graph, org/projects, org/standards, org/surprise_channel; safe-commit rc 0 twice (2191049ef1, 338b08b06d).",
+      "SIDE EFFECT WORTH NAMING: with org/projects absent, proof-of-spec-check.py read \"dep_stage=ABSENT (not pipeline-registered)\" for POSN_ASTTAX and would have treated <decomp_ref> as OPTIONAL; with it present the same instance reads \"dep_stage=EXECUTING\" and the decomp_ref limb ENFORCES. The instance was re-validated after the widening (VALID rc=0 both ways)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CLAUDE.md Rule 14 (every .py edit passes .tools/commit-gate.sh, UNIVERSAL and fail-closed) and Rule 14a (commit via safe-commit.sh); the task order says the worktree is a sparse cone at the issuance commit and must not be re-created.",
+  "world_is": "The four refusals, in order: (1) commit-gate -- ModuleNotFoundError: No module named \"comp_constants_cli\" (commit_gate_runner.py imports it from org/modules/graph, 408 files / 18 MB, outside the cone); (2) surprise-row-gate -- FileNotFoundError on org/surprise_channel/schemas/investigation_item.schema.json (2 files / 19 KB); (3) the same gate STANDING CORPUS pass -- FileNotFoundError on another project channel file (org/missions/D0/NFRA/NFRA_CLDGRPH/surprise-channel/investigations/INVESTIGATION_v1.md; it grades the WHOLE corpus, 76 channel files under org/missions plus 32 under org/surprise_channel); (4) the tree-index limb -- 17 INDEX-MISSING violations, one per project with no org/projects/<CODE>.json (458 files / 4.4 MB). REMEDY TAKEN: `git sparse-checkout add` for org/modules/graph, org/surprise_channel, org/missions and org/projects -- a WORKTREE CHECKOUT change, no repo edit, no gate bypassed, the audited \"# surprise-row-override\" path NOT used. The gates then ran and passed, and the corpus pass graded 240 rows (6 new, 234 pre-existing).",
+  "notes": "For the COO cutting worker worktrees: a cone of {.tools, docs/doctrine, org/critical_paths, <project home>, org/standards, org/modules/graph, org/projects, org/surprise_channel, org/missions} is what the commit path actually needs today -- the last four are what this worker had to add. The alternative (the audited override) would have SKIPPED a real control rather than running it."
 }
 ]
 ```
