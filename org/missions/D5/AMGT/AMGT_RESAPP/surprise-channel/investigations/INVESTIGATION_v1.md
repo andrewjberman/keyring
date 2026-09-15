@@ -5261,6 +5261,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "AMGT-rj-13: 'measure actual delivery, quality, latency and cost' (the CRO brief's acceptance); S-1 cost: {usd, unit}; measure.py OBSERVABLES['cost']: 'the account's usage delta -- read Bright Data's usage/billing figure before the trigger and again after'.",
     "world_is": "The usage-delta instrument measure.py planned needs a key permission this estate key does not hold. A later feed cell either gets a billing-scoped read (a change to the key's permissions in the vendor console, which is an account act outside the estate), or reads cost off the vendor's invoice by hand; neither exists at this cut. Read again at COMPLETION: the ready payload carries seven keys -- avg_duration_per_input, collection_duration, dataset_id, errors, records, snapshot_id, status -- and still no cost.",
     "notes": "Filed as form. The cost the record CAN state today is the held unit-price estimate (usd 0.075 for 50 records at usd 0.0015), which is a guard input, never a measurement."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W22-S8",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~22",
+    "surfaced_at": "2026-09-15T17:05:00Z",
+    "one_line": "THE MEASUREMENT a later feed cell needs: one Reddit keyword job for BA_US_Equity delivered 48 records against a cap of 50 in 713.4 s (vendor collection_duration 709.9 s), 48 of 48 valid under the existing contract, 0 of 48 admitted by the existing item rule (22 REFUSE, 26 PROVISIONAL), 2 of 48 outside the 30-day window, 0 vendor errors, and a cost that cannot be measured with this key (held estimate usd 0.075).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The graded AC2 run, literal invocation, 2026-09-15 16:56:43Z, rc=0: 'JOB id=sd_mu2wf4v3biieffcle submitted_at=2026-09-15T16:41:05Z RESUMED ... no new discovery submitted' / 'POLL ... final_vendor_status=ready vendor_reported_records=48 state=COMPLETE' / 'DELIVERY records=48 valid=48 invalid=0 admitted=0 rejected_by_rule=22 provisional=26 stale=2 fresh=46 capped=False' / 'LATENCY 713.4 seconds'. The first run of the same invocation, 16:41:03Z, printed 'JOB id=sd_mu2wf4v3biieffcle submitted_at=2026-09-15T16:41:05Z persisted-before-polling ... resumed=False' and ended STILL_RUNNING; runs 2-5 resumed and ended STILL_RUNNING; run 6 at 16:52:45Z was the first to read ready.",
+        "GET /datasets/v3/progress/sd_mu2wf4v3biieffcle after completion -> 200 {status: ready, records: 48, errors: 0, collection_duration: 709920, avg_duration_per_input: 354960}.",
+        "Served S-1 record s3://opal-data-harvest/social/v1/_measurement/2026-09-15.json, 12088 bytes, Metadata document-sha256 ad459b40bbbb7c71e3a66f78cf7e48a2fa0f73e66d5127b2c74d29908f23d424, schema-version 1; copy beside the proof at deliverables/0.9.0_WK_AMGT_RESAPP~22/social_measurement_BA_US_Equity_2026-09-15.json (same sha256).",
+        "Job log deliverables/0.9.0_WK_AMGT_RESAPP~22/social_jobs/BA_US_Equity_2026-09-15.items.json, 48 of 48 items: keyword 'BA' n=25 -> REFUSE 22, PROVISIONAL 3, stale 0, 22 distinct communities, the largest BritishAirways (3), UniversityofAllahabad (2), AskIndia, businessanalyst, AskPinay, CollegeRant, JobsPhilippines, Flights; keyword 'Boeing' n=23 -> PROVISIONAL 23, stale 2 (both posted 2026-08-15), 10 distinct communities, the largest boeing (9), aviation (3), SPEEA (2), Boeing_ (2), AskReddit (2)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT-rj-13 deliverable 3: 'A row for the finding, whatever it is: the measured delivery, quality, latency and cost are the numbers a later round's feed cell needs; the header's social half stays no source measured until that cell (rj-9 renders it so)'.",
+    "world_is": "DELIVERY: the declared method works on this account -- one job, one snapshot id, 48 records, 0 errors, COMPLETE. QUALITY: the existing item rule cannot PASS a single Reddit record, by construction -- the vendor record's 30 keys carry no per-post subject, so primary_subject is None on every item; the ticker arm is almost entirely NOT Boeing (British Airways, Bachelor of Arts degrees, business analysts) and the rule refuses 22 of its 25 as contains-the-string, which is the ambiguous-ticker control the CRO brief asks for, working; the company-name arm's 23 sit in plainly Boeing communities and all read PROVISIONAL, not PASS. Every author is UNRESOLVED, so validator.attach_to_security refuses all 48 (the brief's point 4, measured). CAPPED: delivery.capped is false because the job total 48 is under 50, but the BA input returned 25 of its own per-input limit of 25 -- that arm WAS truncated; the flag is job-total by construction. LATENCY: the job became ready between about 578 s (the last running poll) and about 702 s (the first ready poll) after submission, anchored on the shell start stamps; 713.4 s is recorded, including retrieval, against the vendor's own 709.9 s. A synchronous page read cannot wait for this. COST: absent (row S7). WINDOW: the vendor's Past month returned 2 posts from 2026-08-15, one day before the local window start (row S5).",
+    "notes": "Filed as form, not significance. The header's social half stays 'no source measured' until a later round's feed cell; nothing here is a feed, and nothing was scheduled. No second retrieval is owed: the job is COMPLETE, and the record carries the documented retrieval flow and the ledger path. ONE job was submitted in this cell; every later invocation resumed it."
   }
 ]
 ```
