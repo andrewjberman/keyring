@@ -38,3 +38,9 @@ The Barron's publisher contract now enables its existing bounded automatic verif
 The validation used its own local catalog, one body target and three discovery candidates, retaining 15–25-second pacing. Its article was not uploaded. The Windows publication task remained Disabled with zero triggers; recurring collection and automatic article uploads remain false. No broad backfill was run.
 
 The earlier five-publisher commissioning and S3 upload receipts remain separate evidence in `HARVEST_COMMISSIONING_20260915_W.md@e07048dc32`; this new run does not claim to repeat them. The present change closes the previously outstanding worker verification-replay integration. Collection breadth/depth, publisher continuation cursors and the discussion spec's aboutness/Chatter coverage choices remain with the planned mechanism discussion.
+
+## Release and handoff
+
+Implementation committed locally at **8b11d236c4**. The allowlisted **38-file** code/contract archive and manifest were uploaded with independent GET/hash readbacks using the canonical release builder to `s3://opal-data-harvest/lib/local-publications/0.1.0/b96103efe25c8f01/`. Archive SHA-256: `b96103efe25c8f0191105aeb42014147bde5a1837f965245a1c8adf5eae8a92e`. Receipt: `.runtime/opal-data-harvest/release-20260915T1450Z/receipt.json`. This was an explicit code upload, not activation of automatic article uploads.
+
+The bounded commissioning handoff now combines the earlier five-publisher qualification/storage/scheduler receipts, the two genuine Barron's slider passes and this normal-worker replay acceptance. It is ready for Andrew's mechanism/cadence discussion under those stated limits; it is not proof of exhaustive backfill, unattended longevity, substantive article aboutness or a completed RESAPP application. The remediation execution ends at that handoff condition; no repeating wake timer is claimed.
