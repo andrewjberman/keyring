@@ -436,3 +436,20 @@ it need not ship; the CTO RECOMMENDS HOLDING it out of today's merge (nothing in
 rj-1/rj-9 fix and reshape the page this round; two prod changes for one page otherwise); if Andrew wants it visible today,
 `9aef3734` is the ref, defects stated in the release disposition. A recommendation with its facts, not a gate; Andrew's call.
 Push state: LOCAL.
+
+---
+
+## ADDENDUM 13 (13:1x-14:1xZ) -- Andrew asked whether the PRD carries the transcript (yes); the Barron's retrial; the CRO's technical spec read against v0.8
+
+Andrew, at this terminal ~14:0xZ: *"have you expanded on the AMGT_RESAPP PRD with my new transcript and info/"* -- answered yes with
+what v0.8 carries (FWD-16..19, ten contracts, the memo's five parts, the provenance and coverage maps) and the one open item
+(the drained page's promote, his call). At `4.0.0_SA_CRO~W`'s terminal: *"let's trial barron's"* / *"take screenshots its a click
+drag captcha"* -> two independent slider passes with no operator input (@`9118d18e4f`), closing this seat's open call on the
+slider's independent test; and *"spec out the various technical implementations and lets discuss"* -> the spec @`2778e07199`.
+The CTO's read of the spec, sent to the CRO lane for the discussion: nothing amends the signed PRD mid-round; four gaps classified
+(the chart's numeric points and the CSC basis labelling are L10-addendum candidates at the round-11 slug; the 501 refresh is a
+round-12 cell on the existing request carrier; the reader/generation seam is rj-9/rj-10's cell text); on the five decisions,
+where the ratified text already answers (distinguishable partial coverage; the most similar comparable or PENDING; the pool
+average over the union universe with denominators) that answer is named so Andrew decides against a known baseline. Round 11 at
+5 of 13 complete (rj-1, rj-4, rj-5, rj-6, rj-7). The 13:00Z promote passed on the laptop; the site-Z gitlink is unmoved by
+design; no word on the AMGT ref reached this seat. Push state: LOCAL.
