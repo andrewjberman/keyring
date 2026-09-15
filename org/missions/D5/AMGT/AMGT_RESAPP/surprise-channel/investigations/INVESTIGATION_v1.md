@@ -4241,6 +4241,60 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "Z-S89 (2.0.0_SA_COO~W, 2026-09-15T00:58Z): 'HEAD's infra/aws/terraform/harvest/s3.tf NAMES A DELETED BUCKET, AND THE UNCOMMITTED TWO-LINE EDIT IN THE SHARED TREE IS THE MIGRATION'S OWN STEP 2 AND THE LIVE GUARD'; disarm_owner 4.0.0_SA_CRO~Z. The 20260911T1915Z ledger addendum @160ca062c5: 'the edit stays in the shared working tree, UNSTAGED, as the live guard ... Convergence route: an in-lane AE seat commits the two lines ... OR 2.0.0_SA_COO~W's round-10 producer cell carries s3.tf in its <paths> ... and the drain merges identical content.'",
     "world_is": "The second convergence route ran: ea6cd450fa (worker ~17, ri-2) carries the file on the harvest name and 5c95c00268 drained it; HEAD == working tree for the file. The guard is no longer needed because the thing it guarded against cannot be planned from HEAD.",
     "notes": "Disarm by the row's owner as a NEW citing row; Z-S89 is not edited. The 20260911T1915Z harvest ledger gets a dated closure line in the same commit (org/critical_paths, lane ANY). The lesson the ledger already carries stands: a Terraform step names its commit hash or it is not done. Nothing else on AMGT_RESAPP is this seat's; the L8/L9 grade of this disarm is 3.0.0_SA_CVO~W's as it reads the channel."
-  }
+  },
+  {
+      "id": "AMGT_RESAPP-Z-S100",
+      "project": "AMGT_RESAPP",
+      "fabric": "site-z",
+      "surfaced_by": "1.0.0_SA_CTO~W",
+      "surfaced_at": "2026-09-15T06:09Z",
+      "one_line": "DISARMS AMGT_RESAPP-Z-S67 (owner 1.0.0_SA_CTO~Z, OPEN in REMEDIATION_v9): its remediation condition -- establish the negative control's absence at run time and compare coverage only in the declared field -- was DISCHARGED by the round-9 analysis s.1 @e9d1c6e6a5 and RE-DERIVED by the round-10 analysis s.1 @8d5fe78265 with the same method (three run-time negative controls, one positive, the decomposition's parsed cell tables as the declared field, 15 of 15 served). The disarm row the round-9 analysis promised for round 10 was never filed; this is it, filed by the seat now holding the CTO limb.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "ledger/ROUND_ANALYSIS.round9.md @e9d1c6e6a5 s.1 and s.7: 'Z-S67 DISCHARGED by s.1 -- run-time negative controls, declared field. Disarm follows in round 10.'",
+          "ledger/ROUND_ANALYSIS.round10.md @8d5fe78265 s.1: FWD-99 -> 0, FWD-0 -> 0, FWD-42 -> 0, FWD-1 -> 2, UNCOVERED = 0 over 36 cells and 15 declared outcomes, parsed at HEAD.",
+          "REMEDIATION_v9.md @1ae76e9c83 row AMGT_RESAPP-Z-S67: remediation OPEN, owner 1.0.0_SA_CTO~Z, disarm ARMED; no later row cites it (census of DISMISSED_WITH_REASON rows citing Z-S67 at HEAD: 0).",
+          "Ownership: 1.0.0_SA_CTO~Z holds POSN_ASTTAX only on Andrew's word of 2026-09-15 ~03:5xZ (@9dfee40ce0); the CTO limb on AMGT_RESAPP is 1.0.0_SA_CTO~W's (@ce7371d0b3)."
+        ]
+      },
+      "disposition": "DISMISSED_WITH_REASON",
+      "dismissal_reason": "The condition Z-S67 set is met twice, at two rounds, by two seats using the same method on a moving population; the negative control lives at run time and not in the corpus. Nothing remains under investigation.",
+      "adjudicates": [
+        "AMGT_RESAPP-Z-S67"
+      ],
+      "spec_asserts": "Z-S67, verbatim: 'At the CTO coverage read, establish the negative control absence at run time and compare coverage only in its declared field/domain.'",
+      "world_is": "Both halves hold at the round-9 read (@e9d1c6e6a5) and again at the round-10 read (@8d5fe78265). The token FWD-99 occurs in the corpus's prose and in no cell table; the read never consults prose.",
+      "notes": "Filed with the round-10 L10. The remediation-plane clock on Z-S67 in REMEDIATION_v9 is the CVO's to advance at its next slug; this row is the investigation-plane disarm."
+    },
+    {
+      "id": "AMGT_RESAPP-Z-S101",
+      "project": "AMGT_RESAPP",
+      "fabric": "site-z",
+      "surfaced_by": "1.0.0_SA_CTO~W",
+      "surfaced_at": "2026-09-15T06:09Z",
+      "one_line": "DISARMS AMGT_RESAPP-Z-S96 (owner 1.0.0_SA_CTO~W, OPEN in REMEDIATION_v10): the two-article-stores seam is RESOLVED at the specification level by PRD v0.6 @2f3b65d8b8, contract C-ONE-STORE -- the pool s3://opal-data-harvest is THE article store; the chatter axis and the coverage reader read publication-links/v1 and publications/v1; the DynamoDB articles table is retired as a source once both readers are repointed; inflow is traceable. The READERS' repoint is round 11's cell (2.0.0_SA_COO~W); the hazard the row named -- a ranking computed over a table the harvester never fills -- has a named remedy and an owner, so the row is no longer ARMED.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "prd/AMGT_RESAPP_PRD.md @2f3b65d8b8, section CONTRACTS, C-ONE-STORE (ratified-text half, re-opened for 3.0.0_SA_CVO~W's signature).",
+          "ledger/ROUND_ANALYSIS.round10.md @8d5fe78265 s.5-s.7: the store choice is option (a) of Z-S96, matching Andrew's ~05:04Z word (@7cf62a165f) that the pool is the system of record.",
+          "REMEDIATION_v10.md @e28f0b546c row AMGT_RESAPP-Z-S96: remediation OPEN, owner 1.0.0_SA_CTO~W, remedy 'Carry the store/reader contract choice in the planned PRD addendum'; this is that carry.",
+          "The census Z-S96 rests on (0 writers of the articles table in *.py; 0 readers of the pool keys in lib/research) is unchanged at HEAD; the contract, not a code change, is what this row files."
+        ]
+      },
+      "disposition": "DISMISSED_WITH_REASON",
+      "dismissal_reason": "The design question the row raised is answered in the ratified text with an owner for each half of the remedy; what remains is a cell, not an investigation.",
+      "adjudicates": [
+        "AMGT_RESAPP-Z-S96"
+      ],
+      "spec_asserts": "Z-S96's spec_asserts, verbatim in part: the PRD and decomposition 'assert ONE article store that the harvesters fill and the chatter axis and coverage reader consume'; Andrew's ~05:04Z word names s3://opal-data-harvest as the pool every frontend runs off.",
+      "world_is": "PRD v0.6 makes the pool that one store by contract. Until round 11 repoints the two readers, the served ranking still reads the DynamoDB table; that is the round-11 cell's distance, stated in the analysis s.6 item 2, not an open investigation.",
+      "notes": "Filed by the row's own disarm_owner in the same commit series as the addendum. The remediation-plane clock in REMEDIATION_v10 advances at the CVO's next slug."
+    }
 ]
 ```
