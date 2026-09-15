@@ -11,3 +11,13 @@
 ## Current act
 
 Inspect prior research, the existing bucket contract and API pullers; report data shapes, evidence limits and local-run implications for discussion. No backfill or recurring job is initiated by this review. The SiteZ scheduled-job idea remains a proposal in the instruction's own terms.
+
+## Subsequent direction (verbatim, same terminal and date)
+
+> Dont worry about anything stored already, you are looking for *harvest scripts. there should be briefs specifically on these harvest scripts, they have not been employed in a comprehensive basis yet, only tested. We probably have to start attempting a fill to see how they perform in a live fire environment.
+
+> What I mean to say is that any pulls done on these sources, may or may not be the product of these scripts. These scripts need to be tested on batches of securities live on this device so we can see how they fare on say, a batch of 5 securities from the list of 89.
+
+## Updated act
+
+Test the documented four-publication scripts live on this device with five securities selected from the 89-name universe. Attribute results to the exact tested script bytes and retain outputs locally. Existing bucket specimens do not establish these scripts' current behavior. No broad backfill or recurring job is started.
