@@ -7643,6 +7643,28 @@ Andrew asked for (msg 22917); it concerns this project's portal files meeting an
   "adjudicates": [
     "POSN_ASTTAX-Z-W25-S5"
   ]
+},
+{
+  "id": "POSN_ASTTAX-Z-S171",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T08:16:49Z",
+  "one_line": "THE REAL AD-HOC PULL, STEP 2, LANDED AND PRESENTS (Andrew ~07:4xZ via 0.0.0_AB_MSTR~Z 23080; the 13:00Z promote clock 23086). Step 1 (1.0.0_SA_CTO~Z, 23083): the Bloomberg ETF daily pull ad hoc -> bbg/2026-09-14/ at 07:52:33Z (run_class adhoc, 172 tickers, GLD and VXX observed). Step 2 (this seat): (a) both B6 halves amended for a SECOND driven run (COO R2 @b2560929dc, CTO A2 @7add447f06); (b) cot-satellites-characteristics-producer invoked with bbg_as_of 2026-09-14 at 08:09:22Z, rc 0, no FunctionError -- characteristics.json VersionId 74d9.pGWF16Ox7cXKGax.zQw.lhwi5yI -> PXyBGaqn.0Jk6TwWmXl34FlsDH8Gwd0R (08:10:03Z, 67764 B): inputs holdings_as_of 2026-09-15 / positioning_data_as_of 2026-09-11 / bbg_as_of 2026-09-14 (bbg_run_class adhoc), 25 tickers (23 positioning_data / 1 bbg / 1 none), identity 25 of 25 with identity_missing 0, GLD's returns at the new frontier 1D -1.4871 .. 1Y 17.1187 from 17 history partitions + 173 backfill tickers; (c) the presentation on the round-6 drain ref refs/drains/posn-6-portal = ebbee2e6 (F5 + F5 re-cut + F4; branch posn-6-present in /c/tmp/wk-posn-6-26/portal, dev server :5183) against fixtures built from the SIX served keys by pinned VersionId and md5 (present_manifest.json: positioning AqBtm..., etfs MkASX..., attribution mOBBm..., registry Uvdn048a... 07:00:19Z, holdings 5tjkvDfu... 07:00:20Z, characteristics PXyBGaqn... 08:10:03Z): Positioning -> Satellites -> Opal Satellite 15 and Opal Satellite 80 -> Holdings Breakdown: 0 mismatches of 512 cells across 32 rows (every Fee/MC/Active/Yield/Duration/Credit/Beta and all 8 return windows EQUAL the served values under the table's own formatting), NAME 32 of 32 served names, ACTIVE YES/NO by management_style and blank for CASH, GLD under Commodities/Metals with fee 40 and MC 143.7 and its 8 Bloomberg-sourced returns (-1.49% .. +17.12%), CASH blank throughout; the Summary's labels rounded to two decimals trimmed (0 labels with 3+ decimals across the three DOM dumps); four classes present on both satellites' Summary (Structured 0.35% on Sat 15, VXX Hedge 1.88 on Sat 80), the treemap legend per displayed book (Sat 15: 3, Sat 80: 4); every footer and header 'Source: Black Diamond, holdings as of 2026-09-15'; the Models control byte-identical to the round's reads (3 classes, 82.6%/17.4%, Source: Bloomberg). PNGs READ by this seat: present_sat15.png, present_sat80.png, present_models.png. TWO KNOWN COSMETIC ITEMS VISIBLE, already carried: the Portfolio Composition title overlapped by the satellite chip strip (W25-S4 / Z-S169) and the last Summary bar's label clipped at the panel edge (W26-S5 / Z-S146) -- neither a floating number nor a missing measure. Artifacts: deliverables/2.0.0_SA_COO~Z/present_20260915_0813Z/ (PNGs, DOM dumps, manifest, cell compare, the driven-run script).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "drive_characteristics.py output (the invoke, the read-back, the counts); present_cell_compare.txt TOTAL: mismatches 0 of 512 cells across 32 rows in 2 satellite(s); the three PNGs.",
+      "TWO INSTRUMENTS on the served block (the producer's own response; this seat's get-object read-back) and two on the render (ui-smoke screenshots; the DOM read joined to the served bytes by w25_cell_compare.py, a second implementation of the table's formatting rules).",
+      "WHY GRADUATED: the act is inside both halves' R2/A2, read back on the served key, and the presentation bar Andrew named (no floating numbers, no missing Characteristics or Performance) is met on the fresh bytes; the two cosmetic items have owners and carriers."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "Andrew ~07:4xZ: 'confirm that they do a real ad hoc pull and the data presents properly on Asttax'; the B6 halves R2/A2; PRD v0.11 FWD-7, C-HOLDING-MEASURES, C-HOLDING-IDENTITY, C-PRESENT-CLASSES, C-SUMMARY-COPY.",
+  "world_is": "The served satellites keys carry today's roster (07:00Z) and the ad-hoc Bloomberg partition (08:10Z); the round-6 portal ref renders them as specified; the 11:00Z scheduled pull rewrites bbg/2026-09-14/ with run_class scheduled and the 12:30Z fire re-serves the block organically (B6 ledger L8).",
+  "notes": "For 0.0.0_AB_MSTR~Z's independent verification: run id = bbg/2026-09-14/run_manifest.json generated_utc 07:52:33Z; the six VersionIds above; route /positioning -> Satellites -> Opal Satellite 15 / 80; the portal head to publish is ebbee2e6 unless F4's re-run adds a portal commit (it should not)."
 }
 ]
 ```
