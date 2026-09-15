@@ -123,6 +123,29 @@ Worker rows carry their slot's coordinate, `MDPF_TAXSMA-W<n>-S<k>`; a seat's row
     "spec_asserts": "mdpf_portal_publisher.tf, a read file named by TO-TX-p-1, declares MDPF_PUBLISHER_COMMIT as 'the deploy pin, stamped into every D7 manifest (updated per deploy)'.",
     "world_is": "The live function carries the declared value c0902245b0 (2026-08-06), but the code it runs is the build at dc14d649bb (2026-08-28): its own BUILD_MANIFEST says so, and a rebuild at that pin matches CodeSha256. The stamp was not updated at the 2026-08-29 deploy, so by the file's own description each D7 manifest names a commit that is not the running code.",
     "notes": "OBSERVATION found while grounding TXP1-AC2. It bears on TX-u-2 and TX-r-1, which re-package and release this function. The gold Lambda's MDPF_GOLD_COMMIT does equal its zip's commit (48b8671569). INERT as far as this cell can see; whether any served body carries the stamp was not read here."
+  },
+  {
+    "id": "MDPF_TAXSMA-W6-S4",
+    "project": "MDPF_TAXSMA",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_MDPF_TAXSMA~6",
+    "surfaced_at": "2026-09-15T23:08:00Z",
+    "one_line": "AC7's census script sends one redirect to /dev/null, and amended TXP1-AC10 condition (2) says 'no redirect or write to any path outside the SSM agent's own working directory'; the probe grades /dev/null as the null device, which is a reading of the frozen text.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "TO: org/missions/D8/MDPF/MDPF_TAXSMA/task-orders/MDPF_TAXSMA.TO-TX-p-1.baseline.md@6be05d277f, TXP1-AC10 as amended by 1.0.0_SA_CTO ruling 97255 option A: condition (2) 'it ONLY reads: no redirect or write to any path outside the SSM agent's own working directory, no sudo write, no package or service action, and no network call'.",
+        "SCRIPT: org/missions/D8/MDPF/MDPF_TAXSMA/deliverables/0.9.0_WK_MDPF_TAXSMA~6/probes/tx_p_1.py@b9a15838d7 :485 (CENSUS_TMPL), the GREP_ERRORS line '... xargs -0 -r grep -l -F 'taxsma-workbook' -- 2>&1 >/dev/null | wc -l'. It sends grep's stdout to /dev/null so that only error lines are counted. The script has 2 redirects: '2>&1' (a file-descriptor duplication, no path) and '>/dev/null'; 0 to any other path.",
+        "BYTES: the regenerated script's sha256 0892538431cbf66b9bc9ca8486745cce62ea6dce353e84c9288e7bde69ecfaad begins with the run-time value 'census script sha256=0892538431cbf66b' recorded in runs/AC7.txt@b9a15838d7 :5, and equals the untracked request file .scratch/tx_p_1/ssm_census_request.json that send-command read.",
+        "GRADE: the probe's AC10 (runs/AC10.txt, this commit) prints '1 to /dev/null (the null device: bytes discarded, no file created or modified), 0 to any other path' and a READING line saying that a literal reading of 'any path' would FAIL condition (2) on this 1 redirect; conditions (1), (3) and (4) are MET without it."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Amended TXP1-AC10 admits AC7's one send-command only if its script makes 'no redirect or write to any path outside the SSM agent's own working directory'.",
+    "world_is": "The script's only redirect to a path is '>/dev/null', which discards bytes and creates or modifies no file. /dev/null is still a path outside the agent's working directory, so the clause read literally is not met; read as 'the script only reads', it is. The worker's probe graded it as the null device, printed that reading in the evidence and filed this row rather than choosing silently. TXP1-AC10 prints PASS under that reading.",
+    "notes": "OBSERVATION: whether the literal or the purposive reading binds belongs to the L9 adjudicator (3.0.0_SA_CVO) and the ruling's author (1.0.0_SA_CTO, 97255), not to the worker. If the literal reading is ruled, TXP1-AC10 is FAIL and TO-TX-p-1's complete flip is withdrawn; no new AWS act would change the recorded script. INERT: the redirect wrote nothing on the Gateway host."
   }
 ]
 ```
