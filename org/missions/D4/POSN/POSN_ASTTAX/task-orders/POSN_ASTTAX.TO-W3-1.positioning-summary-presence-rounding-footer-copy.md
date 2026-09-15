@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_POSN_ASTTAX~26</issued_to>
 <issued_by>2.0.0_SA_COO~Z</issued_by>
 <issued_date>2026-09-15</issued_date>
-<status>staged</status>
+<status>complete</status>
 
 **Directive:** D4 - **Macro:** POSN - **Fabric:** site-z - **PRD:** `../prd/POSN_ASTTAX_PRD.md` **v0.11** @`ab2ee8052a`
 (C-PRESENT-CLASSES, C-SUMMARY-COPY as clarified at v0.11; FWD-6's DONE WHEN carries the presence rule; AMENDED ~04:1xZ -- act 2 and
