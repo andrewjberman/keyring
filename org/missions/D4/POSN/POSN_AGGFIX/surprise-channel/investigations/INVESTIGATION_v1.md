@@ -53,6 +53,52 @@ worker's id is `POSN_AGGFIX-Z-W<slot>-S<k>`, a seat's `POSN_AGGFIX-Z-S<k>`.
     "spec_asserts": "The producer never-widen COO half @ed1db8f1db prints 1 writer for json/positioning/positioning_data.json, and PRD v0.2 FWD-7 with C-OPAL-ONLY-DATA asserts the aggregate's figures reach Opal viewers only once the change lands.",
     "world_is": "Two further writers restore that file by prefix. A Dev-triggered time-machine restore, or an operator rollback, to a date before the change puts current_holdings.AGG and July book aum back into the file every signed-in viewer receives, until the next pipeline run. It is not part of TO-A3-1's act and neither half signs it.",
     "notes": "INERT until TO-A3-1 lands Branch A. Carried for 1.0.0_SA_CTO~Z's round analysis: whether a cell carries it (for example, the restore set skipping json/positioning/opal_aggregate.json and a restore of the shared file dropping AGG, or a named operating rule). The CTO halves @ this commit name it: ledger/NEVER_WIDEN_ROUND1_PRODUCER_CTO_HALF.md."
+  },
+  {
+    "id": "POSN_AGGFIX-Z-W2-S1",
+    "project": "POSN_AGGFIX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_AGGFIX~2",
+    "surfaced_at": "2026-09-15T19:44:00Z",
+    "one_line": "TO-C1-1 drives a 'client' viewer class in its unit and live arms, but the live signer never mints one: generateAccessToken sets tier 'internal' for firmId opal-capital and 'advisor' for every other firm, and no other claim marks a client. The worker constructed the class (tier 'client', firmId 49financial, no advisor identity) and signed it with the live key.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/opalinvest_dev/lambda/auth-handler/src/jwt.ts @240fe36222 :168 (generateAccessToken, :162): const tier = user.firmId === 'opal-capital' ? 'internal' : 'advisor' -- the payload's only tier source.",
+        "infra/aws/opalinvest_dev/lambda/auth-handler/src/types.ts @240fe36222 :63: the access payload's tier is commented 'Vestigial -- kept for portal-authorizer compat'.",
+        "portal src/contexts/AuthContext.tsx @edf85ce503 :122-140 parseClaims: firmId, userType, advisorId, firmRole, advisorRole; advisorRole levels architect/consultant/local_ops/implementor; no client class.",
+        "org/missions/D4/POSN/POSN_AGGFIX/deliverables/0.9.0_WK_POSN_AGGFIX~2/c1_classes.mjs: the client claim set used; printed with the token redacted in C1-AC3's output."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-C1-1 AF1-s-4 and AF1-s-11: exercise /api/general/positioning/model.json live with a client token, and drive four viewer classes (Opal staff, Dev, advisor, client).",
+    "world_is": "The signer's tier space is {internal, advisor}; no real login produces a client-class token. The worker's client class carries tier 'client' (the value the proxy docstring names), firmId 49financial and no advisor identity. The gate's predicate reads only firmId and userType, so the class's tier value cannot move a gate row.",
+    "notes": "Form only. Not read: portal-authorizer, or any other identity source that might carry a client notion."
+  },
+  {
+    "id": "POSN_AGGFIX-Z-W2-S2",
+    "project": "POSN_AGGFIX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_AGGFIX~2",
+    "surfaced_at": "2026-09-15T19:44:00Z",
+    "one_line": "The portal proxy docstring for getModelData says the Lambda 'Checks X-User-Tier header (blocks client tier)' on /api/general/positioning/model.json. Exercised live, a client-tier token is NOT refused there: the request reaches S3, which answers 403 AccessDenied because the key is absent, byte-identical to Opal staff's answer. MODEL-ROUTE CLIENT REFUSAL: FALSE.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal src/api/portal-proxy.ts @edf85ce503 :1419-1426 (getModelData docstring): 'Lambda: Checks X-User-Tier header (blocks client tier)'; 'Access: Internal + Advisor tiers only'.",
+        "C1-AC3 live run 2026-09-15T19:41:33Z, node .../deliverables/0.9.0_WK_POSN_AGGFIX~2/c1_live_tier_arms.mjs --phase pre: unauthenticated 401 {error: Missing or invalid Authorization header}; client token 403 len=263 S3 XML <Error><Code>AccessDenied</Code> sha256 b3c16307d6e569c8...; Opal-staff token 403 with the same sha256.",
+        "Same run: s3api head-object opal-data-portal-v2 json/positioning/model.json -> 404 Not Found.",
+        "C1-AC2 (c1_edge_tier_read.py) at git objects @b29fe4bf48: public-data-router 0 tier/role/firm/userType branches; auth-validator-edge's branches scoped to /api/scoped/advisor-intelligence/ and the advisor/account/relationship scoping regexes; shared-advisor-router not associated with /api/general/*."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-C1-1 AF1-s-4 / C1-AC3: record whether the proxy docstring's 'blocks client tier' for /api/general/positioning/model.json is true by exercising that URL live with a client token; FALSE is recorded and filed as an OBSERVATION row.",
+    "world_is": "No function on the /api/general/* path reads the tier: any verified token is forwarded to S3. The URL serves nothing today only because json/positioning/model.json does not exist; were that key written, every signed-in viewer could read it.",
+    "notes": "INERT while the key is absent (404 at the run). Not measured: whether anything writes json/positioning/model.json. The docstring describes a check that is not on the path."
   }
 ]
 ```
