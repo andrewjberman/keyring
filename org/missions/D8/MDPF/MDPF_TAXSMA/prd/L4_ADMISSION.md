@@ -2,7 +2,7 @@
 
 Author: `1.0.0_SA_CTO~A`. Recorded: 2026-09-15T08:50:04.057346+00:00.
 
-**Current v0.4 is DRAFT and pending both changed-half L4-R reviews.** Andrew1729cef85e uses existing Traded as the automatic membership key; f95470f384 still answers G-A with opalbloomberg@opalinvest.com. Seven-field source interface unchanged; no active column or manual initial attestation. First-observed dates and separate live/dated-coverage counts are specified. Actual access is believed but UNMEASURED (97190/97192); no new probe or widening ordered. dep_stage returns to PRD; COO97187 holds L6 for admitted v0.4 and L5 v2. Earlier v0.3 admission and L5 v1 are historical. See TRADED_FIELD_ADDENDUM_97192.md.
+**Current v0.5 is DRAFT and pending both current-half L4-R reviews.** v0.4 brief was SIGNED at5e2089e99b; CVO REFUSED the contracts half at91875c897c. The v0.5 repair restores capability-guard precedence, validated Entra tid/oid binding and counterpart pins, and clarifies UTC/session-date comparison. Both hashes change; prior signatures remain historical. Traded membership and seven-field source remain; access/binding proof is still UNMEASURED. dep_stage=PRD, L6 held for admission and COO~T L5 v2. See REVIEW_REPAIR_V05.md.
 
 For v0.2, `python .tools/prd-signoff.py status MDPF_TAXSMA` was read after CRO notice 96992 and returned both halves SIGNED/current. The project stays `dep_stage=PRD` until COO produces the next limb. Its placement is D8 / MDPF / laptop; the D9 business workflow is separate.
 
@@ -77,3 +77,9 @@ Finalization changes only PRD header status and the contract state metadata, plu
 ## v0.4 re-entry under Andrew97192, 2026-09-15T18:46:25.355797+00:00
 
 Both hashes differ from admitted8120db1ff9: ratified-text `da428d318d04535960b84890bc914cecdf4740b135a0ec8764e137071485d44f`, brief `c2ea15c6002f176ceb0b3997c7b854b2e01a71f6c5d1d72002e88497214b2821`. The author signs neither. The canonical version-bump notifier requests both reviews; no duplicate manual post-commit request. Eight endpoint cards and seven-field source shape unchanged. The Traded/date/count/access decisions and exact cell map are in TRADED_FIELD_ADDENDUM_97192.md.
+
+## v0.4 independent verdicts and v0.5 repair, 2026-09-15T19:25:50.181639+00:00
+
+CRO brief SIGNED `docs/briefs/sources/MDPF_TAXSMA_L4_BRIEF_REVIEW_v0_4_20260915.md@27286d3a81`, stamp `5e2089e99b8a96f98fec6a261e317134d90a8efe`. CVO ratified-text REFUSED `org/tier1_exec/3.0.0_SA_CVO/deliverables/PRD_REVIEW_MDPF_TAXSMA_v0.4_RATIFIED_TEXT_HALF_20260915.md@91875c897c`, stamp `4bac56b200416c9f25102374ad4ebb4ae79c6922`. Canonical status independently reads WITHHELD; no admission was inferred from the brief signature. Exact CRO97206 notice read/ACKed; both requested Gateway corrections and the non-blocking date note are carried in REVIEW_REPAIR_V05.md.
+
+v0.5 current hashes: ratified-text `ab7f2488ad922e26fa91feae1b19ae7c5615c6520b338f77150569e5ff84b77b`, brief `a14495740d029c4f2fd09c5309fa183b2f85d75e187c71d162b3f91a31815043`. Both differ from v0.4, so canonical version-bump requests both independent reviews. No old signature is copied or overwritten by this author.

@@ -1,6 +1,6 @@
 {
   "contract": "MDPF_TAXSMA_DATA_CONTRACT",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "authority": "org/missions/D8/MDPF/MDPF_TAXSMA/prd/MDPF_TAXSMA_PRD.md",
   "state": "PROPOSED_L4_REVIEW",
   "purpose": "Normative design enumerations; no deployed implementation or observed account population is asserted by this file.",
@@ -144,7 +144,7 @@
     "pattern": "Gateway-held delegated identity behind one content-specific capability",
     "identity_configuration": "TAXSMA_WORKBOOK_IDENTITY",
     "credential_configuration": "TAXSMA_WORKBOOK_BEARER",
-    "identity_selection": "Exactly opalbloomberg@opalinvest.com, the Site-Z Entra identity named by Andrew. No default, substitute, Bloomberg terminal credential or delegated-token export. G-A authorization is recorded; actual capability access must be measured before production activation.",
+    "identity_selection": "Bind the Andrew-designated opalbloomberg@opalinvest.com account by its validated Entra tenant ID (tid) and object ID (oid), never by an email comparison. The email is designation/display/audit metadata only. TAXSMA_WORKBOOK_IDENTITY records the immutable tid/oid pair resolved from the existing validated Entra principal context, with no default/substitute or caller-supplied identity. G-A authorization is recorded; actual immutable binding and capability access remain to be measured before activation. No Bloomberg terminal credential or delegated-token export.",
     "input_selectors": [],
     "response_fields": [
       "schema_version",
@@ -212,10 +212,28 @@
       "belief": "Andrew thinks the account already has access; this is not a permission measurement or a request for another check.",
       "measurement_ref": "org/missions/D8/MDPF/MDPF_TAXSMA/prd/IDENTITY_ACCESS_PROOF_97190.json",
       "measured_boundary": "Relayed Site-Z exact identity MATCH; get_site_item refused by the per-identity Gateway tool guard before Graph. No SharePoint permission result exists, and the proposed separate capability route was not tested.",
-      "activation_proof": "At TX-r-3, under existing capability/release authorizations, prove exact delegated identity binding and one controlled read of the configured workbook through GET /ms/taxsma-workbook. Retain protected request/time/result/identity evidence without rows or tokens; a failed read does not activate.",
+      "activation_proof": "At TX-r-3 under existing capability/release authorizations, prove the designated account is bound to the configured validated Entra tid/oid, then perform the controlled GET /ms/taxsma-workbook read. Retain protected principal/request/time/result evidence without tokens or workbook rows. The relayed whoami email MATCH is not proof of this immutable binding. Failed binding/read does not activate.",
       "restriction": "No new metadata-tool probe, allowlist widening, sharing-list check or alternate identity is ordered by the latest carrier. Do not bypass a guard. A measured activation refusal is reported through the release owner; no automatic grant or scope widening."
     },
-    "projection_authority": "The existing seven-field projection and response/header shape stand. Andrew1729cef85e chooses the already projected Traded field; no active column or workbook-maintainer request."
+    "projection_authority": "The existing seven-field projection and response/header shape stand. Andrew1729cef85e chooses the already projected Traded field; no active column or workbook-maintainer request.",
+    "guard_order": "The new route has its own guard before generic /ms/* handling. Exact path/method, separate route-only capability bearer, configured validated Entra tid/oid binding, current applicable principal/capability revocation and fixed resource/projection controls all pass before delegated-token fetch or Graph access. Do not fall through to generic guards on a capability failure or accept a generic MCP/ms-ingest/OTP credential as this capability. Other routes keep their existing guards; this ordering is not an allowlist widening or a bypass.",
+    "identity_binding": {
+      "counterpart_ref": "org/missions/D9/NFRA/NFRA_OPLGTW/prd/NFRA_OPLGTW_PRD.md@f0aa50dbc05f1725f3cd1b398b88e6b7639970ae",
+      "counterpart_sections": [
+        "C1",
+        "C2",
+        "A3"
+      ],
+      "configuration": "TAXSMA_WORKBOOK_IDENTITY holds exactly the approved validated Entra tid and oid; named_identity remains display/audit designation only. Actual IDs are protected configuration inputs, not invented here or accepted from caller headers.",
+      "trust_source": "Resolve and record the tid/oid pair from the existing validated Entra principal context for the designated account; use that pair to select and check its broker-held delegated identity. An email match alone, unvalidated token decode or caller-provided tid/oid is not binding proof. Existing issuer/tenant/signature/audience and current revocation checks still apply.",
+      "deny": "Missing, malformed, wrong-tenant or wrong-object binding fails closed before token fetch/Graph; same email with different tid or oid must fail. Invalid capability bearer is UNAUTHORIZED_CAPABILITY. Missing/invalid delegated principal binding is AUTH_REQUIRED. Never fall back to an email-keyed grant or another person.",
+      "controlled_proof": "With the same email designation and otherwise identical valid inputs, change tid only, then oid only: both denied with zero token fetches/Graph requests. Correct validated configured pair succeeds. Also deny unvalidated claims, missing pair, revoked principal/capability and generic credentials. Route-dispatch controls prove the capability guard runs before generic /ms/* handling and cannot be skipped by it."
+    },
+    "counterpart_refs": [
+      "docs/architecture/NFRA_OPLMCP_PRD.md@33c581d223e2e3bac5e44a37abb407b5f79f82de",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/TAXSMA_D8_PIPELINE_20260915/GOVERNING_CONTRACTS.md@d971e17752",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/prd/NFRA_OPLGTW_PRD.md@f0aa50dbc05f1725f3cd1b398b88e6b7639970ae"
+    ]
   },
   "status_axes": {
     "business_status": [
@@ -304,7 +322,8 @@
     "traded_classification": "Use the existing trim/casefold Yes/No/blank parser, not truthy coercion. YES is TRADED_CLAIM independent of Ready and reconciliation results. NO is INACTIVE_CONFIRMED after a prior YES, otherwise UNTRADED (or PROSPECT without an account). UNKNOWN/INVALID on an identified or previously traded row is CONFLICT with TRADED_STATUS_UNVERIFIED. A YES without a valid full identity remains CONFLICT with its YES claim retained; it is never reclassified as a prospect. Truly blank/Total rows remain outside membership and retain their source rows in Silver.",
     "event_idempotency": "source_event_id hashes canonical source identity, full account key, logical snapshot_id, previous accepted event id and normalized Traded state; omit retry time/run UUID. Repeated logical snapshots create no duplicate transition or shifted date. Process current observations by original Gateway observed_at and a persisted watermark. Older unseen snapshots are retained as historical evidence with TRADED_EVENT_ORDER_CONFLICT and cannot silently roll current state backward; conflicting snapshots at the same observed_at refuse. Replay cannot overwrite immutable Gold or bypass pending-next-date corrections.",
     "automatic_history_fields": "For a source-generated event, actor is the S03 service identity, evidence_ref is protected Bronze/Silver lineage, effective_date=date(source_observed_at), membership_date_basis=FIRST_OBSERVED_UTC, and traded_value is YES or NO. source_event_id is stable; no null/invalid Traded or manual date can activate. Invalid/duplicate identities preserve source-row evidence but do not create a falsely resolved per-account transition.",
-    "legacy_reason_compatibility": "MEMBERSHIP_DATE_UNVERIFIED remains readable historical evidence; current automatic-date failures use TRADED_HISTORY_UNVERIFIED. DISPOSITION_REQUIRED may identify an unresolved identity/transfer/strategy correction only, never an initial membership attestation gate."
+    "legacy_reason_compatibility": "MEMBERSHIP_DATE_UNVERIFIED remains readable historical evidence; current automatic-date failures use TRADED_HISTORY_UNVERIFIED. DISPOSITION_REQUIRED may identify an unresolved identity/transfer/strategy correction only, never an initial membership attestation gate.",
+    "date_comparison": "Compare membership effective_date (the UTC calendar date of source_observed_at) directly to the supplied exchange-session valuation_date as ISO calendar dates: start <= valuation_date < end, with an absent end open. Do not convert valuation_date into a timestamp, reinterpret source_observed_at in exchange-local time, or roll the boundary to a session. The exchange calendar chooses valid/expected valuation sessions only. For example, 2026-09-16T00:30:00Z is September15 at20:30 EDT, but the membership boundary is September16. A new YES with no earlier state leaves September15 unverified; retained NO history instead proves exclusion. An explicit NO at that instant leaves previously proven September15 membership intact and excludes September16 onward until reactivation. Current business_active_accounts reflects the accepted flag immediately at source_observed_at, independently of those dated-value consequences. Weekend/holiday boundaries produce no invented session or value."
   },
   "valuation": {
     "basis": "dim_balance.net_mv_plus_cash via b00 canonical_valuation",
@@ -394,7 +413,7 @@
         "sums.total_aua",
         "affected node/child aum"
       ],
-      "version": "0.4.0",
+      "version": "0.5.0",
       "rollout_rule": "Enable new served payload only with a compatible consumer in the same environment; production activation waits for its applicable promotion authorization."
     }
   },
@@ -422,7 +441,7 @@
     },
     "cache_policy": "Category accessor cache TTL at most five minutes; do not cache failures or incomplete transport responses as successful data. Explicit refresh bypasses accessor and query caches; UI retains truthful source dates and stale status even before refresh.",
     "recovery": "Idempotent staged computation, conditional Gold creation, publisher destination readback, and repair of missing/corrupt destination despite unchanged source hash. Repair through the same publisher and canonical served key. No standing comparator, alternate served tree, new monitor or trading side effect.",
-    "l6_release": "COO97187 holds the one L6 issuance for this v0.4 Traded/identity addendum. Both changed halves must be SIGNED and v0.4 ADMITTED, then COO~T recuts L5 v2 and issues once. Frozen v1 remains historical. G-A is answered at f95470f384; workbook access is believed but UNMEASURED at1729cef85e. Actual controlled capability read and coordinated Gateway/never-widen/consumer release conditions remain. No new field, source-owner handoff, metadata probe or access grant is ordered."
+    "l6_release": "COO97187 holds the one L6 issuance for this v0.5 Traded/identity addendum. Both changed halves must be SIGNED and v0.5 ADMITTED, then COO~T recuts L5 v2 and issues once. Frozen v1 remains historical. G-A is answered at f95470f384; workbook access is believed but UNMEASURED at1729cef85e. Actual controlled capability read and coordinated Gateway/never-widen/consumer release conditions remain. No new field, source-owner handoff, metadata probe or access grant is ordered. v0.5 restores the capability guard ordering, validated Entra tid/oid binding and pinned Gateway counterparts, and explicitly carries the existing UTC-date comparison; no new field, resource or scope."
   },
   "artifacts": {
     "workbook_snapshot": {

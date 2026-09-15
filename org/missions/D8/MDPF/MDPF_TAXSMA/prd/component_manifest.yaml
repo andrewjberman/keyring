@@ -1,5 +1,5 @@
 project: MDPF_TAXSMA
-prd_version: v0.4
+prd_version: v0.5
 author: 1.0.0_SA_CTO~A
 scope: Normative target inventory for the PRD extension; distinct from the original 24-unit certified source inventory.
 plane_vocabulary:
@@ -407,9 +407,9 @@ components:
   disposition: AUTHORED_NEW_L4_CONTRACT
   existence_check:
     exists: true
-    last_commit: 8120db1ff90f499a6b4c1930ec89ebd82c85d542
-    source_sha256: 46918e8dedf5ef3153901261476c19627e9c6cda7fb148113fd798e013cfc58a
-    basis: Current v0.4 proposed contract bytes; last_commit is the prior admitted contract vintage.
+    last_commit: d317a65ec7dc9240620f33733eacbf16211c4268
+    source_sha256: e49169831e6bf2ddf0e975de04f5c1b45f7eb4be5999735fba405525a3a4d971
+    basis: Current v0.5 proposed contract bytes; last_commit is the reviewed v0.4 contract vintage.
   boundary: Source/path inspection only; no deployed parity inferred. Recheck exact path before authoring; if usable
     already, verify/reuse.
 - name: TAXSMA_WORKBOOK_IDENTITY activation record
@@ -423,6 +423,8 @@ components:
     authority_ref: org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20260915_180xZ_TAXSMA_WORKBOOK_IDENTITY_OPALBLOOMBERG_AND_ACTIVE_FIELD_MEMBERSHIP.md@f95470f38400da6d2a40eeaa7469651e32ddb95e
     access_belief_ref: org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20260915_183xZ_TAXSMA_ACCESS_BELIEVED_AND_TRADED_COLUMN_IS_MEMBERSHIP_KEY.md@1729cef85e070c632292418925aea32b49f7bbc2
     existing_item_access: UNMEASURED
+    immutable_principal_binding: Entra tid/oid required by NFRA_OPLGTW v0.2 C1/C2; no actual binding proof claimed
+    counterpart_ref: org/missions/D9/NFRA/NFRA_OPLGTW/prd/NFRA_OPLGTW_PRD.md@f0aa50dbc05f1725f3cd1b398b88e6b7639970ae
   boundary: Protected config, not a repository copy of a delegated token.
 - name: Shared/TAX/Tax SMA Accounts.xlsx
   plane: sharepoint-workbook

@@ -20,5 +20,6 @@
   "scope": "Relayed Site-Z read-only measurement; no local independent access proof, no row/credential read, no grant or write.",
   "next_owner": "No additional metadata probe, allowlist widening or sharing-list check ordered. PRD owner carries access as believed but UNMEASURED. Release owner at TX-r-3 measures exact identity binding and actual controlled content-capability read under existing release authorizations; failure is reported, not bypassed.",
   "latest_direction_ref": "org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20260915_183xZ_TAXSMA_ACCESS_BELIEVED_AND_TRADED_COLUMN_IS_MEMBERSHIP_KEY.md@1729cef85e070c632292418925aea32b49f7bbc2",
-  "access_belief": "Andrew believes access is already present; no permission measurement was supplied."
+  "access_belief": "Andrew believes access is already present; no permission measurement was supplied.",
+  "immutable_principal_binding": "UNMEASURED by this relayed record. whoami designation MATCH does not prove configured validated Entra tid/oid. Actual binding is required with the controlled capability read at TX-r-3; no additional probe is ordered now."
 }

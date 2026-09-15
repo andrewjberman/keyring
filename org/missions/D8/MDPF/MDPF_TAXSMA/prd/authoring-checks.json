@@ -1,5 +1,5 @@
 {
-  "checked_utc": "2026-09-15T18:42:09.764541+00:00",
+  "checked_utc": "2026-09-15T19:23:22.958149+00:00",
   "author": "1.0.0_SA_CTO~A",
   "header_and_canonical_shape_violations": [],
   "endpoint_equal_to_approved_after_heading_layout_only": true,
@@ -45,8 +45,8 @@
     "total": 18
   },
   "limitations": "Shape, ID-set, dependency and exact ratified-text checks; only outcome heading layout normalized to canonical FWD syntax. Substantive brief/contract review remains independent at L4-R. No implementation tests.",
-  "prd_version": "v0.4",
-  "data_contract_version": "0.4.0",
+  "prd_version": "v0.5",
+  "data_contract_version": "0.5.0",
   "brief_coverage_rows": [
     "Tax SMA: a complete, reconciled D8 asset pipeline — title and preamble",
     "Commission and precedence",
@@ -84,11 +84,11 @@
     "additional_consistency_fix": "Section 3.9 names the already-projected Traded field"
   },
   "half_hashes": {
-    "ratified-text": "da428d318d04535960b84890bc914cecdf4740b135a0ec8764e137071485d44f",
-    "brief": "c2ea15c6002f176ceb0b3997c7b854b2e01a71f6c5d1d72002e88497214b2821"
+    "ratified-text": "ab7f2488ad922e26fa91feae1b19ae7c5615c6520b338f77150569e5ff84b77b",
+    "brief": "a14495740d029c4f2fd09c5309fa183b2f85d75e187c71d162b3f91a31815043"
   },
-  "prd_sha256": "a5ddb72ba3ca423e9354f17b0b7a30d3e3a80b8bda76578bc52fb764c5aeb56a",
-  "data_contract_sha256": "46918e8dedf5ef3153901261476c19627e9c6cda7fb148113fd798e013cfc58a",
+  "prd_sha256": "03ad7c1fa83257d243ec8a35d345a8e999a5475a9a4edb40eac05613d6200841",
+  "data_contract_sha256": "e49169831e6bf2ddf0e975de04f5c1b45f7eb4be5999735fba405525a3a4d971",
   "ratified_text_correction": {
     "notice_id": 96985,
     "ground": "R1",
@@ -127,10 +127,9 @@
   "admission": {
     "status": "PENDING_CURRENT_HALF_REVIEWS",
     "header_status": "DRAFT",
-    "membership_authority": "org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20260915_183xZ_TAXSMA_ACCESS_BELIEVED_AND_TRADED_COLUMN_IS_MEMBERSHIP_KEY.md@1729cef85e070c632292418925aea32b49f7bbc2",
-    "identity_authority": "org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20260915_180xZ_TAXSMA_WORKBOOK_IDENTITY_OPALBLOOMBERG_AND_ACTIVE_FIELD_MEMBERSHIP.md@f95470f38400da6d2a40eeaa7469651e32ddb95e",
     "both_halves_changed": true,
-    "author_signs_neither_half": true
+    "author_signs_neither_half": true,
+    "reason": "R1/R2 repair plus explicit date comparison and version references"
   },
   "v03_lgic_checks": {
     "checked_utc": "2026-09-15T16:32:56.309846+00:00",
@@ -233,5 +232,74 @@
     "identity_probe": "Site-Z MATCH relayed in MSTR97190",
     "workbook_access": "Believed but UNMEASURED; metadata guard refused before Graph",
     "l6_state": "COO97187 holds one issuance pending admitted v0.4 and L5 v2"
+  },
+  "prior_v04_review": {
+    "prd_version": "v0.4",
+    "prd_pin": "d317a65ec7dc9240620f33733eacbf16211c4268",
+    "brief": {
+      "prd": "MDPF_TAXSMA_PRD.md",
+      "prd_version": "v0.4",
+      "prd_pin": "d317a65ec7dc9240620f33733eacbf16211c4268",
+      "half": "brief",
+      "half_hash": "c2ea15c6002f176ceb0b3997c7b854b2e01a71f6c5d1d72002e88497214b2821",
+      "verdict": "SIGNED",
+      "review_ref": "docs/briefs/sources/MDPF_TAXSMA_L4_BRIEF_REVIEW_v0_4_20260915.md@27286d3a81",
+      "signed_by": "4.0.0_SA_CRO",
+      "signed_at": "2026-09-15T19:15:18Z"
+    },
+    "brief_stamp_commit": "5e2089e99b8a96f98fec6a261e317134d90a8efe",
+    "ratified_text": {
+      "prd": "MDPF_TAXSMA_PRD.md",
+      "prd_version": "v0.4",
+      "prd_pin": "d317a65ec7dc9240620f33733eacbf16211c4268",
+      "half": "ratified-text",
+      "half_hash": "da428d318d04535960b84890bc914cecdf4740b135a0ec8764e137071485d44f",
+      "verdict": "REFUSED",
+      "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/PRD_REVIEW_MDPF_TAXSMA_v0.4_RATIFIED_TEXT_HALF_20260915.md@91875c897c",
+      "signed_by": "3.0.0_SA_CVO",
+      "signed_at": "2026-09-15T19:10:02Z",
+      "reason": "Gateway row: R1 dropped the route's own guard before generic /ms/* handling; R2 names the identity by email with no tid/oid binding (NFRA_OPLGTW v0.2 C1 keys grants by tid/oid)"
+    },
+    "ratified_text_stamp_commit": "4bac56b200416c9f25102374ad4ebb4ae79c6922",
+    "result": "WITHHELD; independent brief approval did not override CVO refusal"
+  },
+  "v05_repair_checks": {
+    "checked_utc": "2026-09-15T19:23:22.958149+00:00",
+    "scope": "v0.5 documentary conformance and unchanged-interface checks; no runtime/live access test",
+    "prd_version": "v0.5",
+    "contract_version": "0.5.0",
+    "header_and_canonical_shape_violations": [],
+    "endpoint_unchanged": true,
+    "endpoint_sha256_without_trailing_separators": "296f83b8a122edc5f737ad6247b55716843b94e69d22ee5afb376c2a2f1d06a1",
+    "owned_surfaces": 19,
+    "components": 49,
+    "brief_headings_carried": 18,
+    "acyclic_dependencies": true,
+    "artifact_count": 9,
+    "artifact_addresses_writers_readers_unchanged": true,
+    "schedules_and_runtime_role_matrix_unchanged": true,
+    "projected_business_fields": 7,
+    "source_headers_projection_response_and_Silver_unchanged": true,
+    "membership_key": "Traded",
+    "membership_date_basis": "FIRST_OBSERVED_UTC",
+    "date_comparison": "UTC date compared directly with exchange-session date labels; no session roll/local-time conversion",
+    "current_business_count_separate_from_dated_value_coverage": true,
+    "R1": "own capability guard precedes generic /ms/* handling",
+    "R2": "validated Entra tid/oid, email designation only; wrong pair denied even with same email",
+    "counterpart_pins_restored": true,
+    "cro_deferred_S19_indexes_corrected": [
+      "I.O3",
+      "I.O5",
+      "I.O8"
+    ],
+    "half_hashes": {
+      "ratified-text": "ab7f2488ad922e26fa91feae1b19ae7c5615c6520b338f77150569e5ff84b77b",
+      "brief": "a14495740d029c4f2fd09c5309fa183b2f85d75e187c71d162b3f91a31815043"
+    },
+    "both_halves_changed_from_v04": true,
+    "prd_sha256": "03ad7c1fa83257d243ec8a35d345a8e999a5475a9a4edb40eac05613d6200841",
+    "data_contract_sha256": "e49169831e6bf2ddf0e975de04f5c1b45f7eb4be5999735fba405525a3a4d971",
+    "workbook_access": "Believed but UNMEASURED; immutable principal binding also unmeasured by the relayed whoami record",
+    "l6_state": "Held for admitted final PRD and L5 v2"
   }
 }
