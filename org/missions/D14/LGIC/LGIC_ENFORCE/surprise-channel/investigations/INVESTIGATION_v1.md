@@ -463,7 +463,7 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     "notes": "DISARM, per W1-S7's own clause, by its disarm owner, before EN-v-3 spawns; no worker ran the defective subcommand against a real view. The criterion text, the face and the fixtures are unchanged: the fix corrects the instrument's loader, a harness defect in the issuer's own fixed input, disclosed in its commit. INERT: EN-v-3 will be spawned from a base carrying the fix."
   },
   {
-    "id": "LGIC_ENFORCE-W4-S1",
+    "id": "LGIC_ENFORCE-W4-S2",
     "project": "LGIC_ENFORCE",
     "fabric": "laptop",
     "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~4",
