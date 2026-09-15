@@ -68,3 +68,11 @@ behaviours**, not two URLs.
   live: Branch B, NOT SIGNED, the restore above.
 - **Re-signed:** SIGNED for the radius as amended here. The CTO half is re-requested to name the WAF normalization; C1-AC6 stops the legs
   until it does.
+
+## AMENDMENT 3 (~21:1xZ, on `1.0.0_SA_CTO~Z` msg 23255): the post-apply re-plan residual is inside this signature
+
+The normalization is PERMANENT: after the apply the targeted re-plan re-proposes the same three `version '' -> null` leaves on the one WebACL
+address (state `""`, AWS absent), so `No changes` cannot pass on this root. A re-plan whose only action is that WebACL with exactly those
+three leaves is inside the permitted set of AMENDMENT 2 and is NOT Branch B; any other action in the re-plan still is. `TO-C1-1` C1-AC11 is
+re-cut to match. Live at this amendment, read by this seat: 25 of 25 auth-validator-edge associations at version 20 (published 21:00:57Z),
+distribution `Deployed`, config ETag `E3E2K17TJ5XXGE`.

@@ -94,6 +94,16 @@ as before. Your artifact rollback left the latest `portal-auth/auth-validator-ed
 rebuild)** before C1-AC9. **Run order on continuation: C1-AC6, C1-AC8, C1-AC9, C1-AC17, C1-AC18, C1-AC19, C1-AC10, C1-AC11, C1-AC20, C1-AC12,
 C1-AC13, C1-AC14, C1-AC15.** C1-AC1..C1-AC5 and C1-AC7 stand as recorded.
 
+**AMENDMENT 3 (issuer, ~21:1xZ, on 1.0.0_SA_CTO~Z's msg 23255 as the edge half's signer): C1-AC11's residual is the PERMANENT WAF
+normalization, NOT Branch B.** After the apply, the targeted re-plan still reads `0 to add, 1 to change, 0 to destroy` on ONE address,
+`aws_wafv2_web_acl.opal_cloudfront_protection`, with exactly the three `managed_rule_group_statement` version leaves `'' -> null`: state holds
+`""` and AWS returns the field absent, so the provider re-proposes it after every apply and `No changes` can never pass on this root. Those
+three leaves are inside both halves' AMENDMENT 2 radius, and C1-AC20 reads every live rule field equal. C1-AC11 is re-cut to accept either
+`No changes` or exactly that one-address, three-leaf residual, read by `<PLAN_LEAF_DIFF_C1>` (the leaf reader you already use for C1-AC9, on
+the re-plan's `show -json`). **Live at the amendment, read by the issuer:** 25 of 25 auth-validator-edge associations at version 20
+(published 21:00:57Z), distribution Deployed. **Do NOT roll back.** Record C1-AC11 against this expectation, then continue to C1-AC14 and
+C1-AC15.
+
 ### REFUSAL CLAUSE
 
 A criterion you cannot satisfy as written is REFUSED with its measurement, never repaired, widened or satisfied by another route. A deploy
@@ -136,7 +146,7 @@ ARMED needs `disarm_owner` `2.0.0_SA_COO~Z`). Keep working.
 
 <criterion id="C1-AC10" cell_refs="AF1-s-11"><invocation>timeout 1800 .tools/safe-apply.sh -chdir=infra/aws/terraform/portal-auth apply C:/tmp/wk-aggfix-1-2/.scratch/c1.tfplan</invocation><expect>`Apply complete! Resources: 0 added, 3 changed, 0 destroyed.` with the halt-gate checkpoint output pasted above it, and the newly published auth-validator-edge version number printed after it (list-versions-by-function).</expect></criterion> `C1-AC10` -- THE APPLY, THROUGH THE GATE.
 
-<criterion id="C1-AC11" cell_refs="AF1-s-11"><invocation>timeout 900 terraform -chdir=infra/aws/terraform/portal-auth plan -input=false -no-color -target='aws_lambda_function.auth_validator_edge[0]' -target=aws_cloudfront_distribution.portal</invocation><expect>`No changes. Your infrastructure matches the configuration.`</expect></criterion> `C1-AC11` -- THE TARGETED RE-PLAN.
+<criterion id="C1-AC11" cell_refs="AF1-s-11"><invocation>timeout 900 bash -c "terraform -chdir=infra/aws/terraform/portal-auth plan -input=false -no-color -target='aws_lambda_function.auth_validator_edge[0]' -target=aws_cloudfront_distribution.portal -out=C:/tmp/wk-aggfix-1-2/.scratch/c1_ac11.tfplan && terraform -chdir=infra/aws/terraform/portal-auth show -json C:/tmp/wk-aggfix-1-2/.scratch/c1_ac11.tfplan > .scratch/c1_ac11_show.json && python <PLAN_LEAF_DIFF_C1> .scratch/c1_ac11_show.json"</invocation><expect>(AMENDMENT 3) either `No changes. Your infrastructure matches the configuration.`, or `Plan: 0 to add, 1 to change, 0 to destroy` where the leaf reader prints ONE address with an action, aws_wafv2_web_acl.opal_cloudfront_protection, whose ONLY leaf changes are the three managed_rule_group_statement version values '' -> null (a line `LEAF DIFFS 3`, after_unknown empty); aws_lambda_function.auth_validator_edge[0] and aws_cloudfront_distribution.portal carry NO action. Anything else: Branch B.</expect></criterion> `C1-AC11` -- THE TARGETED RE-PLAN.
 
 <criterion id="C1-AC12" cell_refs="AF1-s-11"><invocation>timeout 1800 python <LIVE_ASSOCIATION_READ_C1></invocation><expect>the distribution's Status polled until `Deployed` (bounded, each poll printed); then from get-distribution-config every lambda_function_association ARN naming auth-validator-edge, with a line `AUTH-VALIDATOR ASSOCIATIONS 25 -- AT NEW VERSION 25 of 25` (the count C1-AC18 printed) naming the version C1-AC10 published and 0 at any other version.</expect></criterion> `C1-AC12` -- THE LIVE ASSOCIATION, THE ONLY PROOF THE EDGE MOVED.
 
@@ -150,7 +160,7 @@ ARMED needs `disarm_owner` `2.0.0_SA_COO~Z`). Keep working.
 
 <expected_criteria>C1-AC1, C1-AC2, C1-AC3, C1-AC4, C1-AC5, C1-AC6, C1-AC7, C1-AC8, C1-AC9, C1-AC10, C1-AC11, C1-AC12, C1-AC13, C1-AC14, C1-AC15, C1-AC16, C1-AC17, C1-AC18, C1-AC19, C1-AC20</expected_criteria>
 
-<placeholders>EDGE_ROUTE_CENSUS_C1, EDGE_TIER_READ_C1, LIVE_TIER_ARMS_C1, GATE_UNIT_HARNESS_C1, LIVE_ASSOCIATION_READ_C1, LIVE_WAF_READ_C1</placeholders>
+<placeholders>EDGE_ROUTE_CENSUS_C1, EDGE_TIER_READ_C1, LIVE_TIER_ARMS_C1, GATE_UNIT_HARNESS_C1, LIVE_ASSOCIATION_READ_C1, LIVE_WAF_READ_C1, PLAN_LEAF_DIFF_C1</placeholders>
 
 <paths>
 org/missions/D4/POSN/POSN_AGGFIX/task-orders/POSN_AGGFIX.TO-C1-1.edge-refuses-the-aggregate-outside-opal.md
