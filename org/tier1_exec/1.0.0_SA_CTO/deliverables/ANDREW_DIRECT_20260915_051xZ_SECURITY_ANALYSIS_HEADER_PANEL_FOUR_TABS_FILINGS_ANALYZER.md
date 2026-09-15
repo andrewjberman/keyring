@@ -73,6 +73,20 @@ characteristics, from the model block's header scalars and the ETF plane's class
 JUDGMENT over evidence the page already serves for both names (model block, feeds, filings, peers).
 Nothing in it is an order.
 
+## VERBATIM, FIFTH WORD (same terminal, ~05:2xZ, after the egress grant)
+
+> Yes also look at some of the packs that Adam is providing because there are some very clear structure
+> cases to draw from that, like in his "Peers" case, its all comparable multiples. I think we can borrow a
+> lot of the ranking material from the "Security Scanner" to reincorprate there.
+
+**Reading, narrow:** two SOURCES OF STRUCTURE for the Peers tab, both already in the estate: (1) Adam's
+research packs on SharePoint (the F1 corpus the brief measured; F6 measured 48 of 54 carrying a stale
+peer set), whose Peers block is a COMPARABLE-MULTIPLES table -- the shape the tab should reproduce; (2) the
+Security Scanner's factor and ranking material (the live `/api/scoped/security-scanner/*` routes and their
+producer), to be re-incorporated as the ranking half of Peers rather than rebuilt. "Borrow" is read as
+REUSE of existing code and factor definitions under the page's own contract, not a copy into a new
+producer; the peer-SET rule (who the comparables are) remains the open question of the fourth word.
+
 ## READING -- NARROW, AGAINST THE PAGE AS BUILT (refs/drains/rg-2-portal @a845a8be)
 
 | his sentence | what stands today | what moves |
