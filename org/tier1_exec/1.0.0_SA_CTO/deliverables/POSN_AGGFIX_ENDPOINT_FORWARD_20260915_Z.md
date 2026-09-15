@@ -2,13 +2,20 @@
 
 **Author:** `1.0.0_SA_CTO~Z` (spine L2). **Date:** 2026-09-15.
 **Status:** EMITTED, NOT CONFIRMED. The spine makes Andrew's word on each DONE WHEN line the confirmation (L2 "Tool").
+**Amended 2026-09-15 ~17:1xZ, before confirmation, ids unchanged:** FWD-2 and FWD-7 name advisors as well as clients;
+FWD-4 and FWD-6 carry dependencies the L1 brief measured. Findings from `4.0.0_SA_CRO~Z` msg 23175, re-read by this
+seat at the portal (origin/PROD `edf85ce503` `portal-proxy.ts:1418-1426`: the model route is "internal + advisor
+only" and "blocks client tier") and at ruling 5's own text.
 **NOT YET LANDED IN A PRD.** No PRD exists. The block below belongs verbatim under the section title
 `## ENDPOINT (step 2, /endpoint --forward)` in `org/missions/D4/POSN/POSN_AGGFIX/prd/POSN_AGGFIX_PRD.md` at L4.
 **Authority:** Andrew-direct ~16:2xZ, record `ANDREW_DIRECT_20260915_162xZ_POSN_AGGFIX_CTO_Z_ENDPOINT_FORWARD_ON_CRO_RESTORE_PLAN.md` (this folder).
 
 **Input (the brief, by Andrew's designation):**
 `org/tier1_exec/4.0.0_SA_CRO/deliverables/POSITIONING_AGG_OPAL_ONLY_RESTORE_PLAN_20260915.md` @ `2033ff3ea6`
-(origin/CLOUD; blob `0765b9af1f`; 13372 bytes; authored by `4.0.0_SA_CRO`, dated 2026-09-15; no `generated` line).
+(origin/CLOUD, and on SITEZ byte-identical since `1e268c164e`; blob `0765b9af1f`; 13372 bytes; authored by
+`4.0.0_SA_CRO`, dated 2026-09-15; no `generated` line).
+**L1 brief in an admitted shape:** `docs/briefs/posn-aggfix-opal-only-agg-view-brief-20260915.md` @ `1e268c164e`
+(blob `8a527c8aa0`, 27655 bytes, by `4.0.0_SA_CRO~Z`). Its outcomes O1-O7 map onto FWD-1..FWD-8 and re-open nothing.
 Every `:n` below is a line of that blob, read with `git show 2033ff3ea6:<path> | cat -n`.
 
 ---
@@ -29,13 +36,17 @@ ENDPOINT -- POSN_AGGFIX (emitted 2026-09-15; awaiting Andrew's DONE WHEN word)
                     named read the same selected book"; :129 Phase 1 step 3
 
   FWD-2  Nobody outside Opal sees the aggregate on the page
-         DONE WHEN  EXERCISED -- the page has been opened as a client, including a
-                    client whose browser remembers the aggregate as its last
-                    choice, and no aggregate choice appeared
-         ACCEPT     A client looking for the aggregate cannot find it, and a client
-                    whose browser remembered it lands on an ordinary model instead.
+         DONE WHEN  EXERCISED -- the page has been opened as an advisor and as a
+                    client, each including a viewer whose browser remembers the
+                    aggregate as its last choice, and no aggregate choice appeared
+                    for either
+         ACCEPT     An advisor or a client looking for the aggregate cannot find
+                    it, and one whose browser remembered it lands on an ordinary
+                    model instead.
          SOURCE     :27; :126-128 "Gate it by viewer ... a mode-level flag would
-                    show AGG to clients again"; :133-135 remembered selection
+                    show AGG to clients again"; :133-135 remembered selection;
+                    brief O3 "An advisor or a client never finds the aggregate"
+         AMENDED    before confirmation: the advisor arm added (brief finding 1)
 
   FWD-3  Each aggregate holding shows how the models share it, marked as firm-wide
          DONE WHEN  EXERCISED -- an Opal user has read the per-model split on
@@ -56,7 +67,10 @@ ENDPOINT -- POSN_AGGFIX (emitted 2026-09-15; awaiting Andrew's DONE WHEN word)
          SOURCE     :22-23 "A straight revert would restore a stale number"; :74-76;
                     :147-148 Phase 2 step 1; D1 :167
          DEPENDS    D1 = "Together" (the CRO's rec). On "Phase 1 alone" this outcome
-                    is not promised and the endpoint must say the mix is stale.
+                    is not promised, the endpoint must say the mix is stale, and the
+                    aggregate comes back on the old portfolio file that Andrew's
+                    2026-09-09 ruling 5 treated as no longer needed (brief F9,
+                    finding 3).
 
   FWD-5  The aggregate says which day's figures its model mix comes from
          DONE WHEN  EXERCISED -- an Opal user has read the date shown with the
@@ -78,16 +92,27 @@ ENDPOINT -- POSN_AGGFIX (emitted 2026-09-15; awaiting Andrew's DONE WHEN word)
                     :109-111 "Reconcile before relying"; :149; D2 :168
          DEPENDS    D2 = "Fold them in" (the CRO's rec). On "exclude with a note" the
                     ACCEPT becomes: the page says plainly which models are left out.
+                    ALSO: explaining the gap depends on the owner of the firm's
+                    assets-by-model figures, which this project relies on and does
+                    not own; the gap is already in that owner's source (brief F4,
+                    finding 2). If Andrew prefers a bar this project alone can
+                    meet, the last clause becomes "is shown plainly as not yet
+                    explained". Not changed here, because that choice narrows the
+                    outcome.
 
   FWD-7  The aggregate figures are not sent to clients at all
-         DONE WHEN  EXERCISED -- what a client's signed-in session receives has been
-                    read and carries no aggregate, while an Opal session still
-                    receives it
-         ACCEPT     Looking at what a client's browser is given shows nothing about
-                    the firm-wide model mix or the firm total, while Opal staff
-                    still get the aggregate and the page still works for them.
+         DONE WHEN  EXERCISED -- what an advisor's and a client's signed-in
+                    sessions receive has been read and neither carries the
+                    aggregate, while an Opal session still receives it
+         ACCEPT     Looking at what an advisor's or a client's browser is given
+                    shows nothing about the firm-wide model mix or the firm total,
+                    while Opal staff still get the aggregate and the page still
+                    works for them.
          SOURCE     :82-85 "A UI gate makes AGG Opal-only on screen, not in the
-                    data"; :158-160 Phase 3; D3 :169
+                    data"; :158-160 Phase 3; D3 :169; brief O7
+         AMENDED    before confirmation: the advisor arm added. The plan's Phase 3
+                    precedent refuses clients only, so a design copied from it
+                    would fail this line (brief finding 1)
          DEPENDS    D3 = "Move it" (the CRO's rec). On "leave it", this outcome is
                     retired before landing and the endpoint says, in one line, that
                     clients' sessions keep receiving the firm-wide mix and total.
@@ -126,13 +151,13 @@ comparing figures that already exist. None names a date or an event nobody contr
 
 ## Carried to L4, not decided here
 
-- **`brief_ref` cannot yet resolve.** The PRD header pins the brief as `<path>@<commit>`, and L6 refuses a brief whose
-  path matches none of the three admitted L1 shapes (spine L1 "Gate"). The plan sits at an ordinary CRO deliverables
-  path, and its commit is on origin/CLOUD only. The remedy is a route for `4.0.0_SA_CRO~Z` (L1 owner) or the
-  cross-fabric integration, and it is named here, not chosen.
+- **`brief_ref` RESOLVED ~17:0xZ.** `4.0.0_SA_CRO~Z` landed `docs/briefs/posn-aggfix-opal-only-agg-view-brief-20260915.md`
+  @ `1e268c164e`, an admitted L1 shape on SITEZ, and carried the plan onto SITEZ byte-identical. Read back by this
+  seat: both paths in SITEZ HEAD, the plan's blob equal to origin/CLOUD's.
 - **The CRO's measurements are the CRO's.** This phase re-derived none of them: the served file's aggregate block, the
   July-dated weight file, the seven-model current file and its unexplained gap. L4 cites them at their vintage, and
-  the decomposition re-measures anything a cell relies on.
+  the decomposition re-measures anything a cell relies on. The L1 brief re-locates the plan's producer and portal
+  line numbers to SITEZ HEAD and origin/PROD, so L4 cites the brief's locations, not the plan's.
 
 ## Provenance
 
