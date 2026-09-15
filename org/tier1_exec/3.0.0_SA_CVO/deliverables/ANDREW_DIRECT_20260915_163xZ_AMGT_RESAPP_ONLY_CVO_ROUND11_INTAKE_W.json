@@ -1784,6 +1784,67 @@
         "Preserve canonical CVO L8/L9 ownership and deliver one final slug to CTO; no interim findings or live-order changes from this seat."
       ],
       "workflow_action": "Append review frame and preserve earlier history; archive only this exact notification after commit. No outbound reply, runtime repair, API call, deployment or recurring collection initiated."
+    },
+    {
+      "message_id": 23248,
+      "sender": "1.0.0_SA_CTO~W",
+      "message_timestamp_utc": "2026-09-15T20:20:55Z",
+      "recorded_at_utc": "2026-09-15T20:22:13.030952+00:00",
+      "source_filename": "20260915T202055Z_1.0.0_SA_CTO_W__SELF-DRIVE_AMGT_RESAPP_tick_2__card_15_.md",
+      "source_sha256": "d6bf4ce82cf29b8f011c320aee92bb0e39e7fa321b9a537882d7c3e4df3ae64d",
+      "message_body_verbatim": "# Message from 1.0.0_SA_CTO~W\r\n**To:** 3.0.0_SA_CVO~W\r\n**Date:** 20260915T202055Z\r\n**Msg-ID:** 23248\r\n**Subject:** [SELF-DRIVE AMGT_RESAPP tick 2] card 15: Lusha is not a tenure source; ruling 8 executed; CTO half s.8 corrected (@4be2f8be48)\r\n\r\n/self-drive AMGT_RESAPP tick 2 at 1.0.0_SA_CTO~W (adjudicating on Andrew ~19:3xZ @2ac5611057). Record: org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ADJUDICATION_AMGT_RESAPP_20260915T202xZ.md; ledger row 13.\r\n\r\nCARD 15, RULED on 4.0.0_SA_CRO~W's Lusha v3 reference review @ecfe46465e: the one Lusha enrich authorized ~19:0xZ is NOT run -- the documented request cannot exclude emails and phones (\"Omit reveal to get both by default\") and the documented response carries no employment dates. exec_company_tenure_avg_years and exec_role_tenure_avg_years come from filings only (proxy-statement biographies, 10-K/20-F officer sections), ABSENT with reason where the filing does not state a date. The Bloomberg headline is unaffected. No message to Lusha.\r\n\r\nRULING 8 EXECUTED: 0.0.0_AB_MSTR~Z restored 4.0.0_SA_CRO~W's heartbeat (msg 23242, GREEN, pid 23248); root cause as corrected in msg 23246 is the heartbeat helper's unguarded loop, fabric tooling outside AMGT.\r\n\r\nCORRECTION OF MY OWN RECORD, for 2.0.0_SA_COO~W: CTO half s.8 (@b360513e99) said it was written before rj-10's second-act ledger opened. Worker ~19 opened it at 19:56:43Z in its worktree, a minute before s.8 -- my read looked at the shared tree only. s.8 preceded the apply (20:00:21Z) but reached the worker after it (row W19-S19). The act stayed inside s.8's permitted set, its rollback is in the ledger @1e38dfcb7e, and the entry closed @8f05992ce9 with keyed rows. Correction appended to the half; lines 1-6 unchanged.\r\n\r\nState: round 11 at 11 of 13, rj-10's drain and rj-3 remaining; slug not cut; completion test NOT DONE. Push state: LOCAL (0.0.0_AB_MSTR~Z carries).\r\n",
+      "authority_basis": "CTO adjudication under delegated AMGT_RESAPP open-call authority. Operative tick-2 record at 4be2f8be48 and CRO reference review ecfe46465e are cited, not independently read in this exact-notification turn.",
+      "requested_action": "Apply card 15 sourcing decision and retain CTO rj-10 chronology correction for CVO review. No Lusha action requested; final slug remains pending.",
+      "effective_management_frame": [
+        "Do not run the one previously authorized Lusha enrich: CTO rules its documentation fails the no-email/no-phone prerequisite and supplies no employment dates.",
+        "exec_company_tenure_avg_years and exec_role_tenure_avg_years use filings only: proxy-statement biographies or 10-K/20-F officer sections.",
+        "Missing filing dates yield ABSENT with a reason; do not guess tenure from unrelated fields.",
+        "Bloomberg EXECUTIVE_AVERAGE_TENURE headline remains unchanged."
+      ],
+      "supersedes": [
+        {
+          "prior_message_ids": [
+            23191,
+            23202,
+            23224,
+            23237
+          ],
+          "prior_reading": "Lusha may be explored as a tenure fallback, with one bounded enrich pending documentation.",
+          "effective_reading": "Documentation review has resulted in NOT RUN. Companion tenure metrics are filings-only; prior authorization is not evidence of an executed call."
+        }
+      ],
+      "rj10_timeline_correction_as_reported": {
+        "order": "AMGT-rj-10",
+        "earlier_claim": "CTO half s.8 written before the second-act ledger opened.",
+        "corrected_sequence": [
+          "Worker opened ledger in its worktree at 2026-09-15T19:56:43Z, before s.8.",
+          "CTO shared-tree inspection missed that worktree state.",
+          "s.8 preceded apply at 2026-09-15T20:00:21Z, but reached the worker after apply (W19-S19)."
+        ],
+        "cto_assessment": "Act remained within s.8 permitted set; rollback ledger at 1e38dfcb7e; closed entry at 8f05992ce9 with keyed rows.",
+        "review_status": "Preserve as reported correction. Independently inspect source chronology, scope and rollback evidence when grading rj-10; do not equate issue time with worker receipt time."
+      },
+      "runtime_notice": {
+        "state": "CRO~W heartbeat reported restored by MSTR~Z; no independent CVO liveness probe performed.",
+        "scope": "Only retain relevance to AMGT research availability. Root-cause tooling work is outside AMGT and is not pursued."
+      },
+      "round_state_as_reported": {
+        "complete": 11,
+        "total": 13,
+        "remaining": [
+          "rj-10 drain",
+          "rj-3"
+        ],
+        "slug": "NOT_CUT",
+        "completion_test": "NOT_DONE",
+        "verification": "CTO report at message vintage, not a fresh CVO proof-instance census. Earlier seven-proof audit remains pinned to its original head."
+      },
+      "review_checks": [
+        "Read full CTO/CRO records when reviewing the corresponding addendum; do not reopen the disallowed Lusha attempt from an older frame.",
+        "Apply the rj-10 correction to the final evidence review without silently replacing the original historical claim.",
+        "Keep current round-11 grading tied to its issued criteria; do not issue terminal L8/L9/L10 outputs on the reported partial drain alone."
+      ],
+      "workflow_action": "Append current sourcing decision and chronology correction, preserve prior history, then archive only this exact notification. No outbound reply or provider call."
     }
   ]
 }
