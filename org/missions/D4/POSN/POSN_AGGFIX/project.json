@@ -8,7 +8,7 @@
  "dep_stage": "PRD",
  "created": "2026-09-15",
  "registered_under_tree": "2026-09-15",
- "last_updated": "2026-09-15T17:58:37Z",
+ "last_updated": "2026-09-15T18:08:38Z",
  "pods": [
   "1.0.0",
   "2.0.0",
@@ -41,10 +41,11 @@
   "L2 ENDPOINT EMITTED, NOT CONFIRMED: FWD-1..FWD-8. FWD-4, FWD-6 and FWD-7 are written on the CRO's recommendations for D1, D2 and D3 and each states the line it becomes under the other answer; D4 adds an outcome only if Andrew picks the aggregate as the Opal default.",
   "L2 ENDPOINT AMENDED BEFORE CONFIRMATION 2026-09-15 ~17:1xZ by 1.0.0_SA_CTO~Z on 4.0.0_SA_CRO~Z's L1 brief findings (msg 23175), re-read at origin/PROD edf85ce503 portal-proxy.ts:1418-1426 (the model route: internal + advisor only, blocks client tier) and at Andrew's 2026-09-09 ruling 5 text: FWD-2 and FWD-7 add the advisor arm; FWD-6 names its dependency on the owner of the firm's assets-by-model figures without narrowing its bar; FWD-4's Phase-1-alone branch names ruling 5. Ids unchanged.",
   "L2 ENDPOINT CONFIRMED 2026-09-15 ~17:0xZ, Andrew-direct at the 0.0.0_AB_MSTR terminal, relayed by 0.0.0_AB_MSTR~Z msg 23176; SITEZ record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260915_170xZ_POSN_AGGFIX_L2_ANSWERS_DONE_WHEN_D4_FULL_FLOW.md. a) to h) map to FWD-1..FWD-8 (order checked against this seat's bytes; content-checked by 4.0.0_SA_CRO~Z msg 23178). FWD-5 RETIRED (e 'no this is irrelevant'), id vacant. FWD-9 added from D4 ('yes this would be the default view ... if they don't have another one cached'). Scope: primary models and blends of them only (a, f); one Opal-wide aggregate, none per partner firm (b); the prior layout (c). s.6 = the full canonical flow ('might as well do it properly'). D1-D3 read as settled by d, f and g; that reading is this seat's and was relayed back.",
-  "L4 PRD v0.1 written 2026-09-15 by 1.0.0_SA_CTO~Z. Two measured findings shaped it: the producer role's S3 grant on opal-data-portal-v2/* (infra/aws/terraform/yang-pipeline/iam.tf:34-46) already covers the re-pointed read and a new key, so no IAM cell; and the client-tier refusal the portal proxy docstring claims for the model route was not found in the two edge functions comp-routes names for that URL, so S4 verifies where any refusal runs before the Opal-only route (S11) is built."
+  "L4 PRD v0.1 written 2026-09-15 by 1.0.0_SA_CTO~Z. Two measured findings shaped it: the producer role's S3 grant on opal-data-portal-v2/* (infra/aws/terraform/yang-pipeline/iam.tf:34-46) already covers the re-pointed read and a new key, so no IAM cell; and the client-tier refusal the portal proxy docstring claims for the model route was not found in the two edge functions comp-routes names for that URL, so S4 verifies where any refusal runs before the Opal-only route (S11) is built.",
+  "L4-R ADMITTED 2026-09-15 ~18:02Z at PRD v0.2 @cbd85e5cff: ratified-text SIGNED by 3.0.0_SA_CVO~Z @57438abd0e (half_hash 33458b1d30..., unchanged since v0.1), brief SIGNED by 4.0.0_SA_CRO~Z @b523c21086 (half_hash a05dfcec3a..., review @f51af104e4) after its v0.1 refusal @7ffc16301a was answered in v0.2. RELEASE TO L5: broker message 23197 '[PRD LANDED] POSN_AGGFIX v0.2 @b523c21086', sent 18:02:08Z by the notifier in 4.0.0_SA_CRO~Z's sign-off commit and READ by 2.0.0_SA_COO~Z at 18:02:52Z (get_delivery_state, read by 1.0.0_SA_CTO~Z). CARRIED TO L5 as a design fact, not a PRD change: under v0.2 the aggregate's total no longer equals the five books' aum summed (books carry their own rows, the aggregate folds the blends); which total the aggregate shows is settled in the cell serving FWD-6 (4.0.0_SA_CRO~Z v0.2 review, 'ONE NEW NOTE')."
  ],
- "phase": "L4 PRD v0.2 (dep_stage PRD). L4-R: ratified-text SIGNED by 3.0.0_SA_CVO~Z @57438abd0e (unchanged half); brief half REFUSED at v0.1 by 4.0.0_SA_CRO~Z @7ffc16301a and answered in v0.2, re-read owed. L2 CONFIRMED ~17:0xZ; L3 REGISTERED; L1 brief at 1e268c164e.",
- "blocking": "L4-R: the brief half's re-read of v0.2 by 4.0.0_SA_CRO~Z. The COO is notified once both halves read SIGNED; the PRD notifier holds no row for this project, so 1.0.0_SA_CTO~Z hands off by message. STANDING: site-Z push hold; commits LOCAL.",
+ "phase": "L5 at 2.0.0_SA_COO~Z on PRD v0.2 @cbd85e5cff (ADMITTED ~18:02Z, both halves signed current; release msg 23197 READ 18:02:52Z). L4-R closed; L2 CONFIRMED ~17:0xZ; L3 REGISTERED; L1 brief at 1e268c164e.",
+ "blocking": "None at 1.0.0_SA_CTO~Z. L5 decomposition and L6 issuance are 2.0.0_SA_COO~Z's. Relayed back to Andrew, not blocking: the advisor arms on FWD-2 and FWD-7, FWD-9's wording, and D1-D3 as read. STANDING: site-Z push hold; commits LOCAL.",
  "threads": [],
  "thread_counter": 0
 }
