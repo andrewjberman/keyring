@@ -288,6 +288,37 @@ failed, the 6 for cone absence, `S2`). **Drained** `ac10e06de8` (the channel uni
 `wk-amgt-11-1` fast-forwarded to `ac10e06de8`, cone widened with `integrations/` and `infra/`; rj-2 and rj-9's adapter-suite
 invocation re-cut to pytest with the collected count as the denominator (W18-S1). rj-2 spawns at rj-6's drain.
 
+### 12. rj-7 complete and drained; the Posture QA pair chosen; rj-5 complete on the amended bars and drained (10:0x-10:4xZ)
+
+**rj-7 (`~21`) reported at ~10:0xZ COMPLETE, 6 of 6 PASS-by-output:** ONE database of 2,851 candidates (six scanner files, 5,282
+rows folded to 2,849 unique tickers, UNION 3 classified model-block headers; vintage 2026-08-06 carried), four lexicographic rungs
+with per-rung denominators (MECE 2,850 of 2,850 holds), a log-cap tiebreak; BABA derived 12 of 12 in sector and band (rung 2 for
+most: the country differs); the batch wrote 33 of 33 R-1 objects to `peers/v1/` (derived 10, absent 23 with reasons; read-back 33)
+-- 33 because only 33 of the 256 universe names carry a `security_key` (rj-4's 3-of-170 finding, row `W21-S4`); each of the five
+QA names is `derived(n=12)`; the CSC map is 5 present / 12 absent of 17 columns (`W21-S6`: the 12 need per-peer Bloomberg fields a
+model block per peer would carry, outside F2's quota -- reaches rj-9's Peers tab, whose renderer must keep the two grain caveats
+`ey`/`ey_ntm` are reciprocals and NTM, not FY2026); Seeking Alpha comparables `ABSENT-ACCESS` (measured, never the rule). Two seams
+the order did not name were load-bearing (`W21-S1`, `W21-S2`): the union's halves carry different sector vocabularies and different
+market-cap units; both maps live in `lib/research/peers/taxonomy.py` with their residue re-measurable. `W21-S3` (a company twice in
+the database under a canonical key and a SEDOL-shaped scanner ticker X-1 cannot join; disarmed in code by the worker, the residual
+routed to the CVO at L9). **Drained** `9c8071c404` (the channel unioned by row id, 202 rows). Chain D's queue is empty.
+
+**The Posture QA pair (s.19e: chosen at rj-7's drain):** the held universe at U-1 is THREE resolved names -- `BA_US_Equity`,
+`HD_US_Equity`, `VLO_US_Equity` (source `both`); rj-11's order already fixes the NOT-held subject as `BABA_US_Equity`. **The HELD
+subject is `BA_US_Equity`** (`AMGT_QA_HELD_KEY=BA_US_Equity` in rj-11's spawn; named in rj-8's). Read ahead on rj-11's AC3
+("COMPARABLE naming a held security_key" for BABA): BABA's own R-1 members hold no Opal holding, so the comparable comes from the
+order's fallback -- the engine re-run over the three held names -- and HD sits in BABA's scanner sector (Consumer Cyclicals) inside
+the 0.2x-5x band, so a held comparable is reachable at rung 2 and AC3 stands as written; BA's comparable is any of its twelve
+non-held peers.
+
+**rj-5 (`~19`) re-run reported at ~10:3xZ COMPLETE, 7 of 7 PASS-by-output on the amended bytes:** 3 prefixes, 7 bodies printed as
+the denominator, BA 2 / COST 2 / HD 3 links with 1 / 1 / 3 inside the window, the control 0, bodies read EQUAL to links listed (a
+backreference now, stronger than the fixed 80 it replaced), the pointer's attribute names with `rank_sort` ABSENT, table-items 0 on
+4 of 4, 41 of 41 test arms; the worker ran every re-cut `expect` against 13 mutated copies of its own evidence and all 13 were
+refused, so the printed denominators kept their teeth; determinism stable on 3 of 3 dry runs (identical payload hashes while run
+ids moved). Nothing rebuilt; no new rows (`W19-S12` still the next free id). **Drained** `4faa0123ad` (no conflict: the pass touched
+no channel). **Four of thirteen orders complete** (rj-4, rj-1, rj-7, rj-5); the lesson of the count bars banked to memory.
+
 ---
 
 ## Decisions Made
@@ -326,21 +357,20 @@ None at this lane. The next acts are gated on the workers' final reports (backgr
 
 ## Current State
 
-Round 11 of AMGT_RESAPP is EXECUTING (13 orders): rj-4 and rj-1 COMPLETE and drained; rj-5 OPEN on its amended bars with `~19`
-re-running the seven criteria in C:/tmp/wk-amgt-11-2; `~20` on rj-6 in C:/tmp/wk-amgt-11-3 and `~21` on rj-7 in C:/tmp/wk-amgt-11-4
-still live; `~18` idle in C:/tmp/wk-amgt-11-1 (portal @ad275969) until rj-6 drains, then rj-2. rj-8 (`~22`, wk-amgt-11-5) at rj-6's
-drain. Channel at 196 rows. Both co-sign halves are files. PORTAL FROZEN; all commits LOCAL; no push.
+Round 11 of AMGT_RESAPP is EXECUTING (13 orders): rj-4, rj-1, rj-7 and rj-5 COMPLETE and drained at 4faa0123ad; `~20` on rj-6 in
+C:/tmp/wk-amgt-11-3 is the one live worker; `~18` idle in C:/tmp/wk-amgt-11-1 (portal @ad275969) until rj-6 drains, then rj-2; `~22`
+(wk-amgt-11-5) takes rj-8 at rj-6's drain; `~19` idle in C:/tmp/wk-amgt-11-2 until rj-9 drains, then rj-10; chain D done. Posture
+QA held key BA_US_Equity. Channel at 202 rows. Both co-sign halves are files. PORTAL FROZEN; all commits LOCAL; no push.
 
 ---
 
 ## Next Steps
 
-1. At each report: verify the instance with the worktree's own checker, drain through safe-merge.sh (the channel union by row id),
-   read every worker row, disarm as owner where owed. At rj-6's drain spawn rj-8 (~22) and rj-2 (~18); at rj-8: rj-13 (~22); at
-   rj-2 + rj-5/6/7/8: rj-9 (~18); at rj-7's drain choose the Posture QA held/non-held pair from R-1 + U-1 and name it in the rj-6/7/8
-   hand-overs and rj-11's spawn; rj-11 (~20) after rj-6 + rj-7/8; rj-10 (~19, ff its branch first) after rj-5 + rj-1/9; rj-12 (~18)
-   after rj-9 + rj-11; rj-3 (~18) LAST after rj-10 + rj-12.
-2. Fetch chain A's portal branch into refs/drains/rj-portal at each of its drains; the gitlink never moves.
+1. At rj-6's drain: spawn rj-8 (~22, ff wk-amgt-11-5 first, QA pair named) and rj-2 (~18, ff wk-amgt-11-1 first); at rj-8's drain:
+   rj-13 (~22); at rj-2's drain (rj-5/6/7/8 drained): rj-9 (~18, with W21-S6's CSC gap named); rj-11 (~20) after rj-6 + rj-7/8 with
+   AMGT_QA_HELD_KEY=BA_US_Equity; rj-10 (~19, ff first) after rj-9; rj-12 (~18) after rj-9 + rj-11; rj-3 (~18) LAST after rj-10 + rj-12.
+2. Each drain: verify the instance with the worktree's own checker, safe-merge with the channel unioned by row id, read every row,
+   disarm as owner where owed; chain A's portal branch into refs/drains/rj-portal at each of its drains; the gitlink never moves.
 3. The browser half of rj-3 with the exact payloads rj-10 captures (ROUND11_BROWSER_EXERCISE.md); the L8 packet to 3.0.0_SA_CVO~W
-   (ROUND11_PACKET.md + one message) at the end, carrying W18-S6/S7 (live defects, unrepaired) and W19-S8 (the pool's size) for L9.
+   (ROUND11_PACKET.md + one message) at the end, carrying W18-S6/S7 (live defects), W19-S8 (the pool's size), W21-S3/S6 for L9.
 4. Re-arm the inbox Monitor on every expiry; ack every broker message on read. Old worktrees stay until Andrew's word.
