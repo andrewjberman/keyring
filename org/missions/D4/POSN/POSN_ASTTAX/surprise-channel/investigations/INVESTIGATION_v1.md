@@ -7502,6 +7502,147 @@ Andrew asked for (msg 22917); it concerns this project's portal files meeting an
   "spec_asserts": "W2-AC5 expect, parenthetical: the ticker stands in where the served name is null, CASH expected.",
   "world_is": "No row in either satellite has a null served name. The stand-in branch is implemented as the TO's act 3 requires and is not reachable on this payload -- an unexercised branch, stated rather than implied.",
   "notes": "Does not change the criterion's rule half ('the NAME cell EQUALS the served name for every row whose served name is non-null'), which is measured 32 of 32."
+},
+{
+  "id": "POSN_ASTTAX-Z-S165",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T07:08:16Z",
+  "one_line": "THE ORGANIC ARM OF R2 LANDED AND READS AS THE HALVES PREDICTED (both R2 halves named the 07:00Z registry-producer fire as the organic leg; B2's ledger L8 was re-cut on the driven mechanism and closed): at 07:00:19Z/07:00:20Z the scheduled fire wrote registry.json VersionId Uvdn048aH13FRTWAvfoZsftZKPZOPBIT (as_of 2026-09-15; books IDENTICAL to the driven run's, 9 of 9; only as_of/source moved) and holdings.json VersionId 5tjkvDfus1antRLsbDrLikcMQzH1Hk.F (as_of 2026-09-15, 55047 B): 9 satellites, every ticker set IDENTICAL to the 2026-09-14 partition's, LABELS MOVED 0 (GLD commodities/Metals, VXX structured/Hedge, every row labelled, 25 distinct tickers), weights moved per row on the new roster (12-17 rows per satellite) with per-satellite totals 100.00-100.07 unchanged. Read by this seat at 07:01Z with get-object against the driven relabel's captured bytes. The organic case is CLOSED; the driven mechanism and the scheduled fire agree.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "The watch exited at 07:00:34Z on the VersionId move; the diff script's per-satellite lines (rows, set-equal, weights-moved, labels-moved, totals, coverage).",
+      "WHY GRADUATED: the negative arm produced the same labels by the producer's own schedule with no act of this seat; both halves' branch A."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "The R2 halves (CTO @d1685fb4ea, COO @424b7d0e95): 'the 07:00Z fire stays the organic leg and writes as_of 2026-09-15'.",
+  "world_is": "The served satellites keys carry the 2026-09-15 partition with the retagged labels.",
+  "notes": "B6's own organic arm (the first 12:30Z fire) is the remaining read of the night, on its ledger L8."
+},
+{
+  "id": "POSN_ASTTAX-Z-S166",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T07:08:16Z",
+  "one_line": "ADJUDICATION of W25-S1 (INERT): W2-AC1's invocation handed an MSYS path (/c/tmp/...) to native Windows python, so its own tickers line raised FileNotFoundError while every other limb printed; the worker measured the block beside it (25 tickers, name + management_style 25 of 25, VersionId 74d9.pGWF...) and REFUSED the criterion as written -- correct. ACT: the two occurrences re-cut to the native path C:/tmp/... (the issuer's defect; the device memory 'native Python cannot read /cygdrive or MSYS paths' applies to every invocation an order hands to python3).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W25-S1 as filed; the re-cut at this commit.",
+      "WHY GRADUATED: the dependency held on the worker's own read; the instrument is now runnable."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "TO-W2-1 W2-AC1: the served block read back.",
+  "world_is": "The block was served and read; the criterion's line could not print it.",
+  "notes": "An invocation is run once at the cut.",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W25-S1"
+  ]
+},
+{
+  "id": "POSN_ASTTAX-Z-S167",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T07:08:16Z",
+  "one_line": "DISARM of W25-S2 (ARMED, owner this seat): the round's portal drain ref moved UNDER a live worker (10a2799c -> 5ddce2c7 when F5's re-cut was drained at 05:2xZ while F4 ran from 10a2799c), so W2-AC2's 'diff vs the ref' named the sibling's file and W2-AC7's 'ref..branch' would read empty once the ref contains the branch; the worker recorded both readings (5 vs the moving ref, 4 of 4 vs its base) and REFUSED as written -- correct. RULED: the ref moves at every drain BY DESIGN (one lineage, disjoint files merged at the drain); a worker's diff/log bars name the branch's BASE commit as recorded in PORTAL_REFS.md, never the ref. ACT: W2-AC2 and W2-AC7 re-cut to the pinned base 10a2799c; the recipe for every future portal order. INERT: no byte of the sibling's was committed by this worker (its unscoped status showed its four files only).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W25-S2 as filed; PORTAL_REFS.md's line for wk-posn-6-25-portal names the base 10a2799c; the ref at ebbee2e6 now contains both branches (6 files vs dd1d33c6db: F5's 2 + F4's 4).",
+      "WHY GRADUATED: the hazard (committing a sibling's files to satisfy a diff bar) did not fire and the bar no longer invites it."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "TO-W2-1 W2-AC2 / W2-AC7 as re-cut: the base commit is the comparison anchor.",
+  "world_is": "The drain ref is a lineage that advances; a base is a point.",
+  "notes": "Recipe: bars compare against `<BASE>` (from PORTAL_REFS), never `refs/drains/*`.",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W25-S2"
+  ]
+},
+{
+  "id": "POSN_ASTTAX-Z-S168",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T07:08:16Z",
+  "one_line": "ADJUDICATION of W25-S3 (INERT): W2-AC8's legend clause said 'Models: 3' -- the union over all books -- while the same clause's rule is per DISPLAYED book: the default book at load (INT) holds 2 classes, LT holds 3; the worker measured both and REFUSED the number as written -- correct; the issuer's defect. ACT: the clause re-cut to per-book readings (INT 2, LT 3 as measured; Satellites 15 -> 3, 80 -> 4; the pre-change 5 in every mode as the control).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W25-S3 as filed; the first run's legend counts: Sat15 3, Sat80 4, Models INT 2, Models LT 3, pre-change 5 in every mode.",
+      "WHY GRADUATED: the mechanism (one presence set per displayed book) is what the worker shipped; only the expected number was the union."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "TO-W2-1 act 6 / W2-AC8 as re-cut.",
+  "world_is": "The Portfolio Composition legend lists only the displayed book's classes.",
+  "notes": "A number in an expect is a measurement, not a recollection.",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W25-S3"
+  ]
+},
+{
+  "id": "POSN_ASTTAX-Z-S169",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T07:08:16Z",
+  "one_line": "ADJUDICATION of W25-S4 (INERT): the Holdings panel header's DataTimestamp component accepts a `source` prop it never renders, and the composition header's left column measures 18 px against a 1260 px button strip (a 20 px overlap with and without a subtitle) -- both in files outside F4's grant (src/ui/...). RULED: the mode's own clock reaches the panels through the props F4 sets (dates 2 of 2, footers 2 of 2 carry Black Diamond and the as_of); the component's silent `source` and the header layout are CARRIED to the round-6 analysis as a shared-component item, not re-cut mid-round (no round-6 cell owns src/ui).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W25-S4 as filed with the measurements; W2-AC8's first-run readings: Satellites footers/headers 4 of 4 carry Black Diamond + 2026-09-14, 0 say Bloomberg; Models control byte-identical.",
+      "WHY GRADUATED: the visible clock is right; the unrendered prop and the layout overlap have a named file and owner for L10."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "PRD v0.11 C-SUMMARY-COPY (as read by Z-S136): the Satellites mode's footer names Black Diamond and the as_of.",
+  "world_is": "Two panel footers and two header dates carry the mode's clock; one header's source label is a component gap.",
+  "notes": "For 1.0.0_SA_CTO~Z's analysis: src/ui/components DataTimestamp renders `source`, and the composition header's column width.",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W25-S4"
+  ]
+},
+{
+  "id": "POSN_ASTTAX-Z-S170",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T07:08:16Z",
+  "one_line": "ADJUDICATION of W25-S5 (INERT): W2-AC5 predicted the ticker would stand in for CASH's name, but B6 publishes a name for 25 of 25 tickers (CASH: 'Cash & Cash Equivalents' from ETFClassifier), so 0 of 32 rows took the fallback -- the branch is built and unexercised, stated. RULED: correct as recorded; the expect's prediction was the issuer's (from the CTO's 'CASH by neither' measure of the MEASURES' sources, not the identity table); the fallback stays as the honest branch for a ticker the table does not carry.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W25-S5 as filed; the served block: identity_missing 0, CASH name non-null; W2-AC5: 32 of 32 rows took the served name.",
+      "WHY GRADUATED: an unexercised branch is disclosed with its denominator; nothing renders wrong."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "PRD v0.11 C-HOLDING-IDENTITY: the Holdings Breakdown renders NAME from the identity pair, the ticker only where the table has no row.",
+  "world_is": "Every satellite ticker has a table row tonight; the fallback has no live witness.",
+  "notes": "For L9: a bar that predicted a fallback the data never takes.",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W25-S5"
+  ]
 }
 ]
 ```
