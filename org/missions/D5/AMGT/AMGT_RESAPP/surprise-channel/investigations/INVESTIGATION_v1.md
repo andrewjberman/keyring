@@ -4500,6 +4500,97 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
       "spec_asserts": "AC7: 'the same gold/ count, newest key and LastModified as AC1 printed, and the snapshots/ count and newest LastModified unchanged (the ETF plane was read and never written -- any difference is a BLOCKING row)'.",
       "world_is": "The gold/ half of the pair is complete and MATCHES exactly. The snapshots/ half is not a pair: AC1 measured {Key, Size} and AC7 measures {count, LastModified}, so 'unchanged' has nothing to compare against on either field. The stronger control that WAS available and was run instead -- no object under any read prefix carries a LastModified inside the worker's window, and the only 7 writes to the bucket in that window are another producer's under bbg/ -- answers the question the criterion is asking, and answers it on the whole bucket rather than one prefix.",
       "notes": "No difference was found and nothing is blocked; AC7 is recorded PASS on the gold/ pair plus the window control, with the snapshots/ count stated as an AFTER-only value and NOT claimed as unchanged-by-comparison. The generalisable point for the next cut: on a bucket with a live producer, a before/after COUNT is the wrong control shape -- it can move for reasons that have nothing to do with the actor -- and the right one is 'no object under the prefixes I touched has a LastModified inside my window'. Related and already law, so not filed separately: a paginated list-objects-v2 with --query length() returns a PER-PAGE count; this bucket's whole-bucket probe printed '1000' then '518' and a per-page reader would have reported 1000 of 1518."
+    },
+    {
+      "id": "AMGT_RESAPP-Z-W19-S8",
+      "project": "AMGT_RESAPP",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~19",
+      "surfaced_at": "2026-09-15T09:25:00Z",
+      "one_line": "AMGT-rj-5's volume bars are cut against a pool that holds SEVEN articles: publications/v1 has 7 objects (AC1 names 'at least 80'), publication-links/v1 has 7 links across BA 2, COST 2, HD 3 (AC2 names store_item_count 'at least 20 each', AC5 names 'N at least 20'), so four criteria cannot be met AS WRITTEN while every field-level and behavioural clause of the same criteria passes.",
+      "class": "BLOCKING",
+      "hazard_standing": "INERT",
+      "spec_asserts": "AC1: 'a publications/v1 object count at least 80'. AC2: 'for BA_US_Equity, COST_US_Equity and HD_US_Equity: store_item_count at least 20 each'. AC3: 'bodies read at least 80'. AC5: 'the three commissioned names showing N at least 20'.",
+      "world_is": "The pool holds 7 publication bodies and 7 associations in total. Measured 2026-09-15 09:0x-09:2xZ on TWO instruments that agree: (a) the criterion's own invocation, .tools/aws s3api list-objects-v2 --prefix publications/v1/ --query length(Contents) -> 7; (b) an independent client-side-paginated boto3 census of the whole bucket -> 73 objects total, of which publication-links/v1 7 and publications/v1 7. Per name: BA 2 links (1 in the 30-day window), COST 2 (1 in window), HD 3 (3 in window); 5 of the 7 bodies are published inside the window ending 2026-09-15. The other two are older than the window (BA bbg published 2026-07-18, age 58 days; COST ft published 2026-07-26, age 50 days) -- they are in the store and correctly outside the window, not missing.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "AC1 as written, output verbatim: 'publication-links/v1/BA/ publication-links/v1/COST/ publication-links/v1/HD/' then '7'. Three prefixes (the 'at least three ... carrying BA, COST and HD' half is MET); the count 7 against the named bar of 80 is NOT.",
+          "Second instrument, boto3 paginated census of s3://opal-data-harvest 2026-09-15 09:0xZ: TOTAL 73 objects; per first-two-segments: crosswalk/v1 1, derived/model_block 14, derived/model_block_fye 3, lib/local-publications 4, packs/* 5, publication-links/v1 7, publications/v1 7, raw/bloomberg 13, raw/seekingalpha 18, universe/v1 1.",
+          "The seven links, verbatim keys: publication-links/v1/BA/bbg/7231062268...json, BA/wsj/05aec87bff...json, COST/barrons/5568227096...json, COST/ft/942b5946a5...json, HD/barrons/2a6d78f79c...json, HD/bbg/e667f5e3f0...json, HD/sa/5666ee6435...json. Each body read and validated: catalog.validate OK 14 INVALID 0 of 14 over both prefixes.",
+          "The CRO's own pool-readers brief @0e7de170e3 states the same world in its Required Connections item 5: 'Current uploads are bounded commissioning samples; they are not evidence of a complete 89-name backfill. Mark partial baselines and avoid interpreting missing collection as quiet coverage.' The cut's numeric bars and the brief's own characterisation of the store disagree.",
+          "What the same criteria DO produce, met in full and recorded in the instance: AC1 three prefixes carrying BA/COST/HD in the harvester's form; AC2 items >= 1 for each of the three names with title, https url, publisher, published_at and article_key, all four states 0, key_forms naming the harvester's form, and the ZZZ_NOPE control at store_item_count 0 / items 0 / no exception; AC3 per-name window counts BA=1 COST=1 HD=3, a top-10 carrying security_key beside ticker, a pointer with a 64-hex payload_hash and rank_sort ABSENT, dynamodb_reads=0; AC5 four lines with per-state counts and table-items 0, the control at 0."
+        ]
+      },
+      "notes": "NOT REPAIRED AND NOT WIDENED (the order's refusal clause). No article was uploaded to make a bar pass, no bar was re-read as satisfied, and the window was not widened to reach an older article: a criterion this worker cannot satisfy AS WRITTEN is refused with its measurement. The order stays OPEN on AC1, AC2, AC3 and AC5; AC4, AC6 and AC7 are PASS-by-output. The remedy is not this worker's to choose: either the harvest runs a backfill and the same four invocations are re-run unchanged, or the issuer re-cuts the four bars against the store that exists. Both are the issuer's call.",
+      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_RESAPP-Z-W19-S9",
+      "project": "AMGT_RESAPP",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~19",
+      "surfaced_at": "2026-09-15T09:26:00Z",
+      "one_line": "TO-AMGT-rj-1, issued to 0.9.0_WK_AMGT_RESAPP~18, carries THIS worker's deliverables folder inside its <paths> write grant, so two concurrently-live workers hold a write surface over one folder -- the folder that holds this order's proof-of-spec instance.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "A worker's write surface is exactly the <paths> its order names, and <paths> IS the write grant (CLAUDE.md Rule 27; this order's own s.3: 'A SURFACE NOT NAMED IN <paths> IS A WALL'). Read together with one-owner-per-artifact, a deliverables folder named 0.9.0_WK_AMGT_RESAPP~19/ is that worker's own.",
+      "world_is": "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rj-1.the-canonical-key-on-the-ranked-click.md has <issued_to>0.9.0_WK_AMGT_RESAPP~18</issued_to> and a <paths> block whose six entries include 'org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~19/' and 'org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~1/'. Its <status> is staged, so the order is live.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "Read at HEAD 10c74d0efb (this worktree, branch wk-amgt_resapp-11-2): rj-1 <paths> = lib/research/api/scoped_amgt.py, lib/research/api/tests/, lib/research/identity/, portal/src/pages/SecurityAnalysis/, portal/src/api/endpoints/amgt-lead-panel.ts, org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~19/, org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~1/, the investigation file, its own task-order file.",
+          "rj-1's body names the READ it needs: 'The crosswalk EXISTS when you start: rj-4 (chain B, drained before your spawn) landed crosswalk/v1/<as_of>.json in the pool and the ONE resolver lib/research/identity/crosswalk.py ... You call it; you do not re-implement it.' The artifacts it consumes from ~19's folder (crosswalk.v1.2026-09-15.json, universe.v1.2026-09-15.json) are READS, and a read needs no <paths> entry.",
+          "The folder is where THIS order (s.6) puts its own proof-of-spec instance and its dry-run and difference-control artifacts, so the overlap is over a live record, not an inert one."
+        ]
+      },
+      "notes": "Filed as form, not significance. No collision has occurred: at the time of writing this worker's own commit fda8d96c0a is the only one touching the folder in this round. The disposition owner is the issuer 2.0.0_SA_COO~W, which can narrow the grant to a read or confirm it as intended; this worker neither edits another order nor assumes which.",
+      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_RESAPP-Z-W19-S10",
+      "project": "AMGT_RESAPP",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~19",
+      "surfaced_at": "2026-09-15T09:27:00Z",
+      "one_line": "Three of the ninety pytest arms under lib/research/metrics and lib/research/coverage fail in a worker worktree for ABSENCE, not defect: integrations/bloomberg/research/price_axis_pull.py is tracked at HEAD but outside the worker sparse cone, and the failure reads like a regression to the next seat that touches this test file.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "A green test suite in a worker worktree is evidence about the code under test; a red arm is evidence of a defect in it.",
+      "world_is": "In this worktree (sparse cone .tools, docs, infra, lib, org, rcg) the three arms of lib/research/metrics/tests/test_producer_axis_registry.py that exercise the PRICE producer fail at 'import price_axis_pull' with ModuleNotFoundError. The module IS in the repository: git cat-file -p HEAD:integrations/bloomberg/research/price_axis_pull.py returns its source (first line: price_axis_pull.py -- AMGT-rd-6: THE PRICE AXIS ENGINE, BOX-SIDE), while ls of the same path returns No such file or directory. The test file grafts integrations/bloomberg/{mcp,research} onto sys.path at import; those directories do not exist in the cone, so the graft points at nothing.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "python -m pytest lib/research/metrics lib/research/coverage -q -> '3 failed, 87 passed'. The three: test_the_registry_points_at_a_producer_that_really_exists, test_the_price_engine_writes_exactly_the_axes_the_registry_claims, test_the_two_price_products_are_not_the_same_ranking -- each ModuleNotFoundError: No module named 'price_axis_pull'.",
+          "POSITIVE CONTROL that the absence is the cone and not the repo: git cat-file -p HEAD:integrations/bloomberg/research/price_axis_pull.py -> rc=0 with source; git ls-files integrations/bloomberg/research/ lists price_axis_pull.py beside four siblings; ls integrations -> 'cannot access'. git sparse-checkout list -> .tools docs infra lib org rcg.",
+          "The CHATTER arm of the same file (test_the_chatter_producer_writes_exactly_the_axes_the_registry_claims) was updated by this cell to the generation write and PASSES, so the three failures are isolated to the price half and to the missing module.",
+          "The two criteria that grade tests here (AC6) run unittest on lib/research/coverage/tests and lib.research.metrics.tests.test_chatter_axis only -- 25 and 16 arms, both OK -- so nothing in this order is decided by the three."
+        ]
+      },
+      "notes": "Named because the next seat to touch test_producer_axis_registry.py in a sparse worktree will see red arms in a file this cell just edited and may read them as its regression. Widening the cone is not done here: it is a worktree setting, not a repository fact, and this cell was not asked to change it.",
+      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_RESAPP-Z-W19-S11",
+      "project": "AMGT_RESAPP",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~19",
+      "surfaced_at": "2026-09-15T09:28:00Z",
+      "one_line": "AC2's expectation names FIVE fields on the first item but its own invocation truncates that item at 170 characters, and the five contracted fields need 259-296 characters for all three commissioned names -- so title is never visible in the recorded output even though it is present on every item.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "AC2: 'the first item carrying title, a canonical https url, publisher, published_at and article_key ... An item lacking url or published_at ... is NOT met'.",
+      "world_is": "The invocation prints json.dumps(item)[:170]. Measured length of a json object carrying ONLY the five contracted fields: BA_US_Equity 276 chars, COST_US_Equity 259, HD_US_Equity 296 (the full item is 594 / 581 / 614). The adapter's item key order was set so the four identity/clock/link fields come first, which puts publisher, published_at, article_key and the https url inside the 170 characters for all three names and leaves title outside for all three. No field ordering fits all five: the shortest of the three needs 259.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "Recorded AC2 output, BA first item: {'publisher': 'wsj', 'published_at': '2026-09-03T09:30:00Z', 'article_key': 'wsj:096c2a41-2655-4267-b089-7dc3b710dc56', 'url': 'https://www.wsj.com/business/boeings-8-4-b -- cut mid-url at 170.",
+          "Supplementary full dump of the five fields (recorded beside the instance): BA title 'Boeings $8.4 Billion Deal Is Bleeding Red Ink' (wsj, 2026-09-03T09:30:00Z); COST title 'Vanguard: Beware Mission Creep' (barrons, 2026-08-21T23:10:00Z); HD title 'YouTube Inks Amazon Partnership to Boost Online Shopping Bet' (bbg, 2026-09-01T11:00:00.002Z). Every item carries all five.",
+          "The unit battery asserts the property the truncated output cannot show: PoolReaderFeedTest.test_items_carry_the_contracted_fields_newest_first requires title, url, publisher, published_at and article_key to be non-empty on the first item and the url to start with https://."
+        ]
+      },
+      "notes": "The invocation was run EXACTLY as written and the output recorded verbatim, truncation included; the fields were not re-printed under a different command to make the row look met. AC2 is FAIL on its store_item_count bar (row W19-S8) regardless, so this observation changes no verdict -- it is filed so a grader reading only the recorded bytes does not conclude the fifth field is absent from the data.",
+      "disposition": "UNDER_INVESTIGATION"
     }
 ]
 ```
