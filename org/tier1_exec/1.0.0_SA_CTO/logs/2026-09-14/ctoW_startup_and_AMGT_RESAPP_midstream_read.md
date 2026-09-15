@@ -580,3 +580,20 @@ seat's card 3 named the presets by count -- card 3 corrected in the same commit 
 `SecurityScanner/constants.ts`; against the 164 ETF-plane holdings the comparable pools widen (BABA 1 -> 2 held peers) but neither pick
 changes. rj-13: 48 Reddit records for Boeing, 0 admitted, cost unreadable with the key, and the S-1 key has no security coordinate.
 Four addendum candidates added (9-12). Push state: LOCAL.
+
+---
+
+## ADDENDUM 20 (17:3x-17:5xZ) -- COO~W routed the incomplete-comparable finding; Andrew's one-metric-per-tab principle
+
+COO~W, before spawning rj-12, amended it (@`a5358c283c`) to render each side's evidence coverage and an incomplete-comparable line
+beside the Posture verdict, and disarmed W20-S11 as ACCEPT-AND-ROUTE (@`3356b85939`), carrying the contract choice to L8/L9 and this
+seat's L10 read; rj-9's Posture arm corrected (@`4f383fc217`). Nothing owed by this seat.
+
+Andrew at this terminal ~17:4xZ ruled a design principle: one standardized metric per tab, an absolute figure and a percentile within
+the pool, the jumpoff point for Posture's case; average management tenure named for the Exec Management tab, employee-wide tenure a
+"maybe"; the others left open. Recorded verbatim, read narrowly (the pool read as the union universe; Posture consumption his
+"probably"). Measured before writing the addendum candidate: the absolute exists for 4 of 5 names, the percentile cannot -- the pool
+object stores only an average over a mislabelled denominator (5 claimed, 4 contributing); employee-wide tenure appears in 0 of 5 saved
+filing excerpts, which exclude the human-capital section, so it is unmeasured rather than absent. Carried as addendum candidate 13
+(C-TAB-METRIC) with the distribution object, the percentile floor, and REC candidates for the other tabs. Broadcast to the ~W lanes and
+MSTR~Z. Push state: LOCAL.
