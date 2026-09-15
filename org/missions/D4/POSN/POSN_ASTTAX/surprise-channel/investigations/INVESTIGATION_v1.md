@@ -5772,6 +5772,244 @@ Andrew asked for (msg 22917); it concerns this project's portal files meeting an
     "spec_asserts": "TO-V4-1: 'an EventBridge rule cron(20 7 * * ? *) UTC (20 minutes after the registry producer's 07:00Z fire, its own clock, NEVER success-of-upstream)'. ROUND_ANALYSIS.round4 s.4 item 4 (this seat): 'B4 runs on its own schedule offset after B2's'. Z-W19-S17: 'If Monday's partition never lands, the 07:20Z organic fire refuses too'.",
     "world_is": "B4 reads three inputs; the latest-landing one is the Bloomberg partition at ~07:00 ET, not holdings.json at 07:00Z. Anchored to B2's clock, the fire precedes its Bloomberg input on every weekday, so the refusal Z-W19-S17 treats as one missing partition recurs daily. Monday 2026-09-14's partition DOES land -- at the 2026-09-15 07:00 ET pull, ~3h40m after that day's 07:20Z fire.",
     "notes": "REMEDY, for the round-5 analysis: re-anchor B4 to the input that lands LAST. Either an EventBridge Scheduler schedule in America/New_York after the 07:00 ET pull (with a margin after the pull completes, measured rather than assumed), or a UTC cron at or after ~12:30Z so it holds across DST. Keep it its own clock, never success-of-upstream. The round-4 guidance named the wrong anchor (B2's clock) and is owned here; the cell executed the order as written. NEAR-TERM, measured on today's clocks: the registry producer's 07:00Z fire reads the 2026-09-15 roster (lands ~06:00:43Z) and is expected to relabel holdings.json with R1's labels, so the Satellites mode should show GLD as Commodities / Metals and VXX as Structured / Hedge from then (a prediction from the producer's inputs, to be read after the fire). characteristics.json stays at its 2026-09-14T21:45Z version until a run after the Bloomberg pull."
-  }
+  },
+{
+  "id": "POSN_ASTTAX-Z-S121",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T01:45:27Z",
+  "one_line": "DISARM of W19-S11 (BLOCKING): V8-AC8's literal bar ('no BLOCKED: line') failed on BNDX -- a pre-existing module-vs-table disagreement (sub_asset_class Intermediate vs International) outside the thirteen and unmoved by the retag -- while the bar's own parenthetical (zero conflicts on the thirteen, 39 of 39 fields) held. RE-CUT to the parenthetical: zero conflicts on the thirteen; BNDX printed and disclosed. BNDX's disagreement is a Store-2 hygiene item for the round analysis.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE ISSUER'S DEFECT: a bar written as a global absence when its reason was a scoped one; the seeder's own merge rule discriminates per ticker and that is what the re-cut reads.",
+      "WHY GRADUATED: the retag's two-store agreement is measured on the seeder's own instrument; the foreign conflict has a carrier."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W19-S11"
+  ],
+  "spec_asserts": "V8-AC8: MERGE SUMMARY with no BLOCKED: line (zero conflicts on the thirteen).",
+  "world_is": "One BLOCKED: line, one ticker, outside the set; the thirteen agree on every field.",
+  "notes": "BNDX: the module says International, the table says Intermediate -- one of them is wrong and neither is this round's."
+},
+{
+  "id": "POSN_ASTTAX-Z-S122",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T01:45:27Z",
+  "one_line": "DISARM of W19-S12 (INERT): Store 2's banner comments above the retagged entries still read the pre-retag taxonomy ('EQUITY - Volatility' over UVXY/VXX, 'OTHER - Commodities / Volatility' over the commodities and VIXY, QBER under a High Yield banner, JEPI under a dividend-equity banner) because V8-AC7 permitted ONLY the thirteen entries to change. Carried for the round analysis as a comment-only cleanup of _shared/etf_classification.py; the values beneath the banners are correct and are what every consumer reads.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "WHY NOT WIDENED: the bar was cut narrow on purpose (the diff bound IS the control that nothing else moved); a comment re-grouping is a separate, value-free edit.",
+      "WHY GRADUATED: recorded with its four sites for the next cut."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W19-S12"
+  ],
+  "spec_asserts": "V8-AC7: ONLY the thirteen entries' asset_class / sub_asset_class changed.",
+  "world_is": "22 insertions / 22 deletions, all members; the grouping comments now contradict the values beneath them.",
+  "notes": "A future retag order grants the banner lines with the entries, or names the banners as a follow-on."
+},
+{
+  "id": "POSN_ASTTAX-Z-S123",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T01:45:27Z",
+  "one_line": "DISARM of W19-S13 (INERT): the order's criteria name paths on two bases -- `deliverables/...` relative to the project directory (V8-AC3/AC5/AC12/AC15) and repo-root paths elsewhere -- with no stated working directory. RULED and stated in the face: the deliverables paths resolve from org/missions/D4/POSN/POSN_ASTTAX/, everything else from the repo root; the invocations are not re-cut (V8-AC5's retag cannot be re-run and its recorded string must stay the face's).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE ISSUER'S DEFECT: two bases in one order; the fix is one sentence, landed.",
+      "WHY GRADUATED: nothing ran wrong; the record says which directory each command ran from."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W19-S13"
+  ],
+  "spec_asserts": "V8-AC3/AC5/AC12/AC15 name deliverables/0.9.0_WK_POSN_ASTTAX~19/...; the rest name repo-root paths.",
+  "world_is": "Each base resolves exactly one group; the worker chose per criterion and recorded which.",
+  "notes": "One base per order at the next cut."
+},
+{
+  "id": "POSN_ASTTAX-Z-S124",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T01:45:27Z",
+  "one_line": "DISARM of W19-S14 (INERT): V8-AC9's harness reads the seeder under test from the working tree, and slot ~19's sparse cone does not materialise data/ (29,349 of 34,302 tracked files unmaterialised), so the subject was resolved BY CONTENT from the object store (blob 803721e2c1 at HEAD) rather than by filename. ACCEPTED -- the content-key read is the stronger instrument (Rule 22a); the cone is the issuer's provisioning, recorded with Z-S71.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "WHY GRADUATED: the criterion's subject is the committed bytes and that is what was read; the cone limitation is disclosed for the next mint."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W19-S14"
+  ],
+  "spec_asserts": "V8-AC9 names the V3 harness, whose applied_bytes() reads data/black_diamond/scripts/classification/seed_canonical_securities.py from disk.",
+  "world_is": "The file is tracked at HEAD and absent on disk in the cone; the harness ran on the blob's bytes.",
+  "notes": "A worker cone that runs a cross-lane harness includes the harness's subject directories, or the harness reads by content."
+},
+{
+  "id": "POSN_ASTTAX-Z-S125",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T01:45:27Z",
+  "one_line": "DISARM of W19-S15 (BLOCKING): V8-AC14's third generator (yang-generate-holdings-attribution) cannot run on its recorded event at any vintage -- the only event it ever received names an attribution workbook the pipeline's own cleanup stage deleted (NoSuchKey, FunctionError Unhandled, nothing written). RE-CUT: the two generators that feed the Positioning page refreshed and read at target (positioning_data.json AqBtm_5o.2QeiCBRP_veC8HV2Xk0OSaj, allocation_summary.json CmdUs93O1Ti0gwfQmDpgz5suiruCtiT8 at 00:56Z); the attribution generator's refusal is the measured outcome and holdings_attribution_data.json refreshes on Yang's next attribution UPLOAD (an operator act, organic). The CTO half's list named the generator; its mechanism is input-bound, disclosed to both halves' signers by this row.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "WHY NOT A HAND-WRITTEN EVENT: the halves forbid it and there is no workbook to name; the next upload is the honest refresh.",
+      "WHY GRADUATED: the served plane the endpoint names (the Positioning page) is refreshed and at target; the un-refreshed key's consumer is outside the project; the organic carrier is named."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W19-S15"
+  ],
+  "spec_asserts": "V8-AC14 and the halves' R1 amendments: three generators invoked with their recorded events, each 200 with no FunctionError, all three keys refreshed.",
+  "world_is": "Two refreshed; the third's input no longer exists; the Attribution page (its consumer) is out of this project by Andrew's word and the Positioning page reads positioning_data.json, which is refreshed.",
+  "notes": "The next round's endpoint text should say which served keys the Positioning page reads and which it does not."
+},
+{
+  "id": "POSN_ASTTAX-Z-S126",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T01:45:27Z",
+  "one_line": "DISARM of W19-S16 (BLOCKING): cot-satellites-registry-producer refuses on demand before the roster partition for its computed date lands (~06:00:43Z daily; at 01:00Z on 09-15 the 2026-09-15 partition is absent and the producer refuses to walk back or publish an empty -- correct, by design). So holdings.json cannot be relabelled by a driven invoke tonight. RULED: the driven attempt and its measured refusal are V8-AC15's evidence; the relabelled holdings.json is the ORGANIC leg V2-L8 (the 07:00Z fire on 09-15), recorded by the COO on the B2 ledger and a row with the expectation r1_after_served_heads.txt names; V8-AC10's Satellites arm reads the served bytes as they are tonight (the transition state, counted) and the post-fire render is the same organic record.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RULE 27 READ HONESTLY: the mechanism WAS driven deliberately and its fail-closed branch measured; what remains is an upstream landing no seat controls (Black Diamond's export at ~06:00:43Z) -- the genuinely essential wait, qualified here with its reason, and the halves already name the scheduled fire as the organic leg.",
+      "THE HIDDEN-ROW STATE IS LIVE UNTIL THEN, BEHIND THE FREEZE: seven of eight satellites render one row short with the dropped weight inside the grand total (the defect the order exists to prevent, measured by the worker on the pre-retag bytes with Sat 90 as the control); the 07:00Z fire closes it; the page is not promoted.",
+      "WHY GRADUATED: the act is done where it can be done; the residue has a clock, an owner and a recorded expectation."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W19-S16"
+  ],
+  "spec_asserts": "V8-AC15 and both halves' R1 amendments: the producer invoked directly, holdings.json relabelled.",
+  "world_is": "RegistryProducerError BLOCKED: no roster partition at .../rebalancer_models/2026-09-15/page_000.json; nothing written; the pre-retag holdings.json still served.",
+  "notes": "The COO's 07:0xZ read: holdings.json VersionId moved, GLD Commodities/Metals in Sat 15, VXX Structured/Hedge in Sat 80, totals unchanged."
+},
+{
+  "id": "POSN_ASTTAX-Z-S127",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T01:45:27Z",
+  "one_line": "DISARM of W19-S17 (INERT): cot-satellites-characteristics-producer computes its Bloomberg partition as the T-1 business day and fails LOUD when it is absent (no ListBucket by design); at 01:00Z on 09-15 that is bbg/2026-09-14, which the 07:00 ET pull writes ~11:0xZ. Consequence beyond tonight: the producer's OWN 07:20Z schedule precedes its input's landing by ~3h40m every day, so its organic fire will REFUSE daily -- a B4 design defect (the issuer's cron proposal, V4's cell) that 1.0.0_SA_CTO~Z filed independently as Z-S120 for the round analysis (move the rule after the pull, or read the pull's manifest for the latest partition) -- this row adjudicates the worker's W19-S17 and defers the schedule item to Z-S120. Tonight: the COO invokes the producer directly after the pull lands and records V4-L8 on that read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE ISSUER'S DEFECT: the 07:20Z offset was proposed from the registry producer's clock, not from the bbg pull's landing time; V4's preflight named it as a proposal and the first live day measures it wrong.",
+      "WHY GRADUATED: the refresh has a driven path (a direct invoke after ~11:0xZ, the COO's) and the schedule fix is one Terraform line for the next round."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W19-S17"
+  ],
+  "spec_asserts": "V8-AC15: the characteristics producer invoked directly, characteristics.json's coverage unchanged; V4-AC12: cron(20 7 * * ? *) as the standing mechanism.",
+  "world_is": "AccessDenied on the computed 2026-09-14 partition (the designed loud failure); the newest partition is Friday 2026-09-11; the schedule fires before its input exists on every trading day.",
+  "notes": "Round analysis item: B4's schedule vs the bbg pull's 11:0xZ landing; until fixed, the organic leg is the COO's direct invoke."
+},
+{
+  "id": "POSN_ASTTAX-Z-S128",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T01:45:27Z",
+  "one_line": "DISARM of W19-S18 (INERT): THE CELL's TARGET column is one spelling and lands in three planes' grains -- the store lowercase ('structured'), the yang served payload display-cased ('Structured', via ASSET_CLASS_LABELS in the generator), holdings.json raw ('hedge', 'equity'). RULED into V8-AC14/AC10: the comparator applies each plane's own spelling; a per-level comparison across planes with one spelling reads FAIL on a correct world.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "WHY GRADUATED: stated in the face; the vocabulary item (one class vocabulary across producers) is already carried at Z-S114."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W19-S18"
+  ],
+  "spec_asserts": "THE CELL: store what the consumers read; V8-AC14: current_holdings read the TARGET asset_class per THE CELL.",
+  "world_is": "Three planes, three grains, all correct; the worker chose the plane's grain and said so.",
+  "notes": "A cross-plane comparison names the grain per plane at the cut."
+},
+{
+  "id": "POSN_ASTTAX-Z-S129",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T01:45:27Z",
+  "one_line": "DISARM of W19-S19 (INERT): V8-AC10's invocation writes its capture inside the READ-ONLY portal worktree (a portal-relative outfile), leaving an untracked, not-ignored .scratch/ there while V8-AC11's tracked-diff bar still reads 0. Harmless to the bar (tracked changes are what FWD-5 grades) and disclosed; later captures were written to the superproject's .scratch/. The next capture invocation names an outfile outside portal/.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "WHY GRADUATED: the graded property (no tracked portal edit) holds two ways; the untracked capture is named and is cleaned with the worktree at L9."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W19-S19"
+  ],
+  "spec_asserts": "The order: the portal clone is READ-ONLY (git diff --stat under portal/ reads 0); V8-AC10: cd portal && ... .scratch/v8_sat15.png.",
+  "world_is": "portal/.scratch/v8_sat15.png exists untracked; git diff --stat prints nothing; portal HEAD unmoved.",
+  "notes": "An outfile for a read-only worktree lives outside it."
+},
+{
+  "id": "POSN_ASTTAX-Z-S130",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T01:45:27Z",
+  "one_line": "DISARM of Z-S120 (ARMED, owner this seat; filed by 1.0.0_SA_CTO~Z): B4's cot-satellites-characteristics-producer is scheduled at cron(20 7 * * ? *) UTC but reads the previous trading day's Bloomberg partition, which the 07:00 America/New_York pull writes ~11:00Z (EDT) / ~12:00Z (EST) -- the fire precedes its input every weekday, so characteristics.json never refreshes on its own schedule. RULED: the schedule is the issuer's proposal (V4's cell, round 5) and the fix is one Terraform line for the next round -- move the rule after the pull's landing with the EST margin (cron(30 12 * * ? *) UTC) or resolve the partition from the pull's own run_manifest -- carried to the round-5 analysis as the CTO REC; until it lands, the organic leg V4-L8 is the COO's direct invoke after the pull (today ~11:0xZ), recorded on the B4 ledger. Mid-round the decomposition is frozen and no cell owns the .tf.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "WHY NOT FIXED TONIGHT: a cron change is a Terraform apply on the cot-pipeline stack (a plan, a safe-apply, a ledger) outside every round-5 cell; the round is at its last order and the decomposition is frozen; the CTO REC and this row carry the exact line.",
+      "WHY GRADUATED: the mechanism and the fix are measured and named; the interim driven path has an owner (this seat) and a clock; nothing served is wrong, only un-refreshed."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-S120"
+  ],
+  "spec_asserts": "TO-V4-1 V4-AC12: cron(20 7 * * ? *) as the standing mechanism, its own clock, never success-of-upstream; the producer computes its partition from the trading calendar and fails loud when absent.",
+  "world_is": "The producer's designed loud failure fires on its own schedule every trading day because the partition it computes does not exist until ~11:0xZ; the first live fire (09-15 07:20Z) will refuse; measured tonight at 01:00Z on the same computed date.",
+  "notes": "Round 6 (or the L10 addendum cell): satellites-characteristics-producer.tf schedule after the bbg pull's landing, EST-safe."
+}
 ]
 ```
