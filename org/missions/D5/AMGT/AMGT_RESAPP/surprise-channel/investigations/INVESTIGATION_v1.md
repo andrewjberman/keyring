@@ -4243,354 +4243,508 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "notes": "Disarm by the row's owner as a NEW citing row; Z-S89 is not edited. The 20260911T1915Z harvest ledger gets a dated closure line in the same commit (org/critical_paths, lane ANY). The lesson the ledger already carries stands: a Terraform step names its commit hash or it is not done. Nothing else on AMGT_RESAPP is this seat's; the L8/L9 grade of this disarm is 3.0.0_SA_CVO~W's as it reads the channel."
   },
   {
-      "id": "AMGT_RESAPP-Z-S100",
-      "project": "AMGT_RESAPP",
-      "fabric": "site-z",
-      "surfaced_by": "1.0.0_SA_CTO~W",
-      "surfaced_at": "2026-09-15T06:09Z",
-      "one_line": "DISARMS AMGT_RESAPP-Z-S67 (owner 1.0.0_SA_CTO~Z, OPEN in REMEDIATION_v9): its remediation condition -- establish the negative control's absence at run time and compare coverage only in the declared field -- was DISCHARGED by the round-9 analysis s.1 @e9d1c6e6a5 and RE-DERIVED by the round-10 analysis s.1 @8d5fe78265 with the same method (three run-time negative controls, one positive, the decomposition's parsed cell tables as the declared field, 15 of 15 served). The disarm row the round-9 analysis promised for round 10 was never filed; this is it, filed by the seat now holding the CTO limb.",
-      "class": "OBSERVATION",
-      "hazard_standing": "INERT",
-      "grounding": {
-        "status": "GROUNDED",
-        "evidence": [
-          "ledger/ROUND_ANALYSIS.round9.md @e9d1c6e6a5 s.1 and s.7: 'Z-S67 DISCHARGED by s.1 -- run-time negative controls, declared field. Disarm follows in round 10.'",
-          "ledger/ROUND_ANALYSIS.round10.md @8d5fe78265 s.1: FWD-99 -> 0, FWD-0 -> 0, FWD-42 -> 0, FWD-1 -> 2, UNCOVERED = 0 over 36 cells and 15 declared outcomes, parsed at HEAD.",
-          "REMEDIATION_v9.md @1ae76e9c83 row AMGT_RESAPP-Z-S67: remediation OPEN, owner 1.0.0_SA_CTO~Z, disarm ARMED; no later row cites it (census of DISMISSED_WITH_REASON rows citing Z-S67 at HEAD: 0).",
-          "Ownership: 1.0.0_SA_CTO~Z holds POSN_ASTTAX only on Andrew's word of 2026-09-15 ~03:5xZ (@9dfee40ce0); the CTO limb on AMGT_RESAPP is 1.0.0_SA_CTO~W's (@ce7371d0b3)."
-        ]
-      },
-      "disposition": "DISMISSED_WITH_REASON",
-      "dismissal_reason": "The condition Z-S67 set is met twice, at two rounds, by two seats using the same method on a moving population; the negative control lives at run time and not in the corpus. Nothing remains under investigation.",
-      "adjudicates": [
-        "AMGT_RESAPP-Z-S67"
-      ],
-      "spec_asserts": "Z-S67, verbatim: 'At the CTO coverage read, establish the negative control absence at run time and compare coverage only in its declared field/domain.'",
-      "world_is": "Both halves hold at the round-9 read (@e9d1c6e6a5) and again at the round-10 read (@8d5fe78265). The token FWD-99 occurs in the corpus's prose and in no cell table; the read never consults prose.",
-      "notes": "Filed with the round-10 L10. The remediation-plane clock on Z-S67 in REMEDIATION_v9 is the CVO's to advance at its next slug; this row is the investigation-plane disarm."
+    "id": "AMGT_RESAPP-Z-S100",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~W",
+    "surfaced_at": "2026-09-15T06:09Z",
+    "one_line": "DISARMS AMGT_RESAPP-Z-S67 (owner 1.0.0_SA_CTO~Z, OPEN in REMEDIATION_v9): its remediation condition -- establish the negative control's absence at run time and compare coverage only in the declared field -- was DISCHARGED by the round-9 analysis s.1 @e9d1c6e6a5 and RE-DERIVED by the round-10 analysis s.1 @8d5fe78265 with the same method (three run-time negative controls, one positive, the decomposition's parsed cell tables as the declared field, 15 of 15 served). The disarm row the round-9 analysis promised for round 10 was never filed; this is it, filed by the seat now holding the CTO limb.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ledger/ROUND_ANALYSIS.round9.md @e9d1c6e6a5 s.1 and s.7: 'Z-S67 DISCHARGED by s.1 -- run-time negative controls, declared field. Disarm follows in round 10.'",
+        "ledger/ROUND_ANALYSIS.round10.md @8d5fe78265 s.1: FWD-99 -> 0, FWD-0 -> 0, FWD-42 -> 0, FWD-1 -> 2, UNCOVERED = 0 over 36 cells and 15 declared outcomes, parsed at HEAD.",
+        "REMEDIATION_v9.md @1ae76e9c83 row AMGT_RESAPP-Z-S67: remediation OPEN, owner 1.0.0_SA_CTO~Z, disarm ARMED; no later row cites it (census of DISMISSED_WITH_REASON rows citing Z-S67 at HEAD: 0).",
+        "Ownership: 1.0.0_SA_CTO~Z holds POSN_ASTTAX only on Andrew's word of 2026-09-15 ~03:5xZ (@9dfee40ce0); the CTO limb on AMGT_RESAPP is 1.0.0_SA_CTO~W's (@ce7371d0b3)."
+      ]
     },
-    {
-      "id": "AMGT_RESAPP-Z-S101",
-      "project": "AMGT_RESAPP",
-      "fabric": "site-z",
-      "surfaced_by": "1.0.0_SA_CTO~W",
-      "surfaced_at": "2026-09-15T06:09Z",
-      "one_line": "DISARMS AMGT_RESAPP-Z-S96 (owner 1.0.0_SA_CTO~W, OPEN in REMEDIATION_v10): the two-article-stores seam is RESOLVED at the specification level by PRD v0.6 @2f3b65d8b8, contract C-ONE-STORE -- the pool s3://opal-data-harvest is THE article store; the chatter axis and the coverage reader read publication-links/v1 and publications/v1; the DynamoDB articles table is retired as a source once both readers are repointed; inflow is traceable. The READERS' repoint is round 11's cell (2.0.0_SA_COO~W); the hazard the row named -- a ranking computed over a table the harvester never fills -- has a named remedy and an owner, so the row is no longer ARMED.",
-      "class": "OBSERVATION",
-      "hazard_standing": "INERT",
-      "grounding": {
-        "status": "GROUNDED",
-        "evidence": [
-          "prd/AMGT_RESAPP_PRD.md @2f3b65d8b8, section CONTRACTS, C-ONE-STORE (ratified-text half, re-opened for 3.0.0_SA_CVO~W's signature).",
-          "ledger/ROUND_ANALYSIS.round10.md @8d5fe78265 s.5-s.7: the store choice is option (a) of Z-S96, matching Andrew's ~05:04Z word (@7cf62a165f) that the pool is the system of record.",
-          "REMEDIATION_v10.md @e28f0b546c row AMGT_RESAPP-Z-S96: remediation OPEN, owner 1.0.0_SA_CTO~W, remedy 'Carry the store/reader contract choice in the planned PRD addendum'; this is that carry.",
-          "The census Z-S96 rests on (0 writers of the articles table in *.py; 0 readers of the pool keys in lib/research) is unchanged at HEAD; the contract, not a code change, is what this row files."
-        ]
-      },
-      "disposition": "DISMISSED_WITH_REASON",
-      "dismissal_reason": "The design question the row raised is answered in the ratified text with an owner for each half of the remedy; what remains is a cell, not an investigation.",
-      "adjudicates": [
-        "AMGT_RESAPP-Z-S96"
-      ],
-      "spec_asserts": "Z-S96's spec_asserts, verbatim in part: the PRD and decomposition 'assert ONE article store that the harvesters fill and the chatter axis and coverage reader consume'; Andrew's ~05:04Z word names s3://opal-data-harvest as the pool every frontend runs off.",
-      "world_is": "PRD v0.6 makes the pool that one store by contract. Until round 11 repoints the two readers, the served ranking still reads the DynamoDB table; that is the round-11 cell's distance, stated in the analysis s.6 item 2, not an open investigation.",
-      "notes": "Filed by the row's own disarm_owner in the same commit series as the addendum. The remediation-plane clock in REMEDIATION_v10 advances at the CVO's next slug."
-    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "The condition Z-S67 set is met twice, at two rounds, by two seats using the same method on a moving population; the negative control lives at run time and not in the corpus. Nothing remains under investigation.",
+    "adjudicates": [
+      "AMGT_RESAPP-Z-S67"
+    ],
+    "spec_asserts": "Z-S67, verbatim: 'At the CTO coverage read, establish the negative control absence at run time and compare coverage only in its declared field/domain.'",
+    "world_is": "Both halves hold at the round-9 read (@e9d1c6e6a5) and again at the round-10 read (@8d5fe78265). The token FWD-99 occurs in the corpus's prose and in no cell table; the read never consults prose.",
+    "notes": "Filed with the round-10 L10. The remediation-plane clock on Z-S67 in REMEDIATION_v9 is the CVO's to advance at its next slug; this row is the investigation-plane disarm."
+  },
   {
-      "id": "AMGT_RESAPP-Z-S102",
-      "project": "AMGT_RESAPP",
-      "fabric": "site-z",
-      "surfaced_by": "1.0.0_SA_CTO~W",
-      "surfaced_at": "2026-09-15T07:01Z",
-      "one_line": "THE L4-R RELEASE NEVER REACHES THE COO WHEN THE CVO SIGNS LAST: .tools/prd-header-notify.py composes the admitted PRD's COO delivery under the STAMPING seat's serial (row from=3.0.0_SA_CVO~W, released_by its sign-off file); the broker's L8 correspondence guard refuses a CVO->COO send (HTTP 403); reoffer() swallows the exception into last_error and prints nothing, so the row sits UNSENT attempts=0 indefinitely while `status` reads it as merely unsent. Measured on AMGT_RESAPP v0.8 @0e6592e88c at 06:5xZ; worked around by hand this once (row from rewritten to the L4 owner 1.0.0_SA_CTO~W, reoffer sent id=23071).",
-      "class": "OBSERVATION",
-      "hazard_standing": "ARMED",
-      "grounding": {
-        "status": "GROUNDED",
-        "evidence": [
-          ".tools/prd-header-notify.py post-commit 0e6592e88c: 'both sign-offs present; COO delivery for ... v0.8 already recorded (id=None)'; status: '@0e6592e88c -> 2.0.0_SA_COO~W id=None attempts=0 state=UNSENT'.",
-          "org/mcp/.prd-notify/outstanding.jsonl (untracked) row: to=2.0.0_SA_COO~W from=3.0.0_SA_CVO~W released_by=org/missions/D5/AMGT/AMGT_RESAPP/prd/signoff/3.0.0_SA_CVO~W.json last_error='HTTP Error 403: Forbidden'.",
-          ".tools/prd-header-notify.py at HEAD: the release row sets from=os.environ OPAL_AGENT_SERIAL (the committing seat, lines 591-595); reoffer() lines 716-725 catches the send exception into row['last_error'] with no print; status() line 738 prints UNSENT for any row with no msg_id, error or not.",
-          "Positive control: with from rewritten to 1.0.0_SA_CTO~W, `reoffer` printed 'RE-OFFERED AMGT_RESAPP v0.8 id=23071 attempt 1/6' and status reads id=23071 QUEUED.",
-          "Mechanism named by the send tool's own doc: the L8 correspondence guard -- 'the CVO's one send goes to the CTO'. The signer that lands LAST decides who the release is sent as; whenever that is the CVO (always, when the CRO signs first), the release is refused."
-        ]
-      },
-      "disposition": "UNDER_INVESTIGATION",
-      "disarm_owner": "1.0.0_SA_CTO~W",
-      "spec_asserts": "CLAUDE.md Rule 27 / spine v3.15: the L4 notifier 'WITHHOLDS the COO delivery until both are SIGNED at the current bytes' and then delivers it -- the delivery is the CTO's L4->L5 hand-off, and the tool's own comment at line 581-583 says the release goes to the round holder.",
-      "world_is": "The release is composed under whichever seat committed the LAST stamp. For the CVO that send is refused by the broker's L8 guard, and the failure is silent: no print, attempts stays 0, `status` shows UNSENT. The COO would never receive the admitted PRD unless a human reads last_error in an untracked jsonl.",
-      "notes": "Not an AMGT cell: an estate-tool fix (the release row's `from` = the PRD's L4 owner, read from the PRD or from the seat that committed the PRD version, never the stamping seat; and reoffer/status print last_error) belongs to the notifier's owner -- 0.0.0_AB_MSTR~Z / Andrew to name the project. The hand workaround is disclosed in the row's history entry and in the CTO~W session log addendum 8. hazard_standing ARMED estate-wide; INERT for AMGT_RESAPP v0.8 (delivered id=23071)."
+    "id": "AMGT_RESAPP-Z-S101",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~W",
+    "surfaced_at": "2026-09-15T06:09Z",
+    "one_line": "DISARMS AMGT_RESAPP-Z-S96 (owner 1.0.0_SA_CTO~W, OPEN in REMEDIATION_v10): the two-article-stores seam is RESOLVED at the specification level by PRD v0.6 @2f3b65d8b8, contract C-ONE-STORE -- the pool s3://opal-data-harvest is THE article store; the chatter axis and the coverage reader read publication-links/v1 and publications/v1; the DynamoDB articles table is retired as a source once both readers are repointed; inflow is traceable. The READERS' repoint is round 11's cell (2.0.0_SA_COO~W); the hazard the row named -- a ranking computed over a table the harvester never fills -- has a named remedy and an owner, so the row is no longer ARMED.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "prd/AMGT_RESAPP_PRD.md @2f3b65d8b8, section CONTRACTS, C-ONE-STORE (ratified-text half, re-opened for 3.0.0_SA_CVO~W's signature).",
+        "ledger/ROUND_ANALYSIS.round10.md @8d5fe78265 s.5-s.7: the store choice is option (a) of Z-S96, matching Andrew's ~05:04Z word (@7cf62a165f) that the pool is the system of record.",
+        "REMEDIATION_v10.md @e28f0b546c row AMGT_RESAPP-Z-S96: remediation OPEN, owner 1.0.0_SA_CTO~W, remedy 'Carry the store/reader contract choice in the planned PRD addendum'; this is that carry.",
+        "The census Z-S96 rests on (0 writers of the articles table in *.py; 0 readers of the pool keys in lib/research) is unchanged at HEAD; the contract, not a code change, is what this row files."
+      ]
     },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "The design question the row raised is answered in the ratified text with an owner for each half of the remedy; what remains is a cell, not an investigation.",
+    "adjudicates": [
+      "AMGT_RESAPP-Z-S96"
+    ],
+    "spec_asserts": "Z-S96's spec_asserts, verbatim in part: the PRD and decomposition 'assert ONE article store that the harvesters fill and the chatter axis and coverage reader consume'; Andrew's ~05:04Z word names s3://opal-data-harvest as the pool every frontend runs off.",
+    "world_is": "PRD v0.6 makes the pool that one store by contract. Until round 11 repoints the two readers, the served ranking still reads the DynamoDB table; that is the round-11 cell's distance, stated in the analysis s.6 item 2, not an open investigation.",
+    "notes": "Filed by the row's own disarm_owner in the same commit series as the addendum. The remediation-plane clock in REMEDIATION_v10 advances at the CVO's next slug."
+  },
   {
-      "id": "AMGT_RESAPP-Z-S103",
-      "project": "AMGT_RESAPP",
-      "fabric": "site-z",
-      "surfaced_by": "1.0.0_SA_CTO~W",
-      "surfaced_at": "2026-09-15T07:08Z",
-      "one_line": "UPDATES AMGT_RESAPP-Z-S102 on 0.0.0_AB_MSTR~Z's measured answer (msg 23075 -> 07:06Z): the SENDER half is ALREADY FIXED on origin/CLOUD @fc71328804 (1.0.0_SA_CTO, 2026-09-14T08:02Z: from = the PRD's last CTO author, never the stamping seat; a laneless release is HELD; reoffer re-points a stuck non-CTO sender) and reaches SITEZ only with the CLOUD->SITEZ merge held on Andrew's word -- so NO second sender fix lands on SITEZ (a certain conflict at that merge); the SILENT last_error half is UNFIXED on both branches (CLOUD :677/:784, SITEZ :634/:725, zero prints), and route_half's alphabetical lane pick (prd_signoff_lib.py blob d19665e0fb, :360) is unfixed on both. Owner recommendation carried to Andrew by 0.0.0_AB_MSTR~Z, not named here. The v0.8 release itself is closed: the notifier retired its row after 2.0.0_SA_COO~W READ id 23071.",
-      "class": "OBSERVATION",
-      "hazard_standing": "ARMED",
-      "grounding": {
-        "status": "GROUNDED",
-        "evidence": [
-          "0.0.0_AB_MSTR~Z msg 23075-answer (inbox 20260915T070615Z): blobs read in full on both refs with MSYS path conversion off, line counts printed (CLOUD 949, SITEZ 881); shared base 56608aadd4 at 09-14 07:34Z predates fc71328804 by 28 minutes; SITEZ blob a0d693455d vs CLOUD e2f4893e4a.",
-          ".tools/prd-header-notify.py status at 07:0xZ: no AMGT_RESAPP v0.8 row remains (retired on READ); the two v0.4 relics (@bbbf35c38e nudge to the CVO base, @0147a1b924 release to 2.0.0_SA_COO~Z) are the pre-lane era's and are the CLOUD fix's _release_decision to retire.",
-          "Z-S102 @341f7e6ce1: the measurement and the one-time hand workaround (from rewritten to 1.0.0_SA_CTO~W, reoffer -> id 23071)."
-        ]
-      },
-      "disposition": "UNDER_INVESTIGATION",
-      "disarm_owner": "1.0.0_SA_CTO~W",
-      "adjudicates": [
-        "AMGT_RESAPP-Z-S102"
-      ],
-      "spec_asserts": "Z-S102's spec_asserts stand (the L4 notifier delivers the admitted PRD to the round holder as the CTO's L4->L5 hand-off).",
-      "world_is": "On SITEZ until the held merge: a CVO-last signature still composes the release under the CVO and is refused 403 silently; the manual re-point stays the route and is disclosed each time. On CLOUD: the sender half is fixed; the silence and the router are not.",
-      "notes": "Not an AMGT cell. What remains open estate-wide, for Andrew's owner call: (1) print last_error in reoffer() and status(); (2) route_half prefers the reviewer lane matching the project's fabric letter. Both fit one commit on CLOUD by the file's own author so the file moves one way only; 0.0.0_AB_MSTR~Z carries the recommendation. This row is the durable record of the message; the disarm of Z-S102 follows the merge landing on SITEZ and the two remaining fixes, not before."
+    "id": "AMGT_RESAPP-Z-S102",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~W",
+    "surfaced_at": "2026-09-15T07:01Z",
+    "one_line": "THE L4-R RELEASE NEVER REACHES THE COO WHEN THE CVO SIGNS LAST: .tools/prd-header-notify.py composes the admitted PRD's COO delivery under the STAMPING seat's serial (row from=3.0.0_SA_CVO~W, released_by its sign-off file); the broker's L8 correspondence guard refuses a CVO->COO send (HTTP 403); reoffer() swallows the exception into last_error and prints nothing, so the row sits UNSENT attempts=0 indefinitely while `status` reads it as merely unsent. Measured on AMGT_RESAPP v0.8 @0e6592e88c at 06:5xZ; worked around by hand this once (row from rewritten to the L4 owner 1.0.0_SA_CTO~W, reoffer sent id=23071).",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/prd-header-notify.py post-commit 0e6592e88c: 'both sign-offs present; COO delivery for ... v0.8 already recorded (id=None)'; status: '@0e6592e88c -> 2.0.0_SA_COO~W id=None attempts=0 state=UNSENT'.",
+        "org/mcp/.prd-notify/outstanding.jsonl (untracked) row: to=2.0.0_SA_COO~W from=3.0.0_SA_CVO~W released_by=org/missions/D5/AMGT/AMGT_RESAPP/prd/signoff/3.0.0_SA_CVO~W.json last_error='HTTP Error 403: Forbidden'.",
+        ".tools/prd-header-notify.py at HEAD: the release row sets from=os.environ OPAL_AGENT_SERIAL (the committing seat, lines 591-595); reoffer() lines 716-725 catches the send exception into row['last_error'] with no print; status() line 738 prints UNSENT for any row with no msg_id, error or not.",
+        "Positive control: with from rewritten to 1.0.0_SA_CTO~W, `reoffer` printed 'RE-OFFERED AMGT_RESAPP v0.8 id=23071 attempt 1/6' and status reads id=23071 QUEUED.",
+        "Mechanism named by the send tool's own doc: the L8 correspondence guard -- 'the CVO's one send goes to the CTO'. The signer that lands LAST decides who the release is sent as; whenever that is the CVO (always, when the CRO signs first), the release is refused."
+      ]
     },
-    {
-      "id": "AMGT_RESAPP-Z-W19-S1",
-      "project": "AMGT_RESAPP",
-      "fabric": "site-z",
-      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~19",
-      "surfaced_at": "2026-09-15T08:07:00Z",
-      "one_line": "AC1's per-book holding-object probe returns 0 for ALL FOUR books, and the books are NOT missing: the ETF plane's gold/holding/ is DATE-partitioned (one parquet per date, the book a COLUMN inside it), so a key-substring count can never see a book -- a reader following the criterion's own reading would file four absent books that are all present.",
-      "class": "OBSERVATION",
-      "hazard_standing": "INERT",
-      "grounding": {
-        "status": "GROUNDED",
-        "evidence": [
-          "AC1 run verbatim 2026-09-15 07:4xZ: '.tools/aws s3api list-objects-v2 --bucket opal-data-etfs --prefix gold/holding/ --query \"length(Contents[?contains(Key, 'DIVZ')])\"' -> 0, and 0 for IDVZ, PFDE, PFOE (4 of 4 books).",
-          "The full gold/ listing at the same minute: 62 objects, of which 14 are gold/holding/date=YYYY-MM-DD/holding.parquet and 14 are gold/book/date=YYYY-MM-DD/book.parquet; NO key anywhere under gold/ carries a book ticker.",
-          "The newest partition gold/holding/date=2026-09-11/holding.parquet (45,452 bytes, LastModified 2026-09-14T13:01:22+00:00) read with pyarrow: 189 rows, 31 columns, column 'book' present, value counts PFDE 90, IDVZ 45, DIVZ 30, PFOE 24 -- 189 of 189 rows carry one of the four books, so every book IS at the snapshot vintage."
-        ]
-      },
-      "disposition": "UNDER_INVESTIGATION",
-      "spec_asserts": "AC1: 'a per-book holding-object count at least 1 for each of DIVZ, IDVZ, PFDE, PFOE (a book with 0 is a row and its names are UNRESOLVED-SOURCE, not absent)' -- i.e. the plane is expected to be partitioned so that a book is visible in the KEY.",
-      "world_is": "The plane is partitioned by DATE, not by book: gold/holding/date=<d>/holding.parquet carries all four books as a 'book' COLUMN. The criterion's instrument is wrong-object for this layout; the count of 0 measures the key shape, not the books. The cell's own DELIVER item 1 ('whose layout you MEASURE FIRST') anticipated this, and the measurement resolves it: 4 of 4 books present, 189 holding rows, 170 distinct tickers.",
-      "notes": "Recorded because the criterion states a disposition ('a book with 0 is a row ... UNRESOLVED-SOURCE') that would be FALSE if taken on the count alone. No name was marked UNRESOLVED-SOURCE on this ground. The union universe reads the whole partition and carries books per name, so no downstream consumer inherits the wrong-object read."
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "1.0.0_SA_CTO~W",
+    "spec_asserts": "CLAUDE.md Rule 27 / spine v3.15: the L4 notifier 'WITHHOLDS the COO delivery until both are SIGNED at the current bytes' and then delivers it -- the delivery is the CTO's L4->L5 hand-off, and the tool's own comment at line 581-583 says the release goes to the round holder.",
+    "world_is": "The release is composed under whichever seat committed the LAST stamp. For the CVO that send is refused by the broker's L8 guard, and the failure is silent: no print, attempts stays 0, `status` shows UNSENT. The COO would never receive the admitted PRD unless a human reads last_error in an untracked jsonl.",
+    "notes": "Not an AMGT cell: an estate-tool fix (the release row's `from` = the PRD's L4 owner, read from the PRD or from the seat that committed the PRD version, never the stamping seat; and reoffer/status print last_error) belongs to the notifier's owner -- 0.0.0_AB_MSTR~Z / Andrew to name the project. The hand workaround is disclosed in the row's history entry and in the CTO~W session log addendum 8. hazard_standing ARMED estate-wide; INERT for AMGT_RESAPP v0.8 (delivered id=23071)."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S103",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~W",
+    "surfaced_at": "2026-09-15T07:08Z",
+    "one_line": "UPDATES AMGT_RESAPP-Z-S102 on 0.0.0_AB_MSTR~Z's measured answer (msg 23075 -> 07:06Z): the SENDER half is ALREADY FIXED on origin/CLOUD @fc71328804 (1.0.0_SA_CTO, 2026-09-14T08:02Z: from = the PRD's last CTO author, never the stamping seat; a laneless release is HELD; reoffer re-points a stuck non-CTO sender) and reaches SITEZ only with the CLOUD->SITEZ merge held on Andrew's word -- so NO second sender fix lands on SITEZ (a certain conflict at that merge); the SILENT last_error half is UNFIXED on both branches (CLOUD :677/:784, SITEZ :634/:725, zero prints), and route_half's alphabetical lane pick (prd_signoff_lib.py blob d19665e0fb, :360) is unfixed on both. Owner recommendation carried to Andrew by 0.0.0_AB_MSTR~Z, not named here. The v0.8 release itself is closed: the notifier retired its row after 2.0.0_SA_COO~W READ id 23071.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "0.0.0_AB_MSTR~Z msg 23075-answer (inbox 20260915T070615Z): blobs read in full on both refs with MSYS path conversion off, line counts printed (CLOUD 949, SITEZ 881); shared base 56608aadd4 at 09-14 07:34Z predates fc71328804 by 28 minutes; SITEZ blob a0d693455d vs CLOUD e2f4893e4a.",
+        ".tools/prd-header-notify.py status at 07:0xZ: no AMGT_RESAPP v0.8 row remains (retired on READ); the two v0.4 relics (@bbbf35c38e nudge to the CVO base, @0147a1b924 release to 2.0.0_SA_COO~Z) are the pre-lane era's and are the CLOUD fix's _release_decision to retire.",
+        "Z-S102 @341f7e6ce1: the measurement and the one-time hand workaround (from rewritten to 1.0.0_SA_CTO~W, reoffer -> id 23071)."
+      ]
     },
-    {
-      "id": "AMGT_RESAPP-Z-W19-S2",
-      "project": "AMGT_RESAPP",
-      "fabric": "site-z",
-      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~19",
-      "surfaced_at": "2026-09-15T08:07:00Z",
-      "one_line": "C-UNION-UNIVERSE's quoted coverage partition (32 MEASURED / 57 UNRESOLVED at 2026-09-10) does not match the live coverage list at the round-11 cut (34 MEASURED / 55 UNRESOLVED), and the crosswalk's canonical disposition is a THIRD number (33 / 56) because one MEASURED ticker carries no exchange code.",
-      "class": "OBSERVATION",
-      "hazard_standing": "INERT",
-      "grounding": {
-        "status": "GROUNDED",
-        "evidence": [
-          "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~4/universe.json @fa72663c56: denominator_folders 89, ticker_status_partition {'MEASURED': 34, 'UNRESOLVED': 55}.",
-          "The task order's own cell text carries BOTH numbers: the contract quote says '32 tickers MEASURED / 57 UNRESOLVED at 2026-09-10' and the MEASURED-AT-THE-CUT paragraph says 'the chatter producer reads 34 eligible Bloomberg tickers via read_universe_tickers()'.",
-          "crosswalk/v1/2026-09-15.json (this order's deliverable, sha256 c9ea41499ffcf88d07969d6a0ac78ae8631b602368fed5ce270e6a063dfb8a36): input_names 89, MEASURED 33, UNRESOLVED 56 -- the single difference from the coverage list's 34 is the folder 'Schlumberger SLB', whose MEASURED bloomberg value is 'SLB' with no exchange code and which is therefore UNRESOLVED here rather than guessed as US."
-        ]
-      },
-      "disposition": "UNDER_INVESTIGATION",
-      "spec_asserts": "the coverage list is '89 name folders; 32 tickers MEASURED / 57 UNRESOLVED at 2026-09-10'.",
-      "world_is": "89 name folders (agrees), 34 MEASURED / 55 UNRESOLVED in the live list, 33 MEASURED / 56 UNRESOLVED as canonical identities. The 89 denominator -- the one every criterion grades on -- is stable across all three readings; only the partition moved.",
-      "notes": "No criterion on this order grades the 32/57 pair, so nothing is blocked. Flagged for the PRD's next touch: the parenthetical carries a vintage (2026-09-10) but the contract text reads as current, and a reader who checks the partition rather than the denominator will find three answers. The canonical partition (33/56) is the one X-1 publishes and is the one downstream cells should cite."
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "1.0.0_SA_CTO~W",
+    "adjudicates": [
+      "AMGT_RESAPP-Z-S102"
+    ],
+    "spec_asserts": "Z-S102's spec_asserts stand (the L4 notifier delivers the admitted PRD to the round holder as the CTO's L4->L5 hand-off).",
+    "world_is": "On SITEZ until the held merge: a CVO-last signature still composes the release under the CVO and is refused 403 silently; the manual re-point stays the route and is disclosed each time. On CLOUD: the sender half is fixed; the silence and the router are not.",
+    "notes": "Not an AMGT cell. What remains open estate-wide, for Andrew's owner call: (1) print last_error in reoffer() and status(); (2) route_half prefers the reviewer lane matching the project's fabric letter. Both fit one commit on CLOUD by the file's own author so the file moves one way only; 0.0.0_AB_MSTR~Z carries the recommendation. This row is the durable record of the message; the disarm of Z-S102 follows the merge landing on SITEZ and the two remaining fixes, not before."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W19-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~19",
+    "surfaced_at": "2026-09-15T08:07:00Z",
+    "one_line": "AC1's per-book holding-object probe returns 0 for ALL FOUR books, and the books are NOT missing: the ETF plane's gold/holding/ is DATE-partitioned (one parquet per date, the book a COLUMN inside it), so a key-substring count can never see a book -- a reader following the criterion's own reading would file four absent books that are all present.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AC1 run verbatim 2026-09-15 07:4xZ: '.tools/aws s3api list-objects-v2 --bucket opal-data-etfs --prefix gold/holding/ --query \"length(Contents[?contains(Key, 'DIVZ')])\"' -> 0, and 0 for IDVZ, PFDE, PFOE (4 of 4 books).",
+        "The full gold/ listing at the same minute: 62 objects, of which 14 are gold/holding/date=YYYY-MM-DD/holding.parquet and 14 are gold/book/date=YYYY-MM-DD/book.parquet; NO key anywhere under gold/ carries a book ticker.",
+        "The newest partition gold/holding/date=2026-09-11/holding.parquet (45,452 bytes, LastModified 2026-09-14T13:01:22+00:00) read with pyarrow: 189 rows, 31 columns, column 'book' present, value counts PFDE 90, IDVZ 45, DIVZ 30, PFOE 24 -- 189 of 189 rows carry one of the four books, so every book IS at the snapshot vintage."
+      ]
     },
-    {
-      "id": "AMGT_RESAPP-Z-W19-S3",
-      "project": "AMGT_RESAPP",
-      "fabric": "site-z",
-      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~19",
-      "surfaced_at": "2026-09-15T08:07:00Z",
-      "one_line": "C-ONE-IDENTITY names 'security-<16 hex>' as a publication-association key ALREADY PERSISTED; it is persisted nowhere in the pool -- 0 of 71 objects in opal-data-harvest carry the token -- it is COMPUTED at load time by the harvester's loader and lives only in local runtime state.",
-      "class": "OBSERVATION",
-      "hazard_standing": "INERT",
-      "grounding": {
-        "status": "GROUNDED",
-        "evidence": [
-          "boto3 paginated list_objects_v2 over the WHOLE bucket opal-data-harvest 2026-09-15 07:4xZ: 71 objects total; keys containing 'security-' = 0; distinct 'security-<16 hex>' tokens = 0.",
-          "The only PERSISTED association-key prefixes are publication-links/v1/{BA,COST,HD}/ (3 CommonPrefixes, 7 objects) -- all three bare-root PILOT keys; packs/ carries {BABA_US, BA_US, COST_US, NVDA_US_Equity, SAP_GY_Equity} (5) and derived/model_block/ carries {BABA_US_Equity, BA_US_Equity, NVDA_US_Equity, SAP_GY_Equity} (4).",
-          "lib/opal_data_harvest/__main__.py:12-35 (universe()) mints 'security-' + storage.content_hash(row['folder'])[:16] for every NON-pilot folder at load time; the CRO's identity brief (RESAPP_CONNECTION_BRIEF_IDENTITY_20260915_W.md) measured security-b05e0ccdc9868504 for 'Alibaba BABA' from that loader and from a read-only SQLite query on .runtime/opal-data-harvest/progress.sqlite3 whose DISTINCT security_key returned BA, COST, HD only."
-        ]
-      },
-      "disposition": "UNDER_INVESTIGATION",
-      "spec_asserts": "the crosswalk maps the canonical identity to 'every publication-association key already persisted (BA, security-<16 hex>)'.",
-      "world_is": "'BA' is persisted (an S3 prefix and a SQLite row). 'security-<16 hex>' is DERIVED: no pool object and no article link carries one today, because no non-pilot name has been pulled. The crosswalk therefore carries it as a key COMPUTED from the harvester's own published rule, reproduced exactly (the CRO's measured Alibaba digest is reproduced byte-for-byte by this order's implementation and is a unit-test arm).",
-      "notes": "Consequence for readers of X-1: association_keys mixes PERSISTED keys (the five pilots' bare roots) with DERIVED-BUT-DETERMINISTIC keys (security-<16 hex> for the other 84). Both are carried; each record's provenance.association_keys names which rule produced which. A reader that treats every association key as an existing pool prefix will 404 on 84 of 89 names -- that is a fetch expectation, not an identity defect."
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC1: 'a per-book holding-object count at least 1 for each of DIVZ, IDVZ, PFDE, PFOE (a book with 0 is a row and its names are UNRESOLVED-SOURCE, not absent)' -- i.e. the plane is expected to be partitioned so that a book is visible in the KEY.",
+    "world_is": "The plane is partitioned by DATE, not by book: gold/holding/date=<d>/holding.parquet carries all four books as a 'book' COLUMN. The criterion's instrument is wrong-object for this layout; the count of 0 measures the key shape, not the books. The cell's own DELIVER item 1 ('whose layout you MEASURE FIRST') anticipated this, and the measurement resolves it: 4 of 4 books present, 189 holding rows, 170 distinct tickers.",
+    "notes": "Recorded because the criterion states a disposition ('a book with 0 is a row ... UNRESOLVED-SOURCE') that would be FALSE if taken on the count alone. No name was marked UNRESOLVED-SOURCE on this ground. The union universe reads the whole partition and carries books per name, so no downstream consumer inherits the wrong-object read."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W19-S2",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~19",
+    "surfaced_at": "2026-09-15T08:07:00Z",
+    "one_line": "C-UNION-UNIVERSE's quoted coverage partition (32 MEASURED / 57 UNRESOLVED at 2026-09-10) does not match the live coverage list at the round-11 cut (34 MEASURED / 55 UNRESOLVED), and the crosswalk's canonical disposition is a THIRD number (33 / 56) because one MEASURED ticker carries no exchange code.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~4/universe.json @fa72663c56: denominator_folders 89, ticker_status_partition {'MEASURED': 34, 'UNRESOLVED': 55}.",
+        "The task order's own cell text carries BOTH numbers: the contract quote says '32 tickers MEASURED / 57 UNRESOLVED at 2026-09-10' and the MEASURED-AT-THE-CUT paragraph says 'the chatter producer reads 34 eligible Bloomberg tickers via read_universe_tickers()'.",
+        "crosswalk/v1/2026-09-15.json (this order's deliverable, sha256 c9ea41499ffcf88d07969d6a0ac78ae8631b602368fed5ce270e6a063dfb8a36): input_names 89, MEASURED 33, UNRESOLVED 56 -- the single difference from the coverage list's 34 is the folder 'Schlumberger SLB', whose MEASURED bloomberg value is 'SLB' with no exchange code and which is therefore UNRESOLVED here rather than guessed as US."
+      ]
     },
-    {
-      "id": "AMGT_RESAPP-Z-W19-S4",
-      "project": "AMGT_RESAPP",
-      "fabric": "site-z",
-      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~19",
-      "surfaced_at": "2026-09-15T08:07:00Z",
-      "one_line": "The cell sources BOTH cik AND filing_identity from 'the SEC ticker-to-CIK table', but that table carries only {cik_str, ticker, title} -- it cannot yield form_expected (10-K vs 20-F) at all, so the form was MEASURED from a second SEC surface (each issuer's own EDGAR submissions history) rather than inferred from domicile.",
-      "class": "OBSERVATION",
-      "hazard_standing": "INERT",
-      "grounding": {
-        "status": "GROUNDED",
-        "evidence": [
-          "GET https://www.sec.gov/files/company_tickers.json 2026-09-15T07:44:17Z, HTTP 200, 797,759 bytes, sha256 82cd5fd9ccffda811b93ba76070460dd41429c02c00e726f83deb71f553c6cff, Last-Modified Mon, 14 Sep 2026 21:02:02 GMT: 10,422 rows, 10,422 distinct tickers, each row EXACTLY {cik_str, ticker, title} -- 3 fields, no form type, no exchange.",
-          "GET https://data.sec.gov/submissions/CIK<10-digit>.json for the 15 CIKs the 33 canonical roots hit: form_expected read as the form of the MOST RECENT annual filing among 10-K / 20-F / 40-F in the issuer's own history -- BA 10-K (latest 2026-01-30, 7 seen), SAP 20-F (2026-02-26, 28 seen), BABA 20-F (2026-05-20, 12 seen), ASML 20-F, NU 20-F, PBR 20-F; COST/HD/HAL/INTU/KMB/VLO 10-K.",
-          "Both fetches and their retrieval times are cached at org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~19/sec_ticker_cik_cache.json; the union build reads the CACHE and makes no network call, so --dry-run is offline and deterministic."
-        ]
-      },
-      "disposition": "UNDER_INVESTIGATION",
-      "spec_asserts": "'cik and filing_identity from the SEC ticker-to-CIK table (fetched once under the session egress word, cached in your deliverables with its retrieval time)'.",
-      "world_is": "The named table yields cik only. form_expected has no source in it, and the two alternatives were to GUESS from domicile (banned by the same contract's never-guess clause, and wrong: ASML is domiciled NL and files 20-F while SAP is domiciled DE and also files 20-F, but Sensata is domiciled GB/US and files 10-K) or to MEASURE it. It was measured, on the issuer's own filings, and the instrument is named in the cache.",
-      "notes": "Egress authority: Andrew-direct ~05:42Z @dfa63b6d92, the whole site-z fabric has free egress this session. The second endpoint is the same vendor (SEC/EDGAR) and the same authority; it is disclosed here because the cell named ONE fetch and this is two."
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "the coverage list is '89 name folders; 32 tickers MEASURED / 57 UNRESOLVED at 2026-09-10'.",
+    "world_is": "89 name folders (agrees), 34 MEASURED / 55 UNRESOLVED in the live list, 33 MEASURED / 56 UNRESOLVED as canonical identities. The 89 denominator -- the one every criterion grades on -- is stable across all three readings; only the partition moved.",
+    "notes": "No criterion on this order grades the 32/57 pair, so nothing is blocked. Flagged for the PRD's next touch: the parenthetical carries a vintage (2026-09-10) but the contract text reads as current, and a reader who checks the partition rather than the denominator will find three answers. The canonical partition (33/56) is the one X-1 publishes and is the one downstream cells should cite."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W19-S3",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~19",
+    "surfaced_at": "2026-09-15T08:07:00Z",
+    "one_line": "C-ONE-IDENTITY names 'security-<16 hex>' as a publication-association key ALREADY PERSISTED; it is persisted nowhere in the pool -- 0 of 71 objects in opal-data-harvest carry the token -- it is COMPUTED at load time by the harvester's loader and lives only in local runtime state.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "boto3 paginated list_objects_v2 over the WHOLE bucket opal-data-harvest 2026-09-15 07:4xZ: 71 objects total; keys containing 'security-' = 0; distinct 'security-<16 hex>' tokens = 0.",
+        "The only PERSISTED association-key prefixes are publication-links/v1/{BA,COST,HD}/ (3 CommonPrefixes, 7 objects) -- all three bare-root PILOT keys; packs/ carries {BABA_US, BA_US, COST_US, NVDA_US_Equity, SAP_GY_Equity} (5) and derived/model_block/ carries {BABA_US_Equity, BA_US_Equity, NVDA_US_Equity, SAP_GY_Equity} (4).",
+        "lib/opal_data_harvest/__main__.py:12-35 (universe()) mints 'security-' + storage.content_hash(row['folder'])[:16] for every NON-pilot folder at load time; the CRO's identity brief (RESAPP_CONNECTION_BRIEF_IDENTITY_20260915_W.md) measured security-b05e0ccdc9868504 for 'Alibaba BABA' from that loader and from a read-only SQLite query on .runtime/opal-data-harvest/progress.sqlite3 whose DISTINCT security_key returned BA, COST, HD only."
+      ]
     },
-    {
-      "id": "AMGT_RESAPP-Z-W19-S5",
-      "project": "AMGT_RESAPP",
-      "fabric": "site-z",
-      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~19",
-      "surfaced_at": "2026-09-15T08:07:00Z",
-      "one_line": "Three of the 33 canonical security keys contain a character that is illegal in a Windows filename or ambiguous in an S3 key path -- BP/_LN_Equity, NG/_LN_Equity and WALMEX*_MM_Equity -- and the estate's model-artifact convention writes the key straight into a filename (model_block_<key>.json).",
-      "class": "OBSERVATION",
-      "hazard_standing": "INERT",
-      "grounding": {
-        "status": "GROUNDED",
-        "evidence": [
-          "crosswalk/v1/2026-09-15.json: 33 MEASURED keys, of which BP/_LN_Equity (coverage folder 'BP PLC', bloomberg 'BP/ LN'), NG/_LN_Equity ('National Grid NG LN', 'NG/ LN') and WALMEX*_MM_Equity ('Walmart de Mexico WALMEX MM', 'WALMEX* MM') carry '/' or '*'.",
-          "The naming convention that consumes a key as a filename is measured on disk: 8 model_block_<key>.json files under org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~1/ and 14 objects under s3://opal-data-harvest/derived/model_block/<key>/.",
-          "The punctuation is the VENDOR's own spelling, not an artefact of this mapper: Bloomberg writes BP plc as 'BP/ LN' and Walmex as 'WALMEX* MM', and build_universe._TICKER_SHAPE_RE already admits '/' and '*' as measured conventions on this corpus."
-        ]
-      },
-      "disposition": "UNDER_INVESTIGATION",
-      "spec_asserts": "the crosswalk 'preserves exchange and share-class distinctions' and maps the identity to its 'model/pack key (BA_US_Equity)' -- i.e. the canonical key IS the model key.",
-      "world_is": "For 3 of 33 MEASURED identities the canonical key is not filename-safe. 'model_block_BP/_LN_Equity.json' names a DIRECTORY, not a file, on every platform. Nothing in this round writes those three (no pull exists for them), so the hazard is latent, not live -- INERT.",
-      "notes": "Deliberately NOT remedied here: sanitising the key would erase the vendor's own spelling, which is the distinction the contract orders preserved, and inventing a second filename-safe field would widen INTERFACE X-1 beyond the fields the cell names. The right remedy is a CONSUMER-side encoding rule (percent-encode or replace at the artifact boundary, keep the key canonical), owned by whichever cell first writes an artifact for one of these three names. Named here so a reader of X-1 does not discover it by minting a directory."
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "the crosswalk maps the canonical identity to 'every publication-association key already persisted (BA, security-<16 hex>)'.",
+    "world_is": "'BA' is persisted (an S3 prefix and a SQLite row). 'security-<16 hex>' is DERIVED: no pool object and no article link carries one today, because no non-pilot name has been pulled. The crosswalk therefore carries it as a key COMPUTED from the harvester's own published rule, reproduced exactly (the CRO's measured Alibaba digest is reproduced byte-for-byte by this order's implementation and is a unit-test arm).",
+    "notes": "Consequence for readers of X-1: association_keys mixes PERSISTED keys (the five pilots' bare roots) with DERIVED-BUT-DETERMINISTIC keys (security-<16 hex> for the other 84). Both are carried; each record's provenance.association_keys names which rule produced which. A reader that treats every association key as an existing pool prefix will 404 on 84 of 89 names -- that is a fetch expectation, not an identity defect."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W19-S4",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~19",
+    "surfaced_at": "2026-09-15T08:07:00Z",
+    "one_line": "The cell sources BOTH cik AND filing_identity from 'the SEC ticker-to-CIK table', but that table carries only {cik_str, ticker, title} -- it cannot yield form_expected (10-K vs 20-F) at all, so the form was MEASURED from a second SEC surface (each issuer's own EDGAR submissions history) rather than inferred from domicile.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "GET https://www.sec.gov/files/company_tickers.json 2026-09-15T07:44:17Z, HTTP 200, 797,759 bytes, sha256 82cd5fd9ccffda811b93ba76070460dd41429c02c00e726f83deb71f553c6cff, Last-Modified Mon, 14 Sep 2026 21:02:02 GMT: 10,422 rows, 10,422 distinct tickers, each row EXACTLY {cik_str, ticker, title} -- 3 fields, no form type, no exchange.",
+        "GET https://data.sec.gov/submissions/CIK<10-digit>.json for the 15 CIKs the 33 canonical roots hit: form_expected read as the form of the MOST RECENT annual filing among 10-K / 20-F / 40-F in the issuer's own history -- BA 10-K (latest 2026-01-30, 7 seen), SAP 20-F (2026-02-26, 28 seen), BABA 20-F (2026-05-20, 12 seen), ASML 20-F, NU 20-F, PBR 20-F; COST/HD/HAL/INTU/KMB/VLO 10-K.",
+        "Both fetches and their retrieval times are cached at org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~19/sec_ticker_cik_cache.json; the union build reads the CACHE and makes no network call, so --dry-run is offline and deterministic."
+      ]
     },
-    {
-      "id": "AMGT_RESAPP-Z-W19-S6",
-      "project": "AMGT_RESAPP",
-      "fabric": "site-z",
-      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~19",
-      "surfaced_at": "2026-09-15T08:07:00Z",
-      "one_line": "167 of 170 distinct ETF holdings identifiers cannot be resolved to a canonical identity without guessing: the plane's tickers carry NO exchange code and C-ETF-PLANE-READ states the producer-side contract is NOT established, so only the 3 whose raw ticker IS a persisted association key (BA, HD, VLO -- the pilots) join, and 4 more are root-equal to a coverage identity but are deliberately NOT merged.",
-      "class": "OBSERVATION",
-      "hazard_standing": "INERT",
-      "grounding": {
-        "status": "GROUNDED",
-        "evidence": [
-          "gold/holding/date=2026-09-11/holding.parquet: 189 rows, 170 distinct tickers, every one a bare symbol with no exchange code ('BA', 'ASML', 'BP', 'CASH', 'SALXX', '2602335D'); the row carries domicile and cusip but no listing/exchange field.",
-          "universe/v1/2026-09-15.json denominators: coverage 89, holdings_distinct 170, union 256, both 3, resolved 33, unresolved 223, with_cik 12 -- the 3 joins are BA (PFDE), HD (DIVZ) and VLO, each matched on a bare-root PILOT association key persisted at publication-links/v1/<KEY>/.",
-          "The 4 root-equal, NOT-merged identifiers are ASML, INTU, NU and PBR: each is named in its own row's resolution_reason as a 'Root-equal canonical candidate(s) NAMED, NOT merged' -- ASML being the discriminating case, since the coverage identity is ASML_NA_Equity (Amsterdam) and the holding line is a different listing of the same issuer."
-        ]
-      },
-      "disposition": "UNDER_INVESTIGATION",
-      "spec_asserts": "C-UNION-UNIVERSE asks for the UNION of the coverage list and the ETFs' current holdings, with C-ONE-IDENTITY requiring ONE canonical identity per economic security; C-ETF-PLANE-READ states the producer-side contract is NOT established and the read is one-sided.",
-      "world_is": "The two contracts pull opposite ways on 167 names and the never-guess clause wins: an identifier with no exchange code and no declared identifier space is kept UNRESOLVED with its raw identifier, never dropped and never merged on root equality. The consequence, stated plainly: the union carries the SAME economic security twice for ASML, INTU, NU and PBR (once as a coverage identity, once as an unresolved holding line), and each unresolved row NAMES its candidate so the duplication is visible rather than silent.",
-      "notes": "This is the cell's own instruction executed ('a holding identifier that does not resolve is UNRESOLVED with its raw identifier, never dropped, never guessed'), recorded because it is the single fact every reader of U-1 must know before counting. The clean remedy is upstream and is not this order's to take: a PRODUCER-SIDE identifier contract on s3://opal-data-etfs (an exchange code, a figi or the cusip already in the row promoted to a declared key) would let the join be MEASURED instead of refused, and would collapse the four duplicates. cusip is the cheapest candidate: a cusip value is present on 187 of 189 holding rows (the 2 without are the DIVZ and IDVZ cash lines; the PFDE and PFOE cash lines carry the literal 'Cash&Other', which is not a cusip)."
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "'cik and filing_identity from the SEC ticker-to-CIK table (fetched once under the session egress word, cached in your deliverables with its retrieval time)'.",
+    "world_is": "The named table yields cik only. form_expected has no source in it, and the two alternatives were to GUESS from domicile (banned by the same contract's never-guess clause, and wrong: ASML is domiciled NL and files 20-F while SAP is domiciled DE and also files 20-F, but Sensata is domiciled GB/US and files 10-K) or to MEASURE it. It was measured, on the issuer's own filings, and the instrument is named in the cache.",
+    "notes": "Egress authority: Andrew-direct ~05:42Z @dfa63b6d92, the whole site-z fabric has free egress this session. The second endpoint is the same vendor (SEC/EDGAR) and the same authority; it is disclosed here because the cell named ONE fetch and this is two."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W19-S5",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~19",
+    "surfaced_at": "2026-09-15T08:07:00Z",
+    "one_line": "Three of the 33 canonical security keys contain a character that is illegal in a Windows filename or ambiguous in an S3 key path -- BP/_LN_Equity, NG/_LN_Equity and WALMEX*_MM_Equity -- and the estate's model-artifact convention writes the key straight into a filename (model_block_<key>.json).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "crosswalk/v1/2026-09-15.json: 33 MEASURED keys, of which BP/_LN_Equity (coverage folder 'BP PLC', bloomberg 'BP/ LN'), NG/_LN_Equity ('National Grid NG LN', 'NG/ LN') and WALMEX*_MM_Equity ('Walmart de Mexico WALMEX MM', 'WALMEX* MM') carry '/' or '*'.",
+        "The naming convention that consumes a key as a filename is measured on disk: 8 model_block_<key>.json files under org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~1/ and 14 objects under s3://opal-data-harvest/derived/model_block/<key>/.",
+        "The punctuation is the VENDOR's own spelling, not an artefact of this mapper: Bloomberg writes BP plc as 'BP/ LN' and Walmex as 'WALMEX* MM', and build_universe._TICKER_SHAPE_RE already admits '/' and '*' as measured conventions on this corpus."
+      ]
     },
-    {
-      "id": "AMGT_RESAPP-Z-W19-S7",
-      "project": "AMGT_RESAPP",
-      "fabric": "site-z",
-      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~19",
-      "surfaced_at": "2026-09-15T08:25:00Z",
-      "one_line": "AC7's never-written control asks for a snapshots/ COUNT 'unchanged', but AC1 -- the paired BEFORE -- never produces one (it queries the newest key and Size only); and the control is stated bucket-wide on a bucket that has a LIVE PRODUCER, which wrote 7 of 1518 objects during this worker's own window.",
-      "class": "OBSERVATION",
-      "hazard_standing": "INERT",
-      "grounding": {
-        "status": "GROUNDED",
-        "evidence": [
-          "AC1 snapshots/ invocation as written: --query 'sort_by(Contents,&Key)[-1].[Key,Size]' -> 'snapshots/snapshot_2026-09-14.json  2879'. AC7 snapshots/ invocation as written: --query '[length(Contents), max_by(Contents,&LastModified).LastModified]' -> '95  2026-09-14T22:00:17+00:00'. The two queries return DIFFERENT fields, so the count has no before-value and the LastModified has no AC1 before-value either.",
-          "Client-side paginated census of opal-data-etfs 2026-09-15 08:2xZ (boto3, full pagination, counted in python): 1518 objects total; 7 modified at or after 2026-09-15T07:40Z (this worker's first act), ALL of them s3://opal-data-etfs/bbg/2026-09-14/{characteristics,fund_daily,history_topup}.{csv,parquet} and run_manifest.json at 07:52:34Z -- another producer's Bloomberg pull, under a prefix this cell never reads or writes.",
-          "The prefixes this cell DOES read are unchanged across the run: gold/ 62 objects, newest gold/_manifests/2026-09-11/0ec4e7a9e3bb.json at 2026-09-14T13:01:22+00:00 (identical in AC1 at 07:4xZ and AC7 at 08:1xZ); snapshots/ newest key snapshot_2026-09-14.json size 2879 (identical); gold/holding/ 14, gold/book/ 14, config/ 1, and NO object under any of them carries a LastModified inside this worker's window."
-        ]
-      },
-      "disposition": "UNDER_INVESTIGATION",
-      "spec_asserts": "AC7: 'the same gold/ count, newest key and LastModified as AC1 printed, and the snapshots/ count and newest LastModified unchanged (the ETF plane was read and never written -- any difference is a BLOCKING row)'.",
-      "world_is": "The gold/ half of the pair is complete and MATCHES exactly. The snapshots/ half is not a pair: AC1 measured {Key, Size} and AC7 measures {count, LastModified}, so 'unchanged' has nothing to compare against on either field. The stronger control that WAS available and was run instead -- no object under any read prefix carries a LastModified inside the worker's window, and the only 7 writes to the bucket in that window are another producer's under bbg/ -- answers the question the criterion is asking, and answers it on the whole bucket rather than one prefix.",
-      "notes": "No difference was found and nothing is blocked; AC7 is recorded PASS on the gold/ pair plus the window control, with the snapshots/ count stated as an AFTER-only value and NOT claimed as unchanged-by-comparison. The generalisable point for the next cut: on a bucket with a live producer, a before/after COUNT is the wrong control shape -- it can move for reasons that have nothing to do with the actor -- and the right one is 'no object under the prefixes I touched has a LastModified inside my window'. Related and already law, so not filed separately: a paginated list-objects-v2 with --query length() returns a PER-PAGE count; this bucket's whole-bucket probe printed '1000' then '518' and a per-page reader would have reported 1000 of 1518."
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "the crosswalk 'preserves exchange and share-class distinctions' and maps the identity to its 'model/pack key (BA_US_Equity)' -- i.e. the canonical key IS the model key.",
+    "world_is": "For 3 of 33 MEASURED identities the canonical key is not filename-safe. 'model_block_BP/_LN_Equity.json' names a DIRECTORY, not a file, on every platform. Nothing in this round writes those three (no pull exists for them), so the hazard is latent, not live -- INERT.",
+    "notes": "Deliberately NOT remedied here: sanitising the key would erase the vendor's own spelling, which is the distinction the contract orders preserved, and inventing a second filename-safe field would widen INTERFACE X-1 beyond the fields the cell names. The right remedy is a CONSUMER-side encoding rule (percent-encode or replace at the artifact boundary, keep the key canonical), owned by whichever cell first writes an artifact for one of these three names. Named here so a reader of X-1 does not discover it by minting a directory."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W19-S6",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~19",
+    "surfaced_at": "2026-09-15T08:07:00Z",
+    "one_line": "167 of 170 distinct ETF holdings identifiers cannot be resolved to a canonical identity without guessing: the plane's tickers carry NO exchange code and C-ETF-PLANE-READ states the producer-side contract is NOT established, so only the 3 whose raw ticker IS a persisted association key (BA, HD, VLO -- the pilots) join, and 4 more are root-equal to a coverage identity but are deliberately NOT merged.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "gold/holding/date=2026-09-11/holding.parquet: 189 rows, 170 distinct tickers, every one a bare symbol with no exchange code ('BA', 'ASML', 'BP', 'CASH', 'SALXX', '2602335D'); the row carries domicile and cusip but no listing/exchange field.",
+        "universe/v1/2026-09-15.json denominators: coverage 89, holdings_distinct 170, union 256, both 3, resolved 33, unresolved 223, with_cik 12 -- the 3 joins are BA (PFDE), HD (DIVZ) and VLO, each matched on a bare-root PILOT association key persisted at publication-links/v1/<KEY>/.",
+        "The 4 root-equal, NOT-merged identifiers are ASML, INTU, NU and PBR: each is named in its own row's resolution_reason as a 'Root-equal canonical candidate(s) NAMED, NOT merged' -- ASML being the discriminating case, since the coverage identity is ASML_NA_Equity (Amsterdam) and the holding line is a different listing of the same issuer."
+      ]
     },
-    {
-      "id": "AMGT_RESAPP-Z-W19-S8",
-      "project": "AMGT_RESAPP",
-      "fabric": "site-z",
-      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~19",
-      "surfaced_at": "2026-09-15T09:25:00Z",
-      "one_line": "AMGT-rj-5's volume bars are cut against a pool that holds SEVEN articles: publications/v1 has 7 objects (AC1 names 'at least 80'), publication-links/v1 has 7 links across BA 2, COST 2, HD 3 (AC2 names store_item_count 'at least 20 each', AC5 names 'N at least 20'), so four criteria cannot be met AS WRITTEN while every field-level and behavioural clause of the same criteria passes.",
-      "class": "BLOCKING",
-      "hazard_standing": "INERT",
-      "spec_asserts": "AC1: 'a publications/v1 object count at least 80'. AC2: 'for BA_US_Equity, COST_US_Equity and HD_US_Equity: store_item_count at least 20 each'. AC3: 'bodies read at least 80'. AC5: 'the three commissioned names showing N at least 20'.",
-      "world_is": "The pool holds 7 publication bodies and 7 associations in total. Measured 2026-09-15 09:0x-09:2xZ on TWO instruments that agree: (a) the criterion's own invocation, .tools/aws s3api list-objects-v2 --prefix publications/v1/ --query length(Contents) -> 7; (b) an independent client-side-paginated boto3 census of the whole bucket -> 73 objects total, of which publication-links/v1 7 and publications/v1 7. Per name: BA 2 links (1 in the 30-day window), COST 2 (1 in window), HD 3 (3 in window); 5 of the 7 bodies are published inside the window ending 2026-09-15. The other two are older than the window (BA bbg published 2026-07-18, age 58 days; COST ft published 2026-07-26, age 50 days) -- they are in the store and correctly outside the window, not missing.",
-      "grounding": {
-        "status": "GROUNDED",
-        "evidence": [
-          "AC1 as written, output verbatim: 'publication-links/v1/BA/ publication-links/v1/COST/ publication-links/v1/HD/' then '7'. Three prefixes (the 'at least three ... carrying BA, COST and HD' half is MET); the count 7 against the named bar of 80 is NOT.",
-          "Second instrument, boto3 paginated census of s3://opal-data-harvest 2026-09-15 09:0xZ: TOTAL 73 objects; per first-two-segments: crosswalk/v1 1, derived/model_block 14, derived/model_block_fye 3, lib/local-publications 4, packs/* 5, publication-links/v1 7, publications/v1 7, raw/bloomberg 13, raw/seekingalpha 18, universe/v1 1.",
-          "The seven links, verbatim keys: publication-links/v1/BA/bbg/7231062268...json, BA/wsj/05aec87bff...json, COST/barrons/5568227096...json, COST/ft/942b5946a5...json, HD/barrons/2a6d78f79c...json, HD/bbg/e667f5e3f0...json, HD/sa/5666ee6435...json. Each body read and validated: catalog.validate OK 14 INVALID 0 of 14 over both prefixes.",
-          "The CRO's own pool-readers brief @0e7de170e3 states the same world in its Required Connections item 5: 'Current uploads are bounded commissioning samples; they are not evidence of a complete 89-name backfill. Mark partial baselines and avoid interpreting missing collection as quiet coverage.' The cut's numeric bars and the brief's own characterisation of the store disagree.",
-          "What the same criteria DO produce, met in full and recorded in the instance: AC1 three prefixes carrying BA/COST/HD in the harvester's form; AC2 items >= 1 for each of the three names with title, https url, publisher, published_at and article_key, all four states 0, key_forms naming the harvester's form, and the ZZZ_NOPE control at store_item_count 0 / items 0 / no exception; AC3 per-name window counts BA=1 COST=1 HD=3, a top-10 carrying security_key beside ticker, a pointer with a 64-hex payload_hash and rank_sort ABSENT, dynamodb_reads=0; AC5 four lines with per-state counts and table-items 0, the control at 0."
-        ]
-      },
-      "notes": "NOT REPAIRED AND NOT WIDENED (the order's refusal clause). No article was uploaded to make a bar pass, no bar was re-read as satisfied, and the window was not widened to reach an older article: a criterion this worker cannot satisfy AS WRITTEN is refused with its measurement. The order stays OPEN on AC1, AC2, AC3 and AC5; AC4, AC6 and AC7 are PASS-by-output. The remedy is not this worker's to choose: either the harvest runs a backfill and the same four invocations are re-run unchanged, or the issuer re-cuts the four bars against the store that exists. Both are the issuer's call.",
-      "disposition": "UNDER_INVESTIGATION"
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "C-UNION-UNIVERSE asks for the UNION of the coverage list and the ETFs' current holdings, with C-ONE-IDENTITY requiring ONE canonical identity per economic security; C-ETF-PLANE-READ states the producer-side contract is NOT established and the read is one-sided.",
+    "world_is": "The two contracts pull opposite ways on 167 names and the never-guess clause wins: an identifier with no exchange code and no declared identifier space is kept UNRESOLVED with its raw identifier, never dropped and never merged on root equality. The consequence, stated plainly: the union carries the SAME economic security twice for ASML, INTU, NU and PBR (once as a coverage identity, once as an unresolved holding line), and each unresolved row NAMES its candidate so the duplication is visible rather than silent.",
+    "notes": "This is the cell's own instruction executed ('a holding identifier that does not resolve is UNRESOLVED with its raw identifier, never dropped, never guessed'), recorded because it is the single fact every reader of U-1 must know before counting. The clean remedy is upstream and is not this order's to take: a PRODUCER-SIDE identifier contract on s3://opal-data-etfs (an exchange code, a figi or the cusip already in the row promoted to a declared key) would let the join be MEASURED instead of refused, and would collapse the four duplicates. cusip is the cheapest candidate: a cusip value is present on 187 of 189 holding rows (the 2 without are the DIVZ and IDVZ cash lines; the PFDE and PFOE cash lines carry the literal 'Cash&Other', which is not a cusip)."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W19-S7",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~19",
+    "surfaced_at": "2026-09-15T08:25:00Z",
+    "one_line": "AC7's never-written control asks for a snapshots/ COUNT 'unchanged', but AC1 -- the paired BEFORE -- never produces one (it queries the newest key and Size only); and the control is stated bucket-wide on a bucket that has a LIVE PRODUCER, which wrote 7 of 1518 objects during this worker's own window.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AC1 snapshots/ invocation as written: --query 'sort_by(Contents,&Key)[-1].[Key,Size]' -> 'snapshots/snapshot_2026-09-14.json  2879'. AC7 snapshots/ invocation as written: --query '[length(Contents), max_by(Contents,&LastModified).LastModified]' -> '95  2026-09-14T22:00:17+00:00'. The two queries return DIFFERENT fields, so the count has no before-value and the LastModified has no AC1 before-value either.",
+        "Client-side paginated census of opal-data-etfs 2026-09-15 08:2xZ (boto3, full pagination, counted in python): 1518 objects total; 7 modified at or after 2026-09-15T07:40Z (this worker's first act), ALL of them s3://opal-data-etfs/bbg/2026-09-14/{characteristics,fund_daily,history_topup}.{csv,parquet} and run_manifest.json at 07:52:34Z -- another producer's Bloomberg pull, under a prefix this cell never reads or writes.",
+        "The prefixes this cell DOES read are unchanged across the run: gold/ 62 objects, newest gold/_manifests/2026-09-11/0ec4e7a9e3bb.json at 2026-09-14T13:01:22+00:00 (identical in AC1 at 07:4xZ and AC7 at 08:1xZ); snapshots/ newest key snapshot_2026-09-14.json size 2879 (identical); gold/holding/ 14, gold/book/ 14, config/ 1, and NO object under any of them carries a LastModified inside this worker's window."
+      ]
     },
-    {
-      "id": "AMGT_RESAPP-Z-W19-S9",
-      "project": "AMGT_RESAPP",
-      "fabric": "site-z",
-      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~19",
-      "surfaced_at": "2026-09-15T09:26:00Z",
-      "one_line": "TO-AMGT-rj-1, issued to 0.9.0_WK_AMGT_RESAPP~18, carries THIS worker's deliverables folder inside its <paths> write grant, so two concurrently-live workers hold a write surface over one folder -- the folder that holds this order's proof-of-spec instance.",
-      "class": "OBSERVATION",
-      "hazard_standing": "INERT",
-      "spec_asserts": "A worker's write surface is exactly the <paths> its order names, and <paths> IS the write grant (CLAUDE.md Rule 27; this order's own s.3: 'A SURFACE NOT NAMED IN <paths> IS A WALL'). Read together with one-owner-per-artifact, a deliverables folder named 0.9.0_WK_AMGT_RESAPP~19/ is that worker's own.",
-      "world_is": "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rj-1.the-canonical-key-on-the-ranked-click.md has <issued_to>0.9.0_WK_AMGT_RESAPP~18</issued_to> and a <paths> block whose six entries include 'org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~19/' and 'org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~1/'. Its <status> is staged, so the order is live.",
-      "grounding": {
-        "status": "GROUNDED",
-        "evidence": [
-          "Read at HEAD 10c74d0efb (this worktree, branch wk-amgt_resapp-11-2): rj-1 <paths> = lib/research/api/scoped_amgt.py, lib/research/api/tests/, lib/research/identity/, portal/src/pages/SecurityAnalysis/, portal/src/api/endpoints/amgt-lead-panel.ts, org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~19/, org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~1/, the investigation file, its own task-order file.",
-          "rj-1's body names the READ it needs: 'The crosswalk EXISTS when you start: rj-4 (chain B, drained before your spawn) landed crosswalk/v1/<as_of>.json in the pool and the ONE resolver lib/research/identity/crosswalk.py ... You call it; you do not re-implement it.' The artifacts it consumes from ~19's folder (crosswalk.v1.2026-09-15.json, universe.v1.2026-09-15.json) are READS, and a read needs no <paths> entry.",
-          "The folder is where THIS order (s.6) puts its own proof-of-spec instance and its dry-run and difference-control artifacts, so the overlap is over a live record, not an inert one."
-        ]
-      },
-      "notes": "Filed as form, not significance. No collision has occurred: at the time of writing this worker's own commit fda8d96c0a is the only one touching the folder in this round. The disposition owner is the issuer 2.0.0_SA_COO~W, which can narrow the grant to a read or confirm it as intended; this worker neither edits another order nor assumes which.",
-      "disposition": "UNDER_INVESTIGATION"
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC7: 'the same gold/ count, newest key and LastModified as AC1 printed, and the snapshots/ count and newest LastModified unchanged (the ETF plane was read and never written -- any difference is a BLOCKING row)'.",
+    "world_is": "The gold/ half of the pair is complete and MATCHES exactly. The snapshots/ half is not a pair: AC1 measured {Key, Size} and AC7 measures {count, LastModified}, so 'unchanged' has nothing to compare against on either field. The stronger control that WAS available and was run instead -- no object under any read prefix carries a LastModified inside the worker's window, and the only 7 writes to the bucket in that window are another producer's under bbg/ -- answers the question the criterion is asking, and answers it on the whole bucket rather than one prefix.",
+    "notes": "No difference was found and nothing is blocked; AC7 is recorded PASS on the gold/ pair plus the window control, with the snapshots/ count stated as an AFTER-only value and NOT claimed as unchanged-by-comparison. The generalisable point for the next cut: on a bucket with a live producer, a before/after COUNT is the wrong control shape -- it can move for reasons that have nothing to do with the actor -- and the right one is 'no object under the prefixes I touched has a LastModified inside my window'. Related and already law, so not filed separately: a paginated list-objects-v2 with --query length() returns a PER-PAGE count; this bucket's whole-bucket probe printed '1000' then '518' and a per-page reader would have reported 1000 of 1518."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W19-S8",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~19",
+    "surfaced_at": "2026-09-15T09:25:00Z",
+    "one_line": "AMGT-rj-5's volume bars are cut against a pool that holds SEVEN articles: publications/v1 has 7 objects (AC1 names 'at least 80'), publication-links/v1 has 7 links across BA 2, COST 2, HD 3 (AC2 names store_item_count 'at least 20 each', AC5 names 'N at least 20'), so four criteria cannot be met AS WRITTEN while every field-level and behavioural clause of the same criteria passes.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "AC1: 'a publications/v1 object count at least 80'. AC2: 'for BA_US_Equity, COST_US_Equity and HD_US_Equity: store_item_count at least 20 each'. AC3: 'bodies read at least 80'. AC5: 'the three commissioned names showing N at least 20'.",
+    "world_is": "The pool holds 7 publication bodies and 7 associations in total. Measured 2026-09-15 09:0x-09:2xZ on TWO instruments that agree: (a) the criterion's own invocation, .tools/aws s3api list-objects-v2 --prefix publications/v1/ --query length(Contents) -> 7; (b) an independent client-side-paginated boto3 census of the whole bucket -> 73 objects total, of which publication-links/v1 7 and publications/v1 7. Per name: BA 2 links (1 in the 30-day window), COST 2 (1 in window), HD 3 (3 in window); 5 of the 7 bodies are published inside the window ending 2026-09-15. The other two are older than the window (BA bbg published 2026-07-18, age 58 days; COST ft published 2026-07-26, age 50 days) -- they are in the store and correctly outside the window, not missing.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AC1 as written, output verbatim: 'publication-links/v1/BA/ publication-links/v1/COST/ publication-links/v1/HD/' then '7'. Three prefixes (the 'at least three ... carrying BA, COST and HD' half is MET); the count 7 against the named bar of 80 is NOT.",
+        "Second instrument, boto3 paginated census of s3://opal-data-harvest 2026-09-15 09:0xZ: TOTAL 73 objects; per first-two-segments: crosswalk/v1 1, derived/model_block 14, derived/model_block_fye 3, lib/local-publications 4, packs/* 5, publication-links/v1 7, publications/v1 7, raw/bloomberg 13, raw/seekingalpha 18, universe/v1 1.",
+        "The seven links, verbatim keys: publication-links/v1/BA/bbg/7231062268...json, BA/wsj/05aec87bff...json, COST/barrons/5568227096...json, COST/ft/942b5946a5...json, HD/barrons/2a6d78f79c...json, HD/bbg/e667f5e3f0...json, HD/sa/5666ee6435...json. Each body read and validated: catalog.validate OK 14 INVALID 0 of 14 over both prefixes.",
+        "The CRO's own pool-readers brief @0e7de170e3 states the same world in its Required Connections item 5: 'Current uploads are bounded commissioning samples; they are not evidence of a complete 89-name backfill. Mark partial baselines and avoid interpreting missing collection as quiet coverage.' The cut's numeric bars and the brief's own characterisation of the store disagree.",
+        "What the same criteria DO produce, met in full and recorded in the instance: AC1 three prefixes carrying BA/COST/HD in the harvester's form; AC2 items >= 1 for each of the three names with title, https url, publisher, published_at and article_key, all four states 0, key_forms naming the harvester's form, and the ZZZ_NOPE control at store_item_count 0 / items 0 / no exception; AC3 per-name window counts BA=1 COST=1 HD=3, a top-10 carrying security_key beside ticker, a pointer with a 64-hex payload_hash and rank_sort ABSENT, dynamodb_reads=0; AC5 four lines with per-state counts and table-items 0, the control at 0."
+      ]
     },
-    {
-      "id": "AMGT_RESAPP-Z-W19-S10",
-      "project": "AMGT_RESAPP",
-      "fabric": "site-z",
-      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~19",
-      "surfaced_at": "2026-09-15T09:27:00Z",
-      "one_line": "Three of the ninety pytest arms under lib/research/metrics and lib/research/coverage fail in a worker worktree for ABSENCE, not defect: integrations/bloomberg/research/price_axis_pull.py is tracked at HEAD but outside the worker sparse cone, and the failure reads like a regression to the next seat that touches this test file.",
-      "class": "OBSERVATION",
-      "hazard_standing": "INERT",
-      "spec_asserts": "A green test suite in a worker worktree is evidence about the code under test; a red arm is evidence of a defect in it.",
-      "world_is": "In this worktree (sparse cone .tools, docs, infra, lib, org, rcg) the three arms of lib/research/metrics/tests/test_producer_axis_registry.py that exercise the PRICE producer fail at 'import price_axis_pull' with ModuleNotFoundError. The module IS in the repository: git cat-file -p HEAD:integrations/bloomberg/research/price_axis_pull.py returns its source (first line: price_axis_pull.py -- AMGT-rd-6: THE PRICE AXIS ENGINE, BOX-SIDE), while ls of the same path returns No such file or directory. The test file grafts integrations/bloomberg/{mcp,research} onto sys.path at import; those directories do not exist in the cone, so the graft points at nothing.",
-      "grounding": {
-        "status": "GROUNDED",
-        "evidence": [
-          "python -m pytest lib/research/metrics lib/research/coverage -q -> '3 failed, 87 passed'. The three: test_the_registry_points_at_a_producer_that_really_exists, test_the_price_engine_writes_exactly_the_axes_the_registry_claims, test_the_two_price_products_are_not_the_same_ranking -- each ModuleNotFoundError: No module named 'price_axis_pull'.",
-          "POSITIVE CONTROL that the absence is the cone and not the repo: git cat-file -p HEAD:integrations/bloomberg/research/price_axis_pull.py -> rc=0 with source; git ls-files integrations/bloomberg/research/ lists price_axis_pull.py beside four siblings; ls integrations -> 'cannot access'. git sparse-checkout list -> .tools docs infra lib org rcg.",
-          "The CHATTER arm of the same file (test_the_chatter_producer_writes_exactly_the_axes_the_registry_claims) was updated by this cell to the generation write and PASSES, so the three failures are isolated to the price half and to the missing module.",
-          "The two criteria that grade tests here (AC6) run unittest on lib/research/coverage/tests and lib.research.metrics.tests.test_chatter_axis only -- 25 and 16 arms, both OK -- so nothing in this order is decided by the three."
-        ]
-      },
-      "notes": "Named because the next seat to touch test_producer_axis_registry.py in a sparse worktree will see red arms in a file this cell just edited and may read them as its regression. Widening the cone is not done here: it is a worktree setting, not a repository fact, and this cell was not asked to change it.",
-      "disposition": "UNDER_INVESTIGATION"
+    "notes": "NOT REPAIRED AND NOT WIDENED (the order's refusal clause). No article was uploaded to make a bar pass, no bar was re-read as satisfied, and the window was not widened to reach an older article: a criterion this worker cannot satisfy AS WRITTEN is refused with its measurement. The order stays OPEN on AC1, AC2, AC3 and AC5; AC4, AC6 and AC7 are PASS-by-output. The remedy is not this worker's to choose: either the harvest runs a backfill and the same four invocations are re-run unchanged, or the issuer re-cuts the four bars against the store that exists. Both are the issuer's call.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W19-S9",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~19",
+    "surfaced_at": "2026-09-15T09:26:00Z",
+    "one_line": "TO-AMGT-rj-1, issued to 0.9.0_WK_AMGT_RESAPP~18, carries THIS worker's deliverables folder inside its <paths> write grant, so two concurrently-live workers hold a write surface over one folder -- the folder that holds this order's proof-of-spec instance.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "A worker's write surface is exactly the <paths> its order names, and <paths> IS the write grant (CLAUDE.md Rule 27; this order's own s.3: 'A SURFACE NOT NAMED IN <paths> IS A WALL'). Read together with one-owner-per-artifact, a deliverables folder named 0.9.0_WK_AMGT_RESAPP~19/ is that worker's own.",
+    "world_is": "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rj-1.the-canonical-key-on-the-ranked-click.md has <issued_to>0.9.0_WK_AMGT_RESAPP~18</issued_to> and a <paths> block whose six entries include 'org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~19/' and 'org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~1/'. Its <status> is staged, so the order is live.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Read at HEAD 10c74d0efb (this worktree, branch wk-amgt_resapp-11-2): rj-1 <paths> = lib/research/api/scoped_amgt.py, lib/research/api/tests/, lib/research/identity/, portal/src/pages/SecurityAnalysis/, portal/src/api/endpoints/amgt-lead-panel.ts, org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~19/, org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~1/, the investigation file, its own task-order file.",
+        "rj-1's body names the READ it needs: 'The crosswalk EXISTS when you start: rj-4 (chain B, drained before your spawn) landed crosswalk/v1/<as_of>.json in the pool and the ONE resolver lib/research/identity/crosswalk.py ... You call it; you do not re-implement it.' The artifacts it consumes from ~19's folder (crosswalk.v1.2026-09-15.json, universe.v1.2026-09-15.json) are READS, and a read needs no <paths> entry.",
+        "The folder is where THIS order (s.6) puts its own proof-of-spec instance and its dry-run and difference-control artifacts, so the overlap is over a live record, not an inert one."
+      ]
     },
-    {
-      "id": "AMGT_RESAPP-Z-W19-S11",
-      "project": "AMGT_RESAPP",
-      "fabric": "site-z",
-      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~19",
-      "surfaced_at": "2026-09-15T09:28:00Z",
-      "one_line": "AC2's expectation names FIVE fields on the first item but its own invocation truncates that item at 170 characters, and the five contracted fields need 259-296 characters for all three commissioned names -- so title is never visible in the recorded output even though it is present on every item.",
-      "class": "OBSERVATION",
-      "hazard_standing": "INERT",
-      "spec_asserts": "AC2: 'the first item carrying title, a canonical https url, publisher, published_at and article_key ... An item lacking url or published_at ... is NOT met'.",
-      "world_is": "The invocation prints json.dumps(item)[:170]. Measured length of a json object carrying ONLY the five contracted fields: BA_US_Equity 276 chars, COST_US_Equity 259, HD_US_Equity 296 (the full item is 594 / 581 / 614). The adapter's item key order was set so the four identity/clock/link fields come first, which puts publisher, published_at, article_key and the https url inside the 170 characters for all three names and leaves title outside for all three. No field ordering fits all five: the shortest of the three needs 259.",
-      "grounding": {
-        "status": "GROUNDED",
-        "evidence": [
-          "Recorded AC2 output, BA first item: {'publisher': 'wsj', 'published_at': '2026-09-03T09:30:00Z', 'article_key': 'wsj:096c2a41-2655-4267-b089-7dc3b710dc56', 'url': 'https://www.wsj.com/business/boeings-8-4-b -- cut mid-url at 170.",
-          "Supplementary full dump of the five fields (recorded beside the instance): BA title 'Boeings $8.4 Billion Deal Is Bleeding Red Ink' (wsj, 2026-09-03T09:30:00Z); COST title 'Vanguard: Beware Mission Creep' (barrons, 2026-08-21T23:10:00Z); HD title 'YouTube Inks Amazon Partnership to Boost Online Shopping Bet' (bbg, 2026-09-01T11:00:00.002Z). Every item carries all five.",
-          "The unit battery asserts the property the truncated output cannot show: PoolReaderFeedTest.test_items_carry_the_contracted_fields_newest_first requires title, url, publisher, published_at and article_key to be non-empty on the first item and the url to start with https://."
-        ]
-      },
-      "notes": "The invocation was run EXACTLY as written and the output recorded verbatim, truncation included; the fields were not re-printed under a different command to make the row look met. AC2 is FAIL on its store_item_count bar (row W19-S8) regardless, so this observation changes no verdict -- it is filed so a grader reading only the recorded bytes does not conclude the fifth field is absent from the data.",
-      "disposition": "UNDER_INVESTIGATION"
-    }
+    "notes": "Filed as form, not significance. No collision has occurred: at the time of writing this worker's own commit fda8d96c0a is the only one touching the folder in this round. The disposition owner is the issuer 2.0.0_SA_COO~W, which can narrow the grant to a read or confirm it as intended; this worker neither edits another order nor assumes which.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W19-S10",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~19",
+    "surfaced_at": "2026-09-15T09:27:00Z",
+    "one_line": "Three of the ninety pytest arms under lib/research/metrics and lib/research/coverage fail in a worker worktree for ABSENCE, not defect: integrations/bloomberg/research/price_axis_pull.py is tracked at HEAD but outside the worker sparse cone, and the failure reads like a regression to the next seat that touches this test file.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "A green test suite in a worker worktree is evidence about the code under test; a red arm is evidence of a defect in it.",
+    "world_is": "In this worktree (sparse cone .tools, docs, infra, lib, org, rcg) the three arms of lib/research/metrics/tests/test_producer_axis_registry.py that exercise the PRICE producer fail at 'import price_axis_pull' with ModuleNotFoundError. The module IS in the repository: git cat-file -p HEAD:integrations/bloomberg/research/price_axis_pull.py returns its source (first line: price_axis_pull.py -- AMGT-rd-6: THE PRICE AXIS ENGINE, BOX-SIDE), while ls of the same path returns No such file or directory. The test file grafts integrations/bloomberg/{mcp,research} onto sys.path at import; those directories do not exist in the cone, so the graft points at nothing.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python -m pytest lib/research/metrics lib/research/coverage -q -> '3 failed, 87 passed'. The three: test_the_registry_points_at_a_producer_that_really_exists, test_the_price_engine_writes_exactly_the_axes_the_registry_claims, test_the_two_price_products_are_not_the_same_ranking -- each ModuleNotFoundError: No module named 'price_axis_pull'.",
+        "POSITIVE CONTROL that the absence is the cone and not the repo: git cat-file -p HEAD:integrations/bloomberg/research/price_axis_pull.py -> rc=0 with source; git ls-files integrations/bloomberg/research/ lists price_axis_pull.py beside four siblings; ls integrations -> 'cannot access'. git sparse-checkout list -> .tools docs infra lib org rcg.",
+        "The CHATTER arm of the same file (test_the_chatter_producer_writes_exactly_the_axes_the_registry_claims) was updated by this cell to the generation write and PASSES, so the three failures are isolated to the price half and to the missing module.",
+        "The two criteria that grade tests here (AC6) run unittest on lib/research/coverage/tests and lib.research.metrics.tests.test_chatter_axis only -- 25 and 16 arms, both OK -- so nothing in this order is decided by the three."
+      ]
+    },
+    "notes": "Named because the next seat to touch test_producer_axis_registry.py in a sparse worktree will see red arms in a file this cell just edited and may read them as its regression. Widening the cone is not done here: it is a worktree setting, not a repository fact, and this cell was not asked to change it.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W19-S11",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~19",
+    "surfaced_at": "2026-09-15T09:28:00Z",
+    "one_line": "AC2's expectation names FIVE fields on the first item but its own invocation truncates that item at 170 characters, and the five contracted fields need 259-296 characters for all three commissioned names -- so title is never visible in the recorded output even though it is present on every item.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "AC2: 'the first item carrying title, a canonical https url, publisher, published_at and article_key ... An item lacking url or published_at ... is NOT met'.",
+    "world_is": "The invocation prints json.dumps(item)[:170]. Measured length of a json object carrying ONLY the five contracted fields: BA_US_Equity 276 chars, COST_US_Equity 259, HD_US_Equity 296 (the full item is 594 / 581 / 614). The adapter's item key order was set so the four identity/clock/link fields come first, which puts publisher, published_at, article_key and the https url inside the 170 characters for all three names and leaves title outside for all three. No field ordering fits all five: the shortest of the three needs 259.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Recorded AC2 output, BA first item: {'publisher': 'wsj', 'published_at': '2026-09-03T09:30:00Z', 'article_key': 'wsj:096c2a41-2655-4267-b089-7dc3b710dc56', 'url': 'https://www.wsj.com/business/boeings-8-4-b -- cut mid-url at 170.",
+        "Supplementary full dump of the five fields (recorded beside the instance): BA title 'Boeings $8.4 Billion Deal Is Bleeding Red Ink' (wsj, 2026-09-03T09:30:00Z); COST title 'Vanguard: Beware Mission Creep' (barrons, 2026-08-21T23:10:00Z); HD title 'YouTube Inks Amazon Partnership to Boost Online Shopping Bet' (bbg, 2026-09-01T11:00:00.002Z). Every item carries all five.",
+        "The unit battery asserts the property the truncated output cannot show: PoolReaderFeedTest.test_items_carry_the_contracted_fields_newest_first requires title, url, publisher, published_at and article_key to be non-empty on the first item and the url to start with https://."
+      ]
+    },
+    "notes": "The invocation was run EXACTLY as written and the output recorded verbatim, truncation included; the fields were not re-printed under a different command to make the row look met. AC2 is FAIL on its store_item_count bar (row W19-S8) regardless, so this observation changes no verdict -- it is filed so a grader reading only the recorded bytes does not conclude the fifth field is absent from the data.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W18-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~18",
+    "surfaced_at": "2026-09-15T09:20:00Z",
+    "one_line": "AC2's named suite invocation collects ZERO tests and reports OK: every test under lib/research/api/tests is a pytest-style module-level function with no unittest.TestCase, so `python -m unittest discover` runs an EMPTY suite and the criterion's 'OK with 0 failures and 0 errors' is true of nothing.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AC2's first clause run VERBATIM at HEAD 10c74d0efb BEFORE any edit of this cell: `timeout 120 python -m unittest discover -s lib/research/api/tests -p \"test_*.py\" -q` -> 'Ran 0 tests in 0.000s' then 'OK', rc 0. Identical with -v, with -t . , and with an explicit module: `python -m unittest lib.research.api.tests.test_scoped_amgt -q` ALSO runs 0 tests.",
+        "unittest.TestLoader().discover('lib/research/api/tests','test_*.py','.') -> countTestCases() 0 with loader.errors == [] (nothing failed to import) and _match_path True for test_scoped_amgt.py -- the pattern matches, the file is read, and it declares no TestCase. comp-read test_scoped_amgt.py --enumerate 'class ' -> 2 of 2 hits are FakeTable and FakeResource; --enumerate 'def test_' -> 17 module-level functions, five taking pytest's `monkeypatch` fixture.",
+        "The suite DOES run under its own runner, and the count moves: `python -m pytest lib/research/api/tests -q` -> BASELINE (pre-edit) 41 passed / 6 failed; AFTER this cell 54 passed / 6 failed, the 13 new ones being this cell's test_route_boundary_identity.py. The 6 failures are identical in both runs and are row W18-S2's subject."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT_RESAPP.TO-AMGT-rj-1 AC2 expects 'the adapter suite ends OK with 0 failures and 0 errors' from `python -m unittest discover -s lib/research/api/tests -p \"test_*.py\" -q`.",
+    "world_is": "The invocation is satisfiable and was satisfied AS WRITTEN -- and it exercises nothing at all. A test runner that collects zero tests reports the same three lines whether the adapter is whole or broken, so this criterion cannot fail on any edit to scoped_amgt.py. AC2 is recorded PASS-by-output with its literal output, and the pytest control is recorded beside it so the suite's real verdict is on the record too.",
+    "notes": "The cheapest fix for the next cut is one word in the invocation (`pytest` for `unittest discover`) plus a FLOOR ON THE COLLECTED COUNT -- 'N passed' with N asserted above a number, because a runner that collects nothing is the same green as a runner that passes everything. This worker did not change the invocation: a criterion is run as written and refused or disclosed, never repaired."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W18-S2",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~18",
+    "surfaced_at": "2026-09-15T09:21:00Z",
+    "one_line": "6 of 47 adapter tests cannot pass in a worker worktree at all: they read integrations/ and infra/ paths that the sparse cone this order's worktree was cut with does not contain, so they fail on FileNotFoundError at BASELINE and after, in both cases for a reason unrelated to any code under test.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`python -m pytest lib/research/api/tests -q` at HEAD 10c74d0efb BEFORE any edit: 6 failed, 41 passed. The same 6 fail after this cell's edit (6 failed, 54 passed).",
+        "The 6, with their missing path: test_fiscal_scope_contract.py::test_declared_contract_equals_the_scopes_the_producer_emits ('producer source not found at C:/tmp/wk-amgt-11-1/integrations/bloomberg/research/model_block_pull.py') and the five in test_scoped_amgt_mount.py, all on C:/tmp/wk-amgt-11-1/infra/aws/terraform/... .",
+        "The worktree is a deliberate sparse cone: the L7 identity line states it holds .tools, org, docs, rcg and lib, and that data/, infra/ and workflows/ are ABSENT BY DESIGN. `ls` confirms neither integrations/ nor infra/ exists here."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC2 grades 'the adapter suite' from inside this worker's worktree; the worktree is the sparse cone the issuer cut.",
+    "world_is": "A sixth of that suite is unrunnable in the environment the order grades it in, and the two halves of the fact point in opposite directions: under the invocation AC2 names (unittest) the 6 never run, so they cannot colour the verdict; under the runner that actually collects them (pytest) they fail for a worktree-shape reason that no edit in this cell can move. Both numbers are recorded rather than one of them chosen.",
+    "notes": "Not a defect in the tests: each of the 6 is a CONTRACT test tied to a producer or a mount declaration, which is exactly the tie that makes them valuable in a full tree. The generalisable point is about the SPARSE CONE, not the suite -- a cone cut for the files a cell WRITES can silently exclude the files its TESTS READ, and the tell is a failure whose message names a path rather than a value."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W18-S3",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~18",
+    "surfaced_at": "2026-09-15T09:22:00Z",
+    "one_line": "The order's DELIVER item 4 asks for `security_key` on the join harness's fixtures' RANKED ROWS, but 0 of 2 of those fixtures carry a ranked row at all -- both are thesis bundles -- so that half of the instruction has an empty denominator there and was landed in the harness that does render ranked rows.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The join harness's fixtures are thesisBundle.BABA_US_Equity.json and thesisBundle.BABACVOCTRL_US_Equity.json (2 of 2 files it loads, via `load(key)` -> thesisBundle.<key>.json). Their top-level keys are security_key, header_figures, fiscal_year_figures, check_face, drafted_sections, generated_at -- and now identity. Neither carries a `rows` array or any ranked row.",
+        "The harness's own provenance header states what they are: 'the verbatim return of lib/research/api/scoped_amgt.py:read_thesis_bundle(<key>)'.",
+        "The ranked-row fixtures of this page live in errorEmpty.harness.cjs (POPULATED_ROW, and this cell's new UNRESOLVED_ROW), which is the harness that renders RankedList and StarredList."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "DELIVER item 4: 'the join harness's fixtures gain `security_key` on their ranked rows and the `identity` block on the bundle'.",
+    "world_is": "The bundle half was done exactly as written (both fixtures re-captured from the adapter, identity block present, diff against the committed bytes printed before adoption: one key added, generated_at moved, 183/13/196 and 1/1/2 byte-identical). The ranked-row half was done in errorEmpty.harness.cjs, where the ranked rows are -- POPULATED_ROW gains security_key and identity_status, and a new UNRESOLVED_ROW holds security_key at null explicitly.",
+    "notes": "Recorded because a reader auditing item 4 against the join harness alone would find no ranked row and could read that as work not done. Nothing is blocked."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W18-S4",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~18",
+    "surfaced_at": "2026-09-15T09:23:00Z",
+    "one_line": "The order names a `RankedRow` type in types.ts; no type of that name exists there. The ranked row is RankingRowBase, extended by ChatterRankingRow and PriceRankingRow and unioned as RankingRow, and the identity fields were added to the BASE so all three carry them.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "comp-read portal/src/pages/SecurityAnalysis/types.ts --enumerate 'RankedRow' -> 0 hits across the file at portal 9aef3734. The declared ranked-row types are RankingRowBase, ChatterRankingRow, PriceRankingRow and the union RankingRow.",
+        "The fields were added to RankingRowBase, which both concrete row types extend, so a single declaration covers the union -- adding them to a leaf would have left the other leaf without them.",
+        "They are declared OPTIONAL AND NULLABLE (`security_key?: string | null`, `identity_status?: IdentityStatus`) because the producer writes NEITHER field today: MEASURED on the live table 2026-09-15, the ten rows of TRENDING_CHATTER#2026-09-15 carry {as_of_date, axis, axis_date, computed_at, movement, movement_basis, movement_measure, movement_raw_score, rank, rank_sort, raw_chatter_count, score, subject, ticker, window_days, window_total_count} and no security_key. AMGT-rj-5 (chain B) is the cell that emits them."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "DELIVER item 3: '`types.ts` `RankedRow` carries `security_key: string | null` and `identity_status`'.",
+    "world_is": "The named type is the one the order describes under a different name, so the instruction was executed on RankingRowBase. The one deliberate departure from the literal text is the `?`: a REQUIRED `security_key: string | null` would type a wire that does not exist until rj-5 drains, and the order itself says 'the served rows may still lack it -- an UNRESOLVED marker is the correct rendering of a row without a key'. Optional-and-nullable is the shape that admits both the absence and the resolved-to-nothing case, and the renderer treats them identically.",
+    "notes": "AC3's counters do not distinguish the two spellings (they count the token `security_key` in the file), so this row is the disclosure that the grade and the literal text are not the same object."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W18-S5",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~18",
+    "surfaced_at": "2026-09-15T09:24:00Z",
+    "one_line": "AC4's `echo rc=$?` reports the exit code of `tail`, not of the harness: the invocation pipes node into tail, so a harness that exits 1 on a failed check still prints rc=0, and the criterion's rc clause cannot fail.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AC4 as written: `cd portal && timeout 110 node src/pages/SecurityAnalysis/__harness__/errorEmpty.harness.cjs 2>&1 | tail -14; echo rc=$?`. In POSIX sh, `$?` after a pipeline is the exit status of the LAST command in it, which is tail; tail exits 0 whenever it can read its input.",
+        "Measured both ways on the SAME harness run: the literal invocation prints rc=0, and the harness run unpiped (`node ... > ../.scratch/harness.out 2>&1; echo $?`) also prints 0 -- so the recorded PASS is sound at this cut. The two agree here; the point is that they would not disagree visibly if the harness failed.",
+        "The harness DOES set a non-zero code on a wrong-way check (`process.exitCode = 1` beside a 'CHECKS-WRONG-WAY' line), so the signal exists and is simply not reaching the criterion."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC4 expects 'rc=0 with every prior check still at its met value ... and at least one NEW check naming the unresolved row'.",
+    "world_is": "The rc clause is vacuous; the CHECK lines are what actually carries the verdict. This worker made that half non-vacuous from the harness side rather than by editing the criterion: the harness now prints one `CHECK <name> = <actual> (expected <expected>)` line per check and a final `CHECKS-OK 12 of 12`, all of which survive `tail -14`, so the deciding evidence is IN the graded output instead of behind an exit code the pipeline discards.",
+    "notes": "Both values are recorded in the proof instance: the literal invocation's rc=0 and node's own rc=0 measured unpiped. The generalisable form: any criterion of the shape `<cmd> | tail -n; echo rc=$?` grades the tail, and the fix is PIPESTATUS, a redirect to a file, or -- better here -- making the command's own output carry the verdict."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W18-S6",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~18",
+    "surfaced_at": "2026-09-15T09:25:00Z",
+    "one_line": "read_point() upper-cases the ticker it is given while the producer writes MIXED-CASE tickers, so the point read for such a name can never match its own ranked row -- measured live: 'Enel IM' is ranked today and a GetItem for it MISSES, with the exact-case call miss ing too because the upper() is inside the function.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/research/api/scoped_amgt.py:329-336 @10c74d0efb, line 335 verbatim: Key={\"axis_date\": partition_key(axis, as_of_date), \"ticker\": ticker.upper()} .",
+        "Live read 2026-09-15: read_rankings('TRENDING','CHATTER') returns 10 rows and 1 of the 10 tickers is mixed case -- 'Enel IM'. read_point('TRENDING_CHATTER','Enel IM','2026-09-15') -> MISS and read_point('TRENDING_CHATTER','ENEL IM','2026-09-15') -> MISS, because both arguments are upper-cased before the GetItem. POSITIVE CONTROL in the same call: read_point('TRENDING_CHATTER','BABA US','2026-09-15') -> HIT, rank 6.",
+        "The defect is older than this cell and is unmoved by it: this cell only changed WHICH measured string is handed to read_point (the identity's bloomberg form instead of the landed block's display form), not what read_point does with it."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "C-ONE-IDENTITY: one canonical identity resolved once and carried unchanged through overlay, thesis, peers, model, coverage, ranking and Posture.",
+    "world_is": "The identity is carried unchanged up to read_point and is then case-folded inside it, so one name in today's ranked ten cannot reach its own overlay row. This cell's BOUND does not name read_point's key handling and the refusal clause forbids widening, so it is filed rather than repaired.",
+    "notes": "Whoever takes it should decide the question rather than delete the upper(): the fold exists because some caller passes a lower-case ticker, and the honest fix is to make the producer's own case the one truth (the crosswalk's bloomberg form is already exactly that string) and drop the fold at the same time. A GetItem is case-SENSITIVE, so the current code cannot be right for both populations at once."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W18-S7",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~18",
+    "surfaced_at": "2026-09-15T09:26:00Z",
+    "one_line": "The Coverage tab's Star button writes the CANONICAL KEY into a watchlist store keyed by TICKER, so a name starred from that tab can never match a ranked row and lands in the starred residual as an unrankable entry.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/SecurityAnalysis/tabs/CoverageTab.tsx:82 @portal 9aef3734, verbatim: onClick={() => setStarredMutation.mutate({ ticker: securityKey, starred: true })} -- the value passed as `ticker` is the page's securityKey.",
+        "The starred set is compared against ranked rows by TICKER: LeadPanel.tsx builds `starredTickers` from the watchlist entries' `ticker` field and StarredList.tsx filters `rows.filter((row) => starredTickers.has(row.ticker))`. The server side agrees: read_starred/write_starred carry a `ticker` and delegate to lib/research/watchlist/store.py.",
+        "So a star set from the Coverage tab on BABA_US_Equity produces a starred entry that no ranked row (ticker 'BABA US') can ever equal."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "C-ONE-IDENTITY: an identity is resolved once and carried unchanged; two identifier spaces are never mixed.",
+    "world_is": "Two identifier spaces meet in one mutation argument, on the same page and in the same class as the defect this cell repairs, but in a file this cell's DELIVER list does not name -- so it is filed, not fixed. The remedy is a decision, not an edit: either the watchlist becomes key-keyed (a store change, with a migration for the entries already written) or this button sends the identity block's bloomberg form; picking one silently in this cell would have set the precedent the other cell then has to undo.",
+    "notes": "Worth pairing with whatever cell takes AMGT-rj-5: once ranked rows carry security_key, key-keyed is the cheaper end state and the starred residual stops being a dumping ground for identifiers that never matched."
+  }
 ]
 ```
