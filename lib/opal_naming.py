@@ -707,6 +707,10 @@ def _gen_locals(reg, h16):
         "  scope_short = " + _hcl({s["long"]: s["short"] for s in scopes}, 2),
         "  # every spelling lookup() resolves (long, short, alias) -> the long form",
         "  scope_long = " + _hcl(scope_long, 2),
+        "  # every scope: long form -> its class (NAMING_SCHEMA.json key.scope_classes)",
+        "  scope_class = " + _hcl({s["long"]: s["class"] for s in scopes}, 2),
+        "  # the scope classes name() takes in its scope slot (EN-b-1 name())",
+        "  name_scope_classes = " + _hcl(list(NAME_SCOPE_CLASSES)),
         "  # every scope: long form -> its bucket (scopes.json)",
         "  scope_bucket = " + _hcl({s["long"]: s["bucket"] for s in scopes}, 2),
         "  # every firm: long form -> the fence's principal ARN globs (fence_patterns())",
@@ -1322,6 +1326,10 @@ def _is_cadence(kind, schema):
     return kind in cad["values"] or (kind.startswith("on-") and bool(re.match(cad["event_token_regex"], kind[3:])))
 
 
+# The scope classes name() takes in its scope slot; generated_locals.tf carries them as name_scope_classes.
+NAME_SCOPE_CLASSES = ("FIRM", "GLOBAL", "MASTER")
+
+
 def name(system, scope, function, kind, qualifier=None):
     """{system}-{scope}-{function}[-{qualifier}]-{kind} (NAMING_SCHEMA.json resource.grammar). Takes the scope's
     LONG form and writes its SHORT form (S4); scope None is a shared resource and carries no scope (S5). The
@@ -1331,7 +1339,7 @@ def name(system, scope, function, kind, qualifier=None):
         raise ValueError("system %r is not a systems.json key (nor the reserved opal)" % (system,))
     body = []
     if scope is not None:
-        body.append(_long_scope(reg, scope, ("FIRM", "GLOBAL", "MASTER"))["short"])
+        body.append(_long_scope(reg, scope, NAME_SCOPE_CLASSES)["short"])
     words = _kebab("function", function) + (_kebab("qualifier", qualifier) if qualifier is not None else [])
     for t in words:
         if t in v.scope or t == "bd" or t in schema["refused_tokens"]:
@@ -1362,7 +1370,7 @@ def build_vectors(registry=None):
     names, and name()'s output."""
     reg = registry or _registry()
     schema = _schema()
-    scopes = [None] + [s["long"] for s in _scopes(reg) if s.get("class") in ("FIRM", "GLOBAL", "MASTER")]
+    scopes = [None] + [s["long"] for s in _scopes(reg) if s.get("class") in NAME_SCOPE_CLASSES]
     out = []
     for system, function, qualifier, kind in _VECTOR_SHAPES:
         for scope in scopes:
