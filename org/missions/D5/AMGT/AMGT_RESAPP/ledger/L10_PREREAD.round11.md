@@ -22,6 +22,7 @@ read at HEAD or on the live plane, with its vintage.
 | rj-13 the social source, measured (drained 17:18Z, read s.2b) | `~22` | `.../~22/...rj-13...` | VALID rc=0 | 4 of 4 PASS | W22-S3..S8 |
 | rj-9 the header and the five tabs (drained 17:59Z, flipped by the issuer 18:02Z; read s.2b) | `~18` | `.../~18/...rj-9...` | VALID rc=0 | 6 of 6 PASS | W18-S10..S15 |
 | rj-12 the Posture tab and the header line (drained 19:09Z; read s.2b) | `~18` | `.../~18/...rj-12...` | VALID rc=0 | 4 of 4 PASS | W18-S16..S18 |
+| rj-10 the deploy and the live read (partial 19:37Z, COMPLETE 20:32Z after AMENDMENT 5; read s.2b) | `~19` | `.../~19/...rj-10...` | VALID rc=0 | 12 rows, 0 violations | W19-S12..S20 |
 
 Channel at HEAD: 210 rows; 32 round-11 worker rows (28 OBSERVATION/INERT, 3 BLOCKING/INERT -- W19-S8 the volume bars,
 W20-S2 and W20-S3 the schtasks invocation -- and 1 OBSERVATION/ARMED, W21-S3 SAP ranked as its own peer, disarmed
@@ -184,6 +185,22 @@ worker widened the SERVED arm under its spawn grant, row first; **W18-S17** one 
 this cell replaces and was inverted in place (20 of 20); **W18-S18** the SERVED arm hard-coded `reason` None, hiding the reason
 rj-11 writes beside an absent verdict -- now served (null on both landed objects). C-POSTURE's readiness rule (candidate 9) is what
 the tab now shows: pending over incomplete packs, never a verdict.
+
+**rj-10 the deploy and the live read (C-ONE-STORE; C-RANKING-GENERATION; the one live act of the round).** Drained COMPLETE @`0c4650dc1c`
+at 20:32Z by `~19` after a partial drain @`e0c93010af` and AMENDMENT 5 @`4f0436811b`; instance (@`c9b44640bb`) re-graded here VALID
+rc=0, 12 acceptance rows, 0 violations, 9 surprises each resolving to a channel row. TWO acts on the live plane, each under its own
+ledger and inside both co-sign halves: `amgt-round11-one-store-deploy` (0/4/0, both functions and both policies; CLOSED @`807cbb9f9e`)
+and `amgt-round11-producer-universe` (0/1/0, the producer's code only; CLOSED @`8f05992ce9`) -- live producer `0tct2ESH...`, adapter
+`9ubWPnhz...`, producer policy 4 prefixes, adapter 9, the articles table 0; the producer reads `universe/v1/2026-09-15.json` from the
+pool with `fallback_reason` null and every served ranking row carries `security_key`. Rows that bear on the addendum: **W19-S13/S14**
+a package manifest must name every file the code opens at run time (the thesis route opens `drafting/schema.json`), and a vendored
+dependency is pinned by the version that resolves the schema's own `$ref`s (pure-Python jsonschema 4.17.3 cannot; 4.26.0 with its
+compiled wheel can); **W19-S17/S18** a producer contract names its input source and returns it with any fallback reason -- the
+round-10 handler silently ranked against a bundled snapshot and returned four keys; **W19-S16** a live read gated on the apply's own
+success line, never run in the same loop as a blocked act (a pre-act invoke re-wrote 10 rows); **W19-S15** the halt gate's serial path
+is gitignored and absent from a sparse worktree; **W19-S19** the CTO half's s.8 reached the worker after the apply (s.8 corrected at
+@`4be2f8be48`; the act stayed inside it); **W19-S20** a capture glob matched the kept pre-act attempt files, so a count bar needs the
+attempt prefix excluded.
 
 ## 3. The pool as it stands (14:5xZ, `list-objects-v2`, 121 objects)
 
@@ -431,7 +448,7 @@ addendum's text for candidates 13-16 waits on those findings; the slug read for 
 
 ## 5. What is NOT known yet (the slug read's remaining inputs)
 
-The two staged cells (rj-3, rj-10); the CVO's adjudication of the 32 rows and
+The one staged cell (rj-3, amended @`ec3d453f88` to render rj-10's deployed capture); the CVO's adjudication of the 32 rows and
 the slug; whether rj-10's plan reads 0/4/0 and the `_CURRENT` pointer carries no `rank_sort` (co-sign half s.4); FWD-16
 ..FWD-19's EXERCISED bars, which no cell can close -- 18 of 19 need a person, and the person is Andrew or Adam through
 Andrew. Push state: LOCAL.
