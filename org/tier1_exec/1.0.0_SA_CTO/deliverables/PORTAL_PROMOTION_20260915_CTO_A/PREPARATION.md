@@ -1,7 +1,7 @@
 # Portal promotion preparation — 2026-09-15
 
 Author/executor seat: `1.0.0_SA_CTO~A`  
-Status: **IR SOURCE PRECHECK PASSED; CTO ACCEPTS BOTH NAMED TEST FAILURES; PROMOTION NOT STARTED; AWAITING MSTR GO**
+Status: **DEV CANDIDATE PUBLISHED; DEV CI FAILED AT INSTALL; PROMOTION NOT STARTED; AWAITING MSTR GO**
 
 Prepared: 2026-09-15 08:14 UTC
 
@@ -197,3 +197,39 @@ Deferred ownership is explicit:
 The exact proposed change is prepared as **`POST_PROMOTE_TYPECHECK.patch`**, based on candidate `43f18c17`, SHA-256 **`2caf55e1756d56472a99d2eea57816a5f0b37e0e8a21eefada39d4fc95fe88d9`**. It changes exactly one command in each named workflow. `git apply --check` passed against isolated copies of those two candidate files in private scratch. This is an unapplied preparation artifact: no portal source, index, branch or candidate was changed. Reconcile against the actual post-promote DEV head, perform the applicable validation, and land/publish only after promotion and freeze release. The deferred patch is not part of this release.
 
 This corrected record and proposed patch are routed to CTO/MSTR, then only notices 97014, 97017 and 97019 are archived. Promotion remains unstarted; no ledger/sentinel, freeze, merge, push or workflow dispatch is created by these notices.
+
+## DEV publication and Step 4 clarification — notice 97024, 09:47:44 UTC
+
+Exact notice `20260915T094744Z_0.0.0_AB_MSTR_Portal_origin_DEV_fast-forwarded_to_the_.md`, from MSTR, was read and ACKed at 09:48:34 UTC. MSTR reports the authorized DEV fast-forward and expressly states **GO is still pending**. The freeze prohibits other portal DEV pushes and main-DEV merges until promotion lands. Worker branches needing current DEV start from `43f18c17`; the deferred changes remain outside this release.
+
+Independent readback at **09:48:56 UTC**:
+
+| Surface | Measured value |
+|---|---|
+| Live `refs/heads/DEV` | `43f18c179cad01947e0f0a41a9889807301fd233` |
+| Live candidate branch `refs/heads/laptop/integ-promote-20260915` | Same `43f18c179cad01947e0f0a41a9889807301fd233` |
+| Live `refs/heads/PROD` | `b1389c85759511e65ec5d5b26ee96d63c91984c2` |
+| Main portal branch / HEAD | `DEV` / `43f18c179cad01947e0f0a41a9889807301fd233` |
+| Main portal HEAD tree | `f1afba420366a4f8645bbb6262db61ca4af9dab4` |
+| Main portal tracked-state check | `git status --porcelain --untracked-files=no` empty |
+
+These reads confirm candidate publication and main tracked cleanliness. They do not measure the future promotion worktree's all-files cleanliness, and no untracked evidence was removed or moved.
+
+**Step 4 is clarified by MSTR:** the no-ff PROD merge commit will differ from DEV's commit hash. Its file tree must equal the candidate tree; MSTR also offers the recorded second-parent condition. This executor uses the **tree-equality condition**, records the actual PROD merge SHA and its parents, and retains the skill-required empty candidate-to-merge diff plus clean worktree check. Second-parent ancestry alone does not replace file-tree parity. This resolves the literal HEAD-equality ambiguity without changing the required merge procedure. Bind the clarification and candidate pin to the eventual GO message, which MSTR says will state it again.
+
+The remaining planned data input is Site Z's **25-of-25 recheck after the ~11:05 UTC models publish**, targeting ~11:30 UTC. Publication is not deployment authority; no GO was issued by 97024.
+
+## Exact-candidate DEV CI failure — independently measured after publication
+
+`gh -R Opal-Capital/portal run list --commit 43f18c179cad01947e0f0a41a9889807301fd233 --limit 100` returned **one run**: [CI - Build & Validate, 34954379962](https://github.com/Opal-Capital/portal/actions/runs/34954379962), push-created **09:46:39 UTC**, status **completed**, conclusion **failure**. The exact head SHA matches the candidate. Subsequent job and failed-step reads identify:
+
+- Job **104332756669**, **Lint, Type Check & Build**, failed step **6, Install dependencies**, at 09:46:59 UTC.
+- Command: `bun install --frozen-lockfile`; CI's `BUN_VERSION: latest` resolved to **Bun 1.4.2 (`744846f84`)**.
+- Error: **`lockfile had changes, but lockfile is frozen`**, process exit **1**.
+- ESLint, provenance guard, typecheck, build and artifact upload were all **skipped**. The separate Build Summary job succeeded, which does not make the workflow successful.
+
+This is a distinct install failure, not either accepted F25-AC8 or F49-AC8 bun-suite failure. It is not accepted by implication from CTO 97019. MSTR and CTO received the initial red result at **09:49:24/26 UTC** and the exact failed-step diagnosis at **09:50:10/12 UTC**.
+
+Candidate `deploy.yml` independently read at the same SHA pins **Bun 1.3.9** and also uses `bun install --frozen-lockfile`. The differing runner version is an observed difference, not demonstrated causation or proof that PROD installation will pass. No lockfile regeneration, dependency installation, workflow rerun, candidate alteration or CI fix was attempted under the freeze. The new candidate-CI failure requires explicit integration/release disposition and evidence from the responsible owners before it can be represented as resolved. The two-line post-promote patch remains unchanged and unapplied.
+
+The preparation record is committed and routed before archiving only exact notice 97024. Promotion has not started; no deployment ledger, sentinel, PROD merge/push, or workflow dispatch was created by this seat.
