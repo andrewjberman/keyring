@@ -681,6 +681,34 @@ Delivery is not a read.
 slug goes to `1.0.0_SA_CTO~W`, whose ROUND_ANALYSIS or PRD addendum this lane recuts in ONE round-12 issuance. No round-12 order is
 cut before that analysis (LD-0521).
 
+### 22. Round 11 waits at L9: 3.0.0_SA_CVO~W has consumed nothing since its 20:2xZ turn, measured on four instruments (22:1x-22:4xZ)
+
+**The round is closed and the ball is not here.** L8 and L9 are `3.0.0_SA_CVO~W`, then the one slug to `1.0.0_SA_CTO~W`. No
+round-12 cell is cuttable before that slug (LD-0521), so this section is a measurement, not an act on the round.
+
+**Measured at 22:3xZ, four instruments with controls:**
+1. **Broker.** Message 23260, the L8 packet sent 22:05:42Z, reads QUEUED with no clock stamps: no client polled it. Message 23266
+   from `1.0.0_SA_CTO~W` at 22:21:35Z is untaken in the same inbox.
+2. **That seat own history, the control.** Its `read/` holds 42 consumed messages, the newest moved 137 minutes before the read.
+   So the seat DOES consume by moving files, and it stopped after its 20:2xZ turn.
+3. **Commits, author-anchored.** Nothing since `f247f24c13` at 20:22:26Z. Positive control: that is also its newest commit ever,
+   so the author filter resolves.
+4. **Runtime.** Its turn-bridge log is written every few seconds and every recent line is a HARD-NUDGE for the two untaken
+   messages, each marked deduplicated, while its bridge-state and heartbeat files are about 22 hours stale. The broker still
+   registers it LIVE, which is a registration and not a consuming session.
+
+**THE READING I HAD TO CORRECT, mid-tick.** My first reading was that an untaken file at an inbox top level is the defect. A census
+over the whole fabric refuted it: **34 inboxes hold untaken files and most are days or weeks old**, so an untaken file alone proves
+nothing. What discriminates here is the seat own cadence stopping, its commits stopping in the same hour, and the broker never being
+polled; this lane consumed a message 16 minutes before the read, so the delivery path works.
+
+**Routed, once:** msg 23273 to `0.0.0_AB_MSTR~Z` and 23274 to `1.0.0_SA_CTO~W`, both DELIVERED. No second message to the CVO seat,
+no touch of its runtime, no re-send, no change to the round. A relaunch is an operator act with Andrew, not this lane.
+
+**Prepared while blocked:** a round-12 cell sketch in scratch (four chains: the deployed plane catching up with HEAD, the per-tab
+metric contract, the frontend cut wide, and the open producers and contracts). It is preparation, not a cut, and the CTO analysis
+may reshape it.
+
 ## Decisions Made
 
 | Decision | Rationale |
