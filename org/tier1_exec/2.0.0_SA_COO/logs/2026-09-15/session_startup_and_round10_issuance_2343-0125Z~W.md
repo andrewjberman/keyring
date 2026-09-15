@@ -140,6 +140,43 @@ ri-4 AC7 / ri-3 AC2.
 piped censuses and a raw `aws apigatewayv2` read; ri-4's two API-GW invocations carry `# rail-checked:` markers; the rail is blind
 to a command nested in `for`/`$( )`.
 
+### 8. The drains and the close (03:0x-05:2xZ): four of four orders COMPLETE, the round ends at the L8 packet
+
+| order | worker | terminal @ | drained @ | what the world holds now |
+|---|---|---|---|---|
+| ri-1 | ~16 | 8ff08f3a34 | 672bca64fe | the ranked list tells a read failure from an empty day; portal branch on refs/drains/ri-1-portal @9aef3734, gitlink e85f6eb84f unmoved |
+| ri-2 | ~17 | 7f1823c6d2 | 5c95c00268 | the producer consolidated into the harvest root and writing again (targeted apply 0/4/0; 10 rows for 2026-09-15); s3.tf on the harvest name at HEAD; the scoped-amgt artifact as a 30-module import closure (75917 B) |
+| ri-4 | ~17 | 62d6daf36c | 50064d78f5 | the mount deployed: opal-amgt-scoped-api Active; 11 routes on 7k3ed8px20 (85 -> 96, lost []); harvest/tfstate 16 -> 35; direct invoke 200 row_count 10 / no-firm 401 |
+| ri-3 | ~16 | 3f432e97f7 | 8da6d27866 | the mechanical half: today's rows served by the deployed adapter with the payload saved (sha 8de07818ced6fc73), the served route with the repaired components, harnesses unchanged, the build's route chunk found by content (index-Ldzdo1Wa.js); AC6 recorded for 3.0.0_SA_CVO~W |
+
+**Three respawns, three issuer defects, zero worker defects.** Every refusal tonight was correct and every amendment was mine:
+W17-S2 (cell ordering in a shared terraform root, @af5b7c0862), W17-S3 (a package list written as an enumeration, @33d8c00fbc),
+W16-S2 (a build check on an asset NAME the chunk cannot carry, @9b5933d12d). `SendMessage` to a finished worker read "No
+transcript found" on every attempt (memory updated: 8 of 9 NO on this device; respawn directly with artifact coordinates).
+
+**The drain mechanics worth keeping:** the shared tree's uncommitted s3.tf was byte-identical to the branch's commit and git
+still refuses the overwrite (worktree-vs-index, never the merge result) -- snapshot, restore the path to HEAD inside the merge
+window, merge, verify (memory banked); the channel conflicted on two of three drains (append-only, both sides), resolved as a
+union by row id each time; a peer's row (Z-S96, the CTO's) landed between the ri-4 and ri-3 drains and is in the union.
+
+**Rows this round at HEAD 8da6d27866 (171 rows, one fenced block):** seat rows Z-S89..Z-S95 (this lane), Z-S96 (the CTO's,
+ARMED to the CTO: the ranking producer reads a DynamoDB articles table nothing in the repo writes, while the commissioned
+harvester writes S3 publications/v1 -- two stores, no edge); worker rows W16-S1..S3, W17-S1..S7. Disarms filed by this lane at
+the close: Z-S97 (W17-S2) and Z-S98 (Z-S88). Still ARMED with this lane as owner: Z-S95 (the ranked-row click identity),
+carried to round 11. ARMED to others this round: Z-S89 (the CRO; HEAD now carries the fix), Z-S96 (the CTO).
+
+**Andrew-directs that touched this project tonight, all recorded by their receiving lane and relayed verbatim:** ~03:5xZ the
+~W fabric is AMGT_RESAPP only (@9dfee40ce0; this lane redirected a mis-routed POSN notifier to 2.0.0_SA_COO~Z at 03:3xZ before
+the word landed); ~04:3xZ the CRO's harvest loop, cadence reserved (@9db2a36cdc); ~05:04Z at THIS terminal, "key management"
+= executive managers, a Lusha integration, opal-data-harvest as the one pool (@7cf62a165f, relayed 23013/23014); ~05:1xZ at
+the CTO's terminal, the header as the discovery surface and FOUR tabs (Thesis, Exec Management, Peers, Model + a filings
+analyzer), carrier = a PRD addendum at the round-10 L10 (@71df2bf825). Round 10 finishes as cut; round 11 waits on the
+addendum.
+
+**At the close:** the vite view server on 5175 stopped; the two round-10 worktrees (C:/tmp/wk-amgt-10-1, -10-2) and their
+merged branches left in place -- removal is a recursive deletion of untracked scratch and waits on Andrew's word with the
+five older ones; the L8 packet to 3.0.0_SA_CVO~W is the one send at round end (SPAWN-DIRECT 22932).
+
 ---
 
 ## Decisions Made
@@ -178,19 +215,22 @@ None at this lane. The next acts are gated on the workers' final reports (backgr
 
 ## Current State
 
-Round 10 of AMGT_RESAPP is EXECUTING at issuance `59b7b17909` (+ amendment `98eb9701ac`) on decomposition v1.1 @`b4439b997d`.
-Worker `0.9.0_WK_AMGT_RESAPP~16` is on `ri-1` in `C:/tmp/wk-amgt-10-1` (portal at `a845a8be75`, branch `wk-amgt_resapp-10-1-portal`);
-`~17` is on `ri-2` in `C:/tmp/wk-amgt-10-2`, then `ri-4` (both never-widen halves at HEAD: COO `59b7b17909`/`98eb9701ac`, CTO `cf54bd03f3`).
-`ri-3` is handed to ~16 only after ri-4 is terminal. The shared tree's `harvest/s3.tf` edit stays UNCOMMITTED as the guard
-(Z-S89, do not discard); ri-2 carries it. The adjudicator `3.0.0_SA_CVO~W` is live at L8.
+Round 10 of AMGT_RESAPP is at L8: four of four task orders COMPLETE and drained (last drain 8da6d27866), every worker
+branch an ancestor of HEAD, no merge open, the channel at 171 rows in one fenced block. The live plane holds the producer
+writing again (10 rows for 2026-09-15; the 10:00Z scheduled fire is the organic acceptance) and the scoped API mounted (11
+routes live, direct invoke 200 / no-firm 401). The page stays on refs/drains/ri-1-portal (PORTAL FROZEN: COMMIT YES /
+PROMOTE NO). The L8 packet goes to 3.0.0_SA_CVO~W after this commit; L9/L10 are the CVO's and the CTO's; the round-11 recut
+waits on the CTO's PRD addendum (four tabs + executive managers + the Z-S96 article-store choice). Push state: LOCAL.
 
 ---
 
 ## Next Steps
 
-1. **Drain ri-1** on ~16's report: read the instance + report, `safe-merge.sh wk-amgt_resapp-10-1`, fetch the portal branch into `refs/drains/ri-1-portal` (bogus-hash control; `branch -r --contains` with `e85f6eb84f` as the positive control), gitlink unmoved.
-2. **Drain ri-2** on ~17's report (its s3.tf lines land HEAD on the harvest name -> the CRO disarms Z-S89); continue ~17 with the amended `ri-4` face.
-3. **The browser half of ri-3** after ri-1 and ri-4: the view worktree `C:/tmp/portal-resapp-view` to `refs/drains/ri-1-portal`, vite :5175 with `VITE_AUTH_API_URL` empty, `window.__devBypass`, the payload from ri-4's direct invoke injected at the transport, populated / navigation / FWD-9 marking / distinct error arm captured; filed as a row and a deliverable.
-4. **Hand ri-3 to ~16** after ri-4 drains; drain it.
-5. **Drain-end read to `1.0.0_SA_CTO~W`**: the CVO's watermark vs the row count; Z-S78 (Andrew-reserved); any armed row this lane could not seat.
-6. **Prune** the five merged round-7/8/9 worktrees at `C:/tmp/wk-amgt-{7-1,7-2,8-1,8-2,9-1}` and, after the drains, the two round-10 ones.
+1. Send the L8 packet to 3.0.0_SA_CVO~W (this lane's one send at round end), naming every terminal instance, the rows minted
+   this round with their standing, the judgment criterion (ri-3 AC6 -> ROUND10_BROWSER_EXERCISE.md), the ARMED rows and
+   their owners, and the CVO watermark read (none published by ~W at 05:2xZ).
+2. Hold until the CTO's ROUND_ANALYSIS.round10.md and PRD addendum land; then /canonical-flow AMGT_RESAPP and cut round 11
+   in ONE issuance: the header discovery surface, the four tabs, the Exec Management lane (after Andrew's per-use Lusha
+   word), the article-store edge Z-S96 names, and Z-S95's identity fix.
+3. Re-arm the inbox Monitor on every expiry; ack every broker message on read; no other send.
+4. Worktree removal (two round-10, five older) on Andrew's word.

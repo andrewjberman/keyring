@@ -62,3 +62,22 @@ real rows and the resolved key's figures with markers (B); the navigation path a
 reach the figures (B, `Z-S95`). Not settled: the live edge, the deployed Lambda (until `ri-4`), a person's session, today's
 rows (until `ri-2`). Nothing was promoted, pushed, or moved; the gitlink stays `e85f6eb84f`; the view worktree is clean after
 the run (`public/__exercise` staging removed).
+
+## PART C -- FORM (ii), ADDED 2026-09-15 ~05:2xZ: THE DEPLOYED ADAPTER'S RESPONSE FOR THE SAME ROUTE AND DAY
+
+Parts A and B were driven with the adapter run LOCALLY (the mount was not applied at 02:4xZ). The mount landed under `ri-4`
+(drained `50064d78f5`) and the deployed function was read twice by instruments other than this seat's browser:
+
+| read | instrument | response | file @ vintage |
+|---|---|---|---|
+| `ri-4` AC7, firm header present | `aws lambda invoke opal-amgt-scoped-api`, synthetic HTTP API v2 event, `GET /api/scoped/amgt/lead-panel/rankings/trending/chatter` | `statusCode 200`, `axis TRENDING_CHATTER`, `resolution CROSSED`, `row_count 10` | `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~17/ri4.ev.out.json` @`50064d78f5` |
+| `ri-4` AC7, no firm header | same event, `headers {}` | `statusCode 401`, `{"refused": true, "reason": "missing edge-injected X-Firm-Id: request did not pass auth-validator-edge"}` | `.../0.9.0_WK_AMGT_RESAPP~17/ri4.ev-nofirm.out.json` @`50064d78f5` |
+| `ri-3` AC2, today | same event, saved as the TRACEABLE INPUT | `statusCode 200`, `as_of 2026-09-15`, `row_count 10`, `CROSSED`, first ticker `2317 TT` | `.../0.9.0_WK_AMGT_RESAPP~16/rankings.trending.chatter.response.2026-09-15.json` sha256 `8de07818ced6fc73` @`8da6d27866` |
+| `ri-3` AC2, control `as_of=2026-09-13` | same event with the query string | `statusCode 200`, `row_count 0`, `as_of 2026-09-13` | recorded in the instance @`8da6d27866` |
+
+**What this settles:** the payload Part B rendered (the local adapter's `TRENDING_CHATTER` list, 10 rows) and the payload the
+DEPLOYED adapter serves for the same route and day agree on axis, resolution and row count; the firm boundary fails closed on
+the deployed function. **What it does not settle:** the page has NOT been driven against the LIVE edge (API `7k3ed8px20`
+through the portal JWT and authorizer `naqxlm`) -- that needs a person's session or an edge-side stub and is the round-11
+exercise; and `Z-S95` (the ranked-row click's `BABA US` identity) is unchanged on the deployed path, because the adapter's
+resolver is the same code. The view server on `[::1]:5175` was stopped at the round's close.

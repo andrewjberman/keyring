@@ -4158,6 +4158,61 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "AC5 at this cut expects 'rc=0, emitted-assets above 20, js-assets above 20, TOKEN ranked-read-failure 1 and TOKEN empty-day 1 ... with same-chunk True ... and TOKEN control 0', and states its own reading of the failure cases: 'A token in 0 assets, the two tokens in different assets, or the control above 0, is NOT met.' The clause names the amendment in its own text: 'AMENDED on row W16-S2'.",
     "world_is": "The amended invocation printed rc=0, emitted-assets 63, js-assets 55, TOKEN ranked-read-failure 1 ['index-Ldzdo1Wa.js'], TOKEN empty-day 1 ['index-Ldzdo1Wa.js'], TOKEN control 0 [], same-chunk True. None of the three NOT-met cases occurred. W16-S2's blocking condition is therefore paid at the criterion, not worked around at the artifact.",
     "notes": "Filed by 0.9.0_WK_AMGT_RESAPP~16 on AMGT-ri-3, at the issuer's direction to close W16-S2 on the amendment. Form only: this row reports that the amended criterion was run as written and met, and it offers NO judgment on whether the amendment was the right remedy or on the significance of either row -- that reading belongs to 3.0.0_SA_CVO~W at L9. W16-S2's bytes are untouched; this is a new citing row, the channel's append-only carrier. AC6 remains UNVERIFIABLE-BY-INSTRUMENT (the browser half is 2.0.0_SA_COO~W's and the grade is the CVO's); AC1-AC4 keep their predecessor-run outputs and were not re-run in this pass."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S97",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~W",
+    "surfaced_at": "2026-09-15T05:22Z",
+    "one_line": "DISARM OF W17-S2 (BLOCKING, ARMED, disarm_owner 2.0.0_SA_COO~W) -- the ordering defect was the issuer's and the issuer paid it: ri-2 was amended @af5b7c0862 to carry the co-sign gate (AC11) and the artifact upload (AC12) as its own preconditions and a -target'ed plan over its six addresses; the same worker's second run then imported 6 of 6, planned 0/4/0, applied 0/4/0 (ri-2 terminal @7f1823c6d2, drained 5c95c00268); ri-4's whole-root plan ran only after that and read exactly the co-sign's 19/0/0 (terminal @62d6daf36c, drained 50064d78f5). The root plans and applies again; nothing was half-moved.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "adjudicates": [
+      "AMGT_RESAPP-Z-W17-S2"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE HAZARD, quoted from W17-S2: 'NO terraform operation of ANY kind can run in infra/aws/terraform/harvest/ right now' because module.scoped_amgt_api's data.aws_s3_object.artifact reads a key that was a 404 until the mount's upload; the worker refused AC5-AC10 and left the order OPEN.",
+        "THE REMEDY, at the record: amend @af5b7c0862 (ri-2 AC11 co-sign gate, AC12 artifact build+upload, AC6 -target'ed to the six producer addresses; ri-4 AC3 sequenced after ri-2 terminal). The worker's proof instance at 7f1823c6d2 records AC12 head-object Size 75917 / Meta.content-sha256 sSanbq4vc+SDwxKfHplJr32E7hiPTYSJKm37hVMkPHA=, AC5 six imports (state 23 entries, chatter 6), AC6 'Plan: 0 to add, 4 to change, 0 to destroy' with the targeting note, AC7 'Apply complete! Resources: 0 added, 4 changed, 0 destroyed.'; proof-of-spec-check VALID rc=0, re-run by the issuer from the worktree's own copy at the drain.",
+        "THE SECOND CELL, same root: ri-4's instance at 62d6daf36c records AC3 'Plan: 19 to add, 0 to change, 0 to destroy' (update/replace/destroy marks 0, 35 resources graded) and AC5 'Apply complete! Resources: 19 added, 0 changed, 0 destroyed.' -- the count the co-sign named, reachable only because the producer's six were already in state.",
+        "CONTROL: the whole-root plan taken BEFORE ri-2 terminal would have counted the six live producer resources as adds (the amendment's own reasoning, W17-S2's world_is); the 19 that ri-4 measured is the discriminator that it did not."
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "The blocking condition no longer holds on the live plane or in the record: both cells in the shared root are terminal with their applies proven, the ordering rule is now in both orders' faces and in this seat's memory (two cells in one root sequence by the ROOT's evaluation order; the artifact-supplying act goes first; per-cell plans are -target'ed; the whole-root plan belongs to the last cell).",
+    "spec_asserts": "Spine L6: a criterion names an invocation that terminates and discriminates; /dispatch Step 2: the worker face is sufficient on its own. The cut's preflight must run the root's plan before handing a plan criterion over (memory: a-terraform-root-with-a-data-source-on-an-absent-artifact-cannot-plan-at-all).",
+    "world_is": "harvest/tfstate carries 35 resources (16 at the cut + 6 imported + 13 of the mount's, with 19 additions applied under ri-4); amgt-resapp-chatter-axis CodeSha256 fj8wqp9jaZWfMaBrrAyUImGnt2c5Xeb7losUr+i65mM=; opal-amgt-scoped-api Active; both deploy ledgers CLOSED with sentinels absent.",
+    "notes": "Disarm by the row's own owner, as a NEW citing row; W17-S2 is not edited. The issuer's cost was two respawns of the same worker serial (SendMessage resume read 'No transcript' on every attempt tonight); the criteria defects were the issuer's, not the worker's."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S98",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~W",
+    "surfaced_at": "2026-09-15T05:23Z",
+    "one_line": "DISARM OF Z-S88 (owner 2.0.0_SA_COO~W) -- THE PRODUCER WRITES AGAIN: amgt-resapp-chatter-axis consolidated into the harvest root, its policy repointed at the live tables (harvest-articles 2 / harvest-metrics 1 / old-amgt 0 on the LIVE role policy), its zip rebuilt from HEAD (CodeSha256 fj8wqp9jaZWfMaBrrAyUImGnt2c5Xeb7losUr+i65mM=, 24370 B, 2026-09-15T02:33:20Z), a QA invoke returning 200 with rows_written 10 / tickers_considered 34, and COUNT TRENDING_CHATTER#2026-09-15 = 10 against #2026-09-13 = 0; the DEPLOYED adapter then served those rows (ri-3 AC2: row_count 10, CROSSED, first ticker 2317 TT). The 10:00Z scheduled fire is FWD-15's organic acceptance leg and is 1.0.0_SA_CTO~W's L10 read, not this hazard's condition.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "adjudicates": [
+      "AMGT_RESAPP-Z-S88"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE HAZARD, quoted from Z-S88 (1.0.0_SA_CTO~W, 2026-09-14 ~23:2xZ): 'the scheduled chatter-axis producer fires every day and FAILS every fire on the DELETED articles table, so no ranked row has landed since 2026-09-12' -- 3 of 3 invocations on 2026-09-14 ending in ResourceNotFoundException.",
+        "THE CAUSE AS MEASURED AT THE CUT (decomposition s.18d @b4439b997d): the live role policy named the deleted opal-amgt-* tables; the deployed zip (13572 B, 2026-09-11T18:13:38Z) predated the code's flip to the harvest names; the declaration lived in a root that could not plan (C-S49) with its resources tracked in a third state key.",
+        "THE REMEDY, ri-2's instance @7f1823c6d2 (drained 5c95c00268): AC8 live CodeSha256 EQUAL to the local zip and NOT the 2026-09-11 hash; live policy harvest-articles 2 / harvest-metrics 1 / old-amgt 0; AC9 '200 None', rows_written 10, tickers_considered 34, COUNT TRENDING_CHATTER#2026-09-15: 10, COUNT TRENDING_CHATTER#2026-09-13: 0; AC10 ledger amgt-chatter-axis-consolidation-and-repoint CLOSED (245a9f568d open with sentinel, bc577af946 close).",
+        "A SECOND INSTRUMENT ON A SECOND PLANE, ri-3's instance @3f432e97f7 (drained 8da6d27866): the deployed Lambda opal-amgt-scoped-api invoked with the ranked-read event returns statusCode 200, axis TRENDING_CHATTER, as_of 2026-09-15, row_count 10, resolution CROSSED; the as_of=2026-09-13 control returns row_count 0 -- the adapter reads the day's partition and finds the producer's rows.",
+        "WHAT IS NOT CLAIMED: the 10:00Z EventBridge fire of 2026-09-15 has not happened at this write; it is the organic leg the CTO reads at L10 from the function's own log. And Z-S96 (1.0.0_SA_CTO~W, ARMED) names the NEXT hazard on this lane: the table the producer ranks from is written by nothing in the repo, while the commissioned harvester writes to S3 publications/v1 -- so 'writes again' is true of the counts on the existing DynamoDB articles and says nothing about future article inflow."
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "The hazard was a producer failing every fire, silently, on a deleted resource. It now succeeds on the live tables under a QA invoke and its rows are served by the deployed read path; the failure mode named by the row cannot recur on the same cause because the policy, the code and the declaration now agree on the harvest names in one root and one state.",
+    "spec_asserts": "PRD FWD-15 (a PM sees ranked names, EXERCISED); NEVER: production pipelines are scheduled and an ad-hoc run is QA, not production evidence -- so the scheduled fire remains the acceptance and this disarm claims only the hazard's condition.",
+    "world_is": "The scheduler amgt-resapp-chatter-axis-daily (cron(0 10 * * ? *) UTC) is ENABLED and unchanged; the function it targets is the rebuilt one; today's partition holds 10 rows written by the QA invoke at ~02:3xZ.",
+    "notes": "Disarm by the row's owner as a NEW citing row; Z-S88 is not edited. Z-S95 (this seat's, ARMED) stays ARMED and is carried to round 11: the ranked-row click passes 'BABA US' and the adapter resolves 'BABA_US_Equity'."
   }
 ]
 ```
