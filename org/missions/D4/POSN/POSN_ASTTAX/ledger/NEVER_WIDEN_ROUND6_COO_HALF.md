@@ -68,6 +68,23 @@ does NOT change:** the ONE key, N = 1 writer, the rollback (the same prior Versi
 driven run, both branches. The purity control still requires every pre-existing field identical for the same inputs. Rollback of the
 grant: revert the `.tf`, re-apply. COO half for this amendment: `2.0.0_SA_COO~Z`, GIVEN, 2026-09-15 ~04:1xZ; the CTO half amends to match.
 
+### R2 AMENDMENT 2026-09-15 ~07:54Z -- a SECOND driven run on the AD-HOC Bloomberg partition (Andrew ~07:4xZ: "a real ad hoc pull ... the data presents properly on Asttax")
+
+**Why:** Andrew's word via `0.0.0_AB_MSTR~Z` (msg 23080): the merge and promote ride on a REAL ad-hoc pull of the satellites data through
+to the served outputs and the data presenting properly on ASTTAX. The Bloomberg ETF daily pull was run AD HOC by `1.0.0_SA_CTO~Z`
+under the card-4 ledger and landed `bbg/2026-09-14/`; this half covers ONE MORE driven invoke of `cot-satellites-characteristics-producer`
+with `bbg_as_of 2026-09-14` -- **the same act, key, code, grant and rollback shape as the R1 driven run**, on the new partition.
+
+**What this adds:** nothing to the key list (still `platinum/satellites/characteristics.json` on `opal-data-cot`, N = 1 writer) and
+nothing to the grant. **The rollback pin for THIS run:** the served VersionId immediately before the invoke, `74d9.pGWF16Ox7cXKGax.zQw.lhwi5yI` (read by this seat
+at the invoke; the R1 pins stay as history). **Both branches:** A -- the invoke returns rc 0, the VersionId moves, the artifact's
+`inputs.bbg_as_of` reads `2026-09-14`, the `tickers` block still carries 25 tickers with sources 23 / 1 / 1, the identity pair 25 of 25, and
+GLD's returns computed at the new frontier where the partition's `history_topup` row for GLD exists (else NULL per window with the
+rule's reason -- both are Branch A); B -- a refusal (partition absent, a read denied) writes nothing; a read-back that differs beyond
+the new partition's own values (a ticker twice or missing, a `satellites` leaf moved at unchanged holdings/positioning inputs)
+restores the pin above by `copy_object` and files the row. The rule's 12:30Z fire stays the organic leg (B6 ledger L8).
+COO half for this amendment: `2.0.0_SA_COO~Z`, GIVEN, 2026-09-15 ~07:54Z; the CTO half is asked to match in one line on the landing message.
+
 ## 4. WHAT THIS HALF DOES NOT COVER
 
 The Bloomberg return-history backfill (a CTO act, its own ledger); the portal cells F4 and F5 (no served key moves); any promote, push
