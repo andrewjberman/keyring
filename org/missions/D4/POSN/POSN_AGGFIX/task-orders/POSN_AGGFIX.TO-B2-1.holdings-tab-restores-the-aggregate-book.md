@@ -47,13 +47,21 @@ client-side `aggregateWeighting` and the `/api/general/portfolios/aum-metrics.js
 restored. **The canvas law:** `portal/CLAUDE.md` and `DESIGN.md` C3/C5 -- the canvas is light; ink on white panels; the removed
 orange-on-dark classes render near-invisible today.
 
-**Your inputs from TO-B1-1 (at your branch):** the merge helper and the viewer-scoped book set in `shared/bookSet.ts`; `internal` handed to
-the `HoldingsTab` mount; `B_DOM_BEFORE.json` in `deliverables/0.9.0_WK_POSN_AGGFIX~3/`; the render harness `<FIVE_BOOKS_DOM_B>`, the unit
+**Your inputs from TO-B1-1 (at your branch):** the merge helper and the viewer-scoped book set in `shared/bookSet.ts`; the page-level fetch and merge in `Positioning.tsx`
+(NOT the hand-over to the `HoldingsTab` mount -- row W3-S1; this order lands it); `B_DOM_BEFORE.json` in `deliverables/0.9.0_WK_POSN_AGGFIX~3/`; the render harness `<FIVE_BOOKS_DOM_B>`, the unit
 runner and the typecheck runner.
+
+**AMENDED BEFORE HAND-OFF (issuer, ~20:3xZ, on row `POSN_AGGFIX-Z-W3-S1`):** TO-B1-1 measured that the hand-over to the tab could not land
+in its grant. In Models mode `HoldingsTab` renders its OWN `getPositioningData()` result (`HoldingsTab.tsx:727-737` @`edf85ce503`), not the
+page's object, so the page-level merge reaches only `PositioningSummary`; and passing `internal` at the mount fails the typecheck (TS2322)
+until `HoldingsTab` declares the prop. **This order now owns both halves of that hand-over, in ONE commit that typechecks:** `Positioning.tsx`
+passes `internal` and the Opal-only payload the page already fetched to the `HoldingsTab` mount (`:642`), and `HoldingsTab` declares both
+props and merges the aggregate into its own Models-mode data through TO-B1-1's pure helper. **No second request for the Opal-only file**
+(B2-AC11). `Positioning.tsx` is added to `<paths>` for exactly that mount change.
 
 ## YOUR ACT
 
-1. `HoldingsTab.tsx` only: the Aggregate entry first for an internal viewer whose resolved book set holds it; both panels on the aggregate
+1. `HoldingsTab.tsx` and the `HoldingsTab` mount in `Positioning.tsx` (the two props, nothing else in that file): the Aggregate entry first for an internal viewer whose resolved book set holds it; both panels on the aggregate
    through the existing `current_holdings[selectedPortfolio]` path; the Model Breakdown group restored in the prior position and order with
    an "All of Opal" label, in current tokens; the landing on the aggregate for an internal viewer with no remembered choice. Nothing else.
 2. `<AGG_DOM_B2>`: extend the render harness with the aggregate fixture (the 1.1 payload, status OK) and an UNAVAILABLE fixture; screenshots
@@ -89,9 +97,11 @@ ONE row per off-cell finding, id `POSN_AGGFIX-Z-W3-S<k>` continuing your sequenc
 
 <criterion id="B2-AC9" cell_refs="AF1-s-14"><invocation>timeout 60 git -C /c/tmp/wk-aggfix-1-3/portal diff --stat edf85ce503 HEAD -- src</invocation><expect>exactly four files: src/api/portal-proxy.ts, src/pages/Positioning/Positioning.tsx, src/pages/Positioning/shared/bookSet.ts (TO-B1-1) and src/pages/Positioning/tabs/HoldingsTab.tsx (this order); README.md under src/pages/Positioning is a permitted fifth.</expect></criterion> `B2-AC9` -- THE PORTAL WRITE SURFACE, WHOLE.
 
+<criterion id="B2-AC11" cell_refs="AF1-s-14"><invocation>timeout 900 node <FIVE_BOOKS_DOM_B> --network-arms</invocation><expect>at your HEAD, the page opened in Models mode as Opal staff, as an advisor and as a client with every request URL recorded: requests to opal_aggregate.json per page load -- Opal staff exactly 1, advisor 0, client 0; and in ETFs mode 0, 0, 0 (the same table TO-B1-1's B1-AC5 printed, unchanged by the hand-over).</expect></criterion> `B2-AC11` -- THE HAND-OVER ADDS NO SECOND REQUEST.
+
 <criterion id="B2-AC10" cell_refs="AF1-s-14" judgment="true"/> `B2-AC10` -- **JUDGMENT, GRADED BY `3.0.0_SA_CVO~Z` AT L9:** whether the restored selector entry and Model Breakdown group read as "how it was before" (Andrew c) on today's canvas, judged from the screenshots beside the removal diff, and whether the "All of Opal" label keeps an Opal user from reading the aggregate as an advisor's own book. Record the readings and offer NO verdict.
 
-<expected_criteria>B2-AC1, B2-AC2, B2-AC3, B2-AC4, B2-AC5, B2-AC6, B2-AC7, B2-AC8, B2-AC9, B2-AC10</expected_criteria>
+<expected_criteria>B2-AC1, B2-AC2, B2-AC3, B2-AC4, B2-AC5, B2-AC6, B2-AC7, B2-AC8, B2-AC9, B2-AC10, B2-AC11</expected_criteria>
 
 <placeholders>PRIOR_LAYOUT_MAP_B2, AGG_DOM_B2, FIVE_BOOKS_DOM_B, TYPECHECK_RUN_B</placeholders>
 
@@ -101,6 +111,7 @@ org/missions/D4/POSN/POSN_AGGFIX/deliverables/0.9.0_WK_POSN_AGGFIX~3/
 org/missions/D4/POSN/POSN_AGGFIX/surprise-channel/investigations/INVESTIGATION_v1.md
 org/missions/D4/POSN/POSN_AGGFIX/ledger/PORTAL_REFS.md
 portal/src/pages/Positioning/tabs/HoldingsTab.tsx
+portal/src/pages/Positioning/Positioning.tsx
 </paths>
 
 <decomp_ref>

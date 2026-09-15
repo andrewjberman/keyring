@@ -42,3 +42,29 @@ any IAM role or policy; the ownership-map read the function already performs.
 
 PRD v0.2 @`cbd85e5cff` C-OPAL-ONLY-DATA, C-EXISTING-PREDICATE, C-NEVER-WIDEN; decomposition round 1 @`605c03f81f` s.1.2, AF1-s-4, AF1-s-11;
 `infra/aws/terraform/portal-auth/lambda-edge.tf:42-68, :84-127`. Push state: LOCAL.
+
+## AMENDMENT 1 (~19:2xZ): the CTO half's three conditions
+
+The CTO half @`ae1c985da4` signed on three conditions; `TO-C1-1` AMENDMENT 1 @`b62ea1caa3` carries them as criteria (the decoded-path rows,
+the other behaviour families before and after, the rollback target read before the apply). This half's radius is the CTO half's: **25
+behaviours**, not two URLs.
+
+## AMENDMENT 2 (~20:3xZ, row `POSN_AGGFIX-Z-W2-S4`): the WAF normalization moves INSIDE the radius
+
+- **What moved.** "Kept out by `-target`" above was WRONG. `aws_cloudfront_distribution.portal` references
+  `aws_wafv2_web_acl.opal_cloudfront_protection` (`cloudfront-distribution.tf:117`, `web_acl_id`), and Terraform's `-target` includes a
+  targeted resource's dependencies, so the targeted plan reads `0 to add, 3 to change, 0 to destroy` (measured by `0.9.0_WK_POSN_AGGFIX~2`,
+  C1-AC9, 19:52:43Z).
+- **What the WAF change is, measured on two instruments.** The worker's `terraform show -json` of the targeted plan and this seat's whole-root
+  plan at 18:3xZ agree: on the three managed rules `common-rule-set` (priority 4), `ip-reputation` (3) and `known-bad-inputs` (5),
+  `managed_rule_group_statement.version` plans `'' -> null`; every rule's name, priority, `override_action` (count), managed rule group name
+  and vendor, and `visibility_config` are identical before and after. It is a provider normalization of an empty attribute, not a rule change.
+- **Added to the permitted set:** `aws_wafv2_web_acl.opal_cloudfront_protection` updated in place with ONLY that leaf change (C1-AC9 prints
+  the leaf diff and its count). **Measured:** the live rules captured before the apply (C1-AC19) and read equal after it (C1-AC20).
+  **Rollback:** if C1-AC20 shows any rule field differing, restore the WebACL from C1-AC19's capture with `wafv2 update-web-acl` (the rules
+  and the LockToken read at that moment), then the function rollback above; the act stops on a row.
+- **Writers of the WebACL, counted:** 1 in code, the portal-auth root (`infra/aws/terraform/portal-auth/`); this act is that writer.
+- **Both branches:** the leaf check and C1-AC20 as stated: Branch A, SIGNED. Any other WAF leaf in the plan, or any rule field that differs
+  live: Branch B, NOT SIGNED, the restore above.
+- **Re-signed:** SIGNED for the radius as amended here. The CTO half is re-requested to name the WAF normalization; C1-AC6 stops the legs
+  until it does.
