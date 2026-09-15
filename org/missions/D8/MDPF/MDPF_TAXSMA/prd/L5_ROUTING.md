@@ -4,7 +4,7 @@ Author: `1.0.0_SA_CTO~A`. Updated after **CTO97073 at2026-09-15T12:55:50Z**. PRD
 
 ## Current disposition
 
-**The priority decision is settled, and MSTR has named fresh lane `2.0.0_SA_COO~T`.** Its launch awaits COO~F exiting within the three-seat cap. `project.json` keeps `coo_lane: null` until MSTR confirms the new session is live, as explicitly instructed in97076; canonical L4 delivery is held until then. The reservation is recorded, but no live session, delivery or L5 decomposition is claimed.
+**The exact lane `2.0.0_SA_COO~T` is LIVE and is now bound in `project.json`.** MSTR97081 confirms its launch after COO~F's exit. The checked-in canonical `org/mcp/server.py:get_agent_status("2.0.0_SA_COO~T")` returned **LIVE at2026-09-15T13:20:53Z**, last seen10s ago, PID26332, working on MDPF_TAXSMA startup and L5 decomposition. This was a direct invocation of the unchanged repository function because no callable MCP status tool was exposed in this Codex session; it did not register a seat or start a server/helper. The canonical L4 notifier is now eligible to deliver the unchanged v0.2 package; delivery evidence will be recorded below. L5 remains owned by COO~T and is not complete merely because the session is live.
 
 Exact unread notice handled: `20260915T125550Z_1.0.0_SA_CTO_ANDREW_RULED_the_seat_order__MDPF_TAXSMA.md`, Msg-ID97073, sender `1.0.0_SA_CTO`. It relays Andrew's ~12:5xZ words verbatim:
 
@@ -14,7 +14,7 @@ The CTO landed that order in **`org/missions/SEQUENCE.yaml` v4 at `8f0c4fa2bf153
 
 NFRA_OPLGTW keeps **`2.0.0_SA_COO~O`**. It needs no new slot while that lane remains active; it is next if the lane goes dark. IRPT_FNTEND round9 is not in Andrew's stated seat order and waits for a seat after these. The subsequent MSTR97076 reservation uses the slot freed by COO~F for fresh COO~T; COO~F is not repointed to TAXSMA.
 
-## Named lane and launch condition
+## Named lane and launch condition (satisfied at13:20:53Z)
 
 MSTR notice **97076 at 13:01:42 UTC**, exact file `20260915T130142Z_0.0.0_AB_MSTR_MDPF_TAXSMA_seat_named__2.0.0_SA_COO_T__.md`, names **`2.0.0_SA_COO~T`** under **LD-0569 at `f0f86cae9a8c4160458dc928e6cfeb40666bc7f0`**. It is a fresh context; COO~F remains the IRPT_FNTEND context and is not repointed. MSTR reports a clean 12:57 UTC preflight for ~T and asks COO~F to write its cold handoff and exit. MSTR will launch ~T once process truth shows that capacity free, then send this seat a confirmation line.
 
@@ -30,14 +30,14 @@ MSTR's disk note (12 GB free on C:, about 1.4 GB per worker worktree) is an inpu
 - **Next COO slot:** MDPF_TAXSMA -> LGIC_CANON -> ADVI_FIRMBKTS -> MDPF_CANON -> IRPT_BCKEND. NFRA_OPLGTW is already staffed, which is why it does not consume the next-slot queue entry.
 - Laptop capacity **3/3**, lanes COO~F, COO~G and COO~O, from `org/mcp/liveness.json` registrations seen within120 seconds. This is the checker's broker-liveness observation, not an independent process or open-order audit.
 
-The priority decision and lane selection are settled. Remaining routing work is MSTR confirming the live session, followed by canonical delivery to that lane.
+The priority decision, lane selection and launch condition are now settled. The measurement above is historical; the exact canonical status at13:20:53Z supersedes the old F/G/O registration snapshot. Remaining routing work is canonical delivery and evidence of intake by COO~T.
 
 ## Next owners and exact handoff
 
-1. **[0.0.0_AB_MSTR]** Confirm COO~F has exited, launch the reserved COO~T within the three-session cap, and send the promised live-session line.
-2. **[1.0.0_SA_CTO~A]** After the live-session line, record `2.0.0_SA_COO~T` in this project's `project.json` `coo_lane`. Do not put that key in SEQUENCE.yaml or infer a recipient from liveness alone.
-3. **[1.0.0_SA_CTO~A]** Fire the repository's canonical L4 notifier for the unchanged admitted v0.2 package (`60c722fe64`) to the named round holder, and record actual delivery evidence. `.tools/prd-header-notify.py` intentionally holds a release without `coo_lane`; no `PRD_NOTIFY_TO` bypass is used. Delivery/READ demonstrates transport or intake, not L5 completion.
-4. **[2.0.0_SA_COO~T]** Own L5 decomposition and the downstream canonical flow after receiving the admitted package. This note issues no task orders or implementation GO.
+1. **[0.0.0_AB_MSTR, complete]** Notice97081, exact file `20260915T131240Z_0.0.0_AB_MSTR_2.0.0_SA_COO_T_LAUNCHED_13_10Z_for_MDPF_.md`, reports COO~F's cold handoff at6d8030b6ee and exit, then COO~T's launch around13:10Z. It instructs this seat to bind the lane and fire the notifier once canonical get_agent_status reads LIVE.
+2. **[1.0.0_SA_CTO~A, complete]** The exact lane measured LIVE at13:20:53Z; `project.json` now records `coo_lane: "2.0.0_SA_COO~T"`. No sequence edit or PRD_NOTIFY_TO bypass is used.
+3. **[1.0.0_SA_CTO~A, in progress]** The installed canonical post-commit notifier reoffers the held v0.2 release to the named round holder. Record its actual message ID and delivery state; SENT/EMITTED is not READ, and READ is not L5 completion.
+4. **[2.0.0_SA_COO~T]** Own L5 decomposition and the downstream canonical flow for admitted v0.2 at60c722fe64. This routing note issues no task order or implementation GO.
 
 The named-person workbook-content authorization remains a capability-activation input under the signed PRD; it is not a new whole-project precondition on L5 priority. All eight approved endpoint bars still require deliberate walkthrough or controlled-test EXERCISED proof at delivery. This update changes no PRD, contract, signature, workbook or production resource.
 
