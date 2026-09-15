@@ -502,6 +502,43 @@ worktree is NOT initialised, so the prompt gives `terraform init -plugin-dir` ov
 AC6 and AC7 to run in one sitting per Z-S105) and `~18` on rj-12 in `C:/tmp/wk-amgt-11-1` (portal clean at 38cba6a2; next row W18-S16;
 the served posture payload lacks `packs`, a route defect to row first). Ten of thirteen complete.
 
+### 18. W21-S3's residual disarmed on a full-pool measurement; rj-10 AC6 amended mid-flight on the worker's own pre-apply row; three per-tab score words routed to L10 (18:1x-18:5xZ)
+
+**W21-S3 (rj-7, ARMED when surfaced) had no acting owner.** Its owner field named the finished worker `~21` for the in-code half
+(the exact-normalised-name arm) and routed the residual -- a cross-listing whose two name strings differ, needing an ADR-to-home-line
+join X-1 does not carry -- to `3.0.0_SA_CVO~Z`, not a seat on this project (Andrew's split: the ~W fabric owns AMGT_RESAPP). No row
+cited it; rj-7's drain message @`9c8071c404` did not name it. Before claiming "no live instance", this seat measured the whole pool:
+a first read covered only 10 of 33 R-1 objects (a guessed name field) and was discarded as a 10-object zero, not a 33-object one; the
+re-read found the subject name at `subject.name` on 10 objects and a null subject with `members []` on the other 23. Over all 33: 0
+loose self-name matches among the 10 (lower-cased alphanumeric words, company suffixes dropped, full equality or an equal first word
+of 4+ characters -- looser than the engine's exact arm) and 0 members on the 23. **Row Z-S106 @`8cd77e7195`** (235 rows), written by a
+script that re-measured the pool and would have refused to write on any hit: ACCEPT-AND-ROUTE, the ADR-to-home-line join to X-1's
+contract owner at L10, the L9 reader `3.0.0_SA_CVO~W`, re-arming when the universe widens.
+
+**rj-10 AC6 amended @`5a16ea4484` before the worker reached it.** `~19`, building before any world change, drafted row `W19-S12`: AC6
+barred `pool-prefixes at least 9` on BOTH live role policies while the order's own cell grants the producer role FOUR prefixes (the
+CTO half's least-privilege REC), and AC6's query does not select the ListBucket `Condition` -- so a policy obeying the cell prints 4
+and fails a bar it cannot meet. The worker stated it would implement the cell and not widen the grant. Re-cut: the adapter line at
+least 9, the producer line EXACTLY 4 (a higher count is a widened grant); the invocation unchanged; `~19` messaged the new expectation
+verbatim and told not to merge (its worktree predates the commit; the issuer re-grades AC6 against 5a16ea4484 at the drain). Its
+build-only zip passed the isolated runtime 2 of 2 arms (fresh venv, boto3 not importable, lambda_function and jsonschema from the zip
+root, coverage read valid and schema-invalid arms); no sentinel, no apply yet at 18:41Z.
+
+**Andrew-direct, three more words on per-tab scores, all relayed by `1.0.0_SA_CTO~W` and routed to the round-11 L10 addendum (no
+round-11 order change asked, none made):** ~18:1x-18:2xZ (msg 23201, @`3f9481ea12`, candidate 14) Thesis/Risk = ROBUSTNESS, his
+six-constraint factor model with every input from Bloomberg (the CTO measures 0 of 6 computable at the 8-quarter frequency from the
+fiscal-year model block); Mgmt = average executive time with the company, Bloomberg first, Lusha where Bloomberg lacks it, Lusha's
+reliability to be measured (11 of 48 officers matched in rj-8's M-1, no dates). ~18:2xZ (msg 23205, @`947b9793a1`, candidate 15)
+Peers = V, a peer-relative valuation z-score over six yield measures with its guards; source not named; the percentile's population
+(sector vs the analyzed pool) open for both models. Against round 11's R-1: 1 of 5 marked CSC columns carries values, 10 of 33
+subjects have members -- V is not computable from R-1 today. All carried in the packet draft.
+
+**Staged for the close:** the round-11 packet draft in scratch (round 10's six-section format; 80 criteria and 1 judgment censused
+across the 13 orders so s.3 cannot omit one; drain hashes, rows 178 -> 235, the three ARMED rows with their disarms, the next-read
+list); the browser-half method for rj-3 (the page fed rj-10's DEPLOYED captures byte-for-byte, sha256 at input and at the served body,
+error and empty controls, the live edge not claimed); the view worktree `C:/tmp/portal-resapp-view` clean at 9aef3734 with its
+node_modules junction, port 5175 free. Ten of thirteen complete.
+
 ---
 
 ## Decisions Made
@@ -540,22 +577,19 @@ None at this lane. The next acts are gated on the workers' final reports (backgr
 
 ## Current State
 
-Round 11 of AMGT_RESAPP is EXECUTING (13 orders): rj-4, rj-1, rj-7, rj-5, rj-6, rj-2, rj-8, rj-11, rj-13, rj-9 COMPLETE and drained
-(last commit 5ae785828e; channel at 234 rows with Z-S104 and Z-S105). TWO workers LIVE since ~18:1xZ: `~19` on rj-10 (the deploy)
-in C:/tmp/wk-amgt-11-2 and `~18` on rj-12 (the Posture tab) in C:/tmp/wk-amgt-11-1 (portal @38cba6a2). rj-3 amended pre-spawn
-@d37d652bb4 and waits for both. Andrew-direct ~16:3xZ: the ~W fabric is AMGT_RESAPP only; ~17:4x-18:0xZ: one standardized metric per
-tab (routed to L10). PORTAL FROZEN; all commits LOCAL; no push.
+Round 11 of AMGT_RESAPP is EXECUTING (13 orders): 10 COMPLETE and drained (rj-4, rj-1, rj-7, rj-5, rj-6, rj-2, rj-8, rj-11, rj-13,
+rj-9); channel at 235 rows with Z-S104, Z-S105, Z-S106. TWO workers LIVE since ~18:1xZ: `~19` on rj-10 (the deploy; AC6 amended
+@5a16ea4484 and messaged; pre-apply at 18:41Z) in C:/tmp/wk-amgt-11-2, and `~18` on rj-12 (the Posture tab; rows W18-S16..S18 filed
+before its route edit) in C:/tmp/wk-amgt-11-1. rj-3 waits for both. PORTAL FROZEN; all commits LOCAL; no push.
 
 ---
 
 ## Next Steps
 
-1. rj-10's drain: verify the instance, read the ledger entry CLOSED with its sentinel absent, the live reads and the two captures;
-   safe-merge with the channel union. rj-12's drain: the same, the portal ref moved to chain A's tip.
-2. After both: fast-forward wk-amgt-11-1 and spawn rj-3 (~18) with rj-10's captures named; then the issuer's browser half
-   (org/tier1_exec/2.0.0_SA_COO/deliverables/AMGT_RESAPP_W/ROUND11_BROWSER_EXERCISE.md) over the same two payloads.
-3. The L8 packet to 3.0.0_SA_CVO~W (ROUND11_PACKET.md + one message) from the scratch carry notes: every order's instance and drain,
-   the ARMED rows and their disarms (W20-S11/Z-S104, W18-S11/Z-S105), the contract gaps (the Price producer's generation, the
-   comparables' packs, the thesis chart's numeric series, the CSC values, the held side at 3 of 164), Andrew's metric word, the
-   CTO's pre-read; propose round 12 cut wide on the frontend.
+1. rj-10's drain: re-grade AC6 against 5a16ea4484 (and every criterion against the order at HEAD); read the ledger entry CLOSED with
+   its sentinel absent, the live reads and the two captures. rj-12's drain: the same; the portal drain ref to chain A's tip.
+2. After both: fast-forward wk-amgt-11-1, spawn rj-3 (~18) naming rj-10's captures; run the browser half per the staged method
+   and file ROUND11_BROWSER_EXERCISE.md.
+3. The close: every order terminal; dep_stage EXECUTING -> ROUND_CLOSE with the generated flat index; ROUND11_PACKET.md filed from
+   the draft; the one send to 3.0.0_SA_CVO~W.
 4. Re-arm the inbox Monitor and the stagger tick on every expiry; ack every broker message on read.
