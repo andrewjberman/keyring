@@ -214,6 +214,29 @@ name the one known failure instead of silently inheriting it.
     "notes": "INERT: nothing was applied and nothing is half-landed. Source-only cells that test against moto (OG-a-1, OG-q-1, OG-c-1 and their chains) are unaffected and proceed. Carried into L9/L10 with W1-S1."
   },
   {
+    "id": "NFRA_OPLGTW-S4",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-15T12:03Z",
+    "one_line": "Every 08335338 marker date is PUT about ten times within ~40 s and each PUT dispatches the whole 49F gold chain: 94 accelerator dispatches in 14 days for 10 dates, 61 of all 108 dispatches REFUSED by the chain lock, and 40 in-window terminals the dispatcher cannot classify.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "LOGS: logs filter-log-events /aws/lambda/advi-49f-gold-dispatch, 14 days to 2026-09-15T12:0xZ, 249 events, no nextToken: 108 'Event:' lines = 14 source advi.49f.scheduled-floor + 94 Records[aws:s3] on schwab/08335338/meta/complete/date=<D>.json, in bursts of ~10 per date within ~40 s (e.g. 2026-09-15 09:46:08Z..09:46:40Z, 10 for date=2026-09-14); outcomes: 61 CHAIN REFUSED, 33 host starts, 40 'ERROR: chain terminal within poll window, signature=UNKNOWN(first_line=...s3 sync progress...)'.",
+        "OBJECTS: s3api list-objects-v2 opal-data-assets schwab/08335338/meta/complete/ at 12:0xZ: 10 objects, each LastModified equal to the last event of its burst (e.g. date=2026-09-14 at 09:46:40Z).",
+        "CHAIN LOGS: list-objects-v2 opal-data-49financial gold/advi/_logs/chain_2026091*: 6-8 logs per burst, all but one landing within ~2 s of their stamp, plus one 12:45Z floor log per day.",
+        "CODE: infra/aws/lambda/opal-assets/advi-49f-gold-dispatch/lambda_function.py:90-101 @e9b070d842 classifies on CHAIN OK/REFUSED/ABORT lines in StandardOutputContent; :104-128 reads the key only; silver.tf:744-746 calls the notification 'an ACCELERATOR ONLY'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Gate G-B (decomposition @8768f46770 s.6) and OG-c-2 treat the accelerator as one fire per marker write, and silver.tf:744-746 treats it as an accelerator beside the 12:45Z floor.",
+    "world_is": "The producer PUTs one date's marker about ten times per conversion burst, so the chain is dispatched about ten times per date. The lock refuses the overlaps, so one run lands, but 40 of 108 dispatch outcomes are unclassified because the chain's first stdout is s3 sync progress. OG-c-1's rule that an identical qualified closure writes nothing (W4-S4) can only lower the count after OG-c-2's deploy. The replay adds at least one dispatch, which the G-B record names.",
+    "notes": "INERT: the lock prevents concurrent chain runs and every run re-derives the same D. OBSERVATION: the dispatcher and the producer's PUT cadence belong to the 49F ADVI chain's owners, outside this project's write surface. Named in org/tier1_exec/2.0.0_SA_COO~O/deliverables/NEVER_WIDEN_SIGNOFF_NFRA_OPLGTW_OG_C2.md s.3."
+  },
+  {
     "id": "NFRA_OPLGTW-W4-S1",
     "project": "NFRA_OPLGTW",
     "fabric": "laptop",
