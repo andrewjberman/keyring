@@ -1,6 +1,8 @@
 ﻿# Iterative publication harvest loop — working strategy
 
 Author: 4.0.0_SA_CRO~W
+
+**SUPERSEDED — METHOD CORRECTION 2026-09-14:** This browser-content experiment did not test Andrew's intended session-harvester → REST-consumer workflow. Its command entry point is disabled and its streaks do not qualify REST reliability. See `HARVEST_REST_LOOP_20260914_W.md` for the current implementation. The WSJ login question below was withdrawn: the established mechanism uses Web Unlocker. The remainder of this report is historical, not current execution guidance.
 Date: 2026-09-14 US Eastern
 Authority: ANDREW_DIRECT_20260914_HARVEST_ITERATIVE_LOOP_W.md
 Status: ACTIVE LOCAL TESTING; target not yet measured.
