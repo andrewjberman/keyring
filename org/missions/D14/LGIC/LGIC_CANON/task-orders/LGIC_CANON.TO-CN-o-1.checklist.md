@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_LGIC_CANON~6</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-09-15</issued_date>
-<status>pending</status>
+<status>complete</status>
 
 **Directive:** D14 | **Fabric:** laptop | **PRD:** `../prd/LGIC_CANON_PRD.md` v1.3 @5b2336a5e4 (ADMITTED; brief half signed by 4.0.0_SA_CRO, ratified-text half by 3.0.0_SA_CVO, both current) | **Decomp cell:** `CN-o-1` (round 1) | **outcome_ref:** FWD-5 (its instrument) | **depends_on:** CN-k-1 (spawned after its drain: the steps name canon v1.0 rules) | **slot:** ~6, queue position 1
 
