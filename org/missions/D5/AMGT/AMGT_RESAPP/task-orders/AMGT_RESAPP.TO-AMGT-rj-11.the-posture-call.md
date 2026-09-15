@@ -123,7 +123,7 @@ the order OPEN and file a row.**
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
-<status>staged</status>
+<status>complete</status>
 <round>11</round>
 <slot>~20</slot>
 <fabric>site-z</fabric>
