@@ -597,3 +597,14 @@ object stores only an average over a mislabelled denominator (5 claimed, 4 contr
 filing excerpts, which exclude the human-capital section, so it is unmeasured rather than absent. Carried as addendum candidate 13
 (C-TAB-METRIC) with the distribution object, the percentile floor, and REC candidates for the other tabs. Broadcast to the ~W lanes and
 MSTR~Z. Push state: LOCAL.
+
+---
+
+## ADDENDUM 21 (~17:5xZ) -- the metric principle clarified three times: the pool, the store, the history
+
+Andrew, at this terminal, three messages minutes after the principle: the percentile is relative to the pool of analyzed companies
+in the Security Analysis database; all of this is stored in opal-data-harvest; and appended over time. The first corrects this seat's
+reading in the record @`76bd4ea527` (the union universe) -- appended to the record and to candidate 13 as SUPERSEDED, not rewritten.
+Measured against the pool's key shapes: every existing product key appends by date except `drafting/v1/{key}.json` and the social
+measurement key, recorded as the reach of "appended over time" without adjudicating it wider. The four messages broadcast together.
+Push state: LOCAL.
