@@ -37,12 +37,12 @@
   ],
   "leads": {
     "cto": "1.0.0_SA_CTO",
-    "coo": null,
+    "coo": "2.0.0_SA_COO~G",
     "cvo": "3.0.0_SA_CVO",
     "cro": "4.0.0_SA_CRO",
     "workers": "the worker subagents a future COO's L6 issuance names (spine v3 L7: 0.9.0_WK_LGIC_CANON~<n>)"
   },
-  "coo_lane": null,
+  "coo_lane": "2.0.0_SA_COO~G",
   "fabric_ruling": "laptop -- INHERITED FROM THE DIRECTIVE, not asserted here. D14's placement reads LAPTOP on Andrew-direct 2026-09-12 ~17:2xZ at the 4.0.0_SA_CRO~D terminal, VERBATIM: 'we put that at d fourteen. And and it's owned by the laptop.' Placement attaches to the directive, never to a member.",
   "rulings": [
     "MACRO LGIC RATIFIED -- Andrew-direct 2026-09-13 ~21:3xZ at the 1.0.0_SA_CTO terminal, VERBATIM: 'yes 2 all' (record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260913_213xZ_MACROS_RATIFIED_COO_SEAT_FIRMSEP_DROP_COT.md, flip @464c1096d5; proposal MACRO_ENUM_RULE24_D8_ADVI_D14_LGIC_20260913.md @b672b3301c).",

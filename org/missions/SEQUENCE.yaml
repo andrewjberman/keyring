@@ -92,6 +92,7 @@ projects:
     stage: 1
     waits_on: []
     why: "In the Platform Logic stage by Andrew's priority word. No hard dependency on the other two; its PRD is queued after LGIC_ENFORCE's as the CTO's work order, which is not a gate."
+    notes: "Seated on 2.0.0_SA_COO~G alongside LGIC_NAMING and LGIC_ENFORCE: Andrew-direct ~16:1xZ 2026-09-15 at the 2.0.0_SA_COO~G terminal, 'Yeah there is a lot of work to be doing here between ENFORCE and CANON and I want you parallelizing harder. Use more agents, go faster.' (record org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260915_161xZ_PARALLELIZE_HARDER_ENFORCE_AND_CANON~G.md @2373f96073). No new COO session; the laptop stays at 3 of 3; no other project's seat order moves."
 
   ADVI_FIRMBKTS:
     fabric: laptop
@@ -164,3 +165,7 @@ change_log:
     by: "1.0.0_SA_CTO"
     change: "v4 note -- IRPT_BCKEND's notes carry Andrew's backend admin wall (/open-calls card 2): before any route serves, the backend refuses a caller who is not role admin AND firm opal-capital; it lands as an IRPT_BCKEND FWD at its next PRD revision. No order changed."
     word: "'recs approved aand all future pipelines must abide by lgic structures patterns' (Andrew-direct ~14:2xZ at the 1.0.0_SA_CTO terminal, answering /open-calls cards 1-3)"
+  - at: "2026-09-15"
+    by: "1.0.0_SA_CTO"
+    change: "v4 note -- LGIC_CANON seated on 2.0.0_SA_COO~G (coo_lane on its project row); its NEEDS-SLOT clears. No order changed, and no COO session was added."
+    word: "'Yeah there is a lot of work to be doing here between ENFORCE and CANON and I want you parallelizing harder. Use more agents, go faster.' (Andrew-direct ~16:1xZ at the 2.0.0_SA_COO~G terminal, record @2373f96073)"
