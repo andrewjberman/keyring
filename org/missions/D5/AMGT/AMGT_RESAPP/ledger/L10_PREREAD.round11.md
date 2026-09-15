@@ -302,7 +302,17 @@ has no machine field separating "search found nothing" from "links unreadable" (
    reliability on executive-manager information to be measured, including whether it parses into scoped measures (average
    time at the company as a manager; average time at the company in general). Measured by this seat under the session egress
    word -- see the substrate cards.
-   **Candidates for the other tabs (REC only; Andrew left them open):** Peers -- one valuation multiple on a named basis (for example
+   **MEASURED ~18:3xZ-19:0xZ (card `AMGT_RESAPP_SUBSTRATE_MEASUREMENTS_20260915_W/TAB_SCORE_SOURCING_BLOOMBERG_LUSHA_MEASURED.md` s.1):** Bloomberg `EXECUTIVE_AVERAGE_TENURE` -- the average
+   tenure of current executives IN ANY EXECUTIVE POSITION -- is on 33 of 33 pool names, so the as-a-manager measure has an absolute
+   and a pool percentile TODAY; its yearly history exists for 2 of the analyzed five (COST, HD), so the append-over-time store starts
+   now for the rest. Time AT THE COMPANY in general is on Bloomberg for the CEO only (`TOTAL_TENURE_OF_CEO_COMPANY` beside
+   `CHIEF_EXECUTIVE_OFFICER_TENURE`, 33 of 33, with history); no Bloomberg field carries a per-officer join date (the bulk officer
+   list is names and titles). Lusha: prospecting matched 11 of 48 filing officers with the title right for 4 and no dates; the real
+   Lusha data the estate holds (FIND_INSURE silver, 661 contact records, 24 companies) carries position history on 0 of 661, every
+   record the prospecting shape with reveal deferred; dated positions appear only in a hand-built test fixture. So Lusha's
+   reliability and parseability for executive tenure are UNMEASURED until one bounded enrich (no emails, no phones) runs under
+   Andrew's word on `LUSHA_CONTACT_REVEAL_ENABLED`.
+   **Candidates for the other tabs (REC only, written ~17:4xZ; SUPERSEDED ~18:1xZ-18:3xZ by Andrew's models, candidates 14-16):** Peers -- one valuation multiple on a named basis (for example
    EV/EBIT NTM) as the pair within the pool; Model -- one operating figure from the model block (for example FCF margin, or 3-year
    revenue growth); Thesis -- none until the thesis driver carries numeric points (candidate 1), then the driver's latest change;
    Posture -- no metric of its own, it reads the four.
@@ -328,6 +338,14 @@ has no machine field separating "search found nothing" from "links unreadable" (
    obligations, the debt maturity schedule, total debt, covenant thresholds, and largest-customer revenue share. Where a field is
    not entitled or not carried, the constraint is ABSENT for that name and n falls -- which with n < 5 excludes the name, so the
    measurement decides whether the model is computable at all.
+   **BLOOMBERG, MEASURED ~18:4xZ (card s.2) -- superseding the frequency sentence above, which measured the pool's model block, not
+   Bloomberg:** quarterly Bloomberg history over the 33 pool names serves, at the model's observation count, x1 for 14 names, x2 for
+   22, x3 for 3, x4 for 3, x5 for 22 and x6 for 0 (no scalar customer-concentration field; Bloomberg's covenant fields describe bonds,
+   so x1 and x2 fall to the model's default thresholds). Names by constraints at full history: 0 -> 11, 2 -> 8, 3 -> 11, 5 -> 3 --
+   **3 of 33 are rankable under n < 5, and each needs all of x1-x5.** The x3/x4 fields exist (`BS_TOTAL_AVAIL_LINE_OF_CREDIT`,
+   `BS_YEAR_1_PRINCIPAL`, `BS_YEAR_2_PRINCIPAL`, `BS_TOTL_DEBT_DEBT_SCHEDULE`) but the maturity ladder is an annual disclosure, so
+   8 quarterly observations of it are carried-forward values -- the sd question below, now with a number. Trap for the cut: BA's
+   line of credit reads 0 in one quarter between quarters of 10000.
    **METHOD, reviewed (for Andrew to rule; none changes the model's intent):**
    - *The lambda weights are sign-dependent inside a soft minimum.* lambda > 1 deepens a breach (h < 0, more binding) but also inflates
      a surplus (h > 0, less binding), so customer concentration at 1.4 matters MORE when breached and LESS when healthy. If lambda means
@@ -351,6 +369,42 @@ has no machine field separating "search found nothing" from "links unreadable" (
      pull over the same) and rank within the analyzed pool, with a minimum sector size and a fall back to all analyzed names.
    - *Display:* the page shows P (the percentile Andrew asked for); R is for Posture and any composite, and the orthogonalization order
      is declared once for all tabs.
+
+15. **THE PEERS TAB SCORE IS V, PEER-RELATIVE VALUATION -- Andrew-direct ~18:2xZ, recorded verbatim @`947b9793a1`; re-sent
+   byte-identical ~18:3xZ.** Six yield-form measures at equal weight (FCF / market cap; NTM E/P; dividends + buybacks / market cap;
+   EBITDA / EV; sales / EV; inverse PEG), each a z inside the ranked peer set (winsorized p5/p95 over the peers; median and sd; |K| >= 8;
+   a measure needs >= 6 peers; V needs >= 3 measures), averaged; P within sector; R residual. Absolute V, relative P, under candidate 13.
+   **COMPUTED ~18:4xZ on Bloomberg over the served R-1 sets (QA; card s.3):** V for 10 of 10 names holding a peer set -- BA -0.94, BABA
+   +3.45, COST -0.45, HAL +0.27, HD +0.18, INTU +1.48, KMB +0.29, NU -0.85 (3 measures: bank peers carry no FCF or EV multiples), SAP
+   +0.37, VLO +1.38. The other 23 of 33 pool names hold an EMPTY peer set, so V is suppressed there today.
+   **What a cut needs:** (a) member identity resolved to an exchange-coded Bloomberg security BEFORE any read -- of 120 member rows
+   requested by raw identifier, 3 resolve to a DIFFERENT security (Nestle to a warrant, Infineon to an ETF, MediaTek to a fund) and 4
+   are invalid, so candidate 12's rule reaches the valuation inputs; (b) the forward basis as an explicit override -- a `BEST_*` field
+   without `BEST_FPERIOD_OVERRIDE=BF` is the next fiscal QUARTER (BA forward P/E 174.8 at the default, 83.2 at BF); (c) fundamentals
+   in one currency (`EQY_FUND_CRNCY=USD`; BABA's estimates are CNY against a USD listing).
+   **METHOD, reviewed (for Andrew; none changes the model's intent):** the model winsorizes the peers and not the subject, so one
+   measure can carry V -- BABA's inverse PEG z is +19.17 because trailing EPS is depressed against forward, and V without it is +0.30;
+   clamping the subject's value to the peers' p5/p95 bounds, or capping each |z|, keeps V an average. Buybacks on Bloomberg are
+   fiscal-year cash flow, not TTM. A negative forward EPS keeps its sign as a yield only with EPS and price in one currency. The
+   "| sector" percentile over 10 names is the population question candidate 14 already carries.
+   **Round-11 reach:** none; round-12 material with candidate 13.
+
+16. **THE MODEL TAB SCORE IS DIVERGENCE -- Andrew-direct ~18:3xZ, recorded verbatim @`287d2c2619`.** D = (model NTM FCF - consensus
+   NTM FCF) / analyst dispersion; dispersion floored at the sector 20th percentile of s/|F|; the degenerate-consensus guard at 1% of
+   NTM revenue; suppressed below 4 estimates, without a model figure, or at zero dispersion; winsorized at universe p1/p99; P within
+   sector; R residual. Upside U and raw disagreement are companions, never ranked, so valuation stays with the Peers tab. RULED
+   CONDITION ON THE MODEL PRODUCER: drivers seeded at least partly independently of consensus, checked before deployment by sd(D)
+   across the universe (below 0.25 means the factor measures nothing).
+   **MEASURED ~18:5xZ (card s.4):** F_cons exists (`BEST_ESTIMATE_FCF`, 31 of 33 at BF, 1FY and 2FY); R_ntm exists (`BEST_SALES`,
+   33 of 33); **s_cons and N_est for FCF do not exist on Bloomberg** -- every spread, count, high, low and median variant of both FCF
+   mnemonics is invalid on 33 of 33, and the nearest carried dispersion is cash flow per share (`BEST_CPS_STDDEV`, 29 of 33, 4 to 10
+   estimates on the analyzed five) or EPS (33 of 33, 26 to 38 estimates). **F_model does not exist:** the pool's 17 model-block
+   objects hold REPORTED fiscal years pulled from Bloomberg history, with no forecast line and no driver, and the PRD's Model tab is
+   "the plain financial model". So D is suppressed for every name today by Andrew's own guard, and the degeneracy check has no input.
+   **What it needs (Andrew's, not a cut):** a house forecast producer for NTM FCF with independently seeded drivers -- new scope; a
+   named dispersion source for FCF; the fiscal-year end behind 1FY/2FY to calendarize to NTM (`BEST_PERIOD_END_DT` is not a valid
+   mnemonic); and a fiscal-year estimate count for the N_est guard, because the BF count is a fractional blend (COST 38.54).
+   **Round-11 reach:** none.
 
 ## 5. What is NOT known yet (the slug read's remaining inputs)
 

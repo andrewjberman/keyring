@@ -634,3 +634,23 @@ related ratios as a snapshot; 0 of 6 are computable at the model's 8-quarter TTM
 Lusha where Bloomberg lacks it; and he wants Lusha's reliability on executive information measured, including whether it parses into
 time-at-company-as-manager and time-at-company-in-general. Appended to the record as a follow-on; candidates 13 and 14 carry it; the
 Lusha measurement follows; one broadcast covers both words. Push state: LOCAL.
+
+## ADDENDUM 24 (~18:2x-19:0xZ) -- the Peers and Model scores arrive; all four tab scores measured on Bloomberg; Lusha measured
+
+Andrew at this terminal sent two more models mid-measurement: the Peers tab's score V (peer-relative valuation z over six yield-form
+measures), recorded verbatim @`947b9793a1`, and the Model tab's score D (divergence of the house model's NTM FCF from consensus in
+analyst-dispersion units), recorded verbatim @`287d2c2619` with the Peers model re-sent byte-identical. Both broadcast (ids 23205-23212;
+CRO~W QUEUED both times).
+
+Measured, card `AMGT_RESAPP_SUBSTRATE_MEASUREMENTS_20260915_W/TAB_SCORE_SOURCING_BLOOMBERG_LUSHA_MEASURED.md`:
+- Mgmt: Bloomberg's average executive tenure (in any executive position) on 33 of 33 pool names; time at the company only for the CEO;
+  no per-officer dates. Lusha: 0 of 661 real records the estate holds carry position history; dated positions exist only in a fixture.
+- Robustness: Bloomberg quarterly history makes 3 of 33 pool names rankable (n >= 5); x6 has no source. The earlier "0 of 6" was the
+  model block, corrected in the pre-read.
+- Peers: V computed for all 10 names holding a served peer set; 3 of 120 member identities resolve to the wrong security and 4 are
+  invalid; the subject is not winsorized, so BABA's inverse PEG carries its V.
+- Model: consensus FCF exists; FCF dispersion and estimate counts do not exist on Bloomberg; the house model has no forecast, so D is
+  suppressed for every name.
+
+Pre-read candidates 13 and 14 extended, 15 and 16 added. Four decisions surfaced for Andrew: a bounded Lusha enrich; an FCF dispersion
+source; a forecast producer for the Model score; sector against pool percentiles. Push state: LOCAL.
