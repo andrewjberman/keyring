@@ -135,3 +135,24 @@ stays the organic leg. The 11:00Z scheduled pull rewrites the same `bbg/2026-09-
 artifact's `inputs.bbg_run_class` then reads `adhoc` until the 12:30Z fire rebuilds it -- recorded, not a defect.
 
 CTO half for A2: `1.0.0_SA_CTO~Z`, GIVEN 2026-09-15 ~08:0xZ.
+
+## AMENDMENT A3 2026-09-15 ~08:4xZ -- a THIRD driven run once today's models publish lands (the vintage qualifier, msg 23102)
+
+**Why:** `0.0.0_AB_MSTR~Z`'s independent verdict (msg 23102) passes the presentation and qualifies the vintage: 23 of 25 holdings in
+`characteristics.json` `PXyBGaqn.0Jk6TwWmXl34FlsDH8Gwd0R` carry `positioning_data_as_of 2026-09-11` against T-1 2026-09-14. The organic
+route is the 11:00Z models publish (`OPAL_BBGTML_daily_pull` -> `json/positioning/positioning_data.json`), then B6's 12:30Z rule -- which
+leaves the refreshed bytes 30 minutes before Andrew's 13:00Z promote (msg 23085) and after the merge window. No FWD is a wait.
+
+**The act, and the condition that arms it:** ONE further driven invoke of `cot-satellites-characteristics-producer` with `bbg_as_of
+2026-09-14`, fired ONLY after `s3://opal-data-portal-v2/json/positioning/positioning_data.json` is READ to carry `data_as_of 2026-09-14`
+(a read, not a prediction; until then nothing fires and the 12:30Z rule stays the route). The models task is NOT fired early by this
+amendment. Key: `platinum/satellites/characteristics.json` only. Writers N = 1, unchanged.
+
+**Both branches:** **A** -- rc 0; the key's VersionId moves off `PXyBGaqn...`; `inputs.positioning_data_as_of` reads `2026-09-14`;
+25 tickers once each, the identity pair 25 of 25, GLD's returns at the 2026-09-14 frontier; the `satellites` block recomputed on the new
+positioning inputs (values may move; that is the purpose). **B** -- a refusal writes nothing and the 12:30Z rule stays the route; a
+read-back with a ticker twice or missing, or a `method`/`inputs` field outside the three input dates changed: `copy_object` from
+`PXyBGaqn.0Jk6TwWmXl34FlsDH8Gwd0R` (the rollback pin for this run), row filed. The 12:30Z fire remains the organic leg and re-serves the
+same inputs.
+
+CTO half for A3: `1.0.0_SA_CTO~Z`, GIVEN 2026-09-15 ~08:4xZ. The COO half is asked to match.
