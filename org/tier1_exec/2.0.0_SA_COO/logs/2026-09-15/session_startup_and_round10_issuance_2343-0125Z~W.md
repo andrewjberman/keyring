@@ -222,6 +222,34 @@ symmetric comparable, Peers from Adam's packs and the Scanner), ~05:4xZ (the who
 ~05:42Z (at THIS terminal, "The whole sitez fabric has free egress this session" @`dfa63b6d92`, broadcast to 8 of 8 live seats),
 ~05:5xZ (the voice memo), and his direct questions here on the state of the project and when the frontend starts.
 
+### 10. rj-4 drained; the other four chains spawned (08:2x-08:3xZ)
+
+**rj-4 COMPLETE and drained @`10c74d0efb`** (worker `0.9.0_WK_AMGT_RESAPP~19`: 7 of 7 PASS, instance VALID rc=0 under the worktree's
+own checker; rows W19-S1..S7 INERT; the channel at 185 rows; no conflict on the drain). The crosswalk: 89 names, one disposition
+each, 33 MEASURED / 56 UNRESOLVED, six conventions folded, fixed point. The union universe: 256 names = 89 + 170 - 3; only 3 of the
+170 ETF holdings join without guessing (the ETF plane's tickers carry no exchange code; CUSIP on 187 of 189 rows is the upstream
+remedy); with_cik 12, and each of the five QA names carries an EDGAR filing identity with its expected form (BA, COST, HD 10-K; SAP,
+BABA 20-F). Objects in the pool at `crosswalk/v1/2026-09-15.json` and `universe/v1/2026-09-15.json`, shas matching the local copies
+under `deliverables/0.9.0_WK_AMGT_RESAPP~19/`. The worker found and fixed the dry-run CRLF defect itself (both emitters now write
+`sys.stdout.buffer`).
+
+**Fast-forwarded** `wk-amgt-11-1`, `-11-2` (branch `wk-amgt_resapp-11-2`), `-11-3`, `-11-4`, `-11-5` to `10c74d0efb` (== SITEZ);
+the portal worktree at `wk-amgt-11-1/portal` stays @`9aef3734` with vite resolving through the junction.
+
+**Spawned, per s.19e's hand-over order, each with its order's worker face verbatim plus an identity line** (worktree path, cone,
+the X-1/U-1 pool keys and local copies, the five QA names, the 3-of-170 finding stated so it is not re-rowed, the first row id):
+- `~18` on `rj-1` (chain A) in `C:/tmp/wk-amgt-11-1`;
+- `~19` RESPAWNED on `rj-5` (chain B) in `C:/tmp/wk-amgt-11-2` -- a finished worker cannot be resumed on this device, so the
+  identity line carries rj-4 as COMPLETE-do-not-rerun, the artifact coordinates, the rules of rj-4 that rj-5's face cites by
+  reference, next row W19-S8, and that `lib/research/coverage/` already holds the round-1 SA reader beside which `pool_reader.py`
+  lands;
+- `~20` on `rj-6` (chain C) in `C:/tmp/wk-amgt-11-3` (the key only as an exported env var from `comp-secrets`; the expected batch
+  shape of ~12 would-fetch / ~244 UNRESOLVED-SOURCE stated);
+- `~21` on `rj-7` (chain D) in `C:/tmp/wk-amgt-11-4`.
+`rj-8` (`~22`, `wk-amgt-11-5`) waits for rj-6's drain. The inbox Monitor re-armed at its 30-minute expiry (x17); the three broker
+messages replayed on the heartbeat (the CTO half 23078, the 13:00Z promote broadcast 23090, the CTO's HOLD answer 23097) were all
+handled in s.8-9 and carry their first ACK.
+
 ---
 
 ## Decisions Made
@@ -260,18 +288,22 @@ None at this lane. The next acts are gated on the workers' final reports (backgr
 
 ## Current State
 
-Round 11 of AMGT_RESAPP is EXECUTING at issuance fa72663c56 (13 orders, decomposition v1.3 s.19 @f133ed7aff, PRD v0.8
-@1170b4da69 ADMITTED). Worker ~19 is on rj-4 (the crosswalk and the union universe) in C:/tmp/wk-amgt-11-2; chains A, C, D and E
-spawn at its drain; rj-8 after rj-6's drain; the cross-chain cells (rj-2, rj-9, rj-10, rj-11, rj-12, rj-3) by the hand-over order
-of s.19e. The CTO half of the round-11 co-sign is requested (rj-10 stops on it). PORTAL FROZEN; all commits LOCAL.
+Round 11 of AMGT_RESAPP is EXECUTING at 10c74d0efb (13 orders; rj-4 COMPLETE and drained; decomposition v1.3 s.19 @f133ed7aff,
+PRD v0.8 @1170b4da69 ADMITTED). FOUR workers live: ~18 rj-1 in C:/tmp/wk-amgt-11-1 (portal worktree @9aef3734), ~19 rj-5 in
+C:/tmp/wk-amgt-11-2, ~20 rj-6 in C:/tmp/wk-amgt-11-3, ~21 rj-7 in C:/tmp/wk-amgt-11-4. rj-8 (~22, wk-amgt-11-5) spawns at rj-6's
+drain; the cross-chain cells (rj-2, rj-9, rj-10, rj-11, rj-12, rj-3) by the hand-over order of s.19e. Both halves of the round-11
+co-sign are files (COO half + CORRECTION; CTO half @e1c3cf0cb3 SIGNED). PORTAL FROZEN; all commits LOCAL; no push.
 
 ---
 
 ## Next Steps
 
-1. At rj-4's drain: fast-forward wk-amgt-11-1/-3/-4/-5 to the drained tip and spawn rj-1 (~18), rj-6 (~20), rj-7 (~21), rj-5 (~19
-   continues); spawn rj-8 (~22) at rj-6's drain.
-2. Drain each terminal order through safe-merge.sh (the channel union by row id); fetch chain A's portal branch into
-   refs/drains/rj-portal at its drains; choose the Posture QA pair at rj-7's drain and name it in rj-6/7/8's hand-overs.
-3. The browser half of rj-3 with the exact payloads rj-10 captures; the L8 packet to 3.0.0_SA_CVO~W (file + message) at the end.
-4. Re-arm the inbox Monitor on every expiry; ack every broker message on read.
+1. At each report: verify the instance with the worktree's own checker, drain through safe-merge.sh (the channel union by row id),
+   read every worker row, disarm as owner where owed. At rj-6's drain spawn rj-8 (~22); at rj-1 + rj-6: rj-2 (~18); at rj-8: rj-13
+   (~22); at rj-2 + rj-5/6/7/8: rj-9 (~18); at rj-7's drain choose the Posture QA held/non-held pair from R-1 + U-1 and name it in the
+   rj-6/7/8 hand-overs and rj-11's spawn; rj-11 (~20) after rj-6 + rj-7/8; rj-10 (~19, ff its branch first) after rj-5 + rj-1/9;
+   rj-12 (~18) after rj-9 + rj-11; rj-3 (~18) LAST after rj-10 + rj-12.
+2. Fetch chain A's portal branch into refs/drains/rj-portal at its drains; the gitlink never moves.
+3. The browser half of rj-3 with the exact payloads rj-10 captures (ROUND11_BROWSER_EXERCISE.md); the L8 packet to 3.0.0_SA_CVO~W
+   (ROUND11_PACKET.md + one message) at the end.
+4. Re-arm the inbox Monitor on every expiry; ack every broker message on read. Old worktrees stay until Andrew's word.
