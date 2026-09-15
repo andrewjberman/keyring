@@ -959,6 +959,29 @@ new row on 3.0.0_SA_CVO's ask 96495), both 1.0.0_SA_CTO; `LGIC_NAMING-S3`, `LGIC
     "spec_asserts": "Decomposition v4 s.0c: the checker 're-derives the prompt with the same builder and re-parses the verbatim reply, which the seat record hashes'. A clean seat grades PASS wherever the checker runs.",
     "world_is": "Before the fix, a clean seat graded PASS only in the worktree that wrote it; every checkout git wrote would have graded it FAIL. After the fix, the records keep their bytes on every checkout, and the measured PASS holds on the shared tree.",
     "notes": "DISARM, per the three rows' own clause, by their disarm owner. The checker (a frozen fixed input) and the seat files were not edited. The round's later seat (e4) is covered by the same rule, because its records land under the same folder. For 3.0.0_SA_CVO at L8/L9: the seat criteria can be re-run on any checkout. INERT: no clean seat can now read FAIL for its line endings, and none has."
+  },
+  {
+    "id": "LGIC_NAMING-W6-S4",
+    "project": "LGIC_NAMING",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_NAMING~6",
+    "surfaced_at": "2026-09-14T23:58:27Z",
+    "one_line": "LN-e-5 round 2's E5R-AC1 invocation (check_ln_r2.py e5-correct) prints VERDICT: FAIL-MISREAD, not the expected PASS-ALL-CORRECT: the reader marked the key's firm-or-none token on 16 of 18 N3 names; i09 (mdpf-demo-publish-failure-alarm) is marked none where N3_KEY_R2.json reads demo, and i11 (pathfinder-etfs-ingest-task) is marked pathfinder where the key reads none.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "EXERCISED: cd C:/Users/AndrewBerman/Desktop/ajb_workspace/.worktrees/wk-lgic-naming-2-6c && timeout 120 python org/missions/D14/LGIC/LGIC_NAMING/deliverables/2.0.0_SA_COO~G/fixed_inputs/r2/check_ln_r2.py e5-correct, worktree HEAD 5fb93bb734 -> 'WRONG: i09  name=mdpf-demo-publish-failure-alarm  marked=none  expected=demo' / 'WRONG: i11  name=pathfinder-etfs-ingest-task  marked=pathfinder  expected=none' / 'ITEMS: 18  CORRECT: 16  WRONG: 2 (key: N3_KEY_R2.json, firm or none)' / 'VERDICT: FAIL-MISREAD', rc=0.",
+        "INPUTS: org/missions/D14/LGIC/LGIC_NAMING/deliverables/exercises/r2/n3-namer-a.tsv @eaafb46486 (i09 -> mdpf-demo-publish-failure-alarm, i11 -> pathfinder-etfs-ingest-task); r2/n3-reader.tsv @9096ea3c49 (those names marked none and pathfinder); deliverables/2.0.0_SA_COO~G/fixed_inputs/r2/N3_KEY_R2.json @b9ea6f3686 (key i09 demo, i11 none; changed_from_round_1 i11 etfs -> none).",
+        "CHECKER: deliverables/2.0.0_SA_COO~G/fixed_inputs/r2/check_ln_r2.py:237-252 @b9ea6f3686 e5_correct compares the reader's mark on each namer-A name with the key's token as exact strings and prints FAIL-MISREAD on any mismatch.",
+        "E5R-AC2 on the same inputs printed VERDICT: PASS-ONE-REFERENT-EACH (0 clashes across 18 names, 7 tokens marked), so only E5R-AC1 holds the order open."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-LN-e-5-r2 E5R-AC1: 'the reader marked the expected firm, or none, on every item', invocation check_ln_r2.py e5-correct, expect 'VERDICT: PASS-ALL-CORRECT'.",
+    "world_is": "The invocation prints 'VERDICT: FAIL-MISREAD' with 16 of 18 correct. The cell scores and does not read or name, so no mark can be changed inside LN-e-5, and the order stays open on the E5R-AC1 FAIL. r2/n3-reader-score.md records every WRONG line with the name, the mark and the expected token.",
+    "notes": "Filed by the scoring worker because the named invocation did not produce the named result. The task order calls a wrong mark 'the outcome's evidence, not a defect to fix', so nothing is edited. For 3.0.0_SA_CVO's L8 disposition."
   }
 ]
 ```
