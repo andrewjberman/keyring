@@ -525,7 +525,8 @@ class Naming:
                         self.firm_seg[sp] = row["long"]
                 else:
                     self.product_whole[sp] = row["long"]
-        self.first_vocab = self.v.v1 | self.v.v2 | self.v.v3 | {"opal", "bd"}
+        # v3 already carries the refused token (lib/opal_naming.py _Vocab), so only the reserved system is added
+        self.first_vocab = self.v.v1 | self.v.v2 | self.v.v3 | {"opal"}
         self.acct_bucket = re.compile(r"^opal-%s-" % re.escape(self.v.account))
         self._surfaces = None
 
@@ -545,7 +546,8 @@ class Naming:
             return None, s
         if "/" in s:
             if s.startswith("/aws/"):
-                return "LOG_GROUP", s
+                # a bare prefix such as /aws/ or /aws/lambda/ names no resource: not a log group
+                return ("LOG_GROUP", s) if len([x for x in s.split("/") if x]) >= 3 else (None, s)
             segs = s.split("/")
             first = segs[0]
             real = [x for x in segs if x]
@@ -561,9 +563,10 @@ class Naming:
                 if 2 <= len(real) <= 3 and "." not in real[-1]:
                     return "SECRET", s
             return None, s
-        if s in v.buckets or s.startswith("opal-data-") or self.acct_bucket.match(s):
+        if s in v.buckets or self.acct_bucket.match(s) or (s.startswith("opal-data-") and len(s) > len("opal-data-")):
             return "S3_BUCKET", s
-        if re.match(r"^[A-Za-z0-9]+([-_.][A-Za-z0-9]+)+$", s):
+        # an all-capitals string (a node-type constant such as LAMBDA_LAYER) is never an AWS resource name
+        if re.match(r"^[A-Za-z0-9]+([-_.][A-Za-z0-9]+)+$", s) and not s.isupper():
             body = s[:-5] if s.endswith(".fifo") else s
             toks = re.split(r"[-_.]", body.lower())
             if toks[0] in self.first_vocab:

@@ -552,6 +552,52 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     "spec_asserts": "Worker definition, Proof: 'rc 0 AND every mechanical criterion PASS-by-output, then flip the task order's <status> to complete and commit instance, deliverables and flip together'; Rule 14a: 'do NOT pre-git add'.",
     "world_is": "For a cell that MODIFIES a tracked file, the pre-flip manual validation cannot return rc 0 while the deliverable is uncommitted and unstaged. Instance, deliverable and flip cannot ride one commit without pre-staging, so the deliverable took a commit of its own.",
     "notes": "Form only. Every EN-v-<n> cell modifies a tracked carrier, so the same shape is expected on each of them. The order stayed open until the proof commit; no criterion was affected."
+  },
+  {
+    "id": "LGIC_ENFORCE-W2-S5",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~2",
+    "surfaced_at": "2026-09-15T02:10Z",
+    "one_line": "EN-g-1's context rule names 'firm and product tokens as whole segments', but both PRODUCT scopes (mdpf, etfs) are also systems.json keys that name() writes in the system slot, so a whole-segment product match would refuse the builder's own output written as a literal. The limb matches a product token only as the whole string, and exempts float() arguments because lookup('inf') is the inflection row.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN (registry read in wk-lgic-enforce-1-2-g1 @1ca17cc88e): 'PRODUCT scopes: ['mdpf', 'etfs'] | also systems.json keys: ['etfs', 'mdpf']'.",
+        "RUN: lib/opal_naming.py name('mdpf', None, 'publisher', 'role') = 'mdpf-publisher-role' and name('etfs', None, 'netassets', 'daily') = 'etfs-netassets-daily': the product token is the whole first segment of a canonical shared name.",
+        "RUN: lib/opal_naming.py lookup('inf')['long'] = 'inflection', so the numeric spelling in float('inf') is a firm spelling to a whole-segment matcher.",
+        "CODE: .tools/naming-gate.py @02d2869cf0 -- :513-527 build the token sets (FIRM spellings into firm_whole, and into firm_seg when alphanumeric; PRODUCT spellings into product_whole only); :576-585 carrier() matches product_whole on the whole string and firm_seg per segment; :70 EXEMPT_CALLS = {'float'}, applied at :266."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "LGIC_ENFORCE.TO-EN-g-1 worker face, THE CELL item 1: 'The inputs are S3 key and bucket literals, resource-name literals, secret paths, and firm and product tokens as whole segments. The context rule: a token is PERMITTED in the registry files, in a generated file, as an argument to key(), address(), name() or lookup() ... Anywhere else it is a HAND-KEPT CARRIER: a NEW one is refused'.",
+    "world_is": "The registry holds mdpf and etfs both as PRODUCT scopes and as systems.json keys, and name() puts the system first. Matching product tokens as whole segments would refuse every new hand-written mdpf-* or etfs-* name, including the literal spelling of name()'s own conformant output. As built, a product token is a carrier only when it is the whole string (bare 'mdpf', or a lookup-able alias such as 'mdpf_revamp'). Firm tokens are matched as whole segments, as written. Strings passed to float() are not graded.",
+    "notes": "Form only: the cell's words, read against the registry, take two readings, and this row records the one built. No criterion turns on it: the g1 fixtures carry firm tokens only. The reading is L9's to accept or re-cut; the carrier sets are data in Naming.__init__, so a re-cut is a one-line change."
+  },
+  {
+    "id": "LGIC_ENFORCE-W2-S6",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~2",
+    "surfaced_at": "2026-09-15T02:10Z",
+    "one_line": "EN-g-1's output grammar says <verdict> is the grade or REFUSE, but a bare hand-kept firm token has no node type and so no grade. The limb prints OUT-OF-PATTERN for an EXISTING one (a WARN, canonical lookup(<long>)), and RAISE for a RaiseDefect; a why: line under each says which.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE: lib/opal_naming.py:1239-1240 @1ca17cc88e -- grade(name, type) raises RaiseDefect 'G1.1: ... is not a node type of NAMING_SCHEMA.json' for a type outside the schema, so a string with no node type cannot be graded.",
+        "CODE: .tools/naming-gate.py @02d2869cf0 -- :694 an EXISTING carrier with no type returns line verdict OUT-OF-PATTERN, counted as WARN; :697 a RaiseDefect returns line verdict RAISE, counted as WARN, never REFUSE.",
+        "RUN (safe-commit of 02d2869cf0, WARN mode, the stage grading its own file): '[naming-gate] NAMING RAISE .tools/naming-gate.py:547 /aws/ -> (rule or registry defect)' with 'why: RAISE as LOG_GROUP: rule or registry defect, not a refusal: L2: service '' gives no resource type', then 'NAMING-GATE: WARN 9 graded', safe-commit rc=0.",
+        "CODE: org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/2.0.0_SA_COO~G/fixed_inputs/check_en.py:781 @1ca17cc88e reads 'NAMING (OUT-OF-PATTERN|REFUSE)', so no criterion turns on the choice."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "LGIC_ENFORCE.TO-EN-g-1 worker face, interfaces: 'Output: one NAMING <verdict> <file>:<line> <string> -> <canonical> line per graded string (<verdict> is the grade, or REFUSE)'; THE CELL item 1: 'RAISE: printed as a rule or registry defect.'",
+    "world_is": "Two line verdicts fall outside 'the grade, or REFUSE'. RAISE is grade()'s own outcome (it raises instead of returning a verdict). OUT-OF-PATTERN on a bare carrier is the limb's word, since grade() has nothing to return. Both count as WARN in the NAMING-GATE summary and never as REFUSE.",
+    "notes": "Form only. A consumer of org/mcp/naming-gate-verdicts.log that parses the verdict word sees five words: CONFORMANT, ALIAS, OUT-OF-PATTERN, NOT-GRADED, RAISE, plus REFUSE. The why: line is printed but not logged."
   }
 ]
 ```
