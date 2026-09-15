@@ -1039,6 +1039,118 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     "spec_asserts": "TO-EN-d-1 THE CELL: 'EN-d-1 -- firm N+1 is one row (PRD candidate E11, its first half; DEC-9).'",
     "world_is": "The row alone regenerates all 9 views, and it makes the gate refuse the firm's hand-typed address and its name. The validator still warns that the firm's short form is not in NAMING_SCHEMA.json firm_forms, the list the registry names as the owner of which short forms exist. That file is outside this order's <paths>. The exercise added the row only and left the schema unchanged.",
     "notes": "Form only. No criterion turns on the warning. This row does not say whether a firm row missing from firm_forms should be refused or warned."
+  },
+  {
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G",
+    "surfaced_at": "2026-09-15T05:19Z",
+    "class": "OBSERVATION",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "LGIC_ENFORCE-S10",
+    "hazard_standing": "INERT",
+    "one_line": "Issuer's disarm of LGIC_ENFORCE-W3-S5 and W3-S6: check_en.py's t2 subcommands now run safe-apply.sh by the absolute Git Bash the estate's resolver names, and seat the halt checkpoint's identity for their one run. T2-AC1 and T2-AC2 read PASS on EN-t-2's stage and FAIL where no stage exists.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ROWS: LGIC_ENFORCE-W3-S5 (a bare 'bash' resolves to the WSL launcher) and W3-S6 (the halt checkpoint reads identity only from org/mcp/sessions/<CLAUDE_CODE_SESSION_ID>.serial), both BLOCKING and ARMED, disarm_owner 2.0.0_SA_COO~G.",
+        "FIX @c30637c49c: fixed_inputs/check_en.py -- run_bash() through .tools/git_bash_resolver.py; _apply writes the running serial to a synthetic session file and removes it in a finally block.",
+        "DISCRIMINATING PAIR, EN-t-2's worktree, the same inputs for both: t2-refuse FAIL-NOT-REFUSED-BEFORE-PLAN -> PASS-REFUSED-BEFORE-PLAN; t2-pass FAIL-GOOD-TREE-BLOCKED -> PASS-STAGE-PASSES.",
+        "NEGATIVE ARM: the patched checker in EN-f-1's worktree, whose safe-apply.sh carries no naming stage, reads FAIL on both. Session files left in either worktree afterwards: 0."
+      ]
+    },
+    "spec_asserts": "TO-EN-t-2 T2-AC1: 'an apply over a tree naming a resource the module would not produce is refused before Terraform is called'; T2-AC2: 'the tree with a module-produced name passes the stage and reaches Terraform'.",
+    "world_is": "Before the fix, neither criterion could reach safe-apply.sh on this box, whatever the stage did. After it, both measure the stage, as their text says.",
+    "notes": "DISARM by the owner. The criteria text, the face and the fixtures are unchanged; the fix corrects how the instrument launches its process. INERT: TO-EN-t-2's criteria are re-run by a worker cut from a base carrying the fix."
+  },
+  {
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G",
+    "surfaced_at": "2026-09-15T05:19Z",
+    "class": "OBSERVATION",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "LGIC_ENFORCE-S11",
+    "hazard_standing": "INERT",
+    "one_line": "Issuer's disarm of LGIC_ENFORCE-W1-S16: check_en.py reads the live plane through the .tools/aws shim, run by Git Bash, not a bare 'aws' this box cannot launch. F1-AC4 reads PASS-PRIOR-VERBATIM on EN-f-1's record; EN-f-2's f2-policy-live and f2-removed share the fixed path.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ROW: LGIC_ENFORCE-W1-S16 (BLOCKING, ARMED, disarm_owner 2.0.0_SA_COO~G): no aws.exe, only the .CMD and bash shims.",
+        "FIX @c30637c49c: fixed_inputs/check_en.py -- aws_json() and f2-removed call run_bash(['.tools/aws', ...]).",
+        "DISCRIMINATING PAIR, EN-f-1's worktree: f1-prior FAIL-PRIOR-DIFFERS ('NOT RUNNABLE: [WinError 2]') -> PASS-PRIOR-VERBATIM ('PRIOR == LIVE (read now): True')."
+      ]
+    },
+    "spec_asserts": "TO-EN-f-1 F1-AC4: 'FENCE_PRIOR_POLICY.json equals the live policy read now'.",
+    "world_is": "Before the fix, the live read never ran on this box, so F1-AC4 read FAIL whatever the file held. After it, the criterion compares the file with the live policy.",
+    "notes": "DISARM by the owner, before EN-f-2 spawns: f2-policy-live and f2-removed go through the same function. INERT: F1-AC4 is re-run by a worker cut from a base carrying the fix."
+  },
+  {
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G",
+    "surfaced_at": "2026-09-15T05:19Z",
+    "class": "OBSERVATION",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "LGIC_ENFORCE-S12",
+    "hazard_standing": "INERT",
+    "one_line": "Issuer's disarm of LGIC_ENFORCE-W2-S7: check_en.py's p1-surface passes over a carrier whose grade RAISES, as the cell's rule says, instead of stopping on it. P1-AC1 reads PASS-SURFACE-BY-RULE on EN-p-1's record, the rule's surface found at carrier 23 of 12,953.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ROW: LGIC_ENFORCE-W2-S7 (BLOCKING, ARMED, disarm_owner 2.0.0_SA_COO~G): the checker stopped on carrier 1's RaiseDefect.",
+        "FIX @c30637c49c: fixed_inputs/check_en.py -- p1_surface catches the module's own RaiseDefect per carrier and counts it; any other exception is a FAIL-NOT-EVALUABLE verdict, returned.",
+        "DISCRIMINATING PAIR, EN-p-1's worktree: FAIL-NOT-EVALUABLE -> PASS-SURFACE-BY-RULE ('carriers read: 23 of 12953, passed over on a RAISE: 18'), matching the worker's own statement of the rule's result.",
+        "NEGATIVE ARM: the patched checker in the primary tree, where no exercise record exists, reads FAIL-SURFACE."
+      ]
+    },
+    "spec_asserts": "TO-EN-p-1: 'The first whose token grade(token, \"S3Key\") marks OUT-OF-PATTERN is the SURFACE.'",
+    "world_is": "Before the fix, P1-AC1 could not read PASS on any record, because 18 of the first 22 carriers raise. After it, the criterion applies the cell's rule.",
+    "notes": "DISARM by the owner. The criterion text and the face are unchanged. INERT: P1-AC1 is re-run by a worker cut from a base carrying the fix."
+  },
+  {
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G",
+    "surfaced_at": "2026-09-15T05:19Z",
+    "class": "OBSERVATION",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "LGIC_ENFORCE-S13",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~G",
+    "one_line": "Issuer's fix for LGIC_ENFORCE-W1-S17, not yet exercised: check_en.py's f2-signoff now reads the SIGNOFF lines from every committed version of the ledger entry as well as the file, so deploy_ledger.py's rebuild of the entry at a close-leg cannot erase the evidence that both seats signed before the apply.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ROW: LGIC_ENFORCE-W1-S17 (ARMED, disarm_owner 2.0.0_SA_COO~G): deploy_ledger.py rebuilds the entry from its sentinel on every close-leg, dropping lines it did not write.",
+        "FIX @c30637c49c: fixed_inputs/check_en.py -- _entry_history_text() reads 'git show <commit>:<entry>' for every commit that touched the entry, and f2_signoff reads the union.",
+        "NOT EXERCISED: no SIGNOFF line exists yet, because gate G-E has not run. The criterion's question and its grammar are unchanged."
+      ]
+    },
+    "spec_asserts": "TO-EN-f-2's f2-signoff: both SIGNOFF lines precede L2's close, the apply.",
+    "world_is": "The ledger tool is the only writer of the entry at a close-leg, and it keeps only what its sentinel holds. A SIGNOFF line committed before the apply survives in the entry's git history.",
+    "notes": "ARMED until exercised: EN-f-2's f2-signoff, run after G-E and the L2 close, is the first read that can show the history reader finds the two lines. The tool behavior itself (deploy_ledger.py dropping foreign lines at close-leg) goes to its owner at the round's drain-end read. The two SIGNOFF lines, when G-E runs, are committed before EN-f-2 applies."
+  },
+  {
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G",
+    "surfaced_at": "2026-09-15T05:19Z",
+    "class": "OBSERVATION",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "LGIC_ENFORCE-S14",
+    "hazard_standing": "INERT",
+    "one_line": "Issuer's disposition of LGIC_ENFORCE-W3-S8: under ENFORCE, the safe-apply limb would refuse 57 of 78 Terraform roots, because an apply has no diff to split new from existing names. The limb ships in WARN, the enforce file is absent, and the live flip is gate G-F, outside this round.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ROW: LGIC_ENFORCE-W3-S8 (OBSERVATION, ARMED, disarm_owner 2.0.0_SA_COO~G), measured by EN-t-2's worker over the 78 roots at HEAD.",
+        "STATE: org/mcp/naming-gate.enforce is absent (G1-AC14 and the EN-g-1 drain), and the stage never changes safe-apply's exit code in WARN mode (EN-t-2's WARN control)."
+      ]
+    },
+    "spec_asserts": "The PRD's DEC-6 matrix: NEW names refuse, EXISTING names warn unless a remediation owns the surface.",
+    "world_is": "The commit limb reads a diff and so can tell NEW from EXISTING; the apply limb reads a whole tree and cannot. Under one shared enforce switch, an ENFORCE flip would refuse most applies.",
+    "notes": "INERT for this round: nothing sets ENFORCE. The finding bears on gate G-F, the live flip, and goes to 1.0.0_SA_CTO at the round's drain-end read: the apply limb needs its own switch or an existing-name baseline before G-F."
   }
 ]
 ```
