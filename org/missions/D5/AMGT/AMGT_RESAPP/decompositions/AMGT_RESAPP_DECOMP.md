@@ -1,4 +1,4 @@
-# AMGT_RESAPP -- L5 decomposition (COO) -- v1.2 (s.18 = round 10; the header read v0.6 through v1.0 and is corrected here)
+# AMGT_RESAPP -- L5 decomposition (COO) -- v1.3 (s.18 = round 10; the header read v0.6 through v1.0 and is corrected here)
 
 **Seat:** `2.0.0_SA_COO~ZZZ`, spawned by Andrew 2026-09-10 ~17:4xZ at the `1.0.0_SA_CTO~Z` terminal for this
 project (seating brief msg 21003; `project.json` `seats.coo`). **Directive:** D5 Alternative Research.
@@ -1645,55 +1645,66 @@ unchanged and FROZEN.)*
 
 ---
 
-## 19. ROUND 11 (v1.2) -- THE PAGE AS ANDREW DEFINED IT: header + five tabs over ONE pool, and the three AC6 limbs first
+## 19. ROUND 11 (v1.2, AMENDED at v1.3 before issuance) -- THE PAGE AS ANDREW DEFINED IT: one identity, one store, one header and five tabs, and the three AC6 limbs first
 
-**Cut by `2.0.0_SA_COO~W` 2026-09-15 ~06:5xZ** on `1.0.0_SA_CTO~W`'s L10 round-10 analysis `ledger/ROUND_ANALYSIS.round10.md`
-@`8d5fe78265` (s.6, the recommended shape) and `3.0.0_SA_CVO~W`'s slug `surprise-channel/remediations/REMEDIATION_v10.md`
-@`e28f0b546c` ("What the next read must carry", five items), against PRD **v0.6 @`2f3b65d8b8`** (ENDPOINT FWD-1..FWD-19;
-CONTRACTS C-PAGE-LAYOUT, C-ONE-STORE, C-ETF-PLANE-READ, C-UNION-UNIVERSE, C-SIMILARITY-RANKER, C-POSTURE, C-FILINGS-ANALYZER,
-C-EXEC-MANAGEMENT -- eight, as the CVO counted). **PIN HAZARD, stated:** at this write both L4-R halves of v0.6 read REFUSED
-(ratified-text @`01e640925c`, brief @`d8bee9fd68`); the CVO's findings are ENDPOINT hygiene (history inside ENDPOINT, the
-outcome-count sentence, the provenance carrier for the four new cards) and the CRO's are a precedence map over superseded v0.5
-clauses (three tabs, `C-AMGT-ARTICLES-STORE`, the EC2 acquisition prescription) and a coverage map; neither asks a contract to
-change in substance. The cells below cite the CONTRACTS by name; the issuance re-pins this section to the SIGNED version
-(v0.7 or later) in the same commit, and a contract that changes in substance between this write and the signature re-opens
-the cell that cites it (an amendment, never a silent cut). The seam map every cell cites was measured 2026-09-15 06:1x-06:3xZ
-by a read-only reconnaissance over `C:/tmp/wk-amgt-10-1/portal` @`9aef3734` (the round-10 drain ref; the shared `portal/`
-checkout at `e85f6eb84f` does NOT carry the page) and the superproject at `82fab6ad44`.
+**Cut by `2.0.0_SA_COO~W` 2026-09-15 ~06:5xZ; AMENDED ~07:0xZ before any issuance** on `4.0.0_SA_CRO~W`'s connection brief
+`org/tier1_exec/4.0.0_SA_CRO/deliverables/RESAPP_CONNECTION_BRIEF_ROUND11_CUT_20260915_W.md` @`0f9a04e81e` (eight seams
+against the provisional s.19 @`a0f08622ae`, every one carried below) and on **PRD v0.7 @`164ae74e06`** (TEN contracts:
+C-PAGE-LAYOUT, C-ONE-STORE, C-ONE-IDENTITY, C-RANKING-GENERATION, C-ETF-PLANE-READ, C-UNION-UNIVERSE, C-SIMILARITY-RANKER,
+C-POSTURE, C-FILINGS-ANALYZER, C-EXEC-MANAGEMENT; s.9f the supersession map; s.9a-2 the measurement limits). Sources of the
+cut: `1.0.0_SA_CTO~W`'s L10 round-10 analysis `ledger/ROUND_ANALYSIS.round10.md` @`8d5fe78265` s.6 and `3.0.0_SA_CVO~W`'s slug
+`surprise-channel/remediations/REMEDIATION_v10.md` @`e28f0b546c`. **PIN:** the brief half of v0.7 is SIGNED (`4.0.0_SA_CRO~W`,
+stamp `e1d8b2d643`); the ratified-text half is REFUSED on ONE relocation (`3.0.0_SA_CVO~W`, lines 149-154 out of ENDPOINT); the
+issuance re-pins this section to the version at which `prd-signoff.py status AMGT_RESAPP` reads ADMITTED, in the same commit,
+and a contract that changes in substance between this write and that signature re-opens the cell that cites it. The seam map
+every cell cites was measured 2026-09-15 06:1x-06:3xZ over `C:/tmp/wk-amgt-10-1/portal` @`9aef3734` (the round-10 drain ref;
+the shared `portal/` checkout at `e85f6eb84f` does NOT carry the page) and the superproject at `82fab6ad44`.
 
-### 19a. THE SUBTRACTION (Rule 24, by subtraction over the printed denominator, never by recall)
+**THE BOX (s.9f, Andrew's later word of 2026-09-14 @`187f003998`, verbatim in the map): "the stable server is this box, and
+the lambda api calls are also this box ... local on this device with some kind of local cron job."** Every batch this round
+(the union universe, the ranker, the filings analyzer, executive management, Posture) is a LOCAL job on site-Z from the
+canonical library, scheduled as a Windows task DISABLED at creation; recurring activation is Andrew's word by name. NO new
+Lambda and NO new terraform resource is cut for a batch. The served read path (`opal-amgt-scoped-api`, mounted at ri-4) and the
+daily ranking producer (`amgt-resapp-chatter-axis`, repointed at ri-2) stay where they are and are REDEPLOYED once (rj-10).
+
+### 19a. THE SUBTRACTION (Rule 24; the population MINUS the excluded, denominator printed; the CRO's arithmetic finding carried)
 
 `comp-surprise --project AMGT_RESAPP --json` at HEAD `82fab6ad44`, 2026-09-15 06:3xZ: **176 investigation items, 197
-adjudication rows, 123 remediation rows across 104 files; 85 ARMED by latest citing row; 0 open items.** The remediation
-plane (the slug @`e28f0b546c`): **12 rows this round, 7 closed, 5 open**; six earlier clocks preserved in prior slugs
-(S67, S70, S72, S78 in v9; W11-S1 in v7; C-S49 in v5; S67 and S96 since disarmed by the CTO @`008ca40b6c`).
+adjudication rows, 123 remediation rows across 104 files; 85 ARMED by latest citing row; 0 open items.** The remediation plane
+(the slug @`e28f0b546c`): 12 rows this round, 7 closed, 5 open; six earlier clocks preserved in prior slugs (S70, S72, S78 in v9;
+W11-S1 in v7; C-S49 in v5; S67 and S96 disarmed by the CTO @`008ca40b6c`).
 
-The population this round subtracts from is **the 5 open remediation rows of v10 + the 4 new outcomes of v0.6 + the 8
-contracts**, MINUS what is excluded with a reason:
+**THE POPULATION = the 5 open v10 remediation rows + the 4 new outcomes + the 10 contracts = 19 members.** Each is in exactly one
+line below; the lines are disjoint and sum to 19.
 
-| item | carried by | excluded from a cell because |
-|---|---|---|
-| S95 the ranked-click identity (open) | **rj-1** | -- |
-| C-S196 drafting paired with evidence (open) | **rj-2** | -- |
-| S72 the exact-input exercise (open) | **rj-3**, LAST | -- |
-| S96 the article-store contract (open; disarmed @`008ca40b6c` by C-ONE-STORE; the readers' repoint is the cell) | **rj-5** | -- |
-| W17-S4 / W17-S5 the issuer's criteria (open) | the CUT itself: every rerun-able criterion in this round reads COMMITTED state, and every state census enumerates managed addresses apart from data-source entries (19g) | not a cell |
-| FWD-16 the header (description + feed) | **rj-9** | -- |
-| FWD-17 executive management | **rj-8** (the objects) + **rj-9** (the tab) | -- |
-| FWD-18 the filings analyzer + the one chart | **rj-6** (the objects) + **rj-9** (the chart) | -- |
-| FWD-19 Posture | **rj-11** (the call) + **rj-12** (the tab and the header line) | -- |
-| C-UNION-UNIVERSE, C-ETF-PLANE-READ | **rj-4** | -- |
-| C-SIMILARITY-RANKER (FWD-8's rule) | **rj-7** (the set) + **rj-9** (the CSC table) | -- |
-| C-PAGE-LAYOUT | **rj-9** | -- |
-| S70 / W11-S1 (the portal freeze) | -- | EXCLUDED: preserved under the freeze; no cell promotes anything |
-| S78 (Andrew-reserved owner) | -- | EXCLUDED: Andrew's decision, not a cell |
-| S13 the social feed's source | -- | EXCLUDED: the CRO's audit @`1906df40bd` measured no social HTTP client and no 89-name pipeline; the header feed's social half is S13's MEASUREMENT (a harvest-estate act under Andrew's cadence word), and rj-9 renders "social: no source measured" explicitly |
-| the harvest publication collection mechanism and cadence | -- | EXCLUDED: reserved to Andrew by name @`9db2a36cdc`; rj-5 READS what the pool holds and prints the denominator |
-| the deploy of every changed function + the new one | **rj-10** (the consumer cell, ONE terraform act in the harvest root) | -- |
+| # | member | carried by | note |
+|---|---|---|---|
+| 1 | S95 the ranked-click identity (open) | **rj-1** (with rj-4's crosswalk) | -- |
+| 2 | C-S196 drafting paired with evidence (open) | **rj-2** (over rj-6's typed evidence) | -- |
+| 3 | S72 the exact-input exercise (open) | **rj-3**, LAST | -- |
+| 4 | S96 the article-store contract (open; disarmed by C-ONE-STORE; the readers' repoint is the cell) | **rj-5** + **rj-9** (the route half) + **rj-10** (the package seam) | -- |
+| 5 | W17-S4 / W17-S5 the issuer's criteria (open) | the CUT's own discipline (19g) | folded, not a cell |
+| 6 | FWD-16 the header | **rj-9** | -- |
+| 7 | FWD-17 executive management | **rj-8** (objects) + **rj-9** (tab) | -- |
+| 8 | FWD-18 the filings analyzer + the one chart | **rj-6** (objects) + **rj-9** (chart) | -- |
+| 9 | FWD-19 Posture | **rj-11** (the call) + **rj-12** (tab + header line) | -- |
+| 10 | C-PAGE-LAYOUT | **rj-9** | -- |
+| 11 | C-ONE-STORE | **rj-5** (reader + producer) + **rj-9** (coverage route) + **rj-10** (the deployed archives carry the reader, its schema files and `jsonschema`) | -- |
+| 12 | C-ONE-IDENTITY | **rj-4** (the crosswalk `crosswalk/v1`) + **rj-1** (the route boundary) | -- |
+| 13 | C-RANKING-GENERATION | **rj-5** (the writer) + **rj-9** (the reader selects the committed generation) + **rj-10** (the live rerun proves it) | -- |
+| 14 | C-ETF-PLANE-READ | **rj-4** | -- |
+| 15 | C-UNION-UNIVERSE | **rj-4** | -- |
+| 16 | C-SIMILARITY-RANKER | **rj-7** (the set) + **rj-9** (the CSC table) | -- |
+| 17 | C-POSTURE | **rj-11** + **rj-12** | -- |
+| 18 | C-FILINGS-ANALYZER (v0.7: passage map, held uncited claims, typed evidence, the gate against the passage) | **rj-6** | -- |
+| 19 | C-EXEC-MANAGEMENT | **rj-8** | -- |
 
-Denominator: **17 members; 14 covered by 12 cells (three shared), 3 excluded with a reason, 1 folded into the cut's own
-criteria discipline.** Nothing is carried to a later round by this decomposition; round 12 exists only if the CTO's round-11
-analysis sends work back.
+**18 members covered by 13 cells (several shared), 1 folded into the cut; 18 + 1 = 19.** NOT IN THE POPULATION, named so nobody
+looks for them here: S70 / W11-S1 (the portal freeze; nothing promotes), S78 (Andrew-reserved owner), the harvest publication
+collection mechanism and cadence (reserved to Andrew @`9db2a36cdc`; rj-5 reads what the pool holds), the Bloomberg-terms
+question on filings (carded, open), and the recurring activation of any batch (Andrew's word). S13 is IN this round as a bounded
+measurement (**rj-13**, the CRO's eighth seam and s.9a-2's "measure, then build" row) -- one security, one declared method, a
+cap, a window; no feed is built.
 
 ### 19b. PLANE, GRAIN, DENOMINATOR (the remediation-v9 condition, kept)
 
@@ -1704,241 +1715,235 @@ analysis sends work back.
 | remediations (remedy rows) | row | 123 (12 new in v10) | -- | 5 (v10) + 6 preserved clocks |
 | union | item | 85 ARMED by latest citing row across planes | 85 | 0 |
 
-Per-owner ARMED figures are mentions across planes, not items, as in s.19b; none is read at a grain it does not have.
+Per-owner ARMED figures are mentions across planes, not items, as in s.18b; none is read at a grain it does not have.
 
-### 19c. THE CELLS -- twelve, six chains, one consumer
+### 19c. THE CELLS -- thirteen, five chains; rj-4 is the round's first act and every other chain starts after its drain
 
-Worker slots: `0.9.0_WK_AMGT_RESAPP~18` (A, the page: portal + the adapter's routes), `~19` (B, the data backbone + the
-one terraform act), `~20` (C, the model-side calls: filings, then Posture), `~21` (D, the ranker), `~22` (E, executive
-management). Every cell names its INTERFACE where another chain consumes it (19d), so parallel workers converge on the pool
-key and the function signature, not on each other's files.
+Worker slots: `0.9.0_WK_AMGT_RESAPP~18` (A, the page: every portal edit and every edit of `lib/research/api/scoped_amgt.py`),
+`~19` (B, identity + store + the one terraform act), `~20` (C, the model-side calls: filings, then Posture), `~21` (D, the
+ranker), `~22` (E, executive management, then the social measurement). Every cell names its INTERFACE (19d) where another chain
+consumes it, so parallel workers converge on a pool key and a function signature, never on each other's files.
 
-**rj-1 THE CANONICAL KEY ON THE RANKED CLICK** (row Z-S95; FWD-15, FWD-13; C-PAGE-LAYOUT). Chain A. The break is one hop:
-`RankedList.tsx:138` passes `row.ticker` into a slot `useSecurityAnalysisState.ts:37-39` renames `securityKey` with no
-transform; the adapter (`scoped_amgt.py:843-860`) takes the path segment verbatim, `read_security_overlay:630` falls back to
-`security_key.replace("_"," ")`, and `:653` reads `identity_status: UNRESOLVED` for `BABA US`; the ranking row
-(`chatter_axis.py build_rows :329-365`) carries `ticker` and NO canonical key. DELIVER: (1) `build_rows` emits `security_key`
-beside `ticker`, resolved through `lib/research/identity/resolver.py` over the universe object (rj-4's; until it lands, over
-`universe.json`), `null` + `identity_status: UNRESOLVED` when no key resolves -- never a guessed key; (2) the adapter's
-`/security/{key}/*` routes resolve a canonical key as-is and a Bloomberg-ticker form through the same resolver, returning
-`identity_status: UNRESOLVED` with the requested string echoed when neither resolves; (3) `RankedList.tsx`, `StarredList.tsx`
-pass `row.security_key`; a row with none is rendered with a visible UNRESOLVED marker and does not navigate; `types.ts`
-carries the field; (4) the round-8 join harness and `errorEmpty` harness extended by one arm each. BOUND: the producer's zip
-is rebuilt and deployed under rj-10, not here; this cell proves the producer's row shape by a local run of `build_rows` over
-a fixture and by its unit test.
+**rj-4 THE CROSSWALK AND THE UNION UNIVERSE** (C-ONE-IDENTITY, C-UNION-UNIVERSE, C-ETF-PLANE-READ; interfaces X-1, U-1). Chain B,
+FIRST of the round. (i) `crosswalk/v1/<as_of>.json` in the pool: ONE canonical identity per economic security (`<TICKER>_<CC>_Equity`)
+mapped to its Bloomberg identifier (`BA US`), display ticker, model/pack key, and EVERY publication-association key already
+persisted (`BA`, `security-<16 hex>` -- measured by listing `publication-links/v1/` and the pack/model-block names), with the
+source universe row and each identifier's provenance; exchange and share-class preserved; an unresolved vendor identifier stays
+UNRESOLVED (never `US Equity` appended, never a suffix stripped); 89 input names, ONE disposition each; re-running the mapper
+mints no second record (a fixed-point test). A library `lib/research/identity/crosswalk.py` (`resolve(any_form) -> identity |
+UNRESOLVED`, `aliases(identity) -> [association keys]`) is the ONE resolver every other cell calls. (ii) `universe/v1/<as_of>.json`:
+the coverage list (`universe.json`, 89) UNION the four books' current holdings from `s3://opal-data-etfs` (`gold/holding/` at the
+newest `snapshots/snapshot_<date>.json` vintage; the holdings layout MEASURED first -- the snapshot itself is four ETF header
+objects, 2,879 bytes), one row per name `{security_key, ticker, name, source: coverage|holding|both, books, weight_by_book,
+resolution, cik, filing_identity: {source: edgar|none, cik, form_expected: 10-K|20-F|none}, snapshot_date}` -- `cik` and
+`filing_identity` are the CRO's second seam, produced here from the SEC ticker-to-CIK table (cached in the deliverables) and
+carried for rj-6; denominators printed. READ-ONLY on the ETF plane (the object count and newest `LastModified` before and after
+are the control); the counterpart contract is NOT established (v0.7's own words), so the read is one-sided and the snapshot and
+schema vintage are carried on every object.
 
-**rj-2 DRAFTED SENTENCES BESIDE THEIR EVIDENCE** (row C-S196; FWD-9; C-FILINGS-ANALYZER's last sentence). Chain A, after
-rj-1. The seam: `scoped_amgt.py:680` returns `"drafted_sections": []` hardcoded; `ThesisTab.tsx:52` hides evidence in a native
-`title=` tooltip (an array stringified), while `lib/research/drafting/schema.json` already REQUIRES `evidence[]` (minItems 1),
-`generated: true`, `verbatim_check PASS|REFUSE`, and `verbatim.py` is the C-VERBATIM-GATE. DELIVER: (1) `read_thesis_bundle`
-reads `drafting/v1/{security_key}.json` from the pool (INTERFACE D-1, 19d) and, when absent, the landed fixture root
-`AMGT_DRAFTED_SECTIONS_ROOT` (default the `~3` deliverables dir; the BABA fixture is keyed `BABA_US` -- the cell lands a
-canonical-key copy in its own deliverables and points the root there); (2) `ThesisTab.tsx` renders EVERY drafted sentence with
-its `machine` marker inline AND its evidence text VISIBLE beside it (a block under the sentence quoting each evidence item),
-no `title=` carrier; (3) a render check asserting the evidence text is in the HTML beside its sentence; (4) the pipeline's
-refusal path (empty evidence, non-verbatim) exercised as the negative control. The REAL sentences come from rj-6 through the
-same schema; this cell makes the seam carry whatever validated sections exist.
+**rj-1 THE ROUTE BOUNDARY AND THE RANKED CLICK** (row Z-S95; C-ONE-IDENTITY; FWD-15). Chain A, after rj-4's drain. The seam:
+`RankedList.tsx:138` passes `row.ticker` into a slot `useSecurityAnalysisState.ts:37-39` renames `securityKey` with no transform;
+`scoped_amgt.py:843-860` takes the path segment verbatim and `read_security_overlay:630` guesses `replace("_"," ")`; ranking rows
+carry `ticker` only. DELIVER: the identity resolved ONCE at the route boundary through `crosswalk.py` (X-1) and carried unchanged
+through overlay, thesis, peers, model, coverage, ranking and Posture; a Bloomberg form (`BA US`) or a canonical key both resolve;
+neither -> `identity_status: UNRESOLVED` with the requested string echoed, no guessing; the ranking rows carry `security_key`
+(the producer's `build_rows` resolves through X-1; the deploy is rj-10's); `RankedList`/`StarredList` pass `row.security_key`; a
+`null` key renders an UNRESOLVED marker and does not navigate; harness arms.
 
-**rj-3 THE EXACT-INPUT EXERCISE** (row S72; FWD-15, FWD-9, FWD-10; the round's AC6 judgment). Chain A, LAST of all. The
-slug: "the browser rendered 09-12; AC2 captured 09-15. Equal counts/axis/ticker order are insufficient. Keep the exact payload
-hash/day through the assembled-route exercise, with error and empty controls." DELIVER: (1) `join.harness.mjs` accepts
-`--payload <path>` and a key (its `load(key)` already takes a key; the fixture filename is the hardcode) and prints the
-payload's sha256 and `as_of_date` at input; (2) the exercise runs the ASSEMBLED page (five tabs, header) against ONE saved
-ranked payload and ONE thesis bundle captured from the DEPLOYED adapter (rj-10's live reads), the persisted cache cleared
-(`queryPersister.ts clearQueryPersister`, key `OPAL_PORTAL_QUERY_CACHE_v1`, `staleTime: Infinity` at `main.tsx:40-41` is the
-stale-arm mechanism), and records the same sha at the rendered output; (3) error and empty controls on the same route; (4) the
-browser half is the COO's, re-driven with the same payload sha (Part D of `ROUND10_BROWSER_EXERCISE.md`'s successor record);
-(5) the judgment criterion for `3.0.0_SA_CVO~W`. No live-edge or person-session claim.
+**rj-2 DRAFTED SENTENCES BESIDE THEIR EVIDENCE** (row C-S196; FWD-9). Chain A, after rj-1 AND after rj-6's drain (its typed evidence
+is the input). The seam: `scoped_amgt.py:680` hardcodes `"drafted_sections": []`; `ThesisTab.tsx:52` hides evidence in a `title=`
+tooltip. DELIVER: `read_thesis_bundle` reads `drafting/v1/<key>.json` (D-1, typed evidence records with stable ids AND passage text)
+from the pool, validates every evidence id's existence, association and source version through rj-6's validator before serving,
+serves `drafting_status: SERVED | ABSENT | INVALID`; `ThesisTab.tsx` renders every sentence with its machine marker AND the passage
+text visibly beneath it (no `title=` carrier), the verbatim verdict as the `CheckFaceBadge`; a render check asserts the passage text
+sits after its sentence and before the next; the negative controls are the pipeline's (an unknown id, an empty evidence array).
 
-**rj-4 THE UNION UNIVERSE** (C-UNION-UNIVERSE, C-ETF-PLANE-READ; FWD-19's precondition). Chain B, first. DELIVER:
-`lib/research/identity/build_universe.py` (exists) extended to emit `universe/v1/{as_of}.json` to the pool (INTERFACE U-1):
-the coverage list (`universe.json`, 89 folders; 32 MEASURED / 57 UNRESOLVED at 2026-09-10; the CRO's audit read 34 eligible
-Bloomberg tickers) UNION the current holdings of DIVZ / IDVZ / PFDE / PFOE read from `s3://opal-data-etfs` (`gold/holding/`
-at the latest `snapshots/snapshot_<date>.json` vintage -- the snapshot itself is 4 ETF header objects, 2,879 bytes; the
-holdings live under `gold/holding/`, which the cell measures first), one row per name `{security_key, ticker, name,
-source: coverage|holding|both, books: [...], weight_by_book, resolution: MEASURED|UNRESOLVED, snapshot_date}`, denominators
-printed (coverage N, holdings M, union, resolved, unresolved). READ-ONLY on the ETF plane (`C-ETF-PLANE-READ`): GetObject and
-ListBucket only, never a write, and every emitted object carries `snapshot_date`.
+**rj-3 THE EXACT-INPUT EXERCISE** (row S72; FWD-15, FWD-9, FWD-10; the round's AC6 judgment). Chain A, LAST of all. ONE ranked payload
+and ONE thesis bundle captured from the DEPLOYED adapter (rj-10), each carrying its `generation_id`, coverage vintage and payload
+hash (C-RANKING-GENERATION: a date alone cannot tell two computations apart), sha256 printed at input and at output of the
+assembled page (five tabs, header, Posture line); the persisted cache (`OPAL_PORTAL_QUERY_CACHE_v1`, `staleTime: Infinity`)
+cleared per arm; error and empty controls DISTINCT; the browser half the issuer's with the same hashes; the judgment for
+`3.0.0_SA_CVO~W`. No live-edge or person-session claim.
 
-**rj-5 ONE-STORE: THE TWO READERS ON THE POOL** (rows Z-S96 / Z-S101; C-ONE-STORE). Chain B, after rj-4. The seam:
-`chatter_axis.py:205-215` queries DynamoDB `opal-harvest-articles` via `ticker_date_index` (0 items measured 2026-09-11;
-nothing in the repo writes it); `scoped_amgt.py:685-703 read_coverage_set` reads the same table with the lossy
-`replace("_"," ")` key; the harvester writes `publications/v1/{publisher}/{sha256(publisher:article_id)}.json` (body; field
-`published`, NOT `published_at`; `url` canonical; `title`; `publisher`) and `publication-links/v1/{security_key}/{publisher}/
-{digest}.json` (link; `security_key`, `ticker`, `article_key`, `first_discovered_at`) -- schemas `article.schema.json`,
-`security-article.schema.json`; and NO S3 reader exists anywhere under `lib/research/`. DELIVER: (1) a NEW module
-`lib/research/coverage/pool_reader.py` (INTERFACE P-1): `list_links(security_key) -> [link]`, `read_body(article_key) ->
-body`, `coverage_items(security_key, days) -> [{title, url, publisher, published, article_key}]` newest first, with
-`store_item_count` = links found and the vintage of the read; (2) `chatter_axis.py` counts per `security_key` over the
-universe object (U-1) from the pool's `published` dates in the 30-day window (the DynamoDB read path removed; the env knob
-`HARVEST_ARTICLES_TABLE` retired); (3) `read_coverage_set` returns P-1's items; (4) a DIFFERENCE CONTROL printed: pool count
-vs table count for BA, COST, HD (the CRO's commissioned names, 5 bodies per publisher each) and for one name with no links;
-(5) unit tests with a local fake of the two prefixes. The producer's live re-run and the adapter's deploy are rj-10's.
+**rj-5 ONE STORE: THE READER, THE PRODUCER, THE GENERATION** (rows Z-S96 / Z-S101; C-ONE-STORE, C-RANKING-GENERATION; interfaces P-1,
+G-1). Chain B, after rj-4. DELIVER: (i) the ONE shared adapter `lib/research/coverage/pool_reader.py` (P-1) over
+`publication-links/v1/{security_key}/{publisher}/{digest}.json` and `publications/v1/{publisher}/{digest}.json`: `article_key =
+publisher + ':' + article_id`, `digest = sha256(article_key)`, the body's `published` mapped to the consumer's `published_at` at the
+boundary (never `fetched_at`, never `first_discovered_at`); one article counts ONCE per security however many links or aliases
+carry it (the legacy association aliases learned from X-1); a missing body, a malformed record, an access denial and a partial read
+are DISTINGUISHABLE states from a quiet day and from an empty feed; the field-level contract is the CRO's brief @`0e7de170e3`,
+read first. (ii) `chatter_axis.py` builds its 30-day histogram per `security_key` over U-1 from P-1; the DynamoDB articles read path
+and the `HARVEST_ARTICLES_TABLE` knob REMOVED. (iii) THE WRITER: a rerun publishes a COMPLETE GENERATION -- the cut names
+**an immutable generation partition plus a current pointer**: rows written under `axis_date = <AXIS>#<date>#<generation_id>`,
+then ONE pointer item `axis_date = <AXIS>#<date>, ticker = "_CURRENT"` carrying `generation_id`, `run_id`, `coverage_vintage`,
+`payload_hash`, `row_count`, `state: COMPLETE | EMPTY | FAILED`; a successful empty product writes an EMPTY pointer (clears the
+membership from the reader's view); a failed run leaves the prior pointer and writes a FAILED marker beside it; no mixed generation
+is ever readable (G-1: the reader follows the pointer). The measured defect (`batch_writer(overwrite_by_pkeys)` never clearing
+rows; AAA#1, BBB#1, CCC#2 after a replacement run) is the negative control the tests reproduce and the new writer passes.
+(iv) the difference control (pool vs table for BA, COST, HD and a name with no links); unit tests with a local fake of the two
+prefixes covering every distinguishable state. The coverage ROUTE edit is rj-9's (chain A owns `scoped_amgt.py`).
 
-**rj-6 THE FILINGS ANALYZER** (FWD-18; C-FILINGS-ANALYZER; feeds rj-2's schema and rj-9's chart). Chain C, first. Card 1
-@`5007337353`: Boeing's 10-K (EDGAR, a public stand-in; "the production input will be the filing Bloomberg pulls" -- no
-Bloomberg filings pull exists in the estate, so THIS ROUND'S INPUT IS EDGAR for US filers by CIK from the universe object,
-and a non-US name is `UNRESOLVED-SOURCE` explicit; the Bloomberg-terms question stays carded), through the Claude API with
-document citations: 76 items, 71 cited inline; JSON + citations cannot be combined (400). DELIVER: a NEW package
-`lib/research/filings/` -- `fetch.py` (EDGAR full-text for the latest 10-K by CIK, the UA header the SEC requires, the
-document sha256 kept), `analyze.py` TWO PASSES (pass 1: citations on, prose per item class -- guidance, segments, risks,
-commentary, big bets, big challenges, the THESIS DRIVER; pass 2: a JSON schema over pass-1's text with each item's cited
-passage carried as a quoted span), writing `filings/v1/{security_key}/{accession}.analysis.json` (INTERFACE F-1) and
-`drafting/v1/{security_key}.json` (INTERFACE D-1: the drafting schema `lib/research/drafting/schema.json` -- sentences with
-`generated: true`, `evidence[]` = the cited passages, `verbatim_check` from `lib/research/drafting/verbatim.py` against the
-filing text; REFUSE sentences dropped and counted) with `thesis_driver: {series, unit, source}` naming the series the one
-chart is drawn from; `lambda_function.py` + `infra/aws/terraform/harvest/filings-analyzer.tf` (a scheduled batch over the
-universe object, weekly, the anthropic layer `infra/aws/lambda/layers/anthropic-sdk-deps`, the key from Secrets Manager
-`anthropic-api-key` at runtime; declared here, APPLIED under rj-10). QA one-shot in this cell: BA, COST, HD locally under
-Andrew's session egress word @`dfa63b6d92` (the key read through `comp-secrets get anthropic-api-key --reveal`, never a raw
-secretsmanager read), objects landed in the pool and read back. COST, stated for Andrew: about USD 1.06 and 115 s per
-filing at card 1's size; the union universe is ~150 names, so a full weekly batch is on the order of USD 150 -- the cadence
-is declared, not defended, and the first batch does not run in this round.
+**rj-6 THE FILINGS ANALYZER, LOCAL** (FWD-18; C-FILINGS-ANALYZER v0.7; interfaces F-1, D-1). Chain C, after rj-4's drain (CIK and
+filing identity from U-1). Card 1 @`5007337353` is the working shape (read `measure_filings_analyzer.py` first; the SEC user-agent
+it sets is reused, never invented; the key through `comp-secrets get anthropic-api-key --reveal`). THE CUT NAMES TWO PASSES.
+DELIVER: `lib/research/filings/` -- `fetch.py` (the latest 10-K, or 20-F for a foreign private issuer, by CIK from U-1; the
+document persisted with its content hash, retrieval time and parser version; `UNRESOLVED-SOURCE` explicit), `analyze.py` (pass 1:
+citations on, prose per item class; pass 2: a JSON schema over pass-1 text; EVERY cited claim RESOLVES to an exact passage through
+an index-to-passage map persisted beside the rows; a claim whose tag resolves to nothing is HELD uncited -- never evidence, never a
+chart input), writing `filings/v1/{security_key}/{accession}.analysis.json` (F-1) and `drafting/v1/{security_key}.json` (D-1:
+TYPED evidence records `{id, passage, source: {accession, sha256, location}}` beside sentences whose `evidence[]` are those ids;
+`thesis_driver` EXERCISED on a real filing). The drafting library changes are THIS cell's (chain C is `lib/research/drafting/`'s
+one writer this round): the reader validates existence, association and source version for every evidence id BEFORE the verbatim
+gate, and the gate runs against the PASSAGE, not the title (the measured defect: the existing gate passed an unknown id with no
+quotation and refused a valid body passage, three probes ~06:2xZ). QA: at least THREE filings across TWO filers including ONE
+non-US name (BA and COST as 10-K filers; SAP_GY_Equity as a 20-F filer -- the measurement limit of s.9a-2), items / cited / uncited
+printed per filing; a `python -m lib.research.filings.batch --universe <U-1>` CLI over the union universe with a Windows task
+definition DISABLED (`schtasks /Create ... /SC WEEKLY` with the task left disabled; activation is Andrew's). NO Lambda, NO terraform.
+COST stated for Andrew: about USD 1.1 and 115 s per filing at card 1's size; a full weekly batch over ~150 names is on the order of
+USD 150.
 
-**rj-7 THE SIMILARITY RANKER** (FWD-8; C-SIMILARITY-RANKER; FWD-19's comparable). Chain D. The seam:
-`lib/research/peers/engine.py` implements rungs one and two (`GICS_SECTOR_NAME`, `CUR_MKT_CAP` band 0.2x-5x; basis
-analyst|derived|absent) and emits `absent` for every real name because `candidate_universe` is never loaded (`:176-184`); the
-database is the Security Scanner's universe data at `s3://opal-data-portal-v2/json/security_scanner/latest/universes/{sp500,
-r1000,r1000v,acwx,eafe,eafev}/universe_data.json` (`{asOf, universeId, securities: [{ticker, name, mktVal, country, sector,
-industryGroup, universeWeight, values{284 factor codes}}]}`; sp500 3.7 MB, **asOf 2026-08-06** -- a vintage the set must carry),
-served to the portal straight from S3 through `/api/general/*`. DELIVER: `lib/research/peers/universe.py` (loader over the six
-files UNION the model-block headers, one candidate per ticker, the vintage carried); `engine.py` gains rungs three (same
-`country`) and four (same `industryGroup`) in lexicographic order with a log-market-cap tiebreak inside the last rung; the set
-is a Rule 24 subtraction (database MINUS excluded, denominator printed per rung) with `test` strings naming the field;
-`peers/v1/{security_key}/{as_of}.json` to the pool (INTERFACE R-1: `{subject, basis, members: [{security_key|ticker, name,
-rung_reached, mktVal, country, sector, industryGroup, factor_values{...}}], denominators{...}, universe_vintage}`), plus a
-CSC-column map (Price, Shares, Debt, Preferred, Minority, Cash, Market Cap, EV, P/E x3, leverage, 5-yr growth of Rev/EBIT/FCF)
-written as the CSC columns MINUS the scanner-carried factor codes = ABSENT explicit; a Seeking Alpha comparables list, if
-its API exposes one, MEASURED once as an input candidate under the session egress and recorded, never used as the rule. The
-Peers tab's CSC table is rj-9's (chain A) over R-1.
+**rj-7 THE SIMILARITY RANKER** (FWD-8; C-SIMILARITY-RANKER; interface R-1). Chain D, after rj-4's drain. As the provisional cut, with
+the identity through X-1: the loader over the six scanner universe files (`s3://opal-data-portal-v2/json/security_scanner/latest/
+universes/*/universe_data.json`, asOf 2026-08-06 carried as the vintage) UNION the model-block headers; rungs sector -> size band
+(0.2x-5x, `engine.py`) -> country -> industry group, log-market-cap tiebreak; the Rule 24 subtraction per rung; `peers/v1/{key}/
+{as_of}.json` for every resolved name of U-1 (an `absent` object with its reason for the rest); the CSC-column map as present MINUS
+absent; a Seeking Alpha comparables list measured ONCE as an input candidate if reachable without the CRO's vault, else
+ABSENT-ACCESS. Local batch; no deploy.
 
-**rj-8 EXECUTIVE MANAGEMENT** (FWD-17; C-EXEC-MANAGEMENT). Chain E. Card 2: Lusha's `c-suite` filter is loose and carries no
-tenure; the roster and the role-start come from the filing. DELIVER: a NEW package `lib/research/management/` -- `roster.py`
-(the executive-officer section of the latest 10-K / DEF 14A from EDGAR for US filers, `UNRESOLVED-SOURCE` for others; name,
-role, role_start), `enrich.py` (the estate's client `data/find/imo/scripts/_util/lusha_client.py` `LushaClient`, key via
-`comp-secrets get <the find-insure/lusha-ai/* name> --reveal`; profile link + title per CONFIRMED officer only; a targeted web
-search on the company's IR domain for the CEO through `data/find/dualbiz/scripts/serp.py serp_brightdata`; NO contact field
-stored -- the schema forbids `email` and `phone`), writing `management/v1/{security_key}/{as_of}.json` (INTERFACE M-1:
-`{officers: [{name, role, role_start, tenure_years, profile_url|null, source: filing|lusha|web, confirmed: bool}],
-avg_tenure_years, pool_avg_tenure_years, pool_denominator, as_of}`) and `management/v1/_pool/{as_of}.json` (the pool average
-over the universe object with its denominator: names with a roster / names in the union). QA one-shot on BA, COST, HD in this
-cell (ad-hoc QA is permitted; the production loop for this lane is the harvest estate's under the same discipline Andrew
-set at ~04:3xZ, and is NOT started here). The tab is rj-9's over M-1.
+**rj-8 EXECUTIVE MANAGEMENT** (FWD-17; C-EXEC-MANAGEMENT; interface M-1). Chain E, after rj-4's drain. As the provisional cut with the
+identity through X-1 and the roster from the filing rj-6's fetcher persists (the executive-officer section; role start EXERCISED on a
+real filing; ex-US via the 20-F where it carries the section, else UNRESOLVED-SOURCE); Lusha enrichment through the estate's
+`LushaClient` (key via `comp-secrets`; profile link + title per CONFIRMED officer; no contact field stored -- the schema forbids
+`email` and `phone`); a targeted IR-domain search for the CEO via `serp_brightdata`; `management/v1/{key}/{as_of}.json` and the
+pool average over U-1 with its denominator. QA one-shot on BA, COST, HD and the two names rj-11 will compare. Local; no loop
+started (the production loop is the harvest estate's).
 
-**rj-9 THE HEADER AND THE FIVE TABS** (FWD-16; C-PAGE-LAYOUT; the rendering half of FWD-17, FWD-18, FWD-8). Chain A, after
-rj-2 AND after the drains of rj-5, rj-6, rj-7, rj-8 (their pool objects are its fixtures). The seam: `constants.ts:69-73`
-`SECURITY_ANALYSIS_TABS` = exactly three (thesis, peers, coverage); `LeadPanel.tsx` is the header; `CoverageTab.tsx` +
-`useCoverageSet`; the fiscal table lives in `ThesisTab.tsx` (round 5 cut the Model tab); `SecurityOverlay.tsx`. DELIVER:
-(1) tabs = Thesis, Exec Management, Peers, Model, Posture; the Coverage tab retired, its list becomes the header's company
-feed (P-1 items newest first for the selected security; social items rendered as "no source measured (S13)"); (2) a one-line
-description in the header -- source measured in this order: a company-description scalar in the model block header if one
-exists, else the `company_description` section's first sentence from D-1 marked machine, else ABSENT explicit; (3) the Model
-tab = `fiscal_year_figures` in the shape of Adam's `Model` sheet (Financial Summary rows x fiscal years; the three cases
-ABSENT explicit), moved out of Thesis; (4) Thesis = the drafted sections (rj-2) + ONE chart of `thesis_driver`'s series from
-F-1 over the model block's fiscal series (or the filing's segment table when the series is not in the block), ABSENT explicit
-when no driver; (5) Peers = the CSC table over R-1 with the absent columns marked and Average/Median/Min/Max rows; (6) Exec
-Management = M-1 (officers, tenure, the pool comparison line); (7) the adapter's routes for feed, description, peers,
-management and posture read the pool objects (P-1, D-1, R-1, M-1, and `posture/v1/{key}/{as_of}.json` when present) with
-ABSENT explicit -- ALL adapter route edits of the round live in chain A (this cell and rj-1/rj-2) so `scoped_amgt.py` has one
-writer; (8) Print stays a header action. The harnesses extended per tab; the render check over the assembled page.
+**rj-13 THE SOCIAL SOURCE, MEASURED** (S13; s.9a-2's "measure, then build" row; C-LISTING-NOT-CAPABILITY). Chain E, after rj-8. ONE
+security, ONE declared method (the estate's Bright Data dataset trigger per `deliverables/0.9.0_WK_AMGT_RESAPP~6/MEASUREMENT_PLAN.md`:
+X posts, dataset `gd_lwxkxvnf1cynvib9co`, cashtag then company then resolved handle), a CAP (records and USD) and a WINDOW, under
+the session egress word; the observables the plan names (cost, freshness, schema, latency, relevance) printed; the record filed as
+`social/v1/_measurement/<as_of>.json` and a row. NO feed is built; the header's social half renders "no source measured" until a
+later round cuts one from this measurement.
 
-**rj-10 THE DEPLOY AND THE LIVE READ** (the consumer cell; C-ONE-STORE applied; FWD-18's schedule declared). Chain B, after
-rj-5 AND after the drains of rj-1, rj-6, rj-7, rj-8, rj-9 (it consumes their code). ONE terraform act in the harvest root:
-rebuild the scoped API zip (the closure builder from round 10), the chatter-axis zip (`build_zip.py`, now importing the pool
-reader), the filings-analyzer zip + layer; IAM: `s3:GetObject`/`s3:ListBucket` on `opal-data-harvest` for the prefixes
-`publications/v1/`, `publication-links/v1/`, `universe/v1/`, `filings/v1/`, `drafting/v1/`, `peers/v1/`, `management/v1/`,
-`posture/v1/` (read) and `filings/v1/`, `drafting/v1/` (write, the analyzer only); `s3:GetObject` on `opal-data-etfs`
-`gold/holding/*` + `snapshots/*` and on `opal-data-portal-v2` `json/security_scanner/latest/*`; `secretsmanager:GetSecretValue`
-on `anthropic-api-key` (the analyzer role only); the analyzer's EventBridge schedule DISABLED at creation (`state = DISABLED`;
-its first batch is Andrew's word); the DynamoDB articles table's grants REMOVED from the two roles (C-ONE-STORE: retired as a
-source). Whole-root plan with the managed-address census enumerated APART from data-source entries (W17-S5), the co-sign
-(COO half at this cut, CTO half requested in the issuance) covering the served-output move (coverage, thesis, peers, management
-and posture routes now serve pool objects), `safe-apply` with the ledger; LIVE READS: the producer's QA invoke writes rows
-carrying `security_key` from pool counts (the difference control printed again on the live plane); the deployed adapter's
-coverage for BA from the pool; thesis with N>0 drafted sections for BA; peers derived for BA; management for BA; the analyzer
-function invoked once on BA (QA) and its object read back. The exact payloads captured here are rj-3's inputs.
+**rj-9 THE HEADER AND THE FIVE TABS** (FWD-16; C-PAGE-LAYOUT; the rendering half of FWD-17, FWD-18, FWD-8; the route half of
+C-ONE-STORE and C-RANKING-GENERATION). Chain A, after rj-2 AND after the drains of rj-5, rj-6, rj-7, rj-8. Tabs = Thesis, Exec
+Management, Peers, Model, Posture; the Coverage tab retired into the header feed (P-1 items newest first; social: "no source
+measured (S13)"); a one-line description (a model-block header scalar if one exists, else D-1's `company_description` first
+sentence marked machine, else ABSENT); the Model tab = `fiscal_year_figures` in Adam's `Model` sheet shape; Thesis = the drafted
+sections (rj-2) + ONE chart of F-1's `thesis_driver` series; Peers = the CSC table over R-1; Exec Management = M-1; EVERY adapter
+route edit of the round lives here: `read_coverage_set` on P-1 (via X-1's aliases), the rankings route following G-1's pointer
+(the committed generation, never a mixed one; `generation_id` and `payload_hash` on the response), peers on R-1, management on
+M-1, posture on O-1 when present; ABSENT explicit everywhere; Print a header action. Harnesses per tab; the render check over the
+assembled page.
 
-**rj-11 THE POSTURE CALL** (FWD-19; C-POSTURE). Chain C, after rj-6 AND after the drains of rj-4, rj-7, rj-8. DELIVER: a NEW
-package `lib/research/posture/` -- `membership.py` (held / not held, book, weight at the snapshot vintage from U-1 + the
-holdings read), `comparable.py` (rj-7's ranker restricted to the OTHER side: an Opal holding for a non-held subject, a non-held
-name for a held one; the most similar by rung then log-mktcap distance), `judge.py` (the Claude API over the two evidence
-packs -- D-1, M-1, R-1 and the model block figures for BOTH names, plus each name's factor profile scored under the Opal ETF
-presets `SecurityScanner/constants.ts` DIVZ 13 / PFOE 16 as the FIT input -- producing `{verdict: better|worse|hold|
-steer_clear, comparable, basis: [{claim, cites: [pack element ids]}], as_of, marked: "machine"}`), written to
-`posture/v1/{security_key}/{as_of}.json` (INTERFACE O-1) versioned; QA one-shot on BABA_US_Equity (not held) and on one HELD
-name from the holdings read (the symmetric arm); a subject with no comparable -> `verdict: absent` with the reason. NOTHING in
-the trade pipeline reads it; the scheduled compute is round 12's if the analysis asks for it.
+**rj-10 THE DEPLOY AND THE LIVE READ** (the consumer cell; C-ONE-STORE's package seam; C-RANKING-GENERATION on the live plane). Chain B,
+after rj-5 AND after the drains of rj-1, rj-9 (and rj-6/7/8, whose objects the live reads exercise). ONE terraform act in the
+harvest root: rebuild the scoped API zip (the round-10 closure builder, now ALSO carrying the reader's schema files and a vendored
+`jsonschema` -- the package seam, exercised in an isolated runtime before upload) and the chatter-axis zip; IAM: `s3:GetObject` /
+`s3:ListBucket` on `opal-data-harvest` for the prefixes `publication-links/v1/`, `publications/v1/`, `universe/v1/`, `crosswalk/v1/`,
+`filings/v1/`, `drafting/v1/`, `peers/v1/`, `management/v1/`, `posture/v1/` (read) for the two roles; the DynamoDB articles table's
+grants REMOVED from both (retired as a source); NO new function, NO new schedule. The whole-root plan with the managed-address
+census enumerated APART from data-source entries (W17-S5), the co-sign (COO half at the cut, CTO half requested in the issuance)
+covering the served-output move (coverage, thesis, peers, management, posture and rankings now serve pool objects and committed
+generations), `safe-apply` with the ledger; LIVE READS: the producer's QA invoke writes a COMPLETE generation with its pointer
+(rows carry `security_key`; the pointer carries `generation_id`, `coverage_vintage`, `payload_hash`); a second invoke on a day
+with no articles writes an EMPTY pointer (the changed-winner / zero-winner control); the deployed adapter's rankings follow the
+pointer; coverage for BA from the pool; thesis with N > 0 drafted sections with passages; peers derived; management for BA. The
+captured payloads (with `generation_id` and hash) are rj-3's inputs.
 
-**rj-12 THE POSTURE TAB AND THE HEADER LINE** (FWD-19; C-PAGE-LAYOUT). Chain A, after rj-9 AND after rj-11's drain. DELIVER:
-the Posture tab over O-1 (verdict, the named comparable as a link into its own page, the basis claims each with its cited
-pack element rendered beside it, the machine marker, the snapshot date) and the header's one-line posture with the same
-marker; ABSENT explicit when no object.
+**rj-11 THE POSTURE CALL** (FWD-19; C-POSTURE). Chain C, after rj-6 AND after the drains of rj-4, rj-7, rj-8. As the provisional cut:
+membership at the snapshot vintage (U-1 + the holdings read, one-sided), the comparable by R-1 restricted to the OTHER side, the
+judgment through the Claude API over the two evidence packs (D-1, M-1, R-1, the model block figures for BOTH names; the ETF preset
+fit scores) -> `posture/v1/{key}/{as_of}.json` (O-1) `{verdict: better|worse|hold|steer_clear|absent, comparable, basis:
+[{claim, cites}], as_of, generation, marked: "machine"}`; QA on BABA_US_Equity (not held) and on ONE held name from the holdings
+read, with D-1/M-1/R-1 landed for BOTH names of each pair by rj-6/7/8's QA lists (the CRO's seventh seam: the QA name lists are
+aligned in 19e); a subject with no comparable -> `absent` with the reason. Local; nothing trades; no schedule.
+
+**rj-12 THE POSTURE TAB AND THE HEADER LINE** (FWD-19; C-PAGE-LAYOUT). Chain A, after rj-9 AND after rj-11's drain. The tab over O-1
+(verdict, the comparable as a link into its own page, each basis claim with its cited pack element beside it, the machine marker,
+the snapshot date) and the header's one-line posture with the same marker; ABSENT explicit.
 
 ### 19d. THE INTERFACES (what one chain writes and another reads; the pool prefixes are the contract)
 
-| id | writer | reader(s) | pool key | shape (the fields a reader may rely on) |
+| id | writer | reader(s) | pool key / signature | shape (the fields a reader may rely on) |
 |---|---|---|---|---|
-| U-1 | rj-4 | rj-1, rj-5, rj-6, rj-7, rj-8, rj-11 | `universe/v1/{as_of}.json` | `{as_of, snapshot_date, names: [{security_key, ticker, name, source, books, weight_by_book, resolution}], denominators}` |
-| P-1 | rj-5 | rj-9, rj-10 | reads `publication-links/v1/{key}/...` + `publications/v1/...` | `coverage_items(key, days) -> [{title, url, publisher, published, article_key}]`, `store_item_count`, `read_at` |
-| D-1 | rj-6 | rj-2, rj-9, rj-11 | `drafting/v1/{key}.json` | the drafting schema; sections x sentences `{text, generated: true, evidence[], verbatim_check}`; plus `thesis_driver` |
-| F-1 | rj-6 | rj-9 | `filings/v1/{key}/{accession}.analysis.json` | typed rows: guidance, segments, risks, commentary, big_bets, big_challenges, `thesis_driver{series, unit, source}` |
-| R-1 | rj-7 | rj-9, rj-11 | `peers/v1/{key}/{as_of}.json` | `{subject, basis, members[{key|ticker, name, rung_reached, mktVal, country, sector, industryGroup, factor_values}], denominators, universe_vintage, csc_columns{present, absent}}` |
-| M-1 | rj-8 | rj-9, rj-11 | `management/v1/{key}/{as_of}.json`, `management/v1/_pool/{as_of}.json` | officers[], avg_tenure_years, pool_avg_tenure_years, pool_denominator; no contact fields |
-| O-1 | rj-11 | rj-12 | `posture/v1/{key}/{as_of}.json` | `{verdict, comparable, basis[{claim, cites[]}], as_of, marked: "machine"}` |
+| X-1 | rj-4 | every cell | `crosswalk/v1/{as_of}.json`; `lib/research/identity/crosswalk.py resolve(any_form)`, `aliases(identity)` | one record per canonical identity: `{security_key, bloomberg, display_ticker, model_key, association_keys: [...], exchange, share_class, source_row, provenance, resolution}`; UNRESOLVED records kept with their raw identifier |
+| U-1 | rj-4 | rj-1, rj-5, rj-6, rj-7, rj-8, rj-11, rj-13 | `universe/v1/{as_of}.json` | `{as_of, snapshot_date, schema_version, names: [{security_key, ticker, name, source, books, weight_by_book, resolution, cik, filing_identity}], denominators}` |
+| P-1 | rj-5 | rj-9, rj-10 | `lib/research/coverage/pool_reader.py coverage_items(identity, days)` | `{items: [{title, url, publisher, published_at, article_key}], store_item_count, states: {missing_body, malformed, denied, partial}, read_at}` -- one article once per security |
+| G-1 | rj-5 | rj-9, rj-10, rj-3 | DynamoDB `opal-harvest-security-metrics`: rows at `<AXIS>#<date>#<generation_id>`; pointer at `<AXIS>#<date>` / `_CURRENT` | pointer `{generation_id, run_id, coverage_vintage, payload_hash, row_count, state}`; rows carry `security_key`, `ticker`, `rank`, `score`, `generation_id` |
+| D-1 | rj-6 | rj-2, rj-9, rj-11 | `drafting/v1/{key}.json` | the drafting schema (typed): `evidence_records: [{id, passage, source}]`, sections x sentences `{text, generated: true, evidence: [ids], verbatim_check}`, `held_uncited: [...]`, `thesis_driver`, `dropped` |
+| F-1 | rj-6 | rj-9 | `filings/v1/{key}/{accession}.analysis.json` | `{source: {url, sha256, retrieved_at, parser_version}, excerpt_sha256, passage_map, items{...}, held_uncited, thesis_driver}` |
+| R-1 | rj-7 | rj-9, rj-11 | `peers/v1/{key}/{as_of}.json` | `{subject, basis, members[...], denominators, universe_vintage, csc_columns{present, absent}, sa_candidates}` |
+| M-1 | rj-8 | rj-9, rj-11 | `management/v1/{key}/{as_of}.json`, `management/v1/_pool/{as_of}.json` | officers[{name, role, role_start, tenure_years, profile_url, source, confirmed}], avg_tenure_years, pool_avg_tenure_years, pool_denominator; no contact fields |
+| O-1 | rj-11 | rj-12 | `posture/v1/{key}/{as_of}.json` | `{verdict, comparable, basis[{claim, cites}], as_of, generation, marked: "machine"}` |
+| S-1 | rj-13 | (a later round) | `social/v1/_measurement/{as_of}.json` | the measurement record: method, cap, window, cost, freshness, schema, latency, relevance |
 
-A reader treats an absent object as ABSENT explicit, never as an empty day. Every object carries `as_of` and the vintage of
-what it read. `security_key` is the canonical `<TICKER>_<CC>_Equity` form everywhere in the pool; a Bloomberg ticker is a
-display field, never a key.
+A reader treats an absent object as ABSENT explicit, never as an empty day. Every object carries `as_of` and the vintage of what it
+read. `security_key` is the canonical form everywhere in the pool; a Bloomberg ticker is a display field, never a key.
 
 ### 19e. EDGES, FANOUT, THE DRAIN CONTRACT
 
-Edges: rj-1 -> rj-2 -> rj-9 -> rj-12 -> rj-3 (chain A); rj-4 -> rj-5 -> rj-10 (chain B); rj-6 -> rj-11 (chain C); rj-7
-(chain D); rj-8 (chain E); cross-chain: {rj-5, rj-6, rj-7, rj-8} -> rj-9; {rj-1, rj-6, rj-7, rj-8, rj-9} -> rj-10;
-{rj-4, rj-7, rj-8} -> rj-11; rj-10 -> rj-3; rj-11 -> rj-12.
+Edges: rj-4 -> {rj-1, rj-5, rj-6, rj-7, rj-8} (the round's first drain gates every chain); rj-1 -> rj-2 -> rj-9 -> rj-12 -> rj-3
+(chain A); rj-5 -> rj-10 (chain B); rj-6 -> rj-11 (chain C); rj-8 -> rj-13 (chain E); cross-chain: rj-6 -> rj-2; {rj-5, rj-6, rj-7,
+rj-8} -> rj-9; {rj-1, rj-9} -> rj-10; {rj-7, rj-8} -> rj-11; rj-10 -> rj-3; rj-11 -> rj-12.
 
-**M = 5 dependency-independent chains at the cut (A, B, C, D, E); N = 5 workers; K = 8.**
-`fanout: 5 of 5 chains, cap 8, reason: one worker per chain; chain A holds every portal and adapter-route edit so the page and scoped_amgt.py have one writer; cross-chain cells are handed by the COO only after the cells they consume are DRAINED`
+**M = 5 dependency-independent chains after rj-4 (A, B, C, D, E); N = 5 workers; K = 8.**
+`fanout: 5 of 5 chains, cap 8, reason: one worker per chain; rj-4 is spawned alone first and the other four chains spawn at its drain; chain A holds every portal and adapter-route edit, chain C every drafting-library edit, so each shared file has one writer; cross-chain cells are handed only after the cells they consume are DRAINED`
+
+QA name lists aligned (the CRO's seventh seam): rj-6, rj-7 and rj-8 each land objects for BA_US_Equity, COST_US_Equity,
+HD_US_Equity, SAP_GY_Equity (the non-US filer) and BABA_US_Equity, plus the ONE held name rj-11 picks from the holdings read
+(named in rj-11's first row so rj-6/7/8's QA can be extended by the COO's hand-over if it is outside the five).
 
 Drain contract: every worker in a linked worktree cut from the CURRENT branch (`git worktree add -b wk-amgt_resapp-11-<n>
-C:/tmp/wk-amgt-11-<n> HEAD`); chain A's portal checkout is cut from `refs/drains/ri-1-portal` @`9aef3734` on a branch
-`wk-amgt_resapp-11-1-portal`, fetched at its drains into `refs/drains/rj-portal` (the gitlink `e85f6eb84f` NEVER moves);
-chains B-E touch no portal file. The superproject drains through `safe-merge.sh` with the channel union by row id; the
-adapter file `lib/research/api/scoped_amgt.py` has ONE writer (chain A), the terraform root ONE writer (chain B), the pool
-prefixes ONE writer each (19d). Hand-over order the COO drives: rj-1, rj-4, rj-6, rj-7, rj-8 spawn together; rj-2 after rj-1;
-rj-5 after rj-4; rj-9 after rj-2 and the drains of rj-5/6/7/8; rj-11 after rj-6 and the drains of rj-4/7/8; rj-10 after
-rj-5 and the drains of rj-1/6/7/8/9; rj-12 after rj-9 and rj-11's drain; rj-3 after rj-10 and rj-12.
+C:/tmp/wk-amgt-11-<n> HEAD`, a sparse cone for chains B-E); chain A's portal checkout is cut from `refs/drains/ri-1-portal`
+@`9aef3734` on `wk-amgt_resapp-11-1-portal`, fetched at its drains into `refs/drains/rj-portal` (the gitlink `e85f6eb84f` NEVER
+moves); chains B-E touch no portal file. The superproject drains through `safe-merge.sh` with the channel union by row id.
+Hand-over order: rj-4 alone; at its drain rj-1, rj-5, rj-6, rj-7, rj-8 together; rj-2 after rj-1 and rj-6's drain; rj-13 after
+rj-8; rj-9 after rj-2 and the drains of rj-5/6/7/8; rj-11 after rj-6 and the drains of rj-7/8; rj-10 after rj-5 and the drains
+of rj-1/9; rj-12 after rj-9 and rj-11's drain; rj-3 after rj-10 and rj-12.
 
 ### 19f. BOUNDS (the round's, verbatim where they are Andrew's)
 
-PORTAL FROZEN both fabrics: COMMIT YES / PROMOTE NO; no push (site-Z hold); no gitlink move (`e85f6eb84f`); the page lives
-on drain refs. Egress: Andrew-direct ~05:42Z @`dfa63b6d92`, "The whole sitez fabric has free egress this session" -- a
-worker's egress is its issuer's, exercised through its order; every vendor call recorded with its instrument and vintage;
-secrets ONLY through `comp-secrets get <name> --reveal` (Andrew-direct ~05:4xZ @`a5c6a066de`). The publication harvest's
-collection mechanism and cadence stay reserved to Andrew (@`9db2a36cdc`); no cell starts recurring collection; the analyzer's
-schedule is declared DISABLED. The ETF plane is READ-ONLY. Nothing trades from Posture. No monitor, alarm, SNS or SES. No
-non-ASCII in anything that reaches AWS. LD-0521: no round-12 issuance before the round-11 slug and analysis. A criterion a
-worker cannot satisfy as written is REFUSED with a row, never repaired.
+PORTAL FROZEN both fabrics: COMMIT YES / PROMOTE NO; no push (site-Z hold); no gitlink move (`e85f6eb84f`); the page lives on
+drain refs. Egress: Andrew-direct ~05:42Z @`dfa63b6d92`, "The whole sitez fabric has free egress this session" -- a worker's egress
+is its issuer's, exercised through its order; every vendor call recorded with its instrument and vintage; secrets ONLY through
+`comp-secrets get <name> --reveal` (Andrew-direct ~05:4xZ @`a5c6a066de`). The box is site-Z (@`187f003998`): every batch is a local
+job, its task DISABLED at creation; the publication harvest's collection mechanism and cadence stay reserved to Andrew
+(@`9db2a36cdc`); no cell starts recurring collection. The ETF plane is READ-ONLY and its counterpart contract is unestablished. Nothing
+trades from Posture. No monitor, alarm, SNS or SES. No non-ASCII in anything that reaches AWS. LD-0521: no round-12 issuance
+before the round-11 slug and analysis. A criterion a worker cannot satisfy as written is REFUSED with a row, never repaired.
 
-### 19g. PREFLIGHT (read at the cut; the L6 gate reads the three lines)
+### 19g. PREFLIGHT (RUN at the cut 2026-09-15 06:4xZ; the L6 gate reads the three lines)
 
-comp-schedule: RUN (1 new scheduled producer, the filings analyzer, declared DISABLED; the chatter-axis schedule unchanged;
-C3's 12 NEVER clauses read: no monitor, no alarm) -- 1 finding, carried into rj-6/rj-10.
-comp-iam: RUN (new READ grants on three buckets by prefix and one secret; the DynamoDB articles grants REMOVED; no Scan, no
-wildcard resource) -- 2 findings, carried into rj-10's plan census.
-comp-adversary: RUN (filing text and vendor responses are DATA inside a model prompt: the analyzer and the posture judge
-treat them as untrusted, the verbatim gate bounds fabricated sentences, Posture's output is marked machine and read by no
-trade consumer; the Lusha response is scrubbed to name/title/link) -- 3 findings, carried into rj-6, rj-8, rj-11.
-Criteria discipline from W17-S4/W17-S5: every rerun-able criterion reads COMMITTED state (`git show HEAD:` or a `git log`
-limb beside any `git status` limb); every state census enumerates managed addresses APART from data-source entries and never
-a literal total; every large-apply criterion greps tokens over the saved output rather than `tail`-ing a window.
+comp-schedule: RUN (--drift) -- 5 of 5 carriers within budget (16.0 s of 90); REACHED-DENOMINATORS C1=23, C2=8, C3=12, C4=21,
+C5=334; C2 = 8 OPEN deploy-ledger entries (none this project's; rj-10 opens one and closes it inside the round); C3 = 12 standing
+NEVER clauses (no monitor, no alarm); NO new scheduled producer is cut (every batch is a local task DISABLED at creation); BLIND on
+C4 and C5 in the tool's own voice.
+comp-iam: RUN (gaps) -- 838 call(s) verdicted across 98 mapped role(s) over 474 .tf files; 629 UNRESOLVABLE-RESOURCE, 142 GRANTED,
+51 GRANTED-BROAD (EXCLUDED, NOT CLEARED), 14 UNGRANTED, 2 GRANTED-ACTION / UNGRANTED-RESOURCE; 15 missing, 291 deny-present, 1
+coverage-unknown, 2 resource-mismatch across 32 services; BLIND on 266 calls in 26 role-UNMAPPED services. This round's IAM delta
+(rj-10): READ grants by prefix on one bucket for two roles; the DynamoDB articles grants REMOVED; no Scan, no wildcard resource.
+comp-adversary: RUN (compose on the decomposition, --no-packet) -- 48 commit pins, 13 repo paths, 17 file:line cites, 14 tool
+mentions; 23 hex runs not parsed (named); T11 NOT RESOLVED (293 uncited siblings, CAP 25 declared); stage 4 disabled by the caller.
+The round's adversarial surfaces: filing text and vendor responses are DATA inside a model prompt (rj-6, rj-11 state so in the
+prompt; the verbatim gate against the PASSAGE bounds fabrication; held-uncited claims never render); Posture is marked machine and
+read by no trade consumer; the Lusha response is scrubbed to name/title/link.
+comp-cache: RUN (collisions) -- 481 of 481 portal files, 119 of 119 useQuery sites; chain A adds keys under the `amgt-lead`
+namespace only and changes no existing key.
+comp-blast: DECLARED-NOT-APPLICABLE for every cell but rj-10; rj-10's blast is the two functions' code and IAM and the routes'
+served payloads, covered by the co-sign; the plan's 0-destroy line and the managed-address census are its criteria.
+Criteria discipline from W17-S4/W17-S5: every rerun-able criterion reads COMMITTED state (`git log` beside any `git status`);
+every state census enumerates managed addresses APART from data-source entries and never a literal total; every large-apply
+criterion greps tokens over the saved output rather than `tail`-ing a window; every expectation is a regex-safe pattern.
 
 ### 19h. RULE 24 RECORD
 
-(i) MECE over the declared domain: the 17 members of 19a, each in exactly one cell or excluded with a reason; the domain's
-own choice falsified by one unscoped read -- the slug's five carries + the four new FWD cards + the eight contracts the CVO
-counted (the addendum's prose says seven; the CVO's count is the one used). (ii) Same grain: every cell is one deliverable
-set with its own proof instance; the pool prefixes are one object per (key, as_of). (iii) One intent per cell: repair
-(rj-1, rj-2), exercise (rj-3), universe (rj-4), store (rj-5), analysis (rj-6), similarity (rj-7), management (rj-8), page
-(rj-9), deploy (rj-10), posture (rj-11, rj-12). (iv) State coherence: rj-10 is the ONLY cell that moves the live plane; a
-cell's local QA one-shot writes pool objects and nothing else; the values one remedy does not move are named in each cell
-(rj-1 does not deploy; rj-6 does not run the batch; rj-8 does not start the loop; rj-11 does not schedule).
+(i) MECE over the declared domain: 19 members (the 5 open v10 rows + the 4 new FWD cards + the 10 contracts the CVO enumerated),
+each in exactly one line of 19a, 18 covered + 1 folded = 19; the domain's own choice falsified by one unscoped read (the slug's
+carries, the ENDPOINT's cards, the CONTRACTS section's bold names). (ii) Same grain: every cell is one deliverable set with its own
+proof instance; the pool prefixes are one object per (key, as_of); a generation is one object per (axis, date, generation_id).
+(iii) One intent per cell: identity (rj-4, rj-1), evidence (rj-2), exercise (rj-3), store (rj-5), analysis (rj-6), similarity
+(rj-7), management (rj-8), social measurement (rj-13), page (rj-9), deploy (rj-10), posture (rj-11, rj-12). (iv) State coherence:
+rj-10 is the ONLY cell that moves the live plane; a cell's QA one-shot writes pool objects and nothing else; the values one remedy
+does not move are named in each cell (rj-1 does not deploy; rj-6 does not run the batch; rj-8 does not start the loop; rj-11 does
+not schedule; rj-13 builds no feed).
