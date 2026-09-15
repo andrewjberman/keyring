@@ -6013,3 +6013,31 @@ Andrew asked for (msg 22917); it concerns this project's portal files meeting an
 }
 ]
 ```
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-W19-S20",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~19",
+    "surfaced_at": "2026-09-15T02:15:00Z",
+    "one_line": "The order's prose bar for 'no portal edit' -- 'git diff --stat under portal/ must read 0 at your report' -- reads NONZERO from the superproject on a clean worktree: the linked portal worktree sits at the drain ref the COO cut it at, two commits ahead of the gitlink this workspace branch records, so the SUPERPROJECT prints 'portal | 2 +-' while the GRADED instrument (V8-AC11) reads 0.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "The order's identity block: 'Your portal clone is READ-ONLY in this order (`git diff --stat` under portal/ must read 0 at your report -- FWD-5's bar is \"no portal edit\") ... cut by the COO at hand-over DETACHED at `refs/drains/posn-5-portal`'. V8-AC11's invocation is the scoped form: timeout 60 git -C portal diff --stat refs/drains/posn-5-portal.",
+    "world_is": "Two reads of 'git diff --stat' answer about different objects and only one of them is the bar. From the SUPERPROJECT root, git diff --stat prints 'portal | 2 +-' -- a GITLINK pointer difference, e85f6eb84f (what the wk-posn_asttax-5-19 tree records) vs dd1d33c6db (where the COO detached the linked worktree, = refs/drains/posn-5-portal, F1-F3 landed). From INSIDE the clone, git -C portal diff --stat refs/drains/posn-5-portal prints 0 lines and git -C portal rev-parse HEAD is exactly dd1d33c6db. So the clone is clean, the superproject line is the hand-over condition and not an edit, and it was already present before this worker's first act (git status printed ' M portal' at spawn, at both runs). Nothing about it is caused by, or visible to, any act of this order.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "BOTH INSTRUMENTS, SIDE BY SIDE, at HEAD 57654b44c7 on wk-posn_asttax-5-19: `git diff -- portal` -> '-Subproject commit e85f6eb84f3a1771a37011a7e77e372570bad02a / +Subproject commit dd1d33c6db84037fe8bcb8a8d19a819d9a250cbf'; `git ls-tree HEAD -- portal` -> '160000 commit e85f6eb84f3a1771a37011a7e77e372570bad02a portal'; `git -C portal rev-parse HEAD` -> dd1d33c6db84037fe8bcb8a8d19a819d9a250cbf; `git -C portal rev-parse refs/drains/posn-5-portal` -> the SAME hash.",
+        "THE GRADED BAR IS UNAFFECTED AND WAS RE-RUN: timeout 60 git -C portal diff --stat refs/drains/posn-5-portal -> 0 lines of output. V8-AC11 PASSES on its own instrument, and the retag's whole claim -- one place changed, every Positioning mode followed, no portal edit -- stands on that read plus the Models render (Structured 1.50 LT / 2.0 ULT).",
+        "WHY THIS IS NOT W19-S19 AGAIN: S19 (adjudicated Z-S129) is about an UNTRACKED capture file written inside portal/.scratch/ by a portal-relative outfile. This row is about a TRACKED pointer in the SUPERPROJECT that no act of this order touches. Different object, different instrument, different remedy -- S19's remedy is an outfile outside portal/, this one's is reading the scoped form of the command.",
+        "NOT REMEDIED BY THIS WORKER, and why: moving the gitlink would be a commit of portal/ from a worker whose order calls that clone READ-ONLY, and the drain ref is the integrator's to land. The row exists so the next reader of a POSN worker report does not read 'portal | 2 +-' as a portal edit."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "For the issuer: the prose bar and V8-AC11's invocation are not the same read. The criterion's scoped form (git -C portal diff --stat <ref>) is the one that grades 'no portal edit'; the unscoped superproject form answers a gitlink question instead and is nonzero by construction whenever a linked worktree is detached ahead of the recorded pointer."
+  }
+]
+```
