@@ -83,6 +83,8 @@ The notice preserves the seat order, permits reversible paper decomposition, and
 
 ## v0.3 preparation after CTO97115
 
+**F1 source identified by CTO97131:** gateway is the system that ships the bounded capability response, per doctrine section 1. Both workbook tiers use that source. COO~G still owes its systems.json row; PLATFORM_SUBSYSTEM is already an allowed class in the schema. The15:05:08Z private proposal check records the two real gateway refusals until that row lands, with all other authoring checks passing. This is a registry completion dependency, not an unanswered source-choice question or an Andrew decision.
+
 The private proposal adds **S19** for complete typed workbook Silver, changes S03's dependency from S02 to S19, packages Silver in the existing MDPF deployment home, and restricts S08 to the two historical served keys under granted X7/X2. Its checked manifest has **19 owned engines, 49 components and 9 artifacts**; the original eight endpoint cards and all 18 brief headings are retained. The15:00:04Z check after incorporating97126 reports zero canonical shape violations and complete acyclic dependency/coverage checks. Two source-address outputs still await COO~G's authoritative origin row; no placeholder is installed into the canonical PRD or contract. This seat then lands the concrete v0.3 and requests the current-half reviews through the canonical notifier. The lane's paper decomposition can absorb these specified changes now; implementation stays held for the two signatures.
 
 ## Andrew exception answers, CTO97126

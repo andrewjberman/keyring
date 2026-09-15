@@ -1,6 +1,14 @@
 # MDPF_TAXSMA S02: workbook source registry dependency
 
-Author: `1.0.0_SA_CTO~A`. Updated 2026-09-15 after CTO97115. The initial 14:22:00Z probes at `2fd93a5c3db98b1c412da1333cf1946b682d7e73` are historical guessed-source tests, not tests of the declared contract call.
+Author: `1.0.0_SA_CTO~A`. Updated 2026-09-15 after CTO97131. The initial 14:22:00Z probes at `2fd93a5c3db98b1c412da1333cf1946b682d7e73` are historical guessed-source tests, not tests of the declared contract call.
+
+## Current F1 answer, CTO97131
+
+The source token is **gateway**. Notice97131 (15:01:59Z, sender `1.0.0_SA_CTO`) points to the existing doctrine section 1: source is the vendor or system delivering the bytes, and system explicitly includes the gateway platform subsystem. Both definitions were independently read. The seven-field capability response is the delivered source; mdpf is its consumer, so both new workbook tier calls use gateway.
+
+The row is still owed by **COO~G**. `org/standards/NAMING_SCHEMA.json` already permits PRODUCT, PLATFORM_SUBSYSTEM and VENDOR; the populated registry currently contains only the first and last classes. No fourth class, naming override or guessed vendor identity is needed. Direct `address(gateway,49financial,bronze,taxsma_workbook,...)` and corresponding Silver calls refuse because gateway is not yet a systems.json key. These are now tests of the required source token, distinct from the earlier sharepoint/ms guesses. CTO and COO~G received this exact schema distinction at15:03:46/48Z.
+
+The private v0.3 proposal now uses gateway and records both actual refusals. At15:05:08Z its canonical shape, unchanged endpoint, 19-surface / 49-component, 18-heading coverage and acyclic dependency checks pass. The registry commit reference and two positive source-builder outputs remain pending; the canonical signed files are not replaced with an unfinished amendment. Once COO~G lands the row, this seat can finish those outputs and submit both current halves for review. X7/X2 are already granted under97126; no E1/E2 decision remains with Andrew.
 
 **CORRECTED by CTO97115: the declared v0.2 snapshot address builds.** Its source is `mdpf`, a registered product; the earlier failures used guessed `sharepoint` / `ms` identities. Those failures did not establish that the contract's address could not be built. The actual F1 dependency is semantic source identity under R1: LGIC_NAMING owner COO~G must supply the origin row for the bounded Gateway capability response. F2 adds mandatory Silver; F3 preserves one historical served home. **CTO97126 subsequently records Andrew's E1/E2 approval: L6 now waits only for both current v0.3 signatures.** COO~T remains seated and may continue paper L5. The signed v0.2 files are unchanged while the owner finalizes the prepared amendment with the missing origin row.
 
@@ -56,7 +64,7 @@ Unchanged PRD SHA256: `35c38dc71f71739116f04d8a647cf66025a041279ec2a79175daaed22
 
 ## Exact received carrier
 
-**Update after97126:** Andrew has granted E1/E2 as R20 X7 CONDITIONAL / X2 PERMANENT at `9cf4a274db`, independently verified in both canonical register carriers. Earlier pending-Andrew statements describe the prior state only. The private proposal now cites those granted entries and passed its current authoring checks at15:00:04Z; only the owner source row is missing before this seat can finalize F1, land v0.3 and request both signatures. The registry still contains the same16 rows at the15:00Z follow-up artifact read, with no committed origin addition; no substitute key is selected. `LGIC_EXCEPTIONS_97126.md` preserves the exact new direction. `L5_ROUTING.md` records current release conditions.
+**Update after97126:** Andrew has granted E1/E2 as R20 X7 CONDITIONAL / X2 PERMANENT at `9cf4a274db`, independently verified in both canonical register carriers. Earlier pending-Andrew statements describe the prior state only. The private proposal now cites those granted entries and passed its authoring checks at15:00:04Z; only the owner source row is missing before this seat can finalize F1, land v0.3 and request both signatures. The registry still contained the same16 rows at the subsequent follow-up artifact read, with no committed origin addition. The source token was later identified as gateway by97131, as recorded at the top of this note. `LGIC_EXCEPTIONS_97126.md` preserves the exact exception direction. `L5_ROUTING.md` records current release conditions.
 
 Source: `20260915T141753Z_1.0.0_SA_CTO_MDPF_TAXSMA_S02__the_LGIC_address___buil.md`
 
