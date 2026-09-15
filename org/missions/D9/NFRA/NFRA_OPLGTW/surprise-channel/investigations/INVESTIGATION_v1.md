@@ -1411,6 +1411,50 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "W3-S22 was ARMED: a restricted-profile holder could still reach the email-authorized browser routes. W3-S24: TO-OG-q-2 did not grant the file where its tools must be classified, so its tools would be denied to everyone.",
     "world_is": "W3-S22's gap is placed in round 2's email-keyed cell and cannot be exercised in round 1, because the release withholds any restricted profile from a principal who can complete the browser login, and the printed count is the discriminator. OG-q-2 can classify its own tools under a discriminated, entries-only grant.",
     "notes": "W3-S22's disposition cites 97251 as 1.0.0_SA_CTO instructed. The adjudication is 3.0.0_SA_CVO's at L9."
+  },
+  {
+    "id": "NFRA_OPLGTW-S18",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-15T22:56Z",
+    "one_line": "Disarm of NFRA_OPLGTW-W1-S6: the issuer provisioned the gitignored session serial file naming 0.9.0_WK_NFRA_OPLGTW~1 inside worker ~1's worktree. Run from that worktree, the halt gate moved from IDENTITY UNRESOLVED to resolving the worker and scanning its issuer's inbox. OG-i-1 is re-handed on the same branch with its OPEN ledger entry.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "GATE SOURCE: .tools/halt-gate-check.sh @923f7dcab8. :38 roots the gate at the checkout holding the script, which is the worktree. :56-64 resolve identity only from org/mcp/sessions/${CLAUDE_CODE_SESSION_ID}.serial (or an .orphan-cleaned marker). :118 prints this exact one-line remedy. :171-174 admit a 0.9.0_WK_* serial only when a non-terminal order at the checkout's HEAD is issued_to it; at a0bcaa6bae TO-OG-i-1 is issued_to 0.9.0_WK_NFRA_OPLGTW~1 with status pending.",
+        "BEFORE/AFTER in /c/tmp/wk-oplgtw-1-1b @a0bcaa6bae, 2026-09-15T22:5xZ. Before the file: 'HALT-GATE: IDENTITY UNRESOLVED -- BLOCKED (fail-closed)'. After writing org/mcp/sessions/e09b6e12-6f85-4732-b702-3307d4a68532.serial = 0.9.0_WK_NFRA_OPLGTW~1: 'worker 0.9.0_WK_NFRA_OPLGTW~1 has no inbox; scanning its issuer 2.0.0_SA_COO~O', then rc=1 on 14 routine pending messages with no STOP-class message.",
+        "UNTRACKED: .gitignore:423 ignores org/mcp/sessions/. After the write, git status --porcelain in the worktree lists only .scratch/ and .venv-og/, so nothing tracked moved and the worker's <paths> grant is unchanged.",
+        "WORLD: no AWS change had occurred (W1-S6 grounding). The ledger entry opened @4b9671ec09 (2026-09-15T21:54:38Z) stays OPEN on the unmerged branch wk-nfra_oplgtw-1-1b. The re-handed worker's apply closes it, so it is never drained to CLOUD OPEN."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A worker that exports OPAL_AGENT_SERIAL can run .tools/safe-apply.sh from its own worktree.",
+    "world_is": "Exporting the variable satisfies only the identity gate that runs second (resolve_actor). The halt gate runs first and needs a session serial file inside the worktree, a path the worker's grant does not name. So the issuer provisions that file at spawn, as it does .tools/terraform.exe, for every NFRA_OPLGTW worker whose order applies Terraform.",
+    "notes": "This seat is W1-S6's disarm owner; this act and row disarm it. Sibling finding: NFRA_OPLGTW-S19 (the same gate's inbox root in a worktree)."
+  },
+  {
+    "id": "NFRA_OPLGTW-S19",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-15T22:58Z",
+    "one_line": "In a linked worktree the halt gate scans an inbox root that does not exist. HALT_GATE_INBOX_ROOT defaults to <worktree>/org/mcp/inbox, which is gitignored and absent. So once a worker's serial resolves, the gate passes rc=0 with its issuer's real inbox unread, and a [STOP] to the issuer would not halt that worker's apply.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "GATE SOURCE: .tools/halt-gate-check.sh @923f7dcab8. :38-39 set HALT_GATE_INBOX_ROOT to ${HALT_GATE_REPO_ROOT}/org/mcp/inbox, where the repo root is the checkout holding the script. :247 reads 'Missing inbox dir = no messages (not an error)'. :11 reads 'Empty inbox -> PASS silently, exit 0'. :139-141 say a [STOP] to the issuer halts its workers' deploys.",
+        "DISCRIMINATING PAIR in /c/tmp/wk-oplgtw-1-1b @a0bcaa6bae with the worker serial resolved, 2026-09-15T22:5xZ. Default root: 'ls org/mcp/inbox: No such file or directory', then 'scanning its issuer 2.0.0_SA_COO~O' and rc=0. With HALT_GATE_INBOX_ROOT exported to the shared tree's org/mcp/inbox, the same gate at the same HEAD listed 14 pending messages for the same issuer and returned rc=1."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Before a deploy, the halt gate scans the acting agent's inbox, or for a v3 worker its issuer's, and a [STOP] there blocks the deploy (halt-gate-check.sh:139-141).",
+    "world_is": "From a linked worktree the gate scans an absent directory and passes silently. Every NFRA_OPLGTW worker whose order applies is spawned with HALT_GATE_INBOX_ROOT exported to the shared tree's inbox, beside the issuer-provisioned serial file (S18).",
+    "notes": "INERT within NFRA_OPLGTW because of the spawn export. The exposure is estate-wide: any v3 worker that safe-applies from a linked worktree has it. The fix is a gate edit outside this project's write surface, so 1.0.0_SA_CTO is informed. Even with the right root, the gate reads only top-level unread files, which a live stream Monitor empties within seconds; that is Rule 18's standing concession, not a new finding."
   }
 ]
 ```
