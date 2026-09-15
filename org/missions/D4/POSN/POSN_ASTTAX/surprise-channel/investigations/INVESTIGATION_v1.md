@@ -8007,6 +8007,28 @@ Andrew asked for (msg 22917); it concerns this project's portal files meeting an
   "spec_asserts": "Rule 22 STATE: a description is never a state; a durable record carries measured values with their instrument.",
   "world_is": "TO-W2-1's instance carries the measured capture window; one commit message on the shared branch states a stale status.",
   "notes": "For the CVO's L9 on round 6 (W2-AC8's evidence is the corrected one); for the next issuance: after a worker's report, its worktree is removed only after ListAgents shows no live process under that spawn id."
+},
+{
+  "id": "POSN_ASTTAX-Z-S181",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T15:47:56Z",
+  "one_line": "THE CVO's COMPLETENESS CARRIER (ADJUDICATION_v11.Z.md @41305718d4) STATES, FOR THREE OUTCOMES, A CONTRACT THAT IS NOT THE PRD's CARD: C-S184 reads FWD-3 as a 'page presentation contract' (the card: the five classes always in the same ORDER), C-S185 reads FWD-4 as the 'characteristics and performance contract' with characteristics.json as its evidence (the card: one COLOUR per class everywhere; the characteristics artifact is FWD-7's), and C-S186 reads FWD-5 as 'cross-surface consistency' (the card: the classification defined in ONE PLACE flows everywhere; cross-surface agreement is FWD-6's). FWD-1, FWD-2, FWD-6 and FWD-7 are read against their own cards. The seven verdicts are COMPLETE and, for the three mislabelled rows, the evidence that actually bears on the card sits in COMPLETION_REPORT.round7.json's per-outcome notes (F1/F2 for order and colour on the promoted tree; S1A-1 + R1 + B3/U3-1/X1-1 for the single source), which the rows cite by the report's hash. RULED: the verdict column is not contradicted by anything measured; the contract column of three rows is. Recorded so the CTO's R6 grades (COMPLETION_GRADES.round7.json, owed on its return) read the CARDS and the report's notes for FWD-3/4/5, not the carrier's one_line. The registry close-out proceeded on Andrew's word with this named, not silently.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ADJUDICATION_v11.Z.md @41305718d4 rows C-S184, C-S185, C-S186 (spec_asserts text) vs prd/POSN_ASTTAX_PRD.md v0.11 @ab2ee8052a ENDPOINT FWD-3, FWD-4, FWD-5.",
+      "COMPLETION_REPORT.round7.json @ac0ff45dfe outcomes FWD-3 (4 cells), FWD-4 (3 cells), FWD-5 (6 cells), each note naming the exercised artifact.",
+      "WHY INERT: no served key, no order and no registry value depends on the carrier's contract text; the mechanical close (R6) reads the grades file, which does not yet exist."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "Rule 22 GRAIN: the object read is the object claimed -- a completeness verdict on FWD-n is read against FWD-n's card.",
+  "world_is": "Three of seven completeness rows cite another outcome's contract; the verdicts stand on the report's evidence, not on the rows' own text.",
+  "notes": "For 1.0.0_SA_CTO~Z's COMPLETION_GRADES.round7.json and for 3.0.0_SA_CVO~Z's next completeness read: one row per card, the card's DONE WHEN quoted."
 }
 ]
 ```
