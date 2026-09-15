@@ -982,6 +982,28 @@ new row on 3.0.0_SA_CVO's ask 96495), both 1.0.0_SA_CTO; `LGIC_NAMING-S3`, `LGIC
     "spec_asserts": "TO-LN-e-5-r2 E5R-AC1: 'the reader marked the expected firm, or none, on every item', invocation check_ln_r2.py e5-correct, expect 'VERDICT: PASS-ALL-CORRECT'.",
     "world_is": "The invocation prints 'VERDICT: FAIL-MISREAD' with 16 of 18 correct. The cell scores and does not read or name, so no mark can be changed inside LN-e-5, and the order stays open on the E5R-AC1 FAIL. r2/n3-reader-score.md records every WRONG line with the name, the mark and the expected token.",
     "notes": "Filed by the scoring worker because the named invocation did not produce the named result. The task order calls a wrong mark 'the outcome's evidence, not a defect to fix', so nothing is edited. For 3.0.0_SA_CVO's L8 disposition."
+  },
+  {
+    "id": "LGIC_NAMING-W2-S6",
+    "project": "LGIC_NAMING",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_NAMING~2",
+    "surfaced_at": "2026-09-15T07:23:44Z",
+    "one_line": "TO-LN-e-2-r3 names its result file namer-b.result.md, beside the round-3 instance in deliverables/0.9.0_WK_LGIC_NAMING~2/. That path already holds round 2's namer-B result (TO-LN-e-2-r2), so writing the order's file replaces round 2's record at HEAD.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "READ: org/missions/D14/LGIC/LGIC_NAMING/task-orders/LGIC_NAMING.TO-LN-e-2-r3.namer-b.md@6705066c68, <proof_of_spec> block: instance at deliverables/0.9.0_WK_LGIC_NAMING~2/LGIC_NAMING.TO-LN-e-2-r3.namer-b.proof_of_spec.json, 'Result file `namer-b.result.md` beside it'.",
+        "READ: org/missions/D14/LGIC/LGIC_NAMING/deliverables/0.9.0_WK_LGIC_NAMING~2/namer-b.result.md@6705066c68:1 reads '# LGIC_NAMING.TO-LN-e-2-r2 -- namer B, round 2 -- result'.",
+        "READ: org/missions/D14/LGIC/LGIC_NAMING/deliverables/0.9.0_WK_LGIC_NAMING~2/LGIC_NAMING.TO-LN-e-2-r2.namer-b.proof_of_spec.json@6705066c68:66-73 pins that result file at 59f68115a4. Round 2's text therefore stays in git at that pin after the overwrite."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-LN-e-2-r3 <proof_of_spec>: 'Result file `namer-b.result.md` beside it', meaning beside the round-3 instance in deliverables/0.9.0_WK_LGIC_NAMING~2/. The order says nothing about a file already at that path.",
+    "world_is": "deliverables/0.9.0_WK_LGIC_NAMING~2/namer-b.result.md is already tracked at base 6705066c68 as round 2's namer-B result. Following the order rewrites it with round 3's result. Round 2's text survives at 59f68115a4, where round 2's own proof pins it.",
+    "notes": "Filed because doing what the order said also overwrote a record the order did not mention. The round-3 proof does not list the result file as an artifact: .tools/proof-of-spec-check.py:383-386 @6705066c68 refuses, in a dry run, a tracked file pinned PENDING-THIS-COMMIT that is not staged, and this file is tracked. INERT: nothing is lost from git, and round 2's proof still resolves at its pin."
   }
 ]
 ```
