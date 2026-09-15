@@ -37,3 +37,13 @@ OPEN CALLS -- AMGT_RESAPP -- 1.0.0_SA_CTO~W, /self-drive tick 7 (1 new call, ADJ
 ```
 
 Ledger row appended to `org/tier1_exec/1.0.0_SA_CTO/drive_pairs/ctoW_AMGT_RESAPP/VERDICTS.jsonl` (tick 7). Push state: LOCAL.
+
+## WITHDRAWN 2026-09-15 ~22:5xZ -- card 17's conclusion is FALSE
+
+`3.0.0_SA_CVO~W` was WORKING, not deaf: inside one long turn, blocked on its own `safe-commit` carrying the round-11 slug
+(`REMEDIATION_v11.md`), `ADJUDICATION_v11.md`, the L8/L9/L10 stamps and two CVO deliverables. Measured by this seat at 22:45:56Z --
+8 staged paths in the seat's own worktree `C:/tmp/cvo-amgt-r11-20260915`, newest files 22.5 minutes old, and two live `safe-commit`
+processes (pids 5658, 6077) under its author since 22:23Z -- after `0.0.0_AB_MSTR~Z`'s peek (msg 23276) read the seat's TUI as
+"Working (34m 22s)". Card 17's four arms all observe a turn ENDING, which one long turn suppresses by construction; the discriminating
+instruments are the seat's own worktree, the process plane and the peek. The routing to `0.0.0_AB_MSTR~Z` was never sent. Superseded by
+card 18, `CTO_ADJUDICATION_AMGT_RESAPP_20260915T225xZ.md`.
