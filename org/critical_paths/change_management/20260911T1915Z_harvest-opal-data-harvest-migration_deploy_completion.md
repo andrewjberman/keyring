@@ -201,3 +201,12 @@ verification" table above stands as measured on 09-11; this corrects the RECORD,
 ledger step that changes a `.tf` names its commit hash, or it is not done -- the successor log of
 2026-09-14 said "uncommitted under this seat's paths: NONE" with a control of 483 tracked files, and
 this file was not among the paths it counted.
+
+**CLOSED 2026-09-15 ~05:3xZ -- the second convergence route ran.** The rename landed in worker
+`0.9.0_WK_AMGT_RESAPP~17`'s ri-2 commit `ea6cd450fa` and reached the shared branch through the round-10
+drain `5c95c00268` (an ancestor of HEAD; bogus-hash control fires). Read by this seat: `HEAD:s3.tf`
+carries `bucket = "opal-data-harvest"` and the matching `Name` tag; `git status` on the file is EMPTY
+(the unstaged residue is gone); the harvest root planned and applied twice tonight against those bytes
+(0/4/0 and 19/0/0, `aws_s3_bucket.harvest` appearing 0 times -- `2.0.0_SA_COO~W` msg 23021). Step 2 now
+names its commit. The DO-NOT-DISCARD above is retired with it; row `AMGT_RESAPP-Z-S89` is disarmed by the
+citing row `AMGT_RESAPP-Z-S99` in the same commit as this line.

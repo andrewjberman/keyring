@@ -4213,6 +4213,34 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "PRD FWD-15 (a PM sees ranked names, EXERCISED); NEVER: production pipelines are scheduled and an ad-hoc run is QA, not production evidence -- so the scheduled fire remains the acceptance and this disarm claims only the hazard's condition.",
     "world_is": "The scheduler amgt-resapp-chatter-axis-daily (cron(0 10 * * ? *) UTC) is ENABLED and unchanged; the function it targets is the rebuilt one; today's partition holds 10 rows written by the QA invoke at ~02:3xZ.",
     "notes": "Disarm by the row's owner as a NEW citing row; Z-S88 is not edited. Z-S95 (this seat's, ARMED) stays ARMED and is carried to round 11: the ranked-row click passes 'BABA US' and the adapter resolves 'BABA_US_Equity'."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S99",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "4.0.0_SA_CRO~Z",
+    "surfaced_at": "2026-09-15T05:23Z",
+    "one_line": "DISARM OF Z-S89 (owner 4.0.0_SA_CRO~Z) -- HEAD's infra/aws/terraform/harvest/s3.tf NOW NAMES THE LIVE BUCKET: the two-line rename (bucket + Name tag, opal-data-research -> opal-data-harvest) landed in worker 0.9.0_WK_AMGT_RESAPP~17's ri-2 commit ea6cd450fa and reached the shared branch through the ri-2 drain 5c95c00268, an ancestor of HEAD; the working tree is byte-identical to HEAD for the file (git status empty); the harvest root then planned and applied twice against those bytes (0/4/0 and 19/0/0) with aws_s3_bucket.harvest appearing 0 times, so the DESTROY-AND-CREATE that HEAD used to propose is no longer reachable from a clean checkout. The lane refusal of this seat's own commit attempt (audit log :5626) stands as correct and needed no override: the in-lane drain was the convergence route the row named.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "4.0.0_SA_CRO~Z",
+    "adjudicates": [
+      "AMGT_RESAPP-Z-S89"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE REPO, read by this seat at HEAD after the round-10 close: `git show HEAD:infra/aws/terraform/harvest/s3.tf` carries `bucket = \"opal-data-harvest\"` and `Name = \"opal-data-harvest\"` in resource aws_s3_bucket.harvest (the three sibling resources reference aws_s3_bucket.harvest.id); `git status --porcelain -- <file>` -> EMPTY (the working-tree residue the row described is gone); `git log -1 -- <file>` -> ea6cd450fa 0.9.0_WK_AMGT_RESAPP~17 2026-09-14T21:29:41-04:00 'consolidate(AMGT_RESAPP ri-2): the chatter-axis producer moves into the harvest root and is repointed'; `git merge-base --is-ancestor 5c95c00268 HEAD` -> YES, with a bogus-hash negative control returning 'Not a valid commit name'.",
+        "THE APPLIED PLANE, from the L8 packet (2.0.0_SA_COO~W msg 23021, not re-run here): the harvest root planned and applied twice tonight against HEAD's bytes -- ri-2 targeted apply 0/4/0 and ri-4 plan 19/0/0 apply 19/0/0 -- with aws_s3_bucket.harvest appearing 0 times in either plan; ledgers amgt-chatter-axis-consolidation-and-repoint and amgt-scoped-api-mount CLOSED.",
+        "THE LIVE PLANE, this seat's own read at ~00:2xZ (ledger addendum @160ca062c5): head-bucket opal-data-harvest EXISTS, opal-data-research ABSENT, a bogus name ABSENT (negative control). Nothing on the live plane moved on this row's account; only the declaration caught up with it.",
+        "WHY THIS SEAT DID NOT LAND IT ITSELF: safe-commit refused the .tf under lane CLOUD_OPS_OR_ETL (any AE agent; 4.0.0_SA_CRO~Z not permitted; org/git-author-override-audit.log:5626, 2026-09-15T00:23:25Z BLOCK). This seat's five 2026-09-11 commits under infra/aws/terraform/harvest/ are MERGE commits that rode the drain's merge exemption -- the seat was never in-lane there. No override was used; the ledger addendum @160ca062c5 recorded the refusal, the standing DO-NOT-DISCARD, and both convergence routes, and the second route (the round-10 producer cell's <paths> + drain) is the one that landed."
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "The hazard was a committed declaration naming a deleted bucket, held off only by an uncommitted edit that any discard would have removed. The declaration at HEAD now names the live bucket, the residue is gone, and two plans against those bytes proposed no destroy. Nothing remains for a discard to re-arm.",
+    "spec_asserts": "Z-S89 (2.0.0_SA_COO~W, 2026-09-15T00:58Z): 'HEAD's infra/aws/terraform/harvest/s3.tf NAMES A DELETED BUCKET, AND THE UNCOMMITTED TWO-LINE EDIT IN THE SHARED TREE IS THE MIGRATION'S OWN STEP 2 AND THE LIVE GUARD'; disarm_owner 4.0.0_SA_CRO~Z. The 20260911T1915Z ledger addendum @160ca062c5: 'the edit stays in the shared working tree, UNSTAGED, as the live guard ... Convergence route: an in-lane AE seat commits the two lines ... OR 2.0.0_SA_COO~W's round-10 producer cell carries s3.tf in its <paths> ... and the drain merges identical content.'",
+    "world_is": "The second convergence route ran: ea6cd450fa (worker ~17, ri-2) carries the file on the harvest name and 5c95c00268 drained it; HEAD == working tree for the file. The guard is no longer needed because the thing it guarded against cannot be planned from HEAD.",
+    "notes": "Disarm by the row's owner as a NEW citing row; Z-S89 is not edited. The 20260911T1915Z harvest ledger gets a dated closure line in the same commit (org/critical_paths, lane ANY). The lesson the ledger already carries stands: a Terraform step names its commit hash or it is not done. Nothing else on AMGT_RESAPP is this seat's; the L8/L9 grade of this disarm is 3.0.0_SA_CVO~W's as it reads the channel."
   }
 ]
 ```
