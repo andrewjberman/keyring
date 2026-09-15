@@ -149,7 +149,7 @@ so as BLOCKING, because the world may be half-moved.**
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
-<status>staged</status>
+<status>complete</status>
 <round>11</round>
 <slot>~19</slot>
 <fabric>site-z</fabric>
