@@ -5,7 +5,7 @@
   "project": "AMGT_RESAPP",
   "directive": "D5",
   "fabric": "site-z",
-  "prd_version": "v0.6",
+  "prd_version": "v0.7",
   "step": 4,
   "brief_ref": "docs/briefs/amgt-resapp-security-analysis-20260910.md@19ce7d5b4d",
   "endpoint_outcomes": [
@@ -77,6 +77,9 @@ which held that L4-R forbids annotation, history and seat names across the whole
 - **Stale count corrected in the same amendment.** The L5 bar read "Thirteen outcomes cannot be
   closed by any build" while the section carries FOURTEEN `EXERCISED` outcomes; the reviewer caught
   it and it now reads "Fourteen".
+- **And again at v0.7.** v0.6 added four `EXERCISED` outcomes and left the same sentence at "Fourteen";
+  `3.0.0_SA_CVO~W` caught it (review @`01e640925c`) and it now reads "Eighteen". The version-history
+  parenthetical v0.6 placed after the BAR DISTRIBUTION line is moved out of the ENDPOINT to s.9g.
 
 ### C-LIST-OWNER -- THE NAMED OWNER, RECORDED 2026-09-14 (a fact, not an amendment)
 
@@ -142,6 +145,13 @@ retired one leaves its number vacant forever. The round-N analysis and any adden
 *Phase 0 output. `FWD-n` ids are PERMANENT and never reused; a retired outcome leaves its number
 vacant. `DONE WHEN` is the BAR, not the current state. ACCEPT lines are plain English and
 disputable, by rule, and carry no technical language.*
+
+*Carriers, for the verbatim comparison L4-R makes: `FWD-1`..`FWD-14` against
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/AMGT_RESAPP_ENDPOINT_20260910.md` @`3bc8f5f2c4`; `FWD-15` against
+Andrew's reserved L2 confirmation (s.3b); `FWD-16`..`FWD-19` against
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/AMGT_RESAPP_ENDPOINT_ADDENDUM_20260915.md` @`2285a23678`, which
+quotes beside each card the Andrew-direct sentence it was cut from; its four cards are byte-identical to the
+four below.*
 
 ```
 
@@ -338,17 +348,15 @@ disputable, by rule, and carry no technical language.*
                     memo of ~05:5xZ (part five)
 ```
 
-**BAR DISTRIBUTION: 18 of 19 are `EXERCISED`; only `FWD-9` is `APPLIED`.** (v0.6: FWD-16..FWD-19 added,
-every one EXERCISED; the fifteen v0.5 ids and their bars are byte-for-byte unchanged -- an addendum never
-lowers a bar.)
+**BAR DISTRIBUTION: 18 of 19 are `EXERCISED`; only `FWD-9` is `APPLIED`.**
 
-⚠ **THIS IS THE MOST IMPORTANT SINGLE FACT FOR L5. Fourteen outcomes cannot be closed by any
+⚠ **THIS IS THE MOST IMPORTANT SINGLE FACT FOR L5. Eighteen outcomes cannot be closed by any
 build.** **No cell may claim an `EXERCISED` outcome REALIZED on the strength of its own artifact.**
 **Grade the `DONE WHEN` state line, never the `ACCEPT` paragraph beside it.**
 
 ---
 
-## CONTRACTS -- v0.6 (ratified text; the reviewer is `3.0.0_SA_CVO`, always)
+## CONTRACTS -- v0.7 (ratified text; the reviewer is `3.0.0_SA_CVO`, always)
 
 *Contracts are the shapes every cell must respect. Each one names its owner and the record it comes from.
 None of them is an outcome and none of them is graded; they are what a cell may not silently change.*
@@ -365,19 +373,66 @@ Source: Andrew-direct ~05:1xZ and the voice memo ~05:5xZ; measured shape: Adam's
 (`SUBSTRATE_CARDS.md` card 3 @5007337353).
 
 **C-ONE-STORE (resolves `Z-S96`).** The pool `s3://opal-data-harvest` is THE article store. The chatter
-axis producer and the coverage reader READ the pool (`publication-links/v1/{security_key}/...` for the
-association, the body under `publications/v1/{publisher}/{sha256(identity)}.json`, `published_at` from the
-body); the DynamoDB articles table is RETIRED as a source once both readers are repointed, and nothing
-writes it after that. Inflow to the pool is TRACEABLE: every body carries its publisher, canonical URL,
+axis producer and the coverage reader READ the pool through ONE shared adapter: the association at
+`publication-links/v1/{security_key}/{publisher}/{digest}.json` (its `security_key`, `publisher`, `article_key`),
+the body at `publications/v1/{publisher}/{digest}.json`, where `article_key = publisher + ':' + article_id` is
+the stable identity and `digest = sha256(article_key)`; the publication time is the body's **`published`** field
+(the canonical schema `lib/opal_data_harvest/article.schema.json` has no `published_at` and forbids additional
+properties -- v0.6 named the wrong field; the consumer maps `published` to its own `published_at` at its
+boundary and never substitutes `fetched_at`, the retrieval vintage, or the link's `first_discovered_at`); one
+article counts ONCE per associated security however many links or retries carry it; a missing body, a
+malformed record, an access denial and a partial read stay DISTINGUISHABLE from a quiet day and from an empty
+feed; the DynamoDB articles table is RETIRED as a source once both readers are repointed, and nothing writes
+it after that. The field-level source contract and the acceptance examples are `4.0.0_SA_CRO~W`'s connection
+brief `org/tier1_exec/4.0.0_SA_CRO/deliverables/RESAPP_CONNECTION_BRIEF_POOL_READERS_20260915_W.md`
+@`0e7de170e3` (under Andrew's word @`76ab87a06e`), including the package seam: the deployed archives must carry
+the reader, its schema files and `jsonschema`, exercised in an isolated runtime. Inflow to the pool is TRACEABLE: every body carries its publisher, canonical URL,
 stable identity and retrieval receipt. Andrew's ~05:04Z word names the pool as the system of record;
 this contract makes it the only one. Owner of the readers: `2.0.0_SA_COO~W` (the recut); owner of the
 writer: the harvest lane, whose mechanism and cadence stay reserved to Andrew by name.
+
+**C-ONE-IDENTITY (sharpens `C-IDENTITY-RESOLVED`; the rule behind `Z-S95`'s remedy).** ONE canonical security
+identity per economic security, resolved ONCE at the route boundary and carried unchanged through overlay,
+thesis, peers, model, coverage, ranking and Posture. A VERSIONED, EXPLICIT crosswalk (`crosswalk/v1` in the
+pool) maps that identity to its Bloomberg identifier (`BA US`), display ticker, model/pack key (`BA_US_Equity`)
+and every publication-association key already persisted (`BA`, `security-<16 hex>`), carrying the source
+universe row and the identifier's provenance. It preserves exchange and share-class distinctions; an unresolved
+vendor identifier stays UNRESOLVED and is never guessed as US, never made by appending `US Equity` or stripping a
+suffix; a folder rename is not a new security; the five pilots and the other 84 names sit in the same declared
+system; the full universe reports 89 input names and ONE disposition per name; re-running the mapper or
+changing a display label mints no second record. Article bodies need no migration (they are keyed
+`publisher:article_id`); the read adapter learns the legacy association aliases or a separately verified link
+migration runs, and in either case an old and a new link for the same article count ONCE; old links are
+preserved until the transition is verified; no deletes. Measured: three conventions on one name at 06:17Z
+(`4.0.0_SA_CRO~W`, `org/tier1_exec/4.0.0_SA_CRO/deliverables/RESAPP_CONNECTION_BRIEF_IDENTITY_20260915_W.md`
+@`b90bfdd20d`). Owner of the crosswalk and the route-boundary resolution: `2.0.0_SA_COO~W` (the round-11 cut
+chooses the home); `Z-S95`'s remedy and disarm stay with their named owner.
+
+**C-RANKING-GENERATION (the write rule for every ranking partition; sharpens s.3b's `C-SERVER-SIDE-RANKING`).**
+A ranking run for one axis and one date publishes a COMPLETE GENERATION, and the reader selects that committed
+generation: either an immutable generation plus a current pointer, or a bounded replacement of the whole
+same-axis/date membership -- the cut names which, and an upsert that leaves prior rows in place is neither.
+Zero winners, a changed winner and a failed or interrupted write are three DISTINGUISHABLE states: a
+successful empty product clears the earlier membership; a producer or read failure leaves the prior generation
+current and says so; no mixed generation is ever readable. Every generation carries its run id, its source
+coverage vintage and its payload hash, and `Z-S72`'s exact-input exercise carries that identity, because a date
+alone cannot tell two computations on one day apart. A reader Limit is NOT a repair: a stale row can itself
+carry rank 1 and displace a current winner. Measured: `lib/research/metrics/chatter_axis.py` writes through
+`batch_writer(overwrite_by_pkeys=['axis_date','ticker'])` and never removes rows absent from a new ranking --
+a local probe with only `boto3.resource` replaced yielded AAA#1, BBB#1, CCC#2 after a replacement run and all
+three rows after an empty one (`4.0.0_SA_CRO~W`,
+`org/tier1_exec/4.0.0_SA_CRO/deliverables/RESAPP_CONNECTION_BRIEF_RANKING_RETRIES_20260915_W.md` @`5ae6dd04b5`;
+no live write). Owner: `2.0.0_SA_COO~W` (the pool-reader / chatter recut).
 
 **C-ETF-PLANE-READ.** AMGT_RESAPP READS the ETF holdings plane `s3://opal-data-etfs` (`config/etf_universe.json`,
 `gold/book/`, `gold/holding/`, `snapshots/snapshot_<date>.json` written daily at 22:00Z) and NEVER writes it.
 That plane, its producers and its vintages belong to the `~Z` fabric's POSN_ASTTAX / ETFS_* projects. Every
 Posture output and every membership claim carries the snapshot date it read. Source: Andrew-direct
-~05:1xZ (Posture) and ~03:5xZ (the fabric split).
+~05:1xZ (Posture) and ~03:5xZ (the fabric split). ⚠ **The producer's side of this read is NOT yet a
+contract:** the POSN_ASTTAX PRD @`ab2ee8052a` carries no CONTRACTS section and names none of these paths or the
+22:00Z schedule (`3.0.0_SA_CVO~W`, review @`01e640925c`); until `1.0.0_SA_CTO~Z` pins a producer contract this
+read is ONE-SIDED, every consumer carries the snapshot date AND the object's own schema version, and a layout
+change on that plane is a cell in this project, never a silent repair. No POSN signature is implied or asked for.
 
 **C-UNION-UNIVERSE.** The harvest universe is the UNION of the coverage list (`universe.json`, 89 name
 folders; 32 tickers MEASURED / 57 UNRESOLVED at 2026-09-10) and the current holdings of the four Opal ETFs
@@ -424,7 +479,16 @@ cite tags and no citation blocks; structured output and citations cannot be comb
 PASSES or a TAG PARSER, and the cut names which. It runs as a scheduled batch over the union universe,
 never per page view. Every sentence the Thesis tab shows from it is MARKED machine prose beside its cited
 passage (FWD-9's rule). Egress: Andrew's session word @dfa63b6d92; the Bloomberg-terms question is carded and
-open.
+open. ⭐ **v0.7 (measured by `4.0.0_SA_CRO~W`, brief @`a65fe406c2`):** every cited claim RESOLVES to an exact
+passage -- the analysis persists the source filing and the exact submitted excerpt with content hashes, the
+canonical identity, the accession, the retrieval time and the parser version, and an index-to-passage map
+beside the rows; a claim whose tag resolves to nothing is HELD uncited, never rendered as evidence and never a
+chart input (card 1's five uncited segment rows are the measured instance); the drafting reader receives typed
+evidence records with stable ids and the PASSAGE text, validates existence, association and source version for
+every id before its verbatim gate, and runs that gate against the passage, not the title (the existing gate at
+`lib/research/drafting/pipeline.py` passed an unknown id with no quotation and refused a valid body passage:
+three probes, 2026-09-15 ~06:2xZ); the THESIS DRIVER series and the officer role-start field are EXERCISED on a
+real filing before either is claimed to exist -- card 1's parsed object carries neither.
 
 **C-EXEC-MANAGEMENT (FWD-17's shape).** The roster and each officer's role start come from the FILING's
 executive-officer section (the authority); Lusha prospecting enriches each CONFIRMED officer with a profile
@@ -699,6 +763,9 @@ Record: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260911_121xZ_O
 tabs (Thesis / Peers / Coverage) beneath a persistent **Lead Panel**; Print as a header export action;
 the Model tab CUT with its figures rehomed into Thesis and the Security overlay. `.tsx` is authorized
 in the SURFACE round (a later issuance, after round 4 drains). `FWD-15` is his confirmed outcome.
+⭐ **SUPERSEDED AT v0.6/v0.7 as to the SHAPE (s.9f):** `C-PAGE-LAYOUT` -- one header and FIVE tabs (Thesis, Exec
+Management, Peers, Model, Posture); the Coverage tab's content becomes the header feed and the Model tab is
+RESTORED. The lifting of `C-DESIGN-SPEC-FIRST`, the `.tsx` authorization and `FWD-15` stand unchanged.
 
 **`C-AMGT-ARTICLES-STORE`** -- per-ticker article content lands in a NEW DynamoDB table
 `opal-harvest-articles` (RENAMED from `opal-amgt-articles` 2026-09-11; env knob
@@ -708,6 +775,10 @@ in the SURFACE round (a later issuance, after round 4 drains). `FWD-15` is his c
 model-block + S5's print-snapshot home; RENAMED from `opal-data-research` 2026-09-11, env knob
 `HARVEST_BUCKET`). Serves S4 (`FWD-4`) + S13 (`FWD-11`). ⛔ S12 must resolve each
 platform's OWN identifier before dispatch (SA symbol-slug, Bloomberg `"TICKER US Equity"`, FT id).
+⭐ **SUPERSEDED AT v0.6/v0.7 (s.9f) by `C-ONE-STORE`:** the pool `s3://opal-data-harvest` is THE article store
+and this table is not; TRANSITION: the table stays readable until BOTH readers (chatter axis, coverage) are
+repointed at the pool and exercised, then it is retired as a source and nothing writes it. S12's per-platform
+identifier clause stands and is sharpened by `C-ONE-IDENTITY`.
 
 **`C-SERVER-SIDE-RANKING`** -- Trending/Breakout/Price/Chatter are computed SERVER-SIDE by daily jobs
 and written as pre-computed per-ticker rows into a SEPARATE metrics table
@@ -746,6 +817,22 @@ only one is live. The 42 reconcile exactly to this project's own output (rd-6: 3
 A DynamoDB rename is a DESTROY/RECREATE, so on this sentence's premise the rename would have SILENTLY
 DROPPED 42 live rows belonging to two round-5 cells. Caught by `4.0.0_SA_CRO~Z` distrusting a number
 this seat had repeated, and the migration preserved all 42 on full item equality.
+
+⭐ **SUPERSEDED AT v0.7 (s.9f) AS TO THE BOX, by a LATER Andrew word this clause never saw.** Andrew-direct
+2026-09-14 (Eastern) at `4.0.0_SA_CRO~W`'s terminal, recorded at
+`org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260914_DOWJONES_HARVEST_W.md` @`187f003998`, VERBATIM:
+*"The architecture should be the same self-healing cookie secural run from a stable server and then lambda rest
+api pulls, the only difference is that the stable server is this box, and the lambda api calls are also this
+box. i think this whole operation needs to be handled local on this device with some kind of local cron job that
+cycles through the various platforms for the various securities in a polite manner so no rate limiting."* So the
+DIRECTED architecture is LOCAL on site-Z: the session harvesting AND the HTTP/API worker on this box, ONE canonical
+library inside `opal-data-harvest` carrying each platform's tokens, API contract and code; the EC2 box and
+cloud lambda of the ~18:3xZ ruling are HISTORY and available infrastructure, not a binding production target.
+What is NOT yet decided is the RECURRING ACTIVATION: the collection MECHANISM and CADENCE stay RESERVED to Andrew
+by name pending validation (his ~04:3xZ remediation word, `ANDREW_DIRECT_20260915_HARVEST_REMEDIATION_LOOP_W.md`
+@`cdc3576436`; `org/XXX.md` Step 1b-F @`9db2a36cdc`); the local commissioning runs to date are bounded samples on
+the pilot keys with no schedule (`HARVEST_COMMISSIONING_20260915_W.md` @`e07048dc32`). Carried on `4.0.0_SA_CRO~W`'s
+read of the v0.7 draft (06:41Z), which named the source this seat had missed.
 
 **`C-STARRED-PER-FIRM`** -- the starred watchlist is SHARED ACROSS THE FIRM (both PMs see the same
 starred names), keyed per-firm, not per-user. Andrew-ruled 2026-09-11; reversible to per-user on his
@@ -792,7 +879,7 @@ Andrew, never an inference from an EC2 IP proving unworkable against PerimeterX.
 | S13 | `FWD-11` | THE SOCIAL FEED -- admitted by a stated rule | absent | F12 (1,763 datasets LISTED, none exercised); F13 (0 cashtag-native) | **measure, then build** | S11, S12 | ⛔ `C-LISTING-NOT-CAPABILITY`, `C-VENDOR-EGRESS` |
 | S14 | `FWD-12` | THE INPUT LEDGER -- per class: source, last run, outcome, re-run | absent | brief O12 | wire | S6 | `C-STAGE-PERSISTS` |
 | S15 | `FWD-14` | THE LIST REGISTER -- allowlist + social map, each owned, each with a rot signal | absent | PART V (both rot; an unowned list lapses silently) | build | S12 | `C-LIST-OWNER` |
-| S16 | `FWD-15` | THE LEAD PANEL + ITS RANKINGS -- universe discovery: Trending/Breakout x Price/Chatter, List/Chart, Security overlay, Starred | absent | Andrew's frontend walkthrough; CRO full-stack vision Part C; CONFIRMED 2026-09-11 | build | S4, S8, S12, S13 | `C-SERVER-SIDE-RANKING`, `C-PRICE-RANKING-BOXSIDE`, `C-STARRED-PER-FIRM`, `C-AMGT-ARTICLES-STORE` |
+| S16 | `FWD-15` | THE LEAD PANEL + ITS RANKINGS -- universe discovery: Trending/Breakout x Price/Chatter, List/Chart, Security overlay, Starred | absent | Andrew's frontend walkthrough; CRO full-stack vision Part C; CONFIRMED 2026-09-11 | build | S4, S8, S12, S13 | `C-SERVER-SIDE-RANKING`, `C-PRICE-RANKING-BOXSIDE`, `C-STARRED-PER-FIRM`, `C-AMGT-ARTICLES-STORE` (superseded by `C-ONE-STORE`, s.9f) |
 
 ⭐ **S12 IS THE ROOT AND IT IS NOT IN THE BRIEF'S OWN SURFACE LIST.** Four surfaces depend on it
 (S4, S8, S13, S15) and it is the direct remedy for the one defect this project has actually measured
@@ -905,6 +992,10 @@ harvester module, and `4.0.0_SA_CRO~Z` to **oversee and execute** it with full e
 authority -- behind his own gate, *"just /draw me your intended architecture and i can approve/revise."*
 The draw was APPROVED ~18:3xZ with ONE correction: **the box is an EC2 instance, NOT site-Z**, because
 a local server "is not terraformed nor included in the aws resource cloud."
+⭐ **v0.7: SUPERSEDED as to the box by Andrew's LATER word of 2026-09-14 (@`187f003998`, quoted at
+`C-HARVESTER-COMPUTE`'s v0.7 marker in s.3b; the map in s.9f):** the whole operation is directed LOCAL on this
+box with a local cron job; its recurring activation (mechanism, cadence) stays reserved to Andrew pending
+validation. The EC2 estate this section drew is history and available infrastructure.
 
 ### 8b. What changes in round 5, and what does NOT
 
@@ -962,25 +1053,79 @@ duplicate-block errors), which is that seat's to carry rather than this PRD's.
 
 ---
 
-## 9. ADDENDUM v0.6 -- THE PAGE AS ANDREW DEFINED IT ON 2026-09-15 (the round-10 L10 addendum)
+## 9. ADDENDUM v0.6 / v0.7 -- THE PAGE AS ANDREW DEFINED IT ON 2026-09-15 (the round-10 L10 addendum, and the L4-R answer)
 
-**Author:** `1.0.0_SA_CTO~W` (the L4 owner on Andrew's word @ce7371d0b3). **Trigger:** the round-10 slug
-`REMEDIATION_v10.md@e28f0b546c` and this seat's `ledger/ROUND_ANALYSIS.round10.md`. **What this bump
-changes:** the ENDPOINT gains FWD-16..FWD-19; a CONTRACTS section is added (seven contracts); this
-section. **What it does not change:** the fifteen v0.5 outcomes and their bars; s.2-s.8; the surface
-manifest of s.4 (round 11's decomposition extends the rectangle, this PRD does not pre-cut it).
+**Author:** `1.0.0_SA_CTO~W` (the L4 owner on Andrew's word @`ce7371d0b3`). **Trigger:** the round-10 slug
+`surprise-channel/remediations/REMEDIATION_v10.md` @`e28f0b546c` and this seat's
+`ledger/ROUND_ANALYSIS.round10.md` @`8d5fe78265`. **What v0.6 changed:** the ENDPOINT gained FWD-16..FWD-19; a
+CONTRACTS section was added (eight contracts, not the "seven" v0.6 wrote here); this section. **What v0.7
+changes (s.9g has the itemised list):** both L4-R halves of v0.6 were REFUSED (`3.0.0_SA_CVO~W` @`01e640925c`;
+`4.0.0_SA_CRO~W` @`d8bee9fd68`) and v0.7 answers each named correction, adds TWO contracts (`C-ONE-IDENTITY`,
+`C-RANKING-GENERATION`; ten contracts now) and sharpens two (`C-ONE-STORE`, `C-FILINGS-ANALYZER`) on the five connection briefs
+`4.0.0_SA_CRO~W` sent under Andrew's sixty-minute review word (@`76ab87a06e`). **What neither bump changes:**
+the fifteen v0.5 outcomes and their bars; the surface manifest of s.4 as a set of engines (round 11's
+decomposition extends the rectangle; this PRD does not pre-cut it). ⚠ **s.2-s.8 DO change, by supersession,
+and v0.6 said otherwise:** the clauses v0.6's contracts overtake are named one by one in s.9f with the
+replacing contract and the transition condition, and each carries an in-place marker at its own line.
 
-### 9a. Provenance -- seven Andrew-direct records, one memo, three cards
+### 9a. Provenance -- exact paths and pins
 
-| record | what it carries |
+Paths are under `org/tier1_exec/` unless written from the tree root. A pin is the last commit touching the file
+at this bump (`git log -1 --format=%h -- <path>`), read 2026-09-15 ~06:3xZ.
+
+| record (path @ pin) | what it carries |
 |---|---|
-| `1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_232xZ_W_LANES_...md` @ce7371d0b3 | the `~W` lanes take the project; the L4 owner from here |
-| `..._20260915_035xZ_W_FABRIC_IS_AMGT_RESAPP_ONLY_...md` @9dfee40ce0 | `~W` = AMGT_RESAPP only; `~Z` = POSN_ASTTAX |
-| `2.0.0_SA_COO/deliverables/AMGT_RESAPP_W/ANDREW_DIRECT_20260915_0504Z_...md` @7cf62a165f | executive managers; Lusha; the pool as the system of record |
-| `..._20260915_051xZ_SECURITY_ANALYSIS_HEADER_PANEL_FOUR_TABS_FILINGS_ANALYZER.md` @a5c6a066de | six words: header, four tabs, filings analyzer; Posture; union universe; the symmetric comparable; Adam's packs + the Scanner; the whole C-suite + tenure |
-| `..._20260915_052xZ_EGRESS_GRANTED_...md` @473526f738, superseded fabric-wide @dfa63b6d92 | egress for the session; `comp-secrets` as the instrument |
-| `..._20260915_055xZ_TRANSCRIPT_SECURITY_ANALYSIS_PANELS_DRILL_DOWN.md` @fbd5d91431 (JSON beside it) | the voice memo: parts one to five, the ranker, "the RAG is just the four tabs plus comparing with the opal position" |
-| `..._SUBSTRATE_MEASUREMENTS_20260915_W/SUBSTRATE_CARDS.md` @5007337353 | card 1 filings analyzer; card 2 Lusha C-suite; card 3 Adam's workbook + the Scanner registry and presets |
+| `1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_232xZ_W_LANES_FOR_AMGT_RESAPP_CANONICAL_FLOW_AND_COMP_STATE_SPAWN_VIA_MSTRZ.md` @`dc36f73ac0` | the `~W` lanes take the project; the L2/L4 owner from here |
+| `1.0.0_SA_CTO/deliverables/AMGT_RESAPP_W_LANES_HANDOVER_20260914.md` @`9dfee40ce0` | the hand-over: seating, scope, round-10 substance, residue |
+| `1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260915_035xZ_W_FABRIC_IS_AMGT_RESAPP_ONLY_Z_FABRIC_IS_POSN_ASTTAX.md` @`9dfee40ce0` | `~W` = AMGT_RESAPP only; `~Z` = POSN_ASTTAX |
+| `2.0.0_SA_COO/deliverables/AMGT_RESAPP_W/ANDREW_DIRECT_20260915_0504Z_EXECUTIVE_MANAGERS_LUSHA_AND_THE_HARVEST_POOL.md` @`7cf62a165f` | executive managers; Lusha; the pool as the system of record |
+| `1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260915_051xZ_SECURITY_ANALYSIS_HEADER_PANEL_FOUR_TABS_FILINGS_ANALYZER.md` @`a5c6a066de` | six words: the header, four tabs, a filings analyzer; Posture; the union universe; the symmetric comparable; Adam's packs and the Scanner; the whole C-suite and tenure |
+| `1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260915_052xZ_EGRESS_GRANTED_TO_CTO_W_FOR_THE_SESSION.md` @`5007337353` | egress for the session, seat-scoped; `comp-secrets` as the instrument |
+| `2.0.0_SA_COO/deliverables/AMGT_RESAPP_W/ANDREW_DIRECT_20260915_0542Z_WHOLE_SITEZ_FABRIC_FREE_EGRESS_THIS_SESSION.md` @`dfa63b6d92` | the egress word widened to the whole site-Z fabric for the session |
+| `1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260915_055xZ_TRANSCRIPT_SECURITY_ANALYSIS_PANELS_DRILL_DOWN.md` @`2285a23678` (the record @`fbd5d91431`; the correction of its line-80 pointer @`2285a23678`) and `1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260915_055xZ_TRANSCRIPT_New_Recording_34_9677.json` @`fbd5d91431` | the voice memo, verbatim with timestamps: parts one to five, the ranker, "the RAG is just the four tabs plus comparing with the opal position" |
+| `1.0.0_SA_CTO/deliverables/AMGT_RESAPP_ENDPOINT_ADDENDUM_20260915.md` @`2285a23678` | the pinned ratified carrier for FWD-16..FWD-19: each card beside the Andrew-direct sentence it was cut from (s.9g) |
+| `1.0.0_SA_CTO/deliverables/AMGT_RESAPP_PAGE_V2_DESIGN_20260915_W.md` (created @`2285a23678`; its price-partition label corrected to `TRENDING_PRICE#<d>` / `BREAKOUT_PRICE#<d>` in the v0.7 commit on `4.0.0_SA_CRO~W`'s read) | the v2 page drawn from the contracts; the as-built page of the round-10 drain as its appendix |
+| `1.0.0_SA_CTO/deliverables/AMGT_RESAPP_SUBSTRATE_MEASUREMENTS_20260915_W/SUBSTRATE_CARDS.md` @`5007337353`, with `BA_10K_2026-01-30_measurement.json`, `boeing_csuite_prospecting.json`, `measure_filings_analyzer.py`, `measure_lusha_csuite.py` beside it at the same pin | card 1 the filings analyzer; card 2 the Lusha C-suite; card 3 Adam's workbook, the Scanner registry and presets |
+| `4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260914_DOWJONES_HARVEST_W.md` @`187f003998` | Andrew's 2026-09-14 harvest words at `4.0.0_SA_CRO~W`'s terminal: the Dow Jones credential in Secrets Manager; ONE canonical library in `opal-data-harvest`; "the stable server is this box, and the lambda api calls are also this box ... local on this device with some kind of local cron job"; JSON first, HTTP extraction a last resort |
+| `org/XXX.md` Step 1b-F @`9db2a36cdc`; `4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260915_HARVEST_REMEDIATION_LOOP_W.md` @`cdc3576436`; `4.0.0_SA_CRO/deliverables/HARVEST_COMMISSIONING_20260915_W.md` @`e07048dc32` | the harvest remediation loop Andrew directed at `4.0.0_SA_CRO~W`; mechanism and cadence reserved to him by name; the local commissioning evidence |
+| `4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260915_RESAPP_60M_PROGRESS_LOOP_W.md` @`76ab87a06e` | Andrew's sixty-minute progress and gap review word to `4.0.0_SA_CRO~W`: "Look for gaps, if you find any, write a brief on connecting them and send that brief to CTO~W" |
+| `4.0.0_SA_CRO/deliverables/RESAPP_CONNECTION_BRIEF_POOL_READERS_20260915_W.md` @`0e7de170e3` | the pool's `published` field, the join key, dedupe, distinguishable failure states, the package seam |
+| `4.0.0_SA_CRO/deliverables/RESAPP_CONNECTION_BRIEF_IDENTITY_20260915_W.md` @`b90bfdd20d` | three key conventions on one name; the crosswalk |
+| `4.0.0_SA_CRO/deliverables/RESAPP_CONNECTION_BRIEF_SOCIAL_SERP_20260915_W.md` @`36a08d3d1a` | S13's supported input methods (profile-array and keyword discovery, asynchronous jobs), typed social items, two separate judgments |
+| `4.0.0_SA_CRO/deliverables/RESAPP_CONNECTION_BRIEF_FILING_EVIDENCE_20260915_W.md` @`a65fe406c2` | citation resolution before drafting; the drafting gate's three probes |
+| `4.0.0_SA_CRO/deliverables/RESAPP_CONNECTION_BRIEF_RANKING_RETRIES_20260915_W.md` @`5ae6dd04b5` | a ranking rerun retains stale winners (three rows, two rank-1s, locally reproduced); complete-generation semantics |
+| `3.0.0_SA_CVO/deliverables/AMGT_RESAPP_V06_RATIFIED_TEXT_REVIEW_20260915_W.md` @`01e640925c` | the ratified-text refusal of v0.6: R1, R2, R3, the count, the counterpart, the missing file |
+| `4.0.0_SA_CRO/deliverables/AMGT_RESAPP_v06_BRIEF_REVIEW_20260915_W.md` @`d8bee9fd68` | the brief refusal of v0.6: R1 the supersession map, R2 exact pins and the coverage map |
+| `org/missions/D5/AMGT/AMGT_RESAPP/ledger/ROUND_ANALYSIS.round10.md` @`8d5fe78265`; `org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v10.md` @`e28f0b546c` | the L10 read and the slug it answers |
+
+### 9a-2. Coverage map -- each source requirement, the contract that carries it, the engine surface it lands on
+
+| source (row of 9a) | substantive requirement | contract | engine surface (existing or proposed) |
+|---|---|---|---|
+| ~05:1xZ, first word | the header = the ranking cross + the company feed (publisher + social) + a one-line description | `C-PAGE-LAYOUT`, `C-ONE-STORE` | S16 Lead Panel (built; mounted at ri-4); the header feed = S4's reader repointed at the pool; the description = a model-block header scalar |
+| ~05:1xZ first word (tab 2); ~05:04Z; the sixth word; memo part two | Exec Management: the whole C-suite, Lusha, a targeted web search, tenure against the pool | `C-EXEC-MANAGEMENT` | a new lane: the filing's officer section (authority) -> Lusha `contacts_prospecting` -> an IR-domain search for the CEO; pool-average tenure over the union universe |
+| ~05:1xZ first word (tab 3); the fifth word; memo part three | Peers = comparable multiples in Adam's `CSC` shape; the ranker sector -> size -> country -> subsector; the Scanner's ranking material | `C-SIMILARITY-RANKER` | `lib/research/peers/engine.py` (rungs 1-2 exist; no candidate universe loaded) + the Scanner `UniverseDataRow` + `factor_metadata_registry.json` |
+| ~05:1xZ first word (tab 4); memo part four | Model = the plain financial model from Bloomberg, the same every time | `C-PAGE-LAYOUT` (Model restored) | the model block AMGT-s-1 already produces, rendered in Adam's `Model` sheet shape |
+| ~05:1xZ first word (tab 4); memo part one; Yang Liu's Teams pointer | a filings analyzer; the one "big thing" chart chosen from the filings by the thesis | `C-FILINGS-ANALYZER` | a new scheduled cell over the union universe: the Claude API with document citations (card 1); the index-to-passage map; the drafting reader (brief @`a65fe406c2`) |
+| ~05:1xZ second, third and fourth words; memo part five | Posture; the union universe; the symmetric comparable; "the RAG is just the four tabs plus comparing with the opal position" | `C-POSTURE`, `C-UNION-UNIVERSE`, `C-ETF-PLANE-READ` | a new cell, last in order: membership from the ETF snapshots (read-only), the comparable by the ranker, the judgment over two packs, `posture/v1` |
+| ~05:04Z | the pool is the system of record every frontend runs off | `C-ONE-STORE` | the chatter axis + the coverage reader repointed at `publication-links/v1` / `publications/v1` through one adapter |
+| brief @`b90bfdd20d`; `Z-S95` | one canonical identity; three conventions crosswalked | `C-ONE-IDENTITY` | `crosswalk/v1`; the route boundary in `lib/research/api/scoped_amgt.py` |
+| brief @`36a08d3d1a`; S13 | a supported social input method before any cashtag claim | `C-LISTING-NOT-CAPABILITY`, `C-VENDOR-EGRESS` (standing) | S13 "measure, then build": one security, one declared method, a cap, a window |
+| brief @`5ae6dd04b5`; `Z-S72` | a ranking rerun publishes a complete generation; zero winners / changed winner / failure distinguishable; run identity in the exact-input exercise | `C-RANKING-GENERATION` | `lib/research/metrics/chatter_axis.py` writer + `scoped_amgt.py` date-partition reader (the chatter recut) |
+
+**Measurement limits carried into round 11, each with the check the cut runs before building on it:**
+
+| limit (card / brief) | what it means | required check |
+|---|---|---|
+| ONE company's filing (Boeing 10-K, an Item 1A + Item 7 excerpt), a public filing standing in for the Bloomberg pull (card 1) | nothing is known about a second filer, a 10-Q, a foreign filer or a whole document | run the analyzer on at least three filings across two filers including one non-US name; print items / cited / uncited per filing; measure one Bloomberg-pulled filing before the public stand-in is retired |
+| 5 of 76 outputs uncited (card 1); the saved parsed object shows `citations_total=0` because citations arrived INLINE and no passage map was persisted | uncited rows exist, and the measurement cannot locate the passages it cites | hold uncited rows; persist the index-to-passage map; a resolvability check over every cited id (brief @`a65fe406c2`, first acceptance line) |
+| the Lusha `c-suite` filter is LOOSE, 50 of 50 rows returned, NO tenure field (card 2) | Lusha can be neither the roster's authority nor the tenure source | the filing's officer section is the authority; Lusha enriches CONFIRMED officers only; tenure from the filing field; print confirmed / unconfirmed per company |
+| the peers engine has NO candidate universe loaded (9b) | the ranker's rungs exist but rank over nothing | load the Scanner universe data UNION the model-block headers; print the denominator; run the four-postulate MECE check (the database MINUS the excluded = the ranked) |
+| the coverage list: 32 of 89 tickers MEASURED, 57 UNRESOLVED (2026-09-10); the ranker input 34 eligible (06:02Z audit) | the union universe is not yet one identity space | `C-ONE-IDENTITY`'s 89-name disposition table before the union is computed |
+| the ETF plane's producer contract is unpinned (`C-ETF-PLANE-READ`) | a layout change there would break Posture silently | every consumer carries the snapshot date + the schema version; a schema-shape assertion at read time that fails loudly |
+| social: 0 cashtag-native datasets; profile-array and keyword discovery are documented, none exercised (brief @`36a08d3d1a`) | no social item can be admitted yet | S13's bounded first measurement (one security, one method, a cap, a window) before any header social item |
+| the Bloomberg licence terms for filings and financials: an OPEN question (card 1) | the production input may be constrained | Andrew's word before a scheduled batch reads a Bloomberg-pulled filing |
+| the ranking writer upserts and never clears (brief @`5ae6dd04b5`; a local probe, no live write; the live partitions UNMEASURED for mixed generations) | any same-day rerun since ri-2 may have left stale winners in a served partition | before round 11 serves a ranking: count rows and distinct ranks per axis/date partition on the live table, print the denominator; the three-run acceptance (2, 2, 0 visible winners) on the recut writer |
 
 ### 9b. Compiler and substrate evidence (what changed this PRD)
 
@@ -1005,17 +1150,57 @@ outcome. FWD-16..FWD-19 are UNREALIZED at this bump, as every outcome has been a
 
 ### 9d. The round-11 shape the L4 owner RECOMMENDS (the COO cuts)
 
-In dependency order: the three AC6 limbs as recuts of existing seams (`Z-S95` canonical key on the ranked
-click; `C-S196` drafting paired with evidence; `Z-S72` the exact-input exercise); C-ONE-STORE (the two
-readers repointed at the pool); the filings analyzer as one scheduled cell; the ranker over the scanner
-universe data and the Peers tab in the `CSC` shape; the exec-management lane; the header and the Model tab;
-Posture last, since it consumes everything above for two names. The issuer criteria the slug names
-(`W17-S4`, `W17-S5`) are amended at the cut and are not cells.
+In dependency order: `C-ONE-IDENTITY`'s crosswalk and the route-boundary resolution (which subsumes `Z-S95`'s
+ranked-click recut); the other two AC6 limbs as recuts of existing seams (`C-S196` drafting paired with
+evidence -- now through the citation-resolution adapter of brief @`a65fe406c2`; `Z-S72` the exact-input
+exercise); `C-ONE-STORE` (the two readers repointed at the pool through one adapter, `published` mapped at
+the boundary, the package seam exercised in an isolated runtime -- brief @`0e7de170e3`; the chatter writer under
+`C-RANKING-GENERATION` with the three-run acceptance -- brief @`5ae6dd04b5`); the filings analyzer
+as one scheduled cell with its passage map; the ranker over the Scanner universe data and the Peers tab in
+the `CSC` shape; the exec-management lane; the header (feed + description) and the Model tab; S13's bounded
+first social measurement (brief @`36a08d3d1a`: one security, one documented method, a cap and a window; the
+cadence stays Andrew's); Posture last, since it consumes everything above for two names. The issuer criteria
+the slug names (`W17-S4`, `W17-S5`) are amended at the cut and are not cells.
 
 ### 9e. L4-R on this bump
 
-The ENDPOINT and the new CONTRACTS section re-open the ratified-text half (`3.0.0_SA_CVO~W`, the fabric's
-adjudicator on Andrew's ~03:5xZ word); this s.9 re-opens the brief half (`4.0.0_SA_CRO~W`, or a live COO
-not holding the round in its stead). `python .tools/prd-signoff.py status AMGT_RESAPP` is the one read of
-what is owed; the notifier delivers each half; `to-pipeline-gate.py` LIMB 6 refuses a newly-added round-11
-order until both halves are SIGNED at these bytes.
+v0.6's two halves were REFUSED at their stamps (ratified-text `ebe1dab5a5`; brief `7c0a757ab5`), each with a
+pinned review. v0.7 re-delivers BOTH halves at new bytes: the ENDPOINT (R1, R2, the carriers line) and CONTRACTS
+(the count, `C-ONE-STORE`'s field, `C-ETF-PLANE-READ`'s counterpart note, `C-ONE-IDENTITY`, `C-RANKING-GENERATION`,
+`C-FILINGS-ANALYZER`'s v0.7 clause) re-open the ratified-text half for `3.0.0_SA_CVO~W`; the s.3b / s.4 / s.8a markers and this s.9
+re-open the brief half for `4.0.0_SA_CRO~W` (or a live COO not holding the round in its stead); the preamble
+note belongs to neither half. `python .tools/prd-signoff.py status AMGT_RESAPP` is the one read of what is
+owed; `to-pipeline-gate.py` LIMB 6 refuses a newly-added round-11 order until both halves are SIGNED at these
+bytes.
+
+### 9f. SUPERSESSION MAP -- the v0.5 clauses v0.6's contracts overtake (the brief review's R1)
+
+| clause at v0.5 (its lines at v0.6 @`2f3b65d8b8`) | superseded / qualified by | transition condition | what stands |
+|---|---|---|---|
+| s.3b "three tabs (Thesis / Peers / Coverage) ... the Model tab CUT with its figures rehomed" (698-701) | SUPERSEDED by `C-PAGE-LAYOUT`: one header, five tabs, Model restored, Coverage's content = the header feed | the round-11 SURFACE cell lands the five-tab shell; until then the served page is the three-tab as-built (design file, appendix) | `C-DESIGN-SPEC-FIRST` lifted; `.tsx` authorized; `FWD-15` |
+| s.3b `C-AMGT-ARTICLES-STORE` -- article content in DynamoDB `opal-harvest-articles` (703-709) | SUPERSEDED by `C-ONE-STORE`: the pool is the store | the table stays readable until BOTH readers are repointed at the pool and exercised; then it is retired as a source and nothing writes it | the bucket and table renames of 2026-09-11; S12's per-platform identifier rule (sharpened by `C-ONE-IDENTITY`) |
+| s.4 row S16's constraint list naming `C-AMGT-ARTICLES-STORE` (795) | the same supersession, marked in the row | as above | every other constraint on the row |
+| s.3b `C-HARVESTER-COMPUTE` -- the EC2 box + lambda in the harvest estate, "IT IS NOT SITE-Z" (724-738), and s.8a (903-906) | SUPERSEDED as to the box by Andrew's LATER word of 2026-09-14 (@`187f003998`): "the stable server is this box, and the lambda api calls are also this box ... handled local on this device with some kind of local cron job"; the session harvesting and the HTTP/API worker run on site-Z from one canonical library in `opal-data-harvest` | the RECURRING ACTIVATION (mechanism, cadence) is Andrew's decision pending validation (@`cdc3576436`, @`9db2a36cdc`); until he gives it, only bounded commissioning runs on the pilot keys (@`e07048dc32`) | the harvest naming; the pool; `4.0.0_SA_CRO~Z`'s renames of 2026-09-11; JSON-first collection with HTTP extraction as a recorded last resort (same record) |
+| s.3b `C-SERVER-SIDE-RANKING` -- the chatter axis as "the committed chatter gate" over the articles table (711-718) | SHARPENED by `C-ONE-STORE` (the axis reads the pool), `C-ONE-IDENTITY` (rows carry the canonical key) and `C-RANKING-GENERATION` (a rerun replaces the whole generation; the upsert-and-never-clear writer is the measured defect) | the producer's repoint is a round-11 cell (ri-2 moved it to the harvest TABLES; the pool is the next hop) | the metrics table, the daily partitions, TOP_N=10, the 30-day window |
+| s.6 `C-IDENTITY-RESOLVED` -- four keys (535-539) | SHARPENED by `C-ONE-IDENTITY` (a fifth and a sixth key measured: the local association keys) | the crosswalk lands | the display rule ("the page SAYS SO") |
+
+Nothing else in s.2-s.8 is touched by v0.6 or v0.7. A reader at any of the lines above finds the marker in place.
+
+### 9g. What changed v0.6 -> v0.7, itemised (so each reviewer can diff by intent)
+
+Ratified-text half: (1) the version-history parenthetical after the BAR DISTRIBUTION line is removed from the
+ENDPOINT and lives here instead: *v0.6 added FWD-16..FWD-19, every one `EXERCISED`; the fifteen v0.5 ids and
+their bars are byte-for-byte unchanged -- an addendum never lowers a bar*; (2) "Fourteen outcomes cannot be
+closed by any build" -> "Eighteen"; (3) the ENDPOINT preamble names the carriers -- FWD-1..14 @`3bc8f5f2c4`,
+FWD-15 s.3b, FWD-16..19 `AMGT_RESAPP_ENDPOINT_ADDENDUM_20260915.md` @`2285a23678`, whose four cards were
+extracted and compared byte-for-byte against the ENDPOINT's before that commit (703 / 899 / 921 / 971 chars,
+identical); (4) `C-ONE-STORE`: `published_at` -> `published`, the join key, dedupe, distinguishable failure
+states, the package seam; (5) `C-ETF-PLANE-READ`: the producer counterpart is NOT established, the read is
+one-sided, the schema version is carried; (6) NEW `C-ONE-IDENTITY` and NEW `C-RANKING-GENERATION`; (7) `C-FILINGS-ANALYZER`: the v0.7
+citation-resolution clause. Preamble (neither half): (8) the stale-count note gains the v0.7 bullet. Brief
+half: (9) in-place markers at s.3b (three clauses -- the `C-HARVESTER-COMPUTE` one carrying Andrew's LATER local-box
+word @`187f003998`, which this seat had missed and `4.0.0_SA_CRO~W` named on the draft at 06:41Z), s.4 row S16, s.8a; (10) s.9's opening corrected ("seven" ->
+eight at v0.6, ten at v0.7; s.2-s.8 DO change by supersession); (11) 9a rewritten with exact paths and pins;
+9a-2 added (the coverage map, the measurement limits, the required checks); (12) 9d gains the five briefs in
+dependency order; (13) 9e, 9f, 9g. Outside the PRD, at @`2285a23678`: the carrier, the design file, and the
+correction on the transcript record whose line 80 named a file that did not exist.

@@ -11,7 +11,9 @@ caught the absence (review @01e640925c). This file is created now, in the commit
 the `/draw` this seat emitted at ~04:5xZ (the AS-BUILT page at the round-10 drain, appendix below) and Andrew's page
 words of ~05:0x-05:5xZ (records @7cf62a165f, @a5c6a066de, @fbd5d91431). Every name in section 1-3 is a contract
 term or a measured resource; the one thing this drawing does NOT contain is a comparable's ticker, because no ranker
-has run.
+has run. Corrected in the v0.7 commit on `4.0.0_SA_CRO~W`'s read (msg 06:38Z): the price partitions are the crossed
+`TRENDING_PRICE#<d>` / `BREAKOUT_PRICE#<d>` (`integrations/bloomberg/research/price_axis_pull.py` docstring lines 43-55),
+not a single `PRICE#<d>`; the appendix keeps the historical label as history.
 
 ```
 SECURITY ANALYSIS v2 (AMGT_RESAPP, PRD v0.7) -- one header, five tabs, one pool, one identity
@@ -21,8 +23,8 @@ SECURITY ANALYSIS v2 (AMGT_RESAPP, PRD v0.7) -- one header, five tabs, one pool,
    HEADER -- the discovery surface (C-PAGE-LAYOUT)                     FED BY (store, cadence)
    ┌────────────────────────────────────────────────────────────────┐
    │ Lead Panel: Trending | Breakout  x  Price | Chatter ; List|Chart│◄── DynamoDB opal-harvest-security-metrics
-   │            Starred (firm-scoped)   ticker search                │    PRICE#<d> (box-side, daily), TRENDING_CHATTER#<d>,
-   │                                                                │    BREAKOUT_CHATTER#<d> (Lambda amgt-resapp-chatter-axis,
+   │            Starred (firm-scoped)   ticker search                │    TRENDING_PRICE#<d>, BREAKOUT_PRICE#<d> (box-side, daily),
+   │                                                                │    TRENDING_CHATTER#<d>, BREAKOUT_CHATTER#<d> (Lambda amgt-resapp-chatter-axis,
    │                                                                │    Scheduler ...-daily, 30-day window, TOP_N=10)
    │ Company feed: publisher items + social items, newest and       │◄── pool s3://opal-data-harvest (C-ONE-STORE):
    │   most-discussed first, each clickable to its source           │    publication-links/v1/{security_key}/{publisher}/{digest}.json
