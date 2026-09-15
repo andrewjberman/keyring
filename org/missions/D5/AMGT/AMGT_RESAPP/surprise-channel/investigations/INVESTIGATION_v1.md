@@ -3801,6 +3801,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "REMEDIATION_v9 row Z-S71 (OPEN, owner 2.0.0_SA_COO~ZZZ): resolve the obsolete literal 134 against the actual final 136 union in a citing ruling; retain successful-read and nonempty-input guards.",
     "world_is": "Resolved by one read of the packet at the cited line and one line of arithmetic. The analysis s.7 carried it rather than resolving it 'from the number alone', which was correct; the number alone was never the question -- the union's enumeration at the commit that produced 136 was, and the packet carries it.",
     "notes": "Filed by the round-10 issuer as the successor of the row's named owner (hand-over s.5). The CVO adjudicates at L8/L9."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S92",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~W",
+    "surfaced_at": "2026-09-15T01:12Z",
+    "one_line": "THE ISSUER'S '25 ROUTES' ON API 7k3ed8px20 WAS ONE PAGE OF A PAGINATED LIST, AND TWO CRITERIA OF AMGT-ri-4 HARDCODED IT -- found by 1.0.0_SA_CTO~W's co-sign read (22951): get-routes --no-paginate returns 25 Items WITH a NextToken; the auto-paginated read returns 85 Items, 0 naming amgt. AC4 expected 'routes-before 25' and AC6 'before 25, after 36' while their own invocations (get-routes --query Items[].RouteKey --output text) AUTO-PAGINATE and would have printed 85 and 96 -- so a CORRECT apply would have graded NOT MET, a manufactured failure the worker could not tell from a real one. Amended in this commit to a MEASURED N, never a literal total. CLAUDE.md 22a's paginated list-* trap, committed by the seat that cites the rule.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE CTO'S MEASUREMENT (22951, ~01:0xZ): `aws apigatewayv2 get-routes --api-id 7k3ed8px20 --no-paginate` -> 25 Items WITH a NextToken; `--max-results 25` -> the same page; the auto-paginated read -> 85 Items, no token, 0 naming amgt. The issuer's earlier read (00:2xZ) printed `length(Items)` on a `--query` that returned the page count, exactly the shape 22a names.",
+        "WHAT THE MECHANISM DID AND DID NOT DEPEND ON: the COO half's blast radius ('the existing routes are untouched by construction; the 11 are added from harvest's own state; before-set must be a subset of the after-set') is unaffected by N; only the named OUTCOME 'the 25 stay, 11 are added, total 36' carried the page as if it were the set. Corrected to 'N stay, 11 added, N + 11' with N measured at AC4.",
+        "THE AMENDMENT, in this commit: TO-AMGT-ri-4 AC4 <expect> now 'routes-before N (the MEASURED count, printed; 85 at 1.0.0_SA_CTO~W's auto-paginated read, 22951) and amgt-before 0'; AC6 <expect> now 'after equal to before plus 11, amgt-after 11, before-subset-of-after True, lost []' -- never a literal total; the face's '25 routes' corrected to '85 routes by auto-pagination (25 is one page)'. Invocations unchanged, so the placeholder-enforced comparison against the worker's recorded invocations is unaffected. The COO half carries a dated CORRECTION section rather than a silent rewrite. AND the two API Gateway invocations (AC4, AC6) now carry the comp-tool rail's audited `# rail-checked:` marker: the rail REFUSED that exact command at the issuer's seat (raw API-GW inspection routes to comp-routes, which reads the declared config and cannot read the live key set) and would have refused it in the worker's shell -- a second manufactured failure on the same two criteria, found by running the invocation against the world before handing it over."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CLAUDE.md 22a: 'paginated list-* + --query length() returns the PAGE count and --no-paginate is the hazard'. Rule 27: a MODIFICATION of an existing order is not gated (LIMB 6 fires on NEWLY-ADDED only), so amending an in-flight order's expectation is a human discipline -- 'do not cut against a stale half' -- and the record face and worker face are amended together.",
+    "world_is": "The live route set is 85 keys, none amgt, at the CTO's auto-paginated read; the issuer's 25 was a page. The two hardcoded expectations were wrong in the direction that FAILS a correct act, which is the safer direction and still a defect: a worker refusing at AC4 on a healthy plan would have filed a BLOCKING row about a number, and the round would have lost the time it takes to read that row. STAR: the co-sign read caught it BEFORE the worker reached the criterion, which is the whole argument for a second reader on a world act. WARN: decomposition s.18a and the issuance message carry the same '25'; the decomposition is FROZEN mid-round and is not edited -- this row is the correction of record for both.",
+    "notes": "The worker 0.9.0_WK_AMGT_RESAPP~17 is on ri-2 at this write and has not opened ri-4; the amended face reaches it as the prompt of its continuation and through the file its worktree drains against. No bar is lowered: the subset check, the +11, the 11 amgt keys and the lost [] are the discriminators and they are unchanged."
   }
 ]
 ```

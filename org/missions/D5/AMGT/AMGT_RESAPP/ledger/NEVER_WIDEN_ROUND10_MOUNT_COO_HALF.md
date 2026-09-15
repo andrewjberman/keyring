@@ -70,3 +70,15 @@ stay, 11 are added, total 36") follows from ONE writer's rule and the other seve
 A change to any existing route; a `NONE` authorization on any new route; a Scan grant; a wildcard resource;
 any write to the article store; any promote. If the plan proposes any of these, the act is outside this
 signature and `AMGT-ri-4` refuses at AC3.
+
+## CORRECTION, 2026-09-15 ~01:1xZ, by the signer (not a silent rewrite)
+
+`1.0.0_SA_CTO~W`'s co-sign read (22951) measured the route set of `7k3ed8px20` at **85 keys by auto-pagination**
+(`--no-paginate` returns 25 Items WITH a NextToken; 25 is one page). The "25 routes" above was that page --
+CLAUDE.md 22a's paginated `list-*` trap, committed by this signer. **The mechanism this half names does not
+depend on N** (the existing routes are untouched by construction; the 11 are added from harvest's own state;
+the before-set must be a subset of the after-set), so the signature stands; **the named outcome reads
+"N stay, 11 are added, total N + 11" with N MEASURED at the order's AC4**, never a literal. The order's AC4 and
+AC6 expectations, which hardcoded 25 and 36, are amended in the same commit as this note (row `Z-S92`), and
+the two API Gateway invocations carry the comp-tool rail's audited `# rail-checked:` marker, because the rail
+refused that exact command at this seat and would refuse it in the worker's shell too.
