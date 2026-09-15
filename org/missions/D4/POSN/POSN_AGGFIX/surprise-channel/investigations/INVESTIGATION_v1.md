@@ -99,6 +99,52 @@ worker's id is `POSN_AGGFIX-Z-W<slot>-S<k>`, a seat's `POSN_AGGFIX-Z-S<k>`.
     "spec_asserts": "TO-C1-1 AF1-s-4 / C1-AC3: record whether the proxy docstring's 'blocks client tier' for /api/general/positioning/model.json is true by exercising that URL live with a client token; FALSE is recorded and filed as an OBSERVATION row.",
     "world_is": "No function on the /api/general/* path reads the tier: any verified token is forwarded to S3. The URL serves nothing today only because json/positioning/model.json does not exist; were that key written, every signed-in viewer could read it.",
     "notes": "INERT while the key is absent (404 at the run). Not measured: whether anything writes json/positioning/model.json. The docstring describes a check that is not on the path."
+  },
+  {
+    "id": "POSN_AGGFIX-Z-W2-S3",
+    "project": "POSN_AGGFIX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_AGGFIX~2",
+    "surfaced_at": "2026-09-15T19:55:00Z",
+    "one_line": "C1-AC8 asks for infra/aws/lambda/ci/lambda-source-map.json 'restored to PURE ASCII with only the changed values', but the map at HEAD is not pure ASCII: it carries 23 non-ASCII characters (detector 28) on 8 lines, several of them mojibake, so a pure-ASCII restore also rewrites those 8 unrelated lines as backslash-u escapes. The JSON values are identical; the one semantic change the build made is auth-validator-edge artifact_sha256.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/ci/lambda-source-map.json @9633bb9e7e (last commit touching it; unchanged at b29fe4bf48): 197884 bytes, detector len(b)-len(b.decode('utf-8')) = 28; 23 non-ASCII characters U+009D U+00A2 U+00A7 U+00AC U+00C3 U+00E2 U+2014 U+201A U+20AC; json.dumps(indent=2, ensure_ascii=False) reproduces it byte-for-byte.",
+        "A pure-ASCII write (ensure_ascii=True) of the UNCHANGED base differs from it on lines 175, 223, 238, 253, 268, 287, 419, 549 of 3281.",
+        "After build-nodejs-lambda.sh portal-auth auth-validator-edge (2026-09-15T19:50Z): 1 semantic leaf change, /functions/auth-validator-edge/artifact_sha256 wRAHCaKdoJ+wGRe95gu0Yh0jcTEeXTAPahEhQ8sRiic= -> fekWqHP2cWuewpfFOnlxa2S5jBhxmKKs8eB4/QccRxs=; the pure-ASCII restore was 197971 bytes, detector 0, differing from the base on 9 lines (the 8 above plus 1503)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-C1-1 C1-AC8: lambda-source-map.json restored to PURE ASCII with only the changed values (detector 0 printed).",
+    "world_is": "The base already carries non-ASCII bytes, so PURE ASCII and 'only the changed values' cannot both hold byte-wise: a pure-ASCII write leaves exactly one semantic change and eight escape-only line changes on other functions' entries.",
+    "notes": "Form only. The worker's pure-ASCII restore was then returned to the base bytes, because the artifact it described was rolled back under Branch B (row POSN_AGGFIX-Z-W2-S4); the map at the worker's HEAD equals the base. Not measured: which commit introduced the non-ASCII characters, or whether any consumer reads the map in a non-UTF-8 text mode."
+  },
+  {
+    "id": "POSN_AGGFIX-Z-W2-S4",
+    "project": "POSN_AGGFIX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_AGGFIX~2",
+    "surfaced_at": "2026-09-15T20:00:00Z",
+    "one_line": "C1-AC9's targeted plan cannot come out as the order expects: -target=aws_cloudfront_distribution.portal pulls in the distribution's dependency aws_wafv2_web_acl.opal_cloudfront_protection (its web_acl_id), so the plan reads 'Plan: 0 to add, 3 to change, 0 to destroy' with the pre-existing WAF drift inside it. Branch B: the worker stopped before C1-AC17 and C1-AC10, applied nothing, and restored the artifact's prior bytes as the latest object version.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/terraform/portal-auth/cloudfront-distribution.tf @638492cd7e :117: web_acl_id = aws_wafv2_web_acl.opal_cloudfront_protection.arn inside resource aws_cloudfront_distribution.portal -- Terraform's -target includes a targeted resource's dependencies.",
+        "C1-AC9, 2026-09-15T19:52:43Z, the order's invocation verbatim: init succeeded; 'Plan: 0 to add, 3 to change, 0 to destroy.'; terraform show -json of .scratch/c1.tfplan: 14 resource_changes, 3 with an action -- aws_cloudfront_distribution.portal update (25 lambda_arn paths, every before-value auth-validator-edge:19, 0 non-association leaf changes), aws_lambda_function.auth_validator_edge[0] update (s3_object_version GUSk3wpLZE2ElK8it6sOBQeIU0VZASNH -> zNqzzAOFvq1LnTji4BV2_OymHRfr.bXI), aws_wafv2_web_acl.opal_cloudfront_protection update (rule[3], rule[4], rule[5] managed_rule_group_statement version '' -> null).",
+        "Rollback per the COO half's artifact row, 2026-09-15T19:58Z: s3api copy-object CopySourceVersionId GUSk3wpLZE2ElK8it6sOBQeIU0VZASNH -> latest VersionId 7AkZ0zQ1ETC.wcttDTxnk3t2s5QT9rh2, metadata content-sha256 wRAHCaKdoJ+wGRe95gu0Yh0jcTEeXTAPahEhQ8sRiic=; get-object of the latest re-hashed to that value (21096 bytes) and its bundle carries aggregate_denied 0 times.",
+        "Live re-read 2026-09-15T19:58:26Z (c1_live_association_read.py --before-apply): AUTH-VALIDATOR ASSOCIATIONS 25 -- AT VERSION 19 25 of 25, config ETag E1XYSDYC8UB18L, the same ETag C1-AC1 read at 19:33Z.",
+        "Targeted re-plan after the rollback, 2026-09-15T19:59:38Z: still 'Plan: 0 to add, 3 to change, 0 to destroy'; the function now plans s3_object_version GUSk3wpLZE2ElK8it6sOBQeIU0VZASNH -> 7AkZ0zQ1ETC.wcttDTxnk3t2s5QT9rh2 (identical bytes)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-C1-1 C1-AC9 and decomposition s.1.2: the plan -target'ed to the function and the distribution reads 'Plan: 0 to add, 2 to change, 0 to destroy' with aws_wafv2_web_acl absent (the whole-root WAF drift 'kept out of your targeted plan'); anything else is Branch B -- STOP, BLOCKING row, the COO half's rollback.",
+    "world_is": "While the WAF drift stands, no plan targeted to the distribution can exclude it, so C1-AC9 as written cannot pass. Not run: C1-AC17, C1-AC10, C1-AC11, C1-AC12, C1-AC13, C1-AC14, C1-AC15. The live function and all 25 associations are at version 19; ledger entry posn-aggfix-r1-edge-gate stays OPEN with L1 and L2 closed.",
+    "notes": "INERT: left alone, nothing serves differently. Residual of rolling back by copy: the latest artifact VersionId (7AkZ0z...) differs from the one in state (GUSk3...), so the NEXT portal-auth apply by any seat publishes a new version carrying the OLD code, re-points all 25 associations to it, and applies the WAF drift with it. Restoring the exact prior latest version would need a delete of object versions zNqzz... and 7AkZ0z..., an S3 delete this worker does not make without human confirmation. How the plan is re-cut is the issuer's."
   }
 ]
 ```
