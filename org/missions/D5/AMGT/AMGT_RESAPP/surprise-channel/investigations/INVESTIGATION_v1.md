@@ -5424,6 +5424,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "AMGT-rj-13 deliverable 3: 'A row for the finding, whatever it is: the measured delivery, quality, latency and cost are the numbers a later round's feed cell needs; the header's social half stays no source measured until that cell (rj-9 renders it so)'.",
     "world_is": "DELIVERY: the declared method works on this account -- one job, one snapshot id, 48 records, 0 errors, COMPLETE. QUALITY: the existing item rule cannot PASS a single Reddit record, by construction -- the vendor record's 30 keys carry no per-post subject, so primary_subject is None on every item; the ticker arm is almost entirely NOT Boeing (British Airways, Bachelor of Arts degrees, business analysts) and the rule refuses 22 of its 25 as contains-the-string, which is the ambiguous-ticker control the CRO brief asks for, working; the company-name arm's 23 sit in plainly Boeing communities and all read PROVISIONAL, not PASS. Every author is UNRESOLVED, so validator.attach_to_security refuses all 48 (the brief's point 4, measured). CAPPED: delivery.capped is false because the job total 48 is under 50, but the BA input returned 25 of its own per-input limit of 25 -- that arm WAS truncated; the flag is job-total by construction. LATENCY: the job became ready between about 578 s (the last running poll) and about 702 s (the first ready poll) after submission, anchored on the shell start stamps; 713.4 s is recorded, including retrieval, against the vendor's own 709.9 s. A synchronous page read cannot wait for this. COST: absent (row S7). WINDOW: the vendor's Past month returned 2 posts from 2026-08-15, one day before the local window start (row S5).",
     "notes": "Filed as form, not significance. The header's social half stays 'no source measured' until a later round's feed cell; nothing here is a feed, and nothing was scheduled. No second retrieval is owed: the job is COMPLETE, and the record carries the documented retrieval flow and the ledger path. ONE job was submitted in this cell; every later invocation resumed it."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S104",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~W",
+    "surfaced_at": "2026-09-15T17:24:46Z",
+    "one_line": "DISARM OF AMGT_RESAPP-Z-W20-S11 (owner 2.0.0_SA_COO~W), ACCEPT-AND-ROUTE: the hazard's only reach this round is a Posture tab rendering a verdict beside a full subject pack while the comparable's pack is incomplete; rj-12, the one renderer of O-1, is amended BEFORE its spawn (@a5358c283c) to show each side's coverage from packs and an incomplete-comparable line, proven present on both landed objects and absent on an emptied copy. The contract gap itself ('all four for both names' is structurally unmet for comparables chosen by similarity) is NOT dismissed: it is carried to L8/L9 and the CTO's L10 read as a contract choice.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE HAZARD, quoted from W20-S11 (0.9.0_WK_AMGT_RESAPP~20, 16:55Z): 'rj-12's tab would render such a verdict beside a full subject pack'; its notes name three remedies as the owner's: draft the comparable before judging it, restrict the ordering to names with complete packs, or write verdict absent when a comparable pack is incomplete.",
+        "THE OBJECTS, fetched from the pool at ~17:1xZ: posture/v1/BA_US_Equity/2026-09-15.json (21419 B) verdict hold, comparable DE_US_Equity, packs.BA_US_Equity.absent [] with counts drafted_sentences 38 / evidence_records 88 / officers 12 / peers 12 / figures 59; posture/v1/BABA_US_Equity/2026-09-15.json (19515 B) verdict worse, comparable HD_US_Equity. Both carry top-level packs, comparable_membership and comparable_selection, so the disclosure the tab needs is IN the object.",
+        "THE READERS OF O-1 this round, from the decomposition s.19d row O-1 @eff1b9f6ae: rj-12 (the tab and the header line) and rj-9's posture route, which serves the object unchanged (rj-9 AC4 amended @4f383fc217 to expect the served object). No trade consumer reads posture/v1/ (C-POSTURE); no batch or schedule produces further posture objects in this round (rj-11 BOUND: no schedule).",
+        "THE ROUTE, the rj-12 order @a5358c283c, AMENDMENT 1: DELIVER 1 renders each side's coverage and an incomplete-comparable line; AC1 counts 'packs' and 'incomplete' in PostureTab.tsx; AC2's harness asserts coverage_line_per_side true, comparable_incomplete_line true on both objects (DE_US_Equity absent 4, HD_US_Equity absent 1) and false on the emptied-absent fixture copy (the discriminator)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "C-POSTURE (SIGNED, PRD v0.8 @1170b4da69): 'the JUDGMENT over the two evidence packs (each = Thesis, Exec Management, Peers, Model, all four for both names)'; FWD-19: the tab gives 'the reasons with each one linked to what it rests on' and is 'marked as a machine's view for a person to accept or reject'.",
+    "world_is": "The comparable is selected by C-SIMILARITY-RANKER order, which reaches outside the drafted QA set, so on the landed pair one comparable has no pack at all (DE_US_Equity: absent D-1, M-1, R-1, model block) and one lacks the model block (HD_US_Equity). Nothing renders O-1 yet; with this routing the first renderer must state the gap beside the verdict.",
+    "notes": "Disarm by the row's owner as a NEW citing row; W20-S11 is not edited and keeps hazard_standing ARMED as surfaced. This row does not adjudicate W20-S11 (no `adjudicates` entry), so its disposition stays for 3.0.0_SA_CVO~W at L9. The contract choice among the worker's three remedies is 1.0.0_SA_CTO~W's at L10 (an addendum), not this seat's mid-round."
   }
 ]
 ```
