@@ -1540,3 +1540,193 @@ The 21 rows carrier-less at round 6's L8 (INVESTIGATION_v2.md @a72fa41d54; issua
  }
 ]
 ```
+
+## Round 7 -- L8 compile and L9 adjudication (3.0.0_SA_CVO, 2026-09-15T02:21:10Z)
+
+The 10 rows carrier-less at round 7's L8 (INVESTIGATION_v2.md @32855486f0; issuance bc47ca11a3), carried by C-S93..C-S98. Record: `org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND7_L8_L9_20260915.md`.
+
+```json
+[
+ {
+  "id": "IRPT_FNTEND-C-S93",
+  "project": "IRPT_FNTEND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-09-15T02:21:10Z",
+  "one_line": "ROUND-7 L9 GRADE RECORD: the four JUDGMENT verdicts, one per order, bound to each proof instance at its commit -- 4 PASS, 3 of them with a named qualification (F42-AC10, F43-AC9, F45-AC8) and F44-AC7 MET.",
+  "class": "OBSERVATION",
+  "spec_asserts": "Spine L9: a JUDGMENT criterion is graded by the CVO against the specification that issued it and never self-graded; its verdict lives in `grades` on a row of the CVO's.",
+  "world_is": "4 of 4 round-7 judgment rows read UNVERIFIABLE-BY-INSTRUMENT naming this seat. proof-of-spec-check.py, run by this seat on the shared tree with --governing-order <each order>, reads VALID rc=0 on 4 of 4 instances. Evidence and this seat's own runs and reads are in the record, section 3. Vocabulary as round 6: MET -> PASS; MET WITH A NAMED QUALIFICATION -> PASS with the qualification in `reason`; NOT MET -> FAIL.",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~3/IRPT_FNTEND.TO-FE-s-42.advisory-verbatim-at-every-site.proof_of_spec.json@f91fba582c",
+    "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~4/IRPT_FNTEND.TO-FE-s-43.receiving-route-binds-the-order.proof_of_spec.json@33ea27ab7a",
+    "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~6/IRPT_FNTEND.TO-FE-s-44.artifact-coverage-battery-current.proof_of_spec.json@5d25cd5028",
+    "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/IRPT_FNTEND.TO-FE-s-45.dev-server-residuals-and-committed-reads.proof_of_spec.json@3e48518ae9",
+    "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND7_L8_L9_20260915.md (same slug) section 3"
+   ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "A grade record: it adjudicates no item and opens nothing. Each qualification is carried by the row it names (W1-S69, W4-S16) or stated in its reason for the CTO's analysis.",
+  "hazard_standing": "INERT",
+  "grades": [
+   {
+    "criterion": "F42-AC10",
+    "instance": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~3/IRPT_FNTEND.TO-FE-s-42.advisory-verbatim-at-every-site.proof_of_spec.json@f91fba582c",
+    "verdict": "PASS",
+    "reason": "MET WITH A NAMED QUALIFICATION. RULING Z's bar: 'an out-of-enum advisory at every use site is shown verbatim and flagged; F39-AC10's clause is re-graded at the directory site'. Read by this seat at portal DEV 1f3ce9f0 (LOCAL; PORTAL FROZEN, read by git show): the directory cohort now reads advisoryFromWire(wire.cohort.advisory_status) (contracts/adapt.ts:588), which returns { outOfEnum: token } for a token outside the table (:466) -- the round-6 '?? \"unknown\"' rename is gone, so F39-AC10's clause is MET at the directory site. The header renders the flagged shape verbatim with the flag (header/ScopeSummary.tsx:34, isOutOfEnumAdvisory); validate admits the flagged shape on the advisory axis only (contracts/validate.ts:186); ReceiptPanel's Reason line carries the one flag rule (export/ReceiptPanel.tsx:54); fe-s-32's browser test no longer writes ~2's committed captures (const CAPTURES = captureDestination(SCRATCH + 'captures/')). QUALIFICATION: a NON-authoritative cohort still renders every axis as '<axis>: unknown' under 'Cohort (not asserted)' (ScopeSummary.tsx:118) whatever its value -- a withholding gate the worker disclosed, the same gate Holdings applies, not a rename; RULING W's 'never as \"unknown\"' does not carve it out in words, so whether a withheld value should read 'withheld' is the CTO's to rule. Instrument: a source read at DEV, not a browser re-run."
+   },
+   {
+    "criterion": "F43-AC9",
+    "instance": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~4/IRPT_FNTEND.TO-FE-s-43.receiving-route-binds-the-order.proof_of_spec.json@33ea27ab7a",
+    "verdict": "PASS",
+    "reason": "MET WITH A NAMED QUALIFICATION. RULING AA: 'the receiving seat passes the order it is handed, and the route hands it on as --governing-order; an unbound call reads NOT-BOUND, never VALID'. EXERCISED by this seat on the SHARED tree at HEAD 78ba3385aa (not the worker's worktree): python .tools/tests/test_receiving_binding.py -> 'receiving-binding battery: 11 of 11 arm(s) as expected'; committed+bound ACCEPT; doctored to_ref bound -> HAND BACK, 'THE HAND-BACK NAMES BOTH PATHS: yes'; unbound -> 'NOT-BOUND ... the checker ran: no'; BEFORE arm (receiving-check @edac45e48c) ACCEPTS the same doctored instance, so the arm discriminates. QUALIFICATION: the canonical-flow skill still documents the one-argument call and three verdicts (SKILL.md:353, :368 at HEAD; row W4-S16, graduated) -- fail-closed, a seat following it reads NOT-BOUND, never a false ACCEPT."
+   },
+   {
+    "criterion": "F44-AC7",
+    "instance": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~6/IRPT_FNTEND.TO-FE-s-44.artifact-coverage-battery-current.proof_of_spec.json@5d25cd5028",
+    "verdict": "PASS",
+    "reason": "MET. The limb is named and read by this seat: .tools/proof-of-spec-check.py:339 @4d11c008c2 'artifact-resolution/CHECKER-SCOPE: this proof-of-spec-check lives in ... OUTSIDE that tree -- it cannot resolve the instance's commit and CANNOT GRADE IT'. The wrong side is the battery (it wrote instances to the OS temp dir); the checker blob is unchanged, 7e324c78c2 at 4d11c008c2 and at HEAD. The diagnosis (95f7fde99e, 18:30 local) precedes the fix (051379eac7, 18:48). The battery now writes inside the tree (org/standards/test_artifact_coverage_both_grammars.py:20, :163). EXERCISED by this seat on the shared tree at HEAD: 'ARTIFACT-COVERAGE BATTERY: 6/6 PASS (denominator 6)', 'CONTROLS FAIL FOR THEIR NAMED VIOLATION: 3 of 3', 'WITH THE COVERAGE RULE DISABLED IN A SCRATCH COPY, THE CONTROLS CATCH IT: yes' -- it discriminates again."
+   },
+   {
+    "criterion": "F45-AC8",
+    "instance": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/IRPT_FNTEND.TO-FE-s-45.dev-server-residuals-and-committed-reads.proof_of_spec.json@3e48518ae9",
+    "verdict": "PASS",
+    "reason": "MET WITH A NAMED QUALIFICATION. 'RULING U leaves no residual, and F41-AC5 grades what is committed.' Read by this seat at portal DEV 1f3ce9f0 (LOCAL; PORTAL FROZEN, read by git show) against the CTO's adjudication @46664e15f4 s.3-4: all 3 config-loading scripts take the runner loader (package.json:13 dev, :14 build, :17 preview); vite.config.ts names no __dirname and derives its directory with fileURLToPath at ::14,:17; fe-s-38/resolve-config.mjs:64 loads with configLoader 'runner', the dev script's own loader (W1-S68); both per-cell overrides (fe-s-32, fe-s-39) are absent (W1-S65); fe-s-19 no longer says 'documented default' (W1-S64). F41-AC5 reads 'git cat-file blob HEAD:<path>' (fe-s-41/one-writer.test.ts::105,:715). QUALIFICATIONS: (1) the zero .vite-temp writes (4 of 4 kept loaders), the /api 401-vs-401 control and the build's dist-manifest equality (73 of 73) are the worker's runs and the issuer's untouched-pair re-run, NOT re-run by this seat -- a dev start writes into the main checkout's node_modules and the portal is frozen; (2) the runtime bar is met only by the test's added discriminator (listener node.exe, no process.versions.bun, a bun negative control): the field the cut and bar 2 name reads 'node' under bun too (row W1-S69, graduated)."
+   }
+  ]
+ },
+ {
+  "id": "IRPT_FNTEND-C-S94",
+  "project": "IRPT_FNTEND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-09-15T02:21:10Z",
+  "one_line": "ROUND-7 L9: three FE-s-45 rows DISMISSED_WITH_REASON, each closed in drained code or a correction record -- W1-S67 (the dev line alone cannot stop the write; superseded by amendment 1 on RULING (B)), W1-S68 (resolve-config.mjs on the bundle loader; now runner) and W1-S70 (S67's cost 3 corrected from vite's source).",
+  "class": "OBSERVATION",
+  "spec_asserts": "RULING U's residuals (round-6 analysis s.3 @4713211d87) and the CTO's RULING (B) (@46664e15f4 s.2-3): the config-loading scripts and every kept programmatic loader take the runner loader, with fileURLToPath at vite.config.ts's former __dirname sites; resolve-config.mjs loads with the dev script's own loader.",
+  "world_is": "Read by this seat at portal DEV 1f3ce9f0 (LOCAL; PORTAL FROZEN, read by git show): package.json:13/14/17 carry '--configLoader runner'; vite.config.ts has no __dirname and fileURLToPath at :14,:17; fe-s-38/resolve-config.mjs:64 configLoader 'runner'. W1-S67's premise (the dev line as the one lever) is the one the CTO's adjudication corrected and amendment 1 (@5061bc8421) replaced; its cost (1), the runtime moved to bun, is reverted: the dev server runs on node (F45-AC10). W1-S70 is a source reading (vite 7.3.5 config.js:26032-26033, isConfig) that corrects S67's cost (3): an edit to vite.config.ts restarts the server whatever the loader's dependency list holds. NOTE FOR THE ANALYSIS: the CTO's s.5 rejection of (A) lists 'an edit to vite.config.ts stops restarting the server', which rests on S67's cost (3); W1-S70 removes that one reason. The ruling stands on its other two (every dev user's runtime moved off node; proxies never exercised under bun).",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md@32855486f0#IRPT_FNTEND-W1-S67",
+    "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md@32855486f0#IRPT_FNTEND-W1-S68",
+    "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md@32855486f0#IRPT_FNTEND-W1-S70",
+    "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ADJUDICATION_IRPT_FNTEND_20260914T2350Z.md@46664e15f4 s.2, s.3, s.5",
+    "portal 1f3ce9f0: package.json, vite.config.ts, src/pages/InvestorReporting/__tests__/fe-s-38/resolve-config.mjs",
+    "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND7_L8_L9_20260915.md (same slug) section 2"
+   ]
+  },
+  "adjudicates": [
+   "IRPT_FNTEND-W1-S67",
+   "IRPT_FNTEND-W1-S68",
+   "IRPT_FNTEND-W1-S70"
+  ],
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "W1-S67 and W1-S68 are closed in drained code at portal DEV 1f3ce9f0 under amendment 1 (RULING (B)); W1-S70 is a correction record to W1-S67 and moves no verdict. Its bearing on the CTO's s.5 reasoning is carried in the slug, not as a remedy.",
+  "hazard_standing": "INERT"
+ },
+ {
+  "id": "IRPT_FNTEND-C-S95",
+  "project": "IRPT_FNTEND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-09-15T02:21:10Z",
+  "one_line": "ROUND-7 L9: two rows ACCEPTED as records -- W3-S34 (RULING X's three granted tests went unused because none of their claims changed) and W4-S17 (the receiving reporter wraps long owning-tool lines instead of cutting at 150 characters, inside FE-s-43's grant).",
+  "class": "OBSERVATION",
+  "spec_asserts": "Each row states a grant that went unused or a change inside the order's own <paths>; neither claims a defect this project's chain must remedy.",
+  "world_is": "W3-S34: the three tests assert values RULING Z's changes do not reach; the worker's census of record at portal e028fb4d read 553 pass, 18 skip, 0 fail of 571, and the issuer's re-run matched. W4-S17: .tools/receiving-check.py is inside FE-s-43's <paths>; the wrap was needed for F43-AC4 to print both paths, and this seat's re-run of the battery on the shared tree reads 'THE HAND-BACK NAMES BOTH PATHS: yes', with every other route's classification and argv unchanged, 5 of 5 (F43-AC7).",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md@32855486f0#IRPT_FNTEND-W3-S34",
+    "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md@32855486f0#IRPT_FNTEND-W4-S17",
+    "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-43.receiving-route-binds-the-order.md@33ea27ab7a <paths>",
+    "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND7_L8_L9_20260915.md (same slug) section 2"
+   ]
+  },
+  "adjudicates": [
+   "IRPT_FNTEND-W3-S34",
+   "IRPT_FNTEND-W4-S17"
+  ],
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Records: an unused grant and a reporter change inside the granted tool, both verified. Nothing to remedy.",
+  "hazard_standing": "INERT"
+ },
+ {
+  "id": "IRPT_FNTEND-C-S96",
+  "project": "IRPT_FNTEND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-09-15T02:21:10Z",
+  "one_line": "ROUND-7 L9, GRADUATED -- INSTRUMENTS THAT CANNOT SEPARATE THE CAUSE: a named runtime field that reads 'node' under bun too (W1-S69, F45-AC10's clause and the CTO's bar 2), two tests whose 5000 ms default times out on a loaded box (W3-S33), and a census whose 560 s bound prints a load timeout as RED in a regression's row shape (W6-S1).",
+  "class": "OBSERVATION",
+  "spec_asserts": "F45-AC10: 'the dev script's server reports process.release.name = node'; CTO adjudication @46664e15f4 s.4 bar 2: 'prints process.release.name or an equivalent reading node'. F42-AC9 and F44-AC5: the whole-suite census of record reads 0 fail / every battery green. CLAUDE.md Rule 22: DISCRIMINATION -- could the evidence differ if the claim were false?",
+  "world_is": "W1-S69: bun 1.3.9 reports process.release.name 'node' as node does; F45-AC10 was met only by the test's added discriminator (listener image node.exe, no process.versions.bun, a bun negative control reading bun.exe). W3-S33: at base 4d11c008c2 the suite read 2 fail, both 5000 ms timeouts outside the grant (F40-AC5 and F41-AC2); F40-AC5 timed out again alone at 5735 ms; the census of record read 0 fail. W6-S1: .tools/tests/test_governing_binding.py's 560 s per-battery bound (:272 @4d11c008c2) turned test_seeded_limb.py RED rc=124 under load, 275 s alone; the summary row shape does not separate load from regression.",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md@32855486f0#IRPT_FNTEND-W1-S69",
+    "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md@32855486f0#IRPT_FNTEND-W3-S33",
+    "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md@32855486f0#IRPT_FNTEND-W6-S1",
+    "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND7_L8_L9_20260915.md (same slug) section 2"
+   ]
+  },
+  "adjudicates": [
+   "IRPT_FNTEND-W1-S69",
+   "IRPT_FNTEND-W3-S33",
+   "IRPT_FNTEND-W6-S1"
+  ],
+  "disposition": "GRADUATED",
+  "hazard_standing": "INERT"
+ },
+ {
+  "id": "IRPT_FNTEND-C-S97",
+  "project": "IRPT_FNTEND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-09-15T02:21:10Z",
+  "one_line": "ROUND-7 L9, GRADUATED -- THE NO-STATUS DIRECTORY PATH: a v1 directory-search body with no status member, run through the real adapter, becomes a DirectoryEntry the portal's own validator refuses (W3-S35); the adapter's explicit unknown and validate's availability rule disagree on the common path.",
+  "class": "OBSERVATION",
+  "spec_asserts": "contracts/envelope.ts:225-232 @35797660: a response with no status gets the explicit unknown, never READY. contracts/validate.ts:76 @35797660: 'A non-READY state without a reason is a payload a screen cannot explain.'",
+  "world_is": "contracts/adapt.ts EXPLICIT_UNKNOWN_STATE = 'UNCERTAIN' with partialReason and publicReasonCode null; validateContract('DirectoryEntry', ...) on that document reports 'availability: state UNCERTAIN carries NEITHER partialReason NOR publicReasonCode'. status is optional on this route. Whether any production path runs validateContract on an adapted document was NOT read by the worker or by this seat.",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md@32855486f0#IRPT_FNTEND-W3-S35",
+    "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND7_L8_L9_20260915.md (same slug) section 2"
+   ]
+  },
+  "adjudicates": [
+   "IRPT_FNTEND-W3-S35"
+  ],
+  "disposition": "GRADUATED",
+  "hazard_standing": "INERT"
+ },
+ {
+  "id": "IRPT_FNTEND-C-S98",
+  "project": "IRPT_FNTEND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-09-15T02:21:10Z",
+  "one_line": "ROUND-7 L9, GRADUATED -- THE CANONICAL-FLOW SKILL IS STALE AFTER FE-s-43: it still documents the one-argument receiving call and three verdicts (W4-S16), so a seat following it on a proof-of-spec instance reads NOT-BOUND (fail-closed, INERT).",
+  "class": "OBSERVATION",
+  "spec_asserts": "RULING AA: 'an unbound call reads NOT-BOUND, never VALID'; FE-s-43 BOUNDS: the skill's exact change goes to that skill's owner in one row.",
+  "world_is": "At HEAD 3e8cf9e288, .claude/skills/canonical-flow/SKILL.md:353 reads '.tools/receiving-check.py <the artifact your limb consumes>' and :368 'THE THREE VERDICTS'. Owner by census: 13 of 18 commits on the file are 1.0.0_SA_CTO or its lane 1.0.0_SA_CTO~Z. The exact three-edit change is in the row.",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md@32855486f0#IRPT_FNTEND-W4-S16",
+    ".claude/skills/canonical-flow/SKILL.md@2981c4bd72 :353, :368",
+    "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND7_L8_L9_20260915.md (same slug) section 2"
+   ]
+  },
+  "adjudicates": [
+   "IRPT_FNTEND-W4-S16"
+  ],
+  "disposition": "GRADUATED",
+  "hazard_standing": "INERT"
+ }
+]
+```
