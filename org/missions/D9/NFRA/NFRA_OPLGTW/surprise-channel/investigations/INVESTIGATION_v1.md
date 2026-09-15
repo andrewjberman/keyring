@@ -1320,6 +1320,75 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "TO-OG-i-1's blast-radius bound refused any change to an existing resource, and row S3 held OG-i-1..OG-i-4 for the round.",
     "world_is": "The adjudicator admits exactly the two named description backfills into one apply, under criteria that prove the reconciler's address lists survive. The block of S3 lifts: OG-i-1 is re-handed on the amended order, and OG-i-2..OG-i-4 follow on a root that plans clean. Row S2's check still binds OG-i-1's drain: the applied key schema must read pk/sk with TTL on expires_at.",
     "notes": "W1-S1's adjudication cites 97237; it is 3.0.0_SA_CVO's at L9. The same amendment corrects the AC8 harness sentence to the operator role, per W1-S2. W1-S3 needs no act (97237)."
+  },
+  {
+    "id": "NFRA_OPLGTW-W3-S22",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~3",
+    "surfaced_at": "2026-09-15T20:10:00Z",
+    "one_line": "The restricted profile is keyed by tid/oid, but 5 access-layer routes (/login, /sprint, /sprint/, /sprint/archive, /sprint/{day}) and the /callback legacy-consent branch identify a caller only by the ALB OIDC email. So the same person, signed in to the ALB with their work account, can read Daily Sprint pages and complete the legacy Graph consent. The guard cannot see them before that read or credential exchange.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SOURCE: infra/aws/ec2/opal-gateway/app/server.py @7f1ab996a0 :185-198 -- GuardMiddleware resolves /login and /sprint* by get_user_email() (the ALB x-amzn-oidc-data email) and set_current_email(), which clears any principal (app/context.py :93-96).",
+        "SOURCE: infra/aws/ec2/opal-gateway/app/identity.py @7f1ab996a0 :50-69 -- the ALB claims yield an email; no tid or oid is read. app/sprint_view.py @7f1ab996a0 :173-175 -- with SPRINT_VIEW_ALLOWED_EMAILS empty, every tenant email is served.",
+        "SOURCE: infra/aws/ec2/opal-gateway/app/token_broker.py @7f1ab996a0 :330-341 -- redeem_consent exchanges the code for the Graph envelope and writes the cache; its principal is known only after that exchange. The /callback state carries only an email (:358-366).",
+        "PRD: org/missions/D9/NFRA/NFRA_OPLGTW/prd/NFRA_OPLGTW_PRD.md @f0aa50dbc0 :145 'Key grants by tid/oid, not email'; :141 'Do not infer that match from the existing ALB email-only helper'. access_state.py @7f1ab996a0 :117-123 keys POLICY records by tid/oid only; there is no email index.",
+        "RUN: test_data_entitlement_guard.py::test_ogz1_ac08 -- the restricted profile's own gateway token is refused 401 on all 5 access-layer routes, with 0 reads. The row is about the ALB session, a different credential that the same person holds."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OGZ1-AC8 / PRD C2: '/teams/poll, /query/v0 and every other non-MCP route are denied to the restricted profile before any credential or data read'; 'Existing admin/Graph/portal routes retain their existing policy for other users'.",
+    "world_is": "What is built: the restricted profile's tid/oid principal and its gateway token are denied on every non-MCP route before any read (AC8, 28 of 28). The ALB-email routes never carry that principal. A person holding a restricted profile can still reach them through the ALB with an email identity. Closing that needs one of: a SPRINT_VIEW_ALLOWED_EMAILS roster (config), an ALB rule, or an email-keyed deny index in the access-state table. access_state.py, config.py, sprint_view.py and token_broker.py are all outside this order's grant.",
+    "notes": "ARMED: harmless while no restricted profile exists (OG-z-2 creates the first one) and nothing is deployed. Once a restricted profile is live, the Daily Sprint pages are readable by its holder unless a roster is configured. The worker did not add a post-exchange refusal on /callback, because the credential would already have been fetched and cached."
+  },
+  {
+    "id": "NFRA_OPLGTW-W3-S23",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~3",
+    "surfaced_at": "2026-09-15T20:10:00Z",
+    "one_line": "At the cut no Schwab tool is registered anywhere in the Gateway (OG-q-2 builds them). OGZ1-AC4, AC6, AC7 and AC12 are therefore exercised against a test-only stand-in integration that registers the contract's five names through the real run_integration_tool. data_entitlement.py pre-classifies those five names and maps each to an operation.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN: at 7f1ab996a0 the served MCP surface registers 35 native tools, and the 3 buildable integrations register 9 (ycharts 6, opal_portal 1, globgrph 2). None is named schwab_*.",
+        "CONTRACT: org/standards/NFRA_OPLGTW_CONTRACT.json v1.0 :25-31 -- tools schwab_get_access, schwab_list_files, schwab_describe_dataset, schwab_query, schwab_prepare_download.",
+        "SOURCE: infra/aws/ec2/opal-gateway/app/data_entitlement.py (this cell) SCHWAB_TOOLS -- get_access: any active grant; list_files: list; describe_dataset: describe; query: query; prepare_download: download_filtered."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OGZ1-AC4: 'an unknown user sees no Schwab tool in discovery and a direct Schwab call fails'.",
+    "world_is": "With zero Schwab tools registered, that criterion would pass vacuously. The tests register stand-ins carrying the contract's names so that the discovery filter and the dispatch denial are actually exercised.",
+    "notes": "INERT. OG-q-2 must register exactly these five names; a renamed tool would be unclassified and so denied to everyone (row W3-S24). The operation map above is this cell's choice; PRD C4 (:167) describes what the tools do, not which operation gates each."
+  },
+  {
+    "id": "NFRA_OPLGTW-W3-S24",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~3",
+    "surfaced_at": "2026-09-15T20:10:00Z",
+    "one_line": "'A newly added tool is denied until classified' is enforced for EVERY principal, as PRD C2 states it, not only for the restricted profile that OGZ1-AC5 names. From now on, any cell that adds a tool to tools.py or an integration must also add it to app/data_entitlement.py TOOL_CLASSES; otherwise the tool is hidden and denied Gateway-wide.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "PRD: org/missions/D9/NFRA/NFRA_OPLGTW/prd/NFRA_OPLGTW_PRD.md @f0aa50dbc0 :145 -- 'A newly added tool is denied until classified. Preserve existing users' current tool access ... without granting new data tools by default.'",
+        "RUN: test_data_entitlement_guard.py::test_ogz1_ac05 -- an unclassified tool registered outside both chokepoints: tool_unclassified for the restricted profile and for a no-profile principal, with 0 body runs; once classified legacy, the no-profile principal is served.",
+        "SOURCE: app/integrations/registry.py (this cell) -- register_enabled reports any unclassified tool under 'unclassified' rather than registering it silently."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OGZ1-AC5: 'a newly registered, unclassified tool is denied to the restricted profile'.",
+    "world_is": "The criterion holds, and so does the wider PRD sentence: the unclassified tool is denied to everyone. All 44 tools registered at the cut are classified 'legacy', so OGZ1-AC11 holds: existing users keep the same tool set before and after.",
+    "notes": "INERT for this round. A later order that adds a tool needs app/data_entitlement.py in its <paths>, or the new tool is dead on arrival."
   }
 ]
 ```
