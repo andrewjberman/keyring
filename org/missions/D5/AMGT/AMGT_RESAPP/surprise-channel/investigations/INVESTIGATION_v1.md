@@ -5601,6 +5601,73 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "C-RANKING-GENERATION (PRD v0.8 @1170b4da69): every reader of a ranking partition follows the committed generation's pointer and a date without one is ABSENT; FWD-15: a PM sees ranked names on the Price and Chatter axes.",
     "world_is": "G-1 has ONE writer (lib/research/metrics/chatter_axis.py). The box-side Price producer writes rows at the bare date partition with no pointer, so after the deploy every Price list reads ABSENT until that producer writes generations; the Chatter list reads the generation rj-10's AC7 commits. No promoted portal page calls these routes today.",
     "notes": "Disarm by the row's owner as a NEW citing row; W18-S11 is not edited and keeps hazard_standing ARMED as surfaced. No `adjudicates` entry, so its disposition stays for 3.0.0_SA_CVO~W at L9. The rj-10 spawn prompt names this row so the worker runs AC7 in the same sitting as the apply. The remedy (the Price producer writing a generation and pointer, an operator run under integrations/bloomberg/) is 1.0.0_SA_CTO~W's at L10 and round-12 material; it re-arms the moment a promote carries the Security Analysis page to PROD without it."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W19-S12",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~19",
+    "surfaced_at": "2026-09-15T18:40:00Z",
+    "one_line": "rj-10 AC6 @5ae785828e bars pool-prefixes at least 9 on BOTH live role policies, but the same order's cell grants the PRODUCER role only FOUR prefixes, and AC6's own query reads [Effect,Action,Resource] without Condition -- so the producer's line can print at most 4 and AC6 as cut could not be met by a policy that obeys the cell (AC6's expect was amended @5a16ea4484).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-AMGT-rj-10 @5ae785828e AC6 expect: 'both LIVE policies: articles-table 0, pool-prefixes at least 9, scan 0, wildcard 0'. The same order's cell s.1: 'for the PRODUCER role only the FOUR it reads, publication-links/v1/, publications/v1/, crosswalk/v1/, universe/v1/ (the CTO half's least-privilege REC @e1c3cf0cb3) -- resource ARNs by prefix, ListBucket with the s3:prefix condition'; the COO half's CORRECTION: 'The producer's grant is the four-prefix shape'.",
+    "world_is": "AC6's count is sum(t.count(p) for the nine prefix strings) over the JSON of `get-role-policy --query PolicyDocument.Statement[].[Effect,Action,Resource]`. A policy that follows the cell names each of the producer's four prefixes once in the s3:GetObject Resource list (arn:aws:s3:::opal-data-harvest/<prefix>*); the ListBucket statement's Resource is the bucket ARN and its prefixes live in Condition, which the query does not select. So the producer line prints pool-prefixes 4 and the adapter line 9. The worker implements the cell (four for the producer, nine for the adapter), runs AC6 exactly as written, and records both counts as measured -- it does not widen the producer's grant to nine to meet the bar.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/terraform/harvest/chatter-axis-schedule.tf on branch wk-amgt_resapp-11-2 (this worker's edit): local.chatter_axis_pool_prefixes holds 4 entries; statement ReadThePoolPrefixesTheProducerReads Resource = one ARN per prefix; statement ListOnlyThePoolPrefixesTheProducerReads Resource = [aws_s3_bucket.harvest.arn] with Condition StringLike s3:prefix.",
+        "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rj-10.the-deploy-and-the-live-read.md @5ae785828e, AC6 invocation: --query \"PolicyDocument.Statement[].[Effect,Action,Resource]\" (no Condition in the projection).",
+        "The same order @5a16ea4484 (read with git show from the main tree): AC6 invocation byte-identical to @5ae785828e; AC6 expect now 'pool-prefixes at least 9 on the ADAPTER line ... and EXACTLY 4 on the PRODUCER line ... a producer count above 4 is a widened grant and is NOT met'; every other criterion byte-identical."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Drafted BEFORE the apply. AMENDED BY THE ISSUER @5a16ea4484 (2.0.0_SA_COO~W, AC6 expectation only, answering this row as drafted): 'Do NOT widen the producer's grant ... four prefixes for the producer role, nine for the adapter role.' The worker's worktree carries the order @5ae785828e and was not merged; AC6 is recorded against the AMENDED expectation with both counts as measured, and the issuer re-grades AC6 against @5a16ea4484 at the drain. The act is inside both halves either way (the CTO half s.3 property D signs the four-prefix producer shape)."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W19-S13",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~19",
+    "surfaced_at": "2026-09-15T18:50:00Z",
+    "one_line": "rj-10's cell names the harvester's two schema files as the zip's only non-.py members, but the drained adapter's thesis route also opens lib/research/drafting/schema.json on every request -- a zip carrying only the named members served the thesis route as a 500 (FileNotFoundError) in a pre-act run; the worker added it as a third data member.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-AMGT-rj-10 @5ae785828e s.1: 'the zip carries lib/research/coverage/pool_reader.py and its imports, the harvester's SCHEMA FILES (lib/opal_data_harvest/article.schema.json, security-article.schema.json -- non-.py members the closure walk does not see; add them explicitly), and a VENDORED jsonschema'.",
+    "world_is": "lib/research/api/scoped_amgt.py @5ae785828e _validate_drafting_document opens _drafting_schema_path() = <dir of lib/research>/drafting/schema.json for every thesis request (read_thesis_bundle -> read_drafted_sections). The closure walk reads imports, not open() calls, so the file was absent from a build carrying only the two named schemas. Pre-act, reads only: AC8's three GET events run through the handler from (A) the unpacked build-only zip and (B) the repo tree, with a sys.addaudithook recording opens of absent paths. A: thesis statusCode 500, 'FileNotFoundError ... lib\\research\\drafting\\schema.json'; B: thesis statusCode 200, drafted_sections 5, drafting_status SERVED. Rankings and coverage were identical in A and B. The build script now carries lib/research/drafting/schema.json in DATA_MEMBERS with its reader named; nothing under lib/ was edited. The same audit shows a second difference that packaging cannot close: A's thesis has no model block (model_status and header figures absent) because MODEL_BLOCK_ROOT defaults to the repo-relative deliverables directory org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~1 (scoped_amgt.py:135-138), which no Lambda has on disk; B served header_figures 14, fiscal_year_figures 165, check_face 179. AC8 does not bar those fields; the live thesis capture records what the deployed adapter serves.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Worker scratch audit outputs (kept beside the rj-10 instance as rj10.audit.zip.txt / rj10.audit.repo.txt): zip arm 'ERROR: unhandled exception in opal-amgt-scoped-api ... type=FileNotFoundError detail=[Errno 2] No such file or directory: ...\\lib\\research\\drafting\\schema.json' / 'ARM thesis statusCode 500'; repo arm 'ARM thesis statusCode 200 ... drafted_sections list[5] ... drafting_status SERVED'.",
+        "lib/research/api/scoped_amgt.py @5ae785828e :1214-1224 (_drafting_schema_path) and :1309 (open(_drafting_schema_path())).",
+        "lib/research/api/scoped_amgt.py @5ae785828e :135-138 MODEL_BLOCK_ROOT default 'org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~1'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The added member is inside the COO half's key for opal-amgt-scoped-api (code: the closure zip rebuilt, incl. chain A's route edits) and the CTO half's s.2 row for the same address. Filed so the grader sees that the cell's explicit list was narrower than the deployed code's runtime reads. The model-block absence is carried here as a measured fact about the drained code's location assumption, not remedied: no lib/ edit, no org/ files packaged into a Lambda."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W19-S14",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~19",
+    "surfaced_at": "2026-09-15T18:55:00Z",
+    "one_line": "rj-10 orders a VENDORED jsonschema described as pure-Python, but the last pure-Python jsonschema (4.17.3) cannot resolve the drained drafting schema's own $refs (its $id uses the opal:// scheme) and served the thesis route as a 500; the worker vendored 4.26.0 (the version requirements.txt pins), whose dependency set carries ONE compiled wheel, rpds-py, pinned to each function's own platform.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-AMGT-rj-10 @5ae785828e s.1: 'a VENDORED jsonschema (pure-Python; pip-download into the build dir, never a layer), exercised in an ISOLATED runtime before upload (a fresh venv with no site-packages importing lambda_function and calling the coverage read against a local fixture)'.",
+    "world_is": "lib/research/drafting/schema.json @5ae785828e declares $schema draft-07, $id 'opal://lib/research/drafting/schema.json' and three internal refs (#/definitions/section, #/definitions/evidence_record, #/definitions/sentence). jsonschema 4.17.3 resolves a ref with urllib.parse.urljoin against the $id; urljoin leaves the ref unjoined for a scheme outside uses_relative, the defragmented URL is '', the store lookup misses and resolve_remote calls urlopen('') -> RefResolutionError 'unknown url type: '''. Measured pre-act, reads only, on BA_US_Equity's live drafting/v1 document: through the unpacked zip with 4.17.3, scoped_amgt._validate_drafting_document raised RefResolutionError (the handler returned statusCode 500); through the repo tree with the box's jsonschema 4.26.0 the same document validated (True, None). jsonschema 4.18+ resolves refs through `referencing`, which requires `rpds-py`, a compiled extension -- so no jsonschema that serves this schema is pure Python. The worker pinned the set lib/opal_data_harvest/requirements.txt names and the box exercises: jsonschema 4.26.0, attrs 26.1.0, jsonschema-specifications 2025.9.1, referencing 0.37.0, typing_extensions 4.16.0 (all py3-none-any) and rpds-py 2026.6.3 as the ONE admitted compiled wheel -- cp311 manylinux x86_64 for opal-amgt-scoped-api (live python3.11 x86_64), cp312 manylinux x86_64 for amgt-resapp-chatter-axis (live python3.12 x86_64); every other non-pure wheel is refused by both builders. Still pip-downloaded into the build dir, never a layer. The isolated runtime cannot load a manylinux binary on this Windows box, so the build overlays the win_amd64 rpds extension into the SCRATCH ROOT ONLY (printed; the uploaded zip does not change), and adds a third arm that resolves the drafting schema's refs through the zip's validator. The native binary itself is first exercised by the live reads (AC7, AC8).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Worker scratch diagnostic (kept beside the rj-10 instance as rj10.diag.zip.txt / rj10.diag.repo.txt): zip mode 'jsonschema from ...\\iso-api\\jsonschema' -> traceback ending 'jsonschema.exceptions.RefResolutionError: unknown url type: '''; repo mode 'jsonschema from ...\\site-packages\\jsonschema' -> 'validate -> (True, None)'.",
+        "lib/opal_data_harvest/requirements.txt @5ae785828e: 'jsonschema==4.26.0' under '# Versions exercised on SiteZ.'",
+        "importlib.metadata on the build box: jsonschema 4.26.0 requires rpds-py>=0.25.0; referencing 0.37.0 requires rpds-py>=0.7.0. pip download for --platform manylinux2014_x86_64 returned rpds_py-2026.6.3-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl and the cp312 twin; every other pinned wheel py3-none-any.",
+        "lambda get-function-configuration (pre-act, ~18:4xZ): opal-amgt-scoped-api x86_64 python3.11; amgt-resapp-chatter-axis x86_64 python3.12."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The alternative that stays pure-Python is a stdlib scheme registration (urllib.parse.uses_relative) in the adapter's handler; the handler is not among this order's writes (s.3: 'your writes are the two build scripts, the two .tf policy edits, the ledger entry and sentinel, the session serial file, the instance and captures'), and lib/ is read-only, so that path is named here and not taken. Deploying the 4.17.3 build would have served a thesis route that raises, which the CTO half s.5 does not cover. Both halves sign 'a vendored jsonschema' without the pure-Python qualifier; the qualifier is the order's."
   }
 ]
 ```
