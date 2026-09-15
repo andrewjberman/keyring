@@ -444,6 +444,28 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "TO-OG-q-1 OGQ1-AC13: the pinned PyArrow and DuckDB wheels resolve for linux aarch64 on the host's Python, graded with --platform manylinux2014_aarch64. The cell pins 'compatible PyArrow/DuckDB dependencies' and names no version.",
     "world_is": "No DuckDB release since 1.3.0 publishes a manylinux2014 aarch64 wheel, so a 1.3+ pin, 1.5.0 included, cannot pass AC13 as written. The worker pinned duckdb==1.2.2, the newest release that does, reinstalled .venv-og from the edited file, and ran every OG-q-1 test on 1.2.2; AC9 reads the lockdown settings back from 1.2.2 itself. AC13 passes as written. The cost: the Gateway would ship a DuckDB three minor releases older than the one the cut's interpreter carries, and the grading tag chose the version, not the host.",
     "notes": "INERT: nothing deploys in this order. Whether AC13 should name manylinux_2_28_aarch64 (Amazon Linux 2023 ships glibc 2.34 according to its distribution, not measured here) and allow a newer pin is the issuer's call. A newer pin is one requirements.txt edit plus a re-run of this cell's tests and probe."
+  },
+  {
+    "id": "NFRA_OPLGTW-S5",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-15T12:36Z",
+    "one_line": "On 2026-09-15 the 08335338 completion burst dispatched the 49F chain before the silver it names existed: a00 refused at 09:46:28Z for a missing fact_acc date=2026-09-14 that landed at 09:46:37Z; the one lock holder that ran then wrote 31 objects and hung until the 3600 s document timeout.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "HANDED BY 1.0.0_SA_CTO in its G-B half, section F: org/tier1_exec/2.0.0_SA_COO~O/deliverables/NEVER_WIDEN_SIGNOFF_NFRA_OPLGTW_OG_C2.md @65e254cafe, and msg 97058. Its instruments: the chain log line 'REFUSED: fact_acc has no partition date=2026-09-14' at 09:46:28Z; the silver object fact_acc/date=2026-09-14 at 09:46:37Z; the marker's latest version at 09:46:40Z.",
+        "CORROBORATED BY THIS SEAT (a different instrument): s3api list-objects-v2 at 12:0xZ puts schwab/08335338/meta/complete/date=2026-09-14.json at LastModified 09:46:40Z, and the dispatcher log records 10 invocations on that key from 09:46:08Z to 09:46:40Z, the first 20 s before the silver landed (row S4).",
+        "W-PARTIAL: the G-B half's branch table records that the 09:46:38Z lock holder wrote 31 objects for date=2026-09-14 (dim_account .. twr_daily) by 09:48:35Z, uploaded no log, and its SSM command reads TimedOut at advi_49f_floor.tf:268 (timeoutSeconds 3600)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The PRD's C3 treats a completion record as a statement that the day's outputs exist, and silver.tf:744-746 wires the 49F accelerator to fire on that record.",
+    "world_is": "The v1 marker is PUT during the conversion burst, per table, before the day's silver set is complete, so the accelerator starts the chain on a record that precedes its own data. OG-c-1's qualified closure (merged 1f03a3f209) is the remedy on the producer side. It goes live only with OG-c-2's deploy under G-B. Today's date=2026-09-14 partition was left W-partial by the hung run, and the CTO's half expects the 12:45Z floor to complete it.",
+    "notes": "INERT for this project: nothing of NFRA_OPLGTW is deployed yet, and the lock and the floor bound the effect. The chain's timeout and hang belong to the 49F ADVI chain's owners. G-B condition 4 keeps OG-c-2's replay behind a day whose floor reads CHAIN OK."
   }
 ]
 ```
