@@ -4306,6 +4306,27 @@
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W1-S75",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-15T07:16:06Z",
+    "one_line": "Amendment 1 says the cost ledger is produced only by the IRPT_FE_TIMEOUT_LOAD=1 path, and also that the ledger records F41-AC5's control at 18891 ms, a cost measured before the ledger existed. The load path's LEDGER arm therefore carries the 30 pre-amendment costs in from a BOOTSTRAP table (runs B01-B12), each with its run's date, load and source; two of those runs have a day-only date.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-46 F46-AC2: 'The ledger is produced only by the IRPT_FE_TIMEOUT_LOAD=1 path (F46-AC5), with a reporter that records per-test time, and then committed.' AMENDMENT 1: 'The ledger holds each test's recorded costs, each with its run: date, load and source.' and 'The ledger records F41-AC5's control at 18891 ms, so its timeout is 56673 ms.' and 'Your eight committed timeouts stand unless a ledger cost changes one. Each value stays 3 times a ledger cost.'",
+    "world_is": "Seven of the eight committed timeouts are 3 times a cost recorded BEFORE amendment 1 (6984, 3671, 6969, 5046, 7000, 6422 and 18891 ms), and the eighth is the named floor 3 x 5875 ms from row W3-S33; none of these came from a run of the load path as it now stands. If the ledger held only costs the load path measures, those timeouts would stand on no ledger cost. The load path's LEDGER arm reads the working-tree ledger, else the one at HEAD, else a BOOTSTRAP table in timeouts.test.ts holding the 30 costs of the RECORDED table at portal a93275c8 as runs B01-B12. So the committed ledger is written by the load path, and its first 12 runs are carried, not measured, by it. Dates: B01 and B02 (row W3-S33's runs) read '2026-09-14 (before 23:08:10Z)'; B03 and B04 (the issuer's round-8 probes) read '2026-09-15 (day only; the order does not give the time)'; B05 to B12 carry the mtime of the scratch output that recorded them. The census run never reads BOOTSTRAP.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal 09e9431a src/pages/InvestorReporting/__tests__/fe-s-46/timeouts.test.ts: the BOOTSTRAP table (12 runs, 30 costs) and the LEDGER arm, which reads it only when no ledger exists in the working tree or at HEAD",
+        "<WS>/.scratch/a1-load-1.txt (IRPT_FE_TIMEOUT_LOAD=1 at portal 09e9431a, 65 s): 'LEDGER WRITTEN: ... from BOOTSTRAP (no ledger in the working tree or at HEAD): 12 runs recorded before amendment 1; 6 run(s) and 336 cost(s) appended; 18 run(s) in all'",
+        "the ledger it wrote: 18 runs, 371 costs, 16 of 16 tests, 0 unresolved run references; every test's highest cost is a B-run cost, so no committed timeout moved"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
