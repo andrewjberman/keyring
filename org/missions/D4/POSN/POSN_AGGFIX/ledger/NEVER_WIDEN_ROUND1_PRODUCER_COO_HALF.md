@@ -1,0 +1,57 @@
+# NEVER-1 co-sign, ROUND 1 -- the COO half: the Positioning producer reads Opal's current assets by model and moves the aggregate out of the shared file into an Opal-only key
+
+**Signer:** `2.0.0_SA_COO~Z` | **Date:** 2026-09-15 ~19:1xZ | **Act covered:** `POSN_AGGFIX.TO-A3-1` (cell `AF1-s-10`), the round's ONE producer
+deploy through `infra/aws/terraform/yang-pipeline/` and its ONE driven run on the recorded event | **The other half:** `1.0.0_SA_CTO~Z`,
+requested with the round-1 issuance; the act does not run until both halves are files at SITEZ (A3-AC1).
+
+**Verdict:** SIGNED for the blast radius below, and ONLY it.
+
+## What the act MAY touch (the whole permitted set)
+
+| key | what moves | how it is measured | rollback |
+|---|---|---|---|
+| `aws_lambda_function` in `module.generate_positioning` (`yang-generate-positioning`) | code: TO-A2-1's `lambda_function.py` plus every commit TO-A1-1's A1-AC5 lists between the running bytes and HEAD | targeted plan `0 to add, 1 to change, 0 to destroy` (A3-AC4); deployed CodeSha256 == artifact (A3-AC7) | restore the artifact's prior VersionId (printed first at A3-AC3) as the latest object version and re-apply the targeted plan |
+| `s3://opal-313476888478-lambda-artifacts/yang-pipeline/yang-generate-positioning.zip` | overwritten by the build (versioned bucket) | head-object before and after (A3-AC3) | the prior VersionId |
+| `s3://opal-data-portal-v2/json/positioning/positioning_data.json` | `current_holdings.AGG` removed; the five book `aum` values move from the July legacy figures to each model's own current `by_model` row; `generated_at` | prior vs new VersionId, per book non-aum identity and aum equality (A3-AC9) | copy the prior VersionId back as the latest version (a new version; no delete) |
+| `s3://opal-data-portal-v2/json/positioning/opal_aggregate.json` | NEW key, the decomposition's 1.1 payload, `status OK` (or `UNAVAILABLE`) | head before (absent) and after, payload checks (A3-AC8, A3-AC9) | overwrite with a `status UNAVAILABLE` payload. An S3 delete is NOT part of this signature (it needs Andrew's word) |
+| CloudFront invalidation by `yang-invalidate-cloudfront` on its recorded event | cache entries for the paths that event names | A3-AC8 | none needed: an invalidation removes cache entries only |
+| `infra/aws/lambda/ci/lambda-source-map.json`, `infra/aws/terraform/yang-pipeline/CHANGELOG.json` | the recorder's values | git (A3-AC11) | git revert |
+
+**Writers of the named properties, counted (NEVER-1's rule), printed:** `json/positioning/positioning_data.json` -- **1 writer**, the producer
+(`lambda_function.py:2627-2634`, `OUTPUT_KEY` :2529): measured at L5 by `comp-find "positioning/positioning_data" --band DEF` (17 DEF hits
+across 61,858 files; 2 in code; the other code hit `build_satellites_characteristics.py:142` is a READER, `get_object` :230) and re-counted
+by TO-A1-1's A1-AC2 on a different instrument before the act. `json/positioning/opal_aggregate.json` -- **1 writer**, the same producer (a
+new key). **Readers named:** a book's `aum` -- 0 at text grain at L5 (A1-AC3 re-counts); `current_holdings.AGG` -- the satellites script's
+`yang_index` (A3-AC10 exercises it before and after).
+
+## What the act may NOT touch
+
+Every other key under `json/positioning/` (A3-AC8 prints each key's LastModified before and after and any move is Branch B);
+`allocation_summary.json` and `yang-generate-allocation-summary`; the `YangDataPipeline` state machine (never started); every other Lambda,
+role and policy in the root; `platinum/mdpf/global/aum-metrics.json` and the MDPF gold producer (read only); the legacy
+`json/portfolios/aum-metrics.json` object (no longer read, not modified); the portal, its gitlink, DEV and PROD.
+
+## Both branches of every outcome named
+
+- **The plan** reads `0 to add, 1 to change, 0 to destroy` on the one function: SIGNED. Any add, replace, destroy, or change on another address:
+  NOT SIGNED -- the act stops on a row.
+- **The driven run** writes `status OK` and the served delta is confined to {AGG removed, five book `aum`, `generated_at`, the new key}: Branch A,
+  inside this signature. **It writes `status UNAVAILABLE`** (the platinum read failed at run time): the shared file then carries NO
+  `current_holdings` and no `data_date` (today's wholly-failed arm: `generate_positioning_data` :2374-2381 and :2392-2395 @`605c03f81f`;
+row `POSN_AGGFIX-Z-S1`), which breaks the Models view for every viewer -- that outcome is Branch B, and its
+  rollback (the prior VersionId of the shared file restored, the function re-applied at its prior artifact) IS inside this signature and runs
+  at once.
+- **Any other served difference** (a holding, a weight, a benchmark row, another key moving): Branch B, the same rollback.
+
+## The exposure window, named
+
+Until `TO-C1-1`'s edge gate is live, `/api/general/positioning/opal_aggregate.json` is readable by any signed-in viewer. **This is not a
+widening:** every figure in the payload is already reachable by any signed-in viewer today -- the aggregate holdings and `total_aum` in the
+shared file's AGG block (the brief's F7), and the per-model and total AUM figures in `platinum/mdpf/global/aum-metrics.json` through
+`/api/general/mdpf/global/aum-metrics.json` (`public-data-router/index.mjs:51-54`; the OAC grant covers `platinum/mdpf/*` per
+`portal-proxy.ts:1366-1367` @edf85ce503). The gate closes the new key; D3's closure of the MDPF route is NOT this act's claim.
+
+## Provenance
+
+PRD v0.2 @`cbd85e5cff` C-NEVER-WIDEN, C-FIVE-BOOKS-UNCHANGED, C-CURRENT-SOURCE, C-OPAL-ONLY-DATA; decomposition round 1 @`605c03f81f` s.1.1,
+s.1.3, AF1-s-10. Push state: LOCAL.
