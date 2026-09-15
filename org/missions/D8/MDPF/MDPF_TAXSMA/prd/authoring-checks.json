@@ -1,5 +1,5 @@
 {
-  "checked_utc": "2026-09-15T07:54:34.266881+00:00",
+  "checked_utc": "2026-09-15T08:29:58.343432+00:00",
   "author": "1.0.0_SA_CTO~A",
   "header_and_canonical_shape_violations": [],
   "endpoint_equal_to_approved_after_heading_layout_only": true,
@@ -38,8 +38,65 @@
   "owned_components_complete": true,
   "component_count": 47,
   "brief_heading_counts": {
-    "top_level": 9,
-    "nested_outcome": 8
+    "title": 1,
+    "level_2": 9,
+    "nested_outcome": 8,
+    "total": 18
   },
-  "limitations": "Shape, ID-set, dependency and exact ratified-text checks; only outcome heading layout normalized to canonical FWD syntax. Substantive brief/contract review remains independent at L4-R. No implementation tests."
+  "limitations": "Shape, ID-set, dependency and exact ratified-text checks; only outcome heading layout normalized to canonical FWD syntax. Substantive brief/contract review remains independent at L4-R. No implementation tests.",
+  "prd_version": "v0.2",
+  "data_contract_version": "0.2.0",
+  "brief_coverage_rows": [
+    "Tax SMA: a complete, reconciled D8 asset pipeline — title and preamble",
+    "Commission and precedence",
+    "I. Outcome territory",
+    "I.O1",
+    "I.O2",
+    "I.O3",
+    "I.O4",
+    "I.O5",
+    "I.O6",
+    "I.O7",
+    "I.O8",
+    "II. Boundaries",
+    "III. Qualitative completion bar",
+    "IV. Measured prior art and gaps",
+    "V. Dependencies, without sequencing instructions",
+    "VI. Status context — NOT OUTCOME-BEARING",
+    "VII. Limitations and closure required in the PRD",
+    "References"
+  ],
+  "brief_coverage_complete": true,
+  "membership_date_status": [
+    "ATTESTED",
+    "UNVERIFIED"
+  ],
+  "review_correction": {
+    "notice_id": 96983,
+    "grounds": [
+      "R1",
+      "R2"
+    ],
+    "source_review": "docs/briefs/sources/MDPF_TAXSMA_L4_BRIEF_REVIEW_v0_1_20260915.md@eda74adacc",
+    "selection": "ATTESTED-only initial membership in v1; title/preamble counted and carried",
+    "additional_consistency_fix": "Section 3.9 names the already-projected Traded field"
+  },
+  "half_hashes": {
+    "ratified-text": "fed0ad5c18f33765a8e3aaf08bb8fcd1018af3a6ee109340b2ec5fa5ca634fd3",
+    "brief": "f67f3a541306f2cf09f706e4fbcb5e5529318c4c193a691cd8ad69f614a97a0e"
+  },
+  "prd_sha256": "472b1cd5c99c50c52595e0afb890f4811ff18aed8019b915264658c5606358d0",
+  "data_contract_sha256": "0af07aefd485b5bda905caac89b82746a95e8ba2de62e2122198a5a04031a13f",
+  "ratified_text_correction": {
+    "notice_id": 96985,
+    "ground": "R1",
+    "source_review": "org/tier1_exec/3.0.0_SA_CVO/deliverables/PRD_REVIEW_MDPF_TAXSMA_v0.1_RATIFIED_TEXT_HALF_20260915.md@e53b06bd38",
+    "rounding_ruling": "39aae459ed",
+    "nonblocking_notes": {
+      "N1": "Known values only; unknown/stale never coerced to zero",
+      "N2": "96960 durable carrier pinned at 48befbfcbf",
+      "N3": "Desired schedule observation remains desired only",
+      "N4": "CANON prose amendment remains owner-pending"
+    }
+  }
 }

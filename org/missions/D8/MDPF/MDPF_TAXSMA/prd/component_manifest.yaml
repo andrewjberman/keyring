@@ -1,5 +1,5 @@
 project: MDPF_TAXSMA
-prd_version: v0.1
+prd_version: v0.2
 author: 1.0.0_SA_CTO~A
 scope: Normative target inventory for the PRD extension; distinct from the original 24-unit certified source inventory.
 plane_vocabulary:
@@ -404,8 +404,8 @@ components:
   disposition: AUTHORED_NEW_L4_CONTRACT
   existence_check:
     exists: true
-    last_commit: null
-    source_sha256: 2cff438e22214da144ba52ecf4559364268d7d4cb50c891bb936e7d95027298f
+    last_commit: 48befbfcbfbdc78c360f9716dbffadf13c0f6cff
+    source_sha256: 0af07aefd485b5bda905caac89b82746a95e8ba2de62e2122198a5a04031a13f
   boundary: Source/path inspection only; no deployed parity inferred. Recheck exact path before authoring; if usable
     already, verify/reuse.
 - name: TAXSMA_WORKBOOK_IDENTITY activation record

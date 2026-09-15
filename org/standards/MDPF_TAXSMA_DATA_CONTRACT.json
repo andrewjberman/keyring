@@ -1,6 +1,6 @@
 {
   "contract": "MDPF_TAXSMA_DATA_CONTRACT",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "authority": "org/missions/D8/MDPF/MDPF_TAXSMA/prd/MDPF_TAXSMA_PRD.md",
   "state": "PROPOSED_L4_REVIEW",
   "purpose": "Normative design enumerations; no deployed implementation or observed account population is asserted by this file.",
@@ -174,7 +174,6 @@
     ],
     "membership_date_status": [
       "ATTESTED",
-      "SOURCE_PROVEN",
       "UNVERIFIED"
     ],
     "technical_enrollment": [
@@ -229,7 +228,8 @@
       "recorded_at",
       "reason"
     ],
-    "disposition_rule": "Append-only protected data correction with evidence and named actor. No data disposition opens an account, places a trade, grants access or changes a trading master. Corrections do not silently rewrite the workbook."
+    "disposition_rule": "Append-only protected data correction with evidence and named actor. No data disposition opens an account, places a trade, grants access or changes a trading master. Corrections do not silently rewrite the workbook.",
+    "effective_date_rule": "Initial effective membership is ATTESTED-only in v1. Only an authorized operator's CONFIRM_EFFECTIVE_MEMBERSHIP disposition, with a validated full account_key and the required effective_date, evidence_ref, workbook_snapshot_id, actor, recorded_at, reason and disposition history fields, establishes ATTESTED membership. effective_date is the first inclusive membership day; CONFIRM_INACTIVE ends that interval on its effective_date, exclusively. Inception Date, Last Trade Date, custodian strategy labels and source-arrival dates never establish activation automatically. A new TRADED_CLAIM is discovered without manual roster enrollment and enters the expected denominator immediately; until the explicit dated disposition exists it is UNVERIFIED with MEMBERSHIP_DATE_UNVERIFIED, contributes no covered value and prevents a complete affected total. The pending claim and operator disposition remain visible in protected evidence. After attestation, daily processing applies the dated interval automatically. Other disposition kinds correct or close existing history; they do not substitute for initial confirmation."
   },
   "valuation": {
     "basis": "dim_balance.net_mv_plus_cash via b00 canonical_valuation",
@@ -315,7 +315,7 @@
         "sums.total_aua",
         "affected node/child aum"
       ],
-      "version": "0.1.0",
+      "version": "0.2.0",
       "rollout_rule": "Enable new served payload only with a compatible consumer in the same environment; production activation waits for its applicable promotion authorization."
     }
   },
