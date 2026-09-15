@@ -5645,6 +5645,27 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
    "disposition": "UNDER_INVESTIGATION",
    "spec_asserts": "AC4: errorEmpty, drafting and tabs harnesses 'still ending at their met values (the regression control)'. The order does not say a prior check will invert.",
    "world_is": "One of tabs.harness.cjs's 20 checks is a placeholder assertion superseded by this cell. It is replaced by posture_served_call_rendered (the SERVED claim text and a data-posture-verdict ARE on the tab, over the same SERVED denominator), so the control still ends CHECKS-OK 20 of 20 while grading the new state. Its other 19 checks, errorEmpty.harness.cjs and drafting.harness.cjs are unedited."
+  },
+  {
+   "id": "AMGT_RESAPP-Z-W18-S18",
+   "project": "AMGT_RESAPP",
+   "fabric": "site-z",
+   "surfaced_by": "0.9.0_WK_AMGT_RESAPP~18",
+   "surfaced_at": "2026-09-15T18:35:25Z",
+   "one_line": "read_posture's SERVED arm hard-codes reason None, so an O-1 object whose verdict is 'absent' -- which rj-11 writes WITH its reason and without a model call when the subject's identity does not resolve or no comparable exists -- reaches the header and the Posture tab with the verdict and no reason; the order requires 'the reason when the verdict is absent'. Remedied in AMGT-rj-12 by serving the object's own reason.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "lib/research/api/scoped_amgt.py:2122-2133 @ef718ae836: the SERVED return dict carries '\"reason\": None,' for every served object.",
+     "lib/research/posture/judge.py:31-35 @ef718ae836: '\"absent\" is never the model's word: it is written here, without a model call, when the subject's identity does not resolve or no comparable exists -- with the reason.' and _absent_document (judge.py ~:478-500) writes verdict VERDICT_ABSENT, comparable None, basis [], reason <reason>.",
+     "The two landed objects carry verdict hold / worse with reason null, so the defect is latent on today's pool: no served object is absent-with-reason yet."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "AMGT-rj-12 deliverable 1: 'ABSENT-explicit when the object is absent, with the reason when the verdict is absent'. INTERFACE O-1 in the order lists 'reason' among the object's fields.",
+   "world_is": "The route serves the reason only on its own ABSENT arm (no object) and nulls the object's reason on the SERVED arm, so the tab could state ABSENT for an absent verdict but never why. Remedy in this order, beside W18-S16's: the SERVED arm carries document.get('reason'). On both landed objects it is null, so the served value does not move today; lib/research/api/tests pins the absent-verdict arm."
   }
 ]
 ```
