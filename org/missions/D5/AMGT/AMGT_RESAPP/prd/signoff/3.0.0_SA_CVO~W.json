@@ -1,0 +1,12 @@
+{
+  "prd": "AMGT_RESAPP_PRD.md",
+  "prd_version": "v0.6",
+  "prd_pin": "2f3b65d8b842847bd31eefc63766593bcc235b42",
+  "half": "ratified-text",
+  "half_hash": "f52bb3078727d373990d8df005f7db3c1c58b396aa74aa01bb714a12c9a36c3e",
+  "verdict": "REFUSED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_RESAPP_V06_RATIFIED_TEXT_REVIEW_20260915_W.md@01e640925c",
+  "signed_by": "3.0.0_SA_CVO~W",
+  "signed_at": "2026-09-15T06:13:51Z",
+  "reason": "ENDPOINT contains version history and contradicts its 18-EXERCISED count; new-card source comparison and ETF counterpart agreement remain unestablished."
+}
