@@ -4745,6 +4745,141 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "C-ONE-IDENTITY: an identity is resolved once and carried unchanged; two identifier spaces are never mixed.",
     "world_is": "Two identifier spaces meet in one mutation argument, on the same page and in the same class as the defect this cell repairs, but in a file this cell's DELIVER list does not name -- so it is filed, not fixed. The remedy is a decision, not an edit: either the watchlist becomes key-keyed (a store change, with a migration for the entries already written) or this button sends the identity block's bloomberg form; picking one silently in this cell would have set the precedent the other cell then has to undo.",
     "notes": "Worth pairing with whatever cell takes AMGT-rj-5: once ranked rows carry security_key, key-keyed is the cheaper end state and the starred residual stops being a dumping ground for identifiers that never matched."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W21-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~21",
+    "surfaced_at": "2026-09-15T09:35:00Z",
+    "one_line": "The contract's database UNIONs two halves that carry DIFFERENT SECTOR VOCABULARIES -- the scanner's 13-value UniverseDataRow.sector and the model block's GICS_SECTOR_NAME -- so rung 1 run on the raw strings returns ZERO same-sector candidates for two of the three landed subjects; the ranker carries a declared GICS-to-scanner map (basis held) with its residue named.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Measured over the loaded database (candidate_universe.json, vintage 2026-08-06, 2851 rows): the scanner half carries 2849 rows across 13 distinct sector values ['Business Services', 'Consumer Cyclicals', 'Consumer Non-Cyclicals', 'Consumer Services', 'Energy', 'Finance', 'Healthcare', 'Industrials', 'Non-Corporate', 'Non-Energy Materials', 'Technology', 'Telecommunications', 'Utilities']; the model-block half carries 3 rows whose GICS_SECTOR_NAME values are 'Industrials' (BA), 'Consumer Discretionary' (BABA) and 'Information Technology' (SAP).",
+        "Exact-string overlap measured: 'Industrials' is in the scanner vocabulary (428 rows); 'Consumer Discretionary' is NOT (0 rows); 'Information Technology' is NOT (0 rows). So a rung-1 test on raw strings gives BABA and SAP an empty candidate set and BA a set from a taxonomy that is not GICS.",
+        "The map as built: lib/research/peers/taxonomy.py GICS_TO_SCANNER, 11 GICS sectors -> 12 of the 13 scanner sectors, residue ['Non-Corporate'] (1 row, industryGroup 'Financially Operative Institutions') named in sector_map_denominators(); basis 'held' (an editorial mapping between two published taxonomies), carried in every emitted peer set as sector_map.map_id GICS11_TO_SCANNER13_v1 with the mapped value beside the raw one."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD v0.8 group C, ratified: 'the database = the Security Scanner's universe data (UniverseDataRow: ticker, name, mktVal, country, sector, industryGroup, universe weight ...) UNION the harvest universe's model-block header scalars (classification, market cap, country); the rungs, lexicographic, in Andrew's order: same SECTOR ...'.",
+    "world_is": "The UNION is across two classification VOCABULARIES, not one field with two sources. 2849 of 2851 rows speak the scanner's 13-value taxonomy and 3 speak GICS; only the token 'Industrials' appears in both, and the two 'Industrials' do not denote the same set (the scanner carves 'Business Services' out of it). The contract names no map, so the cell either invents one or emits an empty derived set for every model-block subject -- and an empty derived set is exactly what FWD-8 forbids.",
+    "notes": "Disarmed in this order by DECLARING the map rather than hiding it: two GICS sectors map to a PAIR of scanner sectors (Consumer Discretionary -> Consumer Cyclicals + Consumer Services; Communication Services -> Telecommunications + Consumer Services) because the scanner's 'Consumer Services' straddles both, and rung 4 (industryGroup) separates them again; each wide entry carries its reason in SECTOR_MAP_NOTES. taxonomy.residue_over_database() re-measures the map against whatever database is loaded, so a sector value that appears at a later vintage surfaces as UNMAPPED rather than being silently mis-binned (measured now: 0 unmapped sector values). A reader who disagrees with one row of the map can say which row; that is the point of declaring it."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W21-S2",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~21",
+    "surfaced_at": "2026-09-15T09:35:00Z",
+    "one_line": "The two halves of the database quote MARKET CAP IN DIFFERENT UNITS -- the scanner's mktVal is USD MILLIONS, the model block's CUR_MKT_CAP is FULL CURRENCY UNITS -- so the 0.2x-5x band on the raw numbers is off by 1e6 and NO candidate clears it for any model-block subject.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Scanner, sp500/universe_data.json @asOf 2026-08-06: Agilent Technologies mktVal 39918.9 for a ~USD 39.9bn company -- the unit is USD millions.",
+        "Model block, org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~1/model_block_BA_US_Equity.json: CUR_MKT_CAP value 161867780096.00003, and the figure's own basis definition says so verbatim: 'Current market capitalization, full currency units (not millions).' BABA 269839299644.40002, SAP 218452622534.24.",
+        "Consequence if not normalised: candidate/subject = 39918.9 / 161867780096 = 2.5e-7, six orders below the 0.2x floor -- every candidate stops at rung 1 and every model-block subject emits basis absent with 'no candidate reaches rung 2'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The cell: 'the rungs ... then a SIZE BAND (the existing engine's 0.2x-5x market-cap band)' over the UNION database, with the existing engine's MARKET_CAP_MNEMONIC = CUR_MKT_CAP compared against UniverseDataRow.mktVal.",
+    "world_is": "The two fields are the same QUANTITY in different UNITS, and nothing in the contract or the existing engine names the conversion. The band is a RATIO test, which is exactly the shape that survives a unit error silently on one source and fails totally on a mixed one.",
+    "notes": "Disarmed in this order: universe.MODEL_BLOCK_CAP_DIVISOR = 1e6 is applied where a model-block header enters the database and where a model-block subject's own cap is read, the divisor is stated in both module docstrings, and lib/research/peers/tests/test_peers.py::VocabularyAndUnits::test_model_block_cap_is_divided_by_1e6_before_the_band is the red-first arm (a 1e9-unit block must rank against a 1000-million fixture). The emitted subject carries market_cap_raw, market_cap_musd and the block's own unit note, so a consumer can re-derive the conversion rather than trust it."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W21-S3",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~21",
+    "surfaced_at": "2026-09-15T09:35:00Z",
+    "one_line": "A model-block subject whose key does not join the scanner's US ticker space STILL HAS a scanner row, under an identifier X-1 cannot resolve -- so SAP SE ranked as its own top peer ('484628', rung 3) until an exact normalised-name arm was added; a cross-listing carrying a DIFFERENT name string is still not caught.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Measured before the fix: python -m lib.research.peers.engine --security-key SAP_GY_Equity --as-of 2026-09-15 --dry-run printed 'MEMBERS 12 of 94 eligible ... 484628(rung=3) 588950(rung=3) IBM(rung=2) ...' where scanner ticker 484628 is 'SAP SE' (Technology / Software and Consulting / Germany / mktVal 242292.0) -- the subject itself.",
+        "The identity plane cannot join them: the scanner's non-US tickers are SEDOL-shaped ('484628' for SAP SE, 'BK6YZP' for Alibaba, '653665' for BYD), and crosswalk.resolve() returns UNRESOLVED for them by design (it never mints a key from a raw identifier). This is the same seam rj-4 measured from the other side: only 3 of 170 ETF holdings joined the crosswalk because that plane's tickers carry no exchange code.",
+        "Measured after the fix: 'DATABASE 2851 candidate(s) | universe_vintage 2026-08-06 | minus self 2 (ticker 1, exact-name 1) = 2849 graded' and 484628 is gone from the members; the excluded row is recorded in the object as denominators.self_excluded_by_exact_name = [{'ticker': '484628', 'name': 'SAP SE'}].",
+        "The residual, measured: BABA's model block carries NAME 'ALIBABA GROUP HOLDING-SP ADR' while its scanner row is 'Alibaba Group Holding Limited' -- the two do NOT normalise equal, so the arm would not fire. It happens not to matter at this vintage because that scanner row sits in sector 'Consumer Non-Cyclicals', outside BABA's mapped ['Consumer Cyclicals', 'Consumer Services'], so it cannot reach rung 1 at all."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The cell: 'The comparable set of a subject is computed ... by ONE ranker over ONE database' and (the worker face) 'every identity in your objects is resolved through X-1'.",
+    "world_is": "One company can sit in the database TWICE under two identifiers that X-1 cannot join -- the canonical security_key from the model-block half and a SEDOL-shaped scanner ticker from the other -- so the subject is a candidate for itself and, being at distance 0, sorts near the top of its own peer set.",
+    "notes": "DISARM, same turn, by the disarm_owner: the engine now excludes a candidate whose name normalises EXACTLY to the subject's (upper-case alphanumerics, no suffix stripping -- suffix stripping is where a name join stops being an equality and becomes a guess), records both strings in the emitted object, and prints the count on the DATABASE line. The RESIDUAL is left ARMED and stated rather than papered over: a cross-listing whose name string differs is not caught, and closing it needs an identity join the crosswalk does not carry (an ADR-to-local-line join), which is X-1's decision and not this cell's to invent. No live instance exists at this vintage.",
+    "disarm_owner": "0.9.0_WK_AMGT_RESAPP~21 (the measured instance, disarmed in-code this turn); the residual cross-listing join belongs to INTERFACE X-1's owner and is routed to 3.0.0_SA_CVO~Z at L9"
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W21-S4",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~21",
+    "surfaced_at": "2026-09-15T09:35:00Z",
+    "one_line": "The batch writes an R-1 object for 33 of the union universe's 256 names, because only 33 carry a security_key -- the other 223 are UNRESOLVED in U-1 and have NO pool coordinate, so the alternative to not writing them is minting a key from a raw identifier, which the crosswalk forbids.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3://opal-data-harvest/universe/v1/2026-09-15.json (U-1, rj-4's object): 256 names, of which 33 carry a non-null security_key (resolution MEASURED) and 223 carry security_key null (resolution UNRESOLVED); 168 of those 223 carry a bare ticker with no exchange code ('AAPL', 'ABBV') and 55 carry neither.",
+        "U-1's own reason string on an unresolved row: 'the coverage row's bloomberg_ticker status is UNRESOLVED, so no canonical identity is minted for this name (the identifier is NOT guessed from the folder name)'.",
+        "Batch measured: 'BATCH as_of=2026-09-15 names N=33 (of 256 universe names; 223 carry no security_key)' / 'DERIVED D=10 ABSENT A=23 D+A=33 N=33 EQUAL' / 'UPLOADED 33 of 33 ... read-back 33 of 33'; s3api list-objects-v2 --prefix peers/v1/ --query length(Contents) = 33."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The cell's DELIVER 3: 'a batch CLI ... over the union universe ... writing peers/v1/{security_key}/{as_of}.json (INTERFACE R-1) for EVERY RESOLVED NAME -- an absent object with its reason for a name without classification, never a skipped name'; AC4: 'names N from the universe object ... uploaded N'.",
+    "world_is": "'every resolved name' and 'names N from the universe object' are 33 and 256 respectively at this vintage. The batch takes the first reading -- the R-1 key is keyed BY security_key, so a name without one has no coordinate to be written at -- and prints BOTH denominators on its own summary line so the choice is visible rather than inferred. No name with a coordinate is skipped: 10 derived + 23 absent objects = 33 of 33, each absent one carrying its reason.",
+    "notes": "The 23 absent objects are not failures: 22 are non-US keys with no landed model block, whose classification cannot be read without either a Bloomberg call (F2/G-24 forbids it) or a guessed join into the scanner's SEDOL-shaped ticker space; 1 (PBR_US_Equity) is a US key with no scanner row. Each object states which. If the intended denominator is 256, the missing 223 need identities minted upstream in X-1/U-1, not keys invented here."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W21-S5",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~21",
+    "surfaced_at": "2026-09-15T09:35:00Z",
+    "one_line": "The size band is graded ACROSS two currencies and two vintages: a model-block subject's cap is in its own trading currency at the block's timestamp (SAP: EUR, 2026-09-10T23:20:18Z) and every candidate is USD at the scanner's asOf 2026-08-06. No FX rate is applied and none is invented.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "model_block_SAP_GY_Equity.json header: CRNCY 'EUR', CUR_MKT_CAP 218452622534.24, figure vintage '2026-09-10T23:20:18Z'. The scanner's six files all carry asOf '2026-08-06' (measured: 6 of 6).",
+        "The emitted SAP object carries cap_fx_caveat and the reason string ends with 'CAVEAT: CUR_MKT_CAP is quoted in EUR; the database's mktVal is USD -- NO FX rate is applied and none is invented, so the band is graded across currencies', and the printed SUBJECT line labels the number MEUR, never MUSD.",
+        "Magnitude, stated not corrected: at a EUR/USD rate near 1.08 the band's edges move by ~8 percent, which is inside a 0.2x-5x (25x-wide) window -- so the caveat is disclosed rather than remediated, and a rung-3 or rung-4 membership never depends on it."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The cell: 'a SIZE BAND (the existing engine's 0.2x-5x market-cap band)' over the union database, whose subject scalars come from the model-block header and whose candidates come from the scanner files.",
+    "world_is": "The two sides of the ratio are not commensurable on two axes at once -- currency and vintage -- and the contract names neither. An FX conversion would need a rate at a stated date from a source this cell has no egress to, and re-dating either side is not available at all.",
+    "notes": "Carried, not silently absorbed: universe_vintage is on every object and every printed summary, the subject carries market_cap_vintage, classification_vintage and cross_vintage_caveat, and a non-USD subject carries cap_fx_caveat into the reason string. For the 8 derived subjects whose scalars come from the scanner row itself, both sides are USD at one vintage and neither caveat applies."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W21-S6",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~21",
+    "surfaced_at": "2026-09-15T09:35:00Z",
+    "one_line": "Only 5 of Adam's 17 CSC columns map to anything the scanner serves; the other 12 -- Shares, Debt, Preferred, Minority, Cash, P/E 2027, the three leverage ratios and the three 5-yr growth rates -- have no code at any grain, so the Peers tab cannot be filled from this database alone.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Denominator from the CTO's card 3 verbatim (SUBSTRATE_CARDS.md:73-76): 'per peer Price, Shares, Debt, Preferred, Minority, Cash, Mkt Cap, EV, P/E 2025/2026/2027, Debt/Equity, Net Debt/Equity, Net Debt/Capital, 5-yr annual growth of Revenue / EBIT / FCF' = 17 per-peer columns.",
+        "Measured against the scanner's own registry (factor_metadata.json, asOf 2026-08-06, 289 factors) and the 284 codes a UniverseDataRow's values block actually carries: PRESENT 5 -- Price=price (a row field, not a factor code), Mkt Cap=mkt_val_sec, EV=ev, P/E 2025=ey (the RECIPROCAL, trailing grain), P/E 2026=ey_ntm (the RECIPROCAL, NTM grain, not FY2026). ABSENT 12, by subtraction.",
+        "The absent half is not a gap in the search: the value category carries 26 factors and is built on YIELDS (ey, fcfy, bp, ebitev), the solvency category carries 28 and every one is a RATIO (no absolute debt, no net debt, no preferred, no minority), the growth category's widest window is THREE years (sales_gr_3yr), and there is no share-count code or field anywhere in the 289.",
+        "What the missing 12 need is exactly what card 3 says the CSC sheet is built on -- the per-peer Bloomberg fields px_last, EQY_SH_OUT_REAL, CUR_MKT_CAP, debt, preferred, minority, cash -- i.e. a model block PER PEER, which F2's quota (unique securities touched) does not cover at this cut."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Card 3's consequence-for-the-design, which FWD-19 and rj-9 inherit: 'the Peers tab = the CSC table computed for a CORRECT peer set, with the scanner's factor quintiles as the ranking half'. The cell asks for 'the CSC columns mapped to scanner factor codes where one exists (name the code) and listed under absent where none does'.",
+    "world_is": "The map exists and is emitted in every R-1 object, but it is 5 of 17. A Peers tab rendered from the scanner alone can show Price, Mkt Cap, EV and two reciprocal P/Es and nothing else; the multiples and growth columns that make the CSC table a comparables table are not in this database.",
+    "notes": "Filed for rj-9 and for the round's L10 rather than solved here -- this cell's bound is the SET, not the table. The map is machine-readable in every object (csc_columns.present with code + registry name + relation, csc_columns.absent with reason, nearest_code and derivable_from), so the next cell can decide per column between a derivation (Shares = mkt_val_sec / price, Debt = debt_assets * assets), a per-peer Bloomberg pull (a quota decision) and rendering the column as absent. Two PRESENT entries carry grain caveats that a renderer must not drop: ey and ey_ntm are RECIPROCALS, and ey_ntm is a next-twelve-month grain, not the FY2026 column the sheet names."
   }
 ]
 ```
