@@ -46,3 +46,20 @@ CVO notice 96985 refused the v0.1 ratified-text half at `8699f4ba7c`, with its s
 ## L4-R admission
 
 Both current halves are independently SIGNED: CVO at `214982df0b` and CRO at `905d2df375`, against v0.2 `8ab2dc2bc6`. The canonical status oracle reads ADMITTED. The author changed only the PRD header status from DRAFT to RATIFIED; both signed section hashes remain identical. The data contract state metadata changed from PROPOSED_L4_REVIEW to RATIFIED, following this PRD's declared approval mechanism. A parsed comparison proves every other contract field identical to the reviewed pin. The manifest companion hash and final artifact hashes reflect that metadata update. No new rule, endpoint or deployed capability is introduced. `L4_ADMISSION.md` records the signatures, limits and L5 handoff routing condition.
+
+
+## v0.3 LGIC addendum and review boundary, CTO97152
+
+The v0.3 PRD and 0.3.0 contract carry CTO97115 F1-F3, the gateway source identity from97131, and granted R20 X7/X2 from97126 at9cf4a274db. F2 adds S19 complete typed Silver between S02 and S03; F3 declares both existing served homes as historical addresses and prevents a dual write or migration. All shipped columns/rows and response lineage are retained at the typed boundary, with immutable raw body captures and replay identity that separates the logical snapshot from its acquisition envelope. The contract explicitly labels knowledge_date partitions and no-expiry disposition audit history.
+
+The current candidate was checked again before landing: zero canonical shape/manifest violations; all eight approved endpoint cards byte-identical; all18 brief headings carried;19 owned engines,49 components,9 artifacts; dependencies acyclic. `authoring-checks.json` carries the current half and artifact hashes, while its `prior_v02_admission` is historical. `LGIC_V03_BUILDER_EVIDENCE.json` records every exact artifact constructor attempt and the runtime role output at its stated source vintage.
+
+**CTO97152 authorizes landing and both reviews before the gateway systems row commits.** The source choice is closed as gateway, PLATFORM_SUBSYSTEM, owner D9; COO~G owns its row. S02 states: address() resolves once the systems.json gateway row lands. Any recorded gateway refusal is this build prerequisite, not an unresolved design question or a reason to hold L4-R. Base CTO will rerun conformance when the row is at HEAD. The author has neither modified the registry nor overridden the builder.
+
+Both v0.3 halves require their own current-byte signatures; v0.2 admission is not reused. X7/X2 are already granted, so no new Andrew E1/E2 answer is required. No runtime build, worker issuance, deployment, data read/write or capability activation is certified by this authoring pass. S16 remains a separate named-person activation prerequisite.
+
+## v0.3 L4-R admission, 2026-09-15T17:10:49.777890+00:00
+
+v0.3 is ADMITTED: both current halves SIGNED, CVO at294bd175ce and CRO at1db20a3624, against61748ba2e0. Approval metadata alone is finalized to RATIFIED; signed section bytes and all substantive contract fields remain unchanged. Under CTO97126 the signature hold on L6 is cleared. COO~T owns L5 and its subsequent canonical task-order process. The gateway row and builder readback remain an S02 build prerequisite; S16 remains a separate named-person activation prerequisite. This record does not certify decomposition, runtime implementation or EXERCISED endpoints.
+
+Canonical header/manifest shape checks returned zero violations. Both half hashes are checked against the signed61748ba2e0 text, and parsed contract equality excludes only the state field. The conditional operations.l6_release wording is retained as reviewed; its condition is now satisfied by both signatures. The manifest contract evidence hash and current artifact hashes reflect the metadata update. CRO97161 defers the S19 coverage-index omissions to the next substantive bump only. CVO N5/N6 and activation limits are carried in L4_ADMISSION.md.

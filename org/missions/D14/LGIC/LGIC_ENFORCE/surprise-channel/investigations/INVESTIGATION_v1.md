@@ -1689,6 +1689,29 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "TO-EN-x-1 THE CELL step 1: 'Plan the REAL tree read-only (plan -lock=false -out, then show -json, against the real backend), and save the JSON as org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/<your serial>/fwd2_plan.json.' The slot branch carries the records.",
     "world_is": "The naming gate grades a generated terraform plan artifact as newly hand-written names and carriers, including this cell's own CONFORMANT, module-built queue name. It passes the commit only because enforce is off. Nothing exempts a plan JSON deliverable from the stage, so once enforce is on, this order's own deliverable, and EN-f-1's fence_plan.json of the same kind, could not be committed as ordered."
+  },
+  {
+    "id": "LGIC_ENFORCE-S19",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "4.0.0_SA_CRO",
+    "surfaced_at": "2026-09-15T17:58Z",
+    "one_line": "At NAMING_SCHEMA v1.9 (@645725150b, branch lgic-v19-landing) firm_forms is removed and the schema names the identity registry as the one carrier of firm forms, while the registry's own row_fields text (scopes.json:4) still says 'NAMING_SCHEMA.json firm_forms owns which firm short forms exist', so each carrier names the other as the owner.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SCHEMA: org/standards/NAMING_SCHEMA.json@645725150b, parsed: key firm_forms absent; firm_forms_source reads 'A firm's forms (its key and its one sanctioned short form) are the identity registry's rows, infra/logic/registry/scopes.json, and every reader reads them there; this file carries no copy'.",
+        "REGISTRY: infra/logic/registry/scopes.json@645725150b :4 _about.row_fields 'short (NAMING_SCHEMA.json firm_forms owns which firm short forms exist)'; :210 the demo note cites '(NAMING_SCHEMA.json firm_forms)'. Both lines are byte-identical to 2f554182b6, where the field still existed.",
+        "ANALYSIS: org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_LGIC_ENFORCE_ROUND1_20260915.md@7b5331c8c0 s.2 RULING ONE names the readers to repoint as lib/opal_naming.py :248, :287-288, validate and grade(). The registry's row_fields text is not in that list. RULING DEMO corrects the :210 note.",
+        "CODE, read and NOT exercised: lib/opal_naming.py@645725150b :248 reads schema['firm_forms']; :287-290, :347 and :381 use it. The NAMING_SCHEMA v1.9 changelog says the readers land with EN-r-3 on the same branch, before one merge to CLOUD."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RULING ONE (@7b5331c8c0 s.2): 'The identity registry (infra/logic/registry/scopes.json) is the ONE home of a firm's forms. The schema's firm_forms is removed, and every reader reads the registry.' NAMING_SCHEMA v1.9 firm_forms_source: 'this file carries no copy'.",
+    "world_is": "At the pin the registry's own documentation defers the short form's authority to a schema key that no longer exists, and lib/opal_naming.py:248 still reads that key. The code is scheduled (EN-r-3); the row_fields text is not named by the ruling. INERT: the branch is not in CLOUD, and no write, deploy or served key reads this text.",
+    "notes": "Surfaced by 4.0.0_SA_CRO during the LGIC_NAMING v1.9 L4-R, which it signed (review docs/briefs/sources/LGIC_NAMING_L4_BRIEF_REVIEW_v1_9_20260915.md); this is not a ground there. For round 2's one-carrier cell: repoint the row_fields text together with the readers."
   }
 ]
 ```

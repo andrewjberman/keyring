@@ -305,8 +305,10 @@ def artifact_resolution_check(inst: dict, inst_path=None) -> tuple[list[str], li
     # NOT COVERED. It is covered now, in both contexts the checker runs in, by reading the INDEX or the RECORD:
     #   PRE-COMMIT  (the instance file is staged or untracked): the artifact must be STAGED in this same commit
     #               (`git diff --cached --name-only -- <path>` non-empty) -> CO-COMMITTED. Already committed at
-    #               HEAD and not staged -> the CCX violation (pin the commit that carried it). In the worktree but
-    #               not staged -> a violation (it cannot ride this commit).
+    #               HEAD and not staged -> the CCX violation (pin the commit that carried it), EXCEPT in a DRY RUN
+    #               (the instance unstaged) where git reports the tracked artifact MODIFIED IN PLACE -> PENDING: Rule
+    #               14a forbids pre-staging it and safe-commit stages the pathspec, so it rides (row LGIC_ENFORCE-C-S9).
+    #               In the worktree but not staged -> a violation (it cannot ride this commit).
     #   POST-COMMIT (the instance is tracked and unstaged; a certifier's re-run): the artifact must be TOUCHED
     #               by the instance's own commit (`git diff-tree --name-only <c> -- <path>` non-empty) ->
     #               CO-COMMITTED at <c>. Present at <c> but not touched by it -> the CCX violation. Absent -> a
@@ -381,9 +383,20 @@ def artifact_resolution_check(inst: dict, inst_path=None) -> tuple[list[str], li
                     n_cocommit += 1
                     here, parent, where = _blob(f":{path}"), _blob(f"HEAD:{path}"), "the index (co-committed)"
                 elif _git_ok("ls-files", "--error-unmatch", "--", path):
-                    v.append(f"artifact-resolution: {path!r} is PENDING-THIS-COMMIT but is ALREADY COMMITTED at HEAD and "
-                             "NOT staged -- it will not ride this commit; pin the row to the commit that carried it (CCX class)")
-                    continue
+                    # A TRACKED artifact MODIFIED IN PLACE in a DRY RUN is honestly PENDING (row LGIC_ENFORCE-C-S9): Rule
+                    # 14a forbids pre-staging it, and safe-commit stages the pathspec, so it rides the commit that carries
+                    # the proof. "Modified" is git's own answer (`diff --quiet` exits 1), never a byte compare, so a CRLF
+                    # checkout of an unchanged file on an autocrlf box does not read as modified. An UNCHANGED tracked
+                    # artifact is still the CCX class -- nothing of it can ride this commit -- and the hook run (not a dry
+                    # run) keeps refusing an unstaged artifact, because by then it will not ride.
+                    if dry_run and not _git_ok("diff", "--quiet", "--", path):
+                        n_pending += 1
+                        here, parent, where = ((_REPO_ROOT / path).read_bytes(), _blob(f"HEAD:{path}"),
+                                               "the worktree (dry run; tracked, modified in place, rides the commit if staged with the proof)")
+                    else:
+                        v.append(f"artifact-resolution: {path!r} is PENDING-THIS-COMMIT but is ALREADY COMMITTED at HEAD and "
+                                 "NOT staged -- it will not ride this commit; pin the row to the commit that carried it (CCX class)")
+                        continue
                 elif dry_run:
                     n_pending += 1
                     here, parent, where = (_REPO_ROOT / path).read_bytes(), _blob(f"HEAD:{path}"), "the worktree (dry run; untracked, rides the commit if staged with the proof)"
@@ -436,10 +449,11 @@ def artifact_resolution_check(inst: dict, inst_path=None) -> tuple[list[str], li
                      "the row names a (commit, path) pair git refutes")
     frames = [f"artifact-resolution: {n_resolved} resolved at pin / {n_cocommit} PENDING co-committed "
               f"({ctx}: {'staged in this commit' if ctx == 'PRE-COMMIT' else 'touched by the instance commit ' + (inst_commit or '')[:10] if ctx == 'POST-COMMIT' else 'n/a'}) / "
-              f"{n_pending} pending-on-worktree ({'dry run: untracked artifacts that ride the commit if staged with the proof; the hook run decides' if dry_run else 'instance path unknown; presence only'}) / "
+              f"{n_pending} pending-on-worktree ({'dry run: untracked artifacts, or tracked ones git reports modified in place, that ride the commit if staged with the proof; the hook run decides' if dry_run else 'instance path unknown; presence only'}) / "
               f"{n_unresolved} UNRESOLVED-HERE (commit not in local store; announced, not asserted) / "
               f"{n_s3} s3_object (not a git ref; skipped) -- denominator {len(rows)} row(s); "
-              "a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known",
+              "a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known, "
+              "unless a dry run finds that tracked artifact modified in place (it rides the commit)",
               f"artifact-resolution/content: {n_content} row(s) CONTENT-resolved (`introduces` tokens present at the "
               f"pin, absent at its parent) / {n_presence_only} row(s) PRESENCE-ONLY (no `introduces`; the pin exists "
               "and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_"

@@ -461,6 +461,13 @@ seat should not make about itself.
 CHOSEN.** STOP-CONDITION as stated in the argument block: `AMGT_RESAPP` `status: complete`, or
 Andrew's stand-down.
 
+⛔ **SET DOWN 2026-09-15 ~17:4xZ -- THE ROW BELOW IS HISTORY, NOT A LIVE ARM.** Andrew-direct at the
+`2.0.0_SA_COO~G` terminal, VERBATIM: *"Don't get involved in other COO work"* / *"you need to be focused on the LGIC
+work"* (record `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260915_174xZ_LGIC_ONLY_NO_OTHER_COO_WORK~G.md`).
+`2.0.0_SA_COO~G` is LGIC-only (LGIC_NAMING, LGIC_ENFORCE, LGIC_CANON), its 20-minute SEQUENCE tick is deleted, and no
+seat inherits the drive. A sequenced project with a seated COO drives itself at that seat; an unseated one moves when a
+COO slot frees, and `0.0.0_AB_MSTR` seats it (97172). SEQUENCE.yaml's order and stages stay `1.0.0_SA_CTO`'s.
+
 `2.0.0_SA_COO~G` **`/canonical-drive` DIRECTED over THE SEQUENCE: every project under `projects:` in
 `org/missions/SEQUENCE.yaml`, READ AT HEAD EACH TICK** (at the arm: LGIC_NAMING, LGIC_ENFORCE, LGIC_CANON, ADVI_FIRMBKTS,
 MDPF_CANON, IRPT_BCKEND; `parked:` and `pending_placement:` are OUT). Andrew-direct 2026-09-14 ~16:3xZ at the

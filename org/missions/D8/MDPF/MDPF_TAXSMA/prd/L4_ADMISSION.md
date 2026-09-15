@@ -1,8 +1,8 @@
-# MDPF_TAXSMA v0.2 — L4-R admitted, L5 handoff
+# MDPF_TAXSMA - L4-R admission record
 
 Author: `1.0.0_SA_CTO~A`. Recorded: 2026-09-15T08:50:04.057346+00:00.
 
-**Historical v0.2 L4-R admission remains recorded; TAXSMA L6 waits only on both current v0.3 signatures under CTO97126.** The LGIC conformance read requires v0.3 F1-F3 (registered source identity, complete workbook Silver, one historical served home). Andrew has answered E1/E2: X7 CONDITIONAL and X2 PERMANENT are granted in both R20 carriers at `9cf4a274db`, independently read after97126. No further Andrew answer is owed for these exceptions. The prepared private amendment awaits COO~G's origin row before its two source-address calls can be finalized and the package landed for review; the v0.2 signed files remain unchanged. `L5_ROUTING.md` records the current hold and `S02_SOURCE_REGISTRY_DEPENDENCY.md` records the corrected source evidence. No v0.3 admission is claimed.
+**Current v0.3 is ADMITTED: both current halves SIGNED, CVO at294bd175ce and CRO at1db20a3624, against61748ba2e0. Approval metadata alone is finalized to RATIFIED; signed section bytes and all substantive contract fields remain unchanged. Under CTO97126 the signature hold on L6 is cleared. COO~T owns L5 and its subsequent canonical task-order process. The gateway row and builder readback remain an S02 build prerequisite; S16 remains a separate named-person activation prerequisite. This record does not certify decomposition, runtime implementation or EXERCISED endpoints.** The v0.2 admission and earlier v0.3 pending-review observations below are historical.
 
 For v0.2, `python .tools/prd-signoff.py status MDPF_TAXSMA` was read after CRO notice 96992 and returned both halves SIGNED/current. The project stays `dep_stage=PRD` until COO produces the next limb. Its placement is D8 / MDPF / laptop; the D9 business workflow is separate.
 
@@ -43,3 +43,33 @@ Routing update after **CTO97073 at2026-09-15T12:55:50Z**: Andrew resolved the co
 **Canonical send receipt, 2026-09-15T13:25:23Z:** Binding commit `a245ccd226` triggered the installed notifier, which sent **97083** at13:22:49Z from CTO~A to exact COO~T. The broker reports **SENT**, with no emitted_at or acked_at at the measured time; READ is pending. `L5_ROUTING.md` carries the pinned release, exact receipt, unchanged PRD/contract hashes and fresh sequence-check (stage0, no flags, G/O/T capacity3/3). The requested bind-and-send act is complete; COO~T owns the next L5 artifact.
 
 **Final intake receipt, 2026-09-15T13:30:03Z:** Canonical `delivery_state(97083)` returns **READ**, `acked_by=2.0.0_SA_COO~T`, `acked_at=2026-09-15T13:26:22.594818+00:00`. The notifier retired the outstanding row. This supersedes the SENT-only observation above and completes the L4 handoff to the assigned L5 owner; it does not claim a decomposition or exercised endpoint.
+
+## v0.3 brief signature receipt, CRO97161
+
+Exact notice: `20260915T165612Z_4.0.0_SA_CRO_Re_97156_97158__MDPF_TAXSMA_v0.3_brief_h.md`, sender `4.0.0_SA_CRO`, received 2026-09-15T16:56:12Z and ACKed by this seat at16:57:20Z. CRO acknowledges both notifier deliveries97156/97158; the latter was a duplicate, not a separate review request.
+
+- Reviewed PRD pin: `61748ba2e0e31276a6ac84237924508f5df1ac28`, v0.3.
+- Review: `docs/briefs/sources/MDPF_TAXSMA_L4_BRIEF_REVIEW_v0_3_20260915.md@10894fdad147692de31b5fc6a7e4a4b70033c8c8`.
+- Brief signature: `1db20a36244aafc15ab776d01f6c0030a2263489`, bound using `--expect-half-hash` to `4874c5a321c4b14d5482e1773243c8144e041aea6f0819b6570b25b69b0b30ab`.
+- Canonical `python -X utf8 .tools/prd-signoff.py status MDPF_TAXSMA` at17:02:48Z: **WITHHELD**, brief **SIGNED/current**, ratified-text **STALE/OWED by 3.0.0_SA_CVO**. The latter review targets `fb75838bf3acbd49c93627f3e9a033defcd11872e5fbd96a00b4803200c92b46`; the author does not supply or edit either reviewer signature.
+
+**Deferred correction, nonblocking and next bump only:** S19 already serves FWD-1/3/5/8 in the normative prose and its surface row. I.O1 includes S19, while I.O3, I.O5 and I.O8 omit it from their coverage ID indexes. CRO explicitly accepts the present content and asks that these indexes include S19 at the next substantive PRD bump. This receipt records that follow-up without changing the signed brief or requesting a new bump. The CONTRACTS addendum remains CVO's half and was not graded by CRO.
+
+The brief signature completes one current v0.3 half. It does not admit the package, lift L6, certify implementation or satisfy the eight EXERCISED endpoint bars. Existing CVO review requests97155/97157 remain in flight; this receipt does not issue another request. The signed PRD remains byte-identical with SHA256 `468a42dd6b54f01119d5656b7a7c6dd1e36bd749f997b2150c49f150968854fc`.
+
+## v0.3 admission and metadata finalization, 2026-09-15T17:10:49.777890+00:00
+
+v0.3 is ADMITTED: both current halves SIGNED, CVO at294bd175ce and CRO at1db20a3624, against61748ba2e0. Approval metadata alone is finalized to RATIFIED; signed section bytes and all substantive contract fields remain unchanged. Under CTO97126 the signature hold on L6 is cleared. COO~T owns L5 and its subsequent canonical task-order process. The gateway row and builder readback remain an S02 build prerequisite; S16 remains a separate named-person activation prerequisite. This record does not certify decomposition, runtime implementation or EXERCISED endpoints.
+
+| Half | Signature commit | Review | Current half SHA-256 |
+|---|---|---|---|
+| ratified-text | 294bd175ce1f0cf4affc3a042b7e481aba70d691 | org/tier1_exec/3.0.0_SA_CVO/deliverables/PRD_REVIEW_MDPF_TAXSMA_v0.3_RATIFIED_TEXT_HALF_20260915.md@1a7f21c29e | fb75838bf3acbd49c93627f3e9a033defcd11872e5fbd96a00b4803200c92b46 |
+| brief | 1db20a36244aafc15ab776d01f6c0030a2263489 | docs/briefs/sources/MDPF_TAXSMA_L4_BRIEF_REVIEW_v0_3_20260915.md@10894fdad147692de31b5fc6a7e4a4b70033c8c8 | 4874c5a321c4b14d5482e1773243c8144e041aea6f0819b6570b25b69b0b30ab |
+
+The post-receipt canonical read superseded the17:02:48Z WITHHELD observation: CVO signed at17:03:20Z and committed its stamp at17:03:56Z. The current status is ADMITTED. The two earlier delivery pairs97155/97157 and97156/97158 are duplicate requests for these same halves, not four separate approvals.
+
+Finalization changes only PRD header status and the contract state metadata, plus companion hashes and these receipts. PRD v0.3 and contract0.3.0 remain the reviewed versions; both half hashes remain identical. Zero canonical shape violations. The state-only contract diff preserves the conditional L6-release wording and every normative value. Neither reviewer stamp is changed.
+
+**Remaining scoped conditions:** CVO N5 carries the two gateway constructor outputs to the COO~G registry-row landing and base CTO conformance read; this is S02 build-only. CVO N6 carries Andrew's Gold-placement question as OPEN QUESTION, NOT A RULING: the current firm Gold home under96960 remains governing; any later ruling that changes CONTRACTS requires an addendum and fresh review of that half. S16 still requires the named person and unattended-content authorization before activation. CRO97161's I.O3/I.O5/I.O8 coverage-index correction stays deferred to the next substantive PRD bump.
+
+**Canonical L4-to-L5 release:** notifier message97165, author CTO~A, recipient exact 2.0.0_SA_COO~T, release pin294bd175ce, attempt1. Its live transport read before this finalization was OFFER-EXHAUSTED, with no READ acknowledgement claimed. The finalized package is being routed to the same lane; notification or intake does not prove a decomposition.

@@ -246,6 +246,24 @@ def _under(f: str, ps: str) -> bool:
     return f == s or f.startswith(s + "/")
 
 
+_EXCLUDE_MAGIC = re.compile(r"^:(?:\(exclude\)|!|\^)")
+
+
+def _split_pathspec(pathspec):
+    """(includes, excludes): git's exclude magic -- :(exclude)X, :!X, :^X -- names a path to SUBTRACT.
+    Read as a literal prefix it matched nothing, so an exclude-only scope scanned 0 files and an
+    exclude beside an include was silently dropped (LGIC_ENFORCE-W1-S3). No includes means the whole
+    working set, as in git."""
+    inc, exc = [], []
+    for ps in pathspec or []:
+        m = _EXCLUDE_MAGIC.match(ps)
+        if m:
+            exc.append(ps[m.end():])
+        else:
+            inc.append(ps)
+    return inc, exc
+
+
 # ---- NFRA_COMPRAIL sovereign-held guard (GG1) -----------------------------------------------
 # A bare / broad invocation returns the WHOLE repo working set and the caller then READS every
 # file -- including the section-8 sovereign-held trees (data/black_diamond/, canonical schwab
@@ -432,12 +450,15 @@ def gitignore_aware_files(ws: str, pathspec, include_held: bool = False,
                 ig = kept_ig
             seen = set(_norm(f) for f in parent)
             parent = parent + [f for f in ig if _norm(f) not in seen]
+    _inc, _exc = _split_pathspec(pathspec)
     nested = _gitlinks(ws)
     nested_set = set(_norm(n) for n in nested)
     # drop the bare gitlink pointer entries from the parent set (they are not files)
     files = [f for f in parent if _norm(f) not in nested_set]
     for r in nested:
-        if pathspec and not any(_touches(r, ps) for ps in pathspec):
+        if _inc and not any(_touches(r, ps) for ps in _inc):
+            continue
+        if any(_under(r, ps) for ps in _exc):
             continue
         rdir = os.path.join(ws, r)
         if not os.path.exists(os.path.join(rdir, ".git")):
@@ -462,7 +483,8 @@ def gitignore_aware_files(ws: str, pathspec, include_held: bool = False,
         if sub:
             files += sub
     if pathspec:
-        files = [f for f in files if any(_under(f, ps) for ps in pathspec)]
+        files = [f for f in files if (not _inc or any(_under(f, ps) for ps in _inc))
+                 and not any(_under(f, ps) for ps in _exc)]
     # sovereign-held guard (string-prefix on the path list -- never opens a held file)
     held = [f for f in files if _is_held(f)]
     if include_held:

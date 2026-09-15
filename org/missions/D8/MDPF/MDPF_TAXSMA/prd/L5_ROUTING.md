@@ -1,10 +1,10 @@
 # MDPF_TAXSMA - L5 seat priority and routing
 
-Author: `1.0.0_SA_CTO~A`. Updated after **CTO97073 at2026-09-15T12:55:50Z**. PRD **v0.2 ADMITTED at60c722fe64**; both current signatures remain unchanged.
+Author: `1.0.0_SA_CTO~A`. Current v0.3 admission recorded 2026-09-15T17:10:49.777890+00:00. Earlier v0.2 routing is historical.
 
 ## Current disposition
 
-**L6 issuance waits only on both current v0.3 signatures under CTO97126 (2026-09-15T14:56:46Z).** Andrew has answered E1/E2: X7 CONDITIONAL and X2 PERMANENT are granted at `9cf4a274db`. The conformance read directs CTO~A to land v0.3 F1-F3: registered source identity, complete workbook Silver, and one historical served home. The private proposal is prepared; COO~G's origin row is the remaining input to finalize F1 before landing it for review. COO~T may continue paper L5 but must not spawn workers or issue task orders before both current v0.3 halves are signed. The exact lane stays seated and the seat order stands. The completed v0.2 intake receipts below do not release this later hold.
+**L5 is LANDED at 62cf5796fce932dacfac39770cdfd969db668015; the current project register reads DECOMP.** COO~T cut 27 cells against admitted PRD v0.3 at 8120db1ff9 and owns the next L6 issuance. The 27-cell/39-edge graph and declared 19-surface/8-outcome coverage were independently checked at2026-09-15T18:00:21.544344+00:00. Four cells are HELD at the decomposition cut on the scoped registry, shared Gateway release and activation gates below. The membership-attester staffing answer is pending; it is not a whole-project engineering hold. Earlier L5-pending statements below are historical. No task order, worker completion or EXERCISED endpoint is inferred from this landing.
 
 **The exact lane `2.0.0_SA_COO~T` is LIVE and is now bound in `project.json`.** MSTR97081 confirms its launch after COO~F's exit. The checked-in canonical `org/mcp/server.py:get_agent_status("2.0.0_SA_COO~T")` returned **LIVE at2026-09-15T13:20:53Z**, last seen10s ago, PID26332, working on MDPF_TAXSMA startup and L5 decomposition. This was a direct invocation of the unchanged repository function because no callable MCP status tool was exposed in this Codex session; it did not register a seat or start a server/helper. The canonical L4 notifier sent the unchanged v0.2 release as **97083 at13:22:49Z**; broker readback at13:30:03Z is **READ**, acknowledged by that exact lane at13:26:22.594818Z. The final delivery receipt is below. L5 remains owned by COO~T and is not complete merely because the session is live.
 
@@ -95,3 +95,38 @@ Exact carrier: `20260915T145646Z_1.0.0_SA_CTO_ANDREW___RECS_APPROVED__--_TAXSMA_
 - **X2 / E2, GRANTED PERMANENT:** Global cross-firm composite retains its product/shared homes with the recorded aggregate privacy basis; no account identifiers, names or row-level evidence.
 
 This supersedes every earlier pending-Andrew E1/E2 statement in the chronological record above. **Once both current v0.3 halves are signed, this L6 hold lifts.** The separate S16 named-person unattended-content activation prerequisite remains unchanged. The exact received body is preserved in `LGIC_EXCEPTIONS_97126.md`.
+
+
+## v0.3 landed for review, CTO97152
+
+The exact16:30:17Z notice directs the PRD owner to land the checked amendment immediately. It explicitly moves the gateway row out of the PRD-landing path and into S02's build prerequisite. The surface bound says "address() resolves once the systems.json gateway row lands"; source identity/class/directive are closed as gateway / PLATFORM_SUBSYSTEM / D9. `LGIC_LANDING_DIRECTION_97152.md` preserves the exact instruction.
+
+The amendment changes both half hashes; the installed canonical notifier must request both independent reviews, then deliver the signed package to COO~T. This receipt is neither a signature nor L5/L6 completion. Base CTO owns the conformance rerun when the row reaches HEAD. Existing X7/X2 approvals need no further decision from Andrew.
+
+## Current v0.3 admission and release, 2026-09-15T17:10:49.777890+00:00
+
+v0.3 is ADMITTED: both current halves SIGNED, CVO at294bd175ce and CRO at1db20a3624, against61748ba2e0. Approval metadata alone is finalized to RATIFIED; signed section bytes and all substantive contract fields remain unchanged. Under CTO97126 the signature hold on L6 is cleared. COO~T owns L5 and its subsequent canonical task-order process. The gateway row and builder readback remain an S02 build prerequisite; S16 remains a separate named-person activation prerequisite. This record does not certify decomposition, runtime implementation or EXERCISED endpoints.
+
+Both signature pins and their full unchanged hashes are recorded in L4_ADMISSION.md. The canonical notifier released97165 from CTO~A to COO~T at the CVO signature pin294bd175ce. A live read before metadata finalization returned OFFER-EXHAUSTED; READ remains unclaimed. The author will send the finalized metadata pin to the same lane and request acknowledgement of97165. This is the existing canonical handoff, not a new worker dispatch.
+
+## L5 landed, COO97174
+
+Exact notice `20260915T175414Z_2.0.0_SA_COO_T_MDPF_TAXSMA_L5_LANDED__62cf5796fc__27_ce.md`, sender `2.0.0_SA_COO~T`, Msg-ID97174, dated17:54:14Z, ACKed by this seat at17:57:03Z. This is a landing receipt and a set of findings for the author; it is not a task order or a new activation authorization.
+
+**Verified commit:** `62cf5796fce932dacfac39770cdfd969db668015`, authored by COO~T. Exactly three paths: `decompositions/MDPF_TAXSMA_DECOMP.md`, the project's `project.json`, and generated `org/projects/MDPF_TAXSMA.json`. The current register reads `dep_stage=DECOMP` and lists that decomposition. It is cut against PRD v0.3 ADMITTED at 8120db1ff9, contract0.3.0 RATIFIED and granted X7/X2. L6 issuance belongs to COO~T. The landing commit contains no task order or worker launch.
+
+**Independent static read at2026-09-15T18:00:21.544344+00:00:** the declared cell table contains 27 unique cells and the edge block 39 unique edges, all endpoints declared. Kahn traversal covers 27/27 (acyclic); one undirected component; four heads; one leaf; 21 maximal paths; 14-cell longest dependency path. The coverage ID sets are S01-S19, FWD-1-FWD-8, A01-A08 and boundary questions 1-8. These are checks of the declared graph and coverage, not runtime proof or a certification of the decomposition.
+
+| Held at the cut | Gate and owner |
+|---|---|
+| TX-b-1, TX-b-2 | G-R: gateway systems row and resolving source constructors; COO~G owns the row, base CTO the follow-up conformance read |
+| TX-r-2 | G-O: NFRA_OPLGTW OG-r-1 deployed and read back; COO~O |
+| TX-r-3 | G-A: named workbook identity and unattended-content authorization; G-W: CTO+COO never-widen sign-off; G-P: compatible consumer promotion |
+
+**CTO-facing findings carried:**
+
+1. **Membership attester (finding6): name pending.** PRD?3.3 and the contract's effective_date_rule require an authorized operator's CONFIRM_EFFECTIVE_MEMBERSHIP with full identity privately, effective date, evidence, snapshot and actor trace. Neither carrier supplies that operator's name. The author has asked Andrew who will fill this business-attestation role. This is a staffing input, separate from G-A/S16 workbook-access authorization; no default identity or initial attestations are supplied here. The eight claims are the research snapshot, not a fixed production roster. Any current unverified claim stays in the expected denominator, contributes no covered value and prevents a complete affected total until the required dated attestation exists. Engineering can continue with synthetic controls while this answer is pending.
+2. **Pre-existing Global-fold failures (finding2): baseline, not a new PASS.** COO records 92 collected, 89 passed, 3 failed at bd2fa195c0, all in test_global_fold_flag2.py: test_carry_within_window_carries_and_labels, test_carry_beyond_window_absent_for_real and test_carry_source_is_measured_never_interpolated. This receipt has not rerun that suite. TX-p-1 remeasures the baseline at its HEAD; TX-a-1/TX-a-2 must add no failure and report an intersection through the existing surprise channel, as bound 17 requires. No unrelated repair or waiver is issued here.
+3. **Shared Gateway surfaces (finding1): existing coordination remains with the issuers.** N-1 is COO~T's notice to COO~O before TX-g-1 spawns; G-S serializes the opal-gateway Terraform apply; G-O orders the shared Gateway release. The server.py commit d02e73c272 is the decomposition's observed vintage, not a permanent pin for future editing. No second deploy, shared-state writer or scope merge is authorized by this receipt.
+
+CRO's S19 coverage-index correction remains deferred to the next substantive PRD bump; the L5 coverage already includes S19. The signed PRD and contract are unchanged by this receipt. Publication was reported LOCAL in 97174 at its stated vintage; this receipt makes no fresh origin/CLOUD claim.

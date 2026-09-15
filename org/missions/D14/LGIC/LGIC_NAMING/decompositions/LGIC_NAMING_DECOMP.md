@@ -6,12 +6,12 @@
  "directive": "D14",
  "macro": "LGIC",
  "fabric": "laptop",
- "decomp_version": "v5",
+ "decomp_version": "v6",
  "step": 5,
- "prd_ref": "org/missions/D14/LGIC/LGIC_NAMING/prd/LGIC_NAMING_PRD.md@f0a830c15f",
- "prd_half_hashes": {"ratified-text": "SIGNED 3.0.0_SA_CVO, current at v1.7", "brief": "SIGNED 4.0.0_SA_CRO @f0a830c15f (v1.7, review @cd596cf4a4)"},
+ "prd_ref": "org/missions/D14/LGIC/LGIC_NAMING/prd/LGIC_NAMING_PRD.md@2f554182b6",
+ "prd_half_hashes": {"ratified-text": "SIGNED 3.0.0_SA_CVO, current at v1.8", "brief": "SIGNED 4.0.0_SA_CRO @b136cdc308 (v1.8, half f8b0786d8242, review @02529e1bce)"},
  "author": "2.0.0_SA_COO~G",
- "cells": 14,
+ "cells": 15,
  "chains": 5,
  "frozen": true
 }
@@ -32,6 +32,10 @@ re-read, amended in place where v1.4 reaches (3 cells).
 **v4, the round-2 recut**, on `1.0.0_SA_CTO`'s round-1 analysis (L10, 96705 @`de52d3db04`; SC1 corrected
 @`2706014705`) and PRD v1.6. Section 0c is the cut: 8 cells re-run, 4 of them in a clean-context seat. Round 1's text
 below stands as its record.
+**v5, the round-3 recut**, on `1.0.0_SA_CTO`'s round-2 analysis (L10, 96818 @`02f08322af`) and PRD v1.7. Section
+0d is the cut: 6 cells re-run.
+**v6, the round-4 recut**, on `1.0.0_SA_CTO`'s round-3 analysis (L10, 97137 @`2f554182b6`) and PRD v1.8. Section
+0e is the cut: 3 cells run, one of them new (LN-g-2), behind gate G-V19.
 **Frozen at the cut.** A cell that looks wrong mid-round is a **surprise row, never an edit**
 (`org/missions/D14/LGIC/LGIC_NAMING/surprise-channel/investigations/INVESTIGATION_v1.md`).
 
@@ -365,6 +369,133 @@ round-3 cell takes its population from the estate: the N3 items are the analysis
 
 ---
 
+## 0e. v6 -- THE ROUND-4 RECUT (L10: 1.0.0_SA_CTO's round-3 analysis)
+
+**Input.**
+- The analysis: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_LGIC_NAMING_ROUND3_20260915.md` @`2f554182b6`
+  (msg 97137), on `3.0.0_SA_CVO`'s slug 97133 (`ADJUDICATION_v4` @`7c2dec2be1`, `REMEDIATION_v3` @`40cb839387`). It
+  names six items (s.3) and leaves the split and the order to the COO.
+- PRD v1.8 @`2f554182b6`, ADMITTED (`prd-signoff.py status LGIC_NAMING`, read 2026-09-15 ~16:1xZ):
+  - the ratified-text half is SIGNED by `3.0.0_SA_CVO`, current;
+  - the brief half is SIGNED by `4.0.0_SA_CRO` @`b136cdc308` (review @`02529e1bce`, half `f8b0786d8242`).
+- `NAMING_SCHEMA.json` v1.8 at the cut. v1.9 is owed by `1.0.0_SA_CTO` under `LGIC_ENFORCE`'s RULING ONE and C-S11
+  (`ROUND_ANALYSIS_LGIC_ENFORCE_ROUND1_20260915.md` @`7b5331c8c0`, msg 97145): `firm_forms` removed, and the
+  Terraform-type-to-node-type map as schema data.
+- All 28 of the project's orders are terminal.
+
+**The outcome state.** 5 of 6 REALIZED. FWD-5 is EXACT, NOT YET COMPLETE on two gaps: (a) the rule was re-cut for R5
+only (W3-S6); (b) 48 of 68 canonical forms carry `{system}`.
+
+**What runs: 3 of 15 cells, by subtraction.**
+
+```
+  cells at v5 ...................................................... 14
+  plus the cell this cut adds ...................................... +1
+      LN-g-2   grade() in lib/opal_naming.py: carrier 4 of FN1d (analysis s.2) and one side of C-S11's
+               two-way check; the rule and the code are written by different workers (below)
+  cells ............................................................ 15
+  minus cells serving an outcome graded REALIZED, named by no item .... -9
+      LN-e-1 .. LN-e-5         FWD-1 and FWD-2 REALIZED (round 3)
+      LN-l-1 .. LN-l-3         FWD-4 REALIZED
+      LN-t-1                   FWD-6 REALIZED
+  minus FWD-5 cells no round-4 item re-opens .......................... -3
+      LN-h-1, LN-h-2, LN-h-3   the analysis names FWD-5's two gaps (coverage and {system}); neither is the
+                               graders' agreement, which stands as round 1's record (surfaced below)
+  ------------------------------------------------------------
+  cells round 4 runs ................................................ 3
+      LN-g-1   item 1, and FN1d's rule half (W3-S5, W3-S6, AW1, V-2)
+      LN-g-2   item 2, and C-S11
+      LN-f-1   items 3 and 4 (FWD-5's completion; W4-S1)
+```
+
+Items 5 and 6 are not cells:
+- **Item 5, hygiene** (S18, W1-S7, W2-S6), is in every face: the round is in every result stem
+  (`<slug>.r4.result.md`), every exercise file is under `exercises/r4/`, and every pin is a commit, never
+  PENDING-THIS-COMMIT.
+- **Item 6** (W6-S1, S12) is the ISSUER's act at the cut. W6-S1's disarm owner is this seat. Round 3's seat records
+  measure the remedy: the clean-context seat's conditions held, and its canaries leaked 0 of 2 facts. The issuer
+  disarms W6-S1 on the channel citing them. No round-4 cell seats a blind worker.
+
+**The schema the rule is complete against -- the COO's choice, stated.** LN-g-1 completes the rule against the
+schema it LANDS WITH, v1.9, not v1.8. A rule completed at v1.8 would read one or two fields short on arrival: v1.9
+changes `firm_forms` and adds the type map. The rule names the version it lands with only when its coverage line
+reads N of N. So LN-g-1 is cut from the tip of `lgic-v19-landing` once v1.9 is on it (gate G-V19).
+
+**Gate G-V19 -- the cross-project landing.** Andrew's `LGIC_ENFORCE` analysis asks that data and readers never
+disagree at HEAD, and that the rule, `grade()` and the two-way check land together (C-S11).
+- `1.0.0_SA_CTO` commits NAMING_SCHEMA v1.9 on the branch `lgic-v19-landing`, cut from CLOUD by the issuer.
+- EN-r-3 (`LGIC_ENFORCE`, one carrier) and LN-g-1 are cut from that tip once v1.9 is on it. Each, verified, merges
+  into `lgic-v19-landing`, never CLOUD.
+- LN-g-2 is cut from `lgic-v19-landing` after EN-r-3 AND LN-g-1 are merged into it. `lib/opal_naming.py` then has
+  one writer at a time, and the two-way check reads the rule as landed.
+- The group reaches CLOUD in ONE merge by the issuer.
+- Cross-project cell ids: EN-r-2 is `LGIC_ENFORCE`'s registry rows for the 115 tokens; EN-r-3 is its one-carrier
+  cell.
+
+**The field grain (W3-S6), stated so the count is the checker's, never typed.** A field is a top-level key of
+`NAMING_SCHEMA.json`; where the key is an object in both versions, each second-level key is a field instead; a key
+added or removed whole counts once; `version`, `changelog` and `ratified_by` are metadata. Measured at the cut:
+v1.4 -> v1.7 reads 15 changed, 12 besides the metadata (round 3's worker counted the same); v1.4 -> v1.8 reads the
+same 12: `aws_fixed`, `firm_forms`, `grade.placeholder`, `iam_policy.purpose_slot`, `key.partition`,
+`key.scope_rule`, `kind.closed_at_l4`, `resource.function`, `resource.qualifier`, `rows_owner`, `secret.purpose`,
+`system.vendor_through_tiers`. LN-g-1's base carries v1.9, and `check_ln_r4.py g1-coverage` derives its list there.
+
+**The re-run and new cells.** These replace section 0d's rows for round 4; rounds 1-3 stand as their record. Every
+exercise file is under `exercises/r4/`. The checker is `fixed_inputs/r4/check_ln_r4.py`; its negative self-test on
+the pre-issuance tree reads 0 of 17 PASS, and each PASS path was exercised on a scratch copy.
+
+| cell | round 4 | acceptance, one clause per line |
+|---|---|---|
+| `LN-g-1` | the grading rule, complete at the schema it lands with | the coverage line equals the checker's field diff, N of N · a doctored schema field makes it read N-1 of N · the header names the working schema's version · G2 excludes `aws_fixed` names as NOT-GRADED, never RAISE · V-2's placeholder set is `grade.placeholder`'s · the worked cases carry `mdpf-lambda-lambda` and `orion-orion-lambda-lambda` as RAISE at R5, and R5 is one step · J1 at L9: FN1d's one subtraction, G2's exclusion, V-2's reconciliation of any step that emitted `{tier}` or `{entity}`, and each COVERS line's step is true |
+| `LN-g-2` | `grade()` implements the rule as written | both FN1d cases raise at R5 · round 2's 68 forms re-grade with no change beyond a `{system}` fill · every `aws_fixed.by_name` probe returns NOT-GRADED · every rule step is cited in the `grade()` region and every step label there is a rule step · the Terraform-type map is read from the schema, never hand-kept · the suite carries the FN1d tests and adds no failure to the base's (RULING RED) |
+| `LN-f-1` | the firm patterns re-graded, every gap raised | every live IAM_ROLE carrying a firm token is attributed, excluded or raised · every attributed form equals `grade()` at the tree · every form still carrying a placeholder is raised with its missing row (Rule 30) · each firm's pattern catches its own forms · no pattern catches another firm's · J1 at L9: the attributions follow R3 as quoted, and each missing row is a real registry gap |
+
+**The distinct-worker constraint, round 4.**
+- LN-g-2 is not LN-g-1's worker. C-S11's two-way check measures that the code implements the rule AS WRITTEN; a
+  worker who wrote both could make them agree by construction.
+- LN-f-1 is not LN-g-2's worker. LN-f-1 grades by hand from the rule, and the checker compares the hand with
+  `grade()`; the comparison discriminates only if the hand is not the code's author.
+
+**Edges and slots.** Spawn after drain, as in section 5. All three cells sit on chain A (the rule), so round 4 is
+M = 1 chain served by N = 3 workers, N above M for the reason above.
+
+```
+  G-V19: v1.9 on lgic-v19-landing -----> LN-g-1 --+
+  EN-r-3 (LGIC_ENFORCE), merged into the branch ---+--> LN-g-2 --> the V19 group merges to CLOUD --+
+  EN-r-2 (LGIC_ENFORCE), merged to CLOUD ---------------------------------------------------------+--> LN-f-1
+```
+
+| slot | cell | spawned |
+|---|---|---|
+| ~3 | LN-g-1 | when `1.0.0_SA_CTO`'s v1.9 commit is on `lgic-v19-landing`; worktree cut from that tip |
+| ~2 | LN-g-2 | when LN-g-1 and EN-r-3 are both merged into `lgic-v19-landing`; worktree cut from that tip |
+| ~4 | LN-f-1 | when EN-r-2 is merged to CLOUD and the V19 group has merged to CLOUD; worktree cut from CLOUD |
+
+**Fan-out:** 0 of 3 at issuance: every cell waits on another seat's commit. At most 1 concurrent in this project.
+`LGIC_ENFORCE` round 2 states its own count, and the sequence-wide cap is 8.
+
+**Where the work lands.** LN-g-1 and LN-g-2 drain into `lgic-v19-landing`, never CLOUD. LN-f-1 drains to CLOUD.
+
+**Surfaced with the issuance, not cut** (rows the issuer files):
+- **The 48 `{system}` gaps cannot be filled by EN-r-2's rows.** Measured at the cut with `grade()`: all 68 forms
+  equal round 2's record, and the first non-scope token of each of the 48 is a function word (`gold` 9, `api` 4,
+  `exporter` 3, `silver` 3, `bronze` 3, 26 others once or twice), none a system token. Rows for the 115 unresolved
+  system tokens therefore fill none of them. What fills a `{system}` is a per-resource row, the "resource-to-system
+  rows" `grade.placeholder` names, and no cut of either project makes one. LN-f-1 raises each gap with its missing
+  row, and FWD-5 grades on its RAISE clause. Whether a resource-to-system row family is cut is `1.0.0_SA_CTO`'s call.
+- **N6 sample verdicts may move** under G2's exclusion and V-2's narrowing (a default security group, an AWS log
+  group, a `{tier}` or `{entity}` form). No round-4 item re-grades the sample. Carried to `1.0.0_SA_CTO` as a
+  question.
+
+**Andrew-direct ~05:0xZ (msg 96910): LGIC is aimed at the MDPF, ADVI and IRPT pipelines.** No round-4 cell takes an
+estate population beyond LN-f-1's fixed live pull; the aim lands in `LGIC_ENFORCE` round 2 and `LGIC_CANON`.
+
+**L4-R at the cut:** ADMITTED at v1.8. If `1.0.0_SA_CTO` bumps this PRD with v1.9, the issued orders are
+MODIFICATIONS the gate does not re-grade (CLAUDE.md Rule 27), so the issuer re-reads `prd-signoff.py status` before
+each spawn.
+
+---
+
 ## 1. THE DOMAIN, BY SUBTRACTION (Rule 24(i))
 
 Written as the printed denominator MINUS what is excluded, never as a forward list.
@@ -437,7 +568,7 @@ exists, so L6 exercises it on HEAD bytes after the issuance commit (gate G-C).
 
 ---
 
-## 3. THE CELLS — 14
+## 3. THE CELLS — 15 (v6 adds LN-g-2, section 0e)
 
 Ids per `org/standards/DECOMP_CELL_ID_CONVENTION.md` shape 1 (`PREFIX-<axis>-<digits>`), prefix `LN`. Axes:
 `g` the grading rule, `e` the naming and reading exercises, `f` the firm patterns, `l` the key layout, `h` the
@@ -450,6 +581,7 @@ Each acceptance line below is **one criterion**. `J` marks a judgment criterion:
 | cell | what it is | PRD candidate | serves | writes | acceptance, one clause per line |
 |---|---|---|---|---|---|
 | `LN-g-1` | the written grading rule, its worked cases, and (v1.4) the legacy served list | N2 | FWD-5 | `deliverables/GRADING_RULE.md`; (v1.4) `deliverables/LEGACY_SERVED_PATHS.json` | every worked case carries exactly one of CONFORMANT / ALIAS / OUT-OF-PATTERN with its canonical form, or a stated RAISE, or NOT-GRADED for an excluded type · a worked case for each of the **25 graded types** (§3a.5) · a worked case for each of the 3 verdicts · a worked case for each of the 5 census residue classes (camel IAM names, purpose-first policies, library-first layers, `default` security groups, workstream-coded schedules) · every worked case is a live name at a stated vintage · no worked case is a name in the N6 discriminating sample (§3a.4) · (v1.3) a worked case for each of the four v1.3 key forms -- a new family's entity partition `{entity}={id}`, a legacy served path (a bare entity-id segment and a snake_case leaf), a code-tier key `{source}/{scope}/code/{built_tier}/{file}`, and a legacy root `code/` key -- each with its verdict stated · (v1.4) `LEGACY_SERVED_PATHS.json` lists every served path below `{source}/{scope}/platinum/` that the frozen portal requests, with the portal vintage it read and the denominator printed · (v1.4) `GRADING_RULE.md` cites that file and carries no second copy of the list · (v1.4) a discriminating pair of same-shaped platinum paths, one on the list graded CONFORMANT and one off it graded OUT-OF-PATTERN · (v1.4) the legacy root `code/` worked case is graded OUT-OF-PATTERN with the code-tier key as its canonical form, as ruled |
+| `LN-g-2` | (v6) `grade()` in `lib/opal_naming.py` implements the rule as written | N2's code carrier (FN1d carrier 4; C-S11) | FWD-5 | `lib/opal_naming.py`; `lib/tests/test_opal_naming.py`; `exercises/r4/g2-regrade.r4.tsv` | see section 0e |
 | `LN-e-1` | namer A | N3 | FWD-1 | `exercises/n3-namer-a.tsv` | one name for every item of the fixed item set (§3a.1), briefed only with `NAMING_SCHEMA.json` and `infra/logic/05_IDENTITY_SPINE.md` · the record states its worktree base commit |
 | `LN-e-2` | namer B | N3 | FWD-1 | `exercises/n3-namer-b.tsv` | as LN-e-1, blind to it |
 | `LN-e-3` | the namers' comparison | N3 | FWD-1 | `exercises/n3-compare.md` | the two answer files are identical on every item · neither namer's recorded base commit contains the other's answer file |
@@ -468,7 +600,7 @@ Each acceptance line below is **one criterion**. `J` marks a judgment criterion:
 N3 → LN-e-1, LN-e-2, LN-e-3, LN-e-4, LN-e-5 · N4 → LN-f-1 · N5 → LN-l-1, LN-l-2, LN-l-3, and its `MDPF_CANON_PRD.md`
 half as gate G-A, not a cell · N6 → LN-h-1, LN-h-2, LN-h-3 · N7 → LN-t-1.
 **Coverage of the outcomes: 6 of 6.** FWD-1 LN-e-1/2/3 · FWD-2 LN-e-4/5 · FWD-3 LN-f-1 · FWD-4 LN-l-1/2/3 and G-A ·
-FWD-5 LN-g-1, LN-h-1/2/3 · FWD-6 LN-t-1.
+FWD-5 LN-g-1, LN-g-2 (v6), LN-h-1/2/3 · FWD-6 LN-t-1.
 
 ### Why the re-cuts
 
