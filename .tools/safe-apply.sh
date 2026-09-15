@@ -77,6 +77,42 @@ else
 fi
 
 # -----------------------------------------------------------------------------
+# THE NAMING LIMB, apply side (LGIC_ENFORCE cell EN-t-2; PRD candidate E8; DEC-6).
+# ONE stage, placed after the halt checkpoint and BEFORE any plan: .tools/naming-apply-gate.py grades
+# the own-name attribute of every top-level resource block in the tree's .tf files with
+# lib/opal_naming.py grade(). A name the opal_name module would not produce (OUT-OF-PATTERN, ALIAS, or a
+# RAISE) is a REFUSE verdict with the canonical printed; expressions are listed, not graded (their value
+# exists only in a plan). Verdict lines go to org/mcp/naming-gate-verdicts.log (runtime, never committed).
+# THE WARN WINDOW. ENFORCE is on only when org/mcp/naming-gate.enforce exists or NAMING_GATE_ENFORCE=1 --
+# the commit limb's switch. In WARN mode this stage NEVER changes this script's exit code: not on a REFUSE
+# verdict, not on the limb's own error (NAMING ERROR), not on a missing interpreter or a missing limb. In
+# ENFORCE mode it is fail-closed: any non-zero exit stops here with exit 6, before terraform is called.
+NAPPLY_GATE="$SCRIPT_DIR/naming-apply-gate.py"
+NAPPLY_TREE="."
+for arg in "$@"; do
+  case "$arg" in
+    -chdir=*) NAPPLY_TREE="${arg#-chdir=}" ;;
+  esac
+done
+NAPPLY_ENFORCE=0
+if [ "${NAMING_GATE_ENFORCE:-}" = "1" ] || [ -e "$SCRIPT_DIR/../org/mcp/naming-gate.enforce" ]; then
+  NAPPLY_ENFORCE=1
+fi
+NAPPLY_OUT=""; NAPPLY_RC=0
+if [ -f "$NAPPLY_GATE" ]; then
+  NAPPLY_OUT="$(python "$NAPPLY_GATE" "$NAPPLY_TREE" 2>&1)" || NAPPLY_RC=$?
+else
+  NAPPLY_OUT="NAMING ERROR the safe-apply naming limb is absent at $NAPPLY_GATE"; NAPPLY_RC=2
+fi
+if [ "$NAPPLY_ENFORCE" -eq 1 ] && [ "$NAPPLY_RC" -ne 0 ]; then
+  printf '%s\n' "$NAPPLY_OUT" | sed 's/^/  [naming-apply-gate] /' >&2
+  echo "safe-apply: BLOCKED by the naming limb (LGIC_ENFORCE DEC-6, ENFORCE mode, rc=$NAPPLY_RC). Nothing was planned or applied." >&2
+  exit 6
+elif [ -n "$NAPPLY_OUT" ]; then
+  printf '%s\n' "$NAPPLY_OUT" | sed 's/^/  [naming-apply-gate] /' >&2
+fi
+
+# -----------------------------------------------------------------------------
 # TAG-AUTHORIZATION pre-apply gate (comp-tagauthz), fail-closed.
 # CTO 20260709T203543Z: "a tree that sets default_tags must gate imports on comp-tagauthz, wired into
 # safe-apply, deriving its candidate set FROM THE PLAN." In this account tags ARE authorization

@@ -972,6 +972,121 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     "spec_asserts": "TO-EN-s-1 WORKER FACE: 'It judges every nameable name in the repo (the Terraform, lib/config.py-class files, and Lambda sources)'.",
     "world_is": "Nothing the order names defines which literal in a config or Lambda source is a nameable name, so the worker defined it and printed the rule and its exclusions in the report and the module.",
     "notes": "Form only. No criterion turns on the repo denominator. The repo plane is never judged in this run, because the run stops in the live plane first (row LGIC_ENFORCE-W7-S1)."
+  },
+  {
+    "id": "LGIC_ENFORCE-W3-S5",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~3",
+    "surfaced_at": "2026-09-15T04:03Z",
+    "one_line": "T2-AC1 and T2-AC2 cannot print PASS on this box whatever the build: check_en.py _apply runs subprocess ['bash', '.tools/safe-apply.sh', ...], and Windows CreateProcess resolves a bare 'bash' to C:\\Windows\\System32\\bash.exe (the WSL launcher), which fails before safe-apply.sh runs.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~G",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CHECKER: org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/2.0.0_SA_COO~G/fixed_inputs/check_en.py:906 @39aae459ed calls run(['bash', '.tools/safe-apply.sh', '-chdir=...', 'apply'], ...), and run() (:104-114) hands that list argv to subprocess.run.",
+        "MEASURED in the worktree wk-lgic-enforce-1-3-t2: python subprocess.run(['bash','-c','echo BASH=$BASH_VERSION']) -> rc 1, stderr '<3>WSL (9 - Relay) ERROR: CreateProcessCommon:800: execvpe(/bin/bash) failed: No such file or directory', while shutil.which('bash') -> C:\\Program Files\\Git\\usr\\bin\\bash.EXE. 'where bash' lists Git's two bash.exe, then C:\\Windows\\System32\\bash.exe, then the WindowsApps alias; CreateProcess searches the system directory before PATH.",
+        "CRITERION RUNS, the named invocations after the build: t2-refuse -> 'rc=1  terraform called: False  <3>WSL (9 - Relay) ERROR: CreateProcessCommon:800: execvpe(/bin/bash) failed: No such file or directory' then 'VERDICT: FAIL-NOT-REFUSED-BEFORE-PLAN'; t2-pass -> the same WSL line then 'VERDICT: FAIL-GOOD-TREE-BLOCKED'. The pre-build baseline run of t2-pass printed the same WSL line, so the failure does not depend on the build.",
+        "CONTROL, not a criterion: the checker's own t2_refuse and t2_pass with argv[0] swapped for Git Bash's path and nothing else reach safe-apply.sh, and then stop at the halt checkpoint (row LGIC_ENFORCE-W3-S6)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EN-t-2 T2-AC1 and T2-AC2: 'cd <WS> && timeout 120 python .../check_en.py t2-refuse' expects 'VERDICT: PASS-REFUSED-BEFORE-PLAN'; 't2-pass' expects 'VERDICT: PASS-STAGE-PASSES'.",
+    "world_is": "Both invocations print FAIL before any line of safe-apply.sh runs, because the checker's 'bash' is the WSL launcher on this box. The checker is a read-only fixed input and bash resolution is outside the worker's grant, so neither criterion can pass by output here.",
+    "notes": "Form only. For the same reason the issuer's negative arm (selftest-negative) reads FAIL on t2-refuse and t2-pass whether or not the stage exists, so it could not tell a missing stage from a missing bash. One remedy shape, not taken: resolve argv[0] with shutil.which('bash') in _apply."
+  },
+  {
+    "id": "LGIC_ENFORCE-W3-S6",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~3",
+    "surfaced_at": "2026-09-15T04:03Z",
+    "one_line": "Even with Git Bash, safe-apply.sh stops at its halt checkpoint in a worker worktree: halt-gate-check.sh resolves the principal only from org/mcp/sessions/<CLAUDE_CODE_SESSION_ID>.serial or an orphan-cleaned marker under the worktree root, neither exists there, and it fails closed IDENTITY UNRESOLVED (exit 3) before the naming stage.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~G",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RESOLVER: .tools/halt-gate-check.sh:52-119 @39aae459ed reads the CLAUDE_CODE_SESSION_ID .serial file, then a <sid>.*.orphan-cleaned marker, then returns 1; :38 sets HALT_GATE_REPO_ROOT to the directory above the library, which is the worktree; :272-290 prints IDENTITY UNRESOLVED and returns 3. OPAL_AGENT_SERIAL is not read: it was exported for the run and the gate still blocked.",
+        "MEASURED: CLAUDE_CODE_SESSION_ID=9d2c2e56-da40-4edc-ba9d-6924a8f8a17d. The worktree's org/mcp/sessions/ (gitignored, .gitignore:423) holds no file for it. The main tree's copy holds '2.0.0_SA_COO~G': the worker runs under the issuer's session id, so even a copied file would name the issuer, not the worker.",
+        "CONTROL, not a criterion: check_en.py t2_refuse and t2_pass with Git Bash substituted -> 'rc=3  terraform called: False', the IDENTITY UNRESOLVED banner, then FAIL-NOT-REFUSED-BEFORE-PLAN and FAIL-GOOD-TREE-BLOCKED. The checker sets HALT_ACK=1 (check_en.py:907), which acknowledges routine messages but names no principal.",
+        "GRANT: the order's <paths> are .tools/safe-apply.sh, .tools/naming-apply-gate.py and this channel. org/mcp/sessions/ is not among them, and T2-AC3 requires the stage to run AFTER the halt checkpoint, so no placement of the stage reaches it first."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EN-t-2: the checker exercises the stage with a stub Terraform (SAFE_APPLY_TERRAFORM) over the issuer's trees, and the stage sits AFTER the halt checkpoint (T2-AC3).",
+    "world_is": "In a worker worktree the halt checkpoint cannot resolve a principal, so every safe-apply run from there exits 3 before the naming stage, whatever the bash. The two criteria that run safe-apply.sh cannot reach the stage on this box.",
+    "notes": "Form only. The same checkpoint runs first on every safe-apply from a worker worktree; the decomposition's tool pins for the applied cells (LGIC_ENFORCE_DECOMP.md:282-285 @53d221f334) export OPAL_AGENT_SERIAL for 'the two identity gates safe-apply carries', which this resolver does not read. With the halt library stubbed in a scratch copy (deliverables/0.9.0_WK_LGIC_ENFORCE~3/controls/t2_controls.py), the checker's own assertions print PASS-REFUSED-BEFORE-PLAN and PASS-STAGE-PASSES over this build, and both FAIL over the base commit's safe-apply.sh."
+  },
+  {
+    "id": "LGIC_ENFORCE-W3-S7",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~3",
+    "surfaced_at": "2026-09-15T04:03Z",
+    "one_line": "The issuer's bad_tree name BadQueueName is not OUT-OF-PATTERN: grade('BadQueueName','SQS_QUEUE') RAISES (R1.f: 'bad' is in no vocabulary), so no canonical form exists to print; the limb refuses it under DEC-6's RAISE row and prints '-> (rule or registry defect)'.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED: lib/opal_naming.py @39aae459ed grade('BadQueueName','SQS_QUEUE') raises RaiseDefect \"R1.f: 'bad' is in no vocabulary; no registry row resolves it\"; so do 'badqueuename' and 'bad-queue-name'. grade('etfs-price-refresh-queue','SQS_QUEUE') -> ('CONFORMANT', 'etfs-price-refresh-queue').",
+        "RULE: org/missions/D14/LGIC/LGIC_ENFORCE/prd/LGIC_ENFORCE_PRD.md:255 @78128f29ea: a RAISE is 'printed as a rule or registry defect, never as a verdict, and refused like any refusal once enforcing'. The limb prints 'NAMING REFUSE .../t2/bad_tree/main.tf:2 BadQueueName -> (rule or registry defect)', why 'RAISE as SQS_QUEUE: a rule or registry defect, not a naming verdict: R1.f ...', and exits 1 under NAMING_GATE_ENFORCE=1.",
+        "COMMIT LIMB: .tools/naming-gate.py:699-703 @8a60d8e74e counts a RAISE as WARN even when enforcing, unless a NEW firm carrier rides on it. This limb follows PRD :255, so the two limbs differ on a RAISE under ENFORCE."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EN-t-2: 'bad_tree names a queue BadQueueName'; T2-AC1: refused before Terraform is called, 'with the canonical printed'; the limb has 'the same output lines and enforce rules as the commit limb'.",
+    "world_is": "The name has no canonical form, only a RAISE. The limb prints the commit limb's defect string where the canonical goes, and refuses a RAISE once enforcing as DEC-6 says, where the commit limb warns on one.",
+    "notes": "Form only. check_en.t2_refuse asserts only '->' and 'BadQueueName' in the output, so it cannot tell a canonical from the defect string. The canonical path is exercised elsewhere: the coverage control graded 593 names at HEAD REFUSE with a canonical printed (OUT-OF-PATTERN or ALIAS)."
+  },
+  {
+    "id": "LGIC_ENFORCE-W3-S8",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~3",
+    "surfaced_at": "2026-09-15T04:03Z",
+    "one_line": "At apply there is no diff, so DEC-6's NEW/EXISTING split has nothing to read: the limb reads every graded name as the tree states it, and one switch (org/mcp/naming-gate.enforce) arms both limbs. Under ENFORCE, 57 of the 78 Terraform roots at HEAD would be refused before plan.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~G",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RULE: org/missions/D14/LGIC/LGIC_ENFORCE/prd/LGIC_ENFORCE_PRD.md:243-244 @78128f29ea: 'A string is NEW when it is on the diff's added lines and absent from the same file's pre-image'. An apply carries no diff, and whether a resource is being ADDED is known only to a plan, which the PRD (:290-291) and the cell place after this stage.",
+        "MEASURED @39aae459ed with this build (deliverables/0.9.0_WK_LGIC_ENFORCE~3/controls/t2_coverage.py): 78 directories hold a tracked .tf under infra/aws/terraform; 1266 resource-name attributes of the limb's 30 types; 1148 graded literals: 144 CONFORMANT, 3 NOT-GRADED, 593 REFUSE as OUT-OF-PATTERN or ALIAS, 408 REFUSE as RAISE; 118 expressions not graded. 57 of 78 roots carry at least one REFUSE verdict.",
+        "SWITCH: .tools/safe-commit.sh:691 @39aae459ed and this order's stage in .tools/safe-apply.sh read the same NAMING_GATE_ENFORCE=1 or org/mcp/naming-gate.enforce, as the order requires ('the same enforce rules')."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EN-t-2: 'with the same output lines and enforce rules as the commit limb'; DEC-6's matrix grades NEW against a diff's pre-image.",
+    "world_is": "The matrix's NEW/EXISTING axis does not exist at apply, so the limb refuses every name the module would not produce. That is what T2-AC1 asks for, and it also means the one flip that arms the commit limb leaves 57 of 78 existing roots unapplyable until their names are remediated or exempted.",
+    "notes": "Form only. No criterion turns on the 57. In WARN mode, the shipped state, the stage never changes safe-apply's exit code (control: the bad tree with NAMING_GATE_ENFORCE unset reaches the stub terraform, rc 0)."
+  },
+  {
+    "id": "LGIC_ENFORCE-W3-S9",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~3",
+    "surfaced_at": "2026-09-15T04:03Z",
+    "one_line": "The order says the limb grades every resource-name attribute, but 118 of 1266 at HEAD are expressions (references, calls, templates) whose value exists only in a plan. The limb runs before plan, so it lists them as 'unresolved before plan' and grades none of them.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED with deliverables/0.9.0_WK_LGIC_ENFORCE~3/controls/t2_coverage.py @39aae459ed: 1266 attributes, 1148 literal, 118 expression, 0 reading a module whose source is opal_name. At the census base fd9c9ca174 the limb's reader and EN-t-1's census (its own tfscan.py) agree row for row: 1266 and 1266, 0 one-sided, the literal/expression split 1148/118 identical, 0 literal values differing.",
+        "MEASURED: grade('etfs-{x}-queue','SQS_QUEUE') raises 'G3: the tokeniser cannot place a character of a resource name'. A template graded with the commit limb's {x} placeholder would RAISE, and under ENFORCE be refused, whatever it resolves to.",
+        "CENSUS: org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/TF_LABEL_CENSUS.md section 4 @1cc0d2fe73 resolved 100 of its 124 expression values statically, as 'inferred' (a variable default can be overridden at apply). The limb resolves none: it refuses only on a string it has read."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EN-t-2: 'It grades every resource-name attribute in DIR's .tf files with grade()'.",
+    "world_is": "An expression-valued name attribute has no string to grade before plan. The limb grades the literals, lists each expression with its source text, and prints the split on its NAMING-APPLY denominator line. A name passed through the opal_name module is an expression and passes.",
+    "notes": "Form only. No criterion turns on it: both fixture trees name their queue with a literal."
   }
 ]
 ```
