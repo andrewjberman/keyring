@@ -7400,6 +7400,32 @@ Andrew asked for (msg 22917); it concerns this project's portal files meeting an
   "spec_asserts": "W2-AC5 expect, parenthetical: the ticker stands in where the served name is null, CASH expected.",
   "world_is": "No row in either satellite has a null served name. The stand-in branch is implemented as the TO's act 3 requires and is not reachable on this payload -- an unexercised branch, stated rather than implied.",
   "notes": "Does not change the criterion's rule half ('the NAME cell EQUALS the served name for every row whose served name is non-null'), which is measured 32 of 32."
-}
+},
+  {
+    "id": "POSN_ASTTAX-Z-W25-S6",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~25",
+    "surfaced_at": "2026-09-15T09:39:30Z",
+    "one_line": "W2-AC1's ancestry limb requires the portal HEAD to DESCEND from refs/drains/posn-6-portal, but the ref has advanced 2 commits past this branch and now CONTAINS this worker's commit 16c5d359, so the relation is inverted and the criterion refuses as written; the ~07:1xZ re-cut pinned W2-AC2 and W2-AC7 to the branch BASE 10a2799c67 for this exact reason (W25-S2) but left W2-AC1 on the moving ref NAME.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git -C portal rev-parse refs/drains/posn-6-portal -> ebbee2e61a405f74156aded4ce54b3a9e0dc0211; git -C portal rev-parse HEAD -> 16c5d3593594f40d954493e93b28ccd292e18cd0.",
+        "AS WRITTEN: git -C portal merge-base --is-ancestor refs/drains/posn-6-portal HEAD -> rc=1, so REF-IS-ANCESTOR is not printed and the whole invocation exits 1.",
+        "INVERSE: git -C portal merge-base --is-ancestor HEAD refs/drains/posn-6-portal -> rc=0. Counts: rev-list --count refs/drains/posn-6-portal..HEAD = 0; rev-list --count HEAD..refs/drains/posn-6-portal = 2.",
+        "CONTROLS so the instrument is not the explanation: merge-base --is-ancestor 10a2799c67c519288fcd7d4ae6e3b86d5ed48b5a HEAD -> rc=0 (positive); merge-base --is-ancestor HEAD 10a2799c67c519288fcd7d4ae6e3b86d5ed48b5a -> rc=1 (negative).",
+        "The TO's re-cut header names the same mechanism for the two criteria it did pin: 'W2-AC2 and W2-AC7 pinned to the branch BASE 10a2799c (W25-S2: the drain ref moves under a live worker by design)'.",
+        "PORTAL_REFS.md line 16 records BASE 10a2799c67c519288fcd7d4ae6e3b86d5ed48b5a as refs/drains/posn-6-portal AT THE CUT, so the cut-time relation the clause was written to assert is provable against the BASE.",
+        "Path/commit: org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-W2-1.satellites-adapter-attaches-per-ticker-measures.md, W2-AC1 expect, at worktree HEAD 15436a2501cfbcd41e288cf01fbadc1139ccc064 (branch wk-posn_asttax-6-25)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "W2-AC1 expect: 'your portal HEAD descends from refs/drains/posn-6-portal'; the invocation prints REF-IS-ANCESTOR only when merge-base --is-ancestor <ref> HEAD succeeds.",
+    "world_is": "The drain ref is 2 commits AHEAD of this branch and contains this worker's commit, so HEAD does not descend from the ref -- the ref descends from HEAD. The limb cannot be satisfied by any act inside this grant (merging or rebasing onto the ref is forbidden), and satisfying it by substituting the BASE would REPAIR the criterion, which the TO's refusal clause forbids. W2-AC1 is therefore recorded FAIL with its measurement, while its other two limbs -- TO-W1-1 complete at SITEZ, and the served characteristics.json at PXyBGaqn.0Jk6TwWmXl34FlsDH8Gwd0R carrying tickers 25 with name 25 of 25 and management_style 25 of 25 -- PASS by output.",
+    "notes": "THIRD SPAWN on this order. Spawn 1 drained at 51c6108f7e and produced the re-cut; spawn 2 resumed and stopped mid-W2-AC6 WITHOUT committing, so nothing from it is in the record and every criterion recorded this run carries the output of the invocation THIS run made. W2-AC3, W2-AC5, W2-AC6 and W2-AC9 stand as recorded from the first run by the issuer's instruction and were not re-run. Two off-cell observations beside the finding above, neither a refusal: (i) the dev server left on port 5181 by the prior run was dead (curl http_code 000), so W2-AC8 ran on a fresh server on 5185 -- a port is not a state, and the fixtures were rebuilt from the served bytes this run rather than reused; (ii) build_fixtures_w25.mjs documents 'Usage (from portal/)' but w25_fetch_manifest.py writes manifest paths relative to the WORKSPACE root (portal/.scratch/...), so running the builder from portal/ raises ENOENT on 'portal/portal/.scratch/w25_posn.raw'; run it from the workspace root. The remedy is a docstring line in a deliverables-local tool, inside this grant but not on this cell's face, so it is stated here rather than edited mid-round."
+  }
 ]
 ```
