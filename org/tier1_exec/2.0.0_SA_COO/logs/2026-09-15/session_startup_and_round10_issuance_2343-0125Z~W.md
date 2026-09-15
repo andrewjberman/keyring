@@ -250,6 +250,44 @@ the X-1/U-1 pool keys and local copies, the five QA names, the 3-of-170 finding 
 messages replayed on the heartbeat (the CTO half 23078, the 13:00Z promote broadcast 23090, the CTO's HOLD answer 23097) were all
 handled in s.8-9 and carry their first ACK.
 
+### 11. rj-5's first pass refused four bars the pool cannot meet; the bars re-cut; rj-1 complete and drained (09:3x-10:0xZ)
+
+**rj-5 (`~19`) reported at ~09:3xZ with a VALID instance and the order OPEN:** AC4/AC6/AC7 PASS-by-output (the DynamoDB read path
+and `overwrite_by_pkeys` gone, the pointer proven `rank_sort`-free, 41 of 41 test arms, the reader writes and deletes nothing), and
+AC1/AC2/AC3/AC5 REFUSED on their COUNT bars -- the pool holds SEVEN bodies and SEVEN associations (BA 2, COST 2, HD 3; 73 objects
+in the bucket) on two agreeing instruments, where my cut named 80 objects, 20 per name, 80 bodies, 20 links (row `W19-S8`,
+BLOCKING). The bars were my assumption, not a contract clause: the CRO's pool-readers brief @`0e7de170e3` already called the store a
+bounded commissioning sample, and the harvest's collection mechanism and cadence are RESERVED to Andrew (@`9db2a36cdc`), so no seat
+backfills it to meet a bar. Three more rows: `W19-S9` (rj-1's `<paths>` granted WRITE on the `~19` deliverables while `~19` was live
+in them), `W19-S10` (three test arms fail in a worker cone for ABSENCE of `integrations/`), `W19-S11` (AC2's 170-char truncation
+hid `title` from the recorded bytes).
+
+**Acts:** the branch DRAINED as it stood (`acbe9641bc`: the build, the rows, the VALID instance; 189 rows) so P-1 and the generation
+writer sit at HEAD for rj-9/rj-10; the bars RE-CUT in ONE amendment commit `a33786b896` -- rj-5 AC1/AC2/AC3/AC5 carry the pool's
+counts as PRINTED denominators with the discriminating clauses kept (three prefixes; at least one item per commissioned name inside
+the window and none for the control; bodies read equal to links listed; T 0), rj-5 AC2's truncation widened to 400, rj-9 and rj-10's
+`store_item_count at least 20` bars re-cut to `at least 1 and PRINTED`, rj-1's WRITE grant on the `~19` folder removed (a read needs
+none; `~18` had written nothing there). The L6 gate graded the four modifications on `<placeholders>` only (GATE viii), as the law
+says. `wk-amgt-11-2` fast-forwarded to `a33786b896` and its cone widened with `integrations/`; `~19` RESPAWNED on the amended rj-5
+at ~09:5xZ to re-run all seven criteria against the amended bytes (next row `W19-S12`).
+
+**rj-1 (`~18`) reported at ~09:5xZ COMPLETE, 6 of 6 PASS-by-output:** three forms (`BABA_US_Equity`, `BABA US`, `BABA_US`) return
+the identical identity block and 13 of 13 header figures through the crosswalk, the control stays UNRESOLVED with `requested`
+echoed (pre-edit baseline: `BABA US` returned 0); `replace("_"," ")` sites 3 -> 0; ranked and starred rows click through
+`security_key` with a visible UNRESOLVED marker that does not navigate (harness 12 of 12, five new checks; mutant fired and
+restored byte-identical); vite build 55 assets, the token in 1, the control in 0; one portal commit `ad275969` above `9aef3734`,
+the gitlink `e85f6eb84f` unmoved. Design point the worker recorded: the boundary resolves through TWO measured surfaces (the crosswalk
+first, then the landed artifact plane by file name) so the CVO's `BABACVOCTRL_US_Equity` control keeps its UNRESOLVED arm; the
+overlay's point read is keyed by the identity's Bloomberg form because the live `TRENDING_CHATTER#2026-09-15` rows carry `BABA US`.
+Seven rows `W18-S1..S7`, all OBSERVATION / INERT -- two are LIVE DEFECTS left unrepaired for L9: `S6` `read_point` upper-cases
+while the producer writes mixed case (`Enel IM`, ranked today, cannot reach its own overlay row; `scoped_amgt.py:335` @`10c74d0efb`)
+and `S7` `CoverageTab.tsx:82` @portal `9aef3734` stars a canonical key into a ticker-keyed store (the Coverage tab is retired by
+rj-9). `S1`: AC2's `unittest discover` collects ZERO tests over the pytest-style adapter suite (pytest beside it: 54 passed / 6
+failed, the 6 for cone absence, `S2`). **Drained** `ac10e06de8` (the channel unioned by row id, 196 rows); the portal half pinned as
+`refs/drains/rj-1-portal` and `refs/drains/rj-portal` @`ad275969` in the main portal repo (checkout and gitlink unmoved).
+`wk-amgt-11-1` fast-forwarded to `ac10e06de8`, cone widened with `integrations/` and `infra/`; rj-2 and rj-9's adapter-suite
+invocation re-cut to pytest with the collected count as the denominator (W18-S1). rj-2 spawns at rj-6's drain.
+
 ---
 
 ## Decisions Made
@@ -288,22 +326,21 @@ None at this lane. The next acts are gated on the workers' final reports (backgr
 
 ## Current State
 
-Round 11 of AMGT_RESAPP is EXECUTING at 10c74d0efb (13 orders; rj-4 COMPLETE and drained; decomposition v1.3 s.19 @f133ed7aff,
-PRD v0.8 @1170b4da69 ADMITTED). FOUR workers live: ~18 rj-1 in C:/tmp/wk-amgt-11-1 (portal worktree @9aef3734), ~19 rj-5 in
-C:/tmp/wk-amgt-11-2, ~20 rj-6 in C:/tmp/wk-amgt-11-3, ~21 rj-7 in C:/tmp/wk-amgt-11-4. rj-8 (~22, wk-amgt-11-5) spawns at rj-6's
-drain; the cross-chain cells (rj-2, rj-9, rj-10, rj-11, rj-12, rj-3) by the hand-over order of s.19e. Both halves of the round-11
-co-sign are files (COO half + CORRECTION; CTO half @e1c3cf0cb3 SIGNED). PORTAL FROZEN; all commits LOCAL; no push.
+Round 11 of AMGT_RESAPP is EXECUTING (13 orders): rj-4 and rj-1 COMPLETE and drained; rj-5 OPEN on its amended bars with `~19`
+re-running the seven criteria in C:/tmp/wk-amgt-11-2; `~20` on rj-6 in C:/tmp/wk-amgt-11-3 and `~21` on rj-7 in C:/tmp/wk-amgt-11-4
+still live; `~18` idle in C:/tmp/wk-amgt-11-1 (portal @ad275969) until rj-6 drains, then rj-2. rj-8 (`~22`, wk-amgt-11-5) at rj-6's
+drain. Channel at 196 rows. Both co-sign halves are files. PORTAL FROZEN; all commits LOCAL; no push.
 
 ---
 
 ## Next Steps
 
 1. At each report: verify the instance with the worktree's own checker, drain through safe-merge.sh (the channel union by row id),
-   read every worker row, disarm as owner where owed. At rj-6's drain spawn rj-8 (~22); at rj-1 + rj-6: rj-2 (~18); at rj-8: rj-13
-   (~22); at rj-2 + rj-5/6/7/8: rj-9 (~18); at rj-7's drain choose the Posture QA held/non-held pair from R-1 + U-1 and name it in the
-   rj-6/7/8 hand-overs and rj-11's spawn; rj-11 (~20) after rj-6 + rj-7/8; rj-10 (~19, ff its branch first) after rj-5 + rj-1/9;
-   rj-12 (~18) after rj-9 + rj-11; rj-3 (~18) LAST after rj-10 + rj-12.
-2. Fetch chain A's portal branch into refs/drains/rj-portal at its drains; the gitlink never moves.
+   read every worker row, disarm as owner where owed. At rj-6's drain spawn rj-8 (~22) and rj-2 (~18); at rj-8: rj-13 (~22); at
+   rj-2 + rj-5/6/7/8: rj-9 (~18); at rj-7's drain choose the Posture QA held/non-held pair from R-1 + U-1 and name it in the rj-6/7/8
+   hand-overs and rj-11's spawn; rj-11 (~20) after rj-6 + rj-7/8; rj-10 (~19, ff its branch first) after rj-5 + rj-1/9; rj-12 (~18)
+   after rj-9 + rj-11; rj-3 (~18) LAST after rj-10 + rj-12.
+2. Fetch chain A's portal branch into refs/drains/rj-portal at each of its drains; the gitlink never moves.
 3. The browser half of rj-3 with the exact payloads rj-10 captures (ROUND11_BROWSER_EXERCISE.md); the L8 packet to 3.0.0_SA_CVO~W
-   (ROUND11_PACKET.md + one message) at the end.
+   (ROUND11_PACKET.md + one message) at the end, carrying W18-S6/S7 (live defects, unrepaired) and W19-S8 (the pool's size) for L9.
 4. Re-arm the inbox Monitor on every expiry; ack every broker message on read. Old worktrees stay until Andrew's word.
