@@ -11,6 +11,11 @@
 @`cbd85e5cff` (C-CURRENT-SOURCE, C-MEMBERS, C-NO-SILENT-EMPTY, C-OPAL-ONLY-DATA, C-FIVE-BOOKS-UNCHANGED) - **Decomp cells:** `AF1-s-6`,
 `AF1-s-7`, `AF1-s-8` - **Issuance:** round 1, slot `~1`, SECOND in this slot's queue. **Handed to you only after TO-A1-1 drained.**
 **NO DEPLOY AND NO SERVED WRITE IN THIS ORDER: every S3 write the handler attempts is captured to your scratch.**
+**AMENDMENT 1 (~21:3xZ at the partial drain; issuer cut defects, rows W1-S9 and W1-S6):** `A2-AC11` now reads the infra files THIS worker's
+commits touched (the fixed base 605c03f81f also carried other orders' infra files in through SITEZ); `A2-AC13` now bars NEW CLI-versus-handler
+differences against the base commit and equality of the Opal-only payload's AUM-derived fields (the CLI's `main()` passes no ETF returns and a
+`YYYY-MM-DD` date, which predates this order and is not in its cells). RE-RUN those two only; the other eleven stand as recorded. The runs keep
+`PYTHONHASHSEED=0` (row W1-S7).
 
 ---
 
@@ -133,9 +138,9 @@ ONE row per off-cell finding, id `POSN_AGGFIX-Z-W1-S<k>` continuing your sequenc
 
 <criterion id="A2-AC10" cell_refs="AF1-s-8"><invocation>timeout 60 python -c "p='infra/aws/lambda/v2_portal/yang_pipeline/positioning/yang-generate-positioning/lambda_function.py'; b=open(p,'rb').read(); print(p, len(b)-len(b.decode('utf-8'))); c=open('CLAUDE.md','rb').read(); print('CLAUDE.md', len(c)-len(c.decode('utf-8')))"</invocation><expect>the producer file prints 0 and CLAUDE.md prints a number greater than 0 (the detector's firing control).</expect></criterion> `A2-AC10` -- ASCII, BY AN INSTRUMENT THAT CAN FIRE.
 
-<criterion id="A2-AC11" cell_refs="AF1-s-6,AF1-s-7,AF1-s-8"><invocation>timeout 60 git diff --stat 605c03f81f HEAD -- infra/</invocation><expect>exactly one file under infra/: infra/aws/lambda/v2_portal/yang_pipeline/positioning/yang-generate-positioning/lambda_function.py.</expect></criterion> `A2-AC11` -- ONE FILE CHANGED UNDER INFRA.
+<criterion id="A2-AC11" cell_refs="AF1-s-6,AF1-s-7,AF1-s-8"><invocation>timeout 60 bash -c "git log --author='0.9.0_WK_POSN_AGGFIX~1 <' --format= --name-only 605c03f81f..HEAD -- infra/ | sort -u"</invocation><expect>(AMENDMENT 1) exactly one path, the files this worker's own commits touched under infra/: infra/aws/lambda/v2_portal/yang_pipeline/positioning/yang-generate-positioning/lambda_function.py (other orders' infra files that SITEZ brought into the branch are not this order's diff).</expect></criterion> `A2-AC11` -- ONE FILE CHANGED UNDER INFRA.
 
-<criterion id="A2-AC13" cell_refs="AF1-s-8"><invocation>timeout 1200 python <PRODUCER_HARNESS_A2> --cli-upload</invocation><expect>main() run with --upload under the capturing wrapper on the same model PKL the handler runs used: exactly two puts captured, json/positioning/positioning_data.json and json/positioning/opal_aggregate.json, each with ContentType application/json, ContentEncoding gzip and CacheControl no-cache, and each decompressed payload equal to the handler AFTER run's capture of the same key in every field except generated_at.</expect></criterion> `A2-AC13` -- THE SECOND WRITE SITE WRITES THE SAME TWO KEYS.
+<criterion id="A2-AC13" cell_refs="AF1-s-8"><invocation>timeout 1200 python <PRODUCER_HARNESS_A2> --cli-upload</invocation><expect>(AMENDMENT 1) main() run with --upload under the capturing wrapper on the same model PKL the handler runs used: exactly two puts captured, json/positioning/positioning_data.json and json/positioning/opal_aggregate.json, each with ContentType application/json, ContentEncoding gzip and CacheControl no-cache; the shared file's difference from the handler's capture (paths listed with their count) is the SAME path set when both run at 605c03f81f and when both run at HEAD, apart from current_holdings AGG and the five book aum values (main() passes no ETF returns and a YYYY-MM-DD date, a pre-existing difference, row W1-S6); and the opal_aggregate.json payloads from main() and from the handler are equal in status, weights, weights_source, members, left_out, reconciliation, current_holdings.AGG.total_aum and each AGG holding's ticker and weight.</expect></criterion> `A2-AC13` -- THE SECOND WRITE SITE WRITES THE SAME TWO KEYS.
 
 <criterion id="A2-AC12" cell_refs="AF1-s-6,AF1-s-7" judgment="true"/> `A2-AC12` -- **JUDGMENT, GRADED BY `3.0.0_SA_CVO~Z` AT L9:** whether serving `status UNAVAILABLE` on a PARTIAL weight read (a primary model missing) is the right reading of C-NO-SILENT-EMPTY, against serving the aggregate over the rows present with the missing model reported. Record the readings and offer NO verdict.
 
