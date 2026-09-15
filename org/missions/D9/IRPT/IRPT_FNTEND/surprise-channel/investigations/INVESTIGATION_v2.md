@@ -4047,6 +4047,48 @@
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W1-S69",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-15T00:28:36Z",
+    "one_line": "F45-AC10 names `process.release.name` = `node` as the proof that the dev server runs on node, but bun reports `process.release.name` = \"node\" too. The named field reads the same under both runtimes, so by itself it cannot tell the two apart; the test had to add a discriminator the order did not name.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-45 F45-AC10 (AMENDMENT 1, RULING (B)): 'the dev script's server reports `process.release.name` = `node`, and the test prints it.' expect: 'THE DEV SERVER RUNS ON NODE: yes'.",
+    "world_is": "bun 1.3.9 `bun -e \"console.log(process.release.name, process.versions.bun)\"` -> release \"node\", bun \"1.3.9\"; node v26.8.2 -> release \"node\", no versions.bun. The bun:test process that runs residuals.test.ts prints 'process.release.name \"node\", process.versions.bun \"1.3.9\"'. So a grade on the named field alone would read node for the first run's rejected `bun --bun vite --configLoader native` server as well. The fe-s-45 test therefore grades node on three readings together: the pid LISTENING on the server's port (netstat -ano); that pid's image name (tasklist), node.exe; and a record written INSIDE that pid by a NODE_OPTIONS=--require preload (fe-s-45/runtime-probe.cjs): release \"node\", versions.bun absent. It runs the first run's dev line, read from portal df3a3353, as the negative control: listener bun.exe and no record, because bun ignores NODE_OPTIONS --require (measured: `NODE_OPTIONS='--require <probe>' bun -e 1` printed nothing, rc 0). The criterion's verdict line and its printed `process.release.name` stand as the order wrote them; the discriminator is added beside them, not in place of them.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "C:/Users/AndrewBerman/.bun/bin/bun -e (process.release.name, process.versions.bun) -> {\"rel\":\"node\",\"bun\":\"1.3.9\",\"exec\":\"C:\\\\Users\\\\AndrewBerman\\\\.bun\\\\bin\\\\bun.exe\"}; node -e the same -> {\"rel\":\"node\",\"exec\":\"C:\\\\Program Files\\\\nodejs\\\\node.exe\"}",
+        "NODE_OPTIONS='--require \"<WS>/.scratch/rtprobe.cjs\"' node -e 1 -> 'FE45_RUNTIME {...\"release\":\"node\",\"bun\":null...}'; the same under bun -e 1 -> no line, rc 0",
+        "fe-s-45/residuals.test.ts debug run (portal worktree wk-irpt_fntend-7-1-fe-s-45, pre-commit): dev on 5900 'listening on 5900: pid 21712 node.exe', record {\"pid\":21712,\"release\":\"node\",\"bun\":null}; the first run's line on 5901 'listening on 5901: pid 25336 bun.exe', 'runtime record of the listener: NONE'; 'this test process: process.release.name \"node\", process.versions.bun \"1.3.9\"'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W1-S70",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-15T00:28:36Z",
+    "one_line": "Correction to this worker's own row IRPT_FNTEND-W1-S67, cost (3). S67 says the native loader's empty dependency list means an edit to vite.config.ts no longer restarts the dev server. vite 7.3.5 restarts on an edit to the config file itself, whatever the loader's dependency list holds, so that cost does not follow from what S67 measured. S67 stands as filed; this row records the correction beside it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "IRPT_FNTEND-W1-S67 world_is (INVESTIGATION_v2.md, as filed at workspace a050d7b5ec): '(3) native returns no config dependencies, so an edit to vite.config.ts no longer restarts the server.'",
+    "world_is": "portal/node_modules/vite/dist/node/chunks/config.js (vite 7.3.5) :26032 `const isConfig = file === config$2.configFile;` and :26033 `const isConfigDependency = config$2.configFileDependencies.some((name) => file === name);`. The server restarts on either, so the config file triggers a restart through `isConfig` whether or not the loader lists it as a dependency. What S67 measured is the dependency list, not a restart: loadConfigFromFile on the FE-s-45 vite.config.ts returns dependencies [\"vite.config.ts\"] under bundle and [] under runner and native (this config imports only packages). A restart on an edit was NOT exercised; this correction is a source reading. It matters for the amended mechanism too: `vite --configLoader runner` has the same empty list.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/node_modules/vite/dist/node/chunks/config.js:26032-26033 (vite 7.3.5): isConfig = file === config.configFile; isConfigDependency = config.configFileDependencies.some(...)",
+        "portal/node_modules/vite/dist/node/chunks/config.js:35504 (vite 7.3.5): configFileDependencies = loadResult.dependencies",
+        "<WS>/.scratch/loader-probe.mjs under node on the amended portal/vite.config.ts: bundle deps [\"vite.config.ts\"], 3 .vite-temp events; runner deps [], 0 events; native deps [], 0 events; cacheDir portal/.vite and 13 proxy keys under all three"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
