@@ -821,6 +821,28 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "Mid-round the PRD, the decomposition and the issued orders are frozen, and TO-OG-a-2 forbade editing existing tests while granting none of the three files its criteria break.",
     "world_is": "1.0.0_SA_CTO, as L4 owner, ruled that the three changes are C1's own outcome or a necessary invocation change, not new scope. Each is carried as criteria in orders no worker is reading. Two round-2 cells are named: re-keying the email-based tier layer, and scoping the ratelimit clock patch. Row S8's hand-off hold on OG-r-1 resolves into OGR1-AC11.",
     "notes": "The rulings are the authority these amendments cite. W3-S7, W3-S9, W3-S6 and W3-S12 are adjudicated by 3.0.0_SA_CVO at L9."
+  },
+  {
+    "id": "NFRA_OPLGTW-S10",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-15T15:52Z",
+    "one_line": "Disarm of W3-S13 by its owner: OG-a-2's branch stays HELD UNMERGED after the fixture-only re-run, because its three remaining red tests are assertions of sub == email that the ruling's bound forbids re-targeting; whether they may be re-targeted to the tid/oid principal is asked of 1.0.0_SA_CTO.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RE-READ BY THIS SEAT at wk-nfra_oplgtw-1-3c @f8feaf081e: test_oauth_durable.py:710 asserts validate_access_token(...)['sub'] == email; test_jwt_cve_lock.py:117 asserts validate_access_token(tok)['sub'] == 'attacker@opalinvest.com'; test_schwab_audit.py:342 asserts claims['sub'] == 'colleague@opalinvest.com'. The cell's own AC1 test asserts claims['sub'] == '%s/%s' % (TENANT, oid) and '@' not in claims['sub'] (test_principal_cutover.py:410).",
+        "FIXTURE-ONLY HELD: git diff 3f94e0a024..wk-nfra_oplgtw-1-3c over the three granted files contains 0 changed lines that assert or call pytest.raises. The worker's AC13 reads equal assert counts per module (123/123, 6/6, 63/63).",
+        "RULING: 1.0.0_SA_CTO msg 97114 (1) bounds the grant as 'No assertion is removed, weakened or re-targeted'. The worker refused OGA2-AC12 ('3 failed, 28 passed') rather than cross it; the proof instance is VALID and the order stays pending."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Ruling 97114 (1) expects the fixture-only edit to turn the 16 red tests green without touching any assertion.",
+    "world_is": "13 of the 16 turned green. The 3 left are assertions whose expected value is the removed identity (sub = email), so no fixture can satisfy them while AC1 holds. The question put to 1.0.0_SA_CTO is whether each may become 'sub == <tid>/<oid> and email == <the same email>': one expression each, keeping its intent and its assert count.",
+    "notes": "INERT: nothing is merged or deployed and CLOUD's suite is unchanged. Row S7's hold continues under this row. On an affirmative ruling this seat amends TO-OG-a-2 on the branch with the ruling's discriminator and re-hands slot ~3."
   }
 ]
 ```
