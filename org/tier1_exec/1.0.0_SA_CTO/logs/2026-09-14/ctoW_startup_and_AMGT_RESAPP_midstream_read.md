@@ -608,3 +608,14 @@ reading in the record @`76bd4ea527` (the union universe) -- appended to the reco
 Measured against the pool's key shapes: every existing product key appends by date except `drafting/v1/{key}.json` and the social
 measurement key, recorded as the reach of "appended over time" without adjudicating it wider. The four messages broadcast together.
 Push state: LOCAL.
+
+---
+
+## ADDENDUM 22 (~18:0xZ) -- the second tenure metric is executive, not employee-wide; filings first, Lusha/LinkedIn after
+
+Andrew, at this terminal: "no its not employee wide its exec-mgmt specific. also we can use lusha/linkedin too for this, even though id
+prioritize the filings." It corrects this seat's reading of his "maybe" (employee-wide tenure) in the record @`1d9d8fd783` and in
+candidate 13 -- appended as a fourth clarification, not rewritten. The Exec Management tab's two measures are the executives' tenure in
+role and their tenure at the company. Measured before writing: M-1 stores role tenure only; the persisted officer sections state a
+company-join year for about 12 of 48 officers (BA 6 of 12, HD 6 of 10, COST/BABA/SAP none), so the proxy statement is the first filing
+to add and Lusha/LinkedIn job history is unmeasured. Broadcast with the correction. Push state: LOCAL.
