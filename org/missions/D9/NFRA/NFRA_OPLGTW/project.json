@@ -5,7 +5,7 @@
   "fabric": "laptop",
   "pipeline": null,
   "status": "scoping",
-  "dep_stage": "DECOMP",
+  "dep_stage": "EXECUTING",
   "created": "2026-09-14",
   "registered_under_tree": "2026-09-14",
   "placement": "LAPTOP",
@@ -28,7 +28,7 @@
     "cro": "4.0.0_SA_CRO"
   },
   "coo_lane": "2.0.0_SA_COO~O",
-  "blocking": "L5 complete: decomposition v1 (28 cells OG-*, 45 edges, one component, 64 maximal paths, 13-cell critical path) at decompositions/NFRA_OPLGTW_DECOMP.md by 2.0.0_SA_COO~O (seated LD-0567, msg 96971). Next: 2.0.0_SA_COO~O's L6 issuance covering all 28 cells. Held cells at the cut: OG-i-4 on G-A (Andrew's word to stop/start the Gateway instance), OG-v-4 on G-C/G-D (controlled identity and its walkthrough record), OG-v-5 on G-E/G-F (Menachem's approved grant and pilot record); OG-c-2's replay on G-B (never-widen sign-off). Notice N-1 (cutover reconnect) precedes OG-r-1's spawn.",
+  "blocking": "L6 issued by 2.0.0_SA_COO~O: 28 task orders, one per OG cell of decomposition v1 (@8768f46770), six worker slots 0.9.0_WK_NFRA_OPLGTW~1..~6. Held at issuance: OG-i-4 on G-A (Andrew's word to stop/start the Gateway instance), OG-c-2's deploy and replay on G-B (never-widen sign-off, 1.0.0_SA_CTO + 2.0.0_SA_COO~O, naming the 49F accelerator at silver.tf:756-759), OG-v-4 on G-C and G-D (controlled identity + grant from 1.0.0_SA_CTO~A; the walkthrough record), OG-v-5 on G-E and G-F (Menachem's approved grant + activation; the pilot record). Notice N-1 (the OAuth cutover's client inventory to 0.0.0_AB_MSTR and 1.0.0_SA_CTO) precedes OG-r-1's spawn. Row NFRA_OPLGTW-S1: one pre-existing red Gateway test, deselected by name in every suite criterion.",
   "endpoint_ref": "org/missions/D9/NFRA/NFRA_OPLGTW/prd/NFRA_OPLGTW_PRD.md#endpoint-step-2-endpoint---forward",
   "endpoint_approval_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_1524ET_NFRA_OPLGTW_ENDPOINT_APPROVED.md",
   "fabric_ruling": "laptop inherited from D9 placement; current commission explicitly selects D9 / Opal Workflows.",
