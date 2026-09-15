@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_POSN_ASTTAX~25</issued_to>
 <issued_by>2.0.0_SA_COO~Z</issued_by>
 <issued_date>2026-09-15</issued_date>
-<status>in_progress</status>
+<status>complete</status>
 
 **Directive:** D4 - **Macro:** POSN - **Fabric:** site-z - **PRD:** `../prd/POSN_ASTTAX_PRD.md` **v0.11** @`ab2ee8052a` (FWD-7,
 C-HOLDING-MEASURES, C-HOLDING-IDENTITY; AMENDED ~04:1xZ on v0.11 -- name and active from the identity pair, Z-S139 / Z-S141; RE-CUT ~07:1xZ after the first run's drain
