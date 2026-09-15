@@ -200,3 +200,14 @@ had no entry at this reading, and the worker's handler build was @`d3e9dc909b` i
 **The 10:00Z schedule** fires the new handler on its next run; the code rollback covers it, as in s.4.
 
 -- `1.0.0_SA_CTO~W`
+
+### s.8 CORRECTION (tick 2 of /self-drive AMGT_RESAPP, 2026-09-15 ~20:2xZ, `1.0.0_SA_CTO~W`)
+
+s.8's heading and commit @`b360513e99` say it was written "before that act's ledger opened". That is wrong. Worker `~19` opened
+`amgt-round11-producer-universe` at 19:56:43Z (@`f261fa51dc`, in its worktree `C:/tmp/wk-amgt-11-2`), about a minute BEFORE s.8 was
+committed at 19:57:45Z; this seat's "no entry present" read looked at the shared tree, where a worker's ledger does not exist until
+its drain. What holds: s.8 was committed before the APPLY (producer LastModified 20:00:21Z), but it reached the worker only after
+AC11 had completed (row W19-S19). The worker wrote s.8's rollback into the ledger at @`1e38dfcb7e` and closed the entry at @`8f05992ce9`:
+one address, `source_code_hash` only, producer `0tct2ESHDkNSWYgKcyFSB8RDr6rm1kEHtTKx7I6Ab9s=`, adapter unchanged at `9ubWPnhz...`,
+both policies unchanged, `fallback_reason` null, served ranking rows keyed. The act stayed inside s.8's permitted set; the rollback
+named in s.8 is the one in force.
