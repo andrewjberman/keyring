@@ -619,3 +619,18 @@ candidate 13 -- appended as a fourth clarification, not rewritten. The Exec Mana
 role and their tenure at the company. Measured before writing: M-1 stores role tenure only; the persisted officer sections state a
 company-join year for about 12 of 48 officers (BA 6 of 12, HD 6 of 10, COST/BABA/SAP none), so the proxy statement is the first filing
 to add and Lusha/LinkedIn job history is unmeasured. Broadcast with the correction. Push state: LOCAL.
+
+---
+
+## ADDENDUM 23 (~18:1x-18:2xZ) -- rj-9 read; the Robustness model; Bloomberg as the source; the Lusha reliability ask
+
+rj-9 (header + five tabs) drained 17:59Z, VALID 6 of 6, flipped by the issuer 18:02Z (this seat's note crossed the flip; the prepared
+pre-read text was re-read and corrected before commit). Round 11 at 10 of 13.
+
+Andrew at this terminal ~18:1xZ showed the factor model for the Thesis/Risk tab's score, Robustness -- recorded verbatim @`260402c006`.
+Measured against the estate: the Bloomberg model block is fiscal-year only and carries 2 of the 6 constraints' inputs; the scanner holds
+related ratios as a snapshot; 0 of 6 are computable at the model's 8-quarter TTM frequency. Method reviewed for him. Minutes later
+(~18:2xZ): every Robustness input comes from Bloomberg; the Mgmt tab is average executive time with the company, Bloomberg first and
+Lusha where Bloomberg lacks it; and he wants Lusha's reliability on executive information measured, including whether it parses into
+time-at-company-as-manager and time-at-company-in-general. Appended to the record as a follow-on; candidates 13 and 14 carry it; the
+Lusha measurement follows; one broadcast covers both words. Push state: LOCAL.
