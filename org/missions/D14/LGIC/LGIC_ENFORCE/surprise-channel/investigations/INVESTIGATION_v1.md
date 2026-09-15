@@ -1499,6 +1499,31 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     "spec_asserts": "TO-EN-d-2 D2-AC2: 'the search's positive control finds exactly one planted literal', graded by 'check_en.py d2-control' expecting 'VERDICT: PASS-CONTROL-FIRES'. The cell: 'plant one literal in a scratch copy of the file (never committed) and show that your search finds exactly one.'",
     "world_is": "The criterion's invocation cannot tell a control that was run from a json field typed as {\"planted\": \"x\", \"hits\": 1}. Its PASS is the worker's self-report passed through a checker. Whether the control ran can be judged only from the prose and outputs recorded in EXERCISE_FWD1_SEARCH.md, not from D2-AC2's output.",
     "notes": "Form only. The plant is not committed by design (the order says 'never committed'), so a checker that re-ran it would have to plant its own copy. That is the instrument owner's call (2.0.0_SA_COO~G, the fixed input's author). INERT: in this cell the control was run and its outputs are recorded, and no other cell uses d2-control."
+  },
+  {
+    "id": "LGIC_ENFORCE-W1-S18",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~1",
+    "surfaced_at": "2026-09-15T08:38Z",
+    "one_line": "TO-EN-f-2 step 3 runs deploy_ledger.py close, which unlinks the ledger sentinel, and check_en.py finds the ledger entry only through that sentinel. After the ordered close, f2-closed prints FAIL-LEDGER-OPEN and f2-signoff prints FAIL-SIGNOFF on a ledger that is closed, with both SIGNOFF lines in its committed history. F2-AC8 cannot pass in any state the order produces.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~G",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN, the named invocations after 'python .tools/deploy_ledger.py close --slug lgic-enforce-fence-49financial' (rc 0, 'sentinel removed'), 2026-09-15T08:37:06Z..08:37:36Z: f2-signoff 'SIGNOFF LINES: {}  APPLY (L2 closed_at): none' / 'VERDICT: FAIL-SIGNOFF' rc=1; f2-closed 'SENTINEL: absent' / 'VERDICT: FAIL-LEDGER-OPEN' rc=1.",
+        "RUN, the same f2-signoff before the close, 08:23:20Z, sentinel present: 'SIGNOFF LINES: {'1.0.0_SA_CTO': '20260915T072924Z', '2.0.0_SA_COO~G': '20260915T070844Z'}  APPLY (L2 closed_at): 20260915T081903Z' / 'VERDICT: PASS-SIGNED-BEFORE-APPLY' rc=0.",
+        "CODE: check_en.py f2_closed (:737-740 @d7d801c323) is ok = (s is None or s.get('status') == 'CLOSED') and 'CLOSED' in _entry_text().upper(). _entry_text (:653-656) takes the entry path from the sentinel, so with the sentinel absent it returns '' and the second clause is False. With the sentinel present its status is OPEN, so the first clause is False. f2_signoff (:676-683) takes L2's closed_at from the sentinel, and _entry_history_text (:659-673) takes the entry path from it too.",
+        "CODE: .tools/deploy_ledger.py cmd_close (:428-443 @d7d801c323) sets status 'CLOSED -- nothing stranded', re-renders the entry, and unlinks the sentinel (:440). After a tool close there is no sentinel, and no sentinel ever holds status == 'CLOSED'.",
+        "WORLD: the entry org/critical_paths/change_management/20260915T0334Z_lgic-enforce-fence-49financial_deploy_completion.md reads '**Status:** CLOSED -- nothing stranded -- closed 20260915T083705Z', and its last line is the ordered 'CLOSED 20260915T083706Z'. Both SIGNOFF lines are in its committed history, at ccb7422e15 and 766b5a0cfb."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EN-f-2 step 3: 'Close leg L4, then python .tools/deploy_ledger.py close --slug lgic-enforce-fence-49financial, and append a CLOSED <YYYYMMDDTHHMMSSZ> line to the entry. Commit the entry and the sentinel.' F2-AC8: check_en.py f2-closed, expecting 'VERDICT: PASS-LEDGER-CLOSED'. F2-AC1: check_en.py f2-signoff, expecting 'VERDICT: PASS-SIGNED-BEFORE-APPLY'.",
+    "world_is": "The tool closed the ledger and the entry says so, but the checker reaches the entry only through the sentinel that the close deletes. F2-AC8 reads FAIL in both states the order produces: sentinel present (status OPEN) and sentinel absent (no entry read). F2-AC1 turns from PASS to FAIL at the same step.",
+    "notes": "Form only. F2-AC8 is recorded FAIL by its output, and the order stays open. F2-AC1 is recorded with both runs. The disarm belongs to the instrument, for example finding the entry by slug under change_management/ when the sentinel is absent, and reading L2's closed_at from the entry or its history. check_en.py is the issuer's fixed input and a worker may not edit it. Re-creating a sentinel by hand to satisfy the checker would forge the ledger's state."
   }
 ]
 ```
