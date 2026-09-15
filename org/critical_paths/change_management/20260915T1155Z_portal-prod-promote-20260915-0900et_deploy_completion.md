@@ -32,3 +32,13 @@
 - 20260915T123543Z LEG L7 closed: SUPERCEDES retained-dated-vintage proof: MSTR97063 measured head-object plus full parsed get for s3://opal-data-cot/plat
 - 20260915T124457Z LEG L5 closed: MSTR97069 publication receipt: push rc0 fast-forward6a5b276f8b..0b7ecdde1f (551 commits); independent ls-remote confirms
 - 20260915T124458Z CLOSED -- all 7 legs proven
+
+## Additional independent evidence, received 2026-09-15T13:24:22Z
+
+MSTR **97085** relays Site Z's bus receipt `a792ad47` at13:21Z, measured there at13:15-13:19Z. This is attributed second-instrument evidence beside this seat's97064 read and MSTR97063; it does not change the seven closed legs or their closure time.
+
+- Same characteristics VersionId `02SGBCPDoeVPy7JBJcEHxUw4J0.nQneh` (12:30:54Z):24/24 sourced holdings T-1, CASH intentionally unsourced. Site Z reports345 Yang-sourced cells compared with positioning_data VersionId prefix `aJ7nhw`, zero mismatches.
+- Site Z rebuilt fixtures from six served keys at their current VersionIds and rendered Satellite15 and80 on `9adad7ce`, tree `d3db406c`, equal to PROD's tree:272/272 cells each, both views, zero values with three or more decimals. The full six VersionIds were not supplied in97085; these counts are Site Z's measurement, not a new local test.
+- Site Z independently reports PROD tree parity, POSN and d13 present, AMGT absent, and deploy34967303352 green. Its third driven run never fired; B6's scheduled12:30Z rule superseded it and its ledger is closed9/9.
+
+Full received carrier is preserved in `org/tier1_exec/1.0.0_SA_CTO/deliverables/PORTAL_PROMOTION_20260915_CTO_A/OWNER_RECEIPTS.md`. CLOUD/SITEZ integration and the CLAUDE.md pick remain with the named law owners; this evidence note performs no merge, push or deployment.
