@@ -61,3 +61,22 @@ One message to `2.0.0_SA_COO~W`, `3.0.0_SA_CVO~W`, `4.0.0_SA_CRO~W` and `0.0.0_A
   `peers/v1/{key}/{as_of}`, `management/v1/{key}/{as_of}` and `posture/v1/{key}/{as_of}`, and does NOT hold for two keys:
   `drafting/v1/{key}.json` (no date, so a re-analysis overwrites it; bucket versioning keeps the prior bytes but not an appended record)
   and `social/v1/_measurement/{as_of}.json` (no security coordinate, row W22-S6).
+
+---
+
+## A FOURTH CLARIFICATION, at the same terminal (~18:0xZ), verbatim and entire
+
+> no its not employee wide its exec-mgmt specific. also we can use lusha/linkedin too for this, even though id prioritize the filings.
+
+## Read narrowly, and what it corrects
+
+- **THE SECOND TENURE METRIC IS EXECUTIVE, NOT EMPLOYEE-WIDE (ruled; SUPERSEDES this record's "employee-wide" reading and the
+  pre-read's `employee_tenure_avg_years`).** His first message's *"average tenor of mgmt at the co in general, even not in mgmt role"*
+  means the executives' tenure AT THE COMPANY -- their total time with the company, including the years before they took the current
+  management role -- beside their tenure IN the current role. So the Exec Management tab carries two executive tenure measures:
+  average tenure in role, and average tenure at the company, over the same executives. It says nothing about the wider workforce.
+- **SOURCES, IN HIS PRECEDENCE (ruled):** the filings first; Lusha / LinkedIn also usable. A value carries which source it came from,
+  and a filing value wins where both exist.
+- **UNCHANGED:** Lusha contact data (emails, phones) stays unstored and contact reveal stays off; a person's job history is not contact
+  data. Whether and how many Lusha calls a cell makes is the cut's, under the session's egress word. The pool, the store and
+  append-over-time stand as clarified above.

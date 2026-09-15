@@ -263,10 +263,20 @@ social half has no admitted source; a feed is round-12 material and its admissio
    -- `management/v1/_pool/2026-09-15.json` carries only `pool_avg_tenure_years` 4.08 and no per-name distribution, and its denominator
    reads `names_with_roster 5` while 4 names contribute tenures (40 officers = 12 + 13 + 9 + 6), so it must count contributors; it is
    dated by `as_of` (appends by date already) but stores the average, not the distribution. At a pool of 4 analyzed companies the
-   percentile is ABSENT by the floor. His "maybe" metric, `employee_tenure_avg_years`: 0 of the 5 persisted filing
-   source objects state an average or median employee tenure, but those objects are excerpts (risk factors, MD&A, the officer
-   section; W20-S8) and exclude Item 1's human-capital section, where such a figure would be disclosed; Lusha carries no tenure
-   field (card 2). So it is UNMEASURED, not absent -- the first check is Item 1 across the five filers.
+   percentile is ABSENT by the floor. ⭐ **CORRECTED ~18:0xZ by Andrew, verbatim:** *"no its not employee wide its exec-mgmt specific. also we can use lusha/linkedin
+   too for this, even though id prioritize the filings."* This seat had read his "maybe" as employee-wide tenure; it is
+   EXECUTIVE. So the Exec Management tab carries TWO executive tenure measures over the same executives:
+   `exec_role_tenure_avg_years` (time in the current role -- what M-1 computes today) and `exec_company_tenure_avg_years` (time
+   at the company, including the years before the role). Each officer value carries its source, filings first and Lusha /
+   LinkedIn where the filing is silent. **MEASURED ~18:0xZ:** M-1 officer records carry `role_start`, `role_start_basis` and
+   `tenure_years` (role tenure) and NO company-join field. The persisted officer sections state a company-join year in 6 of 12
+   BA bios (*"Amuluru joined Boeing in 2017"*) and 6 of 10 HD bios (*"Campbell began her career with the Company in 1985"*) --
+   a pattern count and a lower bound; COST 0 of 13 (its section is a table of officer-since dates); BABA 0 of 7 (the 20-F lists
+   age and position); SAP no officer-section text in the persisted object. So filings give company tenure for about 12 of 48
+   officers today. The proxy statement (DEF 14A), which carries fuller executive bios, is the first filing to add; Lusha /
+   LinkedIn job history then fills the rest -- UNMEASURED, because card 2's prospecting fields carry no dates, so the Lusha
+   route that returns employment history is measured before it is relied on (job history is not contact data; contact reveal
+   stays off).
    **Candidates for the other tabs (REC only; Andrew left them open):** Peers -- one valuation multiple on a named basis (for example
    EV/EBIT NTM) as the pair within the pool; Model -- one operating figure from the model block (for example FCF margin, or 3-year
    revenue growth); Thesis -- none until the thesis driver carries numeric points (candidate 1), then the driver's latest change;
