@@ -5481,3 +5481,54 @@ Andrew asked for (msg 22917); it concerns this project's portal files meeting an
 }
 ]
 ```
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-S118",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-09-15T00:49:29Z",
+    "one_line": "ANDREW REQUIREMENT, NOT YET CUT: the Positioning Summary's ASSET CLASSES legend must list only the classes that appear in the view on screen. Today it lists all five in every mode -- Models and ETFs show only Fixed Income and Equity, and the legend still names Structured, Commodities and Alternatives. The legend is rendered from the full ASSET_CLASSES array with no presence test.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ANDREW-DIRECT 2026-09-15 ~00:4xZ, VERBATIM: 'There is no need to display the different legend categories if they do not appear in the view', with screenshots of ETFs (Screenshot 2026-09-14 204141.png) and Models (204128.png) modes; record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260915_004xZ_POSITIONING_LEGEND_ONLY_PRESENT_CLASSES_AND_SATELLITES_VIEW_DEFECTS.md@85621749e2.",
+        "SOURCE at portal dd1d33c6 (the POSN drain ref head): src/pages/Positioning/panels/PositioningSummary.tsx:1152-1158 renders the 'Asset Classes' legend from ASSET_CLASSES, the array declared at :71 ('stacked bars and the legend all derive from THIS array'); no filter by the displayed books' values.",
+        "RENDERED: all five legend entries visible in Models, ETFs and Satellites modes while the bars carry two classes (Andrew's three screenshots, 2026-09-14 20:41 ET)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD v0.8 FWD-3 / FWD-4: the five classes in one order and one colour wherever the breakdown is shown. The spec does not say whether a class absent from the view is listed.",
+    "world_is": "Every mode lists all five classes whatever the view holds; Andrew has now ruled that an absent class is not listed. Order and colour of the classes that ARE listed stay as FWD-3 / FWD-4 bind them.",
+    "notes": "REMEDY, for the round-5 analysis and the next frontend cut: filter the legend to classes with a non-zero value across the books currently displayed, keeping ASSET_CLASSES order and colours. One file, the Positioning page. VERIFY AFTER R1: that is when Structured and Commodities first appear in the Satellites mode, so the filter is exercised in both directions only then. Same record, already carried or not a defect: unrounded labels = Z-S117; stale subtitle = Z-S115; GLD absent from the bars and grey in the treemap, VXX under Equity = the pre-R1 state V7-AC5 measured, resolved by R1; Satellite 98 not shown = Andrew's earlier word, Positioning.tsx:130 and :156 (its 16 holdings are identical to Satellite 90's)."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-S119",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-09-15T00:49:29Z",
+    "one_line": "THE PANEL FOOTER DOES RENDER A DATE, IN EVERY MODE, AND ON SATELLITES IT NAMES THE WRONG DATE AND SOURCE: 'September 11th, 2026, 5:00p ET | Source: Bloomberg.' appears under the Positioning Summary in Models, ETFs and Satellites. Z-S113 recorded 'no date renders in any mode', which the live page contradicts. The Satellites mode's data is Black Diamond's holdings.json as of 2026-09-14, not Yang's Bloomberg-sourced PKL of 2026-09-11.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RENDERED: Andrew's screenshots at 2026-09-14 20:41 ET (204141.png ETFs, 204128.png Models, 204150.png Satellites) all show the footer 'September 11th, 2026, 5:00p ET | Source: Bloomberg.'; record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260915_004xZ_POSITIONING_LEGEND_ONLY_PRESENT_CLASSES_AND_SATELLITES_VIEW_DEFECTS.md@85621749e2.",
+        "SOURCE at portal dd1d33c6: PositioningSummary.tsx:1382 '<SmartPanelFooter sourceKey=\"model_pkl\" content=\"Source: Bloomberg.\" />' is one hardcoded footer for every mode; the date comes from the central Yang as-of registry (Positioning.tsx:483-496 useYangDataAsOf, REGISTERS_YANG_AS_OF[mode]).",
+        "SERVED: s3://opal-data-cot/platinum/satellites/holdings.json as_of 2026-09-14, source blackdiamond/cottonwood/bronze/rebalancer_model_detail/2026-09-14 (read 2026-09-14 20:52Z)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-S113 (GRADUATED): 'no date renders in any mode (0 hits for a year pattern over the whole body text in both modes)'; TO-V7-1's cell text: the Satellites mode's as-of is holdings.json's (Black Diamond's partition date).",
+    "world_is": "A date and a source render under the summary in all three modes. On Satellites both are Yang's (2026-09-11, Bloomberg) while the figures above them are Black Diamond's (2026-09-14). The year-pattern instrument behind Z-S113 did not see the footer the user sees; how it missed it is not established here.",
+    "notes": "REMEDY, for the round-5 analysis and the next frontend cut: the Satellites mode's footer carries holdings.json's as_of and a Black Diamond source label; Models and ETFs keep theirs (ETFs' own per-book dates are bookSet.ts's concern, unchanged). Rides the same one-file frontend cell as Z-S118 / Z-S117 / Z-S115. Z-S113's disposition stands as a record; this row corrects its 'no date renders' measurement going forward rather than rewriting it."
+  }
+]
+```
