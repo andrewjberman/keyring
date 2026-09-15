@@ -1074,6 +1074,28 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "Ruling 97141 as carried by the order @1efed70736: exactly three assertion lines change, each to sub == \"<tid>/<oid>\" of that test's principal AND email == the same email; no other assertion changes; every other edit is fixture-only.",
     "world_is": "The ruled expression for test_ogo1_ac06 names that test's oid, which only uuid.uuid5 can reproduce, and uuid was not in scope at the assertion. One module-level import line was added. It is neither an assertion nor a change to how the test obtains its token. The alternatives were worse by the worker's reading: reaching uuid through sys.modules, or changing the helper to hand back its principal, which edits a fixture line to serve an assertion.",
     "notes": "INERT: an import changes no assertion and no behaviour. The AC14 probe counts it as a non-assertion line and prints it as a disclosure; OGA2-AC13 reads 63/63 for the module."
+  },
+  {
+    "id": "NFRA_OPLGTW-S12",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-15T17:10Z",
+    "one_line": "Disarm of W3-S7 and W3-S13 (and the holds of S7 and S10) on OG-a-2's green re-run, which is now merged to CLOUD; and a measured flake: test_schwab_engine.py::test_ogq1_ac02 failed 2 of 3 isolated runs on this box, which will read as a FAILED-MODULE in any per-module suite criterion.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "GREEN RE-RUN: wk-nfra_oplgtw-1-3c @aef164f8e2. proof-of-spec-check --governing-order VALID (rc=0), 14/14. OGA2-AC12 '31 passed'; AC13 assert counts 123/123, 6/6, 63/63; AC14: exactly the 3 named assertion lines changed, each keeping its original email. That meets every arm of 1.0.0_SA_CTO rulings 97114 (1) and 97141.",
+        "COO RE-RUN (a different instrument from the worker's criteria): on the same branch, every module of the glob infra/aws/ec2/opal-gateway/tests/test_*.py in its own process, -m 'not live', -k 'not test_scoped_deny_by_default'. 13 modules; 12 green, including test_oauth_durable 18 passed, test_jwt_cve_lock 6, test_schwab_audit 7 and test_principal_cutover 11; test_schwab_engine '1 failed, 12 passed'.",
+        "FLAKE, NOT REGRESSION: test_schwab_engine re-run '13 passed'; test_ogq1_ac02 alone x3 read failed, passed, failed. OG-a-2 changed app/context.py, oauth_as.py, revocation.py, server.py and token_broker.py (git diff 3f94e0a024..aef164f8e2); app/integrations/schwab/ is untouched, and the engine test imports only app.integrations.schwab.engine (test_schwab_engine.py:22)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "W3-S7 and W3-S13 were ARMED: OG-a-2's drain would carry red existing tests into CLOUD. OG-q-1's AC2 treats test_ogq1_ac02 as deterministic, and TO-OG-v-2 AC4 requires every module green.",
+    "world_is": "OG-a-2 reached CLOUD with its granted modules green, so the red-test hazard is gone. Separately, test_ogq1_ac02's 0.25 s event-loop lag bar is load-sensitive on this shared box, as W3-S12 first reported. Any per-module suite run here, including OGV2-AC4, can read FAILED-MODULES 1 on that test alone.",
+    "notes": "The disarm is by the named owner at the named moment: the drain of OG-a-2 with its green re-run. The flake is OG-q-1's test; whether its bar is re-stated or run under a quiet box is for L9/L10. For OG-v-2 it is known in advance, so a FAILED-MODULE on test_schwab_engine alone is re-run before it is read as a regression."
   }
 ]
 ```
