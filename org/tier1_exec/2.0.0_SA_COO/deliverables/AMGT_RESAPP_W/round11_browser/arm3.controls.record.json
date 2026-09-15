@@ -1,0 +1,42 @@
+{
+  "arm": "3-5 -- the CONTROLS, each in its own FRESH browser context",
+  "when_utc": "2026-09-15T20:5xZ",
+  "instrument": "pw_arm3_controls.js via the Playwright MCP runner; vite [::1]:5175; every scoped request fulfilled from a staged capture of the DEPLOYED adapter, or a stubbed 503",
+  "closed_stray_contexts_before_run": 3,
+  "arms": {
+    "error-503": {
+      "served": "the ranked read answered 503 on all 3 attempts (react-query retries); watchlist 200",
+      "rendered": [
+        "Read failure -- the ranked names could not be read.",
+        "This request did not return, so the rows the producer may have written for this combination were NOT read. Whether any rows exist for today is UNKNOWN from this screen -- nothing here is a statement about the producer. Try again, and if it keeps failing the read path itself is broken.",
+        "Error reported by the read: API request failed: 503 Service Unavailable - {\"message\":\"Service Unavailable (round-11 error arm)\"}"
+      ],
+      "handler_errors": []
+    },
+    "empty-breakout": {
+      "served": "Movement set to BREAKOUT by selectOption; /rankings/breakout/chatter 200 from rankings.breakout.chatter.deployed.json, ranking_status EMPTY, state EMPTY, row_count 0 (the deployed adapter's genuine generation for today)",
+      "rendered": [
+        "Served by the producer partition BREAKOUT_CHATTER (movement dimension: MEASURED).",
+        "generation 20260915T200842Z-4f53cda18c2b | state EMPTY | 0 row(s) committed | coverage vintage pool:universe/v1/2026-09-15.json#as_of=2026-09-15 | read EMPTY",
+        "The committed ranking for BREAKOUT_CHATTER is EMPTY -- the producer ran and ranked no names."
+      ],
+      "handler_errors": []
+    },
+    "absent-no-pointer": {
+      "served": "/rankings/trending/chatter 200 from rankings.trending.chatter.asof20260913.deployed.json, ranking_status ABSENT, row_count 0 (the deployed adapter's genuine no-pointer read)",
+      "rendered": [
+        "Served by the producer partition TRENDING_CHATTER (movement dimension: MEASURED).",
+        "generation: none -- no committed pointer for this date",
+        "No committed ranking for TRENDING_CHATTER on this date -- the producer has not committed a generation, which is not the same as an empty ranking."
+      ],
+      "handler_errors": []
+    }
+  },
+  "discrimination": "The three arms render three DIFFERENT sentences, and each names its own state: a read failure says the producer's rows are UNKNOWN, EMPTY names the generation and its 0 rows, ABSENT says no pointer and that this is not an empty ranking. None of the three is rendered as another.",
+  "instrument_note": "The script's four boolean text flags were pattern guesses written before the page was read, and none matched the page's actual wording (for example it says 'EMPTY -- the producer ran and ranked no names', not 'no ranked names'). The flags are NOT evidence; the rendered panel text above is.",
+  "screenshots": [
+    "ROUND11_BROWSER_arm-error-503.png",
+    "ROUND11_BROWSER_arm-empty-breakout.png",
+    "ROUND11_BROWSER_arm-absent-no-pointer.png"
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "arm": "0 (discarded as a measurement; kept as evidence of the cache trap)",
+  "when_utc": "2026-09-15T20:4xZ",
+  "instrument": "Playwright on the existing browser context; routes installed with context.route on **/auth/refresh, **/auth/me, **/api/scoped/amgt/**; localStorage/sessionStorage cleared on /login before navigating",
+  "measured": {
+    "transport_requests_intercepted": 0,
+    "localStorage_keys_after_clear": 1,
+    "sessionStorage_keys_after_clear": 0,
+    "rendered_stamp": "Sep 14, 2026, 9:43 PM",
+    "rendered_generation_line": "generation: not carried on this payload",
+    "rendered_rows_sample": [
+      "#1 2317 TT chatter 0/100 (0 mentions) UNRESOLVED",
+      "#2 9433 JP ... UNRESOLVED",
+      "#3 992 HK ... UNRESOLVED",
+      "#4 ASML NA ... UNRESOLVED"
+    ],
+    "tabs_rendered": [
+      "THESIS",
+      "EXEC MANAGEMENT",
+      "PEERS",
+      "MODEL",
+      "POSTURE"
+    ],
+    "signed_in_as": "dev@opalcapital.com Admin (without any /auth call reaching the stub)",
+    "console_errors": 7
+  },
+  "reading": "NOT A MEASUREMENT OF THE PAGE. The transport log came back empty, and that has TWO candidate causes this run cannot separate: (a) the page answered from a persisted query cache (OPAL_PORTAL_QUERY_CACHE_v1, staleTime Infinity) left in this browser profile -- it rendered a keyless Sep-14 payload that is NOT rj-10's capture -- and (b) the route handler itself threw on its first line: the Playwright runner sandbox has no `URL` global (arm 1's first run failed with 'ReferenceError: URL is not defined'), and a handler that throws never logs or fulfills. Arm 1 removes both: a fresh browser context whose storage is counted before the page runs, and a handler written in core ECMAScript with its errors captured.",
+  "screenshot": "ROUND11_BROWSER_arm0-STALE-persisted-cache.png",
+  "corrected_at_utc": "2026-09-15T20:5xZ"
+}

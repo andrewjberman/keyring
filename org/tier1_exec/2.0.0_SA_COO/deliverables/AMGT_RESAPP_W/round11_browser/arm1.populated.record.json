@@ -1,0 +1,75 @@
+{
+  "arm": "1 -- POPULATED, fresh browser context",
+  "when_utc": "2026-09-15T20:5xZ",
+  "instrument": "Playwright, a NEW browser context (storage empty by construction), routes on **/auth/refresh, **/auth/me and **/api/scoped/amgt/**; envelopes staged at the view worktree's public/__exercise/ and read through the context's request API; sha256 computed in the runner by a pure-JS implementation self-checked against sha256('abc')",
+  "page": "vite 7.3.5 on [::1]:5175 serving C:/tmp/portal-resapp-view at portal 0e153399 (refs/drains/rj-portal: rj-1, rj-2, rj-9, rj-12); gitlink e85f6eb84f unmoved; nothing promoted",
+  "measured": {
+    "sha256_self_test": true,
+    "storage_before_first_page_load": {
+      "localStorage": [],
+      "sessionStorage": []
+    },
+    "storage_after": [
+      "accessToken",
+      "OPAL_PORTAL_QUERY_CACHE_v1"
+    ],
+    "transport": [
+      {
+        "path": "/auth/refresh",
+        "status": 200,
+        "count": 2
+      },
+      {
+        "path": "/api/scoped/amgt/lead-panel/rankings/trending/chatter",
+        "query": "?limit=10",
+        "status": 200,
+        "file": "rankings.trending.chatter.response.2026-09-15.json",
+        "fileSha": "698c391592a41a213365b147136194494f08fb4c06eb72e6ed613c9ac651ef5d",
+        "expectedFileSha": "698c391592a41a213365b147136194494f08fb4c06eb72e6ed613c9ac651ef5d",
+        "fileShaEqual": true,
+        "servedBodySha": "5b81dffe323fea0ad65297ae632d49324b136de2b25d4482deebb056bb158816"
+      },
+      {
+        "path": "/api/scoped/amgt/watchlist",
+        "status": 200,
+        "fileSha": "9d0138cd1960639933b4e5cc147e4f6e208306343d401f7dc09a56f0b910614e"
+      },
+      {
+        "path": "/api/scoped/amgt/lead-panel/timeseries/trending/chatter",
+        "query": "?tickers=2317+TT%2C9433+JP%2C992+HK%2CASML+NA%2CBABA+US&days=30",
+        "status": 200,
+        "fileSha": "96187ef6dbf003f3a158b4209ed398890066a8ac191123a0cce9ecf27cf67b72"
+      }
+    ],
+    "handler_errors": [],
+    "rendered_stamp": "Sep 15, 2026, 4:10 PM (20:10Z)",
+    "rendered_generation_caption": "generation 20260915T200841Z-adf383740a9e | state COMPLETE | 10 row(s) committed | coverage vintage pool:universe/v1/2026-09-15.json#as_of=2026-09-15",
+    "rendered_rows_in_order": [
+      "2317 TT",
+      "9433 JP",
+      "992 HK",
+      "ASML NA",
+      "BABA US",
+      "BA US",
+      "BBSE3 BZ",
+      "BP/ LN",
+      "COST US",
+      "ENEL IM"
+    ],
+    "rendered_row_count": 10,
+    "rows_marked_UNRESOLVED": 0,
+    "row_scores": "chatter 0/100 (0 mentions) on all 10 (the pool holds 7 links over 3 names)",
+    "tabs_rendered": [
+      "THESIS",
+      "EXEC MANAGEMENT",
+      "PEERS",
+      "MODEL",
+      "POSTURE"
+    ],
+    "no_name_selected_line": "Select a name from the Lead Panel to open its Thesis.",
+    "console_errors": "7 x 'Failed to load resource: the server responded with a status of 401 (Unauthorized)' -- not from any stubbed route (every stubbed response is 200 or a logged 404); unattributed in this arm",
+    "tool_banner": "the MCP tool printed 'ReferenceError: URL is not defined' AFTER the script returned its complete result with handler_errors [] -- attributed to the tool's own post-run reporting, not to the page or the handler"
+  },
+  "reading": "The page rendered EXACTLY rj-10's deployed capture: the same generation id, state, row count and coverage vintage the payload carries, the ten rows in payload order, every row keyed (no UNRESOLVED line, where arm 0's stale cache showed ten) -- and the file the transport served hashes to the capture's recorded sha256.",
+  "screenshot": "ROUND11_BROWSER_arm1-populated.png"
+}

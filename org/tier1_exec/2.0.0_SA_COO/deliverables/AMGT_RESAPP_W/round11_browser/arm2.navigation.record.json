@@ -1,0 +1,38 @@
+{
+  "arm": "2 -- NAVIGATION from a ranked row, fresh browser context (the tab half of this arm FAILED on the locator and is re-run as arm 2b)",
+  "when_utc": "2026-09-15T20:4xZ",
+  "measured": {
+    "click": "getByText('BA US', exact) on the ranked list",
+    "url_after_click": "http://[::1]:5175/security-analysis (the page selects the name in its own state; the URL does not change)",
+    "requests_fired_by_the_click": [
+      "/api/scoped/amgt/security/BA_US_Equity/overlay",
+      "/api/scoped/amgt/security/BA_US_Equity/thesis"
+    ],
+    "thesis_served": {
+      "file": "thesis.BA_US_Equity.response.2026-09-15.json",
+      "fileSha": "f2e7c040727195a1ba4a2775d19eac0eb551dc3382902eb014ad4b465aed5cad",
+      "fileShaEqual": true,
+      "servedBodySha": "d319e849e9b67d1d1b1bb76d45c625fa55eb138ab8565d30f24c13a454bcb720"
+    },
+    "overlay_served": {
+      "file": "overlay.BA_US_Equity.deployed.json",
+      "fileSha": "ef49d9044643252a3d1b24b0eac6a26f9182f749a333fa865059b5c20fd8cf80"
+    },
+    "thesis_dom": {
+      "blockquote_elements": 48,
+      "title_Evidence_attributes": 0
+    },
+    "rankings_served_again": {
+      "fileSha": "698c391592a41a213365b147136194494f08fb4c06eb72e6ed613c9ac651ef5d",
+      "fileShaEqual": true
+    },
+    "handler_errors": [],
+    "responses_401": {
+      "count": 7,
+      "all_under": "/api/scoped/advisor-intelligence/platinum/firm/*.json?firm=bd",
+      "reading": "another portal page's prefetches, outside AMGT and outside the stubbed routes -- the arm-1 console 401s attributed"
+    },
+    "tab_clicks": "ALL FIVE TIMED OUT (30 s each): locator getByRole('button'|'tab', {name: <UPPERCASE label>, exact: true}) matched nothing -- the labels are uppercased for display and their accessible names differ in case. Peers and coverage were therefore never requested in this arm."
+  },
+  "reading": "S95 CLOSED ON THE PAGE: a click on a ranked row now carries the canonical key (BA_US_Equity) to the security routes -- round 10 measured the same click passing 'BABA US' and resolving nothing. C-S196 on the page: the thesis renders 48 evidence passages as blockquote text (rj-2's 48 evidence records) and no evidence tooltip. The thesis body the page read is byte-for-byte rj-10's deployed capture."
+}

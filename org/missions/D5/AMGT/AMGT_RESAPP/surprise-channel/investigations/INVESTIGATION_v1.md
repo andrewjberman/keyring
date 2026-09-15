@@ -5887,6 +5887,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "Recorded as form only. The attempt1 files were not deleted to make the count read two; rj-3's inputs are the two unprefixed files, full sha256 recorded in the instance and in ledger amgt-round11-producer-universe L5."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S107",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~W",
+    "surfaced_at": "2026-09-15T20:58Z",
+    "one_line": "The DEPLOYED adapter opal-amgt-scoped-api (CodeSha256 9ubWPnhz..., LastModified 19:01:10Z) was built from 5ae785828e, which predates rj-12's read_posture change (13191fa180, drained @51297efb9a at 19:09:22Z) -- so the live posture object carries none of comparable_name, packs, membership or comparable_membership, and on the deployed plane the Posture tab renders 'Comparable: UNRESOLVED: DE_US_Equity' and 'Evidence coverage: packs are not carried on this payload'. rj-12's route is COMMITTED and not APPLIED; the page states the absence honestly, and nothing wrong is served.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE SERVED OBJECT: rj-10's deployed capture thesis.BA_US_Equity.response.2026-09-15.json (sha256 f2e7c040727195a1...), body.posture keys read by json.loads at 20:5xZ: ['as_of', 'basis', 'comparable', 'generation', 'marked', 'posture_read', 'reason', 'security_key', 'status', 'verdict'] -- packs, comparable_name, comparable_membership, membership, comparable_selection all ABSENT.",
+        "THE BUILD INPUT vs HEAD, git show of lib/research/api/scoped_amgt.py, read_posture body: @5ae785828e 36 lines with 0 occurrences of packs / comparable_name / comparable_membership; at HEAD @0a0b498e7a 53 lines with 2 / 2 / 2. git merge-base --is-ancestor: 13191fa180 of 5ae785828e NO; 51297efb9a of 5ae785828e NO; positive control 5ae785828e of 51297efb9a yes. Commit times UTC: 5ae785828e 18:02:24, 13191fa180 18:46:17, 51297efb9a 19:09:22.",
+        "THE LIVE CODE, lambda get-function-configuration at 20:5xZ: opal-amgt-scoped-api 9ubWPnhzHs88JSKPwhvemXxpbGdf9PZkz2c1qBxBqSk= LastModified 2026-09-15T19:01:10Z -- unchanged since ledger 20260915T1850Z_amgt-round11-one-store-deploy L4 (:27); rj-10's second act (ledger amgt-round11-producer-universe) rebuilt the producer only.",
+        "THE PAGE, portal view worktree 0e153399 (refs/drains/rj-portal): PostureTab.tsx:78-79 renders comparable_name when present, else the identity label, else 'UNRESOLVED: ${posture.comparable}'; :162 renders the packs-not-carried sentence. Browser arm 2b (ROUND11_BROWSER_EXERCISE.md) rendered exactly those two lines from the capture above.",
+        "THE SPEC, rj-12's order task-orders/AMGT_RESAPP.TO-AMGT-rj-12.the-posture-tab-and-the-header-line.md:25-26 declares the served shape '{... comparable, comparable_name, basis, ... membership, comparable_membership, comparable_selection, fit, packs: {<key>: {counts, absent, sources}}, sources}'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "rj-12 (complete, drained @51297efb9a) serves the posture object with comparable_name and per-key packs, and its Posture tab reads its coverage lines and the incomplete-comparable line from packs -- so the analyst sees DE_US_Equity by name and the comparable's missing parts by source.",
+    "world_is": "The served adapter is the round-11 first act's build from 5ae785828e; rj-12's route change is at HEAD and not in the running zip. Every other surface rj-3 exercises (rankings, thesis, overlay, peers, coverage) is served by the same zip and was exercised as served.",
+    "notes": "Surfaced by the browser half of rj-3 while worker 0.9.0_WK_AMGT_RESAPP~18 runs the exact-input exercise; rj-3's spec is not amended for it (its AC2 bars are the deployed thesis capture as served). No `adjudicates` entry: the disposition stays for 3.0.0_SA_CVO~W at L9. The remedy is a round-12 cell -- an adapter redeploy from HEAD under never-widen co-signs (1.0.0_SA_CTO~W + 2.0.0_SA_COO~W), whose live read re-captures the posture object and asserts comparable_name and packs present -- routed to 1.0.0_SA_CTO~W at L10 through the round-11 packet. The same redeploy is where the Model tab's pool path (W19-S13) would land."
   }
 ]
 ```

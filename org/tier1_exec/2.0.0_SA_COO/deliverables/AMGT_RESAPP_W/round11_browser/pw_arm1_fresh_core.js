@@ -1,0 +1,125 @@
+async (page) => {
+  // ROUND 11 BROWSER HALF OF rj-3 -- arm 1: POPULATED, in a FRESH browser context, using core ECMAScript only.
+  // The runner sandbox has no URL / fetch / TextEncoder / crypto: paths are parsed by regex, envelopes are read
+  // through Playwright's own request context, and sha256 is computed by a pure-JS implementation that is
+  // self-checked against the known digest of "abc" before any payload hash is trusted.
+  const ORIGIN = 'http://[::1]:5175';
+  const DIR = 'C:/Users/Opal Bloomberg/Desktop/ajb_workspace/.playwright-mcp/round11/';
+  const ROUTES = {
+    '/api/scoped/amgt/lead-panel/rankings/trending/chatter': ['rankings.trending.chatter.response.2026-09-15.json', '698c391592a41a213365b147136194494f08fb4c06eb72e6ed613c9ac651ef5d'],
+    '/api/scoped/amgt/security/BA_US_Equity/thesis': ['thesis.BA_US_Equity.response.2026-09-15.json', 'f2e7c040727195a1ba4a2775d19eac0eb551dc3382902eb014ad4b465aed5cad'],
+    '/api/scoped/amgt/security/BA_US_Equity/overlay': ['overlay.BA_US_Equity.deployed.json', null],
+    '/api/scoped/amgt/security/BA_US_Equity/peers': ['peers.BA_US_Equity.deployed.json', null],
+    '/api/scoped/amgt/security/BA_US_Equity/coverage': ['coverage.BA_US_Equity.deployed.json', null],
+    '/api/scoped/amgt/watchlist': ['watchlist.deployed.json', null],
+    '/api/scoped/amgt/lead-panel/timeseries/trending/chatter': ['timeseries.trending.chatter.deployed.json', null],
+  };
+
+  // --- pure-JS SHA-256 over a UTF-8 byte string (each char code 0..255) ---
+  const utf8 = (s) => unescape(encodeURIComponent(s));
+  const sha256 = (ascii) => {
+    const rrot = (v, n) => (v >>> n) | (v << (32 - n));
+    const K = [];
+    const H = [];
+    let isComposite = {};
+    for (let c = 2, n = 0; n < 64; c++) {
+      if (!isComposite[c]) {
+        for (let i = c * c; i < 313; i += c) isComposite[i] = 1;
+        H[n] = (Math.pow(c, 0.5) * 4294967296) | 0;
+        K[n++] = (Math.pow(c, 1 / 3) * 4294967296) | 0;
+      }
+    }
+    const hash = H.slice(0, 8);
+    const bitLen = ascii.length * 8;
+    ascii += '\x80';
+    while ((ascii.length % 64) - 56) ascii += '\x00';
+    const words = [];
+    for (let i = 0; i < ascii.length; i++) words[i >> 2] |= ascii.charCodeAt(i) << ((3 - i) % 4) * 8;
+    words[words.length] = (bitLen / 4294967296) | 0;
+    words[words.length] = bitLen | 0;
+    for (let j = 0; j < words.length;) {
+      const w = words.slice(j, (j += 16));
+      const old = hash.slice(0);
+      for (let i = 0; i < 64; i++) {
+        const w15 = w[i - 15], w2 = w[i - 2];
+        const a = hash[0], e = hash[4];
+        const temp1 = hash[7] + (rrot(e, 6) ^ rrot(e, 11) ^ rrot(e, 25) ^ (e >>> 0 === e ? 0 : 0)) * 0 + (rrot(e, 6) ^ rrot(e, 11) ^ rrot(e, 25)) * 0
+          + (rrot(e, 6) ^ rrot(e, 14) ^ rrot(e, 18) ^ rrot(e, 23) ^ rrot(e, 27) ^ rrot(e, 32 - 0)) * 0;
+        void temp1;
+        const t1 = hash[7] + (rrot(e, 6) ^ rrot(e, 11) ^ rrot(e, 25)) + ((e & hash[5]) ^ (~e & hash[6])) + K[i]
+          + (w[i] = i < 16 ? w[i] : (w[i - 16] + (rrot(w15, 7) ^ rrot(w15, 18) ^ (w15 >>> 3)) + w[i - 7] + (rrot(w2, 17) ^ rrot(w2, 19) ^ (w2 >>> 10))) | 0);
+        const t2 = (rrot(a, 2) ^ rrot(a, 13) ^ rrot(a, 22)) + ((a & hash[1]) ^ (a & hash[2]) ^ (hash[1] & hash[2]));
+        hash.unshift((t1 + t2) | 0);
+        hash[4] = (hash[4] + t1) | 0;
+        hash.length = 8;
+      }
+      for (let i = 0; i < 8; i++) hash[i] = (hash[i] + old[i]) | 0;
+    }
+    let out = '';
+    for (let i = 0; i < 8; i++) for (let j = 3; j + 1; j--) { const b = (hash[i] >> (j * 8)) & 255; out += (b < 16 ? '0' : '') + b.toString(16); }
+    return out;
+  };
+  const SELF_TEST = sha256(utf8('abc'));
+  const SELF_TEST_OK = SELF_TEST === 'ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad';
+  if (!SELF_TEST_OK) return JSON.stringify({ error: 'sha256 self-test failed', got: SELF_TEST });
+
+  const pathOf = (u) => { const m = /^[a-z]+:\/\/[^/]+(\/[^?#]*)(\?[^#]*)?/i.exec(u); return m ? [m[1], m[2] || ''] : [u, '']; };
+  const log = [];
+  const user = { email: 'dev@opalcapital.com', role: 'admin', firmId: 'opal-capital', userType: 'Dev', name: 'Dev Stub' };
+  const browser = page.context().browser();
+  const ctx = await browser.newContext();
+  const p = await ctx.newPage();
+  const consoleErrors = [];
+  p.on('console', (m) => { if (m.type() === 'error') consoleErrors.push(m.text().slice(0, 240)); });
+  const handlerErrors = [];
+  await ctx.route('**/auth/refresh', async (route) => {
+    log.push({ kind: 'auth', path: '/auth/refresh', status: 200 });
+    await route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ accessToken: 'stub.access.token', user }) });
+  });
+  await ctx.route('**/auth/me', async (route) => {
+    log.push({ kind: 'auth', path: '/auth/me', status: 200 });
+    await route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ user }) });
+  });
+  await ctx.route('**/api/scoped/amgt/**', async (route) => {
+    try {
+      const [path, query] = pathOf(route.request().url());
+      const hit = ROUTES[path];
+      if (!hit) {
+        log.push({ kind: 'scoped', path, query, status: 404, served: 'NONE (not captured)' });
+        await route.fulfill({ status: 404, contentType: 'application/json', body: '{"error":"not captured for the round-11 exercise"}' });
+        return;
+      }
+      const r = await ctx.request.get(ORIGIN + '/__exercise/' + hit[0]);
+      const text = await r.text();
+      const fileSha = sha256(utf8(text));
+      const env = JSON.parse(text);
+      const body = env.body || '';
+      log.push({ kind: 'scoped', path, query, status: env.statusCode || 200, file: hit[0], fileSha, expectedFileSha: hit[1], fileShaEqual: hit[1] ? fileSha === hit[1] : 'n/a', servedBodySha: sha256(utf8(body)) });
+      await route.fulfill({ status: env.statusCode || 200, contentType: 'application/json', body });
+    } catch (e) {
+      handlerErrors.push(String(e).slice(0, 240));
+      await route.abort().catch(() => {});
+    }
+  });
+  await p.goto(ORIGIN + '/__exercise/watchlist.deployed.json', { waitUntil: 'domcontentloaded' });
+  const storageBefore = await p.evaluate(() => ({ localStorageKeys: Object.keys(localStorage), sessionStorageKeys: Object.keys(sessionStorage) }));
+  await p.goto(ORIGIN + '/security-analysis', { waitUntil: 'networkidle' });
+  await p.waitForTimeout(3000);
+  const summary = await p.evaluate(() => {
+    const txt = document.body.innerText || '';
+    const lines = txt.split(String.fromCharCode(10)).map((s) => s.trim()).filter(Boolean);
+    const i = lines.findIndex((l) => l === 'LEAD PANEL');
+    return {
+      url: location.href,
+      bodyBytes: document.body.innerHTML.length,
+      leadPanel: lines.slice(Math.max(0, i), Math.max(0, i) + 70),
+      tabs: Array.from(document.querySelectorAll('button,[role="tab"]')).map((b) => (b.innerText || '').trim()).filter((t) => ['THESIS', 'EXEC MANAGEMENT', 'PEERS', 'MODEL', 'POSTURE'].includes(t)),
+      rowLinks: Array.from(document.querySelectorAll('a[href*="/security-analysis/"]')).map((a) => a.getAttribute('href')).slice(0, 20),
+      storageAfter: Object.keys(localStorage),
+    };
+  });
+  await p.screenshot({ path: DIR + 'ROUND11_BROWSER_arm1-populated.png', fullPage: true });
+  globalThis.__r11ctx = ctx;
+  globalThis.__r11page = p;
+  return JSON.stringify({ sha256SelfTest: SELF_TEST_OK, storageBefore, summary, transport: log, handlerErrors, consoleErrors: consoleErrors.slice(0, 10) });
+}
