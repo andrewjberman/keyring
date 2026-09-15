@@ -1819,3 +1819,50 @@ no shared file, so each is its own chain and its own ready root`.**
 - **The seat.** Andrew-direct ~03:2xZ, "both recs approved" (@9e0ee4b49c): this seat holds IRPT_FNTEND through round 8,
   then frees. His ~18:2xZ word, relayed, gives the next freed seat to LGIC_CANON.
 - **PORTAL FROZEN:** local DEV commits only. No CLOUD push and no SITEZ merge until Andrew's word (0.0.0_AB_MSTR's).
+
+## R8.9 THE ADDED CELL -- round 8's one added order (1.0.0_SA_CTO rulings, msgs 96904, 96915 and 96924)
+
+| cell | ruling | write surface | serves | rows | slot |
+|---|---|---|---|---|---|
+| `FE-s-49` | the Opal-admin gate: role admin AND firmId opal-capital (Andrew's prod-deploy condition 2) | portal `src/App.tsx` (the two `/investor-reporting` route lines and the nav item line, made byte-identical to 2.0.0_SA_COO~D's rendering); `src/lib/firmAccess.ts` (`'/investor-reporting'` out of 3 partner sets, only if the suite stays green); `__tests__/fe-s-49/` | FWD-1, FWD-12 (PRD F1: route, page identity, navigation entry) | S66 | ~2 |
+
+**Why mid-round.**
+- Andrew-direct ~04:4xZ, relayed by 0.0.0_AB_MSTR (msg 96903): *"Investor Reporting must remain Opal Admin gated, no
+  clients are allowed to see that."* This is a condition of his full /prod-deploy.
+- To 2.0.0_SA_COO~D (msg 96914): *"that page needs to be listed for Opal Admins only in the tsx for that page."*
+- 1.0.0_SA_CTO ruled it into round 8 as its ONE added order (96904), with the stricter predicate (96915).
+- It then ruled this seat's recommendation (96924): copy 2.0.0_SA_COO~D's rendering byte-for-byte, so identical edits on
+  both branches merge clean, and take the partner allowlist entries out.
+- Andrew confirmed: "we need those admin guards" (96906).
+
+**The issuer's census at portal DEV 1f3ce9f0** (`git show` at the ref):
+- `App.tsx:421` and `:573` wrap the page in `<ProtectedRoute>` with no `requireAdmin` or `requireInternal`, and the nav item at
+  `:94` carries no `requiresAdmin` or `requiresTier`.
+- `ProtectedRoute.tsx`:
+  - `:39-40` `requireAdmin` tests role only;
+  - `:44-45` `requireInternal` tests `firmId === 'opal-capital'`;
+  - `:57` applies the firm allowlist.
+- `firmAccess.ts` `FIRM_ALLOWED_PATHS` lists `/investor-reporting` for **three partner firms**: 49financial, inflection and
+  cottonwood.
+- `hasAccess('internal')` = `firmId === 'opal-capital'` (`AuthContext.tsx:758-760`).
+- `origin/PROD` has 0 investor-reporting route lines, against 3 at DEV.
+- 2.0.0_SA_COO~D's feature working copy carries the exact three target lines, quoted in FE-s-49's cell. Its commit hash
+  follows, and the issuer byte-compares the drain against it.
+- The whole-suite probe of the admin-only change: 559/18/1 of 578, and the 1 fail is the same unrelated load timeout
+  (FE-s-46's). Every browser driver signs in as role admin with firmId opal-capital. So 0 tests turn red; the allowlist
+  change is decided by the worker's own whole-suite run, as the CTO ruled.
+
+**Coverage by subtraction, the added input:**
+- the CTO's cell 4 (denominator 1) -> 49;
+- row S66 -> 49;
+- **0 uncovered.**
+
+**Disjoint by FILE:** `App.tsx` and `firmAccess.ts` are none of 46's, 47's or 48's.
+
+**Fan-out now:** `4 of 4 chains, cap 8, reason: the added cell has no dependency edge with 46, 47 or 48 and no shared file,
+so it is its own chain and ready root`. Max width 4.
+
+**Rule 24 (iv):**
+- Moves: the page's access plane toward EXERCISABLE.
+- Does NOT move: the backend's own admin gating (read-only census in F49-AC9); the d13 branch (2.0.0_SA_COO~D's own
+  commit, identical lines); every other `FIRM_ALLOWED_PATHS` entry; the portal freeze.

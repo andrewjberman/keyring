@@ -4221,6 +4221,29 @@
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-S66",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-15T05:10:00Z",
+    "one_line": "Investor Reporting is not Opal-admin gated in the portal at DEV. Both routes and the nav item admit any signed-in user the firm allowlist passes, and FIRM_ALLOWED_PATHS lists /investor-reporting for three partner firms (49financial, inflection, cottonwood). ProtectedRoute's requireAdmin tests role only, so an admin-only gate would still admit a partner firm's admin. Andrew's prod-deploy condition 2 ('Opal Admin gated, no clients') fails until round 8's added cell FE-s-49 lands.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Andrew-direct ~04:4xZ, relayed by 0.0.0_AB_MSTR (msg 96903), prod-deploy condition 2: 'Investor Reporting must remain Opal Admin gated, no clients are allowed to see that.' Andrew-direct to 2.0.0_SA_COO~D (msg 96914): 'that page needs to be listed for Opal Admins only in the tsx for that page.' 1.0.0_SA_CTO's ruling (msg 96915): Opal admin = role admin AND the internal tier.",
+    "world_is": "At portal DEV 1f3ce9f0, App.tsx:421 (/investor-reporting) and :573 (/investor-reporting/print) are <ProtectedRoute> with no requireAdmin and no requireInternal, and the nav item :94 has no requiresAdmin and no requiresTier. ProtectedRoute.tsx:39-40 tests role only; :44-45 tests firmId opal-capital; :57 applies the firm allowlist, which admits /investor-reporting for 3 partner firms. So at DEV any signed-in user of those firms reaches the page and sees the nav item, and requireAdmin alone would admit such a firm's admin. INERT, not ARMED: origin/PROD's App.tsx carries 0 investor-reporting lines, and 0.0.0_AB_MSTR holds the full /prod-deploy until condition 2 reads on the merged tree. Remedy: round 8's added order FE-s-49, which puts the CTO's predicate on both routes (<ProtectedRoute requireAdmin requireInternal>) and the nav item (requiresAdmin, requiresTier 'internal'), and prints a read-only census of whether each backend endpoint is admin-only.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git show DEV:src/App.tsx (portal DEV 1f3ce9f0): :94 { path: '/investor-reporting', label: 'Investor Reporting', icon: FileText }; :421 <Route path=\"/investor-reporting\" element={<ProtectedRoute><InvestorReporting /></ProtectedRoute>} />; :573 the print route, same shape; :482 <ProtectedRoute requireAdmin> (the admin form); :128 /data-refresh carries requiresAdmin: true; :305-320 the nav filter: firm allowlist, requiresDev, requiresAdmin (role), requiresTier via hasAccess.",
+        "git show DEV:src/components/ProtectedRoute.tsx: :19 requireAdmin = false by default; :39-40 if (requireAdmin && user?.role !== 'admin') -> Navigate /market; :44-45 if (requireInternal && claims?.firmId !== 'opal-capital') -> Navigate /market; :57 isPathAllowedForFirm.",
+        "git show DEV:src/lib/firmAccess.ts: FIRM_ALLOWED_PATHS entries '49financial', 'inflection' and 'cottonwood' each list '/investor-reporting'. src/contexts/AuthContext.tsx:758-760 hasAccess('internal') returns claims.firmId === 'opal-capital'.",
+        "git show origin/PROD:src/App.tsx | grep -c investor-reporting = 0; the same count at DEV = 3 (positive control).",
+        "The issuer's whole-suite probe of the admin-only change on a detached pair at portal 1f3ce9f0: 559 pass, 18 skip, 1 fail of 578; the 1 fail is F41-AC5's control timing out at 5641 ms (FE-s-46's class). Every browser driver signs in as role 'admin', firmId 'opal-capital' (fe-s-19, 30, 31, 32, 40)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
