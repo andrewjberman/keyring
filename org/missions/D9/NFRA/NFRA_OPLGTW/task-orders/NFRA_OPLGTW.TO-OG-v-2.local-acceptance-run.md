@@ -56,8 +56,8 @@ the catalog role gets `completion_prefixes`. A `fact_*` key lies outside both.
 <criterion id="OGV2-AC3" cell_refs="OG-v-2"><invocation>cd <WS> && timeout 120 .venv-og/Scripts/python -m pytest infra/aws/ec2/opal-gateway/tests/acceptance/test_local_acceptance.py::test_ogv2_ac03 -q -p no:cacheprovider --color=no</invocation><expect>(?m)^1 passed(?![^\n]*(failed|error))</expect></criterion>
 `OGV2-AC3` (`test_ogv2_ac03`) -- (difference) a legacy refresh token returns invalid_grant, and a freshly registered loopback client connects and survives a restart (A2, machine half).
 
-<criterion id="OGV2-AC4" cell_refs="OG-v-2"><invocation>cd <WS> && timeout 120 .venv-og/Scripts/python -m pytest infra/aws/ec2/opal-gateway/tests -q -p no:cacheprovider --color=no -m "not live" -k "not test_scoped_deny_by_default"</invocation><expect>(?m)^[1-9][0-9]* passed(?![^\n]*(failed|error))</expect></criterion>
-`OGV2-AC4` -- the whole `infra/aws/ec2/opal-gateway/tests/` suite passes, count printed, with the one known red test of row NFRA_OPLGTW-S1 deselected by name.
+<criterion id="OGV2-AC4" cell_refs="OG-v-2"><invocation>cd <WS> && n=0; f=0; for m in infra/aws/ec2/opal-gateway/tests/test_*.py; do n=$((n+1)); timeout 300 .venv-og/Scripts/python -m pytest "$m" -q -p no:cacheprovider --color=no -m "not live" -k "not test_scoped_deny_by_default" || [ $? = 5 ] || f=$((f+1)); done; echo "MODULES: $n FAILED-MODULES: $f"</invocation><expect>(?m)^MODULES: [1-9][0-9]* FAILED-MODULES: 0$</expect></criterion>
+`OGV2-AC4` -- every module the glob `infra/aws/ec2/opal-gateway/tests/test_*.py` derives passes when run in its own process, the module count printed, with the one known red test of row NFRA_OPLGTW-S1 deselected by name (per module, as ruled by `1.0.0_SA_CTO` msg 97114: the one-process run hangs, rows W3-S6 and W3-S12).
 
 <criterion id="OGV2-AC5" cell_refs="OG-v-2"><invocation>cd <WS> && timeout 120 .venv-og/Scripts/python -m pytest infra/aws/ec2/opal-gateway/tests/acceptance/test_local_acceptance.py::test_ogv2_ac05 -q -p no:cacheprovider --color=no</invocation><expect>(?m)^1 passed(?![^\n]*(failed|error))</expect></criterion>
 `OGV2-AC5` (`test_ogv2_ac05`) -- every S3 call the local acceptance run makes lies inside the prefixes the contract grants the role that made it, printed per role with its denominator.
@@ -123,3 +123,7 @@ Amended 2026-09-15 ~13:1xZ, before hand-off, by `2.0.0_SA_COO~O` on `1.0.0_SA_CT
 `NFRA_OPLGTW-W6-S3`, disarm owner `1.0.0_SA_CTO`): AC5, the S3 call-set assertion, is added, and the cell text carries
 the ruling. No criterion was removed. The decomposition and the PRD
 are unchanged: the ruling is the ratified text's own reading (PRD C3 :155, :157; C6 :185, :187, :191).
+
+Amended again 2026-09-15 ~14:5xZ, before hand-off, by `2.0.0_SA_COO~O` on `1.0.0_SA_CTO`'s ruling msg 97114: AC4 runs
+per module over the glob-derived module list, because the one-process suite hangs (rows W3-S6, W3-S12). Same
+modules, same assertions. The ruling authorizes this invocation change to a frozen criterion.
