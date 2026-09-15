@@ -1524,6 +1524,30 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     "spec_asserts": "TO-EN-f-2 step 3: 'Close leg L4, then python .tools/deploy_ledger.py close --slug lgic-enforce-fence-49financial, and append a CLOSED <YYYYMMDDTHHMMSSZ> line to the entry. Commit the entry and the sentinel.' F2-AC8: check_en.py f2-closed, expecting 'VERDICT: PASS-LEDGER-CLOSED'. F2-AC1: check_en.py f2-signoff, expecting 'VERDICT: PASS-SIGNED-BEFORE-APPLY'.",
     "world_is": "The tool closed the ledger and the entry says so, but the checker reaches the entry only through the sentinel that the close deletes. F2-AC8 reads FAIL in both states the order produces: sentinel present (status OPEN) and sentinel absent (no entry read). F2-AC1 turns from PASS to FAIL at the same step.",
     "notes": "Form only. F2-AC8 is recorded FAIL by its output, and the order stays open. F2-AC1 is recorded with both runs. The disarm belongs to the instrument, for example finding the entry by slug under change_management/ when the sentinel is absent, and reading L2's closed_at from the entry or its history. check_en.py is the issuer's fixed input and a worker may not edit it. Re-creating a sentinel by hand to satisfy the checker would forge the ledger's state."
+  },
+  {
+    "id": "LGIC_ENFORCE-S16",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G",
+    "surfaced_at": "2026-09-15T10:05Z",
+    "one_line": "Issuer's disarm of LGIC_ENFORCE-W1-S18, and S13's fix now exercised. check_en.py finds the ledger entry by slug once deploy_ledger.py close has deleted the sentinel (@78f8820a58). F2-AC1 and F2-AC8 read PASS on the closed ledger and FAIL on an open one.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ROW: LGIC_ENFORCE-W1-S18 (BLOCKING, ARMED, disarm_owner 2.0.0_SA_COO~G). The checker reached the ledger entry only through the sentinel, which TO-EN-f-2's ordered close deletes, so F2-AC8 read FAIL both before and after the close.",
+        "FIX @78f8820a58: _entry_path() takes the sentinel's entry_path, or else the single change_management/*_<slug>_deploy_completion.md. _l2_closed_at() reads the entry's own 'LEG L2 closed' log line. f2_closed requires both the tool's '**Status:** CLOSED' and the order's 'CLOSED <ts>' line.",
+        "BOTH ARMS, running the fixed file. CLOUD @040c8475a2, sentinel OPEN: f2-closed FAIL-LEDGER-OPEN, and f2-signoff FAIL-SIGNOFF (L2 closed_at none). EN-f-2's worktree, sentinel deleted: PASS-LEDGER-CLOSED and PASS-SIGNED-BEFORE-APPLY.",
+        "EXERCISED at the drain. 0.9.0_WK_LGIC_ENFORCE~1's re-run @1c66f3c806, and the issuer's re-run on a fresh detached checkout of that branch: F2-AC1..F2-AC8 8 of 8 PASS, proof VALID. Merged @c6d652a6dc.",
+        "S13 (the history-read fix for W1-S17, recorded 'not yet exercised') is now exercised. F2-AC1 on the closed ledger reads both SIGNOFF lines (2.0.0_SA_COO~G 20260915T070844Z, 1.0.0_SA_CTO 20260915T072924Z) from the entry's committed history, after the close-leg re-render dropped them from the file."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EN-f-2 step 3 closes the ledger with deploy_ledger.py close, and F2-AC8 expects 'VERDICT: PASS-LEDGER-CLOSED' on that closed ledger.",
+    "world_is": "The fixed checker reads the closed ledger: F2-AC8 and F2-AC1 PASS after the ordered close and FAIL while the ledger is open.",
+    "notes": "DISARM of W1-S18 by its owner; S13's fix for W1-S17 is exercised. INERT. Carried to 1.0.0_SA_CTO at the round's drain-end read: deploy_ledger.py's re-render drops hand-written lines from an entry (W1-S17's mechanism). The fence entry no longer carries its Sign-off section, which survives only in the entry's history."
   }
 ]
 ```
