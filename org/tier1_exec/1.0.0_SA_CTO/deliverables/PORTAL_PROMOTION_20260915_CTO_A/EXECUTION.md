@@ -1,6 +1,6 @@
 # Portal promotion execution — 2026-09-15
 
-Executor: `1.0.0_SA_CTO~A`. Status: **STARTED; PROD NOT YET MOVED**.
+Executor: `1.0.0_SA_CTO~A`. Status: **DEPLOYED; CI AND SERVED ARTIFACT VERIFIED; OWNER CLOSEOUT PENDING**.
 
 ## Authority and exact release
 
@@ -36,3 +36,25 @@ Every leg closes only against its actual proof. A still-pending MSTR follow-up s
 At **11:53:52 UTC**, independent `ls-remote` showed DEV at the admitted candidate and PROD at the recorded base. Main portal was DEV at that candidate with zero tracked changes. Bun resolved through PATH and printed **1.3.9**. Existing peer integration worktree remained on `43f18c17`; it will not be altered. The executor uses its own fresh candidate checkout for all-files cleanliness and a separate ephemeral PROD worktree; main portal stays DEV. No PROD branch, merge, push or installation has occurred at this initial record.
 
 Further evidence and exact results are appended as execution proceeds.
+
+## PROD execution and live artifact proof
+
+- PROD pushed at **12:10:07 UTC**: `edf85ce503aad961b84b5ea3b2074eb84d416a16`. First parent/rollback `b1389c85759511e65ec5d5b26ee96d63c91984c2`; second parent `9adad7ce750742e9806c373a71f7ce900f3e22b2`; tree `d3db406c198b325fee48790a84205f0695c6d7c2`. The candidate diff was empty and all-files status clean immediately before the authorized push.
+- Fresh PROD worktree baseline installation, merged frozen installation, typecheck and build passed under Bun 1.3.9. Pre-push provenance guard, VALGATE D-1 (no-op: no static partner adapters changed) and typecheck passed. The push command carried the same-command Andrew-direct override citing `02e9cb858c` and GO 97048.
+- CI exact-head enumeration: **one workflow**, [Deploy to Production 34967303352](https://github.com/Opal-Capital/portal/actions/runs/34967303352), terminal **SUCCESS** at **12:12:00 UTC**. Build/typecheck, artifact upload/download, S3 static/index/JSON deployment, CloudFront invalidation and tag creation all succeeded. See `CI_34967303352.json`.
+- Remote annotated tag **`portal-v2.1.178`**: tag object `968e6ab7e058e974cdc92a279cdb7a5ef5d1d63e`, peeled commit **`edf85ce503aad961b84b5ea3b2074eb84d416a16`**.
+- At **12:16:00 UTC**, HTTP GET against `https://opalinvest.dev` matched **54/54 files byte-for-byte** to this exact run's downloaded `production-build`: `index.html` and all 53 JavaScript/CSS files in its assets root. Index SHA256 `7b70633fdc00be72f33bf5b43db1fe013aae141665df80617c9c52d2c19477e6`. Full bounded hash manifest: `SERVED_ARTIFACT_PROOF.json`. This proves served bundle identity; it does not assert dynamically fetched data freshness.
+
+## Post-deploy behavior checks and remaining proof
+
+The checked-in `portal/scripts/ui-smoke.mjs` exercised actual production JavaScript in fresh headless Edge at 1440x900, with its documented synthetic session claims and **no data fixtures**. Internal Opal admin reached `/investor-reporting` with its nav item present. A 49financial partner with both role=admin and firmRole=admin was redirected from that route to `/market`, with Investor Reporting absent from navigation. Positioning loaded the new page shell. Screenshots and network logs are private scratch evidence.
+
+**Limit:** the harness's synthetic token is not a real bearer; protected APIs returned 401 as expected. The internal IR scope-error state and Positioning empty holdings under that synthetic token are **not** evidence that authenticated data works or that it is broken. No authenticated full data walkthrough is claimed. MSTR was notified at 12:17:19 UTC to provide the existing validation lane's authenticated served Positioning evidence and the separately owned vintage follow-up, alongside workspace pointer/publication and freeze-release receipts. The GO's dated vintage qualifier remains explicit.
+
+Ledger L1-L3 are closed. L4-L7 remain open pending their specified actual proof. Main portal remains DEV; cleanup and canonical log follow before completion.
+
+## Cleanup and additional gate checks
+
+The same partner-admin synthetic session was redirected from `/investor-reporting/print` to `/market`. An internal Opal non-admin was also redirected from `/investor-reporting` to `/market`, with IR navigation absent. These are frontend identity-gate observations only.
+
+Both owned worktree paths were resolved and verified inside the workspace `.runtmp/` directory and all-files clean before removal. `portal-candidate-20260915T115803Z` removal exited 0. `portal-promote-20260915T115803Z` removal exited 255 with Windows `Filename too long`; canonical `git worktree prune` followed, and neither owned path remains registered. The production skill explicitly permits this ignored physical residue. Peer worktrees were untouched. Main portal is verified **DEV at 9adad7ce**, and execution CWD is the workspace root. No workspace push occurred.
