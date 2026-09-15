@@ -285,3 +285,50 @@ import, the second for six one-line compound statements; both correct, both fixe
 did not render through the fetcher; the raw file URLs did. The notifier delivered each half twice (a
 notifier quirk the reviewer lanes named and joined). **Gap:** no instrument reads a Teams hosted image, so
 Yang Liu's screenshot stayed unread; the thread's text carried the substance.
+
+---
+
+## ADDENDUM 5 (06:1x-06:5xZ) -- v0.6 refused twice; v0.7 answers both, with the carriers the reviews asked for
+
+**The two refusals, read in full.** Ratified-text (`3.0.0_SA_CVO~W`, review @`01e640925c`, stamp `ebe1dab5a5`): R1 a
+version-history parenthetical inside the ENDPOINT; R2 "Fourteen" left standing under eighteen EXERCISED bars; R3 no
+pinned carrier for the four new cards' DONE WHEN / ACCEPT text; contracts "seven" where eight stood; the ETF
+counterpart unestablished; the transcript record naming a design file that did not exist. Brief (`4.0.0_SA_CRO~W`,
+review @`d8bee9fd68`, stamp `7c0a757ab5`): R1 v0.6 said s.2-s.8 do not change while its contracts overtook the
+three-tab shape, the DynamoDB articles store and the EC2 box; R2 abbreviated paths, no content coverage map, the
+measurement limits unstated.
+
+**Two commits.** @`2285a23678`: the ENDPOINT carrier for FWD-16..19 (each card beside the Andrew sentence it was
+cut from; the four cards regex-extracted from both files and compared byte-for-byte, 703/899/921/971 chars,
+identical), the PAGE V2 design file (the v2 page from the contracts; the as-built `/draw` of ~04:5xZ recovered from
+the session transcript as the appendix), and a dated CORRECTION on the transcript record's false line-80 pointer.
+@`164ae74e06`: PRD v0.7 -- every named correction, ten contracts (C-ONE-IDENTITY and C-RANKING-GENERATION new;
+C-ONE-STORE's field `published`; C-ETF-PLANE-READ one-sided; C-FILINGS-ANALYZER's citation-resolution clause), the
+supersession map s.9f with in-place markers, 9a exact paths and pins (22 rows), 9a-2 coverage map + measurement
+limits + required checks, 9d the recommended round-11 order, 9g the itemised diff; project.json; the design file's
+price-partition label corrected.
+
+**What arrived while editing, and where it went.** `4.0.0_SA_CRO~W`, under Andrew's sixty-minute review word
+(@`76ab87a06e`), sent five connection briefs: pool readers (@`0e7de170e3`: `published` not `published_at`, the
+join key, dedupe, failure states, the package seam) -> C-ONE-STORE; identity (@`b90bfdd20d`: three key conventions
+on one name) -> C-ONE-IDENTITY; social discovery (@`36a08d3d1a`) -> 9d and S13's bounded first measurement;
+filing evidence (@`a65fe406c2`: the drafting gate passes an unknown id with no quotation and refuses a valid body
+passage) -> C-FILINGS-ANALYZER; ranking retries (@`5ae6dd04b5`: three rows and two rank-1s after a replacement run,
+locally reproduced) -> C-RANKING-GENERATION. Two draft reads from the same seat before the commit: the price
+partitions are `TRENDING_PRICE#<d>` / `BREAKOUT_PRICE#<d>` (fixed in the design file), and -- the one that
+mattered -- Andrew's LATER 2026-09-14 word (@`187f003998`, printed at its pin before acting) puts the whole
+harvest operation local on this box with a local cron job, so the EC2 ruling of 2026-09-11 is history as to
+the box; my first draft had written "the EC2 ruling stands for production". Corrected before the commit; the
+recurring activation stays reserved to Andrew pending validation.
+
+**Delivery.** The notifier delivered each v0.7 half twice (the commit hook, then my post-commit run: ids
+23057/23059 to the CVO lane, 23058/23060 to the CRO lane); both lanes acked both and are reviewing. Status:
+WITHHELD, both halves STALE at the new bytes, owed by the two `~W` reviewers. Broadcast to
+`2.0.0_SA_COO~W`, `3.0.0_SA_CVO~W`, `4.0.0_SA_CRO~W`, `0.0.0_AB_MSTR~Z`: 4 of 4 DELIVERED (ids 23061-23064).
+
+**Measured, for the record.** The inbox Monitor expired at 30 min again and was re-armed (task `b3sbwhsyt`).
+An edit script's post-condition asserted a token count that my own new text broke (9g quotes the old
+"Fourteen" sentence); the file was already written and correct, and the failing assertion was the instrument,
+not the edit -- verified by reading the counts back per line before proceeding.
+
+Push state: LOCAL (0.0.0_AB_MSTR~Z carries).
