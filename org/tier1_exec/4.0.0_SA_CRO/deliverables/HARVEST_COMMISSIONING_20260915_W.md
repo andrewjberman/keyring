@@ -1,6 +1,6 @@
 # Local publication harvest commissioning
 
-Seat `4.0.0_SA_CRO~W`; AMGT_RESAPP / D5. Evidence through 2026-09-15 05:02 UTC.
+Seat `4.0.0_SA_CRO~W`; AMGT_RESAPP / D5. Evidence through 2026-09-15 05:12 UTC.
 
 **Status: not fully commissioned. Barron's independent slider recovery remains
 unproven. No readiness ping or recurring collection authorization is inferred.**
@@ -34,10 +34,11 @@ whitespace inconsistencies without changing their stored body text or hash.
 All **83 canonical article objects and 84 security links** pass the versioned
 schemas and body/hash consistency checks. Proof: `schema-validation.json`.
 
-**22 local tests pass**, including auth replay, verification replay, throttling,
+**25 local tests pass**, including auth replay, verification replay, throttling,
 partial results, shared body lookup before article HTTP, lost S3 acknowledgement,
 small upload budgets, rejected-body reporting, publisher pacing, and broken
-article routes. `ruff check lib/opal_data_harvest` passes.
+article routes, and rejection of HTTP-200 challenge/preview responses.
+`ruff check lib/opal_data_harvest` passes.
 
 ## Storage and scheduling
 
@@ -66,9 +67,9 @@ new articles, zero credential refreshes and `LastTaskResult=0`. It is now
 **disabled, with zero triggers and no next run**. Proof:
 `scheduler-validation.json` and `scheduler-final-state.json`.
 
-The 37-file code/contract archive and its manifest were uploaded and verified by
-readback at `s3://opal-data-harvest/lib/local-publications/0.1.0/a20c19d4d3204072/`.
-Archive SHA-256: `a20c19d4d3204072545c860ac39c02ee309f2fb74d54ea76b17438a26ccd58a7`.
+The current 38-file code/contract archive and its manifest were uploaded and verified by
+readback at `s3://opal-data-harvest/lib/local-publications/0.1.0/6aef3ceee43976dc/`.
+Archive SHA-256: `6aef3ceee43976dce29bb304d9b670800c9cc4a911e3096dbffb3d50dfb88904`.
 This is commissioning code, not a certification of Barron's autonomous recovery.
 
 ## Remediation findings
@@ -89,6 +90,14 @@ This is commissioning code, not a certification of Barron's autonomous recovery.
    One unavailable article can be skipped; repeated server failures defer.
 6. Rejected new bodies are not reported as an empty feed. Accepted partial work
    survives failures, and recovery replays do not duplicate stored bodies.
+7. Recovery no longer treats HTTP 200 alone as restored access. It requires the
+   expected structured search/article response and, for Barron's, a subscriber
+   account check. Real captured-response replay passed four cases, including a
+   rejection of the challenge JSON. A bounded live check at 05:10 UTC verified
+   subscriber access and unlocked article JSON with the saved session. It saw
+   no slider, so it is not an independent captcha pass. Evidence:
+   `verification-contract-validation.json` and
+   `verification/20260915T051028Z-barrons-contract-check/verification-proof.json`.
 
 ## Remaining validation: Barron's slider
 
@@ -122,7 +131,7 @@ cursor. Refreshing known articles after publisher corrections also needs an
 explicit policy. No downstream consumer integration or production daily
 ingestion schedule is claimed by this commissioning result.
 
-Implementation commits: `7aaf58f0c1`, `edbea6bf93`, `c2d48b64d4`.
+Implementation commits: `7aaf58f0c1`, `edbea6bf93`, `c2d48b64d4`, `77d2b46284`.
 Andrew-direct records: `cdc3576436`. Push state: LOCAL; no push performed.
 Observed origin/SITEZ at 05:03 UTC:
 `6f09a06dc919bf21ef96b52aff5cd7e9608ccf85` (`git ls-remote`).
