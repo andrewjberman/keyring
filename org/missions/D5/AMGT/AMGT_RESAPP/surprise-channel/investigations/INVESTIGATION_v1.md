@@ -5061,6 +5061,50 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "Deliverable 1 persists 'excerpt: {items: [1A, 7] or the 20-F equivalents, text, excerpt_sha256}'; AC3 requires SAP items at least 30 and AC2 requires BA at least 50.",
     "world_is": "Per-item caps (risk 70,000 chars, mdna 80,000) bound the submitted excerpt. Measured against each filing's FULL named-item length: COST 69,703 of 69,634 (100 percent, nothing truncated), BA 137,314 of 147,211 (93 percent, mdna capped), HD 101,436 of 106,719 (95 percent, risk capped), SAP 113,823 of 120,083 (95 percent, mdna capped), BABA 150,078 of 481,938 (31 percent, BOTH capped -- its risk item alone is 350,005 chars). Every object records excerpt.truncated_items and excerpt.item_full_chars beside the text, so the bound is visible on the artifact and never silent.",
     "notes": "Not a defect of this cell -- the cap is declared, recorded per object and required by the time bound -- but a fact any reader of F-1 must hold before comparing two names. A Thesis tab that says 'the biggest risks' is saying it over the first 70,000 characters of Alibaba's risk factors and over all of Costco's. The clean remedy is chunked multi-call coverage with the passage map spanning the chunks, which is a larger cut than this one and is not taken here."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W22-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~22",
+    "surfaced_at": "2026-09-15T15:57:01Z",
+    "one_line": "The SERP primitive the cell NAMES cannot fill two of the three fields M-1 names, and on this zone it cannot fill the third either: serp_brightdata() returns only item['link'], and through the serp_opal zone those links come back as opaque Google redirect wrappers (https://www.google.com/goto?url=<blob>), so no result's HOST can be read and ceo_public_profile is ABSENT on 5 of 5 QA names.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/find/dualbiz/scripts/serp.py:245-288 @a4270d3072 (serp_brightdata) appends only `item.get('link') or item.get('url')` to its output list -- the organic item's title and description are read and discarded, so a caller cannot obtain the {title, snippet} INTERFACE M-1 names. Its only unwrapper, _unwrap at :38-43, handles DuckDuckGo's `uddg=` parameter and not Google's `goto?url=`.",
+        "LIVE, one query each through the serp_opal zone 2026-09-15: `site:boeing.com \"Robert K. Ortberg\"` -> 0 url(s); `\"Robert K. Ortberg\" boeing.com chief executive officer` -> 10 url(s), 10 of 10 of the form https://www.google.com/goto?url=CAES... with no host to read.",
+        "The served object records the outcome rather than hiding it: s3://opal-data-harvest/management/v1/BA_US_Equity/2026-09-15.json ceo_public_profile = {url: null, title: null, snippet: null, status: ABSENT, basis: 'the SERP returned 2 url(s) and none on boeing.com -- ABSENT is the honest result, never a page from another host'}. The same shape on the other four names."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT-rj-8 deliverable 2: 'a targeted SERP on the company's IR domain for the CEO (one query, capped pages) -> ceo_public_profile: {url, title, snippet} or ABSENT', with the instrument named in the cell's MEASURED block: 'the estate's SERP primitive for the IR-domain search: data/find/dualbiz/scripts/serp.py serp_brightdata() (a dedicated SERP zone; capped pages)'.",
+    "world_is": "The named primitive returns a list[str] of urls and nothing else, so `title` and `snippet` can never be populated from it; and on this zone every url is a Google redirect wrapper, so even `url` cannot be resolved to the company's own domain. The cell was executed AS WRITTEN -- the named primitive, one query, one page -- and the result is ABSENT with its reason on every name, which the criterion admits ('the CEO's public profile url or ABSENT'). What is NOT available at any price inside this cell is a RESOLVED ceo_public_profile.",
+    "notes": "Not remedied here: a fix is either a title/snippet-carrying call against the Bright Data organic[] payload (which duplicates an estate primitive this cell may only read) or a repair of serp.py itself (outside this order's <paths>). Named so rj-9's tab renders 'not confirmed from the company's own filings' rather than waiting for a field that cannot arrive. The M-1 sub-object carries `status` and `basis` beside the three named keys precisely so a consumer can tell ABSENT-because-nothing-was-found from ABSENT-because-the-instrument-cannot-say."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W22-S2",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~22",
+    "surfaced_at": "2026-09-15T15:57:01Z",
+    "one_line": "BA_US_Equity cost 4 Lusha credits in this cell against the order's bound of 2 per name: the first enrichment run charged its prospecting page and then died on an IMPORT collision between the two estate script surfaces -- data/find/imo/scripts/_util is a PACKAGE and data/find/dualbiz/scripts/_util is a MODULE, so whichever is imported first binds the name and the second fails -- and the graded re-run spent the second 2.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Run 1 (2026-09-15, before a4270d3072): ImportError: cannot import name 'fetch' from '_util' (unknown location), raised at data/find/dualbiz/scripts/serp.py:31 `from _util import fetch`, reached from enrich.ceo_public_profile -- i.e. AFTER prospecting_page had returned a page whose billing.creditsCharged was 2. No output was produced and nothing was written.",
+        "Run 2 (the graded AC3 run): 'LUSHA: CALLED domain boeing.com filter seniority-c-suite(9) credits-used 2 (bound 2 per name) results 50 of 739 matched 4 of 12 officer(s)'. One call, 2 credits -- so the CELL total for this one name is 4, and for the other four names it is 2 each (10 of the cell's 12 credits are inside the bound).",
+        "Remedy landed in the same cell at a4270d3072, lib/research/management/enrich.py _estate_module(): every colliding module name is purged before the import and dropped after it, sys.path is restored BY VALUE (an estate script inserts its own directory and one removal leaves the other copy behind), and build_document now resolves BOTH estate modules BEFORE the first billable call. Proven by importing lusha -> serp -> lusha -> serp in one process, 4 of 4 OK, where the third import failed before the fix."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT-rj-8 BOUND: 'Lusha credits: at most 2 per name in this cell (the prospecting call returns the roster page; no reveal)'.",
+    "world_is": "Four credits were charged for BA_US_Equity in this cell. The bound was never exceeded by a single RUN (each made exactly one prospecting call for 2 credits) and no disclosure endpoint was called anywhere; the overrun is the retry after a crash that happened downstream of an already-billed call. Account impact measured: 1,029 remaining of 1,200 before the cell (card 2 @5007337353), 12 credits spent by this cell in total.",
+    "notes": "The general shape is wider than this cell: ANY module that pays for a call and then touches an unresolved dependency can spend a bound and return nothing. The remedy applied here is the cheap half -- resolve every dependency before the first billable call. The other half, a local cache of the provider page keyed by (domain, as_of) so a retry is free, is NOT built here (YAGNI, and it would persist a provider record to disk, which this cell's own contract argues against)."
   }
 ]
 ```
