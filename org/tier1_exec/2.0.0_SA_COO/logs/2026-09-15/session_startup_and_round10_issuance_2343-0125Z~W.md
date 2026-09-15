@@ -177,6 +177,51 @@ addendum.
 merged branches left in place -- removal is a recursive deletion of untracked scratch and waits on Andrew's word with the
 five older ones; the L8 packet to 3.0.0_SA_CVO~W is the one send at round end (SPAWN-DIRECT 22932).
 
+### 9. Round 11 cut and issued (06:0x-07:3xZ): the page as Andrew defined it, in thirteen cells, one commit
+
+**The L10 landed** (`ROUND_ANALYSIS.round10.md` @`8d5fe78265`: coverage EMPTY over v0.5, ri-1 AC7 PASS / ri-3 AC6 FAIL on S95, C-S196, S72;
+verdict PRD ADDENDUM) and the PRD ran v0.6 -> v0.7 -> v0.8 in an hour under two refusals each answered at new bytes: the CRO's
+brief-half refusal (a precedence map over the superseded v0.5 clauses, a coverage map) and the CVO's ratified-text refusals (history
+inside ENDPOINT, the count sentence, the carrier for the four new cards, one relocation). **v0.8 @`1170b4da69` ADMITTED at 06:5xZ**:
+nineteen outcomes (FWD-16 header feed + description, FWD-17 executive management + tenure vs the pool, FWD-18 the filings analyzer +
+the one chart, FWD-19 Posture), TEN contracts (C-PAGE-LAYOUT, C-ONE-STORE, C-ONE-IDENTITY, C-RANKING-GENERATION, C-ETF-PLANE-READ,
+C-UNION-UNIVERSE, C-SIMILARITY-RANKER, C-POSTURE, C-FILINGS-ANALYZER, C-EXEC-MANAGEMENT), the supersession map (s.9f -- the three-tab
+shape, the DynamoDB articles store and the EC2 harvester box all overtaken; Andrew's later word @`187f003998`: "the stable server is
+this box ... local on this device with some kind of local cron job").
+
+**The decomposition** v1.2 s.19 @`a0f08622ae` (provisional, drafted against v0.6 while both halves were refused, on a read-only seam
+map over the round-10 drain ref) was AMENDED to v1.3 @`73938cdae4` on the CRO's eight-seam connection brief @`0f9a04e81e` and v0.7's
+two new contracts, re-pinned to v0.8 with the CRO's seven follow-up items @`865e4fc113` carried @`41fe04767a`, and given its full
+cell ids @`f133ed7aff` after the L6 gate refused the short form (93 violations, one grammar). The population is 20 (the 5 open v10
+rows, S72's carried clock, 4 outcomes, 10 contracts): 18 covered by 13 cells, 2 folded into the cut's criteria discipline.
+
+**The cut:** thirteen orders `AMGT-rj-1..13` in ONE commit (`065fa6070d` on an isolated sparse worktree, drained @`fa72663c56`;
+the L6 gate passed on the third attempt: the first refused on dep_stage still reading ROUND_CLOSE, the second on the cell-id
+grammar). Five chains, one worker each, `fanout: 5 of 5 chains, cap 8`: A ~18 (rj-1 the route boundary and the ranked click,
+rj-2 drafted sentences beside their evidence, rj-9 the header and the five tabs, rj-12 the Posture tab, rj-3 the exact-input
+exercise LAST -- every portal and adapter-route edit); B ~19 (rj-4 the crosswalk and the union universe FIRST, rj-5 one store: the
+reader, the producer and the complete-generation writer, rj-10 the deploy -- the round's ONE terraform act, under the COO half
+`NEVER_WIDEN_ROUND11_ONE_STORE_COO_HALF.md` landed in the issuance and the CTO half requested); C ~20 (rj-6 the filings analyzer,
+LOCAL, owning the drafting library's typed evidence and passage gate; rj-11 the Posture call); D ~21 (rj-7 the similarity ranker);
+E ~22 (rj-8 executive management; rj-13 the social source measured on the supported Reddit keyword method @`36a08d3d1a`). Every
+batch is a local Windows task DISABLED at creation; NO new Lambda; the interfaces per pool prefix (X-1, U-1, P-1, G-1, D-1, F-1,
+R-1, M-1, O-1, S-1) are the contract between chains. rj-4 spawned alone at 07:3xZ; the other four chains spawn at its drain.
+
+**Preflight** RUN at 06:4xZ and written into every record face: comp-schedule 5 of 5 carriers (C1=23, C2=8, C3=12, C4=21, C5=334);
+comp-iam 838 calls / 98 roles / 474 .tf; comp-adversary 48 pins / 13 paths / 17 cites; comp-cache 481 of 481 files, 119 sites.
+L5 and L6 stamped at v0.8 after the round-10 slug named the issuer's stamp gap (no earlier round carried them).
+
+**Worktrees:** `C:/tmp/wk-amgt-11-issue` (the issuer's, drained; kept until Andrew's word like the others), `wk-amgt-11-1` (A, with the
+portal worktree on `wk-amgt_resapp-11-1-portal` from `refs/drains/ri-1-portal` @`9aef3734` and a node_modules junction),
+`wk-amgt-11-2` (B, sparse incl. infra), `wk-amgt-11-3` (C), `wk-amgt-11-4` (D), `wk-amgt-11-5` (E, sparse incl. data) -- the last four
+cut at `fa72663c56` and fast-forwarded to the drained tip before their spawns.
+
+**Andrew's words tonight that shaped this round, each recorded by its receiving lane:** ~05:04Z (executive managers, Lusha, the pool
+as the system of record, at THIS terminal @`7cf62a165f`), ~05:1x-05:2xZ (the header, the four tabs, Posture, the union universe, the
+symmetric comparable, Peers from Adam's packs and the Scanner), ~05:4xZ (the whole C-suite + tenure; "use comp-secrets in aws"),
+~05:42Z (at THIS terminal, "The whole sitez fabric has free egress this session" @`dfa63b6d92`, broadcast to 8 of 8 live seats),
+~05:5xZ (the voice memo), and his direct questions here on the state of the project and when the frontend starts.
+
 ---
 
 ## Decisions Made
@@ -215,22 +260,18 @@ None at this lane. The next acts are gated on the workers' final reports (backgr
 
 ## Current State
 
-Round 10 of AMGT_RESAPP is at L8: four of four task orders COMPLETE and drained (last drain 8da6d27866), every worker
-branch an ancestor of HEAD, no merge open, the channel at 171 rows in one fenced block. The live plane holds the producer
-writing again (10 rows for 2026-09-15; the 10:00Z scheduled fire is the organic acceptance) and the scoped API mounted (11
-routes live, direct invoke 200 / no-firm 401). The page stays on refs/drains/ri-1-portal (PORTAL FROZEN: COMMIT YES /
-PROMOTE NO). The L8 packet goes to 3.0.0_SA_CVO~W after this commit; L9/L10 are the CVO's and the CTO's; the round-11 recut
-waits on the CTO's PRD addendum (four tabs + executive managers + the Z-S96 article-store choice). Push state: LOCAL.
+Round 11 of AMGT_RESAPP is EXECUTING at issuance fa72663c56 (13 orders, decomposition v1.3 s.19 @f133ed7aff, PRD v0.8
+@1170b4da69 ADMITTED). Worker ~19 is on rj-4 (the crosswalk and the union universe) in C:/tmp/wk-amgt-11-2; chains A, C, D and E
+spawn at its drain; rj-8 after rj-6's drain; the cross-chain cells (rj-2, rj-9, rj-10, rj-11, rj-12, rj-3) by the hand-over order
+of s.19e. The CTO half of the round-11 co-sign is requested (rj-10 stops on it). PORTAL FROZEN; all commits LOCAL.
 
 ---
 
 ## Next Steps
 
-1. Send the L8 packet to 3.0.0_SA_CVO~W (this lane's one send at round end), naming every terminal instance, the rows minted
-   this round with their standing, the judgment criterion (ri-3 AC6 -> ROUND10_BROWSER_EXERCISE.md), the ARMED rows and
-   their owners, and the CVO watermark read (none published by ~W at 05:2xZ).
-2. Hold until the CTO's ROUND_ANALYSIS.round10.md and PRD addendum land; then /canonical-flow AMGT_RESAPP and cut round 11
-   in ONE issuance: the header discovery surface, the four tabs, the Exec Management lane (after Andrew's per-use Lusha
-   word), the article-store edge Z-S96 names, and Z-S95's identity fix.
-3. Re-arm the inbox Monitor on every expiry; ack every broker message on read; no other send.
-4. Worktree removal (two round-10, five older) on Andrew's word.
+1. At rj-4's drain: fast-forward wk-amgt-11-1/-3/-4/-5 to the drained tip and spawn rj-1 (~18), rj-6 (~20), rj-7 (~21), rj-5 (~19
+   continues); spawn rj-8 (~22) at rj-6's drain.
+2. Drain each terminal order through safe-merge.sh (the channel union by row id); fetch chain A's portal branch into
+   refs/drains/rj-portal at its drains; choose the Posture QA pair at rj-7's drain and name it in rj-6/7/8's hand-overs.
+3. The browser half of rj-3 with the exact payloads rj-10 captures; the L8 packet to 3.0.0_SA_CVO~W (file + message) at the end.
+4. Re-arm the inbox Monitor on every expiry; ack every broker message on read.
