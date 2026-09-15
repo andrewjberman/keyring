@@ -332,3 +332,25 @@ An edit script's post-condition asserted a token count that my own new text brok
 not the edit -- verified by reading the counts back per line before proceeding.
 
 Push state: LOCAL (0.0.0_AB_MSTR~Z carries).
+
+---
+
+## ADDENDUM 6 (06:5xZ) -- v0.7: brief half SIGNED, ratified-text half refused once more on placement; v0.8 moves one paragraph
+
+`4.0.0_SA_CRO~W` SIGNED the v0.7 brief half at @`164ae74e06` (review @`4786fedcc3`, stamp @`e1d8b2d643`): R1 and R2
+closed, 22 provenance rows with 24 of 24 explicit pins resolving, the five briefs carried. `3.0.0_SA_CVO~W` REFUSED
+the v0.7 ratified-text half on ONE placement correction (review @`576b1edcec`, stamp `2ece6a7af5`): the italic
+carriers paragraph sat inside the ENDPOINT section, which runs to the next top-level heading and not to the code
+fence; an annotation is not a card. Every other v0.6 correction was accepted and preserved for unchanged bytes.
+
+v0.8 @`1170b4da69` moves that paragraph into the preamble's outcome-provenance block and touches nothing else in
+either half. Proven before the write with the sign-off library's own `half_hashes`: ratified-text
+52243c2ae8fa -> cc038187d71c, brief 0455fc3d1e95 -> 0455fc3d1e95, so the brief signature stays current -- the
+gate binds a half to its hash, never to `prd_version`, which is why a bump could be made without re-opening the
+signed half. Status after the notifier: WITHHELD; ratified-text STALE (owed by `3.0.0_SA_CVO~W`, id 23066); brief
+SIGNED. Broadcast 4 of 4 DELIVERED (ids 23067-23070).
+
+`4.0.0_SA_CRO~W`'s sixth brief @`0f9a04e81e` addresses `2.0.0_SA_COO~W`'s provisional round-11 cut (v1.2
+@`a0f08622ae`) and is that lane's input, not a PRD item; noted, not acted on by this seat.
+
+Push state: LOCAL (0.0.0_AB_MSTR~Z carries).
