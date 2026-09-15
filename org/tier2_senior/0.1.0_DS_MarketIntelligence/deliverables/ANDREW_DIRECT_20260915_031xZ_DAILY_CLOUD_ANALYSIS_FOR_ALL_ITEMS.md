@@ -59,3 +59,29 @@ measured cost, and acts only on his answer.
 - The card itself is `_evolving_keyword_card`
   (`infra/aws/lambda/portal_data_proxy/lambda_function.py:1401-1437`, returned at `:1675` on every
   cache miss), introduced `09f361593c` (2026-06-10).
+
+---
+
+## FOLLOW-UP RULING, ~04:0xZ (2026-09-15), same terminal -- verbatim and entire
+
+> Bypass cost gate
+
+**Context, stated so the words are not stretched:** it answered this seat's question put at ~04:00Z,
+which offered three options -- (1) run keyword-intelligence-generator after BOTH daily
+news-trending-analysis runs by setting `KIG_MORNING_CUTOFF_UTC = "24"` on `news-trending-analysis`
+(Terraform, no code change; measured cost ~20 -> ~34 keyword analyses a day, roughly +70% of the
+generator's GPT spend), (2) keep morning-only and freeze the evening cloud, (3) leave as is. He declined
+the multiple-choice form and typed the three words above.
+
+**Read taken, and it is the narrow one:** the "cost gate" is the 2026-06-11 morning-only gate
+(`903fbe9a8d`); bypassing it is option (1) through the override the gate itself exposes. Nothing wider
+is read into it -- no other GPT-cost control, no other Lambda, no model change. This supersedes the
+2026-06-11 "MORNING run only" ruling for `keyword-intelligence-generator` only.
+
+## SECOND FOLLOW-UP, ~04:1xZ (2026-09-15), same terminal, mid-turn -- verbatim and entire
+
+> everything it displays there should have full data.
+
+"There" is the Daily Cloud drilldown modal of the first message. Recorded as an outcome statement,
+not widened: every keyword the Daily Cloud displays should open to full data rather than the pending
+card.
