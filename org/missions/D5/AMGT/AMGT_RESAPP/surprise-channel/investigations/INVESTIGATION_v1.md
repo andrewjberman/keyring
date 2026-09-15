@@ -5866,6 +5866,27 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "Recorded as form only. The rollback is written into the entry by the ledger tool's own verbs in the next commit, before AC6-AC8, and cited in L3's proof at close."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W19-S20",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~19",
+    "surfaced_at": "2026-09-15T20:11:00Z",
+    "one_line": "rj-10 AC8 expects two SAVED lines (rj-3's two captures), but its glob '*.response.*.json' over the worker's deliverables folder also matches the two attempt1.* captures kept from the blocked first apply (row W19-S16), so the literal invocation prints FOUR SAVED lines.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-AMGT-rj-10 @4f0436811b AC8 expect: '... two SAVED lines with sha256 prefixes -- rj-3's exact inputs'; the invocation prints SAVED for sorted(glob.glob(D+'/*.response.*.json')).",
+    "world_is": "AC8 output at 2026-09-15T20:10:49Z: 'SAVED ...attempt1.rankings.trending.chatter.response.2026-09-15.json 055e4cee82e7904e', 'SAVED ...attempt1.thesis.BA_US_Equity.response.2026-09-15.json a93cec12858f6dae', 'SAVED ...rankings.trending.chatter.response.2026-09-15.json 698c391592a41a21', 'SAVED ...thesis.BA_US_Equity.response.2026-09-15.json f2e7c040727195a1'. The attempt1 files are the pre-act adapter captures from the first run's blocked apply, kept as evidence for W19-S16; the two unprefixed files are this run's captures, written by the same invocation after AC11. The deliverables folder is the one the order names.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "deliverables/0.9.0_WK_AMGT_RESAPP~19/rj10.AC8.out.txt (verbatim).",
+        "deliverables/0.9.0_WK_AMGT_RESAPP~19/attempt1.rankings.trending.chatter.response.2026-09-15.json and attempt1.thesis.BA_US_Equity.response.2026-09-15.json at HEAD (committed by the first run, drained @e0c93010af)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Recorded as form only. The attempt1 files were not deleted to make the count read two; rj-3's inputs are the two unprefixed files, full sha256 recorded in the instance and in ledger amgt-round11-producer-universe L5."
   }
 ]
 ```
