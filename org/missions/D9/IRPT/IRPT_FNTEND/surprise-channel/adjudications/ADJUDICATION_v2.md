@@ -1730,3 +1730,275 @@ The 10 rows carrier-less at round 7's L8 (INVESTIGATION_v2.md @32855486f0; issua
  }
 ]
 ```
+
+## Round 8 -- L8 compile and L9 adjudication (3.0.0_SA_CVO, 2026-09-15T09:42:39Z)
+
+The 18 rows carrier-less at round 8's L8 (INVESTIGATION_v2.md @5e5f074588; issuance 57cb17e329), carried by C-S99..C-S107. Record: `org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND8_L8_L9_20260915.md`.
+
+```json
+[
+ {
+  "id": "IRPT_FNTEND-C-S99",
+  "project": "IRPT_FNTEND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-09-15T09:42:39Z",
+  "one_line": "ROUND-8 L9 GRADE RECORD: the four JUDGMENT verdicts, one per order, bound to each proof instance at its commit -- 4 PASS, each with a named qualification; F49-AC15's names the backend-wall answer: the portal gate is the only admin wall.",
+  "class": "OBSERVATION",
+  "spec_asserts": "Spine L9: a JUDGMENT criterion is graded by the CVO against the specification that issued it and never self-graded; its verdict lives in `grades` on a row of the CVO's.",
+  "world_is": "4 of 4 round-8 judgment rows read UNVERIFIABLE-BY-INSTRUMENT naming this seat. proof-of-spec-check.py, run by this seat on the shared tree with --governing-order <each order>, reads VALID on 4 of 4 instances. Evidence and this seat's own reads are in the record, section 3. Vocabulary as rounds 6-7: MET -> PASS; MET WITH A NAMED QUALIFICATION -> PASS with the qualification in `reason`; NOT MET -> FAIL.",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/IRPT_FNTEND.TO-FE-s-46.per-test-timeouts-sized-to-cost.proof_of_spec.json@1e8997ec6d",
+    "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~3/IRPT_FNTEND.TO-FE-s-47.no-status-carries-its-reason.proof_of_spec.json@0a49c55855",
+    "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~4/IRPT_FNTEND.TO-FE-s-48.non-authoritative-cohort-reads-withheld.proof_of_spec.json@a42c7e05df",
+    "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~2/IRPT_FNTEND.TO-FE-s-49.investor-reporting-opal-admin-only.proof_of_spec.json@a018979694",
+    "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND8_L8_L9_20260915.md (same slug) section 3"
+   ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "A grade record: it adjudicates no item and opens nothing. Each qualification is carried by the row it names (W1-S74, W1-S75, W3-S37, W3-S38, W4-S19, W4-S20, S66) or stated in its reason for the CTO's analysis.",
+  "hazard_standing": "INERT",
+  "grades": [
+   {
+    "criterion": "F46-AC8",
+    "instance": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/IRPT_FNTEND.TO-FE-s-46.per-test-timeouts-sized-to-cost.proof_of_spec.json@1e8997ec6d",
+    "verdict": "PASS",
+    "reason": "MET WITH A NAMED QUALIFICATION. Bar: 'a loaded box can no longer turn a later cell's census red through these two files, and every timeout is sized from a measured cost.' Read by this seat at portal DEV 90d71d9e (LOCAL; PORTAL FROZEN, read by git show): 8 changed timeouts (window:302 17625, one-writer:436 20952, one-writer:452 11013, one-writer:590 20907, one-writer:626 15138, one-writer:764 21000, one-writer:779 19266, one-writer:869 56673), the diff 1f3ce9f0..90d71d9e is 1+7 lines, and the 90000 at one-writer :539 predates the cell. Against the committed ledger (fe-s-46/recorded-costs.json, 24 runs, 16 tests, 707 costs, unchanged at 10c2f07d), 8 of 16 tests have a highest cost >= 2500 ms; 7 timeouts are exactly 3x that cost and F40-AC5's is the order's named floor 3 x 5875 (F41-AC2's control, run B01; timeouts.test.ts:161) against its own highest 5735. All 8 are <= 60000. The census run measures nothing: timeouts.test.ts:66 'const LOAD = env.IRPT_FE_TIMEOUT_LOAD === \"1\"' gates every load arm, and F46-AC6 prints 10 of 10 spawned processes as 8 git reads and 2 seeded scratch runs. QUALIFICATIONS: (1) 'can no longer' is bounded, not absolute: a load that triples a test's highest recorded cost still turns it red; (2) every committed timeout stands on a carried BOOTSTRAP run (B01-B12, 35 costs), not a run of the load path as it now stands, and B03/B04 carry a day-only date (W1-S75); (3) F41-AC5's control has 3327 ms of headroom under the cap, so a committed cost above 20000 ms has no legal timeout (W1-S74's residual; reachable only by an opt-in load run and a commit, never by a census); (4) the same class recurred outside these two files in FE-s-49 (S67). No bun run by this seat: the portal is frozen."
+   },
+   {
+    "criterion": "F47-AC11",
+    "instance": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~3/IRPT_FNTEND.TO-FE-s-47.no-status-carries-its-reason.proof_of_spec.json@0a49c55855",
+    "verdict": "PASS",
+    "reason": "MET WITH A NAMED QUALIFICATION. Bar: 'the adapter supplies the reason on the no-status path, the validator is unchanged, and no stated state carries it.' Read by this seat at portal DEV f28fcc44 (LOCAL; PORTAL FROZEN, read by git show) (identical at 10c2f07d): contracts/adapt.ts:176 NO_STATUS_REASON = 'The response carried no status stating its state, so its state is unknown.'; :307 'partialReason: statedState === null ? (current.partialReason ?? NO_STATUS_REASON) : current.partialReason' -- the reason only when no state is stated, the document's own reason first (amendment 1, 1.0.0_SA_CTO 96947, W3-S39). validate.ts is one blob, 4fc0a042ae9c, at 1f3ce9f0, f28fcc44 and 10c2f07d. The worker's arms: 18 of 18 (operation, trigger) and 11 of 11 stated-state arms held. QUALIFICATION: two paths the grant excluded stay for the round-8 analysis, as amendment 1 routed them: a status member with no state keeps a reasonless default on its own availability (W3-S37), and status-summary/status-job now carry the reason on a document whose data says PARTIAL (W3-S38). Both graduated."
+   },
+   {
+    "criterion": "F48-AC7",
+    "instance": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~4/IRPT_FNTEND.TO-FE-s-48.non-authoritative-cohort-reads-withheld.proof_of_spec.json@a42c7e05df",
+    "verdict": "PASS",
+    "reason": "MET WITH A NAMED QUALIFICATION. Bar: 'a cohort value the panel declines to assert reads \"withheld\" at every render site, never \"unknown\", and a value the producer asserted is unchanged.' Read by this seat at portal DEV ad732941 (LOCAL; PORTAL FROZEN, read by git show) (identical at 10c2f07d): header/ScopeSummary.tsx:120 is the one render site of a non-authoritative CohortFact and builds '${c.axis}: withheld' under 'Cohort (not asserted)'; the worker's census (F48-AC5) finds 1 site, and F48-AC3 holds the asserted path byte-identical to 1f3ce9f0 with a producer's own UNKNOWN still reading 'advisory: unknown'. QUALIFICATION: one surface over, Holdings still renders a non-authoritative classification's partitions as 'unknown' (tabs/holdings/slices.ts:102 at 10c2f07d), by the contract's own comment. It is not a CohortFact, so the bar's letter does not reach it; whether RULING W does is 1.0.0_SA_CTO's (W4-S19, graduated). The fixture registry's prose still says 'unknown renders as unknown' (fixtures/index.ts:77; W4-S20, graduated)."
+   },
+   {
+    "criterion": "F49-AC15",
+    "instance": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~2/IRPT_FNTEND.TO-FE-s-49.investor-reporting-opal-admin-only.proof_of_spec.json@a018979694",
+    "verdict": "PASS",
+    "reason": "MET, WITH THE BACKEND-WALL ANSWER NAMED FOR 1.0.0_SA_CTO AND ANDREW. Bar: 'no client or partner-firm user, admin or not, reaches Investor Reporting or sees its nav item through the portal; no allowlist grants what the gate refuses; the three gate hunks match c29a8b86; and the backend census says whether the UI is the only wall.' Read by this seat at portal DEV 10c2f07d (LOCAL; PORTAL FROZEN, read by git show): App.tsx:96 the nav item carries requiresAdmin: true, requiresTier: 'internal'; both routes are <ProtectedRoute requireAdmin requireInternal> (:423, :575); ProtectedRoute.tsx:39 refuses role != admin and :44 firmId != opal-capital. firmAccess.ts lists /investor-reporting 0 times (3 at 1f3ce9f0; numstat +0 -3). The nav line and both route lines equal c29a8b86's, 3 of 3, by this seat's own line read. Worker: partner admins refused 6 of 6, non-admins 8 of 8, nav shown to 1 of 8 identities. THE ANSWER THE CENSUS GIVES: the portal gate is the ONLY admin wall. Re-read by this seat at workspace HEAD (a source read, not the worker's test): _scope/resolve.py:186 makes a role=admin caller with any verified firm FIRM_OPERATIONS and :193 an advisor FIRM_ADVISOR; _authz/served.py:575 refuses only an absent verified firm; enforce.py:272 refuses only UNKNOWN. So a partner firm's admin who calls the API directly is served its own firm. No endpoint serves yet (investor-reporting.ts:14: the routes 'DO NOT EXIST yet', IRPT_BCKEND B15 builds them). Neither PRD names an admin wall (0 'admin' tokens in IRPT_FNTEND_PRD.md and IRPT_BCKEND_PRD.md), and decomposition R8.9 names 'the backend's own admin gating' as not moved. S66 is graduated to carry the decision."
+   }
+  ]
+ },
+ {
+  "id": "IRPT_FNTEND-C-S100",
+  "project": "IRPT_FNTEND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-09-15T09:42:39Z",
+  "one_line": "ROUND-8 L9: two BLOCKING rows DISMISSED_WITH_REASON, each closed in drained code at portal DEV 10c2f07d under FE-s-49 amendment 1 (1.0.0_SA_CTO's ruling (a), 96961) -- W2-S34 (fe-s-14 asserted the partner entries; granted, re-pointed, entries removed) and S67 (F49-AC10's census had no timeout; it carries 3 x 6703 ms).",
+  "class": "OBSERVATION",
+  "spec_asserts": "1.0.0_SA_CTO 96924 / 96961 (a): '/investor-reporting' removed from the 49financial, inflection and cottonwood sets; fe-s-14/allowlist.test.ts granted; F49-AC13: the census test's timeout sized to its measured cost.",
+  "world_is": "Read by this seat at portal DEV 10c2f07d (LOCAL; PORTAL FROZEN, read by git show): src/lib/firmAccess.ts lists '/investor-reporting' 0 times (3 at 1f3ce9f0; numstat +0 -3); fe-s-14/allowlist.test.ts is in FE-s-49's <paths> and its re-pointed test asserts +0 (:112) -3 (:113). fe-s-49/admin-gate.test.ts:606 declares F49-AC10 and closes with '}, 20109)' at :716; fe-s-49/recorded-costs.json holds 6 costs, highest 6703 (S67's), and 3 x 6703 = 20109. The census run times nothing.",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md@5e5f074588#IRPT_FNTEND-W2-S34",
+    "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md@5e5f074588#IRPT_FNTEND-S67",
+    "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-49.investor-reporting-opal-admin-only.md@a018979694 <paths>, amendment 1",
+    "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND8_L8_L9_20260915.md (same slug) section 2"
+   ]
+  },
+  "adjudicates": [
+   "IRPT_FNTEND-W2-S34",
+   "IRPT_FNTEND-S67"
+  ],
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Both are closed in drained code at portal DEV 10c2f07d, read by this seat. W2-S34's F49-AC9 refusal was superseded by amendment 1; S67's class is carried in F46-AC8's qualification (4).",
+  "hazard_standing": "INERT"
+ },
+ {
+  "id": "IRPT_FNTEND-C-S101",
+  "project": "IRPT_FNTEND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-09-15T09:42:39Z",
+  "one_line": "ROUND-8 L9: four FE-s-46 rows DISMISSED_WITH_REASON as records -- W1-S71 (a type-only overload inside the grant), W1-S72 (the BOUNDS wording names the wrong line; the 8-of-8 compiler proof shows the intent), W1-S73 (8 of 16 tests can reach the default; all 8 carry a timeout) and W1-S75 (30 costs carried from a BOOTSTRAP table; B03/B04 day-only).",
+  "class": "OBSERVATION",
+  "spec_asserts": "IRPT_FNTEND.TO-FE-s-46 THE REMEDY, BOUNDS, F46-AC1..AC3, and amendment 1: 'The ledger is produced only by the IRPT_FE_TIMEOUT_LOAD=1 path' and 'The ledger records F41-AC5's control at 18891 ms'.",
+  "world_is": "Read by this seat at portal DEV 90d71d9e (LOCAL; PORTAL FROZEN, read by git show): the diff against 1f3ce9f0 is 1+7 lines, every one a closing '}, <ms>)' (W1-S72); 8 of 16 tests have a highest ledger cost >= 2500 ms and all 8 carry a timeout (W1-S73). W1-S75: amendment 1's two sentences cannot both hold by measurement alone -- 18891 ms predates the ledger -- and the worker's BOOTSTRAP carry is the one reading that meets both: the load path writes the ledger, 12 of its 24 runs (35 costs) are carried, each naming its source, and B03/B04 read 'day only' (B03, B04). W1-S71 is a type declaration inside fe-s-46/; the typecheck read rc=0 on the issuer's pair.",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md@5e5f074588#IRPT_FNTEND-W1-S71",
+    "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md@5e5f074588#IRPT_FNTEND-W1-S72",
+    "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md@5e5f074588#IRPT_FNTEND-W1-S73",
+    "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md@5e5f074588#IRPT_FNTEND-W1-S75",
+    "portal 90d71d9e:src/pages/InvestorReporting/__tests__/fe-s-46/recorded-costs.json",
+    "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND8_L8_L9_20260915.md (same slug) section 2"
+   ]
+  },
+  "adjudicates": [
+   "IRPT_FNTEND-W1-S71",
+   "IRPT_FNTEND-W1-S72",
+   "IRPT_FNTEND-W1-S73",
+   "IRPT_FNTEND-W1-S75"
+  ],
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Records, each verified at DEV 90d71d9e. W1-S72 and W1-S75 are issuer wording defects (2.0.0_SA_COO~F's, owned in 96994); neither moves a verdict. W1-S75's provenance point is carried in F46-AC8's qualification (2).",
+  "hazard_standing": "INERT"
+ },
+ {
+  "id": "IRPT_FNTEND-C-S102",
+  "project": "IRPT_FNTEND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-09-15T09:42:39Z",
+  "one_line": "ROUND-8 L9: three rows DISMISSED_WITH_REASON as records -- W3-S36 (the wire instances are documents; the test wraps them), W3-S39 (a resolve-scope document's own reason; answered 'document first' by amendment 1, 96947) and W4-S18 (a line citation drift in FE-s-48's premise).",
+  "class": "OBSERVATION",
+  "spec_asserts": "IRPT_FNTEND.TO-FE-s-47 F47-AC2/AC7 and amendment 1 (1.0.0_SA_CTO 96947: the document's own reason first); IRPT_FNTEND.TO-FE-s-48 THE CELL's census premise.",
+  "world_is": "W3-S39: read by this seat at portal DEV f28fcc44 (LOCAL; PORTAL FROZEN, read by git show), contracts/adapt.ts:307 keeps current.partialReason and fills only a null with NO_STATUS_REASON. W3-S36: the worker's wrap is the only body the criterion's words admit. W4-S18: validate.ts is one blob at 1f3ce9f0, f28fcc44 and 10c2f07d; the census classifies it by path and the verdict does not move.",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md@5e5f074588#IRPT_FNTEND-W3-S36",
+    "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md@5e5f074588#IRPT_FNTEND-W3-S39",
+    "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md@5e5f074588#IRPT_FNTEND-W4-S18",
+    "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND8_L8_L9_20260915.md (same slug) section 2"
+   ]
+  },
+  "adjudicates": [
+   "IRPT_FNTEND-W3-S36",
+   "IRPT_FNTEND-W3-S39",
+   "IRPT_FNTEND-W4-S18"
+  ],
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "W3-S39 is closed in drained code; W3-S36 and W4-S18 are records of an order's wording that move no artifact.",
+  "hazard_standing": "INERT"
+ },
+ {
+  "id": "IRPT_FNTEND-C-S103",
+  "project": "IRPT_FNTEND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-09-15T09:42:39Z",
+  "one_line": "ROUND-8 L9, GRADUATED -- THE TWO ARMED LOAD ROWS, BOTH DISARMED IN CODE AT portal DEV 90d71d9e (2026-09-15T07:51:46Z): W1-S74 (the cut's own test ran load inside every census) and W3-S40 (F41-AC5's control timed out under load). Graduated so the disarm is carried in a field, not prose.",
+  "class": "OBSERVATION",
+  "spec_asserts": "The surprise channel: an ARMED row's disarm is carried by the remediation row's two-state `disarm` block; 'DISARMED IS NOT REMEDIATED'. IRPT_FNTEND.TO-FE-s-46 amendment 1: a committed cost ledger, load arms opt-in, F46-AC6.",
+  "world_is": "Read by this seat at portal DEV 90d71d9e (LOCAL; PORTAL FROZEN, read by git show) (committer time 2026-09-15T07:51:46Z): fe-s-46/timeouts.test.ts:66 'const LOAD = env.IRPT_FE_TIMEOUT_LOAD === \"1\"' gates every load and ledger arm, and F46-AC3's bound reads the committed ledger (:708). fe-s-41/one-writer.test.ts:869 closes F41-AC5's control with '}, 56673)' = 3 x 18891. Residual: 3327 ms of headroom under the 60000 ms cap.",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md@5e5f074588#IRPT_FNTEND-W1-S74",
+    "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md@5e5f074588#IRPT_FNTEND-W3-S40",
+    "portal 90d71d9e:src/pages/InvestorReporting/__tests__/fe-s-46/timeouts.test.ts :66, :708",
+    "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND8_L8_L9_20260915.md (same slug) section 2"
+   ]
+  },
+  "adjudicates": [
+   "IRPT_FNTEND-W1-S74",
+   "IRPT_FNTEND-W3-S40"
+  ],
+  "disposition": "GRADUATED",
+  "hazard_standing": "INERT"
+ },
+ {
+  "id": "IRPT_FNTEND-C-S104",
+  "project": "IRPT_FNTEND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-09-15T09:42:39Z",
+  "one_line": "ROUND-8 L9, GRADUATED -- S66, THE BACKEND-WALL HALF: the portal gate is closed at DEV 10c2f07d, but the portal is the ONLY admin wall. A partner firm's admin resolves FIRM_OPERATIONS and is served its own firm; no endpoint serves yet (IRPT_BCKEND B15), and no PRD names an admin wall.",
+  "class": "OBSERVATION",
+  "spec_asserts": "Andrew-direct (96903) prod-deploy condition 2: 'Investor Reporting must remain Opal Admin gated, no clients are allowed to see that.' 1.0.0_SA_CTO (96915): Opal admin = role admin AND the internal tier. F49-AC15: 'the backend census says whether the UI is the only wall'.",
+  "world_is": "PORTAL HALF MET (portal DEV 10c2f07d (LOCAL; PORTAL FROZEN, read by git show)): nav :96, routes :423/:575, ProtectedRoute :39/:44, allowlist 0 of 3. BACKEND at workspace HEAD: _scope/resolve.py:186, :193; _authz/served.py:575; _authz/enforce.py:272. IRPT_FNTEND_PRD.md and IRPT_BCKEND_PRD.md carry 0 'admin' tokens; the decomposition names 'the backend's own admin gating' as not moved (:1867).",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md@5e5f074588#IRPT_FNTEND-S66",
+    "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~2/IRPT_FNTEND.TO-FE-s-49.investor-reporting-opal-admin-only.proof_of_spec.json@a018979694 F49-AC10",
+    "infra/aws/lambda/investor-reporting/_scope/resolve.py@6806f529ac :186",
+    "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND8_L8_L9_20260915.md (same slug) section 2"
+   ]
+  },
+  "adjudicates": [
+   "IRPT_FNTEND-S66"
+  ],
+  "disposition": "GRADUATED",
+  "hazard_standing": "INERT"
+ },
+ {
+  "id": "IRPT_FNTEND-C-S105",
+  "project": "IRPT_FNTEND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-09-15T09:42:39Z",
+  "one_line": "ROUND-8 L9, GRADUATED -- THE NO-STATUS RESIDUE amendment 1 routed to the round-8 analysis: a status member with no state keeps a reasonless default on its own availability (W3-S37), and status-summary/status-job carry the no-status reason on a document whose data says PARTIAL (W3-S38).",
+  "class": "OBSERVATION",
+  "spec_asserts": "RULING V (FE-s-47 THE REMEDY): 'When the adapter supplies its explicit unknown because the response carried no status, or a status with no state, it also supplies a partialReason saying so.' contracts/validate.ts: a top-level state that disagrees with availability.state is refused.",
+  "world_is": "Both are outside FE-s-47's grant (adaptStatusEnvelope; the StatusEnvelope state rule) and predate it; amendment 1's text routes them to the round-8 analysis. Not read by the worker or this seat: whether a production consumer renders either value.",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md@5e5f074588#IRPT_FNTEND-W3-S37",
+    "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md@5e5f074588#IRPT_FNTEND-W3-S38",
+    "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND8_L8_L9_20260915.md (same slug) section 2"
+   ]
+  },
+  "adjudicates": [
+   "IRPT_FNTEND-W3-S37",
+   "IRPT_FNTEND-W3-S38"
+  ],
+  "disposition": "GRADUATED",
+  "hazard_standing": "INERT"
+ },
+ {
+  "id": "IRPT_FNTEND-C-S106",
+  "project": "IRPT_FNTEND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-09-15T09:42:39Z",
+  "one_line": "ROUND-8 L9, GRADUATED -- TWO INSTRUMENTS THAT DO NOT DISCRIMINATE: fe-s-14's F14-AC3 positive control still refuses only the retired '3<TAB>0', so a reader stuck at '0<TAB>3' passes both arms (W2-S35); proof-of-spec-check's COUNT-BAR limb reads a criterion id's last digit as a count (W3-S41).",
+  "class": "OBSERVATION",
+  "spec_asserts": "CLAUDE.md Rule 22 DISCRIMINATION: could the evidence differ if the claim were false? The control's own comment: 'A reader that returned +3 -0 for anything would make the test above a decoration.'",
+  "world_is": "W2-S35 at portal DEV 10c2f07d (LOCAL; PORTAL FROZEN, read by git show): fe-s-14/allowlist.test.ts:126 refuses only startsWith('3\\t0\\t'); the re-pointed test asserts +0 (:112) -3 (:113). INERT: 0 of 3 entries confirmed by other instruments. W3-S41 at HEAD: .tools/proof-of-spec-check.py:1529 still carries the lookbehind; this seat compiled that pattern and it reads 'F47-AC2 PROBLEMS: []' as count '2'; a lookbehind that also excludes a letter or '-' reads it clean and still counts '2 PROBLEMS'. Fail-closed: a false INVALID, never a false VALID.",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md@5e5f074588#IRPT_FNTEND-W2-S35",
+    "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md@5e5f074588#IRPT_FNTEND-W3-S41",
+    ".tools/proof-of-spec-check.py@da3e61889d :1529",
+    "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND8_L8_L9_20260915.md (same slug) section 2"
+   ]
+  },
+  "adjudicates": [
+   "IRPT_FNTEND-W2-S35",
+   "IRPT_FNTEND-W3-S41"
+  ],
+  "disposition": "GRADUATED",
+  "hazard_standing": "INERT"
+ },
+ {
+  "id": "IRPT_FNTEND-C-S107",
+  "project": "IRPT_FNTEND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-09-15T09:42:39Z",
+  "one_line": "ROUND-8 L9, GRADUATED -- RULING W's REACH AND ITS STALE PROSE: Holdings still renders a non-authoritative classification's partitions as 'unknown' (slices.ts, by the contract's own comment; W4-S19), and the fixture registry still says 'unknown renders as unknown' (fixtures/index.ts; W4-S20).",
+  "class": "OBSERVATION",
+  "spec_asserts": "1.0.0_SA_CTO round-7 analysis (96865) item 6: 'a non-authoritative cohort's axes read \"withheld\", never \"unknown\". RULING W keeps \"unknown\" out of any state that has a truer word.'",
+  "world_is": "At portal DEV 10c2f07d (LOCAL; PORTAL FROZEN, read by git show): tabs/holdings/slices.ts:102 returns supervision/advisory 'unknown' for a non-authoritative classification; fixtures/index.ts:77 keeps the old `proves` prose. Neither is a CohortFact and neither was in FE-s-48's grant.",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md@5e5f074588#IRPT_FNTEND-W4-S19",
+    "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md@5e5f074588#IRPT_FNTEND-W4-S20",
+    "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND8_L8_L9_20260915.md (same slug) section 2"
+   ]
+  },
+  "adjudicates": [
+   "IRPT_FNTEND-W4-S19",
+   "IRPT_FNTEND-W4-S20"
+  ],
+  "disposition": "GRADUATED",
+  "hazard_standing": "INERT"
+ }
+]
+```
