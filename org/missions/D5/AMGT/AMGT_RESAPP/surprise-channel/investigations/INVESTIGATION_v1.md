@@ -4500,6 +4500,187 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
       "spec_asserts": "AC7: 'the same gold/ count, newest key and LastModified as AC1 printed, and the snapshots/ count and newest LastModified unchanged (the ETF plane was read and never written -- any difference is a BLOCKING row)'.",
       "world_is": "The gold/ half of the pair is complete and MATCHES exactly. The snapshots/ half is not a pair: AC1 measured {Key, Size} and AC7 measures {count, LastModified}, so 'unchanged' has nothing to compare against on either field. The stronger control that WAS available and was run instead -- no object under any read prefix carries a LastModified inside the worker's window, and the only 7 writes to the bucket in that window are another producer's under bbg/ -- answers the question the criterion is asking, and answers it on the whole bucket rather than one prefix.",
       "notes": "No difference was found and nothing is blocked; AC7 is recorded PASS on the gold/ pair plus the window control, with the snapshots/ count stated as an AFTER-only value and NOT claimed as unchanged-by-comparison. The generalisable point for the next cut: on a bucket with a live producer, a before/after COUNT is the wrong control shape -- it can move for reasons that have nothing to do with the actor -- and the right one is 'no object under the prefixes I touched has a LastModified inside my window'. Related and already law, so not filed separately: a paginated list-objects-v2 with --query length() returns a PER-PAGE count; this bucket's whole-bucket probe printed '1000' then '518' and a per-page reader would have reported 1000 of 1518."
+    },
+    {
+      "id": "AMGT_RESAPP-Z-W20-S1",
+      "project": "AMGT_RESAPP",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~20",
+      "surfaced_at": "2026-09-15T10:05:00Z",
+      "one_line": "AC2's own bound, timeout 115, cannot hold a COLD two-pass run: the first BA_US_Equity run was killed at 115 s (rc 124) and the two passes measure 107.0-137.8 s together across the five QA filings, so no cold run of any of them fits.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "timeout 115 python -m lib.research.filings.analyze --security-key BA_US_Equity --write-pool  ->  'Terminated   timeout 115 python -m lib.research.filings.analyze --security-key BA_US_Equity --write-pool' ; PIPE-RC=124 (2026-09-15 ~09:0xZ).",
+          "timeout 200 python -m lib.research.filings.analyze --security-key BA_US_Equity --stage pass1  ->  'PASS1: model claude-opus-5 input_tokens 56427 output_tokens 6397 seconds 65.2 USD 0.4421 blocks 173 cached false' ; real 1m6.671s.",
+          "timeout 115 python -m lib.research.filings.analyze --security-key BA_US_Equity --write-pool (pass 1 cached)  ->  'PASS2: model claude-opus-5 input_tokens 6068 output_tokens 6767 seconds 60.4 USD 0.1995' and 'USD: total 0.6416 ... seconds 125.6' ; PIPE-RC=0.",
+          "Per-filing seconds from the five recorded USD lines: BA 125.6, COST 110.2, SAP 123.3, HD 107.0, BABA 137.8 -- 5 of 5 above the 115 s bound or within 8 s of it."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "AC2 invocation: 'timeout 115 python -m lib.research.filings.analyze --security-key BA_US_Equity --write-pool'. Its expect names the remedy itself: 'a timeout at 115 s is recorded verbatim and the two passes are split across two invocations named in a row'.",
+      "world_is": "The first cold BA_US_Equity run returned rc 124 with no output past the shell's 'Terminated' line. Measured after it, the two passes NEVER sum under 115 s: pass 1 is 55.7 s (HD) / 57.0 s (COST) / 64.0 s (SAP) / 65.2 s (BA) / 72.8 s (BABA) and pass 2 is 51.3 / 53.2 / 59.3 / 60.4 / 65.0 s, totalling 107.0 / 110.2 / 123.3 / 125.6 / 137.8 s. The order's own remedy was taken: 'python -m lib.research.filings.analyze --security-key <KEY> --stage pass1' runs and CACHES pass 1 (keyed on the excerpt's sha256 and the prompt version, so a cached pass 1 can only be reused for byte-identical input), and the criterion's literal invocation then runs pass 2 LIVE and prints 'cached true' on its PASS1 line. Every AC2/AC3/AC4 row records both invocations.",
+      "notes": "The cache is what HOLDS THE FIVE-RUN BOUND rather than widening it: a retry after a timeout re-bills pass 2 and never pass 1. It is disclosed on every run (passes.pass_1.cached on the analysis object, 'cached true|false' on the PASS1 line) so no reader can mistake a reused pass 1 for a fresh one. For the next cut: either the bound is ~200 s for a cold run, or the criterion names the two staged invocations directly. The excerpt cap is not the lever -- COST is the SMALLEST excerpt (69,703 chars, 100 percent of its named items) and still totals 110.2 s."
+    },
+    {
+      "id": "AMGT_RESAPP-Z-W20-S2",
+      "project": "AMGT_RESAPP",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~20",
+      "surfaced_at": "2026-09-15T10:05:00Z",
+      "one_line": "AC6's task-query invocation produces NOTHING as written under Git Bash: MSYS path conversion rewrites the first argument '/Query' to 'C:/Program Files/Git/Query' and schtasks refuses it, so the grep receives only an ERROR line and prints nothing.",
+      "class": "BLOCKING",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "schtasks /Query /TN OpalResearch-FilingsAnalyzer /FO LIST 2>&1 | tr -d \"\\r\" | grep -E \"TaskName|Status|Schedule Type|Scheduled Task State\" | cat  ->  (no output). Unfiltered head -1: \"ERROR: Invalid argument/option - 'C:/Program Files/Git/Query'.\"",
+          "export MSYS_NO_PATHCONV=1; <the same literal command>  ->  'TaskName:      \\OpalResearch-FilingsAnalyzer' / 'Status:        Disabled'.",
+          "The same mangling was measured on a bare 'schtasks /Query /FO LIST' before the task existed, so it is the argv conversion and not the /TN value."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "AC6 invocation, second limb: 'schtasks /Query /TN OpalResearch-FilingsAnalyzer /FO LIST 2>&1 | tr -d \"\\r\" | grep -E \"TaskName|Status|Schedule Type|Scheduled Task State\" | cat', expecting 'the task query shows TaskName OpalResearch-FilingsAnalyzer'.",
+      "world_is": "Run byte-for-byte in the worker's shell the invocation emits ZERO lines. The unfiltered first line is \"ERROR: Invalid argument/option - 'C:/Program Files/Git/Query'.\" -- MSYS argv conversion, not a missing task. With MSYS_NO_PATHCONV=1 exported (shell state, the invocation string unchanged) the SAME command returns 'TaskName: \\OpalResearch-FilingsAnalyzer' and 'Status: Disabled'.",
+      "notes": "CLAUDE.md's git section already names MSYS_NO_PATHCONV=1 as the remedy for MSYS argv mangling (excluding git push and safe-apply). The env export is shell state and leaves the invocation string byte-identical, so the recorded invocation still aligns with the criterion. For the next cut: any Windows-native command in a criterion needs the prefix stated in the order, or the order has to accept that the literal form returns nothing on this device."
+    },
+    {
+      "id": "AMGT_RESAPP-Z-W20-S3",
+      "project": "AMGT_RESAPP",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~20",
+      "surfaced_at": "2026-09-15T10:05:00Z",
+      "one_line": "AC6's expectation names two fields -- 'Scheduled Task State' and 'Schedule Type' -- that schtasks /FO LIST does NOT emit at all: both require /V, which the criterion's invocation does not carry. The task IS Weekly and IS Disabled; the named invocation cannot show it.",
+      "class": "BLOCKING",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "export MSYS_NO_PATHCONV=1; schtasks /Query /TN OpalResearch-FilingsAnalyzer /FO LIST 2>&1 | tr -d \"\\r\" | grep -E \"TaskName|Status|Schedule Type|Scheduled Task State\" | cat  ->  two lines only: 'TaskName:      \\OpalResearch-FilingsAnalyzer' and 'Status:        Disabled'.",
+          "export MSYS_NO_PATHCONV=1; schtasks /Query /TN OpalResearch-FilingsAnalyzer /FO LIST /V 2>&1 | tr -d \"\\r\" | grep -E \"TaskName|Status|Schedule Type|Scheduled Task State|Task To Run|Days\" | cat  ->  'Scheduled Task State: Disabled', 'Schedule Type: Weekly', 'Days: SUN'.",
+          "A control on an unrelated pre-existing task ('Bloomberg Updater') shows the same field split: /FO LIST gives 5 fields, /FO LIST /V gives Scheduled Task State and Schedule Type -- so this is the tool's output contract, not this task's state."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "AC6 expect: 'the task query shows TaskName OpalResearch-FilingsAnalyzer with Scheduled Task State Disabled and Schedule Type Weekly'.",
+      "world_is": "schtasks /Query /FO LIST emits exactly HostName, TaskName, Next Run Time, Status and Logon Mode. 'Scheduled Task State' and 'Schedule Type' appear ONLY under /V. The invocation's own grep alternation lists both field names AND 'Status', and 'Status: Disabled' is what the non-verbose form returns -- so the DISABLED half of the expectation is met by the named invocation and the WEEKLY half is not obtainable from it. Measured with /V beside it: 'Scheduled Task State: Disabled', 'Schedule Type: Weekly', 'Days: SUN', 'Task To Run: C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\lib\\research\\filings\\run_batch.cmd'.",
+      "notes": "AC6 is recorded FAIL AS WRITTEN with its measurement, per the order's refusal clause, and the order is left OPEN on it; the WORLD-STATE the criterion is asking about is measured and correct (task created Weekly /D SUN /ST 06:00, then DISABLED; activation is Andrew's word). The single-character fix for the next cut is '/FO LIST /V'."
+    },
+    {
+      "id": "AMGT_RESAPP-Z-W20-S4",
+      "project": "AMGT_RESAPP",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~20",
+      "surfaced_at": "2026-09-15T10:05:00Z",
+      "one_line": "Card 1's own section rule -- 'the LAST heading match is the body' -- picks the WRONG region on 2 of the 5 QA filings, and its \\s*-joined patterns miss a third: EDGAR documents break words across HTML nodes ('OPERATING AND FINAN CIAL REVIEW').",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/tier1_exec/1.0.0_SA_CTO/deliverables/AMGT_RESAPP_SUBSTRATE_MEASUREMENTS_20260915_W/measure_filings_analyzer.py@5007337353:61-62 -- bytes printed at the cited lines: '    # the LAST heading match is the body (earlier ones are the table of contents)' / '    start = ms[-1].start()'.",
+          "BA 10-K @000162828026004357: four matches of the risk heading at 79,414 (contents, body 76,910), 86,187 (cross-ref), 99,079 (BODY, bounded 57,245) and 233,617 (cross-ref, UNBOUNDED). ms[-1] is 233,617.",
+          "SAP 20-F @000110465926020058: eight matches of the Item 5 heading; ms[-1] is 560,177 with a 15,816-char body under Material Contracts; the body is 318,035 with 69,573.",
+          "BABA 20-F @000119312526231755: 'Risk Factors' line-start matches = 4, of which the body is 'D. Risk Factors' at 135,987; the FIRST closing 'Item 4. Information on the Company' after it is a cross-reference 1,258 chars in, which closed a 350,005-char item at 1,258 chars until the closing heading was qualified the same way.",
+          "Remedy built and measured 5 of 5: match on a whitespace-COMPACTED copy with an offset map back to the original, and qualify every match -- opening AND closing -- on (a) line start, (b) not a contents entry (a bare page number within three following lines), (c) bounded. All five filings then cut the real body: BA 137,314 chars, COST 69,703, HD 101,436, SAP 113,823, BABA 150,078, each with its officer section (9,409 / 3,759 / 8,261 / 40,000 / 40,000 chars) persisted for rj-8."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "The cell directs the worker to READ measure_filings_analyzer.py FIRST as the measured shape; that script's section() helper takes ms[-1], the last heading match, as the body.",
+      "world_is": "Measured on all five QA primary documents. Boeing's LAST 'Item 1A. Risk Factors' is a CROSS-REFERENCE at char 233,617 inside Item 7 ('See ... under \"Item 1A. Risk Factors\".') and is UNBOUNDED (no Item 1B after it), so the rule would have taken 70,000 chars of the wrong region; the body is at 99,079. SAP's LAST 'Item 5. Operating and Financial Review' is a cross-reference at 560,177 under Material Contracts; the body is at 318,035. Alibaba's Item 5 heading reads 'ITEM 5. OPERATING AND FINAN CIAL REVIEW AND PROSPECTS' at 716,753 -- a \\s*-joined pattern matches it NOWHERE -- and Costco's headings use an EM DASH ('Item 1A-Risk Factors' with U+2014), which the measurement script's pattern does not admit either.",
+      "notes": "Nothing in card 1 is wrong as a MEASUREMENT -- it measured one filing and got a valid excerpt from it. The point for the next reader is that a one-filing measurement cannot tell a rule that works from a rule that happens to work, and the discriminator only appeared at the second and third filer. fetch.py carries all three qualifications and the synthetic TOC-plus-cross-reference case is in lib/research/filings/tests/test_filings.py (TheSectionDiscriminator)."
+    },
+    {
+      "id": "AMGT_RESAPP-Z-W20-S5",
+      "project": "AMGT_RESAPP",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~20",
+      "surfaced_at": "2026-09-15T10:05:00Z",
+      "one_line": "On the first live BA_US_Equity draft the verbatim gate ran 40 times and COULD NOT FAIL ONCE: 1 of 85 analysis items carried a quotation mark, so every served sentence had an empty quoted_spans and passed vacuously.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "First BA drafting object (drafting/v1/BA_US_Equity.json, ContentLength 107019): denominators {\"sentences\": 40, \"with_evidence\": 40, \"verbatim_pass\": 40, \"quoted\": 0, \"evidence_records\": 88, \"dropped\": 0}.",
+          "Analysis object filings/v1/BA_US_Equity/000162828026004357.analysis.json: 85 items, 1 carrying a double-quote character.",
+          "After the mechanical extraction, same analysis, no model call: denominators {\"sentences\": 38, ..., \"quoted\": 14, \"dropped\": 2} with dropped_reasons {\"company_description\": [\"verbatim gate: a quoted span is not in the passage it cites (P0164)\"], \"risks\": [\"... (P0007)\"]}.",
+          "Served object re-uploaded at document-sha256 684197b8861424f99eec4c5a643668c2a7801cc9001ed223b54ff366053f7d81, ContentLength 109540, and AC2 re-run so the record and the artifact agree.",
+          "Across the other four filings the gate also fires on live data: COST dropped 3 of 38, SAP 0 of 36, and both HD and BABA landed with their own counts on the served objects."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "C-FILINGS-ANALYZER: the drafting reader 'validates existence, association and source version for every id before its verbatim gate, and runs that gate against the passage, not the title'. FWD-18 asks for the company's OWN WORDS.",
+      "world_is": "The gate was fixed to read the PASSAGE and the three measured probes now read REFUSE / PASS / REFUSE -- but on live data it had nothing to check. The model rendered the filing's own sentences without marking them as quotations, so the double-quote extraction found spans on 1 of 85 items and the first drafting document reported 'quoted 0' across 40 of 40 sentences with dropped 0. Remedied inside this cell: the quoted span is now found MECHANICALLY as the longest contiguous run of the sentence's own words that appears verbatim in the EXCERPT (never in the passage it cites), and the gate then checks that run against the CITED passage. Re-measured on the same analysis object with no further model call: 14 of 38 sentences carry a verbatim run and TWO sentences were DROPPED for citing a paragraph their own words did not come from.",
+      "notes": "The generalisable point: a gate whose INPUT is produced by the same model whose output it judges can be switched off silently by a prompt-following choice ('quote it') that nobody notices, and the tell is not a failure -- it is a 100 percent pass rate with a zero denominator. The check that caught it was counting the DENOMINATOR the gate ran on, not its verdicts. rj-9 renders quoted_spans as the company's own words; a sentence with quote_method 'none-found' has passage support but no exact quotation, and the two are separate outcomes by the CRO's brief."
+    },
+    {
+      "id": "AMGT_RESAPP-Z-W20-S6",
+      "project": "AMGT_RESAPP",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~20",
+      "surfaced_at": "2026-09-15T10:05:00Z",
+      "one_line": "lib/research/drafting/schema.json's TOP-LEVEL TYPE changes from array to object in this cell: it now validates the DOCUMENT (sections + evidence_records + dropped), not a bare sections array. Any reader validating a bare array against it will now fail.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "git cat-file -p 10c74d0efb:lib/research/drafting/schema.json | sed -n '6p'  ->  '  \"type\": \"array\",' (bytes printed at the cited line).",
+          "comp-find 'research\\.drafting' --files --limit 40  ->  DENOMINATOR: 14 hit(s) across 23133 file(s) scanned in scope [corpus=all]; 7 files, of which 5 are inside lib/research/drafting/.",
+          "run_drafting.py was migrated onto the new typed adapter (records_from_coverage_items) in the same commit, so the AMGT-s-9 fixture path still runs: 13 of 13 drafting tests OK."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "The cell: 'schema.json gains evidence_records: [{id, passage, source: {accession, document_sha256, location}}] at the document level'. AC5 validates the whole D-1 document object against this schema.",
+      "world_is": "At 10c74d0efb the schema's line 6 is '  \"type\": \"array\"' and its items are sections; a document-level key had nowhere to live. It is now an object with required [sections, evidence_records, dropped], sections minItems/maxItems 5. Census before changing it: comp-find 'research\\.drafting' over the corpus returns 14 hits across 23,133 files scanned, and the only CODE consumers are inside the package itself (lib/research/drafting/run_drafting.py, lib/research/drafting/pipeline.py, lib/research/drafting/tests/test_drafting.py); the other hits are a proof-of-spec instance, a CVO audit JSON and this task order. Both in-package consumers were updated in the same commit.",
+      "notes": "Recorded because a schema whose top-level type changes is a silent breaker for any consumer that appears LATER and copies the old shape from a committed instance. The adapter records_from_coverage_items() exists so the pre-existing coverage-item shape (item_id + title) still reaches the typed gate, with the title named explicitly as that shape's whole passage rather than read as one by accident."
+    },
+    {
+      "id": "AMGT_RESAPP-Z-W20-S7",
+      "project": "AMGT_RESAPP",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~20",
+      "surfaced_at": "2026-09-15T10:05:00Z",
+      "one_line": "'comp-secrets get <name> --reveal' prints a FOUR-LINE LABELLED BLOCK (name / firm / arn / value), not the bare secret: a caller doing export KEY=\"$(comp-secrets get ... --reveal)\" gets a 259-character blob that is not a key and fails at the vendor, not at the read.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "export ANTHROPIC_API_KEY=\"$(comp-secrets get anthropic-api-key --reveal)\"  ->  'key present: True len 259 looks-json: False' -- 259 chars, not a key.",
+          "comp-secrets get --help  ->  'usage: comp-secrets get [-h] [--reveal] [--json] ident'.",
+          "export ANTHROPIC_API_KEY=\"$(comp-secrets get anthropic-api-key --reveal | grep '^value:' | sed 's/^value:[[:space:]]*//')\"  ->  'key len 108 prefix sk-ant- no-space True', and a live 300-token Opus 5 probe returned in 2.2 s."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "The cell: 'The key: comp-secrets get anthropic-api-key --reveal (Andrew-direct ~05:4xZ; never a raw secretsmanager read)', and the identity line: 'the Anthropic key reaches your process ONLY as ANTHROPIC_API_KEY, exported from comp-secrets get anthropic-api-key --reveal in the same Bash call'.",
+      "world_is": "Measured without printing the secret: the command returns 4 lines; line 0 is 'name:        anthropic-api-key', line 1 is a 70-character firm value, line 2 is 'arn:         ...c-api-key-G90Ir7', line 3 is 'value: <the key>'. The captured whole is 259 chars; the key alone is 108 chars and begins 'sk-ant-'. The working form is comp-secrets get anthropic-api-key --reveal | grep '^value:' | sed 's/^value:[[:space:]]*//' (a pipe-RECEIVER grep, not a gated search). There is also a --json flag on the same subcommand.",
+      "notes": "No secret is printed anywhere in this record or in any artifact; only the length, the 7-character prefix and the label shape. The failure mode is quiet in the worst way: the export SUCCEEDS, the variable is set, and the error surfaces as a vendor 401 several steps later. Every task order that names comp-secrets as the route for a key should name the value extraction with it, or comp-secrets should grow a value-only flag."
+    },
+    {
+      "id": "AMGT_RESAPP-Z-W20-S8",
+      "project": "AMGT_RESAPP",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~20",
+      "surfaced_at": "2026-09-15T10:05:00Z",
+      "one_line": "The analyzed excerpt is a BOUNDED subset whose coverage of the named items ranges from 100 percent (COST) to 31 percent (BABA) -- so 'the risks the filing states' means something materially different per filer, and the difference is 3x.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "Per-filing, from the five persisted source objects: BABA 150078/481938 (31 percent) truncated ['risk','mdna']; BA 137314/147211 (93) ['mdna']; COST 69703/69634 (100) []; HD 101436/106719 (95) ['risk']; SAP 113823/120083 (95) ['mdna'].",
+          "Card 1's own submission was 350,787 of 494,404 chars at 148,601 input tokens and 114.5 s for ONE pass; the caps here exist because TWO passes have to fit a 115 s criterion bound (row W20-S1).",
+          "The item counts do not track the coverage: BABA at 31 percent coverage produced 80 items at 100 percent cited, COST at 100 percent produced 81."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "Deliverable 1 persists 'excerpt: {items: [1A, 7] or the 20-F equivalents, text, excerpt_sha256}'; AC3 requires SAP items at least 30 and AC2 requires BA at least 50.",
+      "world_is": "Per-item caps (risk 70,000 chars, mdna 80,000) bound the submitted excerpt. Measured against each filing's FULL named-item length: COST 69,703 of 69,634 (100 percent, nothing truncated), BA 137,314 of 147,211 (93 percent, mdna capped), HD 101,436 of 106,719 (95 percent, risk capped), SAP 113,823 of 120,083 (95 percent, mdna capped), BABA 150,078 of 481,938 (31 percent, BOTH capped -- its risk item alone is 350,005 chars). Every object records excerpt.truncated_items and excerpt.item_full_chars beside the text, so the bound is visible on the artifact and never silent.",
+      "notes": "Not a defect of this cell -- the cap is declared, recorded per object and required by the time bound -- but a fact any reader of F-1 must hold before comparing two names. A Thesis tab that says 'the biggest risks' is saying it over the first 70,000 characters of Alibaba's risk factors and over all of Costco's. The clean remedy is chunked multi-call coverage with the passage map spanning the chunks, which is a larger cut than this one and is not taken here."
     }
 ]
 ```
