@@ -297,13 +297,60 @@ has no machine field separating "search found nothing" from "links unreadable" (
    officers today. The proxy statement (DEF 14A), which carries fuller executive bios, is the first filing to add; Lusha /
    LinkedIn job history then fills the rest -- UNMEASURED, because card 2's prospecting fields carry no dates, so the Lusha
    route that returns employment history is measured before it is relied on (job history is not contact data; contact reveal
-   stays off).
+   stays off). ⭐ **SOURCE ORDER ~18:2xZ (Andrew, verbatim in the Robustness record's follow-on):** the Mgmt tab is "average exec
+   management time with company", from BLOOMBERG first and, where Bloomberg does not have it, LUSHA; and he asked for Lusha's
+   reliability on executive-manager information to be measured, including whether it parses into scoped measures (average
+   time at the company as a manager; average time at the company in general). Measured by this seat under the session egress
+   word -- see the substrate cards.
    **Candidates for the other tabs (REC only; Andrew left them open):** Peers -- one valuation multiple on a named basis (for example
    EV/EBIT NTM) as the pair within the pool; Model -- one operating figure from the model block (for example FCF margin, or 3-year
    revenue growth); Thesis -- none until the thesis driver carries numeric points (candidate 1), then the driver's latest change;
    Posture -- no metric of its own, it reads the four.
    **Round-11 reach:** none required. rj-9 builds the tabs now under a frozen face; the metric slot is round-12 material. Whether the
    unspawned rj-12 reserves a header slot for Posture's pair is `2.0.0_SA_COO~W`'s call as issuer.
+
+14. **THE THESIS/RISK TAB SCORE IS ROBUSTNESS -- Andrew-direct ~18:1xZ, the factor model recorded verbatim** (record
+   `ANDREW_DIRECT_20260915_181xZ_THESIS_RISK_TAB_SCORE_IS_ROBUSTNESS_FACTOR_MODEL.md`). Six universal constraints (EBIT / interest;
+   net debt / EBITDA; (cash + revolver) / 24-month obligations; debt maturing within 24 months / total debt; FCF / revenue TTM;
+   largest customer / revenue), each transformed (ln, logit, identity), standardized as headroom to a threshold over 8 TTM
+   observations, weighted by lambda, aggregated by a soft minimum with tau 0.5, guarded, then ranked within sector and residualized
+   in an orthogonalization order. It is the Thesis/Risk tab's metric under candidate 13 (absolute S, relative P).
+   **SOURCE (Andrew ~18:2xZ, ruled): every input comes from BLOOMBERG.**
+   **DATA, MEASURED ~18:1xZ against what the estate pulls today:** the Bloomberg model block (`model_block_BA_US_Equity.json`, 196
+   figures) is FISCAL-YEAR only -- no quarterly or TTM period -- and carries `EBITDA`, `EBITDA_ADJUSTED`, `NET_DEBT`,
+   `CF_FREE_CASH_FLOW`, `SALES_REV_TURN`, and NO EBIT, interest expense, cash, revolver, short-term debt or maturity ladder, total debt,
+   or customer concentration. The Security Scanner registry (289 codes) carries `int_cov`, `leverage`, `fcf_mgn`, `st_debt_assets`,
+   `cash_ratio`, `fix_chrg_cov`, `cash_cov` as one cross-sectional snapshot (vintage 2026-08-06), not a history, with no definitions in
+   the registry. **So today 2 of 6 constraints (x2, x5) are computable at annual frequency and 0 of 6 at the specified 8-quarter TTM
+   frequency; under the n < 5 guard every name is excluded.** The Bloomberg work the score needs: a QUARTERLY history (at least 11
+   quarters for 8 TTM points) of EBIT, interest expense, net debt, EBITDA, cash, FCF and revenue added to the model block's pull; and,
+   measured on the terminal before a cut relies on them, the fields Bloomberg carries for undrawn revolver availability, 24-month
+   obligations, the debt maturity schedule, total debt, covenant thresholds, and largest-customer revenue share. Where a field is
+   not entitled or not carried, the constraint is ABSENT for that name and n falls -- which with n < 5 excludes the name, so the
+   measurement decides whether the model is computable at all.
+   **METHOD, reviewed (for Andrew to rule; none changes the model's intent):**
+   - *The lambda weights are sign-dependent inside a soft minimum.* lambda > 1 deepens a breach (h < 0, more binding) but also inflates
+     a surplus (h > 0, less binding), so customer concentration at 1.4 matters MORE when breached and LESS when healthy. If lambda means
+     importance, a weighted soft minimum keeps the scale: S = -tau * ln( sum_i w_i exp(-h_i/tau) / sum_i w_i ).
+   - *The EBIT/EBITDA guard removes the binding constraints of the weakest names.* Dropping i=1 and i=2 when EBIT or EBITDA is <= 0
+     takes out coverage and leverage exactly when they are breached, so a company can SCORE HIGHER the quarter it turns loss-making, and
+     with n < 5 it then leaves the ranked factor entirely (survivorship in P). A breach value (h at a declared floor) keeps the name and
+     the signal; the same holds for "x <= 0 on a ln metric" on x3, where zero liquidity is the worst case, not a missing one.
+   - *Undefined cases the guards do not name:* total debt = 0 (x4 is 0/0), interest expense = 0 (x1 infinite before winsorizing), and
+     24-month obligations = 0 (x3 infinite).
+   - *sd over 8 overlapping TTM windows understates volatility:* consecutive TTM values share three of four quarters, so the 8 points
+     carry about two years of independent information; the phi floor limits the damage, and sd of quarterly changes is an alternative.
+   - *x6 will not discriminate for most large caps* if Bloomberg's figure follows the disclosure rule (a customer is reported at 10
+     percent of revenue or more): below that it is censored, its sd is 0, sigma sits at the floor, and every such name gets the same
+     headroom -- which lambda 1.4 then scales.
+   - *Frequency:* 20-F filers (SAP, BABA in the pool) report half-yearly or annually, so 8 quarterly TTM observations may not exist for
+     them; the model needs a stated fallback (fewer observations, recorded).
+   - *Two populations, not one:* the winsorization bounds, phi and the "sector ceiling" need a broad CALIBRATION set per sector, while
+     P ranks within the pool of ANALYZED companies (Andrew ~17:5xZ). With 5 analyzed names across 5 sectors, every sector has one member
+     and P is degenerate. REC: calibrate sector statistics on a broad cross-section (the scanner universe's 2,851 names, or a Bloomberg
+     pull over the same) and rank within the analyzed pool, with a minimum sector size and a fall back to all analyzed names.
+   - *Display:* the page shows P (the percentile Andrew asked for); R is for Posture and any composite, and the orthogonalization order
+     is declared once for all tabs.
 
 ## 5. What is NOT known yet (the slug read's remaining inputs)
 

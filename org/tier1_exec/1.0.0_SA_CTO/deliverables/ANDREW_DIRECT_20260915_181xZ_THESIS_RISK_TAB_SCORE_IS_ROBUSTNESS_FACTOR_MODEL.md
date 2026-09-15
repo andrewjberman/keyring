@@ -78,3 +78,22 @@ CROSS-SECTIONAL
 ## Broadcast
 
 One message to `2.0.0_SA_COO~W`, `3.0.0_SA_CVO~W`, `4.0.0_SA_CRO~W` and `0.0.0_AB_MSTR~Z`. Push state: LOCAL.
+
+---
+
+## FOLLOW-ON ~18:2xZ, at the same terminal, verbatim and entire
+
+> This info should all come from Bloomberg for Robustness Score. Then for the "MGMT" tab, I need you to basically structure it as average exec management time with company which we get from Bloomberg as well but if BBG doesnt have it in the filings then we shoot a shot at doing it via Lusha. In any case, I'd be curious to see how reliable lusha is in getting exec manager info and if the information is parseable so we can attempt more scoped opinions, e.g. average time at company as a manager + average time at company in general, etc.
+
+## Read narrowly
+
+- **ROBUSTNESS SOURCES (ruled):** every input of the Robustness score comes from BLOOMBERG -- not the filings. This supersedes the
+  filing sources this seat's pre-read (candidate 14) first named for revolver availability, 24-month obligations, the maturity ladder,
+  covenant thresholds and customer concentration; what Bloomberg carries for each is measured on the terminal before a cut relies on it.
+- **THE MGMT TAB'S METRIC (ruled):** average executive-management time WITH THE COMPANY -- sourced from Bloomberg first; where Bloomberg
+  does not have it, Lusha is attempted. (His ~18:0xZ word set filings first; this one names Bloomberg -- read here as Bloomberg's
+  holdings of the filing data first, Lusha second.)
+- **A MEASUREMENT HE ASKED FOR:** how reliable Lusha is at returning executive-manager information, and whether it is parseable enough
+  for scoped measures -- for example average time at the company AS A MANAGER, and average time at the company IN GENERAL. This seat
+  runs a bounded measurement under the session's egress word; Lusha contact data stays unstored and contact reveal stays off.
+- **UNCHANGED:** the per-tab principle and its four clarifications; the Robustness model as given.
