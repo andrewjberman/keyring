@@ -415,6 +415,29 @@ worker's id is `POSN_AGGFIX-Z-W<slot>-S<k>`, a seat's `POSN_AGGFIX-Z-S<k>`.
     "world_is": "The anchor is fixed, and HEAD includes every SITEZ commit up to 0c4650dc1c, so the diff counts other orders' files. The one-file result holds only against the base this order's work started from.",
     "notes": "Recorded FAIL by output; the supplementary read is not substituted for the criterion. The fixed anchor is right for the before-arm read, but as the base of this diff it picks up every drain merged in after it. How the criterion is re-cut is the issuer's call.",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "POSN_AGGFIX-Z-W1-S10",
+    "project": "POSN_AGGFIX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_AGGFIX~1",
+    "surfaced_at": "2026-09-15T21:19:52Z",
+    "one_line": "The proof schema defines acceptance[].expect as the Python regex the evidence must match, 'Carried from the task order's <expect>'. TO-A2-1's <expect> clauses are prose, so carrying them verbatim makes proof-of-spec-check refuse every PASS row: 10 violations, 9 no-match and 1 uncompilable pattern. The instance omits expect, so it is graded as self-report (the pre-v3 state).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/standards/PROOF_OF_SPEC.schema.json @49607de3fb, acceptance.items.properties.expect.description: 'spine v3.0 L6/L7 (one clause per criterion): the PATTERN (Python regex, searched with DOTALL) the deciding output must match; the checker grades a mechanical criterion by this match, not by the worker. Carried from the task order's <expect>. OPTIONAL'.",
+        ".tools/proof-of-spec-check.py @49607de3fb conditional_checks: re.search(exp, output_evidence, re.S | re.M); a PASS row that does not match is a violation, and a pattern that does not compile is a violation.",
+        "org/missions/D4/POSN/POSN_AGGFIX/task-orders/POSN_AGGFIX.TO-A2-1.producer-reads-current-weights-and-writes-the-opal-only-key.md @49607de3fb, A2-AC1: <expect>legacy 0; platinum 1 or more; opal_aggregate 1 or more.</expect>; every <expect> in the order is an English clause.",
+        "proof-of-spec-check run in worktree wk-posn_aggfix-1-1 at HEAD 49607de3fb, with each order <expect> carried verbatim into the instance: 'violations=10', 'INVALID (rc=1)'; e.g. \"acceptance[A2-AC1]: status=PASS but output_evidence does NOT match expect 'legacy 0; platinum 1 or more; opal_aggregate 1 or more.'\" and 'acceptance[A2-AC7]: expect is not a valid pattern (unterminated character set at position 263)'."
+      ]
+    },
+    "spec_asserts": "org/standards/PROOF_OF_SPEC.schema.json acceptance[].expect: the regex the deciding output must match, carried from the task order's <expect>, so that the checker, not the worker, grades a mechanical criterion.",
+    "world_is": "The order's <expect> clauses are sentences (backticks, semicolons, parentheses, square brackets), not patterns. Verbatim they match no evidence, and A2-AC7's does not even compile. For this order, carrying cannot engage the checker's grading of PASS rows; only a worker writing its own patterns could, and the schema does not describe that.",
+    "notes": "Form only. The instance's criterion_verbatim carries each prose expectation, and PASS rests on verbatim output against it. TO-A1-1's instance carries no expect either.",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
