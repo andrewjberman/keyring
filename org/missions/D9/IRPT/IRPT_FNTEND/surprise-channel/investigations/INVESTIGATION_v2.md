@@ -4458,6 +4458,112 @@
     "spec_asserts": "The COUNT-BAR limb (.tools/proof-of-spec-check.py:1497-1498): 'For a PASS row whose bar asserts ZERO of a noun ... the evidence may carry no NONZERO count of that noun.' IRPT_FNTEND.TO-FE-s-47 F47-AC2: 'Print the problems list (empty), the carried state and the carried partialReason.'",
     "world_is": "The limb treats any digit directly before the noun as a count, including a digit that ends a criterion id in a label, so an empty problems list read as '2 PROBLEMS'. The refusal is loud rather than silent. It will refuse any later instance that prints '<ID ending in a digit> <noun>' beside a zero-count bar for that noun. FE-s-47 relabelled its own line, 'F47-AC2 VALIDATE -> problems list: []', and edited nothing in .tools/.",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W1-S71",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-15T06:24:12Z",
+    "one_line": "The portal's type shim for bun:test declares test(label, fn) with two parameters, so bun's third argument, the per-test timeout the order adds, has no declared overload for F46-AC1's typecheck. The order names no type declaration; a type-only overload was added inside the grant as fe-s-46/ambient-shims.d.ts.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO FE-s-46, THE REMEDY: 'every test in those two files whose measured cost can reach the default carries an explicit per-test timeout (bun's third test() argument)'. F46-AC1: 'the whole portal typechecks' (bun run typecheck, rc=0). The grant is the two files for timeout arguments only, plus fe-s-46/.",
+    "world_is": "portal/src/pages/InvestorReporting/__tests__/fe-s-1/bun-test.d.ts:14 @ portal 1f3ce9f0 declares `export function test(label: string, fn: () => void | Promise<void>): void`. No other shim in the program adds a third parameter to test; fe-s-19 adds one to beforeAll only. tsconfig.app.json sets types ['vite/client'], so bun-types is not in the program. A three-argument test() call therefore matches no declared overload. That consequence is a reading of the declarations: the typecheck was NOT run without the overload. fe-s-46/ambient-shims.d.ts @ portal 01e5cf3d adds `export function test(label: string, fn: () => void | Promise<void>, timeoutMs?: number): void` to the merged 'bun:test' module, in fe-s-19's beforeAll form. fe-s-1's file is not edited. bun run typecheck read rc=0 at 01e5cf3d, 904b6c4f and a93275c8.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-1/bun-test.d.ts:14 @ portal 1f3ce9f0: export function test(label: string, fn: () => void | Promise<void>): void",
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-19/ambient-shims.d.ts:28 @ portal 1f3ce9f0: export function beforeAll(fn: () => void | Promise<void>, timeoutMs?: number): void -- the only shim member with a timeout parameter",
+        "portal/tsconfig.app.json @ portal 1f3ce9f0: \"types\": [\"vite/client\"]; node_modules has no bun-types",
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-46/ambient-shims.d.ts @ portal 01e5cf3d; cd <WS>/portal && bun run typecheck -> '$ tsc -b --noEmit', rc=0 at 01e5cf3d, 904b6c4f and a93275c8"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W1-S72",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-15T06:24:12Z",
+    "one_line": "The bounds ask for each file's diff to 'touch only test( lines', but the third argument of a multi-line test( call sits on the line that closes the call, not on the line that carries 'test('. Every changed line is a closing line '})' becoming '}, <ms>)', and 0 changed lines carry 'test('.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO FE-s-46 BOUNDS: 'Add or change the third argument of a `test(...)` call, and nothing else. No assertion, no printed line, no helper and no constant changes. Paste the diff of each file into the result file, and show that it touches only `test(` lines.'",
+    "world_is": "All 16 test( calls in fe-s-40/window.test.ts and fe-s-41/one-writer.test.ts span several lines: the label and callback open on the test( line, and the callback closes on its own line. Bun's third argument is written after the callback, on that closing line. git diff -U0 1f3ce9f0 at portal a93275c8 changes 8 lines, each '  })' -> '  }, <ms>)': window.test.ts:302 and one-writer.test.ts:436, 452, 590, 626, 764, 779 and 869. None of them carries 'test('. So the bound is shown the other way, by fe-s-46/timeouts.test.ts's BOUNDS test. It parses both blobs with the TypeScript compiler and prints '8 of 8 changed lines close a test( call; 2 of 2 files equal DEV once the third arguments are removed' (HEAD with every third argument cut is the DEV blob, byte for byte).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "cd <WS>/portal && git diff -U0 1f3ce9f0 -- the two files, at portal a93275c8: 8 hunks, each '-  })' / '+  }, <ms>)'",
+        "fe-s-46/timeouts.test.ts BOUNDS at portal 904b6c4f: 'THE DIFF AGAINST DEV 1f3ce9f0 TOUCHES ONLY THE THIRD ARGUMENT OF test( CALLS: yes -- 8 of 8 changed lines close a test( call; 2 of 2 files equal DEV once the third arguments are removed'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W1-S73",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-15T06:24:12Z",
+    "one_line": "The cell names three tests that can run past bun's 5000 ms default on a loaded box. On this box, under loads of the order's own kind, 8 of the 16 tests in the two files recorded at least 2500 ms. Five tests the cell does not name ran past 5000 ms, and one of them failed a run at the default.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO FE-s-46 THE CELL: 'three tests pass on their content but can run past bun's 5000 ms default test timeout on a loaded box' -- F40-AC5 (window.test.ts:253), F41-AC2's control (one-writer.test.ts:424) and F41-AC5's control (one-writer.test.ts:791). THE REMEDY: 'every test in those two files whose measured cost can reach the default carries an explicit per-test timeout'.",
+    "world_is": "The costs come from junit per-test times: 43 sizing processes on the DEV 1f3ce9f0 blobs (K=3, 3, 5, 8, 12 and 12 at once) and the first run of fe-s-46/timeouts.test.ts at portal 01e5cf3d. Besides the three named tests, five more recorded at least 2500 ms: F41-AC4 (:568, 6969 ms), F41-AC5 BOUND (:751, 7000 ms), the CONTROL at :592 (5046 ms), the CONTROL at :766 (6422 ms) and HISTORY at :438 (3671 ms). Four of the five ran past 5000 ms. In that first run, F46-AC2's single run of one-writer.test.ts FAILED :766 at 6422 ms against bun's default, since it then had no timeout argument. In AFTER run 3, two load processes (p1, p4) each read 1 fail 'timed out after 5000ms', and none of the three named tests was the failing one; :592's 5046 ms was recorded in p1. All 8 carry a timeout at portal a93275c8, each 3 times its highest recorded cost.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "<WS>/.scratch/before-sizing.txt and size-k12.txt (loadrun.mjs, junit per-test ms on the DEV blobs): :568 3078 ms and :751 3828 ms at K=12",
+        "fe-s-46/timeouts.test.ts first run at portal 01e5cf3d (<WS>/.scratch/ac-run-1.txt): ':766  6422 ms FAILED  timeout none (bun default 5000)'; AFTER RUN 3 'p1 (load)  : tests 16 fail 1; ... timed out after 5000ms', 'p4 (load)  : tests 16 fail 1; ... timed out after 5000ms'; F46-AC3 print 'IN THE SET :592 ... highest 5046 ms (F46-AC5 AFTER run 3 p1)', ':568 ... 6969 ms', ':751 ... 7000 ms', ':438 ... 3671 ms'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W1-S74",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-15T06:26:22Z",
+    "one_line": "F46-AC3's bar can be met only while every recorded cost of a test stays at or under 20000 ms: the timeout must be at least 3 times that cost and at most 60000 ms. On this box F41-AC5's control recorded 8375, then 15234, then 18891 ms, so its timeout (56673 ms) is 3327 ms under the cap. fe-s-46/timeouts.test.ts counts every run it makes as recorded and is itself in every later whole-suite census. A heavier load can therefore read F46-AC3 red there with no file changed, the load-dependent red W3-S33 removes from the two files.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "F46-AC3: '\"Can reach the default\" means a measured cost of at least 2500 ms (half of 5000) on ANY recorded run ... Each such test's third argument is at least 3 times its highest recorded cost, and at most 60000 ms'. F46-AC5: 'The two files are run 3 times, each time concurrently with a load you generate', invoked through fe-s-46/timeouts.test.ts. F46-AC6: 'the whole-suite census of record' over src/pages/InvestorReporting/__tests__, which includes fe-s-46/. F46-AC7: 'a loaded box can no longer turn a later cell's census red through these two files'.",
+    "world_is": "F41-AC5's control (one-writer.test.ts:791) has recorded 8375 ms (sizing: 43 processes on the DEV 1f3ce9f0 blobs, up to 12 at once), 15234 ms (first run of timeouts.test.ts, portal 01e5cf3d, AC5 AFTER run 3 p0) and 18891 ms (second run, portal 904b6c4f, AC5 BEFORE run 1 p4). Each rise failed F46-AC3 in the run that recorded it: 1 of 8, then 7 of 8. Each was answered by re-sizing from the measurement: 25125, then 45702, then 56673. The deciding run at a93275c8 read 8 of 8, with that test's costs at 3015-6094 ms on a quieter box. 3 x 18891 = 56673 leaves 3327 ms under the cap, and a recorded cost above 20000 ms has no timeout that meets both bounds. The file measured 228 s, 141 s and 74 s over its three invocations here, starting 5 bun test processes at once 4 to 6 times. Between runs the box also carried 23 python, 16 node and 7 claude processes that were not this file's. It sits under __tests__/, so every later whole-suite census runs it, and its F46-AC3 test counts that census's own load runs as recorded.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "<WS>/.scratch/ac-run-1.txt (timeouts.test.ts at portal 01e5cf3d, rc=1, 228 s): 'IN THE SET :791 ... highest 15234 ms (F46-AC5 AFTER run 3 p0); timeout 25125 ms against floor 45702 ms ... NOT SIZED'; 'EXPLICIT TIMEOUT ON EVERY TEST THAT CAN REACH THE DEFAULT: 1 of 8'",
+        "<WS>/.scratch/ac-run-2.txt (portal 904b6c4f, rc=1, 141 s): 'IN THE SET :791 ... highest 18891 ms (F46-AC5 BEFORE run 1 p4); timeout 45702 ms against floor 56673 ms ... NOT SIZED'; '7 of 8'",
+        "<WS>/.scratch/ac-run-3.txt (portal a93275c8, rc=0, 74 s): ':791 ... timeout 56673 ms against floor 56673 ms and cap 60000 ms -> SIZED'; 'EXPLICIT TIMEOUT ON EVERY TEST THAT CAN REACH THE DEFAULT: 8 of 8'",
+        "tasklist between runs: python.exe 23, node.exe 16, claude.exe 7, bun.exe 2 processes"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W1-S75",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-15T07:16:06Z",
+    "one_line": "Amendment 1 says the cost ledger is produced only by the IRPT_FE_TIMEOUT_LOAD=1 path, and also that the ledger records F41-AC5's control at 18891 ms, a cost measured before the ledger existed. The load path's LEDGER arm therefore carries the 30 pre-amendment costs in from a BOOTSTRAP table (runs B01-B12), each with its run's date, load and source; two of those runs have a day-only date.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-46 F46-AC2: 'The ledger is produced only by the IRPT_FE_TIMEOUT_LOAD=1 path (F46-AC5), with a reporter that records per-test time, and then committed.' AMENDMENT 1: 'The ledger holds each test's recorded costs, each with its run: date, load and source.' and 'The ledger records F41-AC5's control at 18891 ms, so its timeout is 56673 ms.' and 'Your eight committed timeouts stand unless a ledger cost changes one. Each value stays 3 times a ledger cost.'",
+    "world_is": "Seven of the eight committed timeouts are 3 times a cost recorded BEFORE amendment 1 (6984, 3671, 6969, 5046, 7000, 6422 and 18891 ms), and the eighth is the named floor 3 x 5875 ms from row W3-S33; none of these came from a run of the load path as it now stands. If the ledger held only costs the load path measures, those timeouts would stand on no ledger cost. The load path's LEDGER arm reads the working-tree ledger, else the one at HEAD, else a BOOTSTRAP table in timeouts.test.ts holding the 30 costs of the RECORDED table at portal a93275c8 as runs B01-B12. So the committed ledger is written by the load path, and its first 12 runs are carried, not measured, by it. Dates: B01 and B02 (row W3-S33's runs) read '2026-09-14 (before 23:08:10Z)'; B03 and B04 (the issuer's round-8 probes) read '2026-09-15 (day only; the order does not give the time)'; B05 to B12 carry the mtime of the scratch output that recorded them. The census run never reads BOOTSTRAP.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal 09e9431a src/pages/InvestorReporting/__tests__/fe-s-46/timeouts.test.ts: the BOOTSTRAP table (12 runs, 30 costs) and the LEDGER arm, which reads it only when no ledger exists in the working tree or at HEAD",
+        "<WS>/.scratch/a1-load-1.txt (IRPT_FE_TIMEOUT_LOAD=1 at portal 09e9431a, 65 s): 'LEDGER WRITTEN: ... from BOOTSTRAP (no ledger in the working tree or at HEAD): 12 runs recorded before amendment 1; 6 run(s) and 336 cost(s) appended; 18 run(s) in all'",
+        "the ledger it wrote: 18 runs, 371 costs, 16 of 16 tests, 0 unresolved run references; every test's highest cost is a B-run cost, so no committed timeout moved"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```

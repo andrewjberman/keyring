@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_FNTEND~1</issued_to>
 <issued_by>2.0.0_SA_COO~F</issued_by>
 <issued_date>2026-09-15</issued_date>
-<status>pending</status>
+<status>complete</status>
 
 **Directive:** D9 | **Fabric:** laptop | **PRD:** `../prd/IRPT_FNTEND_PRD.md` v0.6 @d1479bc5f0 (FIXTURES AND EVIDENCE) | **Decomp cell:** `FE-s-46` (round 8, v0.8 @734eb61ac1) | **outcome_ref:** FWD-1, FWD-11 (evidence) | **depends_on:** none | **slot:** ~1 | **rows:** C-S96 (W3-S33)
 
@@ -42,8 +42,9 @@ Measured by the issuer at portal DEV 1f3ce9f0:
 <criterion id="F46-AC2" cell_refs="FE-s-46" drives="none"><invocation>cd <WS>/portal && timeout 300 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting/__tests__/fe-s-46/timeouts.test.ts</invocation><expect>EVERY TEST IN THE TWO FILES MEASURED: (\d+) of \1(?![0-9])</expect></criterion>
 `F46-AC2` -- the census, by subtraction over the two files.
 - The test enumerates every `test(` call in the COMMITTED blobs (`git cat-file blob HEAD:<path>`) of `fe-s-40/window.test.ts` and `fe-s-41/one-writer.test.ts`, and prints the denominator.
-- It prints each test's measured cost from a run of that file, taken with a reporter that records per-test time (for example `bun test --reporter=junit --reporter-outfile=<WS>/.scratch/<file>.xml`).
-- The line reads `n of n` only when every enumerated test has a cost.
+- It prints each test's recorded cost from the COMMITTED cost ledger `__tests__/fe-s-46/recorded-costs.json` (AMENDMENT 1), read with `git cat-file blob HEAD:<path>`. Each cost carries the run it came from.
+- The ledger is produced only by the `IRPT_FE_TIMEOUT_LOAD=1` path (F46-AC5), with a reporter that records per-test time, and then committed.
+- The line reads `n of n` only when every enumerated test has a ledger cost.
 
 <criterion id="F46-AC3" cell_refs="FE-s-46" drives="none"><invocation>cd <WS>/portal && timeout 300 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting/__tests__/fe-s-46/timeouts.test.ts</invocation><expect>EXPLICIT TIMEOUT ON EVERY TEST THAT CAN REACH THE DEFAULT: (\d+) of \1(?![0-9])</expect></criterion>
 `F46-AC3` -- W3-S33, read from the COMMITTED blobs.
@@ -53,23 +54,30 @@ Measured by the issuer at portal DEV 1f3ce9f0:
 
 <criterion id="F46-AC4" cell_refs="FE-s-46" drives="none"><invocation>cd <WS>/portal && timeout 300 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting/__tests__/fe-s-46/timeouts.test.ts</invocation><expect>A SEEDED 1 MS TIMEOUT FAILS THE SAME TEST: yes</expect></criterion>
 `F46-AC4` -- the control, which shows bun honours the argument.
-- A scratch copy under `<WS>/.scratch/` of F41-AC2's control test, with its timeout set to 1 ms, is run and FAILS on the timeout.
-- The same copy with the committed timeout passes.
+- AMENDMENT 1: a seeded scratch test of YOUR OWN under `<WS>/.scratch/`, not F41-AC2's control. It is a body of about 50 ms that FAILS on a 1 ms timeout.
+- The same body with a 5000 ms timeout passes.
+- It spawns no load, and it runs no test of the two named files.
 - An argument bun ignored would read the same both ways; this arm is the one that can say no.
 
-<criterion id="F46-AC5" cell_refs="FE-s-46" drives="none"><invocation>cd <WS>/portal && timeout 300 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting/__tests__/fe-s-46/timeouts.test.ts</invocation><expect>THE TWO FILES UNDER LOAD: 3 of 3 RUNS 0 FAIL(?![0-9])</expect></criterion>
+<criterion id="F46-AC5" cell_refs="FE-s-46" drives="none"><invocation>cd <WS>/portal && IRPT_FE_TIMEOUT_LOAD=1 timeout 900 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting/__tests__/fe-s-46/timeouts.test.ts</invocation><expect>THE TWO FILES UNDER LOAD: 3 of 3 RUNS 0 FAIL(?![0-9])</expect></criterion>
 `F46-AC5` -- exercised under load.
 - The two files are run 3 times, each time concurrently with a load you generate: for example, 2 more copies of the same two files running at once.
 - The test prints each run's per-test cost for the two named tests, and the load it generated.
 - The BEFORE arm is recorded, not graded: the same load on the DEV 1f3ce9f0 blobs, with its fail count. A load timeout is probabilistic, so its absence on one run proves nothing.
 
-<criterion id="F46-AC6" cell_refs="FE-s-46" drives="none"><invocation>cd <WS>/portal && timeout 600 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting/__tests__</invocation><expect>(?<![0-9])0 fail</expect></criterion>
-`F46-AC6` -- **the whole-suite census of record**, with `IRPT_FE_DEV_PORT` exported to a port you have measured closed.
+<criterion id="F46-AC6" cell_refs="FE-s-46" drives="none"><invocation>cd <WS>/portal && timeout 120 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting/__tests__/fe-s-46/timeouts.test.ts</invocation><expect>THE CENSUS RUN SPAWNS NO LOAD AND MEASURES NO COST: yes</expect></criterion>
+`F46-AC6` -- AMENDMENT 1, row W1-S74.
+- With `IRPT_FE_TIMEOUT_LOAD` unset (the whole-suite census's case), the file spawns no load process, runs no test of the two named files, and records no cost.
+- It prints the processes it spawned and its own wall time.
+- Every load and measurement arm prints its SKIPPED reason by name.
 
-<criterion id="F46-AC7" cell_refs="FE-s-46" judgment="true" drives="none"/>
-`F46-AC7` -- graded at L9: a loaded box can no longer turn a later cell's census red through these two files, and every timeout is sized from a measured cost. RECORD; NO VERDICT.
+<criterion id="F46-AC7" cell_refs="FE-s-46" drives="none"><invocation>cd <WS>/portal && timeout 600 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting/__tests__</invocation><expect>(?<![0-9])0 fail</expect></criterion>
+`F46-AC7` -- **the whole-suite census of record**, with `IRPT_FE_DEV_PORT` exported to a port you have measured closed.
 
-<expected_criteria>F46-AC1, F46-AC2, F46-AC3, F46-AC4, F46-AC5, F46-AC6, F46-AC7</expected_criteria>
+<criterion id="F46-AC8" cell_refs="FE-s-46" judgment="true" drives="none"/>
+`F46-AC8` -- graded at L9: a loaded box can no longer turn a later cell's census red through these two files, and every timeout is sized from a measured cost. RECORD; NO VERDICT.
+
+<expected_criteria>F46-AC1, F46-AC2, F46-AC3, F46-AC4, F46-AC5, F46-AC6, F46-AC7, F46-AC8</expected_criteria>
 
 ## BOUNDS
 
@@ -79,7 +87,7 @@ Measured by the issuer at portal DEV 1f3ce9f0:
   - No assertion, no printed line, no helper and no constant changes.
   - Paste the diff of each file into the result file, and show that it touches only `test(` lines.
 - ⛔ **SIZE FROM A MEASUREMENT, NEVER A ROUND GUESS.** Every timeout cites the recorded cost it is 3 times, in the result file.
-- ⛔ **THE WHOLE-SUITE RUN IS THE CENSUS OF RECORD** (F46-AC6). A red test outside your grant is a BLOCKING row with the list, never an edit.
+- ⛔ **THE WHOLE-SUITE RUN IS THE CENSUS OF RECORD** (F46-AC7). A red test outside your grant is a BLOCKING row with the list, never an edit.
 - ⛔ **NOT YOURS:** every other file under `fe-s-40/` and `fe-s-41/`; `state/tradingCalendar.ts`; `lib/trading_calendar.py`; the fixture maps; `package.json` and `bunfig.toml` (a global timeout would hide every other slow test, which is the opposite of this remedy).
 - **RULING AC.** F46-AC2 and F46-AC3 read the committed blobs. Your load runs read the working tree, and that is deliberate: they exercise what runs.
 - **Servers.** No dev server is needed. Export `IRPT_FE_DEV_PORT` on EVERY `bun test` run to a port you have measured closed (5261 is this slot's). A closed loopback port refuses in about 0.3 to 2 s here, so any probe timeout must exceed 2 s. Sibling slots use 5263 and 5265; never touch them.
@@ -89,6 +97,17 @@ Measured by the issuer at portal DEV 1f3ce9f0:
 - **Surprise.** ONE row per finding, id `IRPT_FNTEND-W1-S<k>`, starting at W1-S71. Read the WHOLE channel PLANE (`INVESTIGATION_v1.md` AND `_v2.md`) before minting; an INERT row OMITS the `disarm_owner` key; write with `newline='\n'` and READ THE DIFFSTAT of your commit.
 - **REFUSE** any criterion you cannot satisfy as written and report the refusal with its measurement.
 - Report push state as LOCAL. **PORTAL IS FROZEN**: local commits only.
+- ⛔ **AMENDMENT 1 (2.0.0_SA_COO~F, 2026-09-15 ~06:4xZ; row IRPT_FNTEND-W1-S74 ARMED, disarm owner this seat; this order is REOPENED; one criterion added, none removed).** Your first run met every bar. W1-S74 shows the CUT put a load-dependent instrument into every later census:
+  - `timeouts.test.ts` records its own load runs as costs, and it runs inside the whole suite;
+  - so a heavier box turns F46-AC3 red with no file changed;
+  - and every census pays its load: 128 s, against 77 s at DEV.
+  **The census must be deterministic:**
+  - **The census run** (no env var) reads ONLY committed blobs: the two files and a committed cost ledger, `__tests__/fe-s-46/recorded-costs.json`. The ledger holds each test's recorded costs, each with its run: date, load and source. The census run spawns NO load, measures NO cost, and runs no test of the two named files (F46-AC6).
+  - **The load and measurement arms** run ONLY when `IRPT_FE_TIMEOUT_LOAD=1` is set (F46-AC5). Otherwise each is skipped BY NAME, with the reason printed. They write the ledger, which you then commit.
+  - **F46-AC4** uses a seeded scratch test of your own, not F41-AC2's control.
+  - **The 60000 ms cap stays.** The ledger records F41-AC5's control at 18891 ms, so its timeout is 56673 ms. Print the headroom. A future recorded cost above 20000 ms makes that test a named residual for the next cut, not a red.
+  - **Your eight committed timeouts stand** unless a ledger cost changes one. Each value stays 3 times a ledger cost.
+  - **Your portal branch now carries portal DEV ad732941** (FE-s-48 drained), synced before this amendment. The whole suite (F46-AC7) runs again with this amendment applied.
 
 <paths>
 portal/src/pages/InvestorReporting/__tests__/fe-s-40/window.test.ts
@@ -103,10 +122,10 @@ org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: `F46-AC1` .. `F46-AC7`. Instance at
+Criterion ids: `F46-AC1` .. `F46-AC8`. Instance at
 `org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/IRPT_FNTEND.TO-FE-s-46.per-test-timeouts-sized-to-cost.proof_of_spec.json`
 (phase `BUILD-GENERAL`, firm `FABRIC`, spec_ref.group `OTHER`), validated with
-`python .tools/proof-of-spec-check.py <instance> F46-AC1,F46-AC2,F46-AC3,F46-AC4,F46-AC5,F46-AC6,F46-AC7 --governing-order org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-46.per-test-timeouts-sized-to-cost.md` BEFORE the `complete` flip. `F46-AC7` recorded `UNVERIFIABLE-BY-INSTRUMENT`, `status_reason` naming the CVO at L9. Result file `per-test-timeouts-sized-to-cost.result.md` beside it. Flip only when every mechanical criterion PASSES by output.
+`python .tools/proof-of-spec-check.py <instance> F46-AC1,F46-AC2,F46-AC3,F46-AC4,F46-AC5,F46-AC6,F46-AC7,F46-AC8 --governing-order org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-46.per-test-timeouts-sized-to-cost.md` BEFORE the `complete` flip. `F46-AC8` recorded `UNVERIFIABLE-BY-INSTRUMENT`, `status_reason` naming the CVO at L9. Result file `per-test-timeouts-sized-to-cost.result.md` beside it. Flip only when every mechanical criterion PASSES by output.
 </proof_of_spec>
 
 **REPORT:** your FINAL MESSAGE, once, in the `WORKER REPORT` shape.
