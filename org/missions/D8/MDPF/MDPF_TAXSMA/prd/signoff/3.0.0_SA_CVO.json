@@ -1,11 +1,11 @@
 {
   "prd": "MDPF_TAXSMA_PRD.md",
-  "prd_version": "v0.2",
-  "prd_pin": "8ab2dc2bc63fe8699e01fc33772b6f8523d224f0",
+  "prd_version": "v0.5",
+  "prd_pin": "5061a43a46230b6d188886f8b19846f5445b0b0c",
   "half": "ratified-text",
-  "half_hash": "fed0ad5c18f33765a8e3aaf08bb8fcd1018af3a6ee109340b2ec5fa5ca634fd3",
+  "half_hash": "ab7f2488ad922e26fa91feae1b19ae7c5615c6520b338f77150569e5ff84b77b",
   "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/PRD_REVIEW_MDPF_TAXSMA_v0.2_RATIFIED_TEXT_HALF_20260915.md@20504bde03",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/PRD_REVIEW_MDPF_TAXSMA_v0.5_RATIFIED_TEXT_HALF_20260915.md@e01e049d24",
   "signed_by": "3.0.0_SA_CVO",
-  "signed_at": "2026-09-15T08:39:24Z"
+  "signed_at": "2026-09-15T19:49:18Z"
 }

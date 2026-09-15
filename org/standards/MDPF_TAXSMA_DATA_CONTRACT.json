@@ -1,6 +1,6 @@
 {
   "contract": "MDPF_TAXSMA_DATA_CONTRACT",
-  "version": "0.2.0",
+  "version": "0.5.0",
   "authority": "org/missions/D8/MDPF/MDPF_TAXSMA/prd/MDPF_TAXSMA_PRD.md",
   "state": "RATIFIED",
   "purpose": "Normative design enumerations; no deployed implementation or observed account population is asserted by this file.",
@@ -84,7 +84,59 @@
     },
     "overflow_behavior": "Fail closed with source error and observed extent. Never truncate and label the result complete.",
     "snapshot_consistency": "Read driveItem ETag before and after complete worksheet acquisition. Publish a snapshot only on equality, complete-page coverage, expected unique headers, and recognized row structure.",
-    "date_input": "Accept ISO YYYY-MM-DD or an actual Excel date cell decoded with the workbook epoch. Reject ambiguous locale strings. Do not equate Inception Date or Last Trade Date with a proven first strategy trade."
+    "date_input": "Accept ISO YYYY-MM-DD or an actual Excel date cell decoded with the workbook epoch. Reject ambiguous locale strings. Do not equate Inception Date or Last Trade Date with a proven first strategy trade.",
+    "source_boundary": {
+      "system": "gateway",
+      "registry_ref": "infra/logic/registry/systems.json",
+      "registry_registration": {
+        "required_key": "gateway",
+        "required_class": "PLATFORM_SUBSYSTEM",
+        "owner_directive": "D9",
+        "registry_owner": "2.0.0_SA_COO~G",
+        "state": "PENDING_BUILD_PREREQUISITE",
+        "authority": "CTO97152: do not wait for the row to land the PRD or trigger review; address() resolves once the systems.json gateway row lands.",
+        "completion_trigger": "COO97187: LGIC_ENFORCE round2 EN-r-5 drain to CLOUD after its required v1.2 brief re-sign; condition remains gateway registered and canonical constructors resolving at build HEAD."
+      },
+      "authority": "CTO97115 F1 and CTO97131 source identity gateway; doctrine section 1; CLAUDE.md Rule 30 at a3d77717df",
+      "shipped_payload": "The complete successful /ms/taxsma-workbook capability response. The seven-field projection happens at this source boundary; it is not an Opal Bronze rewrite of a full Graph worksheet.",
+      "bronze_bytes": "Persist the successful JSON response body byte-for-byte, before parsing/reserializing it. Store retrieval metadata and SHA-256 outside those body bytes. Never retain excluded Graph columns.",
+      "bronze_partition": "UTC knowledge date rendered compact YYYYMMDD under R9; the source dates in the response remain unchanged."
+    },
+    "silver": {
+      "surface": "S19",
+      "trigger": "Successful durable S02 Bronze acquisition is the event that invokes S19 within the existing bounded prelude; no independent clock, poller, queue or standing monitor. Replay of a receipt only repairs/verifies the same snapshot.",
+      "format": "Typed parquet; hive date=YYYY-MM-DD by UTC knowledge date; one immutable snapshot_id-response_sha256.parquet per complete response. response_sha256 hashes exact shipped body bytes; the existing logical snapshot_id remains content-based. Different acquisition envelopes for unchanged logical rows therefore never overwrite or collide with prior raw/Silver captures.",
+      "rows": "Every shipped row is retained, including ACCOUNT_SLOT, BLANK, TOTAL and UNRECOGNIZED. Deduplicate delivery replay by exact response_sha256 plus row_number only; distinct source rows with duplicate account identities remain distinct for S03/S04 to flag. Conflicting replay bytes are an error.",
+      "columns": "Retain all seven projected business columns and all three row_metadata fields. Retain every response envelope field except rows as typed Parquet file metadata, including for a zero-row snapshot. Include Bronze address/hash and snapshot_id provenance. No business filtering, column slimming, normalization of account values or membership selection here.",
+      "typing": "row_number is int64; row_kind is string and other_business_cells_present boolean. Each of the seven business columns retains its shipped scalar in a typed struct with a kind enum (STRING, INTEGER, FLOAT, BOOLEAN, NULL) and mutually exclusive nullable string_value, integer_value (int64), float_value (float64) and boolean_value fields; NULL has no populated value field. No padding, case folding, status parsing or date coercion occurs here. S03/S04 apply the existing business/identity parsers after reading the preserved scalar. The JSON capability rejects non-JSON NaN/Infinity; representable invalid business values remain evidence. Envelope counts are int64, complete is boolean, and identity/date/hash fields are strings with the contract meanings.",
+      "consumer": "S03 reads the complete validated Silver snapshot and its source lineage; Bronze remains immutable audit/replay evidence, never a direct membership shortcut.",
+      "failure": "Missing/corrupt/incomplete Silver is SOURCE_UNAVAILABLE or SOURCE_SCHEMA_INVALID with last-good lineage, never an empty or reduced expected population. Gold cannot report current complete membership before Silver completion.",
+      "business_scalar_schema": {
+        "kind": [
+          "STRING",
+          "INTEGER",
+          "FLOAT",
+          "BOOLEAN",
+          "NULL"
+        ],
+        "fields": {
+          "string_value": "nullable string",
+          "integer_value": "nullable int64",
+          "float_value": "nullable float64",
+          "boolean_value": "nullable boolean"
+        },
+        "invariant": "Exactly the matching field is populated for a non-NULL kind; all four are null for NULL. Refuse unrepresentable input rather than coerce or omit it."
+      },
+      "business_columns": [
+        "Index",
+        "Account Number",
+        "Strategy",
+        "Ready",
+        "Inception Date",
+        "Last Trade Date",
+        "Traded"
+      ]
+    }
   },
   "capability": {
     "method": "GET",
@@ -92,7 +144,7 @@
     "pattern": "Gateway-held delegated identity behind one content-specific capability",
     "identity_configuration": "TAXSMA_WORKBOOK_IDENTITY",
     "credential_configuration": "TAXSMA_WORKBOOK_BEARER",
-    "identity_selection": "One named Opal person, explicitly approved by Andrew before activation; no default identity",
+    "identity_selection": "Bind the Andrew-designated opalbloomberg@opalinvest.com account by its validated Entra tenant ID (tid) and object ID (oid), never by an email comparison. The email is designation/display/audit metadata only. TAXSMA_WORKBOOK_IDENTITY records the immutable tid/oid pair resolved from the existing validated Entra principal context, with no default/substitute or caller-supplied identity. G-A authorization is recorded; actual immutable binding and capability access remain to be measured before activation. No Bloomberg terminal credential or delegated-token export.",
     "input_selectors": [],
     "response_fields": [
       "schema_version",
@@ -151,6 +203,36 @@
       "row values",
       "tokens",
       "authorization headers"
+    ],
+    "named_identity": "opalbloomberg@opalinvest.com",
+    "authorization_ref": "org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20260915_180xZ_TAXSMA_WORKBOOK_IDENTITY_OPALBLOOMBERG_AND_ACTIVE_FIELD_MEMBERSHIP.md@f95470f38400da6d2a40eeaa7469651e32ddb95e",
+    "existing_workbook_access": {
+      "status": "UNMEASURED",
+      "belief_ref": "org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20260915_183xZ_TAXSMA_ACCESS_BELIEVED_AND_TRADED_COLUMN_IS_MEMBERSHIP_KEY.md@1729cef85e070c632292418925aea32b49f7bbc2",
+      "belief": "Andrew thinks the account already has access; this is not a permission measurement or a request for another check.",
+      "measurement_ref": "org/missions/D8/MDPF/MDPF_TAXSMA/prd/IDENTITY_ACCESS_PROOF_97190.json",
+      "measured_boundary": "Relayed Site-Z exact identity MATCH; get_site_item refused by the per-identity Gateway tool guard before Graph. No SharePoint permission result exists, and the proposed separate capability route was not tested.",
+      "activation_proof": "At TX-r-3 under existing capability/release authorizations, prove the designated account is bound to the configured validated Entra tid/oid, then perform the controlled GET /ms/taxsma-workbook read. Retain protected principal/request/time/result evidence without tokens or workbook rows. The relayed whoami email MATCH is not proof of this immutable binding. Failed binding/read does not activate.",
+      "restriction": "No new metadata-tool probe, allowlist widening, sharing-list check or alternate identity is ordered by the latest carrier. Do not bypass a guard. A measured activation refusal is reported through the release owner; no automatic grant or scope widening."
+    },
+    "projection_authority": "The existing seven-field projection and response/header shape stand. Andrew1729cef85e chooses the already projected Traded field; no active column or workbook-maintainer request.",
+    "guard_order": "The new route has its own guard before generic /ms/* handling. Exact path/method, separate route-only capability bearer, configured validated Entra tid/oid binding, current applicable principal/capability revocation and fixed resource/projection controls all pass before delegated-token fetch or Graph access. Do not fall through to generic guards on a capability failure or accept a generic MCP/ms-ingest/OTP credential as this capability. Other routes keep their existing guards; this ordering is not an allowlist widening or a bypass.",
+    "identity_binding": {
+      "counterpart_ref": "org/missions/D9/NFRA/NFRA_OPLGTW/prd/NFRA_OPLGTW_PRD.md@f0aa50dbc05f1725f3cd1b398b88e6b7639970ae",
+      "counterpart_sections": [
+        "C1",
+        "C2",
+        "A3"
+      ],
+      "configuration": "TAXSMA_WORKBOOK_IDENTITY holds exactly the approved validated Entra tid and oid; named_identity remains display/audit designation only. Actual IDs are protected configuration inputs, not invented here or accepted from caller headers.",
+      "trust_source": "Resolve and record the tid/oid pair from the existing validated Entra principal context for the designated account; use that pair to select and check its broker-held delegated identity. An email match alone, unvalidated token decode or caller-provided tid/oid is not binding proof. Existing issuer/tenant/signature/audience and current revocation checks still apply.",
+      "deny": "Missing, malformed, wrong-tenant or wrong-object binding fails closed before token fetch/Graph; same email with different tid or oid must fail. Invalid capability bearer is UNAUTHORIZED_CAPABILITY. Missing/invalid delegated principal binding is AUTH_REQUIRED. Never fall back to an email-keyed grant or another person.",
+      "controlled_proof": "With the same email designation and otherwise identical valid inputs, change tid only, then oid only: both denied with zero token fetches/Graph requests. Correct validated configured pair succeeds. Also deny unvalidated claims, missing pair, revoked principal/capability and generic credentials. Route-dispatch controls prove the capability guard runs before generic /ms/* handling and cannot be skipped by it."
+    },
+    "counterpart_refs": [
+      "docs/architecture/NFRA_OPLMCP_PRD.md@33c581d223e2e3bac5e44a37abb407b5f79f82de",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/TAXSMA_D8_PIPELINE_20260915/GOVERNING_CONTRACTS.md@d971e17752",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/prd/NFRA_OPLGTW_PRD.md@f0aa50dbc05f1725f3cd1b398b88e6b7639970ae"
     ]
   },
   "status_axes": {
@@ -173,7 +255,8 @@
       "TRANSFER_UNRESOLVED"
     ],
     "membership_date_status": [
-      "ATTESTED",
+      "OBSERVED_TRADED",
+      "OBSERVED_INACTIVE",
       "UNVERIFIED"
     ],
     "technical_enrollment": [
@@ -206,13 +289,13 @@
     ]
   },
   "membership": {
-    "denominator": "Every current TRADED_CLAIM plus unresolved previously traded removals/conflicts relevant to the valuation date. Technical enrollment, source absence and missing dates never silently reduce this denominator.",
-    "inclusion": "A dated contribution requires exact identity, verified effective membership for that valuation date, compatible reporting master and strategy, and a valid canonical value. The current workbook is a claim of business status, not independent proof of historical activation.",
-    "exclusion": "Known untraded, prospect and blank rows remain outside value sums even if funded or open at Schwab. Every exclusion has a reason; source failure is never an exclusion.",
+    "denominator": "expected_accounts is the dated membership proof population before identity/value filters, distinct from current business_active_accounts. Every applicable observed Traded member and unresolved prior traded removal/conflict remains in that proof population. Unknown earlier history or an unresolved membership/identity census makes the complete dated count null, never zero. Preserve every current YES claim and its reason in protected evidence even when it has no covered value. Missing custodian/master/strategy/BD/value evidence cannot remove an otherwise countable live claim.",
+    "inclusion": "Traded=YES alone asserts current live membership. Ready, funding, custodian status, strategy labels and BD enrollment neither activate nor veto that business assertion. A covered dated value separately requires exact identity, observed membership for that valuation date, compatible reporting master/strategy and the valid canonical value. Missing custodian or conflicting strategy leaves the live claim present but value unresolved; it blocks a complete affected total rather than silently dropping the account.",
+    "exclusion": "Explicit Traded=NO is inactive from its observed boundary; known untraded/funded accounts and genuine prospects do not contribute. BLANK/TOTAL rows never contribute. UNKNOWN/INVALID Traded on an identified account is unresolved, not inactive. Source failure, removal, rekeying and absent custodian evidence never prove deactivation. Ready alone has no membership effect.",
     "disposition_kinds": [
-      "CONFIRM_EFFECTIVE_MEMBERSHIP",
+      "OBSERVE_TRADED",
+      "OBSERVE_INACTIVE",
       "CORRECT_IDENTITY",
-      "CONFIRM_INACTIVE",
       "CONFIRM_TRANSFER",
       "RESOLVE_STRATEGY"
     ],
@@ -226,10 +309,21 @@
       "evidence_ref",
       "actor",
       "recorded_at",
-      "reason"
+      "reason",
+      "source_event_id",
+      "source_observed_at",
+      "traded_value",
+      "membership_date_basis"
     ],
-    "disposition_rule": "Append-only protected data correction with evidence and named actor. No data disposition opens an account, places a trade, grants access or changes a trading master. Corrections do not silently rewrite the workbook.",
-    "effective_date_rule": "Initial effective membership is ATTESTED-only in v1. Only an authorized operator's CONFIRM_EFFECTIVE_MEMBERSHIP disposition, with a validated full account_key and the required effective_date, evidence_ref, workbook_snapshot_id, actor, recorded_at, reason and disposition history fields, establishes ATTESTED membership. effective_date is the first inclusive membership day; CONFIRM_INACTIVE ends that interval on its effective_date, exclusively. Inception Date, Last Trade Date, custodian strategy labels and source-arrival dates never establish activation automatically. A new TRADED_CLAIM is discovered without manual roster enrollment and enters the expected denominator immediately; until the explicit dated disposition exists it is UNVERIFIED with MEMBERSHIP_DATE_UNVERIFIED, contributes no covered value and prevents a complete affected total. The pending claim and operator disposition remain visible in protected evidence. After attestation, daily processing applies the dated interval automatically. Other disposition kinds correct or close existing history; they do not substitute for initial confirmation."
+    "disposition_rule": "Append-only protected history. S03 emits OBSERVE_TRADED/OBSERVE_INACTIVE from complete Silver, with service actor, immutable source snapshot/hash and original observed_at; no human activation call. CORRECT_IDENTITY, CONFIRM_TRANSFER and RESOLVE_STRATEGY retain named actor/evidence and may reconnect proven history, but cannot invent a Traded state or backdate the source observation. Old CONFIRM_EFFECTIVE_MEMBERSHIP/CONFIRM_INACTIVE records remain historical evidence only, not accepted current activation/deactivation commands. No disposition writes the workbook, opens an account, places a trade, changes a master or grants access.",
+    "effective_date_rule": "FIRST_OBSERVED_UTC, chosen by the PRD owner. First accepted complete source observation establishes the history boundary on date(observed_at). YES opens observed membership inclusively on its original first-observed UTC date; explicit NO closes it exclusively on that date. NO-to-YES reactivation opens a new interval. This is a first-known business state, not a historical first-trade claim. Inception Date, Last Trade Date, source_modified_at, valuation dates and manual dispositions cannot backdate it. A valuation date before an account has trustworthy source history is TRADED_HISTORY_UNVERIFIED, not a complete zero; this includes a newly discovered YES account when the available valuation is the prior session. Retained earlier complete NO observations can establish a known inactive interval; source absence alone cannot. Once membership history covers the requested date, its recorded state governs even if the current live count differs. Same-UTC-day transitions use original observed_at order and the latest accepted state for that day, retaining all events. Missing/invalid Traded, source failure and disappearance never close an interval.",
+    "authority_ref": "org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20260915_183xZ_TAXSMA_ACCESS_BELIEVED_AND_TRADED_COLUMN_IS_MEMBERSHIP_KEY.md@1729cef85e070c632292418925aea32b49f7bbc2",
+    "business_count": "business_active_accounts is the count of distinct validated full account keys with Traded=YES in the latest complete accepted workbook snapshot, computed before any custodian, master, strategy, technical-enrollment or value filter. A missing Schwab record does not reduce it. Duplicate rows for one full key count once but remain a conflict; no arbitrary duplicate row wins. Invalid/missing identities on YES claims, contradictory duplicate states, nonempty unrecognized rows, unknown Traded on an identified account or unresolved prior traded removal/rekey make the complete count null, with the known claims retained in protected evidence. NO and genuine prospects with no account and no YES assertion are outside the live count. Source/Traded-schema failure makes the current count unknown; retain last-good evidence and freshness, never show an empty current census.",
+    "traded_classification": "Use the existing trim/casefold Yes/No/blank parser, not truthy coercion. YES is TRADED_CLAIM independent of Ready and reconciliation results. NO is INACTIVE_CONFIRMED after a prior YES, otherwise UNTRADED (or PROSPECT without an account). UNKNOWN/INVALID on an identified or previously traded row is CONFLICT with TRADED_STATUS_UNVERIFIED. A YES without a valid full identity remains CONFLICT with its YES claim retained; it is never reclassified as a prospect. Truly blank/Total rows remain outside membership and retain their source rows in Silver.",
+    "event_idempotency": "source_event_id hashes canonical source identity, full account key, logical snapshot_id, previous accepted event id and normalized Traded state; omit retry time/run UUID. Repeated logical snapshots create no duplicate transition or shifted date. Process current observations by original Gateway observed_at and a persisted watermark. Older unseen snapshots are retained as historical evidence with TRADED_EVENT_ORDER_CONFLICT and cannot silently roll current state backward; conflicting snapshots at the same observed_at refuse. Replay cannot overwrite immutable Gold or bypass pending-next-date corrections.",
+    "automatic_history_fields": "For a source-generated event, actor is the S03 service identity, evidence_ref is protected Bronze/Silver lineage, effective_date=date(source_observed_at), membership_date_basis=FIRST_OBSERVED_UTC, and traded_value is YES or NO. source_event_id is stable; no null/invalid Traded or manual date can activate. Invalid/duplicate identities preserve source-row evidence but do not create a falsely resolved per-account transition.",
+    "legacy_reason_compatibility": "MEMBERSHIP_DATE_UNVERIFIED remains readable historical evidence; current automatic-date failures use TRADED_HISTORY_UNVERIFIED. DISPOSITION_REQUIRED may identify an unresolved identity/transfer/strategy correction only, never an initial membership attestation gate.",
+    "date_comparison": "Compare membership effective_date (the UTC calendar date of source_observed_at) directly to the supplied exchange-session valuation_date as ISO calendar dates: start <= valuation_date < end, with an absent end open. Do not convert valuation_date into a timestamp, reinterpret source_observed_at in exchange-local time, or roll the boundary to a session. The exchange calendar chooses valid/expected valuation sessions only. For example, 2026-09-16T00:30:00Z is September15 at20:30 EDT, but the membership boundary is September16. A new YES with no earlier state leaves September15 unverified; retained NO history instead proves exclusion. An explicit NO at that instant leaves previously proven September15 membership intact and excludes September16 onward until reactivation. Current business_active_accounts reflects the accepted flag immediately at source_observed_at, independently of those dated-value consequences. Weekend/holiday boundaries produce no invented session or value."
   },
   "valuation": {
     "basis": "dim_balance.net_mv_plus_cash via b00 canonical_valuation",
@@ -264,13 +358,16 @@
       "basis",
       "value_status",
       "reason_codes",
-      "supersedes_observation_id"
+      "supersedes_observation_id",
+      "membership_date_basis",
+      "membership_source_event_id"
     ],
-    "observation_key": "SHA-256 of canonical JSON containing full account key, valuation date, source versions/hashes, workbook snapshot, effective-membership disposition version and basis version; omit ingestion clock and run UUID so retries are stable.",
+    "observation_key": "SHA-256 of canonical JSON containing full account key, valuation date, source versions/hashes, workbook snapshot, observed Traded-history event/correction version and basis version; omit ingestion clock and run UUID so retries are stable.",
     "gold_partition_axis": "knowledge_date",
     "gold_partition_policy": "One immutable data.parquet per UTC knowledge date. Conditional create; an existing identical observation is NO_CHANGE. Changed knowledge after that object exists is queued for the next UTC date. Never replace it or mint another leaf for the same date.",
     "correction_resolution": "For each account and valuation date, select the latest knowledge-date observation through an acyclic explicit supersedes chain. Competing corrections or duplicate observation IDs with different payloads are errors, not arbitrary last-row-wins.",
-    "snapshot_aggregation": "Resolve all account observations for a valuation date first, then aggregate. Never select one newest partition and mistake a correction-only partition for a complete cohort."
+    "snapshot_aggregation": "Resolve all account observations for a valuation date first, then aggregate. Never select one newest partition and mistake a correction-only partition for a complete cohort.",
+    "gold_partition_label": "date={knowledge_date}; UTC knowledge date, never the row valuation_date"
   },
   "categories": {
     "member": "Tax-Managed SMA",
@@ -287,6 +384,7 @@
       "valuation_date",
       "knowledge_date",
       "source_observed_at",
+      "business_active_accounts",
       "expected_accounts",
       "covered_accounts",
       "unresolved_accounts",
@@ -315,7 +413,7 @@
         "sums.total_aua",
         "affected node/child aum"
       ],
-      "version": "0.2.0",
+      "version": "0.5.0",
       "rollout_rule": "Enable new served payload only with a compatible consumer in the same environment; production activation waits for its applicable promotion authorization."
     }
   },
@@ -342,21 +440,38 @@
       "audit": "Gateway owner reads the relevant request IDs during access/revocation review and incident recovery; project validation reconciles every controlled call to its audit receipt."
     },
     "cache_policy": "Category accessor cache TTL at most five minutes; do not cache failures or incomplete transport responses as successful data. Explicit refresh bypasses accessor and query caches; UI retains truthful source dates and stale status even before refresh.",
-    "recovery": "Idempotent staged computation, conditional Gold creation, publisher destination readback, and repair of missing/corrupt destination despite unchanged source hash. Repair through the same publisher and canonical served key. No standing comparator, alternate served tree, new monitor or trading side effect."
+    "recovery": "Idempotent staged computation, conditional Gold creation, publisher destination readback, and repair of missing/corrupt destination despite unchanged source hash. Repair through the same publisher and canonical served key. No standing comparator, alternate served tree, new monitor or trading side effect.",
+    "l6_release": "COO97187 holds the one L6 issuance for this v0.5 Traded/identity addendum. Both changed halves must be SIGNED and v0.5 ADMITTED, then COO~T recuts L5 v2 and issues once. Frozen v1 remains historical. G-A is answered at f95470f384; workbook access is believed but UNMEASURED at1729cef85e. Actual controlled capability read and coordinated Gateway/never-widen/consumer release conditions remain. No new field, source-owner handoff, metadata probe or access grant is ordered. v0.5 restores the capability guard ordering, validated Entra tid/oid binding and pinned Gateway counterparts, and explicitly carries the existing UTC-date comparison; no new field, resource or scope."
   },
   "artifacts": {
     "workbook_snapshot": {
       "builder": "address",
       "args": [
-        "mdpf",
+        "gateway",
         "49financial",
         "bronze",
         "taxsma_workbook",
-        "date={knowledge_date}",
-        "{snapshot_id}.json"
+        "date={knowledge_date_compact}",
+        "{snapshot_id}-{response_sha256}.json"
       ],
-      "content": "Minimized complete source snapshot, immutable source evidence",
+      "content": "Byte-identical successful Gateway capability response; seven business fields and bounded metadata, immutable Bronze source evidence",
       "writer": "S02",
+      "readers": [
+        "S19"
+      ]
+    },
+    "workbook_silver": {
+      "builder": "address",
+      "args": [
+        "gateway",
+        "49financial",
+        "silver",
+        "taxsma_workbook",
+        "date={knowledge_date}",
+        "{snapshot_id}-{response_sha256}.parquet"
+      ],
+      "content": "Complete typed source rows with every shipped column; envelope and Bronze lineage retained in Parquet metadata; no membership filtering",
+      "writer": "S19",
       "readers": [
         "S03"
       ]
@@ -370,13 +485,14 @@
         "taxsma_membership",
         "dispositions.json"
       ],
-      "content": "Protected append-only versioned membership evidence; conditional updates retain history",
+      "content": "Protected append-only observed Traded-state events and typed corrections; retain original source time, observed membership boundary and replay identity",
       "writer": "S03",
       "readers": [
         "S03",
         "S04",
         "S05"
-      ]
+      ],
+      "retention": "No expiry: permanent protected audit evidence and append-only disposition history; explicit family declaration under CTO97115 note (i), not an expiring workflow lease."
     },
     "operational_control": {
       "builder": "address",
@@ -411,7 +527,8 @@
       "readers": [
         "S06",
         "S07"
-      ]
+      ],
+      "partition_axis": "The literal date= label contains knowledge_date, independently of valuation_date in each row."
     },
     "firm_category": {
       "builder": "address",
@@ -443,18 +560,13 @@
       "writer": "S07",
       "readers": [
         "S08"
-      ]
+      ],
+      "exception_ref": "E2"
     },
     "firm_served": {
-      "builder": "address",
-      "args": [
-        "mdpf",
-        "49financial",
-        "platinum",
-        "category_views",
-        "category-views.json"
-      ],
-      "content": "Existing caller route remains; owner CANON handles storage migration",
+      "historical_address": "s3://opal-data-portal-v2/platinum/mdpf/49financial/category-views.json",
+      "content": "S08 writes only this existing served destination; no firm-bucket twin or TAXSMA migration. Granted conditional R20 exception X7 until MDPF_CANON repoints.",
+      "exception_ref": "E1",
       "writer": "S08",
       "readers": [
         "S09"
@@ -466,7 +578,8 @@
       "writer": "S08",
       "readers": [
         "S09"
-      ]
+      ],
+      "exception_ref": "E2"
     }
   },
   "runtime_access_matrix": [
@@ -477,6 +590,7 @@
         "read dated 0833 and 0824 source prefixes",
         "read existing 49financial canonical valuation",
         "conditional write/read Tax snapshot, membership and control",
+        "read immutable workbook Bronze and conditional create/read complete workbook Silver; preserve all source columns and firm scope",
         "conditional create/read Tax Gold history"
       ],
       "denied": [
@@ -549,18 +663,24 @@
     "PUBLICATION_INCOMPLETE",
     "DESTINATION_MISMATCH",
     "RUNTIME_FAILED",
-    "DISABLED"
+    "DISABLED",
+    "TRADED_STATUS_UNVERIFIED",
+    "TRADED_HISTORY_UNVERIFIED",
+    "TRADED_EVENT_ORDER_CONFLICT"
   ],
   "field_types": {
     "account_key": "string; validated full canonical form; protected only",
     "date": "ISO YYYY-MM-DD",
     "timestamp": "UTC RFC3339 with explicit offset",
     "value_usd": "nullable parquet decimal128(20,2); JSON finite USD number rounded only at display; reject NaN/Infinity",
-    "counts": "nonnegative integers; expected_accounts nullable only when denominator unknown",
+    "counts": "Nonnegative integers; business_active_accounts is nullable when the current business census is unknown; expected_accounts is nullable when the dated denominator is unknown. covered_accounts/unresolved_accounts enumerate known dated claims, with complete coverage forbidden when expected_accounts is null. For a known denominator, covered_accounts + unresolved_accounts = expected_accounts. Never compare the separately source-dated business count to that valuation-dated sum.",
     "reason_codes": "array of unique reason_codes enum members; compound failures preserved",
     "snapshot_id": "SHA-256 of stable source identity, ETag and projected payload",
     "nullable_rule": "Every unavailable complete amount carries its status/reasons; null is never coerced to zero",
-    "technical_enrollment": "status axis only; cannot gate canonical Schwab daily membership"
+    "technical_enrollment": "status axis only; cannot gate canonical Schwab daily membership",
+    "response_sha256": "SHA-256 of the exact successful capability JSON response body bytes; retained in Bronze object metadata and Silver lineage, separate from the logical snapshot_id.",
+    "business_active_accounts": "Nullable nonnegative integer for current complete business membership at source_observed_at, independent of valuation_date/custodian/value filters; see membership.business_count. Null means unknown, never zero. Preserve through Gold and the sole publisher; status state supplies no alternative numerical cohort.",
+    "membership_date_basis": "FIRST_OBSERVED_UTC for automatic source events; UNVERIFIED before trustworthy source history. Never an inferred historical first trade."
   },
   "canonical_input_mapping": {
     "account_key": "account_id",
@@ -575,5 +695,34 @@
     ],
     "clock_limit": "_ingested_at is partition-date provenance here, not actual source-arrival or write time",
     "boundary": "Use only existing b00 IN_CLIENT_BOOK output; a missing expected member is an explicit boundary/source exception, never a reason to alter b00."
+  },
+  "lgic_exceptions": {
+    "authority": "Andrew RECS APPROVED relayed in CTO97126; R20 register infra/logic/02_DOCTRINE.md section 4 and infra/logic/06_CONFORMANCE_LEDGER.md section 6 at 9cf4a274dbc10c977f679cf2845c3d4fa41c5965.",
+    "E1": {
+      "pipeline": "MDPF_TAXSMA",
+      "axis": "A2",
+      "departure": "49financial category-views Platinum remains in the existing shared portal-v2 bucket.",
+      "why": "Preserve one served writer and one caller home; MDPF_CANON owns the R19 migration.",
+      "kind": "CONDITIONAL",
+      "condition": "Expires when MDPF_CANON repoints and proves the served key under its own authorization.",
+      "acknowledged_by": "Andrew, RECS APPROVED at the base CTO terminal; relayed in CTO97126",
+      "when": "2026-09-15 ~14:4xZ (source precision)",
+      "state": "GRANTED",
+      "register_id": "X7",
+      "register_commit": "9cf4a274dbc10c977f679cf2845c3d4fa41c5965"
+    },
+    "E2": {
+      "pipeline": "MDPF Global composite",
+      "axis": "A2",
+      "departure": "Global composite Gold remains in the product bucket and served Platinum in the shared portal-v2 bucket.",
+      "why": "R7 cross-firm composite branch, attributable to no single firm. De-identification basis is categories.wire_privacy: aggregate counts, status and dates only, no account identifiers, names or row-level evidence.",
+      "kind": "PERMANENT",
+      "condition": null,
+      "acknowledged_by": "Andrew, RECS APPROVED at the base CTO terminal; relayed in CTO97126",
+      "when": "2026-09-15 ~14:4xZ (source precision)",
+      "state": "GRANTED",
+      "register_id": "X2",
+      "register_commit": "9cf4a274dbc10c977f679cf2845c3d4fa41c5965"
+    }
   }
 }

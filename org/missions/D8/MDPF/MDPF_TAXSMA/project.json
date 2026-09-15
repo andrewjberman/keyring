@@ -5,7 +5,7 @@
   "fabric": "laptop",
   "pipeline": "mdpf",
   "status": "scoping",
-  "dep_stage": "PRD",
+  "dep_stage": "EXECUTING",
   "created": "2026-09-15",
   "registered_under_tree": "2026-09-15",
   "placement": "LAPTOP",
@@ -18,7 +18,9 @@
   "prds": [
     "org/missions/D8/MDPF/MDPF_TAXSMA/prd/MDPF_TAXSMA_PRD.md"
   ],
-  "decompositions": [],
+  "decompositions": [
+    "org/missions/D8/MDPF/MDPF_TAXSMA/decompositions/MDPF_TAXSMA_DECOMP.md"
+  ],
   "leads": {
     "cto": "1.0.0_SA_CTO~A",
     "coo": "2.0.0_SA_COO",
@@ -33,7 +35,7 @@
     "OPAL_TAXROSTER",
     "OPAL_TAXSMA_REGISTRY"
   ],
-  "blocking": "L4-R v0.2 ADMITTED at 60c722fe64; both signatures unchanged. Andrew's next-slot order is settled by CTO97073 / SEQUENCE v4 at 8f0c4fa2bf. MSTR97076 / LD-0569 names fresh lane 2.0.0_SA_COO~T; MSTR97081 confirms launch after COO~F exit. Canonical org/mcp/server.py:get_agent_status measured exact COO~T LIVE at 2026-09-15T13:20:53Z, last seen 10s ago, PID26332. coo_lane is now bound to that exact seat; the installed canonical L4 notifier sent the unchanged v0.2 release as97083 at13:22:49Z. Broker readback13:30:03Z confirms READ, acknowledged by exact COO~T at13:26:22.594818Z; the canonical L4 handoff is complete. prd/L5_ROUTING.md records the exact transport evidence. sequence-check reports stage0/no flags and G/O/T at capacity3/3. Next limb is COO~T L5 decomposition; dep_stage remains PRD until that output exists. NFRA_OPLGTW retains COO~O. Named-person workbook-content authorization remains a capability-activation input, not a new priority hold. No runtime implementation or L5 completion is claimed.",
+  "blocking": "L5 v2 complete: decomposition v2 (27 cells TX-*, 39 edges, one component, 21 maximal paths, 14-cell critical path) at decompositions/MDPF_TAXSMA_DECOMP.md by 2.0.0_SA_COO~T, recut against PRD v0.5 ADMITTED @671925aecc (signed content 5061a43a46: CVO 2560f51f83, CRO d4b71666ff); v1 @62cf5796fc is superseded, never issued. Next: 2.0.0_SA_COO~T's one L6 issuance of all 27 orders. Four cells HELD: TX-b-1 and TX-b-2 on G-R (the gateway systems.json row, via LGIC_ENFORCE EN-r-5's drain); TX-r-2 on G-O (NFRA_OPLGTW OG-r-1 read back); TX-r-3 on G-W (never-widen sign-off) and G-P (consumer promotion). G-A is answered (opalbloomberg@opalinvest.com, bound by validated Entra tid/oid); workbook access stays UNMEASURED until TX-r-3's controlled read. Drive loop armed on Andrew-direct ~19:3xZ (1.0.0_SA_CTO 97213). No task order cut, no runtime implemented and no endpoint EXERCISED by this record.",
   "fabric_ruling": "laptop inherited from D8 placement and explicitly commissioned by Andrew: 'The pipeline aspect is a D8 job, to be handled on this fabric. The workflow D9 aspect is something else.'",
   "thread_counter": 0,
   "threads": [],

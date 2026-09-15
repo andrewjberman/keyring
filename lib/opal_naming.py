@@ -1356,7 +1356,7 @@ def name(system, scope, function, kind, qualifier=None):
 # The shapes the vectors are built over: (system, function, qualifier, kind), each crossed with every
 # FIRM, GLOBAL and MASTER scope row and with no scope.
 _VECTOR_SHAPES = (("mdpf", "publisher", None, "role"), ("blackdiamond", "session", "gold", "lambda"),
-                  ("opal", "gateway", None, "lb"), ("etfs", "netassets", None, "daily"))
+                  ("opal", "ingress", None, "lb"), ("etfs", "netassets", None, "daily"))
 
 
 def _type_of_kind(kind, schema):

@@ -46,3 +46,40 @@ CVO notice 96985 refused the v0.1 ratified-text half at `8699f4ba7c`, with its s
 ## L4-R admission
 
 Both current halves are independently SIGNED: CVO at `214982df0b` and CRO at `905d2df375`, against v0.2 `8ab2dc2bc6`. The canonical status oracle reads ADMITTED. The author changed only the PRD header status from DRAFT to RATIFIED; both signed section hashes remain identical. The data contract state metadata changed from PROPOSED_L4_REVIEW to RATIFIED, following this PRD's declared approval mechanism. A parsed comparison proves every other contract field identical to the reviewed pin. The manifest companion hash and final artifact hashes reflect that metadata update. No new rule, endpoint or deployed capability is introduced. `L4_ADMISSION.md` records the signatures, limits and L5 handoff routing condition.
+
+
+## v0.3 LGIC addendum and review boundary, CTO97152
+
+The v0.3 PRD and 0.3.0 contract carry CTO97115 F1-F3, the gateway source identity from97131, and granted R20 X7/X2 from97126 at9cf4a274db. F2 adds S19 complete typed Silver between S02 and S03; F3 declares both existing served homes as historical addresses and prevents a dual write or migration. All shipped columns/rows and response lineage are retained at the typed boundary, with immutable raw body captures and replay identity that separates the logical snapshot from its acquisition envelope. The contract explicitly labels knowledge_date partitions and no-expiry disposition audit history.
+
+The current candidate was checked again before landing: zero canonical shape/manifest violations; all eight approved endpoint cards byte-identical; all18 brief headings carried;19 owned engines,49 components,9 artifacts; dependencies acyclic. `authoring-checks.json` carries the current half and artifact hashes, while its `prior_v02_admission` is historical. `LGIC_V03_BUILDER_EVIDENCE.json` records every exact artifact constructor attempt and the runtime role output at its stated source vintage.
+
+**CTO97152 authorizes landing and both reviews before the gateway systems row commits.** The source choice is closed as gateway, PLATFORM_SUBSYSTEM, owner D9; COO~G owns its row. S02 states: address() resolves once the systems.json gateway row lands. Any recorded gateway refusal is this build prerequisite, not an unresolved design question or a reason to hold L4-R. Base CTO will rerun conformance when the row is at HEAD. The author has neither modified the registry nor overridden the builder.
+
+Both v0.3 halves require their own current-byte signatures; v0.2 admission is not reused. X7/X2 are already granted, so no new Andrew E1/E2 answer is required. No runtime build, worker issuance, deployment, data read/write or capability activation is certified by this authoring pass. S16 remains a separate named-person activation prerequisite.
+
+## v0.3 L4-R admission, 2026-09-15T17:10:49.777890+00:00
+
+v0.3 is ADMITTED: both current halves SIGNED, CVO at294bd175ce and CRO at1db20a3624, against61748ba2e0. Approval metadata alone is finalized to RATIFIED; signed section bytes and all substantive contract fields remain unchanged. Under CTO97126 the signature hold on L6 is cleared. COO~T owns L5 and its subsequent canonical task-order process. The gateway row and builder readback remain an S02 build prerequisite; S16 remains a separate named-person activation prerequisite. This record does not certify decomposition, runtime implementation or EXERCISED endpoints.
+
+Canonical header/manifest shape checks returned zero violations. Both half hashes are checked against the signed61748ba2e0 text, and parsed contract equality excludes only the state field. The conditional operations.l6_release wording is retained as reviewed; its condition is now satisfied by both signatures. The manifest contract evidence hash and current artifact hashes reflect the metadata update. CRO97161 defers the S19 coverage-index omissions to the next substantive bump only. CVO N5/N6 and activation limits are carried in L4_ADMISSION.md.
+
+## v0.4 Traded-key addendum, 2026-09-15T18:46:25.355797+00:00
+
+Andrew1729cef85e makes existing Traded the automatic live-membership key; f95470f384 still names the Entra identity. No new field or workbook-owner request. The contract separates current live count from dated verified value coverage, uses first-observed UTC history and retains seven-field acquisition/Silver. The attester question and uncommitted active-column proposal are superseded. Identity MATCH is relayed measurement; actual workbook access remains believed but UNMEASURED after the pre-Graph guard refusal. No additional probe or scope change was ordered.
+
+Current documentary checks: zero canonical shape violations; unchanged endpoint cards and source headers/projection/response/Silver;19 surfaces,49 components,9 artifacts,18 brief headings, acyclic dependencies. Artifact addresses/readers/writers, schedules, grants and X7/X2 unchanged. Both halves change and require independent signatures. TRADED_FIELD_ADDENDUM_97192.md carries exact choices/cell map; IDENTITY_ACCESS_PROOF_97190.json distinguishes identity from actual access. No runtime/live capability test claimed.
+
+## v0.5 Gateway repair, 2026-09-15T19:25:50.181639+00:00
+
+CRO97206 signs the v0.4 brief at5e2089e99b; CVO refuses its Gateway row at91875c897c. Independently read both reviews/stamps and canonical WITHHELD status. This revision restores guard ordering before generic /ms/* and validated Entra tid/oid binding, with email designation only and pinned NFRA_OPLMCP/CTO96946/NFRA_OPLGTW counterparts. The non-blocking UTC/session-date note is made explicit and exercised in the required A03 case. A07 includes same-email/different-principal and dispatch-order controls. No live probe was performed.
+
+Both halves change; no reviewer stamp is author-edited. Current checks: zero canonical shape violations,19/49 surfaces/components,18 headings,9 artifacts and acyclic dependencies. Eight endpoint cards and seven-field source/Silver interface unchanged. All artifact definitions, grants and schedules match v0.4. REVIEW_REPAIR_V05.md supplies precise provenance and cell deltas.
+
+## v0.5 L4-R admission, 2026-09-15T19:59:10.238375+00:00
+
+v0.5 is ADMITTED: both independent halves SIGNED/current against5061a43a46, CVO2560f51f83 and CROd4b71666ff. Header/state metadata alone is finalized to RATIFIED; signed halves and every normative contract field remain unchanged. The L4 signature hold is cleared. Canonical release97212 was READ by exact COO~T at19:53:15.906645Z. COO~T owns the L5 v2 recut and subsequent one L6 issuance; the frozen v1 remains historical. This is requirements admission, not implemented or EXERCISED endpoints.
+
+G-A names the existing opalbloomberg account; actual validated tid/oid binding and workbook access remain UNMEASURED until TX-r-3 controlled proof under existing release conditions. No metadata probe, tool widening or access grant is added. CVO N5 carries gateway registry/builder evidence with EN-r-5; N6 leaves the Gold-placement question as a question, preserving96960; N8 carries NFRA_OPLGTW principal-model landing and shared Gateway sequencing. N-1/G-S/G-O/G-W/G-P remain. All seven source fields, Traded/date/count rules, storage addresses and grant scopes remain as signed.
+
+Validated metadata-only change: both signed half hashes unchanged; parsed contract equality excluding only state; zero canonical header/manifest shape violations. Manifest/current artifact hashes updated to the finalized bytes. The source code and all deliberate exercises remain downstream work; neither reviewer signature claims runtime proof. The CRO97218 exact notice, both committed reviews/stamps and broker97212 READ receipt were independently read. No duplicate canonical release was sent after its outstanding row retired normally.

@@ -126,11 +126,25 @@ async def run(
     if not await register():
         return 2
 
+    perm_failures = 0
     while True:
         await asyncio.sleep(interval_seconds)
-        result = await comms.heartbeat(
-            serial, summary=compute_summary(runtime_dir, note)
-        )
+        try:
+            result = await comms.heartbeat(
+                serial, summary=compute_summary(runtime_dir, note)
+            )
+        except PermissionError as exc:
+            # server.py's liveness write retries 5 x 50 ms and then RE-RAISES on purpose, so a refusal is never
+            # silent. Uncaught here it ended this helper, and nothing restarts it: site Z 2026-09-15, 4.0.0_SA_CRO~W
+            # deaf ~50 min (0.0.0_AB_MSTR 97221). So it is LOUD and RETRIED: printed on every refused beat, with
+            # liveness recovered on the next write that succeeds.
+            perm_failures += 1
+            print(f"ERROR: heartbeat liveness write refused ({exc}); consecutive={perm_failures}; "
+                  f"retrying next beat in {interval_seconds:g}s", file=sys.stderr, flush=True)
+            continue
+        if perm_failures:
+            print(f"OK: heartbeat recovered after {perm_failures} refused beat(s)", file=sys.stderr, flush=True)
+            perm_failures = 0
         if "Heartbeat OK" not in result:
             print(result, file=sys.stderr, flush=True)
             if heartbeat_needs_reregistration(serial, result):

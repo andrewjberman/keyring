@@ -1689,6 +1689,52 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "TO-EN-x-1 THE CELL step 1: 'Plan the REAL tree read-only (plan -lock=false -out, then show -json, against the real backend), and save the JSON as org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/<your serial>/fwd2_plan.json.' The slot branch carries the records.",
     "world_is": "The naming gate grades a generated terraform plan artifact as newly hand-written names and carriers, including this cell's own CONFORMANT, module-built queue name. It passes the commit only because enforce is off. Nothing exempts a plan JSON deliverable from the stage, so once enforce is on, this order's own deliverable, and EN-f-1's fence_plan.json of the same kind, could not be committed as ordered."
+  },
+  {
+    "id": "LGIC_ENFORCE-S19",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "4.0.0_SA_CRO",
+    "surfaced_at": "2026-09-15T17:58Z",
+    "one_line": "At NAMING_SCHEMA v1.9 (@645725150b, branch lgic-v19-landing) firm_forms is removed and the schema names the identity registry as the one carrier of firm forms, while the registry's own row_fields text (scopes.json:4) still says 'NAMING_SCHEMA.json firm_forms owns which firm short forms exist', so each carrier names the other as the owner.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SCHEMA: org/standards/NAMING_SCHEMA.json@645725150b, parsed: key firm_forms absent; firm_forms_source reads 'A firm's forms (its key and its one sanctioned short form) are the identity registry's rows, infra/logic/registry/scopes.json, and every reader reads them there; this file carries no copy'.",
+        "REGISTRY: infra/logic/registry/scopes.json@645725150b :4 _about.row_fields 'short (NAMING_SCHEMA.json firm_forms owns which firm short forms exist)'; :210 the demo note cites '(NAMING_SCHEMA.json firm_forms)'. Both lines are byte-identical to 2f554182b6, where the field still existed.",
+        "ANALYSIS: org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_LGIC_ENFORCE_ROUND1_20260915.md@7b5331c8c0 s.2 RULING ONE names the readers to repoint as lib/opal_naming.py :248, :287-288, validate and grade(). The registry's row_fields text is not in that list. RULING DEMO corrects the :210 note.",
+        "CODE, read and NOT exercised: lib/opal_naming.py@645725150b :248 reads schema['firm_forms']; :287-290, :347 and :381 use it. The NAMING_SCHEMA v1.9 changelog says the readers land with EN-r-3 on the same branch, before one merge to CLOUD."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RULING ONE (@7b5331c8c0 s.2): 'The identity registry (infra/logic/registry/scopes.json) is the ONE home of a firm's forms. The schema's firm_forms is removed, and every reader reads the registry.' NAMING_SCHEMA v1.9 firm_forms_source: 'this file carries no copy'.",
+    "world_is": "At the pin the registry's own documentation defers the short form's authority to a schema key that no longer exists, and lib/opal_naming.py:248 still reads that key. The code is scheduled (EN-r-3); the row_fields text is not named by the ruling. INERT: the branch is not in CLOUD, and no write, deploy or served key reads this text.",
+    "notes": "Surfaced by 4.0.0_SA_CRO during the LGIC_NAMING v1.9 L4-R, which it signed (review docs/briefs/sources/LGIC_NAMING_L4_BRIEF_REVIEW_v1_9_20260915.md); this is not a ground there. For round 2's one-carrier cell: repoint the row_fields text together with the readers."
+  },
+  {
+    "id": "LGIC_ENFORCE-W6-S2",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~6",
+    "surfaced_at": "2026-09-15T20:43Z",
+    "one_line": "EN-r-5's named invocation, git apply of the worktree's copy of fixed_inputs/r2/gateway_whole.patch, returned rc=1 and refused 7 of 12 paths. The checkout copy is CRLF, and the 7 refused targets are eol=lf files. The committed blob of the same patch (LF, fd3b303d56) applied 12 of 12, so it was applied as is and not re-made by hand.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN in wk-lgic-enforce-2-6 @671925aecc: git apply --check --verbose org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/2.0.0_SA_COO~G/fixed_inputs/r2/gateway_whole.patch -> 'error: patch failed: .tools/ds-precommit-check.py:65' ... 'error: lib/opal_naming.py: patch does not apply'; 7 refused: .tools/ds-precommit-check.py, directory_runner.py, holdings_snapshot.py, perfrp_firm_pin.py, loaders.py, generated_locals.tf, lib/opal_naming.py; rc=1. Each refused hunk shows '?' (CR) at every line end.",
+        "EOL at 671925aecc (git ls-files --eol): the patch 'i/lf w/crlf attr/' (core.autocrlf=true, no eol attribute); the 7 refused targets 'i/lf w/lf attr/text eol=lf'; the 5 accepted targets (systems.json, GRADING_RULE.md, firm_registry.json, firm-config.mjs, vectors.json) 'i/lf w/crlf attr/'. The checkout copy is 18392 bytes; the blob is 18127 bytes.",
+        "RUN: git show HEAD:<the patch> > .scratch/gateway_whole.lf.patch; git hash-object of it = fd3b303d5679d4ed6d681836b6db86cec9e3d4b0 = git rev-parse HEAD:<the patch>. git apply --check rc=0 on 12 of 12; git apply 'Applied patch ... cleanly' 12 of 12.",
+        "RUN after the apply: python lib/opal_naming.py generate --out . -> 'GENERATE: 9 written, 0 skipped, into . at registry@0f9240483015d802'; git diff before and after the generate byte-identical (cmp). Committed at c19dcc8147, 12 files, 38 insertions, 29 deletions, the patch's own --stat."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EN-r-5-r2 THE CELL: 'In your worktree, run `git apply <that path>`. If it no longer applies, re-make its four parts by hand from the patch's own text, and never widen it'. SPAWN NOTES: 'apply YOUR worktree's copy (`git -C <WS> apply --check` first)'.",
+    "world_is": "The worktree's copy, read by path, is the patch with a CR on every line, and git apply refuses its hunks against LF working files. The patch's own text still applies whole: the committed blob, byte-identical by hash to what the issuer committed, applied 12 of 12 with no hand edit and no widening. The failure comes from the checkout's line endings, not from drift in the target files.",
+    "notes": "Form only. Neither branch the order names fits. The patch does apply, but not from the path the order names. It was applied from its blob, not re-made by hand, because the blob IS 'the patch's own text' and a hand re-make adds a transcription step. Any fixed-input .patch read by path from a checkout on this box (autocrlf, no *.patch eol attribute) meets the same refusal. INERT: this order is the patch's only consumer, and it is spent once applied."
   }
 ]
 ```

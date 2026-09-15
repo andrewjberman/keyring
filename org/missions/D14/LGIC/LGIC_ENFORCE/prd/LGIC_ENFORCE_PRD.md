@@ -5,7 +5,7 @@
  "project": "LGIC_ENFORCE",
  "directive": "D14",
  "fabric": "laptop",
- "prd_version": "v1.1",
+ "prd_version": "v1.2",
  "step": 4,
  "brief_ref": "docs/briefs/d14-executable-layer-brief-20260913.md@fc2a1ba75f",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7"],
@@ -58,6 +58,21 @@ stamp @`bbfa9a28c8`):
 - **N1** names the deny patterns among the schema's consumers (CONTRACTS row 1).
 
 The ENDPOINT section is unchanged. Both halves are owed again.
+
+**v1.2 (2026-09-15, an L10 addendum) adds the resource-to-system rows, on `2.0.0_SA_COO~G`'s LGIC_NAMING round-4 cut
+(97168).**
+- Measured at that cut: `grade()` reproduces all 68 of LGIC_NAMING round 2's forms. In each of the 48 that carry a
+  `{system}` gap, the first token after the scope is a FUNCTION word (gold 9, api 4, exporter 3, silver 3, bronze 3, and
+  24 others), never a system token. So registering the 115 tokens as systems fills none of them. This seat's round-1
+  analysis (97145, RULING ROWS) said it would, and that sentence was wrong.
+- The schema already names where `{system}` comes from (`NAMING_SCHEMA.json` `grade.placeholder`: *"{system} from the
+  identity registry's resource-to-system rows (LGIC_ENFORCE)"*), and no file held them. DEC-1 now defines
+  `resources.json`, and cell candidate E13 populates it.
+- This is option (a) of the two 97168 offered. Option (b), accepting 48 RAISEs as the endpoint, would let LGIC_NAMING's
+  FWD-5 read met on its RAISE clause with the gap it exists to close still open.
+- Only the brief half changes: DEC-1, CELL CANDIDATES, PATHS, BRIEF COVERAGE and the SURFACE MANIFEST's cell column. The
+  ENDPOINT and CONTRACTS are unchanged, because the CONTRACTS registry row already reads `infra/logic/registry/*.json`
+  (DEC-1). The ratified-text half stands.
 
 ## ENDPOINT (step 2, /endpoint --forward)
 
@@ -163,7 +178,7 @@ The one change of direction is intended: the registry rows are consumed there an
 - **DEC-1 The registry is JSON, in `infra/logic/registry/`.** The brief's IV.7 proposed YAML. JSON is read by the
   standard library in the commit gate, the Lambda runtime and the edge build, with no dependency. Bare python on this
   shell has no PyYAML, and that is how a gate fails at import.
-  - The files are `systems.json`, `scopes.json`, `tiers.json`, `exemptions.json` and `remediations.json`:
+  - The files are `systems.json`, `scopes.json`, `tiers.json`, `exemptions.json`, `remediations.json` and `resources.json`:
     - `systems.json` rows: `key`; `class`, one of the schema's ratified `system.classes` (`PRODUCT`,
       `PLATFORM_SUBSYSTEM`, `VENDOR`), which are the brief's product, platform and vendor; `long`; `short`, present only
       where the system has a sanctioned short form; and `owner_directive`, the D-code of the directive that owns the
@@ -174,6 +189,17 @@ The one change of direction is intended: the registry rows are consumed there an
     - `tiers.json`: tier to home rule per tenancy (R4-R7, R16, R21).
     - `exemptions.json`: per firm bucket, each exempt principal with its reason and sign-off reference.
     - `remediations.json`: per remediation project, its owned surfaces and ranking row.
+    - `resources.json` rows (v1.2): `name`, the resource's name exactly as its plane carries it; `type`, its node type,
+      one the grade takes (`NAMING_SCHEMA.json` `kind.by_type` or `types_not_graded_by_kind`); `system`, a `systems.json`
+      key; and `evidence`, the `path@commit` and the line or row that attributes the resource to that system. A row fills
+      one `{system}` gap and nothing else, so it carries no scope: the name's own tokens give its scope.
+      - `grade(name, type)` reads a row only where the name's own tokens resolve no system (rules R1.d and R1.e). With a
+        row, `{system}` is the row's system and the name is graded as usual; without one, the placeholder stays. The
+        signature and the three verdicts are unchanged.
+      - The validator refuses: a row with a field missing or empty; a repeated (`name`, `type`); a `system` that is not a
+        `systems.json` key, or is `opal`; a `type` the grade does not take; and a row for a name whose own tokens already
+        resolve a system, because that row would be a second carrier of what the name already says.
+      - A resource no owner can be named for gets no row. It keeps its placeholder and is counted, never guessed.
   - **There is no kinds file.** Kinds and cadences are closed enumerations owned by `NAMING_SCHEMA.json`, and a copy
     here would be a second carrier.
 - **DEC-2 The builders.** `lib/opal_naming.py`, standard library only.
@@ -357,12 +383,13 @@ One row per candidate cell. The decomposition at L5 is the COO lane's, and it ma
 | E10 FWD-6 on a practice copy | FWD-6 | O6 | C `remediations.json` | a linked worktree on a scratch branch | -- | a planted remediation row that owns one surface holding an old-style name | a change touching the surface without removing the name is refused; the change removing it passes |
 | E11 FWD-7 and FWD-1 on a practice copy | FWD-7, FWD-1 | O1; O7; Part III O1, O7 | C the registry, `key()` | a linked worktree on a scratch branch | -- | one fictitious firm row (DEC-9); the expected diff set computed before the run | the actual diff equals the expected set. A hand-typed address for that firm is refused. **A hand-typed occurrence of the firm's NAME, its long or short form, added to an ordinary code or config carrier outside the registry (a firm list in a config map) is refused, while adding the registry row and letting the generator produce the file succeeds.** A new pipeline for the firm holds no storage-location literal, by a second worker's search |
 | E12 FWD-2 on a real resource | FWD-2 | O2 | C the module, the fence patterns | the real Terraform tree | -- | a plan with the resource named by the module; the fence patterns for its firm from the same row; on a practice copy, one short-form change | the resource's name and its firm's fence pattern both move on that one change |
+| E13 the resource-to-system rows (v1.2) | FWD-5; LGIC_NAMING FWD-5 | IV.6; IV.7 | C `grade()`, the census's attributed resources; P `resources.json` | `TF_LABEL_CENSUS.md` and the census report's attributions; each resource's Terraform module and owning project | `infra/logic/registry/resources.json`; its validate limb in `lib/opal_naming.py` | a row per attributed resource, MDPF, ADVI and IRPT first (96910), each with its evidence. The first population is the 48 `{system}` gaps in LGIC_NAMING round 2's forms | each of the 48 gaps is filled from a row, or listed with the reason no owner can be named. The validator refuses a planted row whose system is not registered, a planted duplicate, and a planted row for a name that resolves its own system. `grade()` over a filled name puts the row's system in its canonical form |
 
 ## PATHS
 
 | kind | path | cell | use |
 |---|---|---|---|
-| new | `infra/logic/registry/systems.json`, `scopes.json`, `tiers.json`, `exemptions.json`, `remediations.json` | E2, E5, E10 | the registry rows |
+| new | `infra/logic/registry/systems.json`, `scopes.json`, `tiers.json`, `exemptions.json`, `remediations.json`, `resources.json` | E2, E5, E10, E13 | the registry rows |
 | new | `lib/opal_naming.py` | E2, E3, E9 | `key()`, `address()`, `name()`, `grade()`, `generate`, `census` |
 | new | `lib/tests/test_opal_naming.py` | E3 | the positive and negative controls |
 | new | `infra/aws/terraform/modules/opal_name/` | E4 | the generated locals and the name output |
@@ -390,7 +417,7 @@ One row per candidate cell. The decomposition at L5 is the COO lane's, and it ma
 | 4 | O2 a Terraform local derives a name, and the fence comes from the same call | DEC-2, DEC-3, DEC-4; the CONTRACTS fence row, with its three conditions; E3, E4, E5, E12 | FWD-2 |
 | 5 | O3 one registry, generated views | DEC-1, DEC-5; E2, E6 | FWD-3 |
 | 6 | O4 a refusal that prints the canonical string, over every key, resource-name literal and firm/product token | DEC-6 (the inputs and the context rule); E7, E8 | FWD-4 |
-| 7 | O5 the ranked census | DEC-7; E9 | FWD-5 |
+| 7 | O5 the ranked census | DEC-7; DEC-1's resource-to-system rows (v1.2); E9, E13 | FWD-5 |
 | 8 | O6 a remediation cannot go quiet | DEC-8; E10 | FWD-6 |
 | 9 | O7 firm N+1 is one row, and a hand-typed firm name is refused | DEC-9; DEC-6's context rule; E2, E11 (the non-address negative) | FWD-7 |
 | 10 | PART II the boundary (OWNS / RELIES ON / SIBLINGS / NOT THIS BRIEF'S) | CONTRACTS; DEC-5's repoint boundary; DEC-11; DEC-12; the SURFACE MANIFEST's excluded row | all |
@@ -416,7 +443,7 @@ E5's three transient probe roles.
 
 | surface | kind | cell | owner |
 |---|---|---|---|
-| `infra/logic/registry/*.json` | new data files | E2 | LGIC_ENFORCE |
+| `infra/logic/registry/*.json` | new data files | E2, E13 | LGIC_ENFORCE |
 | `lib/opal_naming.py`, `lib/tests/test_opal_naming.py` | new code | E2, E3, E9 | LGIC_ENFORCE |
 | `infra/aws/terraform/modules/opal_name/` | new Terraform module: locals and outputs only, no resources | E4 | LGIC_ENFORCE |
 | `infra/aws/terraform/shared-infra/s3-49financial.tf`, the bucket policy only | an APPLIED change to a live bucket policy | E5 | applied by the infrastructure lane through `safe-apply`, under never-widen sign-off (CTO and COO) and a change-management ledger entry |

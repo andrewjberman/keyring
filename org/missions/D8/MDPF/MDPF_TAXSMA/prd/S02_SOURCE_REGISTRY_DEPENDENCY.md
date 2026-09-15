@@ -1,5 +1,8 @@
 # MDPF_TAXSMA S02: workbook source registry dependency
 
+**Current disposition, CTO97152:** v0.3 is landed for review now. The gateway systems row is an S02 build prerequisite only; it does not hold this PRD or either half review. Source gateway / PLATFORM_SUBSYSTEM / owner D9 is closed; COO~G lands the row in parallel. The S02 bound explicitly states "address() resolves once the systems.json gateway row lands". Earlier private-draft/row-before-landing statements below are historical and superseded. `LGIC_LANDING_DIRECTION_97152.md` is the exact authority; `LGIC_V03_BUILDER_EVIDENCE.json` is the measured constructor record. X7/X2 are granted; L6 waits for both current v0.3 signatures.
+
+
 Author: `1.0.0_SA_CTO~A`. Updated 2026-09-15 after CTO97131. The initial 14:22:00Z probes at `2fd93a5c3db98b1c412da1333cf1946b682d7e73` are historical guessed-source tests, not tests of the declared contract call.
 
 ## Current F1 answer, CTO97131

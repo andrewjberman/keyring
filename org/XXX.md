@@ -353,6 +353,26 @@ file -- that legibility is the condition the delegation was accepted on. `paired
 lanes are already driving their own rounds event-driven; this loop dispatches nothing and gates nobody).
 STOP-CONDITION: every scoped project `status: complete` per §4, or HELD-AT-STOP, or his stand-down. A successor
 re-arms ONLY off this line.
+`1.0.0_SA_CTO` **`/self-drive MDPF_TAXSMA,NFRA_OPLGTW,LGIC_NAMING,LGIC_ENFORCE,LGIC_CANON` ARMED 2026-09-15 ~19:4xZ by
+Andrew-direct at the CTO terminal**, VERBATIM: *"i need each of the COOs to have a /goal written for them and they
+must implement it. The goal is to see their various projects through to completion. After those are incorporated, I
+need you to run /self-drive on the associated workstreams so that if open-calls come up, YOU ADJUDICATE THEM."* and
+*"Use sequence.yaml as a guide if needed, it will assist with chronology. again for all client pipeline backend, must
+abide by LGIC patterns."* Record:
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260915_193xZ_COO_GOALS_AND_CTO_SELF_DRIVE_ADJUDICATES.md`.
+- SCOPE: the five projects the three live COO lanes hold. 2.0.0_SA_COO~G holds LGIC_NAMING, LGIC_ENFORCE and
+  LGIC_CANON; 2.0.0_SA_COO~T holds MDPF_TAXSMA; 2.0.0_SA_COO~O holds NFRA_OPLGTW. A project 0.0.0_AB_MSTR seats from
+  the sequence's NEXT COO SLOT joins the scope on seating.
+- Cadence 30 minutes, via CronCreate.
+- `paired_with`: each lane's `/goal-set` loop on the goal in the record (not `/drive`).
+- **THIS SEAT ADJUDICATES every adjudicable call in scope; there is no CVO pitch.** RESERVED is unchanged from the
+  2026-09-12 clause above: vendor egress, unrecoverable acts, money, and the holds he set by name.
+- Every tick reads `sequence-check` and drives in the sequence's order. Rule 30 (LGIC) binds every new address and
+  name.
+- The 2026-09-12 fabric clause above is NOT struck: this clause is the scoped drive his new word directs, and the
+  fabric clause stays the standing authority for the rest.
+- STOP-CONDITION: all five read `status: complete` per §4, HELD-AT-STOP, or his stand-down. A successor RE-ARMS ONLY off
+  this line while the scope is not DONE, and asks each COO lane to re-arm its `/goal-set` loop.
 
 ⛔ **AND "EVERY ONE" MEANS BOTH CLASSES OF ARM. THIS TABLE USED TO RECORD ONE CLASS WHILE CLAIMING TO RECORD ALL --
 a Rule 24 MECE failure in the one file whose job is to be the single source of truth for what runs unattended.**
@@ -460,6 +480,13 @@ seat should not make about itself.
 **TO RESOLVE: whoever holds 21428 reads it out verbatim; the row then re-classes to DIRECTED or
 CHOSEN.** STOP-CONDITION as stated in the argument block: `AMGT_RESAPP` `status: complete`, or
 Andrew's stand-down.
+
+⛔ **SET DOWN 2026-09-15 ~17:4xZ -- THE ROW BELOW IS HISTORY, NOT A LIVE ARM.** Andrew-direct at the
+`2.0.0_SA_COO~G` terminal, VERBATIM: *"Don't get involved in other COO work"* / *"you need to be focused on the LGIC
+work"* (record `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260915_174xZ_LGIC_ONLY_NO_OTHER_COO_WORK~G.md`).
+`2.0.0_SA_COO~G` is LGIC-only (LGIC_NAMING, LGIC_ENFORCE, LGIC_CANON), its 20-minute SEQUENCE tick is deleted, and no
+seat inherits the drive. A sequenced project with a seated COO drives itself at that seat; an unseated one moves when a
+COO slot frees, and `0.0.0_AB_MSTR` seats it (97172). SEQUENCE.yaml's order and stages stay `1.0.0_SA_CTO`'s.
 
 `2.0.0_SA_COO~G` **`/canonical-drive` DIRECTED over THE SEQUENCE: every project under `projects:` in
 `org/missions/SEQUENCE.yaml`, READ AT HEAD EACH TICK** (at the arm: LGIC_NAMING, LGIC_ENFORCE, LGIC_CANON, ADVI_FIRMBKTS,

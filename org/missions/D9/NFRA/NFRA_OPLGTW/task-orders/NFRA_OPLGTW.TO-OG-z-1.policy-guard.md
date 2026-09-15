@@ -49,6 +49,15 @@ query, download_filtered; `disabled_operations` = download_original, write. The 
 `app/integrations/registry.py`, `app/server.py`, `app/query_v0.py`, `app/entitlements.py`, `app/access_state.py`;
 `tests/test_identity_scope.py` and `tests/test_min_tier_gate.py` (existing regressions that must stay as they are).
 
+**The route-table rule (amended before hand-off, on `1.0.0_SA_CTO`'s ruling msg 97203, standing rule C; row
+`NFRA_OPLGTW-S14`).** `tests/test_principal_cutover.py::test_oga2_ac04` requires every served route to be classified in
+`ROUTE_CLASS`.
+- If this cell adds a route, that file is granted to you, ENTRIES ONLY, for your own new paths.
+- Each entry carries the route's REAL guard class, as your code enforces it, never a default `"public"`.
+- A route whose class is genuinely unclear is a surprise row, not an entry.
+- If you add no route, you leave the file untouched.
+AC13 runs the module; AC14 checks the diff.
+
 ### ACCEPTANCE
 
 <placeholders>WS</placeholders>
@@ -89,7 +98,13 @@ query, download_filtered; `disabled_operations` = download_original, write. The 
 <criterion id="OGZ1-AC12" cell_refs="OG-z-1"><invocation>cd <WS> && timeout 120 .venv-og/Scripts/python -m pytest infra/aws/ec2/opal-gateway/tests/test_data_entitlement_guard.py::test_ogz1_ac12 -q -p no:cacheprovider --color=no</invocation><expect>(?m)^1 passed(?![^\n]*(failed|error))</expect></criterion>
 `OGZ1-AC12` (`test_ogz1_ac12`) -- removing an overlay row does not reopen the unlisted path for a restricted profile.
 
-<expected_criteria>OGZ1-AC1, OGZ1-AC2, OGZ1-AC3, OGZ1-AC4, OGZ1-AC5, OGZ1-AC6, OGZ1-AC7, OGZ1-AC8, OGZ1-AC9, OGZ1-AC10, OGZ1-AC11, OGZ1-AC12</expected_criteria>
+<criterion id="OGZ1-AC13" cell_refs="OG-z-1"><invocation>cd <WS> && timeout 300 .venv-og/Scripts/python -m pytest infra/aws/ec2/opal-gateway/tests/test_principal_cutover.py -q -p no:cacheprovider --color=no -m "not live"</invocation><expect>(?m)^[1-9][0-9]* passed(?![^\n]*(failed|error))</expect></criterion>
+`OGZ1-AC13` -- `tests/test_principal_cutover.py` passes after your guard changes.
+
+<criterion id="OGZ1-AC14" cell_refs="OG-z-1"><invocation>cd <WS> && timeout 120 .venv-og/Scripts/python org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~3/probes/og_z1.py AC14</invocation><expect>(?m)^VERDICT: PASS-OGZ1-AC14(?![0-9])</expect></criterion>
+`OGZ1-AC14` -- (discriminating) the diff of `tests/test_principal_cutover.py` against your cut base is empty, or exactly `ROUTE_CLASS` entries for routes this cell adds, one per new path, and no other line; the probe prints the added paths with their classes and `VERDICT: PASS-OGZ1-AC14` or `VERDICT: FAIL-OGZ1-AC14 <reason>`.
+
+<expected_criteria>OGZ1-AC1, OGZ1-AC2, OGZ1-AC3, OGZ1-AC4, OGZ1-AC5, OGZ1-AC6, OGZ1-AC7, OGZ1-AC8, OGZ1-AC9, OGZ1-AC10, OGZ1-AC11, OGZ1-AC12, OGZ1-AC13, OGZ1-AC14</expected_criteria>
 
 `<WS>` is your worktree's absolute path, given in your identity line.
 
@@ -98,9 +113,9 @@ query, download_filtered; `disabled_operations` = download_original, write. The 
 - **Grant.** Your write surface is the `<paths>` block below, plus `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~3/` and this order's own file (for the `<status>` flip). Nothing else. A path you need that is not named is a BLOCKING surprise row on that criterion -- never an override.
 - **Branch.** You work in the worktree named in your identity line, cut from `CLOUD` at hand-off (after `OG-a-3` merged). Never push, merge, rebase, `checkout --` or `clean`.
 - **Interpreter.** Your venv `.venv-og` (`cd <WS> && py -3.12 -m venv --system-site-packages .venv-og && .venv-og/Scripts/python -m pip install -r infra/aws/ec2/opal-gateway/requirements.txt msal moto pytest`) serves every invocation. Never commit `.venv-og/` or `.scratch/`.
-- **Tests.** Each criterion names one test function in `tests/test_data_entitlement_guard.py`; write exactly that name. Your criteria run offline against moto.
+- **Tests.** Each criterion names one test function in `tests/test_data_entitlement_guard.py`; write exactly that name. Your criteria run offline against moto. AC13 is a module run and AC14 a probe.
 - **Existing users are regression, not scope.** AC11 proves their tool sets unchanged; you grant no existing user a new tool and remove none. `identity_tool_allowlist.txt` and `tests/test_identity_scope.py` are not yours: the one known red test there (row NFRA_OPLGTW-S1) stays red, and you never edit either file.
-- **Code.** The commit gate lints with ruff for Python 3.9 syntax. `mcp==1.28.0` is not raised. No existing test is edited to make it pass.
+- **Code.** The commit gate lints with ruff for Python 3.9 syntax. `mcp==1.28.0` is not raised. No existing test is edited to make it pass, except `ROUTE_CLASS` entries for routes this cell adds (AC14).
 - **Nothing deploys.**
 - **No egress off Opal infrastructure.** No call to Claude, an Anthropic endpoint, an interactive Entra sign-in or any vendor API.
 - **No secret in evidence.**
@@ -119,6 +134,7 @@ infra/aws/ec2/opal-gateway/app/integrations/registry.py
 infra/aws/ec2/opal-gateway/app/server.py
 infra/aws/ec2/opal-gateway/app/query_v0.py
 infra/aws/ec2/opal-gateway/tests/test_data_entitlement_guard.py
+infra/aws/ec2/opal-gateway/tests/test_principal_cutover.py
 org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
@@ -128,11 +144,11 @@ org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: `OGZ1-AC1` .. `OGZ1-AC12` (12). Instance at
+Criterion ids: `OGZ1-AC1` .. `OGZ1-AC14` (14). Instance at
 `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~3/NFRA_OPLGTW.TO-OG-z-1.policy-guard.proof_of_spec.json`
 (phase `BUILD-GENERAL`, firm `FABRIC`, spec_ref.group `OTHER`, spec_ref.doc the PRD @f0aa50dbc0, decomp_ref.doc the
 decomposition @8768f46770, decomp_ref.to_ref this order's path), validated with
-`py -3.12 .tools/proof-of-spec-check.py <instance> OGZ1-AC1,OGZ1-AC2,OGZ1-AC3,OGZ1-AC4,OGZ1-AC5,OGZ1-AC6,OGZ1-AC7,OGZ1-AC8,OGZ1-AC9,OGZ1-AC10,OGZ1-AC11,OGZ1-AC12`
+`py -3.12 .tools/proof-of-spec-check.py <instance> OGZ1-AC1,OGZ1-AC2,OGZ1-AC3,OGZ1-AC4,OGZ1-AC5,OGZ1-AC6,OGZ1-AC7,OGZ1-AC8,OGZ1-AC9,OGZ1-AC10,OGZ1-AC11,OGZ1-AC12,OGZ1-AC13,OGZ1-AC14`
 BEFORE the `complete` flip. Result file `policy-guard.result.md` beside it, with the tool and route inventories and
 their denominators. **Flip `complete` only when every MECHANICAL criterion PASSES by output.**
 </proof_of_spec>
@@ -153,3 +169,9 @@ lane: the <paths> block IS the grant (owned-paths-validate.py worker_grant).
 Seating: slot ~3, queue position 5, handed after `OG-a-3` merges (its dependencies `OG-d-1` and `OG-a-2` precede it in
 the same queue). Round 1 of NFRA_OPLGTW, issued by `2.0.0_SA_COO~O` (seated msg 96971, LD-0567). Decomposition v1
 @8768f46770. Row NFRA_OPLGTW-S1 sits on this cell's surface and is not its to fix.
+
+Amended 2026-09-15 ~19:1xZ, before hand-off, by `2.0.0_SA_COO~O` on `1.0.0_SA_CTO`'s ruling msg 97203 (standing rule
+C). The changes:
+- `tests/test_principal_cutover.py` is granted, ROUTE_CLASS entries only, if this cell adds a route;
+- AC13 and AC14 are added.
+No criterion was removed.

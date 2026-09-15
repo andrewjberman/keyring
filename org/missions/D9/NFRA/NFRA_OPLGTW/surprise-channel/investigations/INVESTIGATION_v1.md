@@ -865,6 +865,461 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "Ruling 97114 (1) bounds the grant as 'No assertion is removed, weakened or re-targeted'.",
     "world_is": "The owner of the ruling narrows it: three named assertions, which asserted the removed identity, are re-targeted to a stricter form. Every other assertion is still bound unchanged, and the four arms are mechanical criteria.",
     "notes": "Recorded beside S9 (ruling 97114) at 1.0.0_SA_CTO's request. W3-S13 and S10's hold are disarmed at OG-a-2's drain once the re-run is green; the adjudication is 3.0.0_SA_CVO's at L9."
+  },
+  {
+    "id": "NFRA_OPLGTW-W3-S7",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~3",
+    "surfaced_at": "2026-09-15T13:48:30Z",
+    "one_line": "Three existing Gateway test files assert the pre-cutover behaviour this order's criteria remove, so after OG-a-2 16 existing tests fail (test_oauth_durable 14 of 18, test_jwt_cve_lock::test_control_valid_token_accepted, test_schwab_audit::test_ogo1_ac06), while the order requires test_oauth_durable.py to stay green, forbids editing an existing test, and grants none of the three files.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ORDER: org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-a-2.principal-cutover.md @3f94e0a024 -- BOUNDS 'tests/test_oauth_durable.py stays green' and 'No existing test is edited to make it pass'; <paths> names five app modules, tests/test_principal_cutover.py and this channel, none of the three test files.",
+        "FIXTURE: infra/aws/ec2/opal-gateway/tests/test_oauth_durable.py:186-189 @3f94e0a024 -- monkeypatches token_broker.redeem_code_for_email with LocalIssuer.redeem, which returns claims['email'] (:133-137); the LocalIssuer ID token carries no tid or oid (:128-131).",
+        "TESTS: infra/aws/ec2/opal-gateway/tests/test_jwt_cve_lock.py:64-66 and infra/aws/ec2/opal-gateway/tests/test_schwab_audit.py:301-305 @3f94e0a024 -- issue_access_token(<email>, 'mcp', <client>) with no refresh family, then validate_access_token(token)['sub'] == <email>.",
+        "RUN base 3f94e0a024, one process per module, -m 'not live' -k 'not test_scoped_deny_by_default': 12 modules, 121 passed, 1 deselected, 0 failed. The same at d02e73c272: test_oauth_durable '14 failed, 4 passed' (each 'Sign-in refused ... the upstream identity provider is not configured', assert 400 == 302; AC1, AC2, AC4, AC14 still pass), test_jwt_cve_lock '1 failed, 5 passed' and test_schwab_audit '1 failed, 6 passed' (TypeError: issue_access_token() missing 1 required positional argument: 'family_id'); the other 9 modules unchanged.",
+        "EGRESS: tests/test_oauth_durable.py plus tests/test_principal_cutover.py at d02e73c272 under a socket-and-DNS-refusing pytest plugin: 'EGRESS-ATTEMPTS: 0' -- the refused callbacks make no network call."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The order binds 'tests/test_oauth_durable.py stays green' and 'No existing test is edited to make it pass', and grants only app modules plus tests/test_principal_cutover.py; its criteria require the token and request context to carry the validated tid/oid (OGA2-AC1), every protected route to reject a token lacking the token version and principal (OGA2-AC4), and the family to be checked on every request (OGA2-AC6).",
+    "world_is": "test_oauth_durable's fixture replaces the upstream seam with a fake that yields only an email, so no immutable principal can come back from its sign-in: the bridge, which now requires a validated tid/oid, refuses that sign-in fail-closed and every durable test that completes one fails at the callback. The other two tests mint a family-less access token for an email and expect it accepted -- the legacy token OGA2-AC4 must reject. No design meets the bound and the criteria together: any path that turns an email-only upstream result or a family-less token into access is the email or legacy authorization that C1 removes. The worker edited none of the three files.",
+    "notes": "ARMED: left alone, the drain carries 16 red existing tests into CLOUD and every later Gateway cell inherits them. Disarm: a re-cut granting the three files to a cell -- the durable fixture's upstream fake returns a tid/oid principal through token_broker.redeem_code_for_principal, as tests/test_principal_cutover.py's local issuer does, and the two single tests mint from a refresh family. The 11 OG-a-2 criteria pass by output either way."
+  },
+  {
+    "id": "NFRA_OPLGTW-W3-S8",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~3",
+    "surfaced_at": "2026-09-15T13:48:30Z",
+    "one_line": "A denied entitlement at the MCP tool layer comes back as a SUCCESSFUL MCP result (isError false) whose text is the denial, because tools._run returns every denial as a dict; the gateway never answers it with a 401, a challenge or a login, but a client that reads only isError sees success, and tools.py is outside this order's grant.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "PRD: org/missions/D9/NFRA/NFRA_OPLGTW/prd/NFRA_OPLGTW_PRD.md:141 @f0aa50dbc0 -- 'A denied data entitlement is a terminal tool authorization error, not an OAuth escalation or a login loop.'",
+        "CODE: infra/aws/ec2/opal-gateway/app/tools.py:74-106 @3f94e0a024 -- every _run denial is a returned dict {error, guard_denied: True, code}, never a raised tool error.",
+        "PROBE at the base code (scratch, MOCK_GRAPH, no identity): POST / on the MCP app, tools/call send_email -> 200 text/event-stream, result content '{error: no verified identity established, guard_denied: true, code: identity_required}' with 'isError': false.",
+        "RUN: test_oga2_ac11 at d02e73c272 prints 'policy denial (read-only -> send_email) x2 -> HTTP 200, no WWW-Authenticate, tool result guard_denied code=read_only_denied ... (MCP isError=False); Graph 403 -> HTTP 200, tool error ... (isError=False)'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OGA2-AC11: 'a denied data entitlement returns a terminal tool error and never a 401 or an OAuth escalation'; C1: 'a terminal tool authorization error'.",
+    "world_is": "The denial is terminal (identical on repeat, no needs_login, no login_url, no challenge, and the same token keeps working), and OGA2-AC11 asserts exactly that. At the protocol level, though, the tool call reports success and carries the denial as its text. Raising the denial as an MCP tool error (isError true) is a change to tools._run, outside this grant.",
+    "notes": "INERT: no OAuth loop and no 401 is possible from it; the model reads the denial text. Recorded for OG-z-1, which owns the tool policy layer and the new data entitlements it will add."
+  },
+  {
+    "id": "NFRA_OPLGTW-W3-S9",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~3",
+    "surfaced_at": "2026-09-15T13:48:30Z",
+    "one_line": "The session is now bound to the tid/oid principal, but every authorization decision after the guard still keys on the email the principal carries for display -- tier (andrew@opalinvest.com resolves MASTER_ADMIN by default), the per-identity tool allowlist, the integration min-tier gate and the /query/v0 catalog principal -- so a second principal holding the same email still inherits the first one's tier and tool scope.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "PRD: org/missions/D9/NFRA/NFRA_OPLGTW/prd/NFRA_OPLGTW_PRD.md:131 @f0aa50dbc0 -- 'email is display/audit metadata only'; :145 -- 'Key grants by tid/oid, not email'; :255 -- A3 'tid/oid mismatch denied even with same email'.",
+        "DECOMP: org/missions/D9/NFRA/NFRA_OPLGTW/decompositions/NFRA_OPLGTW_DECOMP.md:614 @8768f46770 -- 'A3 | OG-a-2, OG-z-1'.",
+        "CODE @3f94e0a024: infra/aws/ec2/opal-gateway/app/tools.py:72,79,84 (email = get_current_email(); tier.resolve_tier(email, cfg); identity_scope.check(email, tool)); app/integrations/base.py:114,120,125 (the same three); app/query_v0.py:134 (_principal(email)); app/config.py:241-245 (MASTER_ADMIN_EMAILS default 'andrew@opalinvest.com').",
+        "RUN: test_oga2_ac08 at d02e73c272 -- two principals, one email: B's principal on A's family -> 401; B's Graph call used B's delegated token; A revoked by principal key -> A 401, B 200. Those are the bindings inside this grant."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OGA2-AC8: 'a principal with the same email and a different oid is denied (A3)'; C1: 'email is display/audit metadata only'.",
+    "world_is": "Within its grant the worker bound codes, refresh families, access tokens, the request context, the rate-limit key, principal revocation and the delegated Graph cache to (tid, oid), and OGA2-AC8 shows the second principal denied the first one's family, Graph token and revocation state. The consumers that decide what a caller may do read get_current_email(): tools.py, tier.py, identity_scope.py, integrations/base.py and query_v0.py, all outside the grant, all still resolving by email. The blocklist also matches by email, which only adds denial.",
+    "notes": "ARMED: until the grant and tier layer keys on the principal (C2, OG-z-1, which depends on this cell), a reassigned email inherits the previous holder's tier and tool scope at its next sign-in. Not a new exposure: the same resolution by email held before this cell."
+  },
+  {
+    "id": "NFRA_OPLGTW-W3-S10",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~3",
+    "surfaced_at": "2026-09-15T13:48:30Z",
+    "one_line": "To keep a Graph-using tool's NeedsLogin from looping, the worker also changed the legacy /login consent route (build_consent_url, redeem_consent) to validate the ID token and write the principal's cache, which the order does not name; and a principal's FIRST delegated Graph token now comes from the refresh token of an OpenID-only sign-in, which nothing offline can measure against Entra.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "PRD: org/missions/D9/NFRA/NFRA_OPLGTW/prd/NFRA_OPLGTW_PRD.md:131 @f0aa50dbc0 -- 'Authentication must not require Graph mail/file consent; retain delegated Graph acquisition only for tools that use it.'",
+        "BASE: infra/aws/ec2/opal-gateway/app/token_broker.py:35-38, 136-156 @3f94e0a024 -- one cache per sha256(email); build_auth_url and redeem_code both request GRAPH_SCOPES; app/tools.py:108-111 -- NeedsLogin returns login_url, which is /login (token_broker.py:28).",
+        "BUILD: infra/aws/ec2/opal-gateway/app/token_broker.py @d02e73c272 -- build_auth_url asks AUTHENTICATION_SCOPES ('email'; MSAL adds openid, profile, offline_access); build_consent_url asks GRAPH_SCOPES; redeem_consent writes the principal-keyed and the email-keyed cache; _cache_owner_for reads the principal's cache when the request carries that principal.",
+        "RUN: test_oga2_ac02 at d02e73c272 -- sign-in scopes ['email'], code-redemption scopes ['email'], Graph scopes among them 0 of 17; the /login consent URL asks 17 scopes; test_oga2_ac03 -- the delegated Graph token acquired silently from the sign-in's cache at 8 read-only tier scopes (a fake MSAL client)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The cell text names the bridge's Graph coupling (token_broker requests GRAPH_SCOPES) and the context; it says nothing of the /login consent route or of where a Graph-using tool's first token comes from once the sign-in stops asking for Graph scopes.",
+    "world_is": "Once the bridge asks for identity only, a Graph tool's token must come from the principal's MSAL cache, keyed by tid/oid so that a same-email principal cannot reach it. NeedsLogin sends the user to /login, whose callback wrote only an email-keyed cache that a principal-keyed lookup never reads: a login loop. The worker made /login's callback validate the ID token as the bridge does and write the cache under both the principal and the access-layer email; the fixed server-held identities of /otp and /ms still read theirs by email. Whether Entra issues a Graph token silently from an OpenID-only sign-in's refresh token depends on the tenant's existing delegated consent for the app registration. The harness fakes that exchange.",
+    "notes": "INERT: nothing deploys in this order. The live half -- silent Graph acquisition after an OpenID-only sign-in, and the /login fallback -- is OG-v-2's and OG-v-4's to exercise."
+  },
+  {
+    "id": "NFRA_OPLGTW-W3-S11",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~3",
+    "surfaced_at": "2026-09-15T13:48:30Z",
+    "one_line": "GET /ms/site_children answers 400 'site_id required' before it checks any credential, so the OGA2-AC4 census had to send well-formed parameters before that route's own gate would answer; the worker did not reorder the handler.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE: infra/aws/ec2/opal-gateway/app/server.py:636-641 @3f94e0a024 -- ms_site_children returns 400 when site_id is absent and only then calls _ms_run, whose _ms_guard checks the bearer.",
+        "RUN: the first test_oga2_ac04 run at the build -> AssertionError ('/ms/site_children', 'capability', 400, '{\"error\":\"site_id required\"}'); with site_id supplied the legacy token is refused 401 on 19 of 19 protected routes (test_oga2_ac04 at d02e73c272)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OGA2-AC4: every protected MCP and REST route rejects an access token lacking the new token-version and principal claims, over all route declarations.",
+    "world_is": "One protected route validates its query parameters before its credential, so an unauthenticated caller learns its parameter contract and a credential census that sends no parameters reads a 400, not a rejection. Reordering the handler is a neighbouring behaviour, not this cell's; the census supplies site_id, q and path to every /ms/* GET.",
+    "notes": "INERT: the 400 releases no data; the route still refuses every credential it does not accept."
+  },
+  {
+    "id": "NFRA_OPLGTW-W3-S12",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~3",
+    "surfaced_at": "2026-09-15T13:48:30Z",
+    "one_line": "At the cut base 3f94e0a024 the whole Gateway test suite does not finish in one process: after tests/test_ratelimit.py freezes time.monotonic at import (row W3-S6), test_schwab_engine.py::test_ogq1_ac02 waits on the event-loop clock and never returns, so a 300 s bound expired on it; the same test also misses its 0.25 s lag bar while the box is loaded.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "DECOMP: org/missions/D9/NFRA/NFRA_OPLGTW/decompositions/NFRA_OPLGTW_DECOMP.md:287 @8768f46770 -- OG-a-1's acceptance closes on 'the whole GW/tests/ suite passes, count printed'.",
+        "RUN base 3f94e0a024: 'timeout 300 pytest infra/aws/ec2/opal-gateway/tests -m not live -k not test_scoped_deny_by_default' printed the OG-a-1 lines and 14 more dots, then rc=124.",
+        "RUN at the build: test_ratelimit.py plus test_schwab_engine.py::test_ogq1_ac02 in one process, -v, timeout 60 -> rc=124, last line 'test_schwab_engine.py::test_ogq1_ac02' with no verdict; each of the 12 modules alone passes at base (121 passed).",
+        "RUN: test_ogq1_ac02 measured 'assert 0.26149860000645275 < 0.25' and 'assert 1.3060927999997511 < 0.25' in two runs while the box was loaded, then passed 2 of 2 at base (an archive of 3f94e0a024) and 2 of 2 at the build, alternating; the test imports only app.integrations.schwab.engine."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OG-a-1's acceptance, and the practice of each Gateway cell, runs the whole Gateway suite in one process as the regression census; this worker needed that census to measure what OG-a-2 changes.",
+    "world_is": "The one-process suite hangs at base, so the worker took the census one process per module. Row W3-S6 predicted that a timer-dependent test could fail or pass without waiting; here one waits forever. The same test's lag bar is also sensitive to load on the shared box, independent of this cell's change.",
+    "notes": "INERT: test-only. Any cell told to run the whole suite in one process will hit the bound until test_ratelimit.py scopes its clock (the disarm row W3-S6 names) or the suite is run per module."
+  },
+  {
+    "id": "NFRA_OPLGTW-W3-S13",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~3",
+    "surfaced_at": "2026-09-15T15:22:26Z",
+    "one_line": "Under the amended order's fixture-only grant OGA2-AC12 cannot pass as written: with every fixture now signing in through a tid/oid principal and minting from a refresh family, 3 of 31 tests in the three granted modules still fail, each on an untouched assertion that compares the validated token's sub to an email, while OGA2-AC1 requires sub = <tid>/<oid> with no '@' and the bound forbids re-targeting an assertion.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ORDER: org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-a-2.principal-cutover.md @adc6874dea -- the grant is FIXTURE-ONLY: 'edit only how each test obtains a principal or token' and 'no assertion is removed, weakened or re-targeted'; OGA2-AC12 expects '(?m)^[1-9][0-9]* passed' with no 'failed' on that line.",
+        "CRITERION: infra/aws/ec2/opal-gateway/tests/test_principal_cutover.py:410 @d02e73c272 (OGA2-AC1) -- assert claims[\"sub\"] == \"%s/%s\" % (TENANT, oid) and \"@\" not in claims[\"sub\"]. infra/aws/ec2/opal-gateway/app/oauth_as.py:264 and :321 @d02e73c272 -- the token's sub is principal.key, and validate_access_token refuses a token whose sub is not its tid/oid principal.",
+        "ASSERTIONS, unchanged since the cut base: infra/aws/ec2/opal-gateway/tests/test_oauth_durable.py:710 @318e119c4f (:700 @3f94e0a024) validate_access_token(...)[\"sub\"] == email; tests/test_jwt_cve_lock.py:117 @318e119c4f (:66 @3f94e0a024) validate_access_token(tok)[\"sub\"] == \"attacker@opalinvest.com\"; tests/test_schwab_audit.py:342 @318e119c4f (:305 @3f94e0a024) claims[\"sub\"] == \"colleague@opalinvest.com\".",
+        "RUN OGA2-AC12 verbatim at 318e119c4f: '3 failed, 28 passed in 17.08s', rc=1 (at adc6874dea: '16 failed, 15 passed'). Each of the 3 reaches its sub assertion holding a token validate_access_token accepted, e.g. \"assert '7f3a9c1e-2b4d-4e6f-8a0b-1c2d3e4f5a6b/77a75443-83c9-58c3-a508-5eb28fbcefa6' == 'attacker@opalinvest.com'\".",
+        "DIFF: git diff -U0 over the three files before 318e119c4f -- 107 changed lines, 0 of them naming assert, self.assert* or pytest.raises. Probe og_a2.py AC13 at 318e119c4f -- assert counts HEAD == base 123/123, 6/6, 63/63, 'VERDICT: PASS-OGA2-AC13'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OGA2-AC12: the three granted modules pass, count printed -- reached by fixture-only edits (how each test obtains a principal or token), with no assertion removed, weakened or re-targeted. OGA2-AC1: the token's sub is <tid>/<oid>, and email is display metadata only.",
+    "world_is": "The ruling's disarm for row W3-S7 changed how each test obtains its principal and token, and 13 of the 16 failures are gone. It did not reach three assertions that name the email as the token's subject. Each states the pre-cutover identity model rather than a fixture: no fixture makes a validated token's sub an email without the email authorization C1 removes and OGA2-AC1 forbids. Passing them means re-targeting each to the principal key or to the email claim, which the bound forbids. In test_ogo1_ac06 the structural assertions after the sub assertion do not run while it fails. The worker left all three as written and refuses OGA2-AC12.",
+    "notes": "ARMED: left alone, the drain carries 3 red existing tests into CLOUD. Disarm is the issuer's call: an amendment that lets these three assertions compare sub to the principal key (test_oauth_durable.py:710, test_jwt_cve_lock.py:117, test_schwab_audit.py:342 @318e119c4f). The change is one expression per assertion, and the per-module counts OGA2-AC13 grades would not move, so AC13 cannot distinguish that re-target from none."
+  },
+  {
+    "id": "NFRA_OPLGTW-W3-S14",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~3",
+    "surfaced_at": "2026-09-15T15:22:26Z",
+    "one_line": "test_jwt_cve_lock.py's standalone smoke (its __main__ block) calls test_control_valid_token_accepted() with no arguments, and that test now takes the family_store pytest fixture, so running the file directly stops at a TypeError; pytest runs are unaffected.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "INFERRED",
+      "evidence": [
+        "SOURCE: infra/aws/ec2/opal-gateway/tests/test_jwt_cve_lock.py @318e119c4f -- the module docstring offers 'python tests/test_jwt_cve_lock.py for a standalone smoke'; the if __name__ == \"__main__\" block calls every listed test as t(); test_control_valid_token_accepted(family_store) now requires the fixture.",
+        "SOURCE: the same block @d02e73c272 -- the control test called issue_access_token(email, scope, client) without the family id that signature then required, so the smoke already stopped at a TypeError before this commit; @3f94e0a024 it ran.",
+        "NOT RUN: the direct invocation was not executed; the verdict is read from the source."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The fixture-only grant: the control test mints its token from a refresh family, and edits are limited to how each test obtains a principal or token.",
+    "world_is": "A refresh family needs a durable store, which the control test now receives from a pytest fixture (moto DynamoDB). The __main__ runner supplies no fixtures. The worker did not edit the __main__ block: it is not how a test obtains a token, and no criterion names it.",
+    "notes": "INERT: every criterion and the commit gate run the file through pytest, which supplies the fixture."
+  },
+  {
+    "id": "NFRA_OPLGTW-W3-S15",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~3",
+    "surfaced_at": "2026-09-15T16:27:44Z",
+    "one_line": "Re-targeting tests/test_schwab_audit.py:342 to the test's own '<tid>/<oid>' principal needs the uuid module at module scope, because that test's oid is uuid5-derived inside a helper that imports uuid locally. So the re-target commit adds one non-assertion line, 'import uuid' (line 15), beside the three ruled assertion lines, and the order names no line but those three.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ORDER: org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-a-2.principal-cutover.md @1efed70736 -- exactly three assertions, one expression each, re-targeted to sub == \"<tid>/<oid>\" of that test's principal AND email == the same email; 'No other assertion changes'; otherwise the grant is fixture-only ('edit only how each test obtains a principal or token').",
+        "SOURCE: infra/aws/ec2/opal-gateway/tests/test_schwab_audit.py @f8feaf081e -- _family_access_token imports uuid locally and mints make_principal(_TENANT, str(uuid.uuid5(uuid.NAMESPACE_URL, \"ogo1-ac06/\" + email)), email); the module-level imports are asyncio, fnmatch, json, sys and pathlib, with no uuid.",
+        "DIFF: infra/aws/ec2/opal-gateway/tests/test_schwab_audit.py @7183f7a3d3 -- line 15 'import uuid' and line 343 the re-targeted assertion; probe og_a2.py AC14 at 7183f7a3d3: 'since f8feaf081e: 2 HEAD-side line(s) changed, 1 inside an assertion; other: ['15 import uuid']'. test_oauth_durable.py and test_jwt_cve_lock.py: 1 HEAD-side line changed each, 'other: none' (LocalIssuer.oid_for; uuid already imported at module scope @318e119c4f).",
+        "RUN: OGA2-AC12 verbatim at 7183f7a3d3 -- '31 passed in 18.37s', rc=0; OGA2-AC13 -- 63 = 63 for test_schwab_audit.py, 'VERDICT: PASS-OGA2-AC13'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Ruling 97141 as carried by the order @1efed70736: exactly three assertion lines change, each to sub == \"<tid>/<oid>\" of that test's principal AND email == the same email; no other assertion changes; every other edit is fixture-only.",
+    "world_is": "The ruled expression for test_ogo1_ac06 names that test's oid, which only uuid.uuid5 can reproduce, and uuid was not in scope at the assertion. One module-level import line was added. It is neither an assertion nor a change to how the test obtains its token. The alternatives were worse by the worker's reading: reaching uuid through sys.modules, or changing the helper to hand back its principal, which edits a fixture line to serve an assertion.",
+    "notes": "INERT: an import changes no assertion and no behaviour. The AC14 probe counts it as a non-assertion line and prints it as a disclosure; OGA2-AC13 reads 63/63 for the module."
+  },
+  {
+    "id": "NFRA_OPLGTW-S12",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-15T17:10Z",
+    "one_line": "Disarm of W3-S7 and W3-S13 (and the holds of S7 and S10) on OG-a-2's green re-run, which is now merged to CLOUD; and a measured flake: test_schwab_engine.py::test_ogq1_ac02 failed 2 of 3 isolated runs on this box, which will read as a FAILED-MODULE in any per-module suite criterion.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "GREEN RE-RUN: wk-nfra_oplgtw-1-3c @aef164f8e2. proof-of-spec-check --governing-order VALID (rc=0), 14/14. OGA2-AC12 '31 passed'; AC13 assert counts 123/123, 6/6, 63/63; AC14: exactly the 3 named assertion lines changed, each keeping its original email. That meets every arm of 1.0.0_SA_CTO rulings 97114 (1) and 97141.",
+        "COO RE-RUN (a different instrument from the worker's criteria): on the same branch, every module of the glob infra/aws/ec2/opal-gateway/tests/test_*.py in its own process, -m 'not live', -k 'not test_scoped_deny_by_default'. 13 modules; 12 green, including test_oauth_durable 18 passed, test_jwt_cve_lock 6, test_schwab_audit 7 and test_principal_cutover 11; test_schwab_engine '1 failed, 12 passed'.",
+        "FLAKE, NOT REGRESSION: test_schwab_engine re-run '13 passed'; test_ogq1_ac02 alone x3 read failed, passed, failed. OG-a-2 changed app/context.py, oauth_as.py, revocation.py, server.py and token_broker.py (git diff 3f94e0a024..aef164f8e2); app/integrations/schwab/ is untouched, and the engine test imports only app.integrations.schwab.engine (test_schwab_engine.py:22)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "W3-S7 and W3-S13 were ARMED: OG-a-2's drain would carry red existing tests into CLOUD. OG-q-1's AC2 treats test_ogq1_ac02 as deterministic, and TO-OG-v-2 AC4 requires every module green.",
+    "world_is": "OG-a-2 reached CLOUD with its granted modules green, so the red-test hazard is gone. Separately, test_ogq1_ac02's 0.25 s event-loop lag bar is load-sensitive on this shared box, as W3-S12 first reported. Any per-module suite run here, including OGV2-AC4, can read FAILED-MODULES 1 on that test alone.",
+    "notes": "The disarm is by the named owner at the named moment: the drain of OG-a-2 with its green re-run. The flake is OG-q-1's test; whether its bar is re-stated or run under a quiet box is for L9/L10. For OG-v-2 it is known in advance, so a FAILED-MODULE on test_schwab_engine alone is re-run before it is read as a regression."
+  },
+  {
+    "id": "NFRA_OPLGTW-S13",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-15T18:50Z",
+    "one_line": "Disarm of W3-S16 and W3-S17 by their owner: OG-a-3's branch wk-nfra_oplgtw-1-3d is held UNMERGED, because merging it turns OG-a-2's route census test_oga2_ac04 red on CLOUD and its own AC7 pins an exact route table the next route-adding cell will break; the grant and the criterion restatement are asked of 1.0.0_SA_CTO.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RE-RUN BY THIS SEAT at wk-nfra_oplgtw-1-3d @06a9aec60d: proof-of-spec-check --governing-order VALID (rc=0) 7/7; test_browser_oidc.py '7 passed'; test_principal_cutover.py 'FAILED ...::test_oga2_ac04, 1 failed, 10 passed'.",
+        "W3-S16: test_principal_cutover.py:540 asserts set(ROUTE_CLASS) == set(routes) over every route of app.server. OG-a-3 serves two new paths, /schwab/download/login and /schwab/download/callback (BROWSER_PATHS.json), that the hand-written ROUTE_CLASS does not list, and the file is outside TO-OG-a-3's <paths>.",
+        "W3-S17: test_browser_oidc.py:620 asserts tuple(rest) == BASE_ROUTES and :625 asserts that the head-minus-base declared routes equal exactly the two new ones. Both hold only until another cell adds a route; TO-OG-x-1 adds download routes."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-OG-a-3's <paths> grants no other cell's test, and OGA3-AC7 reads 'the route table differs from the one at your base only by the new paths'.",
+    "world_is": "Two tests pin the whole route table: OG-a-2's classification guard and OG-a-3's exact-diff check. The first needs each route-adding cell to classify its own paths, a file no such cell is granted. The second fails as soon as any later cell adds a route. Until ruled, OG-a-3 stays unmerged. Slot ~3's next cell, OG-z-1, writes the same app/server.py and so waits for this merge.",
+    "notes": "INERT: nothing merged or deployed; CLOUD's suite is unchanged. Asked of 1.0.0_SA_CTO: A, an entries-only grant of ROUTE_CLASS to OG-a-3 for its two public paths; B, AC7 restated as a superset of the base, with the exact diff kept as a one-time proof record; C, a standing entries-only grant for later route-adding cells. W3-S19 (the Entra redirect URI registration) was proposed to ride gate G-C."
+  },
+  {
+    "id": "NFRA_OPLGTW-S14",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-15T19:05Z",
+    "one_line": "Record of 1.0.0_SA_CTO's ruling msg 97203 on W3-S16/W3-S17: (A) OG-a-3 gets an entries-only ROUTE_CLASS grant for its two public paths; (B) OGA3-AC7 is restated as a superset of the base with the exact diff kept as a one-time probe; (C) a standing entries-only grant for OG-x-1 and OG-z-1, each entry carrying the route's real guard class; W3-S19 rides gate G-C; W3-S20 becomes a fixed input in OG-x-1's worker face.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RULING 97203 A: tests/test_principal_cutover.py is granted to OG-a-3 for ENTRIES ONLY. /schwab/download/login and /schwab/download/callback go into ROUTE_CLASS as 'public', their true class, because a login and its OIDC callback are reachable without a session; the public-route arm at :549-554 grades them. Discriminator: the file's diff against the base is exactly those 2 lines, and the module passes 11 of 11.",
+        "RULING 97203 B: OGA3-AC7 becomes a superset. Every base route is served unchanged and in order, the two browser routes are served, the middleware is unchanged, and /login, /sprint and /sprint/archive stay guarded. The 'exactly 2 added at this cell's HEAD' fact is a one-time proof record, because an exact-equality test that later route cells must keep green goes red by design.",
+        "RULING 97203 C, with a condition: any later round-1 cell that adds a route gets the same entries-only grant for its own paths, with the same discriminator, and each entry carries the route's REAL guard class as the code enforces it, never a default 'public'. A genuinely unclear class is a row, not an entry. Census of unhanded orders granting app/server.py: TO-OG-x-1 and TO-OG-z-1, 2 of 2 carried. W3-S19 (the Entra redirect URI for /schwab/download/callback) rides gate G-C before any live download. W3-S20 (download path /schwab/download, cookies Path=/schwab/download) is written into TO-OG-x-1's worker face."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Each Gateway cell's order grants only its own surface, and OGA3-AC7 pins the route table exactly.",
+    "world_is": "Two tests pin the whole route table, so every route-adding cell has to touch another cell's test. The ruling converts that into an entries-only grant with a diff discriminator and a real-class condition, carried as criteria in TO-OG-a-3 (on its held branch), TO-OG-x-1 and TO-OG-z-1. No FWD changes.",
+    "notes": "Recorded beside S9 (97114) and S11 (97141). W3-S16 and W3-S17 (and S13's hold) are disarmed at OG-a-3's drain once its re-run is green; the adjudication is 3.0.0_SA_CVO's at L9."
+  },
+  {
+    "id": "NFRA_OPLGTW-W3-S16",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~3",
+    "surfaced_at": "2026-09-15T18:08:00Z",
+    "one_line": "Adding OG-a-3's two routes turns tests/test_principal_cutover.py::test_oga2_ac04 red: its route census requires every served path to appear in its hand-written ROUTE_CLASS table, which lacks /schwab/download/login and /schwab/download/callback, and that file is outside this order's grant.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN: cd /c/tmp/wk-oplgtw-1-3d && timeout 600 .venv-og/Scripts/python -m pytest infra/aws/ec2/opal-gateway/tests/test_principal_cutover.py -q -p no:cacheprovider --color=no -m \"not live\", on the worktree committed as 6a4e94d734 -- '1 failed, 10 passed in 6.40s'; FAILED test_oga2_ac04 at test_principal_cutover.py:540 (assert set(ROUTE_CLASS) == set(routes)): 'AssertionError: ['/schwab/download/callback', '/schwab/download/login']'.",
+        "SOURCE: infra/aws/ec2/opal-gateway/app/server.py @6a4e94d734 -- two Route declarations added (browser_oidc.LOGIN_PATH, browser_oidc.CALLBACK_PATH); OGA3-AC7 prints 'added 2 ... removed 0; changed 0'.",
+        "BASE: the drain commit 7459929520 records the COO re-run at the cut base green on 12 of 13 modules, the 13th being test_schwab_engine's known load flake, so test_principal_cutover passed there.",
+        "ORDER: org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-a-3.browser-oidc.md @6a4e94d734 -- <paths> names app/browser_oidc.py, app/server.py, tests/test_browser_oidc.py and this channel; tests/test_principal_cutover.py is not named."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The order grants exactly app/browser_oidc.py, app/server.py, tests/test_browser_oidc.py and the channel. Its criteria are the seven tests of tests/test_browser_oidc.py, and OGA3-AC7 requires the route table to differ from the base only by the new paths.",
+    "world_is": "OG-a-2's test_oga2_ac04 fixes the set of served routes through a classification table and fails on any unclassified path, so any cell that adds a route fails it. The worker did not edit that file. The seven OGA3 criteria pass, and the other 12 Gateway modules pass, one process each.",
+    "notes": "ARMED: after this branch drains, the COO's per-module re-run reads test_principal_cutover 1 failed. Disarm: a grant adding the two paths to ROUTE_CLASS (as public routes, each gated by its own state cookie, nonce and ID-token validation), or a ruling that the census reads BROWSER_PATHS.json."
+  },
+  {
+    "id": "NFRA_OPLGTW-W3-S17",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~3",
+    "surfaced_at": "2026-09-15T18:08:00Z",
+    "one_line": "OGA3-AC7 as written pins the route table recorded at the cut base 7459929520, so test_oga3_ac07 turns red as soon as any later cell adds or changes a route. OG-x-1 and OG-z-1 both write app/server.py, per the decomposition.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ORDER: NFRA_OPLGTW.TO-OG-a-3 @6a4e94d734 -- OGA3-AC7: 'the route table differs from the one at your base only by the new paths.'",
+        "SOURCE: infra/aws/ec2/opal-gateway/tests/test_browser_oidc.py @6a4e94d734 -- BASE_ROUTES (27 rows read from the running app at 7459929520) and test_oga3_ac07, which asserts the live table minus the two browser routes equals BASE_ROUTES and re-derives it from the git object of server.py at 7459929520.",
+        "DECOMP: org/missions/D9/NFRA/NFRA_OPLGTW/decompositions/NFRA_OPLGTW_DECOMP.md @8768f46770 -- :507 OG-x-1 writes GW/app/download_routes.py (new) and GW/app/server.py; :315 OG-z-1 writes GW/app/server.py."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OGA3-AC7 compares the route table with the one at this order's base.",
+    "world_is": "Written as ruled, the test holds only until the next cell changes the route table. The first route-adding cell turns OGA3-AC7 red with no defect in OG-a-3. test_oga2_ac04 has the same property (row W3-S16).",
+    "notes": "ARMED for later drains. Disarm: the route-adding cell's order grants amending BASE_ROUTES (or the test's reference commit), or a ruling retires AC7 from the regression set after this round."
+  },
+  {
+    "id": "NFRA_OPLGTW-W3-S18",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~3",
+    "surfaced_at": "2026-09-15T18:08:00Z",
+    "one_line": "The two browser OIDC endpoints fall into the rate limiter's coarse FAIL-OPEN global per-IP bucket, not the tight FAIL-CLOSED auth bucket, because app/ratelimit.py's AUTH_PATHS lists only /authorize, /token, /register and /callback, and that file is outside the grant.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SOURCE: infra/aws/ec2/opal-gateway/app/ratelimit.py @6a4e94d734 -- :42 AUTH_PATHS = frozenset({\"/authorize\", \"/token\", \"/register\", \"/callback\"}); :117-120 enforce_ip: AUTH endpoints get the tight bucket, FAIL-CLOSED, everything else the coarse global bucket, FAIL-OPEN.",
+        "SOURCE: infra/aws/ec2/opal-gateway/app/server.py @6a4e94d734 -- RateLimitMiddleware: is_auth = path in ratelimit.AUTH_PATHS.",
+        "SOURCE: infra/aws/ec2/opal-gateway/app/browser_oidc.py @6a4e94d734 -- the callback redeems an upstream code and validates an ID token (a key lookup) per request, as the /callback bridge leg does."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The order asks for the login and callback in browser_oidc.py and server.py and says nothing of rate limiting. The existing auth endpoints sit in the tight FAIL-CLOSED per-IP bucket.",
+    "world_is": "/schwab/download/login and /schwab/download/callback are rate-limited as ordinary traffic, although each callback costs an upstream code redemption.",
+    "notes": "INERT: nothing deploys in this order. The one-line act, adding the two paths to AUTH_PATHS, belongs to the owner of app/ratelimit.py, before OG-r-1's release."
+  },
+  {
+    "id": "NFRA_OPLGTW-W3-S19",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~3",
+    "surfaced_at": "2026-09-15T18:08:00Z",
+    "one_line": "The separate callback is a new redirect URI at the upstream: the upstream app registration must list <PUBLIC_BASE_URL>/schwab/download/callback beside /callback, and no cell of the decomposition names that act (OG-i-3 is the ALB only).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "INFERRED",
+      "evidence": [
+        "SOURCE: infra/aws/ec2/opal-gateway/app/browser_oidc.py @6a4e94d734 -- callback_url() = PUBLIC_BASE_URL + '/schwab/download/callback', passed as redirect_uri both to get_authorization_request_url and to acquire_token_by_authorization_code.",
+        "SOURCE: infra/aws/ec2/opal-gateway/app/config.py @6a4e94d734 -- redirect_uri = PUBLIC_BASE_URL + '/callback', the code's only redirect URI before this cell.",
+        "DECOMP/PRD: a case-insensitive search of decompositions/*.md and prd/*.md under org/missions/D9/NFRA/NFRA_OPLGTW for 'redirect[ _-]?ur[il]|app registration|reply url' returns 2 lines (PRD C5 :179 and DECOMP :514), both about the ticket never appearing in a redirect URL; none about registering one. OG-i-3 (DECOMP :157) writes TFGW/alb.tf only.",
+        "INFERRED: that the upstream refuses a sign-in whose redirect URI is not registered is standard OpenID Connect behaviour; it was not exercised (the tests use a local issuer)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD C1: 'The download browser uses a separate Gateway-owned OIDC callback'. The order's only downstream hand-off is BROWSER_PATHS.json, for OG-i-3's ALB rules.",
+    "world_is": "Until the app registration lists the new URI, the live sign-in stops at the upstream before the Gateway sees a code. BROWSER_PATHS.json records the URI under upstream_redirect_uri, marked as not an ALB rule.",
+    "notes": "INERT now: nothing deploys. It becomes a hard stop of the download journey at OG-r-1 or OG-v-4 unless the holder of the Entra app registration adds the URI."
+  },
+  {
+    "id": "NFRA_OPLGTW-W3-S20",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~3",
+    "surfaced_at": "2026-09-15T18:08:00Z",
+    "one_line": "Neither the contract nor the PRD names a URL path for the download page or its login. The worker chose /schwab/download as the cookie scope, from the one existing hint (the audit test's sentinel URL https://gateway.opalinvest.com/schwab/download#...). That choice binds OG-x-1 to put its download page and routes at or under /schwab/download, or the session cookie never reaches them.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CONTRACT: org/standards/NFRA_OPLGTW_CONTRACT.json @6a4e94d734 -- a case-insensitive search for '\"/[a-z]|path|url' returns 1 line (:278 download_ticket_transport), which names no path.",
+        "SOURCE: infra/aws/ec2/opal-gateway/tests/test_schwab_audit.py @6a4e94d734 :263 -- the sentinel \"complete URL\": \"https://gateway.opalinvest.com/schwab/download#tkt_s3cr3tQ9xLmN0pR\".",
+        "SOURCE: infra/aws/ec2/opal-gateway/app/browser_oidc.py @6a4e94d734 -- COOKIE_PATH = '/schwab/download'; org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~3/BROWSER_PATHS.json @6a4e94d734 -- cookie_path and cookie_path_note."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The order: write BROWSER_PATHS.json with 'the exact login and callback paths this cell serves'; OGA3-AC4: the session cookie is 'scoped to the download paths'. Neither names the download paths.",
+    "world_is": "The download paths belong to OG-x-1 and are not yet written. Scoping the cookie needs a prefix now, so that prefix fixes where OG-x-1's page can live.",
+    "notes": "INERT: a naming decision, recorded in BROWSER_PATHS.json, which OG-i-3 reads. OG-x-1's order should name /schwab/download as its page path, or re-cut COOKIE_PATH."
+  },
+  {
+    "id": "NFRA_OPLGTW-W3-S21",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~3",
+    "surfaced_at": "2026-09-15T18:08:00Z",
+    "one_line": "The order says tests/test_identity_scope.py::test_scoped_deny_by_default fails at the cut base (row NFRA_OPLGTW-S1). In this worktree the premise does not hold: the module ran 6 passed, 0 failed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN: cd /c/tmp/wk-oplgtw-1-3d && AUDIT_PATH=<.scratch> timeout 600 .venv-og/Scripts/python -m pytest infra/aws/ec2/opal-gateway/tests/test_identity_scope.py -q -p no:cacheprovider --color=no -m \"not live\", on the worktree committed as 6a4e94d734 -- '6 passed in 0.07s', rc=0.",
+        "DIFF: 6a4e94d734 against 7459929520 changes 4 files (app/browser_oidc.py, app/server.py, tests/test_browser_oidc.py, BROWSER_PATHS.json); neither identity_scope.py, its test nor identity_tool_allowlist.txt.",
+        "ORDER: NFRA_OPLGTW.TO-OG-a-3 @6a4e94d734 BOUNDS -- 'tests/test_identity_scope.py::test_scoped_deny_by_default fails at the cut base (row NFRA_OPLGTW-S1).'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The order's BOUNDS: the named test fails at the cut base.",
+    "world_is": "It passed here. The worker did not investigate why (environment, data files or a later fix), because it is not this cell's.",
+    "notes": "INERT: no criterion of this order reads it. Recorded so the premise is re-grounded before the next order repeats it."
+  },
+  {
+    "id": "NFRA_OPLGTW-S15",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-15T20:25Z",
+    "one_line": "Disarm of W3-S16 and W3-S17 (and S13's hold) by their owner: OG-a-3's amended re-run is green and merged, with every Gateway module passing in its own process, so neither route-table coupling reaches CLOUD red.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RE-RUN: wk-nfra_oplgtw-1-3d @4870b953d9, proof-of-spec-check --governing-order VALID (rc=0) 10/10 under ruling 97203. OGA3-AC9 '11 passed' (test_oga2_ac04 reads 29 declarations == 29 app routes). OGA3-AC10: exactly 2 added ROUTE_CLASS lines, both 'public'. OGA3-AC7 is now a superset (27 of 27 base routes unchanged and in order). OGA3-AC8 records base 27 -> HEAD 29, exactly BROWSER_PATHS.json.",
+        "COO RE-RUN (a different instrument): the same branch, every module of the glob infra/aws/ec2/opal-gateway/tests/test_*.py in its own process, -m 'not live', -k 'not test_scoped_deny_by_default': 'MODULES: 14 FAILED-MODULES: 0', including test_principal_cutover 11 passed, test_browser_oidc 7 and test_schwab_engine 13.",
+        "FUTURE-PROOF: TO-OG-x-1 and TO-OG-z-1 carry standing rule C (@a8a250297c), so the next route-adding cell classifies its own paths with their real guard class instead of breaking test_oga2_ac04."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "W3-S16 and W3-S17 were ARMED: merging OG-a-3 would turn test_oga2_ac04 red on CLOUD, and its exact route-table AC7 would break at the next route-adding cell.",
+    "world_is": "Both tests are green at the merge, and the second no longer pins later cells. The hazard is gone at the named moment: OG-a-3's drain with its green re-run.",
+    "notes": "W3-S19 (the Entra redirect URI for /schwab/download/callback) rides gate G-C per ruling 97203. W3-S18, W3-S20 and W3-S21 stay INERT observations for L9. The adjudication is 3.0.0_SA_CVO's."
+  },
+  {
+    "id": "NFRA_OPLGTW-S16",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-15T21:05Z",
+    "one_line": "Record of 1.0.0_SA_CTO's /self-drive ruling msg 97237, the disposition path of W1-S1 and the lift of S3's block: the two WAF description backfills are admitted by name into the opal-gateway root's first apply (OG-i-1's) under four conditions, now TO-OG-i-1's AC10-AC12 and its bounds; OG-i-1 is re-handed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RULING 97237 (1.0.0_SA_CTO, under Andrew-direct ~19:3xZ 'YOU ADJUDICATE THEM'). The owner NFRA_OPSEC202609 is CLOSED with no COO lane. Both descriptions are the owner's own declared text (waf.tf:261, :302), so live comes to match declared, with DELTA=0 on behaviour. addresses is under lifecycle ignore_changes (waf.tf:294-296, :335-337) and is not in the diff.",
+        "CONDITIONS, carried in TO-OG-i-1 by this seat's amendment: (1) the out-of-cell changes are exactly those two ~ description updates, addresses absent (OGI1-AC10); (2) aws wafv2 get-ip-set before and after the apply reads identical address lists with counts (OGI1-AC11); (3) plan and apply run in one safe-apply run, and a WAFOptimisticLockException is a clean abort and re-run (bound); (4) a post-apply plan reads 0 changes on both sets (OGI1-AC12).",
+        "SHARED ROOT: 1.0.0_SA_CTO states that G-S half (b) for MDPF_TAXSMA's TX-i-3 is satisfied by this ruling plus condition 4, and that TX-i-3 applies after OG-i-1's apply and after this seat's G-S half (a)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-OG-i-1's blast-radius bound refused any change to an existing resource, and row S3 held OG-i-1..OG-i-4 for the round.",
+    "world_is": "The adjudicator admits exactly the two named description backfills into one apply, under criteria that prove the reconciler's address lists survive. The block of S3 lifts: OG-i-1 is re-handed on the amended order, and OG-i-2..OG-i-4 follow on a root that plans clean. Row S2's check still binds OG-i-1's drain: the applied key schema must read pk/sk with TTL on expires_at.",
+    "notes": "W1-S1's adjudication cites 97237; it is 3.0.0_SA_CVO's at L9. The same amendment corrects the AC8 harness sentence to the operator role, per W1-S2. W1-S3 needs no act (97237)."
   }
 ]
 ```
