@@ -5,7 +5,7 @@
   "project": "AMGT_RESAPP",
   "directive": "D5",
   "fabric": "site-z",
-  "prd_version": "v0.7",
+  "prd_version": "v0.8",
   "step": 4,
   "brief_ref": "docs/briefs/amgt-resapp-security-analysis-20260910.md@19ce7d5b4d",
   "endpoint_outcomes": [
@@ -65,6 +65,13 @@ which held that L4-R forbids annotation, history and seat names across the whole
   own gaps. `FWD-15` came from Andrew's frontend walkthrough (the Lead Panel), carried in
   `4.0.0_SA_CRO`'s full-stack vision Part C and this seat's synthesis, and was CONFIRMED by Andrew
   2026-09-11 ~12:1xZ ("Recs approved") as his reserved L2 confirmation.
+- **Carriers, for the verbatim comparison L4-R makes** (recorded HERE, outside the ENDPOINT, at v0.8 on
+  `3.0.0_SA_CVO~W`'s review @`576b1edcec`: an annotation is not a card). `FWD-1`..`FWD-14` compare against
+  `org/tier1_exec/1.0.0_SA_CTO/deliverables/AMGT_RESAPP_ENDPOINT_20260910.md` @`3bc8f5f2c4`; `FWD-15` against
+  Andrew's reserved L2 confirmation (s.3b); `FWD-16`..`FWD-19` against
+  `org/tier1_exec/1.0.0_SA_CTO/deliverables/AMGT_RESAPP_ENDPOINT_ADDENDUM_20260915.md` @`2285a23678`, which
+  quotes beside each card the Andrew-direct sentence it was cut from; its four cards are byte-identical to
+  the four in the ENDPOINT. v0.7 had placed this paragraph inside the ENDPOINT section; v0.8 moves it.
 - **The transcription omission, recorded rather than quietly fixed.** The staged copy of this PRD
   carried a POINTER to the L2 endpoint artifact instead of the outcome cards, with a note saying the
   block "is transcribed into this section when this file lands in the tree." The landing was
@@ -145,13 +152,6 @@ retired one leaves its number vacant forever. The round-N analysis and any adden
 *Phase 0 output. `FWD-n` ids are PERMANENT and never reused; a retired outcome leaves its number
 vacant. `DONE WHEN` is the BAR, not the current state. ACCEPT lines are plain English and
 disputable, by rule, and carry no technical language.*
-
-*Carriers, for the verbatim comparison L4-R makes: `FWD-1`..`FWD-14` against
-`org/tier1_exec/1.0.0_SA_CTO/deliverables/AMGT_RESAPP_ENDPOINT_20260910.md` @`3bc8f5f2c4`; `FWD-15` against
-Andrew's reserved L2 confirmation (s.3b); `FWD-16`..`FWD-19` against
-`org/tier1_exec/1.0.0_SA_CTO/deliverables/AMGT_RESAPP_ENDPOINT_ADDENDUM_20260915.md` @`2285a23678`, which
-quotes beside each card the Andrew-direct sentence it was cut from; its four cards are byte-identical to the
-four below.*
 
 ```
 
