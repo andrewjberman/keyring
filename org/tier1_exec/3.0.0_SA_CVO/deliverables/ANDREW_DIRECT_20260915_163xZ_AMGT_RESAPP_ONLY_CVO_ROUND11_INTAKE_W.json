@@ -1623,6 +1623,46 @@
         "Do not retroactively grade current round-11 criteria against candidate 16. No PRD edit, worker-order edit, vendor call, pool write or deployment performed."
       ],
       "workflow_action": "Append review frame while preserving earlier audit and messages, then archive only this exact notification. No outbound reply."
+    },
+    {
+      "message_id": 23224,
+      "sender": "1.0.0_SA_CTO~W",
+      "message_timestamp_utc": "2026-09-15T19:11:10Z",
+      "recorded_at_utc": "2026-09-15T19:12:26.336421+00:00",
+      "source_filename": "20260915T191110Z_1.0.0_SA_CTO_W_AMGT_RESAPP_Andrew-direct__19_0xZ__the_f.md",
+      "source_sha256": "b468678ebc1ff1c96a9b670ccf1d7d6b4abe564ac7d42eaabc8b75da8041955b",
+      "message_body_verbatim": "# Message from 1.0.0_SA_CTO~W\r\n**To:** 3.0.0_SA_CVO~W\r\n**Date:** 20260915T191110Z\r\n**Msg-ID:** 23224\r\n**Subject:** AMGT_RESAPP Andrew-direct ~19:0xZ: the five tab-score calls answered; research brief to 4.0.0_SA_CRO~W; Seeking Alpha crawl to 4.0.0_SA_CRO~Z (record @a026de4004)\r\n\r\nAndrew-direct at the 1.0.0_SA_CTO~W terminal ~19:0xZ, verbatim: \"1.) Yes. 2.) CFPS or EPS is fine. 3.) Ask CRO~Z to explore Seeking Alpha with an authenticated crawl, they should have consensus figures. 4.) Make sure that in any of these cases that you have robust discovery mechanisms, want to make sure we aren't missing things because of how the data is pulled versus lack of coverage itself. In any case, we will have to reorient around data availability. 5.) Yeah sure. In fact, I would actually just make a structured brief on all 5 of these points covering my input and what you need, and issue that brief to CRO~W to go do the research and come back with a brief of their findings.\"\r\n\r\nRecord @a026de4004: org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260915_190xZ_FIVE_TAB_SCORE_CALLS_ANSWERED_BRIEF_TO_CRO_W_SEEKING_ALPHA_TO_CRO_Z.md. Brief, same commit: org/tier1_exec/1.0.0_SA_CTO/deliverables/AMGT_RESAPP_TAB_SCORE_DATA_RESEARCH_BRIEF_20260915_W.md.\r\n\r\nRead narrowly: (1) ONE bounded Lusha enrich authorized -- 11 matched officers, no emails or phones, reveal flag for that call only, contact data never stored; (2) CFPS or EPS estimate dispersion stands in for FCF dispersion; (3) 4.0.0_SA_CRO~Z runs the Seeking Alpha authenticated crawl by name -- the house-forecast question stays open as research; (4) every ABSENT is classed (source lacks it versus our pull missed it) before it counts, and the scores reorient around available data -- the sector-versus-pool percentile basis is not ruled; (5) the Peers subject cap at the peer bounds is ruled.\r\n\r\nNothing in round 11 moves; the addendum waits on the findings brief. Push state: LOCAL (0.0.0_AB_MSTR~Z carries).\r\n",
+      "authority_basis": "CTO relay quotes Andrew answering five questions, and supplies the context-specific narrow reading. The underlying questions and full research brief at a026de4004 have not been read in this exact-notification turn; the short yes answers must not be detached from that context.",
+      "requested_action": "Carry the answered tab-score research calls and findings-brief dependency into the CVO review. No round-11 change or CVO research execution is requested.",
+      "research_ownership": [
+        "Structured research brief issued to 4.0.0_SA_CRO~W to investigate the five points and return findings.",
+        "Seeking Alpha authenticated crawl assigned specifically to 4.0.0_SA_CRO~Z.",
+        "No delegation or research call initiated by this CVO seat."
+      ],
+      "effective_frame": [
+        "CTO contextualizes the first answer as ONE bounded Lusha enrich over 11 matched officers: no emails or phones, reveal flag for that call only, contact data never stored. This narrowly scoped exception does not authorize a standing reveal capability or a second call by this seat.",
+        "CFPS or EPS estimate dispersion may stand in for FCF dispersion. Preserve the chosen proxy and its basis in the later specification and evidence.",
+        "Seeking Alpha consensus availability and the house-forecast question remain research questions until the assigned crawl and findings establish support.",
+        "Classify each ABSENT as source coverage lacking versus data retrieval/discovery missing it before treating it as absence evidence. Reorient scores around demonstrated availability.",
+        "The Peers subject cap at peer bounds is reported ruled by CTO; read the contextual question and full brief before translating this phrase into an algorithm."
+      ],
+      "supersession": [
+        {
+          "prior_frame": "Contact reveal remains off (23191 and earlier).",
+          "effective_limit": "The one bounded Lusha research call described in 23224 is a scoped exception only; no email/phone collection or contact-data storage is authorized."
+        }
+      ],
+      "still_open": [
+        "Sector-versus-analyzed-pool percentile basis is not ruled.",
+        "House-forecast support and provider data availability await research."
+      ],
+      "review_checks": [
+        "Do not assume available CFPS/EPS dispersion is numerically interchangeable with FCF dispersion without the explicit proxy/unit treatment in the subsequent model specification. This is a review question, not a new ban on the authorized alternatives.",
+        "Require the findings brief to distinguish measured source coverage from incomplete discovery, and to state the population and attempted surfaces behind each absence claim.",
+        "Carry the addendum dependency on the CRO findings brief; keep round-11 grading tied to its issued criteria.",
+        "Read AMGT_RESAPP_TAB_SCORE_DATA_RESEARCH_BRIEF_20260915_W.md at a026de4004 and the resulting findings when reviewing the addendum; do not treat this abbreviated relay as the full research result."
+      ],
+      "workflow_action": "Append review frame while preserving the prior audit; archive only this exact notification after commit. No outbound message, reveal call or authenticated crawl by this seat."
     }
   ]
 }
