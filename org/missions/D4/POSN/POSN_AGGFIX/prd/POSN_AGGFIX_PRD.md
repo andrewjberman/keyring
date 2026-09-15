@@ -5,7 +5,7 @@
  "project": "POSN_AGGFIX",
  "directive": "D4",
  "fabric": "site-z",
- "prd_version": "v0.1",
+ "prd_version": "v0.2",
  "step": 4,
  "brief_ref": "docs/briefs/posn-aggfix-opal-only-agg-view-brief-20260915.md@1e268c164e",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-6", "FWD-7", "FWD-8", "FWD-9"],
@@ -20,6 +20,38 @@ from `4.0.0_SA_CRO`'s plan `org/tier1_exec/4.0.0_SA_CRO/deliverables/POSITIONING
 **Endpoint pin:** `org/tier1_exec/1.0.0_SA_CTO/deliverables/POSN_AGGFIX_ENDPOINT_FORWARD_20260915_Z.md` @ `8b0805e72a`,
 confirmed by Andrew 2026-09-15 ~17:0xZ. The ENDPOINT section below is that file's fenced block, byte for byte.
 **Model set:** `org/standards/POSN_AGGREGATE_MODEL_SET.json` (landed with this PRD).
+
+---
+
+## s.0 v0.2 -- ANSWER TO THE BRIEF-HALF REFUSAL (`4.0.0_SA_CRO~Z` @`7ffc16301a`, review @`3cb4034158`)
+
+**Author** `1.0.0_SA_CTO~Z` (L4), 2026-09-15. **Changes the brief half only.** The ENDPOINT section is byte-unchanged, so
+`3.0.0_SA_CVO~Z`'s ratified-text signature at half_hash `33458b1d30...` stands. That was proven by computing
+`half_hashes` on these bytes before the file was written.
+
+**THE DEFECT, ADOPTED IN FULL.** Re-read by this seat at SITEZ HEAD: `lambda_function.py:1796-1798` writes each model
+book's `aum` as `aum_data.get(model_code, 0)`, the dict `load_aum_data` (`:1421`) fills from the legacy file. And
+`:1811-1814` writes the aggregate's `total_aum` as `sum(aum_data.values())` from the same dict. So C-CURRENT-SOURCE moves
+five book-level values, and v0.1's C-FIVE-BOOKS-UNCHANGED, S6 bound and S8 bound could not all hold.
+
+**THE FIX, the reviewer's recommended option:**
+1. C-FIVE-BOOKS-UNCHANGED (s.4) is scoped to every field of the five books except each book's `aum`.
+2. Each book's `aum` becomes that model's OWN row in the current file's `by_model`. No blend share is added to a book's
+   `aum`; blends enter only the aggregate's weights (C-MEMBERS).
+3. C-NEVER-WIDEN (s.4) names the five book-level `aum` values in the blast radius, moving from the July file's figures
+   to the current file's.
+4. S2 (s.7) adds a census of the readers of `current_holdings.<code>.aum`, and of `json/positioning/positioning_data.json`
+   outside the Positioning page directory. The reviewer's text-grain read found no Models-mode reader at portal
+   origin/PROD `edf85ce503`, and did not measure destructured reads or consumers elsewhere.
+5. C-NO-SILENT-EMPTY (s.4) states what survives. A failed weight read today writes `aum` 0 into every book (`:1798`).
+   This project keeps that fallback for the books and changes only the aggregate's behaviour.
+6. The S6 and S8 bounds (s.7), s.8 row 27 and s.10 step 1 are brought into line.
+
+**THE TWO NON-BLOCKING NOTES, TAKEN:** S4 names `infra/aws/lambda-edge/shared-advisor-router/index.mjs` as its first
+read. C-ONE-BOOK says the partner-firm-selection behaviour is read from the page by S13 and S14.
+
+**CHECKED AND MATCHING BY THE REVIEWER, not re-opened:** the s.8 denominator and its line references; the S6 to S8
+producer lines, `OUTPUT_KEY` `:2529` and the upload `:2618-2636`; S9; S10; the standards file's keys; S4's scope.
 
 ---
 
@@ -147,6 +179,8 @@ Nothing an advisor or a client already sees on Positioning changes.
 
 - **C-ONE-BOOK.** There is one aggregate, for all of Opal. No aggregate per partner firm is built. Andrew b): "we just
   need it at global level". Both sources are already Opal-wide (brief F1 and F4; `4.0.0_SA_CRO~Z` msg 23178).
+  Whether the aggregate shows while an internal viewer has a partner firm selected is read from the page by S13 and
+  S14; it is the same global book either way.
 - **C-MEMBERS.** The aggregate counts the primary models UST, ST, INT, LT and ULT, and blends whose every constituent
   is a primary model, each blend added to its constituents by share. Nothing else counts, and assets left out are
   reported with the aggregate. The members and the rule are data in `org/standards/POSN_AGGREGATE_MODEL_SET.json`.
@@ -157,7 +191,8 @@ Nothing an advisor or a client already sees on Positioning changes.
   FWD-5 is retired.
 - **C-NO-SILENT-EMPTY.** A failed or partial weight read never produces an aggregate that reads as current. Today the
   producer serves an empty aggregate and still publishes when the weight read fails (brief F3, `:1474-1476` then
-  `:1538-1541`). The five model books keep their current behaviour.
+  `:1538-1541`). The five model books keep their current failure fallback, which writes `aum` 0 into each book
+  (`:1798`); this project changes only the aggregate's behaviour on a failed or partial read.
 - **C-GAP-EXPLAINED.** Any gap between the per-model figures and Opal's own total is explained before the aggregate is
   read as current. The explanation is this project's read of the producer that makes the file (S1). A defect found
   there is filed as a surprise row for its owner, and this project does not edit that producer.
@@ -173,10 +208,14 @@ Nothing an advisor or a client already sees on Positioning changes.
 - **C-DEFAULT-UNLESS-REMEMBERED.** An Opal user with no remembered choice lands on the aggregate. A remembered choice
   wins. A remembered or hand-edited aggregate choice is honoured only for an internal viewer, and anyone else falls
   back to the ordinary default. Andrew's D4 sentence.
-- **C-FIVE-BOOKS-UNCHANGED.** The five model books in the shared served file are byte-identical before and after every
-  producer change. Everything POSN_ASTTAX left in that file stays as it left it.
+- **C-FIVE-BOOKS-UNCHANGED.** In the shared served file, the five model books are byte-identical before and after every
+  producer change in every field except each book's `aum`. Each book's `aum` moves to that model's own row in the
+  current file's `by_model`, with no blend share added, because `lambda_function.py:1796-1798` writes it from the same
+  table as the aggregate's weights. Everything else POSN_ASTTAX left in that file stays as it left it.
 - **C-NEVER-WIDEN.** Any change to served output lands with the CTO and COO halves naming its blast radius. The writers
-  of the aggregate block and of the shared file are counted first (S2), and the count is printed. The producer deploys
+  of the aggregate block and of the shared file, and the readers of each book's `aum`, are counted first (S2), and the
+  counts are printed. The blast radius names the five book-level `aum` values, which move from the July file's figures
+  to the current file's. The producer deploys
   through its module with `safe-apply`, never a direct function-code update, with its change-management entry opened
   at the start and closed at completion.
 - **C-PORTAL-PROMOTE.** Portal changes are committed behind the promote. The DEV to PROD promote, and any push, happen
@@ -241,13 +280,13 @@ FWD-8, FWD-9); **OWNS items = 4** (T1 to T4); **rows = 17**.
 | id | outcome_ref | surface | claim | MEASURED-BY / evidence | lane | verb | depends_on | accept | bound |
 |---|---|---|---|---|---|---|---|---|---|
 | S1 | FWD-6 | `data/mdpf/scripts/gold/dim_mdpf_aum_metrics.py`; `s3://opal-data-assets/portal/gold/mdpf/global/aum-metrics/2026-09-14.json`; `s3://opal-data-portal-v2/platinum/mdpf/global/aum-metrics.json` | measured (gap 8,324,465.16 present in gold and platinum; legacy file tied within 0.01) | `4.0.0_SA_CRO~Z`, brief F4, head plus parse, 2026-09-15 16:41Z | worker, read-only | verify | -- | C-GAP-EXPLAINED | explain only; a defect is a surprise row for the producer's owner |
-| S2 | FWD-7, FWD-8 | every writer of `current_holdings.AGG` and of `json/positioning/positioning_data.json` | unmeasured (one writer found, brief F3; no census) | brief Part V item 5, Part VII item 7 | worker, read-only | verify | -- | C-NEVER-WIDEN | census printed with its denominator before S8 |
+| S2 | FWD-7, FWD-8 | every writer of `current_holdings.AGG` and of `json/positioning/positioning_data.json`; every reader of `current_holdings.<code>.aum` and of that file outside `portal/src/pages/Positioning` | unmeasured (one writer found, brief F3; no Models-mode `aum` reader at text grain, `4.0.0_SA_CRO~Z` review @ `3cb4034158`; no census) | brief Part V item 5, Part VII item 7; the v0.1 brief-half review | worker, read-only | verify | -- | C-NEVER-WIDEN, C-FIVE-BOOKS-UNCHANGED | both censuses printed with their denominators before S8 |
 | S3 | FWD-2, FWD-9 | `portal/src/pages/Positioning/Positioning.tsx:267` `isInternal() \|\| isDev()` @ portal `edf85ce503` | inferred (what `isDev()` admits is unread, brief Part VII item 9) | `4.0.0_SA_CRO~Z`, brief F6, `git show` at origin/PROD | worker, read-only | verify | -- | C-EXISTING-PREDICATE | -- |
-| S4 | FWD-7 | viewer-tier enforcement for `/api/general/*`: `infra/aws/lambda-edge/auth-validator-edge/index.mjs:385` (injects `X-User-Tier`) and `infra/aws/lambda-edge/public-data-router/index.mjs` | unmeasured. The proxy docstring `portal/src/api/portal-proxy.ts:1419-1426` @ `edf85ce503` says the model route "blocks client tier". The two edge functions `comp-routes trace` names for that URL were searched and show no tier branch. Where a refusal runs, if one does, is unread | `1.0.0_SA_CTO~Z`, `comp-routes trace` on both URLs plus a native search of both functions, this PRD; `comp-find -i x-user-tier infra/aws`: 19 hits across 6,495 files | worker, read-only | verify | -- | C-OPAL-ONLY-DATA | decides S11's home; a live exposure found here is a surprise row, not this project's fix |
+| S4 | FWD-7 | viewer-tier enforcement for `/api/general/*`: first `infra/aws/lambda-edge/shared-advisor-router/index.mjs` (where `X-User-Tier` is defined), then `infra/aws/lambda-edge/auth-validator-edge/index.mjs:385` (injects it) and `infra/aws/lambda-edge/public-data-router/index.mjs` | unmeasured. The proxy docstring `portal/src/api/portal-proxy.ts:1419-1426` @ `edf85ce503` says the model route "blocks client tier". The two edge functions `comp-routes trace` names for that URL were searched and show no tier branch. Where a refusal runs, if one does, is unread | `1.0.0_SA_CTO~Z`, `comp-routes trace` on both URLs plus a native search of both functions, this PRD; `comp-find -i x-user-tier infra/aws`: 19 hits across 6,495 files | worker, read-only | verify | -- | C-OPAL-ONLY-DATA | decides S11's home; a live exposure found here is a surprise row, not this project's fix |
 | S5 | FWD-4 | deployed `yang-generate-positioning` bytes against `infra/aws/lambda/v2_portal/yang_pipeline/positioning/yang-generate-positioning/lambda_function.py` at SITEZ HEAD | unmeasured (brief Part VII item 2) | -- | worker, read-only | verify | -- | C-NEVER-WIDEN | compare against the build input, never by file name |
-| S6 | FWD-4, FWD-6 | `infra/aws/lambda/v2_portal/yang_pipeline/positioning/yang-generate-positioning/lambda_function.py:1421-1476` (`load_aum_data`; name map `:1437-1451`; legacy read `:1461`; empty on a failed read `:1474-1476`) | measured | `4.0.0_SA_CRO~Z`, brief F3, source read @ `ec29ae6fae`; `1.0.0_SA_CTO~Z`, native search confirms `:1421` | worker, `infra/aws/lambda/v2_portal/yang_pipeline/positioning/**` | port | S1, S5, S17 | C-CURRENT-SOURCE, C-MEMBERS, C-NO-SILENT-EMPTY | the five model books' inputs untouched |
+| S6 | FWD-4, FWD-6 | `infra/aws/lambda/v2_portal/yang_pipeline/positioning/yang-generate-positioning/lambda_function.py:1421-1476` (`load_aum_data`; name map `:1437-1451`; legacy read `:1461`; empty on a failed read `:1474-1476`) | measured | `4.0.0_SA_CRO~Z`, brief F3, source read @ `ec29ae6fae`; `1.0.0_SA_CTO~Z`, native search confirms `:1421` | worker, `infra/aws/lambda/v2_portal/yang_pipeline/positioning/**` | port | S1, S5, S17 | C-CURRENT-SOURCE, C-MEMBERS, C-NO-SILENT-EMPTY | the five model books' holdings and weights inputs untouched; each book's `aum` moves to its own current row |
 | S7 | FWD-6 | same file `:1525` `calculate_aggregated_holdings`; zero total returns an empty aggregate `:1538-1541` | measured | brief F3; native search confirms `:1525` | same | align | S6 | C-MEMBERS, C-NO-SILENT-EMPTY | the exercise re-derives per-holding values by hand for a sample |
-| S8 | FWD-7, FWD-8 | same file `:1811` (the aggregate write), `:2529` `OUTPUT_KEY = 'json/positioning/positioning_data.json'`, upload `:2618-2636`; NEW -> an Opal-only key beside it, home chosen at L5 | measured (write sites); absent (the new key) | `1.0.0_SA_CTO~Z`, native search, this PRD; brief F1 for the served block | same | wire | S2, S7 | C-OPAL-ONLY-DATA, C-FIVE-BOOKS-UNCHANGED | the five books byte-identical in the shared file before and after |
+| S8 | FWD-7, FWD-8 | same file `:1811` (the aggregate write), `:2529` `OUTPUT_KEY = 'json/positioning/positioning_data.json'`, upload `:2618-2636`; NEW -> an Opal-only key beside it, home chosen at L5 | measured (write sites); absent (the new key) | `1.0.0_SA_CTO~Z`, native search, this PRD; brief F1 for the served block | same | wire | S2, S7 | C-OPAL-ONLY-DATA, C-FIVE-BOOKS-UNCHANGED | the five books byte-identical in the shared file before and after, except each book's `aum` |
 | S9 | FWD-4, FWD-7 | `infra/aws/terraform/yang-pipeline/iam.tf:34-46` `S3ReadWrite` on `arn:aws:s3:::opal-data-portal-v2/*` for `yang-pipeline-lambda-role` | measured: GetObject and PutObject already cover the current AUM file and any new key in that bucket | `1.0.0_SA_CTO~Z`, `comp-iam service yang-generate-positioning` plus a source read, this PRD | worker, read-only | verify | -- | C-NEVER-WIDEN | no IAM edit is expected; a key in another bucket reopens this row |
 | S10 | FWD-4, FWD-6, FWD-7, FWD-8 | `infra/aws/terraform/yang-pipeline/lambdas.tf:162-172` `module "generate_positioning"` (artifact `yang-pipeline/yang-generate-positioning.zip`) | measured | `1.0.0_SA_CTO~Z`, source read, this PRD | worker, deploy through `safe-apply` | wire | S6, S7, S8, S9 | C-NEVER-WIDEN | both halves name the blast radius and the rollback per key |
 | S11 | FWD-7 | NEW -> the route that serves the Opal-only key to internal viewers and refuses advisors and clients; home chosen at L5 after S4 | absent | -- | worker, edge or routing lane chosen at L5 | wire | S4, S8 | C-OPAL-ONLY-DATA | refusal exercised for an advisor and a client; allowance for an internal viewer |
@@ -302,7 +341,7 @@ heading's substance and where it is consumed.
 | 24 | F7 (`:283`) | every signed-in viewer receives the same file with the aggregate inside; the JWT edge not re-measured | C-OPAL-ONLY-DATA; S4; S11 |
 | 25 | F8 (`:290`) | 536 hits across 61,813 files; one live value reader of the legacy key, the producer at `:1461`; two dead portal wrappers with 0 callers | S6 (the read stops); s.5 (the wrappers and the legacy object) |
 | 26 | F9 (`:312`) | the 2026-08-24 concern and decision verbatim; ruling 5 verbatim, its letter naming only Attribution and Factor Tilts, its premise that AGG is gone | s.6, both rulings verbatim; C-CURRENT-SOURCE |
-| 27 | PART V -- WHAT MUST BE TRUE (`:326`) | nine items: s.6 answered; D1-D4 decided; the gap explained or disclosed; no dependency on `json/portfolios/`; never-widen with a writer census; five books byte-identical; the existing predicate; render as both viewer classes; Terraform deploy | 1 and 2: s.6. 3: C-GAP-EXPLAINED (explained, the bar Andrew confirmed). 4: C-CURRENT-SOURCE. 5: C-NEVER-WIDEN and S2. 6: C-FIVE-BOOKS-UNCHANGED. 7: C-EXISTING-PREDICATE and S3. 8: C-PRIOR-LAYOUT, rendered as three viewer kinds. 9: C-NEVER-WIDEN, S5 and S10 |
+| 27 | PART V -- WHAT MUST BE TRUE (`:326`) | nine items: s.6 answered; D1-D4 decided; the gap explained or disclosed; no dependency on `json/portfolios/`; never-widen with a writer census; five books byte-identical; the existing predicate; render as both viewer classes; Terraform deploy | 1 and 2: s.6. 3: C-GAP-EXPLAINED (explained, the bar Andrew confirmed). 4: C-CURRENT-SOURCE. 5: C-NEVER-WIDEN and S2. 6: C-FIVE-BOOKS-UNCHANGED, scoped at v0.2 to every field except each book's `aum`. 7: C-EXISTING-PREDICATE and S3. 8: C-PRIOR-LAYOUT, rendered as three viewer kinds. 9: C-NEVER-WIDEN, S5 and S10 |
 | 28 | PART VI -- STATUS (`:356`) | status facts at the brief's clocks; marked not outcome-bearing | CONTEXT, no requirement. Superseded where they moved: the project is registered and the endpoint confirmed (s.6) |
 | 29 | PART VII -- WHAT THIS BRIEF DOES NOT CLAIM (`:374`) | twelve disclosures | 1: the build is this project. 2: S5. 3: S4. 4: S1. 5: S17. 6: S7's exercise. 7: S2. 8: S1 (the owner is named with the explanation). 9: S3. 10: S14 reads `d53049a0`. 11: RESOLVED, the ~16:2xZ record is LOCAL on CLOUD @ `bd2fa195c0` and recorded on SITEZ. 12: s.5, not read here either |
 | 30 | REFS TO CARRY (`:403`) | brief path, project, endpoint, directive and macro, source plan, siblings, prior art, rulings, clocks | the PRD header `brief_ref`; the preamble; s.3; s.6 |
@@ -331,7 +370,7 @@ route was not found where the traces point (S4); the blend constituents rest on 
 ## 10. Sequencing input for `2.0.0_SA_COO~Z` (not a dispatch)
 
 1. **The verify rows first, in parallel:** S1, S2, S3, S4, S5, S9 and S17, plus S16's before read. S4 decides S11's
-   home; S2's census precedes any producer change; S17 precedes S6.
+   home; S2's writer and `aum`-reader censuses precede any producer change; S17 precedes S6.
 2. **The producer,** S6 then S7 then S8, in one worktree.
 3. **The deploy,** S10, with both never-widen halves and the change-management entry.
 4. **The route,** S11, after S4 and S8.
