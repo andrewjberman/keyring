@@ -16,6 +16,7 @@ read at HEAD or on the live plane, with its vintage.
 | rj-5 one store: the two readers on the pool | `~19` | `.../~19/...rj-5...` | VALID rc=0 | 7 of 7 PASS | W19-S8..S11 |
 | rj-6 the filings analyzer | `~20` | `.../~20/...rj-6...` | VALID rc=0 | 7 of 7 PASS | W20-S1..S8 |
 | rj-7 the similarity ranker | `~21` | `.../~21/...rj-7...` | VALID rc=0 | 6 of 6 PASS | W21-S1..S6 |
+| rj-2 drafted sentences beside their evidence (drained 15:46Z, read s.2b) | `~18` | `.../~18/...rj-2...` | VALID rc=0 | 6 of 6 PASS | W18-S8..S9 |
 
 Channel at HEAD: 210 rows; 32 round-11 worker rows (28 OBSERVATION/INERT, 3 BLOCKING/INERT -- W19-S8 the volume bars,
 W20-S2 and W20-S3 the schtasks invocation -- and 1 OBSERVATION/ARMED, W21-S3 SAP ranked as its own peer, disarmed
@@ -73,6 +74,23 @@ mapping was needed for rung 1; W21-S2 market cap in different UNITS across the h
 across two currencies and two vintages with no FX; W21-S6 only 5 of Adam's 17 CSC columns map to what the scanner
 serves (two of them trailing/NTM under fiscal-year labels -- the CRO spec's gap 2); Seeking Alpha ABSENT-ACCESS.
 
+## 2b. Drained after the first read (extended as the drain watch fires)
+
+**rj-2 drafted sentences beside their evidence (C-S196's remedy; FWD-9's pairing; C-FILINGS-ANALYZER's reader half).** Drained
+@`5a24d0f45f` at 15:46Z by `~18` after the weekly-limit kill and respawn (COO log @`5bc318c513`). Instance re-graded here: VALID rc=0,
+6 of 6 PASS. Established: the Thesis route serves the validated drafting object from the pool (`drafting_source pool`, 5 sections,
+38 sentences, 38 with passages, 38 generated-true, 38 verbatim-PASS); the ABSENT / INVALID / SERVED arms all discriminate (four arms
+over one object, the positive control the pool's own bytes); the tab prints each passage directly beneath its sentence
+(`passage_after_each_sentence true`, no title-as-evidence attribute, 38 of 38 walked); pytest 84 of 84 with 0 drafting-library
+diff lines (chain C's module untouched); build 55 assets, the machine marker in 1 asset. Only BA_US_Equity is exercised through
+the page; the other four objects were read, not rendered. Two rows: **W18-S8** -- interface D-1 carries NO `held_uncited` field
+(0 of 5 landed objects), so the page serves `held_uncited_count 0` BY ABSENCE for every name while F-1 holds 3 held-uncited
+rows for BA -- a clean default that reads as a finding (the guessed-field trap; the count is F-1's and the drafting document
+must carry it or say ABSENT); **W18-S9** -- rj-1's identifier-conversion guard is a line-level text scan over the whole adapter
+and refused a SECTION LABEL. Addendum candidate 7, added to s.4: the held-uncited count travels WITH the drafting document
+(D-1) as a field that is present or ABSENT-explicit, never 0 by absence; FWD-18's "held uncited, never rendered as evidence"
+needs the count on the object the page reads.
+
 ## 3. The pool as it stands (14:5xZ, `list-objects-v2`, 121 objects)
 
 | prefix | objects | newest | written by |
@@ -104,10 +122,12 @@ serves (two of them trailing/NTM under fiscal-year labels -- the CRO spec's gap 
 6. **The sector vocabulary and cap-unit mapping between the database's halves** (W21-S1/S2/S5): C-SIMILARITY-RANKER
    should name the mapping and the FX basis as part of the database's definition, so the ranker's first rung is not an
    in-code table nobody ratified.
+7. **The held-uncited count on the drafting document** (W18-S8): D-1 carries it as present or ABSENT-explicit, never 0 by
+   absence; the page's "held uncited" line reads that field and nothing else.
 
 ## 5. What is NOT known yet (the slug read's remaining inputs)
 
-The eight staged cells (rj-2, rj-3, rj-8, rj-9, rj-10, rj-11, rj-12, rj-13); the CVO's adjudication of the 32 rows and
+The seven staged cells (rj-3, rj-8, rj-9, rj-10, rj-11, rj-12, rj-13); the CVO's adjudication of the 32 rows and
 the slug; whether rj-10's plan reads 0/4/0 and the `_CURRENT` pointer carries no `rank_sort` (co-sign half s.4); FWD-16
 ..FWD-19's EXERCISED bars, which no cell can close -- 18 of 19 need a person, and the person is Andrew or Adam through
 Andrew. Push state: LOCAL.
