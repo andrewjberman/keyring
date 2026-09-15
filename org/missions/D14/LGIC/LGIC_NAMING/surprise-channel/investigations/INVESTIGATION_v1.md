@@ -1028,6 +1028,28 @@ new row on 3.0.0_SA_CVO's ask 96495), both 1.0.0_SA_CTO; `LGIC_NAMING-S3`, `LGIC
     "spec_asserts": "TO-LN-e-1-r3 <proof_of_spec>: 'Result file `namer-a.result.md` beside it', meaning beside the instance in deliverables/0.9.0_WK_LGIC_NAMING~1/.",
     "world_is": "That path already held a committed record of a different, terminal order (TO-LN-e-1-r2's result, @eaafb46486 and @e8490dcbfb). The order does not say to replace another order's record, but writing the named file does exactly that. The file was written as ordered, so at HEAD it now holds round 3's result, and round 2's text is reachable only by commit.",
     "notes": "Filed on form only: the order had the worker do a thing it did not say. The next round's result name, and whether round 2's record should have been kept at its own path, are for 2.0.0_SA_COO~G and 3.0.0_SA_CVO. Nothing was renamed or restored."
+  },
+  {
+    "id": "LGIC_NAMING-W2-S6",
+    "project": "LGIC_NAMING",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_NAMING~2",
+    "surfaced_at": "2026-09-15T07:23:44Z",
+    "one_line": "TO-LN-e-2-r3 names its result file namer-b.result.md, beside the round-3 instance in deliverables/0.9.0_WK_LGIC_NAMING~2/. That path already holds round 2's namer-B result (TO-LN-e-2-r2), so writing the order's file replaces round 2's record at HEAD.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "READ: org/missions/D14/LGIC/LGIC_NAMING/task-orders/LGIC_NAMING.TO-LN-e-2-r3.namer-b.md@6705066c68, <proof_of_spec> block: instance at deliverables/0.9.0_WK_LGIC_NAMING~2/LGIC_NAMING.TO-LN-e-2-r3.namer-b.proof_of_spec.json, 'Result file `namer-b.result.md` beside it'.",
+        "READ: org/missions/D14/LGIC/LGIC_NAMING/deliverables/0.9.0_WK_LGIC_NAMING~2/namer-b.result.md@6705066c68:1 reads '# LGIC_NAMING.TO-LN-e-2-r2 -- namer B, round 2 -- result'.",
+        "READ: org/missions/D14/LGIC/LGIC_NAMING/deliverables/0.9.0_WK_LGIC_NAMING~2/LGIC_NAMING.TO-LN-e-2-r2.namer-b.proof_of_spec.json@6705066c68:66-73 pins that result file at 59f68115a4. Round 2's text therefore stays in git at that pin after the overwrite."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-LN-e-2-r3 <proof_of_spec>: 'Result file `namer-b.result.md` beside it', meaning beside the round-3 instance in deliverables/0.9.0_WK_LGIC_NAMING~2/. The order says nothing about a file already at that path.",
+    "world_is": "deliverables/0.9.0_WK_LGIC_NAMING~2/namer-b.result.md is already tracked at base 6705066c68 as round 2's namer-B result. Following the order rewrites it with round 3's result. Round 2's text survives at 59f68115a4, where round 2's own proof pins it.",
+    "notes": "Filed because doing what the order said also overwrote a record the order did not mention. The round-3 proof does not list the result file as an artifact: .tools/proof-of-spec-check.py:383-386 @6705066c68 refuses, in a dry run, a tracked file pinned PENDING-THIS-COMMIT that is not staged, and this file is tracked. INERT: nothing is lost from git, and round 2's proof still resolves at its pin."
   }
 ]
 ```
