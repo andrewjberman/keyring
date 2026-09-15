@@ -96,3 +96,26 @@ CTO half  1.0.0_SA_CTO~Z -- GIVEN 2026-09-15 ~03:4xZ, for the act as bounded abo
 Push state: LOCAL (this seat never pushes; `0.0.0_AB_MSTR~Z` carries).
 
 -- `1.0.0_SA_CTO~Z`
+
+## AMENDMENT A1 2026-09-15 ~04:1xZ -- C-HOLDING-IDENTITY (PRD v0.11 @`ab2ee8052a`): the `tickers` block also carries `name` and `management_style` from ETFClassifier
+
+**Why:** Andrew-direct ~04:0xZ at this terminal, VERBATIM in part: *"looks like none of this is going through ETFClassifier"*. Row
+`POSN_ASTTAX-Z-S139` @`ab2ee8052a`: `etf-classifications` carries `name` and `management_style` for 25 of 25 satellite tickers (full scan,
+285 items, 04:0xZ) and no layer of the Satellites path reads them. v0.11 routes both through B6's `tickers` block. Binds once the v0.11
+brief half reads SIGNED; the issuer amends `TO-W1-1` before its deploy leg.
+
+**What changes in the act, and nothing else:**
+
+| object | added to the act | rollback |
+|---|---|---|
+| `platinum/satellites/characteristics.json` | ADDITIVE inside `tickers`: `name` and `management_style` per ticker, read from ETFClassifier; NULL for a ticker the table has no row for, counted. Expected at today's table: 25 of 25 non-null (GLD `SPDR Gold Shares` / `passive`, CASH `Cash & Cash Equivalents` / `unknown`). The purity control (`W1-AC3`) already strips `tickers` whole, so `satellites`, `inputs` and `method` stay graded identical | unchanged: `copy_object` from `rt61ogaj...` |
+| the IAM policy | ONE READ statement: `dynamodb:GetItem` on `arn:aws:dynamodb:us-east-1:313476888478:table/etf-classifications` -- the action the shared module's per-ticker path calls (`etf_classifications_dynamodb.py:72`, `get_item` behind an in-memory cache), mirroring the registry producer's `ReadEtfClassifications` (`satellites-registry-producer.tf:145-151`) WITHOUT its unexercised `BatchGetItem`. No write action, no index, no other table. The module's `query` paths (`:127`, `:149`) are NOT granted: an implementation that reaches them raises AccessDenied, which is Branch B | revert the statement, targeted apply |
+| the package | `infra/aws/lambda/v2_portal/_shared/etf_classifications_dynamodb.py` shipped at its repo path by pin, as the registry producer's package already ships it | the prior artifact `sZ0o...` |
+| the function | `memory_size` MAY move if the worker re-measures (the registry producer stepped 192 -> 256 MB for the dynamodb resource); the plan names it or it does not change | the prior value in the `.tf` |
+
+**Writers:** `characteristics.json` N = 1, unchanged. `etf-classifications` is READ only; its writers are untouched.
+**Plan shape:** still 0 add / 3 change / 0 destroy -- the policy, the function and the rule are already the three changes.
+**Branches:** a DynamoDB read that raises (AccessDenied, throttling) fails the run loudly with nothing written -- Branch B, the row names
+it. A ticker with no table row publishes NULL identity and is counted -- Branch A.
+
+CTO half for A1: `1.0.0_SA_CTO~Z`, GIVEN 2026-09-15 ~04:1xZ. The COO half amends to match.
