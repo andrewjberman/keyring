@@ -6182,6 +6182,227 @@ Andrew asked for (msg 22917); it concerns this project's portal files meeting an
   "spec_asserts": "PRD v0.10 @59113e257a C-SUMMARY-COPY: 'the Satellites mode's footer names holdings.json's as_of and Black Diamond as the source, Models and ETFs unchanged'; ROUND_ANALYSIS.round5 s.4 item 5-7 name PositioningSummary.tsx and Positioning.tsx for F5.",
   "world_is": "In the Satellites mode three of the page's four panel footers/headers show the models PKL vintage and 'Source: Bloomberg.' beside Black Diamond holdings; only the Summary's footer is named by the spec's carriers.",
   "notes": "Carried into TO-W2-1 (F4) as step 5 and W2-AC8; the decomposition s.1 states it; the CTO answers at L10 if the narrower reading holds."
+},
+{
+  "id": "POSN_ASTTAX-Z-W24-S1",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~24",
+  "surfaced_at": "2026-09-15T04:31:00Z",
+  "one_line": "ACTED ON THE ISSUER'S MID-FLIGHT AMENDMENT, recorded because the worker face changed under an order already executing: at ~04:1xZ 2.0.0_SA_COO~Z's notice added PRD v0.11 C-HOLDING-IDENTITY (the tickers block also carries name + management_style from ETFClassifier, a dynamodb read grant, a new zip member) while W1-AC1..W1-AC4 were already measured; a second notice named the amended order on SITEZ @1b791c6a11 (PRD v0.11 @ab2ee8052a) and a third NARROWED the grant to dynamodb:GetItem ONLY (no BatchGetItem). This worker copied the amended order over its worktree copy (git show SITEZ:<path> > <path>), implemented acts 1(e)/2/3 as amended, and RE-RAN W1-AC3 and W1-AC4 against the amended act rather than recording the pre-amendment runs. The .tf carries GetItem only, as the third notice and both halves name; the module's only per-ticker call is table.get_item (etf_classifications_dynamodb.py:72), so no caller needs BatchGetItem.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "The amended order at org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-W1-1.characteristics-per-ticker-block-and-schedule.md @1b791c6a11 (169 lines; act 1(e), act 2's flat member, act 3's table grant, W1-AC4/AC8/AC12 extended) vs the issuance copy @910815809f (155 lines) -- both read.",
+      "Both halves at SITEZ: NEVER_WIDEN_ROUND6_COO_HALF.md @1b791c6a11 (R1 amendment) and NEVER_WIDEN_ROUND6_CTO_HALF.md @2c6b7d8887 ('one dynamodb:GetItem READ on etf-classifications'); the CTO half names etf-classifications 3 times (grep -c on the SITEZ blob).",
+      "W1-AC3 and W1-AC4 were re-run AFTER the identity fields landed; the recorded outputs in this worker's deliverables are the post-amendment ones (w1ac3.purity-control.txt, w1ac4.dry-run.txt)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Rule 27: mid-round the spec AND the decomposition are FROZEN, and a worker's whole context is the face it was handed; the pipeline gate's LIMB 6 does not fire on a task-order MODIFICATION, so a mid-flight amendment reaches a working worker with no refusal anywhere.",
+  "world_is": "TO-W1-1 was amended three times in ~20 minutes while its worker was executing it -- an added constraint (the identity pair), an added .tf grant, then a narrowing of that grant -- delivered as coordinator messages, with the order text on SITEZ landing between the first and second. Nothing mechanical graded the change; the worker's own re-copy and re-run is what kept the criteria aligned with the act.",
+  "notes": "No harm here: the amendment arrived BEFORE the first world write (W1-AC7) and both re-run criteria (AC3, AC4) are cheap. The exposure the row records is the general one CLAUDE.md Rule 27 names -- a modification can change a criterion's grammar or a paths grant under a reading worker with no gate -- and the mitigation that worked is the issuer stating the commit to re-copy from."
+},
+{
+  "id": "POSN_ASTTAX-Z-W24-S2",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~24",
+  "surfaced_at": "2026-09-15T04:31:10Z",
+  "one_line": "THE WORKTREE'S SPARSE CONE DID NOT CARRY A PATH THE AMENDED ACT REQUIRES: infra/aws/lambda/v2_portal/_shared/ (the ETFClassifier module) is absent from the cone cut at issuance, so the local dry run (W1-AC4) could not import the classifier at all. This worker ran `git sparse-checkout add infra/aws/lambda/v2_portal/_shared` -- an act the order does not name -- to materialise the committed bytes; nothing was written, modified or committed there, and git status shows the directory as clean.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Before: the path did not exist in /c/tmp/wk-posn-6-24 (a read of it returned 'Path does not exist'); `git sparse-checkout list` showed 12 cones, none covering infra/aws/lambda/v2_portal.",
+      "The file DOES exist at the issuance commit: `git cat-file -e HEAD:infra/aws/lambda/v2_portal/_shared/etf_classifications_dynamodb.py` rc 0, 14027 bytes.",
+      "After the add: 4 files materialised (README.md, __init__.py, etf_classification.py, etf_classifications_dynamodb.py), `git status --porcelain` carries no entry for any of them -- the checkout matches the index."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The worker face grants <paths> and the COO cuts the worktree; an act the order directs must be executable in the tree the worker is given.",
+  "world_is": "The cone was cut for the PRE-AMENDMENT act (the returns rule from data/etfs/scripts/gold, which IS in the cone); the identity pair added a module in a directory the cone does not carry, and a sparse worktree answers a missing cone path exactly like a deleted file.",
+  "notes": "Generalises to any mid-flight amendment that reaches into a new directory: the amendment must name the cone add as well as the act, or the worker discovers it as an ImportError. The zip build (W1-AC6) would NOT have caught it -- build_package.py reads members from git at a pin, so the package is correct whether or not the file is in the cone."
+},
+{
+  "id": "POSN_ASTTAX-Z-W24-S3",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~24",
+  "surfaced_at": "2026-09-15T04:31:20Z",
+  "one_line": "THE ARTIFACT'S `inputs` TRIPLE IS NOT AN IDENTITY FOR THE INPUT BYTES, AND W1-AC4's SATELLITES-BLOCK ARM DEPENDS ON IT BEING ONE: at an UNCHANGED triple (holdings_as_of 2026-09-14, positioning_data_as_of 2026-09-11, bbg_as_of 2026-09-11) the local dry run's satellites block differs from the served artifact's at one leaf (Opal Satellite 30 beta 0.266956 served vs 0.263467 local), because BOTH json inputs were RE-PUBLISHED under the same as_of after the served artifact was written. The code is proved identical on two instruments: W1-AC3's difference control (DEEP-EQUAL over one shared set of objects, 2275 leaves) and a vintage control that runs the WORKING module over the served artifact's OWN input versions and reproduces its satellites block DEEP-EQUAL.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "head-object: characteristics.json rt61ogajZQy79meUlsY1X_mIdPngxJTZ LastModified 2026-09-14T21:45:13Z; holdings.json now 67GP52SdV1rw6QFVNPytU6ec4TvhwJh3 at 2026-09-15T03:02:26Z (previous BRjqyqnB0pIdLUHOvDY3B_Sh9b0EXIPw at 2026-09-14T19:53:59Z); positioning_data.json now AqBtm_5o.2QeiCBRP_veC8HV2Xk0OSaj at 2026-09-15T00:56:11Z (previous OuevyO7kCIJdEqzGlJWd.z.8S8pqiXJk at 2026-09-14T21:21:33Z, 8745 -> 8757 bytes). Both post-date the served write; both carry the SAME as_of as before.",
+      "input_vintage_control.py (this worker's deliverables, run 2026-09-15 ~04:0xZ): working module + holdings BRjqyqnB... + positioning OuevyO7k... + bbg/2026-09-11 -> satellites block DEEP-EQUAL to served rt61ogaj... True; and both live inputs' bytes differ from those vintages at an unchanged as_of (printed True/True).",
+      "The holdings re-publish is Z-S135's own act (the R2 retag driven at 03:02:26Z), so the beta move is a KNOWN world change, not an unexplained one."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "W1-AC4: 'the satellites block of <LOCAL_OUT> parse-identical to the served artifact's when the inputs triple is unchanged (both triples printed), else stated'; the COO never-widen half Branch B: 'a satellites leaf moved at unchanged inputs' is a ROLLBACK trigger.",
+  "world_is": "An unchanged triple does not mean unchanged inputs: holdings.json is re-published intraday at a fixed as_of (the retag) and positioning_data.json likewise. So the triple-equality test can read FALSE with the code provably unchanged, and -- the sharper direction -- a REAL code defect and a routine input re-publish are indistinguishable BY THAT TEST ALONE.",
+  "notes": "Consequence for W1-AC12 and for F4: the discriminator that does hold is a VINTAGE-pinned re-run (read the inputs by VersionId) or the object's own content hash, not the as_of triple. The artifact carries no input VersionId or content hash today; adding one would make this decidable from the artifact alone and is a spec question for L4, not a worker act. This worker states both readings rather than asserting equality."
+},
+{
+  "id": "POSN_ASTTAX-Z-W24-S4",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~24",
+  "surfaced_at": "2026-09-15T04:31:30Z",
+  "one_line": "A CITATION IN THE AMENDED ORDER NAMES THE OPPOSITE OF ITS CITED BYTES: act 2 directs the classifier module 'mapped FLAT at the zip root, exactly as the registry producer's build_package.py:117-121 does' -- those lines, printed at HEAD 910815809f, map the member AT ITS REPO PATH (zip path == repo path) and the comment above them says so in terms ('IT SHIPS AT ITS REPO PATH like every other member'). The imperative (FLAT) and the precedent (repo path) disagree.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/cot-pipeline/cot-satellites-registry-producer/build_package.py:117-121 at 910815809f, printed: ('infra/aws/lambda/v2_portal/_shared/etf_classifications_dynamodb.py', 'infra/aws/lambda/v2_portal/_shared/etf_classifications_dynamodb.py') preceded by the comment 'IT SHIPS AT ITS REPO PATH like every other member: the producer puts that directory on sys.path (load_classifier) and imports it flat'.",
+      "The amended order @1b791c6a11 act 2: 'the member infra/aws/lambda/v2_portal/_shared/etf_classifications_dynamodb.py mapped FLAT at the zip root, exactly as the registry producer's build_package.py:117-121 does'.",
+      "BOTH layouts import correctly under this producer's load_classifier: it inserts the module's repo directory on sys.path and imports by module name, so a flat member resolves off /var/task and a repo-path member resolves off the insert. Verified locally on the repo-path copy (the dry run's 25-of-25 identity read) before the flat mapping was chosen."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-W1-1 act 2 (amended): the classifier module is mapped FLAT at the zip root, 'exactly as' the cited precedent does.",
+  "world_is": "The two packages now use DIFFERENT layouts for the same module -- registry producer at the repo path, characteristics producer flat -- and the order's own words read as if they were one convention. This worker followed the IMPERATIVE (flat) and recorded the precedent's real shape here and in build_package.py's comment, so a later reader does not infer a convention that does not exist.",
+  "notes": "Cheap either way; the risk is a future edit that 'restores consistency' in one package by reading the other's comment. If L9 rules the precedent is what was meant, the change is one tuple in build_package.py and a rebuild."
+},
+{
+  "id": "POSN_ASTTAX-Z-W24-S5",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~24",
+  "surfaced_at": "2026-09-15T04:31:40Z",
+  "one_line": "THE PRODUCER'S WALL IS NOW DOMINATED BY THE RETURN-HISTORY LOAD AND THE FUNCTION'S TIMEOUT IS UNCHANGED AT 120 s, MEASURED ONLY OFF-PLANE: the local dry run takes 127.6 s wall (2 m 8 s), of which the load lists bbg/ and reads 16 partitions PLUS 173 backfill history.csv objects one at a time (45,070 rows in window). The same work in-region is expected to be far cheaper, but that is an EXPECTATION -- no in-Lambda wall has been read, and the preflight's comp-adversary note named exactly this gap.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "w1ac4.dry-run.txt (this worker's deliverables): producer wall measured twice at 130.3 s and 127.6 s on this device; loader log '16 of 16 total date prefix(es)' and 'backfill history: 173 ticker file(s), 45070 row(s) in window, 0 skipped'.",
+      "infra/aws/terraform/cot-pipeline/satellites-characteristics-producer.tf: timeout 120, memory_size 512 -- both unchanged by this cell (peak RSS measured 164.7 MiB, well under the order's 384 MiB threshold, so the memory stays 512).",
+      "The device wall is NOT the Lambda wall: 173 sequential GetObjects from this workstation to us-east-1 is round-trip bound; the same calls in-region are the thing W1-AC12's driven invoke measures for the first time."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-W1-1 act 3 authorises a MEMORY change only ('keep 512 MB unless W1-AC4 prints a peak above 384 MB'); W1-AC9 expects exactly three changes (function artifact, policy, rule), so a timeout change would be a fourth and is outside both never-widen halves' key lists.",
+  "world_is": "The function's 120 s timeout was sized for a 4-object read (2.84 s measured at TO-V4-1) and now also carries a 189-object history sweep. If the in-region wall exceeds 120 s the driven invoke fails LOUD with nothing written -- recoverable, and that refusal IS the measurement -- but the first read of it is a production invoke.",
+  "notes": "Deliberately NOT pre-emptively widened: the timeout is not in either half's blast radius and raising it would break W1-AC9's 3-change expectation. If W1-AC12 times out, the sizing change plus its own half amendment is the remedy and this row is its carrier. Cheaper mitigation available to a later cell: the backfill sweep re-reads all 173 ticker files for the ONE ticker (GLD) this producer needs."
+},
+{
+  "id": "POSN_ASTTAX-Z-W24-S6",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~24",
+  "surfaced_at": "2026-09-15T04:31:50Z",
+  "one_line": "A SECOND CARRIER OF THE SCHEDULE GOES STALE WITH THIS CELL AND THE ORDER FORBIDS TOUCHING IT: the handler lambda_function.py's docstring states 'cron(20 7 * * ? *) UTC, 20 minutes after the registry producer's 07:00Z fire' and reasons at length about that 20-minute margin, while the .tf rule this cell moves now reads cron(30 12 * * ? *). The order says lambda_function.py is 'unchanged unless the import path needs data/etfs/scripts/gold on sys.path' -- it does not -- so the file is left byte-identical and the stale text is filed here instead of fixed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/cot-pipeline/cot-satellites-characteristics-producer/lambda_function.py at 910815809f, docstring 'WHY ITS OWN SCHEDULE AND NOT THE REGISTRY PRODUCER'S SUCCESS': 'This fires on an independent daily wall-clock rule, cron(20 7 * * ? *) UTC, 20 minutes after the registry producer's own 07:00Z fire' plus a paragraph on the 20-minute margin.",
+      "infra/aws/terraform/cot-pipeline/satellites-characteristics-producer.tf as edited by this cell: schedule_expression = 'cron(30 12 * * ? *)' with the rationale rewritten in place (the .tf's own comment block and the rule description both updated).",
+      "The import path did NOT need a sys.path change: the producer already inserts the repo root (parents[4]) and imports the return rule as a namespace package and the classifier by module name, verified by the dry run."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-W1-1 act 2: 'lambda_function.py: unchanged unless the import path needs data/etfs/scripts/gold on sys.path (state it)'.",
+  "world_is": "After this deploy the handler's docstring describes a schedule that no longer exists, in the file a reader opens FIRST when asking what this function does. No behaviour depends on it -- the trigger carries no date and the rule is Terraform's -- so the cost is a wrong answer to a human, not a wrong artifact.",
+  "notes": "One-line fix for whoever owns the next touch of that file (F4 does not touch it): the docstring's schedule paragraph. Filed rather than fixed because widening a file the order pins is the class this channel exists to avoid."
+},
+{
+  "id": "POSN_ASTTAX-Z-W24-S7",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~24",
+  "surfaced_at": "2026-09-15T04:32:00Z",
+  "one_line": "W1-AC1's EXPECT NAMES A READ ITS INVOCATION DOES NOT MAKE: the clause requires 'the newest bbg partition printed as <NEWEST_BBG_PARTITION> (its characteristics.parquet head-object 200 in the same reading)', but the invocation's last limb only lists CommonPrefixes under bbg/ -- there is no head-object on the partition's parquet anywhere in it. This worker ran the head-object as a separate read in the same session (200, 19,802 bytes) and records it beside the criterion rather than claiming the invocation produced it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "The W1-AC1 invocation, verbatim, ends: \"... s3api list-objects-v2 --bucket opal-data-etfs --prefix bbg/ --delimiter / --query 'CommonPrefixes[].Prefix' --output text | tr '\\t' '\\n' | sort | tail -3\" -- a prefix listing, not an object read.",
+      "The supplementary read, same session, recorded in w1ac1.preconditions.txt: head-object bbg/2026-09-11/characteristics.parquet -> {len 19802, lm 2026-09-14T18:31:19+00:00} rc 0, and bbg/2026-09-11/run_manifest.json -> {len 4047} rc 0.",
+      "A prefix listing cannot distinguish a partition whose directory exists from one whose parquet is absent or zero-length, which is exactly what the expect's parenthetical asks to rule out."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "W1-AC1 expect: the newest bbg partition printed 'with its characteristics.parquet head-object 200 in the same reading'.",
+  "world_is": "The invocation as written proves the PREFIX exists; the expectation asks for the OBJECT. The gap is small here because the dry run reads the parquet immediately afterwards and would fail loud, but a criterion whose invocation cannot produce its expectation is a grading hazard rather than a measurement.",
+  "notes": "Remedy for a future cut: append the head-object to the invocation's chain. Recorded because the refusal clause forbids satisfying a criterion 'by another route' silently -- so the route taken is named instead."
+},
+{
+  "id": "POSN_ASTTAX-Z-W24-S8",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~24",
+  "surfaced_at": "2026-09-15T04:47:00Z",
+  "one_line": "W1-AC5's OWN INVOCATION COULD NOT RUN IN THE WORKTREE AS CUT: `.tools/commit-gate.sh` dies at import with ModuleNotFoundError: No module named 'comp_constants_cli' because its runner puts org/modules/graph (and .../compproof) on sys.path, and the sparse cone carries neither. This worker ran `git sparse-checkout add org/modules/graph` (408 files, 19.3 MB, materialised at the committed bytes, nothing modified) and the gate then passed 4 of 4. SECOND instance of the same class as Z-S W24-S2, on a CRITERION's invocation rather than an act's import.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "First run, verbatim: 'File \"C:\\tmp\\wk-posn-6-24\\.tools\\commit_gate_runner.py\", line 96, in <module> import comp_constants_cli ... ModuleNotFoundError'; exit 1.",
+      ".tools/commit_gate_runner.py:92-100 inserts str(GRAPH_DIR) and str(COMPPROOF_DIR) on sys.path then imports comp_constants_cli, manifest_check_cli, shell_cli, log_open_lint, ses_sender_lint_cli -- five modules, all under org/modules/graph, none in the cone.",
+      "After `git sparse-checkout add org/modules/graph`: 'OK: pre-commit gate clean for 4 of 4 file(s)', exit 0, recorded in w1ac5.commit-gate.txt."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Rule 14 / W1-AC5: every .py edit passes .tools/commit-gate.sh, and the criterion names that invocation as the measurement.",
+  "world_is": "A sparse worktree cut for a cell's FILE SURFACE does not necessarily carry the cell's TOOL surface: commit-gate.sh is in the cone (.tools) but five of its imports are not, and the failure is an ImportError at line 96 rather than anything naming the cone. Every worker on a sparse cone that runs the commit gate hits this.",
+  "notes": "Two candidate remedies, both cheap and neither a worker act: add org/modules/graph to the standard worker cone at /dispatch, or have commit_gate_runner.py fail with a named 'missing cone path' message instead of a bare ModuleNotFoundError. The 19.3 MB add is not free on a memory-pressured device (the sparse cone exists because a full checkout OOMs here)."
+},
+{
+  "id": "POSN_ASTTAX-Z-W24-S9",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~24",
+  "surfaced_at": "2026-09-15T04:47:10Z",
+  "one_line": "THE ZIP LAYOUT FOR THE CLASSIFIER MEMBER: the amended order's act 2 says 'mapped FLAT at the zip root', the CTO never-widen half's AMENDMENT A1 -- the document that BOUNDS this act -- says 'shipped at its repo path by pin, as the registry producer's package already ships it', the cited precedent's bytes say repo path, and W1-AC6's own expect says 'every member at the mirroring layout'. THREE carriers to ONE. This worker SHIPS IT AT ITS REPO PATH, states the conflict here and in build_package.py's comment, and leaves the ruling to L9. S4 (filed 15 minutes earlier, on the citation alone) recorded the opposite disposition; this row supersedes that disposition on evidence S4's author had not yet read -- the halves are read before the first world write, which is after the code is written.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CTO half A1 @2c6b7d8887 (SITEZ), package row, verbatim: 'infra/aws/lambda/v2_portal/_shared/etf_classifications_dynamodb.py shipped at its repo path by pin, as the registry producer's package already ships it'.",
+      "The amended order @1b791c6a11 act 2, verbatim: 'the member infra/aws/lambda/v2_portal/_shared/etf_classifications_dynamodb.py mapped FLAT at the zip root, exactly as the registry producer's build_package.py:117-121 does' -- and those lines map zip path == repo path (printed in row W24-S4).",
+      "W1-AC6 expect, verbatim: 'the first build lists every member at the mirroring layout INCLUDING data/etfs/scripts/gold/etf_positioning_gold.py with its sha256'.",
+      "BEHAVIOURAL EQUIVALENCE, measured not argued: the producer's load_classifier inserts the module's repo directory on sys.path and imports by module name, so the repo-path member resolves in the zip AND in a working tree; a flat member would resolve off /var/task. The 25-of-25 identity read in W1-AC4 ran against the repo-path arrangement."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "NEVER#1: the act is bounded by what BOTH halves name; TO-W1-1 act 2 (amended) names a flat mapping.",
+  "world_is": "Two authoritative carriers of one detail disagree, and the one the worker is told to obey (the order) cites the one it contradicts (the precedent) as its authority. The detail is behaviourally inert, so no instrument downstream would have caught the divergence -- it would simply have shipped a package whose layout the sign-off does not describe.",
+  "notes": "If L9 rules FLAT, the change is one tuple in build_package.py plus a rebuild, re-upload and targeted re-apply (the function's source_code_hash moves), i.e. the same three-change plan again -- not free, but small. Recorded before the upload so the ruling can land before the artifact does."
+},
+{
+  "id": "POSN_ASTTAX-Z-W24-S10",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~24",
+  "surfaced_at": "2026-09-15T04:58:00Z",
+  "one_line": "THE ROW GATE REFUSED THIS WORKER'S FIRST COMMIT ON `class`, AND ITS STANDING CORPUS PASS COULD NOT RUN AT ALL IN A SPARSE WORKTREE: the ratified enum is exactly ['OBSERVATION','BLOCKING'] -- a TWO-value axis -- while the natural vocabulary for a finding (PROCESS_GAP, MEASUREMENT_GAP, SPEC_DEFECT, RISK, DOC_DRIFT) is refused; and the gate's corpus limb died on FileNotFoundError for org/surprise_channel/schemas/investigation_item.schema.json, which the cone did not carry, reporting 'standing corpus pass could not run -- fail-closed'. Both were fixed in session (8 uncommitted rows re-classed OBSERVATION before they landed; `git sparse-checkout add org/surprise_channel`), so nothing invalid reached the record.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output, verbatim: 'BLOCKED -- surprise-channel row gate (steps 7/10) ... 17 violation(s) on NEW rows', 16 of them two-per-row on class, plus 'standing corpus pass could not run (FileNotFoundError: ... org\\\\surprise_channel\\\\schemas\\\\investigation_item.schema.json) -- fail-closed'.",
+      "org/surprise_channel/schemas/investigation_item.schema.json, read after the cone add: required ['id','surfaced_by','surfaced_at','one_line','class','grounding','disposition']; enums class ['OBSERVATION','BLOCKING'], hazard_standing ['ARMED','INERT'], disposition ['UNDER_INVESTIGATION','GRADUATED','DISMISSED_WITH_REASON','DECOMP_INVALIDATING'], fabric ['laptop','site-z'].",
+      "The 9 rows this worker filed were graded as NEW against 234 pre-existing rows not re-graded (the gate prints the denominator: '9 new row(s) of 243 total checked')."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The worker face directs a row 'per org/surprise_channel/schemas/investigation_item.schema.json' with a `class` field; the schema is the contract and the gate enforces it at commit.",
+  "world_is": "A two-value class axis carries the whole taxonomy of what a row can BE, so the KIND of finding (a spec defect, a stale doc, a cone gap, a risk) lives only in prose -- and a worker reading 'class' without opening the schema will invent values and be refused at commit, after the rows are written. Separately, the gate's standing pass is silently unavailable to every sparse worktree that does not carry the schema's directory: it announces the degradation, which is correct, but the degradation is invisible until a commit is attempted.",
+  "notes": "Cheapest fixes, neither a worker act: name the two legal values in the worker face beside the schema path; and either add org/surprise_channel to the standard worker cone or have the gate resolve the schema from git (it grades rows AT a commit, so `git show HEAD:<schema>` is available even when the file is not in the checkout). The intended KIND of each of this worker's 9 rows is stated in its own one_line."
 }
 ]
 ```
