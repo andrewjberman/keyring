@@ -5887,6 +5887,49 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "Recorded as form only. The attempt1 files were not deleted to make the count read two; rj-3's inputs are the two unprefixed files, full sha256 recorded in the instance and in ledger amgt-round11-producer-universe L5."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W18-S19",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~18",
+    "surfaced_at": "2026-09-15T20:49:27Z",
+    "one_line": "rj-3 AC1 and DELIVER step 1 read an as_of_date off each exact input, but the thesis bundle rj-10 captured from the deployed adapter carries no as_of_date key, so AC1's literal invocation prints (None, None, None) for it beside 2026-09-15 for the ranked payload and the two inputs' shared day cannot be shown from that field.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-AMGT-rj-3 @0c4650dc1c s.5 AC1 expect: 'inputs 2 (one ranked payload, one thesis bundle, both captured from the DEPLOYED adapter under rj-10), each with a 16-hex sha256 prefix and the SAME as_of_date, the ranked payload carrying a generation_id and a payload_hash. Inputs 0, or two different days, is a STOP and a BLOCKING row'; s.1 DELIVER step 1: join.harness.mjs 'prints, at input, each file's sha256 and its as_of_date'; AC2 expect: 'an INPUT line per file with its sha256 prefix and as_of_date'.",
+    "world_is": "AC1 run verbatim at 0c4650dc1c from the worktree root, rc=0, three lines: 'inputs 2' / 'INPUT 0.9.0_WK_AMGT_RESAPP~19\\rankings.trending.chatter.response.2026-09-15.json 698c391592a41a21 ('2026-09-15', '20260915T200841Z-adf383740a9e', 'adf383740a9eeee910560739777082bdaa9986a311dd114c0076947b6cf90479')' / 'INPUT 0.9.0_WK_AMGT_RESAPP~19\\thesis.BA_US_Equity.response.2026-09-15.json f2e7c040727195a1 (None, None, None)'. The thesis envelope's body (file sha256 f2e7c040727195a1ba4a2775d19eac0eb551dc3382902eb014ad4b465aed5cad) has 21 keys: security_key, identity, header_figures, fiscal_year_figures, check_face, model_status, fiscal_years, model_cases, generated_at, drafted_sections, drafting_status, drafting_source, drafting_read_completed, drafting_reason, held_uncited_count, held_uncited_basis, thesis_driver, drafting_provenance, thesis_driver_chart, management, posture -- none of them as_of_date, generation_id or payload_hash. The day-bearing fields it does carry are generated_at '2026-09-15T20:10Z' and identity.crosswalk_vintage '2026-09-15', and the file name carries 2026-09-15; the ranked body's as_of_date is '2026-09-15'. AC1's STOP clause (inputs 0, or two different days) is not literally reached; its SAME-as_of_date bar is not met as printed.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AC1 invocation output, verbatim, kept as org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~18/AMGT_RESAPP.TO-AMGT-rj-3.AC1.txt (this order).",
+        "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~19/thesis.BA_US_Equity.response.2026-09-15.json @0c4650dc1c, body keys read as json.loads(envelope['body']).keys().",
+        "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~19/rankings.trending.chatter.response.2026-09-15.json @0c4650dc1c, body as_of_date 2026-09-15, generation_id 20260915T200841Z-adf383740a9e."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Recorded as form only. No day was derived for the thesis bundle: join.harness.mjs prints its as_of_date as ABSENT with generated_at and crosswalk_vintage beside it, and AC1 and AC2 are recorded as their output shows."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W18-S20",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~18",
+    "surfaced_at": "2026-09-15T20:49:27Z",
+    "one_line": "rj-3 DELIVER step 2 reads the header's feed and description off the thesis bundle's identity and renders each of the five tabs from the two captured payloads, but at portal 0e153399 the header's description, feed and posture line ride the /overlay payload and the Peers tab reads /peers, and rj-10 captured neither, so from these two inputs the description and feed render not-carried and the Peers panel mounts with no body.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-AMGT-rj-3 @0c4650dc1c s.1 DELIVER step 2: 'Run the assembled page's render check ... against the two captured payloads: the header (ranked list from the ranked payload; the feed and the description from the thesis bundle's identity), each of the five tabs, the Posture line'; AC3 expect: 'tabs_rendered 5 (thesis, exec_management, peers, model, posture), header_ranked_rows equal to the ranked payload's row_count, header_description_present true or ABSENT-explicit, posture_line_present true or ABSENT-explicit'.",
+    "world_is": "Portal 0e153399: src/pages/SecurityAnalysis/components/HeaderBrief.tsx:7 'WHERE IT READS FROM. All three arrive on the `/overlay` payload the header already reads'; components/LeadPanel.tsx:238 'const overlayQuery = useSecurityOverlay(selectedSecurityKey)' and :352 'bundle={overlayQuery.data}'; components/SecurityOverlay.tsx reads bundle.bloomberg_session_state and bundle.header_figures, fields only /overlay carries; tabs/PeersTab.tsx:141 and tabs/PostureTab.tsx:339 'usePeerSet(securityKey)'. The captured thesis body's 21 keys carry identity and posture but no description and no feed. deliverables/0.9.0_WK_AMGT_RESAPP~19 at 0c4650dc1c holds exactly two unprefixed response captures (rankings.trending.chatter.response.2026-09-15.json, thesis.BA_US_Equity.response.2026-09-15.json) and no /overlay or /peers capture. Row W18-S10 already records that description and feed ride /overlay and peers ride /peers.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git -C portal show 0e153399:src/pages/SecurityAnalysis/components/HeaderBrief.tsx line 7; components/LeadPanel.tsx lines 238 and 352; tabs/PeersTab.tsx line 141; tabs/PostureTab.tsx line 339 (read in the worktree checkout at 0e153399, status clean).",
+        "ls org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~19/ at 0c4650dc1c: *.response.*.json matches four files, two of them the attempt1.* pre-apply captures (row W19-S20) and none an overlay or peers capture."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Recorded as form only. assembled.harness.cjs answers the page's /overlay and /peers hooks with no data (not captured) and prints what renders; it renders the header's own HeaderBrief and PostureHeaderLine from the two leaves the thesis bundle does carry under the same names (identity, posture) and invents no /overlay field. Nothing was captured to fill the gap."
   }
 ]
 ```
