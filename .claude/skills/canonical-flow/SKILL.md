@@ -351,6 +351,7 @@ receiving check."*
 
 ```bash
 .tools/receiving-check.py <the artifact your limb consumes>
+.tools/receiving-check.py <instance.proof_of_spec.json> --governing-order <the task order it closes>   # L7 -> L8
 ```
 
 **Run it on the artifact the PREVIOUS limb produced, before your own act.** One command; it dispatches
@@ -365,12 +366,13 @@ because anything required it.** The same day, a PRD addendum whose outcomes were
 PRD cost `NFRA_REPORT` a round and shipped a regression to a live daily email. **A defect found at the
 handoff costs one message; the same defect found after a cut costs a round.**
 
-**THE THREE VERDICTS, AND SILENCE IS NOT ONE OF THEM:**
+**THE FOUR VERDICTS, AND SILENCE IS NOT ONE OF THEM:**
 
 | verdict | what it means for your next act |
 |---|---|
 | `ACCEPT` | a checker ran and passed it. Build. Cite the tool that passed it, not the wrapper. |
 | `HAND BACK` | a checker ran and refused it. **DO NOT BUILD ON IT** -- return it to its author with the output. |
+| `NOT-BOUND` | a proof-of-spec instance was handed over WITHOUT the order it closes. Nothing ran -- its own to_ref would have steered the verdict. Re-run with `--governing-order <that order>`; never build on it. |
 | `UNCHECKED` | **no checker exists for that artifact type.** Accepting is your JUDGMENT, not a verified act. |
 
 ⛔ **`UNCHECKED` IS NOT `ACCEPT`, AND YOUR ACCEPTANCE MESSAGE MUST SAY WHICH.** Four handoffs have no
