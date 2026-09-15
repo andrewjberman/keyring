@@ -50,6 +50,21 @@ exchange paths this cell serves, one entry per path with its methods. `OG-i-3` r
 **Read:** the PRD's "C5" and "C2" (ticket keys); the contract; `app/browser_oidc.py` (and its `BROWSER_PATHS.json`),
 `app/integrations/schwab/integration.py`, `query.py`, `semantics.py`, `engine.py`, `app/schwab_audit.py`, `app/access_state.py`.
 
+**Fixed inputs from `OG-a-3`, and the route-table rule (amended before hand-off, on `1.0.0_SA_CTO`'s ruling msg 97203;
+rows `NFRA_OPLGTW-W3-S20`, `NFRA_OPLGTW-S14`).**
+- The download browser's login is `OG-a-3`'s (@`06a9aec60d`): `GET /schwab/download/login` and
+  `GET /schwab/download/callback`.
+  - Its session and transaction cookies are scoped `Path=/schwab/download`, so your page and your exchange MUST sit
+    at or under `/schwab/download`, or the session cookie never reaches them.
+  - `browser_oidc.session_principal(request)` gives your routes the signed-in principal.
+- `tests/test_principal_cutover.py::test_oga2_ac04` requires every served route to be classified in `ROUTE_CLASS`.
+  - That file is granted to you, ENTRIES ONLY, for your own `DOWNLOAD_PATHS.json` paths.
+  - Each entry carries the route's REAL guard class, as your code enforces it, never a default `"public"`. The
+    public-route arm passes any route classed public, so misclassing a guarded route opens the hole `ROUTE_CLASS`
+    exists to close.
+  - A route whose class is genuinely unclear is a surprise row, not an entry.
+  - AC28 runs the module; AC29 checks the diff.
+
 ### ACCEPTANCE
 
 <placeholders>WS</placeholders>
@@ -135,7 +150,13 @@ exchange paths this cell serves, one entry per path with its methods. `OG-i-3` r
 <criterion id="OGX1-AC27" cell_refs="OG-x-1"><invocation>cd <WS> && timeout 120 .venv-og/Scripts/python -m pytest infra/aws/ec2/opal-gateway/tests/test_schwab_export.py::test_ogx1_ac27 -q -p no:cacheprovider --color=no</invocation><expect>(?m)^1 passed(?![^\n]*(failed|error))</expect></criterion>
 `OGX1-AC27` (`test_ogx1_ac27`) -- no token and no data value appears in an access log line.
 
-<expected_criteria>OGX1-AC1, OGX1-AC2, OGX1-AC3, OGX1-AC4, OGX1-AC5, OGX1-AC6, OGX1-AC7, OGX1-AC8, OGX1-AC9, OGX1-AC10, OGX1-AC11, OGX1-AC12, OGX1-AC13, OGX1-AC14, OGX1-AC15, OGX1-AC16, OGX1-AC17, OGX1-AC18, OGX1-AC19, OGX1-AC20, OGX1-AC21, OGX1-AC22, OGX1-AC23, OGX1-AC24, OGX1-AC25, OGX1-AC26, OGX1-AC27</expected_criteria>
+<criterion id="OGX1-AC28" cell_refs="OG-x-1"><invocation>cd <WS> && timeout 300 .venv-og/Scripts/python -m pytest infra/aws/ec2/opal-gateway/tests/test_principal_cutover.py -q -p no:cacheprovider --color=no -m "not live"</invocation><expect>(?m)^[1-9][0-9]* passed(?![^\n]*(failed|error))</expect></criterion>
+`OGX1-AC28` -- `tests/test_principal_cutover.py` passes, with this cell's routes classed in `ROUTE_CLASS` and graded by their class's arm.
+
+<criterion id="OGX1-AC29" cell_refs="OG-x-1"><invocation>cd <WS> && timeout 120 .venv-og/Scripts/python org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~5/probes/og_x1.py AC29</invocation><expect>(?m)^VERDICT: PASS-OGX1-AC29(?![0-9])</expect></criterion>
+`OGX1-AC29` -- (discriminating) the diff of `tests/test_principal_cutover.py` against your cut base is exactly `ROUTE_CLASS` entries for the paths in `DOWNLOAD_PATHS.json`, one per path, and no other line; the probe prints each path with its class and `VERDICT: PASS-OGX1-AC29` or `VERDICT: FAIL-OGX1-AC29 <reason>`.
+
+<expected_criteria>OGX1-AC1, OGX1-AC2, OGX1-AC3, OGX1-AC4, OGX1-AC5, OGX1-AC6, OGX1-AC7, OGX1-AC8, OGX1-AC9, OGX1-AC10, OGX1-AC11, OGX1-AC12, OGX1-AC13, OGX1-AC14, OGX1-AC15, OGX1-AC16, OGX1-AC17, OGX1-AC18, OGX1-AC19, OGX1-AC20, OGX1-AC21, OGX1-AC22, OGX1-AC23, OGX1-AC24, OGX1-AC25, OGX1-AC26, OGX1-AC27, OGX1-AC28, OGX1-AC29</expected_criteria>
 
 `<WS>` is your worktree's absolute path, given in your identity line.
 
@@ -144,7 +165,7 @@ exchange paths this cell serves, one entry per path with its methods. `OG-i-3` r
 - **Grant.** Your write surface is the `<paths>` block below, plus `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~5/` and this order's own file (for the `<status>` flip). Nothing else. A path you need that is not named is a BLOCKING surprise row on that criterion -- never an override.
 - **Branch.** You work in the worktree named in your identity line, cut from `CLOUD` at hand-off (after `OG-q-3` and `OG-a-3` merged). Never push, merge, rebase, `checkout --` or `clean`.
 - **Interpreter.** Your venv `.venv-og` (`cd <WS> && py -3.12 -m venv --system-site-packages .venv-og && .venv-og/Scripts/python -m pip install -r infra/aws/ec2/opal-gateway/requirements.txt msal moto pytest`) serves every invocation. Never commit `.venv-og/` or `.scratch/`.
-- **Tests.** Each criterion names one test function in `tests/test_schwab_export.py`; write exactly that name. Offline, moto and synthetic fixtures; browser behaviour is exercised through the ASGI test client and by reading the static script, never a real browser or Entra.
+- **Tests.** Each criterion names one test function in `tests/test_schwab_export.py`; write exactly that name. AC28 is a module run and AC29 a probe; `tests/test_principal_cutover.py` is yours for your `ROUTE_CLASS` entries only. Offline, moto and synthetic fixtures; browser behaviour is exercised through the ASGI test client and by reading the static script, never a real browser or Entra.
 - **No original-file path.** `download_original` stays disabled for every profile; no route serves a Parquet or bronze object.
 - **The known red test.** `tests/test_identity_scope.py::test_scoped_deny_by_default` fails at the cut base (row NFRA_OPLGTW-S1). Never edit it or `identity_tool_allowlist.txt`.
 - **Code.** The commit gate lints with ruff for Python 3.9 syntax. `mcp==1.28.0` is not raised. The ALB is `OG-i-3`'s; nothing deploys.
@@ -163,6 +184,7 @@ infra/aws/ec2/opal-gateway/app/download_routes.py
 infra/aws/ec2/opal-gateway/app/static/schwab_download/
 infra/aws/ec2/opal-gateway/app/server.py
 infra/aws/ec2/opal-gateway/tests/test_schwab_export.py
+infra/aws/ec2/opal-gateway/tests/test_principal_cutover.py
 org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
@@ -172,11 +194,11 @@ org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: `OGX1-AC1` .. `OGX1-AC27` (27). Instance at
+Criterion ids: `OGX1-AC1` .. `OGX1-AC29` (29). Instance at
 `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~5/NFRA_OPLGTW.TO-OG-x-1.csv-export.proof_of_spec.json`
 (phase `BUILD-GENERAL`, firm `FABRIC`, spec_ref.group `OTHER`, spec_ref.doc the PRD @f0aa50dbc0, decomp_ref.doc the
 decomposition @8768f46770, decomp_ref.to_ref this order's path), validated with
-`py -3.12 .tools/proof-of-spec-check.py <instance> OGX1-AC1,OGX1-AC2,OGX1-AC3,OGX1-AC4,OGX1-AC5,OGX1-AC6,OGX1-AC7,OGX1-AC8,OGX1-AC9,OGX1-AC10,OGX1-AC11,OGX1-AC12,OGX1-AC13,OGX1-AC14,OGX1-AC15,OGX1-AC16,OGX1-AC17,OGX1-AC18,OGX1-AC19,OGX1-AC20,OGX1-AC21,OGX1-AC22,OGX1-AC23,OGX1-AC24,OGX1-AC25,OGX1-AC26,OGX1-AC27`
+`py -3.12 .tools/proof-of-spec-check.py <instance> OGX1-AC1,OGX1-AC2,OGX1-AC3,OGX1-AC4,OGX1-AC5,OGX1-AC6,OGX1-AC7,OGX1-AC8,OGX1-AC9,OGX1-AC10,OGX1-AC11,OGX1-AC12,OGX1-AC13,OGX1-AC14,OGX1-AC15,OGX1-AC16,OGX1-AC17,OGX1-AC18,OGX1-AC19,OGX1-AC20,OGX1-AC21,OGX1-AC22,OGX1-AC23,OGX1-AC24,OGX1-AC25,OGX1-AC26,OGX1-AC27,OGX1-AC28,OGX1-AC29`
 BEFORE the `complete` flip. Result file `csv-export.result.md` beside it. **Flip `complete` only when every MECHANICAL
 criterion PASSES by output.**
 </proof_of_spec>
@@ -196,3 +218,10 @@ lane: the <paths> block IS the grant (owned-paths-validate.py worker_grant).
 
 Seating: slot ~5, queue position 6, handed after `OG-q-3` drains and `OG-a-3` merges. Round 1 of NFRA_OPLGTW, issued by
 `2.0.0_SA_COO~O` (seated msg 96971, LD-0567). Decomposition v1 @8768f46770.
+
+Amended 2026-09-15 ~19:1xZ, before hand-off, by `2.0.0_SA_COO~O` on `1.0.0_SA_CTO`'s ruling msg 97203. The changes:
+- the worker face carries `OG-a-3`'s fixed download path and cookie scope (W3-S20);
+- standing rule C: `tests/test_principal_cutover.py` is granted, ROUTE_CLASS entries only, with each route's real
+  guard class;
+- AC28 and AC29 are added.
+No criterion was removed.

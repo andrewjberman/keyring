@@ -2,7 +2,7 @@
 
 Author: `1.0.0_SA_CTO~A`. Recorded: 2026-09-15T08:50:04.057346+00:00.
 
-**Current v0.3 is ADMITTED: both current halves SIGNED, CVO at294bd175ce and CRO at1db20a3624, against61748ba2e0. Approval metadata alone is finalized to RATIFIED; signed section bytes and all substantive contract fields remain unchanged. Under CTO97126 the signature hold on L6 is cleared. COO~T owns L5 and its subsequent canonical task-order process. The gateway row and builder readback remain an S02 build prerequisite; S16 remains a separate named-person activation prerequisite. This record does not certify decomposition, runtime implementation or EXERCISED endpoints.** The v0.2 admission and earlier v0.3 pending-review observations below are historical.
+**Current v0.4 is DRAFT and pending both changed-half L4-R reviews.** Andrew1729cef85e uses existing Traded as the automatic membership key; f95470f384 still answers G-A with opalbloomberg@opalinvest.com. Seven-field source interface unchanged; no active column or manual initial attestation. First-observed dates and separate live/dated-coverage counts are specified. Actual access is believed but UNMEASURED (97190/97192); no new probe or widening ordered. dep_stage returns to PRD; COO97187 holds L6 for admitted v0.4 and L5 v2. Earlier v0.3 admission and L5 v1 are historical. See TRADED_FIELD_ADDENDUM_97192.md.
 
 For v0.2, `python .tools/prd-signoff.py status MDPF_TAXSMA` was read after CRO notice 96992 and returned both halves SIGNED/current. The project stays `dep_stage=PRD` until COO produces the next limb. Its placement is D8 / MDPF / laptop; the D9 business workflow is separate.
 
@@ -73,3 +73,7 @@ Finalization changes only PRD header status and the contract state metadata, plu
 **Remaining scoped conditions:** CVO N5 carries the two gateway constructor outputs to the COO~G registry-row landing and base CTO conformance read; this is S02 build-only. CVO N6 carries Andrew's Gold-placement question as OPEN QUESTION, NOT A RULING: the current firm Gold home under96960 remains governing; any later ruling that changes CONTRACTS requires an addendum and fresh review of that half. S16 still requires the named person and unattended-content authorization before activation. CRO97161's I.O3/I.O5/I.O8 coverage-index correction stays deferred to the next substantive PRD bump.
 
 **Canonical L4-to-L5 release:** notifier message97165, author CTO~A, recipient exact 2.0.0_SA_COO~T, release pin294bd175ce, attempt1. Its live transport read before this finalization was OFFER-EXHAUSTED, with no READ acknowledgement claimed. The finalized package is being routed to the same lane; notification or intake does not prove a decomposition.
+
+## v0.4 re-entry under Andrew97192, 2026-09-15T18:46:25.355797+00:00
+
+Both hashes differ from admitted8120db1ff9: ratified-text `da428d318d04535960b84890bc914cecdf4740b135a0ec8764e137071485d44f`, brief `c2ea15c6002f176ceb0b3997c7b854b2e01a71f6c5d1d72002e88497214b2821`. The author signs neither. The canonical version-bump notifier requests both reviews; no duplicate manual post-commit request. Eight endpoint cards and seven-field source shape unchanged. The Traded/date/count/access decisions and exact cell map are in TRADED_FIELD_ADDENDUM_97192.md.
