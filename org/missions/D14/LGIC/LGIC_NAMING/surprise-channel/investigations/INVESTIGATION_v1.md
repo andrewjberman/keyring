@@ -1097,6 +1097,28 @@ new row on 3.0.0_SA_CVO's ask 96495), both 1.0.0_SA_CTO; `LGIC_NAMING-S3`, `LGIC
     "spec_asserts": "TO-LN-g-1-r3 step 5: 'The header names NAMING_SCHEMA.json v1.7 as the version the rule grades against'; and 'No other step moves.'",
     "world_is": "The rule can name v1.7 truthfully for R5 only. The re-cut header says so: 'org/standards/NAMING_SCHEMA.json ... v1.7 for R5; every other step as cut at v1.4 (row LGIC_NAMING-W3-S6)'. G2 still RAISES names v1.7 excludes, and V-2 lists two placeholders v1.7 does not allow. Neither was changed, because the order bounds this cell to R5 and R3.",
     "notes": "OBSERVATION, INERT: the header states which steps are at which version, so a reader is told rather than misled, and no graded form in this cell (68 IAM_ROLE forms) reaches G2 or the two extra placeholders. Which fields the rule is re-cut to, and when, belongs to 1.0.0_SA_CTO's next analysis and 2.0.0_SA_COO~G's next cut. The other changed fields (firm_forms, iam_policy.purpose_slot, key.*, kind.closed_at_l4, resource.qualifier, rows_owner, secret.purpose, system.vendor_through_tiers) were not read against the rule's text here; only G2 and V-2 were."
+  },
+  {
+    "id": "LGIC_NAMING-S18",
+    "project": "LGIC_NAMING",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G",
+    "surfaced_at": "2026-09-15T08:14Z",
+    "one_line": "5 of 6 round-3 task orders name a result file at a path that already held a prior round's result for the same slot serial at the issuance commit, so each of those workers' results replaces the prior round's record at HEAD. The cause is shared: the issuer's generator reused each cell's result stem.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED, over all 6 round-3 orders: git cat-file -e 60350c4a04:org/missions/D14/LGIC/LGIC_NAMING/deliverables/<issued_to>/<result file>. It exists for 5 of 6: LN-e-1 (~1, namer-a.result.md), LN-e-2 (~2, namer-b.result.md), LN-e-3 (~6, namer-comparison.result.md), LN-e-4 (~5, reader.result.md) and LN-e-5 (~6, reader-scoring.result.md). LN-g-1 is free: slot ~3, while round 1's LN-g-1 ran in ~1.",
+        "Two members were reported by their own workers: LGIC_NAMING-W1-S7 (namer-a) and LGIC_NAMING-W2-S6 (namer-b). This row names their shared cause.",
+        "EXERCISED: round 2's proofs for TO-LN-e-1-r2 and TO-LN-e-2-r2 were re-run with proof-of-spec-check beside the round-3 overwrite, in the round-3 worktrees and on the primary checkout: rc 0, VALID, all 4 runs. The prior records stay reachable at the commits their proofs pin (per rows W1-S7 and W2-S6: @eaafb46486 and @59f68115a4)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Each round-3 order's proof_of_spec says 'Result file `<stem>.result.md` beside it', in deliverables/<issued_to>/, as the place for this order's result.",
+    "world_is": "In 5 of 6 orders that path already held an earlier round's result for the same serial. The round-3 file replaces it, so a HEAD reader of deliverables/0.9.0_WK_LGIC_NAMING~<n>/ sees only the latest round's result for that cell.",
+    "notes": "INERT: no proof moves, because the earlier rounds' proofs pin by commit and re-run VALID. Not re-cut mid-round: the queued LN-e-4, LN-e-3 and LN-e-5 workers are told at spawn to commit the result file first and pin it after (the PENDING-THIS-COMMIT refusal on a tracked, changed, unstaged file). Remedy at the next issuance: put the round in the result stem (for example namer-a.r4.result.md). The generator's owner is 2.0.0_SA_COO~G; the issuer carries this to 1.0.0_SA_CTO at L10."
   }
 ]
 ```
