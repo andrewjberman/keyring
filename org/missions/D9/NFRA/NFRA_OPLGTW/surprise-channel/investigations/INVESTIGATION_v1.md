@@ -1320,6 +1320,49 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "TO-OG-i-1's blast-radius bound refused any change to an existing resource, and row S3 held OG-i-1..OG-i-4 for the round.",
     "world_is": "The adjudicator admits exactly the two named description backfills into one apply, under criteria that prove the reconciler's address lists survive. The block of S3 lifts: OG-i-1 is re-handed on the amended order, and OG-i-2..OG-i-4 follow on a root that plans clean. Row S2's check still binds OG-i-1's drain: the applied key schema must read pk/sk with TTL on expires_at.",
     "notes": "W1-S1's adjudication cites 97237; it is 3.0.0_SA_CVO's at L9. The same amendment corrects the AC8 harness sentence to the operator role, per W1-S2. W1-S3 needs no act (97237)."
+  },
+  {
+    "id": "NFRA_OPLGTW-W1-S4",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~1",
+    "surfaced_at": "2026-09-15T21:52:10Z",
+    "one_line": "The amended OG-i-1 order puts grading reads INSIDE the change-management entry (OGI1-AC11's get-ip-set before and after the apply, recorded in the entry; condition 4 as 'a line in your entry'), while its deploy discipline closes and commits the entry BEFORE the reads that grade the act; OG-i-1 records the AC11 reads as a verify leg's proof before the close and runs AC12's fresh plan after it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ORDER: org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-i-1.access-state-table.md:56-57 @09668e3207 'Each condition is a line in your change-management entry'; :106 OGI1-AC11 'both reads are recorded in the change-management entry'; :120 'close-leg each leg with its proof and close the entry, and COMMIT that BEFORE the reads that grade the act ... open, commit, act, close, commit, read'; :82 OGI1-AC3 compares the close commit with the first readback.",
+        "TOOL: .tools/deploy_ledger.py:438-469 @09668e3207 -- an entry takes content only through its legs (close-leg re-renders it), and close REFUSES while any leg is unproven; its usage text lists a verify leg's proof as a 'post-deploy live-state check (0-diff plan, smoke, served artifact read)'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Open, commit, act, close, commit, read: every read that grades the act follows the committed close, and each of the ruling's four conditions is a line in the entry, with AC11's two reads recorded in it.",
+    "world_is": "For AC11 both cannot hold: its reads must be in the entry, the entry takes content only as leg proof, and a leg must be proven before the close. So the get-ip-set reads immediately before and after the apply are the proof of verify leg L4, proven before the close. Condition 4 is declared as a line in leg L5's target and graded by OGI1-AC12's fresh plan after the committed close. No read of the new table or roles precedes the close, so AC3's instrument (the probe's first readback of the table) is unaffected.",
+    "notes": "INERT: a sequencing choice, and every read is timestamped under deliverables/0.9.0_WK_NFRA_OPLGTW~1/evidence/. Form only."
+  },
+  {
+    "id": "NFRA_OPLGTW-W1-S5",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~1",
+    "surfaced_at": "2026-09-15T21:52:10Z",
+    "one_line": "OGI1-AC11's discriminating comparison runs on two EMPTY lists: both regional blocked-IP sets hold 0 addresses live and 0 in the plan's prior state, so 'identical before and after' holds whether or not a description-only UpdateIPSet would preserve a non-empty reconciler list.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "LIVE: probes/og_i1_act.py waf (wafv2 list-ip-sets REGIONAL, 2 sets listed, then get-ip-set x2) at 2026-09-15T21:49:30Z: opal-blocked-ips-regional (f073f448-eb85-4d23-9306-0cadf4573331) count 0 and opal-blocked-ips-regional-ipv6 (85f90377-7cba-45dd-baca-397310d61f8e) count 0, both sha256 e3b0c44298fc1c14 (the empty list), description absent.",
+        "PLAN: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~1/og_i1.plan.json on branch wk-nfra_oplgtw-1-1b (terraform show -json sha256 6056c82b39a1502e, plan 2026-09-15T21:35:37Z): addresses_count_before 0 and addresses_count_after 0 on both sets; addresses is not a changed attribute.",
+        "ORDER: org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-i-1.access-state-table.md:60-62 @09668e3207 -- 'WAF's UpdateIPSet sends the full list, so this readback is what proves the reconciler's list survived'; :106 marks OGI1-AC11 '(discriminating)'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OGI1-AC11 is the discriminating proof that the reconciler's address list survives the description backfill.",
+    "world_is": "The reconciler's list is empty at this apply, so AC11 compares 0 with 0 and cannot fail on the property it exists for; it can still see a list appearing or vanishing across the apply. The probe prints the lock-token rotation beside it (not deciding) to show the two reads bracket an applied UpdateIPSet. Seeding an address to make the check bite would be a WAF write this order does not grant, so it was not done.",
+    "notes": "INERT: an empty list cannot be lost. It matters to the next apply of this root that meets a non-empty list: ignore_changes keeps addresses out of the diff, but whether the provider's UpdateIPSet sends the refreshed live list is not exercised by this apply."
   }
 ]
 ```
