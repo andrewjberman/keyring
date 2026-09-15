@@ -9,8 +9,15 @@ Cell EN-r-1 (PRD candidate E2; DEC-1, DEC-5) builds this file's first half:
     fence_patterns()  the IAM ARN globs matching principals that carry a firm's scope token
     registry_hash() sha256 over the registry files, the stamp every generated file carries
 
-The builders key(), address(), name() and grade() are cell EN-b-1's, and `census` is cell EN-s-1's
-(DEC-7). Their CLI verbs are present here and refuse until those cells land.
+Cell EN-b-1 (PRD candidate E3; DEC-2) builds the second half:
+
+    key()           {source}/{scope}/{tier}/{table}/{partition}, exactly
+    address()       s3://{bucket}/{key}[/{object}], the bucket from the tier home rule, never an argument
+    name()          {system}-{scope}-{function}[-{qualifier}]-{kind}, the scope's SHORT form from its LONG
+    grade()         (verdict, canonical_form) by LGIC_NAMING's GRADING_RULE.md; RaiseDefect on a RAISE
+    vectors         the name() vectors the Terraform module is proved against
+
+`census` is cell EN-s-1's (DEC-7): its CLI verb is present here and refuses until that cell lands.
 
 THE REGISTRY is infra/logic/registry/*.json (DEC-1). The closed enumerations (tiers, cadences, the scope
 classes, the system classes, the firm forms, the refused tokens) are org/standards/NAMING_SCHEMA.json's:
@@ -711,10 +718,658 @@ def _gen_locals(reg, h16):
     return "\n".join(parts) + "\n"
 
 
+# --------------------------------------------------------------------------- the builders (EN-b-1)
+class RaiseDefect(Exception):
+    """grade() cannot place a name. A defect in GRADING_RULE.md, NAMING_SCHEMA.json or the registry, never a
+    verdict (NAMING_SCHEMA.json grade.unplaceable). The message names the rule step that raised."""
+
+
+# The vendor that bd reads as beside a firm token (GRADING_RULE.md R3; NAMING_SCHEMA.json refused_tokens.bd).
+# The firm it reads as otherwise is lookup('bd'). Checked against systems.json at run time.
+_BD_VENDOR = "blackdiamond"
+# GRADING_RULE.md G1.3: the graded types outside kind.by_type, and the grammar each takes.
+_OTHER_GRAMMAR = {"EVENT_RULE": "R", "SCHEDULE": "R", "SECRET": "S", "LOG_GROUP": "L",
+                  "S3_BUCKET": "B", "S3_BUCKET_POLICY": "B", "S3Key": "K"}
+# GRADING_RULE.md L2: a log group's service names the resource type.
+_LOG_SERVICE = {"lambda": "LAMBDA", "codebuild": "CODEBUILD_PROJECT", "stepfunctions": "STATE_MACHINE",
+                "vendedlogs/states": "STATE_MACHINE", "events": "EVENT_RULE", "ecs": "ECS_TASK_DEFINITION"}
+_CAMEL_RE = re.compile(r"(?<=[a-z0-9])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])")
+_RES_CHARS = re.compile(r"^[A-Za-z0-9._-]+$")
+_VAR_RE = re.compile(r"\{[^}]*\}|\*|%s")
+_KEBAB_JSON = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*\.json$")
+_SNAKE = re.compile(r"^[a-z0-9]+(_[a-z0-9]+)*$")
+_ENTITY = re.compile(r"^[^=]+=[^=]+$")
+_SCHEMA_CACHE = {}
+_VOCAB_CACHE = {}
+
+
+def _schema():
+    if "s" not in _SCHEMA_CACHE:
+        _SCHEMA_CACHE["s"] = load_schema()
+    return _SCHEMA_CACHE["s"]
+
+
+class _Vocab:
+    """GRADING_RULE.md's vocabularies, read from the registry and NAMING_SCHEMA.json at run time.
+
+    V1 is the systems.json keys and V2 its unresolved tokens: the rule calls its own V1 INTERIM and gives the
+    rows to this registry, which holds astn, trade and news unresolved (rows LGIC_ENFORCE-W1-S6, -W1-S11)."""
+
+    def __init__(self, reg, schema):
+        systems = _systems(reg)
+        scopes = _scopes(reg)
+        self.v1 = {s["key"] for s in systems}
+        self.v2 = {u["token"] for u in reg["systems"].get("unresolved", [])}
+        self.products = {s["key"] for s in systems if s.get("class") == "PRODUCT"}
+        self.products |= {s["key"] for s in scopes if s.get("class") == "PRODUCT"}
+        self.vendors = {s["key"] for s in systems if s.get("class") == "VENDOR"}
+        self.scope = {}  # a V4 token (and a firm's refused alias, mockadv) -> its long form
+        self.firm = set()  # the FIRM tokens, long and short, that R3 reads bd against
+        self.long_scope = set()  # V4 long forms: firm longs, the MASTER keys, global
+        self.short = {s["long"]: s["short"] for s in scopes}
+        for s in scopes:
+            if s.get("class") in ("FIRM", "GLOBAL", "MASTER"):
+                self.scope[s["long"]] = s["long"]
+                self.scope[s["short"]] = s["long"]
+                self.long_scope.add(s["long"])
+                if s["class"] == "FIRM":
+                    self.firm |= {s["long"], s["short"]}
+        for tok in schema["refused_tokens"]:
+            if tok == "bd":
+                continue
+            try:
+                row = lookup(tok, reg)
+            except KeyError:
+                continue
+            if row.get("class") == "FIRM":
+                self.scope[tok] = row["long"]
+        self.bd_firm = lookup("bd", reg)["long"]
+        if _BD_VENDOR not in self.vendors:
+            raise RaiseDefect("R3: %r is not a VENDOR row of systems.json" % _BD_VENDOR)
+        self.bd_vendor = _BD_VENDOR
+        refused = reg["systems"].get("refused_keys", {})
+        self.cadences = set(schema["cadence"]["values"])
+        self.v3 = {m for ms in refused.values() if isinstance(ms, list) for m in ms}
+        self.v3 |= self.cadences | set(self.scope) | {"bd"}
+        self.vocab = self.v1 | self.v2 | self.v3
+        self.tiers = list(schema["key"]["tier"])
+        self.kinds_by_type = dict(schema["kind"]["by_type"])
+        tng = schema["types_not_graded_by_kind"]
+        self.not_graded = {t for t, why in tng.items() if str(why).startswith("NOT GRADED")}
+        self.types = set(self.kinds_by_type) | set(tng)
+        self.standing = set(schema["bucket"]["standing_shared"])
+        self.account = str(reg["exemptions"]["account_id"])
+        self.bucket_firm = {}  # a firm's bucket or bucket alias -> the firm's long form
+        self.buckets = set(self.standing)
+        for s in scopes:
+            self.buckets.add(s["bucket"])
+            names = [s["bucket"]] + [a["spelling"] for a in s.get("aliases", []) if "bucket" in a.get("planes", [])]
+            self.buckets |= set(names)
+            if s.get("class") == "FIRM":
+                for b in names:
+                    self.bucket_firm[b] = s["long"]
+        self.list_home = schema["key"]["legacy_served_paths"]["home"]
+
+
+def _vocab():
+    key_ = os.path.abspath(REGISTRY_DIR)
+    if key_ not in _VOCAB_CACHE:
+        _VOCAB_CACHE[key_] = _Vocab(_registry(), _schema())
+    return _VOCAB_CACHE[key_]
+
+
+def _is_var(seg):
+    return bool(_VAR_RE.search(seg))
+
+
+def _res_tokens(s, v, what):
+    """G3 over a resource-name body: N3 separators, N2 camel split, N1 lowercase, N4 generated suffix.
+
+    Pieces then rejoin into ONE token where they spell a vocabulary word: consecutive tokens joined by '-'
+    (seeking-alpha, GRADING_RULE.md V1), or the camel pieces of one word joined whole (CloudWatch ->
+    cloudwatch, a V3 purpose word). Rule text does not state the second (row LGIC_ENFORCE-W1-S9)."""
+    if not _RES_CHARS.match(s):
+        raise RaiseDefect("G3: the tokeniser cannot place a character of %s %r" % (what, s))
+    pieces = []
+    for i, seg in enumerate(re.split(r"[-_.]", s)):
+        for p in _CAMEL_RE.split(seg):
+            if p:
+                pieces.append((p.lower(), i))
+    if pieces and len(pieces[-1][0]) >= 14 and pieces[-1][0].isdigit():
+        pieces.pop()  # N4
+    out, i = [], 0
+    while i < len(pieces):
+        took = 1
+        for j in range(min(len(pieces), i + 4), i + 1, -1):
+            span = pieces[i:j]
+            dashed = "-".join(p for p, _ in span)
+            whole = "".join(p for p, _ in span)
+            if dashed in v.vocab:
+                out.append(dashed)
+                took = j - i
+                break
+            if len({seg for _, seg in span}) == 1 and whole in v.vocab:
+                out.append(whole)
+                took = j - i
+                break
+        else:
+            out.append(pieces[i][0])
+        i += took
+    return out
+
+
+def _bd_is_vendor(toks, i, v):
+    """R3: bd is the vendor when a firm token is next to it, before or after; the firm otherwise."""
+    return (i > 0 and toks[i - 1] in v.firm) or (i + 1 < len(toks) and toks[i + 1] in v.firm)
+
+
+def _system_of(toks, i, v):
+    t = toks[i]
+    if t in v.v1:
+        return t
+    if t == "bd" and _bd_is_vendor(toks, i, v):
+        return v.bd_vendor
+    return None
+
+
+def _alias_spell(toks, v, form):
+    """V-4: replace each alias token in place. bd -> blackdiamond or the firm's form; a firm's long form or
+    mockadv -> the short form (form 'short') or a short form -> the long one (form 'long')."""
+    out = []
+    for i, t in enumerate(toks):
+        if t == "bd":
+            if _bd_is_vendor(toks, i, v):
+                out.append(v.bd_vendor)
+            else:
+                out.append(v.short[v.bd_firm] if form == "short" else v.bd_firm)
+        elif t in v.scope:
+            out.append(v.short[v.scope[t]] if form == "short" else v.scope[t])
+        else:
+            out.append(t)
+    return out
+
+
+def _slots(toks, typ, v, first_of_segment=None):
+    """R1-R4 over a token list: (system, removed indices, scope long or None, placeholder).
+    first_of_segment: the indices R1.d may read (a secret's segment heads, S2); None reads every token."""
+    t1 = toks[0]
+    sysv = _system_of(toks, 0, v)
+    removed = set()
+    placeholder = False
+    if sysv:
+        removed = {0}
+    elif t1 == "opal":  # R2
+        s2 = _system_of(toks, 1, v) if len(toks) > 1 else None
+        if s2:
+            sysv, removed = s2, {0, 1}
+        elif len(toks) > 1 and toks[1] in v.v2:
+            raise RaiseDefect("R2: %r after opal is an unresolved token (V2)" % toks[1])
+        else:
+            sysv, removed = "opal", {0}
+    elif t1 in v.v2:
+        raise RaiseDefect("R1.c: %r is an unresolved token (V2)" % t1)
+    elif t1 in v.v3 or typ == "LAMBDA_LAYER":  # R1.d, R1.e
+        sysv, placeholder = "{system}", True
+        for j in range(1, len(toks)):
+            if first_of_segment is not None and j not in first_of_segment:
+                continue
+            if toks[j] in v.v2:
+                raise RaiseDefect("R1.d: the unresolved token %r (V2) comes before any system (V1)" % toks[j])
+            s = _system_of(toks, j, v)
+            if s:
+                sysv, removed, placeholder = s, {j}, False
+                break
+    else:
+        raise RaiseDefect("R1.f: %r is in no vocabulary; no registry row resolves it" % t1)
+    longs, scope_idx = [], set()
+    for i, t in enumerate(toks):
+        if i in removed:
+            continue
+        if t in v.scope:
+            longs.append(v.scope[t])
+            scope_idx.add(i)
+        elif t == "bd" and not _bd_is_vendor(toks, i, v):
+            longs.append(v.bd_firm)
+            scope_idx.add(i)
+    if len(set(longs)) > 1:
+        raise RaiseDefect("R4: two different scopes %s; a resource has one" % sorted(set(longs)))
+    return sysv, removed | scope_idx, (longs[0] if longs else None), placeholder
+
+
+def _cadence_slot(func, v):
+    """R7: the last slot of an EVENT_RULE or SCHEDULE is a cadence (V6)."""
+    if "on" in func[:-1]:
+        k = func.index("on")
+        if k < len(func) - 1:
+            return func[:k], "-".join(func[k:]), False
+    if func and func[-1] in v.cadences:
+        return func[:-1], func[-1], False
+    for k in range(len(func) - 1, -1, -1):
+        if func[k] in v.cadences:
+            return func[:k] + func[k + 1:], func[k], False
+    return func, "{cadence}", True
+
+
+def _grade_resource(nm, typ, v):
+    if typ == "IAM_POLICY" and "#" in nm:  # R8: X#policy
+        x, _, tail = nm.partition("#")
+        if tail != "policy" or not x:
+            raise RaiseDefect("R8: %r is not a resource policy name X#policy" % nm)
+        if x in v.standing or x.startswith("opal-data-") or x.startswith("opal-%s-" % v.account):
+            canon, ph, aliased = _grade_bucket(x, v)
+        else:
+            xt = _res_tokens(x, v, "a resource policy")
+            owners = [t for t, ks in v.kinds_by_type.items() if xt and xt[-1] in ks]
+            if len(owners) != 1:
+                raise RaiseDefect("R8: the resource %r#policy names cannot be placed from its name" % x)
+            canon, ph, aliased = _grade_resource(x, owners[0], v)
+        return canon + "#policy", ph, (aliased + "#policy" if aliased else None)
+    body, affix = nm, ""
+    if typ == "SQS_QUEUE" and nm.endswith(".fifo"):  # N5
+        body, affix = nm[:-5], ".fifo"
+    toks = _res_tokens(body, v, "a resource name")
+    if not toks:
+        raise RaiseDefect("G3: %r has no token" % nm)
+    sysv, out, scope_long, placeholder = _slots(toks, typ, v)
+    func = [t for i, t in enumerate(toks) if i not in out]
+    if typ in ("EVENT_RULE", "SCHEDULE"):
+        func, last, ph2 = _cadence_slot(func, v)
+        placeholder = placeholder or ph2
+    else:
+        kinds = v.kinds_by_type[typ]
+        last = func.pop() if func and func[-1] in kinds else kinds[0]  # R6
+    parts = [sysv] + ([v.short[scope_long]] if scope_long else []) + func + [last]
+    aliased = "-".join(_alias_spell(body.split("-"), v, "short")) + affix
+    return "-".join(parts) + affix, placeholder, aliased
+
+
+def _grade_secret(nm, v):
+    """Section S: {system}/{scope}/{purpose}."""
+    segtoks = [_res_tokens(s, v, "a secret") for s in nm.split("/") if s]
+    segtoks = [st for st in segtoks if st]
+    if not segtoks:
+        raise RaiseDefect("S1: %r has no token" % nm)
+    flat, heads, where = [], set(), []
+    for si, st in enumerate(segtoks):
+        heads.add(len(flat))
+        for ti, t in enumerate(st):
+            where.append(si)
+            flat.append(t)
+    sysv, out, scope_long, placeholder = _slots(flat, "SECRET", v, first_of_segment=heads)
+    purpose = {}
+    for i, t in enumerate(flat):
+        if i not in out:
+            purpose.setdefault(where[i], []).append(t)
+    parts = [sysv] + ([v.short[scope_long]] if scope_long else []) + ["-".join(purpose[k]) for k in sorted(purpose)]
+    raw = [seg.split("-") for seg in nm.split("/")]
+    spelled = _alias_spell([t for seg in raw for t in seg], v, "short")
+    rebuilt, k = [], 0
+    for seg in raw:
+        rebuilt.append("-".join(spelled[k:k + len(seg)]))
+        k += len(seg)
+    return "/".join(parts), placeholder, "/".join(rebuilt)
+
+
+def _grade_log_group(nm, v):
+    """Section L: /aws/{service}/{resource-name}; G2.3 has already run."""
+    parts = nm.split("/")
+    l3 = len(parts) > 2 and parts[1] == "aws"
+    if l3:
+        if parts[2] == "vendedlogs" and len(parts) > 3:
+            service, rest = "vendedlogs/" + parts[3], parts[4:]
+        else:
+            service, rest = parts[2], parts[3:]
+    else:  # L4: never CONFORMANT, so never an alias of its canonical form either
+        service, rest = parts[1], parts[2:]
+    typ = _LOG_SERVICE.get(service)
+    if typ is None:
+        raise RaiseDefect("L2: service %r gives no resource type" % service)
+    rest_s = "-".join(r for r in rest if r)
+    affix = ""
+    if rest_s.startswith("us-east-1."):  # N5
+        affix, rest_s = "us-east-1.", rest_s[len("us-east-1."):]
+    if not rest_s:
+        raise RaiseDefect("L3: %r names no resource" % nm)
+    canon, placeholder, aliased = _grade_resource(rest_s, typ, v)
+    head = "/aws/%s/%s" % (service, affix)
+    single = l3 and len(rest) == 1  # extra / segments joined with - are a change no alias makes
+    return head + canon, placeholder, (head + aliased if aliased and single else None)
+
+
+def _grade_bucket(nm, v):
+    """Section B: opal-data-{scope} and opal-{account-id}-{purpose}."""
+    if nm in v.standing:
+        return nm, False, None  # B1
+    if nm.startswith("opal-data-"):  # B2
+        toks = nm[len("opal-data-"):].split("-")
+        first = toks[0]
+        if first in v.long_scope or first in v.products:
+            long_, alias = first, False
+        elif first == "bd" and _bd_is_vendor(toks, 0, v):
+            return "opal-data-{scope}", True, None
+        elif first in v.scope or first == "bd":
+            long_, alias = v.scope.get(first, v.bd_firm), True
+        elif first in v.vendors:
+            return "opal-data-{scope}", True, None
+        else:
+            raise RaiseDefect("B2: %r after opal-data- is no scope key%s" % (first, " (V2)" if first in v.v2 else ""))
+        canon = "opal-data-" + long_
+        if len(toks) > 1:
+            return canon, False, None
+        return canon, False, (canon if alias else None)
+    if nm.startswith("opal-"):  # B3
+        toks = nm[len("opal-"):].split("-")
+        if toks[0] == v.account:
+            return nm, False, None
+        if v.account in toks:
+            toks.remove(v.account)
+        return "opal-%s-%s" % (v.account, "-".join(toks)), False, None
+    return "opal-%s-%s" % (v.account, nm), False, None  # B4
+
+
+def _legacy_list(v):
+    path = os.path.join(REPO, *v.list_home.split("/"))
+    if not os.path.isfile(path):
+        raise RaiseDefect("K7: the LIST %s is absent and this key's verdict turns on membership" % v.list_home)
+    return [p.split("/") for p in _read_json(path)["paths"]]
+
+
+def _seg_re(seg):
+    out, pos = "", 0
+    for m in _VAR_RE.finditer(seg):
+        out += re.escape(seg[pos:m.start()]) + "[^/]*"
+        pos = m.end()
+    return re.compile("^" + out + re.escape(seg[pos:]) + "$")
+
+
+def _seg_match(tseg, kseg):
+    return bool(_seg_re(tseg).match(kseg) or (_is_var(kseg) and _seg_re(kseg).match(tseg)))
+
+
+def _on_list(entries, segs, prefix):
+    """K7: segment by segment; a prefix matches an entry's leading segments."""
+    for e in entries:
+        if (len(e) == len(segs) or (prefix and len(e) > len(segs))) and all(_seg_match(a, b) for a, b in zip(e, segs)):
+            return True
+    return False
+
+
+def _new_served(rest, prefix):
+    """K4a's NEW served path forms, below the tier: (segments, placeholder)."""
+    out, placeholder = [], False
+    leaf = None if prefix or not rest else len(rest) - 1
+    if leaf == 0 and "." not in rest[0]:
+        leaf = None
+    for i, s in enumerate(rest):
+        if i == leaf:
+            probe = _VAR_RE.sub("x", s)
+            out.append(s if _KEBAB_JSON.match(probe) else s.lower().replace("_", "-"))
+        elif i == 0:
+            out.append(_table(s))
+        elif _ENTITY.match(s):
+            out.append(s)
+        else:
+            out.append("{entity}={id}")
+            placeholder = True
+    return out, placeholder
+
+
+def _table(s):
+    """K3: a table is snake_case; a kebab or capitalised table is rewritten lowercase with - as _."""
+    if _is_var(s) or "." in s or _SNAKE.match(s):
+        return s
+    return s.lower().replace("-", "_")
+
+
+def _k5a(after, v):
+    """K5.a: a V1 key next, then a scope. (source, scope long, consumed)."""
+    source = scope = None
+    k = 0
+    if after and after[0] in v.v1:
+        source, k = after[0], 1
+        if k < len(after):
+            s = after[k]
+            if s in v.long_scope or s in v.products:
+                scope, k = s, k + 1
+            elif s in v.scope or s == "bd":
+                scope, k = v.scope.get(s, v.bd_firm), k + 1
+    return source, scope, k
+
+
+def _grade_key(nm, v):
+    """Section K: {source}/{scope}/{tier}/{table}/{partition}[/{object}]."""
+    sp = nm.find(" ")
+    key_, annot = (nm[:sp], nm[sp:]) if sp >= 0 else (nm, "")  # N5
+    prefix = key_.endswith("/")
+    segs = key_.split("/")
+    if prefix:
+        segs = segs[:-1]
+    if not segs or any(s == "" for s in segs):
+        raise RaiseDefect("K0: %r has an empty segment" % nm)
+    bucket_scope, had_bucket = None, False
+    if segs[0] in v.buckets:
+        # A bucket is the key's container, never a segment of it (NAMING_SCHEMA.json key.container). A bucket
+        # the registry knows is taken out, and it fills the slots it decides (K5.c): a firm's bucket, the scope.
+        # K1 as written RAISES here (row LGIC_ENFORCE-W1-S10).
+        had_bucket, bucket_scope = True, v.bucket_firm.get(segs[0])
+        segs = segs[1:]
+        if not segs:
+            raise RaiseDefect("K1: %r is a bucket with no key" % nm)
+    s1 = segs[0]
+    placeholder = False
+    aliased = None
+    if s1 == "code" or s1 in v.tiers:  # K6, K5
+        tier_first = s1 != "code"
+        after = segs[1:]
+        source, scope, k = _k5a(after, v)
+        tail = after[k:]
+        if tier_first and s1 == "platinum":  # K5.b
+            srcs = [e[0] for e in _legacy_list(v) if _on_list([e[3:]], tail, prefix)]
+            if source is not None and source in srcs:
+                srcs = [source]
+            if srcs:
+                if source is None and len(set(srcs)) == 1:
+                    source = srcs[0]
+            else:
+                tail, ph = _new_served(tail, prefix)
+                placeholder = placeholder or ph
+        if source is None:
+            source, placeholder = "{source}", True
+        if scope is None:
+            scope = bucket_scope or "{scope}"
+            placeholder = placeholder or bucket_scope is None
+        out = [source, scope, s1 if tier_first else "code"] + tail
+    elif s1 in v.v1:  # K2-K4
+        out, i = [s1], 1
+        if i < len(segs):
+            s = segs[i]
+            if _is_var(s) or s in v.long_scope or s in v.products:
+                out.append(s)
+                i += 1
+            elif s in v.scope or s == "bd":
+                out.append(v.scope.get(s, v.bd_firm))
+                i += 1
+                if not had_bucket:
+                    aliased = True
+            elif bucket_scope:
+                out.append(bucket_scope)
+            else:
+                out.append("{scope}")
+                placeholder = True
+        tier = None
+        if i < len(segs):
+            s = segs[i]
+            if s in v.tiers or _is_var(s):
+                tier = s
+                out.append(s)
+                i += 1
+            else:
+                out.append("{tier}")
+                placeholder = True
+        rest = segs[i:]
+        if tier == "platinum":
+            if _on_list(_legacy_list(v), out + rest, prefix):
+                out += rest  # K4a: a legacy served path keeps its bytes
+            else:
+                new, ph = _new_served(rest, prefix)
+                out += new
+                placeholder = placeholder or ph
+        elif rest:
+            out += ([rest[0]] if tier == "code" else [_table(rest[0])]) + rest[1:]  # K3, K4b
+    else:
+        raise RaiseDefect("K1: segment 1 %r is neither a source nor a tier" % s1)
+    canon = "/".join(out) + ("/" if prefix else "") + annot
+    if aliased:
+        aliased = "/".join(segs[:1] + [canon.split("/")[1]] + segs[2:]) + ("/" if prefix else "") + annot
+    return canon, placeholder, (aliased or None)
+
+
+_GRAMMARS = {"R": _grade_resource, "S": lambda n, t, v: _grade_secret(n, v), "L": lambda n, t, v: _grade_log_group(n, v),
+             "B": lambda n, t, v: _grade_bucket(n, v), "K": lambda n, t, v: _grade_key(n, v)}
+
+
+def grade(name, type):
+    """(verdict, canonical_form) for a name of a node type, by LGIC_NAMING's GRADING_RULE.md.
+
+    The verdict is CONFORMANT, ALIAS or OUT-OF-PATTERN, with the canonical form; NOT-GRADED (canonical None)
+    for a type outside the grade's domain (G1.2). A name the rule cannot place raises RaiseDefect, naming the
+    step. The canonical form fills every slot it can and carries a placeholder ({system}, {source}, {scope},
+    {tier}, {cadence}, {entity}) for each slot it cannot: it never guesses."""
+    v = _vocab()
+    if type not in v.types:
+        raise RaiseDefect("G1.1: %r is not a node type of NAMING_SCHEMA.json" % (type,))
+    if type in v.not_graded:
+        return "NOT-GRADED", None
+    if not isinstance(name, str) or not name or not name.isascii():
+        raise RaiseDefect("G3: %r is not a non-empty ASCII name" % (name,))
+    if type == "SECURITY_GROUP" and name == "default":
+        raise RaiseDefect("G2.1: AWS names every VPC's default security group")
+    if type in ("IAM_POLICY", "IAM_ROLE") and name.startswith(("AWS", "Amazon")):
+        raise RaiseDefect("G2.2: %r is AWS-managed by its prefix" % name)
+    if type == "LOG_GROUP" and (not name.startswith("/") or name.startswith("/aws/ecs/containerinsights/")):
+        raise RaiseDefect("G2.3: %r is a log group AWS names" % name)
+    grammar = "R" if type in v.kinds_by_type else _OTHER_GRAMMAR.get(type)
+    if grammar is None:
+        raise RaiseDefect("G1.3: %r takes no grammar in GRADING_RULE.md" % type)
+    canon, placeholder, aliased = _GRAMMARS[grammar](name, type, v)
+    if placeholder:
+        return "OUT-OF-PATTERN", canon  # V-2
+    if canon == name:
+        return "CONFORMANT", canon  # V-3
+    if aliased is not None and aliased == canon:
+        return "ALIAS", canon  # V-4
+    return "OUT-OF-PATTERN", canon  # V-5
+
+
+def _segment(label, value):
+    if not isinstance(value, str) or not value or "/" in value or not value.isascii() or value != value.strip():
+        raise ValueError("%s must be a non-empty ASCII string with no '/' and no outer space: %r" % (label, value))
+    return value
+
+
+def _long_scope(reg, scope, classes=None):
+    try:
+        row = lookup(scope, reg)
+    except KeyError:
+        raise ValueError("scope %r resolves to no scopes.json row" % (scope,)) from None
+    if scope != row["long"]:
+        raise ValueError("scope %r is not the LONG form: pass %r" % (scope, row["long"]))
+    if classes and row.get("class") not in classes:
+        raise ValueError("scope %r is a %s scope; this slot takes %s" % (scope, row.get("class"), "/".join(classes)))
+    return row
+
+
+def key(source, scope, tier, table, partition):
+    """Exactly {source}/{scope}/{tier}/{table}/{partition} (NAMING_SCHEMA.json key.grammar). The source is a
+    systems.json key, the scope a LONG form, the tier one of key.tier. A bucket is never an argument."""
+    reg = _registry()
+    for label, val in (("source", source), ("scope", scope), ("tier", tier), ("table", table), ("partition", partition)):
+        _segment(label, val)
+    if source not in {s["key"] for s in _systems(reg)}:
+        raise ValueError("source %r is not a systems.json key" % source)
+    _long_scope(reg, scope)
+    if scope == source:
+        raise ValueError("a product is never a scope beneath itself (NAMING_SCHEMA.json key.scope_rule)")
+    if tier not in _schema()["key"]["tier"]:
+        raise ValueError("tier %r is not one of NAMING_SCHEMA.json key.tier" % tier)
+    return "%s/%s/%s/%s/%s" % (source, scope, tier, table, partition)
+
+
+def address(source, scope, tier, table, partition, object=None):
+    """s3://{bucket}/{key}[/{object}]: the bucket is the tier home rule's for the scope's tenancy (tiers.json)."""
+    k = key(source, scope, tier, table, partition)
+    reg = _registry()
+    try:
+        bucket = _home_bucket(reg, lookup(scope, reg), tier, source)
+    except (KeyError, RegistryError) as exc:
+        raise ValueError("no home bucket for tier %s of scope %s: %s" % (tier, scope, exc)) from None
+    out = "s3://%s/%s" % (bucket, k)
+    if object is not None:
+        if not isinstance(object, str) or not object or object.startswith("/") or not object.isascii():
+            raise ValueError("object must be a non-empty ASCII string not starting with '/': %r" % (object,))
+        out += "/" + object
+    return out
+
+
+def _kebab(label, value):
+    if not isinstance(value, str) or not _KEY_RE.match(value):
+        raise ValueError("%s must be lowercase kebab-case ASCII: %r" % (label, value))
+    return value.split("-")
+
+
+def _is_cadence(kind, schema):
+    cad = schema["cadence"]
+    return kind in cad["values"] or (kind.startswith("on-") and bool(re.match(cad["event_token_regex"], kind[3:])))
+
+
+def name(system, scope, function, kind, qualifier=None):
+    """{system}-{scope}-{function}[-{qualifier}]-{kind} (NAMING_SCHEMA.json resource.grammar). Takes the scope's
+    LONG form and writes its SHORT form (S4); scope None is a shared resource and carries no scope (S5). The
+    kind is a kind.values member, or a cadence for an EVENT_RULE or SCHEDULE."""
+    reg, schema, v = _registry(), _schema(), _vocab()
+    if system != "opal" and system not in v.v1:
+        raise ValueError("system %r is not a systems.json key (nor the reserved opal)" % (system,))
+    body = []
+    if scope is not None:
+        body.append(_long_scope(reg, scope, ("FIRM", "GLOBAL", "MASTER"))["short"])
+    words = _kebab("function", function) + (_kebab("qualifier", qualifier) if qualifier is not None else [])
+    for t in words:
+        if t in v.scope or t == "bd" or t in schema["refused_tokens"]:
+            raise ValueError("%r in the function or qualifier is a scope or refused token; pass the scope as scope" % t)
+    if not (kind in schema["kind"]["values"] or _is_cadence(kind, schema)):
+        raise ValueError("kind %r is neither a NAMING_SCHEMA.json kind nor a cadence" % (kind,))
+    nxt = (body + words)[0] if body + words else None
+    if system == "opal" and nxt is not None and (nxt in v.v1 or nxt in v.v2):
+        raise ValueError("opal before %r reads as a null prefix or an unresolved token (GRADING_RULE.md R2)" % nxt)
+    return "-".join([system] + body + words + [kind])
+
+
+# The shapes the vectors are built over: (system, function, qualifier, kind), each crossed with every
+# FIRM, GLOBAL and MASTER scope row and with no scope.
+_VECTOR_SHAPES = (("mdpf", "publisher", None, "role"), ("blackdiamond", "session", "gold", "lambda"),
+                  ("opal", "gateway", None, "lb"), ("etfs", "netassets", None, "daily"))
+
+
+def _type_of_kind(kind, schema):
+    for t, kinds in schema["kind"]["by_type"].items():
+        if kind in kinds:
+            return t
+    return "SCHEDULE" if _is_cadence(kind, schema) else None
+
+
 def build_vectors(registry=None):
-    """The name() vectors the Terraform module is proved against (DEC-3). They are built over name(),
-    cell EN-b-1's builder, so they cannot be built before it lands."""
-    raise NotBuilt("vectors are built over name(), cell EN-b-1's builder, which is not in this module yet")
+    """The name() vectors the Terraform module is proved against (DEC-3): each input, the node type its kind
+    names, and name()'s output."""
+    reg = registry or _registry()
+    schema = _schema()
+    scopes = [None] + [s["long"] for s in _scopes(reg) if s.get("class") in ("FIRM", "GLOBAL", "MASTER")]
+    out = []
+    for system, function, qualifier, kind in _VECTOR_SHAPES:
+        for scope in scopes:
+            out.append({"system": system, "scope": scope, "function": function, "qualifier": qualifier,
+                        "kind": kind, "type": _type_of_kind(kind, schema),
+                        "name": name(system, scope, function, kind, qualifier)})
+    return out
 
 
 def _norm_target(t):

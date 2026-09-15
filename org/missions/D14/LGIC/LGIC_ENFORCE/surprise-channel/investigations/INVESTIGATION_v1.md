@@ -461,6 +461,74 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     "spec_asserts": "EN-v-3's V3-AC2: 'the file's exported content equals its pre-image at the spawn base (DELTA=0)'.",
     "world_is": "Before the fix, no EN-v-3 view could satisfy V3-AC2, however correct. After it, the criterion measures the exports, as its text says.",
     "notes": "DISARM, per W1-S7's own clause, by its disarm owner, before EN-v-3 spawns; no worker ran the defective subcommand against a real view. The criterion text, the face and the fixtures are unchanged: the fix corrects the instrument's loader, a harness defect in the issuer's own fixed input, disclosed in its commit. INERT: EN-v-3 will be spawned from a base carrying the fix."
+  },
+  {
+    "id": "LGIC_ENFORCE-W1-S9",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~1",
+    "surfaced_at": "2026-09-15T00:43:07Z",
+    "one_line": "The IV.3 control CloudWatchLogs (IAM_POLICY) OUT-OF-PATTERN does not follow from GRADING_RULE.md as written, which RAISES it at R1.f; grade() reaches the order's verdict only by rejoining the camel pieces of one word into a vocabulary word (cloud+watch -> cloudwatch), a step the rule does not state.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RULE: org/missions/D14/LGIC/LGIC_NAMING/deliverables/GRADING_RULE.md @ce7349b7cc (byte-identical at HEAD 2a6c7d8543): N2 :68-70 splits before each capital, so CloudWatchLogs gives cloud, watch, logs; V3 :109-110 lists the purpose word cloudwatch as one token; R1.f :149-150 'Any other t1 is in no vocabulary. RAISE'. V1 :92 states the one multi-token match the rule makes: seeking-alpha, 'two tokens, matched as one'.",
+        "SIBLING: org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/TF_LABEL_CENSUS.md :2262, :2462, :2599, :2902, :3023 @1cc0d2fe73 grade the literal CloudWatchLogs 'RAISE ... R1.f: t1 cloud is in no vocabulary'.",
+        "ORDER: LGIC_ENFORCE.TO-EN-b-1 WORKER FACE and PRD LGIC_ENFORCE_PRD.md :350 @78128f29ea (E3): 'CloudWatchLogs OUT-OF-PATTERN'; check_en.py b1-controls wants OUT-OF-PATTERN.",
+        "EXERCISED: lib/opal_naming.py _res_tokens rejoins pieces of ONE original segment whose concatenation is a V1/V2/V3/V4 word: grade('CloudWatchLogs','IAM_POLICY') = ('OUT-OF-PATTERN', '{system}-cloudwatch-logs-policy'); grade('cloud-watch-logs','IAM_POLICY') still RaiseDefect 'R1.f: 'cloud' is in no vocabulary'. Mutant arm with the rejoin removed: b1-controls 'CONTROLS: 4  CORRECT: 3', b1-agree 'WORKED CASES: 43  AGREE: 43' -- no worked case turns on it."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EN-b-1 WORKER FACE: grade() implements the written rule EXACTLY; the brief's IV.3 control CloudWatchLogs (IAM_POLICY) is OUT-OF-PATTERN.",
+    "world_is": "The written rule tokenises CloudWatchLogs to cloud, watch, logs and RAISES at R1.f, as sibling cell EN-t-1 recorded five times. To meet the control, grade() carries one reading the rule does not write: camel pieces of one word rejoin into the vocabulary word they spell, the camel-case analogue of V1's seeking-alpha. No worked case depends on the reading.",
+    "notes": "Which side carries the defect, the rule's R1/N2 or the control, is graded against the rule under the PRD's CONTRACTS row 2. That grading belongs to the rule's owner."
+  },
+  {
+    "id": "LGIC_ENFORCE-W1-S10",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~1",
+    "surfaced_at": "2026-09-15T00:43:07Z",
+    "one_line": "The IV.3 control opal-data-inf/silver/x (S3Key) OUT-OF-PATTERN naming {source} does not follow from GRADING_RULE.md K1, which RAISES a key whose segment 1 is neither a source nor a tier; grade() reaches it by taking a bucket the registry knows out of segment 1 as the key's container.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RULE: GRADING_RULE.md @ce7349b7cc K1 :254-259 'Anything else RAISES, because segment 1 is neither a source nor a tier'; K5.c :284-285 'The S3Key node carries no bucket, and the bucket is what decides them'.",
+        "SCHEMA: org/standards/NAMING_SCHEMA.json key.container '{bucket} -- the bucket that holds the key; NEVER a segment of the key'.",
+        "ORDER: TO-EN-b-1 WORKER FACE; PRD LGIC_ENFORCE_PRD.md :282-283 @78128f29ea 'For opal-data-inf/silver/x, that slot is {source}, unless the producer declares its source. It never guesses.'",
+        "EXERCISED: grade('opal-data-inf/silver/x','S3Key') = ('OUT-OF-PATTERN', '{source}/inflection/silver/x'): opal-data-inf is a bucket alias of inflection in infra/logic/registry/scopes.json @a925c8a642, so the scope is filled and {source} is named. grade('opal-data-zzz/silver/x','S3Key') still RaiseDefect 'K1: segment 1 'opal-data-zzz' is neither a source nor a tier'. Mutant arm with the container step removed: b1-controls 'CONTROLS: 4  CORRECT: 3'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EN-b-1 WORKER FACE: grade() implements the written rule EXACTLY; opal-data-inf/silver/x (S3Key) is OUT-OF-PATTERN, with {source} named as the unfilled slot.",
+    "world_is": "K1 as written RAISES this key. grade() adds one step the rule does not write: a first segment that is a bucket the registry knows (standing shared, a scope's bucket, or a bucket alias) is taken out as the container, fills the scope a firm's bucket decides, and the rest is graded. An unknown bucket-like first segment still RAISES.",
+    "notes": "The PRD's singular 'that slot is {source}' implies that the scope slot is filled. Filling it from a legacy bucket alias (opal-data-inf -> inflection) is this reading. The commit limb's fixture 01_new_key_literal.patch uses the same key shape."
+  },
+  {
+    "id": "LGIC_ENFORCE-W1-S11",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~1",
+    "surfaced_at": "2026-09-15T00:43:07Z",
+    "one_line": "grade() reads its system vocabulary from infra/logic/registry/systems.json, where astn, trade and news are unresolved, so it RAISES on a name whose system slot needs one of them, where GRADING_RULE.md V1 lists all three as PRODUCT systems and gives a verdict.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RULE: GRADING_RULE.md @ce7349b7cc V1 :91 lists irpt, advi, yang, news, astn, amgt, trade as PRODUCT; :95-97 'V1 is INTERIM. The registry rows belong to LGIC_ENFORCE (PRD CONTRACTS row 3)'.",
+        "REGISTRY: infra/logic/registry/systems.json @a925c8a642 'unresolved' holds astn, trade and news, for want of a citable owner_directive (row LGIC_ENFORCE-W1-S6).",
+        "EXERCISED: grade('astn-foo-lambda','LAMBDA'), grade('trade-foo-lambda','LAMBDA') and grade('news-foo-lambda','LAMBDA') each RaiseDefect 'R1.c: ... is an unresolved token (V2)'. None of the 43 worked cases carries one: b1-agree 'WORKED CASES: 43  AGREE: 43  DISAGREE: 0'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EN-b-1 WORKER FACE: grade() implements the written rule EXACTLY; the builders read the registry at run time and copy none of it.",
+    "world_is": "The two instructions diverge on three tokens. The module takes the registry, which the rule's own V1 defers to, so a name led by astn, trade or news RAISES rather than grading. The divergence closes when those three rows gain an owner_directive.",
+    "notes": "Downstream consumer: EN-s-1's census stops on a RAISE (DEC-7). A live name led by one of these three tokens would stop that run."
   }
 ]
 ```
