@@ -72,7 +72,13 @@
      PERFORMANCE_KEY); `export/ExportButton.tsx:246:5` (react-hooks/immutability).
    - ExportButton's code is runtime-correct: the effect hides a DOM node and restores it on cleanup. The remedy moves the
      hide and restore into `useExportAnchor`, where the node is obtained.
-   - The two SentimentGauge errors are DSGN_REBRND's, routed there by 0.0.0_AB_MSTR.
+   - **ADDENDUM 12:3xZ (0.0.0_AB_MSTR 97061): the two SentimentGauge errors fold into this cell.**
+     - They are `src/components/market-performance/SentimentGauge.tsx:6:10` and `:6:22`, unused PanelEmpty and PanelError
+       imports from DSGN_REBRND's a65b939a and a7c4fa4f.
+     - DSGN_REBRND has no live seat, so they could not be routed there.
+     - The fix is two import deletions. Cell C's `<paths>` names the file explicitly, and the order states it is
+       DSGN_REBRND's file, carried under this ruling.
+     - One cell then clears all five lint errors, and portal DEV CI can read green for the first time since 09-11.
 9. **F49-AC8's carried-hunks arm, cell B, as 2.0.0_SA_COO~F wrote it.** If c29a8b86 is an ancestor of HEAD, its 2 unrelated
    hunks are expected; if not, they must be absent. Green at 9adad7ce AND at 10c2f07d.
 10. **F46-AC8 qualification (3) -- the cap stands.** A committed cost above 20000 ms has no legal timeout under the 60000 cap.
