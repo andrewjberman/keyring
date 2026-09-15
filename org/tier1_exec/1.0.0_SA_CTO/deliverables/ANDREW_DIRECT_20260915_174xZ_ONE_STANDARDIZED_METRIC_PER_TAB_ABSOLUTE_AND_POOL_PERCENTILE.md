@@ -34,3 +34,30 @@
 ## Broadcast
 
 One message to `2.0.0_SA_COO~W`, `3.0.0_SA_CVO~W`, `4.0.0_SA_CRO~W` and `0.0.0_AB_MSTR~Z`, quoting the word entire. Push state: LOCAL.
+
+---
+
+## THREE CLARIFICATIONS, minutes later at the same terminal (~17:5xZ), verbatim and entire, in order
+
+> percentile is relative to the pool of analyzed companies in the Security Analysis database
+
+> all of this stuff should be storeed in opal-data-harvest
+
+> and essentially appended over time
+
+## Read narrowly, and what they correct
+
+- **THE POOL (ruled; SUPERSEDES this record's reading above).** The percentile is relative to the companies ANALYZED in the Security
+  Analysis database -- not the 256-name union universe this record first read it as. So a metric's pool is the set of companies that
+  have been through the analysis and carry that metric, and it grows as companies are analyzed. Today that is the five QA names for
+  management tenure (BA, COST, HD, SAP, BABA), four of which carry a tenure.
+- **THE STORE (ruled).** The metrics, their percentiles and their pools live in `s3://opal-data-harvest` -- consistent with
+  C-ONE-STORE, where every Security Analysis product already lives.
+- **APPEND OVER TIME (ruled).** Records are appended as analyses run, not overwritten: a company's metric history and each dated
+  pool are both kept, so a percentile is always read against a named pool vintage and a company's percentile over time is readable.
+- **NOT ADJUDICATED WIDER:** "all of this stuff" is read as the per-tab metrics, percentiles and pools this thread is about. The wider
+  reading -- every Security Analysis output appended over time -- is recorded as plausible; measured against the pool's key shapes at
+  ~17:5xZ, it already holds for `crosswalk/v1/{as_of}`, `universe/v1/{as_of}`, `filings/v1/{key}/{accession}`,
+  `peers/v1/{key}/{as_of}`, `management/v1/{key}/{as_of}` and `posture/v1/{key}/{as_of}`, and does NOT hold for two keys:
+  `drafting/v1/{key}.json` (no date, so a re-analysis overwrites it; bucket versioning keeps the prior bytes but not an appended record)
+  and `social/v1/_measurement/{as_of}.json` (no security coordinate, row W22-S6).

@@ -245,18 +245,25 @@ social half has no admitted source; a feed is round-12 material and its admissio
    are going to center around a relative/absolute value on some standardized score, as that will inform frontend and probably also
    "Posture" wiring."* Record `ANDREW_DIRECT_20260915_174xZ_ONE_STANDARDIZED_METRIC_PER_TAB_ABSOLUTE_AND_POOL_PERCENTILE.md`.
    **The contract the addendum carries (C-TAB-METRIC, proposed by the L4 owner):** every tab declares ONE headline metric record
-   `{metric_id, definition, unit, absolute, percentile, pool_n, pool_vintage, state: MEASURED | ABSENT, reason}`; the POOL is the
-   names of the union universe with that metric MEASURED at the same vintage; the percentile is the company's rank within that pool
-   (mid-rank for ties), stated without a direction or a judgment; below a declared floor of pool names the percentile is
-   `ABSENT` with the reason `pool too small (N)` and the absolute still renders; the per-name values live in one versioned
-   distribution object per metric (`metrics/v1/{metric_id}/{as_of}.json`) so a percentile is recomputable and auditable, never a
-   bare number. The frontend gives each tab one headline slot for the pair. Posture's case opens from both names' pairs (his
+   `{metric_id, definition, unit, absolute, percentile, pool_n, pool_vintage, state: MEASURED | ABSENT, reason}`. ⭐ **CLARIFIED ~17:5xZ
+   by Andrew, three messages verbatim: *"percentile is relative to the pool of analyzed companies in the Security Analysis database"*
+   / *"all of this stuff should be storeed in opal-data-harvest"* / *"and essentially appended over time"*.** So: the POOL is the
+   companies ANALYZED in the Security Analysis database that carry the metric (not the union universe -- this seat's first reading,
+   superseded), and it grows as companies are analyzed; the percentile is the company's rank within that pool at a named vintage
+   (mid-rank for ties), without a direction or a judgment; below a declared floor of pool names the percentile is `ABSENT` with
+   `pool too small (N)` and the absolute still renders. STORE and HISTORY, in `s3://opal-data-harvest`, APPEND-ONLY: one record per
+   company per metric per analysis at `metrics/v1/{metric_id}/{security_key}/{as_of}.json`, never overwritten; one dated pool
+   snapshot per metric at `metrics/v1/{metric_id}/_pool/{as_of}.json` carrying every analyzed company's latest value as of that date,
+   its n and the percentile rule -- so a percentile is recomputable, auditable and readable over time, never a bare number. Reach
+   of "appended over time" beyond the metrics (recorded, not adjudicated wider): the pool's existing keys already append by date
+   except `drafting/v1/{key}.json` (no date; re-analysis overwrites) and `social/v1/_measurement/{as_of}.json` (no security, W22-S6). The frontend gives each tab one headline slot for the pair. Posture's case opens from both names' pairs (his
    "probably" -- recommended by this seat, not ruled).
    **MEASURED 17:4xZ for the one metric he named:** `mgmt_tenure_avg_years` exists as an ABSOLUTE today (M-1: BA 2.58, COST 5.06, HD
    4.68, SAP 4.04; BABA none, 0 of 7 officers with a role start because the 20-F carries no role-start column); the RELATIVE does not
    -- `management/v1/_pool/2026-09-15.json` carries only `pool_avg_tenure_years` 4.08 and no per-name distribution, and its denominator
-   reads `names_with_roster 5` while 4 names contribute tenures (40 officers = 12 + 13 + 9 + 6), so it must count contributors. At a
-   pool of 4 the percentile is ABSENT by the floor. His "maybe" metric, `employee_tenure_avg_years`: 0 of the 5 persisted filing
+   reads `names_with_roster 5` while 4 names contribute tenures (40 officers = 12 + 13 + 9 + 6), so it must count contributors; it is
+   dated by `as_of` (appends by date already) but stores the average, not the distribution. At a pool of 4 analyzed companies the
+   percentile is ABSENT by the floor. His "maybe" metric, `employee_tenure_avg_years`: 0 of the 5 persisted filing
    source objects state an average or median employee tenure, but those objects are excerpts (risk factors, MD&A, the officer
    section; W20-S8) and exclude Item 1's human-capital section, where such a figure would be disclosed; Lusha carries no tenure
    field (card 2). So it is UNMEASURED, not absent -- the first check is Item 1 across the five filers.
