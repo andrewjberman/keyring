@@ -1096,6 +1096,28 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "W3-S7 and W3-S13 were ARMED: OG-a-2's drain would carry red existing tests into CLOUD. OG-q-1's AC2 treats test_ogq1_ac02 as deterministic, and TO-OG-v-2 AC4 requires every module green.",
     "world_is": "OG-a-2 reached CLOUD with its granted modules green, so the red-test hazard is gone. Separately, test_ogq1_ac02's 0.25 s event-loop lag bar is load-sensitive on this shared box, as W3-S12 first reported. Any per-module suite run here, including OGV2-AC4, can read FAILED-MODULES 1 on that test alone.",
     "notes": "The disarm is by the named owner at the named moment: the drain of OG-a-2 with its green re-run. The flake is OG-q-1's test; whether its bar is re-stated or run under a quiet box is for L9/L10. For OG-v-2 it is known in advance, so a FAILED-MODULE on test_schwab_engine alone is re-run before it is read as a regression."
+  },
+  {
+    "id": "NFRA_OPLGTW-S13",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-15T18:50Z",
+    "one_line": "Disarm of W3-S16 and W3-S17 by their owner: OG-a-3's branch wk-nfra_oplgtw-1-3d is held UNMERGED, because merging it turns OG-a-2's route census test_oga2_ac04 red on CLOUD and its own AC7 pins an exact route table the next route-adding cell will break; the grant and the criterion restatement are asked of 1.0.0_SA_CTO.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RE-RUN BY THIS SEAT at wk-nfra_oplgtw-1-3d @06a9aec60d: proof-of-spec-check --governing-order VALID (rc=0) 7/7; test_browser_oidc.py '7 passed'; test_principal_cutover.py 'FAILED ...::test_oga2_ac04, 1 failed, 10 passed'.",
+        "W3-S16: test_principal_cutover.py:540 asserts set(ROUTE_CLASS) == set(routes) over every route of app.server. OG-a-3 serves two new paths, /schwab/download/login and /schwab/download/callback (BROWSER_PATHS.json), that the hand-written ROUTE_CLASS does not list, and the file is outside TO-OG-a-3's <paths>.",
+        "W3-S17: test_browser_oidc.py:620 asserts tuple(rest) == BASE_ROUTES and :625 asserts that the head-minus-base declared routes equal exactly the two new ones. Both hold only until another cell adds a route; TO-OG-x-1 adds download routes."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-OG-a-3's <paths> grants no other cell's test, and OGA3-AC7 reads 'the route table differs from the one at your base only by the new paths'.",
+    "world_is": "Two tests pin the whole route table: OG-a-2's classification guard and OG-a-3's exact-diff check. The first needs each route-adding cell to classify its own paths, a file no such cell is granted. The second fails as soon as any later cell adds a route. Until ruled, OG-a-3 stays unmerged. Slot ~3's next cell, OG-z-1, writes the same app/server.py and so waits for this merge.",
+    "notes": "INERT: nothing merged or deployed; CLOUD's suite is unchanged. Asked of 1.0.0_SA_CTO: A, an entries-only grant of ROUTE_CLASS to OG-a-3 for its two public paths; B, AC7 restated as a superset of the base, with the exact diff kept as a one-time proof record; C, a standing entries-only grant for later route-adding cells. W3-S19 (the Entra redirect URI registration) was proposed to ride gate G-C."
   }
 ]
 ```
