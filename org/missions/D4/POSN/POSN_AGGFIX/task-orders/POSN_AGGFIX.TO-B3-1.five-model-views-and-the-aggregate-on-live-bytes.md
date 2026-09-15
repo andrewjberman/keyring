@@ -41,6 +41,13 @@ present with both panels and the five breakdown columns.
 script C1-AC13 ran); your own `B_DOM_BEFORE.json`, `<FIVE_BOOKS_DOM_B>` and `<AGG_DOM_B2>`. Your portal branch HEAD is the tree AF1-s-12..s-15
 landed on; the COO drains it onto `refs/drains/aggfix-1-portal` at each of your drains, so your branch HEAD and that ref carry the same tree.
 
+**AMENDMENT 1 (issuer, ~23:0xZ, at the partial drain @`6ff556ed39`; rows W3-S5 and W3-S6, both issuer cut defects).** B3-AC4 named slot `~2`'s
+`c1_live_tier_arms.mjs` for a reading that script never produces: its aggregate-absence predicate (`:212`) is scoped to the aggregate URLs and
+is never applied to the control URL. That reading is now **B3-AC6**, whose invocation is a script in YOUR OWN deliverables, so no worker edits
+another's file. And that script resolves its C1-AC17 baseline to the RUNNING worktree, so its exit code is a false negative for any worker but
+`~2` while every printed row MATCHes: **B3-AC4 is graded on the printed rows and their MATCH count, never on rc.** B3-AC1, B3-AC2 and B3-AC3
+stand as recorded; re-run B3-AC4 and run B3-AC6.
+
 ## YOUR ACT
 
 1. `<LIVE_FIXTURES_B3>`: read the two VersionIds from TO-A3-1's instance; fetch both objects by VersionId and the live
@@ -64,13 +71,15 @@ ONE row per off-cell finding, id `POSN_AGGFIX-Z-W3-S<k>` continuing your sequenc
 
 <criterion id="B3-AC3" cell_refs="AF1-s-16"><invocation>timeout 900 node <AGG_DOM_B2> --viewer opal-staff --remembered none --fixtures .scratch/b3_fixtures</invocation><expect>on the NEW shared file and the LIVE aggregate bytes: the page lands on Aggregate; the Portfolio Composition entries and the Holdings Breakdown rows each count equal to the live current_holdings.AGG.holdings length; the five Model Breakdown columns present with three sampled cells equal to model_breakdown x 100 at one decimal; a screenshot saved.</expect></criterion> `B3-AC3` -- THE AGGREGATE ON LIVE BYTES, AS OPAL STAFF.
 
-<criterion id="B3-AC4" cell_refs="AF1-s-16"><invocation>timeout 900 node <LIVE_TIER_ARMS_FROM_C1> --phase post</invocation><expect>the script is the one TO-C1-1's instance names for C1-AC13 (its path printed first); on the live distribution after TO-A3-1: Opal-staff and Dev tokens on /api/general/positioning/opal_aggregate.json return 200 with a body whose status is OK; advisor-class and client-class tokens on both aggregate URLs return 401; all four classes on /api/general/positioning/positioning_data.json return 200 and that body carries no current_holdings.AGG.</expect></criterion> `B3-AC4` -- THROUGH THE LIVE EDGE: OPAL GETS IT, NOBODY ELSE DOES.
+<criterion id="B3-AC4" cell_refs="AF1-s-16"><invocation>timeout 900 node <LIVE_TIER_ARMS_FROM_C1> --phase post</invocation><expect>(AMENDMENT 1) graded on the PRINTED ROWS, never on the exit code (row W3-S6: that script resolves its C1-AC17 baseline to the running worktree, so its rc is a false negative outside slot ~2's): the script is the one TO-C1-1's instance names for C1-AC13 (its path printed first); on the live distribution after TO-A3-1, Opal-staff and Dev tokens on /api/general/positioning/opal_aggregate.json return 200 with a body whose status is OK; advisor-class and client-class tokens on both aggregate URLs return 401; all four classes on /api/general/positioning/positioning_data.json return 200; the table's MATCH count equals its row count.</expect></criterion> `B3-AC4` -- THROUGH THE LIVE EDGE: OPAL GETS IT, NOBODY ELSE DOES.
+
+<criterion id="B3-AC6" cell_refs="AF1-s-16"><invocation>timeout 900 node <SERVED_TIER_BODIES_B3></invocation><expect>(AMENDMENT 1) one table, one row per (class, URL), tokens minted per this order's secrets rule and redacted: for the advisor class and the client class, /api/general/positioning/positioning_data.json returns 200 and its PARSED body carries no current_holdings.AGG (its current_holdings key set printed per row), while both aggregate URL forms return 401; for Opal staff and Dev, /api/general/positioning/opal_aggregate.json returns 200 with a body whose status is OK; and the POSITIVE CONTROL: the same parsed check run against TO-A3-1's PRIOR shared-file version, fetched by VersionId, reports AGG PRESENT, so the check can fail.</expect></criterion> `B3-AC6` -- WHAT A SESSION OUTSIDE OPAL ACTUALLY RECEIVES (AMENDMENT 1).
 
 <criterion id="B3-AC5" cell_refs="AF1-s-16" judgment="true"/> `B3-AC5` -- **JUDGMENT, GRADED BY `3.0.0_SA_CVO~Z` AT L9:** whether B3-AC2's identity across the deploy is the FWD-8 bar ("the same holdings and weights") on the page advisors and clients read, and whether anything an advisor or a client can reach in B3-AC4's responses reveals Opal's model mix or total. Record the readings and offer NO verdict.
 
-<expected_criteria>B3-AC1, B3-AC2, B3-AC3, B3-AC4, B3-AC5</expected_criteria>
+<expected_criteria>B3-AC1, B3-AC2, B3-AC3, B3-AC4, B3-AC5, B3-AC6</expected_criteria>
 
-<placeholders>LIVE_FIXTURES_B3, FIVE_BOOKS_DOM_B, AGG_DOM_B2, LIVE_TIER_ARMS_FROM_C1</placeholders>
+<placeholders>LIVE_FIXTURES_B3, FIVE_BOOKS_DOM_B, AGG_DOM_B2, LIVE_TIER_ARMS_FROM_C1, SERVED_TIER_BODIES_B3</placeholders>
 
 <paths>
 org/missions/D4/POSN/POSN_AGGFIX/task-orders/POSN_AGGFIX.TO-B3-1.five-model-views-and-the-aggregate-on-live-bytes.md
