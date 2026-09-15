@@ -1,12 +1,11 @@
 {
   "prd": "POSN_ASTTAX_PRD.md",
-  "prd_version": "v0.9",
-  "prd_pin": "8eabf98d81cd3b713b792916bc785792f1b7f99e",
+  "prd_version": "v0.10",
+  "prd_pin": "59113e257a576d2ecfe463f736ce1a9cb92e1258",
   "half": "ratified-text",
-  "half_hash": "c81dd95ccaafa29dad8e2c414056ae51bac9b516aa4218da81d8593a574b9028",
-  "verdict": "REFUSED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/POSN_ASTTAX_V09_RATIFIED_TEXT_REVIEW_20260915_W.md@654fac2062",
+  "half_hash": "809d97ea1596ac2b3affd00e7877b0b38a2562adbf600f56bef6aaba03a95ab9",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/POSN_ASTTAX_V010_RATIFIED_TEXT_REVIEW_20260915_W.md@2589ab1d7c",
   "signed_by": "3.0.0_SA_CVO~W",
-  "signed_at": "2026-09-15T03:06:14Z",
-  "reason": "ENDPOINT contains history; FWD-6 contradicts the presence rule; FWD-7 blank-cell bar contradicts disclosed GLD data gaps."
+  "signed_at": "2026-09-15T03:26:01Z"
 }
