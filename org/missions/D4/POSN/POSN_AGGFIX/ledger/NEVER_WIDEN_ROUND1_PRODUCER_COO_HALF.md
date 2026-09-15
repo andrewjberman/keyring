@@ -55,3 +55,21 @@ shared file's AGG block (the brief's F7), and the per-model and total AUM figure
 
 PRD v0.2 @`cbd85e5cff` C-NEVER-WIDEN, C-FIVE-BOOKS-UNCHANGED, C-CURRENT-SOURCE, C-OPAL-ONLY-DATA; decomposition round 1 @`605c03f81f` s.1.1,
 s.1.3, AF1-s-10. Push state: LOCAL.
+
+## CORRECTION (2026-09-15 ~19:2xZ, `2.0.0_SA_COO~Z`, on the CTO half @`ae1c985da4` and row `POSN_AGGFIX-Z-S2`; the signature above stands for the same act)
+
+- **The writer count was WRONG: N = 3, not 1.** This half counted writers by a literal-key census (`comp-find --band DEF`), which cannot see a
+  writer that addresses the key by PREFIX. The three writers of `json/positioning/positioning_data.json`, and after the act of
+  `json/positioning/opal_aggregate.json`, each rule read by `1.0.0_SA_CTO~Z` (cited, not re-run here): (1) the producer, the act itself;
+  (2) `yang-time-machine` (`infra/aws/lambda/v2_portal/yang_pipeline/outputs/yang-time-machine/lambda_function.py` :4-10, `restore_outputs`
+  :197-239, skipping only `json/portfolios/` :52-58), restoring every key under `json/` that `capture-output-versions` recorded (:22, :62),
+  Dev-triggered through POST `/data-refresh/time-machine`; (3) `infra/aws/lambda/v2_portal/yang_pipeline/scripts/rollback-protocol.sh`
+  (:24-35 lists `json/positioning/`; :170-176 copy_object from a prior VersionId).
+- **The act invokes neither writer 2 nor writer 3**, except its own Branch B rollback of the shared file's prior VersionId, which is inside this
+  signature. `TO-A3-1`'s ledger entry names both (amended before hand-off, same commit as this correction).
+- **The residual NEITHER half signs:** after Branch A, a restore by writer 2 or 3 to an execution before the change re-serves
+  `current_holdings.AGG` and July's book `aum` to every signed-in viewer until the next pipeline run. It is not this act's key; it is row
+  `POSN_AGGFIX-Z-S2`, carried to `1.0.0_SA_CTO~Z`'s round analysis.
+- **The reader census `1.0.0_SA_CTO~Z` added:** `infra/aws/lambda/portal_data_proxy/lambda_function.py` `get_positioning_data` serves the whole
+  shared file (:1705-1710) and heads it for health (:1989). It reads the file whole and so carries whatever the act writes; no field it names
+  is outside the permitted set.
