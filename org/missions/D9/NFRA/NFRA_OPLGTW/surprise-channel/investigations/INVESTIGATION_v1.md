@@ -799,6 +799,28 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "PRD C1 :131 says email is display/audit metadata only, and C2 :145 says 'Key grants by tid/oid, not email'.",
     "world_is": "After OG-a-2 the session, families, tokens, revocation and Graph cache are keyed by (tid, oid). The pre-existing tier, tool allowlist and integration min-tier gate still key by email, and no round-1 cell's order re-keys them (OG-z-1 re-keys only the new Schwab grants). The exposure is unchanged from before this project and does not reach users until OG-r-1 deploys.",
     "notes": "Disarmed at a named moment by the named owner: 2.0.0_SA_COO~O does not hand TO-OG-r-1 while W3-S9 has no disposition. The scope question (re-key the existing tier layer in this project, or leave it as a pre-existing, out-of-scope condition) is 1.0.0_SA_CTO's as L4 owner and was asked with this row. The adjudication is 3.0.0_SA_CVO's at L9."
+  },
+  {
+    "id": "NFRA_OPLGTW-S9",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-15T14:58Z",
+    "one_line": "Record of 1.0.0_SA_CTO's three in-round rulings (msg 97114) and the amendments that carry them: OG-a-2 is granted three test files fixture-only (AC12, AC13); W3-S9 is in scope as a round-2 cell and OG-r-1 is guarded by AC11; suite criteria run per module over a glob-derived list.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RULING 1 (a): amend TO-OG-a-2 in round 1 to grant tests/test_oauth_durable.py, tests/test_jwt_cve_lock.py and tests/test_schwab_audit.py. Edits touch only how each test obtains a principal or token; no assertion is removed, weakened or re-targeted. Criteria: the three modules pass, and per module the assert count at HEAD equals the count at the base. Carried @adc6874dea on the held branch wk-nfra_oplgtw-1-3c (OGA2-AC12, OGA2-AC13; status back to pending).",
+        "RULING 2: C1 :131 puts every authorization that still resolves by email in NFRA_OPLGTW's scope, including the existing tier, the per-identity tool allowlist and the integration min-tier gate. No round-1 cell holds it, so it is a round-2 cell named in the CTO's round-1 analysis. W3-S9's disposition is 'in scope, round-2 cell'. The release ships in round 1 only if the Schwab path's authority is the tid/oid grant. Carried @43e7076fb6 as OGR1-AC11: locally and before the deploy, a predecessor's email and tier with no tid/oid grant is denied every Schwab tool. If it fails, nothing deploys.",
+        "RULING 3 (note 3): round-1 suite criteria run per module over a module list derived by glob of infra/aws/ec2/opal-gateway/tests/test_*.py, never typed, and print the module count. The census of unhanded orders naming a one-process suite run found 1 (TO-OG-v-2 AC4); TO-OG-a-1's AC19 belongs to a complete order and is untouched. Carried @43e7076fb6. The root cure, scoping tests/test_ratelimit.py's import-time time.monotonic patch, is a round-2 hygiene cell."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Mid-round the PRD, the decomposition and the issued orders are frozen, and TO-OG-a-2 forbade editing existing tests while granting none of the three files its criteria break.",
+    "world_is": "1.0.0_SA_CTO, as L4 owner, ruled that the three changes are C1's own outcome or a necessary invocation change, not new scope. Each is carried as criteria in orders no worker is reading. Two round-2 cells are named: re-keying the email-based tier layer, and scoping the ratelimit clock patch. Row S8's hand-off hold on OG-r-1 resolves into OGR1-AC11.",
+    "notes": "The rulings are the authority these amendments cite. W3-S7, W3-S9, W3-S6 and W3-S12 are adjudicated by 3.0.0_SA_CVO at L9."
   }
 ]
 ```
