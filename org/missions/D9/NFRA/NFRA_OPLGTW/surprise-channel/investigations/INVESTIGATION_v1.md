@@ -303,6 +303,96 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "'Existing consumers you must not break ... none reads a field this cell removes or renames' (OGC1-AC13), and OGC1-AC8 'concurrent completion yields exactly one qualified closure'.",
     "world_is": "The field set is unchanged, but the write CADENCE the accelerator observes changes. A completion whose closure is identical to the qualified one already published writes no object, so it no longer re-fires the gold dispatcher. A new date, an incomplete record, an incomplete-to-qualified change and a superseding overwrite all still write, and so all still fire.",
     "notes": "INERT: the floor (advi_49f_floor.tf, cron(45 12 * * ? *)) remains the 49F chain's production trigger and is untouched, and a suppressed fire is one whose information the dispatcher already had. Recorded because it is a behaviour change visible to an existing consumer that no field census can see; OG-c-2's G-B never-widen sign-off covers the act's blast radius and can name it."
+  },
+  {
+    "id": "NFRA_OPLGTW-W6-S1",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~6",
+    "surfaced_at": "2026-09-15T12:27Z",
+    "one_line": "The order's operated_by is one of two values per A-row, but the decomposition proves nine A-rows in BOTH a machine cell and a walkthrough and grades A13 in OG-i-1/OG-i-2's live arms, which neither value names; A_ROWS.json therefore carries each row as one or two halves.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ORDER: org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-v-1.acceptance-expectations.md:33-34 @1f03a3f209 -- 'operated_by = machine (graded by OG-v-2 or OG-r-2 in process) or person (graded from a walkthrough record by OG-v-4 or OG-v-5)'.",
+        "DECOMP: org/missions/D9/NFRA/NFRA_OPLGTW/decompositions/NFRA_OPLGTW_DECOMP.md:610-631 @1f03a3f209 (decomposition v1 @8768f46770) -- A2, A3, A4, A6, A10, A11, A12, A17 and A19 are proved in a machine cell AND OG-v-4; A13 is proved in 'OG-i-1, OG-i-2 (live arms)'.",
+        "ARTIFACT: infra/aws/ec2/opal-gateway/tests/acceptance/A_ROWS.json at this worker's commit -- 20 rows, 29 halves (15 machine, 14 person), 9 rows with both; A13's machine half names graded_by OG-i-1, OG-i-2."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Each A-row carries operated_by = machine or person.",
+    "world_is": "Nine rows need both a machine result and a walkthrough observation, and one row (A13) is graded by neither OG-v-2/OG-r-2 nor OG-v-4/OG-v-5. Each row is therefore written as halves: every half is exactly machine or person and has its own expected result, instrument and grader, and the row's operated_by lists its halves' operators.",
+    "notes": "INERT: no row loses a grader. OG-v-2 reads the machine halves and OG-v-4/OG-v-5 the person halves; the probe's AC1 checks that every half is one of the two values."
+  },
+  {
+    "id": "NFRA_OPLGTW-W6-S2",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~6",
+    "surfaced_at": "2026-09-15T12:27Z",
+    "one_line": "No carrier declares the unique grain of dim_position, dim_balance or dim_asset, yet PRD C3/C4 make duplicate grains 'unavailable' and paging depend on 'a validated unique source grain'; the fixtures assume (account_id, cusip, l_s), (account_id) and (cusip).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "PRD: org/missions/D9/NFRA/NFRA_OPLGTW/prd/NFRA_OPLGTW_PRD.md:161 @1f03a3f209 (v0.2 @f0aa50dbc0) -- 'Duplicate/conflicting source grains produce unavailable'; :175 -- 'Tie-break rows deterministically using a validated unique source grain. If a dataset lacks that grain, reject paging'.",
+        "CONTRACT: org/standards/NFRA_OPLGTW_CONTRACT.json v1.0 @1f03a3f209 -- fields, additive_fields and quantity_sum_required_groups [cusip, l_s]; no grain or unique-key member.",
+        "RECTANGLE: workflows/atom_decomposition/runs/nfra-oplgtw/20260914T1919Z/rectangle.final.certified.json @1f03a3f209, S3-data unverified_boundary -- open question 'Are date alignment, metric units, balance overlaps and future security join uniqueness established?'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Duplicate grains produce unavailable, and paging needs a validated unique grain (PRD C3, C4).",
+    "world_is": "The grain the engine must validate is named nowhere. The fixtures' duplicate-grain day (2026-07-07) therefore carries both a conflicting row and an EXACT duplicate row in each dataset, so it is a duplicate under any grain an implementation picks. The A18 paging expectation assumes dim_position is unique on (account_id, cusip, l_s) on the complete dates.",
+    "notes": "INERT for the fixtures. Which grain is declared is a spec question for 1.0.0_SA_CTO, and it is OG-q-3's to implement. If the real grain is wider (a lot or accounting-rule column), real-data paging may be rejected by the rule as written."
+  },
+  {
+    "id": "NFRA_OPLGTW-W6-S3",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~6",
+    "surfaced_at": "2026-09-15T12:27Z",
+    "one_line": "PRD C3 has the catalog HEAD every silver object the closure names, and the published closure names the day's fact_* objects too, but neither Gateway role may GetObject (the permission HeadObject needs) outside the six dim prefixes and two meta/complete prefixes.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "PRD: org/missions/D9/NFRA/NFRA_OPLGTW/prd/NFRA_OPLGTW_PRD.md:159 @1f03a3f209 (v0.2 @f0aa50dbc0) -- 'Gateway catalog construction validates the closure record and independently HEADs every named silver object'; :185-187 -- the data reader gets GetObject/GetObjectVersion on the six exact prefixes and the catalog role only the two completion prefixes.",
+        "CONTRACT: org/standards/NFRA_OPLGTW_CONTRACT.json @1f03a3f209 -- data_prefixes are the six schwab/<master>/silver/dim_*/ prefixes; completion_prefixes the two meta/complete/ prefixes.",
+        "CLOSURE: data/assets/scripts/silver/tests/test_conversion_manifest.py:474-475 @1f03a3f209 -- OG-c-1's own complete day names 8 objects, 5 of them fact_* tables; the closure's objects[] carries every successful expected table (result file section 3).",
+        "FIXTURES: this worker's closures name 7 objects per day (fact_rld, fact_rps, fact_rps_s2, fact_sec and the three dims), and make_fixtures.py writes fact_* stub objects so an emulated bucket holds every named object."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The catalog independently HEADs every named silver object (PRD C3), under read grants limited to the six dim prefixes and the two completion prefixes (PRD C6).",
+    "world_is": "A closure names fact_* objects outside both Gateway roles' grants. If the catalog HEADs every named object, then in AWS each fact HEAD is AccessDenied and every date reads unavailable. The local run cannot see this: an emulated bucket without IAM answers the same HEADs, so OG-v-2 would go green on an implementation that fails live.",
+    "notes": "ARMED because a local green would certify behaviour that fails closed in production. Disarm: 1.0.0_SA_CTO rules whether 'every named silver object' means the dim objects the Gateway serves, or whether a grant widens (which C6 forbids without a revision). The fixtures carry both object classes, so either ruling can be tested."
+  },
+  {
+    "id": "NFRA_OPLGTW-W6-S4",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~6",
+    "surfaced_at": "2026-09-15T12:27Z",
+    "one_line": "The order has the synthetic Parquet fixtures written and committed under fixtures/, but infra/.gitignore:75 ignores *.parquet; they land only because safe-commit force-adds each NAMED file, and a plain git add or a directory pathspec would drop them silently.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "IGNORE: 'git check-ignore -v' on infra/aws/ec2/opal-gateway/tests/acceptance/fixtures/s3/opal-data-assets/schwab/08242234/silver/dim_position/date=2026-07-09/data.parquet at 1f03a3f209 printed 'infra/.gitignore:75:*.parquet' (rc 0).",
+        "STAGING: .tools/safe-commit.sh:49 @1f03a3f209 -- 'Staging uses git add -f, which FORCE-adds files EVEN IF gitignored'; this worker names each of the 113 Parquet files in its pathspec.",
+        "PIN: fixtures/MANIFEST.json carries each Parquet file's sha256; make_fixtures.py regenerates the set byte-identically (two runs, diff -r clean)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "make_fixtures.py and the synthetic Parquet and closure fixtures it writes under fixtures/ are this cell's committed deliverables (TO-OG-v-1, What you write, item 2).",
+    "world_is": "Parquet is ignored repository-wide under infra/. Once force-added the files are tracked and reach every checkout. A later regeneration committed by a route other than named force-adding would silently leave the old bytes, and MANIFEST.json's sha256 would then disagree with the regenerated files.",
+    "notes": "INERT: the negation that would un-ignore the fixture directory lives in infra/.gitignore, outside this order's paths. The og_v1 probe checks every Parquet file against MANIFEST.json's sha256, and it regenerates from make_fixtures.py when a file is absent."
   }
 ]
 ```
