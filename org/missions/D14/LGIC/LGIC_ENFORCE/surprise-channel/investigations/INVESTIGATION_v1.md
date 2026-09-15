@@ -552,6 +552,77 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     "spec_asserts": "Worker definition, Proof: 'rc 0 AND every mechanical criterion PASS-by-output, then flip the task order's <status> to complete and commit instance, deliverables and flip together'; Rule 14a: 'do NOT pre-git add'.",
     "world_is": "For a cell that MODIFIES a tracked file, the pre-flip manual validation cannot return rc 0 while the deliverable is uncommitted and unstaged. Instance, deliverable and flip cannot ride one commit without pre-staging, so the deliverable took a commit of its own.",
     "notes": "Form only. Every EN-v-<n> cell modifies a tracked carrier, so the same shape is expected on each of them. The order stayed open until the proof commit; no criterion was affected."
+  },
+  {
+    "id": "LGIC_ENFORCE-W5-S1",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~5",
+    "surfaced_at": "2026-09-15T00:40Z",
+    "one_line": "EN-v-3's generated firm_bucket_map() returns the same five tenant->bucket pairs as its pre-image, in a different ITERATION ORDER: registry order (49financial, inflection, cottonwood, mockadv, demo) where the pre-image returned firm-config.mjs order (49financial, inflection, mockadv, demo, cottonwood). check_en.py compares the exports with ==, which does not see order.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "PRE-IMAGE @b02fdaa849: data/assets/scripts/gold/investor_reporting/directory_runner.py:170-174 and holdings_snapshot.py:145-153 parse FIRM_CONFIG out of infra/aws/lambda-edge/_shared/firm-config.mjs, whose tenant blocks sit at :66 49financial, :70 inflection, :74 mockadv, :78 demo, :87 cottonwood.",
+        "VIEW (branch wk-lgic-enforce-1-5, generated at registry@50e4fabd1cb6a150): directory_runner.py:170-180 and holdings_snapshot.py:145-155 return a dict literal ordered 49financial, inflection, cottonwood, mockadv, demo.",
+        "EXERCISED: .scratch/ctl_v3.py ARM O, check_en.py's own exports_of over the base copy and the view: MAPPING-EQUAL True, ORDER-EQUAL False, for each of 2 files; check_en.py v3-delta0 'BASE: b02fdaa849  FILES: 2  EXPORTS EQUAL: 2  DIFFER: []' (its comparison, check_en.py:381, is a == b over dicts).",
+        "CALL SITES in the two carriers: directory_runner.py:876 (the map is passed to run_firm; the loop at :886 walks client_firms(), not the map) and holdings_snapshot.py:510, :667, :866, :1223-1224 (keyed .get). 5 of 5 in-file call sites use keyed lookups or pass the map on; none iterates it."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EN-v-3 WORKER FACE: 'The first generation is BYTE-EQUIVALENT in what it exports (DELTA=0)'; V3-AC2: 'the file's exported content equals its pre-image at the spawn base (DELTA=0)'.",
+    "world_is": "The exported mapping is equal key for key and value for value, and V3-AC2 reads PASS-DELTA0; its insertion order is not the pre-image's. The generated block cannot be reordered by hand without breaking its GENERATED mark, and lib/opal_naming.py, which fixes the order, is outside this order's <paths>.",
+    "notes": "INERT on the 5 in-file call sites read above. Importers of firm_bucket_map() outside the two carriers were not censused (outside this order's face). Whether order is part of 'what it exports' is for 2.0.0_SA_COO~G and 3.0.0_SA_CVO to decide."
+  }
+,  {
+    "id": "LGIC_ENFORCE-W5-S2",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~5",
+    "surfaced_at": "2026-09-15T00:40Z",
+    "one_line": "V3-AC3 describes the consumer test's firm_bucket_map as read from firm-config.mjs, and test_directory_runner.py:77 is named test_firm_bucket_map_comes_from_firm_config_mjs. Once the EN-v-3 view lands, firm_bucket_map() reads no file (it returns a literal generated from the registry), and the test passes because it asserts values only.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "TO: org/missions/D14/LGIC/LGIC_ENFORCE/task-orders/LGIC_ENFORCE.TO-EN-v-3.irpt-firm-bucket-map.md @b02fdaa849, V3-AC3: 'its consumers' existing tests pass: data/assets/scripts/gold/investor_reporting/tests/test_directory_runner.py (its firm_bucket_map is read from firm-config.mjs)'.",
+        "TEST @b02fdaa849: test_directory_runner.py:77-80 'def test_firm_bucket_map_comes_from_firm_config_mjs(): m = dr.firm_bucket_map(); assert m[\"49financial\"] == \"opal-data-bd\"; assert m[\"inflection\"] == \"opal-data-inf\"'.",
+        "VIEW (branch wk-lgic-enforce-1-5): directory_runner.py:170-180 is a GENERATED block returning a dict literal; firm_bucket_map() no longer reads FIRM_CONFIG_PATH, and _FIRM_CFG_RE at :166-167 is left defined with no reader in the function.",
+        "EXERCISED: check_en.py v3-tests 'CMD: python -m pytest -q data/assets/scripts/gold/investor_reporting/tests/test_directory_runner.py  rc=0  20 passed' / 'VERDICT: PASS-CONSUMER-TESTS'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EN-v-3 V3-AC3: the consumer test's firm_bucket_map 'is read from firm-config.mjs'.",
+    "world_is": "After the view, firm_bucket_map() reads no file. The test's name still names firm-config.mjs as the source, and its value assertions pass against the registry-generated literal. The test file is outside this order's <paths> and is unchanged.",
+    "notes": "INERT: the test still checks the values the map serves. The mismatch is between the test's name and the function's source. Renaming or re-pointing the test is not this cell's work."
+  },
+  {
+    "id": "LGIC_ENFORCE-W5-S3",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~5",
+    "surfaced_at": "2026-09-15T01:03Z",
+    "one_line": "The order's proof validation, run as a dry run before the flip (nothing staged, per Rule 14a's no pre-add), returns INVALID rc=1 for an EN-v cell. Its artifacts are MODIFIED tracked carriers, and proof-of-spec-check.py:383-386 refuses any PENDING-THIS-COMMIT path that is tracked and unstaged as CCX ('ALREADY COMMITTED at HEAD'). The same instance reads VALID rc=0 against a temporary index holding the commit's paths.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~G",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "EXERCISED dry run (branch wk-lgic-enforce-1-5, nothing staged): 'VIOLATION: artifact-resolution: data/assets/scripts/gold/investor_reporting/directory_runner.py is PENDING-THIS-COMMIT but is ALREADY COMMITTED at HEAD and NOT staged' and the same for holdings_snapshot.py; 'INVALID (rc=1)'.",
+        ".tools/proof-of-spec-check.py:344-354 and :379-386 @b02fdaa849: an unstaged instance sets ctx PRE-COMMIT with dry_run true, and a tracked, unstaged PENDING path is refused at :383 before the dry_run branch at :387 is reached. The comment at :352-353 says the CCX refusal stands in both runs 'because that artifact cannot ride this commit whatever gets staged'.",
+        ".tools/safe-commit.sh:369-392 @b02fdaa849: safe-commit stages the declared pathspec (cg_stage_pathspec) before its gate stages, so at hook time a modified carrier is in the index and takes the co-commit branch at proof-of-spec-check.py:380-382.",
+        "EXERCISED temp-index run: GIT_INDEX_FILE=.scratch/idx_v3, a copy of the worktree index plus the 5 commit paths: 'artifact-resolution: 0 resolved at pin / 3 PENDING co-committed', 'VALID (rc=0)'; the worktree's real index afterwards: 0 staged paths.",
+        "SCOPE: org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/2.0.0_SA_COO~G/fixed_inputs/check_en.py:56-64 @b02fdaa849 (VIEW_OF) names existing tracked carriers for EN-v-1 through EN-v-6, so every EN-v order's artifacts are modified tracked files."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EN-v-3 <proof_of_spec>: 'validated with python .tools/proof-of-spec-check.py <instance> V3-AC1,V3-AC2,V3-AC3 BEFORE the complete flip'; the worker definition: 'ONLY the exit code is the verdict'.",
+    "world_is": "Run as a plain pre-flip dry run, the named invocation refuses a modified tracked artifact as if it could not ride the commit, although safe-commit stages it before its gates. The comment's reason holds for an unmodified tracked file, not a modified one. To reach the pre-commit state without a pre-add, this worker ran the same invocation with GIT_INDEX_FILE pointed at a scratch copy of its index and flipped on that rc 0. The commit's own hook run stays the authority.",
+    "notes": "ARMED: EN-v-1, -2, -4, -5 and -6 carry the same artifact shape, so a worker that follows its order's 'validate before the flip' under Rule 14a gets rc 1 on its dry run. The remedy (a face note for the sibling orders, or a route to the checker's owner) is for the disarm owner to choose."
   }
 ]
 ```
