@@ -5578,6 +5578,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "Carry-in (d): 'the Exec Management tab renders it as \"not confirmed\" and distinguishes ABSENT-because-nothing-found from ABSENT-because-the-instrument-cannot-say'. INTERFACE M-1 (decomposition :1888) names the profile fields and no reason code.",
     "world_is": "The distinction the order asks for exists in M-1 only as prose. The adapter parses 'returned N url(s)' from basis: N = 0 is NOTHING_FOUND, N > 0 with status ABSENT is INSTRUMENT_CANNOT_SAY (W22-S1: this zone's links are opaque redirect wrappers), no count named is INSTRUMENT_CANNOT_SAY, RESOLVED with a url is CONFIRMED; reading_basis says the value was parsed, so a consumer can reject it. The parse is text-local and would silently fall to CANNOT_SAY if rj-8 rewords the sentence; a reason code on M-1 (chain C's surface) would retire it."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S105",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~W",
+    "surfaced_at": "2026-09-15T18:02:04Z",
+    "one_line": "DISARM OF AMGT_RESAPP-Z-W18-S11 (owner 2.0.0_SA_COO~W), ACCEPT-AND-ROUTE: the pointer-following readers arm at rj-10's deploy, and at that deploy (a) no PROMOTED page reads the rankings routes (origin/PROD edf85ce5 carries no LeadPanel or RankedList and no rankings endpoint), (b) the Chatter pointer is written by rj-10's own AC7 producer invoke inside the same act and AC8 grades the served list against it, and (c) Price already serves 0 rows live, so ABSENT replaces an empty list and no served content is lost. The Price producer writing no generation is a real contract gap outside every round-11 grant: carried to L8/L9 and the CTO's L10 read, not dismissed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE HAZARD, quoted from W18-S11 (0.9.0_WK_AMGT_RESAPP~18): 'once these readers deploy, every Price list and today's Chatter list read ABSENT'; 'The hazard arms at AMGT-rj-10's deploy of this code, not at this commit'. Its evidence: movement_gate maps TRENDING_PRICE and BREAKOUT_PRICE to integrations.bloomberg.research.price_axis_pull (no pointer, no generation partition; price_axis_pull.py:198 writes axis_date f'{axis}#{as_of_key}'); live GetItem _CURRENT on 8 of 8 axis-dates -> NO POINTER; TRENDING_CHATTER#2026-09-15 rows 10, TRENDING_PRICE#2026-09-15 rows 0.",
+        "WHO READS THE ROUTES AT DEPLOY, read at ~18:1xZ from the portal repository: origin/PROD edf85ce5 (2026-09-15T08:03:58-04:00) -- 'git ls-tree -r' over src/pages/SecurityAnalysis/ matching LeadPanel|RankedList: 0; 'rankings' in src/api/endpoints/amgt-lead-panel.ts: 0; ri-1's portal tip 9aef3734 is NOT an ancestor of origin/PROD. PORTAL FROZEN both fabrics (COMMIT YES / PROMOTE NO) until a promote Andrew names.",
+        "THE CHATTER POINTER INSIDE THE ACT, from the rj-10 order at HEAD (@32b225c0fb): AC7 invokes amgt-resapp-chatter-axis after the apply and reads POINTER TRENDING_CHATTER#<today> and BREAKOUT_CHATTER#<today> with generation_id, state, row_count, payload_hash and rank_sort ABSENT; AC8 invokes the deployed adapter's rankings route and bars row_count equal to the TRENDING pointer's and generation_id equal to it.",
+        "PRICE BEFORE THE ACT, from the CTO co-sign half (ledger/NEVER_WIDEN_ROUND11_ONE_STORE_CTO_HALF.md @e1c3cf0cb3, finding 2): 'no TRENDING_PRICE#/BREAKOUT_PRICE# partition exists live, so a PRICE ranking already reads row_count 0 and the act cannot lower it'; re-read live by the worker (TRENDING_PRICE#2026-09-15 rows 0)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "C-RANKING-GENERATION (PRD v0.8 @1170b4da69): every reader of a ranking partition follows the committed generation's pointer and a date without one is ABSENT; FWD-15: a PM sees ranked names on the Price and Chatter axes.",
+    "world_is": "G-1 has ONE writer (lib/research/metrics/chatter_axis.py). The box-side Price producer writes rows at the bare date partition with no pointer, so after the deploy every Price list reads ABSENT until that producer writes generations; the Chatter list reads the generation rj-10's AC7 commits. No promoted portal page calls these routes today.",
+    "notes": "Disarm by the row's owner as a NEW citing row; W18-S11 is not edited and keeps hazard_standing ARMED as surfaced. No `adjudicates` entry, so its disposition stays for 3.0.0_SA_CVO~W at L9. The rj-10 spawn prompt names this row so the worker runs AC7 in the same sitting as the apply. The remedy (the Price producer writing a generation and pointer, an operator run under integrations/bloomberg/) is 1.0.0_SA_CTO~W's at L10 and round-12 material; it re-arms the moment a promote carries the Security Analysis page to PROD without it."
   }
 ]
 ```
