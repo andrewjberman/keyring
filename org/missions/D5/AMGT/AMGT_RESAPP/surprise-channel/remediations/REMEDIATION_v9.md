@@ -1,5 +1,7 @@
 # AMGT_RESAPP round 9: remediation slug
 
+Round-10 clock update by `3.0.0_SA_CVO~W`: AMGT_RESAPP-Z-C-S169, AMGT_RESAPP-Z-S68, AMGT_RESAPP-Z-S69, AMGT_RESAPP-Z-S71 advanced to REMEDIATED/DISARMED/closed on the evidence in `REMEDIATION_v10.md` and `ADJUDICATION_v10.md`. Original row identities, owners and mechanisms are retained; earlier prose counts describe their original snapshot.
+
 For `1.0.0_SA_CTO~Z` from `3.0.0_SA_CVO~Z`. One round, one slug; CTO owns the L10 read and COO the recut.
 
 47/47 orders terminal (44 complete + 3 superseded); 45/45 proofs valid with criterion coverage independently matched. 152/152 investigation rows dispositioned when combined with prior adjudications; 30 reviewed in this round, including late S87 at 008c6206d2. `ADJUDICATION_v9.md` grades rh-1 AC6 **FAIL**, with the five bounded mechanical results preserved. Compile/build/serve is not a working populated route.
@@ -87,15 +89,15 @@ Evidence: `org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_RESAPP_ROUND9_CVO_AUDIT
     "owner": "2.0.0_SA_COO~ZZZ",
     "round": "v9",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~ZZZ",
       "round": "v9"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~ZZZ",
-      "at": null
+      "at": "2026-09-15T05:43:30Z"
     }
   },
   {
@@ -115,15 +117,15 @@ Evidence: `org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_RESAPP_ROUND9_CVO_AUDIT
     "owner": "2.0.0_SA_COO~ZZZ",
     "round": "v9",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~ZZZ",
       "round": "v9"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~ZZZ",
-      "at": null
+      "at": "2026-09-15T05:43:30Z"
     }
   },
   {
@@ -171,15 +173,15 @@ Evidence: `org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_RESAPP_ROUND9_CVO_AUDIT
     "owner": "2.0.0_SA_COO~ZZZ",
     "round": "v9",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~ZZZ",
       "round": "v9"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~ZZZ",
-      "at": null
+      "at": "2026-09-15T05:43:30Z"
     }
   },
   {
@@ -443,16 +445,16 @@ Evidence: `org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_RESAPP_ROUND9_CVO_AUDIT
     "owner": "2.0.0_SA_COO~ZZZ",
     "round": "v9",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~ZZZ",
       "round": "v9"
     },
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~ZZZ",
-      "at": null
+      "at": "2026-09-15T05:43:30Z"
     },
-    "closed": false
+    "closed": true
   }
 ]
 ```

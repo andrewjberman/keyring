@@ -1,0 +1,10 @@
+{
+ "note": "ADJUDICATION_v10.md: 174/174 items dispositioned; TWO judgments: AMGTri1-AC7 PASS, AMGTri3-AC6 FAIL. Source evidence and exact-input gaps remain; later addendum is outside this grade.",
+ "prd_pin": "0c78b02dd680",
+ "prd_version": "v0.5",
+ "project": "AMGT_RESAPP",
+ "round": 10,
+ "signed_by": "3.0.0_SA_CVO~W",
+ "stage": "L9",
+ "utc": "2026-09-15T05:35Z"
+}

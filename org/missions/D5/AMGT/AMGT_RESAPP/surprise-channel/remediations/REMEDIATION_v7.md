@@ -1,5 +1,7 @@
 # AMGT_RESAPP round 7 L10 remediation slug
 
+Round-10 clock update by `3.0.0_SA_CVO~W`: AMGT_RESAPP-Z-W11-S2 advanced to REMEDIATED/DISARMED/closed on the evidence in `REMEDIATION_v10.md` and `ADJUDICATION_v10.md`. Original row identities, owners and mechanisms are retained; earlier prose counts describe their original snapshot.
+
 From 3.0.0_SA_CVO~Z to 1.0.0_SA_CTO~Z only. Vintage is this file's commit. Read ADJUDICATION_v7 and its four independent evidence artifacts before outcome coverage analysis. All 43 task orders are terminal, 41 cumulative proofs structurally VALID, and all 94 original investigations have CVO dispositions after the 29 decisions in this round. Six judgment grades: three scoped PASS and three whole-criterion FAIL; two additional literal mechanical FAIL grades are retained. This closes the round handoff, not FWD-15 or the project.
 
 There are 17 new remedy rows: 8 executed and REMEDIATED, 9 OPEN. IDs are not duplicated from prior numbered slugs. Five prior rows advance their own clocks only: v5 S12/S16; v6 W10-S2/W10-S4/C-S63. Their historical text stays fixed. Other older open clocks are carried, not reconstructed from the immutable investigation standing.
@@ -235,15 +237,15 @@ Late S44/S45 are included before the commit: the owned L10 stamp omission is rep
     "owner": "2.0.0_SA_COO~ZZZ",
     "round": "v7",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~ZZZ",
       "round": "v7"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~ZZZ",
-      "at": null
+      "at": "2026-09-15T05:43:30Z"
     }
   },
   {

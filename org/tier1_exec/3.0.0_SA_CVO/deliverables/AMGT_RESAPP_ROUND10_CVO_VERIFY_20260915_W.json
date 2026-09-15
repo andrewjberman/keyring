@@ -1,0 +1,443 @@
+{
+  "at": "2026-09-15T05:29:05.011873+00:00",
+  "head": {
+    "rc": 0,
+    "stdout": "ec1cc68aecefe9242caa86724bf52c074ad86819",
+    "stderr": ""
+  },
+  "instrument": "Local source, saved response/log artifacts and a controlled actual-component render; no new live AWS or browser request.",
+  "hashes": {
+    "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\tier1_exec\\2.0.0_SA_COO\\deliverables\\AMGT_RESAPP_W\\ROUND10_BROWSER_arm-empty-200.png": {
+      "bytes": 69066,
+      "sha256": "5d7f90cfffad3a57802279d3d997d829def0327795021f5627753796463fa910"
+    },
+    "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\tier1_exec\\2.0.0_SA_COO\\deliverables\\AMGT_RESAPP_W\\ROUND10_BROWSER_arm-error-503.png": {
+      "bytes": 80709,
+      "sha256": "97f638f98cecee5294807d650cb1e18a1fcf7a924e5afa28576c764bce0222d3"
+    },
+    "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\tier1_exec\\2.0.0_SA_COO\\deliverables\\AMGT_RESAPP_W\\ROUND10_BROWSER_arm-overlay-baba-us.png": {
+      "bytes": 79667,
+      "sha256": "c67de807d6dcf47e3f97007425d2d5c74870903fc10082f1adf4e3f16c50419b"
+    },
+    "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\tier1_exec\\2.0.0_SA_COO\\deliverables\\AMGT_RESAPP_W\\ROUND10_BROWSER_arm-populated.png": {
+      "bytes": 119529,
+      "sha256": "31f72bafbd6d1e907571277d60bc599f18e06f050fd826fef4b3c435ae6914b3"
+    },
+    "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\tier1_exec\\2.0.0_SA_COO\\deliverables\\AMGT_RESAPP_W\\ROUND10_BROWSER_arm-thesis-baba-us-equity.png": {
+      "bytes": 274361,
+      "sha256": "7e4b2835928d2e6c694874c78168a54d5d45f3a616c62154551b59040a72d69a"
+    },
+    "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\tier1_exec\\2.0.0_SA_COO\\deliverables\\AMGT_RESAPP_W\\ROUND10_BROWSER_arm-thesis-baba-us.png": {
+      "bytes": 79667,
+      "sha256": "c67de807d6dcf47e3f97007425d2d5c74870903fc10082f1adf4e3f16c50419b"
+    },
+    "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\tier1_exec\\2.0.0_SA_COO\\deliverables\\AMGT_RESAPP_W\\ROUND10_BROWSER_EXERCISE.md": {
+      "bytes": 9905,
+      "sha256": "fc1ae777b65222569d2908308cf53a33dc31963103d00d0c7863d0201fccea84"
+    },
+    "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\tier1_exec\\2.0.0_SA_COO\\deliverables\\AMGT_RESAPP_W\\ROUND10_BROWSER_partB.json": {
+      "bytes": 4124,
+      "sha256": "f942028be32dee1098ec38255e41eeba39f2701b3b0fb2eebb27a5da78fbc773"
+    },
+    "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\tier1_exec\\2.0.0_SA_COO\\deliverables\\AMGT_RESAPP_W\\adapter-local.coverage.2317 TT.json": {
+      "bytes": 352,
+      "sha256": "c351deca1b316203676f8a6e8ae8211a289b9616ea6c7596f138f8f1756aaace"
+    },
+    "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\tier1_exec\\2.0.0_SA_COO\\deliverables\\AMGT_RESAPP_W\\adapter-local.coverage.BABA_US.json": {
+      "bytes": 352,
+      "sha256": "f352ffa2eb8278af37a3e182df407c4be122fcb8f4a060262d3735768df1708e"
+    },
+    "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\tier1_exec\\2.0.0_SA_COO\\deliverables\\AMGT_RESAPP_W\\adapter-local.coverage.BABA_US_Equity.json": {
+      "bytes": 366,
+      "sha256": "a3791aca25b22097325a6651000ee23d9b5967bd8668e0ce3f85c75b038da345"
+    },
+    "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\tier1_exec\\2.0.0_SA_COO\\deliverables\\AMGT_RESAPP_W\\adapter-local.overlay.2317 TT.json": {
+      "bytes": 3595,
+      "sha256": "613000da72c0b6e2af8cd9234605d6ae1b70f9eb3d5edc9a144709dcfb693ebe"
+    },
+    "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\tier1_exec\\2.0.0_SA_COO\\deliverables\\AMGT_RESAPP_W\\adapter-local.overlay.BABA_US.json": {
+      "bytes": 3595,
+      "sha256": "2a5317e000476afb59e960b70965b2c4f9072ac6bcb587caf0c338d16ab55ba6"
+    },
+    "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\tier1_exec\\2.0.0_SA_COO\\deliverables\\AMGT_RESAPP_W\\adapter-local.overlay.BABA_US_Equity.json": {
+      "bytes": 11777,
+      "sha256": "831192ae6dfc5ab56ee8b9536b6775c9fb01639ae28f6f9c729179c4a4b49d32"
+    },
+    "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\tier1_exec\\2.0.0_SA_COO\\deliverables\\AMGT_RESAPP_W\\adapter-local.peers.2317 TT.json": {
+      "bytes": 401,
+      "sha256": "6e7bf0d2cffa4cd51c02b06e1aef6b2f39061e24ad7855c366e741f405fb37b1"
+    },
+    "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\tier1_exec\\2.0.0_SA_COO\\deliverables\\AMGT_RESAPP_W\\adapter-local.peers.BABA_US.json": {
+      "bytes": 401,
+      "sha256": "264715d683384c4a955b6d7aee5360210ce15a0549b30e5f8423457e99296146"
+    },
+    "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\tier1_exec\\2.0.0_SA_COO\\deliverables\\AMGT_RESAPP_W\\adapter-local.peers.BABA_US_Equity.json": {
+      "bytes": 1008,
+      "sha256": "187bae2811a0aaf9a335160f51a6c6b62dea7de744c799ac46e09ae2b59f6290"
+    },
+    "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\tier1_exec\\2.0.0_SA_COO\\deliverables\\AMGT_RESAPP_W\\adapter-local.rankings.trending.chatter.2026-09-12.json": {
+      "bytes": 6438,
+      "sha256": "b12b86711725912c780cc5323b31c069cb28bb1ace66589114db3ea8cd3b917b"
+    },
+    "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\tier1_exec\\2.0.0_SA_COO\\deliverables\\AMGT_RESAPP_W\\adapter-local.rankings.trending.chatter.today.json": {
+      "bytes": 748,
+      "sha256": "36ef6287807c65b4e8aee286f9a74ee2ec1252b702027f50aaabb123b0f81425"
+    },
+    "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\tier1_exec\\2.0.0_SA_COO\\deliverables\\AMGT_RESAPP_W\\adapter-local.thesis.2317 TT.json": {
+      "bytes": 413,
+      "sha256": "330c32a889fa9c3dad5e1d087c46aa99170786c45de27d0eb8f3e664c7da20ab"
+    },
+    "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\tier1_exec\\2.0.0_SA_COO\\deliverables\\AMGT_RESAPP_W\\adapter-local.thesis.BABA_US.json": {
+      "bytes": 413,
+      "sha256": "abf70b835cd39f23a130e4e5c0663bdefa7150cd3c3c162c11265b23d4e5c681"
+    },
+    "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\tier1_exec\\2.0.0_SA_COO\\deliverables\\AMGT_RESAPP_W\\adapter-local.thesis.BABA_US_Equity.json": {
+      "bytes": 243148,
+      "sha256": "2b2b384ae152807f432df8211f76afcf65f396e9083555cff7145366768aa1fc"
+    },
+    "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~17\\ri2.apply.txt": {
+      "bytes": 4395,
+      "sha256": "5829d755b3ce9f401d0fdf54748ad400ed40bcc71ea86d7d62003c57f730d93f"
+    },
+    "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~17\\ri2.artifact-build.txt": {
+      "bytes": 1767,
+      "sha256": "5b41e40c70f0a1c5be207fdef91b0cf26e247dd376743f09d11f83647e177032"
+    },
+    "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~17\\ri2.init.txt": {
+      "bytes": 972,
+      "sha256": "65ad0d2d3388ad07006271a0fa12eef2ceafe7855cb3aa15e4286ad284653644"
+    },
+    "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~17\\ri2.plan.txt": {
+      "bytes": 6769,
+      "sha256": "4fb830afe1f3edeb1cf990ebeb1993cfbbb6d36cd0a339d1a48587169cff9b69"
+    },
+    "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~17\\ri4.apply.txt": {
+      "bytes": 7063,
+      "sha256": "9126a6902e2190948aad41c4595896084298bdec6ecb3dcfe5a9a6294df8cd99"
+    },
+    "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~17\\ri4.build.txt": {
+      "bytes": 1767,
+      "sha256": "563bd2d5abf53192d3350bcfb31ee60a47a8e2813f5bf6bfba46bd1043fa9b00"
+    },
+    "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~17\\ri4.ev-nofirm.out.json": {
+      "bytes": 190,
+      "sha256": "52719b9e2fb78d447ca478ac64ac0f7f261a5fb4201594b689783ba39fd215cb"
+    },
+    "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~17\\ri4.ev.out.json": {
+      "bytes": 5291,
+      "sha256": "e9bf290457243fe664ef9ec9ff5cfed50fbe995ef30cece7cf6ed4e8a2c3a3ee"
+    },
+    "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~17\\ri4.plan.txt": {
+      "bytes": 17616,
+      "sha256": "43f83223bc50eb82ce59b5a2e05733d5270666fea74b3476ba65541ea51e7461"
+    },
+    "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~17\\ri4.routes.after.txt": {
+      "bytes": 4437,
+      "sha256": "48ce7cc5dd80754d1498933abf4f4f49fabac4e748a1dfbb94502b4b46c20d8a"
+    },
+    "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~17\\ri4.routes.before.txt": {
+      "bytes": 3913,
+      "sha256": "66efd2073ed6ecd71a87ec7391f4f46814d4110db4f94f36e8c4ecac5741249a"
+    },
+    "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~16\\AMGT_RESAPP.TO-AMGT-ri-1.the-error-empty-boundary.proof_of_spec.json": {
+      "bytes": 30087,
+      "sha256": "4442e53c90c248bd2df88deb812970d475b2e733931fa07610eaae341297f3d9"
+    },
+    "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~16\\AMGT_RESAPP.TO-AMGT-ri-3.the-exercise-against-traceable-input.proof_of_spec.json": {
+      "bytes": 37049,
+      "sha256": "c617013ce440e8c25baae4b9446996a3cdbf2938a3fa7dc99da7d661aa5f5d48"
+    },
+    "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~16\\rankings.trending.chatter.response.2026-09-15.json": {
+      "bytes": 5291,
+      "sha256": "8de07818ced6fc7322190e594cd478080c5b624492212cc37dc204a13d080fd0"
+    },
+    "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~16\\ri3.ev-control.out.json": {
+      "bytes": 534,
+      "sha256": "17c2f16635e85a92d7cf6536e76e5a6d8df9da63b0caf60aa7d99df752db0e79"
+    },
+    "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~16\\ri3.ev.json": {
+      "bytes": 484,
+      "sha256": "404840092e9ef76de4b71a508e2f3582f7a2137407c16f68c96c859d93823602"
+    },
+    "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\infra\\aws\\terraform\\harvest\\s3.tf": {
+      "bytes": 3303,
+      "sha256": "acd1b4a957dd2cc3743ccf7c541c1d7a9c647d05316c6b03ab7724adc0646bd1"
+    },
+    "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\lib\\research\\api\\scoped_amgt.py": {
+      "bytes": 41548,
+      "sha256": "67ff2052c34a8a14a06667cd8526f02a979b666904981540b8d505b4fbd5b585"
+    },
+    "C:\\tmp\\portal-resapp-view\\src\\pages\\SecurityAnalysis\\tabs\\ThesisTab.tsx": {
+      "bytes": 5735,
+      "sha256": "9bfb36f40e61f2bd368b3fd7cf45ac8dced2cdd6ec5d55a0acba01a905318233"
+    },
+    "C:\\tmp\\portal-resapp-view\\src\\pages\\SecurityAnalysis\\components\\RankedList.tsx": {
+      "bytes": 6702,
+      "sha256": "b2a5b6e7c237ec2a188d6f210830443adbe3ad1af3b373f020b869285d009c36"
+    }
+  },
+  "portal": {
+    "head": {
+      "rc": 0,
+      "stdout": "9aef37344cd68c06f37d9d33eb1f2bc886dd6c4c",
+      "stderr": ""
+    },
+    "status": {
+      "rc": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "gitlink": {
+      "rc": 0,
+      "stdout": "160000 e85f6eb84f3a1771a37011a7e77e372570bad02a 0\tportal",
+      "stderr": ""
+    },
+    "diff_from_round9": {
+      "rc": 0,
+      "stdout": "src/pages/SecurityAnalysis/__harness__/errorEmpty.harness.cjs\nsrc/pages/SecurityAnalysis/components/LeadPanel.tsx\nsrc/pages/SecurityAnalysis/components/RankedList.tsx\nsrc/pages/SecurityAnalysis/components/StarredList.tsx",
+      "stderr": ""
+    }
+  },
+  "drain_ancestry": {
+    "672bca64fe": {
+      "rc": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "5c95c00268": {
+      "rc": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "50064d78f5": {
+      "rc": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "8da6d27866": {
+      "rc": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  },
+  "bucket": {
+    "head": {
+      "rc": 0,
+      "stdout": "# THE VERSION STORE -- the harvest estate's object store.\n#\n# STAGE 1: declared at its CURRENT name `opal-data-research` so this module can IMPORT it\n# without touching it. Stage 2 renames it to `opal-data-harvest` per Andrew's approved\n# rename map. ⚠ THAT RENAME IS NOT FREE AND THE COST IS MEASURED, NOT ASSUMED: S3 has no\n# rename -- it is create-copy-delete. Measured 2026-09-11 by 4.0.0_SA_CRO~Z:\n#   60 object versions total | 7 NON-LATEST versions | 1 delete marker\n# A copy carries CURRENT objects only, so those 7 non-latest versions and the delete marker\n# do NOT survive the move. They are the whole cost, and it is small and nameable.\n# ⭐ WHAT THE RENAME DOES *NOT* COST, because this was nearly got wrong: FWD-6's\n# \"snapshots accumulate rather than overwrite\" evidence lives in the KEY GRAMMAR -- distinct\n# timestamped prefixes, e.g. derived/model_block/BABA_US_Equity/20260910T224432Z/ and\n# .../20260910T225428Z/, four of them for BABA alone -- and distinct keys COPY INTACT.\n# This file's own contract says so: \"versioning below is the safety net for an accidental\n# overwrite, not the mechanism the grammar relies on.\"\n#\n# Key grammar (data contract): deliverables/0.9.0_WK_AMGT_RESAPP~7/STORE_CONTRACT.md\n#   raw/<vendor>/<security_key>/<YYYYMMDDTHHMMSSZ>/<artifact>\n#   derived/<engine>/<security_key>/<YYYYMMDDTHHMMSSZ>/<artifact>\n#   packs/<security_key>/<YYYYMMDDTHHMMSSZ>/pack.json\n# Nothing is ever written to a path that already exists.\n\nresource \"aws_s3_bucket\" \"harvest\" {\n  bucket = \"opal-data-harvest\"\n\n  tags = {\n    Name      = \"opal-data-harvest\"\n    project   = \"AMGT_RESAPP\"\n    directive = \"D5\"\n    owner     = \"2.0.0_SA_COO\"\n    Purpose   = \"THE VERSION STORE -- raw before derived - snapshots accumulate - never overwrite\"\n  }\n}\n\n# Versioning ON -- the accidental-overwrite safety net beneath the key grammar.\nresource \"aws_s3_bucket_versioning\" \"harvest\" {\n  bucket = aws_s3_bucket.harvest.id\n  versioning_configuration {\n    status = \"Enabled\"\n  }\n}\n\n# SSE-S3 (AES256) default encryption -- the estate's default for an internal store.\n# No DenyUnencryptedObjectUploads statement: bucket default encryption already guarantees\n# nothing lands unencrypted, and that statement's only measured effect elsewhere was an\n# AccessDenied footgun for callers who merely omit the SSE header (monolith.tf's reasoning).\nresource \"aws_s3_bucket_server_side_encryption_configuration\" \"harvest\" {\n  bucket = aws_s3_bucket.harvest.id\n  rule {\n    apply_server_side_encryption_by_default {\n      sse_algorithm = \"AES256\"\n    }\n  }\n}\n\n# All four public-access blocks ON -- research packs are internal.\nresource \"aws_s3_bucket_public_access_block\" \"harvest\" {\n  bucket                  = aws_s3_bucket.harvest.id\n  block_public_acls       = true\n  ignore_public_acls      = true\n  block_public_policy     = true\n  restrict_public_buckets = true\n}\n\n# Deliberately NOT declared: lifecycle expiration (so accumulation is never silently\n# truncated), replication, aws_s3_bucket_notification, any EventBridge/SNS wiring.\n# A version store is a store. MEASURED 2026-09-11: no lifecycle configuration exists\n# (NoSuchLifecycleConfiguration) and no bucket policy exists (NoSuchBucketPolicy), so\n# access is IAM-only -- both confirmed against the live plane, not assumed from this file.",
+      "stderr": ""
+    },
+    "status": {
+      "rc": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "commit": {
+      "rc": 0,
+      "stdout": "ea6cd450fafca2493b89df98646558d24e134ea2 0.9.0_WK_AMGT_RESAPP~17",
+      "stderr": ""
+    }
+  },
+  "routes": {
+    "before": 85,
+    "after": 96,
+    "lost": [],
+    "added": [
+      "GET /api/scoped/amgt/lead-panel/rankings/{movement}/{subject}",
+      "GET /api/scoped/amgt/lead-panel/timeseries/{movement}/{subject}",
+      "GET /api/scoped/amgt/security/{security_key}/coverage",
+      "GET /api/scoped/amgt/security/{security_key}/overlay",
+      "GET /api/scoped/amgt/security/{security_key}/peers",
+      "GET /api/scoped/amgt/security/{security_key}/print",
+      "GET /api/scoped/amgt/security/{security_key}/thesis",
+      "GET /api/scoped/amgt/watchlist",
+      "POST /api/scoped/amgt/refresh",
+      "POST /api/scoped/amgt/watchlist/star",
+      "POST /api/scoped/amgt/watchlist/unstar"
+    ],
+    "amgt_after": 11
+  },
+  "plans_and_applies": {
+    "ri2.plan.txt": {
+      "lines": 144,
+      "summaries": [
+        "Plan: 0 to add, 4 to change, 0 to destroy."
+      ],
+      "bucket_address_mentions": 0,
+      "create_addresses": [],
+      "update_addresses": [
+        "aws_iam_role.chatter_axis_lambda",
+        "aws_iam_role.chatter_axis_scheduler",
+        "aws_iam_role_policy.chatter_axis_lambda",
+        "aws_lambda_function.chatter_axis_producer"
+      ],
+      "destroying": 0,
+      "destroyed": 0
+    },
+    "ri2.apply.txt": {
+      "lines": 67,
+      "summaries": [
+        "Apply complete! Resources: 0 added, 4 changed, 0 destroyed."
+      ],
+      "bucket_address_mentions": 0,
+      "create_addresses": [],
+      "update_addresses": [],
+      "destroying": 0,
+      "destroyed": 0
+    },
+    "ri4.plan.txt": {
+      "lines": 368,
+      "summaries": [
+        "Plan: 19 to add, 0 to change, 0 to destroy."
+      ],
+      "bucket_address_mentions": 1,
+      "create_addresses": [
+        "aws_apigatewayv2_integration.scoped_amgt_api",
+        "aws_apigatewayv2_route.scoped_amgt_api[\"GET /api/scoped/amgt/lead-panel/rankings/{movement}/{subject}\"]",
+        "aws_apigatewayv2_route.scoped_amgt_api[\"GET /api/scoped/amgt/lead-panel/timeseries/{movement}/{subject}\"]",
+        "aws_apigatewayv2_route.scoped_amgt_api[\"GET /api/scoped/amgt/security/{security_key}/coverage\"]",
+        "aws_apigatewayv2_route.scoped_amgt_api[\"GET /api/scoped/amgt/security/{security_key}/overlay\"]",
+        "aws_apigatewayv2_route.scoped_amgt_api[\"GET /api/scoped/amgt/security/{security_key}/peers\"]",
+        "aws_apigatewayv2_route.scoped_amgt_api[\"GET /api/scoped/amgt/security/{security_key}/print\"]",
+        "aws_apigatewayv2_route.scoped_amgt_api[\"GET /api/scoped/amgt/security/{security_key}/thesis\"]",
+        "aws_apigatewayv2_route.scoped_amgt_api[\"GET /api/scoped/amgt/watchlist\"]",
+        "aws_apigatewayv2_route.scoped_amgt_api[\"POST /api/scoped/amgt/refresh\"]",
+        "aws_apigatewayv2_route.scoped_amgt_api[\"POST /api/scoped/amgt/watchlist/star\"]",
+        "aws_apigatewayv2_route.scoped_amgt_api[\"POST /api/scoped/amgt/watchlist/unstar\"]",
+        "aws_iam_role.scoped_amgt_api",
+        "aws_iam_role_policy.scoped_amgt_api_grants",
+        "aws_iam_role_policy_attachment.scoped_amgt_api_logs",
+        "aws_lambda_permission.scoped_amgt_api_apigw",
+        "terraform_data.scoped_amgt_route_count_check",
+        "module.scoped_amgt_api.aws_cloudwatch_log_group.lambda",
+        "module.scoped_amgt_api.aws_lambda_function.this"
+      ],
+      "update_addresses": [],
+      "destroying": 0,
+      "destroyed": 0
+    },
+    "ri4.apply.txt": {
+      "lines": 86,
+      "summaries": [
+        "Apply complete! Resources: 19 added, 0 changed, 0 destroyed."
+      ],
+      "bucket_address_mentions": 0,
+      "create_addresses": [],
+      "update_addresses": [],
+      "destroying": 0,
+      "destroyed": 0
+    }
+  },
+  "ranking_comparison": {
+    "browser_day": "2026-09-12",
+    "deployed_day": "2026-09-15",
+    "same_payload": false,
+    "browser_rows": 10,
+    "deployed_rows": 10,
+    "same_ticker_sequence": true,
+    "browser_rows_with_security_key": 0,
+    "deployed_rows_with_security_key": 0,
+    "same_axis": true,
+    "same_resolution": true,
+    "browser_computed_at": [
+      "2026-09-12T01:22Z"
+    ],
+    "deployed_computed_at": [
+      "2026-09-15T02:35Z"
+    ]
+  },
+  "saved_adapter_responses": {
+    "adapter-local.thesis.BABA_US.json": {
+      "statusCode": 200,
+      "keys": [
+        "security_key",
+        "header_figures",
+        "fiscal_year_figures",
+        "check_face",
+        "drafted_sections",
+        "generated_at"
+      ],
+      "header_figures": 0,
+      "fiscal_figures": 0,
+      "check_face": 0,
+      "drafted_sections": 0,
+      "row_count": null,
+      "reason": null
+    },
+    "adapter-local.thesis.BABA_US_Equity.json": {
+      "statusCode": 200,
+      "keys": [
+        "security_key",
+        "header_figures",
+        "fiscal_year_figures",
+        "check_face",
+        "drafted_sections",
+        "generated_at"
+      ],
+      "header_figures": 13,
+      "fiscal_figures": 183,
+      "check_face": 196,
+      "drafted_sections": 0,
+      "row_count": null,
+      "reason": null
+    },
+    "ri4.ev.out.json": {
+      "statusCode": 200,
+      "keys": [
+        "axis",
+        "resolution",
+        "as_of_date",
+        "rows",
+        "row_count",
+        "generated_at"
+      ],
+      "header_figures": 0,
+      "fiscal_figures": 0,
+      "check_face": 0,
+      "drafted_sections": 0,
+      "row_count": 10,
+      "reason": null
+    },
+    "ri4.ev-nofirm.out.json": {
+      "statusCode": 401,
+      "keys": [
+        "refused",
+        "reason"
+      ],
+      "header_figures": 0,
+      "fiscal_figures": 0,
+      "check_face": 0,
+      "drafted_sections": 0,
+      "row_count": null,
+      "reason": "missing edge-injected X-Firm-Id: request did not pass auth-validator-edge"
+    }
+  },
+  "source_closure": {
+    "seed": 23,
+    "closure": 30,
+    "added": [
+      "lib/research/price/__init__.py",
+      "lib/research/price/axis.py",
+      "lib/research/print/__init__.py",
+      "lib/research/print/render_pack.py",
+      "lib/research/provenance/__init__.py",
+      "lib/research/provenance/render_print.py",
+      "lib/research/provenance/validate.py"
+    ],
+    "required_modules": 20,
+    "missing": [],
+    "seed_missing_control": [
+      "lib/research/price/axis.py",
+      "lib/research/print/render_pack.py",
+      "lib/research/provenance/render_print.py"
+    ],
+    "limit": "Source AST closure, not a fresh read of the deployed ZIP; dynamic imports and non-Python assets are outside this declared criterion."
+  },
+  "boundary": {
+    "rc": 0,
+    "stderr": ""
+  },
+  "prose": {
+    "rc": 0,
+    "stderr": ""
+  }
+}
