@@ -146,6 +146,50 @@ not a message.
     "spec_asserts": "TO-CN-l-1 2e: the header and the change log read v1.0.",
     "world_is": "The ledger had no change log to update. v1.0 adds one as section 9. Its entries before v1.0 are read from git log of the file (hash, author, subject), not from the document. INERT: the new section moves no row, and the checker's section reads ('THE COUNTS', 'EXCEPTION REGISTER') do not match its heading.",
     "notes": "Filed by 0.9.0_WK_LGIC_CANON~2 from worktree wk-lgic-canon-1-2 while serving TO-CN-l-1. The sibling canon 02_DOCTRINE.md carries its change log as its own last section, which v1.0 follows."
+  },
+  {
+    "id": "LGIC_CANON-W1-S1",
+    "project": "LGIC_CANON",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_CANON~1",
+    "surfaced_at": "2026-09-15T18:58Z",
+    "one_line": "Rendering the schema's key.tier list into the canon made the canon contradict itself: its section 1 vocabulary said a tier is one of four medallion values and that state is NOT a tier, and it gave the root code/gold/ prefix as the code home, while the generated section lists state and code in the {tier} segment and the schema grades a new root code/ home OUT-OF-PATTERN. The worker aligned three section 1 rows, which the order's items do not name.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CANON v0.3: infra/logic/02_DOCTRINE.md@f95470f384:46 'tier ... one of `bronze` `silver` `gold` `platinum`'; :61 state row, NOT-this column 'a tier'; :54 code home row '(`code/gold/` ...)'.",
+        "SCHEMA: org/standards/NAMING_SCHEMA.json@f95470f384:41 key.tier [bronze, silver, gold, platinum, state, code]; :45 key.code 'a legacy root code/ key grades OUT-OF-PATTERN, its canonical_form the code-tier key'.",
+        "ORDER: org/missions/D14/LGIC/LGIC_CANON/task-orders/LGIC_CANON.TO-CN-k-1.canon.md@f95470f384:34 'No rule's substance changes except where items 3, 5 and 6 say so'; items 3 and 6 (:27, :30) name R1's text and R1's non-application only."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-CN-k-1 items 3 and 6 name R1's grammar strings, its firm-form lists and its non-application; nothing else in the canon changes in substance.",
+    "world_is": "With the section in place, the one document held two readings of 'tier' and of 'code home'. The worker changed words only, and no rule's text. Section 1's tier row now reads 'a MEDALLION tier', with the {tier} segment's full list in the generated section. The state row says state occupies the {tier} segment and is not a MEDALLION tier. The code home row says a new home is the code tier and the root homes are LEGACY (row S1). INERT: vocabulary only, no rule, key or name moves. The edit is judged at L9 under K1-J1 (3.0.0_SA_CVO).",
+    "notes": "Filed by the CN-k-1 worker during its v1.0 edit. The firm row's back-ticked spelling list was removed under item 3's census, and is not this row."
+  },
+  {
+    "id": "LGIC_CANON-W1-S2",
+    "project": "LGIC_CANON",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_CANON~1",
+    "surfaced_at": "2026-09-15T18:58Z",
+    "one_line": "The exception register's two carriers were already two different lists: the ledger's section 6 carries X6 (opal-data-demo, GRANTED), which the canon's section 4 never carried, and X6's axis value 'tenancy' is outside the A1-A5 domain of the schema line the canon keeps. Now that item 7 makes the ledger the entries' one home, X6 is the one entry that does not fit the register schema.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "LEDGER: infra/logic/06_CONFORMANCE_LEDGER.md@f95470f384:135 'X6 | `opal-data-demo` | tenancy | a demo tenant, neither firm nor general | ... | PERMANENT | **GRANTED**'.",
+        "CANON v0.3: infra/logic/02_DOCTRINE.md@f95470f384:337-338 schema 'pipeline · axis (A1–A5) · ...'; :340-347 entries X1, X2, X3, X4, X5, X7 and no X6.",
+        "DECOMP: org/missions/D14/LGIC/LGIC_CANON/decompositions/LGIC_CANON_DECOMP.md@f95470f384:449-450 section 8 choice 2 describes the ledger as carrying the canon's entries 'again: two carriers of one list'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Decomposition section 8 choice 2: the canon's section 4 and the ledger's section 6 carry the same entries, and the schema's axis column takes A1-A5.",
+    "world_is": "The carriers had diverged by one entry (X6, ledger only), and that entry's axis is 'tenancy', a value the kept schema does not admit. The canon v1.0 keeps the schema and points at the ledger for entries, so X6 now sits in the one carrier against a schema it does not fit. The worker did not edit the ledger, which is outside this order's paths. INERT: a register entry classifies and moves nothing (DEC-9). The fix belongs to the ledger's owner this round (cell CN-l-1), or to 1.0.0_SA_CTO or 4.0.0_SA_CRO, who write register entries: give X6 an axis in A1-A5, or widen the schema's axis domain by a Rule-24 act.",
+    "notes": "Filed by the CN-k-1 worker while carrying out item 7 (section 4 points at the ledger for its entries)."
   }
 ]
 ```
