@@ -7805,6 +7805,90 @@ Andrew asked for (msg 22917); it concerns this project's portal files meeting an
   "spec_asserts": "PRD v0.11 C-B4-SCHEDULE: cron(30 12 * * ? *) after the 07:00 America/New_York pull, never success-of-upstream; the B6 halves R3/A3: a third driven run after the models publish (superseded).",
   "world_is": "The served satellites block is at T-1 for all 25 holdings by the scheduled fire; no ad-hoc act was needed after 08:10Z.",
   "notes": "For the MSTR's re-verification: VersionId 02SGBCPD..., the same six-key fixture route; for L10: a seat that arms a clock-bound act must arm a wake that survives a 30-minute monitor expiry -- the gap cost nothing tonight because the schedule covered it."
+},
+{
+  "id": "POSN_ASTTAX-Z-W27-S1",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~27",
+  "surfaced_at": "2026-09-15T13:45:58Z",
+  "one_line": "X1-AC1'S OWN REGEX COULD NOT SEE THE CLAUSE IT GRADES: run VERBATIM against the bytes as issued (blob 803721e2c1) it printed 'SET clause: asset_class = :ac, sub_asset_class = :sac, ' -- 2 of the 5 assignments -- because the Yang UpdateExpression was TWO implicitly-concatenated string literals and the pattern's [^'\\\"]+ stops at the first closing quote. It printed no truncation signal, so the companion line 'management_style in SET: False' was produced by an instrument blind to the 2nd through 5th assignments: had management_style been written in the second segment, that line would still have read False. DISARMED IN THIS CELL, not by changing the criterion: the constant AT7-s-1 introduces holds the clause as ONE unsplit literal, so the same invocation now prints all five assignments and nothing else, and the False is discriminating. The CLASS is general -- any regex read of a Python implicit concatenation truncates silently at the seam, and a shorter-than-expected capture reads exactly like a shorter clause.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "X1-AC1's invocation run VERBATIM before any edit, 13:3xZ: 'SET clause: asset_class = :ac, sub_asset_class = :sac, ' / 'tuple: [\"'asset_class', 'sub_asset_class', 'name'\"]' / 'management_style in SET: False'; the subject is blob 803721e2c15464ed4ba054a02aba2311d5506164, whose clause at :306-307 is two adjacent literals.",
+      "The SAME invocation after the constant lands: 'SET clause: asset_class = :ac, sub_asset_class = :sac, #n = :n, last_updated = :ts, updated_by = :ub' -- 5 of 5 assignments, deliverables/0.9.0_WK_POSN_ASTTAX~27/x1_ac1_output.txt."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "X1-AC1's expect: 'the SET clause names asset_class, sub_asset_class, #n (name), last_updated, updated_by and nothing else ... management_style in SET: False'; the preflight adds that the regex 'was written against the expression as it reads today at :305-307' and orders the same read re-run against the constant and stated.",
+  "world_is": "On the bytes it was written against, the regex captured 2 of the 5 assignments and reported nothing about the other 3; the expect's enumeration was therefore never readable from that invocation's output until the clause became one literal.",
+  "notes": "For L9: preflight item 3 is ANSWERED -- the shape did change and the same read was re-run and stated, with the pre-edit and post-edit outputs both recorded. The constant is deliberately unsplit for this reason and the file says so in the comment above it."
+},
+{
+  "id": "POSN_ASTTAX-Z-W27-S2",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~27",
+  "surfaced_at": "2026-09-15T13:45:58Z",
+  "one_line": "THE REJECTED ALTERNATIVE IS NOT MERELY VACUOUS -- IT IS FATAL AND HALF-APPLIED. Measured on a scratch mutant of the applied bytes whose SET clause writes management_style and whose YANG_OWNED_FIELDS carries it: the run raises KeyError: 'management_style' at AGG, the FIRST row that already EXISTS in the table -- but only after 19 of its 56 Yang update_item calls have already landed (19 rows minted). _yang_conflicts returns [] for an ABSENT row before any field is compared, so every first-mint ahead of the first live row is written, and the seeder has no transaction to roll them back. So 'add management_style to the owned tuple' does not degrade to a no-op check: it aborts the re-seed partway with rows written and rows not.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "X1-AC2 exercise arm NEG-3 (scratch mutant .scratch/x1ac2_mutant_neg3_widened_tuple.py, working tree untouched): rc=None RAISED KeyError: 'management_style'; yang get_item 20, update_item 19, rows minted 19; the row it died on: 'AGG'.",
+      "The cause in the unmutated bytes: _yang_conflicts() reads sec[field] for every field in YANG_OWNED_FIELDS, and 0 of the 59 CANONICAL_SECURITIES records carry a 'management_style' key (X1-AC1's 'management_style in records: 0')."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The TO's cell text: 'Adding management_style to the tuple would KeyError on every record (or compare a live value against nothing) -- a vacuous check that reads as protection.'",
+  "world_is": "The KeyError half is confirmed and is stronger than stated: the raise is not per-record-harmless, it terminates the run at the first EXISTING row after 19 writes have landed, leaving the re-seed half-applied.",
+  "notes": "Offered to L9 as measurement behind the cell's choice, and to the CTO's L10 parenthesis: the alternative was not declined on taste."
+},
+{
+  "id": "POSN_ASTTAX-Z-W27-S3",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~27",
+  "surfaced_at": "2026-09-15T13:45:58Z",
+  "one_line": "THE NEW GUARD HAS ONE DECLARED SEAM, AND IT IS THE AUDIT-EXCLUSION LIST. The assertion binds (SET fields MINUS YANG_AUDIT_FIELDS) == YANG_OWNED_FIELDS, because the TO requires last_updated / updated_by excluded BY NAME. Measured on two scratch mutants of the applied bytes: (A) a clause that also writes management_style is REFUSED at import, 0 writes; (B) the SAME clause with 'management_style' appended to YANG_AUDIT_FIELDS IMPORTS CLEANLY, carrying a write surface of 6 fields against a 3-field guard with management_style written and unguarded. The seam needs a deliberate edit to the same three lines the assertion lives in, so it is not reachable by normal operation -- recorded because 'a check that reads as protection' is the exact failure this cell exists to close, and the closure has the shape one level up.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.9.0_WK_POSN_ASTTAX~27/x1_s3_audit_exclusion_probe_output.txt: A -> ASSERTION FIRED; B -> IMPORTED CLEANLY, write surface ('asset_class', 'sub_asset_class', 'name', 'last_updated', 'updated_by', 'management_style'), guard owns ('asset_class', 'sub_asset_class', 'name'), written-but-unguarded ['management_style'].",
+      "The assertion as landed: set(YANG_SET_FIELDS) - set(YANG_AUDIT_FIELDS) == set(YANG_OWNED_FIELDS), seed_canonical_securities.py at the constant block introduced by TO-X1-1."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Act 1: 'the two audit fields last_updated / updated_by excluded by name' and 'ONE module-level assertion that fails loudly at import if the two surfaces ever diverge'.",
+  "world_is": "Excluding by name makes the exclusion list itself part of the declaration the assertion grades: widening that list widens the write surface silently, measured on mutant B.",
+  "notes": "Not repaired in-cell: a fix (deriving the audit set from the values the seeder stamps unconditionally, or asserting the audit tuple's own membership) would be a widening of AT7-s-1. Raised for the CTO's L10 and for X1-AC7's second reading, which asks where management_style's own guard belongs."
+},
+{
+  "id": "POSN_ASTTAX-Z-W27-S4",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~27",
+  "surfaced_at": "2026-09-15T13:51:11Z",
+  "one_line": "R1's management_style WRITE HAS NO SCRIPT TO PUT A GUARD IN, AND ITS ONE INVOCATION CARRIES A DUPLICATED FLAG. Read while recording X1-AC7's second reading (which asks whether that write wants a guard of its own 'in THAT script'): TO-V8-1's V8-AC4 is not a script at all -- it is a single `.tools/aws dynamodb update-item` CLI act, and it carries --expression-attribute-values TWICE on one line (occurrence 1 defines only ':m'; occurrence 2 defines ':m' and ':u'). The CLI keeps the LAST occurrence, so the first is silently discarded and the act worked: had the first won, the --condition-expression 'management_style = :u' would have raised ValidationException for an undefined ':u'. The write did land -- this cell's own live point read at 13:27Z and 13:42Z shows VNQ management_style 'passive'. So the guard on that write was a ConditionExpression on a one-shot command: correct for that act, and carried forward by nothing -- there is no file whose import can fail for the NEXT retag, which is the asymmetry X1-AC7 is asked to read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "task-orders/POSN_ASTTAX.TO-V8-1.the-retag-last-both-stores-both-levels.md:133 of 196, printed verbatim: '--expression-attribute-values' occurs 2 times, '--update-expression' 1, '--condition-expression' 1.",
+      "The act's outcome, measured live in this cell and not inherited: get-item VNQ at 13:27Z and again at 13:42Z, management_style 'passive', both reads byte-identical (sha256 f14a566aa9ec098822e73784251a5d6939defb1f6f9528a3f7b88abd794cb519 over the two-item file)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "X1-AC7's expect: 'whether R1's management_style write (the retag script's, on VNQ) wants a guard of its own in THAT script -- a place no seeder can defend -- for the next retag'.",
+  "world_is": "There is no retag script for VNQ's management_style: V8-AC4 is one CLI update-item, whose only guard was a ConditionExpression on the prior value, and whose argv carries a duplicated --expression-attribute-values that only last-wins parsing made harmless.",
+  "notes": "Filed, not fixed: TO-V8-1 is a terminal order outside this cell's <paths> and the act it describes has already landed correctly. For L9 and the CTO's L10, as input to X1-AC7's second reading. NOT re-run: re-running V8-AC4 would fail its own ConditionExpression by design."
 }
 ]
 ```

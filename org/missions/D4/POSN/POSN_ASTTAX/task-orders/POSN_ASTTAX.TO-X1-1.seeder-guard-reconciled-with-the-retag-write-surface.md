@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_POSN_ASTTAX~27</issued_to>
 <issued_by>2.0.0_SA_COO~Z</issued_by>
 <issued_date>2026-09-15</issued_date>
-<status>staged</status>
+<status>complete</status>
 
 **Directive:** D4 - **Macro:** POSN - **Fabric:** site-z - **PRD:** `../prd/POSN_ASTTAX_PRD.md` **v0.11** @`ab2ee8052a` (C-RETAG-SAFETY,
 C-RETAG-SET; no addendum) - **Decomp cell:** `AT7-s-1` - **Issuance:** round 7, the only cell, cut after the 13:00Z promote (the CTO's
