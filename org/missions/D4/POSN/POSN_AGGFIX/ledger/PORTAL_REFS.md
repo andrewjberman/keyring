@@ -8,3 +8,4 @@ NOTHING HERE MOVES A GITLINK; the DEV to PROD promote and any push are Andrew's 
 | branch | head | cut from (pin) | drain ref | worker | TO | at |
 |---|---|---|---|---|---|---|
 | wk-aggfix-1-3-portal | 63edeeeb51 | edf85ce503 (origin/PROD) | refs/drains/aggfix-1-portal (created by 2.0.0_SA_COO~Z at drain) | 0.9.0_WK_POSN_AGGFIX~3 | POSN_AGGFIX.TO-B1-1 | 2026-09-15T19:48:40Z (portal commit time, UTC) |
+| wk-aggfix-1-3-portal | 3ec1f83cab | 63edeeeb51 (TO-B1-1, itself cut from edf85ce503 origin/PROD) | refs/drains/aggfix-1-portal (pinned at 63edeeeb51 by 2.0.0_SA_COO~Z; this head not yet drained) | 0.9.0_WK_POSN_AGGFIX~3 | POSN_AGGFIX.TO-B2-1 | 2026-09-15T21:03:08Z (portal commit time, UTC) |
