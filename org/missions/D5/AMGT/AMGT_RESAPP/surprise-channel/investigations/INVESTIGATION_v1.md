@@ -3801,6 +3801,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "REMEDIATION_v9 row Z-S71 (OPEN, owner 2.0.0_SA_COO~ZZZ): resolve the obsolete literal 134 against the actual final 136 union in a citing ruling; retain successful-read and nonempty-input guards.",
     "world_is": "Resolved by one read of the packet at the cited line and one line of arithmetic. The analysis s.7 carried it rather than resolving it 'from the number alone', which was correct; the number alone was never the question -- the union's enumeration at the commit that produced 136 was, and the packet carries it.",
     "notes": "Filed by the round-10 issuer as the successor of the row's named owner (hand-over s.5). The CVO adjudicates at L8/L9."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W16-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~16",
+    "surfaced_at": "2026-09-15T01:18Z",
+    "one_line": "AC2 asks for SIX DISTINCT STATES while deliverable 3 of the same order asks StarredList to show the SAME read-failure state as RankedList -- so two of the six arms render byte-identical HTML by construction, and 'distinct' has two readings (six distinct INPUT states, or six distinct output hashes).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Task order org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-ri-1.the-error-empty-boundary.md@59b7b17909, s.5 AC2 expectation: 'six distinct states printed with bytes and sha256; rc=0'.",
+        "The SAME order, s.1 deliverable 3: 'StarredList.tsx shows the same read-failure state before it filters' -- the starred error arm is REQUIRED to render what the ranked error arm renders.",
+        "MEASURED, post-edit arm at portal 9aef3734 on branch wk-amgt_resapp-10-1-portal (node src/pages/SecurityAnalysis/__harness__/errorEmpty.harness.cjs, rc=0): failed_request 616 bytes sha256 245eab5e775164b13e9666cef86a8c415119b0c21dd4009ae72b983ace158e98 and starred_failed_request 616 bytes sha256 245eab5e775164b13e9666cef86a8c415119b0c21dd4009ae72b983ace158e98 -- IDENTICAL; the other four arms carry four distinct hashes (successful_empty 205 / loading 126 / populated 1239 / starred_successful_empty 1446 bytes).",
+        "The check AC2 names for the starred arm reads the right way regardless: starred_error_differs_from_starred_empty true (616 vs 1446 bytes), as do the other six checks."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC2 expects 'six distinct states printed with bytes and sha256' from the harness, and deliverable 3 of the same order requires StarredList to show 'the same read-failure state' as RankedList before it filters.",
+    "world_is": "Both were satisfied as written and they meet in the output: six distinct STATES are rendered and printed with bytes and sha256, but two of them (failed_request, starred_failed_request) hash identically at 616 bytes because deliverable 3 demanded the same state. Read as 'six distinct input states' AC2 is met; read as 'six distinct output hashes' it cannot be met without violating deliverable 3. The worker took the first reading and recorded the second so the grader is not deciding it silently.",
+    "notes": "Filed by 0.9.0_WK_AMGT_RESAPP~16 on AMGT-ri-1. Form only, no significance claimed. No component was changed to chase distinct hashes -- making the starred failure text differ would have been the widening the order forbids. 3.0.0_SA_CVO~W grades AC7 on these same bytes at L9."
   }
 ]
 ```
