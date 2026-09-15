@@ -552,6 +552,73 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     "spec_asserts": "Worker definition, Proof: 'rc 0 AND every mechanical criterion PASS-by-output, then flip the task order's <status> to complete and commit instance, deliverables and flip together'; Rule 14a: 'do NOT pre-git add'.",
     "world_is": "For a cell that MODIFIES a tracked file, the pre-flip manual validation cannot return rc 0 while the deliverable is uncommitted and unstaged. Instance, deliverable and flip cannot ride one commit without pre-staging, so the deliverable took a commit of its own.",
     "notes": "Form only. Every EN-v-<n> cell modifies a tracked carrier, so the same shape is expected on each of them. The order stayed open until the proof commit; no criterion was affected."
+  },
+  {
+    "id": "LGIC_ENFORCE-W7-S1",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~7",
+    "surfaced_at": "2026-09-15T02:20Z",
+    "one_line": "EN-s-1's census cannot judge every nameable live name on this registry: 504 of 1805 live names and 623 of 1869 repo names RAISE in grade(), so the run stops at the 4th live name (sentiment-query-api, R1.f) and S1-AC1 and S1-AC2 FAIL.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN: python lib/opal_naming.py census --live --repo --report org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/NAMING_CENSUS_REPORT.md in wk-lgic-enforce-1-7-s1: 'CENSUS RAISE live API_GW sentiment-query-api -- R1.f: 'sentiment' is in no vocabulary; no registry row resolves it', then 'CENSUS: STOPPED on the first RAISE after 3 judged', rc=3. Live pull: VINTAGE 'Built from the estate as of 2026-09-15 00:57:50 UTC ... manifest: e8a06d444ae8', 2148 nodes, 33 of 33 node types, WITHIN BUDGET.",
+        "MEASURED by a diagnostic, NOT the census: a scratch script outside the worktree grades every census item and continues past a RAISE, only to size the population. Live: 1805 nameable, 1301 graded (OUT-OF-PATTERN 1055, CONFORMANT 217, ALIAS 29), 504 RAISE by step (R1.c 221, R1.f 206, R2 53, B2 15, R8 5, R1.d 2, L2 2); 115 distinct raising tokens, the most frequent globgrph 67, news 46, find 34, trade 24, estate 24, astn 19, semantic 15, agentbus 12, security 11. Repo: 1869 names, 1246 graded, 623 RAISE (R1.f 194, R1.c 180, K1 166, R2 46, B2 32, R1.d 2, L2 2, G2.3 1).",
+        "CODE: lib/opal_naming.py grade() @32855486f0 (EN-b-1) raises R1.c on a V2 (unresolved) first token and R1.f on a token in no vocabulary. Its V1 is systems.json's keys, and row LGIC_ENFORCE-W1-S11 records astn, trade and news held unresolved. org/standards/NAMING_SCHEMA.json grade.unplaceable @32855486f0: a token no registry row resolves 'is a defect in the tokeniser, this file or the registry and is fixed there'.",
+        "CRITERIA: check_en.py s1-planes gives 'PLANES: ['live']' and 'VERDICT: FAIL-PLANES', rc 1. check_en.py s1-all-judged gives 'LIVE NAMEABLE: 1805  JUDGED: 3  LIVE ROWS: 3' and 'VERDICT: FAIL-NOT-ALL-JUDGED', rc 1."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EN-s-1 WORKER FACE: the census 'judges every nameable name in the repo ... and in the live plane', and 'A RAISE stops the run loudly, printing the string, and is never filed as out-of-pattern'. S1-AC2: 'every nameable live name is judged'.",
+    "world_is": "At registry@50e4fabd1cb6a150 both cannot hold. 28 percent of the live nameable names raise, the first at the 4th name in census order, so the run stops before it reaches the repo plane. The remedy is registry rows (infra/logic/registry/systems.json) or rule steps, and neither is in this order's <paths>. The census was not altered to skip a RAISE or file it under a verdict.",
+    "notes": "Form only. The census, its stop and S1-AC4 behave as specified; the blocked criteria are S1-AC1 and S1-AC2. The diagnostic's raise list is at C:/Users/AndrewBerman/AppData/Local/Temp/lgic_enforce_w7/raises2.json on this device. It is not a deliverable."
+  },
+  {
+    "id": "LGIC_ENFORCE-W7-S2",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~7",
+    "surfaced_at": "2026-09-15T02:20Z",
+    "one_line": "live_nameable also excludes 16 AWS-fixed live names (IAM_POLICY 10, LOG_GROUP 4, SECURITY_GROUP 2), departing from the order's formula 'live minus the NOT-GRADED types' (1805, not 1821), because grade() RAISES on names NAMING_SCHEMA.json aws_fixed puts outside the domain.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SCHEMA: org/standards/NAMING_SCHEMA.json aws_fixed @32855486f0: 'names AWS fixes are OUTSIDE the grade's domain, like the NOT GRADED types: excluded, never a fourth verdict'. by_arn: an IAM_POLICY in account aws. by_name: SECURITY_GROUP default; LOG_GROUP RDSOSMetrics and the prefixes aws-waf-logs- and /aws/ecs/containerinsights/.",
+        "CODE: lib/opal_naming.py grade() @32855486f0 raises G2.1 on SECURITY_GROUP 'default', G2.2 on an IAM name starting AWS or Amazon, and G2.3 on a log group not starting with / (GRADING_RULE.md G2, which predates AW1; row LGIC_ENFORCE-W3-S4 records the same departure).",
+        "RUN: census --live: '2148 node(s) ...; 327 of NOT GRADED types, 16 aws_fixed; 1805 to judge'. The report's denominators carry live_not_graded_types 327 and live_aws_fixed 16 beside live_nameable 1805."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EN-s-1 report shape: 'live_nameable: <n, live minus the NOT-GRADED types>'.",
+    "world_is": "Taken literally, the formula puts 16 names into the judged population that grade() RAISES on, so the census would stop on an AWS-managed name the schema puts outside the domain. The census applies the schema's aws_fixed exclusion (_aws_fixed) and prints both subtractions.",
+    "notes": "Form only. No criterion turns on the 16. S1-AC2 compares judged_live with live_nameable and the live row count, and fails on the RAISE stop (row LGIC_ENFORCE-W7-S1) under either formula."
+  },
+  {
+    "id": "LGIC_ENFORCE-W7-S3",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~7",
+    "surfaced_at": "2026-09-15T02:20Z",
+    "one_line": "The order names the repo surfaces (Terraform, config.py-class files, Lambda sources) but not how a source literal is placed as a name or what 'Lambda sources' excludes. The census applies its own stated rule, so the repo denominator of 1869 is that rule's.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ORDER: the TO-EN-s-1 WORKER FACE names the surfaces only, as does PRD DEC-7 (org/missions/D14/LGIC/LGIC_ENFORCE/prd/LGIC_ENFORCE_PRD.md:292-293 @32855486f0). The gate's inputs (:257-265) name the literal classes: S3 key and bucket literals, resource-name literals 'the schema's resource grammar places as a name', and secret paths. They give no placement procedure.",
+        "RULE APPLIED (lib/opal_naming.py _census_classify, in this order's commit): an s3:// URL is a bucket and a key; under a *bucket* binding, a bucket; under a secret, secret_name, _id, _arn or _path binding, a secret path; under a *key* or *prefix* binding and carrying a /, a key; otherwise, a kebab literal whose last token is a kind exactly one node type owns. Terraform: the name attribute of 28 resource types (CENSUS_TF_ATTR) when it is one literal; 113 interpolated names are not judged.",
+        "POPULATION: git ls-files: 468 .tf files. 3329 candidate source files (infra/aws/lambda/** .py .mjs .js .cjs .ts, plus every config.py), minus 2864 vendored or test files, leaves 465. Together they give 1869 repo names. The first version of the rule (deep binding, any *secret* binding, no test-file rule) placed 2072, including 'us-east-1' and 'utf-8' as SECRET. It was tightened before the report was written."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EN-s-1 WORKER FACE: 'It judges every nameable name in the repo (the Terraform, lib/config.py-class files, and Lambda sources)'.",
+    "world_is": "Nothing the order names defines which literal in a config or Lambda source is a nameable name, so the worker defined it and printed the rule and its exclusions in the report and the module.",
+    "notes": "Form only. No criterion turns on the repo denominator. The repo plane is never judged in this run, because the run stops in the live plane first (row LGIC_ENFORCE-W7-S1)."
   }
 ]
 ```
