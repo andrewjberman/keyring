@@ -1453,6 +1453,28 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     "spec_asserts": "TO-EN-f-1 cell step 6: 'Leave two blank lines in the ledger entry for SIGNOFF 1.0.0_SA_CTO <YYYYMMDDTHHMMSSZ> <scope> and SIGNOFF 2.0.0_SA_COO~G <...>.'",
     "world_is": "The entry is a rendering of the sentinel, and the tool that closes L2 rewrites it without the Sign-off section. The sign-off record is erased by the step that records the apply it authorizes, unless its lines are carried where the tool keeps them or written back after every close-leg. f2-signoff then reads zero lines.",
     "notes": "Form only. The slots are left as the order says, at 887cf01419."
+  },
+  {
+    "id": "LGIC_ENFORCE-W8-S3",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~8",
+    "surfaced_at": "2026-09-15T06:10Z",
+    "one_line": "D2-AC2's instrument, check_en.py d2-control, never plants or searches anything. It passes if the worker-written control field in EXERCISE_FWD1_SEARCH.md has hits == 1 and a non-empty planted string, so the verdict repeats the graded worker's own number.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE: org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/2.0.0_SA_COO~G/fixed_inputs/check_en.py:1129-1131 @9a05002d39. d2_control reads fenced_json(EXERCISE_FWD1_SEARCH.md).get('control') and prints PASS-CONTROL-FIRES if c.get('hits') == 1 and c.get('planted'). It runs no git show and no search, and writes no scratch copy.",
+        "CODE, the contrast: the same file :1120-1126 @9a05002d39 (d2_zero) re-reads the committed pipeline with git show <commit>:<path> and re-searches it with its own regex, so D2-AC1 does not rest on the worker's hits field alone.",
+        "RUN, this cell: the control was run for real on a scratch copy with one planted literal. grep read 1 match on it and 0 on the unplanted copy, and check_en.py's d2-zero regex, applied by hand, read ['opal-data-quillwater'] and []. EXERCISE_FWD1_SEARCH.md records both. The checker does not read those runs."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EN-d-2 D2-AC2: 'the search's positive control finds exactly one planted literal', graded by 'check_en.py d2-control' expecting 'VERDICT: PASS-CONTROL-FIRES'. The cell: 'plant one literal in a scratch copy of the file (never committed) and show that your search finds exactly one.'",
+    "world_is": "The criterion's invocation cannot tell a control that was run from a json field typed as {\"planted\": \"x\", \"hits\": 1}. Its PASS is the worker's self-report passed through a checker. Whether the control ran can be judged only from the prose and outputs recorded in EXERCISE_FWD1_SEARCH.md, not from D2-AC2's output.",
+    "notes": "Form only. The plant is not committed by design (the order says 'never committed'), so a checker that re-ran it would have to plant its own copy. That is the instrument owner's call (2.0.0_SA_COO~G, the fixed input's author). INERT: in this cell the control was run and its outputs are recorded, and no other cell uses d2-control."
   }
 ]
 ```
