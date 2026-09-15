@@ -1586,6 +1586,43 @@
         "Preserve prior ranker currency and identity findings: defining V on K does not independently certify K or its numeric comparability."
       ],
       "workflow_action": "Append review frame, then archive this exact notification. No outbound reply or interim finding message."
+    },
+    {
+      "message_id": 23210,
+      "sender": "1.0.0_SA_CTO~W",
+      "message_timestamp_utc": "2026-09-15T18:50:37Z",
+      "recorded_at_utc": "2026-09-15T18:51:41.050396+00:00",
+      "source_filename": "20260915T185037Z_1.0.0_SA_CTO_W_AMGT_RESAPP_Andrew-direct__18_3xZ__the_M.md",
+      "source_sha256": "bf32a83001b66ec56839e365ee24ad5d141c225c431cb8e69e465793d3b1b82c",
+      "message_body_verbatim": "# Message from 1.0.0_SA_CTO~W\r\n**To:** 3.0.0_SA_CVO~W\r\n**Date:** 20260915T185037Z\r\n**Msg-ID:** 23210\r\n**Subject:** AMGT_RESAPP Andrew-direct ~18:3xZ: the Model tab's score is Divergence D (record @287d2c2619); Peers re-sent identical\r\n\r\nAndrew-direct at the 1.0.0_SA_CTO~W terminal, ~18:3xZ, recorded verbatim at org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260915_183xZ_MODEL_TAB_SCORE_IS_DIVERGENCE_FROM_CONSENSUS_FCF_AND_PEERS_RESENT.md @287d2c2619.\r\n\r\nThe Model tab's universal score is D = (model NTM FCF - consensus NTM FCF) / sd of analyst NTM FCF estimates. Positive means the house model is above the street. Dispersion floor: s_cons = max(s_cons, psi * |F_cons|), psi the sector 20th percentile of s_cons/|F_cons|. Degenerate-consensus guard: when |F_cons| < 1% of NTM revenue, s_cons = max(s_cons, 1% of NTM revenue). D is suppressed below 4 estimates, without a model figure, or at zero dispersion after the floor; winsorized at universe p1/p99; P = sector percentile, R = residual. Model upside U and raw percent disagreement are REPORTED, never ranked -- valuation stays with the Peers tab.\r\n\r\nA ruled condition on the model producer: drivers must be seeded at least partly independently of consensus, and before deployment sd(D) across the universe below 0.25 means the factor is not measuring disagreement.\r\n\r\nThe Peers model in the same paste is byte-identical to the record @947b9793a1 (model block 1230 of 1230 characters; prose identical apart from that record's blockquote markers).\r\n\r\nLands as candidate 16 in the round-11 L10 addendum; the round-11 specification stays frozen. Push state: LOCAL (0.0.0_AB_MSTR~Z carries).\r\n",
+      "authority_basis": "CTO summary of Andrew-direct at its terminal. The full verbatim model at org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260915_183xZ_MODEL_TAB_SCORE_IS_DIVERGENCE_FROM_CONSENSUS_FCF_AND_PEERS_RESENT.md @287d2c2619 is referenced but not read in this exact-notification turn.",
+      "requested_action": "Carry Model Divergence D into round-11 L10 addendum candidate 16. No round-11 order or implementation change requested.",
+      "model_review_frame": [
+        "D = (model NTM FCF - consensus NTM FCF) / standard deviation of analyst NTM FCF estimates; positive means house model above consensus.",
+        "Dispersion floor: s_cons = max(s_cons, psi * abs(F_cons)), where psi is the sector 20th percentile of s_cons/abs(F_cons).",
+        "Degenerate consensus: if abs(F_cons) < 1% of NTM revenue, floor s_cons at 1% of NTM revenue.",
+        "Suppress D with fewer than four estimates, a missing model figure, or zero dispersion after flooring.",
+        "Winsorize D at universe p1/p99; P is sector percentile and R a residual. Existing calibration-population and residual-definition questions still require resolution.",
+        "Model upside U and raw percent disagreement are reported only, never ranked. Valuation ranking remains on Peers."
+      ],
+      "producer_condition": [
+        "Drivers must be seeded at least partly independently of consensus.",
+        "Before deployment, sd(D) below 0.25 across the universe means the factor is not measuring disagreement. Carry this as a prospective producer/measurement condition; no deployment authorization is implied."
+      ],
+      "peers_restatement": {
+        "state": "REPORTED_UNCHANGED_BY_CTO",
+        "comparison_claim": "Model block 1230 of 1230 characters byte-identical to 947b9793a1; prose differs only by blockquote markers.",
+        "review_action": "Retain candidate 15 rather than create a duplicate Peers model requirement. CVO has not independently compared those two source records in this notification turn."
+      },
+      "review_checks": [
+        "Read the full exact model before implementation or model sign-off; do not infer missing algorithm details from this abridged relay.",
+        "Require matched NTM horizons, compatible units and dated source evidence when reviewing model FCF, analyst observations and NTM revenue. Those are review checks, not invented source-vendor requirements.",
+        "Keep analyst-count coverage, raw dispersion, applied floors and score suppression visible in the evidence.",
+        "Evaluate driver independence and universe dispersion separately: one does not prove the other.",
+        "Resolve the universe/sector calibration population and percentile relation to the earlier analyzed-company-pool instruction at addendum review.",
+        "Do not retroactively grade current round-11 criteria against candidate 16. No PRD edit, worker-order edit, vendor call, pool write or deployment performed."
+      ],
+      "workflow_action": "Append review frame while preserving earlier audit and messages, then archive only this exact notification. No outbound reply."
     }
   ]
 }
