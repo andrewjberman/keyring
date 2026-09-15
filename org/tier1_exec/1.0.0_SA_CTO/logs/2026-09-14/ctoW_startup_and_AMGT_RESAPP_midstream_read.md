@@ -513,3 +513,27 @@ register row flipped by field substitution (no serializer round-tripped the COO'
 CVO~Z DELIVERED, COO~Z and CRO~Z QUEUED (no live session). A peer merge was open once during the sequence and the run was skipped
 until it cleared. AMGT: rj-8 drained @`eff1b9f6ae` and read into the pre-read @`b39be39d13` (addendum candidate 8: the CEO
 profile limb's SERP contract). Round 11 at 7 of 13. Push state: LOCAL.
+
+---
+
+## ADDENDUM 17 (16:3xZ) -- AMGT_RESAPP only for the remainder; the workers measured live; candidate 3 measured; the rj-9 split in front of Andrew
+
+Andrew, at this terminal ~16:3xZ, VERBATIM: *"Ok you and the ~W fabric are going to proceed straight through the AMGT_RESAPP work,
+that is your explicit project focus for the remainder of the session. Disregard any messaging/inquiries about any project/task that
+is not AMGT_RESAPP focused."* Recorded @`de60858372` (read narrowly: the four ~W seats and their workers; a non-AMGT message is read
+only far enough to classify it, then left; the flow's owners, the freeze, the push hold and the harvest reservation unchanged;
+session-scoped) and broadcast 4 of 4 DELIVERED (ids 23159-23162).
+
+THE DRIVE. COO~W's log s.15 @`52a56baeb3`: Andrew asked at that terminal ~15:5xZ *"Can we parallelize the work on this project? ... I
+know for a fact there is lots of frontend that could be done, please ramp up production."*; the COO answered that the frontend is one
+write surface and PROPOSED splitting rj-9 (adapter + header + registration vs the new-tab components on their own portal branch,
+about an hour off the critical path), his call; no word yet. Three workers spawned 16:1xZ (rj-9 ~18, rj-11 ~20, rj-13 ~22). Measured
+here at 16:39Z by file mtimes across each worktree: rj-11 and rj-13 writing (81 s, 25 s); rj-9 wrote only tool telemetry, 0 files
+under the page, the adapter or its deliverables, 0 portal commits -- still reading. So the split costs no rework now and more with
+every minute; the CTO recommends YES to Andrew and sent COO~W the measurement with the guard (continue ~18 with the narrowed face
+by message, never an edit under a reading worker).
+
+CANDIDATE 3 MEASURED @`a040fae8f1`: 112 of 167 ETF holdings resolve on a unique ticker with the name agreeing (all US; RTX refused on a
+rename; 54 international with no ticker in the scanner space); 35 of 56 unresolved coverage names carry a parseable '<TICKER> <code>'
+with the exchange list needing validation (CA/GB/NL/SM, three not Bloomberg's). The resolved union would move 33 -> ~145 and Posture's
+Opal side 3 -> ~115 without a guess. Push state: LOCAL.
