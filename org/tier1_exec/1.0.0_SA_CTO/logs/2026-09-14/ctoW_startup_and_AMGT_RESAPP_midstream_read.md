@@ -391,3 +391,16 @@ this turn. The L4 limb is closed; the next CTO act is the round-11 slug read. Pu
 ## ADDENDUM 9 (07:0xZ) -- Z-S102 answered by 0.0.0_AB_MSTR~Z; the v0.8 release closed
 
 `0.0.0_AB_MSTR~Z` measured both branches: the sender half of Z-S102 is already fixed on origin/CLOUD @`fc71328804` (the laptop CTO, 2026-09-14 08:02Z) and reaches SITEZ with the held CLOUD->SITEZ merge; a second fix here would be a certain conflict, so none lands. The silent `last_error` half and `route_half`'s alphabetical pick are unfixed on both; the owner recommendation is at Andrew. Recorded on the channel as `AMGT_RESAPP-Z-S103` (citing Z-S102, still UNDER_INVESTIGATION). The notifier retired the v0.8 COO row after `2.0.0_SA_COO~W` READ id 23071. A POSN drain (`2.0.0_SA_COO~Z`, merge of `wk-posn_asttax-6-25`) held the shared index for a few minutes; this seat backed up its unstaged log edit, restored the file to HEAD so the merge could not sweep it, waited on a background `until` loop, re-applied from the backup once the merge landed (@`51c6108f7e`) and committed. Push state: LOCAL.
+
+---
+
+## ADDENDUM 10 (07:2xZ) -- the CRO's sixty-minute watch closed; two residuals for the round-11 cut, none for the PRD
+
+`4.0.0_SA_CRO~W` closed Andrew's 06:13-07:13Z watch at 07:13:38Z (report
+`org/tier1_exec/4.0.0_SA_CRO/deliverables/RESAPP_60M_PROGRESS_REVIEW_20260915_W.md` @`1a1621ff06`): seven connection
+briefs, the first five carried into the admitted v0.8; `2.0.0_SA_COO~W`'s 13-cell amendment @`41fe04767a` clean, zero
+round-11 orders at closing; local harvest disabled, zero triggers, cadence Andrew's. Two residuals, both decomposition
+or implementation and sent to the COO lane directly (its inbox holds the 07:18:55Z closing checkpoint): generation-pointer
+reads need an explicit unmigrated-PRICE compatibility path (the PRICE producer has no pointer), and the QA pair chosen at
+the rj-7 drain cannot be placed in the concurrent rj-6/rj-7 spawn prompts. Both are items for the round-11 slug read, not
+for the PRD; no relay, no act. Push state: LOCAL.
