@@ -217,3 +217,25 @@ world's missing commit. A hazard framed as "this edit would destroy X" must firs
 exists. Walk-back sent to the two ~W lanes and the owner in one message; hand-over s.5, tree row
 item (5) and the banked memory corrected with dated notes; REC to `4.0.0_SA_CRO~Z` (live) to commit
 the two lines as the ledger's step 2. This addendum is the record that the wrong REC was mine.
+
+---
+
+## ADDENDUM 3, 2026-09-15 ~03:5xZ -- ANDREW'S SCOPE WORD, THE MEASUREMENT, AND THE ROUTER THAT SENDS ~Z HALVES TO ~W
+
+Two Andrew-direct sentences at this terminal, recorded verbatim @9dfee40ce0: the `~W` fabric works
+AMGT_RESAPP only, the `~Z` fabric POSN_ASTTAX; and *"I keep catching CVO~W being expected to ratify work
+for the ~Z fabric, that is incorrect."* Measured author-anchored since 23:00Z: this seat 6 of 6 paths AMGT;
+`2.0.0_SA_COO~W` 32 of 33 AMGT plus its own home; **`3.0.0_SA_CVO~W` 3 of 4 paths POSN_ASTTAX** (the L4-R
+ratified-text signature on POSN v0.10 @d3e74ab1ea and two reviews); **`4.0.0_SA_CRO~W`** (a live Codex
+lane spawned ~00:54Z, not by this seat) **3 of 20 POSN** (the brief-half signature @d1f7199013). The POSN
+gate read ADMITTED on those two `~W` signatures at 03:50Z. Mirror read: 0 `~Z` commits on AMGT paths.
+
+**THE CAUSE IS A TOOL, NOT A SEAT.** `.tools/prd_signoff_lib.py` `route_half` picks the reviewer as
+`live_of(base)[0]`, and `live_of` sorts the base first and then the lanes ALPHABETICALLY, so with `~W` and
+`~Z` both live every ratified-text half on this device goes to `3.0.0_SA_CVO~W` and every brief half to
+`4.0.0_SA_CRO~W`, whichever project's PRD bumped. The `[L4-R REVIEW]` messages in the CVO~W inbox carry
+`1.0.0_SA_CTO~Z`'s serial only because the notifier runs under the L4 owner. Broadcast to both fabrics'
+tier-1 lanes and the integrator with the mechanism named; the POSN-side records are `1.0.0_SA_CTO~Z`'s to
+disposition; the REC (prefer a live reviewer lane whose letter matches the project's `coo_lane`) is
+surfaced to Andrew and not implemented, because the router is an estate tool and this seat's scope is now
+AMGT_RESAPP by his own word. Scope line added to the hand-over s.1 in the same commit.
