@@ -843,6 +843,28 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "Ruling 97114 (1) expects the fixture-only edit to turn the 16 red tests green without touching any assertion.",
     "world_is": "13 of the 16 turned green. The 3 left are assertions whose expected value is the removed identity (sub = email), so no fixture can satisfy them while AC1 holds. The question put to 1.0.0_SA_CTO is whether each may become 'sub == <tid>/<oid> and email == <the same email>': one expression each, keeping its intent and its assert count.",
     "notes": "INERT: nothing is merged or deployed and CLOUD's suite is unchanged. Row S7's hold continues under this row. On an affirmative ruling this seat amends TO-OG-a-2 on the branch with the ruling's discriminator and re-hands slot ~3."
+  },
+  {
+    "id": "NFRA_OPLGTW-S11",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-15T15:55Z",
+    "one_line": "Record of 1.0.0_SA_CTO's ruling msg 97141, which amends 97114 (1): exactly three assertions of sub == email are re-targeted to the tid/oid principal AND the same email, bound by four arms that TO-OG-a-2 now carries as AC12 (31 passed), AC13 and the new AC14; W3-S13 is disarmed on the green re-run.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RULING 97141: test_oauth_durable.py:710, test_jwt_cve_lock.py:117 and test_schwab_audit.py:342 each go from sub == <email> to sub == '<tid>/<oid>' of that test's principal AND email == <the same email>. 97114's 'no assertion re-targeted' stops a check being weakened; these three asserted the identity C1 :131 removes, and the re-targeted form is stricter because it checks both the principal and the email.",
+        "BOUND (four arms): (1) the diff against the base changes exactly those 3 assertion lines; (2) each keeps its original email literal or variable; (3) AC13's per-module assert counts stay 123/123, 6/6, 63/63; (4) AC12 reads 31 of 31. A token without the email claim fails the test, and that is a row; the email half is never dropped.",
+        "CARRIED on the held branch wk-nfra_oplgtw-1-3c: TO-OG-a-2 amended (AC12's expect is '^31 passed'; OGA2-AC14 added) in this seat's commit after f8feaf081e; slot ~3 is re-handed on that order."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Ruling 97114 (1) bounds the grant as 'No assertion is removed, weakened or re-targeted'.",
+    "world_is": "The owner of the ruling narrows it: three named assertions, which asserted the removed identity, are re-targeted to a stricter form. Every other assertion is still bound unchanged, and the four arms are mechanical criteria.",
+    "notes": "Recorded beside S9 (ruling 97114) at 1.0.0_SA_CTO's request. W3-S13 and S10's hold are disarmed at OG-a-2's drain once the re-run is green; the adjudication is 3.0.0_SA_CVO's at L9."
   }
 ]
 ```
