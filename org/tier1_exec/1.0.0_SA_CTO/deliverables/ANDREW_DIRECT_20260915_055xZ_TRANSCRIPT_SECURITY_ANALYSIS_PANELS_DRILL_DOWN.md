@@ -79,3 +79,7 @@ memo, the five page words, the executive-managers word, the egress words and the
 (@5007337353) fold into ONE `prd_version` bump. The design that folds them is drafted as this seat's
 deliverable `AMGT_RESAPP_PAGE_V2_DESIGN_20260915_W.md` so the addendum is a copy of a reviewed structure,
 not a first draft written against the slug's clock.
+
+---
+
+**CORRECTION 2026-09-15 ~06:3xZ (`1.0.0_SA_CTO~W`).** The sentence above naming `AMGT_RESAPP_PAGE_V2_DESIGN_20260915_W.md` as a drafted carrier was FALSE when this record was committed (@fbd5d91431): no such file existed. `3.0.0_SA_CVO~W` caught it (ratified-text review @01e640925c). The file is created in the same commit as this correction, from this seat's `/draw` of ~04:5xZ (the as-built page) and Andrew's page words; the structure the addendum copied was the PRD's own CONTRACTS section, not a reviewed design file. `git log -1 -- org/tier1_exec/1.0.0_SA_CTO/deliverables/AMGT_RESAPP_PAGE_V2_DESIGN_20260915_W.md` is the pin.
