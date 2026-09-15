@@ -5151,6 +5151,137 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "AMGT-rj-8 BOUND: 'Lusha credits: at most 2 per name in this cell (the prospecting call returns the roster page; no reveal)'.",
     "world_is": "Four credits were charged for BA_US_Equity in this cell. The bound was never exceeded by a single RUN (each made exactly one prospecting call for 2 credits) and no disclosure endpoint was called anywhere; the overrun is the retry after a crash that happened downstream of an already-billed call. Account impact measured: 1,029 remaining of 1,200 before the cell (card 2 @5007337353), 12 credits spent by this cell in total.",
     "notes": "The general shape is wider than this cell: ANY module that pays for a call and then touches an unresolved dependency can spend a bound and return nothing. The remedy applied here is the cheap half -- resolve every dependency before the first billable call. The other half, a local cache of the provider page keyed by (domain, as_of) so a retry is free, is NOT built here (YAGNI, and it would persist a provider record to disk, which this cell's own contract argues against)."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W18-S10",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~18",
+    "surfaced_at": "2026-09-15T17:35:47Z",
+    "one_line": "AMGT-rj-9 serves management, posture, model, description and feed through the EXISTING /overlay, /thesis and /peers payloads, so the 11-route mount does not move; the description falls through to D-1 because 0 of 3 landed model blocks carry a description header scalar; and AC4's '183 for BA' is BABA's fiscal count -- BA's block carries 165.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python -c \"from lib.research.api import scoped_amgt as s; print(len(s.scoped_amgt_route_table()))\" -> 11 after the edit; test_generation_and_pool_routes.py::test_19 asserts 11 and that no /management, /posture, /model, /description or /feed leaf exists; test_scoped_amgt_mount.py diffs that table against infra/aws/terraform/harvest/scoped-amgt-api.tf, a file outside this order's <paths>.",
+        "Header scalars measured on org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~1/model_block_BA_US_Equity.json @eff1b9f6ae: 179 figures = 165 fiscal_year_line_item + 14 header; the 14 header mnemonics are NAME, CRNCY, CNTRY_OF_DOMICILE, GICS_SECTOR_NAME, PX_LAST, CUR_MKT_CAP, NET_DEBT, CURR_ENTP_VAL, VOLUME_AVG_30D, EQY_SH_OUT_REAL, EQY_FREE_FLOAT_PCT, EQY_BETA, SHORT_INT_RATIO, SI_PERCENT_EQUITY_FLOAT -- none a description. BABA 183 + 13, SAP 190 + 13; COST and HD have no landed block (MODEL_BLOCK_ROOT holds 4 blocks, one of them the CVO control).",
+        "s3://opal-data-harvest/drafting/v1/BA_US_Equity.json top keys: security_key, accession, form, filing_date, source, model, analyzer_version, generated, sections, evidence_records, dropped, dropped_reasons, thesis_driver, denominators -- company_description is a SECTION id (sections[0]), not a top-level field.",
+        "AC4 (amended @4f383fc217) live output: 'description {\"status\": \"SERVED\", \"source\": \"D-1 drafting/v1 company_description sentence 1\", \"marked\": \"machine\", ...' and 'model-fiscal-rows 165'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "DELIVER 1 (d)-(g) names NEW /security/{key}/management, /posture, /description, /feed and /model, and in the same paragraph: 'The mount's route set (11 routes) is unchanged in this cell: new READS are served through the existing {security_key} routes' payloads or the /thesis bundle ... state in your row which shape you chose.' (f): 'the description from a model-block header scalar if one exists (measure the header scalars first; name the field), else D-1's company_description first sentence marked machine, else ABSENT'. AC4 expects 'model-fiscal-rows 183 for BA (or the block's count, printed)'.",
+    "world_is": "SHAPE CHOSEN: no route was added. /overlay carries description, feed and posture (the header); /thesis carries management, posture, model_status, fiscal_years, model_cases and thesis_driver_chart beside the fiscal_year_figures and check_face it already carried (the Exec Management, Model and Posture tabs read it); /peers serves R-1 whole. read_management, read_posture, read_model, read_description and read_feed are library functions those payloads are built from. The fiscal figures stay on the /thesis payload because it is the one route that reaches the model block; the PAGE renders them on the Model tab and no longer on Thesis. DESCRIPTION: the adapter names CIE_DES (Bloomberg's company-description field) as the header scalar it would use, finds it on 0 of 3 blocks, and serves D-1's company_description section, sentence 1, marked machine with its evidence ids. MODEL COUNT: 183 is BABA's; BA prints the block's own 165, which the criterion's parenthetical admits."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W18-S11",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~18",
+    "surfaced_at": "2026-09-15T17:35:47Z",
+    "one_line": "Every ranking reader now follows G-1's _CURRENT pointer, but only the CHATTER producer writes one: the PRICE producer still writes rows at the bare <AXIS>#<date> partition with no pointer, and the live table holds no pointer for any axis (8 of 8 axis-dates probed) beside 10 legacy TRENDING_CHATTER#2026-09-15 rows -- so once these readers deploy, every Price list and today's Chatter list read ABSENT.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~W",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python -c \"from lib.research.metrics import movement_gate as m; [print(a, m.producer_of(a).producer_module) for a in m.CROSSED_AXES]\" -> TRENDING_PRICE and BREAKOUT_PRICE -> integrations.bloomberg.research.price_axis_pull; TRENDING_CHATTER and BREAKOUT_CHATTER -> lib.research.metrics.chatter_axis.",
+        "comp-read integrations/bloomberg/research/price_axis_pull.py --enumerate '_CURRENT|generation|row_count|axis_date' @eff1b9f6ae -> 7 hits (DOCSTRING 4, COMMENT 1, CODE 2); the code hits are :198 '\"axis_date\": f\"{axis}#{as_of_key}\",' and :321 '\"row_count\": len(product[\"rows\"]),' -- no pointer and no generation partition. comp-find 'default_write_generation|build_pointer' over lib/research -> the one DEF file lib/research/metrics/chatter_axis.py.",
+        "Live boto3 GetItem(Key={axis_date: '<AXIS>#<date>', ticker: '_CURRENT'}) on opal-harvest-security-metrics for the 4 crossed axes x {2026-09-15, 2026-09-14}: 'NO POINTER' on 8 of 8.",
+        "Live Query(IndexName='axis-rank-index', axis_date = 'TRENDING_CHATTER#2026-09-15') -> 'rows 10 [2317 TT, 9433 JP, 992 HK, ASML NA]'; the same query on TRENDING_PRICE#2026-09-15 -> rows 0.",
+        "The capture of this cell's fixtures read read_rankings('trending','chatter') live -> 'rankings_live ABSENT TRENDING_CHATTER 2026-09-15 rows 0'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "DELIVER 1 (b): 'EVERY reader of a ranking partition -- the rankings list, the overlay's points, the timeseries history -- follows G-1's pointer for each date and READS the generation partition, checks the rows it read against the pointer's row_count ... a date with no pointer is ABSENT'. INTERFACE G-1 (decomposition :1884): rows at <AXIS>#<date>#<generation_id>, pointer at <AXIS>#<date> / _CURRENT, producer rj-5.",
+    "world_is": "G-1 has ONE writer, lib/research/metrics/chatter_axis.py; the PRICE producer registered for two of the four crossed axes writes neither a pointer nor a generation partition. The readers in this cell follow the contract as written and render a pointer-less date as ABSENT (never EMPTY, never a read failure), so: every Price list is ABSENT until the price producer writes generations, and today's 10 Chatter rows -- written before the generation writer ran live -- are unreachable (not deleted) until the chatter producer commits a generation. ALSO: only the ranked LIST can compare rows read against row_count; the point and series readers are key-addressed subsets of a generation, so they carry the pointer's row_count as a denominator and rely on their key-level read_completeness, and only the list refuses a SHORT_READ. The hazard arms at AMGT-rj-10's deploy of this code, not at this commit (nothing is deployed here)."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W18-S12",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~18",
+    "surfaced_at": "2026-09-15T17:35:47Z",
+    "one_line": "The Thesis tab's one chart cannot be drawn for any of the five QA names without parsing numbers out of prose: D-1's thesis_driver names its series in prose with no mnemonic (5 of 5), 0 of the 3 names with a model block have a fiscal series equal to it, and INTERFACE F-1 carries its segments as cited prose with no numeric table (5 of 5), so the chart renders ABSENT on 5 of 5.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Fetched s3://opal-data-harvest/filings/v1/<key>/<accession>.analysis.json for BA 000162828026004357, COST 000090983225000101, HD 000162828026019436, SAP 000110465926020058, BABA 000119312526231755: census printed 'DENOMINATOR: 5 F-1 analysis objects'; every one has items keys [big_bets, big_challenges, commentary, guidance, risks, segments], segments 11/10/10/11/11 items with keys [evidence_ids, text], numeric fields [], and no top-level table or segment key.",
+        "Driver series (F-1 and D-1 identical on 5 of 5): BA 'BCA commercial aircraft deliveries (with 737 monthly production rate)'; COST 'Comparable sales excluding foreign-currency and gasoline price impacts'; HD 'Comparable sales (with its components, comparable average ticket and comparable customer transactions)'; SAP 'Current cloud backlog growth at constant currencies'; BABA 'Cloud Intelligence Group revenue (and its adjusted EBITA)'. Exact match against each block's fiscal mnemonics and definitions: False on BA, SAP, BABA; COST and HD have no block.",
+        "Fixture capture over the live pool: 'driver chart ABSENT' on all 5 names (portal/src/pages/SecurityAnalysis/__harness__/tabsFixture.<KEY>.json)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "DELIVER 2: 'ThesisTab.tsx = the drafted sections (rj-2) + ONE chart (ThesisDriverChart.tsx) of thesis_driver's series over the model block's fiscal series (or the filing's segment table when the series is not in the block), ABSENT-explicit when no driver'.",
+    "world_is": "Every driver IS present, and none is chartable from the interfaces this cell consumes: the block's 19 fiscal series are price, revenue, margins, EBITDA, EPS, per-share and return series, never deliveries, backlog or comparable sales; and the filing's segment information reaches the pool only as cited sentences. The adapter joins driver to block by EXACT mnemonic or definition equality only and returns ABSENT with block_series_probed and segment_table ABSENT_ON_INTERFACE; the component draws a served series or states that ABSENT. A chart would need a numeric driver series from F-1 or a mnemonic on the driver -- a change on chain C's surface, not this cell's."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W18-S13",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~18",
+    "surfaced_at": "2026-09-15T17:35:47Z",
+    "one_line": "R-1's CSC map marks 5 of 17 columns PRESENT, but its member rows carry a value for only ONE of them (Mkt Cap, as market_cap_musd): Price, EV, P/E 2025 and P/E 2026 are in the factor registry and on none of the 12 member rows, so the Peers table renders 1 carried column, 4 'not carried' and 12 ABSENT.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3://opal-data-harvest/peers/v1/BA_US_Equity/2026-09-15.json: members 12, member keys ['cap_ratio_to_subject', 'country', 'identity', 'industry_group', 'log_cap_distance', 'market_cap_musd', 'name', 'rung_name', 'rung_reached', 'sector', 'ticker', 'universe_weights'].",
+        "Same object csc_columns.present (5): price (kind row_field, in_row_values false), mkt_val_sec ('the row field mktVal carries the same number'), ev, ey ('RECIPROCAL: P/E = 1 / ey'), ey_ntm (reciprocal, NTM grain); csc_columns.absent 12; columns_declared 17.",
+        "The same 17/5/12 map on all 5 QA-name R-1 objects (fixture capture: 'peers derived 12 5' x5); tabs.harness.cjs renders 17 header cells and 12 ABSENT-marked on each."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "DELIVER 2: 'PeersTab.tsx = the CSC table over R-1 (columns present / ABSENT as R-1's map says; Average / Median / Min / Max rows; basis and universe_vintage shown)'. Carry-in W21-S6: 'R-1's csc_columns are 5 present / 12 absent of 17'.",
+    "world_is": "PRESENT is a column fact on R-1, not a cell fact: four of the five present columns name a registry code whose value R-1 never copied onto the member rows. The page renders what R-1 carries -- the one carried column with per-member values and summary rows over them (n shown), the four 'not carried' with that reason, the twelve ABSENT with R-1's reasons -- and does not fetch scanner rows or invert a yield to fill a cell. A filled CSC table needs R-1 to carry the present columns' values per member (chain B's surface)."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W18-S14",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~18",
+    "surfaced_at": "2026-09-15T17:35:47Z",
+    "one_line": "At this cell's execution the pool already held O-1 posture objects for BA and BABA while AMGT-rj-11 had not drained to the worktree base, so AC4's 'posture ABSENT-explicit (rj-11 has not landed at this cell)' did not describe the world; the reader serves O-1 when the object exists, and the issuer amended AC4 @4f383fc217 after rj-11 drained @496470a993.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/aws s3 ls s3://opal-data-harvest/posture/v1/ --recursive -> 2 objects: posture/v1/BABA_US_Equity/2026-09-15.json 19515 bytes and posture/v1/BA_US_Equity/2026-09-15.json 21419 bytes; a listing of the whole bucket at ~16:20Z showed no posture/ prefix.",
+        ".tools/aws s3api head-object --bucket opal-data-harvest --key posture/v1/BA_US_Equity/2026-09-15.json -> LastModified 2026-09-15T16:56:06+00:00, Metadata schema-version 1; the object: verdict hold, comparable DE_US_Equity, marked machine, cites_validated 20 of cites_total 20, generation.run_id posture-20260915T164814Z-a386f70d.",
+        "git log SITEZ -6 -- lib/research/posture 'org/.../AMGT_RESAPP.TO-AMGT-rj-11*' at SITEZ tip f83e1d9b3a -> only the issuance 065fa6070d; git ls-tree -r SITEZ -- lib/research/posture -> no path.",
+        "AC4 as committed at the worktree base printed 'posture {\"status\": \"SERVED\", \"security_key\": \"BA_US_Equity\", \"verdict\": \"hold\", \"compara'; the amended AC4 @4f383fc217 prints 'posture status SERVED verdict hold comparable DE_US_Equity marked machine'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "DELIVER 1 (e): 'NEW /security/{key}/posture on O-1 (ABSENT until rj-11)'. AC4 at the worktree's order: 'posture ABSENT-explicit (rj-11 has not landed at this cell)'. DELIVER 2: 'PostureTab.tsx a placeholder rendering ABSENT-explicit (rj-12 fills it)'.",
+    "world_is": "rj-11's worker wrote its pool objects before its drain, so the premise was true in git and false in the pool for 2 of the 5 QA names. The reader was not bent to force ABSENT: it serves O-1. The placeholder keeps to its grant without lying: PostureTab.tsx and the header Posture line render ABSENT-explicit when no O-1 object exists (3 of 5 names and the harness control arm) and, when one exists, say it has landed with its as_of and marking and do NOT render the call or its basis, which is rj-12's. The issuer's amendment @4f383fc217 moved AC4's posture arm to the served object; this worktree's copy of the order predates it, so the proof-of-spec checker compares AC4 against the pre-amendment invocation."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W18-S15",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~18",
+    "surfaced_at": "2026-09-15T17:35:47Z",
+    "one_line": "M-1 carries no machine field separating 'the search found nothing' from 'the search returned links whose host cannot be read' (row W22-S1), so the adapter reads the url count out of the ceo_public_profile.basis SENTENCE and says so in reading_basis: 4 of 5 QA names read NOT_CONFIRMED_INSTRUMENT_CANNOT_SAY, SAP CONFIRMED, 0 NOTHING_FOUND.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3://opal-data-harvest/management/v1/<key>/2026-09-15.json ceo_public_profile keys on 5 of 5: url, title, snippet, status, basis, ceo_name, query, ir_domain; status RESOLVED on SAP only, ABSENT on BA, COST, HD, BABA.",
+        "The basis sentences: BA 'the SERP returned 2 url(s) and none on boeing.com -- ABSENT is the honest result, never a page from another host'; COST 'returned 4 url(s) and none on investor.costco.com'; HD 'returned 10 url(s) and none on ir.homedepot.com'; BABA 'returned 10 url(s) and none on alibabagroup.com'; SAP 'Bright Data SERP zone ... 10 url(s) returned, 1 on the IR domain'.",
+        "Fixture capture: 'mgmt SERVED 12 NOT_CONFIRMED_INSTRUMENT_CANNOT_SAY' (BA), 13 (COST), 10 (HD), 7 (BABA) and 'SERVED 6 CONFIRMED' (SAP); test_13b pins all three readings."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Carry-in (d): 'the Exec Management tab renders it as \"not confirmed\" and distinguishes ABSENT-because-nothing-found from ABSENT-because-the-instrument-cannot-say'. INTERFACE M-1 (decomposition :1888) names the profile fields and no reason code.",
+    "world_is": "The distinction the order asks for exists in M-1 only as prose. The adapter parses 'returned N url(s)' from basis: N = 0 is NOTHING_FOUND, N > 0 with status ABSENT is INSTRUMENT_CANNOT_SAY (W22-S1: this zone's links are opaque redirect wrappers), no count named is INSTRUMENT_CANNOT_SAY, RESOLVED with a url is CONFIRMED; reading_basis says the value was parsed, so a consumer can reject it. The parse is text-local and would silently fall to CANNOT_SAY if rj-8 rewords the sentence; a reason code on M-1 (chain C's surface) would retire it."
   }
 ]
 ```
