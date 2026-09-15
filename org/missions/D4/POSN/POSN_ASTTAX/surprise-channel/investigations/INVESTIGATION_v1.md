@@ -7383,6 +7383,125 @@ Andrew asked for (msg 22917); it concerns this project's portal files meeting an
   "spec_asserts": "PRD v0.11 C-PRESENT-CLASSES: one presence set per render over the columns the current view draws; TO-W3-1 as re-cut at aacde43a63.",
   "world_is": "F5 complete on the portal ref at 5ddce2c7 behind the freeze; the W3-AC8 judgment's third reading (Structured present in Portfolio, absent in Benchmark, present in Relative -- a row that blinks as the toggle moves) is recorded for 3.0.0_SA_CVO~Z at L9.",
   "notes": "The judgment's 'blinking row' is the presence rule's own consequence under Andrew's word; L9 grades it, L10 decides whether the rule wants a 'held by no drawn column' affordance."
+},
+{
+  "id": "POSN_ASTTAX-Z-W25-S1",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~25",
+  "surfaced_at": "2026-09-15T06:40:14Z",
+  "one_line": "TO-W2-1 W2-AC1's invocation hands an MSYS path ('/c/tmp/wk-posn-6-25/.scratch/char_served.json') to python3, which on this device is native Windows Python 3.11 -- the download lands correctly and the read raises FileNotFoundError, so the criterion's named 'tickers' count and sources line CANNOT print as written.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Run verbatim at 2026-09-15T05:4xZ: the aws shim printed VersionId 74d9.pGWF16Ox7cXKGax.zQw.lhwi5yI / LastModified 2026-09-15T04:53:42+00:00, then 'FileNotFoundError: [Errno 2] No such file or directory: /c/tmp/wk-posn-6-25/.scratch/char_served.json'; the compound's rc was 0 because the last limb succeeded.",
+      "ls -l /c/tmp/wk-posn-6-25/.scratch/ shows char_served.json at 67782 bytes (the object's ContentLength), so the download is sound and only the READ path form is wrong.",
+      "which python3 -> /c/Users/Opal Bloomberg/bin/python3, sys.executable C:\\Users\\Opal Bloomberg\\AppData\\Local\\Programs\\Python\\Python311\\python.exe -- a native interpreter cannot resolve an MSYS /c/ path.",
+      "The same bytes read cleanly at the Windows path: tickers 25, sources ['bbg','none','positioning_data'], name and management_style on 25 of 25.",
+      "Banked device lesson: memory/native-python-cannot-read-cygdrive-paths.md."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "W2-AC1 expect: 'the served characteristics.json carries a non-empty tickers block (count and sources printed)'.",
+  "world_is": "The block is there and was read (25 tickers, 3 sources, 25 of 25 carrying name and management_style), but not by the invocation as written -- its python limb raises on this device. Recorded as REFUSED with the measurement rather than repaired.",
+  "notes": "Cost of the fix at the cut: one path form ('C:/tmp/...' or a portal-relative path). Every other invocation in this TO uses relative paths and runs clean."
+},
+{
+  "id": "POSN_ASTTAX-Z-W25-S2",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~25",
+  "surfaced_at": "2026-09-15T06:40:14Z",
+  "one_line": "The round's portal drain ref MOVED under a live worker: refs/drains/posn-6-portal was 10a2799c67 when this TO was cut and read back at W2-AC1, and is 5ddce2c7ee (a sibling's F5 re-cut) three hours later -- so W2-AC2's 'diff --stat against the ref' reports FIVE files, the fifth being the SIBLING's PositioningSummary.tsx, not this worker's.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W2-AC1 at 2026-09-15T05:4xZ printed 'git -C portal rev-parse refs/drains/posn-6-portal' = 10a2799c67c519288fcd7d4ae6e3b86d5ed48b5a and REF-IS-ANCESTOR.",
+      "At 06:3xZ the same read prints 5ddce2c7ee9a2db498852112dc04c8f42ff419dd -- 'F5(POSN_ASTTAX AT6-s-3, TO-W3-1 act 1 RE-CUT) ... 0.9.0_WK_POSN_ASTTAX~26 2026-09-15 01:49:58 -0400'.",
+      "git -C portal diff --name-only 10a2799c67 refs/drains/posn-6-portal -- src = src/pages/Positioning/panels/PositioningSummary.tsx ONLY (F5's file, disjoint from this TO's four).",
+      "Against the pinned base the same command reports exactly the four files the criterion names: git -C portal diff --stat 10a2799c67 -- src -> satelliteRegistry.ts, satelliteAdapter.ts, satelliteSet.ts, HoldingsTab.tsx.",
+      "merge-base(my HEAD, ref) = 10a2799c67; base IS an ancestor of the ref; nothing was merged in mid-round."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "W2-AC2 expect: 'exactly four files changed ... nothing under src/pages/Positioning/panels/ or Positioning.tsx (F5's files)'.",
+  "world_is": "The invocation compares the working tree against a MOVING SHARED REF, so a sibling's drain during the round adds that sibling's files to this worker's diff. This worker's own surface is exactly four (unscoped git status --porcelain: four M lines, nothing else).",
+  "notes": "ARMED because the condition recurs by normal operation: any worker whose sibling drains mid-round reads a diff naming files it never touched, and the obvious repair (staging what the diff shows) would commit a sibling's work. Disarm at the cut: pin the comparison to the commit the branch was cut from, which the TO already states, instead of the ref name."
+},
+{
+  "id": "POSN_ASTTAX-Z-W25-S3",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~25",
+  "surfaced_at": "2026-09-15T06:40:14Z",
+  "one_line": "W2-AC8 predicts the Models Portfolio Composition legend lists 3 classes, but that panel's legend is PER DISPLAYED BOOK (the rule the same criterion states) and the book on screen at load is INT, which holds 2 -- the 3-class set is the ALL-BOOKS union the Positioning Summary draws.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Served positioning_data.json (VersionId AqBtm_5o.2QeiCBRP_veC8HV2Xk0OSaj) current_holdings by class: UST {Fixed Income 14}, ST {Fixed Income 11, Equity 4}, INT {Equity 11, Fixed Income 8}, LT {Equity 11, Fixed Income 4, Structured 1}, ULT {same as LT}, AGG {Equity 11, Fixed Income 18, Structured 1}.",
+      "DOM read after the edit, Models default book (INT, measured active in the button strip): legend 2 entries -- Fixed Income rgb(16,185,129), Equity rgb(59,130,246).",
+      "DOM read after the edit, Models book LT: legend 3 entries -- Fixed Income, Equity, Structured. The rule discriminates; the book decides the count.",
+      "Pre-change dump, same page and same book: 5 entries in every mode (the control)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "W2-AC8 expect: 'the Portfolio Composition legend lists exactly the classes with a non-zero tile in the displayed book (... Models: 3 -- Fixed Income, Equity, Structured ...)'.",
+  "world_is": "The rule half is satisfied and the number half is not reachable from the invocation, which displays INT. The implemented rule was NOT widened to an all-books union to make the 3 appear.",
+  "notes": "The criterion is recorded REFUSED with both readings printed (INT 2, LT 3). If the intended bar is the mode-level union, that is a different rule from the one step 6 states and belongs to the issuer, not to this worker."
+},
+{
+  "id": "POSN_ASTTAX-Z-W25-S4",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~25",
+  "surfaced_at": "2026-09-15T06:40:14Z",
+  "one_line": "A PanelHeader CANNOT NAME A SOURCE: DataTimestamp takes `source` and uses it only to decide a Yang-specific timestamp adjustment, never rendering it -- and in satellites mode the Portfolio Composition header's eight-satellite button strip leaves its left column 18px, where the date already overlaps the actions by 20px with or without any subtitle.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "src/components/DataTimestamp.tsx: 'const { label } = formatTimestamp(lastUpdated, source)' and the render is '<span>{label}</span>' -- source reaches adjustYangTimestamp and nothing else.",
+      "Measured at 1440x900 after the edit, satellites mode: Portfolio Composition header actions box x=123 w=1260, left column w=18, timestamp box w=26 overlapping the actions by 20px, header height 73px.",
+      "Counterfactual measured on the same bytes with the subtitle removed: identical 18px column and identical 20px overlap, header 73px; WITH a subtitle on that panel the header grows to 137px of wrapped text.",
+      "Holdings Breakdown header on the same page: left column 275px, timestamp 65px, overlap 0 -- it carries 'Source: Black Diamond' legibly, and it does.",
+      "PanelHeader.tsx and DataTimestamp.tsx are both OUTSIDE this TO's <paths> grant."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-W2-1 act 5: 'both headers show that date and source'.",
+  "world_is": "Both headers show the DATE (Sep 14, 2026, the served holdings as_of, replacing the models PKL clock). The SOURCE is shown in the Holdings Breakdown header and in BOTH panel footers; the Portfolio Composition header has no room for it and no prop that renders it.",
+  "notes": "Two candidate fixes, both outside this grant: render `source` in DataTimestamp, or let the composition panel's selector wrap. The false clock -- the thing the act was for -- is gone from both panels either way."
+},
+{
+  "id": "POSN_ASTTAX-Z-W25-S5",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~25",
+  "surfaced_at": "2026-09-15T06:40:14Z",
+  "one_line": "W2-AC5's expect predicts the NAME cell falls back to the ticker for CASH ('the ticker only where it is null -- CASH expected'), but B6 publishes a name for 25 of 25 tickers including CASH ('Cash & Cash Equivalents'), so 0 of 32 rendered rows take the fallback and that branch ships UNEXERCISED by today's payload.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Served characteristics.json VersionId 74d9.pGWF16Ox7cXKGax.zQw.lhwi5yI: entries carrying a non-null name = 25 of 25; CASH = {'name': 'Cash & Cash Equivalents', 'management_style': 'unknown', every measure null}.",
+      "w25_cell_compare over both satellites: 'NAME CELL: 32 of 32 rows took the SERVED name; 0 fell back to the ticker'.",
+      "The rendered CASH row reads 'Cash & Cash Equivalents' with every measure a dash and ACTIVE a dash.",
+      "The same hand-over fact the TO carries (item 1) already says every entry carries name and management_style, so the parenthetical and the hand-over disagree with each other."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "W2-AC5 expect, parenthetical: the ticker stands in where the served name is null, CASH expected.",
+  "world_is": "No row in either satellite has a null served name. The stand-in branch is implemented as the TO's act 3 requires and is not reachable on this payload -- an unexercised branch, stated rather than implied.",
+  "notes": "Does not change the criterion's rule half ('the NAME cell EQUALS the served name for every row whose served name is non-null'), which is measured 32 of 32."
 }
 ]
 ```
