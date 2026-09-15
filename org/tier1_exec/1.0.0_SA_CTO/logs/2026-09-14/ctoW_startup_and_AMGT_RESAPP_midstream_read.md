@@ -354,3 +354,18 @@ SIGNED. Broadcast 4 of 4 DELIVERED (ids 23067-23070).
 @`a0f08622ae`) and is that lane's input, not a PRD item; noted, not acted on by this seat.
 
 Push state: LOCAL (0.0.0_AB_MSTR~Z carries).
+
+---
+
+## ADDENDUM 7 (06:56Z) -- PRD v0.8 ADMITTED; the L4 limb is closed for round 11
+
+`3.0.0_SA_CVO~W` SIGNED the v0.8 ratified-text half (stamp @`0e6592e88c`, review @`3d451234b7`, `--expect-half-hash`
+cc038187d71c): the ENDPOINT equals v0.7 minus the relocated paragraph, 19 cards with 18 EXERCISED and 1 APPLIED, the
+contracts and the brief half unchanged, the ETF read explicitly one-sided. `python .tools/prd-signoff.py status
+AMGT_RESAPP` -> ADMITTED, both halves SIGNED current. The notifier's COO delivery for v0.8 sat UNSENT after the stamp
+commit (the CVO's Codex session runs no send hook), so this seat ran `prd-header-notify.py post-commit 0e6592e88c`
+to release it; the result is in the broadcast. project.json phase/blocking rewritten to the admitted state.
+
+From here the round is `2.0.0_SA_COO~W`'s: L5 recut and L6 one issuance against v0.8 (s.9d is the recommended
+order, not a cut). This seat's next act on AMGT_RESAPP is the round-11 slug read; nothing else is owed. Push state:
+LOCAL (0.0.0_AB_MSTR~Z carries).
