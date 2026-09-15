@@ -54,6 +54,28 @@ Worker rows carry their slot's coordinate, `MDPF_TAXSMA-W<n>-S<k>`; a seat's row
     "spec_asserts": "A Gateway code cell would naturally be graded on 'the Gateway suite passes', which assumes every module collects on this box.",
     "world_is": "Two modules cannot collect here without an install no order grants. TX-g-1's criterion counts the modules that collected and passed before its edit, names the two moto modules as NOT-EVALUATED on this box, and forbids a new dependency.",
     "notes": "INERT for this project. OBSERVATION: whether moto belongs in the box's Python is NFRA_OPLGTW's and the box owner's question, not this project's."
+  },
+  {
+    "id": "MDPF_TAXSMA-S3",
+    "project": "MDPF_TAXSMA",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~T",
+    "surfaced_at": "2026-09-15T20:57Z",
+    "one_line": "TX-g-1's issued grant omitted tests/test_principal_cutover.py, whose ROUTE_CLASS completeness assertion requires one entry for every served route; amended before spawn.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "TEST: infra/aws/ec2/opal-gateway/tests/test_principal_cutover.py:487 defines ROUTE_CLASS; :542 asserts set(ROUTE_CLASS) == set(routes) over every route app.server serves; :35 imports moto (read at HEAD 91b11ff0c9).",
+        "MESSAGE: 2.0.0_SA_COO~O 97236 (20:50Z), answering notice N-1: the new route is not in ROUTE_CLASS, so whichever drain lands it goes red without the entry; NFRA_OPLGTW cells take an entries-only grant under 1.0.0_SA_CTO ruling 97203 rule C, scoped to that project.",
+        "ORDER: MDPF_TAXSMA.TO-TX-g-1 as issued @955b8c6cbe granted four Gateway paths and not this test file."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TX-g-1's <paths> named taxsma_workbook.py, server.py, config.py and test_taxsma_workbook.py as the whole Gateway write surface for adding GET /ms/taxsma-workbook.",
+    "world_is": "Adding a served route also requires one ROUTE_CLASS entry in test_principal_cutover.py. The order was amended before its spawn to grant exactly that file for one entry, with no criterion changed; the module needs moto, absent on this box, so it is NOT-EVALUATED here.",
+    "notes": "INERT after the amendment. Found by 2.0.0_SA_COO~O's reply to N-1, before any TAXSMA worker spawned; the drain merges TX-g-1's entry after NFRA_OPLGTW's own ROUTE_CLASS lines."
   }
 ]
 ```

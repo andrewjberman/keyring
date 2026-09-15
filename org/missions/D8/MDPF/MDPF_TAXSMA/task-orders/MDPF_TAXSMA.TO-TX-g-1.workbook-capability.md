@@ -19,6 +19,8 @@
 
 **Writes:** `GW/app/taxsma_workbook.py` (new), `GW/app/server.py` (route registration only), `GW/app/config.py` (the two configuration keys only), `GW/tests/test_taxsma_workbook.py` (new) (the `<paths>` block below is the grant; abbreviations: `GW` = `infra/aws/ec2/opal-gateway`, `GOLD` = `data/mdpf/scripts/gold`, `SILV` = `data/mdpf/scripts/silver`, `TST` = `data/mdpf/tests/taxsma`, `PUB` = `infra/aws/lambda/opal-assets/opal-assets-mdpf-portal-publisher`, `GLB` = `infra/aws/lambda/mdpf-pipeline/mdpf-gold-lambda`, `TFM`/`TFA`/`TFGW` = `infra/aws/terraform/{mdpf-pipeline,opal-assets,opal-gateway}`, `PSRC` = `portal/src`).
 
+**One entries-only edit outside your module.** `infra/aws/ec2/opal-gateway/tests/test_principal_cutover.py` asserts at :542 that its hand-written `ROUTE_CLASS` dict (:487) names every route `app.server` serves (NFRA_OPLGTW `OG-a-2`, on CLOUD since @7459929520). Add exactly ONE `ROUTE_CLASS` entry for `/ms/taxsma-workbook`, carrying its REAL guard class as your code enforces it (the file's `capability` class: a capability route answers 401 to an access token), and change nothing else in that file. That module imports `moto` (:35), which this box lacks, so it is NOT-EVALUATED here (row MDPF_TAXSMA-S2); the entry keeps it green where it runs. Row MDPF_TAXSMA-S3 records why this path is in your grant.
+
 **Read:** `infra/aws/ec2/opal-gateway/app/ms_ingest.py`; `infra/aws/ec2/opal-gateway/app/token_broker.py`; `infra/aws/ec2/opal-gateway/app/audit.py`; `infra/aws/ec2/opal-gateway/app/server.py`; `infra/aws/ec2/opal-gateway/app/config.py`; `infra/aws/ec2/opal-gateway/app/identity.py`; `infra/aws/ec2/opal-gateway/tests/conftest.py`; `org/standards/MDPF_TAXSMA_DATA_CONTRACT.json`; `org/missions/D9/NFRA/NFRA_OPLGTW/prd/NFRA_OPLGTW_PRD.md`; and your cell's section of `org/missions/D8/MDPF/MDPF_TAXSMA/decompositions/MDPF_TAXSMA_DECOMP.md` (s.3), its bounds (s.8) and its gates (s.6). The PRD and the data contract are the specification; the contract's enumerations are the only vocabulary.
 
 Write `org/missions/D8/MDPF/MDPF_TAXSMA/deliverables/0.9.0_WK_MDPF_TAXSMA~1/workbook-capability.result.md` (each value with its instrument, UTC time and denominator). The probe for every mechanical criterion is `org/missions/D8/MDPF/MDPF_TAXSMA/deliverables/0.9.0_WK_MDPF_TAXSMA~1/probes/tx_g_1.py`, which takes the criterion's short id (`AC1` .. `AC23`), runs or reads the evidence, prints its measurement with vintage and denominator, then exactly one line `VERDICT: PASS-TXG1-AC<n>` or `VERDICT: FAIL-TXG1-AC<n> <reason>`. A "(difference)" criterion runs its engaged and disengaged arms in the same probe run and prints what differed.
@@ -127,6 +129,7 @@ infra/aws/ec2/opal-gateway/app/taxsma_workbook.py
 infra/aws/ec2/opal-gateway/app/server.py
 infra/aws/ec2/opal-gateway/app/config.py
 infra/aws/ec2/opal-gateway/tests/test_taxsma_workbook.py
+infra/aws/ec2/opal-gateway/tests/test_principal_cutover.py
 org/missions/D8/MDPF/MDPF_TAXSMA/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
@@ -160,3 +163,4 @@ lane: the <paths> block IS the grant (owned-paths-validate.py worker_grant); the
 
 Seating: slot ~1, queue position 1. Round 1 of MDPF_TAXSMA, issued by `2.0.0_SA_COO~T`, seated by `0.0.0_AB_MSTR` (msg 97080,
 LD-0569) on Andrew's seat order ~12:5xZ 2026-09-15. Decomposition @7f65001ab3.
+Amended before spawn by `2.0.0_SA_COO~T`: one entries-only path (`tests/test_principal_cutover.py`, a single ROUTE_CLASS line) added to <paths> on 2.0.0_SA_COO~O's 97236; row MDPF_TAXSMA-S3. No criterion changed.
