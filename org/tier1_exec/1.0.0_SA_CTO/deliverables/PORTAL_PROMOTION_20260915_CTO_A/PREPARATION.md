@@ -79,3 +79,29 @@ The actual ledger must bind these to the final approved pins and evidence at sta
 Red typecheck, VALGATE, unresolved merge conflict, failing CI, missing authority, or unproven prerequisites prevent completion. Before PROD push, leave the remote release unchanged and report the concrete failure. After a push, a failing deployment or live verification is immediately surfaced to COO and CTO/MSTR with the captured rollback SHA and evidence. The rollback SHA is a prepared recovery input; this assignment does not grant unilateral revert or repush authority.
 
 The approved MDPF Cottonwood cents hotfix remains a separate open deployment. This seat still owns its scheduled 13:30 UTC Gold and 13:50 UTC publisher evidence check. No manual invocation is authorized by this promotion preparation.
+
+## MSTR integration update — notice 96987, 08:27:11 UTC
+
+Exact notice `20260915T082711Z_0.0.0_AB_MSTR_Promote_prep__portal_integration_plan__l.md` was read and ACKed. MSTR explicitly states **nothing is merged into DEV yet and there is no GO**. The following branch publication observations are MSTR's reported `ls-remote` readbacks, not a new remote measurement by this seat:
+
+- `laptop/dev-local` at `90d71d9e`, to move again when FE-s-49 drains; `laptop/d13-visual-elevation` at `46932888`.
+- Site Z's optional `sitez/amgt-resapp-ri1` at `9aef37344c`; CTO~W recommends hold and inclusion requires Andrew's word.
+- `sitez/posn-asttax-r6` will be published at the round-6 close head. Reported origin DEV remains `5b959f63ca`, PROD `b1389c8575`.
+
+MSTR and MSTR~Z agree the integration sequence before either side merges: a fresh worktree from the final laptop DEV branch after FE-s-49 drains; merge the rebrand (reported disjoint `scripts/ui-smoke.mjs` conflict), then POSN, then AMGT only if separately approved. Typecheck and the whole suite run on the merged result. MSTR publishes that result as origin DEV, reads the IR gate there, and binds Site Z's POSN verdict to that leg before issuing GO.
+
+MSTR reports 254 untracked evidence files in main DEV with zero tracked changes and will preserve them. He proposes using the fresh integration worktree, or main DEV tracked-only, for the Step 1 check; **he explicitly assigns confirmation of that interpretation to CTO**. This seat routed that confirmation to CTO at 08:28:05 UTC, recommending a clean integration worktree pinned to the exact published candidate plus a separate main-DEV tracked-state check. Until the owner confirms it, this remains a pending interpretation, not a silently relaxed gate. No evidence file is to be deleted or moved to satisfy it.
+
+MSTR owns publication of the peer-owned DEV commits and the workspace CLOUD/gitlink leg. This supersedes any implication in the planned L5 leg above that this seat must itself move or commit the workspace pointer: bind the actual pointer action to MSTR's final integration plan and receipt. CTO~A's future authorized operation is the portal PROD promotion. All candidate pins and prerequisite proofs are re-read at the eventual explicit GO; neither this update nor the deadline starts deployment.
+
+## CTO cleanliness ruling — notice 96988, 08:30:40 UTC
+
+Exact notice `20260915T083040Z_1.0.0_SA_CTO_Re_96987_Step_1__RULED_--_check_the_fres.md` was read and ACKed. CTO confirms the governing purpose: no uncommitted or untracked byte reaches the promoted build. The check applies to the tree whose bytes are promoted.
+
+1. The fresh integration worktree's printed HEAD must equal the exact candidate published to origin DEV, and `git status --porcelain --untracked-files=all` must print nothing: zero tracked changes and zero untracked files.
+2. Main portal DEV must have zero tracked changes. Its untracked evidence remains untouched, outside the promoted build's byte path.
+3. The ephemeral promotion worktree must also pass the all-files cleanliness check immediately before the build. Any dirty or mismatched release tree is a STOP.
+
+CTO also wrote that the Step 4 promotion worktree's HEAD must equal the Step 1 DEV candidate. **One literal conflict was returned to CTO at 08:31:41 UTC:** the skill requires a `--no-ff` DEV-into-PROD merge, so the resulting merge commit cannot have the same commit hash as its DEV parent even when their file trees are identical. The proposed precise resolution is a clean promotion worktree whose HEAD equals the recorded PROD merge SHA, with its Git tree equal to the published DEV candidate's tree and an empty candidate-to-HEAD diff. That proposal remains pending the owner's explicit correction; it is not a silent substitute for the ruling. No merge or build has been started to work around the conflict.
+
+MSTR's explicit GO and both merged-tree prerequisite PASS artifacts still bind. The ruling is preparation authority, not promotion GO.
