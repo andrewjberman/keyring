@@ -283,6 +283,56 @@ not a message.
     "spec_asserts": "TO-CN-o-1 THE CELL: every address a step produces is the builders' output (Rule 30), and the last step is the served dashboard the firm's people see.",
     "world_is": "The routes that serve a firm's dashboard read keys the builders refuse to produce, and the membership list for legacy served paths (LN-g-1) does not exist yet. A runner would face two options: type the legacy key by hand, which Rule 30 forbids, or publish at the builder address, which the route never reads. Step 10 of the checklist STOPs there and names this row, and Step 15 points back to it. The owners are the served-route side (ADVI_FIRMBKTS's router work, and LGIC_NAMING's LN-g-1 legacy list), with routing decided by 1.0.0_SA_CTO. INERT: no new firm is being onboarded this round.",
     "notes": "Filed by the CN-o-1 worker while writing Steps 10 and 15 of infra/logic/10_ONBOARDING_CHECKLIST.md."
+  },
+  {
+    "id": "LGIC_CANON-W7-S1",
+    "project": "LGIC_CANON",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_CANON~7",
+    "surfaced_at": "2026-09-15T21:18Z",
+    "one_line": "The two blind judges give the MDPF tree's axis A1 the same verdict (UNDETERMINED) but different rule sets, judge A R9,R18 and judge B R9,R20, so J3-AC2 reads FAIL-J3-CITATIONS-DIFFER (4 of 5 axes). The split traces to the canon: section 2's A1 row names R9 and R18, no section 3 rule governs an ingestion mechanism, and the one measured A1 departure (register X1) is decided by R20, which section 2 lists on no axis.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CHECKER: cd <WS> && timeout 120 python org/missions/D14/LGIC/LGIC_CANON/deliverables/2.0.0_SA_COO~G/fixed_inputs/r1/check_canon_r1.py j3-citations, run at 91b11ff0c9, printed 'CITATIONS DIFFER: A1  A=['R18', 'R9']  B=['R20', 'R9']', 'AXES: 5  SAME RULE SET: 4', 'VERDICT: FAIL-J3-CITATIONS-DIFFER', rc=0.",
+        "ANSWERS: org/missions/D14/LGIC/LGIC_CANON/deliverables/exercises/judge-a.tsv@537f49b8fd:4 'A1 UNDETERMINED R9,R18' (its reason names X1 'DECLARED-EXCEPTION, R20' in prose only); judge-b.tsv@98ed3177ff:2 'A1 UNDETERMINED R9,R20'.",
+        "CANON AXIS TABLE: infra/logic/02_DOCTRINE.md@671925aecc:88 'A1 INGESTION | how a source arrives, by what mechanism | R9, R18'; :94 'Process: R18, R19, R20.' (git diff --stat 671925aecc 91b11ff0c9 on the file is empty).",
+        "CANON RULE HOMES: infra/logic/02_DOCTRINE.md@671925aecc:362 '### A5 FORMAT' then :364 R9 'BRONZE IS RAW AND UNTOUCHED'; :466 '### PROCESS' then :468 R18 'NO SHADOW PATH, NO DUAL-WRITE, NO STANDING COMPARATOR'; :484 R20 'AN UNDECLARED DEPARTURE IS A VIOLATION; A DECLARED ONE IS THE PATTERN WORKING'. Section 3's headings (:110, :154, :296, :362, :410, :421, :446, :466) carry no A1 heading.",
+        "TREE: org/missions/D14/LGIC/LGIC_CANON/deliverables/2.0.0_SA_COO~G/fixed_inputs/r1/CN_TREE_MDPF.md@91b11ff0c9:58 register X1, axis A1, PERMANENT, GRANTED; :48-49 the ingestion mechanism is not measured.",
+        "TRACE: org/missions/D14/LGIC/LGIC_CANON/deliverables/exercises/judge-compare.md section 4, D1 (this row's commit)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-CN-j-3 criterion J3-AC2 expects 'VERDICT: PASS-J3-SAME-CITATIONS': the two judgings give the same rule citations per axis.",
+    "world_is": "They give the same set on A2 to A5 and different sets on A1, so the criterion does not produce its named result and the order stays open on J3-AC2. On A2, A3 and A5 both judges cite the rules that decided the verdict, a subset of section 2's list. On A1 no rule decided the verdict (UNDETERMINED). The canon does not say whether a verdict then cites the axis's section 2 list (judge A) or the rules its reasoning used (judge B, who adds R20 for X1 and drops R18). PRD DEC-2 returns a disagreement to CN-k-1 as a canon defect. INERT: the canon classifies and moves nothing (DEC-9).",
+    "notes": "Filed by 0.9.0_WK_LGIC_CANON~7 on LGIC_CANON.TO-CN-j-3; kept working. This worker judges the row's form, not its significance."
+  },
+  {
+    "id": "LGIC_CANON-W7-S2",
+    "project": "LGIC_CANON",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_CANON~7",
+    "surfaced_at": "2026-09-15T21:18Z",
+    "one_line": "Both blind judges grade naming case J-N3, bd-49f-runner-role (IAM_ROLE), OUT-OF-PATTERN, while the key fixed at L6 reads ALIAS (canonical blackdiamond-49f-runner-role), so J3-AC3 reads FAIL-J3-CASES-OFF-KEY (2 of 3 cases). The key rests on GRADING_RULE.md R3's adjacency test (bd next to a firm token is the VENDOR blackdiamond). The canon's generated naming section does not carry that test, and from the canon alone bd resolves only to the firm, which in a system slot fails the grammar.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CHECKER: cd <WS> && timeout 120 python org/missions/D14/LGIC/LGIC_CANON/deliverables/2.0.0_SA_COO~G/fixed_inputs/r1/check_canon_r1.py j3-naming-key, run at 91b11ff0c9, printed 'CASE OFF THE KEY: J-N3  A=OUT-OF-PATTERN  B=OUT-OF-PATTERN  key=ALIAS', 'CASES: 3  BOTH JUDGES ON THE KEY: 2', 'VERDICT: FAIL-J3-CASES-OFF-KEY', rc=0.",
+        "KEY: org/missions/D14/LGIC/LGIC_CANON/deliverables/2.0.0_SA_COO~G/fixed_inputs/r1/CN_JUDGE_NAMING_KEY.json@91b11ff0c9:5 'J-N3': 'ALIAS'; :6 canonical_form 'blackdiamond-49f-runner-role'; :3 source 'GRADING_RULE.md @3cc090827f section 9'.",
+        "KEY SOURCE: org/missions/D14/LGIC/LGIC_NAMING/deliverables/GRADING_RULE.md@3cc090827f:168-173 R3 'bd ... is the VENDOR blackdiamond when a V4 firm token is next to it, before or after, and the FIRM 49financial otherwise ... The test is ADJACENCY to a V4 firm token, never position'; :368 worked case bd-49f-runner-role ALIAS 'R3 bd next to firm 49f reads as the VENDOR blackdiamond'.",
+        "CANON: infra/logic/02_DOCTRINE.md@671925aecc:278 N4 'refused in EVERY slot ... The vendor is blackdiamond; the firm is 49financial.'; :285 N5 ALIAS 'for example inflection or bd in a resource name's scope slot'; :286 OUT-OF-PATTERN '... a firm in the system slot'; :222 'never a system: a firm'; :64 a firm's registry aliases are spellings of one key. A case-insensitive search of the file for 'adjacen' and 'next to' returns 0 lines.",
+        "REGISTRY: infra/logic/registry/scopes.json@91b11ff0c9:47-53 the bd alias row sits on the firm 49financial, its refused text 'the vendor is blackdiamond, the firm is 49financial'.",
+        "ANSWERS: org/missions/D14/LGIC/LGIC_CANON/deliverables/exercises/judge-a.tsv@537f49b8fd:11 'J-N3 OUT-OF-PATTERN' ('the refused alias of the FIRM 49financial (N4, N5)'); judge-b.tsv@98ed3177ff:9 'J-N3 OUT-OF-PATTERN' ('the canon's only resolution of bd is as the firm's alias')."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-CN-j-3 criterion J3-AC3 expects 'VERDICT: PASS-J3-CASES-MATCH-KEY': the naming cases match the verdicts fixed at L6, in both judgings.",
+    "world_is": "The judges match the key on J-N1 and J-N2 and agree with each other on J-N3, but both are off the key on J-N3, so the criterion does not produce its named result and the order stays open on J3-AC3. The canon's N4 names both referents of bd with no rule for choosing, N5 places a bd alias only in a scope slot, and the registry row puts bd on the firm, so the judges' reading is the one the canon supports and the key's needs GRADING_RULE R3, which the canon does not carry. The generated section is rendered from org/standards/NAMING_SCHEMA.json v1.8 (stamp at 02_DOCTRINE.md:163). Whether the schema carries the test and the renderer drops it, or the schema lacks it, was not read (outside this order's reads). PRD DEC-2 returns the disagreement to CN-k-1. INERT: the canon grades and moves nothing (DEC-9).",
+    "notes": "Filed by 0.9.0_WK_LGIC_CANON~7 on LGIC_CANON.TO-CN-j-3; kept working. The trace is in judge-compare.md section 4, D2. This worker judges the row's form, not its significance: whether the canon or the key changes is the L9 and CN-k-1 call."
   }
 ]
 ```
