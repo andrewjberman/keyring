@@ -668,6 +668,49 @@ if [ -n "$IN_SCOPE" ]; then
 fi
 
 # ---------------------------------------------------------------------------------------------
+# THE NAMING LIMB (LGIC_ENFORCE cell EN-g-1; PRD candidate E7; DEC-6's matrix and context rule).
+# ONE stage. It grades the ADDED lines of the staged graded files (.py .js .mjs .ts .tf .json .yaml .yml)
+# with lib/opal_naming.py grade(): a NEW out-of-pattern or alias literal, a NEW hand-kept firm token, an
+# edit to a GENERATED file, and an existing out-of-pattern literal in a live remediation's surface are
+# REFUSE verdicts; the rest warn or pass. Verdict lines are appended to org/mcp/naming-gate-verdicts.log
+# (runtime state, gitignored by *.log, never committed).
+# THE WARN WINDOW. ENFORCE is on only when org/mcp/naming-gate.enforce exists or NAMING_GATE_ENFORCE=1.
+# In WARN mode this stage NEVER changes this script's exit code -- not on a REFUSE verdict, not on the
+# limb's own internal error (NAMING ERROR), not on a crashed interpreter -- because it sits on every
+# seat's commit path. In ENFORCE mode it is fail-closed: any non-zero exit unstages and aborts, like the
+# commit-gate above. The live flip is gate G-F, outside LGIC_ENFORCE round 1.
+if [ -n "$IN_SCOPE" ] && [ -f "$SCRIPT_DIR/naming-gate.py" ]; then
+  NGATE_FILES=()
+  while IFS= read -r _nf; do
+    case "$_nf" in
+      *.py|*.js|*.mjs|*.ts|*.tf|*.json|*.yaml|*.yml) NGATE_FILES+=("$_nf") ;;
+    esac
+  done <<< "$IN_SCOPE"
+  if [ "${#NGATE_FILES[@]}" -gt 0 ]; then
+    NGATE_ENFORCE=0
+    if [ "${NAMING_GATE_ENFORCE:-}" = "1" ] || [ -e "$SCRIPT_DIR/../org/mcp/naming-gate.enforce" ]; then
+      NGATE_ENFORCE=1
+    fi
+    NGATE_DIFF="$(mktemp "${TMPDIR:-/tmp}/naming-gate.XXXXXX" 2>/dev/null || echo "${TMPDIR:-/tmp}/naming-gate.$$.diff")"
+    NGATE_OUT=""; NGATE_RC=0
+    if git diff --cached --no-color --no-ext-diff -- "${NGATE_FILES[@]}" > "$NGATE_DIFF" 2> "$NGATE_DIFF.err"; then
+      NGATE_OUT="$(python "$SCRIPT_DIR/naming-gate.py" --diff "$NGATE_DIFF" --post-from-index 2>&1)" || NGATE_RC=$?
+    else
+      NGATE_OUT="NAMING ERROR git diff --cached failed: $(head -c 300 "$NGATE_DIFF.err" 2>/dev/null || true)"; NGATE_RC=2
+    fi
+    rm -f "$NGATE_DIFF" "$NGATE_DIFF.err" 2>/dev/null || true
+    if [ "$NGATE_ENFORCE" -eq 1 ] && [ "$NGATE_RC" -ne 0 ]; then
+      for _nf in "${NGATE_FILES[@]}"; do git reset -q HEAD -- "$_nf" 2>/dev/null || true; done
+      echo "ERROR: BLOCKED -- the naming limb refused (LGIC_ENFORCE DEC-6, ENFORCE mode). Commit aborted; files unstaged." >&2
+      printf '%s\n' "$NGATE_OUT" | sed 's/^/  [naming-gate] /' >&2
+      exit 1
+    elif [ -n "$NGATE_OUT" ]; then
+      printf '%s\n' "$NGATE_OUT" | sed 's/^/  [naming-gate] /' >&2
+    fi
+  fi
+fi
+
+# ---------------------------------------------------------------------------------------------
 # LAYER 2 of the CANONICAL FABRIC WORKFLOW -- the TO issuance gate.
 # Andrew-direct 2026-09-01 (3.0.0_SA_CVO terminal): "re-authorize the three enforcement layers
 # and add the stage-3 preflight" / "we need these set up in a manner that they are actually
