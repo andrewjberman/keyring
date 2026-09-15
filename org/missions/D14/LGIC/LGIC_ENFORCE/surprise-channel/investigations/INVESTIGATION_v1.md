@@ -1042,6 +1042,55 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     "spec_asserts": "infra/logic/registry/exemptions.json _about.row_fields at base: 'principal (a role name or an ARN); reason; signoff_ref'.",
     "world_is": "Six of the sixteen principals are not the role ARN of their name. The checker matches only the name, and the policy needs the true ARN, so rows carry both and _about.row_fields now names arn.",
     "notes": "Form only."
+  },
+  {
+    "id": "LGIC_ENFORCE-W1-S16",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~1",
+    "surfaced_at": "2026-09-15T04:22Z",
+    "one_line": "check_en.py f1-prior cannot read the live policy on this box. Its run() starts a bare 'aws' through Python's subprocess, which finds no aws.exe (only .CMD and bash shims exist), so F1-AC4 prints NOT RUNNABLE [WinError 2] and FAIL-PRIOR-DIFFERS whatever FENCE_PRIOR_POLICY.json holds.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~G",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN, the named invocation, twice (about 04:05Z and 04:18Z on 2026-09-15), identical: 'PRIOR == LIVE (read now): False  NOT RUNNABLE: [WinError 2] The system cannot find the file specified' / 'VERDICT: FAIL-PRIOR-DIFFERS' / rc=1.",
+        "CODE: check_en.py run() (:104-114 @39aae459ed) calls subprocess.run(cmd) with the shell off; aws_json (:176-183) passes ['aws', ...]; the OSError comes back as rc 127 'NOT RUNNABLE'; _live_policy (:601-608) returns None, and f1_prior (:611-619) prints FAIL.",
+        "ENV: C:\\Users\\AndrewBerman\\AppData\\Local\\Programs\\Python\\Python312\\python.exe: shutil.which('aws') returns C:\\Users\\AndrewBerman\\bin\\aws.CMD and which('aws.exe') returns None. where.exe aws lists only bin\\aws, bin\\aws.cmd, Python312\\Scripts\\aws and Python312\\Scripts\\aws.cmd. There is no C:\\Program Files\\Amazon\\AWSCLIV2\\aws.exe. For a bare name, CreateProcess tries only .exe.",
+        "DIFFERENT INSTRUMENT (not the criterion's output): the .tools/aws shim from bash, read at 2026-09-15T04:18:57Z. FENCE_PRIOR_POLICY.json is byte-equal (428 bytes) and parse-equal to the live Policy string. Negative control: the same file with one pattern dropped reads unequal.",
+        "SCOPE: every aws call in check_en.py goes through the same run(). f2-policy-live (:655-663) and f2-removed (:695-703), EN-f-2's criteria, fail the same way on this box."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EN-f-1 F1-AC4: 'cd <WS> && timeout 120 python org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/2.0.0_SA_COO~G/fixed_inputs/check_en.py f1-prior', expecting 'VERDICT: PASS-PRIOR-VERBATIM': FENCE_PRIOR_POLICY.json equals the live policy read now.",
+    "world_is": "In this worktree's shell, the named invocation cannot start its aws read, so it cannot print PASS. The file equals the live policy by a different instrument, but that is not the criterion's output.",
+    "notes": "Form only. F1-AC4 is recorded FAIL by its output, and the order stays open. The disarm belongs to the instrument: run() would have to resolve aws in a form this box can start (for example, shutil.which, which finds the .cmd shim). That file is the issuer's fixed input, and a worker may not edit it."
+  },
+  {
+    "id": "LGIC_ENFORCE-W1-S17",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~1",
+    "surfaced_at": "2026-09-15T04:22Z",
+    "one_line": "TO-EN-f-1 has the author hand-add SIGNOFF slots to the ledger entry, and the ledger tool does not keep them. deploy_ledger.py re-renders the whole entry from its sentinel on every close-leg, so EN-f-2's first close-leg erases both seats' SIGNOFF lines, the lines f2-signoff reads.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~G",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE: .tools/deploy_ledger.py _render_entry (:239-286 @39aae459ed) builds the entry from the sentinel's fields only: the header, the manifest and the log. _write_entry (:289-291) overwrites the file. Its docstring says 'open / close-leg / close / hold re-render the entry from the sentinel' and 'Never hand-edit an entry.'",
+        "EXERCISED in memory, no file written: _render_entry of this ledger's sentinel returns 23 lines with no '## Sign-off', while the entry on disk has 34 lines, the section included. A sentinel with one more log event (a simulated close-leg) renders with no SIGNOFF line. Positive control: the render equals the on-disk entry up to its Log.",
+        "CODE: check_en.py f2_signoff (:645-652 @39aae459ed) reads the SIGNOFF lines from the entry's text and requires both timestamps to be before L2's closed_at. L2's close-leg is the very re-render that removes them.",
+        "COMMITTED: the entry with its two blank slots, at 887cf01419 (org/critical_paths/change_management/20260915T0334Z_lgic-enforce-fence-49financial_deploy_completion.md)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EN-f-1 cell step 6: 'Leave two blank lines in the ledger entry for SIGNOFF 1.0.0_SA_CTO <YYYYMMDDTHHMMSSZ> <scope> and SIGNOFF 2.0.0_SA_COO~G <...>.'",
+    "world_is": "The entry is a rendering of the sentinel, and the tool that closes L2 rewrites it without the Sign-off section. The sign-off record is erased by the step that records the apply it authorizes, unless its lines are carried where the tool keeps them or written back after every close-leg. f2-signoff then reads zero lines.",
+    "notes": "Form only. The slots are left as the order says, at 887cf01419."
   }
 ]
 ```
