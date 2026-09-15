@@ -1,11 +1,11 @@
 {
   "prd": "LGIC_NAMING_PRD.md",
-  "prd_version": "v1.8",
-  "prd_pin": "2f554182b688261ca3d296e12de43f9da75fa393",
+  "prd_version": "v1.9",
+  "prd_pin": "645725150ba93cc98f7aaf2e3cabef2110581103",
   "half": "brief",
-  "half_hash": "f8b0786d8242ca71f7a66528e7d087705f451b9e13d0d4f1407a1bd038c0ea9f",
+  "half_hash": "c1b36894a3f0684ddfe7402dbf0739614fcf6d167da5fdb75e0c6666bc476a92",
   "verdict": "SIGNED",
-  "review_ref": "docs/briefs/sources/LGIC_NAMING_L4_BRIEF_REVIEW_v1_8_20260915.md@02529e1bce9015372aafffeff71b175ecbf1c25c",
+  "review_ref": "docs/briefs/sources/LGIC_NAMING_L4_BRIEF_REVIEW_v1_9_20260915.md@8e3348c8b7",
   "signed_by": "4.0.0_SA_CRO",
-  "signed_at": "2026-09-15T15:57:23Z"
+  "signed_at": "2026-09-15T18:11:09Z"
 }
