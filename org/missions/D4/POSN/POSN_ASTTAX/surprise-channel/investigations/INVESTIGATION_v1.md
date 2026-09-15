@@ -5453,6 +5453,31 @@ Andrew asked for (msg 22917); it concerns this project's portal files meeting an
   "spec_asserts": "TO-V7-1 THE CELL: 'The five-class allocation per satellite = the sum of served weights per served asset_class, in F2's five-key PositioningAllocation'; V7-AC5 reads the rendered Satellites mode and names no formatting bar.",
   "world_is": "The sum is correct and the page prints it verbatim at one of the panel's three label sites, so seven class labels render 14-17 significant digits and overlap their neighbours in the 1440x900 capture.",
   "notes": "A value handed to a renderer that has never received an unrounded one is a NEW state for that renderer, not a new value for the producer. The remedy is one Math.round at PositioningSummary.tsx:1011 (outside this cell) or a stated rounding contract on the adapter's allocation; the issuer owns which."
+},
+{
+  "id": "POSN_ASTTAX-Z-S117",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T00:20:55Z",
+  "one_line": "DISARM of W22-S24 (INERT): PositioningSummary.tsx:1011 prints one of its three percent labels UNROUNDED while its siblings at :989/:994 call Math.round, so the Satellites mode renders 7 of 16 class labels as raw float sums (62.589999999999996% ...) -- the sums are correct (they match the adapter probe digit for digit); every previous producer served pre-rounded values so the raw site never had a float to expose. The render site is outside every round-5 cell's grant and no criterion names it; the in-grant alternative (rounding inside the adapter) would make the adapter disagree with the served rows it aggregates and was rightly not taken. Carried for the round analysis as a one-line render fix (Math.round at :1011, matching its siblings) beside the copy items (Z-S115).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED IN THE DOM by the worker: 7 tokens matching a six-plus-decimal percent across the 8 selectable satellites' 16 class labels; the same values read from the adapter probe (Opal Satellite 30 fixed_income 62.589999999999996; Opal Satellite 90 equity 92.11000000000001).",
+      "WHY THE REMEDY IS THE RENDER SITE'S: the label is a display concern the panel already handles at two of its three sites; the adapter's sum is the served weights' sum and is what V7-AC3 and V8-AC10 grade.",
+      "WHY GRADUATED: nothing numeric is wrong, the site is named with its fix, and the page is behind the freeze; the round analysis decides whether it rides the next round or a promote-prep cell."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W22-S24"
+  ],
+  "spec_asserts": "TO-V7-1 THE CELL: the five-class allocation per satellite is the sum of served weights per served asset_class; no criterion names the summary labels' formatting.",
+  "world_is": "The sum is correct and printed verbatim at one unformatted label site; the long digits overlap their neighbours in the 1440x900 capture.",
+  "notes": "For the round analysis: PositioningSummary.tsx:1011 -> Math.round (or the panel's shared formatter), one line, F2's file."
 }
 ]
 ```
