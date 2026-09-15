@@ -6182,6 +6182,28 @@ Andrew asked for (msg 22917); it concerns this project's portal files meeting an
   "spec_asserts": "PRD v0.10 @59113e257a C-SUMMARY-COPY: 'the Satellites mode's footer names holdings.json's as_of and Black Diamond as the source, Models and ETFs unchanged'; ROUND_ANALYSIS.round5 s.4 item 5-7 name PositioningSummary.tsx and Positioning.tsx for F5.",
   "world_is": "In the Satellites mode three of the page's four panel footers/headers show the models PKL vintage and 'Source: Bloomberg.' beside Black Diamond holdings; only the Summary's footer is named by the spec's carriers.",
   "notes": "Carried into TO-W2-1 (F4) as step 5 and W2-AC8; the decomposition s.1 states it; the CTO answers at L10 if the narrower reading holds."
+},
+{
+  "id": "POSN_ASTTAX-Z-S137",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T03:56:46Z",
+  "one_line": "The round-6 issuance @910815809f (03:36Z) passed LIMB 6 on PRD v0.10 @59113e257a's two L4-R signatures by the ~W lanes (ratified-text 3.0.0_SA_CVO~W @d3e74ab1ea, brief 4.0.0_SA_CRO~W @d1f7199013), routed there by prd_signoff_lib.route_half's alphabetical live-lane pick (msg 22986: live_of sorts lanes, ~W before ~Z; no project-to-fabric binding). Andrew-direct ~03:5xZ at the 1.0.0_SA_CTO~W terminal (record @9dfee40ce0): the ~W fabric is AMGT_RESAPP only, the ~Z fabric POSN_ASTTAX; 'CVO~W being expected to ratify work for the ~Z fabric ... is incorrect'. RECORDED, NOT RE-CUT: the signed BYTES are v0.10's current bytes and both halves read SIGNED current at the cut (prd-signoff status 03:33Z); the three orders, the decomposition and the B6 halves are unchanged; the remedy the relay names is the ~Z lanes' signatures at the same bytes (3.0.0_SA_CVO~Z ratified-text, 4.0.0_SA_CRO~Z brief), addressed by 1.0.0_SA_CTO~Z as POSN's L4 owner; the ~W signature records under prd/signoff/ are that tree's to disposition. If a ~Z half REFUSES v0.10 at these bytes, that refusal re-opens the half and this seat's orders are re-read against the amended text (a modification, LIMB 6 does not fire; the human discipline binds).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "prd-signoff.py status POSN_ASTTAX at 03:33:01Z: v0.10 @59113e257a ADMITTED, ratified-text SIGNED 3.0.0_SA_CVO~W current, brief SIGNED 4.0.0_SA_CRO~W current; the to-pipeline-gate NOTE at the issuance commit: 'L4-R sign-offs OK ... at v0.10 (ratified-text=3.0.0_SA_CVO~W, brief=4.0.0_SA_CRO~W)'.",
+      "msg 22986 (1.0.0_SA_CTO~W, relayed verbatim, nothing asked of this seat): the mechanism is the router's alphabetical pick; the REC (a fabric-letter preference in route_half) is surfaced to Andrew, not implemented.",
+      "WHY GRADUATED: no served byte and no order text depends on WHICH live lane signed the same bytes; the process defect has a named owner and a named remedy; the round runs."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "Rule 27 L4-R: the ratified-text half is signed by 3.0.0_SA_CVO, the brief half by 4.0.0_SA_CRO; Andrew ~03:5xZ: the ~W lanes sign nothing for the ~Z fabric.",
+  "world_is": "POSN_ASTTAX's gate rests on two ~W signatures at v0.10's bytes; the ~Z lanes' signatures at the same bytes are owed; round 6 is issued and running on those bytes.",
+  "notes": "Carried for the round-6 L10; the CTO's ask to the ~Z lanes closes it without any act by this seat."
 }
 ]
 ```
