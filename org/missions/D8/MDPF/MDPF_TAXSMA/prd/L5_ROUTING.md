@@ -4,7 +4,7 @@ Author: `1.0.0_SA_CTO~A`. Updated after **CTO97073 at2026-09-15T12:55:50Z**. PRD
 
 ## Current disposition
 
-**L6 issuance waits only on both current v0.3 signatures under CTO97126 (2026-09-15T14:56:46Z).** Andrew has answered E1/E2: X7 CONDITIONAL and X2 PERMANENT are granted at `9cf4a274db`. The conformance read directs CTO~A to land v0.3 F1-F3: registered source identity, complete workbook Silver, and one historical served home. The private proposal is prepared; COO~G's origin row is the remaining input to finalize F1 before landing it for review. COO~T may continue paper L5 but must not spawn workers or issue task orders before both current v0.3 halves are signed. The exact lane stays seated and the seat order stands. The completed v0.2 intake receipts below do not release this later hold.
+**v0.3 is submitted for both current-half reviews under CTO97152.** The canonical PRD, contract0.3.0 and49-component manifest now include gateway source identity, S19 Silver between S02 and S03, and historical served addresses under granted X7/X2. The missing gateway registry row is an S02 build prerequisite only; it does not delay this landing or review. COO~T remains the round lane and can continue paper L5. L6 requires both current v0.3 signatures. S16 remains the separate named-person capability-activation condition. Earlier statements below that the private proposal waits for the row before landing are superseded by97152.
 
 **The exact lane `2.0.0_SA_COO~T` is LIVE and is now bound in `project.json`.** MSTR97081 confirms its launch after COO~F's exit. The checked-in canonical `org/mcp/server.py:get_agent_status("2.0.0_SA_COO~T")` returned **LIVE at2026-09-15T13:20:53Z**, last seen10s ago, PID26332, working on MDPF_TAXSMA startup and L5 decomposition. This was a direct invocation of the unchanged repository function because no callable MCP status tool was exposed in this Codex session; it did not register a seat or start a server/helper. The canonical L4 notifier sent the unchanged v0.2 release as **97083 at13:22:49Z**; broker readback at13:30:03Z is **READ**, acknowledged by that exact lane at13:26:22.594818Z. The final delivery receipt is below. L5 remains owned by COO~T and is not complete merely because the session is live.
 
@@ -95,3 +95,10 @@ Exact carrier: `20260915T145646Z_1.0.0_SA_CTO_ANDREW___RECS_APPROVED__--_TAXSMA_
 - **X2 / E2, GRANTED PERMANENT:** Global cross-firm composite retains its product/shared homes with the recorded aggregate privacy basis; no account identifiers, names or row-level evidence.
 
 This supersedes every earlier pending-Andrew E1/E2 statement in the chronological record above. **Once both current v0.3 halves are signed, this L6 hold lifts.** The separate S16 named-person unattended-content activation prerequisite remains unchanged. The exact received body is preserved in `LGIC_EXCEPTIONS_97126.md`.
+
+
+## v0.3 landed for review, CTO97152
+
+The exact16:30:17Z notice directs the PRD owner to land the checked amendment immediately. It explicitly moves the gateway row out of the PRD-landing path and into S02's build prerequisite. The surface bound says "address() resolves once the systems.json gateway row lands"; source identity/class/directive are closed as gateway / PLATFORM_SUBSYSTEM / D9. `LGIC_LANDING_DIRECTION_97152.md` preserves the exact instruction.
+
+The amendment changes both half hashes; the installed canonical notifier must request both independent reviews, then deliver the signed package to COO~T. This receipt is neither a signature nor L5/L6 completion. Base CTO owns the conformance rerun when the row reaches HEAD. Existing X7/X2 approvals need no further decision from Andrew.

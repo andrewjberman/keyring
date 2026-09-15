@@ -1,5 +1,5 @@
 {
-  "checked_utc": "2026-09-15T08:29:58.343432+00:00",
+  "checked_utc": "2026-09-15T16:32:56.309846+00:00",
   "author": "1.0.0_SA_CTO~A",
   "header_and_canonical_shape_violations": [],
   "endpoint_equal_to_approved_after_heading_layout_only": true,
@@ -22,7 +22,8 @@
     "S15",
     "S16",
     "S17",
-    "S18"
+    "S18",
+    "S19"
   ],
   "dependency_ids": [
     "D01",
@@ -36,7 +37,7 @@
   ],
   "dependency_graph": "ACYCLIC",
   "owned_components_complete": true,
-  "component_count": 47,
+  "component_count": 49,
   "brief_heading_counts": {
     "title": 1,
     "level_2": 9,
@@ -44,8 +45,8 @@
     "total": 18
   },
   "limitations": "Shape, ID-set, dependency and exact ratified-text checks; only outcome heading layout normalized to canonical FWD syntax. Substantive brief/contract review remains independent at L4-R. No implementation tests.",
-  "prd_version": "v0.2",
-  "data_contract_version": "0.2.0",
+  "prd_version": "v0.3",
+  "data_contract_version": "0.3.0",
   "brief_coverage_rows": [
     "Tax SMA: a complete, reconciled D8 asset pipeline — title and preamble",
     "Commission and precedence",
@@ -82,11 +83,11 @@
     "additional_consistency_fix": "Section 3.9 names the already-projected Traded field"
   },
   "half_hashes": {
-    "ratified-text": "fed0ad5c18f33765a8e3aaf08bb8fcd1018af3a6ee109340b2ec5fa5ca634fd3",
-    "brief": "f67f3a541306f2cf09f706e4fbcb5e5529318c4c193a691cd8ad69f614a97a0e"
+    "ratified-text": "fb75838bf3acbd49c93627f3e9a033defcd11872e5fbd96a00b4803200c92b46",
+    "brief": "4874c5a321c4b14d5482e1773243c8144e041aea6f0819b6570b25b69b0b30ab"
   },
-  "prd_sha256": "35c38dc71f71739116f04d8a647cf66025a041279ec2a79175daaed22583ec34",
-  "data_contract_sha256": "5adfb0c5c001f42fc3591d08d5819a7d990f7b9baaf58af232bd2fe892bf7d9a",
+  "prd_sha256": "468a42dd6b54f01119d5656b7a7c6dd1e36bd749f997b2150c49f150968854fc",
+  "data_contract_sha256": "46f22835b2b91c435781850d08211f2310456dcc4b1207232b39bba77de19d63",
   "ratified_text_correction": {
     "notice_id": 96985,
     "ground": "R1",
@@ -99,25 +100,62 @@
       "N4": "CANON prose amendment remains owner-pending"
     }
   },
-  "admission_checked_utc": "2026-09-15T08:50:04.057346+00:00",
-  "reviewed_prd_sha256": "472b1cd5c99c50c52595e0afb890f4811ff18aed8019b915264658c5606358d0",
-  "reviewed_data_contract_sha256": "0af07aefd485b5bda905caac89b82746a95e8ba2de62e2122198a5a04031a13f",
+  "prior_v02_admission": {
+    "admission": {
+      "status": "ADMITTED",
+      "header_status": "RATIFIED",
+      "signed_halves_unchanged": {
+        "ratified-text": "fed0ad5c18f33765a8e3aaf08bb8fcd1018af3a6ee109340b2ec5fa5ca634fd3",
+        "brief": "f67f3a541306f2cf09f706e4fbcb5e5529318c4c193a691cd8ad69f614a97a0e"
+      },
+      "contract_changed_fields": [
+        "state"
+      ],
+      "contract_normative_content_equal_to_reviewed_pin": true,
+      "reviewed_pin": "8ab2dc2bc63fe8699e01fc33772b6f8523d224f0",
+      "signature_commits": {
+        "ratified-text": "214982df0b",
+        "brief": "905d2df375"
+      },
+      "canonical_shape_violations": []
+    },
+    "admission_checked_utc": "2026-09-15T08:50:04.057346+00:00",
+    "reviewed_prd_sha256": "472b1cd5c99c50c52595e0afb890f4811ff18aed8019b915264658c5606358d0",
+    "reviewed_data_contract_sha256": "0af07aefd485b5bda905caac89b82746a95e8ba2de62e2122198a5a04031a13f"
+  },
   "admission": {
-    "status": "ADMITTED",
-    "header_status": "RATIFIED",
-    "signed_halves_unchanged": {
-      "ratified-text": "fed0ad5c18f33765a8e3aaf08bb8fcd1018af3a6ee109340b2ec5fa5ca634fd3",
-      "brief": "f67f3a541306f2cf09f706e4fbcb5e5529318c4c193a691cd8ad69f614a97a0e"
-    },
-    "contract_changed_fields": [
-      "state"
+    "status": "PENDING_CURRENT_HALF_REVIEWS",
+    "header_status": "DRAFT",
+    "authority": "CTO97152; both new half hashes need independent review; the author signs neither half."
+  },
+  "v03_lgic_checks": {
+    "checked_utc": "2026-09-15T16:32:56.309846+00:00",
+    "scope": "v0.3 authoring candidate; not a runtime test or independent sign-off.",
+    "prd_version": "v0.3",
+    "header_and_canonical_shape_violations": [],
+    "endpoint_unchanged": true,
+    "endpoint_sha256_without_trailing_separators": "296f83b8a122edc5f737ad6247b55716843b94e69d22ee5afb376c2a2f1d06a1",
+    "owned_surfaces": 19,
+    "components": 49,
+    "brief_headings_carried": 18,
+    "acyclic_dependencies": true,
+    "artifact_count": 9,
+    "builder_resolved": 5,
+    "builder_pending_source": [
+      "workbook_snapshot",
+      "workbook_silver"
     ],
-    "contract_normative_content_equal_to_reviewed_pin": true,
-    "reviewed_pin": "8ab2dc2bc63fe8699e01fc33772b6f8523d224f0",
-    "signature_commits": {
-      "ratified-text": "214982df0b",
-      "brief": "905d2df375"
+    "historical_served": {
+      "firm_served": "s3://opal-data-portal-v2/platinum/mdpf/49financial/category-views.json",
+      "global_served": "s3://opal-data-portal-v2/platinum/mdpf/global/category-views.json"
     },
-    "canonical_shape_violations": []
-  }
+    "half_hashes": {
+      "ratified-text": "fb75838bf3acbd49c93627f3e9a033defcd11872e5fbd96a00b4803200c92b46",
+      "brief": "4874c5a321c4b14d5482e1773243c8144e041aea6f0819b6570b25b69b0b30ab"
+    },
+    "prd_sha256": "468a42dd6b54f01119d5656b7a7c6dd1e36bd749f997b2150c49f150968854fc",
+    "data_contract_sha256": "46f22835b2b91c435781850d08211f2310456dcc4b1207232b39bba77de19d63",
+    "l6_hold": "CTO97126: only both current v0.3 signatures; X7/X2 granted. CTO97152: gateway registration is an S02 build prerequisite, not a PRD landing or review wait."
+  },
+  "registry_dependency": "gateway PLATFORM_SUBSYSTEM / D9 row is an S02 build prerequisite only under CTO97152. Pending builder refusal does not hold landing or L4-R."
 }

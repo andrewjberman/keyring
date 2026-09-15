@@ -1,0 +1,245 @@
+{
+  "checked_utc": "2026-09-15T16:32:54.520609+00:00",
+  "head": "bd2fa195c0f8d35935bb6dd2cb0ba79552ff7c68",
+  "contract_version": "0.3.0",
+  "source_row": null,
+  "source_registry_ref": null,
+  "registry_prerequisite": {
+    "required_key": "gateway",
+    "required_class": "PLATFORM_SUBSYSTEM",
+    "owner_directive": "D9",
+    "registry_owner": "2.0.0_SA_COO~G",
+    "state": "PENDING_BUILD_PREREQUISITE",
+    "authority": "CTO97152: do not wait for the row to land the PRD or trigger review; address() resolves once the systems.json gateway row lands."
+  },
+  "exception_register_commit": "9cf4a274dbc10c977f679cf2845c3d4fa41c5965",
+  "artifacts": [
+    {
+      "artifact": "workbook_snapshot",
+      "builder": "address",
+      "args": [
+        "gateway",
+        "49financial",
+        "bronze",
+        "taxsma_workbook",
+        "date={knowledge_date_compact}",
+        "{snapshot_id}-{response_sha256}.json"
+      ],
+      "status": "WAITING_REGISTRY_OWNER",
+      "refusal": "source 'gateway' is not a systems.json key"
+    },
+    {
+      "artifact": "workbook_silver",
+      "builder": "address",
+      "args": [
+        "gateway",
+        "49financial",
+        "silver",
+        "taxsma_workbook",
+        "date={knowledge_date}",
+        "{snapshot_id}-{response_sha256}.parquet"
+      ],
+      "status": "WAITING_REGISTRY_OWNER",
+      "refusal": "source 'gateway' is not a systems.json key"
+    },
+    {
+      "artifact": "membership_dispositions",
+      "builder": "address",
+      "args": [
+        "mdpf",
+        "49financial",
+        "state",
+        "taxsma_membership",
+        "dispositions.json"
+      ],
+      "output": "s3://opal-data-49financial/mdpf/49financial/state/taxsma_membership/dispositions.json"
+    },
+    {
+      "artifact": "operational_control",
+      "builder": "address",
+      "args": [
+        "mdpf",
+        "49financial",
+        "state",
+        "taxsma_control",
+        "current.json"
+      ],
+      "output": "s3://opal-data-49financial/mdpf/49financial/state/taxsma_control/current.json"
+    },
+    {
+      "artifact": "taxsma_assets",
+      "builder": "address",
+      "args": [
+        "mdpf",
+        "49financial",
+        "gold",
+        "taxsma_assets",
+        "date={knowledge_date}",
+        "data.parquet"
+      ],
+      "output": "s3://opal-data-49financial/mdpf/49financial/gold/taxsma_assets/date={knowledge_date}/data.parquet"
+    },
+    {
+      "artifact": "firm_category",
+      "builder": "address",
+      "args": [
+        "mdpf",
+        "49financial",
+        "gold",
+        "category_views",
+        "date={knowledge_date}",
+        "data.parquet"
+      ],
+      "output": "s3://opal-data-49financial/mdpf/49financial/gold/category_views/date={knowledge_date}/data.parquet"
+    },
+    {
+      "artifact": "global_category",
+      "builder": "address",
+      "args": [
+        "mdpf",
+        "global",
+        "gold",
+        "category_views",
+        "date={knowledge_date}",
+        "data.parquet"
+      ],
+      "output": "s3://opal-data-mdpf/mdpf/global/gold/category_views/date={knowledge_date}/data.parquet"
+    },
+    {
+      "artifact": "firm_served",
+      "historical_address": "s3://opal-data-portal-v2/platinum/mdpf/49financial/category-views.json",
+      "exception_ref": "E1",
+      "not_new_address": true
+    },
+    {
+      "artifact": "global_served",
+      "historical_address": "s3://opal-data-portal-v2/platinum/mdpf/global/category-views.json",
+      "exception_ref": "E2",
+      "not_new_address": true
+    }
+  ],
+  "runtime_names": [
+    {
+      "builder": "name",
+      "args": [
+        "mdpf",
+        "49financial",
+        "taxsma",
+        "role"
+      ],
+      "output": "mdpf-49f-taxsma-role"
+    }
+  ],
+  "boundary": "Pure canonical constructor outputs; symbolic date/snapshot slots are schema, not observed data. Any gateway refusal is a declared S02 build prerequisite only under CTO97152; it does not hold the v0.3 landing or both half reviews. Historical served addresses are explicit granted X7/X2 exceptions, not new builder calls. No cloud operation, full conformance verdict or implementation proof.",
+  "v02_correction": {
+    "measured_utc": "2026-09-15T14:45:31.703447+00:00",
+    "head": "f589a22a4ee5df81e026c0049c1c4cad22d6297f",
+    "contract_sha256": "5adfb0c5c001f42fc3591d08d5819a7d990f7b9baaf58af232bd2fe892bf7d9a",
+    "builder_calls": 7,
+    "artifacts": [
+      {
+        "artifact": "workbook_snapshot",
+        "builder": "address",
+        "args": [
+          "mdpf",
+          "49financial",
+          "bronze",
+          "taxsma_workbook",
+          "date={knowledge_date}",
+          "{snapshot_id}.json"
+        ],
+        "output": "s3://opal-data-assets/mdpf/49financial/bronze/taxsma_workbook/date={knowledge_date}/{snapshot_id}.json"
+      },
+      {
+        "artifact": "membership_dispositions",
+        "builder": "address",
+        "args": [
+          "mdpf",
+          "49financial",
+          "state",
+          "taxsma_membership",
+          "dispositions.json"
+        ],
+        "output": "s3://opal-data-49financial/mdpf/49financial/state/taxsma_membership/dispositions.json"
+      },
+      {
+        "artifact": "operational_control",
+        "builder": "address",
+        "args": [
+          "mdpf",
+          "49financial",
+          "state",
+          "taxsma_control",
+          "current.json"
+        ],
+        "output": "s3://opal-data-49financial/mdpf/49financial/state/taxsma_control/current.json"
+      },
+      {
+        "artifact": "taxsma_assets",
+        "builder": "address",
+        "args": [
+          "mdpf",
+          "49financial",
+          "gold",
+          "taxsma_assets",
+          "date={knowledge_date}",
+          "data.parquet"
+        ],
+        "output": "s3://opal-data-49financial/mdpf/49financial/gold/taxsma_assets/date={knowledge_date}/data.parquet"
+      },
+      {
+        "artifact": "firm_category",
+        "builder": "address",
+        "args": [
+          "mdpf",
+          "49financial",
+          "gold",
+          "category_views",
+          "date={knowledge_date}",
+          "data.parquet"
+        ],
+        "output": "s3://opal-data-49financial/mdpf/49financial/gold/category_views/date={knowledge_date}/data.parquet"
+      },
+      {
+        "artifact": "global_category",
+        "builder": "address",
+        "args": [
+          "mdpf",
+          "global",
+          "gold",
+          "category_views",
+          "date={knowledge_date}",
+          "data.parquet"
+        ],
+        "output": "s3://opal-data-mdpf/mdpf/global/gold/category_views/date={knowledge_date}/data.parquet"
+      },
+      {
+        "artifact": "firm_served",
+        "builder": "address",
+        "args": [
+          "mdpf",
+          "49financial",
+          "platinum",
+          "category_views",
+          "category-views.json"
+        ],
+        "output": "s3://opal-data-49financial/mdpf/49financial/platinum/category_views/category-views.json"
+      },
+      {
+        "artifact": "global_served",
+        "historical_address": "s3://opal-data-portal-v2/platinum/mdpf/global/category-views.json",
+        "not_builder_probed": true
+      }
+    ],
+    "runtime_role": {
+      "args": [
+        "mdpf",
+        "49financial",
+        "taxsma",
+        "role"
+      ],
+      "output": "mdpf-49f-taxsma-role"
+    },
+    "boundary": "Pure constructor calls with exactly declared symbolic partitions; no AWS data or implementation validation. Corrects the claim that the declared v0.2 snapshot call fails; guessed sharepoint/ms failures did not test that call."
+  }
+}
