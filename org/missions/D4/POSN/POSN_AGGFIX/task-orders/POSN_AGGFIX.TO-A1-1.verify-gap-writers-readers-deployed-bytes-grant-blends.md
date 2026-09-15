@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_POSN_AGGFIX~1</issued_to>
 <issued_by>2.0.0_SA_COO~Z</issued_by>
 <issued_date>2026-09-15</issued_date>
-<status>staged</status>
+<status>complete</status>
 
 **Directive:** D4 - **Macro:** POSN - **Fabric:** site-z - **PRD:** `org/missions/D4/POSN/POSN_AGGFIX/prd/POSN_AGGFIX_PRD.md` **v0.2**
 @`cbd85e5cff` (C-GAP-EXPLAINED, C-NEVER-WIDEN, C-FIVE-BOOKS-UNCHANGED, C-MEMBERS) - **Decomp cells:** `AF1-s-1`, `AF1-s-2`, `AF1-s-5`,
