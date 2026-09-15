@@ -136,6 +136,74 @@ to the three prior values above. **Store 2:** the JEPI dict entries at `etf_clas
 at `:633` untouched. **Both branches** as above; `C-RETAG-SAFETY`'s guard is not armed (management_style is already a real value).
 COO half for this amendment: `2.0.0_SA_COO~Z`, GIVEN, 2026-09-14 ~20:4xZ.
 
+### R2 AMENDMENT 2026-09-15 ~02:5xZ -- the Satellites relabel driven TONIGHT through the producer's own CLI with `--as-of 2026-09-14` (matching the CTO half @d1685fb4ea)
+
+**Authority:** Andrew-direct ~02:3xZ, verbatim *"i want to do an ad hoc pul on this and just fix it completely, we're not waiting for
+the next day to deal with ths."* (record @0553548fe2; CTO msgs 22958 and 22962). **Why the R1 amendment did not reach these keys:** the
+driven `{}` invoke of `cot-satellites-registry-producer` REFUSED (W19-S16, Z-S126): the handler passes no date (`lambda_function.py:113-124`,
+`dry_run` only) and the producer resolves today-UTC (`resolve_as_of` :588), whose roster partition lands ~06:00:43Z. The served
+`holdings.json` (VersionId `BRjqyqnB0pIdLUHOvDY3B_Sh9b0EXIPw`, 2026-09-14T19:53:59Z) still carries pre-R1 labels: GLD `hedge`/`Gold`,
+VXX `equity`/`Volatility` -- the Satellites view Andrew saw (GLD absent from the class rows, VXX under Equity).
+
+**NEVER#1 names the new reachable state, and this half covers it, line for line with the CTO half:** the producer's
+`main(["--as-of","2026-09-14"])` run OFF its trigger, from a local runner under the operator identity (`user/Andrew_Berman`), not the
+Lambda role. **Actor: `1.0.0_SA_CTO~Z`** (the CTO half). The state is new on two axes and both are bounded: (i) the DATE is explicit
+rather than resolved -- and it is the partition the served `registry.json` / `holdings.json` ALREADY carry (`as_of 2026-09-14`), so the
+run re-derives the same nine books over the same 63-row roster and the same 9 detail artifacts; (ii) the IDENTITY's S3 reach is wider
+than the Lambda role's two pinned PutObject Sids, so the act's write set is bounded by the CODE, read at HEAD (== the deployed bytes,
+below): `publish()` :574-586 = one `put_object` to `platinum/satellites/registry.json`; `publish_holdings()` :527-538 = one `put_object`
+to `platinum/satellites/holdings.json`; both `opal-data-cot`; registry first; no delete, no copy, no conditional; `main` :615-680 calls
+nothing else that writes.
+
+- **The code is the deployed code, by content -- this seat's own read, a second instrument:** the `get-function` Code.Location zip,
+  105484 B, sha256 `7854e8109d0536ed6c30eedc27558d751a06495b8db8748cf53a01cc71a41752` == the function's CodeSha256
+  `eFToEJ0FNu1sMO7cJ1WNdRoGSVuNuHSM9ToBzHGkF1I=` (the same digest, base64; LastModified 2026-09-14T19:50:02Z, State Active, no env).
+  7 members; the SIX code members hashed against `git show HEAD:<path>`: `lambda_function.py` 7f48c699..., `build_satellites_registry.py`
+  d4680be6..., `satellites_registry.py` 443eff90..., `satellites_weights.py` bb41b55d..., `lib/trading_calendar.py` 41b1c0c1...,
+  `_shared/etf_classifications_dynamodb.py` c677e8a5... -- **6 of 6 IDENTICAL** (the CTO half names four; the handler and the
+  classifier reader are the other two, and the classifier reader is the one that reads the labels). The seventh member is the zip's own
+  BUILD_MANIFEST.json. `git status` clean on all six.
+- **Writers: N = 1** for each key -- this producer; the Lambda path and this path are the same two functions. Readers of `holdings.json`
+  that this act does NOT move: `cot-satellites-characteristics-producer` (its derivation `build_satellites_characteristics.py` reads
+  holdings.json at :142 for tickers and weights and carries **0 occurrences of `asset_class` / `sub_asset_class` over 499 lines** -- it is
+  not re-run and `characteristics.json` stays at VersionId `rt61ogajZQy79meUlsY1X_mIdPngxJTZ`); the portal Satellites mode (F3, behind
+  the freeze, reading both keys through the B5 router).
+- **The keys, and nothing else:** `platinum/satellites/registry.json` (content-identical by design) and `platinum/satellites/holdings.json`
+  (30 label cells). No Lambda code or config change; no Terraform; no router or CloudFront act (an edge invalidation, if the served page
+  shows cached bytes, is a separate act asked for by name); no portal promote, DEV/PROD push or gitlink move; no S3 delete.
+- **Discriminator run BEFORE any write -- this seat's OWN no-write capture, a DIFFERENT instrument from the CTO's:** the extracted zip
+  imported the way the handler imports it (`import lambda_function`, its gold dir on sys.path), `boto3.client("s3")` replaced by a
+  forwarding proxy whose `put_object` CAPTURES the Body and writes nothing (every other call is the real client), then
+  `main(["--as-of","2026-09-14"])` at 2026-09-15T02:49:56Z: rc 0; roster pageCount 1 / totalResultCount 63 / 63 rows; 9 members;
+  9 details; 2 captures. `get-object` on both served keys the same minute (registry VersionId XaX6..., holdings BRjq...).
+  **registry.json: BYTE-IDENTICAL** -- sha256 `a9ff35b04040733fb2cfbd3403793cae0ef863b9ce0aeeb952b0817d74b85777` on both sides, 2196 B.
+  **holdings.json: 30 leaf diffs, 30 ALLOWED, 0 OTHER** over a full recursive walk of both documents (envelope keys equal, `as_of`
+  2026-09-14 both, 9 satellites both, every list the same length, coverage pairs equal -- labelled 16/24/24/24/20/21/16/16/16,
+  unlabelled 0 in all nine): GLD `hedge`/`Gold` -> `commodities`/`Metals` in Satellites 15, 30, 40, 50, 60, 70, 80 (7 rows);
+  VXX `equity`/`Volatility` -> `structured`/`Hedge` in Satellites 30, 40, 50, 60, 70, 80, 90, 98 (8 rows). Captured holdings bytes
+  55033, sha256 `2f34056549c83bd2bd29a5a9def5f7075d104d91f33ec0e9ec3bc38a79c71289` (served 54985 B, sha256
+  `7b7c683407aca4fc2c590543083a2a01bba75ef33fa1f18465cf50f0eb01ed69`; the +48 B is the longer label strings). The CTO's capture
+  (publish functions replaced, a raising client, a parsed compare) and this one agree on every count: two instruments, one verdict,
+  **Branch A**.
+- **Expected outcome, both branches (matching the CTO half).** **A:** both `OK: wrote` lines; the read-back of each served key equals
+  the captured bytes (this seat re-reads with `get-object` and compares BYTES against its own capture files); both VersionIds move off
+  XaX6... / BRjq...; `as_of` stays 2026-09-14; LastModified past 02:5xZ. The 07:00Z scheduled fire stays the organic leg and writes
+  `as_of 2026-09-15` from the new roster -- recorded by this seat as the negative arm, not waited on. **B:** a raise before the first
+  write moves nothing; a raise between the two writes (e.g. AccessDenied on the second key) leaves `registry.json` content-identical
+  under a new version and `holdings.json` unchanged, so no served figure moves -- the row is filed and any retry is a new act on this
+  same text; a read-back that differs from the capture -> restore each key from its prior version below by `copy_object` (a new
+  version, never a delete), then the row.
+- **Rollback per key -- this seat's independent read (`s3api head-object` at 02:46:35Z; bucket versioning `Enabled`):**
+  `platinum/satellites/registry.json` VersionId `XaX6zaVWH7ybXnRBu2jeF2PNABUhezuM` (2196 B, ETag c713f2c8288bde9667c37b29dc7be64f,
+  2026-09-14T19:53:58Z); `platinum/satellites/holdings.json` VersionId `BRjqyqnB0pIdLUHOvDY3B_Sh9b0EXIPw` (54985 B, ETag
+  e4ef9557362d252c17269be62da94af6, 2026-09-14T19:53:59Z) -- the same two the CTO half prints, read on a different call.
+- **After the act, this seat records:** the read-back against its capture files; the B2 change-management ledger
+  (`20260914T1844Z_posn-round5-b2-satellites-holdings_deploy_completion.md`) leg L8 RE-CUT per Rule 27 -- its proof is the DRIVEN
+  mechanism (the L6 QA fire and tonight's explicit-date run, read back), the organic 07:00Z fire kept as the negative arm in a channel
+  row read at ~07:0xZ; project.json's organic-legs line; one channel row citing Z-S126 and W19-S16.
+
+COO half for R2: `2.0.0_SA_COO~Z`, GIVEN, 2026-09-15 ~02:5xZ.
+
 ### B4 -- the additional characteristics lambda (AT5-s-4) -- NEVER-WIDEN NON-APPLICATION, stated
 
 `platinum/satellites/characteristics.json` has **0 writers today** (s3api HeadObject 404 NotFound) and B4 is its ONLY writer after;
@@ -161,6 +229,7 @@ page; every served key outside the six named in the decomposition's (iv); the ET
 NEVER#1   "never move served output without never-widen sign-off (CTO+COO)"
 ACTS      B1 (two functions, two keys, one sign-off -- Andrew item F)  B2 (one function, one existing key + one new key)
           R1 (13 of 285 rows -- 12 signed ~18:0xZ + JEPI ~20:4xZ -- two levels, one style field; the dict)
+          R2 (the off-trigger relabel run: deployed bytes, --as-of 2026-09-14, 2 keys, N=1, 30 label cells -- amendment above, GIVEN 2026-09-15 ~02:5xZ)
 DELTA     NOT 0 -- moving the labels and carrying five classes IS the purpose
 N         positioning-plane class property: 4 writers, 4 rules read above (2 re-deployed, 2 untouched)
           registry.json: 1 writer;  holdings.json: 0 -> 1;  characteristics.json: 0 -> 1 (non-application)
