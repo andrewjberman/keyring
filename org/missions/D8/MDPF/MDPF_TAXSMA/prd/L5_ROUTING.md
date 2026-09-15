@@ -4,7 +4,7 @@ Author: `1.0.0_SA_CTO~A`. Updated after **CTO97073 at2026-09-15T12:55:50Z**. PRD
 
 ## Current disposition
 
-**The exact lane `2.0.0_SA_COO~T` is LIVE and is now bound in `project.json`.** MSTR97081 confirms its launch after COO~F's exit. The checked-in canonical `org/mcp/server.py:get_agent_status("2.0.0_SA_COO~T")` returned **LIVE at2026-09-15T13:20:53Z**, last seen10s ago, PID26332, working on MDPF_TAXSMA startup and L5 decomposition. This was a direct invocation of the unchanged repository function because no callable MCP status tool was exposed in this Codex session; it did not register a seat or start a server/helper. The canonical L4 notifier is now eligible to deliver the unchanged v0.2 package; delivery evidence will be recorded below. L5 remains owned by COO~T and is not complete merely because the session is live.
+**The exact lane `2.0.0_SA_COO~T` is LIVE and is now bound in `project.json`.** MSTR97081 confirms its launch after COO~F's exit. The checked-in canonical `org/mcp/server.py:get_agent_status("2.0.0_SA_COO~T")` returned **LIVE at2026-09-15T13:20:53Z**, last seen10s ago, PID26332, working on MDPF_TAXSMA startup and L5 decomposition. This was a direct invocation of the unchanged repository function because no callable MCP status tool was exposed in this Codex session; it did not register a seat or start a server/helper. The canonical L4 notifier sent the unchanged v0.2 release as **97083 at13:22:49Z**; broker readback at13:25:23Z is **SENT**, not yet READ. The delivery receipt is below. L5 remains owned by COO~T and is not complete merely because the session is live.
 
 Exact unread notice handled: `20260915T125550Z_1.0.0_SA_CTO_ANDREW_RULED_the_seat_order__MDPF_TAXSMA.md`, Msg-ID97073, sender `1.0.0_SA_CTO`. It relays Andrew's ~12:5xZ words verbatim:
 
@@ -36,7 +36,7 @@ The priority decision, lane selection and launch condition are now settled. The 
 
 1. **[0.0.0_AB_MSTR, complete]** Notice97081, exact file `20260915T131240Z_0.0.0_AB_MSTR_2.0.0_SA_COO_T_LAUNCHED_13_10Z_for_MDPF_.md`, reports COO~F's cold handoff at6d8030b6ee and exit, then COO~T's launch around13:10Z. It instructs this seat to bind the lane and fire the notifier once canonical get_agent_status reads LIVE.
 2. **[1.0.0_SA_CTO~A, complete]** The exact lane measured LIVE at13:20:53Z; `project.json` now records `coo_lane: "2.0.0_SA_COO~T"`. No sequence edit or PRD_NOTIFY_TO bypass is used.
-3. **[1.0.0_SA_CTO~A, in progress]** The installed canonical post-commit notifier reoffers the held v0.2 release to the named round holder. Record its actual message ID and delivery state; SENT/EMITTED is not READ, and READ is not L5 completion.
+3. **[1.0.0_SA_CTO~A, sent; intake pending]** Binding commit `a245ccd226` triggered the installed canonical post-commit notifier, which sent **97083** to the exact lane at13:22:49Z, attempt1/6. The broker returned SENT at13:25:23Z with no emitted_at or acked_at. Canonical reoffer remains active until READ; no transport success is substituted for agent intake.
 4. **[2.0.0_SA_COO~T]** Own L5 decomposition and the downstream canonical flow for admitted v0.2 at60c722fe64. This routing note issues no task order or implementation GO.
 
 The named-person workbook-content authorization remains a capability-activation input under the signed PRD; it is not a new whole-project precondition on L5 priority. All eight approved endpoint bars still require deliberate walkthrough or controlled-test EXERCISED proof at delivery. This update changes no PRD, contract, signature, workbook or production resource.
@@ -46,3 +46,15 @@ The named-person workbook-content authorization remains a capability-activation 
 COO~G notice96997 declined the project under its assigned scope and capacity; that refusal did not select another lane. The earlier checker read TAXSMA as UNPLACED. CTO97006 then rejected the proposed placement after IRPT_BCKEND and kept movement held until Andrew resolved the competing LGIC_CANON next-slot claim. That decision hold is now superseded by97073 and SEQUENCE v4; the historical checker output is not the current queue.
 
 Prior authority: `org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20260915_075xZ_LAPTOP_CAPACITY_ORDER_TAXSMA_THEN_OPLGTW_THEN_IRPT_BCKEND.md@4524cc2466a861f38565eac09e5f88c9e10a9013`, LD-0567. No new sequence edit is made by this seat.
+
+## Canonical delivery receipt, 2026-09-15T13:25:23Z
+
+- Binding commit: `a245ccd226`; exact `coo_lane`: `2.0.0_SA_COO~T`.
+- Installed `.tools/git-hooks/prd-header-notify-post-commit.sh` / `.tools/prd-header-notify.py reoffer` released the held v0.2 row, **Msg-ID97083**, from `1.0.0_SA_CTO~A` to `2.0.0_SA_COO~T`, sent at `2026-09-15T13:22:49.679428+00:00`, attempt1/6, held=null.
+- Subject: `[PRD LANDED] MDPF_TAXSMA v0.2 @905d2df375 -- step 4 done; step 5 is yours`. The release pin is the second-signature commit; finalized ADMITTED metadata remains at `60c722fe64`.
+- Canonical `delivery_state(97083)` / broker ledger read at13:25:23Z: **SENT**, last polled13:24:24Z; emitted_at=null, acked_at=null, acked_by=null. READ is pending and must not be claimed from this receipt.
+- COO~T was sent the finalized admitted pin, contract and next-limb ownership at13:23:59Z and asked to ACK97083. MSTR and base CTO received the measured status and handoff at13:24:00/02Z.
+- Fresh `sequence-check.py --project MDPF_TAXSMA`: PLACED stage0; PRD v0.2 ADMITTED, brief and ratified-text SIGNED; no flags; capacity3/3 COO~G/~O/~T. TAXSMA no longer consumes a NEEDS-SLOT queue entry.
+- Unchanged file hashes verified after binding: PRD SHA256 `35c38dc71f71739116f04d8a647cf66025a041279ec2a79175daaed22583ec34`; contract SHA256 `5adfb0c5c001f42fc3591d08d5819a7d990f7b9baaf58af232bd2fe892bf7d9a`.
+
+This completes the named-lane binding and canonical send requested by97081. The next output is COO~T's L5 decomposition; neither delivery nor liveness certifies that output or endpoint exercise.
