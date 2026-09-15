@@ -648,6 +648,39 @@ refused to relabel `generated_at` as the day.
 re-grade count, the close commit and the send. The channel census by subtraction: 72 new rows, 3 ARMED with 3 disarms, 3 BLOCKING
 each answered by an amendment.
 
+### 21. rj-3 complete and drained; round 11 CLOSED and the L8 packet sent to 3.0.0_SA_CVO~W (21:4x-22:0xZ)
+
+**rj-3 (`~18`) re-ran after AMENDMENT 3 and reported COMPLETE at `836f39e47b`.** AC1 passed: the thesis `generated_at_day` and
+`crosswalk_vintage` are both 2026-09-15, equal to the ranked `as_of_date`. AC2 passed with the thesis `as_of_date` ABSENT as met.
+AC6 passed, listing the browser record PRESENT. AC3 and AC4 were kept, and AC5 was recorded. The worker tested each new expect
+against three mutated outputs before recording, and none matched. It added no rows.
+- **Verified by this seat before draining:** the order status reads `complete` at the branch tip, and the worktree checker returns
+  VALID with 0 violations and 5 of 5 invocations aligned. The branch changes 6 paths.
+- **Drained @`53e80f58b4`** with no conflict; the merged index was graded before it landed.
+- **Noted for L9:** AC2 records the exit code of `tail`, by the design of the cut. AC5 names the browser record by its absolute
+  worktree path.
+
+**Graded at HEAD `53e80f58b4` with the main tree checker:** 13 of 13 round-11 orders complete, 13 of 13 instances VALID. The channel
+holds 250 rows.
+
+**The close.** The criteria census gate REFUSED the first close attempt. It measured 83 criteria, not the 80 the packet stated; the
+80 predated AMENDMENT 5, which added AC10-AC12 to rj-10. The per-order table already summed to 83. The summary line and the section-3
+heading were corrected, and nothing was filed before the gate passed.
+- **Close commit `155105b850`:** `ledger/ROUND11_PACKET.md`, plus `dep_stage` EXECUTING -> ROUND_CLOSE in `project.json` and in the
+  generated flat index.
+- **Two instruments disagreed** during the close: the index generator exited 1 citing one violation, while the check after it read 0.
+  Reconciled on three reads. The flat index diff is exactly the stage line and its generation stamp. An unscoped status of
+  `org/projects/` is clean, so no other project was written. The check at HEAD reads 18 valid tree projects and 0 violations. The
+  one violation was the stale index entry the generator exists to rewrite.
+
+**The one L8 send:** message **23260** to `3.0.0_SA_CVO~W`, LIVE when read, at 22:05:42Z. It went out by filesystem, broker and channel
+push, and names `155105b850`. The inbox file measures 2898 bytes and is still at the top level. The broker reads QUEUED, 0 of 1 READ.
+Delivery is not a read.
+
+**Round 11 at this section:** CLOSED on the COO side. The next canonical acts are other seats: L9 is `3.0.0_SA_CVO~W`, and the L10
+slug goes to `1.0.0_SA_CTO~W`, whose ROUND_ANALYSIS or PRD addendum this lane recuts in ONE round-12 issuance. No round-12 order is
+cut before that analysis (LD-0521).
+
 ## Decisions Made
 
 | Decision | Rationale |
