@@ -6,15 +6,15 @@
  "directive": "D14",
  "macro": "LGIC",
  "fabric": "laptop",
- "decomp_version": "v2",
+ "decomp_version": "v2.1",
  "step": 5,
- "prd_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/prd/LGIC_ENFORCE_PRD.md@78128f29ea",
- "prd_half_hashes": {"ratified-text": "SIGNED 3.0.0_SA_CVO @daeeb1f437 (review @9879d45fdc)", "brief": "SIGNED 4.0.0_SA_CRO @bb99f5f03f (review @93b7a4664e)"},
+ "prd_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/prd/LGIC_ENFORCE_PRD.md@09bde3126c",
+ "prd_half_hashes": {"ratified-text": "SIGNED 3.0.0_SA_CVO @daeeb1f437, current at v1.2 (the half is unchanged)", "brief": "SIGNED 4.0.0_SA_CRO @e848967b3f, re-signed at v1.2"},
  "author": "2.0.0_SA_COO~G",
- "cells": 27,
+ "cells": 28,
  "dag_levels": 7,
  "round": 2,
- "round_2_orders": 11,
+ "round_2_orders": 12,
  "frozen": true
 }
 ```
@@ -41,6 +41,18 @@ edge, gate, criterion or count moved: 22 cells, 7 levels. The freeze above binds
 **v2, the round-2 recut** (2026-09-15), on `1.0.0_SA_CTO`'s round-1 analysis (L10, msg 97145 @`7b5331c8c0`). Section 0b is
 the cut: 11 orders, 6 re-run cells and 5 new ones (`EN-r-2`, `EN-r-3`, `EN-r-4`, `EN-r-5`, `EN-t-3`), so the document now
 holds 27 cells. Round 1's text below stands as its record.
+
+**v2.1, before any round-2 order was issued** (2026-09-15), on PRD v1.2 @`09bde3126c` (ADMITTED on both halves:
+`4.0.0_SA_CRO` re-signed the brief half @`e848967b3f`) and `1.0.0_SA_CTO`'s rulings 97177 and 97200.
+- One cell is added, `EN-r-4`: the resource-to-system rows in `infra/logic/registry/resources.json` (PRD candidate E13).
+  Its first population is LGIC_NAMING round 2's 48 `{system}` gaps. The ruling names it `EN-r-4`, so the per-view-hash
+  cell v2 had cut under that id is renumbered `EN-r-6`, unchanged in content. v2 was never issued, and no other
+  document cites that id: LGIC_NAMING's decomposition cites only `EN-r-2` and `EN-r-3`.
+- `EN-r-3`'s one-carrier clause becomes a census (97200): every reader of `firm_forms` in `lib/opal_naming.py`, and
+  every other tracked file an unscoped search finds, with the denominator printed. Row S19 (`scopes.json`'s
+  `_about.row_fields`) is that cell's too.
+- G-V19a is met: `NAMING_SCHEMA.json` v1.9 is on `lgic-v19-landing` @`bf506e53be`, ADMITTED there.
+- 12 orders; 28 cells.
 
 **The rulings every cell carries, from the PRD preamble:** the SOURCE-FIRST key string
 `{source}/{scope}/{tier}/{table}/{partition}`, with the bucket as container and never a segment; the short forms `49f`, `inf`
@@ -112,9 +124,14 @@ The PRD defers four reads to L5 by name. Each was read at this cut, and the resu
 - The analysis: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_LGIC_ENFORCE_ROUND1_20260915.md` @`7b5331c8c0`
   (msg 97145), on `3.0.0_SA_CVO`'s slug 97135 (`ADJUDICATION_v1` @`43ad6e9b2b`, `REMEDIATION_v1` @`7748cc5df7`). Its s.3
   says what round 2 must reach and leaves the split and the order to the COO.
-- PRD v1.1 @`78128f29ea`, ADMITTED (`prd-signoff.py status LGIC_ENFORCE`: both halves SIGNED, current). No PRD change is
-  owed: RULING ONE's schema text is `NAMING_SCHEMA.json` v1.9, the data file CONTRACTS row 1 reads at run time, which
-  `1.0.0_SA_CTO` writes (s.2).
+- PRD v1.2 @`09bde3126c`, ADMITTED (`prd-signoff.py status LGIC_ENFORCE`: both halves SIGNED, current; the brief half
+  re-signed by `4.0.0_SA_CRO` @`e848967b3f`). Read as the diff from v1.1 @`78128f29ea`, v1.2 is an L10 addendum on the
+  brief half only: DEC-1 defines `resources.json`, candidate E13 populates it, and the ENDPOINT and CONTRACTS are
+  unchanged. RULING ONE's schema text is `NAMING_SCHEMA.json` v1.9, the data file CONTRACTS row 1 reads at run time,
+  which `1.0.0_SA_CTO` writes (s.2).
+- `1.0.0_SA_CTO` 97177: cell `EN-r-4` populates `resources.json` and writes its readers in `lib/opal_naming.py` (`_slots`,
+  `validate`), ordered so it never overlaps another writer of that file; LGIC_NAMING cell f-1's re-grade waits on it.
+  97200: `EN-r-3`'s repoint is a census of every `firm_forms` reader, and row S19 is `EN-r-3`'s.
 - All 22 round-1 orders are terminal: 19 complete, and `EN-s-1`, `EN-v-1` and `EN-x-1` pending with VALID proofs (96806).
   The load-bearing order held: the slug, then the analysis, then this cut.
 - The same seat cuts LGIC_NAMING's round 4 in the same window (its analysis msg 97137; PRD v1.8 ADMITTED @`b136cdc308`).
@@ -127,24 +144,25 @@ The PRD defers four reads to L5 by name. Each was read at this cut, and the resu
   minus cells whose outcome graded REALIZED and that no ruling re-opens  -16
       EN-c-1, EN-c-2, EN-r-1, EN-b-1, EN-m-1   their files move only through the new cells below
       EN-f-1, EN-f-2                           the fence is APPLIED; G-F's live flip is not this round
-      EN-v-1 .. EN-v-6                         FWD-3 REALIZED on its ACCEPT's denominator; regeneration is EN-r-4's
+      EN-v-1 .. EN-v-6                         FWD-3 REALIZED on its ACCEPT's denominator; regeneration is EN-r-6's
       EN-p-1                                   FWD-6 REALIZED
       EN-d-2                                   FWD-1 REALIZED (its control fix lands in the checker, below)
       EN-t-1                                   the label census is an input, not re-run
   = cells re-run ........................................................ 6
       EN-g-1   the commit limb: RULING ADD (authored files only), W2-S9 (validate first), C-S11 (the map as data)
       EN-t-2   the apply limb reads the plan: RULINGS ADD and PLAN
-      EN-s-1   the census, run again on the rows EN-r-2 lands
+      EN-s-1   the census, run again on the rows EN-r-2 and EN-r-4 land
       EN-s-2   the comparison, on the real population
       EN-x-1   FWD-2 again, on one carrier, with disjoint filters (W1-S21)
       EN-d-1   FWD-7 again: a new firm draws no warning
-  plus new cells ........................................................ 5
+  plus new cells ........................................................ 6
       EN-r-5   the gateway registration, whole: the issuer's prepared change, which lanes refused to the issuer
       EN-r-3   RULING ONE: one carrier; DEC-1's field set; RULING DEMO; the tftest generated
       EN-r-2   RULING ROWS: the RAISE population classified, the class (a) rows added
-      EN-r-4   per-view hashes (W1-S14), every view regenerated, each consumer suite by RULING RED
+      EN-r-4   the resource-to-system rows (PRD v1.2 E13; 97177): resources.json, its validate limb, grade() reading it
+      EN-r-6   per-view hashes (W1-S14), every view regenerated, each consumer suite by RULING RED
       EN-t-3   the Terraform roots read with the switch on (the G-F prerequisite)
-  = round-2 orders ..................................................... 11
+  = round-2 orders ..................................................... 12
 ```
 
 **Not cells (s.4):** C-S9 (`1.0.0_SA_CTO`'s `.tools` fix, landed @`7da8112496`), C-S10 (`0.0.0_AB_MSTR`'s fabric-wide merge
@@ -178,6 +196,13 @@ The commit limb validating the registry first (W2-S9) and the per-view hashes (W
   2026-09-14 12:13:53 UTC) to `gateway-*` canonical forms: a verdict, not a rename (`1.0.0_SA_CTO` 97167). `EN-s-1`'s counts
   carry that shift.
 
+**The population `EN-r-4` fills first** (fixed input `fixed_inputs/r2/RESOURCE_GAPS.json`): the 48 names in LGIC_NAMING
+round 2's forms whose canonical form carries `{system}` (`n4-firm-patterns.md` @`a4480344e3`, row LGIC_NAMING-S20):
+49financial 14, inflection 27, cottonwood 6, demo 1. At this cut `grade(name, "IAM_ROLE")` returns each record's
+canonical form, 48 of 48. In each, the token after the scope is a function word, so no `systems.json` row fills the slot
+(PRD v1.2). A `resources.json` row fills it, or the name keeps its placeholder and is counted with its reason. A
+placeholder is not a RAISE, so none of the 48 is in `EN-r-2`'s population.
+
 **A finding the analysis could not see, carried into the faces:** the census reaches its end only if NO group is class (d).
 A rule gap *"stays a loud RAISE"*, and the census stops on a RAISE (DEC-7). K1's 166 repo keys are a rule-plane population
 (a first segment that is neither a source nor a tier). If `EN-r-2` classes any group (d) or leaves one undecided, `EN-s-1`'s
@@ -188,7 +213,7 @@ proofs. That is the round's measurement, not a defect of the cut.
 - `EN-r-5` lands on CLOUD first: it writes `lib/opal_naming.py` and LGIC_NAMING's `GRADING_RULE.md`, as the V19 cells do.
 - `1.0.0_SA_CTO` then writes `NAMING_SCHEMA.json` v1.9 on branch `lgic-v19-landing`, which `2.0.0_SA_COO~G` cuts from
   CLOUD: `firm_forms` removed, and the Terraform-type-to-node-type map as data (C-S11).
-- **G-V19a:** v1.9 is on that branch. `EN-r-3` and LGIC_NAMING's cell g-1 are then cut from its tip. Each, verified by the
+- **G-V19a:** v1.9 is on that branch (met: @`bf506e53be`, ADMITTED there). `EN-r-3` and LGIC_NAMING's cell g-1 are then cut from its tip. Each, verified by the
   issuer, merges into `lgic-v19-landing`, never CLOUD. LGIC_NAMING's cell g-2 (`grade()` to FN1d, the map read as data,
   the two-way check between the rule and `grade()`) is cut after both.
 - **G-V19b:** the group reaches CLOUD in ONE merge. The reason is RULING ONE's *"in the same commit, so the data and its
@@ -201,11 +226,12 @@ proofs. That is the round's measurement, not a defect of the cut.
 | cell | round 2 | serves | acceptance, one clause per line |
 |---|---|---|---|
 | `EN-r-5` | the gateway registration, whole (`fixed_inputs/r2/gateway_whole.patch`, 12 paths) | FWD-5, FWD-7 (Rule 30) | validate: 0 refusals and 17 system rows · `generate` reproduces the 9 committed views · the naming suite has no new failure against the base (RULING RED) · `address("gateway","49financial","bronze","taxsma_workbook",...)` is the `opal-data-assets` key · `name("gateway","49financial","taxsma","role")` is `gateway-49f-taxsma-role` · `sharepoint` is still refused · only the `opal-gateway` worked case of `GRADING_RULE.md` moves, to `gateway-lb` |
-| `EN-r-3` | RULING ONE, DEC-1, RULING DEMO, the tftest (cut from `lgic-v19-landing`) | FWD-2, FWD-7 | no code reads `firm_forms` and the schema carries none · validate: 0 refusals, no warning but the inferred-owner ones · one new FIRM row draws no warning · one change to a firm's short form moves `name()` and `fence_patterns()` together · the tftest is generated and reproduces · every scope-row field is read by the module · `scopes.json`'s `_about` names one home · demo's tenancy is DEMO-TENANT with a home rule and a corrected note · every file that named `firm_forms` at the base is dispositioned · the naming suite has no new failure |
+| `EN-r-3` | RULING ONE, DEC-1, RULING DEMO, the tftest (cut from `lgic-v19-landing`) | FWD-2, FWD-7 | a census: 0 reads of `firm_forms` remain -- none in `lib/opal_naming.py` (every reader: `:248`, `:287-290`, `:347`, `:381`), none in the schema, and every other tracked file an unscoped search finds is a recorded non-reader, denominator printed (97200) · validate: 0 refusals, no warning but the inferred-owner ones · one new FIRM row draws no warning · one change to a firm's short form moves `name()` and `fence_patterns()` together · the tftest is generated and reproduces · every scope-row field is read by the module · `scopes.json`'s `_about` names one home (row S19: its `row_fields`) · demo's tenancy is DEMO-TENANT with a home rule and a corrected note · every file that named `firm_forms` at the base is dispositioned · the naming suite has no new failure |
 | `EN-r-2` | RULING ROWS over the 152 groups | FWD-5 | every group in exactly one of (a), (b), (c), (d), undecided, counts summing to 152 less the pre-landed · the registry validates · every (a) group is a `systems.json` row of a ratified class with a D-code owner · every (a)/(b)/(c) group's examples stop raising on that group · every (d)/undecided group's examples still raise · no token is both a row and unresolved or refused · `J`: every classification and every row's owner basis holds |
 | `EN-s-1` | the census, run again | FWD-5 | round 1's S1-AC1..AC4 unchanged (both planes; every nameable name judged; row shape; a RAISE stops the run) · the report is at HEAD's registry |
 | `EN-s-2` | the comparison, again | FWD-5 | round 1's S2-AC1 and S2-AC2 unchanged · the comparison stands on a census that judged the whole population · `J`: the totals agree with the hand ranking, or every difference is explained |
-| `EN-r-4` | per-view hashes; every view regenerated | FWD-7, FWD-3 | each generated file's mark hashes exactly the registry files it lists · a registry file a view does not list leaves its bytes unchanged · a file it lists moves its mark · the 7 carriers' exports equal the base's, in order, `bucket_for` on both branches · `generate` reproduces all 10 generated files · each consumer suite (views 1, 2, 3, 4, 6) has no new failure against the base |
+| `EN-r-4` | the resource-to-system rows (PRD v1.2 E13) | FWD-5; LGIC_NAMING FWD-5 | every row carries exactly name, type, system and evidence, none empty · the registry validates · validate refuses a planted row with an empty field · a repeated (name, type) · an unregistered system · the system `opal` · a type the grade does not take · a row for a name that resolves its own system · `grade()` over a rowed gap puts the row's system in its canonical form, and without the row the placeholder stays · each of the 48 gaps is rowed or counted with its reason · the naming suite has no new failure · `J`: every row's evidence attributes the resource to that system |
+| `EN-r-6` | per-view hashes; every view regenerated | FWD-7, FWD-3 | each generated file's mark hashes exactly the registry files it lists · a registry file a view does not list leaves its bytes unchanged · a file it lists moves its mark · the 7 carriers' exports equal the base's, in order, `bucket_for` on both branches · `generate` reproduces all 10 generated files · each consumer suite (views 1, 2, 3, 4, 6) has no new failure against the base |
 | `EN-g-1` | the commit limb, additions only | FWD-4 | a machine-written plan file is not graded, while the same name in an authored file is refused · the limb validates the registry first: over a refused registry it prints `NAMING ERROR` and exits 1 enforcing and 0 in WARN mode, and over the valid one it prints none · the limb holds no Terraform-type map of its own · round 1's 14 commit-limb criteria still pass |
 | `EN-t-2` | the apply limb reads the plan | FWD-4 | a created resource with a wrong literal name is refused with its canonical form · a created resource whose wrong name was built by an expression is refused at plan with its canonical form · a rename to a wrong name is refused · existing, updated and deleted resources only warn · a correct create passes · the pre-plan limb prints the deferred-expression count and never refuses · safe-apply blocks on the plan limb before apply · safe-apply passes the plan limb on a correct plan |
 | `EN-t-3` | the Terraform roots, switch on | FWD-4 (G-F's prerequisite) | the pre-plan limb refuses none of the 78 Terraform directories · every one of the 73 roots with a backend block is planned read-only · the plan limb refuses no resource that is neither created nor renamed · every create and rename is disclosed with the limb's verdict · `J`: the extracts are the roots' real plans |
@@ -217,30 +243,37 @@ proofs. That is the round's measurement, not a defect of the cut.
 ```
   EN-r-5 --> [EN-r-5 on CLOUD] --> [G-V19a: v1.9 on lgic-v19-landing] --> EN-r-3 --+
                                         LGIC_NAMING cell g-1 ---------------------+--> LGIC_NAMING cell g-2 --> [G-V19b]
-  [G-V19b] --> EN-r-2 --+--> EN-s-1 --> EN-s-2
-                        +--> EN-r-4 --> EN-d-1
-                        +--> LGIC_NAMING cell f-1 (its round-4 re-grade, ordered after this cell by 97137)
+  [G-V19b] --> EN-r-2 --> EN-r-4 --+--> EN-s-1 --> EN-s-2
+                                   +--> EN-r-6 --> EN-d-1
+                                   +--> LGIC_NAMING cell f-1 (its round-4 re-grade: after EN-r-2 by 97137, after EN-r-4 by 97177)
   [G-V19b] --> EN-g-1 --> EN-t-2 --> EN-t-3
   [G-V19b] --> EN-x-1
 ```
 
 - `EN-g-1 -> EN-t-2`: the apply limb imports the commit limb's map (`naming-apply-gate.py` `COMMIT_LIMB`), so the pair has
   one writer at a time.
-- `EN-r-2 -> EN-r-4`: the per-view regeneration is the round's last registry write, so every view ends current.
-- `EN-r-4 -> EN-d-1`: the expected diff set is computed under the per-view scheme.
+- `EN-r-2 -> EN-r-4`: a resource row names a `systems.json` key, so the keys `EN-r-2` adds are there to name; and the two
+  are the round's registry writers, one at a time.
+- `EN-r-4` writes `lib/opal_naming.py` (`_slots`, `validate`), so it sits where no other writer of that file is live:
+  `EN-r-5` lands before G-V19, the V19 group (`EN-r-3`, LGIC_NAMING cells g-1 and g-2) lands at G-V19b, and `EN-r-6`
+  spawns only after `EN-r-4` drains. One writer at a time (97177).
+- `EN-r-4 -> EN-s-1`: the census grades with the rows in place, as LGIC_NAMING cell f-1's re-grade does.
+- `EN-r-4 -> EN-r-6`: the per-view regeneration is the round's last registry write, so every view ends current.
+- `EN-r-6 -> EN-d-1`: the expected diff set is computed under the per-view scheme.
 
 | slot | cells, in order | spawned |
 |---|---|---|
 | ~6 | EN-r-5 | at issuance |
-| ~1 | EN-r-3, then EN-r-2, then EN-r-4 | EN-r-3 at G-V19a, from `lgic-v19-landing`'s tip; EN-r-2 at G-V19b; EN-r-4 after EN-r-2 drains |
-| ~2 | EN-s-1, then EN-s-2 | after EN-r-2 drains |
+| ~1 | EN-r-3, then EN-r-2, then EN-r-4, then EN-r-6 | EN-r-3 at G-V19a, from `lgic-v19-landing`'s tip (@`bf506e53be` or later); EN-r-2 at G-V19b; EN-r-4 after EN-r-2 drains; EN-r-6 after EN-r-4 drains |
+| ~2 | EN-s-1, then EN-s-2 | after EN-r-4 drains |
 | ~3 | EN-g-1, then EN-t-2, then EN-t-3 | at G-V19b; each after the one before drains |
 | ~4 | EN-x-1 | at G-V19b |
-| ~5 | EN-d-1 | after EN-r-4 drains |
+| ~5 | EN-d-1 | after EN-r-6 drains |
 
 **Fan-out: N of M = 6 chains (EN-r-5; the registry chain; the census chain; the limb chain; EN-x-1; EN-d-1), cap 8.** One
-worker at issuance (EN-r-5). At most 5 at once after G-V19b (~1, ~2, ~3, ~4, then ~5 once EN-r-4 drains). No
-distinct-worker constraint binds this round: `EN-d-2` is not re-run.
+worker at issuance (EN-r-5), which lands before any other chain spawns. At most 4 at once: ~1, ~3 and ~4 from G-V19b,
+~2 once EN-r-4 drains, and ~5 only once EN-r-6 drains, when ~1 has ended. No distinct-worker constraint binds this round:
+`EN-d-2` is not re-run.
 
 **Disk.** Four cells make practice copies or plan real roots (`EN-t-3`, `EN-x-1`, `EN-d-1`, and `EN-r-3`'s landing-branch
 worktree). The 10G stop line binds at every spawn (C: read 27G free at this cut).
@@ -249,7 +282,7 @@ worktree). The 10G stop line binds at every spawn (C: read 27G free at this cut)
 1. The population is the 152-group union of both planes, not the live 115.
 2. `EN-r-5` is a worker cell: the prepared change touches six paths whose lanes refuse the issuer, and the canonical route
    for a lane-refused change is a worker grant.
-3. `EN-r-4` is ONE cell for every view (round 1 used six): regeneration is mechanical and has one writer at the round's
+3. `EN-r-6` is ONE cell for every view (round 1 used six): regeneration is mechanical and has one writer at the round's
    last registry state; each consumer suite is its own criterion.
 4. The limbs read the schema's map too: C-S11's one carrier, extended to the two limbs, so the type map has one home.
 5. `EN-t-3` plans the 73 roots that declare a backend. The other 5 Terraform directories (4 under `modules/`, and
@@ -257,8 +290,11 @@ worktree). The 10G stop line binds at every spawn (C: read 27G free at this cut)
 6. Every round-2 result file carries `.r2.`, the new exercise records are new files (`EXERCISE_FWD2_R2.md`,
    `EXERCISE_FWD7_R2.md`), and proofs pin artifacts by commit (S18; the one-shot `PENDING-THIS-COMMIT` sentinel went stale on
    `EN-x-1` in round 1).
+7. `EN-r-4` (97177) sits in the registry chain, after `EN-r-2` and before `EN-r-6`, not in a slot of its own: it writes
+   both the registry and `lib/opal_naming.py`, and that chain is where those writers are already one at a time.
 
-**What this cut does not claim:** that the census reaches its end (the finding above); G-F's flip; that `EN-t-3`'s extracts
+**What this cut does not claim:** that the census reaches its end (the finding above); that every one of the 48 gaps
+gets a row (a resource no owner can be named for is counted, never guessed); G-F's flip; that `EN-t-3`'s extracts
 are the roots' real plans (T3R-J1, at L9); the population at any later vintage.
 
 **Battery at the cut.** comp-schedule: CARRIED from L5 (`--budget 540`, 5 of 5 carriers, 25 gates, none naming this
@@ -268,7 +304,7 @@ records and read-only plans; no operation, policy, principal or resource is adde
 (3 of 3 cited commits verified; 1 cited path, stable; T11 stated: the analysis carries no `<decomp_ref>`, so filesystem
 adjacency stands as its neighborhood).
 
-**L4-R at the cut:** ADMITTED at v1.1.
+**L4-R at the cut:** ADMITTED at v1.1 for v2, and at v1.2 for v2.1 (both halves current).
 
 ---
 
