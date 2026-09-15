@@ -190,6 +190,75 @@ not a message.
     "spec_asserts": "Decomposition section 8 choice 2: the canon's section 4 and the ledger's section 6 carry the same entries, and the schema's axis column takes A1-A5.",
     "world_is": "The carriers had diverged by one entry (X6, ledger only), and that entry's axis is 'tenancy', a value the kept schema does not admit. The canon v1.0 keeps the schema and points at the ledger for entries, so X6 now sits in the one carrier against a schema it does not fit. The worker did not edit the ledger, which is outside this order's paths. INERT: a register entry classifies and moves nothing (DEC-9). The fix belongs to the ledger's owner this round (cell CN-l-1), or to 1.0.0_SA_CTO or 4.0.0_SA_CRO, who write register entries: give X6 an axis in A1-A5, or widen the schema's axis domain by a Rule-24 act.",
     "notes": "Filed by the CN-k-1 worker while carrying out item 7 (section 4 points at the ledger for its entries)."
+  },
+  {
+    "id": "LGIC_CANON-W6-S1",
+    "project": "LGIC_CANON",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_CANON~6",
+    "surfaced_at": "2026-09-15T20:53Z",
+    "one_line": "A new firm's identity row cannot be written without two values that no builder or rule produces: its LONG and SHORT forms. The schema's firm list is a closed list of four firms, ruled by Andrew, and the only onboarding runbook tells the operator to choose the slug. The checklist therefore takes both forms as inputs from Andrew and derives nothing.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SCHEMA: org/standards/NAMING_SCHEMA.json@671925aecc:113 firm_forms lists exactly four firms (49financial/49f, inflection/inf, cottonwood/cot, demo/demo). Its rows_owner text reads 'This file fixes the SHAPE and the closed lists; it mints no row.'",
+        "CANON: infra/logic/02_DOCTRINE.md@671925aecc:123-125 R1 'Each firm has ONE sanctioned LONG form and ONE sanctioned SHORT form ... Andrew ~03:5xZ'. No rule in the canon derives a new firm's two forms.",
+        "RUNBOOK: infra/aws/users/ONBOARDING.md@671925aecc:164-168 'Step 1 -- Choose the firmId slug. Lowercase, alphanumeric, no spaces.' The one existing firm-onboarding runbook leaves the choice to the operator.",
+        "PRACTICE RUN: org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/EXERCISE_FWD7.md@671925aecc:6 took the fictitious forms quillwater/qwt as fixed by its order; :35 shows that a new FIRM row draws 'WARN ... is not in NAMING_SCHEMA.json firm_forms'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-CN-o-1 THE CELL: the checklist takes a new firm from its identity row to its served dashboard 'with no step where somebody has to invent an answer' (FWD-5), and every name a step produces is the builders' output (CLAUDE.md Rule 30).",
+    "world_is": "The identity row's first fields, the firm's LONG and SHORT forms, are what name(), lookup() and address() read, so the builders cannot supply them. The canon rules which form each slot takes, and the schema's closed list names four firms; both rest on Andrew's card-2 word. The only runbook (ONBOARDING.md section 5, step 1) has the operator pick a slug. The checklist does not invent a derivation: its INPUTS table and Step 1 take both forms from Andrew. Whether a rule should derive them (for example, SHORT from LONG) is for 1.0.0_SA_CTO and LGIC_NAMING's owner to carry to Andrew. INERT: the checklist's first real run (C6) is not cut this round.",
+    "notes": "Filed by the CN-o-1 worker while writing Step 1 of infra/logic/10_ONBOARDING_CHECKLIST.md."
+  },
+  {
+    "id": "LGIC_CANON-W6-S2",
+    "project": "LGIC_CANON",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_CANON~6",
+    "surfaced_at": "2026-09-15T20:53Z",
+    "one_line": "The acts that give a firm's people their sign-in have no LGIC_ENFORCE CONTRACTS builder and are not generated views. They are the opal-partner-<firm> table (one hand-written partner-firms/<firm>.tf per firm), the user rows written with CLI put-item, and the portal page-access map FIRM_ALLOWED_PATHS, which is edited by hand. So the checklist's sign-in step can name only the identity row as its input, and has to take the portal path list from Andrew.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUNBOOK: infra/aws/users/ONBOARDING.md@671925aecc:170-183 creates 'opal-partner-$FIRM' with aws dynamodb create-table 'until 0.7.0_AE_CloudOps ships the TF module'; :82-83 and :109-110 write users with aws dynamodb put-item; :201-213 has the page-access map portal/src/lib/firmAccess.ts FIRM_ALLOWED_PATHS edited by hand (portal/ is a gitlink and that file was not read).",
+        "MODULE: infra/aws/terraform/partner-firms/demo.tf@671925aecc:32-35 'module \"firm_demo\" { source = \"../modules/partner-firm-table\" firm_id = \"demo\" }'. There is one hand-written file per firm in that directory (49financial.tf, cottonwood.tf, demo.tf, inflection.tf).",
+        "CONTRACTS: org/missions/D14/LGIC/LGIC_ENFORCE/prd/LGIC_ENFORCE_PRD.md@671925aecc:161-171 has nine rows, and none produces the sign-in table, the user rows or the page-access map. lib/opal_naming.py@671925aecc:60-68 VIEWS lists seven generated carriers, and neither partner-firms/*.tf nor firmAccess.ts is among them."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-CN-o-1 THE CELL: every step names its builder or gate by an LGIC_ENFORCE CONTRACTS name; every name a step produces is the builders' output (Rule 30); the last step is the served dashboard its people see.",
+    "world_is": "No LGIC_ENFORCE contract builds the firm's sign-in, and no registry field carries the portal paths a firm may open. So Step 14 of the checklist names the identity registry's ROWS as the source of the firm id, email domain and surfaces, says plainly that the three acts sit outside every contract, and STOPs for the path list if Andrew has not given it. FIRM_ALLOWED_PATHS is a per-firm map kept by hand, of the kind DEC-5 turns into generated views, and it is not one of the seven. The canon rules only the storage plane, so no canon rule governs sign-in either; Step 14 cites R6's tenant separation. The owner of the gap is 1.0.0_SA_CTO: a CONTRACTS row, or a DEC-5 carrier. INERT: nothing runs until C6.",
+    "notes": "Filed by the CN-o-1 worker while writing Step 14 of infra/logic/10_ONBOARDING_CHECKLIST.md."
+  },
+  {
+    "id": "LGIC_CANON-W6-S3",
+    "project": "LGIC_CANON",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_CANON~6",
+    "surfaced_at": "2026-09-15T20:53Z",
+    "one_line": "A new firm's dashboard is served through routes that read tier-first keys: the edge auth validator reads platinum/{firmId}/ownership_map.json in FIRM_BUCKET_MAP[firmId] || `opal-data-${firmId}`, and the router asserts platinum/advi/{firm}/. key() and address() cannot produce those keys, and the list that would admit legacy served paths does not exist yet. So the checklist's platinum step STOPs there instead of having a hand-typed key written.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "EDGE: infra/aws/lambda-edge/auth-validator-edge/index.mjs@671925aecc:153-154 'const bucket = FIRM_BUCKET_MAP[firmId] || `opal-data-${firmId}`;' and 'const key = `platinum/${firmId}/ownership_map.json`;'. The key is tier-first, and the fallback bucket is composed by hand.",
+        "BUILDERS: lib/opal_naming.py@671925aecc:1287-1300 key() returns only {source}/{scope}/{tier}/{table}/{partition}; :1303-1316 address() returns s3://{bucket}/ followed by that key. Neither can produce 'platinum/<firm>/ownership_map.json'.",
+        "ROUTER: infra/aws/lambda-edge/_shared/firm-config.mjs@671925aecc:34, the hazard note above FIRM_CONFIG: 'shared-advisor-router asserts the {firm} segment of platinum/advi/{firm}/', which is also tier-first.",
+        "SCHEMA: infra/logic/02_DOCTRINE.md@671925aecc:180-182, the generated N1 'legacy served path' clauses. A legacy served path keeps its bytes only if legacy_served_paths lists it, and that list is 'absent until LN-g-1 lands it'.",
+        "REGISTRY: infra/logic/registry/scopes.json@671925aecc, row 49financial: its alias opal-data-bd has planes [bucket] and routed true. The router still serves 49 Financial from its legacy bucket, so no firm is yet served from a canonical firm bucket."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-CN-o-1 THE CELL: every address a step produces is the builders' output (Rule 30), and the last step is the served dashboard the firm's people see.",
+    "world_is": "The routes that serve a firm's dashboard read keys the builders refuse to produce, and the membership list for legacy served paths (LN-g-1) does not exist yet. A runner would face two options: type the legacy key by hand, which Rule 30 forbids, or publish at the builder address, which the route never reads. Step 10 of the checklist STOPs there and names this row, and Step 15 points back to it. The owners are the served-route side (ADVI_FIRMBKTS's router work, and LGIC_NAMING's LN-g-1 legacy list), with routing decided by 1.0.0_SA_CTO. INERT: no new firm is being onboarded this round.",
+    "notes": "Filed by the CN-o-1 worker while writing Steps 10 and 15 of infra/logic/10_ONBOARDING_CHECKLIST.md."
   }
 ]
 ```
