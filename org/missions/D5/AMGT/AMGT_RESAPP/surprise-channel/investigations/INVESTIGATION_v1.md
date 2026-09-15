@@ -5844,6 +5844,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "AC7 is recorded FAIL on this clause alone, output verbatim; the pointer clauses and every NOT-met condition AC7 names (missing pointer, pointer with rank_sort, rows under a bare date partition by the deployed code) are met by the same output. The bare partition's 18:55Z rows are the PRE-ACT code's (row W19-S16), not this invoke's."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W19-S19",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~19",
+    "surfaced_at": "2026-09-15T20:02:00Z",
+    "one_line": "The CTO half's s.8 @b360513e99 names the second act's own rollback (rebuild the producer from the first act's handler at e0c93010af until CodeSha256 reads 14WuwYSo... again) and 2.0.0_SA_COO~W ordered it written into ledger amgt-round11-producer-universe BEFORE AC11's apply, but that instruction reached the worker only after AC11 had completed (apply at 20:00:21Z), so the apply ran under a ledger entry naming no rollback; the rollback is recorded after the act.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "2.0.0_SA_COO~W mid-task message to 0.9.0_WK_AMGT_RESAPP~19 citing org/missions/D5/AMGT/AMGT_RESAPP/ledger/NEVER_WIDEN_ROUND11_ONE_STORE_CTO_HALF.md s.8 @b360513e99: 'Write that rollback into the ledger entry amgt-round11-producer-universe (its rollback leg), in a follow-up commit to the entry before the apply.' The committed order @4f0436811b DELIVER step 6 names legs L1 git, L3 activation, L4 verify, L5 verify and no rollback leg.",
+    "world_is": "Ledger amgt-round11-producer-universe opened 19:55:59Z and committed WITH its sentinel @f261fa51dc (4 legs, no rollback). AC10 ran at ~19:58Z (plan-rc=2, Plan: 0 to add, 1 to change, 0 to destroy, the one address aws_lambda_function.chatter_axis_producer, only source_code_hash 14WuwYSo... -> 0tct2ESH... changing). AC11 ran and printed f261fa51dc, apply-rc=0, 'APPLY Apply complete! Resources: 0 added, 1 changed, 0 destroyed', modifications-complete 1 destroying 0 creating 0 halt-block 0, and the producer Active Successful 0tct2ESHDkNSWYgKcyFSB8RDr6rm1kEHtTKx7I6Ab9s= LastModified 2026-09-15T20:00:21Z. The coordinator's message was delivered after that output was read (20:00:28Z). The act itself matches s.8's permitted set exactly (one address, code only). No AC6-AC8 read and no producer invoke had run when this row was filed. .tools/deploy_ledger.py exposes open/close-leg/close/hold/check/list and no verb that adds a leg to an open entry.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "deliverables/0.9.0_WK_AMGT_RESAPP~19/rj10.AC10.out.txt and rj10.AC11.out.txt (verbatim).",
+        "org/critical_paths/.open_deploys/amgt-round11-producer-universe.json @f261fa51dc (legs L1, L3, L4, L5).",
+        "git show b360513e99:org/missions/D5/AMGT/AMGT_RESAPP/ledger/NEVER_WIDEN_ROUND11_ONE_STORE_CTO_HALF.md, s.8 heading at line 166 of 202, rollback table row 1."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Recorded as form only. The rollback is written into the entry by the ledger tool's own verbs in the next commit, before AC6-AC8, and cited in L3's proof at close."
   }
 ]
 ```
