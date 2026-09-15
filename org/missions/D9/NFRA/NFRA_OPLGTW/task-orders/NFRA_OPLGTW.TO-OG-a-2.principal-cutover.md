@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_OPLGTW~3</issued_to>
 <issued_by>2.0.0_SA_COO~O</issued_by>
 <issued_date>2026-09-15</issued_date>
-<status>complete</status>
+<status>pending</status>
 
 **Directive:** D9 | **Fabric:** laptop | **PRD:** `org/missions/D9/NFRA/NFRA_OPLGTW/prd/NFRA_OPLGTW_PRD.md` v0.2 @f0aa50dbc0 (ADMITTED) | **Contract:** `org/standards/NFRA_OPLGTW_CONTRACT.json` v1.0 | **Decomp cell:** `OG-a-2` | **outcome_ref:** FWD-1, FWD-3, FWD-7 | **depends_on:** `OG-a-1` | **slot:** ~3, queue position 3
 
@@ -46,6 +46,20 @@ bound refresh families behind one principal-key function; this cell changes that
 **Read:** the PRD's "C1"; `app/token_broker.py`, `app/context.py`, `app/identity.py`, `app/oauth_as.py`, `app/server.py`,
 `app/revocation.py`; `tests/test_oauth_durable.py` (the previous cell's tests, which must stay green).
 
+**Amended after your first run, on `1.0.0_SA_CTO`'s ruling (msg 97114; rows `NFRA_OPLGTW-W3-S7`, `NFRA_OPLGTW-S7`).**
+The first run (this branch at `fed567f54e`) passes AC1..AC11, and 16 existing tests fail, because their fixtures
+obtain a principal the way C1 removes. `tests/test_oauth_durable.py`'s upstream fake yields only an email.
+`tests/test_jwt_cve_lock.py` and `tests/test_schwab_audit.py` mint a family-less token for an email. Updating how
+those tests sign in is part of C1's own outcome. So the three files are granted to this cell, FIXTURE-ONLY:
+- edit only how each test obtains a principal or token;
+- the durable fake returns a tid/oid principal through `token_broker.redeem_code_for_principal`, as
+  `tests/test_principal_cutover.py`'s local issuer does;
+- the two single tests mint from a refresh family;
+- no assertion is removed, weakened or re-targeted.
+AC12 runs the three modules green. AC13 counts, per module, the assert statements (`assert`, `self.assert*`,
+`pytest.raises`) at your HEAD and at the cut base `3f94e0a024`, prints both, and passes only when every pair is
+equal. Your AC1..AC11 code stands; re-run all thirteen criteria and rebuild the proof instance and result file.
+
 ### ACCEPTANCE
 
 <placeholders>WS</placeholders>
@@ -83,7 +97,13 @@ bound refresh families behind one principal-key function; this cell changes that
 <criterion id="OGA2-AC11" cell_refs="OG-a-2"><invocation>cd <WS> && timeout 120 .venv-og/Scripts/python -m pytest infra/aws/ec2/opal-gateway/tests/test_principal_cutover.py::test_oga2_ac11 -q -p no:cacheprovider --color=no</invocation><expect>(?m)^1 passed(?![^\n]*(failed|error))</expect></criterion>
 `OGA2-AC11` (`test_oga2_ac11`) -- a denied data entitlement returns a terminal tool error and never a 401 or an OAuth escalation.
 
-<expected_criteria>OGA2-AC1, OGA2-AC2, OGA2-AC3, OGA2-AC4, OGA2-AC5, OGA2-AC6, OGA2-AC7, OGA2-AC8, OGA2-AC9, OGA2-AC10, OGA2-AC11</expected_criteria>
+<criterion id="OGA2-AC12" cell_refs="OG-a-2"><invocation>cd <WS> && timeout 300 .venv-og/Scripts/python -m pytest infra/aws/ec2/opal-gateway/tests/test_oauth_durable.py infra/aws/ec2/opal-gateway/tests/test_jwt_cve_lock.py infra/aws/ec2/opal-gateway/tests/test_schwab_audit.py -q -p no:cacheprovider --color=no -m "not live"</invocation><expect>(?m)^[1-9][0-9]* passed(?![^\n]*(failed|error))</expect></criterion>
+`OGA2-AC12` -- the three granted modules, `tests/test_oauth_durable.py`, `tests/test_jwt_cve_lock.py` and `tests/test_schwab_audit.py`, pass, count printed.
+
+<criterion id="OGA2-AC13" cell_refs="OG-a-2"><invocation>cd <WS> && timeout 120 .venv-og/Scripts/python org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~3/probes/og_a2.py AC13</invocation><expect>(?m)^VERDICT: PASS-OGA2-AC13(?![0-9])</expect></criterion>
+`OGA2-AC13` -- (discriminating) for each of the three granted modules, the count of assert statements (`assert`, `self.assert*`, `pytest.raises`) at HEAD equals the count at the cut base `3f94e0a024`, both numbers printed per module; the probe prints `VERDICT: PASS-OGA2-AC13` or `VERDICT: FAIL-OGA2-AC13 <reason>`.
+
+<expected_criteria>OGA2-AC1, OGA2-AC2, OGA2-AC3, OGA2-AC4, OGA2-AC5, OGA2-AC6, OGA2-AC7, OGA2-AC8, OGA2-AC9, OGA2-AC10, OGA2-AC11, OGA2-AC12, OGA2-AC13</expected_criteria>
 
 `<WS>` is your worktree's absolute path, given in your identity line.
 
@@ -92,9 +112,9 @@ bound refresh families behind one principal-key function; this cell changes that
 - **Grant.** Your write surface is the `<paths>` block below, plus `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~3/` and this order's own file (for the `<status>` flip). Nothing else. A path you need that is not named is a BLOCKING surprise row on that criterion -- never an override.
 - **Branch.** You work in the worktree named in your identity line, cut from `CLOUD` at hand-off (after `OG-a-1` merged). Never push, merge, rebase, `checkout --` or `clean`.
 - **Interpreter.** Your venv `.venv-og` (`cd <WS> && py -3.12 -m venv --system-site-packages .venv-og && .venv-og/Scripts/python -m pip install -r infra/aws/ec2/opal-gateway/requirements.txt msal moto pytest`) serves every invocation. Never commit `.venv-og/` or `.scratch/`.
-- **Tests.** Each criterion names one test function in `tests/test_principal_cutover.py`; write exactly that name. The upstream identity provider is a local test issuer with a locally generated key, never Entra. `tests/test_oauth_durable.py` stays green.
+- **Tests.** Each criterion names one test function in `tests/test_principal_cutover.py`; write exactly that name. The upstream identity provider is a local test issuer with a locally generated key, never Entra. `tests/test_oauth_durable.py`, `tests/test_jwt_cve_lock.py` and `tests/test_schwab_audit.py` run green (AC12).
 - **The known red test.** `tests/test_identity_scope.py::test_scoped_deny_by_default` fails at the cut base (row NFRA_OPLGTW-S1). Never edit it or `identity_tool_allowlist.txt`.
-- **Code.** The commit gate lints with ruff for Python 3.9 syntax. `mcp==1.28.0` is not raised. No existing test is edited to make it pass.
+- **Code.** The commit gate lints with ruff for Python 3.9 syntax. `mcp==1.28.0` is not raised. No existing test is edited to make it pass, except the three granted test files within the fixture-only bound above (AC13 grades it).
 - **Nothing deploys.** The cutover reaches users only through `OG-r-1`.
 - **No egress off Opal infrastructure.** No call to Claude, an Anthropic endpoint, an interactive Entra sign-in or any vendor API.
 - **No secret in evidence.**
@@ -112,6 +132,9 @@ infra/aws/ec2/opal-gateway/app/oauth_as.py
 infra/aws/ec2/opal-gateway/app/server.py
 infra/aws/ec2/opal-gateway/app/revocation.py
 infra/aws/ec2/opal-gateway/tests/test_principal_cutover.py
+infra/aws/ec2/opal-gateway/tests/test_oauth_durable.py
+infra/aws/ec2/opal-gateway/tests/test_jwt_cve_lock.py
+infra/aws/ec2/opal-gateway/tests/test_schwab_audit.py
 org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
@@ -121,11 +144,11 @@ org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: `OGA2-AC1` .. `OGA2-AC11` (11). Instance at
+Criterion ids: `OGA2-AC1` .. `OGA2-AC13` (13). Instance at
 `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~3/NFRA_OPLGTW.TO-OG-a-2.principal-cutover.proof_of_spec.json`
 (phase `BUILD-GENERAL`, firm `FABRIC`, spec_ref.group `OTHER`, spec_ref.doc the PRD @f0aa50dbc0, decomp_ref.doc the
 decomposition @8768f46770, decomp_ref.to_ref this order's path), validated with
-`py -3.12 .tools/proof-of-spec-check.py <instance> OGA2-AC1,OGA2-AC2,OGA2-AC3,OGA2-AC4,OGA2-AC5,OGA2-AC6,OGA2-AC7,OGA2-AC8,OGA2-AC9,OGA2-AC10,OGA2-AC11`
+`py -3.12 .tools/proof-of-spec-check.py <instance> OGA2-AC1,OGA2-AC2,OGA2-AC3,OGA2-AC4,OGA2-AC5,OGA2-AC6,OGA2-AC7,OGA2-AC8,OGA2-AC9,OGA2-AC10,OGA2-AC11,OGA2-AC12,OGA2-AC13`
 BEFORE the `complete` flip. Result file `principal-cutover.result.md` beside it. **Flip `complete` only when every
 MECHANICAL criterion PASSES by output.**
 </proof_of_spec>
@@ -145,3 +168,12 @@ lane: the <paths> block IS the grant (owned-paths-validate.py worker_grant).
 
 Seating: slot ~3, queue position 3, handed after `OG-a-1` merges. Round 1 of NFRA_OPLGTW, issued by `2.0.0_SA_COO~O`
 (seated msg 96971, LD-0567). Decomposition v1 @8768f46770.
+
+Amended 2026-09-15 ~14:5xZ, after the first run and before re-hand-off, by `2.0.0_SA_COO~O` on `1.0.0_SA_CTO`'s ruling
+msg 97114 (rows `NFRA_OPLGTW-W3-S7`, `NFRA_OPLGTW-S7`). The changes:
+- `<status>` returns to pending;
+- `<paths>` gains the three test files, fixture-only;
+- the Tests and Code bounds are narrowed to that grant;
+- AC12 and AC13 are added.
+No criterion was removed. The PRD is unchanged. The surface addition is the ruling's, which reads it as C1's own
+outcome.
