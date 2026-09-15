@@ -1389,6 +1389,52 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "OGZ1-AC5: 'a newly registered, unclassified tool is denied to the restricted profile'.",
     "world_is": "The criterion holds, and so does the wider PRD sentence: the unclassified tool is denied to everyone. All 44 tools registered at the cut are classified 'legacy', so OGZ1-AC11 holds: existing users keep the same tool set before and after.",
     "notes": "INERT for this round. A later order that adds a tool needs app/data_entitlement.py in its <paths>, or the new tool is dead on arrival."
+  },
+  {
+    "id": "NFRA_OPLGTW-W3-S25",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~3",
+    "surfaced_at": "2026-09-15T23:11:00Z",
+    "one_line": "Neither end of the interface to OG-i-2's alias-key secret is stated by any carrier: nothing names the configuration setting that holds the secret's NAME, and nothing states the secret VALUE's shape. app/config.py carries no such setting and is outside this order's grant, and the ~1 deliverable SCHWAB_IDENTITIES.json does not exist at the cut. OG-z-3 therefore chose both: the environment variable SCHWAB_ACCOUNT_REF_SECRET_ID holds the name, and the SecretString is {\"current_version\": \"v<n>\", \"keys\": {\"v<n>\": \"<base64 of at least 32 bytes>\"}}.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SOURCE: infra/aws/ec2/opal-gateway/app/config.py @f4c7184f6d -- comp-read --enumerate '(?i)secret|schwab|account_ref|hmac' reads 11 hits across 341 lines (CLIENT_SECRET at :25 and :308, a Fernet comment at :174, YCHARTS_SECRET_ID at :231 with its comments, the integration-enablement comments). No setting names a Schwab alias-key secret, and config.py is not in TO-OG-z-3's <paths>.",
+        "ABSENT: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~1/ @f4c7184f6d holds 4 entries (the OG-i-1 proof instance, access-state-table.result.md, og_i1.plan.json, probes/) and no SCHWAB_IDENTITIES.json. OG-i-2 has not run.",
+        "DECOMP: org/missions/D9/NFRA/NFRA_OPLGTW/decompositions/NFRA_OPLGTW_DECOMP.md @8768f46770 :156 gives OG-i-2 'the alias-key secret' and :189 asks only for 'the alias-key secret with the Gateway's read grant on it'. PRD @f0aa50dbc0 :147 says only 'keep its key in the existing approved secret mechanism'. Neither states the value's shape or where its name is configured.",
+        "SOURCE (this cell): infra/aws/ec2/opal-gateway/app/account_ref.py -- SECRET_ID_ENV = 'SCHWAB_ACCOUNT_REF_SECRET_ID', current_keyring() through app/integrations/base.py SecretsCredential, parse_keyring() for the value. RUN: OGZ3-AC1, 6 of 6 fail-closed arms (name unset, no such secret, not JSON, 16-byte key, no key for current_version, key not base64) raise KeyUnavailable on a mint and answer UNAVAILABLE on a resolution."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-OG-z-3's cell: 'The key lives in the secret OG-i-2 provisions; its NAME (never its value) is in org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~1/SCHWAB_IDENTITIES.json once that cell merges. Read the key through the Gateway's existing secret path (app/integrations/base.py, the secretsmanager:GetSecretValue call).'",
+    "world_is": "The secret PATH is used exactly as named: base.SecretsCredential, one GetSecretValue, cached, never logged. What no carrier supplies is the two ends of that path -- which configuration key holds the secret's name at runtime (a deliverable JSON is not deployed to the host), and what the SecretString must contain. This cell chose both and fails closed on anything else, so nothing silently degrades to an unkeyed alias. Both settings must be adopted elsewhere: the value's shape by OG-i-2, the environment variable by the release cell OG-r-1, and neither file is in this order's <paths>.",
+    "notes": "ARMED, disarm 2.0.0_SA_COO~O: harmless while nothing deploys and no Schwab tool is built (OG-q-2), and every failure is UNAVAILABLE rather than a weak alias. Left alone, OG-i-2 provisions a value in a shape nobody told it and the release ships without the variable, and every account_ref then reads UNAVAILABLE on a live Gateway. It disarms by naming the shape above in OG-i-2's order and SCHWAB_ACCOUNT_REF_SECRET_ID in OG-r-1's, or by re-cutting this cell with app/config.py in its grant so the name sits beside YCHARTS_SECRET_ID."
+  },
+  {
+    "id": "NFRA_OPLGTW-W3-S26",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~3",
+    "surfaced_at": "2026-09-15T23:11:00Z",
+    "one_line": "With the root logger at DEBUG, one strong read of a data_entitlement grant writes the DynamoDB response body to the log through botocore's wire logger, and that body carries the grant's raw account ids. The Gateway configures no Python logging anywhere in app/, so the host's root level is Python's default WARNING and the same read logs nothing; the exposure appears only if a later cell lowers the level.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN: .scratch/botocore_debug_probe.py in this worktree (moto DynamoDB, one grant carrying one raw account id, data_entitlement.current_access) -- 'root WARNING (host default): log lines 0, lines carrying the raw id 0'; 'root DEBUG: log lines 40, lines carrying the raw id 1', the line being botocore's response body b'{\"Item\"...}'.",
+        "SOURCE: infra/aws/ec2/opal-gateway/app/ @f4c7184f6d -- one logging.getLogger in the whole package, app/account_ref.py:70 (this cell's own logger); no basicConfig, setLevel or dictConfig anywhere in app/, so the root logger keeps Python's default WARNING.",
+        "PRD: org/missions/D9/NFRA/NFRA_OPLGTW/prd/NFRA_OPLGTW_PRD.md @f0aa50dbc0 :147 -- 'never log raw IDs'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OGZ3-AC4: 'a raw account ID appears in no log or audit line the harness captures'.",
+    "world_is": "The criterion holds for this cell's own surface: 13 arms over 5 corpora (log records, stdout, stderr, the audit JSONL, everything returned to the tool layer), 0 raw ids and 0 key bytes, with the SDK wire loggers held at WARNING, their level on the host. One level below that, the leaking line is not this module's but the AWS SDK's, and it carries the grant record rather than any response this module builds.",
+    "notes": "INERT: nothing deploys and the host's level is WARNING by default. A later cell that adds logging configuration to the Gateway should hold botocore/boto3/urllib3 no lower than INFO, or every grant read puts raw account ids in the journal. Any logging configuration and app/config.py are outside this order's grant."
   }
 ]
 ```
