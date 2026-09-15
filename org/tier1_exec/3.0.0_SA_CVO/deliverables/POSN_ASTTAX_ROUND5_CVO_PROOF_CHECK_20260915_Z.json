@@ -1,0 +1,20 @@
+{
+  "seat": "3.0.0_SA_CVO~Z",
+  "project": "POSN_ASTTAX",
+  "round": 5,
+  "checked_at": "2026-09-15T02:45:00Z",
+  "checker": ".tools/proof-of-spec-check.py",
+  "summary": {"instances": 9, "valid": 9, "invalid": 0},
+  "instances": [
+    {"order": "V1", "worker": "~19", "status": "VALID", "rc": 0},
+    {"order": "V2", "worker": "~20", "status": "VALID", "rc": 0},
+    {"order": "V3", "worker": "~21", "status": "VALID", "rc": 0},
+    {"order": "V4", "worker": "~20", "status": "VALID", "rc": 0},
+    {"order": "V5", "worker": "~22", "status": "VALID", "rc": 0},
+    {"order": "V6", "worker": "~22", "status": "VALID", "rc": 0},
+    {"order": "V7", "worker": "~22", "status": "VALID", "rc": 0},
+    {"order": "V8", "worker": "~19", "status": "VALID", "rc": 0},
+    {"order": "V9", "worker": "~23", "status": "VALID", "rc": 0}
+  ],
+  "note": "Structural validation only; judgment and surprise dispositions are recorded in ADJUDICATION_v7.Z.md."
+}
