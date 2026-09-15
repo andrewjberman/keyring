@@ -79,9 +79,11 @@ zip member at its repo path; you never edit it** (its lane is ETFS).
 3. The `.tf`: the rule's cron; the policy's READ grant widened EXACTLY as both never-widen halves name (`s3:ListBucket` on
    `arn:aws:s3:::opal-data-etfs` with `s3:prefix` conditioned to `bbg/*` and `bbg-testpull/tickers/*`; `s3:GetObject` on
    `opal-data-etfs/bbg/*/history_topup.parquet` and `opal-data-etfs/bbg-testpull/tickers/*/history.csv`); NO new write, the deny
-   unchanged; AND (v0.11) a READ grant on the table -- Sid `ReadEtfClassifications`, `dynamodb:GetItem` + `dynamodb:BatchGetItem` on
-   `arn:aws:dynamodb:<region>:<account_id>:table/etf-classifications` (the registry producer's `satellites-registry-producer.tf:145-152`
-   precedent; the module's call is `get_item`; no `Scan`, no `Query`, no write). Memory: keep 512 MB unless W1-AC4 prints a peak above
+   unchanged; AND (v0.11) a READ grant on the table -- Sid `ReadEtfClassifications`, `dynamodb:GetItem` ONLY on
+   `arn:aws:dynamodb:<region>:<account_id>:table/etf-classifications` (NARROWER than the registry producer's
+   `satellites-registry-producer.tf:145-152` precedent, which also grants BatchGetItem: the module's per-ticker path calls `get_item`
+   only, and BOTH never-widen halves name exactly that one action -- CTO half A1 @2c6b7d8887, COO half R1; no `BatchGetItem`, no
+   `Scan`, no `Query`, no write). Memory: keep 512 MB unless W1-AC4 prints a peak above
    384 MB, then 1024 MB and say so.
 4. Deploy (W1-AC5..W1-AC11), then the DRIVEN run (W1-AC12), the rule read (W1-AC13), the record (W1-AC14).
 
@@ -118,7 +120,7 @@ ONE row per off-cell finding, `POSN_ASTTAX-Z-W24-S<k>` (start at S1), appended t
 
 <criterion id="W1-AC7" cell_refs="AT6-s-1"><invocation>timeout 300 bash -c ".tools/aws s3api put-object --bucket opal-313476888478-lambda-artifacts --key cot-pipeline/cot-satellites-characteristics-producer.zip --body /c/tmp/wk-posn-6-24/.scratch/b6.zip --metadata content-sha256=<ZIP_SHA256_B64> --output json && .tools/aws s3api head-object --bucket opal-313476888478-lambda-artifacts --key cot-pipeline/cot-satellites-characteristics-producer.zip --output json"</invocation><expect>ONLY after W1-AC1 read both halves at HEAD; the head-object READ BACK (never the put response) prints the new VersionId, ContentLength equal to the zip's bytes and Metadata content-sha256 equal to the base64 sha256 you computed; the PRIOR version printed as the rollback (sZ0o.m4CGbylNMV7KPN1oR9bgRZnlEml expected -- read, not assumed).</expect></criterion> `W1-AC7` -- THE ARTIFACT UPLOADED, READ BACK, PRIOR VERSION KEPT.
 
-<criterion id="W1-AC8" cell_refs="AT6-s-1"><invocation>timeout 300 comp-iam gaps infra/aws/terraform/cot-pipeline/satellites-characteristics-producer.tf</invocation><expect>the policy reads exactly: the three existing input GetObjects, the ONE pinned PutObject, plus the READ widening the halves name (ListBucket on opal-data-etfs conditioned to the two prefixes; GetObject on history_topup.parquet and bbg-testpull/tickers/*/history.csv; GetItem + BatchGetItem on table/etf-classifications) -- no wildcard bucket, no new write, no Scan, the cross-firm deny present; the DESIRED-plane caveat quoted.</expect></criterion> `W1-AC8` -- THE GRANT, EXACTLY THE HALVES' LIST.
+<criterion id="W1-AC8" cell_refs="AT6-s-1"><invocation>timeout 300 comp-iam gaps infra/aws/terraform/cot-pipeline/satellites-characteristics-producer.tf</invocation><expect>the policy reads exactly: the three existing input GetObjects, the ONE pinned PutObject, plus the READ widening the halves name (ListBucket on opal-data-etfs conditioned to the two prefixes; GetObject on history_topup.parquet and bbg-testpull/tickers/*/history.csv; GetItem ONLY on table/etf-classifications) -- no wildcard bucket, no new write, no BatchGetItem, no Scan, the cross-firm deny present; the DESIRED-plane caveat quoted.</expect></criterion> `W1-AC8` -- THE GRANT, EXACTLY THE HALVES' LIST.
 
 <criterion id="W1-AC9" cell_refs="AT6-s-1"><invocation>timeout 600 terraform -chdir=infra/aws/terraform/cot-pipeline plan -target=module.cot_satellites_characteristics_producer -target=aws_iam_role_policy.cot_satellites_characteristics_producer_s3 -target=aws_cloudwatch_event_rule.cot_satellites_characteristics_producer_daily -out=C:/tmp/wk-posn-6-24/.scratch/b6.tfplan</invocation><expect>Plan: 0 to add, 3 to change, 0 to destroy -- exactly the function (s3_object_version + source_code_hash to W1-AC7's values, memory if changed), the policy (the READ widening) and the rule (schedule_expression cron(20 7 * * ? *) -> cron(30 12 * * ? *)); each change named from the plan text; the plan path ABSOLUTE (-chdir re-bases a relative one, W19-S2).</expect></criterion> `W1-AC9` -- THE PLAN: THREE CHANGES, NAMED.
 
