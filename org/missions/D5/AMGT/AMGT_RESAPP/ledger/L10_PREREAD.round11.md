@@ -124,22 +124,50 @@ bound is a criterion the order must be able to refuse on, so the FIRST charge co
    contract, @`2778e07199` s.7) -- measured absent on all five drafting objects.
 2. **CSC basis labelling.** A column whose basis (trailing / NTM) differs from its label (fiscal-year P/E) renders as
    an ALTERNATIVE labelled measure, never under the year label (Rule 24(iv)); 5 of 17 columns map today.
-3. **Resolution widening for the union universe** -- the one that unblocks FWD-19. ⭐ **MEASURED 16:3xZ by this seat, read-only,
-   over the pool's `universe/v1/2026-09-15.json` and rj-7's `load_candidate_universe()` (2,851 rows, vintage 2026-08-06):**
-   (a) COVERAGE -- 35 of the 56 unresolved names END in `<TICKER> <2-letter code>` inside the name string (`"Adobe ADBE US"`,
-   `"Air Liquide AI FP"`); the 21 that do not are bare names or name+ticker with no exchange (`"Mastercard MA"`, `"UBS"`).
-   ⚠ The parse must VALIDATE the code against a declared Bloomberg exchange list, never accept any two letters: 4 codes in the
-   parsed set appear nowhere among the 33 resolved names (`CA`, `GB`, `NL`, `SM`), and three of them are not Bloomberg's own
-   (Bloomberg writes `CN`, `LN`, `NA`; `SM` is Madrid and real). (b) ETF HOLDINGS -- 166 of 167 carry a bare alphabetic
-   ticker, 1 a Bloomberg id (`2602335D`, TPG); a join on ticker to the scanner database with the NAME required to agree yields
-   **112 of 167 UNIQUE + NAME-AGREES** (all United States), 1 UNIQUE + NAME-DISAGREES (`RTX`: "Raytheon Technologies Corp" vs
-   "RTX Corporation" -- a rename, a true match the name rule refuses, so it stays UNRESOLVED and correctly so), 0 ambiguous,
-   54 NO TICKER MATCH (the international books: ADR and home-market tickers in IDVZ/PFOE -- `ASML`, `AZN`, `BBSEY` -- the
-   scanner's ticker space does not carry them). Books over the 167: PFDE 88, DIVZ 29, IDVZ 45, PFOE 24. **So the rule would
-   move the resolved union from 33 to about 145 names without a guess, and Posture's Opal side from 3 names to about 115.**
-   (c) the ETF plane's producer carrying the Bloomberg form on every holding remains the durable fix for the 54 and is a
-   POSN-side contract, outside this project's lanes by Andrew's ~16:3xZ word; the AMGT half is (a) + (b) above, with the
-   exchange list and the name-agreement rule named in C-ONE-IDENTITY.
+3. **Resolution of Opal's holdings -- CORRECTED 17:0xZ on Andrew's reads; the earlier scanner join is WITHDRAWN as the method.**
+   Andrew-direct at this terminal ~16:4x-16:5xZ, verbatim, in order: *"Where are you trying to resolve the Opal Holdings from? We have
+   everything for that in opal-data-etfs and also coming in through the ETFClassifier function."* / *"Check the ETFClassifier because
+   we have a whole DDB table with full information"* / *"use comp-find --corpus aws"* / *"also parse through the opal-data-etfs bucket as
+   a whole"* / *"See if there are CUSIPS stored anywhere in there"* / *"There should be some kind of stable join key that can be
+   compiled"* / *"even if we dont have a direct single key"* / *"There isn't "a second one" there is just a pipeline of sorts of scripts a
+   DDB table and maybe a couple lambdas for seeding. You can find the system via scanning through what actually feeds the Positioning
+   portal page."*
+   **What was wrong:** rj-4's union object (and this seat's 16:3xZ test on it) read ONE ETF-plane object, `gold/holding/date=2026-09-11`,
+   used only its bare ticker, and joined it to the Security Scanner universe -- a FOREIGN ticker space -- so it called 54 international
+   holdings unresolvable and named the ETF producer as the fix. The producer chain that feeds the Positioning page already carries the
+   key. **The chain, traced from the page:** Positioning ETF mode <- `/api/general/etfs/positioning_data.json` <-
+   `data/etfs/scripts/gold/etf_positioning_publisher.py` <- `gold/holding` parquet <- `etf_positioning_gold.py` over
+   `silver/holdings/<date>` (issuer files: `holding_ticker`, `cusip`, `id_kind`, `cusip_basis`) + `bbg/<date>/characteristics`
+   (Bloomberg `security` = `<TICKER> US Equity`, `NAME`, `CNTRY_OF_DOMICILE`, GICS) + ETFClassifier (`etf_classifications_dynamodb.py`
+   over DynamoDB `etf-classifications`, 285 rows keyed by ticker; seeded by `seed-etf-classifications.py` for the models' ETFs and
+   `seed-etf-constituents.py` for the four ETFs' constituents). **Whole-bucket parse:** 1,532 objects in 367 key shapes, 344 readable
+   shapes read; CUSIP lives in exactly 4 shapes (`silver/holdings/<D>.parquet` x94, `gold/holding/date=<D>/holding.parquet` x15,
+   `bbg/<D>/constituents/constituents_issuer_fill.{csv,parquet}` x16 each); the Bloomberg security form + domicile in
+   `bbg/<D>/characteristics.{csv,parquet}` x17.
+   **MEASURED over the 09-14 partition (the newest; rj-4 read 09-11, which still held JD, MER, NVS in IDVZ):** 164 non-cash holdings.
+   (i) the `cusip` column holds 161 valid 9-character CUSIPs (check digit verified), 1 FIGI (`2602335D` TPG, `BBG01Y2F01K3`, id_kind
+   `bbgid`), 1 SEDOL (`ICT`, `6455819`, domicile PH) and 1 Excel-corrupted value (`RTX`, `7.55E+105`) -- silver's own `id_kind` column
+   already reads `cusip` 179 / `bbgid` 1 / `unclassified` 2 / `vendor-sentinel` 2 rows; (ii) holding ticker = Bloomberg root joins
+   164 of 164 to a `<TICKER> US Equity` security, 0 multi-matches, `domicile == CNTRY_OF_DOMICILE` on 164 of 164 -- every
+   international holding is held as its US-listed ADR line; (iii) the ISIN compiled from the ETF-plane CUSIP (US + CUSIP + check)
+   equals the ISIN in DynamoDB `trade-security-identifiers` (an independent source: ticker/isin/figi/sedol, 92 rows) on 47 of 47
+   overlapping names, 0 disagreements; (iv) ETFClassifier carries a row for 161 of 164 (missing `BBY`, `EXPD`, `META` -- a seeding
+   gap), asset class agreeing on 161 of 161, and it carries the three odd names by name (`Raytheon Technologies Corp`, `International
+   Container Terminal Services Inc`, `TPG Inc`). Bloomberg's own identifier legs did NOT resolve these:
+   `bbg/2026-09-14/constituents/run_manifest.json` records `1b_list_bloomberg_bql: refused:entitlement` and
+   `3_bloomberg_enrich: not-implemented`, so today's join is issuer file -> ticker root.
+   **THE COMPILED STABLE KEY (no single column carries it; the compile rule, in precedence):** per holding, `stable_id` = the CUSIP
+   when `id_kind == cusip` and the check digit validates (161); else the FIGI when `id_kind == bbgid` (1); else SEDOL + domicile (1);
+   else the Bloomberg security + the ETFClassifier name with the malformed value recorded (RTX, 1) -- 164 of 164, each carrying
+   `id_basis`. Beside it: `bloomberg_security` (164/164), `isin` compiled from the CUSIP (161) and cross-checked against
+   `trade-security-identifiers` where present, `figi`/`sedol` from that table where present, `domicile`, and the ETFClassifier row.
+   Agreement checks, all measured above: domicile vs CNTRY_OF_DOMICILE, compiled ISIN vs the table's ISIN, asset class vs
+   ETFClassifier. **So Posture's Opal side is all 164 held names, not 3 and not ~115.** The coverage side (89 names) resolves
+   separately; the ONE seam the compile does not bridge is an ADR Opal holds vs a HOME listing on the coverage list (`AMX US Equity`
+   held; `AXMB MM` covered) -- same issuer, different lines, and neither CUSIP nor ISIN links them; that bridge needs a Bloomberg
+   underlying-ticker field and stays open, not guessed. For the addendum: C-ONE-IDENTITY's crosswalk takes the Opal side from THIS
+   chain (ETF plane + ETFClassifier), read-only, at the partition's own date; the scanner universe stays the ranker's candidate
+   database and is never the holdings' resolver.
 4. **A gate must be shown to discriminate on the input it faces** (W20-S5; the round-9 lesson again): the verbatim
    gate's PASS is evidence only beside a count of sentences it COULD have refused.
 5. **The watchlist store keyed by ticker** (W18-S7) and `read_point()`'s upper-casing (W18-S6): C-ONE-IDENTITY's
