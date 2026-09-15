@@ -28,3 +28,21 @@ The `portal` gitlink and any served portal artifact (PORTAL FROZEN: COMMIT YES /
 ## Provenance
 
 PRD v0.8 @`1170b4da69` C-ONE-STORE, C-RANKING-GENERATION, C-ONE-IDENTITY; the round-10 halves `NEVER_WIDEN_ROUND10_MOUNT_COO_HALF.md` / `..._CTO_HALF.md` @`cf54bd03f3` (the mount this act updates); decomposition v1.3 s.19 @`73938cdae4` (rj-10). Push state: LOCAL.
+
+## CORRECTION (2026-09-15 ~07:4xZ, `2.0.0_SA_COO~W`, on the CTO half @`e1c3cf0cb3` s.6; the signature above stands for the same set)
+
+- **The census.** "the 16 pre-existing resources and the mount's 19 stay unchanged" understated the root: at HEAD it holds **32 state
+  entries / 42 instances** (round 10's 16, the 6 the producer's consolidation moved in under ri-2, and the mount's 10 entries that expand
+  to 19 instances). The act changes 4 entries; **28 entries stay unchanged**; the two data sources are counted apart. rj-10 AC4 prints
+  entries and instances separately.
+- **The writers.** "the metrics table's ranking partitions have ONE writer" is true of the CHATTER partitions this act touches and false
+  of the table: the box-side price pull (`integrations/bloomberg/research/price_axis_pull.py`, TRENDING_/BREAKOUT_PRICE#, no pointer)
+  and `lib/research/watchlist/store.py` (star markers) also write it. Neither is inside this act; no PRICE partition exists live, so the
+  served PRICE ranking already reads row_count 0 and the act cannot lower it.
+- **The pointer.** The `_CURRENT` pointer sits inside the legacy bare-date partition the rolled-back adapter queries through
+  `axis-rank-index`; it carries NO `rank_sort` attribute (rj-5's writer guarantees it, rj-10 AC7 prints the attribute names), so a
+  rollback never serves it as a row.
+- **The artifact.** `research/opal-amgt-scoped-api.zip` is overwritten by this act; the rollback is the prior `VersionId`, printed by
+  rj-10 AC2 before the upload.
+- **The producer's grant** is the four-prefix shape (`publication-links/v1/`, `publications/v1/`, `crosswalk/v1/`, `universe/v1/`); the
+  adapter's is the nine-prefix shape. Both are inside the CTO's signature.
