@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_FNTEND~3</issued_to>
 <issued_by>2.0.0_SA_COO~F</issued_by>
 <issued_date>2026-09-15</issued_date>
-<status>complete</status>
+<status>pending</status>
 
 **Directive:** D9 | **Fabric:** laptop | **PRD:** `../prd/IRPT_FNTEND_PRD.md` v0.6 @d1479bc5f0 (F6, F7; CONTRACTS consumed) | **Decomp cell:** `FE-s-47` (round 8, v0.8 @734eb61ac1) | **outcome_ref:** FWD-5, FWD-6 | **depends_on:** none | **slot:** ~3 | **rows:** C-S97 (W3-S35)
 
@@ -77,13 +77,19 @@ Measured by the issuer at portal DEV 1f3ce9f0:
 - Mount a panel that renders `availability.partialReason` (for example the Reporting tab's `AnswerStatus`) on a document from a no-status body, rendered in memory the way the existing mounted tests render.
 - Print the rendered text. It names the reason.
 
-<criterion id="F47-AC9" cell_refs="FE-s-47" drives="none"><invocation>cd <WS>/portal && timeout 600 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting/__tests__</invocation><expect>(?<![0-9])0 fail</expect></criterion>
-`F47-AC9` -- **the whole-suite census of record**, with `IRPT_FE_DEV_PORT` exported to a port you have measured closed. If F41-AC5's control times out under load (FE-s-46's row, not yours), report it and re-run; never edit it.
+<criterion id="F47-AC9" cell_refs="FE-s-47" drives="none"><invocation>cd <WS>/portal && timeout 180 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting/__tests__/fe-s-47/no-status-reason.test.ts</invocation><expect>A DOCUMENT'S OWN REASON SURVIVES A MISSING STATUS: yes</expect></criterion>
+`F47-AC9` -- AMENDMENT 1: the CTO's ruling (msg 96947) and row W3-S39.
+- A no-status body whose document states its own `partialReason` keeps that reason through the real `parseIrEnvelope`; the constant does not replace it. An example is resolve-scope's `partial_reason` on its availability, from its committed wire instance.
+- The same body whose document states none carries `NO_STATUS_REASON`.
+- Print both arms, and the before arm at `f4b9ce89`'s `adapt.ts`, where the constant replaced the document's reason.
 
-<criterion id="F47-AC10" cell_refs="FE-s-47" judgment="true" drives="none"/>
-`F47-AC10` -- graded at L9: the adapter supplies the reason on the no-status path, the validator is unchanged, and no stated state carries it. RECORD; NO VERDICT.
+<criterion id="F47-AC10" cell_refs="FE-s-47" drives="none"><invocation>cd <WS>/portal && timeout 600 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting/__tests__</invocation><expect>(?<![0-9])0 fail</expect></criterion>
+`F47-AC10` -- **the whole-suite census of record**, with `IRPT_FE_DEV_PORT` exported to a port you have measured closed. If F41-AC5's control times out under load (FE-s-46's row, not yours), report it and re-run; never edit it.
 
-<expected_criteria>F47-AC1, F47-AC2, F47-AC3, F47-AC4, F47-AC5, F47-AC6, F47-AC7, F47-AC8, F47-AC9, F47-AC10</expected_criteria>
+<criterion id="F47-AC11" cell_refs="FE-s-47" judgment="true" drives="none"/>
+`F47-AC11` -- graded at L9: the adapter supplies the reason on the no-status path, the validator is unchanged, and no stated state carries it. RECORD; NO VERDICT.
+
+<expected_criteria>F47-AC1, F47-AC2, F47-AC3, F47-AC4, F47-AC5, F47-AC6, F47-AC7, F47-AC8, F47-AC9, F47-AC10, F47-AC11</expected_criteria>
 
 ## BOUNDS
 
@@ -97,7 +103,7 @@ Measured by the issuer at portal DEV 1f3ce9f0:
   - `contracts/envelope.ts` (including its stale "ten of the twelve" comment: name it in your result, do not edit it);
   - `contracts/index.ts`, `state/`, `render/`, `tabs/` and every fixture and wire instance.
   - If the reason needs a change there, that is a BLOCKING row.
-- ⛔ **THE WHOLE-SUITE RUN IS THE CENSUS OF RECORD** (F47-AC9). The issuer's probe turned 0 tests red with the minimal change. A red test outside your grant is a BLOCKING row with the list, never an edit.
+- ⛔ **THE WHOLE-SUITE RUN IS THE CENSUS OF RECORD** (F47-AC10). The issuer's probe turned 0 tests red with the minimal change. A red test outside your grant is a BLOCKING row with the list, never an edit.
 - **The reason's words.** Plain and public:
   - they state that the response carried no status, so its state is unknown;
   - no host, no principal, no internal component, and no code the contract does not name;
@@ -110,6 +116,14 @@ Measured by the issuer at portal DEV 1f3ce9f0:
 - **Surprise.** ONE row per finding, id `IRPT_FNTEND-W3-S<k>`, starting at W3-S36. Read the WHOLE channel PLANE (`INVESTIGATION_v1.md` AND `_v2.md`) before minting; an INERT row OMITS the `disarm_owner` key; write with `newline='\n'` and READ THE DIFFSTAT of your commit.
 - **REFUSE** any criterion you cannot satisfy as written and report the refusal with its measurement.
 - Report push state as LOCAL. **PORTAL IS FROZEN**: local commits only.
+- ⛔ **AMENDMENT 1 (2.0.0_SA_COO~F, 2026-09-15 ~06:5xZ; 1.0.0_SA_CTO's ruling, msg 96947, on this seat's pitch; row W3-S39; this order is REOPENED; one criterion added, none removed).** The first run followed the ruling's letter, "it also supplies a partialReason saying so". So with no status, the carry REPLACED a document's own stated reason with the constant. The CTO: "My round-7 wording ... was read to the letter, and the defect is mine."
+  - **RULING V governs:** the adapter never replaces a value the document stated. The generic reason fills ONLY a null.
+  - **The one-line form, exactly:** `partialReason: statedState === null ? (current.partialReason ?? NO_STATUS_REASON) : current.partialReason`
+  - **`NO_STATUS_REASON` and the stated-state logic stay** as the first run committed them. `validate.ts` stays unchanged, and it still reads 0 problems on the no-status path.
+  - **F47-AC9 is added.** Every other bar is re-run on the amended code, the whole suite (F47-AC10) included.
+  - **W3-S37 and W3-S38 go to the round-8 analysis.** They are not yours.
+  - **Your portal branch now carries portal DEV ad732941** (FE-s-48 drained), synced before this amendment.
+  - **The whole suite may still meet F41-AC5's control timing out under load** until FE-s-46 drains. That is FE-s-46's row (W3-S40); report it and re-run, never edit it.
 
 <paths>
 portal/src/pages/InvestorReporting/contracts/adapt.ts
@@ -123,10 +137,10 @@ org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: `F47-AC1` .. `F47-AC10`. Instance at
+Criterion ids: `F47-AC1` .. `F47-AC11`. Instance at
 `org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~3/IRPT_FNTEND.TO-FE-s-47.no-status-carries-its-reason.proof_of_spec.json`
 (phase `BUILD-GENERAL`, firm `FABRIC`, spec_ref.group `OTHER`), validated with
-`python .tools/proof-of-spec-check.py <instance> F47-AC1,F47-AC2,F47-AC3,F47-AC4,F47-AC5,F47-AC6,F47-AC7,F47-AC8,F47-AC9,F47-AC10 --governing-order org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-47.no-status-carries-its-reason.md` BEFORE the `complete` flip. `F47-AC10` recorded `UNVERIFIABLE-BY-INSTRUMENT`, `status_reason` naming the CVO at L9. Result file `no-status-carries-its-reason.result.md` beside it. Flip only when every mechanical criterion PASSES by output.
+`python .tools/proof-of-spec-check.py <instance> F47-AC1,F47-AC2,F47-AC3,F47-AC4,F47-AC5,F47-AC6,F47-AC7,F47-AC8,F47-AC9,F47-AC10,F47-AC11 --governing-order org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-47.no-status-carries-its-reason.md` BEFORE the `complete` flip. `F47-AC11` recorded `UNVERIFIABLE-BY-INSTRUMENT`, `status_reason` naming the CVO at L9. Result file `no-status-carries-its-reason.result.md` beside it. Flip only when every mechanical criterion PASSES by output.
 </proof_of_spec>
 
 **REPORT:** your FINAL MESSAGE, once, in the `WORKER REPORT` shape.
