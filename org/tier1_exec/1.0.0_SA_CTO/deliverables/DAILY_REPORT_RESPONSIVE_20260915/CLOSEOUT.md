@@ -32,6 +32,11 @@ Report source and prepublication evidence are committed at
 
 ## Gateway source ownership and live boundary
 
+**Update 2026-09-15T03:37:49.006783+00:00:** the source ownership route below is now closed.
+The two Gateway files are committed at `ee268aa92af9f96c7f0d236dc0a3c6d0b4713df2` via the authorized audited
+single-commit lane override. See `GATEWAY_SOURCE_COMMIT.md`. No service deploy
+was performed. The paragraphs below preserve the initial publication boundary.
+
 The existing Gateway can serve either responsive object without a service
 deployment. Its current one-time filename hop does not prevent either object
 from resizing. Unauthenticated live `/sprint` returned 302 to

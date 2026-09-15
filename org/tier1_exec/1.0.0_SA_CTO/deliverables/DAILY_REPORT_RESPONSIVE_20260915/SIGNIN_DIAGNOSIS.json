@@ -1,0 +1,66 @@
+{
+  "measured_at_utc": "2026-09-15T03:28:03.827479+00:00",
+  "window_start_utc": "2026-09-15T01:28:03.827479+00:00",
+  "metrics": {
+    "ELBAuthError": [
+      {
+        "time": "2026-09-14T23:23:00-04:00",
+        "sum": 2.0
+      }
+    ],
+    "ELBAuthFailure": [
+      {
+        "time": "2026-09-14T23:23:00-04:00",
+        "sum": 4.0
+      }
+    ],
+    "ELBAuthSuccess": [],
+    "HTTPCode_ELB_5XX_Count": [
+      {
+        "time": "2026-09-14T23:23:00-04:00",
+        "sum": 2.0
+      }
+    ],
+    "HTTPCode_Target_5XX_Count": []
+  },
+  "log_scan": {
+    "objects": 48,
+    "lines_in_window": 868,
+    "parse_errors": 0
+  },
+  "auth_or_500_events": [
+    {
+      "time": "2026-09-15T03:24:55.786498Z",
+      "path": "/oauth2/idpresponse",
+      "elb_status": "500",
+      "target_status": "-",
+      "actions": "authenticate",
+      "error_reason": "AuthTokenEpRequestTimeout"
+    },
+    {
+      "time": "2026-09-15T03:24:59.878455Z",
+      "path": "/oauth2/idpresponse",
+      "elb_status": "401",
+      "target_status": "-",
+      "actions": "authenticate",
+      "error_reason": "AuthInvalidAWSALBAuthNonce"
+    }
+  ],
+  "alb_security_group": "sg-02571ff2f33d2f9d4",
+  "live_egress": [
+    {
+      "IpProtocol": "tcp",
+      "FromPort": 8080,
+      "ToPort": 8080,
+      "UserIdGroupPairs": [],
+      "IpRanges": [
+        {
+          "Description": "To the gateway port inside the VPC",
+          "CidrIp": "172.31.0.0/16"
+        }
+      ],
+      "Ipv6Ranges": [],
+      "PrefixListIds": []
+    }
+  ]
+}
