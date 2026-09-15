@@ -6403,6 +6403,75 @@ Andrew asked for (msg 22917); it concerns this project's portal files meeting an
   "spec_asserts": "The worker face directs a row 'per org/surprise_channel/schemas/investigation_item.schema.json' with a `class` field; the schema is the contract and the gate enforces it at commit.",
   "world_is": "A two-value class axis carries the whole taxonomy of what a row can BE, so the KIND of finding (a spec defect, a stale doc, a cone gap, a risk) lives only in prose -- and a worker reading 'class' without opening the schema will invent values and be refused at commit, after the rows are written. Separately, the gate's standing pass is silently unavailable to every sparse worktree that does not carry the schema's directory: it announces the degradation, which is correct, but the degradation is invisible until a commit is attempted.",
   "notes": "Cheapest fixes, neither a worker act: name the two legal values in the worker face beside the schema path; and either add org/surprise_channel to the standard worker cone or have the gate resolve the schema from git (it grades rows AT a commit, so `git show HEAD:<schema>` is available even when the file is not in the checkout). The intended KIND of each of this worker's 9 rows is stated in its own one_line."
+},
+{
+  "id": "POSN_ASTTAX-Z-W24-S11",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~24",
+  "surfaced_at": "2026-09-15T05:10:00Z",
+  "one_line": "TWO CRITERIA CANNOT RUN AS WRITTEN BECAUSE THEIR INVOCATIONS DO NOT MATCH THEIR TOOLS' INTERFACES, AND BOTH ARE REFUSED RATHER THAN REPAIRED. W1-AC8: `comp-iam gaps <path.tf>` -> 'comp-iam: error: unrecognized arguments: infra/aws/terraform/cot-pipeline/satellites-characteristics-producer.tf', rc 2 -- `comp-iam gaps --help` prints 'usage: comp-iam gaps [-h]', the subcommand takes NO positional at all and cannot be pointed at a .tf file. W1-AC14: `record-terraform-deploy.sh --plan <plan>` -> 'Unknown argument: C:/tmp/.../b6.tfplan', rc 1 -- the script reads PIPELINE=$1 (:47) BEFORE parsing flags, so '--plan' is eaten as the pipeline NAME.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W1-AC8 recorded verbatim in deliverables/0.9.0_WK_POSN_ASTTAX~24/w1ac8.comp-iam-gaps.txt, with the --help read beside it (the measurement of the refusal, not a route around it).",
+      "W1-AC14 recorded verbatim in w1ac14.record.txt: the as-written run, then the script's own parser at record-terraform-deploy.sh:47 (PIPELINE=\"$1\"; shift) and :86-90 (the catch-all '*) echo Unknown argument; exit 1').",
+      "THE GRANT W1-AC8 EXISTS TO CHECK IS STILL MEASURED, by a different criterion's output: W1-AC9's plan text prints the whole policy -- 2 unchanged elements hidden + ReadBloombergEtfDaily + the three ADDED Sids (ListBloombergHistoryPrefixes conditioned to bbg/* and bbg-testpull/tickers/*, ReadBloombergReturnHistory, ReadEtfClassifications with dynamodb:GetItem ONLY) + WriteSatellitesCharacteristics, with no Scan, no BatchGetItem, no new write and the cross-firm deny untouched.",
+      "THE RECORD W1-AC14 EXISTS TO PRODUCE WAS STILL MADE, through the script's documented interface and stated as such: commits a031c56c74 and 9633bb9e7e (source map) plus the hand-written CHANGELOG entry."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-W1-1 REFUSAL CLAUSE: 'A criterion you cannot satisfy as written is REFUSED with its measurement, never repaired, widened or satisfied by another route.' W1-AC8 and W1-AC14 name those two invocations.",
+  "world_is": "Both criteria name a real instrument and a real intent, and both name an argument shape the instrument has never accepted. Neither was runnable at the cut -- so no amount of execution care could have produced a PASS, and the only honest outcome is a REFUSED criterion beside a completed act.",
+  "notes": "Runnable forms, for whoever re-cuts: `comp-iam gaps` takes no argument (its output is estate-wide; the per-file read this criterion wants may not exist in that tool at all -- `comp-iam role cot-satellites-characteristics-producer-role` is the nearest), and the recorder is `record-terraform-deploy.sh cot-pipeline --plan <plan> [--code-sha256 <sha>] [--deploy-ledger <slug>]`. A cut-time `--help` on each tool is the cheapest prevention."
+},
+{
+  "id": "POSN_ASTTAX-Z-W24-S12",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~24",
+  "surfaced_at": "2026-09-15T05:10:10Z",
+  "one_line": "PLANNING A SHARED TERRAFORM ROOT FROM A WORKER WORKTREE REQUIRED TWO THINGS THE ORDER DID NOT ANTICIPATE, ONE OF WHICH MUTATES STATE THE WHOLE ESTATE SHARES: (1) the worktree's .terraform is a JUNCTION to the main tree's cache, whose modules.json was built 2026-08-27 and predates this function's module, so the targeted plan refused with 'Module not installed' -- `terraform init -input=false` (no -migrate-state, no -reconfigure, no -upgrade) fixed it AND wrote the new module entry into the SHARED cache the main tree and every other worktree read; (2) the root's ec2.tf calls file() on infra/aws/ec2/cot-exporter/user-data.sh, which a targeted plan still evaluates, so the plan refused again until that directory was added to the sparse cone.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "First plan, verbatim: 'Error: Module not installed ... on satellites-characteristics-producer.tf line 293'; .terraform/modules/modules.json (dated Aug 27) listed 5 modules and NOT cot_satellites_characteristics_producer.",
+      "init output: 'Initializing modules... - cot_satellites_characteristics_producer in ..\\modules\\yang-lambda'; 'Reusing previous version of hashicorp/aws from the dependency lock file'; 'Terraform has been successfully initialized!' -- no provider download, no state migration.",
+      "Second plan, verbatim: 'Error: Invalid function argument ... on ec2.tf line 68 ... no file exists at \"./../../ec2/cot-exporter/user-data.sh\"'; resolved by `git sparse-checkout add infra/aws/ec2` (369 files, 7.0 MB, committed bytes only).",
+      "Third plan: 'Plan: 0 to add, 3 to change, 0 to destroy', and the later unscoped plan 'No changes. Your infrastructure matches the configuration.'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The hand-over allowed `terraform init -input=false` ONLY if the plan refused for a MISSING PROVIDER, and forbade `init -migrate-state`; the worktree's .terraform is described as a junction to the main tree's initialized cache (providers + modules.json).",
+  "world_is": "The refusal was for a missing MODULE, not a provider -- the cache is not merely 'initialized', it is STALE relative to the configuration, and any seat planning this root hits the same error. The init that fixes it is not worktree-local: through the junction it edits the cache the main tree uses. That is a shared-state write by a worker, done deliberately here because a plan is impossible without it, and it is exactly the class the one-index/one-cache contention rules exist for.",
+  "notes": "Nothing was destroyed and no state was migrated: the write was an ADD of one module entry that the main tree's own configuration also requires. Two follow-ups for the owner: (a) the hand-over's init condition should say 'a missing provider OR module'; (b) a worker cone that must plan a ROOT needs the root's whole file() surface (here infra/aws/ec2), because Terraform evaluates every file in the root regardless of -target."
+},
+{
+  "id": "POSN_ASTTAX-Z-W24-S13",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~24",
+  "surfaced_at": "2026-09-15T05:10:20Z",
+  "one_line": "THE IN-LAMBDA WALL AND PEAK ARE NOW MEASURED, AND THE RECORDER'S OWN CHANGELOG LIMB FAILED FOR A DIFFERENT REASON THAN THE ORDER PREDICTED. The driven run's CloudWatch REPORT: Duration 39,407 ms of the 120,000 ms timeout (33%, 3.0x headroom), Max Memory Used 270 MB of 512 MB (53%), Init Duration 440 ms -- so the 400-day history sweep (16 partitions + 173 backfill files, 47,506 rows) fits the existing envelope and the local 127 s wall was device-to-S3 latency, not work (W24-S5's open question, answered). Separately: the order expected the recorder's CHANGELOG helper to fail on 'a hardcoded bun path'; on this device it failed because JSON_TOOL fell through to PYTHON (record-terraform-deploy.sh:222) which was then handed a .js file -- 'SyntaxError: unterminated string literal'. That failure ALSO empties FUNCTIONS_UPDATED_FILE, which silently no-ops the durable source-map sha reconcile, so the first record left deployed_code_sha256 at the PREVIOUS deploy's value.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CloudWatch stream 2026/09/15/[$LATEST]8da1acb227a548b8b7b6a3221dfc7ca7, REPORT RequestId db1940a5-a3b0-4d33-b9d1-4d0ea154af2b: 'Duration: 39407.13 ms  Billed Duration: 39848 ms  Memory Size: 512 MB  Max Memory Used: 270 MB  Init Duration: 440.35 ms'. Read with boto3 -- the aws shim mangles a log-stream name containing slashes.",
+      "Recorder run 1: 'SyntaxError: unterminated string literal (detected at line 18)' on rdeploy-changelog-*.js, then 'Note: CHANGELOG.json write failed -- source map update still committed' and 'reconcile: SKIP -- empty deployed-function set (fail-safe no-op)'.",
+      "The stale field, measured after run 1: lambda-source-map.json cot-satellites-characteristics-producer deployed_code_sha256 = 6M4Co5N81OD/SxD+fS0/pzbByeBKeYaVh8z/kszV3Vk= (the PRE-deploy sha) and deploy_ledger = posn-round5-b4-satellites-characteristics (round 5's slug), while the live function read rN/jcmeQk4F/HJsQHfasjdWFgIjWXOrYHeBPkf5TbOU=.",
+      "Corrected by re-running the recorder with --code-sha256 and --deploy-ledger (commit 9633bb9e7e, diff: both fields moved to the round-6 values); the CHANGELOG entry was then written by hand, non-ASCII count 18 before and 18 after."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "W1-AC14: 'its CHANGELOG helper cannot run here (W23-S4: a hardcoded bun path) -- write the CHANGELOG.json entry YOURSELF'; W24-S5 and the preflight's comp-adversary item 1 left the in-Lambda wall and peak unread.",
+  "world_is": "The helper's failure MODE on this device is a python-reading-javascript SyntaxError, not a missing bun -- same outcome, different cause, and the cause matters because it also silently disables the sha reconcile downstream of it. A recorder run that is not given --code-sha256 therefore writes a record that says the PREVIOUS code is deployed, and nothing in its output says so.",
+  "notes": "For the next deploy on this device: pass --code-sha256 <live CodeSha256> and --deploy-ledger <slug> to record-terraform-deploy.sh, then READ the two fields back out of the source map. The wall measurement also gives the next sizing question a number: the backfill sweep is 173 GetObjects for ONE ticker's series, so the wall scales with the backfill prefix, not with this producer's work."
 }
 ]
 ```
