@@ -55,10 +55,25 @@ those tests sign in is part of C1's own outcome. So the three files are granted 
 - the durable fake returns a tid/oid principal through `token_broker.redeem_code_for_principal`, as
   `tests/test_principal_cutover.py`'s local issuer does;
 - the two single tests mint from a refresh family;
-- no assertion is removed, weakened or re-targeted.
+- no assertion is removed, weakened or re-targeted, except the three named in the next paragraph.
 AC12 runs the three modules green. AC13 counts, per module, the assert statements (`assert`, `self.assert*`,
 `pytest.raises`) at your HEAD and at the cut base `3f94e0a024`, prints both, and passes only when every pair is
 equal. Your AC1..AC11 code stands; re-run all thirteen criteria and rebuild the proof instance and result file.
+
+**Amended again after your second run, on `1.0.0_SA_CTO`'s ruling msg 97141 (row `NFRA_OPLGTW-W3-S13`).** The
+fixture-only run fixed 13 of the 16. The three left are assertions that expect the identity C1 removes, `sub ==
+<email>`. Exactly these three, one expression each, are re-targeted to `sub == "<tid>/<oid>"` of that test's
+principal AND `email == <the same email>`:
+- `tests/test_oauth_durable.py:710`
+- `tests/test_jwt_cve_lock.py:117`
+- `tests/test_schwab_audit.py:342` (line numbers at `f8feaf081e`)
+No other assertion changes. If a token lacks the `email` claim, the test fails; that is a finding you row, and you
+never drop the email half. The bound has four arms, and every one is a criterion:
+- AC14: the diff against `3f94e0a024` changes exactly these three assertion lines, and each still carries its
+  original email literal or variable;
+- AC13: the per-module assert counts stay 123/123, 6/6 and 63/63;
+- AC12: the three modules read 31 passed.
+Re-run all fourteen criteria and rebuild the proof instance and result file.
 
 ### ACCEPTANCE
 
@@ -97,13 +112,16 @@ equal. Your AC1..AC11 code stands; re-run all thirteen criteria and rebuild the 
 <criterion id="OGA2-AC11" cell_refs="OG-a-2"><invocation>cd <WS> && timeout 120 .venv-og/Scripts/python -m pytest infra/aws/ec2/opal-gateway/tests/test_principal_cutover.py::test_oga2_ac11 -q -p no:cacheprovider --color=no</invocation><expect>(?m)^1 passed(?![^\n]*(failed|error))</expect></criterion>
 `OGA2-AC11` (`test_oga2_ac11`) -- a denied data entitlement returns a terminal tool error and never a 401 or an OAuth escalation.
 
-<criterion id="OGA2-AC12" cell_refs="OG-a-2"><invocation>cd <WS> && timeout 300 .venv-og/Scripts/python -m pytest infra/aws/ec2/opal-gateway/tests/test_oauth_durable.py infra/aws/ec2/opal-gateway/tests/test_jwt_cve_lock.py infra/aws/ec2/opal-gateway/tests/test_schwab_audit.py -q -p no:cacheprovider --color=no -m "not live"</invocation><expect>(?m)^[1-9][0-9]* passed(?![^\n]*(failed|error))</expect></criterion>
-`OGA2-AC12` -- the three granted modules, `tests/test_oauth_durable.py`, `tests/test_jwt_cve_lock.py` and `tests/test_schwab_audit.py`, pass, count printed.
+<criterion id="OGA2-AC12" cell_refs="OG-a-2"><invocation>cd <WS> && timeout 300 .venv-og/Scripts/python -m pytest infra/aws/ec2/opal-gateway/tests/test_oauth_durable.py infra/aws/ec2/opal-gateway/tests/test_jwt_cve_lock.py infra/aws/ec2/opal-gateway/tests/test_schwab_audit.py -q -p no:cacheprovider --color=no -m "not live"</invocation><expect>(?m)^31 passed(?![^\n]*(failed|error))</expect></criterion>
+`OGA2-AC12` -- the three granted modules, `tests/test_oauth_durable.py`, `tests/test_jwt_cve_lock.py` and `tests/test_schwab_audit.py`, pass: 31 of 31.
 
 <criterion id="OGA2-AC13" cell_refs="OG-a-2"><invocation>cd <WS> && timeout 120 .venv-og/Scripts/python org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~3/probes/og_a2.py AC13</invocation><expect>(?m)^VERDICT: PASS-OGA2-AC13(?![0-9])</expect></criterion>
 `OGA2-AC13` -- (discriminating) for each of the three granted modules, the count of assert statements (`assert`, `self.assert*`, `pytest.raises`) at HEAD equals the count at the cut base `3f94e0a024`, both numbers printed per module; the probe prints `VERDICT: PASS-OGA2-AC13` or `VERDICT: FAIL-OGA2-AC13 <reason>`.
 
-<expected_criteria>OGA2-AC1, OGA2-AC2, OGA2-AC3, OGA2-AC4, OGA2-AC5, OGA2-AC6, OGA2-AC7, OGA2-AC8, OGA2-AC9, OGA2-AC10, OGA2-AC11, OGA2-AC12, OGA2-AC13</expected_criteria>
+<criterion id="OGA2-AC14" cell_refs="OG-a-2"><invocation>cd <WS> && timeout 120 .venv-og/Scripts/python org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~3/probes/og_a2.py AC14</invocation><expect>(?m)^VERDICT: PASS-OGA2-AC14(?![0-9])</expect></criterion>
+`OGA2-AC14` -- (discriminating) across the three granted modules, the diff against the cut base `3f94e0a024` changes exactly 3 assertion lines, the three named in ruling 97141, and each changed line still contains its original email literal or variable; counts printed.
+
+<expected_criteria>OGA2-AC1, OGA2-AC2, OGA2-AC3, OGA2-AC4, OGA2-AC5, OGA2-AC6, OGA2-AC7, OGA2-AC8, OGA2-AC9, OGA2-AC10, OGA2-AC11, OGA2-AC12, OGA2-AC13, OGA2-AC14</expected_criteria>
 
 `<WS>` is your worktree's absolute path, given in your identity line.
 
@@ -114,7 +132,7 @@ equal. Your AC1..AC11 code stands; re-run all thirteen criteria and rebuild the 
 - **Interpreter.** Your venv `.venv-og` (`cd <WS> && py -3.12 -m venv --system-site-packages .venv-og && .venv-og/Scripts/python -m pip install -r infra/aws/ec2/opal-gateway/requirements.txt msal moto pytest`) serves every invocation. Never commit `.venv-og/` or `.scratch/`.
 - **Tests.** Each criterion names one test function in `tests/test_principal_cutover.py`; write exactly that name. The upstream identity provider is a local test issuer with a locally generated key, never Entra. `tests/test_oauth_durable.py`, `tests/test_jwt_cve_lock.py` and `tests/test_schwab_audit.py` run green (AC12).
 - **The known red test.** `tests/test_identity_scope.py::test_scoped_deny_by_default` fails at the cut base (row NFRA_OPLGTW-S1). Never edit it or `identity_tool_allowlist.txt`.
-- **Code.** The commit gate lints with ruff for Python 3.9 syntax. `mcp==1.28.0` is not raised. No existing test is edited to make it pass, except the three granted test files within the fixture-only bound above (AC13 grades it).
+- **Code.** The commit gate lints with ruff for Python 3.9 syntax. `mcp==1.28.0` is not raised. No existing test is edited to make it pass, except the three granted test files within the fixture-only bound above (AC13 grades it), and the three assertions re-targeted as ruled in msg 97141 (AC14 grades it).
 - **Nothing deploys.** The cutover reaches users only through `OG-r-1`.
 - **No egress off Opal infrastructure.** No call to Claude, an Anthropic endpoint, an interactive Entra sign-in or any vendor API.
 - **No secret in evidence.**
@@ -144,11 +162,11 @@ org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: `OGA2-AC1` .. `OGA2-AC13` (13). Instance at
+Criterion ids: `OGA2-AC1` .. `OGA2-AC14` (14). Instance at
 `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~3/NFRA_OPLGTW.TO-OG-a-2.principal-cutover.proof_of_spec.json`
 (phase `BUILD-GENERAL`, firm `FABRIC`, spec_ref.group `OTHER`, spec_ref.doc the PRD @f0aa50dbc0, decomp_ref.doc the
 decomposition @8768f46770, decomp_ref.to_ref this order's path), validated with
-`py -3.12 .tools/proof-of-spec-check.py <instance> OGA2-AC1,OGA2-AC2,OGA2-AC3,OGA2-AC4,OGA2-AC5,OGA2-AC6,OGA2-AC7,OGA2-AC8,OGA2-AC9,OGA2-AC10,OGA2-AC11,OGA2-AC12,OGA2-AC13`
+`py -3.12 .tools/proof-of-spec-check.py <instance> OGA2-AC1,OGA2-AC2,OGA2-AC3,OGA2-AC4,OGA2-AC5,OGA2-AC6,OGA2-AC7,OGA2-AC8,OGA2-AC9,OGA2-AC10,OGA2-AC11,OGA2-AC12,OGA2-AC13,OGA2-AC14`
 BEFORE the `complete` flip. Result file `principal-cutover.result.md` beside it. **Flip `complete` only when every
 MECHANICAL criterion PASSES by output.**
 </proof_of_spec>
@@ -177,3 +195,10 @@ msg 97114 (rows `NFRA_OPLGTW-W3-S7`, `NFRA_OPLGTW-S7`). The changes:
 - AC12 and AC13 are added.
 No criterion was removed. The PRD is unchanged. The surface addition is the ruling's, which reads it as C1's own
 outcome.
+
+Amended again 2026-09-15 ~15:5xZ, after the second run, on `1.0.0_SA_CTO`'s ruling msg 97141 (row
+`NFRA_OPLGTW-W3-S13`). The changes:
+- exactly three assertions of `sub == <email>` are re-targeted to the tid/oid principal AND the same email;
+- AC12's bar is 31 passed;
+- AC14 is added.
+No criterion was removed.
