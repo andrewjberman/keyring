@@ -1,12 +1,11 @@
 {
   "prd": "POSN_AGGFIX_PRD.md",
-  "prd_version": "v0.1",
-  "prd_pin": "d6bee5693c34dc05cc1744d88eb2b6b7e89b5ea6",
+  "prd_version": "v0.2",
+  "prd_pin": "cbd85e5cffb21b713642b54b4b9557a9d1c112f6",
   "half": "brief",
-  "half_hash": "f044e8d31df23efefab8c489507638f9329227ad201bc8e00974abef3f632490",
-  "verdict": "REFUSED",
-  "review_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/POSN_AGGFIX_PRD_v0.1_BRIEF_HALF_REVIEW_20260915_Z.md@3cb4034158",
+  "half_hash": "a05dfcec3a12111037bcf1bc4c912452540ec88c89d273f62dc5f5ea089708c4",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/POSN_AGGFIX_PRD_v0.2_BRIEF_HALF_REVIEW_20260915_Z.md@f51af104e4",
   "signed_by": "4.0.0_SA_CRO~Z",
-  "signed_at": "2026-09-15T17:50:57Z",
-  "reason": "C-FIVE-BOOKS-UNCHANGED (:176-177) with the S6 (:248) and S8 (:250) bounds cannot hold under C-CURRENT-SOURCE (:154-157): the producer writes each model book's aum from the same weight table (lambda_function.py:1796-1798 @ec29ae6fae), so the re-point changes 5 book-level values; brief-half fix only, ratified text untouched"
+  "signed_at": "2026-09-15T18:01:56Z"
 }
