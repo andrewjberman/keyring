@@ -78,14 +78,21 @@
   {
    "seq": 5,
    "limb": "L10",
-   "started_utc": "TO_BE_FILLED",
-   "ended_utc": "TO_BE_FILLED",
-   "act": "TO_BE_FILLED by the parent session: the ONE slug to 1.0.0_SA_CTO after its own verification.",
-   "inputs": [],
-   "outputs": [],
+   "started_utc": "2026-09-15T02:3xZ",
+   "ended_utc": "2026-09-15T02:38:16Z",
+   "act": "Sent the ONE slug to 1.0.0_SA_CTO, after the parent session re-verified the fork's work with a different instrument (a raw-text id regex and an adjudicates read, not a json walk). The checks: 10 new rows (227 at HEAD minus 217 at bc47ca11a3), 0 of 227 uncarried; 45 of 45 orders complete; ADJUDICATION_v2 old bytes an exact prefix (152791 -> 170824); REMEDIATION_v3 at 5 rows, all OPEN, round v7, none carrying a route, equal to the 5 graduated ids; F42-AC10's evidence line read directly at portal DEV 1f3ce9f0 (contracts/adapt.ts:588, value: advisoryFromWire(wire.cohort.advisory_status)); and the commits aba71991f0, 2d42ebd1b0 and ac41c29ce1 authored by this seat, each touching only its own paths. The slug also carries, for the record, this seat's census of graduated rows without remediation rows (@f0c0f06c9f): 42 on IRPT_FNTEND, from rounds 3-5.",
+   "inputs": [
+    {"kind": "ARTIFACT", "ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND7_L8_L9_20260915.md@ac41c29ce1"},
+    {"kind": "ARTIFACT", "ref": "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/adjudications/ADJUDICATION_v2.md@aba71991f0"},
+    {"kind": "ARTIFACT", "ref": "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/remediations/REMEDIATION_v3.md@2d42ebd1b0"},
+    {"kind": "ARTIFACT", "ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/GRADUATED_WITHOUT_REMEDIATION_ROW_CENSUS_20260915.md@f0c0f06c9f"}
+   ],
+   "outputs": [
+    {"kind": "MESSAGE", "ref": "to 1.0.0_SA_CTO, delivered 2026-09-15T02:38:16Z: org/mcp/inbox/1.0.0_SA_CTO/read/20260915T023816Z_3.0.0_SA_CVO__L10_SLUG__IRPT_FNTEND_round_7__4_of_4_j.md, 4143 bytes by os.path.getsize (gitignored, so it has no commit vintage)"}
+   ],
    "spine_clause": "L10: ONE slug to the CTO, only after every TO is terminal and every row dispositioned",
-   "gate_or_notifier_touched": "TO_BE_FILLED",
-   "note": "TO_BE_FILLED"
+   "gate_or_notifier_touched": "the CVO send guard (the send goes to 1.0.0_SA_CTO only); delivered by filesystem, broker and channel push",
+   "note": "The slug's push state is origin/CLOUD 6a5b276f8b, from the fork's ls-remote read at 02:35Z, and says so."
   }
  ]
 }
