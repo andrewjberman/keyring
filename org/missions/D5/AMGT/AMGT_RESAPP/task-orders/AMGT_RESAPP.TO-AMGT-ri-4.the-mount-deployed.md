@@ -157,7 +157,7 @@ final report on this order: OPEN, BLOCKING row, nothing applied.**
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
-<status>staged</status>
+<status>complete</status>
 <round>10</round>
 <slot>~17</slot>
 <fabric>site-z</fabric>
