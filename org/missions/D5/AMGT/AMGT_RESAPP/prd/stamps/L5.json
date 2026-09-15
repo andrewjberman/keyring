@@ -1,9 +1,9 @@
 {
- "note": "round 10: decomposition v1.1 s.18 @b4439b997d, four cells (ri-1 boundary, ri-2 producer, ri-3 exercise, ri-4 mount); stamped late after the round-10 slug named the issuer's stamp gap",
- "prd_pin": "aca0b0f10887",
- "prd_version": "v0.6",
+ "note": "round 11: decomposition v1.3 s.19 @f133ed7aff against v0.8 ADMITTED -- 13 cells AMGT-rj-1..13, 5 chains, the population of 20 subtracted",
+ "prd_pin": "303427dfdf7b",
+ "prd_version": "v0.8",
  "project": "AMGT_RESAPP",
  "signed_by": "2.0.0_SA_COO~W",
  "stage": "L5",
- "utc": "2026-09-15T06:05Z"
+ "utc": "2026-09-15T07:33Z"
 }
