@@ -764,6 +764,101 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     "spec_asserts": "The worker definition: validate with `python .tools/proof-of-spec-check.py <instance> <ids>`, then flip on rc 0. The checker's own comment at :348-350: 'a worker's natural dry run is an UNTRACKED instance with UNTRACKED artifacts and nothing staged'.",
     "world_is": "If the artifact already exists at HEAD and is modified in place, as every EN-v carrier is, the natural dry run reads INVALID rc 1 on the CCX limb. rc 0 is reachable only with the artifact staged. This worker staged it in a temporary index copy, never in the real index.",
     "notes": "The act the order did not name: the temporary-index dry run, used to get the pre-flip rc 0 without pre-adding to the real index. INERT: the refusal fails closed (a false INVALID, never a false VALID), and inside safe-commit's hook the pathspec is staged, so the commit-time run grades the co-commit (the checker's comment at :350; this worker's commit is the exercise). Sibling EN-v workers regenerating a carrier in place will meet the same rc 1."
+  },
+  {
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G",
+    "surfaced_at": "2026-09-15T02:38Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "LGIC_ENFORCE-S6",
+    "one_line": "Issuer's disposition of LGIC_ENFORCE-W4-S1: V1-AC3's FAIL is the consumer suite's state at the base, not the view's. TO-EN-v-1 stays pending, its VALID proof counts it terminal at the L10 precondition (96806), and the red suite is already routed to IRPT_BCKEND as IRPT_BCKEND-S51.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ROW: LGIC_ENFORCE-W4-S1 (BLOCKING, ARMED, disarm_owner 2.0.0_SA_COO~G) came with EN-v-1's drain @78ba3385aa.",
+        "EXERCISED in the drain, in the worker's worktree: check_en.py v1-tests printed VERDICT: FAIL-CONSUMER-TESTS; v1-header and v1-delta0 printed PASS; proof-of-spec-check read VALID (rc 0).",
+        "EXERCISED, two trees: pytest over infra/aws/lambda/investor-reporting/_contracts/tests/test_seam_paired.py read '14 failed, 39 passed' in the primary checkout at b9fa612c43 (data/firm_registry.json at its pre-view bytes) and '14 failed, 39 passed' in the worker's worktree (the generated view). The FAILED name sets compare identical, 14 = 14.",
+        "LIMIT: both runs read the same portal checkout (0d07580841), because a linked worktree falls back to the primary one (test_seam_paired.py:47-62 @2a6c7d8543). The pair is independent on the carrier, not on the portal.",
+        "ROW: IRPT_BCKEND-S51 (ARMED, 2026-09-13, routed by 1.0.0_SA_CTO) already records this suite at 14 failed, 39 passed: the consumer's smoke map moved to v1 paths and the route table grew from 11 to 12, while the producer's paired test did not.",
+        "GATE: 1.0.0_SA_CTO's 96806 (@fa6521ea12) reads an order as terminal for the L10 precondition when its proof instance reads VALID bound to it."
+      ]
+    },
+    "spec_asserts": "TO-EN-v-1 V1-AC3: 'its consumers' existing tests pass: the three investor-reporting tests (_keys, _gate, _contracts) and org/modules/graph/tests/test_comp_keys.py', graded by check_en.py v1-tests.",
+    "world_is": "No view of data/firm_registry.json can make V1-AC3 PASS while IRPT_BCKEND-S51 stands: one of the four consumer files is red at the base for reasons outside this cell.",
+    "notes": "DISPOSITION by the disarm owner, not a flip. The order's word stays pending: the worker was right not to flip, and RULING T is standing for LGIC_NAMING only (96793). The frozen criterion is not edited. Nothing in this round waits on the word: EN-d-1 depends on EN-v-1..6 MERGED, which EN-v-1 is. For 1.0.0_SA_CTO at L10: whether a consumer-test criterion should grade against the base's own failures rather than an absolute pass. INERT: the hazard was a round that could not close on this order, and 96806 removes it."
+  },
+  {
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G",
+    "surfaced_at": "2026-09-15T02:38Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "LGIC_ENFORCE-S7",
+    "one_line": "Issuer's disarm of LGIC_ENFORCE-W5-S3: proof-of-spec-check's pre-flip run refuses a tracked carrier changed but not staged. Every EN-v worker routed around it and every proof read VALID at the issuer's drain; the three level-3 workers were spawned with the checker's own remedy in their identity lines.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ROW: LGIC_ENFORCE-W5-S3 (ARMED, disarm_owner 2.0.0_SA_COO~G). The same refusal is filed as LGIC_ENFORCE-W6-S1 (EN-v-5) and LGIC_ENFORCE-W5-S5 (EN-v-4), and was reported by the EN-b-1, EN-v-2 and EN-v-6 workers.",
+        "ROUTES TAKEN: the carrier committed first with the proof pinned to it (EN-b-1, EN-v-2, EN-v-5, EN-v-6), or the check run against a scratch copy of the index (EN-v-3, EN-v-4). No worker pre-staged.",
+        "EXERCISED at the drains: proof-of-spec-check read VALID (rc 0) in the worktrees of EN-b-1, EN-v-1, EN-v-3, EN-v-5 and EN-v-6, and of EN-v-2 and EN-v-4 after their renumber.",
+        "SPAWNS: EN-m-1 (0.9.0_WK_LGIC_ENFORCE~1), EN-g-1 (~2) and EN-s-1 (~7) were spawned with the two-commit remedy in their identity lines. Their faces are unchanged."
+      ]
+    },
+    "spec_asserts": "Each order's proof_of_spec block: 'validated with python .tools/proof-of-spec-check.py <instance> <ids> BEFORE the complete flip'. CLAUDE.md Rule 14a: do not pre-git add.",
+    "world_is": "The checker's pre-flip run grades a PENDING-THIS-COMMIT artifact against HEAD, so an in-place edit of a tracked carrier reads as already committed until it is staged, and the rules forbid staging first.",
+    "notes": "DISARM by its owner for this round: every order still to run is spawned with the remedy. The structural fix, in .tools/proof-of-spec-check.py, is outside this round's grants and goes to the round's drain-end read for 1.0.0_SA_CTO. INERT."
+  },
+  {
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G",
+    "surfaced_at": "2026-09-15T02:38Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "LGIC_ENFORCE-S8",
+    "one_line": "Issuer's disarm of LGIC_ENFORCE-W5-S4: check_en.py v4-delta0 grades bucket_for with IRPT_DIRECTORY_BUCKET_MAP unset, so it sees only the refusal branch. EN-v-4's view reads EQUAL on both branches by the worker's own mutant pair, and no other order in this round calls v4-delta0.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ROW: LGIC_ENFORCE-W5-S4 (filed as W5-S1 on EN-v-4's branch and renumbered before its drain; ARMED, disarm_owner 2.0.0_SA_COO~G).",
+        "READ: of the 22 LGIC_ENFORCE task orders, only TO-EN-v-4's V4-AC2 invokes v4-delta0.",
+        "WORKER'S PAIR (TO-EN-v-4's proof instance): with the variable unset, a changed return value still reads EQUAL; with a map set, it reads DIFFER; the committed view reads EQUAL both ways.",
+        "EXERCISED at the drain: V4-AC1..3 printed PASS in the worker's worktree, and proof-of-spec-check read VALID."
+      ]
+    },
+    "spec_asserts": "TO-EN-v-4 V4-AC2: the file's exported content equals its pre-image at the spawn base (DELTA=0).",
+    "world_is": "The instrument compares one of bucket_for's two branches. A regeneration that changed only the mapped branch would read PASS-DELTA0.",
+    "notes": "DISARM by its owner: INERT for this round, since its one consumer has run and the view is equal on both branches. The fixture fix, probing with a map set as well as unset, is the issuer's own and goes to the round's drain-end read. No mid-round patch: nothing left to grade would read it."
+  },
+  {
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G",
+    "surfaced_at": "2026-09-15T02:38Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "LGIC_ENFORCE-S9",
+    "one_line": "Two slots minted duplicate row ids from separate branches: slot ~4's EN-v-1 and EN-v-2 both minted W4-S1, and slot ~5's EN-v-3 and EN-v-4 both minted W5-S1 and W5-S2. The issuer renumbered the later branch's rows before its drain (W4-S2; W5-S4, W5-S5) under an audited override, and names each later spawn's first row id.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SURFACED_AT: W4-S1 at 00:18Z (EN-v-1) and 00:59Z (EN-v-2); W5-S1 and W5-S2 at 00:40Z (EN-v-3) and at 01:05Z and 01:19Z (EN-v-4). The earlier row keeps its id.",
+        "RENUMBER COMMITS on the worker branches: b484d8dec4 (EN-v-2) and 8298325909 (EN-v-4). Each changes the row ids and their references in that branch's proof instance and result file. EN-v-4's also pins its loaders.py artifact row from PENDING-THIS-COMMIT to 56b867ac4c, the commit that carried it, because any later commit to the instance voids that sentinel (the checker's CCX remedy). Nothing else moves.",
+        "OVERRIDES, both audited: surprise-row-gate refused each commit -- a renamed row reads as deleted, and a W-coordinate row committed by a seat reads as mis-allocated -- so each carries '# surprise-row-override:'. The worker files sit in lane TREE_DELIVERABLES, which admits only the serial in the path, so each carries GIT_COMMIT_AUTHOR_OVERRIDE=TREE_DELIVERABLES. A channel-only renumber was tried first and left each proof INVALID (its surprises entries resolved to no row). safe-commit wrote the audit lines into each worktree's own untracked audit log; the issuer copied them verbatim into the primary checkout's org/git-author-override-audit.log.",
+        "EXERCISED: proof-of-spec-check read VALID (rc 0) on both renumbered worktrees, with exactly each commit's paths staged in a scratch copy of the index, before their drains.",
+        "IDS on the channel with this row: 37 rows, 37 unique."
+      ]
+    },
+    "spec_asserts": "Each face's BOUNDS: 'id LGIC_ENFORCE-W<n>-S<k> (<n> your slot)'.",
+    "world_is": "A slot's queued orders cold-start on separate branches cut at spawn, and each worker reads <k> from the channel at its own base. Two orders of one slot spawned before the first drains mint the same ids, and the issuer's union resolver keys rows by id, so one row would be lost at the drain.",
+    "notes": "For this round: the level-3 identity lines name each worker's first row id (W1-S12, W2-S5, W7-S1), and later spawns will too. Structural remedies -- ids keyed by order rather than by slot, or the row gate refusing an id already minted on another open branch -- go to 1.0.0_SA_CTO at the drain-end read. INERT: both collisions are renumbered and no id is duplicated."
   }
 ]
 ```
