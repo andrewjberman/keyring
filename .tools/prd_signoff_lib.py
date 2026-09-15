@@ -398,13 +398,24 @@ def live_serials(root, now=None):
     return {s for s, info in data.items() if isinstance(info, dict) and now - float(info.get("last_seen_epoch", 0) or 0) < LIVE_SECONDS}
 
 
-def route_half(half, live, coo_lane_of_project=None, overdue=False, designated=None):
+def route_half(half, live, coo_lane_of_project=None, overdue=False, designated=None, fabric=None):
     """(serial, reason) -- who is ASKED to sign `half` right now. The ratified-text half always goes to the
     CVO (base or its live lane). The brief half goes to the CRO when a CRO base/lane is live; else, or when the
     CRO is OVERDUE on it, to a live 2.0.0_SA_COO instance that is NOT this project's round holder; else to the
-    CRO base anyway (a message to a dead base is a hole, so the reason says so and the notifier keeps re-offering)."""
+    CRO base anyway (a message to a dead base is a hole, so the reason says so and the notifier keeps re-offering).
+
+    THE PROJECT'S FABRIC PICKS AMONG LIVE LANES FIRST (row AMGT_RESAPP-Z-S102, measured on site Z by
+    0.0.0_AB_MSTR~Z). The pick used to be alphabetical after the base, so with both ~W and ~Z lanes live a site-Z
+    project's sign-off went to ~W. `fabric` is the project row's field (census: 'laptop', 'site-z', or absent). A
+    'site-z' project prefers a ~Z lane; any other project prefers a lane that is not ~Z. Within that, the base
+    comes first, then alphabetical order, which is unchanged whenever only one fabric's lanes are live."""
+    want_z = str(fabric or "").strip().lower() in ("site-z", "sitez")
+
+    def _is_z(s):
+        return ("~" in s) and s.split("~", 1)[1].upper().startswith("Z")
+
     def live_of(base):
-        return sorted([s for s in live if base_serial(s) == base], key=lambda x: (x != base, x))
+        return sorted([s for s in live if base_serial(s) == base], key=lambda x: (_is_z(x) != want_z, x != base, x))
     if half == "ratified-text":
         c = live_of("3.0.0_SA_CVO")
         return (c[0] if c else "3.0.0_SA_CVO"), ("live" if c else "no live CVO session; the base is addressed, which is a hole until a session is live; re-offer continues")
@@ -499,6 +510,15 @@ def self_test():
     arm("route: ratified-text ignores the designation", route_half("ratified-text", live, designated="2.0.0_SA_COO~D")[0].startswith("3.0.0_SA_CVO"))
     arm("route: nobody live -> the primary base, with the hole named", route_half("brief", set())[0] == "4.0.0_SA_CRO" and "hole" in route_half("brief", set())[1])
     arm("route: the CVO is never substituted", route_half("ratified-text", {"2.0.0_SA_COO"})[0] == "3.0.0_SA_CVO")
+    # FABRIC PREFERENCE (row AMGT_RESAPP-Z-S102): with both ~W and ~Z lanes live, a site-z project goes to ~Z; a project
+    # with no fabric, or a laptop one, keeps the old order (alphabetical after the base), so ~W.
+    two = {"4.0.0_SA_CRO~W", "4.0.0_SA_CRO~Z", "3.0.0_SA_CVO~W", "3.0.0_SA_CVO~Z"}
+    arm("route FABRIC: a site-z project's brief half goes to the ~Z CRO lane, not ~W", route_half("brief", two, fabric="site-z")[0] == "4.0.0_SA_CRO~Z")
+    arm("route FABRIC: a site-z project's ratified-text half goes to the ~Z CVO lane", route_half("ratified-text", two, fabric="site-z")[0] == "3.0.0_SA_CVO~Z")
+    arm("route FABRIC: no fabric -> the old order (~W), so a laptop routing is unchanged", route_half("brief", two)[0] == "4.0.0_SA_CRO~W"
+        and route_half("brief", two, fabric="laptop")[0] == "4.0.0_SA_CRO~W")
+    arm("route FABRIC: a site-z project's COO fallback prefers a ~Z COO lane, never its own round holder",
+        route_half("brief", {"2.0.0_SA_COO~A", "2.0.0_SA_COO~ZZZ", "2.0.0_SA_COO~ZZ"}, coo_lane_of_project="2.0.0_SA_COO~ZZ", fabric="site-z")[0] == "2.0.0_SA_COO~ZZZ")
     # A SIGNATURE IS A COMMITTED FILE (row LGIC_NAMING-S14). The doctored pair runs in a THROWAWAY repo, so no real signoff
     # dir is touched: a committed SIGNED file is read, the same SIGNED content left uncommitted is not, and a worktree edit
     # to a committed file is not read either.

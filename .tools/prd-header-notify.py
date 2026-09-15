@@ -115,6 +115,12 @@ def _designated_of(root, prd_rel):
     return _lib().designated_brief_signer(_project_doc_of(root, prd_rel))[0]
 
 
+def _fabric_of(root, prd_rel):
+    """The project row's `fabric` ('laptop', 'site-z', or None); route_half prefers the reviewer lane of that fabric
+    (row AMGT_RESAPP-Z-S102)."""
+    return (_project_doc_of(root, prd_rel) or {}).get("fabric")
+
+
 def _evaluate_prd(root, prd_rel, prd_text=None):
     """The lib's verdict on the PRD's working-tree bytes (post-commit: HEAD is checked out) and its sign-off dir."""
     lib = _lib()
@@ -542,7 +548,8 @@ def post_commit(root, at=None):
         live = lib.live_serials(root)
         coo_lane = _coo_lane_of(root, rel)
         for half in lib.missing_halves(ev):
-            to, why = lib.route_half(half, live, coo_lane_of_project=coo_lane, designated=_designated_of(root, rel))
+            to, why = lib.route_half(half, live, coo_lane_of_project=coo_lane, designated=_designated_of(root, rel),
+                                     fabric=_fabric_of(root, rel))
             r = dict(base_row, to=to, history=[], kind="prd-review", half=half, half_hash=ev["hashes"][half],
                      route_reason=why)
             if lib.base_serial(to) == lib.SUBSTITUTE.get(half):
@@ -728,7 +735,8 @@ def _overdue_halves(root, state, now):
             continue
         row["nudged_windows"] = windows
         coo_lane = _coo_lane_of(root, row["path"])
-        to, why = lib.route_half(half, live, coo_lane_of_project=coo_lane, overdue=(half == "brief" and windows >= 2), designated=_designated_of(root, row["path"]))
+        to, why = lib.route_half(half, live, coo_lane_of_project=coo_lane, overdue=(half == "brief" and windows >= 2), designated=_designated_of(root, row["path"]),
+                                 fabric=_fabric_of(root, row["path"]))
         nudge = dict(row, kind="prd-nudge", to=to, route_reason=why, overdue_min=int(age_min), history=[],
                      attempts=0, msg_id=None, sent_at=None)
         if lib.base_serial(to) == lib.SUBSTITUTE.get(half):

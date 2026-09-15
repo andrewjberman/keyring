@@ -114,7 +114,7 @@ def cmd_status(lib, code=None):
             if st["state"] == "SIGNED":
                 owed = ""
             else:
-                who, reason = lib.route_half(half, live, coo_lane_of_project=doc.get("coo_lane"), designated=lib.designated_brief_signer(doc)[0])
+                who, reason = lib.route_half(half, live, coo_lane_of_project=doc.get("coo_lane"), designated=lib.designated_brief_signer(doc)[0], fabric=doc.get("fabric"))
                 owed = "   OWED BY %s (%s)" % (who, reason)
             print("    %-14s %-13s %-22s %s%s" % (half, st["state"], st["by"] or "-", st["detail"][:90], owed))
         for n in r["unreadable"]:
