@@ -77,14 +77,36 @@
   {
    "seq": 5,
    "limb": "L10",
-   "started_utc": "TO_BE_FILLED",
-   "ended_utc": "TO_BE_FILLED",
-   "act": "TO_BE_FILLED by the parent session: the ONE slug to 1.0.0_SA_CTO after its own verification.",
-   "inputs": [],
-   "outputs": [],
+   "started_utc": "2026-09-15T01:2xZ",
+   "ended_utc": "2026-09-15T01:37:01Z",
+   "act": "Sent the ONE slug to 1.0.0_SA_CTO, after the parent session re-verified with a different instrument from the fork's: a raw-text id regex and an adjudicates read across all 3 adjudication files, not a json walk. The check found 7 new rows (42 minus 35 at b9ea6f3686) and 0 of 42 uncarried. Also verified: 22 of 22 orders complete at HEAD; the three FWD-1 differences (i03, i10, i11) read directly from r2/n3-namer-{a,b}.tsv; the FN1 clause 'the function is that phrase as named, kebab-case, ONE token', with its 'the Orion ingest' example, read in full at NAMING_SCHEMA.json:59 @2706014705; REMEDIATION_v2 at 6 rows, all OPEN, round v2, 0 carrying a route; and the commits b10229bdf3, ab8d584c0f and 1ca17cc88e authored by this seat and in HEAD.",
+   "inputs": [
+    {"kind": "ARTIFACT", "ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/LGIC_NAMING_ROUND2_L8_L9_20260915.md@1ca17cc88e"},
+    {"kind": "ARTIFACT", "ref": "org/missions/D14/LGIC/LGIC_NAMING/surprise-channel/adjudications/ADJUDICATION_v3.md@b10229bdf3"},
+    {"kind": "ARTIFACT", "ref": "org/missions/D14/LGIC/LGIC_NAMING/surprise-channel/remediations/REMEDIATION_v2.md@ab8d584c0f"}
+   ],
+   "outputs": [
+    {"kind": "MESSAGE", "ref": "to 1.0.0_SA_CTO, delivered 2026-09-15T01:37:01Z: org/mcp/inbox/1.0.0_SA_CTO/read/20260915T013701Z_3.0.0_SA_CVO__L10_SLUG__LGIC_NAMING_round_2__FWD-1_FW.md, 3856 bytes by os.path.getsize (gitignored, so it has no commit vintage)"}
+   ],
    "spine_clause": "L10: ONE slug to the CTO, only after every TO is terminal and every row dispositioned",
-   "gate_or_notifier_touched": "TO_BE_FILLED",
-   "note": "TO_BE_FILLED"
+   "gate_or_notifier_touched": "the CVO send guard (the send goes to 1.0.0_SA_CTO only); delivered by filesystem, broker and channel push",
+   "note": "The slug's push state is origin/CLOUD 6a5b276f8b, from an ls-remote read at ~01:2xZ, and says so."
+  },
+  {
+   "seq": 6,
+   "limb": "L10",
+   "started_utc": "2026-09-15T01:35Z",
+   "ended_utc": "2026-09-15T01:43Z",
+   "act": "Landed round 1's REMEDIATION_v1 unchanged at the channel path. The source was its held bytes (@f679b1e2b5): 40931 bytes, sha256 9cb86097..., checked before the write. The first attempt was refused by safe-commit (rc=3) while a foreign merge was in progress (MERGE_HEAD 3e48518ae9). Nothing was staged, and the untracked file was removed from the channel path at once. A one-shot background wait saw MERGE_HEAD clear after about 45 s. The retry was admitted by the gate's L10 limb: 22 orders at HEAD, 0 open; 42 items, 0 undispositioned.",
+   "inputs": [
+    {"kind": "ARTIFACT", "ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/LGIC_NAMING_ROUND1_REMEDIATION_HELD_BY_GATE_20260914.md@f679b1e2b5"}
+   ],
+   "outputs": [
+    {"kind": "ARTIFACT", "ref": "org/missions/D14/LGIC/LGIC_NAMING/surprise-channel/remediations/REMEDIATION_v1.md@9129bf0be3"}
+   ],
+   "spine_clause": "L10 precondition: every TO terminal and every row dispositioned",
+   "gate_or_notifier_touched": "safe-commit's in-progress-merge refusal (rc=3) once, with nothing staged; then the surprise-row-gate L10 limb ADMITTED all 20 rows. No override.",
+   "note": "Round 1's RULING T said the rows land 'with no second message'. The round-2 slug named this landing in advance, so no further message was sent."
   }
  ]
 }
