@@ -1,12 +1,11 @@
 {
   "prd": "AMGT_RESAPP_PRD.md",
-  "prd_version": "v0.6",
-  "prd_pin": "2f3b65d8b842847bd31eefc63766593bcc235b42",
+  "prd_version": "v0.7",
+  "prd_pin": "164ae74e06d02030ef70dc8fd1e76030e9713e6c",
   "half": "brief",
-  "half_hash": "90b966c9b31051c680ad9c5efc2a8cb4d495895682ff1627deeb02aff1e1b3ad",
-  "verdict": "REFUSED",
-  "review_ref": "org/tier1_exec/4.0.0_SA_CRO/deliverables/AMGT_RESAPP_v06_BRIEF_REVIEW_20260915_W.md@d8bee9fd68",
+  "half_hash": "0455fc3d1e95715a8043d5f9fbadddd8a72e8d5a178a961da57635a5cc15ebea",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/4.0.0_SA_CRO/deliverables/AMGT_RESAPP_v07_BRIEF_REVIEW_20260915_W.md@4786fedcc3",
   "signed_by": "4.0.0_SA_CRO~W",
-  "signed_at": "2026-09-15T06:12:22Z",
-  "reason": "v0.6 preserves conflicting legacy store/layout/compute requirements and lacks complete supplement content coverage."
+  "signed_at": "2026-09-15T06:50:16Z"
 }
