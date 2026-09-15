@@ -529,6 +529,29 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     "spec_asserts": "TO-EN-b-1 WORKER FACE: grade() implements the written rule EXACTLY; the builders read the registry at run time and copy none of it.",
     "world_is": "The two instructions diverge on three tokens. The module takes the registry, which the rule's own V1 defers to, so a name led by astn, trade or news RAISES rather than grading. The divergence closes when those three rows gain an owner_directive.",
     "notes": "Downstream consumer: EN-s-1's census stops on a RAISE (DEC-7). A live name led by one of these three tokens would stop that run."
+  },
+  {
+    "id": "LGIC_ENFORCE-W6-S1",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~6",
+    "surfaced_at": "2026-09-15T00:49Z",
+    "one_line": "EN-v-5 could not commit the carrier, instance and flip together. Before staging, proof-of-spec-check refuses a PENDING-THIS-COMMIT row on a MODIFIED tracked carrier, and Rule 14a forbids pre-staging, so the carrier went in its own commit efacdee1e0 and the proof pins it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN: python .tools/proof-of-spec-check.py <EN-v-5 instance> V5-AC1,V5-AC2 with the carrier row at PENDING-THIS-COMMIT and the carrier modified but unstaged in wk-lgic-enforce-1-6: 'VIOLATION: artifact-resolution: 'data/assets/scripts/gold/runners_49f/perfrp_firm_pin.py' is PENDING-THIS-COMMIT but is ALREADY COMMITTED at HEAD and NOT staged -- it will not ride this commit; pin the row to the commit that carried it (CCX class)' INVALID (rc=1).",
+        "CODE: .tools/proof-of-spec-check.py:379-384 @b02fdaa849. In PRE-COMMIT context a PENDING row passes only when the path is in `git diff --cached`; a path that is tracked (ls-files --error-unmatch) and not staged is refused, whether or not the worktree changed it.",
+        "CONTRAST: the sibling instance deliverables/0.9.0_WK_LGIC_ENFORCE~1/LGIC_ENFORCE.TO-EN-r-1...proof_of_spec.json carries PENDING-THIS-COMMIT on NEW (untracked) files, which the dry run counts as pending-on-worktree, not as a violation.",
+        "REMEDY TAKEN (the checker's own words: 'pin the row to the commit that carried it'): carrier alone at efacdee1e0; the instance row pinned efacdee1e0 with introduces ['END GENERATED [FIRM_TREES]'] (present at the pin, absent at b02fdaa849)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Worker definition, Proof: 'rc 0 AND every mechanical criterion PASS-by-output, then flip the task order's <status> to complete and commit instance, deliverables and flip together'; Rule 14a: 'do NOT pre-git add'.",
+    "world_is": "For a cell that MODIFIES a tracked file, the pre-flip manual validation cannot return rc 0 while the deliverable is uncommitted and unstaged. Instance, deliverable and flip cannot ride one commit without pre-staging, so the deliverable took a commit of its own.",
+    "notes": "Form only. Every EN-v-<n> cell modifies a tracked carrier, so the same shape is expected on each of them. The order stayed open until the proof commit; no criterion was affected."
   }
 ]
 ```
