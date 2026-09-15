@@ -3896,6 +3896,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W17-S5",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~17",
+    "surfaced_at": "2026-09-15T02:40Z",
+    "one_line": "AC5's two recorded outputs BOTH diverge from its <expect> while the import it grades fully succeeded, and one of the two divergences was CAUSED BY THE ORDER'S OWN AMENDMENT. (a) DENOMINATOR: AC5 expects 'state-resources 22' (16 at the cut + 6 imported); the run printed 23. The 23rd entry is module.scoped_amgt_api.data.aws_s3_object.artifact -- a DATA SOURCE that could not resolve at cut time because its S3 key was a 404, and that now resolves and is cached in state precisely because AC12 (added by the same amendment, and sequenced BEFORE AC5 by that amendment) uploaded the object. The amendment moved the denominator and AC5's expect line was not moved with it. (b) INSTRUMENT: AC5's loop ends each import with 'tail -1', but terraform import's last line is BLANK, so all six lines printed empty where the expect describes six 'Import successful!' lines. Neither divergence touches AC5's stated NOT-met branch and the six imports demonstrably landed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-AMGT-ri-2 AC5 <expect>, verbatim: 'six lines each ending Import successful! (an already-managed resource on a re-run prints an error naming it as already managed -- record it and do not import twice), then state-resources 22 and chatter 6 (the 16 resources harvest/tfstate carried at this cut plus the six). Fewer than six imported, or a chatter count under 6, is NOT met.'",
+    "world_is": "The AC5 invocation was run once, verbatim. All six IMPORT lines printed with an empty tail. The state read printed 'state-resources 23 chatter 6'. The full 23-entry state list decomposes exactly: 13 pre-existing non-module managed resources + 3 pre-existing module.harvest_enqueue entries (1 data source, 2 resources) = 16 at the cut, + the 6 imported chatter_axis resources = 22, + module.scoped_amgt_api.data.aws_s3_object.artifact = 23. The six imports carry GENUINE LIVE ATTRIBUTES, which is stronger evidence than the success string the tail dropped: terraform state show aws_lambda_function.chatter_axis_producer -> last_modified 2026-09-11T18:13:38.063+0000, source_code_size 13572, handler lambda_function.handler, runtime python3.12 (byte-for-byte the pre-cell figures the order recorded at its cut), and terraform state show aws_scheduler_schedule.chatter_axis_daily -> name amgt-resapp-chatter-axis-daily, group_name default, schedule_expression 'cron(0 10 * * ? *)', state ENABLED. AC5's own NOT-met branch (fewer than six imported, or chatter under 6) is not triggered: chatter is 6 of 6.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE 23RD ENTRY IS A DATA SOURCE, NOT A RESOURCE, and its address names the module AC12 exists to unblock: 'module.scoped_amgt_api.data.aws_s3_object.artifact'. TO-AMGT-ri-2's own amendment text states the mechanism that put it there: the data source 'reads s3://opal-313476888478-lambda-artifacts/research/opal-amgt-scoped-api.zip at EVALUATION time, and that key is a 404 until it is uploaded'. AC12 uploaded it in this same order, minutes earlier (head-object Size 60905).",
+        "THE TAIL-1 ARTIFACT IS THE INSTRUMENT, NOT THE ACT: the six resources are in state (chatter 6) and carry live attribute values that could only have come from a successful read of the live plane. A failed import leaves NO state entry at all -- which is exactly what this worker's predecessor measured and filed as W17-S2 (6 of 6 rc=1, 0 imported) before AC12 existed.",
+        "NO RE-IMPORT WAS RUN to recover the success string: AC5 itself says 'do not import twice', and a second import of an already-managed address errors rather than re-proving anything. The state-show read is a DIFFERENT instrument answering the same question, not a repetition of the first.",
+        "DENOMINATOR PRINTED AND DECOMPOSED: 23 of 23 state entries enumerated by 'terraform state list | cat -n' at the worktree's harvest root after the imports; the 16 + 6 + 1 split above accounts for every one."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
