@@ -1334,6 +1334,125 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     "spec_asserts": "TO-EN-t-2: 'It grades every resource-name attribute in DIR's .tf files with grade()'.",
     "world_is": "An expression-valued name attribute has no string to grade before plan. The limb grades the literals, lists each expression with its source text, and prints the split on its NAMING-APPLY denominator line. A name passed through the opal_name module is an expression and passes.",
     "notes": "Form only. No criterion turns on it: both fixture trees name their queue with a literal."
+  },
+  {
+    "id": "LGIC_ENFORCE-W1-S13",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~1",
+    "surfaced_at": "2026-09-15T03:49Z",
+    "one_line": "generate() renders no exemptions local, so the fence's exemption list cannot come from the module's GENERATED locals as TO-EN-f-1 says. Module opal_name reads infra/logic/registry/exemptions.json itself, with file() and jsondecode(), in main.tf.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE: lib/opal_naming.py _gen_locals (:697-723 @39aae459ed) renders scope_short, scope_long, scope_class, name_scope_classes, scope_bucket, fence_patterns and account_id. It renders no exemptions list. The regenerated generated_locals.tf (registry@ba5318901b937130) has no exemptions local either.",
+        "GRANT: TO-EN-f-1 <paths> names infra/aws/terraform/modules/opal_name/ and infra/logic/registry/exemptions.json. It does not name lib/, so the generator cannot be extended in this cell.",
+        "BUILT: modules/opal_name/main.tf local fence_exemption_arns = jsondecode(file(\"${path.module}/../../../../logic/registry/exemptions.json\")), mapped per bucket to principal ARNs; output fence_exemption_arns. The Deny reads module.opal_name.fence_patterns[\"49financial\"] and module.opal_name.fence_exemption_arns[<bucket>].",
+        "RUN: check_en.py f1-no-typed-list 'VERDICT: PASS-NO-TYPED-LIST'; m1-no-external PASS (no data \"external\"); m1-vectors '37 passed, 0 failed'; the plan renders the 1 pattern and the 16 exemption ARNs into the policy's ArnNotLike list."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EN-f-1 cell step 2: 'Both lists come from the module's generated locals and are never typed (DEC-4 (iii))'. Step 1: 'Then regenerate the module locals (generate)'.",
+    "world_is": "generate() writes fence_patterns into generated_locals.tf and no exemptions list, and the generator (lib/) is outside this order's grant. The exemption list reaches the policy through a module local that reads the registry file at plan time, not through a generated local. It is still never typed.",
+    "notes": "Form only. To bring the exemptions into the generated locals, _gen_locals would render one more map, and a seat whose grant holds lib/opal_naming.py would do it."
+  },
+  {
+    "id": "LGIC_ENFORCE-W1-S14",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~1",
+    "surfaced_at": "2026-09-15T03:49Z",
+    "one_line": "Adding the exemption rows moves the registry hash from 50e4fabd1cb6a150 to ba5318901b937130, so 7 generated views outside this order's grant now carry a stale GENERATED header. Their content is otherwise unchanged.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~G",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE: lib/opal_naming.py REGISTRY_FILES (:52 @39aae459ed) includes exemptions.json, and registry_hash (:92-101) hashes every registry file. RUN: 'VALIDATE: OK 16 system row(s), 9 scope row(s), 9 warning(s) at registry@ba5318901b937130' after the rows, where the base read 50e4fabd1cb6a150.",
+        "READ: at base 39aae459ed, 50e4fabd1cb6a150 appears in 7 generated views outside TO-EN-f-1's <paths>: data/firm_registry.json, infra/aws/lambda-edge/_shared/firm-config.mjs, infra/aws/lambda/investor-reporting/_authz/loaders.py, data/assets/scripts/gold/runners_49f/perfrp_firm_pin.py, data/assets/scripts/gold/investor_reporting/holdings_snapshot.py, data/assets/scripts/gold/investor_reporting/directory_runner.py and .tools/ds-precommit-check.py. The module's two generated files are in the grant and were regenerated here.",
+        "RUN: python lib/opal_naming.py generate --out .scratch/regen (9 written) compared line by line with each live view: 7 of 7 differ ONLY in the lines naming the old hash (8 lines in total; 0 other differing lines). So the views' exported content is unchanged and only their headers are stale.",
+        "CODE: check_en.py _v_header (:713-716 @39aae459ed) requires each view to carry the CURRENT registry hash. On a tree carrying this order's commit, every EN-v-<n> header criterion reads FAIL-HEADER until those 7 views are regenerated."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EN-f-1 cell step 1: add the exemptions.json rows, 'Then regenerate the module locals (generate)'. The <paths> grant names infra/logic/registry/exemptions.json and infra/aws/terraform/modules/opal_name/ only.",
+    "world_is": "The registry hash covers exemptions.json, so any exemption row re-stales the header of every generated view. The order grants regeneration of the module's files only, and the 7 other views keep the old hash until a seat whose grant holds them runs generate.",
+    "notes": "Form only. The disarm is one generate over those 7 targets (header-only, measured above), by the issuer or a cell it names. Left alone, the EN-v header criteria go red on the drained tree."
+  },
+  {
+    "id": "LGIC_ENFORCE-W1-S15",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~1",
+    "surfaced_at": "2026-09-15T03:49Z",
+    "one_line": "The exemptions.json row form ('principal (a role name or an ARN)') cannot write an IAM user or a service-linked role in a form both check_en.py f1-covered and the policy accept, so each row also carries an arn field.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE: check_en.py f1_covered (:540-557 @39aae459ed) finds a writer's row by its census name, or by 'arn:aws:iam::313476888478:role/' + name. A row written as a user ARN (user/Andrew_Berman) or a service-linked role ARN (role/aws-service-role/<service>/<name>) matches neither, so it reads UNCOVERED.",
+        "CENSUS: FENCE_WRITER_CENSUS.md opal-data-49financial holds 16 principals: 3 are IAM users (Andrew_Berman, Andrew_Berman_Console, Opal_Terminal) and 3 are service-linked roles under aws-service-role/ paths. For those 6, a bare name rendered as role/<name> is a principal that does not exist, so the policy would deny the real one.",
+        "CODE: lib/opal_naming.py validate (:404-410 @39aae459ed) requires principal, reason and signoff_ref, and refuses no other field. RUN after the rows: 'VALIDATE: OK'.",
+        "BUILT: each of the 16 rows has principal = the census name and arn = the census ARN. main.tf takes arn first. RUN: f1-covered 'WRITERS OF opal-data-49financial: 16  COVERED: 16'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "infra/logic/registry/exemptions.json _about.row_fields at base: 'principal (a role name or an ARN); reason; signoff_ref'.",
+    "world_is": "Six of the sixteen principals are not the role ARN of their name. The checker matches only the name, and the policy needs the true ARN, so rows carry both and _about.row_fields now names arn.",
+    "notes": "Form only."
+  },
+  {
+    "id": "LGIC_ENFORCE-W1-S16",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~1",
+    "surfaced_at": "2026-09-15T04:22Z",
+    "one_line": "check_en.py f1-prior cannot read the live policy on this box. Its run() starts a bare 'aws' through Python's subprocess, which finds no aws.exe (only .CMD and bash shims exist), so F1-AC4 prints NOT RUNNABLE [WinError 2] and FAIL-PRIOR-DIFFERS whatever FENCE_PRIOR_POLICY.json holds.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~G",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN, the named invocation, twice (about 04:05Z and 04:18Z on 2026-09-15), identical: 'PRIOR == LIVE (read now): False  NOT RUNNABLE: [WinError 2] The system cannot find the file specified' / 'VERDICT: FAIL-PRIOR-DIFFERS' / rc=1.",
+        "CODE: check_en.py run() (:104-114 @39aae459ed) calls subprocess.run(cmd) with the shell off; aws_json (:176-183) passes ['aws', ...]; the OSError comes back as rc 127 'NOT RUNNABLE'; _live_policy (:601-608) returns None, and f1_prior (:611-619) prints FAIL.",
+        "ENV: C:\\Users\\AndrewBerman\\AppData\\Local\\Programs\\Python\\Python312\\python.exe: shutil.which('aws') returns C:\\Users\\AndrewBerman\\bin\\aws.CMD and which('aws.exe') returns None. where.exe aws lists only bin\\aws, bin\\aws.cmd, Python312\\Scripts\\aws and Python312\\Scripts\\aws.cmd. There is no C:\\Program Files\\Amazon\\AWSCLIV2\\aws.exe. For a bare name, CreateProcess tries only .exe.",
+        "DIFFERENT INSTRUMENT (not the criterion's output): the .tools/aws shim from bash, read at 2026-09-15T04:18:57Z. FENCE_PRIOR_POLICY.json is byte-equal (428 bytes) and parse-equal to the live Policy string. Negative control: the same file with one pattern dropped reads unequal.",
+        "SCOPE: every aws call in check_en.py goes through the same run(). f2-policy-live (:655-663) and f2-removed (:695-703), EN-f-2's criteria, fail the same way on this box."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EN-f-1 F1-AC4: 'cd <WS> && timeout 120 python org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/2.0.0_SA_COO~G/fixed_inputs/check_en.py f1-prior', expecting 'VERDICT: PASS-PRIOR-VERBATIM': FENCE_PRIOR_POLICY.json equals the live policy read now.",
+    "world_is": "In this worktree's shell, the named invocation cannot start its aws read, so it cannot print PASS. The file equals the live policy by a different instrument, but that is not the criterion's output.",
+    "notes": "Form only. F1-AC4 is recorded FAIL by its output, and the order stays open. The disarm belongs to the instrument: run() would have to resolve aws in a form this box can start (for example, shutil.which, which finds the .cmd shim). That file is the issuer's fixed input, and a worker may not edit it."
+  },
+  {
+    "id": "LGIC_ENFORCE-W1-S17",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~1",
+    "surfaced_at": "2026-09-15T04:22Z",
+    "one_line": "TO-EN-f-1 has the author hand-add SIGNOFF slots to the ledger entry, and the ledger tool does not keep them. deploy_ledger.py re-renders the whole entry from its sentinel on every close-leg, so EN-f-2's first close-leg erases both seats' SIGNOFF lines, the lines f2-signoff reads.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~G",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE: .tools/deploy_ledger.py _render_entry (:239-286 @39aae459ed) builds the entry from the sentinel's fields only: the header, the manifest and the log. _write_entry (:289-291) overwrites the file. Its docstring says 'open / close-leg / close / hold re-render the entry from the sentinel' and 'Never hand-edit an entry.'",
+        "EXERCISED in memory, no file written: _render_entry of this ledger's sentinel returns 23 lines with no '## Sign-off', while the entry on disk has 34 lines, the section included. A sentinel with one more log event (a simulated close-leg) renders with no SIGNOFF line. Positive control: the render equals the on-disk entry up to its Log.",
+        "CODE: check_en.py f2_signoff (:645-652 @39aae459ed) reads the SIGNOFF lines from the entry's text and requires both timestamps to be before L2's closed_at. L2's close-leg is the very re-render that removes them.",
+        "COMMITTED: the entry with its two blank slots, at 887cf01419 (org/critical_paths/change_management/20260915T0334Z_lgic-enforce-fence-49financial_deploy_completion.md)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EN-f-1 cell step 6: 'Leave two blank lines in the ledger entry for SIGNOFF 1.0.0_SA_CTO <YYYYMMDDTHHMMSSZ> <scope> and SIGNOFF 2.0.0_SA_COO~G <...>.'",
+    "world_is": "The entry is a rendering of the sentinel, and the tool that closes L2 rewrites it without the Sign-off section. The sign-off record is erased by the step that records the apply it authorizes, unless its lines are carried where the tool keeps them or written back after every close-leg. f2-signoff then reads zero lines.",
+    "notes": "Form only. The slots are left as the order says, at 887cf01419."
   }
 ]
 ```
