@@ -560,3 +560,23 @@ Acts: the pre-read's candidate 3 replaced (the first attempt died on a shell her
 correction message had already said it landed, so it was landed immediately after through Write-tool scripts); the correction sent
 to `2.0.0_SA_COO~W` (@17:00Z) with the rj-11 relevance stated as the COO's call; a memory banked on resolving a population from the
 chain that feeds its consumer. Push state: LOCAL.
+
+---
+
+## ADDENDUM 19 (17:1x-17:3xZ) -- /open-calls; rj-11 and rj-13 drained and read
+
+Andrew ran `/open-calls` at this terminal. Swept first (inbox since 16:30Z, the ~W lanes' and MSTR~Z's commits since 15:30Z, every
+Andrew-direct record written today, COO~W's log, CRO~W's spec pin, MSTR~Z's messages on the portal ref): seven calls carded, two
+BLOCKING (the rj-9 split; recurring collection activation and cadence) and five CARRIED (the Security Analysis page to production;
+ADR vs home listing for Posture/Peers; EDGAR vs Bloomberg filings; ~W capacity against the weekly limit; who exercises the page);
+four decidable items decided at this lane instead of listed (Chatter during partial backfill shows collected coverage with the
+incompleteness stated; Posture shows pending rather than a lesser comparable; the management benchmark is the equal-weight mean of
+company means with denominators; a filing is re-analyzed only when new or when the model/prompt changes).
+
+Round 11 moved to 9 of 13: rj-11 (Posture) and rj-13 (social) drained 17:17-17:18Z, both VALID on re-grade. Read into the pre-read:
+both Posture verdicts were issued over an incomplete comparable pack (HD no model block; DE no thesis, management or peers), so they
+are the measured instance of the readiness rule decided above; every fit score is ABSENT because R-1 drops factor values and this
+seat's card 3 named the presets by count -- card 3 corrected in the same commit with the 13 + 16 codes and weights from the portal's
+`SecurityScanner/constants.ts`; against the 164 ETF-plane holdings the comparable pools widen (BABA 1 -> 2 held peers) but neither pick
+changes. rj-13: 48 Reddit records for Boeing, 0 admitted, cost unreadable with the key, and the S-1 key has no security coordinate.
+Four addendum candidates added (9-12). Push state: LOCAL.
