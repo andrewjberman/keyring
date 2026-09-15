@@ -17,7 +17,8 @@ Cell EN-b-1 (PRD candidate E3; DEC-2) builds the second half:
     grade()         (verdict, canonical_form) by LGIC_NAMING's GRADING_RULE.md; RaiseDefect on a RAISE
     vectors         the name() vectors the Terraform module is proved against
 
-`census` is cell EN-s-1's (DEC-7): its CLI verb is present here and refuses until that cell lands.
+Cell EN-s-1 (PRD candidate E9; DEC-7) adds census mode: `census` judges the repo and the live plane with grade(),
+and the first RAISE stops the run with the string printed.
 
 THE REGISTRY is infra/logic/registry/*.json (DEC-1). The closed enumerations (tiers, cadences, the scope
 classes, the system classes, the firm forms, the refused tokens) are org/standards/NAMING_SCHEMA.json's:
@@ -1418,6 +1419,615 @@ def generate(out_dir, targets=None):
     return results
 
 
+# --------------------------------------------------------------------------- census (EN-s-1, DEC-7)
+# Census mode judges every nameable name of two planes with grade(), and a RAISE stops the run with the string
+# printed: it is never filed under a verdict (NAMING_SCHEMA.json grade.unplaceable).
+#
+#   live  every node comp-find --corpus aws returns for the node types of NAMING_SCHEMA.json
+#         (node_type_vocabulary), with the graph's VINTAGE line. The NOT GRADED types, and the names
+#         NAMING_SCHEMA.json aws_fixed puts outside the grade's domain, are excluded and counted, never judged.
+#   repo  tracked files: the name attribute of each Terraform resource of a graded type; and, in config.py-class
+#         files and Lambda sources, each string literal the rule below places as a name (_census_classify).
+#         Vendored code (a package beside a *.dist-info, layers/, node_modules/, tests/) is not Opal's naming.
+
+CENSUS_TF_ATTR = {  # Terraform resource type -> (node type, the attribute carrying the resource's name)
+    "aws_lambda_function": ("LAMBDA", "function_name"),
+    "aws_iam_role": ("IAM_ROLE", "name"),
+    "aws_iam_policy": ("IAM_POLICY", "name"),
+    "aws_iam_role_policy": ("IAM_POLICY", "name"),
+    "aws_iam_user_policy": ("IAM_POLICY", "name"),
+    "aws_iam_instance_profile": ("INSTANCE_PROFILE", "name"),
+    "aws_security_group": ("SECURITY_GROUP", "name"),
+    "aws_api_gateway_rest_api": ("API_GW", "name"),
+    "aws_apigatewayv2_api": ("API_GW", "name"),
+    "aws_dynamodb_table": ("DYNAMODB_TABLE", "name"),
+    "aws_sqs_queue": ("SQS_QUEUE", "name"),
+    "aws_sns_topic": ("SNS_TOPIC", "name"),
+    "aws_cloudwatch_metric_alarm": ("CW_ALARM", "alarm_name"),
+    "aws_lambda_layer_version": ("LAMBDA_LAYER", "layer_name"),
+    "aws_instance": ("EC2_INSTANCE", "tags.Name"),
+    "aws_codebuild_project": ("CODEBUILD_PROJECT", "name"),
+    "aws_ssm_document": ("SSM_DOCUMENT", "name"),
+    "aws_ecs_task_definition": ("ECS_TASK_DEFINITION", "family"),
+    "aws_sfn_state_machine": ("STATE_MACHINE", "name"),
+    "aws_lb": ("LOAD_BALANCER", "name"),
+    "aws_ecs_cluster": ("ECS_CLUSTER", "name"),
+    "aws_cloudwatch_event_rule": ("EVENT_RULE", "name"),
+    "aws_scheduler_schedule": ("SCHEDULE", "name"),
+    "aws_cloudwatch_log_group": ("LOG_GROUP", "name"),
+    "aws_s3_bucket": ("S3_BUCKET", "bucket"),
+    "aws_s3_bucket_policy": ("S3_BUCKET_POLICY", "bucket"),
+    "aws_s3_object": ("S3Key", "key"),
+    "aws_secretsmanager_secret": ("SECRET", "name"),
+}
+CENSUS_LAMBDA_ROOT = "infra/aws/lambda/"
+CENSUS_TF_ROOT = "infra/aws/terraform/"
+CENSUS_SOURCE_EXT = (".py", ".mjs", ".js", ".cjs", ".ts")
+_VENDOR_PARTS = {"node_modules", "site-packages", "layers", "__pycache__", "tests", "test", "__tests__", "dist",
+                 "build", "vendor"}
+_BUCKET_NAME_RE = re.compile(r"^[a-z0-9][a-z0-9.-]{1,61}[a-z0-9]$")
+_SECRET_NAME_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9/_+=.@-]*$")
+_KIND_NAME_RE = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)+$")
+_KEY_CTX_RE = re.compile(r"(key|prefix)s?$|(^|_)(key|prefix)s?(_|$)", re.I)
+_SECRET_CTX_RE = re.compile(r"secret_?(name|id|arn|path)?$", re.I)
+_TEST_FILE_RE = re.compile(r"^(test_.*|.*_test\.py|conftest\.py|.*\.(test|spec)\.[cm]?[jt]s)$")
+_JS_LIT_RE = re.compile(r"""(?:([A-Za-z_$][A-Za-z0-9_$]*)["']?\s*[:=]\s*)?(['"`])((?:(?!\2)[^\\\n]|\\.)*)\2""")
+
+
+class CensusError(Exception):
+    """A plane the census could not read: no measurement, never a zero."""
+
+
+def _census_git_files():
+    import subprocess
+    p = subprocess.run(["git", "-C", REPO, "ls-files", "-z"], capture_output=True)
+    if p.returncode != 0:
+        raise CensusError("git ls-files failed (rc=%d): %s" % (p.returncode, p.stderr.decode("utf-8", "replace")[-300:]))
+    return [f for f in p.stdout.decode("utf-8", "replace").split("\0") if f]
+
+
+def _vendored(path, dist_parents):
+    parts = path.split("/")
+    if any(p in _VENDOR_PARTS for p in parts[:-1]) or _TEST_FILE_RE.match(parts[-1]):
+        return True  # vendored, or a test (its literals are fixtures, not Opal's naming)
+    for d in dist_parents:
+        if path.startswith(d + "/") and "/" in path[len(d) + 1:]:
+            return True  # inside a package directory installed beside a *.dist-info
+    return False
+
+
+def census_repo_files(files=None):
+    """(terraform files, config.py-class and Lambda source files, the vendored files excluded)."""
+    files = files if files is not None else _census_git_files()
+    dist_parents = set()
+    for f in files:
+        parts = f.split("/")
+        for i, p in enumerate(parts[:-1]):
+            if p.endswith((".dist-info", ".egg-info")):
+                dist_parents.add("/".join(parts[:i]))
+    tf = sorted(f for f in files if f.startswith(CENSUS_TF_ROOT) and f.endswith(".tf"))
+    cand = sorted({f for f in files if (f.startswith(CENSUS_LAMBDA_ROOT) and f.endswith(CENSUS_SOURCE_EXT))
+                   or f.rsplit("/", 1)[-1] == "config.py"})
+    src = [f for f in cand if not _vendored(f, dist_parents)]
+    return tf, src, len(cand) - len(src)
+
+
+# ---- a stdlib Terraform reader: top-level items of a body, strings, heredocs and comments skipped
+_TF_ATTR_RE = re.compile(r"([A-Za-z_][A-Za-z0-9_-]*)[ \t]*=(?![=>])[ \t]*")
+_TF_BLOCK_RE = re.compile(r'([A-Za-z_][A-Za-z0-9_-]*)((?:[ \t]+(?:"(?:[^"\\\n]|\\.)*"|[A-Za-z_][A-Za-z0-9_-]*))*)[ \t]*\{')
+_TF_LABEL_RE = re.compile(r'"((?:[^"\\\n]|\\.)*)"|([A-Za-z_][A-Za-z0-9_-]*)')
+_TF_LITERAL_RE = re.compile(r'^"((?:[^"\\\n]|\\.)*)"$')
+
+
+def _tf_comment_end(t, i):
+    if t[i] == "#" or t.startswith("//", i):
+        j = t.find("\n", i)
+        return len(t) if j < 0 else j
+    if t.startswith("/*", i):
+        j = t.find("*/", i + 2)
+        return len(t) if j < 0 else j + 2
+    return None
+
+
+def _tf_heredoc_end(t, i):
+    m = re.match(r"<<-?([A-Za-z_][A-Za-z0-9_]*)[ \t]*\n", t[i:i + 200])
+    if not m:
+        return None
+    mm = re.compile(r"^[ \t]*" + re.escape(m.group(1)) + r"[ \t]*$", re.M).search(t, i + m.end())
+    return len(t) if not mm else mm.end()
+
+
+def _tf_string_end(t, i):
+    j, n = i + 1, len(t)
+    while j < n:
+        c = t[j]
+        if c == "\\":
+            j += 2
+        elif c == '"':
+            return j + 1
+        elif c in "$%" and t.startswith("{", j + 1) and t[j - 1] != c:
+            j = _tf_close(t, j + 1)
+        else:
+            j += 1
+    return n
+
+
+def _tf_close(t, i):
+    """i at an opening bracket; the index after its match."""
+    depth, n = 0, len(t)
+    while i < n:
+        c = t[i]
+        e = _tf_comment_end(t, i) if c in "#/" else None
+        if e is not None:
+            i = e
+            continue
+        if c == '"':
+            i = _tf_string_end(t, i)
+            continue
+        if c == "<" and t.startswith("<<", i):
+            h = _tf_heredoc_end(t, i)
+            if h is not None:
+                i = h
+                continue
+        if c in "{[(":
+            depth += 1
+        elif c in "}])":
+            depth -= 1
+            if depth == 0:
+                return i + 1
+        i += 1
+    return n
+
+
+def _tf_value_end(t, i, end):
+    depth = 0
+    while i < end:
+        c = t[i]
+        e = _tf_comment_end(t, i) if c in "#/" else None
+        if e is not None:
+            if depth == 0 and not t.startswith("/*", i):
+                return i
+            i = e
+            continue
+        if c == '"':
+            i = _tf_string_end(t, i)
+            continue
+        if c == "<" and t.startswith("<<", i):
+            h = _tf_heredoc_end(t, i)
+            if h is not None:
+                i = h
+                continue
+        if c in "{[(":
+            depth += 1
+        elif c in "}])":
+            if depth == 0:
+                return i
+            depth -= 1
+        elif c == "\n" and depth == 0:
+            return i
+        i += 1
+    return end
+
+
+def _tf_items(t, i, end):
+    """Top-level items of t[i:end]: ('attr', name, pos, raw) and ('block', kind, labels, pos, body_start, body_end)."""
+    out = []
+    while i < end:
+        c = t[i]
+        if c in " \t\r\n;,":
+            i += 1
+            continue
+        e = _tf_comment_end(t, i) if c in "#/" else None
+        if e is not None:
+            i = e
+            continue
+        m = _TF_ATTR_RE.match(t, i)
+        if m:
+            ve = _tf_value_end(t, m.end(), end)
+            out.append(("attr", m.group(1), i, t[m.end():ve].strip()))
+            i = ve
+            continue
+        m = _TF_BLOCK_RE.match(t, i)
+        if m:
+            b = _tf_close(t, m.end() - 1)
+            out.append(("block", m.group(1), [a or b_ for a, b_ in _TF_LABEL_RE.findall(m.group(2))], i, m.end(), b - 1))
+            i = b
+            continue
+        j = t.find("\n", i)
+        i = end if j < 0 else j + 1
+    return out
+
+
+def _tf_literal(raw):
+    """The string a Terraform expression spells when it is ONE literal with no interpolation, else None."""
+    m = _TF_LITERAL_RE.match(raw or "")
+    if not m or "${" in m.group(1) or "%{" in m.group(1):
+        return None
+    return m.group(1).replace('\\"', '"').replace("\\\\", "\\")
+
+
+def _line_of(text, pos):
+    return text.count("\n", 0, pos) + 1
+
+
+def census_tf_names(path, text):
+    """(names, expressions): each (node type, name, 'path:line') a graded resource block's name attribute spells as a
+    literal; and each (node type, 'path:line') whose name is an expression, not a literal (not judged)."""
+    text = text.replace("\r\n", "\n")
+    names, exprs = [], []
+    for it in _tf_items(text, 0, len(text)):
+        if it[0] != "block" or it[1] != "resource" or len(it[2]) != 2 or it[2][0] not in CENSUS_TF_ATTR:
+            continue
+        typ, attr = CENSUS_TF_ATTR[it[2][0]]
+        where = "%s:%d" % (path, _line_of(text, it[3]))
+        attrs = {a[1]: a for a in _tf_items(text, it[4], it[5]) if a[0] == "attr"}
+        raw = None
+        if attr == "tags.Name":
+            tags = attrs.get("tags")
+            m = re.search(r'(?:^|[{,\s])"?Name"?\s*=\s*("(?:[^"\\\n]|\\.)*")', tags[3]) if tags else None
+            raw = m.group(1) if m else None
+        elif attr in attrs:
+            raw = attrs[attr][3]
+        if raw is None:
+            continue  # no name attribute: AWS or a name_prefix names it
+        lit = _tf_literal(raw)
+        if lit is None or not lit:
+            exprs.append((typ, where))
+        else:
+            names.append((typ, lit, where))
+    return names, exprs
+
+
+def _single_owner_kinds(v):
+    owners = {}
+    for t, ks in v.kinds_by_type.items():
+        for k in ks:
+            owners.setdefault(k, set()).add(t)
+    return {k: next(iter(ts)) for k, ts in owners.items() if len(ts) == 1}
+
+
+def _census_classify(value, ctx, v, kinds):
+    """The (node type, name) pairs the schema's grammars place in one string literal of a source file, in order:
+    an s3:// URL is a bucket and a key; under a *bucket* name, a bucket; under a *secret* name, a secret path;
+    under a *key* or *prefix* name, a key when it carries a /; else a kebab name whose last token is a kind
+    exactly one node type owns (NAMING_SCHEMA.json kind.by_type) is a name of that type."""
+    if not value or not value.isascii() or any(ch.isspace() for ch in value) or len(value) > 1024:
+        return []
+    if value.startswith("s3://"):
+        b, _, k = value[5:].partition("/")
+        out = [("S3_BUCKET", b)] if _BUCKET_NAME_RE.match(b) else []
+        return out + ([("S3Key", k)] if k and not k.startswith("/") else [])
+    c = (ctx or "").lower()
+    if "bucket" in c and _BUCKET_NAME_RE.match(value):
+        return [("S3_BUCKET", value)]
+    if _SECRET_CTX_RE.search(c) and _SECRET_NAME_RE.match(value) and ("/" in value or "-" in value):
+        return [("SECRET", value)]
+    if _KEY_CTX_RE.search(c or "") and "/" in value and not value.startswith(("/", ".")) and "://" not in value:
+        return [("S3Key", value)]
+    if _KIND_NAME_RE.match(value):
+        t = kinds.get(value.rsplit("-", 1)[-1])
+        if t:
+            return [(t, value)]
+    return []
+
+
+def _py_literals(text):
+    """(string, context name, line) for each str constant of a Python source that is not a docstring. The context
+    is the name it is bound to: an assignment target, a keyword argument, a dict key, or os.environ.get's key."""
+    tree = ast.parse(text)
+    ctx, skip = {}, set()
+
+    def mark(node, name):
+        # Only the bound value itself, or a direct element of a tuple, list, set or conditional: a string deeper in
+        # the expression (a call's argument, an encoding) is not what the name is bound to.
+        subs = [node] + (list(node.elts) if isinstance(node, (ast.Tuple, ast.List, ast.Set)) else []) \
+            + ([node.body, node.orelse] if isinstance(node, ast.IfExp) else [])
+        for sub in subs:
+            if isinstance(sub, ast.Constant) and isinstance(sub.value, str):
+                ctx.setdefault(id(sub), name)
+
+    def tname(t):
+        if isinstance(t, ast.Name):
+            return t.id
+        if isinstance(t, ast.Attribute):
+            return t.attr
+        if isinstance(t, ast.Subscript) and isinstance(t.slice, ast.Constant) and isinstance(t.slice.value, str):
+            return t.slice.value
+        return None
+
+    for node in ast.walk(tree):
+        body = getattr(node, "body", None)
+        if isinstance(body, list) and body and isinstance(body[0], ast.Expr) and isinstance(body[0].value, ast.Constant):
+            skip.add(id(body[0].value))
+        if isinstance(node, ast.Assign) and node.targets:
+            mark(node.value, tname(node.targets[0]))
+        elif isinstance(node, ast.AnnAssign) and node.value is not None:
+            mark(node.value, tname(node.target))
+        elif isinstance(node, ast.keyword) and node.arg:
+            mark(node.value, node.arg)
+        elif isinstance(node, ast.Dict):
+            for k, val in zip(node.keys, node.values):
+                if isinstance(k, ast.Constant) and isinstance(k.value, str):
+                    mark(val, k.value)
+        elif isinstance(node, ast.Call) and node.args and isinstance(node.args[0], ast.Constant) \
+                and isinstance(node.args[0].value, str) and len(node.args) > 1:
+            f = node.func
+            if isinstance(f, ast.Attribute) and f.attr in ("get", "getenv", "setdefault"):
+                mark(node.args[1], node.args[0].value)
+    out = []
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Constant) and isinstance(node.value, str) and id(node) not in skip:
+            out.append((node.value, ctx.get(id(node)), getattr(node, "lineno", 0)))
+    return out
+
+
+def _js_literals(text):
+    out = []
+    for n, line in enumerate(text.split("\n"), 1):
+        s = line.lstrip()
+        if s.startswith(("//", "*", "/*")):
+            continue
+        for m in _JS_LIT_RE.finditer(line):
+            if m.group(2) == "`" and "${" in m.group(3):
+                continue
+            out.append((m.group(3), m.group(1), n))
+    return out
+
+
+def census_source_names(path, text, v, kinds):
+    """(names, templates, unparsed): (node type, name, 'path:line') placed by _census_classify; the placed strings
+    that are templates (a {..} or %s outside a key, not a name); and whether the file could not be parsed."""
+    text = text.replace("\r\n", "\n")
+    try:
+        lits = _py_literals(text) if path.endswith(".py") else _js_literals(text)
+    except (SyntaxError, ValueError):
+        return [], [], True
+    names, templates = [], []
+    for value, ctx, line in lits:
+        for typ, nm in _census_classify(value, ctx, v, kinds):
+            where = "%s:%d" % (path, line)
+            if typ != "S3Key" and _is_var(nm):
+                templates.append((typ, where))
+            else:
+                names.append((typ, nm, where))
+    return names, templates, False
+
+
+def census_repo():
+    """The repo plane: (items, stats). items: dicts of plane, type, current, where."""
+    v = _vocab()
+    kinds = _single_owner_kinds(v)
+    tf, src, vendored = census_repo_files()
+    items, stats = [], {"tf_files": len(tf), "source_files": len(src), "vendored_excluded": vendored,
+                        "tf_expressions": 0, "source_templates": 0, "unparsed": []}
+    for f in tf:
+        names, exprs = census_tf_names(f, _read_text(os.path.join(REPO, *f.split("/"))))
+        stats["tf_expressions"] += len(exprs)
+        items += [{"plane": "repo", "type": t, "current": n, "where": w} for t, n, w in names]
+    for f in src:
+        try:
+            text = _read_text(os.path.join(REPO, *f.split("/")))
+        except (OSError, UnicodeDecodeError):
+            stats["unparsed"].append(f)
+            continue
+        names, templates, bad = census_source_names(f, text, v, kinds)
+        if bad:
+            stats["unparsed"].append(f)
+        stats["source_templates"] += len(templates)
+        items += [{"plane": "repo", "type": t, "current": n, "where": w} for t, n, w in names]
+    return items, stats
+
+
+def _aws_fixed(typ, name, arn, schema):
+    """NAMING_SCHEMA.json aws_fixed: a name AWS fixes is outside the grade's domain. The rule's reason, else None."""
+    af = schema.get("aws_fixed", {})
+    if typ == "IAM_POLICY" and af.get("by_arn") and (arn or "").split(":")[4:5] == ["aws"]:
+        return "by_arn"
+    for e in af.get("by_name", {}).get(typ, []):
+        if (e.startswith("prefix: ") and name.startswith(e[len("prefix: "):])) or name == e:
+            return "by_name %s" % e
+    return None
+
+
+def census_live(budget=600):
+    """The live plane from comp-find --corpus aws: (nodes, vintage, the command). nodes: dicts of type, name, arn.
+    A pull that did not scan every node type is a CensusError: no measurement, never a zero."""
+    import subprocess
+    types = sorted(_vocab().types)
+    cmd = [sys.executable, os.path.join(REPO, ".tools", "comp-find"), "--corpus", "aws", "--name", ".", *types,
+           "--all", "--budget", str(budget)]
+    p = subprocess.run(cmd, cwd=REPO, capture_output=True)
+    out = (p.stdout or b"").decode("utf-8", "replace").replace("\r\n", "\n")
+    shown = "comp-find --corpus aws --name . %s --all --budget %s" % (" ".join(types), budget)
+    if p.returncode != 0 or "WITHIN BUDGET" not in out or not re.search(r"DEFERRED: 0 of", out):
+        raise CensusError("the live pull did not scan every node type (rc=%d): %s" % (p.returncode, out[-600:]))
+    vm = re.search(r"^  VINTAGE: (.+)$", out, re.M)
+    dm = re.search(r"DENOMINATOR: (\d+) hit\(s\) across (\d+) aws node\(s\)", out)
+    if not vm or "UNREAD" in vm.group(1) or not dm:
+        raise CensusError("the live pull printed no vintage or no denominator")
+    nodes, cur, lines = [], None, out.split("\n")
+    for i, ln in enumerate(lines):
+        m = re.match(r"^  \[([A-Za-z0-9_]+)\]$", ln)
+        if m:
+            cur = m.group(1)
+            continue
+        if cur and ln.startswith("    ") and not ln.startswith("      ") and "  drift=" in ln:
+            nm = ln[4:].rsplit("  drift=", 1)[0]
+            arn = lines[i + 1].strip() if i + 1 < len(lines) and lines[i + 1].startswith("      ") else ""
+            nodes.append({"type": cur, "name": nm, "arn": arn})
+    if not (int(dm.group(1)) == int(dm.group(2)) == len(nodes)):
+        raise CensusError("the live pull parsed %d node(s) against DENOMINATOR %s hit(s) across %s node(s)"
+                          % (len(nodes), dm.group(1), dm.group(2)))
+    return nodes, vm.group(1).strip(), shown
+
+
+def census_names_file(path):
+    """--names FILE: one name per line, TYPE<TAB>NAME or NAME<TAB>TYPE (the column that is a node type is the type)."""
+    types = _vocab().types
+    items = []
+    for n, line in enumerate(_read_text(path).split("\n"), 1):
+        if not line.strip() or line.lstrip().startswith("#"):
+            continue
+        a, _, b = line.partition("\t")
+        typ, nm = (a, b) if a in types else (b, a)
+        items.append({"plane": "names", "type": typ.strip(), "current": nm.strip(), "where": "%s:%d" % (path, n)})
+    return items
+
+
+def census_judge(items, out=print):
+    """grade() each item in order: (rows, the RAISE that stopped the run or None). A RAISE stops the run."""
+    rows = []
+    for it in items:
+        try:
+            verdict, canon = grade(it["current"], it["type"])
+        except RaiseDefect as exc:
+            out("CENSUS RAISE %s %s %s%s -- %s" % (it["plane"], it["type"],
+                                                   (it["where"] + " ") if it.get("where") else "", it["current"], exc))
+            return rows, dict(it, message=str(exc))
+        row = {"current": it["current"], "canonical": canon, "verdict": verdict, "type": it["type"], "plane": it["plane"]}
+        if it.get("where"):
+            row["where"] = it["where"]
+        rows.append(row)
+    return rows, None
+
+
+def _count(rows, key):
+    c = {}
+    for r in rows:
+        c[r[key]] = c.get(r[key], 0) + 1
+    return dict(sorted(c.items()))
+
+
+def census_report(path, doc, prose):
+    body = ",\n".join(json.dumps(r, sort_keys=False) for r in doc["rows"])
+    head = {k: doc[k] for k in doc if k != "rows"}
+    js = json.dumps(head, indent=1)[:-2] + ',\n "rows": [\n' + body + "\n ]\n}"
+    json.loads(js)  # the fence parses, or the report is not written
+    with open(path, "w", encoding="utf-8", newline="\n") as fh:
+        fh.write(prose.rstrip("\n") + "\n\n```json\n" + js + "\n```\n")
+
+
+def census(names_file=None, live=False, repo=False, report=None, budget=600, out=print):
+    """Census mode (DEC-7). Returns the exit code: 0 when every item is judged; 3 on the first RAISE; 2 when a
+    plane cannot be read. The live plane is judged first, then the repo plane."""
+    schema = _schema()
+    v = _vocab()
+    items, stats, vintage, shown = [], {}, None, None
+    live_n = live_ng = live_fixed = 0
+    ng_counts, fixed_counts = {}, {}
+    if names_file:
+        items += census_names_file(names_file)
+    try:
+        if live:
+            nodes, vintage, shown = census_live(budget)
+            live_n = len(nodes)
+            for nd in nodes:
+                if nd["type"] in v.not_graded:
+                    live_ng += 1
+                    ng_counts[nd["type"]] = ng_counts.get(nd["type"], 0) + 1
+                    continue
+                why = _aws_fixed(nd["type"], nd["name"], nd["arn"], schema)
+                if why:
+                    live_fixed += 1
+                    fixed_counts[nd["type"]] = fixed_counts.get(nd["type"], 0) + 1
+                    continue
+                items.append({"plane": "live", "type": nd["type"], "current": nd["name"]})
+            out("CENSUS LIVE: %d node(s) at VINTAGE %s; %d of NOT GRADED types, %d aws_fixed; %d to judge"
+                % (live_n, vintage, live_ng, live_fixed, live_n - live_ng - live_fixed))
+        if repo:
+            ritems, stats = census_repo()
+            items += ritems
+            out("CENSUS REPO: %d name(s) from %d .tf file(s) and %d source file(s); %d vendored file(s) excluded; "
+                "%d Terraform name expression(s) and %d template(s) not names; %d file(s) unparsed"
+                % (len(ritems), stats["tf_files"], stats["source_files"], stats["vendored_excluded"],
+                   stats["tf_expressions"], stats["source_templates"], len(stats["unparsed"])))
+    except CensusError as exc:
+        out("CENSUS ERROR %s" % exc)
+        return 2
+    rows, stopped = census_judge(items, out)
+    for r in rows:
+        out("CENSUS %s %s %s %s -> %s" % (r["verdict"], r["plane"], r["type"], r["current"], r["canonical"]))
+    live_nameable = live_n - live_ng - live_fixed
+    judged_live = sum(1 for r in rows if r["plane"] == "live")
+    repo_n = sum(1 for it in items if it["plane"] == "repo")
+    judged_repo = sum(1 for r in rows if r["plane"] == "repo")
+    if report:
+        doc = {"vintage": vintage, "live_command": shown,
+               "denominators": {"repo": repo_n, "live": live_n, "live_nameable": live_nameable,
+                                "judged_live": judged_live, "judged_repo": judged_repo,
+                                "live_not_graded_types": live_ng, "live_aws_fixed": live_fixed},
+               "registry": registry_hash()[:16], "stopped": stopped, "rows": rows}
+        census_report(report, doc, _census_prose(doc, stats, ng_counts, fixed_counts))
+        out("CENSUS REPORT %s" % report)
+    if stopped:
+        out("CENSUS: STOPPED on the first RAISE after %d judged: %s %s %r" % (
+            len(rows), stopped["plane"], stopped["type"], stopped["current"]))
+        return 3
+    out("CENSUS: COMPLETE %d judged (live %d of %d nameable, repo %d of %d)" % (
+        len(rows), judged_live, live_nameable, judged_repo, repo_n))
+    return 0
+
+
+def _census_prose(doc, stats, ng_counts, fixed_counts):
+    d, rows = doc["denominators"], doc["rows"]
+    live = [r for r in rows if r["plane"] == "live"]
+    repo = [r for r in rows if r["plane"] == "repo"]
+    s = doc["stopped"]
+    lines = [
+        "# NAMING_CENSUS_REPORT -- census mode, the run (LGIC_ENFORCE EN-s-1, DEC-7)",
+        "",
+        "Written by `python lib/opal_naming.py census --live --repo --report <this file>` at registry@%s." % doc["registry"],
+        "Every number below is recomputable from the fenced json at the end.",
+        "",
+        "## Status",
+        "",
+        ("**STOPPED on the first RAISE**: %s plane, type %s, name `%s`%s -- %s. A RAISE is a defect in the rule, the "
+         "schema or the registry and is never filed under a verdict (NAMING_SCHEMA.json grade.unplaceable), so the rows "
+         "below are the names judged BEFORE the stop, and the run is not complete."
+         % (s["plane"], s["type"], s["current"], (" at " + s["where"]) if s.get("where") else "", s["message"]))
+        if s else "**COMPLETE**: every item was judged and no name raised.",
+        "",
+        "## The live plane",
+        "",
+        "- Vintage: `%s`." % doc["vintage"],
+        "- Instrument: `%s`." % doc["live_command"],
+        "- live = **%d** nodes; minus %d of the NOT GRADED types (%s); minus %d names NAMING_SCHEMA.json aws_fixed puts "
+        "outside the grade's domain (%s); live_nameable = **%d**." % (
+            d["live"], d["live_not_graded_types"], ", ".join("%s %d" % kv for kv in sorted(ng_counts.items())) or "none",
+            d["live_aws_fixed"], ", ".join("%s %d" % kv for kv in sorted(fixed_counts.items())) or "none",
+            d["live_nameable"]),
+        "- judged_live = **%d** of %d. Verdicts: %s." % (d["judged_live"], d["live_nameable"], _count(live, "verdict")),
+        "",
+        "## The repo plane",
+        "",
+        "- Terraform: %d tracked .tf files under `%s`; the name attribute of each resource of a graded type "
+        "(`CENSUS_TF_ATTR`), when it is ONE literal; %d name(s) that are expressions are not names and are not judged."
+        % (stats.get("tf_files", 0), CENSUS_TF_ROOT, stats.get("tf_expressions", 0)),
+        "- Sources: %d tracked files -- every config.py, and the Lambda sources under `%s` (%s) -- after %d vendored "
+        "and test files were excluded; each string literal `_census_classify` places as a name; %d placed template(s) are not "
+        "names; %d file(s) unparsed%s."
+        % (stats.get("source_files", 0), CENSUS_LAMBDA_ROOT, ", ".join(CENSUS_SOURCE_EXT),
+           stats.get("vendored_excluded", 0), stats.get("source_templates", 0), len(stats.get("unparsed", [])),
+           (": " + ", ".join(stats["unparsed"][:10])) if stats.get("unparsed") else ""),
+        "- repo = **%d** names; judged_repo = **%d**. Verdicts: %s." % (d["repo"], d["judged_repo"], _count(repo, "verdict")),
+        "",
+        "## Totals by type (judged rows)",
+        "",
+        "| type | plane | CONFORMANT | ALIAS | OUT-OF-PATTERN | NOT-GRADED |",
+        "|---|---|---|---|---|---|",
+    ]
+    by = {}
+    for r in rows:
+        k = (r["type"], r["plane"])
+        by.setdefault(k, {}).setdefault(r["verdict"], 0)
+        by[k][r["verdict"]] += 1
+    for (t, p), c in sorted(by.items()):
+        lines.append("| %s | %s | %d | %d | %d | %d |" % (t, p, c.get("CONFORMANT", 0), c.get("ALIAS", 0),
+                                                           c.get("OUT-OF-PATTERN", 0), c.get("NOT-GRADED", 0)))
+    lines += ["", "The comparison against LGIC_NAMING's hand gradings is EN-s-2's and is not made here."]
+    return "\n".join(lines)
+
+
 # --------------------------------------------------------------------------- CLI
 def main(argv=None):
     ap = argparse.ArgumentParser(prog="opal_naming.py", description="the identity registry's validator and generator")
@@ -1433,6 +2043,8 @@ def main(argv=None):
     c.add_argument("--names")
     c.add_argument("--live", action="store_true")
     c.add_argument("--repo", action="store_true")
+    c.add_argument("--report", help="write the census report (prose, then one fenced json block) to this path")
+    c.add_argument("--budget", type=int, default=600, help="seconds for the live pull (comp-find --budget)")
     a = ap.parse_args(argv)
 
     if a.cmd == "validate":
@@ -1469,8 +2081,10 @@ def main(argv=None):
             print("ERROR: %s" % exc)
             return 2
     if a.cmd == "census":
-        print("ERROR: census is DEC-7's, cell EN-s-1, and is not in this module yet")
-        return 2
+        live, repo = a.live, a.repo
+        if not (a.names or live or repo):
+            live = repo = True
+        return census(a.names, live, repo, a.report, a.budget)
     ap.print_help()
     return 2
 
