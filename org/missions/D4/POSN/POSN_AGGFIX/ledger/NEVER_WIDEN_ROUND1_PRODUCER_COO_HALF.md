@@ -77,3 +77,11 @@ s.1.3, AF1-s-10. Push state: LOCAL.
   Lambda handler's put (`lambda_function.py:2623-2630`), which is this act, and `main()`'s `--upload` put (`:2501-2508`), a manual CLI path
   this act does not invoke. `TO-A2-1` was amended before hand-off so that path writes the Opal-only key beside the shared file (A2-AC13). The
   writer count by program stays N = 3; by write site it is 4.
+
+## ADDENDUM 2 (~21:3xZ, row `POSN_AGGFIX-Z-W1-S7`; the same line as the CTO half's ADDENDUM 1 @`10d61c774f`)
+
+"A served difference" and "any other served difference", wherever this half names Branch A or Branch B, mean a difference in PARSED JSON
+VALUES (dict key order ignored, list order compared), never a difference in raw bytes or a hash. The shared file's
+`portfolios.<code>.benchmark.spread.segment` keys follow set iteration order under per-process hash randomisation, so two runs of identical code
+can differ in byte order alone. A key-order-only difference is NOT Branch B. The permitted value differences stay exactly as named above:
+`current_holdings.AGG` removed, the five book `aum` values, `generated_at`, and the new key. `TO-A3-1` A3-AC9 already compares parsed JSON.
