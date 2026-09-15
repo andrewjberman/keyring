@@ -1,0 +1,57 @@
+[
+  {
+    "key": "daily-reports/2026-09-14/Desktop_DAILY_REPORT_2026-09-14.html",
+    "backup": "0.html",
+    "bytes": 51484,
+    "sha256": "0488e7d806a0465e96bf02375157c62de15adaa83df443dc2997e1fc278695cf",
+    "etag": "\"96999e6418e88097fdeef512034c08db\"",
+    "version_id": "OqUiltOgdOI9FkhUK8oHBQsMa2YUxCYh",
+    "last_modified": "2026-09-14T22:53:41+00:00",
+    "content_type": "text/html; charset=utf-8",
+    "cache_control": "private, no-store"
+  },
+  {
+    "key": "daily-reports/2026-09-14/Mobile_DAILY_REPORT_2026-09-14.html",
+    "backup": "1.html",
+    "bytes": 48669,
+    "sha256": "a70dd36c81efe6140453b85c17b29c109f532dc2889288056f3f5a083a33f582",
+    "etag": "\"3912516359abc7edba965a5da618bbc6\"",
+    "version_id": "ko9QUP3i88XY11FyuvPkXaVzra9eWUBO",
+    "last_modified": "2026-09-14T22:53:41+00:00",
+    "content_type": "text/html; charset=utf-8",
+    "cache_control": "private, no-store"
+  },
+  {
+    "key": "daily-reports/latest/Desktop_DAILY_REPORT.html",
+    "backup": "2.html",
+    "bytes": 51484,
+    "sha256": "0488e7d806a0465e96bf02375157c62de15adaa83df443dc2997e1fc278695cf",
+    "etag": "\"96999e6418e88097fdeef512034c08db\"",
+    "version_id": "x0MlVB33ftJ.UVsVTJbQT9WKd2WCxUdd",
+    "last_modified": "2026-09-14T22:53:41+00:00",
+    "content_type": "text/html; charset=utf-8",
+    "cache_control": "private, no-store"
+  },
+  {
+    "key": "daily-reports/latest/Mobile_DAILY_REPORT.html",
+    "backup": "3.html",
+    "bytes": 48669,
+    "sha256": "a70dd36c81efe6140453b85c17b29c109f532dc2889288056f3f5a083a33f582",
+    "etag": "\"3912516359abc7edba965a5da618bbc6\"",
+    "version_id": "WSIr_kqTvKI5NQm5Y.nGMHDYhBrLsX6.",
+    "last_modified": "2026-09-14T22:53:41+00:00",
+    "content_type": "text/html; charset=utf-8",
+    "cache_control": "private, no-store"
+  },
+  {
+    "key": "daily-reports/latest/index.html",
+    "backup": "4.html",
+    "bytes": 2017,
+    "sha256": "5b3b5f9719362d1a01b19333745ceaf95a699fc1abf053722864bf7bdd251417",
+    "etag": "\"c4704f227bca78176bb7289ee7386410\"",
+    "version_id": "cyl1Syyas2M6gLBknJNP2wwTRCP43oPS",
+    "last_modified": "2026-09-14T22:53:42+00:00",
+    "content_type": "text/html; charset=utf-8",
+    "cache_control": "private, no-store"
+  }
+]
