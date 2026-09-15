@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_LGIC_CANON~9</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-09-15</issued_date>
-<status>pending</status>
+<status>complete</status>
 
 **Directive:** D14 | **Fabric:** laptop | **PRD:** `../prd/LGIC_CANON_PRD.md` v1.3 @5b2336a5e4 (ADMITTED; brief half signed by 4.0.0_SA_CRO, ratified-text half by 3.0.0_SA_CVO, both current) | **Decomp cell:** `CN-n-2` (round 1) | **outcome_ref:** FWD-4 | **depends_on:** CN-n-1 (spawned after its drain, never at the same time: FWD-4's 'on different days' read as separate contexts, decomposition section 8 choice 4) | **slot:** ~9, queue position 1
 
