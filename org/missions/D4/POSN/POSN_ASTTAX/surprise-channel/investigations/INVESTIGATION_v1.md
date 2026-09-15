@@ -5429,6 +5429,30 @@ Andrew asked for (msg 22917); it concerns this project's portal files meeting an
   "spec_asserts": "V7-AC6: the read throws and the page shows an error notice, not 'no holdings'.",
   "world_is": "Both strings are on the page; the notice is the adapter's honest branch; the placeholder is the panels' own empty state outside the grant.",
   "notes": "A negative-control bar names the ELEMENT that must not render, not a phrase that may appear elsewhere on the page."
+},
+{
+  "id": "POSN_ASTTAX-Z-W22-S24",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~22",
+  "surfaced_at": "2026-09-14T23:58Z",
+  "one_line": "The Positioning Summary panel prints one of its three percent labels UNROUNDED, so the Satellites mode renders 7 of 16 class labels as raw float sums -- '62.589999999999996%', '92.11000000000001%', '27.830000000000002%' -- while the SAME panel rounds the other two label sites (PositioningSummary.tsx:989 and :994 call Math.round; :1011 prints {data[c.key]}% raw). Nothing is numerically wrong: the long digits ARE the sum of the served weights this cell was ordered to compute. It surfaces now because every previous producer of this panel's input served PRE-ROUNDED values, so the raw site never had a float to expose. No criterion of TO-V7-1 names the summary labels; not repaired, because the only in-grant remedy (rounding the sum inside satelliteAdapter.ts) would make the adapter's output disagree with the served rows it aggregates, and the honest remedy is at the render site, which is outside this cell's <paths>.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED IN THE RENDERED DOM, not from the image: the Satellites-mode body text carries 7 tokens matching \\d+\\.\\d{6,}% -- 27.830000000000002%, 30.170000000000005%, 39.43000000000001%, 42.870000000000005%, 62.589999999999996%, 87.80000000000001%, 92.11000000000001% -- of 16 class labels across the 8 selectable satellites (read_satellites_dom.js run 2, .scratch/v7_dom_read_r2.json, both satellite captures agree).",
+      "THE INPUT, from the adapter probe in the same page: Opal Satellite 30 allocation.fixed_income = 62.589999999999996, Opal Satellite 90 allocation.equity = 92.11000000000001 -- the float sums of the served weights, matching the rendered tokens digit for digit.",
+      "THE RENDER SITE, cited: portal/src/pages/Positioning/panels/PositioningSummary.tsx:1011 '<span key={c.key} style={{ color: c.color }}>{data[c.key]}%</span>' at ea64113ba9 -- no formatter; the sibling label sites :989 and :994 both wrap the same values in Math.round(). The file is NOT in TO-V7-1's <paths>.",
+      "WHY IT IS NEW HERE AND NOT A REGRESSION OF THIS CELL: the Models payload arrives with allocation values already rounded by its producer, so :1011 has never been handed a repeating float before; the Satellites allocation is summed in the browser by THIS cell's display aggregation, which the cell's own text authorises ('a sum over served rows is aggregation for display').",
+      "SCOPE, COUNTED: 7 of 16 labels on the Satellites mode; the treemap, the holdings table and its totals (74.16 / 17.50 / 100.00) are unaffected -- those paths format their own values."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-V7-1 THE CELL: 'The five-class allocation per satellite = the sum of served weights per served asset_class, in F2's five-key PositioningAllocation'; V7-AC5 reads the rendered Satellites mode and names no formatting bar.",
+  "world_is": "The sum is correct and the page prints it verbatim at one of the panel's three label sites, so seven class labels render 14-17 significant digits and overlap their neighbours in the 1440x900 capture.",
+  "notes": "A value handed to a renderer that has never received an unrounded one is a NEW state for that renderer, not a new value for the producer. The remedy is one Math.round at PositioningSummary.tsx:1011 (outside this cell) or a stated rounding contract on the adapter's allocation; the issuer owns which."
 }
 ]
 ```
