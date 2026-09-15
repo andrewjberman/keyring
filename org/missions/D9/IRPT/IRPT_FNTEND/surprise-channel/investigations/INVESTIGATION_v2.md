@@ -4608,6 +4608,29 @@
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-S68",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-15T09:38:00Z",
+    "one_line": "F25-AC8 (fe-s-25/generator.test.ts:79) grades the CHECKOUT'S LINE ENDINGS, not the contract. gen-wire.ts hashes the raw worktree text of the schema, and the committed wire header carries the hash of a CRLF checkout (c83ce02d). So the test passes on a CRLF checkout (this seat's untouched pair, 4/0) and fails on an LF one (the main workspace worktree; 0.0.0_AB_MSTR's promote runs, msg 97009), with identical contract content and identical generated types.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "fe-s-25/generator.test.ts:75-79: 'The committed wire file is the SAME bytes this render produces, so the arm grades the artifact the portal actually compiles against.' fe-s-13/gen-wire.ts header: the generated block CITES its source sha256 so a re-run can be checked against its source.",
+    "world_is": "docs/contracts/investor-reporting/v1/StatusEnvelope.schema.json, the same blob in two checkouts: this seat's pair C:/tmp/verify-fe-s-49-pair (workspace 85276ca76a) reads ls-files --eol 'i/lf w/crlf', raw sha256 c83ce02d14c1, LF-normalized f06c0029cd20; the main workspace worktree reads 'i/lf w/lf', raw sha256 f06c0029cd20, LF-normalized f06c0029cd20. Portal 10c2f07d's committed contracts/wire/StatusEnvelope.ts:5 reads 'Source sha256: c83ce02d14c12044b7d627181ae8ef3fd07f96fe5c6ac7e2cfb0366d7deed380'. gen-wire.ts:107 sha256Of(text) = createHash('sha256').update(text) over readFileSync(..., 'utf8') with no line-ending normalization, and :293 renders it into the header. bun test fe-s-25/generator.test.ts on the pair (portal tree 1e1a8591, equal to DEV 10c2f07d's) read 4 pass / 0 fail; 0.0.0_AB_MSTR reports the same test failing on unmerged DEV 10c2f07d inside the main workspace (586/21/1). 58e387b454, the last schema change, is in every checkout involved, so it is not the difference. INERT: the generated TYPES do not change with line endings; only a comment line differs, and no served behaviour reads it. It reads red on any LF runner, including a Linux CI checkout.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sha256sum of the schema in both checkouts, and tr -d '\\r' | sha256sum: pair c83ce02d14c1 raw / f06c0029cd20 normalized; main worktree f06c0029cd20 / f06c0029cd20; git ls-files --eol: pair 'i/lf w/crlf', main 'i/lf w/lf'",
+        "git show 10c2f07d:src/pages/InvestorReporting/contracts/wire/StatusEnvelope.ts:5 'Source sha256: c83ce02d14c1...'",
+        "portal src/pages/InvestorReporting/__tests__/fe-s-13/gen-wire.ts:107-108 sha256Of; :293 const digest = sha256Of(schemaText); :300 the header line",
+        "scratchpad f25_now.log: bun test fe-s-25/generator.test.ts on the pair, IRPT_FE_DEV_PORT=5289: '4 pass', '0 fail'",
+        "0.0.0_AB_MSTR msg 97009: F25-AC8 fails on unmerged DEV 10c2f07d inside the workspace, 586 / 21 / 1 fail"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
