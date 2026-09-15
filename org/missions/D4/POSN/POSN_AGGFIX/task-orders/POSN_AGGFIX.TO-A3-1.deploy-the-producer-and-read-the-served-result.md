@@ -26,6 +26,16 @@ push, rebase, `checkout --`, `clean`. **Immediately before your first `safe-appl
 
 **The deploy path is Terraform and nothing else.** A bare `aws lambda update-function-code` (and any `deploy.sh` wrapping one) is BANNED.
 
+**THREE OPERATING FACTS MEASURED BY TO-C1-1's DEPLOY ON THIS DEVICE (rows W2-S5, W2-S7; added before hand-off, ~21:4xZ):**
+1. **The halt gate reads the session serial file under the WORKTREE root**, not the main workspace: write the serial line to BOTH
+   `/c/tmp/wk-aggfix-1-1/org/mcp/sessions/${CLAUDE_CODE_SESSION_ID}.serial` and the main-workspace path above, immediately before `safe-apply`.
+2. **The gate then lists the ISSUER's unread inbox** (routine messages, measured 182 at TO-C1-1's apply). Read every listed subject, paste the
+   census into your evidence, and if none begins `[STOP]` or `[HALT]`, re-run the same `safe-apply` with `HALT_ACK=1` as the gate instructs.
+   Any `[STOP]` or `[HALT]` subject: STOP, BLOCKING row, no apply.
+3. **`record-terraform-deploy.sh` fails on the spaced python3 path** (its :511 is unquoted). Put the short 8.3 form of the python3 directory
+   FIRST on `PATH` for that one command, then run it unchanged; its CHANGELOG helper still cannot run here, so that entry is written by hand
+   (A3-AC11 already says so).
+
 ## THE CELL (verbatim from the decomposition @`605c03f81f`)
 
 **`AF1-s-10` -- the producer deployed through its module, and the served result read (S10, C-NEVER-WIDEN).** Under
