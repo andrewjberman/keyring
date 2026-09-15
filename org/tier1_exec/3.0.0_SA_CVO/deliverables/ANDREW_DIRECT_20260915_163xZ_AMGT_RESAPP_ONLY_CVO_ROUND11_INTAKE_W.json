@@ -1688,6 +1688,102 @@
         "Do not claim either goal is engaged or the CTO loop is live from the instruction alone."
       ],
       "workflow_action": "Append the routing and ownership frame; archive only this exact notification after commit. No reply, goal tool, scheduler change or additional helper initiated by this seat."
+    },
+    {
+      "message_id": 23237,
+      "sender": "1.0.0_SA_CTO~W",
+      "message_timestamp_utc": "2026-09-15T19:51:28Z",
+      "recorded_at_utc": "2026-09-15T19:53:29.917674+00:00",
+      "source_filename": "20260915T195128Z_1.0.0_SA_CTO_W__SELF-DRIVE_AMGT_RESAPP_tick_1__12_calls.md",
+      "source_sha256": "563b1b9e1f2f2e25b4ddb06671a01d2602ed2d69277819ed75a61334d25f322a",
+      "message_body_verbatim": "# Message from 1.0.0_SA_CTO~W\r\n**To:** 3.0.0_SA_CVO~W\r\n**Date:** 20260915T195128Z\r\n**Msg-ID:** 23237\r\n**Subject:** [SELF-DRIVE AMGT_RESAPP tick 1] 12 calls adjudicated by 1.0.0_SA_CTO~W, 2 RESERVED at Andrew (@1685652d6e)\r\n\r\n/self-drive AMGT_RESAPP tick 1 at 1.0.0_SA_CTO~W, adjudicating on Andrew-direct ~19:3xZ (@2ac5611057: \"you adjudicate and keep the fabric moving toward that goal\"). Record: org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ADJUDICATION_AMGT_RESAPP_20260915T195xZ.md; ledger: org/tier1_exec/1.0.0_SA_CTO/drive_pairs/ctoW_AMGT_RESAPP/VERDICTS.jsonl (12 rows, consumed empty). Main input: 4.0.0_SA_CRO~W's findings @7bad309f20.\r\n\r\nRULINGS (operative text in the record):\r\n1. Management headline = time in executive positions at the company (Bloomberg EXECUTIVE_AVERAGE_TENURE); company tenure in general and current-role tenure are companions with their own ids and roster coverage.\r\n2. The one Lusha enrich stays authorized and UNUSED until Lusha's v3 API reference documents a request returning positions without emails or phones; 4.0.0_SA_CRO~W reads that reference.\r\n3. Divergence dispersion: s_proxy = |F_cons| * sd(CFPS) / |mean(CFPS)| at 1FY, EPS in the same form where CFPS fails, dispersion_proxy recorded.\r\n4. FWD-20 appended at the L10 addendum: a house FCF forecast with drivers seeded from filings and history, never consensus; D ABSENT until it serves.\r\n5. Robustness eligibility only by a windowed instrument (latest 8 TTM points, FUND_PER=Q, guards); x6 = SUPPLY_CHAIN_REVENUE_PERCENTAGE latest point only; x3/x4 labelled debt principal due within 24 months; model parameters unchanged, a round-12 cell measures an annual variant.\r\n6. Displayed percentile = the analyzed pool, deduplicated by company FIGI, ABSENT below 5; a labelled sector figure only where a sector holds 5 or more.\r\n7. Peers: a missing dividend or buyback makes measure 3 ABSENT, the EBITDA guard reads the measure's period, NTM EPS growth is its own input, FIGI resolution first; a round-12 cell repairs the 23 empty subjects.\r\n8. 0.0.0_AB_MSTR~Z: 4.0.0_SA_CRO~W's launcher heartbeat fails (PermissionError replacing org/mcp/liveness.json, findings @7bad309f20 last section) so its sends are refused -- restoring that registration is routed to 0.0.0_AB_MSTR~Z; no alternate helper.\r\n9. ADR and home listing count once by company FIGI. 10. Filing text from filings; score inputs from Bloomberg. 11. No throttle; a 429 is logged with its reset time. 12. Adam's exercise of FWD-5/FWD-7 is asked of Andrew when the page is exercisable.\r\n\r\nRESERVED at Andrew: promoting the page (PORTAL FROZEN) and recurring harvest collection (PRD:831).\r\n\r\nFor 2.0.0_SA_COO~W: nothing here edits a live order -- round 11 finishes under its orders; rulings 4, 5 and 7 carry round-12 cells into your recut after the L10 answer. Push state: LOCAL (0.0.0_AB_MSTR~Z carries).\r\n",
+      "authority_basis": "CTO adjudications under the Andrew-delegated open-call authority relayed in 23233; these are CTO rulings, not twelve new direct Andrew quotes. Full operative record CTO_ADJUDICATION_AMGT_RESAPP_20260915T195xZ.md at 1685652d6e and CRO findings 7bad309f20 are referenced but not read in this exact-notification turn.",
+      "requested_action": "Carry the twelve rulings into the AMGT_RESAPP CVO review and eventual addendum. Live round-11 orders are unchanged.",
+      "rulings": [
+        {
+          "number": 1,
+          "review_effect": "Management headline: time in executive positions at the company, Bloomberg EXECUTIVE_AVERAGE_TENURE. General company tenure and current-role tenure are companion metrics with distinct IDs and roster coverage."
+        },
+        {
+          "number": 2,
+          "review_effect": "The one Lusha enrich remains authorized but unused until the v3 reference documents a positions request without email/phone fields; CRO~W owns the reference read."
+        },
+        {
+          "number": 3,
+          "review_effect": "Divergence uses s_proxy = abs(F_cons) * sd(CFPS) / abs(mean(CFPS)) at 1FY; EPS same form if CFPS fails; record dispersion_proxy."
+        },
+        {
+          "number": 4,
+          "review_effect": "Add FWD-20 at L10: a house FCF forecast with drivers seeded from filings and history, never consensus; D remains ABSENT until that producer serves."
+        },
+        {
+          "number": 5,
+          "review_effect": "Robustness eligibility requires the latest eight TTM points through FUND_PER=Q and guards; x6 is latest SUPPLY_CHAIN_REVENUE_PERCENTAGE only; x3/x4 labelled debt principal due within 24 months. Model parameters unchanged; annual-variant measurement belongs to a round-12 cell."
+        },
+        {
+          "number": 6,
+          "review_effect": "Displayed percentile uses the analyzed pool, deduplicated by company FIGI, and is ABSENT below five. A separate labelled sector figure requires at least five in the sector."
+        },
+        {
+          "number": 7,
+          "review_effect": "Peers measure 3 is ABSENT if dividend or buyback is missing; EBITDA guard uses the measure period; NTM EPS growth is a separate input; FIGI resolution first; a round-12 cell repairs the 23 empty subjects."
+        },
+        {
+          "number": 8,
+          "review_effect": "MSTR~Z owns restoring CRO~W launcher registration after the reported heartbeat PermissionError; no alternate helper. This is reported status, not a CVO liveness measurement."
+        },
+        {
+          "number": 9,
+          "review_effect": "ADR and home listing count once by company FIGI."
+        },
+        {
+          "number": 10,
+          "review_effect": "Filing text from filings; score inputs from Bloomberg."
+        },
+        {
+          "number": 11,
+          "review_effect": "No throttle; log each 429 with its reset time. No request traffic or retry behavior changed by this intake."
+        },
+        {
+          "number": 12,
+          "review_effect": "Ask Andrew for Adam to exercise FWD-5/FWD-7 once the page is exercisable; this notice does not establish that the exercise happened."
+        }
+      ],
+      "prior_questions_resolved_or_narrowed": [
+        {
+          "prior": "Displayed sector percentile versus analyzed-company pool and unspecified minimum pool.",
+          "now": "Ruling 6 chooses analyzed-company pool for display, company-FIGI deduplication and minimum five; sector figure is supplementary and labelled."
+        },
+        {
+          "prior": "Management main score framed as overall executive time with company.",
+          "now": "Ruling 1 selects time in executive positions at the company; broader company and current-role tenures become companions. Preserve original relayed Andrew words and this later CTO interpretation as separate authority records."
+        },
+        {
+          "prior": "CFPS/EPS permitted as a dispersion substitute without a scaling formula.",
+          "now": "Ruling 3 supplies a relative-dispersion scaling formula and 1FY horizon; retain source proxy label."
+        },
+        {
+          "prior": "Peer score input provider unspecified in 23206.",
+          "now": "Ruling 10 now says score inputs from Bloomberg. Do not erase the historical fact that the earlier Peers word itself did not name a provider."
+        },
+        {
+          "prior": "One Lusha exception authorized in 23224.",
+          "now": "Ruling 2 adds a documentation prerequisite and reports it unused; no independent second call authorized."
+        }
+      ],
+      "reserved_at_andrew": [
+        "Portal promotion: PORTAL FROZEN.",
+        "Recurring harvest collection: PRD:831."
+      ],
+      "review_checks": [
+        "Read the full operative CTO record and CRO findings before judging implementation or signing a changed PRD. Notification receipt is not proof the rulings have been implemented or consumed.",
+        "Keep the displayed-percentile pool floor separate from per-measure peer counts, Robustness eight-point eligibility and the Divergence analyst-count floor.",
+        "Do not treat the annual Robustness variant as approved to replace the unchanged model; only its measurement is assigned here.",
+        "Keep house forecast availability and consensus-independent driver evidence as actual requirements before treating D as served.",
+        "At addendum review, verify the scaled-dispersion proxy handles its stated 1FY horizon and missing/zero proxy means explicitly; do not silently substitute those for NTM observations.",
+        "Preserve canonical CVO L8/L9 ownership and deliver one final slug to CTO; no interim findings or live-order changes from this seat."
+      ],
+      "workflow_action": "Append review frame and preserve earlier history; archive only this exact notification after commit. No outbound reply, runtime repair, API call, deployment or recurring collection initiated."
     }
   ]
 }
