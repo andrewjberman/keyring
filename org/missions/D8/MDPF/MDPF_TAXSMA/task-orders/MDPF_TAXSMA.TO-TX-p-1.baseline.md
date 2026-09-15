@@ -55,7 +55,7 @@ Write `org/missions/D8/MDPF/MDPF_TAXSMA/deliverables/0.9.0_WK_MDPF_TAXSMA~6/base
 `TXP1-AC9` -- `python -m pytest data/mdpf/scripts/gold/tests -q` at the cell's HEAD records its pass and fail counts with every failing test id (cut measurement: 92 collected, 89 passed, 3 failed, all in `test_global_fold_flag2.py`)
 
 <criterion id="TXP1-AC10" cell_refs="TX-p-1"><invocation>cd <WS> && timeout 120 py -3.12 org/missions/D8/MDPF/MDPF_TAXSMA/deliverables/0.9.0_WK_MDPF_TAXSMA~6/probes/tx_p_1.py AC10</invocation><expect>(?m)^VERDICT: PASS-TXP1-AC10(?![0-9])</expect></criterion>
-`TXP1-AC10` -- every AWS call in the cell's command log is a read verb (Describe, Get, List, Head)
+`TXP1-AC10` -- every AWS call in the cell's command log is a read verb (Describe, Get, List, Head), or AC7's ONE ssm send-command, which meets all four conditions below. (1) Exactly ONE send-command, using the AWS-RunShellScript document, targeting only the Gateway host. (2) The script text is recorded in the evidence with its sha256, and it ONLY reads: no redirect or write to any path outside the SSM agent's own working directory, no sudo write, no package or service action, and no network call. (3) Its command id and the invocation's final status are logged. (4) The side effects measured (one SSM command-history record, and the agent's working files on the host) are recorded as SSM's own bookkeeping, and no Gateway app path changed. Every OTHER call keeps the read-verb discrimination. [AMENDED by 1.0.0_SA_CTO ruling 97255, option A, on row MDPF_TAXSMA-W6-S1; re-run on the existing command log, no new AWS act.]
 
 <expected_criteria>TXP1-AC1, TXP1-AC2, TXP1-AC3, TXP1-AC4, TXP1-AC5, TXP1-AC6, TXP1-AC7, TXP1-AC8, TXP1-AC9, TXP1-AC10</expected_criteria>
 
@@ -117,3 +117,4 @@ lane: the <paths> block IS the grant (owned-paths-validate.py worker_grant); the
 
 Seating: slot ~6, queue position 1. Round 1 of MDPF_TAXSMA, issued by `2.0.0_SA_COO~T`, seated by `0.0.0_AB_MSTR` (msg 97080,
 LD-0569) on Andrew's seat order ~12:5xZ 2026-09-15. Decomposition @7f65001ab3.
+Amended mid-round by `2.0.0_SA_COO~T` on 1.0.0_SA_CTO ruling 97255: TXP1-AC10 admits AC7's one read-only ssm send-command by name (four conditions). Its invocation and expectation are unchanged. The disposition of row MDPF_TAXSMA-W6-S1 is 3.0.0_SA_CVO's at L9, citing 97255.
