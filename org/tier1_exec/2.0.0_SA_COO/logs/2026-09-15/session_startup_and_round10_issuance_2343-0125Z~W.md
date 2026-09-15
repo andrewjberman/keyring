@@ -345,6 +345,33 @@ positive control ONCE from the pool into `.scratch/goodroot/` (now graded as a S
 rj-8 in `C:/tmp/wk-amgt-11-5` (cone widened with `integrations/`; the Lusha and SERP clients present; the QA pair named for the
 record) and `~18` on rj-2 in `C:/tmp/wk-amgt-11-1` (both amendments folded into the face; next row `W18-S8`). Three workers live.
 
+### 14. Both live workers killed by the API weekly limit; the seat deaf four hours; both respawned after Andrew's login (10:5xZ-15:0xZ)
+
+**At ~10:5xZ three notifications arrived together:** `~18` (rj-2) and `~22` (rj-8) each terminated with HTTP 429 -- *"You've hit your
+weekly limit - resets Sep 19, 5pm (America/New_York)"* (model `claude-opus-5`; `~18` at "Now the portal side.", `~22` at "Now the CTO's
+card 2 measurement") -- and the inbox Monitor x21 expired in the same batch. The session then compacted and, with no live Monitor and
+the account at its limit, SLEPT: nothing re-armed, nothing woke it, from ~10:5xZ to 15:00Z. Eight messages queued unread in that
+window, among them the Andrew-direct pair relayed by `0.0.0_AB_MSTR~Z` at 14:42Z / 14:43Z (msgs 23135, 23139), VERBATIM: *"make sure
+sitez and 4.0.0_SA_CRO~W in particular are driving RESAPP"* and *"THEY SHOULD BE BLASTING THAT, PRIORITY RESOURCE ALLOCATION"*; MSTR~Z's
+correction 23144 (its "no inbox-watch process for any seat" line was a Win32-plane read and is withdrawn); and four `4.0.0_SA_CRO~W`
+records (the Barron's local retrial passed twice @`9118d18e4f`; the v0.8 technical spec for discussion @`2778e07199`, a proposal and not
+an order; harvest worker acceptance passed and the commissioning handoff ready @`98d10e04c9`). `1.0.0_SA_CTO~Z` is out on the same
+weekly limit until Sep 19 (POSN only). Andrew ran `/login` at this terminal at ~14:5xZ and asked why the project was not being driven;
+this section is the answer.
+
+**Acts (14:5x-15:0xZ):** the Monitor re-armed x22 (`bv0vxxcug`, TaskOutput running at 15:00Z) and a staggered second watcher armed;
+the three broker messages acked on read; the residue measured before anything was touched -- `wk-amgt-11-1`: NO diff under `lib/` or
+`portal/src/`, the portal worktree clean at ad275969, eleven `infra/aws/*` files modified by line endings only (the cone widening's
+CRLF artifact; `diff -w` empty) and `.scratch/` holding an UNAPPLIED `rj2_drafting_block.py` (359 lines) plus the goodroot fetch;
+`wk-amgt-11-5`: clean apart from `.scratch/src/` (the five filings and their officer sections, pulled before the kill). Neither worker
+had committed. Both faces re-read from the orders at HEAD (rj-8 byte-identical to the spawn copy; rj-2 carrying amendment 2's AC2 and
+bullet -- the scratch copy predated it) and `~18` RESPAWNED on rj-2, `~22` on rj-8 at ~14:58Z with identity lines naming the residue,
+the branch tips (8940b7320c, 04b59f883c), the next row ids (W18-S8, W22-S1) and, for rj-8, that the five QA names are the whole set.
+The tree moved 4e8c8f1533 -> 9ceb811406 in the gap (the CTO~W's L10 PRE-READ @`9ceb811406`: the five drained cells re-graded 5 of 5
+VALID, the union universe's resolution gap 33 of 256 measured, six addendum candidates named; the CRO~W's harvest commissioning
+@`8b11d236c4` / @`98d10e04c9`; POSN's round-7 close) without touching the AMGT channel (210 rows at HEAD). Reply (a)-(d) sent to
+`0.0.0_AB_MSTR~Z`. Lesson banked to memory: a worker's weekly-limit 429 is the ACCOUNT's, and it silences the parent seat too.
+
 ---
 
 ## Decisions Made
@@ -383,20 +410,24 @@ None at this lane. The next acts are gated on the workers' final reports (backgr
 
 ## Current State
 
-Round 11 of AMGT_RESAPP is EXECUTING (13 orders): rj-4, rj-1, rj-7, rj-5 COMPLETE and drained; rj-6 drained partial with `~20`
-re-running its amended AC6 in C:/tmp/wk-amgt-11-3; `~22` on rj-8 in C:/tmp/wk-amgt-11-5; `~18` on rj-2 in C:/tmp/wk-amgt-11-1
-(portal @ad275969); `~19` idle in C:/tmp/wk-amgt-11-2 until rj-9 drains, then rj-10; chain D done. SITEZ at 8940b7320c; channel at
-210 rows. Posture QA held key BA_US_Equity. PORTAL FROZEN; all commits LOCAL; no push.
+Round 11 of AMGT_RESAPP is EXECUTING (13 orders): rj-4, rj-1, rj-7, rj-5, rj-6 COMPLETE and drained (last drain 4e8c8f1533; the tree
+since moved to 9ceb811406 by other seats, AMGT channel untouched at 210 rows); `~18` on rj-2 in C:/tmp/wk-amgt-11-1 (portal
+@ad275969) and `~22` on rj-8 in C:/tmp/wk-amgt-11-5, both RESPAWNED ~14:58Z after the 10:5xZ weekly-limit kill; `~19` idle in
+wk-amgt-11-2 until rj-9 drains; `~20` idle in wk-amgt-11-3 until rj-8 drains; chain D done. Posture QA held key BA_US_Equity. PORTAL
+FROZEN; all commits LOCAL; no push. Monitor x22 bv0vxxcug plus a staggered tick. Andrew-direct 14:4xZ: RESAPP is the priority at full speed.
 
 ---
 
 ## Next Steps
 
-1. At rj-8's drain: rj-13 (~22). At rj-2's drain (rj-5/6/7/8 drained): rj-9 (~18, with W21-S6's CSC gap and W18-S7 named). rj-11
-   (~20) after rj-6 completes and rj-7/8 drain, with AMGT_QA_HELD_KEY=BA_US_Equity. rj-10 (~19, ff first) after rj-9. rj-12 (~18)
-   after rj-9 + rj-11. rj-3 (~18) LAST after rj-10 + rj-12.
+1. At rj-8's drain: rj-11 (~20, ff wk-amgt-11-3 first, AMGT_QA_HELD_KEY=BA_US_Equity) and rj-13 (~22). At rj-2's drain (with rj-8
+   drained): rj-9 (~18, with W21-S6's CSC gap and W18-S7 named). rj-10 (~19, ff first) after rj-9. rj-12 (~18) after rj-9 + rj-11.
+   rj-3 (~18) LAST after rj-10 + rj-12.
 2. Each drain: verify the instance with the worktree's own checker, safe-merge with the channel unioned by row id, read every row,
    disarm as owner where owed; chain A's portal branch into refs/drains/rj-portal at each of its drains; the gitlink never moves.
 3. The browser half of rj-3 with the exact payloads rj-10 captures (ROUND11_BROWSER_EXERCISE.md); the L8 packet to 3.0.0_SA_CVO~W
-   (ROUND11_PACKET.md + one message) at the end, carrying W18-S6/S7, W19-S8, W20-S4/S5/S8, W21-S3/S6 for L9.
-4. Re-arm the inbox Monitor on every expiry; ack every broker message on read. Old worktrees stay until Andrew's word.
+   (ROUND11_PACKET.md + one message) at the end, carrying W18-S6/S7, W19-S8, W20-S4/S5/S8, W21-S3/S6 for L9, and reading the CTO's
+   L10 pre-read @9ceb811406 (six addendum candidates) beside it.
+4. Re-arm the inbox Monitor on every expiry, the staggered tick beside it; ack every broker message on read. A worker 429 on the
+   weekly limit: record the reset time in the log, the heartbeat and the final message; respawn only after capacity returns. Old
+   worktrees stay until Andrew's word.
