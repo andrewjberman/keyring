@@ -5746,3 +5746,32 @@ Andrew asked for (msg 22917); it concerns this project's portal files meeting an
 }
 ]
 ```
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-S120",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-09-15T01:42:46Z",
+    "one_line": "B4's SCHEDULE FIRES BEFORE ITS INPUT EXISTS, EVERY WEEKDAY: cot-satellites-characteristics-producer runs at cron(20 7 * * ? *) UTC and reads the Bloomberg ETF partition for the previous trading day, but the Bloomberg pull that writes that partition runs at 07:00 America/New_York (11:00Z in EDT, 12:00Z in EST). So the 07:20Z fire refuses 3h40m (EDT) / 4h40m (EST) before its input lands, and characteristics.json never refreshes on its own schedule -- only a manual invoke after the pull refreshes it. This is structural, not the one missing partition Z-W19-S17 describes, and the anchor came from this seat's own round-4 L4 guidance.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "LIVE RULE, read 2026-09-15 ~01:3xZ: aws events describe-rule cot-satellites-characteristics-producer-daily -> cron(20 7 * * ? *) ENABLED; list-rule-names-by-target on the function ARN returns that one rule only. The registry producer's rule is cron(0 7 * * ? *) ENABLED.",
+        "THE PRODUCER'S DATE RULE, data/assets/scripts/gold/build_satellites_characteristics.py at HEAD: resolve_bbg_as_of (:440-449) returns prev_trading_day(today, UTC date), and its docstring states a missing partition 'fails LOUD on the GetObject instead of silently walking back to an older day'; load_bbg (:160-176) GetObjects bbg/<asof>/characteristics.parquet and its manifest with no fallback.",
+        "THE INPUT'S CLOCK: the Windows scheduled task OPAL_BBGTML_daily_pull on this device, LastRunTime 9/14/2026 7:00:01 AM (LastTaskResult 0), NextRunTime 9/15/2026 7:00:00 AM (local ET); integrations/bloomberg/pipeline/etf_daily_pull.py lands under bbg/<BDay(-1) of today>. Newest partitions at the read: bbg/2026-09-09, 2026-09-10, 2026-09-11.",
+        "CORROBORATION BOTH WAYS: characteristics.json LastModified 2026-09-14T21:45:13Z (head-object), a run (after that day's pull had written bbg/2026-09-11, its T-1) and the producer REFUSED on worker ~19's on-demand invoke (T-1 = 2026-09-14, not yet written; the 2026-09-15 07:00 ET pull writes it) -- commit 7e6024957d, row Z-W19-S17."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-V4-1: 'an EventBridge rule cron(20 7 * * ? *) UTC (20 minutes after the registry producer's 07:00Z fire, its own clock, NEVER success-of-upstream)'. ROUND_ANALYSIS.round4 s.4 item 4 (this seat): 'B4 runs on its own schedule offset after B2's'. Z-W19-S17: 'If Monday's partition never lands, the 07:20Z organic fire refuses too'.",
+    "world_is": "B4 reads three inputs; the latest-landing one is the Bloomberg partition at ~07:00 ET, not holdings.json at 07:00Z. Anchored to B2's clock, the fire precedes its Bloomberg input on every weekday, so the refusal Z-W19-S17 treats as one missing partition recurs daily. Monday 2026-09-14's partition DOES land -- at the 2026-09-15 07:00 ET pull, ~3h40m after that day's 07:20Z fire.",
+    "notes": "REMEDY, for the round-5 analysis: re-anchor B4 to the input that lands LAST. Either an EventBridge Scheduler schedule in America/New_York after the 07:00 ET pull (with a margin after the pull completes, measured rather than assumed), or a UTC cron at or after ~12:30Z so it holds across DST. Keep it its own clock, never success-of-upstream. The round-4 guidance named the wrong anchor (B2's clock) and is owned here; the cell executed the order as written. NEAR-TERM, measured on today's clocks: the registry producer's 07:00Z fire reads the 2026-09-15 roster (lands ~06:00:43Z) and is expected to relabel holdings.json with R1's labels, so the Satellites mode should show GLD as Commodities / Metals and VXX as Structured / Hedge from then (a prediction from the producer's inputs, to be read after the fire). characteristics.json stays at its 2026-09-14T21:45Z version until a run after the Bloomberg pull."
+  }
+]
+```
