@@ -709,6 +709,35 @@ no touch of its runtime, no re-send, no change to the round. A relaunch is an op
 metric contract, the frontend cut wide, and the open producers and contracts). It is preparation, not a cut, and the CTO analysis
 may reshape it.
 
+### 23. CORRECTION to section 22: 3.0.0_SA_CVO~W was WORKING, 34 minutes into one turn; my inference was wrong (22:4xZ)
+
+`0.0.0_AB_MSTR~Z` answered msg 23273 with msg 23275 and reversed the reading. The seat is inside ONE TURN, blocked on its own
+`safe-commit` carrying 250 dispositions, three L8/L9/L10 stamps, the round-11 remediation and the CVO audit deliverables. No
+operator act was warranted. Nothing was sent to that seat and nothing of its runtime was touched, by me or by the integrator.
+
+**Every measurement in section 22 is correct. The INFERENCE is wrong, and the reason is reusable:** all four arms measure
+CONSUMPTION or its traces -- the broker never polled, the archive cadence stopped, no new commit, the bridge nudging and
+deduplicating. A seat inside one long turn cannot poll, cannot archive and cannot commit until its commit returns, so it produces
+that signature BY CONSTRUCTION. Four arms on ONE plane read as breadth and are not breadth: Rule 22's shared-dependency limb, in
+the form where every per-arm check passes.
+
+**My refuting arm was aimed at the wrong tree.** After sending, I ran the read the estate banks as the only one that can say
+WORKING -- fresh untracked work on that serial -- and it read 0 twice, seconds apart, which I took as corroboration. It could not
+have seen anything: the seat holds its OWN worktree, `C:/tmp/cvo-amgt-r11-20260915` at `a35563e197`, which `git worktree list`
+shows in one line from the shared tree. I enumerate worktrees for workers as a matter of course and did not do it for a SEAT.
+
+**The instrument I did not have, now banked:** `.tools/unstick.ps1 -Serial "<serial>" -Peek`, read at HEAD before use -- the
+`-Peek` branch captures the window to a PNG and sends NO keystrokes (the SendKeys calls are the non-peek path). It reads the seat
+own TUI, the only surface that says "Working (34m 22s - esc to interrupt)". The process plane corroborates separately: the parent
+and child `safe-commit` with that author and the exact pathspec.
+
+**What I keep:** measure, then run the refuting instrument IN THE TREE THE SUBJECT WRITES TO, then route. I routed one step early.
+The restraint that left a window to check was not touching the runtime, not re-sending to that seat, and routing the remedy to an
+operator as their call rather than taking it. Acked 23275; reply sent to both seats.
+
+**Round state unchanged:** round 11 CLOSED @`155105b850`, L8 and L9 in flight at `3.0.0_SA_CVO~W`, no round-12 cell cuttable
+before its slug reaches `1.0.0_SA_CTO~W`.
+
 ## Decisions Made
 
 | Decision | Rationale |
