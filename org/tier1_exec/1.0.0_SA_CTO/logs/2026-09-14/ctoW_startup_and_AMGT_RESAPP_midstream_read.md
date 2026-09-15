@@ -537,3 +537,26 @@ CANDIDATE 3 MEASURED @`a040fae8f1`: 112 of 167 ETF holdings resolve on a unique 
 rename; 54 international with no ticker in the scanner space); 35 of 56 unresolved coverage names carry a parseable '<TICKER> <code>'
 with the exchange list needing validation (CA/GB/NL/SM, three not Bloomberg's). The resolved union would move 33 -> ~145 and Posture's
 Opal side 3 -> ~115 without a guess. Push state: LOCAL.
+
+---
+
+## ADDENDUM 18 (16:4x-17:0xZ) -- Andrew corrected the holdings resolution source; the chain that feeds Positioning resolves 164 of 164
+
+Andrew, at this terminal, eight messages in a row (verbatim in the pre-read, candidate 3): where was I resolving the Opal
+holdings from; opal-data-etfs and ETFClassifier have everything; check the ETFClassifier DDB table; use `comp-find --corpus aws`;
+parse the bucket as a whole; look for CUSIPs; a stable join key can be compiled even without a single direct key; ETFClassifier is
+one system (scripts, a DDB table, seeding lambdas), found by tracing what feeds the Positioning page.
+
+He was right and my 16:3xZ report was wrong in its source: I had joined the bare tickers of one derived object (rj-4's union file
+over `gold/holding` 09-11) to the Security Scanner universe and called 54 international holdings unresolvable. Measured instead,
+from the chain that feeds Positioning: 1,532 objects / 367 key shapes parsed, CUSIP in 4 shapes; over the 09-14 partition 164
+non-cash holdings -- 161 valid CUSIPs, 1 FIGI, 1 SEDOL, 1 Excel-corrupted value; ticker root to `<T> US Equity` 164 of 164 with
+domicile agreeing 164 of 164; the compiled ISIN equal to `trade-security-identifiers` 47 of 47; ETFClassifier rows 161 of 164.
+`comp-find --corpus aws` found four matching DynamoDB tables; I briefly posited a second classifier store from the POSN proofs'
+"both stores" phrase -- Andrew corrected that too, and the trace confirmed one chain. The compiled key's precedence rule is in the
+pre-read; Posture's Opal side is 164 names.
+
+Acts: the pre-read's candidate 3 replaced (the first attempt died on a shell heredoc apostrophe and wrote nothing; the COO
+correction message had already said it landed, so it was landed immediately after through Write-tool scripts); the correction sent
+to `2.0.0_SA_COO~W` (@17:00Z) with the rj-11 relevance stated as the COO's call; a memory banked on resolving a population from the
+chain that feeds its consumer. Push state: LOCAL.
