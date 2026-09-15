@@ -1,4 +1,4 @@
-# POSN_ASTTAX -- L5 DECOMPOSITION (round 7) -- DRAFT, NOT CUT (the cut follows the 13:00Z promote, per the CTO's L10)
+# POSN_ASTTAX -- L5 DECOMPOSITION (round 7) -- CUT 13:21Z (ONE issuance: TO-X1-1; the promote read from the plane first)
 
 **archetype:** IMPLEMENT (one cell: the seeder guard's owned fields reconciled with the retag's write surface, by measurement and exercise)
 **Owner (L5-L6):** `2.0.0_SA_COO~Z` - **Date:** 2026-09-15 ~10:2xZ - **Directive:** D4 - **Macro:** POSN - **Fabric:** site-z
@@ -9,8 +9,10 @@ C-RETAG-SAFETY / C-RETAG-SET already bind the guard to the retag's writes). **An
 **The CTO's cell text:** *"The cell adds management_style to the owned tuple (or states, measured, why a reseed cannot write it) and a
 criterion that runs the guard against a reseed changing ONLY VNQ's management_style and reads the refusal."*
 
-> **STATUS OF THIS FILE: ONE CELL, DRAFTED; the ONE issuance (`TO-X1-1`) is cut AFTER the 13:00Z portal promote (the CTO's word in
-> 23119: "ONE-cell recut C-S177 after the 13:00Z promote"). Nothing in it gates the promote.
+> **STATUS OF THIS FILE: CUT 13:21Z.** The promote READ FROM THE PLANE at 13:19Z: the portal origin's refs/heads/PROD edf85ce503 and
+> refs/heads/DEV acdb02e917 both contain the round-6 head ebbee2e61a (`merge-base --is-ancestor` YES for each; `sitez/posn-asttax-r6`
+> = ebbee2e61a). `prd-signoff.py status` at the cut: v0.11 @ab2ee8052a ADMITTED, both halves SIGNED current. ONE issuance: `TO-X1-1`
+> (slot ~27). The decomposition FREEZES here.
 
 ---
 
