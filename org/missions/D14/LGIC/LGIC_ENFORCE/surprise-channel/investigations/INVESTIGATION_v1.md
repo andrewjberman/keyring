@@ -972,6 +972,76 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     "spec_asserts": "TO-EN-s-1 WORKER FACE: 'It judges every nameable name in the repo (the Terraform, lib/config.py-class files, and Lambda sources)'.",
     "world_is": "Nothing the order names defines which literal in a config or Lambda source is a nameable name, so the worker defined it and printed the rule and its exclusions in the report and the module.",
     "notes": "Form only. No criterion turns on the repo denominator. The repo plane is never judged in this run, because the run stops in the live plane first (row LGIC_ENFORCE-W7-S1)."
+  },
+  {
+    "id": "LGIC_ENFORCE-W1-S13",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~1",
+    "surfaced_at": "2026-09-15T03:49Z",
+    "one_line": "generate() renders no exemptions local, so the fence's exemption list cannot come from the module's GENERATED locals as TO-EN-f-1 says. Module opal_name reads infra/logic/registry/exemptions.json itself, with file() and jsondecode(), in main.tf.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE: lib/opal_naming.py _gen_locals (:697-723 @39aae459ed) renders scope_short, scope_long, scope_class, name_scope_classes, scope_bucket, fence_patterns and account_id. It renders no exemptions list. The regenerated generated_locals.tf (registry@ba5318901b937130) has no exemptions local either.",
+        "GRANT: TO-EN-f-1 <paths> names infra/aws/terraform/modules/opal_name/ and infra/logic/registry/exemptions.json. It does not name lib/, so the generator cannot be extended in this cell.",
+        "BUILT: modules/opal_name/main.tf local fence_exemption_arns = jsondecode(file(\"${path.module}/../../../../logic/registry/exemptions.json\")), mapped per bucket to principal ARNs; output fence_exemption_arns. The Deny reads module.opal_name.fence_patterns[\"49financial\"] and module.opal_name.fence_exemption_arns[<bucket>].",
+        "RUN: check_en.py f1-no-typed-list 'VERDICT: PASS-NO-TYPED-LIST'; m1-no-external PASS (no data \"external\"); m1-vectors '37 passed, 0 failed'; the plan renders the 1 pattern and the 16 exemption ARNs into the policy's ArnNotLike list."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EN-f-1 cell step 2: 'Both lists come from the module's generated locals and are never typed (DEC-4 (iii))'. Step 1: 'Then regenerate the module locals (generate)'.",
+    "world_is": "generate() writes fence_patterns into generated_locals.tf and no exemptions list, and the generator (lib/) is outside this order's grant. The exemption list reaches the policy through a module local that reads the registry file at plan time, not through a generated local. It is still never typed.",
+    "notes": "Form only. To bring the exemptions into the generated locals, _gen_locals would render one more map, and a seat whose grant holds lib/opal_naming.py would do it."
+  },
+  {
+    "id": "LGIC_ENFORCE-W1-S14",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~1",
+    "surfaced_at": "2026-09-15T03:49Z",
+    "one_line": "Adding the exemption rows moves the registry hash from 50e4fabd1cb6a150 to ba5318901b937130, so 7 generated views outside this order's grant now carry a stale GENERATED header. Their content is otherwise unchanged.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~G",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE: lib/opal_naming.py REGISTRY_FILES (:52 @39aae459ed) includes exemptions.json, and registry_hash (:92-101) hashes every registry file. RUN: 'VALIDATE: OK 16 system row(s), 9 scope row(s), 9 warning(s) at registry@ba5318901b937130' after the rows, where the base read 50e4fabd1cb6a150.",
+        "READ: at base 39aae459ed, 50e4fabd1cb6a150 appears in 7 generated views outside TO-EN-f-1's <paths>: data/firm_registry.json, infra/aws/lambda-edge/_shared/firm-config.mjs, infra/aws/lambda/investor-reporting/_authz/loaders.py, data/assets/scripts/gold/runners_49f/perfrp_firm_pin.py, data/assets/scripts/gold/investor_reporting/holdings_snapshot.py, data/assets/scripts/gold/investor_reporting/directory_runner.py and .tools/ds-precommit-check.py. The module's two generated files are in the grant and were regenerated here.",
+        "RUN: python lib/opal_naming.py generate --out .scratch/regen (9 written) compared line by line with each live view: 7 of 7 differ ONLY in the lines naming the old hash (8 lines in total; 0 other differing lines). So the views' exported content is unchanged and only their headers are stale.",
+        "CODE: check_en.py _v_header (:713-716 @39aae459ed) requires each view to carry the CURRENT registry hash. On a tree carrying this order's commit, every EN-v-<n> header criterion reads FAIL-HEADER until those 7 views are regenerated."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EN-f-1 cell step 1: add the exemptions.json rows, 'Then regenerate the module locals (generate)'. The <paths> grant names infra/logic/registry/exemptions.json and infra/aws/terraform/modules/opal_name/ only.",
+    "world_is": "The registry hash covers exemptions.json, so any exemption row re-stales the header of every generated view. The order grants regeneration of the module's files only, and the 7 other views keep the old hash until a seat whose grant holds them runs generate.",
+    "notes": "Form only. The disarm is one generate over those 7 targets (header-only, measured above), by the issuer or a cell it names. Left alone, the EN-v header criteria go red on the drained tree."
+  },
+  {
+    "id": "LGIC_ENFORCE-W1-S15",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~1",
+    "surfaced_at": "2026-09-15T03:49Z",
+    "one_line": "The exemptions.json row form ('principal (a role name or an ARN)') cannot write an IAM user or a service-linked role in a form both check_en.py f1-covered and the policy accept, so each row also carries an arn field.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE: check_en.py f1_covered (:540-557 @39aae459ed) finds a writer's row by its census name, or by 'arn:aws:iam::313476888478:role/' + name. A row written as a user ARN (user/Andrew_Berman) or a service-linked role ARN (role/aws-service-role/<service>/<name>) matches neither, so it reads UNCOVERED.",
+        "CENSUS: FENCE_WRITER_CENSUS.md opal-data-49financial holds 16 principals: 3 are IAM users (Andrew_Berman, Andrew_Berman_Console, Opal_Terminal) and 3 are service-linked roles under aws-service-role/ paths. For those 6, a bare name rendered as role/<name> is a principal that does not exist, so the policy would deny the real one.",
+        "CODE: lib/opal_naming.py validate (:404-410 @39aae459ed) requires principal, reason and signoff_ref, and refuses no other field. RUN after the rows: 'VALIDATE: OK'.",
+        "BUILT: each of the 16 rows has principal = the census name and arn = the census ARN. main.tf takes arn first. RUN: f1-covered 'WRITERS OF opal-data-49financial: 16  COVERED: 16'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "infra/logic/registry/exemptions.json _about.row_fields at base: 'principal (a role name or an ARN); reason; signoff_ref'.",
+    "world_is": "Six of the sixteen principals are not the role ARN of their name. The checker matches only the name, and the policy needs the true ARN, so rows carry both and _about.row_fields now names arn.",
+    "notes": "Form only."
   }
 ]
 ```
