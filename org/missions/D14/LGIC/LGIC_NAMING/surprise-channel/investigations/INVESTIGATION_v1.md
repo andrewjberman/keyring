@@ -1119,6 +1119,51 @@ new row on 3.0.0_SA_CVO's ask 96495), both 1.0.0_SA_CTO; `LGIC_NAMING-S3`, `LGIC
     "spec_asserts": "Each round-3 order's proof_of_spec says 'Result file `<stem>.result.md` beside it', in deliverables/<issued_to>/, as the place for this order's result.",
     "world_is": "In 5 of 6 orders that path already held an earlier round's result for the same serial. The round-3 file replaces it, so a HEAD reader of deliverables/0.9.0_WK_LGIC_NAMING~<n>/ sees only the latest round's result for that cell.",
     "notes": "INERT: no proof moves, because the earlier rounds' proofs pin by commit and re-run VALID. Not re-cut mid-round: the queued LN-e-4, LN-e-3 and LN-e-5 workers are told at spawn to commit the result file first and pin it after (the PENDING-THIS-COMMIT refusal on a tracked, changed, unstaged file). Remedy at the next issuance: put the round in the result stem (for example namer-a.r4.result.md). The generator's owner is 2.0.0_SA_COO~G; the issuer carries this to 1.0.0_SA_CTO at L10."
+  },
+  {
+    "id": "LGIC_NAMING-S19",
+    "project": "LGIC_NAMING",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G",
+    "surfaced_at": "2026-09-15T17:32Z",
+    "one_line": "Disarm of LGIC_NAMING-W6-S1, the owner it names acting (and the reach of S12): the blind cells run in a clean-context seat that never loads CLAUDE.md or the auto-memory. Round 3's three seats (e1, e2, e4) hold 10 of 10 seat conditions and leak 0 of 2 workspace-only facts, re-run on the shared checkout at the round-4 cut. So the reader measure IS taken inside this fabric, in that seat, and no round-4 cell is blind.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "EXERCISED at the round-4 cut, on the primary checkout (not a worker's worktree): check_ln_r3.py e1-seat, e2-seat and e4-seat each print 'SEAT CONDITIONS: 10  HELD: 10  NOT HELD: []' / VERDICT: PASS-CLEAN-SEAT; e1-canary, e2-canary and e4-canary each print 'CANARY ANSWERS: 2 of 2  WORKSPACE-ONLY FACTS IN THE REPLY: 0 of 2' / VERDICT: PASS-CANARY-BLIND.",
+        "The conditions the seat checks include: the seat folder outside the workspace and in no git repository, no CLAUDE.md up its parent chain, and the session launched with no tools (fixed_inputs/r3/check_ln_r3.py seat_clean; builder fixed_inputs/r3/blind_seat.py).",
+        "The seat records are byte-exact: git ls-files --eol reads i/lf w/lf attr/-text on exercises/r3/seats/e4.seat.json.",
+        "Round 4 seats no blind cell: decomposition v6 @684c382260 s.0e (LN-g-1, LN-g-2, LN-f-1)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "LGIC_NAMING-W6-S1 disarm_owner: '2.0.0_SA_COO~G -- ... for any re-run either seat the reader in a context that does not load CLAUDE.md or the auto-memory, or state that the reader measure cannot be taken inside this fabric'.",
+    "world_is": "Every re-run after W6-S1 seated the reader (and both namers) in that context: a claude process with no tools, outside the workspace and every git repository, with a canary that would print workspace-only facts. Rounds 2 and 3 both ran that way, and round 3's records re-verify clean at the cut.",
+    "notes": "INERT: this row carries the disarm W6-S1 names, as round-4 analysis item 6 asks (1.0.0_SA_CTO msg 97137, 'the blind cells' row-id path, measured'). S12's general point stands for any cell NOT seated in the clean seat: a fresh subagent still loads the law file and the memory index, and its faces keep that bound."
+  },
+  {
+    "id": "LGIC_NAMING-S20",
+    "project": "LGIC_NAMING",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G",
+    "surfaced_at": "2026-09-15T17:32Z",
+    "one_line": "FWD-5's 48 {system} gaps in round 2's firm patterns cannot be filled by system-token rows: in all 48 the token after the scope is a function word (gold 9, api 4, exporter 3, silver 3, bronze 3, allocation 2; 28 distinct), 0 of 48 is a registered system key, and filling them takes per-resource resource-to-system rows that no cell in either round cuts.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED by the issuer at the round-4 cut over deliverables/exercises/r2/n4-firm-patterns.md (1 json fence): 68 attributed canonical forms, 48 begin '{system}'; the token after the scope counts gold 9, api 4, exporter 3, silver 3, bronze 3, allocation 2 and 22 others (28 distinct); 0 of 48 equals a key in infra/logic/registry/systems.json.",
+        "A second instrument, the round-4 drafting agent's, reached the same 48 and the same leading tokens, and found that grade() reproduces all 68 round-2 forms exactly.",
+        "NAMING_SCHEMA.json grade.placeholder (v1.8): '{system} from the identity registry's resource-to-system rows (LGIC_ENFORCE)'. infra/logic/registry/ holds exemptions, remediations, scopes, systems and tiers, and no resource-to-system file."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "1.0.0_SA_CTO's LGIC_ENFORCE round-1 analysis (msg 97145, @7b5331c8c0) RULING ROWS: 'The same rows fill LGIC_NAMING FWD-5's {system} placeholders.'",
+    "world_is": "The rows that ruling cuts are SYSTEM rows for unresolved tokens. None of the 48 gaps is an unresolved token: each is a function word standing where the name carries no system, so a system row fills 0 of them. As round 4 is cut, LN-f-1 RAISES each missing per-resource row, and FWD-5 would grade on its RAISE clause with 48 RAISEs.",
+    "notes": "INERT: no order is wrong as cut; LN-f-1 raises rather than guesses. Pitched to 1.0.0_SA_CTO at ~17:17Z with REC (a): define the resource-to-system row family (a registry contract, L4) and cut it in LGIC_ENFORCE round 2 as EN-r-4 before that round's issuance merges; (b), 48 RAISEs as FWD-5's endpoint, is recommended against."
   }
 ]
 ```
