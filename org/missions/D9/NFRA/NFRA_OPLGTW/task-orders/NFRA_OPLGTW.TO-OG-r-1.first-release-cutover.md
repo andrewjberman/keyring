@@ -48,6 +48,13 @@ probe's own process only, against emulated AWS. An identity carrying a predecess
 but no tid/oid grant, is denied every Schwab tool; the same request under an active tid/oid grant is allowed. If AC11
 fails, nothing deploys: file a BLOCKING row and stop.
 
+**The browser-login withholding (amended before hand-off, on `1.0.0_SA_CTO`'s ruling msg 97251; row
+`NFRA_OPLGTW-W3-S22`).** Five browser routes (`/login` and the four `/sprint` paths) and the legacy-consent branch of
+`/callback` still authorize by the ALB login email, not by tid/oid; closing that is a round-2 cell. So in this
+release, no principal whose email can complete the ALB browser login (the Entra app's assignment) holds a restricted
+profile. AC12 prints the set of principals holding a restricted profile at release and, for each, whether its email
+can complete that login. Every one that can is withheld, so the printed count is 0.
+
 **Read:** the PRD's "C1", "C6" and "Operator journey, audit and release"; `infra/aws/ec2/safe-ec2-deploy.sh` and
 `infra/aws/ec2/opal-gateway/deploy-to-ec2.sh` (the release process); `infra/aws/ec2/EC2_MANIFEST.json`; the baseline.
 
@@ -92,7 +99,10 @@ taking the short id, printing its measurement with vintage and denominator, then
 <criterion id="OGR1-AC11" cell_refs="OG-r-1"><invocation>cd <WS> && timeout 120 .venv-og/Scripts/python org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~2/probes/og_r1.py AC11</invocation><expect>(?m)^VERDICT: PASS-OGR1-AC11(?![0-9])</expect></criterion>
 `OGR1-AC11` -- (difference) on the release base, locally and before the deploy, an identity carrying a predecessor's email and tier but no tid/oid grant is denied every Schwab tool, while the same request under an active tid/oid grant is allowed; the Schwab tool count is printed.
 
-<expected_criteria>OGR1-AC1, OGR1-AC2, OGR1-AC3, OGR1-AC4, OGR1-AC5, OGR1-AC6, OGR1-AC7, OGR1-AC8, OGR1-AC9, OGR1-AC10, OGR1-AC11</expected_criteria>
+<criterion id="OGR1-AC12" cell_refs="OG-r-1"><invocation>cd <WS> && timeout 120 .venv-og/Scripts/python org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~2/probes/og_r1.py AC12</invocation><expect>(?m)^VERDICT: PASS-OGR1-AC12(?![0-9])</expect></criterion>
+`OGR1-AC12` -- at release, the set of principals holding a restricted profile is printed and, for each, whether its email can complete the ALB browser login (the Entra app's assignment); the count of principals that hold a restricted profile AND can complete that login is 0.
+
+<expected_criteria>OGR1-AC1, OGR1-AC2, OGR1-AC3, OGR1-AC4, OGR1-AC5, OGR1-AC6, OGR1-AC7, OGR1-AC8, OGR1-AC9, OGR1-AC10, OGR1-AC11, OGR1-AC12</expected_criteria>
 
 `<WS>` is your worktree's absolute path, given in your identity line.
 
@@ -126,11 +136,11 @@ org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: `OGR1-AC1` .. `OGR1-AC11` (11). Instance at
+Criterion ids: `OGR1-AC1` .. `OGR1-AC12` (12). Instance at
 `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~2/NFRA_OPLGTW.TO-OG-r-1.first-release-cutover.proof_of_spec.json`
 (phase `BUILD-GENERAL`, firm `FABRIC`, spec_ref.group `OTHER`, spec_ref.doc the PRD @f0aa50dbc0, decomp_ref.doc the
 decomposition @8768f46770, decomp_ref.to_ref this order's path), validated with
-`py -3.12 .tools/proof-of-spec-check.py <instance> OGR1-AC1,OGR1-AC2,OGR1-AC3,OGR1-AC4,OGR1-AC5,OGR1-AC6,OGR1-AC7,OGR1-AC8,OGR1-AC9,OGR1-AC10,OGR1-AC11`
+`py -3.12 .tools/proof-of-spec-check.py <instance> OGR1-AC1,OGR1-AC2,OGR1-AC3,OGR1-AC4,OGR1-AC5,OGR1-AC6,OGR1-AC7,OGR1-AC8,OGR1-AC9,OGR1-AC10,OGR1-AC11,OGR1-AC12`
 BEFORE the `complete` flip. Result file `first-release-cutover.result.md` beside it. **Flip `complete` only when every
 MECHANICAL criterion PASSES by output.**
 </proof_of_spec>
@@ -155,3 +165,7 @@ Decomposition v1 @8768f46770.
 Amended 2026-09-15 ~14:5xZ, before hand-off, by `2.0.0_SA_COO~O` on `1.0.0_SA_CTO`'s ruling msg 97114. W3-S9 is
 disposed "in scope, round-2 cell", and the release is guarded by AC11. The hand-off hold of row `NFRA_OPLGTW-S8`
 resolves into AC11. No criterion was removed.
+
+Amended again 2026-09-15 ~22:1xZ, before hand-off, by `2.0.0_SA_COO~O` on `1.0.0_SA_CTO`'s ruling msg 97251: AC12
+adds the browser-login withholding line, which is W3-S22's round-1 disarm; its fix rides the round-2 email-keyed
+cell. No criterion was removed.

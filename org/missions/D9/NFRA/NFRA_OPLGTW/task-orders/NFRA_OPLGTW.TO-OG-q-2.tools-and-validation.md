@@ -63,6 +63,17 @@ enablement configuration is on, and the default configuration leaves it off (AC2
 `app/data_entitlement.py`, `app/account_ref.py`, `app/schwab_audit.py`, `app/integrations/schwab/catalog.py` and
 `engine.py`.
 
+**The tool classification (amended before hand-off, on `1.0.0_SA_CTO`'s ruling msg 97251; rows `NFRA_OPLGTW-W3-S23`,
+`NFRA_OPLGTW-W3-S24`).** `OG-z-1`'s guard denies an unclassified tool to EVERY principal, per the PRD's "a newly added
+tool is denied until classified". So your five tools need entries in `app/data_entitlement.py`, where the
+classification lives.
+- That file is granted to you, ENTRIES ONLY, for your own five tools.
+- Each entry classifies its tool with its REAL operation class from the contract (`list`, `describe`, `query`,
+  `download_filtered`). No entry widens an existing one, and none takes a permissive default.
+- A tool whose class is unclear is a surprise row, not an entry.
+- The five tool names are the contract's exact names; `OG-z-1`'s test stand-ins already carry them.
+AC25 runs the guard module; AC26 checks the file's diff.
+
 ### ACCEPTANCE
 
 <placeholders>WS</placeholders>
@@ -139,7 +150,13 @@ enablement configuration is on, and the default configuration leaves it off (AC2
 <criterion id="OGQ2-AC24" cell_refs="OG-q-2"><invocation>cd <WS> && timeout 120 .venv-og/Scripts/python -m pytest infra/aws/ec2/opal-gateway/tests/test_schwab_query.py::test_ogq2_ac24 -q -p no:cacheprovider --color=no</invocation><expect>(?m)^1 passed(?![^\n]*(failed|error))</expect></criterion>
 `OGQ2-AC24` (`test_ogq2_ac24`) -- with the default configuration the Schwab integration is not registered, and with its enablement on it is (decomposition bound 9, made mechanical).
 
-<expected_criteria>OGQ2-AC1, OGQ2-AC2, OGQ2-AC3, OGQ2-AC4, OGQ2-AC5, OGQ2-AC6, OGQ2-AC7, OGQ2-AC8, OGQ2-AC9, OGQ2-AC10, OGQ2-AC11, OGQ2-AC12, OGQ2-AC13, OGQ2-AC14, OGQ2-AC15, OGQ2-AC16, OGQ2-AC17, OGQ2-AC18, OGQ2-AC19, OGQ2-AC20, OGQ2-AC21, OGQ2-AC22, OGQ2-AC23, OGQ2-AC24</expected_criteria>
+<criterion id="OGQ2-AC25" cell_refs="OG-q-2"><invocation>cd <WS> && timeout 300 .venv-og/Scripts/python -m pytest infra/aws/ec2/opal-gateway/tests/test_data_entitlement_guard.py -q -p no:cacheprovider --color=no -m "not live"</invocation><expect>(?m)^[1-9][0-9]* passed(?![^\n]*(failed|error))</expect></criterion>
+`OGQ2-AC25` -- `tests/test_data_entitlement_guard.py` passes with your five tools classified.
+
+<criterion id="OGQ2-AC26" cell_refs="OG-q-2"><invocation>cd <WS> && timeout 120 .venv-og/Scripts/python org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~5/probes/og_q2.py AC26</invocation><expect>(?m)^VERDICT: PASS-OGQ2-AC26(?![0-9])</expect></criterion>
+`OGQ2-AC26` -- (discriminating) the diff of `app/data_entitlement.py` against your cut base is exactly five added entries, one per contract tool name, each with an operation class from the contract, and no other line; the probe prints each tool with its class and `VERDICT: PASS-OGQ2-AC26` or `VERDICT: FAIL-OGQ2-AC26 <reason>`.
+
+<expected_criteria>OGQ2-AC1, OGQ2-AC2, OGQ2-AC3, OGQ2-AC4, OGQ2-AC5, OGQ2-AC6, OGQ2-AC7, OGQ2-AC8, OGQ2-AC9, OGQ2-AC10, OGQ2-AC11, OGQ2-AC12, OGQ2-AC13, OGQ2-AC14, OGQ2-AC15, OGQ2-AC16, OGQ2-AC17, OGQ2-AC18, OGQ2-AC19, OGQ2-AC20, OGQ2-AC21, OGQ2-AC22, OGQ2-AC23, OGQ2-AC24, OGQ2-AC25, OGQ2-AC26</expected_criteria>
 
 `<WS>` is your worktree's absolute path, given in your identity line.
 
@@ -148,7 +165,7 @@ enablement configuration is on, and the default configuration leaves it off (AC2
 - **Grant.** Your write surface is the `<paths>` block below, plus `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~5/` and this order's own file (for the `<status>` flip). Nothing else. A path you need that is not named is a BLOCKING surprise row on that criterion -- never an override.
 - **Branch.** You work in the worktree named in your identity line, cut from `CLOUD` at hand-off (after `OG-z-3` and `OG-k-1` merged). Never push, merge, rebase, `checkout --` or `clean`.
 - **Interpreter.** Your venv `.venv-og` (`cd <WS> && py -3.12 -m venv --system-site-packages .venv-og && .venv-og/Scripts/python -m pip install -r infra/aws/ec2/opal-gateway/requirements.txt msal moto pytest`) serves every invocation. Never commit `.venv-og/` or `.scratch/`.
-- **Tests.** Each criterion names one test function in `tests/test_schwab_query.py`; write exactly that name. Offline, moto and synthetic Parquet; no Schwab object is read.
+- **Tests.** Each criterion names one test function in `tests/test_schwab_query.py`; write exactly that name. Offline, moto and synthetic Parquet; no Schwab object is read. AC25 is a module run and AC26 a probe; `app/data_entitlement.py` is yours for your five tools' entries only.
 - **Limits are ceilings.** Never raise one to make a test pass.
 - **The known red test.** `tests/test_identity_scope.py::test_scoped_deny_by_default` fails at the cut base (row NFRA_OPLGTW-S1). Never edit it or `identity_tool_allowlist.txt`.
 - **Code.** The commit gate lints with ruff for Python 3.9 syntax. `mcp==1.28.0` is not raised. Existing integrations keep their registration and behaviour. Nothing deploys.
@@ -167,6 +184,7 @@ infra/aws/ec2/opal-gateway/app/integrations/schwab/envelope.py
 infra/aws/ec2/opal-gateway/app/integrations/schwab/cursor.py
 infra/aws/ec2/opal-gateway/app/integrations/schwab/__init__.py
 infra/aws/ec2/opal-gateway/app/integrations/registry.py
+infra/aws/ec2/opal-gateway/app/data_entitlement.py
 infra/aws/ec2/opal-gateway/tests/test_schwab_query.py
 org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
@@ -177,11 +195,11 @@ org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: `OGQ2-AC1` .. `OGQ2-AC24` (24). Instance at
+Criterion ids: `OGQ2-AC1` .. `OGQ2-AC26` (26). Instance at
 `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~5/NFRA_OPLGTW.TO-OG-q-2.tools-and-validation.proof_of_spec.json`
 (phase `BUILD-GENERAL`, firm `FABRIC`, spec_ref.group `OTHER`, spec_ref.doc the PRD @f0aa50dbc0, decomp_ref.doc the
 decomposition @8768f46770, decomp_ref.to_ref this order's path), validated with
-`py -3.12 .tools/proof-of-spec-check.py <instance> OGQ2-AC1,OGQ2-AC2,OGQ2-AC3,OGQ2-AC4,OGQ2-AC5,OGQ2-AC6,OGQ2-AC7,OGQ2-AC8,OGQ2-AC9,OGQ2-AC10,OGQ2-AC11,OGQ2-AC12,OGQ2-AC13,OGQ2-AC14,OGQ2-AC15,OGQ2-AC16,OGQ2-AC17,OGQ2-AC18,OGQ2-AC19,OGQ2-AC20,OGQ2-AC21,OGQ2-AC22,OGQ2-AC23,OGQ2-AC24`
+`py -3.12 .tools/proof-of-spec-check.py <instance> OGQ2-AC1,OGQ2-AC2,OGQ2-AC3,OGQ2-AC4,OGQ2-AC5,OGQ2-AC6,OGQ2-AC7,OGQ2-AC8,OGQ2-AC9,OGQ2-AC10,OGQ2-AC11,OGQ2-AC12,OGQ2-AC13,OGQ2-AC14,OGQ2-AC15,OGQ2-AC16,OGQ2-AC17,OGQ2-AC18,OGQ2-AC19,OGQ2-AC20,OGQ2-AC21,OGQ2-AC22,OGQ2-AC23,OGQ2-AC24,OGQ2-AC25,OGQ2-AC26`
 BEFORE the `complete` flip. Result file `tools-and-validation.result.md` beside it. **Flip `complete` only when every
 MECHANICAL criterion PASSES by output.**
 </proof_of_spec>
@@ -203,3 +221,9 @@ Seating: slot ~5, queue position 4, handed after `OG-k-1` drains and `OG-z-3` me
 `2.0.0_SA_COO~O` (seated msg 96971, LD-0567). Decomposition v1 @8768f46770. AC24 is the one criterion the cut derives
 from a decomposition bound (s.8 bound 9) rather than from the cell's own acceptance list; recorded here so the L9 grade
 can weigh it.
+
+Amended 2026-09-15 ~22:1xZ, before hand-off, by `2.0.0_SA_COO~O` on `1.0.0_SA_CTO`'s ruling msg 97251. The changes:
+- `app/data_entitlement.py` is granted, entries only, for this cell's five tools, each with its real operation class
+  (rows W3-S23, W3-S24);
+- AC25 and AC26 are added.
+The same grant stands for any later round-1 cell that adds a tool. No criterion was removed.
