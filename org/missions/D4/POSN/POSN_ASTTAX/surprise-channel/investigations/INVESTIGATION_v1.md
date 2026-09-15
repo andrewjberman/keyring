@@ -7889,6 +7889,102 @@ Andrew asked for (msg 22917); it concerns this project's portal files meeting an
   "spec_asserts": "X1-AC7's expect: 'whether R1's management_style write (the retag script's, on VNQ) wants a guard of its own in THAT script -- a place no seeder can defend -- for the next retag'.",
   "world_is": "There is no retag script for VNQ's management_style: V8-AC4 is one CLI update-item, whose only guard was a ConditionExpression on the prior value, and whose argv carries a duplicated --expression-attribute-values that only last-wins parsing made harmless.",
   "notes": "Filed, not fixed: TO-V8-1 is a terminal order outside this cell's <paths> and the act it describes has already landed correctly. For L9 and the CTO's L10, as input to X1-AC7's second reading. NOT re-run: re-running V8-AC4 would fail its own ConditionExpression by design."
+},
+{
+  "id": "POSN_ASTTAX-Z-S176",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T14:08:54Z",
+  "one_line": "ADJUDICATION of W27-S1 (INERT): X1-AC1's regex, written by the issuer against the SET clause as it read at the cut, captured 2 of 5 assignments on the issued bytes (the expression was an implicitly-concatenated pair of literals and `[^'\"]+` stopped at the first quote) and signalled no truncation -- a blind instrument reporting 'management_style in SET: False' from a partial read. The worker disarmed it IN-CELL by making the new constant one unsplit literal and recorded both vintages (2 of 5 on the issued bytes, 5 of 5 on the committed bytes). RULED: the issuer's instrument defect; the worker's remedy is inside act 1 (the constant is the cell's own change) and the criterion passed on a full read with a positive control (3 of 3 arms). Lesson: an invocation's regex is run against the bytes at the cut AND its match is printed with its denominator (the count of assignments) so a partial capture cannot pass as a whole one.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W27-S1 as filed; X1-AC1's output: SET clause 5 of 5 assignments, tuple 3 of 3, positive-control arms unmutated CLEAN / narrower FIRED / wider FIRED.",
+      "WHY GRADUATED: the blind read never became evidence; the full read did."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W27-S1"
+  ],
+  "spec_asserts": "TO-X1-1 X1-AC1: the SET clause's field names read from the bytes equal YANG_OWNED_FIELDS 3 of 3.",
+  "world_is": "The seeder's expression is one literal; the regex and the assertion both read it whole.",
+  "notes": "Recurring class this round (Z-S155, Z-S166): an issuer's instrument written without running it."
+},
+{
+  "id": "POSN_ASTTAX-Z-S177",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T14:08:54Z",
+  "one_line": "ADJUDICATION of W27-S2 (INERT): the rejected alternative (adding management_style to YANG_OWNED_FIELDS) is not vacuous but FATAL -- measured on the scratch harness it raises KeyError at AGG, the first row that already exists, AFTER 19 of 56 writes had landed: a half-applied reseed. RULED: this measurement is the decomposition's premise (s.1) proved rather than argued, and it is the record the CTO's L10 disarm of C-S177 should cite: the reconciliation is 'the guard owns exactly the seeder's write surface', not a wider tuple.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W27-S2 as filed; the harness run: KeyError after 19 of 56 update_item calls.",
+      "WHY GRADUATED: a counterfactual measured on the scratch harness; nothing live moved; the cell's chosen branch stands on it."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W27-S2"
+  ],
+  "spec_asserts": "The CTO's L10 cell text: add management_style to the tuple OR state, measured, why a reseed cannot write it.",
+  "world_is": "The seeder cannot write management_style (proved) and cannot safely own it (proved).",
+  "notes": "For 1.0.0_SA_CTO~Z's round-7 L10 and C-S177's disarm."
+},
+{
+  "id": "POSN_ASTTAX-Z-S178",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T14:08:54Z",
+  "one_line": "ADJUDICATION of W27-S3 (INERT): the new import-time assertion's ONE declared seam -- the audit-exclusion list YANG_AUDIT_FIELDS: a mutant that writes management_style is refused at import (0 writes), but the same mutant with 'management_style' appended to the audit list imports cleanly with a 6-field write surface against a 3-field guard. The worker did not repair it (widening). RULED: correct not to widen; CARRIED to the round-7 L10 as the guard's residual -- a stricter form asserts the SET clause's fields equal owned + exactly {last_updated, updated_by} as a CLOSED set (no editable exclusion list), one line for the next edit of that file, and a note that a future edit which adds a field to the audit list is itself a widening to be read at L9.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W27-S3 as filed with both mutant arms; X1-AC1's three positive-control arms.",
+      "WHY GRADUATED: the seam is disclosed with its exact bytes and a one-line closed-set form; no live write path exists through it today."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W27-S3"
+  ],
+  "spec_asserts": "TO-X1-1 act 1: an assertion that fails loudly if the two surfaces ever diverge.",
+  "world_is": "The assertion catches a widened SET clause unless the audit list is widened with it.",
+  "notes": "For 1.0.0_SA_CTO~Z's round-7 L10: the closed-set form."
+},
+{
+  "id": "POSN_ASTTAX-Z-S179",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T14:08:54Z",
+  "one_line": "ADJUDICATION of W27-S4 (INERT): R1's management_style write on VNQ (TO-V8-1 V8-AC4) has no script a guard could live in -- it was one CLI update-item whose ConditionExpression was carried forward by nothing; and that invocation carried --expression-attribute-values TWICE (the first occurrence defining only :m), so only the CLI's last-wins parsing made the condition resolvable; the live row reads passive (correct, X1-AC5's before/after point read). RULED: a record defect in a COMPLETE round-5 order (not re-opened: the act landed and is read back correct), CARRIED to the round-7 L10 as the honest answer to X1-AC7's second question -- the next retag carries its management_style write in the retag script (r1_rollback.py's sibling) with its own conditional guard, never a hand CLI.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W27-S4 as filed; TO-V8-1 V8-AC4's invocation text; the live VNQ row at 13:27Z and 13:42Z byte-identical (752 B, one sha256).",
+      "WHY GRADUATED: the served value is correct and read twice; the defect is in a closed order's invocation grammar and its remedy is a next-retag rule, owned at L10."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W27-S4"
+  ],
+  "spec_asserts": "PRD v0.11 C-RETAG-SAFETY: the retag's writes name their level and carry a guard; TO-V8-1 V8-AC4.",
+  "world_is": "VNQ management_style passive on the live table; no script guards a future rewrite of it.",
+  "notes": "For the judgment X1-AC7 at L9 and the CTO's L10."
 }
 ]
 ```
