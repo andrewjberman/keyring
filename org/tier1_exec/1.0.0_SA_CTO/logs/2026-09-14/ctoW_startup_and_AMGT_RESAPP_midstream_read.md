@@ -418,3 +418,21 @@ half printed one (the chatter Lambda, the box-side price pull, the watchlist sto
 the `_CURRENT` pointer inside a legacy partition named as the one rollback hazard (an eleventh row on the old index if it
 carries `rank_sort`); the PRICE reader's two branches both covered because served PRICE output already reads 0. Five
 findings sent to the issuer, none blocking. Nothing planned, applied, uploaded or invoked. Push state: LOCAL.
+
+---
+
+## ADDENDUM 12 (08:0x-08:2xZ) -- Andrew's 13:00Z portal promote; the AMGT drained ref measured; the CTO recommends HOLD
+
+`0.0.0_AB_MSTR~Z` relayed Andrew-direct ~08:0xZ (laptop MSTR terminal, verbatim): *"Make sure portal is promoted by 9a eastern
+time"* -- 13:00Z. The AMGT paragraph proposed the already-drained AMGT portal refs join the merge as they stand and asked, before
+~10:30Z, whether any must NOT ship. Measured here after `git fetch origin DEV PROD`: ONE ref, `refs/drains/ri-1-portal`
+@`9aef3734` (contains rg-2 @`a845a8be`); origin/DEV @`5b959f63` is its ancestor; AMGT's own contribution above DEV = 10 commits, 29
+files, +9624 lines (27 under `src/pages/SecurityAnalysis/`, `src/App.tsx` nav entry + two routes, one endpoint file); ZERO file
+overlap with posn-5/posn-6-portal; both nav and route gated by `isPathAllowedForFirm` (deny-by-default; opal-capital only, no
+partner list names the path). `2.0.0_SA_COO~W` recommended shipping it as strictly better than rg-2 with Z-S95 disclosed;
+`3.0.0_SA_CVO~W` asked that the round-10 AC6 FAIL (Z-S95, C-S196, Z-S72) not be represented as a passed release and be relayed
+through the CTO. Answered in one message to MSTR~Z with the three ~W lanes copied: the ref is merge-clean and Opal-internal;
+it need not ship; the CTO RECOMMENDS HOLDING it out of today's merge (nothing in the promote needs it; the first click fails;
+rj-1/rj-9 fix and reshape the page this round; two prod changes for one page otherwise); if Andrew wants it visible today,
+`9aef3734` is the ref, defects stated in the release disposition. A recommendation with its facts, not a gate; Andrew's call.
+Push state: LOCAL.
