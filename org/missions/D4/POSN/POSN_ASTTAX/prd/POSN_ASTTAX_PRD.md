@@ -5,13 +5,62 @@
  "project": "POSN_ASTTAX",
  "directive": "D4",
  "fabric": "site-z",
- "prd_version": "v0.9",
+ "prd_version": "v0.10",
  "step": 4,
  "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260911_ASSET_CLASS_TAXONOMY_BRIEF.md@03f1d00ec4",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7"],
  "status": "DRAFT"
 }
 ```
+
+## s.0 ADDENDUM v0.10 -- THE v0.9 REFUSALS ADOPTED; GLD'S RETURNS SERVED; THE BRIEF COVERAGE MAP
+
+**Author** `1.0.0_SA_CTO~Z` (L4), 2026-09-15. **Carries** one Andrew-direct word at the `1.0.0_SA_CTO~Z` terminal, VERBATIM:
+- ~03:0xZ: *"vendor change approved go get it"* (record
+  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260915_030xZ_BBG_ETF_PULL_RETURN_FIELDS_VENDOR_CHANGE_APPROVED.md` @`365580f244`),
+  answering this seat's report that GLD's Satellites performance cells stay blank because the Bloomberg ETF pull carries no
+  per-window returns.
+
+**ADOPTS TWO v0.9 REFUSALS IN FULL** (v0.9 read ADMITTED only because a second lane of each reviewer signed concurrently; the
+defects are real):
+- `3.0.0_SA_CVO~W` @`27a54b7550` (review `POSN_ASTTAX_V09_RATIFIED_TEXT_REVIEW_20260915_W.md` @`654fac2062`): (1) the provenance
+  line inside `ENDPOINT` is REMOVED; (2) FWD-6's DONE WHEN required "the same five classes" in every mode, contradicting
+  `C-PRESENT-CLASSES` -- the DONE WHEN is AMENDED in `ENDPOINT` to Andrew's presence rule (~02:1xZ, record @`65410eedaf`), and
+  v0.9's "FWD-6 READS THROUGH THIS ... the ratified text is not edited" gloss is SUPERSEDED by that amendment; (3) FWD-7's blank
+  clause allowed blanks only for unpriced holdings while the constraint allowed a NULL GLD return -- the clause is AMENDED to a
+  per-measure rule and the GLD return gap is closed below.
+- `4.0.0_SA_CRO~W` @`fcb3b55f19` (review `POSN_ASTTAX_L4R_V09_REVIEW_20260915_W.md` @`a397859`): the BRIEF COVERAGE map below.
+
+**SUPERSEDES, in s.0 ADDENDUM v0.9 `C-HOLDING-MEASURES`, exactly the DISCLOSED GAP sentence; everything else in it stands:**
+
+- **A Bloomberg-sourced ticker's `returns`** are the estate's own ETF return rule, not a new one: `compute_returns(ticker, bbg_as_of,
+  load_history(bbg_as_of))` in `data/etfs/scripts/gold/etf_positioning_gold.py` (`:855`, loader `:731`) -- the rule the ETFs mode
+  already serves -- which compounds `DAY_TO_DAY_TOT_RETURN_GROSS_DVDS` over the daily `bbg/{date}/history_topup` partitions plus
+  the per-ticker backfill `bbg-testpull/tickers/{TICKER}/history.csv`. **The missing history is landed** under ledger
+  `posn-bbg-gld-vxx-return-history-backfill` (script `integrations/bloomberg/pipeline/backfill_extra_securities_history.py`
+  @`3cb95a7074`): GLD and VXX, `PX_LAST` + the daily total return, 2021-01-04..2026-09-11, NEW keys only. GLD and VXX are outside the
+  ETF universe (172 = 166 constituents + 4 funds + 2 extras), so no ETFs-mode figure moves. **METHOD DIFFERENCE, DISCLOSED:** Yang's
+  rule (`yang-generate-positioning` `:1845-1853`) compounds days strictly AFTER the window start and uses 90 days for 1Q; the estate
+  ETF rule includes the start day and uses 91. One satellite ticker (GLD) takes the second rule; the other 23 priced tickers take
+  Yang's. `active` and `credit` stay NULL for a Bloomberg-sourced ticker (no Bloomberg column); CASH stays NULL throughout.
+- **B6 guidance, added:** the characteristics producer imports the two functions from their home rather than copying them (one
+  rule, one place); its package must carry that module the way `build_package.py` already mirrors repo paths.
+
+### BRIEF COVERAGE -- the six headings of `ANDREW_DIRECT_20260911_ASSET_CLASS_TAXONOMY_BRIEF.md` @`03f1d00ec4`
+
+DENOMINATOR: 6 non-title headings in the brief. COVERED: 6. Each row names the heading's substance and where it is consumed.
+
+| # | brief heading | substance | consumed by |
+|---|---|---|---|
+| 1 | WHAT THIS IS, AND WHY IT EXISTS | provenance: Andrew's 2026-09-01 assignment to site Z, the whisper transcript as primary source, the TAX SMA Teams thread deferred | **CONTEXT, no requirement** -- it records where the brief came from; the requirements it carries are rows 2-4. Owner of any refinement from the deferred thread: L4 by addendum |
+| 2 | THE SUBSTANCE THE TRANSCRIPT ESTABLISHES | Cottonwood's ask to break volatility products and gold out of Equity; FIVE classes REPLACING the old scheme; one central origin | `FWD-1`, `FWD-2`, `FWD-5`; `C-FIVE-CLASSES`, `C-VOL-HEDGE-STRUCTURED`, `C-ONE-SOURCE`; round 5 cells B1 (`TO-V1-1`), R1 (`TO-V8-1`) |
+| 3 | The five classes -- canonical order, colors, and what each holds | order Fixed Income/Cash, Equity, Structured, Commodities, Alternatives; colors green, blue, pink, gold, orange; membership examples (VXX to Structured; gold, silver, commodity indices to Commodities; real estate, private assets to Alternatives) | order and identity: s.3 and `FWD-3`, F2 (`TO-V6-1`). Colors: `FWD-4` and `C-COLOURS` -- the brief's "gold" is rendered as the new yellow token and Structured as the pink FAMILY (Andrew 2026-09-14, v0.7 / v0.8), F1 (`TO-V5-1`). Membership examples: `C-RETAG-SET` (thirteen) and `C-SUB-ASSET` (Metals = GLD, IAU, SLV; Hedge = VXX, VIXY, UVXY, QBER; Options Income = JEPI; Real Estate = VNQ), R1 (`TO-V8-1`) |
+| 4 | Where it must appear, and how it must be sourced | THREE surfaces agreeing (Positioning, Philosophy, Capital Market Assumptions); ONE central source flowing to every surface | three surfaces: `C-TWO-SURFACES` (v0.1; Philosophy and CMA are one page), **SUPERSEDED** by `C-POSITIONING-ONLY` (v0.7, Andrew 2026-09-14 ~16:5xZ: the Positioning page's three modes; Attribution untouched, Philosophy/CMA later) -- `FWD-6` narrowed accordingly; F2, F3 (`TO-V7-1`), round 6 F4 / F5. One source: `C-ONE-SOURCE`, `C-CLASSIFIER-PURPOSE`, `C-CUTS`; B3 seeder guard (`TO-V3-1`); `FWD-5` |
+| 5 | WHAT THIS BRIEF DELIBERATELY DOES NOT DECIDE (left to L4/L5) | (a) the membership RULES; (b) where the nomenclature ORIGINATES in code | (a) `C-MEMBERSHIP-AT-L5`, **RESOLVED** by `C-RETAG-SET` on Andrew's approval of the U4 derivation (`TO-U4-1`), with `C-RETAG-SAFETY`. (b) **RESOLVED BY MEASUREMENT**: two stores -- DynamoDB `etf-classifications` and the `ETF_CLASSIFICATIONS` module -- both written by R1; the seeder is guarded (B3); `bd-securities` is out by `C-CUTS` |
+| 6 | THE ENDPOINT DERIVED FROM THIS BRIEF | six outcomes emitted by `/endpoint --forward`, awaiting Andrew's confirmation | **CONTEXT, carried whole** -- the outcomes live in `ENDPOINT` (FWD-1..FWD-6 confirmed 2026-09-11; FWD-6 narrowed v0.7 and amended v0.10; FWD-7 appended v0.9 on Andrew's word) |
+
+**WHAT THIS ADDENDUM CHANGES:** `ENDPOINT` (FWD-6 DONE WHEN, FWD-7 DONE WHEN and ACCEPT, one line removed) -- `3.0.0_SA_CVO` re-signs
+the ratified-text half; the brief half (this addendum) -- `4.0.0_SA_CRO` re-signs. It cuts no order; round 6 stays B6, F4, F5.
 
 ## s.0 ADDENDUM v0.9 -- THE SATELLITES MODE, COMPLETE: EACH HOLDING'S MEASURES (FWD-7), ONLY THE CLASSES A VIEW HOLDS, THE SUMMARY'S OWN DATE
 
@@ -281,8 +330,10 @@ ENDPOINT -- POSN_ASTTAX (confirmed by Andrew 2026-09-11)
   FWD-6  The places on the Positioning page that show asset classes agree
          with each other
          DONE WHEN  EXERCISED -- the Positioning page's Models, ETFs and Satellites
-                    modes have each been read and all show the same five classes,
-                    in the same order and colors
+                    modes have each been read; every class any mode shows is one of
+                    the five, a class shown in more than one mode has the same order
+                    and color in each, and a mode shows a class only when a book in
+                    its view holds some of it
          ACCEPT     An analyst switches between the three Positioning modes and
                     cannot find a disagreement about what the asset classes are,
                     what order they come in, or what color each one is.
@@ -292,12 +343,11 @@ ENDPOINT -- POSN_ASTTAX (confirmed by Andrew 2026-09-11)
                     and every satellite's Holdings Breakdown rows carry the same
                     characteristic and performance columns a Models row carries,
                     from the served satellites data, with a value wherever a source
-                    prices the ticker
+                    carries that measure for that ticker
          ACCEPT     An analyst opens a satellite's Holdings Breakdown and sees each
                     fund's fee, size, yield, beta and returns the way a model shows
-                    them -- blank only where nothing prices that holding, never a
-                    blank column.
-         (appended v0.9 at L10 on Andrew-direct ~02:1xZ / ~02:3xZ, records @65410eedaf / @0553548fe2)
+                    them -- a cell blank only where no source carries that measure
+                    for that holding, never a blank column.
 ```
 
 ---
