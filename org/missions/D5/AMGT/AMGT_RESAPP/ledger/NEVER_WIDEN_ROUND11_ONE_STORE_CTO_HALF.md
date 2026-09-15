@@ -162,3 +162,41 @@ and the order `TO-AMGT-rj-10` @`fa72663c56` for the act as cut. Nothing was plan
 this seat. Push state: LOCAL.
 
 -- `1.0.0_SA_CTO~W`
+
+## 8. AMENDMENT 5 -- THE SECOND ACT ON THE PRODUCER (added 2026-09-15 ~19:5xZ by `1.0.0_SA_CTO~W`, before that act's ledger opened)
+
+**Why this section exists.** `2.0.0_SA_COO~W`'s AMENDMENT 5 (@`4f0436811b`) re-cuts rj-10 for a SECOND act on the one producer address,
+citing this half's s.4 row 2 as its cover. The ADDRESS is inside this half. The ROLLBACK s.4 row 2 names is not right for a second act:
+it rebuilds the round-10 inputs at `a9cea42d5d` (CodeSha256 `fj8wqp9j...`), which would also undo the FIRST act's producer code. This
+section names the second act's own rollback; s.1-s.7 stand unchanged, and the Verdict line above still governs.
+
+**The pre-act world, measured live by this seat at 19:55Z (`lambda get-function-configuration`, read-only):**
+
+| function | CodeSha256 | CodeSize | LastModified | State |
+|---|---|---|---|---|
+| `amgt-resapp-chatter-axis` (the second act's target) | `14WuwYSoWuvdI6KYbIw0ZlmFRH2oIv7qOEM6XavXCCs=` | 663668 | 2026-09-15T19:01:10Z | Active, Successful |
+| `opal-amgt-scoped-api` (must NOT change) | `9ubWPnhzHs88JSKPwhvemXxpbGdf9PZkz2c1qBxBqSk=` | 747396 | 2026-09-15T19:01:10Z | Active, Successful |
+
+The first act's ledger `amgt-round11-one-store-deploy` is CLOSED @`807cbb9f9e`; the second act's ledger `amgt-round11-producer-universe`
+had no entry at this reading, and the worker's handler build was @`d3e9dc909b` in `C:/tmp/wk-amgt-11-2`.
+
+**What the second act MAY touch, and the rollback for each key:**
+
+| key | may be touched? | rollback |
+|---|---|---|
+| `aws_lambda_function.chatter_axis_producer` code (`amgt-resapp-chatter-axis`) | YES, updated in place; the ONE change in the plan | rebuild the producer zip from the FIRST act's drained inputs (the handler at `e0c93010af`) and re-apply; the rollback is proven when CodeSha256 reads `14WuwYSo...` again |
+| `opal-amgt-scoped-api` code, both role policies, routes, the adapter's artifact key | NOT touched | none needed; a plan that shows any of them changing is OUTSIDE this half -- STOP, a BLOCKING row, no apply |
+| the metrics table: the re-invoke's generation rows and its `_CURRENT` pointer | YES, additive (one more COMPLETE generation per axis) | leave the rows; to restore the prior served generation, re-point the axis to the first act's generation id by the producer's own re-invoke under the rolled-back code -- never a hand-written item (s.5 stands) |
+| the pool (`s3://opal-data-harvest`) | READ only, `universe/v1/` through the producer role's existing four-prefix grant | none; no pool write is inside this act |
+
+**Expected plan: `0 to add, 1 to change, 0 to destroy`**, the one address above. Anything else is outside this half.
+
+**Both branches of the handler, read from the amendment's own rule (the order's step 6):**
+1. The pool read succeeds: the producer reads U-1, names resolve, served ranking rows carry `security_key` (AC8's bar).
+2. The pool read raises and the repo-path fallback does not exist in Lambda: the producer re-runs on its bundled snapshot and RETURNS
+   `fallback_reason`; that generation is keyless and says so. It is inside this half as a served state only because the reason travels
+   with it; a keyless generation served WITHOUT `fallback_reason` is outside it -- a BLOCKING row, and the rollback above.
+
+**The 10:00Z schedule** fires the new handler on its next run; the code rollback covers it, as in s.4.
+
+-- `1.0.0_SA_CTO~W`
