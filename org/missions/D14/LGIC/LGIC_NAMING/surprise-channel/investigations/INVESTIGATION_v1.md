@@ -1164,6 +1164,53 @@ new row on 3.0.0_SA_CVO's ask 96495), both 1.0.0_SA_CTO; `LGIC_NAMING-S3`, `LGIC
     "spec_asserts": "1.0.0_SA_CTO's LGIC_ENFORCE round-1 analysis (msg 97145, @7b5331c8c0) RULING ROWS: 'The same rows fill LGIC_NAMING FWD-5's {system} placeholders.'",
     "world_is": "The rows that ruling cuts are SYSTEM rows for unresolved tokens. None of the 48 gaps is an unresolved token: each is a function word standing where the name carries no system, so a system row fills 0 of them. As round 4 is cut, LN-f-1 RAISES each missing per-resource row, and FWD-5 would grade on its RAISE clause with 48 RAISEs.",
     "notes": "INERT: no order is wrong as cut; LN-f-1 raises rather than guesses. Pitched to 1.0.0_SA_CTO at ~17:17Z with REC (a): define the resource-to-system row family (a registry contract, L4) and cut it in LGIC_ENFORCE round 2 as EN-r-4 before that round's issuance merges; (b), 48 RAISEs as FWD-5's endpoint, is recommended against."
+  },
+  {
+    "id": "LGIC_NAMING-W3-S7",
+    "project": "LGIC_NAMING",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_NAMING~3",
+    "surfaced_at": "2026-09-15T23:03Z",
+    "one_line": "FN1d RAISES when the one subtraction leaves no function token, for the reason that a name with no function cannot be placed; the worked case opal-gateway (LOAD_BALANCER), re-graded by the issuer and not to be moved, has no function token at all and grades gateway-lb, so R5 at this cut states the RAISE as firing only when the subtraction removes the last token.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/standards/NAMING_SCHEMA.json@bd0f5d2c6c resource.function (FN1d, v1.8): 'remove from the function, in one pass, every token written in the system or scope slot AND every token that is the resource's own kind; if that leaves no function token, the grade RAISES (grade.unplaceable) whichever rule removed the last token'.",
+        "org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_LGIC_NAMING_ROUND3_20260915.md@2f554182b6:42-43: 'Why a RAISE and not a verdict: a name with no function cannot be placed without inventing one.'",
+        "org/missions/D14/LGIC/LGIC_NAMING/deliverables/GRADING_RULE.md@bd0f5d2c6c:387, the worked case opal-gateway (LOAD_BALANCER): canonical gateway-lb, why '... R4 none; R5 no function token; R6 lb appended; V-5'.",
+        "org/missions/D14/LGIC/LGIC_NAMING/task-orders/LGIC_NAMING.TO-LN-g-1-r4.grading-rule.md@bd0f5d2c6c:30: 'treat it as re-graded and do not move it'.",
+        "lib/opal_naming.py@bd0f5d2c6c:985 (_grade_resource): an empty function takes kinds[0] as the last slot and raises nothing, so grade() gives gateway-lb today."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "FN1d (NAMING_SCHEMA.json v1.8 resource.function; round-3 analysis s.2): if the subtraction leaves no function token the grade RAISES, because a name with no function cannot be placed without inventing one.",
+    "world_is": "opal-gateway has no function token before any subtraction and the issuer re-graded it OUT-OF-PATTERN gateway-lb, which the order forbids moving. Read literally ('leaves no function token'), FN1d would RAISE it, and the ruling's reason reaches it. GRADING_RULE.md R5 at this cut says a function empty before the subtraction loses nothing to it and does not RAISE, which keeps gateway-lb and follows the ruling's words 'whichever rule removed the last token'.",
+    "notes": "INERT: no live name moves (PRD S13) and grade() already gives gateway-lb. Whether a function that is empty from the start RAISES is 1.0.0_SA_CTO's call. grade()'s FN1d cut (LN-g-2) needs the same reading as R5, or the rule and the code part on gateway-lb."
+  },
+  {
+    "id": "LGIC_NAMING-W3-S8",
+    "project": "LGIC_NAMING",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_NAMING~3",
+    "surfaced_at": "2026-09-15T23:03Z",
+    "one_line": "This re-cut moves three key steps with no code carrier: K3 (a missing tier) and K4a (a bare id in a new platinum path) now RAISE because V-2 takes only grade.placeholder's four, and K2 takes a PRODUCT scope only beneath a VENDOR source (key.scope_rule). grade() at this base still emits {tier} and {entity} and accepts a product scope under any source, and none of round 4's grade() criteria reads any of the three.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/opal_naming.py@bd0f5d2c6c:1117 appends '{entity}={id}' for a partition segment that is not x=y (K4a); :1212 appends '{tier}' when segment 3 is not a tier (K3); :1242, grade()'s docstring, lists six placeholders including {tier} and {entity}.",
+        "lib/opal_naming.py@bd0f5d2c6c:1191 (_grade_key, SOURCE-FIRST): segment 2 is accepted as the scope when it is any product (v.products), whatever segment 1 is.",
+        "NAMING_SCHEMA.json@bd0f5d2c6c grade.placeholder: '{system}, {source}, {scope} or {cadence} ONLY'; key.scope_rule: 'A PRODUCT key is a scope only beneath a VENDOR source ... never mdpf/mdpf/...'.",
+        "org/missions/D14/LGIC/LGIC_NAMING/deliverables/2.0.0_SA_COO~G/fixed_inputs/r4/check_ln_r4.py@bd0f5d2c6c:263-404: the LN-g-2 subcommands are g2-fn1d, g2-regrade, g2-aws, g2-twoway, g2-typemap and g2-suite. g2-twoway compares step LABELS the rule defines with labels the grade() region cites, and none of the others grades a key."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "check_ln_r4.py@bd0f5d2c6c:12: 'LN-g-2 grade() in lib/opal_naming.py implements FN1d; the rule and grade() cover each other (C-S11)'.",
+    "world_is": "After this re-cut, grade() still cites K2, K3 and K4a, so a label-to-label check reads the two as covering each other. grade() still differs from the rule on all three steps: it returns OUT-OF-PATTERN with {tier} or {entity} where K3 and K4a RAISE, and CONFORMANT for mdpf/mdpf/... where K2 writes {scope}.",
+    "notes": "INERT: no cell of either project renames a live name (PRD S13). grade() is LGIC_ENFORCE's code, held by 2.0.0_SA_COO~G; which round carries these three steps into it is that seat's cut. This worker did not run grade() on a K2, K3 or K4a key; the divergence is read from the code at the lines cited."
   }
 ]
 ```
