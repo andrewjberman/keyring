@@ -237,6 +237,35 @@ social half has no admitted source; a feed is round-12 material and its admissio
    before it is cut.
 12. **The compiled key reaches the peer side too** (rj-11 re-measured): the scanner's non-US identifiers are SEDOL stems and
    local codes, so C-ONE-IDENTITY's crosswalk accepts SEDOL (check digit computed) as a basis beside CUSIP and FIGI.
+13. **ONE STANDARDIZED METRIC PER TAB, AS AN ABSOLUTE AND A POOL PERCENTILE -- Andrew-direct ~17:4xZ, a RULED design principle.**
+   Verbatim: *"we need to standardize some kind of metric per tab. the metric will be an absolute figure but also a relative figure
+   (percentile based in the pool). this gives a clear jumpoff point for the AI Rec in posture when it makes its case. I think average
+   mgmt tenor (and maybe average tenor of mgmt at the co in general, even not in mgmt role) is a obvious one for mgmt tab. We dont
+   necessarily need to know what all the others will be, but I think its important to design the tabs with that in mind, that they
+   are going to center around a relative/absolute value on some standardized score, as that will inform frontend and probably also
+   "Posture" wiring."* Record `ANDREW_DIRECT_20260915_174xZ_ONE_STANDARDIZED_METRIC_PER_TAB_ABSOLUTE_AND_POOL_PERCENTILE.md`.
+   **The contract the addendum carries (C-TAB-METRIC, proposed by the L4 owner):** every tab declares ONE headline metric record
+   `{metric_id, definition, unit, absolute, percentile, pool_n, pool_vintage, state: MEASURED | ABSENT, reason}`; the POOL is the
+   names of the union universe with that metric MEASURED at the same vintage; the percentile is the company's rank within that pool
+   (mid-rank for ties), stated without a direction or a judgment; below a declared floor of pool names the percentile is
+   `ABSENT` with the reason `pool too small (N)` and the absolute still renders; the per-name values live in one versioned
+   distribution object per metric (`metrics/v1/{metric_id}/{as_of}.json`) so a percentile is recomputable and auditable, never a
+   bare number. The frontend gives each tab one headline slot for the pair. Posture's case opens from both names' pairs (his
+   "probably" -- recommended by this seat, not ruled).
+   **MEASURED 17:4xZ for the one metric he named:** `mgmt_tenure_avg_years` exists as an ABSOLUTE today (M-1: BA 2.58, COST 5.06, HD
+   4.68, SAP 4.04; BABA none, 0 of 7 officers with a role start because the 20-F carries no role-start column); the RELATIVE does not
+   -- `management/v1/_pool/2026-09-15.json` carries only `pool_avg_tenure_years` 4.08 and no per-name distribution, and its denominator
+   reads `names_with_roster 5` while 4 names contribute tenures (40 officers = 12 + 13 + 9 + 6), so it must count contributors. At a
+   pool of 4 the percentile is ABSENT by the floor. His "maybe" metric, `employee_tenure_avg_years`: 0 of the 5 persisted filing
+   source objects state an average or median employee tenure, but those objects are excerpts (risk factors, MD&A, the officer
+   section; W20-S8) and exclude Item 1's human-capital section, where such a figure would be disclosed; Lusha carries no tenure
+   field (card 2). So it is UNMEASURED, not absent -- the first check is Item 1 across the five filers.
+   **Candidates for the other tabs (REC only; Andrew left them open):** Peers -- one valuation multiple on a named basis (for example
+   EV/EBIT NTM) as the pair within the pool; Model -- one operating figure from the model block (for example FCF margin, or 3-year
+   revenue growth); Thesis -- none until the thesis driver carries numeric points (candidate 1), then the driver's latest change;
+   Posture -- no metric of its own, it reads the four.
+   **Round-11 reach:** none required. rj-9 builds the tabs now under a frozen face; the metric slot is round-12 material. Whether the
+   unspawned rj-12 reserves a header slot for Posture's pair is `2.0.0_SA_COO~W`'s call as issuer.
 
 ## 5. What is NOT known yet (the slug read's remaining inputs)
 
