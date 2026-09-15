@@ -4295,6 +4295,31 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
       "spec_asserts": "Z-S96's spec_asserts, verbatim in part: the PRD and decomposition 'assert ONE article store that the harvesters fill and the chatter axis and coverage reader consume'; Andrew's ~05:04Z word names s3://opal-data-harvest as the pool every frontend runs off.",
       "world_is": "PRD v0.6 makes the pool that one store by contract. Until round 11 repoints the two readers, the served ranking still reads the DynamoDB table; that is the round-11 cell's distance, stated in the analysis s.6 item 2, not an open investigation.",
       "notes": "Filed by the row's own disarm_owner in the same commit series as the addendum. The remediation-plane clock in REMEDIATION_v10 advances at the CVO's next slug."
+    },
+  {
+      "id": "AMGT_RESAPP-Z-S102",
+      "project": "AMGT_RESAPP",
+      "fabric": "site-z",
+      "surfaced_by": "1.0.0_SA_CTO~W",
+      "surfaced_at": "2026-09-15T07:01Z",
+      "one_line": "THE L4-R RELEASE NEVER REACHES THE COO WHEN THE CVO SIGNS LAST: .tools/prd-header-notify.py composes the admitted PRD's COO delivery under the STAMPING seat's serial (row from=3.0.0_SA_CVO~W, released_by its sign-off file); the broker's L8 correspondence guard refuses a CVO->COO send (HTTP 403); reoffer() swallows the exception into last_error and prints nothing, so the row sits UNSENT attempts=0 indefinitely while `status` reads it as merely unsent. Measured on AMGT_RESAPP v0.8 @0e6592e88c at 06:5xZ; worked around by hand this once (row from rewritten to the L4 owner 1.0.0_SA_CTO~W, reoffer sent id=23071).",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          ".tools/prd-header-notify.py post-commit 0e6592e88c: 'both sign-offs present; COO delivery for ... v0.8 already recorded (id=None)'; status: '@0e6592e88c -> 2.0.0_SA_COO~W id=None attempts=0 state=UNSENT'.",
+          "org/mcp/.prd-notify/outstanding.jsonl (untracked) row: to=2.0.0_SA_COO~W from=3.0.0_SA_CVO~W released_by=org/missions/D5/AMGT/AMGT_RESAPP/prd/signoff/3.0.0_SA_CVO~W.json last_error='HTTP Error 403: Forbidden'.",
+          ".tools/prd-header-notify.py at HEAD: the release row sets from=os.environ OPAL_AGENT_SERIAL (the committing seat, lines 591-595); reoffer() lines 716-725 catches the send exception into row['last_error'] with no print; status() line 738 prints UNSENT for any row with no msg_id, error or not.",
+          "Positive control: with from rewritten to 1.0.0_SA_CTO~W, `reoffer` printed 'RE-OFFERED AMGT_RESAPP v0.8 id=23071 attempt 1/6' and status reads id=23071 QUEUED.",
+          "Mechanism named by the send tool's own doc: the L8 correspondence guard -- 'the CVO's one send goes to the CTO'. The signer that lands LAST decides who the release is sent as; whenever that is the CVO (always, when the CRO signs first), the release is refused."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "1.0.0_SA_CTO~W",
+      "spec_asserts": "CLAUDE.md Rule 27 / spine v3.15: the L4 notifier 'WITHHOLDS the COO delivery until both are SIGNED at the current bytes' and then delivers it -- the delivery is the CTO's L4->L5 hand-off, and the tool's own comment at line 581-583 says the release goes to the round holder.",
+      "world_is": "The release is composed under whichever seat committed the LAST stamp. For the CVO that send is refused by the broker's L8 guard, and the failure is silent: no print, attempts stays 0, `status` shows UNSENT. The COO would never receive the admitted PRD unless a human reads last_error in an untracked jsonl.",
+      "notes": "Not an AMGT cell: an estate-tool fix (the release row's `from` = the PRD's L4 owner, read from the PRD or from the seat that committed the PRD version, never the stamping seat; and reoffer/status print last_error) belongs to the notifier's owner -- 0.0.0_AB_MSTR~Z / Andrew to name the project. The hand workaround is disclosed in the row's history entry and in the CTO~W session log addendum 8. hazard_standing ARMED estate-wide; INERT for AMGT_RESAPP v0.8 (delivered id=23071)."
     }
 ]
 ```
