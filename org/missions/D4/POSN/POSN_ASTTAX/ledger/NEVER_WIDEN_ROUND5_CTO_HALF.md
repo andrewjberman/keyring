@@ -158,3 +158,43 @@ sign-off must cover it. **This half now covers it:**
 - The Bloomberg pull edit (`ac3e03a317`, its own ledger `posn-bbg-etf-pull-gld-vxx`).
 
 Push state: LOCAL (this seat never pushes; site-Z pushes are held by `0.0.0_AB_MSTR~Z` on Andrew's word).
+
+### R2 AMENDMENT 2026-09-15 ~02:5xZ -- the Satellites relabel is driven TONIGHT through the producer's own CLI with an explicit `--as-of 2026-09-14`
+
+**Why:** Andrew-direct ~02:3xZ, verbatim *"i want to do an ad hoc pul on this and just fix it completely, we're not waiting for
+the next day to deal with ths."* (record @0553548fe2). The R1 amendment's driven `{}` invoke of `cot-satellites-registry-producer`
+refused (`Z-S126`): the Lambda handler passes no date (`lambda_function.py:113-124`, only `dry_run`), and the producer resolves
+today-UTC, whose roster partition lands ~06:00:43Z. The served `holdings.json` therefore still carries pre-R1 labels.
+
+**NEVER#1 names the new reachable state, and this half covers it:** the producer run OFF its trigger, with an EXPLICIT date, from a
+local runner under the operator identity `arn:aws:iam::313476888478:user/Andrew_Berman` rather than the Lambda role. Actor:
+`1.0.0_SA_CTO~Z`, on Andrew's word above.
+
+- **The code is the deployed code, by content:** the Lambda zip (`get-function` Code.Location) hashes to the function's
+  CodeSha256 `eFToEJ0FNu1sMO7cJ1WNdRoGSVuNuHSM9ToBzHGkF1I=` (LastModified 2026-09-14T19:50:02Z); its
+  `build_satellites_registry.py`, `satellites_registry.py`, `satellites_weights.py` and `lib/trading_calendar.py` are byte-identical
+  to HEAD. The run imports the modules FROM THE EXTRACTED ZIP and calls `main(["--as-of", "2026-09-14"])`.
+- **Writers of the property: N = 1.** Both keys are written only by this producer (COO half table, `registry.json` = 1 writer,
+  `holdings.json` = the same producer); the Lambda path and this path call the same two functions. Its write set, read at HEAD:
+  `publish()` `:574-586` = one `put_object` to `platinum/satellites/registry.json`; `publish_holdings()` `:527-538` = one
+  `put_object` to `platinum/satellites/holdings.json`; both on `opal-data-cot`; no delete, no conditional, registry first.
+- **The keys, and nothing else:** those two. `characteristics.json` is NOT written (its inputs are the holdings WEIGHTS, which this
+  run does not change). No Lambda code or config change. No router or CloudFront act (if the edge serves cached bytes, an
+  invalidation is a separate act, asked for by name).
+- **Discriminator, run BEFORE any write (done, no-write):** the same code with both publish functions replaced by local captures and
+  an S3 client that raises on any put/copy/delete. Measured: rc 0; 63 roster rows, 9 members, 9 details; `registry.json` PARSED-IDENTICAL
+  to the served bytes; `holdings.json` 9 satellites, 0 non-label differences (weights, row sets, coverage, envelope all equal) and
+  30 label cells changed -- GLD `hedge`/`Gold` -> `commodities`/`Metals` in 7 satellites, VXX `equity`/`Volatility` ->
+  `structured`/`Hedge` in 8. GLD and VXX are the only retag-set tickers any satellite holds.
+- **Expected outcome, both branches.**
+  - **A:** the publish run prints both `OK: wrote` lines; the read-back of both served keys equals the captured bytes when parsed;
+    both VersionIds move; `as_of` stays `2026-09-14`. The 07:00Z scheduled fire stays the organic leg and writes `as_of 2026-09-15`.
+  - **B:** the run raises before the first write (nothing moves); or it raises between the two writes (e.g. AccessDenied on the
+    operator identity for the second key) -- then `registry.json` holds content-identical bytes under a new version and `holdings.json`
+    is unchanged, so no served figure moves; or the read-back differs from the capture. On a read-back difference: restore each key
+    from its prior version below by `copy_object` (a new version, never a delete), then file the row.
+- **Rollback per key (prior versions, read 2026-09-15 ~02:4xZ, bucket versioning Enabled):**
+  `platinum/satellites/registry.json` VersionId `XaX6zaVWH7ybXnRBu2jeF2PNABUhezuM` (2196 B, LastModified 2026-09-14T19:53:58Z);
+  `platinum/satellites/holdings.json` VersionId `BRjqyqnB0pIdLUHOvDY3B_Sh9b0EXIPw` (54985 B, LastModified 2026-09-14T19:53:59Z).
+
+CTO half for R2: `1.0.0_SA_CTO~Z`, GIVEN, 2026-09-15 ~02:5xZ. The COO half is asked for on this text.
