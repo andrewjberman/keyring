@@ -60,3 +60,15 @@ whether a cell carries it.
 
 PRD v0.2 @ `cbd85e5cff`: C-NEVER-WIDEN, C-FIVE-BOOKS-UNCHANGED, C-CURRENT-SOURCE, C-OPAL-ONLY-DATA. Decomposition @ `605c03f81f` s.1.1 and s.1.3.
 Task order `POSN_AGGFIX.TO-A3-1` at SITEZ HEAD. Source reads at SITEZ HEAD `669ecfcedb` or later. Push state: LOCAL.
+
+## ADDENDUM 1 (~21:3xZ, row `POSN_AGGFIX-Z-W1-S7`): "a served difference" is measured on parsed values
+
+Two runs of the producer on the same inputs do not produce the same bytes: `portfolios.<code>.benchmark.spread.segment` keys follow
+set iteration order, which Python's per-process hash randomisation reorders (row W1-S7, measured by `0.9.0_WK_POSN_AGGFIX~1` under
+TO-A2-1). So, for this half and for the COO half's branches it agrees with:
+- **"Any other served difference" means a difference in parsed JSON values, with dict key order ignored and list order compared.** It
+  never means a difference in raw bytes or in a hash of the bytes.
+- **A key-order-only difference is NOT Branch B.** A value difference is.
+- This matches TO-A3-1 as amended, which compares the prior and new shared files as parsed JSON.
+
+The five books' `aum` values and `current_holdings.AGG`'s removal remain the named, permitted differences.
