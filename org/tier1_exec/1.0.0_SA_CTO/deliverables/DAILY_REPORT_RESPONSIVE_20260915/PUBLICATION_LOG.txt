@@ -1,0 +1,14 @@
+PLAN: daily_reports\out\Desktop_DAILY_REPORT_2026-09-14.html (51754 B, md5 f299cf256de2) -> s3://opal-data-portal-v2/daily-reports/2026-09-14/Desktop_DAILY_REPORT_2026-09-14.html
+PLAN: daily_reports\out\Mobile_DAILY_REPORT_2026-09-14.html (51754 B, md5 f299cf256de2) -> s3://opal-data-portal-v2/daily-reports/2026-09-14/Mobile_DAILY_REPORT_2026-09-14.html
+OK: Desktop -> s3://opal-data-portal-v2/daily-reports/2026-09-14/Desktop_DAILY_REPORT_2026-09-14.html size=51754/51754 etag=MATCH
+OK: Mobile -> s3://opal-data-portal-v2/daily-reports/2026-09-14/Mobile_DAILY_REPORT_2026-09-14.html size=51754/51754 etag=MATCH
+PUBLISHED 2026-09-14: 2/2 pages verified. View: https://mcp.opalinvest.dev/sprint/2026-09-14  (latest: https://mcp.opalinvest.dev/sprint)
+OK: Desktop (latest) -> s3://opal-data-portal-v2/daily-reports/latest/Desktop_DAILY_REPORT.html size=51754/51754 etag=MATCH
+OK: Mobile (latest) -> s3://opal-data-portal-v2/daily-reports/latest/Mobile_DAILY_REPORT.html size=51754/51754 etag=MATCH
+OK: chooser -> s3://opal-data-portal-v2/daily-reports/latest/index.html size=1370/1370 etag=MATCH
+OK: presigned chooser fetched: 1370 B, Content-Type=text/html; charset=utf-8
+
+PRESIGNED LINKS (valid 168 h, until the object is deleted or the key rotates):
+  TEAMS LINK (responsive report): [presigned URL retained privately]
+  Desktop: [presigned URL retained privately]
+  Mobile:  [presigned URL retained privately]

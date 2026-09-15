@@ -1,0 +1,53 @@
+{
+  "published_at_utc": "2026-09-15T03:16:00.950073+00:00",
+  "bucket": "opal-data-portal-v2",
+  "report_date": "2026-09-14",
+  "publisher_exit_code": 0,
+  "objects": [
+    {
+      "key": "daily-reports/2026-09-14/Desktop_DAILY_REPORT_2026-09-14.html",
+      "bytes": 51754,
+      "sha256": "1eb98d6b4a63f6782648fe2c6b3a14d30fff8a7839a2cff502092e27ee0d8058",
+      "etag": "\"f299cf256de264e16ecec4ff9c979b2e\"",
+      "version_id": "o9czdZjrrlEjHllbHllxTIV8FEBxxoF5",
+      "last_modified": "2026-09-15T03:16:01+00:00"
+    },
+    {
+      "key": "daily-reports/2026-09-14/Mobile_DAILY_REPORT_2026-09-14.html",
+      "bytes": 51754,
+      "sha256": "1eb98d6b4a63f6782648fe2c6b3a14d30fff8a7839a2cff502092e27ee0d8058",
+      "etag": "\"f299cf256de264e16ecec4ff9c979b2e\"",
+      "version_id": "iENrDjsPk8ZgGtt2PoeMRfA5EwJ0WEWF",
+      "last_modified": "2026-09-15T03:16:01+00:00"
+    },
+    {
+      "key": "daily-reports/latest/Desktop_DAILY_REPORT.html",
+      "bytes": 51754,
+      "sha256": "1eb98d6b4a63f6782648fe2c6b3a14d30fff8a7839a2cff502092e27ee0d8058",
+      "etag": "\"f299cf256de264e16ecec4ff9c979b2e\"",
+      "version_id": "3ab2AF0ElI9MFkOjaBhpw1HwURhBBtGz",
+      "last_modified": "2026-09-15T03:16:01+00:00"
+    },
+    {
+      "key": "daily-reports/latest/Mobile_DAILY_REPORT.html",
+      "bytes": 51754,
+      "sha256": "1eb98d6b4a63f6782648fe2c6b3a14d30fff8a7839a2cff502092e27ee0d8058",
+      "etag": "\"f299cf256de264e16ecec4ff9c979b2e\"",
+      "version_id": "DLY1P6R7rf71oL5V1FWav.c.sKEFfgUt",
+      "last_modified": "2026-09-15T03:16:01+00:00"
+    },
+    {
+      "key": "daily-reports/latest/index.html",
+      "bytes": 1370,
+      "sha256": "4a538706e7abc41e4a9b3628eaf3dbdca62438252867fd18dc5db72fc6a01449",
+      "etag": "\"f647bfb5bfafb9cf3e20adba3bcc93e4\"",
+      "version_id": "LTlMMwnhn4KzyAcdu3mUND25FogdFfvJ",
+      "last_modified": "2026-09-15T03:16:01+00:00"
+    }
+  ],
+  "readback": "All four report GET bodies equal browser-tested SHA-256; chooser GET/Content-Type passed in publisher",
+  "gateway_service_deployed": false,
+  "alb_changed": false,
+  "cloud_pushed": false,
+  "sitez_merged": false
+}
