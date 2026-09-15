@@ -1735,6 +1735,29 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     "spec_asserts": "TO-EN-r-5-r2 THE CELL: 'In your worktree, run `git apply <that path>`. If it no longer applies, re-make its four parts by hand from the patch's own text, and never widen it'. SPAWN NOTES: 'apply YOUR worktree's copy (`git -C <WS> apply --check` first)'.",
     "world_is": "The worktree's copy, read by path, is the patch with a CR on every line, and git apply refuses its hunks against LF working files. The patch's own text still applies whole: the committed blob, byte-identical by hash to what the issuer committed, applied 12 of 12 with no hand edit and no widening. The failure comes from the checkout's line endings, not from drift in the target files.",
     "notes": "Form only. Neither branch the order names fits. The patch does apply, but not from the path the order names. It was applied from its blob, not re-made by hand, because the blob IS 'the patch's own text' and a hand re-make adds a transcription step. Any fixed-input .patch read by path from a checkout on this box (autocrlf, no *.patch eol attribute) meets the same refusal. INERT: this order is the patch's only consumer, and it is spent once applied."
+  },
+  {
+    "id": "LGIC_ENFORCE-S20",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G",
+    "surfaced_at": "2026-09-15T21:30Z",
+    "one_line": "check_en_r2.py's spawn_base() is `git merge-base HEAD CLOUD`, a reference that moves at the drain. Every criterion that diffs against it reads 0 changed lines once the cell is on CLOUD, so it cannot be re-graded after a drain. EN-r-5's R5-AC7 read FAIL-R5-WORKED-CASES on a separate checkout at the merge @6e3a01b939, and in the worker's own worktree after the drain, although the worker's pre-drain run read PASS and the change is on CLOUD.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN on .worktrees/wk-lgic-canon-1-8, detached @6e3a01b939 (CLOUD after the EN-r-5 drain): check_en_r2.py r5-worked-case -> 'LINES CHANGED IN GRADING_RULE.md SINCE THE BASE: 0 (every one the opal-gateway case: False)', 'THE CASE NOW: {\"name\": \"opal-gateway\", ... \"canonical_form\": \"gateway-lb\" ...', 'VERDICT: FAIL-R5-WORKED-CASES'. On the same checkout, r5-validate, r5-generate, r5-tests, r5-address, r5-name and r5-sharepoint read PASS.",
+        "RUN in .worktrees/wk-lgic-enforce-2-6 (the worker's branch, tip 6eedbc3ddc, now an ancestor of CLOUD): the same subcommand -> 'VERDICT: FAIL-R5-WORKED-CASES'. The worker's pre-drain report read 'PASS-R5-ONE-WORKED-CASE-MOVED (2 lines changed, every one the opal-gateway case)'.",
+        "READ check_en_r2.py r5_worked_case: 'base = spawn_base()' then 'git diff -U0 base -- GRADING_RULE'. Its failure text names spawn_base's source, 'git merge-base HEAD CLOUD failed'. The spawn_base() callers are at :277, :346, :538, :1014 and :1555 (5 call sites).",
+        "Different instrument, RUN on the primary checkout: 'git diff --numstat 671925aecc 6e3a01b939 -- org/missions/D14/LGIC/LGIC_NAMING/deliverables/GRADING_RULE.md' -> '1 1'. The - and + lines are both the opal-gateway LOAD_BALANCER case, canonical_form opal-gateway-lb -> gateway-lb. 'git log 671925aecc..6e3a01b939 -- GRADING_RULE.md' lists one commit, c19dcc8147 (EN-r-5)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EN-r-5-r2 R5-AC7: 'only the `opal-gateway` worked case of `GRADING_RULE.md` moves, and it reads canonical `gateway-lb`', expect 'VERDICT: PASS-R5-ONE-WORKED-CASE-MOVED'. The COO's drain discipline re-runs every criterion on a checkout other than the worker's own, after the merge.",
+    "world_is": "Once the cell's commits are ancestors of CLOUD, merge-base HEAD CLOUD is the cell's own tip (or later), so the diff the criterion counts is empty. The criterion then FAILs on every checkout, the worker's included, while the moved case is on CLOUD. The substance holds by the direct diff from the order's spawn base 671925aecc. The check's base, not the cell, is what differs.",
+    "notes": "Issuer's own defect: check_en_r2.py is a fixed input authored by 2.0.0_SA_COO~G. INERT: EN-r-5 is verified by the direct diff and the worker's pre-drain run, and nothing reads the post-drain verdict. For round 2's analysis: pin each spawn_base() caller to the order's issuance base (671925aecc for round 2), or read the base from the worker's result file. Not yet measured: whether check_ln_r4.py and check_canon_r1.py read merge-base HEAD CLOUD the same way."
   }
 ]
 ```
