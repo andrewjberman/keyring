@@ -6041,3 +6041,55 @@ Andrew asked for (msg 22917); it concerns this project's portal files meeting an
   }
 ]
 ```
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-S131",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-09-15T02:26:25Z",
+    "one_line": "ANDREW REQUIREMENT, WIDENING Z-S118, NOT YET CUT: a class that no book in the view holds shows NO ROW anywhere on the Positioning Summary -- not in the legend (Z-S118) and not in the expanded details' coloured ASSET CLASS rows. Today the Models view lists 'ASSET CLASS (5)' with all-zero Commodities (%) and Alternatives (%) rows, and the code renders a zero row on purpose.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ANDREW-DIRECT 2026-09-15 ~02:1xZ, VERBATIM: 'if none of the models/ETFs/satellites have a given asset class (e.g. Alternatives) then no Alternatives row should be shown. In the context of the Models view, becuase there is Structured exposure, but no Commodities or Alternatives Exposure, that means that commodities and alternatives weights should not appear in that colored bar section of the characteristics.' Screenshot 2026-09-14 221346.png (Models, Portfolio view, details expanded); record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260915_021xZ_ZERO_CLASS_ROWS_HIDDEN_AND_SATELLITES_HOLDINGS_BREAKDOWN_EMPTY.md@65410eedaf.",
+        "SOURCE at portal dd1d33c6: panels/PositioningSummary.tsx:574-582 builds the Asset Class section as ASSET_CLASSES.map(...) with the comment 'A class with no weight renders a ZERO ROW: the reader is told the book holds none of it, which is a different and truer statement than an absent row'; :850 prints the count from section.rows.length; the legend is :1159-1170 (Z-S118). The stacked bars ALREADY omit a zero class (:952 'data[c.key] > 0 &&').",
+        "RENDERED: Image #2 shows ASSET CLASS (5) with Commodities (%) = 0 and Alternatives (%) = 0 in all five columns, and Structured (%) 1.50 / 2 in Long-Term / Ultra Long-Term."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD v0.8 FWD-3 / FWD-4 bind one order and one colour for the five classes; the portal's own design comment at PositioningSummary.tsx:575-577 chose a zero row over an absent one. Neither the PRD nor any cut order says whether an absent class is listed.",
+    "world_is": "Every mode renders all five Asset Class rows and all five legend entries whatever the view holds. Andrew has now ruled both are filtered to the classes present, reversing the zero-row design choice.",
+    "notes": "REMEDY, for the round-5 analysis and the next frontend cut (one file, the same cell as Z-S118 / Z-S119 / Z-S117 / Z-S115): derive ONE presence set per render -- the classes with a non-zero value in ANY column the current view draws (portfolio columns, and benchmark columns where the Benchmark / Relative / Custom view draws them) -- and use it for the legend, the Asset Class rows and the section count, keeping ASSET_CLASSES order and colours. 'The view' is read as the current mode's displayed books (his example is Models); a class present in another mode does not bring its row back. Delete the zero-row comment with the behaviour. VERIFY across the R1 boundary: Models (Structured present, Commodities / Alternatives absent), and Satellites after holdings.json carries R1's labels (Commodities and Structured appear)."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-S132",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-09-15T02:26:25Z",
+    "one_line": "SPEC GAP, NO CELL SERVED IT: the Satellites mode's Holdings Breakdown panel shows NO characteristics and NO performance for any holding, by construction. The panel reads per-HOLDING fee / MC / active / yield / duration / credit / beta and returns from each current_holdings row; the satellite adapter emits rows with ticker, name, class, sub-class and weight only, and characteristics.json publishes per-SATELLITE aggregates with contributor ticker LISTS, not per-ticker values. The PRD, the round-5 decomposition and TO-V7-1 all name satellite-level measures only.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "1.0.0_SA_CTO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ANDREW-DIRECT 2026-09-15 ~02:1xZ, VERBATIM: 'the Satellites section is still broken; not displaying data [Image #3] showing all the floats in this case. and no characteristics or performance in the \"Holdings Breakdown\" panel.' Record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260915_021xZ_ZERO_CLASS_ROWS_HIDDEN_AND_SATELLITES_HOLDINGS_BREAKDOWN_EMPTY.md@65410eedaf.",
+        "SERVED: s3://opal-data-cot/platinum/satellites/characteristics.json (LastModified 2026-09-14T21:45:13Z), per satellite keys = fee, yield, duration, beta, returns, coverage, total_weight, sources, contributors; contributors = {scalar: {field: [tickers]}, returns: {window: [tickers]}} -- ticker lists, zero per-ticker values. method.precedence_grain = 'per ticker (a ticker's whole row comes from one source)', so the lambda RESOLVES per-ticker values at run time and publishes only their weighted sum.",
+        "SOURCE at portal dd1d33c6: shared/satelliteAdapter.ts:262-282 maps each served row to {ticker, name: ticker, asset_class, sub_asset_class, weight} and nothing else; :313-320 puts the served aggregates on the PORTFOLIO (the summary's Characteristics rows), not on rows. tabs/HoldingsTab.tsx:966-975 reads h.fee, h.aum, h.active, h.yield, h.duration, h.credit, h.beta from the current_holdings row, and getHoldingPerformance (:1063-1073) reads holding.returns from the same row -- every one undefined for a satellite row.",
+        "SPEC: PRD v0.8 C-SATELLITE-SOURCE (:79-84) 'Weighted characteristics (fee, yield, duration, beta, returns) are aggregated server-side by an additional lambda'; decomposition round 5 AT5-s-7 act 'its measures come from characteristics.json' with a bar on buckets and row counts only; TO-V7-1 act 3 the same. No clause, cell or criterion names per-holding measures in the Satellites Holdings Breakdown."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "C-SATELLITE-SOURCE and TO-V7-1: the Satellites mode's MEASURES come from characteristics.json, the additional lambda's per-satellite aggregates. Models and ETFs Holdings Breakdown rows carry per-holding characteristics and returns from their own payloads.",
+    "world_is": "The Holdings Breakdown's Characteristics and Performance views are blank for all eight displayed satellites, every row. It is not a render bug and not pre-R1: no served artifact carries a per-ticker measure for a satellite holding, and no cell was cut to produce one. Same screenshot, already carried or transitional: raw floats on the summary labels = Z-S117; each bar short of its full book by GLD's weight (served asset_class 'hedge', 2.11-8.34 in seven satellites; excluded from the five) and VXX counted in Equity (served 'equity' / 'Volatility', 0.35-1.87 in eight) = holdings.json still carrying pre-R1 labels, expected to clear at the registry producer's next fire; footer date and source = Z-S119; subtitle 'weighted blend of Opal model portfolios' = Z-S115.",
+    "notes": "REMEDY, for this seat's round-5 analysis (a PRD addendum -- an outcome no cell served): (1) BACKEND, B4: characteristics.json also publishes the per-ticker values it already resolves -- one block per ticker (fee, yield, duration, beta, returns, and the source it came from), once per artifact since a ticker's values do not vary by satellite -- beside the unchanged aggregates; NULL stays NULL. (2) FRONTEND, the adapter: attach each row's served per-ticker values; still no arithmetic. (3) OPEN for the analysis, not guessed here: MC (aum), Active and Credit are panel columns outside B4's field set -- source them, or drop them for Satellites the way ETFs drop Duration (Andrew-direct 2026-08-25). (4) The Positioning Summary's own Characteristics rows for Satellites already read the aggregates; not re-verified here."
+  }
+]
+```
