@@ -1,0 +1,226 @@
+{
+ "patch_meta": {
+  "agent": "3.0.0_SA_CVO",
+  "mission": "VERIFY_MEASURED",
+  "cycle": 5,
+  "cells_examined": 24,
+  "cells_in_scope": 24
+ },
+ "changes": [
+  {
+   "entity_id": "S4-valuation",
+   "field": "recorded_observation",
+   "from_status": "MEASURED",
+   "to_status": "MEASURED",
+   "value": {
+    "canonical_rows": 7468,
+    "unique_account_keys": 7468,
+    "business_date": "2026-09-11",
+    "object_write_time_utc": "2026-09-14T12:47:35Z",
+    "canonical_parquet_objects_enumerated": 549,
+    "traded_claims": 8,
+    "traded_exact_canonical_matches": 6,
+    "traded_missing_canonical_matches": 2,
+    "matched_endings": [
+     "5115",
+     "3310",
+     "0058",
+     "9710",
+     "9812",
+     "8743"
+    ],
+    "missing_endings": [
+     "4809",
+     "5591"
+    ],
+    "six_matched_traded_values_tie_to_balance_to_cent": true,
+    "all_11_matched_matrix_values_tie_to_balance_to_cent": true,
+    "accrual_status_counts": {
+     "PENDING-RULING": 7468
+    },
+    "schema_version": "1.0",
+    "source_pipeline": "49f-gold-runners",
+    "ingested_at": "2026-09-11",
+    "whole_table_fair_value_identity_holds": true,
+    "basis_control": "eqty_incl_option differs from net_mv_plus_cash for all six corroborated traded accounts.",
+    "interpretation": "The six matched traded values are a partial cohort, not the complete Tax SMA total. The two workbook-traded claims without canonical/0833 coverage (endings 4809, 5591) are unaccounted for, so no complete eight-account total is established from these values (constraint C3; this entity's unverified_boundary gap 1)."
+   },
+   "evidence": {
+    "instrument": "Pandas entire-artifact exact private joins, cent comparisons, key uniqueness, lineage and fair-value identity checks",
+    "locator": "%LOCALAPPDATA%/CodexSeatScratch/1.0.0_SA_CTO~A/taxsma-20260915/canonical-value-check.json#canonical_valuation; %LOCALAPPDATA%/CodexSeatScratch/1.0.0_SA_CTO~A/taxsma-20260915/canonical_valuation.parquet#account_id,business_date,net_mv_plus_cash,fair_value,accrual_status; %LOCALAPPDATA%/CodexSeatScratch/1.0.0_SA_CTO~A/taxsma-20260915/0833_dim_balance.parquet#account_id,net_mv_plus_cash,eqty_incl_option; %LOCALAPPDATA%/CodexSeatScratch/1.0.0_SA_CTO~A/taxsma-20260915/account-keys.private.json#matrix_keys",
+    "source_uri": "%LOCALAPPDATA%/CodexSeatScratch/1.0.0_SA_CTO~A/taxsma-20260915/canonical-value-check.json#canonical_valuation; %LOCALAPPDATA%/CodexSeatScratch/1.0.0_SA_CTO~A/taxsma-20260915/canonical_valuation.parquet#account_id,business_date,net_mv_plus_cash,fair_value,accrual_status; %LOCALAPPDATA%/CodexSeatScratch/1.0.0_SA_CTO~A/taxsma-20260915/0833_dim_balance.parquet#account_id,net_mv_plus_cash,eqty_incl_option; %LOCALAPPDATA%/CodexSeatScratch/1.0.0_SA_CTO~A/taxsma-20260915/account-keys.private.json#matrix_keys",
+    "vintage": "Source/provenance date 2026-09-11; object write clock 2026-09-14T12:47:35Z; receipt 2026-09-15T04:51:46.163359Z.",
+    "denominator": [
+     {
+      "n": 7468,
+      "of_what": "canonical rows",
+      "unit": "rows"
+     },
+     {
+      "n": 7469,
+      "of_what": "balance rows",
+      "unit": "rows"
+     },
+     {
+      "n": 8,
+      "of_what": "traded claims",
+      "unit": "accounts"
+     },
+     {
+      "n": 6,
+      "of_what": "matched traded canonical accounts",
+      "unit": "accounts",
+      "contained_in": "traded claims"
+     },
+     {
+      "n": 2,
+      "of_what": "missing traded canonical accounts",
+      "unit": "accounts",
+      "contained_in": "traded claims"
+     },
+     {
+      "n": 13,
+      "of_what": "matrix accounts",
+      "unit": "accounts"
+     },
+     {
+      "n": 11,
+      "of_what": "matched canonical matrix accounts",
+      "unit": "accounts",
+      "contained_in": "matrix accounts"
+     },
+     {
+      "n": 549,
+      "of_what": "enumerated canonical parquet objects",
+      "unit": "objects"
+     }
+    ],
+    "count_grain": "INSTANCE",
+    "evidence_class": "DATA",
+    "scope": "Pinned documentary/source assessment; only named private receipts and source; no live vendor call, deployment, production write or credential handling.",
+    "limitations": "Named September 11 partition only. No dollar values or aggregate live total disclosed. Measurement preceded the next delivery window; wall-clock age is not a lateness finding. Accrual zero is an explicit upstream placeholder.",
+    "rederived_at_utc": "2026-09-15T05:26:27.763075+00:00",
+    "integrity": "All 25 named private receipts and all 10 repository source blobs at 8e8afed454 matched the manifest SHA-256 values. The separately authorized private account-key helper was checked against complete workbook/source memberships and matrix order.",
+    "revalidation": "Recheck named source vintages before implementation acceptance and after membership/source changes."
+   },
+   "basis": "DISCRIMINATOR, a coherence violation on six independent legs. (1) Rectangle constraint C3: 'No incomplete or stale account cohort can be asserted as a complete current Tax SMA total'. (2) The same entity's unverified_boundary documented_gaps[0]: 'A complete current daily Tax SMA aggregate is not established: two of eight traded claims lack canonical/0833 coverage'. (3) This cell's own fields: traded_missing_canonical_matches = 2 and missing_endings [4809, 5591]. (4) S1-workbook.unverified_boundary gap 3, and S2-identities.recorded_observation interpretation ('Two missing traded claims stay unverified'). (5) The cited package RESEARCH.md@8e8afed454 :11 (the canonical valuation 'is a usable source for the six matched accounts, but it cannot repair missing identi[ties]') and :114 ('No live asset total is asserted for an incomplete cohort'). (6) The permitted private receipt canonical-value-check.json, whose sha256 equals the manifest: 6 of 8 traded cohort entries carry canonical rows and 2 carry 0, the pair {4809, 5591}. The domain bar names this finding class verbatim: 'presenting a partial/stale value as complete'. Every other field of the cell re-derives: 7468 rows and unique keys, 549 objects, and PENDING-RULING on 7468 of 7468 (canonical_valuation.parquet, sha256 equals the manifest)."
+  }
+ ],
+ "unchanged_examined": [
+  {
+   "entity_id": "S1-workbook",
+   "field": "source_contract",
+   "why_unchanged": "COHERENT. The permitted receipt 20260915T043655996141Z_read_site_workbook.json (sha256 equals the manifest) reads address Sheet1!A1:N22, 22 rows and 14 columns, with a header equal to the cell's 14 names exactly."
+  },
+  {
+   "entity_id": "S1-workbook",
+   "field": "recorded_observation",
+   "why_unchanged": "COHERENT. An independent header-keyed tally of the same receipt reads 20 indexed slots (row 22 is 'Total'), 10 complete numbers, 3 named rows without a number, 7 blank, 8 Ready and Traded Yes, 2 No/No and 0 duplicates. The traded and No/No ending sets equal the cell's. Arithmetic holds: 10+3+7 = 20 and 8+2 = 10. RESEARCH.md@8e8afed454 :29-32 agrees."
+  },
+  {
+   "entity_id": "S1-workbook",
+   "field": "unverified_boundary",
+   "why_unchanged": "COHERENT. Owner and next probe are present. Gap 3 ('six corroborated members do not establish a complete current eight-account value') agrees with C3, with S2 and with S4's boundary. The cell establishes the gap only (runtime_expected_value_evidence false)."
+  },
+  {
+   "entity_id": "S2-identities",
+   "field": "source_contract",
+   "why_unchanged": "COHERENT. The join rule is whole-identity (C2). Denominators re-derive from permitted receipts: 0833_fact_acc 7469 rows and 0824_fact_acc 7384 rows, business_date 2026-09-11 in both (sha256 equals the manifest). They are corroborated independently by NFRA_OPLGTW's certified rectangle footers: 08335338/dim_balance 7469 rows and 08242234/dim_balance 7384 rows."
+  },
+  {
+   "entity_id": "S2-identities",
+   "field": "recorded_observation",
+   "why_unchanged": "COHERENT. Mechanical checks: corroborated (6) plus missing (2) equals S1's 8 traded endings, disjoint; label counts 8+3 = 11; 11 - 3 unlisted = 8 numbered exact matches = 6 corroborated + 2 No/No. 0833_fact_rps reads 105074 rows from its receipt, equal to NFRA_OPLGTW's certified 08335338/dim_position rows. The RESEARCH.md matrix :43-52 agrees per ending. Strategy-label identities are not re-derived, because that would need the identity helper."
+  },
+  {
+   "entity_id": "S2-identities",
+   "field": "unverified_boundary",
+   "why_unchanged": "COHERENT. Each of the four gaps matches a recorded fact in S2.recorded_observation. Owner and probe are present, and activation is not inferred from labels (C1)."
+  },
+  {
+   "entity_id": "S3-enrollment",
+   "field": "source_contract",
+   "why_unchanged": "COHERENT. taxsma_registry.py@8e8afed454: VALID_STATUS at :37; active requires a BD id at :84; ETag IfMatch/IfNoneMatch at :91-102; enroll retries on 412 at :105; list_active excludes pending at :144-146; normalize_schwab at :46-54 does zfill(10) under a docstring promising 'never fuzzy', the overstatement the cell names. discover_accounts at :338-361 carries trade_start_date. The empty-roster refusal was not read."
+  },
+  {
+   "entity_id": "S3-enrollment",
+   "field": "recorded_observation",
+   "why_unchanged": "COHERENT. live-roster.private.json (sha256 equals the manifest): 5 accounts, active 3 and pending_resolution 2. bd_xref: 6202 rows. taxsma_gold: 45 rows, 1 unique account, pull_asof 2026-07-17, data_as_of 2026-06-30. normalizer-probe.json (packet): 6 cases, 4 accepted (suffix_only among them) and 2 rejected. The split 3+2+3 = 8 equals S1's traded set. The RESEARCH.md :43-52 roster column agrees per ending. The 1-of-13 xref match is not re-derived, because that is an identity join."
+  },
+  {
+   "entity_id": "S3-enrollment",
+   "field": "unverified_boundary",
+   "why_unchanged": "COHERENT. The gaps equal S3's recorded counts (3 absent, 2 pending) and the source-verified normalizer defect. Technical pending stays distinct from business pending (C1). Owner and probe are present."
+  },
+  {
+   "entity_id": "S4-valuation",
+   "field": "source_contract",
+   "why_unchanged": "COHERENT. b00_canonical_valuation.py@8e8afed454 reads: the 10-column decomposition; accrued_income 0.0 with PENDING-RULING; fair_value = net_mv_plus_cash + accrued_income; the IN_CLIENT_BOOK filter; sort by account_id. runner_common.py :88-91 stamps _ingested_at = asof, never a clock."
+  },
+  {
+   "entity_id": "S4-valuation",
+   "field": "unverified_boundary",
+   "why_unchanged": "COHERENT. Gap 1 states the completeness boundary that S4.recorded_observation's interpretation contradicts. It agrees with C3, with RESEARCH.md :114 and with the receipt (6 of 8 traded entries carry canonical rows)."
+  },
+  {
+   "entity_id": "S5-category",
+   "field": "source_contract",
+   "why_unchanged": "COHERENT. mdpf_gold_consolidator.py@1465fd3f7d: :621-643 _last returns None for [] and for a None tail, and float(v or 0.0) for a scalar; :646-660 withholds the scope; :746-754 refuses an additive member with no carried source_basis; :791 client = non_model - sma_carve_out_aum; :883 total_aua = total + sma_additive_aum. The registry@b6e97e9685 declares tax as Tax-Managed SMA, ALT Strategies, SMA_BASIS_ADDITIVE."
+  },
+  {
+   "entity_id": "S5-category",
+   "field": "recorded_observation",
+   "why_unchanged": "COHERENT. The consolidator shapes non-Global scopes at :1555 and Global separately at :1584-1587. dim_mdpf_aggregate_aua_timeseries.py@73c2dea263: GLOBAL_MODEL_KEYS at :139 is a fixed tuple (its own warning at :128-138), iterated at :2490; the entries rebuilt at :1215-1220 and :2586-2587 carry no source_basis. The compiler zero is bounded as a coverage limit, not absence."
+  },
+  {
+   "entity_id": "S5-category",
+   "field": "unverified_boundary",
+   "why_unchanged": "COHERENT. The unexercised exact-once Tax SMA contribution follows from S5's two recorded reconstruction points and the fixed Global tuple. Owners (1.0.0_SA_CTO~A and 0.4.0_DS_ClientPlatform) and the probe are present, and C5 is kept."
+  },
+  {
+   "entity_id": "S6-publication",
+   "field": "source_contract",
+   "why_unchanged": "COHERENT. MDPF_CANON_PRD.md@8d12b77adb :173-183 read: the publisher alone converts JSON, firm buckets are consumed from ADVI_FIRMBKTS, and the portal's URLs are kept. Sibling targets are not treated as deployed (C4)."
+  },
+  {
+   "entity_id": "S6-publication",
+   "field": "recorded_observation",
+   "why_unchanged": "COHERENT. Publisher lambda_function.py@84fda0fd04: :291-296 returns unchanged with no write on an equal source key and sha; :299-303 passes a non-object through without _provenance; :385 all_present requires expected not None, no missing pairs and no failed. The consolidator's ARTIFACT_TYPE_SCOPE_SET :128-162 carries category-views, while MDPF_CANON :178 lists aggregate-aua-timeseries, account-distribution, aum-metrics and account-units, so the discrepancy is real. Portal CategoryViewTree.tsx@0e1c232d5f :125-128 and :174-177 suppress as the cell states."
+  },
+  {
+   "entity_id": "S6-publication",
+   "field": "unverified_boundary",
+   "why_unchanged": "COHERENT. The consumer constraint agrees with the source read at CategoryViewTree :125-128, :174-177 and :371-395 (the headline is unconditional when the predicate is unavailable). Owners and probe are present, and no deployment is inferred."
+  },
+  {
+   "entity_id": "S7-operations",
+   "field": "source_contract",
+   "why_unchanged": "COHERENT. scheduled-floor.tf@9eff54d274: :113-114 flexible window OFF; :133-134 cron(30 13 * * ? *) UTC; :139 target mdpf_gold; :154-155 DLQ. mdpf_portal_publisher.tf@0484d5d0bd: :214-215 OFF; :228-229 cron(50 13 * * ? *) UTC. gold-lambda.tf@3d0587cbdf :97-99: handler mdpf_gold_consolidator.lambda_handler. mdpf_calendar_binding.py@d136d5bb19: :37-46 import-or-fail and :75-89 assert_pmc_backend refuses the fallback."
+  },
+  {
+   "entity_id": "S7-operations",
+   "field": "recorded_observation",
+   "why_unchanged": "COHERENT. The permitted receipt producer-live-wiring.json (824 bytes; sha256 4a061748... equals both the manifest and the cell) reads FunctionName, State Active, LastUpdateStatus Successful, Handler, Runtime python3.12, LastModified and CodeSha256 exactly as the cell does. eventbridge_rules_targeting_producer is [], with the scope sentence the cell bounds."
+  },
+  {
+   "entity_id": "S7-operations",
+   "field": "unverified_boundary",
+   "why_unchanged": "COHERENT. The five-atom frame labels unmeasured axes without values. Owners (1.0.0_SA_CTO~A, 0.7.0_AE_CloudOps and 0.4.0_DS_ClientPlatform) and the probe are present, and C4 is kept."
+  },
+  {
+   "entity_id": "S8-onboarding",
+   "field": "source_contract",
+   "why_unchanged": "COHERENT. The converter receipt 20260915T043849410660Z_read_site_file.json (239 code lines): :77 read_excel header=0; :81 strips dashes; :90 Ready-only gate with no Traded check; :106 iterates CostBasis_Acct_*.csv. That matches 'not complete traded-cohort ingestion'. The SOP and margin PDFs were not re-read, so their cited page counts are carried."
+  },
+  {
+   "entity_id": "S8-onboarding",
+   "field": "recorded_observation",
+   "why_unchanged": "COHERENT. The historical workbook receipt 20260915T043849399539Z: address Sheet1!A1:K14, header on row 2 ('Account #'), 6 nonblank account cells, all 6 masked, 0 complete. Converter :24-26 rolls back past Sat/Sun only; :90 is Ready-only; :121-123 skips a CSV without a Ready match."
+  },
+  {
+   "entity_id": "S8-onboarding",
+   "field": "unverified_boundary",
+   "why_unchanged": "COHERENT. The four gaps follow from S8's recorded converter and search limits. The D9 boundary stays distinct from D8. Owner and probe are present."
+  }
+ ]
+}
