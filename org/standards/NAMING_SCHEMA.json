@@ -1,7 +1,7 @@
 {
  "title": "NAMING_SCHEMA -- the D14 Platform Logic naming schema's CLOSED ENUMERATIONS, as data",
- "version": "v1.6",
- "ratified_by": "org/missions/D14/LGIC/LGIC_NAMING/prd/LGIC_NAMING_PRD.md v1.6 (L4, 1.0.0_SA_CTO; v1.5 and v1.6 at L10). Spine L4: a decision that is an enumeration is closed as data in org/standards/ and cited.",
+ "version": "v1.7",
+ "ratified_by": "org/missions/D14/LGIC/LGIC_NAMING/prd/LGIC_NAMING_PRD.md v1.7 (L4, 1.0.0_SA_CTO; v1.5, v1.6 and v1.7 at L10). Spine L4: a decision that is an enumeration is closed as data in org/standards/ and cited.",
  "changelog": [
   "v1.0 -- first issue with LGIC_NAMING_PRD v1.0 @c65a169ba0.",
   "v1.1 -- on 4.0.0_SA_CRO~D's REFUSED brief half (review @1e4e3e10fd): kind.by_type keys are the live plane's node_type strings (CODEBUILD -> CODEBUILD_PROJECT, ECS_TASK -> ECS_TASK_DEFINITION); every node type not graded by kind is enumerated by subtraction; lb and cluster added for the two minted types that had no kind.",
@@ -9,7 +9,8 @@
   "v1.3 -- on 1.0.0_SA_CTO's adjudication of rows LGIC_NAMING-S6, S7 and S8 (org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ADJUDICATION_LGIC_NAMING_20260914T103xZ_S6_S7_S8_ENTITY_PARTITION_CODE_TIER_LEGACY_SERVED_PATHS.md): key.partition gains the entity partition; key.table_case bounds kebab-case to NEW served leaves; key.legacy_served_path and key.code are new. The five ruled segments are unchanged.",
   "v1.4 -- on 1.0.0_SA_CTO's adjudication of row LGIC_NAMING-S10 (org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ADJUDICATION_LGIC_NAMING_20260914T113xZ_S10_LEGACY_MEMBERSHIP_IS_DATA.md): legacy-served membership is data -- key.legacy_served_paths names its home, its producer (cell LN-g-1) and its claim, and grade() RAISES on a key whose verdict turns on it until the list lands, so the grade stays (name, type) over this file; key.code gives a legacy root code/ key its verdict (OUT-OF-PATTERN, the code-tier canonical form).",
   "v1.5 -- at L10, on 1.0.0_SA_CTO's ROUND-1 ANALYSIS (org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_LGIC_NAMING_ROUND1_20260914.md), ruling the four slots round 1 measured as unruled (carrier C-S5) and two FWD-5 gaps (C-S8): resource.function (FN1), resource.qualifier (FN2, FN3), secret.purpose and iam_policy.purpose_slot (FN4), key.partition's {entity} (P1), key.scope_rule (SC1), system.vendor_through_tiers (SY1), grade.placeholder (PH1) and aws_fixed (AW1). The five ruled key segments are unchanged.",
-  "v1.6 -- on 4.0.0_SA_CRO's refusal of PRD v1.5's brief half (@3a9a0c2f91, R3): key.scope_rule states the vendor MASTER case. A master keeps its own scope under doctrine R3 (two masters of one firm are two scopes, never commingled), and the audience rule decides FIRM or global for every other key. v1.5 had put a Schwab master under its firm."
+  "v1.6 -- on 4.0.0_SA_CRO's refusal of PRD v1.5's brief half (@3a9a0c2f91, R3): key.scope_rule states the vendor MASTER case. A master keeps its own scope under doctrine R3 (two masters of one firm are two scopes, never commingled), and the audience rule decides FIRM or global for every other key. v1.5 had put a Schwab master under its firm.",
+  "v1.7 -- at L10, on 1.0.0_SA_CTO's ROUND-2 ANALYSIS (org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_LGIC_NAMING_ROUND2_20260915.md): resource.function -- a noun-phrase function drops every token already written in the system or scope slot (FN1b, row C-S14), and only the resource's OWN kind is barred from its function (FN1c, row W4-S2); both bind the grade as well as the namer, while FN1's word-choice clauses bind the namer only. firm_forms.demo cites the registry row that defines it (RULING DM, row W6-S4). rows_owner: the registry now exists and governs where it and the seed differ. system.vendor_through_tiers' worked example is a name outside every naming-exercise item set (RULING EX1, row S15). The five ruled key segments, the grade signature and its verdicts are unchanged."
  ],
  "authority": [
   "SOURCE-FIRST key string -- Andrew-direct 2026-09-13 ~03:2xZ card 1, 'all recs approved' (relayed 4.0.0_SA_CRO~D 96332)",
@@ -17,7 +18,7 @@
   "Remediation shape (a): D14 owns the rule, registry, builders and flagger; every fix goes where the resource lives -- Andrew-direct 2026-09-13 ~03:5xZ",
   "WHERE each form is used (the per-slot split) -- RATIFIED AT L4 by 1.0.0_SA_CTO in LGIC_NAMING_PRD, revertible on Andrew's word; it narrows nothing he ruled"
  ],
- "rows_owner": "The ROWS (which firms, products, vendors and platform subsystems exist, with their keys and aliases) belong to the identity registry, which LGIC_ENFORCE owns under ruling (a). Seed until that registry exists: infra/logic/05_IDENTITY_SPINE.md. This file fixes the SHAPE and the closed lists; it mints no row.",
+ "rows_owner": "The ROWS (which firms, products, vendors and platform subsystems exist, with their keys and aliases) belong to the identity registry, which LGIC_ENFORCE owns under ruling (a): infra/logic/registry/ (LGIC_ENFORCE EN-r-1 @a925c8a642). The seed infra/logic/05_IDENTITY_SPINE.md served until the registry existed; where the two differ, the registry governs (v1.7). This file fixes the SHAPE and the closed lists; it mints no row.",
  "node_type_vocabulary": {
   "owner": "the live-plane CloudNode graph read by comp-find --corpus aws. Every type key in this file (kind.by_type and types_not_graded_by_kind) IS a node_type value that instrument returns, spelled exactly as it returns it.",
   "measured": "comp-find --corpus aws '.' --budget 600 by 1.0.0_SA_CTO 2026-09-13 ~22:4xZ; graph vintage 'Built from the estate as of 2026-09-13 12:15:54 UTC', manifest 48bf196564e6; 2,531 nodes, 33 node types",
@@ -56,7 +57,7 @@
   "scope_form": "SHORT",
   "scope_when_shared": "OMITTED -- a shared resource carries no scope token, never a placeholder",
   "last_slot": {"default": "kind", "EVENT_RULE": "cadence", "SCHEDULE": "cadence"},
-  "function": "names what the resource does. Where the item DESCRIBES the action with a verb, the function is that verb in its base form (publish, fetch, read, build, download); an agent noun is always written as its verb (publisher -> publish, exporter -> export, scanner -> scan), because the kind names the thing. Where the item NAMES the process or subject as a noun phrase (the SmartX platform export, the Orion ingest, the price-refresh queue, pipeline alerts, delivery status), the function is that phrase as named, kebab-case, ONE token (as silver-chain). A kind word (queue, host, topic, table, alarm) is never written in the function slot (FN1, v1.5)",
+  "function": "names what the resource does. Where the item DESCRIBES the action with a verb, the function is that verb in its base form (publish, fetch, read, build, download); an agent noun describing the resource ITSELF is written as its verb (publisher -> publish, exporter -> export, scanner -> scan), because the kind names the thing. Where the item NAMES the process or subject as a noun phrase (the SmartX platform export, the Orion ingest, the price-refresh queue, pipeline alerts, delivery status), the function is that phrase as named, kebab-case, ONE token (as silver-chain), LESS every token already written in the system or scope slot: Inflection's Orion ingest is orion-inf-ingest, never orion-inf-orion-ingest; a subtraction that leaves no function token RAISES (grade.unplaceable) (FN1b, v1.7). The resource's OWN kind (kind.by_type for its type) is never written in its function; another type's kind that names the subject the resource serves is part of that phrase and stays (mdpf-gold-lambda-role is the role the gold lambda assumes) (FN1c, v1.7). FN1b and FN1c bind the GRADE as well as the namer, because both are read from the name alone; the word-choice clauses before them bind the NAMER, who has the item's description, and a grade keeps a function's words as written (FN1, v1.5; v1.7)",
   "qualifier": "optional narrowing, written after the function: the TIER (bronze, silver, gold, platinum) or the named TABLE the action acts on, when the item names one -- any other object (figures, files, data, session data) is not written (FN2); a leg; or an environment (dev | prod). A CW_ALARM's qualifier is its condition noun (failure, error, latency), always written (FN3, v1.5)"
  },
  "kind": {
@@ -112,7 +113,7 @@
   {"key": "49financial", "short": "49f"},
   {"key": "inflection", "short": "inf"},
   {"key": "cottonwood", "short": "cot"},
-  {"key": "demo", "short": "demo", "note": "one token; the long and short forms are the same string"}
+  {"key": "demo", "short": "demo", "note": "one token; the long and short forms are the same string. The identity registry defines it: infra/logic/registry/scopes.json row demo reads class FIRM, tenancy FIRM, tenant kind demo, so in every naming slot demo reads as a firm (RULING DM, row W6-S4, v1.7)"}
  ],
  "global_scope": {"key": "global", "short": "global"},
  "refused_tokens": {
@@ -122,7 +123,7 @@
  "system": {
   "classes": ["PRODUCT", "PLATFORM_SUBSYSTEM", "VENDOR"],
   "vendor_as_system_only_when": "the resource IS the vendor integration",
-  "vendor_through_tiers": "a resource that builds a firm's data from ONE vendor's feed IS that vendor's integration at every tier it builds (orion-inf-build-gold-profile); a resource that combines feeds takes the PRODUCT or PLATFORM_SUBSYSTEM that owns the combination (SY1, v1.5)",
+  "vendor_through_tiers": "a resource that builds a firm's data from ONE vendor's feed IS that vendor's integration at every tier it builds (blackdiamond-cot-build-silver-profile); a resource that combines feeds takes the PRODUCT or PLATFORM_SUBSYSTEM that owns the combination (SY1, v1.5). A worked example here is kept outside every naming-exercise item set, so a briefing that carries this file never spells an item's answer (RULING EX1, row S15, v1.7)",
   "never_a_system": ["a firm", "a project code", "a workstream code", "a cadence", "a generic noun"],
   "reserved": {"opal": "account-level platform resources only; never a null prefix before a real system"}
  },

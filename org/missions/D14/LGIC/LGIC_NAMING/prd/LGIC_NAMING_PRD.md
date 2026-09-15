@@ -5,7 +5,7 @@
  "project": "LGIC_NAMING",
  "directive": "D14",
  "fabric": "laptop",
- "prd_version": "v1.6",
+ "prd_version": "v1.7",
  "step": 4,
  "brief_ref": "docs/briefs/d14-naming-schema-brief-20260913.md@1b42dbe758",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6"],
@@ -184,6 +184,19 @@ as a second copy here.
   - SC1 gains the master case above;
   - AW1 is carried into N2 and coverage row 17;
   - PH1's dependency on `LGIC_ENFORCE` is carried into the arc and N6.
+  v1.7 carries `1.0.0_SA_CTO`'s ROUND-2 ANALYSIS
+  (`org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_LGIC_NAMING_ROUND2_20260915.md`), as data in
+  `NAMING_SCHEMA.json` v1.7:
+  - a noun-phrase function drops every token already written in the system or scope slot (`orion-inf-ingest`, never
+    `orion-inf-orion-ingest`) (FN1b);
+  - only the resource's OWN kind is barred from its function, and another type's kind that names the subject it serves
+    stays (FN1c);
+  - both of those bind the grade as well as the namer. FN1's word-choice clauses bind the namer, who has the item's
+    description, and a grade keeps a function's words as written;
+  - `demo` reads as a firm in every naming slot, as the identity registry's row defines it, and the registry governs
+    where it and the seed differ (DM);
+  - FWD-2's reader may be told what each position holds, because reading "from position" presupposes it (POS);
+  - SY1's worked example is a name outside every naming-exercise item set (EX1).
 
 ## PROJECT ARC AND DEFINED OUTCOME
 
@@ -208,7 +221,7 @@ One row per candidate cell. The decomposition at L5 is the COO lane's and may sp
 |---|---|---|---|---|---|---|---|
 | N1 the schema as data | FWD-1, FWD-2, FWD-3, FWD-5 | IV.2, IV.3, IV.4, IV.5, IV.6; Part V bullets 2-4 | P `NAMING_SCHEMA.json` | -- | `org/standards/NAMING_SCHEMA.json` (landed WITH this PRD at L4) | the data file parses; every enumeration S1-S13 names is present in it | **delivered at L4; no L7 cell unless an L10 addendum changes it** |
 | N2 the written grading rule with worked cases | FWD-5 | O5; IV.6 (the residue enumerated, not omitted); Part V bullet 4; Part VII bullet 5 | C `NAMING_SCHEMA.json`; P the grading rule | `infra/logic/09_NAMING_CENSUS.md` | `org/missions/D14/LGIC/LGIC_NAMING/deliverables/GRADING_RULE.md` | at least one worked case per verdict and per resource type in the data file's `kind.by_type`, drawn from real live names (`comp-find --corpus aws`), each with its canonical form; the census residue classes (camel IAM, purpose-first policies, library-first layers, workstream-coded schedules) each graded; the AWS-fixed names (S14 AW1: the `default` security group, AWS-managed policies read by ARN, and AWS-created log groups; 15 measured by name and prefix in row W1-S4) each dispositioned as EXCLUDED, never graded | every worked case yields exactly one of the three verdicts or a stated RAISE |
-| N3 the blind naming and reading exercises | FWD-1, FWD-2 | O1, O2; Part III O1, O2 | C `NAMING_SCHEMA.json`, the registry seed | -- | `org/missions/D14/LGIC/LGIC_NAMING/deliverables/` (exercise records) | two workers, briefed only with the schema and the registry seed, each name the same set of new resources (including the Cottonwood model-portfolio publisher) without conferring; a third reads a set of conforming names and marks the firm in each | identical strings from both namers on every item; the reader marks the firm correctly in every conforming name, and no token reads as two referents |
+| N3 the blind naming and reading exercises | FWD-1, FWD-2 | O1, O2; Part III O1, O2 | C `NAMING_SCHEMA.json`, the identity registry (`infra/logic/registry/`; the seed `infra/logic/05_IDENTITY_SPINE.md` served until it existed, and where they differ the registry governs -- S14 DM) | -- | `org/missions/D14/LGIC/LGIC_NAMING/deliverables/` (exercise records) | two workers, briefed only with the schema and the registry, each name the same set of new resources (including the Cottonwood model-portfolio publisher) without conferring, and no briefing spells an item's answer (S14 EX1); a third, briefed with the same two and told what each position of the grammar holds (S14 POS), reads a set of conforming names and marks the firm in each | identical strings from both namers on every item; the reader marks the firm correctly in every conforming name, and no token reads as two referents |
 | N4 one pattern per firm | FWD-3 | O3; IV.3; Part III O3 | C `NAMING_SCHEMA.json` | the live principal names (`comp-find --corpus aws`, `IAM_ROLE`) | `org/missions/D14/LGIC/LGIC_NAMING/deliverables/` | for each firm, one pattern written from S3-S5, applied to the canonical forms of every principal the census attributes to that firm, with the denominator printed | one pattern per firm catches every attributed principal's canonical form and no other firm's |
 | N5 the replacement notices on older layouts | FWD-4 | O4; Part II RELIES ON (the source-first ruling); IV.7 row 3 | C the ruled key string | -- | edits to the texts below, each by its owner | the two older layout texts: the 2026-08-18 template comment `infra/aws/terraform/shared-infra/s3-49financial.tf:8-13`, and `MDPF_CANON_PRD.md` s.3; a reading exercise across a firm bucket and a product bucket | each older text states it is replaced by S1, citing this PRD; a reader who learned `opal-data-assets` reads an address in another bucket correctly |
 | N6 the hand-grading agreement exercise | FWD-5 | O5; Part III O5 | C the grading rule (N2) | `infra/logic/09_NAMING_CENSUS.md` | `org/missions/D14/LGIC/LGIC_NAMING/deliverables/` | two workers who did not write N2 each grade the same sample of real live names, the sample drawn across every resource type, with the denominator printed | the two gradings agree on every name, verdict and canonical form; any disagreement or RAISE returns to N2 as a rule defect; a canonical form carrying a placeholder (S14 PH1) is exact but not the complete correct name, and is counted apart, so N6 can pass on agreement while FWD-5's completeness waits on `LGIC_ENFORCE`'s rows |
