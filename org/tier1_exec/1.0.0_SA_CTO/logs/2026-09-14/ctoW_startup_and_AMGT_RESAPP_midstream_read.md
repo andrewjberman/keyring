@@ -453,3 +453,27 @@ where the ratified text already answers (distinguishable partial coverage; the m
 average over the union universe with denominators) that answer is named so Andrew decides against a known baseline. Round 11 at
 5 of 13 complete (rj-1, rj-4, rj-5, rj-6, rj-7). The 13:00Z promote passed on the laptop; the site-Z gitlink is unmoved by
 design; no word on the AMGT ref reached this seat. Push state: LOCAL.
+
+---
+
+## ADDENDUM 14 (14:4x-14:5xZ) -- Andrew's priority word; the evidence reply; the L10 pre-read started; the CVO's evidence relayed; the register row corrected
+
+Andrew-direct ~14:4xZ at the laptop MSTR terminal, relayed by `0.0.0_AB_MSTR~Z` unadjudicated, VERBATIM: *"make sure sitez and
+4.0.0_SA_CRO~W in particular are driving RESAPP"* and *"THEY SHOULD BE BLASTING THAT, PRIORITY RESOURCE ALLOCATION"*. Each ~W seat
+was asked for (a) process truth, (b) the Monitor armed now, (c) the last act, (d) what it drives. This seat answered on its own
+instruments (msg 14:46Z): the stream child on the MSYS plane (the MSTR's Win32 census could not see it -- corrected by MSTR~Z at
+14:50Z on this seat's catch), Monitor bilwur74w `TaskOutput -> running`, 10 expiries / 10 same-turn re-arms, last commit
+71ffb7b386 at 14:07:55Z, driving the midstream L10 pre-read. The ~W-lanes summary for Andrew went in the same message: v0.8
+ADMITTED both halves; round 11 issued 07:27Z @`fa72663c56`, 5 of 13 complete; no blocker on the CTO limb; the ri-1 portal HOLD
+stands and is moot in the better direction (rj-1 drained, rj-9 next: the next promote ships the FRESH rj-portal drain, never
+9aef3734, which is not in PROD edf85ce5 -- fetched and checked).
+
+THE DRIVE: `ledger/L10_PREREAD.round11.md` @`9ceb811406` -- the five drained instances re-run through the checker with explicit
+criteria (5 of 5 VALID), each cell read against its contract, the 32 round-11 worker rows censused (28 OBSERVATION/INERT, 3
+BLOCKING/INERT, 1 ARMED), the pool's 121 objects by prefix, and the structural finding: the union universe is 33 of 256 names
+resolved (167 of 170 holdings arrive as bare tickers; 56 of 89 coverage names carry their Bloomberg form unparsed inside the
+name), so Posture's Opal side is three names today; six addendum candidates named for the slug read (the chart's numeric points,
+CSC basis labelling, resolution widening, a gate that must discriminate on its input, the two ticker-keyed seams, the database
+halves' vocabulary/unit/FX mapping). Also: the CVO's (a)-(d) evidence, which reaches MSTR only through the CTO, relayed at
+14:52Z; the CRO's close-out (bounded commissioning complete under its limits, handoff to Andrew) pointed at; project.json's
+stale "NEXT: cuts round 11" prose corrected @`cab4535071` on the CVO's flag. Push state: LOCAL.
