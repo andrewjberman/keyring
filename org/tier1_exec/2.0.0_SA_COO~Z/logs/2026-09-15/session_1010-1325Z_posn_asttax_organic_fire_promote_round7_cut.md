@@ -64,3 +64,22 @@ Applied: a staggered second watcher; the memory the sibling banked stands for th
   (slots ~19..~27); workspace branches deleted 9 of 9 (one after its late commit was drained); portal branches deleted 6 of 6 (each verified
   an ancestor of refs/drains/posn-6-portal first). KEPT: /c/tmp/portal-posn-view (the drain ref's view, detached at ebbee2e6) and the
   round 2-4 worktrees (not in the authorized list). `git worktree list`: 0 round 5-7 entries remain.
+
+---
+
+## Addendum 15:14Z -- the operator asked "are we done?"; the COO's COMPLETION REPORT written (spine L10, the close)
+
+- **Measured before answering:** 32 orders, 28 complete / 2 superseded / 2 cancelled, 0 open; 30 proof instances (28 orders, two short-form
+  duplicates) ALL VALID rc=0 by `proof-of-spec-check`; the channel 312 rows, **0 undispositioned** by `surprise-row-gate._latest_dispositions`
+  (266 GRADUATED, 41 DISMISSED_WITH_REASON, 5 DECOMP_INVALIDATING, all carried by a later adjudication); PRD v0.11 @ab2ee8052a ADMITTED, both halves
+  SIGNED current; `missions-tree-index.py check` 0 violations (17 tree projects); the CVO's round-7 L9 judgment grade @73382f58b6 (C-S181); NO
+  round-7 slug on disk (REMEDIATION_v6.Z.md is the newest), NO ROUND_ANALYSIS.round7, NO COMPLETION_GRADES for any round.
+- **Written:** `ledger/COMPLETION_REPORT.round7.json` -- 7 of 7 outcomes COVERED, every complete order cited under the outcome its cell serves at
+  its proof's vintage; validated against `org/standards/COMPLETION_REPORT.schema.json` (jsonschema 4.26). It is the first completion report on
+  this project: rounds 1-6 closed on the CTO's round analyses alone, so this one is PROJECT-WIDE across the seven decompositions (38 cells).
+- **What closes the project, by owner:** the CVO's slug; the CTO's ROUND_ANALYSIS.round7 (C-S177's disarm) + COMPLETION_GRADES.round7.json;
+  R6 admits `dep_stage: CLOSED` only on 7 of 7 REALIZED with each `state_observed` at or above the card (FWD-3/FWD-4 APPLIED, the rest EXERCISED);
+  then `status: closed` on project.json and `missions-tree-index.py derive --write` refreshes `org/projects/POSN_ASTTAX.json` (DIRECTIVES.yaml's
+  members line keeps the code -- the ETFS_GUARDRAIL precedent). The CTO's deploy ledger `posn-bbg-etf-pull-gld-vxx` L2 is satisfied by the world
+  (manifest LastModified 11:07:04Z, run_class scheduled, extra_securities [GLD, VXX] present in vendor_observations, objects_failed []); its 24 h
+  window ends 17:35Z.
