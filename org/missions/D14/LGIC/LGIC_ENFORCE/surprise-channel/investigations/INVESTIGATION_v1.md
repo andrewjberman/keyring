@@ -463,7 +463,7 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     "notes": "DISARM, per W1-S7's own clause, by its disarm owner, before EN-v-3 spawns; no worker ran the defective subcommand against a real view. The criterion text, the face and the fixtures are unchanged: the fix corrects the instrument's loader, a harness defect in the issuer's own fixed input, disclosed in its commit. INERT: EN-v-3 will be spawned from a base carrying the fix."
   },
   {
-    "id": "LGIC_ENFORCE-W5-S1",
+    "id": "LGIC_ENFORCE-W5-S4",
     "project": "LGIC_ENFORCE",
     "fabric": "laptop",
     "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~5",
@@ -487,7 +487,7 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     "notes": "Filed by the worker on EN-v-4; the fixed inputs are read-only to it, and nothing was changed. ARMED because the next regeneration of this carrier, or any later edit to the generator's _BUCKET_FOR template, would be graded by the same subcommand and certify DELTA=0 on the refusal branch alone. Disarm owner: the fixed input's issuer. One remedy is for exports_of to probe under both an unset and a populated IRPT_DIRECTORY_BUCKET_MAP; how to disarm is the owner's call."
   },
   {
-    "id": "LGIC_ENFORCE-W5-S2",
+    "id": "LGIC_ENFORCE-W5-S5",
     "project": "LGIC_ENFORCE",
     "fabric": "laptop",
     "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~5",
