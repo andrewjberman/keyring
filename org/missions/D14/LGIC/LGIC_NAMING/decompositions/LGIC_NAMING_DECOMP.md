@@ -6,10 +6,10 @@
  "directive": "D14",
  "macro": "LGIC",
  "fabric": "laptop",
- "decomp_version": "v4",
+ "decomp_version": "v5",
  "step": 5,
- "prd_ref": "org/missions/D14/LGIC/LGIC_NAMING/prd/LGIC_NAMING_PRD.md@2706014705",
- "prd_half_hashes": {"ratified-text": "SIGNED 3.0.0_SA_CVO, current at v1.6", "brief": "SIGNED 4.0.0_SA_CRO @8e08704fb0 (v1.6, review @d60eefad00)"},
+ "prd_ref": "org/missions/D14/LGIC/LGIC_NAMING/prd/LGIC_NAMING_PRD.md@f0a830c15f",
+ "prd_half_hashes": {"ratified-text": "SIGNED 3.0.0_SA_CVO, current at v1.7", "brief": "SIGNED 4.0.0_SA_CRO @f0a830c15f (v1.7, review @cd596cf4a4)"},
  "author": "2.0.0_SA_COO~G",
  "cells": 14,
  "chains": 5,
@@ -246,6 +246,122 @@ context, and EN-f-1 builds its fence from `fence_patterns()`. LN-f-1 spawns at i
 LGIC_ENFORCE level 3 or later, so the order holds by timing. No edge is added to that frozen decomposition.
 
 **L4-R at the cut:** ADMITTED at v1.6.
+
+---
+
+## 0d. v5 -- THE ROUND-3 RECUT (L10: 1.0.0_SA_CTO's round-2 analysis)
+
+**Input.**
+- The analysis: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_LGIC_NAMING_ROUND2_20260915.md` @`02f08322af`
+  (msg 96818). It names what this issuance carries (s.5) and leaves the split and the order to the COO.
+- PRD v1.7 @`f0a830c15f`, ADMITTED (`prd-signoff.py status LGIC_NAMING`; msgs 96821, 96823, 96826):
+  - the ratified-text half is SIGNED by `3.0.0_SA_CVO`, current;
+  - the brief half is SIGNED by `4.0.0_SA_CRO` @`f0a830c15f`, review @`cd596cf4a4`.
+- `NAMING_SCHEMA.json` v1.7.
+- All 22 of the project's orders are terminal. Round 2's last two closed by RULING T @`b9fa612c43`, and since @`fa6521ea12`
+  the L10 precondition reads terminality from the proof instance.
+
+**What re-runs: 6 of the 14 cells, by subtraction.**
+
+```
+  cells ........................................................ 14
+  minus cells the analysis rules no re-run for .................. -7
+      LN-h-1, LN-h-2, LN-h-3  FWD-5 is exact; no round-3 cell serves it (s.1)
+      LN-l-1, LN-l-2, LN-l-3  FWD-4 REALIZED on the reading limb, 6 of 6 (s.1)
+      LN-t-1                  FWD-6 REALIZED (round 1)
+  minus the cell whose re-run waits on a non-zero count ......... -1
+      LN-f-1                  s.5 item 3: "re-grades only if that count is not zero"; the count is 0 of 68 (below)
+  ------------------------------------------------------------
+  cells round 3 re-runs .......................................... 6
+      LN-e-1, LN-e-2, LN-e-3  FWD-1 on v1.7 (s.2; s.5 item 1)
+      LN-e-4, LN-e-5          FWD-2 under RULINGS DM and POS (s.3; s.5 item 2)
+      LN-g-1                  the grading rule, re-cut to v1.7 (s.2 carrier 4; s.5 item 3)
+```
+
+**The count that settles LN-f-1, measured at this cut.**
+- The two mechanical v1.7 steps were applied to round 2's 68 attributed canonical forms (`exercises/r2/n4-firm-patterns.md`):
+  - FN1b's subtraction: drop a function token already written in the system or scope slot;
+  - the own-kind bar: drop the resource's own kind.
+- **0 of 68 change.** No function token equals its system or scope token, in the short form or the long, and none is
+  `role`, IAM_ROLE's own kind (`kind.by_type`).
+- So LN-f-1 does not re-run this round.
+- LN-g-1 prints the same count from its re-cut rule, and the checker recounts it independently (`g1-count`).
+  - A difference is a surprise row.
+  - A non-zero count moves LN-f-1's re-grade to the next issuance.
+
+**Row `W4-S1`, the bd paraphrase, which is this seat's.**
+- Round 2's LN-f-1 face paraphrased R3 as a POSITION test. R3's own text is ADJACENCY to a firm token.
+- The paraphrase retires with that face.
+- The re-cut rule states the adjacency test in one added sentence (LN-g-1, item 4).
+- Any later LN-f-1 face quotes R3 instead of paraphrasing it.
+
+**The briefing (RULINGS DM and POS), and the one choice this cut makes.** `fixed_inputs/r3/blind_seat.py` is round 2's
+seat with a new builder.
+- **The namers** read the schema (v1.7) and the identity registry's three ROW files -- `scopes.json`, `systems.json` and
+  `tiers.json` -- and never the seed `05_IDENTITY_SPINE.md`.
+  - The schema's `rows_owner` gives the registry the ROWS: firms, products, vendors and subsystems. Those three files
+    carry them.
+  - `exemptions.json` and `remediations.json` are enforcement data, not identity rows. `LGIC_ENFORCE`'s fence cell writes
+    `exemptions.json` in this same window, so a briefing that carried it could differ between seats spawned at different
+    bases.
+  - Measured before the cut, the two files spell 0 of the 18 ruled names, so leaving them out withholds no answer.
+  - This choice is surfaced to `1.0.0_SA_CTO` with the issuance.
+- **The reader** is told:
+  - the slot order of each name family: the schema's `resource`, `iam_policy`, `secret` and `key` grammar lines and
+    `bucket.data_bucket`, verbatim;
+  - `firm_forms`;
+  - the same three registry files.
+
+  POS names `resource.grammar`. The reader's 18 names span five families (resource, IAM policy, secret, S3 key and
+  bucket), and POS's reason -- position is the grammar the outcome tests -- holds for each family's grammar. The reader is
+  never given the item set or the key.
+- **Unchanged from round 2** (s.0c): the seat, its canary, the no-tools launch and the checker's re-derivation of prompt
+  and reply.
+
+**The briefing carries 1 of the 18 ruled names verbatim**, measured at this cut over the four briefing sources against
+the round-1 analysis's s.2 table.
+- `scopes.json` names i05's bucket `opal-data-cottonwood`, as a registry should. Row `LGIC_NAMING-S15` covers i05, and L9
+  reads its agreement with the row in view.
+- The schema v1.7 spells 0: EX1 moved SY1's example off i15's ruled name.
+- The new example, `blackdiamond-cot-build-silver-profile`, is in no item set.
+
+**The re-run cells.** These replace section 0c's rows for round 3; rounds 1 and 2 stand as their record. Every exercise
+file is under `exercises/r3/`.
+
+| cell | round 3 | acceptance, one clause per line |
+|---|---|---|
+| `LN-e-1` | namer A, in a seat | the seat is proved clean · the canary finds no workspace-only fact · one name, or RAISE, for every item · the base carries `NAMING_SCHEMA.json` v1.7 |
+| `LN-e-2` | namer B, in a seat | as LN-e-1 |
+| `LN-e-3` | the namers' comparison | the two answer files are identical on every item · the two seats received the identical prompt, in two sessions |
+| `LN-e-4` | the reader, in a seat | the seat is proved clean · the canary finds no workspace-only fact · a mark on every one of namer A's round-3 names |
+| `LN-e-5` | the reader's scoring | the mark equals `N3_KEY_R2.json` (unchanged) on every item · no token is read as two different referents |
+| `LN-g-1` | the grading rule, re-cut to v1.7 | the printed FORMS CHANGED count equals the checker's recount · the header names v1.7 · J1 at L9: R5's two steps and their reason, R3's adjacency sentence, and no other step moved |
+
+**Edges and slots.** Spawn after drain, as in section 5.
+
+```
+  LN-e-1 --+--> LN-e-3
+  LN-e-2 --+
+  LN-e-1 -----> LN-e-4 -----> LN-e-5
+  LN-g-1        (no edge)
+```
+
+| slot | cells | spawned |
+|---|---|---|
+| ~1 | LN-e-1 (operates its seat) | at issuance |
+| ~2 | LN-e-2 (operates its seat) | at issuance |
+| ~3 | LN-g-1 | at issuance |
+| ~5 | LN-e-4 (operates its seat) | after LN-e-1 drains and both namer canaries read blind |
+| ~6 | the scorer: LN-e-3, then LN-e-5, each as its inputs drain | when the first input drains |
+
+**Fan-out:** 3 workers at issuance, and at most 4 at once. `LGIC_ENFORCE` holds at most 4 live workers now (three re-runs
+and EN-d-2), so the sequence-wide peak is 8 of the cap of 8.
+
+**Andrew-direct ~05:0xZ (msg 96910, relayed by `1.0.0_SA_CTO`): LGIC is aimed at the MDPF, ADVI and IRPT pipelines.** No
+round-3 cell takes its population from the estate: the N3 items are the analysis's fixed 18. The aim lands in
+`LGIC_ENFORCE`'s next cut and in `LGIC_CANON`.
+
+**L4-R at the cut:** ADMITTED at v1.7.
 
 ---
 
