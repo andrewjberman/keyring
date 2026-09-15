@@ -413,6 +413,49 @@ and R-1 objects for BA and BABA present). **SPAWNED at 16:1xZ, three at once:** 
 W18-S6/S7, W18-S8, W22-S1 into the tabs), `~20` on rj-11 (`AMGT_QA_HELD_KEY=BA_US_Equity`; the held names named as BA, HD, VLO of
 256; next row W20-S9), `~22` on rj-13 (the datasets key named as `brightdata-api-key`; next row W22-S3). Seven of thirteen complete.
 
+### 16. Andrew's AMGT-only word; rj-11 and rj-13 complete and drained; rj-9 AC4 and rj-12 amended; W20-S11 disarmed (16:3x-17:2xZ)
+
+**Andrew-direct ~16:3xZ**, relayed by `1.0.0_SA_CTO~W` (msg 23159, record @`de60858372`) and carried for `3.0.0_SA_CVO~W` (msg 23167,
+record @`58a2f98bda`), VERBATIM: *"Ok you and the ~W fabric are going to proceed straight through the AMGT_RESAPP work, that is your
+explicit project focus for the remainder of the session. Disregard any messaging/inquiries about any project/task that is not
+AMGT_RESAPP focused."* This lane already held exactly that scope; nothing moved. The model for this session was switched to Opus 5
+(1M context) at the terminal the same minutes; commit attribution follows it from here.
+
+**The split of rj-9 (proposed 15:5xZ) stays Andrew's call.** `1.0.0_SA_CTO~W` recommends yes to him (msg 23166, 16:40Z). Staged in
+scratch, not cut: the sibling cell creates seven NEW files only (ModelTab, ExecManagementTab, PostureTab, ThesisDriverChart, CscTable,
+tabTypes, a components harness), measured ABSENT at ffeb4840 with ThesisTab.tsx PRESENT as the control, so both portal branches merge
+without conflict. At 17:0xZ `~18` had begun editing the ADAPTER half (scoped_amgt.py and its tests) with ZERO portal edits, so the
+half that would move still carries no rework. A desktop notification went to Andrew at 16:42Z.
+
+**Candidate 3 corrected by `1.0.0_SA_CTO~W`** (msg 23172, 17:00Z): Opal's holdings resolve 164 of 164 from the chain that feeds the
+Positioning page (CUSIP 161, FIGI 1, SEDOL 1, Bloomberg security 1), not ~115 via the scanner. No new COO row: rj-11's own W20-S13
+already records the domain gap (167 of U-1's 170 holding rows unresolved; membership three-state), and the pairing is carried for L9.
+
+**rj-11 (`~20`) reported at ~17:1xZ:** instance VALID 6 of 6 -- membership three-state from U-1, the comparable on the other side
+(BABA not held -> HD_US_Equity held, rung 2, log-cap distance 0.256; BA held -> DE_US_Equity not held, rung 3, 0.025, the nearest of 8
+not-held peers with 4 unproven excluded), fit ABSENT on every preset (R-1 carries no factor values), the judgment through
+`claude-opus-5` over both packs (BABA worse, cites 17 of 17, USD 0.19; BA hold, cites 20 of 20, USD 0.13), two O-1 objects in the pool,
+the control `absent` with no model call, 22 tests. Rows W20-S9..S14; S11 ARMED with this seat its owner (the comparables lack their
+packs: DE_US_Equity none of the four parts, HD_US_Equity no model block). **Drained clean @`496470a993`** (220 rows).
+
+**rj-13 (`~22`) reported at ~17:1xZ:** instance VALID 4 of 4 -- one Reddit keyword job for BA_US_Equity through `/datasets/v3/trigger`
+with the job id persisted before polling (1 trigger across 7 resumed runs; estimate USD 0.075 of the 5 cap; key `brightdata-api-key`),
+COMPLETE in 713 s with 48 records, 48 valid, 0 admitted by the existing rule (22 rejected, 26 provisional -- the vendor record carries
+no per-post subject; the 'BA' arm is mostly British Airways and was truncated at its own 25), cost ABSENT (the key cannot read
+billing), the S-1 record in the pool, 29 tests. Rows W22-S3..S8, all INERT (S6: the S-1 key carries no security, so a second name on
+one day overwrites the first). **Drained @`f0d0f09e31`** after the expected channel conflict (union 220 + 6 = 226).
+
+**Acts after the drains:** (1) rj-9 AC4 AMENDMENT 4 @`4f383fc217` -- its posture arm expected ABSENT "(rj-11 has not landed at this
+cell)" and printed `json.dumps(po)[:80]`, which cut before the verdict; now it prints status, verdict, comparable, marked and expects
+the served BA object (verdict hold, comparable DE_US_Equity); the duplicate AMENDMENT 3 label noted in the same edit. `~18` was
+messaged at once with the new invocation and expectation verbatim and told not to merge (its worktree predates the commit). (2) rj-12
+AMENDMENT 1 @`a5358c283c`, BEFORE its spawn -- the tab renders each side's evidence coverage from `packs` and an incomplete-comparable
+line, the harness proving the line present on both landed objects and absent on an emptied-absent copy; the O-1 shape corrected to the
+landed object; fixtures from the pool (the `~20` deliverables hold run records, not O-1 copies, measured). (3) Row **Z-S104**
+@`3356b85939` (227 rows): the disarm of W20-S11 by its owner, ACCEPT-AND-ROUTE, disposition UNDER_INVESTIGATION -- the hazard's one
+reach this round routed into rj-12; the contract choice among the worker's three remedies left to the CTO's L10 read. Nine of thirteen
+complete; `~20` and `~22` idle with empty queues.
+
 ---
 
 ## Decisions Made
@@ -451,21 +494,22 @@ None at this lane. The next acts are gated on the workers' final reports (backgr
 
 ## Current State
 
-Round 11 of AMGT_RESAPP is EXECUTING (13 orders): rj-4, rj-1, rj-7, rj-5, rj-6, rj-2, rj-8 COMPLETE and drained (last drain
-eff1b9f6ae; channel at 214 rows). THREE workers LIVE since 16:1xZ: `~18` on rj-9 in C:/tmp/wk-amgt-11-1 (portal @ffeb4840 on
-wk-amgt_resapp-11-1-portal), `~20` on rj-11 in C:/tmp/wk-amgt-11-3, `~22` on rj-13 in C:/tmp/wk-amgt-11-5; `~19` idle in
-wk-amgt-11-2 until rj-9 drains (rj-10); chain D done. Andrew's word on splitting rj-9 mid-round is OPEN. PORTAL FROZEN; all commits
-LOCAL; no push. Inbox Monitor + a 15-minute stagger tick, re-armed on every expiry.
+Round 11 of AMGT_RESAPP is EXECUTING (13 orders): rj-4, rj-1, rj-7, rj-5, rj-6, rj-2, rj-8, rj-11, rj-13 COMPLETE and drained (last
+drain f0d0f09e31; channel at 227 rows with Z-S104). ONE worker LIVE: `~18` on rj-9 in C:/tmp/wk-amgt-11-1 (adapter half under edit,
+portal half untouched; AC4 amended @4f383fc217 and messaged). `~19` idle in wk-amgt-11-2 until rj-9 drains (rj-10); `~20` and `~22`
+queues empty. rj-12 amended pre-spawn @a5358c283c. Andrew's word on splitting rj-9 is OPEN (staged plan in scratch). Andrew-direct
+~16:3xZ: the ~W fabric is AMGT_RESAPP only for the session. PORTAL FROZEN; all commits LOCAL; no push.
 
 ---
 
 ## Next Steps
 
-1. At rj-9's drain: rj-10 (~19, ff wk-amgt-11-2 first). At rj-9 + rj-11: rj-12 (~18). rj-3 (~18) LAST after rj-10 + rj-12. If Andrew
-   says split rj-9: amend the decomposition, cut the sibling cell, spawn it on a new slot with its own portal branch.
+1. At rj-9's drain: rj-10 (~19, ff wk-amgt-11-2 first) and rj-12 (~18, carrying Z-S104) in parallel; rj-3 (~18) LAST after both.
+   At the drain, reconcile rj-9's recorded AC4 invocation against the amended order (its worktree predates 4f383fc217).
+   If Andrew says split rj-9: cut the sibling cell per the staged plan, continue ~18 with a message naming what left its order.
 2. Each drain: verify with the worktree's own checker, safe-merge with the channel unioned by row id, read every row, disarm as owner
-   where owed; chain A's portal branch into refs/drains/rj-portal at each of its drains; the gitlink never moves.
-3. The browser half of rj-3 with rj-10's payloads (ROUND11_BROWSER_EXERCISE.md); the L8 packet to 3.0.0_SA_CVO~W (ROUND11_PACKET.md +
-   one message) carrying W18-S6/S7/S8/S9, W19-S8, W20-S4/S5/S8, W21-S3/S6, W22-S1/S2 and every row the three live workers file, plus the
-   CTO's L10 pre-read @9ceb811406 beside it; propose round 12 cut WIDE on the frontend from the start.
-4. Re-arm the inbox Monitor and the stagger tick on every expiry; ack every broker message on read. Old worktrees stay until Andrew's word.
+   where owed; chain A's portal branch into refs/drains/rj-portal; the gitlink never moves.
+3. The browser half of rj-3 with rj-10's payloads; the L8 packet to 3.0.0_SA_CVO~W carrying the scratch carry notes (W20-S10/S11/S13
+   with Z-S104 and candidate 3 corrected; W22-S1..S8; W18-S6..S9; W19-S8; W20-S4/S5/S8; W21-S3/S6) and the CTO's pre-read; propose
+   round 12 cut wide on the frontend.
+4. Re-arm the inbox Monitor and the stagger tick on every expiry; ack every broker message on read.
