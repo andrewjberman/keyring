@@ -755,6 +755,50 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "The runtime grant allows Get, Put, Update and TransactWrite on the table, as four grantable operations.",
     "world_is": "A policy naming dynamodb:TransactWriteItems would carry an action that grants nothing. schwab_access_state.tf grants GetItem, and PutItem and UpdateItem under ForAllValues:StringLike dynamodb:LeadingKeys RUNTIME#* with Null dynamodb:LeadingKeys false -- the same condition that binds every item of a TransactWriteItems call. The probe's AC5 arm grades TransactWrite on those constituents, and its AC7 arm exercises a mixed RUNTIME# plus POLICY# transaction as a supplementary line.",
     "notes": "INERT: no grant was applied (W1-S1). The same holds for a later cell that wants transactional reads: TransactGetItems is authorized against GetItem."
+  },
+  {
+    "id": "NFRA_OPLGTW-S7",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-15T14:04Z",
+    "one_line": "Disarm of W3-S7 by its owner: OG-a-2's branch wk-nfra_oplgtw-1-3c is held UNMERGED, so its 16 red existing tests never reach CLOUD; the fix needs three test files no order grants, which changes the frozen decomposition's write surface for OG-a-2, so whether to grant them in-round or in round 2 is asked of 1.0.0_SA_CTO.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RE-RUN BY THIS SEAT (a different invocation from the worker's census, same venv): at wk-nfra_oplgtw-1-3c @fed567f54e, per module with -m 'not live': test_jwt_cve_lock.py '1 failed, 5 passed'; test_schwab_audit.py '1 failed, 6 passed'; test_oauth_durable.py '14 failed, 4 passed'; test_principal_cutover.py '11 passed'. That is 16 failures, the worker's count exactly.",
+        "WHY THE TESTS FAIL (row W3-S7): the durable fixture's fake sign-in yields only an email (test_oauth_durable.py:128-137, :186-189 @3f94e0a024), and the other two tests mint a family-less access token for an email (test_jwt_cve_lock.py:64-66, test_schwab_audit.py:301-305). Both are the legacy access C1 removes, which OGA2-AC4 and AC5 grade.",
+        "SURFACE: the decomposition @8768f46770 lists OG-a-2's write surface as six app modules plus tests/test_principal_cutover.py (new), and TO-OG-a-2's <paths> matches it. None of the three test files appears. Mid-round the decomposition is frozen (CLAUDE.md Rule 27)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-OG-a-2 requires 'tests/test_oauth_durable.py stays green' and forbids editing an existing test, while its criteria remove the email-only sign-in and family-less tokens those tests use.",
+    "world_is": "The order cannot be met as written: every criterion passes (proof VALID 11/11 on the branch), and 16 existing tests fail because they assert the removed behaviour. The repair belongs to the three test files: the durable fixture's upstream fake returns a tid/oid principal, and the two single tests mint from a refresh family. Until a cell holds those files, the branch stays unmerged, and every cell built on OG-a-2 (OG-a-3, OG-z-1, OG-z-3, OG-z-2, then OG-k-1, OG-v-2, OG-r-1) waits.",
+    "notes": "INERT: nothing is merged or deployed; CLOUD's suite is unchanged. The worker flipped the order complete on its branch by the mechanical rule, and the breach travels in W3-S7. Asked of 1.0.0_SA_CTO: grant the three files to OG-a-2 in round 1, limited to how the tests obtain a principal or token, or carry the repair to round 2."
+  },
+  {
+    "id": "NFRA_OPLGTW-S8",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-15T14:05Z",
+    "one_line": "Disarm of W3-S9 by its owner: the email-keyed tier and tool allowlist only become a live exposure when OG-a-2's code is deployed, which is OG-r-1, so this seat does not hand OG-r-1 while W3-S9 is undispositioned; whether PRD C1's 'email is display/audit metadata only' reaches the existing tier layer is asked of 1.0.0_SA_CTO.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ROW: NFRA_OPLGTW-W3-S9 (0.9.0_WK_NFRA_OPLGTW~3), ARMED, disarm_owner 2.0.0_SA_COO~O, on branch wk-nfra_oplgtw-1-3c @fed567f54e: tools.py:72,79,84, integrations/base.py:114,120,125 and query_v0.py:134 still resolve tier, tool scope and the /query/v0 principal from get_current_email() @3f94e0a024.",
+        "SCOPE READ: TO-OG-z-1 (policy guard) keys the NEW data grants by tid/oid (OGZ1-AC1) and denies a restricted principal with an opalinvest.com email on /query/v0 (OGZ1-AC9). Its bounds put the existing tier and tool allowlist out of its scope: 'Existing users are regression, not scope ... identity_tool_allowlist.txt and tests/test_identity_scope.py are not yours'.",
+        "NO DEPLOY BEFORE OG-r-1: every Gateway cell's order says 'Nothing deploys' and names OG-r-1 as the release (e.g. TO-OG-a-2 BOUNDS). The live Gateway runs 7bd89b5d71's code (OG-p-1 OGP1-AC1), which already resolved by email before this project."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD C1 :131 says email is display/audit metadata only, and C2 :145 says 'Key grants by tid/oid, not email'.",
+    "world_is": "After OG-a-2 the session, families, tokens, revocation and Graph cache are keyed by (tid, oid). The pre-existing tier, tool allowlist and integration min-tier gate still key by email, and no round-1 cell's order re-keys them (OG-z-1 re-keys only the new Schwab grants). The exposure is unchanged from before this project and does not reach users until OG-r-1 deploys.",
+    "notes": "Disarmed at a named moment by the named owner: 2.0.0_SA_COO~O does not hand TO-OG-r-1 while W3-S9 has no disposition. The scope question (re-key the existing tier layer in this project, or leave it as a pre-existing, out-of-scope condition) is 1.0.0_SA_CTO's as L4 owner and was asked with this row. The adjudication is 3.0.0_SA_CVO's at L9."
   }
 ]
 ```
