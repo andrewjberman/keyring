@@ -1,0 +1,91 @@
+{
+ "schema_version": "1.0",
+ "project": "IRPT_FNTEND",
+ "round": 7,
+ "seat": "3.0.0_SA_CVO",
+ "written_utc": "2026-09-15T02:3xZ",
+ "trigger": "2.0.0_SA_COO~F's round-7 drain-end packet, msg 96814 (2026-09-15T01:46:24Z): 4 of 4 orders complete and drained, the last drain FE-s-45 @32855486f0. The compile and grading ran in a background FORK of this seat's session (same serial, same model). The packet's carrier is org/mcp/inbox/3.0.0_SA_CVO/read/20260915T014624Z_2.0.0_SA_COO_F_IRPT_FNTEND_round_7_DRAIN-END_PACKET__L8.md, an UNTRACKED device-local file (org/mcp/inbox/* is gitignored), so no commit vintage exists for it.",
+ "rows": [
+  {
+   "seq": 1,
+   "limb": "L8",
+   "started_utc": "2026-09-15T01:5xZ",
+   "ended_utc": "2026-09-15T02:1xZ",
+   "act": "Compiled round 7's channel. The new rows are those at HEAD absent at the issuance bc47ca11a3, over BOTH investigation files and every JSON fence: 227 minus 217 = 10, 0 lost. An independent id-line count agrees (227). Over BOTH adjudication files (44 and 48 rows) exactly those 10 were carrier-less, matching the packet's list; every id present at the issuance has a carrier. Highest existing carrier: C-S92. All 10 OBSERVATION/INERT.",
+   "inputs": [
+    {"kind": "MESSAGE", "ref": "96814"},
+    {"kind": "ARTIFACT", "ref": "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v{1,2}.md@bc47ca11a3 and at HEAD 3e8cf9e288"},
+    {"kind": "ARTIFACT", "ref": "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/adjudications/ADJUDICATION_v{1,2}.md at HEAD"}
+   ],
+   "outputs": [
+    {"kind": "ARTIFACT", "ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND7_L8_L9_20260915.md sections 1-2"}
+   ],
+   "spine_clause": "L8: input is the new investigation rows and no others",
+   "gate_or_notifier_touched": "none -- a read-only compile",
+   "note": "started_utc and ended_utc are taken from tool-call order to the ten-minute grain, not recorded by an instrument."
+  },
+  {
+   "seq": 2,
+   "limb": "L9",
+   "started_utc": "2026-09-15T01:5xZ",
+   "ended_utc": "2026-09-15T02:21:10Z",
+   "act": "Graded the four JUDGMENT criteria, all PASS: F42-AC10 qualified (a non-authoritative cohort renders '<axis>: unknown'), F43-AC9 qualified (the canonical-flow skill is stale, W4-S16), F44-AC7 MET, and F45-AC8 qualified (the zero-write and build-manifest figures are the worker's and issuer's runs; W1-S69). EXERCISED on the SHARED tree, not a worker's worktree: proof-of-spec-check.py bound with --governing-order on 4 of 4 instances -> VALID rc=0; .tools/tests/test_receiving_binding.py -> '11 of 11 arm(s) as expected'; org/standards/test_artifact_coverage_both_grammars.py -> '6/6 PASS', controls 3 of 3, mutant caught. READ at portal DEV 1f3ce9f0 by git show (portal frozen): adapt.ts:588 and :466, ScopeSummary.tsx:34 and :118, validate.ts:186, ReceiptPanel.tsx:54, package.json:13/14/17, vite.config.ts:14/17, fe-s-38/resolve-config.mjs:64, fe-s-41/one-writer.test.ts:105/715, the two overrides absent, fe-s-19 phrase gone. Read at 4d11c008c2: proof-of-spec-check.py:339, the CHECKER-SCOPE limb, with the checker blob 7e324c78c2 unchanged at HEAD.",
+   "inputs": [
+    {"kind": "ARTIFACT", "ref": "the four instances: TO-FE-s-42 @f91fba582c, TO-FE-s-43 @33ea27ab7a, TO-FE-s-44 @5d25cd5028, TO-FE-s-45 @3e48518ae9"},
+    {"kind": "ARTIFACT", "ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_IRPT_FNTEND_ROUND6_20260914.md@4713211d87 RULINGS X, Y, Z, AA, AB, AC, U residuals; CTO_ADJUDICATION_IRPT_FNTEND_20260914T2350Z.md@46664e15f4 s.3-4"},
+    {"kind": "ARTIFACT", "ref": "portal DEV 1f3ce9f0 (LOCAL): contracts/adapt.ts, contracts/validate.ts, header/ScopeSummary.tsx, export/ReceiptPanel.tsx, package.json, vite.config.ts, __tests__/fe-s-38/resolve-config.mjs, __tests__/fe-s-41/one-writer.test.ts, __tests__/fe-s-32/holdings-in-a-browser.test.ts"}
+   ],
+   "outputs": [
+    {"kind": "ARTIFACT", "ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND7_L8_L9_20260915.md sections 3-4"}
+   ],
+   "spine_clause": "L9: JUDGMENT criteria are graded here and never self-graded",
+   "gate_or_notifier_touched": "none -- reads and re-runs only",
+   "note": "ended_utc is the generator's stamp, the carriers' surfaced_at. No browser, dev-server or portal test run by this seat: the portal is frozen and a dev start writes into the main checkout."
+  },
+  {
+   "seq": 3,
+   "limb": "L9",
+   "started_utc": "2026-09-15T02:21:10Z",
+   "ended_utc": "2026-09-15T02:2xZ",
+   "act": "Carried every disposition and the four grades on the channel as C-S93..C-S98, a new fence under a round-7 heading in ADJUDICATION_v2.md (the old 152791 bytes an exact prefix of the new 170824; no existing row edited): 5 DISMISSED_WITH_REASON (C-S94: W1-S67, W1-S68, W1-S70; C-S95: W3-S34, W4-S17) and 5 GRADUATED (C-S96: W1-S69, W3-S33, W6-S1; C-S97: W3-S35; C-S98: W4-S16). Closing count at HEAD: carrier-less 0 of 227.",
+   "inputs": [
+    {"kind": "ARTIFACT", "ref": "the record's sections 1-4"}
+   ],
+   "outputs": [
+    {"kind": "ARTIFACT", "ref": "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/adjudications/ADJUDICATION_v2.md@aba71991f0"}
+   ],
+   "spine_clause": "L10 precondition: every row dispositioned",
+   "gate_or_notifier_touched": "surprise-row-gate: 6 new rows of 54 checked, OK; missions-tree-check 0 violations. jsonschema Draft 7 read 0 violations on all 11 new rows (6 carriers, 5 remediation) before either commit.",
+   "note": "Convention read from the channel's history: carriers appended under a round heading in ADJUDICATION_v2.md (rounds 4-6); remediation one new file per round slug (v1 round 1, v2 round 6), so REMEDIATION_v3.md."
+  },
+  {
+   "seq": 4,
+   "limb": "L10",
+   "started_utc": "2026-09-15T02:2xZ",
+   "ended_utc": "2026-09-15T02:3xZ",
+   "act": "Landed the remediation document at surprise-channel/remediations/REMEDIATION_v3.md: 5 rows (W1-S69, W3-S33, W6-S1, W3-S35, W4-S16), all OPEN, round v7, none carrying a route; the graduated set equals the remediation ids, 5 of 5. The first attempt was refused by safe-commit's contamination check (10 foreign paths staged by LGIC_ENFORCE EN-m-1's merge in progress). This seat unstaged only its own file, removed it from the channel path, waited for MERGE_HEAD to clear (one-shot background wait), and retried. The gate's L10 limb admitted every row: 45 orders at HEAD, 0 open; 227 items, 0 undispositioned.",
+   "inputs": [
+    {"kind": "ARTIFACT", "ref": "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/*.md at HEAD (45; 0 open)"},
+    {"kind": "ARTIFACT", "ref": "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/adjudications/ADJUDICATION_v2.md@aba71991f0"}
+   ],
+   "outputs": [
+    {"kind": "ARTIFACT", "ref": "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/remediations/REMEDIATION_v3.md@2d42ebd1b0"}
+   ],
+   "spine_clause": "L10 precondition: every TO terminal and every row dispositioned",
+   "gate_or_notifier_touched": "safe-commit's contamination refusal (rc=1) once, with a foreign merge's paths staged; then the surprise-row-gate L10 limb ADMITTED all 5 rows. No override.",
+   "note": "The foreign staged paths were not touched."
+  },
+  {
+   "seq": 5,
+   "limb": "L10",
+   "started_utc": "TO_BE_FILLED",
+   "ended_utc": "TO_BE_FILLED",
+   "act": "TO_BE_FILLED by the parent session: the ONE slug to 1.0.0_SA_CTO after its own verification.",
+   "inputs": [],
+   "outputs": [],
+   "spine_clause": "L10: ONE slug to the CTO, only after every TO is terminal and every row dispositioned",
+   "gate_or_notifier_touched": "TO_BE_FILLED",
+   "note": "TO_BE_FILLED"
+  }
+ ]
+}
