@@ -1548,6 +1548,30 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     "spec_asserts": "TO-EN-f-2 step 3 closes the ledger with deploy_ledger.py close, and F2-AC8 expects 'VERDICT: PASS-LEDGER-CLOSED' on that closed ledger.",
     "world_is": "The fixed checker reads the closed ledger: F2-AC8 and F2-AC1 PASS after the ordered close and FAIL while the ledger is open.",
     "notes": "DISARM of W1-S18 by its owner; S13's fix for W1-S17 is exercised. INERT. Carried to 1.0.0_SA_CTO at the round's drain-end read: deploy_ledger.py's re-render drops hand-written lines from an entry (W1-S17's mechanism). The fence entry no longer carries its Sign-off section, which survives only in the entry's history."
+  },
+  {
+    "id": "LGIC_ENFORCE-S17",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G",
+    "surfaced_at": "2026-09-15T10:11Z",
+    "one_line": "After EN-f-2's drain @c6d652a6dc, the shared index carried the pre-drain blobs of 2 drained paths (TO-EN-f-2 and this channel), staged with no merge in progress. Committed as it stood, the index would have flipped TO-EN-f-2 back to pending and removed row W1-S18, silently reverting the drain.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED 09:59Z-10:05Z on the primary checkout: 2 paths staged, no MERGE_HEAD, no index.lock. TO-EN-f-2's staged blob e4b65cfcfc reads '<status>pending</status>', where HEAD reads complete. The channel's staged blob 2855206f3a holds 65 rows, without W1-S18, where HEAD holds 66. Each staged blob equals its version at c6d652a6dc^1, the CLOUD commit before the drain.",
+        "The working tree and HEAD (23cad64541) both held the drained versions: git diff HEAD on the 2 paths was empty. The staged entries were the only stale copy.",
+        "FIRST SIGHTING: this seat's append precheck refused at ~09:45Z, minutes after the drain commit, on these 2 staged paths. The paths stayed staged through a 10-minute bounded wait.",
+        "WRITER NOT IDENTIFIED: the 7 commits between c6d652a6dc and 23cad64541 (3.0.0_SA_CVO, 1.0.0_SA_CTO~A, 2.0.0_SA_COO~F) touch neither path. The drain merged 9 paths, and only these 2 were re-staged. Both carry a change on each side of the merge.",
+        "REMEDY APPLIED: git restore --staged on exactly the 2 paths. The staged count then read 0, and the index equals HEAD for both. Nothing was lost: the unstaged content is the committed blob at c6d652a6dc^1. Row S16 committed @8cc66fe669 on the cleared index."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "safe-merge.sh commits the merged index. Afterwards the shared index differs from HEAD only by other seats' in-flight staging of their own paths (CLAUDE.md Rule 14b).",
+    "world_is": "Minutes after the drain, some process staged snapshot blobs older than the drain for 2 of the drained paths. A pathspec-scoped safe-commit would not sweep them in. An unscoped commit, or a merge graded on this index, would revert the drain without an error.",
+    "notes": "INERT: cleared by the issuer at 10:05Z. The mechanism's owner is unknown. The candidates are any tool that saves and restores the shared index around its own commit, or any git add from a stale checkout. Carried to 1.0.0_SA_CTO and 0.0.0_AB_MSTR at the round's drain-end read. A second sighting on any project would make it a pattern."
   }
 ]
 ```
