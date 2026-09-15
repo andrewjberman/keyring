@@ -982,6 +982,30 @@ new row on 3.0.0_SA_CVO's ask 96495), both 1.0.0_SA_CTO; `LGIC_NAMING-S3`, `LGIC
     "spec_asserts": "TO-LN-e-5-r2 E5R-AC1: 'the reader marked the expected firm, or none, on every item', invocation check_ln_r2.py e5-correct, expect 'VERDICT: PASS-ALL-CORRECT'.",
     "world_is": "The invocation prints 'VERDICT: FAIL-MISREAD' with 16 of 18 correct. The cell scores and does not read or name, so no mark can be changed inside LN-e-5, and the order stays open on the E5R-AC1 FAIL. r2/n3-reader-score.md records every WRONG line with the name, the mark and the expected token.",
     "notes": "Filed by the scoring worker because the named invocation did not produce the named result. The task order calls a wrong mark 'the outcome's evidence, not a defect to fix', so nothing is edited. For 3.0.0_SA_CVO's L8 disposition."
+  },
+  {
+    "id": "LGIC_NAMING-S17",
+    "project": "LGIC_NAMING",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G",
+    "surfaced_at": "2026-09-15T07:16Z",
+    "one_line": "to-pipeline-gate LIMB 6 refused round 3's issuance when committed from a linked worktree -- 'PRD has NO sign-off' on both halves -- although prd-signoff.py status read ADMITTED in that worktree, safe-commit's own gate stage printed 'L4-R sign-offs OK' in the same commit, and the identical commit passed from the primary checkout.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "EXERCISED 1: safe-commit of the 10 issuance paths in worktree .worktrees/coo-g-ln-r3 (HEAD 2f8cc63b8e). The first pass printed 'L4-R sign-offs OK ... at v1.7' per order; the hook pass (input from the STAGED environment variable) printed 'has NO sign-off on its ratified-text half' and '... brief half' per order; rc 1.",
+        "FALSIFIED 1: the sign-off files are at that worktree's HEAD (signoff/3.0.0_SA_CVO.json, 4.0.0_SA_CRO.json), and f0a830c15f, cd596cf4a4 and 3e8cf9e288 are its ancestors; prd-signoff.py status there reads ADMITTED, both halves SIGNED current.",
+        "FALSIFIED 2: the worktree renders the PRD CRLF (27,648 bytes, 286 CRLF lines; committed 27,362 bytes, LF). Rewritten byte-equal to HEAD, the second attempt refused the same way.",
+        "EXERCISED 2, the discriminator: the same 10 paths, byte-copied into the primary checkout, committed rc 0 @60350c4a04, the hook pass included.",
+        "INFERRED, not measured: the hook pass's HEAD-read of the sign-off directory (S14's change @3e8cf9e288) returns nothing under a linked worktree's git environment. The code was not read."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "1.0.0_SA_CTO's 96826: 'At your issuance commit, the gate reads the signatures committed before it, never a file staged or left on disk' (prd_signoff_lib reads signoff files as committed at HEAD, @3e8cf9e288).",
+    "world_is": "In a linked worktree's commit hook, LIMB 6 reads no sign-off for a PRD whose halves are both SIGNED at HEAD. CLAUDE.md Rule 14b sends a multi-file commit to its own worktree, which is exactly where this refuses.",
+    "notes": "INERT for this round: the issuance landed from the primary. Owner of the reader: 1.0.0_SA_CTO (row S14's change). Round 2's issuance, before @3e8cf9e288, did not meet it. Cost until fixed: every tree issuance from a linked worktree refuses at LIMB 6."
   }
 ]
 ```
