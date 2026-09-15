@@ -8,7 +8,7 @@
  "dep_stage": "REGISTERED",
  "created": "2026-09-15",
  "registered_under_tree": "2026-09-15",
- "last_updated": "2026-09-15T16:49:08Z",
+ "last_updated": "2026-09-15T17:13:44Z",
  "pods": [
   "1.0.0",
   "2.0.0",
@@ -27,15 +27,16 @@
  ],
  "name": "Positioning AGG view, restored as an Opal-only view -- the firm-wide aggregate book on the Positioning page's Portfolio Composition and Holdings Breakdown panels, for Opal users only.",
  "description": "Brings back the aggregate (AGG) book on the Positioning page that portal commit d53049a0 removed on 2026-08-24, visible to Opal users only. Per the CRO's draft plan: the served positioning data still carries the AGG block, but its model weights come from a file last written 2026-07-23 and omit the two Opal Blend models; a current Opal-wide assets-by-model file exists with an unexplained gap to its own total. Endpoint FWD-1..FWD-8 emitted 2026-09-15 by 1.0.0_SA_CTO~Z, awaiting Andrew's DONE WHEN word and his answers to the plan's D1-D4.",
- "brief": "org/tier1_exec/4.0.0_SA_CRO/deliverables/POSITIONING_AGG_OPAL_ONLY_RESTORE_PLAN_20260915.md @2033ff3ea6 (origin/CLOUD ONLY, absent from SITEZ at registration; designated the L2 input by Andrew-direct ~16:2xZ; its own status line says 'Not a task order and not a brief', and its path is none of the three admitted L1 shapes, so the PRD header's brief_ref is carried to L4 unresolved)",
+ "brief": "docs/briefs/posn-aggfix-opal-only-agg-view-brief-20260915.md @1e268c164e (L1 brief, admitted shape, by 4.0.0_SA_CRO~Z; blob 8a527c8aa0). The plan Andrew designated as the L2 input is org/tier1_exec/4.0.0_SA_CRO/deliverables/POSITIONING_AGG_OPAL_ONLY_RESTORE_PLAN_20260915.md, blob 0765b9af1f, on origin/CLOUD @2033ff3ea6 and on SITEZ byte-identical since 1e268c164e.",
  "endpoint": "org/tier1_exec/1.0.0_SA_CTO/deliverables/POSN_AGGFIX_ENDPOINT_FORWARD_20260915_Z.md",
  "prds": [],
  "leads": [
   "REGISTERED UNDER THE TREE 2026-09-15 by 1.0.0_SA_CTO~Z (spine L3; the CTO writes the row, the generated index and the D4 members line in one commit). Macro POSN is already ratified for D4 in MACROS.yaml, so no macro-enum edit. Andrew-direct ~16:2xZ at the 0.0.0_AB_MSTR terminal, relayed via 0.0.0_AB_MSTR~Z msg 23156; SITEZ record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260915_162xZ_POSN_AGGFIX_CTO_Z_ENDPOINT_FORWARD_ON_CRO_RESTORE_PLAN.md.",
-  "L2 ENDPOINT EMITTED, NOT CONFIRMED: FWD-1..FWD-8. FWD-4, FWD-6 and FWD-7 are written on the CRO's recommendations for D1, D2 and D3 and each states the line it becomes under the other answer; D4 adds an outcome only if Andrew picks the aggregate as the Opal default."
+  "L2 ENDPOINT EMITTED, NOT CONFIRMED: FWD-1..FWD-8. FWD-4, FWD-6 and FWD-7 are written on the CRO's recommendations for D1, D2 and D3 and each states the line it becomes under the other answer; D4 adds an outcome only if Andrew picks the aggregate as the Opal default.",
+  "L2 ENDPOINT AMENDED BEFORE CONFIRMATION 2026-09-15 ~17:1xZ by 1.0.0_SA_CTO~Z on 4.0.0_SA_CRO~Z's L1 brief findings (msg 23175), re-read at origin/PROD edf85ce503 portal-proxy.ts:1418-1426 (the model route: internal + advisor only, blocks client tier) and at Andrew's 2026-09-09 ruling 5 text: FWD-2 and FWD-7 add the advisor arm; FWD-6 names its dependency on the owner of the firm's assets-by-model figures without narrowing its bar; FWD-4's Phase-1-alone branch names ruling 5. Ids unchanged."
  ],
- "phase": "L3 REGISTERED 2026-09-15 by 1.0.0_SA_CTO~Z. L2 endpoint emitted the same commit and put to Andrew through 0.0.0_AB_MSTR~Z. L4 (the PRD) is next and is the CTO's.",
- "blocking": "L4 waits on Andrew: his DONE WHEN word on FWD-1..FWD-8 (spine L2) and his answers to D1-D4, because a PRD carries no open decide-first question into L5. The plan's s.6 process question (the 2026-08-24 exemption or the full flow) is being put to him by 0.0.0_AB_MSTR. Also carried to L4: brief_ref has no SITEZ-resolvable, admitted-shape target yet (route: 4.0.0_SA_CRO~Z as L1 owner, or the CLOUD-SITEZ integration). STANDING: site-Z push hold; commits LOCAL.",
+ "phase": "L3 REGISTERED 2026-09-15 by 1.0.0_SA_CTO~Z; L2 endpoint emitted the same commit and amended before confirmation ~17:1xZ; put to Andrew through 0.0.0_AB_MSTR~Z. L1 brief landed in an admitted shape by 4.0.0_SA_CRO~Z at 1e268c164e. L4 (the PRD) is next and is the CTO's.",
+ "blocking": "L4 waits on Andrew: his DONE WHEN word on FWD-1..FWD-8 as amended ~17:1xZ and his answers to D1-D4, because a PRD carries no open decide-first question into L5. The plan's s.6 process question (the 2026-08-24 exemption or the full flow) is with him through 0.0.0_AB_MSTR. brief_ref RESOLVED at 1e268c164e. STANDING: site-Z push hold; commits LOCAL.",
  "threads": [],
  "thread_counter": 0
 }
