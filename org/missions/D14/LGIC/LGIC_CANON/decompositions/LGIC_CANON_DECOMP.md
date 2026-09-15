@@ -26,7 +26,9 @@ with the DIRECTED Step 1b-F row. `1.0.0_SA_CTO` set the L5 order in msg 96640; t
 judged tree for C2 (row LGIC_CANON-S2, 4.0.0_SA_CRO @48146fdd10; 1.0.0_SA_CTO's correction 96693).
 **v3, the re-read at the L6 cut** (section 0c), 2026-09-15, after `1.0.0_SA_CTO` seated this project on `2.0.0_SA_COO~G`
 (@`52ea4c8cac`). The PRD did not move; the register, the schema and the registry did. Cells, edges and constraints stand;
-CN-n-2 moves to its own slot, and gate G-V19R is added.
+CN-n-2 moves to its own slot, and gate G-V19R is added. v3 writes LGIC_ENFORCE's cells as `LGIC_ENFORCE cell r-<n>` (its id
+there is `EN-r-<n>`), as that project's v1.1 did: the L6 coverage limb reads every cell id in this document as one of
+this project's own (LGIC_ENFORCE row S1), and refused this issuance for 12 of 15 cells on the three it counted.
 **Sequence:** stage 1, no gate. `sequence-check --project LGIC_CANON` flags NEEDS-SLOT, which this cut and its row flip answer.
 **Frozen at the cut.** A cell that looks wrong mid-round is a **surprise row, never an edit**
 (`org/missions/D14/LGIC/LGIC_CANON/surprise-channel/investigations/INVESTIGATION_v1.md`, 1 row at the cut).
@@ -123,7 +125,7 @@ moved is the estate the cells read.
      `render_naming_section.py --write` in that same merge, and `--check` reads 0 on the merged tree. That is
      `3.0.0_SA_CVO`'s N4 trigger exercised, not a new rule.
 4. **The registry exists, so G-R is CLEARED, measured:** `infra/logic/registry/{scopes,systems,tiers,exemptions,remediations}.json`
-   at HEAD; EN-r-1 landed @`a925c8a642`. CN-n-1 spawns at issuance.
+   at HEAD; LGIC_ENFORCE cell r-1 landed @`a925c8a642`. CN-n-1 spawns at issuance.
 5. **CLAUDE.md Rule 30** (Andrew-direct ~14:2xZ, *"all future pipelines must abide by lgic structures patterns"*): every
    address and name comes from the builders. CN-n's key (section 3a.3) is builder output -- `key()`, `address()`, `name()`
    and the registry's `bucket` field -- never typed. CN-o-1's steps name their builders.
@@ -143,9 +145,9 @@ moved is the estate the cells read.
 ```
 
 No cell writes `lib/opal_naming.py`, `infra/logic/registry/*`, `NAMING_SCHEMA.json`, `GRADING_RULE.md` or any LGIC_ENFORCE
-or LGIC_NAMING deliverable, so no cell is ordered after GROUP V19 or EN-r-2. The READ dependencies, disclosed:
+or LGIC_NAMING deliverable, so no cell is ordered after GROUP V19 or LGIC_ENFORCE cell r-2. The READ dependencies, disclosed:
 - CN-k-1 reads the schema and the firm-forms carrier (G-V19R above).
-- CN-n reads the registry and the builders. EN-r-2 adds SYSTEM rows and EN-r-3 moves the firm forms' carrier; neither moves
+- CN-n reads the registry and the builders. LGIC_ENFORCE cell r-2 adds SYSTEM rows and its cell r-3 moves the firm forms' carrier; neither moves
   `49financial`/`49f`, so no key value moves with them.
 - CN-j's naming cases come from `GRADING_RULE.md` @`3cc090827f`. None turns on a step LGIC_NAMING round 4 re-cuts (G2's
   AWS-fixed exclusion, FN1d's one subtraction, V-2's placeholders).
@@ -329,7 +331,7 @@ workspace. **No cell is owned by a seat.** Every cell is served by a worker at L
   CN-k-1 --+--> CN-j-1 --+
            +--> CN-j-2 --+--> CN-j-3
            +--> CN-o-1 -----> CN-o-2
-  [G-R: LGIC_ENFORCE EN-r-1 merged] ==> CN-n-1 --> CN-n-2 --> CN-n-3
+  [G-R: LGIC_ENFORCE cell r-1 merged] ==> CN-n-1 --> CN-n-2 --> CN-n-3
                                          (CN-n-1 --------------^)
   CN-r-1        (no edge)
   CN-r-2        (no edge)
@@ -402,7 +404,7 @@ project adds no carrier.
 | gate | owner | the condition that clears it |
 |---|---|---|
 | **G-C** worker admission | `2.0.0_SA_COO~G` | after the issuance commit, `owned-paths-validate --check-agent` on HEAD bytes PERMITs each slot on a named path and REFUSES it on an unnamed one |
-| **G-R** the registry exists | `LGIC_ENFORCE`'s COO lane (this lane) | LGIC_ENFORCE cell EN-r-1 merged (`infra/logic/registry/*.json` at HEAD). CN-n-1 is spawned only then. It is DEC-5's *"waits on it existing"*, as a driven edge, not a wait: EN-r-1 sits at level 1 of LGIC_ENFORCE's DAG |
+| **G-R** the registry exists | `LGIC_ENFORCE`'s COO lane (this lane) | LGIC_ENFORCE cell r-1 merged (`infra/logic/registry/*.json` at HEAD). CN-n-1 is spawned only then. It is DEC-5's *"waits on it existing"*, as a driven edge, not a wait: that cell sits at level 1 of LGIC_ENFORCE's DAG |
 | **G-N** a genuinely new firm | Andrew (his ~13:4xZ word) | a true new-firm act exists. C6 is then cut, and FWD-5 is graded on it. Until then, FWD-5 is EXPRESSLY held, with the reason and his word |
 
 ### `comp-iam`: DECLARED-NOT-APPLICABLE
