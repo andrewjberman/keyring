@@ -4326,6 +4326,138 @@
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S36",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-15T05:41:00Z",
+    "one_line": "The committed wire instances that F47-AC2 and F47-AC7 name have no status member to remove: each is a producer DOCUMENT, not a v1 response envelope. The test wraps the instance in the envelope, sets status to the committed StatusEnvelope instance, then removes status.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal@1f3ce9f0 fixtures/wire/DirectoryEntry.valid.json['instance'], read with python: its top-level members are ids, display_name, masked_discriminator, permitted_scope, permitted_capabilities, termination, access, revision and cohort. None is status. The instances in the other ten fixtures/wire/*.valid.json files are documents too.",
+        "portal@8243b44b contracts/envelope.ts:7: a v1 body is { contract_version, operation, firm_id, data, status? }.",
+        "F47-AC2 run at portal 8243b44b: \"F47-AC2 BODY: committed fixtures/wire/DirectoryEntry.valid.json['instance'] in a v1 envelope, 'status' in body: false\"."
+      ]
+    },
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-47 F47-AC2: 'Build the body from the committed wire instance fixtures/wire/DirectoryEntry.valid.json['instance'] with its status member removed'. F47-AC7: 'from its committed wire instance with status removed'.",
+    "world_is": "The instance has no status member, so there is nothing to remove from it. __tests__/fe-s-47/no-status-reason.test.ts builds the v1 envelope around the committed instance, with data shaped as the committed contracts/wire/responses.ts declares it (a list for directory-search). It sets status to the committed StatusEnvelope.valid.json instance, then deletes status. It prints that the body has no status member.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S37",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-15T05:41:00Z",
+    "one_line": "If a response's status member omits its REQUIRED state, the status's OWN availability keeps wireEnvelope's explicit unknown with no partialReason, and parsed.status.state is undefined. The carry gives the DOCUMENT the reason. The status member is outside FE-s-47's grant, and the F47-AC6 census subtracts this site with the residue printed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "F47-AC6 at portal 8243b44b: \"F47-AC6 RESIDUE (off-contract) a status with no state: parsed.status.state undefined; parsed.status.availability {\\\"state\\\":\\\"UNCERTAIN\\\",\\\"partialReason\\\":null,\\\"publicReasonCode\\\":\\\"SOURCE_PARTITION_INCOMPLETE\\\"}\".",
+        "portal@8243b44b contracts/envelope.ts:191 adapts ANY record status with adaptStatusEnvelope. adapt.ts:552 passes wireEnvelope state: STATE_FOR_WIRE[wire.state], and adapt.ts:559 sets the top-level state from the same lookup. wireEnvelope's default is adapt.ts:237.",
+        "F47-AC6 at portal 8243b44b: \"OVERWRITE (1) documents: a READY status replaces the document's explicit unknown on 9 of 9 operations whose document carries an availability\" and \"OVERWRITE (2) the status member: 9 of 9 contract states map to a stated view state\".",
+        "portal@8243b44b contracts/wire/StatusEnvelope.ts:18: state is a required member of StatusEnvelopeWire."
+      ]
+    },
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-47 F47-AC6 subtracts 'the sites that are not an Availability' and 'the sites whose output is always overwritten on a response path before it is read (wireEnvelope's, if it is)'. BOUNDS: adapt.ts is the worker's for 'the explicit-unknown sites your F47-AC6 census keeps' and the one constant. 'Nothing else in the file.'",
+    "world_is": "wireEnvelope's default reaches a response in two ways. Through a document adapter it is always overwritten: parseIrEnvelope's carry (envelope.ts:219) replaces the state. Through the status member, an in-contract status never takes it. A status record without state does take it, and that residue fits neither category the order names. The test subtracts the site as 'OVERWRITTEN on every in-contract response' and prints the residue beside it. A reason there needs a change to adaptStatusEnvelope, which the grant excludes. If the status also omits public_reason_code, validate.ts:95 would call that availability reasonless; that arm was not run.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S38",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-15T05:41:00Z",
+    "one_line": "On status-summary and status-job with no envelope status, the carry replaces the StatusEnvelope document's own state on its availability with UNCERTAIN. validateContract then reports \"state 'PARTIAL' disagrees with availability.state 'UNCERTAIN'\". The no-status reason now sits on a document whose own data says PARTIAL.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "F47-AC7 at portal 8243b44b, for both operations: \"OTHER PROBLEMS (printed, not graded; row IRPT_FNTEND-W3-S38): [\\\"StatusEnvelope[0]: state 'PARTIAL' disagrees with availability.state 'UNCERTAIN'\\\"]\". The availability's partialReason is NO_STATUS_REASON, and its publicReasonCode is SOURCE_PARTITION_INCOMPLETE.",
+        "portal@1f3ce9f0 contracts/adapt.ts:290: 'state: status?.state ?? EXPLICIT_UNKNOWN_STATE' replaced availability.state for every operation before FE-s-47, including status-summary and status-job (envelope.ts:147-148). FE-s-47 did not change that state rule (adapt.ts:299-301 @8243b44b).",
+        "portal@1f3ce9f0 contracts/validate.ts:618-621: the StatusEnvelope check refuses a top-level state that disagrees with availability.state."
+      ]
+    },
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-47 F47-AC7: 'Any OTHER problem an instance shows is printed, not graded, and is a surprise row.' THE REMEDY: 'A response whose status states a state never carries that reason.'",
+    "world_is": "For these two operations the data IS a status document, and it states PARTIAL; the envelope's own status member is absent. The ruling's trigger, no status on the response, holds. So the carry supplies the explicit unknown and now its reason too, while the document says PARTIAL at the top level. The disagreement predates FE-s-47 and is outside the grant. Not read: whether a production consumer renders a status-summary document's availability or its top-level state.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S39",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-15T05:41:00Z",
+    "one_line": "With no status, a resolve-scope document's own partial_reason no longer rides on its availability: the carry puts NO_STATUS_REASON there instead. The order does not say which reason wins when the document already states one. The top-level ResolvedScope.partialReason still carries it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal@8243b44b contracts/adapt.ts:674 (partialReason: wire.partial_reason into wireEnvelope) and :690 (top-level partialReason). adaptResolvedScope is the one document adapter that passes a reason into wireEnvelope; the F47-AC6 census over the committed tree found no other.",
+        "F47-AC6 at portal 8243b44b: \"REACH resolve-scope, no status: state UNCERTAIN, partialReason \\\"The response carried no status stating its state, so its state is unknown.\\\" -> CARRIES\".",
+        "F47-AC3 at portal 8243b44b: under a READY or PARTIAL status, both resolve-scope arms carry the document's own \"one account of four is outside the advisor's grant\" and are HELD."
+      ]
+    },
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-47 THE REMEDY: 'When the adapter supplies its explicit unknown because the response carried no status, or a status with no state, it also supplies a partialReason saying so.' Under a stated state, F47-AC3 says the carried partialReason 'is exactly what the status and document state'.",
+    "world_is": "Before FE-s-47, a no-status resolve-scope carried UNCERTAIN with the document's own reason on its availability. Now it carries UNCERTAIN with NO_STATUS_REASON. The adapter supplies the reason every time it supplies the explicit unknown, which follows the ruling's wording, and so the reason explains the state the adapter supplied. Keeping the document's reason when one is present was the other reading, and the order does not choose between them. The document's reason is still in ResolvedScope.partialReason, and under a stated state it rides on availability exactly as before.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S40",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-15T05:50:00Z",
+    "one_line": "F41-AC5's CONTROL (__tests__/fe-s-41/one-writer.test.ts:791) timed F47-AC9's whole-suite census out at bun's 5000 ms default on 3 of 4 runs, and again when fe-s-41 ran alone. Run 4, at the final portal HEAD f4b9ce89, read 0 fail. Whether a whole-suite census on this base passes depends on the box's load, and fixing that is FE-s-46's cell.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.9.0_WK_IRPT_FNTEND~1",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Every run below used IRPT_FE_DEV_PORT=5263, measured closed (ECONNREFUSED) before the run.",
+        "Run 1, portal 8243b44b: 564 pass, 18 skip, 3 fail of 585. The three were F41-AC5's CONTROL [6000 ms]; fe-s-13 'producer fixtures' [5265 ms]; and F47-AC6 [10828 ms]. F47-AC6 is this order's own test and is fixed at fffb8454, which reads each committed blob once.",
+        "Run 2, portal fffb8454: '566 pass', '18 skip', '1 fail', 'Ran 585 tests across 103 files. [103.53s]'. The one fail was F41-AC5's CONTROL [6609.00ms], which timed out after 5000ms.",
+        "Run 3, the re-run F47-AC9 grants, portal fffb8454: '566 pass', '18 skip', '1 fail', 'Ran 585 tests across 103 files. [79.59s]'. The same test failed [6641.00ms].",
+        "__tests__/fe-s-41/one-writer.test.ts run alone at portal fffb8454: '10 pass', '1 fail', 'Ran 11 tests across 1 file. [9.11s]'. The control took [5625.00ms] and timed out after 5000ms.",
+        "Run 4, portal f4b9ce89 (the final HEAD; its only change since fffb8454 is one output label in the FE-s-47 test): '567 pass', '18 skip', '0 fail', 'Ran 585 tests across 103 files. [75.61s]'.",
+        "IRPT_FNTEND.TO-FE-s-46 @716a9f4f6c, issued to 0.9.0_WK_IRPT_FNTEND~1, names this test ('__tests__/fe-s-41/one-writer.test.ts:791 ... CONTROL -- an UNCOMMITTED in-place edit naming perf-9 ...'). Its remedy is an explicit per-test timeout sized from the test's measured loaded cost."
+      ]
+    },
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-47 F47-AC9: the whole suite, expect '(?<![0-9])0 fail'. 'If F41-AC5's control times out under load (FE-s-46's row, not yours), report it and re-run; never edit it.' BOUNDS: 'A red test outside your grant is a BLOCKING row with the list, never an edit.'",
+    "world_is": "The bar was met on the deciding run at the final HEAD (run 4), and F47-AC9 is recorded PASS on that run, with runs 1 to 3 disclosed in its status_reason. When the census was red, the red list outside the grant had one member: F41-AC5's CONTROL. It ran past 5000 ms on runs 1, 2 and 3 and alone, and under it on run 4; FE-s-47 did not edit it. fe-s-13's 'producer fixtures' timed out on run 1 only. Until FE-s-46's timeouts land, any cell's whole-suite census on this base passes or fails with the box's load, for a reason that cell's grant cannot fix.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S41",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-15T06:05:00Z",
+    "one_line": "proof-of-spec-check's COUNT-BAR limb reads the digit that ends a criterion id as a count. The printed line 'F47-AC2 PROBLEMS: []' matched as the nonzero count '2 PROBLEMS' beside F47-AC2's zero-count bar, and the instance was refused. The test's output label now puts no digit before the noun.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Checker run at workspace e2d9f703e9, checker-vintage da3e61889d, bound with --governing-order to the FE-s-47 order: \"VIOLATION: count-bar[F47-AC2]: the bar 'A NO-STATUS DIRECTORY BODY THROUGH parseIrEnvelope AND validateContract READS 0 PROBLEMS: yes' asserts ZERO of 'problem' and its own search DOES match the evidence -- but the evidence also carries a NONZERO count for that noun: '2 PROBLEMS'.\" Verdict: INVALID (rc=1).",
+        ".tools/proof-of-spec-check.py:1529 @e2d9f703e9: pat = re.compile(r\"(?<![0-9.])(?<!of )([0-9]+)[ \\t]+\" + re.escape(stem) + r\"[A-Za-z_()]*\", re.I). A letter before the digit passes both lookbehinds, so 'AC2 PROBLEMS' yields the count '2'.",
+        "The evidence line was verbatim output of __tests__/fe-s-47/no-status-reason.test.ts at portal fffb8454: 'F47-AC2 PROBLEMS: []', an empty problems list."
+      ]
+    },
+    "spec_asserts": "The COUNT-BAR limb (.tools/proof-of-spec-check.py:1497-1498): 'For a PASS row whose bar asserts ZERO of a noun ... the evidence may carry no NONZERO count of that noun.' IRPT_FNTEND.TO-FE-s-47 F47-AC2: 'Print the problems list (empty), the carried state and the carried partialReason.'",
+    "world_is": "The limb treats any digit directly before the noun as a count, including a digit that ends a criterion id in a label, so an empty problems list read as '2 PROBLEMS'. The refusal is loud rather than silent. It will refuse any later instance that prints '<ID ending in a digit> <noun>' beside a zero-count bar for that noun. FE-s-47 relabelled its own line, 'F47-AC2 VALIDATE -> problems list: []', and edited nothing in .tools/.",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
