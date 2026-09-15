@@ -1653,10 +1653,9 @@ against the provisional s.19 @`a0f08622ae`, every one carried below) and on **PR
 C-PAGE-LAYOUT, C-ONE-STORE, C-ONE-IDENTITY, C-RANKING-GENERATION, C-ETF-PLANE-READ, C-UNION-UNIVERSE, C-SIMILARITY-RANKER,
 C-POSTURE, C-FILINGS-ANALYZER, C-EXEC-MANAGEMENT; s.9f the supersession map; s.9a-2 the measurement limits). Sources of the
 cut: `1.0.0_SA_CTO~W`'s L10 round-10 analysis `ledger/ROUND_ANALYSIS.round10.md` @`8d5fe78265` s.6 and `3.0.0_SA_CVO~W`'s slug
-`surprise-channel/remediations/REMEDIATION_v10.md` @`e28f0b546c`. **PIN:** the brief half of v0.7 is SIGNED (`4.0.0_SA_CRO~W`,
-stamp `e1d8b2d643`); the ratified-text half is REFUSED on ONE relocation (`3.0.0_SA_CVO~W`, lines 149-154 out of ENDPOINT); the
-issuance re-pins this section to the version at which `prd-signoff.py status AMGT_RESAPP` reads ADMITTED, in the same commit,
-and a contract that changes in substance between this write and that signature re-opens the cell that cites it. The seam map
+`surprise-channel/remediations/REMEDIATION_v10.md` @`e28f0b546c`. **PIN (re-pinned at 07:0xZ): PRD v0.8 @`1170b4da69`, ADMITTED** -- ratified-text half SIGNED by `3.0.0_SA_CVO~W` (stamp @`0e6592e88c`),
+brief half SIGNED by `4.0.0_SA_CRO~W` (stamp @`e1d8b2d643`); v0.8's only change from v0.7 is one paragraph moved out of the ENDPOINT,
+no contract changed in substance, so every cell below stands as cut. The seam map
 every cell cites was measured 2026-09-15 06:1x-06:3xZ over `C:/tmp/wk-amgt-10-1/portal` @`9aef3734` (the round-10 drain ref;
 the shared `portal/` checkout at `e85f6eb84f` does NOT carry the page) and the superproject at `82fab6ad44`.
 
@@ -1674,16 +1673,18 @@ adjudication rows, 123 remediation rows across 104 files; 85 ARMED by latest cit
 (the slug @`e28f0b546c`): 12 rows this round, 7 closed, 5 open; six earlier clocks preserved in prior slugs (S70, S72, S78 in v9;
 W11-S1 in v7; C-S49 in v5; S67 and S96 disarmed by the CTO @`008ca40b6c`).
 
-**THE POPULATION = the 5 open v10 remediation rows + the 4 new outcomes + the 10 contracts = 19 members.** Each is in exactly one
-line below; the lines are disjoint and sum to 19.
+**THE POPULATION = the 5 open v10 remediation rows (S95, C-S196, S96, W17-S4, W17-S5) + the 1 carried clock the slug advanced (S72) +
+the 4 new outcomes + the 10 contracts = 20 members** (the CRO's follow-up @`865e4fc113` item 7: S72 is a carried clock, not a v10
+row, and W17-S4 / W17-S5 are two rows). Each is in exactly one line below; the lines are disjoint and sum to 20.
 
 | # | member | carried by | note |
 |---|---|---|---|
 | 1 | S95 the ranked-click identity (open) | **rj-1** (with rj-4's crosswalk) | -- |
 | 2 | C-S196 drafting paired with evidence (open) | **rj-2** (over rj-6's typed evidence) | -- |
-| 3 | S72 the exact-input exercise (open) | **rj-3**, LAST | -- |
+| 3 | S72 the exact-input exercise (a v9 clock the slug advanced) | **rj-3**, LAST | -- |
 | 4 | S96 the article-store contract (open; disarmed by C-ONE-STORE; the readers' repoint is the cell) | **rj-5** + **rj-9** (the route half) + **rj-10** (the package seam) | -- |
-| 5 | W17-S4 / W17-S5 the issuer's criteria (open) | the CUT's own discipline (19g) | folded, not a cell |
+| 5a | W17-S4 (a rerun criterion reading committed state) | the CUT's own discipline (19g) | folded, not a cell |
+| 5b | W17-S5 (a state census enumerating managed addresses) | the CUT's own discipline (19g) | folded, not a cell |
 | 6 | FWD-16 the header | **rj-9** | -- |
 | 7 | FWD-17 executive management | **rj-8** (objects) + **rj-9** (tab) | -- |
 | 8 | FWD-18 the filings analyzer + the one chart | **rj-6** (objects) + **rj-9** (chart) | -- |
@@ -1699,7 +1700,7 @@ line below; the lines are disjoint and sum to 19.
 | 18 | C-FILINGS-ANALYZER (v0.7: passage map, held uncited claims, typed evidence, the gate against the passage) | **rj-6** | -- |
 | 19 | C-EXEC-MANAGEMENT | **rj-8** | -- |
 
-**18 members covered by 13 cells (several shared), 1 folded into the cut; 18 + 1 = 19.** NOT IN THE POPULATION, named so nobody
+**18 members covered by 13 cells (several shared), 2 folded into the cut; 18 + 2 = 20.** NOT IN THE POPULATION, named so nobody
 looks for them here: S70 / W11-S1 (the portal freeze; nothing promotes), S78 (Andrew-reserved owner), the harvest publication
 collection mechanism and cadence (reserved to Andrew @`9db2a36cdc`; rj-5 reads what the pool holds), the Bloomberg-terms
 question on filings (carded, open), and the recurring activation of any batch (Andrew's word). S13 is IN this round as a bounded
@@ -1741,7 +1742,9 @@ carried for rj-6; denominators printed. READ-ONLY on the ETF plane (the object c
 are the control); the counterpart contract is NOT established (v0.7's own words), so the read is one-sided and the snapshot and
 schema vintage are carried on every object.
 
-**rj-1 THE ROUTE BOUNDARY AND THE RANKED CLICK** (row Z-S95; C-ONE-IDENTITY; FWD-15). Chain A, after rj-4's drain. The seam:
+**rj-1 THE ROUTE BOUNDARY AND THE RANKED CLICK** (row Z-S95; C-ONE-IDENTITY; FWD-15). Chain A, after rj-4's drain. (The ranking
+row's `security_key` is emitted by `rj-5`, chain B -- the CRO's follow-up item 4: two chains never edit `chatter_axis.py`; rj-1
+consumes the row shape and renders a row without a key as UNRESOLVED.) The seam:
 `RankedList.tsx:138` passes `row.ticker` into a slot `useSecurityAnalysisState.ts:37-39` renames `securityKey` with no transform;
 `scoped_amgt.py:843-860` takes the path segment verbatim and `read_security_overlay:630` guesses `replace("_"," ")`; ranking rows
 carry `ticker` only. DELIVER: the identity resolved ONCE at the route boundary through `crosswalk.py` (X-1) and carried unchanged
@@ -1772,13 +1775,16 @@ publisher + ':' + article_id`, `digest = sha256(article_key)`, the body's `publi
 boundary (never `fetched_at`, never `first_discovered_at`); one article counts ONCE per security however many links or aliases
 carry it (the legacy association aliases learned from X-1); a missing body, a malformed record, an access denial and a partial read
 are DISTINGUISHABLE states from a quiet day and from an empty feed; the field-level contract is the CRO's brief @`0e7de170e3`,
-read first. (ii) `chatter_axis.py` builds its 30-day histogram per `security_key` over U-1 from P-1; the DynamoDB articles read path
-and the `HARVEST_ARTICLES_TABLE` knob REMOVED. (iii) THE WRITER: a rerun publishes a COMPLETE GENERATION -- the cut names
+read first. (ii) `chatter_axis.py` builds its 30-day histogram per `security_key` over U-1 from P-1 and its rows carry `security_key`
+through X-1 (the row-shape edit is THIS cell's); the DynamoDB articles read path and the `HARVEST_ARTICLES_TABLE` knob REMOVED. (iii) THE WRITER: a rerun publishes a COMPLETE GENERATION -- the cut names
 **an immutable generation partition plus a current pointer**: rows written under `axis_date = <AXIS>#<date>#<generation_id>`,
 then ONE pointer item `axis_date = <AXIS>#<date>, ticker = "_CURRENT"` carrying `generation_id`, `run_id`, `coverage_vintage`,
-`payload_hash`, `row_count`, `state: COMPLETE | EMPTY | FAILED`; a successful empty product writes an EMPTY pointer (clears the
-membership from the reader's view); a failed run leaves the prior pointer and writes a FAILED marker beside it; no mixed generation
-is ever readable (G-1: the reader follows the pointer). The measured defect (`batch_writer(overwrite_by_pkeys)` never clearing
+`payload_hash`, `row_count`, `state: COMPLETE | EMPTY | FAILED`, written AFTER the rows; a successful empty product writes an EMPTY
+pointer (clears the membership from the reader's view); a failed run leaves the prior pointer and writes a FAILED marker beside it;
+no mixed generation is ever readable (G-1: the reader follows the pointer AND checks the rows it reads against the pointer's
+`row_count`, because a GSI read is eventually consistent -- a short read is retried, then refused, never served; the CRO's
+follow-up item 3). The existing all-zero-day semantics stand: TRENDING ranks ties, BREAKOUT empties (item 5), so the EMPTY arm is
+BREAKOUT on an all-zero day. The measured defect (`batch_writer(overwrite_by_pkeys)` never clearing
 rows; AAA#1, BBB#1, CCC#2 after a replacement run) is the negative control the tests reproduce and the new writer passes.
 (iv) the difference control (pool vs table for BA, COST, HD and a name with no links); unit tests with a local fake of the two
 prefixes covering every distinguishable state. The coverage ROUTE edit is rj-9's (chain A owns `scoped_amgt.py`).
@@ -1810,8 +1816,9 @@ universes/*/universe_data.json`, asOf 2026-08-06 carried as the vintage) UNION t
 absent; a Seeking Alpha comparables list measured ONCE as an input candidate if reachable without the CRO's vault, else
 ABSENT-ACCESS. Local batch; no deploy.
 
-**rj-8 EXECUTIVE MANAGEMENT** (FWD-17; C-EXEC-MANAGEMENT; interface M-1). Chain E, after rj-4's drain. As the provisional cut with the
-identity through X-1 and the roster from the filing rj-6's fetcher persists (the executive-officer section; role start EXERCISED on a
+**rj-8 EXECUTIVE MANAGEMENT** (FWD-17; C-EXEC-MANAGEMENT; interface M-1). Chain E, after rj-4's drain AND after rj-6's drain (the
+filing rj-6 persists in the pool is its roster's source; the CRO's follow-up item 4). As the provisional cut with the identity
+through X-1 and the roster from the filing rj-6's fetcher persists (the executive-officer section; role start EXERCISED on a
 real filing; ex-US via the 20-F where it carries the section, else UNRESOLVED-SOURCE); Lusha enrichment through the estate's
 `LushaClient` (key via `comp-secrets`; profile link + title per CONFIRMED officer; no contact field stored -- the schema forbids
 `email` and `phone`); a targeted IR-domain search for the CEO via `serp_brightdata`; `management/v1/{key}/{as_of}.json` and the
@@ -1819,9 +1826,10 @@ pool average over U-1 with its denominator. QA one-shot on BA, COST, HD and the 
 started (the production loop is the harvest estate's).
 
 **rj-13 THE SOCIAL SOURCE, MEASURED** (S13; s.9a-2's "measure, then build" row; C-LISTING-NOT-CAPABILITY). Chain E, after rj-8. ONE
-security, ONE declared method (the estate's Bright Data dataset trigger per `deliverables/0.9.0_WK_AMGT_RESAPP~6/MEASUREMENT_PLAN.md`:
-X posts, dataset `gd_lwxkxvnf1cynvib9co`, cashtag then company then resolved handle), a CAP (records and USD) and a WINDOW, under
-the session egress word; the observables the plan names (cost, freshness, schema, latency, relevance) printed; the record filed as
+security, ONE declared SUPPORTED method per the CRO's social brief @`36a08d3d1a` (the CRO's follow-up item 1: NOT the old cashtag
+plan -- the X inventory has no keyword-post discovery): Reddit discussion search, dataset `gd_lvz8ah06191smkebj4`, `type=discover_new`,
+`discover_by=keyword`, inputs `keyword`, `date`, a bounded `num_of_posts`; the job identity persisted and retrieved through the
+documented delivery flow, never resubmitted per poll; a CAP (posts and USD) and a WINDOW, under the session egress word; the observables the plan names (cost, freshness, schema, latency, relevance) printed; the record filed as
 `social/v1/_measurement/<as_of>.json` and a row. NO feed is built; the header's social half renders "no source measured" until a
 later round cuts one from this measurement.
 
@@ -1831,9 +1839,11 @@ Management, Peers, Model, Posture; the Coverage tab retired into the header feed
 measured (S13)"); a one-line description (a model-block header scalar if one exists, else D-1's `company_description` first
 sentence marked machine, else ABSENT); the Model tab = `fiscal_year_figures` in Adam's `Model` sheet shape; Thesis = the drafted
 sections (rj-2) + ONE chart of F-1's `thesis_driver` series; Peers = the CSC table over R-1; Exec Management = M-1; EVERY adapter
-route edit of the round lives here: `read_coverage_set` on P-1 (via X-1's aliases), the rankings route following G-1's pointer
-(the committed generation, never a mixed one; `generation_id` and `payload_hash` on the response), peers on R-1, management on
-M-1, posture on O-1 when present; ABSENT explicit everywhere; Print a header action. Harnesses per tab; the render check over the
+route edit of the round lives here: `read_coverage_set` on P-1 (via X-1's aliases); EVERY reader of a ranking partition follows
+G-1's pointer and checks `row_count` -- the rankings list, the overlay's points (`scoped_amgt.py:329-338`) and the timeseries
+history (`:434-438`) alike (the CRO's follow-up item 2), never a bare date partition, never a mixed generation; `generation_id` and
+`payload_hash` on every ranking response; peers on R-1, management on M-1, posture on O-1 when present; ABSENT explicit everywhere;
+Print a header action. Harnesses per tab; the render check over the
 assembled page.
 
 **rj-10 THE DEPLOY AND THE LIVE READ** (the consumer cell; C-ONE-STORE's package seam; C-RANKING-GENERATION on the live plane). Chain B,
@@ -1846,8 +1856,9 @@ grants REMOVED from both (retired as a source); NO new function, NO new schedule
 census enumerated APART from data-source entries (W17-S5), the co-sign (COO half at the cut, CTO half requested in the issuance)
 covering the served-output move (coverage, thesis, peers, management, posture and rankings now serve pool objects and committed
 generations), `safe-apply` with the ledger; LIVE READS: the producer's QA invoke writes a COMPLETE generation with its pointer
-(rows carry `security_key`; the pointer carries `generation_id`, `coverage_vintage`, `payload_hash`); a second invoke on a day
-with no articles writes an EMPTY pointer (the changed-winner / zero-winner control); the deployed adapter's rankings follow the
+(rows carry `security_key`; the pointer carries `generation_id`, `coverage_vintage`, `payload_hash`); the BREAKOUT partition on an
+all-zero day carries an EMPTY pointer while TRENDING keeps its tie-ranked rows (the existing semantics; the CRO's follow-up item 5),
+and a re-invoke replaces the whole generation (the changed-winner control); the deployed adapter's rankings follow the
 pointer; coverage for BA from the pool; thesis with N > 0 drafted sections with passages; peers derived; management for BA. The
 captured payloads (with `generation_id` and hash) are rj-3's inputs.
 
@@ -1890,15 +1901,17 @@ rj-8} -> rj-9; {rj-1, rj-9} -> rj-10; {rj-7, rj-8} -> rj-11; rj-10 -> rj-3; rj-1
 **M = 5 dependency-independent chains after rj-4 (A, B, C, D, E); N = 5 workers; K = 8.**
 `fanout: 5 of 5 chains, cap 8, reason: one worker per chain; rj-4 is spawned alone first and the other four chains spawn at its drain; chain A holds every portal and adapter-route edit, chain C every drafting-library edit, so each shared file has one writer; cross-chain cells are handed only after the cells they consume are DRAINED`
 
-QA name lists aligned (the CRO's seventh seam): rj-6, rj-7 and rj-8 each land objects for BA_US_Equity, COST_US_Equity,
-HD_US_Equity, SAP_GY_Equity (the non-US filer) and BABA_US_Equity, plus the ONE held name rj-11 picks from the holdings read
-(named in rj-11's first row so rj-6/7/8's QA can be extended by the COO's hand-over if it is outside the five).
+QA name lists aligned (the CRO's seventh seam; follow-up item 6): rj-6, rj-7 and rj-8 each land objects for BA_US_Equity,
+COST_US_Equity, HD_US_Equity, SAP_GY_Equity (the non-US filer) and BABA_US_Equity; the held/non-held PAIR for rj-11 is chosen by
+the COO at rj-7's drain from R-1 and U-1 (a held name whose ranker comparable is one of the five, or the reverse) and named in
+the spawn prompts of rj-6, rj-7 and rj-8 as "up to two more QA names" BEFORE those cells drain, so rj-11 starts with both
+names' objects landed.
 
 Drain contract: every worker in a linked worktree cut from the CURRENT branch (`git worktree add -b wk-amgt_resapp-11-<n>
 C:/tmp/wk-amgt-11-<n> HEAD`, a sparse cone for chains B-E); chain A's portal checkout is cut from `refs/drains/ri-1-portal`
 @`9aef3734` on `wk-amgt_resapp-11-1-portal`, fetched at its drains into `refs/drains/rj-portal` (the gitlink `e85f6eb84f` NEVER
 moves); chains B-E touch no portal file. The superproject drains through `safe-merge.sh` with the channel union by row id.
-Hand-over order: rj-4 alone; at its drain rj-1, rj-5, rj-6, rj-7, rj-8 together; rj-2 after rj-1 and rj-6's drain; rj-13 after
+Hand-over order: rj-4 alone; at its drain rj-1, rj-5, rj-6, rj-7 together and rj-8 at rj-6's drain; rj-2 after rj-1 and rj-6's drain; rj-13 after
 rj-8; rj-9 after rj-2 and the drains of rj-5/6/7/8; rj-11 after rj-6 and the drains of rj-7/8; rj-10 after rj-5 and the drains
 of rj-1/9; rj-12 after rj-9 and rj-11's drain; rj-3 after rj-10 and rj-12.
 
