@@ -4346,6 +4346,160 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
       "spec_asserts": "Z-S102's spec_asserts stand (the L4 notifier delivers the admitted PRD to the round holder as the CTO's L4->L5 hand-off).",
       "world_is": "On SITEZ until the held merge: a CVO-last signature still composes the release under the CVO and is refused 403 silently; the manual re-point stays the route and is disclosed each time. On CLOUD: the sender half is fixed; the silence and the router are not.",
       "notes": "Not an AMGT cell. What remains open estate-wide, for Andrew's owner call: (1) print last_error in reoffer() and status(); (2) route_half prefers the reviewer lane matching the project's fabric letter. Both fit one commit on CLOUD by the file's own author so the file moves one way only; 0.0.0_AB_MSTR~Z carries the recommendation. This row is the durable record of the message; the disarm of Z-S102 follows the merge landing on SITEZ and the two remaining fixes, not before."
+    },
+    {
+      "id": "AMGT_RESAPP-Z-W19-S1",
+      "project": "AMGT_RESAPP",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~19",
+      "surfaced_at": "2026-09-15T08:07:00Z",
+      "one_line": "AC1's per-book holding-object probe returns 0 for ALL FOUR books, and the books are NOT missing: the ETF plane's gold/holding/ is DATE-partitioned (one parquet per date, the book a COLUMN inside it), so a key-substring count can never see a book -- a reader following the criterion's own reading would file four absent books that are all present.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "AC1 run verbatim 2026-09-15 07:4xZ: '.tools/aws s3api list-objects-v2 --bucket opal-data-etfs --prefix gold/holding/ --query \"length(Contents[?contains(Key, 'DIVZ')])\"' -> 0, and 0 for IDVZ, PFDE, PFOE (4 of 4 books).",
+          "The full gold/ listing at the same minute: 62 objects, of which 14 are gold/holding/date=YYYY-MM-DD/holding.parquet and 14 are gold/book/date=YYYY-MM-DD/book.parquet; NO key anywhere under gold/ carries a book ticker.",
+          "The newest partition gold/holding/date=2026-09-11/holding.parquet (45,452 bytes, LastModified 2026-09-14T13:01:22+00:00) read with pyarrow: 189 rows, 31 columns, column 'book' present, value counts PFDE 90, IDVZ 45, DIVZ 30, PFOE 24 -- 189 of 189 rows carry one of the four books, so every book IS at the snapshot vintage."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "AC1: 'a per-book holding-object count at least 1 for each of DIVZ, IDVZ, PFDE, PFOE (a book with 0 is a row and its names are UNRESOLVED-SOURCE, not absent)' -- i.e. the plane is expected to be partitioned so that a book is visible in the KEY.",
+      "world_is": "The plane is partitioned by DATE, not by book: gold/holding/date=<d>/holding.parquet carries all four books as a 'book' COLUMN. The criterion's instrument is wrong-object for this layout; the count of 0 measures the key shape, not the books. The cell's own DELIVER item 1 ('whose layout you MEASURE FIRST') anticipated this, and the measurement resolves it: 4 of 4 books present, 189 holding rows, 170 distinct tickers.",
+      "notes": "Recorded because the criterion states a disposition ('a book with 0 is a row ... UNRESOLVED-SOURCE') that would be FALSE if taken on the count alone. No name was marked UNRESOLVED-SOURCE on this ground. The union universe reads the whole partition and carries books per name, so no downstream consumer inherits the wrong-object read."
+    },
+    {
+      "id": "AMGT_RESAPP-Z-W19-S2",
+      "project": "AMGT_RESAPP",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~19",
+      "surfaced_at": "2026-09-15T08:07:00Z",
+      "one_line": "C-UNION-UNIVERSE's quoted coverage partition (32 MEASURED / 57 UNRESOLVED at 2026-09-10) does not match the live coverage list at the round-11 cut (34 MEASURED / 55 UNRESOLVED), and the crosswalk's canonical disposition is a THIRD number (33 / 56) because one MEASURED ticker carries no exchange code.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~4/universe.json @fa72663c56: denominator_folders 89, ticker_status_partition {'MEASURED': 34, 'UNRESOLVED': 55}.",
+          "The task order's own cell text carries BOTH numbers: the contract quote says '32 tickers MEASURED / 57 UNRESOLVED at 2026-09-10' and the MEASURED-AT-THE-CUT paragraph says 'the chatter producer reads 34 eligible Bloomberg tickers via read_universe_tickers()'.",
+          "crosswalk/v1/2026-09-15.json (this order's deliverable, sha256 c9ea41499ffcf88d07969d6a0ac78ae8631b602368fed5ce270e6a063dfb8a36): input_names 89, MEASURED 33, UNRESOLVED 56 -- the single difference from the coverage list's 34 is the folder 'Schlumberger SLB', whose MEASURED bloomberg value is 'SLB' with no exchange code and which is therefore UNRESOLVED here rather than guessed as US."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "the coverage list is '89 name folders; 32 tickers MEASURED / 57 UNRESOLVED at 2026-09-10'.",
+      "world_is": "89 name folders (agrees), 34 MEASURED / 55 UNRESOLVED in the live list, 33 MEASURED / 56 UNRESOLVED as canonical identities. The 89 denominator -- the one every criterion grades on -- is stable across all three readings; only the partition moved.",
+      "notes": "No criterion on this order grades the 32/57 pair, so nothing is blocked. Flagged for the PRD's next touch: the parenthetical carries a vintage (2026-09-10) but the contract text reads as current, and a reader who checks the partition rather than the denominator will find three answers. The canonical partition (33/56) is the one X-1 publishes and is the one downstream cells should cite."
+    },
+    {
+      "id": "AMGT_RESAPP-Z-W19-S3",
+      "project": "AMGT_RESAPP",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~19",
+      "surfaced_at": "2026-09-15T08:07:00Z",
+      "one_line": "C-ONE-IDENTITY names 'security-<16 hex>' as a publication-association key ALREADY PERSISTED; it is persisted nowhere in the pool -- 0 of 71 objects in opal-data-harvest carry the token -- it is COMPUTED at load time by the harvester's loader and lives only in local runtime state.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "boto3 paginated list_objects_v2 over the WHOLE bucket opal-data-harvest 2026-09-15 07:4xZ: 71 objects total; keys containing 'security-' = 0; distinct 'security-<16 hex>' tokens = 0.",
+          "The only PERSISTED association-key prefixes are publication-links/v1/{BA,COST,HD}/ (3 CommonPrefixes, 7 objects) -- all three bare-root PILOT keys; packs/ carries {BABA_US, BA_US, COST_US, NVDA_US_Equity, SAP_GY_Equity} (5) and derived/model_block/ carries {BABA_US_Equity, BA_US_Equity, NVDA_US_Equity, SAP_GY_Equity} (4).",
+          "lib/opal_data_harvest/__main__.py:12-35 (universe()) mints 'security-' + storage.content_hash(row['folder'])[:16] for every NON-pilot folder at load time; the CRO's identity brief (RESAPP_CONNECTION_BRIEF_IDENTITY_20260915_W.md) measured security-b05e0ccdc9868504 for 'Alibaba BABA' from that loader and from a read-only SQLite query on .runtime/opal-data-harvest/progress.sqlite3 whose DISTINCT security_key returned BA, COST, HD only."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "the crosswalk maps the canonical identity to 'every publication-association key already persisted (BA, security-<16 hex>)'.",
+      "world_is": "'BA' is persisted (an S3 prefix and a SQLite row). 'security-<16 hex>' is DERIVED: no pool object and no article link carries one today, because no non-pilot name has been pulled. The crosswalk therefore carries it as a key COMPUTED from the harvester's own published rule, reproduced exactly (the CRO's measured Alibaba digest is reproduced byte-for-byte by this order's implementation and is a unit-test arm).",
+      "notes": "Consequence for readers of X-1: association_keys mixes PERSISTED keys (the five pilots' bare roots) with DERIVED-BUT-DETERMINISTIC keys (security-<16 hex> for the other 84). Both are carried; each record's provenance.association_keys names which rule produced which. A reader that treats every association key as an existing pool prefix will 404 on 84 of 89 names -- that is a fetch expectation, not an identity defect."
+    },
+    {
+      "id": "AMGT_RESAPP-Z-W19-S4",
+      "project": "AMGT_RESAPP",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~19",
+      "surfaced_at": "2026-09-15T08:07:00Z",
+      "one_line": "The cell sources BOTH cik AND filing_identity from 'the SEC ticker-to-CIK table', but that table carries only {cik_str, ticker, title} -- it cannot yield form_expected (10-K vs 20-F) at all, so the form was MEASURED from a second SEC surface (each issuer's own EDGAR submissions history) rather than inferred from domicile.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "GET https://www.sec.gov/files/company_tickers.json 2026-09-15T07:44:17Z, HTTP 200, 797,759 bytes, sha256 82cd5fd9ccffda811b93ba76070460dd41429c02c00e726f83deb71f553c6cff, Last-Modified Mon, 14 Sep 2026 21:02:02 GMT: 10,422 rows, 10,422 distinct tickers, each row EXACTLY {cik_str, ticker, title} -- 3 fields, no form type, no exchange.",
+          "GET https://data.sec.gov/submissions/CIK<10-digit>.json for the 15 CIKs the 33 canonical roots hit: form_expected read as the form of the MOST RECENT annual filing among 10-K / 20-F / 40-F in the issuer's own history -- BA 10-K (latest 2026-01-30, 7 seen), SAP 20-F (2026-02-26, 28 seen), BABA 20-F (2026-05-20, 12 seen), ASML 20-F, NU 20-F, PBR 20-F; COST/HD/HAL/INTU/KMB/VLO 10-K.",
+          "Both fetches and their retrieval times are cached at org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~19/sec_ticker_cik_cache.json; the union build reads the CACHE and makes no network call, so --dry-run is offline and deterministic."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "'cik and filing_identity from the SEC ticker-to-CIK table (fetched once under the session egress word, cached in your deliverables with its retrieval time)'.",
+      "world_is": "The named table yields cik only. form_expected has no source in it, and the two alternatives were to GUESS from domicile (banned by the same contract's never-guess clause, and wrong: ASML is domiciled NL and files 20-F while SAP is domiciled DE and also files 20-F, but Sensata is domiciled GB/US and files 10-K) or to MEASURE it. It was measured, on the issuer's own filings, and the instrument is named in the cache.",
+      "notes": "Egress authority: Andrew-direct ~05:42Z @dfa63b6d92, the whole site-z fabric has free egress this session. The second endpoint is the same vendor (SEC/EDGAR) and the same authority; it is disclosed here because the cell named ONE fetch and this is two."
+    },
+    {
+      "id": "AMGT_RESAPP-Z-W19-S5",
+      "project": "AMGT_RESAPP",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~19",
+      "surfaced_at": "2026-09-15T08:07:00Z",
+      "one_line": "Three of the 33 canonical security keys contain a character that is illegal in a Windows filename or ambiguous in an S3 key path -- BP/_LN_Equity, NG/_LN_Equity and WALMEX*_MM_Equity -- and the estate's model-artifact convention writes the key straight into a filename (model_block_<key>.json).",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "crosswalk/v1/2026-09-15.json: 33 MEASURED keys, of which BP/_LN_Equity (coverage folder 'BP PLC', bloomberg 'BP/ LN'), NG/_LN_Equity ('National Grid NG LN', 'NG/ LN') and WALMEX*_MM_Equity ('Walmart de Mexico WALMEX MM', 'WALMEX* MM') carry '/' or '*'.",
+          "The naming convention that consumes a key as a filename is measured on disk: 8 model_block_<key>.json files under org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~1/ and 14 objects under s3://opal-data-harvest/derived/model_block/<key>/.",
+          "The punctuation is the VENDOR's own spelling, not an artefact of this mapper: Bloomberg writes BP plc as 'BP/ LN' and Walmex as 'WALMEX* MM', and build_universe._TICKER_SHAPE_RE already admits '/' and '*' as measured conventions on this corpus."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "the crosswalk 'preserves exchange and share-class distinctions' and maps the identity to its 'model/pack key (BA_US_Equity)' -- i.e. the canonical key IS the model key.",
+      "world_is": "For 3 of 33 MEASURED identities the canonical key is not filename-safe. 'model_block_BP/_LN_Equity.json' names a DIRECTORY, not a file, on every platform. Nothing in this round writes those three (no pull exists for them), so the hazard is latent, not live -- INERT.",
+      "notes": "Deliberately NOT remedied here: sanitising the key would erase the vendor's own spelling, which is the distinction the contract orders preserved, and inventing a second filename-safe field would widen INTERFACE X-1 beyond the fields the cell names. The right remedy is a CONSUMER-side encoding rule (percent-encode or replace at the artifact boundary, keep the key canonical), owned by whichever cell first writes an artifact for one of these three names. Named here so a reader of X-1 does not discover it by minting a directory."
+    },
+    {
+      "id": "AMGT_RESAPP-Z-W19-S6",
+      "project": "AMGT_RESAPP",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~19",
+      "surfaced_at": "2026-09-15T08:07:00Z",
+      "one_line": "167 of 170 distinct ETF holdings identifiers cannot be resolved to a canonical identity without guessing: the plane's tickers carry NO exchange code and C-ETF-PLANE-READ states the producer-side contract is NOT established, so only the 3 whose raw ticker IS a persisted association key (BA, HD, VLO -- the pilots) join, and 4 more are root-equal to a coverage identity but are deliberately NOT merged.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "gold/holding/date=2026-09-11/holding.parquet: 189 rows, 170 distinct tickers, every one a bare symbol with no exchange code ('BA', 'ASML', 'BP', 'CASH', 'SALXX', '2602335D'); the row carries domicile and cusip but no listing/exchange field.",
+          "universe/v1/2026-09-15.json denominators: coverage 89, holdings_distinct 170, union 256, both 3, resolved 33, unresolved 223, with_cik 12 -- the 3 joins are BA (PFDE), HD (DIVZ) and VLO, each matched on a bare-root PILOT association key persisted at publication-links/v1/<KEY>/.",
+          "The 4 root-equal, NOT-merged identifiers are ASML, INTU, NU and PBR: each is named in its own row's resolution_reason as a 'Root-equal canonical candidate(s) NAMED, NOT merged' -- ASML being the discriminating case, since the coverage identity is ASML_NA_Equity (Amsterdam) and the holding line is a different listing of the same issuer."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "C-UNION-UNIVERSE asks for the UNION of the coverage list and the ETFs' current holdings, with C-ONE-IDENTITY requiring ONE canonical identity per economic security; C-ETF-PLANE-READ states the producer-side contract is NOT established and the read is one-sided.",
+      "world_is": "The two contracts pull opposite ways on 167 names and the never-guess clause wins: an identifier with no exchange code and no declared identifier space is kept UNRESOLVED with its raw identifier, never dropped and never merged on root equality. The consequence, stated plainly: the union carries the SAME economic security twice for ASML, INTU, NU and PBR (once as a coverage identity, once as an unresolved holding line), and each unresolved row NAMES its candidate so the duplication is visible rather than silent.",
+      "notes": "This is the cell's own instruction executed ('a holding identifier that does not resolve is UNRESOLVED with its raw identifier, never dropped, never guessed'), recorded because it is the single fact every reader of U-1 must know before counting. The clean remedy is upstream and is not this order's to take: a PRODUCER-SIDE identifier contract on s3://opal-data-etfs (an exchange code, a figi or the cusip already in the row promoted to a declared key) would let the join be MEASURED instead of refused, and would collapse the four duplicates. cusip is the cheapest candidate: a cusip value is present on 187 of 189 holding rows (the 2 without are the DIVZ and IDVZ cash lines; the PFDE and PFOE cash lines carry the literal 'Cash&Other', which is not a cusip)."
+    },
+    {
+      "id": "AMGT_RESAPP-Z-W19-S7",
+      "project": "AMGT_RESAPP",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~19",
+      "surfaced_at": "2026-09-15T08:25:00Z",
+      "one_line": "AC7's never-written control asks for a snapshots/ COUNT 'unchanged', but AC1 -- the paired BEFORE -- never produces one (it queries the newest key and Size only); and the control is stated bucket-wide on a bucket that has a LIVE PRODUCER, which wrote 7 of 1518 objects during this worker's own window.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "AC1 snapshots/ invocation as written: --query 'sort_by(Contents,&Key)[-1].[Key,Size]' -> 'snapshots/snapshot_2026-09-14.json  2879'. AC7 snapshots/ invocation as written: --query '[length(Contents), max_by(Contents,&LastModified).LastModified]' -> '95  2026-09-14T22:00:17+00:00'. The two queries return DIFFERENT fields, so the count has no before-value and the LastModified has no AC1 before-value either.",
+          "Client-side paginated census of opal-data-etfs 2026-09-15 08:2xZ (boto3, full pagination, counted in python): 1518 objects total; 7 modified at or after 2026-09-15T07:40Z (this worker's first act), ALL of them s3://opal-data-etfs/bbg/2026-09-14/{characteristics,fund_daily,history_topup}.{csv,parquet} and run_manifest.json at 07:52:34Z -- another producer's Bloomberg pull, under a prefix this cell never reads or writes.",
+          "The prefixes this cell DOES read are unchanged across the run: gold/ 62 objects, newest gold/_manifests/2026-09-11/0ec4e7a9e3bb.json at 2026-09-14T13:01:22+00:00 (identical in AC1 at 07:4xZ and AC7 at 08:1xZ); snapshots/ newest key snapshot_2026-09-14.json size 2879 (identical); gold/holding/ 14, gold/book/ 14, config/ 1, and NO object under any of them carries a LastModified inside this worker's window."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "AC7: 'the same gold/ count, newest key and LastModified as AC1 printed, and the snapshots/ count and newest LastModified unchanged (the ETF plane was read and never written -- any difference is a BLOCKING row)'.",
+      "world_is": "The gold/ half of the pair is complete and MATCHES exactly. The snapshots/ half is not a pair: AC1 measured {Key, Size} and AC7 measures {count, LastModified}, so 'unchanged' has nothing to compare against on either field. The stronger control that WAS available and was run instead -- no object under any read prefix carries a LastModified inside the worker's window, and the only 7 writes to the bucket in that window are another producer's under bbg/ -- answers the question the criterion is asking, and answers it on the whole bucket rather than one prefix.",
+      "notes": "No difference was found and nothing is blocked; AC7 is recorded PASS on the gold/ pair plus the window control, with the snapshots/ count stated as an AFTER-only value and NOT claimed as unchanged-by-comparison. The generalisable point for the next cut: on a bucket with a live producer, a before/after COUNT is the wrong control shape -- it can move for reasons that have nothing to do with the actor -- and the right one is 'no object under the prefixes I touched has a LastModified inside my window'. Related and already law, so not filed separately: a paginated list-objects-v2 with --query length() returns a PER-PAGE count; this bucket's whole-bucket probe printed '1000' then '518' and a per-page reader would have reported 1000 of 1518."
     }
 ]
 ```

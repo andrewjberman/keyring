@@ -134,7 +134,7 @@ with `--only -- <paths>`. Report once. **If a criterion cannot be met, leave the
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
-<status>staged</status>
+<status>complete</status>
 <round>11</round>
 <slot>~19</slot>
 <fabric>site-z</fabric>
