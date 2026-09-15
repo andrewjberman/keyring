@@ -1,6 +1,6 @@
 {
   "measured_at": "2026-09-15T13:36:05.634231+00:00",
-  "state": "PARTIAL_EXERCISED_GOLD_6_OF_7; PUBLISHER_PENDING_1350; COTTONWOOD_STANDALONE_UNITS_DATED_EMISSION_GAP",
+  "state": "HISTORICAL_1331_GOLD_SNAPSHOT_6_OF_7; SUPERSEDED_BY_1340_ACCRUAL_7_OF_7",
   "pre_measurement": {
     "started_at": "2026-09-15T13:28:13.387958+00:00",
     "finished_at": "2026-09-15T13:28:17.461870+00:00"
@@ -1048,5 +1048,14 @@
   ],
   "control_limit": "49financial and inflection naturally produced new dated Gold in this scheduled run. Before/after daily bytes are not a counterfactual test of the hotfix; no exact unchanged-output claim is made.",
   "production_mutations_by_observer": 0,
-  "manual_invocations": 0
+  "manual_invocations": 0,
+  "current_disposition": {
+    "source_notice": 97089,
+    "measured_at": "2026-09-15T13:45:41.582795+00:00",
+    "state": "EXERCISED_ALL_7_TARGET_PLATINUM_OUTPUTS; LEDGER_CLOSED",
+    "correction": "The earlier inference of a missing dated account-units writer omitted the13:40 accrual bridge. No code gap or scope disposition is required. Original13:31 observations below remain accurate at their time.",
+    "evidence": "accrual-bridge-1340-verification.json",
+    "final_evidence": "scheduled-publisher-1350-verification.json",
+    "final_measured_at": "2026-09-15T13:50:59.645628+00:00"
+  }
 }

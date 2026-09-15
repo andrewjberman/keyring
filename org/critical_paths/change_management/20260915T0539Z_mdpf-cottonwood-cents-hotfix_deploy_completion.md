@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-09-15T05:39:28.801309+00:00
-**Status:** HELD-SOVEREIGN-GATED -- gate: external / Scheduled opal-assets-mdpf-portal-publisher 2026-09-15T13:50Z, plus CTO disposition of the unchanged baseline Cottonwood standalone account-units dated emission gap reported 13:35Z; Gold 6/7 verified (held since 2026-09-15T06:11:59.317871+00:00)
+**Status:** CLOSED -- nothing stranded -- closed 20260915T135231Z -- gate: external / Scheduled opal-assets-mdpf-portal-publisher 2026-09-15T13:50Z; all7 target Gold families current after13:40 accrual bridge verified13:45:41Z under CTO97089 (held since 2026-09-15T06:11:59.317871+00:00)
 **Deploy:** mdpf-gold-lambda live baseline 73c2dea263 plus Cottonwood whole-cents comparison only; CTO 96931 and COO 96933
 **Authored by:** 1.0.0_SA_CTO~A
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -16,7 +16,7 @@
 | L2 | git | isolated hotfix pin and Terraform code pin LOCAL; pushes held | baseline plus two named source/test paths only; exact diff and test receipts | LOCAL isolated source pin 48b8671569b72efb4eca64ef41ded4de9c54e84c has exactly two paths: pair-builder whole-cents comparison and its four-case test. 4/4 tests pass. Canonical package closure 18/18 Python imports passed; 23 ZIP members, only pair-builder and BUILD_MANIFEST differ from deployed baseline. ZIP SHA256 7af218097511a2be15fbe0a2e07b20c04f3320f66f6bf0402fe20268b2488801. CLOUD TF pin-only commit 8ed668b075, one line/one file, canonical safe-commit with audited CLOUD_OPS_OR_ETL override under explicit CTO 96931/96935/96942. Remote CLOUD tip measured 6a5b276f8b382edca90673d1f425320a251ca0e5; no push. | CLOSED 20260915T060547Z |
 | L3 | verify | rollback inventory | kept live zip and pre-change object versions or copies for both gold and platinum keys | 05:47Z bucket versioning Enabled on both opal-data-assets and opal-data-portal-v2. rollback-inventory.json records exact versions/hashes of fourteen existing objects across seven families; immutable private backup bytes also kept. Deployed rollback ZIP and prior S3 code ZIP match SHA256 53ff3b33534103fc46f7c910dd96a29393b68e01ff198f0fb36768211ccb7210; prior code object version Mpv.veBsx7I42MEiMhWUkttFFfvBaqL1. Global account-units absent in both planes, excluded by corrected COO 96940 and CTO 96942. No deletion permitted by the correction. | CLOSED 20260915T060549Z |
 | L4 | activation | mdpf-gold-lambda code artifact and function only | saved-plan safe-apply; zero unrelated managed changes; live package hash and zero-diff scoped plan | Safe-apply rc0, saved plan SHA256 5f1314843b60e35e5b331327a0f057a551a75bd27690191c358c29f512c51dcd: 0 add,1 in-place function update,0 destroy. Live readback 06:10:11Z Active/Successful, 23/23 package members equal hotfix.zip, download SHA256 7af218097511a2be15fbe0a2e07b20c04f3320f66f6bf0402fe20268b2488801, CodeSha256 verified, env commit 48b8671569 and S3 version 9GsracvIPvfBMzF1dttMpew0TkQtt.qg. Targeted post-plan rc0/no managed changes. Fourteen existing output versions and route-bindings metadata SHA unchanged. Details in MDPF_COTTONWOOD_CENTS_HOTFIX_20260915/applied-verification.json and postapply-summary.json. No manual invoke; scheduled results not yet observed. | CLOSED 20260915T061137Z |
-| L5 | verify | next scheduled gold and publisher results | current content as_of for cottonwood/global; no scope failure; unchanged other firm outputs |  | OPEN |
+| L5 | verify | next scheduled gold and publisher results | current content as_of for cottonwood/global; no scope failure; unchanged other firm outputs | EXERCISED 2026-09-15T13:50:59Z: Gold run996aa948 13:30:36-13:31:10Z has0 SCOPE FAILED/ERROR/Traceback in283 events.13:40 bridge dated Cottonwood units09-14 is byte-identical to staging,8281B SHA52440d2d, independently read13:45:41Z. Publisher20260915T135046Z-eeb9afc8 13:50:46-50Z all_present true, no missing/unexpected pairs.7/7 target Platinum bodies equal current Gold except publisher provenance; source SHA/key/vintage pass. Cottonwood category/AUM/distribution/units and Global category/AUM09-14; Global distribution own period09-15.6/6 other-firm controls equal current Gold; routine daily changes are not falsely described as unchanged bytes.7/7 prior Gold versions retained; Global units absent after run. Exact Lambda hotfix hash retained.CTO97089 resolves omitted13:40 bridge; original7-family expectation met. Separate prior-pointer AccessDenied also occurs in09-14 pre-hotfix manifest and is reported to CTO. Evidence: SCHEDULED_VERIFICATION.md, accrual-bridge-1340-verification.json and scheduled-publisher-1350-verification.json in MDPF_COTTONWOOD_CENTS_HOTFIX_20260915. No manual invoke or new production mutation. | CLOSED 20260915T135231Z |
 
 ## Log
 
@@ -27,17 +27,17 @@
 - 20260915T061137Z LEG L4 closed: Safe-apply rc0, saved plan SHA256 5f1314843b60e35e5b331327a0f057a551a75bd27690191c358c29f512c51dcd: 0 add,1 in-place fun
 - 20260915T061159Z HELD-SOVEREIGN-GATED gate=external/CTO96931/96942 and COO96933/96940: next scheduled mdpf-gold-lambda and publisher
 - 20260915T133759Z HELD-SOVEREIGN-GATED gate=external/Scheduled opal-assets-mdpf-portal-publisher 2026-09-15T13:50Z, plus CTO disposit
+- 20260915T134612Z HELD-SOVEREIGN-GATED gate=external/Scheduled opal-assets-mdpf-portal-publisher 2026-09-15T13:50Z; all7 target Gold 
+- 20260915T135231Z LEG L5 closed: EXERCISED 2026-09-15T13:50:59Z: Gold run996aa948 13:30:36-13:31:10Z has0 SCOPE FAILED/ERROR/Traceback in283 events.13:40
+- 20260915T135231Z CLOSED -- all 5 legs proven
 
-## Scheduled Gold observation, 2026-09-15T13:36Z
+## Final evidence and corrected writer chain
 
-**The scheduled Gold run healed Cottonwood and Global category views and AUM. Six of the seven named dated families advanced. The full verification leg remains open:** the 13:50 UTC publisher has not yet run, and Cottonwood's standalone dated account-units output still carries value_date2026-09-10.
-
-
-Full measured receipt and the unchanged-baseline standalone account-units gap are in `org/tier1_exec/1.0.0_SA_CTO/deliverables/MDPF_COTTONWOOD_CENTS_HOTFIX_20260915/SCHEDULED_VERIFICATION.md` and its JSON companion. L5 remains OPEN; no seven-of-seven or Platinum success is claimed.
+Actual13:50:59Z read verifies7/7 target Platinum contents against their dated Gold, with source hash/key/vintage equality. The13:40 accrual bridge completed Cottonwood/account-units; CTO97089 corrected this seat's earlier omitted-writer inference, without narrowing the seven-family expectation. All5 ledger legs are CLOSED. Evidence: `org/tier1_exec/1.0.0_SA_CTO/deliverables/MDPF_COTTONWOOD_CENTS_HOTFIX_20260915/SCHEDULED_VERIFICATION.md` and its Gold/accrual/publisher JSON receipts. A previous-pointer AccessDenied warning is independently present in the09-14 pre-hotfix publisher manifest and has been reported separately; no IAM or publisher mutation occurred.
 
 ## Signed scope appendix
 
-This appendix is also preserved in `org/tier1_exec/1.0.0_SA_CTO/deliverables/MDPF_COTTONWOOD_CENTS_HOTFIX_20260915/SIGNOFFS.md`. The canonical renderer drops appended prose on mutation; retain this stable companion.
+Stable original scope carrier: `org/tier1_exec/1.0.0_SA_CTO/deliverables/MDPF_COTTONWOOD_CENTS_HOTFIX_20260915/SIGNOFFS.md`.
 
 # Bounded Cottonwood hotfix: exact sign-off and disposition carriers
 

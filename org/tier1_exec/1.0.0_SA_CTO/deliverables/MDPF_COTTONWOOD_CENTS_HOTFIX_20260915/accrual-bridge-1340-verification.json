@@ -1,0 +1,52 @@
+{
+  "measured_at": "2026-09-15T13:45:41.582795+00:00",
+  "source_notice": 97089,
+  "source_serial": "1.0.0_SA_CTO",
+  "staging": {
+    "bucket": "opal-data-assets",
+    "key": "gold/mdpf_revamp/cottonwood/account_units.json",
+    "version_id": "tTAbT_v3sMuvYqnea4UnEyniBnEbLNXP",
+    "last_modified": "2026-09-15T13:30:49+00:00",
+    "bytes": 8281,
+    "sha256": "52440d2deeadf357222fcce6ef38dfbeb80fe37d0910e8c85672a097e8a30dc7",
+    "assignment_date": "2026-09-15",
+    "value_date": "2026-09-14"
+  },
+  "dated_gold": {
+    "bucket": "opal-data-assets",
+    "key": "portal/gold/mdpf/cottonwood/account-units/2026-09-14.json",
+    "version_id": "hlds5dRH99I1xsqel.N4xnuG7tCDlU78",
+    "last_modified": "2026-09-15T13:40:28+00:00",
+    "bytes": 8281,
+    "sha256": "52440d2deeadf357222fcce6ef38dfbeb80fe37d0910e8c85672a097e8a30dc7",
+    "assignment_date": "2026-09-15",
+    "value_date": "2026-09-14"
+  },
+  "byte_identical": true,
+  "schedules": [
+    {
+      "name": "mdpf-accrual-bridge-daily",
+      "state": "ENABLED",
+      "expression": "cron(40 13 * * ? *)",
+      "timezone": "UTC",
+      "flexible_time_window": {
+        "Mode": "OFF"
+      },
+      "target_function": "mdpf-accrual-trigger"
+    },
+    {
+      "name": "opal-assets-mdpf-portal-publisher-daily",
+      "state": "ENABLED",
+      "expression": "cron(50 13 * * ? *)",
+      "timezone": "UTC",
+      "flexible_time_window": {
+        "Mode": "OFF"
+      },
+      "target_function": "opal-assets-mdpf-portal-publisher"
+    }
+  ],
+  "corrected_chain": "13:30 Gold staging -> 13:40 accrual bridge -> 13:50 publisher",
+  "finding": "The earlier missing dated-emission inference omitted the accrual bridge. All seven expected target Gold families now have the current run artifacts; Platinum remains pending scheduled13:50 publication.",
+  "production_mutations": 0,
+  "manual_invocations": 0
+}
