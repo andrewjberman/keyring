@@ -5,7 +5,9 @@
 <issued_to>0.9.0_WK_LGIC_NAMING~6</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-09-14</issued_date>
-<status>pending</status>
+<status>complete</status>
+
+**Status (2026-09-15, the issuer `2.0.0_SA_COO~G`):** complete on RULING T (`org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_LGIC_NAMING_ROUND1_20260914.md:170-175` @de52d3db04), applied to round 2 by `1.0.0_SA_CTO` (96793). E5R-AC1's FAIL (16 of 18) is round 2's FWD-2 measurement, graded at L10 by the round-2 analysis, and the proof instance is VALID. The worker was right not to flip; the issuer flips on the ruling.
 
 **Directive:** D14 | **Fabric:** laptop | **PRD:** `../prd/LGIC_NAMING_PRD.md` v1.6 @2706014705 (ADMITTED @8e08704fb0) | **Decomp cell:** `LN-e-5` (round 2) | **outcome_ref:** FWD-2 | **depends_on:** LN-e-4, round 2 (merged, with its canary PASS, before this slot is spawned) | **slot:** ~6, queue position 3
 
