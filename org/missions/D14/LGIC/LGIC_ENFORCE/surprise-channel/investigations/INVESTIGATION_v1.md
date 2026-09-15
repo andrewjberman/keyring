@@ -1594,6 +1594,29 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "TO-EN-x-1 X1-AC3: 'one change to the short form moves the resource's name and the fence pattern together.' THE CELL: 'The resource's name AND the fence's pattern for the firm must both move on that one change.'",
     "world_is": "The instrument's two filters are not disjoint, and the fence-pattern line alone satisfies both. The criterion therefore cannot tell a moved resource name from a moved fence pattern. A plan (or show -json) at 'after' would carry the resource's name; the committed diff does not."
+  },
+  {
+    "id": "LGIC_ENFORCE-W1-S22",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~1",
+    "surfaced_at": "2026-09-15T10:42Z",
+    "one_line": "TO-EN-x-1 orders fwd2_plan.json, a terraform show -json, committed under the worker's deliverables folder. The commit-time naming gate graded 151 names in that machine output, 115 NAMING REFUSE (every one on fwd2_plan.json) and 13 NAMING RAISE, and passed the commit only because org/mcp/naming-gate.enforce is absent (WARN mode). With enforce on, the gate would refuse the deliverable the order names.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~G",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN: bash .tools/safe-commit.sh of commit d49089952b on branch wk-lgic-enforce-1-1-x1, 2026-09-15T~10:40Z. Its log (352 lines) prints '[naming-gate] NAMING-GATE: WARN 151 graded', with 115 'NAMING REFUSE' lines and 13 'NAMING RAISE' lines. All 115 REFUSE lines name org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/fwd2_plan.json:1, the one-line JSON.",
+        "RUN, same log: 'NAMING REFUSE .../fwd2_plan.json:1 advi-49f-fwd2-exercise-queue -> advi-49f-fwd2-exercise-queue', why: \"CONFORMANT as SQS_QUEUE, but a NEW hand-kept carrier of '49f' outside every permitted context: read it through lookup('49financial')\". This is the cell's own resource, named by module opal_name.",
+        "RUN, same log: live names read out of the plan's prior state are refused as NEW, e.g. '/aws/lambda/etf-ownership-dashboard -> /aws/lambda/{system}-etf-ownership-dashboard-lambda', why 'NEW and OUT-OF-PATTERN as LOG_GROUP: REFUSE', and 'arn:aws:dynamodb:us-east-1:313476888478:table/bd-securities -> lookup('49financial')'.",
+        "WORLD: org/mcp/naming-gate.enforce is ABSENT in the worktree and not tracked at HEAD ('git ls-files --error-unmatch' says it does not match any file), so the stage ran in WARN mode and the commit landed."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EN-x-1 THE CELL step 1: 'Plan the REAL tree read-only (plan -lock=false -out, then show -json, against the real backend), and save the JSON as org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/<your serial>/fwd2_plan.json.' The slot branch carries the records.",
+    "world_is": "The naming gate grades a generated terraform plan artifact as newly hand-written names and carriers, including this cell's own CONFORMANT, module-built queue name. It passes the commit only because enforce is off. Nothing exempts a plan JSON deliverable from the stage, so once enforce is on, this order's own deliverable, and EN-f-1's fence_plan.json of the same kind, could not be committed as ordered."
   }
 ]
 ```
