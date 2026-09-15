@@ -6,12 +6,13 @@
  "directive": "D14",
  "macro": "LGIC",
  "fabric": "laptop",
- "decomp_version": "v2",
+ "decomp_version": "v3",
  "step": 5,
  "prd_ref": "org/missions/D14/LGIC/LGIC_CANON/prd/LGIC_CANON_PRD.md@5b2336a5e4",
- "prd_half_hashes": {"brief": "STALE at v1.3 -- owed by 4.0.0_SA_CRO (refused v1.2 @04dace74d6 on R1, answered by v1.3)", "ratified-text": "SIGNED 3.0.0_SA_CVO, current at v1.3 (ENDPOINT and CONTRACTS unchanged)"},
+ "prd_half_hashes": {"brief": "SIGNED 4.0.0_SA_CRO, current at v1.3 (prd-signoff.py status, read at the L6 cut 2026-09-15)", "ratified-text": "SIGNED 3.0.0_SA_CVO, current at v1.3 (ENDPOINT and CONTRACTS unchanged)"},
  "author": "2.0.0_SA_COO~G",
  "cells": 12,
+ "slots": 9,
  "candidates_not_cut": ["C6 -- FWD-5 held on Andrew's ~13:4xZ word"],
  "dag_levels": 3,
  "frozen": true
@@ -23,6 +24,9 @@ with the DIRECTED Step 1b-F row. `1.0.0_SA_CTO` set the L5 order in msg 96640; t
 **Input:** the PRD's SURFACE MANIFEST at v1.1 @`56608aadd4` (v1), re-read at v1.3 @`5b2336a5e4` (v2, section 0b).
 **v2, cut before any L6 issuance** (LGIC_CANON has no issuer: Andrew-direct ~18:2xZ, 96673 item 3). It changes one choice: the
 judged tree for C2 (row LGIC_CANON-S2, 4.0.0_SA_CRO @48146fdd10; 1.0.0_SA_CTO's correction 96693).
+**v3, the re-read at the L6 cut** (section 0c), 2026-09-15, after `1.0.0_SA_CTO` seated this project on `2.0.0_SA_COO~G`
+(@`52ea4c8cac`). The PRD did not move; the register, the schema and the registry did. Cells, edges and constraints stand;
+CN-n-2 moves to its own slot, and gate G-V19R is added.
 **Sequence:** stage 1, no gate. `sequence-check --project LGIC_CANON` flags NEEDS-SLOT, which this cut and its row flip answer.
 **Frozen at the cut.** A cell that looks wrong mid-round is a **surprise row, never an edit**
 (`org/missions/D14/LGIC/LGIC_CANON/surprise-channel/investigations/INVESTIGATION_v1.md`, 1 row at the cut).
@@ -87,6 +91,94 @@ confirmed by `1.0.0_SA_CTO` (96693). **The corrected tree is MDPF**, because ins
 
 This seat re-reads those three lines at HEAD before the cut, and L6 re-reads them again at the issuance base. Nothing was cut
 on the wrong tree.
+
+---
+
+## 0c. v3 -- THE RE-READ AT THE L6 CUT (round 1's issuance, 2026-09-15)
+
+**What moved since v2, measured at the issuance base CLOUD @`10894fdad1`.** The PRD did not: its latest commit is
+`5b2336a5e4`, the one v2 read, and `prd-signoff.py status LGIC_CANON` reads ADMITTED (both halves SIGNED, current). What
+moved is the estate the cells read.
+
+1. **The seat.** `1.0.0_SA_CTO` seated this project on `2.0.0_SA_COO~G` @`52ea4c8cac`, on Andrew-direct ~16:1xZ, verbatim
+   *"Yeah there is a lot of work to be doing here between ENFORCE and CANON and I want you parallelizing harder. Use more
+   agents, go faster."* (record `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260915_161xZ_PARALLELIZE_HARDER_ENFORCE_AND_CANON~G.md`).
+   `sequence-check --project LGIC_CANON` no longer flags NEEDS-SLOT.
+2. **The exception register moved, in both of its carriers.** X2 GRANTED and X7 added @`9cf4a274db` (`1.0.0_SA_CTO`),
+   cross-referenced @`c9048873d1` (`4.0.0_SA_CRO`), in `02_DOCTRINE.md` section 4 and `06_CONFORMANCE_LEDGER.md` section 6.
+   - **CN-l-1:** *"X2, X3 and X5 each name their decider"* now reads the register's acknowledged column or a `decider:`
+     line. X2's decider is its acknowledgement (GRANTED); X3 and X5 still read `--`.
+   - **The MDPF tree (section 3a.1) now carries three declared exceptions** -- X1 (`:130`), X2 (`:131`), X7 (`:136`) --
+     beside its MIGRATE rows (`:98`, `:100`, the monolith gold residue `:59-60`, the per-firm platinum `:110`). DEC-2 is met
+     with room to spare, and the tree stands.
+   - **Both files have live co-writers.** `1.0.0_SA_CTO` and `4.0.0_SA_CRO` write register entries in them. CN-k-1 and
+     CN-l-1 hold them this round; an entry that lands mid-round is merged at the drain, never reverted.
+3. **`NAMING_SCHEMA.json` is v1.8 (@`2f554182b6`), and v1.9 is scheduled (gate G-V19, cut beside LGIC_ENFORCE round 2
+   and LGIC_NAMING round 4).** v1.9 removes `firm_forms` (the registry's `scopes.json` becomes their one carrier,
+   LGIC_ENFORCE RULING ONE) and adds the Terraform-type-to-node-type map.
+   - CN-k-1's generated section renders the naming content from the files that carry it AT HEAD: the schema, and the firm
+     forms from `firm_forms` while the field exists, else the registry's FIRM rows. Its stamp names every file read, with
+     that file's hash.
+   - **Gate G-V19R (new; the issuer's drain act):** whichever of CN-k-1's drain and GROUP V19's merge lands SECOND re-runs
+     `render_naming_section.py --write` in that same merge, and `--check` reads 0 on the merged tree. That is
+     `3.0.0_SA_CVO`'s N4 trigger exercised, not a new rule.
+4. **The registry exists, so G-R is CLEARED, measured:** `infra/logic/registry/{scopes,systems,tiers,exemptions,remediations}.json`
+   at HEAD; EN-r-1 landed @`a925c8a642`. CN-n-1 spawns at issuance.
+5. **CLAUDE.md Rule 30** (Andrew-direct ~14:2xZ, *"all future pipelines must abide by lgic structures patterns"*): every
+   address and name comes from the builders. CN-n's key (section 3a.3) is builder output -- `key()`, `address()`, `name()`
+   and the registry's `bucket` field -- never typed. CN-o-1's steps name their builders.
+6. **Andrew's aim (msg 96910): LGIC is aimed at the MDPF, ADVI and IRPT pipelines.** Two cells take a population. The judged
+   tree is MDPF (v2 already). The naming job's systems are MDPF, ADVI and IRPT, plus the Black Diamond integration for the
+   refused-token case.
+
+**The cross-project write census, by subtraction (Rule 24):**
+
+```
+  write surfaces of the 12 cells .................................. 13 paths
+  minus records and exercises under org/missions/D14/LGIC/LGIC_CANON/ -9
+  minus this project's own infra/logic/ surfaces (section 1) ....... -4
+        02_DOCTRINE.md, render_naming_section.py, 06_CONFORMANCE_LEDGER.md, 10_ONBOARDING_CHECKLIST.md
+  ------------------------------------------------------------------
+  paths any other LGIC project writes this round .................... 0
+```
+
+No cell writes `lib/opal_naming.py`, `infra/logic/registry/*`, `NAMING_SCHEMA.json`, `GRADING_RULE.md` or any LGIC_ENFORCE
+or LGIC_NAMING deliverable, so no cell is ordered after GROUP V19 or EN-r-2. The READ dependencies, disclosed:
+- CN-k-1 reads the schema and the firm-forms carrier (G-V19R above).
+- CN-n reads the registry and the builders. EN-r-2 adds SYSTEM rows and EN-r-3 moves the firm forms' carrier; neither moves
+  `49financial`/`49f`, so no key value moves with them.
+- CN-j's naming cases come from `GRADING_RULE.md` @`3cc090827f`. None turns on a step LGIC_NAMING round 4 re-cuts (G2's
+  AWS-fixed exclusion, FN1d's one subtraction, V-2's placeholders).
+- CN-o-1 reads LGIC_ENFORCE's CONTRACTS names (PRD v1.1, unchanged).
+
+**Fixed inputs, committed with the issuance under `deliverables/2.0.0_SA_COO~G/fixed_inputs/r1/`:** `CN_TREE_MDPF.md` (facts
+only, no disposition); `CN_JUDGE_CASES.json` (3 cases: a CONFORMANT secret and two ALIAS names that turn on `bd` and the
+per-slot firm form); `CN_JUDGE_NAMING_KEY.json`; `CN_NAMING_JOB.json` (6 items: 3 LONG, 2 SHORT, 1 refused-token trap);
+`CN_NAMING_KEY.json`; and `check_canon_r1.py` (39 subcommands, one per mechanical criterion).
+
+**The slots, v2's table with one change:**
+
+| slot | cells | spawned |
+|---|---|---|
+| ~1 | CN-k-1 | at issuance |
+| ~2 | CN-l-1 | at issuance |
+| ~3 | CN-r-1, then CN-r-2 | at issuance |
+| ~4 | CN-j-1 | after CN-k-1 drains |
+| ~5 | CN-j-2 | after CN-k-1 drains, from slot 4's base |
+| ~6 | CN-o-1 | after CN-k-1 drains |
+| ~7 | the scorer: CN-j-3, CN-o-2, CN-n-3, each as its inputs drain | when the first input drains |
+| ~8 | CN-n-1 | at issuance (G-R cleared) |
+| ~9 | CN-n-2 | after CN-n-1 drains |
+
+- **The change:** CN-n-2 takes its own slot ~9, not a second spawn in slot ~8. Two contexts on one serial would mint rows
+  under one W-number (the row-id collision class, LGIC_ENFORCE C-S13) and blur the blindness check's attribution.
+- **Fan-out:** 9 slots over M = 5 chains ({k-1, j-1, j-2, j-3, o-1, o-2}, {n-1, n-2, n-3}, {r-1}, {r-2}, {l-1}). N exceeds M by
+  the distinct-worker cells, as `1.0.0_SA_CTO`'s S3 ruling allows (LGIC_NAMING round-3 analysis section 2). 4 spawn at
+  issuance and at most 7 are live at once; ~9 spawns only after ~8's worker has ended, so the live count stays under the cap
+  of 8.
+
+**Unchanged from section 5:** blindness to the estate is NOT-EVALUATED for the judges and the naming workers (the preloaded
+context). **L4-R at the cut:** ADMITTED at v1.3.
 
 ---
 
