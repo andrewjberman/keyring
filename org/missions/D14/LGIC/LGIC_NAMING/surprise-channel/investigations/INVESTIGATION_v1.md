@@ -1050,6 +1050,53 @@ new row on 3.0.0_SA_CVO's ask 96495), both 1.0.0_SA_CTO; `LGIC_NAMING-S3`, `LGIC
     "spec_asserts": "TO-LN-e-2-r3 <proof_of_spec>: 'Result file `namer-b.result.md` beside it', meaning beside the round-3 instance in deliverables/0.9.0_WK_LGIC_NAMING~2/. The order says nothing about a file already at that path.",
     "world_is": "deliverables/0.9.0_WK_LGIC_NAMING~2/namer-b.result.md is already tracked at base 6705066c68 as round 2's namer-B result. Following the order rewrites it with round 3's result. Round 2's text survives at 59f68115a4, where round 2's own proof pins it.",
     "notes": "Filed because doing what the order said also overwrote a record the order did not mention. The round-3 proof does not list the result file as an artifact: .tools/proof-of-spec-check.py:383-386 @6705066c68 refuses, in a dry run, a tracked file pinned PENDING-THIS-COMMIT that is not staged, and this file is tracked. INERT: nothing is lost from git, and round 2's proof still resolves at its pin."
+  },
+  {
+    "id": "LGIC_NAMING-W3-S5",
+    "project": "LGIC_NAMING",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_NAMING~3",
+    "surfaced_at": "2026-09-15T07:24Z",
+    "one_line": "The own-kind bar (FN1c, GRADING_RULE R5.b) can leave a function slot with no token, e.g. a LAMBDA named mdpf-lambda-lambda, and neither TO-LN-g-1-r3 nor NAMING_SCHEMA v1.7 names the output then: the RAISE on an empty function is stated for FN1b's subtraction only. The re-cut rule says it does not decide, instead of choosing.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ORDER: org/missions/D14/LGIC/LGIC_NAMING/task-orders/LGIC_NAMING.TO-LN-g-1-r3.grading-rule.md@6705066c68:20-21 -- step 1 (FN1b): 'If that leaves no function token, the grade RAISES (grade.unplaceable).' Step 2 (own-kind bar) names no outcome for an emptied function.",
+        "DATA: org/standards/NAMING_SCHEMA.json@6705066c68 (v1.7) resource.function -- 'a subtraction that leaves no function token RAISES (grade.unplaceable) (FN1b, v1.7)', then a separate sentence 'The resource's OWN kind (kind.by_type for its type) is never written in its function ... (FN1c, v1.7)', with no empty-function clause.",
+        "RULE: org/missions/D14/LGIC/LGIC_NAMING/deliverables/GRADING_RULE.md@6705066c68:23-31 section 0 -- 'Every name gets exactly one of five outputs'. A LAMBDA mdpf-lambda-lambda: R1.a system mdpf, R4 no scope, remaining [lambda, lambda]; R6 keeps the last; the function is [lambda]; R5.b drops it, and no function token is left.",
+        "ORDER-DEPENDENCE, by hand: take a LAMBDA whose system is orion and whose function is [orion, lambda]. In the order's listed order, FN1b leaves [lambda] (no RAISE), then R5.b empties it. In the reverse order, R5.b leaves [orion], then FN1b empties it, which RAISES. The re-cut rule applies the steps in the listed order.",
+        "REACH: 0 of LN-f-1's 68 attributed forms and 0 of the rule's section-9 worked cases reach this case (this worker's scratch recounts). LIVE_NAMES.json was not censused for it."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-LN-g-1-r3 cell steps 1-2 and NAMING_SCHEMA v1.7 resource.function: FN1b's subtraction RAISES when it leaves no function token; the own-kind bar drops the resource's own kind from its function.",
+    "world_is": "The own-kind bar is a second drop that can also leave no function token, and nothing names the output. GRADING_RULE R5.b now says 'If this step leaves no function token, v1.7 does not say what follows (row LGIC_NAMING-W3-S5)' and applies the two steps in the order listed, because the result depends on the order.",
+    "notes": "OBSERVATION, INERT: no graded form in this cell reaches the case. Whether an emptied function after the own-kind bar RAISES, like FN1b's, is the schema author's call (1.0.0_SA_CTO, NAMING_SCHEMA resource.function); the same question reaches LGIC_ENFORCE's grade() when the v1.7 steps land there. Nothing outside this order's paths was edited."
+  },
+  {
+    "id": "LGIC_NAMING-W3-S6",
+    "project": "LGIC_NAMING",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_NAMING~3",
+    "surfaced_at": "2026-09-15T07:25Z",
+    "one_line": "TO-LN-g-1-r3 has GRADING_RULE.md's header name NAMING_SCHEMA.json v1.7 and says no other step moves, but 12 fields besides version, changelog and ratified_by changed between v1.4, the version the rule was cut at, and v1.7. Only resource.function is re-cut, and at least two changes contradict steps the rule still states: aws_fixed (G2) and grade.placeholder (V-2).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "DIFF, by python, field by field (second level inside dicts): org/standards/NAMING_SCHEMA.json@e04b802fe9 (version v1.4) against @6705066c68 (version v1.7) -- 15 changed: aws_fixed, changelog, firm_forms, grade.placeholder, iam_policy.purpose_slot, key.partition, key.scope_rule, kind.closed_at_l4, ratified_by, resource.function, resource.qualifier, rows_owner, secret.purpose, system.vendor_through_tiers, version. Top-level keys 23 at v1.4, 24 at v1.7 (aws_fixed added).",
+        "G2: org/missions/D14/LGIC/LGIC_NAMING/deliverables/GRADING_RULE.md@6705066c68:50-60 RAISES a default SECURITY_GROUP, an AWS/Amazon-prefixed IAM_POLICY or IAM_ROLE, and an AWS-fixed LOG_GROUP, saying DATA 'gives these graded types no exclusion'. v1.7 aws_fixed (AW1, v1.5): 'names AWS fixes are OUTSIDE the grade's domain, like the NOT GRADED types: excluded, never a fourth verdict', with an AWS-managed IAM_POLICY read 'from the node's ARN, never from the name'.",
+        "V-2: GRADING_RULE.md@6705066c68:300-301 lists the placeholders {system}, {source}, {scope}, {tier}, {cadence} and {entity}; v1.7 grade.placeholder (PH1): 'a canonical_form may carry {system}, {source}, {scope} or {cadence} ONLY for a slot the name does not carry'.",
+        "ORDER: org/missions/D14/LGIC/LGIC_NAMING/task-orders/LGIC_NAMING.TO-LN-g-1-r3.grading-rule.md@6705066c68:24 (step 5, the header names v1.7) and :27 ('No other step moves'); round-2 analysis org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_LGIC_NAMING_ROUND2_20260915.md@02f08322af s.5 item 3 re-cuts R5 and R3 only."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-LN-g-1-r3 step 5: 'The header names NAMING_SCHEMA.json v1.7 as the version the rule grades against'; and 'No other step moves.'",
+    "world_is": "The rule can name v1.7 truthfully for R5 only. The re-cut header says so: 'org/standards/NAMING_SCHEMA.json ... v1.7 for R5; every other step as cut at v1.4 (row LGIC_NAMING-W3-S6)'. G2 still RAISES names v1.7 excludes, and V-2 lists two placeholders v1.7 does not allow. Neither was changed, because the order bounds this cell to R5 and R3.",
+    "notes": "OBSERVATION, INERT: the header states which steps are at which version, so a reader is told rather than misled, and no graded form in this cell (68 IAM_ROLE forms) reaches G2 or the two extra placeholders. Which fields the rule is re-cut to, and when, belongs to 1.0.0_SA_CTO's next analysis and 2.0.0_SA_COO~G's next cut. The other changed fields (firm_forms, iam_policy.purpose_slot, key.*, kind.closed_at_l4, resource.qualifier, rows_owner, secret.purpose, system.vendor_through_tiers) were not read against the rule's text here; only G2 and V-2 were."
   }
 ]
 ```
