@@ -5624,6 +5624,71 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "C-SIMILARITY-RANKER (PRD v0.8 @1170b4da69): the comparable set of a subject is computed by ONE ranker over ONE database, every identity resolved through X-1; a subject is never its own peer.",
     "world_is": "A company can sit in the database twice under identifiers X-1 cannot join (a canonical key and a SEDOL-shaped scanner ticker); the engine now drops the exact-name twin; a twin whose name string differs would survive -- but no served R-1 object carries one at this vintage.",
     "notes": "A NEW citing row; W21-S3 is not edited and keeps hazard_standing ARMED as surfaced. No `adjudicates` entry: the disposition stays for 3.0.0_SA_CVO~W at L9. The residual RE-ARMS when the universe widens (the CTO's corrected candidate 3 moves the resolved union from 33 toward ~145 names, many of them ADR lines), so the round-12 cut that widens the universe carries the ADR-to-home-line join or re-measures this before the batch writes peers for the new names."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W18-S16",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~18",
+    "surfaced_at": "2026-09-15T18:23:07Z",
+    "one_line": "The served O-1 read (read_posture) carries 10 of the landed object's 20 top-level keys and drops packs, comparable_name, fit, membership, comparable_membership and comparable_selection -- the fields the Posture tab must render for the coverage lines, the incomplete-comparable line and the B:/C:/FIT: cites -- and nothing on the route carries the comparable's display ticker; and the order's premise of a '/security/{key}/posture' route is false: O-1 rides /overlay and /thesis. Remedied in AMGT-rj-12 inside read_posture as the spawn grant names, AC3's printed fields unchanged.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Pre-edit, worktree HEAD 5ae785828e: python read_posture('BABA_US_Equity') printed 'PRE-EDIT top keys ['status', 'security_key', 'verdict', 'comparable', 'basis', 'as_of', 'generation', 'marked', 'reason', 'posture_read']' beside 'route verdict worse comparable HD_US_Equity basis 6 marked machine' and 'control ABSENT' (rc=0).",
+        "s3://opal-data-harvest/posture/v1/BABA_US_Equity/2026-09-15.json (19515 B) and .../BA_US_Equity/2026-09-15.json (21419 B) top keys, 20 each: schema_version, security_key, as_of, verdict, comparable, comparable_name, marked, notice, reason, basis, dropped_claims, cites_validated, cites_total, generation, membership, comparable_membership, comparable_selection, fit, packs, sources.",
+        "lib/research/api/scoped_amgt.py:2100-2133 @5ae785828e builds the SERVED dict from exactly the 10 keys above; lib/research/posture/packs.py:18-26 @5ae785828e declares the cite grammar B:membership, S:, E:, O:, M:, P:, F:, FIT:<preset>, C:<field> -- the B:, FIT: and C: elements exist only on the O-1 object (membership / fit / comparable_selection), never on the thesis or peers bundles.",
+        "lib/research/api/tests/test_generation_and_pool_routes.py:519-523 @5ae785828e asserts the route table holds 11 routes and no '/posture' leaf; read_posture is called from read_security_overlay (:1735) and read_thesis_bundle (:1796).",
+        "resolve_identity at the same HEAD: 'HD_US_Equity' -> MEASURED display_ticker 'HD US' (crosswalk/v1); 'DE_US_Equity' -> UNRESOLVED display_ticker null ('matches no persisted or measured identifier form in crosswalk/v1 (as_of 2026-09-15, 89 records)')."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT-rj-12 s.1: 'rj-9's /security/{key}/posture route already serves it'; BOUND: 'no adapter edit needed (rj-9's route serves O-1) -- if one is, it is a row; no edit under lib/'. Deliverable 1 asks for each side's coverage 'read from packs', the comparable linked 'through the identity's display ticker', and each cite resolved to 'a fit score' among other elements. The spawn prompt of 2.0.0_SA_COO~W grants lib/research/api/scoped_amgt.py for exactly this defect, row first.",
+    "world_is": "The route serves a strict subset of O-1, so a tab reading it cannot print packs.counts or packs.<key>.absent and cannot resolve a FIT:, B: or C: cite; there is no posture route, only the posture leaf of /overlay and /thesis. Remedy in this order: read_posture's SERVED dict adds comparable_name, packs, fit, membership, comparable_membership, comparable_selection, notice, cites_validated and cites_total verbatim from the object, plus comparable_identity = resolve_identity(comparable) -- a resolution of the COMPARABLE's key, never a second resolution of the requested one. DE_US_Equity resolves UNRESOLVED, so the tab names that comparable by comparable_name and key and says the identity is unresolved. The BOUND's 'no edit under lib/' and the spawn grant disagree; this row is the record of which one was followed."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W18-S17",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~18",
+    "surfaced_at": "2026-09-15T18:23:07Z",
+    "one_line": "AC4's regression control tabs.harness.cjs carries an rj-9 check, posture_served_call_not_rendered, that asserts the Posture placeholder does NOT print a SERVED object's claim or a data-posture-verdict -- the exact property AMGT-rj-12 exists to reverse -- so the control cannot end at its met value unless that one check is inverted; it is inverted in place (same name count, 20 checks) and says so.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/SecurityAnalysis/__harness__/tabs.harness.cjs:316-318 @portal 38cba6a2: 'if (firstClaim && !postureHtml.includes(esc(firstClaim)) && !postureHtml.includes('data-posture-verdict')) tally.postureServedHidden += 1;' and :340 check('posture_served_call_not_rendered', tally.postureServedHidden === servedPostures, true, ...).",
+        "The rj-9 fixtures carry posture SERVED on BABA_US_Equity and BA_US_Equity (tabsFixture.BABA_US_Equity.json thesis.posture.status 'SERVED', verdict 'worse', basis 6).",
+        "AMGT-rj-12 AC4 expects 'the three prior harnesses still ending at their met values (the regression control)'; deliverable 1 renders 'EVERY basis claim with its cites'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC4: errorEmpty, drafting and tabs harnesses 'still ending at their met values (the regression control)'. The order does not say a prior check will invert.",
+    "world_is": "One of tabs.harness.cjs's 20 checks is a placeholder assertion superseded by this cell. It is replaced by posture_served_call_rendered (the SERVED claim text and a data-posture-verdict ARE on the tab, over the same SERVED denominator), so the control still ends CHECKS-OK 20 of 20 while grading the new state. Its other 19 checks, errorEmpty.harness.cjs and drafting.harness.cjs are unedited."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W18-S18",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~18",
+    "surfaced_at": "2026-09-15T18:35:25Z",
+    "one_line": "read_posture's SERVED arm hard-codes reason None, so an O-1 object whose verdict is 'absent' -- which rj-11 writes WITH its reason and without a model call when the subject's identity does not resolve or no comparable exists -- reaches the header and the Posture tab with the verdict and no reason; the order requires 'the reason when the verdict is absent'. Remedied in AMGT-rj-12 by serving the object's own reason.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/research/api/scoped_amgt.py:2122-2133 @ef718ae836: the SERVED return dict carries '\"reason\": None,' for every served object.",
+        "lib/research/posture/judge.py:31-35 @ef718ae836: '\"absent\" is never the model's word: it is written here, without a model call, when the subject's identity does not resolve or no comparable exists -- with the reason.' and _absent_document (judge.py ~:478-500) writes verdict VERDICT_ABSENT, comparable None, basis [], reason <reason>.",
+        "The two landed objects carry verdict hold / worse with reason null, so the defect is latent on today's pool: no served object is absent-with-reason yet."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT-rj-12 deliverable 1: 'ABSENT-explicit when the object is absent, with the reason when the verdict is absent'. INTERFACE O-1 in the order lists 'reason' among the object's fields.",
+    "world_is": "The route serves the reason only on its own ABSENT arm (no object) and nulls the object's reason on the SERVED arm, so the tab could state ABSENT for an absent verdict but never why. Remedy in this order, beside W18-S16's: the SERVED arm carries document.get('reason'). On both landed objects it is null, so the served value does not move today; lib/research/api/tests pins the absent-verdict arm."
   }
 ]
 ```
