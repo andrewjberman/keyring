@@ -66,12 +66,14 @@ taken before ri-2's imports counts the six live producer resources as adds and a
    after your branch was cut -- so AC1 reads BOTH from the main tree via `git rev-parse --git-common-dir`). If the
    CTO half is ABSENT, this order stays OPEN on a BLOCKING row and you STOP at AC1: no artifact upload, no plan, no
    apply. The COO hands you nothing else until it lands.
-2. Write `infra/aws/terraform/harvest/build-and-upload-scoped-amgt.sh`: zip `lambda_function.py` at the root plus
-   every `.py` under `lib/research/api/`, `lib/research/metrics/`, `lib/research/checkface/`, `lib/research/rules/`,
-   `lib/research/watchlist/` and the `__init__.py` files of `lib/` and `lib/research/` where present, preserving the
-   `lib/` prefix, EXCLUDING `tests/` directories and `__pycache__`; then a VERIFY step that walks every packaged
-   `.py` by AST and refuses if any `from lib.research...` / `import lib.research...` module it names is not in the
-   zip (the same enumeration-lapses-silently guard `build_zip.py` carries); then upload with
+2. `infra/aws/terraform/harvest/build-and-upload-scoped-amgt.sh` (written under ri-2 AC12; re-run here): zip
+   `lambda_function.py` at the root plus the TRANSITIVE IMPORT CLOSURE of `lib.research` modules reachable from it
+   (seed: the five packages `api/`, `metrics/`, `checkface/`, `rules/`, `watchlist/`; walk every packaged `.py` by AST,
+   module- AND function-scope imports; add what is named from `lib/research/`; repeat to a fixed point), the
+   `__init__.py` of `lib/`, `lib/research/` and every packaged package, preserving the `lib/` prefix, EXCLUDING
+   `tests/` and `__pycache__`; the VERIFY step prints the closure and refuses on a non-empty missing list (AMENDED on
+   row W17-S3: the five-directory enumeration missed `lib.research.price.axis`, `lib.research.print.render_pack` and
+   `lib.research.provenance.render_print`, all function-scope imports); then upload with
    `--metadata content-sha256=<base64 sha256>` and `head-object` the key back. Deterministic zip entries (fixed
    date_time) so a re-run on unchanged inputs does not perturb the hash.
 3. Snapshot the api's route keys BEFORE anything (AC4), then plan (AC3): **`19 to add, 0 to change, 0 to destroy`**
@@ -104,13 +106,8 @@ infra/aws/terraform/harvest/
 infra/aws/terraform/modules/yang-lambda/
 infra/aws/lambda/research/scoped_amgt_api/
 infra/aws/lambda/ci/lambda-source-map.json
-lib/research/api/
-lib/research/metrics/
-lib/research/checkface/
-lib/research/rules/
-lib/research/watchlist/
+lib/research/
 lib/__init__.py
-lib/research/__init__.py
 org/missions/D5/AMGT/AMGT_RESAPP/ledger/NEVER_WIDEN_ROUND10_MOUNT_COO_HALF.md
 org/missions/D5/AMGT/AMGT_RESAPP/ledger/NEVER_WIDEN_ROUND10_MOUNT_CTO_HALF.md
 org/critical_paths/change_management/
@@ -137,7 +134,7 @@ fenced JSON array; never edit an existing row; keep working.
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="AMGT-ri-4"><invocation>MAIN="$(dirname "$(git rev-parse --git-common-dir)")"; for h in COO CTO; do f="$MAIN/org/missions/D5/AMGT/AMGT_RESAPP/ledger/NEVER_WIDEN_ROUND10_MOUNT_${h}_HALF.md"; printf "%s_HALF %s\n" "$h" "$(test -f "$f" && echo PRESENT || echo ABSENT)"; test -f "$f" && sed -n '1,5p' "$f"; done; printf "NEG %s\n" "$(test -f "$MAIN/org/missions/D5/AMGT/AMGT_RESAPP/ledger/NEVER_WIDEN_ROUND10_ZZZ_NOPE.md" && echo PRESENT || echo ABSENT)"</invocation><expect>COO_HALF PRESENT and CTO_HALF PRESENT, each with its first lines printed and the CTO half carrying a Verdict line that reads SIGNED or a ruling that NEVER-1 does not bind this act, and NEG ABSENT. STOP: CTO_HALF ABSENT means this order STOPS HERE -- file a BLOCKING row, record AC1 as FAIL, leave the order OPEN, do not proceed to any later criterion. Re-run this criterion only when the COO continues you</expect></criterion>
-  <criterion id="AC2" cell_refs="AMGT-ri-4"><invocation>timeout 115 bash infra/aws/terraform/harvest/build-and-upload-scoped-amgt.sh > .scratch/ri4.build.txt 2>&1; echo build-rc=$?; tail -12 .scratch/ri4.build.txt</invocation><expect>(idempotent when ri-2 AC12 already ran it: same bytes, same content-sha256) build-rc=0; a zipped: line with a non-zero byte count and an entry count above 20; a VERIFY line reporting every lib.research import it found is packaged with a missing list of []; a head-object JSON for research/opal-amgt-scoped-api.zip whose Meta.content-sha256 EQUALS the printed local sha256 (b64) line and whose Size is non-zero; and OK: uploaded s3://opal-313476888478-lambda-artifacts/research/opal-amgt-scoped-api.zip. A missing-module list that is not empty, or a head-object whose metadata lacks content-sha256, is NOT met</expect></criterion>
+  <criterion id="AC2" cell_refs="AMGT-ri-4"><invocation>timeout 115 bash infra/aws/terraform/harvest/build-and-upload-scoped-amgt.sh > .scratch/ri4.build.txt 2>&1; echo build-rc=$?; tail -12 .scratch/ri4.build.txt</invocation><expect>(idempotent when ri-2 AC12 already ran it: same bytes, same content-sha256) build-rc=0; a zipped: line with a non-zero byte count and an entry count above 20; a VERIFY line reporting the transitive lib.research import closure it packaged (module- and function-scope, to a fixed point) with a missing list of []; a head-object JSON for research/opal-amgt-scoped-api.zip whose Meta.content-sha256 EQUALS the printed local sha256 (b64) line and whose Size is non-zero; and OK: uploaded s3://opal-313476888478-lambda-artifacts/research/opal-amgt-scoped-api.zip. A missing-module list that is not empty, or a head-object whose metadata lacks content-sha256, is NOT met</expect></criterion>
   <criterion id="AC3" cell_refs="AMGT-ri-4"><invocation>cd infra/aws/terraform/harvest && timeout 115 terraform plan -input=false -no-color -detailed-exitcode -out=../../../../.scratch/ri4.tfplan > ../../../../.scratch/ri4.plan.txt 2>&1; echo plan-rc=$?; python -c "import re; t=open('../../../../.scratch/ri4.plan.txt',encoding='utf-8',errors='replace').read(); m=re.search(r'Plan: (\d+) to add, (\d+) to change, (\d+) to destroy',t); print('PLAN', m.group(0) if m else 'NO-PLAN-LINE'); print('update-marks', t.count('will be updated in-place'), 'replace-marks', t.count('must be replaced'), 'destroy-marks', t.count('will be destroyed')); [print(' ', l.strip()[:110]) for l in t.splitlines() if l.strip().startswith('#') and 'will be created' in l]"</invocation><expect>PLAN Plan: 19 to add, 0 to change, 0 to destroy, update-marks 0, replace-marks 0, destroy-marks 0, plan-rc=2, and the created list containing ONLY addresses that begin with module.scoped_amgt_api., aws_iam_role.scoped_amgt_api, aws_iam_role_policy_attachment.scoped_amgt_api_logs, aws_iam_role_policy.scoped_amgt_api_grants, aws_apigatewayv2_integration.scoped_amgt_api, aws_apigatewayv2_route.scoped_amgt_api[ (eleven), aws_lambda_permission.scoped_amgt_api_apigw, terraform_data.scoped_amgt_route_count_check. Any other address, any change, any destroy, or an add count other than 19 is OUTSIDE the co-sign and is NOT met: no apply runs</expect></criterion>
   <criterion id="AC4" cell_refs="AMGT-ri-4"><invocation>.tools/aws apigatewayv2 get-routes --api-id 7k3ed8px20 --query "Items[].RouteKey" --output text | tr "\t" "\n" | sort > .scratch/ri4.routes.before.txt; python -c "t=[l for l in open('.scratch/ri4.routes.before.txt').read().splitlines() if l.strip()]; print('routes-before', len(t), 'amgt-before', sum(1 for r in t if '/api/scoped/amgt/' in r)); print(chr(10).join(sorted(t)))" # rail-checked: a LIVE route-set census before/after an apply; comp-routes reads the declared CF/API config from the repo and cannot read the live key set</invocation><expect>routes-before N -- the MEASURED count, printed, with every key listed (85 at 1.0.0_SA_CTO~W's auto-paginated read, 22951, 2026-09-15 ~01:0xZ; 25 is ONE PAGE of this paginated list and is never the expectation) -- and amgt-before 0. Run this BEFORE the apply; a snapshot taken after cannot discriminate. AMENDED on row Z-S92: the committed version hardcoded the page</expect></criterion>
   <criterion id="AC5" cell_refs="AMGT-ri-4"><invocation>printf '%s' 0.9.0_WK_AMGT_RESAPP~17 > "org/mcp/sessions/${CLAUDE_CODE_SESSION_ID}.serial"; test -f org/critical_paths/.open_deploys/amgt-scoped-api-mount.json && git log -1 --format=%h -- org/critical_paths/.open_deploys/amgt-scoped-api-mount.json; HALT_ACK=1 timeout 115 bash .tools/safe-apply.sh -chdir=infra/aws/terraform/harvest apply -input=false -no-color ../../../../.scratch/ri4.tfplan > .scratch/ri4.apply.txt 2>&1; echo apply-rc=$?; tail -6 .scratch/ri4.apply.txt</invocation><expect>a commit hash for the COMMITTED sentinel, then apply-rc=0 and the line Apply complete! Resources: 19 added, 0 changed, 0 destroyed. A halt-gate BLOCK is recorded verbatim and is NOT met until its cause is read; any changed or destroyed count above 0 is a hard stop and a BLOCKING row</expect></criterion>
