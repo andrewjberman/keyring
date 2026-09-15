@@ -539,6 +539,63 @@ list); the browser-half method for rj-3 (the page fed rj-10's DEPLOYED captures 
 error and empty controls, the live edge not claimed); the view worktree `C:/tmp/portal-resapp-view` clean at 9aef3734 with its
 node_modules junction, port 5175 free. Ten of thirteen complete.
 
+### 19. rj-12 drained; rj-10's deploy landed and drained partial, open on keyless rows; AMENDMENT 5 and ~19 respawned; the AMGT_RESAPP goal engaged on Andrew's word (18:5x-19:5xZ)
+
+**rj-12 (`~18`) reported at ~19:0xZ:** instance VALID 4 of 4 -- the Posture tab and the header line: the verdict in words with the
+machine marker, the comparable linked, every basis claim with its cites beside it (BABA 15 of 17 and BA 16 of 20 resolved; the rest
+printed 'cite not resolved' with their reason), each side's evidence coverage from `packs` and the incomplete-comparable line on both
+objects and absent on an emptied copy (Z-S104's route), harness 32 of 32, build 54 assets. `read_posture` now serves the packs,
+memberships, selection and name the tab renders -- rows W18-S16..S18 filed BEFORE the route edit, all INERT. The first drain attempt
+was REFUSED by safe-merge on a STAGED file of another seat (`2.0.0_SA_COO~Z`'s Andrew-direct record, POSN) -- not touched, not
+unstaged, no message (Andrew's split); the peer committed @5e3cf9e358 within two minutes and the retry drained @`51297efb9a` (238
+rows). `refs/drains/rj-portal` moved 38cba6a2 -> `0e153399` (fast-forward; rj-9 inside as control).
+
+**rj-10 (`~19`) -- the deploy, read on the live plane by this seat at every step, never from the worker's report alone:**
+- 18:54:52Z attempt 1 BLOCKED by the halt gate (`IDENTITY UNRESOLVED -- BLOCKED (fail-closed)`): the order's own printf wrote into
+  `org/mcp/sessions/`, which is gitignored and so absent from a sparse worktree (row W19-S15). Read at 18:59:56Z: both functions on
+  their pre-act hashes, both policies unchanged (articles-table 2 each), no pointer -- the world had NOT moved. But the worker's loop
+  ran AC6-AC8 anyway, and AC7 invoked the OLD producer, which upserted today's 10 legacy chatter rows (row W19-S16, the worker's own).
+- 19:00:10Z the worker created the directory and re-ran AC5 byte-for-byte: **apply 0 added / 4 changed / 0 destroyed at 19:01:10Z.**
+  Read at 19:04:33Z: `opal-amgt-scoped-api` 9ubWPnhz... 747396 B and `amgt-resapp-chatter-axis` 14WuwYSo... 663668 B, both
+  LastModified 19:01:10Z; both policies articles-table 0, the adapter on 9 pool prefixes and the producer on 4. Ledger
+  `amgt-round11-one-store-deploy` CLOSED 5 of 5 @807cbb9f9e, sentinel absent. Captures written 19:02:03Z, after the apply, carrying
+  generation `20260915T190138Z-6556d07d87e5`.
+- Report ~19:3xZ: 7 of 9, **AC7 FAIL** (the payload clause -- the handler returns four keys; the issuer's bar) and **AC8 FAIL**
+  (`rows-with-key 0` of 10 -- W19-S17: the handler `infra/aws/terraform/harvest/lambda_src/lambda_function.py:39` passes its bundled
+  snapshot as `universe_path`, so U-1 is never read and no name resolves; a real defect, the S95 click-identity gap on the deployed
+  plane). Also W19-S13 (the thesis route opens `lib/research/drafting/schema.json`, packaged as a third data member), W19-S14
+  (jsonschema 4.26.0 with one compiled wheel, not pure-Python -- 4.17.3 cannot resolve the drafting schema's refs).
+- Re-graded by this seat against the order @5a16ea4484 with `regrade_with_order_at.sh` (built this hour, self-tested on rj-12 with a
+  negative control: refusal exit 1, positive exit 0, order untouched): VALID, restored byte-identical. **Drained PARTIAL @`e0c93010af`**
+  (245 rows) so HEAD carries the deployed build, both policy edits, the closed ledger and the rows; the order stays `staged`.
+
+**AMENDMENT 5 @`4f0436811b`, inside the cell and the grant:** the cell says 'rows carry `security_key`'; the handler is inside rj-10's
+`<paths>`; `lib/research/` stays READ-ONLY. DELIVER step 6 edits the HANDLER ONLY -- `compute_chatter_axis()` without `universe_path`
+(U-1 from the pool through the producer role's `universe/v1/` grant), the bundled snapshot only as a DISCLOSED fallback, and the summary
+the function already builds returned (per-axis generations, universe provenance). A SECOND act on the one producer address inside both
+co-sign halves (COO half row 2, CTO half s.4 row 2), under its own ledger `amgt-round11-producer-universe`, proven by NEW AC10 (plan
+0/1/0), AC11 (apply 0/1/0, `mkdir -p org/mcp/sessions` first) and AC12 (closed); AC7 gains the pool-source clause; AC8 unchanged; AC6-AC8
+re-run ONLY after AC11's success line. The amendment script was caught BEFORE it ran carrying HTML entities (`&gt;` `&amp;`) where the
+order's invocations carry raw shell characters -- fixed, and the committed order checked structurally (12 criteria, one invocation and
+one expect each, 0 entities). `~19` RESPAWNED ~19:5xZ in `wk-amgt-11-2` fast-forwarded to 4f0436811b: AC1-AC5 and AC9 proven and not
+re-run, one Bash call per criterion, the handler checked against the real pool BEFORE any AWS act, next row W19-S19. Lesson banked:
+a sparse worktree never holds a gitignored runtime dir, so an apply order creates `org/mcp/sessions` first and gates every world read on
+the act's own success line.
+
+**Andrew-direct, per-tab scores, all relayed by `1.0.0_SA_CTO~W` and routed to the round-11 L10 addendum:** ~18:3xZ (msg 23209,
+candidate 16) Model = Divergence D (house NTM FCF vs consensus over estimate dispersion, with the producer condition sd(D) >= 0.25);
+~19:0xZ (msg 23223, @a026de4004) the five calls answered -- one bounded Lusha enrich authorized, CFPS or EPS dispersion for D, the
+Seeking Alpha crawl to 4.0.0_SA_CRO~Z, every ABSENT classed source-lacks vs pull-missed before it counts, the Peers cap ruled -- and a
+research brief to 4.0.0_SA_CRO~W. All in the packet draft, with this round's ABSENTs classed by the new rule.
+
+**Andrew-direct ~19:3xZ (msg 23232, record @2ac5611057): "write a /goal for yourself and COO~W to effectively see AMGT_RESAPP through
+to completion ... both you and COO~W need to engage the /goal skill with that text."** Engaged here via `/goal-set` with the text
+unchanged: AMGT_RESAPP to CLOSED under the canonical workflow, every FWD REALIZED against its exercised artifact, DONE WHEN the ledger
+carries COMPLETION_REPORT and COMPLETION_GRADES over the same outcomes, `missions-tree-index.py check` admits the row CLOSED, every
+order terminal and every row dispositioned; HELD-AT-STOP only on an Andrew-reserved act. The COO half: finish round 11, one recut
+issuance per L10 answer, COMPLETION_REPORT at the close, open calls routed to 1.0.0_SA_CTO~W (which adjudicates). The goal's loop is
+armed as a 20-minute recurring job beside the inbox watch and the stagger tick.
+
 ---
 
 ## Decisions Made
@@ -577,19 +634,19 @@ None at this lane. The next acts are gated on the workers' final reports (backgr
 
 ## Current State
 
-Round 11 of AMGT_RESAPP is EXECUTING (13 orders): 10 COMPLETE and drained (rj-4, rj-1, rj-7, rj-5, rj-6, rj-2, rj-8, rj-11, rj-13,
-rj-9); channel at 235 rows with Z-S104, Z-S105, Z-S106. TWO workers LIVE since ~18:1xZ: `~19` on rj-10 (the deploy; AC6 amended
-@5a16ea4484 and messaged; pre-apply at 18:41Z) in C:/tmp/wk-amgt-11-2, and `~18` on rj-12 (the Posture tab; rows W18-S16..S18 filed
-before its route edit) in C:/tmp/wk-amgt-11-1. rj-3 waits for both. PORTAL FROZEN; all commits LOCAL; no push.
+GOAL ENGAGED (Andrew-direct ~19:3xZ): AMGT_RESAPP to CLOSED. Round 11 EXECUTING (13 orders): 11 COMPLETE and drained (rj-4, rj-1, rj-7,
+rj-5, rj-6, rj-2, rj-8, rj-11, rj-13, rj-9, rj-12); rj-10 drained PARTIAL @e0c93010af (the first act live, ledger closed), open on AC7
+and AC8, AMENDMENT 5 @4f0436811b, `~19` respawned on the second, producer-only act; rj-3 waits for rj-10's keyed captures. Channel 245
+rows. The view worktree C:/tmp/portal-resapp-view on the final page 0e153399, port 5175 free. PORTAL FROZEN; all commits LOCAL; no push.
 
 ---
 
 ## Next Steps
 
-1. rj-10's drain: re-grade AC6 against 5a16ea4484 (and every criterion against the order at HEAD); read the ledger entry CLOSED with
-   its sentinel absent, the live reads and the two captures. rj-12's drain: the same; the portal drain ref to chain A's tip.
-2. After both: fast-forward wk-amgt-11-1, spawn rj-3 (~18) naming rj-10's captures; run the browser half per the staged method
-   and file ROUND11_BROWSER_EXERCISE.md.
-3. The close: every order terminal; dep_stage EXECUTING -> ROUND_CLOSE with the generated flat index; ROUND11_PACKET.md filed from
-   the draft; the one send to 3.0.0_SA_CVO~W.
-4. Re-arm the inbox Monitor and the stagger tick on every expiry; ack every broker message on read.
+1. rj-10: on `~19`'s report, read the live producer (CodeSha256, universe source, keyed rows), re-grade with regrade_with_order_at.sh
+   against the order at HEAD, drain, flip complete only when AC1-AC12 all PASS.
+2. rj-3: fast-forward wk-amgt-11-1, spawn `~18` with rj-10's captures and their full sha256s; run the browser half per
+   ROUND11_BROWSER_PLAN.md and file ROUND11_BROWSER_EXERCISE.md.
+3. The close: every order terminal; dep_stage EXECUTING -> ROUND_CLOSE with the generated flat index; ROUND11_PACKET.md from the draft;
+   the one send to 3.0.0_SA_CVO~W. Then the L10 answer -> one recut issuance (round 12), cut wide on the frontend.
+4. The goal loop every 20 minutes; the inbox watch and the stagger tick re-armed on every expiry; ack every broker message on read.
