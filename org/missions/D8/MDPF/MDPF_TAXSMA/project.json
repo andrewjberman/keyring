@@ -33,7 +33,7 @@
     "OPAL_TAXROSTER",
     "OPAL_TAXSMA_REGISTRY"
   ],
-  "blocking": "L4-R v0.2 ADMITTED: current CVO and CRO halves signed at 214982df0b and 905d2df375; header RATIFIED. L5 decomposition belongs to COO. Canonical release requires a named coo_lane; the lane request was delivered to 2.0.0_SA_COO at 2026-09-15T08:47:33Z. Named-person unattended workbook-content authorization remains an activation input; existing production/push holds remain. No runtime implementation is claimed.",
+  "blocking": "L4-R v0.2 ADMITTED at 60c722fe64; both current signatures remain unchanged. L5 awaits an assigned COO lane: COO~G explicitly declined in 96997, laptop capacity is 3/3, and TAXSMA is UNPLACED in SEQUENCE.yaml. prd/L5_ROUTING.md carries the unapplied tail-placement proposal for the sequence owner and the MSTR-owned seating requirement. No queue priority, extra seat or lane claim is inferred. Named-person workbook-content authorization remains an activation input; no runtime implementation is claimed.",
   "fabric_ruling": "laptop inherited from D8 placement and explicitly commissioned by Andrew: 'The pipeline aspect is a D8 job, to be handled on this fabric. The workflow D9 aspect is something else.'",
   "thread_counter": 0,
   "threads": [],
