@@ -5668,6 +5668,94 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "The alternative that stays pure-Python is a stdlib scheme registration (urllib.parse.uses_relative) in the adapter's handler; the handler is not among this order's writes (s.3: 'your writes are the two build scripts, the two .tf policy edits, the ledger entry and sentinel, the session serial file, the instance and captures'), and lib/ is read-only, so that path is named here and not taken. Deploying the 4.17.3 build would have served a thesis route that raises, which the CTO half s.5 does not cover. Both halves sign 'a vendored jsonschema' without the pure-Python qualifier; the qualifier is the order's."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W19-S15",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~19",
+    "surfaced_at": "2026-09-15T19:10:00Z",
+    "one_line": "rj-10 AC5's first segment writes the halt gate's serial into org/mcp/sessions/, a gitignored directory the worker's sparse worktree does not hold, so the write failed, the halt gate could not name its principal and BLOCKED the apply (applied nothing); the worker created the directory inside its grant and the literal invocation then applied.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-AMGT-rj-10 @5ae785828e AC5 invocation opens with: printf '%s' 0.9.0_WK_AMGT_RESAPP~19 > \"org/mcp/sessions/${CLAUDE_CODE_SESSION_ID}.serial\"; the spawn prompt: 'write your serial into it IMMEDIATELY before the apply, exactly as AC5's invocation does'. <paths> grants org/mcp/sessions/.",
+    "world_is": "C:/tmp/wk-amgt-11-2 carried no org/mcp/sessions/ directory (the path is gitignored at .gitignore:435 and so never checked out; the main tree has it). Attempt 1 at 18:54:51Z printed '.scratch/AC5.sh: line 1: org/mcp/sessions/f44df7ef-924a-4d22-a758-c0e892a892d4.serial: No such file or directory', then the sentinel hash 5620cb14a4, then apply-rc=3, 'APPLY NO-APPLY-LINE', 'halt-block 1'; the saved apply text reads 'HALT-GATE: IDENTITY UNRESOLVED -- BLOCKED (fail-closed)'. Terraform ran nothing (AC6 right after still read both functions' pre-act CodeSha256). The worker read the cause, ran mkdir -p org/mcp/sessions in its worktree, and re-ran AC5 byte-for-byte at 19:00:10Z: apply-rc=0, 'Apply complete! Resources: 0 added, 4 changed, 0 destroyed', halt-block 0.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "deliverables/0.9.0_WK_AMGT_RESAPP~19/rj10.AC5.attempt1.txt and rj10.apply.attempt1.txt (attempt 1, verbatim).",
+        "deliverables/0.9.0_WK_AMGT_RESAPP~19/rj10.AC5.out.txt and rj10.apply.txt (attempt 2, verbatim).",
+        ".gitignore:435 'org/mcp/sessions/' (git check-ignore -v in the worktree)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "A worktree-creation or order-cut remedy (the directory created with the worktree, or the invocation's printf preceded by mkdir -p) is the issuer's to choose; the worker changed no invocation."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W19-S16",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~19",
+    "surfaced_at": "2026-09-15T19:12:00Z",
+    "one_line": "The worker ran AC5-AC8 in one loop WITHOUT gating AC6-AC8 on AC5's result, so when AC5's first attempt was blocked (W19-S15) AC7 invoked the PRE-ACT producer at 18:55Z, which upserted the 10 existing rows of TRENDING_CHATTER#2026-09-15 -- an off-order write on rows the CTO half marks not-to-be-touched -- and AC8 captured the pre-act adapter (captures replaced after the real apply).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-AMGT-rj-10 @5ae785828e: 'the act, the close, the commit of the close, then the grading reads'; AC5 expect 'A halt-gate BLOCK is recorded verbatim and is NOT met until its cause is read'; AC7 'the generation write is the producer's own invoke' of the DEPLOYED code. CTO half @e1c3cf0cb3 s.4: 'the metrics table's EXISTING rows (62 today, 4 partitions) ... may be touched? NO'.",
+    "world_is": "The worker's loop `for c in AC5 AC6 AC7 AC8` ran each criterion regardless of the previous one's result. With the apply blocked, AC7's `lambda invoke amgt-resapp-chatter-axis` at ~18:55Z ran the ROUND-10 producer code (CodeSha256 fj8wqp9j..., still live): 200 None, payload {as_of_date 2026-09-15, tickers_considered 34, rows_ranked 10, rows_written 10}, no pointer on either axis. Read after the real apply, the bare partition TRENDING_CHATTER#2026-09-15 holds 11 items: 10 rows with computed_at 2026-09-15T18:55Z and rank_sort 00001-00010 (2317 TT, 9433 JP, 992 HK, ASML NA, BA US, BABA US, BBSE3 BZ, BP/ LN, COST US, Enel IM; score 0, raw_chatter_count 0, window_total_count 0 on all 10) plus the new producer's generation_pointer (no rank_sort). BREAKOUT_CHATTER#2026-09-15 holds 0 rows. The CTO half's census at ~07:3xZ counted 10 rows in this partition, so the count did not move; the PRIOR item values were not read before the upsert and are UNREAD, so whether any attribute other than computed_at changed is not known. AC6 attempt 1 read only; AC8 attempt 1 read the pre-act adapter (rankings row_count 10 from the bare partition, thesis 0 drafted sections, coverage 0) and wrote two capture files into the deliverables, which were moved out and replaced by the post-apply captures. After the apply the deployed adapter follows the _CURRENT pointer only (AC8 attempt 2 served generation 20260915T190138Z-6556d07d87e5, rows computed_at 19:01Z), so the 18:55Z rows are served by nothing live; a rolled-back adapter would serve them, as it would have served the 10:00Z write of the same code.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "deliverables/0.9.0_WK_AMGT_RESAPP~19/rj10.AC7.attempt1.txt (200 None; POINTER None on both axes) and rj10.AC8.attempt1.txt; attempt-1 captures kept as attempt1.rankings.trending.chatter.response.2026-09-15.json / attempt1.thesis.BA_US_Equity.response.2026-09-15.json.",
+        "deliverables/0.9.0_WK_AMGT_RESAPP~19/rj10.bare.after.json: dynamodb query axis_date = TRENDING_CHATTER#2026-09-15 after the apply, 11 items, no LastEvaluatedKey; grouped (computed_at 18:55Z, rank_sort present) 10, (generation_pointer, no rank_sort) 1.",
+        "CTO half NEVER_WIDEN_ROUND11_ONE_STORE_CTO_HALF.md @e1c3cf0cb3 s.3 property A: 'TRENDING_CHATTER#2026-09-15 10'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The worker's own sequencing defect, stated as such: the second run gated AC6-AC8 on AC5's apply-rc and APPLY line. No row was deleted or hand-written to restore anything (the order bounds hand-written metrics items). The rows' disposition -- leave, or re-point nothing because nothing serves them -- is the issuer's and the CTO's under the half's s.4."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W19-S17",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~19",
+    "surfaced_at": "2026-09-15T19:14:00Z",
+    "one_line": "The deployed producer never reads the pool's union universe: its unchanged Lambda handler passes universe_path=universe_snapshot.json and the producer treats a given path as 'that file, full stop', so every name stays UNRESOLVED, no row carries a security_key, every count is 0 -- a COMPLETE generation of 10 zero-score keyless rows, and rj-10 AC8's rows-with-key reads 0 of 10.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-AMGT-rj-10 @5ae785828e AC8 expect: 'rank statusCode 200 with row_count equal to the TRENDING pointer's row_count, a generation_id equal to the pointer's, a payload_hash, rows-with-key equal to row_count'. Cell s.1: the producer role reads 'publication-links/v1/, publications/v1/, crosswalk/v1/, universe/v1/'. lib/research/metrics/chatter_axis.py @5ae785828e :44-49 'the identity layer's UNION UNIVERSE (INTERFACE U-1, universe/v1/<as_of>.json in the pool; the landed universe.json is the fallback'.",
+    "world_is": "infra/aws/terraform/harvest/lambda_src/lambda_function.py @5ae785828e (round-10 vintage, not among this order's writes) calls compute_chatter_axis(universe_path=_UNIVERSE_SNAPSHOT_PATH). chatter_axis.read_universe_names @5ae785828e: '`universe_path` given -> that file, full stop. Otherwise the POOL's union universe'. So the pool object universe/v1/2026-09-15.json (present: list-objects-v2 prefix universe/v1/ returns that one key) is never read and no fallback_reason is set (the invoke's log line is 'OK: chatter axis as_of=2026-09-15 tickers_considered=34 rows_ranked=10 rows_written=10', no universe_fallback). Both pointers carry coverage_vintage 'file:/var/task/universe_snapshot.json#as_of=UNSTATED'. The served rankings/trending/chatter capture (AC8 attempt 2): ranking_status SERVED, state COMPLETE, row_count 10, generation_id 20260915T190138Z-6556d07d87e5, and on 10 of 10 rows security_key null, identity_status UNRESOLVED, score 0, raw_chatter_count 0 (tickers 2317 TT ... Enel IM). AC8 printed rows-with-key 0. The pool holds bodies and links for BA_US_Equity, COST_US_Equity, HD_US_Equity (coverage for BA_US_Equity served store_item_count 2), which a keyless universe cannot join. Not a grant defect: the producer's live policy grants universe/v1/* and the code path never lists it. The pre-act served list was also 10 zero-score rows on the same tickers (row W19-S16's 18:55Z rows), so the served signal did not fall.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/terraform/harvest/lambda_src/lambda_function.py @5ae785828e: 'summary = compute_chatter_axis(universe_path=_UNIVERSE_SNAPSHOT_PATH)'.",
+        "lib/research/metrics/chatter_axis.py @5ae785828e read_universe_names docstring and branch 'if universe_path: ... source = \"file:%s\" % (universe_path,)'.",
+        "deliverables/0.9.0_WK_AMGT_RESAPP~19/rankings.trending.chatter.response.2026-09-15.json (the AC8 capture) and rj10.AC8.out.txt ('rows-with-key 0'); rj10.AC7.out.txt (both pointers' coverage_vintage); rj10.producer.logs.json (CloudWatch, 5 events since 19:00Z)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The remedy is a one-argument change in the producer's handler (or the builder no longer baking the snapshot as the primary input), which is outside this order's writes (s.3) and outside 'no edit to lib/research/'; named, not taken. No promoted portal page reads these routes today (the spawn prompt, W18-S11); this re-arms the moment a promote carries the Security Analysis ranked list to PROD with keyless zero rows. The 10:00Z schedule will write the same shape daily until the handler moves."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W19-S18",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~19",
+    "surfaced_at": "2026-09-15T19:15:00Z",
+    "one_line": "rj-10 AC7 expects the producer's invoke payload to carry rows_written per axis, generation ids and the pool denominators, but the deployed producer's unchanged handler returns exactly four summary keys, so that clause cannot appear in AC7's output even though both generations and pointers were written.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-AMGT-rj-10 @5ae785828e AC7 expect: '200 None; a payload with rows_written per axis, generation ids and the pool denominators (names read, names with links); for each axis a POINTER line ...'.",
+    "world_is": "infra/aws/terraform/harvest/lambda_src/lambda_function.py @5ae785828e returns {as_of_date, tickers_considered, rows_ranked, rows_written} and nothing else. AC7's output (19:01:25Z): '200 None' then '{\"as_of_date\": \"2026-09-15\", \"tickers_considered\": 34, \"rows_ranked\": 10, \"rows_written\": 10}' -- one rows_written total, no per-axis split, no generation id, no names read / names with links. The rest of AC7 is present in the same output: POINTER TRENDING_CHATTER#2026-09-15 20260915T190138Z-6556d07d87e5 COMPLETE 10 with a 64-hex payload_hash; POINTER BREAKOUT_CHATTER#2026-09-15 20260915T190139Z-4f53cda18c2b EMPTY 0; neither pointer's attribute list carries rank_sort; the generation partitions hold 10 and 0 items. The handler is not among this order's writes.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "deliverables/0.9.0_WK_AMGT_RESAPP~19/rj10.AC7.out.txt (verbatim).",
+        "infra/aws/terraform/harvest/lambda_src/lambda_function.py @5ae785828e, handler's return statement (four keys).",
+        "dynamodb query --select COUNT: TRENDING_CHATTER#2026-09-15#20260915T190138Z-6556d07d87e5 10; BREAKOUT_CHATTER#2026-09-15#20260915T190139Z-4f53cda18c2b 0."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "AC7 is recorded FAIL on this clause alone, output verbatim; the pointer clauses and every NOT-met condition AC7 names (missing pointer, pointer with rank_sort, rows under a bare date partition by the deployed code) are met by the same output. The bare partition's 18:55Z rows are the PRE-ACT code's (row W19-S16), not this invoke's."
   }
 ]
 ```
