@@ -1,7 +1,8 @@
 # Portal promotion preparation — 2026-09-15
 
 Author/executor seat: `1.0.0_SA_CTO~A`  
-Status: **PREPARATION COMPLETE; PROMOTION NOT STARTED; AWAITING MSTR GO**  
+Status: **CANDIDATE IR SOURCE PRECHECK PASSED; PROMOTION NOT STARTED; AWAITING MSTR GO**
+
 Prepared: 2026-09-15 08:14 UTC
 
 ## Assignment and authority boundary
@@ -128,3 +129,39 @@ Read-only preparation evidence, measured 2026-09-15T09:00:21Z and completed with
 | `10c2f07d...:src/lib/firmAccess.ts` | All three named partner sets omit the page | Committed source inspection only; no authenticated walkthrough claimed |
 
 No final integrated candidate has been selected or graded by these preparation controls. Repeat the checks at GO, retain both prerequisite PASS artifacts, and apply the prior cleanliness and exact-byte requirements. The Step 4 no-ff merge commit/hash wording remains pending the explicit owner clarification already requested. No fetch, build, merge, push or deployment was performed for this notice.
+
+## Published candidate precheck — notice 97008, 09:32:50 UTC
+
+Exact notice `20260915T093250Z_0.0.0_AB_MSTR_Promote_candidate_43f18c17__laptop_integ.md`, from `0.0.0_AB_MSTR`, was read and ACKed at 09:33:37 UTC. It expressly says **no GO** and offers this head for the 96996 precheck: **`43f18c179cad01947e0f0a41a9889807301fd233`**, published as `laptop/integ-promote-20260915`. MSTR reports it combines gated DEV `10c2f07d`, d13 `46932888` and POSN round 6 `ebbee2e61a`; AMGT is excluded because its separate approval has not been given.
+
+This seat independently measured the following against that exact commit at approximately **09:34–09:35 UTC**, using the existing portal Git object store and a read-only `ls-remote`. No checkout, fetch, install, build, merge or branch mutation was needed.
+
+| Check | Measured result |
+|---|---|
+| `merge-base --is-ancestor 10c2f07d4da3795c0e404a92a8b9515259e42be7 43f18c179cad01947e0f0a41a9889807301fd233` | exit **0** |
+| Same ancestry check with an all-zero candidate | exit **128**, invalid commit: expected negative control |
+| Candidate `src/App.tsx` route entries | **2/2** named routes, `/investor-reporting` and `/investor-reporting/print`, have `ProtectedRoute requireAdmin requireInternal` |
+| Candidate IR navigation item | **1/1** item has `requiresAdmin: true` and `requiresTier: 'internal'` |
+| Candidate `src/lib/firmAccess.ts` partner allowlists | **3/3** named sets (`49financial`, `inflection`, `cottonwood`) omit `/investor-reporting` |
+| Candidate tree | `f1afba420366a4f8645bbb6262db61ca4af9dab4` |
+| Site Z trial `1a1e13ef1d7197c88499d010ebd4539a79270a0b` tree | Same tree `f1afba420366a4f8645bbb6262db61ca4af9dab4`; candidate-to-trial `git diff --exit-code` is empty, exit **0** |
+| Live remote `refs/heads/laptop/integ-promote-20260915` | `43f18c179cad01947e0f0a41a9889807301fd233` |
+| Live remote `refs/heads/DEV` | `5b959f63ca5e51214fe1e605b04b82b2bbf60ef4` |
+| Live remote `refs/heads/PROD` | `b1389c85759511e65ec5d5b26ee96d63c91984c2` |
+
+Source inspection used `git show <candidate>:<path>`, not main DEV working files. The inspected blob IDs are `cb20bd3d2fe93988c4a759bf37add3b994bc4e6d` for `src/App.tsx` and `73cf302f0a48a876f548c943367ba326dc2ba804` for `src/lib/firmAccess.ts`. These results establish the requested source guards and ancestry on the named published branch. They do not establish authenticated runtime behavior, clean build worktrees, successful whole-suite execution, or admission of this candidate to origin DEV.
+
+### Suite issues reported by MSTR; CTO disposition remains pending
+
+The notice reports **585 pass / 21 skip / 2 fail of 608** on intermediate tree `57c70a8e`, versus **586 / 21 / 1** on unmerged DEV `10c2f07d` at the same workspace-relative test location. Its final-candidate whole-suite run was still in progress. This seat has not rerun that suite or independently diagnosed those failures.
+
+- **F25-AC8**, `fe-s-25 generator.test.ts:79`: MSTR reports pre-existing cross-repository source-hash drift between the generated wire contract and the current workspace schema. CTO must rule whether to fix first; COO~F owns the proposed regeneration at the current contract.
+- **F49-AC8**, `fe-s-49 admin-gate.test.ts:582`: MSTR reports a merge-attributable pre-merge assertion that forbids two unrelated d13 hunks, which become expected after merging d13. The guard assertions reportedly still pass. CTO must rule on fix-first or acceptance; COO~F owns the proposed ancestry-aware test amendment.
+
+Neither failure is waived by the passing source precheck. Any amended candidate requires the checks to be repeated against its exact new SHA. Base CTO retains both test dispositions; this seat does not edit COO~F's tests or generated wire file from this notice.
+
+### Next release inputs
+
+MSTR targets GO around **11:30–12:00 UTC**, after Site Z's planned **11:1xZ 25-of-25 data recheck**. That is reported scheduling, not observed PASS evidence or time-based authority. Required inputs still include the final candidate/DEV publication, applicable test dispositions and final suite result, both prerequisite PASS records, clean integration/promotion trees, the unresolved Step 4 no-ff merge/hash clarification, freeze, and explicit MSTR GO. The existing clarification remains with CTO; this notice does not answer it.
+
+No deployment ledger or sentinel is opened for this precheck. The workspace gitlink and publication remain MSTR-owned. The result is routed to MSTR and CTO, then only the exact notice 97008 is archived.
