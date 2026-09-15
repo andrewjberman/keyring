@@ -87,6 +87,19 @@ producer), to be re-incorporated as the ranking half of Peers rather than rebuil
 REUSE of existing code and factor definitions under the page's own contract, not a copy into a new
 producer; the peer-SET rule (who the comparables are) remains the open question of the fourth word.
 
+## VERBATIM, SIXTH WORD (same terminal, ~05:4xZ)
+
+> Yeah something that would be interesting for exec management is if we can actually pull the whole c
+> suite and also have a piece in there that is like average tenor of exec management as compared to
+> the rest of the pool.
+
+**Reading, narrow:** the Exec Management tab covers the WHOLE C-SUITE of the security, not the CEO
+alone, and carries one derived measure: the average tenure of that C-suite compared with the average
+across the pool (the harvest universe, i.e. the coverage list plus the ETF holdings). Tenure needs a
+per-person start date in role, which is a FIELD the substrate must be measured to carry; the pool
+average is a denominator the pool's own roster provides. "Pull" is read as a collection lane under the
+harvest grammar, not as a live per-page call.
+
 ## READING -- NARROW, AGAINST THE PAGE AS BUILT (refs/drains/rg-2-portal @a845a8be)
 
 | his sentence | what stands today | what moves |
