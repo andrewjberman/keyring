@@ -4305,6 +4305,27 @@
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-S67",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-15T07:34:00Z",
+    "one_line": "FE-s-49's backend-census test (F49-AC10) timed out at bun's default 5000 ms in 2 runs of 2 on this seat's untouched RULING Y pair (6703 ms alone, 5938 ms in the whole suite). Its bar still printed '12 of 12', so the worker's proof reads AC10 and AC11 PASS while the file is red on another checkout. The census test carries no timeout sized to its cost: the W1-S74 class, and this seat's cut gap. FE-s-49 is held from drain; amendment 1 sizes the timeout.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-49 F49-AC11: 'THE WHOLE-SUITE RUN IS THE CENSUS OF RECORD' with 0 fail; F49-AC10's bar 'EVERY ENDPOINT INVESTOR REPORTING CALLS HAS A PRINTED ADMIN-ONLY ANSWER: 12 of 12'. The round-8 lesson of W1-S74: a test added to the census must not be load-dependent.",
+    "world_is": "On C:/tmp/verify-fe-s-49-pair (workspace d0a5ad368d, portal 640379b8, detached, node_modules junction, IRPT_FE_DEV_PORT=5289 measured ECONNREFUSED on v4 and v6): (1) bun test __tests__/fe-s-49/admin-gate.test.ts: 8 pass / 1 fail, F49-AC10 'this test timed out after 5000ms' [6703.00ms], the bar line printed 12 of 12 before the timeout; (2) bun test src/pages/InvestorReporting/__tests__: 567 pass / 18 skip / 2 fail of 587, F49-AC10 timed out [5938.00ms] and F41-AC5's control timed out [5422.00ms] (W3-S40, FE-s-46's). admin-gate.test.ts:608 declares F49-AC10 with no timeout argument; its census runs git grep over the workspace repository (:687). The beforeAll at :366 carries 120000. A third run, the cell file at this seat's throwaway integration merge c727df7b (640379b8 + 3e84bce6), passed 9/0: the census's cost straddles the default, which is the defect, not a mitigation. The worker's run read 569/18/0. Proof and typecheck are clean on the pair (VALID bound, rc=0). INERT, not ARMED: nothing of FE-s-49 has drained, and the drain is held until an amended re-run passes on an untouched pair.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "scratchpad v49.admin-gate.test (the cell file on the untouched pair): 'F49-AC10 -- every endpoint Investor Reporting calls has a printed admin-only answer (READ-ONLY census) [6703.00ms]', '^ this test timed out after 5000ms.', '8 pass', '1 fail'",
+        "scratchpad v49.suite (the whole suite on the untouched pair): '567 pass', '18 skip', '2 fail', 'Ran 587 tests across 103 files. [81.41s]'; the fails are F41-AC5 CONTROL [5422.00ms] and F49-AC10 [5938.00ms], each 'timed out after 5000ms'",
+        "portal 640379b8:src/pages/InvestorReporting/__tests__/fe-s-49/admin-gate.test.ts:608 test('F49-AC10 ...', () => { with no timeout argument; :366 }, 120000) on the beforeAll; :687 the git grep census"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
