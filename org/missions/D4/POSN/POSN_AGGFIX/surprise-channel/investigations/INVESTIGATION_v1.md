@@ -558,6 +558,50 @@ worker's id is `POSN_AGGFIX-Z-W<slot>-S<k>`, a seat's `POSN_AGGFIX-Z-S<k>`.
     "spec_asserts": "TO-C1-1 C1-AC14: timeout 300 bash infra/aws/lambda/ci/record-terraform-deploy.sh portal-auth --plan <c1.tfplan> --author <worker>; the recorder's commit verified by git with auth-validator-edge's last_deployed_commit moved.",
     "world_is": "On this device the recorder cannot reach its scoping step while python3 resolves under the spaced user profile, so it refuses before writing anything. With PATH rooted at the 8.3 short name the same invocation records the deploy. The recorder's code was not changed.",
     "notes": "Form only. Not measured: whether any other call site in record-terraform-deploy.sh expands an interpreter path unquoted, or how other devices resolve python3."
+  },
+  {
+    "id": "POSN_AGGFIX-Z-W1-S11",
+    "project": "POSN_AGGFIX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_AGGFIX~1",
+    "surfaced_at": "2026-09-15T22:12:00Z",
+    "one_line": "A3-AC5's safe-apply passed the halt gate on its first run without listing the issuer's unread inbox, so the order's OPERATING FACT 2 (read every listed subject, paste the census, re-run with HALT_ACK=1) had nothing to act on; the apply ran once, without HALT_ACK.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D4/POSN/POSN_AGGFIX/task-orders/POSN_AGGFIX.TO-A3-1.deploy-the-producer-and-read-the-served-result.md @33dad02f79 OPERATING FACT 2: 'The gate then lists the ISSUER's unread inbox (routine messages, measured 182 at TO-C1-1's apply). Read every listed subject, paste the census into your evidence, and if none begins [STOP] or [HALT], re-run the same safe-apply with HALT_ACK=1 as the gate instructs.'",
+        "A3-AC5 run 1, 2026-09-15T22:08:49Z, serial files written to both the worktree and main-workspace session paths immediately before, the order's invocation verbatim: the only halt-gate line printed is 'HALT-GATE: worker 0.9.0_WK_POSN_AGGFIX~1 has no inbox; scanning its issuer 2.0.0_SA_COO~Z (a [STOP] to the issuer halts its workers)'; the tagauthz and tombstone gates follow, then 'Apply complete! Resources: 0 added, 1 changed, 0 destroyed.', rc=0 (org/missions/D4/POSN/POSN_AGGFIX/deliverables/0.9.0_WK_POSN_AGGFIX~1/a3_ac5.attempt1.out.txt).",
+        ".tools/safe-apply.sh @84fe842e09 :263 '# Checkpoint passed (empty inbox, or routine acked, or audited STOP override).'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-A3-1 OPERATING FACT 2 and A3-AC5: the halt gate lists the issuer's unread inbox, the worker pastes the subject census, and re-runs safe-apply with HALT_ACK=1 when no subject begins [STOP] or [HALT].",
+    "world_is": "The gate listed no subjects and asked for no acknowledgment; it passed and the apply completed on the first run. No subject census exists to paste, and HALT_ACK=1 was not used.",
+    "notes": "Form only. Not measured: the issuer inbox's unread count at 22:08Z, or which branch of the checkpoint (empty inbox or otherwise) passed it."
+  },
+  {
+    "id": "POSN_AGGFIX-Z-W1-S12",
+    "project": "POSN_AGGFIX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_AGGFIX~1",
+    "surfaced_at": "2026-09-15T22:15:00Z",
+    "one_line": "yang-invalidate-cloudfront, invoked with its recorded event, invalidates only ONE of the two distributions it names: E2LPCXXBLDGWXY returns NoSuchDistribution and is caught inside the function, so the run reports no FunctionError. The recorded pipeline execution 20260914_v1-9dbd2129 got the same error at 07:08 EDT, so this predates the deploy.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/v2_portal/yang_pipeline/outputs/invalidate-cloudfront/lambda_function.py @84fe842e09 :28-31 DISTRIBUTION_IDS ['E2LPCXXBLDGWXY', 'EVTSA9VEHNZVH']; :43-52 create_invalidation Paths ['/*']; :60-65 any exception is logged and appended as {'distribution_id', 'error'}, never raised.",
+        "A3-AC8 driven invoke 2026-09-15T22:12:21Z, recorded input sha256 031b8fff6f2dbc87: StatusCode 200, FunctionError none, payload {'invalidations': [{'distribution_id': 'E2LPCXXBLDGWXY', 'error': 'An error occurred (NoSuchDistribution) when calling the CreateInvalidation operation: The specified distribution does not exist.'}, {'distribution_id': 'EVTSA9VEHNZVH', 'invalidation_id': 'I7UYBELUPGGXFNJ66T7RKNKEYA', 'status': 'InProgress'}]} (org/missions/D4/POSN/POSN_AGGFIX/deliverables/0.9.0_WK_POSN_AGGFIX~1/a3_ac8.out.txt).",
+        "get_execution_history of arn:aws:states:us-east-1:313476888478:execution:YangDataPipeline:20260914_v1-9dbd2129 (166 events): InvalidateCloudFront TaskStateEntered event 154; LambdaFunctionSucceeded event 157 at 2026-09-15 07:08:06 -04:00 carries the same NoSuchDistribution error for E2LPCXXBLDGWXY and invalidation I1YKVUAI19FE94Z83JXRPD5P3O InProgress for EVTSA9VEHNZVH."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-A3-1 A3-AC8 and the producer COO half's permitted set: yang-invalidate-cloudfront invoked once with its recorded event removes the cache entries for the paths that event names, and the invoke shows no FunctionError.",
+    "world_is": "The invoke shows no FunctionError, and one of the function's two hardcoded distributions no longer exists, so only EVTSA9VEHNZVH is invalidated. Every pipeline run does the same: the recorded execution carries the identical error.",
+    "notes": "Form only. Not measured: which distribution serves the portal's /api/general/positioning/ paths, whether E2LPCXXBLDGWXY was deleted or renamed, or when the error first appeared."
   }
 ]
 ```
