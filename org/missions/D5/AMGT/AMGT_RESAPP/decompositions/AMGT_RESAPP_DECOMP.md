@@ -1718,14 +1718,14 @@ cap, a window; no feed is built.
 
 Per-owner ARMED figures are mentions across planes, not items, as in s.18b; none is read at a grain it does not have.
 
-### 19c. THE CELLS -- thirteen, five chains; rj-4 is the round's first act and every other chain starts after its drain
+### 19c. THE CELLS -- thirteen (ids `AMGT-rj-1` .. `AMGT-rj-13`, the grammar the L6 gate reads), five chains; rj-4 is the round's first act and every other chain starts after its drain
 
 Worker slots: `0.9.0_WK_AMGT_RESAPP~18` (A, the page: every portal edit and every edit of `lib/research/api/scoped_amgt.py`),
 `~19` (B, identity + store + the one terraform act), `~20` (C, the model-side calls: filings, then Posture), `~21` (D, the
 ranker), `~22` (E, executive management, then the social measurement). Every cell names its INTERFACE (19d) where another chain
 consumes it, so parallel workers converge on a pool key and a function signature, never on each other's files.
 
-**rj-4 THE CROSSWALK AND THE UNION UNIVERSE** (C-ONE-IDENTITY, C-UNION-UNIVERSE, C-ETF-PLANE-READ; interfaces X-1, U-1). Chain B,
+**`AMGT-rj-4` THE CROSSWALK AND THE UNION UNIVERSE** (C-ONE-IDENTITY, C-UNION-UNIVERSE, C-ETF-PLANE-READ; interfaces X-1, U-1). Chain B,
 FIRST of the round. (i) `crosswalk/v1/<as_of>.json` in the pool: ONE canonical identity per economic security (`<TICKER>_<CC>_Equity`)
 mapped to its Bloomberg identifier (`BA US`), display ticker, model/pack key, and EVERY publication-association key already
 persisted (`BA`, `security-<16 hex>` -- measured by listing `publication-links/v1/` and the pack/model-block names), with the
@@ -1742,7 +1742,7 @@ carried for rj-6; denominators printed. READ-ONLY on the ETF plane (the object c
 are the control); the counterpart contract is NOT established (v0.7's own words), so the read is one-sided and the snapshot and
 schema vintage are carried on every object.
 
-**rj-1 THE ROUTE BOUNDARY AND THE RANKED CLICK** (row Z-S95; C-ONE-IDENTITY; FWD-15). Chain A, after rj-4's drain. (The ranking
+**`AMGT-rj-1` THE ROUTE BOUNDARY AND THE RANKED CLICK** (row Z-S95; C-ONE-IDENTITY; FWD-15). Chain A, after rj-4's drain. (The ranking
 row's `security_key` is emitted by `rj-5`, chain B -- the CRO's follow-up item 4: two chains never edit `chatter_axis.py`; rj-1
 consumes the row shape and renders a row without a key as UNRESOLVED.) The seam:
 `RankedList.tsx:138` passes `row.ticker` into a slot `useSecurityAnalysisState.ts:37-39` renames `securityKey` with no transform;
@@ -1753,7 +1753,7 @@ neither -> `identity_status: UNRESOLVED` with the requested string echoed, no gu
 (the producer's `build_rows` resolves through X-1; the deploy is rj-10's); `RankedList`/`StarredList` pass `row.security_key`; a
 `null` key renders an UNRESOLVED marker and does not navigate; harness arms.
 
-**rj-2 DRAFTED SENTENCES BESIDE THEIR EVIDENCE** (row C-S196; FWD-9). Chain A, after rj-1 AND after rj-6's drain (its typed evidence
+**`AMGT-rj-2` DRAFTED SENTENCES BESIDE THEIR EVIDENCE** (row C-S196; FWD-9). Chain A, after rj-1 AND after rj-6's drain (its typed evidence
 is the input). The seam: `scoped_amgt.py:680` hardcodes `"drafted_sections": []`; `ThesisTab.tsx:52` hides evidence in a `title=`
 tooltip. DELIVER: `read_thesis_bundle` reads `drafting/v1/<key>.json` (D-1, typed evidence records with stable ids AND passage text)
 from the pool, validates every evidence id's existence, association and source version through rj-6's validator before serving,
@@ -1761,14 +1761,14 @@ serves `drafting_status: SERVED | ABSENT | INVALID`; `ThesisTab.tsx` renders eve
 text visibly beneath it (no `title=` carrier), the verbatim verdict as the `CheckFaceBadge`; a render check asserts the passage text
 sits after its sentence and before the next; the negative controls are the pipeline's (an unknown id, an empty evidence array).
 
-**rj-3 THE EXACT-INPUT EXERCISE** (row S72; FWD-15, FWD-9, FWD-10; the round's AC6 judgment). Chain A, LAST of all. ONE ranked payload
+**`AMGT-rj-3` THE EXACT-INPUT EXERCISE** (row S72; FWD-15, FWD-9, FWD-10; the round's AC6 judgment). Chain A, LAST of all. ONE ranked payload
 and ONE thesis bundle captured from the DEPLOYED adapter (rj-10), each carrying its `generation_id`, coverage vintage and payload
 hash (C-RANKING-GENERATION: a date alone cannot tell two computations apart), sha256 printed at input and at output of the
 assembled page (five tabs, header, Posture line); the persisted cache (`OPAL_PORTAL_QUERY_CACHE_v1`, `staleTime: Infinity`)
 cleared per arm; error and empty controls DISTINCT; the browser half the issuer's with the same hashes; the judgment for
 `3.0.0_SA_CVO~W`. No live-edge or person-session claim.
 
-**rj-5 ONE STORE: THE READER, THE PRODUCER, THE GENERATION** (rows Z-S96 / Z-S101; C-ONE-STORE, C-RANKING-GENERATION; interfaces P-1,
+**`AMGT-rj-5` ONE STORE: THE READER, THE PRODUCER, THE GENERATION** (rows Z-S96 / Z-S101; C-ONE-STORE, C-RANKING-GENERATION; interfaces P-1,
 G-1). Chain B, after rj-4. DELIVER: (i) the ONE shared adapter `lib/research/coverage/pool_reader.py` (P-1) over
 `publication-links/v1/{security_key}/{publisher}/{digest}.json` and `publications/v1/{publisher}/{digest}.json`: `article_key =
 publisher + ':' + article_id`, `digest = sha256(article_key)`, the body's `published` mapped to the consumer's `published_at` at the
@@ -1789,7 +1789,7 @@ rows; AAA#1, BBB#1, CCC#2 after a replacement run) is the negative control the t
 (iv) the difference control (pool vs table for BA, COST, HD and a name with no links); unit tests with a local fake of the two
 prefixes covering every distinguishable state. The coverage ROUTE edit is rj-9's (chain A owns `scoped_amgt.py`).
 
-**rj-6 THE FILINGS ANALYZER, LOCAL** (FWD-18; C-FILINGS-ANALYZER v0.7; interfaces F-1, D-1). Chain C, after rj-4's drain (CIK and
+**`AMGT-rj-6` THE FILINGS ANALYZER, LOCAL** (FWD-18; C-FILINGS-ANALYZER v0.7; interfaces F-1, D-1). Chain C, after rj-4's drain (CIK and
 filing identity from U-1). Card 1 @`5007337353` is the working shape (read `measure_filings_analyzer.py` first; the SEC user-agent
 it sets is reused, never invented; the key through `comp-secrets get anthropic-api-key --reveal`). THE CUT NAMES TWO PASSES.
 DELIVER: `lib/research/filings/` -- `fetch.py` (the latest 10-K, or 20-F for a foreign private issuer, by CIK from U-1; the
@@ -1808,7 +1808,7 @@ definition DISABLED (`schtasks /Create ... /SC WEEKLY` with the task left disabl
 COST stated for Andrew: about USD 1.1 and 115 s per filing at card 1's size; a full weekly batch over ~150 names is on the order of
 USD 150.
 
-**rj-7 THE SIMILARITY RANKER** (FWD-8; C-SIMILARITY-RANKER; interface R-1). Chain D, after rj-4's drain. As the provisional cut, with
+**`AMGT-rj-7` THE SIMILARITY RANKER** (FWD-8; C-SIMILARITY-RANKER; interface R-1). Chain D, after rj-4's drain. As the provisional cut, with
 the identity through X-1: the loader over the six scanner universe files (`s3://opal-data-portal-v2/json/security_scanner/latest/
 universes/*/universe_data.json`, asOf 2026-08-06 carried as the vintage) UNION the model-block headers; rungs sector -> size band
 (0.2x-5x, `engine.py`) -> country -> industry group, log-market-cap tiebreak; the Rule 24 subtraction per rung; `peers/v1/{key}/
@@ -1816,7 +1816,7 @@ universes/*/universe_data.json`, asOf 2026-08-06 carried as the vintage) UNION t
 absent; a Seeking Alpha comparables list measured ONCE as an input candidate if reachable without the CRO's vault, else
 ABSENT-ACCESS. Local batch; no deploy.
 
-**rj-8 EXECUTIVE MANAGEMENT** (FWD-17; C-EXEC-MANAGEMENT; interface M-1). Chain E, after rj-4's drain AND after rj-6's drain (the
+**`AMGT-rj-8` EXECUTIVE MANAGEMENT** (FWD-17; C-EXEC-MANAGEMENT; interface M-1). Chain E, after rj-4's drain AND after rj-6's drain (the
 filing rj-6 persists in the pool is its roster's source; the CRO's follow-up item 4). As the provisional cut with the identity
 through X-1 and the roster from the filing rj-6's fetcher persists (the executive-officer section; role start EXERCISED on a
 real filing; ex-US via the 20-F where it carries the section, else UNRESOLVED-SOURCE); Lusha enrichment through the estate's
@@ -1825,7 +1825,7 @@ real filing; ex-US via the 20-F where it carries the section, else UNRESOLVED-SO
 pool average over U-1 with its denominator. QA one-shot on BA, COST, HD and the two names rj-11 will compare. Local; no loop
 started (the production loop is the harvest estate's).
 
-**rj-13 THE SOCIAL SOURCE, MEASURED** (S13; s.9a-2's "measure, then build" row; C-LISTING-NOT-CAPABILITY). Chain E, after rj-8. ONE
+**`AMGT-rj-13` THE SOCIAL SOURCE, MEASURED** (S13; s.9a-2's "measure, then build" row; C-LISTING-NOT-CAPABILITY). Chain E, after rj-8. ONE
 security, ONE declared SUPPORTED method per the CRO's social brief @`36a08d3d1a` (the CRO's follow-up item 1: NOT the old cashtag
 plan -- the X inventory has no keyword-post discovery): Reddit discussion search, dataset `gd_lvz8ah06191smkebj4`, `type=discover_new`,
 `discover_by=keyword`, inputs `keyword`, `date`, a bounded `num_of_posts`; the job identity persisted and retrieved through the
@@ -1833,7 +1833,7 @@ documented delivery flow, never resubmitted per poll; a CAP (posts and USD) and 
 `social/v1/_measurement/<as_of>.json` and a row. NO feed is built; the header's social half renders "no source measured" until a
 later round cuts one from this measurement.
 
-**rj-9 THE HEADER AND THE FIVE TABS** (FWD-16; C-PAGE-LAYOUT; the rendering half of FWD-17, FWD-18, FWD-8; the route half of
+**`AMGT-rj-9` THE HEADER AND THE FIVE TABS** (FWD-16; C-PAGE-LAYOUT; the rendering half of FWD-17, FWD-18, FWD-8; the route half of
 C-ONE-STORE and C-RANKING-GENERATION). Chain A, after rj-2 AND after the drains of rj-5, rj-6, rj-7, rj-8. Tabs = Thesis, Exec
 Management, Peers, Model, Posture; the Coverage tab retired into the header feed (P-1 items newest first; social: "no source
 measured (S13)"); a one-line description (a model-block header scalar if one exists, else D-1's `company_description` first
@@ -1846,7 +1846,7 @@ history (`:434-438`) alike (the CRO's follow-up item 2), never a bare date parti
 Print a header action. Harnesses per tab; the render check over the
 assembled page.
 
-**rj-10 THE DEPLOY AND THE LIVE READ** (the consumer cell; C-ONE-STORE's package seam; C-RANKING-GENERATION on the live plane). Chain B,
+**`AMGT-rj-10` THE DEPLOY AND THE LIVE READ** (the consumer cell; C-ONE-STORE's package seam; C-RANKING-GENERATION on the live plane). Chain B,
 after rj-5 AND after the drains of rj-1, rj-9 (and rj-6/7/8, whose objects the live reads exercise). ONE terraform act in the
 harvest root: rebuild the scoped API zip (the round-10 closure builder, now ALSO carrying the reader's schema files and a vendored
 `jsonschema` -- the package seam, exercised in an isolated runtime before upload) and the chatter-axis zip; IAM: `s3:GetObject` /
@@ -1862,7 +1862,7 @@ and a re-invoke replaces the whole generation (the changed-winner control); the 
 pointer; coverage for BA from the pool; thesis with N > 0 drafted sections with passages; peers derived; management for BA. The
 captured payloads (with `generation_id` and hash) are rj-3's inputs.
 
-**rj-11 THE POSTURE CALL** (FWD-19; C-POSTURE). Chain C, after rj-6 AND after the drains of rj-4, rj-7, rj-8. As the provisional cut:
+**`AMGT-rj-11` THE POSTURE CALL** (FWD-19; C-POSTURE). Chain C, after rj-6 AND after the drains of rj-4, rj-7, rj-8. As the provisional cut:
 membership at the snapshot vintage (U-1 + the holdings read, one-sided), the comparable by R-1 restricted to the OTHER side, the
 judgment through the Claude API over the two evidence packs (D-1, M-1, R-1, the model block figures for BOTH names; the ETF preset
 fit scores) -> `posture/v1/{key}/{as_of}.json` (O-1) `{verdict: better|worse|hold|steer_clear|absent, comparable, basis:
@@ -1870,7 +1870,7 @@ fit scores) -> `posture/v1/{key}/{as_of}.json` (O-1) `{verdict: better|worse|hol
 read, with D-1/M-1/R-1 landed for BOTH names of each pair by rj-6/7/8's QA lists (the CRO's seventh seam: the QA name lists are
 aligned in 19e); a subject with no comparable -> `absent` with the reason. Local; nothing trades; no schedule.
 
-**rj-12 THE POSTURE TAB AND THE HEADER LINE** (FWD-19; C-PAGE-LAYOUT). Chain A, after rj-9 AND after rj-11's drain. The tab over O-1
+**`AMGT-rj-12` THE POSTURE TAB AND THE HEADER LINE** (FWD-19; C-PAGE-LAYOUT). Chain A, after rj-9 AND after rj-11's drain. The tab over O-1
 (verdict, the comparable as a link into its own page, each basis claim with its cited pack element beside it, the machine marker,
 the snapshot date) and the header's one-line posture with the same marker; ABSENT explicit.
 
