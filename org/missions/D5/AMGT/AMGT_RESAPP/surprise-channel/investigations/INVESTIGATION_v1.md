@@ -4500,6 +4500,160 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
       "spec_asserts": "AC7: 'the same gold/ count, newest key and LastModified as AC1 printed, and the snapshots/ count and newest LastModified unchanged (the ETF plane was read and never written -- any difference is a BLOCKING row)'.",
       "world_is": "The gold/ half of the pair is complete and MATCHES exactly. The snapshots/ half is not a pair: AC1 measured {Key, Size} and AC7 measures {count, LastModified}, so 'unchanged' has nothing to compare against on either field. The stronger control that WAS available and was run instead -- no object under any read prefix carries a LastModified inside the worker's window, and the only 7 writes to the bucket in that window are another producer's under bbg/ -- answers the question the criterion is asking, and answers it on the whole bucket rather than one prefix.",
       "notes": "No difference was found and nothing is blocked; AC7 is recorded PASS on the gold/ pair plus the window control, with the snapshots/ count stated as an AFTER-only value and NOT claimed as unchanged-by-comparison. The generalisable point for the next cut: on a bucket with a live producer, a before/after COUNT is the wrong control shape -- it can move for reasons that have nothing to do with the actor -- and the right one is 'no object under the prefixes I touched has a LastModified inside my window'. Related and already law, so not filed separately: a paginated list-objects-v2 with --query length() returns a PER-PAGE count; this bucket's whole-bucket probe printed '1000' then '518' and a per-page reader would have reported 1000 of 1518."
+    },
+    {
+      "id": "AMGT_RESAPP-Z-W18-S1",
+      "project": "AMGT_RESAPP",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~18",
+      "surfaced_at": "2026-09-15T09:20:00Z",
+      "one_line": "AC2's named suite invocation collects ZERO tests and reports OK: every test under lib/research/api/tests is a pytest-style module-level function with no unittest.TestCase, so `python -m unittest discover` runs an EMPTY suite and the criterion's 'OK with 0 failures and 0 errors' is true of nothing.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "AC2's first clause run VERBATIM at HEAD 10c74d0efb BEFORE any edit of this cell: `timeout 120 python -m unittest discover -s lib/research/api/tests -p \"test_*.py\" -q` -> 'Ran 0 tests in 0.000s' then 'OK', rc 0. Identical with -v, with -t . , and with an explicit module: `python -m unittest lib.research.api.tests.test_scoped_amgt -q` ALSO runs 0 tests.",
+          "unittest.TestLoader().discover('lib/research/api/tests','test_*.py','.') -> countTestCases() 0 with loader.errors == [] (nothing failed to import) and _match_path True for test_scoped_amgt.py -- the pattern matches, the file is read, and it declares no TestCase. comp-read test_scoped_amgt.py --enumerate 'class ' -> 2 of 2 hits are FakeTable and FakeResource; --enumerate 'def test_' -> 17 module-level functions, five taking pytest's `monkeypatch` fixture.",
+          "The suite DOES run under its own runner, and the count moves: `python -m pytest lib/research/api/tests -q` -> BASELINE (pre-edit) 41 passed / 6 failed; AFTER this cell 54 passed / 6 failed, the 13 new ones being this cell's test_route_boundary_identity.py. The 6 failures are identical in both runs and are row W18-S2's subject."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "AMGT_RESAPP.TO-AMGT-rj-1 AC2 expects 'the adapter suite ends OK with 0 failures and 0 errors' from `python -m unittest discover -s lib/research/api/tests -p \"test_*.py\" -q`.",
+      "world_is": "The invocation is satisfiable and was satisfied AS WRITTEN -- and it exercises nothing at all. A test runner that collects zero tests reports the same three lines whether the adapter is whole or broken, so this criterion cannot fail on any edit to scoped_amgt.py. AC2 is recorded PASS-by-output with its literal output, and the pytest control is recorded beside it so the suite's real verdict is on the record too.",
+      "notes": "The cheapest fix for the next cut is one word in the invocation (`pytest` for `unittest discover`) plus a FLOOR ON THE COLLECTED COUNT -- 'N passed' with N asserted above a number, because a runner that collects nothing is the same green as a runner that passes everything. This worker did not change the invocation: a criterion is run as written and refused or disclosed, never repaired."
+    },
+    {
+      "id": "AMGT_RESAPP-Z-W18-S2",
+      "project": "AMGT_RESAPP",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~18",
+      "surfaced_at": "2026-09-15T09:21:00Z",
+      "one_line": "6 of 47 adapter tests cannot pass in a worker worktree at all: they read integrations/ and infra/ paths that the sparse cone this order's worktree was cut with does not contain, so they fail on FileNotFoundError at BASELINE and after, in both cases for a reason unrelated to any code under test.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "`python -m pytest lib/research/api/tests -q` at HEAD 10c74d0efb BEFORE any edit: 6 failed, 41 passed. The same 6 fail after this cell's edit (6 failed, 54 passed).",
+          "The 6, with their missing path: test_fiscal_scope_contract.py::test_declared_contract_equals_the_scopes_the_producer_emits ('producer source not found at C:/tmp/wk-amgt-11-1/integrations/bloomberg/research/model_block_pull.py') and the five in test_scoped_amgt_mount.py, all on C:/tmp/wk-amgt-11-1/infra/aws/terraform/... .",
+          "The worktree is a deliberate sparse cone: the L7 identity line states it holds .tools, org, docs, rcg and lib, and that data/, infra/ and workflows/ are ABSENT BY DESIGN. `ls` confirms neither integrations/ nor infra/ exists here."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "AC2 grades 'the adapter suite' from inside this worker's worktree; the worktree is the sparse cone the issuer cut.",
+      "world_is": "A sixth of that suite is unrunnable in the environment the order grades it in, and the two halves of the fact point in opposite directions: under the invocation AC2 names (unittest) the 6 never run, so they cannot colour the verdict; under the runner that actually collects them (pytest) they fail for a worktree-shape reason that no edit in this cell can move. Both numbers are recorded rather than one of them chosen.",
+      "notes": "Not a defect in the tests: each of the 6 is a CONTRACT test tied to a producer or a mount declaration, which is exactly the tie that makes them valuable in a full tree. The generalisable point is about the SPARSE CONE, not the suite -- a cone cut for the files a cell WRITES can silently exclude the files its TESTS READ, and the tell is a failure whose message names a path rather than a value."
+    },
+    {
+      "id": "AMGT_RESAPP-Z-W18-S3",
+      "project": "AMGT_RESAPP",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~18",
+      "surfaced_at": "2026-09-15T09:22:00Z",
+      "one_line": "The order's DELIVER item 4 asks for `security_key` on the join harness's fixtures' RANKED ROWS, but 0 of 2 of those fixtures carry a ranked row at all -- both are thesis bundles -- so that half of the instruction has an empty denominator there and was landed in the harness that does render ranked rows.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "The join harness's fixtures are thesisBundle.BABA_US_Equity.json and thesisBundle.BABACVOCTRL_US_Equity.json (2 of 2 files it loads, via `load(key)` -> thesisBundle.<key>.json). Their top-level keys are security_key, header_figures, fiscal_year_figures, check_face, drafted_sections, generated_at -- and now identity. Neither carries a `rows` array or any ranked row.",
+          "The harness's own provenance header states what they are: 'the verbatim return of lib/research/api/scoped_amgt.py:read_thesis_bundle(<key>)'.",
+          "The ranked-row fixtures of this page live in errorEmpty.harness.cjs (POPULATED_ROW, and this cell's new UNRESOLVED_ROW), which is the harness that renders RankedList and StarredList."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "DELIVER item 4: 'the join harness's fixtures gain `security_key` on their ranked rows and the `identity` block on the bundle'.",
+      "world_is": "The bundle half was done exactly as written (both fixtures re-captured from the adapter, identity block present, diff against the committed bytes printed before adoption: one key added, generated_at moved, 183/13/196 and 1/1/2 byte-identical). The ranked-row half was done in errorEmpty.harness.cjs, where the ranked rows are -- POPULATED_ROW gains security_key and identity_status, and a new UNRESOLVED_ROW holds security_key at null explicitly.",
+      "notes": "Recorded because a reader auditing item 4 against the join harness alone would find no ranked row and could read that as work not done. Nothing is blocked."
+    },
+    {
+      "id": "AMGT_RESAPP-Z-W18-S4",
+      "project": "AMGT_RESAPP",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~18",
+      "surfaced_at": "2026-09-15T09:23:00Z",
+      "one_line": "The order names a `RankedRow` type in types.ts; no type of that name exists there. The ranked row is RankingRowBase, extended by ChatterRankingRow and PriceRankingRow and unioned as RankingRow, and the identity fields were added to the BASE so all three carry them.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "comp-read portal/src/pages/SecurityAnalysis/types.ts --enumerate 'RankedRow' -> 0 hits across the file at portal 9aef3734. The declared ranked-row types are RankingRowBase, ChatterRankingRow, PriceRankingRow and the union RankingRow.",
+          "The fields were added to RankingRowBase, which both concrete row types extend, so a single declaration covers the union -- adding them to a leaf would have left the other leaf without them.",
+          "They are declared OPTIONAL AND NULLABLE (`security_key?: string | null`, `identity_status?: IdentityStatus`) because the producer writes NEITHER field today: MEASURED on the live table 2026-09-15, the ten rows of TRENDING_CHATTER#2026-09-15 carry {as_of_date, axis, axis_date, computed_at, movement, movement_basis, movement_measure, movement_raw_score, rank, rank_sort, raw_chatter_count, score, subject, ticker, window_days, window_total_count} and no security_key. AMGT-rj-5 (chain B) is the cell that emits them."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "DELIVER item 3: '`types.ts` `RankedRow` carries `security_key: string | null` and `identity_status`'.",
+      "world_is": "The named type is the one the order describes under a different name, so the instruction was executed on RankingRowBase. The one deliberate departure from the literal text is the `?`: a REQUIRED `security_key: string | null` would type a wire that does not exist until rj-5 drains, and the order itself says 'the served rows may still lack it -- an UNRESOLVED marker is the correct rendering of a row without a key'. Optional-and-nullable is the shape that admits both the absence and the resolved-to-nothing case, and the renderer treats them identically.",
+      "notes": "AC3's counters do not distinguish the two spellings (they count the token `security_key` in the file), so this row is the disclosure that the grade and the literal text are not the same object."
+    },
+    {
+      "id": "AMGT_RESAPP-Z-W18-S5",
+      "project": "AMGT_RESAPP",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~18",
+      "surfaced_at": "2026-09-15T09:24:00Z",
+      "one_line": "AC4's `echo rc=$?` reports the exit code of `tail`, not of the harness: the invocation pipes node into tail, so a harness that exits 1 on a failed check still prints rc=0, and the criterion's rc clause cannot fail.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "AC4 as written: `cd portal && timeout 110 node src/pages/SecurityAnalysis/__harness__/errorEmpty.harness.cjs 2>&1 | tail -14; echo rc=$?`. In POSIX sh, `$?` after a pipeline is the exit status of the LAST command in it, which is tail; tail exits 0 whenever it can read its input.",
+          "Measured both ways on the SAME harness run: the literal invocation prints rc=0, and the harness run unpiped (`node ... > ../.scratch/harness.out 2>&1; echo $?`) also prints 0 -- so the recorded PASS is sound at this cut. The two agree here; the point is that they would not disagree visibly if the harness failed.",
+          "The harness DOES set a non-zero code on a wrong-way check (`process.exitCode = 1` beside a 'CHECKS-WRONG-WAY' line), so the signal exists and is simply not reaching the criterion."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "AC4 expects 'rc=0 with every prior check still at its met value ... and at least one NEW check naming the unresolved row'.",
+      "world_is": "The rc clause is vacuous; the CHECK lines are what actually carries the verdict. This worker made that half non-vacuous from the harness side rather than by editing the criterion: the harness now prints one `CHECK <name> = <actual> (expected <expected>)` line per check and a final `CHECKS-OK 12 of 12`, all of which survive `tail -14`, so the deciding evidence is IN the graded output instead of behind an exit code the pipeline discards.",
+      "notes": "Both values are recorded in the proof instance: the literal invocation's rc=0 and node's own rc=0 measured unpiped. The generalisable form: any criterion of the shape `<cmd> | tail -n; echo rc=$?` grades the tail, and the fix is PIPESTATUS, a redirect to a file, or -- better here -- making the command's own output carry the verdict."
+    },
+    {
+      "id": "AMGT_RESAPP-Z-W18-S6",
+      "project": "AMGT_RESAPP",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~18",
+      "surfaced_at": "2026-09-15T09:25:00Z",
+      "one_line": "read_point() upper-cases the ticker it is given while the producer writes MIXED-CASE tickers, so the point read for such a name can never match its own ranked row -- measured live: 'Enel IM' is ranked today and a GetItem for it MISSES, with the exact-case call miss ing too because the upper() is inside the function.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/research/api/scoped_amgt.py:329-336 @10c74d0efb, line 335 verbatim: Key={\"axis_date\": partition_key(axis, as_of_date), \"ticker\": ticker.upper()} .",
+          "Live read 2026-09-15: read_rankings('TRENDING','CHATTER') returns 10 rows and 1 of the 10 tickers is mixed case -- 'Enel IM'. read_point('TRENDING_CHATTER','Enel IM','2026-09-15') -> MISS and read_point('TRENDING_CHATTER','ENEL IM','2026-09-15') -> MISS, because both arguments are upper-cased before the GetItem. POSITIVE CONTROL in the same call: read_point('TRENDING_CHATTER','BABA US','2026-09-15') -> HIT, rank 6.",
+          "The defect is older than this cell and is unmoved by it: this cell only changed WHICH measured string is handed to read_point (the identity's bloomberg form instead of the landed block's display form), not what read_point does with it."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "C-ONE-IDENTITY: one canonical identity resolved once and carried unchanged through overlay, thesis, peers, model, coverage, ranking and Posture.",
+      "world_is": "The identity is carried unchanged up to read_point and is then case-folded inside it, so one name in today's ranked ten cannot reach its own overlay row. This cell's BOUND does not name read_point's key handling and the refusal clause forbids widening, so it is filed rather than repaired.",
+      "notes": "Whoever takes it should decide the question rather than delete the upper(): the fold exists because some caller passes a lower-case ticker, and the honest fix is to make the producer's own case the one truth (the crosswalk's bloomberg form is already exactly that string) and drop the fold at the same time. A GetItem is case-SENSITIVE, so the current code cannot be right for both populations at once."
+    },
+    {
+      "id": "AMGT_RESAPP-Z-W18-S7",
+      "project": "AMGT_RESAPP",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~18",
+      "surfaced_at": "2026-09-15T09:26:00Z",
+      "one_line": "The Coverage tab's Star button writes the CANONICAL KEY into a watchlist store keyed by TICKER, so a name starred from that tab can never match a ranked row and lands in the starred residual as an unrankable entry.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "portal/src/pages/SecurityAnalysis/tabs/CoverageTab.tsx:82 @portal 9aef3734, verbatim: onClick={() => setStarredMutation.mutate({ ticker: securityKey, starred: true })} -- the value passed as `ticker` is the page's securityKey.",
+          "The starred set is compared against ranked rows by TICKER: LeadPanel.tsx builds `starredTickers` from the watchlist entries' `ticker` field and StarredList.tsx filters `rows.filter((row) => starredTickers.has(row.ticker))`. The server side agrees: read_starred/write_starred carry a `ticker` and delegate to lib/research/watchlist/store.py.",
+          "So a star set from the Coverage tab on BABA_US_Equity produces a starred entry that no ranked row (ticker 'BABA US') can ever equal."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "C-ONE-IDENTITY: an identity is resolved once and carried unchanged; two identifier spaces are never mixed.",
+      "world_is": "Two identifier spaces meet in one mutation argument, on the same page and in the same class as the defect this cell repairs, but in a file this cell's DELIVER list does not name -- so it is filed, not fixed. The remedy is a decision, not an edit: either the watchlist becomes key-keyed (a store change, with a migration for the entries already written) or this button sends the identity block's bloomberg form; picking one silently in this cell would have set the precedent the other cell then has to undo.",
+      "notes": "Worth pairing with whatever cell takes AMGT-rj-5: once ranked rows carry security_key, key-keyed is the cheaper end state and the starred residual stops being a dumping ground for identifiers that never matched."
     }
 ]
 ```
