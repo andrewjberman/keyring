@@ -1389,6 +1389,28 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "OGZ1-AC5: 'a newly registered, unclassified tool is denied to the restricted profile'.",
     "world_is": "The criterion holds, and so does the wider PRD sentence: the unclassified tool is denied to everyone. All 44 tools registered at the cut are classified 'legacy', so OGZ1-AC11 holds: existing users keep the same tool set before and after.",
     "notes": "INERT for this round. A later order that adds a tool needs app/data_entitlement.py in its <paths>, or the new tool is dead on arrival."
+  },
+  {
+    "id": "NFRA_OPLGTW-S17",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-15T22:12Z",
+    "one_line": "Record of 1.0.0_SA_CTO's ruling msg 97251: W3-S22 rides round 2 inside the email-keyed authorization cell (an email-keyed deny record in the access-state table) and is disarmed for round 1 by TO-OG-r-1's new AC12 withholding line; OG-q-2 gets an entries-only grant on app/data_entitlement.py for its five tools (AC25, AC26), standing for any later tool-adding cell.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RULING 97251 (1), on W3-S22 (disarm owner 1.0.0_SA_CTO): round 2, widening the email-keyed cell of ruling 97114 to /login, the four /sprint paths and /callback's legacy-consent branch. Mechanism: an email-keyed deny record in the access-state table, so there is ONE carrier, not an ALB rule or a roster. Round 1 is disarmed because the restricted profile is new with this project, and TO-OG-r-1 AC12 prints the restricted-profile principals able to complete the ALB browser login, which must count 0.",
+        "RULING 97251 (2), on W3-S24 and W3-S23: an entries-only grant on app/data_entitlement.py for OG-q-2's five tools, each with its real contract operation class, with no widening and no permissive default. An unclear class is a row. Discriminator: the diff is exactly five entries, and test_data_entitlement_guard.py stays green. It stands for any later NFRA_OPLGTW round-1 cell that adds a tool.",
+        "CARRIED: TO-OG-r-1 (AC12) and TO-OG-q-2 (AC25, AC26, <paths> + app/data_entitlement.py), both amended before any worker was handed them, in this seat's commit beside this row."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "W3-S22 was ARMED: a restricted-profile holder could still reach the email-authorized browser routes. W3-S24: TO-OG-q-2 did not grant the file where its tools must be classified, so its tools would be denied to everyone.",
+    "world_is": "W3-S22's gap is placed in round 2's email-keyed cell and cannot be exercised in round 1, because the release withholds any restricted profile from a principal who can complete the browser login, and the printed count is the discriminator. OG-q-2 can classify its own tools under a discriminated, entries-only grant.",
+    "notes": "W3-S22's disposition cites 97251 as 1.0.0_SA_CTO instructed. The adjudication is 3.0.0_SA_CVO's at L9."
   }
 ]
 ```
