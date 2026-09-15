@@ -407,9 +407,10 @@ components:
   disposition: AUTHORED_NEW_L4_CONTRACT
   existence_check:
     exists: true
-    last_commit: d317a65ec7dc9240620f33733eacbf16211c4268
-    source_sha256: e49169831e6bf2ddf0e975de04f5c1b45f7eb4be5999735fba405525a3a4d971
-    basis: Current v0.5 proposed contract bytes; last_commit is the reviewed v0.4 contract vintage.
+    last_commit: 5061a43a46230b6d188886f8b19846f5445b0b0c
+    source_sha256: e3a5c376b3ad2bd516ade2e2a9d5420d668ed2a41d9613197ccffd8ffb900dfa
+    basis: Current RATIFIED v0.5 contract bytes; all normative fields equal the independently signed reviewed pin;
+      state metadata alone finalized.
   boundary: Source/path inspection only; no deployed parity inferred. Recheck exact path before authoring; if usable
     already, verify/reuse.
 - name: TAXSMA_WORKBOOK_IDENTITY activation record

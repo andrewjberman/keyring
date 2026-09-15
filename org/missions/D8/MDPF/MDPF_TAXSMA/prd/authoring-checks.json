@@ -87,8 +87,8 @@
     "ratified-text": "ab7f2488ad922e26fa91feae1b19ae7c5615c6520b338f77150569e5ff84b77b",
     "brief": "a14495740d029c4f2fd09c5309fa183b2f85d75e187c71d162b3f91a31815043"
   },
-  "prd_sha256": "03ad7c1fa83257d243ec8a35d345a8e999a5475a9a4edb40eac05613d6200841",
-  "data_contract_sha256": "e49169831e6bf2ddf0e975de04f5c1b45f7eb4be5999735fba405525a3a4d971",
+  "prd_sha256": "7aec0a1f78d0bd36306da599ec21d2375e45391d68d07afad52b0092956d8419",
+  "data_contract_sha256": "e3a5c376b3ad2bd516ade2e2a9d5420d668ed2a41d9613197ccffd8ffb900dfa",
   "ratified_text_correction": {
     "notice_id": 96985,
     "ground": "R1",
@@ -125,11 +125,48 @@
     "reviewed_data_contract_sha256": "0af07aefd485b5bda905caac89b82746a95e8ba2de62e2122198a5a04031a13f"
   },
   "admission": {
-    "status": "PENDING_CURRENT_HALF_REVIEWS",
-    "header_status": "DRAFT",
-    "both_halves_changed": true,
-    "author_signs_neither_half": true,
-    "reason": "R1/R2 repair plus explicit date comparison and version references"
+    "status": "ADMITTED",
+    "header_status": "RATIFIED",
+    "signed_halves_unchanged": {
+      "ratified-text": "ab7f2488ad922e26fa91feae1b19ae7c5615c6520b338f77150569e5ff84b77b",
+      "brief": "a14495740d029c4f2fd09c5309fa183b2f85d75e187c71d162b3f91a31815043"
+    },
+    "contract_changed_fields": [
+      "state"
+    ],
+    "contract_normative_content_equal_to_reviewed_pin": true,
+    "reviewed_pin": "5061a43a46230b6d188886f8b19846f5445b0b0c",
+    "signature_commits": {
+      "ratified-text": "2560f51f837a53a0c3e6ac16a5c140f64852ae48",
+      "brief": "d4b71666ffa45158c69ee91f38a18cd0e11d2ed2"
+    },
+    "review_refs": {
+      "ratified-text": "org/tier1_exec/3.0.0_SA_CVO/deliverables/PRD_REVIEW_MDPF_TAXSMA_v0.5_RATIFIED_TEXT_HALF_20260915.md@e01e049d24",
+      "brief": "docs/briefs/sources/MDPF_TAXSMA_L4_BRIEF_REVIEW_v0_5_20260915.md@915893d796"
+    },
+    "canonical_shape_violations": [],
+    "canonical_release": {
+      "id": 97212,
+      "from_serial": "1.0.0_SA_CTO~A",
+      "to_serial": "2.0.0_SA_COO~T",
+      "subject": "[PRD LANDED] MDPF_TAXSMA v0.5 @2560f51f83 -- step 4 done; step 5 is yours",
+      "sent_at": "2026-09-15T19:50:19.441472+00:00",
+      "state": "READ",
+      "polled_at": "2026-09-15T19:51:55.115716+00:00",
+      "emitted_at": "2026-09-15T19:53:15.906645+00:00",
+      "acked_at": "2026-09-15T19:53:15.906645+00:00",
+      "acked_by": "2.0.0_SA_COO~T"
+    },
+    "release_checked_utc": "2026-09-15T19:56:39.446374+00:00",
+    "l6_signature_hold": "CLEARED; COO~T owns the required L5 v2 recut before its one L6 issuance",
+    "remaining_conditions": {
+      "N5": "gateway registry/constructors; EN-r-5 trigger and L9 evidence read",
+      "N6": "Gold-placement question remains a question, not a new ruling; current96960 firm Gold home governs",
+      "N7": "TX-r-3 must measure configured validated tid/oid binding and actual authorized workbook capability read before activation; no new metadata probe or widening",
+      "N8": "NFRA_OPLGTW principal model and shared Gateway sequencing govern the Gateway work cut; COO carries current owner/release ordering"
+    },
+    "source_fields": 7,
+    "endpoints_exercised": false
   },
   "v03_lgic_checks": {
     "checked_utc": "2026-09-15T16:32:56.309846+00:00",
@@ -301,5 +338,8 @@
     "data_contract_sha256": "e49169831e6bf2ddf0e975de04f5c1b45f7eb4be5999735fba405525a3a4d971",
     "workbook_access": "Believed but UNMEASURED; immutable principal binding also unmeasured by the relayed whoami record",
     "l6_state": "Held for admitted final PRD and L5 v2"
-  }
+  },
+  "admission_checked_utc": "2026-09-15T19:59:10.238375+00:00",
+  "reviewed_prd_sha256": "03ad7c1fa83257d243ec8a35d345a8e999a5475a9a4edb40eac05613d6200841",
+  "reviewed_data_contract_sha256": "e49169831e6bf2ddf0e975de04f5c1b45f7eb4be5999735fba405525a3a4d971"
 }

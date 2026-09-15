@@ -2,7 +2,7 @@
 
 Author: `1.0.0_SA_CTO~A`. Recorded: 2026-09-15T08:50:04.057346+00:00.
 
-**Current v0.5 is DRAFT and pending both current-half L4-R reviews.** v0.4 brief was SIGNED at5e2089e99b; CVO REFUSED the contracts half at91875c897c. The v0.5 repair restores capability-guard precedence, validated Entra tid/oid binding and counterpart pins, and clarifies UTC/session-date comparison. Both hashes change; prior signatures remain historical. Traded membership and seven-field source remain; access/binding proof is still UNMEASURED. dep_stage=PRD, L6 held for admission and COO~T L5 v2. See REVIEW_REPAIR_V05.md.
+**Current v0.5 is ADMITTED: both independent halves SIGNED/current against5061a43a46, CVO2560f51f83 and CROd4b71666ff. Header/state metadata alone is finalized to RATIFIED; signed halves and every normative contract field remain unchanged. The L4 signature hold is cleared. Canonical release97212 was READ by exact COO~T at19:53:15.906645Z. COO~T owns the L5 v2 recut and subsequent one L6 issuance; the frozen v1 remains historical. This is requirements admission, not implemented or EXERCISED endpoints.** G-A names the existing opalbloomberg account; actual validated tid/oid binding and workbook access remain UNMEASURED until TX-r-3 controlled proof under existing release conditions. No metadata probe, tool widening or access grant is added. CVO N5 carries gateway registry/builder evidence with EN-r-5; N6 leaves the Gold-placement question as a question, preserving96960; N8 carries NFRA_OPLGTW principal-model landing and shared Gateway sequencing. N-1/G-S/G-O/G-W/G-P remain. All seven source fields, Traded/date/count rules, storage addresses and grant scopes remain as signed. Earlier pending-review and v0.3/v0.4 observations below are historical.
 
 For v0.2, `python .tools/prd-signoff.py status MDPF_TAXSMA` was read after CRO notice 96992 and returned both halves SIGNED/current. The project stays `dep_stage=PRD` until COO produces the next limb. Its placement is D8 / MDPF / laptop; the D9 business workflow is separate.
 
@@ -83,3 +83,18 @@ Both hashes differ from admitted8120db1ff9: ratified-text `da428d318d04535960b84
 CRO brief SIGNED `docs/briefs/sources/MDPF_TAXSMA_L4_BRIEF_REVIEW_v0_4_20260915.md@27286d3a81`, stamp `5e2089e99b8a96f98fec6a261e317134d90a8efe`. CVO ratified-text REFUSED `org/tier1_exec/3.0.0_SA_CVO/deliverables/PRD_REVIEW_MDPF_TAXSMA_v0.4_RATIFIED_TEXT_HALF_20260915.md@91875c897c`, stamp `4bac56b200416c9f25102374ad4ebb4ae79c6922`. Canonical status independently reads WITHHELD; no admission was inferred from the brief signature. Exact CRO97206 notice read/ACKed; both requested Gateway corrections and the non-blocking date note are carried in REVIEW_REPAIR_V05.md.
 
 v0.5 current hashes: ratified-text `ab7f2488ad922e26fa91feae1b19ae7c5615c6520b338f77150569e5ff84b77b`, brief `a14495740d029c4f2fd09c5309fa183b2f85d75e187c71d162b3f91a31815043`. Both differ from v0.4, so canonical version-bump requests both independent reviews. No old signature is copied or overwritten by this author.
+
+## v0.5 admission and metadata finalization, 2026-09-15T19:59:10.238375+00:00
+
+v0.5 is ADMITTED: both independent halves SIGNED/current against5061a43a46, CVO2560f51f83 and CROd4b71666ff. Header/state metadata alone is finalized to RATIFIED; signed halves and every normative contract field remain unchanged. The L4 signature hold is cleared. Canonical release97212 was READ by exact COO~T at19:53:15.906645Z. COO~T owns the L5 v2 recut and subsequent one L6 issuance; the frozen v1 remains historical. This is requirements admission, not implemented or EXERCISED endpoints.
+
+| Half | Signature commit | Review | Current half SHA-256 |
+|---|---|---|---|
+| ratified-text | 2560f51f837a53a0c3e6ac16a5c140f64852ae48 | org/tier1_exec/3.0.0_SA_CVO/deliverables/PRD_REVIEW_MDPF_TAXSMA_v0.5_RATIFIED_TEXT_HALF_20260915.md@e01e049d24 | ab7f2488ad922e26fa91feae1b19ae7c5615c6520b338f77150569e5ff84b77b |
+| brief | d4b71666ffa45158c69ee91f38a18cd0e11d2ed2 | docs/briefs/sources/MDPF_TAXSMA_L4_BRIEF_REVIEW_v0_5_20260915.md@915893d796 | a14495740d029c4f2fd09c5309fa183b2f85d75e187c71d162b3f91a31815043 |
+
+Finalization changes only PRD header status and contract state, plus companion hashes/receipts. PRD v0.5 and contract0.5.0 retain their reviewed versions. Both half hashes remain identical; every normative contract field is equal to5061a43a46. Zero canonical shape violations. Neither reviewer stamp was edited. CVO R1/R2 and the CRO UTC-date note are closed by the signed text.
+
+G-A names the existing opalbloomberg account; actual validated tid/oid binding and workbook access remain UNMEASURED until TX-r-3 controlled proof under existing release conditions. No metadata probe, tool widening or access grant is added. CVO N5 carries gateway registry/builder evidence with EN-r-5; N6 leaves the Gold-placement question as a question, preserving96960; N8 carries NFRA_OPLGTW principal-model landing and shared Gateway sequencing. N-1/G-S/G-O/G-W/G-P remain. All seven source fields, Traded/date/count rules, storage addresses and grant scopes remain as signed.
+
+**Canonical release:** message97212, sender CTO~A, recipient COO~T, release signature pin2560f51f83. Sent `2026-09-15T19:50:19.441472+00:00`, READ `2026-09-15T19:53:15.906645+00:00` by `2.0.0_SA_COO~T`; broker metadata checked `2026-09-15T19:56:39.446374+00:00`. The notification retired from outstanding.jsonl after READ, as its code specifies. No manual resend/recovery was needed. Receipt proves intake, not completion of L5 v2 or L6 issuance.
