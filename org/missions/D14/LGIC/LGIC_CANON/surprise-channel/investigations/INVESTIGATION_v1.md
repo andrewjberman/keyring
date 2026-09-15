@@ -190,6 +190,30 @@ not a message.
     "spec_asserts": "Decomposition section 8 choice 2: the canon's section 4 and the ledger's section 6 carry the same entries, and the schema's axis column takes A1-A5.",
     "world_is": "The carriers had diverged by one entry (X6, ledger only), and that entry's axis is 'tenancy', a value the kept schema does not admit. The canon v1.0 keeps the schema and points at the ledger for entries, so X6 now sits in the one carrier against a schema it does not fit. The worker did not edit the ledger, which is outside this order's paths. INERT: a register entry classifies and moves nothing (DEC-9). The fix belongs to the ledger's owner this round (cell CN-l-1), or to 1.0.0_SA_CTO or 4.0.0_SA_CRO, who write register entries: give X6 an axis in A1-A5, or widen the schema's axis domain by a Rule-24 act.",
     "notes": "Filed by the CN-k-1 worker while carrying out item 7 (section 4 points at the ledger for its entries)."
+  },
+  {
+    "id": "LGIC_CANON-W5-S1",
+    "project": "LGIC_CANON",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_CANON~5",
+    "surfaced_at": "2026-09-15T20:31Z",
+    "one_line": "Judging the MDPF tree's A3 axis from the canon alone, the canon gives two answers for the monolith's tier-first planes: R1's census tag reads '53 of 53 non-SmartX monolith planes CONFORMANT', while R1's own text makes the key source-first in every bucket and R5's census names opal-data-assets gold/ (502) and portal/gold/ (415), which are tier-first or carry no scope segment. Judge B graded by the rule text (A3 VIOLATES, R1).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CANON R1 TEXT: infra/logic/02_DOCTRINE.md@671925aecc:112-120 'THE SAME STRING IN EVERY BUCKET, source first' and 'SUPERSEDED 2026-09-13 ~03:2xZ ... SOURCE-FIRST everywhere'; :167 N1 grammar {source}/{scope}/{tier}/{table}/{partition}; :175 'mdpf/global/..., never mdpf/mdpf/...'.",
+        "CANON R1 CENSUS: infra/logic/02_DOCTRINE.md@671925aecc:130 'census: 53 of 53 non-SmartX monolith planes CONFORMANT; SmartX see R2'; :23-24 census tags are 'as of 01_CENSUS.md @d35653da5e'.",
+        "CANON R5 CENSUS: infra/logic/02_DOCTRINE.md@671925aecc:314 'opal-data-assets/gold/ 502 (json), portal/gold/ 415'.",
+        "TREE: org/missions/D14/LGIC/LGIC_CANON/deliverables/2.0.0_SA_COO~G/fixed_inputs/r1/CN_TREE_MDPF.md@671925aecc:23-24 P4 opal-data-assets gold/mdpf/ and gold/mdpf_revamp/ under a root gold/ prefix (502 objects); P5 opal-data-assets portal/gold/ (415 objects).",
+        "ANSWER: org/missions/D14/LGIC/LGIC_CANON/deliverables/exercises/judge-b.tsv@98ed3177ff row A3 'VIOLATES R1', committed before this row was written."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-CN-j-2 and canon section 0: a seat answers 'is this conformant, and against which rule' from the one document, without a second document.",
+    "world_is": "On A3 the one document holds two readings of the same monolith planes: R1's census tag says they conform, and R1's text read against R5's census says they do not. A judge who takes the tag answers A3 differently from one who takes the text, which is the disagreement FWD-1 measures. Whether the tag predates the source-first ruling was not measured (01_CENSUS.md is outside this order's reads). INERT: a census tag classifies and moves nothing (DEC-9). The remedy is a recount of R1's tag, or a note of its vintage, at the canon's next edit.",
+    "notes": "Filed by 0.9.0_WK_LGIC_CANON~5 (judge B) on LGIC_CANON.TO-CN-j-2; kept working. This worker judges the row's form, not its significance."
   }
 ]
 ```
