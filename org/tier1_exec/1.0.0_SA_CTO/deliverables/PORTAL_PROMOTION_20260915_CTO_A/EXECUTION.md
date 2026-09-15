@@ -1,10 +1,10 @@
 # Portal promotion execution — 2026-09-15
 
-Executor: `1.0.0_SA_CTO~A`. Status: **PORTAL DEPLOYED AND EXERCISED; ONLY L5 WORKSPACE PUBLICATION OPEN**.
+Executor: `1.0.0_SA_CTO~A`. Status: **COMPLETE; PORTAL DEPLOYED AND EXERCISED; ALL SEVEN LEDGER LEGS CLOSED**.
 
-**Publication approval resolved (CTO97067, 12:37:44 UTC): MSTR is authorized to push CLOUD after the foreign merge clears.** This seat measured that merge absent and the staged index empty at12:38Z. L5 still requires the actual publication receipt; no new approval is being requested.
+**Publication verified (MSTR97069, independently read at12:44Z): origin/CLOUD is `0b7ecdde1fced656bfc686b0714c8379730f7d20`, carrying pointer commit `8e5780daf6` and this closeout record.** The published portal gitlink is `9adad7ce750742e9806c373a71f7ce900f3e22b2`. All seven legs closed through the canonical tool at12:44Z; the open-deploy sentinel was removed.
 
-**Latest data receipt (12:34:37 UTC, MSTR97063): characteristics vintage qualifier CLEARED.** The scheduled 12:30:54 UTC refresh supplies September 14 data for all 24 sourced holdings; CASH remains intentionally unsourced. Exact object version and bounded coverage proof are recorded below. Only L5 workspace publication remains open.
+**Latest data receipt (12:34:37 UTC, MSTR97063): characteristics vintage qualifier CLEARED.** The scheduled 12:30:54 UTC refresh supplies September 14 data for all 24 sourced holdings; CASH remains intentionally unsourced. Exact object version and bounded coverage proof are recorded below. Workspace publication is also complete; the dated entries below preserve the execution audit.
 
 ## Authority and exact release
 
@@ -111,3 +111,13 @@ Exact notice **CTO97067 at12:37:44Z**, preserved in `OWNER_RECEIPTS.md`, authori
 The CTO reports target404 loud skips for the two silver closure modules and two tests; those skips do not deploy the OG-c-1 code outside OG-c-2's signed deployment. This seat records the CTO's measurement and disposition rather than claiming to have independently repeated that whole AWS census. The pipeline push proceeds under Rule13 and MSTR ownership, not under this seat's portal push authority. SentimentGauge's two unused imports remain assigned by the ruling to the separate IRPT_FNTEND round9 cellC.
 
 At **12:38:43Z**, this seat measured `MERGE_HEAD` absent. The next read confirmed the staged index empty and HEAD `3f94e0a024`, COO~O's completed OG-q-1 worker drain. Thus the earlier shared-merge obstacle to the four-path documentation commit has cleared. The records can be committed with the canonical wrapper and exact pathspecs; no other seat's index or merge was changed. **L5 stays OPEN until MSTR's real publication receipt arrives**, and the earlier approval hold is resolved. The data-vintage qualifier remains cleared by MSTR97063.
+
+## Final publication and ledger closure
+
+MSTR **97069 at12:43:30Z** reports the authorized CLOUD push succeeded, advancing `6a5b276f8b` to **`0b7ecdde1fced656bfc686b0714c8379730f7d20`**, 551 commits. This seat independently read that exact live remote head, verified **`8e5780daf6` is its ancestor**, and read the published tree's portal gitlink as **`9adad7ce750742e9806c373a71f7ce900f3e22b2`**. The published head includes the four-path closeout record; MSTR also attributes LD-0568's outcome addendum to the range.
+
+The owner receipt reports canonical safe-deploy PASS: two files deployed and verified, the investor-reporting bundle minted with MD5 **`ec26d1d1d2f820c221f3cdf250ef9bad`**, and four explicit non-member404 skips. This matches the CTO's three-object ruled write set. That AWS side-effect evidence is attributed to MSTR's actual push receipt; this seat independently verified Git publication and the portal pointer.
+
+Canonical `deploy_ledger.py close-leg` closed **L5**, then `close` confirmed **all seven legs proven**, marked the deployment entry **CLOSED**, and removed only its corresponding sentinel. The release is fully closed within its one-hour ledger window and before Andrew's09:00 Eastern deadline: frontend deployment at08:12 Eastern, full ledger closure at08:44 Eastern. Portal production remains edf85ce5 / portal-v2.1.178; the separate two-line CI fix is published on DEV as acdb02e9. No extra production redeploy is implied.
+
+**No portal promotion obligation remains with this executor.** The subsequent CLOUD-to-SITEZ integration and SITEZ-side gitlink are separately assigned to MSTR/MSTR~Z, as97069 specifies. Their status does not reopen a completed portal ledger leg. The canonical event log will record this final publication and closure; the existing full session log112a616b5c remains the earlier window record.
