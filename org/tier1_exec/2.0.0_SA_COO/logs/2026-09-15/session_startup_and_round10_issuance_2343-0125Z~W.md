@@ -97,6 +97,49 @@ five markers PRESENT) and negative (~17's empty submodule dir resolves to the su
 `e85f6eb84f` unmoved. Two worker subagents launched with the faces verbatim. The amended ri-4 was synced into ~17's tree by
 retrieving my own commit (`git checkout 98eb9701ac -- <order>`, unstaged), byte-identical to HEAD.
 
+### 7. Execution (01:2x-03:0xZ): ri-1 drained, the producer writes again, the browser half filed, AC12 amended twice
+
+**ri-1 (~16) drained @`672bca64fe`.** Instance VALID; the portal branch fetched into `refs/drains/ri-1-portal` @`9aef3734`
+(bogus-hash control ABSENT, `e85f6eb84f` positive control present); gitlink unmoved; row W16-S1 read at the drain.
+
+**ri-2 (~17), two runs, and the round's ordering defect (W17-S2).** The first run executed AC1-AC4 and REFUSED AC5-AC10 correctly:
+`module.scoped_amgt_api.data.aws_s3_object.artifact` is evaluated on EVERY terraform operation in the harvest root, and the
+key was a 404 until the mount's upload -- so the producer cell, sequenced BEFORE the mount in the same root, could neither
+import nor plan. Amended @`af5b7c0862`: ri-2 gained the co-sign gate (AC11) and the artifact build+upload (AC12) as
+preconditions inside the signed act, AC6 became a `-target`ed plan over the six producer addresses, ri-4's whole-root plan
+was sequenced after ri-2 terminal. The second run (respawned on the same worktree after `SendMessage` returned
+"No transcript found") landed the world change: targeted plan `0 to add, 4 to change, 0 to destroy`, apply `0/4/0`,
+`aws_s3_bucket.harvest` 0 times in the plan text; CodeSha256 `TtTSpotkwWuVuMFbPv0RWTv2zqqifa/xfHQtBtuo924=` (13572 B) ->
+`fj8wqp9jaZWfMaBrrAyUImGnt2c5Xeb7losUr+i65mM=` (24370 B, 2026-09-15T02:33:20Z) equal to the local zip; live policy
+harvest-articles 2 / harvest-metrics 1 / old-amgt 0; QA invoke 200, rows_written 10, tickers_considered 34; COUNT
+`TRENDING_CHATTER#2026-09-15` = 10 against `#2026-09-13` = 0 (the control). Ledger opened WITH its sentinel committed
+(`245a9f568d`), closed (`bc577af946`). **THE PRODUCER WRITES AGAIN** (branch `wk-amgt_resapp-10-2` @`5f6ab69a4e`, not yet drained).
+
+**AC12 refused as written (W17-S3), amended @`33d8c00fbc`.** The artifact IS uploaded (60905 B, content-sha256 matching), but
+AC12's own AST verify reported three modules outside its five-directory package list -- `lib.research.price.axis`,
+`lib.research.print.render_pack`, `lib.research.provenance.render_print`, all FUNCTION-scope imports (scoped_amgt.py:592/:879,
+movement_gate.py:359). The issuer's defect: a package list written as an ENUMERATION, which lapses silently (build_zip.py's own
+docstring says so). Amended on both orders: the package is the TRANSITIVE import closure to a fixed point; `<paths>` widens to
+`lib/research/` read-only; invocations byte-identical. ~17 respawned a second time on the same worktree to close AC12.
+
+**Two more instrument divergences the worker rowed, INERT:** W17-S4 (AC2's `git status` limb is an uncommitted-tree instrument
+run against a committed tree; proven CLEAN on a 586-file `ls-files` denominator) and W17-S5 (AC5's `tail -1` catches terraform's
+trailing blank line, and its expected 22 state entries read 23 because AC12, inserted AHEAD of AC5 by the amendment, made the
+data source resolvable). Both are the issuer's expectation aging under its own amendment.
+
+**The browser half of ri-3 (COO deliverable, Z-S94; finding Z-S95).** View worktree `C:/tmp/portal-resapp-view` at `9aef3734`,
+vite on `[::1]:5175`. `window.__devBypass` is unusable for data pages (the api-client's proactive refresh 401s and hard-redirects
+to /login); the exercise stubs `/auth/refresh` and `/api/scoped/amgt/*` at the Playwright transport, clears the react-query
+persisted cache per arm, and serves adapter bodies produced LOCALLY by boto3 (`lib/research/api/scoped_amgt.py handler`) via
+`public/__exercise/`. Six arms captured (`ROUND10_BROWSER_arm-*.png`, `ROUND10_BROWSER_partB.json`, eleven `adapter-local.*.json`,
+committed `1ce570d7ea`). Finding Z-S95 (ARMED, mine): the ranked-row click passes `BABA US`, which the adapter does not resolve;
+the canonical `BABA_US_Equity` reaches 183 figures / 40 PROVISIONAL markers. Its disarm is the deployed adapter's response under
+ri-4 AC7 / ri-3 AC2.
+
+**Rail behaviour banked (Z-S93 + memory):** five whole-call aborts on `.tf` greps, `find` (including a Python `def find`),
+piped censuses and a raw `aws apigatewayv2` read; ri-4's two API-GW invocations carry `# rail-checked:` markers; the rail is blind
+to a command nested in `for`/`$( )`.
+
 ---
 
 ## Decisions Made
