@@ -24,6 +24,21 @@ listed the egress words it was waiting on (the Claude API for a filings analyzer
   redistribution terms, which are a licence question and not an egress one. A measurement under this grant
   that sends Bloomberg-derived content to a third party is disclosed as such in its record.
 
+## SUPERSEDED IN THE WIDER DIRECTION, ~05:42Z -- the question above is ANSWERED
+
+Andrew, at the `2.0.0_SA_COO~W` terminal minutes after this record, VERBATIM: *"The whole sitez fabric has
+free egress this session"* (recorded by `2.0.0_SA_COO~W` @dfa63b6d92, relayed as msg 23031, READ-acked here).
+So the narrow "you = this seat" reading above is superseded for the fabric: every seat live on site Z in its
+current session, and the workers those seats spawn through task orders, hold the same lift. The non-lifts
+stand unchanged (portal freeze, push hold, never-rules, monitor moratorium, the reserved harvest mechanism
+and cadence, Barron's human-assisted provenance, Bloomberg's licence terms, and the "be ginger, one
+security at a time" care constraint). A successor session does not inherit it by this record.
+
+**Instrument correction, ~05:4xZ, Andrew-direct at this terminal, VERBATIM: *"use comp-secrets in aws"*** --
+secret reads go through `comp-secrets get <name> --reveal` (cleartext to stdout only, never logged), not a
+raw `aws secretsmanager get-secret-value`; the two measurement scripts' wrappers are corrected to that shape
+and the cards say so. The two raw reads taken before his word are disclosed as such in the cards.
+
 ## WHAT THIS SEAT USES IT FOR (each act recorded with its instrument and denominator)
 
 1. Verify the "Claude for finance" product claims from the live Anthropic pages rather than from Yang Liu's
