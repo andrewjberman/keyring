@@ -1,0 +1,52 @@
+{
+  "measured_at_utc": "2026-09-15T04:05:37.039344+00:00",
+  "window_start_utc": "2026-09-15T04:03:48.055528+00:00",
+  "metric_window_start_utc": "2026-09-15T04:04:00+00:00",
+  "metrics": {
+    "ELBAuthError": [],
+    "ELBAuthFailure": [],
+    "ELBAuthSuccess": [
+      {
+        "time": "2026-09-15T00:04:00-04:00",
+        "sum": 1.0
+      }
+    ],
+    "HTTPCode_ELB_5XX_Count": [],
+    "HTTPCode_Target_5XX_Count": []
+  },
+  "log_scan": {
+    "objects": 2,
+    "lines_in_window": 11,
+    "parse_errors": 0,
+    "latest_request_time_utc": "2026-09-15T04:04:59.067688+00:00"
+  },
+  "auth_report_or_500_events": [
+    {
+      "time": "2026-09-15T04:04:57.579338Z",
+      "path": "/",
+      "elb_status": "302",
+      "target_status": "-",
+      "actions": "waf,authenticate",
+      "error_reason": "-"
+    },
+    {
+      "time": "2026-09-15T04:04:58.944981Z",
+      "path": "/oauth2/idpresponse",
+      "elb_status": "302",
+      "target_status": "-",
+      "actions": "authenticate",
+      "error_reason": "-"
+    },
+    {
+      "time": "2026-09-15T04:04:58.983719Z",
+      "path": "/",
+      "elb_status": "404",
+      "target_status": "404",
+      "actions": "waf,authenticate,forward",
+      "error_reason": "-"
+    }
+  ],
+  "elb_auth_success_sum": 1.0,
+  "auth_token_endpoint_error_count": 0,
+  "limitations": "ALB logs and CloudWatch delivery can lag. Zero observed errors without a real post-apply sign-in is not exercise proof. Andrew report-visible confirmation is separately required."
+}

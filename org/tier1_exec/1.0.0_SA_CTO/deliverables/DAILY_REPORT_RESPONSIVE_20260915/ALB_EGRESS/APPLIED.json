@@ -1,0 +1,41 @@
+{
+  "started_at_utc": "2026-09-15T04:02:34.876998+00:00",
+  "applied_at_utc": "2026-09-15T04:03:48.055528+00:00",
+  "safe_apply_exit_code": 0,
+  "plan_sha256": "00715c0dac2a7f5481d06e8fd352ac247531f94681ae85feafe568207c9d5a2b",
+  "security_group": "sg-02571ff2f33d2f9d4",
+  "live_egress": [
+    {
+      "IpProtocol": "tcp",
+      "FromPort": 8080,
+      "ToPort": 8080,
+      "UserIdGroupPairs": [],
+      "IpRanges": [
+        {
+          "Description": "To the gateway port inside the VPC",
+          "CidrIp": "172.31.0.0/16"
+        }
+      ],
+      "Ipv6Ranges": [],
+      "PrefixListIds": []
+    },
+    {
+      "IpProtocol": "tcp",
+      "FromPort": 443,
+      "ToPort": 443,
+      "UserIdGroupPairs": [],
+      "IpRanges": [
+        {
+          "Description": "HTTPS to the OIDC IdP token and userinfo endpoints (authenticate-oidc calls them from the ALB)",
+          "CidrIp": "0.0.0.0/0"
+        }
+      ],
+      "Ipv6Ranges": [],
+      "PrefixListIds": []
+    }
+  ],
+  "ingress_unchanged": true,
+  "gateway_service_deployed": false,
+  "cloud_pushed": false,
+  "sitez_merged": false
+}

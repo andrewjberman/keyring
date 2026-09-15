@@ -1,4 +1,16 @@
-# Authenticated Gateway still blocked
+# Authenticated Gateway sign-in repaired
+
+**Current status, 2026-09-15T04:05Z:** APPLIED and EXERCISED. Under CTO
+Msg96866 and Msg96877, this exact seat applied the approved saved SG-only
+plan through safe-apply. Both egress rules are verified and the SG-only
+re-plan has no changes. Andrew confirms "Report loads"; CloudWatch records
+one post-apply authentication success, and the delivered callback log has
+302 with no authentication error. See `ALB_EGRESS/CLOSEOUT.md` for the
+bounded evidence and known deliberately unapplied WAF description drift.
+
+The following is the preserved pre-fix diagnosis and source-commit history;
+its statements about the missing rule and base CTO apply ownership are
+superseded by the completed repair above.
 
 Measured 2026-09-15T03:28Z by `1.0.0_SA_CTO~A`, following Andrew's report
 that both `https://mcp.opalinvest.dev/sprint` and the root return HTTP 500.

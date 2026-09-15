@@ -1,5 +1,14 @@
 # Responsive report publication closeout
 
+**Sign-in repair update, 2026-09-15T04:05Z:** the report is now confirmed
+visible by Andrew after real sign-in. This seat applied the approved ALB
+HTTPS egress rule under CTO Msg96866/96877, verified both live rules and a
+zero-change SG-only re-plan, and observed a successful OIDC callback plus
+`ELBAuthSuccess=1`. See `ALB_EGRESS/CLOSEOUT.md`. The publication history
+below preserves the earlier scope; its statement that this seat made no
+ALB change is superseded by this separately authorized repair. CLOUD push
+and SITEZ merge remain held.
+
 Recorded 2026-09-15T03:19Z by `1.0.0_SA_CTO~A`.
 
 The responsive report is live. Both 2026-09-14 dated objects, both latest
