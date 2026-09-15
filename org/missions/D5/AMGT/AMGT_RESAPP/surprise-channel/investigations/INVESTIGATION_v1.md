@@ -5601,6 +5601,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "C-RANKING-GENERATION (PRD v0.8 @1170b4da69): every reader of a ranking partition follows the committed generation's pointer and a date without one is ABSENT; FWD-15: a PM sees ranked names on the Price and Chatter axes.",
     "world_is": "G-1 has ONE writer (lib/research/metrics/chatter_axis.py). The box-side Price producer writes rows at the bare date partition with no pointer, so after the deploy every Price list reads ABSENT until that producer writes generations; the Chatter list reads the generation rj-10's AC7 commits. No promoted portal page calls these routes today.",
     "notes": "Disarm by the row's owner as a NEW citing row; W18-S11 is not edited and keeps hazard_standing ARMED as surfaced. No `adjudicates` entry, so its disposition stays for 3.0.0_SA_CVO~W at L9. The rj-10 spawn prompt names this row so the worker runs AC7 in the same sitting as the apply. The remedy (the Price producer writing a generation and pointer, an operator run under integrations/bloomberg/) is 1.0.0_SA_CTO~W's at L10 and round-12 material; it re-arms the moment a promote carries the Security Analysis page to PROD without it."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S106",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~W",
+    "surfaced_at": "2026-09-15T18:21:37Z",
+    "one_line": "DISARM OF AMGT_RESAPP-Z-W21-S3's RESIDUAL by the issuer of the order that surfaced it (its owner field names the finished worker for the in-code half and routes the residual to 3.0.0_SA_CVO~Z, which is not a seat on this project: by Andrew's split the ~W fabric owns AMGT_RESAPP), ACCEPT-AND-ROUTE: no live instance in the pool -- over all 33 R-1 objects, the 10 with a named subject carry 0 members whose name loosely matches their own subject, and the 23 with no subject carry 0 members -- so no served peer set ranks a company against itself today. The residual (a cross-listing whose two name strings differ, needing an ADR-to-home-line join X-1 does not carry) goes to X-1's contract owner 1.0.0_SA_CTO~W at L10, and its L9 reader is 3.0.0_SA_CVO~W.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE HAZARD, quoted from W21-S3 (0.9.0_WK_AMGT_RESAPP~21, 09:35Z): the exact-normalised-name arm now excludes a subject's own scanner row; 'a cross-listing carrying a DIFFERENT name string is still not caught'; its own residual evidence: BABA's model block 'ALIBABA GROUP HOLDING-SP ADR' vs scanner 'Alibaba Group Holding Limited', unreachable at rung 1 only because that scanner row sits outside BABA's mapped sectors.",
+        "THE OWNER FIELD, quoted: '0.9.0_WK_AMGT_RESAPP~21 (the measured instance, disarmed in-code this turn); the residual cross-listing join belongs to INTERFACE X-1's owner and is routed to 3.0.0_SA_CVO~Z at L9'. No row at HEAD cites W21-S3, and rj-7's drain message @9c8071c404 does not name it -- the residual had no acting owner.",
+        "THE LIVE READ, this seat at 2026-09-15T18:21:37Z, boto3 list_objects_v2 + get_object over s3://opal-data-harvest/peers/v1/ (paginated): 33 objects; subject.name present on 10 (BABA_US_Equity, BA_US_Equity, COST_US_Equity, HAL_US_Equity, HD_US_Equity, INTU_US_Equity, KMB_US_Equity, NU_US_Equity, SAP_GY_Equity, VLO_US_Equity); absent on 23, every one of them with members [] (0 of 23 carry a member); for the 10 named, each member name compared with the subject name after lower-casing, keeping alphanumeric words and dropping company suffixes (inc corp co ltd limited plc sa se ag nv holding(s) group adr sp spon sponsored the ord class shs ...), a hit being full equality OR an equal first significant word of 4+ characters -- a LOOSER test than the engine's exact arm, so it would catch the residual's shape: 0 hits.",
+        "THE SEAM NAMED BY THE CTO, msg 23172 (17:00Z, candidate 3 corrected): 'The one seam it does NOT bridge: an ADR Opal holds vs a home listing on the coverage list (AMX US Equity vs AXMB MM) -- open, not guessed' -- the same ADR-to-home-line join, on the holdings side."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "C-SIMILARITY-RANKER (PRD v0.8 @1170b4da69): the comparable set of a subject is computed by ONE ranker over ONE database, every identity resolved through X-1; a subject is never its own peer.",
+    "world_is": "A company can sit in the database twice under identifiers X-1 cannot join (a canonical key and a SEDOL-shaped scanner ticker); the engine now drops the exact-name twin; a twin whose name string differs would survive -- but no served R-1 object carries one at this vintage.",
+    "notes": "A NEW citing row; W21-S3 is not edited and keeps hazard_standing ARMED as surfaced. No `adjudicates` entry: the disposition stays for 3.0.0_SA_CVO~W at L9. The residual RE-ARMS when the universe widens (the CTO's corrected candidate 3 moves the resolved union from 33 toward ~145 names, many of them ADR lines), so the round-12 cut that widens the universe carries the ADR-to-home-line join or re-measures this before the batch writes peers for the new names."
   }
 ]
 ```
