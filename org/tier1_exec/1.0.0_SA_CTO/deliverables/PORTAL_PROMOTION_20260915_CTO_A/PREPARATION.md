@@ -1,7 +1,7 @@
 # Portal promotion preparation — 2026-09-15
 
 Author/executor seat: `1.0.0_SA_CTO~A`  
-Status: **REPLACEMENT 9adad7ce LOCK/IR CHECKS PASS; CI INSTALL PASSES THEN LINT FAILS; AWAITING DATA RECHECK AND MSTR GO; PROMOTION NOT STARTED**
+Status: **9adad7ce LOCK/IR CHECKS PASS; ALL FIVE LINT ERRORS ACCEPTED BY CTO; MANUAL PROVENANCE GUARD PASS REPORTED; AWAITING DATA RECHECK AND MSTR GO; PROMOTION NOT STARTED**
 
 Prepared: 2026-09-15 08:14 UTC
 
@@ -254,11 +254,11 @@ These are CTO's attributed scratch measurements, not a full clean installation/b
 
 1. Diff from `43f18c17` names **`bun.lock` only**; inspect the actual diff for deletions and exactly the four stated hoists, retaining their previous versions and integrity hashes.
 2. On a clean checkout, **Bun 1.3.9** runs full `bun install --frozen-lockfile`, then `bun run typecheck`, then `bun run build`: **all exit 0**. A lockfile-only check does not substitute for these full checks.
-3. The replacement SHA's DEV CI run **passes Install**. CTO expressly anticipates the already-existing lint failure described below; capture the actual run and steps rather than relabeling it green or assuming any red result is accepted.
+3. The replacement SHA's DEV CI run **passes Install**. CTO 97040 now explicitly accepts the full five-error lint inventory below; capture the actual run and steps rather than relabeling it green or extending that acceptance to an unlisted error.
 4. Site Z's planned **25-of-25 data recheck after the ~11:05 UTC models publish runs on the new SHA**, not the blocked candidate.
 5. Rebind this seat's required gate-commit ancestry, exact IR source checks, publication/cleanliness checks and eventual MSTR GO to that new candidate. The final promotion tree must equal the **new candidate's tree**, with an empty diff; old tree `f1afba42` is historical and cannot be used as the replacement release's parity target.
 
-**Named DEV lint disposition:** CTO identifies `src/pages/InvestorReporting/__tests__/fe-s-5/alias-probe.test.ts:16:20`, ESLint `no-constant-binary-expression` on `cn('a', false && 'b', 'c')`, as present since DEV `5b959f63` (reported run `34562328385` on 09-11) and still present on `43f18c17`. CTO accepts that specific existing DEV-only lint failure for this promotion because PROD `deploy.yml` runs install/typecheck/build, not lint. Its fix belongs to the IRPT_FNTEND round-8 work alongside F25/F49. This is attributed history/disposition, not an independent reread of the earlier run. Additional failures are not accepted by implication, and required PROD workflow success remains mandatory.
+**DEV lint disposition, expanded by CTO 97040:** the prior ruling named only `src/pages/InvestorReporting/__tests__/fe-s-5/alias-probe.test.ts:16:20`, `no-constant-binary-expression`, as historical since `5b959f63`. CTO now explicitly accepts **all five errors** measured on `9adad7ce`: the two unused SentimentGauge imports, the unused fe-s-19 `PERFORMANCE_KEY`, the ExportButton hook/DOM immutability diagnostic, and the historical fe-s-5 expression. Four arrived with the merge; only the fe-s-5 error was in the cited 09-11 baseline. The full rationale and deferred owners are recorded below. No unlisted error is accepted by implication, and required PROD workflow success remains mandatory.
 
 MSTR's GO window remains ~11:30–12:00 UTC with the 13:00 UTC deadline. This amendment supplies a blocking decision and a repair/proof path, not deployment GO. The amended preparation is committed and routed to CTO/MSTR before archiving exact notice 97030. No deployment ledger, sentinel, dependency installation, source edit, merge, push or workflow dispatch is started by this seat.
 
@@ -312,7 +312,7 @@ The failed log independently reports **84 problems: 5 errors, 79 warnings**, mat
 - `src/pages/InvestorReporting/__tests__/fe-s-5/alias-probe.test.ts`: the named constant-binary-expression error, line 16.
 - `src/pages/InvestorReporting/export/ExportButton.tsx`: value cannot be modified, line 246.
 
-CTO 97030 identifies the expected DEV lint stop as outside PROD's install/typecheck/build gate; MSTR 97034 explicitly reports the full 84-problem state as pre-existing. This seat records those owner statements and the observed inventory, without calling the DEV workflow successful or inventing a further source change. Both owners received the measured result and full error inventory at **10:23:42/46 UTC**. Required PROD workflow success remains mandatory.
+CTO 97030 identifies the expected DEV lint stop as outside PROD's install/typecheck/build gate. MSTR 97034's description of all five errors as pre-existing is **corrected by CTO 97040**: four came in with the merge and are now expressly adjudicated, rather than covered by the single historical-error example. The measured 84-problem count remains unchanged. Both owners received this seat's exact error inventory at **10:23:42/46 UTC**. The DEV workflow remains failure, and required PROD workflow success remains mandatory.
 
 ### Remaining release inputs
 
@@ -327,3 +327,22 @@ Read only exact notice `20260915T102404Z_0.0.0_AB_MSTR_Candidate_9adad7ce__verif
 MSTR relays POSN round 6 **L10 CLOSED** from CTO~Z message **23121**, via MSTR~Z bus **83db61cf**, `ROUND_ANALYSIS.round6.md@e60bf6dca1` SITEZ LOCAL: **31 orders = 27 complete + 2 superseded + 2 cancelled; 0 open**. The relayed statement is that nothing in L10 gates promotion. A later **C-S177** Black Diamond seeder-guard recut has no served consequence today. This records the owner's supplied closeout, not an independent audit or an assignment of that recut to this seat.
 
 MSTR identifies **one remaining pre-GO item**: Site Z's **25-of-25 data recheck and Satellites render on `9adad7ce`**, after the **~11:05 UTC models publish and third characteristics run**, targeting **~11:30 UTC**. GO follows that result. Execution-time exact-pin, clean-worktree and PROD parity checks remain part of carrying out the eventual GO; they do not create a new owner approval request now. No GO is present in 97037 and no deployment has begun.
+
+## Full lint adjudication and manual provenance guard — CTO 97040, 10:33:41 UTC
+
+Read only exact notice `20260915T103341Z_1.0.0_SA_CTO_9adad7ce__all_5_lint_errors_ruled_not_pr.md` from CTO; ACK sent at **10:34:58 UTC**. CTO closes the gap between the one historical example in its earlier ruling and the five errors actually measured on `9adad7ce`. Its read of baseline DEV run `34562328385` found no matches for the three files containing the other four errors. Those four are therefore recorded as merge additions, superseding the previous all-pre-existing description.
+
+**RULING: all five named errors are lint-only and may accompany promotion of `9adad7ce`; none is a `deploy.yml` gate.** The disposition and runtime assessments below are CTO's supplied rationale:
+
+| Errors | CTO rationale / source | Deferred owner |
+|---|---|---|
+| `SentimentGauge.tsx:6:10` and `:6:22`, unused `PanelEmpty` / `PanelError` | Dead imports from DSGN_REBRND, `a65b939a` RB-s-10 and `a7c4fa4f`; no behavior | MSTR routes the one-line fix to DSGN_REBRND's holder |
+| `fe-s-19/pre-envelope.test.ts:43:28`, unused `PERFORMANCE_KEY` | Test-only import from `357b4055` FE-s-35 | IRPT_FNTEND round-8 analysis |
+| `export/ExportButton.tsx:246:5`, `react-hooks/immutability` | CTO read lines 244–249 at `9adad7ce`: an effect hides the hook-returned DOM anchor and restores its prior display on cleanup; CTO judges this ordinary, runtime-correct DOM work. The file is new to PROD and behind the Opal-admin IR gate | IRPT_FNTEND round-8 analysis |
+| `fe-s-5/alias-probe.test.ts:16:20`, constant binary expression | Historical error already ruled in 97030 | IRPT_FNTEND round-8 analysis |
+
+The three IRPT errors are carried as one round-8 analysis cell alongside F25-AC8 and F49-AC8; **no new order opens from this notice**. This seat's already-prepared two-line workflow typecheck patch still lands after promotion. The full error inventory remains named; the ruling does not relabel the failed DEV workflow as successful.
+
+**Manual provenance-guard proof, distinct from skipped CI:** CTO reports `node scripts/provenance-read-guard.mjs` in `.portal-integ-20260915` at **`43f18c17`**, **exit 0**, **`OK: no unlabeled reads`**, scanning `src/**/*.{ts,tsx}`. It measured zero tracked changes before and after. CTO also measured an empty `src`/`scripts` diff to **`9adad7ce`**; this seat's preceding complete lockfile-only diff independently establishes that source/script parity. The reported manual run therefore applies to the replacement source. It is an attributed executed check, not a rerun by this seat. The CI guard step remains **SKIPPED**; only the separate manual execution supplies PASS evidence. MSTR's separate (b) checks continue to supply typecheck/build evidence.
+
+The remaining pre-GO new-SHA data recheck and Satellites render is unchanged, target ~11:30 UTC. No GO is issued by 97040. The updated record is committed and routed before archiving only exact notice 97040. No source edit, order issuance, dependency installation, merge, push, workflow dispatch or deployment is started by this seat.
