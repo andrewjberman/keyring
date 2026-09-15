@@ -4564,6 +4564,50 @@
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W2-S34",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~2",
+    "surfaced_at": "2026-09-15T07:05:46Z",
+    "one_line": "FE-s-49's allowlist arm cannot land inside its grant: src/pages/InvestorReporting/__tests__/fe-s-14/allowlist.test.ts asserts that 49financial, inflection and cottonwood list /investor-reporting in FIRM_ALLOWED_PATHS, so removing the three entries turned the whole suite red (3 fail, all in that file). Under 1.0.0_SA_CTO's ruling (96924) the entries are kept and F49-AC9 is REFUSED. The route gate (requireAdmin requireInternal) and the nav predicate still refuse every partner-firm user.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-49, THE REMEDY (1.0.0_SA_CTO's ruling, 96924): \"'/investor-reporting' removed from the 49financial, inflection and cottonwood sets in FIRM_ALLOWED_PATHS, so no allowlist grants what the gate refuses. ONLY if the whole suite stays as green as the probe: 0 fail beyond the known F41-AC5 load timeout. If a test depends on those entries, keep them, file a BLOCKING row naming the test, and REFUSE F49-AC9 with the measurement.\" BOUNDS: a red test outside the grant is never an edit.",
+    "world_is": "The test is src/pages/InvestorReporting/__tests__/fe-s-14/allowlist.test.ts (portal 1f3ce9f0, unchanged at 640379b8), outside FE-s-49's <paths>. With the three entries removed in the working copy over the committed gate (portal 61f5c76b), the whole suite read 566 pass / 18 skip / 3 fail of 587, and all three fails are that file's: F14-AC2 'ALLOWED -- isPathAllowedForFirm is true for each granted firm' (:52 expect(allowed).toBe(3), received 0); F14-AC2 'the grant is in the MATRIX, not in some other branch of the guard' (:62 FIRM_ALLOWED_PATHS[firm].has(ROUTE) toBe(true), received false); F14-AC3 'FIRMACCESS DIFF -- exactly three added lines, none removed, since the baseline' (:96 added toBe(3), received 0 against baseline edab15b5). F41-AC5 did not time out on that run. The entries were restored (firmAccess.ts equals HEAD, never committed removed) and the re-run read 569 pass / 18 skip / 0 fail of 587. INERT, not ARMED: at portal 640379b8 every partner-firm identity is refused by ProtectedRoute requireInternal on both routes (6 of 6 admins, and 8 of 8 non-admins with opal-capital's), and the nav filter hides the item from all of them (shown to 1 of 8 identities, the opal-capital admin), so the three remaining entries grant nothing the gate passes. Landing the removal needs an order whose grant includes fe-s-14/allowlist.test.ts, whose F14-AC2 and F14-AC3 assertions encode the grant the CTO's ruling retires.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "<WS>/.scratch/suite_removed.log: bun test src/pages/InvestorReporting/__tests__ with IRPT_FE_DEV_PORT=5267 (measured closed), firmAccess.ts entries removed in the working copy, portal HEAD 61f5c76b: '566 pass', '18 skip', '3 fail', 'Ran 587 tests across 103 files'; the three failing cases are the three fe-s-14 allowlist cases named in world_is",
+        "<WS>/.scratch/fe14_removed.log: the same file alone: 'ALLOWED: 0 of 3', 'FIRMACCESS DIFF: +0 -0', 2 pass, 3 fail",
+        "portal 1f3ce9f0:src/pages/InvestorReporting/__tests__/fe-s-14/allowlist.test.ts:39 GRANTED = ['49financial', 'inflection', 'cottonwood']; :52, :62 and :96 the three failing assertions",
+        "<WS>/.scratch/ac11.log: after the restore, portal HEAD 640379b8, port 5267 CLOSED ECONNREFUSED: '569 pass', '18 skip', '0 fail', 'Ran 587 tests across 103 files'",
+        "<WS>/.scratch/ag_final.log (admin-gate.test.ts at 640379b8): 'A PARTNER-FIRM ADMIN IS REFUSED ON BOTH ROUTES: 6 of 6', 'A NON-ADMIN IS REFUSED ON BOTH ROUTES: 8 of 8', 'THE NAV SHOWS INVESTOR REPORTING ONLY TO THE OPAL INTERNAL ADMIN: yes', 'PARTNER ALLOWLIST ENTRIES GRANTING /investor-reporting: 3 of 3 REMAIN'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W2-S35",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~2",
+    "surfaced_at": "2026-09-15T08:29:30Z",
+    "one_line": "FE-s-49 amendment 1 keeps fe-s-14's F14-AC3 positive control unchanged, but that control still refuses only the RETIRED expectation (a numstat of '3<TAB>0' against edab15b5), so it no longer bounds the re-pointed diff test, which expects +0 -3 between 1f3ce9f0 and HEAD: a numstat reader stuck at '0<TAB>3' would pass both.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-49, amendment 1 bound: 'F14-AC3's diff test measures +0 -3 against 1f3ce9f0 (F49-AC12) ... The demo / unknown-id refusal test and the positive control stay unchanged.' F49-AC12: 'Its positive control, and its demo and unknown-id refusal arm, stay as they are.' The control's own comment states its purpose: 'A reader that returned +3 -0 for anything would make the test above a decoration.'",
+    "world_is": "Kept byte-unchanged as ordered, the control (portal 0f674aa9, src/pages/InvestorReporting/__tests__/fe-s-14/allowlist.test.ts:120) runs `git diff --numstat edab15b5 -- src/pages/InvestorReporting/index.tsx`, a working-copy diff against FE-s-14's old baseline, and at :126 refuses only an answer starting '3<TAB>0<TAB>', the expectation the re-pointed test no longer has. The re-pointed test (:102) runs a different git form, `git diff --numstat 1f3ce9f0 HEAD -- src/lib/firmAccess.ts` (committed trees), and asserts added 0 (:112) and removed 3 (:113). A reader constant at '0<TAB>3' passes the re-pointed test and the control alike, so the control no longer discriminates the arm it sits beside. INERT: the re-pointed test's reading is confirmed by instruments other than its own reader -- the worker's own `git diff --numstat 1f3ce9f0 0f674aa9 -- src/lib/firmAccess.ts` reads '0<TAB>3', and admin-gate.test.ts F49-AC9 reads each firm's set from the committed firmAccess.ts blobs (0 of 3 remain). Re-pointing the control's refusal value is a one-line edit this order withholds from the worker.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal 0f674aa9:src/pages/InvestorReporting/__tests__/fe-s-14/allowlist.test.ts:126 expect(line.startsWith('3\\t0\\t')).toBe(false) -- the same line as 1f3ce9f0:src/pages/InvestorReporting/__tests__/fe-s-14/allowlist.test.ts:110",
+        "portal 0f674aa9:src/pages/InvestorReporting/__tests__/fe-s-14/allowlist.test.ts:102 the re-pointed test's git form (1f3ce9f0 HEAD, committed trees), against the control's :120 (edab15b5, working copy)",
+        "cd <WS>/portal && git diff --numstat 1f3ce9f0 0f674aa9 -- src/lib/firmAccess.ts -> '0<TAB>3<TAB>src/lib/firmAccess.ts' (the worker's read, a different instrument from the test's reader)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```

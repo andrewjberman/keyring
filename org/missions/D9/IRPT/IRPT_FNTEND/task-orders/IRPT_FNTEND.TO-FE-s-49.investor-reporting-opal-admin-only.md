@@ -5,9 +5,9 @@
 <issued_to>0.9.0_WK_IRPT_FNTEND~2</issued_to>
 <issued_by>2.0.0_SA_COO~F</issued_by>
 <issued_date>2026-09-15</issued_date>
-<status>pending</status>
+<status>complete</status>
 
-**Directive:** D9 | **Fabric:** laptop | **PRD:** `../prd/IRPT_FNTEND_PRD.md` v0.6 @d1479bc5f0 (F1: route, page identity and navigation entry) | **Decomp cell:** `FE-s-49` (round 8's one added order, v0.8 R8.9 @b6edeb9fc9) | **outcome_ref:** FWD-1, FWD-12 | **depends_on:** none | **slot:** ~2 | **rows:** S66
+**Directive:** D9 | **Fabric:** laptop | **PRD:** `../prd/IRPT_FNTEND_PRD.md` v0.6 @d1479bc5f0 (F1: route, page identity and navigation entry) | **Decomp cell:** `FE-s-49` (round 8's one added order, v0.8 R8.9 @b6edeb9fc9) | **outcome_ref:** FWD-1, FWD-12 | **depends_on:** none | **slot:** ~2 | **rows:** S66, W2-S34, S67
 
 <placeholders>WS</placeholders>
 
@@ -47,8 +47,7 @@ Measured by the issuer at portal DEV 1f3ce9f0 (`git show` at the ref):
 **THE REMEDY (the CTO's RULING, 96924):**
 - The three gate hunks above, exactly as at `c29a8b86`.
 - `'/investor-reporting'` removed from the `49financial`, `inflection` and `cottonwood` sets in `FIRM_ALLOWED_PATHS`, so no allowlist grants what the gate refuses.
-  - ONLY if the whole suite stays as green as the probe: 0 fail beyond the known F41-AC5 load timeout.
-  - If a test depends on those entries, keep them, file a BLOCKING row naming the test, and REFUSE F49-AC9 with the measurement. That is the CTO's instruction.
+  - ~~ONLY if the whole suite stays as green ...~~ **RETIRED BY AMENDMENT 1** (1.0.0_SA_CTO, msg 96961): the first run found the one test that depends on the entries, `fe-s-14/allowlist.test.ts` (row W2-S34), and the CTO ruled that Andrew's word supersedes the partner grant that test encodes. **The removal LANDS, and fe-s-14's F14-AC2 and F14-AC3 are re-pointed** (F49-AC11, F49-AC12).
 - Nothing else in `App.tsx` or `firmAccess.ts` changes, and `ProtectedRoute` and `AuthContext` do not change.
 
 ### ACCEPTANCE
@@ -104,13 +103,26 @@ Measured by the issuer at portal DEV 1f3ce9f0 (`git show` at the ref):
 - Print `admin-only: yes | no | UNKNOWN` with the `file:line` it rests on. UNKNOWN counts as an answer only with the files searched printed beside it.
 - This tells Andrew whether the UI is the only wall.
 
-<criterion id="F49-AC11" cell_refs="FE-s-49" drives="none"><invocation>cd <WS>/portal && timeout 600 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting/__tests__</invocation><expect>(?<![0-9])0 fail</expect></criterion>
-`F49-AC11` -- **the whole-suite census of record**, with `IRPT_FE_DEV_PORT` exported to a port you have measured closed, run AFTER both the `App.tsx` and `firmAccess.ts` changes. If F41-AC5's control times out under load (FE-s-46's row, not yours), report it and re-run; never edit it.
+<criterion id="F49-AC11" cell_refs="FE-s-49" drives="none"><invocation>cd <WS>/portal && timeout 180 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting/__tests__/fe-s-14/allowlist.test.ts</invocation><expect>PARTNER FIRMS REFUSED: 3 of 3(?![0-9])</expect></criterion>
+`F49-AC11` -- AMENDMENT 1: fe-s-14's F14-AC2, re-pointed. The three firms it granted (`49financial`, `inflection`, `cottonwood`) are REFUSED by `isPathAllowedForFirm` for `/investor-reporting`, and none of their `FIRM_ALLOWED_PATHS` sets lists it. Print each firm. The internal short-circuit arm stays.
 
-<criterion id="F49-AC12" cell_refs="FE-s-49" judgment="true" drives="none"/>
-`F49-AC12` -- graded at L9: no client or partner-firm user, admin or not, reaches Investor Reporting or sees its nav item through the portal; no allowlist grants what the gate refuses; the three gate hunks match `c29a8b86`; and the backend census says whether the UI is the only wall. RECORD; NO VERDICT.
+<criterion id="F49-AC12" cell_refs="FE-s-49" drives="none"><invocation>cd <WS>/portal && timeout 180 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting/__tests__/fe-s-14/allowlist.test.ts</invocation><expect>FIRMACCESS DIFF: \+0 -3(?![0-9])</expect></criterion>
+`F49-AC12` -- AMENDMENT 1: fe-s-14's F14-AC3 diff test, re-pointed to measure the retirement by GIT, against DEV `1f3ce9f0` (the last DEV before this order). Exactly three lines removed and none added in `src/lib/firmAccess.ts`. Its positive control, and its `demo` and unknown-id refusal arm, stay as they are.
 
-<expected_criteria>F49-AC1, F49-AC2, F49-AC3, F49-AC4, F49-AC5, F49-AC6, F49-AC7, F49-AC8, F49-AC9, F49-AC10, F49-AC11, F49-AC12</expected_criteria>
+<criterion id="F49-AC13" cell_refs="FE-s-49" drives="none"><invocation>cd <WS>/portal && timeout 180 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting/__tests__/fe-s-49/admin-gate.test.ts</invocation><expect>THE CENSUS TEST'S TIMEOUT IS 3 TIMES ITS HIGHEST RECORDED COST: yes</expect></criterion>
+`F49-AC13` -- AMENDMENT 1: row S67.
+- F49-AC10's census test carries an explicit third argument, a timeout, sized under FE-s-46's rule: 3 times the highest recorded cost.
+- The recorded costs are committed beside the test: yours, and the issuer's `6703` ms (the cell file alone) and `5938` ms (inside the whole suite), from row S67.
+- The bar reads the test's third argument from the COMMITTED blob, and the costs from the committed record. It prints both and the ratio.
+- It measures NOTHING at census time: no timing, no load, no cost is recorded by the census run (W1-S74).
+
+<criterion id="F49-AC14" cell_refs="FE-s-49" drives="none"><invocation>cd <WS>/portal && timeout 600 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting/__tests__</invocation><expect>(?<![0-9])0 fail</expect></criterion>
+`F49-AC14` -- **the whole-suite census of record**, with `IRPT_FE_DEV_PORT` exported to a port you have measured closed, run AFTER both the `App.tsx` and `firmAccess.ts` changes. If F41-AC5's control times out under load (FE-s-46's row, not yours), report it and re-run; never edit it.
+
+<criterion id="F49-AC15" cell_refs="FE-s-49" judgment="true" drives="none"/>
+`F49-AC15` -- graded at L9: no client or partner-firm user, admin or not, reaches Investor Reporting or sees its nav item through the portal; no allowlist grants what the gate refuses; the three gate hunks match `c29a8b86`; and the backend census says whether the UI is the only wall. RECORD; NO VERDICT.
+
+<expected_criteria>F49-AC1, F49-AC2, F49-AC3, F49-AC4, F49-AC5, F49-AC6, F49-AC7, F49-AC8, F49-AC9, F49-AC10, F49-AC11, F49-AC12, F49-AC13, F49-AC14, F49-AC15</expected_criteria>
 
 ## BOUNDS
 
@@ -119,7 +131,7 @@ Measured by the issuer at portal DEV 1f3ce9f0 (`git show` at the ref):
 - ⛔ **`src/lib/firmAccess.ts` IS YOURS FOR THREE LINES ONLY:** the `'/investor-reporting',` entry in the `49financial`, `inflection` and `cottonwood` sets, removed. No other entry, firm, comment or function. Paste the diff.
 - ⛔ **NOT YOURS:** `src/components/ProtectedRoute.tsx`, `src/contexts/`, every other page and every other `FIRM_ALLOWED_PATHS` entry, and the `feature/d13-visual-elevation` branch. If the predicate cannot be expressed with the existing props, that is a BLOCKING row.
 - ⛔ **ONE PREDICATE, THE CTO'S:** role admin AND firmId opal-capital. No new prop, no new helper, no copy of the check.
-- ⛔ **THE WHOLE-SUITE RUN IS THE CENSUS OF RECORD** (F49-AC11). A red test outside your grant is a BLOCKING row with the list, never an edit. If the red test depends on the removed allowlist entries, restore those entries, re-run, and REFUSE F49-AC9 with the measurement.
+- ⛔ **THE WHOLE-SUITE RUN IS THE CENSUS OF RECORD** (F49-AC14). A red test outside your grant is a BLOCKING row with the list, never an edit. ~~If the red test depends on the removed allowlist entries, restore those entries ...~~ RETIRED by amendment 1 for `fe-s-14/allowlist.test.ts` only, which is now yours to re-point. Any OTHER red test is a BLOCKING row, never an edit.
 - **No visual change:** the nav item hides for users who may not see it, and nothing about how it looks changes.
 - **RULING AC.** Every file your tests inspect is read as the committed blob or tree (`git cat-file blob HEAD:<path>` or `<commit>:<path>`), or the test says why it reads the working copy.
 - **The backend census reads, never writes.** It makes no network call and runs no deploy.
@@ -130,9 +142,23 @@ Measured by the issuer at portal DEV 1f3ce9f0 (`git show` at the ref):
 - **Surprise.** ONE row per finding, id `IRPT_FNTEND-W2-S<k>`, starting at W2-S34. Read the WHOLE channel PLANE (`INVESTIGATION_v1.md` AND `_v2.md`) before minting; an INERT row OMITS the `disarm_owner` key; write with `newline='\n'` and READ THE DIFFSTAT of your commit.
 - **REFUSE** any criterion you cannot satisfy as written and report the refusal with its measurement.
 - Report push state as LOCAL. **PORTAL IS FROZEN**: local commits only.
+- ⛔ **AMENDMENT 1 (2.0.0_SA_COO~F, 2026-09-15 ~07:4xZ; 1.0.0_SA_CTO's ruling, msg 96961, on rows W2-S34 and S67; the order stays pending; three criteria added, none removed).**
+  - **What the first run did.** It landed the three gate hunks, byte-identical to `c29a8b86` (portal `61f5c76b`, `640379b8`; they STAY). It REFUSED F49-AC9 exactly as instructed, because `fe-s-14/allowlist.test.ts` asserts the partner entries (W2-S34).
+  - **What this seat found** (row S67). On an untouched pair, F49-AC10's census test TIMED OUT at bun's default 5000 ms in 2 runs of 3: `6703` ms alone, and `5938` ms inside the whole suite. Its bar printed "12 of 12" anyway. The test has no timeout sized to its cost.
+  - **The CTO's ruling (96961):** "Andrew's word, 'no clients are allowed', supersedes the partner grant that my earlier ruling put into fe-s-14." One respawn carries BOTH:
+    - (i) the three `'/investor-reporting',` entries REMOVED from `firmAccess.ts` (F49-AC9 as cut);
+    - (ii) the census test's timeout (F49-AC13).
+  - ⛔ **`fe-s-14/allowlist.test.ts` IS YOURS FOR THE RE-POINT ONLY.**
+    - F14-AC2's two tests assert the three firms are REFUSED (F49-AC11).
+    - F14-AC3's diff test measures `+0 -3` against `1f3ce9f0` (F49-AC12).
+    - The header comment says the grant was retired, and by whom: Andrew's word relayed in 96903, and the CTO's ruling 96961. "The three firms the CTO's ruling names" must no longer read as current.
+    - The `demo` / unknown-id refusal test and the positive control stay unchanged.
+  - **`admin-gate.test.ts`:** F49-AC9's before-and-after arm now reads 0 of 3 at HEAD. F49-AC10 gains its timeout, and F49-AC13's bar is added.
+  - **Your portal branch now carries portal DEV,** synced before this amendment. That includes FE-s-47 amendment 1 and, if drained by then, FE-s-46 amendment 1. The whole suite may run slower or faster than the first run; F14's tests are now yours, so no other test should depend on the entries.
 
 <paths>
 portal/src/App.tsx
+portal/src/pages/InvestorReporting/__tests__/fe-s-14/allowlist.test.ts
 portal/src/lib/firmAccess.ts
 portal/src/pages/InvestorReporting/__tests__/fe-s-49/
 org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md
@@ -144,10 +170,10 @@ org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: `F49-AC1` .. `F49-AC12`. Instance at
+Criterion ids: `F49-AC1` .. `F49-AC15`. Instance at
 `org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~2/IRPT_FNTEND.TO-FE-s-49.investor-reporting-opal-admin-only.proof_of_spec.json`
 (phase `BUILD-GENERAL`, firm `FABRIC`, spec_ref.group `OTHER`), validated with
-`python .tools/proof-of-spec-check.py <instance> F49-AC1,F49-AC2,F49-AC3,F49-AC4,F49-AC5,F49-AC6,F49-AC7,F49-AC8,F49-AC9,F49-AC10,F49-AC11,F49-AC12 --governing-order org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-49.investor-reporting-opal-admin-only.md` BEFORE the `complete` flip. `F49-AC12` recorded `UNVERIFIABLE-BY-INSTRUMENT`, `status_reason` naming the CVO at L9. Result file `investor-reporting-opal-admin-only.result.md` beside it. Flip only when every mechanical criterion PASSES by output.
+`python .tools/proof-of-spec-check.py <instance> F49-AC1,F49-AC2,F49-AC3,F49-AC4,F49-AC5,F49-AC6,F49-AC7,F49-AC8,F49-AC9,F49-AC10,F49-AC11,F49-AC12,F49-AC13,F49-AC14,F49-AC15 --governing-order org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-49.investor-reporting-opal-admin-only.md` BEFORE the `complete` flip. `F49-AC15` recorded `UNVERIFIABLE-BY-INSTRUMENT`, `status_reason` naming the CVO at L9. Result file `investor-reporting-opal-admin-only.result.md` beside it. Flip only when every mechanical criterion PASSES by output.
 </proof_of_spec>
 
 **REPORT:** your FINAL MESSAGE, once, in the `WORKER REPORT` shape.
