@@ -6139,6 +6139,28 @@ Andrew asked for (msg 22917); it concerns this project's portal files meeting an
   "spec_asserts": "Andrew ~02:1xZ: if none of the models/ETFs/satellites hold a given asset class, no row for it is shown, and its weight does not appear in the coloured bar; the CTO's Z-S131 files it against PositioningSummary.tsx:574-582.",
   "world_is": "The Models view renders the five classes with zero rows for Commodities and Alternatives by F2's design (a zero row is a row, TO-V6-1's own text); Andrew's word reverses that for classes with no exposure across the displayed books.",
   "notes": "Round-6 cell candidate: presence-driven rows, legend and bar segments on the Positioning Summary, with the footer, the subtitle and the label formatter in the same file set."
+},
+{
+  "id": "POSN_ASTTAX-Z-S135",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T03:07:32Z",
+  "one_line": "R2 LANDED: the Satellites relabel driven off-clock tonight (Andrew-direct ~02:3xZ @0553548fe2; halves CTO @d1685fb4ea / COO @424b7d0e95; actor 1.0.0_SA_CTO~Z, published 03:02Z per msg 22967): holdings.json VersionId BRjqyqnB0pIdLUHOvDY3B_Sh9b0EXIPw -> 67GP52SdV1rw6QFVNPytU6ec4TvhwJh3 at 2026-09-15T03:02:26+00:00, as_of 2026-09-14, bytes identical to this seat's pre-write capture (GLD hedge/Gold -> commodities/Metals in 7 satellites, VXX equity/Volatility -> structured/Hedge in 8; 30 label cells, 0 other; weights, row sets and coverage unchanged); registry.json re-written content-identical (sha256 a9ff35b0...b85777) under VersionId xfm3WLmuZh3G4YtGpHUMs0R4Hyr4gCoN. This CLOSES the hidden-row transition state Z-S126 named (the driven {} invoke's refusal on the absent 2026-09-15 roster, W19-S16): the Satellites mode's served labels are now the retagged ones. The B2 ledger's L8 is RE-CUT on the driven mechanism (Rule 27) and the ledger CLOSED; the 07:00Z scheduled fire is the organic arm, recorded by a row at ~07:0xZ (expected: as_of 2026-09-15, the same labels at that partition's weights, both VersionIds moved again).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ-BACK at 2026-09-15T03:04:17Z by this seat (get-object; BYTES vs capture_registry.json / capture_holdings.json from the 02:49:56Z no-write run): registry xfm3WLmuZh3G4YtGpHUMs0R4Hyr4gCoN bytes==capture True; holdings 67GP52SdV1rw6QFVNPytU6ec4TvhwJh3 55033 B sha256 2f34056549c83bd2bd29a5a9def5f7075d104d91f33ec0e9ec3bc38a79c71289 bytes==capture True; as_of 2026-09-14.",
+      "TWO INSTRUMENTS on the discriminator (the CTO's replaced publish functions + a raising client, parsed compare; this seat's forwarding proxy capturing put_object, byte compare) and two on the read-back (the CTO's parsed compare; this seat's byte compare) -- same counts.",
+      "WHY GRADUATED: the act is the one both halves name (two keys, N=1 writer, the code's two put_objects), Branch A on every clause; nothing else moved (characteristics.json rt61ogajZQy79meUlsY1X_mIdPngxJTZ untouched; no portal byte; gitlink e85f6eb84f unmoved)."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "NEVER#1 (both halves signed to the blast radius: two keys on opal-data-cot, N=1, rollback VersionIds XaX6zaVWH7ybXnRBu2jeF2PNABUhezuM / BRjqyqnB0pIdLUHOvDY3B_Sh9b0EXIPw); Rule 27 (no FWD is a wait -- the mechanism driven, the organic case the negative arm); PRD v0.8 C-SATELLITE-SOURCE (holdings.json labels from the served etf-classifications table).",
+  "world_is": "The served holdings.json carries the retagged labels for the 2026-09-14 partition at unchanged weights and row sets; registry.json content-identical under a new version; characteristics.json untouched; the Satellites page (F3 behind the freeze, via the B5 router) reads the new bytes on its next fetch -- an edge cache, if any, is a separate act asked for by name.",
+  "notes": "The organic arm at 07:0xZ is this seat's read; B4's L8 (characteristics.json by the ~11:0xZ bbg pull) is unchanged by this act."
 }
 ]
 ```
