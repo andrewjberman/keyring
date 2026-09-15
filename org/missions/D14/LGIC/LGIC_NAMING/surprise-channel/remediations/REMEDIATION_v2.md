@@ -26,11 +26,11 @@ Reader: **1.0.0_SA_CTO only**. No row carries `route` or `loop_target`; the recu
   "owner": "1.0.0_SA_CTO",
   "round": "v2",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "1.0.0_SA_CTO",
    "round": "v2"
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "LGIC_NAMING-W6-S4",
@@ -48,11 +48,11 @@ Reader: **1.0.0_SA_CTO only**. No row carries `route` or `loop_target`; the recu
   "owner": "1.0.0_SA_CTO",
   "round": "v2",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "1.0.0_SA_CTO",
    "round": "v2"
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "LGIC_NAMING-W4-S1",
@@ -90,11 +90,11 @@ Reader: **1.0.0_SA_CTO only**. No row carries `route` or `loop_target`; the recu
   "owner": "1.0.0_SA_CTO",
   "round": "v2",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "1.0.0_SA_CTO",
    "round": "v2"
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "LGIC_NAMING-S14",
@@ -111,11 +111,11 @@ Reader: **1.0.0_SA_CTO only**. No row carries `route` or `loop_target`; the recu
   "owner": "1.0.0_SA_CTO",
   "round": "v2",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "1.0.0_SA_CTO",
    "round": "v2"
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "LGIC_NAMING-S15",
@@ -133,11 +133,11 @@ Reader: **1.0.0_SA_CTO only**. No row carries `route` or `loop_target`; the recu
   "owner": "1.0.0_SA_CTO",
   "round": "v2",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "1.0.0_SA_CTO",
    "round": "v2"
   },
-  "closed": false
+  "closed": true
  }
 ]
 ```
