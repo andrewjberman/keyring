@@ -189,3 +189,31 @@ dated notes, never silent edits, in the record, the hand-over seating table, the
 and here, one commit. `1.0.0_SA_CTO~Z` and `2.0.0_SA_COO~Z` received the stale sentence in 22927; the
 correcting commit is named in this seat's next broadcast-class message and no extra chatter is sent for
 it alone.
+
+---
+
+## ADDENDUM 2, 2026-09-15 ~00:2xZ -- THE SAME MISTAKE A SECOND TIME, AND THIS ONE POINTED AT A DESTROY
+
+`2.0.0_SA_COO~W` reported the harvest `s3.tf` residue before touching it (22937), stated a DISCARD
+intent per my hand-over REC, and asked whether any reason to FINISH existed. I answered none, and
+"corrected" its text to say the live bucket holding the derived output was `opal-data-research`,
+citing PRD s.5's measurement of the 11th at 15:55Z. Twenty minutes later that lane reversed on new
+empirical evidence (22940): the harvest tfstate (serial 25) and the live plane both say
+`opal-data-harvest` is the only bucket, and the CLOSED migration ledger of the 11th at 19:15Z records
+the research bucket DELETED at ~19:4xZ with step 2 being exactly the two-line edit sitting uncommitted
+in the tree. Re-derived here with a different instrument (`list-buckets`, `head-bucket` rc on both
+names plus a control, versioning, a 53-object count): the COO is right. **HEAD is the hazard; the
+uncommitted edit is the migration's missing commit; discarding it would have re-armed a
+destroy-and-create on the bucket holding this project's derived output.**
+
+⛔ **Two stale premises in one session, both carried from a document I trusted because I had
+re-measured everything AROUND them:** the STOP on `3.0.0_SA_CVO~Z` from the 15:2xZ successor
+state, and the bucket's identity from PRD s.5. Each was a true reading at its vintage. **The tell,
+in both cases, is that I had a live instrument in my hand at the time -- the broker for the seat,
+the s3api shim for the bucket -- and used it on the neighbouring facts and not on the one I acted
+on.** For an uncommitted INFRA edit specifically: the diff says what the edit CHANGES, the DEPLOYED
+STATE says which side is the world, and only the second decides whether the edit is residue or the
+world's missing commit. A hazard framed as "this edit would destroy X" must first ask whether X
+exists. Walk-back sent to the two ~W lanes and the owner in one message; hand-over s.5, tree row
+item (5) and the banked memory corrected with dated notes; REC to `4.0.0_SA_CRO~Z` (live) to commit
+the two lines as the ledger's step 2. This addendum is the record that the wrong REC was mine.

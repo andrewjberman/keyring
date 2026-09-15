@@ -142,15 +142,25 @@ Z-S34: two superproject branches, one gitlink, a plain safe-merge cannot drain a
 
 ## 5. RESIDUE THE COO INHERITS (report first, touch by the rules)
 
-- **UNFINISHED-EDITS, 1 file, HAZARD.** `infra/aws/terraform/harvest/s3.tf` is MODIFIED and
-  uncommitted in the shared tree since 2026-09-11T19:17:02Z (mtime), on NO ref: it renames the
-  bucket `opal-data-research` -> `opal-data-harvest` (2 lines). A `safe-apply` of the harvest root
-  with that edit present would DESTROY and recreate a versioned bucket holding this project's
-  `derived/model_block/` output. Author unknown (the shared tree carries no author). Per
-  `/canonical-flow`: the COO finishes or discards it, one commit, with the CVO validating; a touch no
-  open order explains is a surprise row. CTO REC: discard the working-tree edit and land the
-  rename, if Andrew still wants it, under the harvest migration's own cell (rows Z-S12, C-S49,
-  owner `4.0.0_SA_CRO~Z`), never as a stray apply. `1.0.0_SA_CTO~W` did not touch it.
+- **UNFINISHED-EDITS, 1 file -- AND THE HAZARD IS THE OPPOSITE OF WHAT THIS BULLET FIRST SAID.**
+  `infra/aws/terraform/harvest/s3.tf` is MODIFIED and uncommitted in the shared tree since
+  2026-09-11T19:17:02Z (mtime), on NO ref: it renames the bucket `opal-data-research` ->
+  `opal-data-harvest` (2 lines). Author unknown from the tree; by content and timing it is
+  `4.0.0_SA_CRO~Z`'s step 2 of the CLOSED migration ledger
+  `org/critical_paths/change_management/20260911T1915Z_harvest-opal-data-harvest-migration_deploy_completion.md`
+  @21abe7691d ("Point `s3.tf` at `opal-data-harvest` and `apply` -- CREATE ONLY"), never committed.
+  **CORRECTED 2026-09-15 ~00:2xZ on `2.0.0_SA_COO~W`'s reversal (msg 22940), re-derived here with
+  `list-buckets` + `head-bucket` + versioning + an object count: the ONLY bucket that exists is
+  `opal-data-harvest` (created 19:18:12Z on the 11th, versioning Enabled, 53 objects, `derived/model_block/`
+  present); `opal-data-research` returns 404 exactly like a bogus control.** So HEAD's committed file names
+  a deleted bucket, `bucket` is ForceNew, and a plan against HEAD would DESTROY `opal-data-harvest` and
+  create an empty `opal-data-research`. **The uncommitted edit is what prevents that today. DO NOT DISCARD
+  IT.** The first version of this bullet recommended discarding it, on PRD s.5's 15:55Z read of the 11th,
+  four hours BEFORE the migration; that REC is RETRACTED and was wrong in the direction that re-arms a
+  destroy. REC now, to `4.0.0_SA_CRO~Z` as the owner: commit the two lines as the ledger's step 2, one
+  file, in the shared tree. The COO files the finding as a row (ARMED, disarm_owner `4.0.0_SA_CRO~Z`,
+  citing Z-S12, C-S49 and the ledger) and guards the producer cell's `<paths>` so the file reads
+  `opal-data-harvest` before any plan and the plan prints `0 to destroy`. `1.0.0_SA_CTO~W` did not touch it.
 - **5 merged worker worktrees** at `C:/tmp/wk-amgt-{7-1,7-2,8-1,8-2,9-1}`, each dirty only with
   ` M portal` (the gitlink) and `?? .scratch/`. Prunable by the COO after its own read.
 - **8 OPEN rows in REMEDIATION_v9** (17 rows: 9 closed, 8 open; owners 14 `~ZZZ`, 3 `~Z`). A
