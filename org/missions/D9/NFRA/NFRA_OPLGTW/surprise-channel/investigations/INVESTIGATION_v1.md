@@ -630,6 +630,29 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "The fixture-only grant: the control test mints its token from a refresh family, and edits are limited to how each test obtains a principal or token.",
     "world_is": "A refresh family needs a durable store, which the control test now receives from a pytest fixture (moto DynamoDB). The __main__ runner supplies no fixtures. The worker did not edit the __main__ block: it is not how a test obtains a token, and no criterion names it.",
     "notes": "INERT: every criterion and the commit gate run the file through pytest, which supplies the fixture."
+  },
+  {
+    "id": "NFRA_OPLGTW-W3-S15",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~3",
+    "surfaced_at": "2026-09-15T16:27:44Z",
+    "one_line": "Re-targeting tests/test_schwab_audit.py:342 to the test's own '<tid>/<oid>' principal needs the uuid module at module scope, because that test's oid is uuid5-derived inside a helper that imports uuid locally. So the re-target commit adds one non-assertion line, 'import uuid' (line 15), beside the three ruled assertion lines, and the order names no line but those three.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ORDER: org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-a-2.principal-cutover.md @1efed70736 -- exactly three assertions, one expression each, re-targeted to sub == \"<tid>/<oid>\" of that test's principal AND email == the same email; 'No other assertion changes'; otherwise the grant is fixture-only ('edit only how each test obtains a principal or token').",
+        "SOURCE: infra/aws/ec2/opal-gateway/tests/test_schwab_audit.py @f8feaf081e -- _family_access_token imports uuid locally and mints make_principal(_TENANT, str(uuid.uuid5(uuid.NAMESPACE_URL, \"ogo1-ac06/\" + email)), email); the module-level imports are asyncio, fnmatch, json, sys and pathlib, with no uuid.",
+        "DIFF: infra/aws/ec2/opal-gateway/tests/test_schwab_audit.py @7183f7a3d3 -- line 15 'import uuid' and line 343 the re-targeted assertion; probe og_a2.py AC14 at 7183f7a3d3: 'since f8feaf081e: 2 HEAD-side line(s) changed, 1 inside an assertion; other: ['15 import uuid']'. test_oauth_durable.py and test_jwt_cve_lock.py: 1 HEAD-side line changed each, 'other: none' (LocalIssuer.oid_for; uuid already imported at module scope @318e119c4f).",
+        "RUN: OGA2-AC12 verbatim at 7183f7a3d3 -- '31 passed in 18.37s', rc=0; OGA2-AC13 -- 63 = 63 for test_schwab_audit.py, 'VERDICT: PASS-OGA2-AC13'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Ruling 97141 as carried by the order @1efed70736: exactly three assertion lines change, each to sub == \"<tid>/<oid>\" of that test's principal AND email == the same email; no other assertion changes; every other edit is fixture-only.",
+    "world_is": "The ruled expression for test_ogo1_ac06 names that test's oid, which only uuid.uuid5 can reproduce, and uuid was not in scope at the assertion. One module-level import line was added. It is neither an assertion nor a change to how the test obtains its token. The alternatives were worse by the worker's reading: reaching uuid through sys.modules, or changing the helper to hand back its principal, which edits a fixture line to serve an assertion.",
+    "notes": "INERT: an import changes no assertion and no behaviour. The AC14 probe counts it as a non-assertion line and prints it as a disclosure; OGA2-AC13 reads 63/63 for the module."
   }
 ]
 ```
