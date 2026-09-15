@@ -73,3 +73,7 @@ s.1.3, AF1-s-10. Push state: LOCAL.
 - **The reader census `1.0.0_SA_CTO~Z` added:** `infra/aws/lambda/portal_data_proxy/lambda_function.py` `get_positioning_data` serves the whole
   shared file (:1705-1710) and heads it for health (:1989). It reads the file whole and so carries whatever the act writes; no field it names
   is outside the permitted set.
+- **ADDENDUM (~19:5xZ, row `POSN_AGGFIX-Z-W1-S4`, measured by `TO-A1-1` A1-AC2):** writer 1 has TWO write sites in the producer file -- the
+  Lambda handler's put (`lambda_function.py:2623-2630`), which is this act, and `main()`'s `--upload` put (`:2501-2508`), a manual CLI path
+  this act does not invoke. `TO-A2-1` was amended before hand-off so that path writes the Opal-only key beside the shared file (A2-AC13). The
+  writer count by program stays N = 3; by write site it is 4.

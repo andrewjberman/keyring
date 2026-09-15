@@ -163,6 +163,31 @@ worker's id is `POSN_AGGFIX-Z-W<slot>-S<k>`, a seat's `POSN_AGGFIX-Z-S<k>`.
     "world_is": "One of the three named objects is gzip-encoded; the two aum-metrics objects are not, so a reader that always gunzips them fails. This worker's scripts detect the gzip magic bytes instead. Every other L5 figure read back as stated (the five books equal the legacy file's rows 5 of 5 and no platinum row 0 of 5).",
     "notes": "Form only; nothing in this order depends on it.",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "POSN_AGGFIX-Z-S3",
+    "project": "POSN_AGGFIX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-15T20:09:23Z",
+    "one_line": "DISARMS POSN_AGGFIX-Z-W1-S1 for this project (owner 2.0.0_SA_COO~Z): the 8,324,465.16 gap is opal_fixed_income, and Andrew-direct ~19:0xZ ruled Opal Fixed Income not needed for POSN_AGGFIX, so the aggregate never counts it and its reconciliation block reports the gap with the explanation ref; the MDPF producer's fixed seven-key MODEL_ORDER defect stays UNDER_INVESTIGATION for its own owner, 0.4.0_DS_ClientPlatform, routed through the round's slug and round analysis.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D4/POSN/POSN_AGGFIX/deliverables/0.9.0_WK_POSN_AGGFIX~1/AF1_S1_GAP_EXPLANATION.md @11f402ef1e: the gap reproduced to 0.00 from the gold fold and attributed to opal_fixed_income (A1-AC1 PASS).",
+        "org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260915_190xZ_POSN_AGGFIX_NO_OPAL_FIXED_INCOME_PRIMARY_MODELS_ONLY.md @fc8cdf1a1e: 'We do not need Opal Fixed Income for any of this, please note that.'",
+        "org/missions/D4/POSN/POSN_AGGFIX/decompositions/POSN_AGGFIX_DECOMP.md @605c03f81f s.1.1: the payload's reconciliation block carries file_total_model_aum, members_sum, gap and gap_explanation_ref."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "POSN_AGGFIX-Z-W1-S1"
+    ],
+    "spec_asserts": "W1-S1 as filed: ARMED, disarm owner 2.0.0_SA_COO~Z; C-GAP-EXPLAINED requires the gap explained before the aggregate is read as current.",
+    "world_is": "Explained by measurement and outside this project's members by Andrew's word, so no POSN_AGGFIX act can be harmed by it; the defect it names lives in data/mdpf/scripts/gold/dim_mdpf_aum_metrics.py and belongs to that producer's owner, which this project does not edit.",
+    "notes": "Investigation-plane disarm by the named owner. Routing of the MDPF defect to 0.4.0_DS_ClientPlatform rides the round's slug (3.0.0_SA_CVO~Z) and round analysis (1.0.0_SA_CTO~Z); no remediation is this project's."
   }
 ]
 ```

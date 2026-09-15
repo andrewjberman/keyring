@@ -86,7 +86,9 @@ verdicts (a CONTRADICTED blend STOPS this order with a BLOCKING row; NO-DEFINITI
    Lambda branch of `load_aum_data` re-pointed and returning the three separated maps plus source VersionId, period, file total and
    status; `calculate_aggregated_holdings` over `member_aum`; `extract_current_holdings` without the AGG write; the handler writing the
    1.1 payload to `json/positioning/opal_aggregate.json` with the put shape at :2627-2634 after the shared file. The CLI `main()` keeps
-   working (it may write the aggregate payload beside its local output). Every other function stays byte-identical.
+   working, and its `--upload` branch (:2489-2510) -- the shared key's SECOND write site (row W1-S4) -- writes the 1.1 payload to
+   `json/positioning/opal_aggregate.json` beside the shared file with the same put shape, so a manual upload never serves a shared file
+   without its aggregate key. Every other function stays byte-identical.
 2. `<PRODUCER_HARNESS_A2>`: a script in your deliverables folder. It loads the recorded `GeneratePositioning` event from the state
    machine's LAST execution that ran it (`YangDataPipeline`, `get-execution-history`, read-only; the raw input string, never a
    hand-written event), then runs `lambda_handler` twice in separate subprocesses with `AWS_LAMBDA_FUNCTION_NAME` set: BEFORE = the file
@@ -95,7 +97,8 @@ verdicts (a CONTRADICTED blend STOPS this order with a BLOCKING row; NO-DEFINITI
    run). It prints the comparisons the criteria name. Modes, one per criterion that invokes it: `--membership-equals-standard`
    (A2-AC2, no handler run), `--compare` (A2-AC3), `--book-aum` (A2-AC4), `--aggregate-payload` (A2-AC5), `--hand-rederive` (A2-AC6),
    `--fail-weights` (A2-AC7: the platinum `get_object` raises in AFTER; the legacy one raises in BEFORE), `--partial-weights` (A2-AC8:
-   the platinum `by_model` served to AFTER with the ULT row removed; the legacy `by_model` with the ULT row removed to BEFORE). The
+   the platinum `by_model` served to AFTER with the ULT row removed; the legacy `by_model` with the ULT row removed to BEFORE), `--cli-upload` (A2-AC13: `main()` with `--upload` under the same
+   capturing wrapper and the same model PKL). The
    normal-run modes may share one cached pair of runs in `.scratch/` as long as each mode prints which run it read.
 3. Record every criterion; file rows for anything off-cell; keep working.
 
@@ -132,9 +135,11 @@ ONE row per off-cell finding, id `POSN_AGGFIX-Z-W1-S<k>` continuing your sequenc
 
 <criterion id="A2-AC11" cell_refs="AF1-s-6,AF1-s-7,AF1-s-8"><invocation>timeout 60 git diff --stat 605c03f81f HEAD -- infra/</invocation><expect>exactly one file under infra/: infra/aws/lambda/v2_portal/yang_pipeline/positioning/yang-generate-positioning/lambda_function.py.</expect></criterion> `A2-AC11` -- ONE FILE CHANGED UNDER INFRA.
 
+<criterion id="A2-AC13" cell_refs="AF1-s-8"><invocation>timeout 1200 python <PRODUCER_HARNESS_A2> --cli-upload</invocation><expect>main() run with --upload under the capturing wrapper on the same model PKL the handler runs used: exactly two puts captured, json/positioning/positioning_data.json and json/positioning/opal_aggregate.json, each with ContentType application/json, ContentEncoding gzip and CacheControl no-cache, and each decompressed payload equal to the handler AFTER run's capture of the same key in every field except generated_at.</expect></criterion> `A2-AC13` -- THE SECOND WRITE SITE WRITES THE SAME TWO KEYS.
+
 <criterion id="A2-AC12" cell_refs="AF1-s-6,AF1-s-7" judgment="true"/> `A2-AC12` -- **JUDGMENT, GRADED BY `3.0.0_SA_CVO~Z` AT L9:** whether serving `status UNAVAILABLE` on a PARTIAL weight read (a primary model missing) is the right reading of C-NO-SILENT-EMPTY, against serving the aggregate over the rows present with the missing model reported. Record the readings and offer NO verdict.
 
-<expected_criteria>A2-AC1, A2-AC2, A2-AC3, A2-AC4, A2-AC5, A2-AC6, A2-AC7, A2-AC8, A2-AC9, A2-AC10, A2-AC11, A2-AC12</expected_criteria>
+<expected_criteria>A2-AC1, A2-AC2, A2-AC3, A2-AC4, A2-AC5, A2-AC6, A2-AC7, A2-AC8, A2-AC9, A2-AC10, A2-AC11, A2-AC12, A2-AC13</expected_criteria>
 
 <placeholders>PRODUCER_HARNESS_A2</placeholders>
 

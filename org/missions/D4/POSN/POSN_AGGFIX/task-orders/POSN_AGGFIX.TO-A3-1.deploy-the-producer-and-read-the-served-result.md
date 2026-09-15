@@ -52,7 +52,9 @@ not one -- this producer, `yang-time-machine` (a Dev-triggered restore of every 
 `infra/aws/lambda/v2_portal/yang_pipeline/scripts/rollback-protocol.sh` (an operator restore by prefix). This act invokes neither, except its
 own Branch B rollback of the shared file's prior VersionId. The ledger entry (A3-AC2) names both and the residual both halves leave unsigned:
 after Branch A, a restore to any execution before the change re-serves `current_holdings.AGG` and July book `aum` until the next pipeline run.
-That residual is row Z-S2's, carried to the round analysis; it is not yours to fix.
+That residual is row Z-S2's, carried to the round analysis; it is not yours to fix. **And the producer file itself carries two write
+sites of the shared key (row W1-S4):** the handler (this act) and `main()`'s `--upload` branch (a manual path, not invoked here), which
+TO-A2-1 amended to write the Opal-only key beside it (A2-AC13).
 
 **Your inputs (at SITEZ, never re-derived):** TO-A2-1's harness and its recorded event (the execution ARN it printed); TO-A1-1's commit list
 between the running bytes and HEAD (every commit on that list rides this deploy and both halves name them).
