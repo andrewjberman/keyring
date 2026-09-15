@@ -54,6 +54,28 @@ Worker rows carry their slot's coordinate, `MDPF_TAXSMA-W<n>-S<k>`; a seat's row
     "spec_asserts": "A Gateway code cell would naturally be graded on 'the Gateway suite passes', which assumes every module collects on this box.",
     "world_is": "Two modules cannot collect here without an install no order grants. TX-g-1's criterion counts the modules that collected and passed before its edit, names the two moto modules as NOT-EVALUATED on this box, and forbids a new dependency.",
     "notes": "INERT for this project. OBSERVATION: whether moto belongs in the box's Python is NFRA_OPLGTW's and the box owner's question, not this project's."
+  },
+  {
+    "id": "MDPF_TAXSMA-W5-S1",
+    "project": "MDPF_TAXSMA",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_MDPF_TAXSMA~5",
+    "surfaced_at": "2026-09-15T21:20Z",
+    "one_line": "PRD s.3.4 classifies additional Tax-labelled custodian candidates 'UNCONFIRMED', but no status axis or reason code in the data contract carries that value, so the expected-case manifest cannot name the candidates' status in contract vocabulary.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "PRD org/missions/D8/MDPF/MDPF_TAXSMA/prd/MDPF_TAXSMA_PRD.md@671925aecc line 205: 'Discover additional Tax-labeled custodian candidates by the complete dated source population and classify them UNCONFIRMED; no automatic workbook edit or membership promotion follows.'",
+        "CONTRACT org/standards/MDPF_TAXSMA_DATA_CONTRACT.json@91b11ff0c9 status_axes (business_status 7, identity_status 7, membership_date_status 3, technical_enrollment 5, value_status 4, freshness 5, run_result 6 members) and reason_codes (36 members): the token UNCONFIRMED occurs only inside REMOVED_UNCONFIRMED (lines 245 and 650), a different state (a removed prior traded row).",
+        "TASK ORDER org/missions/D8/MDPF/MDPF_TAXSMA/task-orders/MDPF_TAXSMA.TO-TX-v-1.expected-cases.md@91b11ff0c9 line 22: 'the contract's enumerations are the only vocabulary'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The order makes the contract's enumerations the only vocabulary, and PRD s.3.4 names the additional-candidate classification UNCONFIRMED.",
+    "world_is": "The contract has no UNCONFIRMED member on any axis. TX-v-1's arm A02-09 therefore states the candidate's observable without a status label: not counted live, not in the dated expected population, listed once in protected candidate evidence, no workbook write. The label that S04 (TX-m-2) emits for a candidate is unfixed by the contract.",
+    "notes": "INERT: the manifest's candidate expectation does not depend on the label. OBSERVATION: whether the contract gains a candidate value or the PRD word is dropped belongs to the contract owner (the PRD author), not to any worker cell."
   }
 ]
 ```
