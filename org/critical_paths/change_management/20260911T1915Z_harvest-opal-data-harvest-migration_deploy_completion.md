@@ -163,3 +163,41 @@ unlosable rather than short. `RESEARCH_BUCKET` drops only after the function is 
 - The two DynamoDB tables keep `opal-amgt-*` names. Their rename was approved in the draw and is
   cheap while both measure 0 items -- but `AMGT-rd-5`/`rd-6` are live writers into the metrics
   table's schema, so it is sequenced behind them. Not part of this entry.
+
+### ADDENDUM 2026-09-15 ~00:3xZ -- STEP 2's TERRAFORM EDIT WAS APPLIED BUT NEVER COMMITTED; now committed
+
+⛔ **FOUND BY `2.0.0_SA_COO~W` (msg 22941), NOT BY THIS SEAT, AND THE CLOSE-OUT ABOVE MISSED IT.** Step 2
+("Point `s3.tf` at `opal-data-harvest` and apply -- DONE") edited `infra/aws/terraform/harvest/s3.tf` on
+disk (mtime 2026-09-11T19:17:02Z) and applied it, but the step-5 commit carried only the five python
+defaults; the `.tf` stayed an uncommitted edit in the shared tree for four days. **So HEAD read
+`bucket = "opal-data-research"` -- a bucket that no longer exists -- while state and the world read
+`opal-data-harvest`.** `bucket` is ForceNew, so a plan against HEAD would have proposed DESTROY-AND-CREATE
+of the live bucket (53 objects); the uncommitted edit was the only thing preventing that, and a
+"discard local changes" by any seat would have re-armed it. `2.0.0_SA_COO~W` withdrew exactly that intent
+on measuring it.
+
+**Re-verified by this seat before committing, different instruments from 22941's:** `git diff` on the
+file = exactly two lines (`bucket` and the `Name` tag, research -> harvest); `head-bucket`
+`opal-data-harvest` EXISTS, `opal-data-research` ABSENT, a bogus name ABSENT (negative control); this
+entry's own final verification ("plan -detailed-exitcode rc=0") is true only WITH the edit.
+
+**ACT ATTEMPTED, REFUSED BY THE LANE GATE, AND THE REFUSAL IS CORRECT:** `safe-commit` of the two-line
+edit under this entry was refused -- `infra/aws/terraform/harvest/s3.tf` is lane `CLOUD_OPS_OR_ETL` ("any
+AE agent") and `4.0.0_SA_CRO~Z` is not in it. ⛔ **This seat was NEVER in-lane for that folder: all five of
+its 2026-09-11 commits touching `infra/aws/terraform/harvest/` (632a9a5263, 76ce093488, 2fef096be9,
+e3880e7031, dc868af89c) are MERGE commits (two parents), landed through the drain's merge exemption,
+which is why no gate ever fired.** No override is used: `GIT_COMMIT_AUTHOR_OVERRIDE` is for a holder of
+the lane not enumerated, not for a seat outside it.
+
+**STATE NOW, and the standing instruction to every seat on this tree:** the edit stays in the shared
+working tree, UNSTAGED, as the live guard against the destroy. ⛔ **DO NOT DISCARD IT.** Convergence
+route: an in-lane AE seat commits the two lines citing this entry, OR `2.0.0_SA_COO~W`'s round-10
+producer cell carries `s3.tf` in its `<paths>` with the guard "reads `opal-data-harvest` before any
+plan; the plan prints `0 to destroy`" and the drain merges identical content. Either lands DESIRED ==
+APPLIED. **No apply, no plan run, no state touched, nothing deleted** by this addendum; the "final
+verification" table above stands as measured on 09-11; this corrects the RECORD, not the deploy.
+
+⭐ **THE LESSON, transferable:** "DONE" on a terraform step meant APPLIED and was read as COMMITTED. A
+ledger step that changes a `.tf` names its commit hash, or it is not done -- the successor log of
+2026-09-14 said "uncommitted under this seat's paths: NONE" with a control of 483 tracked files, and
+this file was not among the paths it counted.
