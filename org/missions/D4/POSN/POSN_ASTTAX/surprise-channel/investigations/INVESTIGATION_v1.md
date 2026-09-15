@@ -7427,5 +7427,30 @@ Andrew asked for (msg 22917); it concerns this project's portal files meeting an
     "world_is": "The drain ref is 2 commits AHEAD of this branch and contains this worker's commit, so HEAD does not descend from the ref -- the ref descends from HEAD. The limb cannot be satisfied by any act inside this grant (merging or rebasing onto the ref is forbidden), and satisfying it by substituting the BASE would REPAIR the criterion, which the TO's refusal clause forbids. W2-AC1 is therefore recorded FAIL with its measurement, while its other two limbs -- TO-W1-1 complete at SITEZ, and the served characteristics.json at PXyBGaqn.0Jk6TwWmXl34FlsDH8Gwd0R carrying tickers 25 with name 25 of 25 and management_style 25 of 25 -- PASS by output.",
     "notes": "THIRD SPAWN on this order. Spawn 1 drained at 51c6108f7e and produced the re-cut; spawn 2 resumed and stopped mid-W2-AC6 WITHOUT committing, so nothing from it is in the record and every criterion recorded this run carries the output of the invocation THIS run made. W2-AC3, W2-AC5, W2-AC6 and W2-AC9 stand as recorded from the first run by the issuer's instruction and were not re-run. Two off-cell observations beside the finding above, neither a refusal: (i) the dev server left on port 5181 by the prior run was dead (curl http_code 000), so W2-AC8 ran on a fresh server on 5185 -- a port is not a state, and the fixtures were rebuilt from the served bytes this run rather than reused; (ii) build_fixtures_w25.mjs documents 'Usage (from portal/)' but w25_fetch_manifest.py writes manifest paths relative to the WORKSPACE root (portal/.scratch/...), so running the builder from portal/ raises ENOENT on 'portal/portal/.scratch/w25_posn.raw'; run it from the workspace root. The remedy is a docstring line in a deliverables-local tool, inside this grant but not on this cell's face, so it is stated here rather than edited mid-round."
   }
+,
+  {
+    "id": "POSN_ASTTAX-Z-W25-S7",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~25",
+    "surfaced_at": "2026-09-15T09:53:00Z",
+    "one_line": "W2-AC1's dependency limb reads the WORKTREE copy of TO-W1-1, which is stale against the shared branch by construction, so as written it prints in_progress while SITEZ prints complete -- the limb is satisfiable only by a read the invocation does not make, and the same shape recurs on any criterion that greps a shared-branch artifact from inside a worker's worktree.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AS WRITTEN, from the worktree root: f=$(ls org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-W1-1.*.md); grep -o -m1 on its <status> -> <status>in_progress</status>.",
+        "SAME READ AT SITEZ 03a334e357: git show SITEZ:org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-W1-1.characteristics-per-ticker-block-and-schedule.md piped to grep -o -m1 -> <status>complete</status>.",
+        "The alternative branch of the expect is independently satisfied: SITEZ:org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~24/POSN_ASTTAX.TO-W1-1.characteristics-per-ticker-block-and-schedule.proof_of_spec.json carries W1-AC12 PASS (15 acceptance rows; W1-AC8 PASS and W1-AC14 PASS beside it), so W2-AC1's dependency holds on EITHER branch and this row changes no verdict.",
+        "Mechanism, not a defect in this branch: a worker's worktree is cut once and never merges, so any file the shared branch advances after the cut is read at the CUT vintage. The worktree copy of TO-W1-1 is the pre-flip one; SITEZ flipped it after this branch was created.",
+        "Path/commit: org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-W2-1.satellites-adapter-attaches-per-ticker-measures.md, W2-AC1 invocation limb 1, at SITEZ 03a334e357ba6fb6587d19cbab00baf6f0bf9de5, copied into worktree branch wk-posn_asttax-6-25 (0599f308f7) as this run's first act."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "W2-AC1's invocation resolves TO-W1-1 by ls inside the worker's own worktree and greps its <status>; the expect reads that status as the project's CURRENT dependency state (TO-W1-1 reads complete -- OR in_progress with its proof instance on SITEZ carrying W1-AC12 PASS).",
+    "world_is": "The worktree copy is a snapshot at branch-cut and prints in_progress; SITEZ prints complete. The invocation therefore measures THIS BRANCH'S VINTAGE of a shared-branch fact, and a criterion that must read a shared-branch fact has to name the ref (git show SITEZ:<path>) rather than a path inside the worktree. Here the difference is benign -- both branches of the expect are met, and the second branch is met at the worktree vintage too -- so the row is OBSERVATION and INERT. Same class as W25-S2 and W25-S6 (a clause anchored to something that moves under a live worker), direction reversed: there the ANCHOR moved ahead of the worker, here the WORKER'S COPY lags the anchor.",
+    "notes": "FOURTH SPAWN, ONE CRITERION. Re-ran nothing but W2-AC1, on the limb the issuer re-cut at SITEZ 03a334e357. That re-cut CLOSES W25-S6 by measurement: git -C portal merge-base --is-ancestor 10a2799c67c519288fcd7d4ae6e3b86d5ed48b5a HEAD -> rc=0 and BASE-IS-ANCESTOR is printed, with the inverse at rc=1 as a discriminating negative control. W2-AC1 is recorded PASS and the order's status flips to complete at 9 of 9 (8 PASS by output, W2-AC9 recorded judgment). No portal commit this run: portal HEAD stays 16c5d3593594f40d954493e93b28ccd292e18cd0."
+  }
 ]
 ```
