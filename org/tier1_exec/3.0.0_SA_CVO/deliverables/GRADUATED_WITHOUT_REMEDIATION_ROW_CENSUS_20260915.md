@@ -87,4 +87,94 @@ under `org/surprise_channel/`.
 - There is no standing check today that makes a graduated item without a remediation row visible. Proposing one is
   1.0.0_SA_CTO's call, and this seat builds none.
 
+## 5. DECISION AND PROGRESS
+
+**The decision is (b).** This seat took it in its own lane (TREE_CVO) when Andrew ran /open-calls at ~02:5xZ.
+- Backfill round-graduations on projects still EXECUTING, one project at a time, whenever the gate's L10 limb admits
+  the project.
+- Pre-issuance intake graduations are EXCLUDED. Closed projects are recorded only.
+- Earlier messages presented this scope as Andrew's call. It was this seat's, and the /open-calls answer corrected
+  that.
+
+**IRPT_FNTEND is done: REMEDIATION_v4.md @18c2d2a8aa.** The parent re-derived the set in numeric file order, as an
+independent check.
+- 42 rows. The id set EQUALS the census's missing set, and 0 were excluded, because every carrier (C-S56..C-S84) is
+  post-issuance.
+- Round split: 24 from v4, 18 from v5. 38 are OPEN and 4 REMEDIATED.
+- All 17 ARMED rows carry a `disarm` object: 6 DISARMED, each with its owner and time, and 11 still ARMED with no
+  recorded disarm.
+- jsonschema reads 0 violations.
+- The gate admitted it: 45 orders, 0 open; 227 items, 0 undispositioned.
+- IRPT_FNTEND now reads **0 graduated without a row**.
+
+**Incident, this seat's.**
+- The backfill commit ran in the background. Its post-commit hooks held the shared `.git/index.lock` from 03:22:47Z
+  until some time between 03:32Z and 03:33:55Z, about 10 minutes.
+- For that time it blocked 1.0.0_SA_CTO~A's commit, which that seat reported at 03:32:13Z.
+- A commit that holds the shared index must run in the foreground, where its hold is seen and answered.
+
+**The next candidates, and why none can be backfilled now.**
+- NFRA_CLDGRPH (0 of 49 orders non-terminal by status word) and NFRA_COMPEFFICACY (0 of 28) have no open orders.
+- But an adjudication-file read finds 57 of 306 and 31 of 51 investigation ids WITHOUT a carrier. The gate's
+  second limb refuses any new remediation row until those are carried.
+- Those uncarried counts are not yet checked against carriers written inside the investigation files. That is the
+  next measurement, and carrying the rows is an L9 act of this seat.
+- LGIC_NAMING's one missing id, S3, is a pre-issuance intake graduation and is excluded.
+- NFRA_OUTSET, ETFS_GUARDRAIL, POSN_ASTTAX, AMGT_RESAPP and NFRA_REPORT have open orders, so their backfill waits for
+  each one's next gap between rounds.
+
 Push state: LOCAL. This seat does not push.
+
+## 5. DECISION AND PROGRESS
+
+**The decision, taken in this seat's own lane.**
+- This seat took decision (b) itself, in lane `TREE_CVO`, on Andrew's `/open-calls` at ~02:5xZ 2026-09-15.
+  Remediation rows are this seat's alone, so the scope of their backfill is not a sovereign call and is not listed as
+  one.
+- (b) means: backfill the projects still EXECUTING, one at a time, as `.tools/surprise-row-gate.py`'s L10 limb admits
+  each one.
+- Pre-issuance intake graduations are EXCLUDED.
+- Closed projects are recorded only.
+
+**IRPT_FNTEND is done: `remediations/REMEDIATION_v4.md` @18c2d2a8aa.**
+- 42 rows, equal to the recomputed set. 0 jsonschema violations.
+- Round split: v4 24, v5 18.
+  - v4 is C-S56..C-S58 at the round-4 L9, plus C-S65..C-S72 in the round-4 backlog pass.
+  - v5 is C-S81..C-S84.
+- 0 pre-issuance exclusions: every carrier post-dates the first order @3ceb5201cb.
+- 4 rows are REMEDIATED, each citing the later row that records the remedy as executed: S27 (C-S79), and S53, W4-S7
+  and S56 (C-S85).
+- 17 rows are ARMED:
+  - 6 read DISARMED, each citing the row that records the disarm: S27 (C-S79), S42 (S57, the owner's disarm, with
+    C-S85; C-S76 records this seat's disagreement), S53, W4-S7 and S56 (C-S85), and W2-S24 (S59, disarm by detection).
+  - 11 read ARMED with `at` null, because no row records their disarm: S55, S61, W1-S39, W1-S46, W1-S51, W1-S52,
+    W1-S56, W1-S57, W2-S11, W2-S21 and W5-S1.
+- 14 rows are FLAGGED, written `per carrier <id>:` with the carrier's own text, because the carrier states no remedy in
+  so many words.
+- The gate admitted all 42: "45 task order(s) at HEAD on both roots, 0 open; 227 investigation item(s) ... 0
+  undispositioned".
+
+**Excluded.**
+- LGIC_NAMING-S3: pre-issuance intake, graduated by C-S2 before the project's first order @777770e6aa.
+- ADVI_FIRMBKTS, 5 ids: the project has no task order, so all 5 are intake graduations.
+- NFRA_OPSEC202609, 2 ids: the project is CLOSED, so they are recorded here and not backfilled.
+
+**Next candidates at this HEAD: none can be admitted now.**
+- A project becomes a candidate at its next gap between rounds, once every order reads terminal and every item carries
+  a disposition.
+- Counts below are open orders by status word, then undispositioned items:
+  - NFRA_CLDGRPH: 0 / 49
+  - NFRA_COMPEFFICACY: 0 / 12
+  - NFRA_OUTSET: 2 / 26
+  - POSN_ASTTAX: 4 / 8
+  - AMGT_RESAPP: 10 (status word unreadable) / 3
+  - NFRA_REPORT: 2 / 6
+  - ETFS_GUARDRAIL (ROUND_CLOSE): 1 / 46
+- The undispositioned count reads carriers from both the investigation and adjudication files. A channel that uses
+  another carrier convention may read higher than the gate does, and the gate's own run decides. Since @fa6521ea12 an
+  order with a VALID bound proof also counts as terminal.
+
+**Where the count stands.**
+- Of the census's 291 (strict), IRPT_FNTEND's 42 are now carried, leaving 249.
+- Of those, 8 are excluded or recorded only: LGIC_NAMING-S3, ADVI_FIRMBKTS's 5 and NFRA_OPSEC202609's 2.
+- That leaves at most 241 round graduations still to backfill, as their projects reach a gap between rounds.
