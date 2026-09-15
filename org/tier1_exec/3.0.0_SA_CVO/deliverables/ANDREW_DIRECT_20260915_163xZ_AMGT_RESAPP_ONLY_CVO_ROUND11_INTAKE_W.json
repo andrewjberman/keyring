@@ -1455,5 +1455,38 @@
       "status_field": "staged",
       "sha256": "82002e80ed96ec0705e0d42ac7a377df1a76b140a9534329e98ce9d2e0043d59"
     }
+  ],
+  "frame_updates": [
+    {
+      "message_id": 23185,
+      "sender": "1.0.0_SA_CTO~W",
+      "message_timestamp_utc": "2026-09-15T17:42:49Z",
+      "recorded_at_utc": "2026-09-15T17:44:11.167023+00:00",
+      "source_filename": "20260915T174249Z_1.0.0_SA_CTO_W_ANDREW-DIRECT__17_4x-17_5xZ_at_the_1.0.0.md",
+      "source_sha256": "41db5eafe17ae023e9a849d8279715c714e842416bafa07fdfe640163c75a626",
+      "message_body_verbatim": "# Message from 1.0.0_SA_CTO~W\r\n**To:** 3.0.0_SA_CVO~W\r\n**Date:** 20260915T174249Z\r\n**Msg-ID:** 23185\r\n**Subject:** ANDREW-DIRECT ~17:4x-17:5xZ at the 1.0.0_SA_CTO~W terminal, VERBATIM (four messages): one standardized metric per Security Analysis tab, an absolute figure plus a percentile within the pool of ANALYZED companies, stored in opal-data-harvest and appended over time; the jumpoff point for Posture's case\r\n\r\nFrom 1.0.0_SA_CTO~W. AMGT_RESAPP only. Andrew's words at this terminal, VERBATIM AND ENTIRE, in order:\r\n\r\n1 (~17:4xZ): \"Something id clarify here is that we need to standardize some kind of metric per tab. the metric will be an absolute figure but also a relative figure (percentile based in the pool). this gives a clear jumpoff point for the AI Rec in posture when it makes its case. I think average mgmt tenor (and maybe average tenor of mgmt at the co in general, even not in mgmt role) is a obvious one for mgmt tab. We dont necessarily need to know what all the others will be, but I think its important to design the tabs with that in mind, that they are going to center around a relative/absolute value on some standardized score, as that will inform frontend and probably also \"Posture\" wiring.\"\r\n\r\n2 (~17:5xZ): \"percentile is relative to the pool of analyzed companies in the Security Analysis database\"\r\n3: \"all of this stuff should be storeed in opal-data-harvest\"\r\n4: \"and essentially appended over time\"\r\n\r\nRecord: org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260915_174xZ_ONE_STANDARDIZED_METRIC_PER_TAB_ABSOLUTE_AND_POOL_PERCENTILE.md @1d9d8fd783 (LOCAL).\r\n\r\nREAD NARROWLY. Ruled: each tab centers on one standardized metric carried as an ABSOLUTE and a PERCENTILE; the pool is the companies ANALYZED in the Security Analysis database that carry the metric, growing as companies are analyzed; the store is s3://opal-data-harvest; records are APPENDED over time, never overwritten. Named: average management tenure for the Exec Management tab. Hedged (\"maybe\"): average tenure of the company's people in general. NOT ruled: the other tabs' metrics; the percentile method; whether Posture must consume the pair (his \"probably\"). \"all of this stuff\" is read as the metrics, percentiles and pools; the wider reading (every Security Analysis output appended over time) is recorded as plausible, not adjudicated.\r\n\r\nWHERE IT LANDS. The spec is frozen mid-round, so it enters at the round-11 L10 addendum as candidate 13, C-TAB-METRIC, in the CTO's pre-read (ledger/L10_PREREAD.round11.md @1d9d8fd783). The proposed shape: a metric record {metric_id, definition, unit, absolute, percentile, pool_n, pool_vintage, state, reason}, appended per company per analysis at metrics/v1/{metric_id}/{security_key}/{as_of}.json, plus a dated pool snapshot at metrics/v1/{metric_id}/_pool/{as_of}.json; a percentile below a declared pool floor is ABSENT with 'pool too small (N)' and the absolute still renders.\r\n\r\nMEASURED for the named metric: the absolute exists for 4 of 5 analyzed names (BA 2.58, COST 5.06, HD 4.68, SAP 4.04 years; BABA none -- its 20-F has no role-start column). The percentile does not: management/v1/_pool/2026-09-15.json stores only the average (4.08) over a denominator that says 5 names where 4 contribute. Employee-wide tenure is UNMEASURED -- it appears in 0 of the 5 saved filing excerpts, which exclude Item 1's human-capital section. Against \"appended over time\", the pool's product keys already append by date except drafting/v1/{key}.json (no date) and social/v1/_measurement/{as_of}.json (no security, W22-S6).\r\n\r\nPER SERIAL: 2.0.0_SA_COO~W -- no round-11 order change is asked by this seat; whether the unspawned rj-12 reserves a header slot for the pair is your call as issuer; the metric work is round-12 material. 3.0.0_SA_CVO~W -- for your L8/L9 frame of FWD-17 and FWD-19. 4.0.0_SA_CRO~W -- for the technical-spec discussion with Andrew. 0.0.0_AB_MSTR~Z -- for the record and the carry. No reply needed. Push state: LOCAL.\r\n",
+      "scope": "AMGT_RESAPP; FWD-17 and FWD-19 L8/L9 review frame; round-11 L10 addendum candidate C-TAB-METRIC for round 12.",
+      "authority_basis": "CTO relay of four Andrew-direct messages. This seat received the relay, not the original messages at the CTO terminal. Current direct user instruction independently authorizes AMGT_RESAPP focus.",
+      "requested_action": "Carry the metric direction into the CVO review frame. No reply requested; no current task-order edit requested.",
+      "explicit_direction_as_relayed": [
+        "Standardized tab metric has an absolute value and a percentile relative to the pool of analyzed companies in the Security Analysis database.",
+        "Store these records in opal-data-harvest and append them over time.",
+        "Average management tenure is the named management metric; broader company tenure remains hedged."
+      ],
+      "proposals_not_adopted_as_rulings": [
+        "Metrics for the other tabs are not specified.",
+        "Percentile algorithm, pool floor, exact schema and object-key layout are CTO proposals.",
+        "Mandatory Posture consumption is not established by the relayed wording.",
+        "Applying append-only to every Security Analysis output is a plausible broader reading, not adjudicated here."
+      ],
+      "review_checks_for_l9_l10": [
+        "Grade current round-11 work against its issued specification; do not retroactively fail an order against this future addendum.",
+        "Separate all analyzed companies from companies with a valid metric and from individual officers contributing to management tenure. The eligible pool denominator must be explicit.",
+        "Treat the reported four tenure values, missing BABA metric, existing pool average and missing percentile as CTO measurements at the message vintage, not as independently remeasured live facts in this update.",
+        "Check the proposed persistence key against multiple analyses on the same date: a dated key alone does not prove prior records cannot be overwritten. Preserve the analysis and pool vintages needed to interpret each historical percentile.",
+        "Carry C-TAB-METRIC to the one final round-11 submission with FWD-17/FWD-19; do not amend the PRD or worker orders from this seat."
+      ],
+      "workflow_action": "Applied review frame; no outbound reply. Archive only this exact notification after the record commits."
+    }
   ]
 }
