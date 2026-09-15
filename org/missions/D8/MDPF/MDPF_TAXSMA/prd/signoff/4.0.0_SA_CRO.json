@@ -1,12 +1,11 @@
 {
   "prd": "MDPF_TAXSMA_PRD.md",
-  "prd_version": "v0.1",
-  "prd_pin": "48befbfcbfbdc78c360f9716dbffadf13c0f6cff",
+  "prd_version": "v0.2",
+  "prd_pin": "8ab2dc2bc63fe8699e01fc33772b6f8523d224f0",
   "half": "brief",
-  "half_hash": "03fadcd5469144c0d3ce8e00c82962a4024acb888863db122c1277c01375cbd6",
-  "verdict": "REFUSED",
-  "review_ref": "docs/briefs/sources/MDPF_TAXSMA_L4_BRIEF_REVIEW_v0_1_20260915.md@eda74adacc7023cb90dd57e52596eea1612f82ad",
+  "half_hash": "f67f3a541306f2cf09f706e4fbcb5e5529318c4c193a691cd8ad69f614a97a0e",
+  "verdict": "SIGNED",
+  "review_ref": "docs/briefs/sources/MDPF_TAXSMA_L4_BRIEF_REVIEW_v0_2_20260915.md@f5a6d57e4a6377a9195383c7b9e8285da71e4b48",
   "signed_by": "4.0.0_SA_CRO",
-  "signed_at": "2026-09-15T08:17:07Z",
-  "reason": "R1 SOURCE_PROVEN effective-date status has no rule (v0.1:161, A03 v0.1:231; brief VII:106); R2 coverage denominator 17 of 18 headings (v0.1:314)"
+  "signed_at": "2026-09-15T08:43:39Z"
 }
