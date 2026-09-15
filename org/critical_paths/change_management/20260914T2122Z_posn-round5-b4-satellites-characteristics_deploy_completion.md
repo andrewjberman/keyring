@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-09-14T21:22:07.408537+00:00
-**Status:** OPEN
+**Status:** CLOSED -- nothing stranded -- closed 20260915T050453Z
 **Deploy:** POSN_ASTTAX B4: cot-satellites-characteristics-producer (new function)
 **Authored by:** 0.9.0_WK_POSN_ASTTAX~20
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -19,7 +19,7 @@
 | L5 | verify | 0-diff | No changes | terraform plan (UNSCOPED, whole cot-pipeline root): 'No changes. Your infrastructure matches the configuration.' DISCRIMINATING because the same unscoped plan was run BEFORE the .tf existed and also read 'No changes.' -- so the 9 adds landed exactly as configured and perturbed nothing else in the stack. | CLOSED 20260914T220114Z |
 | L6 | verify | QA invocation lands characteristics.json | s3api head + content read | aws lambda invoke --payload {} -> StatusCode 200, no FunctionError, response rc=0 naming platinum/satellites/characteristics.json. s3api head-object on that key: 200, ContentLength 54825, VersionId rt61ogajZQy79meUlsY1X_mIdPngxJTZ. Body read back: 9 of 9 satellites' coverage pairs EQUAL the V4-AC3 local run, and the whole satellites block is identical. QA proof on demand, never production evidence. | CLOSED 20260914T220115Z |
 | L7 | verify | schedule enabled with the function as target | describe-rule + list-targets | events describe-rule cot-satellites-characteristics-producer-daily: State ENABLED, ScheduleExpression cron(20 7 * * ? *). list-targets-by-rule: one target, id CotSatellitesCharacteristicsProducerDaily, arn arn:aws:lambda:us-east-1:313476888478:function:cot-satellites-characteristics-producer. | CLOSED 20260914T220115Z |
-| L8 | verify | next scheduled 07:20Z fire lands organically (the negative arm; recorded by the COO) | head after the fire |  | OPEN |
+| L8 | verify | next scheduled 07:20Z fire lands organically (the negative arm; recorded by the COO) | head after the fire | SUPERSEDED by round 6 B6: the rule is rescheduled to cron(30 12 * * ? *) and driven; the organic arm is B6's ledger L8 | CLOSED 20260915T050453Z |
 
 ## Log
 
@@ -31,3 +31,5 @@
 - 20260914T220114Z LEG L5 closed: terraform plan (UNSCOPED, whole cot-pipeline root): 'No changes. Your infrastructure matches the configuration.' DISCRIM
 - 20260914T220115Z LEG L6 closed: aws lambda invoke --payload {} -> StatusCode 200, no FunctionError, response rc=0 naming platinum/satellites/characteris
 - 20260914T220115Z LEG L7 closed: events describe-rule cot-satellites-characteristics-producer-daily: State ENABLED, ScheduleExpression cron(20 7 * * ? *)
+- 20260915T050453Z LEG L8 closed: SUPERSEDED by round 6 B6: the rule is rescheduled to cron(30 12 * * ? *) and driven; the organic arm is B6's ledger L8
+- 20260915T050453Z CLOSED -- all 8 legs proven

@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_POSN_ASTTAX~24</issued_to>
 <issued_by>2.0.0_SA_COO~Z</issued_by>
 <issued_date>2026-09-15</issued_date>
-<status>staged</status>
+<status>in_progress</status>
 
 **Directive:** D4 - **Macro:** POSN - **Fabric:** site-z - **PRD:** `../prd/POSN_ASTTAX_PRD.md` **v0.11** @`ab2ee8052a` (s.0 ADDENDUM
 v0.9 + v0.10 + v0.11: FWD-7, C-HOLDING-MEASURES, C-B4-SCHEDULE, C-HOLDING-IDENTITY; the returns rule for a Bloomberg-sourced ticker;
