@@ -190,6 +190,30 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "TO-OG-p-1 OGP1-AC13: 'every AWS call in the cell's command log is a read verb (Describe, Get, List, Head)', in the same order that names ssm send-command as the host-read route for AC1, AC2 and AC10.",
     "world_is": "The two clauses cannot both hold: every host read needs SendCommand. The probe grades the log literally, prints the 8 SendCommand rows by operation, and says VERDICT FAIL-OGP1-AC13. It does not reclassify SendCommand as a read. Nothing was written in AWS or on the host; SendCommand's only side effect is the SSM command record itself.",
     "notes": "Whether AC13 should read 'read-verb or the named SSM read route', or the host criteria should be re-cut, is the issuer's call."
+  },
+  {
+    "id": "NFRA_OPLGTW-W5-S2",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~5",
+    "surfaced_at": "2026-09-15T12:04:25Z",
+    "one_line": "OGQ1-AC13's platform tag (manylinux2014_aarch64) matches no DuckDB release from 1.3.0 on, including the cut interpreter's 1.5.0 and the newest stable 1.5.5, so the order as written forces the DuckDB pin down to 1.2.2; OG-q-1 pins duckdb==1.2.2 and pyarrow==18.1.0.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ORDER: org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-q-1.execution-engine.md:84 @da63a446ef -- AC13 is graded by 'pip download --only-binary=:all: --no-deps --platform manylinux2014_aarch64 --python-version <host>' for each pin; :146-147 (record face) says the cut's interpreter carries PyArrow 18.1.0 and DuckDB 1.5.0 for local tests.",
+        "RUN: on 2026-09-15 in /c/tmp/wk-oplgtw-1-5b, 'pip download --only-binary=:all: --no-deps --platform manylinux2014_aarch64 --python-version 3.11 duckdb==1.5.0' -> 'ERROR: No matching distribution found for duckdb==1.5.0'; the same with --platform manylinux_2_28_aarch64 downloaded duckdb-1.5.0-cp311-cp311-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl. pyarrow==18.1.0 downloaded under both tags.",
+        "INDEX: https://pypi.org/pypi/duckdb/json read on 2026-09-15 -- among the last 20 stable releases, 1.1.2 through 1.2.2 carry a cp311 manylinux_2_17_aarch64.manylinux2014_aarch64 wheel; 1.3.0 through 1.4.1 carry only manylinux_2_27_aarch64.manylinux_2_28_aarch64; 1.4.2 through 1.5.5 carry only manylinux_2_26_aarch64.manylinux_2_28_aarch64. Every one of the 20 carries a cp312 win_amd64 wheel.",
+        "PROBE: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~5/probes/og_q1.py AC13 on branch wk-nfra_oplgtw-1-5b -- 'resolved 2 of 2 pins for manylinux2014_aarch64 on Python 3.11', 'VERDICT: PASS-OGQ1-AC13', rc=0, with duckdb==1.2.2.",
+        "BASELINE: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~2/BASELINE.json OGP1-AC2 @da63a446ef -- python_version 'Python 3.11.15', kernel 6.1.175-219.357.amzn2023.aarch64; no glibc version was measured, so whether a manylinux_2_28 wheel installs on the host is unmeasured."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-OG-q-1 OGQ1-AC13: the pinned PyArrow and DuckDB wheels resolve for linux aarch64 on the host's Python, graded with --platform manylinux2014_aarch64. The cell pins 'compatible PyArrow/DuckDB dependencies' and names no version.",
+    "world_is": "No DuckDB release since 1.3.0 publishes a manylinux2014 aarch64 wheel, so a 1.3+ pin, 1.5.0 included, cannot pass AC13 as written. The worker pinned duckdb==1.2.2, the newest release that does, reinstalled .venv-og from the edited file, and ran every OG-q-1 test on 1.2.2; AC9 reads the lockdown settings back from 1.2.2 itself. AC13 passes as written. The cost: the Gateway would ship a DuckDB three minor releases older than the one the cut's interpreter carries, and the grading tag chose the version, not the host.",
+    "notes": "INERT: nothing deploys in this order. Whether AC13 should name manylinux_2_28_aarch64 (Amazon Linux 2023 ships glibc 2.34 according to its distribution, not measured here) and allow a newer pin is the issuer's call. A newer pin is one requirements.txt edit plus a re-run of this cell's tests and probe."
   }
 ]
 ```
