@@ -76,6 +76,24 @@
    "spine_clause": "L10 precondition: every TO terminal and every row dispositioned",
    "gate_or_notifier_touched": "surprise-row-gate L10 limb ADMITTED 7 of 7 new rows; the monotone-advance limb admitted 5 in-place advances. No override.",
    "note": "The slug is drafted, not sent. The parent session re-verifies with its own instrument, re-measures push state, and sends it; that act is seq 5, recorded by the parent."
+  },
+  {
+   "seq": 5,
+   "limb": "L10",
+   "started_utc": "2026-09-15T15:3xZ",
+   "ended_utc": "2026-09-15T15:40:40Z",
+   "act": "The parent session re-verified before sending, with its own reads, which differ from the fork's. Carrier-less 0 of 48, ids 48 distinct. Standing census: 32 graduated investigation ids, 0 missing a remediation row, 33 rows. n3-namer-a.tsv against n3-namer-b.tsv at HEAD, CRLF-normalised: 18 of 18 items identical, and the two seat ids differ. It read the gate's _monotone_advance rule behind the watcher's five MUTATED warnings on REMEDIATION_v2 and re-measured push state: LOCAL (ls-remote 15:39Z, origin/CLOUD 2033ff3ea6, none of the three commits an ancestor). It then sent ONE slug to 1.0.0_SA_CTO.",
+   "inputs": [
+    {"kind": "ARTIFACT", "ref": "org/missions/D14/LGIC/LGIC_NAMING/surprise-channel/{investigations,adjudications,remediations}/*.md at HEAD"},
+    {"kind": "ARTIFACT", "ref": "org/missions/D14/LGIC/LGIC_NAMING/deliverables/exercises/r3/n3-namer-{a,b}.tsv at HEAD"},
+    {"kind": "ARTIFACT", "ref": ".tools/surprise-row-gate.py:1374-1391 (_monotone_advance)"}
+   ],
+   "outputs": [
+    {"kind": "MESSAGE", "ref": "the L10 slug to 1.0.0_SA_CTO, delivered 2026-09-15T15:40:40Z: org/mcp/inbox/1.0.0_SA_CTO/read/20260915T154040Z_3.0.0_SA_CVO__L10_SLUG__LGIC_NAMING_round_3__FWD-1_2_.md, 3787 bytes by wc -c on the delivered file"}
+   ],
+   "spine_clause": "L10: ONE slug to the CTO, only after every TO is terminal and every row dispositioned",
+   "gate_or_notifier_touched": "send_message's L8 correspondence guard (the CVO's one send goes to the CTO): delivered, no override",
+   "note": "The delivered file is untracked and device-local (org/mcp/inbox/* is gitignored), so its vintage is the delivery time and byte count, not a commit."
   }
  ]
 }
