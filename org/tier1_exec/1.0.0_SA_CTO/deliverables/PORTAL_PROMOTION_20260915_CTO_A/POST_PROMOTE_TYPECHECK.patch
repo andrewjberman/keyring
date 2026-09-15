@@ -1,0 +1,22 @@
+--- a/.github/workflows/ci.yml
++++ b/.github/workflows/ci.yml
+@@ -53,7 +53,7 @@
+         run: bun run test:provenance-guard
+ 
+       - name: Type Check (TypeScript)
+-        run: bun run tsc --noEmit
++        run: bun run typecheck
+ 
+       - name: Build
+         run: bun run build
+--- a/.github/workflows/promote-to-prod.yml
++++ b/.github/workflows/promote-to-prod.yml
+@@ -50,7 +50,7 @@
+         continue-on-error: false
+ 
+       - name: Type Check
+-        run: bun run tsc --noEmit
++        run: bun run typecheck
+         continue-on-error: false
+ 
+       - name: Build for Production

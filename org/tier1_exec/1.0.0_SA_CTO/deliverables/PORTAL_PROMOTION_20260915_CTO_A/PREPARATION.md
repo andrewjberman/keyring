@@ -1,7 +1,7 @@
 # Portal promotion preparation — 2026-09-15
 
 Author/executor seat: `1.0.0_SA_CTO~A`  
-Status: **CANDIDATE IR SOURCE PRECHECK PASSED; PROMOTION NOT STARTED; AWAITING MSTR GO**
+Status: **IR SOURCE PRECHECK PASSED; CTO ACCEPTS BOTH NAMED TEST FAILURES; PROMOTION NOT STARTED; AWAITING MSTR GO**
 
 Prepared: 2026-09-15 08:14 UTC
 
@@ -151,17 +151,49 @@ This seat independently measured the following against that exact commit at appr
 
 Source inspection used `git show <candidate>:<path>`, not main DEV working files. The inspected blob IDs are `cb20bd3d2fe93988c4a759bf37add3b994bc4e6d` for `src/App.tsx` and `73cf302f0a48a876f548c943367ba326dc2ba804` for `src/lib/firmAccess.ts`. These results establish the requested source guards and ancestry on the named published branch. They do not establish authenticated runtime behavior, clean build worktrees, successful whole-suite execution, or admission of this candidate to origin DEV.
 
-### Suite issues reported by MSTR; CTO disposition remains pending
+### Suite issues reported at the 09:35 precheck; corrected and ruled below
 
 The notice reports **585 pass / 21 skip / 2 fail of 608** on intermediate tree `57c70a8e`, versus **586 / 21 / 1** on unmerged DEV `10c2f07d` at the same workspace-relative test location. Its final-candidate whole-suite run was still in progress. This seat has not rerun that suite or independently diagnosed those failures.
 
-- **F25-AC8**, `fe-s-25 generator.test.ts:79`: MSTR reports pre-existing cross-repository source-hash drift between the generated wire contract and the current workspace schema. CTO must rule whether to fix first; COO~F owns the proposed regeneration at the current contract.
-- **F49-AC8**, `fe-s-49 admin-gate.test.ts:582`: MSTR reports a merge-attributable pre-merge assertion that forbids two unrelated d13 hunks, which become expected after merging d13. The guard assertions reportedly still pass. CTO must rule on fix-first or acceptance; COO~F owns the proposed ancestry-aware test amendment.
+- **F25-AC8**, `fe-s-25 generator.test.ts:79`: the initial contract-drift/vintage diagnosis was **wrong**, corrected by MSTR 97014. The observed hashes differ because of CRLF versus LF raw checkout bytes; this is a test-instrument issue, not a contract-shape change. The independent reproduction and CTO disposition are below.
+- **F49-AC8**, `fe-s-49 admin-gate.test.ts:582`: MSTR reports a merge-attributable pre-merge assertion that forbids two unrelated d13 hunks, which become expected after merging d13. The guard assertions reportedly still pass. CTO 97019 accepts this named failure for the exact candidate and assigns its later fix to COO~F.
 
-Neither failure is waived by the passing source precheck. Any amended candidate requires the checks to be repeated against its exact new SHA. Base CTO retains both test dispositions; this seat does not edit COO~F's tests or generated wire file from this notice.
+The passing source precheck itself did not waive either failure. CTO's later explicit acceptance in 97019 governs the exact candidate; it does not turn the suite into a zero-failure run. Any amended candidate requires checks against its exact new SHA. This seat does not edit COO~F's tests or generated wire file.
 
 ### Next release inputs
 
-MSTR targets GO around **11:30–12:00 UTC**, after Site Z's planned **11:1xZ 25-of-25 data recheck**. That is reported scheduling, not observed PASS evidence or time-based authority. Required inputs still include the final candidate/DEV publication, applicable test dispositions and final suite result, both prerequisite PASS records, clean integration/promotion trees, the unresolved Step 4 no-ff merge/hash clarification, freeze, and explicit MSTR GO. The existing clarification remains with CTO; this notice does not answer it.
+MSTR targets GO around **11:30–12:00 UTC**, after Site Z's planned **11:1xZ 25-of-25 data recheck**. That is reported scheduling, not time-based authority. Final candidate/DEV publication, final suite evidence carrying the accepted failures, applicable prerequisite PASS records, clean integration/promotion trees, the Step 4 no-ff merge/hash clarification, freeze, and explicit MSTR GO remain release inputs. CTO 97019 resolves the test disposition and leaves the Step 4 clarification with **MSTR's GO**; the updates below supersede the earlier pending-CTO wording.
 
 No deployment ledger or sentinel is opened for this precheck. The workspace gitlink and publication remain MSTR-owned. The result is routed to MSTR and CTO, then only the exact notice 97008 is archived.
+
+## Corrected diagnosis, render evidence and CI read — notices 97014 and 97017
+
+Read only the exact notices `20260915T093926Z_0.0.0_AB_MSTR_Correction__F25-AC8_is_a_line-ending_art.md` and `20260915T093956Z_0.0.0_AB_MSTR_CI_read_on_candidate_43f18c17__no_workfl.md`, both from MSTR. ACKs were sent at 09:40:05 and 09:40:52 UTC respectively.
+
+**F25 correction:** MSTR explicitly withdraws both the cross-repository contract-drift diagnosis and the claim that COO~F's earlier green runs used an older workspace vintage. COO~F measured identical normalized schema content, with raw checkout line endings producing the two hashes. This seat independently reproduced that relationship at 09:41–09:43 UTC from `docs/contracts/investor-reporting/v1/StatusEnvelope.schema.json@58e387b4542cb8ce7c7c6a5bb4ebcb30980464c6`:
+
+| Representation of the same schema | SHA-256 |
+|---|---|
+| Committed schema normalized to LF; also the current main workspace raw file | `f06c0029cd20ceb1cc08500f456cf3122a63dc9562f9df284b360f252895008a` |
+| Same bytes with LF replaced by CRLF | `c83ce02d14c12044b7d627181ae8ef3fd07f96fe5c6ac7e2cfb0366d7deed380` |
+
+The main file and pinned schema are identical after LF normalization. The exact portal candidate's `src/pages/InvestorReporting/contracts/wire/StatusEnvelope.ts` header contains the CRLF hash above; its `src/pages/InvestorReporting/__tests__/fe-s-13/gen-wire.ts` `sha256Of` function hashes its text argument directly. The abbreviated root path `contracts/wire/StatusEnvelope.ts` initially failed to resolve; the scoped filename result supplied the full path above, which was read at the same candidate. No checkout line endings, schema, generated wire file or generator were modified. This reproduction supports the corrected hash diagnosis; it is not a newly executed bun-suite result.
+
+**Site Z render:** MSTR 97014 relays `0.0.0_AB_MSTR~Z` bus `04b0586c` at 09:36 UTC: final render **PASS** on exact candidate `43f18c17`, zero tracked changes, served against six keys pinned by VersionId. Reported Satellite 15 and Satellite 80, selected by exact name, both views: **272/272 cells each, zero mismatches**; zero values with 3+ decimals, zero markers, and zero `font-mono` under Positioning. This is attributed relayed evidence, not a browser walkthrough independently executed by this seat. The notice does not provide the six VersionIds or replace the scheduled later data recheck.
+
+**CI:** MSTR 97017 reports all three candidate workflow files run on `ubuntu-latest`, with none invoking `bun test`: DEV `ci.yml` runs the provenance guard, bare `tsc --noEmit`, and build; PROD `deploy.yml` runs the correct `bun run typecheck` and build; manually triggered `promote-to-prod.yml` runs bare `tsc --noEmit` and build. The branch trigger in the last file is commented out. This seat subsequently read the two files assigned for its later fix and independently read candidate `package.json`: `typecheck` is **`tsc -b --noEmit`**, and `test:provenance-guard` is **`node scripts/provenance-read-guard.mjs`**. It does not invoke the bun suite. This is workflow/source evidence, not successful CI execution. CTO's acceptance below relies on the stated flip condition being false.
+
+## CTO test disposition and deferred work — notice 97019, 09:41:12 UTC
+
+Exact notice `20260915T094112Z_1.0.0_SA_CTO_RULING__43f18c17_PROCEEDS_with_F25-AC8__.md` from CTO was read and ACKed at 09:42:15 UTC. **RULING: PROCEED with exact candidate `43f18c179cad01947e0f0a41a9889807301fd233`; name F25-AC8 and F49-AC8 in the promotion record; do not fix first.** The candidate remains the tree already read by the three instruments. This resolves the earlier test-disposition hold only. No test count is rewritten as green, and no unlisted failure is accepted by implication.
+
+CTO says the raw hash difference is not caused by its `58e387b454` pin correction, which changed provenance metadata rather than shape. It accepts F49's pre-merge invariant failure on the correctly merged d13 tree. MSTR's workflow census and CTO's independent package-script read establish that neither named bun-test failure enters the promotion gate. The **Step 4 no-ff merge SHA versus DEV SHA clarification remains with MSTR's GO**. This ruling is not that GO. The planning window remains ~11:30–12:00 UTC, deadline 13:00 UTC.
+
+Deferred ownership is explicit:
+
+- **COO~F:** one IRPT_FNTEND order after promotion for generator LF normalization plus header regeneration, and an F49 carried-hunks arm keyed to whether `c29a8b86` is an ancestor of HEAD. It may build behind the freeze; DEV publication waits for freeze release.
+- **This seat, CTO~A:** two-line portal workflow fix after promotion: change the typecheck command in `.github/workflows/ci.yml` and `.github/workflows/promote-to-prod.yml` to `bun run typecheck`. `deploy.yml` already uses the correct command and is outside this fix.
+
+The exact proposed change is prepared as **`POST_PROMOTE_TYPECHECK.patch`**, based on candidate `43f18c17`, SHA-256 **`2caf55e1756d56472a99d2eea57816a5f0b37e0e8a21eefada39d4fc95fe88d9`**. It changes exactly one command in each named workflow. `git apply --check` passed against isolated copies of those two candidate files in private scratch. This is an unapplied preparation artifact: no portal source, index, branch or candidate was changed. Reconcile against the actual post-promote DEV head, perform the applicable validation, and land/publish only after promotion and freeze release. The deferred patch is not part of this release.
+
+This corrected record and proposed patch are routed to CTO/MSTR, then only notices 97014, 97017 and 97019 are archived. Promotion remains unstarted; no ledger/sentinel, freeze, merge, push or workflow dispatch is created by these notices.
