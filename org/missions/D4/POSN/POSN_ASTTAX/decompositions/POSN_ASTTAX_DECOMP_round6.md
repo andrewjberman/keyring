@@ -1,4 +1,4 @@
-# POSN_ASTTAX -- L5 DECOMPOSITION (round 6) -- DRAFT, NOT CUT
+# POSN_ASTTAX -- L5 DECOMPOSITION (round 6) -- CUT 03:35Z (ONE issuance: TO-W1-1, TO-W2-1, TO-W3-1)
 
 **archetype:** IMPLEMENT (the Satellites mode completed: each holding's measures served and attached; only the classes a view holds; the summary's own date and copy)
 **Owner (L5-L6):** `2.0.0_SA_COO~Z` - **Date:** 2026-09-15 ~03:2xZ - **Directive:** D4 - **Macro:** POSN - **Fabric:** site-z
@@ -17,8 +17,10 @@ round-5 slug `surprise-channel/remediations/REMEDIATION_v5.Z.md` @`1edf35dbc3` (
 next day"*). C-DONE binds as in round 5: backend deployed and driven; frontend built and committed behind the freeze; no promote,
 no DEV/PROD push, no gitlink move.
 
-> **STATUS OF THIS FILE: THREE CELLS, PINNED TO v0.10 @59113e257a, HELD FOR ITS TWO SIGNED HALVES (LIMB 6).** The cut is ONE issuance
-> (`TO-W1-1` B6, `TO-W2-1` F4, `TO-W3-1` F5) the moment `prd-signoff.py status` reads both halves SIGNED at v0.10's bytes.
+> **STATUS OF THIS FILE: CUT 03:35Z.** `prd-signoff.py status POSN_ASTTAX` read at the cut: v0.10 @59113e257a ADMITTED, ratified-text
+> SIGNED `3.0.0_SA_CVO~W` current (@d3e74ab1ea), brief SIGNED `4.0.0_SA_CRO~W` current (@d1f7199013); the PRD's last commit is
+> 59113e257a (no move since the pin). ONE issuance: `TO-W1-1` (B6, slot ~24, wave 1), `TO-W2-1` (F4, slot ~25, wave 2), `TO-W3-1`
+> (F5, slot ~26, wave 1). The decomposition FREEZES here; the only off-spec act mid-round is a surprise row.
 
 ---
 
@@ -76,9 +78,9 @@ its Positioning Summary across modes (C-PRESENT-CLASSES).
 
 | cell | breakdown | serves (surface -> outcomes) | status | placement |
 |---|---|---|---|---|
-| `AT6-s-1` | **B6** the per-ticker block + the schedule | S1 -> FWD-7 (served), C-B4-SCHEDULE | DRAFTED | `TO-W1-1`, slot `~24`, wave 1 |
-| `AT6-s-2` | **F4** the adapter attaches the served values | S3 -> FWD-7 (rendered) | DRAFTED | `TO-W2-1`, slot `~25`, wave 2 (after B6 DEPLOYED and served) |
-| `AT6-s-3` | **F5** presence filter, rounding, footer, copy | S3 -> FWD-6 (through C-PRESENT-CLASSES, C-SUMMARY-COPY), FWD-3 | DRAFTED | `TO-W3-1`, slot `~26`, wave 1 |
+| `AT6-s-1` | **B6** the per-ticker block + the schedule | S1 -> FWD-7 (served), C-B4-SCHEDULE | CUT | `TO-W1-1`, slot `~24`, wave 1 |
+| `AT6-s-2` | **F4** the adapter attaches the served values | S3 -> FWD-7 (rendered) | CUT | `TO-W2-1`, slot `~25`, wave 2 (after B6 DEPLOYED and served) |
+| `AT6-s-3` | **F5** presence filter, rounding, footer, copy | S3 -> FWD-6 (through C-PRESENT-CLASSES, C-SUMMARY-COPY), FWD-3 | CUT | `TO-W3-1`, slot `~26`, wave 1 |
 
 ## 3. THE CELLS -- what each settles, its write surface, its measured premise
 
