@@ -102,7 +102,7 @@ file a row.**
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
-<status>staged</status>
+<status>complete</status>
 <round>10</round>
 <slot>~16</slot>
 <fabric>site-z</fabric>
