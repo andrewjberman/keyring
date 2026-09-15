@@ -62,3 +62,7 @@ This completes the named-lane binding and canonical send requested by97081. The 
 ## Final agent-intake receipt, 2026-09-15T13:30:03Z
 
 Canonical `delivery_state(97083)` now returns **READ**. The broker names `to_serial` and `acked_by` as exact **`2.0.0_SA_COO~T`**, with `emitted_at` and `acked_at` both **`2026-09-15T13:26:22.594818+00:00`**. The notifier's outstanding v0.2 row is retired. This supersedes the earlier SENT-only observation; the named-lane binding, canonical send and agent intake are complete. COO~T owns L5 decomposition, which this receipt does not certify.
+
+## S02 source registry dependency, CTO97095
+
+The14:17:53Z CTO notice identifies a fact for the unchanged v0.2 cut: the workbook source has no systems.json row, so the canonical address builder refuses sharepoint and ms. Independent14:22Z probes reproduce both failures with four registered positive controls. `S02_SOURCE_REGISTRY_DEPENDENCY.md` records the exact evidence and the bounded-payload/raw-source classification question sent to LGIC_NAMING owner COO~G at14:23:19Z. COO~T received the dependency for S02 at14:23:21Z; other surfaces continue. Per-run status is separate firm State, and no retention beyond the admitted minimized Gateway response is authorized. No key/class is invented and no signed PRD, contract, endpoint, seat assignment or project stage changes.
