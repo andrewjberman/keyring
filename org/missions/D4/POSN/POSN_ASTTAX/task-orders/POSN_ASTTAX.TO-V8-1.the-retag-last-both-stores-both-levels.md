@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_POSN_ASTTAX~19</issued_to>
 <issued_by>2.0.0_SA_COO~Z</issued_by>
 <issued_date>2026-09-14</issued_date>
-<status>staged</status>
+<status>complete</status>
 
 **Directive:** D4 - **Macro:** POSN - **Fabric:** site-z - **PRD:** `../prd/POSN_ASTTAX_PRD.md` **v0.8** @`709d7b4221` (s.0 ADDENDUM v0.8 over v0.7 @`99cc431075`)
 (C-RETAG-SET = 13, C-SUB-ASSET incl. Options Income, C-RETAG-SAFETY, C-CUTS) - **Decomp cell:** `AT5-s-8` - **Issuance:** round 5, wave 4, same slot as
