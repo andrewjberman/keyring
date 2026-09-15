@@ -8029,6 +8029,33 @@ Andrew asked for (msg 22917); it concerns this project's portal files meeting an
   "spec_asserts": "Rule 22 GRAIN: the object read is the object claimed -- a completeness verdict on FWD-n is read against FWD-n's card.",
   "world_is": "Three of seven completeness rows cite another outcome's contract; the verdicts stand on the report's evidence, not on the rows' own text.",
   "notes": "For 1.0.0_SA_CTO~Z's COMPLETION_GRADES.round7.json and for 3.0.0_SA_CVO~Z's next completeness read: one row per card, the card's DONE WHEN quoted."
-}
+},
+  {
+      "id": "POSN_ASTTAX-Z-S182",
+      "project": "POSN_ASTTAX",
+      "fabric": "site-z",
+      "surfaced_by": "1.0.0_SA_CTO~W",
+      "surfaced_at": "2026-09-15T16:11Z",
+      "one_line": "DISARMS POSN_ASTTAX-Z-C-S177 (owner 1.0.0_SA_CTO~Z; DECOMP_INVALIDATING at ADJUDICATION_v8.Z; REMEDIATED at the round-7 slug row C-S189 @41305718d4): the seeder guard's owned tuple (YANG_OWNED_FIELDS) EQUALS the seeder's write surface, 3 of 3 fields (TO-X1-1 proof @2cdca2a27d, 6 of 6 mechanical PASS, re-graded VALID by this seat at HEAD), and the R1 management_style write is outside that writer, so the reseed cannot clobber it. Filed by 1.0.0_SA_CTO~W at the close on Andrew's word of ~15:5xZ (the project's CTO lane is out on the weekly limit until Sep 19); the row's future ownership for any R1 management_style guard cell stays with the CTO limb as C-S189 says.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~27/POSN_ASTTAX.TO-X1-1.seeder-guard-reconciled-with-the-retag-write-surface.proof_of_spec.json @2cdca2a27d: X1-AC1..AC6 PASS, AC7 UNVERIFIABLE-BY-INSTRUMENT; the guard tuple vs the SET fields 3 of 3.",
+          "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/adjudications/ADJUDICATION_v11.Z.md @41305718d4 row POSN_ASTTAX-Z-C-S189: 'C-S177 is answered by X1-1'.",
+          "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/remediations/REMEDIATION_v7.Z.md @41305718d4: the round's one slug row, REMEDIATED.",
+          "org/missions/D4/POSN/POSN_ASTTAX/ledger/COMPLETION_GRADES.round7.json (this commit): FWD-5's grade cites X1-1 as the durability limb of the single source."
+        ]
+      },
+      "disposition": "DISMISSED_WITH_REASON",
+      "dismissal_reason": "The condition C-S177 set -- reconcile the guard's owned fields with the R1 management_style write surface before any reseed, with a criterion and proof exercising the corrected set -- is met by TO-X1-1's proof; nothing remains under investigation.",
+      "adjudicates": [
+        "POSN_ASTTAX-Z-C-S177"
+      ],
+      "spec_asserts": "C-S177's remedy, verbatim: 'Reconcile YANG_OWNED_FIELDS and the R1 management_style write before any reseed; add a criterion and proof that exercises the corrected set.'",
+      "world_is": "Reconciled and exercised: the guard's tuple equals the seeder's write surface (3 of 3) and management_style is outside it; the proof is VALID at HEAD.",
+      "notes": "Investigation-plane disarm at the project's close. The remediation-plane state (REMEDIATED) was set by the CVO's slug and is not moved here."
+    }
 ]
 ```

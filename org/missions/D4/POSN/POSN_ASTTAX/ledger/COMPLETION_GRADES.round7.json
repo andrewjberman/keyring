@@ -1,0 +1,60 @@
+{
+  "kind": "COMPLETION_GRADES",
+  "schema_version": "1.0",
+  "project": "POSN_ASTTAX",
+  "round": 7,
+  "graded_by": "1.0.0_SA_CTO~W",
+  "graded_utc": "2026-09-15T16:10Z",
+  "report_ref": "org/missions/D4/POSN/POSN_ASTTAX/ledger/COMPLETION_REPORT.round7.json@ac0ff45dfe",
+  "rows": [
+    {
+      "fwd_id": "FWD-1",
+      "verdict": "REALIZED",
+      "state_observed": "EXERCISED",
+      "artifact_ref": "s3://opal-data-portal-v2/json/positioning/positioning_data.json@aJ7nhwRKko3H_AMRzsNvvwkf1NiO9aou",
+      "note": "Read by the grader at 16:0xZ: the served models file (VersionId aJ7nhw..., LastModified 2026-09-15T11:06:20Z, data_as_of 2026-09-14 = T-1) carries 110 of 110 current-holdings rows across the five models (AGG 30, INT 19, LT 16, ULT 16, ST 15, UST 14) each with exactly ONE asset_class from the ratified five, none in two and none classless; the 91 ticker rows without a class are the models' target-allocation lists (portfolios/*/holdings) and the labelled benchmark definitions, not holdings. The served satellites file s3://opal-data-cot/platinum/satellites/holdings.json@5tjkvDfus1antRLsbDrLikcMQzH1Hk.F (07:00:20Z, as_of 2026-09-15) carries 177 of 177 holding rows classed, 0 classless. Real portfolios re-sorted: R1's retag on both stores at both levels (TO-V8-1 proof @643c747ccb, 14 of 14 PASS) and the 07:00Z organic registry fire read them; the page renders them on the promoted tree (origin/PROD edf85ce503 contains ebbee2e61a, checked by merge-base at 16:0xZ). ACCEPT limbs: five buckets present under C-PRESENT-CLASSES; every position in exactly one; none left over -- all covered by the two served artifacts read here."
+    },
+    {
+      "fwd_id": "FWD-2",
+      "verdict": "REALIZED",
+      "state_observed": "EXERCISED",
+      "artifact_ref": "s3://opal-data-cot/platinum/satellites/holdings.json@5tjkvDfus1antRLsbDrLikcMQzH1Hk.F",
+      "note": "Read by the grader at 16:0xZ: in the served models file every VXX current-holdings row (3 of 3) is asset_class Structured / sub Hedge, no longer Equity; in the served satellites file VXX rows are structured / Hedge and GLD rows are commodities / Metals, so volatility and hedge stand apart from equity and gold apart from the rest (the ACCEPT's two limbs). The move is R1's retag of the twelve-member set (TO-V8-1 @643c747ccb) after TO-T5-1's bar measured the eight hedge/volatility keys against the served artifact (@ proof at HEAD, 7 of 7 PASS), carried by the hardened generators (TO-V1-1, 12 of 12 PASS) to the served plane."
+    },
+    {
+      "fwd_id": "FWD-3",
+      "verdict": "REALIZED",
+      "state_observed": "APPLIED",
+      "artifact_ref": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~22/POSN_ASTTAX.TO-V6-1.the-positioning-page-renders-five-classes.proof_of_spec.json@707230272",
+      "note": "The card's bar is APPLIED and the domain of 'every place' is the Positioning page by Andrew's word (PRD v0.11 C-POSITIONING-ONLY: 14 files; the Attribution page NOT touched, two classes, Yang's layout -- out of scope by his word, not by omission; the grader read its three-class ASSET_CLASS_ORDER at origin/PROD and records it as outside the card). Within the domain: the canonical order lives in the class registry (TO-V5-1 @49fc6850f1, 7 of 7 PASS, one file changed) and every Positioning render reads it (TO-V6-1, 8 of 8 PASS incl. the rendered-order print; TO-W3-1 @ HEAD, 7 of 7 PASS, the presence rule over exactly the drawn columns); served at the promote -- origin/PROD edf85ce503 contains the POSN leg ebbee2e61a. Two independent DOM reads of the promoted tree found no ordering disagreement (2.0.0_SA_COO~Z present_20260915_0813Z 0 of 512 cells; 0.0.0_AB_MSTR~Z 544 of 544). APPLIED meets an APPLIED card; the promoted tree is above it."
+    },
+    {
+      "fwd_id": "FWD-4",
+      "verdict": "REALIZED",
+      "state_observed": "APPLIED",
+      "artifact_ref": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~22/POSN_ASTTAX.TO-V5-1.the-colour-registry.proof_of_spec.json@49fc6850f1",
+      "note": "Same domain as FWD-3 (the Positioning page, C-POSITIONING-ONLY). One colour per class in the registry -- green Fixed Income/Cash, blue Equity, pink Structured, gold Commodities, orange Alternatives (PRD s.3) -- after TO-U2-1's census of every reader TO-U1-1 derived (11 of 11 readers, 62 binding rows, 0 anchor mismatches; TO-U2-1 @8eff182563, 4 of 4 PASS); the registry landed in TO-V5-1 (the swatch readings and contrast check in its instance) and TO-V6-1 renders the map (rendered DOM swatches). The two DOM reads of the promoted tree found no colour disagreement across the modes. APPLIED meets an APPLIED card."
+    },
+    {
+      "fwd_id": "FWD-5",
+      "verdict": "REALIZED",
+      "state_observed": "EXERCISED",
+      "artifact_ref": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~19/POSN_ASTTAX.TO-V8-1.the-retag-last-both-stores-both-levels.proof_of_spec.json@643c747ccb",
+      "note": "The one place is ETFClassifier (TO-S1A-1 @6bed191b42, 11 of 11 PASS, Andrew-direct 2026-09-11). The exercise is R1: a person changed twelve class assignments ONCE in the single source (TO-V8-1: r1_before.json / r1_after.json / r1_compare_stores.py, both stores at both levels, 14 of 14 PASS) and both Positioning surfaces reflected it without being edited -- the F-cells read the registry and never re-derive (TO-V6-1, TO-V7-1); the grader's own read of the served models and satellites files at 16:0xZ shows the retagged classes (VXX Structured/Hedge; GLD commodities/Metals). Durability of the single source: the seeder's preserve-don't-clobber guard (TO-V3-1 @6c0d6e092f, 6 of 6 PASS; TO-U3-1 @a851d02645, 4 of 4) and round 7's TO-X1-1 (@ HEAD, 6 of 6 PASS) proving the guard's owned tuple equal to the seeder's write surface, 3 of 3 fields."
+    },
+    {
+      "fwd_id": "FWD-6",
+      "verdict": "REALIZED",
+      "state_observed": "EXERCISED",
+      "artifact_ref": "org/tier0_exec/0.0.0_AB_MSTR~Z/deliverables/asttax_verify_20260915/ASTTAX_INDEPENDENT_VERDICT_20260915_0840Z.md@580bc43d77",
+      "note": "The three modes were READ on the promoted tree by two instruments: 2.0.0_SA_COO~Z's presentation check (deliverables/2.0.0_SA_COO~Z/present_20260915_0813Z @ad3a87b244: Models, Satellite 15, Satellite 80 DOM dumps and PNGs; 0 of 512 cells differing across 32 rows; 32 of 32 rows took the served name) and 0.0.0_AB_MSTR~Z's independent read (544 of 544 cells equal the served values, the mutation arm discriminates, no unrounded values). Under the presence rule (v0.10 DONE WHEN, C-PRESENT-CLASSES) the grader read the served inputs: Models shows Fixed Income / Equity / Structured (3), ETFs shows Equity / Fixed Income (2; platinum/etfs/positioning_data.json generated 13:01Z), Satellites shows fixed_income / equity / commodities / structured (4) -- every class shown is one of the five, and a class shown in more than one mode carries the registry's one order and colour (FWD-3/FWD-4 above). MSTR~Z's 08:40Z vintage qualifier (23 of 25 holdings a day behind) was resolved by the 11:00Z scheduled task: data_as_of 2026-09-14 = T-1 at the grader's read."
+    },
+    {
+      "fwd_id": "FWD-7",
+      "verdict": "REALIZED",
+      "state_observed": "EXERCISED",
+      "artifact_ref": "s3://opal-data-cot/platinum/satellites/characteristics.json@02SGBCPDoeVPy7JBJcEHxUw4J0.nQneh",
+      "note": "Read by the grader at 16:0xZ: the served characteristics artifact (VersionId 02SGBC..., LastModified 2026-09-15T12:30:54Z, the scheduled fire on cron(30 12 * * ? *); inputs holdings 2026-09-15 / positioning 2026-09-14 / bbg 2026-09-14) carries 25 of 25 tickers with fee, aum, yield, duration, credit, beta, returns, source, name and management_style fields; valued: fee 24, aum 24, returns 24, yield 22, beta 11 of 25 -- blank where no source prices the holding (CASH has no source; beta where the source carries none), never a blank column. The Satellites adapter attaches the per-ticker measures to every Holdings Breakdown row (TO-W2-1 @ HEAD, 8 of 8 PASS; TO-W1-1, 14 of 14 PASS, the producer and its schedule). Read on the page: the two DOM reads above (COO~Z 0 of 512 mismatches on two satellites' Holdings Breakdown; MSTR~Z 544 of 544, mutation arm discriminates) -- an analyst's read of Satellite 15 and Satellite 80 by two seats on two instruments."
+    }
+  ]
+}
