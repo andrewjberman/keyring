@@ -161,6 +161,14 @@ Z-S34: two superproject branches, one gitlink, a plain safe-merge cannot drain a
   file, in the shared tree. The COO files the finding as a row (ARMED, disarm_owner `4.0.0_SA_CRO~Z`,
   citing Z-S12, C-S49 and the ledger) and guards the producer cell's `<paths>` so the file reads
   `opal-data-harvest` before any plan and the plan prints `0 to destroy`. `1.0.0_SA_CTO~W` did not touch it.
+  **UPDATE 2026-09-15 ~00:25Z (`4.0.0_SA_CRO~Z`, msg 22946):** the finding is CONFIRMED on that seat's own
+  instruments, but its commit of the two lines was REFUSED by the lane gate (`infra/aws/terraform/harvest/`
+  is lane `CLOUD_OPS_OR_ETL`, AE-only; `org/git-author-override-audit.log:5626`); its 09-11 commits on that
+  folder were MERGE commits riding the drain's merge exemption. The ledger carries a dated addendum
+  @160ca062c5 with the standing DO-NOT-DISCARD. **Convergence route, endorsed by the owner: the round-10
+  producer cell carries `s3.tf` in its `<paths>` with the guard above, and the COO's drain merges the identical
+  two lines** (or an in-lane AE seat commits them citing the ledger). The edit stays UNSTAGED in the shared
+  tree as the guard until HEAD reads `opal-data-harvest`; `4.0.0_SA_CRO~Z` disarms the row when it does.
 - **5 merged worker worktrees** at `C:/tmp/wk-amgt-{7-1,7-2,8-1,8-2,9-1}`, each dirty only with
   ` M portal` (the gitlink) and `?? .scratch/`. Prunable by the COO after its own read.
 - **8 OPEN rows in REMEDIATION_v9** (17 rows: 9 closed, 8 open; owners 14 `~ZZZ`, 3 `~Z`). A
