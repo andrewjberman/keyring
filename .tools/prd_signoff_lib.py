@@ -283,18 +283,51 @@ def build_doc(prd_basename, prd_text, prd_pin, half, verdict, review_ref, signed
     return doc
 
 
-def read_signoff_files(signoff_dir):
-    """{basename: parsed-json-or-None} for every *.json in the dir (missing dir -> {})."""
+def read_signoff_files(signoff_dir, ref="HEAD"):
+    """{basename: parsed-json-or-None} for every *.json in the signoff dir AS COMMITTED AT `ref` (default HEAD).
+
+    A SIGNATURE IS A COMMITTED FILE, NEVER A WORKING COPY (row LGIC_NAMING-S14, carried by C-S11 into REMEDIATION_v2).
+    This used to list and open the worktree. When `prd-signoff.py refuse` exited rc=1 because a foreign commit landed
+    16 s after the review commit, the new signoff JSON stayed written but uncommitted, and `status` read it: the brief
+    half read REFUSED while HEAD still held the v1.4 SIGNED record. The same read serves all four callers, so each of them
+    now reads the record: `prd-signoff.py` status (and its post-commit re-read after a stamp), `to-pipeline-gate.py`
+    LIMB 6, `prd-header-notify.py` and `prd-stamp.py`. Their call shapes are unchanged.
+
+    The dir is placed in its repository BY GIT: `git rev-parse --show-prefix`, run from its parent (the PRD's own dir),
+    gives the repository-relative path, never os.path.relpath. A Windows 8.3 short path (`ANDREW~1`) against git's
+    long `--show-toplevel` made relpath climb out of the repo, and the read silently came back empty (measured by this
+    function's own self-test in a tempdir). It is then listed with `git ls-tree` and read with `git show <ref>:<path>`
+    from the toplevel. A missing dir at `ref` reads {}. When git cannot
+    answer, the read also returns {} -- no signature -- so it fails toward the law, never toward admission. An entry git
+    lists but cannot show, or that does not parse, reads None, which evaluate() already refuses as not readable."""
+    import subprocess
     files = {}
-    if not os.path.isdir(signoff_dir):
+    parent = os.path.dirname(os.path.abspath(signoff_dir))
+    if not os.path.isdir(parent):
         return files
-    for n in sorted(os.listdir(signoff_dir)):
+
+    def _git(args, cwd):
+        return subprocess.run(["git"] + args, cwd=cwd, capture_output=True, text=True, encoding="utf-8",
+                              errors="replace", timeout=60)
+    try:
+        top = _git(["rev-parse", "--show-toplevel"], parent)
+        pre = _git(["rev-parse", "--show-prefix"], parent)
+        if top.returncode != 0 or not top.stdout.strip() or pre.returncode != 0:
+            return files
+        root = top.stdout.strip()
+        rel = pre.stdout.strip() + os.path.basename(os.path.normpath(signoff_dir))
+        ls = _git(["ls-tree", "--name-only", ref, "--", rel + "/"], root)
+    except Exception:  # noqa: BLE001
+        return files
+    if ls.returncode != 0:
+        return files
+    for p in sorted(x.strip() for x in ls.stdout.splitlines() if x.strip()):
+        n = p.rsplit("/", 1)[-1]
         if not n.endswith(".json"):
             continue
-        p = os.path.join(signoff_dir, n)
         try:
-            with open(p, "r", encoding="utf-8") as fh:
-                files[n] = json.load(fh)
+            r = _git(["show", "%s:%s" % (ref, p)], root)
+            files[n] = json.loads(r.stdout) if r.returncode == 0 else None
         except Exception:  # noqa: BLE001
             files[n] = None
     return files
@@ -458,6 +491,46 @@ def self_test():
     arm("route: ratified-text ignores the designation", route_half("ratified-text", live, designated="2.0.0_SA_COO~D")[0].startswith("3.0.0_SA_CVO"))
     arm("route: nobody live -> the primary base, with the hole named", route_half("brief", set())[0] == "4.0.0_SA_CRO" and "hole" in route_half("brief", set())[1])
     arm("route: the CVO is never substituted", route_half("ratified-text", {"2.0.0_SA_COO"})[0] == "3.0.0_SA_CVO")
+    # A SIGNATURE IS A COMMITTED FILE (row LGIC_NAMING-S14). The doctored pair runs in a THROWAWAY repo, so no real signoff
+    # dir is touched: a committed SIGNED file is read, the same SIGNED content left uncommitted is not, and a worktree edit
+    # to a committed file is not read either.
+    import shutil
+    import subprocess
+    import tempfile
+    tmp, bare = tempfile.mkdtemp(prefix="signoff-head-"), tempfile.mkdtemp(prefix="signoff-norepo-")
+    try:
+        def g(*a):
+            return subprocess.run(["git", "-c", "user.name=t", "-c", "user.email=t@t", "-c", "core.autocrlf=false"] + list(a),
+                                  cwd=tmp, capture_output=True, text=True)
+        g("init", "-q")
+        sd = os.path.join(tmp, "prd", SIGNOFF_DIR)
+        os.makedirs(sd)
+        os.makedirs(os.path.join(tmp, "prd2"))
+        with open(os.path.join(sd, "3.0.0_SA_CVO.json"), "w", encoding="utf-8") as fh:
+            json.dump(cvo, fh)
+        g("add", "-A")
+        committed = g("commit", "-q", "-m", "the committed signoff").returncode == 0
+        with open(os.path.join(sd, "4.0.0_SA_CRO.json"), "w", encoding="utf-8") as fh:
+            json.dump(cro, fh)
+        at_head = read_signoff_files(sd)
+        in_worktree = {n: json.load(open(os.path.join(sd, n), encoding="utf-8")) for n in sorted(os.listdir(sd))}
+        arm("S14 positive control: a COMMITTED signoff is read at HEAD", committed and (at_head.get("3.0.0_SA_CVO.json") or {}).get("verdict") == "SIGNED")
+        arm("S14 doctored pair: the same SIGNED content left UNCOMMITTED is NOT read", "4.0.0_SA_CRO.json" not in at_head and "4.0.0_SA_CRO.json" in in_worktree)
+        arm("S14 discrimination: the HEAD read WITHHOLDS (brief owed) where the old worktree read would ADMIT",
+            not evaluate(prd, at_head)["admitted"] and evaluate(prd, in_worktree)["admitted"])
+        with open(os.path.join(sd, "3.0.0_SA_CVO.json"), "w", encoding="utf-8") as fh:
+            json.dump(dict(cvo, verdict="REFUSED"), fh)
+        arm("S14: a worktree EDIT to a committed signoff is not read -- HEAD's bytes win", (read_signoff_files(sd).get("3.0.0_SA_CVO.json") or {}).get("verdict") == "SIGNED")
+        arm("S14: a signoff dir absent at HEAD reads {}", read_signoff_files(os.path.join(tmp, "prd2", SIGNOFF_DIR)) == {})
+        os.makedirs(os.path.join(bare, "prd"))
+        arm("S14: a dir outside any repository reads {} (no signature: fails toward the law)", read_signoff_files(os.path.join(bare, "prd", SIGNOFF_DIR)) == {})
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
+        shutil.rmtree(bare, ignore_errors=True)
+    live = read_signoff_files(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+                                           "org", "missions", "D14", "LGIC", "LGIC_NAMING", "prd", SIGNOFF_DIR))
+    arm("S14 LIVE: LGIC_NAMING's real signoff dir reads its committed files at HEAD (>= 2, every one parsed)",
+        len(live) >= 2 and all(v is not None for v in live.values()))
     print("prd_signoff_lib self-test: %d defect(s)" % fails)
     return fails
 
