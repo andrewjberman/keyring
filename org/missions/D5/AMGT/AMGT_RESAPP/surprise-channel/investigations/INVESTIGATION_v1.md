@@ -5151,6 +5151,146 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "AMGT-rj-8 BOUND: 'Lusha credits: at most 2 per name in this cell (the prospecting call returns the roster page; no reveal)'.",
     "world_is": "Four credits were charged for BA_US_Equity in this cell. The bound was never exceeded by a single RUN (each made exactly one prospecting call for 2 credits) and no disclosure endpoint was called anywhere; the overrun is the retry after a crash that happened downstream of an already-billed call. Account impact measured: 1,029 remaining of 1,200 before the cell (card 2 @5007337353), 12 credits spent by this cell in total.",
     "notes": "The general shape is wider than this cell: ANY module that pays for a call and then touches an unresolved dependency can spend a bound and return nothing. The remedy applied here is the cheap half -- resolve every dependency before the first billable call. The other half, a local cache of the provider page keyed by (domain, as_of) so a retry is free, is NOT built here (YAGNI, and it would persist a provider record to disk, which this cell's own contract argues against)."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W20-S9",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~20",
+    "surfaced_at": "2026-09-15T16:55:00Z",
+    "one_line": "Card 3 carries the DIVZ and PFOE presets as COUNTS AND WEIGHTS, not as factor-code lists: DIVZ names 7 of its 13 codes and PFOE 0 of its 16, so 22 of the 29 preset slots the fit is scored under have no code to read.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/tier1_exec/1.0.0_SA_CTO/deliverables/AMGT_RESAPP_SUBSTRATE_MEASUREMENTS_20260915_W/SUBSTRATE_CARDS.md @5007337353 :85-87 (9697 bytes; cmp SAME against the same path at eff1b9f6ae): 'DIVZ = the default preset (13 factors, dividend-tilted: dy_ntm 20, dps_gr_1yr 10, shldr_yield 10, six momentum at 5, ey_ntm / fcfy / accruals_bs / leverage at 7.5), PFOE = 16 factors (growth 42 / quality 30 / sentiment 10 / valuation 8 / momentum 10)'.",
+        "The seven named DIVZ codes all exist in the scanner registry (deliverables/0.9.0_WK_AMGT_RESAPP~21/scanner_factor_metadata.json, asOf 2026-08-06, 289 factors); its momentum category has 15 codes, so 'six momentum' does not identify six.",
+        "constants.ts is not reachable from this tree: `git ls-tree HEAD portal` = 160000 commit e85f6eb84f (a gitlink); `git show HEAD:portal/src/pages/SecurityScanner/constants.ts` = 'fatal: path ... does not exist in HEAD'.",
+        "lib/research/posture/fit.py @7d6d93d46a records the presets at exactly this grain; every fit line printed by AC3/AC4 reads 'DIVZ ... (7 named in card 3) | PFOE ... (0 named in card 3)'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Worker face s.1 (19d): 'the ETF presets portal/src/pages/SecurityScanner/constants.ts (DIVZ 13 factors, PFOE 16 -- the file is outside your cone: its factor lists are copied into the CTO's card 3 @5007337353, read them there and name the vintage)'.",
+    "world_is": "The card copies the preset SHAPES, not the factor lists: DIVZ 13 declared, 7 codes named with weights (dy_ntm 20, dps_gr_1yr 10, shldr_yield 10, ey_ntm / fcfy / accruals_bs / leverage 7.5) and six momentum slots at weight 5 with no codes; PFOE 16 declared with category weights only and zero codes. The file the card copies from is a gitlink target outside this tree.",
+    "notes": "Remedy applied inside the order: fit.py keeps the card's grain and never completes a list from memory -- an unnamed slot is ABSENT 'code not named in card 3' and the denominator prints declared and named separately. Closing it needs the 29 codes copied from constants.ts by a seat that can read portal (the card's author or the security-scanner producers). Moot for this round's numbers while row W20-S10 stands, because no factor value is present for any named code either."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W20-S10",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~20",
+    "surfaced_at": "2026-09-15T16:55:00Z",
+    "one_line": "R-1's rows carry NO scanner factor values -- the ranker's loader keeps the 284-code set and drops the numbers by design -- so every fit score under DIVZ and PFOE is ABSENT, 0 of 13 and 0 of 16 factors present, for all four names of the QA pair.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3://opal-data-harvest/peers/v1/BABA_US_Equity/2026-09-15.json (16894 bytes) and .../BA_US_Equity/2026-09-15.json (16832): member keys are exactly cap_ratio_to_subject, country, identity, industry_group, log_cap_distance, market_cap_musd, name, rung_name, rung_reached, sector, ticker, universe_weights on all 24 members; no values object on any member or either subject block; csc_columns carries the column MAP (row_value_codes 284), not values.",
+        "lib/research/peers/universe.py:258-260 @eff1b9f6ae: 'The values themselves are NOT cached: this ranker maps columns, it does not serve figures.' The cached database deliverables/0.9.0_WK_AMGT_RESAPP~21/candidate_universe.json (2851 rows, vintage 2026-08-06) carries none either.",
+        "BABA has no scanner row at all: its R-1 subject block is source 'model_block_header'.",
+        "AC3 and AC4 output @7d6d93d46a, four FIT lines: 'DIVZ ABSENT 0 of 13 factors present (7 named in card 3) | PFOE ABSENT 0 of 16 factors present (0 named in card 3)' for BABA_US_Equity, HD_US_Equity, BA_US_Equity and DE_US_Equity."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Worker face s.1 DELIVER 3: 'lib/research/posture/fit.py: each name's factor profile scored under the DIVZ and PFOE presets from the scanner values R-1 carries'; 19d: 'R-1 peers/v1/{key}/{as_of}.json (the ranker's members with rung_reached and the scanner factor values)'. C-POSTURE: the fit score 'is the FIT input to (3)'.",
+    "world_is": "R-1 carries classification, market cap, country and universe weights per member and the CSC column mapping, but no factor value for any code. The FIT input to the judgment is therefore ABSENT on both sides of both verdicts; the prompt tells the model an ABSENT fit is unmeasured, not low, and both posture objects carry the ABSENT scores with their denominators.",
+    "notes": "NOT taken: a direct read of the six scanner universe files (s3://opal-data-portal-v2/json/security_scanner/latest/universes/<id>/universe_data.json, 2.9-13.3 MB each, which do carry a values object per security) -- the order names R-1 as the source, and a second read path would widen the cell. The scorer itself is exercised over fixture rows that carry values (tests: FitTests, 2 of 13 present, weighted and oriented). Closing it is a ranker change (carry the preset codes' values on each member) or an order that names the scanner read."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W20-S11",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~20",
+    "surfaced_at": "2026-09-15T16:55:00Z",
+    "one_line": "The QA pair's COMPARABLES do not carry the four-part pack the order says landed: HD_US_Equity has no model block, and Boeing's rule-chosen comparable DE_US_Equity has none of D-1, M-1, R-1 or a model block -- so Boeing's posture was judged against a comparable whose only evidence is the seven facts Boeing's own peer row carries.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~W",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Model blocks in org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~1/ @eff1b9f6ae: model_block_BABACVOCTRL_US_Equity, _BABA_US_Equity, _BA_US_Equity, _SAP_GY_Equity (4 of 4 listed; no HD_US_Equity, no DE_US_Equity).",
+        "Pool head-object, one command, 2026-09-15 ~16:4xZ: drafting/v1/HD_US_Equity.json 99745, management/v1/HD_US_Equity/2026-09-15.json 5121, peers/v1/HD_US_Equity/2026-09-15.json 16436 (the positive control); drafting/v1/DE_US_Equity.json, management/v1/DE_US_Equity/2026-09-15.json, peers/v1/DE_US_Equity/2026-09-15.json all 404 Not Found.",
+        "AC3 PACKS lines: BABA_US_Equity subject drafted_sentences=38 evidence_records=64 officers=7 peers=12 figures=70 absent=0; HD_US_Equity comparable 38 / 61 / 10 / 12 / figures=0 absent=1. Verdict worse.",
+        "AC4 PACKS lines: BA_US_Equity subject 38 / 88 / 12 / 12 / 59 absent=0; DE_US_Equity comparable 0 / 0 / 0 / 0 / 0 with comparability=7 and absent=4. Verdict hold."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "C-POSTURE (SIGNED): 'the JUDGMENT over the two evidence packs (each = Thesis, Exec Management, Peers, Model, all four for both names)'. Worker face 19d: 'one NOT-held subject (BABA_US_Equity) whose comparable is an Opal holding, and one HELD subject whose comparable is a non-held name -- both sides' D-1, M-1, R-1 and model block landed by rj-6/7/8's QA lists'.",
+    "world_is": "The QA lists landed packs for the five QA names (BA, COST, HD, SAP, BABA) -- the SUBJECTS -- and the comparable is chosen afterwards by the ranker's order, which reaches outside that list. HD (BABA's comparable) lacks the Model part. DE_US_Equity (BA's comparable: rung 3, log-cap distance 0.025, the nearest not-held member of 8) lacks all four parts, so the judgment compares a full pack with an empty one plus membership, fit ABSENT and the 7 comparability facts from BA's own R-1 member row.",
+    "notes": "ARMED because the future normal operation this cell defines -- a posture call per universe name -- selects comparables by similarity, not by pack coverage, so most comparables will sit outside the drafted set and the 'all four for both names' contract is structurally unmet for them; rj-12's tab would render such a verdict beside a full subject pack. The object discloses it (packs.<key>.absent names each missing source), and neither QA verdict claims evidence the comparable lacks, but disclosure is not the contract. Remedy options are the owner's: draft the comparable before judging it (spend), restrict the ordering to names with complete packs (a ranker-order change), or write verdict absent when a comparable pack is incomplete."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W20-S12",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~20",
+    "surfaced_at": "2026-09-15T16:55:00Z",
+    "one_line": "X-1 resolves 1 of BABA's 12 R-1 members and 0 of BA's 12, so 'R-1's members filtered to the other side's membership' had no key to filter on; the comparable step keys a member by the ranker's own scanner US ticker-space rule, and Boeing's comparable DE_US_Equity is a key that rule made and no registry carries.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "R-1 member identity cells: BABA_US_Equity 12 of 12 resolution UNRESOLVED, BA_US_Equity 12 of 12 UNRESOLVED (raw_identifier = the scanner ticker).",
+        "lib.research.identity.crosswalk.resolve (crosswalk/v1 as_of 2026-09-15, 89 records): 'HD' -> HD_US_Equity MEASURED matched_as association_key; 'DE' and 'UNP' -> UNRESOLVED.",
+        "The rule's source: lib/research/peers/universe.py module docstring @eff1b9f6ae -- 'A model-block name whose key is a US listing joins the scanner row with the same ticker root (the scanner's US ticker space); a non-US model-block key does NOT join by root'.",
+        "comparable() denominators at AC2 @7d6d93d46a: BABA r1_members 12 = unresolved 8 + resolved 4 (association_key 1, scanner_us_root_join 3); BA r1_members 12 = unresolved 0 + resolved 12 (scanner_us_root_join 12), same_side 0, other_side 8, unproven 4.",
+        "Before the rule was added (same code otherwise): BA basis absent -- R-1 other_side 0, and the re-run over U-1's 25 not-held resolved names matched 5 database rows and reached no rung-2 candidate ('0 of 5 candidate(s) share the subject's sector Industrials')."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Worker face s.1 DELIVER 2: 'the most similar name on the OTHER side: R-1's members filtered to the other side's membership (held names for a non-held subject and vice versa), ordered by rung_reached then log-market-cap distance'; C-POSTURE: 'comparable: <security_key>'; 19d consumes 'X-1 crosswalk.resolve'.",
+    "world_is": "The identity layer covers the 89 coverage names; R-1 members are scanner tickers, almost all outside it. Filtering by membership needs a key per member, so the step resolves in a fixed order -- the member's own measured identity, then X-1, then '<TICKER>_US_Equity' only for a letter ticker carrying an sp500 / r1000 / r1000v weight -- and labels the third RULE_DERIVED with matched_as scanner_us_root_join. SEDOL-shaped and ex-US-only members stay UNRESOLVED and are counted, never sided.",
+    "notes": "INERT: the label travels on the object (comparable_membership.identity.resolution RULE_DERIVED, matched_as, reason), and membership for such a key is read by key, ticker root and name against all 170 holding rows. A reader that re-resolves 'DE_US_Equity' through X-1 will get UNRESOLVED; that is the identity layer's coverage, and extending X-1 over scanner tickers is its owner's call."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W20-S13",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~20",
+    "surfaced_at": "2026-09-15T16:55:00Z",
+    "one_line": "membership returns held True / False / None, not the bool the order names: 167 of U-1's 170 holding rows carry security_key null, and four of Boeing's twelve R-1 peers (UNP, UBER, LMT, HWM) sit among them in DIVZ / PFOE / PFDE / PFDE -- a two-state key read calls them not held.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3://opal-data-harvest/universe/v1/2026-09-15.json (185928 bytes), snapshot_date 2026-09-14: names 256; rows with books 170 (source both 3, holding 167); security_key set on 3 (BA_US_Equity PFDE 1.6, HD_US_Equity DIVZ 3.3, VLO_US_Equity PFDE 0.83), null on 167 with resolution_reason '... The ETF plane's producer-side identifier contract is NOT established (C-ETF-PLANE-READ), so this raw identifier is kept UNRESOLVED rather than guessed.'",
+        "Holding rows by ticker, probed for each of BA's 12 R-1 tickers: UNP ['DIVZ'], UBER ['PFOE'], LMT ['PFDE'], HWM ['PFDE']; DE, ETN, PH, VRT, TT, GD, PWR, GEV none.",
+        "AC2 @7d6d93d46a: BABA_US_Equity held false, BA_US_Equity held true books PFDE weight 1.6, both snapshot_date 2026-09-14; AC4: comparable DE_US_Equity held=False (no holding row by key, ticker root or normalised name).",
+        "tests/test_posture.py MembershipTests.test_unproven_candidate_holding_row and OtherSideFilterTests.test_held_subject_gets_not_held_comparable_and_skips_unproven, 22 of 22 OK."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Worker face s.1 DELIVER 1: 'lib/research/posture/membership.py: membership(identity, universe) -> {held: bool, books: [...], weight_by_book, snapshot_date} from U-1 (one-sided read; the vintage carried)'.",
+    "world_is": "A key-equality read of U-1 answers 'held' for 3 names and silently 'not held' for any name among the 167 unresolved holding rows. membership() therefore returns held None (UNPROVEN) when an unresolved holding row shares the key's ticker root or normalised name -- the candidate rows NAMED, never merged -- or when the identity does not resolve; comparable() excludes UNPROVEN from BOTH sides. Every value on the QA pair's path is two-state: BABA False, BA True, HD True, DE False.",
+    "notes": "The third value is the producer's own refusal carried forward, not a new decision: C-ETF-PLANE-READ keeps those identifiers UNRESOLVED and this module does not overrule it. A consumer that tests truthiness would read None as not held; the module docstring and side() say to test 'is True' / 'is False'. Closing it is the ETF plane's identifier contract, not this cell."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W20-S14",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~20",
+    "surfaced_at": "2026-09-15T17:00:00Z",
+    "one_line": "Both posture objects were RE-WRITTEN once after their model runs -- loaded from the pool, re-serialised by a fixed-order writer, re-PUT and read back, no model call -- because the first writer's sort_keys order put generation.run_id and generation.model past AC6's 120-character print.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "First AC6 run against the build commit 7d6d93d46a printed: generation {\"answer_sha256\": \"0aa8e13701221db6b3a30c505aab2d91799683194ee5e29e6d1224e62c0a9d0c\", \"effort\": \"low\", \"generated_at\": \" -- and, in the same run, 'files 6 nonascii 0 raw-secretsmanager-reads 0 etfs-direct-reads 1', the one hit being membership.py's docstring sentence denying such a read.",
+        "Re-serialisation, one command, 2026-09-15 ~16:5xZ: posture/v1/BABA_US_Equity/2026-09-15.json BEFORE 19515 bytes document-sha256 fc11a31de0153b0a..., content-equal True, AFTER 19515 bytes sha256 c250400d009e68a0..., read_back_ok True; posture/v1/BA_US_Equity/2026-09-15.json BEFORE 21419 bytes 84ee22811571990f..., content-equal True, AFTER 21419 bytes d7b2426e902df4bb..., read_back_ok True.",
+        "After the re-write, both objects: generation[:120] begins {\"run_id\": \"posture-20260915T16472...\", \"model\": \"claude-opus-5\"; run_id, verdict, basis and usage compared equal to the stored originals (True True True True for each).",
+        "The writer change and the docstring rewording are one commit on top of 7d6d93d46a; tests/test_posture.py SerialiseTests pins the order (22 of 22 OK)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Worker face s.1 DELIVER 5: 'posture/v1/{security_key}/{as_of}.json (INTERFACE O-1) versioned by as_of, Metadata {document-sha256, schema-version}, read-back'; BOUND: 'two model runs in this cell'; AC6: 'generation with run_id and model' read through json.dumps(d.get('generation'))[:120].",
+    "world_is": "The order names one write per name, made by the judged run. Each name was written twice: once by its model run (AC3 at 16:47:39Z, AC4 at 16:48:29Z, bytes and sha printed in their OK lines) and once by the re-serialisation, which changed only key ORDER. The AC3 and AC4 OK lines therefore name a sha256 the pool no longer holds; the current Metadata document-sha256 values are c250400d... and d7b2426e.... Byte length, run_id, verdict, basis, usage and every other value are unchanged, and no third model call was made.",
+    "notes": "Why a re-write and not a re-run: a re-run would have spent a third and fourth model call against a two-run bound to change nothing but byte order. Why not leave it: AC6's own invocation reads the stored bytes, so the order of keys in the object IS what the criterion measures. Both limbs were my defects, caught by the criterion as designed; this row records the unnamed pool write, not a defect in the order."
   }
 ]
 ```
