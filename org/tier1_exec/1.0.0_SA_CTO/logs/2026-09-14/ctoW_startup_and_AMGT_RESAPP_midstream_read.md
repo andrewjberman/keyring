@@ -239,3 +239,49 @@ tier-1 lanes and the integrator with the mechanism named; the POSN-side records 
 disposition; the REC (prefer a live reviewer lane whose letter matches the project's `coo_lane`) is
 surfaced to Andrew and not implemented, because the router is an estate tool and this seat's scope is now
 AMGT_RESAPP by his own word. Scope line added to the hand-over s.1 in the same commit.
+
+---
+
+## ADDENDUM 4, 2026-09-15 04:1x-06:1xZ -- SEVEN WORDS, THREE MEASUREMENTS, ONE SLUG, ONE ADDENDUM
+
+**archetype:** MIXED (VALIDATE + SCRIBE + COORDINATE)
+
+**Andrew's words at this terminal, each recorded verbatim and broadcast the same turn:** the loop-ledger
+row for `4.0.0_SA_CRO~W`'s directed harvest loop (@9db2a36cdc); the page redesign -- header as the
+discovery surface, four then five tabs, a filings analyzer (@71df2bf825, six words appended through
+@a5c6a066de: Posture, the union universe, the symmetric comparable, Adam's packs + the Security Scanner,
+the whole C-suite + tenure); the session egress grant (@473526f738, superseded fabric-wide by his word at
+the COO~W terminal @dfa63b6d92); "use comp-secrets in aws"; the voice-memo transcript delivered by file
+(@fbd5d91431, JSON beside it).
+
+**Measured under the egress word** (`AMGT_RESAPP_SUBSTRATE_MEASUREMENTS_20260915_W/` @5007337353):
+card 1 the filings analyzer -- Boeing's 10-K Items 1A + 7 (350,787 of 494,404 chars, 148,601 tokens)
+through `claude-opus-5` with citations and a schema, 114.5 s, USD 1.06, 76 items, 71 cited INLINE (no
+citation blocks when JSON is requested; structured output and citations cannot be combined); card 2 Lusha
+prospecting, boeing.com, c-suite: 50 of 50 rows, 9 fields, NO tenure field, loose filter, 2 credits;
+card 3 Adam's Boeing workbook (`Model` and `CSC` sheets measured; the stale telecom set present) and the
+Security Scanner registry (289 factors / 18 categories; DIVZ 13-factor and PFOE 16-factor presets).
+Two raw `aws secretsmanager` reads were taken before his comp-secrets word and are disclosed; the scripts
+now take the key from `comp-secrets get --reveal` on the bash side. The Lusha record is scrubbed to
+id / name / title / social links.
+
+**The round-10 close.** The slug landed at 05:55Z (@e28f0b546c, author verified at the commit). L10 read
+@8d5fe78265: coverage EMPTY over v0.5 (36 cells, 15 of 15 served, controls firing), 51/51 terminal by
+the LAST `<status>` per file, 49/49 proofs VALID, AC7 PASS and AC6 FAIL accepted, VERDICT = PRD ADDENDUM.
+PRD v0.6 @2f3b65d8b8: FWD-16..FWD-19 in the ENDPOINT, a CONTRACTS section (seven contracts) in the
+ratified half by the library's own partition, s.9 in the brief half; both halves STALE and owed by the
+`~W` reviewer lanes; the notifier delivered them (23047-23050). Rows Z-S100 / Z-S101 @008ca40b6c disarm
+Z-S67 and Z-S96. Tree row moved to L10 ANSWERED round 10 / addendum v0.6.
+
+**Compiler tools this addendum:** the sign-off library called directly (`top_sections`, `half_of_section`,
+`half_hashes`) to prove the CONTRACTS section's half before committing · `prd-signoff.py status` on the
+working-tree bytes · `prd-header-notify.py route-dryrun` then `post-commit` · `proof-of-spec-check.py` over
+49 instances · the decomposition's cell tables parsed for the coverage read · `count_tokens` before the
+model call · `comp-secrets get` (redacted) and `comp-secrets consumers` · openpyxl on the workbook ·
+`ruff` before the gate (the gate refused twice on style in the measurement scripts; fixed, not bypassed).
+
+**What failed:** the first commit of the cards was refused by the universal `.py` gate for an unused
+import, the second for six one-line compound statements; both correct, both fixed. The GitHub tree pages
+did not render through the fetcher; the raw file URLs did. The notifier delivered each half twice (a
+notifier quirk the reviewer lanes named and joined). **Gap:** no instrument reads a Teams hosted image, so
+Yang Liu's screenshot stayed unread; the thread's text carried the substance.
