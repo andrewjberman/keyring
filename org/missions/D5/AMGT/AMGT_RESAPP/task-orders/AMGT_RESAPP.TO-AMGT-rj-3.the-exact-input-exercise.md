@@ -105,7 +105,7 @@ commit with `--only -- <paths>`. Report once. **If a criterion cannot be met, le
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
-<status>staged</status>
+<status>complete</status>
 <round>11</round>
 <slot>~18</slot>
 <fabric>site-z</fabric>
