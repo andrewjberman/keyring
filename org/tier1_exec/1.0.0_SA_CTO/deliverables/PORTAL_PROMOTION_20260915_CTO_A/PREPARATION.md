@@ -1,7 +1,7 @@
 # Portal promotion preparation — 2026-09-15
 
 Author/executor seat: `1.0.0_SA_CTO~A`  
-Status: **DEV CANDIDATE PUBLISHED; DEV CI FAILED AT INSTALL; PROMOTION NOT STARTED; AWAITING MSTR GO**
+Status: **43f18c17 BLOCKED AS-IS BY CTO; AWAITING INTEGRATOR LOCKFILE FIX AND NEW-CANDIDATE PROOFS; PROMOTION NOT STARTED**
 
 Prepared: 2026-09-15 08:14 UTC
 
@@ -185,7 +185,7 @@ The main file and pinned schema are identical after LF normalization. The exact 
 
 ## CTO test disposition and deferred work — notice 97019, 09:41:12 UTC
 
-Exact notice `20260915T094112Z_1.0.0_SA_CTO_RULING__43f18c17_PROCEEDS_with_F25-AC8__.md` from CTO was read and ACKed at 09:42:15 UTC. **RULING: PROCEED with exact candidate `43f18c179cad01947e0f0a41a9889807301fd233`; name F25-AC8 and F49-AC8 in the promotion record; do not fix first.** The candidate remains the tree already read by the three instruments. This resolves the earlier test-disposition hold only. No test count is rewritten as green, and no unlisted failure is accepted by implication.
+Exact notice `20260915T094112Z_1.0.0_SA_CTO_RULING__43f18c17_PROCEEDS_with_F25-AC8__.md` from CTO was read and ACKed at 09:42:15 UTC. Its original ruling was to proceed with exact candidate `43f18c179cad01947e0f0a41a9889807301fd233`, name F25-AC8 and F49-AC8, and not fix those tests first. **CTO 97030 below supersedes permission to promote that candidate as-is because of the separate stale-lockfile defect. The F25/F49 exceptions still stand.** No test count is rewritten as green, and no unlisted failure is accepted by implication.
 
 CTO says the raw hash difference is not caused by its `58e387b454` pin correction, which changed provenance metadata rather than shape. It accepts F49's pre-merge invariant failure on the correctly merged d13 tree. MSTR's workflow census and CTO's independent package-script read establish that neither named bun-test failure enters the promotion gate. The **Step 4 no-ff merge SHA versus DEV SHA clarification remains with MSTR's GO**. This ruling is not that GO. The planning window remains ~11:30–12:00 UTC, deadline 13:00 UTC.
 
@@ -230,6 +230,34 @@ The remaining planned data input is Site Z's **25-of-25 recheck after the ~11:05
 
 This is a distinct install failure, not either accepted F25-AC8 or F49-AC8 bun-suite failure. It is not accepted by implication from CTO 97019. MSTR and CTO received the initial red result at **09:49:24/26 UTC** and the exact failed-step diagnosis at **09:50:10/12 UTC**.
 
-Candidate `deploy.yml` independently read at the same SHA pins **Bun 1.3.9** and also uses `bun install --frozen-lockfile`. The differing runner version is an observed difference, not demonstrated causation or proof that PROD installation will pass. No lockfile regeneration, dependency installation, workflow rerun, candidate alteration or CI fix was attempted under the freeze. The new candidate-CI failure requires explicit integration/release disposition and evidence from the responsible owners before it can be represented as resolved. The two-line post-promote patch remains unchanged and unapplied.
+Candidate `deploy.yml` independently read at the same SHA pins **Bun 1.3.9** and also uses `bun install --frozen-lockfile`. The earlier version-causality question is now resolved by **CTO 97030**: the same stale pair fails the frozen-lockfile check on pinned Bun 1.3.9. **43f18c17 must not promote as-is.** MSTR must provide the one-commit lockfile repair and the new-candidate proofs below. This replaces the former pending-disposition statement; it does not claim the repair already exists or has passed. No lockfile regeneration, dependency installation, workflow rerun, candidate alteration or CI fix was performed by this seat. The two-line post-promote patch remains unchanged and unapplied.
 
 The preparation record is committed and routed before archiving only exact notice 97024. Promotion has not started; no deployment ledger, sentinel, PROD merge/push, or workflow dispatch was created by this seat.
+
+## Blocking amendment and replacement-candidate requirements — CTO 97030, 10:06:12 UTC
+
+Read only exact notice `20260915T100612Z_1.0.0_SA_CTO_AMENDS_97018__43f18c17_must_NOT_promote_.md` from `1.0.0_SA_CTO`; ACK sent at **10:07:08 UTC**. It amends the earlier PROCEED ruling: **do not promote `43f18c179cad01947e0f0a41a9889807301fd233` as-is**. The separate F25-AC8/F49-AC8 test disposition remains in effect.
+
+CTO's reported diagnosis is a stale manifest/lock pair. d13 commit `19be39c1` removed seven dependencies from `package.json` without regenerating `bun.lock`: `@nivo/core`, `@nivo/radar`, `@visx/scale`, `apexcharts`, `framer-motion`, `phosphor-react`, and `react-apexcharts`. The old lock's root workspace block still contains them; CTO reports no lockfile change between gated DEV `10c2f07d` and `43f18c17`.
+
+CTO independently tested a scratch copy of the exact candidate's `package.json` and `bun.lock` with **Bun 1.3.9**, matching PROD's pinned version:
+
+- Original pair: `bun install --frozen-lockfile --lockfile-only` **exit 1**, frozen-lockfile mismatch.
+- Regeneration: `bun install --lockfile-only` **exit 0**, reported 450 packages; diff **103 removed / 4 added lines**.
+- Regenerated pair: frozen-lockfile-only check **exit 0**.
+
+These are CTO's attributed scratch measurements, not a full clean installation/build run by this seat. They establish why the original candidate is blocked before any PROD push. The only four added resolutions are reported hoists of existing identical version/sha512 entries: `@types/d3-array@3.2.2`, `@types/d3-interpolate@3.0.4`, `d3-format@3.1.0`, and `d3-time-format@4.1.0`. No remaining package resolution is to change.
+
+**Integrator action:** MSTR commits the regenerated **`bun.lock` only**, as one commit on top of `43f18c17`. CTO explicitly allows this candidate repair through the existing DEV freeze. That allowance belongs to the integrator's repair; it does not release unrelated DEV pushes or authorize this seat to edit the candidate. CTO reports no committed fix and no portal mutation by its own seat in the notice. No new candidate SHA has been supplied here.
+
+**Required proof before GO on the replacement candidate:**
+
+1. Diff from `43f18c17` names **`bun.lock` only**; inspect the actual diff for deletions and exactly the four stated hoists, retaining their previous versions and integrity hashes.
+2. On a clean checkout, **Bun 1.3.9** runs full `bun install --frozen-lockfile`, then `bun run typecheck`, then `bun run build`: **all exit 0**. A lockfile-only check does not substitute for these full checks.
+3. The replacement SHA's DEV CI run **passes Install**. CTO expressly anticipates the already-existing lint failure described below; capture the actual run and steps rather than relabeling it green or assuming any red result is accepted.
+4. Site Z's planned **25-of-25 data recheck after the ~11:05 UTC models publish runs on the new SHA**, not the blocked candidate.
+5. Rebind this seat's required gate-commit ancestry, exact IR source checks, publication/cleanliness checks and eventual MSTR GO to that new candidate. The final promotion tree must equal the **new candidate's tree**, with an empty diff; old tree `f1afba42` is historical and cannot be used as the replacement release's parity target.
+
+**Named DEV lint disposition:** CTO identifies `src/pages/InvestorReporting/__tests__/fe-s-5/alias-probe.test.ts:16:20`, ESLint `no-constant-binary-expression` on `cn('a', false && 'b', 'c')`, as present since DEV `5b959f63` (reported run `34562328385` on 09-11) and still present on `43f18c17`. CTO accepts that specific existing DEV-only lint failure for this promotion because PROD `deploy.yml` runs install/typecheck/build, not lint. Its fix belongs to the IRPT_FNTEND round-8 work alongside F25/F49. This is attributed history/disposition, not an independent reread of the earlier run. Additional failures are not accepted by implication, and required PROD workflow success remains mandatory.
+
+MSTR's GO window remains ~11:30–12:00 UTC with the 13:00 UTC deadline. This amendment supplies a blocking decision and a repair/proof path, not deployment GO. The amended preparation is committed and routed to CTO/MSTR before archiving exact notice 97030. No deployment ledger, sentinel, dependency installation, source edit, merge, push or workflow dispatch is started by this seat.
