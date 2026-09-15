@@ -6161,6 +6161,27 @@ Andrew asked for (msg 22917); it concerns this project's portal files meeting an
   "spec_asserts": "NEVER#1 (both halves signed to the blast radius: two keys on opal-data-cot, N=1, rollback VersionIds XaX6zaVWH7ybXnRBu2jeF2PNABUhezuM / BRjqyqnB0pIdLUHOvDY3B_Sh9b0EXIPw); Rule 27 (no FWD is a wait -- the mechanism driven, the organic case the negative arm); PRD v0.8 C-SATELLITE-SOURCE (holdings.json labels from the served etf-classifications table).",
   "world_is": "The served holdings.json carries the retagged labels for the 2026-09-14 partition at unchanged weights and row sets; registry.json content-identical under a new version; characteristics.json untouched; the Satellites page (F3 behind the freeze, via the B5 router) reads the new bytes on its next fetch -- an edge cache, if any, is a separate act asked for by name.",
   "notes": "The organic arm at 07:0xZ is this seat's read; B4's L8 (characteristics.json by the ~11:0xZ bbg pull) is unchanged by this act."
+},
+{
+  "id": "POSN_ASTTAX-Z-S136",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T03:31:33Z",
+  "one_line": "L5 round 6, the issuer's ONE reading beyond the CTO's file list, recorded so L10 can hold the narrower one: PRD v0.10 C-SUMMARY-COPY says 'the Satellites mode's footer names holdings.json's as_of and Black Diamond as the source'. The mode draws TWO panels; the Positioning Summary's footer (PositioningSummary.tsx:1382, C-S143, F5) AND the Holdings panels' two footers and two headers (HoldingsTab.tsx:1085-1087, :1162, :1169-1171, :1811 at dd1d33c6db) are all pinned to the models PKL clock (sourceKey model_pkl, 'Source: Bloomberg.', useDataSourceTimestamp('yang') at :726) while the mode's numbers are Black Diamond's as of holdings.json's as_of. The CTO's L10 and v0.10 name only the Summary's. This seat reads the constraint's plain text as reaching every footer the mode draws and gives the Holdings panels' hunks to F4 (TO-W2-1 step 5, W2-AC8; the file is F4's, disjoint from F5), Models and ETFs byte-identical as the control. Not a spec change: the text is applied, not widened; the row is the carrier for 1.0.0_SA_CTO~Z to rule otherwise at L10, and the change stays (it removes a false clock from the mode Andrew is reading tonight).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Measured at dd1d33c6db (worktree C:/tmp/portal-posn-view): HoldingsTab.tsx:1162 and :1811 <SmartPanelFooter sourceKey=\"model_pkl\" content=\"Source: Bloomberg.\" />; :726 useDataSourceTimestamp('yang') consumed at :1085-1087 and :1169-1171; REGISTERS_YANG_AS_OF.satellites = false (Positioning.tsx:491-495) so nothing corrects it; the satellites' holdings_as_of reaches only data_as_of (satelliteAdapter.ts:336, :366-369).",
+      "WHY GRADUATED: the reading is recorded in the cell text, the decomposition (s.1) and this row before the cut; the act is inside one cell's file grant; the narrower reading costs one row at L10 and no rollback (the Satellites-mode strings only)."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "PRD v0.10 @59113e257a C-SUMMARY-COPY: 'the Satellites mode's footer names holdings.json's as_of and Black Diamond as the source, Models and ETFs unchanged'; ROUND_ANALYSIS.round5 s.4 item 5-7 name PositioningSummary.tsx and Positioning.tsx for F5.",
+  "world_is": "In the Satellites mode three of the page's four panel footers/headers show the models PKL vintage and 'Source: Bloomberg.' beside Black Diamond holdings; only the Summary's footer is named by the spec's carriers.",
+  "notes": "Carried into TO-W2-1 (F4) as step 5 and W2-AC8; the decomposition s.1 states it; the CTO answers at L10 if the narrower reading holds."
 }
 ]
 ```
