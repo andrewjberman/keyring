@@ -36,7 +36,23 @@
 
 # Repo root: this file lives in <repo>/.tools/ . Overridable for tests.
 HALT_GATE_REPO_ROOT="${HALT_GATE_REPO_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." 2>/dev/null && pwd)}"
-HALT_GATE_INBOX_ROOT="${HALT_GATE_INBOX_ROOT:-${HALT_GATE_REPO_ROOT}/org/mcp/inbox}"
+# THE SHARED CHECKOUT (NFRA_OPLGTW-S19, S18 and W1-S6; LGIC_ENFORCE-W3-S6; 2026-09-15, 1.0.0_SA_CTO). A spine-v3
+# worker runs this gate from its OWN linked worktree, where org/mcp/inbox and org/mcp/sessions (both gitignored) do not
+# exist: they live only in the main checkout. Rooted at this script's checkout, the gate read an ABSENT inbox as "no
+# messages" (halt_gate_unread_for) and passed rc=0, so a [STOP] to a worker's issuer never halted the worker's apply;
+# and identity failed closed rc=3. Measured by 2.0.0_SA_COO~O as a discriminating pair in one worktree at one HEAD:
+# default root rc=0 silent, HALT_GATE_INBOX_ROOT at the shared inbox rc=1 with 14 pending (97257).
+# git's common dir is the main checkout's .git from EVERY worktree, so its parent is the one checkout that holds the
+# live inbox and sessions. Outside a git checkout (a test's temp root) it falls back to the repo root, the prior
+# behaviour. Overridable for tests.
+if [ -z "${HALT_GATE_SHARED_ROOT:-}" ]; then
+  _hg_common="$(cd "$HALT_GATE_REPO_ROOT" 2>/dev/null && git rev-parse --git-common-dir 2>/dev/null)"
+  if [ -n "$_hg_common" ]; then
+    HALT_GATE_SHARED_ROOT="$(cd "$HALT_GATE_REPO_ROOT" 2>/dev/null && cd "$_hg_common/.." 2>/dev/null && pwd)"
+  fi
+  HALT_GATE_SHARED_ROOT="${HALT_GATE_SHARED_ROOT:-$HALT_GATE_REPO_ROOT}"
+fi
+HALT_GATE_INBOX_ROOT="${HALT_GATE_INBOX_ROOT:-${HALT_GATE_SHARED_ROOT}/org/mcp/inbox}"
 HALT_GATE_CONTEXT_FILE="${HALT_GATE_CONTEXT_FILE:-${HALT_GATE_REPO_ROOT}/.comp-graph/.agent_context}"
 HALT_GATE_AUDIT_LOG="${HALT_GATE_AUDIT_LOG:-${HALT_GATE_REPO_ROOT}/org/halt-gate-override-audit.log}"
 
@@ -52,16 +68,22 @@ HALT_GATE_AUDIT_LOG="${HALT_GATE_AUDIT_LOG:-${HALT_GATE_REPO_ROOT}/org/halt-gate
 halt_gate_resolve_serial() {
   local repo_root="${HALT_GATE_REPO_ROOT}" ctx="${HALT_GATE_CONTEXT_FILE}" serial=""
 
-  # Primary: session-id-keyed serial file (LD-0070 §7.2 canonical)
+  # Primary: session-id-keyed serial file (LD-0070 §7.2 canonical). Two directories, in order: this checkout's own
+  # (an issuer may provision a worker's serial inside the worker's worktree, so parallel workers of one session each
+  # resolve as themselves), then the SHARED checkout's, where a session's serial file actually lives. The second was
+  # unreachable from a linked worktree before 2026-09-15 (see HALT_GATE_SHARED_ROOT above).
   if [ -n "${CLAUDE_CODE_SESSION_ID:-}" ]; then
-    local sess_file="${repo_root}/org/mcp/sessions/${CLAUDE_CODE_SESSION_ID}.serial"
-    if [ -f "$sess_file" ]; then
-      serial="$(tr -d '\r\n[:space:]' < "$sess_file" 2>/dev/null)"
-      if [ -n "$serial" ]; then
-        printf '%s\n' "$serial"
-        return 0
+    local sess_dir sess_file
+    for sess_dir in "${repo_root}/org/mcp/sessions" "${HALT_GATE_SHARED_ROOT}/org/mcp/sessions"; do
+      sess_file="${sess_dir}/${CLAUDE_CODE_SESSION_ID}.serial"
+      if [ -f "$sess_file" ]; then
+        serial="$(tr -d '\r\n[:space:]' < "$sess_file" 2>/dev/null)"
+        if [ -n "$serial" ]; then
+          printf '%s\n' "$serial"
+          return 0
+        fi
       fi
-    fi
+    done
 
     # Secondary (session-keyed, clobber-PROOF): the register_agent PostToolUse hook
     # (hook_register_orphan_cleanup.py) writes a per-(session,serial) marker
@@ -74,6 +96,7 @@ halt_gate_resolve_serial() {
     # the hook's '/'->'_' safe_serial is byte-identical to the serial.
     local marker
     marker="$(ls -t "${repo_root}/org/mcp/sessions/${CLAUDE_CODE_SESSION_ID}."*.orphan-cleaned 2>/dev/null | head -1)"
+    [ -n "$marker" ] || marker="$(ls -t "${HALT_GATE_SHARED_ROOT}/org/mcp/sessions/${CLAUDE_CODE_SESSION_ID}."*.orphan-cleaned 2>/dev/null | head -1)"
     if [ -n "$marker" ]; then
       serial="$(basename "$marker")"
       serial="${serial#"${CLAUDE_CODE_SESSION_ID}".}"
