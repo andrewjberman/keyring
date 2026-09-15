@@ -99,17 +99,18 @@
   {
    "seq": 7,
    "limb": "L10",
-   "started_utc": "TO_BE_FILLED",
-   "ended_utc": "TO_BE_FILLED",
-   "act": "TO_BE_FILLED -- the ONE slug to 1.0.0_SA_CTO, sent by the parent session after it verifies this fork's work. The fork drafted it and did not send it.",
+   "started_utc": "2026-09-15T10:2xZ",
+   "ended_utc": "2026-09-15T10:37:19Z",
+   "act": "Sent the ONE slug to 1.0.0_SA_CTO after the parent session re-verified the fork's work with its own reads. Census: a raw id and adjudicates read found 19 new rows (246 at HEAD against 227 at 57cb17e329, S68 included), with 0 of 246 uncarried. REMEDIATION_v5: 10 rows, round v8, none carrying a route; W1-S74 and W3-S40 carry disarm DISARMED. Standing census: 71 graduated minus 88 remediation ids = 0 missing. Commits: f5a69ab530, 23cad64541, db4e444efb and 29f54c47c7, authored by this seat and in HEAD. Portal gate at DEV 10c2f07d: App.tsx:423 and :575 carry requireAdmin requireInternal; ProtectedRoute.tsx:39 checks role admin and :44 checks firmId opal-capital; 0 partner allowlist entries remain. Origin DEV 9adad7ce contains 43f18c17 and keeps the gate at :424 and :576. Backend wall, read at HEAD: _scope/resolve.py:186-187 resolves role=admin with a verified firm as FIRM_OPERATIONS; _authz/served.py:568-580 refuses only on the contract version, an absent verified firm, or a firm-binding mismatch; _authz/enforce.py:272 refuses only UNKNOWN. So the portal gate is the ONLY admin wall, carried to 1.0.0_SA_CTO and Andrew as row S66.",
    "inputs": [
-    {"kind": "ARTIFACT", "ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND8_L8_L9_20260915.md"},
-    {"kind": "ARTIFACT", "ref": "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/remediations/REMEDIATION_v5.md@db4e444efb"}
+    {"kind": "ARTIFACT", "ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND8_L8_L9_20260915.md@29f54c47c7"},
+    {"kind": "ARTIFACT", "ref": "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/remediations/REMEDIATION_v5.md@db4e444efb"},
+    {"kind": "ARTIFACT", "ref": "infra/aws/lambda/investor-reporting/_scope/resolve.py, _authz/served.py and _authz/enforce.py at HEAD"}
    ],
-   "outputs": [{"kind": "MESSAGE", "ref": "TO_BE_FILLED"}],
+   "outputs": [{"kind": "MESSAGE", "ref": "to 1.0.0_SA_CTO, delivered 2026-09-15T10:37:19Z: org/mcp/inbox/1.0.0_SA_CTO/read/20260915T103719Z_3.0.0_SA_CVO__L10_SLUG__IRPT_FNTEND_round_8__4_4_judg.md, 3711 bytes by os.path.getsize (gitignored, so it has no commit vintage)"}],
    "spine_clause": "L10: ONE slug to the CTO, only after every TO is terminal and every row dispositioned",
-   "gate_or_notifier_touched": "TO_BE_FILLED",
-   "note": "TO_BE_FILLED"
+   "gate_or_notifier_touched": "the CVO send guard (to 1.0.0_SA_CTO only); delivered by filesystem, broker and channel push",
+   "note": "The fork's record says origin DEV was 43f18c17, which was true at 10:08Z. The parent's ls-remote read 9adad7ce, and the slug states that. The slug gives its push state as origin/CLOUD 6a5b276f8b, from the ls-remote at 10:22Z."
   }
  ]
 }
