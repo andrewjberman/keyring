@@ -1,12 +1,11 @@
 {
   "prd": "POSN_ASTTAX_PRD.md",
-  "prd_version": "v0.9",
-  "prd_pin": "8eabf98d81cd3b713b792916bc785792f1b7f99e",
+  "prd_version": "v0.10",
+  "prd_pin": "59113e257a576d2ecfe463f736ce1a9cb92e1258",
   "half": "brief",
-  "half_hash": "df54481971e7d9e2b208aad425d940c1a7c757e9a1063d6e67d917c47f73dc9c",
-  "verdict": "REFUSED",
-  "review_ref": "org/tier1_exec/4.0.0_SA_CRO/deliverables/POSN_ASTTAX_L4R_V09_REVIEW_20260915_W.md@a397859",
+  "half_hash": "71082b53f2e998a5fa9201330d440958c745ba4578df41433e2f5d8a8fe0da8a",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/4.0.0_SA_CRO/deliverables/POSN_ASTTAX_L4R_V010_REVIEW_20260915_W.md@187f003998",
   "signed_by": "4.0.0_SA_CRO~W",
-  "signed_at": "2026-09-15T03:04:58Z",
-  "reason": "Missing explicit six-section brief coverage denominator and consuming-cell content map required by delivery 22966"
+  "signed_at": "2026-09-15T03:27:07Z"
 }
