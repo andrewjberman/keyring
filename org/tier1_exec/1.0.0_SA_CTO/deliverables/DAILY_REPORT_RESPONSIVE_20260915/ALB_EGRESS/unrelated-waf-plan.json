@@ -1,0 +1,22 @@
+[
+  {
+    "address": "aws_wafv2_ip_set.opal_blocked_ips_regional_v4",
+    "changed_attributes": [
+      "description"
+    ],
+    "before_description": "",
+    "after_description": "NFRA_OPSEC202609 C-2: addresses blocked at the ALB. Written ONLY by the OP-s-15 reconciler from opal-suspicious-addresses, never by hand.",
+    "address_count_before": 0,
+    "address_count_after": 0
+  },
+  {
+    "address": "aws_wafv2_ip_set.opal_blocked_ips_regional_v6",
+    "changed_attributes": [
+      "description"
+    ],
+    "before_description": "",
+    "after_description": "NFRA_OPSEC202609 C-2: IPv6 sibling of opal-blocked-ips-regional. Separate resource because the provider carries one ip_address_version per set.",
+    "address_count_before": 0,
+    "address_count_after": 0
+  }
+]
