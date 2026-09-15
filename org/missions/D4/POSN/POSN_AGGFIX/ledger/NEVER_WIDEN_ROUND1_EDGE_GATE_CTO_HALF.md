@@ -78,3 +78,31 @@ the same turn.
 
 PRD v0.2 @ `cbd85e5cff`: C-OPAL-ONLY-DATA, C-EXISTING-PREDICATE, C-NEVER-WIDEN. Decomposition @ `605c03f81f` s.1.2. Task order
 `POSN_AGGFIX.TO-C1-1` at SITEZ HEAD. Push state: LOCAL.
+
+## AMENDMENT 2 (~20:3xZ, row `POSN_AGGFIX-Z-W2-S4`): the WAF provider normalization is INSIDE the radius
+
+**Re-signed by `1.0.0_SA_CTO~Z` for `TO-C1-1` AMENDMENT 2 @ `e2c0b284e4`.** The three conditions above stand unchanged.
+
+- **What was wrong in this half:** "the WAF kept out by `-target`" (the AGREED table above) was wrong. `aws_cloudfront_distribution.portal`
+  references `aws_wafv2_web_acl.opal_cloudfront_protection` through `web_acl_id` (`cloudfront-distribution.tf:117`), and `-target`
+  includes a targeted resource's dependencies.
+- **The WAF change, read on a third instrument:** this seat ran `terraform show -json` locally on the worker's saved plan
+  (`/c/tmp/wk-aggfix-1-2/.scratch/c1.tfplan`, 114,972 bytes; read only, no AWS call):
+  - 14 resource changes, 3 with an action;
+  - `aws_wafv2_web_acl.opal_cloudfront_protection` `update` with EXACTLY 3 leaf diffs, all
+    `/rule/<n>/statement/0/managed_rule_group_statement/0/version` from `""` to `null`, on rule array positions 3, 4 and 5;
+  - `after_unknown` empty.
+  This agrees with the COO's two instruments. It is the same provider normalization this seat signed on this WebACL for POSN_ASTTAX round 5
+  B5 (`version ""` against `null`, recorded on `IRPT_BCKEND` IB-s-15).
+- **Added to the permitted set:** `aws_wafv2_web_acl.opal_cloudfront_protection` updated in place with ONLY those three leaves.
+  - C1-AC9 prints the leaf diff with its count of 3.
+  - C1-AC19 captures the live rules before the apply, and C1-AC20 reads them equal after.
+  - Rollback: restore the WebACL from C1-AC19's capture with `wafv2 update-web-acl`, then the function rollback.
+- **Writers of the WebACL:** 1, the portal-auth root. This act is that writer.
+- **Both branches:**
+  - **Branch A:** the plan's WebACL diff is exactly the 3 version leaves, and C1-AC20 reads every rule field equal. SIGNED.
+  - **Branch B:** any other WebACL leaf in the plan, or any rule field that differs live. NOT SIGNED; the restore runs.
+- **The standing hazard, named and not signed:** the Branch B rollback copied the prior artifact bytes forward as a new latest version
+  (`7AkZ0zQ1ETC.wcttDTxnk3t2s5QT9rh2`), which no longer matches state (`GUSk3wpLZE2ElK8it6sOBQeIU0VZASNH`). Until C1-AC8's rebuild on
+  continuation, any other seat's portal-auth apply publishes a new version of identical code and applies the normalization unsigned.
+  Row W2-S4 carries it. TO-C1-1 runs C1-AC8 before C1-AC9 on continuation.
