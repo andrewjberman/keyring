@@ -7,8 +7,8 @@
 <issued_date>2026-09-15</issued_date>
 <status>staged</status>
 
-**Directive:** D4 - **Macro:** POSN - **Fabric:** site-z - **PRD:** `../prd/POSN_ASTTAX_PRD.md` **v0.10** @`59113e257a` (FWD-7,
-C-HOLDING-MEASURES) - **Decomp cell:** `AT6-s-2` - **Issuance:** round 6, wave 2, slot `~25` -- **you start this order only after
+**Directive:** D4 - **Macro:** POSN - **Fabric:** site-z - **PRD:** `../prd/POSN_ASTTAX_PRD.md` **v0.11** @`ab2ee8052a` (FWD-7,
+C-HOLDING-MEASURES, C-HOLDING-IDENTITY; AMENDED ~04:1xZ on v0.11 -- name and active from the identity pair, Z-S139 / Z-S141) - **Decomp cell:** `AT6-s-2` - **Issuance:** round 6, wave 2, slot `~25` -- **you start this order only after
 `TO-W1-1` is `complete` at HEAD AND the served `characteristics.json` carries `tickers`** (the COO names the hash and the VersionId at
 hand-over; W2-AC1 reads both back).
 
@@ -46,8 +46,9 @@ an em dash on null at :1604). The read `src/api/endpoints/satelliteRegistry.ts:2
 :168 carries no `tickers`; contract types in `shared/satelliteSet.ts:142-184`.
 
 **Served input (schema READ BACK from the served bytes, never from this text):** `characteristics.json.tickers.<TICKER> = {fee, aum,
-active, yield, duration, credit, beta, returns: {<window>: number|null}, source}` (TO-W1-1); `aum` in the same unit as Yang's
-(millions); `active` 0|1|null; a NULL is "nothing prices it".
+active, yield, duration, credit, beta, returns: {<window>: number|null}, source, name, management_style}` (TO-W1-1 as amended on
+v0.11); `aum` in the same unit as Yang's (millions); `active` 0|1|null; `name` a string or null; `management_style` `active` |
+`passive` | `unknown` | null; a NULL is "nothing prices it" / "the table has no row".
 
 **Your act:**
 1. `satelliteSet.ts`: the served `tickers` contract type beside the characteristics type (type-only; membership never hand-copied).
@@ -57,6 +58,10 @@ active, yield, duration, credit, beta, returns: {<window>: number|null}, source}
    `tickers[row.ticker]` -- pass-through, unit as served, a null or non-finite served value -> `undefined` (the same `servedScalar`
    discipline), `returns` copied per window; a ticker absent from `tickers` -> every measure `undefined` and the ticker COUNTED into
    `coverage` (disclosed, never guessed). **No `*`, `/`, `Math.`, `toFixed`, sum or blend anywhere in the attach** (W2-AC3 enumerates).
+   **(v0.11 C-HOLDING-IDENTITY)** the row's `name` = `tickers[ticker].name` when non-null, else the ticker (today's stand-in, only where the
+   table has no row); the row's `active` flag = `1` when `tickers[ticker].management_style` is `active`, `0` when `passive`, `undefined` when
+   `unknown` or null -- a label-to-flag transliteration for the renderer (the same discipline as SERVED_CLASS_DISPLAY), never a
+   computation; the served `active` MEASURE is not the source of the flag (state it once). The HoldingsTab beta overrides stay.
 4. `HoldingsTab.tsx`, ONE hunk at :1561-1565: `active === 1` -> YES chip; `active === 0` -> NO; `active == null` -> `-` (blank, like
    its siblings). Models and ETFs rows always carry 0|1 today, so they render unchanged (W2-AC5 prints a Models row as the control).
 5. `HoldingsTab.tsx`, the Satellites mode's OWN clock on the Holdings panels (C-SUMMARY-COPY's plain text: *"the Satellites mode's
@@ -96,7 +101,7 @@ ONE row per off-cell finding, `POSN_ASTTAX-Z-W25-S<k>` (start at S1), appended t
 
 <criterion id="W2-AC4" cell_refs="AT6-s-2"><invocation>timeout 600 bash -c "cd portal && bun run tsc -b"</invocation><expect>exit 0 with the checked-file count; POSITIVE CONTROL: an injected type error fails the same command, then reverted.</expect></criterion> `W2-AC4` -- THE BUILD, WITH AN INSTRUMENT THAT CAN FAIL.
 
-<criterion id="W2-AC5" cell_refs="AT6-s-2"><invocation>timeout 600 bash -c "cd portal && node scripts/ui-smoke.mjs positioning .scratch/w2_sat15.png --port <PORT> --fixtures <FIXTURES> --click 'Satellites' --pick 'Opal Satellite 15' && node scripts/ui-smoke.mjs positioning .scratch/w2_sat80.png --port <PORT> --fixtures <FIXTURES> --click 'Satellites' --pick 'Opal Satellite 80' && PYTHONUTF8=1 python3 <CELL_COMPARE> .scratch/w2_sat15.txt .scratch/w2_sat80.txt"</invocation><expect>the fixtures built from the SERVED bytes (six keys, VersionIds printed, characteristics.json POST-B6); both screenshots READ; the DOM's Holdings Breakdown rows dumped (the TEXT/DOM read the way W19's v8_ac10_dom_read did) and compared by <CELL_COMPARE> to the served tickers block under the renderer's own formatting: for EVERY row of Opal Satellite 15 and Opal Satellite 80 the 7 characteristic cells and 8 performance cells EQUAL the served value formatted as the table formats it (printed served vs rendered per cell, mismatches 0 of N with N printed); a NULL renders `-` (or the em dash for a return), never `NO` and never a raw float; CASH blank in every measure; GLD's return cells blank iff served null; ONE Models row printed as the control (Active still YES/NO for a 0|1). If the page's selector control is not a --pick target, read `ui-smoke.mjs:224-300`, use --select/--clicktext, and state which.</expect></criterion> `W2-AC5` -- THE RENDER, CELL BY CELL, AGAINST THE SERVED BLOCK.
+<criterion id="W2-AC5" cell_refs="AT6-s-2"><invocation>timeout 600 bash -c "cd portal && node scripts/ui-smoke.mjs positioning .scratch/w2_sat15.png --port <PORT> --fixtures <FIXTURES> --click 'Satellites' --pick 'Opal Satellite 15' && node scripts/ui-smoke.mjs positioning .scratch/w2_sat80.png --port <PORT> --fixtures <FIXTURES> --click 'Satellites' --pick 'Opal Satellite 80' && PYTHONUTF8=1 python3 <CELL_COMPARE> .scratch/w2_sat15.txt .scratch/w2_sat80.txt"</invocation><expect>the fixtures built from the SERVED bytes (six keys, VersionIds printed, characteristics.json POST-B6); both screenshots READ; the DOM's Holdings Breakdown rows dumped (the TEXT/DOM read the way W19's v8_ac10_dom_read did) and compared by <CELL_COMPARE> to the served tickers block under the renderer's own formatting: for EVERY row of Opal Satellite 15 and Opal Satellite 80 the 7 characteristic cells and 8 performance cells EQUAL the served value formatted as the table formats it (printed served vs rendered per cell, mismatches 0 of N with N printed); a NULL renders `-` (or the em dash for a return), never `NO` and never a raw float; CASH blank in every measure; GLD's return cells blank iff served null; the NAME cell EQUALS the served name for every row whose served name is non-null (the ticker only where it is null -- CASH expected; count printed) and ACTIVE reads YES for management_style active, NO for passive, blank for unknown/null (per row printed against the served pair); ONE Models row printed as the control (Active still YES/NO for a 0|1, the name unchanged). If the page's selector control is not a --pick target, read `ui-smoke.mjs:224-300`, use --select/--clicktext, and state which.</expect></criterion> `W2-AC5` -- THE RENDER, CELL BY CELL, AGAINST THE SERVED BLOCK.
 
 <criterion id="W2-AC6" cell_refs="AT6-s-2"><invocation>timeout 600 bash -c "cd portal && PYTHONUTF8=1 python3 -c \"import json,sys; f=json.load(open('<FIXTURES>', encoding='utf-8')); k=[x for x in f if x.endswith('/satellites/characteristics.json')][0]; f[k].pop('tickers'); json.dump(f, open('<FIXTURES_NO_TICKERS>','w', encoding='utf-8'))\" && node scripts/ui-smoke.mjs positioning .scratch/w2_neg.png --port <PORT> --fixtures <FIXTURES_NO_TICKERS> --click 'Satellites' --pick 'Opal Satellite 15'"</invocation><expect>the DISCRIMINATING PAIR: with the tickers block REMOVED from the served-bytes fixture by a scripted key deletion (never a hand-written body) the read THROWS (the honest branch from step 2) and the page shows the error notice, not blank cells -- OR, if the COO's hand-over states the type stays optional, every measure cell renders `-`; state which branch the code takes and why. Either way the pair DIFFERS from W2-AC5, so the equality there is the attachment, not the renderer's default.</expect></criterion> `W2-AC6` -- THE NEGATIVE CONTROL: WITHOUT THE BLOCK, NO VALUES.
 

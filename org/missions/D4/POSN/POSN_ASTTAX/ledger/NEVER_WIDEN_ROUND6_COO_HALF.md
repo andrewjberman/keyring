@@ -53,6 +53,20 @@ router's leaf allowlist is unchanged (the key's path is unchanged).
   that REFUSES (partition absent, a read denied): nothing was written -- the refusal is the measured act, the row names the reason and
   the organic leg stays.
 
+### R1 AMENDMENT 2026-09-15 ~04:1xZ -- the identity pair (PRD v0.11 @ab2ee8052a C-HOLDING-IDENTITY): a READ on DynamoDB `etf-classifications`
+
+**Why:** Andrew ~04:0xZ (*"looks like none of this is going through ETFClassifier"*; rows Z-S139 by the CTO, Z-S141 by this seat). B6's
+`tickers` block ALSO carries `name` and `management_style` for every ticker any satellite holds, read through the estate's one classifier
+module (`etf_classifications_dynamodb.py`, `get_item` per distinct ticker, ~25 reads per run -- the same call the registry producer
+already makes under its own `ReadEtfClassifications` grant). **What this adds to the act's blast radius:** ONE READ grant --
+`dynamodb:GetItem` + `dynamodb:BatchGetItem` on `arn:aws:dynamodb:<region>:<account_id>:table/etf-classifications` in
+`aws_iam_role_policy.cot_satellites_characteristics_producer_s3` -- and two more fields inside the ADDITIVE block (`name`,
+`management_style`, NULL + counted where the table has no row; `method.tickers_block.identity_source` / `identity_missing`). **What it
+does NOT change:** the ONE key, N = 1 writer, the rollback (the same prior VersionId and artifact version), the table's own writers
+(R1's retag script and the seeder; this act WRITES NOTHING to the table -- no `PutItem`, no `UpdateItem`, no `Scan`), the schedule, the
+driven run, both branches. The purity control still requires every pre-existing field identical for the same inputs. Rollback of the
+grant: revert the `.tf`, re-apply. COO half for this amendment: `2.0.0_SA_COO~Z`, GIVEN, 2026-09-15 ~04:1xZ; the CTO half amends to match.
+
 ## 4. WHAT THIS HALF DOES NOT COVER
 
 The Bloomberg return-history backfill (a CTO act, its own ledger); the portal cells F4 and F5 (no served key moves); any promote, push
@@ -63,7 +77,7 @@ contents.
 
 ```
 NEVER#1   "never move served output without never-widen sign-off (CTO+COO)"
-ACT       B6: one function's code + its rule's cron + a READ-only IAM widening; ONE driven run with an explicit bbg_as_of
+ACT       B6: one function's code + its rule's cron + a READ-only IAM widening (S3 history prefixes; R1: DynamoDB GetItem/BatchGetItem on etf-classifications); ONE driven run with an explicit bbg_as_of
 KEY       platinum/satellites/characteristics.json (opal-data-cot) -- ADDITIVE change, prior VersionId rt61ogajZQy79meUlsY1X_mIdPngxJTZ
 N         1 writer (unchanged); readers: the B5 route -> the Satellites adapter (F3 today, F4 after)
 COO half  2.0.0_SA_COO~Z, GIVEN 2026-09-15 ~03:2xZ; re-read at v0.10 @59113e257a ~03:3xZ, key list unchanged (a changed key list re-opens it)

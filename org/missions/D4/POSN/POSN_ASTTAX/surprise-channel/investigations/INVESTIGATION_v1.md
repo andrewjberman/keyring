@@ -6259,6 +6259,56 @@ Andrew asked for (msg 22917); it concerns this project's portal files meeting an
     "spec_asserts": "PRD C-ONE-SOURCE / FWD-5: the classification is defined in one place and flows everywhere. v0.10 C-HOLDING-MEASURES: active from Yang's row, else NULL.",
     "world_is": "A satellite row's name and active are not read from ETFClassifier at any layer; Yang's copies of both agree with the table where Yang holds the ticker, and nothing serves them for GLD or CASH.",
     "notes": "REMEDY (PRD v0.11 C-HOLDING-IDENTITY): B6's tickers block ALSO carries, for every ticker, `name` and `management_style` read from ETFClassifier (the same table the holdings labels come from; a READ grant on etf-classifications added to the never-widen halves), independent of the measures' source precedence; F4 renders name from it (ticker only when the table has no row, counted) and ACTIVE from management_style (active YES, passive NO, unknown or absent '-'). Both are issuer amendments inside round 6 (TO-W1-1 before its deploy leg, TO-W2-1 before hand-off). The PFDE/PFOE/UVXY beta hardcodes are Yang's specification in every mode and are NOT changed here; with B6 served, PFDE's beta is Yang's own 1.05 and the override is idempotent."
-  }
+  },
+{
+  "id": "POSN_ASTTAX-Z-S140",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T04:14:26Z",
+  "one_line": "DISARM of the CTO's Z-S138 (ARMED, owner this seat): the TO-W3-1 act-2 reading (Math.round at PositioningSummary.tsx:1011) would have re-formatted every Models label (82.6% -> 83%); PRD v0.11 @ab2ee8052a withdraws 'like its two siblings' and fixes the rule -- the single-bar label renders at no more than two decimals, trailing zeros dropped (Satellites 62.59%, Models/ETFs byte-identical). ACT: TO-W3-1 act 2 and the label clauses of W3-AC5 / W3-AC6 AMENDED to that rule with the Models labels as the byte-identical control; worker ~26 notified MID-RUN by the issuer's harness notice (~04:1xZ, before any portal commit -- its branch was still at dd1d33c6db) and told never to commit Math.round; the amended face lands on SITEZ with this row. The issuer's error: a reading chosen at L5 where the spec text admitted two, without asking; recorded.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "PRD v0.11 s.0 ADDENDUM: 'The single-bar percent label renders the value at no more than two decimals, trailing zeros dropped ... Models and ETFs labels are byte-identical to today (82.6%, 17.4%). Like its two siblings is withdrawn.'",
+      "The worker's portal branch wk-posn-6-26-portal read dd1d33c6db (no commit) at 03:53Z and at the notice; the notice names the regex bar ^[0-9]+(\\.[0-9]{1,2})?%$ and the control dump.",
+      "WHY GRADUATED: the hazard was a wrong reading not yet in any commit; the amended text and the mid-run notice remove it; the bar now discriminates (the Models control would fail under Math.round)."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-S138"
+  ],
+  "spec_asserts": "PRD v0.11 C-SUMMARY-COPY (clarified): the label at :1011 renders at no more than two decimals, trailing zeros dropped; Models/ETFs labels byte-identical.",
+  "world_is": "TO-W3-1 act 2 amended; W3-AC5 carries the regex bar and the byte-identical Models control; the worker holds act 2 to the notice.",
+  "notes": "A modification LIMB 6 does not grade (gate viii: placeholder sets unchanged, stated in the commit message)."
+},
+{
+  "id": "POSN_ASTTAX-Z-S141",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T04:14:26Z",
+  "one_line": "DISARM of the CTO's Z-S139 (ARMED, owner this seat): round 6 as cut took name (= ticker) and active (from Yang's row, so GLD and CASH had none) from nowhere near ETFClassifier though the table carries both for 25 of 25 satellite tickers. PRD v0.11 @ab2ee8052a C-HOLDING-IDENTITY: B6's tickers block ALSO carries name and management_style read through the one classifier module (get_item per distinct ticker), NULL + counted where the table has no row; F4 renders NAME from it (ticker only where null) and ACTIVE from management_style (active YES / passive NO / unknown or null blank). ACT: TO-W1-1 amended (act 1(e), the flat-mapped module member, the .tf READ grant GetItem/BatchGetItem on table/etf-classifications, W1-AC4/AC8/AC12 clauses), TO-W2-1 amended (act 3, W2-AC5), the COO never-widen half R1 (the table read added to the radius; the CTO half amends to match); worker ~24 notified MID-RUN before its deploy leg (nothing applied; W1-AC7 held until the amended order and both amended halves are on SITEZ); ~25 not yet spawned.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "etf_classifications_dynamodb.py: ETFClassifier.get_classification(ticker) -> table.get_item(Key={'ticker': ticker}) (:52-84); the registry producer packages the module flat (build_package.py:117-121) and reads it in load_classifier (:312-347) under Sid ReadEtfClassifications (GetItem, BatchGetItem; satellites-registry-producer.tf:145-152) -- the precedent B6 copies.",
+      "PRD v0.11 measured basis: full scan 285 items, 25 of 25 satellite tickers carry name and management_style; Yang agrees 23 of 23 on both.",
+      "WHY GRADUATED: the gap is now a named field pair in two amended cells with a bar per row (NAME equals the served name; ACTIVE per management_style), the read grant is inside both halves' radius, and no world write has happened in round 6."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-S139"
+  ],
+  "spec_asserts": "PRD v0.11 C-HOLDING-IDENTITY: the tickers block carries name and management_style from ETFClassifier for every satellite ticker; the Holdings Breakdown renders NAME and ACTIVE from them.",
+  "world_is": "TO-W1-1 and TO-W2-1 amended; the COO half R1 given; the CTO half's matching amendment owed; B6's deploy leg held until both are at HEAD.",
+  "notes": "The beta hardcodes (PFDE, PFOE, UVXY) stay, per the PRD."
+}
 ]
 ```
