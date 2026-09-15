@@ -1151,6 +1151,74 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     "spec_asserts": "The PRD's DEC-6 matrix: NEW names refuse, EXISTING names warn unless a remediation owns the surface.",
     "world_is": "The commit limb reads a diff and so can tell NEW from EXISTING; the apply limb reads a whole tree and cannot. Under one shared enforce switch, an ENFORCE flip would refuse most applies.",
     "notes": "INERT for this round: nothing sets ENFORCE. The finding bears on gate G-F, the live flip, and goes to 1.0.0_SA_CTO at the round's drain-end read: the apply limb needs its own switch or an existing-name baseline before G-F."
+  },
+  {
+    "id": "LGIC_ENFORCE-W2-S7",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~2",
+    "surfaced_at": "2026-09-15T03:41Z",
+    "one_line": "check_en.py p1-surface cannot evaluate the order's rule. It calls grade(token, 'S3Key') inside a bare next() with no RaiseDefect handling, and the first sorted carrier raises, so P1-AC1 prints FAIL-NOT-EVALUABLE whatever the record says.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~G",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "INSTRUMENT: org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/2.0.0_SA_COO~G/fixed_inputs/check_en.py:986-994 @39aae459ed. want = next(p for p, _, tok in cands if tok and o.grade(tok, 'S3Key')[0] == 'OUT-OF-PATTERN') sits inside a try whose except prints FAIL-NOT-EVALUABLE. A RaiseDefect from any candidate before the first OUT-OF-PATTERN ends the read.",
+        "RUN, before any record existed (WS wk-lgic-enforce-1-2-p1 @39aae459ed): 'RaiseDefect: K1: segment 1 '\\\\\"' is neither a source nor a tier' / 'VERDICT: FAIL-NOT-EVALUABLE', rc=1.",
+        "WHY: sorted by (path, line), candidate 1 of 12953 is .claude/settings.local.json:26 with token '\\\"/aws/lambda/inf-ec2-launch-monitor\\\"'. It raises in lib/opal_naming.py _grade_key (:1225 @39aae459ed). 18 of the first 22 candidates raise and 4 grade CONFORMANT.",
+        "THE RULE, read with a raising token skipped (a RAISE is not OUT-OF-PATTERN): candidate 23 of 12953, .claude/skills/mdpf-refresh/mdpf_refresh.py:292, token 'platinum/mdpf/inflection/aggregate-aua-timeseries.json', OUT-OF-PATTERN -> 'mdpf/inflection/platinum/aggregate-aua-timeseries.json'. EXERCISE_FWD6.md names this path."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EN-p-1 WORKER FACE: 'The first whose token grade(token, \"S3Key\") marks OUT-OF-PATTERN is the SURFACE.' P1-AC1 runs check_en.py p1-surface and expects 'VERDICT: PASS-SURFACE-BY-RULE'.",
+    "world_is": "The instrument raises at carrier 1 of 12953, before it reaches the rule's answer at carrier 23, so no record can pass P1-AC1. The fixed inputs are read-only to the worker.",
+    "notes": "P1-AC1 is recorded FAIL by output and the order stays open. The record states the rule's result as read with raising tokens skipped."
+  },
+  {
+    "id": "LGIC_ENFORCE-W2-S8",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~2",
+    "surfaced_at": "2026-09-15T03:41Z",
+    "one_line": "A live remediation already owns the rule's surface. MDPF_CANON's s3-prefix platinum/mdpf/ matches the bucket-less key, so the touching diff is refused before any row is planted. The planted row shows only in the project name the refusal prints.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "PRE-PLANT CONTROL, practice copy prac-lgic-enforce-p1 @39aae459ed, the touching diff with --enforce: 'NAMING REFUSE .claude/skills/mdpf-refresh/mdpf_refresh.py:292 platinum/mdpf/inflection/aggregate-aua-timeseries.json -> mdpf/inflection/platinum/aggregate-aua-timeseries.json', 'why: EXISTING and OUT-OF-PATTERN as S3Key in a surface remediations.json assigns to the live remediation MDPF_CANON', 'NAMING-GATE: REFUSE 1 graded', rc=1.",
+        "MECHANISM: .tools/naming-gate.py remediation_of (:613-632 @39aae459ed). A key whose first segment is not a bucket gets bucket None, and the test 'bucket is None or bucket == sf.get(\"bucket\")' admits every s3-prefix by prefix alone. infra/logic/registry/remediations.json:28 @39aae459ed: MDPF_CANON owns {s3-prefix, opal-data-portal-v2, platinum/mdpf/}. org/missions/D8/MDPF/MDPF_CANON/project.json reads status 'active'.",
+        "POST-PLANT, plant 6640c8153d on prac-lgic-enforce-p1 with the row placed first in the array: the same diff was refused and named 'the live remediation PRAC_FWD6REM'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EN-p-1 WORKER FACE step 1: 'Plant ONE remediations.json row: a fictitious remediation project owning that surface.' Step 2: 'it must REFUSE, naming the surface.'",
+    "world_is": "The surface was owned before the plant, so a REFUSE alone cannot show that the planted row was read. The worker put the row first and ran a pre-plant control. The discriminator is the project named (MDPF_CANON before, PRAC_FWD6REM after), not the verdict.",
+    "notes": "Form only. The literal's bucket is a variable (Bucket=PORTAL, i.e. opal-data-portal-v2), so the bucket-less match happens to be right for this surface."
+  },
+  {
+    "id": "LGIC_ENFORCE-W2-S9",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~2",
+    "surfaced_at": "2026-09-15T03:41Z",
+    "one_line": "The registry's own validator refuses the fictitious row the order asks for, because the project is not in DIRECTIVES.yaml. The commit limb loads the registry without validating and still reads the row as live, so the refusal fired on a row validate refuses.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python lib/opal_naming.py validate in the practice copy. Pre-plant (39aae459ed): 'VALIDATE: OK 16 system row(s), 9 scope row(s), 9 warning(s) at registry@50e4fabd1cb6a150', rc=0. Post-plant (6640c8153d): rc=1, 'REFUSED remediations.json[0].project: 'PRAC_FWD6REM' is not a project in org/missions/DIRECTIVES.yaml', 'REFUSED remediations.json[0].owner_directive: 'D14': the directive whose projects list names 'PRAC_FWD6REM'', 'VALIDATE: REFUSED 2 refusal(s), 9 warning(s)'.",
+        "RULE: lib/opal_naming.py:414-420 @39aae459ed. LOAD WITHOUT VALIDATION: .tools/naming-gate.py:509 @39aae459ed calls mod._registry(), and lib/opal_naming.py:121-124 shows that is load_registry with no validate().",
+        "COMMIT: the plant commit ran every safe-commit stage clean ('[naming-gate] NAMING-GATE: PASS 0 graded'; to-pipeline-gate and surprise-row-gate OK). No stage validates the registry."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EN-p-1 WORKER FACE step 1: 'Plant ONE remediations.json row: a fictitious remediation project owning that surface. Commit it on the scratch branch.'",
+    "world_is": "The plant commit 6640c8153d landed with every stage clean, yet validate refuses the registry at that commit, and the limb still honoured the row. A fictitious project and a valid registry cannot both hold.",
+    "notes": "Scratch branch only, never merged. Form only: whether the limb should validate the registry it reads is not this worker's call."
   }
 ]
 ```
