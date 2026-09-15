@@ -7358,6 +7358,31 @@ Andrew asked for (msg 22917); it concerns this project's portal files meeting an
   "spec_asserts": "TO-W3-1 W3-AC2 expects exactly two changed files against refs/drains/posn-6-portal; W3-AC5 expects every single-bar percent label in the TEXT dump to match the two-decimal shape with the label count and the match count equal; the hand-over facts expect the fixtures to be the SERVED bytes; CLAUDE.md rule 14b says an append-only shared file is NOT isolated in a side branch.",
   "world_is": "The drain ref moved onto the worker's own prior commit between the two runs, so the two-file denominator belongs to the round's base (dd1d33c6db) and not to the ref the criterion names; the Relative view has no percent labels for the shape clause to grade; one of the six served keys moved on the live plane between the runs, so 'the served bytes' is a fixed object only because the VersionId pin exists; and the row gate refuses the only move that would have made the channel append conflict-free, so a worker appends to a stale copy by design.",
   "notes": "Filed by the worker on resume; no act taken beyond recording both denominators and committing this branch's own rows only. Nothing here changes what act 1 did."
+},
+{
+  "id": "POSN_ASTTAX-Z-S164",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T06:23:33Z",
+  "one_line": "ADJUDICATION of W26-S8 (INERT), the resumed run of TO-W3-1 act 1: (1) W3-AC2's 'exactly two files vs the ref' cannot print two once the ref was fast-forwarded onto the worker's own prior commit -- recorded both ways (1 vs the ref, 2 vs the round base dd1d33c6db, the named pair), RULED sufficient: the bar's substance is 'nothing outside the two files', which both readings show; (2) the fixtures were re-fetched BY PINNED VersionId and accepted on md5 equality (6 of 6) because characteristics.json had moved live (B6) -- the right instrument: 'the same served bytes' means the pinned bytes, and the re-render was comparable (3 of 4 views md5-identical, exactly the Benchmark view moved); (3) W3-AC5's label-shape clause has no subject in the Relative view (signed one-decimal deltas) -- stated, no defect; (4) the row gate's foreign-row sweep refused a row re-order the worker tried to make the channel append conflict-free -- correct behaviour of the gate (a worker never moves another author's rows; the drain's union is the mechanism). ALSO RE-APPLIED HERE: the worker's status flip to complete (its commit 6e99b97e6c, proof VALID rc=0, 8 rows re-recorded) which the 3-way merge dropped because the worker's final status equalled the merge base's while the shared branch carried the re-cut's in_progress -- an issuer act on the merge result, not a grading. TO-W3-1 (F5) is COMPLETE at HEAD: the presence rule over the drawn columns (Benchmark view 2 classes, no Structured row; Relative 3; Portfolio 3; Satellites 4; ETFs 2), the two-decimal trimmed label, the Satellites footer, subtitle and notices.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W26-S8 as filed; the re-run's proof instance VALID rc=0; W3-AC5: presence sets 3/3, 2/2, 3/3, 2/2 AGREE; 21 matrix rows in the Benchmark view where the pre-re-cut render drew 22 with a Structured row of five zeros (w3_models_bench_PRECUT_at_10a2799c.png kept beside the new capture).",
+      "The portal ref refs/drains/posn-6-portal = 5ddce2c7 (the re-cut commit, one file); gitlink e85f6eb84f unmoved.",
+      "WHY GRADUATED: every item is a stated reading with the honest instrument chosen; no served byte is wrong; the order's every criterion is PASS by output or a recorded judgment."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W26-S8"
+  ],
+  "spec_asserts": "PRD v0.11 C-PRESENT-CLASSES: one presence set per render over the columns the current view draws; TO-W3-1 as re-cut at aacde43a63.",
+  "world_is": "F5 complete on the portal ref at 5ddce2c7 behind the freeze; the W3-AC8 judgment's third reading (Structured present in Portfolio, absent in Benchmark, present in Relative -- a row that blinks as the toggle moves) is recorded for 3.0.0_SA_CVO~Z at L9.",
+  "notes": "The judgment's 'blinking row' is the presence rule's own consequence under Andrew's word; L9 grades it, L10 decides whether the rule wants a 'held by no drawn column' affordance."
 }
 ]
 ```
