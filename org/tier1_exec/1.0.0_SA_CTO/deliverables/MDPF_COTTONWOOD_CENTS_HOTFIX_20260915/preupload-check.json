@@ -1,0 +1,12 @@
+{
+  "zip_sha256": "7af218097511a2be15fbe0a2e07b20c04f3320f66f6bf0402fe20268b2488801",
+  "members": 23,
+  "changed_members": [
+    "BUILD_MANIFEST.json",
+    "build_cottonwood_mdpf_pair.py"
+  ],
+  "live_revision_unchanged": true,
+  "prior_code_version_unchanged": true,
+  "package_scope": "Only pair-builder code plus its build manifest differ; test is not packaged.",
+  "mutation_count": 0
+}
