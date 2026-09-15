@@ -1,7 +1,7 @@
 # Portal promotion preparation — 2026-09-15
 
 Author/executor seat: `1.0.0_SA_CTO~A`  
-Status: **43f18c17 BLOCKED AS-IS BY CTO; AWAITING INTEGRATOR LOCKFILE FIX AND NEW-CANDIDATE PROOFS; PROMOTION NOT STARTED**
+Status: **REPLACEMENT 9adad7ce LOCK/IR CHECKS PASS; CI INSTALL PASSES THEN LINT FAILS; AWAITING DATA RECHECK AND MSTR GO; PROMOTION NOT STARTED**
 
 Prepared: 2026-09-15 08:14 UTC
 
@@ -261,3 +261,69 @@ These are CTO's attributed scratch measurements, not a full clean installation/b
 **Named DEV lint disposition:** CTO identifies `src/pages/InvestorReporting/__tests__/fe-s-5/alias-probe.test.ts:16:20`, ESLint `no-constant-binary-expression` on `cn('a', false && 'b', 'c')`, as present since DEV `5b959f63` (reported run `34562328385` on 09-11) and still present on `43f18c17`. CTO accepts that specific existing DEV-only lint failure for this promotion because PROD `deploy.yml` runs install/typecheck/build, not lint. Its fix belongs to the IRPT_FNTEND round-8 work alongside F25/F49. This is attributed history/disposition, not an independent reread of the earlier run. Additional failures are not accepted by implication, and required PROD workflow success remains mandatory.
 
 MSTR's GO window remains ~11:30–12:00 UTC with the 13:00 UTC deadline. This amendment supplies a blocking decision and a repair/proof path, not deployment GO. The amended preparation is committed and routed to CTO/MSTR before archiving exact notice 97030. No deployment ledger, sentinel, dependency installation, source edit, merge, push or workflow dispatch is started by this seat.
+
+## Replacement candidate adopted and checked — MSTR 97034, 10:19:58 UTC
+
+Read only exact notice `20260915T101958Z_0.0.0_AB_MSTR_NEW_promote_candidate_9adad7ce__43f18c17.md` from MSTR; ACK sent at **10:21:03 UTC**. The integrator adopts Site Z's published repair as its one permitted candidate commit: **`9adad7ce750742e9806c373a71f7ce900f3e22b2`**. MSTR explicitly says **no GO yet**. The old candidate's as-is block remains historical; the following replacement evidence addresses the prescribed repair checks without authorizing deployment.
+
+### Independent source and publication checks, 10:21–10:23 UTC
+
+| Check | Result |
+|---|---|
+| Replacement parents | Exactly one: `43f18c179cad01947e0f0a41a9889807301fd233` |
+| Complete parent-to-candidate diff | **`bun.lock` only**, **4 insertions / 103 deletions** |
+| New candidate tree / future parity target | **`d3db406c198b325fee48790a84205f0695c6d7c2`** |
+| LF-normalized committed `bun.lock` SHA-256 | **`b32cb20e3d31d35fd6e4e0026585eca4a159e881f0ecebfa2a884340593ff4c6`** |
+| Live DEV, laptop candidate branch, Site Z fix branch | All **`9adad7ce750742e9806c373a71f7ce900f3e22b2`** |
+| Main portal branch / HEAD / tracked changes | **DEV / `9adad7ce...` / none**; untracked files untouched |
+| Live PROD | Unchanged **`b1389c85759511e65ec5d5b26ee96d63c91984c2`** |
+| Required `10c2f07d...` gate ancestry into replacement | **exit 0**; all-zero bogus-candidate control **exit 128** |
+| Candidate's two IR routes | **2/2** carry `requireAdmin requireInternal` |
+| Candidate's IR navigation item | **1/1** carries `requiresAdmin: true` and `requiresTier: 'internal'` |
+| Named partner allowlists | **3/3** omit `/investor-reporting` |
+
+The full lock diff was read. A parsed comparison of the package-entry arrays found exactly the four expected root payload changes. Each new root array is identical in full, including version, dependency metadata and sha512 integrity, to its previous nested entry:
+
+| New root resolution | Identical prior nested entry |
+|---|---|
+| `@types/d3-array@3.2.2` | `victory-vendor/@types/d3-array` |
+| `@types/d3-interpolate@3.0.4` | `victory-vendor/@types/d3-interpolate` |
+| `d3-format@3.1.0` | `@visx/vendor/d3-format` |
+| `d3-time-format@4.1.0` | `@visx/vendor/d3-time-format` |
+
+Every other retained package-entry payload is identical; no new resolution payload was introduced. The root dependency removals match the seven stated manifest removals. This independently satisfies the requested lock-diff inspection, not a fresh dependency installation.
+
+Both IR source files were read from `git show 9adad7ce...:<path>`. They are byte-identical to the preceding candidate: `src/App.tsx` blob **`cb20bd3d2fe93988c4a759bf37add3b994bc4e6d`**, `src/lib/firmAccess.ts` blob **`73cf302f0a48a876f548c943367ba326dc2ba804`**. The guards were checked against the replacement's own bytes. Actual promotion parity must use the new tree above; `f1afba42` remains an old-tree observation.
+
+### Attributed clean installation and build evidence
+
+MSTR 97034 reports its clean checkout used **its own `node_modules`, no junction**, and **Bun 1.3.9** with the identical repaired lock bytes: full frozen install with scripts **exit 0**, **377 packages**; `bun run typecheck` **exit 0**; `bun run build` **exit 0**, **26.48 seconds**, chunk-size warning only. That is the integrator's required (b) evidence, not a rerun by this seat.
+
+The same notice relays Site Z's second instrument on **`9adad7ce` itself**: an actual **Bun 1.3.9** binary passed frozen installation with the lock unchanged, while the old `43f18c17` control failed. Site Z's typecheck and build used **1.3.14**, a distinct version that is recorded accurately and is not substituted for MSTR's 1.3.9 checks. The commit subject names Site Z regeneration under 1.3.14; the committed lock's normalized hash agrees with MSTR's separately reported 1.3.9 regeneration. No install/build was run by this executor for this notice.
+
+### Exact replacement CI result
+
+An exact-SHA query returned one run: [CI - Build & Validate, **34957141198**](https://github.com/Opal-Capital/portal/actions/runs/34957141198), push-created **10:17:18 UTC**, **completed / failure**, head **`9adad7ce750742e9806c373a71f7ce900f3e22b2`**. Job **104341799582** passed **Install dependencies** at **10:17:37 UTC**, then failed **Run ESLint** at **10:18:42 UTC**. Thus the specific new-candidate CI **Install requirement passes**. Provenance guard, typecheck, build and artifact upload were skipped; the workflow as a whole is not green.
+
+The failed log independently reports **84 problems: 5 errors, 79 warnings**, matching MSTR's clean-checkout count. The complete five-error inventory is retained rather than reducing the result to the one example named in the CTO ruling:
+
+- `src/components/market-performance/SentimentGauge.tsx`: unused `PanelEmpty` and `PanelError` imports, two errors at line 6.
+- `src/pages/InvestorReporting/__tests__/fe-s-19/pre-envelope.test.ts`: unused `PERFORMANCE_KEY`, line 43.
+- `src/pages/InvestorReporting/__tests__/fe-s-5/alias-probe.test.ts`: the named constant-binary-expression error, line 16.
+- `src/pages/InvestorReporting/export/ExportButton.tsx`: value cannot be modified, line 246.
+
+CTO 97030 identifies the expected DEV lint stop as outside PROD's install/typecheck/build gate; MSTR 97034 explicitly reports the full 84-problem state as pre-existing. This seat records those owner statements and the observed inventory, without calling the DEV workflow successful or inventing a further source change. Both owners received the measured result and full error inventory at **10:23:42/46 UTC**. Required PROD workflow success remains mandatory.
+
+### Remaining release inputs
+
+The **25-of-25 data recheck and render after the ~11:05 UTC models publish must use `9adad7ce`**; MSTR reports that request is on the Site Z bus, but the later result is not present in 97034. The notice also relays POSN round 6 CLOSED at 10:03 UTC, `5467a8e804` SITEZ LOCAL, naming carried portal commit `ebbee2e61a`; this is attributed project-close evidence, not the later data-recheck result.
+
+The actual MSTR GO, final exact pins and applicable prerequisite records still precede deployment. Re-read refs and execution cleanliness at GO and use the replacement tree for the clarified no-ff merge parity check. The DEV freeze and post-promote patch hold continue. This candidate precheck starts no ledger, install/build, merge, push, source edit or deployment. The record is committed and routed before archiving only exact notices 97034 and 97037.
+
+## Integrator confirms (c); remaining pre-GO data check — MSTR 97037, 10:24:04 UTC
+
+Read only exact notice `20260915T102404Z_0.0.0_AB_MSTR_Candidate_9adad7ce__verification__c__PAS.md` from MSTR and ACKed it. Its step-by-step read of **run 34957141198** agrees with this seat's independent result above: **(c) PASS**, because frozen Install succeeds and CI stops at the expected DEV-only lint step. The overall run remains failure. MSTR explicitly binds the skipped CI typecheck/build to its separate clean-checkout **Bun 1.3.9** install/typecheck/build results, retaining Site Z's distinct **1.3.14** typecheck/build as the second instrument.
+
+MSTR relays POSN round 6 **L10 CLOSED** from CTO~Z message **23121**, via MSTR~Z bus **83db61cf**, `ROUND_ANALYSIS.round6.md@e60bf6dca1` SITEZ LOCAL: **31 orders = 27 complete + 2 superseded + 2 cancelled; 0 open**. The relayed statement is that nothing in L10 gates promotion. A later **C-S177** Black Diamond seeder-guard recut has no served consequence today. This records the owner's supplied closeout, not an independent audit or an assignment of that recut to this seat.
+
+MSTR identifies **one remaining pre-GO item**: Site Z's **25-of-25 data recheck and Satellites render on `9adad7ce`**, after the **~11:05 UTC models publish and third characteristics run**, targeting **~11:30 UTC**. GO follows that result. Execution-time exact-pin, clean-worktree and PROD parity checks remain part of carrying out the eventual GO; they do not create a new owner approval request now. No GO is present in 97037 and no deployment has begun.
