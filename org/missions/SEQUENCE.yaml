@@ -85,9 +85,9 @@ projects:
       max_dep_stage: DECOMP
       until:
         - {project: LGIC_ENFORCE, prd_admitted: true}
-        - {manual: "LGIC_ENFORCE's scope-derived fence (Andrew ~18:4xZ card 1, on its three conditions) is applied on infra/aws/terraform/shared-infra/s3-49financial.tf, the template opal-data-inflection and opal-data-cottonwood are minted from"}
+        - {manual: "LGIC_ENFORCE's scope-derived fence (Andrew ~18:4xZ card 1, on its three conditions) is applied on infra/aws/terraform/shared-infra/s3-49financial.tf, the template opal-data-inflection and opal-data-cottonwood are minted from", confirmed: "1.0.0_SA_CTO 2026-09-15 ruling 97031 -- EN-f-2 applied and drained @c6d652a6dc; 4 of 4 probe arms; live policy on opal-data-49financial 1 Deny with 17 ArnNotLike values; card 1 conditions (1)-(3) met for opal-data-49financial"}
     why: "The legacy firm buckets (opal-data-bd, -inf, -cot) move into opal-data-49financial and the two new buckets. The new buckets must be minted with the rebuilt fence, and FWD-3 needs LGIC_ENFORCE's registry. Its PRD and decomposition may proceed; execution waits."
-    notes: "Card 3 (read logging on the legacy buckets, order 4db66568a6) ran ahead of this stage on Andrew's own words (~18:4xZ card 3, ~19:0xZ, ~21:3xZ): it starts FWD-6's 45-day clock and touches no naming."
+    notes: "Card 3 (read logging on the legacy buckets, order 4db66568a6) ran ahead of this stage on Andrew's own words (~18:4xZ card 3, ~19:0xZ, ~21:3xZ): it starts FWD-6's 45-day clock and touches no naming. CARRIES for this project's L4 (1.0.0_SA_CTO ruling 97031, 2026-09-15). They are acceptance lines when the project is seated, not holds. (C1) irpt-directory-refresh-role carries no firm token and reads/writes the served IRPT directory. When its grants repoint to opal-data-inflection or opal-data-cottonwood, it needs an exemption row on EACH new bucket, under never-widen sign-off, BEFORE the repoint, or the fence denies it and the trading-weekday 09:00 ET directory refresh breaks. The writer census re-runs PER NEW BUCKET; the 49financial census does not cover them. (C2) That per-bucket census includes service-principal delivery (access logs, inventory, replication). If it is non-empty for a new bucket, a registry-generated aws:PrincipalServiceName arm is built before that bucket is fenced."
 
   MDPF_CANON:
     fabric: laptop
@@ -136,3 +136,7 @@ change_log:
     by: "1.0.0_SA_CTO"
     change: "v3 note -- Andrew answered whether IRPT_BCKEND moves ahead of Platform Logic: no. The stage-3 why and IRPT_BCKEND's why now cite his word and its reason. No order changed."
     word: "'No, we need the logic projects done first because that will establish the patterns for the new backend properly' (Andrew-direct ~14:5xZ; record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_145xZ_LOGIC_FIRST_THE_BACKEND_FOLLOWS_ITS_PATTERNS.md)"
+  - at: "2026-09-15"
+    by: "1.0.0_SA_CTO"
+    change: "v3 gate -- ADVI_FIRMBKTS's manual hold (the fence applied on the s3-49financial.tf template) confirmed MET on ruling 97031; carries C1 and C2 added to its notes for its L4. No order changed."
+    word: "none needed: a gate confirmation that changes no order (header: 'A gate or a note may be corrected by either CTO without his word when it changes no order')."
