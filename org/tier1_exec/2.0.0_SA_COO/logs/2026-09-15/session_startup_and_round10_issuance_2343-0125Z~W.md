@@ -372,6 +372,47 @@ VALID, the union universe's resolution gap 33 of 256 measured, six addendum cand
 @`8b11d236c4` / @`98d10e04c9`; POSN's round-7 close) without touching the AMGT channel (210 rows at HEAD). Reply (a)-(d) sent to
 `0.0.0_AB_MSTR~Z`. Lesson banked to memory: a worker's weekly-limit 429 is the ACCOUNT's, and it silences the parent seat too.
 
+### 15. rj-2 and rj-8 complete and drained; Andrew's parallelization ask answered; three workers spawned at once (15:3x-16:1xZ)
+
+**rj-2 (`~18`) reported at 15:4xZ:** instance VALID, 6 of 6 PASS-by-output -- the Thesis route serves the validated drafted document
+with every evidence id resolved to its passage (38 of 38 sentences, 48 evidence records; goodroot SERVED, both bad roots INVALID), the
+tab prints each passage beneath its sentence (harness 7 of 7 over 38 of 38; the SHIPPED component rendered against the same fixture
+as the mutant: 0 markers, 0 of 48 passages, the `title="Evidence: [object Object]"` carrier present -- C-S196 reproduced as a
+measurement), pytest 84 of 84 (60 + 24 new), the build 55 assets with the control token in 0 of 55, gitlink unmoved. Rows `W18-S8`
+(INTERFACE D-1 carries NO `held_uncited` field, 0 of 5 objects: the count is served 0 BY ABSENCE with `held_uncited_basis`; for SAP
+F-1 held 6) and `W18-S9` (rj-1's identifier guard is a whole-module text scan and refused a section label; the function rewritten,
+the guard untouched), both INERT. **Drained clean @`5a24d0f45f`** (212 rows; no channel conflict -- HEAD's channel had not moved since
+the branch base); `refs/drains/rj-portal` moved to chain A's `ffeb4840` (ad275969 its ancestor, positive control); `wk-amgt-11-1`
+fast-forwarded.
+
+**rj-8 (`~22`) reported at 16:0xZ:** instance VALID, 6 of 6 -- the roster FROM THE FILING (BA 12 of 12 officers, 12 of 12 with a
+role start from the filing's since-clause; the parser keeps bare numeric lines because they are BABA's AGE column and SAP's
+YEAR-FIRST-APPOINTED column, and skips SAP's twenty-member Supervisory Board that sits above the Executive Board), Lusha prospecting
+under the 2-credit bound with the seniority filter sent SERVER-SIDE through the client's `_execute` seam (50 of 739 and 4 of 12
+matched, against 50 of 103,753 and 1 of 12 unfiltered on the same 2 credits), 0 contact fields stored, the six M-1 objects in the
+pool (5 names + `_pool`: 4.08 y over 40 officers of 5 names in 256), the weekly task `OpalResearch-ExecManagement` defined DISABLED,
+26 tests. Rows `W22-S1` (the SERP zone returns opaque Google redirect wrappers, so `ceo_public_profile` is ABSENT on 5 of 5 with a
+`status` + `basis` sub-object -- rj-9 renders "not confirmed") and `W22-S2` (BA cost 4 credits: the first run's charged page was lost
+to a `sys.modules` collision between the two estate `_util` surfaces, a PACKAGE and a MODULE of the same name; an isolated importer
+landed), both INERT. **Drained @`eff1b9f6ae`** after the expected channel conflict (union: HEAD 212 + branch-only 2 = 214).
+
+**Andrew at ~15:5xZ:** *"Can we parallelize the work on this project? ... I know for a fact there is lots of frontend that could be
+done, please ramp up production."* Answered on the record: the round's remaining work is bounded by the dependency graph as cut --
+the frontend is ONE chain (rj-1, rj-2, rj-9, rj-12, rj-3) because it writes ONE surface (`scoped_amgt.py` and the SecurityAnalysis
+page directory), so two workers on it would conflict on every drain; the legal maximum at rj-8's drain is THREE at once, then two,
+then one. PROPOSED to him, his call because the decomposition is frozen mid-round: split rj-9 into an adapter+header+registration
+cell (chain A) and a new-tab-components cell on its own portal branch (a new slot), roughly an hour off the critical path; and the
+frontend beyond round 11 (the CRO's four gaps @`2778e07199`, the CTO's six addendum candidates @`9ceb811406`) is round-12 material --
+cutting it now would deadlock round 11's L10 (LD-0521). No word yet.
+
+**Acts:** rj-9's fixture sentence re-cut as AMENDMENT 3 @`d0fd29c5bf` (measured at HEAD: `~19` 5 json, `~20` 1 json and NO D-1 copy,
+`~21` 5 json, `~22` none -- fixtures are fetched from the pool into `.scratch/`); the three worktrees `wk-amgt-11-1/-3/-5`
+fast-forwarded to eff1b9f6ae and every path the three faces read confirmed present (jsonschema 4.26.0 in both python cones; the
+`posture/v1/` prefix EMPTY, 0 objects; `anthropic-api-key` and `brightdata-api-key` present in `comp-secrets list`; the model blocks
+and R-1 objects for BA and BABA present). **SPAWNED at 16:1xZ, three at once:** `~18` on rj-9 (next row W18-S10; carrying W21-S6,
+W18-S6/S7, W18-S8, W22-S1 into the tabs), `~20` on rj-11 (`AMGT_QA_HELD_KEY=BA_US_Equity`; the held names named as BA, HD, VLO of
+256; next row W20-S9), `~22` on rj-13 (the datasets key named as `brightdata-api-key`; next row W22-S3). Seven of thirteen complete.
+
 ---
 
 ## Decisions Made
@@ -410,24 +451,21 @@ None at this lane. The next acts are gated on the workers' final reports (backgr
 
 ## Current State
 
-Round 11 of AMGT_RESAPP is EXECUTING (13 orders): rj-4, rj-1, rj-7, rj-5, rj-6 COMPLETE and drained (last drain 4e8c8f1533; the tree
-since moved to 9ceb811406 by other seats, AMGT channel untouched at 210 rows); `~18` on rj-2 in C:/tmp/wk-amgt-11-1 (portal
-@ad275969) and `~22` on rj-8 in C:/tmp/wk-amgt-11-5, both RESPAWNED ~14:58Z after the 10:5xZ weekly-limit kill; `~19` idle in
-wk-amgt-11-2 until rj-9 drains; `~20` idle in wk-amgt-11-3 until rj-8 drains; chain D done. Posture QA held key BA_US_Equity. PORTAL
-FROZEN; all commits LOCAL; no push. Monitor x22 bv0vxxcug plus a staggered tick. Andrew-direct 14:4xZ: RESAPP is the priority at full speed.
+Round 11 of AMGT_RESAPP is EXECUTING (13 orders): rj-4, rj-1, rj-7, rj-5, rj-6, rj-2, rj-8 COMPLETE and drained (last drain
+eff1b9f6ae; channel at 214 rows). THREE workers LIVE since 16:1xZ: `~18` on rj-9 in C:/tmp/wk-amgt-11-1 (portal @ffeb4840 on
+wk-amgt_resapp-11-1-portal), `~20` on rj-11 in C:/tmp/wk-amgt-11-3, `~22` on rj-13 in C:/tmp/wk-amgt-11-5; `~19` idle in
+wk-amgt-11-2 until rj-9 drains (rj-10); chain D done. Andrew's word on splitting rj-9 mid-round is OPEN. PORTAL FROZEN; all commits
+LOCAL; no push. Inbox Monitor + a 15-minute stagger tick, re-armed on every expiry.
 
 ---
 
 ## Next Steps
 
-1. At rj-8's drain: rj-11 (~20, ff wk-amgt-11-3 first, AMGT_QA_HELD_KEY=BA_US_Equity) and rj-13 (~22). At rj-2's drain (with rj-8
-   drained): rj-9 (~18, with W21-S6's CSC gap and W18-S7 named). rj-10 (~19, ff first) after rj-9. rj-12 (~18) after rj-9 + rj-11.
-   rj-3 (~18) LAST after rj-10 + rj-12.
-2. Each drain: verify the instance with the worktree's own checker, safe-merge with the channel unioned by row id, read every row,
-   disarm as owner where owed; chain A's portal branch into refs/drains/rj-portal at each of its drains; the gitlink never moves.
-3. The browser half of rj-3 with the exact payloads rj-10 captures (ROUND11_BROWSER_EXERCISE.md); the L8 packet to 3.0.0_SA_CVO~W
-   (ROUND11_PACKET.md + one message) at the end, carrying W18-S6/S7, W19-S8, W20-S4/S5/S8, W21-S3/S6 for L9, and reading the CTO's
-   L10 pre-read @9ceb811406 (six addendum candidates) beside it.
-4. Re-arm the inbox Monitor on every expiry, the staggered tick beside it; ack every broker message on read. A worker 429 on the
-   weekly limit: record the reset time in the log, the heartbeat and the final message; respawn only after capacity returns. Old
-   worktrees stay until Andrew's word.
+1. At rj-9's drain: rj-10 (~19, ff wk-amgt-11-2 first). At rj-9 + rj-11: rj-12 (~18). rj-3 (~18) LAST after rj-10 + rj-12. If Andrew
+   says split rj-9: amend the decomposition, cut the sibling cell, spawn it on a new slot with its own portal branch.
+2. Each drain: verify with the worktree's own checker, safe-merge with the channel unioned by row id, read every row, disarm as owner
+   where owed; chain A's portal branch into refs/drains/rj-portal at each of its drains; the gitlink never moves.
+3. The browser half of rj-3 with rj-10's payloads (ROUND11_BROWSER_EXERCISE.md); the L8 packet to 3.0.0_SA_CVO~W (ROUND11_PACKET.md +
+   one message) carrying W18-S6/S7/S8/S9, W19-S8, W20-S4/S5/S8, W21-S3/S6, W22-S1/S2 and every row the three live workers file, plus the
+   CTO's L10 pre-read @9ceb811406 beside it; propose round 12 cut WIDE on the frontend from the start.
+4. Re-arm the inbox Monitor and the stagger tick on every expiry; ack every broker message on read. Old worktrees stay until Andrew's word.
