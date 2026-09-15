@@ -461,6 +461,29 @@ seat should not make about itself.
 CHOSEN.** STOP-CONDITION as stated in the argument block: `AMGT_RESAPP` `status: complete`, or
 Andrew's stand-down.
 
+`4.0.0_SA_CRO~W` **[FABRIC: SITE-Z; the ~W fabric is AMGT_RESAPP ONLY, Andrew-direct 2026-09-15 ~03:5xZ]**
+**HARVEST REMEDIATION LOOP -- DIRECTED, ARMED 2026-09-15 ~04:3xZ by Andrew-direct at the `4.0.0_SA_CRO~W`
+terminal** (relayed to `1.0.0_SA_CTO~W` at 04:38Z; that lane's record
+`org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260915_HARVEST_REMEDIATION_LOOP_W.md`, in its working
+tree at this write, its commit that lane's), VERBATIM: *"Ok set a loop for yourself to remediate all these
+issues including validating Barron's end to end, then once they are completely done and validated and you are
+ready to set the loop, ping me, and we will decide the mechanism of how the data is pulled. I suspect it is A.)
+Too aggressive to pull 5+ articles from every single ticker from every single platform every single day, which
+means we will have to slowly and steadily build up the backfill over some amount of cycles. B.) Once we have a
+solid backfill then we need to figure out how to make sure we are not pulling the same articles multiple times,
+which means that articles have to be keyed on some kind of stable key so we dont keep pulling the same ones."*
+SCOPE: AMGT_RESAPP / D5 local harvest remediation and BOUNDED local validation, the Barron's click-and-drag
+verification included (his ~04:0xZ word at the same terminal: the 03:52Z Barron's pass was human-assisted and is
+NOT a pass). CADENCE of the remediation loop: the lane's own. **THE COLLECTION MECHANISM AND ITS CADENCE ARE
+RESERVED TO ANDREW, BY NAME:** no recurring collection is enabled and no backfill cadence is chosen until he
+decides after the validation report; the scheduled entrypoint stays DISABLED after a bounded one-shot test;
+five articles is a validation target, never a daily quota. STOP-CONDITION: every named issue remediated and
+validated end to end, then the ping to Andrew; or his stand-down. No cron id is recorded here (the table records
+authority, never the churning artifact). Landed by `1.0.0_SA_CTO~W` (the CTO lands rows; the lane did not write
+its own). POSN_ASTTAX is outside that lane's scope (record
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260915_035xZ_W_FABRIC_IS_AMGT_RESAPP_ONLY_Z_FABRIC_IS_POSN_ASTTAX.md`
+@9dfee40ce0).
+
 **Find a stale cron from a prior session? Cancel it:** `CronList` → `CronDelete`.
 
 ---
