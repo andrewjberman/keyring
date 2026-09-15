@@ -326,6 +326,118 @@ worker's id is `POSN_AGGFIX-Z-W<slot>-S<k>`, a seat's `POSN_AGGFIX-Z-S<k>`.
     "spec_asserts": "TO-C1-1 C1-AC9 and decomposition s.1.2: the plan -target'ed to the function and the distribution reads 'Plan: 0 to add, 2 to change, 0 to destroy' with aws_wafv2_web_acl absent (the whole-root WAF drift 'kept out of your targeted plan'); anything else is Branch B -- STOP, BLOCKING row, the COO half's rollback.",
     "world_is": "While the WAF drift stands, no plan targeted to the distribution can exclude it, so C1-AC9 as written cannot pass. Not run: C1-AC17, C1-AC10, C1-AC11, C1-AC12, C1-AC13, C1-AC14, C1-AC15. The live function and all 25 associations are at version 19; ledger entry posn-aggfix-r1-edge-gate stays OPEN with L1 and L2 closed.",
     "notes": "INERT: left alone, nothing serves differently. Residual of rolling back by copy: the latest artifact VersionId (7AkZ0z...) differs from the one in state (GUSk3...), so the NEXT portal-auth apply by any seat publishes a new version carrying the OLD code, re-points all 25 associations to it, and applies the WAF drift with it. Restoring the exact prior latest version would need a delete of object versions zNqzz... and 7AkZ0z..., an S3 delete this worker does not make without human confirmation. How the plan is re-cut is the issuer's."
+  },
+  {
+    "id": "POSN_AGGFIX-Z-W1-S6",
+    "project": "POSN_AGGFIX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_AGGFIX~1",
+    "surfaced_at": "2026-09-15T21:10:10Z",
+    "one_line": "A2-AC13 cannot hold as written. main() --upload now writes both keys with the put shape, but its payloads cannot equal the handler's in every field except generated_at: main() passes generate_positioning_data no ETF returns and a YYYY-MM-DD data_date, while the handler passes etf_returns_df/etf_returns_lookup and a YYYYMMDD data_date. The same differences exist at 605c03f81f.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/v2_portal/yang_pipeline/positioning/yang-generate-positioning/lambda_function.py @166ca71b85 :2603 (main): generate_positioning_data(model_data, date_formatted, data_pkl_data); :2761 (lambda_handler): generate_positioning_data(model_data, data_date, None, data_as_of, etf_returns_df, etf_returns_lookup). The same two calls @605c03f81f at :2461 and :2615.",
+        "org/missions/D4/POSN/POSN_AGGFIX/deliverables/0.9.0_WK_POSN_AGGFIX~1/a2_ac13.out.txt @166ca71b85 (a2_producer_harness.py --cli-upload, 2026-09-15T21:05Z, event execution 20260914_v1-9dbd2129; the model PKL benchmarks/model_20260914_v1.pkl at VersionId V7LdxQzGOdxGv6KulE48xjPDATbu0A4T for both runs; main() return 0): EXACTLY TWO PUTS True, both with ContentType application/json, ContentEncoding gzip, CacheControl no-cache. positioning_data.json DIFFERS on 161 leaf paths in 11 shapes: 160 holdings[*].returns present only in the handler's capture (portfolios and the five books), plus $.data_date. opal_aggregate.json DIFFERS on 30 paths, all $.current_holdings.AGG.holdings[*].returns.",
+        "Same output, CONTROL at 605c03f81f: the CLI shared file against the handler shared file DIFFERS on 191 paths in 12 shapes, the same classes plus the AGG holdings returns the base still carried in the shared file (30).",
+        "Captured data_date values, read from the .scratch captures: handler runs '20260914' (BEFORE and AFTER); CLI runs '2026-09-14' (BEFORE and AFTER). data_as_of is '2026-09-14' in all four."
+      ]
+    },
+    "spec_asserts": "TO-A2-1 A2-AC13: main() run with --upload under the capturing wrapper on the same model PKL: exactly two puts captured, each with ContentType application/json, ContentEncoding gzip and CacheControl no-cache, and each decompressed payload equal to the handler AFTER run's capture of the same key in every field except generated_at.",
+    "world_is": "The two write sites built different payloads before this order touched them. The CLI path carries no per-holding returns (in portfolios, in the five books, and now in the aggregate's holdings), and its data_date is YYYY-MM-DD. Making the payloads equal means changing how main() calls generate_positioning_data (load etf_returns from the model PKL and pass the YYYYMMDD date), which the order does not name. Refused under the refusal clause, not repaired.",
+    "notes": "A2-AC13 is recorded FAIL. Its other limbs hold: two puts, the put shape, the same model PKL, main() return 0. The harness sets AWS_LAMBDA_FUNCTION_NAME for the CLI run as for the handler runs; without it, main() takes load_aum_data's local branch and writes no current_holdings. Whether A2-AC13 is re-cut to exclude returns and data_date, or main() is widened, is the issuer's call.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "POSN_AGGFIX-Z-W1-S7",
+    "project": "POSN_AGGFIX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_AGGFIX~1",
+    "surfaced_at": "2026-09-15T21:10:10Z",
+    "one_line": "The shared file is not byte-stable across processes for the same source and the same inputs. The key order of portfolios.<code>.benchmark.spread.segment.{sector,geography,maturity} follows set iteration, which Python's per-process hash randomization reorders. To make A2-AC3's byte comparison meaningful, the harness pins PYTHONHASHSEED=0 for every run.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/v2_portal/yang_pipeline/positioning/yang-generate-positioning/lambda_function.py @605c03f81f :1265, :1272, :1279 (calculate_benchmark_comparison): all_sectors, all_geographies and all_maturities = set(...) | set(...), iterated to fill spread['segment'][...]; the same lines @166ca71b85.",
+        "org/missions/D4/POSN/POSN_AGGFIX/deliverables/0.9.0_WK_POSN_AGGFIX~1/a2_ac3.unpinned_hash_seed.out.txt @166ca71b85 (seed unpinned, 2026-09-15T20:58Z): BOOKS NON-AUM IDENTICAL 5 of 5; 'TOP-LEVEL DIFFERS on: portfolios' with 0 differing leaf paths. A diagnostic read of those captures found 14 dicts whose key order differs, all under benchmark.spread.segment, with json.dumps(sort_keys=True) EQUAL.",
+        "Discriminating read in the same session: two runs of the BEFORE source at 605c03f81f with the seed unpinned (.scratch/a2/diag_runs/before-rep1 and before-rep2): portfolios bytes DIFFER and sorted-keys EQUAL; data_as_of, note, benchmarks, current_holdings and data_date bytes EQUAL.",
+        "org/missions/D4/POSN/POSN_AGGFIX/deliverables/0.9.0_WK_POSN_AGGFIX~1/a2_ac3.out.txt @166ca71b85 (PYTHONHASHSEED=0 for both arms): TOP-LEVEL IDENTICAL, BOOKS NON-AUM IDENTICAL 5 of 5, CONTROL FIRED."
+      ]
+    },
+    "spec_asserts": "TO-A2-1 AF1-s-8 and A2-AC3: the handler run at the base commit and at the branch HEAD against the SAME inputs, with every top-level key other than generated_at and current_holdings byte-identical.",
+    "world_is": "portfolios is byte-identical only while the hash seed is held equal. The deployed Lambda runs with a random seed, so the served shared file's segment key order can change from run to run with no data change. Consumers that read by key are unaffected; any byte or hash comparison of two served files would see a change that is not one.",
+    "notes": "Form only. The producer's key order is outside this order's cells and is untouched. The harness's first comparator was also blind to key order (it printed 0 differing leaf paths for a real byte difference); it now reports key-order differences.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "POSN_AGGFIX-Z-W1-S8",
+    "project": "POSN_AGGFIX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_AGGFIX~1",
+    "surfaced_at": "2026-09-15T21:10:10Z",
+    "one_line": "A2-AC6 asks the hand re-derivation to match the producer to 6 decimals, but the producer serves each aggregate weight rounded to 4 decimals (round(total_weight, 4)). The 6-decimal MATCH is therefore of the hand value rounded to 4 places the producer's way; the unrounded hand values differ from the served weights in the 5th decimal.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/v2_portal/yang_pipeline/positioning/yang-generate-positioning/lambda_function.py @166ca71b85 :1675 (calculate_aggregated_holdings): 'weight': round(data['total_weight'], 4); @605c03f81f :1607. The books' weights that feed the sum are rounded to 4 at :1894 @166ca71b85.",
+        "org/missions/D4/POSN/POSN_AGGFIX/deliverables/0.9.0_WK_POSN_AGGFIX~1/a2_ac6.out.txt @166ca71b85, unrounded hand value / hand rounded to 4 / producer weight: IEFA 0.1351988140 / 0.135200 / 0.135200; DIVZ 0.1262441538 / 0.126200 / 0.126200; IDVZ 0.1042665386 / 0.104300 / 0.104300. HAND RE-DERIVATION MATCH 3 of 3."
+      ]
+    },
+    "spec_asserts": "AF1-s-7 and A2-AC6: the exercise re-derives the aggregate weight of three named holdings by hand from the model books and the member AUM, and matches the producer's output to 6 decimals.",
+    "world_is": "The served weight has 4 decimals, so an unrounded re-derivation cannot agree with it at 6. The harness prints the unrounded value, the value rounded to 4, and the producer's weight, and grades MATCH on the rounded value.",
+    "notes": "Form only. The rounding is unchanged by this order.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "POSN_AGGFIX-Z-W1-S9",
+    "project": "POSN_AGGFIX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_AGGFIX~1",
+    "surfaced_at": "2026-09-15T21:10:10Z",
+    "one_line": "A2-AC11 cannot print one file. git diff --stat 605c03f81f HEAD -- infra/ lists 8 files at HEAD 166ca71b85, because the SITEZ fast-forward the order's first act requires brought in 7 infra files that other orders changed after the anchor (POSN_AGGFIX TO-C1-1's edge gate, AMGT_RESAPP rj-10's harvest files). This order's own commit changes exactly one infra file.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D4/POSN/POSN_AGGFIX/deliverables/0.9.0_WK_POSN_AGGFIX~1/a2_ac11.out.txt, the invocation verbatim at HEAD 166ca71b85: 8 files changed -- infra/aws/lambda-edge/auth-validator-edge/aggregate_gate.mjs, infra/aws/lambda-edge/auth-validator-edge/index.mjs, the producer lambda_function.py, and infra/aws/terraform/harvest/{build-and-upload-scoped-amgt.sh, chatter-axis-schedule.tf, lambda_src/build_zip.py, lambda_src/lambda_function.py, scoped-amgt-api.tf}; rc=0.",
+        "Same file, labeled SUPPLEMENTARY: git diff --stat 0c4650dc1c HEAD -- infra/ (0c4650dc1c = the SITEZ tip fast-forwarded to before any edit) lists 1 file, the producer, 197 insertions and 47 deletions.",
+        "Same file: git log 605c03f81f..HEAD -- infra/ names 240fe36222 (0.9.0_WK_POSN_AGGFIX~2), a30a75d74a and d3e9dc909b (0.9.0_WK_AMGT_RESAPP~19), drains 5445eee97e and 0c4650dc1c, and this order's 166ca71b85."
+      ]
+    },
+    "spec_asserts": "TO-A2-1 A2-AC11: timeout 60 git diff --stat 605c03f81f HEAD -- infra/ shows exactly one file under infra/: infra/aws/lambda/v2_portal/yang_pipeline/positioning/yang-generate-positioning/lambda_function.py. The first act brings SITEZ into the branch.",
+    "world_is": "The anchor is fixed, and HEAD includes every SITEZ commit up to 0c4650dc1c, so the diff counts other orders' files. The one-file result holds only against the base this order's work started from.",
+    "notes": "Recorded FAIL by output; the supplementary read is not substituted for the criterion. The fixed anchor is right for the before-arm read, but as the base of this diff it picks up every drain merged in after it. How the criterion is re-cut is the issuer's call.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "POSN_AGGFIX-Z-W1-S10",
+    "project": "POSN_AGGFIX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_AGGFIX~1",
+    "surfaced_at": "2026-09-15T21:19:52Z",
+    "one_line": "The proof schema defines acceptance[].expect as the Python regex the evidence must match, 'Carried from the task order's <expect>'. TO-A2-1's <expect> clauses are prose, so carrying them verbatim makes proof-of-spec-check refuse every PASS row: 10 violations, 9 no-match and 1 uncompilable pattern. The instance omits expect, so it is graded as self-report (the pre-v3 state).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/standards/PROOF_OF_SPEC.schema.json @49607de3fb, acceptance.items.properties.expect.description: 'spine v3.0 L6/L7 (one clause per criterion): the PATTERN (Python regex, searched with DOTALL) the deciding output must match; the checker grades a mechanical criterion by this match, not by the worker. Carried from the task order's <expect>. OPTIONAL'.",
+        ".tools/proof-of-spec-check.py @49607de3fb conditional_checks: re.search(exp, output_evidence, re.S | re.M); a PASS row that does not match is a violation, and a pattern that does not compile is a violation.",
+        "org/missions/D4/POSN/POSN_AGGFIX/task-orders/POSN_AGGFIX.TO-A2-1.producer-reads-current-weights-and-writes-the-opal-only-key.md @49607de3fb, A2-AC1: <expect>legacy 0; platinum 1 or more; opal_aggregate 1 or more.</expect>; every <expect> in the order is an English clause.",
+        "proof-of-spec-check run in worktree wk-posn_aggfix-1-1 at HEAD 49607de3fb, with each order <expect> carried verbatim into the instance: 'violations=10', 'INVALID (rc=1)'; e.g. \"acceptance[A2-AC1]: status=PASS but output_evidence does NOT match expect 'legacy 0; platinum 1 or more; opal_aggregate 1 or more.'\" and 'acceptance[A2-AC7]: expect is not a valid pattern (unterminated character set at position 263)'."
+      ]
+    },
+    "spec_asserts": "org/standards/PROOF_OF_SPEC.schema.json acceptance[].expect: the regex the deciding output must match, carried from the task order's <expect>, so that the checker, not the worker, grades a mechanical criterion.",
+    "world_is": "The order's <expect> clauses are sentences (backticks, semicolons, parentheses, square brackets), not patterns. Verbatim they match no evidence, and A2-AC7's does not even compile. For this order, carrying cannot engage the checker's grading of PASS rows; only a worker writing its own patterns could, and the schema does not describe that.",
+    "notes": "Form only. The instance's criterion_verbatim carries each prose expectation, and PASS rests on verbatim output against it. TO-A1-1's instance carries no expect either.",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
