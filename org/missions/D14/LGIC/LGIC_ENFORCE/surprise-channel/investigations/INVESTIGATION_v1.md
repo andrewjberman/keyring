@@ -438,6 +438,31 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     "spec_asserts": "TO-EN-r-1 WORKER FACE: scopes.json rows key, class, long, short, tenancy, bucket and aliases; bd appears only as an alias or a refused token.",
     "world_is": "Each added field holds one fact a carrier holds today, and each view is rendered from those fields (lib/opal_naming.py _firm_registry_rows, _separations, _blk_firm_trees). The live buckets opal-data-bd, opal-data-inf and opal-data-cot are bucket-plane aliases marked routed, because r1-bd refuses bd anywhere but an alias and GRADING_RULE.md grades opal-data-bd an ALIAS of opal-data-49financial. mockadv is an alias of 49financial with its own tenant block. Each registry file's _about states its fields.",
     "notes": "DEC-1's field list may be read as a minimum, and this as its extension; that read is the issuer's and 1.0.0_SA_CTO's to make."
+  },
+  {
+    "id": "LGIC_ENFORCE-W4-S1",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~4",
+    "surfaced_at": "2026-09-15T00:18Z",
+    "one_line": "check_en.py v1-tests reads FAIL-CONSUMER-TESTS whatever data/firm_registry.json says: the same 14 tests in test_seam_paired.py fail at the base bytes and at the generated view, because they read the portal fixture from the primary checkout (12 keys) and routes.json (12 routes) against an asserted 11.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~G",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "EXERCISED, a discriminating pair in worktree wk-lgic-enforce-1-4 @2a6c7d8543 where only the carrier varies: the four consumer test files with data/firm_registry.json at its HEAD bytes gave '14 failed, 95 passed' rc 1; with the generated view gave '14 failed, 95 passed' rc 1; the FAILED sets compared equal (14 = 14, IDENTICAL SET: True), every one in infra/aws/lambda/investor-reporting/_contracts/tests/test_seam_paired.py.",
+        "EXERCISED, per file on the generated view: _keys/tests/test_keys.py 45 passed rc 0; _gate/tests/test_policy_completeness.py 3 passed rc 0; org/modules/graph/tests/test_comp_keys.py 8 passed rc 0; _contracts/tests/test_seam_paired.py 14 failed, 39 passed rc 1.",
+        "FILE: infra/aws/lambda/investor-reporting/_contracts/tests/test_seam_paired.py:47-62 @2a6c7d8543: portal/ is a gitlink a linked worktree does not populate, so portal_root() falls back to C:/Users/AndrewBerman/Desktop/ajb_workspace/portal and the run printed 'consumer fixtures read from the primary checkout'; :216 asserts len(smoke) == 11 and failed 'assert 12 == 11'.",
+        "READ: the portal gitlink at HEAD 2a6c7d8543 is e85f6eb84f; the primary checkout's portal is at 0d07580841 on DEV (e85f6eb84f is its ancestor, merge-base --is-ancestor rc 0). src/pages/InvestorReporting/fixtures/smoke/default.json holds 11 keys at e85f6eb84f and 12 at 0d07580841.",
+        "FILE: docs/contracts/investor-reporting/v1/routes.json @2a6c7d8543 holds 12 route entries (last touched d9c940244a, 2026-09-11 12:32 -04:00); test_seam_paired.py:428 asserts len(declared) == 11 and failed 'assert 12 == 11' after printing 'routes in routes.json: 12 = 12 DECLARED'. The test was last touched at 49035683d1 (2026-09-11 19:47 -04:00)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EN-v-1 V1-AC3: 'its consumers' existing tests pass: the three investor-reporting tests (_keys, _gate, _contracts) and org/modules/graph/tests/test_comp_keys.py', graded by check_en.py v1-tests expecting VERDICT: PASS-CONSUMER-TESTS.",
+    "world_is": "The _contracts test fails 14 of 53 at the spawn base with the carrier unchanged, so V1-AC3 cannot read PASS from any view of data/firm_registry.json. Moving it takes an edit to test_seam_paired.py or a different portal state, and neither is in this order's <paths>. V1-AC1 and V1-AC2 pass by output. The order stays pending.",
+    "notes": "The failure text of the 11 parametrized test_paired_consumer_request_through_the_real_dispatcher cases was not read; only their names and the shared FAILED set. Whether a worktree whose portal/ is populated at gitlink e85f6eb84f would pass the 13 fixture-reading tests was not exercised: populating portal/ is outside this cell. The same v1-tests invocation graded in the shared tree reads the same primary portal."
   }
 ]
 ```
