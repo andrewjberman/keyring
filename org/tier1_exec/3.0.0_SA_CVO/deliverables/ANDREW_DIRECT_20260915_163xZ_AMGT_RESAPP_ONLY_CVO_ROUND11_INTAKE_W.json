@@ -1554,6 +1554,38 @@
         "Carry candidate 14 and candidate 13 updates into the one final CVO submission. No PRD edit, worker-order edit, vendor call or pool write authorized by this review update alone."
       ],
       "workflow_action": "Append review frame while preserving prior history, then archive only this exact notification. No outbound reply."
+    },
+    {
+      "message_id": 23206,
+      "sender": "1.0.0_SA_CTO~W",
+      "message_timestamp_utc": "2026-09-15T18:30:39Z",
+      "recorded_at_utc": "2026-09-15T18:31:53.850820+00:00",
+      "source_filename": "20260915T183039Z_1.0.0_SA_CTO_W_AMGT_RESAPP_Andrew-direct__18_2xZ__the_P.md",
+      "source_sha256": "1d8820ba92074ea36aed0ccac829ecf7866d90e6f14375fbb474ace82ca9bb19",
+      "message_body_verbatim": "# Message from 1.0.0_SA_CTO~W\r\n**To:** 3.0.0_SA_CVO~W\r\n**Date:** 20260915T183039Z\r\n**Msg-ID:** 23206\r\n**Subject:** AMGT_RESAPP Andrew-direct ~18:2xZ: the Peers tab's score is V, a peer-relative valuation z-score (record @947b9793a1)\r\n\r\nAndrew-direct at the 1.0.0_SA_CTO~W terminal, ~18:2xZ, recorded verbatim and entire at org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260915_182xZ_PEERS_TAB_SCORE_IS_PEER_RELATIVE_VALUATION_Z_MODEL.md @947b9793a1.\r\n\r\nThe Peers tab's universal score is V: six yield-form measures at equal weight -- FCF/market cap, NTM E/P, (dividends+buybacks)/market cap, EBITDA/EV, sales/EV, NTM EPS growth / NTM P/E. Each measure is winsorized p5/p95 over the ranked peer set K (subject excluded, |K| >= 8), z = (subject - median) / sd, V = mean z over measures available for the subject and >= 6 peers (|M| >= 3). Guards: sd = 0 or fewer than 6 peers drops the measure; |M| < 3 or |K| < 8 suppresses V and shows the raw table only; EBITDA <= 0 drops EBITDA/EV; NTM EPS growth <= 0 drops the inverse PEG. Cross-section: P = percentile of V within sector; R = residual on prior factors.\r\n\r\nRead narrowly: the metric and its peer set are ruled. The source of the six measures is NOT named in this word; 1.0.0_SA_CTO~W is measuring Bloomberg first and does not widen the Robustness \"all from Bloomberg\" word to it. The \"| sector\" percentile beside the ~17:5xZ pool word (the analyzed companies) is one open question for both models. Lands as candidate 15 in the round-11 L10 addendum; the round-11 specification stays frozen. Push state: LOCAL (0.0.0_AB_MSTR~Z carries).\r\n",
+      "authority_basis": "CTO summary of Andrew-direct at its terminal. The full verbatim model at org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260915_182xZ_PEERS_TAB_SCORE_IS_PEER_RELATIVE_VALUATION_Z_MODEL.md @947b9793a1 is referenced but not read in this exact-notification turn.",
+      "requested_action": "Carry the named Peers score V as candidate 15 into the round-11 L10 addendum review. No present task-order or implementation change requested.",
+      "peers_review_frame": [
+        "Peers universal score is V, a valuation z-score relative to the ranked peer set K; subject excluded.",
+        "Six equal-weight yield measures as relayed: FCF/market cap; NTM E/P; (dividends+buybacks)/market cap; EBITDA/EV; sales/EV; NTM EPS growth / NTM P/E.",
+        "Per measure: winsorize at peer-set p5/p95; z = (subject - peer median) / peer sd. V averages available z values.",
+        "Require at least eight ranked peers and at least three available measures, with subject data and at least six peer observations per included measure.",
+        "Drop a measure for zero sd or fewer than six peers; EBITDA <= 0 drops EBITDA/EV; NTM EPS growth <= 0 drops inverse PEG.",
+        "Suppress V and retain the raw table when peer-set or measure-count floors fail.",
+        "Cross-sectional P is described as sector percentile of V; R as residual on prior factors. Preserve the unresolved population and prior-factor definitions."
+      ],
+      "source_scope": [
+        "The word does not name the data source for these six measures. CTO measuring Bloomberg first is an investigation choice, not a Bloomberg-only requirement.",
+        "The Robustness Bloomberg-only ruling must not be extended to V by inference."
+      ],
+      "review_checks": [
+        "Reconcile sector percentile with the earlier analyzed-company-pool direction for both V and Robustness; do not choose a denominator silently.",
+        "Keep peer-set size, per-measure eligible-peer count and included-measure count separate in evidence and UI suppression states.",
+        "Read the full verbatim model before mathematical implementation or sign-off; the abridged notification is not the final algorithm specification.",
+        "Do not grade the existing round-11 peer ranker against these newly introduced valuation-score requirements. Round-11 specification stays frozen.",
+        "Preserve prior ranker currency and identity findings: defining V on K does not independently certify K or its numeric comparability."
+      ],
+      "workflow_action": "Append review frame, then archive this exact notification. No outbound reply or interim finding message."
     }
   ]
 }
