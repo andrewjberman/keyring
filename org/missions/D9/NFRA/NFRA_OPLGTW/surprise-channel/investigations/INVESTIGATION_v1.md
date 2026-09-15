@@ -1363,6 +1363,30 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "OGI1-AC11 is the discriminating proof that the reconciler's address list survives the description backfill.",
     "world_is": "The reconciler's list is empty at this apply, so AC11 compares 0 with 0 and cannot fail on the property it exists for; it can still see a list appearing or vanishing across the apply. The probe prints the lock-token rotation beside it (not deciding) to show the two reads bracket an applied UpdateIPSet. Seeding an address to make the check bite would be a WAF write this order does not grant, so it was not done.",
     "notes": "INERT: an empty list cannot be lost. It matters to the next apply of this root that meets a non-empty list: ignore_changes keeps addresses out of the diff, but whether the provider's UpdateIPSet sends the refreshed live list is not exercised by this apply."
+  },
+  {
+    "id": "NFRA_OPLGTW-W1-S6",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~1",
+    "surfaced_at": "2026-09-15T21:56:47Z",
+    "one_line": "OG-i-1's one safe-apply run was refused before terraform ran: the halt gate resolves the acting serial only from org/mcp/sessions/<session-id>.serial (or an .orphan-cleaned marker) under the worktree root and never reads OPAL_AGENT_SERIAL, and that gitignored directory is absent in the worker's worktree and outside its write grant.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN: probes/og_i1_act.py apply, 2026-09-15T21:56:44.893672Z..21:56:47.841644Z, safe-apply.sh -chdir=infra/aws/terraform/opal-gateway apply -no-color: 'HALT-GATE: IDENTITY UNRESOLVED -- BLOCKED (fail-closed)', remedy printed as writing the serial to org/mcp/sessions/e09b6e12-6f85-4732-b702-3307d4a68532.serial, 'Do NOT override this'; exit 3; no approval prompt, terraform never invoked. Record: deliverables/0.9.0_WK_NFRA_OPLGTW~1/evidence/apply.json and apply.log on branch wk-nfra_oplgtw-1-1b.",
+        "CODE: .tools/halt-gate-check.sh:52-120 @09668e3207 -- halt_gate_resolve_serial reads ${HALT_GATE_REPO_ROOT}/org/mcp/sessions/${CLAUDE_CODE_SESSION_ID}.serial, then ${CLAUDE_CODE_SESSION_ID}.*.orphan-cleaned, else returns 1; :38 HALT_GATE_REPO_ROOT is the script's own checkout (this worktree); :267-274 halt_gate_check blocks on the failed resolution. Native Grep for OPAL_AGENT_SERIAL over the file: 0 hits. The worker admission path (:142-174) validates a 0.9.0_WK serial against a non-terminal order, but is reached only after a serial resolves.",
+        "WORKTREE: org/mcp/sessions/ is gitignored (.gitignore:423 @09668e3207), 0 tracked files, absent in /c/tmp/wk-oplgtw-1-1b; the worker's CLAUDE_CODE_SESSION_ID is e09b6e12-6f85-4732-b702-3307d4a68532, the parent session's.",
+        "ORDER: org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-i-1.access-state-table.md:117 and :133-139 @09668e3207 -- the <paths> grant does not name org/mcp/sessions/, and an unnamed path needed is 'a BLOCKING surprise row on that criterion -- never an override'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A worker that exports OPAL_AGENT_SERIAL can run .tools/safe-apply.sh from its own worktree (spawn identity line: 'Begin every Bash call with export OPAL_AGENT_SERIAL=... -- safe-apply's identity gates read it').",
+    "world_is": "The halt gate, which safe-apply runs first, never reads OPAL_AGENT_SERIAL. Its only identity sources are session-keyed files under the worktree's org/mcp/sessions/, which is gitignored, absent in a fresh worktree and outside this order's grant. Its remedy is to write that file, and the gate itself says not to override. So the apply did not run: nothing changed in AWS (WAF get-ip-set before and after, 0 and 0 on both sets), the ledger nfra-oplgtw-og-i-1-access-state stays OPEN with L1-L5 unproven, and schwab_access_state.tf sits committed and unapplied at 4b9671ec09 on the worker branch.",
+    "notes": "ARMED, the issuer's to disarm, on two counts. (1) Draining wk-nfra_oplgtw-1-1b's schwab_access_state.tf to CLOUD before an order-bound apply lets any later apply of the root create the table and both grants outside this ledger (the shape W1-S1 named). (2) The OPEN sentinel will blare RED past its 2 h window once it is on CLOUD, although nothing was deployed. A re-run needs one of three things: the session serial file admitted by a re-cut <paths> (worktree-local, gitignored, never committed); a serial file the issuer provisions at spawn, as it does .tools/terraform.exe; or an apply by a seat whose identity the gate resolves. It can reuse the open ledger. Form only."
   }
 ]
 ```
