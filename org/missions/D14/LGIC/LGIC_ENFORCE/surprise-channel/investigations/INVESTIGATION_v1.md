@@ -1572,6 +1572,30 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     "spec_asserts": "safe-merge.sh commits the merged index. Afterwards the shared index differs from HEAD only by other seats' in-flight staging of their own paths (CLAUDE.md Rule 14b).",
     "world_is": "Minutes after the drain, some process staged snapshot blobs older than the drain for 2 of the drained paths. A pathspec-scoped safe-commit would not sweep them in. An unscoped commit, or a merge graded on this index, would revert the drain without an error.",
     "notes": "INERT: cleared by the issuer at 10:05Z. The mechanism's owner is unknown. The candidates are any tool that saves and restores the shared index around its own commit, or any git add from a stale checkout. Carried to 1.0.0_SA_CTO and 0.0.0_AB_MSTR at the round's drain-end read. A second sighting on any project would make it a pattern."
+  },
+  {
+    "id": "LGIC_ENFORCE-S18",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G",
+    "surfaced_at": "2026-09-15T11:04Z",
+    "one_line": "Correction to LGIC_ENFORCE-S17: the index restore did more than leave stale staging. It truncated the drain itself. Merge c6d652a6dc recorded 2 of EN-f-2's 8 changed paths, so CLOUD kept the probe-roles .tf and the open-deploy sentinel and lacked the closed entry, FENCE_PROBES.md, the proof and the result. Landed after the fact in 3 commits.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED: git diff --name-status c6d652a6dc^1 c6d652a6dc lists 2 paths (TO-EN-f-2, INVESTIGATION_v1.md). The branch changed 8 more against the merge base; one, check_en.py, was already equal on CLOUD. lgic-enforce-fence-probes.tf and the .open_deploys sentinel were PRESENT at c6d652a6dc and at HEAD, and absent at c6d652a6dc^2. The shared working tree showed them as unstaged deletions.",
+        "CENSUS: all 55 merge commits by 2.0.0_SA_COO~G since 2026-09-14 12:00Z. A path counts as dropped when the merge's blob differs from the branch tip's while CLOUD's side left the path untouched. Result: 1 of 55 affected (c6d652a6dc), 6 paths.",
+        "FOUND BY: 0.9.0_WK_LGIC_ENFORCE~1 in row W1-S20. EN-x-1's read-only plan from c6d652a6dc showed the 3 probe roles as creates.",
+        "REMEDY: each of the 6 working-tree paths was byte-compared to the branch tip 1c66f3c806 (git hash-object --path: 6 of 6 MATCH), then landed. Ledger entry and sentinel deletion @5ee8e068fd; the probes .tf deletion @8c77a1400a (lane override CLOUD_OPS_OR_ETL, audited); FENCE_PROBES.md, the proof and the result @d482e58ecf (lane override TREE_DELIVERABLES, audited).",
+        "LIVE PLANE UNCHANGED throughout: the fence is applied, and the 3 probe roles returned NoSuchEntity on the issuer's own read. The hazard was a CLOUD plan or apply re-creating them, not their existence."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "safe-merge.sh reports 'MERGED and committed' only after grading the merged index. The resulting commit is the merged tree.",
+    "world_is": "safe-merge graded 8 staged paths and printed 'MERGED and committed -- c6d652a6dc', but the commit recorded 2. The issuer reported the drain on that line without reading the resulting tree. 1.0.0_SA_CTO's ADVI_FIRMBKTS ruling 97031 cited the drain; its evidence (the live policy, the probes) stands independently of the record.",
+    "notes": "INERT once the 3 landing commits are in. Carried to 1.0.0_SA_CTO and 0.0.0_AB_MSTR. A merge's first-parent diff should be checked against the branch's own diff before a drain is called landed; this issuer now does so. The census method would show whether other seats' merges were truncated the same way. The writer that restores the index is still not identified (S17)."
   }
 ]
 ```
