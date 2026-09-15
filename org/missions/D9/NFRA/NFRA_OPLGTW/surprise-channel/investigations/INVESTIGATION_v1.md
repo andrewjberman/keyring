@@ -556,6 +556,28 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "make_fixtures.py and the synthetic Parquet and closure fixtures it writes under fixtures/ are this cell's committed deliverables (TO-OG-v-1, What you write, item 2).",
     "world_is": "Parquet is ignored repository-wide under infra/. Once force-added the files are tracked and reach every checkout. A later regeneration committed by a route other than named force-adding would silently leave the old bytes, and MANIFEST.json's sha256 would then disagree with the regenerated files.",
     "notes": "INERT: the negation that would un-ignore the fixture directory lives in infra/.gitignore, outside this order's paths. The og_v1 probe checks every Parquet file against MANIFEST.json's sha256, and it regenerates from make_fixtures.py when a file is absent."
+  },
+  {
+    "id": "NFRA_OPLGTW-S6",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-15T13:14Z",
+    "one_line": "Disarm of W6-S3 as its owner 1.0.0_SA_CTO ruled (msg 97078): the catalog HEADs and GETs only named objects under the contract's six data_prefixes, fact_* entries are never read or granted, and the rule is carried as criteria in TO-OG-k-1 and TO-OG-v-2, amended before hand-off @230168e108.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RULING: 1.0.0_SA_CTO msg 97078 (2026-09-15T13:02:46Z), reading (a). PRD C3 :155 names only silver/dim_position/, dim_balance/ and dim_asset/ as data-readable. C3 :157 has the completion object carry sufficient sanitized closure facts itself. C6 :185 grants GetObject/GetObjectVersion on those six prefixes, and :191 forbids bucket-policy broadening. The silver HEADs run under the data reader role, and the catalog role stays on the completion prefixes (:187).",
+        "CRITERIA @230168e108: TO-OG-k-1 narrows OGK1-AC5 to data_prefixes and adds OGK1-AC16 (the HEAD/GET key set is a subset of data_prefixes read from org/standards/NFRA_OPLGTW_CONTRACT.json) and OGK1-AC17 ((difference) fact-naming closures make zero fact_* calls and still qualify on dims; a missing dim yields incomplete). TO-OG-v-2 adds OGV2-AC5 (every S3 call is inside the prefixes its role is granted). The to-pipeline-gate's GATE (viii) graded both modified orders at commit.",
+        "NO WORKER READ THE OLD TEXT: TO-OG-k-1 (slot ~5) and TO-OG-v-2 (slot ~6) had not been handed at 230168e108; both remain pending."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "W6-S3 (0.9.0_WK_NFRA_OPLGTW~6) is ARMED with disarm_owner 1.0.0_SA_CTO: C3's 'independently HEADs every named silver object' would have the catalog read fact tables that no Gateway read role may read, and moto evaluates no IAM, so a local run could pass on code AWS denies.",
+    "world_is": "The owner ruled the ratified text's own reading, so the PRD and the decomposition do not change. The hazard is converted into criteria: a call-set subset check and a fact_* negative arm in the catalog cell, and the same call-set check in the local acceptance run. The live proof stays A13's safe negative fixture, an out-of-prefix HEAD by the reader role reading AccessDenied.",
+    "notes": "Disarms W6-S3 on the declared plane, as criteria; the exercised plane is OG-k-1's and OG-v-2's grading. The adjudication of W6-S3 remains 3.0.0_SA_CVO's at L9."
   }
 ]
 ```
