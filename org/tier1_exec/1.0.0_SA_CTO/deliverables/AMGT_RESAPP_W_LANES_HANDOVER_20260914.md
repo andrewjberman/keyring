@@ -22,6 +22,13 @@ subagents."*
 | L5 / L6 / L7 / the recut (COO) | `2.0.0_SA_COO~W` | PROVISIONED 2026-09-14T23:42:07Z by `0.0.0_AB_MSTR~Z` (Claude seat, broker PID 3344; msg 22934). Replaces `2.0.0_SA_COO~ZZZ`, NOT REGISTERED, closed down on Andrew's word at 15:19Z (msg 22817). One project per Tier-2 seat instance: this lane holds AMGT_RESAPP and nothing else. |
 | L8 / L9 / the slug (CVO) | `3.0.0_SA_CVO~W` | PROVISIONED 2026-09-14T23:42:09Z by `0.0.0_AB_MSTR~Z` (Codex seat, thread bound, status GREEN; msg 22934). `3.0.0_SA_CVO~Z` is LIVE (PID 9404) as POSN_ASTTAX's adjudicator. **CORRECTED ~23:4xZ on msg 22934: NO STOP stands on `3.0.0_SA_CVO~Z`.** Both halves were lifted at ~17:00Z (`1.0.0_SA_CTO~Z`, msg 22828) and ~17:03Z (`0.0.0_AB_MSTR~Z`, msg 22832) on Andrew's word, and the seat has been live since 17:07Z. This table said a STOP stood from its first commit @ce7371d0b3 until this correction; the premise came from the pre-reboot successor state of 15:2xZ and was not re-measured. Nobody at these lanes touches `~Z` because it is a separate live seat on another project, not because of any hold. |
 
+**SCOPE, ANDREW-DIRECT 2026-09-15 ~03:5xZ at this terminal, VERBATIM:** *"Please make sure that the ~W agents
+are only working on AMGT_RESAPP. I spawned the ~W fabric explicitly to work on RESAPP while the ~Z agents
+work on POSN_ASTTAX."* and *"I keep catching CVO~W being expected to ratify work for the ~Z fabric, that is
+incorrect."* **No `~W` lane reviews, signs, refuses, adjudicates or commits on any project but AMGT_RESAPP;
+a POSN_ASTTAX routing that reaches a `~W` inbox is answered by NOT acting on it and by naming the `~Z` owner
+back to the sender.** Record: `ANDREW_DIRECT_20260915_035xZ_W_FABRIC_IS_AMGT_RESAPP_ONLY_Z_FABRIC_IS_POSN_ASTTAX.md`.
+
 Loops: **zero crons at launch, both lanes.** The `org/XXX.md` Step 1b-F row for the 10-minute
 `/canonical-drive` over AMGT_RESAPP names `2.0.0_SA_COO~ZZZ`. A `~W` arm needs Andrew's word by
 name; when he gives it, `1.0.0_SA_CTO~W` lands the row. Until then: event-driven, inbox Monitor only.
