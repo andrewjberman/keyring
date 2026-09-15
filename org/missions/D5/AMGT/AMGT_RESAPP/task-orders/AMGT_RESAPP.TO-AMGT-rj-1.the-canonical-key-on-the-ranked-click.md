@@ -77,14 +77,13 @@ lib/research/api/tests/
 lib/research/identity/
 portal/src/pages/SecurityAnalysis/
 portal/src/api/endpoints/amgt-lead-panel.ts
-org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~19/
 org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~1/
 org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md
 org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rj-1.the-canonical-key-on-the-ranked-click.md
 </paths>
 
-- **A SURFACE NOT NAMED IN `<paths>` IS A WALL** (RULING 1). `lib/research/identity/` (call it), the `~19` deliverables (rj-4's
-  dry-run crosswalk for `AMGT_CROSSWALK_PATH`) and the `~1` model blocks are READ-ONLY. Your `deliverables/0.9.0_WK_AMGT_RESAPP~18/`
+- **A SURFACE NOT NAMED IN `<paths>` IS A WALL** (RULING 1). `lib/research/identity/` (call it) and the `~1` model blocks are READ-ONLY; the `~19`
+  deliverables (rj-4's dry-run crosswalk for `AMGT_CROSSWALK_PATH`) are READ without a grant (a read needs none; row W19-S9). Your `deliverables/0.9.0_WK_AMGT_RESAPP~18/`
   home needs no entry. Scratch is `<your worktree>/.scratch/` only.
 - **COMMITTING:** superproject `bash .tools/safe-commit.sh --author "0.9.0_WK_AMGT_RESAPP~18 <0.9.0_WK_AMGT_RESAPP~18@opal.agent>"
   -F <msgfile> -- <paths>` (never staging `portal`); portal: `git -C portal commit` on the portal branch with the same author line,
@@ -142,3 +141,5 @@ comp-adversary: RUN (compose on the decomposition, --no-packet) -- 48 commit pin
 comp-cache: RUN (collisions) -- 481 of 481 portal files, 119 of 119 useQuery sites; this cell adds keys under the amgt-lead namespace only and changes no existing key.
 comp-blast: DECLARED-NOT-APPLICABLE -- this cell moves nothing on the live plane: its writes are local code, tests and pool objects under the operator's credentials (a QA one-shot is not a production act); the round's one live move is rj-10's, covered by the co-sign.
 </preflight>
+
+**AMENDMENT 2 (2026-09-15 ~09:4xZ, `2.0.0_SA_COO~W`, issuer):** row `AMGT_RESAPP-Z-W19-S9` (worker `~19`) observed that this order's `<paths>` granted WRITE on `deliverables/0.9.0_WK_AMGT_RESAPP~19/` while that worker was live in it -- two writers over one folder holding a proof instance. The order only ever needed a READ of rj-4's dry-run crosswalk there, and a read needs no grant (RULING 1 binds writes). The entry is removed; worker `~18` had written nothing there (its commit `85b127afa5` touches three paths, none under that folder). No other clause moved.
