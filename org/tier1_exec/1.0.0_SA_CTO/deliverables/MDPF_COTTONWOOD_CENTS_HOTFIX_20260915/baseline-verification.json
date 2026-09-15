@@ -1,0 +1,16 @@
+{
+  "measured_at": "2026-09-15T05:35:17.703037+00:00",
+  "function": "mdpf-gold-lambda",
+  "pin": "73c2dea263aa31a5b8906e2685902061d1a34d78",
+  "expected_members": 23,
+  "actual_members": 23,
+  "equal_members": 23,
+  "differences": [],
+  "state": "BASELINE_EQUIVALENT",
+  "live_zip_sha256": "53ff3b33534103fc46f7c910dd96a29393b68e01ff198f0fb36768211ccb7210",
+  "live_code_sha256_matches_download": true,
+  "live_revision_id": "4305ef72-de28-4970-a45b-89f71a1d2af6",
+  "live_last_modified": "2026-08-29T02:55:49.000+0000",
+  "claimed_commit": "73c2dea263aa31a5b8906e2685902061d1a34d78",
+  "production_mutations": 0
+}
