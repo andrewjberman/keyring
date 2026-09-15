@@ -1276,6 +1276,28 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "The order's BOUNDS: the named test fails at the cut base.",
     "world_is": "It passed here. The worker did not investigate why (environment, data files or a later fix), because it is not this cell's.",
     "notes": "INERT: no criterion of this order reads it. Recorded so the premise is re-grounded before the next order repeats it."
+  },
+  {
+    "id": "NFRA_OPLGTW-S15",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-15T20:25Z",
+    "one_line": "Disarm of W3-S16 and W3-S17 (and S13's hold) by their owner: OG-a-3's amended re-run is green and merged, with every Gateway module passing in its own process, so neither route-table coupling reaches CLOUD red.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RE-RUN: wk-nfra_oplgtw-1-3d @4870b953d9, proof-of-spec-check --governing-order VALID (rc=0) 10/10 under ruling 97203. OGA3-AC9 '11 passed' (test_oga2_ac04 reads 29 declarations == 29 app routes). OGA3-AC10: exactly 2 added ROUTE_CLASS lines, both 'public'. OGA3-AC7 is now a superset (27 of 27 base routes unchanged and in order). OGA3-AC8 records base 27 -> HEAD 29, exactly BROWSER_PATHS.json.",
+        "COO RE-RUN (a different instrument): the same branch, every module of the glob infra/aws/ec2/opal-gateway/tests/test_*.py in its own process, -m 'not live', -k 'not test_scoped_deny_by_default': 'MODULES: 14 FAILED-MODULES: 0', including test_principal_cutover 11 passed, test_browser_oidc 7 and test_schwab_engine 13.",
+        "FUTURE-PROOF: TO-OG-x-1 and TO-OG-z-1 carry standing rule C (@a8a250297c), so the next route-adding cell classifies its own paths with their real guard class instead of breaking test_oga2_ac04."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "W3-S16 and W3-S17 were ARMED: merging OG-a-3 would turn test_oga2_ac04 red on CLOUD, and its exact route-table AC7 would break at the next route-adding cell.",
+    "world_is": "Both tests are green at the merge, and the second no longer pins later cells. The hazard is gone at the named moment: OG-a-3's drain with its green re-run.",
+    "notes": "W3-S19 (the Entra redirect URI for /schwab/download/callback) rides gate G-C per ruling 97203. W3-S18, W3-S20 and W3-S21 stay INERT observations for L9. The adjudication is 3.0.0_SA_CVO's."
   }
 ]
 ```
