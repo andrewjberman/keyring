@@ -1298,6 +1298,28 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "W3-S16 and W3-S17 were ARMED: merging OG-a-3 would turn test_oga2_ac04 red on CLOUD, and its exact route-table AC7 would break at the next route-adding cell.",
     "world_is": "Both tests are green at the merge, and the second no longer pins later cells. The hazard is gone at the named moment: OG-a-3's drain with its green re-run.",
     "notes": "W3-S19 (the Entra redirect URI for /schwab/download/callback) rides gate G-C per ruling 97203. W3-S18, W3-S20 and W3-S21 stay INERT observations for L9. The adjudication is 3.0.0_SA_CVO's."
+  },
+  {
+    "id": "NFRA_OPLGTW-S16",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-15T21:05Z",
+    "one_line": "Record of 1.0.0_SA_CTO's /self-drive ruling msg 97237, the disposition path of W1-S1 and the lift of S3's block: the two WAF description backfills are admitted by name into the opal-gateway root's first apply (OG-i-1's) under four conditions, now TO-OG-i-1's AC10-AC12 and its bounds; OG-i-1 is re-handed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RULING 97237 (1.0.0_SA_CTO, under Andrew-direct ~19:3xZ 'YOU ADJUDICATE THEM'). The owner NFRA_OPSEC202609 is CLOSED with no COO lane. Both descriptions are the owner's own declared text (waf.tf:261, :302), so live comes to match declared, with DELTA=0 on behaviour. addresses is under lifecycle ignore_changes (waf.tf:294-296, :335-337) and is not in the diff.",
+        "CONDITIONS, carried in TO-OG-i-1 by this seat's amendment: (1) the out-of-cell changes are exactly those two ~ description updates, addresses absent (OGI1-AC10); (2) aws wafv2 get-ip-set before and after the apply reads identical address lists with counts (OGI1-AC11); (3) plan and apply run in one safe-apply run, and a WAFOptimisticLockException is a clean abort and re-run (bound); (4) a post-apply plan reads 0 changes on both sets (OGI1-AC12).",
+        "SHARED ROOT: 1.0.0_SA_CTO states that G-S half (b) for MDPF_TAXSMA's TX-i-3 is satisfied by this ruling plus condition 4, and that TX-i-3 applies after OG-i-1's apply and after this seat's G-S half (a)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-OG-i-1's blast-radius bound refused any change to an existing resource, and row S3 held OG-i-1..OG-i-4 for the round.",
+    "world_is": "The adjudicator admits exactly the two named description backfills into one apply, under criteria that prove the reconciler's address lists survive. The block of S3 lifts: OG-i-1 is re-handed on the amended order, and OG-i-2..OG-i-4 follow on a root that plans clean. Row S2's check still binds OG-i-1's drain: the applied key schema must read pk/sk with TTL on expires_at.",
+    "notes": "W1-S1's adjudication cites 97237; it is 3.0.0_SA_CVO's at L9. The same amendment corrects the AC8 harness sentence to the operator role, per W1-S2. W1-S3 needs no act (97237)."
   }
 ]
 ```
