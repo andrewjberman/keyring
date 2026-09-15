@@ -49,4 +49,29 @@ EXECUTING (issuance `ed1db8f1db`). **Recorded by:** `2.0.0_SA_COO~Z`, the same t
 
 ## BROADCAST
 
-One message to `1.0.0_SA_CTO~Z`, `0.0.0_AB_MSTR~Z` and `3.0.0_SA_CVO~Z`, quoting both sentences entire. Push state: LOCAL.
+One message to `1.0.0_SA_CTO~Z`, `0.0.0_AB_MSTR~Z` and `3.0.0_SA_CVO~Z`, quoting both sentences entire (ids 23214, 23215, 23216, all
+DELIVERED). Push state: LOCAL.
+
+## ANSWER -- ANDREW-DIRECT ~19:1xZ at the same terminal, VERBATIM AND ENTIRE
+
+> "a) Yes they split into primary models"
+
+**What it settles:** reading (a). The two 50/50 blends of primary models still count, each split into the primary models it is made of.
+The member set is the five primary models UST, ST, INT, LT and ULT, with the blends entering through them; Opal Fixed Income is out. This is
+PRD v0.2 C-MEMBERS and FWD-6 ("blends included") exactly as written, and `org/standards/POSN_AGGREGATE_MODEL_SET.json` v1.0 as written.
+
+**What it changes:** nothing issued. No PRD bump, no re-sign, no standard edit, no order amendment. This seat's hold on its own hand-off of
+`TO-A2-1` is RELEASED: the order is handed to `0.9.0_WK_POSN_AGGFIX~1` when `TO-A1-1` drains, as queued. Broadcast to the same three seats.
+
+## AND THE SPLIT RULE -- ANDREW-DIRECT a minute later, same terminal, VERBATIM AND ENTIRE
+
+> "50/50 ST INT would be 50% into ST and 50% into INT"
+
+**What it settles, read narrowly:** the blend `opal_blend_5050_st_int` ("Opal Blend 5050 St Int") enters the aggregate as 50% of its assets
+into ST and 50% into INT. That is exactly the constituents and shares the standard carries for that blend today, where they rest on
+`claim: inferred` from the name; for that one blend the constituents now carry Andrew's word. **The sentence names the ST INT blend only.**
+It does not state the constituents of `opal_blend_5050_int_ltc`; that blend's standard row stays `inferred` and `AF1-s-17` still verifies it.
+
+**What it changes:** nothing issued. `TO-A1-1`'s blend census (A1-AC8) runs as written; this record is cited at its drain as a definition
+source for the ST INT blend. Upgrading the standard's `claim` for that row is an edit to `1.0.0_SA_CTO~Z`'s authored standard and is
+offered, not made.
