@@ -5453,6 +5453,220 @@ Andrew asked for (msg 22917); it concerns this project's portal files meeting an
   "spec_asserts": "TO-V7-1 THE CELL: 'The five-class allocation per satellite = the sum of served weights per served asset_class, in F2's five-key PositioningAllocation'; V7-AC5 reads the rendered Satellites mode and names no formatting bar.",
   "world_is": "The sum is correct and the page prints it verbatim at one of the panel's three label sites, so seven class labels render 14-17 significant digits and overlap their neighbours in the 1440x900 capture.",
   "notes": "A value handed to a renderer that has never received an unrounded one is a NEW state for that renderer, not a new value for the producer. The remedy is one Math.round at PositioningSummary.tsx:1011 (outside this cell) or a stated rounding contract on the adapter's allocation; the issuer owns which."
+},
+{
+  "id": "POSN_ASTTAX-Z-W19-S11",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~19",
+  "surfaced_at": "2026-09-15T00:42:47Z",
+  "one_line": "V8-AC8's literal bar and its own parenthetical disagree in the world as it is: the seeder's dry run DOES print a BLOCKED: line, and it is about BNDX -- a pre-existing module-vs-table disagreement outside the thirteen, unmoved by this retag.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "V8-AC8 <expect>: the MERGE SUMMARY block 'printed by the script's dry run, with NO line beginning BLOCKED: after it (zero conflicts: the module and the table agree on the thirteen); --upload never passed.'",
+  "world_is": "The dry run prints the MERGE SUMMARY and then five lines beginning BLOCKED:, returning rc=3. The ONLY conflict is BNDX sub_asset_class, table='Intermediate' vs module='International' -- 1 field on 1 ticker, and BNDX is not a member of the thirteen. The parenthetical half of the same expectation is MEASURED TRUE: across the thirteen the seeder's own merge_item reports 0 conflicts over 39 fields (13 x 3) and every one of the thirteen is SAME against the live row. So the criterion's stated bar FAILS BY OUTPUT while the reason it gives for that bar HOLDS.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "INVOCATION, verbatim from the criterion: timeout 300 python infra/aws/lambda/v2_portal/yang_pipeline/seed-etf-classifications.py -- rc=3. Output: 'MERGE SUMMARY / tickers in the module union: 136 / rows read from the table: 285 / rows whose values PRESERVED: 1 of 136 ticker(s) / rows already correct (skipped): 113 of 136 / rows to write: 23 of 136', then 'CONFLICT -- ... BNDX sub_asset_class table='Intermediate' module='International'', then 'BLOCKED: 1 field(s) on 1 ticker(s) would be overwritten ... NOTHING WAS WRITTEN.'",
+      "DISCRIMINATING TEST, two vintages x two planes, that this retag did NOT cause it: the TABLE's BNDX row reads sub_asset_class='Intermediate' in r1_before.json (the V8-AC2 scan, taken BEFORE the first write) AND in r1_after.json (after all thirteen writes) -- byte-identical, and BNDX is one of the 272 of 272 non-member rows V8-AC6's negative control proved unmoved. The MODULE's BNDX reads 'International' at the PRE-EDIT bytes (git show eeec3e9d62~1:infra/aws/lambda/v2_portal/_shared/etf_classification.py, exec'd in-process) AND at HEAD. Both sides of the conflict are unchanged by this order at both vintages.",
+      "THE PARENTHETICAL, MEASURED SEPARATELY on the seeder's OWN merge rule rather than argued: seed-etf-classifications.py merge_item() called for each of the thirteen against its live row from r1_after.json returns 0 conflicts for all thirteen, and item_differs is SAME on asset_class/sub_asset_class/management_style for all thirteen. VNQ alone reports preserved=['management_style'] (the module carries no VNQ style; the table's 'passive', written by V8-AC4, stands) -- which is the PRESERVE branch working, not a conflict.",
+      "THE BLOCKED LINES ARE THE SCRIPT'S FAIL-CLOSED BRANCH, not a failure of this act: seed-etf-classifications.py:236-243 prints them and returns 3 when conflicts exist and --accept-module-truth is absent; NOTHING WAS WRITTEN and --upload was never passed.",
+      "COVERAGE of the claim 'outside the thirteen': the CONFLICT block enumerates every conflict the run found -- 1 line, 1 ticker -- so this is the whole conflict set at this vintage, not a sample."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not repaired, widened or routed around, per the order's REFUSAL CLAUSE. The two available repairs are both out of this cell: --accept-module-truth would make a re-seed overwrite the table's curated BNDX value (the exact revert the guard exists to prevent, and a write outside the signed thirteen), and editing the module's BNDX entry is a fourteenth row in a file whose criterion says ONLY the thirteen entries change. V8-AC8 is recorded FAIL by output with its measurement and the order stays open on it. The issuer owns which half of its own expectation governs."
+},
+{
+  "id": "POSN_ASTTAX-Z-W19-S12",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~19",
+  "surfaced_at": "2026-09-15T00:42:47Z",
+  "one_line": "Store 2's section headers now describe the wrong classes: V8-AC7 permits ONLY the thirteen entries to change, so the comment banners that GROUP those entries still read 'EQUITY - Volatility' and 'OTHER - Commodities / Volatility' over rows now tagged structured and commodities.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "V8-AC7 <expect>: 'with ONLY the thirteen entries' asset_class / sub_asset_class changed (git diff --stat and the hunks printed)'.",
+  "world_is": "The retag landed as 22 insertions / 22 deletions, every changed line a member of the thirteen. The banner comments inside ETF_CLASSIFICATIONS are unchanged and now contradict the values beneath them: :229-231 'EQUITY - Volatility (per product decision 2026-01)' sits above UVXY and VXX, both now 'structured'; :234-236 'OTHER - Commodities / Volatility' sits above GLD/IAU/SLV/DBC/PDBC/GSG/USO (now 'commodities') and VIXY (now 'structured'); QBER at :122 sits under 'FIXED INCOME - High Yield' and JEPI at :180 under a dividend-equity banner. A reader who trusts the banner reads the pre-retag taxonomy.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git diff -U0 -- infra/aws/lambda/v2_portal/_shared/etf_classification.py at the working tree before commit eeec3e9d62: 22 insertions(+), 22 deletions(-), 1 file changed; every +/- line matches ^[+-]    '<TICKER>': and every TICKER is one of the thirteen. No comment line appears in the diff.",
+      "THE BANNERS, read at HEAD after the edit (sed -n '229,244p'): '# EQUITY - Volatility (per product decision 2026-01)' immediately above 'UVXY': 'structured' and 'VXX': 'structured'; '# OTHER - Commodities / Volatility' immediately above 'GLD': 'commodities' ... 'VIXY': 'structured'.",
+      "WHY IT WAS NOT FIXED IN PLACE: editing those banners would put non-member lines in the diff, which is exactly what V8-AC7's 'ONLY the thirteen entries' forbids. The criterion and the file's readability point opposite ways here and the criterion wins.",
+      "INERT, and why: these are Python comments. The module's live values are the dicts, and all thirteen were verified at both levels by importing the edited module (13 of 13 at target on BOTH levels) and by the seeder's own merge rule (0 conflicts across the thirteen). No consumer reads a comment."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The same shape exists one level down in ETF_SUB_ASSET_CLASS (the 'Volatility' and metals groupings at :551-:571). A follow-on cell that re-banners both dicts costs one commit and moves no value; it is not this order's act."
+},
+{
+  "id": "POSN_ASTTAX-Z-W19-S13",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~19",
+  "surfaced_at": "2026-09-15T00:42:47Z",
+  "one_line": "This order's criteria name paths on TWO different bases -- some relative to the project directory, some to the repo root -- so the worker, not the order, chooses each invocation's working directory.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "V8-AC3/AC5/AC12/AC15 name 'deliverables/0.9.0_WK_POSN_ASTTAX~19/...' while V8-AC7/AC8/AC9 name repo-root paths ('infra/aws/lambda/...', 'org/missions/D4/POSN/POSN_ASTTAX/deliverables/...'), and the order states no working directory.",
+  "world_is": "Run from the repo root, the face's V8-AC3 invocation fails: python reports \"can't open file 'C:\\\\tmp\\\\wk-posn-5-19\\\\deliverables\\\\0.9.0_WK_POSN_ASTTAX~19\\\\r1_rollback.py': [Errno 2] No such file or directory\", and 'ls deliverables' reads 'No such file or directory'. The same command run from org/missions/D4/POSN/POSN_ASTTAX/ resolves and produces the named result. Each base resolves exactly one group of criteria and neither base resolves both.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED, both bases: from /c/tmp/wk-posn-5-19 the V8-AC3 invocation returns Errno 2 on C:\\tmp\\wk-posn-5-19\\deliverables\\...; from /c/tmp/wk-posn-5-19/org/missions/D4/POSN/POSN_ASTTAX (pwd printed) the identical argv returns the criterion's named output and rc=0.",
+      "The <paths> grant and <proof_of_spec> both name the full repo-root form org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~19/, so the FILE is exactly where the order says it is; only the invocation's base is unstated.",
+      "DENOMINATOR: of 15 criteria, 4 carry a project-relative deliverables path (V8-AC3, V8-AC5, V8-AC12, V8-AC15), 3 carry repo-root paths (V8-AC7, V8-AC8, V8-AC9 via its placeholder), 1 runs under portal/ by its own cd (V8-AC10), and the rest are cwd-free.",
+      "NO RESULT DEPENDS ON THE CHOICE: every such invocation was run from the base under which its argv resolves, unmodified, and the cwd is recorded beside each in the proof-of-spec instance."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed for form, not significance: a criterion whose argv resolves under one base and not another is under-specified even when the resolution is obvious, because the failing base produces an Errno, not a wrong answer -- a worker that read the Errno as a missing deliverable would have filed a BLOCKING row instead of changing directory. One line ('run from the project root') in the next cut removes it."
+},
+{
+  "id": "POSN_ASTTAX-Z-W19-S14",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~19",
+  "surfaced_at": "2026-09-15T01:05:33Z",
+  "one_line": "V8-AC9's harness reads its subject from the WORKING TREE, and this worktree is a sparse cone that does not materialise data/ -- so the seeder under test had to be resolved BY CONTENT from the object store instead of by filename.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "V8-AC9 names <V3_1_S_GUARDED> = 'the V3 harness under deliverables/0.9.0_WK_POSN_ASTTAX~21/', and that harness's applied_bytes() does io.open(os.path.join(ROOT, 'data/black_diamond/scripts/classification/seed_canonical_securities.py')).",
+  "world_is": "The file is TRACKED at HEAD (git ls-tree lists blob 803721e2c15464ed4ba054a02aba2311d5506164) but does NOT EXIST on disk: git sparse-checkout list returns 13 cone directories and data/ is not one of them, git ls-files -t reports 'S' for the path, and 29,349 of 34,302 tracked files are unmaterialised for the same reason. A naive read of the harness would report the subject MISSING and the criterion unrunnable.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list -> .tools, infra/aws/lambda/ci, infra/aws/lambda/v2_portal, infra/aws/terraform/modules, infra/aws/terraform/yang-pipeline, lib, org/critical_paths, org/missions, org/modules, org/projects, org/ref, org/standards, org/surprise_channel (13 cones); core.sparseCheckout=true, core.sparseCheckoutCone=true.",
+      "DENOMINATOR, so this is not read off one path: 34,302 tracked files, 29,349 not present on disk; top missing roots org 17,099 / infra 7,885 / docs 1,298 / data 1,137.",
+      "THE ROUTE TAKEN, and why it is stronger rather than weaker: the subject is resolved from the object store and PINNED BY BLOB -- HEAD:<path> = 803721e2c15464ed4ba054a02aba2311d5506164, while 8cad052620~1:<path> = fbbc7165d33198789d3a7788a557ed3f5ce75614, the PRE-patch blob the harness itself names as round 4's subject. The two differ and 8cad052620 is 'POSN_ASTTAX TO-V3-1 (AT5-s-3): APPLY round 4's preserve-don't-clobber guard', so the bytes under test are PROVABLY the guarded ones. Resolving a subject by CONTENT rather than by filename is the estate's own rule for deployed artifacts.",
+      "The harness's OTHER path, pre_patch_bytes(), asserts sha == fbbc7165d331 for 'git show HEAD:<path>' -- true when TO-V3-1 was UNCOMMITTED, false now that it is complete at HEAD. That arm is not used by V8-AC9 (which needs the upload arm on the applied bytes only), so the stale assertion was not exercised; it is recorded here because the next caller of main() will hit it.",
+      "The machinery copy the harness pins is unchanged: .scratch/u3_ac1_before_control.py sha256[:16] = ae72cab7dfbeb62f, equal to the harness's MACHINERY_SHA256 assertion, taken from ~21's committed u3_ac1_before_control.py.ROUND4COPY.txt."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "No tree was rebuilt and no cone was widened to make the order runnable. If a later cell wants the harness's main() to run end to end in a sparse worktree, the fix is one line in applied_bytes() -- fall back to git show when the path is sparse -- plus re-pinning PRE_PATCH_BLOB now that the patch is committed."
+},
+{
+  "id": "POSN_ASTTAX-Z-W19-S15",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~19",
+  "surfaced_at": "2026-09-15T01:05:33Z",
+  "one_line": "V8-AC14 cannot be satisfied as written for the third generator: the ONLY recorded event yang-generate-holdings-attribution ever received names an input workbook the pipeline's own cleanup stage has since deleted, and the criterion forbids a hand-written event.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "V8-AC14: 'the three yang writers ... invoked DIRECTLY, once each, in order -- yang-generate-positioning, yang-generate-holdings-attribution, yang-generate-allocation-summary -- each with the event the state machine passed it on the last execution that ran it ..., never a hand-written event; each StatusCode 200, no FunctionError; ... head-object on ... holdings_attribution_data.json: LastModified AFTER the retag time and VersionId different from the pre-retag read'.",
+  "world_is": "The walk back found the event: execution 20260904_v1-71e7c33e, LambdaFunctionScheduled #52, the most recent of the nine most recent executions to schedule that function at all. Its input names manifest.files.attribution_excel = 'Model Portfolio Attribution 20260831.xlsx', which the DEPLOYED handler resolves to s3://opal-data-portal-v2/uploads/Model Portfolio Attribution 20260831.xlsx. That object is 404. The invoke was issued anyway and returned StatusCode 200 with FunctionError=Unhandled, errorType NoSuchKey, raised at lambda_function.py:96 download_file -> :130 get_object. The served key did not move. So the criterion's two halves -- 'use only the recorded event' and 'the artifact must refresh' -- cannot both hold at this vintage.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE WALK BACK, with its denominator: of the 9 most recent YangDataPipeline executions, 8 scheduled yang-generate-holdings-attribution ZERO times (20260911_v1-1c95bba7, 20260910_v1-7fecaa04, 20260909_v1-f826412d, 20260908_v1-82ae0971, 20260904_v1-a849ee3b, 20260904_v1-33c4dc7a, 20260904_v1-3c6fdaa5, 20260904_v1-06273296) and 20260904_v1-71e7c33e scheduled it once, as event #52 at 2026-09-04T13:51:20Z. That is consistent with the served artifact's own LastModified, 2026-09-04T13:51:29Z.",
+      "THE INPUT, measured: s3api head-object s3://opal-data-portal-v2/uploads/Model Portfolio Attribution 20260831.xlsx -> 404. The uploads/ prefix holds 13 keys of which 4 are attribution workbooks -- 20260131, '20260131 1', 20260331, 20260731 -- and the one the recorded event names is not among them. The pipeline's own yang-cleanup-uploads stage runs in every execution.",
+      "THE INVOKE, attempted and recorded rather than predicted: StatusCode 200, FunctionError Unhandled, errorMessage 'An error occurred (NoSuchKey) when calling the GetObject operation: The specified key does not exist.'",
+      "IT WROTE NOTHING, checked rather than assumed: holdings_attribution_data.json reads VersionId mOBBmXhjOyNPM2ue_.3C9G1eR79lUrlk / LastModified 2026-09-04T13:51:29Z both BEFORE and AFTER the attempt, identical. The deployed handler calls download_file() at :96 before parse and before upload_json(), so a missing workbook cannot produce a write -- read from the deployed zip, not from the repo.",
+      "IT IS GENUINELY A WRITER OF THE RETAGGED PROPERTY, so the order is right to name it: the served holdings_attribution_data.json carries 423 asset_class and 423 sub_asset_class occurrences, including 27 'Volatility' -- the pre-retag sub_asset_class of VXX/UVXY/VIXY/QBER -- and its zip carries etf_classifications_dynamodb.py.",
+      "NOT TREATED AS BRANCH B, and why, stated so the issuer can overrule: Branch B's own remedy is 'run r1_rollback.py ... AND RE-ISSUE THE SAME INVOCATIONS so every served key returns to pre-retag labels', which presumes the invocations RUN; for this one it cannot run at either vintage. The failure is independent of the retag (the workbook was deleted days before it) and provably moved nothing. Rolling back a correct, co-signed 13-row retag over a deleted 2026-08-31 spreadsheet was judged the larger error. The call is the issuer's."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The other two generators DID refresh on demand: positioning_data.json OuevyO7kCIJdEqzGlJWd.z.8S8pqiXJk -> AqBtm_5o.2QeiCBRP_veC8HV2Xk0OSaj (00:56:11Z) and allocation_summary.json HfPxh0kkU6s5yCYCyKvv7SRP977Dhijp -> CmdUs93O1Ti0gwfQmDpgz5suiruCtiT8 (00:56:26Z), both after the retag, no key outside the three moving. So the served attribution artifact stays TEN DAYS OLD and carries pre-retag labels -- which is what FWD-6 ('the three modes agree') will be graded against at L9."
+},
+{
+  "id": "POSN_ASTTAX-Z-W19-S16",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~19",
+  "surfaced_at": "2026-09-15T01:05:33Z",
+  "one_line": "V8-AC15's first producer REFUSES on demand at this hour by its own design: cot-satellites-registry-producer computes TODAY's roster partition, today's has not landed (upstream lands ~06:00:43Z), and it refuses to walk back or publish an empty.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "V8-AC15: 'StatusCode 200 and no FunctionError; ... holdings.json's rows for every retagged ticker any satellite holds read the TARGET asset_class AND sub_asset_class (print them: GLD under Commodities / Metals in Sat 15, VXX under Structured / Hedge in Sat 80 ...)'.",
+  "world_is": "aws lambda invoke --function-name cot-satellites-registry-producer --payload {} returned StatusCode 200 with FunctionError=Unhandled and errorType RegistryProducerError: 'BLOCKED: no roster partition at s3://opal-data-assets/blackdiamond/cottonwood/bronze/rebalancer_models/2026-09-15/page_000.json (S3 said AccessDenied). REFUSING to walk back to an older partition and REFUSING to publish an empty ... Upstream lands ~06:00:43Z daily'. The refusal is CORRECT: the partition really is absent. Consequence: holdings.json still serves its pre-retag labels, so V8-AC15's label bars and V8-AC10's Satellites label bars cannot be met until the producer runs.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE UPSTREAM, measured on MY credentials rather than inferred from the lambda's error: list-objects-v2 s3://opal-data-assets/blackdiamond/cottonwood/bronze/rebalancer_models/2026-09-15/ -> 0 keys; .../2026-09-14/ -> 1 key (page_000.json); .../2026-09-13/ -> 1 key. So the producer's date is genuinely empty and the neighbouring dates are genuinely present -- the AccessDenied in its message is the 403-instead-of-404 a role without s3:ListBucket receives, not a permissions regression.",
+      "WALL CLOCK at the invoke: 2026-09-15T01:00:24Z, i.e. about five hours before the ~06:00:43Z upstream landing the producer's own message names, and six hours before its 07:00Z schedule.",
+      "IT WROTE NOTHING: registry.json XaX6zaVWH7ybXnRBu2jeF2PNABUhezuM / 19:53:58Z and holdings.json BRjqyqnB0pIdLUHOvDY3B_Sh9b0EXIPw / 19:53:59Z, identical before and after the refused invoke.",
+      "THE SERVED LABELS TODAY, read from the served bytes: holdings.json as_of 2026-09-14 carries ('hedge','Gold') x7 including GLD 8.34 in Opal Satellite 15, and ('equity','Volatility') x8 including VXX -- i.e. the PRE-RETAG labels, because the producer last ran at 19:53Z yesterday, hours before the retag.",
+      "WHY A RE-RUN WOULD FIX IT WHEN UPSTREAM LANDS: the producer reads etf-classifications at run time (B2 ledger L2/L3 record the ReadEtfClassifications GetItem/BatchGetItem policy added for exactly that), so the 07:00Z organic fire will pick the retag up without any further act."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not repaired by another route: the producer accepts --as-of, and passing it would target a date the criterion does not name, which is the same class of act as hand-writing a recorded event. The order's own preflight says the organic fires (07:00Z / 07:20Z) are the COO's next-day leg, and V8-AC12 records the baseline for exactly that diff."
+},
+{
+  "id": "POSN_ASTTAX-Z-W19-S17",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~19",
+  "surfaced_at": "2026-09-15T01:05:33Z",
+  "one_line": "V8-AC15's second producer refuses for a DIFFERENT reason worth its own row: cot-satellites-characteristics-producer asks for the T-1 business day's Bloomberg partition, and MONDAY 2026-09-14 has no bbg partition at all -- the newest is Friday 2026-09-11.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "V8-AC15: '... then the same for cot-satellites-characteristics-producer into r1_characteristics_invoke.json ... characteristics.json's nine coverage pairs unchanged from its prior version'.",
+  "world_is": "The invoke returned StatusCode 200, FunctionError=Unhandled, errorType AccessDenied on s3:ListBucket for opal-data-etfs, raised inside load_bbg at build_satellites_characteristics.py:171. That message is the producer's DESIGNED loud failure for a missing partition -- its own docstring at resolve_bbg_as_of (:440-449) says 'The role carries no s3:ListBucket by design, so the partition date is computed rather than discovered. A missing partition therefore fails LOUD on the GetObject instead of silently walking back'. The computed date is prev_trading_day(2026-09-15) = Monday 2026-09-14, and bbg/2026-09-14/characteristics.parquet is 404.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE PARTITION SET, listed on my own credentials with its denominator: s3://opal-data-etfs/bbg/ holds 16 date partitions; head-object reads bbg/2026-09-11/characteristics.parquet PRESENT 19802 bytes and bbg/2026-09-12/, bbg/2026-09-13/, bbg/2026-09-14/ characteristics.parquet all 404. The newest partition is Friday 2026-09-11.",
+      "THE CALENDAR, resolved before calling anything stale (CLAUDE.md NEVER-4): 2026-09-14 is a MONDAY and 2026-09-15 is a TUESDAY, so T-1 business day from today is Monday the 14th -- a trading day whose partition is absent, NOT a weekend artefact. 'Friday is Monday's answer' would make bbg/2026-09-11 the right partition for a Monday run, and that is exactly why B4's QA invoke SUCCEEDED at ~21:45Z yesterday: prev_trading_day(2026-09-14) = 2026-09-11, which exists.",
+      "SO THE SAME FUNCTION, UNCHANGED, SUCCEEDED 3 HOURS AGO AND FAILS NOW -- the discriminator is the date it computes, not its code or its role. CodeSha256 and role are untouched since B4 (ledger 20260914T2122Z, L5 0-diff re-plan).",
+      "IT WROTE NOTHING: characteristics.json rt61ogajZQy79meUlsY1X_mIdPngxJTZ / 2026-09-14T21:45:13Z, identical before and after.",
+      "WHAT IS NOT CLAIMED: whether Monday's Bloomberg pull is merely late or did not run at all. That belongs to the BBG derived layer, not to this cell, and the derived layer is documented current-day-only."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "If Monday's partition never lands, the 07:20Z organic fire refuses too and characteristics.json stays at its 2026-09-14T21:45Z version. That is a different failure from the registry's (which only needs the clock to reach ~06:00Z), which is why it is filed separately."
+},
+{
+  "id": "POSN_ASTTAX-Z-W19-S18",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~19",
+  "surfaced_at": "2026-09-15T01:05:33Z",
+  "one_line": "THE CELL's TARGET column is written in ONE spelling but lands in TWO: the DynamoDB store must take 'structured' and the Yang served payload emits 'Structured', so a per-level comparison reads FAIL on a correct world unless it picks the plane's own grain.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "THE CELL's table prints targets as 'Commodities / Metals', 'Structured / Hedge', 'Alternatives / Real Estate', while the same paragraph says 'read ...lambda_function.py:271-303 for the exact stored spelling of the five classes (structured, commodities, alternatives, ...) -- store what the consumers read, never the display label'. V8-AC14 then says the served current_holdings must 'read the TARGET asset_class per THE CELL'.",
+  "world_is": "Three planes, three grains, all correct at once: (1) DynamoDB stores lowercase 'structured'; (2) positioning_data.json's current_holdings carries 'Structured', because yang-generate-positioning maps the store value through ASSET_CLASS_LABELS before serving; (3) platinum/satellites/holdings.json carries the RAW store value ('hedge', 'equity', 'fixed_income') with no label mapping at all. A comparator that applies one spelling to all three planes fails on two of them.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED, and caught by exactly this: the first V8-AC14 run compared the served current_holdings against the STORE spelling and printed 'VXX LT structured vs Structured FAIL' on all 3 rows -- a green world reported red.",
+      "THE DISCRIMINATING PAIR that settles it, same rows, pre vs post: VXX in LT/ULT/AGG read ('Equity','Volatility') at pre-retag VersionId OuevyO7kCIJdEqzGlJWd.z.8S8pqiXJk and ('Structured','Hedge') at post-retag AqBtm_5o.2QeiCBRP_veC8HV2Xk0OSaj. Both levels moved to THE CELL's target column spelling exactly.",
+      "THE MAP, read from the generator's own source rather than transcribed: ASSET_CLASS_LABELS in yang-generate-positioning/lambda_function.py = {alternatives: Alternatives, cash: Cash, commodities: Commodities, equity: Equity, fixed_income: Fixed Income, hedge: Hedge, structured: Structured}.",
+      "THE THIRD PLANE, measured: the served satellites holdings.json carries pairs ('hedge','Gold') and ('equity','Volatility') -- raw store values, lowercase, no label hop. So the same ticker is 'Structured' in one served artifact and 'structured' in another BY DESIGN.",
+      "COVERAGE of the corrected comparison: 6 of 6 cells (1 ticker Yang's books hold x 3 models x 2 levels) PASS against the label grain, with membership identical on 6 of 6 models."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed because the next cell that grades 'served == target' across these three artifacts will hit it, and the failure mode is a FALSE RED that looks exactly like a failed retag. The cheap fix in a future cut is to print the target twice in THE CELL -- stored value and served label -- or to name the plane beside each bar."
+},
+{
+  "id": "POSN_ASTTAX-Z-W19-S19",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~19",
+  "surfaced_at": "2026-09-15T01:20:25Z",
+  "one_line": "The criterion's own capture command writes its PNG INSIDE the read-only portal worktree, because its outfile is portal-relative -- so a worktree the order calls READ-ONLY now carries an untracked, NOT-ignored file, while the graded bar still reads 0.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order: 'Your portal clone is READ-ONLY in this order (git diff --stat under portal/ must read 0 at your report -- FWD-5's bar is \"no portal edit\")'. V8-AC10's invocation is \"cd portal && node scripts/ui-smoke.mjs positioning .scratch/v8_sat15.png ...\" -- an outfile resolved INSIDE portal/.",
+  "world_is": "Run as written, the first capture created portal/.scratch/v8_sat15.png (268,724 bytes). V8-AC11's bar is unaffected -- git diff --stat refs/drains/posn-5-portal prints nothing, 0 files changed, and portal HEAD is still dd1d33c6db84037fe8bcb8a8d19a819d9a250cbf -- because that instrument grades TRACKED changes. But git status --porcelain in portal/ now prints '?? .scratch/', and the path is NOT ignored by the portal repo: portal/.gitignore:50 is '.comp-graph/', and git check-ignore -v .scratch/v8_sat15.png run FROM INSIDE portal returns rc=1 with no output. Every later capture was written to the SUPERPROJECT's ../.scratch/ instead.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ls -la portal/.scratch/ -> one file, v8_sat15.png, 268724 bytes, created 21:09 local by the first V8-AC10 capture.",
+      "git -C portal diff --stat refs/drains/posn-5-portal -> EMPTY (0 files changed); git -C portal rev-parse HEAD -> dd1d33c6db84037fe8bcb8a8d19a819d9a250cbf. So V8-AC11 passes on its own instrument.",
+      "TWO INSTRUMENTS DISAGREED AND THE DISAGREEMENT WAS RESOLVED RATHER THAN LEFT STANDING: 'git -C portal check-ignore -v .scratch/' printed a match at '.gitignore:50' (the SUPERPROJECT's file, resolved from the outer cwd), while 'git status --porcelain' listed the path as untracked. Read from INSIDE portal, sed -n '48,52p' .gitignore shows line 50 = '.comp-graph/', and check-ignore on the FILE returns rc=1. The porcelain was right and the first check-ignore was answering about the wrong repo.",
+      "NOT DELETED, deliberately: removing it would erase the evidence of what the run did, and a recursive delete needs Andrew's word under Agent Autonomy. It is left in place and disclosed here so the next reader of that worktree does not have to guess."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The one-word fix in a later cut is to write the capture to '../.scratch/<name>.png' in the criterion text, as every capture after the first one here did. Worth fixing because the drain worktree is shared and a stray untracked PNG in it reads like somebody edited the portal."
 }
 ]
 ```
