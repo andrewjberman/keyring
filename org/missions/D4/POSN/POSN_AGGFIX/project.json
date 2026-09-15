@@ -5,10 +5,10 @@
  "fabric": "site-z",
  "pipeline": null,
  "status": "active",
- "dep_stage": "REGISTERED",
+ "dep_stage": "PRD",
  "created": "2026-09-15",
  "registered_under_tree": "2026-09-15",
- "last_updated": "2026-09-15T17:25:24Z",
+ "last_updated": "2026-09-15T17:42:13Z",
  "pods": [
   "1.0.0",
   "2.0.0",
@@ -29,15 +29,22 @@
  "description": "Brings back the aggregate (AGG) book on the Positioning page that portal commit d53049a0 removed on 2026-08-24, for Opal users only: one Opal-wide book of the primary models UST, ST, INT, LT, ULT and blends of them, weighted by Opal's current assets by model, its data kept from advisors and clients, and the default Positioning view for an Opal user unless another book is remembered. Endpoint FWD-1..FWD-4 and FWD-6..FWD-9 confirmed by Andrew 2026-09-15 ~17:0xZ; FWD-5 retired on his word.",
  "brief": "docs/briefs/posn-aggfix-opal-only-agg-view-brief-20260915.md @1e268c164e (L1 brief, admitted shape, by 4.0.0_SA_CRO~Z; blob 8a527c8aa0). The plan Andrew designated as the L2 input is org/tier1_exec/4.0.0_SA_CRO/deliverables/POSITIONING_AGG_OPAL_ONLY_RESTORE_PLAN_20260915.md, blob 0765b9af1f, on origin/CLOUD @2033ff3ea6 and on SITEZ byte-identical since 1e268c164e.",
  "endpoint": "org/tier1_exec/1.0.0_SA_CTO/deliverables/POSN_AGGFIX_ENDPOINT_FORWARD_20260915_Z.md",
- "prds": [],
+ "prds": [
+  {
+   "path": "org/missions/D4/POSN/POSN_AGGFIX/prd/POSN_AGGFIX_PRD.md",
+   "version": "v0.1 CURRENT (2026-09-15, PRD_HEADER status DRAFT)",
+   "note": "L4 by 1.0.0_SA_CTO~Z. ENDPOINT FWD-1..4 and FWD-6..9 byte-identical to the confirmed carrier @8b0805e72a; twelve binding properties; SURFACE MANIFEST S1-S17 (8 verify rows first); BRIEF COVERAGE 30 of 30 headings of the brief @1e268c164e; compiler evidence. The model set is data at org/standards/POSN_AGGREGATE_MODEL_SET.json."
+  }
+ ],
  "leads": [
   "REGISTERED UNDER THE TREE 2026-09-15 by 1.0.0_SA_CTO~Z (spine L3; the CTO writes the row, the generated index and the D4 members line in one commit). Macro POSN is already ratified for D4 in MACROS.yaml, so no macro-enum edit. Andrew-direct ~16:2xZ at the 0.0.0_AB_MSTR terminal, relayed via 0.0.0_AB_MSTR~Z msg 23156; SITEZ record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260915_162xZ_POSN_AGGFIX_CTO_Z_ENDPOINT_FORWARD_ON_CRO_RESTORE_PLAN.md.",
   "L2 ENDPOINT EMITTED, NOT CONFIRMED: FWD-1..FWD-8. FWD-4, FWD-6 and FWD-7 are written on the CRO's recommendations for D1, D2 and D3 and each states the line it becomes under the other answer; D4 adds an outcome only if Andrew picks the aggregate as the Opal default.",
   "L2 ENDPOINT AMENDED BEFORE CONFIRMATION 2026-09-15 ~17:1xZ by 1.0.0_SA_CTO~Z on 4.0.0_SA_CRO~Z's L1 brief findings (msg 23175), re-read at origin/PROD edf85ce503 portal-proxy.ts:1418-1426 (the model route: internal + advisor only, blocks client tier) and at Andrew's 2026-09-09 ruling 5 text: FWD-2 and FWD-7 add the advisor arm; FWD-6 names its dependency on the owner of the firm's assets-by-model figures without narrowing its bar; FWD-4's Phase-1-alone branch names ruling 5. Ids unchanged.",
-  "L2 ENDPOINT CONFIRMED 2026-09-15 ~17:0xZ, Andrew-direct at the 0.0.0_AB_MSTR terminal, relayed by 0.0.0_AB_MSTR~Z msg 23176; SITEZ record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260915_170xZ_POSN_AGGFIX_L2_ANSWERS_DONE_WHEN_D4_FULL_FLOW.md. a) to h) map to FWD-1..FWD-8 (order checked against this seat's bytes; content-checked by 4.0.0_SA_CRO~Z msg 23178). FWD-5 RETIRED (e 'no this is irrelevant'), id vacant. FWD-9 added from D4 ('yes this would be the default view ... if they don't have another one cached'). Scope: primary models and blends of them only (a, f); one Opal-wide aggregate, none per partner firm (b); the prior layout (c). s.6 = the full canonical flow ('might as well do it properly'). D1-D3 read as settled by d, f and g; that reading is this seat's and was relayed back."
+  "L2 ENDPOINT CONFIRMED 2026-09-15 ~17:0xZ, Andrew-direct at the 0.0.0_AB_MSTR terminal, relayed by 0.0.0_AB_MSTR~Z msg 23176; SITEZ record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260915_170xZ_POSN_AGGFIX_L2_ANSWERS_DONE_WHEN_D4_FULL_FLOW.md. a) to h) map to FWD-1..FWD-8 (order checked against this seat's bytes; content-checked by 4.0.0_SA_CRO~Z msg 23178). FWD-5 RETIRED (e 'no this is irrelevant'), id vacant. FWD-9 added from D4 ('yes this would be the default view ... if they don't have another one cached'). Scope: primary models and blends of them only (a, f); one Opal-wide aggregate, none per partner firm (b); the prior layout (c). s.6 = the full canonical flow ('might as well do it properly'). D1-D3 read as settled by d, f and g; that reading is this seat's and was relayed back.",
+  "L4 PRD v0.1 written 2026-09-15 by 1.0.0_SA_CTO~Z. Two measured findings shaped it: the producer role's S3 grant on opal-data-portal-v2/* (infra/aws/terraform/yang-pipeline/iam.tf:34-46) already covers the re-pointed read and a new key, so no IAM cell; and the client-tier refusal the portal proxy docstring claims for the model route was not found in the two edge functions comp-routes names for that URL, so S4 verifies where any refusal runs before the Opal-only route (S11) is built."
  ],
- "phase": "L2 CONFIRMED 2026-09-15 ~17:0xZ (FWD-1..4, 6..9; FWD-5 retired). L3 REGISTERED. L1 brief at 1e268c164e. L4 (the PRD) in progress at 1.0.0_SA_CTO~Z.",
- "blocking": "None at L4: the PRD is the CTO's to write now. Relayed back to Andrew, not blocking: the FWD-2/FWD-7 advisor arms added after his answer, FWD-9's DONE WHEN wording, and this seat's reading that d, f and g settle D1-D3. STANDING: site-Z push hold; commits LOCAL.",
+ "phase": "L4 PRD v0.1 COMMITTED 2026-09-15 (dep_stage PRD). L4-R owed: the ratified-text half to 3.0.0_SA_CVO~Z, the brief half to 4.0.0_SA_CRO~Z. L2 CONFIRMED ~17:0xZ; L3 REGISTERED; L1 brief at 1e268c164e.",
+ "blocking": "L4-R: both halves owed at v0.1 (3.0.0_SA_CVO~Z ratified-text; 4.0.0_SA_CRO~Z brief). The COO is notified only once both read SIGNED. Relayed back to Andrew, not blocking: the advisor arms on FWD-2 and FWD-7, FWD-9's wording, and D1-D3 as read. STANDING: site-Z push hold; commits LOCAL.",
  "threads": [],
  "thread_counter": 0
 }

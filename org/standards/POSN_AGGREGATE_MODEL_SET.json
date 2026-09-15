@@ -1,0 +1,49 @@
+{
+ "_what": "The members of the Positioning aggregate book: Opal's primary models, and 50/50 blends of two primary models. Closed as data at L4 because the spine closes an enumeration in org/standards/ rather than in PRD prose. Consumer: POSN_AGGFIX constraint C-MEMBERS and surface rows S6, S7 and S17 of org/missions/D4/POSN/POSN_AGGFIX/prd/POSN_AGGFIX_PRD.md.",
+ "version": "1.0",
+ "authored_by": "1.0.0_SA_CTO~Z",
+ "authored_at": "2026-09-15",
+ "authority": {
+  "andrew_direct": "2026-09-15 ~17:0xZ at the 0.0.0_AB_MSTR terminal, VERBATIM in part: 'a.) ... this would solely be those firms holding as it pertains to the primary models or blends of the primary models (e.g. 50/50 ST INT)' and 'f) yes blends count but only of primary models UST ST INT LT ULT'",
+  "record": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260915_170xZ_POSN_AGGFIX_L2_ANSWERS_DONE_WHEN_D4_FULL_FLOW.md@acc47518c1"
+ },
+ "claim_values": "measured = read from a named artifact at a named vintage; inferred = derived by reading, not confirmed against a definition. A consumer rejects an inferred value as proof.",
+ "primary_models": [
+  {"code": "UST", "canonical_key": "opal_ultra_short_term", "served_name": "Ultra Short-Term", "claim": "measured"},
+  {"code": "ST", "canonical_key": "opal_short_term", "served_name": "Short-Term", "claim": "measured"},
+  {"code": "INT", "canonical_key": "opal_intermediate", "served_name": "Intermediate", "claim": "measured"},
+  {"code": "LT", "canonical_key": "opal_long_term_conservative", "served_name": "Long-Term Conservative", "claim": "measured"},
+  {"code": "ULT", "canonical_key": "opal_long_term_aggressive", "served_name": "Long-Term Aggressive", "claim": "measured"}
+ ],
+ "primary_models_evidence": "canonical_key and served_name: data/mdpf/scripts/gold/dim_mdpf_aum_metrics.py:84-91 (SERVED_MODEL_NAME) at SITEZ acc47518c1; code per served name: docs/briefs/posn-aggfix-opal-only-agg-view-brief-20260915.md@1e268c164e Part IV F4. The producer's own name map carries further aliases for the same five codes at infra/aws/lambda/v2_portal/yang_pipeline/positioning/yang-generate-positioning/lambda_function.py:1437-1451 (13 names over 5 codes, brief F3); those aliases are the producer's and are not restated here.",
+ "blends": [
+  {
+   "canonical_key": "opal_blend_5050_int_ltc",
+   "served_name": "Opal Blend 5050 Int Ltc",
+   "constituents": [{"code": "INT", "share": 0.5}, {"code": "LT", "share": 0.5}],
+   "claim": "inferred",
+   "basis": "the key and name read Intermediate plus Long-Term Conservative, and Long-Term Conservative is LT above; no model definition was read"
+  },
+  {
+   "canonical_key": "opal_blend_5050_st_int",
+   "served_name": "Opal Blend 5050 St Int",
+   "constituents": [{"code": "ST", "share": 0.5}, {"code": "INT", "share": 0.5}],
+   "claim": "inferred",
+   "basis": "the key and name read Short-Term plus Intermediate, and Andrew's own example is '50/50 ST INT'; no model definition was read"
+  }
+ ],
+ "blends_evidence": "canonical_key and served_name: dim_mdpf_aum_metrics.py:90-91 and data/mdpf/scripts/gold/mdpf_revamp_model_crosswalk.py:215-216. comp-find 'Opal Blend 5050' over org/standards and data/mdpf/scripts/gold returned 4 hits across 133 files, all names or keys, none a constituent definition.",
+ "membership_rule": "A model counts in the aggregate if it is a primary model, or a blend whose every constituent is a primary model. A blend counts by adding each constituent's share of the blend's assets to that primary model. Any other model in a source is left out, and the assets left out are reported with the aggregate rather than silently dropped.",
+ "measured_against": {
+  "artifact": "s3://opal-data-portal-v2/platinum/mdpf/global/aum-metrics.json",
+  "version_id": "OVcFBOpgjFywfYJGYjowX2VSVwLdiyez",
+  "period": "2026-09-14",
+  "by_model_rows": 7,
+  "rows_primary": 5,
+  "rows_blend_of_primary": 2,
+  "rows_outside_the_rule": 0,
+  "measured_by": "4.0.0_SA_CRO~Z, brief Part IV F4 (read 2026-09-15 16:41Z); re-stated in msg 23178",
+  "claim": "measured"
+ },
+ "open_verification": "The blend constituents are inferred. POSN_AGGFIX surface row S17 verifies them against a model definition before the aggregate is served as current. This is a verification of a fact, not an open decision: the rule above is Andrew's."
+}
