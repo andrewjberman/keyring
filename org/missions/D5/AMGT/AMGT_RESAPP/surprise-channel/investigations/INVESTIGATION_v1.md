@@ -5291,6 +5291,139 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "Worker face s.1 DELIVER 5: 'posture/v1/{security_key}/{as_of}.json (INTERFACE O-1) versioned by as_of, Metadata {document-sha256, schema-version}, read-back'; BOUND: 'two model runs in this cell'; AC6: 'generation with run_id and model' read through json.dumps(d.get('generation'))[:120].",
     "world_is": "The order names one write per name, made by the judged run. Each name was written twice: once by its model run (AC3 at 16:47:39Z, AC4 at 16:48:29Z, bytes and sha printed in their OK lines) and once by the re-serialisation, which changed only key ORDER. The AC3 and AC4 OK lines therefore name a sha256 the pool no longer holds; the current Metadata document-sha256 values are c250400d... and d7b2426e.... Byte length, run_id, verdict, basis, usage and every other value are unchanged, and no third model call was made.",
     "notes": "Why a re-write and not a re-run: a re-run would have spent a third and fourth model call against a two-run bound to change nothing but byte order. Why not leave it: AC6's own invocation reads the stored bytes, so the order of keys in the object IS what the criterion measures. Both limbs were my defects, caught by the criterion as designed; this row records the unnamed pool write, not a defect in the order."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W22-S3",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~22",
+    "surfaced_at": "2026-09-15T16:52:00Z",
+    "one_line": "The X second candidate has NO input for this security from the source the cut names: the account pass holds Boeing's social_account as UNRESOLVED with value null (client-rendered footer), so profile_urls_available is 0 -- the method is not merely un-run by this cell's bound, it is not runnable for BA_US_Equity from that artifact.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/tier1_exec/4.0.0_SA_CRO/deliverables/IDENTITY_SOCIAL_ACCOUNT_PASS_20260914_Z.json @eff1b9f6ae: 1 of 88 records has company_name 'Boeing' (folder 'Boeing BA'); social_account = {value: null, status: UNRESOLVED, evidence: 'REFUSED -- the page at https://www.boeing.com/ returned 25329 bytes and carried NO social links ... THIS IS A LIMIT OF THE INSTRUMENT, not evidence the company has no accounts.'}. The pass's own denominator: 88 attempted, 61 resolved, 27 unresolved.",
+        "lib/research/social/collect.py @5ac6e20930 read_second_candidate_profiles() reads that record and writes second_candidate.profile_urls_available = 0, with the pass's evidence, into the served S-1 record s3://opal-data-harvest/social/v1/_measurement/2026-09-15.json."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT-rj-13 deliverable 2: second_candidate: {platform: x, discover_by: profiles_array, profile_urls_from: the account pass, status: NOT_RUN}; the CRO brief @36a08d3d1a: 'Corporate account URLs come from the existing map with their evidence status'.",
+    "world_is": "For the one security this round measures, the existing map carries no X handle at all. A later round that runs the X method for Boeing needs another source of profile urls (an account-page visit, or an entry with its own evidence status) before its first input exists.",
+    "notes": "Recorded as a counted field in the S-1 record so a reader cannot mistake NOT_RUN-by-bound for NOT_RUN-for-lack-of-input."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W22-S4",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~22",
+    "surfaced_at": "2026-09-15T16:52:00Z",
+    "one_line": "The vendor reports a genuine ZERO-MATCH discovery as status=failed: its monitor-progress status enum is starting|running|ready|failed|canceled with no zero value, and 'No data found in discovery' and 'Snapshot is empty' are listed among the failed error_message values -- so a client reading status alone records a zero as a FAILURE, the conflation this cell must not make.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "https://docs.brightdata.com/api-reference/web-scraper-api/management-apis/monitor-progress.md read 2026-09-15 ~16:3xZ (5017 bytes): status enum [starting, running, ready, failed, canceled]; 'When `status` is `failed`, `error_message` is one of: ... No data found in discovery / Snapshot is empty / Failed to deliver snapshot / ... / Input validation failed: DETAILS'.",
+        "lib/research/social/collect.py @5ac6e20930: VENDOR_ZERO_DATA_MESSAGES maps those two messages to ZERO_MATCHES and every other failed/canceled to FAILED; four stubbed tests cover the three arms and canceled -- suite 28 of 28 OK."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT-rj-13 deliverable 1: 'the five states (failure, zero matches, stale matches, capped results, still-running) each a distinct outcome in the record'; the CRO brief: 'Failure, zero matches, stale matches, capped results and still-running collection remain separate states'.",
+    "world_is": "The distinction is not in the vendor's status field; it lives in a free-text error_message. The mapping is a string match on the two documented messages, so it is only as durable as the vendor's wording -- a reworded message turns a zero back into FAILED with nothing to say so.",
+    "notes": "Filed as form. A later feed cell inherits both the mapping and its dependency on two literal vendor strings."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W22-S5",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~22",
+    "surfaced_at": "2026-09-15T16:52:00Z",
+    "one_line": "The cut's `date = the last 30 days` is not expressible on this input method: the vendor's `date` field is an ENUM (Past hour, Past day, Past week, Past month, Past year, All time) with no day count, so the job sends 'Past month' and the declared 30-day window is re-applied locally on each record's own posted_at.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "https://docs.brightdata.com/api-reference/scrapers/social-media-apis/reddit-posts-discover-by-keyword.md read 2026-09-15 ~16:3xZ (2758 bytes): 'The date filter to apply to the search. One of: `Past hour`, `Past day`, `Past week`, `Past month`, `Past year`, `All time`'.",
+        "lib/research/social/collect.py @5ac6e20930 API_DATE_FOR_30_DAYS = 'Past month'; the S-1 record's method.window.enforced_by states the local re-application; a record whose posted_at cannot be parsed counts STALE (test_an_unparseable_date_is_stale_never_silently_fresh).",
+        "Before any spend the constant read 'Last month', which is not a vendor value; the doc read caught it and no trigger was sent with it -- the ledger deliverables/0.9.0_WK_AMGT_RESAPP~22/social_jobs/BA_US_Equity_2026-09-15.json persists 'Past month' on both inputs."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT-rj-13 deliverable 1: '`date` = the last 30 days'; S-1 method.window.",
+    "world_is": "The vendor's month is the vendor's definition (calendar month or trailing 30 days is not documented), so delivery.stale counts returned records that fall outside the local 30-day window -- a nonzero stale count on a 'Past month' query measures the vendor's window, not a defect.",
+    "notes": "method_version 'social-reddit-keyword-v1' pins this enum choice, so a later change of window is a new method version, per the brief's point 6."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W22-S6",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~22",
+    "surfaced_at": "2026-09-15T16:52:00Z",
+    "one_line": "INTERFACE S-1's key social/v1/_measurement/{as_of}.json carries no security coordinate while the record carries security_key: one security per day fits it, and a second security measured on the same as_of would OVERWRITE the first at the same key.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AMGT-rj-13 deliverable 2 names the key 'social/v1/_measurement/{as_of}.json'; AC2 and AC3 read exactly 'social/v1/_measurement/2026-09-15.json'.",
+        "lib/research/social/collect.py @5ac6e20930 write_pool_object() writes POOL_PREFIX + as_of + '.json' as ordered; every run of the literal AC2 invocation today overwrote that one key (five by 16:50Z, etags 102a3039.., fb350482.., e9b38bff.., 73ac45cc.., 48d9d43e..), each read back with a matching sha256 -- for ONE security, the cell's bound.",
+        "Sibling families in the same bucket key by security first: management/v1/BA_US_Equity/2026-09-15.json and filings/v1/BA_US_Equity/<accession>.source.json (list_objects_v2, 2026-09-15)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "INTERFACE S-1: social/v1/_measurement/{as_of}.json.",
+    "world_is": "Built as specified and harmless under this cell's bound (no second security). A round that measures more than one name per day needs a different key shape, which is a new S-1 version rather than a silent overwrite.",
+    "notes": "Not changed here: the key is the interface the cut names and AC3 reads."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W22-S7",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~22",
+    "surfaced_at": "2026-09-15T16:52:00Z",
+    "one_line": "COST cannot be MEASURED with brightdata-api-key on any route probed: the progress payload carries no cost field, the snapshots listing carries none, and the account balance route refuses the key with 403 'Your API key lacks the required permissions for this action' -- so S-1 cost.usd is null with claim 'absent', and the only usd figure in the record is the pre-call estimate (claim held).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "GET /datasets/v3/progress/sd_mu2wf4v3biieffcle (2026-09-15 ~16:48Z, job running) -> 200 {status, snapshot_id, dataset_id, running_time: 441299} -- four keys, no cost.",
+        "GET /datasets/v3/snapshots?dataset_id=gd_lvz8ah06191smkebj4 (~16:51Z) -> 200, 1 row: {id: sd_mu2wf4v3biieffcle, created: 2026-09-15T16:41:06.399Z, dataset_id, status: running, dataset_size: 46} -- five keys, no cost.",
+        "GET /customer/balance (~16:48Z) -> 403, 141 bytes: 'Your API key lacks the required permissions for this action. You can change your token permissions at https://brightdata.com/cp/setting/users'. The same key returns 200 on /datasets/list (1765 datasets), so this is a permission scope on the key, not an outage.",
+        "GET /datasets/v3/progress/sd_mu2wf4v3biieffcle at completion (~16:52:58Z, status ready, records 48, errors 0) -> the served S-1 record s3://opal-data-harvest/social/v1/_measurement/2026-09-15.json (document-sha256 2961afa5..) cost.basis lists the keys seen: [avg_duration_per_input, collection_duration, dataset_id, errors, records, snapshot_id, status] -- seven keys, no cost.",
+        "lib/research/social/collect.py @5ac6e20930 reads a cost field from the progress payload first and a balance delta second, and writes claim 'absent' with the keys it saw when neither exists; test_an_absent_vendor_cost_is_absent_not_zero."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT-rj-13: 'measure actual delivery, quality, latency and cost' (the CRO brief's acceptance); S-1 cost: {usd, unit}; measure.py OBSERVABLES['cost']: 'the account's usage delta -- read Bright Data's usage/billing figure before the trigger and again after'.",
+    "world_is": "The usage-delta instrument measure.py planned needs a key permission this estate key does not hold. A later feed cell either gets a billing-scoped read (a change to the key's permissions in the vendor console, which is an account act outside the estate), or reads cost off the vendor's invoice by hand; neither exists at this cut. Read again at COMPLETION: the ready payload carries seven keys -- avg_duration_per_input, collection_duration, dataset_id, errors, records, snapshot_id, status -- and still no cost.",
+    "notes": "Filed as form. The cost the record CAN state today is the held unit-price estimate (usd 0.075 for 50 records at usd 0.0015), which is a guard input, never a measurement."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W22-S8",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~22",
+    "surfaced_at": "2026-09-15T17:05:00Z",
+    "one_line": "THE MEASUREMENT a later feed cell needs: one Reddit keyword job for BA_US_Equity delivered 48 records against a cap of 50 in 713.4 s (vendor collection_duration 709.9 s), 48 of 48 valid under the existing contract, 0 of 48 admitted by the existing item rule (22 REFUSE, 26 PROVISIONAL), 2 of 48 outside the 30-day window, 0 vendor errors, and a cost that cannot be measured with this key (held estimate usd 0.075).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The graded AC2 run, literal invocation, 2026-09-15 16:56:43Z, rc=0: 'JOB id=sd_mu2wf4v3biieffcle submitted_at=2026-09-15T16:41:05Z RESUMED ... no new discovery submitted' / 'POLL ... final_vendor_status=ready vendor_reported_records=48 state=COMPLETE' / 'DELIVERY records=48 valid=48 invalid=0 admitted=0 rejected_by_rule=22 provisional=26 stale=2 fresh=46 capped=False' / 'LATENCY 713.4 seconds'. The first run of the same invocation, 16:41:03Z, printed 'JOB id=sd_mu2wf4v3biieffcle submitted_at=2026-09-15T16:41:05Z persisted-before-polling ... resumed=False' and ended STILL_RUNNING; runs 2-5 resumed and ended STILL_RUNNING; run 6 at 16:52:45Z was the first to read ready.",
+        "GET /datasets/v3/progress/sd_mu2wf4v3biieffcle after completion -> 200 {status: ready, records: 48, errors: 0, collection_duration: 709920, avg_duration_per_input: 354960}.",
+        "Served S-1 record s3://opal-data-harvest/social/v1/_measurement/2026-09-15.json, 12088 bytes, Metadata document-sha256 ad459b40bbbb7c71e3a66f78cf7e48a2fa0f73e66d5127b2c74d29908f23d424, schema-version 1; copy beside the proof at deliverables/0.9.0_WK_AMGT_RESAPP~22/social_measurement_BA_US_Equity_2026-09-15.json (same sha256).",
+        "Job log deliverables/0.9.0_WK_AMGT_RESAPP~22/social_jobs/BA_US_Equity_2026-09-15.items.json, 48 of 48 items: keyword 'BA' n=25 -> REFUSE 22, PROVISIONAL 3, stale 0, 22 distinct communities, the largest BritishAirways (3), UniversityofAllahabad (2), AskIndia, businessanalyst, AskPinay, CollegeRant, JobsPhilippines, Flights; keyword 'Boeing' n=23 -> PROVISIONAL 23, stale 2 (both posted 2026-08-15), 10 distinct communities, the largest boeing (9), aviation (3), SPEEA (2), Boeing_ (2), AskReddit (2)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT-rj-13 deliverable 3: 'A row for the finding, whatever it is: the measured delivery, quality, latency and cost are the numbers a later round's feed cell needs; the header's social half stays no source measured until that cell (rj-9 renders it so)'.",
+    "world_is": "DELIVERY: the declared method works on this account -- one job, one snapshot id, 48 records, 0 errors, COMPLETE. QUALITY: the existing item rule cannot PASS a single Reddit record, by construction -- the vendor record's 30 keys carry no per-post subject, so primary_subject is None on every item; the ticker arm is almost entirely NOT Boeing (British Airways, Bachelor of Arts degrees, business analysts) and the rule refuses 22 of its 25 as contains-the-string, which is the ambiguous-ticker control the CRO brief asks for, working; the company-name arm's 23 sit in plainly Boeing communities and all read PROVISIONAL, not PASS. Every author is UNRESOLVED, so validator.attach_to_security refuses all 48 (the brief's point 4, measured). CAPPED: delivery.capped is false because the job total 48 is under 50, but the BA input returned 25 of its own per-input limit of 25 -- that arm WAS truncated; the flag is job-total by construction. LATENCY: the job became ready between about 578 s (the last running poll) and about 702 s (the first ready poll) after submission, anchored on the shell start stamps; 713.4 s is recorded, including retrieval, against the vendor's own 709.9 s. A synchronous page read cannot wait for this. COST: absent (row S7). WINDOW: the vendor's Past month returned 2 posts from 2026-08-15, one day before the local window start (row S5).",
+    "notes": "Filed as form, not significance. The header's social half stays 'no source measured' until a later round's feed cell; nothing here is a feed, and nothing was scheduled. No second retrieval is owed: the job is COMPLETE, and the record carries the documented retrieval flow and the ledger path. ONE job was submitted in this cell; every later invocation resumed it."
   }
 ]
 ```
