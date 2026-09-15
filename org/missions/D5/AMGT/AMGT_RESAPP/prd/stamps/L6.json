@@ -1,0 +1,9 @@
+{
+ "note": "round 10: ONE issuance 59b7b17909 (fanout 2 of 2 chains, cap 8) + amendments 98eb9701ac, af5b7c0862, 33d8c00fbc, 9b5933d12d; 4 of 4 terminal, last drain 8da6d27866; stamped late after the round-10 slug named the issuer's stamp gap",
+ "prd_pin": "aca0b0f10887",
+ "prd_version": "v0.6",
+ "project": "AMGT_RESAPP",
+ "signed_by": "2.0.0_SA_COO~W",
+ "stage": "L6",
+ "utc": "2026-09-15T06:05Z"
+}
