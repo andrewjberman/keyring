@@ -1074,6 +1074,142 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "Ruling 97141 as carried by the order @1efed70736: exactly three assertion lines change, each to sub == \"<tid>/<oid>\" of that test's principal AND email == the same email; no other assertion changes; every other edit is fixture-only.",
     "world_is": "The ruled expression for test_ogo1_ac06 names that test's oid, which only uuid.uuid5 can reproduce, and uuid was not in scope at the assertion. One module-level import line was added. It is neither an assertion nor a change to how the test obtains its token. The alternatives were worse by the worker's reading: reaching uuid through sys.modules, or changing the helper to hand back its principal, which edits a fixture line to serve an assertion.",
     "notes": "INERT: an import changes no assertion and no behaviour. The AC14 probe counts it as a non-assertion line and prints it as a disclosure; OGA2-AC13 reads 63/63 for the module."
+  },
+  {
+    "id": "NFRA_OPLGTW-W3-S16",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~3",
+    "surfaced_at": "2026-09-15T18:08:00Z",
+    "one_line": "Adding OG-a-3's two routes turns tests/test_principal_cutover.py::test_oga2_ac04 red: its route census requires every served path to appear in its hand-written ROUTE_CLASS table, which lacks /schwab/download/login and /schwab/download/callback, and that file is outside this order's grant.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN: cd /c/tmp/wk-oplgtw-1-3d && timeout 600 .venv-og/Scripts/python -m pytest infra/aws/ec2/opal-gateway/tests/test_principal_cutover.py -q -p no:cacheprovider --color=no -m \"not live\", on the worktree committed as 6a4e94d734 -- '1 failed, 10 passed in 6.40s'; FAILED test_oga2_ac04 at test_principal_cutover.py:540 (assert set(ROUTE_CLASS) == set(routes)): 'AssertionError: ['/schwab/download/callback', '/schwab/download/login']'.",
+        "SOURCE: infra/aws/ec2/opal-gateway/app/server.py @6a4e94d734 -- two Route declarations added (browser_oidc.LOGIN_PATH, browser_oidc.CALLBACK_PATH); OGA3-AC7 prints 'added 2 ... removed 0; changed 0'.",
+        "BASE: the drain commit 7459929520 records the COO re-run at the cut base green on 12 of 13 modules, the 13th being test_schwab_engine's known load flake, so test_principal_cutover passed there.",
+        "ORDER: org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-a-3.browser-oidc.md @6a4e94d734 -- <paths> names app/browser_oidc.py, app/server.py, tests/test_browser_oidc.py and this channel; tests/test_principal_cutover.py is not named."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The order grants exactly app/browser_oidc.py, app/server.py, tests/test_browser_oidc.py and the channel. Its criteria are the seven tests of tests/test_browser_oidc.py, and OGA3-AC7 requires the route table to differ from the base only by the new paths.",
+    "world_is": "OG-a-2's test_oga2_ac04 fixes the set of served routes through a classification table and fails on any unclassified path, so any cell that adds a route fails it. The worker did not edit that file. The seven OGA3 criteria pass, and the other 12 Gateway modules pass, one process each.",
+    "notes": "ARMED: after this branch drains, the COO's per-module re-run reads test_principal_cutover 1 failed. Disarm: a grant adding the two paths to ROUTE_CLASS (as public routes, each gated by its own state cookie, nonce and ID-token validation), or a ruling that the census reads BROWSER_PATHS.json."
+  },
+  {
+    "id": "NFRA_OPLGTW-W3-S17",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~3",
+    "surfaced_at": "2026-09-15T18:08:00Z",
+    "one_line": "OGA3-AC7 as written pins the route table recorded at the cut base 7459929520, so test_oga3_ac07 turns red as soon as any later cell adds or changes a route. OG-x-1 and OG-z-1 both write app/server.py, per the decomposition.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ORDER: NFRA_OPLGTW.TO-OG-a-3 @6a4e94d734 -- OGA3-AC7: 'the route table differs from the one at your base only by the new paths.'",
+        "SOURCE: infra/aws/ec2/opal-gateway/tests/test_browser_oidc.py @6a4e94d734 -- BASE_ROUTES (27 rows read from the running app at 7459929520) and test_oga3_ac07, which asserts the live table minus the two browser routes equals BASE_ROUTES and re-derives it from the git object of server.py at 7459929520.",
+        "DECOMP: org/missions/D9/NFRA/NFRA_OPLGTW/decompositions/NFRA_OPLGTW_DECOMP.md @8768f46770 -- :507 OG-x-1 writes GW/app/download_routes.py (new) and GW/app/server.py; :315 OG-z-1 writes GW/app/server.py."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OGA3-AC7 compares the route table with the one at this order's base.",
+    "world_is": "Written as ruled, the test holds only until the next cell changes the route table. The first route-adding cell turns OGA3-AC7 red with no defect in OG-a-3. test_oga2_ac04 has the same property (row W3-S16).",
+    "notes": "ARMED for later drains. Disarm: the route-adding cell's order grants amending BASE_ROUTES (or the test's reference commit), or a ruling retires AC7 from the regression set after this round."
+  },
+  {
+    "id": "NFRA_OPLGTW-W3-S18",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~3",
+    "surfaced_at": "2026-09-15T18:08:00Z",
+    "one_line": "The two browser OIDC endpoints fall into the rate limiter's coarse FAIL-OPEN global per-IP bucket, not the tight FAIL-CLOSED auth bucket, because app/ratelimit.py's AUTH_PATHS lists only /authorize, /token, /register and /callback, and that file is outside the grant.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SOURCE: infra/aws/ec2/opal-gateway/app/ratelimit.py @6a4e94d734 -- :42 AUTH_PATHS = frozenset({\"/authorize\", \"/token\", \"/register\", \"/callback\"}); :117-120 enforce_ip: AUTH endpoints get the tight bucket, FAIL-CLOSED, everything else the coarse global bucket, FAIL-OPEN.",
+        "SOURCE: infra/aws/ec2/opal-gateway/app/server.py @6a4e94d734 -- RateLimitMiddleware: is_auth = path in ratelimit.AUTH_PATHS.",
+        "SOURCE: infra/aws/ec2/opal-gateway/app/browser_oidc.py @6a4e94d734 -- the callback redeems an upstream code and validates an ID token (a key lookup) per request, as the /callback bridge leg does."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The order asks for the login and callback in browser_oidc.py and server.py and says nothing of rate limiting. The existing auth endpoints sit in the tight FAIL-CLOSED per-IP bucket.",
+    "world_is": "/schwab/download/login and /schwab/download/callback are rate-limited as ordinary traffic, although each callback costs an upstream code redemption.",
+    "notes": "INERT: nothing deploys in this order. The one-line act, adding the two paths to AUTH_PATHS, belongs to the owner of app/ratelimit.py, before OG-r-1's release."
+  },
+  {
+    "id": "NFRA_OPLGTW-W3-S19",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~3",
+    "surfaced_at": "2026-09-15T18:08:00Z",
+    "one_line": "The separate callback is a new redirect URI at the upstream: the upstream app registration must list <PUBLIC_BASE_URL>/schwab/download/callback beside /callback, and no cell of the decomposition names that act (OG-i-3 is the ALB only).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "INFERRED",
+      "evidence": [
+        "SOURCE: infra/aws/ec2/opal-gateway/app/browser_oidc.py @6a4e94d734 -- callback_url() = PUBLIC_BASE_URL + '/schwab/download/callback', passed as redirect_uri both to get_authorization_request_url and to acquire_token_by_authorization_code.",
+        "SOURCE: infra/aws/ec2/opal-gateway/app/config.py @6a4e94d734 -- redirect_uri = PUBLIC_BASE_URL + '/callback', the code's only redirect URI before this cell.",
+        "DECOMP/PRD: a case-insensitive search of decompositions/*.md and prd/*.md under org/missions/D9/NFRA/NFRA_OPLGTW for 'redirect[ _-]?ur[il]|app registration|reply url' returns 2 lines (PRD C5 :179 and DECOMP :514), both about the ticket never appearing in a redirect URL; none about registering one. OG-i-3 (DECOMP :157) writes TFGW/alb.tf only.",
+        "INFERRED: that the upstream refuses a sign-in whose redirect URI is not registered is standard OpenID Connect behaviour; it was not exercised (the tests use a local issuer)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD C1: 'The download browser uses a separate Gateway-owned OIDC callback'. The order's only downstream hand-off is BROWSER_PATHS.json, for OG-i-3's ALB rules.",
+    "world_is": "Until the app registration lists the new URI, the live sign-in stops at the upstream before the Gateway sees a code. BROWSER_PATHS.json records the URI under upstream_redirect_uri, marked as not an ALB rule.",
+    "notes": "INERT now: nothing deploys. It becomes a hard stop of the download journey at OG-r-1 or OG-v-4 unless the holder of the Entra app registration adds the URI."
+  },
+  {
+    "id": "NFRA_OPLGTW-W3-S20",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~3",
+    "surfaced_at": "2026-09-15T18:08:00Z",
+    "one_line": "Neither the contract nor the PRD names a URL path for the download page or its login. The worker chose /schwab/download as the cookie scope, from the one existing hint (the audit test's sentinel URL https://gateway.opalinvest.com/schwab/download#...). That choice binds OG-x-1 to put its download page and routes at or under /schwab/download, or the session cookie never reaches them.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CONTRACT: org/standards/NFRA_OPLGTW_CONTRACT.json @6a4e94d734 -- a case-insensitive search for '\"/[a-z]|path|url' returns 1 line (:278 download_ticket_transport), which names no path.",
+        "SOURCE: infra/aws/ec2/opal-gateway/tests/test_schwab_audit.py @6a4e94d734 :263 -- the sentinel \"complete URL\": \"https://gateway.opalinvest.com/schwab/download#tkt_s3cr3tQ9xLmN0pR\".",
+        "SOURCE: infra/aws/ec2/opal-gateway/app/browser_oidc.py @6a4e94d734 -- COOKIE_PATH = '/schwab/download'; org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~3/BROWSER_PATHS.json @6a4e94d734 -- cookie_path and cookie_path_note."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The order: write BROWSER_PATHS.json with 'the exact login and callback paths this cell serves'; OGA3-AC4: the session cookie is 'scoped to the download paths'. Neither names the download paths.",
+    "world_is": "The download paths belong to OG-x-1 and are not yet written. Scoping the cookie needs a prefix now, so that prefix fixes where OG-x-1's page can live.",
+    "notes": "INERT: a naming decision, recorded in BROWSER_PATHS.json, which OG-i-3 reads. OG-x-1's order should name /schwab/download as its page path, or re-cut COOKIE_PATH."
+  },
+  {
+    "id": "NFRA_OPLGTW-W3-S21",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~3",
+    "surfaced_at": "2026-09-15T18:08:00Z",
+    "one_line": "The order says tests/test_identity_scope.py::test_scoped_deny_by_default fails at the cut base (row NFRA_OPLGTW-S1). In this worktree the premise does not hold: the module ran 6 passed, 0 failed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN: cd /c/tmp/wk-oplgtw-1-3d && AUDIT_PATH=<.scratch> timeout 600 .venv-og/Scripts/python -m pytest infra/aws/ec2/opal-gateway/tests/test_identity_scope.py -q -p no:cacheprovider --color=no -m \"not live\", on the worktree committed as 6a4e94d734 -- '6 passed in 0.07s', rc=0.",
+        "DIFF: 6a4e94d734 against 7459929520 changes 4 files (app/browser_oidc.py, app/server.py, tests/test_browser_oidc.py, BROWSER_PATHS.json); neither identity_scope.py, its test nor identity_tool_allowlist.txt.",
+        "ORDER: NFRA_OPLGTW.TO-OG-a-3 @6a4e94d734 BOUNDS -- 'tests/test_identity_scope.py::test_scoped_deny_by_default fails at the cut base (row NFRA_OPLGTW-S1).'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The order's BOUNDS: the named test fails at the cut base.",
+    "world_is": "It passed here. The worker did not investigate why (environment, data files or a later fix), because it is not this cell's.",
+    "notes": "INERT: no criterion of this order reads it. Recorded so the premise is re-grounded before the next order repeats it."
   }
 ]
 ```
