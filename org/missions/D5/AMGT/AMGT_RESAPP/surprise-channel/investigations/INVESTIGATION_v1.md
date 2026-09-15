@@ -4478,6 +4478,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
       "spec_asserts": "C-UNION-UNIVERSE asks for the UNION of the coverage list and the ETFs' current holdings, with C-ONE-IDENTITY requiring ONE canonical identity per economic security; C-ETF-PLANE-READ states the producer-side contract is NOT established and the read is one-sided.",
       "world_is": "The two contracts pull opposite ways on 167 names and the never-guess clause wins: an identifier with no exchange code and no declared identifier space is kept UNRESOLVED with its raw identifier, never dropped and never merged on root equality. The consequence, stated plainly: the union carries the SAME economic security twice for ASML, INTU, NU and PBR (once as a coverage identity, once as an unresolved holding line), and each unresolved row NAMES its candidate so the duplication is visible rather than silent.",
       "notes": "This is the cell's own instruction executed ('a holding identifier that does not resolve is UNRESOLVED with its raw identifier, never dropped, never guessed'), recorded because it is the single fact every reader of U-1 must know before counting. The clean remedy is upstream and is not this order's to take: a PRODUCER-SIDE identifier contract on s3://opal-data-etfs (an exchange code, a figi or the cusip already in the row promoted to a declared key) would let the join be MEASURED instead of refused, and would collapse the four duplicates. cusip is the cheapest candidate: a cusip value is present on 187 of 189 holding rows (the 2 without are the DIVZ and IDVZ cash lines; the PFDE and PFOE cash lines carry the literal 'Cash&Other', which is not a cusip)."
+    },
+    {
+      "id": "AMGT_RESAPP-Z-W19-S7",
+      "project": "AMGT_RESAPP",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~19",
+      "surfaced_at": "2026-09-15T08:25:00Z",
+      "one_line": "AC7's never-written control asks for a snapshots/ COUNT 'unchanged', but AC1 -- the paired BEFORE -- never produces one (it queries the newest key and Size only); and the control is stated bucket-wide on a bucket that has a LIVE PRODUCER, which wrote 7 of 1518 objects during this worker's own window.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "AC1 snapshots/ invocation as written: --query 'sort_by(Contents,&Key)[-1].[Key,Size]' -> 'snapshots/snapshot_2026-09-14.json  2879'. AC7 snapshots/ invocation as written: --query '[length(Contents), max_by(Contents,&LastModified).LastModified]' -> '95  2026-09-14T22:00:17+00:00'. The two queries return DIFFERENT fields, so the count has no before-value and the LastModified has no AC1 before-value either.",
+          "Client-side paginated census of opal-data-etfs 2026-09-15 08:2xZ (boto3, full pagination, counted in python): 1518 objects total; 7 modified at or after 2026-09-15T07:40Z (this worker's first act), ALL of them s3://opal-data-etfs/bbg/2026-09-14/{characteristics,fund_daily,history_topup}.{csv,parquet} and run_manifest.json at 07:52:34Z -- another producer's Bloomberg pull, under a prefix this cell never reads or writes.",
+          "The prefixes this cell DOES read are unchanged across the run: gold/ 62 objects, newest gold/_manifests/2026-09-11/0ec4e7a9e3bb.json at 2026-09-14T13:01:22+00:00 (identical in AC1 at 07:4xZ and AC7 at 08:1xZ); snapshots/ newest key snapshot_2026-09-14.json size 2879 (identical); gold/holding/ 14, gold/book/ 14, config/ 1, and NO object under any of them carries a LastModified inside this worker's window."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "AC7: 'the same gold/ count, newest key and LastModified as AC1 printed, and the snapshots/ count and newest LastModified unchanged (the ETF plane was read and never written -- any difference is a BLOCKING row)'.",
+      "world_is": "The gold/ half of the pair is complete and MATCHES exactly. The snapshots/ half is not a pair: AC1 measured {Key, Size} and AC7 measures {count, LastModified}, so 'unchanged' has nothing to compare against on either field. The stronger control that WAS available and was run instead -- no object under any read prefix carries a LastModified inside the worker's window, and the only 7 writes to the bucket in that window are another producer's under bbg/ -- answers the question the criterion is asking, and answers it on the whole bucket rather than one prefix.",
+      "notes": "No difference was found and nothing is blocked; AC7 is recorded PASS on the gold/ pair plus the window control, with the snapshots/ count stated as an AFTER-only value and NOT claimed as unchanged-by-comparison. The generalisable point for the next cut: on a bucket with a live producer, a before/after COUNT is the wrong control shape -- it can move for reasons that have nothing to do with the actor -- and the right one is 'no object under the prefixes I touched has a LastModified inside my window'. Related and already law, so not filed separately: a paginated list-objects-v2 with --query length() returns a PER-PAGE count; this bucket's whole-bucket probe printed '1000' then '518' and a per-page reader would have reported 1000 of 1518."
     }
 ]
 ```
