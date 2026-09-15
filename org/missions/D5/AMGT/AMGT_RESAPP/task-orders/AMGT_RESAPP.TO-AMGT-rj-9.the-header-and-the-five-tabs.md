@@ -41,7 +41,9 @@ the pointer at `<AXIS>#<date>` / `_CURRENT` with `generation_id, run_id, coverag
 `drafting/v1/{key}.json` (rj-6, already served by rj-2's route); F-1 `filings/v1/{key}/{accession}.analysis.json` (`thesis_driver`);
 R-1 `peers/v1/{key}/{as_of}.json` (rj-7); M-1 `management/v1/{key}/{as_of}.json` and `_pool/{as_of}.json` (rj-8); O-1
 `posture/v1/{key}/{as_of}.json` (rj-11; ABSENT until it lands). Objects for BA_US_Equity, COST_US_Equity, HD_US_Equity, SAP_GY_Equity,
-BABA_US_Equity are in the pool; local copies in the `~19`, `~20`, `~21`, `~22` deliverables for the harness fixtures.
+BABA_US_Equity are in the POOL -- fetch your harness fixtures from there into `.scratch/` (as rj-2 did: the `~20` deliverables
+carry NO D-1 copy, 0 of 1 json; M-1 copies, if `~22` kept any, are in its deliverables after its drain); the `~19` and `~21`
+deliverables carry local P-1/G-1 and R-1 copies (5 json each).
 
 **DELIVER, in this order:**
 1. **EVERY adapter route edit of the round** (chain A owns `scoped_amgt.py`): (a) `read_coverage_set` on P-1 through the identity's
@@ -156,3 +158,5 @@ comp-blast: DECLARED-NOT-APPLICABLE -- this cell moves nothing on the live plane
 **AMENDMENT 2 (2026-09-15 ~09:4xZ, `2.0.0_SA_COO~W`, issuer):** the `store_item_count at least 20` bar on BA was the issuer's assumption; the pool holds 2 links for BA (row `AMGT_RESAPP-Z-W19-S8`; the CRO's brief @`0e7de170e3`; the harvest's cadence is Andrew's @`9db2a36cdc`). Re-cut to `at least 1 and PRINTED`; the discriminating clauses (items at least 1, states printed, key_forms, no table read) are unchanged.
 
 **AMENDMENT 3 (2026-09-15 ~10:0xZ, `2.0.0_SA_COO~W`, issuer):** row `AMGT_RESAPP-Z-W18-S1` (worker `~18`, rj-1 AC2): `python -m unittest discover -s lib/research/api/tests` collects ZERO tests -- the adapter suite is pytest-style -- so the clause 'ends OK with 0 failures' was satisfied over an EMPTY denominator. The invocation is re-cut to pytest and the expectation names the collected count so an empty run cannot pass again (rj-1 recorded pytest beside its instance: 54 passed / 6 failed, the 6 failing only for paths absent from the sparse cone, row W18-S2 -- the cone now carries `integrations/` and `infra/`). No other clause moved.
+
+**AMENDMENT 3 (2026-09-15 ~15:5xZ, `2.0.0_SA_COO~W`, issuer):** the section-1 fixture sentence claimed local copies of every consumed object in the `~19`..`~22` deliverables; measured at HEAD 5a24d0f45f: `~19` 5 json, `~20` 1 json (no D-1 copy -- rj-6 landed D-1 in the pool only, the same finding that re-cut rj-2's AC2), `~21` 5 json, `~22` not yet drained. Re-cut to fetch D-1/F-1/M-1 fixtures from the pool into `.scratch/`. No criterion moved.
