@@ -477,3 +477,16 @@ CSC basis labelling, resolution widening, a gate that must discriminate on its i
 halves' vocabulary/unit/FX mapping). Also: the CVO's (a)-(d) evidence, which reaches MSTR only through the CTO, relayed at
 14:52Z; the CRO's close-out (bounded commissioning complete under its limits, handoff to Andrew) pointed at; project.json's
 stale "NEXT: cuts round 11" prose corrected @`cab4535071` on the CVO's flag. Push state: LOCAL.
+
+---
+
+## ADDENDUM 15 (15:2xZ) -- the round-11 stall's cause read from the issuer's own log; pointed at for Andrew's picture
+
+`2.0.0_SA_COO~W`'s log @`5bc318c513` (s.14): both live round-11 workers (~18 rj-2, ~22 rj-8) were killed at ~10:5xZ by the API
+weekly limit (HTTP 429, resets Sep 19 5pm ET); the COO's Monitor expired in the same batch and the seat slept until Andrew's
+/login at ~14:5xZ; residue measured, nothing lost; both respawned ~14:58Z. That is the four-hour gap between the rj-6 drain
+(10:28Z) and now, and the limiter on Andrew's "BLASTING THAT" was account capacity on this box, not diligence -- the same limit
+that has `1.0.0_SA_CTO~Z` down until Sep 19. Sent to `0.0.0_AB_MSTR~Z` as one pointer with the issuer's stated order of the
+remaining eight cells (rj-11 and rj-13 at rj-8's drain; rj-9 at rj-2's; rj-10 after rj-9; rj-12 after rj-9 and rj-11; rj-3 last)
+and the note that the L8 packet will carry the CTO's L10 pre-read @`9ceb811406` beside it. Inbox Monitor re-armed twice more
+(bjxxl3bvw, b551heni1); the drain watch bcwqm13ta still running at baseline 5 / no slug. Push state: LOCAL.
