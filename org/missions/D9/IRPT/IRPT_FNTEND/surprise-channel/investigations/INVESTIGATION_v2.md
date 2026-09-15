@@ -4244,6 +4244,67 @@
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W4-S18",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~4",
+    "surfaced_at": "2026-09-15T05:33:22Z",
+    "one_line": "TO-FE-s-48's census premise places the CohortFact check at `contracts/validate.ts:164-171`. At portal DEV 1f3ce9f0 those lines are the termination and access checks; the per-cohort check is at :178-192. The file is right and the lines are not.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-48.non-authoritative-cohort-reads-withheld.md @e2d9f703e9, THE CELL: \"Round 7's census of `CohortFact` values outside `__tests__/` finds two consumers: `contracts/validate.ts:164-171`, which checks and does not render, and `header/ScopeSummary.tsx`, which renders. Re-run it at your vintage.\"",
+    "world_is": "`git cat-file blob 1f3ce9f0:src/pages/InvestorReporting/contracts/validate.ts`, lines 160-192. Lines :160-162 are the termination checks, :165-173 the access checks, and :175-176 the termination/access separation. The cohort loop is at :178-192, and :188 is `req(c, cp, 'authoritative', 'boolean', p)`. The re-run census (F48-AC5, fe-s-48/withheld.test.ts) classifies validate.ts by path, not by line: it CHECKS a CohortFact and renders nothing. So the verdict is unchanged and only the citation drifted. INERT: a line citation in an order's premise moves no artifact.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git cat-file blob 1f3ce9f0:src/pages/InvestorReporting/contracts/validate.ts (portal) :164-171 = `const a = req(v, path, 'access', 'object', p)` ... `req(a, `${path}.access`, 'entitlementRevision', 'string', p)`; :178 `const cohorts = req(v, path, 'cohorts', 'array', p)` through :192",
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-48.non-authoritative-cohort-reads-withheld.md @e2d9f703e9 THE CELL and <preflight> 'the render census' both cite validate.ts:164-171"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W4-S19",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~4",
+    "surfaced_at": "2026-09-15T05:33:22Z",
+    "one_line": "The ruling's reach, one surface over: Holdings renders a NON-AUTHORITATIVE classification's supervision and advisory partitions as 'unknown' (tabs/holdings/slices.ts:100-102 @1f3ce9f0). That is the same withheld-by-authority shape the header now words as 'withheld'. It is not a CohortFact, this order excludes slices.ts, and the contract's own comment mandates 'unknown' there, so it is left as it is and placed here for the ruling's owner.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-48.non-authoritative-cohort-reads-withheld.md @e2d9f703e9: `1.0.0_SA_CTO` round-7 analysis (msg 96865, item 6), 'a non-authoritative cohort's axes read \"withheld\", never \"unknown\". RULING W keeps \"unknown\" out of any state that has a truer word'; F48-AC7 (judgment): 'a cohort value the panel declines to assert reads \"withheld\" at every render site, never \"unknown\"'. BOUNDS: `tabs/holdings/slices.ts` is NOT YOURS.",
+    "world_is": "slices.ts @1f3ce9f0 :100-102 `renderedClassification`: `if (!classification.authoritative) { return { supervision: 'unknown', advisory: 'unknown', authoritative: false } }`. Its header comment (:21-25) cites the contract: 'False => render every partition above as unknown'. At 1f3ce9f0 that comment is contracts/index.ts:708; slices.ts cites :598. SliceTable.tsx renders those partitions as cell text and marks `data-classification-authoritative` so a reader can tell a gap from a producer's own 'unknown'. F48-AC5's census (committed tree) SUBTRACTS slices.ts, SliceTable.tsx and HoldingsTab.tsx as holding no CohortFact: they name none of CohortFact, cohorts, DirectoryEntry or SearchOptionRow. That is correct by TYPE. Whether RULING W's 'truer word' reaches a Holdings classification the producer does not assert is a ruling question for `1.0.0_SA_CTO`, not a worker's. INERT: text rendering only, and nothing about the Holdings surface moved in this order.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git cat-file blob 1f3ce9f0:src/pages/InvestorReporting/tabs/holdings/slices.ts :100 `export function renderedClassification(...)`, :102 `return { supervision: 'unknown', advisory: 'unknown', authoritative: false }`",
+        "git cat-file blob 1f3ce9f0:src/pages/InvestorReporting/contracts/index.ts :708 `/** False => render every partition above as unknown. */`",
+        "fe-s-48/withheld.test.ts F48-AC5 census line: 'src/pages/InvestorReporting/tabs/holdings/slices.ts -- holds no CohortFact (names none of CohortFact/cohorts/DirectoryEntry/SearchOptionRow); its 8 \"authoritative\" hit(s) belong to another fact or to prose'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W4-S20",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~4",
+    "surfaced_at": "2026-09-15T05:33:22Z",
+    "one_line": "The fixture registry still describes directory.unknown-cohort.json as 'a non-authoritative cohort fact -- unknown renders as unknown, never as false and never as Client' (fixtures/index.ts:77). After FE-s-48 the header renders that fixture's three axes as 'withheld'. The prose is stale, and fixtures are outside this order's grant.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-48.non-authoritative-cohort-reads-withheld.md @e2d9f703e9 BOUNDS: 'NOT YOURS: ... every fixture'; THE REMEDY: 'The \"Cohort (not asserted)\" fact renders each withheld axis as `<axis>: withheld`'.",
+    "world_is": "git cat-file blob 1f3ce9f0:src/pages/InvestorReporting/fixtures/index.ts :75 `file: 'directory.unknown-cohort.json'`, :77 `proves: 'a non-authoritative cohort fact -- unknown renders as unknown, never as false and never as Client'`. The registry renders nothing, and neither does anything that reads it. `proves` lives only on the exported `NAMED_NEGATIVES` list (fixtures/index.ts:37-48). F48-AC5's census finds `NAMED_NEGATIVES` named by 0 non-test files other than the registry. The one non-test importer of the registry, src/api/endpoints/investor-reporting.ts:80, takes only FIXTURE_FOR_CONTRACT and loadFixtureJson. And `git grep -E '.proves([^A-Za-z0-9_]|$)' HEAD -- src` returns rc 1 even with the tests included. The fact's own values ARE 'unknown', so the prose is right about the value and wrong about the render. F48-AC2 renders this fixture's fact as 'supervision: withheld, billing: withheld, advisory: withheld'. INERT: descriptive metadata no screen shows. The wording change belongs to whoever owns fixtures/index.ts.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git cat-file blob 1f3ce9f0:src/pages/InvestorReporting/fixtures/index.ts :77 (the proves string, verbatim above)",
+        "fe-s-48/withheld.test.ts F48-AC2 arm 1: RENDERED \"Cohort (not asserted)\": \"supervision: withheld, billing: withheld, advisory: withheld\""
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
