@@ -1,0 +1,13 @@
+{
+ "project_code": "POSN_AGGFIX",
+ "home": "org/missions/D4/POSN/POSN_AGGFIX",
+ "directive": "D4",
+ "macro_code": "POSN",
+ "fabric": "site-z",
+ "dep_stage": "REGISTERED",
+ "status": "active",
+ "name": "Positioning AGG view, restored as an Opal-only view -- the firm-wide aggregate book on the Positioning page's Portfolio Composition and Holdings Breakdown panels, for Opal users only.",
+ "generated_from": "org/missions/D4/POSN/POSN_AGGFIX/project.json",
+ "generated_by": ".tools/missions-tree-index.py",
+ "generated_at": "2026-09-15T16:51:12Z"
+}
