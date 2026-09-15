@@ -115,10 +115,11 @@ def _designated_of(root, prd_rel):
     return _lib().designated_brief_signer(_project_doc_of(root, prd_rel))[0]
 
 
-def _fabric_of(root, prd_rel):
-    """The project row's `fabric` ('laptop', 'site-z', or None); route_half prefers the reviewer lane of that fabric
-    (row AMGT_RESAPP-Z-S102)."""
-    return (_project_doc_of(root, prd_rel) or {}).get("fabric")
+def _review_suffix_of(root, prd_rel):
+    """The lane family route_half prefers for this PRD's sign-off (lib.review_lane_suffix: an explicit project-row
+    `reviewer_lane_suffix`, else the PRD's last CTO-lane author). Not the project's `fabric`, which separates
+    devices, not families (row AMGT_RESAPP-Z-S102)."""
+    return _lib().review_lane_suffix(root, prd_rel, _project_doc_of(root, prd_rel))
 
 
 def _evaluate_prd(root, prd_rel, prd_text=None):
@@ -549,7 +550,7 @@ def post_commit(root, at=None):
         coo_lane = _coo_lane_of(root, rel)
         for half in lib.missing_halves(ev):
             to, why = lib.route_half(half, live, coo_lane_of_project=coo_lane, designated=_designated_of(root, rel),
-                                     fabric=_fabric_of(root, rel))
+                                     prefer_suffix=_review_suffix_of(root, rel))
             r = dict(base_row, to=to, history=[], kind="prd-review", half=half, half_hash=ev["hashes"][half],
                      route_reason=why)
             if lib.base_serial(to) == lib.SUBSTITUTE.get(half):
@@ -736,7 +737,7 @@ def _overdue_halves(root, state, now):
         row["nudged_windows"] = windows
         coo_lane = _coo_lane_of(root, row["path"])
         to, why = lib.route_half(half, live, coo_lane_of_project=coo_lane, overdue=(half == "brief" and windows >= 2), designated=_designated_of(root, row["path"]),
-                                 fabric=_fabric_of(root, row["path"]))
+                                 prefer_suffix=_review_suffix_of(root, row["path"]))
         nudge = dict(row, kind="prd-nudge", to=to, route_reason=why, overdue_min=int(age_min), history=[],
                      attempts=0, msg_id=None, sent_at=None)
         if lib.base_serial(to) == lib.SUBSTITUTE.get(half):
