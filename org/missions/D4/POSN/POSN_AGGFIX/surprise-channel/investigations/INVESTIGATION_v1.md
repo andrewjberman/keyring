@@ -438,6 +438,53 @@ worker's id is `POSN_AGGFIX-Z-W<slot>-S<k>`, a seat's `POSN_AGGFIX-Z-S<k>`.
     "world_is": "The order's <expect> clauses are sentences (backticks, semicolons, parentheses, square brackets), not patterns. Verbatim they match no evidence, and A2-AC7's does not even compile. For this order, carrying cannot engage the checker's grading of PASS rows; only a worker writing its own patterns could, and the schema does not describe that.",
     "notes": "Form only. The instance's criterion_verbatim carries each prose expectation, and PASS rests on verbatim output against it. TO-A1-1's instance carries no expect either.",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "POSN_AGGFIX-Z-W3-S3",
+    "project": "POSN_AGGFIX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_AGGFIX~3",
+    "surfaced_at": "2026-09-15T20:57:22Z",
+    "one_line": "TO-B2-1 grounds the re-authoring on 'the canvas is light; ink on white panels; the removed orange-on-dark classes render near-invisible today', but both Holdings tab panels are Panel variant=\"chart\", which renders the dark BAND with the .dark-band ink context, where the neighbouring columns' light idioms are legal and legible; the restored group was authored in the band's own ink token with the four named classes kept out, and its legibility is left to B2-AC6's measurement rather than to the premise.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal src/pages/Positioning/tabs/HoldingsTab.tsx @edf85ce503 (unchanged at 63edeeeb51) :1103 and :1195 -- Portfolio Composition and Holdings Breakdown are each `<Panel variant=\"chart\">`.",
+        "portal src/ui/components/panels/Panel.tsx @63edeeeb51 (not touched since edf85ce503) :63 `chart: 'bg-[hsl(var(--bg-band))]', // inverted band -- white-text idiom legal inside` and :90 `(variant === 'chart' || variant === 'mixed') && 'dark-band'`.",
+        "portal src/index.css @63edeeeb51 :363-379 body sets --layer-body 221 45% 18% and --semantic-background-contentPanel: var(--layer-body); :406-413 `.dark-band { color: hsl(var(--palette-white)) }` (mode-stable band ink).",
+        "portal CLAUDE.md @63edeeeb51 :44 (the 'Known divergence' paragraph): Panel variant chart/mixed resolve to the band and stay dark because 4,887 light-on-dark idioms in src/pages/ depend on a dark container; portal DESIGN.md C3 names the band ink palette.white #E8ECF5.",
+        "HoldingsTab.tsx @edf85ce503 :1303-1374 -- the columns beside the restored group render text-green-300 and text-white on that band today."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-B2-1 cell AF1-s-14 and 'The canvas law': the Model Breakdown group is 're-authored in today's light-canvas tokens (no text-white, text-orange-300, bg-white/10, bg-orange-500/5)'; 'the canvas is light; ink on white panels; the removed orange-on-dark classes render near-invisible today'.",
+    "world_is": "The page canvas is light, but the Holdings tab's two panels are band-valued containers (the portal's own recorded divergence from DESIGN.md C3), so the group sits on the band's panel body, not on a white panel. The worker kept the four named classes out (counted by B2-AC1), set the group's ink to the band's ink token hsl(var(--palette-white)) as a value, laid the orange tint over the opaque panel base the way the neighbouring headers are, and measured contrast on the rendered ground (B2-AC6). A navy-on-white re-authoring, which the premise implies, would have measured illegible on this ground.",
+    "notes": "Form only; significance not judged. Whether the Holdings panels should move to a white panel is DSGN_REBRND's (rows DSGN_REBRND-W1-S9 / W2-S5 named in portal CLAUDE.md), not this order's."
+  },
+  {
+    "id": "POSN_AGGFIX-Z-W3-S4",
+    "project": "POSN_AGGFIX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_AGGFIX~3",
+    "surfaced_at": "2026-09-15T21:23:05Z",
+    "one_line": "proof-of-spec-check's count-bar limb refused TO-B2-1's B2-AC8 row because the shared typecheck runner printed an exit code directly before the noun ('RUN 1: EXIT=0  error TS lines=0' in the bar; 'EXIT=2  error' and 'exit=2 errors=1' in the control arm's lines), which the limb reads as a zero count beside a nonzero count of errors; TO-B1-1's committed B1-AC7 bar matched the same wording written as `EXIT=0[ ]{2}error` and was never recognized as a bar, so the same evidence shape passed one instance and failed the next on the regex spelling alone.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/proof-of-spec-check.py @f247f24c13 :1384 `_BAR_ZERO_RE` accepts `0` followed by [ \t]+, a literal backslash-s or backslash-t, or `[ \t]` before a noun, so `0[ ]{2}error` is not read as a zero-count bar while `0  error` is; :1405 `_nonzero_counts` reads any `<digits><space>noun`, so an exit code printed before the noun counts; :1380-1382 NON-APPLICATION names key=value bars (`rc=0`) as outside the rule.",
+        "org/missions/D4/POSN/POSN_AGGFIX/deliverables/0.9.0_WK_POSN_AGGFIX~3/b2_proof_check.txt (this order, first check): 'VIOLATION: count-bar[B2-AC8] ... asserts ZERO of 'error' ... NONZERO count for that noun: '2  error'; '2 errors'' -> INVALID (rc=1); every other row's bar read clean.",
+        "org/missions/D4/POSN/POSN_AGGFIX/deliverables/0.9.0_WK_POSN_AGGFIX~3/POSN_AGGFIX.TO-B1-1.portal-fetch-viewer-gate-and-remembered-choice.proof_of_spec.json @0741530d35, row B1-AC7 expect `RUN 1: EXIT=0[ ]{2}error TS lines=0\b` over evidence carrying 'RUN 2: EXIT=2  error TS lines=1'; b1_proof_check.txt @0741530d35: 'count-bar-frame: 0 PASS row(s) carry a zero-count bar' and VALID (rc=0).",
+        "org/missions/D4/POSN/POSN_AGGFIX/deliverables/0.9.0_WK_POSN_AGGFIX~3/b2_ac8_typecheck.attempt1.txt (the refused record, kept) and b_typecheck_run.sh (committed with this row): the runner now prints `exit_code=N; error_TS_line_count=M`; the computed values are unchanged."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The agent definition: 'Validate: python .tools/proof-of-spec-check.py <instance> <ids> -- ONLY the exit code is the verdict', and RULING M(ii) as quoted by the limb: a PASS whose zero-count bar matches evidence that also carries a nonzero count of the same noun is refused, key=value bars being out of scope.",
+    "world_is": "The B2-AC8 evidence is a key=value record (an exit code and an error-line count per run, with a deliberate-error control arm whose count is 1 by design); the limb classifies it by adjacency, so whether it refuses depends on how the bar's whitespace is spelled and on whether the instrument prints a number before the noun. The worker did not respell the bar to pass the detector; it changed the runner's wording to key=value fields, re-ran the same invocation once, kept the refused record as attempt1, and rebuilt.",
+    "notes": "Form only; significance not judged. Whether the limb should also recognize `[ ]{n}` / `\\s{n}` spellings, or skip exit-code adjacency, is the checker owner's."
   }
 ]
 ```
