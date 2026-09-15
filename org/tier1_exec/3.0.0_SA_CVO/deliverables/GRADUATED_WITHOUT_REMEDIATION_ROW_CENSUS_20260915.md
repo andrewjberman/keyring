@@ -89,44 +89,6 @@ under `org/surprise_channel/`.
 
 ## 5. DECISION AND PROGRESS
 
-**The decision is (b).** This seat took it in its own lane (TREE_CVO) when Andrew ran /open-calls at ~02:5xZ.
-- Backfill round-graduations on projects still EXECUTING, one project at a time, whenever the gate's L10 limb admits
-  the project.
-- Pre-issuance intake graduations are EXCLUDED. Closed projects are recorded only.
-- Earlier messages presented this scope as Andrew's call. It was this seat's, and the /open-calls answer corrected
-  that.
-
-**IRPT_FNTEND is done: REMEDIATION_v4.md @18c2d2a8aa.** The parent re-derived the set in numeric file order, as an
-independent check.
-- 42 rows. The id set EQUALS the census's missing set, and 0 were excluded, because every carrier (C-S56..C-S84) is
-  post-issuance.
-- Round split: 24 from v4, 18 from v5. 38 are OPEN and 4 REMEDIATED.
-- All 17 ARMED rows carry a `disarm` object: 6 DISARMED, each with its owner and time, and 11 still ARMED with no
-  recorded disarm.
-- jsonschema reads 0 violations.
-- The gate admitted it: 45 orders, 0 open; 227 items, 0 undispositioned.
-- IRPT_FNTEND now reads **0 graduated without a row**.
-
-**Incident, this seat's.**
-- The backfill commit ran in the background. Its post-commit hooks held the shared `.git/index.lock` from 03:22:47Z
-  until some time between 03:32Z and 03:33:55Z, about 10 minutes.
-- For that time it blocked 1.0.0_SA_CTO~A's commit, which that seat reported at 03:32:13Z.
-- A commit that holds the shared index must run in the foreground, where its hold is seen and answered.
-
-**The next candidates, and why none can be backfilled now.**
-- NFRA_CLDGRPH (0 of 49 orders non-terminal by status word) and NFRA_COMPEFFICACY (0 of 28) have no open orders.
-- But an adjudication-file read finds 57 of 306 and 31 of 51 investigation ids WITHOUT a carrier. The gate's
-  second limb refuses any new remediation row until those are carried.
-- Those uncarried counts are not yet checked against carriers written inside the investigation files. That is the
-  next measurement, and carrying the rows is an L9 act of this seat.
-- LGIC_NAMING's one missing id, S3, is a pre-issuance intake graduation and is excluded.
-- NFRA_OUTSET, ETFS_GUARDRAIL, POSN_ASTTAX, AMGT_RESAPP and NFRA_REPORT have open orders, so their backfill waits for
-  each one's next gap between rounds.
-
-Push state: LOCAL. This seat does not push.
-
-## 5. DECISION AND PROGRESS
-
 **The decision, taken in this seat's own lane.**
 - This seat took decision (b) itself, in lane `TREE_CVO`, on Andrew's `/open-calls` at ~02:5xZ 2026-09-15.
   Remediation rows are this seat's alone, so the scope of their backfill is not a sovereign call and is not listed as
@@ -178,3 +140,17 @@ Push state: LOCAL. This seat does not push.
 - Of the census's 291 (strict), IRPT_FNTEND's 42 are now carried, leaving 249.
 - Of those, 8 are excluded or recorded only: LGIC_NAMING-S3, ADVI_FIRMBKTS's 5 and NFRA_OPSEC202609's 2.
 - That leaves at most 241 round graduations still to backfill, as their projects reach a gap between rounds.
+
+**Incident, this seat's.**
+- The backfill commit @18c2d2a8aa ran in the background. Its post-commit hooks held the shared `.git/index.lock` from
+  03:22:47Z until some time between 03:32Z and 03:33:55Z, about 10 minutes.
+- For that time it blocked 1.0.0_SA_CTO~A's commit, which that seat reported at 03:32:13Z. This seat answered at
+  03:43Z, and PID 32684 was gone by 03:42:17Z.
+- A commit that holds the shared index runs in the foreground from now on.
+
+**A de-duplication, disclosed.** This section was first committed in two copies. The parent's copy was appended on
+disk while the fork was writing its own, and the fork's commit f2b9067e9f carried both. The parent's copy is removed
+here, and its one unique item, the incident above, is kept. The fork's undispositioned counts supersede the parent's,
+because they read carriers from BOTH the investigation and adjudication files.
+
+Push state: LOCAL. This seat does not push.
