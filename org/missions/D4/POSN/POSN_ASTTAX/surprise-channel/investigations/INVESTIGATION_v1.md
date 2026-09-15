@@ -7308,6 +7308,31 @@ Andrew asked for (msg 22917); it concerns this project's portal files meeting an
   "spec_asserts": "The task order re-cuts W1-AC8 to `comp-iam gaps` read with a pipe-receiver grep for this role's section, and names the fallback 'If the lens prints NO per-role section at all, record its whole output's shape (the denominator it prints) and the role's absence'. Its <preflight> states that same tool's denominator as 474 .tf files / 404 policy blocks attached. W1-AC14 as re-cut MEASURES a record already made, and the order's own W1-AC14 text requires the non-ASCII count 'printed before and after equal (unchanged by this cell)'.",
   "world_is": "(1) comp-iam's denominator is a property of what is CHECKED OUT, not of the repository: in this sparse worktree the same subcommand swept 27 .tf files and 15 attached policy blocks instead of 474 and 404, and printed that as its own authority with no truncation warning. The two runs of one tool are therefore NOT comparable across a sparse worktree boundary, and a worker quoting its lens denominator beside a seat's is quoting two different corpora. Here it does not change W1-AC8's reading -- the role IS parsed from the one tree that matters (cot-pipeline, 9 statements / 10 Allow actions) and the lens emits no per-role prose for ANY role -- but the same narrowing would convert a genuine gap ELSEWHERE into a clean 'Total: 0 ... across 0 service(s)'. (2) A deliberate encoding remediation committed by one cell is reverted by the next cell's normal recorder run, and the revert is invisible: the file stays valid UTF-8 JSON, git shows a whole-file re-encode, and no gate reads the count.",
   "notes": "NOT REPAIRED HERE, both deliberately. (1) is a property of the instrument plus this worktree's cone; widening the cone to make a lens denominator larger is not this order's act, and the order's fallback branch anticipated the empty read and named W1-AC9's plan text -- already recorded -- as the instrument that measured the grant. (2) infra/aws/lambda/ci/lambda-source-map.json IS inside this order's <paths>, but this resume's instruction is explicit that nothing is re-recorded and W1-AC14 only MEASURES the record; re-escaping the file would be a fresh write to the record this criterion grades. The durable fix is in the recorder's JSON writer (ensure_ascii on the source-map write in infra/aws/lambda/ci/record-terraform-deploy.sh), whose lane is CI/AE, not this worker's -- hence disarm_owner is the issuer, to route it. ARMED rather than INERT because the reverting act is the recorder's FUTURE NORMAL operation: every subsequent deploy record re-flips the file, so any remediation of it is guaranteed not to stick until the writer changes. No consumer breakage is claimed -- this worker did not census the readers of that file, and that census is the hinge between ARMED-and-harmless and ARMED-and-harmful."
+},
+{
+  "id": "POSN_ASTTAX-Z-S163",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T06:15:10Z",
+  "one_line": "DISARM of W24-S15 (ARMED, owner this seat): infra/aws/lambda/ci/lambda-source-map.json carries 28 non-ASCII bytes again from a031c56c74 onward (the CI recorder's own commits 'ci: record deploy cot-pipeline'), after worker ~20's deliberate re-escape to 0 at 909e9783f3 in round 5; the detector len(b) - len(b.decode('utf-8')) over six vintages with a pure-ASCII negative control. RULED: the reverting act is the recorder's NORMAL write (the same class as round 5's Z-S103-family finding: every recorder run re-encodes the map, which is why this seat's drains merge it SEMANTICALLY -- merge_sourcemap.py), so a hand re-escape cannot stick and is not made here; the FIX is inside the recorder's write path (an explicit encoding and ensure_ascii on the JSON write; the python limb at record-terraform-deploy.sh:259 and :340-341 opens the file without an encoding, and the [skip ci] commits show a second writer) -- the CI/AE lane's, carried with W23-S4 / C-S136 (0.7.0_AE_CloudOps) for the round-6 analysis. THE HINGE, named and not closed tonight: the map's READERS and their encodings (943 files name the path; the code readers include record-terraform-deploy.sh, record-resource-deploy.sh, build-nodejs-lambda.sh, source-map-staleness-census.py, .tools/backfill-lambda-iam-mapping.py, .tools/check-lambda-layer-deps and the comp-lambdamap compiler) -- a cp1252 text-mode reader on this device decodes those 28 bytes WRONG and reports success (CLAUDE.md s.4); no consumer breakage is claimed and none was measured. INERT for this round: no POSN cell reads the map; B6's record (W1-AC14) was read back by content on an explicit-utf-8 read and agreed 3 of 3.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W24-S15 as filed (six vintages, 0 at 909e9783f3, 28 from a031c56c74 through SITEZ HEAD; negative control pure ASCII); this seat's read at 06:1xZ: 28 at HEAD.",
+      "record-terraform-deploy.sh :259 `with open(source_map_path) as f:` and :340-341 `with open(source_map_path, 'w') as f: json.dump(sm, f, indent=2)` -- no encoding argument on either; the recorder's commits carry the bytes.",
+      "WHY GRADUATED: the hazard has a mechanism, a writer, an owner and a named hinge; a round-6 cell cannot fix a CI lane's script (out of every grant) and a by-hand re-escape is undone by the next deploy of any function."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W24-S15"
+  ],
+  "spec_asserts": "CLAUDE.md s.4: no non-ASCII in production code/logs/AWS; a file's every reader explicit or ALL non-ASCII out, never a subset; the recorder's device defects are the CI lane's (W23-S4, C-S136).",
+  "world_is": "The source map at HEAD carries 28 non-ASCII bytes written by the recorder; POSN's drains merge it semantically; the reader-encoding census is unread.",
+  "notes": "For the round-6 analysis and the CloudOps carry: one recorder fix (encoding + ensure_ascii) closes W23-S4's encoding limb, C-S136's banner limb stays separate."
 }
 ]
 ```
