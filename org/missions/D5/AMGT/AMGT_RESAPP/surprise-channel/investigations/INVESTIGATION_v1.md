@@ -5061,6 +5061,52 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "Deliverable 1 persists 'excerpt: {items: [1A, 7] or the 20-F equivalents, text, excerpt_sha256}'; AC3 requires SAP items at least 30 and AC2 requires BA at least 50.",
     "world_is": "Per-item caps (risk 70,000 chars, mdna 80,000) bound the submitted excerpt. Measured against each filing's FULL named-item length: COST 69,703 of 69,634 (100 percent, nothing truncated), BA 137,314 of 147,211 (93 percent, mdna capped), HD 101,436 of 106,719 (95 percent, risk capped), SAP 113,823 of 120,083 (95 percent, mdna capped), BABA 150,078 of 481,938 (31 percent, BOTH capped -- its risk item alone is 350,005 chars). Every object records excerpt.truncated_items and excerpt.item_full_chars beside the text, so the bound is visible on the artifact and never silent.",
     "notes": "Not a defect of this cell -- the cap is declared, recorded per object and required by the time bound -- but a fact any reader of F-1 must hold before comparing two names. A Thesis tab that says 'the biggest risks' is saying it over the first 70,000 characters of Alibaba's risk factors and over all of Costco's. The clean remedy is chunked multi-call coverage with the passage map spanning the chunks, which is a larger cut than this one and is not taken here."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W18-S8",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~18",
+    "surfaced_at": "2026-09-15T12:10:00Z",
+    "one_line": "INTERFACE D-1 does not carry a held_uncited field at all -- 0 of 5 landed drafting/v1 objects have the key -- although this cell's text and the decomposition's own D-1 row both name it; the field lives on F-1 (the analysis object) and D-1's nearest equivalent is `dropped`, so `held_uncited_count` is served as 0 BY ABSENCE with its basis named rather than as a measurement.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Fetched all five objects fresh from the pool: for k in BA_US_Equity COST_US_Equity SAP_GY_Equity HD_US_Equity BABA_US_Equity; do .tools/aws s3api get-object --bucket opal-data-harvest --key \"drafting/v1/$k.json\" ... --query ContentLength --output text; done  ->  109540 88475 84313 99745 102534.",
+        "Key census over those five, denominator printed: 'DENOMINATOR: 5 landed drafting/v1 objects' then one line per object, every one 'held_uncited_key False', closing 'WITH held_uncited: 0 of 5'. Each carries `dropped` (BABA 2, BA 2, COST 3, HD 2, SAP 0) and `dropped_reasons` instead.",
+        "GRAIN: the BA bytes measured hash to sha256 684197b8861424f9..., which is the digest 0.9.0_WK_AMGT_RESAPP~20 recorded for the object it served (deliverables/0.9.0_WK_AMGT_RESAPP~20/MEASUREMENTS.md section 5) -- the object read IS the object served.",
+        "git cat-file -p 8940b7320c:lib/research/filings/analyze.py | sed -n '610p'  ->  '        \"held_uncited\": held,' (bytes printed at the cited line): the field is produced on INTERFACE F-1, the analysis object, not on D-1.",
+        "git cat-file -p 8940b7320c:org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md | sed -n '1885p'  ->  the D-1 row reads '... `held_uncited: [...]`, `thesis_driver`, `dropped`', while line 1886's F-1 row names it too."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The cell (task order @8940b7320c): 'WHAT rj-6 LANDED (INTERFACE D-1 ...): the drafting schema, TYPED -- evidence_records ... ; sections x sentences ...; `held_uncited`; `thesis_driver`; `dropped`', and AC1 expects 'held_uncited_count a printed integer' from an object read at drafting/v1/<security_key>.json. The decomposition's D-1 interface row (line 1885) makes the same assertion.",
+    "world_is": "0 of 5 landed drafting/v1 objects carry `held_uncited`; the drafting marking contract (lib/research/drafting/schema.json) does not declare it either. It is F-1's field: lib/research/filings/analyze.py:610 sets it on the ANALYSIS object, and ~20's MEASUREMENTS.md section 3 tabulates it there per filing (SAP 6 held, the other four 0) -- so the quantity exists and is measured, one interface upstream of the one this cell reads. The adapter therefore returns held_uncited_count 0 for every one of the five names, beside a held_uncited_basis of ABSENT_ON_OBJECT (the three values are object.held_uncited / ABSENT_ON_OBJECT / NOT_SERVED), and the page prints '0 claims held uncited, not shown'.",
+    "notes": "AC1 is met on its own terms -- the count is a printed integer -- but a reader must not read that 0 as 'the analyzer withheld nothing on BA': it is 'this object carries no such field'. For BA the two happen to agree (F-1 held 0); for SAP_GY_Equity they do NOT (F-1 held 6, D-1 would still serve 0 by absence), which is why the basis travels in the response instead of a bare number. Two clean remedies, neither taken here because lib/research/drafting/ and lib/research/filings/ are chain C's surface and this cell is bounded off both: carry `held_uncited` (or its count) through build_drafting_document onto D-1, or amend the D-1 interface row to say the count is not on this object. A consumer that joins D-1 to F-1 to recover it would be a second reader of one quantity."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W18-S9",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~18",
+    "surfaced_at": "2026-09-15T12:10:00Z",
+    "one_line": "AMGT-rj-1's identifier-conversion guard is a LINE-LEVEL text scan over the whole of scoped_amgt.py, so it refused a SECTION LABEL ('investment_thesis' -> 'Investment thesis') that touches no identifier, with a message asserting the line 'converts an identifier form'.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python -m pytest lib/research/api/tests -q  ->  '1 failed, 83 passed' with 'AssertionError: 1 of 1549 lines still convert an identifier form: [(840, '    return \"{0}\".format(section_id or \"\").replace(\"_\", \" \").capitalize()')]'.",
+        "git cat-file -p 8940b7320c:lib/research/api/tests/test_route_boundary_identity.py | sed -n '274,283p'  ->  bytes printed at the cited lines: 'source = open(scoped_amgt.__file__, encoding=\"utf-8\").read()' ... 'if 'replace(\"_\", \" \")' in line or \"replace('_', ' ')\" in line' -- the scan is over the ENTIRE module text with no scope on the variable being converted.",
+        "After rewriting _section_label as ' '.join(...split('_')).capitalize() and touching NO test: python -m pytest lib/research/api/tests -q  ->  '84 passed in 8.55s'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "This cell orders the route to return `drafted_sections` for the five drafting limbs; nothing in the order names an idiom that is banned inside lib/research/api/scoped_amgt.py, and the guard is not part of the seam the cell describes.",
+    "world_is": "test_the_module_converts_no_identifier_form_into_another reads the module's own source and refuses the literal substrings 'replace(\"_\", \" \")' and \"replace('_', ' ')\" ANYWHERE in it. The guard is text-local by construction and cannot distinguish a security key from a section id, so the first underscore-to-space in the file for ANY purpose fails a test whose message names identifier conversion. The guard was NOT touched: this cell's function was rewritten to the split/join form and the suite is 84 passed, 0 failed.",
+    "notes": "Filed as form, not significance. The guard is doing its job -- AMGT-rj-1's defect was exactly an underscore-to-space inverse applied to a path segment, and a text-local ban is the cheapest thing that cannot be argued around -- and erring toward over-refusal is the right direction for an identifier contract. What costs the next worker is the MESSAGE: it asserts the refused line converts an identifier form, which for line 840 was false, and a worker who believes it will go looking for an identity defect that is not there. A message naming the ban ('this module may not contain an underscore-to-space replace at all; use split/join if you are not converting an identifier') costs one string and no coverage. Not changed here: the test file is AMGT-rj-1's contract surface and re-wording its assertion is not this cell's to do."
   }
 ]
 ```
