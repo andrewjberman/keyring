@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-09-15T05:39:28.801309+00:00
-**Status:** HELD-SOVEREIGN-GATED -- gate: external / CTO96931/96942 and COO96933/96940: next scheduled mdpf-gold-lambda and publisher run only; manual invoke excluded (held since 2026-09-15T06:11:59.317871+00:00)
+**Status:** HELD-SOVEREIGN-GATED -- gate: external / Scheduled opal-assets-mdpf-portal-publisher 2026-09-15T13:50Z, plus CTO disposition of the unchanged baseline Cottonwood standalone account-units dated emission gap reported 13:35Z; Gold 6/7 verified (held since 2026-09-15T06:11:59.317871+00:00)
 **Deploy:** mdpf-gold-lambda live baseline 73c2dea263 plus Cottonwood whole-cents comparison only; CTO 96931 and COO 96933
 **Authored by:** 1.0.0_SA_CTO~A
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -26,10 +26,18 @@
 - 20260915T060549Z LEG L3 closed: 05:47Z bucket versioning Enabled on both opal-data-assets and opal-data-portal-v2. rollback-inventory.json records exact
 - 20260915T061137Z LEG L4 closed: Safe-apply rc0, saved plan SHA256 5f1314843b60e35e5b331327a0f057a551a75bd27690191c358c29f512c51dcd: 0 add,1 in-place fun
 - 20260915T061159Z HELD-SOVEREIGN-GATED gate=external/CTO96931/96942 and COO96933/96940: next scheduled mdpf-gold-lambda and publisher
+- 20260915T133759Z HELD-SOVEREIGN-GATED gate=external/Scheduled opal-assets-mdpf-portal-publisher 2026-09-15T13:50Z, plus CTO disposit
+
+## Scheduled Gold observation, 2026-09-15T13:36Z
+
+**The scheduled Gold run healed Cottonwood and Global category views and AUM. Six of the seven named dated families advanced. The full verification leg remains open:** the 13:50 UTC publisher has not yet run, and Cottonwood's standalone dated account-units output still carries value_date2026-09-10.
+
+
+Full measured receipt and the unchanged-baseline standalone account-units gap are in `org/tier1_exec/1.0.0_SA_CTO/deliverables/MDPF_COTTONWOOD_CENTS_HOTFIX_20260915/SCHEDULED_VERIFICATION.md` and its JSON companion. L5 remains OPEN; no seven-of-seven or Platinum success is claimed.
 
 ## Signed scope appendix
 
-This appendix is also preserved in `org/tier1_exec/1.0.0_SA_CTO/deliverables/MDPF_COTTONWOOD_CENTS_HOTFIX_20260915/SIGNOFFS.md`. The canonical ledger renderer rebuilds the table/log and drops appended prose on close-leg/hold; reattach this exact appendix after the final future ledger mutation.
+This appendix is also preserved in `org/tier1_exec/1.0.0_SA_CTO/deliverables/MDPF_COTTONWOOD_CENTS_HOTFIX_20260915/SIGNOFFS.md`. The canonical renderer drops appended prose on mutation; retain this stable companion.
 
 # Bounded Cottonwood hotfix: exact sign-off and disposition carriers
 
