@@ -37,6 +37,12 @@ with their denominator.
 (from `OG-v-1`); the PRD's "Acceptance matrix and independent proof"; `app/server.py` (how the app is built) -- you read
 the app to drive it, never to derive an expectation.
 
+**The call-set assertion, as ruled (amended into this order before hand-off).** moto evaluates no IAM, so a local run
+cannot fail on a read that AWS would deny. The S3 call list is the one local instrument that can (`1.0.0_SA_CTO`,
+msg 97078, on row `NFRA_OPLGTW-W6-S3`). Record every S3 call the integrated run makes (role, operation, bucket,
+key) and grade it against the prefixes the contract grants each role: the data reader role gets `data_prefixes`, and
+the catalog role gets `completion_prefixes`. A `fact_*` key lies outside both.
+
 ### ACCEPTANCE
 
 <placeholders>WS</placeholders>
@@ -53,7 +59,10 @@ the app to drive it, never to derive an expectation.
 <criterion id="OGV2-AC4" cell_refs="OG-v-2"><invocation>cd <WS> && timeout 120 .venv-og/Scripts/python -m pytest infra/aws/ec2/opal-gateway/tests -q -p no:cacheprovider --color=no -m "not live" -k "not test_scoped_deny_by_default"</invocation><expect>(?m)^[1-9][0-9]* passed(?![^\n]*(failed|error))</expect></criterion>
 `OGV2-AC4` -- the whole `infra/aws/ec2/opal-gateway/tests/` suite passes, count printed, with the one known red test of row NFRA_OPLGTW-S1 deselected by name.
 
-<expected_criteria>OGV2-AC1, OGV2-AC2, OGV2-AC3, OGV2-AC4</expected_criteria>
+<criterion id="OGV2-AC5" cell_refs="OG-v-2"><invocation>cd <WS> && timeout 120 .venv-og/Scripts/python -m pytest infra/aws/ec2/opal-gateway/tests/acceptance/test_local_acceptance.py::test_ogv2_ac05 -q -p no:cacheprovider --color=no</invocation><expect>(?m)^1 passed(?![^\n]*(failed|error))</expect></criterion>
+`OGV2-AC5` (`test_ogv2_ac05`) -- every S3 call the local acceptance run makes lies inside the prefixes the contract grants the role that made it, printed per role with its denominator.
+
+<expected_criteria>OGV2-AC1, OGV2-AC2, OGV2-AC3, OGV2-AC4, OGV2-AC5</expected_criteria>
 
 `<WS>` is your worktree's absolute path, given in your identity line.
 
@@ -84,11 +93,11 @@ org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: `OGV2-AC1` .. `OGV2-AC4` (4). Instance at
+Criterion ids: `OGV2-AC1` .. `OGV2-AC5` (5). Instance at
 `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~6/NFRA_OPLGTW.TO-OG-v-2.local-acceptance-run.proof_of_spec.json`
 (phase `BUILD-GENERAL`, firm `FABRIC`, spec_ref.group `OTHER`, spec_ref.doc the PRD @f0aa50dbc0, decomp_ref.doc the
 decomposition @8768f46770, decomp_ref.to_ref this order's path), validated with
-`py -3.12 .tools/proof-of-spec-check.py <instance> OGV2-AC1,OGV2-AC2,OGV2-AC3,OGV2-AC4` BEFORE the `complete` flip.
+`py -3.12 .tools/proof-of-spec-check.py <instance> OGV2-AC1,OGV2-AC2,OGV2-AC3,OGV2-AC4,OGV2-AC5` BEFORE the `complete` flip.
 Result file `local-acceptance-run.result.md` beside it, with one line per A-row: run here, host, or person. **Flip
 `complete` only when every MECHANICAL criterion PASSES by output.**
 </proof_of_spec>
@@ -109,3 +118,8 @@ lane: the <paths> block IS the grant (owned-paths-validate.py worker_grant).
 Seating: slot ~6, queue position 2, handed after `OG-x-1` and `OG-z-2` merge (every Gateway code cell is then at HEAD);
 a slot that authored no `app/` code. Round 1 of NFRA_OPLGTW, issued by `2.0.0_SA_COO~O` (seated msg 96971, LD-0567).
 Decomposition v1 @8768f46770.
+
+Amended 2026-09-15 ~13:1xZ, before hand-off, by `2.0.0_SA_COO~O` on `1.0.0_SA_CTO`'s ruling msg 97078 (row
+`NFRA_OPLGTW-W6-S3`, disarm owner `1.0.0_SA_CTO`): AC5, the S3 call-set assertion, is added, and the cell text carries
+the ruling. No criterion was removed. The decomposition and the PRD
+are unchanged: the ruling is the ratified text's own reading (PRD C3 :155, :157; C6 :185, :187, :191).

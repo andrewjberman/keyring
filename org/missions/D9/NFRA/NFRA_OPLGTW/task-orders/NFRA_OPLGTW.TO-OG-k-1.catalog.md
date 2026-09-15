@@ -48,6 +48,16 @@ them from configuration, and your tests use moto (S3 with versioning, STS).
 `grant_date_modes`, `reader_role`, `catalog_role`); `app/integrations/base.py`, `app/access_state.py`,
 `app/data_entitlement.py`; `OG-c-1`'s result file.
 
+**The HEAD set, as ruled (amended into this order before hand-off).** `1.0.0_SA_CTO`, disarm owner of row
+`NFRA_OPLGTW-W6-S3`, ruled (msg 97078) that C3's *"independently HEADs every named silver object"* means every named
+object under the contract's six `data_prefixes`, `schwab/{08242234,08335338}/silver/{dim_position,dim_balance,dim_asset}/`.
+The closure's `fact_*` entries are validated from the record's own facts only: they are never HEADed, never fetched
+and never granted (PRD C3 :155, :157; C6 :185, :191). The catalog therefore derives its HEAD and GET set as the
+closure's named objects INTERSECTED with `data_prefixes`, read from `org/standards/NFRA_OPLGTW_CONTRACT.json` and never
+typed. Those reads run under the data reader role; the catalog role stays on the two `completion_prefixes`. `OG-v-1`'s
+closure fixtures under `infra/aws/ec2/opal-gateway/tests/acceptance/fixtures/` include fact-naming closures; they are
+AC17's input.
+
 ### ACCEPTANCE
 
 <placeholders>WS</placeholders>
@@ -65,7 +75,7 @@ them from configuration, and your tests use moto (S3 with versioning, STS).
 `OGK1-AC4` (`test_ogk1_ac04`) -- closure validation uses the catalog role only and data HEADs use the data role only.
 
 <criterion id="OGK1-AC5" cell_refs="OG-k-1"><invocation>cd <WS> && timeout 120 .venv-og/Scripts/python -m pytest infra/aws/ec2/opal-gateway/tests/test_schwab_catalog.py::test_ogk1_ac05 -q -p no:cacheprovider --color=no</invocation><expect>(?m)^1 passed(?![^\n]*(failed|error))</expect></criterion>
-`OGK1-AC5` (`test_ogk1_ac05`) -- every named silver object is HEADed by its VersionId.
+`OGK1-AC5` (`test_ogk1_ac05`) -- every named silver object under the contract's `data_prefixes` is HEADed by its VersionId.
 
 <criterion id="OGK1-AC6" cell_refs="OG-k-1"><invocation>cd <WS> && timeout 120 .venv-og/Scripts/python -m pytest infra/aws/ec2/opal-gateway/tests/test_schwab_catalog.py::test_ogk1_ac06 -q -p no:cacheprovider --color=no</invocation><expect>(?m)^1 passed(?![^\n]*(failed|error))</expect></criterion>
 `OGK1-AC6` (`test_ogk1_ac06`) -- a null, unversioned, changed or unavailable object yields incomplete or unavailable, one fixture each.
@@ -97,7 +107,13 @@ them from configuration, and your tests use moto (S3 with versioning, STS).
 <criterion id="OGK1-AC15" cell_refs="OG-k-1"><invocation>cd <WS> && timeout 120 .venv-og/Scripts/python -m pytest infra/aws/ec2/opal-gateway/tests/test_schwab_catalog.py::test_ogk1_ac15 -q -p no:cacheprovider --color=no</invocation><expect>(?m)^1 passed(?![^\n]*(failed|error))</expect></criterion>
 `OGK1-AC15` (`test_ogk1_ac15`) -- staleness is reported as days since the qualified business date, with the observation time.
 
-<expected_criteria>OGK1-AC1, OGK1-AC2, OGK1-AC3, OGK1-AC4, OGK1-AC5, OGK1-AC6, OGK1-AC7, OGK1-AC8, OGK1-AC9, OGK1-AC10, OGK1-AC11, OGK1-AC12, OGK1-AC13, OGK1-AC14, OGK1-AC15</expected_criteria>
+<criterion id="OGK1-AC16" cell_refs="OG-k-1"><invocation>cd <WS> && timeout 120 .venv-og/Scripts/python -m pytest infra/aws/ec2/opal-gateway/tests/test_schwab_catalog.py::test_ogk1_ac16 -q -p no:cacheprovider --color=no</invocation><expect>(?m)^1 passed(?![^\n]*(failed|error))</expect></criterion>
+`OGK1-AC16` (`test_ogk1_ac16`) -- the set of keys the catalog HEADs and GETs, printed with its denominator, is a subset of the `data_prefixes` read from the contract file.
+
+<criterion id="OGK1-AC17" cell_refs="OG-k-1"><invocation>cd <WS> && timeout 120 .venv-og/Scripts/python -m pytest infra/aws/ec2/opal-gateway/tests/test_schwab_catalog.py::test_ogk1_ac17 -q -p no:cacheprovider --color=no</invocation><expect>(?m)^1 passed(?![^\n]*(failed|error))</expect></criterion>
+`OGK1-AC17` (`test_ogk1_ac17`) -- (difference) a qualified closure that also names `fact_*` objects makes zero S3 calls under any `fact_*` key and still yields a snapshot on its dims, while the same closure with one dim object missing yields incomplete.
+
+<expected_criteria>OGK1-AC1, OGK1-AC2, OGK1-AC3, OGK1-AC4, OGK1-AC5, OGK1-AC6, OGK1-AC7, OGK1-AC8, OGK1-AC9, OGK1-AC10, OGK1-AC11, OGK1-AC12, OGK1-AC13, OGK1-AC14, OGK1-AC15, OGK1-AC16, OGK1-AC17</expected_criteria>
 
 `<WS>` is your worktree's absolute path, given in your identity line.
 
@@ -131,11 +147,11 @@ org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: `OGK1-AC1` .. `OGK1-AC15` (15). Instance at
+Criterion ids: `OGK1-AC1` .. `OGK1-AC17` (17). Instance at
 `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~5/NFRA_OPLGTW.TO-OG-k-1.catalog.proof_of_spec.json`
 (phase `BUILD-GENERAL`, firm `FABRIC`, spec_ref.group `OTHER`, spec_ref.doc the PRD @f0aa50dbc0, decomp_ref.doc the
 decomposition @8768f46770, decomp_ref.to_ref this order's path), validated with
-`py -3.12 .tools/proof-of-spec-check.py <instance> OGK1-AC1,OGK1-AC2,OGK1-AC3,OGK1-AC4,OGK1-AC5,OGK1-AC6,OGK1-AC7,OGK1-AC8,OGK1-AC9,OGK1-AC10,OGK1-AC11,OGK1-AC12,OGK1-AC13,OGK1-AC14,OGK1-AC15`
+`py -3.12 .tools/proof-of-spec-check.py <instance> OGK1-AC1,OGK1-AC2,OGK1-AC3,OGK1-AC4,OGK1-AC5,OGK1-AC6,OGK1-AC7,OGK1-AC8,OGK1-AC9,OGK1-AC10,OGK1-AC11,OGK1-AC12,OGK1-AC13,OGK1-AC14,OGK1-AC15,OGK1-AC16,OGK1-AC17`
 BEFORE the `complete` flip. Result file `catalog.result.md` beside it. **Flip `complete` only when every MECHANICAL
 criterion PASSES by output.**
 </proof_of_spec>
@@ -155,3 +171,8 @@ lane: the <paths> block IS the grant (owned-paths-validate.py worker_grant).
 
 Seating: slot ~5, queue position 3, handed after `OG-q-1` drains and `OG-z-1` and `OG-c-1` merge. Round 1 of NFRA_OPLGTW,
 issued by `2.0.0_SA_COO~O` (seated msg 96971, LD-0567). Decomposition v1 @8768f46770.
+
+Amended 2026-09-15 ~13:1xZ, before hand-off, by `2.0.0_SA_COO~O` on `1.0.0_SA_CTO`'s ruling msg 97078 (row
+`NFRA_OPLGTW-W6-S3`, disarm owner `1.0.0_SA_CTO`): AC5 is narrowed to the contract's `data_prefixes`; AC16 and AC17 are added; the cell
+text carries the ruling. No criterion was removed. The decomposition and the PRD
+are unchanged: the ruling is the ratified text's own reading (PRD C3 :155, :157; C6 :185, :187, :191).
