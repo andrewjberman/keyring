@@ -17,6 +17,7 @@ read at HEAD or on the live plane, with its vintage.
 | rj-6 the filings analyzer | `~20` | `.../~20/...rj-6...` | VALID rc=0 | 7 of 7 PASS | W20-S1..S8 |
 | rj-7 the similarity ranker | `~21` | `.../~21/...rj-7...` | VALID rc=0 | 6 of 6 PASS | W21-S1..S6 |
 | rj-2 drafted sentences beside their evidence (drained 15:46Z, read s.2b) | `~18` | `.../~18/...rj-2...` | VALID rc=0 | 6 of 6 PASS | W18-S8..S9 |
+| rj-8 executive management (drained 16:10Z, read s.2b) | `~22` | `.../~22/...rj-8...` | VALID rc=0 | 6 of 6 PASS | W22-S1..S2 |
 
 Channel at HEAD: 210 rows; 32 round-11 worker rows (28 OBSERVATION/INERT, 3 BLOCKING/INERT -- W19-S8 the volume bars,
 W20-S2 and W20-S3 the schtasks invocation -- and 1 OBSERVATION/ARMED, W21-S3 SAP ranked as its own peer, disarmed
@@ -91,6 +92,20 @@ and refused a SECTION LABEL. Addendum candidate 7, added to s.4: the held-uncite
 (D-1) as a field that is present or ABSENT-explicit, never 0 by absence; FWD-18's "held uncited, never rendered as evidence"
 needs the count on the object the page reads.
 
+**rj-8 executive management (C-EXEC-MANAGEMENT; FWD-17's producer half).** Drained @`eff1b9f6ae` at 16:10Z by `~22` after the
+weekly-limit kill and respawn. Instance re-graded here: VALID rc=0, 6 of 6 PASS; 6 objects under `management/v1` (five names + the
+pool object). Established: the roster comes from the persisted FILING's officer section (BA: `Item 10`, 12 officers, 12 with a role
+start, avg tenure 2.58 y; COST 13 of 13, 5.06 y); the pool average 4.08 y over a printed denominator (names_in_union 256,
+names_with_roster 5, officers_with_role_start 40); the schema forbids `email` and `phone` (contact-fields 0); Lusha enriches
+confirmed officers with a profile link (BA with-profile 4); the batch is a local task, DISABLED. Two rows: **W22-S1** the SERP
+primitive returns only opaque redirect links on the serp_opal zone, so the CEO public profile is ABSENT for 5 of 5 with the reason
+recorded (C-EXEC-MANAGEMENT's IR-domain search is not yet a working limb); **W22-S2** BA cost 4 Lusha credits against a bound of 2
+per name -- the first run was charged and died on a `sys.modules` collision between two estate `_util` surfaces (a live cost
+defect in the estate's shared helpers, not this cell's; round-12 material). Exclusions honest: BABA's 20-F carries no role-start
+column (0 of 7); domains declared for the 5 QA names only. Addendum candidate 8: the CEO profile limb needs a resolved-destination
+SERP contract (the redirect unwrapped or a different zone) before the tab can show it; and candidate 5's reach: a vendor-credit
+bound is a criterion the order must be able to refuse on, so the FIRST charge counts.
+
 ## 3. The pool as it stands (14:5xZ, `list-objects-v2`, 121 objects)
 
 | prefix | objects | newest | written by |
@@ -124,10 +139,13 @@ needs the count on the object the page reads.
    in-code table nobody ratified.
 7. **The held-uncited count on the drafting document** (W18-S8): D-1 carries it as present or ABSENT-explicit, never 0 by
    absence; the page's "held uncited" line reads that field and nothing else.
+8. **The CEO public-profile limb** (W22-S1) needs a SERP contract that yields the DESTINATION url, not a redirect wrapper;
+   until then C-EXEC-MANAGEMENT's third limb renders ABSENT with its reason. And a vendor-credit bound is enforced on the first
+   charge (W22-S2), which is a criterion shape, not a contract.
 
 ## 5. What is NOT known yet (the slug read's remaining inputs)
 
-The seven staged cells (rj-3, rj-8, rj-9, rj-10, rj-11, rj-12, rj-13); the CVO's adjudication of the 32 rows and
+The six staged cells (rj-3, rj-9, rj-10, rj-11, rj-12, rj-13); the CVO's adjudication of the 32 rows and
 the slug; whether rj-10's plan reads 0/4/0 and the `_CURRENT` pointer carries no `rank_sort` (co-sign half s.4); FWD-16
 ..FWD-19's EXERCISED bars, which no cell can close -- 18 of 19 need a person, and the person is Andrew or Adam through
 Andrew. Push state: LOCAL.
