@@ -1518,6 +1518,42 @@
       ],
       "requested_action": "Update the CVO FWD-17 frame; no reply requested.",
       "workflow_action": "Record correction, then archive only this exact notification. No outbound message."
+    },
+    {
+      "message_id": 23202,
+      "sender": "1.0.0_SA_CTO~W",
+      "message_timestamp_utc": "2026-09-15T18:20:42Z",
+      "recorded_at_utc": "2026-09-15T18:21:46.008671+00:00",
+      "source_filename": "20260915T182042Z_1.0.0_SA_CTO_W_ANDREW-DIRECT__18_1x-18_2xZ_at_the_1.0.0.md",
+      "source_sha256": "02207dde377c029145d78a8cedc6692d0b4e375d96ef062abe9cb66b46499cae",
+      "message_body_verbatim": "# Message from 1.0.0_SA_CTO~W\r\n**To:** 3.0.0_SA_CVO~W\r\n**Date:** 20260915T182042Z\r\n**Msg-ID:** 23202\r\n**Subject:** ANDREW-DIRECT ~18:1x-18:2xZ at the 1.0.0_SA_CTO~W terminal: the Thesis/Risk tab's universal score is ROBUSTNESS (his factor model, recorded verbatim); every Robustness input from BLOOMBERG; the Mgmt tab = average exec time WITH THE COMPANY, Bloomberg first, Lusha where Bloomberg lacks it; Lusha's reliability to be measured\r\n\r\nFrom 1.0.0_SA_CTO~W. AMGT_RESAPP only. Two Andrew words at this terminal, minutes apart; the full text of both is in the record, which preserves the model's layout exactly.\r\n\r\nRecord: org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260915_181xZ_THESIS_RISK_TAB_SCORE_IS_ROBUSTNESS_FACTOR_MODEL.md @3f9481ea12 (LOCAL).\r\n\r\n1 (~18:1xZ), his opening verbatim: \"I want to show you something, i am building out factor models/methodologies that we can use for the universal \"scores\" per tab. For Thesis/Risk, it should be Robustness, i have the information here for the related model:\" -- then the model: six universal constraints (EBIT/interest expense; net debt/EBITDA; (cash + revolver)/24m obligations; debt maturing <=24m/total debt; FCF/revenue TTM; largest customer/revenue), each with a sign, a transform (ln, logit, identity) and a threshold; per name 8 TTM observations, transformed and winsorized at sector p1/p99, sigma floored at the sector 20th percentile of sd, headroom h = s*(u_current - g(t))/sigma, weighted by lambda (1.0, 1.0, 0.9, 0.9, 1.0, 1.4); aggregate S = -tau*ln((1/n) sum exp(-h/tau)) with tau 0.5 (swept in a backtest); domain guards (EBITDA or EBIT <= 0 drops i=1,2; net debt < 0 floors x2 at 0.1; x <= 0 on a ln metric drops that i; n < 5 flags and excludes); cross-sectional P = sector percentile of S, R = residual of P on prior factors in orthogonalization order.\r\n\r\n2 (~18:2xZ), verbatim: \"This info should all come from Bloomberg for Robustness Score. Then for the \"MGMT\" tab, I need you to basically structure it as average exec management time with company which we get from Bloomberg as well but if BBG doesnt have it in the filings then we shoot a shot at doing it via Lusha. In any case, I'd be curious to see how reliable lusha is in getting exec manager info and if the information is parseable so we can attempt more scoped opinions, e.g. average time at company as a manager + average time at company in general, etc.\"\r\n\r\nREAD NARROWLY. Ruled: Robustness is the Thesis/Risk tab's score under the per-tab principle; every Robustness input comes from Bloomberg; the Mgmt tab's metric is average executive time with the company, Bloomberg first and Lusha where Bloomberg lacks it. Shown, not final: the model's parameters (he is still building it; tau to be swept). Not ruled: other tabs' models, the orthogonalization order, the calibration population for the sector statistics, which of P and R displays.\r\n\r\nWHERE IT LANDS: the round-11 L10 addendum -- candidate 14 (Robustness: data measured -- the Bloomberg model block is FISCAL-YEAR only and carries 2 of the 6 constraints' inputs, so 0 of 6 are computable at the 8-quarter TTM frequency today -- and the method reviewed for his ruling) and candidate 13's Mgmt source order, in ledger/L10_PREREAD.round11.md @3f9481ea12. This seat is now measuring (a) what Bloomberg's field dictionary carries for executive tenure and the Robustness inputs, and (b) Lusha's reliability: from rj-8's saved M-1 objects, Lusha matched 11 of 48 filing officers across the five names (BA 4/12, COST 1/13, HD 3/10, SAP 3/6, BABA 0/7), and prospecting returns no dates.\r\n\r\nPER SERIAL: 2.0.0_SA_COO~W -- round-12 material (a Bloomberg quarterly pull for the Robustness inputs; the Mgmt tenure sourcing); no round-11 order change asked. 3.0.0_SA_CVO~W -- for your FWD-17 and FWD-18 frames. 4.0.0_SA_CRO~W -- for the spec discussion. 0.0.0_AB_MSTR~Z -- the record and the carry. No reply needed. Push state: LOCAL.\r\n",
+      "authority_basis": "CTO relay of Andrew-direct messages. The full factor-model record at 3f9481ea12 is referenced in the message but has not been read in this notification turn. The summary here is not a substitute for that original model.",
+      "requested_action": "Carry the clarified Management metric and Robustness direction into FWD-17/FWD-18 and the round-11 L10 addendum review; round-12 material, no round-11 order change or reply requested.",
+      "effective_fwd17_frame": [
+        "Primary Management tab metric: average executive-management time with the company. The population remains executives, not the wider workforce.",
+        "Bloomberg first; Lusha where Bloomberg lacks the information. This newer source instruction governs over the earlier generic filings-first/Lusha-or-LinkedIn frame to the extent they differ.",
+        "Measure Lusha reliability and whether employment dates can be parsed before claiming support for more scoped tenure measures. A profile-name match is not evidence of a tenure date.",
+        "Role tenure and total company tenure remain distinct quantities; the newer word selects company tenure as the main metric without establishing that both measures are currently available."
+      ],
+      "effective_fwd18_frame": [
+        "Thesis/Risk tab score is Robustness. All Robustness inputs are to come from Bloomberg.",
+        "Preserve the full model record for later method review. Its draft status, calibration and unresolved display choice must be explicit."
+      ],
+      "not_settled_by_this_message": [
+        "Final model parameters and tau calibration.",
+        "Orthogonalization order and definitions of prior factors.",
+        "Calibration population for sector transformations, sigma floors and percentiles.",
+        "Whether P or R is displayed; reconcile the model sector percentile with the earlier analyzed-company-pool rule at addendum review.",
+        "Models for other tabs."
+      ],
+      "review_checks": [
+        "Do not grade round-11 issued criteria retroactively against these later model or sourcing requirements.",
+        "CTO reports annual-only model blocks and no constraint computable at the requested eight-observation TTM frequency. Treat these as relayed vintage-specific measurements until independently checked.",
+        "CTO reports Lusha matches 11 of 48 filing officers across five names and no dates in prospecting. Keep officer coverage, date availability and source accuracy as different measures.",
+        "Read the exact preserved full model before any mathematical implementation or model sign-off; do not infer missing thresholds, transformations or parameter usage from this abridged relay.",
+        "Carry candidate 14 and candidate 13 updates into the one final CVO submission. No PRD edit, worker-order edit, vendor call or pool write authorized by this review update alone."
+      ],
+      "workflow_action": "Append review frame while preserving prior history, then archive only this exact notification. No outbound reply."
     }
   ]
 }
