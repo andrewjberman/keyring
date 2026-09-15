@@ -333,6 +333,31 @@ not a message.
     "spec_asserts": "TO-CN-j-3 criterion J3-AC3 expects 'VERDICT: PASS-J3-CASES-MATCH-KEY': the naming cases match the verdicts fixed at L6, in both judgings.",
     "world_is": "The judges match the key on J-N1 and J-N2 and agree with each other on J-N3, but both are off the key on J-N3, so the criterion does not produce its named result and the order stays open on J3-AC3. The canon's N4 names both referents of bd with no rule for choosing, N5 places a bd alias only in a scope slot, and the registry row puts bd on the firm, so the judges' reading is the one the canon supports and the key's needs GRADING_RULE R3, which the canon does not carry. The generated section is rendered from org/standards/NAMING_SCHEMA.json v1.8 (stamp at 02_DOCTRINE.md:163). Whether the schema carries the test and the renderer drops it, or the schema lacks it, was not read (outside this order's reads). PRD DEC-2 returns the disagreement to CN-k-1. INERT: the canon grades and moves nothing (DEC-9).",
     "notes": "Filed by 0.9.0_WK_LGIC_CANON~7 on LGIC_CANON.TO-CN-j-3; kept working. The trace is in judge-compare.md section 4, D2. This worker judges the row's form, not its significance: whether the canon or the key changes is the L9 and CN-k-1 call."
+  },
+  {
+    "id": "LGIC_CANON-W7-S3",
+    "project": "LGIC_CANON",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_CANON~7",
+    "surfaced_at": "2026-09-15T22:57Z",
+    "one_line": "The review of the onboarding checklist marks 5 of its 16 steps JUDGEMENT (3, 7, 8, 9, 14), so O2-AC2 reads FAIL-O2-JUDGEMENT-STEP, not PASS-O2-NO-JUDGEMENT, and the order stays open. Four of the five trace to the pipeline build that onboarding bundles and that the canon fixes only in form: table names, partition forms, the resource set, function words and a pipeline directory. The fifth is Step 14's mandated opal-partner-<LONG> table, which grade() reads OUT-OF-PATTERN while Step 12 applies only CONFORMANT names.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CHECKER: check_canon_r1.py o2-zero at 894b41f920 printed 'STEPS MARKED: 16  MARKED JUDGEMENT: 5 [3, 7, 8, 9, 14]' and 'VERDICT: FAIL-O2-JUDGEMENT-STEP', rc=0. o2-marks printed 'STEPS: 16  MARKED WITH A REASON: 16' and 'VERDICT: PASS-O2-ALL-MARKED', rc=0.",
+        "REVIEW: org/missions/D14/LGIC/LGIC_CANON/deliverables/CHECKLIST_REVIEW.md@894b41f920 carries one line per step, each with its reason and file:line citations at c08fd0c0eb.",
+        "CHECKLIST: infra/logic/10_ONBOARDING_CHECKLIST.md@05d5131e5e. :32-42, the inputs table, carries no table name, partition form, resource set, function word or pipeline directory. :98-103, Step 3(c), records 'the name the pipeline's author gave it'. :176-177 is Step 7's resource set. :194-196 and :208-211 are Steps 8 and 9's <table> and <partition> placeholders. :287-289 mandates opal-partner-<LONG>, and :261-263 applies a name only when it reads CONFORMANT.",
+        "CANON: infra/logic/02_DOCTRINE.md@c08fd0c0eb. :179 fixes only a table's case. :183-186 offers three partition forms. :364-365, R9, says bronze keeps 'compact YYYYMMDD'. :385-386 is R11's 'dated/timestamped-in-title parquets'. :216 says FN1's word choice binds 'the NAMER, who has the item's description'. :454, R16's non-application, puts the git source tree outside the canon.",
+        "BUILDER: lib/opal_naming.py@c08fd0c0eb :1269-1272 (_segment) and :1287-1300 (key()) check table and partition for shape only. grade('opal-partner-demo', 'DYNAMODB_TABLE') returned ('OUT-OF-PATTERN', 'opal-demo-partner-table'), and grade('opal-partner-49financial', 'DYNAMODB_TABLE') returned ('OUT-OF-PATTERN', 'opal-49f-partner-table'), run read-only by this worker.",
+        "RUNBOOK AND CENSUS: infra/aws/users/ONBOARDING.md@c08fd0c0eb :187-199: the auth handler builds the table name opal-partner-{firmId}, and portal-auth's IAM grant covers opal-partner-*. comp-find 'opal-partner' over infra/logic, org/standards and org/missions/D14/LGIC (corpus all) found 61 hits across 502 files, none of them in infra/logic/06_CONFORMANCE_LEDGER.md, infra/logic/registry/ or org/standards/."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-CN-o-2 criterion O2-AC2 expects 'VERDICT: PASS-O2-NO-JUDGEMENT': no step of infra/logic/10_ONBOARDING_CHECKLIST.md is marked JUDGEMENT (FWD-5: 'no step where somebody has to invent an answer').",
+    "world_is": "A reviewer who did not write the checklist marks 5 of its 16 steps JUDGEMENT. So the criterion does not produce its named result, and the order stays open on O2-AC2; O2-AC1 passes, with 16 of 16 steps marked. Steps 3, 7, 8 and 9 share one cause. Onboarding bundles the build of the firm's pipelines, and the canon fixes a pipeline's homes, formats, compute and name grammar but not its contents. Those contents are: the pipeline directory and a master row's label (Step 3); the resource set and the function words (Step 7); the bronze and silver table names and bronze's partition form (Step 8); and the gold table names, the gold partition form and the owner of a combined build (Step 9). No input carries them, and key() and address() accept any choice of valid shape. Step 14 has a separate cause. It mandates opal-partner-<LONG>, which grade() reads OUT-OF-PATTERN, while Step 12 applies only CONFORMANT names. The auth handler requires that name, no register entry declares the departure, and the checklist names no STOP and no owner for the conflict. INERT: the checklist is a document, and nothing runs until cell C6 (PRD DEC-9).",
+    "notes": "Filed by 0.9.0_WK_LGIC_CANON~7 on LGIC_CANON.TO-CN-o-2; this worker kept working. CHECKLIST_REVIEW.md carries the reason for each step. This worker judges the row's form, not its significance: whether the checklist, its inputs or the canon change is for L9 (3.0.0_SA_CVO) and the CN-o-1 recut to decide."
   }
 ]
 ```
