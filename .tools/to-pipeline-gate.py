@@ -411,17 +411,41 @@ def _criterion_grammar_violations(rel, text):
     return v
 
 
+_TABLE_FIRST_COL_RE = re.compile(r"^\|\s*([^|\n]+?)\s*\|", re.M)
+
+
+def _declared_cells(decomp_text):
+    """The decomposition's OWN cell ids: those written in the FIRST column of a table row, where a decomposition
+    declares its cells. Any other id in the text is a CITATION -- another project's cell named as an input, a gate or
+    an edge -- and no issuance of this project can own it (LGIC_ENFORCE-S1; measured 2026-09-15 at HEAD: MDPF_TAXSMA
+    declares 27 of the 31 ids it carries, the other 4 NFRA_OPLGTW's; LGIC_NAMING 15 of 20, the other 5 LGIC_ENFORCE's).
+    A text that declares none in a table keeps the prior reading: every id."""
+    text = decomp_text or ""
+    declared = set()
+    for m in _TABLE_FIRST_COL_RE.finditer(text):
+        declared.update(CELL_ID_RE.findall(m.group(1)))
+    return declared or set(CELL_ID_RE.findall(text))
+
+
 def _coverage_gap(decomp_text, owned_union):
-    """PURE. (missing, unknown, ids): the decomposition's cell ids no staged order owns, the owned ids the decomposition
-    lacks, and the decomposition's id set."""
-    ids = set(CELL_ID_RE.findall(decomp_text or ""))
+    """PURE. (missing, unknown, ids): the decomposition's DECLARED cell ids no staged order owns, the owned ids the
+    decomposition lacks, and the declared id set (_declared_cells)."""
+    ids = _declared_cells(decomp_text)
     owned = set(owned_union)
     return sorted(ids - owned), sorted(owned - ids), ids
 
 
 def _coverage_groups(root, targets):
     """I/O half: {(code, rel_json, doc): [owned cell ids...]} over the NEWLY ADDED tree task orders."""
-    groups = {}
+    return _coverage_scan(root, targets)[0]
+
+
+def _coverage_scan(root, targets):
+    """I/O half: (groups, overrides). groups is _coverage_groups'; overrides is {(code, rel_json, doc): [(rel, reason)]}
+    for the NEW orders carrying the '# pipeline-override:' line the coverage refusal offers. check_file audits that
+    line and returns before any per-order limb; this is the coverage limb reading the same line, which it never did,
+    so the refusal named an escape nothing read (LGIC_ENFORCE-S1)."""
+    groups, overrides = {}, {}
     for rel in targets:
         rel = rel.replace("\\", "/")
         if not TREE_TO_RE.search(rel):
@@ -441,10 +465,13 @@ def _coverage_groups(root, targets):
         doc = dm.group(1).strip() if dm else ""
         owned = _split_cells(" ".join(OWNED_CELLS_RE.findall(m.group(1))))
         groups.setdefault((code, rel_json, doc), []).extend(owned)
-    return groups
+        ov = OVERRIDE_RE.search(text)
+        if ov:
+            overrides.setdefault((code, rel_json, doc), []).append((rel, ov.group(1).strip()))
+    return groups, overrides
 
 
-def _coverage_grade(groups, stage_of, decomp_of):
+def _coverage_grade(groups, stage_of, decomp_of, overrides=None):
     """PURE given its two readers. spine v3.0 L6 (carrier 1 of eight; Andrew-direct 2026-09-03 ~22:2xZ): ONE issuance
     covers EVERY cell. For a tree project whose row reads dep_stage DECOMP (the issuance moment), the union of
     <owned_cells> across the staged NEW orders must equal the named decomposition's cell set; a missing cell REFUSES,
@@ -469,7 +496,16 @@ def _coverage_grade(groups, stage_of, decomp_of):
         if not ids:
             notes.append("%s: issuance coverage not graded (%s carries no cell id by the grammar)" % (code, doc))
             continue
-        if missing:
+        cited = len(set(CELL_ID_RE.findall(decomp_text)) - ids)
+        if cited:
+            notes.append("%s: %d id(s) in %s are cited, not declared in a table's first column -- another project's "
+                         "cells, not required of this issuance" % (code, cited, doc))
+        ovs = (overrides or {}).get((code, rel_json, doc)) or []
+        if missing and ovs:
+            notes.append("%s: the issuance under %s owns %d of %d cell(s) of %s -- MISSING: %s -- ADMITTED under the "
+                         "audited override on %s (%s)" % (code, rel_json, len(ids) - len(missing), len(ids), doc,
+                                                         ", ".join(missing), ovs[0][0], ovs[0][1]))
+        elif missing:
             v.append("%s: the issuance under %s owns %d of %d cell(s) of %s -- MISSING: %s. spine v3.0 L6: ONE issuance "
                      "covers EVERY cell of the decomposition; cut the missing order(s) in this same commit, or take the "
                      "audited '# pipeline-override:' on one order with the reason" % (
@@ -507,9 +543,11 @@ def _coverage_violations(root, targets):
     # v3's first fresh-project round (4.0.0_SA_CRO 94331). Reading HEAD decouples them: at the issuance
     # moment the row still reads DECOMP, so coverage grades AND the flip may land in the same commit.
     # A genuine recut (row already EXECUTING at HEAD) is still not graded here, exactly as documented.
-    return _coverage_grade(_coverage_groups(root, targets),
+    groups, overrides = _coverage_scan(root, targets)
+    return _coverage_grade(groups,
                            lambda code, rel_json: _row_stage_at(root, rel_json, "HEAD"),
-                           lambda doc: _decomp_text(root, doc)[0])
+                           lambda doc: _decomp_text(root, doc)[0],
+                           overrides)
 
 
 def _carrier2_violations(root, targets):
@@ -643,6 +681,9 @@ def _self_test():
     ph_lit = ('<criterion id="C1" cell_refs="CE-a-1"><invocation>timeout 120 python x.py</invocation>'
               '<expect>OK</expect></criterion>')
     ph = _placeholder_declaration_violations
+    _ck = ("X_PRJ", "org/missions/D0/X/X_PRJ/project.json", "d.md")
+    _tbl = "| cell | x |\n|---|---|\n| `CE-a-1` | a |\n| `CE-a-2` | b |\n\nCE-a-2 waits on OG-r-1, another project's cell.\n"
+    _cg = lambda owned, ov=None: _coverage_grade({_ck: owned}, lambda c, r: "DECOMP", lambda d: _tbl, ov)  # noqa: E731
     # GATE (ix) fixture: a battery in the SHAPE of test_proof_of_spec_alignment.py (arms named in check(), printed as
     # `  {verdict:4s} {name}`, a %d RESULT line, a BATTERY PASS line). Pure; the real bytes are the battery's.
     _ov_red = ("results = []\n"
@@ -675,6 +716,13 @@ def _self_test():
          lambda: grade(["CE-a-1"], stage="EXECUTING")[0] == [] and any("not graded" in n for n in grade(["CE-a-1"], stage="EXECUTING")[1])),
         ("coverage NOT GRADED when the decomposition is unreadable: admitted, noted",
          lambda: grade(["CE-a-1"], text=None)[0] == []),
+        ("coverage (S1): an id the decomposition only CITES is not required -> admitted, the citation noted",
+         lambda: _cg(["CE-a-1", "CE-a-2"])[0] == [] and any("1 id(s)" in n and "cited" in n for n in _cg(["CE-a-1", "CE-a-2"])[1])),
+        ("coverage (S1): a DECLARED cell still missing -> refused naming it, and not the cited id",
+         lambda: any("MISSING: CE-a-2" in x and "OG-r-1" not in x for x in _cg(["CE-a-1"])[0])),
+        ("coverage (S1): the override the refusal offers ADMITS the missing cell, noted with its order",
+         lambda: _cg(["CE-a-1"], {_ck: [("t.md", "why")]})[0] == []
+                 and any("ADMITTED" in n and "t.md" in n for n in _cg(["CE-a-1"], {_ck: [("t.md", "why")]})[1])),
         ("grammar: v2 self-closing criterion on a tree order -> refused, grammar named",
          lambda: any("v2 self-closing" in x for x in _criterion_grammar_violations(tree, v2))),
         ("grammar: v3 mechanical criterion (one invocation, one expect) -> admitted",
