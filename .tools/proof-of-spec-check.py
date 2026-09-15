@@ -1497,10 +1497,13 @@ def _cut_after(rel, ruling: str):
 # THE RULE. For a PASS row whose bar asserts ZERO of a noun (`0 fail`, `0 arm\(s\) failed`, `0 errors`)
 # and whose bar DOES match its evidence, the evidence may carry no NONZERO count of that noun.
 # REFUSE for a NEW instance, ANNOUNCE for a LEGACY one (the boundary above).
-# ANCHORING. A count in the evidence is left-anchored with (?<![0-9.]) and NEVER with \b -- a \b anchor
+# ANCHORING. A count in the evidence is left-anchored with (?<![0-9.A-Za-z_]) and NEVER with \b -- a \b anchor
 # false-fails `\x1b[1m4 passed`, because the ANSI code puts a word character before the count (1.0.0_SA_CTO
-# 96370, tested with the grader's own call). ANSI escapes are stripped before counting, and a count
-# preceded by `of ` is a DENOMINATOR (`0 of 487 fail`), not a count of the noun.
+# 96370, tested with the grader's own call). A digit directly after a letter or underscore ENDS an identifier
+# (`F47-AC2 PROBLEMS` is criterion F47-AC2's label, not 2 problems -- row IRPT_FNTEND-W3-S41, 1.0.0_SA_CTO
+# round-8 analysis). ANSI escapes are replaced by a SPACE before counting, never removed: removal would glue a
+# real count to the word before it (`pass\x1b[0m4 fail` -> `pass4 fail`), and the identifier rule would then hide
+# it. A count preceded by `of ` is a DENOMINATOR (`0 of 487 fail`), not a count of the noun.
 # NON-APPLICATION: a bar with no zero-count noun; a bar that does NOT match its evidence (conditional_checks
 # already refuses that PASS); key=value bars (`rc=0`, `LEAKS: 0`) -- the ruling names count nouns, and a
 # `rc=0` bar beside an honest `rc=1` inside a test's own printed arms would be refused for the wrong reason.
@@ -1525,8 +1528,8 @@ def _zero_count_nouns(expect: str) -> list:
 
 def _nonzero_counts(evidence: str, stem: str) -> list:
     """Every NONZERO count of `stem` in the ANSI-stripped evidence, as the printed fragment."""
-    clean = _ANSI_RE.sub("", evidence or "")
-    pat = re.compile(r"(?<![0-9.])(?<!of )([0-9]+)[ \t]+" + re.escape(stem) + r"[A-Za-z_()]*", re.I)
+    clean = _ANSI_RE.sub(" ", evidence or "")
+    pat = re.compile(r"(?<![0-9.A-Za-z_])(?<!of )([0-9]+)[ \t]+" + re.escape(stem) + r"[A-Za-z_()]*", re.I)
     return [m.group(0) for m in pat.finditer(clean) if int(m.group(1)) != 0]
 
 
@@ -2031,6 +2034,10 @@ def _self_test() -> int:
         " 486 pass\n 0 fail\n0 of 487 fail", True, 0)
     _cb("Y count-bar: ENFORCE, an ANSI-coloured contradicting ' 10 fail' -> 1 violation (stripped, then counted)",
         "\x1b[0m\x1b[31m 10 fail\x1b[0m\n", True, 1, "NONZERO count")
+    _cb("Y2 count-bar: ENFORCE, an id's trailing digit before the noun ('F47-AC2 PROBLEMS') is NOT a count -> 0 "
+        "violations (row W3-S41)", "F47-AC2 PROBLEMS list: []\nVALIDATE -> 0 problems\n", True, 0, bar="0 problems")
+    _cb("Y3 count-bar: ENFORCE, a real count an ANSI escape glues to a word ('pass\\x1b[0m4 fail') -> 1 violation "
+        "(the escape reads as a space)", " 0 fail\n5 pass\x1b[0m4 fail\n", True, 1, "4 fail")
 
     # ---- FE-s-29 limb 3: the DRIVES limb (RULING Q + the CTO's condition). Pure: the order text, the mode
     # and the file reader are injected; the real-bytes arms (the six seeded suites, F19's browser suite,
