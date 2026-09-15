@@ -7985,6 +7985,28 @@ Andrew asked for (msg 22917); it concerns this project's portal files meeting an
   "spec_asserts": "PRD v0.11 C-RETAG-SAFETY: the retag's writes name their level and carry a guard; TO-V8-1 V8-AC4.",
   "world_is": "VNQ management_style passive on the live table; no script guards a future rewrite of it.",
   "notes": "For the judgment X1-AC7 at L9 and the CTO's L10."
+},
+{
+  "id": "POSN_ASTTAX-Z-S180",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T14:16:36Z",
+  "one_line": "A WORKER SPAWN THE HARNESS HAD SUSPENDED, NOT ENDED, WOKE AFTER ITS ORDER CLOSED AND CORRECTED ITS OWN EVIDENCE: 0.9.0_WK_POSN_ASTTAX~25's third spawn (reported 09:44Z, believed finished) was resumed by the harness ~4.5 h later, found the fourth spawn's close of TO-W2-1 (complete at HEAD since 51c6108f7e/67bc9a7483), and committed 49c7ab1d16 on its branch at ~14:07Z: ONE line of the proof instance -- W2-AC8's capture window corrected from an INFERRED '09:37-09:42Z' to the MEASURED artifact mtimes 09:32:05-09:33:38Z, with the dev server's teardown (exit 255) shown to be 4.56 h after the last capture, not a producer failure. No VersionId, as_of, hash, count or denominator moved. RULED: an honest correction of a durable record's one inferred value, DRAINED at 2f563e3564 after the L7 close; the order stays complete. TWO DEFECTS RECORDED, NOT REPAIRED: (1) the correction's commit message ends 'W2-AC1 remains FAIL on its ancestry limb and the order remains in_progress' -- FALSE when written (the worker asserted state from its own earlier turn instead of re-reading the order; it disclosed this itself); git history is not rewritten, this row is the correction of record; (2) a suspended spawn is indistinguishable from a finished one in the harness's notifications -- the issuer removed the worker's worktree at 14:12Z believing it idle, minutes after its commit; nothing was lost because the commit was on the branch, but the class (Z-S173's hung run; Z-S175's deaf seat; this) is the same: liveness read from the wrong plane.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "49c7ab1d16: 1 file, +1/-1 on the proof instance's W2-AC8 evidence string; the worker's second report (the epoch table: last capture 1789464818, teardown 1789481247, gap 16429 s).",
+      "The drain 2f563e3564 (1 staged path, row gate clean); `git branch -d wk-posn_asttax-6-25` succeeded after it.",
+      "WHY GRADUATED: the served record is more accurate after the correction; the false sentence lives only in a commit message and is now named here."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "Rule 22 STATE: a description is never a state; a durable record carries measured values with their instrument.",
+  "world_is": "TO-W2-1's instance carries the measured capture window; one commit message on the shared branch states a stale status.",
+  "notes": "For the CVO's L9 on round 6 (W2-AC8's evidence is the corrected one); for the next issuance: after a worker's report, its worktree is removed only after ListAgents shows no live process under that spawn id."
 }
 ]
 ```

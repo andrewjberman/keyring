@@ -50,3 +50,17 @@ Applied: a staggered second watcher; the memory the sibling banked stands for th
    with the operator's word on deletion.
 2. **[3.0.0_SA_CVO~Z]** L8/L9 on round 7 (one judgment, X1-AC7); the slug. **[1.0.0_SA_CTO~Z]** the round-7 L10; C-S177's disarm.
 3. **[0.0.0_AB_MSTR~Z]** the site-Z push hold and the carry of the LOCAL commits.
+
+---
+
+## Addendum 14:16Z -- round 7 closed; the worktree cleanup on the operator's word
+
+- **Round 7 L7 CLOSED** @510682f51a (TO-X1-1 complete, drained a40ea3482c; rows Z-S176..Z-S179). One late one-line evidence correction
+  from F4's third spawn drained @2f563e3564 (row Z-S180).
+- **Cleanup (authorized by the operator at ~13:5xZ, "clean up the worktrees after round 7 closes"), measured:** dev servers stopped 2 of 2
+  still listening (5183, 5185; 5181 already gone); junctions unlinked FIRST 4 of 4 (three portal node_modules links, one .terraform link to the
+  main tree's cache -- the main cache and the real node_modules verified intact after); portal worktrees removed 4 of 4 (3 by `git worktree
+  remove --force`, 1 refused "Filename too long" and gone with its parent directory, then pruned); workspace worktrees removed 9 of 9
+  (slots ~19..~27); workspace branches deleted 9 of 9 (one after its late commit was drained); portal branches deleted 6 of 6 (each verified
+  an ancestor of refs/drains/posn-6-portal first). KEPT: /c/tmp/portal-posn-view (the drain ref's view, detached at ebbee2e6) and the
+  round 2-4 worktrees (not in the authorized list). `git worktree list`: 0 round 5-7 entries remain.
