@@ -461,6 +461,29 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     "spec_asserts": "EN-v-3's V3-AC2: 'the file's exported content equals its pre-image at the spawn base (DELTA=0)'.",
     "world_is": "Before the fix, no EN-v-3 view could satisfy V3-AC2, however correct. After it, the criterion measures the exports, as its text says.",
     "notes": "DISARM, per W1-S7's own clause, by its disarm owner, before EN-v-3 spawns; no worker ran the defective subcommand against a real view. The criterion text, the face and the fixtures are unchanged: the fix corrects the instrument's loader, a harness defect in the issuer's own fixed input, disclosed in its commit. INERT: EN-v-3 will be spawned from a base carrying the fix."
+  },
+  {
+    "id": "LGIC_ENFORCE-W4-S1",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~4",
+    "surfaced_at": "2026-09-15T00:59Z",
+    "one_line": "The first generation of firm-config.mjs re-orders FIRM_CONFIG's keys (base 49financial, inflection, mockadv, demo, cottonwood; generated 49financial, inflection, cottonwood, mockadv, demo), so Object.keys of FIRM_CONFIG and of FIRM_BUCKET_MAP change order, and check_en.py v2-delta0 cannot see order: an order-only mutant reads EQUAL.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "BASE, run: node .scratch/ctl/keys.mjs over git show b02fdaa849:infra/aws/lambda-edge/_shared/firm-config.mjs -> [\"49financial\",\"inflection\",\"mockadv\",\"demo\",\"cottonwood\"] for both FIRM_CONFIG and FIRM_BUCKET_MAP; both frozen.",
+        "LIVE, run: the same over the generated file (python lib/opal_naming.py generate --out . --target infra/aws/lambda-edge/_shared/firm-config.mjs, registry@50e4fabd1cb6a150) -> [\"49financial\",\"inflection\",\"cottonwood\",\"mockadv\",\"demo\"] for both; both frozen. The GENERATED block is firm-config.mjs:65-88 in the worktree wk-lgic-enforce-1-4-v2.",
+        "INSTRUMENT, read: check_en.py:187-204 @b02fdaa849 (exports_of) loads the .mjs through node and returns json.loads(JSON.stringify(m.FIRM_CONFIG)); :375-384 (_compare_carriers) compares the two with a == b on Python dicts, which ignores key order. EXERCISED: _compare_carriers over an order-only mutant ('demo' moved first, node reads [\"demo\",\"49financial\",...]) against the base -> 'EQUAL: 1 DIFFER: []'; over a bucket mutant ('opal-data-cot' -> 'opal-data-cottonwood') -> 'EQUAL: 0 DIFFER: [infra/aws/lambda-edge/_shared/firm-config.mjs]'.",
+        "CONSUMERS, read: Grep 'FIRM_CONFIG|FIRM_BUCKET_MAP' over infra/aws/lambda-edge (node_modules excluded): 3 importing functions, and every use indexes by key: auth-validator-edge/index.mjs:153, shared-advisor-router/index.mjs:242-243 and :380, shared-advisor-router-response/index.mjs:106 and :122. The one iteration is the file's own FIRM_BUCKET_MAP derivation (firm-config.mjs:106-110 @b02fdaa849), which inherits the order."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EN-v-2 THE CELL: 'The first generation is BYTE-EQUIVALENT in what it exports (DELTA=0). ... Change nothing but the carrier'; V2-AC2: 'the file's exported content equals its pre-image at the spawn base (DELTA=0)'.",
+    "world_is": "Every key and every value is equal (V2-AC2 PASS-DELTA0) and both exports stay frozen, but the insertion order, which JavaScript exposes through Object.keys, Object.entries and JSON.stringify, is now the registry's order and not the carrier's. The generated block also drops the in-map history comments (the 'demo' ADVI_DEMOV1.001 note, the 'cottonwood' FIRMSEP.10 note and the FUTURE note). V2-AC2 compares parsed dicts, so it cannot tell an order change from no change.",
+    "notes": "0.9.0_WK_LGIC_ENFORCE~1 disclosed the reorder and the comment loss as a declared exclusion in TO-EN-r-1's proof ('The exports are equal (R1-AC6); how EN-v-2 and EN-v-6 carry the comments is theirs'). This row adds two facts: the order is an exported property, and the DELTA=0 instrument does not look at it. Whether insertion order is part of 'what it exports' is for 2.0.0_SA_COO~G and 1.0.0_SA_CTO to decide. The carrier was written exactly as the generator emits it, with nothing re-ordered or restored by hand. INERT: no consumer iterates either export (census above) and nothing is deployed in this cell. A deploy or a future iterating consumer would see the registry's order."
   }
 ]
 ```
