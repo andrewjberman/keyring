@@ -6945,6 +6945,342 @@ Andrew asked for (msg 22917); it concerns this project's portal files meeting an
   "spec_asserts": "A worker edits only the files its <paths> grant names, and a clean worktree is what lets `git status` be read as a statement about the worker's work.",
   "world_is": "A cone add is not a neutral read on this device: files whose committed bytes are CRLF (or whose checkout writes CRLF) land in the working tree as whole-file modifications. Every later `git status` in this worktree carries 12 lines of noise a reader must discount, and a drain can refuse with 'local changes would be overwritten' on files the worker never opened.",
   "notes": "Harmless if left alone -- nothing was staged or committed -- and `git checkout --` on them is forbidden to a worker anyway. Worth knowing before the drain: if a merge refuses on one of these 12 paths, the cause is this, not contention. A .gitattributes text=auto entry for that tree, or a cone that never has to carry it, is the durable fix and belongs to the tree's owner."
+},
+{
+  "id": "POSN_ASTTAX-Z-S149",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T05:32:02Z",
+  "one_line": "ADJUDICATION of W24-S1 (INERT): the worker acted on three issuer notices mid-run (v0.11 identity pair; the amended order on SITEZ; the GetItem-only grant), copied the amended face from SITEZ, implemented acts 1(e)/2/3 as amended and re-ran W1-AC3/W1-AC4 -- the drain shows the identity pair served 25 of 25 and the plan's three Sids. The same three-carrier mechanism as Z-S142.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W24-S1 as filed; the served block read by this seat at 04:54Z: identity 25 of 25, identity_missing 0; W1-AC9's plan text names ReadEtfClassifications with dynamodb:GetItem only.",
+      "WHY GRADUATED: every amendment reached the worker before the world write it bounded."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W24-S1"
+  ],
+  "spec_asserts": "TO-W1-1 as amended at 1b791c6a11 and 6aaf98db39.",
+  "world_is": "B6 deployed and driven on the amended text.",
+  "notes": "Nothing further."
+},
+{
+  "id": "POSN_ASTTAX-Z-S150",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T05:32:02Z",
+  "one_line": "ADJUDICATION of W24-S2 (INERT): the issuance cone lacked infra/aws/lambda/v2_portal/_shared (the classifier module the amended act imports); the worker added it to its cone (committed bytes, nothing modified). Same class as W26-S7 / Z-S148: the cone recipe now carries it (banked).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W24-S2 as filed; the widened cone read by this seat at 05:14Z includes infra/aws/lambda/v2_portal/_shared.",
+      "WHY GRADUATED: a read-side cone gap, remedied by widening, no bypass."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W24-S2"
+  ],
+  "spec_asserts": "CLAUDE.md 14b: a worker worktree carries what its acts read.",
+  "world_is": "Slot ~24's cone widened by the worker; the recipe fixed for ~25 and the next issuance.",
+  "notes": "See Z-S148 and the banked memory."
+},
+{
+  "id": "POSN_ASTTAX-Z-S151",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T05:32:02Z",
+  "one_line": "ADJUDICATION of W24-S3 (INERT): the artifact's inputs triple (holdings_as_of, positioning_data_as_of, bbg_as_of) is NOT an identity for the input BYTES -- both JSON inputs were re-published under the same as_of after the served artifact was written, so at an unchanged triple the dry run's satellites block differed from the served at one leaf (Opal Satellite 30 beta 0.266956 -> 0.263467); the code is proved identical on two instruments (W1-AC3 over 2275 leaves; a vintage control). RULED: W1-AC4's 'else stated' arm is the measured act and the purity bar is unaffected. CARRIED to the round-6 analysis as a provenance item: the artifact's inputs block should carry each input's VersionId/ETag beside its as_of (a spec addendum, not a cell tonight).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W24-S3 as filed with the leaf and its cause; W1-AC3 DEEP-EQUAL True over 2275 leaves.",
+      "WHY GRADUATED: the bar was written on a proxy (the triple) the worker showed is not an identity, and the honest branch was taken and stated."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W24-S3"
+  ],
+  "spec_asserts": "TO-W1-1 W1-AC4: the satellites block parse-identical when the inputs triple is unchanged, else stated.",
+  "world_is": "The served satellites block moved by one leaf because an input moved under the same as_of.",
+  "notes": "For 1.0.0_SA_CTO~Z's analysis: an as_of is a partition name, not a content hash."
+},
+{
+  "id": "POSN_ASTTAX-Z-S152",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T05:32:02Z",
+  "one_line": "ADJUDICATION of W24-S4 (INERT): the amended act 2 said the classifier member is mapped FLAT and cited build_package.py:117-121 as the precedent, while those bytes map it at its REPO PATH and say so -- the issuer's misreading of the precedent's comment (the module is IMPORTED flat by name after a sys.path insert; it SHIPS at its repo path). ACT: act 2 re-worded to the repo path at this commit; superseded on the ruling by W24-S9 / Z-S157.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W24-S4 as filed; build_package.py:117-121 at HEAD; the Explore report the issuer read said 'flat, because infra.aws.lambda.v2_portal._shared is NOT an importable package name' -- about the IMPORT, not the zip path.",
+      "WHY GRADUATED: the citation is corrected in the face; the shipped bytes were right."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W24-S4"
+  ],
+  "spec_asserts": "TO-W1-1 act 2 as amended.",
+  "world_is": "The worker shipped the repo path; the order now says so.",
+  "notes": "A citation that names the opposite of its bytes: the issuer's, corrected."
+},
+{
+  "id": "POSN_ASTTAX-Z-S153",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T05:32:02Z",
+  "one_line": "ADJUDICATION of W24-S5 (INERT): the local dry run's wall (127.6 s, the history load over 16 partitions + 173 backfill objects) exceeded the function's 120 s timeout OFF-PLANE; the in-Lambda measure answered it (W24-S13: 39.4 s of 120 s, 270 MB of 512 MB). No sizing change; the memory clause of act 3 (512 MB unless the peak exceeds 384 MB) held (peak 164.7 MiB locally, 270 MB in-Lambda).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W24-S5 and W24-S13 as filed; CloudWatch REPORT Duration 39,407 ms, Max Memory Used 270 MB, Init 440 ms.",
+      "WHY GRADUATED: the open question was answered by the driven run on the plane that matters."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W24-S5"
+  ],
+  "spec_asserts": "TO-W1-1 preflight (1): a peak or wall exceeding the envelope is a row and a sizing change.",
+  "world_is": "The envelope holds with 3x wall headroom and 47% memory headroom.",
+  "notes": "The local wall was device-to-S3 latency."
+},
+{
+  "id": "POSN_ASTTAX-Z-S154",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T05:32:02Z",
+  "one_line": "ADJUDICATION of W24-S6 (INERT): the handler's docstring (lambda_function.py) still reasons about cron(20 7 * * ? *) and a 20-minute margin while the rule now reads cron(30 12 * * ? *) -- a second carrier of the schedule gone stale; the order forbade touching the file and the worker left it byte-identical. RULED: NOT fixed tonight -- editing the handler after the deploy would put HEAD's member out of step with the deployed bytes without a redeploy (the source map would then name a sha HEAD no longer carries). CARRIED to the round-6 analysis: a comment-only change to ride the next deploy of this function.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W24-S6 as filed; the rule at cron(30 12 * * ? *) ENABLED (W1-AC13).",
+      "WHY GRADUATED: a stale comment with a named carrier and a named moment to fix it; no reader of the schedule reads the docstring."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W24-S6"
+  ],
+  "spec_asserts": "C-B4-SCHEDULE: the rule fires at cron(30 12 * * ? *).",
+  "world_is": "The .tf is the schedule's only live carrier; the docstring is prose.",
+  "notes": "For 1.0.0_SA_CTO~Z's analysis."
+},
+{
+  "id": "POSN_ASTTAX-Z-S155",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T05:32:02Z",
+  "one_line": "ADJUDICATION of W24-S7 (INERT): W1-AC1's expect named a head-object on the newest partition's characteristics.parquet that its invocation never made; the worker ran the head-object as a separate read (200, 19,802 B) and recorded it beside the criterion rather than claiming the invocation produced it -- correct. ACT: W1-AC1's invocation re-cut to include that limb (the issuer's clause defect); the recorded evidence stands.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W24-S7 as filed; the re-cut invocation at this commit.",
+      "WHY GRADUATED: an expect/invocation misalignment in the issuer's text, closed by the re-cut; the read was made honestly."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W24-S7"
+  ],
+  "spec_asserts": "TO-W1-1 W1-AC1 expect: the partition's characteristics.parquet head-object 200 in the same reading.",
+  "world_is": "The invocation now makes the read its expect names.",
+  "notes": "Rule 22 GRAIN: the object read is the object claimed."
+},
+{
+  "id": "POSN_ASTTAX-Z-S156",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T05:32:02Z",
+  "one_line": "ADJUDICATION of W24-S8 (INERT): W1-AC5's own instrument (.tools/commit-gate.sh) could not run in the cone as cut -- its runner needs org/modules/graph on sys.path; the worker added the path (408 files, committed bytes) and the gate passed 4 of 4. Same class as W26-S7 / Z-S148; the recipe carries it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W24-S8 as filed; commit-gate.sh's import of comp_constants_cli.",
+      "WHY GRADUATED: remedied by widening the read, no bypass."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W24-S8"
+  ],
+  "spec_asserts": "TO-W1-1 W1-AC5: commit-gate clean for 4 of 4 files.",
+  "world_is": "The gate ran and passed after the cone widening.",
+  "notes": "See Z-S148."
+},
+{
+  "id": "POSN_ASTTAX-Z-S157",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T05:32:02Z",
+  "one_line": "ADJUDICATION of W24-S9 (INERT) -- RULED: the classifier member SHIPS AT ITS REPO PATH. Three carriers said repo path (the CTO half A1, which bounds the act; the cited precedent's bytes; W1-AC6's own expect 'every member at the mirroring layout') against the order's one word FLAT (the issuer's misreading, Z-S152); the worker shipped the repo path, stated the conflict in the row and in build_package.py's comment, and left the ruling to L9 -- correct, and the ruling is now the issuer's: act 2 re-worded at this commit. The deployed zip (W1-AC6: 5 members at the mirroring layout; W1-AC7: the artifact read back) is the ruled shape.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W24-S9 as filed; W1-AC6 PASS with 5 members at the mirroring layout; the CTO half A1 @2c6b7d8887 'shipped at its repo path by pin'.",
+      "WHY GRADUATED: the shipped bytes match every binding carrier; only the order's word was wrong and it is corrected."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W24-S9"
+  ],
+  "spec_asserts": "The CTO half A1 and W1-AC6: the mirroring layout for every member.",
+  "world_is": "The zip carries the module at infra/aws/lambda/v2_portal/_shared/; the handler imports it by name.",
+  "notes": "The issuer's error, corrected in the face."
+},
+{
+  "id": "POSN_ASTTAX-Z-S158",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T05:32:02Z",
+  "one_line": "ADJUDICATION of W24-S10 (INERT): the row gate's `class` enum is exactly [OBSERVATION, BLOCKING] and refused the worker's richer vocabulary (PROCESS_GAP, SPEC_DEFECT, ...); the corpus pass fail-closed in the sparse cone on the absent schema path. RULED: the two-value axis is the ratified schema (Rule 24 -- one axis, one intent: does this row BLOCK the cell or not); the finding's kind belongs in one_line and notes, which is where the worker put it after re-classing 8 rows. The schema path (org/surprise_channel/schemas) is in the cone recipe (Z-S148).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W24-S10 as filed; surprise-row-gate's enum; the corpus pass's FileNotFoundError on the schema path.",
+      "WHY GRADUATED: the worker conformed to the ratified axis and the cone gap is owned."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W24-S10"
+  ],
+  "spec_asserts": "docs/doctrine/THE_SURPRISE_CHANNEL.md: class is OBSERVATION or BLOCKING.",
+  "world_is": "All 14 rows landed as OBSERVATION; the corpus pass ran at the drain.",
+  "notes": "A finding taxonomy proposal, if wanted, arrives with its four-postulate record (Rule 24), not through the gate."
+},
+{
+  "id": "POSN_ASTTAX-Z-S159",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T05:32:02Z",
+  "one_line": "ADJUDICATION of W24-S11 (INERT) -- THE ISSUER'S TWO UNRUNNABLE INVOCATIONS, RE-CUT: W1-AC8 `comp-iam gaps <path.tf>` (the subcommand takes no positional) and W1-AC14 `record-terraform-deploy.sh --plan <plan>` (PIPELINE is the first positional). Both REFUSED by the worker as written -- correct; neither act was left undone: the grant is measured by W1-AC9's plan text (three added Sids, GetItem only), and the RECORD was made through the documented interface (source map at a031c56c74 and 9633bb9e7e, the CHANGELOG entry by hand at 3c5c3bba93, git-verified). ACT: both criteria RE-CUT at this commit to runnable instruments that MEASURE those acts (the lens read for the role's section with a pipe-receiver grep; the record read back from git and the two files), one new declared placeholder RECORD_READBACK; worker ~24 resumed for the two; the order stays in_progress until they record.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W24-S11 as filed with both error texts; the worker's commit 3f089f2928 body; the re-cut at this commit.",
+      "WHY GRADUATED: two issuer defects in invocation grammar, each with the act done and evidenced and a runnable instrument now named; the refusal clause worked as designed."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W24-S11"
+  ],
+  "spec_asserts": "TO-W1-1 W1-AC8 and W1-AC14 as re-cut.",
+  "world_is": "The deploy is landed, driven, recorded; two criteria await their re-run.",
+  "notes": "An invocation is written by RUNNING it once at the cut (round 5's Z-S105 lesson, missed twice here)."
+},
+{
+  "id": "POSN_ASTTAX-Z-S160",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T05:32:02Z",
+  "one_line": "ADJUDICATION of W24-S12 (INERT): planning the shared cot-pipeline root from a worker worktree needed (1) `terraform init -input=false` because the junctioned .terraform cache's modules.json predated this function's module -- the init WROTE the module entry into the SHARED cache every worktree reads (no migrate, no reconfigure, no upgrade; the entry the main tree also lacked); (2) infra/aws/ec2 in the cone because the root's ec2.tf calls file() on a user-data script. RULED: (1) is benign and disclosed -- the shared cache gained the entry the root already declares; (2) joins the cone recipe for a terraform root (the root's file() inputs).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W24-S12 as filed; W1-AC9 0/3/0 and W1-AC11 'No changes' after the init; the main tree's cache predated B4's module as well.",
+      "WHY GRADUATED: a shared-cache write that adds what the configuration declares is not drift; the cone item is owned."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W24-S12"
+  ],
+  "spec_asserts": "NEVER: bare terraform apply -- init is not apply; safe-apply gated the apply.",
+  "world_is": "The main tree's .terraform/modules/modules.json now carries the characteristics module entry.",
+  "notes": "Recipe: a terraform root's cone carries every path its file() reads."
+},
+{
+  "id": "POSN_ASTTAX-Z-S161",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T05:32:02Z",
+  "one_line": "ADJUDICATION of W24-S13 (INERT): the in-Lambda measures are now READ (Duration 39,407 ms of 120,000; Max Memory 270 MB of 512; Init 440 ms) -- the envelope holds with 3x headroom, answering W24-S5; separately the recorder's CHANGELOG limb failed on a DIFFERENT device defect than the order predicted (a JSON_TOOL resolution, not the bun path) -- a second failure mode in the same script. CARRIED with W23-S4 / C-S136 to the deployment tooling owner (0.7.0_AE_CloudOps); the by-hand entry is the record tonight, as in round 5.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W24-S13 as filed with the REPORT line; the CHANGELOG head entry at HEAD names the function and 2a62019b.",
+      "WHY GRADUATED: the measurement closes an open question and the tooling defect has an owner and a workaround that produced the record."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W24-S13"
+  ],
+  "spec_asserts": "TO-W1-1 W1-AC14: the CHANGELOG entry by hand in the helper's shape.",
+  "world_is": "The record is in the tree; the recorder still cannot write it on this device.",
+  "notes": "For the CloudOps carry."
+},
+{
+  "id": "POSN_ASTTAX-Z-S162",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T05:32:02Z",
+  "one_line": "ADJUDICATION of W24-S14 (INERT): adding infra/aws/ec2 to the cone manufactured 12 'modified' files under infra/aws/ec2/smartx-exporter (CRLF-vs-LF checkout artifacts, every line of each) that the worker never touched and left uncommitted -- correct. RULED: a device checkout artifact (the same family as the tree's autocrlf warnings), outside every grant this round; nothing to do in POSN; noted for the device.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W24-S14 as filed; git's own CRLF warning on the same paths.",
+      "WHY GRADUATED: not an edit, not in any grant, not committed; a device note."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W24-S14"
+  ],
+  "spec_asserts": "CLAUDE.md: a worker's write surface is exactly its <paths>.",
+  "world_is": "The 12 files sit modified in slot ~24's worktree only.",
+  "notes": "Slot cleanup at L9 discards them with the worktree."
 }
 ]
 ```

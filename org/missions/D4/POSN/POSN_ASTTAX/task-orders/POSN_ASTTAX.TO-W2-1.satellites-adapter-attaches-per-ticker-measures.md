@@ -8,9 +8,10 @@
 <status>staged</status>
 
 **Directive:** D4 - **Macro:** POSN - **Fabric:** site-z - **PRD:** `../prd/POSN_ASTTAX_PRD.md` **v0.11** @`ab2ee8052a` (FWD-7,
-C-HOLDING-MEASURES, C-HOLDING-IDENTITY; AMENDED ~04:1xZ on v0.11 -- name and active from the identity pair, Z-S139 / Z-S141) - **Decomp cell:** `AT6-s-2` - **Issuance:** round 6, wave 2, slot `~25` -- **you start this order only after
-`TO-W1-1` is `complete` at HEAD AND the served `characteristics.json` carries `tickers`** (the COO names the hash and the VersionId at
-hand-over; W2-AC1 reads both back).
+C-HOLDING-MEASURES, C-HOLDING-IDENTITY; AMENDED ~04:1xZ on v0.11 -- name and active from the identity pair, Z-S139 / Z-S141) - **Decomp cell:** `AT6-s-2` - **Issuance:** round 6, wave 2, slot `~25` -- **you start this order only after B6 is
+SERVED -- the served `characteristics.json` carries `tickers`** (the COO names the VersionId at hand-over; W2-AC1 reads it back).
+`TO-W1-1` reads `in_progress` at HEAD on two RE-CUT criteria whose acts are done (W24-S11: the issuer's unrunnable invocations); the
+served block is your dependency, the status word was its proxy.
 
 ---
 
@@ -98,7 +99,7 @@ ONE row per off-cell finding, `POSN_ASTTAX-Z-W25-S<k>` (start at S1), appended t
 
 ## CRITERIA -- structured, one clause each
 
-<criterion id="W2-AC1" cell_refs="AT6-s-2"><invocation>timeout 120 bash -c "f=\$(ls org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-W1-1.*.md); grep -o -m1 '<status>[^<]*</status>' \$f; .tools/aws s3api get-object --bucket opal-data-cot --key platinum/satellites/characteristics.json /c/tmp/wk-posn-6-25/.scratch/char_served.json --query '{v:VersionId,lm:LastModified}' --output json && PYTHONUTF8=1 python3 -c \"import json; d=json.load(open('/c/tmp/wk-posn-6-25/.scratch/char_served.json', encoding='utf-8')); t=d.get('tickers') or {}; print('tickers', len(t), 'sources', sorted(set(v.get('source') for v in t.values())))\"; git -C portal rev-parse refs/drains/posn-6-portal; git -C portal merge-base --is-ancestor refs/drains/posn-6-portal HEAD && echo REF-IS-ANCESTOR"</invocation><expect>TO-W1-1 reads `complete`; the served characteristics.json carries a non-empty `tickers` block (count and sources printed, VersionId printed); your portal HEAD descends from refs/drains/posn-6-portal. Any other reading: STOP with a row.</expect></criterion> `W2-AC1` -- THE UPSTREAM, READ BACK FROM THE SERVED BYTES.
+<criterion id="W2-AC1" cell_refs="AT6-s-2"><invocation>timeout 120 bash -c "f=\$(ls org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-W1-1.*.md); grep -o -m1 '<status>[^<]*</status>' \$f; .tools/aws s3api get-object --bucket opal-data-cot --key platinum/satellites/characteristics.json /c/tmp/wk-posn-6-25/.scratch/char_served.json --query '{v:VersionId,lm:LastModified}' --output json && PYTHONUTF8=1 python3 -c \"import json; d=json.load(open('/c/tmp/wk-posn-6-25/.scratch/char_served.json', encoding='utf-8')); t=d.get('tickers') or {}; print('tickers', len(t), 'sources', sorted(set(v.get('source') for v in t.values())))\"; git -C portal rev-parse refs/drains/posn-6-portal; git -C portal merge-base --is-ancestor refs/drains/posn-6-portal HEAD && echo REF-IS-ANCESTOR"</invocation><expect>TO-W1-1 reads `complete` -- OR `in_progress` with its proof instance on SITEZ carrying W1-AC12 PASS (the two open criteria are W1-AC8 / W1-AC14, re-cut after the drain at ec1cc68aec; the served block is the dependency); the served characteristics.json carries a non-empty `tickers` block (count and sources printed; VersionId printed, 74d9.pGWF16Ox7cXKGax.zQw.lhwi5yI or later; every entry carries name and management_style); your portal HEAD descends from refs/drains/posn-6-portal. Any other reading: STOP with a row.</expect></criterion> `W2-AC1` -- THE UPSTREAM, READ BACK FROM THE SERVED BYTES.
 
 <criterion id="W2-AC2" cell_refs="AT6-s-2"><invocation>timeout 60 git -C portal diff --stat refs/drains/posn-6-portal -- src</invocation><expect>exactly four files changed: src/pages/Positioning/shared/satelliteAdapter.ts, src/pages/Positioning/shared/satelliteSet.ts, src/api/endpoints/satelliteRegistry.ts, src/pages/Positioning/tabs/HoldingsTab.tsx (the Active cell hunk, the four Satellites-mode footer/header hunks and the Portfolio Composition legend hunk, each named); the unscoped `git -C portal status --porcelain` shows the same four and nothing else; nothing under src/pages/Positioning/panels/ or Positioning.tsx (F5's files).</expect></criterion> `W2-AC2` -- FOUR FILES, DISJOINT FROM F5.
 
