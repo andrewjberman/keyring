@@ -1,0 +1,2074 @@
+{
+  "as_of": "2026-09-15T19:21:44.943536+00:00",
+  "kind": "ReferenceDataRequest",
+  "securities": [
+    "2317 TT Equity",
+    "9433 JP Equity",
+    "992 HK Equity",
+    "ASML NA Equity",
+    "BA US Equity",
+    "BABA US Equity",
+    "BBSE3 BZ Equity",
+    "BP/ LN Equity",
+    "COST US Equity",
+    "ENEL IM Equity",
+    "HAL US Equity",
+    "HD US Equity",
+    "HSBA LN Equity",
+    "ICICIBC IN Equity",
+    "IMB LN Equity",
+    "INTU US Equity",
+    "KMB US Equity",
+    "KPN NA Equity",
+    "NG/ LN Equity",
+    "NOVN SW Equity",
+    "NU US Equity",
+    "PBR US Equity",
+    "RKT LN Equity",
+    "RMS FP Equity",
+    "ROG SW Equity",
+    "RWE GR Equity",
+    "SAP GY Equity",
+    "SSE LN Equity",
+    "ST SP Equity",
+    "ULVR LN Equity",
+    "VLO US Equity",
+    "WALMEX* MM Equity",
+    "ZURN SW Equity"
+  ],
+  "fields": [
+    "NAME",
+    "COMPANY_EXEC_OFFICERS",
+    "LAST_CFO_START_DATE",
+    "LAST_COO_START_DATE",
+    "PRIMARY_PERIODICITY",
+    "BS_CONTRACTUAL_OBLIG_YEAR_1",
+    "BS_CONTRACTUAL_OBLIG_YEAR_2_3",
+    "BS_YEAR_1_PRINCIPAL",
+    "BS_YEAR_2_PRINCIPAL"
+  ],
+  "overrides": {},
+  "parameters": {},
+  "responses": [
+    {
+      "securityData": [
+        {
+          "security": "VLO US Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 30,
+          "fieldData": {
+            "NAME": "VALERO ENERGY CORP",
+            "COMPANY_EXEC_OFFICERS": [
+              {
+                "Executive Officers": "R Lane Riggs,  Chairman/President/CEO"
+              },
+              {
+                "Executive Officers": "Gary K Simmons,  Exec VP/COO"
+              },
+              {
+                "Executive Officers": "Richard J Walsh \"Rich\",  Exec VP/Gen Cnsl"
+              },
+              {
+                "Executive Officers": "Homer Bhullar,  Senior VP/CFO"
+              },
+              {
+                "Executive Officers": "Julia Rendon Reinhart,  Senior VP/Chief Human Resources Officer"
+              },
+              {
+                "Executive Officers": "Greg Bram,  Senior Vice President"
+              },
+              {
+                "Executive Officers": "Eric Honeyman,  Senior VP:Renewables Operations & Low Carbon Fuels"
+              },
+              {
+                "Executive Officers": "Richard F Lashway \"Rich\",  Senior VP:Corporate Dev & Strategy"
+              },
+              {
+                "Executive Officers": "John P Locke,  VP/Treasurer"
+              },
+              {
+                "Executive Officers": "Elizabeth Selva,  VP/Controller"
+              },
+              {
+                "Executive Officers": "Matt Dooley,  VP:Refining Services"
+              },
+              {
+                "Executive Officers": "Greg Gentry,  VP:Refining Operations"
+              },
+              {
+                "Executive Officers": "Randy Hawkins,  VP:Crude & Feestocks Supply"
+              },
+              {
+                "Executive Officers": "Mike Zacho,  VP:Information Services & Technology"
+              },
+              {
+                "Executive Officers": "Brian Donovan,  VP:Investor Relations"
+              }
+            ],
+            "LAST_CFO_START_DATE": "2026-01-01",
+            "LAST_COO_START_DATE": "2023-07-20",
+            "PRIMARY_PERIODICITY": "Quarterly and Annual",
+            "BS_YEAR_1_PRINCIPAL": 695.0,
+            "BS_YEAR_2_PRINCIPAL": 564.0
+          }
+        },
+        {
+          "security": "WALMEX* MM Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 31,
+          "fieldData": {
+            "NAME": "WALMART DE MEXICO SAB DE CV",
+            "COMPANY_EXEC_OFFICERS": [
+              {
+                "Executive Officers": "Cristian Barrientos Pozo,  CEO/Pres & CEO:Centroamerica"
+              },
+              {
+                "Executive Officers": "Camilo Canedo Priesca,  Chief Financial Officer"
+              },
+              {
+                "Executive Officers": "Paul Lewellen,  Chief Operating Officer"
+              },
+              {
+                "Executive Officers": "Michelle Benavides,  Chief Legal Officer"
+              },
+              {
+                "Executive Officers": "Beatriz Nunez,  Chief Growth Officer"
+              },
+              {
+                "Executive Officers": "Prathibha Rajashekhar,  CEO:Sams Club"
+              },
+              {
+                "Executive Officers": "Javier Andrade,  Senior VP/Chief Merchandising Officer"
+              },
+              {
+                "Executive Officers": "Cristina Ronski,  Senior VP/CEO:Central America"
+              },
+              {
+                "Executive Officers": "Juan Carlos Alarcon,  Senior VP:Human Resources"
+              },
+              {
+                "Executive Officers": "Javier Trevino Cantu,  Senior VP:Corporate Affairs"
+              },
+              {
+                "Executive Officers": "Gaston Wainstein,  Senior VP:Supply Chain & Real Estate"
+              },
+              {
+                "Executive Officers": "Gerardo Adame,  VP:Walmart Connect & Data Ventures"
+              },
+              {
+                "Executive Officers": "Juan Carlos Aja,  VP:Merchandising Food"
+              },
+              {
+                "Executive Officers": "Francia Priscila Del Carmen Alarcon,  VP:Taxes"
+              },
+              {
+                "Executive Officers": "Guillermo Emilio Barreto Areas,  VP:Commercial Finance & Operations"
+              },
+              {
+                "Executive Officers": "Nayelli Gutierrez Arista,  VP:Audit"
+              },
+              {
+                "Executive Officers": "Milton Brandt,  VP:Finance"
+              },
+              {
+                "Executive Officers": "Francisco Jose Perez Brena,  VP:Purchasing Central America"
+              },
+              {
+                "Executive Officers": "Edmundo Delgado,  VP:Operations"
+              },
+              {
+                "Executive Officers": "Juan Manuel Eugeni,  VP:Operations Bodega Aurrera"
+              },
+              {
+                "Executive Officers": "Erika Abigail Falfan,  VP:Real State"
+              },
+              {
+                "Executive Officers": "Alexandre Franca,  VP:Comptroller"
+              },
+              {
+                "Executive Officers": "Mariana Rebeca Gonzalez Garcia,  Vp:Shopping, Entertainment & Season"
+              },
+              {
+                "Executive Officers": "Pedro Martin Patino Gonsenheim,  VP:Human Capital Consultant Operations"
+              },
+              {
+                "Executive Officers": "Eduardo Villarreal Holguera,  VP:Operations W2"
+              },
+              {
+                "Executive Officers": "Tomas Andres Durandeau Labarca,  VP:Bodega Aurrera"
+              },
+              {
+                "Executive Officers": "Richard Vargas Loaiciga,  VP:Operations Central America"
+              },
+              {
+                "Executive Officers": "Mariana Alejandra Fonseca Medina,  VP:Customer Office"
+              },
+              {
+                "Executive Officers": "Jose Eleazar Chapa Montemayor,  VP:Data & Product"
+              },
+              {
+                "Executive Officers": "Sandro Norberto Do Nascimento,  VP:Logistics"
+              },
+              {
+                "Executive Officers": "Yvonne Alejandra Paczka,  VP:HR Transformation & People Busin Partner Staff"
+              },
+              {
+                "Executive Officers": "Danilo Paffi,  VP:Technology Mexico & CAM"
+              },
+              {
+                "Executive Officers": "Todd Ray Starbuck,  VP:Supply Chain Transformation"
+              },
+              {
+                "Executive Officers": "Jose Angel Sanchez Villalobos,  VP:Merchandising"
+              },
+              {
+                "Executive Officers": "Adriana Velazquez Villasenor,  VP:Ethics, Compliance & Legal"
+              },
+              {
+                "Executive Officers": "Salvador Villasenor,  Director:Investor Relations"
+              }
+            ],
+            "LAST_CFO_START_DATE": "2026-08-15",
+            "LAST_COO_START_DATE": "2025-10-21",
+            "PRIMARY_PERIODICITY": "Quarterly and Annual",
+            "BS_YEAR_1_PRINCIPAL": 0.0,
+            "BS_YEAR_2_PRINCIPAL": 0.0
+          }
+        },
+        {
+          "security": "ZURN SW Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 32,
+          "fieldData": {
+            "NAME": "ZURICH INSURANCE GROUP AG",
+            "COMPANY_EXEC_OFFICERS": [
+              {
+                "Executive Officers": "Mario Greco,  Chief Executive Officer"
+              },
+              {
+                "Executive Officers": "Claudia Cordioli,  Chief Financial Officer"
+              },
+              {
+                "Executive Officers": "Ericson Chan,  Chief Information & Digital Officer"
+              },
+              {
+                "Executive Officers": "Peter Giger,  Chief Risk Officer"
+              },
+              {
+                "Executive Officers": "Stephan Van Vliet,  Chief Investment Officer"
+              },
+              {
+                "Executive Officers": "Sierra Signorelli,  CEO:Commercial Insurance"
+              },
+              {
+                "Executive Officers": "Raul Vargas,  CEO:Farmers Group Inc"
+              },
+              {
+                "Executive Officers": "Laurence Maurice,  CEO:Latin America"
+              },
+              {
+                "Executive Officers": "Cara Morton,  CEO: Global Businesses and Operations"
+              },
+              {
+                "Executive Officers": "Alison Martin,  CEO:Life, Health and Bank Distribution"
+              },
+              {
+                "Executive Officers": "Tulsi Naidu,  CEO:Asia Pacific"
+              },
+              {
+                "Executive Officers": "Kristof Terryn,  CEO:Europe, Middle East"
+              },
+              {
+                "Executive Officers": "Jon Hocking,  Head:Investor Relations and Rating Agency Manageme"
+              }
+            ],
+            "LAST_CFO_START_DATE": "2024-03-01",
+            "LAST_COO_START_DATE": "2016-07-01",
+            "PRIMARY_PERIODICITY": "Semi-Annual and Annual",
+            "BS_YEAR_1_PRINCIPAL": 13491.0,
+            "BS_YEAR_2_PRINCIPAL": 411.0
+          }
+        }
+      ]
+    },
+    {
+      "securityData": [
+        {
+          "security": "2317 TT Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 0,
+          "fieldData": {
+            "NAME": "HON HAI PRECISION INDUSTRY",
+            "COMPANY_EXEC_OFFICERS": [
+              {
+                "Executive Officers": "Liu Young-Way \"Young\",  Chairman/President/CEO"
+              },
+              {
+                "Executive Officers": "Jiang Chi-Heng,  Rotating Chief Executive Officer"
+              },
+              {
+                "Executive Officers": "Li Wei-Bin,  Chief Information Security Office"
+              },
+              {
+                "Executive Officers": "Dr Chen Wei-Ming \"Bob\",  Presidentr:Business Group"
+              },
+              {
+                "Executive Officers": "Jiang Zhi-Xiong,  Presidentr:Business Group"
+              },
+              {
+                "Executive Officers": "Lin Chung-Cheng,  President:Business Group"
+              },
+              {
+                "Executive Officers": "Huang De-Cai,  Dir:Finance"
+              },
+              {
+                "Executive Officers": "Wu Chun-I \"James\",  Investor Relations"
+              }
+            ],
+            "PRIMARY_PERIODICITY": "Quarterly and Annual",
+            "BS_YEAR_1_PRINCIPAL": 6.416,
+            "BS_YEAR_2_PRINCIPAL": 21632.773
+          }
+        },
+        {
+          "security": "9433 JP Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 1,
+          "fieldData": {
+            "NAME": "KDDI CORP",
+            "COMPANY_EXEC_OFFICERS": [
+              {
+                "Executive Officers": "Makoto Takahashi,  Chairman"
+              },
+              {
+                "Executive Officers": "Hiromichi Matsuda,  President/CEO"
+              },
+              {
+                "Executive Officers": "Nanae Saishoji,  Senior Managing Executive Officer/CFO"
+              },
+              {
+                "Executive Officers": "Kazuyuki Yoshimura,  Senior Managing Executive Officer/CTO"
+              },
+              {
+                "Executive Officers": "Tomohiko Katsuki,  Managing Executive Officer/CSO/CDO"
+              },
+              {
+                "Executive Officers": "Tomoko Nakayama,  Managing Executive Officer/CHRO"
+              },
+              {
+                "Executive Officers": "Hiroaki Hosoi,  Managing Executive Officer"
+              },
+              {
+                "Executive Officers": "Masato Kobayashi,  Managing Executive Officer"
+              },
+              {
+                "Executive Officers": "Hitoshi Oda,  Managing Executive Officer"
+              },
+              {
+                "Executive Officers": "Yasuo Tawara,  Managing Executive Officer"
+              },
+              {
+                "Executive Officers": "Kazuhiro Yamamoto,  Managing Executive Officer"
+              },
+              {
+                "Executive Officers": "Kazuhiro Furuhata,  Executive Officer/CNO"
+              },
+              {
+                "Executive Officers": "Toshiyuki Miyakawa,  General Manager:IR"
+              }
+            ],
+            "LAST_CFO_START_DATE": "2023-04-01",
+            "PRIMARY_PERIODICITY": "Quarterly and Annual",
+            "BS_YEAR_1_PRINCIPAL": 352233.0
+          }
+        },
+        {
+          "security": "992 HK Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 2,
+          "fieldData": {
+            "NAME": "LENOVO GROUP LTD",
+            "COMPANY_EXEC_OFFICERS": [
+              {
+                "Executive Officers": "Yang Yuanqing,  Chairman/CEO/Executive Director"
+              },
+              {
+                "Executive Officers": "Ashley Gorakhpurwalla,  Exec VP/Pres:Infrastructure Solutions Group"
+              },
+              {
+                "Executive Officers": "Liu Jun,  Exec VP/Pres:China"
+              },
+              {
+                "Executive Officers": "Luca Rossi,  Exec VP/Pres:Intelligent Devices Group"
+              },
+              {
+                "Executive Officers": "Kin Hang Wong,  Exec VP/Pres:Solutions & Services Group"
+              },
+              {
+                "Executive Officers": "Matthew Zielinski,  Exec VP/Pres:Intl Sales Organization"
+              },
+              {
+                "Executive Officers": "Winston Cheng,  Senior VP/CFO"
+              },
+              {
+                "Executive Officers": "Dr Tolga Kurtoglu,  Senior VP/CTO"
+              },
+              {
+                "Executive Officers": "Gian Qiao,  Senior VP/CSO/CMO"
+              },
+              {
+                "Executive Officers": "Arthur Hu,  Senior VP/CIO/Chief Technology & Delivery Officer"
+              },
+              {
+                "Executive Officers": "David C Carroll,  Senior VP/Chief Legal & Corporate Responsibility O"
+              },
+              {
+                "Executive Officers": "Douglas W Fisher \"Doug\",  Senior VP/Chief Security & AI Officer"
+              },
+              {
+                "Executive Officers": "Matt Dobrodziej,  Senior VP/President:EMEA"
+              },
+              {
+                "Executive Officers": "Tareq Alangari,  Senior VP & Pres:Lenovo Middle East"
+              },
+              {
+                "Executive Officers": "Ryan McCurdy,  Senior VP & President:Lenovo North America"
+              },
+              {
+                "Executive Officers": "Sergio Buniac,  Senior VP:Mobile Business Group/Pres:Motorola"
+              },
+              {
+                "Executive Officers": "Che Min Tu \"Jammi\",  Senior VP:Global Operations"
+              },
+              {
+                "Executive Officers": "Gao Lan,  Senior VP:Human Resouces"
+              },
+              {
+                "Executive Officers": "Gaspar Fernandez-Concha,  VP & Gen Mgr:Lenovo LATAM"
+              },
+              {
+                "Executive Officers": "Lixi Yuan,  Director:Investor Relations"
+              },
+              {
+                "Executive Officers": "Lam Ngan Ling,  Secretary/General Counsel"
+              }
+            ],
+            "LAST_CFO_START_DATE": "2024-04-15",
+            "LAST_COO_START_DATE": "2014-04-01",
+            "PRIMARY_PERIODICITY": "Quarterly and Annual",
+            "BS_YEAR_1_PRINCIPAL": 878.443,
+            "BS_YEAR_2_PRINCIPAL": 2407.514
+          }
+        },
+        {
+          "security": "ASML NA Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 3,
+          "fieldData": {
+            "NAME": "ASML HOLDING NV",
+            "COMPANY_EXEC_OFFICERS": [
+              {
+                "Executive Officers": "Christophe Fouquet,  President/CEO/Chairman Mgmt Brd"
+              },
+              {
+                "Executive Officers": "Prof Roger J M Dassen PhD,  EVP/Chief Financial Officer"
+              },
+              {
+                "Executive Officers": "Frederic J M Schneider-Maunoury,  EVP/Chief Operations Officer"
+              },
+              {
+                "Executive Officers": "Marco Pieters,  EVP/Chief Technology Officer"
+              },
+              {
+                "Executive Officers": "Wayne R Allan,  EVP/Chief Strategic Sourcing & Procurement Officer"
+              },
+              {
+                "Executive Officers": "Jim Koonmen,  EVP/Chief Customer Officer"
+              },
+              {
+                "Executive Officers": "Jim Kavanagh,  VP:IR Worldwide"
+              }
+            ],
+            "LAST_CFO_START_DATE": "2018-06-01",
+            "LAST_COO_START_DATE": "2009-12-01",
+            "PRIMARY_PERIODICITY": "Quarterly and Annual",
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 9600.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_2_3": 2700.0,
+            "BS_YEAR_1_PRINCIPAL": 1694.8,
+            "BS_YEAR_2_PRINCIPAL": 751.8
+          }
+        },
+        {
+          "security": "BA US Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 4,
+          "fieldData": {
+            "NAME": "BOEING CO/THE",
+            "COMPANY_EXEC_OFFICERS": [
+              {
+                "Executive Officers": "Robert K Ortberg \"Kelly\",  President/CEO"
+              },
+              {
+                "Executive Officers": "Stephen Kenneth Parker \"Steve\",  Exec VP/Pres & CEO:Boeing Defense"
+              },
+              {
+                "Executive Officers": "Stephanie F Pope,  Exec VP/Pres & CEO:BCA"
+              },
+              {
+                "Executive Officers": "Christopher Raymond \"Chris\",  Exec VP/Pres & CEO:Boeing Global Services"
+              },
+              {
+                "Executive Officers": "Jesus Malave Jr \"Jay\",  Exec VP:Finance/CFO"
+              },
+              {
+                "Executive Officers": "Uma Amuluru,  Exec VP:Human Resources/Chief Human Resources Ofcr"
+              },
+              {
+                "Executive Officers": "Brett C Gerry,  Exec VP:Global Compliance/CLO"
+              },
+              {
+                "Executive Officers": "Howard E McKenzie,  Exec VP:Engg & Technology/Chief Engineer"
+              },
+              {
+                "Executive Officers": "Jeffrey Shockey \"Jeff\",  Exec VP:Global Public Policy & Corporate Strategy"
+              },
+              {
+                "Executive Officers": "Ann M Schmidt,  Senior VP/Chief Com & Brand Officer"
+              },
+              {
+                "Executive Officers": "Dr Brendan J Nelson,  Senior VP/Pres:Global"
+              },
+              {
+                "Executive Officers": "Michael J Cleary,  Senior VP/Controller"
+              },
+              {
+                "Executive Officers": "Ryan L Shedd,  Senior VP/Controller"
+              },
+              {
+                "Executive Officers": "Dana Scott Deasy,  Sr VP:IT & Data Analytics/CIDO"
+              },
+              {
+                "Executive Officers": "Don Ruhmann,  Sr VP:Global Aerospace Safety/Chief Aerospace Safe"
+              },
+              {
+                "Executive Officers": "Eric Hill,  VP:Investor Relations"
+              },
+              {
+                "Executive Officers": "Tommy D Preston Jr,  VP:Global Compliance/Chief Compliance Officer"
+              }
+            ],
+            "LAST_CFO_START_DATE": "2025-08-15",
+            "LAST_COO_START_DATE": "2023-12-01",
+            "PRIMARY_PERIODICITY": "Quarterly and Annual"
+          }
+        },
+        {
+          "security": "BABA US Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 5,
+          "fieldData": {
+            "NAME": "ALIBABA GROUP HOLDING-SP ADR",
+            "COMPANY_EXEC_OFFICERS": [
+              {
+                "Executive Officers": "Tsai Chung-Hsin \"Joseph\",  Chairman/Co-Founder"
+              },
+              {
+                "Executive Officers": "Wu Yongming \"Eddie\",  CEO/Co-Founder"
+              },
+              {
+                "Executive Officers": "John Michael Evans \"Mike\",  President"
+              },
+              {
+                "Executive Officers": "Hong Xu \"Toby\",  Chief Financial Officer"
+              },
+              {
+                "Executive Officers": "Jiang Fang \"Jane\",  Chief People Officer"
+              },
+              {
+                "Executive Officers": "Fan Jiang,  CEO:E-Commerce Business"
+              },
+              {
+                "Executive Officers": "Zhang Jinwei \"Kevin\",  Secretary"
+              },
+              {
+                "Executive Officers": "Yu Siying \"Sara\",  General Counsel"
+              },
+              {
+                "Executive Officers": "Lydia Liu,  Head:Investor Relations"
+              }
+            ],
+            "LAST_CFO_START_DATE": "2022-04-01",
+            "LAST_COO_START_DATE": "2013-09-10",
+            "PRIMARY_PERIODICITY": "Quarterly and Annual",
+            "BS_YEAR_1_PRINCIPAL": 47294.0,
+            "BS_YEAR_2_PRINCIPAL": 13249.0
+          }
+        },
+        {
+          "security": "BBSE3 BZ Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 6,
+          "fieldData": {
+            "NAME": "BB SEGURIDADE PARTICIPACOES",
+            "COMPANY_EXEC_OFFICERS": [
+              {
+                "Executive Officers": "Delano Valentim de Andrade,  Chief Executive Officer"
+              },
+              {
+                "Executive Officers": "Rafael Augusto Sperendio,  CFO/Dir:Investor Relations"
+              },
+              {
+                "Executive Officers": "Bruno Alves do Nascimento,  Chief Technology & Portfolio Officer"
+              },
+              {
+                "Executive Officers": "Allan Trancoso Ferraz Silva,  Chief Commercial & Customer Officer"
+              },
+              {
+                "Executive Officers": "Felipe Resende Peres,  Head:Investor Relations"
+              }
+            ],
+            "LAST_CFO_START_DATE": "2021-04-30",
+            "PRIMARY_PERIODICITY": "Quarterly and Annual"
+          }
+        },
+        {
+          "security": "BP/ LN Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 7,
+          "fieldData": {
+            "NAME": "BP PLC",
+            "COMPANY_EXEC_OFFICERS": [
+              {
+                "Executive Officers": "Marguerite Eileen O'Neill \"Meg\",  Chief Executive Officer"
+              },
+              {
+                "Executive Officers": "Carol Howle,  Deputy CEO"
+              },
+              {
+                "Executive Officers": "Katherine Anne Thomson \"Kate\",  Chief Financial Officer"
+              },
+              {
+                "Executive Officers": "Gordon Birrell,  Exec VP:Upstream"
+              },
+              {
+                "Executive Officers": "Emeka Emembolu,  Exec VP:Technology"
+              },
+              {
+                "Executive Officers": "Richard Michael Harding \"Mike\",  Interim Exec VP:Downstream"
+              },
+              {
+                "Executive Officers": "William Lin,  Exec VP:Gas & Low Carbon Energy"
+              },
+              {
+                "Executive Officers": "Mike Sosso,  Exec VP:Legal"
+              },
+              {
+                "Executive Officers": "Craig Marshall,  Senior VP:Investor Relations"
+              },
+              {
+                "Executive Officers": "Benedict J S Mathews \"Ben\",  Secretary"
+              }
+            ],
+            "LAST_CFO_START_DATE": "2024-02-02",
+            "PRIMARY_PERIODICITY": "Quarterly and Annual",
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 12288.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_2_3": 125412.0,
+            "BS_YEAR_1_PRINCIPAL": 3312.0,
+            "BS_YEAR_2_PRINCIPAL": 6628.0
+          }
+        },
+        {
+          "security": "COST US Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 8,
+          "fieldData": {
+            "NAME": "COSTCO WHOLESALE CORP",
+            "COMPANY_EXEC_OFFICERS": [
+              {
+                "Executive Officers": "Roland Michael Vachris \"Ron\",  President/CEO"
+              },
+              {
+                "Executive Officers": "Caton Frates,  Senior Exec VP:US & Mexico Warehouse Operations"
+              },
+              {
+                "Executive Officers": "Gary Millerchip,  Exec VP/CFO"
+              },
+              {
+                "Executive Officers": "Javier Polit,  Exec VP/Chief Information & Digital Officer"
+              },
+              {
+                "Executive Officers": "Claudine E Adamo,  Exec VP/COO:Merchandising"
+              },
+              {
+                "Executive Officers": "Teresa A Jones,  Exec VP/COO:Global Depots & Traffic"
+              },
+              {
+                "Executive Officers": "James C Klauer \"Jim\",  Exec VP/COO:Northern"
+              },
+              {
+                "Executive Officers": "Pierre Riel,  Exec VP/COO:International"
+              },
+              {
+                "Executive Officers": "Yoram B Rubanenko,  Exec VP/COO:Eastern"
+              },
+              {
+                "Executive Officers": "John Sullivan,  Exec VP/Secy/Gen Cnsl"
+              },
+              {
+                "Executive Officers": "Patrick J Callans \"Pat\",  Exec VP:Administration"
+              },
+              {
+                "Executive Officers": "Tiffany Barbre,  Senior VP/Controller"
+              },
+              {
+                "Executive Officers": "Marc-Andre Bally,  Senior VP/Gen Mgr:Western Canada"
+              },
+              {
+                "Executive Officers": "Kim Brown,  Senior VP/Gen Mgr:Northwest"
+              },
+              {
+                "Executive Officers": "Greg Carter II,  Senior VP/Gen Mgr:Los Angeles"
+              },
+              {
+                "Executive Officers": "Richard Chang,  Senior VP/Gen Mgr:Asia"
+              },
+              {
+                "Executive Officers": "Angelina Chaparro,  Senior VP/Gen Mgr:Bay Area"
+              },
+              {
+                "Executive Officers": "Frank Chislette,  Senior VP/Gen Mgr:Eastern Canada"
+              },
+              {
+                "Executive Officers": "Wendy Davis,  Senior VP/Gen Mgr:Southeast Region"
+              },
+              {
+                "Executive Officers": "Darby Greek,  Senior VP/Gen Mgr:Texas Region"
+              },
+              {
+                "Executive Officers": "Bill Koza,  Senior VP/Gen Mgr:Midwest"
+              },
+              {
+                "Executive Officers": "Mario Omoss,  Senior VP/Gen Mgr:Northwest Region"
+              },
+              {
+                "Executive Officers": "Adam Self,  Senior VP/Gen Mgr:Northeast Region"
+              },
+              {
+                "Executive Officers": "Louie Silveira,  Senior VP/Gen Mgr:Europe"
+              },
+              {
+                "Executive Officers": "Azmina Virani,  Senior VP/Gen Mgr:Western Canada Region"
+              },
+              {
+                "Executive Officers": "W Richard Wilcox \"Rich\",  Senior VP/Gen Mgr:San Deigo Region"
+              },
+              {
+                "Executive Officers": "Gino Dorico,  Senior VP/Country Mgr:Canada"
+              },
+              {
+                "Executive Officers": "Jeff Cole,  Senior VP:Wholesale Industries & Business Dev"
+              },
+              {
+                "Executive Officers": "Sheri Flies,  Senior VP:Global Sustainability & Compliance"
+              },
+              {
+                "Executive Officers": "Sarah George,  Senior VP:Merchandising"
+              },
+              {
+                "Executive Officers": "Peter Gruening,  Senior VP:Membership & Member Service Centers"
+              },
+              {
+                "Executive Officers": "Yoon Kim,  Senior VP:Merchandising Non-Foods"
+              },
+              {
+                "Executive Officers": "David Messner,  Senior VP:Real Estate Development"
+              },
+              {
+                "Executive Officers": "Ali Moayeri,  Senior VP:Construction & Purchasing"
+              },
+              {
+                "Executive Officers": "Pietro Nenci,  Senior VP:Merchandising Corporate Foods"
+              },
+              {
+                "Executive Officers": "Scott O'Brien,  Senior VP:Merchandising"
+              },
+              {
+                "Executive Officers": "Robert Parker,  Senior VP:Business Centers"
+              },
+              {
+                "Executive Officers": "Mike Parrott,  Senior VP:Ecommerce"
+              },
+              {
+                "Executive Officers": "Walt Shafer,  Senior VP:Lincoln Premium Poultry"
+              },
+              {
+                "Executive Officers": "Geoff Shavey,  Senior VP:Merchandising"
+              },
+              {
+                "Executive Officers": "Richard Stephens,  Senior VP:Pharmacy"
+              },
+              {
+                "Executive Officers": "Brenda Weber,  Senior VP:Human Resources"
+              },
+              {
+                "Executive Officers": "Terry Williams,  Senior VP:Merchandising Program Management & Train"
+              }
+            ],
+            "LAST_CFO_START_DATE": "2024-03-15",
+            "LAST_COO_START_DATE": "2022-02-02",
+            "PRIMARY_PERIODICITY": "Quarterly and Annual",
+            "BS_YEAR_1_PRINCIPAL": 75.0,
+            "BS_YEAR_2_PRINCIPAL": 2250.0
+          }
+        },
+        {
+          "security": "ENEL IM Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 9,
+          "fieldData": {
+            "NAME": "ENEL SPA",
+            "COMPANY_EXEC_OFFICERS": [
+              {
+                "Executive Officers": "Paolo Scaroni,  Chairman"
+              },
+              {
+                "Executive Officers": "Flavio Cattaneo,  CEO/General Manager"
+              },
+              {
+                "Executive Officers": "Stefano De Angelis,  Chief Financial Officer"
+              },
+              {
+                "Executive Officers": "Lorenzo Ceppatelli,  Chief Pricing Officer/Head:Global Energy & Commodi"
+              },
+              {
+                "Executive Officers": "Gianni Vittorio Armani,  Dir:Enel Grids/Dir:Iberia"
+              },
+              {
+                "Executive Officers": "Francesco Bertoli,  Dir:Enel Grids & Innovation/Country Mgr:Colombia &"
+              },
+              {
+                "Executive Officers": "Francesca Gostinelli,  Director:Enel Group Italy/Director:Enel Commercial"
+              },
+              {
+                "Executive Officers": "Omar Al Bayaty,  Head:Investor Relations"
+              },
+              {
+                "Executive Officers": "Stefano Azzi,  Head:Commercial"
+              },
+              {
+                "Executive Officers": "Salvatore Bernabei,  Head:Global Green Power Generation & Thermal Gener"
+              },
+              {
+                "Executive Officers": "Stefano Ciurli,  Head:ICT Procurement Real Estate & General Service"
+              },
+              {
+                "Executive Officers": "Elisabetta Colacchia,  Head:People and Organization"
+              },
+              {
+                "Executive Officers": "Valerio Giardina,  Head:Security"
+              },
+              {
+                "Executive Officers": "Nicolo Mardegan,  Head:External Relations"
+              },
+              {
+                "Executive Officers": "Michela Mossini,  Head:Chief Executive Office Strategy & Sustainabil"
+              },
+              {
+                "Executive Officers": "Roberto Antonio Enzo Deambrogio,  Head:Rest of the World"
+              },
+              {
+                "Executive Officers": "Francesco Puntillo,  Head:Legal Corporate Regulatory & Antitrust Affair"
+              },
+              {
+                "Executive Officers": "Anna Spina,  Head:Audit"
+              }
+            ],
+            "LAST_CFO_START_DATE": "2023-06-12",
+            "LAST_COO_START_DATE": "2002-05-24",
+            "PRIMARY_PERIODICITY": "Quarterly and Annual",
+            "BS_YEAR_1_PRINCIPAL": 11778.0,
+            "BS_YEAR_2_PRINCIPAL": 8293.0
+          }
+        }
+      ]
+    },
+    {
+      "securityData": [
+        {
+          "security": "HAL US Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 10,
+          "fieldData": {
+            "NAME": "HALLIBURTON CO",
+            "COMPANY_EXEC_OFFICERS": [
+              {
+                "Executive Officers": "Jeffrey Allen Miller \"Jeff\",  Chairman/President/CEO"
+              },
+              {
+                "Executive Officers": "Rami Yassine,  President:Eastern Hemisphere"
+              },
+              {
+                "Executive Officers": "Michael Casey Maxwell,  Pres:Western Hemisphere"
+              },
+              {
+                "Executive Officers": "Eric J Carre,  Exec VP/CFO"
+              },
+              {
+                "Executive Officers": "Shannon Jeffrey Slocum,  Exec VP/COO"
+              },
+              {
+                "Executive Officers": "Lawrence J Pope,  Exev VP/CAO"
+              },
+              {
+                "Executive Officers": "Van H Beckwith,  Exec VP/CLO/Secretary"
+              },
+              {
+                "Executive Officers": "Summer Condarco,  Senior VP/Chief Health, Safety & Environment Offic"
+              },
+              {
+                "Executive Officers": "Joshua Sears \"Josh\",  Senior VP:Drilling & Evaluation"
+              },
+              {
+                "Executive Officers": "Sriram Srinivasan,  Senior VP:Global Technology"
+              },
+              {
+                "Executive Officers": "Shawn Stasiuk,  Senior VP:Completion & Production"
+              },
+              {
+                "Executive Officers": "David Coleman,  Senior Dir:IR"
+              }
+            ],
+            "LAST_CFO_START_DATE": "2022-05-02",
+            "LAST_COO_START_DATE": "2026-01-01",
+            "PRIMARY_PERIODICITY": "Quarterly and Annual",
+            "BS_YEAR_1_PRINCIPAL": 0.0,
+            "BS_YEAR_2_PRINCIPAL": 0.0
+          }
+        },
+        {
+          "security": "HD US Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 11,
+          "fieldData": {
+            "NAME": "HOME DEPOT INC",
+            "COMPANY_EXEC_OFFICERS": [
+              {
+                "Executive Officers": "Edward P Decker \"Ted\",  President/CEO"
+              },
+              {
+                "Executive Officers": "Marc Brown,  CEO:HD Supply"
+              },
+              {
+                "Executive Officers": "Pete Capel,  Pres:Northern Division"
+              },
+              {
+                "Executive Officers": "Kelly Mayhall,  Pres:Southern"
+              },
+              {
+                "Executive Officers": "Vinod Nalajala,  Pres:Canada"
+              },
+              {
+                "Executive Officers": "B J Powers,  Pres:Western Division"
+              },
+              {
+                "Executive Officers": "Jose Alberto Rodriguez \"Pepe\",  Pres:Mexico"
+              },
+              {
+                "Executive Officers": "Ann-Marie Campbell,  Senior Exec VP:US Stores"
+              },
+              {
+                "Executive Officers": "Richard V McPhail,  Exec VP/CFO"
+              },
+              {
+                "Executive Officers": "Dr Franziska Bell \"Fran\",  Exec VP/CTO"
+              },
+              {
+                "Executive Officers": "Angela Brown \"Angie\",  Exec VP/Chief Information Officer"
+              },
+              {
+                "Executive Officers": "Teresa Wynn Roseborough,  Exec VP/Secy/Gen Cnsl"
+              },
+              {
+                "Executive Officers": "William Bastek \"Billy\",  Exec VP:Merchandising"
+              },
+              {
+                "Executive Officers": "Jordan Broggi,  Exec VP:Interconnected Retail"
+              },
+              {
+                "Executive Officers": "John Deaton,  Exec VP:Supply Chain & Product Development"
+              },
+              {
+                "Executive Officers": "Michael Rowe,  Exec VP:Pro"
+              },
+              {
+                "Executive Officers": "Stephanie Smith,  Exec VP:Human Resources"
+              },
+              {
+                "Executive Officers": "Molly Battin,  Senior VP/Chief Marketing Officer"
+              },
+              {
+                "Executive Officers": "Kimberly R Scardino,  Senior VP:Finance/Chief Acctg Ofcr/Controller"
+              },
+              {
+                "Executive Officers": "Deepak Arora,  Senior VP:Technology"
+              },
+              {
+                "Executive Officers": "Rodes Bazzel,  Senior VP:Merchandising"
+              },
+              {
+                "Executive Officers": "Haydn Chilcott,  Senior VP:Operations"
+              },
+              {
+                "Executive Officers": "Chip Devine,  Senior VP:Pro Sales"
+              },
+              {
+                "Executive Officers": "John Drake,  Senior VP:Supply Chain"
+              },
+              {
+                "Executive Officers": "Rebecca Godecke,  Senior VP:Online"
+              },
+              {
+                "Executive Officers": "Arlette Guthrie,  Senior VP:Human Resources"
+              },
+              {
+                "Executive Officers": "Crystal Hanlon,  Senior VP:Culture & Values"
+              },
+              {
+                "Executive Officers": "Jim Hovis,  Senior VP:Merchandising & Building Materials"
+              },
+              {
+                "Executive Officers": "Amit Kalra,  Senior VP:Supply Chain"
+              },
+              {
+                "Executive Officers": "Hua Li,  Senior VP:Global Brand & Product Development"
+              },
+              {
+                "Executive Officers": "David Passafiume,  Senior VP:Merchandising Decor"
+              },
+              {
+                "Executive Officers": "Tim Wilkerson,  Senior VP:Home Services"
+              },
+              {
+                "Executive Officers": "Demetrus Walk \"Dee\",  Senior VP:Enterprise Delivery Experience"
+              },
+              {
+                "Executive Officers": "Isabel Janci,  VP:Investor Relations/Treasurer"
+              }
+            ],
+            "LAST_CFO_START_DATE": "2019-09-01",
+            "LAST_COO_START_DATE": "2020-10-05",
+            "PRIMARY_PERIODICITY": "Quarterly and Annual",
+            "BS_YEAR_1_PRINCIPAL": 4684.0,
+            "BS_YEAR_2_PRINCIPAL": 3625.0
+          }
+        },
+        {
+          "security": "HSBA LN Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 12,
+          "fieldData": {
+            "NAME": "HSBC HOLDINGS PLC",
+            "COMPANY_EXEC_OFFICERS": [
+              {
+                "Executive Officers": "Georges Bahjat Elhedery,  Chief Executive Officer"
+              },
+              {
+                "Executive Officers": "Manveen Kaur \"Pam\",  CFO/Exec Dir"
+              },
+              {
+                "Executive Officers": "Suzy White,  Chief Operating Officer"
+              },
+              {
+                "Executive Officers": "Richard Blackburn,  Chief Risk & Compliance Officer"
+              },
+              {
+                "Executive Officers": "Robert F Hoyt \"Bob\",  Chief Legal Officer"
+              },
+              {
+                "Executive Officers": "David Rice,  Chief AI Officer"
+              },
+              {
+                "Executive Officers": "Stuart Riley,  Chief Information Officer"
+              },
+              {
+                "Executive Officers": "Aileen Taylor,  Chief People & Governance Officer"
+              },
+              {
+                "Executive Officers": "Barry O'Byrne,  CEO:Intl Wealth & Premier Banking"
+              },
+              {
+                "Executive Officers": "David Lindberg,  CEO:HSBC UK Bank plc"
+              },
+              {
+                "Executive Officers": "Ida Liu,  CEO:Private Bank"
+              },
+              {
+                "Executive Officers": "Michael Murray Roberts,  CEO:HSBC Bank plc"
+              },
+              {
+                "Executive Officers": "Surendra Rosha,  Co-CEO:Asia & Middle-East"
+              },
+              {
+                "Executive Officers": "Yijian Liao \"David\",  Co-CEO:Asia & Middle-East"
+              },
+              {
+                "Executive Officers": "Valentin Valderrabano,  CCO:Intl Wealth & Premier Banking"
+              },
+              {
+                "Executive Officers": "Angela McEntee,  Secretary"
+              },
+              {
+                "Executive Officers": "Daniel Scott Palomaki,  Controller"
+              },
+              {
+                "Executive Officers": "Alastair Ryan,  Global Head:Investor Relations"
+              },
+              {
+                "Executive Officers": "Nick Elias,  Head:Wealth Platforms"
+              },
+              {
+                "Executive Officers": "Russell Jackson,  Head:Internal Audit"
+              }
+            ],
+            "LAST_CFO_START_DATE": "2025-01-01",
+            "LAST_COO_START_DATE": "2024-10-22",
+            "PRIMARY_PERIODICITY": "Quarterly and Annual"
+          }
+        },
+        {
+          "security": "ICICIBC IN Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 13,
+          "fieldData": {
+            "NAME": "ICICI BANK LTD",
+            "COMPANY_EXEC_OFFICERS": [
+              {
+                "Executive Officers": "Sandeep Bakhshi,  Managing Director/CEO"
+              },
+              {
+                "Executive Officers": "Sandeep Batra,  Whole Time Director/Exec Dir"
+              },
+              {
+                "Executive Officers": "Ajay Kumar Gupta,  Whole Time Dir/Exec Dir"
+              },
+              {
+                "Executive Officers": "Rakesh Jha,  Whole Time Director/Exec Dir"
+              },
+              {
+                "Executive Officers": "Anindya Banerjee,  Chief Financial Officer/Head:Investor Relations"
+              },
+              {
+                "Executive Officers": "Laxminarayan Achar,  Chief Accountant"
+              },
+              {
+                "Executive Officers": "Prachiti D Lalingkar,  Secretary"
+              },
+              {
+                "Executive Officers": "Anuj Bhargava,  Head:Customer 360-Degree Banking"
+              },
+              {
+                "Executive Officers": "Jaideep Goswami,  Head:Equities"
+              }
+            ],
+            "LAST_CFO_START_DATE": "2022-05-01",
+            "PRIMARY_PERIODICITY": "Quarterly and Annual"
+          }
+        },
+        {
+          "security": "IMB LN Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 14,
+          "fieldData": {
+            "NAME": "IMPERIAL BRANDS PLC",
+            "COMPANY_EXEC_OFFICERS": [
+              {
+                "Executive Officers": "Lukas Jean-Baptiste Paravicini,  Chief Executive Officer"
+              },
+              {
+                "Executive Officers": "Murray Henry McGowan,  Chief Financial Officer"
+              },
+              {
+                "Executive Officers": "Alison Clarke,  Chief People & Culture Officer"
+              },
+              {
+                "Executive Officers": "Kevin Massie,  Chief Legal & Compliance Officer"
+              },
+              {
+                "Executive Officers": "Miao Song,  Chief Services & Solutions Officer"
+              },
+              {
+                "Executive Officers": "Deborah Binks-Moore,  Chief Corporate Affairs Officer"
+              },
+              {
+                "Executive Officers": "Sami Naffakh,  Chief Supply Chain Officer"
+              },
+              {
+                "Executive Officers": "Paola Pocci,  Chief Consumer Officer"
+              },
+              {
+                "Executive Officers": "Kim Reed,  Pres & CEO:USA"
+              },
+              {
+                "Executive Officers": "Martin Staunton,  Chief Strategy & Corporate Development Officer"
+              },
+              {
+                "Executive Officers": "Priyali Kamath,  Pres:AAACE"
+              },
+              {
+                "Executive Officers": "Ales Struminsky,  Pres:Europe"
+              },
+              {
+                "Executive Officers": "John Crosse,  Dir:Investor Relations"
+              },
+              {
+                "Executive Officers": "Emily Carey,  Secretary"
+              }
+            ],
+            "LAST_CFO_START_DATE": "2025-10-01",
+            "LAST_COO_START_DATE": "2009-03-01",
+            "PRIMARY_PERIODICITY": "Semi-Annual and Annual",
+            "BS_YEAR_1_PRINCIPAL": 1070.0
+          }
+        },
+        {
+          "security": "INTU US Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 15,
+          "fieldData": {
+            "NAME": "INTUIT INC",
+            "COMPANY_EXEC_OFFICERS": [
+              {
+                "Executive Officers": "Sasan K Goodarzi,  Chairman/President/CEO"
+              },
+              {
+                "Executive Officers": "Sandeep Singh Aujla,  Exec VP/CFO"
+              },
+              {
+                "Executive Officers": "Alex G Balazs,  Exec VP/Chief Technology Officer"
+              },
+              {
+                "Executive Officers": "Anton Hanebrink,  Exec VP/Chief Corporate Strategy & Development Off"
+              },
+              {
+                "Executive Officers": "Caryl Hilliard,  Exec VP/Chief People & Places Officer"
+              },
+              {
+                "Executive Officers": "Gregory N Johnson \"Greg\",  Exec VP/Chief Commercial Officer"
+              },
+              {
+                "Executive Officers": "Sarah Kim,  Exec VP/Chief Customer Success Officer"
+              },
+              {
+                "Executive Officers": "David Hahn,  Exec VP/Gen Mgr:Services Group"
+              },
+              {
+                "Executive Officers": "Mark Notarainni,  Exec VP/Gen Mgr:Consumer Group"
+              },
+              {
+                "Executive Officers": "Ashley Still,  Exec VP/Gen Mgr:Mid-Market Group"
+              },
+              {
+                "Executive Officers": "Tyler Cozzens,  Exec VP/Secy/Gen Cnsl"
+              },
+              {
+                "Executive Officers": "Lionel Mohri,  Senior VP/Chief Transformation Officer"
+              },
+              {
+                "Executive Officers": "Anne-Sophie Seigneurbieux,  Senior VP:IR"
+              }
+            ],
+            "LAST_CFO_START_DATE": "2023-08-01",
+            "PRIMARY_PERIODICITY": "Quarterly and Annual",
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 3181.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_2_3": 4433.0,
+            "BS_YEAR_1_PRINCIPAL": 1250.0,
+            "BS_YEAR_2_PRINCIPAL": 400.0
+          }
+        },
+        {
+          "security": "KMB US Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 16,
+          "fieldData": {
+            "NAME": "KIMBERLY-CLARK CORP",
+            "COMPANY_EXEC_OFFICERS": [
+              {
+                "Executive Officers": "Michael D Hsu \"Mike\",  Chairman/CEO"
+              },
+              {
+                "Executive Officers": "Nelson Urdaneta,  Senior VP/Chief Financial Officer"
+              },
+              {
+                "Executive Officers": "Russell Torres \"Russ\",  President/COO"
+              },
+              {
+                "Executive Officers": "Patricia Corsi,  Chief Growth Officer"
+              },
+              {
+                "Executive Officers": "Tamera Fenske,  Chief Supply Chain Officer"
+              },
+              {
+                "Executive Officers": "Jeffrey P Melucci \"Jeff\",  Chief Administrative & Strategy Ofcr"
+              },
+              {
+                "Executive Officers": "Stacey J Valy Panayiotou,  Chief Human Resources Officer"
+              },
+              {
+                "Executive Officers": "Craig S Slavtcheff,  Chief Research & Development Officer"
+              },
+              {
+                "Executive Officers": "Francesco Tinto,  Chief Information & GBS Ofcr"
+              },
+              {
+                "Executive Officers": "Ehab Abou-Oaf,  Pres:International Family Care & Professional"
+              },
+              {
+                "Executive Officers": "John Carmichael,  Pres:North America"
+              },
+              {
+                "Executive Officers": "Katy Chen,  Pres:International Personal Care"
+              },
+              {
+                "Executive Officers": "Suzana Blades,  Senior VP/General Counsel"
+              },
+              {
+                "Executive Officers": "Christopher M Jakubik \"Chris\",  Head:Global Investor Relations"
+              }
+            ],
+            "LAST_CFO_START_DATE": "2022-04-18",
+            "LAST_COO_START_DATE": "2025-05-01",
+            "PRIMARY_PERIODICITY": "Quarterly and Annual",
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 4380.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_2_3": 3173.0,
+            "BS_YEAR_1_PRINCIPAL": 413.0,
+            "BS_YEAR_2_PRINCIPAL": 608.0
+          }
+        },
+        {
+          "security": "KPN NA Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 17,
+          "fieldData": {
+            "NAME": "KONINKLIJKE KPN NV",
+            "COMPANY_EXEC_OFFICERS": [
+              {
+                "Executive Officers": "Joost F E Farwerck,  Chief Executive Officer"
+              },
+              {
+                "Executive Officers": "H Chris Figee,  Chief Financial Officer"
+              },
+              {
+                "Executive Officers": "Wouter Stammeijer,  Chief Operating Officer"
+              },
+              {
+                "Executive Officers": "Marieke W M Snoep,  Chief Consumer Market Officer"
+              },
+              {
+                "Executive Officers": "Chantal Vergouw,  Chief Business Market Officer"
+              },
+              {
+                "Executive Officers": "Matthijs van Leijenhorst,  Head:Investor Relations"
+              }
+            ],
+            "LAST_CFO_START_DATE": "2020-02-01",
+            "LAST_COO_START_DATE": "2023-06-01",
+            "PRIMARY_PERIODICITY": "Quarterly and Annual",
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 878.0,
+            "BS_YEAR_1_PRINCIPAL": 287.0,
+            "BS_YEAR_2_PRINCIPAL": 300.0
+          }
+        },
+        {
+          "security": "NG/ LN Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 18,
+          "fieldData": {
+            "NAME": "NATIONAL GRID PLC",
+            "COMPANY_EXEC_OFFICERS": [
+              {
+                "Executive Officers": "Zoe A Yujnovich,  Chief Executive Officer"
+              },
+              {
+                "Executive Officers": "Andrew Agg \"Andy\",  Chief Financial Officer"
+              },
+              {
+                "Executive Officers": "Alice Delahunty,  Chief Technology & Innovation Officer"
+              },
+              {
+                "Executive Officers": "Justine Campbell,  Chief Legal Officer"
+              },
+              {
+                "Executive Officers": "Emma Hardaker-Jones,  Chief People Officer"
+              },
+              {
+                "Executive Officers": "Sally Librera,  Interim Pres:US"
+              },
+              {
+                "Executive Officers": "Cordi O'Hara,  Pres:UK"
+              },
+              {
+                "Executive Officers": "Angela Broad,  Dir:Investor Relations"
+              },
+              {
+                "Executive Officers": "Julian Baddeley,  Secretary"
+              }
+            ],
+            "LAST_CFO_START_DATE": "2019-01-01",
+            "PRIMARY_PERIODICITY": "Semi-Annual and Annual",
+            "BS_YEAR_1_PRINCIPAL": 3900.0,
+            "BS_YEAR_2_PRINCIPAL": 2513.0
+          }
+        },
+        {
+          "security": "NOVN SW Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 19,
+          "fieldData": {
+            "NAME": "NOVARTIS AG-REG",
+            "COMPANY_EXEC_OFFICERS": [
+              {
+                "Executive Officers": "Dr Vasant Narasimhan \"Vas\",  Chief Executive Officer"
+              },
+              {
+                "Executive Officers": "Mukul Mehta,  Chief Financial Officer"
+              },
+              {
+                "Executive Officers": "Aharon Gal \"Ronny\",  Chief Strategy & Growth Officer"
+              },
+              {
+                "Executive Officers": "Karen L Hale,  Chief Legal & Compliance Officer"
+              },
+              {
+                "Executive Officers": "Teresa Jose,  Chief Audit Officer"
+              },
+              {
+                "Executive Officers": "Dr Robert Kowalski \"Rob\",  Chief People & Organization Officer"
+              },
+              {
+                "Executive Officers": "Michelle Weese,  Chief Corporate Affairs Officer"
+              },
+              {
+                "Executive Officers": "Dr Shreeram Aradhye,  Pres:Development/Chief Medical Officer"
+              },
+              {
+                "Executive Officers": "Victor Bulto,  Pres:Innovative Medicines US"
+              },
+              {
+                "Executive Officers": "Lutz Hegemann PhD,  Pres:Global Health & Swiss Country Affairs"
+              },
+              {
+                "Executive Officers": "Dr Patrick Horber,  Pres:International"
+              },
+              {
+                "Executive Officers": "Steffen Lang,  Pres:Operations"
+              },
+              {
+                "Executive Officers": "Dr Fiona H Marshall,  Pres:BioMedical Research"
+              },
+              {
+                "Executive Officers": "Reshema Kemps-Polanco,  Exec VP & Chief Commercial Ofcr:Novartis US"
+              },
+              {
+                "Executive Officers": "Charlotte Pamer-Wieser,  Secretary"
+              },
+              {
+                "Executive Officers": "Sloan Simpson,  Head:Investor Relations"
+              }
+            ],
+            "LAST_CFO_START_DATE": "2026-03-16",
+            "LAST_COO_START_DATE": "2008-12-01",
+            "PRIMARY_PERIODICITY": "Quarterly and Annual",
+            "BS_YEAR_1_PRINCIPAL": 5602.0
+          }
+        }
+      ]
+    },
+    {
+      "securityData": [
+        {
+          "security": "NU US Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 20,
+          "fieldData": {
+            "NAME": "NU HOLDINGS LTD/CAYMAN ISL-A",
+            "COMPANY_EXEC_OFFICERS": [
+              {
+                "Executive Officers": "David Velez Osorno,  Chairman/CEO/Co-Founder"
+              },
+              {
+                "Executive Officers": "Roberto de Oliveira Campos Neto,  Vice Chairman/Global Head:Public Policy"
+              },
+              {
+                "Executive Officers": "Rob Livingston,  Chief Financial Officer"
+              },
+              {
+                "Executive Officers": "Eric Cristhopher Young,  Chief Technology Officer"
+              },
+              {
+                "Executive Officers": "Cristina Helena Zingaretti Junqueira,  Chief Growth Officer/CEO:US/Co-Founder"
+              },
+              {
+                "Executive Officers": "Ethan Eismann,  Chief Design Officer"
+              },
+              {
+                "Executive Officers": "Henrique Camossa Saldanha Fragelli,  Chief Risk Officer"
+              },
+              {
+                "Executive Officers": "Suzana Kubric,  Chief People Officer"
+              },
+              {
+                "Executive Officers": "Carl Rivera,  Chief Product Officer"
+              },
+              {
+                "Executive Officers": "Livia Martines Chanes,  CEO:Brazil & Latin America"
+              },
+              {
+                "Executive Officers": "Guilherme Souto,  Investor Relations"
+              }
+            ],
+            "LAST_CFO_START_DATE": "2026-07-13",
+            "LAST_COO_START_DATE": "2022-08-16",
+            "PRIMARY_PERIODICITY": "Quarterly and Annual",
+            "BS_YEAR_1_PRINCIPAL": 2525.443
+          }
+        },
+        {
+          "security": "PBR US Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 21,
+          "fieldData": {
+            "NAME": "PETROLEO BRASILEIRO-SPON ADR",
+            "COMPANY_EXEC_OFFICERS": [
+              {
+                "Executive Officers": "Magda Maria de Regina Chambriard,  Chief Executive Officer"
+              },
+              {
+                "Executive Officers": "Fernando Sabbi Melgarejo,  CFO/Investor Relations"
+              },
+              {
+                "Executive Officers": "Renata Faria Rodrigues Baruzzi Lopes,  Chief Engineering & Technology Officer"
+              },
+              {
+                "Executive Officers": "Sylvia Maria Couto Dos Anjos,  Chief Exploration & Production Officer"
+              },
+              {
+                "Executive Officers": "Ricardo Wagner de Araujo,  Chief Governance & Compliance Executive Officer"
+              },
+              {
+                "Executive Officers": "Clarice Coppetti,  Chief Corporate Affairs Officer"
+              },
+              {
+                "Executive Officers": "Angelica Laureano,  Chief Logistics & Commercialization Officer"
+              },
+              {
+                "Executive Officers": "William Franca da Silva,  Chief Industrial Processes & Products Officer"
+              },
+              {
+                "Executive Officers": "Eduardo De Nardi Ros,  Mgr:Invester Relations"
+              }
+            ],
+            "LAST_CFO_START_DATE": "2024-06-14",
+            "PRIMARY_PERIODICITY": "Quarterly and Annual",
+            "BS_YEAR_1_PRINCIPAL": 12027.0
+          }
+        },
+        {
+          "security": "RKT LN Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 22,
+          "fieldData": {
+            "NAME": "RECKITT BENCKISER GROUP PLC",
+            "COMPANY_EXEC_OFFICERS": [
+              {
+                "Executive Officers": "Kris Licht,  CEO/Executive Director"
+              },
+              {
+                "Executive Officers": "Shannon Eisenhardt,  CFO/Executive Director"
+              },
+              {
+                "Executive Officers": "Ryan Dullea,  Chief Category Growth Officer"
+              },
+              {
+                "Executive Officers": "Angela Naef,  Chief Research & Development Ofcr"
+              },
+              {
+                "Executive Officers": "Harald Emberger,  Chief Supply Officer"
+              },
+              {
+                "Executive Officers": "Sheila Redzepi,  Chief Communications & Corporate Affairs Officer"
+              },
+              {
+                "Executive Officers": "Ranjay Radhakrishnan,  Chief Human Resources Officer"
+              },
+              {
+                "Executive Officers": "Eric Gilliot,  Pres:Europe"
+              },
+              {
+                "Executive Officers": "Nitish Kapoor,  Pres:Emerging Markets"
+              },
+              {
+                "Executive Officers": "Jerome Lemaire,  Pres:North America"
+              },
+              {
+                "Executive Officers": "Susan Sholtis,  Pres:Nutrition"
+              },
+              {
+                "Executive Officers": "Catheryn O'Rourke,  Secretary/General Counsel"
+              },
+              {
+                "Executive Officers": "Nicholas James Ashworth \"Nick\",  Head:Investor Relations"
+              }
+            ],
+            "LAST_CFO_START_DATE": "2024-03-31",
+            "PRIMARY_PERIODICITY": "Semi-Annual and Annual",
+            "BS_YEAR_1_PRINCIPAL": 745.0
+          }
+        },
+        {
+          "security": "RMS FP Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 23,
+          "fieldData": {
+            "NAME": "HERMES INTERNATIONAL",
+            "COMPANY_EXEC_OFFICERS": [
+              {
+                "Executive Officers": "Axel Dumas,  Co-Chairman-Mgmt Board/CEO"
+              },
+              {
+                "Executive Officers": "Henri-Louis Bauer,  Co-Chairman-Mgmt Board"
+              },
+              {
+                "Executive Officers": "Laurent Dordet,  CEO:Watchmaking"
+              },
+              {
+                "Executive Officers": "Eric Du Halgouet,  Exec VP:Finance/CFO"
+              },
+              {
+                "Executive Officers": "Florian Craen,  Exec VP:Sales & Distribution"
+              },
+              {
+                "Executive Officers": "Charlotte David,  Exec VP:Communication"
+              },
+              {
+                "Executive Officers": "Pierre-Alexis Dumas,  Exec VP:Artistic"
+              },
+              {
+                "Executive Officers": "Sharon MacBeath,  Exec VP:Human Resources & Sustainability"
+              },
+              {
+                "Executive Officers": "Guillaume De Seynes,  Exec VP:Manufacturing & Equity Investments"
+              },
+              {
+                "Executive Officers": "Agnes de Villers,  Exec VP:Leather Goods"
+              },
+              {
+                "Executive Officers": "Frederic Agostini,  Mng Dir:Commercial"
+              },
+              {
+                "Executive Officers": "Segolene Audras-Verdillon,  Mng Dir:Travel Retail"
+              },
+              {
+                "Executive Officers": "Marine Cambuzat,  Mng Dir:Retail Activities"
+              },
+              {
+                "Executive Officers": "Alix Coindreau,  Mng Dir:Silk & Fashion Accessories"
+              },
+              {
+                "Executive Officers": "Celio Dunbavand,  Mng Dir:Women's Ready-To-Wear"
+              },
+              {
+                "Executive Officers": "Julien Faurie,  Mng Dir:Shoes"
+              },
+              {
+                "Executive Officers": "Corinne Feneon,  Mng Dir:Retail Operations"
+              },
+              {
+                "Executive Officers": "Jessica Berrezaie Fracassi,  Mng Dir:Home"
+              },
+              {
+                "Executive Officers": "Wilfried Guerrand,  Mng Dir:Metiers & Info Sys"
+              },
+              {
+                "Executive Officers": "Luc Hennard,  Mng Dir:Europe"
+              },
+              {
+                "Executive Officers": "Caroline Jacques,  Mng Dir:France"
+              },
+              {
+                "Executive Officers": "Diane Mahady,  Mng Dir:USA & Latin America"
+              },
+              {
+                "Executive Officers": "Thierry Outin,  Mng Dir:South Asia"
+              },
+              {
+                "Executive Officers": "Hinde Pagani,  Mng Dir:Digital Sales & Services"
+              },
+              {
+                "Executive Officers": "Anne-Sarah Panhard,  Mng Dir:Perfume & Beauty"
+              },
+              {
+                "Executive Officers": "Elodie Potdevin,  Mng Dir:Data & Technology"
+              },
+              {
+                "Executive Officers": "Ambre Pulcini,  Mng Dir:Jewellery"
+              },
+              {
+                "Executive Officers": "Shigeru Takagaki,  Mng Dir:Japan"
+              },
+              {
+                "Executive Officers": "Sophie Vissing,  Mng Dir:Greater China"
+              },
+              {
+                "Executive Officers": "Nicolas Martin,  Secretary"
+              },
+              {
+                "Executive Officers": "Alexandra Boucheron,  Head:Investor Relations"
+              }
+            ],
+            "LAST_CFO_START_DATE": "2007-01-01",
+            "PRIMARY_PERIODICITY": "Semi-Annual and Annual",
+            "BS_YEAR_1_PRINCIPAL": 0.0
+          }
+        },
+        {
+          "security": "ROG SW Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 24,
+          "fieldData": {
+            "NAME": "ROCHE HOLDING AG-GENUSSCHEIN",
+            "COMPANY_EXEC_OFFICERS": [
+              {
+                "Executive Officers": "Dr Thomas Schinecker,  Chief Executive Officer"
+              },
+              {
+                "Executive Officers": "Dr Alan Hippe,  Chief Financial Officer"
+              },
+              {
+                "Executive Officers": "Dr Levi Garraway,  CMO/Head:Global Product Development"
+              },
+              {
+                "Executive Officers": "Wafaa Mamilli,  Chief Digital & Technology Officer"
+              },
+              {
+                "Executive Officers": "Pascale Schmidt,  Chief Compliance Officer"
+              },
+              {
+                "Executive Officers": "Cristina A Wilbur,  Chief People Officer"
+              },
+              {
+                "Executive Officers": "Teresa A Graham,  CEO:Pharmaceuticals"
+              },
+              {
+                "Executive Officers": "Matthew Sause \"Matt\",  CEO:Diagnostics"
+              },
+              {
+                "Executive Officers": "Dr Manu Chakravarthy,  Senior VP/Global Head:Cardiovascular"
+              },
+              {
+                "Executive Officers": "Claudia Boeckstiegel,  General Counsel"
+              },
+              {
+                "Executive Officers": "Bruno Eschli,  Head:Investor Relations"
+              },
+              {
+                "Executive Officers": "Silke Hoernstein,  Head:Corporate Strategy & Sustainability/Secretary"
+              },
+              {
+                "Executive Officers": "Dr Aviv Regev,  Head:Genentech Research & Early Development"
+              },
+              {
+                "Executive Officers": "Dr Nina Schwab-Hautzinger,  Head:Group Communications"
+              },
+              {
+                "Executive Officers": "Boris L Zaietra,  Head:Corporate Business Development"
+              }
+            ],
+            "LAST_CFO_START_DATE": "2011-04-01",
+            "PRIMARY_PERIODICITY": "Semi-Annual and Annual",
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 24396.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_2_3": 4590.0,
+            "BS_YEAR_1_PRINCIPAL": 5158.0,
+            "BS_YEAR_2_PRINCIPAL": 3958.0
+          }
+        },
+        {
+          "security": "RWE GR Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 25,
+          "fieldData": {
+            "NAME": "RWE AG",
+            "COMPANY_EXEC_OFFICERS": [
+              {
+                "Executive Officers": "Dr Markus Krebber,  Chairman-Mgmt Board/CEO"
+              },
+              {
+                "Executive Officers": "Dr Michael Mueller,  CFO/Member-Mgmt Board"
+              },
+              {
+                "Executive Officers": "Katja Van Doren,  Chief Human Resources Officer/Dir:Labour"
+              },
+              {
+                "Executive Officers": "Dr Sopna Sury,  CEO:Renewables Europe & Australia/Member-Mgmt Boar"
+              },
+              {
+                "Executive Officers": "Thomas Denny,  Head:Investor Relations"
+              }
+            ],
+            "LAST_CFO_START_DATE": "2021-05-01",
+            "LAST_COO_START_DATE": "2010-10-01",
+            "PRIMARY_PERIODICITY": "Quarterly and Annual"
+          }
+        },
+        {
+          "security": "SAP GY Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 26,
+          "fieldData": {
+            "NAME": "SAP SE",
+            "COMPANY_EXEC_OFFICERS": [
+              {
+                "Executive Officers": "Christian Klein,  CEO/Member-Mgmt Board"
+              },
+              {
+                "Executive Officers": "Dominik Asam,  CFO/Member-Mgmt Board"
+              },
+              {
+                "Executive Officers": "Sebastian Steinhaeuser,  COO/Member-Mgmt Board"
+              },
+              {
+                "Executive Officers": "Philipp Herzig,  CTO/Chief Artificial Intelligence Officer/Member-M"
+              },
+              {
+                "Executive Officers": "Ada Agrait,  Chief Marketing Officer/Member-Mgmt Board"
+              },
+              {
+                "Executive Officers": "Sebastian Behrendt,  Chief Controlling Officer/Head:Global Finance"
+              },
+              {
+                "Executive Officers": "Gina Vargiu-Breuer,  Chief People Officer/Dir:Labor"
+              },
+              {
+                "Executive Officers": "Michael Ameling,  Chief Product Ofcr & Gen Mgr:Business Technology P"
+              },
+              {
+                "Executive Officers": "Thomas Heinrich Saueressig,  Chief Customer Officer"
+              },
+              {
+                "Executive Officers": "Monika Schaller,  Chief Communications Officer"
+              },
+              {
+                "Executive Officers": "Jan Gilg,  Chief Revenue Ofcr:Americas & Global Business Suit"
+              },
+              {
+                "Executive Officers": "Emmanuel Raptopoulos \"Manos\",  Chief Revenue Ofcr:APAC EMEA & MEE"
+              },
+              {
+                "Executive Officers": "Manoj Swaminathan,  Chief Product Officer:Business Suite/Gen Mgr"
+              },
+              {
+                "Executive Officers": "Muhammad Alam,  Chief Product Office/Head:Product & Engineering"
+              },
+              {
+                "Executive Officers": "Thomas Pfiester,  Head:Global Customer Engagement"
+              },
+              {
+                "Executive Officers": "Alexandra Steiger,  Global Head:Investor Relations"
+              }
+            ],
+            "LAST_CFO_START_DATE": "2023-03-31",
+            "LAST_COO_START_DATE": "2024-01-01",
+            "PRIMARY_PERIODICITY": "Quarterly and Annual",
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 2574.0,
+            "BS_YEAR_1_PRINCIPAL": 4798.0,
+            "BS_YEAR_2_PRINCIPAL": 1066.0
+          }
+        },
+        {
+          "security": "SSE LN Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 27,
+          "fieldData": {
+            "NAME": "SSE PLC",
+            "COMPANY_EXEC_OFFICERS": [
+              {
+                "Executive Officers": "Martin Pibworth,  Chief Executive Officer"
+              },
+              {
+                "Executive Officers": "Barry O'Regan,  Chief Financial Officer"
+              },
+              {
+                "Executive Officers": "Rhian Kelly,  Chief Sustainability Officer"
+              },
+              {
+                "Executive Officers": "Thomas Brostrom,  Mng Dir:Intl & Business Development"
+              },
+              {
+                "Executive Officers": "Christopher Burchell \"Chris\",  Mng Dir:SSEN Distribution"
+              },
+              {
+                "Executive Officers": "Nikki Flanders,  Mng Dir:Energy Customer Solutions"
+              },
+              {
+                "Executive Officers": "Finlay McCutcheon,  Mng Dir:SSE Thermal"
+              },
+              {
+                "Executive Officers": "Robert McDonald \"Rob\",  Mng Dir:SSEN Transmission"
+              },
+              {
+                "Executive Officers": "Sam Peacock,  Mang Dir:Regulation & Policy"
+              },
+              {
+                "Executive Officers": "Stephen Wheeler,  Mng Dir:SSE Renewables"
+              },
+              {
+                "Executive Officers": "Michael Livingston,  Director:Investor Relations"
+              },
+              {
+                "Executive Officers": "John William Stewart,  Dir:HR"
+              },
+              {
+                "Executive Officers": "Liz Tanner,  Secy/Gen Counsel"
+              },
+              {
+                "Executive Officers": "Peter Grant Lawns,  Deputy Secretary"
+              }
+            ],
+            "LAST_CFO_START_DATE": "2023-12-01",
+            "LAST_COO_START_DATE": "2002-10-01",
+            "PRIMARY_PERIODICITY": "Semi-Annual and Annual",
+            "BS_YEAR_1_PRINCIPAL": 1124.6
+          }
+        },
+        {
+          "security": "ST SP Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 28,
+          "fieldData": {
+            "NAME": "SINGAPORE TELECOMMUNICATIONS",
+            "COMPANY_EXEC_OFFICERS": [
+              {
+                "Executive Officers": "Yuen Kuan Moon,  Group CEO/Executive Director"
+              },
+              {
+                "Executive Officers": "Tao Yih Lang \"Arthur\",  Group Chief Financial Officer"
+              },
+              {
+                "Executive Officers": "Jorge Fernandes,  Group Chief Technology Officer"
+              },
+              {
+                "Executive Officers": "Woo Siew Weng \"William\",  Group CIO/Group Chief Digital Officer"
+              },
+              {
+                "Executive Officers": "Siok Hoon Gan,  Group Chief Corporate Officer"
+              },
+              {
+                "Executive Officers": "Tan Mee Ling \"Aileen\",  Chief People & Sustainability Officer"
+              },
+              {
+                "Executive Officers": "York Chye Chang \"Bill\",  CEO:Digital InfraCo"
+              },
+              {
+                "Executive Officers": "Sam Liew,  CEO:NCS"
+              },
+              {
+                "Executive Officers": "Ng Tian-Chong,  CEO:Singtel Singapore"
+              },
+              {
+                "Executive Officers": "Stephen P Rue,  CEO:Optus"
+              },
+              {
+                "Executive Officers": "Lim Li Ching,  Secretary"
+              }
+            ],
+            "LAST_CFO_START_DATE": "2021-04-01",
+            "LAST_COO_START_DATE": "1999-04-01",
+            "PRIMARY_PERIODICITY": "Semi-Annual and Annual"
+          }
+        },
+        {
+          "security": "ULVR LN Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 29,
+          "fieldData": {
+            "NAME": "UNILEVER PLC",
+            "COMPANY_EXEC_OFFICERS": [
+              {
+                "Executive Officers": "Fernando Fernandez,  Chief Executive Officer"
+              },
+              {
+                "Executive Officers": "Srinivas Phatak,  Chief Financial Officer"
+              },
+              {
+                "Executive Officers": "Prakash Kakkad,  Chief Legal Officer/Secretary"
+              },
+              {
+                "Executive Officers": "Mairead Nayager,  Chief People Officer"
+              },
+              {
+                "Executive Officers": "Richard Slater,  Chief Research & Development Officer"
+              },
+              {
+                "Executive Officers": "Wilhelmus Uijen \"Willem\",  Chief Supply Chain & Operations Officer"
+              },
+              {
+                "Executive Officers": "Priya Nair,  CEO & Mng Dir:Hindustan Unilever Ltd"
+              },
+              {
+                "Executive Officers": "Eduardo Campanella,  Pres:Home Care Bus Group"
+              },
+              {
+                "Executive Officers": "Reginaldo Ecclissato,  Pres:1 Unilever Markets"
+              },
+              {
+                "Executive Officers": "Fabian T Garcia,  Pres:Personal Care Bus Group"
+              },
+              {
+                "Executive Officers": "Heiko Schipper,  Pres:Foods"
+              },
+              {
+                "Executive Officers": "Jemma Spalton,  Head:Investor Relations"
+              }
+            ],
+            "LAST_CFO_START_DATE": "2025-09-16",
+            "LAST_COO_START_DATE": "2019-05-01",
+            "PRIMARY_PERIODICITY": "Semi-Annual and Annual",
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 1460.0
+          }
+        }
+      ]
+    }
+  ]
+}

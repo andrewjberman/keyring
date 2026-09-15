@@ -1,0 +1,4580 @@
+{
+  "as_of": "2026-09-15T19:21:43.630678+00:00",
+  "kind": "HistoricalDataRequest",
+  "securities": [
+    "2317 TT Equity",
+    "9433 JP Equity",
+    "992 HK Equity",
+    "ASML NA Equity",
+    "BA US Equity",
+    "BABA US Equity",
+    "BBSE3 BZ Equity",
+    "BP/ LN Equity",
+    "COST US Equity",
+    "ENEL IM Equity",
+    "HAL US Equity",
+    "HD US Equity",
+    "HSBA LN Equity",
+    "ICICIBC IN Equity",
+    "IMB LN Equity",
+    "INTU US Equity",
+    "KMB US Equity",
+    "KPN NA Equity",
+    "NG/ LN Equity",
+    "NOVN SW Equity",
+    "NU US Equity",
+    "PBR US Equity",
+    "RKT LN Equity",
+    "RMS FP Equity",
+    "ROG SW Equity",
+    "RWE GR Equity",
+    "SAP GY Equity",
+    "SSE LN Equity",
+    "ST SP Equity",
+    "ULVR LN Equity",
+    "VLO US Equity",
+    "WALMEX* MM Equity",
+    "ZURN SW Equity"
+  ],
+  "fields": [
+    "EBIT",
+    "IS_INT_EXPENSE",
+    "TRAIL_12M_EBITDA",
+    "NET_DEBT",
+    "BS_CASH_NEAR_CASH_ITEM",
+    "BS_TOTAL_AVAIL_LINE_OF_CREDIT",
+    "BS_YEAR_1_PRINCIPAL",
+    "BS_YEAR_2_PRINCIPAL",
+    "BS_TOTL_DEBT_DEBT_SCHEDULE",
+    "TRAIL_12M_FREE_CASH_FLOW",
+    "TRAIL_12M_NET_SALES",
+    "SUPPLY_CHAIN_SUM_TOP_REVENUES"
+  ],
+  "overrides": {
+    "FUND_PER": "Y",
+    "SUPPLY_CHAIN_SUM_COUNT_OVERRIDE": "1"
+  },
+  "parameters": {
+    "startDate": "20170101",
+    "endDate": "20260915",
+    "periodicitySelection": "YEARLY"
+  },
+  "responses": [
+    {
+      "securityData": {
+        "security": "ZURN SW Equity",
+        "eidData": [],
+        "sequenceNumber": 32,
+        "fieldExceptions": [],
+        "fieldData": [
+          {
+            "date": "2017-12-29",
+            "TRAIL_12M_FREE_CASH_FLOW": 4523.0,
+            "TRAIL_12M_NET_SALES": 64043.0
+          },
+          {
+            "date": "2017-12-31",
+            "IS_INT_EXPENSE": 411.0,
+            "NET_DEBT": 2556.0,
+            "BS_CASH_NEAR_CASH_ITEM": 8228.0,
+            "BS_YEAR_1_PRINCIPAL": 1369.0,
+            "BS_YEAR_2_PRINCIPAL": 262.0
+          },
+          {
+            "date": "2018-12-31",
+            "IS_INT_EXPENSE": 402.0,
+            "NET_DEBT": 3363.0,
+            "BS_CASH_NEAR_CASH_ITEM": 8649.0,
+            "BS_YEAR_1_PRINCIPAL": 308.0,
+            "BS_YEAR_2_PRINCIPAL": 690.0,
+            "TRAIL_12M_FREE_CASH_FLOW": -685.0,
+            "TRAIL_12M_NET_SALES": 47204.0
+          },
+          {
+            "date": "2019-12-31",
+            "IS_INT_EXPENSE": 401.0,
+            "NET_DEBT": 5608.0,
+            "BS_CASH_NEAR_CASH_ITEM": 7880.0,
+            "BS_YEAR_1_PRINCIPAL": 9928.0,
+            "BS_YEAR_2_PRINCIPAL": 108.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 3585.0,
+            "TRAIL_12M_NET_SALES": 72088.0
+          },
+          {
+            "date": "2020-12-31",
+            "IS_INT_EXPENSE": 399.0,
+            "NET_DEBT": 4752.0,
+            "BS_CASH_NEAR_CASH_ITEM": 11106.0,
+            "BS_YEAR_1_PRINCIPAL": 11548.0,
+            "BS_YEAR_2_PRINCIPAL": 2370.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 4249.0,
+            "TRAIL_12M_NET_SALES": 58925.0
+          },
+          {
+            "date": "2021-12-31",
+            "IS_INT_EXPENSE": 469.0,
+            "NET_DEBT": 8289.0,
+            "BS_CASH_NEAR_CASH_ITEM": 8698.0,
+            "BS_YEAR_1_PRINCIPAL": 12625.0,
+            "BS_YEAR_2_PRINCIPAL": 1699.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 6694.0,
+            "TRAIL_12M_NET_SALES": 70054.0
+          },
+          {
+            "date": "2022-12-30",
+            "TRAIL_12M_FREE_CASH_FLOW": 4508.0,
+            "TRAIL_12M_NET_SALES": 55552.0
+          },
+          {
+            "date": "2022-12-31",
+            "IS_INT_EXPENSE": 444.0,
+            "NET_DEBT": 8111.0,
+            "BS_CASH_NEAR_CASH_ITEM": 7560.0,
+            "BS_YEAR_1_PRINCIPAL": 11286.0,
+            "BS_YEAR_2_PRINCIPAL": 963.0
+          },
+          {
+            "date": "2023-12-29",
+            "TRAIL_12M_FREE_CASH_FLOW": 6930.0,
+            "TRAIL_12M_NET_SALES": 60758.0
+          },
+          {
+            "date": "2023-12-31",
+            "IS_INT_EXPENSE": 456.0,
+            "NET_DEBT": 8137.0,
+            "BS_CASH_NEAR_CASH_ITEM": 7280.0,
+            "BS_YEAR_1_PRINCIPAL": 11571.0,
+            "BS_YEAR_2_PRINCIPAL": 429.0
+          },
+          {
+            "date": "2024-12-31",
+            "IS_INT_EXPENSE": 440.0,
+            "NET_DEBT": 7660.0,
+            "BS_CASH_NEAR_CASH_ITEM": 6768.0,
+            "BS_YEAR_1_PRINCIPAL": 10691.0,
+            "BS_YEAR_2_PRINCIPAL": 1945.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 7238.0,
+            "TRAIL_12M_NET_SALES": 65690.0
+          },
+          {
+            "date": "2025-12-31",
+            "IS_INT_EXPENSE": 460.0,
+            "NET_DEBT": 8595.0,
+            "BS_CASH_NEAR_CASH_ITEM": 7086.0,
+            "BS_YEAR_1_PRINCIPAL": 13491.0,
+            "BS_YEAR_2_PRINCIPAL": 411.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 5423.0,
+            "TRAIL_12M_NET_SALES": 69793.0
+          }
+        ]
+      }
+    },
+    {
+      "securityData": {
+        "security": "2317 TT Equity",
+        "eidData": [],
+        "sequenceNumber": 0,
+        "fieldExceptions": [],
+        "fieldData": [
+          {
+            "date": "2017-12-30",
+            "TRAIL_12M_EBITDA": 173570.841,
+            "TRAIL_12M_FREE_CASH_FLOW": -85410.904,
+            "TRAIL_12M_NET_SALES": 4706736.096
+          },
+          {
+            "date": "2017-12-31",
+            "EBIT": 112570.431,
+            "IS_INT_EXPENSE": 38742.136,
+            "NET_DEBT": -113667.08,
+            "BS_CASH_NEAR_CASH_ITEM": 642496.059
+          },
+          {
+            "date": "2018-12-31",
+            "EBIT": 136146.875,
+            "IS_INT_EXPENSE": 54978.871,
+            "TRAIL_12M_EBITDA": 196072.732,
+            "NET_DEBT": -77940.143,
+            "BS_CASH_NEAR_CASH_ITEM": 788662.325,
+            "TRAIL_12M_FREE_CASH_FLOW": -93292.944,
+            "TRAIL_12M_NET_SALES": 5293803.022
+          },
+          {
+            "date": "2019-12-31",
+            "EBIT": 114896.886,
+            "IS_INT_EXPENSE": 66600.696,
+            "TRAIL_12M_EBITDA": 181905.743,
+            "NET_DEBT": -200991.362,
+            "BS_CASH_NEAR_CASH_ITEM": 857864.362,
+            "TRAIL_12M_FREE_CASH_FLOW": 195038.779,
+            "TRAIL_12M_NET_SALES": 5342810.995
+          },
+          {
+            "date": "2020-12-31",
+            "EBIT": 110827.448,
+            "IS_INT_EXPENSE": 40317.013,
+            "TRAIL_12M_EBITDA": 175941.182,
+            "NET_DEBT": -466189.604,
+            "BS_CASH_NEAR_CASH_ITEM": 1232794.015,
+            "TRAIL_12M_FREE_CASH_FLOW": 326780.34,
+            "TRAIL_12M_NET_SALES": 5358023.065
+          },
+          {
+            "date": "2021-12-31",
+            "EBIT": 148959.492,
+            "IS_INT_EXPENSE": 21958.495,
+            "TRAIL_12M_EBITDA": 224440.651,
+            "NET_DEBT": -198855.264,
+            "BS_CASH_NEAR_CASH_ITEM": 1059417.011,
+            "TRAIL_12M_FREE_CASH_FLOW": -159890.953,
+            "TRAIL_12M_NET_SALES": 5994173.882
+          },
+          {
+            "date": "2022-12-31",
+            "EBIT": 173787.842,
+            "IS_INT_EXPENSE": 34736.195,
+            "TRAIL_12M_EBITDA": 249390.149,
+            "NET_DEBT": -106479.673,
+            "BS_CASH_NEAR_CASH_ITEM": 1062326.324,
+            "TRAIL_12M_FREE_CASH_FLOW": 41074.456,
+            "TRAIL_12M_NET_SALES": 6626996.75
+          },
+          {
+            "date": "2023-12-30",
+            "TRAIL_12M_EBITDA": 250066.831,
+            "TRAIL_12M_FREE_CASH_FLOW": 357517.708,
+            "TRAIL_12M_NET_SALES": 6162221.359
+          },
+          {
+            "date": "2023-12-31",
+            "EBIT": 166528.495,
+            "IS_INT_EXPENSE": 65543.261,
+            "NET_DEBT": -403245.688,
+            "BS_CASH_NEAR_CASH_ITEM": 1197662.695
+          },
+          {
+            "date": "2024-12-31",
+            "EBIT": 200607.227,
+            "IS_INT_EXPENSE": 36795.487,
+            "TRAIL_12M_EBITDA": 287771.494,
+            "NET_DEBT": -348976.174,
+            "BS_CASH_NEAR_CASH_ITEM": 937108.093,
+            "TRAIL_12M_FREE_CASH_FLOW": 46845.625,
+            "TRAIL_12M_NET_SALES": 6859615.493
+          },
+          {
+            "date": "2025-12-31",
+            "EBIT": 259222.96,
+            "IS_INT_EXPENSE": 38096.396,
+            "TRAIL_12M_EBITDA": 356429.607,
+            "NET_DEBT": -302597.307,
+            "BS_CASH_NEAR_CASH_ITEM": 1016439.967,
+            "BS_YEAR_1_PRINCIPAL": 6.416,
+            "BS_YEAR_2_PRINCIPAL": 21632.773,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 27316.74,
+            "TRAIL_12M_FREE_CASH_FLOW": 69136.433,
+            "TRAIL_12M_NET_SALES": 8103104.763
+          }
+        ]
+      }
+    },
+    {
+      "securityData": {
+        "security": "9433 JP Equity",
+        "eidData": [],
+        "sequenceNumber": 1,
+        "fieldExceptions": [],
+        "fieldData": [
+          {
+            "date": "2017-03-31",
+            "EBIT": 910221.0,
+            "IS_INT_EXPENSE": 10872.0,
+            "NET_DEBT": 824933.0,
+            "BS_CASH_NEAR_CASH_ITEM": 226607.0,
+            "BS_YEAR_1_PRINCIPAL": 55922.0
+          },
+          {
+            "date": "2017-12-29",
+            "TRAIL_12M_EBITDA": 1455415.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 822325.0,
+            "TRAIL_12M_NET_SALES": 4748259.0
+          },
+          {
+            "date": "2018-03-31",
+            "EBIT": 958200.0,
+            "IS_INT_EXPENSE": 9701.0,
+            "NET_DEBT": 913129.0,
+            "BS_CASH_NEAR_CASH_ITEM": 200834.0,
+            "BS_YEAR_1_PRINCIPAL": 300559.0
+          },
+          {
+            "date": "2018-12-31",
+            "TRAIL_12M_EBITDA": 1505015.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 700303.0,
+            "TRAIL_12M_NET_SALES": 5041978.0
+          },
+          {
+            "date": "2019-03-31",
+            "EBIT": 1008949.0,
+            "IS_INT_EXPENSE": 8694.0,
+            "NET_DEBT": 1066473.0,
+            "BS_CASH_NEAR_CASH_ITEM": 204597.0,
+            "BS_YEAR_1_PRINCIPAL": 118574.0
+          },
+          {
+            "date": "2019-12-31",
+            "TRAIL_12M_EBITDA": 1571351.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 630076.0,
+            "TRAIL_12M_NET_SALES": 5080353.0
+          },
+          {
+            "date": "2020-03-31",
+            "EBIT": 1021981.0,
+            "IS_INT_EXPENSE": 8132.0,
+            "NET_DEBT": 1129520.0,
+            "BS_CASH_NEAR_CASH_ITEM": 369202.0,
+            "BS_YEAR_1_PRINCIPAL": 153262.0
+          },
+          {
+            "date": "2020-12-31",
+            "TRAIL_12M_EBITDA": 1711906.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 930415.0,
+            "TRAIL_12M_NET_SALES": 5237221.0
+          },
+          {
+            "date": "2021-03-31",
+            "EBIT": 1032511.0,
+            "IS_INT_EXPENSE": 6929.0,
+            "NET_DEBT": 540943.0,
+            "BS_CASH_NEAR_CASH_ITEM": 809802.0,
+            "BS_YEAR_1_PRINCIPAL": 73375.0
+          },
+          {
+            "date": "2021-12-31",
+            "TRAIL_12M_EBITDA": 1760256.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 1267444.0,
+            "TRAIL_12M_NET_SALES": 5312599.0
+          },
+          {
+            "date": "2022-03-31",
+            "EBIT": 1054800.0,
+            "IS_INT_EXPENSE": 8650.0,
+            "NET_DEBT": 456706.0,
+            "BS_CASH_NEAR_CASH_ITEM": 796613.0,
+            "BS_YEAR_1_PRINCIPAL": 230470.0
+          },
+          {
+            "date": "2022-12-30",
+            "TRAIL_12M_EBITDA": 1782901.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 1042848.0,
+            "TRAIL_12M_NET_SALES": 5446708.0
+          },
+          {
+            "date": "2023-03-31",
+            "EBIT": 1071180.0,
+            "IS_INT_EXPENSE": 9349.0,
+            "NET_DEBT": 749665.0,
+            "BS_CASH_NEAR_CASH_ITEM": 480252.0,
+            "BS_YEAR_1_PRINCIPAL": 268444.0
+          },
+          {
+            "date": "2023-12-29",
+            "TRAIL_12M_EBITDA": 1768332.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 684217.0,
+            "TRAIL_12M_NET_SALES": 5671762.0
+          },
+          {
+            "date": "2024-03-31",
+            "EBIT": 902087.0,
+            "IS_INT_EXPENSE": 12127.0,
+            "NET_DEBT": 1085982.0,
+            "BS_CASH_NEAR_CASH_ITEM": 887207.0,
+            "BS_YEAR_1_PRINCIPAL": 213459.0
+          },
+          {
+            "date": "2024-12-31",
+            "TRAIL_12M_EBITDA": 1587986.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 1182558.0,
+            "TRAIL_12M_NET_SALES": 5699724.0
+          },
+          {
+            "date": "2025-03-31",
+            "EBIT": 1059966.0,
+            "IS_INT_EXPENSE": 22816.0,
+            "NET_DEBT": 3066497.0,
+            "BS_CASH_NEAR_CASH_ITEM": 921175.0,
+            "BS_YEAR_1_PRINCIPAL": 257943.0
+          },
+          {
+            "date": "2025-12-31",
+            "TRAIL_12M_EBITDA": 1743748.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 848095.0,
+            "TRAIL_12M_NET_SALES": 5835525.0
+          },
+          {
+            "date": "2026-03-31",
+            "EBIT": 1059234.0,
+            "IS_INT_EXPENSE": 39521.0,
+            "NET_DEBT": 3579660.0,
+            "BS_CASH_NEAR_CASH_ITEM": 1078807.0,
+            "BS_YEAR_1_PRINCIPAL": 352233.0
+          }
+        ]
+      }
+    },
+    {
+      "securityData": {
+        "security": "992 HK Equity",
+        "eidData": [],
+        "sequenceNumber": 2,
+        "fieldExceptions": [],
+        "fieldData": [
+          {
+            "date": "2017-03-31",
+            "EBIT": 783.316,
+            "IS_INT_EXPENSE": 198.215,
+            "NET_DEBT": 162.804,
+            "BS_CASH_NEAR_CASH_ITEM": 2754.599,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 0.0,
+            "BS_YEAR_1_PRINCIPAL": 70.003,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 3036.695
+          },
+          {
+            "date": "2017-12-29",
+            "TRAIL_12M_EBITDA": 1525.422,
+            "TRAIL_12M_FREE_CASH_FLOW": 1547.163,
+            "TRAIL_12M_NET_SALES": 43034.731
+          },
+          {
+            "date": "2018-03-31",
+            "EBIT": 442.172,
+            "IS_INT_EXPENSE": 187.304,
+            "NET_DEBT": 1956.387,
+            "BS_CASH_NEAR_CASH_ITEM": 1848.017,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 0.0,
+            "BS_YEAR_1_PRINCIPAL": 1166.692,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 3815.417
+          },
+          {
+            "date": "2018-12-31",
+            "TRAIL_12M_EBITDA": 1180.694,
+            "TRAIL_12M_FREE_CASH_FLOW": -1238.066,
+            "TRAIL_12M_NET_SALES": 45349.943
+          },
+          {
+            "date": "2019-03-31",
+            "EBIT": 1289.346,
+            "IS_INT_EXPENSE": 237.398,
+            "NET_DEBT": 1715.339,
+            "BS_CASH_NEAR_CASH_ITEM": 2662.854,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 1203.0,
+            "BS_YEAR_1_PRINCIPAL": 1953.043,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 4379.813
+          },
+          {
+            "date": "2019-12-31",
+            "TRAIL_12M_EBITDA": 2087.966,
+            "TRAIL_12M_FREE_CASH_FLOW": 962.475,
+            "TRAIL_12M_NET_SALES": 51037.943
+          },
+          {
+            "date": "2020-03-31",
+            "EBIT": 1531.21,
+            "IS_INT_EXPENSE": 261.702,
+            "NET_DEBT": 1731.461,
+            "BS_CASH_NEAR_CASH_ITEM": 3550.99,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 1256.0,
+            "BS_YEAR_1_PRINCIPAL": 3294.98,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 4859.599
+          },
+          {
+            "date": "2020-12-31",
+            "TRAIL_12M_EBITDA": 2500.997,
+            "TRAIL_12M_FREE_CASH_FLOW": 1584.235,
+            "TRAIL_12M_NET_SALES": 50716.349
+          },
+          {
+            "date": "2021-03-31",
+            "EBIT": 2296.453,
+            "IS_INT_EXPENSE": 267.015,
+            "NET_DEBT": 3154.439,
+            "BS_CASH_NEAR_CASH_ITEM": 3068.385,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 1396.0,
+            "BS_YEAR_1_PRINCIPAL": 698.271,
+            "BS_YEAR_2_PRINCIPAL": 685.008,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 3997.853
+          },
+          {
+            "date": "2021-12-31",
+            "TRAIL_12M_EBITDA": 3356.471,
+            "TRAIL_12M_FREE_CASH_FLOW": 2992.42,
+            "TRAIL_12M_NET_SALES": 60742.312
+          },
+          {
+            "date": "2022-03-31",
+            "EBIT": 3237.55,
+            "IS_INT_EXPENSE": 258.553,
+            "NET_DEBT": 4104.281,
+            "BS_CASH_NEAR_CASH_ITEM": 3988.595,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 2415.0,
+            "BS_YEAR_1_PRINCIPAL": 787.922,
+            "BS_YEAR_2_PRINCIPAL": 642.46,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 3421.27
+          },
+          {
+            "date": "2022-12-30",
+            "TRAIL_12M_EBITDA": 4501.914,
+            "TRAIL_12M_FREE_CASH_FLOW": 3139.418,
+            "TRAIL_12M_NET_SALES": 71618.216
+          },
+          {
+            "date": "2023-03-31",
+            "EBIT": 2786.847,
+            "IS_INT_EXPENSE": 316.112,
+            "NET_DEBT": 2843.497,
+            "BS_CASH_NEAR_CASH_ITEM": 4250.085,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 3344.0,
+            "BS_YEAR_1_PRINCIPAL": 271.616,
+            "BS_YEAR_2_PRINCIPAL": 0.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 3954.794
+          },
+          {
+            "date": "2023-12-29",
+            "TRAIL_12M_EBITDA": 4139.526,
+            "TRAIL_12M_FREE_CASH_FLOW": 1684.34,
+            "TRAIL_12M_NET_SALES": 61946.854
+          },
+          {
+            "date": "2024-03-31",
+            "EBIT": 2079.699,
+            "IS_INT_EXPENSE": 275.203,
+            "NET_DEBT": 2425.724,
+            "BS_CASH_NEAR_CASH_ITEM": 3559.831,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 3733.0,
+            "BS_YEAR_1_PRINCIPAL": 50.431,
+            "BS_YEAR_2_PRINCIPAL": 964.798,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 3619.66
+          },
+          {
+            "date": "2024-12-31",
+            "TRAIL_12M_EBITDA": 3492.852,
+            "TRAIL_12M_FREE_CASH_FLOW": 1428.22,
+            "TRAIL_12M_NET_SALES": 56863.784
+          },
+          {
+            "date": "2025-03-31",
+            "EBIT": 2185.62,
+            "IS_INT_EXPENSE": 293.595,
+            "NET_DEBT": 4390.913,
+            "BS_CASH_NEAR_CASH_ITEM": 4728.124,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 4989.0,
+            "BS_YEAR_1_PRINCIPAL": 1030.352,
+            "BS_YEAR_2_PRINCIPAL": 0.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 5368.158
+          },
+          {
+            "date": "2025-12-31",
+            "TRAIL_12M_EBITDA": 3604.755,
+            "TRAIL_12M_FREE_CASH_FLOW": 551.422,
+            "TRAIL_12M_NET_SALES": 69076.968
+          },
+          {
+            "date": "2026-03-31",
+            "EBIT": 3316.843,
+            "IS_INT_EXPENSE": 314.09,
+            "NET_DEBT": 4151.155,
+            "BS_CASH_NEAR_CASH_ITEM": 4887.162,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 5541.0,
+            "BS_YEAR_1_PRINCIPAL": 878.443,
+            "BS_YEAR_2_PRINCIPAL": 2407.514,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 4741.038
+          }
+        ]
+      }
+    },
+    {
+      "securityData": {
+        "security": "ASML NA Equity",
+        "eidData": [],
+        "sequenceNumber": 3,
+        "fieldExceptions": [],
+        "fieldData": [
+          {
+            "date": "2017-12-29",
+            "TRAIL_12M_EBITDA": 2857.2,
+            "TRAIL_12M_FREE_CASH_FLOW": 1479.4,
+            "TRAIL_12M_NET_SALES": 8962.7
+          },
+          {
+            "date": "2017-12-31",
+            "EBIT": 2439.7,
+            "IS_INT_EXPENSE": 57.5,
+            "NET_DEBT": -230.2,
+            "BS_CASH_NEAR_CASH_ITEM": 2259.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 700.0,
+            "BS_YEAR_1_PRINCIPAL": 28.0,
+            "BS_YEAR_2_PRINCIPAL": 1.8,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 3035.6
+          },
+          {
+            "date": "2018-12-31",
+            "EBIT": 2965.3,
+            "IS_INT_EXPENSE": 41.8,
+            "TRAIL_12M_EBITDA": 3388.0,
+            "NET_DEBT": -1007.9,
+            "BS_CASH_NEAR_CASH_ITEM": 3121.1,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 700.0,
+            "BS_YEAR_1_PRINCIPAL": 1.8,
+            "BS_YEAR_2_PRINCIPAL": 1.8,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 3007.5,
+            "TRAIL_12M_FREE_CASH_FLOW": 2498.7,
+            "TRAIL_12M_NET_SALES": 10944.0
+          },
+          {
+            "date": "2019-12-31",
+            "EBIT": 2790.8,
+            "IS_INT_EXPENSE": 36.6,
+            "TRAIL_12M_EBITDA": 3239.3,
+            "NET_DEBT": -1400.4,
+            "BS_CASH_NEAR_CASH_ITEM": 3532.3,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 700.0,
+            "BS_YEAR_1_PRINCIPAL": 2.8,
+            "BS_YEAR_2_PRINCIPAL": 2.8,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 3009.7,
+            "TRAIL_12M_FREE_CASH_FLOW": 2509.8,
+            "TRAIL_12M_NET_SALES": 11820.0
+          },
+          {
+            "date": "2020-12-31",
+            "EBIT": 4051.5,
+            "IS_INT_EXPENSE": 43.3,
+            "TRAIL_12M_EBITDA": 4542.3,
+            "NET_DEBT": -2497.1,
+            "BS_CASH_NEAR_CASH_ITEM": 6049.4,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 700.0,
+            "BS_YEAR_1_PRINCIPAL": 15.4,
+            "BS_YEAR_2_PRINCIPAL": 512.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 4563.6,
+            "TRAIL_12M_FREE_CASH_FLOW": 3665.6,
+            "TRAIL_12M_NET_SALES": 13978.5
+          },
+          {
+            "date": "2021-12-31",
+            "EBIT": 6750.1,
+            "IS_INT_EXPENSE": 54.6,
+            "TRAIL_12M_EBITDA": 7221.1,
+            "NET_DEBT": -2844.5,
+            "BS_CASH_NEAR_CASH_ITEM": 6951.8,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 700.0,
+            "BS_YEAR_1_PRINCIPAL": 508.6,
+            "BS_YEAR_2_PRINCIPAL": 755.9,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 4541.6,
+            "TRAIL_12M_FREE_CASH_FLOW": 9945.1,
+            "TRAIL_12M_NET_SALES": 18611.0
+          },
+          {
+            "date": "2022-12-30",
+            "TRAIL_12M_EBITDA": 7084.3,
+            "TRAIL_12M_FREE_CASH_FLOW": 7205.0,
+            "TRAIL_12M_NET_SALES": 21173.4
+          },
+          {
+            "date": "2022-12-31",
+            "EBIT": 6500.7,
+            "IS_INT_EXPENSE": 60.8,
+            "NET_DEBT": -3068.0,
+            "BS_CASH_NEAR_CASH_ITEM": 7268.3,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 700.0,
+            "BS_YEAR_1_PRINCIPAL": 753.8,
+            "BS_YEAR_2_PRINCIPAL": 2.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 4524.7
+          },
+          {
+            "date": "2023-12-29",
+            "TRAIL_12M_EBITDA": 9782.1,
+            "TRAIL_12M_FREE_CASH_FLOW": 3287.8,
+            "TRAIL_12M_NET_SALES": 27558.5
+          },
+          {
+            "date": "2023-12-31",
+            "EBIT": 9042.3,
+            "IS_INT_EXPENSE": 152.7,
+            "NET_DEBT": -2331.8,
+            "BS_CASH_NEAR_CASH_ITEM": 7004.7,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 700.0,
+            "BS_YEAR_1_PRINCIPAL": 0.1,
+            "BS_YEAR_2_PRINCIPAL": 1004.2,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 4771.3
+          },
+          {
+            "date": "2024-12-31",
+            "EBIT": 9022.6,
+            "IS_INT_EXPENSE": 162.6,
+            "TRAIL_12M_EBITDA": 9941.2,
+            "NET_DEBT": -7985.1,
+            "BS_CASH_NEAR_CASH_ITEM": 12735.9,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 1500.0,
+            "BS_YEAR_1_PRINCIPAL": 1001.8,
+            "BS_YEAR_2_PRINCIPAL": 1001.8,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 4768.1,
+            "TRAIL_12M_FREE_CASH_FLOW": 9099.0,
+            "TRAIL_12M_NET_SALES": 28262.9
+          },
+          {
+            "date": "2025-12-31",
+            "EBIT": 11301.4,
+            "IS_INT_EXPENSE": 118.3,
+            "TRAIL_12M_EBITDA": 12327.3,
+            "NET_DEBT": -8870.2,
+            "BS_CASH_NEAR_CASH_ITEM": 12916.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 1500.0,
+            "BS_YEAR_1_PRINCIPAL": 1694.8,
+            "BS_YEAR_2_PRINCIPAL": 751.8,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 4459.3,
+            "TRAIL_12M_FREE_CASH_FLOW": 11084.9,
+            "TRAIL_12M_NET_SALES": 32667.3
+          }
+        ]
+      }
+    },
+    {
+      "securityData": {
+        "security": "BA US Equity",
+        "eidData": [],
+        "sequenceNumber": 4,
+        "fieldExceptions": [],
+        "fieldData": [
+          {
+            "date": "2017-12-29",
+            "TRAIL_12M_EBITDA": 12391.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 11607.0,
+            "TRAIL_12M_NET_SALES": 94005.0
+          },
+          {
+            "date": "2017-12-31",
+            "EBIT": 10344.0,
+            "IS_INT_EXPENSE": 360.0,
+            "NET_DEBT": 1125.0,
+            "BS_CASH_NEAR_CASH_ITEM": 8813.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 5000.0,
+            "BS_YEAR_1_PRINCIPAL": 1285.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 11130.0
+          },
+          {
+            "date": "2018-12-31",
+            "EBIT": 11987.0,
+            "IS_INT_EXPENSE": 475.0,
+            "TRAIL_12M_EBITDA": 14101.0,
+            "NET_DEBT": 5283.0,
+            "BS_CASH_NEAR_CASH_ITEM": 7637.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 5120.0,
+            "BS_YEAR_1_PRINCIPAL": 3137.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 13932.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 13600.0,
+            "TRAIL_12M_NET_SALES": 101127.0
+          },
+          {
+            "date": "2019-12-31",
+            "EBIT": -1975.0,
+            "IS_INT_EXPENSE": 722.0,
+            "TRAIL_12M_EBITDA": 567.0,
+            "NET_DEBT": 18502.0,
+            "BS_CASH_NEAR_CASH_ITEM": 9485.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 9600.0,
+            "BS_YEAR_1_PRINCIPAL": 7306.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 27476.0,
+            "TRAIL_12M_FREE_CASH_FLOW": -4280.0,
+            "TRAIL_12M_NET_SALES": 76559.0
+          },
+          {
+            "date": "2020-12-31",
+            "EBIT": -12767.0,
+            "IS_INT_EXPENSE": 2156.0,
+            "TRAIL_12M_EBITDA": -10232.0,
+            "NET_DEBT": 39345.0,
+            "BS_CASH_NEAR_CASH_ITEM": 7752.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 9473.0,
+            "BS_YEAR_1_PRINCIPAL": 1630.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 63963.0,
+            "TRAIL_12M_FREE_CASH_FLOW": -19713.0,
+            "TRAIL_12M_NET_SALES": 58158.0
+          },
+          {
+            "date": "2021-12-31",
+            "EBIT": -2902.0,
+            "IS_INT_EXPENSE": 2682.0,
+            "TRAIL_12M_EBITDA": -451.0,
+            "NET_DEBT": 43397.0,
+            "BS_CASH_NEAR_CASH_ITEM": 8052.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 14700.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 58100.0,
+            "TRAIL_12M_FREE_CASH_FLOW": -4396.0,
+            "TRAIL_12M_NET_SALES": 62286.0
+          },
+          {
+            "date": "2022-12-30",
+            "TRAIL_12M_EBITDA": -1194.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 2290.0,
+            "TRAIL_12M_NET_SALES": 66608.0
+          },
+          {
+            "date": "2022-12-31",
+            "EBIT": -3519.0,
+            "IS_INT_EXPENSE": 2561.0,
+            "NET_DEBT": 41362.0,
+            "BS_CASH_NEAR_CASH_ITEM": 14614.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 12000.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 57000.0
+          },
+          {
+            "date": "2023-12-29",
+            "TRAIL_12M_EBITDA": 1469.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 4433.0,
+            "TRAIL_12M_NET_SALES": 77794.0
+          },
+          {
+            "date": "2023-12-31",
+            "EBIT": -773.0,
+            "IS_INT_EXPENSE": 2459.0,
+            "NET_DEBT": 38156.0,
+            "BS_CASH_NEAR_CASH_ITEM": 12691.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 10000.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 52300.0
+          },
+          {
+            "date": "2024-12-31",
+            "EBIT": -10707.0,
+            "IS_INT_EXPENSE": 2725.0,
+            "TRAIL_12M_EBITDA": -8416.0,
+            "NET_DEBT": 29676.0,
+            "BS_CASH_NEAR_CASH_ITEM": 13801.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 10000.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 53900.0,
+            "TRAIL_12M_FREE_CASH_FLOW": -14310.0,
+            "TRAIL_12M_NET_SALES": 66517.0
+          },
+          {
+            "date": "2025-12-31",
+            "EBIT": 4281.0,
+            "IS_INT_EXPENSE": 2771.0,
+            "TRAIL_12M_EBITDA": 6752.0,
+            "NET_DEBT": 26965.0,
+            "BS_CASH_NEAR_CASH_ITEM": 10921.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 10000.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 54100.0,
+            "TRAIL_12M_FREE_CASH_FLOW": -1877.0,
+            "TRAIL_12M_NET_SALES": 89463.0
+          }
+        ]
+      }
+    },
+    {
+      "securityData": {
+        "security": "BABA US Equity",
+        "eidData": [],
+        "sequenceNumber": 5,
+        "fieldExceptions": [],
+        "fieldData": [
+          {
+            "date": "2017-03-31",
+            "EBIT": 48055.0,
+            "IS_INT_EXPENSE": 2671.0,
+            "NET_DEBT": -90521.0,
+            "BS_CASH_NEAR_CASH_ITEM": 143736.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 35470.0,
+            "BS_YEAR_1_PRINCIPAL": 8957.0,
+            "BS_YEAR_2_PRINCIPAL": 0.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 36907.0
+          },
+          {
+            "date": "2017-12-29",
+            "TRAIL_12M_EBITDA": 62347.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 62780.0,
+            "TRAIL_12M_NET_SALES": 158273.0
+          },
+          {
+            "date": "2018-03-31",
+            "EBIT": 69314.0,
+            "IS_INT_EXPENSE": 3566.0,
+            "NET_DEBT": -122849.0,
+            "BS_CASH_NEAR_CASH_ITEM": 199309.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 155680.0,
+            "BS_YEAR_1_PRINCIPAL": 6031.0,
+            "BS_YEAR_2_PRINCIPAL": 17224.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 40181.0
+          },
+          {
+            "date": "2018-12-31",
+            "TRAIL_12M_EBITDA": 91334.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 95969.0,
+            "TRAIL_12M_NET_SALES": 250266.0
+          },
+          {
+            "date": "2019-03-31",
+            "EBIT": 57084.0,
+            "IS_INT_EXPENSE": 5190.0,
+            "NET_DEBT": -225955.0,
+            "BS_CASH_NEAR_CASH_ITEM": 189976.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 155680.0,
+            "BS_YEAR_1_PRINCIPAL": 22485.0,
+            "BS_YEAR_2_PRINCIPAL": 841.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 42897.0
+          },
+          {
+            "date": "2019-12-31",
+            "TRAIL_12M_EBITDA": 94164.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 101332.0,
+            "TRAIL_12M_NET_SALES": 376844.0
+          },
+          {
+            "date": "2020-03-31",
+            "EBIT": 91430.0,
+            "IS_INT_EXPENSE": 5180.0,
+            "NET_DEBT": -377257.0,
+            "BS_CASH_NEAR_CASH_ITEM": 330503.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 155680.0,
+            "BS_YEAR_1_PRINCIPAL": 5154.0,
+            "BS_YEAR_2_PRINCIPAL": 11512.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 44958.0
+          },
+          {
+            "date": "2020-12-31",
+            "TRAIL_12M_EBITDA": 139457.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 135221.0,
+            "TRAIL_12M_NET_SALES": 509711.0
+          },
+          {
+            "date": "2021-03-31",
+            "EBIT": 89678.0,
+            "IS_INT_EXPENSE": 4476.0,
+            "NET_DEBT": -539227.0,
+            "BS_CASH_NEAR_CASH_ITEM": 321262.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 6500.0,
+            "BS_YEAR_1_PRINCIPAL": 13451.0,
+            "BS_YEAR_2_PRINCIPAL": 1705.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 42042.0
+          },
+          {
+            "date": "2021-12-31",
+            "TRAIL_12M_EBITDA": 144399.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 190336.0,
+            "TRAIL_12M_NET_SALES": 717289.0
+          },
+          {
+            "date": "2022-03-31",
+            "EBIT": 69638.0,
+            "IS_INT_EXPENSE": 4909.0,
+            "NET_DEBT": -502099.0,
+            "BS_CASH_NEAR_CASH_ITEM": 189898.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 5150.0,
+            "BS_YEAR_1_PRINCIPAL": 8841.0,
+            "BS_YEAR_2_PRINCIPAL": 5177.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 47152.0
+          },
+          {
+            "date": "2022-12-30",
+            "TRAIL_12M_EBITDA": 128685.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 89435.0,
+            "TRAIL_12M_NET_SALES": 853062.0
+          },
+          {
+            "date": "2023-03-31",
+            "EBIT": 100351.0,
+            "IS_INT_EXPENSE": 5918.0,
+            "NET_DEBT": -574638.0,
+            "BS_CASH_NEAR_CASH_ITEM": 193086.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 6500.0,
+            "BS_YEAR_1_PRINCIPAL": 12267.0,
+            "BS_YEAR_2_PRINCIPAL": 45488.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 59529.0
+          },
+          {
+            "date": "2023-12-29",
+            "TRAIL_12M_EBITDA": 158091.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 165400.0,
+            "TRAIL_12M_NET_SALES": 868687.0
+          },
+          {
+            "date": "2024-03-31",
+            "EBIT": 113350.0,
+            "IS_INT_EXPENSE": 7947.0,
+            "NET_DEBT": -586357.0,
+            "BS_CASH_NEAR_CASH_ITEM": 248125.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 6500.0,
+            "BS_YEAR_1_PRINCIPAL": 29010.0,
+            "BS_YEAR_2_PRINCIPAL": 4807.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 68515.0
+          },
+          {
+            "date": "2024-12-31",
+            "TRAIL_12M_EBITDA": 168606.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 150506.0,
+            "TRAIL_12M_NET_SALES": 941168.0
+          },
+          {
+            "date": "2025-03-31",
+            "EBIT": 140905.0,
+            "IS_INT_EXPENSE": 9596.0,
+            "NET_DEBT": -536801.0,
+            "BS_CASH_NEAR_CASH_ITEM": 145487.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 6500.0,
+            "BS_YEAR_1_PRINCIPAL": 25468.0,
+            "BS_YEAR_2_PRINCIPAL": 23590.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 72524.0
+          },
+          {
+            "date": "2025-12-31",
+            "TRAIL_12M_EBITDA": 193795.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 77537.0,
+            "TRAIL_12M_NET_SALES": 996347.0
+          },
+          {
+            "date": "2026-03-31",
+            "EBIT": 50150.0,
+            "IS_INT_EXPENSE": 9793.0,
+            "NET_DEBT": -496090.0,
+            "BS_CASH_NEAR_CASH_ITEM": 131530.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 6500.0,
+            "BS_YEAR_1_PRINCIPAL": 47294.0,
+            "BS_YEAR_2_PRINCIPAL": 13249.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 75674.0
+          }
+        ]
+      }
+    },
+    {
+      "securityData": {
+        "security": "BBSE3 BZ Equity",
+        "eidData": [],
+        "sequenceNumber": 6,
+        "fieldExceptions": [],
+        "fieldData": [
+          {
+            "date": "2017-12-29",
+            "TRAIL_12M_FREE_CASH_FLOW": 4359.395,
+            "TRAIL_12M_NET_SALES": 3357.831
+          },
+          {
+            "date": "2017-12-31",
+            "EBIT": 2774.877,
+            "NET_DEBT": -3644.179,
+            "BS_CASH_NEAR_CASH_ITEM": 3644.179
+          },
+          {
+            "date": "2018-12-31",
+            "EBIT": 2761.318,
+            "NET_DEBT": -6056.247,
+            "BS_CASH_NEAR_CASH_ITEM": 6056.247,
+            "TRAIL_12M_FREE_CASH_FLOW": 3355.309,
+            "TRAIL_12M_NET_SALES": 3395.102
+          },
+          {
+            "date": "2019-12-31",
+            "EBIT": 6620.698,
+            "TRAIL_12M_EBITDA": 6621.585,
+            "NET_DEBT": -7381.292,
+            "BS_CASH_NEAR_CASH_ITEM": 7381.292,
+            "TRAIL_12M_FREE_CASH_FLOW": 3035.409,
+            "TRAIL_12M_NET_SALES": 6930.806
+          },
+          {
+            "date": "2020-12-31",
+            "EBIT": 3039.657,
+            "TRAIL_12M_EBITDA": 3040.668,
+            "NET_DEBT": -2195.445,
+            "BS_CASH_NEAR_CASH_ITEM": 2195.445,
+            "TRAIL_12M_FREE_CASH_FLOW": 3908.82,
+            "TRAIL_12M_NET_SALES": 3389.936
+          },
+          {
+            "date": "2021-12-31",
+            "EBIT": 3253.584,
+            "TRAIL_12M_EBITDA": 3254.651,
+            "NET_DEBT": -4090.561,
+            "BS_CASH_NEAR_CASH_ITEM": 4090.561,
+            "TRAIL_12M_FREE_CASH_FLOW": 3946.565,
+            "TRAIL_12M_NET_SALES": 3647.325
+          },
+          {
+            "date": "2022-12-30",
+            "TRAIL_12M_EBITDA": 4215.252,
+            "TRAIL_12M_FREE_CASH_FLOW": 6259.385,
+            "TRAIL_12M_NET_SALES": 4674.057
+          },
+          {
+            "date": "2022-12-31",
+            "EBIT": 4213.967,
+            "NET_DEBT": -6076.618,
+            "BS_CASH_NEAR_CASH_ITEM": 6076.618
+          },
+          {
+            "date": "2023-12-29",
+            "TRAIL_12M_EBITDA": 4686.695,
+            "TRAIL_12M_FREE_CASH_FLOW": 7347.908,
+            "TRAIL_12M_NET_SALES": 5095.335
+          },
+          {
+            "date": "2023-12-31",
+            "EBIT": 4686.242,
+            "NET_DEBT": -4752.742,
+            "BS_CASH_NEAR_CASH_ITEM": 4752.742
+          },
+          {
+            "date": "2024-12-31",
+            "EBIT": 5141.663,
+            "TRAIL_12M_EBITDA": 5142.931,
+            "NET_DEBT": -7789.875,
+            "BS_CASH_NEAR_CASH_ITEM": 7789.875,
+            "TRAIL_12M_FREE_CASH_FLOW": 4223.583,
+            "TRAIL_12M_NET_SALES": 5564.412
+          },
+          {
+            "date": "2025-12-31",
+            "EBIT": 5698.896,
+            "TRAIL_12M_EBITDA": 5700.227,
+            "NET_DEBT": -8855.104,
+            "BS_CASH_NEAR_CASH_ITEM": 8855.104,
+            "TRAIL_12M_FREE_CASH_FLOW": 9338.926,
+            "TRAIL_12M_NET_SALES": 6197.561
+          }
+        ]
+      }
+    },
+    {
+      "securityData": {
+        "security": "BP/ LN Equity",
+        "eidData": [],
+        "sequenceNumber": 7,
+        "fieldExceptions": [],
+        "fieldData": [
+          {
+            "date": "2017-12-29",
+            "TRAIL_12M_EBITDA": 21894.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 2369.0,
+            "TRAIL_12M_NET_SALES": 240208.0
+          },
+          {
+            "date": "2017-12-31",
+            "EBIT": 6310.0,
+            "IS_INT_EXPENSE": 1718.0,
+            "NET_DEBT": 37329.0,
+            "BS_CASH_NEAR_CASH_ITEM": 25586.0,
+            "BS_YEAR_1_PRINCIPAL": 9291.0,
+            "BS_YEAR_2_PRINCIPAL": 8766.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 70641.0
+          },
+          {
+            "date": "2018-12-31",
+            "EBIT": 14852.0,
+            "IS_INT_EXPENSE": 2198.0,
+            "TRAIL_12M_EBITDA": 30309.0,
+            "NET_DEBT": 42783.0,
+            "BS_CASH_NEAR_CASH_ITEM": 22468.0,
+            "BS_YEAR_1_PRINCIPAL": 11607.0,
+            "BS_YEAR_2_PRINCIPAL": 8646.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 74587.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 6166.0,
+            "TRAIL_12M_NET_SALES": 298756.0
+          },
+          {
+            "date": "2019-12-31",
+            "EBIT": 7680.0,
+            "IS_INT_EXPENSE": 2410.0,
+            "TRAIL_12M_EBITDA": 25460.0,
+            "NET_DEBT": 54466.0,
+            "BS_CASH_NEAR_CASH_ITEM": 22472.0,
+            "BS_YEAR_1_PRINCIPAL": 10065.0,
+            "BS_YEAR_2_PRINCIPAL": 6726.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 65353.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 10352.0,
+            "TRAIL_12M_NET_SALES": 278397.0
+          },
+          {
+            "date": "2020-12-31",
+            "EBIT": -22000.0,
+            "IS_INT_EXPENSE": 2166.0,
+            "TRAIL_12M_EBITDA": -7111.0,
+            "NET_DEBT": 50024.0,
+            "BS_CASH_NEAR_CASH_ITEM": 31111.0,
+            "BS_YEAR_1_PRINCIPAL": 9119.0,
+            "BS_YEAR_2_PRINCIPAL": 6292.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 69305.0,
+            "TRAIL_12M_FREE_CASH_FLOW": -144.0,
+            "TRAIL_12M_NET_SALES": 105944.0
+          },
+          {
+            "date": "2021-12-31",
+            "EBIT": 13502.0,
+            "IS_INT_EXPENSE": 1820.0,
+            "TRAIL_12M_EBITDA": 28307.0,
+            "NET_DEBT": 38471.0,
+            "BS_CASH_NEAR_CASH_ITEM": 30681.0,
+            "BS_YEAR_1_PRINCIPAL": 5370.0,
+            "BS_YEAR_2_PRINCIPAL": 4425.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 58437.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 12725.0,
+            "TRAIL_12M_NET_SALES": 157739.0
+          },
+          {
+            "date": "2022-12-30",
+            "TRAIL_12M_EBITDA": 28724.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 28863.0,
+            "TRAIL_12M_NET_SALES": 241392.0
+          },
+          {
+            "date": "2022-12-31",
+            "EBIT": 14406.0,
+            "IS_INT_EXPENSE": 2070.0,
+            "NET_DEBT": 25405.0,
+            "BS_CASH_NEAR_CASH_ITEM": 29195.0,
+            "BS_YEAR_1_PRINCIPAL": 2978.0,
+            "BS_YEAR_2_PRINCIPAL": 2811.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 47461.0
+          },
+          {
+            "date": "2023-12-29",
+            "TRAIL_12M_EBITDA": 40743.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 17754.0,
+            "TRAIL_12M_NET_SALES": 210130.0
+          },
+          {
+            "date": "2023-12-31",
+            "EBIT": 24815.0,
+            "IS_INT_EXPENSE": 3478.0,
+            "NET_DEBT": 28962.0,
+            "BS_CASH_NEAR_CASH_ITEM": 33030.0,
+            "BS_YEAR_1_PRINCIPAL": 3054.0,
+            "BS_YEAR_2_PRINCIPAL": 3820.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 50311.0
+          },
+          {
+            "date": "2024-12-31",
+            "EBIT": 6531.0,
+            "IS_INT_EXPENSE": 3951.0,
+            "TRAIL_12M_EBITDA": 23153.0,
+            "NET_DEBT": 31955.0,
+            "BS_CASH_NEAR_CASH_ITEM": 39204.0,
+            "BS_YEAR_1_PRINCIPAL": 4402.0,
+            "BS_YEAR_2_PRINCIPAL": 4716.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 56392.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 12000.0,
+            "TRAIL_12M_NET_SALES": 189185.0
+          },
+          {
+            "date": "2025-12-31",
+            "EBIT": 10415.0,
+            "IS_INT_EXPENSE": 4123.0,
+            "TRAIL_12M_EBITDA": 28237.0,
+            "NET_DEBT": 35358.0,
+            "BS_CASH_NEAR_CASH_ITEM": 36556.0,
+            "BS_YEAR_1_PRINCIPAL": 3312.0,
+            "BS_YEAR_2_PRINCIPAL": 6628.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 52929.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 11272.0,
+            "TRAIL_12M_NET_SALES": 189335.0
+          }
+        ]
+      }
+    },
+    {
+      "securityData": {
+        "security": "ROG SW Equity",
+        "eidData": [],
+        "sequenceNumber": 24,
+        "fieldExceptions": [],
+        "fieldData": [
+          {
+            "date": "2017-12-29",
+            "TRAIL_12M_EBITDA": 16890.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 13897.0,
+            "TRAIL_12M_NET_SALES": 53299.0
+          },
+          {
+            "date": "2017-12-31",
+            "EBIT": 13003.0,
+            "IS_INT_EXPENSE": 732.0,
+            "NET_DEBT": 6963.0,
+            "BS_CASH_NEAR_CASH_ITEM": 4719.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 7600.0,
+            "BS_YEAR_1_PRINCIPAL": 2167.0,
+            "BS_YEAR_2_PRINCIPAL": 1955.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 18960.0
+          },
+          {
+            "date": "2018-12-31",
+            "EBIT": 14769.0,
+            "IS_INT_EXPENSE": 733.0,
+            "TRAIL_12M_EBITDA": 18355.0,
+            "NET_DEBT": 5652.0,
+            "BS_CASH_NEAR_CASH_ITEM": 6681.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 7700.0,
+            "BS_YEAR_1_PRINCIPAL": 1959.0,
+            "BS_YEAR_2_PRINCIPAL": 583.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 18770.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 15367.0,
+            "TRAIL_12M_NET_SALES": 56846.0
+          },
+          {
+            "date": "2019-12-31",
+            "EBIT": 17548.0,
+            "IS_INT_EXPENSE": 760.0,
+            "TRAIL_12M_EBITDA": 21489.0,
+            "NET_DEBT": 3724.0,
+            "BS_CASH_NEAR_CASH_ITEM": 6075.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 7600.0,
+            "BS_YEAR_1_PRINCIPAL": 0.0,
+            "BS_YEAR_2_PRINCIPAL": 1861.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 14360.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 18327.0,
+            "TRAIL_12M_NET_SALES": 61466.0
+          },
+          {
+            "date": "2020-12-31",
+            "EBIT": 18543.0,
+            "IS_INT_EXPENSE": 539.0,
+            "TRAIL_12M_EBITDA": 22744.0,
+            "NET_DEBT": 3077.0,
+            "BS_CASH_NEAR_CASH_ITEM": 5727.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 7500.0,
+            "BS_YEAR_1_PRINCIPAL": 1804.0,
+            "BS_YEAR_2_PRINCIPAL": 1074.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 14213.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 14632.0,
+            "TRAIL_12M_NET_SALES": 58323.0
+          },
+          {
+            "date": "2021-12-31",
+            "EBIT": 18155.0,
+            "IS_INT_EXPENSE": 342.0,
+            "TRAIL_12M_EBITDA": 22598.0,
+            "NET_DEBT": 19521.0,
+            "BS_CASH_NEAR_CASH_ITEM": 6850.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 7500.0,
+            "BS_YEAR_1_PRINCIPAL": 15495.0,
+            "BS_YEAR_2_PRINCIPAL": 1494.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 35967.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 16876.0,
+            "TRAIL_12M_NET_SALES": 62801.0
+          },
+          {
+            "date": "2022-12-30",
+            "TRAIL_12M_EBITDA": 21320.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 14441.0,
+            "TRAIL_12M_NET_SALES": 63281.0
+          },
+          {
+            "date": "2022-12-31",
+            "EBIT": 17476.0,
+            "IS_INT_EXPENSE": 608.0,
+            "NET_DEBT": 16777.0,
+            "BS_CASH_NEAR_CASH_ITEM": 4991.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 7500.0,
+            "BS_YEAR_1_PRINCIPAL": 4457.0,
+            "BS_YEAR_2_PRINCIPAL": 3671.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 30346.0
+          },
+          {
+            "date": "2023-12-29",
+            "TRAIL_12M_EBITDA": 18859.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 12309.0,
+            "TRAIL_12M_NET_SALES": 58716.0
+          },
+          {
+            "date": "2023-12-31",
+            "EBIT": 15395.0,
+            "IS_INT_EXPENSE": 828.0,
+            "NET_DEBT": 20272.0,
+            "BS_CASH_NEAR_CASH_ITEM": 5376.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 7500.0,
+            "BS_YEAR_1_PRINCIPAL": 6013.0,
+            "BS_YEAR_2_PRINCIPAL": 4038.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 36628.0
+          },
+          {
+            "date": "2024-12-31",
+            "EBIT": 13417.0,
+            "IS_INT_EXPENSE": 1248.0,
+            "TRAIL_12M_EBITDA": 16840.0,
+            "NET_DEBT": 19037.0,
+            "BS_CASH_NEAR_CASH_ITEM": 6975.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 7500.0,
+            "BS_YEAR_1_PRINCIPAL": 5473.0,
+            "BS_YEAR_2_PRINCIPAL": 4210.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 45747.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 16028.0,
+            "TRAIL_12M_NET_SALES": 60495.0
+          },
+          {
+            "date": "2025-12-31",
+            "EBIT": 18476.0,
+            "IS_INT_EXPENSE": 1187.0,
+            "TRAIL_12M_EBITDA": 21862.0,
+            "NET_DEBT": 17715.0,
+            "BS_CASH_NEAR_CASH_ITEM": 5582.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 7500.0,
+            "BS_YEAR_1_PRINCIPAL": 5158.0,
+            "BS_YEAR_2_PRINCIPAL": 3958.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 39533.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 14125.0,
+            "TRAIL_12M_NET_SALES": 61516.0
+          }
+        ]
+      }
+    },
+    {
+      "securityData": {
+        "security": "RWE GR Equity",
+        "eidData": [],
+        "sequenceNumber": 25,
+        "fieldExceptions": [],
+        "fieldData": [
+          {
+            "date": "2017-12-29",
+            "TRAIL_12M_EBITDA": 4375.0,
+            "TRAIL_12M_FREE_CASH_FLOW": -2439.0,
+            "TRAIL_12M_NET_SALES": 13822.0
+          },
+          {
+            "date": "2017-12-31",
+            "EBIT": 1792.0,
+            "IS_INT_EXPENSE": 298.0,
+            "NET_DEBT": 8137.0,
+            "BS_CASH_NEAR_CASH_ITEM": 3933.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 3500.0
+          },
+          {
+            "date": "2018-12-31",
+            "EBIT": 185.0,
+            "IS_INT_EXPENSE": 180.0,
+            "TRAIL_12M_EBITDA": 1143.0,
+            "NET_DEBT": -4622.0,
+            "BS_CASH_NEAR_CASH_ITEM": 3523.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 3000.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 5598.0,
+            "TRAIL_12M_NET_SALES": 13406.0
+          },
+          {
+            "date": "2019-12-31",
+            "EBIT": -1040.0,
+            "IS_INT_EXPENSE": 258.0,
+            "TRAIL_12M_EBITDA": 1714.0,
+            "NET_DEBT": -837.0,
+            "BS_CASH_NEAR_CASH_ITEM": 3192.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 5000.0,
+            "TRAIL_12M_FREE_CASH_FLOW": -3290.0,
+            "TRAIL_12M_NET_SALES": 13125.0
+          },
+          {
+            "date": "2020-12-31",
+            "EBIT": -2456.0,
+            "IS_INT_EXPENSE": 296.0,
+            "TRAIL_12M_EBITDA": 723.0,
+            "NET_DEBT": -3795.0,
+            "BS_CASH_NEAR_CASH_ITEM": 4774.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 5000.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 1890.0,
+            "TRAIL_12M_NET_SALES": 13688.0
+          },
+          {
+            "date": "2021-12-31",
+            "EBIT": 1018.0,
+            "IS_INT_EXPENSE": 340.0,
+            "TRAIL_12M_EBITDA": 3135.0,
+            "NET_DEBT": 3929.0,
+            "BS_CASH_NEAR_CASH_ITEM": 5825.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 5000.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 3585.0,
+            "TRAIL_12M_NET_SALES": 24526.0
+          },
+          {
+            "date": "2022-12-30",
+            "TRAIL_12M_EBITDA": -1615.0,
+            "TRAIL_12M_FREE_CASH_FLOW": -897.0,
+            "TRAIL_12M_NET_SALES": 38415.0
+          },
+          {
+            "date": "2022-12-31",
+            "EBIT": -3245.0,
+            "IS_INT_EXPENSE": 816.0,
+            "NET_DEBT": 547.0,
+            "BS_CASH_NEAR_CASH_ITEM": 6988.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 5000.0
+          },
+          {
+            "date": "2023-12-29",
+            "TRAIL_12M_EBITDA": 1540.0,
+            "TRAIL_12M_FREE_CASH_FLOW": -911.0,
+            "TRAIL_12M_NET_SALES": 28566.0
+          },
+          {
+            "date": "2023-12-31",
+            "EBIT": -358.0,
+            "IS_INT_EXPENSE": 1011.0,
+            "NET_DEBT": 2387.0,
+            "BS_CASH_NEAR_CASH_ITEM": 6917.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 10000.0
+          },
+          {
+            "date": "2024-12-31",
+            "EBIT": 3848.0,
+            "IS_INT_EXPENSE": 847.0,
+            "TRAIL_12M_EBITDA": 5723.0,
+            "NET_DEBT": 6729.0,
+            "BS_CASH_NEAR_CASH_ITEM": 5090.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 10000.0,
+            "TRAIL_12M_FREE_CASH_FLOW": -2757.0,
+            "TRAIL_12M_NET_SALES": 24224.0
+          },
+          {
+            "date": "2025-12-31",
+            "EBIT": 631.0,
+            "IS_INT_EXPENSE": 561.0,
+            "TRAIL_12M_EBITDA": 2623.0,
+            "NET_DEBT": 6338.0,
+            "BS_CASH_NEAR_CASH_ITEM": 7734.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 10000.0,
+            "TRAIL_12M_FREE_CASH_FLOW": -5060.0,
+            "TRAIL_12M_NET_SALES": 17628.0
+          }
+        ]
+      }
+    },
+    {
+      "securityData": {
+        "security": "SAP GY Equity",
+        "eidData": [],
+        "sequenceNumber": 26,
+        "fieldExceptions": [],
+        "fieldData": [
+          {
+            "date": "2017-12-29",
+            "TRAIL_12M_EBITDA": 6149.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 3770.0,
+            "TRAIL_12M_NET_SALES": 23461.0
+          },
+          {
+            "date": "2017-12-31",
+            "EBIT": 4877.0,
+            "IS_INT_EXPENSE": 205.0,
+            "NET_DEBT": 1594.0,
+            "BS_CASH_NEAR_CASH_ITEM": 4011.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 474.0,
+            "BS_YEAR_1_PRINCIPAL": 1298.0
+          },
+          {
+            "date": "2018-12-31",
+            "EBIT": 5703.0,
+            "IS_INT_EXPENSE": 312.0,
+            "TRAIL_12M_EBITDA": 7065.0,
+            "NET_DEBT": 2671.0,
+            "BS_CASH_NEAR_CASH_ITEM": 8627.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 424.0,
+            "BS_YEAR_1_PRINCIPAL": 759.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 2845.0,
+            "TRAIL_12M_NET_SALES": 24707.0
+          },
+          {
+            "date": "2019-12-31",
+            "EBIT": 4473.0,
+            "IS_INT_EXPENSE": 362.0,
+            "TRAIL_12M_EBITDA": 6345.0,
+            "NET_DEBT": 10537.0,
+            "BS_CASH_NEAR_CASH_ITEM": 5314.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 2924.0,
+            "BS_YEAR_1_PRINCIPAL": 2531.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 13617.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 2679.0,
+            "TRAIL_12M_NET_SALES": 27554.0
+          },
+          {
+            "date": "2020-12-31",
+            "EBIT": 6623.0,
+            "IS_INT_EXPENSE": 255.0,
+            "TRAIL_12M_EBITDA": 8454.0,
+            "NET_DEBT": 9006.0,
+            "BS_CASH_NEAR_CASH_ITEM": 5311.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 2933.0,
+            "BS_YEAR_1_PRINCIPAL": 1484.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 13344.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 6379.0,
+            "TRAIL_12M_NET_SALES": 27338.0
+          },
+          {
+            "date": "2021-12-31",
+            "EBIT": 4659.0,
+            "IS_INT_EXPENSE": 210.0,
+            "TRAIL_12M_EBITDA": 6434.0,
+            "NET_DEBT": 3823.0,
+            "BS_CASH_NEAR_CASH_ITEM": 8897.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 2835.0,
+            "BS_YEAR_1_PRINCIPAL": 4084.0,
+            "BS_YEAR_2_PRINCIPAL": 1695.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 13285.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 5422.0,
+            "TRAIL_12M_NET_SALES": 27842.0
+          },
+          {
+            "date": "2022-12-30",
+            "TRAIL_12M_EBITDA": 7658.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 4769.0,
+            "TRAIL_12M_NET_SALES": 29520.0
+          },
+          {
+            "date": "2022-12-31",
+            "EBIT": 6089.0,
+            "IS_INT_EXPENSE": 272.0,
+            "NET_DEBT": 3586.0,
+            "BS_CASH_NEAR_CASH_ITEM": 9007.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 3050.0,
+            "BS_YEAR_1_PRINCIPAL": 8210.0,
+            "BS_YEAR_2_PRINCIPAL": 1288.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 11366.0
+          },
+          {
+            "date": "2023-12-29",
+            "TRAIL_12M_EBITDA": 7160.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 5548.0,
+            "TRAIL_12M_NET_SALES": 31208.0
+          },
+          {
+            "date": "2023-12-31",
+            "EBIT": 5787.0,
+            "IS_INT_EXPENSE": 639.0,
+            "NET_DEBT": -2557.0,
+            "BS_CASH_NEAR_CASH_ITEM": 8124.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 3550.0,
+            "BS_YEAR_1_PRINCIPAL": 4024.0,
+            "BS_YEAR_2_PRINCIPAL": 985.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 7432.0
+          },
+          {
+            "date": "2024-12-31",
+            "EBIT": 4665.0,
+            "IS_INT_EXPENSE": 958.0,
+            "TRAIL_12M_EBITDA": 5945.0,
+            "NET_DEBT": -415.0,
+            "BS_CASH_NEAR_CASH_ITEM": 9609.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 4200.0,
+            "BS_YEAR_1_PRINCIPAL": 6150.0,
+            "BS_YEAR_2_PRINCIPAL": 1196.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 9206.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 4421.0,
+            "TRAIL_12M_NET_SALES": 34176.0
+          },
+          {
+            "date": "2025-12-31",
+            "EBIT": 9617.0,
+            "IS_INT_EXPENSE": 1213.0,
+            "TRAIL_12M_EBITDA": 10928.0,
+            "NET_DEBT": -2213.0,
+            "BS_CASH_NEAR_CASH_ITEM": 8220.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 4150.0,
+            "BS_YEAR_1_PRINCIPAL": 4798.0,
+            "BS_YEAR_2_PRINCIPAL": 1066.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 5949.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 8264.0,
+            "TRAIL_12M_NET_SALES": 36800.0
+          }
+        ]
+      }
+    },
+    {
+      "securityData": {
+        "security": "SSE LN Equity",
+        "eidData": [],
+        "sequenceNumber": 27,
+        "fieldExceptions": [],
+        "fieldData": [
+          {
+            "date": "2017-03-31",
+            "EBIT": 1753.1,
+            "IS_INT_EXPENSE": 306.2,
+            "NET_DEBT": 6655.4,
+            "BS_CASH_NEAR_CASH_ITEM": 1427.0,
+            "BS_YEAR_1_PRINCIPAL": 118.8,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 6226.5
+          },
+          {
+            "date": "2017-12-29",
+            "TRAIL_12M_EBITDA": 2888.1,
+            "TRAIL_12M_FREE_CASH_FLOW": 510.9,
+            "TRAIL_12M_NET_SALES": 29037.9
+          },
+          {
+            "date": "2018-03-31",
+            "EBIT": 1011.2,
+            "IS_INT_EXPENSE": 355.6,
+            "NET_DEBT": 8378.3,
+            "BS_CASH_NEAR_CASH_ITEM": 232.2,
+            "BS_YEAR_1_PRINCIPAL": 626.3,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 6670.8
+          },
+          {
+            "date": "2018-12-31",
+            "TRAIL_12M_EBITDA": 2048.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 413.8,
+            "TRAIL_12M_NET_SALES": 27250.4
+          },
+          {
+            "date": "2019-03-31",
+            "EBIT": 1484.4,
+            "IS_INT_EXPENSE": 355.5,
+            "NET_DEBT": 8884.5,
+            "BS_CASH_NEAR_CASH_ITEM": 431.6,
+            "BS_YEAR_1_PRINCIPAL": 668.4,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 7389.2
+          },
+          {
+            "date": "2019-12-31",
+            "TRAIL_12M_EBITDA": 2232.6,
+            "TRAIL_12M_FREE_CASH_FLOW": -49.7,
+            "TRAIL_12M_NET_SALES": 7301.5
+          },
+          {
+            "date": "2020-03-31",
+            "EBIT": 809.5,
+            "IS_INT_EXPENSE": 374.4,
+            "NET_DEBT": 10007.8,
+            "BS_CASH_NEAR_CASH_ITEM": 164.6,
+            "BS_YEAR_1_PRINCIPAL": 1893.8,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 9717.2
+          },
+          {
+            "date": "2020-12-31",
+            "TRAIL_12M_EBITDA": 1756.7,
+            "TRAIL_12M_FREE_CASH_FLOW": 486.1,
+            "TRAIL_12M_NET_SALES": 6800.6
+          },
+          {
+            "date": "2021-03-31",
+            "EBIT": 2611.5,
+            "IS_INT_EXPENSE": 372.1,
+            "NET_DEBT": 7810.4,
+            "BS_CASH_NEAR_CASH_ITEM": 1600.2,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 1500.0,
+            "BS_YEAR_1_PRINCIPAL": 864.7,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 8989.6
+          },
+          {
+            "date": "2021-12-31",
+            "TRAIL_12M_EBITDA": 3249.4,
+            "TRAIL_12M_FREE_CASH_FLOW": 832.2,
+            "TRAIL_12M_NET_SALES": 6826.4
+          },
+          {
+            "date": "2022-03-31",
+            "EBIT": 3639.7,
+            "IS_INT_EXPENSE": 361.8,
+            "NET_DEBT": 8015.4,
+            "BS_CASH_NEAR_CASH_ITEM": 1049.3,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 1500.0,
+            "BS_YEAR_1_PRINCIPAL": 1118.7,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 8671.2
+          },
+          {
+            "date": "2022-12-30",
+            "TRAIL_12M_EBITDA": 3942.9,
+            "TRAIL_12M_FREE_CASH_FLOW": 354.3,
+            "TRAIL_12M_NET_SALES": 8697.2
+          },
+          {
+            "date": "2023-03-31",
+            "EBIT": -808.6,
+            "IS_INT_EXPENSE": 396.7,
+            "NET_DEBT": 8168.1,
+            "BS_CASH_NEAR_CASH_ITEM": 891.8,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 1500.0,
+            "BS_YEAR_1_PRINCIPAL": 1738.5,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 8654.0
+          },
+          {
+            "date": "2023-12-29",
+            "TRAIL_12M_EBITDA": -167.9,
+            "TRAIL_12M_FREE_CASH_FLOW": 14.3,
+            "TRAIL_12M_NET_SALES": 12490.7
+          },
+          {
+            "date": "2024-03-31",
+            "EBIT": 2494.1,
+            "IS_INT_EXPENSE": 318.3,
+            "NET_DEBT": 8097.8,
+            "BS_CASH_NEAR_CASH_ITEM": 1035.9,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 1500.0,
+            "BS_YEAR_1_PRINCIPAL": 1044.5,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 8726.2
+          },
+          {
+            "date": "2024-12-31",
+            "TRAIL_12M_EBITDA": 3353.1,
+            "TRAIL_12M_FREE_CASH_FLOW": 1889.7,
+            "TRAIL_12M_NET_SALES": 10457.2
+          },
+          {
+            "date": "2025-03-31",
+            "EBIT": 1872.3,
+            "IS_INT_EXPENSE": 319.2,
+            "NET_DEBT": 9513.9,
+            "BS_CASH_NEAR_CASH_ITEM": 1090.5,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 1500.0,
+            "BS_YEAR_1_PRINCIPAL": 1895.5,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 5836.2
+          },
+          {
+            "date": "2025-12-31",
+            "TRAIL_12M_EBITDA": 2929.4,
+            "TRAIL_12M_FREE_CASH_FLOW": -212.4,
+            "TRAIL_12M_NET_SALES": 10131.9
+          },
+          {
+            "date": "2026-03-31",
+            "EBIT": 1800.9,
+            "IS_INT_EXPENSE": 310.4,
+            "NET_DEBT": 8578.3,
+            "BS_CASH_NEAR_CASH_ITEM": 1542.9,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 1100.0,
+            "BS_YEAR_1_PRINCIPAL": 1124.6,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 4552.3
+          }
+        ]
+      }
+    },
+    {
+      "securityData": {
+        "security": "ST SP Equity",
+        "eidData": [],
+        "sequenceNumber": 28,
+        "fieldExceptions": [],
+        "fieldData": [
+          {
+            "date": "2017-03-31",
+            "EBIT": 2763.8,
+            "IS_INT_EXPENSE": 370.3,
+            "NET_DEBT": 10652.1,
+            "BS_CASH_NEAR_CASH_ITEM": 533.8
+          },
+          {
+            "date": "2017-12-29",
+            "TRAIL_12M_EBITDA": 5002.7,
+            "TRAIL_12M_FREE_CASH_FLOW": 2743.9,
+            "TRAIL_12M_NET_SALES": 16711.4
+          },
+          {
+            "date": "2018-03-31",
+            "EBIT": 4704.7,
+            "IS_INT_EXPENSE": 383.4,
+            "NET_DEBT": 9966.3,
+            "BS_CASH_NEAR_CASH_ITEM": 524.9
+          },
+          {
+            "date": "2018-12-31",
+            "TRAIL_12M_EBITDA": 6954.7,
+            "TRAIL_12M_FREE_CASH_FLOW": 3244.5,
+            "TRAIL_12M_NET_SALES": 17268.0
+          },
+          {
+            "date": "2019-03-31",
+            "EBIT": 2534.5,
+            "IS_INT_EXPENSE": 390.1,
+            "NET_DEBT": 10151.4,
+            "BS_CASH_NEAR_CASH_ITEM": 512.7
+          },
+          {
+            "date": "2019-12-31",
+            "TRAIL_12M_EBITDA": 4756.7,
+            "TRAIL_12M_FREE_CASH_FLOW": 3271.7,
+            "TRAIL_12M_NET_SALES": 17371.7
+          },
+          {
+            "date": "2020-03-31",
+            "EBIT": 2371.6,
+            "IS_INT_EXPENSE": 459.2,
+            "NET_DEBT": 13173.0,
+            "BS_CASH_NEAR_CASH_ITEM": 999.6
+          },
+          {
+            "date": "2020-12-31",
+            "TRAIL_12M_EBITDA": 4951.9,
+            "TRAIL_12M_FREE_CASH_FLOW": 3471.9,
+            "TRAIL_12M_NET_SALES": 16542.3
+          },
+          {
+            "date": "2021-03-31",
+            "EBIT": 547.3,
+            "IS_INT_EXPENSE": 414.3,
+            "NET_DEBT": 12104.8,
+            "BS_CASH_NEAR_CASH_ITEM": 754.7
+          },
+          {
+            "date": "2021-12-31",
+            "TRAIL_12M_EBITDA": 3232.1,
+            "TRAIL_12M_FREE_CASH_FLOW": 3017.3,
+            "TRAIL_12M_NET_SALES": 15644.0
+          },
+          {
+            "date": "2022-03-31",
+            "EBIT": 1283.0,
+            "IS_INT_EXPENSE": 425.0,
+            "NET_DEBT": 9738.5,
+            "BS_CASH_NEAR_CASH_ITEM": 2130.1
+          },
+          {
+            "date": "2022-12-30",
+            "TRAIL_12M_EBITDA": 4005.5,
+            "TRAIL_12M_FREE_CASH_FLOW": 2702.3,
+            "TRAIL_12M_NET_SALES": 15339.1
+          },
+          {
+            "date": "2023-03-31",
+            "EBIT": 1136.0,
+            "IS_INT_EXPENSE": 397.1,
+            "NET_DEBT": 9225.4,
+            "BS_CASH_NEAR_CASH_ITEM": 1667.9
+          },
+          {
+            "date": "2023-12-29",
+            "TRAIL_12M_EBITDA": 3710.1,
+            "TRAIL_12M_FREE_CASH_FLOW": 2275.7,
+            "TRAIL_12M_NET_SALES": 14624.4
+          },
+          {
+            "date": "2024-03-31",
+            "EBIT": -96.5,
+            "IS_INT_EXPENSE": 427.4,
+            "NET_DEBT": 7294.4,
+            "BS_CASH_NEAR_CASH_ITEM": 4605.2
+          },
+          {
+            "date": "2024-12-31",
+            "TRAIL_12M_EBITDA": 2347.5,
+            "TRAIL_12M_FREE_CASH_FLOW": 2247.5,
+            "TRAIL_12M_NET_SALES": 14127.5
+          },
+          {
+            "date": "2025-03-31",
+            "EBIT": 2358.6,
+            "IS_INT_EXPENSE": 447.8,
+            "NET_DEBT": 8898.5,
+            "BS_CASH_NEAR_CASH_ITEM": 2773.2
+          },
+          {
+            "date": "2025-12-31",
+            "TRAIL_12M_EBITDA": 4769.2,
+            "TRAIL_12M_FREE_CASH_FLOW": 2008.3,
+            "TRAIL_12M_NET_SALES": 14146.1
+          },
+          {
+            "date": "2026-03-31",
+            "EBIT": 4579.1,
+            "IS_INT_EXPENSE": 431.2,
+            "NET_DEBT": 8208.3,
+            "BS_CASH_NEAR_CASH_ITEM": 3470.4
+          }
+        ]
+      }
+    },
+    {
+      "securityData": {
+        "security": "ULVR LN Equity",
+        "eidData": [],
+        "sequenceNumber": 29,
+        "fieldExceptions": [],
+        "fieldData": [
+          {
+            "date": "2017-12-29",
+            "TRAIL_12M_EBITDA": 11196.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 6088.0,
+            "TRAIL_12M_NET_SALES": 53715.0
+          },
+          {
+            "date": "2017-12-31",
+            "EBIT": 9171.0,
+            "IS_INT_EXPENSE": 692.0,
+            "NET_DEBT": 20514.0,
+            "BS_CASH_NEAR_CASH_ITEM": 3317.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 7865.0,
+            "BS_YEAR_1_PRINCIPAL": 7688.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 23876.0
+          },
+          {
+            "date": "2018-12-31",
+            "EBIT": 12688.0,
+            "IS_INT_EXPENSE": 731.0,
+            "TRAIL_12M_EBITDA": 14904.0,
+            "NET_DEBT": 22684.0,
+            "BS_CASH_NEAR_CASH_ITEM": 3230.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 7865.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 5682.0,
+            "TRAIL_12M_NET_SALES": 50982.0
+          },
+          {
+            "date": "2019-12-31",
+            "EBIT": 8708.0,
+            "IS_INT_EXPENSE": 763.0,
+            "TRAIL_12M_EBITDA": 10690.0,
+            "NET_DEBT": 22803.0,
+            "BS_CASH_NEAR_CASH_ITEM": 4185.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 7865.0,
+            "BS_YEAR_1_PRINCIPAL": 4074.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 26095.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 6409.0,
+            "TRAIL_12M_NET_SALES": 51980.0
+          },
+          {
+            "date": "2020-12-31",
+            "EBIT": 8303.0,
+            "IS_INT_EXPENSE": 647.0,
+            "TRAIL_12M_EBITDA": 10321.0,
+            "NET_DEBT": 20950.0,
+            "BS_CASH_NEAR_CASH_ITEM": 5548.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 7965.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 7928.0,
+            "TRAIL_12M_NET_SALES": 50724.0
+          },
+          {
+            "date": "2021-12-31",
+            "EBIT": 8702.0,
+            "IS_INT_EXPENSE": 563.0,
+            "TRAIL_12M_EBITDA": 10465.0,
+            "NET_DEBT": 25553.0,
+            "BS_CASH_NEAR_CASH_ITEM": 3415.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 7965.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 6709.0,
+            "TRAIL_12M_NET_SALES": 52444.0
+          },
+          {
+            "date": "2022-12-30",
+            "TRAIL_12M_EBITDA": 12701.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 5554.0,
+            "TRAIL_12M_NET_SALES": 60073.0
+          },
+          {
+            "date": "2022-12-31",
+            "EBIT": 10755.0,
+            "IS_INT_EXPENSE": 782.0,
+            "NET_DEBT": 23863.0,
+            "BS_CASH_NEAR_CASH_ITEM": 4326.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 7461.68
+          },
+          {
+            "date": "2023-12-29",
+            "TRAIL_12M_EBITDA": 11337.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 7531.0,
+            "TRAIL_12M_NET_SALES": 59604.0
+          },
+          {
+            "date": "2023-12-31",
+            "EBIT": 9758.0,
+            "IS_INT_EXPENSE": 1075.0,
+            "NET_DEBT": 23631.0,
+            "BS_CASH_NEAR_CASH_ITEM": 4159.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 9900.0
+          },
+          {
+            "date": "2024-12-31",
+            "EBIT": 8829.0,
+            "IS_INT_EXPENSE": 1063.0,
+            "TRAIL_12M_EBITDA": 10211.0,
+            "NET_DEBT": 24584.0,
+            "BS_CASH_NEAR_CASH_ITEM": 6136.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 7800.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 7888.0,
+            "TRAIL_12M_NET_SALES": 52479.0
+          },
+          {
+            "date": "2025-12-31",
+            "EBIT": 9037.0,
+            "IS_INT_EXPENSE": 1104.0,
+            "TRAIL_12M_EBITDA": 10401.0,
+            "NET_DEBT": 23218.0,
+            "BS_CASH_NEAR_CASH_ITEM": 3941.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 7800.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 7008.0,
+            "TRAIL_12M_NET_SALES": 50503.0
+          }
+        ]
+      }
+    },
+    {
+      "securityData": {
+        "security": "VLO US Equity",
+        "eidData": [],
+        "sequenceNumber": 30,
+        "fieldExceptions": [],
+        "fieldData": [
+          {
+            "date": "2017-12-29",
+            "TRAIL_12M_EBITDA": 5549.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 4103.0,
+            "TRAIL_12M_NET_SALES": 93980.0
+          },
+          {
+            "date": "2017-12-31",
+            "EBIT": 3563.0,
+            "IS_INT_EXPENSE": 468.0,
+            "NET_DEBT": 3022.0,
+            "BS_CASH_NEAR_CASH_ITEM": 5850.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 4651.0,
+            "BS_YEAR_1_PRINCIPAL": 106.0,
+            "BS_YEAR_2_PRINCIPAL": 756.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 8310.0
+          },
+          {
+            "date": "2018-12-31",
+            "EBIT": 4572.0,
+            "IS_INT_EXPENSE": 470.0,
+            "TRAIL_12M_EBITDA": 6641.0,
+            "NET_DEBT": 6127.0,
+            "BS_CASH_NEAR_CASH_ITEM": 2982.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 5369.0,
+            "BS_YEAR_1_PRINCIPAL": 214.0,
+            "BS_YEAR_2_PRINCIPAL": 855.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 8503.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 1704.0,
+            "TRAIL_12M_NET_SALES": 117033.0
+          },
+          {
+            "date": "2019-12-31",
+            "EBIT": 3836.0,
+            "IS_INT_EXPENSE": 454.0,
+            "TRAIL_12M_EBITDA": 6500.0,
+            "NET_DEBT": 8379.0,
+            "BS_CASH_NEAR_CASH_ITEM": 2583.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 5504.0,
+            "BS_YEAR_1_PRINCIPAL": 376.0,
+            "BS_YEAR_2_PRINCIPAL": 250.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 8881.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 3537.0,
+            "TRAIL_12M_NET_SALES": 108324.0
+          },
+          {
+            "date": "2020-12-31",
+            "EBIT": -1579.0,
+            "IS_INT_EXPENSE": 563.0,
+            "TRAIL_12M_EBITDA": 1194.0,
+            "NET_DEBT": 12534.0,
+            "BS_CASH_NEAR_CASH_ITEM": 3313.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 5983.0,
+            "BS_YEAR_1_PRINCIPAL": 603.0,
+            "BS_YEAR_2_PRINCIPAL": 6.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 13013.0,
+            "TRAIL_12M_FREE_CASH_FLOW": -1488.0,
+            "TRAIL_12M_NET_SALES": 64912.0
+          },
+          {
+            "date": "2021-12-31",
+            "EBIT": 2130.0,
+            "IS_INT_EXPENSE": 603.0,
+            "TRAIL_12M_EBITDA": 4909.0,
+            "NET_DEBT": 11003.0,
+            "BS_CASH_NEAR_CASH_ITEM": 4122.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 5658.0,
+            "BS_YEAR_1_PRINCIPAL": 1110.0,
+            "BS_YEAR_2_PRINCIPAL": 20.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 11950.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 3401.0,
+            "TRAIL_12M_NET_SALES": 113977.0
+          },
+          {
+            "date": "2022-12-30",
+            "TRAIL_12M_EBITDA": 18513.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 9837.0,
+            "TRAIL_12M_NET_SALES": 176383.0
+          },
+          {
+            "date": "2022-12-31",
+            "EBIT": 15690.0,
+            "IS_INT_EXPENSE": 562.0,
+            "NET_DEBT": 6773.0,
+            "BS_CASH_NEAR_CASH_ITEM": 4862.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 5735.0,
+            "BS_YEAR_1_PRINCIPAL": 861.0,
+            "BS_YEAR_2_PRINCIPAL": 167.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 9241.0
+          },
+          {
+            "date": "2023-12-29",
+            "TRAIL_12M_EBITDA": 14946.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 7313.0,
+            "TRAIL_12M_NET_SALES": 144766.0
+          },
+          {
+            "date": "2023-12-31",
+            "EBIT": 11858.0,
+            "IS_INT_EXPENSE": 592.0,
+            "NET_DEBT": 6100.0,
+            "BS_CASH_NEAR_CASH_ITEM": 5424.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 5556.0,
+            "BS_YEAR_1_PRINCIPAL": 1197.0,
+            "BS_YEAR_2_PRINCIPAL": 441.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 9218.0
+          },
+          {
+            "date": "2024-12-31",
+            "EBIT": 3755.0,
+            "IS_INT_EXPENSE": 556.0,
+            "TRAIL_12M_EBITDA": 7002.0,
+            "NET_DEBT": 5806.0,
+            "BS_CASH_NEAR_CASH_ITEM": 4657.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 6556.0,
+            "BS_YEAR_1_PRINCIPAL": 499.0,
+            "BS_YEAR_2_PRINCIPAL": 672.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 8085.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 4626.0,
+            "TRAIL_12M_NET_SALES": 129881.0
+          },
+          {
+            "date": "2025-12-31",
+            "EBIT": 3181.0,
+            "IS_INT_EXPENSE": 556.0,
+            "TRAIL_12M_EBITDA": 6831.0,
+            "NET_DEBT": 5931.0,
+            "BS_CASH_NEAR_CASH_ITEM": 4688.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 6746.0,
+            "BS_YEAR_1_PRINCIPAL": 695.0,
+            "BS_YEAR_2_PRINCIPAL": 564.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 8261.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 3938.0,
+            "TRAIL_12M_NET_SALES": 122687.0
+          }
+        ]
+      }
+    },
+    {
+      "securityData": {
+        "security": "WALMEX* MM Equity",
+        "eidData": [],
+        "sequenceNumber": 31,
+        "fieldExceptions": [],
+        "fieldData": [
+          {
+            "date": "2017-12-29",
+            "TRAIL_12M_EBITDA": 55482.415,
+            "TRAIL_12M_FREE_CASH_FLOW": 32740.047,
+            "TRAIL_12M_NET_SALES": 573265.02
+          },
+          {
+            "date": "2017-12-31",
+            "EBIT": 43837.539,
+            "IS_INT_EXPENSE": 1436.653,
+            "NET_DEBT": -21488.733,
+            "BS_CASH_NEAR_CASH_ITEM": 16690.567,
+            "BS_YEAR_1_PRINCIPAL": 381.204,
+            "BS_YEAR_2_PRINCIPAL": 354.719
+          },
+          {
+            "date": "2018-12-31",
+            "EBIT": 49189.788,
+            "IS_INT_EXPENSE": 1553.237,
+            "TRAIL_12M_EBITDA": 61747.376,
+            "NET_DEBT": -24353.981,
+            "BS_CASH_NEAR_CASH_ITEM": 14625.147,
+            "BS_YEAR_1_PRINCIPAL": 308.352,
+            "BS_YEAR_2_PRINCIPAL": 319.446,
+            "TRAIL_12M_FREE_CASH_FLOW": 30870.314,
+            "TRAIL_12M_NET_SALES": 616910.332
+          },
+          {
+            "date": "2019-12-31",
+            "EBIT": 54002.686,
+            "TRAIL_12M_EBITDA": 71005.193,
+            "NET_DEBT": 26355.529,
+            "BS_CASH_NEAR_CASH_ITEM": 19168.562,
+            "BS_YEAR_1_PRINCIPAL": 87115.823,
+            "BS_YEAR_2_PRINCIPAL": 0.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 37755.736,
+            "TRAIL_12M_NET_SALES": 646846.434
+          },
+          {
+            "date": "2020-12-31",
+            "EBIT": 57447.281,
+            "TRAIL_12M_EBITDA": 75386.905,
+            "NET_DEBT": 24067.851,
+            "BS_CASH_NEAR_CASH_ITEM": 26577.187,
+            "BS_YEAR_1_PRINCIPAL": 92356.297,
+            "BS_YEAR_2_PRINCIPAL": 0.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 45536.394,
+            "TRAIL_12M_NET_SALES": 701734.164
+          },
+          {
+            "date": "2021-12-31",
+            "EBIT": 62907.658,
+            "TRAIL_12M_EBITDA": 81213.539,
+            "NET_DEBT": 21874.843,
+            "BS_CASH_NEAR_CASH_ITEM": 35127.748,
+            "BS_YEAR_1_PRINCIPAL": 0.0,
+            "BS_YEAR_2_PRINCIPAL": 0.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 45218.047,
+            "TRAIL_12M_NET_SALES": 736044.023
+          },
+          {
+            "date": "2022-12-30",
+            "TRAIL_12M_EBITDA": 87370.822,
+            "TRAIL_12M_FREE_CASH_FLOW": 45146.813,
+            "TRAIL_12M_NET_SALES": 819169.435
+          },
+          {
+            "date": "2022-12-31",
+            "EBIT": 68011.617,
+            "IS_INT_EXPENSE": 7049.835,
+            "NET_DEBT": 22411.391,
+            "BS_CASH_NEAR_CASH_ITEM": 36008.176,
+            "BS_YEAR_1_PRINCIPAL": 0.0,
+            "BS_YEAR_2_PRINCIPAL": 0.0
+          },
+          {
+            "date": "2023-12-29",
+            "TRAIL_12M_EBITDA": 93853.422,
+            "TRAIL_12M_FREE_CASH_FLOW": 59288.288,
+            "TRAIL_12M_NET_SALES": 886523.205
+          },
+          {
+            "date": "2023-12-31",
+            "EBIT": 73275.983,
+            "IS_INT_EXPENSE": 7836.519,
+            "NET_DEBT": 34584.811,
+            "BS_CASH_NEAR_CASH_ITEM": 35743.572,
+            "BS_YEAR_1_PRINCIPAL": 0.0,
+            "BS_YEAR_2_PRINCIPAL": 0.0
+          },
+          {
+            "date": "2024-12-31",
+            "EBIT": 77358.988,
+            "IS_INT_EXPENSE": 8593.484,
+            "TRAIL_12M_EBITDA": 99998.462,
+            "NET_DEBT": 43216.322,
+            "BS_CASH_NEAR_CASH_ITEM": 36513.582,
+            "BS_YEAR_1_PRINCIPAL": 0.0,
+            "BS_YEAR_2_PRINCIPAL": 0.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 40486.031,
+            "TRAIL_12M_NET_SALES": 958507.491
+          },
+          {
+            "date": "2025-12-31",
+            "EBIT": 78493.75,
+            "IS_INT_EXPENSE": 9115.155,
+            "TRAIL_12M_EBITDA": 103446.881,
+            "NET_DEBT": 52256.994,
+            "BS_CASH_NEAR_CASH_ITEM": 28591.153,
+            "BS_YEAR_1_PRINCIPAL": 0.0,
+            "BS_YEAR_2_PRINCIPAL": 0.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 44520.251,
+            "TRAIL_12M_NET_SALES": 1011597.884
+          }
+        ]
+      }
+    },
+    {
+      "securityData": {
+        "security": "COST US Equity",
+        "eidData": [],
+        "sequenceNumber": 8,
+        "fieldExceptions": [],
+        "fieldData": [
+          {
+            "date": "2017-09-03",
+            "EBIT": 4111.0,
+            "IS_INT_EXPENSE": 134.0,
+            "NET_DEBT": 887.0,
+            "BS_CASH_NEAR_CASH_ITEM": 4546.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 730.0,
+            "BS_YEAR_1_PRINCIPAL": 86.0,
+            "BS_YEAR_2_PRINCIPAL": 91.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 6659.0
+          },
+          {
+            "date": "2017-12-29",
+            "TRAIL_12M_EBITDA": 5481.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 4224.0,
+            "TRAIL_12M_NET_SALES": 129025.0
+          },
+          {
+            "date": "2018-09-02",
+            "EBIT": 4480.0,
+            "IS_INT_EXPENSE": 159.0,
+            "NET_DEBT": -675.0,
+            "BS_CASH_NEAR_CASH_ITEM": 6055.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 708.0,
+            "BS_YEAR_1_PRINCIPAL": 90.0,
+            "BS_YEAR_2_PRINCIPAL": 1700.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 6614.0
+          },
+          {
+            "date": "2018-12-31",
+            "TRAIL_12M_EBITDA": 5917.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 2805.0,
+            "TRAIL_12M_NET_SALES": 141576.0
+          },
+          {
+            "date": "2019-09-01",
+            "EBIT": 4737.0,
+            "IS_INT_EXPENSE": 150.0,
+            "NET_DEBT": -2595.0,
+            "BS_CASH_NEAR_CASH_ITEM": 8384.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 720.0,
+            "BS_YEAR_1_PRINCIPAL": 1700.0,
+            "BS_YEAR_2_PRINCIPAL": 1094.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 6852.0
+          },
+          {
+            "date": "2019-12-31",
+            "TRAIL_12M_EBITDA": 6229.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 3358.0,
+            "TRAIL_12M_NET_SALES": 152703.0
+          },
+          {
+            "date": "2020-08-30",
+            "EBIT": 5435.0,
+            "IS_INT_EXPENSE": 160.0,
+            "NET_DEBT": -2876.0,
+            "BS_CASH_NEAR_CASH_ITEM": 12277.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 784.0,
+            "BS_YEAR_1_PRINCIPAL": 95.0,
+            "BS_YEAR_2_PRINCIPAL": 800.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 7657.0
+          },
+          {
+            "date": "2020-12-31",
+            "TRAIL_12M_EBITDA": 7332.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 6051.0,
+            "TRAIL_12M_NET_SALES": 166761.0
+          },
+          {
+            "date": "2021-08-29",
+            "EBIT": 6708.0,
+            "IS_INT_EXPENSE": 171.0,
+            "NET_DEBT": -1748.0,
+            "BS_CASH_NEAR_CASH_ITEM": 11258.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 815.0,
+            "BS_YEAR_1_PRINCIPAL": 800.0,
+            "BS_YEAR_2_PRINCIPAL": 91.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 7531.0
+          },
+          {
+            "date": "2021-12-31",
+            "TRAIL_12M_EBITDA": 8785.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 5370.0,
+            "TRAIL_12M_NET_SALES": 195929.0
+          },
+          {
+            "date": "2022-08-28",
+            "EBIT": 7793.0,
+            "IS_INT_EXPENSE": 158.0,
+            "NET_DEBT": -1526.0,
+            "BS_CASH_NEAR_CASH_ITEM": 10203.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 1033.0,
+            "BS_YEAR_1_PRINCIPAL": 73.0,
+            "BS_YEAR_2_PRINCIPAL": 1088.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 6590.0
+          },
+          {
+            "date": "2022-12-30",
+            "TRAIL_12M_EBITDA": 9990.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 3501.0,
+            "TRAIL_12M_NET_SALES": 226954.0
+          },
+          {
+            "date": "2023-09-03",
+            "EBIT": 8114.0,
+            "IS_INT_EXPENSE": 160.0,
+            "NET_DEBT": -6001.0,
+            "BS_CASH_NEAR_CASH_ITEM": 13700.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 835.0,
+            "BS_YEAR_1_PRINCIPAL": 1081.0,
+            "BS_YEAR_2_PRINCIPAL": 103.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 6484.0
+          },
+          {
+            "date": "2023-12-29",
+            "TRAIL_12M_EBITDA": 10500.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 6745.0,
+            "TRAIL_12M_NET_SALES": 242290.0
+          },
+          {
+            "date": "2024-09-01",
+            "EBIT": 9285.0,
+            "IS_INT_EXPENSE": 169.0,
+            "NET_DEBT": -2546.0,
+            "BS_CASH_NEAR_CASH_ITEM": 9906.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 1005.0,
+            "BS_YEAR_1_PRINCIPAL": 103.0,
+            "BS_YEAR_2_PRINCIPAL": 76.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 5919.0
+          },
+          {
+            "date": "2024-12-31",
+            "TRAIL_12M_EBITDA": 11806.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 6629.0,
+            "TRAIL_12M_NET_SALES": 254453.0
+          },
+          {
+            "date": "2025-08-31",
+            "EBIT": 10383.0,
+            "IS_INT_EXPENSE": 154.0,
+            "NET_DEBT": -6750.0,
+            "BS_CASH_NEAR_CASH_ITEM": 14161.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 1020.0,
+            "BS_YEAR_1_PRINCIPAL": 75.0,
+            "BS_YEAR_2_PRINCIPAL": 2250.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 5805.0
+          },
+          {
+            "date": "2025-12-31",
+            "TRAIL_12M_EBITDA": 13080.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 7837.0,
+            "TRAIL_12M_NET_SALES": 275235.0
+          }
+        ]
+      }
+    },
+    {
+      "securityData": {
+        "security": "ENEL IM Equity",
+        "eidData": [],
+        "sequenceNumber": 9,
+        "fieldExceptions": [],
+        "fieldData": [
+          {
+            "date": "2017-12-29",
+            "TRAIL_12M_EBITDA": 15653.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 2899.0,
+            "TRAIL_12M_NET_SALES": 72664.0
+          },
+          {
+            "date": "2017-12-31",
+            "EBIT": 9792.0,
+            "IS_INT_EXPENSE": 2439.0,
+            "NET_DEBT": 40694.0,
+            "BS_CASH_NEAR_CASH_ITEM": 7021.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 14006.0,
+            "BS_YEAR_1_PRINCIPAL": 7000.0,
+            "BS_YEAR_2_PRINCIPAL": 3945.0
+          },
+          {
+            "date": "2018-12-31",
+            "EBIT": 9900.0,
+            "IS_INT_EXPENSE": 2488.0,
+            "TRAIL_12M_EBITDA": 15255.0,
+            "NET_DEBT": 44964.0,
+            "BS_CASH_NEAR_CASH_ITEM": 6630.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 14508.0,
+            "BS_YEAR_1_PRINCIPAL": 3367.0,
+            "BS_YEAR_2_PRINCIPAL": 4302.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 4167.0,
+            "TRAIL_12M_NET_SALES": 73134.0
+          },
+          {
+            "date": "2019-12-31",
+            "EBIT": 6878.0,
+            "IS_INT_EXPENSE": 2599.0,
+            "TRAIL_12M_EBITDA": 16560.0,
+            "NET_DEBT": 51073.0,
+            "BS_CASH_NEAR_CASH_ITEM": 9029.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 15676.0,
+            "BS_YEAR_1_PRINCIPAL": 3409.0,
+            "BS_YEAR_2_PRINCIPAL": 3600.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 3015.0,
+            "TRAIL_12M_NET_SALES": 77366.0
+          },
+          {
+            "date": "2020-12-31",
+            "EBIT": 8455.0,
+            "IS_INT_EXPENSE": 2327.0,
+            "TRAIL_12M_EBITDA": 15618.0,
+            "NET_DEBT": 51858.0,
+            "BS_CASH_NEAR_CASH_ITEM": 5906.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 16449.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 3178.0,
+            "TRAIL_12M_NET_SALES": 63642.0
+          },
+          {
+            "date": "2021-12-31",
+            "EBIT": 7551.0,
+            "IS_INT_EXPENSE": 2333.0,
+            "TRAIL_12M_EBITDA": 16242.0,
+            "NET_DEBT": 61564.0,
+            "BS_CASH_NEAR_CASH_ITEM": 8858.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 5473.0,
+            "BS_YEAR_1_PRINCIPAL": 4031.0,
+            "BS_YEAR_2_PRINCIPAL": 3954.0,
+            "TRAIL_12M_FREE_CASH_FLOW": -630.0,
+            "TRAIL_12M_NET_SALES": 81900.0
+          },
+          {
+            "date": "2022-12-30",
+            "TRAIL_12M_EBITDA": 20002.0,
+            "TRAIL_12M_FREE_CASH_FLOW": -2632.0,
+            "TRAIL_12M_NET_SALES": 135653.0
+          },
+          {
+            "date": "2022-12-31",
+            "EBIT": 11193.0,
+            "IS_INT_EXPENSE": 2628.0,
+            "NET_DEBT": 73796.0,
+            "BS_CASH_NEAR_CASH_ITEM": 11041.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 5537.0,
+            "BS_YEAR_1_PRINCIPAL": 2835.0,
+            "BS_YEAR_2_PRINCIPAL": 10927.0
+          },
+          {
+            "date": "2023-12-29",
+            "TRAIL_12M_EBITDA": 19289.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 3237.0,
+            "TRAIL_12M_NET_SALES": 92882.0
+          },
+          {
+            "date": "2023-12-31",
+            "EBIT": 10832.0,
+            "IS_INT_EXPENSE": 3517.0,
+            "NET_DEBT": 67618.0,
+            "BS_CASH_NEAR_CASH_ITEM": 6801.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 17407.0,
+            "BS_YEAR_1_PRINCIPAL": 9086.0,
+            "BS_YEAR_2_PRINCIPAL": 7313.0
+          },
+          {
+            "date": "2024-12-31",
+            "EBIT": 15494.0,
+            "IS_INT_EXPENSE": 3451.0,
+            "TRAIL_12M_EBITDA": 22743.0,
+            "NET_DEBT": 59024.0,
+            "BS_CASH_NEAR_CASH_ITEM": 8051.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 17112.0,
+            "BS_YEAR_1_PRINCIPAL": 11098.0,
+            "BS_YEAR_2_PRINCIPAL": 8928.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 4292.0,
+            "TRAIL_12M_NET_SALES": 73914.0
+          },
+          {
+            "date": "2025-12-31",
+            "EBIT": 11533.0,
+            "IS_INT_EXPENSE": 2846.0,
+            "TRAIL_12M_EBITDA": 21011.0,
+            "NET_DEBT": 62698.0,
+            "BS_CASH_NEAR_CASH_ITEM": 5065.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 16146.0,
+            "BS_YEAR_1_PRINCIPAL": 11778.0,
+            "BS_YEAR_2_PRINCIPAL": 8293.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 5420.0,
+            "TRAIL_12M_NET_SALES": 78057.0
+          }
+        ]
+      }
+    },
+    {
+      "securityData": {
+        "security": "HAL US Equity",
+        "eidData": [],
+        "sequenceNumber": 10,
+        "fieldExceptions": [],
+        "fieldData": [
+          {
+            "date": "2017-12-29",
+            "TRAIL_12M_EBITDA": 2930.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 1095.0,
+            "TRAIL_12M_NET_SALES": 20620.0
+          },
+          {
+            "date": "2017-12-31",
+            "EBIT": 1374.0,
+            "IS_INT_EXPENSE": 705.0,
+            "NET_DEBT": 8605.0,
+            "BS_CASH_NEAR_CASH_ITEM": 2337.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 3000.0,
+            "BS_YEAR_1_PRINCIPAL": 440.0,
+            "BS_YEAR_2_PRINCIPAL": 30.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 10942.0
+          },
+          {
+            "date": "2018-12-31",
+            "EBIT": 2467.0,
+            "IS_INT_EXPENSE": 598.0,
+            "TRAIL_12M_EBITDA": 4073.0,
+            "NET_DEBT": 8336.0,
+            "BS_CASH_NEAR_CASH_ITEM": 2008.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 3000.0,
+            "BS_YEAR_1_PRINCIPAL": 34.0,
+            "BS_YEAR_2_PRINCIPAL": 27.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 10344.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 1131.0,
+            "TRAIL_12M_NET_SALES": 23995.0
+          },
+          {
+            "date": "2019-12-31",
+            "EBIT": -448.0,
+            "IS_INT_EXPENSE": 592.0,
+            "TRAIL_12M_EBITDA": 1527.0,
+            "NET_DEBT": 9235.0,
+            "BS_CASH_NEAR_CASH_ITEM": 2268.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 3500.0,
+            "BS_YEAR_1_PRINCIPAL": 11.0,
+            "BS_YEAR_2_PRINCIPAL": 697.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 10316.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 915.0,
+            "TRAIL_12M_NET_SALES": 22408.0
+          },
+          {
+            "date": "2020-12-31",
+            "EBIT": -2436.0,
+            "IS_INT_EXPENSE": 543.0,
+            "TRAIL_12M_EBITDA": -1086.0,
+            "NET_DEBT": 8415.0,
+            "BS_CASH_NEAR_CASH_ITEM": 2563.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 3500.0,
+            "BS_YEAR_1_PRINCIPAL": 695.0,
+            "BS_YEAR_2_PRINCIPAL": 9.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 9132.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 1153.0,
+            "TRAIL_12M_NET_SALES": 14445.0
+          },
+          {
+            "date": "2021-12-31",
+            "EBIT": 1800.0,
+            "IS_INT_EXPENSE": 529.0,
+            "TRAIL_12M_EBITDA": 2974.0,
+            "NET_DEBT": 7279.0,
+            "BS_CASH_NEAR_CASH_ITEM": 3044.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 3500.0,
+            "BS_YEAR_1_PRINCIPAL": 7.0,
+            "BS_YEAR_2_PRINCIPAL": 600.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 9127.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 1112.0,
+            "TRAIL_12M_NET_SALES": 15295.0
+          },
+          {
+            "date": "2022-12-30",
+            "TRAIL_12M_EBITDA": 3945.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 1231.0,
+            "TRAIL_12M_NET_SALES": 20297.0
+          },
+          {
+            "date": "2022-12-31",
+            "EBIT": 2707.0,
+            "IS_INT_EXPENSE": 492.0,
+            "NET_DEBT": 6738.0,
+            "BS_CASH_NEAR_CASH_ITEM": 2346.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 3500.0,
+            "BS_YEAR_1_PRINCIPAL": 0.0,
+            "BS_YEAR_2_PRINCIPAL": 0.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 7928.0
+          },
+          {
+            "date": "2023-12-29",
+            "TRAIL_12M_EBITDA": 5416.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 2079.0,
+            "TRAIL_12M_NET_SALES": 23018.0
+          },
+          {
+            "date": "2023-12-31",
+            "EBIT": 4083.0,
+            "IS_INT_EXPENSE": 476.0,
+            "NET_DEBT": 6709.0,
+            "BS_CASH_NEAR_CASH_ITEM": 2264.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 3500.0,
+            "BS_YEAR_1_PRINCIPAL": 0.0,
+            "BS_YEAR_2_PRINCIPAL": 382.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 7636.0
+          },
+          {
+            "date": "2024-12-31",
+            "EBIT": 3822.0,
+            "IS_INT_EXPENSE": 450.0,
+            "TRAIL_12M_EBITDA": 5251.0,
+            "NET_DEBT": 6154.0,
+            "BS_CASH_NEAR_CASH_ITEM": 2618.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 3500.0,
+            "BS_YEAR_1_PRINCIPAL": 0.0,
+            "BS_YEAR_2_PRINCIPAL": 381.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 7541.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 2423.0,
+            "TRAIL_12M_NET_SALES": 22944.0
+          },
+          {
+            "date": "2025-12-31",
+            "EBIT": 2260.0,
+            "IS_INT_EXPENSE": 440.0,
+            "TRAIL_12M_EBITDA": 3753.0,
+            "NET_DEBT": 6110.0,
+            "BS_CASH_NEAR_CASH_ITEM": 2206.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 3500.0,
+            "BS_YEAR_1_PRINCIPAL": 0.0,
+            "BS_YEAR_2_PRINCIPAL": 0.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 7158.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 1672.0,
+            "TRAIL_12M_NET_SALES": 22184.0
+          }
+        ]
+      }
+    },
+    {
+      "securityData": {
+        "security": "HD US Equity",
+        "eidData": [],
+        "sequenceNumber": 11,
+        "fieldExceptions": [],
+        "fieldData": [
+          {
+            "date": "2017-01-29",
+            "EBIT": 13427.0,
+            "IS_INT_EXPENSE": 972.0,
+            "NET_DEBT": 21063.0,
+            "BS_CASH_NEAR_CASH_ITEM": 2538.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 1290.0,
+            "BS_YEAR_1_PRINCIPAL": 1210.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 22013.0
+          },
+          {
+            "date": "2017-12-29",
+            "TRAIL_12M_EBITDA": 15400.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 8162.0,
+            "TRAIL_12M_NET_SALES": 94595.0
+          },
+          {
+            "date": "2018-01-28",
+            "EBIT": 14681.0,
+            "IS_INT_EXPENSE": 1057.0,
+            "NET_DEBT": 23433.0,
+            "BS_CASH_NEAR_CASH_ITEM": 3595.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 3000.0,
+            "BS_YEAR_1_PRINCIPAL": 2709.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 24485.0
+          },
+          {
+            "date": "2018-12-31",
+            "TRAIL_12M_EBITDA": 16743.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 10134.0,
+            "TRAIL_12M_NET_SALES": 100904.0
+          },
+          {
+            "date": "2019-02-03",
+            "EBIT": 15530.0,
+            "IS_INT_EXPENSE": 1051.0,
+            "NET_DEBT": 27424.0,
+            "BS_CASH_NEAR_CASH_ITEM": 1778.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 2000.0,
+            "BS_YEAR_1_PRINCIPAL": 2339.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 29202.0
+          },
+          {
+            "date": "2019-12-31",
+            "TRAIL_12M_EBITDA": 17682.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 10596.0,
+            "TRAIL_12M_NET_SALES": 108203.0
+          },
+          {
+            "date": "2020-02-02",
+            "EBIT": 15843.0,
+            "IS_INT_EXPENSE": 1201.0,
+            "NET_DEBT": 35244.0,
+            "BS_CASH_NEAR_CASH_ITEM": 2133.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 3000.0,
+            "BS_YEAR_1_PRINCIPAL": 1750.0,
+            "BS_YEAR_2_PRINCIPAL": 2350.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 31483.0
+          },
+          {
+            "date": "2020-12-31",
+            "TRAIL_12M_EBITDA": 18952.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 11009.0,
+            "TRAIL_12M_NET_SALES": 110225.0
+          },
+          {
+            "date": "2021-01-31",
+            "EBIT": 18278.0,
+            "IS_INT_EXPENSE": 1347.0,
+            "NET_DEBT": 35593.0,
+            "BS_CASH_NEAR_CASH_ITEM": 7895.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 3000.0,
+            "BS_YEAR_1_PRINCIPAL": 1350.0,
+            "BS_YEAR_2_PRINCIPAL": 2250.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 37238.0
+          },
+          {
+            "date": "2021-12-31",
+            "TRAIL_12M_EBITDA": 21566.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 16376.0,
+            "TRAIL_12M_NET_SALES": 132110.0
+          },
+          {
+            "date": "2022-01-30",
+            "EBIT": 23040.0,
+            "IS_INT_EXPENSE": 1347.0,
+            "NET_DEBT": 44124.0,
+            "BS_CASH_NEAR_CASH_ITEM": 2343.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 3000.0,
+            "BS_YEAR_1_PRINCIPAL": 2250.0,
+            "BS_YEAR_2_PRINCIPAL": 1000.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 39051.0
+          },
+          {
+            "date": "2022-12-30",
+            "TRAIL_12M_EBITDA": 26986.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 14005.0,
+            "TRAIL_12M_NET_SALES": 151157.0
+          },
+          {
+            "date": "2023-01-29",
+            "EBIT": 24039.0,
+            "IS_INT_EXPENSE": 1617.0,
+            "NET_DEBT": 47838.0,
+            "BS_CASH_NEAR_CASH_ITEM": 2757.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 3000.0,
+            "BS_YEAR_1_PRINCIPAL": 1000.0,
+            "BS_YEAR_2_PRINCIPAL": 1100.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 43193.0
+          },
+          {
+            "date": "2023-12-29",
+            "TRAIL_12M_EBITDA": 28183.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 11496.0,
+            "TRAIL_12M_NET_SALES": 157403.0
+          },
+          {
+            "date": "2024-01-28",
+            "EBIT": 21689.0,
+            "IS_INT_EXPENSE": 1943.0,
+            "NET_DEBT": 48751.0,
+            "BS_CASH_NEAR_CASH_ITEM": 3760.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 5000.0,
+            "BS_YEAR_1_PRINCIPAL": 1100.0,
+            "BS_YEAR_2_PRINCIPAL": 2750.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 44111.0
+          },
+          {
+            "date": "2024-12-31",
+            "TRAIL_12M_EBITDA": 26295.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 17946.0,
+            "TRAIL_12M_NET_SALES": 152669.0
+          },
+          {
+            "date": "2025-02-02",
+            "EBIT": 21526.0,
+            "IS_INT_EXPENSE": 2321.0,
+            "NET_DEBT": 60903.0,
+            "BS_CASH_NEAR_CASH_ITEM": 1659.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 10000.0,
+            "BS_YEAR_1_PRINCIPAL": 4315.0,
+            "BS_YEAR_2_PRINCIPAL": 4608.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 53067.0
+          },
+          {
+            "date": "2025-12-31",
+            "TRAIL_12M_EBITDA": 26948.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 16325.0,
+            "TRAIL_12M_NET_SALES": 159514.0
+          },
+          {
+            "date": "2026-02-01",
+            "EBIT": 20890.0,
+            "IS_INT_EXPENSE": 2412.0,
+            "NET_DEBT": 64249.0,
+            "BS_CASH_NEAR_CASH_ITEM": 1389.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 11000.0,
+            "BS_YEAR_1_PRINCIPAL": 4684.0,
+            "BS_YEAR_2_PRINCIPAL": 3625.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 51308.0
+          }
+        ]
+      }
+    },
+    {
+      "securityData": {
+        "security": "HSBA LN Equity",
+        "eidData": [],
+        "sequenceNumber": 12,
+        "fieldExceptions": [],
+        "fieldData": [
+          {
+            "date": "2017-12-29",
+            "TRAIL_12M_NET_SALES": 67306.0
+          },
+          {
+            "date": "2017-12-31",
+            "NET_DEBT": -10541.0,
+            "BS_CASH_NEAR_CASH_ITEM": 187252.0
+          },
+          {
+            "date": "2018-12-31",
+            "NET_DEBT": -69176.0,
+            "BS_CASH_NEAR_CASH_ITEM": 168630.0,
+            "TRAIL_12M_NET_SALES": 76324.0
+          },
+          {
+            "date": "2019-12-31",
+            "NET_DEBT": -52825.0,
+            "BS_CASH_NEAR_CASH_ITEM": 159055.0,
+            "TRAIL_12M_NET_SALES": 83747.0
+          },
+          {
+            "date": "2020-12-31",
+            "NET_DEBT": -229515.0,
+            "BS_CASH_NEAR_CASH_ITEM": 308575.0,
+            "TRAIL_12M_NET_SALES": 67784.0
+          },
+          {
+            "date": "2021-12-31",
+            "NET_DEBT": -316582.0,
+            "BS_CASH_NEAR_CASH_ITEM": 407154.0,
+            "TRAIL_12M_NET_SALES": 62942.0
+          },
+          {
+            "date": "2022-12-30",
+            "TRAIL_12M_NET_SALES": 76423.0
+          },
+          {
+            "date": "2022-12-31",
+            "NET_DEBT": -321512.0,
+            "BS_CASH_NEAR_CASH_ITEM": 334299.0
+          },
+          {
+            "date": "2023-12-29",
+            "TRAIL_12M_NET_SALES": 134901.0
+          },
+          {
+            "date": "2023-12-31",
+            "NET_DEBT": -217232.0,
+            "BS_CASH_NEAR_CASH_ITEM": 292210.0
+          },
+          {
+            "date": "2024-12-31",
+            "NET_DEBT": -167201.0,
+            "BS_CASH_NEAR_CASH_ITEM": 267674.0,
+            "TRAIL_12M_NET_SALES": 145717.0
+          },
+          {
+            "date": "2025-12-31",
+            "NET_DEBT": -174990.0,
+            "BS_CASH_NEAR_CASH_ITEM": 242859.0,
+            "TRAIL_12M_NET_SALES": 135617.0
+          }
+        ]
+      }
+    },
+    {
+      "securityData": {
+        "security": "ICICIBC IN Equity",
+        "eidData": [],
+        "sequenceNumber": 13,
+        "fieldExceptions": [],
+        "fieldData": [
+          {
+            "date": "2017-03-31",
+            "NET_DEBT": 1161039.451,
+            "BS_CASH_NEAR_CASH_ITEM": 318912.598
+          },
+          {
+            "date": "2017-12-31",
+            "TRAIL_12M_NET_SALES": 847630.21
+          },
+          {
+            "date": "2018-03-31",
+            "NET_DEBT": 1477097.791,
+            "BS_CASH_NEAR_CASH_ITEM": 332726.026
+          },
+          {
+            "date": "2018-12-31",
+            "TRAIL_12M_NET_SALES": 833827.795
+          },
+          {
+            "date": "2019-03-31",
+            "NET_DEBT": 1315524.092,
+            "BS_CASH_NEAR_CASH_ITEM": 380662.784
+          },
+          {
+            "date": "2019-12-31",
+            "TRAIL_12M_NET_SALES": 921378.587
+          },
+          {
+            "date": "2020-03-31",
+            "NET_DEBT": 917191.227,
+            "BS_CASH_NEAR_CASH_ITEM": 353119.341
+          },
+          {
+            "date": "2020-12-31",
+            "TRAIL_12M_NET_SALES": 1072274.519
+          },
+          {
+            "date": "2021-03-31",
+            "NET_DEBT": 92048.226,
+            "BS_CASH_NEAR_CASH_ITEM": 463022.049
+          },
+          {
+            "date": "2021-12-31",
+            "TRAIL_12M_NET_SALES": 1141408.672
+          },
+          {
+            "date": "2022-03-31",
+            "NET_DEBT": -84297.582,
+            "BS_CASH_NEAR_CASH_ITEM": 602287.069
+          },
+          {
+            "date": "2022-12-31",
+            "TRAIL_12M_NET_SALES": 1176600.384
+          },
+          {
+            "date": "2023-03-31",
+            "NET_DEBT": 662305.921,
+            "BS_CASH_NEAR_CASH_ITEM": 686489.413
+          },
+          {
+            "date": "2023-12-31",
+            "TRAIL_12M_NET_SALES": 1445236.845
+          },
+          {
+            "date": "2024-03-31",
+            "NET_DEBT": 574991.482,
+            "BS_CASH_NEAR_CASH_ITEM": 899430.231
+          },
+          {
+            "date": "2024-12-31",
+            "TRAIL_12M_NET_SALES": 1857776.114
+          },
+          {
+            "date": "2025-03-31",
+            "NET_DEBT": 138859.831,
+            "BS_CASH_NEAR_CASH_ITEM": 1202409.132
+          },
+          {
+            "date": "2025-12-31",
+            "TRAIL_12M_NET_SALES": 2945869.343
+          },
+          {
+            "date": "2026-03-31",
+            "NET_DEBT": -347490.182,
+            "BS_CASH_NEAR_CASH_ITEM": 1212371.937
+          }
+        ]
+      }
+    },
+    {
+      "securityData": {
+        "security": "IMB LN Equity",
+        "eidData": [],
+        "sequenceNumber": 14,
+        "fieldExceptions": [],
+        "fieldData": [
+          {
+            "date": "2017-09-30",
+            "EBIT": 2278.0,
+            "IS_INT_EXPENSE": 549.0,
+            "NET_DEBT": 11925.0,
+            "BS_CASH_NEAR_CASH_ITEM": 624.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 3000.0,
+            "BS_YEAR_1_PRINCIPAL": 2353.0,
+            "BS_YEAR_2_PRINCIPAL": 720.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 10196.0
+          },
+          {
+            "date": "2017-12-29",
+            "TRAIL_12M_EBITDA": 3594.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 2337.0,
+            "TRAIL_12M_NET_SALES": 30247.0
+          },
+          {
+            "date": "2018-09-30",
+            "EBIT": 2407.0,
+            "IS_INT_EXPENSE": 497.0,
+            "NET_DEBT": 11220.0,
+            "BS_CASH_NEAR_CASH_ITEM": 775.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 4056.0,
+            "BS_YEAR_1_PRINCIPAL": 2397.0,
+            "BS_YEAR_2_PRINCIPAL": 1656.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 9598.0
+          },
+          {
+            "date": "2018-12-31",
+            "TRAIL_12M_EBITDA": 3673.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 2269.0,
+            "TRAIL_12M_NET_SALES": 30066.0
+          },
+          {
+            "date": "2019-09-30",
+            "EBIT": 2197.0,
+            "IS_INT_EXPENSE": 466.0,
+            "NET_DEBT": 11348.0,
+            "BS_CASH_NEAR_CASH_ITEM": 2286.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 3277.0,
+            "BS_YEAR_1_PRINCIPAL": 1937.0,
+            "BS_YEAR_2_PRINCIPAL": 1340.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 11697.0
+          },
+          {
+            "date": "2019-12-31",
+            "TRAIL_12M_EBITDA": 3513.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 2354.0,
+            "TRAIL_12M_NET_SALES": 31594.0
+          },
+          {
+            "date": "2020-09-30",
+            "EBIT": 2731.0,
+            "IS_INT_EXPENSE": 432.0,
+            "NET_DEBT": 10325.0,
+            "BS_CASH_NEAR_CASH_ITEM": 1626.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 4744.0,
+            "BS_YEAR_1_PRINCIPAL": 1442.0,
+            "BS_YEAR_2_PRINCIPAL": 2037.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 10210.0
+          },
+          {
+            "date": "2020-12-31",
+            "TRAIL_12M_EBITDA": 3641.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 3308.0,
+            "TRAIL_12M_NET_SALES": 32562.0
+          },
+          {
+            "date": "2021-09-30",
+            "EBIT": 3146.0,
+            "IS_INT_EXPENSE": 428.0,
+            "NET_DEBT": 8786.0,
+            "BS_CASH_NEAR_CASH_ITEM": 1287.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 3012.0,
+            "BS_YEAR_1_PRINCIPAL": 1107.0,
+            "BS_YEAR_2_PRINCIPAL": 1393.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 8715.0
+          },
+          {
+            "date": "2021-12-31",
+            "TRAIL_12M_EBITDA": 3961.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 1567.0,
+            "TRAIL_12M_NET_SALES": 32791.0
+          },
+          {
+            "date": "2022-09-30",
+            "EBIT": 2683.0,
+            "IS_INT_EXPENSE": 329.0,
+            "NET_DEBT": 8405.0,
+            "BS_CASH_NEAR_CASH_ITEM": 1850.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 3091.0,
+            "BS_YEAR_1_PRINCIPAL": 1011.0,
+            "BS_YEAR_2_PRINCIPAL": 1537.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 8996.0
+          },
+          {
+            "date": "2022-12-30",
+            "TRAIL_12M_EBITDA": 3343.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 2598.0,
+            "TRAIL_12M_NET_SALES": 32551.0
+          },
+          {
+            "date": "2023-09-30",
+            "EBIT": 3402.0,
+            "IS_INT_EXPENSE": 412.0,
+            "NET_DEBT": 8385.0,
+            "BS_CASH_NEAR_CASH_ITEM": 1345.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 3575.0,
+            "BS_YEAR_1_PRINCIPAL": 1499.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 9381.0
+          },
+          {
+            "date": "2023-12-29",
+            "TRAIL_12M_EBITDA": 4034.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 2397.0,
+            "TRAIL_12M_NET_SALES": 32475.0
+          },
+          {
+            "date": "2024-09-30",
+            "EBIT": 3554.0,
+            "IS_INT_EXPENSE": 404.0,
+            "NET_DEBT": 8005.0,
+            "BS_CASH_NEAR_CASH_ITEM": 1078.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 3164.0,
+            "BS_YEAR_1_PRINCIPAL": 1197.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 8697.0
+          },
+          {
+            "date": "2024-12-31",
+            "TRAIL_12M_EBITDA": 4201.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 2520.0,
+            "TRAIL_12M_NET_SALES": 32411.0
+          },
+          {
+            "date": "2025-09-30",
+            "EBIT": 3490.0,
+            "IS_INT_EXPENSE": 412.0,
+            "NET_DEBT": 8557.0,
+            "BS_CASH_NEAR_CASH_ITEM": 1439.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 3319.0,
+            "BS_YEAR_1_PRINCIPAL": 1070.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 9594.0
+          },
+          {
+            "date": "2025-12-31",
+            "TRAIL_12M_EBITDA": 4271.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 3045.0,
+            "TRAIL_12M_NET_SALES": 32171.0
+          }
+        ]
+      }
+    },
+    {
+      "securityData": {
+        "security": "INTU US Equity",
+        "eidData": [],
+        "sequenceNumber": 15,
+        "fieldExceptions": [],
+        "fieldData": [
+          {
+            "date": "2017-07-31",
+            "EBIT": 1418.0,
+            "IS_INT_EXPENSE": 31.0,
+            "NET_DEBT": -289.0,
+            "BS_CASH_NEAR_CASH_ITEM": 529.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 1000.0,
+            "BS_YEAR_1_PRINCIPAL": 50.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 488.0
+          },
+          {
+            "date": "2017-12-29",
+            "TRAIL_12M_EBITDA": 1654.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 1369.0,
+            "TRAIL_12M_NET_SALES": 5196.0
+          },
+          {
+            "date": "2018-07-31",
+            "EBIT": 1560.0,
+            "IS_INT_EXPENSE": 20.0,
+            "NET_DEBT": -1278.0,
+            "BS_CASH_NEAR_CASH_ITEM": 1464.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 1000.0,
+            "BS_YEAR_1_PRINCIPAL": 50.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 438.0
+          },
+          {
+            "date": "2018-12-31",
+            "TRAIL_12M_EBITDA": 1813.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 1988.0,
+            "TRAIL_12M_NET_SALES": 6025.0
+          },
+          {
+            "date": "2019-07-31",
+            "EBIT": 1854.0,
+            "IS_INT_EXPENSE": 15.0,
+            "NET_DEBT": -2304.0,
+            "BS_CASH_NEAR_CASH_ITEM": 2116.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 1000.0,
+            "BS_YEAR_1_PRINCIPAL": 50.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 436.0
+          },
+          {
+            "date": "2019-12-31",
+            "TRAIL_12M_EBITDA": 2079.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 2169.0,
+            "TRAIL_12M_NET_SALES": 6784.0
+          },
+          {
+            "date": "2020-07-31",
+            "EBIT": 2176.0,
+            "IS_INT_EXPENSE": 14.0,
+            "NET_DEBT": -3414.0,
+            "BS_CASH_NEAR_CASH_ITEM": 6442.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 1000.0,
+            "BS_YEAR_1_PRINCIPAL": 338.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 3369.0
+          },
+          {
+            "date": "2020-12-31",
+            "TRAIL_12M_EBITDA": 2441.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 2277.0,
+            "TRAIL_12M_NET_SALES": 7679.0
+          },
+          {
+            "date": "2021-07-31",
+            "EBIT": 2500.0,
+            "IS_INT_EXPENSE": 29.0,
+            "NET_DEBT": -1390.0,
+            "BS_CASH_NEAR_CASH_ITEM": 2562.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 1400.0,
+            "BS_YEAR_1_PRINCIPAL": 325.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 2034.0
+          },
+          {
+            "date": "2021-12-31",
+            "TRAIL_12M_EBITDA": 2922.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 3125.0,
+            "TRAIL_12M_NET_SALES": 9633.0
+          },
+          {
+            "date": "2022-07-31",
+            "EBIT": 2571.0,
+            "IS_INT_EXPENSE": 81.0,
+            "NET_DEBT": 4259.0,
+            "BS_CASH_NEAR_CASH_ITEM": 2796.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 1000.0,
+            "BS_YEAR_1_PRINCIPAL": 0.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 6415.0
+          },
+          {
+            "date": "2022-12-30",
+            "TRAIL_12M_EBITDA": 3405.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 3660.0,
+            "TRAIL_12M_NET_SALES": 12726.0
+          },
+          {
+            "date": "2023-07-31",
+            "EBIT": 3141.0,
+            "IS_INT_EXPENSE": 248.0,
+            "NET_DEBT": 3027.0,
+            "BS_CASH_NEAR_CASH_ITEM": 2848.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 1000.0,
+            "BS_YEAR_1_PRINCIPAL": 0.0,
+            "BS_YEAR_2_PRINCIPAL": 4700.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 6130.0
+          },
+          {
+            "date": "2023-12-29",
+            "TRAIL_12M_EBITDA": 4059.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 4786.0,
+            "TRAIL_12M_NET_SALES": 14368.0
+          },
+          {
+            "date": "2024-07-31",
+            "EBIT": 3630.0,
+            "IS_INT_EXPENSE": 242.0,
+            "NET_DEBT": 2493.0,
+            "BS_CASH_NEAR_CASH_ITEM": 3609.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 1500.0,
+            "BS_YEAR_1_PRINCIPAL": 500.0,
+            "BS_YEAR_2_PRINCIPAL": 0.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 6038.0
+          },
+          {
+            "date": "2024-12-31",
+            "TRAIL_12M_EBITDA": 4516.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 4634.0,
+            "TRAIL_12M_NET_SALES": 16285.0
+          },
+          {
+            "date": "2025-07-31",
+            "EBIT": 4923.0,
+            "IS_INT_EXPENSE": 247.0,
+            "NET_DEBT": 2087.0,
+            "BS_CASH_NEAR_CASH_ITEM": 2884.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 4500.0,
+            "BS_YEAR_1_PRINCIPAL": 0.0,
+            "BS_YEAR_2_PRINCIPAL": 1250.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 5973.0
+          },
+          {
+            "date": "2025-12-31",
+            "TRAIL_12M_EBITDA": 5833.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 6083.0,
+            "TRAIL_12M_NET_SALES": 18831.0
+          },
+          {
+            "date": "2026-07-31",
+            "EBIT": 5884.0,
+            "IS_INT_EXPENSE": 256.0,
+            "NET_DEBT": 1221.0,
+            "BS_CASH_NEAR_CASH_ITEM": 4705.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 2200.0,
+            "BS_YEAR_1_PRINCIPAL": 1250.0,
+            "BS_YEAR_2_PRINCIPAL": 400.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 7669.0
+          }
+        ]
+      }
+    },
+    {
+      "securityData": {
+        "security": "KMB US Equity",
+        "eidData": [],
+        "sequenceNumber": 16,
+        "fieldExceptions": [],
+        "fieldData": [
+          {
+            "date": "2017-12-29",
+            "TRAIL_12M_EBITDA": 4082.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 2144.0,
+            "TRAIL_12M_NET_SALES": 18348.0
+          },
+          {
+            "date": "2017-12-31",
+            "EBIT": 3358.0,
+            "IS_INT_EXPENSE": 318.0,
+            "NET_DEBT": 6809.0,
+            "BS_CASH_NEAR_CASH_ITEM": 616.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 2000.0,
+            "BS_YEAR_1_PRINCIPAL": 407.0,
+            "BS_YEAR_2_PRINCIPAL": 714.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 6878.0
+          },
+          {
+            "date": "2018-12-31",
+            "EBIT": 2229.0,
+            "IS_INT_EXPENSE": 263.0,
+            "TRAIL_12M_EBITDA": 3111.0,
+            "NET_DEBT": 6916.0,
+            "BS_CASH_NEAR_CASH_ITEM": 539.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 2000.0,
+            "BS_YEAR_1_PRINCIPAL": 716.0,
+            "BS_YEAR_2_PRINCIPAL": 758.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 6960.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 2093.0,
+            "TRAIL_12M_NET_SALES": 18486.0
+          },
+          {
+            "date": "2019-12-31",
+            "EBIT": 2991.0,
+            "IS_INT_EXPENSE": 261.0,
+            "TRAIL_12M_EBITDA": 4077.0,
+            "NET_DEBT": 7709.0,
+            "BS_CASH_NEAR_CASH_ITEM": 442.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 2000.0,
+            "BS_YEAR_1_PRINCIPAL": 761.0,
+            "BS_YEAR_2_PRINCIPAL": 258.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 6972.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 1527.0,
+            "TRAIL_12M_NET_SALES": 18450.0
+          },
+          {
+            "date": "2020-12-31",
+            "EBIT": 3244.0,
+            "IS_INT_EXPENSE": 252.0,
+            "TRAIL_12M_EBITDA": 4218.0,
+            "NET_DEBT": 8617.0,
+            "BS_CASH_NEAR_CASH_ITEM": 303.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 2750.0,
+            "BS_YEAR_1_PRINCIPAL": 265.0,
+            "BS_YEAR_2_PRINCIPAL": 314.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 8141.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 2512.0,
+            "TRAIL_12M_NET_SALES": 19140.0
+          },
+          {
+            "date": "2021-12-31",
+            "EBIT": 2561.0,
+            "IS_INT_EXPENSE": 256.0,
+            "TRAIL_12M_EBITDA": 3499.0,
+            "NET_DEBT": 8827.0,
+            "BS_CASH_NEAR_CASH_ITEM": 270.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 2775.0,
+            "BS_YEAR_1_PRINCIPAL": 317.0,
+            "BS_YEAR_2_PRINCIPAL": 473.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 8456.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 1723.0,
+            "TRAIL_12M_NET_SALES": 19440.0
+          },
+          {
+            "date": "2022-12-30",
+            "TRAIL_12M_EBITDA": 3596.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 1857.0,
+            "TRAIL_12M_NET_SALES": 20175.0
+          },
+          {
+            "date": "2022-12-31",
+            "EBIT": 2681.0,
+            "IS_INT_EXPENSE": 282.0,
+            "NET_DEBT": 8499.0,
+            "BS_CASH_NEAR_CASH_ITEM": 427.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 2775.0,
+            "BS_YEAR_1_PRINCIPAL": 472.0,
+            "BS_YEAR_2_PRINCIPAL": 524.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 8049.0
+          },
+          {
+            "date": "2023-12-29",
+            "TRAIL_12M_EBITDA": 3244.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 2776.0,
+            "TRAIL_12M_NET_SALES": 20431.0
+          },
+          {
+            "date": "2023-12-31",
+            "EBIT": 2344.0,
+            "IS_INT_EXPENSE": 293.0,
+            "NET_DEBT": 7367.0,
+            "BS_CASH_NEAR_CASH_ITEM": 1093.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 2750.0,
+            "BS_YEAR_1_PRINCIPAL": 566.0,
+            "BS_YEAR_2_PRINCIPAL": 559.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 7982.0
+          },
+          {
+            "date": "2024-12-31",
+            "EBIT": 2700.0,
+            "IS_INT_EXPENSE": 270.0,
+            "TRAIL_12M_EBITDA": 3617.0,
+            "NET_DEBT": 6789.0,
+            "BS_CASH_NEAR_CASH_ITEM": 1010.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 2750.0,
+            "BS_YEAR_1_PRINCIPAL": 566.0,
+            "BS_YEAR_2_PRINCIPAL": 410.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 7451.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 2513.0,
+            "TRAIL_12M_NET_SALES": 16805.0
+          },
+          {
+            "date": "2025-12-31",
+            "EBIT": 2351.0,
+            "IS_INT_EXPENSE": 256.0,
+            "TRAIL_12M_EBITDA": 3297.0,
+            "NET_DEBT": 6866.0,
+            "BS_CASH_NEAR_CASH_ITEM": 688.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 2750.0,
+            "BS_YEAR_1_PRINCIPAL": 413.0,
+            "BS_YEAR_2_PRINCIPAL": 608.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 6896.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 1639.0,
+            "TRAIL_12M_NET_SALES": 16447.0
+          }
+        ]
+      }
+    },
+    {
+      "securityData": {
+        "security": "KPN NA Equity",
+        "eidData": [],
+        "sequenceNumber": 17,
+        "fieldExceptions": [],
+        "fieldData": [
+          {
+            "date": "2017-12-29",
+            "TRAIL_12M_EBITDA": 2169.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 1126.0,
+            "TRAIL_12M_NET_SALES": 5740.0
+          },
+          {
+            "date": "2017-12-31",
+            "EBIT": 755.0,
+            "IS_INT_EXPENSE": 323.0,
+            "NET_DEBT": 6411.0,
+            "BS_CASH_NEAR_CASH_ITEM": 856.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 1250.0,
+            "BS_YEAR_1_PRINCIPAL": 0.0,
+            "BS_YEAR_2_PRINCIPAL": 2264.0
+          },
+          {
+            "date": "2018-12-31",
+            "EBIT": 820.0,
+            "IS_INT_EXPENSE": 315.0,
+            "TRAIL_12M_EBITDA": 2353.0,
+            "NET_DEBT": 5834.0,
+            "BS_CASH_NEAR_CASH_ITEM": 594.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 1250.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 7519.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 1291.0,
+            "TRAIL_12M_NET_SALES": 5633.0
+          },
+          {
+            "date": "2019-12-31",
+            "EBIT": 1041.0,
+            "IS_INT_EXPENSE": 279.0,
+            "TRAIL_12M_EBITDA": 2578.0,
+            "NET_DEBT": 5148.0,
+            "BS_CASH_NEAR_CASH_ITEM": 766.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 1250.0,
+            "BS_YEAR_1_PRINCIPAL": 931.0,
+            "BS_YEAR_2_PRINCIPAL": 613.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 6659.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 1147.0,
+            "TRAIL_12M_NET_SALES": 5499.0
+          },
+          {
+            "date": "2020-12-31",
+            "EBIT": 911.0,
+            "IS_INT_EXPENSE": 217.0,
+            "TRAIL_12M_EBITDA": 2463.0,
+            "NET_DEBT": 5332.0,
+            "BS_CASH_NEAR_CASH_ITEM": 597.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 1250.0,
+            "BS_YEAR_1_PRINCIPAL": 673.0,
+            "BS_YEAR_2_PRINCIPAL": 616.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 6500.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 1121.0,
+            "TRAIL_12M_NET_SALES": 5283.0
+          },
+          {
+            "date": "2021-12-31",
+            "EBIT": 1862.0,
+            "IS_INT_EXPENSE": 203.0,
+            "TRAIL_12M_EBITDA": 3322.0,
+            "NET_DEBT": 6307.0,
+            "BS_CASH_NEAR_CASH_ITEM": 793.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 1000.0,
+            "BS_YEAR_1_PRINCIPAL": 676.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 6550.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 1138.0,
+            "TRAIL_12M_NET_SALES": 5270.0
+          },
+          {
+            "date": "2022-12-30",
+            "TRAIL_12M_EBITDA": 2560.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 1226.0,
+            "TRAIL_12M_NET_SALES": 5311.0
+          },
+          {
+            "date": "2022-12-31",
+            "EBIT": 1214.0,
+            "IS_INT_EXPENSE": 196.0,
+            "NET_DEBT": 5435.0,
+            "BS_CASH_NEAR_CASH_ITEM": 399.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 1000.0,
+            "BS_YEAR_1_PRINCIPAL": 196.0,
+            "BS_YEAR_2_PRINCIPAL": 431.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 5495.0
+          },
+          {
+            "date": "2023-12-29",
+            "TRAIL_12M_EBITDA": 2548.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 1252.0,
+            "TRAIL_12M_NET_SALES": 5439.0
+          },
+          {
+            "date": "2023-12-31",
+            "EBIT": 1342.0,
+            "IS_INT_EXPENSE": 245.0,
+            "NET_DEBT": 5852.0,
+            "BS_CASH_NEAR_CASH_ITEM": 608.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 1000.0,
+            "BS_YEAR_1_PRINCIPAL": 431.0,
+            "BS_YEAR_2_PRINCIPAL": 625.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 6908.0
+          },
+          {
+            "date": "2024-12-31",
+            "EBIT": 1392.0,
+            "IS_INT_EXPENSE": 255.0,
+            "TRAIL_12M_EBITDA": 2632.0,
+            "NET_DEBT": 5043.0,
+            "BS_CASH_NEAR_CASH_ITEM": 662.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 1000.0,
+            "BS_YEAR_1_PRINCIPAL": 844.0,
+            "BS_YEAR_2_PRINCIPAL": 302.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 7257.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 1256.0,
+            "TRAIL_12M_NET_SALES": 5603.0
+          },
+          {
+            "date": "2025-12-31",
+            "EBIT": 1370.0,
+            "IS_INT_EXPENSE": 248.0,
+            "TRAIL_12M_EBITDA": 2716.0,
+            "NET_DEBT": 5545.0,
+            "BS_CASH_NEAR_CASH_ITEM": 405.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 1000.0,
+            "BS_YEAR_1_PRINCIPAL": 287.0,
+            "BS_YEAR_2_PRINCIPAL": 300.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 7298.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 1292.0,
+            "TRAIL_12M_NET_SALES": 5797.0
+          }
+        ]
+      }
+    },
+    {
+      "securityData": {
+        "security": "NG/ LN Equity",
+        "eidData": [],
+        "sequenceNumber": 18,
+        "fieldExceptions": [],
+        "fieldData": [
+          {
+            "date": "2017-03-31",
+            "EBIT": 3145.0,
+            "IS_INT_EXPENSE": 894.0,
+            "NET_DEBT": 18758.0,
+            "BS_CASH_NEAR_CASH_ITEM": 1139.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 5276.0,
+            "BS_YEAR_1_PRINCIPAL": 5496.0,
+            "BS_YEAR_2_PRINCIPAL": 1941.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 28638.0
+          },
+          {
+            "date": "2017-12-29",
+            "TRAIL_12M_EBITDA": 4626.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 1244.0,
+            "TRAIL_12M_NET_SALES": 15035.0
+          },
+          {
+            "date": "2018-03-31",
+            "EBIT": 3449.0,
+            "IS_INT_EXPENSE": 1000.0,
+            "NET_DEBT": 23602.0,
+            "BS_CASH_NEAR_CASH_ITEM": 329.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 5683.0,
+            "BS_YEAR_1_PRINCIPAL": 4447.0,
+            "BS_YEAR_2_PRINCIPAL": 1694.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 26625.0
+          },
+          {
+            "date": "2018-12-31",
+            "TRAIL_12M_EBITDA": 4979.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 11.0,
+            "TRAIL_12M_NET_SALES": 15250.0
+          },
+          {
+            "date": "2019-03-31",
+            "EBIT": 2830.0,
+            "IS_INT_EXPENSE": 907.0,
+            "NET_DEBT": 26497.0,
+            "BS_CASH_NEAR_CASH_ITEM": 252.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 5727.0,
+            "BS_YEAR_1_PRINCIPAL": 4472.0,
+            "BS_YEAR_2_PRINCIPAL": 2393.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 28730.0
+          },
+          {
+            "date": "2019-12-31",
+            "TRAIL_12M_EBITDA": 4418.0,
+            "TRAIL_12M_FREE_CASH_FLOW": -166.0,
+            "TRAIL_12M_NET_SALES": 14933.0
+          },
+          {
+            "date": "2020-03-31",
+            "EBIT": 2191.0,
+            "IS_INT_EXPENSE": 991.0,
+            "NET_DEBT": 28723.0,
+            "BS_CASH_NEAR_CASH_ITEM": 73.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 5772.0,
+            "BS_YEAR_1_PRINCIPAL": 4072.0,
+            "BS_YEAR_2_PRINCIPAL": 2212.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 30794.0
+          },
+          {
+            "date": "2020-12-31",
+            "TRAIL_12M_EBITDA": 3626.0,
+            "TRAIL_12M_FREE_CASH_FLOW": -392.0,
+            "TRAIL_12M_NET_SALES": 13360.0
+          },
+          {
+            "date": "2021-03-31",
+            "EBIT": 2335.0,
+            "IS_INT_EXPENSE": 900.0,
+            "NET_DEBT": 28721.0,
+            "BS_CASH_NEAR_CASH_ITEM": 157.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 5525.0,
+            "BS_YEAR_1_PRINCIPAL": 3737.0,
+            "BS_YEAR_2_PRINCIPAL": 1745.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 31220.0
+          },
+          {
+            "date": "2021-12-31",
+            "TRAIL_12M_EBITDA": 3820.0,
+            "TRAIL_12M_FREE_CASH_FLOW": -405.0,
+            "TRAIL_12M_NET_SALES": 13665.0
+          },
+          {
+            "date": "2022-03-31",
+            "EBIT": 4223.0,
+            "IS_INT_EXPENSE": 1157.0,
+            "NET_DEBT": 42116.0,
+            "BS_CASH_NEAR_CASH_ITEM": 204.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 6914.0,
+            "BS_YEAR_1_PRINCIPAL": 12121.0,
+            "BS_YEAR_2_PRINCIPAL": 1410.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 45465.0
+          },
+          {
+            "date": "2022-12-30",
+            "TRAIL_12M_EBITDA": 6053.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 327.0,
+            "TRAIL_12M_NET_SALES": 18449.0
+          },
+          {
+            "date": "2023-03-31",
+            "EBIT": 4689.0,
+            "IS_INT_EXPENSE": 1667.0,
+            "NET_DEBT": 40217.0,
+            "BS_CASH_NEAR_CASH_ITEM": 163.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 6503.0,
+            "BS_YEAR_1_PRINCIPAL": 2955.0,
+            "BS_YEAR_2_PRINCIPAL": 2799.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 42985.0
+          },
+          {
+            "date": "2023-12-29",
+            "TRAIL_12M_EBITDA": 6673.0,
+            "TRAIL_12M_FREE_CASH_FLOW": -602.0,
+            "TRAIL_12M_NET_SALES": 21659.0
+          },
+          {
+            "date": "2024-03-31",
+            "EBIT": 4475.0,
+            "IS_INT_EXPENSE": 1692.0,
+            "NET_DEBT": 42814.0,
+            "BS_CASH_NEAR_CASH_ITEM": 559.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 7905.0,
+            "BS_YEAR_1_PRINCIPAL": 4859.0,
+            "BS_YEAR_2_PRINCIPAL": 2706.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 47072.0
+          },
+          {
+            "date": "2024-12-31",
+            "TRAIL_12M_EBITDA": 6536.0,
+            "TRAIL_12M_FREE_CASH_FLOW": -1268.0,
+            "TRAIL_12M_NET_SALES": 19850.0
+          },
+          {
+            "date": "2025-03-31",
+            "EBIT": 4934.0,
+            "IS_INT_EXPENSE": 1784.0,
+            "NET_DEBT": 40608.0,
+            "BS_CASH_NEAR_CASH_ITEM": 1178.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 7832.0,
+            "BS_YEAR_1_PRINCIPAL": 4662.0,
+            "BS_YEAR_2_PRINCIPAL": 3283.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 47539.0
+          },
+          {
+            "date": "2025-12-31",
+            "TRAIL_12M_EBITDA": 7109.0,
+            "TRAIL_12M_FREE_CASH_FLOW": -3434.0,
+            "TRAIL_12M_NET_SALES": 18378.0
+          },
+          {
+            "date": "2026-03-31",
+            "EBIT": 5355.0,
+            "IS_INT_EXPENSE": 1634.0,
+            "NET_DEBT": 43927.0,
+            "BS_CASH_NEAR_CASH_ITEM": 375.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 8007.0,
+            "BS_YEAR_1_PRINCIPAL": 3900.0,
+            "BS_YEAR_2_PRINCIPAL": 2513.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 46755.0
+          }
+        ]
+      }
+    },
+    {
+      "securityData": {
+        "security": "NOVN SW Equity",
+        "eidData": [],
+        "sequenceNumber": 19,
+        "fieldExceptions": [],
+        "fieldData": [
+          {
+            "date": "2017-12-29",
+            "TRAIL_12M_EBITDA": 13827.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 10925.0,
+            "TRAIL_12M_NET_SALES": 50135.0
+          },
+          {
+            "date": "2017-12-31",
+            "EBIT": 8629.0,
+            "IS_INT_EXPENSE": 777.0,
+            "NET_DEBT": 18940.0,
+            "BS_CASH_NEAR_CASH_ITEM": 8860.0,
+            "BS_YEAR_1_PRINCIPAL": 5308.0,
+            "BS_YEAR_2_PRINCIPAL": 359.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 28891.0
+          },
+          {
+            "date": "2018-12-31",
+            "EBIT": 8403.0,
+            "IS_INT_EXPENSE": 932.0,
+            "TRAIL_12M_EBITDA": 13614.0,
+            "NET_DEBT": 16256.0,
+            "BS_CASH_NEAR_CASH_ITEM": 13271.0,
+            "BS_YEAR_1_PRINCIPAL": 9678.0,
+            "BS_YEAR_2_PRINCIPAL": 2006.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 32148.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 14241.0,
+            "TRAIL_12M_NET_SALES": 46099.0
+          },
+          {
+            "date": "2019-12-31",
+            "EBIT": 9086.0,
+            "IS_INT_EXPENSE": 916.0,
+            "TRAIL_12M_EBITDA": 14607.0,
+            "NET_DEBT": 17804.0,
+            "BS_CASH_NEAR_CASH_ITEM": 11112.0,
+            "BS_YEAR_1_PRINCIPAL": 7031.0,
+            "BS_YEAR_2_PRINCIPAL": 2002.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 27384.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 12324.0,
+            "TRAIL_12M_NET_SALES": 48677.0
+          },
+          {
+            "date": "2020-12-31",
+            "EBIT": 10152.0,
+            "IS_INT_EXPENSE": 936.0,
+            "TRAIL_12M_EBITDA": 14932.0,
+            "NET_DEBT": 26451.0,
+            "BS_CASH_NEAR_CASH_ITEM": 9658.0,
+            "BS_YEAR_1_PRINCIPAL": 9785.0,
+            "BS_YEAR_2_PRINCIPAL": 2272.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 36044.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 12375.0,
+            "TRAIL_12M_NET_SALES": 49898.0
+          },
+          {
+            "date": "2021-12-31",
+            "EBIT": 11689.0,
+            "IS_INT_EXPENSE": 811.0,
+            "TRAIL_12M_EBITDA": 17118.0,
+            "NET_DEBT": 2801.0,
+            "BS_CASH_NEAR_CASH_ITEM": 12407.0,
+            "BS_YEAR_1_PRINCIPAL": 6295.0,
+            "BS_YEAR_2_PRINCIPAL": 2621.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 31818.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 13693.0,
+            "TRAIL_12M_NET_SALES": 52877.0
+          },
+          {
+            "date": "2022-12-30",
+            "TRAIL_12M_EBITDA": 14651.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 13320.0,
+            "TRAIL_12M_NET_SALES": 43461.0
+          },
+          {
+            "date": "2022-12-31",
+            "EBIT": 7946.0,
+            "IS_INT_EXPENSE": 743.0,
+            "NET_DEBT": 9183.0,
+            "BS_CASH_NEAR_CASH_ITEM": 7517.0,
+            "BS_YEAR_1_PRINCIPAL": 5931.0,
+            "BS_YEAR_2_PRINCIPAL": 2241.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 28416.0
+          },
+          {
+            "date": "2023-12-29",
+            "TRAIL_12M_EBITDA": 18046.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 13398.0,
+            "TRAIL_12M_NET_SALES": 46660.0
+          },
+          {
+            "date": "2023-12-31",
+            "EBIT": 9769.0,
+            "IS_INT_EXPENSE": 793.0,
+            "NET_DEBT": 12275.0,
+            "BS_CASH_NEAR_CASH_ITEM": 13393.0,
+            "BS_YEAR_1_PRINCIPAL": 6175.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 24611.0
+          },
+          {
+            "date": "2024-12-31",
+            "EBIT": 14544.0,
+            "IS_INT_EXPENSE": 939.0,
+            "TRAIL_12M_EBITDA": 20613.0,
+            "NET_DEBT": 17907.0,
+            "BS_CASH_NEAR_CASH_ITEM": 11459.0,
+            "BS_YEAR_1_PRINCIPAL": 8232.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 29598.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 16253.0,
+            "TRAIL_12M_NET_SALES": 51722.0
+          },
+          {
+            "date": "2025-12-31",
+            "EBIT": 17644.0,
+            "IS_INT_EXPENSE": 1076.0,
+            "TRAIL_12M_EBITDA": 22919.0,
+            "NET_DEBT": 23045.0,
+            "BS_CASH_NEAR_CASH_ITEM": 11435.0,
+            "BS_YEAR_1_PRINCIPAL": 5602.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 33537.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 17546.0,
+            "TRAIL_12M_NET_SALES": 56674.0
+          }
+        ]
+      }
+    },
+    {
+      "securityData": {
+        "security": "NU US Equity",
+        "eidData": [],
+        "sequenceNumber": 20,
+        "fieldExceptions": [],
+        "fieldData": [
+          {
+            "date": "2018-12-31",
+            "EBIT": 55.155,
+            "TRAIL_12M_EBITDA": 56.226,
+            "NET_DEBT": -263.793,
+            "BS_CASH_NEAR_CASH_ITEM": 379.207,
+            "BS_YEAR_1_PRINCIPAL": 17.254,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 115.414,
+            "TRAIL_12M_FREE_CASH_FLOW": -11.321,
+            "TRAIL_12M_NET_SALES": 318.919
+          },
+          {
+            "date": "2019-12-31",
+            "EBIT": 59.714,
+            "TRAIL_12M_EBITDA": 64.787,
+            "NET_DEBT": -924.539,
+            "BS_CASH_NEAR_CASH_ITEM": 1246.566,
+            "BS_YEAR_1_PRINCIPAL": 101.491,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 303.326,
+            "TRAIL_12M_FREE_CASH_FLOW": 273.76,
+            "TRAIL_12M_NET_SALES": 612.109
+          },
+          {
+            "date": "2020-12-31",
+            "EBIT": 21.898,
+            "IS_INT_EXPENSE": 87.325,
+            "TRAIL_12M_EBITDA": 29.326,
+            "NET_DEBT": -2198.112,
+            "BS_CASH_NEAR_CASH_ITEM": 2343.78,
+            "BS_YEAR_1_PRINCIPAL": 136.644,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 177.196,
+            "TRAIL_12M_FREE_CASH_FLOW": 971.436,
+            "TRAIL_12M_NET_SALES": 737.133
+          },
+          {
+            "date": "2021-12-31",
+            "EBIT": 197.18,
+            "IS_INT_EXPENSE": 317.42,
+            "TRAIL_12M_EBITDA": 214.519,
+            "NET_DEBT": -3476.413,
+            "BS_CASH_NEAR_CASH_ITEM": 2705.675,
+            "BS_YEAR_1_PRINCIPAL": 23.577,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 157.254,
+            "TRAIL_12M_FREE_CASH_FLOW": -2930.343,
+            "TRAIL_12M_NET_SALES": 1698.023
+          },
+          {
+            "date": "2022-12-30",
+            "TRAIL_12M_EBITDA": 1274.583,
+            "TRAIL_12M_FREE_CASH_FLOW": -5542.516,
+            "TRAIL_12M_NET_SALES": 4792.231
+          },
+          {
+            "date": "2022-12-31",
+            "EBIT": 1239.002,
+            "IS_INT_EXPENSE": 1407.898,
+            "NET_DEBT": -6147.172,
+            "BS_CASH_NEAR_CASH_ITEM": 4172.316,
+            "BS_YEAR_1_PRINCIPAL": 38.329,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 585.568
+          },
+          {
+            "date": "2023-12-29",
+            "TRAIL_12M_EBITDA": 3638.898,
+            "TRAIL_12M_FREE_CASH_FLOW": -6418.874,
+            "TRAIL_12M_NET_SALES": 8028.976
+          },
+          {
+            "date": "2023-12-31",
+            "EBIT": 3576.003,
+            "IS_INT_EXPENSE": 1723.829,
+            "NET_DEBT": -11987.183,
+            "BS_CASH_NEAR_CASH_ITEM": 5923.44,
+            "BS_YEAR_1_PRINCIPAL": 113.595,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 1136.344
+          },
+          {
+            "date": "2024-12-31",
+            "EBIT": 5630.057,
+            "IS_INT_EXPENSE": 2342.227,
+            "TRAIL_12M_EBITDA": 5707.185,
+            "NET_DEBT": -13863.941,
+            "BS_CASH_NEAR_CASH_ITEM": 9185.742,
+            "BS_YEAR_1_PRINCIPAL": 414.291,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 1730.357,
+            "TRAIL_12M_FREE_CASH_FLOW": -3516.986,
+            "TRAIL_12M_NET_SALES": 11517.075
+          },
+          {
+            "date": "2025-12-31",
+            "EBIT": 8450.788,
+            "IS_INT_EXPENSE": 3876.544,
+            "TRAIL_12M_EBITDA": 8548.756,
+            "NET_DEBT": -19330.181,
+            "BS_CASH_NEAR_CASH_ITEM": 15003.643,
+            "BS_YEAR_1_PRINCIPAL": 2525.443,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 4398.216,
+            "TRAIL_12M_FREE_CASH_FLOW": -9368.033,
+            "TRAIL_12M_NET_SALES": 15904.831
+          }
+        ]
+      }
+    },
+    {
+      "securityData": {
+        "security": "PBR US Equity",
+        "eidData": [],
+        "sequenceNumber": 21,
+        "fieldExceptions": [],
+        "fieldData": [
+          {
+            "date": "2017-12-29",
+            "TRAIL_12M_EBITDA": 78102.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 44303.0,
+            "TRAIL_12M_NET_SALES": 283695.0
+          },
+          {
+            "date": "2017-12-31",
+            "EBIT": 35624.0,
+            "IS_INT_EXPENSE": 23570.0,
+            "NET_DEBT": 280541.0,
+            "BS_CASH_NEAR_CASH_ITEM": 74494.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 400.0,
+            "BS_YEAR_1_PRINCIPAL": 23160.0,
+            "BS_YEAR_2_PRINCIPAL": 21423.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 360724.0
+          },
+          {
+            "date": "2018-12-31",
+            "EBIT": 60545.0,
+            "IS_INT_EXPENSE": 21564.0,
+            "TRAIL_12M_EBITDA": 103774.0,
+            "NET_DEBT": 268619.0,
+            "BS_CASH_NEAR_CASH_ITEM": 53854.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 11365.0,
+            "BS_YEAR_1_PRINCIPAL": 14207.0,
+            "BS_YEAR_2_PRINCIPAL": 15193.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 326161.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 55919.0,
+            "TRAIL_12M_NET_SALES": 310255.0
+          },
+          {
+            "date": "2019-12-31",
+            "EBIT": 81154.0,
+            "IS_INT_EXPENSE": 25033.0,
+            "TRAIL_12M_EBITDA": 139656.0,
+            "NET_DEBT": 317635.0,
+            "BS_CASH_NEAR_CASH_ITEM": 29714.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 14879.0,
+            "BS_YEAR_1_PRINCIPAL": 18013.0,
+            "BS_YEAR_2_PRINCIPAL": 16002.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 254982.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 73488.0,
+            "TRAIL_12M_NET_SALES": 302245.0
+          },
+          {
+            "date": "2020-12-31",
+            "EBIT": 52893.0,
+            "IS_INT_EXPENSE": 25313.0,
+            "TRAIL_12M_EBITDA": 111198.0,
+            "NET_DEBT": 328041.0,
+            "BS_CASH_NEAR_CASH_ITEM": 60856.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 11979.0,
+            "BS_YEAR_1_PRINCIPAL": 21751.0,
+            "BS_YEAR_2_PRINCIPAL": 17055.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 280038.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 119396.0,
+            "TRAIL_12M_NET_SALES": 272069.0
+          },
+          {
+            "date": "2021-12-31",
+            "EBIT": 202404.0,
+            "IS_INT_EXPENSE": 22045.0,
+            "TRAIL_12M_EBITDA": 265452.0,
+            "NET_DEBT": 265531.0,
+            "BS_CASH_NEAR_CASH_ITEM": 58410.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 14579.0,
+            "BS_YEAR_1_PRINCIPAL": 20315.0,
+            "BS_YEAR_2_PRINCIPAL": 16591.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 199224.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 173325.0,
+            "TRAIL_12M_NET_SALES": 452668.0
+          },
+          {
+            "date": "2022-12-30",
+            "TRAIL_12M_EBITDA": 361166.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 207659.0,
+            "TRAIL_12M_NET_SALES": 641256.0
+          },
+          {
+            "date": "2022-12-31",
+            "EBIT": 292964.0,
+            "IS_INT_EXPENSE": 19109.0,
+            "NET_DEBT": 216351.0,
+            "BS_CASH_NEAR_CASH_ITEM": 41723.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 12579.0,
+            "BS_YEAR_1_PRINCIPAL": 18656.0,
+            "BS_YEAR_2_PRINCIPAL": 20577.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 156286.0
+          },
+          {
+            "date": "2023-12-29",
+            "TRAIL_12M_EBITDA": 257026.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 155820.0,
+            "TRAIL_12M_NET_SALES": 511994.0
+          },
+          {
+            "date": "2023-12-31",
+            "EBIT": 190822.0,
+            "IS_INT_EXPENSE": 20195.0,
+            "NET_DEBT": 216138.0,
+            "BS_CASH_NEAR_CASH_ITEM": 61613.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 11379.0,
+            "BS_YEAR_1_PRINCIPAL": 20923.0,
+            "BS_YEAR_2_PRINCIPAL": 14844.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 139431.0
+          },
+          {
+            "date": "2024-12-31",
+            "EBIT": 140668.0,
+            "IS_INT_EXPENSE": 23795.0,
+            "TRAIL_12M_EBITDA": 207701.0,
+            "NET_DEBT": 323211.0,
+            "BS_CASH_NEAR_CASH_ITEM": 20254.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 13379.0,
+            "BS_YEAR_1_PRINCIPAL": 15887.0,
+            "BS_YEAR_2_PRINCIPAL": 11538.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 143426.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 124968.0,
+            "TRAIL_12M_NET_SALES": 490829.0
+          },
+          {
+            "date": "2025-12-31",
+            "EBIT": 145870.0,
+            "IS_INT_EXPENSE": 26939.0,
+            "TRAIL_12M_EBITDA": 230258.0,
+            "NET_DEBT": 333403.0,
+            "BS_CASH_NEAR_CASH_ITEM": 35608.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 16000.0,
+            "BS_YEAR_1_PRINCIPAL": 12027.0,
+            "BS_YEAR_2_PRINCIPAL": 12026.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 145489.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 92325.0,
+            "TRAIL_12M_NET_SALES": 497549.0
+          }
+        ]
+      }
+    },
+    {
+      "securityData": {
+        "security": "RKT LN Equity",
+        "eidData": [],
+        "sequenceNumber": 22,
+        "fieldExceptions": [],
+        "fieldData": [
+          {
+            "date": "2017-12-29",
+            "TRAIL_12M_EBITDA": 3005.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 2205.0,
+            "TRAIL_12M_NET_SALES": 11449.0
+          },
+          {
+            "date": "2017-12-31",
+            "EBIT": 2737.0,
+            "IS_INT_EXPENSE": 247.0,
+            "NET_DEBT": 11066.0,
+            "BS_CASH_NEAR_CASH_ITEM": 2125.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 4500.0,
+            "BS_YEAR_1_PRINCIPAL": 1346.0
+          },
+          {
+            "date": "2018-12-31",
+            "EBIT": 3058.0,
+            "IS_INT_EXPENSE": 352.0,
+            "TRAIL_12M_EBITDA": 3467.0,
+            "NET_DEBT": 10736.0,
+            "BS_CASH_NEAR_CASH_ITEM": 1483.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 4500.0,
+            "BS_YEAR_1_PRINCIPAL": 1709.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 2194.0,
+            "TRAIL_12M_NET_SALES": 12597.0
+          },
+          {
+            "date": "2019-12-31",
+            "EBIT": -1954.0,
+            "IS_INT_EXPENSE": 331.0,
+            "TRAIL_12M_EBITDA": -1516.0,
+            "NET_DEBT": 10646.0,
+            "BS_CASH_NEAR_CASH_ITEM": 1549.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 5500.0,
+            "BS_YEAR_1_PRINCIPAL": 3081.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 1105.0,
+            "TRAIL_12M_NET_SALES": 12846.0
+          },
+          {
+            "date": "2020-12-31",
+            "EBIT": 2160.0,
+            "IS_INT_EXPENSE": 276.0,
+            "TRAIL_12M_EBITDA": 2632.0,
+            "NET_DEBT": 8911.0,
+            "BS_CASH_NEAR_CASH_ITEM": 1646.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 3500.0,
+            "BS_YEAR_1_PRINCIPAL": 763.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 3124.0,
+            "TRAIL_12M_NET_SALES": 13993.0
+          },
+          {
+            "date": "2021-12-31",
+            "EBIT": -804.0,
+            "IS_INT_EXPENSE": 244.0,
+            "TRAIL_12M_EBITDA": -323.0,
+            "NET_DEBT": 8302.0,
+            "BS_CASH_NEAR_CASH_ITEM": 1261.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 4500.0,
+            "BS_YEAR_1_PRINCIPAL": 2485.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 1324.0,
+            "TRAIL_12M_NET_SALES": 13234.0
+          },
+          {
+            "date": "2022-12-30",
+            "TRAIL_12M_EBITDA": 3856.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 2035.0,
+            "TRAIL_12M_NET_SALES": 14453.0
+          },
+          {
+            "date": "2022-12-31",
+            "EBIT": 3249.0,
+            "IS_INT_EXPENSE": 233.0,
+            "NET_DEBT": 7727.0,
+            "BS_CASH_NEAR_CASH_ITEM": 1157.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 4500.0,
+            "BS_YEAR_1_PRINCIPAL": 1643.0
+          },
+          {
+            "date": "2023-12-29",
+            "TRAIL_12M_EBITDA": 3821.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 2288.0,
+            "TRAIL_12M_NET_SALES": 14607.0
+          },
+          {
+            "date": "2023-12-31",
+            "EBIT": 2531.0,
+            "IS_INT_EXPENSE": 340.0,
+            "NET_DEBT": 7150.0,
+            "BS_CASH_NEAR_CASH_ITEM": 1387.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 4500.0,
+            "BS_YEAR_1_PRINCIPAL": 1601.0
+          },
+          {
+            "date": "2024-12-31",
+            "EBIT": 2425.0,
+            "IS_INT_EXPENSE": 402.0,
+            "TRAIL_12M_EBITDA": 3733.0,
+            "NET_DEBT": 7778.0,
+            "BS_CASH_NEAR_CASH_ITEM": 880.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 4450.0,
+            "BS_YEAR_1_PRINCIPAL": 1344.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 2312.0,
+            "TRAIL_12M_NET_SALES": 14169.0
+          },
+          {
+            "date": "2025-12-31",
+            "EBIT": 4217.0,
+            "IS_INT_EXPENSE": 430.0,
+            "TRAIL_12M_EBITDA": 4973.0,
+            "NET_DEBT": 6478.0,
+            "BS_CASH_NEAR_CASH_ITEM": 1952.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 4400.0,
+            "BS_YEAR_1_PRINCIPAL": 745.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 1761.0,
+            "TRAIL_12M_NET_SALES": 14205.0
+          }
+        ]
+      }
+    },
+    {
+      "securityData": {
+        "security": "RMS FP Equity",
+        "eidData": [],
+        "sequenceNumber": 23,
+        "fieldExceptions": [],
+        "fieldData": [
+          {
+            "date": "2017-12-29",
+            "TRAIL_12M_EBITDA": 2123.1,
+            "TRAIL_12M_FREE_CASH_FLOW": 1425.7,
+            "TRAIL_12M_NET_SALES": 5549.2
+          },
+          {
+            "date": "2017-12-31",
+            "EBIT": 1922.0,
+            "IS_INT_EXPENSE": 1.8,
+            "NET_DEBT": -2878.3,
+            "BS_CASH_NEAR_CASH_ITEM": 1005.4,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 143.0,
+            "BS_YEAR_1_PRINCIPAL": 30.1
+          },
+          {
+            "date": "2018-12-31",
+            "EBIT": 2128.0,
+            "IS_INT_EXPENSE": 26.7,
+            "TRAIL_12M_EBITDA": 2533.8,
+            "NET_DEBT": -2313.1,
+            "BS_CASH_NEAR_CASH_ITEM": 1050.4,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 144.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 1655.4,
+            "TRAIL_12M_NET_SALES": 5966.1
+          },
+          {
+            "date": "2019-12-31",
+            "EBIT": 2338.9,
+            "IS_INT_EXPENSE": 25.2,
+            "TRAIL_12M_EBITDA": 2786.6,
+            "NET_DEBT": -3242.5,
+            "BS_CASH_NEAR_CASH_ITEM": 1018.3,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 151.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 1646.8,
+            "TRAIL_12M_NET_SALES": 6883.4
+          },
+          {
+            "date": "2020-12-31",
+            "EBIT": 2072.5,
+            "IS_INT_EXPENSE": 32.3,
+            "TRAIL_12M_EBITDA": 2586.7,
+            "NET_DEBT": -3046.7,
+            "BS_CASH_NEAR_CASH_ITEM": 1312.9,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 108.0,
+            "BS_YEAR_1_PRINCIPAL": 24.5,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 24.7,
+            "TRAIL_12M_FREE_CASH_FLOW": 1215.3,
+            "TRAIL_12M_NET_SALES": 6389.4
+          },
+          {
+            "date": "2021-12-31",
+            "EBIT": 3530.0,
+            "IS_INT_EXPENSE": 33.0,
+            "TRAIL_12M_EBITDA": 4093.0,
+            "NET_DEBT": -4894.0,
+            "BS_CASH_NEAR_CASH_ITEM": 1925.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 146.0,
+            "BS_YEAR_1_PRINCIPAL": 1.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 1.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 2920.0,
+            "TRAIL_12M_NET_SALES": 8982.0
+          },
+          {
+            "date": "2022-12-30",
+            "TRAIL_12M_EBITDA": 5304.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 3757.0,
+            "TRAIL_12M_NET_SALES": 11602.0
+          },
+          {
+            "date": "2022-12-31",
+            "EBIT": 4697.0,
+            "IS_INT_EXPENSE": 45.0,
+            "NET_DEBT": -7291.0,
+            "BS_CASH_NEAR_CASH_ITEM": 2028.0,
+            "BS_TOTAL_AVAIL_LINE_OF_CREDIT": 87.0,
+            "BS_YEAR_1_PRINCIPAL": 1.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 1.0
+          },
+          {
+            "date": "2023-12-29",
+            "TRAIL_12M_EBITDA": 6422.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 3582.0,
+            "TRAIL_12M_NET_SALES": 13427.0
+          },
+          {
+            "date": "2023-12-31",
+            "EBIT": 5650.0,
+            "IS_INT_EXPENSE": 56.0,
+            "NET_DEBT": -8565.0,
+            "BS_CASH_NEAR_CASH_ITEM": 1386.0,
+            "BS_YEAR_1_PRINCIPAL": 1.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 3.0
+          },
+          {
+            "date": "2024-12-31",
+            "EBIT": 6150.0,
+            "IS_INT_EXPENSE": 59.0,
+            "TRAIL_12M_EBITDA": 6994.0,
+            "NET_DEBT": -9467.0,
+            "BS_CASH_NEAR_CASH_ITEM": 1676.0,
+            "BS_YEAR_1_PRINCIPAL": 0.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 1.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 4101.0,
+            "TRAIL_12M_NET_SALES": 15170.0
+          },
+          {
+            "date": "2025-12-31",
+            "EBIT": 6569.0,
+            "IS_INT_EXPENSE": 55.0,
+            "TRAIL_12M_EBITDA": 7495.0,
+            "NET_DEBT": -9893.0,
+            "BS_CASH_NEAR_CASH_ITEM": 1896.0,
+            "BS_YEAR_1_PRINCIPAL": 0.0,
+            "BS_TOTL_DEBT_DEBT_SCHEDULE": 0.0,
+            "TRAIL_12M_FREE_CASH_FLOW": 4288.0,
+            "TRAIL_12M_NET_SALES": 16002.0
+          }
+        ]
+      }
+    }
+  ]
+}

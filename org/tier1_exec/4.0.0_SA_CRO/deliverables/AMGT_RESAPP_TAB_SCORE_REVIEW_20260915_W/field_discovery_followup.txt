@@ -1,0 +1,112 @@
+﻿=== free cash flow broker        returned 2 field(s)
+   BEST_ESTIMATE_FCF                  BEst Estimate Free Cash Flow                                           Earnings Estimates/BEst (Bloomberg Estim
+   HEADLINE_FCF                       Free Cash Flow - Headline                                              Fundamentals/Bloomberg Fundamentals/Esti
+=== free cash flow dispersion    returned 0 field(s)
+=== executive tenure             returned 5 field(s)
+   TOTAL_TENURE_OF_CEO_COMPANY        CEO Total Tenure at Company                                            ESG/Governance/Executives
+   CHIEF_EXECUTIVE_OFFICER_TENURE     Chief Executive Officer Tenure                                         ESG/Governance/Board
+   EXECUTIVE_AVERAGE_TENURE           Average Exec Tenure                                                    ESG/Governance/Board
+   CEO_TENURE_AS_OF_FY_END            Chief Executive Officer Tenure as of FY End                            ESG/Governance/Compensation/Executives/C
+   EXECUTIVE_DIRECTOR_BOARD_DUR       Executive Director Board Duration                                      ESG/Governance/Board
+=== officer start                returned 5 field(s)
+   LAST_CEO_START_DATE                Last Chief Executive Officer Start Date                                ESG/Governance/Compensation/Executives/C
+   LAST_CFO_START_DATE                Last Chief Financial Officer Start Date                                ESG/Governance/Compensation/Executives/C
+   LAST_COO_START_DATE                Last Chief Operating Officer Start Date                                ESG/Governance/Compensation/Executives/C
+   LAST_CIO_START_DATE                Last Chief Investment Officer Start Date                               ESG/Governance/Compensation/Executives/C
+   NO_ADVS_SRVD_AS_CEO_OR_EQ          Num of Advisers Who Served as CEO or Equiv                             ESG/Governance/Board
+=== employment date              returned 10 field(s)
+   NUMBER_OF_TEMPORARY_EMPLOYEES      Number of Temporary Employees                                          ESG/Social/Employee
+   IS_OPRB_EXPENSE_INCOME             Other Post Retirement Benefits Expense (Income)                        Fundamentals/Bloomberg Fundamentals/Inco
+   BOARD_DIVERSITY_COUNT              Board Diversity Count                                                  ESG/Governance/Board
+   BOARD_DIVERSITY_PCT                Board Diversity Percentage                                             ESG/Governance/Board
+   BOARD_DIVERSITY_BREAKOUT_CODE      Board Diversity Breakout Code                                          ESG/Governance/Board
+   BOARD_WOMEN_ETHNIC_DIV_COUNT       Board Women and Ethnic Diversity Count                                 ESG/Governance/Board
+   BOARD_WOMEN_ETHNIC_DIV_PCT         Board Women and Ethnic Diversity Percent                               ESG/Governance/Board
+   ARD_DEFERRED_OUT_OF_RES_OPEB       ARD Deferred Outflows of Resources OPEB                                Fundamentals/Bloomberg Fundamentals/Stan
+   BS_DEFER_OUTFLOWS_OF_RESRCS_OPEB   Deferred Outflows of Resources OPEB                                    Fundamentals/Bloomberg Fundamentals/Bala
+   ARDR_DEFER_OTFLWS_OF_RESRCS_OPEB   ARDR Deferred Outflows of Resources OPEB                               Fundamentals/Bloomberg Fundamentals/Stan
+=== contractual obligations      returned 29 field(s)
+   BS_CONTRACTUAL_OBLIG_TOTAL         Total Contractual Obligations                                          Fundamentals/Bloomberg Fundamentals/Bala
+   BS_CONTRACTUAL_OBLIG_YEAR_1        Contractual Obligations - Year 1                                       Fundamentals/Bloomberg Fundamentals/Bala
+   BS_CONTRACTUAL_OBLIG_BEYOND_YR_5   Contractual Obligations - Beyond Year 5                                Fundamentals/Bloomberg Fundamentals/Bala
+   ARDR_CONTRACTUAL_OBLIG_TOTAL       ARD Ref Total Contractual Obligations                                  Fundamentals/Bloomberg Fundamentals/Stan
+   BS_CONTRACTUAL_OBLIG_YEAR_2_3      Contractual Obligations - Years 2 & 3                                  Fundamentals/Bloomberg Fundamentals/Bala
+   BS_CONTRACTUAL_OBLIG_YEAR_4_5      Contractual Obligations - Years 4 & 5                                  Fundamentals/Bloomberg Fundamentals/Bala
+   BS_CONTRACTUAL_OBLIG_YEAR_2_5      Contractual Obligations - Years 2 - 5                                  Fundamentals/Bloomberg Fundamentals/Bala
+   ARDR_CONTRACTUAL_OBLIG_YEAR_1      ARD Ref Contractual Obligations - Year 1                               Fundamentals/Bloomberg Fundamentals/Stan
+   ARDR_CONT_OBLIG_BEYOND_YEAR_5      ARD Ref Contractual Obligations - Beyond Year 5                        Fundamentals/Bloomberg Fundamentals/Stan
+   ARDR_CONTRACTUAL_OBLIG_YEAR_2_3    ARD Ref Contractual Obligations Years - 2 & 3                          Fundamentals/Bloomberg Fundamentals/Stan
+   ARDR_CONTRACTUAL_OBLIG_YEAR_4_5    ARD Ref Contractual Obligations Years - 4 & 5                          Fundamentals/Bloomberg Fundamentals/Stan
+   ARDR_CONTRACTUAL_OBLIG_YEAR_2_5    ARD Ref Contractual Obligations - Years 2 - 5                          Fundamentals/Bloomberg Fundamentals/Stan
+   ARD_CONTRACTUAL_OBLIG_TOTAL        ARD Total Contractual Obligations                                      Fundamentals/Bloomberg Fundamentals/Stan
+   ARD_CONTRACTUAL_OBLIG_YEAR_1       ARD Contractual Obligations - Year 1                                   Fundamentals/Bloomberg Fundamentals/Stan
+   ARD_CONTRACTUAL_OBLIG_YEAR_2_3     ARD Contractual Obligations - Years 2 & 3                              Fundamentals/Bloomberg Fundamentals/Stan
+   ARD_CONTRACTUAL_OBLIG_YEAR_4_5     ARD Contractual Obligations - Years 4 & 5                              Fundamentals/Bloomberg Fundamentals/Stan
+   ARD_CONT_OBLIG_BEYOND_YR_5         ARD Contractual Obligations - Beyond Year 5                            Fundamentals/Bloomberg Fundamentals/Stan
+   BS_CURRNT_REMNNG_PERF_OBLIGTN_CB   Current Remaining Performance Obligation CB                            Fundamentals/Bloomberg Fundamentals/Bala
+   BS_NONCURR_REMNNG_PERF_OBLIG_CB    Noncurrent Remaining Performance Obligation CB                         Fundamentals/Bloomberg Fundamentals/Bala
+   RTG_MDY_LT_CRA                     Moody's LT Counterparty Risk Assessment Rating                         Ratings/Credit Ratings/Moody's/Issuer/Co
+   RTG_MDY_ST_CRA                     Moody's ST Counterparty Risk Assessment Rating                         Ratings/Credit Ratings/Moody's/Issuer/Co
+   BS_INSURANCE_CONTRACT_LIBLTS       Insurance Contract Liabilities                                         Fundamentals/Bloomberg Fundamentals/Bala
+   BS_CURRENT_FINANCIAL_LIABS         Current Financial Liabilities                                          Fundamentals/Bloomberg Fundamentals/Bala
+   BS_NONCURRENT_FINANCIAL_LIABS      Noncurrent Financial Liabilities                                       Fundamentals/Bloomberg Fundamentals/Bala
+   BS_CREDIT_RWA                      Credit Risk Weighted Assets                                            Fundamentals/Bloomberg Fundamentals/Bala
+   ARD_SECURITIZED_DEBT               ARD Securitized Debt                                                   Fundamentals/Bloomberg Fundamentals/Stan
+   UNFUNDED_LOAN_COMMITMENTS          Unfunded Loan Commitments                                              Fundamentals/Bloomberg Fundamentals/Bala
+   IS_STATES_OPEB_ACTRLLY_DET_CONT    States OPEB Actrlly Det Contribution                                   Fundamentals/Bloomberg Fundamentals/Inco
+   ARDR_TIME_TO_REQUIRED_FUNDING      ARDR Time to Required Funding                                          Fundamentals/Bloomberg Fundamentals/Stan
+=== fundamental period override  returned 54 field(s)
+   FUND_PER                           Fundamental Period                                                     Fundamentals/Bloomberg Fundamentals/Comp
+   BEST_PERIOD_NUM_OF_DAYS            Number of Days in Fundamental Period                                   Earnings Estimates/BEst (Bloomberg Estim
+   FUNDAMENTAL_PUBLIC_DATE            Fundamental Public Date                                                Descriptive/Company/Issuer/Filings & Rep
+   FUNDAMENTAL_DATABASE_DATE          Fundamental Database Date                                              Descriptive/Company/Issuer/Filings & Rep
+   EXPECTED_REPORT_PERIOD_END_DATE    Expected Report Period End Date                                        Descriptive/Company/Issuer/Filings & Rep
+   EQY_FUND_RELATIVE_PERIOD           Equity Fundamental Relative Period                                     Fundamentals/Bloomberg Fundamentals/Comp
+   EQY_FUND_DT                        Equity Fundamental Date                                                Fundamentals/Bloomberg Fundamentals/Comp
+   CURR_ENTP_VAL                      Enterprise Value                                                       Fundamentals/Bloomberg Fundamentals/Fina
+   EXPECTED_REPORT_DT                 Expected Earnings Report Date                                          Descriptive/Company/Issuer/Filings & Rep
+   BEST_EPS                           BEst EPS                                                               Earnings Estimates/BEst (Bloomberg Estim
+   BICS_REVENUE_%_LEVEL_ASSIGNED      BICS Revenue Percentage Level Assigned                                 Fundamentals/Segmentation/Standardized P
+   HISTORICAL_MARKET_CAP              Historical Market Cap                                                  Fundamentals/Bloomberg Fundamentals/Fina
+   EXPECTED_REPORT_TIME               Expected Earnings Report Time                                          Descriptive/Company/Issuer/Filings & Rep
+   BEST_EPS_BRK_GRID                  BEst EPS Adjusted Broker Estimates                                     Earnings Estimates/BEst (Bloomberg Estim
+   CRNCY_ADJ_CURR_EV                  Currency Adjusted Enterprise Value                                     Fundamentals/Bloomberg Fundamentals/Fina
+   IS_EPS                             Basic Earnings per Share                                               Fundamentals/Bloomberg Fundamentals/Inco
+   ENTERPRISE_VALUE                   Periodic Enterprise Value                                              Fundamentals/Bloomberg Fundamentals/Fina
+   BEST_SALES_BRK_GRID                BEst Sales Broker Estimates                                            Earnings Estimates/BEst (Bloomberg Estim
+   IS_DIV_PER_SHR                     Dividend Per Share                                                     Fundamentals/Bloomberg Fundamentals/Inco
+   BEST_OP_INC_BRK_GRID               BEst Operating Income Broker Estimates                                 Earnings Estimates/BEst (Bloomberg Estim
+   T12_EPS_AGGTE                      Trailing Weighted EPS                                                  Fundamentals/Index Fundamentals
+   EQY_DPS                            Dividends per Share                                                    Fundamentals/Bloomberg Fundamentals/Fina
+   BEST_EBITDA_BRK_GRID               BEst EBITDA Broker Estimates                                           Earnings Estimates/BEst (Bloomberg Estim
+   BEST_EPS_GAAP_BRK_GRID             BEst EPS GAAP Broker Estimates                                         Earnings Estimates/BEst (Bloomberg Estim
+   BEST_DPS_BRK_GRID                  BEst Dividend Per Share Broker Estimates                               Earnings Estimates/BEst (Bloomberg Estim
+   BEST_NET_INC_GAAP_BRK_GRID         BEst Net Income GAAP Broker Estimates                                  Earnings Estimates/BEst (Bloomberg Estim
+   CUR_MKT_CAP                        Current Market Cap                                                     Fundamentals/Bloomberg Fundamentals/Fina
+   TPD_PERIOD_END_DATE_OVERRIDE       Third Party Data Period End Date Override                              Fundamentals/Third Party Data/A.M. Best
+   BEST_EBIT_BRK_GRID                 BEst EBIT Broker Estimates                                             Earnings Estimates/BEst (Bloomberg Estim
+   BICS_REVENUE_LEVEL_ASSIGNED        BICS Revenue Level Assigned                                            Fundamentals/Segmentation/Standardized P
+   BEST_NET_INCOME_BRK_GRID           BEst Net Income Broker Estimates                                       Earnings Estimates/BEst (Bloomberg Estim
+   BEST_ROA_BRK_GRID                  BEst Return on Assets Broker Estimates                                 Earnings Estimates/BEst (Bloomberg Estim
+   BICS_SEGMENT_DATA                  BICS Segment Data                                                      Fundamentals/Segmentation/Single Point D
+   BEST_BPS_BRK_GRID                  BEst Book Value Per Share Broker Estimates                             Earnings Estimates/BEst (Bloomberg Estim
+   BEST_PTP_BRK_GRID                  BEst Pre-Tax Profit Broker Estimates                                   Earnings Estimates/BEst (Bloomberg Estim
+   BEST_ROE_BRK_GRID                  BEst Return on Equity Broker Estimates                                 Earnings Estimates/BEst (Bloomberg Estim
+   BEST_CPS_BRK_GRID                  BEst Cashflow Per Share Broker Estimates                               Earnings Estimates/BEst (Bloomberg Estim
+   BEST_CURRENT_PROFIT_BRK_GRID       BEst Current Profit Broker Estimates                                   Earnings Estimates/BEst (Bloomberg Estim
+   BEST_NET_DEBT_BRK_GRID             BEst Net Debt Broker Estimates                                         Earnings Estimates/BEst (Bloomberg Estim
+   T12M_DVDS_PAID                     Trailing 12M Dividends Paid                                            Fundamentals/Bloomberg Fundamentals/Fina
+   BEST_CAPEX_BROKER_GRID             BEst CAPEX Broker Estimates                                            Earnings Estimates/BEst (Bloomberg Estim
+   EARN_ANN_DT_TIME_HIST_WITH_EPS     Earnings Announcement Date & Time History with EPS                     Earnings Estimates/Earnings Announcement
+   BEST_FFOPS_BRK_GRID                BEst Funds from Ops Per Share Broker Estimates                         Earnings Estimates/BEst (Bloomberg Estim
+   POWER_DEMAND_FORECAST_CTRY_RSK     Power Demand Forecast (Country of Risk)                                ESG/Environmental/Country/Region
+   BEST_AFFOPS_BROKER_GRID            BEst AFFO Per Share Broker Estimates                                   Earnings Estimates/BEst (Bloomberg Estim
+   BEST_LTG_EPS_BRK_GRID              BEst LT Growth EPS Broker Estimates                                    Earnings Estimates/BEst (Bloomberg Estim
+   IN_HOUSE_STRING                    In-House String                                                        Descriptive/Custom/General
+   IN_HOUSE_DATE                      In-House Date                                                          Descriptive/Custom/General
+   IN_HOUSE_INTEGER                   In-House Integer                                                       Descriptive/Custom/General
+   IN_HOUSE_REAL                      In-House Real                                                          Descriptive/Custom/General
+   BEST_DCPU_BROKER_GRID              BEst DCPU Broker Estimates                                             Earnings Estimates/BEst (Bloomberg Estim
+   EQUITY_FUNDS_ABSOLUTE_SEGMENT_#    Equity Funds Absolute Segment Number                                   Fundamentals/Segmentation/Overridable Fi
+   BEST_NAV_BRK_GRID                  BEst Net Asset Value Broker Estimates                                  Earnings Estimates/BEst (Bloomberg Estim
+   EQY_FUNDS_SEGMENT_NUMBER           Equity Funds Segment Number                                            Fundamentals/Segmentation/Overridable Fi

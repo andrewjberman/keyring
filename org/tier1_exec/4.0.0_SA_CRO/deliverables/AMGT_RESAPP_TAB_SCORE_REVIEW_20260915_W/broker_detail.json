@@ -1,0 +1,2125 @@
+{
+  "as_of": "2026-09-15T19:15:58.378534+00:00",
+  "kind": "ReferenceDataRequest",
+  "securities": [
+    "BA US Equity",
+    "COST US Equity",
+    "HD US Equity",
+    "SAP GY Equity",
+    "BABA US Equity"
+  ],
+  "fields": [
+    "BEST_CPS_BRK_GRID",
+    "BEST_CAPEX_BROKER_GRID",
+    "BEST_PERIOD_END_DATE"
+  ],
+  "overrides": {
+    "BEST_FPERIOD_OVERRIDE": "1FY"
+  },
+  "parameters": {},
+  "responses": [
+    {
+      "securityData": [
+        {
+          "security": "BA US Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 0,
+          "fieldData": {
+            "BEST_CPS_BRK_GRID": [
+              {
+                "Broker": "Broker",
+                "Analyst": "Analyst",
+                "Date": "Date",
+                "Current Value": "12/2026",
+                "Current Change": "Change",
+                "Next Value": "12/2027",
+                "Next Change": "Change"
+              },
+              {
+                "Broker": "BofA Securities",
+                "Analyst": "Ronald Epstein",
+                "Date": "08/10/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "BNP Paribas",
+                "Analyst": "Matthew Akers",
+                "Date": "08/04/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "UBS",
+                "Analyst": "Gavin Parsons",
+                "Date": "07/29/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Deutsche Bank",
+                "Analyst": "Scott Deuschle",
+                "Date": "07/29/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              }
+            ],
+            "BEST_CAPEX_BROKER_GRID": [
+              {
+                "Broker": "Broker",
+                "Analyst": "Analyst",
+                "Date": "Date",
+                "Current Value": "12/2026",
+                "Current Change": "Change",
+                "Next Value": "12/2027",
+                "Next Change": "Change"
+              },
+              {
+                "Broker": "Jefferies",
+                "Analyst": "Sheila Kahyaoglu",
+                "Date": "09/13/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Seaport Global",
+                "Analyst": "Richard Safran",
+                "Date": "09/09/26",
+                "Current Value": "-3818.000",
+                "Current Change": "0.000",
+                "Next Value": "-4005.000",
+                "Next Change": "0.000"
+              },
+              {
+                "Broker": "Melius Research LLC",
+                "Analyst": "Scott Mikus",
+                "Date": "08/10/26",
+                "Current Value": "-4000.000",
+                "Current Change": "0.000",
+                "Next Value": "-4260.000",
+                "Next Change": "0.000"
+              },
+              {
+                "Broker": "Bernstein",
+                "Analyst": "Douglas Harned",
+                "Date": "08/10/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Tigress Financial Partners",
+                "Analyst": "Ivan Feinseth",
+                "Date": "08/06/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "BNP Paribas",
+                "Analyst": "Matthew Akers",
+                "Date": "08/03/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Wells Fargo",
+                "Analyst": "David Strauss",
+                "Date": "07/30/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Rothschild & Co Redburn",
+                "Analyst": "Olivier Brochet",
+                "Date": "07/29/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Susquehanna",
+                "Analyst": "Charles Minervino",
+                "Date": "07/29/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Wolfe Research",
+                "Analyst": "Myles Walton",
+                "Date": "07/29/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "William Blair",
+                "Analyst": "Louie DiPalma",
+                "Date": "07/29/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "UBS",
+                "Analyst": "Gavin Parsons",
+                "Date": "07/29/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "JP Morgan",
+                "Analyst": "Seth Seifman",
+                "Date": "07/29/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Vertical Research Partners",
+                "Analyst": "Robert Stallard",
+                "Date": "07/28/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Deutsche Bank",
+                "Analyst": "Scott Deuschle",
+                "Date": "07/28/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "TD Cowen",
+                "Analyst": "Gautam Khanna",
+                "Date": "07/28/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Baird",
+                "Analyst": "Peter Arment",
+                "Date": "07/28/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "RBC Capital Markets",
+                "Analyst": "Kenneth Herbert",
+                "Date": "07/28/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Company Data",
+                "Analyst": "Company Guidance",
+                "Date": "07/28/26",
+                "Current Value": "-4000.000",
+                "Current Change": "0.000",
+                "Next Value": "",
+                "Next Change": ""
+              },
+              {
+                "Broker": "Banco BTG Pactual",
+                "Analyst": "Lucas Marquiori",
+                "Date": "07/12/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Alembic Global Advisors",
+                "Analyst": "Peter Skibitski",
+                "Date": "04/23/26",
+                "Current Value": "-3800.000",
+                "Current Change": "-600.000",
+                "Next Value": "-3700.000",
+                "Next Change": "-500.000"
+              },
+              {
+                "Broker": "Valuation & Research Specialis",
+                "Analyst": "Michalis Kenanidis",
+                "Date": "05/27/25",
+                "Current Value": "-1482.000",
+                "Current Change": "NA",
+                "Next Value": "",
+                "Next Change": ""
+              }
+            ],
+            "BEST_PERIOD_END_DATE": "2026-12-31"
+          }
+        },
+        {
+          "security": "COST US Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 1,
+          "fieldData": {
+            "BEST_CPS_BRK_GRID": [
+              {
+                "Broker": "Broker",
+                "Analyst": "Analyst",
+                "Date": "Date",
+                "Current Value": "08/2026",
+                "Current Change": "Change",
+                "Next Value": "08/2027",
+                "Next Change": "Change"
+              },
+              {
+                "Broker": "Truist Securities",
+                "Analyst": "R Scot Ciccarelli",
+                "Date": "09/04/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Deutsche Bank",
+                "Analyst": "Krisztina Katai",
+                "Date": "09/03/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Telsey Advisory Group",
+                "Analyst": "Joseph Feldman",
+                "Date": "09/02/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "HSBC",
+                "Analyst": "Joseph Thomas",
+                "Date": "09/02/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "UBS",
+                "Analyst": "Michael Lasser",
+                "Date": "08/07/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "BofA Securities",
+                "Analyst": "Christopher Nardone",
+                "Date": "08/05/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              }
+            ],
+            "BEST_CAPEX_BROKER_GRID": [
+              {
+                "Broker": "Broker",
+                "Analyst": "Analyst",
+                "Date": "Date",
+                "Current Value": "08/2026",
+                "Current Change": "Change",
+                "Next Value": "08/2027",
+                "Next Change": "Change"
+              },
+              {
+                "Broker": "Bernstein",
+                "Analyst": "Zhihan Ma",
+                "Date": "09/04/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Truist Securities",
+                "Analyst": "R Scot Ciccarelli",
+                "Date": "09/04/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Deutsche Bank",
+                "Analyst": "Krisztina Katai",
+                "Date": "09/03/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Telsey Advisory Group",
+                "Analyst": "Joseph Feldman",
+                "Date": "09/03/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "JP Morgan",
+                "Analyst": "Christopher Horvers",
+                "Date": "09/03/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "HSBC",
+                "Analyst": "Joseph Thomas",
+                "Date": "09/02/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Oppenheimer",
+                "Analyst": "Rupesh Parikh",
+                "Date": "09/02/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Wells Fargo",
+                "Analyst": "Edward Kelly",
+                "Date": "09/02/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "William Blair",
+                "Analyst": "Phillip Blee",
+                "Date": "09/02/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "UBS",
+                "Analyst": "Michael Lasser",
+                "Date": "09/02/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "D.A. Davidson",
+                "Analyst": "Michael Baker",
+                "Date": "09/02/26",
+                "Current Value": "-6462.000",
+                "Current Change": "7.000",
+                "Next Value": "-6904.000",
+                "Next Change": "7.000"
+              },
+              {
+                "Broker": "BTIG",
+                "Analyst": "Robert Drbul",
+                "Date": "09/02/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Guggenheim",
+                "Analyst": "John Heinbockel",
+                "Date": "08/22/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "BMO Capital Markets",
+                "Analyst": "Kelly Bania",
+                "Date": "08/11/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Rothschild & Co Redburn",
+                "Analyst": "Sam Hudson",
+                "Date": "08/06/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "CITIC Securities Co Ltd",
+                "Analyst": "Xiaofang Xu",
+                "Date": "07/13/26",
+                "Current Value": "-3410.000",
+                "Current Change": "NA",
+                "Next Value": "-3654.000",
+                "Next Change": "NA"
+              },
+              {
+                "Broker": "Melius Research LLC",
+                "Analyst": "Jacob Aiken-Phillips",
+                "Date": "06/30/26",
+                "Current Value": "-6428.000",
+                "Current Change": "-913.000",
+                "Next Value": "-4900.000",
+                "Next Change": "0.000"
+              },
+              {
+                "Broker": "Wolfe Research",
+                "Analyst": "Spencer Hanus",
+                "Date": "06/22/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Evercore ISI",
+                "Analyst": "Greg Melich",
+                "Date": "06/12/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "NorthCoast Research",
+                "Analyst": "Charles Cerankosky",
+                "Date": "06/04/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Mizuho Securities",
+                "Analyst": "David Bellinger",
+                "Date": "05/29/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Raymond James",
+                "Analyst": "Bobby Griffin",
+                "Date": "05/29/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Barclays",
+                "Analyst": "Seth Sigman",
+                "Date": "05/29/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Jefferies",
+                "Analyst": "Corey Tarlowe",
+                "Date": "05/29/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Roth Capital Partners",
+                "Analyst": "William Kirk",
+                "Date": "05/29/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Baird",
+                "Analyst": "Peter Benedict",
+                "Date": "05/28/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Company Data",
+                "Analyst": "Company Guidance",
+                "Date": "05/28/26",
+                "Current Value": "-6500.000",
+                "Current Change": "0.000",
+                "Next Value": "",
+                "Next Change": ""
+              },
+              {
+                "Broker": "R5 Capital",
+                "Analyst": "Scott Mushkin",
+                "Date": "05/14/26",
+                "Current Value": "-5815.000",
+                "Current Change": "-1233.000",
+                "Next Value": "-5865.000",
+                "Next Change": "-1233.000"
+              },
+              {
+                "Broker": "TD Cowen",
+                "Analyst": "Oliver Chen",
+                "Date": "05/30/25",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              }
+            ],
+            "BEST_PERIOD_END_DATE": "2026-08-31"
+          }
+        },
+        {
+          "security": "HD US Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 2,
+          "fieldData": {
+            "BEST_CPS_BRK_GRID": [
+              {
+                "Broker": "Broker",
+                "Analyst": "Analyst",
+                "Date": "Date",
+                "Current Value": "01/2027",
+                "Current Change": "Change",
+                "Next Value": "01/2028",
+                "Next Change": "Change"
+              },
+              {
+                "Broker": "BofA Securities",
+                "Analyst": "Christopher Nardone",
+                "Date": "09/08/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Telsey Advisory Group",
+                "Analyst": "Joseph Feldman",
+                "Date": "08/21/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "BNP Paribas",
+                "Analyst": "Chris Bottiglieri",
+                "Date": "08/19/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Truist Securities",
+                "Analyst": "R Scot Ciccarelli",
+                "Date": "08/19/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "UBS",
+                "Analyst": "Michael Lasser",
+                "Date": "08/19/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "HSBC",
+                "Analyst": "Joseph Thomas",
+                "Date": "08/18/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Barclays",
+                "Analyst": "Seth Sigman",
+                "Date": "08/18/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Soochow Securities (HK) Ltd.",
+                "Analyst": "Runze Li",
+                "Date": "05/22/25",
+                "Current Value": "20.360",
+                "Current Change": "NA",
+                "Next Value": "21.550",
+                "Next Change": "NA"
+              }
+            ],
+            "BEST_CAPEX_BROKER_GRID": [
+              {
+                "Broker": "Broker",
+                "Analyst": "Analyst",
+                "Date": "Date",
+                "Current Value": "01/2027",
+                "Current Change": "Change",
+                "Next Value": "01/2028",
+                "Next Change": "Change"
+              },
+              {
+                "Broker": "Bernstein",
+                "Analyst": "Zhihan Ma",
+                "Date": "09/09/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "R5 Capital",
+                "Analyst": "Scott Mushkin",
+                "Date": "09/05/26",
+                "Current Value": "-4279.000",
+                "Current Change": "2.000",
+                "Next Value": "-4487.000",
+                "Next Change": "35.000"
+              },
+              {
+                "Broker": "Zacks",
+                "Analyst": "Team Coverage",
+                "Date": "09/01/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Melius Research LLC",
+                "Analyst": "Rob Wertheimer",
+                "Date": "08/27/26",
+                "Current Value": "-4207.000",
+                "Current Change": "-136.000",
+                "Next Value": "-4437.000",
+                "Next Change": "40.000"
+              },
+              {
+                "Broker": "Morningstar",
+                "Analyst": "Jaime Katz",
+                "Date": "08/25/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Telsey Advisory Group",
+                "Analyst": "Joseph Feldman",
+                "Date": "08/21/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Stifel",
+                "Analyst": "W Carter",
+                "Date": "08/21/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "KeyBanc Capital Markets",
+                "Analyst": "Bradley Thomas",
+                "Date": "08/20/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Wolfe Research",
+                "Analyst": "Spencer Hanus",
+                "Date": "08/19/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Evercore ISI",
+                "Analyst": "Greg Melich",
+                "Date": "08/19/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Truist Securities",
+                "Analyst": "R Scot Ciccarelli",
+                "Date": "08/19/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "UBS",
+                "Analyst": "Michael Lasser",
+                "Date": "08/19/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Zelman",
+                "Analyst": "Marius Morar",
+                "Date": "08/19/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "BNP Paribas",
+                "Analyst": "Chris Bottiglieri",
+                "Date": "08/18/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Piper Sandler & Co",
+                "Analyst": "Peter Keith",
+                "Date": "08/18/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "HSBC",
+                "Analyst": "Joseph Thomas",
+                "Date": "08/18/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Guggenheim",
+                "Analyst": "Steven Forbes",
+                "Date": "08/18/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Mizuho Securities",
+                "Analyst": "David Bellinger",
+                "Date": "08/18/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Raymond James",
+                "Analyst": "Bobby Griffin",
+                "Date": "08/18/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Wells Fargo",
+                "Analyst": "Zachary Fadem",
+                "Date": "08/18/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Baird",
+                "Analyst": "Peter Benedict",
+                "Date": "08/18/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Barclays",
+                "Analyst": "Seth Sigman",
+                "Date": "08/18/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Jefferies",
+                "Analyst": "Jonathan Matuszewski",
+                "Date": "08/18/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "D.A. Davidson",
+                "Analyst": "Michael Baker",
+                "Date": "08/18/26",
+                "Current Value": "-4249.000",
+                "Current Change": "-176.000",
+                "Next Value": "-4429.000",
+                "Next Change": "-5.000"
+              },
+              {
+                "Broker": "JP Morgan",
+                "Analyst": "Christopher Horvers",
+                "Date": "08/18/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Rothschild & Co Redburn",
+                "Analyst": "Sam Hudson",
+                "Date": "05/21/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Longbow Research",
+                "Analyst": "David Macgregor",
+                "Date": "11/13/25",
+                "Current Value": "-4109.000",
+                "Current Change": "0.000",
+                "Next Value": "-4273.000",
+                "Next Change": "0.000"
+              },
+              {
+                "Broker": "Oppenheimer",
+                "Analyst": "Brian Nagel",
+                "Date": "09/24/25",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Soochow Securities (HK) Ltd.",
+                "Analyst": "Runze Li",
+                "Date": "05/22/25",
+                "Current Value": "-4201.000",
+                "Current Change": "NA",
+                "Next Value": "-4404.000",
+                "Next Change": "NA"
+              }
+            ],
+            "BEST_PERIOD_END_DATE": "2027-01-31"
+          }
+        },
+        {
+          "security": "SAP GY Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 3,
+          "fieldData": {
+            "BEST_CPS_BRK_GRID": [
+              {
+                "Broker": "Broker",
+                "Analyst": "Analyst",
+                "Date": "Date",
+                "Current Value": "12/2026",
+                "Current Change": "Change",
+                "Next Value": "12/2027",
+                "Next Change": "Change"
+              },
+              {
+                "Broker": "AlphaValue/Baader Europe",
+                "Analyst": "Maximilien Pascaud",
+                "Date": "09/03/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "BofA Securities",
+                "Analyst": "Frederic Boulan",
+                "Date": "08/27/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "UBS",
+                "Analyst": "Michael Briest",
+                "Date": "08/21/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "BNP Paribas",
+                "Analyst": "Ben Castillo-Bernaus",
+                "Date": "07/27/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Kepler Cheuvreux",
+                "Analyst": "Laurent Daure",
+                "Date": "07/27/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "HSBC",
+                "Analyst": "Abhishek Shukla",
+                "Date": "07/26/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Deutsche Bank",
+                "Analyst": "Johannes Schaller",
+                "Date": "07/24/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Oddo BHF",
+                "Analyst": "Nicolas David",
+                "Date": "07/24/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Oppenheimer",
+                "Analyst": "Brian Schwartz",
+                "Date": "07/24/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "DZ Bank AG Research",
+                "Analyst": "Armin Kremser",
+                "Date": "07/24/26",
+                "Current Value": "8.670",
+                "Current Change": "0.000",
+                "Next Value": "9.630",
+                "Next Change": "0.000"
+              },
+              {
+                "Broker": "BMO Capital Markets",
+                "Analyst": "Keith Bachman",
+                "Date": "07/24/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "TD Cowen",
+                "Analyst": "J Wood",
+                "Date": "07/24/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Evercore ISI",
+                "Analyst": "Stewart Materne",
+                "Date": "05/13/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "CICC",
+                "Analyst": "Hongjie Li",
+                "Date": "02/09/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "JP Morgan",
+                "Analyst": "Toby Ogg",
+                "Date": "06/19/25",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              }
+            ],
+            "BEST_CAPEX_BROKER_GRID": [
+              {
+                "Broker": "Broker",
+                "Analyst": "Analyst",
+                "Date": "Date",
+                "Current Value": "12/2026",
+                "Current Change": "Change",
+                "Next Value": "12/2027",
+                "Next Change": "Change"
+              },
+              {
+                "Broker": "AlphaValue/Baader Europe",
+                "Analyst": "Maximilien Pascaud",
+                "Date": "09/03/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Grupo Santander",
+                "Analyst": "Adrian Sanchez Ruiz",
+                "Date": "09/01/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "BNP Paribas",
+                "Analyst": "Ben Castillo-Bernaus",
+                "Date": "08/31/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "UBS",
+                "Analyst": "Michael Briest",
+                "Date": "08/21/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Rothschild & Co Redburn",
+                "Analyst": "Omar Sheikh",
+                "Date": "07/28/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Berenberg",
+                "Analyst": "Naing Nay Soe",
+                "Date": "07/27/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "JP Morgan",
+                "Analyst": "Toby Ogg",
+                "Date": "07/27/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "HSBC",
+                "Analyst": "Abhishek Shukla",
+                "Date": "07/26/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Barclays",
+                "Analyst": "Sven Merkt",
+                "Date": "07/24/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Morningstar",
+                "Analyst": "Rob Hales",
+                "Date": "07/24/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Piper Sandler & Co",
+                "Analyst": "Billy Fitzsimmons",
+                "Date": "07/24/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Bankhaus Metzler",
+                "Analyst": "Oliver Frey",
+                "Date": "07/24/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "BMO Capital Markets",
+                "Analyst": "Keith Bachman",
+                "Date": "07/24/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Citizens",
+                "Analyst": "Patrick Walravens",
+                "Date": "07/24/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "TD Cowen",
+                "Analyst": "J Wood",
+                "Date": "07/24/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "KeyBanc Capital Markets",
+                "Analyst": "Jackson Ader",
+                "Date": "07/23/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Wells Fargo",
+                "Analyst": "Michael Turrin",
+                "Date": "07/15/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Deutsche Bank",
+                "Analyst": "Johannes Schaller",
+                "Date": "07/14/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Jefferies",
+                "Analyst": "Charles Brennan",
+                "Date": "06/25/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Oppenheimer",
+                "Analyst": "Brian Schwartz",
+                "Date": "05/13/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Evercore ISI",
+                "Analyst": "Stewart Materne",
+                "Date": "05/13/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Wolfe Research",
+                "Analyst": "Alex Zukin",
+                "Date": "04/02/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Bernstein",
+                "Analyst": "Richard Nguyen",
+                "Date": "03/18/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "CICC",
+                "Analyst": "Hongjie Li",
+                "Date": "02/09/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Arete Research",
+                "Analyst": "Adam Shepherd",
+                "Date": "12/11/25",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "DZ Bank AG Research",
+                "Analyst": "Armin Kremser",
+                "Date": "10/23/25",
+                "Current Value": "-1700.000",
+                "Current Change": "0.000",
+                "Next Value": "-1790.000",
+                "Next Change": "0.000"
+              },
+              {
+                "Broker": "Kepler Cheuvreux",
+                "Analyst": "Laurent Daure",
+                "Date": "09/25/25",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Oddo BHF",
+                "Analyst": "Nicolas David",
+                "Date": "09/23/25",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "China Renaissance Research",
+                "Analyst": "Colin Liu",
+                "Date": "07/25/25",
+                "Current Value": "-771.000",
+                "Current Change": "8.000",
+                "Next Value": "-869.000",
+                "Next Change": "9.000"
+              }
+            ],
+            "BEST_PERIOD_END_DATE": "2026-12-31"
+          }
+        },
+        {
+          "security": "BABA US Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 4,
+          "fieldData": {
+            "BEST_CPS_BRK_GRID": [
+              {
+                "Broker": "Broker",
+                "Analyst": "Analyst",
+                "Date": "Date",
+                "Current Value": "03/2027",
+                "Current Change": "Change",
+                "Next Value": "03/2028",
+                "Next Change": "Change"
+              },
+              {
+                "Broker": "Macquarie",
+                "Analyst": "Ellie Jiang",
+                "Date": "09/15/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Deutsche Bank",
+                "Analyst": "Peter Milliken",
+                "Date": "09/07/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "CLSA",
+                "Analyst": "Elinor Leung",
+                "Date": "09/02/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "CCB International Securities L",
+                "Analyst": "Cathy Chan",
+                "Date": "09/01/26",
+                "Current Value": "50.640",
+                "Current Change": "-7.680",
+                "Next Value": "59.280",
+                "Next Change": "-14.880"
+              },
+              {
+                "Broker": "The Zephirin Group Inc",
+                "Analyst": "Longdley Zephirin",
+                "Date": "08/27/26",
+                "Current Value": "59.200",
+                "Current Change": "52.860",
+                "Next Value": "68.240",
+                "Next Change": "60.250"
+              },
+              {
+                "Broker": "Guosheng Securities Co., Ltd",
+                "Analyst": "Jun Xia",
+                "Date": "08/24/26",
+                "Current Value": "5.300",
+                "Current Change": "-1.400",
+                "Next Value": "7.300",
+                "Next Change": "-0.300"
+              },
+              {
+                "Broker": "BNP Paribas",
+                "Analyst": "Colin Liu",
+                "Date": "08/24/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Guolian Minsheng Securities",
+                "Analyst": "Rong Kong",
+                "Date": "08/24/26",
+                "Current Value": "8.580",
+                "Current Change": "-48.240",
+                "Next Value": "12.310",
+                "Next Change": "-80.960"
+              },
+              {
+                "Broker": "BOC International Holdings Ltd",
+                "Analyst": "Raphael Chen",
+                "Date": "08/21/26",
+                "Current Value": "90.040",
+                "Current Change": "16.280",
+                "Next Value": "122.660",
+                "Next Change": "29.380"
+              },
+              {
+                "Broker": "DBS Bank",
+                "Analyst": "Andy Yu",
+                "Date": "08/21/26",
+                "Current Value": "0.000",
+                "Current Change": "0.000",
+                "Next Value": "0.000",
+                "Next Change": "0.000"
+              },
+              {
+                "Broker": "Caitong Securities Co Ltd",
+                "Analyst": "Hao Yanhui",
+                "Date": "08/21/26",
+                "Current Value": "1.970",
+                "Current Change": "0.180",
+                "Next Value": "1.810",
+                "Next Change": "0.040"
+              },
+              {
+                "Broker": "HSBC",
+                "Analyst": "Charlene Liu",
+                "Date": "08/20/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "UBS",
+                "Analyst": "Kenneth Fong",
+                "Date": "08/20/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "CICC",
+                "Analyst": "Yang Bai",
+                "Date": "08/20/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Zhongtai Securities",
+                "Analyst": "Conglu Wu",
+                "Date": "07/08/26",
+                "Current Value": "62.240",
+                "Current Change": "49.930",
+                "Next Value": "84.670",
+                "Next Change": "70.480"
+              },
+              {
+                "Broker": "Founder Securities Co. Ltd",
+                "Analyst": "Zhou Xin",
+                "Date": "05/14/26",
+                "Current Value": "11.460",
+                "Current Change": "-63.180",
+                "Next Value": "10.810",
+                "Next Change": "-76.150"
+              },
+              {
+                "Broker": "Huachuang Securities",
+                "Analyst": "Lei Yao",
+                "Date": "04/10/26",
+                "Current Value": "3.960",
+                "Current Change": "-3.680",
+                "Next Value": "9.210",
+                "Next Change": "-3.880"
+              },
+              {
+                "Broker": "Chang Jiang Securities Co. Lim",
+                "Analyst": "Jin Li",
+                "Date": "03/20/26",
+                "Current Value": "8.790",
+                "Current Change": "-97.930",
+                "Next Value": "13.610",
+                "Next Change": "NA"
+              },
+              {
+                "Broker": "Orient Securities Co Ltd",
+                "Analyst": "Wenqian Xiang",
+                "Date": "01/15/26",
+                "Current Value": "112.800",
+                "Current Change": "-12.800",
+                "Next Value": "140.800",
+                "Next Change": "-7.200"
+              },
+              {
+                "Broker": "East Asia Qianhai Securities C",
+                "Analyst": "Jiaying Zong",
+                "Date": "01/15/26",
+                "Current Value": "16.800",
+                "Current Change": "14.900",
+                "Next Value": "2.100",
+                "Next Change": "NA"
+              },
+              {
+                "Broker": "Great Wall Securities",
+                "Analyst": "Hou Bin",
+                "Date": "12/08/25",
+                "Current Value": "8.700",
+                "Current Change": "-6.050",
+                "Next Value": "10.680",
+                "Next Change": "NA"
+              },
+              {
+                "Broker": "Everbright Securities",
+                "Analyst": "Tianzi Fu",
+                "Date": "05/19/25",
+                "Current Value": "88.800",
+                "Current Change": "0.000",
+                "Next Value": "92.800",
+                "Next Change": "0.000"
+              },
+              {
+                "Broker": "China Merchants Securities Co.",
+                "Analyst": "Crystal Li",
+                "Date": "03/06/25",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "GF Securities Co. Ltd.",
+                "Analyst": "Wenxin Ji",
+                "Date": "02/21/25",
+                "Current Value": "118.100",
+                "Current Change": "-3.500",
+                "Next Value": "",
+                "Next Change": ""
+              },
+              {
+                "Broker": "Haitong Securities Co Ltd: Chi",
+                "Analyst": "Liting Wang",
+                "Date": "12/05/24",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "China Renaissance Research",
+                "Analyst": "Ella Ji",
+                "Date": "08/15/24",
+                "Current Value": "165.530",
+                "Current Change": "-3.680",
+                "Next Value": "",
+                "Next Change": ""
+              }
+            ],
+            "BEST_CAPEX_BROKER_GRID": [
+              {
+                "Broker": "Broker",
+                "Analyst": "Analyst",
+                "Date": "Date",
+                "Current Value": "03/2027",
+                "Current Change": "Change",
+                "Next Value": "03/2028",
+                "Next Change": "Change"
+              },
+              {
+                "Broker": "Deutsche Bank",
+                "Analyst": "Peter Milliken",
+                "Date": "09/07/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Bernstein",
+                "Analyst": "Robin Zhu",
+                "Date": "09/06/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "CLSA",
+                "Analyst": "Elinor Leung",
+                "Date": "09/02/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "HSBC",
+                "Analyst": "Charlene Liu",
+                "Date": "09/01/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "The Zephirin Group Inc",
+                "Analyst": "Longdley Zephirin",
+                "Date": "08/27/26",
+                "Current Value": "-160678.000",
+                "Current Change": "-53130.000",
+                "Next Value": "-116000.000",
+                "Next Change": "-8452.000"
+              },
+              {
+                "Broker": "Soochow Securities Co Ltd",
+                "Analyst": "Liangwei Zhang",
+                "Date": "08/25/26",
+                "Current Value": "-170185.000",
+                "Current Change": "-31516.000",
+                "Next Value": "-204222.000",
+                "Next Change": "-54459.000"
+              },
+              {
+                "Broker": "CITIC Securities Co Ltd",
+                "Analyst": "Yuan Liao",
+                "Date": "08/25/26",
+                "Current Value": "-153520.000",
+                "Current Change": "0.000",
+                "Next Value": "-153872.000",
+                "Next Change": "0.000"
+              },
+              {
+                "Broker": "Guosen Securities Co., Ltd",
+                "Analyst": "Lunke Zhang",
+                "Date": "08/24/26",
+                "Current Value": "-349077.000",
+                "Current Change": "0.000",
+                "Next Value": "-471254.000",
+                "Next Change": "0.000"
+              },
+              {
+                "Broker": "Sealand Securities",
+                "Analyst": "Mengzhu Chen",
+                "Date": "08/24/26",
+                "Current Value": "-205071.000",
+                "Current Change": "-35787.000",
+                "Next Value": "-236788.000",
+                "Next Change": "-19179.000"
+              },
+              {
+                "Broker": "Guosheng Securities Co., Ltd",
+                "Analyst": "Jun Xia",
+                "Date": "08/24/26",
+                "Current Value": "-136063.000",
+                "Current Change": "-6063.000",
+                "Next Value": "-146063.000",
+                "Next Change": "-6063.000"
+              },
+              {
+                "Broker": "Aletheia Capital Limited",
+                "Analyst": "Eric Wen",
+                "Date": "08/21/26",
+                "Current Value": "-37693.000",
+                "Current Change": "4756.000",
+                "Next Value": "-39147.000",
+                "Next Change": "-128.000"
+              },
+              {
+                "Broker": "Nomura",
+                "Analyst": "Jialong Shi",
+                "Date": "08/21/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "UOB Kay Hian",
+                "Analyst": "Julia Pan",
+                "Date": "08/21/26",
+                "Current Value": "-170058.000",
+                "Current Change": "-45734.000",
+                "Next Value": "-146675.000",
+                "Next Change": "-7527.000"
+              },
+              {
+                "Broker": "Caitong Securities Co Ltd",
+                "Analyst": "Hao Yanhui",
+                "Date": "08/21/26",
+                "Current Value": "-174000.000",
+                "Current Change": "-12000.000",
+                "Next Value": "-217500.000",
+                "Next Change": "-15000.000"
+              },
+              {
+                "Broker": "86Research Inc.",
+                "Analyst": "Chaoyi Chai",
+                "Date": "08/21/26",
+                "Current Value": "-157678.000",
+                "Current Change": "-36217.000",
+                "Next Value": "-127265.000",
+                "Next Change": "5508.000"
+              },
+              {
+                "Broker": "Daiwa Securities",
+                "Analyst": "John Choi",
+                "Date": "08/20/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "UBS",
+                "Analyst": "Kenneth Fong",
+                "Date": "08/20/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "BOC International Holdings Ltd",
+                "Analyst": "Raphael Chen",
+                "Date": "08/20/26",
+                "Current Value": "0.000",
+                "Current Change": "12394.000",
+                "Next Value": "0.000",
+                "Next Change": "14103.000"
+              },
+              {
+                "Broker": "BNP Paribas",
+                "Analyst": "Colin Liu",
+                "Date": "07/10/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "JP Morgan",
+                "Analyst": "Alex Yao",
+                "Date": "07/08/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Zhongtai Securities",
+                "Analyst": "Conglu Wu",
+                "Date": "07/08/26",
+                "Current Value": "-141000.000",
+                "Current Change": "NA",
+                "Next Value": "-151500.000",
+                "Next Change": "NA"
+              },
+              {
+                "Broker": "Huatai Research",
+                "Analyst": "Lulu Xia",
+                "Date": "06/29/26",
+                "Current Value": "-128889.000",
+                "Current Change": "0.000",
+                "Next Value": "-118781.000",
+                "Next Change": "0.000"
+              },
+              {
+                "Broker": "HuaAn Securities Co. Ltd.",
+                "Analyst": "Yuehao Shi",
+                "Date": "05/25/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "CCB International Securities L",
+                "Analyst": "Cathy Chan",
+                "Date": "05/19/26",
+                "Current Value": "-140000.000",
+                "Current Change": "0.000",
+                "Next Value": "-140000.000",
+                "Next Change": "0.000"
+              },
+              {
+                "Broker": "Guolian Minsheng Securities",
+                "Analyst": "Rong Kong",
+                "Date": "05/18/26",
+                "Current Value": "-123000.000",
+                "Current Change": "27000.000",
+                "Next Value": "-129000.000",
+                "Next Change": "28350.000"
+              },
+              {
+                "Broker": "Founder Securities Co. Ltd",
+                "Analyst": "Zhou Xin",
+                "Date": "05/14/26",
+                "Current Value": "-13490.000",
+                "Current Change": "0.000",
+                "Next Value": "-16460.000",
+                "Next Change": "0.000"
+              },
+              {
+                "Broker": "Orient Securities Co Ltd",
+                "Analyst": "Wenqian Xiang",
+                "Date": "05/11/26",
+                "Current Value": "-230000.000",
+                "Current Change": "-69044.000",
+                "Next Value": "-278000.000",
+                "Next Change": "-106310.000"
+              },
+              {
+                "Broker": "Mizuho Securities",
+                "Analyst": "Wei Fang",
+                "Date": "05/03/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Huachuang Securities",
+                "Analyst": "Lei Yao",
+                "Date": "04/10/26",
+                "Current Value": "-61214.000",
+                "Current Change": "0.000",
+                "Next Value": "-68632.000",
+                "Next Change": "0.000"
+              },
+              {
+                "Broker": "CICC",
+                "Analyst": "Yang Bai",
+                "Date": "04/10/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Cmb International Capital Corp",
+                "Analyst": "Saiyi He",
+                "Date": "04/09/26",
+                "Current Value": "-135419.000",
+                "Current Change": "1092.000",
+                "Next Value": "-150454.000",
+                "Next Change": "1078.000"
+              },
+              {
+                "Broker": "China Galaxy International",
+                "Analyst": "Lei Yang",
+                "Date": "04/09/26",
+                "Current Value": "-137500.000",
+                "Current Change": "0.000",
+                "Next Value": "-107500.000",
+                "Next Change": "0.000"
+              },
+              {
+                "Broker": "China Renaissance Research",
+                "Analyst": "Ella Ji",
+                "Date": "03/20/26",
+                "Current Value": "-125281.000",
+                "Current Change": "0.000",
+                "Next Value": "-126281.000",
+                "Next Change": "0.000"
+              },
+              {
+                "Broker": "Chang Jiang Securities Co. Lim",
+                "Analyst": "Jin Li",
+                "Date": "03/20/26",
+                "Current Value": "-131000.000",
+                "Current Change": "0.000",
+                "Next Value": "-131000.000",
+                "Next Change": "NA"
+              },
+              {
+                "Broker": "DBS Bank",
+                "Analyst": "Andy Yu",
+                "Date": "03/20/26",
+                "Current Value": "-130000.000",
+                "Current Change": "10000.000",
+                "Next Value": "-140000.000",
+                "Next Change": "10000.000"
+              },
+              {
+                "Broker": "Haitong International Research",
+                "Analyst": "Barney Yao",
+                "Date": "03/20/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Baird",
+                "Analyst": "Colin Sebastian",
+                "Date": "03/19/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Western Securities Co.,ltd",
+                "Analyst": "Jiaqi Yu",
+                "Date": "03/18/26",
+                "Current Value": "-63074.000",
+                "Current Change": "NA",
+                "Next Value": "-63074.000",
+                "Next Change": "NA"
+              },
+              {
+                "Broker": "East Asia Qianhai Securities C",
+                "Analyst": "Jiaying Zong",
+                "Date": "01/15/26",
+                "Current Value": "-75791.000",
+                "Current Change": "-5614.000",
+                "Next Value": "-75791.000",
+                "Next Change": "NA"
+              },
+              {
+                "Broker": "China Merchants Securities Co.",
+                "Analyst": "Crystal Li",
+                "Date": "01/15/26",
+                "Current Value": "PERM DENIED",
+                "Current Change": "PERM DENIED",
+                "Next Value": "PERM DENIED",
+                "Next Change": "PERM DENIED"
+              },
+              {
+                "Broker": "Shenwan Hongyuan Co, Ltd.",
+                "Analyst": "Lingyi Zhao",
+                "Date": "12/24/25",
+                "Current Value": "-125300.000",
+                "Current Change": "NA",
+                "Next Value": "-125300.000",
+                "Next Change": "NA"
+              },
+              {
+                "Broker": "Great Wall Securities",
+                "Analyst": "Hou Bin",
+                "Date": "12/08/25",
+                "Current Value": "-125991.000",
+                "Current Change": "50431.000",
+                "Next Value": "-123470.000",
+                "Next Change": "NA"
+              },
+              {
+                "Broker": "Guotai Haitong Securities",
+                "Analyst": "Heping Qin",
+                "Date": "12/01/25",
+                "Current Value": "-148783.000",
+                "Current Change": "NA",
+                "Next Value": "-152600.000",
+                "Next Change": "NA"
+              },
+              {
+                "Broker": "SPDB International Holdings Lt",
+                "Analyst": "Dan Zhao",
+                "Date": "09/01/25",
+                "Current Value": "-85554.000",
+                "Current Change": "-32976.000",
+                "Next Value": "-90648.000",
+                "Next Change": "-34691.000"
+              },
+              {
+                "Broker": "Everbright Securities",
+                "Analyst": "Tianzi Fu",
+                "Date": "05/19/25",
+                "Current Value": "-109000.000",
+                "Current Change": "0.000",
+                "Next Value": "-109000.000",
+                "Next Change": "0.000"
+              },
+              {
+                "Broker": "GF Securities Co. Ltd.",
+                "Analyst": "Wenxin Ji",
+                "Date": "02/21/25",
+                "Current Value": "-43488.000",
+                "Current Change": "-228.000",
+                "Next Value": "",
+                "Next Change": ""
+              },
+              {
+                "Broker": "Yuanta",
+                "Analyst": "Peter Chu",
+                "Date": "11/18/24",
+                "Current Value": "-55446.000",
+                "Current Change": "NA",
+                "Next Value": "",
+                "Next Change": ""
+              },
+              {
+                "Broker": "Freedom Broker",
+                "Analyst": "Vadim Merkulov",
+                "Date": "07/15/24",
+                "Current Value": "-39680.000",
+                "Current Change": "NA",
+                "Next Value": "-61166.000",
+                "Next Change": "NA"
+              }
+            ],
+            "BEST_PERIOD_END_DATE": "2027-03-31"
+          }
+        }
+      ]
+    }
+  ]
+}
