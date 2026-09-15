@@ -438,6 +438,29 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     "spec_asserts": "TO-EN-r-1 WORKER FACE: scopes.json rows key, class, long, short, tenancy, bucket and aliases; bd appears only as an alias or a refused token.",
     "world_is": "Each added field holds one fact a carrier holds today, and each view is rendered from those fields (lib/opal_naming.py _firm_registry_rows, _separations, _blk_firm_trees). The live buckets opal-data-bd, opal-data-inf and opal-data-cot are bucket-plane aliases marked routed, because r1-bd refuses bd anywhere but an alias and GRADING_RULE.md grades opal-data-bd an ALIAS of opal-data-49financial. mockadv is an alias of 49financial with its own tenant block. Each registry file's _about states its fields.",
     "notes": "DEC-1's field list may be read as a minimum, and this as its extension; that read is the issuer's and 1.0.0_SA_CTO's to make."
+  },
+  {
+    "id": "LGIC_ENFORCE-S4",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G",
+    "surfaced_at": "2026-09-15T00:17Z",
+    "one_line": "Issuer's disarm of LGIC_ENFORCE-W1-S7: check_en.py's v3-delta0 now loads each base copy beside its live file, so directory_runner.py's and holdings_snapshot.py's __file__-relative imports resolve. A base that equals its live copy reads PASS-DELTA0, where it read FAIL by construction.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ROW: LGIC_ENFORCE-W1-S7 (ARMED, disarm_owner 2.0.0_SA_COO~G): the base copies were written into a temp tree, where trading_calendar and ids do not import.",
+        "FIX @9951c799b1: fixed_inputs/check_en.py _v_delta0 writes each base copy as a hidden sibling of its live file, per exports_of's contract ('as if it lived at path'), and removes it afterwards.",
+        "DISCRIMINATING PAIR, the same inputs for both (base = HEAD, so it equals live; not-yet-generated guard stubbed): the old instrument printed FAIL-DELTA-NONZERO (ModuleNotFoundError trading_calendar), and the patched one printed PASS-DELTA0 (2 of 2 exports equal).",
+        "GUARD: unstubbed, v3-delta0 on the pre-view tree still prints FAIL-NOT-GENERATED. Sibling files left after the run: 0."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "EN-v-3's V3-AC2: 'the file's exported content equals its pre-image at the spawn base (DELTA=0)'.",
+    "world_is": "Before the fix, no EN-v-3 view could satisfy V3-AC2, however correct. After it, the criterion measures the exports, as its text says.",
+    "notes": "DISARM, per W1-S7's own clause, by its disarm owner, before EN-v-3 spawns; no worker ran the defective subcommand against a real view. The criterion text, the face and the fixtures are unchanged: the fix corrects the instrument's loader, a harness defect in the issuer's own fixed input, disclosed in its commit. INERT: EN-v-3 will be spawned from a base carrying the fix."
   }
 ]
 ```
