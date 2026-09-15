@@ -100,3 +100,16 @@ ETFS / security-scanner producers' (the `~Z` fabric's domain); AMGT reads both.
 No feature works; no cell is cut; no production key is written; no vendor cadence is chosen. Each card is a
 measured input to the addendum's outcome text, and each open question above stays open until its owner
 answers it.
+
+---
+
+**CORRECTION 2026-09-15 ~17:3xZ (`1.0.0_SA_CTO~W`), card 3.** This card recorded the Security Scanner presets as COUNTS ("DIVZ 13
+factors, PFOE 16") and named no codes, and `AMGT-rj-11` built Posture's fit input from the card as written: 22 of the 29 preset
+slots had no code to read and every fit score came out ABSENT (worker rows `AMGT_RESAPP-Z-W20-S9`, `W20-S10`). The codes and weights
+were in the promoted portal all along: `src/pages/SecurityScanner/constants.ts` at origin/PROD `edf85ce5`, `DEFAULT_PRESET` (DIVZ,
+13 codes) and `PFOE_PRESET` (16 codes, "all 16 codes verified present in the served factor_metadata.json (289 factors, asOf
+20260521)"). DIVZ: dy_ntm 20.0, dps_gr_1yr 10.0, shldr_yield 10.0, eps_est_rev_45d 5.0, short_pct_chg_12m 5.0, days_to_cover 5.0,
+pcta52wl 5.0, ret_mom_252d 5.0, velocity_63d 5.0, ey_ntm 7.5, fcfy 7.5, accruals_bs 7.5, leverage 7.5. PFOE: sales_fwd_gr_1yr 7,
+sales_gr_3yr 7, sales_fwd_gr_3yr 7, eps_fwd_gr_1yr 7, eps_gr_3yr 7, eps_fwd_gr_3yr 7, gross_mgn 6, oper_mgn 6, fcf_mgn 6, roe 6,
+int_cov 6, eps_stability 5, eps_est_rev_45d 5, peg_ntm 8, ret_mom_252d 5, short_pct_chg_12m 5. A card that names a set by its size
+hands the next cell a count where it needed members.

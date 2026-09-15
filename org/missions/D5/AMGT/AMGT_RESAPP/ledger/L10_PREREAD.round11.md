@@ -18,6 +18,8 @@ read at HEAD or on the live plane, with its vintage.
 | rj-7 the similarity ranker | `~21` | `.../~21/...rj-7...` | VALID rc=0 | 6 of 6 PASS | W21-S1..S6 |
 | rj-2 drafted sentences beside their evidence (drained 15:46Z, read s.2b) | `~18` | `.../~18/...rj-2...` | VALID rc=0 | 6 of 6 PASS | W18-S8..S9 |
 | rj-8 executive management (drained 16:10Z, read s.2b) | `~22` | `.../~22/...rj-8...` | VALID rc=0 | 6 of 6 PASS | W22-S1..S2 |
+| rj-11 the Posture call (drained 17:17Z, read s.2b) | `~20` | `.../~20/...rj-11...` | VALID rc=0 | 6 of 6 PASS | W20-S9..S14 |
+| rj-13 the social source, measured (drained 17:18Z, read s.2b) | `~22` | `.../~22/...rj-13...` | VALID rc=0 | 4 of 4 PASS | W22-S3..S8 |
 
 Channel at HEAD: 210 rows; 32 round-11 worker rows (28 OBSERVATION/INERT, 3 BLOCKING/INERT -- W19-S8 the volume bars,
 W20-S2 and W20-S3 the schtasks invocation -- and 1 OBSERVATION/ARMED, W21-S3 SAP ranked as its own peer, disarmed
@@ -106,6 +108,49 @@ column (0 of 7); domains declared for the 5 QA names only. Addendum candidate 8:
 SERP contract (the redirect unwrapped or a different zone) before the tab can show it; and candidate 5's reach: a vendor-credit
 bound is a criterion the order must be able to refuse on, so the FIRST charge counts.
 
+**rj-11 the Posture call (C-POSTURE; FWD-19's producer half).** Drained @`496470a993` at 17:17Z by `~20`. Instance re-graded here:
+VALID rc=0, 6 of 6 PASS; two O-1 objects in the pool (`posture/v1/BABA_US_Equity/2026-09-15.json` verdict `worse` vs `HD_US_Equity`;
+`posture/v1/BA_US_Equity/2026-09-15.json` verdict `hold` vs `DE_US_Equity`), each schema-valid, every basis claim cited (17 of 17; 20 of
+20), marked machine with the never-an-instruction notice, the model run recorded (`claude-opus-5`, BABA 33,598 in / 875 out, USD 0.19);
+the control subject yields `absent` with no model call. Read here from the objects themselves:
+- **Both verdicts were issued over an INCOMPLETE comparable pack.** BABA's comparable HD carries `Model: ABSENT (no model block landed
+  for this name)`; BA's comparable DE carries Thesis, Exec management and Peers ABSENT (NoSuchKey on D-1, M-1, R-1). C-POSTURE's
+  judgment is *"over the two evidence packs (each = Thesis, Exec Management, Peers, Model, all four for both names)"*, so these are
+  judgments over one pack and a fragment, and FWD-19's ACCEPT (*"gives the reasons with each one linked to what it rests on"*) is met
+  for the subject's side only. Worker row W20-S11 names it and did not draft the comparables' packs (bound). The CTO's decided
+  readiness rule (this seat's /open-calls sweep, ~17:1xZ): **a comparable whose pack is incomplete yields `pending` with the request,
+  never a verdict** -- so these two objects are the measured instance, and FWD-19 must not grade REALIZED on them.
+- **Every fit score is ABSENT** (0 of 13 DIVZ, 0 of 16 PFOE, all four names): R-1 drops the scanner factor values by design (W20-S10),
+  and card 3 named the presets as COUNTS (W20-S9). ⚠ **Card 3's gap is this seat's:** the codes and weights exist in the promoted portal
+  -- `src/pages/SecurityScanner/constants.ts` @ origin/PROD `edf85ce5`, `DEFAULT_PRESET` (DIVZ, 13: `dy_ntm` 20, `dps_gr_1yr` 10,
+  `shldr_yield` 10, `eps_est_rev_45d`, `short_pct_chg_12m`, `days_to_cover`, `pcta52wl`, `ret_mom_252d`, `velocity_63d` 5 each, `ey_ntm`,
+  `fcfy`, `accruals_bs`, `leverage` 7.5 each) and `PFOE_PRESET` (16: six growth codes at 7, `gross_mgn`/`oper_mgn`/`fcf_mgn`/`roe`/
+  `int_cov` at 6, `eps_stability` and `eps_est_rev_45d` at 5, `peg_ntm` 8, `ret_mom_252d` and `short_pct_chg_12m` 5); card 3 is corrected
+  in the same commit as this note.
+- **Membership and the comparable, re-measured against the ETF-plane holdings (candidate 3):** rj-11 read U-1 (3 of 170 holding rows
+  resolved) and resolved 4 of BABA's 12 R-1 members (1 by association key, 3 by a scanner US root join) and 0 of BA's 12. Against the 164
+  held tickers of `gold/holding` 09-14: BABA's held members are HD (DIVZ) and BKNG (PFDE) -- 2 of 12, where U-1 saw 1 -- and the rule
+  (deepest rung, then nearest log cap) still selects HD (rung 2, 0.256 vs BKNG 0.549); BA's not-held members are 8 of 12 (DE, ETN, PH,
+  VRT, TT, GD, PWR, GEV; held: UNP DIVZ, UBER PFOE, LMT PFDE, HWM PFDE) and the rule still selects DE (rung 3, 0.025). So the corrected
+  membership widens the candidate pool and changes neither pick today; it is the pack-completeness rule, not membership, that makes
+  these two verdicts premature. ⚠ 8 of BABA's 12 R-1 members carry scanner identifiers that are 6-character SEDOL stems (`653665` BYD,
+  `BGJW37` Meituan, `406141` LVMH, `BP9DL9` Inditex, `525397` Hermes, `BCRWZ1` Richemont) or local codes (`7203` Toyota, `9983` Fast
+  Retailing) -- the compiled key of candidate 3 bridges these through SEDOL (check digit computed) where `trade-security-identifiers`
+  or the ETF plane carries it.
+- Rows also filed: W20-S12 (X-1 resolves 1 of BABA's and 0 of BA's R-1 members), W20-S13 (membership is tri-state held True/False/None,
+  not the order's bool), W20-S14 (both objects re-serialised once for key order, no model call).
+
+**rj-13 the social source, measured (S13; C-LISTING-NOT-CAPABILITY).** Drained @`f0d0f09e31` at 17:18Z by `~22`. Instance re-graded
+here: VALID rc=0, 4 of 4 PASS; `social/v1/_measurement/2026-09-15.json`. The measurement: Reddit keyword discovery, dataset
+`gd_lvz8ah06191smkebj4`, inputs `Boeing` (company name, 25) and `BA` (the ticker-ambiguity control, 25), cap 50, 30-day window (the
+vendor's enum offers `Past month`; the window re-applied locally, W22-S5); job COMPLETE, **48 records in 713.4 s, 48 valid, 0 ADMITTED
+(22 REFUSE, 26 PROVISIONAL), 2 stale, 0 vendor errors**; the X official-account method NOT RUN (0 X profile urls for Boeing in the
+account pass, W22-S3); a genuine zero-match is reported by the vendor as `status=failed` with the zero only in the message (W22-S4);
+**cost NOT measurable with `brightdata-api-key`** on any route probed (no cost field; balance route 403; the estimate USD 0.075 is a
+held claim, W22-S7). ⚠ W22-S6: the S-1 key `social/v1/_measurement/{as_of}.json` carries no security coordinate, so a second security
+measured on the same day overwrites the first. Net for FWD-16: **one bounded measurement admits nothing for Boeing**, so the header's
+social half has no admitted source; a feed is round-12 material and its admission rule and cost basis are the open inputs.
+
 ## 3. The pool as it stands (14:5xZ, `list-objects-v2`, 121 objects)
 
 | prefix | objects | newest | written by |
@@ -180,10 +225,22 @@ bound is a criterion the order must be able to refuse on, so the FIRST charge co
 8. **The CEO public-profile limb** (W22-S1) needs a SERP contract that yields the DESTINATION url, not a redirect wrapper;
    until then C-EXEC-MANAGEMENT's third limb renders ABSENT with its reason. And a vendor-credit bound is enforced on the first
    charge (W22-S2), which is a criterion shape, not a contract.
+9. **Posture readiness is a rule, not a default** (rj-11, W20-S11): a comparable whose four-part pack is incomplete yields
+   `pending` with the request for the missing parts, never a verdict; C-POSTURE carries it, and FWD-19 does not grade REALIZED on
+   an object judged over one pack and a fragment (both round-11 objects are that instance).
+10. **Posture's fit input is named where it lives** (W20-S9, W20-S10): the preset codes and weights from the portal's
+   `SecurityScanner/constants.ts` (`DEFAULT_PRESET` 13, `PFOE_PRESET` 16) and the factor VALUES from the scanner universe files for
+   those codes -- R-1 is the peer set, not the fit source; a missing value stays ABSENT per factor with its denominator.
+11. **The social measurement's key and its admission** (rj-13, W22-S6, W22-S8): `social/v1/_measurement/{security_key}/{as_of}.json`
+   so a second security cannot overwrite the first; and one bounded Reddit keyword job admitted 0 of 48 for Boeing, so a feed
+   needs its admission rule measured on more than one name and a cost basis that can be READ (the key cannot read cost today)
+   before it is cut.
+12. **The compiled key reaches the peer side too** (rj-11 re-measured): the scanner's non-US identifiers are SEDOL stems and
+   local codes, so C-ONE-IDENTITY's crosswalk accepts SEDOL (check digit computed) as a basis beside CUSIP and FIGI.
 
 ## 5. What is NOT known yet (the slug read's remaining inputs)
 
-The six staged cells (rj-3, rj-9, rj-10, rj-11, rj-12, rj-13); the CVO's adjudication of the 32 rows and
+The four staged cells (rj-3, rj-9, rj-10, rj-12); the CVO's adjudication of the 32 rows and
 the slug; whether rj-10's plan reads 0/4/0 and the `_CURRENT` pointer carries no `rank_sort` (co-sign half s.4); FWD-16
 ..FWD-19's EXERCISED bars, which no cell can close -- 18 of 19 need a person, and the person is Andrew or Adam through
 Andrew. Push state: LOCAL.
