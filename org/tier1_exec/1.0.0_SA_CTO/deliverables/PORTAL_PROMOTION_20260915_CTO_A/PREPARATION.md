@@ -105,3 +105,26 @@ Exact notice `20260915T083040Z_1.0.0_SA_CTO_Re_96987_Step_1__RULED_--_check_the_
 CTO also wrote that the Step 4 promotion worktree's HEAD must equal the Step 1 DEV candidate. **One literal conflict was returned to CTO at 08:31:41 UTC:** the skill requires a `--no-ff` DEV-into-PROD merge, so the resulting merge commit cannot have the same commit hash as its DEV parent even when their file trees are identical. The proposed precise resolution is a clean promotion worktree whose HEAD equals the recorded PROD merge SHA, with its Git tree equal to the published DEV candidate's tree and an empty candidate-to-HEAD diff. That proposal remains pending the owner's explicit correction; it is not a silent substitute for the ruling. No merge or build has been started to work around the conflict.
 
 MSTR's explicit GO and both merged-tree prerequisite PASS artifacts still bind. The ruling is preparation authority, not promotion GO.
+
+## Investor Reporting candidate requirement — notice 96996, 08:58:43 UTC
+
+Exact notice `20260915T085843Z_1.0.0_SA_CTO_Promote_Step_1_addition__the_candidate_m.md`, from CTO, was read and ACKed. It adds a mandatory two-part Step 1 test. The required Investor Reporting admin-gate commit is **`10c2f07d4da3795c0e404a92a8b9515259e42be7`** (FE-s-49 amendment 1). The earlier `90d71d9e1199d7bf5f666e68c8c58400333e6267` does not contain it and is not eligible by itself.
+
+At the eventual GO, print and retain both checks against the **actual published, merged candidate**:
+
+1. `git merge-base --is-ancestor 10c2f07d4da3795c0e404a92a8b9515259e42be7 <candidate>` must return 0. A bogus candidate hash must fail as the negative control. A nonzero exit for the real candidate, including an unreadable object, is a STOP.
+2. Read `git show <candidate>:src/App.tsx` and `git show <candidate>:src/lib/firmAccess.ts`. In the candidate's own bytes, both `/investor-reporting` and `/investor-reporting/print` must carry `requireAdmin requireInternal`; the navigation item must carry `requiresAdmin: true` and `requiresTier: 'internal'`; the `49financial`, `inflection` and `cottonwood` allowlists must each omit `/investor-reporting`. Any failed or unreadable content check is a STOP even when ancestry passes, because a later merge can remove the guard.
+
+The notice abbreviates the second source path as `lib/firmAccess.ts`. That literal root path was read at the cited commit and failed because it does not exist. A scoped filename search and `git ls-tree` resolve the canonical path unambiguously to **`src/lib/firmAccess.ts`**, which was then read from the same exact commit. This is an explicit source-path correction, not a substituted inbox notice or a concealed failed read.
+
+Read-only preparation evidence, measured 2026-09-15T09:00:21Z and completed with the corrected path shortly afterward:
+
+| Test | Result | Limit |
+|---|---|---|
+| Required commit ancestor of itself | exit 0 | Positive plumbing control, not a final candidate check |
+| Required commit ancestor of old `90d71d9e...` | exit 1 | Old published DEV snapshot fails the new gate |
+| Required commit ancestor of all-zero bogus commit | exit 128, invalid commit | Expected negative control; an invalid real candidate would also stop |
+| `10c2f07d...:src/App.tsx` | Both route guards and the admin/internal navigation restriction present | Committed source inspection only |
+| `10c2f07d...:src/lib/firmAccess.ts` | All three named partner sets omit the page | Committed source inspection only; no authenticated walkthrough claimed |
+
+No final integrated candidate has been selected or graded by these preparation controls. Repeat the checks at GO, retain both prerequisite PASS artifacts, and apply the prior cleanliness and exact-byte requirements. The Step 4 no-ff merge commit/hash wording remains pending the explicit owner clarification already requested. No fetch, build, merge, push or deployment was performed for this notice.
