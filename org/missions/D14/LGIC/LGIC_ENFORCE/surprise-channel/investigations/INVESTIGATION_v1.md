@@ -972,6 +972,51 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     "spec_asserts": "TO-EN-s-1 WORKER FACE: 'It judges every nameable name in the repo (the Terraform, lib/config.py-class files, and Lambda sources)'.",
     "world_is": "Nothing the order names defines which literal in a config or Lambda source is a nameable name, so the worker defined it and printed the rule and its exclusions in the report and the module.",
     "notes": "Form only. No criterion turns on the repo denominator. The repo plane is never judged in this run, because the run stops in the live plane first (row LGIC_ENFORCE-W7-S1)."
+  },
+  {
+    "id": "LGIC_ENFORCE-W8-S1",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~8",
+    "surfaced_at": "2026-09-15T03:45Z",
+    "one_line": "D1-AC3 and D1-AC6 can both pass only if the new pipeline is committed BEFORE the expected-set commit, but the cell lists writing it last (step 5). On scratch branch prac-lgic-enforce-d1 it was committed first, @b4afbb00c7.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE: org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/2.0.0_SA_COO~G/fixed_inputs/check_en.py:1053-1058 @652d3a2204 (d1-pipeline) passes only if 'git cat-file -e <generated>:<pipeline_path>' succeeds, so the pipeline must exist AT the generated commit.",
+        "CODE: the same file :1033-1040 @652d3a2204 (d1-diff-equal) compares 'git diff --name-only <expected_set> <generated>', less infra/logic/registry, to expected_files for exact equality, so any commit between the two that adds the pipeline puts it in the actual set.",
+        "SCRATCH BRANCH prac-lgic-enforce-d1 (never pushed): b4afbb00c7 the pipeline, then 5e6573d25f expected_diff.txt (expected_set), then 92bc3b51bf the row and the generator's output (generated). 'git diff --name-only 5e6573d25f 92bc3b51bf' prints 10 paths: the 9 expected plus infra/logic/registry/scopes.json."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EN-d-1 THE CELL: step 1 'Compute the expected diff set FIRST ... That commit is expected_set'; step 2 'Add ONE scopes.json row ... That commit is generated. The actual diff, less the registry itself, must equal the expected set exactly'; step 5 'Write a NEW pipeline for the firm ... and commit it on the scratch branch.'",
+    "world_is": "A pipeline committed after 'generated' is absent at 'generated', which fails D1-AC6. One committed between the two commits enters the diff, which fails D1-AC3. Only a commit that is an ancestor of expected_set satisfies both, so the pipeline was committed first. The expected set was still computed and committed before the row was added.",
+    "notes": "Form only. The pipeline's path is under this worker's deliverables folder (deliverables/0.9.0_WK_LGIC_ENFORCE~8/pipeline/qwt_positions.py) because the order's <paths> admits no data/ path. The order names no location for it."
+  },
+  {
+    "id": "LGIC_ENFORCE-W8-S2",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~8",
+    "surfaced_at": "2026-09-15T03:45Z",
+    "one_line": "Firm N+1 as one scopes.json row is not all the registry asks for: validate prints 'WARN scopes.json[3].key: firm 'quillwater' is not in NAMING_SCHEMA.json firm_forms', and scopes.json itself says firm_forms owns which firm short forms exist. Generate and the gate proceed on the row alone.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN: 'python lib/opal_naming.py validate' in the practice copy after the row was added: 'WARN scopes.json[3].key: firm 'quillwater' is not in NAMING_SCHEMA.json firm_forms' ... 'VALIDATE: OK 16 system row(s), 10 scope row(s), 10 warning(s) at registry@8f946960611a1880', rc 0. Then 'GENERATE: 9 written, 0 skipped, into . at registry@8f946960611a1880'.",
+        "CODE: lib/opal_naming.py:286-290 @652d3a2204. A FIRM row whose key is absent from firm_forms is appended to warnings, never refused. generate() (:1391-1393) stops only on refusals.",
+        "SCHEMA: org/standards/NAMING_SCHEMA.json:112-117 @652d3a2204. firm_forms lists 49financial, inflection, cottonwood and demo. Its authority line :17 reads 'WHICH firm short forms exist (49f, inf, cot beside the long forms; bd refused in every slot) -- Andrew-direct 2026-09-13 ~03:5xZ card 2'.",
+        "REGISTRY: infra/logic/registry/scopes.json:4 @652d3a2204, row_fields: 'short (NAMING_SCHEMA.json firm_forms owns which firm short forms exist)'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EN-d-1 THE CELL: 'EN-d-1 -- firm N+1 is one row (PRD candidate E11, its first half; DEC-9).'",
+    "world_is": "The row alone regenerates all 9 views, and it makes the gate refuse the firm's hand-typed address and its name. The validator still warns that the firm's short form is not in NAMING_SCHEMA.json firm_forms, the list the registry names as the owner of which short forms exist. That file is outside this order's <paths>. The exercise added the row only and left the schema unchanged.",
+    "notes": "Form only. No criterion turns on the warning. This row does not say whether a firm row missing from firm_forms should be refused or warned."
   }
 ]
 ```
