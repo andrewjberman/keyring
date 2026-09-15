@@ -6464,6 +6464,175 @@ Andrew asked for (msg 22917); it concerns this project's portal files meeting an
   "spec_asserts": "CLAUDE.md Rule 14 (every .py edit passes .tools/commit-gate.sh, UNIVERSAL and fail-closed) and Rule 14a (commit via safe-commit.sh); the task order says the worktree is a sparse cone at the issuance commit and must not be re-created.",
   "world_is": "The four refusals, in order: (1) commit-gate -- ModuleNotFoundError: No module named \"comp_constants_cli\" (commit_gate_runner.py imports it from org/modules/graph, 408 files / 18 MB, outside the cone); (2) surprise-row-gate -- FileNotFoundError on org/surprise_channel/schemas/investigation_item.schema.json (2 files / 19 KB); (3) the same gate STANDING CORPUS pass -- FileNotFoundError on another project channel file (org/missions/D0/NFRA/NFRA_CLDGRPH/surprise-channel/investigations/INVESTIGATION_v1.md; it grades the WHOLE corpus, 76 channel files under org/missions plus 32 under org/surprise_channel); (4) the tree-index limb -- 17 INDEX-MISSING violations, one per project with no org/projects/<CODE>.json (458 files / 4.4 MB). REMEDY TAKEN: `git sparse-checkout add` for org/modules/graph, org/surprise_channel, org/missions and org/projects -- a WORKTREE CHECKOUT change, no repo edit, no gate bypassed, the audited \"# surprise-row-override\" path NOT used. The gates then ran and passed, and the corpus pass graded 240 rows (6 new, 234 pre-existing).",
   "notes": "For the COO cutting worker worktrees: a cone of {.tools, docs/doctrine, org/critical_paths, <project home>, org/standards, org/modules/graph, org/projects, org/surprise_channel, org/missions} is what the commit path actually needs today -- the last four are what this worker had to add. The alternative (the audited override) would have SKIPPED a real control rather than running it."
+},
+{
+  "id": "POSN_ASTTAX-Z-S142",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T05:20:26Z",
+  "one_line": "ADJUDICATION of W26-S1 (INERT): the worker acted on the issuer's mid-run amendment notice (v0.11, the two-decimal trimmed label) and no Math.round reading reached any commit; the amended order was copied from SITEZ @1b791c6a11 into its worktree before the flip. Measured pre/post on one instrument: Models/Benchmark/ETFs labels byte-identical; exactly 5 Satellites labels changed, all IEEE artifacts. The mechanism the round now has: an issuer amendment reaches a running worker through the harness notice, the face on SITEZ, and a row -- three carriers, one text.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W26-S1 as filed; TO-W3-1 act 2 at 1b791c6a11; the worker's report: 62.589999999999996% -> 62.59%, 29.820000000000004% -> 29.82%, 39.43000000000001% -> 39.43%, 27.830000000000002% -> 27.83%, 90.24000000000001% -> 90.24%.",
+      "WHY GRADUATED: the superseded reading never became a byte on the ref; the amended bar discriminates (the Models control)."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W26-S1"
+  ],
+  "spec_asserts": "PRD v0.11 C-SUMMARY-COPY (clarified): no more than two decimals, trailing zeros dropped; Models/ETFs byte-identical.",
+  "world_is": "The label at :1011 renders Number(v.toFixed(2)); the five artifacts are gone; the other modes unchanged.",
+  "notes": "Nothing further."
+},
+{
+  "id": "POSN_ASTTAX-Z-S143",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T05:20:26Z",
+  "one_line": "ADJUDICATION of W26-S2 (INERT): ui-smoke.mjs:334 slices the TEXT dump to 160 characters, so the issuer's label clause 'the TEXT dump matches ...' had a denominator of ZERO labels in the graded dump; the worker carried the bar on a supplementary DOM read (11 of 11, 9 of 9, 8 of 8 labels, the shape regex and the byte-identical Models control) and said so. RULED: the DOM read is the honest instrument and the bar stands on it; the issuer's clause named the wrong carrier (the slice is a tool limit, W22-S10's sibling). CARRIED, not a cell: a ui-smoke option to dump the full TEXT -- the portal tooling owner at the integration cut; noted for the round-6 analysis.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W26-S2 as filed; ui-smoke.mjs:334 at dd1d33c6db; the proof instance's W3-AC5 evidence names the DOM dump and its counts.",
+      "WHY GRADUATED: the criterion was exercised on a full-coverage instrument with its denominator printed; the tool limit is disclosed and owned."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W26-S2"
+  ],
+  "spec_asserts": "TO-W3-1 W3-AC5: every single-bar label in the TEXT dump matches the shape regex, counts printed equal.",
+  "world_is": "The graded TEXT dump carries 160 characters; the DOM read carries every label.",
+  "notes": "A bar that names 'the TEXT dump' should name the DOM read on this script; the issuer's clause, corrected by the worker's instrument."
+},
+{
+  "id": "POSN_ASTTAX-Z-S144",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T05:20:26Z",
+  "one_line": "ADJUDICATION of W26-S3 (INERT): the Positioning page draws a SECOND legend -- the Portfolio Composition treemap's, in HoldingsTab.tsx -- which still lists all five classes in every mode (Models 3 vs 5, ETFs 2 vs 5 on the same screen) after F5 put the presence rule on the Summary. ACT (the issuer's reading, like Z-S136): Andrew's ~00:4xZ word names legend categories that do not appear in the view, not one panel; C-PRESENT-CLASSES names the Summary because that is where the screenshot was; the file is F4's and F4 is not yet spawned -- TO-W2-1 act 6 and W2-AC8 AMENDED: the treemap legend lists only the classes with a non-zero tile in the displayed book, Models/ETFs the same, the five-entry pre-change legend as the control. Recorded for 1.0.0_SA_CTO~Z's L10 to hold the narrower reading; the change stays either way.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W26-S3 as filed: w3_models.png shows the Summary legend at 3 and the treemap legend at 5; w3_etfs.png 2 vs 5; HoldingsTab.tsx renders it and is outside TO-W3-1's <paths>.",
+      "WHY GRADUATED: the gap has a cell, a file owner and a bar before any F4 byte exists; no served byte is wrong."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W26-S3"
+  ],
+  "spec_asserts": "Andrew ~00:4xZ: 'There is no need to display the different legend categories if they do not appear in the view'; PRD v0.11 C-PRESENT-CLASSES (the Summary).",
+  "world_is": "Two legends on one page disagree about what the view holds until F4 lands act 6.",
+  "notes": "The issuer's second reading beyond the CTO's file list this round (Z-S136 the first); both carried to L10."
+},
+{
+  "id": "POSN_ASTTAX-Z-S145",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T05:20:26Z",
+  "one_line": "ADJUDICATION of W26-S4 (INERT): the portal's .gitignore does not cover .scratch/, where both graded ui-smoke invocations write; the worker copied the artifacts to its deliverables and removed the directory before the graded W3-AC2 diff, so the two-file bar held. CARRIED, not a cell: a one-line .gitignore entry in the portal repo belongs to the integrate plan (0.0.0_AB_MSTR~Z, 22918) or the next portal cell that touches the root, never to a cell whose <paths> are two page files.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W26-S4 as filed; W3-AC2 PASS at 2 of 2 files with the unscoped status empty.",
+      "WHY GRADUATED: the hazard (an untracked scratch dir widening a diff) was neutralised by the worker's discipline and is owned by the portal integrate plan."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W26-S4"
+  ],
+  "spec_asserts": "TO-W3-1 W3-AC2: exactly two files changed; the unscoped status shows the same two and nothing else.",
+  "world_is": "Portal .gitignore lacks .scratch/; every render bar in rounds 5 and 6 writes there.",
+  "notes": "Noted for the round-6 analysis."
+},
+{
+  "id": "POSN_ASTTAX-Z-S146",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T05:20:26Z",
+  "one_line": "ADJUDICATION of W26-S5 (INERT): at 1440 px the longest Satellites single-bar label (90.24%) is clipped at the panel edge -- PRE-EXISTING (the pre-edit string was 12 characters longer and clipped worse), narrowed by the cell, not introduced. CARRIED to the round-6 analysis as a layout item (a label width or a bar-end margin in PositioningSummary.tsx), not re-cut mid-round: no constraint names label fit, and the served value is correct.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W26-S5 as filed; w3_sats.png and w3_sats_expanded.png read by the worker; the pre-edit label 90.24000000000001% at the same width.",
+      "WHY GRADUATED: a cosmetic, pre-existing, narrowed defect with a named file and no spec text; L10 decides whether it earns a cell."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W26-S5"
+  ],
+  "spec_asserts": "No constraint names label fit; C-SUMMARY-COPY names the value's precision only.",
+  "world_is": "The 90.24% label is partially clipped at 1440 px in the Satellites mode.",
+  "notes": "For the CTO's round-6 analysis."
+},
+{
+  "id": "POSN_ASTTAX-Z-S147",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T05:20:26Z",
+  "one_line": "ADJUDICATION of W26-S6 (INERT) -- THE ISSUER'S ERROR, RE-CUT: TO-W3-1 act 1 said the presence set is over 'the books portfolio values' ALWAYS plus the benchmark values when Benchmark or Relative is on; C-PRESENT-CLASSES says 'a non-zero value in any column the current view DRAWS'. The Benchmark view draws only benchmark bars and no benchmark carries Structured today, so under the order Structured sits in the legend with a row of five zeros -- exactly the category-that-does-not-appear Andrew ~00:4xZ said not to display. The worker implemented the order's reading as instructed (never two readings in code) and filed the difference. ACT: act 1 RE-CUT to the constraint's sentence (Portfolio view = portfolio values; Benchmark view = benchmark values ONLY; Relative view = the deltas; Custom when valid), W3-AC3(a) and W3-AC5's Benchmark/Relative clause re-cut with the discriminator (Benchmark on Models: 2 classes, no Structured row; the pre-re-cut render's 3 with a zero row), the order RE-OPENED (in_progress) for that one act; worker ~26 resumed on the re-cut face. The error is the issuer's: a paraphrase of the constraint at L5 that added a word the constraint does not carry.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W26-S6 as filed with its measurement: every benchmark allocation carries structured = 0 while LT and ULT portfolio columns carry 1.5 and 2.0; the Benchmark view rendered a 3-entry legend and a Structured row of five zeros (w3_models_bench.png).",
+      "PRD v0.11 C-PRESENT-CLASSES: 'the classes with a non-zero value in ANY column the current view draws'; FWD-6 DONE WHEN: 'a mode shows a class only when a book in its view holds some of it'.",
+      "WHY GRADUATED: the wrong reading is named, the re-cut carries the constraint's words and a discriminating bar, and the worker is resumed before any drain of the fix."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W26-S6"
+  ],
+  "spec_asserts": "PRD v0.11 C-PRESENT-CLASSES: one presence set per render over the columns the current view draws.",
+  "world_is": "F5 on the ref (10a2799c) lists Structured in the Benchmark view with a zero row; the re-cut removes it; the Portfolio and Relative views are unaffected.",
+  "notes": "A paraphrase at L5 is a second carrier of the spec's sentence; cite the sentence, do not restate it."
+},
+{
+  "id": "POSN_ASTTAX-Z-S148",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T05:20:26Z",
+  "one_line": "ADJUDICATION of W26-S7 (INERT): a sparse-cone worker worktree cannot run the mandated commit gates -- safe-commit refused four times, each on a different absent path (org/modules/graph, the surprise-row schema, the whole surprise-channel corpus, org/projects); the worker widened its cone so every gate RAN and did not use the audited override. RULED: correct. THE RECIPE FIX (the issuer's): every round-6 cone from here includes org/modules/graph, org/standards, org/surprise_channel, org/projects and the schema path the row gate reads; slot ~25's cone widened before its spawn; the round-5 cones that passed did so because their commits happened to miss those limbs. Banked as a memory for the next issuance.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W26-S7 as filed: four refusals, four paths, the override unused; `git -C /c/tmp/wk-posn-6-26 sparse-checkout list` after the widening is the recipe.",
+      "WHY GRADUATED: the worker's remedy was the right one (widen the read, never bypass the gate) and the issuer's recipe now carries it."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W26-S7"
+  ],
+  "spec_asserts": "CLAUDE.md 14a/14b: commit via safe-commit under the gates; a refusal is answered by making the gate able to run, never by --force.",
+  "world_is": "Round-6 cones cut at 910815809f lacked four paths the gates read; ~26 widened its own; ~25 is widened at the cut.",
+  "notes": "Memory banked: the sparse cone must carry every path the commit gates read."
 }
 ]
 ```
