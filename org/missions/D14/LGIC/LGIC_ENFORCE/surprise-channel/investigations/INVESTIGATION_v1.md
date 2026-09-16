@@ -2076,6 +2076,30 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
    "spec_asserts": "A commit's author line names the seat that performed the act, so an author census of a round counts who did the work.",
    "world_is": "On the merge path the author line is whatever the invoking shell exported, and nothing grades it -- the lane check that would have refused the base serial is exempt on a merge commit. For four merges this hour the exported value was the base serial while the acting seat was the lane, so the census names a seat that is not seated.",
    "notes": "\u2b50 THE GENERAL SHAPE, which is why this is worth a row rather than a silent correction: A GATE THAT REFUSES ON ONE PATH AND IS EXEMPT ON ANOTHER TEACHES THE CORRECT VALUE ONLY WHERE IT BITES. I learned ~G from the lane refusal on the commit path and never learned it on the merge path, because the merge path never refused. The value was wrong in exactly the place no instrument was looking. \u26a0 Found by 1.0.0_SA_CTO, not by me, on an off-task census during its own tick -- and its hypothesis (a tool or environment drop) was the generous one; the measurement says the seat typed it."
+  },
+  {
+    "id": "LGIC_ENFORCE-W2-S10",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~2",
+    "surfaced_at": "2026-09-16T09:48Z",
+    "one_line": "The EN-s-1 re-run's only OUT-OF-PATTERN row carries a LITERAL unfilled {system} into the census report -- live API_GW inf-otp-relay-api grades to '{system}-inf-otp-relay-api' while its own registered sibling inf-otp-relay-lambda-role grades to 'advi-inf-otp-relay-lambda-role', because resources.json is keyed by (name, type) and 18 of RESOURCE_GAPS.json's 48 gaps have no (name, type) row.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "The EN-s-1 round-2 worker face (LGIC_ENFORCE.TO-EN-s-1-r2.census-run.md@4f9a9eb3f3, THE CELL, paragraph 'What the counts should show') states: EN-r-4's rows fill {system} where a name's own tokens resolve none.",
+    "world_is": "At HEAD registry@254d4e9ece847acb they fill it only where a resources.json row matches the graded name AND its type. EXERCISED in this worktree: grade('inf-otp-relay-api','API_GW') returns ('OUT-OF-PATTERN','{system}-inf-otp-relay-api') -- the placeholder is emitted verbatim -- while grade('inf-otp-relay-lambda-role','IAM_ROLE') returns ('OUT-OF-PATTERN','advi-inf-otp-relay-lambda-role'). The first is the ONLY non-CONFORMANT row the re-run produced before its RAISE stop, so 1 of 1 OUT-OF-PATTERN rows in NAMING_CENSUS_REPORT.md carries the placeholder. This changes no S1R criterion's verdict and is filed, not chased.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "EXERCISED, this worktree at HEAD c8e9d02213 (base CLOUD): lib/opal_naming.py@39cbad4214 loaded by path and called directly -- grade('inf-otp-relay-api','API_GW') -> ('OUT-OF-PATTERN', '{system}-inf-otp-relay-api'); grade('inf-otp-relay-lambda-role','IAM_ROLE') -> ('OUT-OF-PATTERN', 'advi-inf-otp-relay-lambda-role'). The pair is the discriminator: same resource family, same firm token inf, different type; only the type carrying a registry row resolves {system}.",
+        "MEASURED, this worktree: infra/logic/registry/resources.json@b15ed01ee6 carries 30 rows; the one row naming otp is {'name': 'inf-otp-relay-lambda-role', 'type': 'IAM_ROLE', 'system': 'advi'}. There is NO row for inf-otp-relay-api of type API_GW.",
+        "MEASURED, this worktree: over the 48 gaps of org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/2.0.0_SA_COO~G/fixed_inputs/r2/RESOURCE_GAPS.json@4f9a9eb3f3, 18 have no (name, type) match among resources.json's 30 rows. DENOMINATOR: 48 of 48 gaps compared against 30 of 30 registry rows.",
+        "MEASURED, the ordered run in this worktree: 'python lib/opal_naming.py census --live --repo --report org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/NAMING_CENSUS_REPORT.md' rc=3, log line 'CENSUS OUT-OF-PATTERN live API_GW inf-otp-relay-api -> {system}-inf-otp-relay-api'. The written report's fenced json carries the same row verbatim: {'current': 'inf-otp-relay-api', 'canonical': '{system}-inf-otp-relay-api', 'verdict': 'OUT-OF-PATTERN', 'type': 'API_GW', 'plane': 'live'}.",
+        "READ org/missions/D14/LGIC/LGIC_ENFORCE/task-orders/LGIC_ENFORCE.TO-EN-s-1-r2.census-run.md@4f9a9eb3f3, THE CELL, paragraph 'What the counts should show' -- the asserted sentence is quoted in spec_asserts above."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "INERT, not ARMED: the defect surfaces as a VISIBLE placeholder token inside the canonical, which no consumer can mistake for a name -- it cannot silently produce a wrong rename target. SCOPE: whether 18 uncovered gaps is itself a defect belongs to EN-r-4's own criterion r4-gaps-covered (check_en_r2.py@5e908a4929) and is NOT graded here; this row records only what the EN-s-1 census output carries. No remedy is available to this worker -- infra/logic/registry/resources.json is outside this order's <paths> grant."
   }
 ]
 ```
