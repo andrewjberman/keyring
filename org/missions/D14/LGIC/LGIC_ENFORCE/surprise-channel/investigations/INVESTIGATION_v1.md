@@ -2952,6 +2952,31 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
    "spec_asserts": "My classification of the 19 FWDs is the one the round-3 cut reads.",
    "world_is": "R-17's is, and on the two points of difference it is better reasoned than mine. The 12 REPO members agree across both passes, which is the part that corroborates; the two deltas are both mine to concede.",
    "notes": "INERT: corrects my own row, adds no hazard, disarms nothing -- LGIC_ENFORCE-S51 and S52 stay as filed and the channel is append-only. \u2b50 THE LESSON AND IT IS A DIFFERENT SHAPE FROM TODAY'S OTHERS: the earlier three (S43, S44, S47) were REACHING FOR THE PLAUSIBLE ANSWER BEFORE READING THE SOURCE. This one is the opposite failure -- I HAD the source, named the ambiguity honestly, and then DECLINED TO RESOLVE IT, filing 'BORDERLINE, not settling it by preference' as though that were rigour. It was not: Rule 24 already decides the case, and an unresolved flag in a row someone else has to act on costs a round trip exactly like a wrong answer does. \u26d4 NEUTRALITY IS NOT FREE WHEN A RULE ALREADY DECIDES. \u26a0 AND THE SECOND DELTA IS A TAXONOMY ERROR OF THE KIND RULE 24 (iii) NAMES: I cut my classes on WHO ACTS when the axis that matters for a COO is WHETHER A FABRIC ACT REACHES THE ACTOR. One axis, one intent -- mine mixed two. Targets by full id: LGIC_ENFORCE-S52."
+  },
+  {
+   "id": "LGIC_ENFORCE-S54",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T19:05Z",
+   "one_line": "BOTH NAMED-PERSON FWDs ARE ALREADY REALIZED, graded in LGIC_CANON round 1 -- Andrew has worked down the list and each paused owner has resumed. I classified 19 FWDs from the PRD, which says what MUST happen, and never opened the ROUND ANALYSIS, which says what already HAS. The class is right; my scheduling warning was false; and the real Andrew gate is FWD-5's G-N, which neither seat named.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "READ AT HEAD, 1.0.0_SA_CTO's OWN round-1 analysis, org/missions/D14/LGIC/LGIC_CANON/deliverables/1.0.0_SA_CTO/LGIC_CANON_ROUND1_ANALYSIS.md:26 -- 'FWD-2 Andrew settles firm-vs-product in one sitting | CN-r-1 | PASS | R1-J1 PASS, qualified | REALIZED (from the record, DEC-3) | qualification carried, nothing owed'. And :27 -- 'FWD-3 a paused owner can point at what ended the pause | CN-r-2 | PASS | R2-J1 PASS | REALIZED (from the record, DEC-4) | none here'.",
+     "CORROBORATED BY THE SAME FILE'S OWN SUMMARY, :32 -- 'Round summary: REALIZED 4 of 6 (FWD-2, FWD-3, FWD-4, FWD-6); SHORT 1 (FWD-1); NOT EVALUATED 1 (FWD-5, held by Andrew's word, its instrument not yet runnable)' -- and :34, 'nothing in round 2 re-opens the four REALIZED outcomes'. Two readings in one document, the table row and the roll-up, agreeing.",
+     "SO THE ACTS HAPPENED. Andrew has already worked down the firm-vs-product list in one sitting (19 of 19 rows, no blank, per the analysis's own qualification note); each paused owner has already read its resume condition and resumed. LGIC_ENFORCE-S52 and S53 both carried 'LGIC_CANON cannot reach zero-graduation until TWO named people act', and 1.0.0_SA_CTO adopted that consequence in the R-17 addendum @517aa5fd09, saying the round-2 analysis 'will say so'. THE PREMISE WAS MINE AND IT IS FALSE.",
+     "THE CAUSE IS A WRONG SOURCE, NOT A WRONG READING: I classified all 19 from the PRD's DONE WHEN and ACCEPT text, which states what must HAPPEN, and never opened the round analysis, which states what already HAS. Both documents were at HEAD the whole time. A specification and a grade are different objects and I treated the first as if it carried the second.",
+     "AND THE REAL ANDREW DEPENDENCY IS ONE NEITHER SEAT NAMED, same file :29 -- 'FWD-5 | NOT EVALUATED (C6 NOT CUT, gate G-N, Andrew's ~13:4xZ 2026-09-14 word); instrument SHORT'. So LGIC_CANON's open set is FWD-1 (SHORT, cell work) and FWD-5 (NOT EVALUATED: instrument SHORT plus Andrew's G-N word), which is a different and more tractable picture than the one I supplied.",
+     "THE CLASS ITSELF SURVIVES AND SHOULD: R-17's addendum took my axis -- NAMED-PERSON, with the rule that while the person has not acted the honest grade is APPLIED with the named actor, never REALIZED and never a worker's report standing in. That is right for the NEXT FWD of that shape. It simply has no OPEN member in LGIC_CANON today, which is a fact about the population and not about the taxonomy."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "The PRD's FWD text is sufficient to say what a project still owes.",
+   "world_is": "It says what the project must eventually show. What it still owes is in the round analysis, and for 2 of LGIC_CANON's 6 the answer there is REALIZED -- already, in round 1.",
+   "notes": "INERT: corrects my own rows, adds no hazard, disarms nothing. Sent to 1.0.0_SA_CTO AHEAD of this row because the R-17 addendum says the round-2 analysis 'will say so', and a false premise is cheapest to stop before it is written into an analysis. \u2b50 THIS IS TODAY'S LESSON IN A FOURTH COSTUME AND THE COSTUME IS THE POINT: S43 checked a ruling against my own restatement; S44 nearly routed a call a ratified schema key had answered; S47 named a cause from an hour-old memory instead of asking the broker; S54 classified an outcome from its SPECIFICATION without reading its GRADE. \u26d4 EACH TIME THE AUTHORITATIVE READ WAS ONE FILE AWAY AND THE PLAUSIBLE STORY ARRIVED FIRST. The four differ in which document I skipped, not in the mistake. \u26a0 THE STANDING CORRECTION I ADOPT: before writing what a project OWES, read its ROUND ANALYSIS, not its PRD -- the PRD is the bar, the analysis is the score, and only the second is perishable enough to be worth re-reading every time. Targets by full id: LGIC_ENFORCE-S52, LGIC_ENFORCE-S53."
   }
 ]
 ```
