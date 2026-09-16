@@ -1636,6 +1636,28 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "Validate the instance, then flip <status> and commit the instance, the deliverables and the flip together.",
     "world_is": "The two acts cannot both hold for an artifact the RUN creates: the checker resolves PENDING against the instance's LAST commit, so a file first written after that commit reads ABSENT and the instance is INVALID until the file is committed separately. Splitting the evidence file into its own prior commit is what makes the validation the bound requires possible at all; the flip still rides one commit with the instance and the deliverables.",
     "notes": "INERT and FORM ONLY. It costs one extra commit per run-created evidence file and nothing else; no criterion's measurement changes. The general shape is the known PENDING one-shot: the sentinel names 'this commit' but is read against the commit the instance already has."
+  },
+  {
+    "id": "NFRA_OPLGTW-W2-S4",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~2",
+    "surfaced_at": "2026-09-16T19:16Z",
+    "one_line": "A CloudWatch GetMetricStatistics percentile query whose one requested Period spans the 15-day 1-minute-resolution retention boundary silently returns TWO datapoints instead of one, split unevenly (measured [10, 79222] samples for a 30-day window on this ALB) -- reading Datapoints[0] alone (the first build of AC11) reported a p95 of 31 ms from the 10-sample sliver where the window's true, dominant figure is ~553 ms.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED: cloudwatch get-metric-statistics (AWS/ApplicationELB TargetResponseTime, LoadBalancer=app/opal-gateway/89166a68f337e5a4, ExtendedStatistics p95, Statistics SampleCount) via .tools/aws, one call per width, StartTime = EndTime - width, Period = width, EndTime fixed at 2026-09-16T18:51:44Z/19:1xZ: widths 1 hour through 14 days each returned exactly 1 Datapoint (e.g. 14 d -> SampleCount 43642); 15 d -> 2 datapoints SampleCount [10.0, 45233.0]; 16 d -> [46676.0, 10.0]; 30 d -> [10.0, 79222.0] (timestamps exactly one Period apart, both at :50:00 minute-of-hour, not proportional to elapsed time).",
+        "CODE (this worktree, uncommitted at grounding time): org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~2/probes/og_p1.py -- AC11_WINDOW_DAYS lowered from 30 to 14 with this finding recorded beside it; ac11() no longer indexes Datapoints[0] directly -- _cw_datapoint(data) refuses (returns a problem, not a value) whenever len(Datapoints) != 1.",
+        "RE-RUN AFTER FIX: same probe, AC11, 14-day window: exactly 1 datapoint, sample_count=43745, p95_seconds=0.5535 (553.5 ms) -- consistent with the dominant bucket the 15/16/30-day probes also showed (~0.55 s), confirming the 31 ms figure from the unfixed build was the defect, not the true baseline."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OGP1-AC11 (amended) asks for p95 latency from the ALB's TargetResponseTime over 'a stated window', with no width named -- any width the criterion states is legal on its face.",
+    "world_is": "CloudWatch keeps 1-minute-resolution datapoints, which percentile (ExtendedStatistics) queries require, for 15 days; a single-period request whose span crosses that boundary is not clipped to the requested window -- it is silently answered with two datapoints that do not partition the window proportionally to time, and nothing in the response signals the split as an error. A caller that assumes 'one period, one datapoint' and reads Datapoints[0] gets a real AWS value that is nonetheless the wrong one for the claimed window, with no error, no denominator mismatch and no exception -- the exact 'clean metric with a wrong verdict' shape Rule 22 warns about. This cell caught it before recording by widening the control from a single dry run to a day-by-day bisection, fixed it by choosing a window under the retention boundary, and added a second, independent guard that refuses outright rather than mis-picking if the split ever recurs (a shorter window, a different metric, or a future retention-policy change).",
+    "notes": "INERT: caught and fixed inside this same cell before any figure was recorded or committed; nothing downstream consumed the wrong 31 ms value. OBSERVATION, not ARMED: no other cell in this project currently issues a CloudWatch ExtendedStatistics query, so disarm_owner is not named; any FUTURE cell (in this or another project) that queries CloudWatch percentiles with a period longer than ~14 days should read this row first -- an estate-wide instrument-trap catalogue entry (CLAUDE.md 22a) is the issuer's or CTO's call, not this cell's to make."
   }
 ]
 ```
