@@ -7197,6 +7197,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "AMGT-rk-14's worker face carries a proof_of_spec block of exactly four criteria, each one clause with one invocation and one expect, which is what the worker executes and what the proof checker grades.",
     "world_is": "The block carried a 937-byte orphan between AC3 and AC4 with one spare </invocation>, one spare <expect>/</expect> pair and one spare </criterion>, so the block had 4 openers against 5 closers.",
     "notes": "This is the issuer's own defect and the fifth criterion-level defect found by pre-spawn reading today. The repair DELETES the orphan and changes NO criterion: AC1 keeps AMENDMENT 13's re-cut and AC2, AC3 and AC4 are byte-identical. The rule it leaves behind: after re-cutting a MULTI-LINE invocation, count the BLOCK's tags rather than the criterion's captures, because a capture-scoped control cannot see a defect in the text the captures sit inside. Non-application: a single-line invocation replaced whole, where the closing tag is inside the replaced span."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S136",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-16T20:30:24Z",
+    "one_line": "AMGT-rk-17's two Bloomberg pulls RAN at 20:18-20:20Z over the 33 keyed names: 33 of 33 landed raw and derived with every NAME the intended company, and the price axis wrote a 2026-09-15 generation (32 of 34 tickers, 64 rows, 0 failed). AC3 as issued read 31 of 33 because keys BP/_LN_Equity and NG/_LN_Equity contain a slash; ISSUER AMENDMENT 17 re-cuts the key read and it reads 33 of 33.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Run log: 11 batches of 3 (model_block_pull.py refuses more than 3 securities per invocation), every pull and derive rc=0, 8-10 FY rows and 129-205 figures per name; the driver never retried a name.",
+        "Refdata NAME census on the 33 fresh raw stamps: every name is the intended issuer (e.g. 2317_TT_Equity HON HAI PRECISION INDUSTRY, BP/_LN_Equity BP PLC, NG/_LN_Equity NATIONAL GRID PLC, WALMEX*_MM_Equity WALMART DE MEXICO SAB DE CV); 0 names with no refdata.",
+        "price_axis_pull.py rc=0: as-of 2026-09-15 by lib.trading_calendar.prev_trading_day, usable PX_LAST for 32 of 34, insufficient history for 'Enel IM' and 'ROG SW', TRENDING_PRICE and BREAKOUT_PRICE 32 rows each, 64 of 64 written, 0 failed. AC4 as written now reads newest_axis_date 2026-09-15.",
+        "AC3 as issued after the run: attempted 33, blocks_landed 34, landed_of_attempted 31 of 33, missing ['BP/_LN_Equity','NG/_LN_Equity']; the re-cut counter reads 33 of 33, missing 0, and AC2 raw_keys 34.",
+        "The price axis reads its own universe file (deliverables/0.9.0_WK_AMGT_RESAPP~4/universe.json, 34 MEASURED tickers) where the model-block pull used ENEL IM Equity successfully; 'Enel IM' casing in that file is a candidate cause for its insufficient-history result, UNMEASURED."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT-rk-17's AC2 and AC3 count landed keys against the 33 keyed crosswalk names.",
+    "world_is": "Two keyed names contain a slash, so a split on '/' mis-reads them; the landing itself was complete.",
+    "notes": "The pulls were run by the issuer directly on Andrew's word at the 2.0.0_SA_COO~Z terminal ('do the pulls', 2026-09-16 ~20:2xZ), not by a worker slot; the order's proof instance and status flip are still owed. Two price-axis tickers carry no ranking at 2026-09-15 (Enel IM, ROG SW); whether 'Enel IM' is a casing defect in the price axis's own universe file is recorded, not measured."
   }
 ]
 ```
