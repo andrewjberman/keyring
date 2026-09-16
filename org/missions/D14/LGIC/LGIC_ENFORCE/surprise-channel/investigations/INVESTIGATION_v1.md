@@ -2773,6 +2773,30 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
    "spec_asserts": "An L8 hand-off delivered to a LIVE seat is work in flight, and a round waiting on its slug is waiting on a seat that is compiling.",
    "world_is": "Three rounds have been waiting on an unopened inbox since 06:52Z. The seat is live, healthy on every roster limb, and idle.",
    "notes": "ARMED, disarm_owner 3.0.0_SA_CVO -- the re-arm is that seat's own and nobody else's. \u26d4 I HAVE NOT TOUCHED IT: the watcher discipline is SELF-SCOPED, so this seat does not kill, stop or re-arm another serial's Monitor, and it did not. Direct message sent to 3.0.0_SA_CVO naming the seven files and what is owed, with 1.0.0_SA_CTO copied separately BECAUSE that message lands in the same unopened inbox. \u26a0 HYPOTHESIS, offered as one and not measured: the inbox Monitor caps at 30 minutes and expires SILENTLY; this seat's own expired during this same session and was re-armed, so 'arm once' is false and a seat that ignores the expiry notice goes deaf while reading perfectly healthy. \u2b50 THE STANDING CORRECTION THIS SEAT ADOPTS, and it is the part that outlives the incident: A HAND-OFF IS NOT 'WITH' A SEAT UNTIL AN ACK EXISTS. From here every state line reads 'sent, no ack' until ack_messages records one, and the cheap second instrument is the RECIPIENT'S UNDRAINED INBOX DEPTH -- one ls, available to any sender, and it would have caught this at 08:12Z instead of 12:49Z. Nothing about the WORK changes: rounds stay terminal, round 3 stays uncut behind the slugs (LD-0521), the five ARMED clocks are where they were. What changes is a STATE LINE two seats were repeating."
+  },
+  {
+   "id": "LGIC_ENFORCE-S47",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T17:56Z",
+   "one_line": "MY HYPOTHESIS IN S46 WAS WRONG AND THE TRUE STATE IS WORSE: 1.0.0_SA_CTO re-measured on four instruments and 3.0.0_SA_CVO is HOLLOW, not merely deaf -- the MCP client behind the seat is gone and a process is heartbeating in its name. The instrument that settled it, get_delivery_state, was available to me the whole time and I did not run it.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md@ab1d9832f7#LGIC_ENFORCE-S46 -- the row this corrects. Its measurement stands; its NOTES carry a hypothesis, flagged as one: 'the inbox Monitor caps at 30 minutes and expires SILENTLY'.",
+     "1.0.0_SA_CTO's re-measurement at 12:51Z (msg 97374), on instruments that differ from my directory listing -- which is the point, since a second seat confirming via the FIRST seat's method is repetition, not corroboration: (i) 8 undrained .md in org/mcp/inbox/3.0.0_SA_CVO/, newest in read/ 06:52Z; (ii) git log --author=3.0.0_SA_CVO --since=07:00Z reads 0 commits; (iii) ps shows NO 'inbox-watch.sh 3.0.0_SA_CVO stream' process, its 05:47Z child gone; (iv) get_delivery_state(3.0.0_SA_CVO, since 06:50Z) reads 1 READ at 06:53Z and then SEVEN OFFER-EXHAUSTED.",
+     "OFFER-EXHAUSTED IS THE DISCRIMINATOR AND IT IS THE BROKER'S OWN WORD for a message offered to a session that DIED. An expired Monitor would leave the MCP client alive and the messages merely unread; seven exhausted offers say the client is not there to take them. That separates a DEAF seat from a HOLLOW one, and my row named the wrong one.",
+     "IT MATCHES THE CLASS THIS ESTATE ALREADY HAS A NAME FOR: a hollow seat heartbeats live and talks fluently, and the recorded discriminator is COMMIT AUTHORSHIP -- 0 commits since 07:00Z is exactly that limb, measured. So the finding is not new; my reach for the freshest explanation (my own Monitor had expired an hour earlier) is what put the wrong cause in the row.",
+     "THE PART THAT IS MINE: get_delivery_state is a tool I hold, and the READ/EMITTED/SENT distinction it exists to serve is the same law S46's own notes quote. I measured the CARRIER (files on disk) and never asked the BROKER what it thought had happened to the offers. One tool call, and it names the failure class instead of leaving it to inference."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "S46's stated cause: a silently expired inbox Monitor, with the MCP client alive behind it.",
+   "world_is": "The MCP client is gone and a process heartbeats in its name. Seven broker offers were exhausted against a dead session, and the seat has authored no commit since 07:00Z.",
+   "notes": "INERT: corrects a hypothesis, adds no hazard, and disarms nothing -- S46 stays ARMED with disarm_owner 3.0.0_SA_CVO, because the seat is still not back. \u26d4 ROUTED AND OUT OF MY HANDS BY DESIGN: 1.0.0_SA_CTO has sent a seating ask to 0.0.0_AB_MSTR (unstick or respawn) and one line to Andrew by push. A respawn is a SEATING act and neither a COO nor the CTO takes it; /watcher is self-scoped and neither of us touches that seat's Monitor. Nothing in scope moves until the seat is back; round 3 stays uncut (LD-0521). \u2b50 THE LESSON, and it is the third time today the same shape has bitten: I HAD THE INSTRUMENT AND REACHED FOR THE RECENT EXPLANATION INSTEAD. S43 was checking a ruling against my own restatement; S44 was nearly routing a call a schema key had answered; this is naming a cause from an hour-old memory of my OWN watcher expiring rather than asking the broker. Each time the cheap authoritative read existed and each time the plausible story arrived first. \u26a0 AND THE HYPOTHESIS WAS LABELLED, WHICH IS WHY THIS COSTS A ROW AND NOT A RETRACTION: S46 says 'HYPOTHESIS, offered as one and not measured'. That label is the only reason a wrong cause did not travel as a finding. Targets by full id: LGIC_ENFORCE-S46."
   }
 ]
 ```
