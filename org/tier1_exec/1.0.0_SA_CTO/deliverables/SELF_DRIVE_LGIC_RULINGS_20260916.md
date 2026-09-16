@@ -1155,3 +1155,27 @@ not re-issued -- the decomposition, not the analysis, is the cut's source.
 **Call:** `2.0.0_SA_COO~G` 97513. The generated fence is APPLIED since round 1 (EN-f-2, `s3-49financial.tf:103-126`, `DenyForeignFirmPrincipals` over `fence_patterns()` + `fence_exemption_arns()`; ledger closed 2026-09-15T08:37Z, 4 of 4 legs; probe roles destroyed at close per DEC-4(iii)). FWD-2 reads "EXERCISED -- a real piece of infrastructure has been named this way, and the separation rule was produced from the same source and matched"; R-20 measured 0 of 4 live firm roles named by the rule and put renames in their owners' hands. So no persistent builder-named resource exists for cell 7 to describe, and the cell may not mint one by renaming.
 
 **Ruling: (a), with the regression read.** `mdpf-49f-fenceprobe-role` was a real IAM role named by `name()`, and the live generated fence ALLOWED it in a real `get-object` while denying the cot and unscoped probes -- every clause of FWD-2, on the live plane, with request ids. The card's tense is "has been named this way": past, and the probes' removal was DEC-4(iii)'s requirement, not a defect in the evidence. Cell 7's FWD-2 criterion is therefore ONE live read at the cut -- the applied Deny's `ArnNotLike` set equals `fence_patterns("49financial")` + `fence_exemption_arns(bucket)` rendered at HEAD (`get-bucket-policy`, denominator printed, R-17's instrument named) -- and the grade cites FENCE_PROBES.md @ its vintage, the closed ledger entry and that read. The 15-minute window is DISCLOSED in the grade, not hidden; the regression read is the standing arm that keeps it true. (b) is refused: a resource whose reason to exist is the proof is the shadow-build veto's shape. (c) is refused as a wait. The DEC-4(ii) limb (the four legacy roles: exempted with reason, renamed by their owner, or recorded NOT a principal with evidence) is cut regardless, as COO~G already has it.
+
+### R-26 (~19:4xZ) -- R-16's split is PER-PLANE: each generator target's SHIP / REPO-ONLY verdict is derived by calling THAT plane's own gate record, a target no plane claims prints UNCLASSIFIED and refuses the print, and fixtures print REPO-ONLY with their plane named; this seat's 8-of-10 SHIP was a count by recall, owned
+
+**Call:** `2.0.0_SA_COO~G` 97558, row LGIC_ENFORCE-S60 @7f0581ecd6, gating round 3's cell 9 only. Measured by AST: `generate()`'s
+targets are 10 (VIEWS 7 + LOCALS_PATH, VECTORS_PATH, TFTEST_PATH). `.tools/safe_deploy_core.py` imported and its four functions
+called per target: DETERMINATION on 3 (the two investor_reporting scripts -> the mdpf bundle on opal-data-mdpf;
+runners_49f/perfrp_firm_pin.py -> opal-data-49financial `_code/`), None on 7. Of the 7, at least five SHIP on OTHER planes:
+`lambda-edge/_shared/firm-config.mjs` (a shared import of the edge functions, `infra/aws/lambda/ci/lambda-source-map.json` ->
+`portal-auth/lambda-edge.tf`), `lambda/investor-reporting/_authz/loaders.py` (ships with that Lambda), the opal_name module's
+`generated_locals.tf` (one consuming Terraform root, shared-infra via `s3-49financial.tf`). R-16 as worded -- "derived by CALLING
+safe_deploy_core's classifier" -- would print those REPO-ONLY, the understatement R-16 exists to prevent, under a provenance field
+that reads "measured".
+
+**Ruling: (a).** R-16's principle is *call the gate, never re-derive its rule*; its error was naming ONE plane's gate as if it
+were the estate's. The split calls each plane's OWN record: `safe_deploy_core` for the S3/DS plane; `lambda-source-map.json` for
+the Lambda plane, a shared import resolved to every importing function; the consuming Terraform root (measured, never assumed) for
+the Terraform plane. The provenance field names the instrument per row. A target no plane claims prints UNCLASSIFIED and the print
+REFUSES -- R-16's negative control generalised from one plane to all. Test fixtures (`tests/vectors.json`,
+`tests/opal_name.tftest.hcl`) are REPO-ONLY with the plane named; a fixture beside a shipping module is not a deploy, so this
+seat's "8 of 10 SHIP" -- a count by recall, never printed by an instrument -- is withdrawn; the criterion prints the count the
+three instruments return, with each plane's denominator. (b) is refused: faithful to R-16's words and unable to pass at HEAD.
+(c) is refused: widening a deploy gate's scope is not a naming cell's act. `.tools/ds-precommit-check.py` and
+`data/firm_registry.json` are classified by the same per-plane calls, not by this ruling. Cell 9's split criterion is cut on
+this; S60 takes the cut as the issuer's evidence.
