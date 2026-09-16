@@ -5,7 +5,7 @@
  "project": "LGIC_ENFORCE",
  "directive": "D14",
  "fabric": "laptop",
- "prd_version": "v1.2",
+ "prd_version": "v1.3",
  "step": 4,
  "brief_ref": "docs/briefs/d14-executable-layer-brief-20260913.md@fc2a1ba75f",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7"],
@@ -73,6 +73,14 @@ The ENDPOINT section is unchanged. Both halves are owed again.
 - Only the brief half changes: DEC-1, CELL CANDIDATES, PATHS, BRIEF COVERAGE and the SURFACE MANIFEST's cell column. The
   ENDPOINT and CONTRACTS are unchanged, because the CONTRACTS registry row already reads `infra/logic/registry/*.json`
   (DEC-1). The ratified-text half stands.
+
+**v1.3 (2026-09-16, an L10 addendum) discloses DEC-5's coupling, on `1.0.0_SA_CTO`'s ROUND-2 ANALYSIS
+(`org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_LGIC_ENFORCE_ROUND2_20260916.md`) and ruling R-16.**
+- Measured on `0.0.0_AB_MSTR`'s 2026-09-16 ~13:0xZ push: EN-r-6's comment-only re-render of the GENERATED mark re-minted
+  the investor_reporting bundle (md5 moved, two member sha256s moved, zero executable bytes) and deployed one runner
+  script. 8 of the generator's 10 targets sit on surfaces that SHIP (row LGIC_ENFORCE-S50).
+- DEC-5 now states the consequence it was built with. Only the brief half changes: DEC-5, and the round-3 cell that
+  prints it. The ENDPOINT and CONTRACTS are byte-unchanged; the ratified-text half stands.
 
 ## ENDPOINT (step 2, /endpoint --forward)
 
@@ -266,6 +274,18 @@ The one change of direction is intended: the registry rows are consumed there an
     pattern.
   - **Repointing the consumers that compute a firm's location in their own code is `ADVI_FIRMBKTS` FWD-3's** (the
     endpoint's s.2, ruling (a)). This project generates the lists and makes a hand edit refusable.
+  - **DEC-5 addendum (v1.3, R-16): a registry edit is a deploy on every shipping generated view, and this project says
+    so.** Every generated file carries the registry hash in its GENERATED mark (EN-r-6), so ANY registry edit re-stamps
+    every target that reads the changed file, and 8 of the generator's 10 targets ship (2 lambda/Terraform, 3 DS -> S3
+    bundle, 3 terraform-plane module files; 1 repo-only; 1 classified by the gate). The mark STAYS in the bytes: it is
+    the provenance control DEC-5 rests on, and a bundle hash that moves when bytes move is the deploy gate telling the
+    truth. What this project owes instead is DISCLOSURE, mechanical: the generator prints its target list (the module's
+    own VIEWS tuples plus the named extras, counted by AST, never by a regex over the block); the SHIP / REPO-ONLY split
+    is derived by CALLING the deploy gate's own classifier (`.tools/safe_deploy_core.py`) over that list, so the number
+    is the gate's and carries `measured: safe_deploy_core`; a target the classifier does not place refuses the print;
+    and the consumers pinned on the bundle md5 or member sha256 (freshness or drift instruments) are a CENSUS criterion
+    with its denominator printed, UNKNOWN on the record until that print exists, never zero. A registry edit's commit
+    message names the generated views it re-stamps, read from the gate's own output.
 - **DEC-6 The flagger's matrix.** The brief's IV.5 is ratified, and its grain is stated. A string is NEW when it is on
   the diff's added lines and absent from the same file's pre-image; otherwise it is EXISTING.
 

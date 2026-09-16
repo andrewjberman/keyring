@@ -895,3 +895,18 @@ firm key in its name is outside a text read -- the walk's UNMEASURED class).
 graded against the live read, never a report. This seat -- the round-5 analysis routes (iii)'s list to LGIC_ENFORCE
 (DEC-4 ii) and to the IRPT and ADVI owners; the LGIC_ENFORCE round-2 analysis names the four as E1 writer-census
 members. No NAMING_SCHEMA edit; no generator edit.
+
+### LGIC_ENFORCE ROUND-2 ANALYSIS (~15:0xZ, on the CVO's slug 97430 @82884cf465) -- rulings A-1..A-16 recorded in `ROUND_ANALYSIS_LGIC_ENFORCE_ROUND2_20260916.md` s.2
+
+Grades: REALIZED 4 of 7 (FWD-1, 3, 6, 7); FWD-2 EXERCISED on read-only plans, the APPLIED bar owed (round-3 fence cell
+under DEC-4 ii-iii with R-20's four roles as the writer census); FWD-4 REALIZED on practice copies, the estate flip bound
+to R-11/R-13's domain cell; FWD-5 NOT REALIZED for the second round. **A-4, the one ruling that changes a cut rule:** the
+coverage floor was ALREADY in the PRD's E9 acceptance draft ("every nameable live name is judged") and round 2's S2R
+criterion dropped it for an OR-branch an explained near-zero satisfies forever; the round-3 census carries `judged ==
+nameable` (denominators printed on both planes) as a MECHANICAL arm and a RAISE that stops the run FAILS the criterion.
+No PRD addendum for FWD-5. **A-1:** C-S24's limb (refuse `adjudicates` / `disposition: GRADUATED` on a worker's row) joins
+the one round-3 row-gate cell -- four limbs now (R-18(2), R-19(2), R-19 addendum, A-1). **A-2:** S47's HOLLOW reading was
+this seat's and is owned again here; S46 and C-S17 countersigned under R-19(2). **A-5:** PRD v1.3, DEC-5 addendum (R-16),
+brief half only. **A-6:** the `binary`/`-diff` bypass inside a declaration tree needs a same-line reason or the gate
+refuses it; record trees need nothing. T3R-J1 NOT_EVALUATED accepted with the CVO's cheap evaluation as a round-3 cell.
+Round 3 = nine cells, the flip round and the census round; the recut is COO~G's in ONE issuance.
