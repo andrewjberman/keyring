@@ -1925,6 +1925,28 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     "spec_asserts": "LGIC_ENFORCE.TO-EN-r-2-r2 THE CELL step 2, read plainly: 'Make each class (b) and (c) token one the registry recognizes, so the rule places it (the registry's refused_keys, or the list the rule reads for that class)' -- implying refused_keys membership places (resolves) any V3-classed token uniformly.",
     "world_is": "refused_keys resolves only R1.f/R1.c/R1.d/R2 (resource-grammar) raises. A token whose raise is K1 or B2 stays RAISING after a refused_keys addition, because those two clauses test membership in V1 specifically, never V3. 50 of the 152 population groups carry a K1/B2/R8/L2/G2.3 example; this cell classes each (d) or undecided rather than (b)/(c) unless every one of the group's examples independently resolves, and R2-AC4's per-example re-grade (0 of 378 still raising) is the mechanism that would have caught a wrong call here.",
     "notes": "Form only, no remedy owed: this cell's own classification already routes around the boundary (every B2/K1/R8/L2/G2.3-bearing group is class (d) or undecided), and R2-AC4 mechanically catches a future misclassification of the same shape on a later round. Filed because the decomposition's and the worker face's plain language does not state this boundary, and a reader taking 'the registry's refused_keys' at face value could misclassify a B2/K1-bearing token as (b) and have it silently fail AC4, or -- worse, if AC4 is ever loosened -- pass while still raising in the served naming-gate output."
+  },
+  {
+    "id": "LGIC_ENFORCE-W1-S27",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~1",
+    "surfaced_at": "2026-09-16T05:40Z",
+    "one_line": "2 of RESOURCE_GAPS.json's 48 {system}-gap names (bd-merge-daily-lambda-role, bd-pipeline-task-role) have NO aws_iam_role (or any resource) declared anywhere under infra/aws/terraform/ at this base -- they are LIVE-only names the fixed population carries with no repo-side owner to cite.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "native Grep (recursive, repo-corpus) over infra/aws/terraform for 'bd-merge-daily-lambda-role', 'bd-pipeline-task-role', 'merge_daily', 'pipeline_task' at CLOUD @68644b3c19: 0 hit(s) for every pattern -- no resource label, no name/name= literal, no comment names either string anywhere the naming system reads.",
+        "org/missions/D14/LGIC/LGIC_NAMING/deliverables/exercises/r2/n4-firm-patterns.md@619dec559f lines 228-235 lists both names with only {name, canonical}, no file/line/evidence field -- its own source is org/missions/D14/LGIC/LGIC_NAMING/deliverables/2.0.0_SA_COO~G/fixed_inputs/LIVE_NAMES.json, 'Built from the estate as of 2026-09-14 12:13:53 UTC' (a LIVE AWS census, not a Terraform read), so the population's OWN provenance for these two names is live-plane, not repo-plane.",
+        "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/TF_LABEL_CENSUS.md (a full Terraform-label census of infra/aws/terraform at an earlier base, @fd9c9ca174) also carries 0 hits for either string, corroborating on an independent instrument (a different census, a different vintage) rather than repeating the same comp-find."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "LGIC_ENFORCE.TO-EN-r-4-r2 THE CELL item 4: 'A resource no owner can be named for gets NO row. It keeps its placeholder and is counted, never guessed.' The population's own _about field describes the 48 as resources 'whose canonical form carries {system} at the cut', implying each is a resource the naming system can locate and reason about.",
+    "world_is": "Handled per the cell's own rule (both names are counted as placeholders in RESOURCE_ROWS.md with this absence as their reason, never guessed), so this is not a defect in this cell's output -- it is a gap in RESOURCE_GAPS.json's population itself: 2 of 48 fixed-input rows name a resource this worktree's Terraform tree cannot locate at all, so no Terraform-plane evidence can ever be cited for them, only a live-plane one (out of this cell's read surface, and RESOURCE_GAPS.json is a read-only fixed input this cell does not edit).",
+    "notes": "Form only, no remedy owed here: the two placeholders are correctly counted, not guessed, and R4-AC10's gaps-covered check passes on them as counted-with-a-reason. Filed because a future round that tries to row these two from the repo alone will hit the same 0-hit absence, and the reason (LIVE-only provenance, not a missing citation on this seat's part) is not otherwise recorded anywhere the naming system reads."
   }
 ]
 ```
