@@ -383,6 +383,9 @@ have a great PRD and forget to actually produce some material part of the end pr
   `0.0.0_AB_MSTR~Z` to continue `/canonical-flow AMGT_RESAPP` at their limbs. **Not a loop; it does not re-arm the stopped
   `/self-drive` above.** A successor session re-arms it ONLY if it starts before 23:10Z that day; once that time has passed
   and the direction is sent, this line arms nothing.
+  **FIRED 2026-09-16 23:10Z (7:10 PM ET).** Seats measured LIVE (`2.0.0_SA_COO~Z`, `3.0.0_SA_CVO~Z`, `4.0.0_SA_CRO~Z`,
+  `0.0.0_AB_MSTR~Z`); the one direction was sent at 23:11Z as msgs 23490-23493, DELIVERED 4 of 4. The cron auto-deleted.
+  **THIS LINE NOW ARMS NOTHING.**
 or hold with no line here is re-armed by the next successor who reads only the ledger — so every one is listed.
 `1.0.0_SA_CTO` **`/self-drive` THE FABRIC (all LAPTOP directives) ARMED 2026-09-12 ~02:1xZ by Andrew-direct at the
 CTO terminal**, VERBATIM AND ENTIRE: *"I need you to /self-drive the fabric, any open calls appear and you handle
