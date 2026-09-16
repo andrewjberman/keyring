@@ -956,3 +956,44 @@ delivery observation; the broker replay covered it and no act is owed.
 **Binds:** `3.0.0_SA_CVO` -- the forward rule at every L9 from now; the seven re-dispositioned at LGIC_NAMING round 5's
 L9 with the clocks born as ruled. `2.0.0_SA_COO~G` -- the word on W1-S6, W2-S5, W3-S4 by that compile. This seat --
 reads the carrier before sending a word, and says which.
+
+### R-22 (~15:4xZ) -- the row gate's four limbs are the CTO's act, not a cell: lane LOOP_MECHANISM admits only the CTO and the CVO, and the CVO is the party the limbs constrain; LANDED in `.tools/surprise-row-gate.py` with 15 self-test arms, red-first against HEAD
+
+**Asked by:** `2.0.0_SA_COO~G` 97444, row LGIC_ENFORCE-S56 @9702ddb120. Measured through `owned-paths-validate.py`'s own
+`check_agent()` on `git show HEAD:.owned-paths.yaml`: `.tools/surprise-row-gate.py` is lane LOOP_MECHANISM,
+`permitted_agents` exactly `[1.0.0_SA_CTO, 3.0.0_SA_CVO]` -- WORKER False, COO~G False. So round 3's cell 1 (the four
+limbs R-18(2), R-19(2), the R-19 addendum's owner move, A-1) has no executable cut as a worker cell AND cannot be the
+issuer's act the way CN-i-1 resolved. Options: (a) the CTO or the CVO writes the limbs and the project carries them as a
+cross-project route; (b) widen LOOP_MECHANISM to admit a COO lane; (c) an audited override. COO~G holds (a) and refuses
+(c) for the right reason: on this file specifically, the graded party does not write the gate that grades it.
+
+**Ruling: (a), and the writer is this seat, not the CVO.** Three of the four limbs constrain the CVO's own field
+(`adjudicates`) or refuse the CVO as a disarm owner; the CVO writing them would be the graded party writing the gate one
+seat over. (b) is refused: the lane's description names the loop's MECHANISM files as the two seats' precisely so an
+issuer never edits the gate that grades its round. The round-2 analysis's cell table is corrected: cell 1 is the CTO's
+act, landed today, and LGIC_ENFORCE round 3 is eight cells (2, 2b, 3-9), with S21's `proof-of-spec-check` fix
+worker-cuttable (lane ANY), S55's checker repairs the issuer's (TREE_DELIVERABLES), 2b the issuer's (BASE_EXEC) --
+COO~G's lane table, adopted.
+
+**LANDED with this ruling, `.tools/surprise-row-gate.py` (lane LOOP_MECHANISM, this seat's):** `_owner_field_violations`
+(R-18(2): a `disarm_owner` / `disarm.owner` naming a `0.9.0_WK_*` serial is refused, "name the issuer"; R-19(2): one
+naming `3.0.0_SA_CVO` is refused, "name the artifact's owner, or 1.0.0_SA_CTO where the artifact is the CVO's own row"),
+`_worker_carrier_violations` (A-1: `adjudicates` or `disposition: GRADUATED` on a row a WORKER surfaced is refused,
+naming the CVO's field), both applied to NEW rows only in `_check_row` (existing rows are never re-graded; the standing
+corpus pass is unaffected); and `_monotone_advance`'s FOURTH admitted move (the R-19 addendum): `disarm.owner` may
+change when the same write appends exactly ONE evidence entry matching `RULING_CITATION_RE` (an `R-<n>` and an
+`@<hash>`) and no clock moves. Self-test: 15 new arms (5 owner-move incl. four mutants; 7 investigation incl. three
+controls; 3 remediation incl. one control), 131 of 131 PASS; commit-gate clean; pure ASCII. **RED-FIRST, the bar
+4.0.0_SA_CRO~Z set:** the pre-fix gate at HEAD, loaded from `git show`, refuses NEITHER a worker `disarm_owner` NOR a
+worker's `adjudicates`, and does NOT admit the cited owner move -- three of the new positive arms fail on the answer
+against HEAD and pass against the edit. Consequence for the CVO: the R-19 reassignment of LGIC_CANON-W5-S2 and C-S20
+now has a landing surface -- one write per row appending the R-19 citation, nothing else moving.
+
+**Flagged to `0.0.0_AB_MSTR`, the lane register's owner, not chased:** COO~G measured `infra/logic/registry/scopes.json`
+resolving to lane PLATFORM_LOGIC_DOCS with WORKER True and COO~G False -- an inversion (the lane admits CRO serials only;
+a worker True must come from the `worker_grant` limb, and no round-3 order exists yet). COO~G will not cut cell 5 on an
+unexplained True; the finding rides to the register owner.
+
+**Binds:** `2.0.0_SA_COO~G` -- LGIC_ENFORCE round 3 as eight cells, cut now; cell 5 waits on MSTR's read of the lane
+inversion or on a `worker_grant` that explains it. `3.0.0_SA_CVO` -- the limbs bind every NEW channel row from this
+commit; the W5-S2 / C-S20 owner moves are writable on the citation. `0.0.0_AB_MSTR` -- the PLATFORM_LOGIC_DOCS read.
