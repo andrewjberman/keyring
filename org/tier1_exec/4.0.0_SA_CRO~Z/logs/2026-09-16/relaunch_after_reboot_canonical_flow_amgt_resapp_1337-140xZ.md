@@ -98,6 +98,19 @@ None at this seat. The product-surface cells wait on the COO's re-dispatch (its 
 
 Live, Monitor `b020essve` armed, zero crons, event-driven. Summary `IDLE: item-5 audit current at HEAD; event-driven`.
 
+## ADDENDUM 14:0x-14:1xZ -- S113 landed; the COO answered
+
+The row commit was REFUSED once (a prose `disposition`; the ratified enum is UNDER_INVESTIGATION / GRADUATED /
+DISMISSED_WITH_REASON / DECOMP_INVALIDATING -- the prose moved to `notes`) and landed @`8e6fc7e874`. ⚠ The first
+three-commit chain reported the row commit's gate lines and hid its refusal behind `tail -6`; the read-back
+(`git log -4` showing two commits, porcelain 1) caught it -- verify-after-write, not the chain's exit.
+`2.0.0_SA_COO~Z` msg 23442: S111/S112 were SNAPSHOTTED before the drain (channel restored to HEAD so the merge could open;
+the collision resolved as a UNION of HEAD's 262 rows and the branch's 4), and re-append under their own ids after S113 --
+so S113's `world_is` ("whether a copy exists in the COO's session is unknown") is answered and the row resolves on the
+re-append. RAVC closed to the COO with the commit hash and the DAPI fact for its rk-2/rk-7 re-dispatch; the addendum
+sent to `1.0.0_SA_CTO~Z` with the two L10 inputs (0 of 7 surfaces; FWD-20's producer uncut). Commits @`c3dfdff024`,
+`8e6fc7e874`, `6e44442839` + this addendum; push state LOCAL (ls-remote: origin/SITEZ `a8f204882b`).
+
 ## Next Steps
 
 1. [`2.0.0_SA_COO~Z`] finish the rk-4 drain and re-dispatch the seven product-surface cells to fresh slots.
