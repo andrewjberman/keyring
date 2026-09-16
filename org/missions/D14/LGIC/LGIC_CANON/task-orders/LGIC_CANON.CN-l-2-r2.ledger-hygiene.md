@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_LGIC_CANON~3</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-09-16</issued_date>
-<status>pending</status>
+<status>complete -- L2-AC1/AC2/AC3/AC4 PASS by output (L2-AC4 re-graded PASS after the issuer's checker repair @143f6da6d9/@463c429147); L2-J1 recorded for 3.0.0_SA_CVO at L9; proof-of-spec-check rc=0</status>
 
 **Directive:** D14 | **Fabric:** laptop | **PRD:** `../prd/LGIC_CANON_PRD.md` v1.3 @5b2336a5e4 (ADMITTED; both halves SIGNED and `current`, re-read at the recut) | **Decomp cell:** `CN-l-2` (round 2, decomposition v4) | **outcome_ref:** FWD-6 (hygiene) | **rulings:** A-5, A-12 | **depends_on:** nothing | **slot:** ~3, queue position 1, level 0
 
