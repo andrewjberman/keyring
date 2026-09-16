@@ -398,3 +398,92 @@ Cells A, B, D, E, F, G, H, I and J stand as written in s.5 and A1.4. The v0.9 PR
 none of these corrections changes ratified text -- K, L and M are **cut-level shape**, and the two cards are
 decisions that belong to Andrew rather than to the PRD. `3.0.0_SA_CVO~Z`'s pending ratified-text signature is
 **not re-opened by this file** and the half hash `88e330dea809` still stands.
+
+---
+
+# ADDENDUM 3 -- 2026-09-16 ~05:4xZ (self-drive tick 2): the FIT contract ruled, the social cost ruled, and round 11's five open slug rows dispositioned
+
+**Author:** `1.0.0_SA_CTO~Z`, adjudicating in its own lane per Andrew's ~04:3xZ word. **Why this exists:** the
+tick's first question is *what is waiting on THIS seat*, and three channel rows reassigned to the CTO limb at
+`Z-S109` carried no ruling, while **the FIT is named in the slug's obligation 2 and is covered by NO cell in
+A-M.** A gap between a named obligation and the cell set is the thing this loop exists to catch.
+
+## A3.1 THE FIT -- RULED (settles `W20-S9` and `W20-S10`, which are ONE defect in two places)
+
+**What is measured.** `W20-S9`: card 3 carries the DIVZ and PFOE presets as **counts and weights, not as factor-code
+lists** -- DIVZ names 7 of its 13 codes, PFOE **0 of its 16**, so **22 of the 29 preset slots have no code to
+read**. `W20-S10`: R-1's rows carry **no scanner factor values at all** -- the ranker's loader keeps the 284-code
+set and **drops the numbers by design** -- so every fit score is ABSENT, 0 of 13 and 0 of 16, for all four names
+of the QA pair.
+
+⭐ **THESE ARE NOT TWO FINDINGS. The fit needs a CODE to read and a VALUE to read for it, and both ends are
+missing** -- so repairing either alone moves nothing and would grade as progress. Naming the 22 codes against
+rows that carry no values still yields ABSENT; retaining values for codes the preset never names still yields
+ABSENT. **A cell that fixes one end and passes its criterion is the failure mode here.**
+
+**RULED: the fit is made COMPUTABLE, in ONE cell that carries BOTH ends, or it is not cut at all.**
+1. The presets name **every** factor code they score under -- 13 of 13 for DIVZ, 16 of 16 for PFOE, the printed
+   denominator beside each.
+2. The ranker's loader **retains the factor values for exactly those codes** on the R-1 rows. Not the 284-code
+   set: the named codes, so the retention is bounded by the presets rather than by the scanner's width.
+3. The fit score is ABSENT **with a classed reason** wherever a named code has no value for a name -- the source
+   lacks it, or our pull missed it (A1.3's classing rule, applied here).
+4. **Its criterion asserts a NONZERO factor count on a real name**, not the absence of an error. A fit that
+   renders ABSENT everywhere satisfies "the tab renders" and proves nothing.
+
+⛔ **NOT RULED: retiring the fit.** It is part of the surface Andrew approved (PRD s.3b, "Recs approved"), and
+retiring a ratified surface element is an endpoint change, not a cut-level call. If the fit proves uncomputable
+on measured grounds, that is a card at Andrew with the measurement, never a quiet drop.
+
+**CELL N** (round 12): the fit made computable, both ends in one cell. Chained after **C** and **M**, because
+the codes are read against the peer rows those two repair.
+
+## A3.2 THE SOCIAL COST -- RULED (settles `W22-S7`)
+
+**What is measured:** cost cannot be read with the key on any route probed -- the progress payload carries no
+cost field, the snapshots listing carries none, and the balance route refuses the key **403, "Your API key lacks
+the required permissions for this action."** So `S-1 cost.usd` is null with claim `absent`, and the only USD
+figure in the record is the **pre-call estimate**, claim `held`.
+
+**RULED, and it is a claim-discipline ruling rather than a build one:** the cost field stays **ABSENT with its
+reason recorded** -- *the key lacks billing permission* -- and the pre-call estimate is REPORTED as `held`,
+**never promoted to `measured`.** ⛔ **The estimate must not be allowed to drift into the measured slot**, which
+is precisely what an unenforced provenance field does: an estimate sitting where a measurement belongs reads as
+a measurement to every later consumer. This is `A_VALUE_MUST_CARRY_ITS_CLAIM` at its narrowest and most literal.
+
+**A key with billing permission is a CREDENTIAL act and is NOT taken tonight.** It is not carded either: the
+social source is already unproven as a feed (cell G classifies it), and asking for a credential to measure the
+cost of a feed we have not decided to run inverts the order. **If cell G's classification says the feed is worth
+running, the billing key rides with that decision and not before.**
+
+## A3.3 ROUND 11's FIVE OPEN SLUG ROWS -- DISPOSITIONED
+
+`3.0.0_SA_CVO~Z` read these as the analysis's to disposition (msg 23377) and it is right. `project.json`'s
+`blocking` field names them as round 11's open five. Each is dispositioned here against the artifact, not the
+prose:
+
+| row | disposition | grounding |
+|---|---|---|
+| `Z-S95` ranked click lacks the canonical key | **REMEDIATED in round 11** | rj-1 landed the canonical key on the ranked click; rj-10's served capture carries **10 of 10** rows with a `security_key`; the slug records the repair and updates its clock in v10 |
+| `C-S196` no drafted sections, evidence tooltip-only | **REMEDIATED in round 11** | rj-2 serves validated D-1 with **38 of 38** sentences carrying passages, and the browser half read **48 evidence blockquotes, 0 tooltips** |
+| `W17-S4` / `W17-S5` issuer criteria | **CARRIED into cell F**, not closed | they are the criteria-repair class the slug's obligation 5 addresses AT THE ISSUER; cell F owns them and they close when round 12's orders assert nonzero collected denominators |
+| `Z-S96` two article stores | **RESOLVED by `C-ONE-STORE`**, disarm row already filed by `1.0.0_SA_CTO~W` | the contract settled the question; no further act |
+
+⚠ **`W17-S4`/`W17-S5` are the only two still open, and they are open BY DESIGN** -- a criteria-repair obligation
+cannot be closed by a ruling, only by the next cut writing better criteria. **They are NOT a blocker on the
+round-12 issuance** and `project.json`'s `blocking` field is corrected in this commit to say so, because it
+currently reads as though all five gate the round.
+
+## A3.4 WHAT THIS TICK MEASURED AND DID NOT ACT ON
+
+- **Zero unmerged branches.** `git branch --no-merged HEAD` returns **0** -- the round-11 stranded-slug class is
+  clear, and this check is now standing.
+- **`2.0.0_SA_COO~Z` is WORKING, not stalled.** Zero commits in the shared tree, but plane 3 shows its own
+  worktree `C:/tmp/coo-amgt-r12` on `coo-amgt-r12-20260916` at `06378dd3bd` -- Rule 14b isolation for a
+  multi-file commit, created off the latest addendum. **No nudge.** ⭐ A zero-commit count in the shared tree is
+  the EXPECTED reading for a correctly-isolating seat, and nudging on it would punish the right behaviour.
+- **`3.0.0_SA_CVO~Z` is mid-review** of the v0.9 ratified-text half, with `Z-S109` landed. The signature is the
+  last gate on the L6 issuance and nothing else waits on it.
+- **The deployed plane was NOT re-measured this tick.** `4.0.0_SA_CRO~Z` measured it at ~05:0xZ and ~05:1xZ and
+  nothing has deployed since; re-running it would burn the context the next adjudication needs and could not
+  change an act. **Re-measure when a deploy lands, not on a timer.**
