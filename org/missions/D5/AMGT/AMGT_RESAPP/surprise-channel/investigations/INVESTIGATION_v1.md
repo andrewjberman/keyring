@@ -6865,6 +6865,74 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "W24-S3's own disarm_owner 2.0.0_SA_COO~Z; CLAUDE.md s.5 NEVER leave a confirmed deploy half-landed; 1.0.0_SA_CTO~Z's ruling msg 23463 (rollback first, fix-forward packaging, AC7/AC8, grants).",
     "world_is": "The hazard W24-S3 names is no longer live on the served plane, and the repair it needs is now inside a granted order with a non-regression bar and a packaging bar that a code-only fix cannot pass.",
     "notes": "Disarmed by a NEW citing row, never an in-place flip; W24-S3's hazard_standing stays ARMED at-surfacing. W24-S4 (change_management wall): rk-2's grant now names org/critical_paths/change_management/ and org/critical_paths/.open_deploys/. W24-S5 (AC1's count pattern): AC1's expect now states a count bar reads over the whole integer; the instance's regex rejected 17, the bar did not. Issuer defects owned in this amendment: rk-2 AC5 named a /posture route amendment 2 called a correct pre-state, and rk-2's face ordered a ledger entry its grant never carried. Dispositions of W24-S3/S4/S5 at L9 are 3.0.0_SA_CVO~Z's."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W25-S6",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~25",
+    "surfaced_at": "2026-09-16T17:20:00Z",
+    "one_line": "AMGT-rk-13's AC3 re-arm of W25-S3, run AFTER the ranker batch writes peers/v1 for the widened universe: self_match_suspects is now 2, not 0 -- GOOGL_US_Equity (Alphabet Inc. Class A) and GOOG_US_Equity (Alphabet Inc. Class C) each carry the other as a served comparable, a genuine same-company self-match the engine's exact-ticker/exact-name self-exclusion cannot catch because both the ticker and the name string differ by share class.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AC3.after.txt (this worker's deliverables directory, same invocation as W25-S3's re-measurement, run AFTER `python -m lib.research.peers.engine --as-of 2026-09-16 --write-pool` uploaded 191 of 191 objects): peer_objects 191, subjects_with_name 121, members_graded 1408, self_match_suspects 2 [('GOOGL_US_Equity', 'Alphabet Inc. Class A', 'GOOG', 'Alphabet Inc. Class C'), ('GOOG_US_Equity', 'Alphabet Inc. Class C', 'GOOGL', 'Alphabet Inc. Class A')], mutant_suspects 2.",
+        "AC3.self_match_prewrite.txt (same worker, run BEFORE the batch wrote any new object, over the pre-existing 33 peers/v1 objects at 2026-09-15): self_match_suspects 0 -- confirming W25-S3's own re-measurement and that this residual is NEW, surfaced specifically by the widened universe's newly-populated names (GOOGL and GOOG were both basis=absent or non-existent before AMGT-rk-13's re-run).",
+        "lib/research/peers/engine.py's self-exclusion arm (peers(), 'self_tickers'/'subject_name_norm' block, unchanged by this cell) excludes a candidate only when its ticker equals the key's root or the subject's own scanner ticker, or its name normalises EXACTLY to the subject's -- 'GOOGL' != 'GOOG' and 'ALPHABETINCCLASSA' != 'ALPHABETINCCLASSC' under normalised_name(), so neither arm fires for a same-company different-share-class pair.",
+        "s3://opal-data-harvest/peers/v1/GOOGL_US_Equity/2026-09-16.json and peers/v1/GOOG_US_Equity/2026-09-16.json (uploaded this run, read-back OK) each carry the other ticker inside members, at rung_reached 4 (same sector, band, country and industry group -- which two share classes of the same issuer trivially satisfy)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT-rk-13 AC3: 'MET when ... self_match_suspects 0 and mutant_suspects 2 ... A suspect that is genuinely a different company is refused as written: list it and file a row. This is the W25-S3 re-arm condition, made its own criterion by 1.0.0_SA_CTO~Z's ruling at msg 23440, condition 2.' W25-S3's disarm_owner: 'the same re-measurement must be repeated by AMGT-rk-13 ... BEFORE that batch writes peers/v1 objects for the newly-resolved holdings, because a self-match residual could still surface among the ~158 new holding-source names.'",
+    "world_is": "The predicted residual DID surface, and it is not 'genuinely a different company' in the sense AC3's escape clause contemplates (an unrelated company sharing tokens) -- GOOGL and GOOG are the SAME issuer's two share classes, so this is the cross-listing/self-match shape W21-S3 named, one level further than the exact-name arm reaches. W25-S3 itself already found, on the SAME live scanner database, that a broader token-overlap self-exclusion fix is UNSAFE (it over-excluded unrelated companies sharing only a generic corporate-suffix word and changed COST's served membership) and reverted it byte-for-byte; and W25-S3's disarm_owner text states the substantive fix (an ADR/share-class-aware identity join) is 'INTERFACE X-1's owner's decision, routed to 3.0.0_SA_CVO~Z at L9', never this cell's to invent. AC3 is therefore REFUSED AS WRITTEN per this order's own Refusal Clause: graded FAIL with this measurement, not repaired by a route the order did not name.",
+    "disarm_owner": "3.0.0_SA_CVO~Z at L9 (INTERFACE X-1's owner, exactly as W25-S3 routes the same question) -- a share-class/cross-listing-aware self-exclusion or identity join for the peers engine; until then, GOOGL_US_Equity and GOOG_US_Equity's served peer sets each name the other as a comparable.",
+    "notes": "This row does not disarm W25-S3 (which already closed on its own alternative, the pre-batch re-measurement); it is the re-arm condition's OUTCOME, filed as its own row per W25-S3's own text ('the re-arm condition ... belongs to whichever cell next writes peers/v1 objects for the widened universe'). AMGT-rk-13's proof-of-spec instance grades AC3 FAIL with this row cited, per the task order's Refusal Clause (section 4); the task order's <status> stays pending. AC1, AC2 and AC4 all PASS on the live store (populated_subjects 121 of 121 expected; figi-dedup and crosswalk consumption both present in lib/research/peers/*.py; pool-blocks-classified-by-block 4 of 4 with NVDA_US_Equity now sourced model_block_header)."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W25-S7",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~25",
+    "surfaced_at": "2026-09-16T17:25:00Z",
+    "one_line": "AMGT-rk-13's mandated invocation (`python -m lib.research.peers.engine --as-of 2026-09-16 --write-pool`) writes its batch log/summary artifact to org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~21/ (engine.batch_artifact_paths(), hardcoded beside universe.CACHE_DIR_DEFAULT), a path OUTSIDE this order's <paths> grant -- left untracked, not committed by this cell.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/research/peers/engine.py batch_artifact_paths(as_of): 'directory = os.path.dirname(universe_module.cache_path())' -> universe.CACHE_DIR_DEFAULT = org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~21/ -- a path this cell's <paths> does not name (only .../deliverables/0.9.0_WK_AMGT_RESAPP~25/ is granted).",
+        "git status --porcelain after running the batch: '?? org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~21/peers_batch.2026-09-16.json' (peers_batch.2026-09-16.log is gitignored, *.log, per .gitignore:68). The prior partition, peers_batch.2026-09-15.json/.log, was already committed under the SAME ~21 directory by an earlier cell (rj-7/its worker), so the pattern of landing this artifact under ~21 pre-dates this order and is not this cell's design choice.",
+        "This cell's own <paths> grant lists only lib/research/identity/, lib/research/peers/, lib/research/universe/ (absent as a literal directory -- see this order's own surprise row on that, if filed), lib/research/scores/, lib/research/api/tests/ and this worker's own ~25 deliverables/task-order paths -- ~21's deliverables directory is not among them.",
+        "No code edit was made to relocate this artifact (out of scope: universe.CACHE_DIR_DEFAULT is a shared coordinate other cells' invocations also depend on, e.g. this same order's AC1 invocation reads u.CACHE_DIR_DEFAULT directly for the scanner-ticker set -- moving it would change a surface this order does not own)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "This order's <paths> block (section 3) names lib/research/identity/, lib/research/peers/, lib/research/universe/, lib/research/scores/, lib/research/api/tests/ and org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~25/ -- 'A SURFACE NOT NAMED IN <paths> IS A WALL' (RULING 1).",
+    "world_is": "Running the DELIVER text's own mandated invocation (re-run the similarity ranker's batch over the widened universe) necessarily calls run_batch(), which writes its log/summary pair beside the candidate-universe cache -- a coordinate fixed in universe.py by an earlier cell (AMGT-rj-7/its worker slot ~21), not by this order. The write landed; it was NOT staged or committed by this worker (left untracked in the shared worktree), so no commit under this serial touches a path outside the grant.",
+    "notes": "No fix attempted: relocating universe.CACHE_DIR_DEFAULT/batch_artifact_paths() would touch a shared coordinate this order does not own and could break another cell's read of the same default. Left for whichever cell/COO holds a grant over ~21's deliverables directory (or a future cell that owns universe.py's cache-location constants) to fold in or relocate. The batch's SUBSTANTIVE output -- the 191 peers/v1 pool objects and their read-back -- is unaffected; this row concerns only the local, untracked log/summary side-artifact."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W25-S8",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~25",
+    "surfaced_at": "2026-09-16T17:26:00Z",
+    "one_line": "This order's <paths> grant names lib/research/universe/ as a literal directory; no such directory exists in the worktree -- the universe-building code this cell reads/depends on lives at lib/research/peers/universe.py (the candidate database) and lib/research/identity/build_universe.py (the identity union), both already covered by this order's OTHER granted paths (lib/research/peers/, lib/research/identity/), so the absence never blocked any write this cell needed to make.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "test -e lib/research/universe (run at this worker's first act, this order's coordinate check): MISSING. ls lib/research/: identity/, peers/, scores/, api/, and 15 other package directories -- no universe/ among them.",
+        "The two modules named 'universe' in this project both sit elsewhere: lib/research/peers/universe.py (the candidate DATABASE the ranker grades against -- SCANNER_BUCKET/model-block union, AC1's `u.MODEL_BLOCK_DIR_DEFAULT` etc.) and lib/research/identity/build_universe.py (the identity UNION universe, universe/v1/<as_of>.json in the pool -- AMGT-rk-4's own artifact). This cell edited universe.py (adding model_block_pool_index/read_model_block_from_pool for AC4) and engine.py (AC2/AC4), both under lib/research/peers/, which IS granted; nothing needed a write under a literal lib/research/universe/ directory."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Task order AMGT-rk-13 section 3 <paths>: 'lib/research/identity/ ... lib/research/peers/ ... lib/research/universe/ ... lib/research/scores/ ... lib/research/api/tests/ ...'.",
+    "world_is": "lib/research/universe/ does not exist as a directory at this commit; the functionality the name suggests is split across lib/research/peers/universe.py and lib/research/identity/build_universe.py, both reachable through this order's OTHER granted paths.",
+    "notes": "No STOP was taken: the missing entry is one path among five in the grant, and this cell's every required write landed inside a path that DOES exist and IS granted (lib/research/peers/). Per the top-level instructions this is recorded as a surprise ('a path is elsewhere'), not a BLOCKING row, because it never prevented an act this order needed. No code or grant was widened to compensate."
   }
 ]
 ```
