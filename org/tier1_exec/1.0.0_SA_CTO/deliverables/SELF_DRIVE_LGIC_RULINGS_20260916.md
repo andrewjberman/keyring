@@ -547,3 +547,11 @@ rule), not by editing them; the open-backlog counter prints the two numbers. `3.
 row whose evidence cites a disarm row graduates with `disarm.state ARMED` and the disarm owner named, so the owner
 advances the clock (A-15's mechanism); routed in the round-2 analyses, not as a message. This seat -- the round-2
 analyses read the two numbers, never the filed count.
+
+**R-14 addendum (~12:0xZ, COO~G 97360, complied @de5d4e2648):** the nine links re-cited in one row per project
+(LGIC_CANON-S16, LGIC_ENFORCE-S37), the counter `open_backlog.py` matching full ids only, the discipline adopted. **A
+THIRD category, CONFIRMED as within R-14:** an item the CVO adjudicated DISMISSED_WITH_REASON never receives a
+remediation row (only a GRADUATED item does), so it has NO clock by design; counting it LIVE overstates by
+construction. The counter prints `filed ARMED | DISMISSED | LIVE | PENDING` -- LGIC_ENFORCE 29 | 6 | 15 | 5,
+LGIC_CANON 4 | 0 | 4 | 4 -- which splits a category rather than collapsing one, R-14's own principle. Confirmed; the
+round-2 analyses read the four numbers.
