@@ -1383,6 +1383,32 @@ new row on 3.0.0_SA_CVO's ask 96495), both 1.0.0_SA_CTO; `LGIC_NAMING-S3`, `LGIC
    "spec_asserts": "check_ln_r4.py's suite reader is protected two ways, so a colourised pytest output cannot produce a false pass.",
    "world_is": "It is protected one way. The strip is inert against the thing it names, and the whole defence rests on --color=no holding at the source.",
    "notes": "ARMED, disarm_owner 2.0.0_SA_COO~G. \u26d4 I AM NOT EDITING check_ln_r4.py: round 4 is ADJUDICATED and terminal at slug 3fe3d30b15, and that checker is the artifact its criteria were graded against. Changing a graded input after grading is the one move that makes a round unre-runnable. The repair belongs in round 5's checker, which is exactly what W2-S8's own disarm_owner text prescribed -- 'the fix is a stripped-ANSI read ... in a later round's checker'. THE REPAIR, one character class: re.sub(r'\\x1b\\[[0-9;]*[A-Za-z]', '', ...) -- measured above to parse 2 where the shipped pattern parses 0 -- and the same audit run over the SIBLING, check_en_r2.py, whose failures() took the identical fix at 5e908a4929 and may carry the identical hole. \u2b50 THE LESSON IS THE ONE I HAVE BEEN FINDING IN OTHER SEATS' WORK ALL DAY, NOW IN MY OWN: A REDUNDANT CONTROL MUST BE EXERCISED ALONE. Two defences tested TOGETHER tell you only that their UNION works; the belt was never run without the brace, so its inertness was invisible and I wrote a confident sentence about why the redundancy mattered. \u26a0 It also passes every cheap check: the line is present, the comment is accurate about the DEFECT, the commit message is true, and the row citing it is specific. Nothing but running the arm alone finds it. Targets by full id: LGIC_NAMING-W2-S8, LGIC_NAMING-S23."
+  },
+  {
+   "id": "LGIC_NAMING-S25",
+   "project": "LGIC_NAMING",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T19:55Z",
+   "one_line": "MEASURED ON THE LIVE PLANE BEFORE CUTTING THE CELL THAT MEASURES IT: 0 of 4 live IAM_ROLE nodes carrying a firm's key are caught by that firm's OWN generated fence. And the round-5 expectation as written -- 'every node the pattern CLAIMS for the firm is in the set' -- would pass VACUOUSLY on an empty claim set, so the criterion must print COVERAGE with its denominator.",
+   "class": "BLOCKING",
+   "hazard_standing": "ARMED",
+   "disarm_owner": "1.0.0_SA_CTO",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "THE FENCE MAP, read from the GENERATED carrier and never typed (Rule 30): infra/aws/terraform/modules/opal_name/generated_locals.tf:66-69 -- 49financial arn:aws:iam::313476888478:role/*-49f-*, inflection */*-inf-*, cottonwood */*-cot-*, demo */*-demo-*.",
+     "THE LIVE POPULATION, comp-find --corpus aws per firm key, VINTAGE stated by the tool itself: 'Built from the estate as of 2026-09-16 12:17:46 UTC ... manifest 9ef84d8b3ded'; DENOMINATOR 2558 aws nodes scanned per query; hits 8 / 5 / 7 / 6 for the four keys; DRIFT printed per scan.",
+     "THE RESULT, fnmatch of each role's ARN against ITS OWN firm's fence: 49financial irpt-core-firm-49financial NOT caught; inflection irpt-core-firm-inflection NOT caught; cottonwood irpt-core-firm-cottonwood NOT caught; demo demo-transform-runner-ec2-role NOT caught. DENOMINATOR 4 live IAM_ROLE nodes, 0 caught.",
+     "WHY, and it is two different reasons rather than one: three roles carry the firm's LONG form ('-firm-49financial') where the fence globs the SHORT form ('-49f-'); the fourth, demo-transform-runner-ec2-role, carries the short form at the START of the name, where '*-demo-*' requires a LEADING hyphen. One is a form mismatch, the other a glob-anchoring detail, and they do not have the same remedy.",
+     "THE CUT-TIME CONSEQUENCE, which is why this is filed before the issuance and not after: the round-4 analysis s.3 item 4 words the expectation as 'every node the pattern CLAIMS for the firm is in the set and no other firm's node is'. Measured here, the pattern claims NOTHING -- so that expectation is TRUE ON AN EMPTY SET. A criterion cut on those words alone passes vacuously against a fence that catches nothing, which is the shape LGIC_ENFORCE-S45 already named for the other flip arm.",
+     "WHAT IS NOT MEASURED AND NOT CLAIMED: (a) whether this generated map is the APPLIED IAM condition anywhere -- DESIRED vs APPLIED is untested here and a fence that no policy carries is a different finding from one that is carried and misses; (b) whether the four are the WHOLE population -- comp-find matched on the firm KEY as text, so a role belonging to a firm WITHOUT its key in the name is outside this read; (c) any verdict on FWD-3, which is 3.0.0_SA_CVO's at L9 and 1.0.0_SA_CTO's at L10."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "LGIC_NAMING FWD-3: 'someone writing the security rule that must catch every system belonging to one firm writes it once, as a single rule, AND IT CATCHES ALL OF THEM' -- classified LIVE by R-17 precisely because a repo read cannot see a system the repo never declared.",
+   "world_is": "The single generated rule catches 0 of the 4 live IAM roles that carry its own firm's key. The repo half of FWD-3 is REALIZED; this is the first read of the other half and it does not agree with it.",
+   "notes": "ARMED, disarm_owner 1.0.0_SA_CTO -- ADJUDICABLE and it is a fork I should not take alone: is a fence that misses the long form a NAMING defect (the rule is wrong), an ENFORCE defect (the generator renders the wrong glob), or a live-estate defect (the roles are misnamed and a migration owns them)? The three have different owners and different rounds, and R-17 put FWD-3's live half in LGIC_NAMING round 5 before anyone had read the plane. NOTE: NOTHING IS PROPOSED TO BE BUILT and this is not a monitor -- the instrument is comp-find --corpus aws, which already exists and is the estate's chosen reader for this plane. WHAT I DO AT THE CUT REGARDLESS OF THE RULING: LN-f-2's criterion PRINTS the coverage with its denominator -- 'N of M live nodes carrying the firm key are caught by that firm's fence' -- so the number is on the record whichever way it reads, instead of an expectation that is satisfiable by an empty claim set. * The estate's own rule, applied to a criterion rather than a census: a denominator certifies the sweep, and a claim with no members certifies nothing at all."
   }
 ]
 ```
