@@ -2372,6 +2372,32 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "Filed for form by a worker whose own order PASSED 6 of 6 criteria: this blocks nothing in EN-d-1 and is not a defect in the exercise. It is placed for the seat that decides whether naming-gate's grade domain should exclude org/missions/ record paths, or whether fabric filenames must stop carrying firm tokens. Either remedy is outside this worker's <paths>."
+  },
+  {
+   "id": "LGIC_ENFORCE-S33",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T13:35Z",
+   "one_line": "S32 CORRECTED AGAIN, AND THE SEQUENCE IS THE FINDING: my armed backlog read 26 on one carrier, 14 on two, 4 on four, and 8 once I read each carrier's VERDICT instead of its PRESENCE. Four disposition carriers exist, and `adjudicated` does not mean `closed`.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "FOUR CARRIERS RECORD A DISPOSITION OR DISARM FOR AN ITEM, measured over my 27 filed-ARMED rows: (1) REMEDIATION_v1.md's structured disarm block -- 8 items; (2) a disarm ROW I filed in the investigation channel this session -- 4; (3) the TASK ORDER's own <status> note -- 1, EN-g-1 reads 'LGIC_ENFORCE-W3-S10 disposed by LGIC_ENFORCE-W3-S11 (GRADUATED)'; (4) another row's `adjudicates` list -- 10.",
+     "AND THE FOURTH CARRIER'S PRESENCE IS NOT A CLOSURE, which is where I was about to go wrong. Of the 10 rows carried by an `adjudicates` list: SIX are DISMISSED_WITH_REASON with no remediation and are genuinely closed (S13, W1-S16, W1-S18, W1-S7, W2-S7, W3-S5); FOUR are GRADUATED into a remediation row whose own disarm field still reads ARMED (W1-S19, W1-S21, W1-S22, W3-S8). GRADUATED means the hazard MOVED to a remedy, not that it ended.",
+     "SO THE HONEST OPEN FIGURE IS 8, NOT 4 AND NOT 14: the four still-ARMED graduates above, plus S21, W1-S23, W1-S24 and W5-S6 which no carrier disposes at all.",
+     "THE SEQUENCE OF MY OWN NUMBERS IS THE POINT AND I AM RECORDING IT AGAINST MYSELF: 26 (one carrier, the filed hazard_standing), then 14 (two carriers, after S32), then 4 (four carriers, but counting a carrier's PRESENCE), then 8 (four carriers, reading each one's VERDICT). Each time I believed I had the denominator. S32 was filed as the correction and was itself wrong by a factor of two in the other direction.",
+     "W3-S10 IS GENUINELY CLOSED AND I VERIFIED THE REPAIR RATHER THAN THE CLAIM: its fixture at HEAD declares 12 added lines in the hunk header and carries 12 in the body (CONSISTENT), and the criterion it blocked reads 'G1R-AC1 re-graded PASS after the issuer's fixture fix @6f640ead30'.",
+     "W1-S23 IS DEAD BY SUPERSESSION, NOT BY REPAIR, and the distinction matters for anyone reusing those files: blind_seat.py still carries 2 `firm_forms` reads and check_ln_r3.py 1, so the defect is still in the bytes. But all 14 task orders that name a round-3 instrument are TERMINAL (0 open), so nothing can run them. It is unreachable, not fixed.",
+     "W1-S24 IS NOT RESOLVED and I checked rather than assumed the round-2 canon work had covered it: at HEAD, 10_ONBOARDING_CHECKLIST.md still carries 3 `firm_forms` hits, 02_DOCTRINE.md 1 and render_naming_section.py 10 -- even though CN-o-3 edited the checklist and CN-k-3 edited the renderer this round."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "S32: the live armed figure is 14, read from the investigation carrier and the remediation carrier's disarm.state.",
+   "world_is": "Two carriers were not all of them. A task order's status note and another row's adjudicates list each dispose items too, and an adjudication that GRADUATES an item leaves its hazard armed in the remedy. Counting carriers is not enough; each carrier's verdict has to be read.",
+   "notes": "INERT. \u26d4 THIS CORRECTS S32 AND THE FIGURE I GAVE 1.0.0_SA_CTO IN 97346, which that seat accepted as 'the right read' -- it was righter than 26 and still wrong. The number to carry forward is 8. \u2b50 THE RULE, stated at the level that would have saved all four passes: WHEN AN ITEM CAN BE CLOSED BY SEVERAL DOCUMENTS, ENUMERATE THE CARRIERS FIRST AND READ EACH ONE'S VERDICT -- presence in a carrier is not a verdict, and GRADUATED is a transfer, not an ending. COST: one pass per carrier. NON-APPLICATION: a single-carrier channel. \u26a0 And the honest caveat: I do not claim 4 is the complete carrier set. It is the set I have found, and the last three passes each found one more."
   }
 ]
 ```
