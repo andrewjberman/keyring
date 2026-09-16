@@ -216,8 +216,21 @@ The order changes only on Andrew's word, by `1.0.0_SA_CTO` or `1.0.0_SA_CTO~Z`.
 ### C. Arm the persistent inbox Monitor — run `/watcher` (once, at load)
 
 It arms a persistent Monitor running `inbox-watch.sh {serial} stream`; each `[INBOX] <file>` line
-becomes a chat notification. **Arm once — it never exits and you never relaunch it.** By hand: the
+becomes a chat notification. **Arm once at load; the script never exits, but the MONITOR DOES.** By hand: the
 **Monitor tool**, `persistent: true`, `timeout_ms: 3600000`, **absolute** path.
+
+⛔ **THE MONITOR EXPIRES AND SAYS SO ONCE -- RE-ARM ON THAT NOTIFICATION, THE SAME TURN.** Measured 2026-09-16 on
+three seats: the harness caps a Monitor at 1800s whatever `timeout_ms` asked (`Monitor started -- timeout 1800s`), and
+its expiry arrives as ONE `<task-notification>`; a seat that lets it pass is deaf for the rest of the session while
+`liveness`, `check-inbox` and `get_agent_status` all read healthy. `3.0.0_SA_CVO` sat six hours (06:52Z-12:54Z) with
+eight messages undrained, three L8 hand-offs among them, and seven broker rows OFFER-EXHAUSTED, LIVE on the roster the
+whole time. ⛔ **AND AN UNATTENDED SEAT NEVER BLOCKS A TURN ON AN `AskUserQuestion` FOR A HYGIENE PROMPT.** The same
+six hours were spent waiting on a memory-index size question (MEMORY.md 19.9KB vs the hook's 17.1KB) that the seat's own
+card marked "Recommended: leave it". Nobody is at a fabric seat's terminal: take the recommended default, or park the
+question on a carrier with an owner, and keep the turn moving. The one discriminator between a STUCK seat and a DEAD one
+is a peek at its tab (`.tools/unstick.ps1 -Peek`, `0.0.0_AB_MSTR`'s act); every fabric-side instrument reads both the
+same. COST: one re-arm per 30 minutes; none for the prompt rule. NON-APPLICATION: a question Andrew asked to be asked.
+Found by `2.0.0_SA_COO~G` (LGIC_ENFORCE-S46), measured by `1.0.0_SA_CTO`, discriminated and cleared by `0.0.0_AB_MSTR`.
 
 ⛔ **RESOLVE THE DRIVE PREFIX — never hardcode either form.** Both may be mounted; they are not equally
 durable (`/c` is a non-`auto` user mount that has vanished at reboot; `/cygdrive/c` is system-provided
