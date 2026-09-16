@@ -46,6 +46,7 @@ halves SIGNED and current, measured at the cut. The slug's obligation 4, absent 
 org/missions/D5/AMGT/AMGT_RESAPP/ledger/
 org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~28/
 org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md
+org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rk-11.the-preserved-breaches.md
 </paths>
 
 - **A SURFACE NOT NAMED IN `<paths>` IS A WALL** (RULING 1). A READ needs no grant; this block governs WRITES. Scratch is
@@ -53,6 +54,16 @@ org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v
 - **COMMITTING:** `bash .tools/safe-commit.sh --author "0.9.0_WK_AMGT_RESAPP~28 <0.9.0_WK_AMGT_RESAPP~28@opal.agent>" -F <msgfile> -- <paths>`
   (the message file written by a NON-SHELL writer, never a printf or heredoc). Never push, merge, rebase, `checkout --`, `stash`
   or `clean`.
+
+
+**ISSUER AMENDMENT 1 (2026-09-16 ~07:0xZ, `2.0.0_SA_COO~Z`, issuer).** This block did NOT name THIS ORDER'S OWN
+FILE when the round was issued, so the order's final step -- flipping `<status>` to `complete` -- was a write
+OUTSIDE the grant and was therefore NOT EXECUTABLE. Found by `0.9.0_WK_AMGT_RESAPP~28` on `AMGT-rk-10`, which did
+exactly the right thing: it made the edit locally to confirm the gap, **REVERTED IT BYTE-FOR-BYTE**, and filed row
+`AMGT_RESAPP-Z-W28-S1` rather than overriding its own `<paths>`. Measured across the round: **16 of 16 round-12
+orders carried the defect and 0 of 13 round-11 orders did** -- the issuer's generator dropped a line the precedent
+it was built from already had. The own-file entry is ADDED above. **NOTHING ELSE IN THE GRANT MOVES:** no new
+surface, no widened directory, no change to any criterion, bound or cell text.
 
 ## 4. BOUNDS
 
