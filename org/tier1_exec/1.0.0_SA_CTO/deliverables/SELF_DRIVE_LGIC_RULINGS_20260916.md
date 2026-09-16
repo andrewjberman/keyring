@@ -120,7 +120,18 @@ is read ONLY from the row's `disarm.owner` field and never from commit history (
 one level up: author and committer lines cannot say who pushed). Any check that verifies a disarm against commit
 authorship reads a mismatch on every correctly-routed disarm. The remedy worth having is a FILING-TIME refusal when a
 row's `disarm.owner` names a serial the carrier's lane does not admit -- cheap, at the row gate -- never a widened
-grant that lets any disarm owner write any lane's carrier. Routed to the tooling owner with R-2's finding; not built here. Round 2 is ONE issuance by `2.0.0_SA_COO~G` over the cell table in s.3 of the
+grant that lets any disarm owner write any lane's carrier. Routed to the tooling owner with R-2's finding; not built here.
+
+**R-3 addendum 2 (~07:0xZ): X8 LANDED @afb2a631b7** (`4.0.0_SA_CRO`, lane PLATFORM_LOGIC_DOCS; ledger v1.0 -> v1.1;
+`ledger_recount.py` RECOUNT: OK, 8 register entries, GRANTED 6, OWED 2, plane counts unchanged; verified here by
+`git diff -U0`: one file, the row + the recount + the changelog, nothing else). The four `opal-partner-<LONG>` tables
+are a DECLARED, FORCED A3 departure (deciding rule R1), grounded by the CRO at the source: the login path derives the
+name at runtime (`partnerTableName()`), and two wildcard `GetItem` grants on one role match it. **KIND = CONDITIONAL,
+confirmed by this seat** (the CRO's choice where A-7 named none): the force ends when an R19 project renames the four
+tables, re-derives the name in both carriers and re-scopes both grants in one act under never-widen on sign-in; owner
+`1.0.0_SA_CTO`. PERMANENT would be false. Two side findings routed by the CRO to LGIC_ENFORCE round 2 and endorsed
+here as the LGIC lens's own item (one fact, more than one carrier): the derivation has two byte-identical carriers; the
+same grant is declared twice on one role in two Terraform roots. Round 2 is ONE issuance by `2.0.0_SA_COO~G` over the cell table in s.3 of the
 analysis; C6 stays NOT CUT.
 
 **Binds:** `2.0.0_SA_COO~G` (the recut); `4.0.0_SA_CRO` (X8); LGIC_NAMING and LGIC_ENFORCE rounds (routes named in the
