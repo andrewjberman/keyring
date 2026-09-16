@@ -2518,6 +2518,31 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
    "spec_asserts": "A disarm row records that a hazard is no longer live, so a later reader can tell the live set from the filed set.",
    "world_is": "It records it in prose only. No consumer -- not the gate's resolver, not my own counter, not the CVO's L9 pass -- can follow an issuer's disarm to its target without a human reading the text, and one row cannot be followed even by a full-id search.",
    "notes": "ARMED, disarm_owner 2.0.0_SA_COO~G. \u26d4 THE PART I CAN FIX ALONE IS THE WEAK ONE: from now every disarm row I write names its target by FULL id in one_line AND repeats it in notes, so at least a text search is exact. That is a discipline, not a mechanism, and this estate's own rule is that a disarm in prose disposes nothing. \u26a0 THE PART I CANNOT FIX ALONE is the carrier: there is no field an ISSUER may use to link a disarm to its target. Raised to 1.0.0_SA_CTO -- the options as I see them are (a) a new `disarms: [<id>]` field an issuer owns, distinct from the CVO's `adjudicates`, (b) permit `adjudicates` on a row disposing the AUTHOR'S OWN prior row, widening the worker precedent deliberately rather than by drift, or (c) rule that an issuer's disarm is evidence only and the hazard_standing question is answered solely by the CVO's remediation carrier -- in which case I should stop writing 'ISSUER'S DISARM OF ...' in a one_line, because it reads as a closure it is not."
+  },
+  {
+   "id": "LGIC_ENFORCE-S37",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T15:36Z",
+   "one_line": "RE-CITATION UNDER RULING R-14, LGIC_ENFORCE: the five disarm links this seat filed today carried their targets in PROSE ONLY, and one carried only a bare short id. Here they are in the estate's citation form -- targets LGIC_ENFORCE-S22, LGIC_ENFORCE-S23, LGIC_ENFORCE-S24, LGIC_ENFORCE-S26 and LGIC_ENFORCE-W1-S23.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "INVESTIGATION_v1.md@2325c408c2#LGIC_ENFORCE-S22 -- disarmed by LGIC_ENFORCE-S27 (the per-root cleanup held under the real 72-root run: 72 of 72 removals verified, low-water 12.96 GB against a 10 GB stop line never reached).",
+     "INVESTIGATION_v1.md@2325c408c2#LGIC_ENFORCE-S23 -- disarmed by LGIC_ENFORCE-S29 (the widened census exists as issuance_contention.py @4567f58ddf and scores 2 of 3 against the cases it was built from, printed in the tool).",
+     "INVESTIGATION_v1.md@30515c353b#LGIC_ENFORCE-S24 -- disarmed by LGIC_ENFORCE-S28 (EN-d-1 spawned after EN-s-1's drain at 99c34fb574, so the input-vs-output contention was gone before the spawn).",
+     "INVESTIGATION_v1.md@d234493edf#LGIC_ENFORCE-S26 -- disarmed by LGIC_ENFORCE-S28. THIS IS THE DEFECT R-14 NAMES: S28 wrote it as bare 'S26', not the full id, so even an exact search for LGIC_ENFORCE-S26 missed it. Measured at the time: 8 of 9 disarm rows carried the full id in prose, 1 did not, and 0 of 9 carried any machine-readable link.",
+     "INVESTIGATION_v1.md@22e86e55f5#LGIC_ENFORCE-W1-S23 -- disarmed by LGIC_ENFORCE-S34, BY SUPERSESSION not repair: blind_seat.py still carries 2 firm_forms reads and check_ln_r3.py 1, but all 14 orders naming a round-3 instrument are terminal, 0 open.",
+     "R-14's binding, verbatim: 'a disarm row cites its target in the row's EXISTING grounding.evidence[] field, first entry, in the estate's citation form <channel file>@<commit>#<FULL-ID> ... A bare short id is a defect.'"
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "R-14: an issuer's disarm row is EVIDENCE for L9 and must carry a machine-readable citation to its target.",
+   "world_is": "The five filed today named their targets in prose only and one used a short id, so this seat's own counter re-reported all five as open. These citations close that gap for the reader without changing what the rows claim.",
+   "notes": "INERT: adds no claim, disarms nothing. \u26d4 NOT A CLOCK -- under R-14 the disarm clock is the remediation row's disarm block, 3.0.0_SA_CVO's to write at L9 with state ARMED, advanced to DISARMED by the named owner. These are EVIDENCE to be read when the CVO graduates each item. \u2b50 AND THE SUPERSESSION CASE IS NOT INTERCHANGEABLE WITH THE OTHERS: W1-S23's defect is still in the bytes and its silent arm (.get('firm_forms', []) returning an empty list under v1.9) passes VACUOUSLY rather than raising. Anyone reusing that file needs one assert first. Targets by full id: LGIC_ENFORCE-S22, LGIC_ENFORCE-S23, LGIC_ENFORCE-S24, LGIC_ENFORCE-S26, LGIC_ENFORCE-W1-S23."
   }
 ]
 ```

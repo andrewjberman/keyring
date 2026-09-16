@@ -992,6 +992,31 @@ not a message.
    "spec_asserts": "C-S11: a judge briefed with the canon alone can no longer resolve a demo naming case from the one document.",
    "world_is": "It can again at HEAD -- the bullet, the note verbatim and the ruling id are all in the generated section -- and the arm that would catch the next silent drop of this class now exists and prints a denominator.",
    "notes": "INERT. \u26a0 THE CVO WROTE THIS ROW ARMED AGAINST ITS OWN READING and said so in terms: 'Read on its own this seat would have said INERT under PRD DEC-9 -- the canon classifies and moves nothing, grade() reads the schema and not the canon.' It kept ARMED because the filer had. That deference is the reason this disarm is measured against C-S11's OWN standard (the canon alone resolving a case) rather than against S3's (the note reaching the section) -- disarming a row on a weaker test than the one it set would be closing someone else's finding on my terms. \u26d4 This disarms C-S11 only; W2-S3 and W2-S4, the two rows CN-k-3's worker filed, stay open and are 3.0.0_SA_CVO's at L9."
+  },
+  {
+   "id": "LGIC_CANON-S16",
+   "project": "LGIC_CANON",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T15:35Z",
+   "one_line": "RE-CITATION UNDER RULING R-14, LGIC_CANON: the four disarm rows this seat filed today carried their targets in PROSE ONLY. Here they are in the estate's citation form so the same resolver that reads a remediation row can follow them -- targets LGIC_CANON-S3, LGIC_CANON-S7, LGIC_CANON-S11 and LGIC_CANON-C-S11.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "INVESTIGATION_v1.md@5bdaa031c0#LGIC_CANON-S3 -- disarmed by LGIC_CANON-S10 (the renderer reads a FIRM row's note again; verified on the served canon, 1 of 1 notes carried verbatim, RULING DM present).",
+     "INVESTIGATION_v1.md@087f434330#LGIC_CANON-S7 -- disarmed by LGIC_CANON-S8 (the three judges' spawn bases measured from git: one base 49b4a5b74a, exercises/r2 empty there, positive control six files one directory up).",
+     "INVESTIGATION_v1.md@f8eb631fa8#LGIC_CANON-S11 -- disarmed by LGIC_CANON-S12 (CN-k-4 WITHDRAWN under R-10 at cc6ed04bab; round 2 read 9 of 10 terminal at that point, 10 of 10 after CN-o-4).",
+     "ADJUDICATION_v1.md@3ee4bb55ec#LGIC_CANON-C-S11 -- disarmed by LGIC_CANON-S15 (re-tested against C-S11's OWN standard, not S3's: the demo BULLET, the 404-character note verbatim, and RULING DM all present in the generated section).",
+     "R-14's binding, verbatim on the point this row answers: 'a disarm row cites its target in the row's EXISTING grounding.evidence[] field, first entry, in the estate's citation form <channel file>@<commit>#<FULL-ID> ... A bare short id is a defect.'",
+     "WHY A NEW ROW RATHER THAN AN EDIT: the channel is APPEND-ONLY, so the four rows as filed keep their prose-only citations forever. R-14 binds 'the eight rows disarmed today are re-cited by ONE row per project listing them (append-only; no edits to the old rows)'. This is LGIC_CANON's one row; LGIC_ENFORCE-S37 is the other."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "R-14: an issuer's disarm row is EVIDENCE for L9 and must carry a machine-readable citation to its target.",
+   "world_is": "The four filed today named their targets in prose only, so no resolver could follow them and this seat's own counter re-reported three of them as open. These citations close that gap for the reader without changing what the rows claim.",
+   "notes": "INERT: this adds no claim and disarms nothing. \u26d4 IT IS NOT A CLOCK. Under R-14 the disarm CLOCK is the remediation row's disarm block, written by 3.0.0_SA_CVO at L9 with state ARMED and advanced to DISARMED by the named owner. These four rows are EVIDENCE the hazard is dead, to be read when the CVO graduates each item; they close nothing by themselves. Targets by full id, repeated here so a text search is exact: LGIC_CANON-S3, LGIC_CANON-S7, LGIC_CANON-S11, LGIC_CANON-C-S11."
   }
 ]
 ```
