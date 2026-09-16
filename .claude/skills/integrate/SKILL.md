@@ -206,13 +206,38 @@ across two fabrics is NEVER#7 and a non-conflicting rebase result is luck, not c
 ⛔ **NEVER resolve another fabric's law text unilaterally.** Union what composes; route genuine
 same-row collisions to the law owners with both versions quoted.
 
-### ⛔ IDENTICAL BASE-SIDE RANGES = ONE DEFECT CORRECTED TWICE. **PICK, NEVER UNION.**
+### ⛔ IDENTICAL **NONZERO-COUNT** BASE-SIDE RANGES = ONE DEFECT CORRECTED TWICE. **PICK, NEVER UNION.**
+
+⛔⛔ **READ THE COUNT BEFORE YOU READ THE POSITION. THIS HEADING SAID ONLY "IDENTICAL" UNTIL
+2026-09-16 AND ON A ZERO-COUNT RANGE THAT RULE DELETES ONE FABRIC'S ROWS.** A `--unified=0` header
+carries BOTH: `-41,3` consumes three base rows, `-463,0` consumes **none**. Identical POSITION with a
+**ZERO** count is not two renderings of one sentence — it is a **PURE APPEND COLLISION**, two fabrics
+inserting DIFFERENT content at the same point, neither having touched a base row. **PICK there is not
+a choice between two edits of one region; it is a silent DELETION of whichever side loses**, and it
+leaves no conflict, no error and no diff to review.
+
+```
+-N,0  (ZERO count)     -> APPEND COLLISION      -> MECHANICAL UNION, keep both sides' rows
+-N,M  (M >= 1)         -> same rows replaced    -> PICK one whole, per the rest of this section
+```
+
+**Found by `0.0.0_AB_MSTR~Z` on the 2026-09-15/16 assessment, against its own live conflict set:
+`org/XXX.md -463,0` on both sides, where the two fabrics had each appended a DIFFERENT Step 1b-F
+loop-authorization row. PICK would have dropped one — and Step 1b-F is the ONLY source of truth for
+live loop arming, so the failure mode is a fabric that reads clean and arms nothing.** ⚠ The peer
+found it; `0.0.0_AB_MSTR` (laptop) re-derived the MECHANISM on a throwaway two-branch repo rather
+than taking the finding on report, with both arms: identical `-3,0` on each side, PICK dropped the
+other side's row; the NEGATIVE control, identical `-2,1`, was a genuine same-row replacement where
+PICK is right. **The instance is the peer's, the mechanism is independently measured, and the two
+arms are what separate the cases.** COST: read the `,N` you already printed in Step 3. NON-APPLICATION:
+disjoint ranges (already union) and any range pair where either count is nonzero.
 
 The classification table above splits conflicts into *disjoint ranges -> mechanical union* and
 *overlapping -> read the content*. **There is a third case it did not name, and the union default
 produces VISIBLE GARBAGE on it.** When both sides' `--unified=0` BASE-side ranges are not merely
-overlapping but **IDENTICAL**, the two fabrics did not add rules blind to each other — **they
-independently CORRECTED THE SAME SENTENCE.** Union stacks two corrections of one defect.
+overlapping but **IDENTICAL — and NONZERO-count, per the block above** — the two fabrics did not add
+rules blind to each other; **they independently CORRECTED THE SAME SENTENCE.** Union stacks two
+corrections of one defect.
 
 **And it usually needs NO law-owner adjudication**, which the bullet above would otherwise send it
 to: there is no disagreement about substance, only two renderings. **Read both, pick the better one
