@@ -157,6 +157,15 @@ second one on the same route (the redeployed archive fails before it reaches the
 state exactly (sha `9ubWPnhz`); it does not close G2. No act by this seat: the rollback is the COO's under the ruling,
 and a duplicate row on a ruled class costs a line. Next re-read: after the CTO's 16:17Z tick lands.
 
+**CLOSED 16:39:49Z, this seat's own instrument:** the adapter reads LastModified `2026-09-16T16:18:57Z`, CodeSha
+`9ubWPnhz`, 747,396 B -- the s.1 build restored, 14 minutes past the ruled bound; `/thesis` 200 `model_status ABSENT`
+0 figures, `/overlay` 200, `/print` 500 -- **byte-for-byte the s.1 state.** The COO's change-management entry
+`org/critical_paths/change_management/20260916T1606Z_amgt-scoped-api-rk2-rollback-20260916_deploy_completion.md`
+(@`817d827e39`) opened 16:06:56Z and CLOSED; the CTO's tick 6 @`877782d502` verified it on a second instrument; rk-2
+was drained OPEN (@`ec4bf1f8d0`: AC2/AC3 PASS, AC1/AC4/AC5 FAIL, rows W24-S3/S4 ARMED) and re-cut under ISSUER
+AMENDMENT 9 @`1c0639a019`. Three instruments agree. The served plane is back where the morning audit left it, and G2
+is exactly as open as it was.
+
 ## 4. INSTRUMENTS AND VINTAGES
 
 | instrument | observes | vintage |
