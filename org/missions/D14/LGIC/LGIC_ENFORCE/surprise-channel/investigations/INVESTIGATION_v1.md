@@ -2174,6 +2174,30 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     "spec_asserts": "The order's BOUNDS attribute exactly one write to `terraform init`: 'Every `init` writes a .terraform directory into your worktree.' The grant clause says the write surface is the <paths> block plus this worker's deliverables folder and the order file, 'Nothing else.'",
     "world_is": "init ALSO rewrites the tracked .terraform.lock.hcl when the config's provider set has moved, which it did on 2 of 72 roots. In a disposable worktree this is inert -- the change is unstaged and never merges. In the MAIN checkout, or any worktree a seat commits broadly from, the same invocation (including the one inside .tools/safe-apply.sh) silently dirties a tracked file that an unrelated `safe-commit -- <dir>` could sweep in.",
     "notes": "Filed for form, not significance: this worker neither committed nor reverted the two files and both stay unstaged. The durable question for whoever recuts or adjudicates: a cell that orders `terraform init` over N roots should either name .terraform.lock.hcl in its <paths> so the prune is a recorded decision, or say explicitly that lock-file drift is left in the worktree and discarded -- today the order says neither, and the two affected roots (market-overview, seeking-alpha) carry a stale archive-provider entry in their committed lock files that any future init will prune again."
+  },
+  {
+    "id": "LGIC_ENFORCE-W2-S11",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~2",
+    "surfaced_at": "2026-09-16T10:58Z",
+    "one_line": "S2R-AC1 and S2R-AC2 both PRINT PASS on the round-1 comparison file at this cell's base, BEFORE the cell rewrites anything -- so neither criterion discriminates round 2's rewrite from round 1's record, and the only round-2 criterion on EN-s-2 that can move is the one the order already expects to FAIL.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED as a negative control, run in worktree wk-lgic-enforce-2e-2b at base 2a2b853f79 BEFORE any edit to NAMING_CENSUS_COMPARISON.md (git status --porcelain printed only '?? .scratch/'): `timeout 120 python org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/2.0.0_SA_COO~G/fixed_inputs/check_en.py s2-three` printed \"COMPARED AGAINST: {'N2': 1, 'N6': 2, 'IV7': 10}\" then \"VERDICT: PASS-THREE-COMPARED\", rc=0; `... check_en.py s2-named` printed \"DISAGREEMENTS: 0  MALFORMED: 0\" then \"VERDICT: PASS-DISAGREEMENTS-NAMED\", rc=0.",
+        "SAME two invocations AFTER the rewrite print the identical evidence lines and the identical verdicts, rc=0 both. The deciding lines did not move, because the round-1 file (NAMING_CENSUS_COMPARISON.md@e6ffd3a2a0) already carried an 'against' object with three truthy denominators and an empty 'disagreements' list.",
+        "READ, the checker's own code: s2_three at check_en.py:1029-1033 tests only `all(k in a and a[k].get('denominator') for k in ('N2','N6','IV7'))` over the FIRST json fence; s2_named at :1036-1040 tests only that 'disagreements' is a list whose entries carry name, census_verdict and hand_verdict. Neither reads the census report, so neither can see that the comparison was rebuilt against a different report (db7eac8f1d, registry 254d4e9ece847acb) than round 1 read (f64b6f35cb, registry 50e4fabd1cb6a150).",
+        "DENOMINATOR: 3 mechanical criteria on this order. 2 of 3 (S2R-AC1, S2R-AC2) pass before the work and after it; 1 of 3 (S2R-AC3) reads the census report's denominators, not this cell's file, and prints FAIL-PARTIAL-POPULATION rc=1 both before and after -- so 3 of 3 round-2 mechanical criteria on EN-s-2 return the same verdict whether or not this cell runs.",
+        "READ the task order: S2R-AC1 and S2R-AC2 are labelled \"(round 1's S2-AC1, unchanged)\" and \"(round 1's S2-AC2, unchanged)\", so re-using the round-1 checker is the order's deliberate choice, not a defect in check_en_r2.py."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The order issues S2R-AC1 and S2R-AC2 as this cell's mechanical acceptance ('the totals are set beside N2, N6 and IV7, each with its denominator'; 'every disagreement names the name and both verdicts'), and instructs the worker to REWRITE NAMING_CENSUS_COMPARISON.md against the round-2 census report.",
+    "world_is": "Both criteria are already satisfied at the base commit by round 1's file, which this cell replaces. They grade the SHAPE of whatever file sits at that path, never its vintage or its subject, so a cell that did nothing would print the same two PASS lines. The content this round actually turns on -- that the comparison reads the round-2 report at registry 254d4e9ece847acb, that N2's worked cases moved 43 -> 45, and what the stopped census did not reach -- has no mechanical reader; it is carried only by S2R-J1, which 3.0.0_SA_CVO grades at L9.",
+    "notes": "Filed for form, not significance, and nothing was worked around: the rewrite was done as ordered and the two criteria are recorded PASS-by-output with their deciding lines, as the proof instance requires. The durable question for whoever recuts or adjudicates: a re-run cell whose criteria are inherited unchanged from the round it is redoing cannot be graded mechanically on the redo. A cheap discriminator exists in the shape the order already mandates -- the json's 'census' object names the report by path@commit, so a round-2 checker could require that pin to equal the report's own last-changing commit (db7eac8f1d) and refuse a comparison rebuilt against a stale census. This worker did not build that checker: fixed inputs are read-only in this order, and the criterion set is frozen mid-round."
   }
 ]
 ```
