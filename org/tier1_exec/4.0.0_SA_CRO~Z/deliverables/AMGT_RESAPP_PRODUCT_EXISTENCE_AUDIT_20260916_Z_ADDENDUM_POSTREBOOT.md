@@ -129,6 +129,34 @@ rest of this record: the deployed adapter today answers the Model tab with `mode
 FWD-15..19 can grade REALIZED while FWD-1 and FWD-5 stay ABSENT. That is consistent with the PRD's outcome grain (the
 carrier is one outcome set, its content another) and is noted so nobody reads a REALIZED page as a filled one.
 
+## 3c. ADDENDUM 16:1xZ -- THE SERVED PLANE MOVED BACKWARD: the adapter was redeployed by rk-2 and the routes that answered 200 now answer 500
+
+Round 12 at 7 of 16 terminal (rk-3, rk-5 joined). Re-read of the deployed adapter at 16:10:30Z, same instrument as
+s.1 (boto3 `get_function_configuration` + direct GET invokes for `BA_US_Equity` with `x-firm-id`):
+
+| what | s.1 (13:50Z) | 16:10Z |
+|---|---|---|
+| `opal-amgt-scoped-api` | LastModified `2026-09-15T19:01:10Z`, CodeSha `9ubWPnhz`, 747,396 B | **LastModified `2026-09-16T15:19:34Z`, CodeSha `Di6/6ju9`, 749,036 B** -- redeployed by the rk-2 worker (`~24`); env still the two table names, no `MODEL_BLOCK_ROOT` |
+| `/thesis` | 200, `model_status ABSENT`, 0 figures | **500** |
+| `/print` | 500 | 500 |
+| `/posture` | 404 | 404 |
+
+So the one component s.3 of the audit called "deployed, edge-authorized and answering" no longer answers on the
+Model tab's route; `/overlay` **500** on this seat's own invoke at 16:11:07Z (`"internal error in the AMGT scoped read
+API"`), agreeing with `1.0.0_SA_CTO~Z`'s 15:59Z second-instrument read (tick 5 @`e987b69f1e`); `/peers` **200** at the
+same instant, so the regression is on the per-security read path, not the whole function -- the discriminator that
+separates a broken archive from a dead one.
+**This is already RULED and OWNED, not a new finding of this seat:** co-sign AMENDMENT 2 @`aa97d2ea9f` names the
+blast radius (every route the function serves, 11, where the half named two), rules ROLLBACK-FIRST with a 16:05Z bound
+at `2.0.0_SA_COO~Z`, and fix-forward as packaging rather than a pool read; the CTO's 16:17Z tick verifies the rollback
+or says the bound was missed. **Measured by this seat at 16:10:30Z: the regressed build was still live, five minutes
+past the bound.** Recorded here because it is the product-existence fact -- for the interval since 15:19Z a person
+opening the page against the deployed plane gets a header with no thesis and no overlay, which is LESS product than
+the audit measured -- and because G2's mechanism (the adapter reads a folder that is not in Lambda) is now joined by a
+second one on the same route (the redeployed archive fails before it reaches the read). Rollback restores s.1's
+state exactly (sha `9ubWPnhz`); it does not close G2. No act by this seat: the rollback is the COO's under the ruling,
+and a duplicate row on a ruled class costs a line. Next re-read: after the CTO's 16:17Z tick lands.
+
 ## 4. INSTRUMENTS AND VINTAGES
 
 | instrument | observes | vintage |
