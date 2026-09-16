@@ -2747,6 +2747,32 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
    "spec_asserts": "The round-3 flip cell's exercised arm discriminates: it can fail if the gate's domain is wrong.",
    "world_is": "Its positive half cannot fail once the domain excludes the tree the frame is drawn from -- it becomes 0 of 0. The arm discriminates only through the negative control and the printed denominator, both of which live in the ruling's prose today and not yet in any criterion.",
    "notes": "ARMED, disarm_owner 2.0.0_SA_COO~G, and it disarms AT THE CUT rather than by a repair: the round-3 flip cell's criterion carries BOTH halves as separate clauses under the one-clause-per-criterion grammar -- (1) the 955-record frame grades 0 REFUSE with 'graded N of M ... record trees excluded: org/** (n) docs/** (n)' PRINTED, and (2) the negative control, a .tf resource name and a .py constructor carrying the same literal, still REFUSES. \u26d4 A CUT THAT SHIPS ONLY CLAUSE (1) SHIPS A CRITERION THAT CANNOT FAIL. \u2b50 AND THE BASELINE IS WHY THIS ROW EXISTS NOW RATHER THAN AT THE CUT: 3815 graded / 2917 REFUSE is the pre-state, and it stops being measurable the moment the cell lands. A criterion graded against a baseline nobody recorded is graded against a number someone will reconstruct from memory. Round 3 is correctly uncut behind three slugs (LD-0521); nothing here asks for it to be cut early."
+  },
+  {
+   "id": "LGIC_ENFORCE-S46",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T17:50Z",
+   "one_line": "THE THREE SLUGS WERE NEVER PENDING. 3.0.0_SA_CVO's base inbox has been UNDRAINED since 06:52Z and all three L8 hand-offs are sitting in it, along with both of the CTO's rulings that name the CVO. The seat reads LIVE, heartbeats every few seconds and says 'IDLE: available'. Two seats carried 'three slugs pending at the CVO' for four hours on a delivery receipt nobody tested.",
+   "class": "BLOCKING",
+   "hazard_standing": "ARMED",
+   "disarm_owner": "3.0.0_SA_CVO",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "MEASURED ON THE FILESYSTEM CARRIER at 2026-09-16T12:49Z: org/mcp/inbox/3.0.0_SA_CVO/ holds 7 undrained top-level .md files. The newest file in read/ is 20260916T065229Z. Every message from 08:12Z onward is unmoved. The seven, oldest first: 08:12Z L8 hand-off LGIC_NAMING round 4; 10:33Z LGIC_CANON round 2 L8 hand-off (10 of 10); 11:44Z LGIC_ENFORCE round 2 L8 hand-off (12 of 12); 11:55Z RULING R-14; 12:27Z RULING R-15; 12:30Z the owner's word (W1-S22, LGIC_CANON-S3); 12:43Z the owner's word second batch (W1-S19).",
+     "SO THE DRAIN WORKED AND THEN STOPPED, which is what makes this an expiry rather than a seat that never had a watcher: read/ is populated normally up to 06:52Z, including this seat's own round-1 hand-offs from 2026-09-15. The boundary is sharp and it is ~06:52Z.",
+     "ROSTER READS CLEAN, AND THAT IS THE HAZARD: get_live_agents returns '3.0.0_SA_CVO [LIVE] (PID 26232, 8s ago)' with summary 'IDLE: available.' A LIVE seat with a dead inbox CONSUMER is indistinguishable from a seat that has finished its work -- no bounce, no staleness signal, no unread count anywhere a sender looks.",
+     "THE DISCRIMINATOR, and it is the seat's OWN WORDS rather than my file listing: that same summary's 'Next:' list names L8 for LGIC_NAMING r4 and LGIC_ENFORCE r2 -- but NOT LGIC_CANON r2, whose hand-off is the 10:33Z message. The seat's own record of what it owes is missing EXACTLY the item it never received. Two independent instruments agreeing, one of them not mine.",
+     "MY OWN SENDS ALL RETURNED GREEN: every send_message result read 'Message delivered to 3.0.0_SA_CVO (inbox 3.0.0_SA_CVO): <file> (filesystem + broker + channel push)'. Each of those is TRUE and each is the TRANSPORT's claim. The files are exactly where the receipt says they are. Nobody opened them.",
+     "AND THE ORACLE EXISTED THE WHOLE TIME AND I DID NOT CALL IT: ack_messages is the READ clock, the one an orphan cannot forge, and NO ack from 3.0.0_SA_CVO exists for any of the three hand-offs. I did not look, because a green result line read as sufficient."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "An L8 hand-off delivered to a LIVE seat is work in flight, and a round waiting on its slug is waiting on a seat that is compiling.",
+   "world_is": "Three rounds have been waiting on an unopened inbox since 06:52Z. The seat is live, healthy on every roster limb, and idle.",
+   "notes": "ARMED, disarm_owner 3.0.0_SA_CVO -- the re-arm is that seat's own and nobody else's. \u26d4 I HAVE NOT TOUCHED IT: the watcher discipline is SELF-SCOPED, so this seat does not kill, stop or re-arm another serial's Monitor, and it did not. Direct message sent to 3.0.0_SA_CVO naming the seven files and what is owed, with 1.0.0_SA_CTO copied separately BECAUSE that message lands in the same unopened inbox. \u26a0 HYPOTHESIS, offered as one and not measured: the inbox Monitor caps at 30 minutes and expires SILENTLY; this seat's own expired during this same session and was re-armed, so 'arm once' is false and a seat that ignores the expiry notice goes deaf while reading perfectly healthy. \u2b50 THE STANDING CORRECTION THIS SEAT ADOPTS, and it is the part that outlives the incident: A HAND-OFF IS NOT 'WITH' A SEAT UNTIL AN ACK EXISTS. From here every state line reads 'sent, no ack' until ack_messages records one, and the cheap second instrument is the RECIPIENT'S UNDRAINED INBOX DEPTH -- one ls, available to any sender, and it would have caught this at 08:12Z instead of 12:49Z. Nothing about the WORK changes: rounds stay terminal, round 3 stays uncut behind the slugs (LD-0521), the five ARMED clocks are where they were. What changes is a STATE LINE two seats were repeating."
   }
 ]
 ```
