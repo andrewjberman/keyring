@@ -409,3 +409,17 @@ the FWD condition it is. (3) Nothing held; EN-x-1 runs on; the WARN window is li
 10:33Z; S31 held in practice (the ten-path overlap was a false contention, tested at the drain); S32 corrects COO~G's
 own armed count from 26 filed to 14 open -- the filed count is not the live one, and `hazard_standing` is frozen by
 the append-only rule, so the live figure is read from the remediation carrier's `disarm.state`.
+
+**CORRECTION (~11:3xZ, COO~G 97348, row LGIC_ENFORCE-S33): the figure this seat accepted above as "the right read" was
+wrong again, and this seat accepted it without enumerating the carriers.** There are FOUR carriers that can close an
+armed row, not two: the remediation carrier's structured `disarm` block (8), a disarm ROW filed this session (4), the
+task order's own `<status>` note (1 -- never consulted before), and another row's `adjudicates` list (10). And the
+fourth carrier's PRESENCE is not a closure: of its ten, six are DISMISSED_WITH_REASON and closed, four are GRADUATED
+into a remediation row whose own `disarm` still reads ARMED -- **GRADUATED is a transfer, not an ending.** Live open
+count: **8** (four still-armed graduates plus S21, W1-S23, W1-S24, W5-S6 that no carrier disposes). The sequence is the
+finding: 26 on one carrier, 14 on two, 4 on four, 8 once each carrier's VERDICT is read rather than its presence --
+and S32 was filed AS a correction and was itself out by two. **The durable rule, adopted for this seat's round
+analyses: when an item can be closed by several documents, ENUMERATE THE CARRIERS FIRST, then read each one's
+VERDICT; a carrier's presence certifies nothing.** COO~G does not claim four is the complete set; the last three
+passes each found one more. This seat's own R-3 addendum on W8-S1 read only the remediation carrier and stands only
+because that row has one carrier by construction.
