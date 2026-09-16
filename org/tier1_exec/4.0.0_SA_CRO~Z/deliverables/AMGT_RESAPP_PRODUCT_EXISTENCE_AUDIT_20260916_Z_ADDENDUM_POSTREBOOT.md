@@ -205,6 +205,25 @@ becomes a push whose result is `git ls-remote` on `origin/DEV`. Nothing is measu
 served plane after the runs and the push land, on its own instruments, and records the numbers then. No act by this
 seat on the word itself; the record is the CTO's.
 
+## 3f. ADDENDUM 19:4xZ -- CARD 3 EXECUTED: the page is on `origin/DEV`; CARD 1 not yet landed; the SITEZ push is done
+
+Measured on this seat's own instruments at 19:4xZ, after `0.0.0_AB_MSTR~Z` executed items 3 and 4 of the word:
+
+| what | value |
+|---|---|
+| portal `DEV` local = `origin/DEV` = `git ls-remote` | **`2453a7b4`** (was `be8cf218`); a pure fast-forward (origin/DEV is an ancestor, 0 local-ahead) |
+| page on DEV | **47 of 47** files under `src/pages/SecurityAnalysis`, **3** route lines in `App.tsx` (was 0 / 0 since the audit) |
+| superproject gitlink `HEAD:portal` | still `be8cf218` (` M portal` in the shared tree) -- the gitlink update follows under `0.0.0_AB_MSTR~Z`'s own mechanics, per 23475 |
+| workspace `SITEZ` | `origin/SITEZ` = local HEAD `6f46ed0703` by ls-remote -- **this record's push state is now ON ORIGIN**, and every hash cited above `6f46ed0703` resolves on origin |
+| `derived/model_block/` | 14 objects, 4 keys, newest 2026-09-11 -- **CARD 1's pull has not landed yet** |
+| adapter | unchanged at `x3KrEBvZ` (17:23Z); `/posture` 404, `/print` 500 unchanged (rk-8 completed @`128d2ad67d` without a redeploy; rk-6's is authorized by both co-sign halves and pending) |
+
+**Read against s.3b:** G1's DURABILITY half is closed -- the frontend exists on origin, CI-validated by the repo's own
+workflow on that push, on more than one disk. G1's EXISTENCE half is unchanged by construction (a DEV push serves
+nothing, s.3b correction) and closes on the ruled class: a CAPTURED render of the built page against the deployed
+adapter (msg 23459). Round 12 at 10 of 16 terminal (rk-8, rk-13 joined), no slug. Next re-read: when the 33-name
+pull lands in `derived/model_block/` (the population half of G2) and when rk-6's print redeploy lands (G3).
+
 ## 4. INSTRUMENTS AND VINTAGES
 
 | instrument | observes | vintage |
