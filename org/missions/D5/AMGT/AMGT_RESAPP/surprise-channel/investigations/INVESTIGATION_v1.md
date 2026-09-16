@@ -6653,6 +6653,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "Worker-face preamble: 'Your first act prints git rev-parse --abbrev-ref HEAD and tests that org/, .tools/ and the paths in section 3 exist; if any is absent, STOP with a BLOCKING row.'",
     "world_is": "2 of the 8 <paths> lines (lib/research/universe/, lib/research/scores/) are absent and have never existed in this repo; the other 6 are present. This cell's DELIVER does not require either absent path, so the run proceeded rather than treating the mismatch as a tree-integrity BLOCKING row -- the general worker bar's own language distinguishes 'the worktree does not carry the paths the task order names' (a broken/incomplete checkout, tested by org/ and .tools/ at the top) from a per-grant write surface that may legitimately be provisioned for work never exercised.",
     "notes": "Not treated as BLOCKING: this is a write-grant surface (RULING 1: 'A SURFACE NOT NAMED IN <paths> IS A WALL... A READ needs no grant; this block governs WRITES'), no criterion in section 5 needs either path, and the substantive work this order names was already built and committed at 0a5064ded5 entirely inside the paths that DO exist. Recorded per the surprise-channel imperative (append and keep working) rather than halting the order."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W26-S4",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~26",
+    "surfaced_at": "2026-09-16T14:49:50Z",
+    "one_line": "AC3 as RE-CUT in ISSUER AMENDMENT 4 is confirmed REFUSED as written, independently re-run by this worker: the deployed route now parses correctly (200, top-level rows/row_count/ranking_status, no axes sub-object) and the chatter CONTROL reads SERVED with 10 rows, but the price axis reads ranking_status ABSENT, row_count 0, reason 'no generation pointer at TRENDING_PRICE#2026-09-16 / _CURRENT', because the only committed price generation in the store is dated 2026-09-10 and a fresh generation for today needs a live Bloomberg pull this cell cannot make.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AC3's literal invocation as re-cut, run under timeout 120 at ~14:4xZ, rc 0: price 'http 200 ranking_status ABSENT rows 0 row_count 0 as_of_date 2026-09-16 generation_id None'; price_reason \"no generation pointer at TRENDING_PRICE#2026-09-16 / _CURRENT: no committed ranking exists for this date -- this is not an empty membership\"; price_rows_with_security_key 0; chatter_CONTROL 'http 200 ranking_status SERVED rows 10 generation_id 20260916T100027Z-efd7e544dd59' -- the control is nonzero, so the instrument is proven live and the price ABSENT is a real measurement, not an artifact of a broken probe.",
+        "AC1's own live scan (same worker, same run) finds exactly ONE price generation in the store, TRENDING_PRICE#2026-09-10#20260916T065448Z-9b7ffda3dcdc (32 rows) -- no TRENDING_PRICE partition dated 2026-09-15 or 2026-09-16 exists anywhere in opal-harvest-security-metrics (13 distinct axis_date values scanned, full list read).",
+        "This is the SAME state 2.0.0_SA_COO~Z measured and recorded at AMGT_RESAPP-Z-S118/S119 (issuer, same commit as this order's ISSUER AMENDMENT 4): identical statusCode, identical ranking_status/reason strings, identical chatter generation_id. This row is the worker's own confirming re-run against the criterion as it now stands, not a new defect."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "This order's AC3 <expect>, ISSUER AMENDMENT 4 text: 'price http 200, ranking_status SERVED, rows NONZERO ... A price axis that still returns 0 rows on the served route is NOT met even if a generation exists in the store.' The REFUSAL CLAUSE: 'a criterion you cannot satisfy AS WRITTEN is REFUSED with its measurement and a row; never repaired, widened, or satisfied by a route this order did not name.'",
+    "world_is": "The price axis returns 0 rows on the served route for today's date because no price generation has ever been written for 2026-09-10 forward: the estate's only real price observations are the six-day-vintage legacy PRICE#2026-09-10 partition. Producing an honest generation for 2026-09-16 requires a live Bloomberg pull, which runs only on the terminal box (PRD s.3b C-PRICE-RANKING-BOXSIDE), was measured UNREACHABLE from this worktree (127.0.0.1:8194 connection refused, per AMGT_RESAPP-Z-W26-S1's grounding), and whose puller (integrations/bloomberg/research/price_axis_pull.py) sits outside this order's <paths>. This order's own BOUNDS state 'No vendor call beyond what this order names, and availability is never authorization,' and this order names none. AC3 is therefore recorded FAIL exactly as invoked; AC1 and AC2 (which do not require today's date) both PASS, proving the generation-writer mechanism itself is sound.",
+    "notes": "Disarm AMGT_RESAPP-Z-W18-S11 stands as filed at AMGT_RESAPP-Z-W26-S1: the pointer-writing gap that row named is closed. This row states the SEPARATE, disclosed live-data-cadence gap (no generation newer than 2026-09-10) that AC3/AC4 measure and that closing requires a live vendor pull outside this cell's scope -- the same distinction W26-S1 already drew. No action taken beyond recording; order AMGT-rk-3 stays OPEN with AC3 FAIL, per this worker's own instructions."
   }
 ]
 ```
