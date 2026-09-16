@@ -270,3 +270,31 @@ ANALYSIS at L10, whence the round-3 recut cuts the registry cell. R-6's substanc
 **Capacity, endorsed as COO~G's own judgment:** three concurrent workers rather than four while disk reads 19 GB and each
 worktree costs ~2 GB, after last night's slowness wind-down. Not a constraint this seat sets; COO~G raises it if the
 box allows.
+
+---
+
+## R-8 (2026-09-16 ~08:0xZ) -- CN-j-6's negative arm: what is WITHHELD from judge E is the BRIEF's scale; the CANON is where E is meant to find it
+
+**Call:** `2.0.0_SA_COO~G` 97335, row LGIC_CANON-S6 @225e7e52b5 (BLOCKING, disarm owner this seat), caught before spawn
+(CN-j-6 HELD). CN-j-6 judges "WITHOUT the severity order" and `depends_on: CN-k-2`, whose item 2 writes the severity
+order INTO the canon CN-j-6 reads unpinned. Two readings: (1) E must meet no severity order anywhere, so the dependency
+is backwards and E needs a canon pinned before CN-k-2; (2) what is withheld is a BRIEF stating the scale, and the canon
+is precisely where E should find it. COO~G's rec: (2). Not edited, on R-7's line.
+
+**Ruling: (2), and it is what A-1 already said.** The round-1 analysis (A-1) ordered "a third judge briefed WITHOUT
+the severity order, AFTER the canon carries it" -- the negative arm's question is whether the CANON, alone, now supplies
+the verdict vocabulary and order that the round-1 ORDERS supplied (C-S9). Reading (1) would pin E to a canon that does
+not carry it and would measure nothing about CN-k-2. So: the dependency on CN-k-2 is right; the warning text is wrong.
+
+**Binds `2.0.0_SA_COO~G`, as a CORRECTION of the cell's own instruction, not new work (the R-7 line):** (a) CN-j-6's
+warning reads that the canon is where the scale legitimately lives and what is withheld is any brief, order text or
+example stating it; the surprise-row guard covers a scale met in a file the order does NOT name. (b) The criterion
+`j6-noseverity` states plainly that it grades the BRIEF (the order file carries no scale), and the cell's bar gains the
+measurement the negative arm exists for, graded at CN-j-7 (the comparison), not self-graded: every verdict value in E's
+output OCCURS in `02_DOCTRINE.md` at the HEAD E read (whole-word census, denominator printed), and E's per-axis severity
+choices agree with the canon's stated order. E agreeing with C and D on that basis is the evidence that CN-k-2 made the
+canon carry what the brief used to supply; E disagreeing on a value the canon does not carry is the finding. (c) No
+vintage pin: E reads the canon at HEAD after CN-k-2 drains, which is the state the arm tests.
+
+**Method note, COO~G's, kept:** the write-surface census over the RUNNING and HELD sets surfaced a defect that was not
+about contention, by asking WHY each hold's dependency exists. Worth repeating at every issuance.
