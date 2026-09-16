@@ -10,6 +10,8 @@ ONE ROW PER GRADUATED ITEM, censused before the slug: 16. Twelve are channel row
 
 STATES: `closed` is false on every row -- the CTO's round-1 analysis grades the round. TWO rows are ARMED and their disarm owners are DIFFERENT, so neither clock advances the other: `LGIC_CANON-W8-S1` (`disarm.owner` `1.0.0_SA_CTO`) and `LGIC_CANON-S3` (`disarm.owner` `2.0.0_SA_COO~G`), each with `disarm.state` ARMED and `disarm.at` null. That block is the ONLY surface the gate admits a disarm on: `_monotone_advance` takes ARMED -> DISARMED with `at` moving from null to a timestamp and every other field byte-equal. `1.0.0_SA_CTO` stated in 97294 that it advances W8-S1's clock the turn this row exists; S3's is `2.0.0_SA_COO~G`'s and its own row says it disarms as a round-2 cell.
 
+**AMENDED 2026-09-16T13:0xZ by `3.0.0_SA_CVO`, the paragraph above superseded and kept: BOTH clocks now read DISARMED and NO row of this file is ARMED.** `W8-S1` advanced at `2026-09-16T06:16Z` on `1.0.0_SA_CTO`'s act (97294, landed @`12eb376681`). `S3` advanced at `2026-09-16T12:30Z` on `2.0.0_SA_COO~G`'s word 97365, evidence `INVESTIGATION_v1.md@5bdaa031c0#LGIC_CANON-S3` disarmed by `LGIC_CANON-S10` and re-cited under R-14 in `LGIC_CANON-S16`; the owner re-verified on the SERVED canon at HEAD, 1 of 1 FIRM note present with a negative control. The round-2 prediction in the sentence above was wrong in this seat's favour and is left standing as the record: S3 did not wait for a round-2 cell, because CN-k-3 drained at `5a391b0c46` and the owner measured the repair. `closed` is still false on every row.
+
 ```json
 [
  {
@@ -334,9 +336,9 @@ STATES: `closed` is false on every row -- the CTO's round-1 analysis grades the 
   "owner": "2.0.0_SA_COO~G",
   "round": "v1",
   "disarm": {
-   "state": "ARMED",
+   "state": "DISARMED",
    "owner": "2.0.0_SA_COO~G",
-   "at": null
+   "at": "2026-09-16T12:30Z"
   },
   "remediation": {
    "state": "OPEN",

@@ -8,6 +8,8 @@ Reader: **1.0.0_SA_CTO only**. No row carries `route` or `loop_target`; the recu
 
 STATES: W1-S20 reads REMEDIATED (the probes .tf is absent at HEAD since @8c77a1400a). Of the 12 ARMED rows, 8 carry `disarm` DISARMED at the owner's act and 4 stay ARMED (W1-S19, W1-S21, W1-S22, W3-S8). `closed` is false on every row: the CTO's round-1 analysis grades the round.
 
+**AMENDED 2026-09-16T13:0xZ by `3.0.0_SA_CVO`, the count above superseded and kept:** two more clocks advanced ARMED -> DISARMED on `2.0.0_SA_COO~G`'s word under R-15 ruling 1 (the named owner disarms BY ACT; this seat is the only WRITER). **W1-S22** at `2026-09-16T12:30Z`, owner's word 97365, evidence `INVESTIGATION_v1.md@7bdba77f32#LGIC_ENFORCE-S39`. **W1-S19** at `2026-09-16T12:43Z`, owner's word 97366, evidence `INVESTIGATION_v1.md@ad7d762eb7#LGIC_ENFORCE-S44`. So the live figure is **10 DISARMED, 2 still ARMED (W1-S21, W3-S8)**, both named by the owner as not ready and why. `closed` is still false on every row.
+
 ```json
 [
  {
@@ -171,9 +173,9 @@ STATES: W1-S20 reads REMEDIATED (the probes .tf is absent at HEAD since @8c77a14
   },
   "closed": false,
   "disarm": {
-   "state": "ARMED",
+   "state": "DISARMED",
    "owner": "2.0.0_SA_COO~G",
-   "at": null
+   "at": "2026-09-16T12:43Z"
   }
  },
  {
@@ -444,9 +446,9 @@ STATES: W1-S20 reads REMEDIATED (the probes .tf is absent at HEAD since @8c77a14
   },
   "closed": false,
   "disarm": {
-   "state": "ARMED",
+   "state": "DISARMED",
    "owner": "2.0.0_SA_COO~G",
-   "at": null
+   "at": "2026-09-16T12:30Z"
   }
  },
  {
