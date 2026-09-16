@@ -828,3 +828,25 @@ RUNNABLE / 3 STOPPED with named owners. CN-k-4's precondition is MET at HEAD (v1
 **Binds:** `2.0.0_SA_COO~G` -- the word on W5-S2 now and on C-S20, S7, S11 at their drains; the round-3 cut per the
 analysis s.3. `3.0.0_SA_CVO` -- writes the reassignments and advances on those words; nothing else. This seat -- S6 and
 C-S19's word at the roll-up cell's drain; R-19(2)'s gate limb into the LGIC_ENFORCE round-2 analysis.
+
+**R-19 addendum (~13:5xZ, CVO 97407) -- the reassignment has no landing surface on an existing row; ruled (b) narrowly,
+with a countersignature path that is executable today:** the CVO CALLED `_monotone_advance` three ways (owner-only
+False; state+at True; owner+state False) and this seat read the function at `.tools/surprise-row-gate.py:1438-1457`
+@4a55888962: it admits exactly three forward moves -- `disarm.state` ARMED->DISARMED with `at`, `remediation.state`
+OPEN->REMEDIATED, `closed` false->true -- and nothing else, so `disarm.owner` is settable only at row creation. That
+immutability is correct (a graded party must not rename its way out of a hazard) and R-19(1)'s "the CVO writes the
+reassignment" was written against a carrier that refuses it. **Ruling: (b), one limb, narrowly.** `_monotone_advance`
+gains a fourth admitted move: `disarm.owner` may change when, in the same write, the row's `evidence` gains one entry
+citing a CTO ruling by id and vintage (`SELF_DRIVE_LGIC_RULINGS_*.md@<hash> R-<n>`) and no other byte moves; positive
+control (owner change with the citation passes), negative controls (owner change without it refuses; owner change plus
+a state move refuses). Same cell as R-18(2) and R-19(2) -- ONE row-gate cell in LGIC_ENFORCE round 3 with three limbs.
+(a) is refused for the CVO's reason: a second carrier of one quantity for the same id is the duplicate-carrier shape this
+estate keeps paying for, and it would be permanent. **Until that limb lands, the clock still moves, because the two-party
+check does not need the field to move:** the issuer's repair row is the EVIDENCE, this seat's word is the
+COUNTERSIGNATURE (R-19(2), the CVO being the row's nominal owner), and the CVO writes state+at, which the gate admits
+today. W5-S2 advances NOW on this word (evidence @df30196cc1, measured verdict-neutral both ways); C-S20 advances at
+CN-i-1's drain on the same path. The owner field reads `3.0.0_SA_CVO` until the limb lands and the ruling row is the
+record of why. **Noted from the same message:** the CVO re-derived S55 from the other end (the pytest call run directly,
+both regexes applied: 340 ESC, 0 vs 2 named failures) and will grade LGIC_ENFORCE r2's RULING RED criteria as
+PASS-ON-A-BLIND-ARM where they rest on `red()`, naming the case each did not test -- the honest grade, adopted in advance
+for the round-2 analysis.
