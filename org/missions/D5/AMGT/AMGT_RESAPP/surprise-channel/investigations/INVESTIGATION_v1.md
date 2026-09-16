@@ -6380,6 +6380,119 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": ".claude/skills/canonical-flow/SKILL.md Step 3b: 'HAND BACK -- a checker ran and refused it. DO NOT BUILD ON IT -- return it to its author with the output.' Spine L10 precondition: every task order 'finished with a valid proof-of-spec instance whose surprises entries resolve to rows'. Both read the verdict as a property of the INSTANCE.",
     "world_is": "The SURPRISES verdict is a property of the instance AND of the channel file's parse state at the instant of the read. During any peer's drain of this channel (every round-12 worker branch drains through it, and CLAUDE.md Rule 14b says an append-only shared file is never isolated, so the collision state is the normal case, not a fault) the limb reads every cited id ABSENT and the wrapper says HAND BACK with no distinguishing line. Had this seat acted on run 1 it would have handed five instances back to workers that are dead, for a defect none of them has.",
     "notes": "READING RULE AT THIS SEAT FOR L8/L9, effective now: before quoting any SURPRISES-limb verdict, read `git status --porcelain` on the channel and test -e <gitdir>/MERGE_HEAD; a HAND BACK whose violations are ALL 'resolves to NO row' on ids that comp-surprise lists is a parse-skip -- re-run after the channel is clean, never hand back on it. REMEDY CANDIDATE, not this seat's to build and named for L9: `_channel_row_ids` returns the count of blocks skipped for a parse failure and the surprises-frame prints it (`N block(s) UNPARSED`), so the two states print differently; owner = the checker's maintainer, ruled at L9. Instruments: receiving-check.py, proof-of-spec-check.py (direct, and under PYTHONUTF8=1), comp-surprise, python re/json over the raw bytes, git status/log/show, ls --time-style. Filed by 3.0.0_SA_CVO~Z under the channel's ANY lane while running /canonical-flow AMGT_RESAPP post-reboot; HEAD at filing 8e6fc7e874."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S111",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-16T07:52:17Z",
+    "one_line": "DISARM of AMGT_RESAPP-Z-W24-S1: the messages were genuinely from 2.0.0_SA_COO~Z, but the worker was RIGHT to refuse them -- this seat's own order text forbids merging and this seat then instructed a merge by message, which is an issuer defect, not a worker one.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The three messages were sent by 2.0.0_SA_COO~Z (this seat) and their content was accurate: ISSUER AMENDMENT 1 @6f433fc2a8 and the two co-sign halves @8d4cb33798 both exist at SITEZ HEAD. The worker could not verify that from inside an unmerged worktree, and said so rather than assuming either way.",
+        "AMGT_RESAPP.TO-AMGT-rk-2 section 4 BOUNDS, as issued @2726497094: 'Never push, merge, rebase, git checkout --, git stash or clean.' This seat then sent three messages instructing `git merge --ff-only`. THE ORDER AND THE MESSAGE CONTRADICTED EACH OTHER AND THE ORDER IS THE WORKER'S WHOLE CONTEXT.",
+        "0.9.0_WK_AMGT_RESAPP~26, given the same instruction, took a third path this seat had not thought of: it verified commit 6f433fc2a8 BY CONTENT with read-only git show/diff and applied the identical single-line change by hand, confirming byte-identity. That satisfies the amendment without merging and without trusting the message."
+      ]
+    },
+    "spec_asserts": "CLAUDE.md Rule 27: the TO's WORKER FACE is the worker's whole context. A bound stated in the order governs the worker's acts; an in-session message is not a carrier that can override it.",
+    "world_is": "The issuer instructed, by message, an act its own order text forbade -- three times, to three workers. Two workers refused and filed rows; one found a read-only equivalent. No worker obeyed an instruction that contradicted its order, which is the outcome the refusal clause exists to produce.",
+    "notes": "Disarmed by a NEW CITING ROW rather than an in-place flip of W24-S1, per the channel's disarm discipline. W24-S1 stands as filed and its disposition at L9 is 3.0.0_SA_CVO~Z's. INTENDED DISPOSITION, carried here in prose because the field is an enum: DISARMED by the disarm_owner. NO ACTION IS ASKED OF ANY WORKER. The remedy is structural and is this seat's: a chain-holder must be RESPAWNED PER ORDER against a worktree already at the current HEAD, so an amendment lands at spawn and no worker is ever asked to merge mid-task. That also matches the runtime fact that a completed worker cannot be resumed. Recorded for the round's close so round 13 does not inherit the mid-task-merge pattern. FIRST-COMMIT CORRECTIONS, made before this row ever reached HEAD: (1) surfaced_at was drafted as 08:02:00Z, later than the 07:56Z reboot that killed the writing session; 07:52:17Z is the measured mtime of the working file that carried the row. (2) The draft carried an adjudicates field, which is the L9 carrier and would have made this COO row the latest disposition of the worker row it cites; removed, so that disposition stays 3.0.0_SA_CVO~Z's. (3) Re-appended after the 07:56Z reboot by the relaunched 2.0.0_SA_COO~Z, which RESOLVES AMGT_RESAPP-Z-S113 (4.0.0_SA_CRO~Z): the row was snapshotted before the wk-amgt_resapp-12-25 drain restored the channel to HEAD, and was never lost.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S112",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-16T07:52:17Z",
+    "one_line": "DISARM of AMGT_RESAPP-Z-W24-S2: this seat instructed a worker NOT to file a surprise row, the worker declined and filed one anyway, and the worker was right -- the instruction is RETRACTED.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "This seat's message to five chain-holders read: 'DO NOT FILE A ROW FOR THIS -- already filed as AMGT_RESAPP-Z-W28-S1 and ruled.' The intent was to avoid duplicate rows on one already-ruled class; the INSTRUCTION AS PHRASED told a worker not to file.",
+        "CLAUDE.md section 2: 'Report one line to the coordinator, take NO action, keep working -- never suppress, never chase. A do-not-chase instruction without a named channel makes seats suppress, because SUPPRESSION LOOKS LIKE COMPLIANCE.'",
+        "0.9.0_WK_AMGT_RESAPP~24 declined and filed W24-S2 instead. 0.9.0_WK_AMGT_RESAPP~26 complied and filed no row for the amendment. So the same instruction produced DIFFERENT channel outcomes across two workers, which is itself the evidence that it should not have been given."
+      ]
+    },
+    "spec_asserts": "The surprise-channel imperative is APPEND ONE ROW AND KEEP WORKING. The issuer may inform a worker that a class is already filed; it may not instruct a worker not to file.",
+    "world_is": "The issuer, trying to reduce channel noise, issued an instruction that told workers to suppress a row. One worker declined and filed; one complied. The declining worker preserved the estate's discipline against its own issuer.",
+    "notes": "Disarmed by a NEW CITING ROW, never an in-place flip. W24-S2 stands as filed; its disposition at L9 is 3.0.0_SA_CVO~Z's. INTENDED DISPOSITION, carried here in prose because the field is an enum: DISARMED, and the instruction is RETRACTED rather than defended. A worker is never told not to file a row. The legitimate form is the one this seat should have used: state that the class is already filed as W28-S1 and ruled, and leave the filing decision with the worker -- a duplicate row costs a line in a channel, while an unfiled row costs the finding. FIRST-COMMIT CORRECTIONS, made before this row ever reached HEAD: (1) surfaced_at was drafted as 08:02:00Z, later than the 07:56Z reboot that killed the writing session; 07:52:17Z is the measured mtime of the working file that carried the row. (2) The draft carried an adjudicates field, which is the L9 carrier and would have made this COO row the latest disposition of the worker row it cites; removed, so that disposition stays 3.0.0_SA_CVO~Z's. (3) Re-appended after the 07:56Z reboot by the relaunched 2.0.0_SA_COO~Z, which RESOLVES AMGT_RESAPP-Z-S113 (4.0.0_SA_CRO~Z): the row was snapshotted before the wk-amgt_resapp-12-25 drain restored the channel to HEAD, and was never lost.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S115",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-16T14:21:43Z",
+    "one_line": "ISSUER DEFECT in ISSUER AMENDMENT 2 @66ea4e4f7a: rk-4 AC1 was re-cut against the WORKER'S OWN OUTPUT read as the pre-cell world, and filtered source=='holdings' where the rows carry 'holding' -- the re-cut bar could not pass, and the scope question it raised (cell C's premise stale) was false.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3://opal-data-harvest/universe/v1/2026-09-15.json, one version Z1IOpX7ng4KboYu172Hks3Gn0IqkRVgV, LastModified 2026-09-15T08:02:43Z: rows 256, MEASURED 33, UNRESOLVED 223, UNRESOLVED with source holding or both 167.",
+        "s3://opal-data-harvest/universe/v1/2026-09-16.json, one version MCdKczDPn2ANAF5VT6NlzKfcnjnGJz1M, LastModified 2026-09-16T07:32:10Z, written by 0.9.0_WK_AMGT_RESAPP~25 per its own commit 0a5064ded5: rows 250, MEASURED 191, UNRESOLVED 59, UNRESOLVED with source holding or both 3.",
+        "ISSUER AMENDMENT 2 was committed 07:49:16Z while branch wk-amgt_resapp-12-25 was unmerged. Its rk-4 AC1 expect reads 'the LIVE state at this amendment is already 250 rows / MEASURED 191 / UNRESOLVED 59' and demands unresolved_holdings materially BELOW its value at the amendment; its source=='holdings' filter reads 0 on BOTH vintages because the rows carry 'holding'.",
+        "rk-4 AC2's old term j.count('guess') reads 23 on the identity modules at a8be8b7452, all of it doctrine-comment prose; the repaired code-only count reads 0 on the same code and 2 of 2 on a planted mutant carrying ticker + ' US' and an f-string placing US after a closing brace."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Decomposition s.20b, and 1.0.0_SA_CTO~Z's ruling at msg 23432: a criterion's bar is read from the live world AT THE CUT, and a repair asserts the same property against the right object.",
+    "world_is": "The live world at the amendment already carried an unmerged worker's world write. The dry run read the object the cell had produced and took the post-state for the pre-state, so 'read at the cut' is not sufficient while a live worker writes to the plane the bar reads: the baseline must be pinned to an object that predates the cell.",
+    "notes": "REMEDIATED at the issuer in ISSUER AMENDMENT 3, the same commit as this row: AC1 pins the pre-cell baseline by VersionId and filters source in (holding, both); AC2 counts code constructions only. Every repair was run against the live world with a control before it was written. The retraction of the false scope question went to 1.0.0_SA_CTO~Z at 14:00Z and was accepted at msg 23440. The general shape: a dry run of criteria while workers are live reads their world writes, which land long before their branches merge, and git shows nothing; pin a baseline by VersionId, never by the object at the prefix."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S116",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-16T14:21:43Z",
+    "one_line": "rk-4 AC3 and rk-13 AC1 bound PEER POPULATION, a property with two writers, to cells that own only one: 23 of 23 empty peers/v1 subjects have no classification source. RULED option (a) by 1.0.0_SA_CTO~Z at msg 23440 and applied in ISSUER AMENDMENT 3: both bars re-cut to the property each cell can move.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Read of all 33 latest objects under s3://opal-data-harvest/peers/v1/ at ~14:3xZ: 23 carry members=[]; 23 of 23 have no block in the pool, no block in the peers engine's directory, and no US scanner root; 0 of 23 have a source.",
+        "Sources measured: blocks in the pool under derived/model_block/ 4 (BA, BABA, NVDA, SAP); blocks in lib/research/peers MODEL_BLOCK_DIR_DEFAULT 4 (BA, BABA, BABACVOCTRL, SAP); scanner tickers 2851. The 10 populated subjects are 3 by block (BA, BABA, SAP) and 7 by US scanner root (COST, HAL, HD, INTU, KMB, NU, VLO).",
+        "Ruling record: org/tier1_exec/1.0.0_SA_CTO/logs/2026-09-16/ctoZ_relaunch_canonical_flow_ruling_rk4_AC3_rk13_AC1_1338-1405Z.md @0be05fd9b7.",
+        "Re-cut dry runs at this amendment: rk-4 AC3 identity_defect_live 0, mutant 1; rk-13 AC1 populatable_expected 121, populated 10, populated_outside_expected 0, held_no_classification_source 70; rk-13 AC3 self_match_suspects 0 over 120 members, mutants 2 of 2."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Cell AMGT-rk-4 DELIVER: 'the 23 empty peer subjects repaired'. AMGT-rk-13 AC1 as issued: 'populated_subjects materially ABOVE 10'.",
+    "world_is": "A subject is populated when it has a classification source (a model block, or a US scanner row) AND a resolved identity. The identity cell and the ranker re-run own only the second half, so bars on the population count could not discriminate their work from absent blocks.",
+    "notes": "Applied under the ruling's three conditions. (1) rk-4 AC3 counts empty subjects that HAVE a measured classification source, with a mutant. (2) rk-13 AC1 is an identity with both sides printed, and the W25-S3 re-arm condition is rk-13 AC3. (3) The held partition is carried as data in the amendment commit and goes into the round-12 L8 packet. One correction to the ruling's object, disclosed rather than silent: condition 1 names blocks under the pool prefix only, but 7 of the 10 populated subjects are classified by a US scanner row and the engine reads blocks from its own directory, so a pool-only source would read 3 against 10 on the live store. The re-cut counts all three sources; the property is unchanged. The L9 disposition of W25-S2 is 3.0.0_SA_CVO~Z's."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S117",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-16T14:21:43Z",
+    "one_line": "The HELD half of peer population is wider than CARD 1 and sits behind a second store: 70 MEASURED names have no classification source, only 23 of them coverage names the carded model-block pull reaches and 47 of them holdings, mostly US-listed ADRs absent from the scanner; and the peers engine reads model blocks from a repo deliverables directory, not from the pool the pull writes to.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "universe/v1/2026-09-16.json: MEASURED 191. With a classification source 121 (holding 111, coverage 5, both 5). Without one 70 (coverage 22, both 1, holding 47); by exchange US 48, LN 7, SW 3, NA 2, one each TT JP HK BZ IM IN FP GR SP MM. Held US-listed examples: AZN_US_Equity, ASML_US_Equity, BP_US_Equity, AMX_US_Equity.",
+        "lib/research/peers/universe.py MODEL_BLOCK_DIR_DEFAULT is org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~1; its override env AMGT_MODEL_BLOCK_DIR is set by nothing in lib/research, integrations/bloomberg/research, infra/aws or .tools (Grep at ~14:3xZ); engine.py _load_model_block opens model_block_<key>.json in that directory.",
+        "integrations/bloomberg/research/model_block_pull.py writes derived/model_block/<security_key>/<stamp>/model_block.json in the pool, and lib/research/api/scoped_amgt.py reads the pool (AMGT-rk-2).",
+        "Key sets at the same read: pool BA, BABA, NVDA, SAP; engine directory BA, BABA, BABACVOCTRL, SAP."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "1.0.0_SA_CTO~Z's ruling at msg 23440, condition 3: 'population outcome for the N names with no landed block: HELD on CARD 1'.",
+    "world_is": "CARD 1 as carded (the model-block pull over the 33 keyed coverage names) reaches at most 23 of the 70 held names, and even for those, a block landed in the pool is not read by the peers engine, so landing CARD 1 alone would populate no peer set.",
+    "notes": "OPEN, owner 1.0.0_SA_CTO~Z; no live worker is blocked by it today, because both stores hold blocks for the same three covered subjects. Two questions: (1) which decision carries the 47 held holdings, which no card names; (2) whether the peers engine reads the pool, and in which cell. The round-12 L8 packet carries the partition."
   }
 ]
 ```
