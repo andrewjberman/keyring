@@ -1681,6 +1681,28 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "Provision the two ExternalIds and the alias-key secret (JSON shape of OG-z-3), give the Gateway a read grant on the alias-key secret, and add exactly one statement to the Gateway role; no value in a committed file.",
     "world_is": "An ExternalId cannot be kept out of Terraform state, because each trust policy Terraform writes carries it. So generating it there adds no new copy. The estate convention keeps a real secret VALUE out of state, so the alias key (32 bytes from secrets.token_bytes, base64, under current_version v1) is written once by og_i2_act.py put-alias-key after the apply. That command refuses if the secret already holds a version, and it records the version id and the read-back shape, never the value. Identity-policy grants on the two secrets would add a second and third statement to opal-gateway-role, so each secret carries its own resource policy, principal opal-gateway-role, secretsmanager:GetSecretValue only.",
     "notes": "INERT and FORM ONLY. What a later cell inherits: the Gateway reads ExternalIds from opal/mcp/opal-gateway-schwab-reader-external-ids (fields data_read, catalog_read) and the key from opal/mcp/opal-gateway-schwab-account-ref-key. Rotating an ExternalId means tainting the version resource. Rotating the key means adding a version and moving current_version, which put-alias-key refuses to do. Both secrets carry prevent_destroy."
+  },
+  {
+    "id": "NFRA_OPLGTW-W1-S11",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~1",
+    "surfaced_at": "2026-09-16T18:35Z",
+    "one_line": "Row NFRA_OPLGTW-W1-S9 undercounts: the naming limb printed THREE REFUSE verdicts on OG-i-2's additions, not two. The third is the Gateway inline policy opal-gateway-assume-schwab-readers (-> gateway-assume-schwab-readers-policy). That name is this worker's choice, following the root's existing var.name-prefixed policy names, not a name the PRD fixes.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SAVED-PLAN RUN: naming-apply-gate.py --plan-json over the show -json of og_i2.plan.json, 2026-09-16T18:0xZ -- '(WARN window: 3 REFUSE verdict(s) did not block ...)', REFUSE on aws_iam_role.schwab_catalog_read, aws_iam_role.schwab_data_read and aws_iam_role_policy.gw_assume_schwab_readers. S9 was written from a first page of this output cut at 30 lines, which showed only the two roles.",
+        "APPLY RUN: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~1/evidence/og_i2/apply.log -- the in-run naming plan stage prints the same three REFUSE lines, and the apply proceeded (WARN mode), 'Apply complete! Resources: 10 added, 0 changed, 0 destroyed.'",
+        "CONVENTION: infra/aws/terraform/opal-gateway/taxsma_gateway_iam.tf and schwab_access_state.tf @5503d92f88 name their Gateway policies with the var.name prefix: '-assume-emp-roles' and '-access-state-runtime'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Row W1-S9's count of naming REFUSE verdicts on this cell's additions (two).",
+    "world_is": "There are three: the two C6 role names and the Gateway policy name. W1-S9 stands as filed, because rows are never edited, and this row carries the correct count. Under ENFORCE, a later apply of this root would stop on all three.",
+    "notes": "INERT and FORM ONLY. The policy name could conform without any spec change, unlike the two role names. It is left as applied because renaming an inline policy destroys and recreates it, which is outside this order's blast radius."
   }
 ]
 ```
