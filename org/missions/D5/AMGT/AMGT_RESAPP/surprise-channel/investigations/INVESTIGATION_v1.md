@@ -7052,6 +7052,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "AMGT-rk-6's AC2 asserts the deployed artifact carries matplotlib, pypdf and numpy, and its expect explicitly permits a layer as the carrier.",
     "world_is": "The invocation could only ever see the function's own zip, so the layer branch it permitted was unmeasurable by the instrument the criterion names; a correct layer-based fix would have graded as a failure.",
     "notes": "This is ISSUER AMENDMENT 11's defect with the sign flipped -- there a wrong object PASSED silently, here a right answer would have FAILED silently. The repair adds layer enumeration to the one invocation the grammar allows; no bar, grant, bound or cell text moves, and AC1, AC3, AC4 and AC5 are byte-identical. Recorded separately: the function's memory 512 MB, timeout 29 s and ephemeral 512 MB are small for matplotlib, and the note now says that raising any of them is a served-plane change belonging in the never-widen co-sign's blast radius with its own rollback value."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S133",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-16T18:57:18Z",
+    "one_line": "AMGT-rk-14's AC1 -- the clause guarding the cell's own one-end-repair failure mode -- barred four substring counts that ALREADY read nonzero at the cut (6, 6, 46, 45), so four of its five bars could not fail and the criterion was a FALSE GREEN. ISSUER AMENDMENT 13 re-cuts AC1 to the one property no other criterion on the order can see, the loader's retention being bounded by the presets rather than the scanner's 284-code width, and demotes the four counts to printed CONTEXT.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AC1 as issued, run whole by the issuer over a 12-module denominator: divz-codes-listed 6, pfoe-codes-listed 6, horizon-label 46, fx-basis 45, preset-bounded-retention 0. Four of the five bars were already met before any work was done; only preset-bounded-retention discriminated.",
+        "The counts are substring counts over concatenated source: DIVZ is nonzero because the preset KEY exists in lib/research/posture/fit.py, and trailing / NTM / fx / currency are nonzero because they occur in docstrings, comments and unrelated code across lib/research/peers/ and lib/research/scores/.",
+        "AMGT-rk-14's own cell text: 'A cell that fixes one end and passes its criterion is the failure mode here.' AC1 was the clause standing guard over that, and as written it would have passed with three of the four ends untouched.",
+        "AC2 dry-run whole at the same amendment and found SOUND and discriminating: preset-home lib/research/posture/fit.py, DIVZ declared 13 codes_named 7 unnamed_slots 6, PFOE declared 16 codes_named 0 unnamed_slots 16. AC3 bars all four ends on the SERVED peers/v1 data against member_rows. Neither AC2 nor AC3 can distinguish a loader that retains the preset codes from one that retains all 284 values.",
+        "The re-cut AC1 dry-run whole, rc=0: modules 12, peers-modules 6, preset-bounded-retention 0, CONTEXT-divz-token 6, CONTEXT-pfoe-token 6, CONTEXT-horizon-token 46, CONTEXT-fx-token 45. The one bar fails today, which is the correct pre-state."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT-rk-14's AC1 asserts that all FOUR ends of the fit appear in source -- codes named, values retained, horizons labelled, FX basis stated -- and bars each of the four as nonzero.",
+    "world_is": "Four of those four bars read nonzero at the cut before any repair, because they are substring counts over concatenated module source rather than measurements of the property. The criterion could not fail on them.",
+    "notes": "This is the third criterion defect of the same family found by issuer dry run today and the second where the defect was a SILENT PASS rather than a refusal: AMENDMENT 11 (rk-8's fifth route did not exist and both criteria passed on it) and AMENDMENT 12 (rk-6's AC2 permitted a layer its instrument could not see, the opposite sign). The four ends are NOT dropped -- they are graded on AC3's denominators, where they are measurable on served data. AC2, AC3 and AC4 are byte-identical; no grant, bound or cell text moves."
   }
 ]
 ```
