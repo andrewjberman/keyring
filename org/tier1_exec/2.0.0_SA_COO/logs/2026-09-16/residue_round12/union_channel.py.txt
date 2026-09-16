@@ -1,0 +1,42 @@
+"""Resolve an append collision on the AMGT_RESAPP investigation channel as a SEMANTIC UNION.
+
+result = HEAD's file + every row the branch appended to the merge base, in branch order.
+Refuses if either side is not a pure tail-append of the base, if a branch-new id already
+exists at HEAD, or if the union does not parse to exactly HEAD rows + branch-new rows.
+Usage: python union_channel.py <branch>   (run in the main worktree while the merge is OPEN)
+"""
+import json, re, subprocess, sys
+
+F = 'org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md'
+END = "  }\n]\n```\n"
+branch = sys.argv[1]
+
+def show(ref):
+    r = subprocess.run(['git', 'show', '%s:%s' % (ref, F)], capture_output=True)
+    assert r.returncode == 0, r.stderr
+    return r.stdout.decode('utf-8')
+
+def rows(t):
+    blocks = re.findall(r'```json\n(.*?)\n```', t, re.S)
+    assert len(blocks) == 1, 'expected one fenced block, got %d' % len(blocks)
+    return json.loads(blocks[0])
+
+mb = subprocess.run(['git', 'merge-base', 'HEAD', branch], capture_output=True, text=True).stdout.strip()
+base, ours, theirs = show(mb), show('HEAD'), show(branch)
+for n, t in (('base', base), ('ours', ours), ('theirs', theirs)):
+    assert t.endswith(END) and '\r' not in t, n
+stem = base[:-len(END)]
+assert ours.startswith(stem) and theirs.startswith(stem), 'a side is not a tail-append of the base'
+seg = theirs[len(base) - len(END):-len(END)]
+result = ours[:-len(END)] + seg + END
+rb, ro, rt, rr = rows(base), rows(ours), rows(theirs), rows(result)
+base_ids = set(x['id'] for x in rb)
+branch_new = [x['id'] for x in rt if x['id'] not in base_ids]
+assert not (set(branch_new) & set(x['id'] for x in ro)), 'branch-new id already at HEAD'
+assert [x['id'] for x in rr] == [x['id'] for x in ro] + branch_new, 'union order mismatch'
+assert len(set(x['id'] for x in rr)) == len(rr), 'duplicate ids'
+nonascii = lambda t: len(t.encode()) - len(t)
+open(F, 'w', encoding='utf-8', newline='').write(result)
+print('merge-base', mb[:10], '| rows base', len(rb), 'HEAD', len(ro), 'branch', len(rt), '-> union', len(rr))
+print('branch-new ids', branch_new)
+print('non-ASCII HEAD', nonascii(ours), 'union', nonascii(result), 'segment', nonascii(seg))

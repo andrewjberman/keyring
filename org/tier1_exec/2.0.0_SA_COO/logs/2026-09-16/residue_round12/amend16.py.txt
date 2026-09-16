@@ -1,0 +1,163 @@
+import json, re, sys, glob, datetime, os
+
+A = os.path.dirname(os.path.abspath(__file__))
+MODE = sys.argv[1] if len(sys.argv) > 1 else 'dry'
+PRJ = 'org/missions/D5/AMGT/AMGT_RESAPP/'
+INV = PRJ + 'surprise-channel/investigations/INVESTIGATION_v1.md'
+TO = glob.glob(PRJ + 'task-orders/AMGT_RESAPP.TO-AMGT-rk-15.*.md')
+assert len(TO) == 1, TO
+TO = TO[0]
+NOW = datetime.datetime.now(datetime.timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
+AM = "ISSUER AMENDMENT 16 (2026-09-16 ~20:1xZ, 2.0.0_SA_COO~Z, issuer)"
+
+mx = 0
+for f in glob.glob(PRJ + 'surprise-channel/*/*.md'):
+    for n in re.findall(r'AMGT_RESAPP-Z-S(\d+)\b', open(f, encoding='utf-8').read()):
+        mx = max(mx, int(n))
+R = 'AMGT_RESAPP-Z-S%d' % (mx + 1)
+print('max Z-S', mx, '-> minting', R)
+
+t = open(TO, encoding='utf-8', newline='').read()
+assert '\r' not in t and 'ISSUER AMENDMENT 16' not in t
+orig = t
+
+# ---- 1. AC2: demote the two bars that already pass; keep the one that discriminates -------------
+NEW_INV2 = ("cd portal && python -c \"import io,glob,os; fs=sorted(glob.glob('src/pages/SecurityAnalysis/**/*.tsx', recursive=True)); "
+            "B=dict((f, io.open(f,encoding='utf-8',errors='replace').read()) for f in fs); j=''.join(B.values()); "
+            "ch=[f for f in fs if 'ThesisDriverChart' in os.path.basename(f)]; cj=''.join(B[f] for f in ch); "
+            "print('components', len(fs)); print('chart-components', len(ch)); "
+            "print('absent-reason-rendered', j.count('absent_reason')); "
+            "print('CONTEXT-chart-points-refs', cj.count('.points')); "
+            "print('CONTEXT-driver-chart-refs', j.count('ThesisDriverChart')); "
+            "print('CONTEXT-series-name-refs', j.count('thesis_driver'))\"")
+
+NEW_EXP2 = ("components and chart-components printed as denominators, and absent-reason-rendered AT LEAST 1 -- the ONE bar on "
+            "this clause. ISSUER AMENDMENT 16 demoted the other two: driver-chart-refs and points-consumed were barred at least "
+            "1 each and ALREADY READ 8 and 7 on chain A's own portal branch before any work, because the chart COMPONENT IS "
+            "ALREADY BUILT and the page already reads the series by NAME. Worse, points-consumed summed thesis_driver with "
+            "driver.points, and driver.points reads 0 while thesis_driver reads 7, so the bar could not tell a page that reads "
+            "the POINTS from one that reads only the NAME -- which is the precise distinction its own expect demanded. Those "
+            "counts are retained as CONTEXT-*, PRINTED and NOT BARS, measured at the amendment on wk-amgt_resapp-12-23-portal "
+            "@2453a7b4: components 19, chart-components 1, absent-reason-rendered 0, CONTEXT-chart-points-refs 2, "
+            "CONTEXT-driver-chart-refs 8, CONTEXT-series-name-refs 7. The points half is now graded where it is REAL, on the "
+            "SERVED body, by AC4")
+
+m2 = re.search(r'(<criterion id="AC2"[^>]*><invocation>)(.*?)(</invocation><expect>)(.*?)(</expect></criterion>)', t, re.S)
+assert m2, 'AC2 not found'
+assert 'driver-chart-refs' in m2.group(2) and 'points-consumed' in m2.group(2)
+t = t[:m2.start(2)] + NEW_INV2 + t[m2.end(2):m2.start(4)] + NEW_EXP2 + t[m2.end(4):]
+
+# ---- 2. AC4: NEW, the served plane end to end ---------------------------------------------------
+NEW_INV4 = ("python -c \"import boto3,json; c=boto3.client('lambda'); "
+            "b=json.loads(c.invoke(FunctionName='opal-amgt-scoped-api', Payload=json.dumps({'rawPath':"
+            "'/api/scoped/amgt/security/BA_US_Equity/thesis','headers':{'x-firm-id':'bd'},"
+            "'requestContext':{'http':{'method':'GET'}}}).encode())['Payload'].read()); d=json.loads(b.get('body') or '{}'); "
+            "ch=d.get('thesis_driver_chart') or {}; pts=ch.get('points') or []; print('status', b.get('statusCode')); "
+            "print('driver_series', str(ch.get('driver_series'))[:80]); print('driver_unit', str(ch.get('driver_unit'))[:60]); "
+            "print('points_count', len(pts)); print('chart_status', ch.get('status')); "
+            "print('chart_reason', str(ch.get('reason'))[:120]); "
+            "print('first_point', json.dumps(pts[0])[:120] if pts else 'NONE')\"")
+
+NEW_EXP4 = ("status 200 and points_count NONZERO for BA_US_Equity on the DEPLOYED adapter, with driver_series, driver_unit, "
+            "chart_status, chart_reason and first_point all printed. THIS IS THE CELL'S OWN WARNING MADE MEASURABLE: the cell "
+            "says the criterion ASSERTS A NONZERO POINT COUNT ON A REAL NAME, never the presence of the field, and only the "
+            "served body can say that. Measured at the amendment: status 200, driver_series 'BCA commercial aircraft deliveries "
+            "(with 737 monthly production rate)', driver_unit 'aircraft delivered per year (and per month)', points_count 0, "
+            "chart_status ABSENT, chart_reason naming that the driver's series is not one of the model block's 19 fiscal series "
+            "by exact mnemonic or definition. SO THE NAME AND THE UNIT ALREADY SERVE AND THE POINTS DO NOT, which is the whole "
+            "cell in one reading. ISSUER AMENDMENT 16 ALSO PLACES THE `BA_US_Equity` PILOT RE-RUN HERE, per row "
+            "AMGT_RESAPP-Z-S127 and ANDREW-DIRECT 2026-09-16 ~19:2xZ which authorizes it: this clause cannot pass until BA's "
+            "filings document is regenerated UNDER YOUR OWN producer change, so the re-run is yours and AMGT-rk-18 is told not "
+            "to take it. ONE name, ONE re-run, no cadence. A points_count still 0 with an unchanged chart_reason is NOT met")
+
+m3 = re.search(r'<criterion id="AC3"[^>]*>.*?</criterion>', t, re.S)
+assert m3
+NEW_C4 = ('\n  <criterion id="AC4" cell_refs="AMGT-rk-15"><invocation>' + NEW_INV4 +
+          '</invocation><expect>' + NEW_EXP4 + '</expect></criterion>')
+t = t[:m3.end()] + NEW_C4 + t[m3.end():]
+
+NOTE = (
+"**%s -- AC2's TWO PAGE BARS ALREADY PASSED, AND THE ONE THAT MATTERED COULD NOT TELL THE POINTS FROM THE\n"
+"NAME. A NEW AC4 GRADES THE POINTS ON THE SERVED BODY, AND THE `BA_US_Equity` RE-RUN LANDS HERE.**\n"
+"- **THE DEFECT.** AC2 barred `driver-chart-refs` and `points-consumed` each at least 1. Measured on chain A's own\n"
+"  portal branch `wk-amgt_resapp-12-23-portal` @`2453a7b4`, BEFORE any work: **8 and 7.** The chart COMPONENT is\n"
+"  already built and the page already reads the series by NAME. **And `points-consumed` summed `thesis_driver` with\n"
+"  `driver.points`, where `driver.points` reads 0 and `thesis_driver` reads 7** -- so the bar could not distinguish\n"
+"  a page that reads the POINTS from one that reads only the NAME, which is the exact distinction its own expect\n"
+"  demanded (*\"A chart component that reads only the series NAME is NOT met\"*). Only `absent-reason-rendered`,\n"
+"  at 0, discriminated.\n"
+"- **THE REPAIR, in two halves.** AC2 keeps the ONE page bar that is real -- the classed reason must be RENDERED --\n"
+"  and demotes the rest to `CONTEXT-*`. **The points half moves to where it is actually true: the SERVED BODY.**\n"
+"- **AC4 IS NEW AND IT IS THE CELL IN ONE READING.** Measured at this amendment on the deployed adapter,\n"
+"  `GET /security/BA_US_Equity/thesis` 200: `thesis_driver_chart.driver_series` and `.driver_unit` **ALREADY SERVE**\n"
+"  (the BCA deliveries series, in aircraft per year), `points_count` **0**, `chart_status` **ABSENT**, and\n"
+"  `chart_reason` says the driver's series **is not one of the model block's 19 fiscal series by exact mnemonic or\n"
+"  definition.** The name and the unit are there; the numbers are not. That is FWD-18 exactly.\n"
+"- **AND THE `BA_US_Equity` PILOT RE-RUN IS PLACED HERE, NOT ON `AMGT-rk-18`.** Row `AMGT_RESAPP-Z-S127` asked which\n"
+"  order carries it; **ANDREW-DIRECT 2026-09-16 ~19:2xZ (\"Yes on all four, execute them.\") authorizes it**, and the\n"
+"  answer follows from AC4: the served points cannot change until BA's filings document is regenerated **under THIS\n"
+"  cell's own producer change**. Running it from `AMGT-rk-18` would spend the vendor call and produce the OLD shape,\n"
+"  so that order is explicitly told not to. **ONE name, ONE re-run, no cadence.**\n"
+"- **AC3 IS UNTOUCHED AND WAS DRY-RUN WHOLE AT THIS AMENDMENT, rc=0, discriminating:** `filings-modules 6`,\n"
+"  `points-emitted 0`, `units-emitted 0`, `absent-reason-emitted 0` -- all three bars fail today, which is the\n"
+"  correct pre-state for the producer half.\n"
+"- **NOTHING ELSE MOVES:** no grant path, no bound, no cell text. The grant already carries\n"
+"  `lib/research/filings/`, and the re-run's world write is `filings/v1/BA_US_Equity/`, which needs no repo grant.\n\n" % AM)
+
+assert not any(ord(c) > 127 for c in NOTE)
+assert t.count('<proof_of_spec>') == 1
+ai = t.index('<proof_of_spec>')
+t = t[:ai] + NOTE + t[ai:]
+
+def tags(s):
+    i, j = s.find('<proof_of_spec>'), s.find('</proof_of_spec>')
+    b = s[i:j]
+    return (len(re.findall(r'<criterion id="AC\d+"', b)), b.count('</criterion>'),
+            b.count('<invocation>'), b.count('</invocation>'), b.count('<expect>'), b.count('</expect>'))
+print('tags before', tags(orig), '-> after', tags(t))
+assert tags(orig) == (2, 2, 2, 2, 2, 2), tags(orig)
+assert tags(t) == (3, 3, 3, 3, 3, 3), tags(t)
+
+def crits(s):
+    return re.findall(r'<criterion id="(AC\d+)"[^>]*>(?:<invocation>(.*?)</invocation><expect>(.*?)</expect>)?', s, re.S)
+b4, af = crits(orig), crits(t)
+assert [c[0] for c in b4] == ['AC2', 'AC3'] and [c[0] for c in af] == ['AC2', 'AC3', 'AC4'], ([c[0] for c in b4], [c[0] for c in af])
+assert b4[1] == af[1], 'AC3 must be byte-identical'
+for name, s in (('AC2', af[0][1]), ('AC4', af[2][1])):
+    for bad in ('>=', chr(60), chr(96), '$'):
+        assert bad not in s, (name, bad)
+d_before = len(orig.encode()) - len(orig)
+d_after = len(t.encode()) - len(t)
+print('rk-15', len(orig.encode()), '->', len(t.encode()), '| non-ASCII delta', d_after - d_before)
+
+K = ['id', 'project', 'fabric', 'surfaced_by', 'surfaced_at', 'one_line', 'class', 'hazard_standing', 'grounding',
+     'disposition', 'spec_asserts', 'world_is', 'notes']
+row = dict(zip(K, [R, 'AMGT_RESAPP', 'site-z', '2.0.0_SA_COO~Z', NOW,
+    "AMGT-rk-15's AC2 barred driver-chart-refs and points-consumed at least 1 each, and both ALREADY READ 8 and 7 on chain A's portal branch because the chart component is built and the page reads the series by NAME; points-consumed summed thesis_driver (7) with driver.points (0), so it could not tell a page reading the POINTS from one reading only the NAME -- the exact distinction its expect demanded. ISSUER AMENDMENT 16 keeps the one real page bar, demotes the rest to CONTEXT, and adds AC4 grading points_count on the SERVED body, where the BA_US_Equity pilot re-run (S127) is also placed.",
+    'OBSERVATION', 'INERT',
+    {'status': 'GROUNDED', 'evidence': [
+        "AC2 as issued, computed on wk-amgt_resapp-12-23-portal @2453a7b4 through git show (the running chain-A worktree was not touched): components 19, driver-chart-refs 8, points-consumed 7, absent-reason-rendered 0. Split per token: ThesisDriverChart 8, thesis_driver 7, driver.points 0, and .points 5 of which 3 are in RankedChart.tsx, a different chart.",
+        "The deployed adapter, GET /api/scoped/amgt/security/BA_US_Equity/thesis, 200 at 203953 bytes: thesis_driver_chart carries driver_series 'BCA commercial aircraft deliveries (with 737 monthly production rate)' and driver_unit 'aircraft delivered per year (and per month)' but points is an EMPTY LIST, chart_status ABSENT, and chart_reason states the driver's series is not one of the model block's 19 fiscal series by exact mnemonic or definition.",
+        "So the NAME and the UNIT already serve and the POINTS do not, which is FWD-18's gap exactly, and it is visible only on the served body -- no page-source token count can see it.",
+        "AC3 dry-run whole at the same amendment, rc=0 and discriminating: filings-modules 6, points-emitted 0, units-emitted 0, absent-reason-emitted 0.",
+        "ANDREW-DIRECT 2026-09-16 ~19:2xZ, VERBATIM 'Yes on all four, execute them.' (record @0d780cf6f8) authorizes the one-name BA_US_Equity pilot re-run that row AMGT_RESAPP-Z-S127 asked the issuer to place."]},
+    'UNDER_INVESTIGATION',
+    "AMGT-rk-15's AC2 asserts the Thesis tab draws the driver as a NUMERIC SERIES and renders a classed reason where there is none, and its expect states that a component reading only the series NAME is NOT met.",
+    "Two of its three bars were already met before any work, and the bar meant to separate points from name summed a token that reads 0 with a token that reads 7, so it could not make that separation at all. The property is only decidable on the served body, where points_count reads 0 against a driver_series and driver_unit that already serve.",
+    "Sixth criterion defect found by issuer dry run today and the fourth SILENT PASS of the family (AMENDMENT 11 rk-8, 13 rk-14, 14 rk-12, and this one; AMENDMENT 12 was the opposite sign and 15 was a malformed block). The repair does not weaken the cell: the page keeps its one real bar and the points half moves to AC4 on the SERVED plane, which is strictly harder. The BA_US_Equity re-run lands on this order because the served points cannot move until BA's document is regenerated under THIS cell's producer change; AMGT-rk-18 carries an explicit instruction not to run it. AC3 is byte-identical; no grant, bound or cell text moves."]))
+
+chan = open(INV, encoding='utf-8', newline='').read()
+existing = json.loads(re.findall(r'```json\n(.*?)\n```', chan, re.S)[-1])
+assert R not in set(x['id'] for x in existing)
+END = "  }\n]\n```\n"
+assert chan.endswith(END) and '\r' not in chan
+body = '\n'.join('  ' + l for l in json.dumps(row, indent=2, ensure_ascii=True).split('\n'))
+out = chan[:-len(END)] + '  },\n' + body[:-3].rstrip('\n ') + '\n' + END
+parsed = json.loads(re.findall(r'```json\n(.*?)\n```', out, re.S)[-1])
+assert parsed[:-1] == existing and parsed[-1] == row
+print('channel rows', len(existing), '->', len(parsed))
+
+if MODE == 'write':
+    open(TO, 'w', encoding='utf-8', newline='').write(t)
+    open(INV, 'w', encoding='utf-8', newline='').write(out)
+    print('WRITTEN')

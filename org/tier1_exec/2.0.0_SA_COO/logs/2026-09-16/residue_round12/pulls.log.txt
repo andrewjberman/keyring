@@ -1,0 +1,120 @@
+START 2026-09-16T20:18:04.862365+00:00 crosswalk crosswalk/v1/2026-09-15.json records 89 keyed 33
+BATCH 1/11 pull rc=0 10s ['2317 TT Equity', '9433 JP Equity', '992 HK Equity']
+   | PULL: 2317 TT Equity -> raw stamp 20260916T201805Z (raw/bloomberg/2317_TT_Equity/20260916T201805Z/refdata.json, raw/bloomberg/2317_TT_Equity/20260916T201805Z/histdata.json)
+   | PULL: 9433 JP Equity -> raw stamp 20260916T201809Z (raw/bloomberg/9433_JP_Equity/20260916T201809Z/refdata.json, raw/bloomberg/9433_JP_Equity/20260916T201809Z/histdata.json)
+   | PULL: 992 HK Equity -> raw stamp 20260916T201811Z (raw/bloomberg/992_HK_Equity/20260916T201811Z/refdata.json, raw/bloomberg/992_HK_Equity/20260916T201811Z/histdata.json)
+   | PULL DONE: 3 of 3 securities landed raw
+BATCH 1/11 derive rc=0 2s ['2317 TT Equity', '9433 JP Equity', '992 HK Equity']
+   | DERIVE: 2317 TT Equity -> derived stamp 20260916T201816Z (10 FY rows, 205 figures, 0 unresolved)
+   | DERIVE: 9433 JP Equity -> derived stamp 20260916T201816Z (10 FY rows, 203 figures, 2 unresolved)
+   | DERIVE: 992 HK Equity -> derived stamp 20260916T201816Z (10 FY rows, 203 figures, 2 unresolved)
+   | DERIVE DONE: 3 of 3 securities derived
+BATCH 2/11 pull rc=0 10s ['ASML NA Equity', 'BABA US Equity', 'BA US Equity']
+   | PULL: ASML NA Equity -> raw stamp 20260916T201817Z (raw/bloomberg/ASML_NA_Equity/20260916T201817Z/refdata.json, raw/bloomberg/ASML_NA_Equity/20260916T201817Z/histdata.json)
+   | PULL: BABA US Equity -> raw stamp 20260916T201821Z (raw/bloomberg/BABA_US_Equity/20260916T201821Z/refdata.json, raw/bloomberg/BABA_US_Equity/20260916T201821Z/histdata.json)
+   | PULL: BA US Equity -> raw stamp 20260916T201824Z (raw/bloomberg/BA_US_Equity/20260916T201824Z/refdata.json, raw/bloomberg/BA_US_Equity/20260916T201824Z/histdata.json)
+   | PULL DONE: 3 of 3 securities landed raw
+BATCH 2/11 derive rc=0 2s ['ASML NA Equity', 'BABA US Equity', 'BA US Equity']
+   | DERIVE: ASML NA Equity -> derived stamp 20260916T201828Z (10 FY rows, 203 figures, 2 unresolved)
+   | DERIVE: BABA US Equity -> derived stamp 20260916T201828Z (10 FY rows, 196 figures, 2 unresolved)
+   | DERIVE: BA US Equity -> derived stamp 20260916T201828Z (10 FY rows, 179 figures, 1 unresolved)
+   | DERIVE DONE: 3 of 3 securities derived
+BATCH 3/11 pull rc=0 9s ['BBSE3 BZ Equity', 'BP/ LN Equity', 'COST US Equity']
+   | PULL: BBSE3 BZ Equity -> raw stamp 20260916T201829Z (raw/bloomberg/BBSE3_BZ_Equity/20260916T201829Z/refdata.json, raw/bloomberg/BBSE3_BZ_Equity/20260916T201829Z/histdata.json)
+   | PULL: BP/ LN Equity -> raw stamp 20260916T201833Z (raw/bloomberg/BP/_LN_Equity/20260916T201833Z/refdata.json, raw/bloomberg/BP/_LN_Equity/20260916T201833Z/histdata.json)
+   | PULL: COST US Equity -> raw stamp 20260916T201835Z (raw/bloomberg/COST_US_Equity/20260916T201835Z/refdata.json, raw/bloomberg/COST_US_Equity/20260916T201835Z/histdata.json)
+   | PULL DONE: 3 of 3 securities landed raw
+BATCH 3/11 derive rc=0 2s ['BBSE3 BZ Equity', 'BP/ LN Equity', 'COST US Equity']
+   | DERIVE: BBSE3 BZ Equity -> derived stamp 20260916T201840Z (10 FY rows, 193 figures, 1 unresolved)
+   | DERIVE: BP/ LN Equity -> derived stamp 20260916T201840Z (10 FY rows, 203 figures, 2 unresolved)
+   | DERIVE: COST US Equity -> derived stamp 20260916T201840Z (10 FY rows, 205 figures, 0 unresolved)
+   | DERIVE DONE: 3 of 3 securities derived
+BATCH 4/11 pull rc=0 10s ['ENEL IM Equity', 'HAL US Equity', 'HD US Equity']
+   | PULL: ENEL IM Equity -> raw stamp 20260916T201841Z (raw/bloomberg/ENEL_IM_Equity/20260916T201841Z/refdata.json, raw/bloomberg/ENEL_IM_Equity/20260916T201841Z/histdata.json)
+   | PULL: HAL US Equity -> raw stamp 20260916T201845Z (raw/bloomberg/HAL_US_Equity/20260916T201845Z/refdata.json, raw/bloomberg/HAL_US_Equity/20260916T201845Z/histdata.json)
+   | PULL: HD US Equity -> raw stamp 20260916T201847Z (raw/bloomberg/HD_US_Equity/20260916T201847Z/refdata.json, raw/bloomberg/HD_US_Equity/20260916T201847Z/histdata.json)
+   | PULL DONE: 3 of 3 securities landed raw
+BATCH 4/11 derive rc=0 2s ['ENEL IM Equity', 'HAL US Equity', 'HD US Equity']
+   | DERIVE: ENEL IM Equity -> derived stamp 20260916T201852Z (10 FY rows, 203 figures, 2 unresolved)
+   | DERIVE: HAL US Equity -> derived stamp 20260916T201852Z (10 FY rows, 205 figures, 0 unresolved)
+   | DERIVE: HD US Equity -> derived stamp 20260916T201852Z (10 FY rows, 199 figures, 0 unresolved)
+   | DERIVE DONE: 3 of 3 securities derived
+BATCH 5/11 pull rc=0 9s ['HSBA LN Equity', 'ICICIBC IN Equity', 'IMB LN Equity']
+   | PULL: HSBA LN Equity -> raw stamp 20260916T201853Z (raw/bloomberg/HSBA_LN_Equity/20260916T201853Z/refdata.json, raw/bloomberg/HSBA_LN_Equity/20260916T201853Z/histdata.json)
+   | PULL: ICICIBC IN Equity -> raw stamp 20260916T201856Z (raw/bloomberg/ICICIBC_IN_Equity/20260916T201856Z/refdata.json, raw/bloomberg/ICICIBC_IN_Equity/20260916T201856Z/histdata.json)
+   | PULL: IMB LN Equity -> raw stamp 20260916T201859Z (raw/bloomberg/IMB_LN_Equity/20260916T201859Z/refdata.json, raw/bloomberg/IMB_LN_Equity/20260916T201859Z/histdata.json)
+   | PULL DONE: 3 of 3 securities landed raw
+BATCH 5/11 derive rc=0 2s ['HSBA LN Equity', 'ICICIBC IN Equity', 'IMB LN Equity']
+   | DERIVE: HSBA LN Equity -> derived stamp 20260916T201903Z (10 FY rows, 152 figures, 3 unresolved)
+   | DERIVE: ICICIBC IN Equity -> derived stamp 20260916T201904Z (10 FY rows, 152 figures, 3 unresolved)
+   | DERIVE: IMB LN Equity -> derived stamp 20260916T201904Z (10 FY rows, 203 figures, 2 unresolved)
+   | DERIVE DONE: 3 of 3 securities derived
+BATCH 6/11 pull rc=0 9s ['INTU US Equity', 'KMB US Equity', 'KPN NA Equity']
+   | PULL: INTU US Equity -> raw stamp 20260916T201905Z (raw/bloomberg/INTU_US_Equity/20260916T201905Z/refdata.json, raw/bloomberg/INTU_US_Equity/20260916T201905Z/histdata.json)
+   | PULL: KMB US Equity -> raw stamp 20260916T201908Z (raw/bloomberg/KMB_US_Equity/20260916T201908Z/refdata.json, raw/bloomberg/KMB_US_Equity/20260916T201908Z/histdata.json)
+   | PULL: KPN NA Equity -> raw stamp 20260916T201910Z (raw/bloomberg/KPN_NA_Equity/20260916T201910Z/refdata.json, raw/bloomberg/KPN_NA_Equity/20260916T201910Z/histdata.json)
+   | PULL DONE: 3 of 3 securities landed raw
+BATCH 6/11 derive rc=0 2s ['INTU US Equity', 'KMB US Equity', 'KPN NA Equity']
+   | DERIVE: INTU US Equity -> derived stamp 20260916T201914Z (10 FY rows, 205 figures, 0 unresolved)
+   | DERIVE: KMB US Equity -> derived stamp 20260916T201915Z (10 FY rows, 198 figures, 0 unresolved)
+   | DERIVE: KPN NA Equity -> derived stamp 20260916T201915Z (10 FY rows, 203 figures, 2 unresolved)
+   | DERIVE DONE: 3 of 3 securities derived
+BATCH 7/11 pull rc=0 10s ['NG/ LN Equity', 'NOVN SW Equity', 'NU US Equity']
+   | PULL: NG/ LN Equity -> raw stamp 20260916T201916Z (raw/bloomberg/NG/_LN_Equity/20260916T201916Z/refdata.json, raw/bloomberg/NG/_LN_Equity/20260916T201916Z/histdata.json)
+   | PULL: NOVN SW Equity -> raw stamp 20260916T201920Z (raw/bloomberg/NOVN_SW_Equity/20260916T201920Z/refdata.json, raw/bloomberg/NOVN_SW_Equity/20260916T201920Z/histdata.json)
+   | PULL: NU US Equity -> raw stamp 20260916T201922Z (raw/bloomberg/NU_US_Equity/20260916T201922Z/refdata.json, raw/bloomberg/NU_US_Equity/20260916T201922Z/histdata.json)
+   | PULL DONE: 3 of 3 securities landed raw
+BATCH 7/11 derive rc=0 2s ['NG/ LN Equity', 'NOVN SW Equity', 'NU US Equity']
+   | DERIVE: NG/ LN Equity -> derived stamp 20260916T201927Z (10 FY rows, 203 figures, 2 unresolved)
+   | DERIVE: NOVN SW Equity -> derived stamp 20260916T201927Z (10 FY rows, 203 figures, 2 unresolved)
+   | DERIVE: NU US Equity -> derived stamp 20260916T201928Z (8 FY rows, 140 figures, 1 unresolved)
+   | DERIVE DONE: 3 of 3 securities derived
+BATCH 8/11 pull rc=0 10s ['PBR US Equity', 'RKT LN Equity', 'RMS FP Equity']
+   | PULL: PBR US Equity -> raw stamp 20260916T201929Z (raw/bloomberg/PBR_US_Equity/20260916T201929Z/refdata.json, raw/bloomberg/PBR_US_Equity/20260916T201929Z/histdata.json)
+   | PULL: RKT LN Equity -> raw stamp 20260916T201933Z (raw/bloomberg/RKT_LN_Equity/20260916T201933Z/refdata.json, raw/bloomberg/RKT_LN_Equity/20260916T201933Z/histdata.json)
+   | PULL: RMS FP Equity -> raw stamp 20260916T201936Z (raw/bloomberg/RMS_FP_Equity/20260916T201936Z/refdata.json, raw/bloomberg/RMS_FP_Equity/20260916T201936Z/histdata.json)
+   | PULL DONE: 3 of 3 securities landed raw
+BATCH 8/11 derive rc=0 2s ['PBR US Equity', 'RKT LN Equity', 'RMS FP Equity']
+   | DERIVE: PBR US Equity -> derived stamp 20260916T201940Z (10 FY rows, 129 figures, 2 unresolved)
+   | DERIVE: RKT LN Equity -> derived stamp 20260916T201940Z (10 FY rows, 205 figures, 0 unresolved)
+   | DERIVE: RMS FP Equity -> derived stamp 20260916T201941Z (10 FY rows, 203 figures, 2 unresolved)
+   | DERIVE DONE: 3 of 3 securities derived
+BATCH 9/11 pull rc=0 10s ['ROG SW Equity', 'RWE GR Equity', 'SAP GY Equity']
+   | PULL: ROG SW Equity -> raw stamp 20260916T201941Z (raw/bloomberg/ROG_SW_Equity/20260916T201941Z/refdata.json, raw/bloomberg/ROG_SW_Equity/20260916T201941Z/histdata.json)
+   | PULL: RWE GR Equity -> raw stamp 20260916T201945Z (raw/bloomberg/RWE_GR_Equity/20260916T201945Z/refdata.json, raw/bloomberg/RWE_GR_Equity/20260916T201945Z/histdata.json)
+   | PULL: SAP GY Equity -> raw stamp 20260916T201948Z (raw/bloomberg/SAP_GY_Equity/20260916T201948Z/refdata.json, raw/bloomberg/SAP_GY_Equity/20260916T201948Z/histdata.json)
+   | PULL DONE: 3 of 3 securities landed raw
+BATCH 9/11 derive rc=0 2s ['ROG SW Equity', 'RWE GR Equity', 'SAP GY Equity']
+   | DERIVE: ROG SW Equity -> derived stamp 20260916T201952Z (10 FY rows, 199 figures, 6 unresolved)
+   | DERIVE: RWE GR Equity -> derived stamp 20260916T201952Z (10 FY rows, 200 figures, 2 unresolved)
+   | DERIVE: SAP GY Equity -> derived stamp 20260916T201952Z (10 FY rows, 203 figures, 2 unresolved)
+   | DERIVE DONE: 3 of 3 securities derived
+BATCH 10/11 pull rc=0 10s ['SSE LN Equity', 'ST SP Equity', 'ULVR LN Equity']
+   | PULL: SSE LN Equity -> raw stamp 20260916T201953Z (raw/bloomberg/SSE_LN_Equity/20260916T201953Z/refdata.json, raw/bloomberg/SSE_LN_Equity/20260916T201953Z/histdata.json)
+   | PULL: ST SP Equity -> raw stamp 20260916T201957Z (raw/bloomberg/ST_SP_Equity/20260916T201957Z/refdata.json, raw/bloomberg/ST_SP_Equity/20260916T201957Z/histdata.json)
+   | PULL: ULVR LN Equity -> raw stamp 20260916T201959Z (raw/bloomberg/ULVR_LN_Equity/20260916T201959Z/refdata.json, raw/bloomberg/ULVR_LN_Equity/20260916T201959Z/histdata.json)
+   | PULL DONE: 3 of 3 securities landed raw
+BATCH 10/11 derive rc=0 2s ['SSE LN Equity', 'ST SP Equity', 'ULVR LN Equity']
+   | DERIVE: SSE LN Equity -> derived stamp 20260916T202004Z (10 FY rows, 203 figures, 2 unresolved)
+   | DERIVE: ST SP Equity -> derived stamp 20260916T202004Z (10 FY rows, 203 figures, 2 unresolved)
+   | DERIVE: ULVR LN Equity -> derived stamp 20260916T202005Z (10 FY rows, 205 figures, 0 unresolved)
+   | DERIVE DONE: 3 of 3 securities derived
+BATCH 11/11 pull rc=0 10s ['VLO US Equity', 'WALMEX* MM Equity', 'ZURN SW Equity']
+   | PULL: VLO US Equity -> raw stamp 20260916T202005Z (raw/bloomberg/VLO_US_Equity/20260916T202005Z/refdata.json, raw/bloomberg/VLO_US_Equity/20260916T202005Z/histdata.json)
+   | PULL: WALMEX* MM Equity -> raw stamp 20260916T202009Z (raw/bloomberg/WALMEX*_MM_Equity/20260916T202009Z/refdata.json, raw/bloomberg/WALMEX*_MM_Equity/20260916T202009Z/histdata.json)
+   | PULL: ZURN SW Equity -> raw stamp 20260916T202011Z (raw/bloomberg/ZURN_SW_Equity/20260916T202011Z/refdata.json, raw/bloomberg/ZURN_SW_Equity/20260916T202011Z/histdata.json)
+   | PULL DONE: 3 of 3 securities landed raw
+BATCH 11/11 derive rc=0 2s ['VLO US Equity', 'WALMEX* MM Equity', 'ZURN SW Equity']
+   | DERIVE: VLO US Equity -> derived stamp 20260916T202016Z (10 FY rows, 205 figures, 0 unresolved)
+   | DERIVE: WALMEX* MM Equity -> derived stamp 20260916T202016Z (10 FY rows, 203 figures, 2 unresolved)
+   | DERIVE: ZURN SW Equity -> derived stamp 20260916T202017Z (10 FY rows, 163 figures, 2 unresolved)
+   | DERIVE DONE: 3 of 3 securities derived
+PRICE_AXIS rc=0 6s
+   | [price_axis] universe: 34 covered name(s) with a MEASURED Bloomberg ticker (source: C:\Users\Opal Bloomberg\Desktop\ajb_workspace\org\missions\D5\AMGT\AMGT_RESAPP\deliverables\0.9.0_WK_AMGT_RESAPP~4\universe.json)
+   | [price_axis] as-of 2026-09-15 (lib.trading_calendar.prev_trading_day) -- window 2026-08-16 .. 2026-09-15 (30 days)
+   | [price_axis] usable PX_LAST series for 32 of 34 ticker(s); 2 insufficient/no history in window: ['Enel IM', 'ROG SW']
+   | [price_axis] TRENDING_PRICE: ranked 32 row(s); rank 1 = PBR US (19.2877); rank 32 = ASML NA (-14.9519); 0 excluded
+   | [price_axis] BREAKOUT_PRICE: ranked 32 row(s); rank 1 = PBR US (0.1086); rank 32 = RMS FP (-0.092); 0 excluded
+   | [price_axis] wrote record copy: C:\Users\Opal Bloomberg\Desktop\ajb_workspace\org\missions\D5\AMGT\AMGT_RESAPP\deliverables\0.9.0_WK_AMGT_RESAPP~6\price_axis_rows_2026-09-15.json
+   | [price_axis] written 64 of 64 row(s) to opal-harvest-security-metrics; failed 0
+END 2026-09-16T20:20:22.755835+00:00

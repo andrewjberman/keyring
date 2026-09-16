@@ -1,0 +1,94 @@
+{
+  "rk-6_chainB_wk24": {
+    "worktree": "C:\\tmp\\wk-amgt-12-24",
+    "repo": "workspace",
+    "branch": "wk-amgt_resapp-12-24",
+    "base_head": "128d2ad67d7d235236108ef799a280e48062b5fa",
+    "tracked_modified": [
+      "infra/aws/terraform/harvest/build-and-upload-scoped-amgt.sh",
+      "infra/aws/terraform/harvest/scoped-amgt-api.tf",
+      "lib/research/api/scoped_amgt.py",
+      "lib/research/api/tests/test_generation_and_pool_routes.py",
+      "lib/research/api/tests/test_scoped_amgt_mount.py",
+      "lib/research/print/render_pack.py"
+    ],
+    "untracked_new": [
+      "infra/aws/terraform/harvest/build-and-upload-print-deps-layer.sh",
+      "infra/aws/terraform/harvest/build_print_deps_layer.py",
+      "infra/aws/terraform/harvest/print-deps-layer.tf",
+      "lib/research/api/tests/test_surfaced_outcome_routes.py"
+    ],
+    "patch_bytes": 103584,
+    "reverse_apply_check_rc": 0,
+    "reverse_apply_check_err": "",
+    "file_sha256": {
+      "infra/aws/terraform/harvest/build-and-upload-scoped-amgt.sh": "b900a1db612bc179c7960fcd9787c61e19ce5c410e1b711a8c264f7b99dbcc2c",
+      "infra/aws/terraform/harvest/scoped-amgt-api.tf": "cc5063e67d44211025cfd32bc842744639c966720ddfb42af63d279c601b2bff",
+      "lib/research/api/scoped_amgt.py": "aefb72e4246028410b12ff57ae44b67698e4cf84b7143472013cd0fad1ab77ad",
+      "lib/research/api/tests/test_generation_and_pool_routes.py": "1f462ac813d89d2ce6670b6132ceda3810047e4635520d720856900f5f92227e",
+      "lib/research/api/tests/test_scoped_amgt_mount.py": "b4879dc4a3d8ba4e29fbc006e752fb5e3ddb4df7485521ba38caf9164b1ce5d9",
+      "lib/research/print/render_pack.py": "adb878eb697dad758a0a2283e2ac5bbd7ca21fa83a11567110dabb1fb4821f14",
+      "infra/aws/terraform/harvest/build-and-upload-print-deps-layer.sh": "a70d9788264019d07ea0670029cf0c1020f4c3223d9a72acd4e0ef94bf0e0d30",
+      "infra/aws/terraform/harvest/build_print_deps_layer.py": "907861330fa8ed87a5aada2d2fb480b3f9263893f1265bda8737d2623bdc9ae4",
+      "infra/aws/terraform/harvest/print-deps-layer.tf": "729a2e55df57468ec7d954ac1ca415ef05925710bcc2865c12f2566cc6dbe443",
+      "lib/research/api/tests/test_surfaced_outcome_routes.py": "5b0a006ec1aeaac4dcf58ea0398ea3e316ec17dcf9ba47f7d95315225b23a16f"
+    }
+  },
+  "rk-14_chainC_wk25": {
+    "worktree": "C:\\tmp\\wk-amgt-12-25",
+    "repo": "workspace",
+    "branch": "wk-amgt_resapp-12-25",
+    "base_head": "074652cc0083a0e4280e24db7360f58e7d00c871",
+    "tracked_modified": [
+      "lib/research/peers/csc.py",
+      "lib/research/peers/engine.py",
+      "lib/research/peers/universe.py",
+      "lib/research/posture/fit.py",
+      "lib/research/posture/tests/test_posture.py"
+    ],
+    "untracked_new": [],
+    "patch_bytes": 46296,
+    "reverse_apply_check_rc": 0,
+    "reverse_apply_check_err": "",
+    "file_sha256": {
+      "lib/research/peers/csc.py": "23af164408879666e2f1f8905376b7129298277d1382a9aee20a552ff342aedb",
+      "lib/research/peers/engine.py": "75745a1af8679cb0187814e59168425d21ba95c831c98bef2fdf9a3f9b894286",
+      "lib/research/peers/universe.py": "8b005bf694be870a4a7827b1d8aef1444f97166eb0d73ed86fcaf4fdd0780dbd",
+      "lib/research/posture/fit.py": "d138bcbadafd8433c003ffba3b0b00197c7bc2dbb789d4d47412ae4c54491fff",
+      "lib/research/posture/tests/test_posture.py": "f8b4d5cd1e09232dbfc693febe43871986495eec995c9895555e761d0cbee7a2"
+    }
+  },
+  "rk-12_chainA_wk23_PORTAL": {
+    "worktree": "C:\\tmp\\wk-amgt-12-23\\portal",
+    "repo": "portal",
+    "branch": "wk-amgt_resapp-12-23-portal",
+    "base_head": "2453a7b4c6b7ff91ea89db499890a9486265d1a0",
+    "tracked_modified": [
+      "src/api/endpoints/amgt-lead-panel.ts",
+      "src/pages/SecurityAnalysis/SecurityAnalysis.tsx",
+      "src/pages/SecurityAnalysis/constants.ts",
+      "src/pages/SecurityAnalysis/hooks/useLeadPanelApi.ts",
+      "src/pages/SecurityAnalysis/types.ts"
+    ],
+    "untracked_new": [
+      "src/pages/SecurityAnalysis/components/CoverageFreshnessPanel.tsx",
+      "src/pages/SecurityAnalysis/components/InputLedgerPanel.tsx",
+      "src/pages/SecurityAnalysis/components/ListRegisterPanel.tsx",
+      "src/pages/SecurityAnalysis/components/ResearchInputsPanel.tsx"
+    ],
+    "patch_bytes": 49232,
+    "reverse_apply_check_rc": 0,
+    "reverse_apply_check_err": "",
+    "file_sha256": {
+      "src/api/endpoints/amgt-lead-panel.ts": "989b61d10664542ae37dd1f4532b014d096e6a4508a9af857e293709802e5f65",
+      "src/pages/SecurityAnalysis/SecurityAnalysis.tsx": "b9edc141655c7986fc217d1ef8e5637f42713c843e003b084282ccda8af65351",
+      "src/pages/SecurityAnalysis/constants.ts": "a25020091857723bb37ff944eccf320f49cd8cda82e17ac392bb3e108677ca7c",
+      "src/pages/SecurityAnalysis/hooks/useLeadPanelApi.ts": "31a8485f62d6b98187948f5bae51a63996f855ef697659a6cc336bb25667caa4",
+      "src/pages/SecurityAnalysis/types.ts": "775fd0599f2e274be8197b978729172b19d1d90d9e87ea37b2dc7ba4606a71ad",
+      "src/pages/SecurityAnalysis/components/CoverageFreshnessPanel.tsx": "d077d3b8f4c603839990a611cdc4e4a64d029f41d5950d38c2bb96fc1023af89",
+      "src/pages/SecurityAnalysis/components/InputLedgerPanel.tsx": "c7c1607e1e6c67689a578a7edf0f12f419020995b4c69c63b81847a9b8254dad",
+      "src/pages/SecurityAnalysis/components/ListRegisterPanel.tsx": "5e01c2f97bf37dc51efa8b4cda8e025526bd0f7feca82a7e6cab7fdf446c7aee",
+      "src/pages/SecurityAnalysis/components/ResearchInputsPanel.tsx": "35ede370c4f19667228b969bf034feb60dfea8880e574ab5de5e72e9eae3521d"
+    }
+  }
+}

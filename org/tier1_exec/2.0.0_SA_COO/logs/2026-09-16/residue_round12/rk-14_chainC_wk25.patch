@@ -1,0 +1,973 @@
+diff --git a/lib/research/peers/csc.py b/lib/research/peers/csc.py
+index 9af4c0f091..13d4de710a 100644
+--- a/lib/research/peers/csc.py
++++ b/lib/research/peers/csc.py
+@@ -30,9 +30,27 @@ A DERIVATION IS NOT A CODE.  Shares is mkt_val_sec / price and absolute Debt is
+ debt_assets * assets, but neither is a column the scanner serves, so both sit
+ under ABSENT carrying `derivable_from`.  Calling them present would make the
+ subtraction lie by five columns.
++
++AMGT-rk-14 -- NEVER A FISCAL-YEAR LABEL OVER AN NTM FIGURE.  Two of the five
++PRESENT columns are quoted from Adam's sheet under FISCAL-YEAR NAMES over
++figures that are not fiscal-year figures at all:
++
++    "P/E 2025"  is 1 / ey      -- TRAILING earnings yield
++    "P/E 2026"  is 1 / ey_ntm  -- NEXT TWELVE MONTHS, which is not FY2026
++
++The relation strings said so in prose and nothing read them.  Every present
++column now carries a machine-readable `horizon` DERIVED BY RULE from the
++scanner registry's own factor name (lib/research/posture/fit.py horizon_for),
++a `display_label` that states the grain instead of the fiscal year, and
++`label_conflict` naming the disagreement where the card's column name and the
++figure's horizon disagree.  build_csc_map() REFUSES to emit a fiscal-year
++display label over a trailing or NTM horizon -- the check is
++fit.assert_no_fiscal_year_label() and it raises rather than warning.
+ """
+ from __future__ import annotations
+ 
++from lib.research.posture import fit as posture_fit
++
+ CSC_SOURCE = (
+     "org/tier1_exec/1.0.0_SA_CTO/deliverables/"
+     "AMGT_RESAPP_SUBSTRATE_MEASUREMENTS_20260915_W/SUBSTRATE_CARDS.md:73-76 "
+@@ -71,6 +89,17 @@ _CLAIMED_PRESENT = {
+     "P/E 2026": ("factor_code", "ey_ntm", "RECIPROCAL: P/E = 1 / ey_ntm; NEXT-TWELVE-MONTH grain, not the FY2026 fiscal year"),
+ }
+ 
++# AMGT-rk-14: what the column is HONESTLY called, and the horizon the figure
++# carries when no registry entry states one (a row_field has no registry code).
++# The display label NEVER carries a fiscal year over a non-fiscal-year figure.
++_DISPLAY = {
++    "Price": ("Price (last)", "trailing", "the row's price scalar at the universe vintage"),
++    "Mkt Cap": ("Mkt Cap (USD mm)", "trailing", "point-in-time at the universe vintage"),
++    "EV": ("EV (USD mm)", "trailing", "point-in-time at the universe vintage"),
++    "P/E 2025": ("P/E (trailing)", None, None),
++    "P/E 2026": ("P/E (NTM)", None, None),
++}
++
+ # column -> (reason, nearest_code_or_None, derivable_from_or_None)
+ _CLAIMED_ABSENT = {
+     "Shares": (
+@@ -148,8 +177,27 @@ def build_csc_map(factor_metadata=None, row_value_codes=None):
+         if not claim:
+             continue
+         kind, code, relation = claim
++        display_label, fallback_horizon, fallback_basis = _DISPLAY.get(
++            column, (column, None, None)
++        )
++        horizon, horizon_basis = posture_fit.horizon_for(code, registry)
++        if horizon is None and fallback_horizon is not None:
++            horizon, horizon_basis = fallback_horizon, fallback_basis
++        ok, refusal = posture_fit.assert_no_fiscal_year_label(display_label, horizon)
++        if not ok:
++            raise ValueError("CSC column %r: %s" % (column, refusal))
++        card_ok, card_refusal = posture_fit.assert_no_fiscal_year_label(column, horizon)
+         entry = {
+             "column": column,
++            "display_label": display_label,
++            "horizon": horizon,
++            "horizon_basis": horizon_basis,
++            "label_conflict": None
++            if card_ok
++            else "the card's column name %r is a FISCAL-YEAR label over a %s figure; "
++            "display_label %r is what this map emits instead"
++            % (column, horizon, display_label),
++            "label_conflict_rule": None if card_ok else card_refusal,
+             "kind": kind,
+             "code": code,
+             "relation": relation,
+@@ -197,6 +245,15 @@ def build_csc_map(factor_metadata=None, row_value_codes=None):
+         % (len(CSC_COLUMNS), len(present)),
+         "registry_factors": len(registry) if registry else None,
+         "row_value_codes": len(row_codes) if row_codes else None,
++        "horizons_labelled": sum(1 for e in present if e.get("horizon")),
++        "horizons_denominator": "%d of %d present column(s) carry a horizon; %d of them "
++        "sit under a FISCAL-YEAR column name the figure does not support"
++        % (
++            sum(1 for e in present if e.get("horizon")),
++            len(present),
++            sum(1 for e in present if e.get("label_conflict")),
++        ),
++        "fiscal_year_label_rule": posture_fit.FISCAL_YEAR_LABEL_REFUSED,
+         "summary_rows": ["Average", "Median", "Min", "Max"],
+         "summary_rows_note": "summary ROWS over the same columns, not columns",
+     }
+@@ -207,11 +264,26 @@ def present_line(csc_map):
+         len(csc_map["present"]),
+         csc_map["columns_declared"],
+         "; ".join(
+-            "%s=%s(%s)" % (e["column"], e["code"], e["kind"]) for e in csc_map["present"]
++            "%s=%s(%s,horizon=%s)" % (e["display_label"], e["code"], e["kind"], e["horizon"])
++            for e in csc_map["present"]
+         ),
+     )
+ 
+ 
++def horizon_line(csc_map):
++    """AMGT-rk-14: the horizon denominator and every fiscal-year label conflict."""
++    conflicts = [e for e in csc_map["present"] if e.get("label_conflict")]
++    return "CSC horizons %s | fiscal-year-label conflicts %d: %s" % (
++        csc_map.get("horizons_denominator"),
++        len(conflicts),
++        "; ".join(
++            "%s -> %s (%s)" % (e["column"], e["display_label"], e["horizon"])
++            for e in conflicts
++        )
++        or "none",
++    )
++
++
+ def absent_line(csc_map):
+     return "CSC absent %d of %d (denominator minus present): %s" % (
+         len(csc_map["absent"]),
+diff --git a/lib/research/peers/engine.py b/lib/research/peers/engine.py
+index 6ad04dd1fa..7b9dc9927d 100644
+--- a/lib/research/peers/engine.py
++++ b/lib/research/peers/engine.py
+@@ -53,6 +53,10 @@ from lib.research.peers import csc as csc_module
+ from lib.research.peers import taxonomy
+ from lib.research.peers import universe as universe_module
+ 
++# AMGT-rk-14: the preset code list and the horizon RULE.  fit.py imports
++# nothing from this package -- one-way, no cycle.
++from lib.research.posture import fit as posture_fit
++
+ _THIS_DIR = os.path.dirname(os.path.abspath(__file__))
+ _REPO_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(_THIS_DIR)))
+ 
+@@ -394,6 +398,13 @@ def _subject_from_scanner_row(security_key, row):
+         "currency": "USD",
+         "cap_fx_caveat": None,
+         "scanner_ticker": row.get("ticker"),
++        # AMGT-rk-14: the SUBJECT scores under the presets too, and it scores
++        # from the same retained values by the same path as a member row.
++        "factors": dict(row.get("preset_values") or {}),
++        "fx_basis": row.get("fx_basis"),
++        "size_band_basis": row.get("size_band_basis"),
++        "cap_currency": row.get("cap_currency"),
++        "cap_vintage": row.get("cap_vintage"),
+     }
+ 
+ 
+@@ -515,6 +526,64 @@ def _depth_for(row, subject):
+     return 4
+ 
+ 
++def member_factor_block(row, factor_registry=None):
++    """
++    AMGT-rk-14, BOTH ENDS ON ONE ROW.  The member row carries:
++      factors          -- the PRESET-BOUNDED factor values the loader retained
++      factor_horizons  -- code -> horizon, derived by rule from the scanner
++                          registry's own name text, only for codes this row
++                          actually carries a value for (so it is per-row
++                          discriminating, not a copy of one constant map)
++      horizon /        -- the grain of the row's OWN scalars, stated; never a
++      horizon_label       fiscal-year label over a trailing or NTM figure
++      fx_basis /       -- the two facts a size band must name to be comparable
++      size_band_basis     across currencies and vintages, or ABSENT with reason
++
++    A row the loader retained nothing for gets factors {} and an ABSENT reason
++    naming WHY -- never a silent empty dict.
++    """
++    factor_registry = (
++        factor_registry if factor_registry is not None else posture_fit.load_registry()[0]
++    )
++    factors = dict(row.get("preset_values") or {})
++    horizons = {}
++    for code in sorted(factors):
++        horizon, _basis = posture_fit.horizon_for(code, factor_registry)
++        if horizon:
++            horizons[code] = horizon
++    cap_vintage = row.get("cap_vintage")
++    horizon_label = (
++        "trailing point-in-time at cap vintage %s (market_cap_musd, price); the FACTOR "
++        "horizons are per code in factor_horizons (%d of %d value(s) labelled) -- NTM and "
++        "forward figures are labelled as such and NEVER under a fiscal-year name"
++        % (cap_vintage, len(horizons), len(factors))
++    )
++    ok, reason = posture_fit.assert_no_fiscal_year_label(horizon_label, "trailing")
++    if not ok:  # a guard that can fire, not a comment
++        raise ValueError(reason)
++    block = {
++        "factors": factors,
++        "factors_denominator": "%d of %d preset code(s) carried by this row"
++        % (len(factors), len(posture_fit.PRESET_VALUE_CODES)),
++        "factors_basis": universe_module.PRESET_RETENTION_BASIS
++        if factors
++        else "ABSENT: the loaded row carries no preset factor values (the candidate came "
++        "from a model-block header, which carries no scanner factor block)",
++        "factor_horizons": horizons,
++        "horizon": "trailing",
++        "horizon_label": horizon_label,
++        "horizons_labelled": len(horizons),
++        "fx_basis": row.get("fx_basis")
++        or "ABSENT: this row's cap carries no stated FX basis",
++        "size_band_basis": row.get("size_band_basis")
++        or "ABSENT: this row's cap carries no stated size-band basis",
++        "cap_currency": row.get("cap_currency"),
++        "cap_vintage": cap_vintage,
++        "cap_source": row.get("cap_source"),
++    }
++    return block
++
++
+ def _make(security_key, basis, members, reason, vintage, **extra):
+     if basis not in BASES:
+         raise ValueError("basis must be one of %s, got %r" % (BASES, basis))
+@@ -773,6 +842,9 @@ def peers(
+         ranked.append((-depth, distance if distance is not None else 1e9, row.get("ticker"), depth, row, distance))
+     ranked.sort(key=lambda t: (t[0], t[1], t[2]))
+ 
++    # AMGT-rk-14: the registry read ONCE per set, not once per member.
++    factor_registry = posture_fit.load_registry()[0]
++
+     members = []
+     for _negdepth, _dist_key, _ticker, depth, row, distance in ranked[:MAX_MEMBERS]:
+         member = {
+@@ -788,6 +860,7 @@ def peers(
+             "log_cap_distance": distance,
+             "universe_weights": row.get("universe_weights") or {},
+         }
++        member.update(member_factor_block(row, factor_registry))
+         if resolve_identities:
+             member["identity"] = resolve_identity(row.get("ticker"), widened_identity_index)
+         members.append(member)
+@@ -817,6 +890,26 @@ def peers(
+     if subject.get("cap_fx_caveat"):
+         reason += "; CAVEAT: " + subject["cap_fx_caveat"]
+ 
++    # AMGT-rk-14: the FOUR ends, counted over THIS set's own members and
++    # printed on the object -- never a boolean, never asserted.
++    fit_denominators = {
++        "member_rows": len(members),
++        "preset_codes": len(posture_fit.PRESET_VALUE_CODES),
++        "codes_named": sum(1 for m in members if m.get("factors")),
++        "values_present": sum(
++            1 for m in members if any(v is not None for v in (m.get("factors") or {}).values())
++        ),
++        "horizons_labelled": sum(1 for m in members if m.get("horizon_label")),
++        "fx_basis_stated": sum(1 for m in members if m.get("fx_basis")),
++        "size_band_absent": sum(
++            1 for m in members if str(m.get("size_band_basis") or "").startswith("ABSENT")
++        ),
++        "factor_values_total": sum(len(m.get("factors") or {}) for m in members),
++        "basis": "codes from %s; values %s; horizons derived from the scanner factor "
++        "registry's own name text; fx basis and vintage from the row that supplied the cap"
++        % (posture_fit.PRESET_SOURCE[:80], universe_module.PRESET_RETENTION_BASIS[:60]),
++    }
++
+     return _make(
+         security_key,
+         "derived",
+@@ -827,6 +920,8 @@ def peers(
+         denominators=denominators,
+         sector_map=taxonomy.sector_map_denominators(),
+         country_map=taxonomy.country_map_denominators(),
++        fit_denominators=fit_denominators,
++        horizon_census=posture_fit.horizon_census(registry=factor_registry),
+         **common
+     )
+ 
+diff --git a/lib/research/peers/universe.py b/lib/research/peers/universe.py
+index 00f2a0a55b..e17c7f9581 100644
+--- a/lib/research/peers/universe.py
++++ b/lib/research/peers/universe.py
+@@ -50,6 +50,11 @@ import os
+ 
+ from lib.research.peers import taxonomy
+ 
++# AMGT-rk-14 end 2: the PRESETS are the bound on what this loader retains.
++# fit.py imports nothing from this package, so this is a one-way data
++# dependency on a constant and creates no import cycle.
++from lib.research.posture import fit as posture_fit
++
+ _THIS_DIR = os.path.dirname(os.path.abspath(__file__))
+ _REPO_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(_THIS_DIR)))
+ 
+@@ -92,7 +97,33 @@ CURRENCY_MNEMONIC = "CRNCY"
+ # The scanner quotes market value in USD millions; the model block in units.
+ MODEL_BLOCK_CAP_DIVISOR = 1e6
+ 
+-SCHEMA_VERSION = 1
++# ---------------------------------------------------------------------------
++# AMGT-rk-14 END 2 -- PRESET-BOUNDED RETENTION
++#
++# This loader used to keep the factor-code SET and DROP THE NUMBERS ("this
++# ranker maps columns, it does not serve figures"), so every name the posture
++# FIT scored came back ABSENT no matter how many codes the presets named.
++# Naming the codes and dropping the values are TWO ENDS of one defect and
++# repairing either alone moves nothing.
++#
++# The retention is BOUNDED BY THE PRESETS, never by the row's width: the UNION
++# of DIVZ (13) and PFOE (16) is 26 codes, and a UniverseDataRow carries 284.
++# The bound is the presets' own code list, so a preset edit moves this set and
++# nothing else has to be touched.
++# ---------------------------------------------------------------------------
++PRESET_VALUE_CODES = posture_fit.PRESET_VALUE_CODES
++PRESET_RETENTION_BASIS = (
++    "preset-bounded: the UNION of the DIVZ and PFOE preset code lists in "
++    "lib/research/posture/fit.py PRESETS (%d codes), NOT the scanner row's full "
++    "factor width" % len(PRESET_VALUE_CODES)
++)
++
++USD_FX_BASIS = (
++    "USD; the scanner's universe_data mktVal is already USD MILLIONS and NO FX rate is "
++    "applied or invented; vintage = the scanner file's own asOf"
++)
++
++SCHEMA_VERSION = 2
+ 
+ _MEMO = {}
+ 
+@@ -166,13 +197,45 @@ def _model_block_files(model_block_dir):
+     return out
+ 
+ 
+-def _header_figure(block, mnemonic):
++def _header_figure_record(block, mnemonic):
++    """The WHOLE header figure -- value, vintage, unit, currency_caveat.  The
++    value-only read below dropped the vintage, which is half of what AMGT-rk-14
++    requires a size band to NAME."""
+     for fig in block.get("figures", []):
+         if fig.get("scope") == "header" and fig.get("mnemonic") == mnemonic:
+-            return fig.get("value")
++            return fig
+     return None
+ 
+ 
++def _header_figure(block, mnemonic):
++    record = _header_figure_record(block, mnemonic)
++    return record.get("value") if record else None
++
++
++def preset_values_from_row(raw_values):
++    """
++    The PRESET-BOUNDED retention: the numeric value for each preset code the
++    row carries, and nothing else.  A non-numeric, a bool or a null is DROPPED
++    (a None is not a value); the codes are the presets' union (PRESET_VALUE_CODES),
++    so the returned dict is bounded by the presets whatever the row's width.
++    """
++    if not isinstance(raw_values, dict):
++        return {}
++    out = {}
++    for code in PRESET_VALUE_CODES:
++        value = raw_values.get(code)
++        if isinstance(value, bool) or value is None:
++            continue
++        try:
++            number = float(value)
++        except (TypeError, ValueError):
++            continue
++        if number != number or number in (float("inf"), float("-inf")):
++            continue
++        out[code] = number
++    return out
++
++
+ _MODEL_BLOCK_POOL_INDEX_MEMO = None
+ 
+ 
+@@ -249,9 +312,28 @@ def _blank_row(ticker):
+         "sector_vocabulary": None,
+         "currency": None,
+         "cap_fx_caveat": None,
++        # AMGT-rk-14: the preset-bounded factor values, and the two facts a size
++        # band must NAME to be comparable across currencies and vintages.
++        "preset_values": {},
++        "fx_basis": None,
++        "cap_currency": None,
++        "cap_vintage": None,
++        "cap_source": None,
++        "size_band_basis": None,
+     }
+ 
+ 
++def distinct_vintage_hint(vintages):
++    """The scanner vintage a size band is compared AGAINST, or the set when the
++    six files disagree -- never a single one picked silently."""
++    seen = sorted(set(v for v in (vintages or {}).values() if v))
++    if not seen:
++        return "UNKNOWN (no scanner file carried an asOf)"
++    if len(seen) == 1:
++        return seen[0]
++    return "|".join(seen) + " (DISTINCT across the scanner files)"
++
++
+ def build_candidate_universe(model_block_dir=None, refresh=False):
+     """
+     Read the six scanner files and the model-block headers and fold them into
+@@ -307,9 +389,27 @@ def build_candidate_universe(model_block_dir=None, refresh=False):
+                 row["universe_weights"][universe_id] = weight
+             if not value_codes and isinstance(sec.get("values"), dict):
+                 # The factor-code SET a UniverseDataRow carries -- csc.py checks
+-                # every PRESENT claim against it.  The values themselves are NOT
+-                # cached: this ranker maps columns, it does not serve figures.
++                # every PRESENT claim against it.
+                 value_codes.update(sec["values"].keys())
++            # AMGT-rk-14 END 2: and the VALUES for the preset codes, bounded by
++            # PRESET_VALUE_CODES.  First file carrying them wins, so the row's
++            # numbers and its scalars come from the same scanner file.
++            if not row["preset_values"]:
++                retained = preset_values_from_row(sec.get("values"))
++                if retained:
++                    row["preset_values"] = retained
++            # The size band's two named facts, set by the file that supplies the
++            # cap.  A scanner cap is USD millions at that file's own asOf.
++            if row["cap_vintage"] is None and row.get("mktVal") is not None:
++                row["fx_basis"] = USD_FX_BASIS
++                row["cap_currency"] = "USD"
++                row["cap_vintage"] = document.get("asOf")
++                row["cap_source"] = "scanner:" + universe_id
++                row["size_band_basis"] = (
++                    "COMPARABLE: cap is USD millions from scanner %s at asOf %s, so the "
++                    "log-cap band is a ratio of two USD figures at ONE vintage"
++                    % (universe_id, document.get("asOf"))
++                )
+ 
+     scanner_unique = len(rows)
+ 
+@@ -326,7 +426,9 @@ def build_candidate_universe(model_block_dir=None, refresh=False):
+             skipped_unclassified.append(security_key)
+             continue
+         classified += 1
+-        cap = _header_figure(block, MARKET_CAP_MNEMONIC)
++        cap_record = _header_figure_record(block, MARKET_CAP_MNEMONIC) or {}
++        cap = cap_record.get("value")
++        cap_vintage = cap_record.get("vintage")
+         currency = _header_figure(block, CURRENCY_MNEMONIC)
+         country_iso = _header_figure(block, COUNTRY_MNEMONIC)
+         country, _vocab = taxonomy.scanner_country_for(country_iso)
+@@ -354,10 +456,43 @@ def build_candidate_universe(model_block_dir=None, refresh=False):
+             target["mktVal"] = cap_musd
+             target["currency"] = currency
+             target["cap_fx_caveat"] = (currency not in (None, "USD"))
++            # AMGT-rk-14 END 4: the size band NAMES its FX basis and its
++            # vintage, or is ABSENT with that reason.  The model block's
++            # CUR_MKT_CAP is in the security's OWN trading currency and NO FX
++            # rate is applied here, so a non-USD cap is NOT comparable to the
++            # scanner's USD-millions band and this row says so rather than
++            # letting a ratio of two different currencies read as a band.
++            target["cap_currency"] = currency
++            target["cap_vintage"] = cap_vintage
++            target["cap_source"] = "model_block:%s:%s" % (security_key, MARKET_CAP_MNEMONIC)
++            if currency == "USD":
++                target["fx_basis"] = (
++                    "USD; model block %s in full currency units divided by %g, "
++                    "bloomberg-dapi vintage %s; no FX rate applied and none needed"
++                    % (MARKET_CAP_MNEMONIC, MODEL_BLOCK_CAP_DIVISOR, cap_vintage)
++                )
++                target["size_band_basis"] = (
++                    "COMPARABLE: cap is USD millions at model-block vintage %s against a "
++                    "scanner band at asOf %s -- SAME CURRENCY, DIFFERENT VINTAGE, and both "
++                    "are named here" % (cap_vintage, distinct_vintage_hint(vintages))
++                )
++            else:
++                target["fx_basis"] = (
++                    "ABSENT: %s is in %s (the security's own trading currency) at "
++                    "bloomberg-dapi vintage %s and NO FX rate is applied or invented here"
++                    % (MARKET_CAP_MNEMONIC, currency, cap_vintage)
++                )
++                target["size_band_basis"] = (
++                    "ABSENT: a %s cap cannot be ratioed against the scanner's USD-millions "
++                    "band without an FX rate, and no FX source is read by this loader; the "
++                    "band for this row is NOT comparable and is not shown as one"
++                    % currency
++                )
+         else:
+             # The scanner row already carries a USD, same-vintage cap and a
+             # scanner-vocabulary sector: those stay.  The block contributes the
+-            # canonical identity only.
++            # canonical identity only -- INCLUDING the FX basis, which stays the
++            # scanner's because the CAP stays the scanner's.
+             target["currency"] = target.get("currency") or "USD"
+         target["security_key"] = security_key
+         if "model_block" not in target["sources"]:
+@@ -376,6 +511,24 @@ def build_candidate_universe(model_block_dir=None, refresh=False):
+     denominators["files_read"] = len(UNIVERSE_IDS) - len(failures)
+     denominators["row_value_codes"] = len(value_codes)
+ 
++    # AMGT-rk-14: the retention's OWN denominators, printed, never asserted.
++    all_rows = list(rows.values())
++    denominators["preset_value_codes"] = len(PRESET_VALUE_CODES)
++    denominators["rows_with_preset_values"] = sum(1 for r in all_rows if r.get("preset_values"))
++    denominators["preset_values_retained"] = sum(len(r.get("preset_values") or {}) for r in all_rows)
++    denominators["rows_with_fx_basis"] = sum(1 for r in all_rows if r.get("fx_basis"))
++    denominators["rows_with_cap_vintage"] = sum(1 for r in all_rows if r.get("cap_vintage"))
++    denominators["rows_size_band_absent"] = sum(
++        1 for r in all_rows if str(r.get("size_band_basis") or "").startswith("ABSENT")
++    )
++    denominators["preset_retention_width_check"] = (
++        "max %d code(s) on any row against the %d the scanner row carries"
++        % (
++            max([len(r.get("preset_values") or {}) for r in all_rows] or [0]),
++            len(value_codes),
++        )
++    )
++
+     distinct_vintages = sorted(set(v for v in vintages.values() if v))
+     document = {
+         "schema_version": SCHEMA_VERSION,
+@@ -393,6 +546,8 @@ def build_candidate_universe(model_block_dir=None, refresh=False):
+         },
+         "read_failures": failures,
+         "row_value_codes": sorted(value_codes),
++        "preset_value_codes": list(PRESET_VALUE_CODES),
++        "preset_retention_basis": PRESET_RETENTION_BASIS,
+         "denominators": denominators,
+         "rows": sorted(rows.values(), key=lambda r: r["ticker"]),
+     }
+@@ -412,9 +567,14 @@ def load_candidate_universe(path=None, refresh=False, model_block_dir=None):
+         return _MEMO[memo_key]
+     if not refresh and os.path.isfile(target):
+         document = _read_json(target)
+-        document.setdefault("cache_path", target)
+-        _MEMO[memo_key] = document
+-        return document
++        # AMGT-rk-14: a cache written BEFORE the preset-bounded retention landed
++        # carries the code set and no values, and reading it would put the
++        # repaired loader behind a stale file with nothing saying so.  A cache
++        # that does not carry the retention is REBUILT, never served.
++        if document.get("preset_value_codes"):
++            document.setdefault("cache_path", target)
++            _MEMO[memo_key] = document
++            return document
+     document = build_candidate_universe(model_block_dir=model_block_dir, refresh=refresh)
+     document["cache_sha256"] = _write_json(target, document)
+     document["cache_path"] = target
+@@ -472,6 +632,29 @@ def summary_lines(document):
+             else " -- FAILED: " + ", ".join(sorted(document["read_failures"])),
+         )
+     )
++    lines.append(
++        "PRESET-BOUNDED RETENTION codes %s (the DIVZ+PFOE union) against %s the scanner row "
++        "carries; rows carrying values %s of %s; values retained %s; %s"
++        % (
++            den.get("preset_value_codes"),
++            den.get("row_value_codes"),
++            den.get("rows_with_preset_values"),
++            den.get("database"),
++            den.get("preset_values_retained"),
++            den.get("preset_retention_width_check"),
++        )
++    )
++    lines.append(
++        "SIZE BAND BASIS fx_basis stated %s of %s row(s); cap vintage named %s of %s; "
++        "size band ABSENT (no FX rate for a non-USD cap) %s"
++        % (
++            den.get("rows_with_fx_basis"),
++            den.get("database"),
++            den.get("rows_with_cap_vintage"),
++            den.get("database"),
++            den.get("rows_size_band_absent"),
++        )
++    )
+     return lines
+ 
+ 
+diff --git a/lib/research/posture/fit.py b/lib/research/posture/fit.py
+index f18606bc3a..473d40c72c 100644
+--- a/lib/research/posture/fit.py
++++ b/lib/research/posture/fit.py
+@@ -7,32 +7,46 @@ input to (3)."  The order: "each name's factor profile scored under the DIVZ and
+ PFOE presets from the scanner values R-1 carries (a preset factor the row lacks
+ is ABSENT explicit; the score printed with its denominator of factors present)".
+ 
+-THE PRESETS, AND WHERE THEY COME FROM.  portal/src/pages/SecurityScanner/
+-constants.ts is outside this worktree (portal is a gitlink; the file does not
+-exist in this tree's history).  The order points at the copy in the CTO's
+-substrate card 3 @5007337353:
+-  org/tier1_exec/1.0.0_SA_CTO/deliverables/AMGT_RESAPP_SUBSTRATE_MEASUREMENTS_20260915_W/
+-  SUBSTRATE_CARDS.md, CARD 3, "Resource B".
+-Card 3 carries the presets at TWO different grains, and they are recorded here
+-exactly as it carries them -- never completed from memory:
+-  DIVZ  13 factors DECLARED; 7 NAMED WITH WEIGHTS (dy_ntm 20, dps_gr_1yr 10,
+-        shldr_yield 10, ey_ntm / fcfy / accruals_bs / leverage 7.5 each) and
+-        "six momentum at 5" -- SIX CODES NOT NAMED.
+-  PFOE  16 factors DECLARED; CATEGORY WEIGHTS ONLY (growth 42 / quality 30 /
+-        sentiment 10 / valuation 8 / momentum 10) -- ZERO CODES NAMED.
+-An unnamed preset slot is ABSENT with the reason "code not named in card 3",
+-so the denominator subtraction is:  present = declared MINUS unnamed MINUS
+-named-but-lacking-a-value.
+-
+-THE VALUES.  The score reads the scanner factor values the R-1 row carries
+-(a `values` object keyed by factor code, the scanner's UniverseDataRow shape).
+-Measured at this cut: R-1's members carry NO `values` object -- the ranker's
+-loader keeps the code SET and deliberately drops the numbers
+-(lib/research/peers/universe.py: "The values themselves are NOT cached: this
+-ranker maps columns, it does not serve figures").  So every factor is ABSENT at
+-this cut and every score prints 0 present of its declared count.  The scorer is
+-still exercised in full by the unit tests over fixture rows that DO carry
+-values; nothing here reads the scanner plane to fill the gap.
++THE PRESETS, AND WHERE THEY COME FROM -- AMGT-rk-14, BOTH ENDS.
++
++Until AMGT-rk-14 this module carried the presets at CARD 3's grain, and card 3
++names only SOME of the codes: DIVZ 7 of 13 named with weights plus "six
++momentum at 5", PFOE 16 declared with CATEGORY weights and ZERO codes named.
++That is 22 of the 29 preset slots with NO CODE TO READ.
++
++The codes are now READ FROM THE PRESET FILE ITSELF, verbatim:
++  portal/src/pages/SecurityScanner/constants.ts
++  DEFAULT_PRESET (DIVZ, 13 entries) and PFOE_PRESET (16 entries),
++  at portal gitlink commit be8cf218743af0c04a4d57b908b28cf7435e119d -- the
++  commit THIS tree's HEAD records for the portal gitlink, so the bytes read are
++  the bytes this tree points at.  portal/ is a gitlink and is not checked out in
++  a worker worktree; the file is read from the workspace's portal checkout, which
++  was measured at that same commit and clean.
++Every code below carries the weight and the Andrew-taxonomy group the file
++gives it.  DIVZ sums to 100.0 over 13 codes, PFOE to 100 over 16.  NOTHING here
++is completed from memory and NOTHING is inferred from a category weight:
++`unnamed` is now EMPTY for both presets, and the two counts are printed, never
++asserted.
++
++THE VALUES -- the other end, and repairing one end moves nothing.  Naming the
++22 codes against rows that carry no values leaves every score ABSENT, so the
++ranker's loader now RETAINS the scanner factor values for exactly these codes
++(lib/research/peers/universe.py PRESET_VALUE_CODES, the UNION of the two
++presets = 26 codes, bounded BY THE PRESETS and not by the scanner's 284-code
++row width).  A row carries them under `preset_values`; a peer member row under
++`factors`.  row_values() reads all three field names, so a subject block, a
++member row and a fixture row all score by the same path.
++
++THE HORIZON -- never a fiscal-year label over an NTM figure.  The scanner's
++factor registry carries NO horizon field, so the horizon is DERIVED BY RULE
++from the registry's own `name` text (which states it: "Dividend Yield NTM",
++"EPS Forward Growth (1 Year)", "Return Momentum (252D)") and every derived
++label carries `horizon_basis` naming that derivation.  The classes are MECE
++over the preset codes BY SUBTRACTION: NTM, forward-<window>,
++trailing-<window>, and TRAILING = the denominator MINUS the ones whose
++registry name carries a horizon token.  A FISCAL-YEAR label (FY2025, "P/E
++2026") is NEVER emitted for a trailing or NTM figure -- assert_no_fiscal_year_
++label() refuses one and the unit tests exercise it.
+ 
+ THE SCORE, when at least one factor is present: the weighted mean of the row's
+ own ORIENTED values over the factors present, orientation from the scanner's
+@@ -49,9 +63,11 @@ _THIS_DIR = os.path.dirname(os.path.abspath(__file__))
+ _REPO_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(_THIS_DIR)))
+ 
+ PRESET_SOURCE = (
++    "portal/src/pages/SecurityScanner/constants.ts DEFAULT_PRESET (DIVZ, 13) + PFOE_PRESET (16) "
++    "@ portal gitlink be8cf218743af0c04a4d57b908b28cf7435e119d, the commit this tree's HEAD "
++    "records for portal/ (AMGT-rk-14; supersedes the PARTIAL card-3 copy at "
+     "org/tier1_exec/1.0.0_SA_CTO/deliverables/AMGT_RESAPP_SUBSTRATE_MEASUREMENTS_20260915_W/"
+-    "SUBSTRATE_CARDS.md CARD 3 Resource B @5007337353 (copy of "
+-    "portal/src/pages/SecurityScanner/constants.ts; the file itself is outside this tree)"
++    "SUBSTRATE_CARDS.md CARD 3 Resource B @5007337353, which named 7 of 13 DIVZ and 0 of 16 PFOE)"
+ )
+ 
+ REGISTRY_PATH = os.path.join(
+@@ -62,34 +78,183 @@ REGISTRY_PATH = os.path.join(
+ 
+ UNNAMED = "code not named in card 3"
+ 
++# AMGT-rk-14 end 1: the codes, verbatim from constants.ts at the gitlink commit
++# this tree records (see PRESET_SOURCE).  code, weight, Andrew-taxonomy group.
++_DIVZ_ENTRIES = (
++    ("dy_ntm", 20.0, "Dividend"),
++    ("dps_gr_1yr", 10.0, "Dividend"),
++    ("shldr_yield", 10.0, "Dividend"),
++    ("eps_est_rev_45d", 5.0, "Momentum"),
++    ("short_pct_chg_12m", 5.0, "Momentum"),
++    ("days_to_cover", 5.0, "Momentum"),
++    ("pcta52wl", 5.0, "Momentum"),
++    ("ret_mom_252d", 5.0, "Momentum"),
++    ("velocity_63d", 5.0, "Momentum"),
++    ("ey_ntm", 7.5, "Value"),
++    ("fcfy", 7.5, "Value"),
++    ("accruals_bs", 7.5, "Quality"),
++    ("leverage", 7.5, "Quality"),
++)
++
++_PFOE_ENTRIES = (
++    ("sales_fwd_gr_1yr", 7.0, "Growth"),
++    ("sales_gr_3yr", 7.0, "Growth"),
++    ("sales_fwd_gr_3yr", 7.0, "Growth"),
++    ("eps_fwd_gr_1yr", 7.0, "Growth"),
++    ("eps_gr_3yr", 7.0, "Growth"),
++    ("eps_fwd_gr_3yr", 7.0, "Growth"),
++    ("gross_mgn", 6.0, "Quality"),
++    ("oper_mgn", 6.0, "Quality"),
++    ("fcf_mgn", 6.0, "Quality"),
++    ("roe", 6.0, "Quality"),
++    ("int_cov", 6.0, "Quality"),
++    ("eps_stability", 5.0, "Sentiment"),
++    ("eps_est_rev_45d", 5.0, "Sentiment"),
++    ("peg_ntm", 8.0, "Valuation"),
++    ("ret_mom_252d", 5.0, "Momentum"),
++    ("short_pct_chg_12m", 5.0, "Momentum"),
++)
++
++
++def _named(entries):
++    return [{"code": c, "weight": w, "group": g} for c, w, g in entries]
++
++
+ PRESETS = {
+     "DIVZ": {
+         "declared": 13,
+-        "named": [
+-            {"code": "dy_ntm", "weight": 20.0},
+-            {"code": "dps_gr_1yr", "weight": 10.0},
+-            {"code": "shldr_yield", "weight": 10.0},
+-            {"code": "ey_ntm", "weight": 7.5},
+-            {"code": "fcfy", "weight": 7.5},
+-            {"code": "accruals_bs", "weight": 7.5},
+-            {"code": "leverage", "weight": 7.5},
+-        ],
+-        "unnamed": [{"slot": "momentum_%d" % i, "category": "momentum", "weight": 5.0} for i in range(1, 7)],
++        "named": _named(_DIVZ_ENTRIES),
++        # EMPTY by construction: declared MINUS named is 0.  A non-empty list
++        # here means the preset file and this module disagree, and the
++        # subtraction below prints it rather than hiding it.
++        "unnamed": [],
+         "category_weights": None,
++        "weight_sum": sum(w for _c, w, _g in _DIVZ_ENTRIES),
+         "card_text": (
+             "DIVZ = the default preset (13 factors, dividend-tilted: dy_ntm 20, dps_gr_1yr 10, "
+             "shldr_yield 10, six momentum at 5, ey_ntm / fcfy / accruals_bs / leverage at 7.5)"
+         ),
++        "codes_source": "constants.ts DEFAULT_PRESET",
+     },
+     "PFOE": {
+         "declared": 16,
+-        "named": [],
+-        "unnamed": [{"slot": "pfoe_%02d" % i, "category": None, "weight": None} for i in range(1, 17)],
++        "named": _named(_PFOE_ENTRIES),
++        "unnamed": [],
+         "category_weights": {"growth": 42, "quality": 30, "sentiment": 10, "valuation": 8, "momentum": 10},
++        "weight_sum": sum(w for _c, w, _g in _PFOE_ENTRIES),
+         "card_text": "PFOE = 16 factors (growth 42 / quality 30 / sentiment 10 / valuation 8 / momentum 10)",
++        "codes_source": "constants.ts PFOE_PRESET",
+     },
+ }
+ 
++# The UNION of the two presets -- the code set the ranker's loader retains.
++# 26 = 13 + 16 MINUS the 3 codes both presets score under (eps_est_rev_45d,
++# ret_mom_252d, short_pct_chg_12m).  BOUNDED BY THE PRESETS; the scanner row
++# carries 284.
++PRESET_VALUE_CODES = tuple(
++    sorted(set(c for _n, p in PRESETS.items() for c in (f["code"] for f in p["named"])))
++)
++
++# ---------------------------------------------------------------------------
++# THE HORIZON -- derived BY RULE from the registry's own name; never a fiscal year
++# ---------------------------------------------------------------------------
++FISCAL_YEAR_LABEL_REFUSED = (
++    "a fiscal-year label (FY20xx, 'P/E 2026') over a trailing or NTM figure is the defect "
++    "AMGT-rk-14 names: the label must state the grain the number actually carries"
++)
++
++# name token -> horizon window, read off the registry name text.  A code whose
++# name carries NONE of these is TRAILING by subtraction, never by a forward list.
++_WINDOW_TOKENS = (
++    ("(45D)", "45d"),
++    ("(63D)", "63d"),
++    ("(252D)", "252d"),
++    ("(12M)", "12m"),
++    ("(1 YEAR)", "1y"),
++    ("(3 YEAR)", "3y"),
++    ("(5 YEAR)", "5y"),
++    ("52-WEEK", "52w"),
++)
++
++
++def horizon_for(code, registry=None):
++    """
++    (horizon, basis) for a scanner factor code, DERIVED from the registry's own
++    `name` text -- the registry carries no horizon field, and inventing one
++    would be inferred, not measured.
++
++    Classes, MECE over any code set BY SUBTRACTION:
++      'NTM'            the name says NTM
++      'forward-<w>'    the name says Forward, window from the parenthetical
++      'trailing-<w>'   the name carries a lookback window token
++      'trailing'       THE REMAINDER -- no horizon token in the name
++      None             the code is not in the registry at all (never guessed)
++    """
++    registry = registry if registry is not None else load_registry()[0]
++    entry = registry.get(code) or {}
++    name = entry.get("name")
++    if not name:
++        return None, "ABSENT: %r is not in the scanner factor registry, so no horizon is derivable" % code
++    upper = name.upper()
++    window = None
++    for token, tag in _WINDOW_TOKENS:
++        if token in upper:
++            window = tag
++            break
++    if "NTM" in upper:
++        return "NTM", "registry name %r states NTM" % name
++    if "FORWARD" in upper or "FWD" in upper:
++        return (
++            "forward-%s" % window if window else "forward",
++            "registry name %r states Forward%s" % (name, (" over %s" % window) if window else ""),
++        )
++    if window:
++        return "trailing-%s" % window, "registry name %r carries the lookback window %s" % (name, window)
++    return (
++        "trailing",
++        "registry name %r carries no horizon token: TRAILING by subtraction (most recent reported)" % name,
++    )
++
++
++def assert_no_fiscal_year_label(label, horizon):
++    """
++    Refuse a fiscal-year label over a figure whose horizon is not a fiscal year.
++    Returns (ok, reason).  Used by the CSC map and exercised by the unit tests.
++    """
++    if not label:
++        return True, "no label"
++    digits = "".join(ch for ch in str(label) if ch.isdigit())
++    looks_fiscal = len(digits) == 4 and digits.startswith("20")
++    non_fiscal = horizon is not None and (
++        horizon == "NTM"
++        or horizon == "trailing"
++        or str(horizon).startswith("trailing-")
++        or str(horizon).startswith("forward-")
++    )
++    if looks_fiscal and non_fiscal:
++        return False, "%s: label %r over horizon %r" % (FISCAL_YEAR_LABEL_REFUSED, label, horizon)
++    return True, "label %r is not a fiscal-year label over a non-fiscal-year horizon" % label
++
++
++def horizon_census(codes=None, registry=None):
++    """The denominator, printed: every preset code banded by derived horizon."""
++    codes = tuple(codes or PRESET_VALUE_CODES)
++    registry = registry if registry is not None else load_registry()[0]
++    bands = {}
++    for code in codes:
++        horizon, _basis = horizon_for(code, registry)
++        bands.setdefault(horizon, []).append(code)
++    labelled = sum(len(v) for k, v in bands.items() if k)
++    return {
++        "codes": len(codes),
++        "labelled": labelled,
++        "unlabelled": len(codes) - labelled,
++        "bands": dict((k, sorted(v)) for k, v in bands.items()),
++        "subtraction": "trailing = %d codes MINUS the %d whose registry name carries a horizon token"
++        % (len(codes), sum(len(v) for k, v in bands.items() if k and k != "trailing")),
++    }
++
++
+ METHOD = (
+     "weighted mean of the row's own factor values over the factors PRESENT, each value "
+     "oriented by the scanner registry's relationship (Inverse negated); not a percentile -- "
+@@ -113,15 +278,27 @@ def load_registry(path=None):
+     return out
+ 
+ 
++VALUE_FIELDS = ("values", "factor_values", "preset_values", "factors")
++
++
+ def row_values(row):
+-    """The scanner factor values a row carries -- `values` (UniverseDataRow) or
+-    `factor_values`.  {} when it carries none; never a fetched substitute."""
++    """
++    The scanner factor values a row carries.  {} when it carries none; never a
++    fetched substitute.  FOUR field names, one path (AMGT-rk-14): `values` is the
++    raw UniverseDataRow shape, `factor_values` a fixture's, `preset_values` the
++    ranker loader's PRESET-BOUNDED retention, `factors` the peer MEMBER row's.
++    Reading only the first two is how the scorer stayed ABSENT on served rows
++    that carried the numbers under the ranker's own field name.
++    """
+     if not isinstance(row, dict):
+         return {}
+-    for field in ("values", "factor_values"):
++    for field in VALUE_FIELDS:
+         value = row.get(field)
+-        if isinstance(value, dict):
++        if isinstance(value, dict) and value:
+             return value
++    for field in VALUE_FIELDS:
++        if isinstance(row.get(field), dict):
++            return row[field]
+     return {}
+ 
+ 
+@@ -147,12 +324,15 @@ def score_preset(preset_name, row, registry=None):
+         absent.append({"code": None, "slot": slot["slot"], "reason": UNNAMED})
+     for factor in preset["named"]:
+         code = factor["code"]
++        horizon, horizon_basis = horizon_for(code, registry)
+         value = _number(values.get(code))
+         if value is None:
+             absent.append(
+                 {
+                     "code": code,
+                     "slot": None,
++                    "horizon": horizon,
++                    "horizon_basis": horizon_basis,
+                     "reason": "the row carries no value for %s" % code
+                     if not values
+                     else "the row's values object has no numeric %s" % code,
+@@ -165,7 +345,10 @@ def score_preset(preset_name, row, registry=None):
+             {
+                 "code": code,
+                 "weight": factor["weight"],
++                "group": factor.get("group"),
+                 "value": value,
++                "horizon": horizon,
++                "horizon_basis": horizon_basis,
+                 "relationship": relationship,
+                 "oriented": oriented,
+             }
+@@ -181,7 +364,7 @@ def score_preset(preset_name, row, registry=None):
+         "factors_declared": preset["declared"],
+         "factors_named": len(preset["named"]),
+         "factors_present": len(present),
+-        "denominator": "%d of %d factors present (%d named in card 3)"
++        "denominator": "%d of %d factors present (%d code(s) named by the preset)"
+         % (len(present), preset["declared"], len(preset["named"])),
+         "subtraction": "present %d = declared %d MINUS unnamed %d MINUS named-without-value %d"
+         % (
+@@ -192,7 +375,12 @@ def score_preset(preset_name, row, registry=None):
+         ),
+         "present": present,
+         "absent": absent,
++        "horizons_labelled": sum(1 for f in present if f.get("horizon")),
++        "horizons_denominator": "%d of %d factor(s) present carry a derived horizon"
++        % (sum(1 for f in present if f.get("horizon")), len(present)),
+         "category_weights": preset["category_weights"],
++        "weight_sum": preset.get("weight_sum"),
++        "codes_source": preset.get("codes_source"),
+         "method": METHOD,
+         "source": PRESET_SOURCE,
+     }
+@@ -218,6 +406,8 @@ def fit(security_key, row, presets=("DIVZ", "PFOE"), registry=None, row_source=N
+             else "ABSENT: no R-1 row for this name"
+         ),
+         "presets": {name: score_preset(name, row or {}, registry=registry) for name in presets},
++        "fx_basis": (row or {}).get("fx_basis"),
++        "size_band_basis": (row or {}).get("size_band_basis"),
+     }
+ 
+ 
+diff --git a/lib/research/posture/tests/test_posture.py b/lib/research/posture/tests/test_posture.py
+index d4ae99319f..f58851788f 100644
+--- a/lib/research/posture/tests/test_posture.py
++++ b/lib/research/posture/tests/test_posture.py
+@@ -203,7 +203,13 @@ class FitTests(unittest.TestCase):
+         self.assertIsNone(divz["score"])
+         self.assertEqual((divz["factors_present"], divz["factors_declared"]), (0, 13))
+         self.assertEqual(len(divz["absent"]), 13)
+-        self.assertEqual(len([a for a in divz["absent"] if a["reason"] == fit_module.UNNAMED]), 6)
++        # AMGT-rk-14 END 1: the presets now name EVERY code they score under
++        # (13 of 13 DIVZ, 16 of 16 PFOE, read from constants.ts at the gitlink
++        # commit this tree records), so NO slot is absent for the reason "code
++        # not named in card 3" any more -- all 13 are absent because the ROW
++        # carries no value, which is the other end and a different defect.
++        self.assertEqual(len([a for a in divz["absent"] if a["reason"] == fit_module.UNNAMED]), 0)
++        self.assertEqual(len([a for a in divz["absent"] if a["code"]]), 13)
+         pfoe = record["presets"]["PFOE"]
+         self.assertEqual((pfoe["factors_present"], pfoe["factors_declared"], pfoe["factors_named"]), (0, 16, 0))
+ 
+@@ -212,7 +218,9 @@ class FitTests(unittest.TestCase):
+         row = {"values": {"dy_ntm": 0.04, "leverage": 2.0, "fcfy": None, "ey_ntm": "n/a"}}
+         score = fit_module.score_preset("DIVZ", row, registry=registry)
+         self.assertEqual(score["factors_present"], 2)
+-        self.assertEqual(score["denominator"], "2 of 13 factors present (7 named in card 3)")
++        self.assertEqual(
++            score["denominator"], "2 of 13 factors present (13 code(s) named by the preset)"
++        )
+         expected = round((20.0 * 0.04 + 7.5 * -2.0) / 27.5, 6)
+         self.assertEqual(score["score"], expected)
+         self.assertIn("ey_ntm", [a["code"] for a in score["absent"]])
