@@ -308,6 +308,119 @@ adjacency stands as its neighborhood).
 
 ---
 
+## 0c. v3 -- THE ROUND-3 RECUT (L10: 1.0.0_SA_CTO's round-2 analysis)
+
+**Input.**
+- The analysis: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_LGIC_ENFORCE_ROUND2_20260916.md`,
+  s.3's cell table, on `3.0.0_SA_CVO`'s round-2 slug. Its cells are named INDICATIVELY and it says so; the
+  split, the order and the ACT are left to this seat.
+- `1.0.0_SA_CTO` 97445 (RULING R-22): cell 1 is not this round's -- the four row-gate limbs are LANDED by that
+  seat in `.tools/surprise-row-gate.py` @`9d10c4b796`, 15 new arms, 131 of 131, red-first against HEAD. R-22
+  took shape (a) on this seat's S56: THE ACT BELONGS TO WHOEVER THE LANE ADMITS. That sentence is the whole
+  method of this recut, and it is applied below to every cell rather than only to the one that raised it.
+- `0.0.0_AB_MSTR` 97450: the `scopes.json` worker-True was a STALE FACE, not a lane defect.
+
+**Cell 1 is closed, and the count reconciles.** The analysis's table prints TEN rows but counts EIGHT cells,
+and this seat's own S56 called it NINE; all three agree once `2b` is read as cell 2's SECOND PART (it writes a
+different file, depends on cell 2's drain, and is the same gate's flip) and cell 1 is removed as LANDED. So:
+
+```
+  rows in the analysis's round-3 table ................................. 10
+  minus 2b, which is cell 2's second part, not a cell ................... -1
+  = cells ............................................................... 9
+  minus cell 1, LANDED by 1.0.0_SA_CTO @9d10c4b796 under R-22(a) ........ -1
+  = ROUND 3 IS EIGHT CELLS: 2 (with 2b), 3, 4, 5, 6, 7, 8, 9
+```
+
+### THE ACT CENSUS -- who may lawfully write each cell's surface
+
+Run AT THE CUT, on the lane file's own instrument (`.tools/owned-paths-validate.py`: `resolve_lane()` for the
+lane, `permitted_agents` for the roster, and the `--check-agent` CLI with each path PIPED ON STDIN -- an EMPTY
+stdin admits every serial, so nothing was left to default). The worktree `.owned-paths.yaml` was verified CLEAN
+against HEAD by `git status --porcelain` before the read, so these are the RECORD's bytes and not a neighbour's
+uncommitted edit. This is S23's instrument-dependency read and S31's grant-breadth read, both of which the
+analysis asks for by name.
+
+⛔ **IT MUST BE RUN AFTER THE STALE FACES WERE RETIRED, OR IT READS THE WRONG WORLD.** Six LGIC_ENFORCE
+orders sat non-terminal at HEAD carrying VALID proof-of-spec instances -- the class `0.0.0_AB_MSTR` named in
+97450 -- and each was a live ADHC_OWNPTH.005 grant to its `issued_to` worker for every path in its block. This
+seat retired all six @`9f9d006c8b` (the word is `complete`, not `superseded`: see the note that closes this
+section). Before that flip `0.9.0_WK_LGIC_ENFORCE~1` read PERMIT on `infra/logic/registry/scopes.json`; after
+it, REFUSED. **A grant census run over a tree with stale faces measures the faces, not the lanes.**
+
+| cell | the surface that decides | lane | worker | `2.0.0_SA_COO~G` | whose act |
+|---|---|---|---|---|---|
+| 2 | `.tools/naming-gate.py` | `ANY` | PERMIT | PERMIT | WORKER |
+| 2b | `org/mcp/naming-gate.enforce` | `BASE_EXEC` | REFUSED | PERMIT | ISSUER, after cell 2 drains |
+| 3a | `.tools/proof-of-spec-check.py` | `ANY` | PERMIT | PERMIT | WORKER |
+| 3b | `deliverables/2.0.0_SA_COO~G/fixed_inputs/r2/check_en_r2.py`, and LGIC_NAMING's `check_ln_r4.py` | `TREE_DELIVERABLES` | REFUSED | PERMIT | ISSUER (S55's repair) |
+| 4 | `LGIC_ENFORCE/deliverables/<blob>` -- NO serial subfolder | `TREE_DELIVERABLES` | REFUSED | REFUSED | **NOBODY** -- see below |
+| 5 | `infra/logic/registry/*.json` | `PLATFORM_LOGIC_DOCS` | REFUSED | REFUSED | `4.0.0_SA_CRO` only |
+| 6 | the worker's own `deliverables/<serial>/` | `TREE_DELIVERABLES` | PERMIT | REFUSED | WORKER |
+| 7 | `infra/logic/registry/exemptions.json` | `PLATFORM_LOGIC_DOCS` | REFUSED | REFUSED | `4.0.0_SA_CRO` only |
+| 7 | `org/critical_paths/change_management/`, `.open_deploys/` | `ANY` | PERMIT | PERMIT | WORKER (the ledger half) |
+| 8 | the worker's own `deliverables/<serial>/` | `TREE_DELIVERABLES` | PERMIT | REFUSED | WORKER |
+| 9 | `lib/opal_naming.py` | `BASE_EXEC` | REFUSED | PERMIT | ISSUER |
+
+**POSITIVE CONTROL, so no row above is read as a broken instrument:** `4.0.0_SA_CRO` reads PERMIT on every
+`infra/logic/registry/` path in the same sweep. The lane resolves and admits somebody; these are grant
+boundaries, not a blanket refusal and not a failed read.
+
+**Cell 4 has no lawful actor on its source side, and that is not a new fact -- it is R-2's.** The 18 ownerless
+files sit DIRECTLY under `deliverables/` with no serial in the path, and `TREE_DELIVERABLES` derives the owner
+FROM the path; with no serial there, the lane admits nobody. Measured: worker REFUSED, `2.0.0_SA_COO~G`
+REFUSED, `1.0.0_SA_CTO` REFUSED, `4.0.0_SA_CRO` REFUSED -- on the same call that returns PERMIT for each
+destination's own owner (`deliverables/2.0.0_SA_COO~G/...` -> this seat PERMIT;
+`deliverables/1.0.0_SA_CTO/...` -> the CTO PERMIT). A `git mv` stages BOTH paths, so the move needs the
+source's permission and there is none. R-2 ruled reading (a) with NO override, and the remedy it named -- a
+relocation cell -- has now missed two rounds.
+
+⚠ **AND THE POPULATION IS 18, NOT THE 17 S35 RECORDS.** Re-counted at WRITE time by git object type over
+`git ls-tree HEAD` (the method S35 itself established, after an earlier count of 26 mistook nine serial TREES
+for files): **18 blobs, 9 trees.** The trees agree; the blobs differ by one. Every one of the 18 has a
+first-commit date at or before `2026-09-16 07:29 -0400`, which PRECEDES S35's own `surfaced_at` of
+`2026-09-16T14:20Z` -- so this is not growth since S35, it is an undercount INSIDE S35, and the true figure at
+its own vintage was already 18. R-2 measured 12. S35 is ARMED with `disarm_owner` `2.0.0_SA_COO~G`, this seat;
+the correction rides its disarm at cell 4's drain rather than opening a new row.
+
+### What round 3 cuts, and what it routes
+
+**FIVE WORKER CELLS** -- cut as task orders: `2` (the gate's domain), `3a` (the `proof-of-spec-check.py`
+channel-resolution fix, LGIC_NAMING-S21), `6` (the census to the end), `7-ledger` (the live-plane writer census
+and the change-management entry), `8` (the roots census, evaluated). Each writes only `ANY` surfaces or its own
+`deliverables/<serial>/`.
+
+**THREE ISSUER ACTS** -- taken by `2.0.0_SA_COO~G` at the issuance commit, each with its negative self-test arm
+exercised ALONE as the evidence, C-S20-style: `2b` (the `naming-gate.enforce` flip, bound to cell 2's drain AND
+to the 78-root read of 0 refusals of existing resources), `3b` (S55's `\x1b` strip and `--color=no` repair in
+`check_en_r2.py` and `check_ln_r4.py`), `9` (the generator's target-list print in `lib/opal_naming.py`).
+
+**THREE CROSS-PROJECT ROUTES -- NOT CELLS OF THIS PROJECT**, by R-22(a)'s own reasoning and CN-i-1's precedent:
+- **Cell 5's registry edits and cell 7's `exemptions.json` -> `4.0.0_SA_CRO`.** `PLATFORM_LOGIC_DOCS` exists so
+  that the registry Rule 30 makes authoritative for every address and name is not edited by the projects it
+  grades -- and LGIC_ENFORCE is exactly such a project. No lane widening is proposed. What IS cut here is each
+  cell's MEASURE-AND-RECORD half, which needs no registry write: the class prints, the denominators, the `note`
+  reader's record, the four PRODUCT owners measured, and the live-plane writer census.
+- **Cell 4's relocation -> `1.0.0_SA_CTO`,** as the seat that ruled R-2 and the only one that can authorise the
+  audited override or ask `0.0.0_AB_MSTR` for the lane amendment. Filed as `LGIC_ENFORCE-S57` (BLOCKING, ARMED,
+  `disarm_owner` `1.0.0_SA_CTO`) together with the registry finding.
+- **Cell 5's `scopes.json` `row_fields` text (S19)** rides the same CRO route.
+
+**This is not a narrowing of the round.** All eight cells are worked this round; three of them are worked to
+the boundary the lane draws, and the remainder of those three is routed to the seat that may act, with its
+evidence already measured rather than left to be rediscovered.
+
+**A note on the word `complete` at `9f9d006c8b`, because 97450 asked for `superseded`.** All six retired faces
+carry a proof-of-spec instance that this seat re-ran through `.tools/proof-of-spec-check.py` with
+`--governing-order` BOUND (the form `to-pipeline-gate.py`'s complete-flip path uses): six of six VALID, rc=0.
+`superseded` would state on the record that the work was discarded; it was done and graded. The project's own
+convention is measured, not invented: of the round-1 faces that DO carry a round-2 recut, four of four already
+read `complete` at HEAD (`EN-d-1`, `EN-g-1`, `EN-s-2`, `EN-t-2`), and NO task order in LGIC_ENFORCE reads
+`superseded` at any vintage. Two of 97450's supporting legs also did not survive reading the artifacts:
+`EN-v-1` has no round-2 recut at all, and `EN-s-1`'s recut is itself non-terminal. The citing clause is safe to
+the reader that matters -- `owned-paths-validate.py`'s `_TO_STATUS_RE` takes the FIRST word token and is
+line-anchored, and `EN-g-1-r2` already carries prose after its word at HEAD.
+
 ## 1. THE DOMAIN, BY SUBTRACTION (Rule 24(i))
 
 ```
