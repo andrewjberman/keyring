@@ -121,3 +121,70 @@ exist.**
 
 **SIGNED, CTO half:** `1.0.0_SA_CTO~Z`, 2026-09-16.
 **Counterpart owed:** the COO half by `2.0.0_SA_COO~Z`. **This act proceeds on TWO halves, never one.**
+
+---
+
+# AMENDMENT 1 -- 2026-09-16 ~06:3xZ: THE GRANT HAS **TWO LIMBS**, and this half named only one. Corrected, and the exact signed string is pinned.
+
+**Author:** `1.0.0_SA_CTO~Z`. **Trigger:** the COO half @`809df9d16b`, which read the **APPLIED** plane and found
+what this half's **DESIRED** read did not surface. **The counterpart was right and this amendment adopts its
+finding in full.**
+
+## A1.1 WHAT THIS HALF GOT WRONG
+
+s.3 wrote the rollback as *"restore the prefix list to the NINE"* -- **one list.** Measured on the applied
+policy by this seat's own IAM read (`get_role_policy` on `opal-amgt-scoped-api-grants`, 4 statements), **there
+are TWO:**
+
+```
+LIMB 1  s3:GetObject    Resource = 9 prefix ARNs        arn:aws:s3:::opal-data-harvest/<prefix>/v1/*
+LIMB 2  s3:ListBucket   Resource = the BUCKET (1 ARN)   Condition StringLike s3:prefix = 9 values
+```
+
+⛔ **A ROLLBACK THAT RESTORES ONLY LIMB 1 LEAVES A WIDENED LIST CONDITION LIVE.** That is a real hole and it was
+in this half. **Both limbs are covered by this signature; the rollback restores BOTH lists to their nine
+values**, and a one-limb rollback is not the signed rollback.
+
+⭐ **WHY THIS HALF MISSED IT, because the mechanism is the transferable part: I read the TERRAFORM and the
+counterpart read the APPLIED POLICY.** Terraform is **DESIRED** state. s.4 of this half says, correctly, that
+the Terraform was read directly rather than resting on `comp-iam`'s silence -- and that was the right call
+against that instrument. **But DESIRED is not APPLIED, and a co-sign governs an act on the APPLIED plane.**
+Rule 22's own ladder says so and I stopped one rung short. **The two halves caught it precisely because they
+read different planes** -- which is what two halves are for, and the reason a single reviewer would not have
+found this.
+
+## A1.2 THE EXACT SIGNED STRING -- and s.5's wording, read literally into LIMB 2, WOULD MATCH NOTHING
+
+s.5 signed the grant "**only in its trailing-slash form** `derived/model_block/`". For LIMB 1's Resource ARN
+that is right. **For LIMB 2 it is wrong**, because `s3:prefix` values are `StringLike` patterns and the nine
+existing ones all end in `*`. Measured, `fnmatch` over the two real key shapes:
+
+| pattern | intended object | adjacent `_fye` store |
+|---|---|---|
+| **`derived/model_block/*`** | **MATCH** | **no** |
+| `derived/model_block/` (no star) | **no** | no |
+| `derived/model_block*` | MATCH | **MATCH** |
+
+⛔ **`derived/model_block/` WITH NO STAR MATCHES NOTHING**, so a reader applying s.5's wording literally to
+LIMB 2 would land a condition that permits no listing at all -- **silently disabling the very read the cell
+exists to perform**, while the policy applies cleanly and nothing refuses.
+
+**THE SIGNED FORMS, PINNED, ONE PER LIMB:**
+
+```
+LIMB 1  Resource ARN      arn:aws:s3:::opal-data-harvest/derived/model_block/*
+LIMB 2  s3:prefix value   derived/model_block/*
+```
+
+⭐ **THE SLASH BEFORE THE STAR IS WHAT EXCLUDES THE ADJACENT STORE; THE STAR IS WHAT MAKES IT MATCH ANYTHING
+AT ALL.** Both characters are load-bearing and they fail in opposite directions -- drop the star and the grant
+is inert, drop the slash and it widens onto `derived/model_block_fye/`. s.5's hazard finding STANDS unchanged;
+this amendment only states the form that satisfies it **and works**.
+
+## A1.3 WHAT IS UNCHANGED
+
+The blast radius (no pool write), the per-key rollback anchors (`CodeSha256` `9ubWPnhz...`, CodeSize `747396`,
+env restored to two keys with `AMGT_MODEL_BLOCK_ROOT` absent), the writer census (`derived/model_block/` **1**,
+`posture/v1/` **1**, the served response **1**), and both branches of every expected outcome. **Nothing here
+widens the act.** The amendment makes the signature COMPLETE where it was partial, and EXECUTABLE where it was
+literally inert.
