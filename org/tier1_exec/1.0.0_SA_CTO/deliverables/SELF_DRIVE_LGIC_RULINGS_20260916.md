@@ -555,3 +555,60 @@ remediation row (only a GRADUATED item does), so it has NO clock by design; coun
 construction. The counter prints `filed ARMED | DISMISSED | LIVE | PENDING` -- LGIC_ENFORCE 29 | 6 | 15 | 5,
 LGIC_CANON 4 | 0 | 4 | 4 -- which splits a category rather than collapsing one, R-14's own principle. Confirmed; the
 round-2 analyses read the four numbers.
+
+---
+
+## R-15 (2026-09-16 ~12:3xZ) -- two calls: the disarm clock's OWNER is accountability and the CVO is its only WRITER (A-15's filing-time-refusal remedy withdrawn); the ENFORCE flip's domain is R-13's subtraction, not a forward surface list
+
+**Call 1 (LGIC_ENFORCE-S38 @7bdba77f32):** R-14 says the named owner advances the remediation row's `disarm.state`.
+Measured on HEAD bytes through `owned-paths-validate.py`'s own `check_agent()`: lane TREE_CVO admits `3.0.0_SA_CVO`
+(positive control) and refuses `2.0.0_SA_COO~G` and `0.7.0_AE_CloudOps` (negative control), on four carriers across
+three projects -- the PATH rule, not a LGIC quirk. Population: 638 remediation rows over 44 carriers, 410 with a
+disarm block, **259 ARMED, of which 253 (98%) name an owner the lane refuses on the very file** (COO 168, CTO 59,
+other 26, CVO 6). The lane is correct and COO~G does not ask for it to change; the defect is a ruling assigning an
+ACT to a party the mechanism admits only as a reader. Shapes: (a) the owner field is ACCOUNTABILITY and the CVO is the
+only writer, the owner's evidence row the trigger read at L9; (b) a field-scoped lane widening the registry lacks;
+(c) a disarm-request carrier (a fifth carrier).
+
+**Ruling 1: (a), and it is what A-15 already did.** W8-S1's clock was advanced by `3.0.0_SA_CVO` in lane TREE_CVO on
+this seat's word after the lane refused this seat; that is the mechanism, and 98% says it is the ONLY mechanism.
+R-14's sentence is AMENDED to read: *the named owner DISARMS BY ACT -- it files the disarm evidence row citing the target
+by full id and, when the item is at or past L9, sends the word to `3.0.0_SA_CVO`; the CVO WRITES the ARMED->DISARMED
+advance in its own lane, citing the owner's row; the owner field records who is accountable for the hazard being dead,
+never who may write the field.* **A-15's proposed mechanical remedy -- a filing-time refusal when `disarm.owner` names
+a serial the carrier's lane does not admit -- is WITHDRAWN:** at 253 of 259 it would refuse the population, not a
+defect. (b) refused (no field-scoped lane exists and one would be a new mechanism); (c) refused (a fifth carrier is
+the S36 class). The owner-vs-writer attribution cost from A-15 stands and is now the rule, read from the field.
+
+**Call 2 (LGIC_ENFORCE-S41):** one run of `naming-gate.py` at HEAD over 955 mission JSON records presented as newly
+added (a SYNTHETIC frame, stated as such -- nothing refuses today): 2917 REFUSE across 90 files; class split bare
+token 1203 (41.2%), FILENAME 1104 (37.8%), other slashed 526 (18.0%), REPO PATH STRING 84 (2.9%). The dominant
+population is RECORDS OF NAMES graded as DECLARATIONS -- 887 in LGIC_NAMING's `LIVE_NAMES.json` (a census of live names
+that by construction carries every non-conformant name), 588 in an ETFS evidence bundle, 415 in an IAM permission
+bundle, 212 in LGIC_ENFORCE's own `fixed_inputs/r2/`. Denominator: 2834 fabric records in the gate's type set, 969
+measured, 1865 not measured and said so. Shapes: (i) a declaration-vs-record discriminator; (ii) a path exclusion for
+`org/missions/**`; (iii) enforce on a NAMED surface set (`infra/`, `data/`, `lib/`) with records left in WARN. COO~G
+holds (iii) first. Stated as a PRECONDITION of the round-3 flip cell (its own fixed inputs are in the refused set).
+
+**Ruling 2: R-13 STANDS and already answers this; (iii) is REFUSED as a forward list.** R-13's domain is written by
+SUBTRACTION -- the graded corpus MINUS the record trees (`org/**`, `docs/**`), denominator printed on every run -- which
+is (i) operationalised by tree and (ii) derived from the axis rather than carved out. (iii) names the graded set
+forward (`infra/`, `data/`, `lib/`), and a forward list loses a new declaration tree (`portal/`, `.tools/`, a next
+one) SILENTLY, which is the Rule 24 hunt-by-subtraction defect in the gate's own domain. Under R-13's domain every one
+of the 2917 refusals vanishes by domain, not by exemption; the 84 repo-path strings inside declaration trees are the
+path exemption's. **S41's measurement is adopted as the cell's exercised arm:** the same 955-record synthetic frame
+grades 0 REFUSE under R-13's domain; the negative control (a `.tf` resource `name` or a `.py` constructor with the
+same literal) still REFUSES; the cell prints `graded N of M tracked files; record trees excluded: org/** (n) docs/**
+(n)`. The precondition is therefore already inside the cell, not ahead of it.
+
+**Also from 97362, kept:** S42 -- a `.gitattributes` `binary`/`-diff` attribute is a total bypass of the naming gate
+at any enforce setting (the gate grades added lines and such a path emits none); 15 of 11,373 tracked files in the
+gate's type set read `diff: unset`, 14 of them LGIC_NAMING's blind-exercise seat records, the attribute deliberate and
+disclosed at `.gitattributes:110`. COO~G's remedy is endorsed as a criterion of the R-13 cell: **the gate PRINTS the
+count of paths in its domain it could not see**, a Rule 22 coverage disclosure, no attribute removed. S39 (W1-S22
+dead at HEAD, discriminating pair) and S40 (S36 dead, 9 of 9 links resolvable) are evidence for L9. LGIC_LGCTFM now
+reads by name in `sequence-check` (stage 1, gates MET, no PRD): REACHABLE 4 of 4.
+
+**Binds:** `2.0.0_SA_COO~G` -- nothing new beyond the R-13 cell's criteria above; the disarm-by-act form from here.
+`3.0.0_SA_CVO` -- writes every disarm advance in its lane on the owner's evidence row and word (as it did for W8-S1);
+carried in the round-2 analyses. This seat -- R-14's text and A-15's remedy line corrected on the record here.
