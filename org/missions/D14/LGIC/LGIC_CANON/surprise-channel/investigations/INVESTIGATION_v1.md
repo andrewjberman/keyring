@@ -1017,6 +1017,31 @@ not a message.
    "spec_asserts": "R-14: an issuer's disarm row is EVIDENCE for L9 and must carry a machine-readable citation to its target.",
    "world_is": "The four filed today named their targets in prose only, so no resolver could follow them and this seat's own counter re-reported three of them as open. These citations close that gap for the reader without changing what the rows claim.",
    "notes": "INERT: this adds no claim and disarms nothing. \u26d4 IT IS NOT A CLOCK. Under R-14 the disarm CLOCK is the remediation row's disarm block, written by 3.0.0_SA_CVO at L9 with state ARMED and advanced to DISARMED by the named owner. These four rows are EVIDENCE the hazard is dead, to be read when the CVO graduates each item; they close nothing by themselves. Targets by full id, repeated here so a text search is exact: LGIC_CANON-S3, LGIC_CANON-S7, LGIC_CANON-S11, LGIC_CANON-C-S11."
+  },
+  {
+   "id": "LGIC_CANON-S17",
+   "project": "LGIC_CANON",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T20:15Z",
+   "one_line": "THE FOUR INSTRUMENT DEFECTS CN-i-1 IS CUT TO REPAIR ARE TWO, NOT FOUR, AT HEAD: W2-S3 and W8-S4 are LIVE and I reproduced both in the current bytes; W3-S2 and W5-S2 were already repaired and their rows describe a pre-repair state. Read before building, so the cell is cut at what is actually broken.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "LIVE -- W2-S3, check_canon_r2.py:245 k3_contentdiff(). Its DOCSTRING says 'The arm is exercised against a planted removal, which is this criterion's negative control.' The BODY plants nothing: it reads the flag string out of the renderer's source, runs --content-diff ONCE on the true tree, and passes on the substring 'CONTENT-DIFF: 0'. A constant print of that string satisfies it. The row is exact and the defect is in the bytes at HEAD.",
+     "LIVE -- W8-S4, check_canon_r2.py:497 o3_sovereign(). 'marked = re.findall(r\"SOVEREIGN\", blob)' counts OCCURRENCES of the token anywhere in the INPUTS section and then prints 'the INPUTS section names %d SOVEREIGN input(s)'. Occurrences are not marked rows, and the verdict is 'if marked' -- so ONE occurrence anywhere, in prose or a definition list, passes it. Exactly W8-S4's claim.",
+     "ALREADY REPAIRED -- W3-S2, check_canon_r2.py:602 l2_recount(). The row says \\S+ single-token regexes cannot read the multi-word SECTION and TOTAL labels. At HEAD :619 reads '^SECTION\\s+(.+?):\\s+(\\d+)\\s+rows' -- the non-greedy form -- and the function's own docstring at :606-609 records the measurement that drove the repair (the TOTAL pattern captured 6 of 14 rows, the SECTION pattern ZERO, because the real shape is 'SECTION <label>: <n> rows (<instrument>)').",
+     "ALREADY REPAIRED -- W5-S2, check_canon_r2.py:318 j_reach(), repaired at df30196cc1 and re-verified at HEAD this session: it scopes to column(JUDGE[which], 'reach') by the TSV's own header, REFUSES loudly when that column is absent, and PRINTS a DISCLOSED: line when a whole-row scan would have read differently. Both j4-reach and j5-reach route through that one function, so it was a CLASS repair.",
+     "SO THE PARTITION IS 2 LIVE / 2 ALREADY REPAIRED of the 4 the round-2 slug names, and CN-i-1's build is halved. The two live ones share ONE shape -- an instrument counting or asserting something ADJACENT to the claim (a docstring's promise; a token's occurrences) rather than the claim itself.",
+     "WHY THIS WAS READ RATHER THAN ASSUMED: LGIC_ENFORCE-S54 recorded this seat classifying an outcome from its SPECIFICATION without reading its GRADE, and LGIC_NAMING-S44 recorded a mechanism measured DEAD whose row still described it as live. A surprise row states the world AT ITS FILING and is frozen there; the bytes move underneath it. Two of four here."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "CN-i-1 repairs four instrument defects in this seat's round-2 fixed inputs.",
+   "world_is": "Two of the four are already repaired at HEAD. CN-i-1 repairs two, and carries the other two forward as regression arms rather than re-fixing what is not broken.",
+   "notes": "INERT: adds no hazard. It NARROWS the cut rather than widening it, which is the direction that needs evidence, so both live defects are reproduced above from the current bytes rather than cited from the rows. * WHAT CN-i-1 NOW BUILDS: the two repairs (a k3-contentdiff that PLANTS the removal it claims, and an o3-sovereign that counts MARKED ROWS with its denominator printed), plus A-23's negative self-test per subcommand with EACH ARM EXERCISED ALONE, plus regression arms holding the two already-repaired readings in place so a later round cannot quietly undo them. ! AND THE REGRESSION ARMS ARE NOT OPTIONAL: a repair with no arm is a repair that can be reverted without anything failing, which is how W5-S2's class got into two checkers at once in the first place."
   }
 ]
 ```
