@@ -2025,6 +2025,31 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     "spec_asserts": "THE CELL item 1: 'each generated file declares the registry files its renderer reads ... Derive the declaration from what the renderer reads ... A registry file the renderer does not read is not listed.' The mark format 'over <file>[,<file>...]' and check_en_r2.py's PER_VIEW regex both presuppose every renderer reads at least one registry file.",
     "world_is": "One of the ten renderers (bucket_for) reads none, by design, and says so in its own pre-existing comment -- a genuine, previously-documented zero-dependency case the mark format cannot express. Declaring the empty set is not mechanically an option (it would fail require_per_view() for every one of the ten R6-AC* criteria, not just this one). scopes.json was declared instead: not a dict-key read this renderer makes, but the block's own documented trust anchor (the same file data/firm_registry.json itself declares), chosen because it is the least-arbitrary non-empty answer available and it lets every R6-AC* criterion PASS by output under this cell's own checker.",
     "notes": "No remedy owed to reach PASS -- all ten R6-AC* criteria pass under this resolution, cited above. Filed so 3.0.0_SA_CVO (L9) or a later round can confirm the scopes.json attribution is the right call, or amend the mark format/PER_VIEW regex to admit a literal zero-file 'over' clause for a renderer that truly reads nothing, should either be preferred to this worker's judgment call."
+  },
+  {
+   "id": "LGIC_ENFORCE-S24",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T10:05Z",
+   "one_line": "S23's rule applied for the FIRST time and caught a SECOND cell within the hour: EN-d-1 is unblocked by its dependency graph and by write-surface disjointness, and is HELD anyway, because it WRITES the two registry files the live EN-s-1 census READS.",
+   "class": "OBSERVATION",
+   "hazard_standing": "ARMED",
+   "disarm_owner": "2.0.0_SA_COO~G",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "EN-d-1 READS AS READY ON BOTH EXISTING CHECKS. Its declared depends_on is 'EN-r-6 round 2 (merged)' and EN-r-6 drained at c8e9d02213. Its <paths> do not intersect EN-s-1's <paths> (EN-s-1 writes only NAMING_CENSUS_REPORT.md and the channel). Its worktree was provisioned and healthy at the time of this row.",
+     "AND IT IS STILL CONTENDED. EN-d-1's write surface opens with infra/logic/registry/scopes.json and data/firm_registry.json. EN-s-1's cell is 'python lib/opal_naming.py census --live --repo', and that census READS the registry -- those two files are its INPUT, and S1R-AC5 grades that 'the report was written at HEAD's registry'.",
+     "SO THE CONTENTION IS INPUT-vs-OUTPUT, one step out from S23's instrument-vs-output. EN-d-1 adds a demo firm to the registry; if it landed while EN-s-1 was censusing, EN-s-1's report would describe a registry that HEAD no longer carries, and S1R-AC5 would fail at drain through no fault of its worker.",
+     "MEASURED SEQUENCE: EN-s-1 was spawned into wk-lgic-enforce-2d-2 at base c8e9d02213 and is LIVE at the time of this row. EN-d-1's worktree wk-lgic-enforce-2d-5 exists at the same base and NO worker has been spawned into it.",
+     "THIS IS THE WIDENED CHECK FROM LGIC_ENFORCE-S23 RUNNING, NOT A NEW DISCOVERY OF THE SAME THING. S23 says to intersect each cell's INVOCATION targets with every open cell's <paths> rather than comparing <paths> to <paths>; doing exactly that on the next spawn decision returned this pair. Two instances in one round, found by one rule, is the evidence that the rule is worth keeping rather than a one-off."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "EN-d-1's depends_on (EN-r-6, merged) and the round's write-surface disjointness check both read this cell as ready to spawn.",
+   "world_is": "Neither check reads what EN-s-1 CONSUMES. EN-d-1 writes the two registry files the live census reads as its input, so spawning it now would corrupt a sibling's measurement rather than its own.",
+   "notes": "ARMED, disarm_owner 2.0.0_SA_COO~G. EN-d-1 is HELD until EN-s-1 drains, then spawned against the post-drain tree; its worktree is already provisioned so the hold costs a wait, not a rebuild. Disarms when EN-d-1 is spawned after EN-s-1's drain. \u26a0 This row does NOT re-argue S23 and does not disarm it -- S23 owns the durable widening of the issuance census; this row exists so a reader asking why EN-d-1 sat unspawned while every declared gate read MET finds the answer at the cell rather than only in the rule."
   }
 ]
 ```
