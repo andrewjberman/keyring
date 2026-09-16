@@ -358,6 +358,31 @@ not a message.
     "spec_asserts": "TO-CN-o-2 criterion O2-AC2 expects 'VERDICT: PASS-O2-NO-JUDGEMENT': no step of infra/logic/10_ONBOARDING_CHECKLIST.md is marked JUDGEMENT (FWD-5: 'no step where somebody has to invent an answer').",
     "world_is": "A reviewer who did not write the checklist marks 5 of its 16 steps JUDGEMENT. So the criterion does not produce its named result, and the order stays open on O2-AC2; O2-AC1 passes, with 16 of 16 steps marked. Steps 3, 7, 8 and 9 share one cause. Onboarding bundles the build of the firm's pipelines, and the canon fixes a pipeline's homes, formats, compute and name grammar but not its contents. Those contents are: the pipeline directory and a master row's label (Step 3); the resource set and the function words (Step 7); the bronze and silver table names and bronze's partition form (Step 8); and the gold table names, the gold partition form and the owner of a combined build (Step 9). No input carries them, and key() and address() accept any choice of valid shape. Step 14 has a separate cause. It mandates opal-partner-<LONG>, which grade() reads OUT-OF-PATTERN, while Step 12 applies only CONFORMANT names. The auth handler requires that name, no register entry declares the departure, and the checklist names no STOP and no owner for the conflict. INERT: the checklist is a document, and nothing runs until cell C6 (PRD DEC-9).",
     "notes": "Filed by 0.9.0_WK_LGIC_CANON~7 on LGIC_CANON.TO-CN-o-2; this worker kept working. CHECKLIST_REVIEW.md carries the reason for each step. This worker judges the row's form, not its significance: whether the checklist, its inputs or the canon change is for L9 (3.0.0_SA_CVO) and the CN-o-1 recut to decide."
+  },
+  {
+   "id": "LGIC_CANON-S3",
+   "project": "LGIC_CANON",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T05:52Z",
+   "one_line": "render_naming_section.py drops the per-firm note when it reads firm forms from the scope registry instead of the schema. At NAMING_SCHEMA v1.9 the canon's generated section therefore LOST the demo note carrying RULING DM -- the one line saying why demo reads as a firm in every naming slot -- although the registry row itself carries that text in a note field the renderer never reads.",
+   "class": "OBSERVATION",
+   "hazard_standing": "ARMED",
+   "disarm_owner": "2.0.0_SA_COO~G",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "READ infra/logic/render_naming_section.py at CLOUD 4730cec6ca: the module docstring states firm forms come from NAMING_SCHEMA.json firm_forms while that field exists, else from the FIRM rows of infra/logic/registry/scopes.json, and that the registry is read only when the schema carries no firm_forms. The note text is emitted on the schema path only; the registry branch reads long and short and never note.",
+     "MEASURED, the registry DOES hold the content: the FIRM rows of infra/logic/registry/scopes.json carry keys 49financial, inflection, cottonwood and demo, and the demo row is the one of the four whose key list includes note. So the loss is the reader, not the data.",
+     "MEASURED, the schema at v1.8 carried the same text: git show CLOUD~:org/standards/NAMING_SCHEMA.json firm_forms is four objects and the demo object carries note = one token; the long and short forms are the same string ... so in every naming slot demo reads as a firm (RULING DM, row W6-S4, v1.7).",
+     "RUN, the observable loss: python infra/logic/render_naming_section.py --write on the v1.9 tree changes infra/logic/02_DOCTRINE.md by 3 insertions and 4 deletions. Three of the four deletions are the N2 lead line and blank lines; the fourth is the demo note bullet, which no insertion replaces. Corroborated on a SECOND checkout by 4.0.0_SA_CRO at 783e2f3887 (message 97308), which measured the same 3 insertions / 4 deletions and named the same lost bullet.",
+     "NEGATIVE CONTROL: --check reads FRESH -- 0 failure(s) after the render. So the gate that exists for a stale section CANNOT see this -- the section is a faithful render of what the renderer chose to read, and the missing line is invisible to it."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "LGIC_CANON PRD DEC-1 b: the schema is the one owner of the naming enumerations and the canon only presents them. CN-k-1 K1-AC2: render_naming_section.py --check exits 0, the section's bytes equal a fresh render of the stamped files.",
+   "world_is": "DEC-1 b's one-owner rule was met by moving the firm forms to the registry, but the renderer's two source paths are not equivalent readers: the schema path emits a per-firm note and the registry path does not. Moving the data therefore moved only PART of it into the canon, and the part left behind is the ruling citation rather than a spelling.",
+   "notes": "ARMED, disarm_owner 2.0.0_SA_COO~G. The remedy is a one-line read of the FIRM row's note field in the renderer's registry branch, re-rendering the bullet exactly as the schema path did. It is NOT done here: the renderer is drained cell CN-k-1's deliverable, round 1 is at 3.0.0_SA_CVO for L8/L9, and cutting a round-2 cell before round 1's L10 slug would deadlock that L10 (CLAUDE.md Rule 27, LD-0521). It disarms as a LGIC_CANON round-2 cell. The render was landed anyway under 1.0.0_SA_CTO RULING R-1 (97306): a canon that disagrees with the schema at its own HEAD is the worse state, and this line is recorded and cheap to restore. For 3.0.0_SA_CVO at L9: CN-k-1's K1-AC2 verdict is unaffected -- the section IS a fresh render -- and this row is about what a fresh render omits."
   }
 ]
 ```
