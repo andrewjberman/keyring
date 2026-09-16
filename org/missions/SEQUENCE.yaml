@@ -94,6 +94,16 @@ projects:
     why: "In the Platform Logic stage by Andrew's priority word. No hard dependency on the other two; its PRD is queued after LGIC_ENFORCE's as the CTO's work order, which is not a gate."
     notes: "Seated on 2.0.0_SA_COO~G alongside LGIC_NAMING and LGIC_ENFORCE: Andrew-direct ~16:1xZ 2026-09-15 at the 2.0.0_SA_COO~G terminal, 'Yeah there is a lot of work to be doing here between ENFORCE and CANON and I want you parallelizing harder. Use more agents, go faster.' (record org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260915_161xZ_PARALLELIZE_HARDER_ENFORCE_AND_CANON~G.md @2373f96073). No new COO session; the laptop stays at 3 of 3; no other project's seat order moves."
 
+  LGIC_LGCTFM:
+    fabric: laptop
+    stage: 1
+    waits_on:
+      - {project: LGIC_NAMING, prd_admitted: true}
+      - {project: LGIC_ENFORCE, prd_admitted: true}
+      - {project: LGIC_CANON, prd_admitted: true}
+    why: "The Legacy Transform is the LENS the D14 canon, schema and builders are read through: its DESIRED half is computed by LGIC_ENFORCE's address()/name()/grade() against LGIC_NAMING's schema and graded against LGIC_CANON's rules (brief IV.1, IV.4), so its PRD cannot be written before those three are admitted. All three are admitted at placement, so the gates are met and nothing waits. Fourth in the Platform Logic stage by Andrew's ~05:2xZ 2026-09-16 word naming the four LGIC projects together; last of the four for a COO seat, behind the three already seated on 2.0.0_SA_COO~G."
+    notes: "Placed at L3 (REGISTERED, 2026-09-16 @5ae9383901) so the goal loops' 'drive in the sequence's order' covers the set Andrew named (2.0.0_SA_COO~G 97315). Its first real subjects are stage-2 projects (ADVI_FIRMBKTS, MDPF_CANON; brief IV.15, O6): that is a CONSUMER relation, recorded on those rows' notes when their L5 cuts the cell, never a gate on this row. Stage-2 holds are unchanged by this placement."
+
   ADVI_FIRMBKTS:
     fabric: laptop
     stage: 2
@@ -169,3 +179,7 @@ change_log:
     by: "1.0.0_SA_CTO"
     change: "v4 note -- LGIC_CANON seated on 2.0.0_SA_COO~G (coo_lane on its project row); its NEEDS-SLOT clears. No order changed, and no COO session was added."
     word: "'Yeah there is a lot of work to be doing here between ENFORCE and CANON and I want you parallelizing harder. Use more agents, go faster.' (Andrew-direct ~16:1xZ at the 2.0.0_SA_COO~G terminal, record @2373f96073)"
+  - at: "2026-09-16"
+    by: "1.0.0_SA_CTO"
+    change: "v4 placement -- LGIC_LGCTFM placed in stage 1, fourth of the Platform Logic projects, waits_on the three D14 PRDs admitted (all met at placement). Answers 2.0.0_SA_COO~G's open call R-3 (97315): a register member the goal loops drive 'in the sequence's order' was unplaced. No existing order changed; stage-2 holds unchanged; last of the four for a COO seat."
+    word: "'Your goal for this session is to drive the LGIC projects to completion and validation. There is one new one coming in from CRO, LGIC_LGCTFM, which you will have to /endpoint --forward ... You are done when all 4 LGIC projects are completed, validated, and closed.' (Andrew-direct ~05:2xZ 2026-09-16 at the 1.0.0_SA_CTO terminal; record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260916_052xZ_LGIC_GOAL_AND_30M_SELF_DRIVE_ADJUDICATE.md @a6e628fb89)"

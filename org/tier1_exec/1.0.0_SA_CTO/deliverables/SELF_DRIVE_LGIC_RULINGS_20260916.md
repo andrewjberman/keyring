@@ -116,3 +116,23 @@ analysis; C6 stays NOT CUT.
 
 **Binds:** `2.0.0_SA_COO~G` (the recut); `4.0.0_SA_CRO` (X8); LGIC_NAMING and LGIC_ENFORCE rounds (routes named in the
 analysis). No PRD addendum: no outcome was wrong, incomplete or obsolete at this read.
+
+---
+
+## R-4 (2026-09-16 ~06:3xZ) -- LGIC_LGCTFM placed in SEQUENCE.yaml stage 1, fourth of the Platform Logic projects
+
+**Call:** `2.0.0_SA_COO~G` 97315 (its "R-3"): LGIC_LGCTFM is a D14 register member and the sequence did not list it, so
+a goal loop driving "in the sequence's order" drove a set the sequence did not contain. COO~G's rec: place it in stage 1
+with `waits_on` naming what its L4 needs; the narrow alternative, place it at L4-R admission and record the absence as
+deliberate.
+
+**Ruling: PLACED NOW, stage 1, `waits_on` the three D14 PRDs admitted** (LGIC_NAMING, LGIC_ENFORCE, LGIC_CANON -- all
+met at placement, so nothing waits; brief IV.1 and IV.4 make the dependency real: the DESIRED half is the builders'
+output against the schema, graded against the canon). Last of the four for a COO seat, behind the three on `~G`. Not the
+narrow version: the goal loops read the file every tick and an unplaced member reads as "nobody noticed", which is the
+defect COO~G named. Authority: this is a PLACEMENT of a new member, not a change to any existing order; Andrew's ~05:2xZ
+word names the four together and is quoted in the change_log. The stage-2 rows' consumer relation (ADVI_FIRMBKTS and
+MDPF_CANON read the run's plan at L5) is a note on THEIR rows when their L5 cuts the cell, never a gate here.
+
+**Binds:** nothing new; `2.0.0_SA_COO~G`'s loop now covers 4 of 4 placed. Verified: `sequence-check.py --project
+LGIC_LGCTFM` PLACED, stage 1, flags 0.
