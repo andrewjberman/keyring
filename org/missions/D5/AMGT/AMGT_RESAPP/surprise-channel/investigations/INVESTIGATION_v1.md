@@ -6956,6 +6956,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "Task order AMGT-rk-13 section 3 <paths>: 'lib/research/identity/ ... lib/research/peers/ ... lib/research/universe/ ... lib/research/scores/ ... lib/research/api/tests/ ...'.",
     "world_is": "lib/research/universe/ does not exist as a directory at this commit; the functionality the name suggests is split across lib/research/peers/universe.py and lib/research/identity/build_universe.py, both reachable through this order's OTHER granted paths.",
     "notes": "No STOP was taken: the missing entry is one path among five in the grant, and this cell's every required write landed inside a path that DOES exist and IS granted (lib/research/peers/). Per the top-level instructions this is recorded as a surprise ('a path is elsewhere'), not a BLOCKING row, because it never prevented an act this order needed. No code or grant was widened to compensate."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S130",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-16T17:48:14Z",
+    "one_line": "ISSUER READING of AMGT_RESAPP-Z-W25-S6, cut into AMGT-rk-13 as ISSUER AMENDMENT 10: the GOOGL/GOOG pair is ONE issuer's two share classes, so AC3's escape clause for a genuinely different company does not reach it, the repair is inside lib/research/peers/ which rk-13 already grants, and the over-exclusion control is part of the repair; rk-13's grant widens by the ~21 deliverables path W25-S7 names.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Worker 0.9.0_WK_AMGT_RESAPP~25's AC3 run after its batch: self_match_suspects 2 over 1408 members across 191 objects -- GOOGL_US_Equity (Alphabet Inc. Class A) and GOOG_US_Equity (Alphabet Inc. Class C) each carrying the other; mutant_suspects 2 of 2, so the instrument fired.",
+        "AMGT-rk-4's cell text, inlined in its own worker face: 'company-FIGI deduplication repaired' and 'the company-FIGI deduplication is broken' -- the mechanism for one issuer under two identifiers is named inside chain C's own family.",
+        "AMGT_RESAPP-Z-W25-S3 (rk-4): a token-overlap self-exclusion attempt caught the named case AND over-excluded unrelated companies sharing a corporate-suffix word; it was reverted byte-for-byte. That is why the repair's evidence must print what it removes.",
+        "AMGT_RESAPP-Z-W25-S7: engine.batch_artifact_paths() writes the batch log and summary under deliverables/0.9.0_WK_AMGT_RESAPP~21/, outside rk-13's grant as issued, so the DELIVER's own mandated invocation could not commit its evidence.",
+        "rk-13's other three criteria PASS at HEAD ae94f4c1fb: populatable_expected 121 and populated_subjects 121 with 1408 members (AC1), crosswalk 11 and figi 5 over 6 modules (AC2), pool blocks 4 of 4 with NVDA_US_Equity through model_block_header (AC4)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT-rk-13 AC3: self_match_suspects 0, with the escape clause reading 'a suspect that is genuinely a different company is refused as written'.",
+    "world_is": "The worker refused rather than widen an exclusion rule on its own reading, which is what the refusal clause asks for. The issuer's reading is that the escape does not cover a same-issuer share class, and the mechanism is already named in the chain's own cell text.",
+    "notes": "NO criterion moves; the amendment is a note plus one grant path, so nothing already proven is re-opened. rk-13 stays OPEN for a respawn that repairs the exclusion and re-proves AC3 only; AC1, AC2 and AC4 carry forward from the instance at 33304ed32c. W25-S6 stays ARMED with its own disarm_owner at L9 -- this row does not disarm it, it directs the repair. W25-S8 is recorded and needs no act: the non-existent grant path blocks no write this cell makes."
   }
 ]
 ```

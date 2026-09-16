@@ -42,6 +42,7 @@ lib/research/api/tests/
 org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~25/
 org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md
 org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rk-13.the-similarity-ranker-rerun.md
+org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~21/
 </paths>
 
 - **A SURFACE NOT NAMED IN `<paths>` IS A WALL** (RULING 1). A READ needs no grant; this block governs WRITES. Scratch is
@@ -105,6 +106,27 @@ NEW, AC2 is UNCHANGED. Nothing else in this order moves: no cell text, no grant,
   runs on the box under the box's credentials.
 - AC4's planted case is `NVDA_US_Equity`: a block in the pool, none in the directory. Today it classifies through
   `scanner_row`, and it must classify through `model_block_header`.
+
+**ISSUER AMENDMENT 10 (2026-09-16 ~17:5xZ, 2.0.0_SA_COO~Z).** NO criterion changes. The grant WIDENS by one path, and this note settles what AC3's escape clause does and does
+not cover.
+- **AC3's two suspects are NOT the escape clause's case.** `GOOGL_US_Equity` and `GOOG_US_Equity` are ONE issuer's two share
+  classes, each served as the other's comparable. AC3's escape is for a suspect that is *genuinely a different company*
+  sharing tokens; the same issuer under two share classes is the self-match shape `W21-S3` named, one level further out
+  (row `AMGT_RESAPP-Z-W25-S6`, and `AMGT-rk-4`'s own cell text names the broken **company-FIGI deduplication** as this
+  family's mechanism). **The repair is inside `lib/research/peers/`, which this order already grants.** AC3 stands as
+  written: `self_match_suspects 0` with `mutant_suspects 2`.
+- **AND THE OVER-EXCLUSION CONTROL IS PART OF THE REPAIR, because the last attempt at this class over-excluded.** In
+  `AMGT-rk-4` a token-overlap rule caught the named case and also dropped unrelated companies sharing a corporate-suffix
+  word, and was reverted byte-for-byte (row `W25-S3`). So the evidence PRINTS, across every subject, the members the new
+  rule removes and the member count before and after: the removals must be share-class siblings of their own subject and
+  nothing else. A removal you cannot name that way is a refusal and a row, not a pass.
+- **W25-S7, the batch artifact:** `engine.batch_artifact_paths()` writes the batch log and summary beside the
+  candidate-universe cache under `deliverables/0.9.0_WK_AMGT_RESAPP~21/`, which your grant did not name, so the mandated
+  invocation could not commit its own evidence. That path is ADDED above. Do not move the coordinate itself: another
+  cell reads the same default, and relocating it is not this cell's act.
+- **W25-S8, the grant's `lib/research/universe/`:** that directory does not exist, and the code it names lives in
+  `lib/research/peers/universe.py` and `lib/research/identity/build_universe.py`, both already granted. The entry is left
+  as issued: removing it changes nothing you can write, and the row records the fact for L9.
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="AMGT-rk-13"><invocation>python -c "import io,os,json,sys,boto3; sys.path.insert(0,'.'); from lib.research.peers import universe as u; s=boto3.client('s3'); B='opal-data-harvest'; L=lambda p: [o['Key'] for pg in s.get_paginator('list_objects_v2').paginate(Bucket=B,Prefix=p) for o in pg.get('Contents',[])]; P='derived/model_block/'; pool=set(k[len(P):].rsplit('/',2)[0] for k in L(P) if k.endswith('/model_block.json')); d=u.MODEL_BLOCK_DIR_DEFAULT; eng=set(n[len('model_block_'):-len('.json')] for n in (os.listdir(d) if os.path.isdir(d) else []) if n.startswith('model_block_') and n.endswith('.json') and not n.startswith('model_block_fye_')); us=set(str(r.get('ticker')) for r in json.load(io.open(os.path.join(u.CACHE_DIR_DEFAULT,u.CACHE_NAME),encoding='utf-8'))['rows']); src=lambda k: (k in pool) or (k in eng) or (u.ticker_root(k)[1]=='US' and u.ticker_root(k)[0] in us); uk=sorted(k for k in L('universe/v1/') if k.endswith('.json'))[-1]; meas=set(r['security_key'] for r in json.loads(s.get_object(Bucket=B,Key=uk)['Body'].read())['names'] if r.get('resolution')=='MEASURED' and r.get('security_key')); exp=set(k for k in meas if src(k)); ks=sorted(k for k in L('peers/v1/') if k.endswith('.json')); last={k.rsplit('/',1)[0]: k for k in ks}; objs=[json.loads(s.get_object(Bucket=B,Key=k)['Body'].read()) for k in sorted(last.values())]; pop=set(o.get('security_key') for o in objs if (o.get('members') or [])); print('universe_key', uk); print('measured_names', len(meas)); print('populatable_expected', len(exp)); print('held_no_classification_source', len(meas - exp)); print('peer_objects', len(objs), 'of', len(ks), 'dated objects'); print('populated_subjects', len(pop)); print('expected_not_populated', len(exp - pop), sorted(exp - pop)[:12]); print('populated_outside_expected', len(pop - exp), sorted(pop - exp)[:12]); print('total_members', sum(len(o.get('members') or []) for o in objs)); print('grain', 'one latest object per subject; subjects and members; one census, one invocation, one grain')"</invocation><expect>universe_key, measured_names, populatable_expected, held_no_classification_source, peer_objects, populated_subjects and total_members printed, with the grain line. MET when populated_subjects EQUALS populatable_expected, expected_not_populated is 0, populated_outside_expected is 0 and total_members is nonzero. populatable_expected counts the MEASURED names in the latest universe that HAVE a classification source: a landed block in the pool under derived/model_block/ or in the peers engine's own block directory, or a US ticker root present in the scanner. Every source is MEASURED here, never read from a peer object's reason label. At this amendment it reads 121 expected against 10 populated, so the bar cannot pass until the ranker re-runs over the widened identity set. Names with no classification source are HELD and are not graded here. ISSUER AMENDMENT 3 re-cut this bar on 1.0.0_SA_CTO~Z's ruling at msg 23440, condition 2: the old bar, populated materially above 10, read a SUM of two writers. A post-census in a different grain from the pre-census is the W20-S1 defect and is NOT met</expect></criterion>
