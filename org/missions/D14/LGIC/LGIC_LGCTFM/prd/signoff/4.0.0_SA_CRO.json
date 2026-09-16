@@ -1,0 +1,12 @@
+{
+  "prd": "LGIC_LGCTFM_PRD.md",
+  "prd_version": "v1.4",
+  "prd_pin": "459b4a736deb14487a613fdd63e5f84592ef2ce1",
+  "half": "brief",
+  "half_hash": "3fad8c8de298ab5a937fff7497a6fbd487ca056d5c75e8098f3ec53a31a95a18",
+  "verdict": "SIGNED",
+  "review_ref": "docs/briefs/sources/LGIC_LGCTFM_L4_BRIEF_REVIEW_v1_4_20260916.md@7b0db9f986",
+  "signed_by": "4.0.0_SA_CRO",
+  "signed_at": "2026-09-16T17:44:37Z",
+  "reason": "v1.4: T4 restated by reference to FORK_CONTROLS.json (four at this write, FORK-5 withdrawn on measurement per R-24 clause 3); DEC-5 and T4 read one count from one carrier; ratified-text hash unchanged; nothing else moved"
+}

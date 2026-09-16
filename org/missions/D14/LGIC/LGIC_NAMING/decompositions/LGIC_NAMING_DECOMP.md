@@ -219,6 +219,7 @@ here is under `exercises/r2/`.
 | `LN-e-4` | the reader, in a seat | the seat is proved clean · the canary finds no workspace-only fact · a mark on every one of namer A's round-2 names: the firm, exactly as spelled, or none (Q) |
 | `LN-e-5` | the reader's scoring | the mark equals `N3_KEY_R2.json` (firm or none) on every item · no token is read as two different referents (R) |
 | `LN-f-1` | the firm patterns, with RAISE | round 1's four criteria, and J1, on `n4-firm-patterns.md` · the shape gains `raise` beside `attributed` and `excluded`: a RAISE carries its GRADING_RULE step, and no exclusion's reason is a RAISE |
+| `LN-f-2` | (v7) FWD-3's LIVE half: the `scopes.json` fence pattern over the live inventory | N4, the live plane | FWD-3 | `exercises/r5/f2-live-fence.r5.md` | see section 0f -- `comp-find --corpus aws` with ONE firm's key, `drift_class` printed, the DB's `built:` line as the vintage, denominator = nodes scanned; every node the pattern claims for the firm is in the set and no other firm's node is; negative control: a second firm's known resource is NOT matched; never `simulate-policy` |
 | `LN-l-2` | the layout reader, in a seat | the seat is proved clean · the canary finds no workspace-only fact · a role list or DOES-NOT-FIT on each of the seven addresses, briefed with `N5_R2.json` (every tier's slots, code included; K) |
 | `LN-l-3` | the layout scoring | every label equals round 1's `N5_KEY.json` · the legacy negative control reads DOES-NOT-FIT |
 
@@ -496,6 +497,115 @@ each spawn.
 
 ---
 
+## 0f. v7 -- THE ROUND-5 RECUT, THE CLOSING ROUND (L10: 1.0.0_SA_CTO's round-4 analysis)
+
+**Input.**
+- The analysis: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_LGIC_NAMING_ROUND4_20260916.md`
+  @`5a12d0b97c` (msg 97396), on `3.0.0_SA_CVO`'s slug 97390 (`ADJUDICATION_v5` + `REMEDIATION_v4`
+  @`3fe3d30b15`). It names five items in s.3 and leaves the split, the order and the cell names to this seat.
+- PRD **v1.10 ADMITTED** -- `prd-signoff.py status LGIC_NAMING`, read at the cut: ratified-text SIGNED by
+  `3.0.0_SA_CVO` (current), brief SIGNED by `4.0.0_SA_CRO` (current). The brief half went STALE when v1.10
+  changed its bytes and was re-signed; `[PRD LANDED]` @`592ff7a5de`. **Nothing was cut while it read WITHHELD.**
+- `NAMING_SCHEMA.json` **v1.10**, which lands A-3 (`alias_adjacency`) -- the edit `LGIC_CANON`'s CN-k-4 was
+  WITHDRAWN under R-10 to wait for. The cross-project READ dependency that withdrawal disclosed is now MET.
+- All 31 of the project's orders are terminal.
+
+**The outcome state (analysis s.1, with R-17's plane column).** FWD-1, 2, 4, 6 REALIZED, unchanged.
+FWD-5 REALIZED **at the round-4 vintage** and HELD OPEN at HEAD by S22. FWD-3 REALIZED on its **repo** half;
+its **LIVE** half is NOT YET MEASURED.
+
+**Why this is the CLOSING round.** Every open item is a re-verdict, a re-run at a moved vintage, or the one
+plane this project has never read. No item asks for new capability.
+
+**What runs: 4 of 16 cells, by subtraction.**
+
+```
+  cells at v6 ...................................................... 15
+  plus the cell this cut adds ...................................... +1
+      LN-f-2   FWD-3's LIVE half: the fence pattern over the live inventory. Same axis `f` (firm
+               patterns) as the cell that already owns FWD-3 -- a new AXIS would claim this is a
+               different kind of question, and it is the same question on a second plane.
+  cells ............................................................ 16
+  minus cells serving an outcome REALIZED and re-opened by no item ... -10
+      LN-e-1 .. LN-e-5         FWD-1, FWD-2
+      LN-l-1 .. LN-l-3         FWD-4
+      LN-t-1                   FWD-6
+      LN-h-3                   FWD-5's graders' agreement: round 1's record, no item re-opens it
+  minus FWD-5 cells no round-5 item re-opens ......................... -2
+      LN-h-1, LN-h-2           the two blind gradings; items 1 and 3 move the RULE and the CODE,
+                               not the agreement measured against them
+  ------------------------------------------------------------
+  cells round 5 runs ................................................ 4
+      LN-g-1   item 3 (the rule's coverage at v1.10) + item 5's forms arm
+      LN-g-2   item 1 (S22 / R-5, the two worked cases from the builder) + item 5's checker arm
+      LN-f-1   item 2 (W4-S3 / C-S25, the gaps re-run at HEAD)   -- REPO plane
+      LN-f-2   item 4 (FWD-3's live half, R-17)                   -- LIVE plane
+```
+
+**THE SPLIT THIS CUT CHOOSES, AND THE ONE IT REFUSES.** Items 1 and 3 could be one "grading" cell. They are
+two, on round 4's own principle, kept deliberately: **the RULE and the CODE are written by different workers**
+(section 0e), because a cell that both states a rule and implements it grades its own homework. Item 1 exercises
+`grade()`; item 3 states what `GRADING_RULE.md` covers. Different files, different workers, no edge.
+
+**AND THE SPLIT BY PLANE, which R-17 forces.** Items 2 and 4 both serve FWD-3 and both are firm patterns, so
+one cell could carry both. They are two because **R-17 binds a LIVE row's criterion to name the estate
+instrument in its invocation**, and the two planes have different instruments, different denominators and
+different vintages: item 2 reads `infra/logic/registry/` at the cell's own base; item 4 reads the live AWS
+plane through `comp-find --corpus aws`, whose vintage is the DB's own `built:` line and whose denominator is
+nodes scanned. A single cell would have to carry two denominators and two vintages under one verdict.
+
+**Item 5 is not a cell.** Its two arms are regression criteria that belong to the cells whose surface they
+re-read: G1R4-AC6 re-graded by the fixed checker (post-@`68644b3c19`) rides LN-g-2, which owns the suite; the
+68 canonical forms re-grading with 0 changes under v1.10 rides LN-g-1, which owns the forms.
+
+**What this round does NOT carry, named so the subtraction is checkable.** The analysis routes three items to
+**LGIC_ENFORCE round 3**, not here: R-18's gate limb (refuse a worker `disarm_owner`); S21's worktree-rooted
+resolution in `proof-of-spec-check.py`; R-16's generator target-list print with the deploy gate's
+classification. This seat also carries into that round, from its own channel: `LGIC_ENFORCE-S55` (the RULING
+RED arm's inert ANSI strip) and `LGIC_NAMING-S24` (its sibling).
+
+**AMENDED BEFORE THE ISSUANCE -- v7.1: the cells are THREE, not four, because two of them wrote the
+same file.** The split above put item 1 (the two globgrph worked cases, S22/R-5) in `LN-g-2` and item 3
+(the `alias_adjacency` step) in `LN-g-1`, on round 4's rule-versus-code principle. **MEASURED before
+cutting: item 1 is a RULE edit, not a code edit.** `lib/tests/test_opal_naming.py:25` pins
+`_RULE = .../deliverables/GRADING_RULE.md` and `:28-31` parses the worked cases out of that file's json
+fence, so the two failing parametrised cases are assertions about GRADING_RULE.md's own text. And
+`grade()` at HEAD already returns `('OUT-OF-PATTERN', 'globgrph-serving-task')` and
+`('OUT-OF-PATTERN', 'globgrph-cluster')` -- **the builder is already right; only the worked cases
+disagree**, so nothing in `lib/` changes for item 1 at all.
+
+Two cells writing `GRADING_RULE.md` in one round is the collision `/dispatch` names, and it would have
+been issued had the test's source not been read at the cut. So items 1, 3 and 5 are ONE cell:
+
+```
+  cells round 5 runs ................................................ 3
+      LN-g-1   items 1 + 3 + 5   GRADING_RULE.md, ONE writer
+      LN-f-1   item 2            the gaps re-run           -- REPO plane
+      LN-f-2   item 4            FWD-3's live half (R-20)  -- LIVE plane
+```
+
+**AND THE RULE-VERSUS-CODE SEPARATION IS KEPT, BY THE PATHS RATHER THAN BY THE WORKER SPLIT.** The point
+of round 4's principle is that a worker who writes both a rule and its implementation can make them agree
+by construction. Here `LN-g-1`'s `<paths>` DO NOT INCLUDE `lib/`: the worker re-verdicts the worked cases
+to whatever `grade()` returns and cannot touch `grade()`. The constraint is mechanical, not a convention
+about who holds which slot -- which is stronger than the arrangement it replaces.
+
+**DEPENDENCY EDGES: none. M = 3 independent chains, one cell each (v7.1).** LN-g-1 writes `GRADING_RULE.md`;
+LN-g-2 writes `lib/opal_naming.py` and its tests; LN-f-1 writes the gaps exercise; LN-f-2 writes the live
+census. No cell reads another's output: item 2 runs `f1-gaps` at **its own base**, so it does not wait on
+LN-g-2's `grade()` edit, and that independence is a choice this cut makes explicit rather than a coincidence.
+
+**THE ISSUER'S OWN DEBT, carried into the faces rather than left to a worker to discover.** Four instrument
+defects were found in this seat's round-4 and round-2 fixed inputs by workers and by `3.0.0_SA_CVO`
+(`LGIC_CANON` W2-S3, W3-S2, W8-S4, W5-S2), and two more by this seat this session (`LGIC_ENFORCE-S55`,
+`LGIC_NAMING-S24`). The CVO's line is the right one: *"four in one round is a rate, not a coincidence."*
+Every round-5 criterion whose invocation is one of this seat's checkers therefore carries a
+**DISCRIMINATING ARM** -- the checker must be shown to FAIL on a doctored input, not merely to pass on the
+true one. ⭐ The estate already holds this seat's own worked example of the right shape: `check_canon_r2.py`'s
+`j_reach` reads the **named column** rather than blob-scanning the row, REFUSES loudly when the column is
+absent, and PRINTS a `DISCLOSED:` line when a whole-row scan would have read differently -- and both
+`j4-reach` and `j5-reach` route through that one function, so the repair was of the CLASS and not the instance.
+
 ## 1. THE DOMAIN, BY SUBTRACTION (Rule 24(i))
 
 Written as the printed denominator MINUS what is excluded, never as a forward list.
@@ -568,7 +678,7 @@ exists, so L6 exercises it on HEAD bytes after the issuance commit (gate G-C).
 
 ---
 
-## 3. THE CELLS — 15 (v6 adds LN-g-2, section 0e)
+## 3. THE CELLS — 16 (v6 adds LN-g-2, section 0e; v7 adds LN-f-2, section 0f)
 
 Ids per `org/standards/DECOMP_CELL_ID_CONVENTION.md` shape 1 (`PREFIX-<axis>-<digits>`), prefix `LN`. Axes:
 `g` the grading rule, `e` the naming and reading exercises, `f` the firm patterns, `l` the key layout, `h` the

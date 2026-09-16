@@ -106,6 +106,16 @@ WORKER_SERIAL_RE = re.compile(r"^0\.9\.0_WK_(?P<code>[A-Z0-9_]+?)[~_](?P<n>[0-9]
 # /endpoint --forward Phase-0 outcome id. PERMANENT AND NEVER REUSED by contract
 # (1.0.0_SA_CTO @b3584ea86a, landed in the skill AND the PRD template together).
 OUTCOME_REF_RE = re.compile(r"^FWD-[0-9]+$")
+# OWNER-AND-CARRIER LIMBS (1.0.0_SA_CTO, 2026-09-16, SELF_DRIVE_LGIC_RULINGS_20260916.md R-18(2), R-19(2), R-19 addendum,
+# and A-1 of the LGIC_ENFORCE round-2 analysis; measured on LGIC_NAMING-W2-S7, LGIC_CANON-W5-S2, LGIC_ENFORCE-C-S24).
+# A disarm owner is the seat that must ACT (file the evidence and send the word) while 3.0.0_SA_CVO WRITES the clock
+# (R-15). So a NEW row may name neither a WORKER (terminal at its drain; can never send the word -- the duty passes to
+# its issuer) nor the CVO (the writer) as disarm owner. On an EXISTING remediation row `disarm.owner` is otherwise
+# immutable; it may change ONLY when the same write appends exactly one evidence entry citing a CTO ruling by id and
+# vintage and nothing else moves. And the CVO's L9 fields (`adjudicates`, disposition GRADUATED) are refused on a row a
+# WORKER surfaced: a worker's GRADUATED transfers the item to nobody and hides it from the CVO's compile.
+RULING_CITATION_RE = re.compile(r"(?:\bR-[0-9]+\b.*@[0-9a-f]{7,40}\b)|(?:@[0-9a-f]{7,40}\b.*\bR-[0-9]+\b)")
+CVO_SERIAL = "3.0.0_SA_CVO"
 
 # LOCKED MAPPING -- fork 4's verdict IS fork 5's loop target. See the module docstring.
 ROUTE_TO_STEP = {"SPEC_ERROR": 6, "DECOMP_INVALIDATING": 5, "SCOPE_CHANGE": 2}
@@ -1225,8 +1235,54 @@ def _kind(rel):
     return "REMEDIATION" if "REMEDIATION" in os.path.basename(rel).upper() else "INVESTIGATION"
 
 
-def _check_row(row, kind, schema):
-    """Complaints about ONE NEW row. Schema-required + closed enums + the step-7/10 fields."""
+def _first_token(val):
+    s = str(val or "").strip()
+    return s.split()[0] if s else ""
+
+
+def _owner_field_violations(rid, owner, field):
+    """PURE. R-18(2) and R-19(2) on a NEW row: a disarm owner that can never act (a WORKER serial) or that is the WRITER
+    of the clock (3.0.0_SA_CVO) is refused, naming who to name instead."""
+    v = _first_token(owner)
+    if not v:
+        return []
+    if WORKER_SERIAL_RE.match(v):
+        return ["%s: %s=%r names a WORKER serial. A worker is terminal at its drain and can never send the owner's "
+                "word, so the duty passes to its ISSUER (R-18): name the issuer" % (rid, field, owner)]
+    if v == CVO_SERIAL or _base_serial(v) == CVO_SERIAL:
+        return ["%s: %s=%r names the CVO, the only WRITER of a disarm clock (R-15); a disarm owner is never the "
+                "writer (R-19): name the artifact's owner, or 1.0.0_SA_CTO where the artifact is the CVO's own row"
+                % (rid, field, owner)]
+    return []
+
+
+def _worker_carrier_violations(rid, row):
+    """PURE. A-1 (LGIC_ENFORCE-C-S24): `adjudicates` and disposition GRADUATED are the CVO's L9 fields; on a row a
+    WORKER surfaced they are refused, because a worker's GRADUATED transfers the item to nobody."""
+    sb = _first_token(row.get("surfaced_by"))
+    if not WORKER_SERIAL_RE.match(sb):
+        return []
+    out = []
+    if row.get("adjudicates"):
+        out.append("%s: `adjudicates` on a row surfaced by WORKER %s. `adjudicates` is the L9 adjudication carrier and "
+                   "it is 3.0.0_SA_CVO's field (A-1, LGIC_ENFORCE-C-S24): a worker files its finding as "
+                   "UNDER_INVESTIGATION and the CVO dispositions it" % (rid, sb))
+    if row.get("disposition") == "GRADUATED":
+        out.append("%s: disposition=GRADUATED on a row surfaced by WORKER %s. GRADUATED is a TRANSFER the CVO makes at "
+                   "L9 with a remediation row as its landing surface; a worker's GRADUATED transfers the item to nobody "
+                   "and hides it from the CVO's compile (A-1, LGIC_ENFORCE-C-S24)" % (rid, sb))
+    return out
+
+
+def _check_row(row, kind, schema, carried=False):
+    """Complaints about ONE NEW row. Schema-required + closed enums + the step-7/10 fields.
+
+    `carried` (R-28, 1.0.0_SA_CTO 2026-09-16): True only for a row a MERGE CARRIED from a parent (`_row_was_carried`).
+    The OWNER-AND-CARRIER limbs (R-18(2), R-19(2), A-1) grade the AUTHORING act -- who a seat named as owner, which
+    fields a worker wrote -- so they bind where the row is minted, exactly as the two L10 precondition limbs do. Measured
+    on the CLOUD->SITEZ leg: SITEZ had never touched D14, so 9 LGIC rows minted 02:54-10:45 EDT, BEFORE these limbs
+    landed @9d10c4b796 (11:40 EDT), read as NEW there and refused a merge that has no override path -- rows the
+    mutation limb forbids editing, whose clocks were already DISARMED or INERT. Schema and enum limbs still grade."""
     out = []
     rid = row.get("id", "<no id>")
     props = schema.get("properties", {})
@@ -1293,7 +1349,13 @@ def _check_row(row, kind, schema):
         if row.get("hazard_standing") == "ARMED" and not str(row.get("disarm_owner", "")).strip():
             out.append("%s: hazard_standing=ARMED with no disarm_owner -- ARMED without an owner "
                        "is a hazard nobody has agreed to hold" % rid)
+        if not carried:
+            out += _owner_field_violations(rid, row.get("disarm_owner"), "disarm_owner")
+            out += _worker_carrier_violations(rid, row)
     else:
+        dz = row.get("disarm")
+        if isinstance(dz, dict) and not carried:
+            out += _owner_field_violations(rid, dz.get("owner"), "disarm.owner")
         route, target = row.get("route"), row.get("loop_target")
         # REMEDIATED-IN-ROUND (2026-09-03, the gate-model fork between 1.0.0_SA_CTO and 1.0.0_SA_CTO~Z, ruled at the
         # base -- relay 93568, ruling 93571): the route enum answers "what does the remedy need that does not exist
@@ -1455,6 +1517,21 @@ def _monotone_advance(old, new):
     if o.get("closed") is False and n.get("closed") is True:
         moved = True
         n["closed"] = False
+    # THE FOURTH ADMITTED MOVE (R-19 addendum @06061b21af): `disarm.owner` may change ONLY when the same write appends
+    # exactly ONE evidence entry citing a CTO ruling by id and vintage (`R-<n>` and `@<hash>`) and NO clock moves.
+    # Measured need: LGIC_CANON-W5-S2 and C-S20 were ruled reassigned (R-19) and the field was immutable, so a ruling
+    # had no landing surface; measured hazard the immutability guards: a graded party renaming its way out of a
+    # hazard -- which is why the citation is required and the clock may not move in the same write.
+    owner_moved = False
+    if isinstance(od, dict) and isinstance(nd, dict) and od.get("owner") != nd.get("owner"):
+        oe, ne = o.get("evidence"), n.get("evidence")
+        if (isinstance(oe, list) and isinstance(ne, list) and len(ne) == len(oe) + 1 and ne[:len(oe)] == oe
+                and RULING_CITATION_RE.search(str(ne[-1]))):
+            owner_moved = True
+            nd["owner"] = od.get("owner")
+            n["evidence"] = oe
+    if owner_moved:
+        return (not moved) and o == n
     return moved and o == n
 
 
@@ -1537,7 +1614,9 @@ def check_file(root, rel):
             v.append("%s: NEW row %s says project=%r but the file sits in %r's folder. The path is the "
                      "membership; a row filed under another project is an identity defect."
                      % (rel, rid, row["project"], folder_project))
-        v.extend(_check_row(row, kind, schema))
+        # R-28: a CARRIED row is not re-graded on the owner-and-carrier limbs; `_pids` None (no merge, or parents
+        # unreadable) carries nothing, so off a merge and fail-closed every limb grades.
+        v.extend(_check_row(row, kind, schema, carried=_mrg_now and _row_was_carried(row, _pids)))
         # GATE (iii), both limbs, both route shapes: a NEW tree row that carries a route waits for every TO under
         # the project to be terminal AND every investigation item under it to be dispositioned.
         # spine v3.0 L10 carrier 6: the precondition applies to EVERY new remediation row under a tree project (the slug
@@ -1946,7 +2025,75 @@ def _self_test(root):
         ("advance MUTANT: the clock moves AND the remedy is reworded -> refused",
          lambda: not _monotone_advance(base_row, adv(remediation={"state": "REMEDIATED"}, remedy="fix the other thing"))),
         ("advance: no change at all -> not an advance (False)", lambda: not _monotone_advance(base_row, adv())),
+        # THE FOURTH ADMITTED MOVE (R-19 addendum): owner change with a same-write CTO-ruling citation, nothing else.
+        ("advance OWNER: disarm.owner changes AND exactly one CTO-ruling citation is appended -> admitted",
+         lambda: _monotone_advance(base_row, adv(disarm={"owner": "2.0.0_SA_COO~G"},
+                                                 evidence=["a@b", "SELF_DRIVE_LGIC_RULINGS_20260916.md@4a55888962 R-19 ruling 1"]))),
+        ("advance OWNER MUTANT: owner changes with NO citation -> refused (the field stays immutable)",
+         lambda: not _monotone_advance(base_row, adv(disarm={"owner": "2.0.0_SA_COO~G"}))),
+        ("advance OWNER MUTANT: owner changes with an evidence entry that cites no ruling -> refused",
+         lambda: not _monotone_advance(base_row, adv(disarm={"owner": "2.0.0_SA_COO~G"}, evidence=["a@b", "see the message"]))),
+        ("advance OWNER MUTANT: owner changes AND the clock moves in the same write -> refused",
+         lambda: not _monotone_advance(base_row, adv(disarm={"owner": "2.0.0_SA_COO~G", "state": "DISARMED", "at": "2026-09-16T15:00Z"},
+                                                     evidence=["a@b", "SELF_DRIVE_LGIC_RULINGS_20260916.md@4a55888962 R-19"]))),
+        ("advance OWNER MUTANT: owner changes and the existing evidence is REWRITTEN under the citation -> refused",
+         lambda: not _monotone_advance(base_row, adv(disarm={"owner": "2.0.0_SA_COO~G"},
+                                                     evidence=["z@z", "SELF_DRIVE_LGIC_RULINGS_20260916.md@4a55888962 R-19"]))),
     ]
+    # OWNER-AND-CARRIER LIMBS on NEW rows (R-18(2), R-19(2), A-1) -- graded through _check_row with the committed schemas;
+    # each limb has a positive (refuses) and a negative (a legitimate owner or carrier passes this limb) arm.
+    try:
+        ischema = _schema(root, "INVESTIGATION")
+    except Exception as exc:  # noqa: BLE001
+        ischema = None
+        arms.append(("investigation schema readable for the owner/carrier arms", lambda exc=exc: (_ for _ in ()).throw(exc)))
+    _toks = ("(R-18)", "(R-19)", "C-S24")
+    def _has(rows_out, tok):
+        return any(tok in x for x in rows_out)
+    def _none(rows_out):
+        return not any(t in x for x in rows_out for t in _toks)
+    if ischema is not None:
+        inv = lambda **kw: dict({"id": "X_PRJ-W2-S3", "project": "X_PRJ", "fabric": "laptop"}, **kw)  # noqa: E731
+        arms += [
+            ("R-18(2) inv: disarm_owner names a WORKER serial -> refused, names the issuer",
+             lambda: _has(_check_row(inv(hazard_standing="ARMED", disarm_owner="0.9.0_WK_X_PRJ~2"), "INVESTIGATION", ischema), "(R-18)")),
+            ("R-19(2) inv: disarm_owner names the CVO -> refused (the owner is never the writer)",
+             lambda: _has(_check_row(inv(hazard_standing="ARMED", disarm_owner="3.0.0_SA_CVO"), "INVESTIGATION", ischema), "(R-19)")),
+            ("owner CONTROL inv: disarm_owner names a COO lane -> no owner complaint",
+             lambda: _none(_check_row(inv(hazard_standing="ARMED", disarm_owner="2.0.0_SA_COO~G"), "INVESTIGATION", ischema))),
+            ("A-1: `adjudicates` on a WORKER's row -> refused, names the CVO's field",
+             lambda: _has(_check_row(inv(surfaced_by="0.9.0_WK_X_PRJ~3", adjudicates=["X_PRJ-W2-S2"]), "INVESTIGATION", ischema), "C-S24")),
+            ("A-1: disposition GRADUATED on a WORKER's row -> refused",
+             lambda: _has(_check_row(inv(surfaced_by="0.9.0_WK_X_PRJ~3", disposition="GRADUATED"), "INVESTIGATION", ischema), "C-S24")),
+            ("A-1 CONTROL: the same fields on the CVO's own row -> no carrier complaint",
+             lambda: _none(_check_row(inv(surfaced_by="3.0.0_SA_CVO", disposition="GRADUATED", adjudicates=["X_PRJ-W2-S2"]), "INVESTIGATION", ischema))),
+            ("A-1 CONTROL: a WORKER's row filed UNDER_INVESTIGATION with no adjudicates -> no carrier complaint",
+             lambda: _none(_check_row(inv(surfaced_by="0.9.0_WK_X_PRJ~3", disposition="UNDER_INVESTIGATION"), "INVESTIGATION", ischema))),
+            # R-28: the owner-and-carrier limbs grade the AUTHORING act, so a row CARRIED by a merge is not re-graded.
+            ("R-28 CARRIED inv: CVO disarm_owner + a WORKER's GRADUATED/adjudicates on a carried row -> no owner/carrier complaint",
+             lambda: _none(_check_row(inv(surfaced_by="0.9.0_WK_X_PRJ~3", hazard_standing="ARMED", disarm_owner="3.0.0_SA_CVO",
+                                          disposition="GRADUATED", adjudicates=["X_PRJ-W2-S2"]), "INVESTIGATION", ischema, carried=True))),
+            ("R-28 NARROWNESS inv: the SAME row not carried (minted) -> still refused on the R-19 and A-1 limbs it trips",
+             lambda: all(_has(_check_row(inv(surfaced_by="0.9.0_WK_X_PRJ~3", hazard_standing="ARMED", disarm_owner="3.0.0_SA_CVO",
+                                             disposition="GRADUATED", adjudicates=["X_PRJ-W2-S2"]), "INVESTIGATION", ischema), t)
+                         for t in ("(R-19)", "C-S24"))),
+            ("R-28 NARROWNESS schema: a carried row is still graded on the schema (an enum outside the ratified set refuses)",
+             lambda: any("not in the ratified enum" in x for x in _check_row(inv(disposition="NOT_A_DISPOSITION"), "INVESTIGATION", ischema, carried=True))),
+            ("R-28 WIRING: check_file passes carried only as a merge AND a parent-carried id (fail-closed on None parents)",
+             lambda: "carried=_mrg_now and _row_was_carried(row, _pids)" in inspect.getsource(check_file)
+             and _row_was_carried({"id": "X_PRJ-S3"}, None) is False),
+        ]
+    if rschema is not None:
+        arms += [
+            ("R-18(2) rem: disarm.owner names a WORKER serial -> refused",
+             lambda: _has(_check_row(rem(hazard_standing="ARMED", disarm={"state": "ARMED", "owner": "0.9.0_WK_X_PRJ~2", "at": None}), "REMEDIATION", rschema), "(R-18)")),
+            ("R-19(2) rem: disarm.owner names the CVO -> refused",
+             lambda: _has(_check_row(rem(hazard_standing="ARMED", disarm={"state": "ARMED", "owner": "3.0.0_SA_CVO", "at": None}), "REMEDIATION", rschema), "(R-19)")),
+            ("owner CONTROL rem: disarm.owner names the CTO -> no owner complaint",
+             lambda: _none(_check_row(rem(hazard_standing="ARMED", disarm={"state": "ARMED", "owner": "1.0.0_SA_CTO", "at": None}), "REMEDIATION", rschema))),
+            ("R-28 CARRIED rem: disarm.owner names a WORKER on a carried row -> no owner complaint",
+             lambda: _none(_check_row(rem(hazard_standing="ARMED", disarm={"state": "DISARMED", "owner": "0.9.0_WK_X_PRJ~2", "at": "2026-09-16T14:05Z"}), "REMEDIATION", rschema, carried=True))),
+        ]
     # THE ITEM CENSUS and THE ALLOCATOR RACE (94007 / 94010, v3's first drain): items vs the CVO's rows; one id, two documents.
     ADJ = "org/missions/D11/NFRA/X_PRJ/surprise-channel/adjudications/ADJUDICATION_v1.md"
     INV = "org/missions/D11/NFRA/X_PRJ/surprise-channel/investigations/INVESTIGATION_v1.md"

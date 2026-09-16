@@ -1636,6 +1636,276 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "Validate the instance, then flip <status> and commit the instance, the deliverables and the flip together.",
     "world_is": "The two acts cannot both hold for an artifact the RUN creates: the checker resolves PENDING against the instance's LAST commit, so a file first written after that commit reads ABSENT and the instance is INVALID until the file is committed separately. Splitting the evidence file into its own prior commit is what makes the validation the bound requires possible at all; the flip still rides one commit with the instance and the deliverables.",
     "notes": "INERT and FORM ONLY. It costs one extra commit per run-created evidence file and nothing else; no criterion's measurement changes. The general shape is the known PENDING one-shot: the sentinel names 'this commit' but is read against the commit the instance already has."
+  },
+  {
+    "id": "NFRA_OPLGTW-W5-S3",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~5",
+    "surfaced_at": "2026-09-16T18:13:06Z",
+    "one_line": "TO-OG-k-1's hand-off names tests/test_identity_scope.py::test_scoped_deny_by_default as 'the known red test' that 'fails at the cut base', with an instruction never to edit it or identity_tool_allowlist.txt. Neither file carries any change in this worktree (both clean at HEAD f4c7184f6d), and the test PASSES.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN: cd /c/tmp/wk-oplgtw-1-5c && .venv-og/Scripts/python -m pytest infra/aws/ec2/opal-gateway/tests/test_identity_scope.py::test_scoped_deny_by_default -v -p no:cacheprovider --color=no -> '1 passed in 0.07s', at HEAD f4c7184f6d.",
+        "git status --short infra/aws/ec2/opal-gateway/tests/test_identity_scope.py -> no output (clean, unmodified by this worker or any predecessor in this worktree).",
+        "git log -1 -- infra/aws/ec2/opal-gateway/identity_tool_allowlist.txt -> 2781aac326 (LD-0415 repo rename), no commit since; the file is clean in this worktree's git status."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-OG-k-1 hand-off: 'tests/test_identity_scope.py::test_scoped_deny_by_default fails at the cut base (row NFRA_OPLGTW-S1). Never edit it or identity_tool_allowlist.txt.'",
+    "world_is": "The test passes at this worktree's base, unmodified. Either row S1's finding was already remediated upstream of this cut by a change outside this cell's <paths> (so the hand-off's premise is stale), or the failure is state-dependent (test order / fixture interaction) and does not reproduce standalone -- this row does not adjudicate which. This cell's own 17 criteria (OGK1-AC1..17) are unaffected: none of them names or depends on this test, and neither identity_tool_allowlist.txt nor test_identity_scope.py is in this cell's <paths>, so no action was taken beyond this observation.",
+    "notes": "INERT: no criterion of this order reads this test, and the worker made no edit to either named file. Filed on the bounded sanity check this order itself invited ('Existing AuthKind values and their integrations keep their behaviour'), not as a hunt."
+  },
+  {
+    "id": "NFRA_OPLGTW-W1-S9",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~1",
+    "surfaced_at": "2026-09-16T18:20Z",
+    "one_line": "OG-i-2's two role names are fixed verbatim by PRD C6, and safe-apply's naming limb grades both as REFUSE when it reads the plan (a new IAM role with an out-of-pattern name). The limb is in WARN mode today, so the apply is not stopped. Under ENFORCE, the same apply would stop with exit 7 unless the names get a registry row or an R20 departure.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SPEC: org/missions/D9/NFRA/NFRA_OPLGTW/prd/NFRA_OPLGTW_PRD.md @f0aa50dbc0, C6 -- 'the dedicated assumed role `opal-mcp-emp-menachem-schwab-read`' and 'a separate Gateway-assumable `opal-mcp-schwab-catalog-read` role'; the order's cell text repeats both names.",
+        "GATE: python .tools/naming-apply-gate.py --plan-json <show -json of the saved plan> in worktree /c/tmp/wk-oplgtw-1-1c @5503d92f88 plus the uncommitted schwab_reader_iam.tf, 2026-09-16T18:0xZ, rc 0 -- 'NAMING REFUSE aws_iam_role.schwab_catalog_read opal-mcp-schwab-catalog-read -> opal-mcp-schwab-catalog-read-role' and 'NAMING REFUSE aws_iam_role.schwab_data_read opal-mcp-emp-menachem-schwab-read -> opal-mcp-emp-menachem-schwab-read-role', each 'why: ... (ADDITION): OUT-OF-PATTERN as IAM_ROLE'.",
+        "SWITCH: .tools/safe-apply.sh @5503d92f88 -- ENFORCE only when org/mcp/naming-gate.enforce exists or NAMING_GATE_ENFORCE=1; neither file exists in this worktree or in the shared checkout (ls, 2026-09-16T18:0xZ), so the plan-mode stage never changes the exit code."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The two reader roles carry the names C6 gives them.",
+    "world_is": "They do, and the canon's builder would name them with a -role suffix. In WARN mode the naming limb prints REFUSE for both and lets the apply continue. The order is frozen and names the roles verbatim, so they are kept as written. Rule 30 exempts existing pipelines and routes a deliberate departure to an R20 register entry; this order records neither.",
+    "notes": "INERT and FORM ONLY. Nothing is renamed here. If ENFORCE is switched on before a later apply of this root, that apply stops at exit 7 on these two names unless a registry row or an R20 entry exists by then. The five resources already in taxsma_gateway_iam.tf print WARN, not REFUSE, only because they already exist."
+  },
+  {
+    "id": "NFRA_OPLGTW-W1-S10",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~1",
+    "surfaced_at": "2026-09-16T18:20Z",
+    "one_line": "OG-i-2 names no mechanism for three things it requires, so this worker chose: (1) the two ExternalIds are generated by Terraform (uuid() frozen by ignore_changes) into a Secrets Manager secret, so they sit in Terraform state; (2) the alias-key VALUE is written out-of-band with put-secret-value, not by Terraform; (3) the Gateway's read grants on both secrets are resource policies on the secrets, so its identity policies gain exactly the one assume statement.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ORDER: org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-i-2.reader-identities.md -- 'where each ExternalId and the alias key live (secret or parameter NAMES, never values)'; 'Provision the secret with THAT shape'; BOUNDS 'No ExternalId value, alias key, credential or object content enters a committed file'; Blast radius 'adds exactly one statement to the Gateway role's inline policies'; AC1 'the alias-key secret with the Gateway's read grant on it'.",
+        "CONVENTION: infra/aws/terraform/opal-gateway/secrets.tf @5503d92f88 -- 'METADATA ONLY -- never aws_secretsmanager_secret_version (the value never enters TF state)'. The existing Tax SMA ExternalId is typed literally in taxsma_gateway_iam.tf, which this order forbids for its own values.",
+        "LOCK: infra/aws/terraform/opal-gateway/.terraform.lock.hcl @5503d92f88 pins only hashicorp/archive and hashicorp/aws, so no random provider exists to generate either value without a new provider download.",
+        "PLAN: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~1/og_i2.plan.json (terraform 1.9.8, 2026-09-16T18:03:38Z) -- 'Plan: 10 to add, 0 to change, 0 to destroy.', including aws_secretsmanager_secret_version.schwab_reader_external_ids and two aws_secretsmanager_secret_policy resources, and no version resource for the alias key."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Provision the two ExternalIds and the alias-key secret (JSON shape of OG-z-3), give the Gateway a read grant on the alias-key secret, and add exactly one statement to the Gateway role; no value in a committed file.",
+    "world_is": "An ExternalId cannot be kept out of Terraform state, because each trust policy Terraform writes carries it. So generating it there adds no new copy. The estate convention keeps a real secret VALUE out of state, so the alias key (32 bytes from secrets.token_bytes, base64, under current_version v1) is written once by og_i2_act.py put-alias-key after the apply. That command refuses if the secret already holds a version, and it records the version id and the read-back shape, never the value. Identity-policy grants on the two secrets would add a second and third statement to opal-gateway-role, so each secret carries its own resource policy, principal opal-gateway-role, secretsmanager:GetSecretValue only.",
+    "notes": "INERT and FORM ONLY. What a later cell inherits: the Gateway reads ExternalIds from opal/mcp/opal-gateway-schwab-reader-external-ids (fields data_read, catalog_read) and the key from opal/mcp/opal-gateway-schwab-account-ref-key. Rotating an ExternalId means tainting the version resource. Rotating the key means adding a version and moving current_version, which put-alias-key refuses to do. Both secrets carry prevent_destroy."
+  },
+  {
+    "id": "NFRA_OPLGTW-W1-S11",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~1",
+    "surfaced_at": "2026-09-16T18:35Z",
+    "one_line": "Row NFRA_OPLGTW-W1-S9 undercounts: the naming limb printed THREE REFUSE verdicts on OG-i-2's additions, not two. The third is the Gateway inline policy opal-gateway-assume-schwab-readers (-> gateway-assume-schwab-readers-policy). That name is this worker's choice, following the root's existing var.name-prefixed policy names, not a name the PRD fixes.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SAVED-PLAN RUN: naming-apply-gate.py --plan-json over the show -json of og_i2.plan.json, 2026-09-16T18:0xZ -- '(WARN window: 3 REFUSE verdict(s) did not block ...)', REFUSE on aws_iam_role.schwab_catalog_read, aws_iam_role.schwab_data_read and aws_iam_role_policy.gw_assume_schwab_readers. S9 was written from a first page of this output cut at 30 lines, which showed only the two roles.",
+        "APPLY RUN: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~1/evidence/og_i2/apply.log -- the in-run naming plan stage prints the same three REFUSE lines, and the apply proceeded (WARN mode), 'Apply complete! Resources: 10 added, 0 changed, 0 destroyed.'",
+        "CONVENTION: infra/aws/terraform/opal-gateway/taxsma_gateway_iam.tf and schwab_access_state.tf @5503d92f88 name their Gateway policies with the var.name prefix: '-assume-emp-roles' and '-access-state-runtime'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Row W1-S9's count of naming REFUSE verdicts on this cell's additions (two).",
+    "world_is": "There are three: the two C6 role names and the Gateway policy name. W1-S9 stands as filed, because rows are never edited, and this row carries the correct count. Under ENFORCE, a later apply of this root would stop on all three.",
+    "notes": "INERT and FORM ONLY. The policy name could conform without any spec change, unlike the two role names. It is left as applied because renaming an inline policy destroys and recreates it, which is outside this order's blast radius."
+  },
+  {
+    "id": "NFRA_OPLGTW-W4-S10",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~4",
+    "surfaced_at": "2026-09-16T18:42:00Z",
+    "one_line": "The estate build for this Lambda (infra/aws/lambda/ci/build-and-upload.sh opal-assets opal-assets-silver-schwab) exits rc=1 with no error line, before the zip, on every package whose BUILD_MANIFEST.json declares no declared_blobs: its manifest probe exits 1 by design for 'declares nothing', but the script runs under set -e, so the shell aborts before MANIFEST_DECL=$? can route that to the SKIP branch. The worker re-ran with the script's own documented per-build override BAU_MANIFEST_SKIP=1, which reaches the same state the SKIP branch was written to reach.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN: TMPDIR=<ws>/.scratch bash infra/aws/lambda/ci/build-and-upload.sh opal-assets opal-assets-silver-schwab at worktree HEAD 58a95125c1, 2026-09-16T18:38:31Z -> last line 'OK: import-closure -- 12 packaged .py file(s) ...', then rc=1; no SHA256 line, no upload, source map unchanged (git status clean under infra/). Log: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~4/deploy/build.log.",
+        "SOURCE: infra/aws/lambda/ci/build-and-upload.sh @58a95125c1 -- :33 'set -e'; :300-310 the unguarded 'python - \"$PY_SOURCE\" <<PYEOF ... sys.exit(0 if m.get(\"declared_blobs\") else 1)'; :311 'MANIFEST_DECL=$?'; :346-349 the SKIP branch ('this BUILD_MANIFEST declares no declared_blobs ... (not a pass)'). Last touched by dbbbfb89b2 (2026-08-30 05:43 -0400), after the schwab pin's build 5c7b2a9a6b (2026-08-29 22:26 -0400).",
+        "MANIFEST: py -3.12 json.load of infra/aws/lambda/opal-assets/opal-assets-silver-schwab/BUILD_MANIFEST.json @58a95125c1 -> keys [function, vendored_modules, vendoring, layer_dependencies, memory_mb, timeout_s, sizing_basis, contract]; declared_blobs False.",
+        "REPRODUCTION (different instrument, no repo file): bash -c 'set -e; python - <<PYEOF / import sys; sys.exit(1) / PYEOF; X=$?; echo reached' -> prints nothing, outer rc=1."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-OG-c-2 THE CELL: 'Find the build that writes that artifact from the vendored directory, and use it.'",
+    "world_is": "The build as written cannot produce this package's zip: it stops rc=1 silently at the manifest-declaration probe, which is also how a non-declaring package reached the dead branch for every build since dbbbfb89b2. The override BAU_MANIFEST_SKIP=1 (documented at :286 'Override per-build ... justify in the commit message') skips only that probe, whose designed outcome for this manifest is SKIP; import-closure still runs. The worker used it for this one build and records it here and in the ledger commit.",
+    "notes": "INERT for this order (the override reaches the designed branch). Estate-wide it is a latent build break for 13 of 14 packages per the script's own count at :278; that repair is the script owner's, not a rider on this order."
+  },
+  {
+    "id": "NFRA_OPLGTW-W4-S11",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~4",
+    "surfaced_at": "2026-09-16T19:20:00Z",
+    "one_line": "To name 'every date=D key' that G-B condition 5 asks for, this worker had to LIST prefixes under s3://opal-data-49financial/gold/advi/ (5 delimiter listings per pass returning CommonPrefixes: gold/advi/, canonical/, dimensions/, insurance/, reference/) before reading the date=2026-09-15 keys; ruling R-OG-4 as carried in the order admits read-only access on exactly gold/advi/_logs/ and the named date=D keys, and no carrier names the date=D keys themselves.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ORDER at CLOUD 68bd819cd8 (amended @7c44a2cf82), BOUNDS Cross-firm law: 'admitted read-only (list, head, get) on exactly s3://opal-data-49financial/gold/advi/_logs/ and the date=D keys those conditions name, with every key read printed and nothing else in that bucket'.",
+        "SIGNOFF at CLOUD 68bd819cd8, Half 2 s.E condition 5: 'For W and W-partial it also names the before and after VersionIds of every date=D key'; s.A lists areas (dimensions/, reference/ref_txn_classification/, canonical/, insurance/) but no key list.",
+        "READS: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~4/replay/gold49f_date_d_before.json and _after.json, field 'reads' -- 29 calls each pass: 5 delimiter listings (CommonPrefixes only, no object keys outside date=D) and 24 list-object-versions on <table>/date=2026-09-15/. Result: 31 keys; also reference/bd_legacy_* tables, which Half 2 s.B names as another writer's keys."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Cross-firm law as amended: only _logs/ and the date=D keys the conditions name, nothing else in that bucket.",
+    "world_is": "The date=D key set is not enumerated in any carrier, so meeting condition 5 needed 5 prefix listings one level above the admitted keys on each of 2 passes (before, after). No object outside _logs/ and date=2026-09-15/ was read; nothing was written.",
+    "notes": "INERT: read-only listings, every call printed in the evidence files. For a later replay: name the date=D table prefixes in the sign-off, or admit the prefix listing."
+  },
+  {
+    "id": "NFRA_OPLGTW-W4-S12",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~4",
+    "surfaced_at": "2026-09-16T19:21:00Z",
+    "one_line": "The replay-caused 49F dispatch ran a full chain that ends CHAIN OK date=2026-09-15, but advi-49f-gold-dispatch logged 'ERROR: chain terminal within poll window, signature=UNKNOWN(first_line=Completed 1.5 KiB/1.1 MiB ... with 84 file(s) remaining)' for the same command -- the dispatcher classifies the SSM output by its first line, which was an aws s3 progress line.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "DISPATCHER: CloudWatch /aws/lambda/advi-49f-gold-dispatch filter-log-events from 2026-09-16T19:09Z (8 events, no nextToken): 19:11:45 'dispatched: doc=advi-49f-chain-dispatch command_id=8e7e7614-e014-4342-ae4a-47b8bb7ac0d1 started_by_dispatcher=True'; 19:14:15 'ERROR: chain terminal within poll window, signature=UNKNOWN(first_line='Completed 1.5 KiB/1.1 MiB (5.8 KiB/s) with 84 file(s) remaining') {\"statusCode\": 200, \"dispatched\": true, ...'.",
+        "SSM: get-command-invocation 8e7e7614-e014-4342-ae4a-47b8bb7ac0d1 on i-01003b035d2988dfb -> Success (19:14:31Z).",
+        "CHAIN LOG: s3://opal-data-49financial/gold/advi/_logs/chain_20260916T191146Z.log VersionId v46i6VrCC8vcbd4.1l49c88tS1GtV7aK, 145 lines: first 'CHAIN START date=2026-09-15 mode=production ... stages=18', last 'CHAIN OK date=2026-09-15 wall=144.6s'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "G-B sign-off Half 2 s.C: each dispatch branch (R, A, W, W-partial) is distinguishable from what the chain writes and logs.",
+    "world_is": "The dispatcher's own verdict line for a successful branch-W run reads ERROR with signature UNKNOWN, so the dispatcher log cannot be used to classify a dispatch's branch; the chain log and the SSM status can. Not caused by this order's code.",
+    "notes": "INERT for this order: branch W was classified from the chain log and SSM status. Owner of advi-49f-gold-dispatch decides."
+  },
+  {
+    "id": "NFRA_OPLGTW-W2-S4",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~2",
+    "surfaced_at": "2026-09-16T19:16Z",
+    "one_line": "A CloudWatch GetMetricStatistics percentile query whose one requested Period spans the 15-day 1-minute-resolution retention boundary silently returns TWO datapoints instead of one, split unevenly (measured [10, 79222] samples for a 30-day window on this ALB) -- reading Datapoints[0] alone (the first build of AC11) reported a p95 of 31 ms from the 10-sample sliver where the window's true, dominant figure is ~553 ms.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED: cloudwatch get-metric-statistics (AWS/ApplicationELB TargetResponseTime, LoadBalancer=app/opal-gateway/89166a68f337e5a4, ExtendedStatistics p95, Statistics SampleCount) via .tools/aws, one call per width, StartTime = EndTime - width, Period = width, EndTime fixed at 2026-09-16T18:51:44Z/19:1xZ: widths 1 hour through 14 days each returned exactly 1 Datapoint (e.g. 14 d -> SampleCount 43642); 15 d -> 2 datapoints SampleCount [10.0, 45233.0]; 16 d -> [46676.0, 10.0]; 30 d -> [10.0, 79222.0] (timestamps exactly one Period apart, both at :50:00 minute-of-hour, not proportional to elapsed time).",
+        "CODE (this worktree, uncommitted at grounding time): org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~2/probes/og_p1.py -- AC11_WINDOW_DAYS lowered from 30 to 14 with this finding recorded beside it; ac11() no longer indexes Datapoints[0] directly -- _cw_datapoint(data) refuses (returns a problem, not a value) whenever len(Datapoints) != 1.",
+        "RE-RUN AFTER FIX: same probe, AC11, 14-day window: exactly 1 datapoint, sample_count=43745, p95_seconds=0.5535 (553.5 ms) -- consistent with the dominant bucket the 15/16/30-day probes also showed (~0.55 s), confirming the 31 ms figure from the unfixed build was the defect, not the true baseline."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OGP1-AC11 (amended) asks for p95 latency from the ALB's TargetResponseTime over 'a stated window', with no width named -- any width the criterion states is legal on its face.",
+    "world_is": "CloudWatch keeps 1-minute-resolution datapoints, which percentile (ExtendedStatistics) queries require, for 15 days; a single-period request whose span crosses that boundary is not clipped to the requested window -- it is silently answered with two datapoints that do not partition the window proportionally to time, and nothing in the response signals the split as an error. A caller that assumes 'one period, one datapoint' and reads Datapoints[0] gets a real AWS value that is nonetheless the wrong one for the claimed window, with no error, no denominator mismatch and no exception -- the exact 'clean metric with a wrong verdict' shape Rule 22 warns about. This cell caught it before recording by widening the control from a single dry run to a day-by-day bisection, fixed it by choosing a window under the retention boundary, and added a second, independent guard that refuses outright rather than mis-picking if the split ever recurs (a shorter window, a different metric, or a future retention-policy change).",
+    "notes": "INERT: caught and fixed inside this same cell before any figure was recorded or committed; nothing downstream consumed the wrong 31 ms value. OBSERVATION, not ARMED: no other cell in this project currently issues a CloudWatch ExtendedStatistics query, so disarm_owner is not named; any FUTURE cell (in this or another project) that queries CloudWatch percentiles with a period longer than ~14 days should read this row first -- an estate-wide instrument-trap catalogue entry (CLAUDE.md 22a) is the issuer's or CTO's call, not this cell's to make."
+  },
+  {
+    "id": "NFRA_OPLGTW-W5-S4",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~5",
+    "surfaced_at": "2026-09-16T19:37:00Z",
+    "one_line": "OGQ2-AC26 cannot be met as written. It requires app/data_entitlement.py to differ from the cut base by exactly five added entries, one per Schwab tool, but the cut base already classifies all five: OG-z-1 added them. schwab_get_access also has no contract operation class. The worker added no entry, and the AC26 probe prints FAIL.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SOURCE: infra/aws/ec2/opal-gateway/app/data_entitlement.py:75-81 @0fc7c71160 -- SCHWAB_TOOLS already maps schwab_get_access: None, schwab_list_files: 'list', schwab_describe_dataset: 'describe', schwab_query: 'query', schwab_prepare_download: 'download_filtered'; :103 puts all five in TOOL_CLASSES as CLASS_SCHWAB; :279 allowed_tools grants an op=None tool to any active grant.",
+        "ORDER: org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-q-2.tools-and-validation.md:68 @85e35f511c -- 'So your five tools need entries in app/data_entitlement.py'; :72 'No entry widens an existing one, and none takes a permissive default'; :73 'A tool whose class is unclear is a surprise row, not an entry'.",
+        "PRIOR ROW: NFRA_OPLGTW-W3-S23 (this channel) already recorded that 'data_entitlement.py pre-classifies those five names and maps each to an operation'.",
+        "RUN: cd /c/tmp/wk-oplgtw-1-5d && timeout 120 .venv-og/Scripts/python org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~5/probes/og_q2.py AC26 -> 'diff 0fc7c71160..worktree: 0 added line(s), 0 removed line(s)', 'VERDICT: FAIL-OGQ2-AC26 0 added lines, expected exactly 5; 0 of 5 contract tools have an added entry', rc=1. The probe was checked with a synthetic diff: five well-formed entries print PASS (rc 0), and the same entries plus one removed line print FAIL (rc 1).",
+        "RUN: OGQ2-AC25, the guard module with the real schwab integration registered in the registry: '12 passed in 13.02s', rc=0; test_ogq2_ac01 asserts de.classify(t) == 'schwab' for all 5 registered tools."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-OG-q-2 (amended on 1.0.0_SA_CTO's ruling msg 97251), AC26: 'the diff of app/data_entitlement.py against your cut base is exactly five added entries, one per contract tool name, each with an operation class from the contract, and no other line'.",
+    "world_is": "At the cut base the file already classifies all five tools, so the classification the amendment wanted exists and the guard serves the real tools (AC1, AC25). Five more entries could only duplicate or override lines that already exist. schwab_get_access also has no contract operation: it is None, 'any active grant'. Giving it one of list/describe/query/download_filtered would change an existing entry, and the order routes an unclear class to a surprise row, not an entry. So app/data_entitlement.py is unchanged, AC26 is refused as written, and the order stays open.",
+    "notes": "BLOCKING on OGQ2-AC26 only. The other 25 criteria pass by output. INERT: nothing deploys, and the existing classification is what the guard enforces. Two ways out, both the issuer's: re-cut AC26 to certify that the file is unchanged and already classifies the five tools, or rule a contract class for schwab_get_access. The second would be a change to OG-z-1's entry, outside this order's 'entries only' grant."
+  },
+  {
+    "id": "NFRA_OPLGTW-W5-S5",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~5",
+    "surfaced_at": "2026-09-16T19:37:00Z",
+    "one_line": "schwab_query and schwab_prepare_download refuse dim_asset with UNAVAILABLE (asset_policy_selection_unavailable). The PRD's partial-account CUSIP restriction for dim_asset belongs to OG-q-3 and is not built yet. Without it, an asset read would ignore the account grant. The tool layer therefore takes an asset_policy hook, and until one is supplied it fails closed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "PRD: org/missions/D9/NFRA/NFRA_OPLGTW/prd/NFRA_OPLGTW_PRD.md @f0aa50dbc0 C3 -- 'For a partial-account grant restrict its CUSIPs to holdings of the authorized accounts for that same master/date ... absent qualification denies the asset read.'",
+        "ORDER: org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-q-3.snapshot-semantics.md -- OGQ3-AC11..AC13 assign that selection to OG-q-3 (semantics.py), which depends on OG-q-2.",
+        "SOURCE: infra/aws/ec2/opal-gateway/app/integrations/schwab/integration.py on branch wk-nfra_oplgtw-1-5d -- SchwabService(asset_policy=None) is the default, and query() and prepare_download() raise UNAVAILABLE 'asset_policy_selection_unavailable' for dim_asset while it is None.",
+        "SOURCE: the same branch's app/integrations/schwab/query.py DATASET_SCHEMAS -- field types copied from data/assets/scripts/silver/schwab_schemas.py @0fc7c71160 (dim_position quantities decimal(15,5), market_value_settled_unsettled decimal(17,4), closing_price decimal(16,5), dim_balance values decimal(15,2)); DATASET_GRAINS declares dim_position (account_id, cusip, l_s), dim_balance (account_id,) and dim_asset (cusip,), each validated per snapshot by a count-per-grain job before any page is cut."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-OG-q-2: 'schwab_query executes one master/dataset/date' over the contract's three datasets.",
+    "world_is": "schwab_query and schwab_prepare_download serve dim_position and dim_balance. dim_asset is listed and described but refuses data until OG-q-3 supplies the asset policy. The declared unique grains are unmeasured against real silver: a snapshot whose grain is not unique refuses paging (AC20) rather than paging wrongly.",
+    "notes": "INERT: fail-closed, nothing deploys, and no criterion of this order reads dim_asset data. OG-q-3 fills SchwabService(asset_policy=...) and owns the measured dataset descriptions."
+  },
+  {
+    "id": "NFRA_OPLGTW-W5-S6",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~5",
+    "surfaced_at": "2026-09-16T19:37:00Z",
+    "one_line": "The 500-row response cap is counted across every representation. Each result carries its rows twice, in structuredContent and in the duplicate JSON text block, so no single page returns more than 250 rows even though page_size accepts up to 500.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "PRD: org/missions/D9/NFRA/NFRA_OPLGTW/prd/NFRA_OPLGTW_PRD.md @f0aa50dbc0 C4 -- 'Limit the entire serialized MCP result to 500 rows, 100,000 Unicode codepoints and 131,072 UTF-8 bytes, including all content blocks, structuredContent and duplicated text.'",
+        "SOURCE: infra/aws/ec2/opal-gateway/app/integrations/schwab/envelope.py measure() on branch wk-nfra_oplgtw-1-5d -- rows = structuredContent rows plus the rows of each text block.",
+        "RUN: test_ogq2_ac16 -- 'page_size 500 over 700 matched -> returned 151, truncated True; measured rows 302 (structured 151 + text 151), codepoints 70340, utf-8 bytes 130740' (here the byte cap bound first)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD C4 names 500 rows and says the limit includes duplicated text, but not whether a duplicated row counts once or twice.",
+    "world_is": "The worker took the literal, conservative reading: a row counts once in each representation. A larger page is always truncated with explicit counts and a cursor, so no row is lost. The other reading, rows counted once, would let a page return up to 500.",
+    "notes": "INERT: the stricter reading only shortens pages. The spec owner can relax it by changing envelope.measure()."
+  },
+  {
+    "id": "NFRA_OPLGTW-S21",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-16T20:15Z",
+    "one_line": "Two drained cells' tests contradict on CLOUD: OG-z-2's test_ogz2_ac08 asserts 'schwab' is not a registered integration id (a self-declared tripwire for widening its POLICY# census), while OG-q-2 registers the schwab integration in app/integrations/registry.py as its own order required. After both drains the shared tree reads test_entitlement_admin.py 1 failed, 8 passed; each branch was green alone.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN (shared tree @6a7e9f6caf, the OG-z-2 worktree's venv): pytest tests/test_entitlement_admin.py -> '1 failed, 8 passed'; FAILED test_ogz2_ac08: AssertionError 'the five Schwab tools are classified but not yet registered on any factory; if that changes, this census's file set must widen with it' -- assert 'schwab' not in ['globgrph', 'opal_portal', 'schwab', 'ycharts'] (tests/test_entitlement_admin.py:311). Re-run: same result.",
+        "CONTROL: the same module in the OG-z-2 worktree @7a5554face (before OG-q-2's merge) -> '9 passed'.",
+        "CAUSE, read: OG-q-2 @c3728d6bdb adds schwab to app/integrations/registry.py, registering only when ENABLED_INTEGRATIONS lists it (OGQ2-AC24); OG-z-2's AC8 census enumerates registered integration ids and fails closed when schwab appears.",
+        "OG-q-2's own module on the shared tree: tests/test_schwab_query.py 24 passed."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OGZ2-AC8: no registered MCP tool writes a POLICY# record, over all tools, denominator printed -- with the schwab integration inside 'all tools' once it is registered.",
+    "world_is": "The census's file set excludes the schwab integration's modules and trips by design now that OG-q-2 registered them, so the criterion is unmet at CLOUD HEAD though no tool writes POLICY# by either cell's evidence. Remedy by this seat within L6: TO-OG-z-2 is re-opened (status pending) with an amendment widening AC8's census to the schwab integration's modules, and cold re-handed to 0.9.0_WK_NFRA_OPLGTW~3.",
+    "notes": "No served surface; nothing deployed. This seat is the disarm owner and the re-opened OG-z-2's drain is the disarming act."
   }
 ]
 ```

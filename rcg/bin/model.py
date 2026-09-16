@@ -7,7 +7,8 @@ ratifications exist: full disposition classes are never minted from seeds.
 
 EPISTEMIC STATUS (R-0010): every score is OBSERVED (a number from a deterministic run)
 wrapping ASSESSED-at-best provenance (seed labels are OBSERVED-derived; future ratified
-labels are RATIFIED) -- the stamp carries both. A score never outranks the grader.
+labels are RATIFIED) -- the stamp carries both, COMPUTED from the run and written to
+model_stamp.json beside predictions.jsonl. A score never outranks the grader.
 
 BOUNDARY DECLARATION (printed every run):
   address_space      scoreable rows of the newest vintage carrying features.
@@ -110,12 +111,45 @@ def main() -> int:
           f"vintages ({n_resurrected} retained from older vintages only -- deleted or "
           f"pre-rescan files whose labels stay trainable)")
 
-    head = subprocess.run(["git", "rev-parse", "--short=8", "HEAD"], cwd=WS,
-                          capture_output=True, text=True).stdout.strip()
+    # VINTAGE GRAIN (RCG-D4): this read the LIVE head and stamped it on scores computed
+    # from a PINNED scan vintage. Caught 2026-09-16 the only way it can be -- another
+    # seat committed between the scan and the score, so the stamp read head=6328a6fb
+    # over a population measured at af7ee8fc, and every prediction claimed to describe
+    # a commit it had never seen. When the two agree the defect is invisible, which is
+    # the usual case and why it survived. `head` is now the VINTAGE's -- the repo state
+    # the scores actually describe -- and the live head rides beside it as run_head.
+    run_head = subprocess.run(["git", "rev-parse", "--short=8", "HEAD"], cwd=WS,
+                              capture_output=True, text=True).stdout.strip()
+    head = scan_dir.name.rsplit("_", 1)[-1]
+    if head != run_head:
+        print(f"[model] WARNING: scoring vintage {scan_dir.name} (head {head}) while the "
+              f"worktree is at {run_head} -- the scores describe {head}. Re-run "
+              "rcg/bin/scan.py to score the current tree.")
+    # PROVENANCE (RCG-D3): label_provenance was the HARDCODED STRING
+    # "seed-only (OBSERVED-derived; zero RATIFIED yet)" -- true only at cycle 0, and
+    # false from the first ratification onward. Measured 2026-09-16 on vintage
+    # 20260916T033918Z_af7ee8fc: the SAME run printed "ratified labels folded: 17537"
+    # two lines below the stamp claiming zero. The docstring above promises the stamp
+    # "carries both"; it carried neither. It is now COMPUTED from the run.
+    # Second half of the same hole: labels_md5 hashed seed_labels.jsonl ONLY, so two
+    # runs over DIFFERENT ratified ledgers stamped identically. LABELS.jsonl is now
+    # hashed on its own line.
+    n_ratified = len(ratified)
     version = {"cycle": 0, "head": head,
                "labels_md5": md5_8(scan_dir / "seed_labels.jsonl"),
+               "ratified_labels_md5": md5_8(ledger) if ledger.exists() else "ABSENT",
+               "n_ratified_folded": n_ratified,
+               "run_head": run_head, "head_drifted_from_run": head != run_head,
                "rulings_md5": md5_8(WS / "rcg" / "rulings" / "RULINGS.jsonl"),
-               "label_provenance": "seed-only (OBSERVED-derived; zero RATIFIED yet)"}
+               "label_provenance": (
+                   "seed-only (OBSERVED-derived; zero RATIFIED)" if not n_ratified else
+                   f"MIXED: {n_ratified} RATIFIED rows fold over the seeds and win on "
+                   "conflict (weights per the source census above); the remainder is "
+                   "OBSERVED-derived seed")}
+    # The stamp is PERSISTED beside the predictions it describes -- a stamp that only
+    # ever reached stdout could not be read back off the artifact.
+    (scan_dir / "model_stamp.json").write_text(json.dumps(version, indent=1),
+                                               encoding="utf-8")
 
     cols = [k for k in rows[0] if k not in DROP]
 
@@ -179,6 +213,11 @@ def main() -> int:
             n_band += band
             h.write(json.dumps({"path": r["path"], "p_archive": p_arch,
                                 "uncertain": band, "seed": seeds.get(r["path"]),
+                                # head-only BY DESIGN: the frozen E-0004 prior
+                                # (deliverables/E0004_FROZEN/predictions_prior_
+                                # c4259ace.jsonl) keys on this shape, so widening the
+                                # field would break that comparison. The full stamp
+                                # lives in model_stamp.json beside this file.
                                 "model_version": version["head"]}) + "\n")
 
     imp = sorted(zip(cols, clf.get_feature_importance()), key=lambda x: -x[1])[:8]

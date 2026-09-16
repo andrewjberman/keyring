@@ -5,7 +5,7 @@
  "project": "LGIC_CANON",
  "directive": "D14",
  "fabric": "laptop",
- "prd_version": "v1.3",
+ "prd_version": "v1.5",
  "step": 4,
  "brief_ref": "docs/briefs/d14-pipeline-canon-brief-20260912.md@a4cc0cb681",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6"],
@@ -108,15 +108,22 @@ proves nothing." v1.2 left CELL CANDIDATES C2's inputs column on the old wording
 
   FWD-5  Taking on a new firm is one checklist run end to end, with no step where
          somebody has to invent an answer
-         DONE WHEN  EXERCISED -- a firm has actually been taken on this way and its
-                    people can see their dashboard
-         ACCEPT     someone follows the checklist from start to finish, the new
-                    firm's people see their dashboard at the end, and nowhere in it
-                    did anyone have to make a judgement call the rules should
-                    already have made -- where today every firm has been a one-off
+         DONE WHEN  EXERCISED -- the checklist has been run end to end on a
+                    LGIC_LGCTFM practice wave over an existing firm's subject, and
+                    that firm's people can see their dashboard at the end
+         ACCEPT     someone follows the checklist from start to finish on the
+                    practice wave, the firm's people see their dashboard at the end
+                    exactly as before, and nowhere in it did anyone have to make a
+                    judgement call the rules should already have made -- where today
+                    every firm has been a one-off; no demonstration firm is made up
+                    for it, and the first genuinely new firm re-runs it as
+                    confirmation only
          SOURCE     brief v2 Part I O5; bar Part III O5; Andrew, "we're going to have
                     the same pattern over and over again as we take on more and
-                    more firms"
+                    more firms"; Andrew-direct 2026-09-16 ~18:2xZ, "Yes we can do
+                    something like this (b), but I think it would really be in a
+                    context of LGIC_LGCTFM, because we don't have a new firm to test
+                    and I don't feel like messing around making demo cruft"
 
   FWD-6  Every part of the estate has a decision recorded against it -- leave it,
          move it, retire it, or allow it as a stated exception
@@ -202,16 +209,15 @@ proves nothing." v1.2 left CELL CANDIDATES C2's inputs column on the old wording
   - The job carries at least one LONG case, one SHORT case, and one refused or wrong-slot case. The exercise cannot pass
     by avoiding the firm whose spellings diverged.
 - **DEC-6 FWD-5: the checklist, then its first real run.** Cell C5 writes the checklist. Cell C6 is its first
-  end-to-end run on a real firm: `ADVI_FIRMBKTS`'s first cutover. That run takes a firm onto the canonical estate
-  through every step: the identity row, the bucket from the template, IAM under the scope-derived fence, pipelines
-  through `key()` and `address()`, the routes, and the served dashboard its people see.
-  - **The call this PRD does not make:** FWD-5's confirmed text names a NEW firm, and a cutover moves an existing
-    one. Whether that run MEETS FWD-5, or only proves the checklist ahead of the next genuinely new firm, is carried
-    to Andrew as one open call.
-  - **REC: it meets it,** with the next new firm as the confirming arm. The bar's substance is *"no step where
-    somebody has to invent an answer"*, and the cutover exercises every step with real users.
-  - Until he rules, C6 runs and is graded against the text as confirmed. **LGIC_CANON's close waits on one
-    `ADVI_FIRMBKTS` cutover, which is a driven act, not a wait.**
+  end-to-end run: a `LGIC_LGCTFM` PRACTICE WAVE over an existing firm's subject, sequenced after `LGIC_LGCTFM`
+  round 1 gives it that subject. That run takes the firm through every step: the identity row, the bucket from the
+  template, IAM under the scope-derived fence, pipelines through `key()` and `address()`, the routes, and the served
+  dashboard its people see, exactly as before.
+  - **The call is made** (Andrew-direct 2026-09-16 ~18:2xZ, call 2, record @50d1b9403e): *"Yes we can do something like
+    this (b), but I think it would really be in a context of LGIC_LGCTFM, because we don't have a new firm to test
+    and I don't feel like messing around making demo cruft."* FWD-5's bar (ENDPOINT) is the practice wave; the
+    first genuinely new firm is the confirming arm; no demonstration firm is made up. Gate G-N is lifted by that word.
+  - **LGIC_CANON's close waits on one `LGIC_LGCTFM` practice wave, which is a driven act, not a wait.**
 - **DEC-7 FWD-6 at APPLIED, ruled (a).** The ledger v0.3 reads 0 AWAITING, but by its own s.7 its counts were
   *"re-derived by hand ... a row-by-row recount is owed before any count here is cited as measured."* Cell C8 does
   four things:
@@ -258,7 +264,7 @@ proves nothing." v1.2 left CELL CANDIDATES C2's inputs column on the old wording
 4. The checklist (C5).
 5. The blind judging exercise (C2).
 6. The naming exercise, once `LGIC_ENFORCE`'s registry exists (C7).
-7. The checklist's first real run, at `ADVI_FIRMBKTS`'s first cutover (C6).
+7. The checklist's first real run, on a `LGIC_LGCTFM` practice wave over an existing firm, after `LGIC_LGCTFM` round 1 (C6).
 
 It closes when every FWD grades REALIZED.
 
@@ -273,7 +279,7 @@ One row per candidate cell. The decomposition at L5 is the COO lane's, and it ma
 | C3 FWD-2 from the record | FWD-2 | O2; Part III O2 | C `04_SCOPE_TICKLIST.md` v0.2; the nine-calls record | the table, the record | `org/missions/D14/LGIC/LGIC_CANON/deliverables/` | each clause of the ACCEPT line beside its evidence line | one sitting, enough evidence beside every row, and the pre-decided rows pre-filled, each shown from the record |
 | C4 FWD-3 from the record | FWD-3 | O3; IV.12; Part III O3 | C the two contradiction reports; the nine-calls record; both IRPT PRDs | `infra/logic/03_CONTRADICTION_REPORTS/` | `org/missions/D14/LGIC/LGIC_CANON/deliverables/` | per project: what ended its pause and which of the three branches it took | each project's pause-ending row is cited with its branch; for IRPT_BCKEND, whether its PRD has absorbed the three CONTRADICTS is stated as measured, and it is open at v0.14 |
 | C5 the onboarding checklist | FWD-5 | O5; IV.4; Part III O5; Part V bullet 2 | C the registry, `key()`, `address()`, `name()`, the fence; P the checklist | -- | `infra/logic/10_ONBOARDING_CHECKLIST.md` | every step naming its rule and its builder or gate; a reviewer marks each step mechanical or judgement | ordered from the identity row to the served dashboard; zero steps marked judgement |
-| C6 the checklist's first real run | FWD-5 | O5; Part III O5 | C the checklist | `ADVI_FIRMBKTS`'s first firm cutover | `org/missions/D14/LGIC/LGIC_CANON/deliverables/` | the run's record, step by step; the surprise rows it raised | every step followed as written; the firm's people see their dashboard at the end; no surprise row names a judgement the canon should have made |
+| C6 the checklist's first real run | FWD-5 | O5; Part III O5 | C the checklist | a `LGIC_LGCTFM` practice wave over an existing firm's subject (that project's round-1 run) | `org/missions/D14/LGIC/LGIC_CANON/deliverables/` | the run's record, step by step; the surprise rows it raised | every step followed as written; the firm's people see their dashboard at the end exactly as before; no surprise row names a judgement the canon should have made |
 | C7 the naming exercise | FWD-4 | O4; IV.4; Part III O4 | C the registry | `LGIC_ENFORCE`'s registry, once its cell E2 lands | `org/missions/D14/LGIC/LGIC_CANON/deliverables/` | two workers, on different days, doing the same naming job for one firm, with a LONG-slot case, a SHORT-slot case, and a refused or wrong-slot case | both outputs equal the registry-and-schema canonical value for each job, surface and slot; the refused or wrong-slot case is caught; a sanctioned LONG or SHORT form is never counted as a failure |
 | C8 the ledger at v1.0 | FWD-6 | O6; IV.2, IV.3, IV.5, IV.6, IV.8, IV.10, IV.13; Part V bullet 4 | P the ledger | `infra/logic/06_CONFORMANCE_LEDGER.md` v0.3 | the same path | a script recount with its instrument and denominator; a decider named on every undecided part | the recount reproduces or corrects s.7; X2, X3 and X5 each name their decider; every CONDITIONAL entry carries its condition and owner; decided against waiting is a column |
 
@@ -342,5 +348,5 @@ Surfaces this project writes, reads or executes. **Nothing here moves data or ch
 | `org/missions/D14/LGIC/LGIC_CANON/deliverables/` | exercise and grading records | C2, C3, C4, C6, C7 | LGIC_CANON |
 | `docs/doctrine/CLAUDE_ANNEX.md`, Rule 17b's citation line only | a law edit | DEC-8 | 1.0.0_SA_CTO |
 | the reference set in `infra/logic/`; `NAMING_SCHEMA.json`; the registry; the D10, MDPF_CANON and OPAL_ASSETS PRDs; both IRPT PRDs | read only | C1-C8 | -- |
-| `ADVI_FIRMBKTS`'s first cutover | observed and recorded, not executed here | C6 | ADVI_FIRMBKTS, under its own PRD's manifest |
+| a `LGIC_LGCTFM` practice wave over an existing firm | observed and recorded, not executed here | C6 | LGIC_LGCTFM, under its own PRD (a practice wave is FWD-8's admitted form there) |
 | any data move, trigger repoint, bucket-policy edit, apply or vendor call; the pause | excluded | -- | the migration projects under R19; Andrew for the pause |

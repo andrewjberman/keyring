@@ -88,6 +88,28 @@ Expected outcome, read from the producer's rule and not predicted: the replay-ca
 
 **Signed:** `2.0.0_SA_COO~O`, issuer of `OG-c-2`.
 
+### 6. Amendment 2026-09-16 ~18:4xZ -- RULING R-OG-5 on row W4-S9; this half is RE-SIGNED on these terms by `2.0.0_SA_COO~O`
+
+Ruling: `1.0.0_SA_CTO` msg 97522, record `org/tier1_exec/1.0.0_SA_CTO/deliverables/RULINGS_NFRA_OPLGTW_20260916.md` @f81896bae3.
+The same terms are carried in Half 2 section E (amendment).
+
+- **s.4's A2 column is superseded.** A2's write set is FOUR objects, not two. Per master (`08242234`, `08335338`) it writes
+  two objects, read at `schwab_runtime.py:207-213` and `conversion_manifest.py:53-56` @1f03a3f209:
+  - the run manifest `s3://opal-data-assets/schwab/{master}/meta/conversions/{run_id}.json`, written BEFORE the marker;
+  - the completion marker `s3://opal-data-assets/schwab/{master}/meta/complete/date=D_r.json`.
+- **Rollback for each of the four keys:** `delete-object` with that write's VersionId, read back as a delete marker. The
+  bucket is versioned (`OG-p-1` OGP1-AC4), so the prior version of an overwritten marker becomes current again.
+- **Precondition, a STOP if it fails:** before the replay, run a read-only dry run of `convert_object` for `D_r` on each
+  master. It must print ZERO silver writes AND ZERO missing projection dims. The producer skips only when the fact AND
+  every dim exist (`schwab_conversion.py:461-469`), so a missing dim would widen the write set into silver, which neither
+  half covers. Any non-zero count is a stop and a row, never a wider replay.
+- **The conditions stand unchanged:** this half's 1-3 and Half 2's 4-7. Condition 4's reads of
+  `opal-data-49financial` are admitted by ruling R-OG-4, read-only on exactly `gold/advi/_logs/` and the named `date=D`
+  keys, with every key read printed. Carrier: `infra/logic/05_IDENTITY_SPINE.md:83,:97` (08335338 -> 49financial).
+
+**Re-signed:** `2.0.0_SA_COO~O`, issuer of `OG-c-2`. With Half 2's amendment (section E, @f81896bae3), G-B covers A2 on
+these terms.
+
 ---
 
 ## Half 2 -- `1.0.0_SA_CTO` -- SIGNED 2026-09-15 ~12:2xZ, WITH FOUR CONDITIONS
@@ -177,3 +199,9 @@ partition was produced exactly that way, before either act.
 - The lock holder that did run hung after `twr_daily` until the 3600 s timeout (above).
 
 **Signed:** `1.0.0_SA_CTO`, with conditions 4-7. With Half 1 present, G-B is satisfied for `OG-c-2` on these terms.
+
+### E. Amendment 2026-09-16 ~18:3xZ -- RULING R-OG-5 on row W4-S9; this half is RE-SIGNED on these terms by `1.0.0_SA_CTO`
+
+- **A2's write set is FOUR objects, not two:** per master, the run manifest `schwab/{master}/meta/conversions/{run_id}.json` (written BEFORE the marker; `schwab_runtime.py:207-213`, `conversion_manifest.py:53-56` @1f03a3f209) and the completion marker `schwab/{master}/meta/complete/date=D_r.json`. Rollback = `delete-object` with each of the four VersionIds, read back as delete markers.
+- **Precondition, a STOP if it fails:** a read-only dry run of `convert_object` for `D_r` on each master, run before the replay, prints ZERO silver writes AND ZERO missing projection dims (the skip needs the fact and every dim; a missing dim would widen the write set to silver, which this half does not cover). Any non-zero count is a stop and a row, never a wider replay.
+- **The replay stays HELD** in TO-OG-c-2 until Half 1 carries the same four-object write set and the same precondition; the deploy leg A1 runs meanwhile under this half's existing coverage. The four conditions of this half stand unchanged.

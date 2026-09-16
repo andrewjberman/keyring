@@ -1,0 +1,11 @@
+{
+  "prd": "LGIC_LGCTFM_PRD.md",
+  "prd_version": "v1.0",
+  "prd_pin": "e996f463bbbe636316f915b29115fdc0934b8b4f",
+  "half": "ratified-text",
+  "half_hash": "12670f7e7971a46d78177b5b6db0884d1e81af90bd938edcef0a4f646e1530e4",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/LGIC_LGCTFM_L4R_RATIFIED_TEXT_REVIEW_v1_0_20260916.md@df1f48b4eb",
+  "signed_by": "3.0.0_SA_CVO",
+  "signed_at": "2026-09-16T14:16:05Z"
+}

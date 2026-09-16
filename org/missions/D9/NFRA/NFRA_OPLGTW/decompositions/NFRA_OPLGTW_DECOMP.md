@@ -132,7 +132,7 @@ its cell reads it.
 
 ---
 
-## 3. THE CELLS -- 28
+## 3. THE CELLS -- 29 (28 at v1; `OG-i-5` added 2026-09-16 on ruling R-OG-8)
 
 Ids per `org/standards/DECOMP_CELL_ID_CONVENTION.md` shape 1, prefix `OG`. Axes: `p` parity and baseline, `i` AWS
 infrastructure (Terraform, one state), `d` durable state, `a` authentication, `z` authorization, `c` completion closure,
@@ -154,6 +154,7 @@ same harness with it disengaged (spine L6). Those are marked "(difference)".
 | `OG-p-1` | deployed parity and the pre-change baseline, read only | FWD-7, FWD-8; inputs to `OG-q-1`, `OG-i-4`, `OG-r-1`, `OG-c-2` | deliverables only | OPEN |
 | `OG-i-1` | the `opal-gateway-access-state` table and its two grants | FWD-1, 3, 4, 6, 7 | `TFGW/schwab_access_state.tf` (new) | OPEN |
 | `OG-i-2` | the Schwab data-plane identities: two reader roles, the Gateway's assume statement, the alias-key secret | FWD-3 | `TFGW/schwab_reader_iam.tf` (new) | OPEN |
+| `OG-i-5` | the access-state table renamed to the builder's name, its records carried across under proof (added 2026-09-16 on ruling R-OG-8) | FWD-1, 3, 4, 6, 7 | `TFGW/schwab_access_state.tf`, `GW/app/access_state.py`, `GW/app/oauth_as.py`, the contract JSON | OPEN |
 | `OG-i-3` | the ALB's explicit browser paths for the download page and its OIDC callback | FWD-1, 4, 7 | `TFGW/alb.tf` | OPEN |
 | `OG-i-4` | the pilot host: t4g.nano to t4g.small | FWD-7 | `TFGW/main.tf` (`aws_instance.gw` `instance_type` only) | HELD (G-A) |
 | `OG-r-1` | the first release: the integrated build, the OAuth cutover, the Schwab flag off | FWD-1, 7, 8 | `infra/aws/ec2/EC2_MANIFEST.json` (the deploy record) | OPEN |
@@ -184,6 +185,19 @@ same harness with it disengaged (spine L6). Those are marked "(difference)".
 - (difference) from the Gateway host, an isolated runtime-principal write to a `POLICY#` key is AccessDenied, while the same write to a `RUNTIME#` key succeeds in the same harness (A13)
 - two concurrent operator revisions of one isolated `POLICY#` record yield exactly one success and one ConditionalCheckFailed (A13)
 - a probe `POLICY#` record carries no TTL attribute
+
+**`OG-i-5` acceptance** (added 2026-09-16 by `2.0.0_SA_COO~O` on `1.0.0_SA_CTO` ruling R-OG-8, msg 97553, PRD v0.7 @79a1fd4a47. It is a cell added mid-round on the L4 owner's ruling, not a re-decomposition. Edges: `OG-i-2 -> OG-i-5` (state), `OG-i-5 -> OG-i-3` (state), `OG-i-5 -> OG-r-1`. Slot ~1, before `OG-i-3`.)
+- the table's new name is printed from `lib/opal_naming.py` and equals the ruled value
+- the apply runs through `safe-apply` under a ledger entry whose OPEN sentinel is committed before the act
+- the first apply's plan creates exactly the new table, repoints only the runtime grant and the operator policy to it, and destroys nothing
+- `describe-table` on the new table reads SSE enabled, point-in-time recovery enabled, PAY_PER_REQUEST billing, the TTL attribute and the designed key schema
+- (discriminating) the item count of the old and new tables is equal, both printed
+- every copied item, the operator-audit namespace included, is equal item by item on both sides, the denominator printed
+- no application, Terraform or contract reference to the old table name remains outside the project's historical records, by an unscoped count with its denominator
+- `tests/test_access_state.py`, `tests/test_oauth_durable.py` and `tests/test_principal_cutover.py` pass, one process per module
+- (difference) from the Gateway host, a runtime-principal write to a `POLICY#` key of the new table is AccessDenied, while the same write to a `RUNTIME#` key succeeds (A13)
+- the old table is removed only after the equality criteria are recorded, by a second apply whose plan destroys only the old table
+- the ledger entry is closed and committed before the final reads, and a fresh plan of the root reads 0 changes
 
 **`OG-i-2` acceptance**
 - the plan creates exactly two roles with their policies, one statement on `opal-gateway-role` allowing `sts:AssumeRole` on exactly those two ARNs with each one's dedicated ExternalId, and the alias-key secret with the Gateway's read grant on it

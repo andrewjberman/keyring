@@ -20,6 +20,10 @@ BOUNDARY DECLARATION (printed every run):
                      (skipped + counted), non-UTF8 binary content, DATA-file runtime
                      producer/consumer relations (a written-at-runtime artifact is
                      invisible here -- scan_data cycle territory, declared).
+  determinism        REPRODUCIBLE on a pinned scan vintage: every set-order leak
+                     into output (the dotted-module [:4] truncation, root `why`
+                     labels) is sorted at its build site, so marked.jsonl and
+                     edges.jsonl are byte-stable without PYTHONHASHSEED.
   presentation       the print is aggregates; per-file truth is marked.jsonl.
   failure_direction  UNDER-MARKING (false cruft) -- which is why the sweep proposes and
                      never executes, and why import resolution is deliberately generous
@@ -89,7 +93,7 @@ def build_root_set(population: set) -> tuple[set, dict]:
         elif entry in population:
             roots.add(entry)
             why[entry] = "root:exact"
-    for p in population:
+    for p in sorted(population):
         for pref in prefixes:
             if p.startswith(pref):
                 roots.add(p)
@@ -112,9 +116,9 @@ def build_root_set(population: set) -> tuple[set, dict]:
         functions = json.loads(smap.read_text(encoding="utf-8")).get("functions", {})
     except (OSError, json.JSONDecodeError):
         functions = {}
-    dirs = {str(v.get("source_dir", "")).strip("/").replace("\\", "/")
-            for v in functions.values() if isinstance(v, dict)}
-    for p in population:
+    dirs = sorted({str(v.get("source_dir", "")).strip("/").replace("\\", "/")
+                   for v in functions.values() if isinstance(v, dict)})
+    for p in sorted(population):
         for d in dirs:
             if d and p.startswith(d + "/"):
                 if p not in roots:
@@ -131,9 +135,9 @@ def build_root_set(population: set) -> tuple[set, dict]:
         services = json.loads(man.read_text(encoding="utf-8")).get("services", {})
     except (OSError, json.JSONDecodeError):
         services = {}
-    sdirs = {str(v.get("source_path", "")).strip("/").replace("\\", "/")
-             for v in services.values() if isinstance(v, dict)}
-    for p in population:
+    sdirs = sorted({str(v.get("source_path", "")).strip("/").replace("\\", "/")
+                    for v in services.values() if isinstance(v, dict)})
+    for p in sorted(population):
         for d in sdirs:
             if d and (p == d or p.startswith(d + "/")):
                 if p not in roots:
@@ -142,7 +146,7 @@ def build_root_set(population: set) -> tuple[set, dict]:
                     n_ec2 += 1
                 break
     # terraform tree
-    for p in population:
+    for p in sorted(population):
         if p.startswith("infra/aws/terraform/") and p not in roots:
             roots.add(p)
             why[p] = "root:terraform"
@@ -151,13 +155,19 @@ def build_root_set(population: set) -> tuple[set, dict]:
     return roots, why
 
 
-def build_edges(rows: list[dict]) -> tuple[dict, dict]:
+def build_edges(rows: list[dict], no_lexicon: bool = False) -> tuple[dict, dict]:
     """Return (edges: src -> set(dst), stats). Three channels, all declared."""
     population = {r["path"] for r in rows}
+    # DETERMINISM (RCG-D2): `population` is a SET, and `dotted` lists feed a [:4]
+    # TRUNCATION below -- so set-iteration order selected WHICH 4 candidates became
+    # edges, and PYTHONHASHSEED varied it run to run. Measured 2026-09-16 on one
+    # pinned scan vintage: 3 unseeded runs -> 3 distinct marked.jsonl sha256; 2 runs
+    # at PYTHONHASHSEED=0 -> byte-identical. Sorting at the BUILD sites fixes it in
+    # the tool rather than in the caller's environment.
     basename_index: dict = defaultdict(list)
-    for p in population:
+    for p in sorted(population):
         basename_index[p.rsplit("/", 1)[-1]].append(p)
-    py_files = [p for p in population if p.endswith(".py")]
+    py_files = sorted(p for p in population if p.endswith(".py"))
     dotted: dict = defaultdict(list)
     for p in py_files:
         mod = p[:-3].replace("/", ".")
@@ -165,9 +175,25 @@ def build_edges(rows: list[dict]) -> tuple[dict, dict]:
         for i in range(len(parts)):
             dotted[".".join(parts[i:])].append(p)
 
+    # FAIL-CLOSED (RCG-D1): this used to read the lexicon behind a bare
+    # `if lexicon_path.exists():`. A run before lexicon.py had ever been run
+    # contributed ZERO invoke edges, printed a clean aggregate with no warning, and
+    # still advertised the channel as LIVE in the boundary declaration below.
+    # A missing declared input must not read as a healthy run. --no-lexicon is the
+    # audited escape and DOWNGRADES the boundary declaration instead of silencing it.
     lexicon_path = newest_scan() / "lexicon.json"
     tool_tokens: dict = {}
-    if lexicon_path.exists():
+    if not lexicon_path.exists():
+        if not no_lexicon:
+            print(f"BLOCKED: no lexicon.json in {lexicon_path.parent.name} -- the "
+                  "tool-invocation edge channel is DECLARED LIVE in this tool's "
+                  "boundary. Run rcg/bin/lexicon.py first, or pass --no-lexicon to "
+                  "run with that channel explicitly DISABLED.")
+            sys.exit(3)
+        print("[edges] WARNING: --no-lexicon -- channel 3 (tool-token invocations) "
+              "DISABLED; invoke_edges will read 0 by construction, not by absence "
+              "of invocations.")
+    else:
         lex = json.loads(lexicon_path.read_text(encoding="utf-8"))
         for e in lex["entries"]:
             if e["kind"] == "tool" and e["status"] == "LIVE":
@@ -281,6 +307,10 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--cycle0", action="store_true",
                         help="emit the comp-tools dependency map + registry adjudication")
+    parser.add_argument("--no-lexicon", action="store_true",
+                        help="run with edge channel 3 (tool-token invocations) "
+                             "explicitly DISABLED instead of refusing on a missing "
+                             "lexicon.json; the boundary declaration is downgraded")
     args = parser.parse_args()
 
     scan_dir = newest_scan()
@@ -289,7 +319,7 @@ def main() -> int:
     print(f"[mark] scan vintage {scan_dir.name} -- population {len(rows)}")
 
     roots, why = build_root_set(population)
-    edges, stats = build_edges(rows)
+    edges, stats = build_edges(rows, no_lexicon=args.no_lexicon)
     hops = closure(roots, edges)
 
     in_degree: dict = defaultdict(int)

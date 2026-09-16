@@ -356,7 +356,7 @@ directives:
     members:
       subgroups: []
       projects: [OPAL_TAXSMA, OPAL_TAXROSTER, OPAL_TAXSMA_PT2, OPAL_TAXSMA_REGISTRY,
-                 IRPT_FNTEND, IRPT_BCKEND, NFRA_OPLGTW]
+                 IRPT_FNTEND, IRPT_BCKEND, NFRA_OPLGTW, NFRA_SPMOVE]
     stance: "Assess-first: state-assessment deliverable (repo prior-art census incl. the stalled
       08-04 TO seat-or-supersede, workflow map, SharePoint sync review, hole list) -> Andrew review
       -> Yang/Alyssa meeting -> pipeline-build TOs. Recordings pair + SMARTX CSVs INGESTED @ad01cca427
@@ -548,7 +548,7 @@ directives:
       governs. Placement attaches to the DIRECTIVE, never to a member (LD-0498, LD-0502)."
     members:
       subgroups: []
-      projects: [LGIC_CANON, LGIC_NAMING, LGIC_ENFORCE]
+      projects: [LGIC_CANON, LGIC_NAMING, LGIC_ENFORCE, LGIC_LGCTFM]
       members_note: "EMPTY AT MINT, AND THAT IS CORRECT RATHER THAN INCOMPLETE -- the D5/D10 precedent
         (LD-0454): an empty member set is honest where a plausible one is not, and must NOT be filled to make
         a row look finished. Rule 27 also makes the DIRECTIVES.yaml members line the CTO's L3 carrier

@@ -1,0 +1,43 @@
+{
+  "project_code": "NFRA_SPMOVE",
+  "macro_code": "NFRA",
+  "directive": "D9",
+  "fabric": "laptop",
+  "pipeline": null,
+  "status": "active",
+  "dep_stage": "REGISTERED",
+  "created": "2026-09-16",
+  "registered_under_tree": "2026-09-16",
+  "placement": "LAPTOP",
+  "pods": [],
+  "related": [
+    "NFRA_OPLGTW",
+    "LGIC_NAMING",
+    "LGIC_ENFORCE"
+  ],
+  "name": "AWS -> SharePoint file movements as a patterned structure -- first instance: Schwab transactions delivered as monthly workbooks to the main Opal SharePoint, the SharePoint path mirroring the naming builder's AWS address",
+  "description": "Commissioned by Andrew-direct 2026-09-16 ~19:4xZ at the 1.0.0_SA_CTO terminal ('a small project') on 4.0.0_SA_CRO~G's brief, which carries his five inputs verbatim: an AWS folder on the main Opal SharePoint whose paths follow the AWS path structure via LGIC_NAMING; Schwab masters 08242234 and 08335338 only; monthly workbooks, separate per master, all 140 columns; standing and daily, about fifteen minutes after the Schwab pull; Menachem as recipient only after several clean days on his word. The pattern: a marker-triggered producer rebuilds the month's workbook from silver into a builder-named S3 home, a bounded Gateway capability replaces it in place under SharePoint's AWS folder, a run record prints the denominators, and the recipient switch is OFF until his word. NFRA_OPLGTW is not its home (its FWD-9 was retired on his ~18:2xZ word) and its reader roles are never widened for this.",
+  "phase": "L3 REGISTERED UNDER THE PROJECT TREE 2026-09-16 ~19:5xZ by 1.0.0_SA_CTO under D9/NFRA (the Gateway's directive; NFRA_OPLGTW's sibling). || L2 ENDPOINT org/tier1_exec/1.0.0_SA_CTO/deliverables/NFRA_SPMOVE_ENDPOINT_FORWARD_20260916.md -- FWD-1..FWD-6 (five EXERCISED bars, FWD-3 APPLIED), emitted on the brief's O1-O6 and NOT YET CONFIRMED by Andrew (the spine makes the DONE WHEN confirmation his). || L1 BRIEF docs/briefs/schwab-trn-sharepoint-export-brief-20260916.md @d5e870fed2, author 4.0.0_SA_CRO~G (6 outcomes, 10 preconditions, his five inputs verbatim). || NEXT: Andrew's DONE WHEN word on FWD-1..FWD-6, then L4 at 1.0.0_SA_CTO (the PRD: the SharePoint path rule as a NAMING_SCHEMA.json addition ratified through this seat's schema bump; the Gateway's bounded large-file replace under AWS/ only; the delivery tier under the canon; a read role scoped to exactly the two masters' fact_trn and the output prefix; the backfill decision; rollback by SharePoint version history), then L4-R (3.0.0_SA_CVO ratified-text half; 4.0.0_SA_CRO or 4.0.0_SA_CRO~G brief half).",
+  "blocking": "NOTHING HERE IS A GATE THIS SEAT INVENTED; each line names whose it is. (1) L4 waits on Andrew's DONE WHEN confirmation of FWD-1..FWD-6 (spine L2). (2) Seat: 2.0.0_SA_COO~G after its three LGIC issuances (this seat's rec on the card he answered; a seating word is 0.0.0_AB_MSTR's to execute when the lane is free). (3) The sequence does not place this project; it is driven as an unplaced project unless Andrew orders it in. (4) The naming-canon addition (the SharePoint path rule) is this project's cell, ratified through the CTO's schema bump, never a rider on LGIC_ENFORCE.",
+  "brief_ref": "docs/briefs/schwab-trn-sharepoint-export-brief-20260916.md@d5e870fed2",
+  "prds": [],
+  "prd_lineage": [],
+  "decompositions": [],
+  "decomposition_lineage": [],
+  "leads": {
+    "cto": "1.0.0_SA_CTO",
+    "coo": null,
+    "cvo": "3.0.0_SA_CVO",
+    "cro": "4.0.0_SA_CRO~G",
+    "workers": "the worker subagents a future COO's L6 issuance names (spine v3 L7: 0.9.0_WK_NFRA_SPMOVE~<n>)"
+  },
+  "coo_lane": null,
+  "fabric_ruling": "laptop -- INHERITED FROM THE DIRECTIVE, not asserted here. D9's placement reads LAPTOP on Andrew-direct 2026-09-10 ~18:5xZ ('D9 as a whole is Laptop now'). Placement attaches to the directive, never to a member.",
+  "rulings": [
+    "A SMALL PROJECT -- Andrew-direct 2026-09-16 ~19:4xZ at the 1.0.0_SA_CTO terminal, VERBATIM AND ENTIRE: 'a small project.' (record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260916_194xZ_SCHWAB_SHAREPOINT_A_SMALL_PROJECT.md), answering the card put on 4.0.0_SA_CRO~G's brief s.8.",
+    "RELEGATED TO 4.0.0_SA_CRO~G, FOLD OR PROJECT HIS CALL -- Andrew-direct 2026-09-16 ~18:2xZ, call 4, VERBATIM in org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260916_182xZ_RESERVED_GROUP_FOUR_CALLS_RULED.md @50d1b9403e.",
+    "THE FIVE INPUTS AND THE CARD ANSWERS -- Andrew-direct at the 4.0.0_SA_CRO~G terminal 2026-09-16 ~3:0x-3:4x PM ET, VERBATIM in the brief's first section @d5e870fed2: the AWS folder on the main Opal SharePoint following the AWS path structure via LGIC_NAMING; masters 0824 and 0833 only; monthly, separate per master, 140 columns; standing, daily, ~15m after the pull; Menachem only after several clean days."
+  ],
+  "thread_counter": 0,
+  "threads": []
+}

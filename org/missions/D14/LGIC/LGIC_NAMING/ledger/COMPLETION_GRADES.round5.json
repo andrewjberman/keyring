@@ -1,0 +1,53 @@
+{
+ "kind": "COMPLETION_GRADES",
+ "schema_version": "1.0",
+ "project": "LGIC_NAMING",
+ "round": 5,
+ "graded_by": "1.0.0_SA_CTO",
+ "graded_utc": "2026-09-16T16:38Z",
+ "report_ref": "org/missions/D14/LGIC/LGIC_NAMING/ledger/COMPLETION_REPORT.round5.json@0570c42b98",
+ "rows": [
+  {
+   "fwd_id": "FWD-1",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D14/LGIC/LGIC_NAMING/deliverables/0.9.0_WK_LGIC_NAMING~6/LGIC_NAMING.TO-LN-e-3-r3.namer-comparison.proof_of_spec.json@cd86d91a55",
+   "state_observed": "EXERCISED",
+   "note": "Two seats that never conferred named the same 18 new items identically, each equal to the ruled name, with the canary blind (round 3). The card asks EXERCISED and the record is the exercise itself. Slug: surprise-channel/adjudications/ADJUDICATION_v6.md@2ce4f87aab; analysis: org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_LGIC_NAMING_ROUND5_20260916.md@5edf316564."
+  },
+  {
+   "fwd_id": "FWD-2",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D14/LGIC/LGIC_NAMING/deliverables/0.9.0_WK_LGIC_NAMING~6/LGIC_NAMING.TO-LN-e-5-r3.reader-scoring.proof_of_spec.json@adfd5599f7",
+   "state_observed": "EXERCISED",
+   "note": "A reader new to the estate pointed at the firm in 18 of 18 names unaided, 0 clashes, the seat clean; one abbreviation never means two things because bd is refused in every slot (S10) and its reading is decided by adjacency (v1.10 alias_adjacency)."
+  },
+  {
+   "fwd_id": "FWD-3",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D14/LGIC/LGIC_NAMING/deliverables/0.9.0_WK_LGIC_NAMING~4/LGIC_NAMING.TO-LN-f-2-r5.live-fence.proof_of_spec.json@59282b1126",
+   "state_observed": "EXERCISED",
+   "note": "The single rule is the firm's fence_patterns() glob from the registry. Read on the LIVE plane (comp-find --corpus aws, 'Built from the estate as of 2026-09-16 12:17:46 UTC', 2558 nodes scanned): every canonical form the rule produces for a firm's roles matches that firm's glob (8 of 8) and no other firm's form does; coverage of the legacy-named live population is DISCLOSED at 0 of 4 with every uncaught node's grade() verdict and canonical form and what a text read cannot see (R-20 iii). The four are LGIC_ENFORCE DEC-4(ii)'s existing-writer census and their owners' renames; a spelling outside the rule is DENIED loudly by the deny-by-default fence, never caught silently. Round 4 (LN-f-1-r4 @e3a1035585): FN1b + FN1c change 0 of 68 canonical forms."
+  },
+  {
+   "fwd_id": "FWD-4",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D14/LGIC/LGIC_NAMING/deliverables/0.9.0_WK_LGIC_NAMING~6/LGIC_NAMING.TO-LN-l-3-r2.layout-scoring.proof_of_spec.json@b9834f3b37",
+   "state_observed": "EXERCISED",
+   "note": "A reader who learned the shared store's layout read addresses in a firm's and a product's store correctly, 6 of 6, the code tier included (round 2); every older description of a different layout says it is replaced (LN-l-1 @4f30c6e3a0; MDPF_CANON's moved notice @3514843a12)."
+  },
+  {
+   "fwd_id": "FWD-5",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D14/LGIC/LGIC_NAMING/deliverables/0.9.0_WK_LGIC_NAMING~1/LGIC_NAMING.TO-LN-g-1-r5.rule-at-v110.proof_of_spec.json@9bff58525a",
+   "state_observed": "EXERCISED",
+   "note": "Two people applied the written rule by hand to the same real names and agreed (LN-h-3 @f829fdb1fc, round 1). The rule is complete at v1.10, coverage N of N derived from the schema diff, a doctored field reading N-1 of N and failing with both readings recorded (G1R5-AC5). The machine copies it: grade() equals the hand rule on every worked case, 82 of 82 at LN-g-1-r5's drain @6c32ffa1f9 (LN-g-2-r4 @f015dff193; S22's globgrph pair re-verdicted from the builder, not the tests edited). A name the rule cannot place RAISES with its missing_row named: 68 raises, 0 guessed, the planted rowless name still raising (LN-f-1-r5 @f49c697b41); round 4's 69 names re-graded at HEAD read 49 -> 19, exactly the 30 registry rows EN-r-4 landed. The 19 remaining {system} gaps are LGIC_ENFORCE's registry rows (R-6, RULING ROWS), not flaws in the rule, which is exact on every one of them."
+  },
+  {
+   "fwd_id": "FWD-6",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D14/LGIC/LGIC_NAMING/deliverables/0.9.0_WK_LGIC_NAMING~2/LGIC_NAMING.TO-LN-t-1.tension-ranking.proof_of_spec.json@36afc955ba",
+   "state_observed": "APPLIED",
+   "note": "The ranked list of the ten worst naming problems exists with a plain statement of each one's cost (deliverables/TENSION_RANKING.md, round 1). The card asks APPLIED (Andrew's card 5, PRD :18) and the artifact is applied."
+  }
+ ]
+}

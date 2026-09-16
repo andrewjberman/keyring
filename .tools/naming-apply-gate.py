@@ -1,8 +1,17 @@
 #!/usr/bin/env python3
 """naming-apply-gate.py -- the naming safe-apply limb (LGIC_ENFORCE cell EN-t-2; PRD candidate E8, second half; DEC-6).
 
-Grades the resource-name attributes of ONE Terraform root (DIR) with lib/opal_naming.py grade(), BEFORE any plan
-runs. .tools/safe-apply.sh calls it as one stage between the halt checkpoint and the tag-authorization gate.
+TWO MODES, round 2 (row W3-S8, CTO round-1 analysis s.2: an apply has no diff, so whether a resource is being ADDED
+is known only to a plan):
+  PRE-PLAN (DIR mode, unchanged shape): grades the resource-name attributes of ONE Terraform root (DIR) with
+    lib/opal_naming.py grade(), BEFORE any plan runs -- it cannot tell an existing resource from a new one, so it
+    NEVER refuses (every bad grade prints, capped at WARN).
+  PLAN (--plan-json FILE, new): grades a rendered `terraform show -json` document's resource_changes. A resource
+    being ADDED (an action including `create`, or an `update` whose own-name attribute changes) is graded for real
+    -- a REFUSE-worthy grade REFUSES, enforcing. Every other resource (no-op, a name-keeping update, a delete) is
+    graded too but only ever WARNs: it already exists, so this limb is not the one that gets to block it.
+.tools/safe-apply.sh calls DIR mode as one stage right after the halt checkpoint, then renders its own plan and
+calls plan mode on it, before any other plan-reading gate (tag-authz, tombstone) and before apply.
 
 WHAT IT GRADES, AND WHY (read from org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/TF_LABEL_CENSUS.md, EN-t-1):
   - The OWN-NAME attribute of every top-level resource block in DIR's *.tf files (the files terraform loads for that
@@ -24,22 +33,36 @@ WHAT IT GRADES, AND WHY (read from org/missions/D14/LGIC/LGIC_ENFORCE/deliverabl
     plan. Each is listed on an `unresolved` line (one that reads a module whose source is the opal_name module is
     marked module-produced) and none counts as graded.
 
-THE MATRIX AT APPLY. DEC-6 decides NEW against a diff's pre-image. An apply has no diff, and whether a resource is being
-added is known only to a plan, which runs after this stage. So every graded name is read as the tree states it:
-    OUT-OF-PATTERN or ALIAS     REFUSE, canonical printed (the module would not produce this name)
-    RAISE                       printed as a rule or registry defect, never as a naming verdict, and refused like any
-                                refusal once enforcing (DEC-6's RAISE row)
-    CONFORMANT, NOT-GRADED      pass
+THE MATRIX, PRE-PLAN (DIR mode). Every graded name is read as the tree states it, since addition status is unknown here:
+    OUT-OF-PATTERN, ALIAS or RAISE     WARN, canonical printed (the module would not produce this name; this stage
+                                        cannot tell an addition from an existing resource, so it never refuses)
+    CONFORMANT, NOT-GRADED             pass
+An expression (a reference, a function call, a template with ${...}) has its value only in a plan and is listed on
+an `unresolved` line, never graded; the summary line states how many are deferred to plan.
+
+THE MATRIX, PLAN (--plan-json mode). DEC-6 decides NEW against a diff's pre-image; a plan's resource_changes decide
+it directly (an action including `create`, or an `update` whose own-name attribute changed, per resource):
+    ADDITION, and OUT-OF-PATTERN, ALIAS or RAISE     REFUSE, canonical printed (the module would not produce this
+                                                      name; DEC-6's RAISE row: a rule or registry defect refuses like
+                                                      any other refusal once enforcing)
+    ADDITION, and CONFORMANT or NOT-GRADED           pass
+    NOT an addition (no-op, a name-keeping update, a delete)     WARN if the grade would otherwise refuse, else pass
+                                                                  -- it already exists; this limb never blocks it
 
 ENFORCE AND OUTPUT are the commit limb's (.tools/naming-gate.py, EN-g-1): ENFORCE is --enforce, env
 NAMING_GATE_ENFORCE=1, or a present org/mcp/naming-gate.enforce, and a REFUSE then exits 1. Otherwise it is WARN mode and
-exits 0, on an internal error too (`NAMING ERROR <reason>`). One `NAMING <verdict> <file>:<line> <string> -> <canonical>`
-line per graded name (<verdict> is the grade, or REFUSE) with a `why:` line under it, then
-`NAMING-GATE: <PASS|WARN|REFUSE> <n> graded`. Every verdict line is appended to org/mcp/naming-gate-verdicts.log (runtime
-state; gitignored; never committed), in mode APPLY-WARN or APPLY-ENFORCE.
+exits 0, on an internal error too (`NAMING ERROR <reason>`).
+  DIR mode: one `NAMING <verdict> <file>:<line> <string> -> <canonical>` line per graded name (<verdict> is the
+    grade, or WARN) with a `why:` line under it, then `NAMING-GATE: <PASS|WARN> <n> graded` (never REFUSE -- see
+    above). Every verdict line is appended to org/mcp/naming-gate-verdicts.log (runtime state; gitignored; never
+    committed), in mode APPLY-WARN or APPLY-ENFORCE.
+  Plan mode: one `NAMING <verdict> <address> <name> -> <canonical>` line per graded name (<verdict> is REFUSE, WARN
+    or the grade) with a `why:` line under it, then `NAMING-PLAN: <PASS|WARN|REFUSE> <n> graded`. Logged the same
+    way, in mode PLAN-WARN or PLAN-ENFORCE.
 
 Usage:
     python .tools/naming-apply-gate.py DIR [--enforce]
+    python .tools/naming-apply-gate.py --plan-json FILE [--enforce]
 
 Standard library only. ASCII only.
 """
@@ -49,6 +72,7 @@ import argparse
 import datetime
 import importlib.machinery
 import importlib.util
+import json
 import os
 import re
 import sys
@@ -213,7 +237,7 @@ def _shown(d, f):
 
 # --------------------------------------------------------------------------- the matrix at apply
 def judge(mod, node_type, s):
-    """(line verdict, canonical, why, refuses) for one literal name."""
+    """(line verdict, canonical, why, refuses) for one literal name, graded as an ADDITION."""
     try:
         verdict, canon = mod.grade(s, node_type)
     except mod.RaiseDefect as exc:
@@ -227,6 +251,16 @@ def judge(mod, node_type, s):
                 "%s as %s: the module would not produce this name; an apply has no diff and runs this stage before any"
                 " plan, so the name is read as the tree states it" % (verdict, node_type), True)
     return "CONFORMANT", canon, "CONFORMANT as %s" % node_type, False
+
+
+def judge_capped(mod, node_type, s):
+    """As judge(), but a REFUSE-worthy grade is capped at WARN, refuses=False -- for a name this limb cannot
+    confirm is an ADDITION: a pre-plan literal (DIR mode never sees a plan), or a plan resource that is a
+    no-op, a name-keeping update or a delete (EN-t-2 round 2 item 1: 'every other resource ... only WARNs')."""
+    verdict, canon, why, refuses = judge(mod, node_type, s)
+    if refuses:
+        return "WARN", canon, why + " -- not confirmed as an addition here, so this only WARNs", False
+    return verdict, canon, why, False
 
 
 def run(d):
@@ -255,21 +289,110 @@ def run(d):
                 src = modules.get(r["module"]) if r["module"] else None
                 unresolved.append((shown, r, src is not None and "opal_name" in src))
                 continue
-            verdict, canon, why, refuses = judge(mod, r["node_type"], r["value"])
+            # DIR mode cannot tell an existing resource from a new one (item 2), so every literal is graded
+            # capped at WARN: a REFUSE-worthy name still prints, it just never blocks (refuses is always False).
+            verdict, canon, why, refuses = judge_capped(mod, r["node_type"], r["value"])
             graded.append((verdict, shown, r["line"], r["value"], canon,
                            "%s.%s %s: %s" % (r["tf_type"], r["label"], r["attr"], why), refuses))
     return graded, unresolved, len(files)
 
 
+# --------------------------------------------------------------------------- plan mode (EN-t-2, round 2)
+def _get_path(d, path):
+    """Read a dotted attribute path (e.g. 'tags.Name') out of a plan JSON object; None if any hop is missing,
+    the value along the way is not a dict, or the leaf is not a string."""
+    if not isinstance(d, dict) or not path:
+        return None
+    cur = d
+    for part in path.split("."):
+        if not isinstance(cur, dict) or part not in cur:
+            return None
+        cur = cur[part]
+    return cur if isinstance(cur, str) else None
+
+
+def _is_addition(change, attr):
+    """A resource_changes entry is an ADDITION when its actions include `create` (a plain create, or the
+    create half of a replace), or when it is an `update` whose own-name attribute's value changed -- a rename
+    is a new name even though the resource address is not new (item 1)."""
+    actions = (change or {}).get("actions") or []
+    if "create" in actions:
+        return True
+    if "update" in actions:
+        return _get_path((change or {}).get("before") or {}, attr) != _get_path((change or {}).get("after") or {}, attr)
+    return False
+
+
+def run_plan(path):
+    """graded rows for one `terraform show -json` document's resource_changes: one row per managed resource
+    whose Terraform type carries a graded own-name attribute (the schema's map, same as DIR mode and the
+    commit limb -- item 4). An ADDITION is graded for real (judge(), may REFUSE); every other resource is
+    graded capped at WARN (judge_capped(), item 1's 'every other resource ... only WARNs') -- it already
+    exists (or is being removed), and this limb does not get to block it."""
+    ng = _load(COMMIT_LIMB, "naming_gate_for_apply_plan")
+    types = dict(ng.TF_NODE)
+    types.update(NOT_GRADED_TYPES)
+    try:
+        mod = _load(OPAL_PATH, "opal_naming_for_apply_plan")
+    except GateError:
+        raise
+    except Exception as exc:
+        raise GateError("lib/opal_naming.py cannot be loaded: %s: %s" % (type(exc).__name__, exc)) from None
+    if not os.path.isfile(path):
+        raise GateError("%s is absent" % path)
+    try:
+        with open(path, "rb") as fh:
+            plan = json.loads(fh.read().decode("utf-8"))
+    except (OSError, ValueError) as exc:
+        raise GateError("cannot parse plan json %s: %s" % (path, exc)) from None
+    if not isinstance(plan, dict):
+        raise GateError("%s is not a JSON object" % path)
+    changes = plan.get("resource_changes")
+    if not isinstance(changes, list):
+        raise GateError("%s carries no resource_changes array (is it a `terraform show -json` document?)" % path)
+    graded = []
+    for rc in changes:
+        if not isinstance(rc, dict) or rc.get("mode") != "managed":
+            continue
+        spec = types.get(rc.get("type"))
+        if not spec:
+            continue
+        node_type, attr = spec
+        change = rc.get("change") or {}
+        after, before = change.get("after"), change.get("before")
+        name = _get_path(after, attr) if isinstance(after, dict) else _get_path(before, attr)
+        if not name:
+            continue
+        addition = _is_addition(change, attr)
+        address = rc.get("address") or "?"
+        if addition:
+            verdict, canon, why, refuses = judge(mod, node_type, name)
+        else:
+            verdict, canon, why, refuses = judge_capped(mod, node_type, name)
+        graded.append((verdict, address, name, canon,
+                       "%s (%s): %s" % (address, "ADDITION" if addition else "existing", why), refuses))
+    return graded
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(prog="naming-apply-gate.py", description="the naming safe-apply limb (LGIC_ENFORCE EN-t-2, DEC-6)")
-    ap.add_argument("dir", help="the Terraform root safe-apply is about to plan (its -chdir, or .)")
+    ap.add_argument("dir", nargs="?", help="the Terraform root safe-apply is about to plan (its -chdir, or .) -- pre-plan mode")
+    ap.add_argument("--plan-json", dest="plan_json", metavar="FILE",
+                     help="a rendered `terraform show -json` document to grade -- plan mode (EN-t-2 round 2)")
     ap.add_argument("--enforce", action="store_true", help="a REFUSE exits 1 (also NAMING_GATE_ENFORCE=1 or org/mcp/naming-gate.enforce)")
     args = ap.parse_args(argv)
+    if bool(args.dir) == bool(args.plan_json):
+        ap.error("give exactly one of DIR or --plan-json")
     enforce = enforcing(args.enforce)
+    if args.plan_json:
+        return _main_plan(args.plan_json, enforce)
+    return _main_dir(args.dir, enforce)
+
+
+def _main_dir(d, enforce):
     mode = "APPLY-ENFORCE" if enforce else "APPLY-WARN"
     try:
-        graded, unresolved, nfiles = run(args.dir)
+        graded, unresolved, nfiles = run(d)
     except Exception as exc:
         line = "NAMING ERROR %s" % (str(exc) if isinstance(exc, GateError) else "%s: %s" % (type(exc).__name__, exc))
         print(line)
@@ -289,23 +412,60 @@ def main(argv=None):
             path, r["line"], r["tf_type"], r["label"], r["attr"], r["expr"],
             "module-produced: module.%s sources the opal_name module" % r["module"] if by_module
             else "an expression; its value exists only in a plan"))
-    refused = sum(1 for g in graded if g[6])
-    denom = "NAMING-APPLY: %s: %d .tf file(s), %d resource-name attribute(s): %d graded, %d expression(s) not graded before plan (%d module-produced)" % (
-        _shown(args.dir, "."), nfiles, len(graded) + len(unresolved), len(graded), len(unresolved),
+    refused = sum(1 for g in graded if g[6])  # always 0: DIR mode grades every literal with judge_capped()
+    warned = sum(1 for g in graded if g[0] == "WARN")
+    n_deferred = len(unresolved)
+    noun = "expression" if n_deferred == 1 else "expressions"
+    denom = "NAMING-APPLY: %s: %d .tf file(s), %d resource-name attribute(s): %d graded, %d %s deferred to plan (%d module-produced)" % (
+        _shown(d, "."), nfiles, len(graded) + len(unresolved), len(graded), n_deferred, noun,
         sum(1 for u in unresolved if u[2]))
     print(denom)
     if nfiles == 0:
         print("  (0 .tf files in this directory: nothing to grade; is -chdir=DIR correct?)")
+    summary = "WARN" if (refused or warned) else "PASS"  # DIR mode NEVER refuses -- it cannot tell ADD from EXISTING
+    if warned:
+        print("  (pre-plan: %d name(s) would REFUSE if this turns out to be an addition; the plan-time stage"
+              " decides that -- this stage never refuses)" % warned)
+    last = "NAMING-GATE: %s %d graded" % (summary, len(graded))
+    print(last)
+    log_lines(verdict_lines + [denom, last], mode)
+    return 1 if (refused and enforce) else 0
+
+
+def _main_plan(path, enforce):
+    mode = "PLAN-ENFORCE" if enforce else "PLAN-WARN"
+    try:
+        graded = run_plan(path)
+    except Exception as exc:
+        line = "NAMING ERROR %s" % (str(exc) if isinstance(exc, GateError) else "%s: %s" % (type(exc).__name__, exc))
+        print(line)
+        log_lines([line], mode)
+        if not enforce:
+            print("  (WARN window: the limb's own error never blocks an apply; enforce is off)")
+        return 1 if enforce else 0
+    graded.sort(key=lambda r: (r[1], r[2]))
+    verdict_lines = []
+    for verdict, address, name, canon, why, _refuses in graded:
+        vl = "NAMING %s %s %s -> %s" % (verdict, address, name, canon)
+        verdict_lines.append(vl)
+        print(vl)
+        print("  why: %s" % why)
+    refused = sum(1 for g in graded if g[5])
+    warned = sum(1 for g in graded if g[0] == "WARN")
+    denom = "NAMING-PLAN-DENOM: %s: %d resource-name(s) graded" % (path, len(graded))
+    print(denom)
+    if not graded:
+        print("  (0 graded resource-name(s) in this plan: nothing to grade, or nothing this schema's map covers)")
     if refused and enforce:
         summary = "REFUSE"
-    elif refused:
+    elif refused or warned:
         summary = "WARN"
     else:
         summary = "PASS"
     if refused and not enforce:
         print("  (WARN window: %d REFUSE verdict(s) did not block; ENFORCE is --enforce, NAMING_GATE_ENFORCE=1 or"
               " org/mcp/naming-gate.enforce)" % refused)
-    last = "NAMING-GATE: %s %d graded" % (summary, len(graded))
+    last = "NAMING-PLAN: %s %d graded" % (summary, len(graded))
     print(last)
     log_lines(verdict_lines + [denom, last], mode)
     return 1 if (refused and enforce) else 0

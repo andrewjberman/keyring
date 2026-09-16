@@ -1,11 +1,11 @@
 {
   "prd": "NFRA_OPLGTW_PRD.md",
-  "prd_version": "v0.1",
-  "prd_pin": "2af252cb3961c0c7d9529af3d6f5e754faff4c43",
+  "prd_version": "v0.7",
+  "prd_pin": "79a1fd4a476253ce412397e4d579c6da4f03d885",
   "half": "ratified-text",
-  "half_hash": "908c9e9460c1cdbb3cf4fa111d5946461c1dfc074963022b3b5e43d6c00233f9",
+  "half_hash": "8fc9c2558601300d2e0e1471726266de8fd35881ffe08c60a1045b7b5b2a3a5d",
   "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/PRD_REVIEW_NFRA_OPLGTW_v0.1_RATIFIED_TEXT_HALF_20260914.md@64904c6abc",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/PRD_REVIEW_NFRA_OPLGTW_v0.7_RATIFIED_TEXT_HALF_20260916.md@13ca2e8aa3",
   "signed_by": "3.0.0_SA_CVO",
-  "signed_at": "2026-09-14T20:00:39Z"
+  "signed_at": "2026-09-16T19:37:46Z"
 }

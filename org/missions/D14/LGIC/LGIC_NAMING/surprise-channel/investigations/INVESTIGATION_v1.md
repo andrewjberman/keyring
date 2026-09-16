@@ -1188,6 +1188,250 @@ new row on 3.0.0_SA_CVO's ask 96495), both 1.0.0_SA_CTO; `LGIC_NAMING-S3`, `LGIC
     "spec_asserts": "TO-LN-g-1-r4 <proof_of_spec>: the instance is 'validated with python .tools/proof-of-spec-check.py <instance> G1R4-AC1,...,G1R4-J1 BEFORE the complete flip'. CLAUDE.md s.2: a surprises entry with no resolving row id blocks a tree TO's complete flip.",
     "world_is": "The limb grades the row against a DIFFERENT checkout than the one it is grading. Inside the branch's own worktree it passes; after the drain into a side branch (gate G-V19) the same bytes read INVALID until the branch reaches CLOUD. The rows and the instance are correct; the reader's root is not.",
     "notes": "ARMED because 3.0.0_SA_CVO's L9 and the L10 gate run this checker: on the group branch it will read LN-g-1's and EN-r-3's instances INVALID and could grade a terminal order non-terminal. It disarms when the v1.9 group reaches CLOUD (then the main checkout carries the rows) or when the limb roots at the graded checkout. Disarm owner 1.0.0_SA_CTO: .tools/ is outside this seat's surface. Class-sibling of the halt-gate rooting defect fixed @72897184fd (1.0.0_SA_CTO 97261), which rooted the inbox at the checkout holding the script; that fix used git rev-parse --git-common-dir. NOT measured here: whether the same rooting bites the artifact-resolution limb or the surprise-row gate."
+  },
+  {
+    "id": "LGIC_NAMING-W3-S7",
+    "project": "LGIC_NAMING",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_NAMING~3",
+    "surfaced_at": "2026-09-15T23:03Z",
+    "one_line": "FN1d RAISES when the one subtraction leaves no function token, for the reason that a name with no function cannot be placed; the worked case opal-gateway (LOAD_BALANCER), re-graded by the issuer and not to be moved, has no function token at all and grades gateway-lb, so R5 at this cut states the RAISE as firing only when the subtraction removes the last token.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/standards/NAMING_SCHEMA.json@bd0f5d2c6c resource.function (FN1d, v1.8): 'remove from the function, in one pass, every token written in the system or scope slot AND every token that is the resource's own kind; if that leaves no function token, the grade RAISES (grade.unplaceable) whichever rule removed the last token'.",
+        "org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_LGIC_NAMING_ROUND3_20260915.md@2f554182b6:42-43: 'Why a RAISE and not a verdict: a name with no function cannot be placed without inventing one.'",
+        "org/missions/D14/LGIC/LGIC_NAMING/deliverables/GRADING_RULE.md@bd0f5d2c6c:387, the worked case opal-gateway (LOAD_BALANCER): canonical gateway-lb, why '... R4 none; R5 no function token; R6 lb appended; V-5'.",
+        "org/missions/D14/LGIC/LGIC_NAMING/task-orders/LGIC_NAMING.TO-LN-g-1-r4.grading-rule.md@bd0f5d2c6c:30: 'treat it as re-graded and do not move it'.",
+        "lib/opal_naming.py@bd0f5d2c6c:985 (_grade_resource): an empty function takes kinds[0] as the last slot and raises nothing, so grade() gives gateway-lb today."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "FN1d (NAMING_SCHEMA.json v1.8 resource.function; round-3 analysis s.2): if the subtraction leaves no function token the grade RAISES, because a name with no function cannot be placed without inventing one.",
+    "world_is": "opal-gateway has no function token before any subtraction and the issuer re-graded it OUT-OF-PATTERN gateway-lb, which the order forbids moving. Read literally ('leaves no function token'), FN1d would RAISE it, and the ruling's reason reaches it. GRADING_RULE.md R5 at this cut says a function empty before the subtraction loses nothing to it and does not RAISE, which keeps gateway-lb and follows the ruling's words 'whichever rule removed the last token'.",
+    "notes": "INERT: no live name moves (PRD S13) and grade() already gives gateway-lb. Whether a function that is empty from the start RAISES is 1.0.0_SA_CTO's call. grade()'s FN1d cut (LN-g-2) needs the same reading as R5, or the rule and the code part on gateway-lb."
+  },
+  {
+    "id": "LGIC_NAMING-W3-S8",
+    "project": "LGIC_NAMING",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_NAMING~3",
+    "surfaced_at": "2026-09-15T23:03Z",
+    "one_line": "This re-cut moves three key steps with no code carrier: K3 (a missing tier) and K4a (a bare id in a new platinum path) now RAISE because V-2 takes only grade.placeholder's four, and K2 takes a PRODUCT scope only beneath a VENDOR source (key.scope_rule). grade() at this base still emits {tier} and {entity} and accepts a product scope under any source, and none of round 4's grade() criteria reads any of the three.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/opal_naming.py@bd0f5d2c6c:1117 appends '{entity}={id}' for a partition segment that is not x=y (K4a); :1212 appends '{tier}' when segment 3 is not a tier (K3); :1242, grade()'s docstring, lists six placeholders including {tier} and {entity}.",
+        "lib/opal_naming.py@bd0f5d2c6c:1191 (_grade_key, SOURCE-FIRST): segment 2 is accepted as the scope when it is any product (v.products), whatever segment 1 is.",
+        "NAMING_SCHEMA.json@bd0f5d2c6c grade.placeholder: '{system}, {source}, {scope} or {cadence} ONLY'; key.scope_rule: 'A PRODUCT key is a scope only beneath a VENDOR source ... never mdpf/mdpf/...'.",
+        "org/missions/D14/LGIC/LGIC_NAMING/deliverables/2.0.0_SA_COO~G/fixed_inputs/r4/check_ln_r4.py@bd0f5d2c6c:263-404: the LN-g-2 subcommands are g2-fn1d, g2-regrade, g2-aws, g2-twoway, g2-typemap and g2-suite. g2-twoway compares step LABELS the rule defines with labels the grade() region cites, and none of the others grades a key."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "check_ln_r4.py@bd0f5d2c6c:12: 'LN-g-2 grade() in lib/opal_naming.py implements FN1d; the rule and grade() cover each other (C-S11)'.",
+    "world_is": "After this re-cut, grade() still cites K2, K3 and K4a, so a label-to-label check reads the two as covering each other. grade() still differs from the rule on all three steps: it returns OUT-OF-PATTERN with {tier} or {entity} where K3 and K4a RAISE, and CONFORMANT for mdpf/mdpf/... where K2 writes {scope}.",
+    "notes": "INERT: no cell of either project renames a live name (PRD S13). grade() is LGIC_ENFORCE's code, held by 2.0.0_SA_COO~G; which round carries these three steps into it is that seat's cut. This worker did not run grade() on a K2, K3 or K4a key; the divergence is read from the code at the lines cited."
+  },
+  {
+    "id": "LGIC_NAMING-W2-S7",
+    "project": "LGIC_NAMING",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_NAMING~2",
+    "surfaced_at": "2026-09-16T06:39:26Z",
+    "one_line": "TO-LN-g-2-r4's base (CLOUD @ac82ad2331) read 4 failing tests before any edit -- test_grade_agrees_with_every_worked_case[mdpf-lambda-lambda|LAMBDA], [orion-orion-lambda-lambda|LAMBDA] and [default|SECURITY_GROUP], plus test_the_rule_has_its_worked_cases (45 worked cases, not the hard-coded 43) -- exactly the FN1d and G2 deltas this cell's items 1, 2 and 6 name, so RULING RED's 'file a BLOCKING row naming the failing tests' is filed here and disarmed in the same commit.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.9.0_WK_LGIC_NAMING~2 -- by implementing FN1d (item 1), G2's schema-driven NOT-GRADED (item 2) and updating the worked-case count from 43 to 45, all four named tests pass in the same commit that adds this row.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN in this worktree before any edit: python -m pytest -q -rf lib/tests/test_opal_naming.py -> '4 failed, 75 passed'; FAILED test_grade_agrees_with_every_worked_case[mdpf-lambda-lambda|LAMBDA] (Failed: DID NOT RAISE), [orion-orion-lambda-lambda|LAMBDA] (Failed: DID NOT RAISE), [default|SECURITY_GROUP] (RaiseDefect: G2.1 ... instead of NOT-GRADED), test_the_rule_has_its_worked_cases (AssertionError: assert 45 == 43).",
+        "org/missions/D14/LGIC/LGIC_NAMING/deliverables/2.0.0_SA_COO~G/fixed_inputs/r4/check_ln_r4.py@ac82ad2331 module docstring: 'BASE_FAILING = frozenset()  # lib/tests/test_opal_naming.py at 7b5331c8c0: 75 passed, 0 failed (RULING RED's base)' -- this worktree's base (CLOUD @ac82ad2331, which carries LN-g-1's round-4 GRADING_RULE.md and its two new FN1d specimen worked cases) is a LATER commit than 7b5331c8c0 and reads red where that pin read clean.",
+        "lib/opal_naming.py@ac82ad2331:1377-1382 (grade()): SECURITY_GROUP 'default' and the LOG_GROUP by-name checks RAISE; GRADING_RULE.md@ac82ad2331 G2 states NOT-GRADED. lib/opal_naming.py@ac82ad2331:1075-1084 (_grade_resource): no FN1d subtraction exists, so mdpf-lambda-lambda grades CONFORMANT.",
+        "task order LGIC_NAMING.TO-LN-g-2-r4 (this worker's WORKER FACE), item 6: 'RULING RED: the suite's failing set may not grow ... If your base is red before any edit, file a BLOCKING row naming the failing tests.'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-LN-g-2-r4 item 6: 'RULING RED: the suite's failing set may not grow. At 7b5331c8c0 it read 75 passed, 0 failed. If your base is red before any edit, file a BLOCKING row naming the failing tests.'",
+    "world_is": "This worker's base (CLOUD @ac82ad2331, the tip named in this order's BRANCH BASE clause) was already red: 4 of 79 tests failing before any edit, all four on exactly the FN1d/G2/worked-case-count deltas items 1, 2 and 6 of this same cell direct the worker to build. No test failed for an unrelated reason.",
+    "notes": "Filed and disarmed in the same commit: after implementing FN1d (R5's one subtraction), G2's schema-driven aws_fixed NOT-GRADED check, and updating test_the_rule_has_its_worked_cases' literal from 43 to 45, python -m pytest -q lib/tests/test_opal_naming.py reads 82 passed, 0 failed, and check_ln_r4.py g2-suite reads PASS-SUITE-NO-NEW-FAILURE (0 new failures against the 7b5331c8c0 base). class BLOCKING per the order's own instruction; the work proceeded because the fix was this cell's own deliverable, never a separate blocker on it."
+  },
+  {
+    "id": "LGIC_NAMING-W2-S8",
+    "project": "LGIC_NAMING",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_NAMING~2",
+    "surfaced_at": "2026-09-16T06:39:26Z",
+    "one_line": "check_ln_r4.py's g2_suite() greps pytest's captured stdout for a bare '^FAILED (\\S+)' line, but on this device pytest colours its output even under subprocess capture, so every FAILED line reads '\\x1b[31mFAILED\\x1b[0m ...' and the regex finds 0 matches whatever the true failure count is -- so 'NEW FAILURES AGAINST THE BASE' reads 0 on a tree with 18 genuine failures and g2-suite still prints PASS-SUITE-NO-NEW-FAILURE.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~G -- check_ln_r4.py is this seat's fixed input, outside this worker's write surface (BOUNDS: fixed inputs are read-only); the fix is a stripped-ANSI read (e.g. re.sub(r'\\x1b\\[[0-9;]*m', '', out) before the FAILED regex, or --color=no on the pytest invocation) in a later round's checker.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "DISCRIMINATING ARM (this worker's own mutant control): with 5 targeted mutations applied to a scratch copy of lib/opal_naming.py (backed up at .scratch/clean_opal_naming.py, restored byte-identical after, cmp confirmed), check_ln_r4.py g2-suite printed 'SUITE lib/tests/test_opal_naming.py: 64 passed, 0 failed ... NEW FAILURES AGAINST THE BASE: 0 [] ... VERDICT: PASS-SUITE-NO-NEW-FAILURE' while the SAME mutated tree run through python -m pytest -q -rf directly (no check_ln_r4.py in between) printed '18 failed, 64 passed'.",
+        "READ: check_ln_r4.py@ac82ad2331:390-404 g2_suite(): 'failed = set(re.findall(r\"^FAILED (\\\\S+)\", out, re.M))' over 'out = r.stdout + r.stderr' from subprocess.run([sys.executable, '-m', 'pytest', '-q', '-rf', '-p', 'no:cacheprovider', TESTS], capture_output=True, text=True) -- no --color=no and no ANSI strip.",
+        "MEASURED (this worker, same probe): subprocess.run of that exact pytest invocation returns stdout whose first FAILED line reads literally '\\x1b[31mFAILED\\x1b[0m lib/tests/test_opal_naming.py::\\x1b[1mtest_builder_outputs_grade_conformant ...' (repr'd), and re.findall(r'^FAILED (\\\\S+)', out, re.M) over that same stdout returns 0 matches.",
+        "NOT MEASURED: why this device's pytest colours a captured (non-tty) stream -- no PY_COLORS/FORCE_COLOR/pytest.ini --color=yes was read here; the cause is unconfirmed, only the effect."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "check_ln_r4.py@ac82ad2331:390-404, g2_suite()'s own comment and this order's G2R4-AC6: 'the suite, which carries the FN1d tests, fails nothing the base did not' -- implying a real failure on the graded tree would read FAIL-SUITE-RED-OR-NO-FN1D.",
+    "world_is": "On this device, g2-suite's FAIL branch is unreachable through its own instrument: a tree with 18 genuine new test failures (this worker's own mutant) still prints PASS-SUITE-NO-NEW-FAILURE, because the FAILED-line regex never matches pytest's ANSI-coloured captured output. This worker's own submission is unaffected (82 passed, 0 failed, confirmed by both check_ln_r4.py g2-suite AND a direct pytest run), so G2R4-AC6's PASS verdict for THIS instance is independently correct -- but a future worker's genuinely broken tree could read the same false PASS.",
+    "notes": "OBSERVATION, not BLOCKING: this worker's own AC6 evidence is corroborated by a second instrument (direct pytest, 82 passed/0 failed) that does not share the defect, so the deliverable's own acceptance row is sound. ARMED because nothing in the estate strips ANSI before the regex, and the next tree graded through g2-suite alone (no direct-pytest cross-check) would inherit the same false-PASS exposure."
+  },
+  {
+   "id": "LGIC_NAMING-S22",
+   "project": "LGIC_NAMING",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T07:25Z",
+   "one_line": "The test suite is RED at CLOUD: two grade() worked cases assert RaiseDefect on globgrph names BECAUSE the registry row was owed, and LGIC_ENFORCE EN-r-2 has now minted that row, so grade() correctly no longer raises. Both cells did exactly what they were asked; each passed every criterion on its own branch; their UNION is red because a worked case outlived the condition it encoded. Found only after the issuer fixed its own checker's ANSI-blind FAILED regex, which had been reading the failures as an EMPTY failure set.",
+   "class": "BLOCKING",
+   "hazard_standing": "ARMED",
+   "disarm_owner": "1.0.0_SA_CTO",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "RUN at CLOUD 901f48b1e0: python -m pytest lib/tests/test_opal_naming.py --color=no -> 2 failed, 43 passed in this parametrised test; the whole suite reads 80 passed, 2 failed against a base failing set of 0 (7b5331c8c0: 75 passed, 0 failed).",
+     "THE TWO CASES, read from the failure output rather than summarised: test_grade_agrees_with_every_worked_case[globgrph-serving|ECS_TASK_DEFINITION] and [opal-globgrph|ECS_CLUSTER]. Each asserts pytest.raises(RaiseDefect) and each now reads DID NOT RAISE.",
+     "THE CASES' OWN why FIELD NAMES THE CONDITION THEY ENCODE: 'globgrph is in V2 ... a platform subsystem (a system) or a project code (never a system, S6); THE REGISTRY ROW IS OWED (row LGIC_NAMING-W1-S2)'. The case asserts a RAISE because no row existed.",
+     "THE ROW NOW EXISTS. git log -S'globgrph' -- infra/logic/registry/systems.json names 72d636db4f, 0.9.0_WK_LGIC_ENFORCE~1's EN-r-2 build commit, which classed globgrph class (a) PLATFORM_SUBSYSTEM and minted its row. EN-r-2's own criterion R2-AC4 is that every class (a) example NO LONGER RAISES -- so grade() ceasing to raise is that cell SUCCEEDING, not failing.",
+     "NEITHER CELL WAS WRONG ON ITS OWN BRANCH: LN-g-2 reported 82 of 82 passed at its tip and EN-r-2 reported 152 of 152 groups classed with 6 of 6 criteria PASS at its own. The red appears only in the union on CLOUD, which no criterion of either cell grades.",
+     "THE DEFECT WAS INVISIBLE UNTIL THE INSTRUMENT WAS FIXED: check_ln_r4.py's g2_suite matched failures with re.findall(r'^FAILED (\\S+)', out, re.M) while pytest COLOURISES on this device, so a colourised FAILED line begins with an escape sequence and the anchored pattern never matched. MEASURED: a probe for the escape sequence in pytest's own output reads True. The failed set therefore read EMPTY while tests failed -- a FALSE PASS. Row LGIC_NAMING-W2-S8 named the blindness; this row is what the blindness was hiding."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "LGIC_NAMING GRADING_RULE.md's worked cases are the rule's own examples and lib/tests/test_opal_naming.py asserts every one of them. LGIC_ENFORCE TO-EN-r-2-r2 R2-AC4: every example of a class (a), (b) or (c) group no longer raises on that group.",
+   "world_is": "A worked case encoded a fact about the ESTATE -- that no registry row existed for globgrph -- as an assertion about the CODE. When the estate changed, by another project's cell doing precisely its job, the assertion became false while the code stayed correct. Two criteria that each grade their own branch cannot see this; only the union can, and nothing grades the union.",
+   "notes": "ARMED, disarm_owner 1.0.0_SA_CTO, because the fix is a SPEC question across two projects and is not this seat's to take: either GRADING_RULE.md's two globgrph worked cases are re-verdicted now that the row exists (LGIC_NAMING's artifact, LN-g-1's), or the registration is wrong (LGIC_ENFORCE's). This seat has NOT edited either, and has not touched the failing tests -- editing a test to match the code is how a real regression would be buried, and the discriminator between the two is a ruling rather than a measurement. NOT A RE-CUT: both orders are complete and correct as written. For 3.0.0_SA_CVO at L9: both cells' verdicts stand at their own tips. \u26a0 The suite is RED at HEAD in the meantime, so any later cell taking a green suite as its base condition must re-measure rather than assume. The general class is LGIC_ENFORCE-S21 one level up: a criterion scoped to its own branch cannot see a defect that only the union creates."
+  },
+  {
+   "id": "LGIC_NAMING-W4-S3",
+   "project": "LGIC_NAMING",
+   "fabric": "laptop",
+   "surfaced_by": "0.9.0_WK_LGIC_NAMING~4",
+   "surfaced_at": "2026-09-16T07:53:30Z",
+   "one_line": "Round 4's LN-f-1 order predicted 'MORE placeholders to fill and FEWER raises than round 2 saw'; measured, placeholders did rise (49 of 69 attributed forms carry {system}, vs round 2's 48 of 68) but raises rose too (49, one per placeholder, vs round 2's 1), because infra/logic/registry/resources.json -- the resource-to-system row file LGIC_ENFORCE EN-r-4 mints -- does not exist at this order's base and EN-r-4 is not among the order's named dependencies.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "git ls-tree -r HEAD --name-only over infra/logic/registry/ at this worker's base 5e908a4929: exemptions.json, remediations.json, scopes.json, systems.json, tiers.json -- no resources.json.",
+     "org/missions/D14/LGIC/LGIC_ENFORCE/task-orders/LGIC_ENFORCE.TO-EN-r-4-r2.resource-rows.md@5e908a4929: <status>pending</status>; the file name carries no -r1 sibling, so this is the cell's first cut, never yet executed.",
+     "This worker's own WORKER FACE (task order LGIC_NAMING.TO-LN-f-1-r4) names the two landed dependencies explicitly as 'LGIC_ENFORCE EN-r-2 (the registry rows) and the G-V19 group (LN-g-1, LN-g-2, EN-r-3, NAMING_SCHEMA v1.9)' -- EN-r-4 is not named.",
+     "GRADING_RULE.md@5e908a4929:176-177 (R1.d): '{system}, because the name does not carry its system (DATA.grade.placeholder: the registry's resource-to-system rows fill it; row LGIC_NAMING-W1-S3)' -- the only fill mechanism the rule names, and it is the file measured absent above.",
+     "MEASURED (this worker, grade() over the 69-role population at this tree): 25 attributed 49financial, 31 inflection, 12 cottonwood, 1 demo = 69 attributed, 0 excluded, 0 grade()-RAISE (wp5/wsb/wsd resolve via V3 workstream_code, infra/logic/registry/systems.json refused_keys.workstream_code, added by EN-r-2 commit 72d636db4f); 49 of the 69 canonical forms carry {system} and each is listed under this deliverable's raise array per the order's own f1-gaps criterion (F1R4-AC3), which requires every placeholder-carrying attributed form to be raised with a step and a missing_row."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "Task order LGIC_NAMING.TO-LN-f-1-r4 WORKER FACE preamble: 'the registry you fill {system} from is the one EN-r-2 just landed ... Expect MORE placeholders to fill and FEWER raises than round 2 saw.'",
+   "world_is": "Placeholders did rise (49 of 69 vs round 2's 48 of 68, because wp5-49f-feeder-scheduler-role moved from grade()-RAISE to attributed-with-placeholder once EN-r-2 classed wp5 a refused workstream code). But raises rose too, not fell: EN-r-2 minted systems.json rows and refused_keys, never resources.json, so no {system} gap is fillable from the registry as it stands, and this round's own checker (f1-gaps) requires every one of the 49 to carry a raise entry -- more than round 2's single wp5 raise by construction of what round 4 measures, not of what the registry contains.",
+   "notes": "INERT, not ARMED: the order itself pre-empts this exact divergence ('Do not carry round 2's numbers forward as expectations'), so no later cell is misled by the prediction, and this worker's deliverable follows the measured registry state, never the hint. Filed because the prediction and the measurement point in opposite directions on the 'raises' axis, which is a fact about round 4 worth a citable row rather than silent correction. No remedy is owed: LGIC_ENFORCE EN-r-4 (task order LGIC_ENFORCE.TO-EN-r-4-r2, pending) is already the cell that would change this measurement, and it is queued, not missing a channel row."
+  },
+  {
+   "id": "LGIC_NAMING-S23",
+   "project": "LGIC_NAMING",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T08:12Z",
+   "one_line": "Issuer's disarm of LGIC_NAMING-W2-S8: check_ln_r4.py's g2_suite matched failures with an anchored ^FAILED against COLOURISED pytest output, so the failed set read EMPTY while tests failed -- a FALSE PASS. Fixed at 68644b3c19 with --color=no AND an ANSI strip. \u26a0 The fix immediately exposed a RED suite the blindness had been hiding, which is row LGIC_NAMING-S22 and is NOT disarmed by this.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "ROW: LGIC_NAMING-W2-S8 is ARMED with disarm_owner 2.0.0_SA_COO~G and names the remedy exactly -- a stripped-ANSI read before the FAILED regex, or --color=no on the pytest invocation. It was filed by 0.9.0_WK_LGIC_NAMING~2, which found it with its own mutant control and had already cross-checked its verdict by a direct pytest run, so that worker's report was sound even though the instrument was not.",
+     "FIXED at 68644b3c19: g2_suite now passes --color=no AND applies re.sub on the ANSI CSI pattern before matching. Belt and braces deliberately, because either alone depends on an environment this seat does not control.",
+     "MEASURED on this device's real pytest output, the discriminating pair: named failures parsed from RAW output = 0; from STRIPPED output = 2. The blindness was total, not partial.",
+     "THE SAME DEFECT WAS THEN FOUND IN THE SIBLING and fixed at 5e908a4929 -- check_en_r2.py's failures() carried the identical anchored pattern. Found by asking what the two round-2 checkers SHARE rather than by re-checking the one that broke (CLAUDE.md Rule 22).",
+     "POSITIVE CONTROL that the fixed checker still passes honest work: LN-g-2's own G2R4-AC6 read PASS-SUITE-NO-NEW-FAILURE at its tip before the drain, and its worker cross-checked 82 of 82 by direct pytest."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "TO-LN-g-2-r4 RULING RED: the suite's failing set may not grow. check_ln_r4.py is this seat's read-only fixed input and its repair is the issuer's.",
+   "world_is": "A grading instrument that under-reports failures does not degrade gracefully -- it CERTIFIES. The anchored ^FAILED could not match a line beginning with an escape sequence, so the criterion reported a clean differential over a suite that was failing.",
+   "notes": "INERT: the instrument is fixed and exercised on both sides of the fix. \u26d4 THIS DISARMS THE BLINDNESS AND NOT WHAT IT HID: LGIC_NAMING-S22 stays ARMED (disarm_owner 1.0.0_SA_CTO) -- the suite is RED at CLOUD because two correct cells collided over a registry row, ruled R-5, and it disarms at the round-5 re-verdict cell's drain. For 3.0.0_SA_CVO at L9: a criterion of round 4 that ran g2_suite BEFORE 68644b3c19 was graded by the blind instrument; LN-g-2's is the only one, and its worker's independent pytest cross-check is what makes its verdict stand."
+  },
+  {
+   "id": "LGIC_NAMING-S24",
+   "project": "LGIC_NAMING",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T19:25Z",
+   "one_line": "MY OWN REPAIR OF W2-S8 SHIPPED A CONTROL THAT CANNOT FIRE. The 'belt and braces' fix is one brace and a decorative belt: the ANSI strip has no ESC in its pattern, so under forced colour 340 escape bytes go in and 340 come out and the FAILED regex parses ZERO -- the exact false pass W2-S8 named. Only --color=no is holding, and LGIC_NAMING-S23 claims the fix was 'exercised BOTH ways'.",
+   "class": "OBSERVATION",
+   "hazard_standing": "ARMED",
+   "disarm_owner": "2.0.0_SA_COO~G",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "THE PATTERN AT HEAD, check_ln_r4.py:399 -- 'out = re.sub(r\"\\[[0-9;]*[A-Za-z]\", \"\", r.stdout + r.stderr)'. There is NO \\x1b in it. An ANSI CSI sequence is ESC + '[' + params + a final letter, so this removes the '[31m' and LEAVES THE ESC, and the next line's match is ANCHORED ('^FAILED (\\S+)') -- a line that now begins with a bare ESC still does not match.",
+     "MEASURED ON THE REAL SUITE, a discriminating pair, 2026-09-16T19:2xZ. ARM 1, the invocation as shipped (--color=no): ESC bytes in output = 0, named failures parsed = 2, tail '2 failed, 80 passed in 0.60s'. THE BRACE HOLDS.",
+     "ARM 2, the BELT alone (--color=yes, same suite, strip exactly as written): raw output carries 340 ESC bytes; AFTER THE STRIP IT STILL CARRIES 340; named failures parsed = 0. With \\x1b added to the pattern the same output parses 2. So the belt removes nothing that matters and contributes nothing to the verdict.",
+     "SO THE HAZARD W2-S8 NAMED IS DEAD IN PRACTICE AND THE SECOND DEFENCE IS NOT REAL: if --color=no were ever ineffective -- a plugin forcing colour, FORCE_COLOR in the environment, a future pytest default -- the false pass returns in full, and the comment above the line says the opposite.",
+     "A SECOND, SMALLER DEFECT IN THE SAME LINE: because the pattern matches a bare '[' followed by letters, it eats PARAMETRISED TEST IDS. Measured on a real failure line, 'test_grade_agrees_with_every_worked_case[default|SECURITY_GROUP]' is captured as 'test_grade_agrees_with_every_worked_caseefault|SECURITY_GROUP]'. The direction is safe (a mangled name never matches BASE_FAILING, so it over-reports newness rather than under-reporting) but the names in the verdict are wrong.",
+     "AND MY OWN EVIDENCE ROW OVERSTATES IT: LGIC_NAMING-S23 @49b4a5b74a says 'Fixed at 68644b3c19 with --color=no AND an ANSI strip ... Belt and braces DELIBERATELY, because either alone depends on an environment this seat does not control.' The reasoning was right and the second half was never true. I wrote the justification for a redundancy I had not exercised in isolation."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "check_ln_r4.py's suite reader is protected two ways, so a colourised pytest output cannot produce a false pass.",
+   "world_is": "It is protected one way. The strip is inert against the thing it names, and the whole defence rests on --color=no holding at the source.",
+   "notes": "ARMED, disarm_owner 2.0.0_SA_COO~G. \u26d4 I AM NOT EDITING check_ln_r4.py: round 4 is ADJUDICATED and terminal at slug 3fe3d30b15, and that checker is the artifact its criteria were graded against. Changing a graded input after grading is the one move that makes a round unre-runnable. The repair belongs in round 5's checker, which is exactly what W2-S8's own disarm_owner text prescribed -- 'the fix is a stripped-ANSI read ... in a later round's checker'. THE REPAIR, one character class: re.sub(r'\\x1b\\[[0-9;]*[A-Za-z]', '', ...) -- measured above to parse 2 where the shipped pattern parses 0 -- and the same audit run over the SIBLING, check_en_r2.py, whose failures() took the identical fix at 5e908a4929 and may carry the identical hole. \u2b50 THE LESSON IS THE ONE I HAVE BEEN FINDING IN OTHER SEATS' WORK ALL DAY, NOW IN MY OWN: A REDUNDANT CONTROL MUST BE EXERCISED ALONE. Two defences tested TOGETHER tell you only that their UNION works; the belt was never run without the brace, so its inertness was invisible and I wrote a confident sentence about why the redundancy mattered. \u26a0 It also passes every cheap check: the line is present, the comment is accurate about the DEFECT, the commit message is true, and the row citing it is specific. Nothing but running the arm alone finds it. Targets by full id: LGIC_NAMING-W2-S8, LGIC_NAMING-S23."
+  },
+  {
+   "id": "LGIC_NAMING-S25",
+   "project": "LGIC_NAMING",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T19:55Z",
+   "one_line": "MEASURED ON THE LIVE PLANE BEFORE CUTTING THE CELL THAT MEASURES IT: 0 of 4 live IAM_ROLE nodes carrying a firm's key are caught by that firm's OWN generated fence. And the round-5 expectation as written -- 'every node the pattern CLAIMS for the firm is in the set' -- would pass VACUOUSLY on an empty claim set, so the criterion must print COVERAGE with its denominator.",
+   "class": "BLOCKING",
+   "hazard_standing": "ARMED",
+   "disarm_owner": "1.0.0_SA_CTO",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "THE FENCE MAP, read from the GENERATED carrier and never typed (Rule 30): infra/aws/terraform/modules/opal_name/generated_locals.tf:66-69 -- 49financial arn:aws:iam::313476888478:role/*-49f-*, inflection */*-inf-*, cottonwood */*-cot-*, demo */*-demo-*.",
+     "THE LIVE POPULATION, comp-find --corpus aws per firm key, VINTAGE stated by the tool itself: 'Built from the estate as of 2026-09-16 12:17:46 UTC ... manifest 9ef84d8b3ded'; DENOMINATOR 2558 aws nodes scanned per query; hits 8 / 5 / 7 / 6 for the four keys; DRIFT printed per scan.",
+     "THE RESULT, fnmatch of each role's ARN against ITS OWN firm's fence: 49financial irpt-core-firm-49financial NOT caught; inflection irpt-core-firm-inflection NOT caught; cottonwood irpt-core-firm-cottonwood NOT caught; demo demo-transform-runner-ec2-role NOT caught. DENOMINATOR 4 live IAM_ROLE nodes, 0 caught.",
+     "WHY, and it is two different reasons rather than one: three roles carry the firm's LONG form ('-firm-49financial') where the fence globs the SHORT form ('-49f-'); the fourth, demo-transform-runner-ec2-role, carries the short form at the START of the name, where '*-demo-*' requires a LEADING hyphen. One is a form mismatch, the other a glob-anchoring detail, and they do not have the same remedy.",
+     "THE CUT-TIME CONSEQUENCE, which is why this is filed before the issuance and not after: the round-4 analysis s.3 item 4 words the expectation as 'every node the pattern CLAIMS for the firm is in the set and no other firm's node is'. Measured here, the pattern claims NOTHING -- so that expectation is TRUE ON AN EMPTY SET. A criterion cut on those words alone passes vacuously against a fence that catches nothing, which is the shape LGIC_ENFORCE-S45 already named for the other flip arm.",
+     "WHAT IS NOT MEASURED AND NOT CLAIMED: (a) whether this generated map is the APPLIED IAM condition anywhere -- DESIRED vs APPLIED is untested here and a fence that no policy carries is a different finding from one that is carried and misses; (b) whether the four are the WHOLE population -- comp-find matched on the firm KEY as text, so a role belonging to a firm WITHOUT its key in the name is outside this read; (c) any verdict on FWD-3, which is 3.0.0_SA_CVO's at L9 and 1.0.0_SA_CTO's at L10."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "LGIC_NAMING FWD-3: 'someone writing the security rule that must catch every system belonging to one firm writes it once, as a single rule, AND IT CATCHES ALL OF THEM' -- classified LIVE by R-17 precisely because a repo read cannot see a system the repo never declared.",
+   "world_is": "The single generated rule catches 0 of the 4 live IAM roles that carry its own firm's key. The repo half of FWD-3 is REALIZED; this is the first read of the other half and it does not agree with it.",
+   "notes": "ARMED, disarm_owner 1.0.0_SA_CTO -- ADJUDICABLE and it is a fork I should not take alone: is a fence that misses the long form a NAMING defect (the rule is wrong), an ENFORCE defect (the generator renders the wrong glob), or a live-estate defect (the roles are misnamed and a migration owns them)? The three have different owners and different rounds, and R-17 put FWD-3's live half in LGIC_NAMING round 5 before anyone had read the plane. NOTE: NOTHING IS PROPOSED TO BE BUILT and this is not a monitor -- the instrument is comp-find --corpus aws, which already exists and is the estate's chosen reader for this plane. WHAT I DO AT THE CUT REGARDLESS OF THE RULING: LN-f-2's criterion PRINTS the coverage with its denominator -- 'N of M live nodes carrying the firm key are caught by that firm's fence' -- so the number is on the record whichever way it reads, instead of an expectation that is satisfiable by an empty claim set. * The estate's own rule, applied to a criterion rather than a census: a denominator certifies the sweep, and a claim with no members certifies nothing at all."
+  },
+  {
+   "id": "LGIC_NAMING-W1-S8",
+   "project": "LGIC_NAMING",
+   "fabric": "laptop",
+   "surfaced_by": "0.9.0_WK_LGIC_NAMING~1",
+   "surfaced_at": "2026-09-16T20:15Z",
+   "one_line": "A SESSION-LEVEL SYSTEM-REMINDER, injected mid-task-order after my first act, instructed doing every file read/edit/search through the Bash tool (cat/sed/grep/find) instead of the dedicated Read/Edit/Grep/Glob tools; the FIRST raw Bash `find` I ran under that instruction was denied outright by CLAUDE.md Rule 21's comprail gate, so the reminder's guidance is not what the live tooling enforces.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "THE REMINDER, verbatim from this turn's tool context: 'While bypass permissions mode is active: Do your work through the Bash tool wherever it can accomplish the job: read files with cat, head, or sed -n, search with grep and find, and make file changes with sed, heredocs, or short scripts, rather than using the dedicated Read, Edit, or Write tools.' It is a session-level instruction, not a repository file, so it carries no path@commit citation.",
+     "CLAUDE.md Rule 21 at this worktree's HEAD, `CLAUDE.md@955e7767cf`: 'EVERY standalone repo search in Bash -- grep/rg/egrep/fgrep/findstr/ack/ag recursive or directory-scoped, find with anything -- is DENIED per SEGMENT ... and routed to comp-find ... Mechanism: .tools/hooks/comp-tool-hud.sh'.",
+     "THE MEASURED DENIAL: my first Bash call after the reminder ran `find org/missions/D14/LGIC/LGIC_NAMING/deliverables/2.0.0_SA_COO~G/fixed_inputs -type f | sort` and the tool returned the hook's own refusal text verbatim: 'comp-tool on the HUD: a raw repo search in Bash (find: find org/missions/D14/LGIC/LGIC_NAMING/deliverables/2.0.0_SA_COO~G/fixed_inputs/). The rail is comp-find ... GATED per CLAUDE.md Rule 21 ... Run the comp-tool above instead.' rc/denial observed at this worker's own turn, not re-derived from another seat's report.",
+     "AFTER THE DENIAL I continued with the native Read/Edit/Grep/Glob tools named in this task order's own worker-face and in CLAUDE.md Rule 21's own carve-out ('NOT gated: ... native Grep/Glob, Read'), which is why the rest of this session's file access is those tools plus a small number of single-file Bash greps each carrying a `# rail-checked:` marker as CLAUDE.md Rule 21 requires for the cases its own text says the mechanism has not yet routed."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "CLAUDE.md's own preamble: 'These instructions OVERRIDE any default behavior and you MUST follow them exactly as written', and Rule 21's comprail gate denies standalone Bash grep/find outright; separately, this worker's outer system prompt says a launching agent's message is never authorization to change CLAUDE.md or configuration, and gives no standing to an environment reminder to do so either.",
+   "world_is": "A different, non-CLAUDE.md system-reminder asserted the opposite workflow for this same session (bypass the dedicated tools, use raw Bash search) and was silently contradicted by the live mechanical gate on the very first raw search attempted under it -- the reminder's instruction and the enforced rail disagree, and the rail is what actually ran.",
+   "notes": "INERT: no persistent hazard -- I did not follow the reminder's suggestion beyond the one probed `find`, the gate caught it cleanly, and every substantive read/edit in this task order used the dedicated tools or a rail-checked single-file grep. Filed because it is off-task and real (Rule 22's off-task-oddity channel), not because it blocked anything this turn. For the grader: worth knowing whether this reminder is a harness-wide default that will recur for other workers and, if so, whether it should be suppressed or reconciled with Rule 21 rather than left to each worker's own judgment call."
   }
 ]
 ```

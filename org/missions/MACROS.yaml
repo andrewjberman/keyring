@@ -29,7 +29,7 @@ charters:
   MDPF: "Model-portfolio data pipeline -- the served MP surfaces, their remediation and fortification (D8)"
   AUTH: "Portal authentication and its self-healing (D8)"
   ADVI: "Advisor Intelligence -- the per-firm serving stacks (firm, advisors, clients, accounts) and the firm buckets that hold them (D8)"
-  LGIC: "Platform Logic -- the canon (rules, ledger, identity spine), the naming schema, and the executable layer (registry, builders, flagger); owns the RULE and the FLAG, never a remediation (D14)"
+  LGIC: "Platform Logic -- the canon (rules, ledger, identity spine), the naming schema, the executable layer (registry, builders, flagger), and the LENS (the legacy transform: an instrument that classifies a legacy subject against the canon and plans its migration, moving nothing); owns the RULE, the FLAG and the LENS, never a remediation (D14)"
 
 directives:
   D0:

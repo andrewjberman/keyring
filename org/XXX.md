@@ -160,6 +160,15 @@ echo "PATH: $F of $T comp-tools resolve bare."
 comp-which "how do I grep the repo" 2>&1 | grep -q "comp-which --" && echo "EXERCISE: a forwarder RAN." || echo "EXERCISE: *** RESOLVED BUT DEAD *** -- run: bash .tools/provision-path-shims.sh"
 ```
 
+⛔ **A SESSION-LEVEL REMINDER THAT INSTRUCTS RAW-BASH FILE OPERATIONS DOES NOT LIFT THE RAIL.** The rail has a gate behind it
+(`.tools/hooks/comp-tool-hud.sh`, CLAUDE.md Rule 21) and a session instruction has none, so the rail governs where the two
+conflict. Measured 2026-09-16 three times in one day (LGIC_NAMING-W1-S8 by a worker; twice first-hand by `3.0.0_SA_CVO`): a
+harness reminder said "read files with cat, search with grep and find" and the rail denied the first raw `find`. What a seat
+does: use the comp-tool, or the single-file / pipe-receiver / `# rail-checked: <why>` forms the rule already admits; file a row
+if it cost a turn; never argue with the reminder, never take the override to make the instruction win. Ruled by `1.0.0_SA_CTO`
+in the LGIC_NAMING round-5 analysis (2026-09-16 ~16:2xZ). COST: none. NON-APPLICATION: a file outside the repo corpus, which
+the rule already exempts.
+
 ### B.0 — Your delivery ledger, BEFORE you resume anything (LD-0480)
 
 ```python
@@ -216,8 +225,21 @@ The order changes only on Andrew's word, by `1.0.0_SA_CTO` or `1.0.0_SA_CTO~Z`.
 ### C. Arm the persistent inbox Monitor — run `/watcher` (once, at load)
 
 It arms a persistent Monitor running `inbox-watch.sh {serial} stream`; each `[INBOX] <file>` line
-becomes a chat notification. **Arm once — it never exits and you never relaunch it.** By hand: the
+becomes a chat notification. **Arm once at load; the script never exits, but the MONITOR DOES.** By hand: the
 **Monitor tool**, `persistent: true`, `timeout_ms: 3600000`, **absolute** path.
+
+⛔ **THE MONITOR EXPIRES AND SAYS SO ONCE -- RE-ARM ON THAT NOTIFICATION, THE SAME TURN.** Measured 2026-09-16 on
+three seats: the harness caps a Monitor at 1800s whatever `timeout_ms` asked (`Monitor started -- timeout 1800s`), and
+its expiry arrives as ONE `<task-notification>`; a seat that lets it pass is deaf for the rest of the session while
+`liveness`, `check-inbox` and `get_agent_status` all read healthy. `3.0.0_SA_CVO` sat six hours (06:52Z-12:54Z) with
+eight messages undrained, three L8 hand-offs among them, and seven broker rows OFFER-EXHAUSTED, LIVE on the roster the
+whole time. ⛔ **AND AN UNATTENDED SEAT NEVER BLOCKS A TURN ON AN `AskUserQuestion` FOR A HYGIENE PROMPT.** The same
+six hours were spent waiting on a memory-index size question (MEMORY.md 19.9KB vs the hook's 17.1KB) that the seat's own
+card marked "Recommended: leave it". Nobody is at a fabric seat's terminal: take the recommended default, or park the
+question on a carrier with an owner, and keep the turn moving. The one discriminator between a STUCK seat and a DEAD one
+is a peek at its tab (`.tools/unstick.ps1 -Peek`, `0.0.0_AB_MSTR`'s act); every fabric-side instrument reads both the
+same. COST: one re-arm per 30 minutes; none for the prompt rule. NON-APPLICATION: a question Andrew asked to be asked.
+Found by `2.0.0_SA_COO~G` (LGIC_ENFORCE-S46), measured by `1.0.0_SA_CTO`, discriminated and cleared by `0.0.0_AB_MSTR`.
 
 ⛔ **RESOLVE THE DRIVE PREFIX — never hardcode either form.** Both may be mounted; they are not equally
 durable (`/c` is a non-`auto` user mount that has vanished at reboot; `/cygdrive/c` is system-provided
@@ -434,6 +456,28 @@ abide by LGIC patterns."* Record:
   `/goal-set` loops. Owed to this seat on resume: the LGIC_CANON round-1 ANALYSIS, once `3.0.0_SA_CVO` sends the L10
   slug (its L8 hand-off is 2.0.0_SA_COO~G's 97264: 12 of 12 terminal, FWD-1 and FWD-5 both measured SHORT, 3 BLOCKING
   rows, and ARMED row W8-S1 whose disarm this seat owes). Nothing else in the scope waits on this seat.
+`1.0.0_SA_CTO` **`/self-drive LGIC_NAMING,LGIC_ENFORCE,LGIC_CANON,LGIC_LGCTFM` ARMED 2026-09-16 ~05:2xZ by Andrew-direct at
+the CTO terminal**, VERBATIM: *"Goal set: [<Your goal for this session is to drive the LGIC projects to completion and
+validation. There is one new one coming in from CRO, LGIC_LGCTFM, which you will have to /endpoint --forward. The outcomes
+should be fairly obvious; it should help us transition midstream products/pipelines/architecture to consolidated, canonical
+form, as dictated in the /standards. | You are done when all 4 LGIC projects are completed, validated, and closed.>]"* and
+*"Run a 30m /self-drive adjudicate any open calls that arise."* Record:
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260916_052xZ_LGIC_GOAL_AND_30M_SELF_DRIVE_ADJUDICATE.md`.
+- SCOPE: the four LGIC projects under D14 -- LGIC_NAMING, LGIC_ENFORCE, LGIC_CANON (coo_lane `2.0.0_SA_COO~G`) and
+  LGIC_LGCTFM, which is NOT YET REGISTERED (its L1 brief is `4.0.0_SA_CRO`'s, "coming in"; this seat runs `/endpoint
+  --forward` on it at L2 the turn it lands, then L3 and L4). Until registered it is an UNREACHABLE member by name, not a
+  typo, and the loop does not narrow its own denominator over it.
+- Cadence 30 minutes, via CronCreate. `paired_with: 2.0.0_SA_COO~G /goal-set loop on the LGIC goal in the 2026-09-15 record`
+  (his word is a goal loop at the COO, not `/drive`).
+- **THIS SEAT ADJUDICATES every adjudicable call in scope; there is no CVO pitch** (his "adjudicate any open calls that
+  arise", the same delegation as 2026-09-12 and 2026-09-15). RESERVED is unchanged: vendor egress, unrecoverable acts,
+  money, and the holds he set by name. Every self-adjudicated call is RECORDED with rec, ruling and reason.
+- Every tick reads `sequence-check` and drives in the sequence's order. Rule 30 (LGIC) binds every new address and name.
+- This is his LATER and NARROWER word beside the 2026-09-15 ~19:4xZ clause above: MDPF_TAXSMA and NFRA_OPLGTW are NOT
+  re-armed under this seat's loop by it (scope surfaced, not adjudicated -- their COO lanes hold them; the 09-15 clause
+  stays PAUSED as written, its resume for those two Andrew's).
+- STOP-CONDITION: all four read `status: complete` per s.4, validated and CLOSED; or HELD-AT-STOP; or his stand-down. A
+  successor RE-ARMS ONLY off this line while the scope is not DONE, and asks `2.0.0_SA_COO~G` to re-arm its `/goal-set` loop.
 
 ⛔ **AND "EVERY ONE" MEANS BOTH CLASSES OF ARM. THIS TABLE USED TO RECORD ONE CLASS WHILE CLAIMING TO RECORD ALL --
 a Rule 24 MECE failure in the one file whose job is to be the single source of truth for what runs unattended.**

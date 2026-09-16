@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_OPLGTW~4</issued_to>
 <issued_by>2.0.0_SA_COO~O</issued_by>
 <issued_date>2026-09-15</issued_date>
-<status>pending</status>
+<status>complete</status>
 
 **Directive:** D9 | **Fabric:** laptop | **PRD:** `org/missions/D9/NFRA/NFRA_OPLGTW/prd/NFRA_OPLGTW_PRD.md` v0.2 @f0aa50dbc0 (ADMITTED) | **Contract:** `org/standards/NFRA_OPLGTW_CONTRACT.json` v1.0 | **Decomp cell:** `OG-c-2` | **outcome_ref:** FWD-2, FWD-5, FWD-8 | **depends_on:** `OG-c-1`; **HELD on gate G-B** (both world acts) | **slot:** ~4, queue position 2
 
@@ -44,6 +44,31 @@ binds: before either act, the sign-off record
 
 The baseline for the bucket settings is `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~2/BASELINE.json`
 (`OG-p-1`); the record schema is `OG-c-1`'s (its result file in this slot's deliverables).
+
+**The un-staging, before any plan (amended by `2.0.0_SA_COO~O` before re-hand, per `1.0.0_SA_CTO` ruling R-OG-1, msg
+97499, record `org/tier1_exec/1.0.0_SA_CTO/deliverables/RULINGS_NFRA_OPLGTW_20260916.md` @d6583eab37; row W4-S5).** The
+`opal-assets` root carries a staged-and-never-applied change to `opal-assets-daily-emitter` (commit `2740e4de8f`) that
+repoints it at `portal/gold/mdpf/_staging/aggregate_aua/`, an empty tree whose producer `mdpf-daily-trigger` has been
+destroyed. It is WITHDRAWN from this root, not admitted. As your first act, restore that file to its parent's bytes in
+its OWN commit: `git checkout 2740e4de8f^ -- infra/aws/terraform/opal-assets/emitter.tf`. The commit message records that
+X-ii-a's AE half is withdrawn from the root because its producer was destroyed and its target tree is empty, and that a
+re-home re-lands through its own act under MDPF_CANON. Touch no other file in that commit and nothing in the
+`mdpf-pipeline` root. No ledger entry is opened for the un-staging (nothing was ever applied). The discriminator is
+`OGC2-AC3`: the plan then reads only the schwab family's rows. Gate G-B stands with no re-read.
+
+**The replay is RELEASED (issuer, 2026-09-16 ~18:4xZ), on rulings R-OG-4 and R-OG-5** (`1.0.0_SA_CTO` msg 97522, record
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/RULINGS_NFRA_OPLGTW_20260916.md` @f81896bae3). Both G-B halves are re-signed
+(Half 1 s.6, Half 2 s.E). Before the replay, confirm the released terms by reading this order's text at CLOUD HEAD in
+the shared tree, `/c/Users/AndrewBerman/Desktop/ajb_workspace`, and that sign-off record there.
+- **Write set (W4-S9):** the replay writes FOUR objects: per master, the run manifest
+  `schwab/{master}/meta/conversions/{run_id}.json` and the marker `schwab/{master}/meta/complete/date=D_r.json`. Record
+  each object's key and VersionId in the result file.
+- **Stop precondition:** first run a read-only dry run of `convert_object` for `D_r` on each master. It must print ZERO
+  silver writes AND ZERO missing projection dims. Any non-zero count means no replay and one BLOCKING row.
+- **The 49F reads (W4-S8)** that sign-off conditions 4, 5 and 7 require are admitted: see the Cross-firm bullet in BOUNDS.
+- **Ledger:** the deploy entry is already closed. The replay opens its own entry,
+  `nfra-oplgtw-og-c-2-replay` (sentinel `org/critical_paths/.open_deploys/nfra-oplgtw-og-c-2-replay.json`), and commits
+  it before the replay and closes it before `AC7`..`AC11`'s grading reads.
 
 **Read:** the PRD's "C3" and "C6"; `infra/aws/terraform/opal-assets/silver.tf`; `infra/aws/terraform/modules/yang-lambda/`;
 `OG-c-1`'s result file; the sign-off record above.
@@ -103,7 +128,7 @@ taking the short id, printing its measurement with vintage and denominator, then
 - **Terraform** only through `.tools/safe-apply.sh`, never bare `terraform apply`, never `-target`, never `aws lambda update-function-code`. `.tools/terraform.exe` is provisioned into your worktree by the issuer; if absent, a BLOCKING row.
 - **Blast radius.** One function family. A plan row for any other family, any IAM change, or any change to the bucket, its notifications or its policy is a BLOCKING row and no apply.
 - **No source mutation.** No write, delete or overwrite of any bronze or silver object; the replay writes completion records only. AC10 is the proof.
-- **Cross-firm law.** Only `schwab/08242234/` and `schwab/08335338/`; no other firm's bucket or prefix.
+- **Cross-firm law.** Only `schwab/08242234/` and `schwab/08335338/`; no other firm's bucket or prefix. One exception, by ruling R-OG-4 (msg 97522 @f81896bae3, row W4-S8): the reads that G-B conditions 4, 5 and 7 require are admitted read-only (list, head, get) on exactly `s3://opal-data-49financial/gold/advi/_logs/` and the `date=D` keys those conditions name, with every key read printed and nothing else in that bucket. Carrier: `infra/logic/05_IDENTITY_SPINE.md:83,:97` and `04_SCOPE_TICKLIST.md:50` map master `08335338` to `49financial`, so this is the master's own downstream chain. It is a probe of a sign-off condition, not a pipeline tree referencing another firm's data.
 - **No egress off Opal infrastructure.** No call to Claude, an Anthropic endpoint, an interactive Entra sign-in or any vendor API.
 - **No new monitor, alarm, SNS or notification path.**
 - **Commits.** `.tools/safe-commit.sh` under your serial; every `.py` you touch passes `.tools/commit-gate.sh`.
@@ -117,8 +142,10 @@ infra/aws/lambda/opal-assets/opal-assets-silver-schwab/conversion_manifest.py
 infra/aws/lambda/opal-assets/opal-assets-silver-schwab/schwab_runtime.py
 infra/aws/lambda/opal-assets/opal-assets-silver-schwab/BUILD_MANIFEST.json
 infra/aws/terraform/opal-assets/silver.tf
+infra/aws/terraform/opal-assets/emitter.tf
 org/critical_paths/change_management/
 org/critical_paths/.open_deploys/nfra-oplgtw-og-c-2-producer.json
+org/critical_paths/.open_deploys/nfra-oplgtw-og-c-2-replay.json
 org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 

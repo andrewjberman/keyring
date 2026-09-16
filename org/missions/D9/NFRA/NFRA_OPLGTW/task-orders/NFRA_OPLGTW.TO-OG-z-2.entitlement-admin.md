@@ -36,6 +36,13 @@ the command validates against: `fields`, `forbidden_field_classes`, `grant_date_
 **This cell builds the command; it activates no grant.** Your tests run against moto. No real person's profile is
 created, revised or revoked here (gate G-E is a separate, later act by an authorized operator).
 
+**RE-OPENED 2026-09-16 ~20:2xZ by `2.0.0_SA_COO~O` (row `NFRA_OPLGTW-S21`); the cell, its criteria and its grant are unchanged.** Your first run completed at `7a5554face` (merged @c0b68fd735), 9 of 9 PASS. After it, `OG-q-2` merged (@6a7e9f6caf) and registered the `schwab` integration in `app/integrations/registry.py`, dark by default, as its own order required.
+- **What breaks.** `test_ogz2_ac08` asserts `"schwab" not in registry.available_ids()` as a tripwire, because its census file set did not yet include the Schwab integration's modules. So at CLOUD HEAD the module reads `1 failed, 8 passed`.
+- **Your task.** Widen AC8's census so that `app/integrations/schwab/**/*.py` is scanned like every other registered integration, and remove the tripwire assertion. The criterion is still: no registered MCP tool writes a `POLICY#` record, over all tools, with the denominator printed.
+- **Control.** Show the widened census would catch a `POLICY#` write placed in a Schwab integration module, as a mutant you restore.
+- **Re-run.** Run all nine criteria again at your new HEAD, plus `tests/test_schwab_query.py` as a whole module (it must stay green). Re-validate the proof instance and flip `complete` again only on 9 of 9 PASS.
+- **Scope.** Only `tests/test_entitlement_admin.py` changes, unless a row says why.
+
 **Read:** the PRD's "C2" and "C6"; the contract; `app/data_entitlement.py`, `app/access_state.py`.
 
 ### ACCEPTANCE

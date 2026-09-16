@@ -1,11 +1,11 @@
-# MDPF_CANON -- the MDPF canon migration: gold as dated parquet in opal-data-mdpf, each firm's served slice in that firm's own bucket, one publisher, and two legacy trees retired only on proof
+# MDPF_CANON -- the MDPF canon migration: gold as dated parquet at the builder's address per R7 (each firm's in its own bucket, the composite in opal-data-mdpf), each firm's served slice in that firm's own bucket, one publisher, and two legacy trees retired only on proof
 
 ```json
 {
  "project": "MDPF_CANON",
  "directive": "D8",
  "fabric": "laptop",
- "prd_version": "v2.3",
+ "prd_version": "v2.6",
  "step": 4,
  "brief_ref": "docs/briefs/d8-mdpf-canon-migration-brief-20260913.md@fd579d3caf",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8"],
@@ -18,6 +18,16 @@
 and were never decomposed because the project was never registered. That path now carries a moved notice. Its three
 stale items are amended here (DEC-1), and its founding content -- A-1 to A-3, rows B1 and B2, and the three
 final-step obligations -- is carried forward below.
+
+**v2.4, v2.5 and v2.6 (2026-09-16 ~18:3xZ to ~19:1xZ, `1.0.0_SA_CTO`) -- every typed data home became the builder's address, and every restatement of the old single-bucket bar followed it (v2.6: the two DEFINED OUTCOME lines the CVO's unscoped re-read found after its own census missed them).** Andrew's call 3
+(~18:2xZ, record @50d1b9403e: *"(a), yes. Should be using LGIC_NAMING patterns in both cases"*) decided gold's home per R7 through
+`address()`; v2.4 restated CONTRACTS :177's gold instance and M2, which had typed the product bucket for every scope against the same
+sentence's builder mandate (the CVO's 97324 finding, its own disclosure that it signed v2.2 without catching it). v2.5 finished the job
+on both halves' findings: the title, FWD-1's bar (which counted places and could not tell a correct four-bucket build from a wrong
+one-bucket build; it now names the rule), PATHS, the SURFACE MANIFEST and BRIEF COVERAGE row 4 (the brief's "one bucket" superseded for
+firm-attributable tables), and the `state` instance, which cited R21 for an address R21 itself (his GAP-1 ruling, 09-13) and Rule 30 both
+home in the firm bucket and which `address()` already returns that way -- a standing ruling applied, no new question. The 08-18 "MDPF gold
+stays at opal-data-assets/portal/gold/" word is superseded for firm-attributable tables only; `global` and the code home are untouched.
 
 **Brief:** `docs/briefs/d8-mdpf-canon-migration-brief-20260913.md` @`fd579d3caf`, author `4.0.0_SA_CRO~D`.
 - The later touch @`9ba5e5370d` is a one-line diff to the REFS `PROJECT` line.
@@ -83,14 +93,16 @@ CONTRACTS changed, so both halves are owed again.
 
 ```
   FWD-1  Anyone can tell how current any model-portfolio figure is from where it is
-         kept, and every one of them is kept in the one place built for them
+         kept, and every one of them is kept where the one naming rule puts it
          DONE WHEN  EXERCISED -- someone has actually answered a dated question this way
          ACCEPT     asked "what did 49 Financial's total assets read on a particular day
                     last month", someone answers from the name of the stored file alone,
-                    without opening it -- and every stored figure of this kind is in the
-                    same one place, full history, one addition per day -- where today the
-                    same figures sit in two places under two different naming habits, and
-                    the place meant for them is empty
+                    without opening it -- and every stored figure of this kind is where
+                    the one naming rule puts it, that firm's own bucket for a firm's
+                    figures and the product bucket for the cross-firm composite, full
+                    history, one addition per day -- where today the same figures sit in
+                    two places under two different naming habits, and neither is where
+                    the rule puts them
          SOURCE     brief Part I O1; bar Part III O1
 
   FWD-2  A firm's advisors read their model-portfolio figures from that firm's own
@@ -174,7 +186,7 @@ CONTRACTS changed, so both halves are owed again.
 
 | contract | direction | shape | consumer / producer |
 |---|---|---|---|
-| the canonical key string, MDPF's instances | **consumed** (ruled) | `{source}/{scope}/{tier}/{table}/{partition}`, verbatim, with `{source}` = `mdpf` and `{scope}` one of `49financial`, `inflection`, `cottonwood`, `global`, `demo` in the LONG form. The instances: gold `s3://opal-data-mdpf/mdpf/{scope}/gold/{artifact}/date={YYYY-MM-DD}/data.parquet`; state `s3://opal-data-mdpf/mdpf/{scope}/state/...` (R21); bronze `s3://opal-data-assets/mdpf/{scope}/bronze/{feed}/...` (R4); a firm's served slice `s3://opal-data-{firm}/mdpf/{firm}/platinum/{table}/{leaf}.json` (R7), where `{table}` is the snake_case artifact and the partition slot holds the schema's "named leaf" form: the kebab-case served file itself. The vector: `key("mdpf", "49financial", "platinum", "aum_metrics", "aum-metrics.json")` returns `mdpf/49financial/platinum/aum_metrics/aum-metrics.json`, and `address()` over the same arguments returns it under `s3://opal-data-49financial/`. **Every NEW address comes from `LGIC_ENFORCE`'s `key()` and `address()`, never typed.** The one exception is the combined slice `s3://opal-data-portal-v2/platinum/mdpf/global/...`: it is historical, tier-first, and stays exactly where it is (X2), so no builder produces it and nothing moves it to satisfy this row | ruled by Andrew ~03:2xZ and ratified as `LGIC_NAMING` S1; the builders are `LGIC_ENFORCE`'s |
+| the canonical key string, MDPF's instances | **consumed** (ruled) | `{source}/{scope}/{tier}/{table}/{partition}`, verbatim, with `{source}` = `mdpf` and `{scope}` one of `49financial`, `inflection`, `cottonwood`, `global`, `demo` in the LONG form. The instances, each the builder's output and none typed: gold at the address `address("mdpf", {scope}, "gold", {artifact}, "date={YYYY-MM-DD}")` returns under R7 -- the firm bucket for the firm scopes, `s3://opal-data-mdpf/` for `global` only (X2's composite branch) -- on Andrew-direct 2026-09-16 ~18:2xZ, call 3, record @50d1b9403e; state at the address `address()` returns for the `state` tier under R21 and Rule 30 (the firm bucket for the firm scopes, `s3://opal-data-mdpf/` for `global`); bronze at `address()`'s output for the bronze tier (R4; today `s3://opal-data-assets/mdpf/{scope}/bronze/{feed}/...`); a firm's served slice at `address()`'s output for the platinum tier (R7; today `s3://opal-data-{firm}/mdpf/{firm}/platinum/{table}/{leaf}.json`), where `{table}` is the snake_case artifact and the partition slot holds the schema's "named leaf" form: the kebab-case served file itself. The vector: `key("mdpf", "49financial", "platinum", "aum_metrics", "aum-metrics.json")` returns `mdpf/49financial/platinum/aum_metrics/aum-metrics.json`, and `address()` over the same arguments returns it under `s3://opal-data-49financial/`. **Every NEW address comes from `LGIC_ENFORCE`'s `key()` and `address()`, never typed.** The one exception is the combined slice `s3://opal-data-portal-v2/platinum/mdpf/global/...`: it is historical, tier-first, and stays exactly where it is (X2), so no builder produces it and nothing moves it to satisfy this row | ruled by Andrew ~03:2xZ and ratified as `LGIC_NAMING` S1; the builders are `LGIC_ENFORCE`'s |
 | the gold artifact | **produced** | parquet only; one partition per day, carrying its date in the key; the full history backfilled from the current JSON to the extent it exists; history is never rewritten. The artifacts are `account_distribution`, `account_units`, `aggregate_aua_timeseries` and `aum_metrics` (snake_case) | the publisher; any reader that needs a figure's vintage |
 | the served platinum JSON | **produced**, by the publisher alone | the leaves `aggregate-aua-timeseries`, `account-distribution`, `aum-metrics` and `account-units` (kebab-case), their data-bearing leaves byte-unchanged across every cutover, with `_provenance.written_at` excluded because it advances daily. The publisher is the one place parquet becomes JSON, and it reads only `opal-data-mdpf` | the portal's Model Portfolios page |
 | each firm's bucket and its serving grants | **consumed** | the bucket exists, serves, and carries its serving grants, per firm | produced by `ADVI_FIRMBKTS`, per firm; FWD-2 and FWD-6 wait on it for that firm |
@@ -316,9 +328,9 @@ CONTRACTS changed, so both halves are owed again.
 ## PROJECT ARC AND DEFINED OUTCOME
 
 **Defined outcome:**
-- Every MDPF figure is dated parquet in one bucket.
+- Every MDPF figure is dated parquet where the one naming rule puts it: a firm's figures in that firm's own bucket, the cross-firm composite in the product bucket.
 - Each firm's served slice is in that firm's own bucket, behind a route that asserts the tenant.
-- One publisher reads only that bucket, and what people see did not change.
+- One publisher reads only the buckets the rule names for the figures it serves, and what people see did not change.
 - A dedicated runner writes each firm's slice with the fence untouched.
 - The bronze is in the shared intake.
 - The two legacy trees are gone, on proof, and the hold is true.
@@ -340,7 +352,7 @@ One row per candidate cell. The decomposition at L5 is the COO lane's, and it ma
 | cell | serves | brief sections consumed | contracts consumed (C) / produced (P) | paths: reuse | paths: new home | fixtures / evidence | acceptance clause draft |
 |---|---|---|---|---|---|---|---|
 | M1 the reader census | FWD-5, FWD-8 | IV.2; IV.3; Part V bullet 3; Part VII bullet 1 | -- | `comp-find` over the corpus, unscoped; Terraform; `EC2_MANIFEST.json`; the portal source | `org/missions/D8/MDPF/MDPF_CANON/deliverables/READER_CENSUS.md` | every reader and writer of both trees, the served key and the old bronze, each with its evidence line and its instrument; IV.2's 16 definitions and 50 config sites as the floor | every reader the unscoped read finds is listed or excluded with a reason, denominator printed; the instrument is named (a name census proves presence, never absence) |
-| M2 the emitter | FWD-1 | O1; IV.1; IV.5; Part V bullets 1-2 | C the key string, `key()` and `address()`; P the gold artifact | -- | `s3://opal-data-mdpf/mdpf/{scope}/gold/` | one partition written for today for every artifact and scope; the twins diffed before convergence | a dated question is answered from a key alone; the emitter writes no string it did not get from the builders; no second write path exists |
+| M2 the emitter | FWD-1 | O1; IV.1; IV.5; Part V bullets 1-2 | C the key string, `key()` and `address()`; P the gold artifact | -- | the address `address()` returns per scope under R7 (the firm bucket for firm scopes, `opal-data-mdpf` for `global`); never typed here | one partition written for today for every artifact and scope; the twins diffed before convergence | a dated question is answered from a key alone; the emitter writes no string it did not get from the builders; no second write path exists |
 | M3 the backfill | FWD-1 | O1; A-3 | P the gold artifact | the current JSON artifacts in both trees | the same prefix | every historical date the JSON holds, one partition each, with the count printed against the source's | the full series is the partition set; no date is rewritten |
 | M4 the repoints and the seams | FWD-5 | O5; IV.3; IV.4; AC9 | C the key string | the producer scripts M1 names | -- | one reader at a time; each seam's `/seams` read on the MECHANICAL, DECLARATIVE and SEMANTIC axes, grounded on the DEPLOYED artifact | a search finds no producer writing to, reading from, or running code out of the old places, and the leftovers are history; every seam passes all three axes |
 | M5 the publisher | FWD-4 | O4; IV.4; the second final-step obligation | C the gold artifact; P the served JSON | `infra/aws/lambda/opal-assets/opal-assets-mdpf-portal-publisher/` | -- | the served leaves diffed on data-bearing values before and after, with the population named (the brief's three denominators, 522, 492 and 13, reconciled first) | every figure is identical; the publisher reads only `opal-data-mdpf`; it is switched last |
@@ -356,7 +368,7 @@ One row per candidate cell. The decomposition at L5 is the COO lane's, and it ma
 
 | kind | path | cell | use |
 |---|---|---|---|
-| new | `s3://opal-data-mdpf/mdpf/{scope}/gold/` and `.../state/` | M2, M3 | the gold artifact and its state |
+| new | the address `address()` returns per scope for the gold and state tiers under R7 and R21 (`opal-data-{firm}` for the firm scopes, `opal-data-mdpf` for `global`); never typed | M2, M3 | the gold artifact and its state |
 | new | the code home in `s3://opal-data-mdpf/`, at the address LGIC_NAMING-S7 rules: the brief's `code/mdpf/gold/...` or the schema's `mdpf/global/code/gold/...` (the accrual bundle and the gold Lambda's zip, by packaging declaration) | M6 | the code home, HELD on S7 |
 | new | `s3://opal-data-assets/mdpf/{scope}/bronze/` | M8 | the bronze home |
 | new | `s3://opal-data-{firm}/mdpf/{firm}/platinum/{table}/{leaf}.json` | M9, M10 | each firm's served slice, at the five-segment key |
@@ -386,7 +398,7 @@ Each is an entry. Every entry maps to a decision, a cell and an outcome, or carr
 | 1 | title / preamble | the preamble above; DEC-14 | all |
 | 2 | PART 0 how the blind constraint was honoured | NOT CONSUMED as work: a method record. Its one carried fact (MDPF_GLOBAL's grant question seen and not used) is DEC-12 | -- |
 | 3 | PART I heading | structural | -- |
-| 4 | O1 vintage from the key; one bucket | DEC-2; M2, M3 | FWD-1 |
+| 4 | O1 vintage from the key; one bucket -- "one bucket" SUPERSEDED for firm-attributable tables by Andrew's call 3 @50d1b9403e (per firm by R7; the composite stays in the product bucket) | DEC-2; M2, M3 | FWD-1 |
 | 5 | O2 a firm's slice in its own bucket; another firm refused | DEC-5 (the compatibility route; callers unchanged); M9 | FWD-2 |
 | 6 | O3 the combined slice stays, with its reason | DEC-7; M7 | FWD-3 |
 | 7 | O4 one publisher, reading only the MDPF store | DEC-4 (last); M5 | FWD-4 |
@@ -420,7 +432,7 @@ Surfaces this project writes, reads or executes.
 
 | surface | kind | cell | owner |
 |---|---|---|---|
-| `s3://opal-data-mdpf/mdpf/{scope}/gold/` and `/state/`; the code home at the address LGIC_NAMING-S7 rules | new objects, and packaging declarations for the code (held on S7) | M2, M3, M6 | MDPF_CANON |
+| the gold and state addresses `address()` returns per scope under R7 and R21 (`opal-data-{firm}` for the firm scopes, `opal-data-mdpf` for `global`; never typed); the code home at the address LGIC_NAMING-S7 rules | new objects, and packaging declarations for the code (held on S7) | M2, M3, M6 | MDPF_CANON |
 | `s3://opal-data-assets/mdpf/{scope}/bronze/` | new objects (the bronze move) | M8 | MDPF_CANON |
 | `s3://opal-data-{firm}/mdpf/{firm}/platinum/{table}/` | APPLIED: the served slices move to the five-segment key; never-widen sign-off per served key | M9 | MDPF_CANON, per firm, after `ADVI_FIRMBKTS` delivers that firm |
 | `public-data-router`, the scoped router and the CloudFront behaviours for `/api/general/mdpf/{firm}/...` | APPLIED: the tenant-asserting compatibility route; `global` unchanged | M9 | MDPF_CANON, through the infrastructure lane |

@@ -1782,6 +1782,1347 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     "spec_asserts": "TO-EN-r-3-r2 R3-AC1: 'a census (97200): 0 reads of firm_forms remain ... every other tracked file an unscoped search finds naming it is a recorded non-reader'. R3-AC9: 'every file that named firm_forms at the base carries a disposition, and none marked repointed still names it'.",
     "world_is": "Both criteria are written against ONE cell's tree and are graded again on the UNION the group branch makes. A record that is complete when its cell drains goes stale the moment a sibling cell lands a file that mentions the token, even a record file that only quotes a checker's output. The order was flipped complete on its own worktree's PASS, which was true there.",
     "notes": "ARMED, disarm owner 2.0.0_SA_COO~G: it disarms when FIRM_FORMS_READERS.md lists the two LGIC_NAMING records as 'another-project' -- a one-line record edit, not a re-cut, and NOT done tonight under the managed wind-down (Andrew ~23:3xZ via 0.0.0_AB_MSTR 97267). For 3.0.0_SA_CVO at L9: read EN-r-3's verdicts at the worker's tip 3c42177812, where the 10 mechanical criteria PASS, and read this row for the group-tree reading. The same class will meet any later cell whose criterion censuses the whole tree while a group branch stages several cells at once."
+  },
+  {
+    "id": "LGIC_ENFORCE-W1-S23",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~1",
+    "surfaced_at": "2026-09-15T23:16Z",
+    "one_line": "LGIC_NAMING round 3's fixed inputs read NAMING_SCHEMA.json firm_forms, which v1.9 removed on this branch: blind_seat.py indexes s[\"firm_forms\"] (a KeyError under v1.9) and check_ln_r3.py reads s.get(\"firm_forms\", []) (a silently empty scope set), and the three r3 seat prompts carry a snapshot of the schema list and of the scopes.json fields bucket_basis and the demo note that this cell removes.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~G",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "READ org/missions/D14/LGIC/LGIC_NAMING/deliverables/2.0.0_SA_COO~G/fixed_inputs/r3/blind_seat.py:109 @bd0f5d2c6c: 'return lines + \"\\\\nThe firm spellings, long and short (firm_forms):\\\\n\" + json.dumps(s[\"firm_forms\"], indent=1, ensure_ascii=True)' -- a direct index, so a KeyError on a schema with no firm_forms key.",
+        "READ org/missions/D14/LGIC/LGIC_NAMING/deliverables/2.0.0_SA_COO~G/fixed_inputs/r3/check_ln_r3.py:281 @bd0f5d2c6c: 'scopes = set(f[\"short\"] for f in s.get(\"firm_forms\", [])) | {s.get(\"global_scope\", {}).get(\"short\", \"global\")}' -- the default [] makes the firm half of that set empty, with no error.",
+        "READ org/standards/NAMING_SCHEMA.json @bd0f5d2c6c: the top-level keys carry firm_forms_source and no firm_forms ('python lib/opal_naming.py validate' at this tip reads 0 refusals; the v1.9 removal is 1.0.0_SA_CTO's commit 645725150b, 'NAMING_SCHEMA v1.9 on lgic-v19-landing -- firm_forms removed').",
+        "READ org/missions/D14/LGIC/LGIC_NAMING/deliverables/exercises/r3/seats/e1.prompt.txt:120, :168, :374, :393 @bd0f5d2c6c (e2.prompt.txt at the same four lines; e4.prompt.txt at :13, :38, :244, :263): each prompt embeds '\"firm_forms\": [', scopes.json's _about.row_fields naming it, the demo note naming it, and the bucket_basis field, all as the seat's given text.",
+        "WORLD: this cell removes bucket_basis and rewrites _about.row_fields and the demo note in infra/logic/registry/scopes.json (DEC-1, RULING DEMO), so the prompts' snapshot is a vintage the registry no longer matches once this branch drains."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EN-r-3-r2 THE CELL item 5: 'LGIC_NAMING's round-3 fixed inputs read it for their seats: row that for the issuer, and do not edit them.' BOUNDS: 'Fixed inputs are read-only.'",
+    "world_is": "Two of LGIC_NAMING round 3's instruments read the removed field as CODE, not as text: one raises, one degrades silently to an empty firm set. Neither is in this order's paths and neither is edited here. The three seat prompts additionally carry a registry snapshot this cell moves.",
+    "notes": "Filed for the issuer, 2.0.0_SA_COO~G, which owns both projects' fixed inputs. ARMED because LGIC_NAMING's LN-g-1 runs in parallel from the same v1.9 base: an r3 instrument run against this schema meets the KeyError or the empty set. Not a claim about LGIC_NAMING's round; only about what these files read."
+  },
+  {
+    "id": "LGIC_ENFORCE-W1-S24",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~1",
+    "surfaced_at": "2026-09-15T23:16Z",
+    "one_line": "LGIC_CANON's carriers still present NAMING_SCHEMA.json firm_forms as live: 10_ONBOARDING_CHECKLIST.md tells a seat to APPEND a new firm to the schema list and quotes the validate warning this cell removes, 02_DOCTRINE.md's generated naming section is stamped v1.8 and says the forms are read from the list, and check_canon_r1.py iterates s.get(\"firm_forms\").",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~G",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "READ infra/logic/10_ONBOARDING_CHECKLIST.md:72, :75, :77 @bd0f5d2c6c: 'builder: `org/standards/NAMING_SCHEMA.json` (`firm_forms`)'; \"`WARN scopes.json[<i>].key: firm '<LONG>' is not in NAMING_SCHEMA.json firm_forms`. This is the line\"; '- **If the line is printed:** append `{\"key\": \"<LONG>\", \"short\": \"<SHORT>\"}` to `firm_forms` in'. That WARN is the warning this cell removes from validate.",
+        "READ infra/logic/02_DOCTRINE.md:163 and :190 @bd0f5d2c6c: 'stamp: org/standards/NAMING_SCHEMA.json v1.8 sha256:4ff4e61930b3c8cdcd767ba660e32d0e37e527196a340cec3c94e27f1dd9b8c0' and 'Firm forms read from `firm_forms` in the schema: 4 firms.' -- inside the GENERATED naming section markers.",
+        "READ infra/logic/render_naming_section.py:98-107 @bd0f5d2c6c: 'forms = schema.get(\"firm_forms\")' returns '`firm_forms` in the schema' while the field exists, and otherwise the FIRM rows of the scope registry, so a re-render under v1.9 takes the registry branch with no code edit.",
+        "READ org/missions/D14/LGIC/LGIC_CANON/deliverables/2.0.0_SA_COO~G/fixed_inputs/r1/check_canon_r1.py:226 @bd0f5d2c6c: 'for f in s.get(\"firm_forms\") or []:' -- LGIC_CANON round 1's issuer instrument, empty under v1.9.",
+        "RUN: python lib/opal_naming.py validate at this worktree reads 'VALIDATE: OK 17 system row(s), 9 scope row(s), 9 warning(s)', all nine the inferred-owner warning; no firm-forms warning can be printed any more."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EN-r-3-r2 THE CELL item 5: 'A file you did not repoint that still names it is a historical record (a round's record, a review, an adjudication) or another project's.' The order's <paths> do not admit infra/logic/ outside the registry.",
+    "world_is": "Three LGIC_CANON carriers outside this order's paths still teach the removed field. The checklist is the sharp one: followed as written, it re-adds firm_forms to NAMING_SCHEMA.json and so re-creates the second carrier RULING ONE removed; the warning it tells the seat to wait for can no longer print. The doctrine's line is generated and moves on a re-render of render_naming_section.py.",
+    "notes": "Filed, not fixed: infra/logic/10_ONBOARDING_CHECKLIST.md, infra/logic/02_DOCTRINE.md and infra/logic/render_naming_section.py are outside this order's <paths>, and a path this order does not name is a row, never an override. Each is recorded 'another-project' in FIRM_FORMS_READERS.md."
+  },
+  {
+    "id": "LGIC_ENFORCE-W1-S25",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~1",
+    "surfaced_at": "2026-09-15T23:16Z",
+    "one_line": "DEC-1 (remove any scope-row field nothing reads) and RULING DEMO (demo's note must cite X6) meet on the field 'note', which no generator and no validate limb read: to keep both, validate now READS note, refusing one that is present and not a non-empty string. The order names neither the read nor the removal of note.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "READ infra/logic/registry/scopes.json @bd0f5d2c6c: 'note' appears on the demo scope row only; the other 'note' the module reads is the GLOBAL row's tenant.note (lib/opal_naming.py _firm_registry_rows), a different field.",
+        "RUN at this worktree: 'python org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/2.0.0_SA_COO~G/fixed_inputs/r2/check_en_r2.py r3-dec1-fields' on the pre-edit tree printed 'SCOPE-ROW FIELDS: 18  NAMED BY NO STRING IN lib/opal_naming.py: ['bucket_basis', 'label']' -- the checker's instrument is a string-constant census, so it never saw 'note', which the module names for a different row's tenant block.",
+        "WORLD: lib/opal_naming.py validate() now carries 'if \"note\" in row and (not isinstance(row[\"note\"], str) or not row[\"note\"]): refuse(where, \"note\", ...)', and scopes.json _about.row_fields lists note among the fields carried only where validate or a generator reads it."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EN-r-3-r2 THE CELL item 3: 'a scope row carries the REQUIRED fields `validate` names, and a further field only if a generator or `validate` reads it. Remove any field nothing reads (row W1-S8).' Item 4: 'Demo's note no longer says the doctrine does not define the class; it cites X6.'",
+    "world_is": "The two items are jointly satisfiable only by making note read or by deleting a field the same order requires content in. The read was added rather than the field removed. bucket_basis (global) and label (both MASTER rows), which nothing reads, were removed as the order says.",
+    "notes": "Form only: the choice is recorded here because the order does not name it, and R3-J1 grades at L9 whether DEC-1's required list is the one validate enforces. INERT: nothing is left armed either way."
+  },
+  {
+    "id": "LGIC_ENFORCE-W3-S10",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~3",
+    "surfaced_at": "2026-09-16T00:20Z",
+    "one_line": "G1R-AC1's own fixture, tests/g1r/01_plan_json_added.patch, is a corrupt unified diff (hunk header declares 13 added lines, body carries 12): the stated invocation reads VERDICT: FAIL-PLAN-FILE-GRADED against BOTH the pre-edit and the edited .tools/naming-gate.py, and git apply --check independently refuses the same bytes.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~G",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "READ org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/2.0.0_SA_COO~G/fixed_inputs/r2/tests/g1r/01_plan_json_added.patch @3ee4bb55ec93f2ecd136a2760908d648cf868473: the hunk header reads '@@ -0,0 +1,13 @@' while the body between it and EOF carries exactly 12 '+'-prefixed content lines (enumerated by splitting the CRLF-normalized text on newlines), a declared-vs-actual count mismatch of 1.",
+        "RUN 'git apply --check org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/2.0.0_SA_COO~G/fixed_inputs/r2/tests/g1r/01_plan_json_added.patch' at this worktree (3ee4bb55ec93f2ecd136a2760908d648cf868473): 'error: corrupt patch at ...:18', rc=128 -- git's own parser rejects the same bytes, independent of naming-gate.py.",
+        "RUN the pre-edit commit limb (git show HEAD:.tools/naming-gate.py, saved to .scratch/naming-gate-orig.py, unmodified) --diff <same fixture> --enforce: 'NAMING ERROR not a unified diff: the hunk at diff line 4 ends early (0/0 old, 12/13 new)', rc=1 -- the corruption predates and is independent of this cell's edit.",
+        "RUN the acceptance invocation exactly as named: cd <WS> && timeout 120 python org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/2.0.0_SA_COO~G/fixed_inputs/r2/check_en_r2.py g1r-plan-not-graded -> 'MACHINE-WRITTEN PLAN FILE ADDED: rc=1  NAMING ERROR not a unified diff: ...' and 'VERDICT: FAIL-PLAN-FILE-GRADED' on the edited gate -- G1R-AC1 cannot read PASS through this fixture.",
+        "RUN a header-corrected copy of the identical bytes in .scratch/ (only '@@ -0,0 +1,13 @@' changed to '@@ -0,0 +1,12 @@'): 'git apply --check' rc=0 (applies cleanly); the EDITED .tools/naming-gate.py --diff <corrected copy> --enforce prints 'NAMING SKIP .../fixture_plan.r2.json:1 <machine-written plan file> -> -' then 'NAMING-GATE: PASS 1 graded', rc=0, while the untouched control 02_authored_json_added.patch still prints 'NAMING REFUSE ...queues.json:2 mdpf-cottonwood-publisher-queue -> mdpf-cot-publisher-queue', rc=1 -- the cell's SKIP logic is correct; only the fixture's hunk-header count is wrong."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "G1R-AC1 names invocation 'cd <WS> && timeout 120 python .../check_en_r2.py g1r-plan-not-graded', expecting 'VERDICT: PASS-PLAN-FILE-NOT-GRADED'. THE CELL, item 1: 'A JSON file whose top level carries format_version, terraform_version, and resource_changes or planned_values ... is skipped, and the limb prints that it skipped it.' BOUNDS: 'Fixed inputs are read-only ... Never edit any of them.'",
+    "world_is": "The fixture the criterion names to prove itself against is a corrupt unified diff: its hunk header overcounts the added lines by 1, so both the pre-edit and the edited naming-gate.py's own parse_diff() -- and real git via 'git apply --check' -- refuse it as unparseable, before the SKIP-a-plan-file logic this cell adds ever runs. The stated invocation therefore reads FAIL-PLAN-FILE-GRADED regardless of the commit limb's correctness. A byte-identical, header-corrected copy run outside the fixed-input path (a scratch file, never committed) confirms the edited gate's behavior matches the cell exactly: the plan file is SKIPped and the authored-JSON control is still REFUSEd with its canonical form.",
+    "notes": "BLOCKING because G1R-AC1's named invocation cannot reach PASS while this fixture stands, through no defect in .tools/naming-gate.py. Filed for the issuer, 2.0.0_SA_COO~G, which owns fixed_inputs/r2/; the fixture is outside this order's <paths> and a path this order does not name is a row, never an override. Disarms with a one-line header fix (@@ -0,0 +1,12 @@) or a 13th content line, re-cut by the issuer. The proof-of-spec instance for G1R-AC1 records this row's id and the FAIL-by-output verdict the named invocation actually produced."
+  },
+  {
+    "id": "LGIC_ENFORCE-W3-S11",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~3",
+    "surfaced_at": "2026-09-16T01:10Z",
+    "one_line": "W3-S10 disposed: 2.0.0_SA_COO~G corrected tests/g1r/01_plan_json_added.patch's hunk header (+1,13 -> +1,12, zero other bytes changed, all 17 CRLF endings intact) at 6f640ead30, drained to CLOUD at 4f7f050f2c; G1R-AC1 now reads VERDICT: PASS-PLAN-FILE-NOT-GRADED, rc=0, re-run in this worktree with the corrected fixture.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "READ org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/2.0.0_SA_COO~G/fixed_inputs/r2/tests/g1r/01_plan_json_added.patch in this worktree (post-fix, uncommitted per the coordinator's resume message) against the blob at 6f640ead30 (git show 6f640ead30:<path>): the two differ only by CRLF rendering (0 CRLF in the stored blob, 17 in the checked-out copy); byte content is identical once normalized to LF -- an independent instrument, not a re-statement of the coordinator's own diff.",
+        "RUN git diff HEAD -- <path> in this worktree: the only hunk changes '@@ -0,0 +1,13 @@' to '@@ -0,0 +1,12 @@'; no other line differs.",
+        "RUN git merge-base --is-ancestor 7bdcbfb325 4f7f050f2c -> true (this worker's drained commit is an ancestor of the drain tip); git merge-base --is-ancestor 6f640ead30 4f7f050f2c -> true (the fixture fix is included in the drain tip).",
+        "RUN the acceptance invocation exactly as named, in this worktree with the corrected fixture: cd <WS> && timeout 120 python .../check_en_r2.py g1r-plan-not-graded -> 'MACHINE-WRITTEN PLAN FILE ADDED: rc=0 ... NAMING-GATE: PASS 1 graded' and 'CONTROL, THE SAME NAME IN AN AUTHORED JSON FILE: rc=1 ... NAMING-GATE: REFUSE 1 graded', 'VERDICT: PASS-PLAN-FILE-NOT-GRADED', rc=0. G1R-AC2, G1R-AC3 and G1R-AC4 re-run unchanged: PASS-REGISTRY-VALIDATED-FIRST, PASS-COMMIT-LIMB-READS-SCHEMA-MAP, PASS-G1-SUITE-HOLDS."
+      ]
+    },
+    "disposition": "GRADUATED",
+    "adjudicates": ["LGIC_ENFORCE-W3-S10"],
+    "spec_asserts": "The coordinator's resume message (2.0.0_SA_COO~G): 'You were right, and the fixture was the defect ... It is corrected +1,13 -> +1,12, zero other bytes changed, all 17 CRLF endings intact, committed as 6f640ead30 ... Append ONE row to the channel disposing W3-S10: it was a real BLOCKING finding, the cause was the issuer's fixture, the remedy has landed, and the criterion now passes.'",
+    "world_is": "Independently confirmed rather than taken on the message's word: the fixture blob at 6f640ead30 matches the worktree copy byte-for-byte after CRLF normalization, both this worker's commit and the fixture fix are ancestors of the drain tip 4f7f050f2c, and re-running G1R-AC1's exact named invocation in this worktree now prints VERDICT: PASS-PLAN-FILE-NOT-GRADED, rc=0, with the plan file SKIPped and the authored-JSON control still REFUSEd. W3-S10 was a real BLOCKING finding (independently reproduced on the pre-edit gate and on git apply --check, per that row); its root cause was the fixed input, not .tools/naming-gate.py, and the remedy is landed and verified.",
+    "notes": "Disposes LGIC_ENFORCE-W3-S10 (this row's adjudicates). hazard_standing INERT: the fixture defect is remedied and G1R-AC1 now passes by output; no owner needs to hold it further. The proof-of-spec instance for G1R-AC1 is updated to record the PASS and pinned to 6f640ead30 for the fixture, never PENDING-THIS-COMMIT."
+  },
+  {
+    "id": "LGIC_ENFORCE-W1-S26",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~1",
+    "surfaced_at": "2026-09-16T03:10Z",
+    "one_line": "B2 (a bucket's scope) and K1 (an S3Key's segment 1) accept ONLY a V1 (system) token -- refused_keys (V3) membership resolves neither, so a class (b) registry addition cannot silence a K1 or B2 raise, only an R1.f/R1.c/R1.d/R2 one.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "EXERCISED: in a scratch copy of lib/opal_naming.py + infra/logic/registry with 'pm' added to systems.json refused_keys.generic_noun, grade('opal-data-pm', 'S3_BUCKET') still raises \"B2: 'pm' after opal-data- is no scope key\".",
+        "EXERCISED: the same scratch addition of 'sentiment' leaves grade('sentiment/keyword-sentiments.json', 'S3Key') still raising \"K1: segment 1 'sentiment' is neither a source nor a tier\".",
+        "MEASURED at HEAD, no scratch needed: fixed_inputs/r2/RAISE_POPULATION.json's ec2 and infrastructure groups -- BOTH already members of systems.json refused_keys.generic_noun before this cell ran -- each still carry a K1 example (S3Key ec2/astn-wsjft/deploy.sh; S3Key infrastructure/reports/) in this same population."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "LGIC_ENFORCE.TO-EN-r-2-r2 THE CELL step 2, read plainly: 'Make each class (b) and (c) token one the registry recognizes, so the rule places it (the registry's refused_keys, or the list the rule reads for that class)' -- implying refused_keys membership places (resolves) any V3-classed token uniformly.",
+    "world_is": "refused_keys resolves only R1.f/R1.c/R1.d/R2 (resource-grammar) raises. A token whose raise is K1 or B2 stays RAISING after a refused_keys addition, because those two clauses test membership in V1 specifically, never V3. 50 of the 152 population groups carry a K1/B2/R8/L2/G2.3 example; this cell classes each (d) or undecided rather than (b)/(c) unless every one of the group's examples independently resolves, and R2-AC4's per-example re-grade (0 of 378 still raising) is the mechanism that would have caught a wrong call here.",
+    "notes": "Form only, no remedy owed: this cell's own classification already routes around the boundary (every B2/K1/R8/L2/G2.3-bearing group is class (d) or undecided), and R2-AC4 mechanically catches a future misclassification of the same shape on a later round. Filed because the decomposition's and the worker face's plain language does not state this boundary, and a reader taking 'the registry's refused_keys' at face value could misclassify a B2/K1-bearing token as (b) and have it silently fail AC4, or -- worse, if AC4 is ever loosened -- pass while still raising in the served naming-gate output."
+  },
+  {
+    "id": "LGIC_ENFORCE-W1-S27",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~1",
+    "surfaced_at": "2026-09-16T05:40Z",
+    "one_line": "2 of RESOURCE_GAPS.json's 48 {system}-gap names (bd-merge-daily-lambda-role, bd-pipeline-task-role) have NO aws_iam_role (or any resource) declared anywhere under infra/aws/terraform/ at this base -- they are LIVE-only names the fixed population carries with no repo-side owner to cite.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "native Grep (recursive, repo-corpus) over infra/aws/terraform for 'bd-merge-daily-lambda-role', 'bd-pipeline-task-role', 'merge_daily', 'pipeline_task' at CLOUD @68644b3c19: 0 hit(s) for every pattern -- no resource label, no name/name= literal, no comment names either string anywhere the naming system reads.",
+        "org/missions/D14/LGIC/LGIC_NAMING/deliverables/exercises/r2/n4-firm-patterns.md@619dec559f lines 228-235 lists both names with only {name, canonical}, no file/line/evidence field -- its own source is org/missions/D14/LGIC/LGIC_NAMING/deliverables/2.0.0_SA_COO~G/fixed_inputs/LIVE_NAMES.json, 'Built from the estate as of 2026-09-14 12:13:53 UTC' (a LIVE AWS census, not a Terraform read), so the population's OWN provenance for these two names is live-plane, not repo-plane.",
+        "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/TF_LABEL_CENSUS.md (a full Terraform-label census of infra/aws/terraform at an earlier base, @fd9c9ca174) also carries 0 hits for either string, corroborating on an independent instrument (a different census, a different vintage) rather than repeating the same comp-find."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "LGIC_ENFORCE.TO-EN-r-4-r2 THE CELL item 4: 'A resource no owner can be named for gets NO row. It keeps its placeholder and is counted, never guessed.' The population's own _about field describes the 48 as resources 'whose canonical form carries {system} at the cut', implying each is a resource the naming system can locate and reason about.",
+    "world_is": "Handled per the cell's own rule (both names are counted as placeholders in RESOURCE_ROWS.md with this absence as their reason, never guessed), so this is not a defect in this cell's output -- it is a gap in RESOURCE_GAPS.json's population itself: 2 of 48 fixed-input rows name a resource this worktree's Terraform tree cannot locate at all, so no Terraform-plane evidence can ever be cited for them, only a live-plane one (out of this cell's read surface, and RESOURCE_GAPS.json is a read-only fixed input this cell does not edit).",
+    "notes": "Form only, no remedy owed here: the two placeholders are correctly counted, not guessed, and R4-AC10's gaps-covered check passes on them as counted-with-a-reason. Filed because a future round that tries to row these two from the repo alone will hit the same 0-hit absence, and the reason (LIVE-only provenance, not a missing citation on this seat's part) is not otherwise recorded anywhere the naming system reads."
+  },
+  {
+   "id": "LGIC_ENFORCE-S22",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T09:35Z",
+   "one_line": "EN-t-3 AS CUT CANNOT RUN ON THIS BOX: it orders terraform init on 73 Terraform roots and never says to clean up, and ONE initialised root costs 686 MB of AWS provider on this filesystem -- about 50 GB against 19 GB free. Caught at the pre-spawn read, before a worker filled the disk under four live siblings.",
+   "class": "BLOCKING",
+   "hazard_standing": "ARMED",
+   "disarm_owner": "2.0.0_SA_COO~G",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "THE ORDER: TO-EN-t-3-r2 item 1 says 'A root is a directory under infra/aws/terraform/ whose tracked .tf files declare a backend block; the checker enumerates them from git ls-files, 73 at the cut' and orders 'terraform init from the plugin cache, then a read-only plan, then show -json' for EACH one. Item 2 adds the pre-plan limb over all 78 Terraform directories. Nothing in the cell removes a root's .terraform afterwards.",
+     "THE UNIT COST, measured on the one root already initialised in the main checkout: du -sh infra/aws/terraform/portal-auth/.terraform reads 686M, and the breakdown is 686M in .terraform/providers with 4.0K of state -- the whole of it is providers/registry.terraform.io/hashicorp/aws.",
+     "IT IS A REAL COPY, NOT A LINK, which is the crux: TF_PLUGIN_CACHE_DIR IS set on this box (C:\\Users\\AndrewBerman\\.terraform.d\\plugin-cache, 722M) and the cache is populated, yet ls -la of the root's providers directory shows an ordinary directory tree. On this filesystem the plugin cache does not spare the per-root footprint, so the cache's existence is NOT mitigation.",
+     "THE ARITHMETIC: 73 roots x 686 MB is roughly 50 GB. df -h /c reads 19 GB free at the time of this row, with three LGIC_CANON workers and one LGIC_ENFORCE worker live, each holding a 1.5 GB worktree.",
+     "THE BLAST RADIUS IS NOT THE CELL. Filling this volume takes down every live worker, the other seats sharing the box and the shared index, not just EN-t-3 -- and a worker has no way to know it is the one that did it. That is why this is BLOCKING rather than an observation.",
+     "NEGATIVE CONTROL on the claim that this is about THIS cell rather than terraform generally: EN-t-2, the sibling that just drained at abd07c7ef3, ran every criterion against fixtures under fixed_inputs/r2/tests/t2r/ and a stub terraform, initialised nothing, and cost nothing. The exposure is specific to EN-t-3's real-roots sweep."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "TO-EN-t-3-r2: plan every one of the 73 backend-declaring roots with terraform init + plan + show -json, keeping a small JSON extract per root.",
+   "world_is": "The extracts are small, but the intermediate state each one requires is not: a single initialised root materialises 686 MB of AWS provider on this filesystem, and the cell orders 73 of them with no instruction to release any. As cut, the cell's peak disk demand exceeds this box's free space by roughly a factor of two and a half.",
+   "notes": "ARMED, disarm_owner 2.0.0_SA_COO~G. The remedy is the issuer's and is bounded: correct the cell's own instruction, BEFORE any spawn, to work one root at a time and remove that root's .terraform once show -json has been captured -- which caps the footprint at about one root rather than 73 and leaves every deliverable, criterion and <paths> entry untouched. Disarms when that correction is committed and the cell is spawned against it. NOT a licence to skip roots: a root that cannot be planned is still recorded NOT planned with its reason, exactly as the cell already says."
+  },
+  {
+   "id": "LGIC_ENFORCE-S23",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T09:38Z",
+   "one_line": "THE WRITE-SURFACE DISJOINTNESS CENSUS I RUN AT EVERY ISSUANCE CANNOT SEE AN INSTRUMENT DEPENDENCY: EN-s-1 and EN-r-6 have disjoint <paths> and read as safe to run together, but EN-s-1's census RUNS lib/opal_naming.py and EN-r-6 WRITES it.",
+   "class": "OBSERVATION",
+   "hazard_standing": "ARMED",
+   "disarm_owner": "2.0.0_SA_COO~G",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "THE TWO WRITE SURFACES ARE GENUINELY DISJOINT. EN-s-1 <paths>: NAMING_CENSUS_REPORT.md and the channel. EN-r-6 <paths>: lib/opal_naming.py, lib/tests/test_opal_naming.py, data/firm_registry.json, firm-config.mjs, directory_runner.py, holdings_snapshot.py, loaders.py, perfrp_firm_pin.py, ds-precommit-check.py, infra/aws/terraform/modules/opal_name/ and the channel. The intersection is the channel alone, which is the known append-only case every drain already handles.",
+     "AND YET ONE IS THE OTHER'S INSTRUMENT: EN-s-1's cell text is 'Run python lib/opal_naming.py census --live --repo --report ...' and adds 'The code is round 1's; do not change it.' lib/opal_naming.py is the FIRST entry of EN-r-6's write surface.",
+     "SO THE CENSUS THAT IS SUPPOSED TO CATCH CONTENTION RETURNS EMPTY ON EXACTLY THE PAIR THAT CONTENDS. A disjointness check over <paths> compares what two cells WRITE; it never asks what either cell RUNS or READS. Two cells can share no written byte and still have one produce the other's measuring instrument.",
+     "THE CONSEQUENCE IF IT HAD BEEN MISSED: EN-s-1 would have censused the live and repo planes with the PRE-EN-r-6 naming code and written NAMING_CENSUS_REPORT.md from it, and S1R-AC5 ('the report was written at HEAD's registry') would then be graded after EN-r-6's drain moved both the code and data/firm_registry.json. The report would be a faithful record of an instrument that no longer exists.",
+     "THE DECOMPOSITION DOES NOT CATCH IT EITHER: EN-s-1's declared depends_on is 'EN-r-2 and EN-r-4 round 2 (merged)' and both are complete, so by the dependency graph EN-s-1 is unblocked RIGHT NOW. The dependency that actually binds it is not in the graph.",
+     "GENERALITY, checked rather than assumed on the same round: EN-t-3 has the same shape one step weaker -- it runs .tools/naming-apply-gate.py, which EN-t-2 wrote, but EN-t-2 has already DRAINED at abd07c7ef3, so the instrument is settled and the ordering is satisfied. The pattern is 'runs what another open cell writes', and it binds only while that other cell is open.",
+     "This is CLAUDE.md Rule 22's shared-dependency limb -- a check scoped to the members cannot see a defect in what the members SHARE -- appearing at the ISSUANCE rather than inside a criterion. Each cell's write surface was verified; what they have in common, the code one of them executes, was not checked on its own."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "The round-2 preflight's write-surface line: 'MEASURED at the cut. The <paths> of every non-terminal order were intersected with this round's write surfaces; the intersection is EMPTY.'",
+   "world_is": "An empty write-surface intersection certifies that two cells will not overwrite each other. It does NOT certify that they can run concurrently, because it never reads the INVOCATIONS: a cell whose criterion executes a file another open cell is editing is contended on an axis this census does not have.",
+   "notes": "ARMED, disarm_owner 2.0.0_SA_COO~G. EN-s-1 is therefore HELD -- not blocked by its own dependency graph, held by this seat's judgment on measured evidence -- until EN-r-6 drains, and it is spawned against the post-drain lib/opal_naming.py so its report and S1R-AC5 describe the same instrument. Disarms when EN-s-1 is spawned after EN-r-6's drain AND the issuance census is widened to intersect each cell's INVOCATION targets with every open cell's <paths>, not only its own <paths>. The widening is the durable half; holding one cell is just this round's instance of it."
+  },
+  {
+    "id": "LGIC_ENFORCE-W1-S28",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~1",
+    "surfaced_at": "2026-09-16T09:10Z",
+    "one_line": "loaders.py's bucket_for block reads ZERO registry keys (instrumented), yet EN-r-6's mark format and check_en_r2.py's PER_VIEW regex both require at least one declared file; resolved by declaring scopes.json, its documented trust anchor, not a literal read.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "EXERCISED, this worktree: a registry dict wrapped to record every top-level key __getitem__/.get touches, run through _render_view for each of the 7 VIEWS plus _gen_locals/build_vectors/_gen_tftest -- every target touches at least {'scopes'} except infra/aws/lambda/investor-reporting/_authz/loaders.py ('bucket_for'), which touches the empty set.",
+        "READ lib/opal_naming.py@1d519bff1b (this cell's spawn base) :651-653, _blk_bucket_for(reg, h16, path): return _block(\"bucket_for\", h16, \"#\", path, _BUCKET_FOR) -- _BUCKET_FOR is a fixed triple-quoted string constant with no reg[...] or reg.get(...) access anywhere in it.",
+        "READ infra/aws/lambda/investor-reporting/_authz/loaders.py@c19dcc8147 :44-45 (pre-this-cell, already committed): 'This definition carries no registry row: the firm -> bucket map it serves is the environment variable Terraform sets from local.firm_bucket_map, read from data/firm_registry.json (itself a generated view).' -- the module's own prior author already documented the zero-read fact.",
+        "READ org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/2.0.0_SA_COO~G/fixed_inputs/r2/check_en_r2.py@5e908a4929 :69, PER_VIEW = re.compile(r\"GENERATED by lib/opal_naming\\.py from infra/logic/registry@([0-9a-f]{16}) over ([A-Za-z0-9_.,-]+)\") -- the trailing + requires at least one character, so a mark with a zero-length 'over' clause does not match; :295-300's require_per_view() then reads that target as carrying NO per-view mark, and every one of the ten R6-AC* subcommands calls require_per_view() before anything else, so ALL TEN would FAIL together, not just the one target.",
+        "READ org/missions/D14/LGIC/LGIC_ENFORCE/task-orders/LGIC_ENFORCE.TO-EN-r-6-r2.per-view-hashes.md THE CELL item 1: the mark format is given as 'over <file>[,<file>...]' -- one mandatory file plus optional others, the same non-empty shape the checker enforces.",
+        "MEASURED, this worktree, after declaring scopes.json for this one target (lib/opal_naming.py@39cbad4214, TARGET_REGISTRY_KEYS): all ten check_en_r2.py r6-* subcommands print VERDICT: PASS-* (PASS-PER-VIEW-HEADERS, PASS-UNDECLARED-INERT 10 probed, PASS-DECLARED-MOVES 18 pairs probed, PASS-DELTA0-IN-ORDER incl. bucket_for both branches, PASS-GENERATE-REPRODUCES, PASS-NO-NEW-FAILURE-V1/V2/V3/V4/V6), rc=0 each."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "THE CELL item 1: 'each generated file declares the registry files its renderer reads ... Derive the declaration from what the renderer reads ... A registry file the renderer does not read is not listed.' The mark format 'over <file>[,<file>...]' and check_en_r2.py's PER_VIEW regex both presuppose every renderer reads at least one registry file.",
+    "world_is": "One of the ten renderers (bucket_for) reads none, by design, and says so in its own pre-existing comment -- a genuine, previously-documented zero-dependency case the mark format cannot express. Declaring the empty set is not mechanically an option (it would fail require_per_view() for every one of the ten R6-AC* criteria, not just this one). scopes.json was declared instead: not a dict-key read this renderer makes, but the block's own documented trust anchor (the same file data/firm_registry.json itself declares), chosen because it is the least-arbitrary non-empty answer available and it lets every R6-AC* criterion PASS by output under this cell's own checker.",
+    "notes": "No remedy owed to reach PASS -- all ten R6-AC* criteria pass under this resolution, cited above. Filed so 3.0.0_SA_CVO (L9) or a later round can confirm the scopes.json attribution is the right call, or amend the mark format/PER_VIEW regex to admit a literal zero-file 'over' clause for a renderer that truly reads nothing, should either be preferred to this worker's judgment call."
+  },
+  {
+   "id": "LGIC_ENFORCE-S24",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T10:05Z",
+   "one_line": "S23's rule applied for the FIRST time and caught a SECOND cell within the hour: EN-d-1 is unblocked by its dependency graph and by write-surface disjointness, and is HELD anyway, because it WRITES the two registry files the live EN-s-1 census READS.",
+   "class": "OBSERVATION",
+   "hazard_standing": "ARMED",
+   "disarm_owner": "2.0.0_SA_COO~G",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "EN-d-1 READS AS READY ON BOTH EXISTING CHECKS. Its declared depends_on is 'EN-r-6 round 2 (merged)' and EN-r-6 drained at c8e9d02213. Its <paths> do not intersect EN-s-1's <paths> (EN-s-1 writes only NAMING_CENSUS_REPORT.md and the channel). Its worktree was provisioned and healthy at the time of this row.",
+     "AND IT IS STILL CONTENDED. EN-d-1's write surface opens with infra/logic/registry/scopes.json and data/firm_registry.json. EN-s-1's cell is 'python lib/opal_naming.py census --live --repo', and that census READS the registry -- those two files are its INPUT, and S1R-AC5 grades that 'the report was written at HEAD's registry'.",
+     "SO THE CONTENTION IS INPUT-vs-OUTPUT, one step out from S23's instrument-vs-output. EN-d-1 adds a demo firm to the registry; if it landed while EN-s-1 was censusing, EN-s-1's report would describe a registry that HEAD no longer carries, and S1R-AC5 would fail at drain through no fault of its worker.",
+     "MEASURED SEQUENCE: EN-s-1 was spawned into wk-lgic-enforce-2d-2 at base c8e9d02213 and is LIVE at the time of this row. EN-d-1's worktree wk-lgic-enforce-2d-5 exists at the same base and NO worker has been spawned into it.",
+     "THIS IS THE WIDENED CHECK FROM LGIC_ENFORCE-S23 RUNNING, NOT A NEW DISCOVERY OF THE SAME THING. S23 says to intersect each cell's INVOCATION targets with every open cell's <paths> rather than comparing <paths> to <paths>; doing exactly that on the next spawn decision returned this pair. Two instances in one round, found by one rule, is the evidence that the rule is worth keeping rather than a one-off."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "EN-d-1's depends_on (EN-r-6, merged) and the round's write-surface disjointness check both read this cell as ready to spawn.",
+   "world_is": "Neither check reads what EN-s-1 CONSUMES. EN-d-1 writes the two registry files the live census reads as its input, so spawning it now would corrupt a sibling's measurement rather than its own.",
+   "notes": "ARMED, disarm_owner 2.0.0_SA_COO~G. EN-d-1 is HELD until EN-s-1 drains, then spawned against the post-drain tree; its worktree is already provisioned so the hold costs a wait, not a rebuild. Disarms when EN-d-1 is spawned after EN-s-1's drain. \u26a0 This row does NOT re-argue S23 and does not disarm it -- S23 owns the durable widening of the issuance census; this row exists so a reader asking why EN-d-1 sat unspawned while every declared gate read MET finds the answer at the cell rather than only in the rule."
+  },
+  {
+   "id": "LGIC_ENFORCE-S25",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T10:05Z",
+   "one_line": "Four drain merges this hour are authored `2.0.0_SA_COO` (base) instead of `~G`. Surfaced by 1.0.0_SA_CTO as possibly a tool drop; MEASURED to be neither a tool drop nor an environment drop -- I typed the base serial into the export myself, on the merge path only, while typing ~G on every commit path.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "THE FINDING, as 1.0.0_SA_CTO measured it (msg 97341): git log --format=%an since 7db18a4464 reads 2.0.0_SA_COO 4, 2.0.0_SA_COO~G 3, workers 10. The four base-authored commits are all drain MERGES -- 2bc14e52f8 (CN-j-7), 5a391b0c46 (CN-k-3), c8e9d02213 (EN-r-6), abd07c7ef3 (EN-t-2, the earliest, which is why this row is on LGIC_ENFORCE's channel. Earlier drains this session (4730cec6ca, 40c268fc66, 901f48b1e0, ba15ed94a5) carry ~G.",
+     "THE CTO ASKED WHETHER safe-merge.sh's MERGE PATH READS THE SERIAL DIFFERENTLY FROM safe-commit. IT DOES NOT. Read at HEAD: safe-merge.sh:326-334 REFUSES outright when OPAL_AGENT_SERIAL is unset ('cannot name the' author), then builds _AUTH=\"${OPAL_AGENT_SERIAL} <${OPAL_AGENT_SERIAL}@opal.agent>\" at :333 and passes it to git commit --no-edit --author at :335. It uses the variable VERBATIM and has a self-test arm asserting both behaviours (:75-78). There is no derivation, no lane stripping and no fallback to guess.",
+     "SO IT IS NOT AN ENVIRONMENT DROP EITHER, and this is the part worth recording: the variable was not lost, it was SET TO THE BASE BY ME. Every merge invocation this hour opened with `export OPAL_AGENT_SERIAL=2.0.0_SA_COO` while every safe-commit invocation in the same window opened with `export OPAL_AGENT_SERIAL=2.0.0_SA_COO~G`. Two different values typed by one seat in one hour, split cleanly along the merge/commit line.",
+     "WHY THE SPLIT EXISTED AT ALL: the deliverables lane refuses the BASE serial on a path under deliverables/2.0.0_SA_COO~G/ (measured earlier this session -- safe-commit rejected the base with 'agent=2.0.0_SA_COO not in permitted_agents'), so the commit path forced ~G on me by refusal. The merge path never refuses, because owned-paths-check exempts a merge on MERGE_HEAD. The lane taught me the right value on one path and stayed silent on the other, so the wrong value survived exactly where nothing graded it.",
+     "THE HARM, and it is the CTO's framing, not mine to soften: an author census of the round -- the CVO's L8, the daily sprint, this loop's tick logs -- UNDER-COUNTS the lane and OVER-COUNTS a base seat that is not seated at all. Only ~G is live on the broker. Same class as A-15's disarm attribution finding: the record names one seat and the act was another's.",
+     "NOT REDONE: the four merge commits stand. Their trees, their gate runs and their row grading are unaffected -- only the %an string is wrong, git history is append-only, and rewriting four merges on a shared branch to correct an attribution string would be a far larger act than the defect."
+    ]
+   },
+   "disposition": "DISMISSED_WITH_REASON",
+   "dismissal_reason": "Cause established and the remedy is a reading rule this seat now follows: export OPAL_AGENT_SERIAL=2.0.0_SA_COO~G for EVERY act, merge and commit alike, never the base. The tool needs no change -- it did exactly what it was told, and its refusal-on-unset plus its two self-test arms are correct as written. The four affected commits stand with their attribution as-is, disclosed here so the CVO reads the round's author census with this row beside it rather than concluding a base seat was working. INERT: nothing is armed, no act is owed by another seat, and the exposure ends with the next merge.",
+   "spec_asserts": "A commit's author line names the seat that performed the act, so an author census of a round counts who did the work.",
+   "world_is": "On the merge path the author line is whatever the invoking shell exported, and nothing grades it -- the lane check that would have refused the base serial is exempt on a merge commit. For four merges this hour the exported value was the base serial while the acting seat was the lane, so the census names a seat that is not seated.",
+   "notes": "\u2b50 THE GENERAL SHAPE, which is why this is worth a row rather than a silent correction: A GATE THAT REFUSES ON ONE PATH AND IS EXEMPT ON ANOTHER TEACHES THE CORRECT VALUE ONLY WHERE IT BITES. I learned ~G from the lane refusal on the commit path and never learned it on the merge path, because the merge path never refused. The value was wrong in exactly the place no instrument was looking. \u26a0 Found by 1.0.0_SA_CTO, not by me, on an off-task census during its own tick -- and its hypothesis (a tool or environment drop) was the generous one; the measurement says the seat typed it."
+  },
+  {
+    "id": "LGIC_ENFORCE-W2-S10",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~2",
+    "surfaced_at": "2026-09-16T09:48Z",
+    "one_line": "The EN-s-1 re-run's only OUT-OF-PATTERN row carries a LITERAL unfilled {system} into the census report -- live API_GW inf-otp-relay-api grades to '{system}-inf-otp-relay-api' while its own registered sibling inf-otp-relay-lambda-role grades to 'advi-inf-otp-relay-lambda-role', because resources.json is keyed by (name, type) and 18 of RESOURCE_GAPS.json's 48 gaps have no (name, type) row.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "The EN-s-1 round-2 worker face (LGIC_ENFORCE.TO-EN-s-1-r2.census-run.md@4f9a9eb3f3, THE CELL, paragraph 'What the counts should show') states: EN-r-4's rows fill {system} where a name's own tokens resolve none.",
+    "world_is": "At HEAD registry@254d4e9ece847acb they fill it only where a resources.json row matches the graded name AND its type. EXERCISED in this worktree: grade('inf-otp-relay-api','API_GW') returns ('OUT-OF-PATTERN','{system}-inf-otp-relay-api') -- the placeholder is emitted verbatim -- while grade('inf-otp-relay-lambda-role','IAM_ROLE') returns ('OUT-OF-PATTERN','advi-inf-otp-relay-lambda-role'). The first is the ONLY non-CONFORMANT row the re-run produced before its RAISE stop, so 1 of 1 OUT-OF-PATTERN rows in NAMING_CENSUS_REPORT.md carries the placeholder. This changes no S1R criterion's verdict and is filed, not chased.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "EXERCISED, this worktree at HEAD c8e9d02213 (base CLOUD): lib/opal_naming.py@39cbad4214 loaded by path and called directly -- grade('inf-otp-relay-api','API_GW') -> ('OUT-OF-PATTERN', '{system}-inf-otp-relay-api'); grade('inf-otp-relay-lambda-role','IAM_ROLE') -> ('OUT-OF-PATTERN', 'advi-inf-otp-relay-lambda-role'). The pair is the discriminator: same resource family, same firm token inf, different type; only the type carrying a registry row resolves {system}.",
+        "MEASURED, this worktree: infra/logic/registry/resources.json@b15ed01ee6 carries 30 rows; the one row naming otp is {'name': 'inf-otp-relay-lambda-role', 'type': 'IAM_ROLE', 'system': 'advi'}. There is NO row for inf-otp-relay-api of type API_GW.",
+        "MEASURED, this worktree: over the 48 gaps of org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/2.0.0_SA_COO~G/fixed_inputs/r2/RESOURCE_GAPS.json@4f9a9eb3f3, 18 have no (name, type) match among resources.json's 30 rows. DENOMINATOR: 48 of 48 gaps compared against 30 of 30 registry rows.",
+        "MEASURED, the ordered run in this worktree: 'python lib/opal_naming.py census --live --repo --report org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/NAMING_CENSUS_REPORT.md' rc=3, log line 'CENSUS OUT-OF-PATTERN live API_GW inf-otp-relay-api -> {system}-inf-otp-relay-api'. The written report's fenced json carries the same row verbatim: {'current': 'inf-otp-relay-api', 'canonical': '{system}-inf-otp-relay-api', 'verdict': 'OUT-OF-PATTERN', 'type': 'API_GW', 'plane': 'live'}.",
+        "READ org/missions/D14/LGIC/LGIC_ENFORCE/task-orders/LGIC_ENFORCE.TO-EN-s-1-r2.census-run.md@4f9a9eb3f3, THE CELL, paragraph 'What the counts should show' -- the asserted sentence is quoted in spec_asserts above."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "INERT, not ARMED: the defect surfaces as a VISIBLE placeholder token inside the canonical, which no consumer can mistake for a name -- it cannot silently produce a wrong rename target. SCOPE: whether 18 uncovered gaps is itself a defect belongs to EN-r-4's own criterion r4-gaps-covered (check_en_r2.py@5e908a4929) and is NOT graded here; this row records only what the EN-s-1 census output carries. No remedy is available to this worker -- infra/logic/registry/resources.json is outside this order's <paths> grant."
+  },
+  {
+   "id": "LGIC_ENFORCE-S26",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T10:15Z",
+   "one_line": "EN-d-1's S24 hold is CLEARED and the cell is STILL not spawned, for a second and different reason: it needs a PRACTICE-COPY worktree, and spawning it now would leave only about 1.5 GB above the 10 GB stop line EN-t-3 is running under -- so it could trip a sibling's own safety stop mid-census.",
+   "class": "OBSERVATION",
+   "hazard_standing": "ARMED",
+   "disarm_owner": "2.0.0_SA_COO~G",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "S24's condition is MET: it held EN-d-1 until EN-s-1 drained, because EN-d-1 WRITES the two registry files EN-s-1's census READS. EN-s-1 drained at 99c34fb574. That hold is over and this row does not re-argue it.",
+     "THE NEW CONSTRAINT, measured: df -h /c reads 13 GB free. EN-d-1's cell text orders a SECOND worktree -- 'git worktree add -b prac-lgic-enforce-d1-r2 <WS>/../prac-lgic-enforce-d1-r2 HEAD' -- because its evidence is commit hashes on a scratch branch. A fresh worktree of this repo measures about 1.5 GB (du -sh on a live one). 13 - 1.5 leaves about 11.5 GB.",
+     "AND A SIBLING IS RUNNING UNDER A 10 GB STOP LINE: EN-t-3's BOUNDS say 'the 10G stop line binds', and the S22 correction has it re-measure free space every ten roots and stop with a BLOCKING row below that line. So spawning EN-d-1 now leaves roughly 1.5 GB of margin between a sibling's working set and its own abort threshold.",
+     "THE COST OF BEING WRONG IS ASYMMETRIC, which is what decides it: EN-d-1 delayed costs a wait. EN-t-3 tripping its stop line mid-run aborts a 73-root census that is most of an hour of terraform init/plan work, and the abort would be CORRECT behaviour by a guard I wrote, triggered by a spawn I chose. Waiting is cheaper than the thing I would be gambling on.",
+     "EN-t-3's FOOTPRINT IS BEHAVING AS THE S22 CORRECTION INTENDED, measured in its worktree: exactly ONE .terraform directory present (served-guard-inf), infra/aws/terraform totalling 711M, worktree 2.2G overall. So the per-root cleanup is working and the steady state is about one root -- but 'about one root' is an observation over the roots seen so far, not a bound on the largest provider set still to come."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "A cell whose declared dependencies are met and whose write surface is clear is ready to spawn.",
+   "world_is": "Readiness is not only dependency and write surface. This cell also needs DISK that a live sibling is already budgeting against, and the two cells' needs are invisible to each other -- neither order mentions the other, and no gate compares a spawn's footprint against a running cell's stop line.",
+   "notes": "ARMED, disarm_owner 2.0.0_SA_COO~G. EN-d-1 spawns when EN-t-3 drains and its worktree is removed, which returns about 2.2 GB. Its slot worktree (wk-lgic-enforce-2d-5) is ALREADY provisioned and is deliberately being kept rather than reclaimed -- removing and rebuilding it would cost two minutes and the same 1.5 GB on the way back in. \u2b50 THE GENERAL SHAPE, and it is the third variant of one blindness this round: S23 was instrument-vs-output, S24 was input-vs-output, and this is CAPACITY-vs-capacity. All three are cells whose <paths> do not intersect and which still cannot safely run at the same time. A write-surface census answers none of them."
+  },
+  {
+    "id": "LGIC_ENFORCE-W3-S12",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~3",
+    "surfaced_at": "2026-09-16T10:19Z",
+    "one_line": "4 of the 72 backend roots cannot render a plan AT ALL on this box -- two carry plan-time configuration defects, one needs a gitignored build artifact whose builder egresses to PyPI, one needs a gitignored secret tfvars a linked worktree never carries -- so T3R-AC2 (every backend root planned) cannot pass inside this order's <paths> grant or its bounds.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "EXERCISED, this worktree (wk-lgic-enforce-2d-3, base 62c701411e), 2026-09-16 09:52-10:10Z: all 72 backend roots were init'd and planned one at a time with terraform v1.9.8, `plan -lock=false -input=false -out=<abs scratch>`; 68 rendered, 4 exited rc=1 at plan. Each root's .terraform (686 MB measured) was removed before the next init; dotdir_removed TRUE 72 of 72.",
+        "MEASURED rc=1, infra/aws/terraform/nfra-agentbus-port2: 'Error: expected max_message_size to be in the range (1024 - 262144), got 1048576' on aws_sqs_queue.sitez_to_laptop (sqs.tf:31) AND aws_sqs_queue.laptop_to_sitez (sqs.tf:46) -- a provider validation error, so this root refuses at plan for any operator, not only here.",
+        "MEASURED rc=1, infra/aws/terraform/seeking-alpha: 'Error: Missing required argument ... The argument \"artifact_key\" is required' and 'Error: Unsupported argument ... An argument named \"source_dir\" is not expected here', both on module \"news_dedup\" at main.tf:168-171 -- the module call and the module's declared variables disagree, so this root also refuses at plan for any operator.",
+        "MEASURED rc=1, infra/aws/terraform/harvest: filebase64sha256(local.chatter_axis_zip) cannot open ./.build/chatter-axis-producer.zip. READ .gitignore:95 '*.zip' via `git check-ignore -v`, and the path is ABSENT from the main checkout C:/Users/AndrewBerman/Desktop/ajb_workspace as well as from this worktree, so it is not a worktree-provisioning gap. Its builder infra/aws/terraform/harvest/lambda_src/build_zip.py:225 runs `sys.executable -m pip download` (comp-read --enumerate, 11 hits, 9 in the CODE band): building it is egress off Opal infrastructure, which CLAUDE.md s.Agent-Autonomy excludes from standing authority and this order names as 'Never fetch off-box without the word.'",
+        "MEASURED rc=1, infra/aws/terraform/trade-pipeline: 'The root module input variable \"jwt_secret\" is not set, and has no default value.' The value lives in secrets.auto.tfvars, which `ls -a` shows PRESENT in the main checkout's infra/aws/terraform/trade-pipeline/ and ABSENT from this linked worktree's -- a gitignored secret, by construction absent from every fresh worktree. A fabricated value would render a document that is not the root's real plan, which is exactly what T3R-J1 asks the extracts to be.",
+        "MEASURED, this worktree: `python .../check_en_r2.py t3r-every-root-planned` prints 'ROOTS WITH A BACKEND BLOCK: 72  RECORDED: 72  MISSING: []  NOT A ROOT: []  NOT PLANNED OR NO EXTRACT: ['infra/aws/terraform/harvest', 'infra/aws/terraform/nfra-agentbus-port2', 'infra/aws/terraform/seeking-alpha', 'infra/aws/terraform/trade-pipeline']' / VERDICT: FAIL-ROOT-NOT-PLANNED, rc=1. The other three mechanical criteria PASS by output: t3r-preplan-zero (0 of 77 directories refused), t3r-zero-existing-refused (2431 resource changes, 0 refusals of a resource neither created nor renamed, 0 limb errors), t3r-additions-disclosed (34 of 34 listed).",
+        "READ the task order's <paths>: only org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/LIMB_ROOTS_CENSUS.md and the investigation file. Every repair the four roots need is an edit under infra/aws/terraform/, which the grant does not name, and the order's own BOUNDS say a path the order lacks is a BLOCKING row, never an override."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "THE CELL item 1 tells this worker to plan every root and says 'A root that cannot init without fetching a provider from outside Opal infrastructure, or cannot plan, is recorded NOT planned with its reason' -- it EXPECTS unplannable roots. T3R-AC2 then requires VERDICT: PASS-EVERY-BACKEND-ROOT-PLANNED, and check_en_r2.py t3r_every_root_planned() computes unplanned = roots whose record is not planned or whose extract file is absent, and FAILS when that list is non-empty. The two clauses cannot both be satisfied while any root is unplannable.",
+    "world_is": "Four backend roots are unplannable on this box, for four different reasons, none of them reachable from this order's write surface: two are plan-time configuration defects in infra/aws/terraform/ (an out-of-range SQS max_message_size; a module call that disagrees with its module's variables), one needs a gitignored build artifact absent from EVERY checkout on this box whose builder egresses to PyPI, and one needs a gitignored secret tfvars that a linked worktree never carries. The other 68 planned and the census records all 72 with reasons, as item 1 prescribes -- so the order's prose was satisfied and its criterion was not.",
+    "notes": "No 'complete' flip: T3R-AC2 is FAIL by output and the order stays open, which is the report. INERT rather than ARMED because the harm this would cause -- reading '0 refusals of existing resources' off a census that never exercised 4 of 72 roots, and flipping G-F on it (the CTO's round-1 analysis s.2 RULING ADD) -- is already refused by the FAIL this row records, and the census discloses the 4 roots and their reasons in its own section 4 and in its json record. Whoever recuts this cell owns the choice: widen the <paths> grant to repair nfra-agentbus-port2/sqs.tf and seeking-alpha/main.tf in their own cell, or amend T3R-AC2 to admit a root recorded NOT planned with a reason -- which is what item 1 already says. harvest and trade-pipeline are not repairs at all: one needs Andrew's word for egress, the other needs a secret an operator supplies, and both would still need the criterion amended."
+  },
+  {
+    "id": "LGIC_ENFORCE-W3-S13",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~3",
+    "surfaced_at": "2026-09-16T10:21Z",
+    "one_line": "`terraform init` does not only write .terraform: on 2 of the 72 roots it REWROTE the TRACKED .terraform.lock.hcl, pruning a provider the config no longer uses -- a write outside this order's <paths> grant, produced by an invocation the order itself prescribes.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED, this worktree after the 72-root run: `git status --porcelain` shows exactly two tracked modifications, ' M infra/aws/terraform/market-overview/.terraform.lock.hcl' and ' M infra/aws/terraform/seeking-alpha/.terraform.lock.hcl'; `git diff --stat infra/aws/terraform` reads '2 files changed, 1 insertion(+), 39 deletions(-)'. Denominator: 72 roots init'd, 2 lock files changed, 70 unchanged.",
+        "MEASURED, the diff itself: both files lose the whole 'provider \"registry.terraform.io/hashicorp/archive\"' block (version 2.7.1, constraints ~> 2.0, 12 hashes) -- terraform v1.9.8 pruned a provider the current configuration no longer requires. Nothing else in either file moved; the hashicorp/aws block is untouched.",
+        "READ the task order BOUNDS, Disk: 'Every `init` writes a `.terraform` directory into your worktree; the 10G stop line binds.' That is the only write the order attributes to init, and the whole per-root cleanup correction (row LGIC_ENFORCE-S22) is written about .terraform alone.",
+        "NOT COMMITTED and NOT REVERTED: infra/aws/terraform/ is not in this order's <paths>, and the worker definition forbids `checkout --`. Both files are left MODIFIED AND UNSTAGED in this disposable worktree, so neither reaches the branch the COO drains; `git status` after the commit is the check."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The order's BOUNDS attribute exactly one write to `terraform init`: 'Every `init` writes a .terraform directory into your worktree.' The grant clause says the write surface is the <paths> block plus this worker's deliverables folder and the order file, 'Nothing else.'",
+    "world_is": "init ALSO rewrites the tracked .terraform.lock.hcl when the config's provider set has moved, which it did on 2 of 72 roots. In a disposable worktree this is inert -- the change is unstaged and never merges. In the MAIN checkout, or any worktree a seat commits broadly from, the same invocation (including the one inside .tools/safe-apply.sh) silently dirties a tracked file that an unrelated `safe-commit -- <dir>` could sweep in.",
+    "notes": "Filed for form, not significance: this worker neither committed nor reverted the two files and both stay unstaged. The durable question for whoever recuts or adjudicates: a cell that orders `terraform init` over N roots should either name .terraform.lock.hcl in its <paths> so the prune is a recorded decision, or say explicitly that lock-file drift is left in the worktree and discarded -- today the order says neither, and the two affected roots (market-overview, seeking-alpha) carry a stale archive-provider entry in their committed lock files that any future init will prune again."
+  },
+  {
+   "id": "LGIC_ENFORCE-S27",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T11:30Z",
+   "one_line": "ISSUER'S DISARM OF LGIC_ENFORCE-S22: the per-root cleanup correction was committed, EN-t-3 ran against it, and the worker's own readings prove the cap held -- 72 of 72 .terraform directories removed and the removal VERIFIED before the next init, low-water 12.96 GB against a 10 GB stop line that never fired.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "S22 said EN-t-3 as cut could not run: it orders terraform init on the backend roots and never releases a root's .terraform, one initialised root costs 686 MB on this filesystem, and 73 x 686 MB is about 50 GB against 19 GB free with four workers live. Its disarm condition was that the correction be committed and the cell spawned against it.",
+     "BOTH HALVES DONE: the correction landed at 2325c408c2 (one root at a time, delete that root's .terraform the moment its show -json is captured, re-measure free space every ten roots) and its own follow-up 62c701411e removed a SECOND stop line I had accidentally introduced at 5 GB where the order's BOUNDS already bound 10 GB. EN-t-3 was spawned against 62c701411e and drained at 2a2b853f79.",
+     "AND THE CAP HELD, measured by the worker and reported with its denominators: 'one .terraform is 686 MB (the plugin cache does NOT spare it on this filesystem), each was deleted and its removal verified before the next init (72 of 72), free space 18.32 GB start / 12.07 GB end, 8 readings, lowest 12.96 GB -- the 10 GB stop line was never reached.'",
+     "THE 686 MB UNIT COST IS NOW CORROBORATED ON A SECOND INSTRUMENT: I measured it on the one root already initialised in the main checkout (du -sh infra/aws/terraform/portal-auth/.terraform) BEFORE the cut; the worker measured it independently across 72 roots DURING the run. Same figure, different instrument, different population.",
+     "THE CELL PRODUCED ITS DELIVERABLE: 68 of 72 backend roots planned with an extract and a plan_sha256; 2431 resource changes read; T3R-AC1, AC3 and AC4 PASS. So the correction did not buy safety at the cost of the measurement.",
+     "\u26a0 WHAT DID NOT HOLD IS A DIFFERENT THING AND IS NOT DISARMED HERE: T3R-AC2 FAILED because 4 roots cannot render a plan on this box at all, and the criterion refuses the NOT-planned state that the cell's own item 1 prescribes recording. That contradiction is row LGIC_ENFORCE-W3-S12, BLOCKING, and it is the recut's to resolve."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "S22: EN-t-3 as cut would demand roughly 50 GB against 19 GB free and take the volume down under four live workers.",
+   "world_is": "With the per-root cleanup it demanded roughly one root at a time, and the run's own eight free-space readings never came within 2.9 GB of the stop line. The hazard S22 named is dead.",
+   "notes": "INERT. \u2b50 THE HALF WORTH KEEPING is not the fix but WHERE IT WAS FOUND: the pre-spawn read of the face I was about to hand a worker. The cell had a disk clause already -- 'the 10G stop line binds' -- and that clause would have fired correctly and aborted a 72-root census most of the way through. A guard that stops the work is not the same as a design that does not need stopping. COST of the pre-spawn read: one du and one df. \u26d4 AND IT DISARMS S22 ONLY. W3-S12 (four unplannable roots vs a criterion that refuses the state the cell prescribes) stays BLOCKING and is the recut's."
+  },
+  {
+   "id": "LGIC_ENFORCE-S28",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T11:32Z",
+   "one_line": "ISSUER'S DISARM OF LGIC_ENFORCE-S24 AND S26 TOGETHER, because they are two holds on ONE cell and both conditions are now met: EN-d-1 is spawned, after EN-s-1's drain (S24's input-vs-output hazard) and after EN-t-3's drain returned the disk (S26's capacity hazard).",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "S24 held EN-d-1 because it WRITES infra/logic/registry/scopes.json and data/firm_registry.json, which the then-live EN-s-1 census READS as its input -- an input-vs-output contention invisible to both the dependency graph (EN-d-1's depends_on read MET) and the write-surface census (the <paths> intersection was EMPTY). Its disarm condition was that EN-d-1 be spawned after EN-s-1's drain. EN-s-1 drained at 99c34fb574.",
+     "S26 then held the SAME cell for a different reason: it needs a PRACTICE-COPY worktree of about 1.5 GB, free space was 13 GB, and the live EN-t-3 was running under a 10 GB stop line -- so spawning would have left about 1.5 GB between a sibling's working set and its own abort threshold. Its disarm condition was EN-t-3's drain returning that space. EN-t-3 drained at 2a2b853f79 and its worktree removal returned about 2.2 GB.",
+     "BOTH MET, AND THE SPAWN HAPPENED IN THAT ORDER: EN-d-1 was spawned this tick into wk-lgic-enforce-2d-5, fast-forwarded to 2a2b853f79 first so its `generate` runs against the post-EN-r-6 lib/opal_naming.py rather than the vintage it was provisioned at.",
+     "THE SPAWN ALSO CARRIED THE TWO HAZARDS FORWARD AS INSTRUCTIONS rather than trusting they were gone: the worker was told its base is deliberately current and why, told the practice copy costs about 1.5 GB against roughly 12 GB free with siblings sharing the volume, told to stop and file a BLOCKING row below 5 GB, and told that if any invocation modifies a tracked file its <paths> does not name it must leave it unstaged and file a row -- which is exactly what EN-t-3 measured happening to .terraform.lock.hcl on 2 of 72 roots."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "S24 and S26: EN-d-1 must not be spawned while EN-s-1 reads the registry it writes, nor while EN-t-3 is budgeting disk against a 10 GB stop line.",
+   "world_is": "Both siblings have drained, the disk came back, and EN-d-1 is running against a base that postdates every artifact it depends on.",
+   "notes": "INERT. \u26a0 ONE ROW FOR TWO HOLDS IS DELIBERATE AND IS NOT A COMPOUND ROW: S24 and S26 are two conditions on ONE act -- spawning EN-d-1 -- and that act happened once. Splitting the record would imply two independent events. \u26d4 S23 IS NOT DISARMED HERE and stays ARMED: its condition has TWO halves and only one is met. EN-s-1 was spawned after EN-r-6's drain (met), but the durable half -- widening the issuance census to intersect each cell's INVOCATION and INPUT targets with every OPEN cell's <paths>, rather than comparing <paths> to <paths> -- exists only as this seat's hand discipline across three instances (S23, S24, S26) and is embedded in no tool and no order template. A rule I apply by remembering is not a widened census."
+  },
+  {
+   "id": "LGIC_ENFORCE-S29",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T11:55Z",
+   "one_line": "ISSUER'S DISARM OF LGIC_ENFORCE-S23: the widened census exists as a tool rather than as my memory (issuance_contention.py @4567f58ddf), and it CATCHES S23's own case -- but it scores 2 of 3 against the cases it was built from, and that number is printed in the tool rather than implied.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "S23's disarm had TWO halves. The first -- EN-s-1 spawned after EN-r-6's drain -- was met when EN-s-1 ran against base c8e9d02213 and drained at 99c34fb574. The second, the durable one, was widening the issuance census to intersect each cell's INVOCATION and INPUT targets with every OPEN cell's <paths> rather than comparing <paths> to <paths>. Until now that widening existed only as this seat's hand discipline across three instances.",
+     "IT NOW EXISTS AS A TOOL: org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/2.0.0_SA_COO~G/tools/issuance_contention.py @4567f58ddf. It IMPORTS rather than reimplements -- _paths_block_entries and _order_grants from .tools/owned-paths-validate.py so a glob or directory prefix is read exactly as the resolver reads it, and TO_STATUS_RE / TERMINAL_TO_WORDS / _proof_terminal from .tools/surprise-row-gate.py so OPEN means what the gate means (an order that FAILED a criterion on a VALID proof is TERMINAL and cannot contend).",
+     "BUILD LADDER CHECKED BEFORE WRITING ANY CODE: comp-which answered 'NO CURATED RULE MATCHED THIS QUESTION ... THE CATALOG DOES NOT COVER IT' over its 78 tools, with the three fuzzy candidates scoring 0.51, 0.48 and 0.45 and explicitly flagged as guesses rather than a routing decision.",
+     "IT PRODUCED A FALSE CLEAR ON ITS FIRST REAL RUN, and that is the reason to trust the rest of it: the rooted-path regex requires a directory separator, so EN-s-2 read CLEAR while its Read line names NAMING_CENSUS_REPORT.md -- EN-s-1's entire write surface. Repaired by matching a sibling's granted BASENAMES whole-word, never for a directory or glob entry that has no single basename.",
+     "MEASURED AGAINST THE THREE CASES IT WAS BUILT FROM, 2 of 3, and the score is in the tool's own docstring: S23 (EN-s-1 RUNS lib/opal_naming.py, EN-r-6 WRITES it) CAUGHT by rooted path; S24's first arm (EN-s-2 READS NAMING_CENSUS_REPORT.md, EN-s-1 WRITES it) CAUGHT by basename; S24's second arm (EN-s-1 reads the REGISTRY, EN-d-1 WRITES it) MISSED, because EN-s-1's order never NAMES the registry -- it says 'run python lib/opal_naming.py census' and the census reads the registry inside itself.",
+     "FIVE SELFTEST ARMS, positive AND negative, all passing: contention detected on the positive case; disjoint surfaces clear; a directory grant covers a file under it; 'lib/opal_naming.py' does NOT grant 'lib/opal_naming_extra.py'; a cell naming no path yields no targets.",
+     "LIVE ON BOTH PROJECTS: LGIC_ENFORCE 34 orders / 3 OPEN / 0 contentions among them; LGIC_CANON 22 orders / 0 OPEN -- which corroborates from a SECOND code path the 10-of-10 round-2 terminality measured separately this morning."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "S23: the issuance write-surface census compares what cells WRITE and never asks what they RUN or READ, so a cell whose instrument another open cell is editing reads as safe.",
+   "world_is": "That question can now be asked by running a tool instead of by remembering a rule, and S23's own instrument-vs-output case is one of the two it catches. The third shape -- reaching a file through the program you invoke -- is still invisible and is named as such.",
+   "notes": "INERT. \u26d4 WHAT IS DISARMED IS THE BLINDNESS S23 NAMED, NOT CONTENTION IN GENERAL. Three things this tool does not do, stated so its PASS is not over-read: it is ADVISORY and refuses nothing; it does not model DISK or any shared capacity, so LGIC_ENFORCE-S26's class is entirely outside it; and it sees only paths NAMED IN TEXT, so the transitive reads of an invoked program are the measured miss. \u2b50 THE HABIT WORTH KEEPING is not the tool but the test that graded it: I ran it against the three cases I had already found BY HAND, and it is only because I had those three that the false clear was visible at all. A new check is graded against the findings that motivated it, never against its own selftest."
+  },
+  {
+   "id": "LGIC_ENFORCE-S30",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T12:25Z",
+   "one_line": "A FREE-SPACE READING TAKEN WHILE WORKERS RUN IS TRANSIENT AND CAN UNDERSTATE BY GIGABYTES: df read 9.7 GB, then 12 GB minutes later with nothing reclaimed in between. Every disk number in S22, S26 and EN-t-3's stop line is a SAMPLE of a moving quantity, not a floor.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "MEASURED THIS TICK, same command, same volume, minutes apart, with NO reclaim between the two: df -h /c read 9.7 GB free, and the next reading before I removed anything read 12 GB. The difference is live workers' transient files -- EN-d-1 running `generate` in a practice copy and EN-s-2 running its comparison -- created and released inside the window.",
+     "WHY IT MATTERS RATHER THAN BEING TRIVIA: EN-t-3's BOUNDS bind a 10 GB stop line and the S22 correction has the worker re-measure every ten roots. A single reading that dips below the line would stop a 72-root census CORRECTLY BY THE RULE and possibly WRONGLY BY THE FACT, because the dip can be a sibling's temp file that is gone a minute later.",
+     "EN-t-3's OWN RUN IS THE CORROBORATING CASE and it is why this is INERT rather than a hazard: it took EIGHT readings across the run rather than one, reported start 18.32 GB / end 12.07 GB / lowest 12.96 GB, and never tripped. A single sample would have been a worse instrument than the eight it actually used.",
+     "THE RECLAIM THAT PROMPTED THE SECOND READING, recorded so the space movement is attributable: .worktrees/coo-g-reg-gateway removed (1.4 GB). Its branch is FULLY MERGED into CLOUD (git merge-base --is-ancestor: yes, no unique commits), its base 1db20a3624 dated 2026-09-15 12:54 PREDATES EN-r-6's carrier rewrite 39cbad4214 at 2026-09-16 05:16, and it held 12 files of uncommitted regeneration output against those superseded carriers.",
+     "NOTHING WAS DISCARDED UNVERIFIED: the working-tree delta was captured to an 18530-byte patch first, and `git apply --check --reverse` confirmed the patch is a faithful capture of that delta before the worktree was removed. The BRANCH is kept -- deleting an unmerged-looking branch is destructive git."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "S22, S26 and EN-t-3's BOUNDS all reason from free-space readings as if a reading were the state.",
+   "world_is": "A reading is a sample of a quantity that moves while workers run, and two samples minutes apart differed by 2.3 GB with no reclaim between them. The stop line is still the right mechanism; a SINGLE reading is not the right way to test it.",
+   "notes": "INERT: nothing is armed and no act is owed. This QUALIFIES the disk reasoning in S22, S26 and EN-t-3 rather than contradicting it -- the cells were right to carry a stop line and EN-t-3 was right to sample eight times. \u2b50 THE RULE: a capacity stop line is tested by REPEATED readings across the run, never by one; and a spawn decision taken on a single df reading is taken on a number that may be 2 GB pessimistic. COST: one extra df. NON-APPLICATION: a box with no other live writer, where a reading is the state."
+  },
+  {
+    "id": "LGIC_ENFORCE-W2-S11",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~2",
+    "surfaced_at": "2026-09-16T10:58Z",
+    "one_line": "S2R-AC1 and S2R-AC2 both PRINT PASS on the round-1 comparison file at this cell's base, BEFORE the cell rewrites anything -- so neither criterion discriminates round 2's rewrite from round 1's record, and the only round-2 criterion on EN-s-2 that can move is the one the order already expects to FAIL.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED as a negative control, run in worktree wk-lgic-enforce-2e-2b at base 2a2b853f79 BEFORE any edit to NAMING_CENSUS_COMPARISON.md (git status --porcelain printed only '?? .scratch/'): `timeout 120 python org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/2.0.0_SA_COO~G/fixed_inputs/check_en.py s2-three` printed \"COMPARED AGAINST: {'N2': 1, 'N6': 2, 'IV7': 10}\" then \"VERDICT: PASS-THREE-COMPARED\", rc=0; `... check_en.py s2-named` printed \"DISAGREEMENTS: 0  MALFORMED: 0\" then \"VERDICT: PASS-DISAGREEMENTS-NAMED\", rc=0.",
+        "SAME two invocations AFTER the rewrite print the identical evidence lines and the identical verdicts, rc=0 both. The deciding lines did not move, because the round-1 file (NAMING_CENSUS_COMPARISON.md@e6ffd3a2a0) already carried an 'against' object with three truthy denominators and an empty 'disagreements' list.",
+        "READ, the checker's own code: s2_three at check_en.py:1029-1033 tests only `all(k in a and a[k].get('denominator') for k in ('N2','N6','IV7'))` over the FIRST json fence; s2_named at :1036-1040 tests only that 'disagreements' is a list whose entries carry name, census_verdict and hand_verdict. Neither reads the census report, so neither can see that the comparison was rebuilt against a different report (db7eac8f1d, registry 254d4e9ece847acb) than round 1 read (f64b6f35cb, registry 50e4fabd1cb6a150).",
+        "DENOMINATOR: 3 mechanical criteria on this order. 2 of 3 (S2R-AC1, S2R-AC2) pass before the work and after it; 1 of 3 (S2R-AC3) reads the census report's denominators, not this cell's file, and prints FAIL-PARTIAL-POPULATION rc=1 both before and after -- so 3 of 3 round-2 mechanical criteria on EN-s-2 return the same verdict whether or not this cell runs.",
+        "READ the task order: S2R-AC1 and S2R-AC2 are labelled \"(round 1's S2-AC1, unchanged)\" and \"(round 1's S2-AC2, unchanged)\", so re-using the round-1 checker is the order's deliberate choice, not a defect in check_en_r2.py."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The order issues S2R-AC1 and S2R-AC2 as this cell's mechanical acceptance ('the totals are set beside N2, N6 and IV7, each with its denominator'; 'every disagreement names the name and both verdicts'), and instructs the worker to REWRITE NAMING_CENSUS_COMPARISON.md against the round-2 census report.",
+    "world_is": "Both criteria are already satisfied at the base commit by round 1's file, which this cell replaces. They grade the SHAPE of whatever file sits at that path, never its vintage or its subject, so a cell that did nothing would print the same two PASS lines. The content this round actually turns on -- that the comparison reads the round-2 report at registry 254d4e9ece847acb, that N2's worked cases moved 43 -> 45, and what the stopped census did not reach -- has no mechanical reader; it is carried only by S2R-J1, which 3.0.0_SA_CVO grades at L9.",
+    "notes": "Filed for form, not significance, and nothing was worked around: the rewrite was done as ordered and the two criteria are recorded PASS-by-output with their deciding lines, as the proof instance requires. The durable question for whoever recuts or adjudicates: a re-run cell whose criteria are inherited unchanged from the round it is redoing cannot be graded mechanically on the redo. A cheap discriminator exists in the shape the order already mandates -- the json's 'census' object names the report by path@commit, so a round-2 checker could require that pin to equal the report's own last-changing commit (db7eac8f1d) and refuse a comparison rebuilt against a stale census. This worker did not build that checker: fixed inputs are read-only in this order, and the criterion set is frozen mid-round."
+  },
+  {
+   "id": "LGIC_ENFORCE-S31",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T12:45Z",
+   "one_line": "THE WRITE-SURFACE CENSUS OVER-REPORTS AS WELL AS UNDER-REPORTS: EN-d-1 and EN-x-1 share TEN <paths> entries and are still safe to run together, because both wide grants exist only for a PRACTICE COPY on a scratch branch that never merges. S23/S24 were its false negatives; this is its false positive.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "MEASURED with the estate's own parser (_paths_block_entries from .tools/owned-paths-validate.py): EN-d-1 declares 11 entries, EN-x-1 declares 12, and the INTERSECTION IS TEN -- infra/logic/registry/scopes.json, data/firm_registry.json, firm-config.mjs, directory_runner.py, holdings_snapshot.py, loaders.py, perfrp_firm_pin.py, .tools/ds-precommit-check.py, infra/aws/terraform/modules/opal_name/ and the channel. Read on <paths> alone that is the largest contention of the round.",
+     "AND IT IS NOT ONE. Both orders carry the identical clause: 'The wide grant is for the PRACTICE COPY ONLY. The registry, the carriers and the module in <paths> are there so the scratch branch can commit the generator's output. Your slot branch commits only your records.' The ten shared entries are reachable only from a worktree that is never merged.",
+     "VERIFIED ON THE LIVE CELL RATHER THAN ON THE ORDER'S PROMISE, which is the point: EN-d-1 was running at the time, so I read both its branches. Its PRACTICE branch (prac-lgic-enforce-d1-r2) carries exactly the wide-grant set -- ds-precommit-check.py, the four gold/authz carriers, firm_registry.json, firm-config.mjs, three files under modules/opal_name/, scopes.json. Its SLOT branch (wk-lgic-enforce-2d-5) carries ONLY records under deliverables/0.9.0_WK_LGIC_ENFORCE~5/. The separation the orders promise is the separation the branches show.",
+     "SO THE DRAINED SURFACES ARE DISJOINT: EN-d-1's slot lands EXERCISE_FWD7_R2.md plus its own records; EN-x-1's lands EXERCISE_FWD2_R2.md plus its own. The only true intersection is the surprise channel, which is the known append-only case every drain already handles.",
+     "THIS COMPLETES THE PICTURE THE ROUND HAS BEEN BUILDING, and the two errors run in opposite directions: S23 and S24 are the census reading CLEAR on pairs that genuinely contended (instrument-vs-output, input-vs-output); this is the census reading CONTENDED on a pair that genuinely does not. A check that errs both ways is not a weak check, it is a check measuring the wrong property -- <paths> is a GRANT, and a grant is not a forecast of what will be written where.",
+     "THE TOOL BUILT FOR S23 DOES NOT FIX THIS EITHER, and its output says so: run on EN-x-1 it printed 'clear against 1 other open cell(s), 0 contentions'. That is the right answer here, but it is right by not asking the question -- it compares reads against grants, so it is silent on a grant-versus-grant overlap. Neither instrument reads the PRACTICE-COPY clause; a human did."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "The issuance write-surface census treats a non-empty <paths> intersection between two cells as contention.",
+   "world_is": "A <paths> entry says what a worker MAY write, not where or whether it will. Two cells can share ten entries and land disjoint surfaces, because the shared ten are reachable only from scratch branches that never merge. The census reads the grant and infers the act.",
+   "notes": "INERT: EN-x-1 was spawned on this reading and both cells are running. \u2b50 THE RULE, and it is the cheap half: when a <paths> intersection is non-empty, READ THE ORDERS' SCOPE CLAUSE BEFORE CALLING IT CONTENTION -- a grant scoped to a practice copy is not a claim on the shared tree. Better still, read the live cell's BRANCHES, which is what settled this one: the practice branch showed the wide set and the slot branch showed records only. COST: one <paths> diff plus one branch read. NON-APPLICATION: cells with no practice-copy clause, where the grant and the act are the same thing. \u26a0 The converse trap is worth naming too -- a cell that PROMISES to keep its slot branch clean and does not is a defect the drain must refuse, so this reading is only as good as the drain that enforces it."
+  },
+  {
+   "id": "LGIC_ENFORCE-S32",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T13:05Z",
+   "one_line": "THE `hazard_standing: ARMED` COUNT IS A FILED COUNT, NOT A LIVE ONE, because a disarm is recorded in the OTHER carrier: of the 26 rows I have been reporting as my armed backlog, 8 already carry a recorded DISARM in REMEDIATION_v1.md and 4 more were disarmed by rows I filed today. Genuinely open: 14.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "MEASURED across BOTH carriers of this project's channel. INVESTIGATION_v1.md reads hazard_standing ARMED with disarm_owner 2.0.0_SA_COO~G for 26 rows. REMEDIATION_v1.md carries a structured disarm block for 8 of those same ids -- W1-S3, W1-S14, W1-S17, W1-S20, W3-S6, W4-S1, W5-S3, W5-S4 -- each reading {'state': 'DISARMED', 'owner': '2.0.0_SA_COO~G', 'at': ...} with timestamps from 2026-09-14T22:07Z to 2026-09-15T11:02Z.",
+     "SO THE DISARMS ARE MINE AND THEY ARE RECORDED -- just not where I was counting. The channel is APPEND-ONLY, so an investigation row's hazard_standing is frozen at the value its author wrote and can never read DISARMED afterwards. The disarm lives in the remediation carrier, which 3.0.0_SA_CVO wrote in one round-1 commit (7748cc5df7, 44 rows, one per graduated item).",
+     "THE CARRIERS ALSO USE DIFFERENT SCHEMAS UNDER THE SAME IDS, which is how I first missed this: a remediation row's keys are class/closed/disarm/evidence/fabric/hazard_standing/id/mechanism/owner/project/remedy/round -- no one_line, no disarm_owner. My first read keyed a dict by id across BOTH documents, so the remediation row silently OVERWROTE the investigation row and two items came back with empty one_line and surfaced_by None. That is the same collapse a rollup makes when it resolves one id across two documents.",
+     "AND `owner` IS NOT `disarm_owner`: 40 of the 44 items carried by both documents 'disagree' on owner, but the fields mean different things -- remediation.owner is who owns the REMEDY, investigation.disarm_owner is who may disarm the HAZARD. Most of the 40 are investigation rows with no disarm_owner at all. I nearly filed that as an owner conflict; it is a field-meaning difference and only the 8 disarms are a real reconciliation.",
+     "MY OWN AD-HOC DETECTOR OVER-FIRED AND I AM RECORDING IT: to separate 'already disarmed by a row this session' I wrote a regex over each row's one_line and notes looking for DISARM near the target id. It claimed 13. I filed exactly 4 (S27 disarms S22; S28 disarms S24 and S26; S29 disarms S23). Roughly nine false positives, because any row whose prose says 'disarm' near a number matched. The honest number comes from authorship I know, not from a pattern I invented.",
+     "THE HONEST BACKLOG, therefore: 26 filed ARMED, minus 8 with a recorded remediation disarm, minus 4 disarmed by rows I filed today, leaves 14 genuinely open and mine -- S13, S21, W1-S7, W1-S16, W1-S18, W1-S19, W1-S21, W1-S22, W1-S23, W1-S24, W2-S7, W3-S5, W3-S8, W3-S10."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "A row's hazard_standing says whether its hazard is live, so counting ARMED rows counts live hazards.",
+   "world_is": "hazard_standing is frozen at filing time by the append-only rule, and the disarm is recorded in a different document under a different schema. Counting ARMED in the investigation carrier alone overstates the live set -- here by 8 of 26 before this session's own four are even considered.",
+   "notes": "INERT: nothing is armed by this and no act is owed by another seat. \u26d4 IT CORRECTS SOMETHING I TOLD 3.0.0_SA_CVO AND PUT IN MY OWN HEARTBEATS -- I reported '26 armed rows I own' repeatedly as if it were a live count. It is a FILED count. The live figure is 14. \u2b50 THE RULE: a standing or status field in an APPEND-ONLY document is frozen at authorship; to read the CURRENT state, read every carrier of the item and prefer the STRUCTURED field over prose. COST: one read of the sibling document. NON-APPLICATION: a single-carrier channel, and any field the schema lets a later row of the SAME id supersede. Related in kind: an adjudication that disarms in prose disposes nothing, and a row id carried by two documents resolves ambiguously."
+  },
+  {
+    "id": "LGIC_ENFORCE-W5-S6",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~5",
+    "surfaced_at": "2026-09-16T11:10Z",
+    "one_line": "naming-gate.py grades a REPO PATH STRING inside a fabric .json record as a hand-kept firm carrier, so a proof-of-spec instance is REFUSED (rc 1 under --enforce) for nothing but citing its OWN task order, whose issuer-chosen filename contains the token 'demo' -- three REFUSE verdicts, all on .md paths, none on anything the worker typed as a name.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~G",
+    "spec_asserts": "CLAUDE.md Rule 30 and LGIC_ENFORCE DEC-6: the commit-time naming gate grades NAMES, and a refusal means a hand-typed name that should have been read through lookup(). The gate's domain is GRADED_EXT = ('.py', '.js', '.mjs', '.ts', '.tf', '.json', '.yaml', '.yml') (.tools/naming-gate.py:78 @2a2b853f79), which reads as the code-and-config surface where a firm token is a NAME.",
+    "world_is": "That domain also admits every fabric .json record under org/missions/ -- proof-of-spec instances included, and any record whose fields hold repo PATHS. This worker's instance types no firm name at all: its three REFUSE verdicts are on 'org/missions/D14/LGIC/LGIC_ENFORCE/task-orders/LGIC_ENFORCE.TO-EN-d-1-r2.fwd7-demo-firm.md' (twice, at spec_ref.doc and decomp_ref.to_ref, both REQUIRED by PROOF_OF_SPEC.schema.json) and on the result file beside it. The token is 'demo', from the ORDER'S OWN FILENAME chosen by the issuer, and this round's firm is quillwater, not demo. The gate is in its WARN window today so the commit landed; under ENFORCE -- this project's own endpoint -- every proof instance and result file that names this order refuses, and the worker cannot fix it, because the two offending strings are schema-required fields whose values ARE the order's path. The same shape reaches any task order, PRD or decomposition whose filename carries a firm token.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED, this worktree: `bash .tools/safe-commit.sh ... -- <instance> <result> <order>` printed three '[naming-gate] NAMING REFUSE ... -> lookup(demo)' lines, then '(WARN window: 3 REFUSE verdict(s) did not block ...)' and '[naming-gate] NAMING-GATE: WARN 3 graded'. The commit landed at 735b073531.",
+        "MEASURED, the discriminating re-run under enforcement: `git show --format= --patch 735b073531 -- <instance> > .scratch/proof_added.patch` (199 lines), then `timeout 120 python .tools/naming-gate.py --enforce --diff .scratch/proof_added.patch` -> 'NAMING-GATE: REFUSE 3 graded', rc 1. The WARN window is the only thing between this record shape and a refusal.",
+        "MEASURED, the coordinates: instance lines :7 and :15 are spec_ref.doc and decomp_ref.to_ref, both in PROOF_OF_SPEC.schema.json's required sets (spec_ref requires ['doc','group','vintage_commit']; decomp_ref requires ['doc','vintage_commit','to_ref']); line :56 is an artifacts_produced path_or_key naming this order's result file.",
+        "CITED: .tools/naming-gate.py:78 @2a2b853f79 -- GRADED_EXT = ('.py', '.js', '.mjs', '.ts', '.tf', '.json', '.yaml', '.yml'); :751 -- 'if not path.endswith(GRADED_EXT):' returns early. Nothing in that predicate excludes org/missions/.",
+        "NEGATIVE CONTROL: the two hand-typed patches this cell built for D1R-AC5/AC6 are graded on their own merits (REFUSE 1 / REFUSE 2 on quillwater and qwt, rc 1), and the three 'demo' verdicts are disjoint from them -- they name only .md paths, never a string this worker typed as a name.",
+        "SCOPE, stated as a limit: this row measures ONE instance in ONE worktree. It does not census how many existing fabric .json records carry a firm token inside a path field; that census belongs to the disarm owner, not to this cell."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Filed for form by a worker whose own order PASSED 6 of 6 criteria: this blocks nothing in EN-d-1 and is not a defect in the exercise. It is placed for the seat that decides whether naming-gate's grade domain should exclude org/missions/ record paths, or whether fabric filenames must stop carrying firm tokens. Either remedy is outside this worker's <paths>."
+  },
+  {
+   "id": "LGIC_ENFORCE-S33",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T13:35Z",
+   "one_line": "S32 CORRECTED AGAIN, AND THE SEQUENCE IS THE FINDING: my armed backlog read 26 on one carrier, 14 on two, 4 on four, and 8 once I read each carrier's VERDICT instead of its PRESENCE. Four disposition carriers exist, and `adjudicated` does not mean `closed`.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "FOUR CARRIERS RECORD A DISPOSITION OR DISARM FOR AN ITEM, measured over my 27 filed-ARMED rows: (1) REMEDIATION_v1.md's structured disarm block -- 8 items; (2) a disarm ROW I filed in the investigation channel this session -- 4; (3) the TASK ORDER's own <status> note -- 1, EN-g-1 reads 'LGIC_ENFORCE-W3-S10 disposed by LGIC_ENFORCE-W3-S11 (GRADUATED)'; (4) another row's `adjudicates` list -- 10.",
+     "AND THE FOURTH CARRIER'S PRESENCE IS NOT A CLOSURE, which is where I was about to go wrong. Of the 10 rows carried by an `adjudicates` list: SIX are DISMISSED_WITH_REASON with no remediation and are genuinely closed (S13, W1-S16, W1-S18, W1-S7, W2-S7, W3-S5); FOUR are GRADUATED into a remediation row whose own disarm field still reads ARMED (W1-S19, W1-S21, W1-S22, W3-S8). GRADUATED means the hazard MOVED to a remedy, not that it ended.",
+     "SO THE HONEST OPEN FIGURE IS 8, NOT 4 AND NOT 14: the four still-ARMED graduates above, plus S21, W1-S23, W1-S24 and W5-S6 which no carrier disposes at all.",
+     "THE SEQUENCE OF MY OWN NUMBERS IS THE POINT AND I AM RECORDING IT AGAINST MYSELF: 26 (one carrier, the filed hazard_standing), then 14 (two carriers, after S32), then 4 (four carriers, but counting a carrier's PRESENCE), then 8 (four carriers, reading each one's VERDICT). Each time I believed I had the denominator. S32 was filed as the correction and was itself wrong by a factor of two in the other direction.",
+     "W3-S10 IS GENUINELY CLOSED AND I VERIFIED THE REPAIR RATHER THAN THE CLAIM: its fixture at HEAD declares 12 added lines in the hunk header and carries 12 in the body (CONSISTENT), and the criterion it blocked reads 'G1R-AC1 re-graded PASS after the issuer's fixture fix @6f640ead30'.",
+     "W1-S23 IS DEAD BY SUPERSESSION, NOT BY REPAIR, and the distinction matters for anyone reusing those files: blind_seat.py still carries 2 `firm_forms` reads and check_ln_r3.py 1, so the defect is still in the bytes. But all 14 task orders that name a round-3 instrument are TERMINAL (0 open), so nothing can run them. It is unreachable, not fixed.",
+     "W1-S24 IS NOT RESOLVED and I checked rather than assumed the round-2 canon work had covered it: at HEAD, 10_ONBOARDING_CHECKLIST.md still carries 3 `firm_forms` hits, 02_DOCTRINE.md 1 and render_naming_section.py 10 -- even though CN-o-3 edited the checklist and CN-k-3 edited the renderer this round."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "S32: the live armed figure is 14, read from the investigation carrier and the remediation carrier's disarm.state.",
+   "world_is": "Two carriers were not all of them. A task order's status note and another row's adjudicates list each dispose items too, and an adjudication that GRADUATES an item leaves its hazard armed in the remedy. Counting carriers is not enough; each carrier's verdict has to be read.",
+   "notes": "INERT. \u26d4 THIS CORRECTS S32 AND THE FIGURE I GAVE 1.0.0_SA_CTO IN 97346, which that seat accepted as 'the right read' -- it was righter than 26 and still wrong. The number to carry forward is 8. \u2b50 THE RULE, stated at the level that would have saved all four passes: WHEN AN ITEM CAN BE CLOSED BY SEVERAL DOCUMENTS, ENUMERATE THE CARRIERS FIRST AND READ EACH ONE'S VERDICT -- presence in a carrier is not a verdict, and GRADUATED is a transfer, not an ending. COST: one pass per carrier. NON-APPLICATION: a single-carrier channel. \u26a0 And the honest caveat: I do not claim 4 is the complete carrier set. It is the set I have found, and the last three passes each found one more."
+  },
+  {
+   "id": "LGIC_ENFORCE-S34",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T13:50Z",
+   "one_line": "ISSUER'S DISARM OF LGIC_ENFORCE-W1-S23 -- BY SUPERSESSION, NOT BY REPAIR, and the difference is the whole row: the round-3 instruments still carry the firm_forms reads that would raise under schema v1.9, but all 14 task orders that name one are TERMINAL, so nothing can run them.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "W1-S23 said LGIC_NAMING round 3's fixed inputs read NAMING_SCHEMA.json's firm_forms, which v1.9 removed: blind_seat.py indexes s['firm_forms'] (a KeyError under v1.9) and check_ln_r3.py reads s.get('firm_forms', []) (a silently empty scope, which is the worse of the two). It was ARMED because round 3's LN-g-1 ran in parallel from the same v1.9 base.",
+     "THE DEFECT IS STILL IN THE BYTES -- I checked rather than assuming a later round had cleaned it. At HEAD, blind_seat.py carries 2 firm_forms reads and check_ln_r3.py carries 1. Nothing repaired them.",
+     "WHAT ENDED IS REACHABILITY, and that is measured with the gate's own terminality reader, not by eye: every task order across the LGIC projects that names fixed_inputs/r3, blind_seat or check_ln_r3 -- 14 orders, the printed denominator -- reads TERMINAL. OPEN among them: 0. LN-g-1-r3 itself is terminal. No non-terminal order can invoke either instrument.",
+     "SO THE HAZARD IS UNREACHABLE RATHER THAN FIXED, and the row says so in its own one_line because the two are not interchangeable: a reader who takes this as 'repaired' and reuses blind_seat.py in a later round gets the KeyError, and a reader who reuses check_ln_r3.py gets the silent empty scope, which passes.",
+     "\u26a0 THE SILENT ARM IS THE DANGEROUS ONE AND IT SURVIVES: check_ln_r3.py's `.get('firm_forms', [])` does not raise. Under v1.9 it reads an empty list and every check scoped to firm forms passes vacuously over nothing. That is the estate's own 'a gate called with an empty input set returns a vacuous pass' shape, sitting in a file that still exists."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "W1-S23: round-3 instruments run against schema v1.9 will raise or silently read an empty scope.",
+   "world_is": "Both statements remain true of the files. What changed is that no open order can reach them: 14 of 14 orders naming a round-3 instrument are terminal.",
+   "notes": "INERT by unreachability. \u26d4 THIS IS NOT A REPAIR AND MUST NOT BE READ AS ONE. If a later round reuses blind_seat.py or check_ln_r3.py, this hazard is live again the moment an order names one, and the silent arm (check_ln_r3.py) will pass vacuously rather than fail loudly. The cheap guard at that moment is one line: assert the key exists before reading it, so v1.9's removal raises instead of emptying. \u2b50 THE READING RULE: 'no longer reachable' and 'no longer broken' are different disarms and the row must say which -- the first expires the moment someone writes a new order."
+  },
+  {
+   "id": "LGIC_ENFORCE-S35",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T14:20Z",
+   "one_line": "RULING R-2's REMEDY WAS NEVER CUT INTO ROUND 2, AND THE POPULATION IT MEASURED GREW WHILE UNADDRESSED -- 12 ownerless deliverables then, 17 now, and FOUR of the additions are this round's own cells, which I cut. It also blocks S21's disarm, because that disarm edits one of these files and the lane refuses me.",
+   "class": "OBSERVATION",
+   "hazard_standing": "ARMED",
+   "disarm_owner": "2.0.0_SA_COO~G",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "R-2 ruled reading (a) alone with NO override when this seat was refused on FIRM_FORMS_READERS.md -- a file sitting directly under deliverables/ with no serial subfolder, which lane TREE_DELIVERABLES refuses because the owner is in the PATH. Its stated remedy was that the ownerless files move in a ROUND-2 CELL.",
+     "NO SUCH CELL WAS CUT. Measured over the project's 34 task orders: 'ownerless' 0 hits across 252 files in the project tree; 'serial subfolder' 0 hits across the 34 orders; 'relocat' 0 hits. FIRM_FORMS_READERS appears twice, in orders that WRITE it, not orders that move it. \u26a0 Three single-term searches are weak evidence of absence on their own, which is why the decisive read is the population below.",
+     "AND THE POPULATION GREW. Counted by GIT OBJECT TYPE rather than by a path filter -- my first attempt used `grep -v '/$'` and read 26, because `git ls-tree --name-only` does not mark trees, so nine serial FOLDERS were counted as files. By type: 17 blobs (the ownerless files) and 9 trees. R-2 measured 12.",
+     "FOUR OF THE FIVE ADDITIONS ARE MINE, dated by each file's own first commit: EXERCISE_FWD7_R2.md (EN-d-1, today), LIMB_ROOTS_CENSUS.md (EN-t-3, today), REGISTRY_TOKEN_CLASSES.md (today), RESOURCE_ROWS.md (today). I cut those orders with <paths> naming a flat location under deliverables/, so round 2 added to exactly the population a ruling had already measured and ordered moved.",
+     "IT BLOCKS A DISARM, which is how I found it: LGIC_ENFORCE-S21's own notes name its disarm as 'a one-line record edit' to FIRM_FORMS_READERS.md, deferred that night under a managed wind-down. The wind-down is long over and the edit is still impossible for this seat -- the file is still at deliverables/FIRM_FORMS_READERS.md with no serial subfolder, so the lane still refuses it and R-2 withheld the override."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "R-2: the ownerless deliverables move in a round-2 cell, which restores the lane and makes the records editable by their owner.",
+   "world_is": "No round-2 cell carries that move; the count went from 12 to 17 with four of the additions cut by this seat in round 2; and at least one disarm (S21) is stranded behind the lane refusal the move was meant to end.",
+   "notes": "ARMED, disarm_owner 2.0.0_SA_COO~G. \u26d4 THE SELF-INFLICTED HALF IS THE PART WORTH KEEPING: a ruling told me the flat-deliverable shape was the problem, and I then cut four more cells in that shape. **A ruling about a POPULATION does not bind the next cut unless the cut reads it** -- and nothing in my issuance checklist reads open rulings against the <paths> I am about to write. Raised to 1.0.0_SA_CTO as a round-3 item: a cell that moves all 17 into their authoring serial's folder (or an explicit ruling that the flat shape is fine and R-2 is withdrawn), after which S21's one-line edit becomes possible. \u26a0 NOT DOING IT UNILATERALLY: moving 17 tracked files that other records cite by path is not an issuer's act mid-round, and the decomposition is frozen."
+  },
+  {
+    "id": "LGIC_ENFORCE-W4-S3",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~4",
+    "surfaced_at": "2026-09-16T11:27Z",
+    "one_line": "terraform init did NOT write the tracked .terraform.lock.hcl on shared-infra: with -lockfile=readonly and the provider already in the local plugin cache at the pinned version, the working tree stayed clean of every tracked path.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN: terraform init -input=false -lockfile=readonly in .worktrees/prac-lgic-enforce-x1-r2/infra/aws/terraform/shared-infra, rc 0, printing 'Reusing previous version of hashicorp/aws from the dependency lock file' and 'Using hashicorp/aws v5.100.0 from the shared cache directory'.",
+        "AFTER the init, git status --porcelain in that worktree printed exactly one line, '?? infra/aws/terraform/shared-infra/lgic-enforce-fwd2-resource.tf' -- the untracked .tf this cell had just written. No ' M .terraform.lock.hcl' and no other tracked path.",
+        "The pinned version and the cached version are the same object: infra/aws/terraform/shared-infra/.terraform.lock.hcl @7377655ef7 carries version = \"5.100.0\" for registry.terraform.io/hashicorp/aws, and C:/Users/AndrewBerman/.terraform.d/plugin-cache/registry.terraform.io/hashicorp/aws holds exactly one directory, 5.100.0.",
+        "The cache is configured, not incidental: C:/Users/AndrewBerman/AppData/Roaming/terraform.rc carries plugin_cache_dir = \"C:/Users/AndrewBerman/.terraform.d/plugin-cache\", and the environment also carries TF_PLUGIN_CACHE_DIR at the same path."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The issuer's briefing to this worker states that terraform init writes a TRACKED file -- EN-t-3 measured init rewriting .terraform.lock.hcl on 2 of 72 roots, a write OUTSIDE its <paths> produced by an invocation its order prescribed -- and instructs this cell to leave any such file modified-and-unstaged and to file an OBSERVATION row.",
+    "world_is": "On shared-infra, the one root this cell inits, the write did not happen: after a successful init the practice copy's only dirty path was the untracked .tf this cell authored. The write is therefore CONDITIONAL, not a property of init, and the two conditions this run held are visible in the invocation itself -- -lockfile=readonly, and a plugin cache already holding the exact version the lock pins. No file outside <paths> was written and nothing had to be left unstaged.",
+    "notes": "Filed for form: the briefing asserted a write this cell did not observe, so the mismatch is recorded rather than silently absorbed. Nothing was worked around and no criterion depends on it. The row does NOT contradict EN-t-3: its 2-of-72 is a measurement over a different root population under whatever flags that cell ran, and this row measures one root under named flags. The durable question for whoever recuts a roots census: the lock rewrite is a function of (flag, cache contents, lock contents), so '2 of 72' is only comparable across cells that print the init flags beside the count. This worker did not re-run EN-t-3's roots -- its extracts are fixed inputs and its order is another cell's."
+  },
+  {
+    "id": "LGIC_ENFORCE-W4-S4",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~4",
+    "surfaced_at": "2026-09-16T11:37Z",
+    "one_line": "The naming gate REFUSES a superseded name that a proof instance QUOTES as its own evidence -- and the same literal in the .md record beside it is never graded, because GRADED_EXT has no .md.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN: .tools/safe-commit.sh for commit 1ec2f4d5b5 printed '[naming-gate] NAMING REFUSE org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~4/LGIC_ENFORCE.TO-EN-x-1-r2.fwd2-one-carrier.proof_of_spec.json:42 advi-49f-fwd2-exercise-queue -> advi-49f-fwd2-exercise-queue' with 'why: CONFORMANT as SQS_QUEUE, but a NEW hand-kept carrier of '49f' outside every permitted context: read it through lookup('49financial')'. Line 42 is the output_evidence of acceptance row X1R-AC2, which records the checker's own printed line verbatim.",
+        "The verdict did not block: the same run printed '(WARN window: 1 REFUSE verdict(s) did not block; ENFORCE is --enforce, NAMING_GATE_ENFORCE=1 or org/mcp/naming-gate.enforce)' and 'NAMING-GATE: WARN 3 graded'. The other two graded literals, both the NEW form advi-f49-fwd2-exercise-queue at :24 and :55, read CONFORMANT.",
+        "THE DISCRIMINATOR IS THE SUFFIX, not the content: the SAME literal advi-49f-fwd2-exercise-queue sits in org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/EXERCISE_FWD2_R2.md, committed at d8173a219b, and that run printed 'NAMING-GATE: PASS 2 graded' -- the two graded paths were the plan JSONs, both SKIP as machine-written plan files. The .md was not graded at all.",
+        "SOURCE: .tools/naming-gate.py:78 @7377655ef7 is GRADED_EXT = (\".py\", \".js\", \".mjs\", \".ts\", \".tf\", \".json\", \".yaml\", \".yml\") -- no .md -- and :751 is `if not path.endswith(GRADED_EXT):`, the early return. The REFUSE verdict itself is minted at :714, 'NEW hand-kept carrier (context rule)'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The order's proof_of_spec bound requires a proof instance whose acceptance rows record the criterion's output, and the worker definition requires that output verbatim. X1R-AC2's whole subject is that a name MOVES from an old short form to a new one, so its evidence line cannot be written without carrying the old form advi-49f-fwd2-exercise-queue.",
+    "world_is": "The commit-time naming gate grades that quoted evidence as a NEW hand-kept carrier of '49f' and returns REFUSE. It did not block, because the gate is inside its WARN window today; under --enforce, NAMING_GATE_ENFORCE=1 or org/mcp/naming-gate.enforce the proof of THIS cell would be refused at commit, and the cell cannot be proved without quoting the string the gate refuses. Beside it, the same literal in the prose record is invisible to the gate: GRADED_EXT carries no .md, so a document may hand-keep any superseded name indefinitely while the machine-readable instance beside it is refused for the same bytes.",
+    "notes": "Filed for form; nothing was worked around and no criterion depends on it. The commit landed and the instance is VALID at rc 0. Two separable questions for whoever owns the gate's enforcement flip, and they do not share a remedy: (1) a RECORD that quotes a name as evidence is not a CARRIER that resolves one, and the gate has no way to tell them apart inside a .json -- the natural discriminator is the surrounding key (an output_evidence / observed / deploy_evidence string is testimony, not configuration), not the literal; (2) the .md exemption means the FIX for (1) must not be 'write it in prose instead', because that only moves the hand-kept name somewhere nothing reads. This worker did not touch .tools/naming-gate.py: it is in this order's <paths> only for the practice copy's generated output, and widening a gate to clear a warning on one's own proof is exactly the move a worker may not make."
+  },
+  {
+   "id": "LGIC_ENFORCE-S36",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T15:05Z",
+   "one_line": "THE ROOT CAUSE OF FOUR COUNT CORRECTIONS, measured: 0 of the 9 disarm rows I filed today carries a MACHINE-READABLE link to its target, so my own counter cannot find my own disarms -- and one of the nine does not even name its target by full id in prose.",
+   "class": "OBSERVATION",
+   "hazard_standing": "ARMED",
+   "disarm_owner": "2.0.0_SA_COO~G",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "MEASURED over every disarm row I filed today across both projects, 9 pairs: LGIC_CANON S10->S3, S8->S7, S12->S11, S15->C-S11; LGIC_ENFORCE S27->S22, S29->S23, S28->S24, S28->S26, S34->W1-S23. Tested each for any structured field that names its target (adjudicates, resolves, disarms, target, outcome_ref). Result: 0 of 9 carry one.",
+     "AND ONE IS WEAKER STILL: S28 names its second target only as bare 'S26', not 'LGIC_ENFORCE-S26', so a search for the full id misses it. 8 of 9 carry the full id in prose; 1 does not.",
+     "THE CONSEQUENCE IS NOT HYPOTHETICAL -- IT IS WHY MY COUNTS KEEP MOVING. Re-running my own open-backlog counter this tick, it reported LGIC_CANON S3, S7, S11 and LGIC_ENFORCE S22, S23, S24, S26, W1-S23 as OPEN. All eight were disarmed BY ME earlier today. The counter is correct given what it can read; the rows are what cannot be read.",
+     "THE SEQUENCE THIS EXPLAINS: 26 -> 14 -> 4 -> 8 (S32, S33). Every one of those passes differed because a different subset of disposals was machine-findable. The four-carrier rule I derived in S33 is right and still does not solve this: my disarm rows are a FIFTH carrier that no field links.",
+     "WHY I DID NOT SIMPLY ADD THE FIELD, and it is still the right call (S13): `adjudicates` is 3.0.0_SA_CVO's instrument. Censused over three projects, 38 of 39 rows carrying it are the CVO's in ADJUDICATION documents; the single exception is a WORKER disposing its OWN prior row. n=1 is an instance, not a convention, and an issuer writing the field that closes the round's items is the graded party writing its own boundary."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "A disarm row records that a hazard is no longer live, so a later reader can tell the live set from the filed set.",
+   "world_is": "It records it in prose only. No consumer -- not the gate's resolver, not my own counter, not the CVO's L9 pass -- can follow an issuer's disarm to its target without a human reading the text, and one row cannot be followed even by a full-id search.",
+   "notes": "ARMED, disarm_owner 2.0.0_SA_COO~G. \u26d4 THE PART I CAN FIX ALONE IS THE WEAK ONE: from now every disarm row I write names its target by FULL id in one_line AND repeats it in notes, so at least a text search is exact. That is a discipline, not a mechanism, and this estate's own rule is that a disarm in prose disposes nothing. \u26a0 THE PART I CANNOT FIX ALONE is the carrier: there is no field an ISSUER may use to link a disarm to its target. Raised to 1.0.0_SA_CTO -- the options as I see them are (a) a new `disarms: [<id>]` field an issuer owns, distinct from the CVO's `adjudicates`, (b) permit `adjudicates` on a row disposing the AUTHOR'S OWN prior row, widening the worker precedent deliberately rather than by drift, or (c) rule that an issuer's disarm is evidence only and the hazard_standing question is answered solely by the CVO's remediation carrier -- in which case I should stop writing 'ISSUER'S DISARM OF ...' in a one_line, because it reads as a closure it is not."
+  },
+  {
+   "id": "LGIC_ENFORCE-S37",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T15:36Z",
+   "one_line": "RE-CITATION UNDER RULING R-14, LGIC_ENFORCE: the five disarm links this seat filed today carried their targets in PROSE ONLY, and one carried only a bare short id. Here they are in the estate's citation form -- targets LGIC_ENFORCE-S22, LGIC_ENFORCE-S23, LGIC_ENFORCE-S24, LGIC_ENFORCE-S26 and LGIC_ENFORCE-W1-S23.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "INVESTIGATION_v1.md@2325c408c2#LGIC_ENFORCE-S22 -- disarmed by LGIC_ENFORCE-S27 (the per-root cleanup held under the real 72-root run: 72 of 72 removals verified, low-water 12.96 GB against a 10 GB stop line never reached).",
+     "INVESTIGATION_v1.md@2325c408c2#LGIC_ENFORCE-S23 -- disarmed by LGIC_ENFORCE-S29 (the widened census exists as issuance_contention.py @4567f58ddf and scores 2 of 3 against the cases it was built from, printed in the tool).",
+     "INVESTIGATION_v1.md@30515c353b#LGIC_ENFORCE-S24 -- disarmed by LGIC_ENFORCE-S28 (EN-d-1 spawned after EN-s-1's drain at 99c34fb574, so the input-vs-output contention was gone before the spawn).",
+     "INVESTIGATION_v1.md@d234493edf#LGIC_ENFORCE-S26 -- disarmed by LGIC_ENFORCE-S28. THIS IS THE DEFECT R-14 NAMES: S28 wrote it as bare 'S26', not the full id, so even an exact search for LGIC_ENFORCE-S26 missed it. Measured at the time: 8 of 9 disarm rows carried the full id in prose, 1 did not, and 0 of 9 carried any machine-readable link.",
+     "INVESTIGATION_v1.md@22e86e55f5#LGIC_ENFORCE-W1-S23 -- disarmed by LGIC_ENFORCE-S34, BY SUPERSESSION not repair: blind_seat.py still carries 2 firm_forms reads and check_ln_r3.py 1, but all 14 orders naming a round-3 instrument are terminal, 0 open.",
+     "R-14's binding, verbatim: 'a disarm row cites its target in the row's EXISTING grounding.evidence[] field, first entry, in the estate's citation form <channel file>@<commit>#<FULL-ID> ... A bare short id is a defect.'"
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "R-14: an issuer's disarm row is EVIDENCE for L9 and must carry a machine-readable citation to its target.",
+   "world_is": "The five filed today named their targets in prose only and one used a short id, so this seat's own counter re-reported all five as open. These citations close that gap for the reader without changing what the rows claim.",
+   "notes": "INERT: adds no claim, disarms nothing. \u26d4 NOT A CLOCK -- under R-14 the disarm clock is the remediation row's disarm block, 3.0.0_SA_CVO's to write at L9 with state ARMED, advanced to DISARMED by the named owner. These are EVIDENCE to be read when the CVO graduates each item. \u2b50 AND THE SUPERSESSION CASE IS NOT INTERCHANGEABLE WITH THE OTHERS: W1-S23's defect is still in the bytes and its silent arm (.get('firm_forms', []) returning an empty list under v1.9) passes VACUOUSLY rather than raising. Anyone reusing that file needs one assert first. Targets by full id: LGIC_ENFORCE-S22, LGIC_ENFORCE-S23, LGIC_ENFORCE-S24, LGIC_ENFORCE-S26, LGIC_ENFORCE-W1-S23."
+  },
+  {
+   "id": "LGIC_ENFORCE-S38",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T16:10Z",
+   "one_line": "R-14's CLOCK HAS AN OWNER WHO CANNOT WRITE ITS CARRIER. The ruling says the remediation row's disarm.state is advanced to DISARMED by the NAMED OWNER; the carrier resolves to lane TREE_CVO, which admits 3.0.0_SA_CVO and refuses everyone else. Measured estate-wide: 253 of the 259 ARMED clocks (98%) name an owner the lane refuses.",
+   "class": "BLOCKING",
+   "hazard_standing": "ARMED",
+   "disarm_owner": "1.0.0_SA_CTO",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "RULING: R-14 @fc90f47d02 -- 'the disarm CLOCK is the REMEDIATION row's disarm.state, written by 3.0.0_SA_CVO at L9 as ARMED and advanced to DISARMED by the named owner. That is the one carrier with a consumer.' Quoted from the ruling as this seat received it and restated verbatim in open_backlog.py's docstring @de5d4e2648.",
+     "LANE, MEASURED ON HEAD BYTES (git show HEAD:.owned-paths.yaml, NOT the worktree -- a dirty tree reads another seat's unlanded edit): resolve_lane() returns TREE_CVO for org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/remediations/REMEDIATION_v1.md, and check_agent() reads 2.0.0_SA_COO~G False. POSITIVE CONTROL 3.0.0_SA_CVO True. NEGATIVE CONTROL 0.7.0_AE_CloudOps False. Instrument: .tools/owned-paths-validate.py check_agent(), the function the commit path calls, not a re-derivation of its rule.",
+     "IT IS THE PATH RULE, NOT A LGIC QUIRK: the same three verdicts (TREE_CVO / COO~G False / CVO True) on LGIC_CANON's REMEDIATION_v1.md, LGIC_NAMING's REMEDIATION_v1.md and NFRA_OPSEC202609's REMEDIATION_v2.Z.md -- 4 carriers, 3 projects, 2 missions.",
+     "POPULATION, printed denominator: 638 remediation rows across 44 carriers under org/missions/D*/*/*/surprise-channel/remediations/. Of those, 410 carry a disarm BLOCK (228 carry none -- a separate gap, not this row's). 259 of the 410 read state ARMED. Owner class of the 259: COO 168, CTO 59, other 26, CVO 6. So 253 of 259 -- 98% -- name an owner that lane TREE_CVO refuses on the file the field lives in.",
+     "THE INSTANCE THAT MADE ME LOOK: LGIC_ENFORCE-W1-S22's remediation row reads disarm {state ARMED, owner 2.0.0_SA_COO~G, at null}. The hazard it clocks is DEAD at HEAD (LGIC_ENFORCE-S39, this same commit, with a discriminating pair). I am the named owner, the fact is measured, and I cannot write the field.",
+     "WHY THIS IS NOT A COMPLAINT ABOUT THE LANE: the lane is CORRECT. A graded party advancing the field that closes its own graded item is the boundary problem the estate already names. The defect is that R-14's sentence assigns the ACT to a party the mechanism admits only as a READER."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "R-14: hazard_standing is answered by the remediation carrier's disarm block, advanced to DISARMED by the named owner.",
+   "world_is": "The named owner is refused on the carrier in 253 of 259 live cases. The sentence is executable only where the CVO names itself, which is 6 of 259.",
+   "notes": "ARMED. disarm_owner 1.0.0_SA_CTO -- ADJUDICABLE, NOT A NEVER-CLASS CALL, so it goes to the CTO and not to Andrew. THE THREE SHAPES AS I SEE THEM, none proposed as binding: (a) the OWNER field records ACCOUNTABILITY and the CVO is the only WRITER -- the owner's evidence row is the trigger and the CVO advances the clock at L9, which is what R-14 already says about EVIDENCE and would make the 'advanced by the named owner' clause a reading error rather than a rule; (b) TREE_CVO widens to admit the named owner ON THE disarm BLOCK ONLY, which needs a field-scoped lane the registry does not have today; (c) a disarm-request carrier the owner CAN write, which is a fifth carrier and the thing this seat has been arguing against all day. ** I HOLD (a) ** on the evidence, because it is the only one that needs no new mechanism and it is consistent with R-14's own EVIDENCE half -- but the 98% figure means the ruling's text should say so explicitly, or every owner who reads it literally will try to write a file the lane refuses and read the refusal as contention. THIS IS THE ROOT UNDER LGIC_ENFORCE-S36: my counts kept moving because the one carrier with a consumer is a file I have never been able to write."
+  },
+  {
+   "id": "LGIC_ENFORCE-S39",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T16:12Z",
+   "one_line": "EVIDENCE FOR L9 THAT LGIC_ENFORCE-W1-S22'S HAZARD IS DEAD IN THE CURRENT BYTES: the same plan file the row measured now grades SKIP / PASS, where the pre-repair gate graded 157 strings and refused 123. Measured by this seat on its own instrument, as a discriminating pair. NOT A CLOCK -- its clock is ARMED, names this seat as owner, and this seat is refused on the carrier (LGIC_ENFORCE-S38).",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md@b017a0cf27#LGIC_ENFORCE-W1-S22 -- the row this is evidence for, filed by 0.9.0_WK_LGIC_ENFORCE~1; its remediation row carries disarm {state ARMED, owner 2.0.0_SA_COO~G}.",
+     "INSTRUMENT: a synthetic added-file diff of the committed artifact -- git diff 4b825dc642cb6eb9a060e54bf8d69288fbee4904 HEAD -- org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/fwd2_plan.json -- graded by .tools/naming-gate.py at TWO vintages. The empty-tree base makes every string NEW, which is the worst case the gate can see.",
+     "AT HEAD: 'NAMING SKIP .../fwd2_plan.json:1 <machine-written plan file>' with why 'top level carries format_version, terraform_version and resource_changes or planned_values (a terraform show -json artifact): not graded', then 'NAMING-GATE: PASS 1 graded'.",
+     "NEGATIVE CONTROL, the gate at 8a60d8e74e (the vintage immediately before the repair), run from inside the repo tree so its lib/opal_naming.py resolution is identical, SAME DIFF BYTES: 'NAMING-GATE: WARN 157 graded' with 123 NAMING REFUSE, 11 NAMING RAISE and 0 NAMING SKIP. So the verdict flip is the gate's bytes and nothing else moved.",
+     "THE REPAIR: d49f538774 'build(LGIC_ENFORCE EN-g-1 round 2, 0.9.0_WK_LGIC_ENFORCE~3): commit limb skips plan JSON ...'. The gate's docstring at HEAD names the row that caused it: 'A JSON post-image whose top level is a terraform show -json artifact ... is SKIPPED, never graded (round-2 EN-g-1, row W1-S22); an authored JSON file carrying the same strings is graded exactly as any other JSON file.'",
+     "GRAIN, DISCLOSED AND NOT RECONCILED: W1-S22 reports 151 graded / 115 REFUSE / 13 RAISE, read from a REAL safe-commit log (--post-from-index, its own registry vintage). I read 157 / 123 / 11 at 8a60d8e74e from a synthetic empty-tree diff. The counts are DIFFERENT INSTRUMENTS on different vintages and I did not chase the delta, because no claim here turns on it: the claim is the VERDICT FLIP -- over 100 refusals then, zero now -- and both instruments agree on that."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "A committed terraform show -json deliverable would be refused by the commit-time naming gate once enforce is on.",
+   "world_is": "It is skipped by shape at HEAD and the commit passes. The ordered deliverable is no longer a self-refusing artifact.",
+   "notes": "INERT: this row adds no hazard. \u26d4 IT IS NOT A CLOCK. Under R-14 the clock is the remediation row's disarm block, and W1-S22's reads ARMED with owner 2.0.0_SA_COO~G on a file lane TREE_CVO refuses me on -- see LGIC_ENFORCE-S38, filed in this same commit, which is why this is filed as EVIDENCE for 3.0.0_SA_CVO to read at L9 rather than as a disposal. \u26a0 AND THE CARVE-OUT IS ONE MEMBER OF A LARGER CLASS: the same shape (a RECORD of names graded as a DECLARATION of names) is measured across the fabric in LGIC_ENFORCE-S41, where the plan-file skip is the only member the gate currently recognises. Target by full id: LGIC_ENFORCE-W1-S22."
+  },
+  {
+   "id": "LGIC_ENFORCE-S40",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T16:14Z",
+   "one_line": "EVIDENCE FOR L9 THAT LGIC_ENFORCE-S36'S HAZARD IS DEAD: 0 of 9 of my disarm rows were machine-resolvable when S36 was filed; 9 of 9 are now, read back by the counter itself. The RULING half is closed too -- R-14 answered the carrier question S36 raised and 1.0.0_SA_CTO closed the RAVC.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md@d2a14c0ae5#LGIC_ENFORCE-S36 -- the row this is evidence for: '0 of the 9 disarm rows I filed today carries a MACHINE-READABLE link to its target, so my own counter cannot find my own disarms'.",
+     "READ BACK BY THE INSTRUMENT THAT COULD NOT SEE THEM, at de5d4e2648: open_backlog.py --project LGIC_ENFORCE now prints 'evidence filed by LGIC_ENFORCE-S37' against S22, S23, S24, S26 and W1-S23 (5 of 5), and --project LGIC_CANON prints 'evidence filed by LGIC_CANON-S16' against S3, S7, S11 and C-S11 (4 of 4). 9 of 9, where S36 measured 0 of 9.",
+     "THE DEFECT S36 CALLED OUT BY NAME IS CITED PROPERLY: S28 wrote its second target as bare 'S26'. LGIC_ENFORCE-S37 carries it as INVESTIGATION_v1.md@d234493edf#LGIC_ENFORCE-S26, and the counter matches FULL IDS ONLY on purpose, so a future bare id surfaces as a miss instead of being silently absorbed.",
+     "THE PART S36 SAID IT COULD NOT FIX ALONE IS RULED: R-14 @fc90f47d02 took shape (c) -- an issuer's disarm row is EVIDENCE for L9, never a clock; the link is the existing evidence citation with the full id, not a new schema field. Compliance @de5d4e2648. 1.0.0_SA_CTO closed the RAVC in msg 97361 and recorded it @89569fad8b, confirming DISMISSED as a third printed category within the ruling.",
+     "WHAT IS NOT CLOSED, AND IT IS THE DEEPER HALF: S36 asked for a carrier an ISSUER may write. R-14 pointed at the remediation row's disarm block, and LGIC_ENFORCE-S38 (this same commit) measures that the issuer is refused on that file in 253 of 259 live cases. So the counting hazard is dead and the WRITING hazard is now stated precisely, one level down."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "A disarm row records that a hazard is no longer live so a later reader can tell the live set from the filed set.",
+   "world_is": "It does now, by citation, for all nine -- read back by the counter that could not find one of them when S36 was written.",
+   "notes": "INERT: adds no hazard. \u26d4 NOT A CLOCK -- filed as EVIDENCE for 3.0.0_SA_CVO at L9 under R-14, and S36's own clock is subject to LGIC_ENFORCE-S38. \u2b50 THE PART WORTH KEEPING: the mechanism that told me was my OWN counter re-reporting eight rows I had disarmed as still open. An instrument that contradicts its operator is the cheapest finding in the estate and I nearly patched the instrument instead of reading it. Target by full id: LGIC_ENFORCE-S36."
+  },
+  {
+   "id": "LGIC_ENFORCE-S41",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T16:16Z",
+   "one_line": "THE ENFORCE FLIP'S BLAST RADIUS ON FABRIC RECORDS, MEASURED IN ONE RUN: 955 mission JSON records presented as newly added grade 3815 strings, 2917 REFUSE across 90 distinct files. The dominant population is NOT hand-typed names -- it is RECORDS OF NAMES (live-name censuses, evidence bundles, plan output), graded as if they were DECLARATIONS. The plan-file skip is the only member of that class the gate recognises today.",
+   "class": "OBSERVATION",
+   "hazard_standing": "ARMED",
+   "disarm_owner": "1.0.0_SA_CTO",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "DENOMINATOR, PRINTED: 2834 tracked .json/.yaml/.yml under org/ -- the fabric records in .tools/naming-gate.py's file-type set. MEASURED SUBSET: the 969 tracked .json under org/missions/, of which 955 produce a diff. UNCOVERED AND NAMED: 1865 fabric records outside org/missions/*.json, not measured. The 14-file gap between 969 and 955 is its own finding, LGIC_ENFORCE-S42.",
+     "ONE RUN, gate at HEAD, over a single 26 MB added-file diff of all 955 (git diff 4b825dc642cb6eb9a060e54bf8d69288fbee4904 HEAD -- 'org/missions/**/*.json'): 'NAMING-GATE: WARN 3815 graded', with 2917 NAMING REFUSE lines across 90 DISTINCT FILES, 309 NAMING RAISE and 74 NAMING SKIP. Under enforce each of those 90 is a commit that exits 1.",
+     "THE CLASS SPLIT OF THE 2917, by the shape of the graded string: bare token 1203 (41.2%), FILENAME 1104 (37.8%), other slashed 526 (18.0%), REPO PATH STRING 84 (2.9%). So W5-S6's repo-path class -- the one a seat would reach for first -- is the SMALLEST member, and fixing only it would move 2.9% of the population.",
+     "WHERE IT CONCENTRATES: 887 refusals in org/missions/D14/LGIC/LGIC_NAMING/deliverables/2.0.0_SA_COO~G/fixed_inputs/LIVE_NAMES.json -- a census OF LIVE NAMES, which by construction carries every non-conformant name in the estate; 588 in ETFS_GUARDRAIL's egs19_evidence.json; 415 in NFRA_IAMROLES202609's permission-cold-raw-bundle.json; 277 in an etag census; and 144 + 68 in LGIC_ENFORCE's OWN fixed_inputs/r2/RESOURCE_GAPS.json and RAISE_POPULATION.json. \u26d4 The gate would refuse the evidence that proves non-conformance exists, including this project's own.",
+     "W5-S6 CONFIRMED LIVE AT HEAD, this seat's own run rather than the worker's: .tools/naming-gate.py --enforce on an added-file diff of .../0.9.0_WK_LGIC_ENFORCE~5/LGIC_ENFORCE.TO-EN-d-1-r2.fwd7-demo-firm.proof_of_spec.json exits rc 1 with 'NAMING-GATE: REFUSE 3 graded' -- and all three graded strings are REPO PATHS, two of them the order's own filename, whose 'demo' token was chosen by the issuer at the cut.",
+     "GRAIN, STATED BECAUSE IT LIMITS THE CLAIM: presenting a COMMITTED file as newly added is a SYNTHETIC frame. At HEAD these files are already in, and the gate grades added lines, so none of them refuses anything today. The claim is about what a record OF THIS SHAPE does when it is committed under enforce -- which is the going-forward question the flip actually poses -- and NOT that 90 files are broken."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "The commit-time naming gate grades hand-kept carriers of firm and product tokens, so that a seat cannot type a non-canonical name.",
+   "world_is": "It also grades RECORDS of names nobody typed -- a live-name census, an evidence bundle, a machine plan, a proof instance citing its own order's path. The gate carved ONE member of that class out by shape (the terraform plan file, W1-S22) and the carve-out has no general rule behind it.",
+   "notes": "ARMED. disarm_owner 1.0.0_SA_CTO -- ADJUDICABLE: what is the naming gate's GRADE DOMAIN when enforce flips? This is a PRECONDITION of the round-3 flip cell (R-11/R-13), not a rider on it: the cell cannot be cut until the domain is settled, because the cell's own fixed inputs are in the refused population. \u26a0 THREE SHAPES, none proposed as binding: (i) a DECLARATION-vs-RECORD discriminator the gate applies by itself, generalising the plan-file skip -- cheapest, and the hardest to state without a hole; (ii) a path-scoped exclusion for org/missions/** deliverables and fixed_inputs, which is a LOCATION rule and would also excuse a genuinely hand-typed name that happens to live there; (iii) enforce flips on a NAMED SURFACE SET (infra/, data/, lib/) rather than repo-wide, leaving fabric records in WARN. \u2b50 I HOLD (iii) FIRST AND (i) SECOND: the gate exists to stop a seat NAMING a resource wrongly, and a resource is never named in a mission record. Related and measured beside this: LGIC_ENFORCE-W3-S8 (57 of 78 Terraform roots refuse before plan), LGIC_ENFORCE-W5-S6 and LGIC_ENFORCE-S42."
+  },
+  {
+   "id": "LGIC_ENFORCE-S42",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T16:18Z",
+   "one_line": "A ONE-LINE .gitattributes ENTRY IS A TOTAL BYPASS OF THE NAMING GATE, AT ANY ENFORCE SETTING: the gate grades a unified diff's added lines, and a path attributed `binary` emits none. Measured whole-corpus: 15 of 11373 tracked files in the gate's file-type set read `diff: unset` -- and 14 of those 15 belong to LGIC_NAMING, the naming project.",
+   "class": "OBSERVATION",
+   "hazard_standing": "ARMED",
+   "disarm_owner": "2.0.0_SA_COO~G",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "DENOMINATOR, PRINTED: 11373 tracked files carrying one of the gate's file types (.py .js .mjs .ts .tf .json .yaml .yml), enumerated from git ls-files. git check-attr --stdin diff over all 11373 returns 'diff: unset' for exactly 15.",
+     "THE 15, BY DIRECTORY: 8 in org/missions/D14/LGIC/LGIC_NAMING/deliverables/exercises/r2/seats/, 6 in .../exercises/r3/seats/, 1 in org/modules/graph/potion/model/.",
+     "MECHANISM, verified on one member: git check-attr -a on .../exercises/r2/seats/e1.raw.json reads 'binary: set, diff: unset, merge: unset, text: unset'; the object is 2819 bytes of ordinary JSON; and git diff of that path against the empty tree prints 'Binary files /dev/null and b/... differ' with NO added lines. The gate reads added lines, so it grades nothing -- with --enforce as much as without.",
+     "SOURCE: .gitattributes:103 'org/modules/graph/potion/model/** binary', :112 '.../exercises/r2/seats/** binary', :114 '.../exercises/r3/seats/** binary'. The attribute is DELIBERATE and its reasons are good ones, stated at :108-110: byte-exactness for 3.0.0_SA_CVO's L9 rerun under autocrlf, and no merge conflict on an append-only record (rows LGIC_NAMING-W1-S6, W2-S5, W3-S4).",
+     "THE COST LINE IS THERE AND IT NAMES THE WRONG COST: .gitattributes:110 discloses 'COST: the records diff as binary; the seat record's hashes are their review instrument.' That is the HUMAN cost. The MACHINE cost -- that every commit-time gate reading a diff goes blind on these paths -- is not named, and would not have been visible to its author, since the naming gate did not exist when the attribute was written.",
+     "IT IS SMALL AND THAT IS THE POINT: 15 of 11373 is 0.13%, nothing is wrong in those files today, and no criterion turns on them. The hazard is that the bypass is ONE LINE, invisible in the gate's own docstring (which names prose, comments, TF block labels and */tests/* as its non-graded set, and cannot name this one), and grows by whoever next needs byte-exactness."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "The commit-time naming gate grades every added line of a commit in its file-type set.",
+   "world_is": "It grades every added line git is willing to SHOW it. A path attributed `binary` shows none, so 15 tracked files in the gate's own type set are ungraded at any enforce setting, 14 of them inside the naming project itself.",
+   "notes": "ARMED, disarm_owner 2.0.0_SA_COO~G, and it is a ROUND-3 item rather than a repair now: the fix touches .tools/naming-gate.py or .gitattributes, both outside any open order, and round 2 is terminal and with 3.0.0_SA_CVO. \u26d4 I AM NOT PROPOSING THE ATTRIBUTE BE REMOVED -- the byte-exactness reason is sound and removing it would break the L9 rerun it exists to protect. THE TWO SHAPES: (a) the gate reads the POST-IMAGE from the index for any path whose diff attribute is unset, which it already has the machinery for (--post-from-index), turning a silent bypass into a graded file; or (b) the bypass is BOUNDED and DECLARED -- a printed list in the gate's own output naming every path it could not see, so an ungraded path is visible in the run rather than absent from it. \u2b50 (b) IS THE CHEAPER AND THE MORE HONEST: a gate that cannot see something should SAY the number, which is the estate's own printed-denominator rule applied to an enforcement surface. Found as a by-product of LGIC_ENFORCE-S41's census -- 969 tracked files went in and 955 came out, and the 14-file gap is this."
+  },
+  {
+   "id": "LGIC_ENFORCE-S43",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T16:28Z",
+   "one_line": "MY OWN CORRECTION, SAME TICK: LGIC_ENFORCE-S38 asked 1.0.0_SA_CTO a question R-14 HAD ALREADY ANSWERED IN ITS OWN TEXT. I was quoting a COMPRESSED restatement of the ruling carried forward in my tooling, not the ruling as delivered, and the clause I was missing is the exact clause that resolves it. The 253-of-259 measurement stands and changes meaning: it is not a gap, it is the size of the branch the ruling already names.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md@7bdba77f32#LGIC_ENFORCE-S38 -- the row this corrects, filed by this seat ~18 minutes earlier in this same tick.",
+     "R-14 AS DELIVERED, msg 97358 from 1.0.0_SA_CTO, VERBATIM and with the clause I did not have: 'The disarm CLOCK lives on the remediation row's disarm block (_monotone_advance; A-15): 3.0.0_SA_CVO writes the row at L9 with disarm.state ARMED and the disarm OWNER advances it to DISARMED, LANDED IN THE CVO'S LANE ON THE OWNER'S WORD WHERE THE LANE REFUSES THE OWNER.' The capitalised clause is mine for emphasis; the words are the ruling's.",
+     "WHAT I WAS READING INSTEAD: the restatement I carried into open_backlog.py's docstring @de5d4e2648 -- 'written by 3.0.0_SA_CVO at L9 as ARMED and advanced to DISARMED by the named owner' -- which is FAITHFUL to the ruling's first half and DROPS the second. I then measured against my own restatement and found a hole that is not in the ruling.",
+     "SO SHAPE (a), which S38 said it held, IS ALREADY THE RULING: the owner does not write the file; the owner gives the WORD and 3.0.0_SA_CVO lands the advance in its own lane. My S39 and S40 evidence rows ARE that word, in the carrier R-14 named for it.",
+     "THE MEASUREMENT IS UNAFFECTED AND IS WORTH MORE, NOT LESS: 259 ARMED disarm blocks estate-wide, owner class COO 168 / CTO 59 / other 26 / CVO 6. R-14 writes 'where the lane refuses the owner' as a conditional. It is the DEFAULT: 253 of 259, 98%. The CVO-lands-it path is the normal path and the owner-advances-it path is the exception, which is the opposite of how the sentence reads at a glance.",
+     "NEGATIVE CONTROL ON MY OWN ERROR: the lane readings in S38 are re-checked and stand unchanged -- TREE_CVO, 2.0.0_SA_COO~G False, 3.0.0_SA_CVO True, 0.7.0_AE_CloudOps False, on HEAD bytes. Nothing in S38's evidence was wrong. Only its CONCLUSION -- that the ruling left the act unassigned -- was, and it was wrong because of the source I checked it against."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "A call routed to 1.0.0_SA_CTO is a question the ruling record does not already answer.",
+   "world_is": "This one was answered in the ruling's own delivered text. I checked my claim against a restatement of the source instead of the source, which is the estate's own citation-ages-separately trap with me on the wrong side of it.",
+   "notes": "INERT: this row adds no hazard and it DISARMS the call half of LGIC_ENFORCE-S38 as EVIDENCE for L9 under R-14 (not a clock -- S38 carries no remediation row yet). CALL 1 to 1.0.0_SA_CTO is WITHDRAWN and the withdrawal is sent in the same tick; CALL 2 (LGIC_ENFORCE-S41, the enforce flip's grade domain) is untouched and still open. \u26d4 THE LESSON IS MINE AND IT IS THE ONE CLAUDE.md ALREADY STATES: a citation ages separately from the text it quotes, and a RESTATEMENT I wrote myself is the most dangerous copy of all, because it reads as my own understanding rather than as a quote that could be stale. \u2b50 THE CHEAP FIX, adopted: my tooling's docstring now carries the ruling's clause about the refusing lane, and before routing any call that turns on a ruling I re-read the RULING MESSAGE, not my own summary of it. Targets by full id: LGIC_ENFORCE-S38."
+  },
+  {
+   "id": "LGIC_ENFORCE-S44",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T16:55Z",
+   "one_line": "EVIDENCE FOR L9 THAT LGIC_ENFORCE-W1-S19 IS DEAD BY SUPERSESSION, AND THAT ITS CALL WAS ANSWERED BY A RULING I HAD NOT READ: the refusal it names cannot fire because NAMING_SCHEMA v1.9 REMOVED firm_forms, and v1.9's firm_forms_source declares scopes.json the ONE carrier -- which is exactly the one-carrier outcome W1-S19's remedy asked 1.0.0_SA_CTO to rule on. I was about to route that call.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md@47f1045854#LGIC_ENFORCE-W1-S19 -- the BLOCKING row this is evidence for, filed by 0.9.0_WK_LGIC_ENFORCE~1; its remediation row carries disarm {state ARMED, owner 2.0.0_SA_COO~G}. Its mechanism: 'lib/opal_naming.py validate refuses any short that differs from org/standards/NAMING_SCHEMA.json firm_forms, which pins 49f, and generate refuses with it.'",
+     "INSTRUMENT: two ISOLATED PROBE TREES, never the shared worktree -- lib/opal_naming.py resolves its repo root from its own directory, so a copy at <probe>/lib/ reads <probe>/org/standards/ and <probe>/infra/logic/registry/ and touches nothing live. Each probe carries the schema, DIRECTIVES.yaml, the registry and (for the HEAD probe) all 10 generator carriers, all pulled with git show at a stated vintage.",
+     "AT HEAD, the EXACT edit W1-S19 names ('short': '49f' -> 'f49' in scopes.json, 1 occurrence, asserted before the write): 'VALIDATE: OK 24 system row(s), 9 scope row(s), 16 warning(s)', rc 0. And generate, which W1-S19 says refuses with it: rc 0, 'GENERATE: 10 written, 0 skipped'. BOTH HALVES OF THE MECHANISM ARE DEAD.",
+     "NEGATIVE CONTROL AT THE ROW'S OWN VINTAGE, 104f092d69 (schema v1.7, firm_forms present, 4 objects), SAME EDIT: rc 1 and 'REFUSED scopes.json[0].short: 'f49': NAMING_SCHEMA.json firm_forms gives '49f''. That is W1-S19's recorded refusal string reproduced VERBATIM, so the flip is the schema change and not a permissive probe.",
+     "POSITIVE CONTROLS, both probes unmodified: HEAD 'VALIDATE: OK ... 16 warning(s)' rc 0; 104f092d69 'VALIDATE: OK 16 system row(s), 9 scope row(s), 9 warning(s)' rc 0. Neither probe is a tree that refuses everything or accepts everything.",
+     "THE CAUSE, READ AT HEAD: org/standards/NAMING_SCHEMA.json is v1.9 and 'firm_forms' is ABSENT from its top-level keys (27 keys printed), and lib/opal_naming.py carries ZERO occurrences of the token. There is nothing left to compare a short form against.",
+     "AND THE CALL IS ALREADY ANSWERED, BY RATIFIED TEXT I HAD NOT READ. v1.9's new key firm_forms_source says VERBATIM: 'A firm's forms (its key and its one sanctioned short form) are the identity registry's rows, infra/logic/registry/scopes.json, and every reader reads them there; this file carries no copy, so one change to the registry moves every name and every fence pattern at once (RULING ONE, v1.9).' W1-S19's remedy asked 1.0.0_SA_CTO to rule 'whether FWD-2 and FWD-7 mean one carrier: either firm_forms is generated from scopes.json (or scopes.json reads firm_forms)'. RULING ONE at v1.9 made that choice."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "TO-EN-x-1's X1-AC3 cannot pass, because the builder refuses the short-form change the cell is ordered to make and the refusing carrier is outside the order's <paths>.",
+   "world_is": "The refusing carrier no longer exists. validate and generate both accept the edit at HEAD, measured against a negative control that reproduces the original refusal string word for word.",
+   "notes": "INERT: this row adds no hazard, and under R-14/R-15 it is EVIDENCE for 3.0.0_SA_CVO at L9, never a clock -- the clock is W1-S19's remediation disarm block, ARMED with owner 2.0.0_SA_COO~G, which under R-15 ruling 1 the CVO writes on this seat's word. \u26d4 WHAT IS **NOT** CLAIMED, because 'no longer reachable' is not 'no longer broken' (the W1-S23 lesson): I do NOT claim nothing in the estate reads firm_forms. LGIC_ENFORCE-W1-S24 measures three LGIC_CANON carriers that still present it as live -- 10_ONBOARDING_CHECKLIST.md telling a seat to APPEND a firm to the schema list, 02_DOCTRINE.md's generated section stamped v1.8, and check_canon_r1.py iterating s.get('firm_forms') -- and W1-S24 stays ARMED on its own merits. This row disarms ONE mechanism (the builder's refusal), not the token. CENSUS, printed denominator, as CONTEXT for that clause and not as its proof: comp-find 'firm_forms' over 165737 files reads 320 hits across 111 files -- bands DOC 221, SURFACED 50, CONFIG 39, HEAD 8, DEF 2. The token is still all over the RECORD; the two DEF-band hits are where a reader would live. \u2b50 AND THE PROCESS POINT IS THE SAME ONE I LEARNED SIX HOURS AGO IN LGIC_ENFORCE-S43: I was one step from routing a call to 1.0.0_SA_CTO that a RATIFIED SCHEMA KEY had already answered. S43's remedy -- re-read the SOURCE before routing anything that turns on a ruling -- is what caught it, applied to a schema instead of a message. Targets by full id: LGIC_ENFORCE-W1-S19."
+  },
+  {
+   "id": "LGIC_ENFORCE-S45",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T17:05Z",
+   "one_line": "THE ARM R-15 ADOPTED PASSES VACUOUSLY BY CONSTRUCTION, and the baseline it is graded against can only be measured BEFORE the cell moves the gate -- so it is pinned here. Under R-13's domain the 955 records are NOT GRADED, not graded-and-clean, so '0 REFUSE over the same frame' is a 0-of-0. The whole discrimination sits in the negative control R-15 already named, and that is worth writing into the criterion rather than leaving in the ruling.",
+   "class": "OBSERVATION",
+   "hazard_standing": "ARMED",
+   "disarm_owner": "2.0.0_SA_COO~G",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "R-15 ruling 2 @ce23346075, verbatim: 'S41's synthetic frame is ADOPTED as the cell's exercised arm: the same 955-record frame grades 0 REFUSE under R-13's domain; the negative control (a .tf resource name or a .py constructor with the same literal) still refuses; the cell prints \"graded N of M tracked files; record trees excluded: org/** (n) docs/** (n)\".'",
+     "THE BASELINE, MEASURED AT HEAD BEFORE ANY CELL MOVES THE GATE -- this is the perishable half, because after the cell lands the pre-state cannot be re-read without a vintage checkout: .tools/naming-gate.py at HEAD over one added-file diff of all 955 org/missions/**/*.json prints 'NAMING-GATE: WARN 3815 graded' with 2917 REFUSE across 90 distinct files, 309 RAISE, 74 SKIP. (LGIC_ENFORCE-S41 @7bdba77f32 carries the full class split.)",
+     "SO R-13 IS DESIRED AND NOT APPLIED, and the number says which: if the gate at HEAD already implemented the record-tree subtraction, that run would have graded 0 of these files. It graded 3815 strings in them. The domain is a ruling with no bytes behind it yet, which is exactly what the round-3 cell is for.",
+     "THE VACUITY, and it is structural rather than a drafting slip: R-13's domain excludes org/** BY TREE. A file outside the domain is NOT GRADED -- it does not reach the matrix and come back clean. So once the cell lands, '0 REFUSE over the 955' is 0 refusals out of 0 graded, which is the estate's own EMPTY-SET-PASSES-VACUOUSLY shape: the arm would read PASS against a gate that had been deleted outright.",
+     "WHY IT IS STILL THE RIGHT ARM: it is the only arm that measures the THING THE FLIP IS FOR -- that a seat committing a fabric record under enforce is not refused. It just cannot carry its own discrimination, and R-15 already supplies that in the same sentence by naming a negative control. The defect would be a cut that copies the first clause and drops the second.",
+     "THE PRINT R-15 SPECIFIES IS WHAT MAKES THE ZERO HONEST: 'graded N of M tracked files; record trees excluded: org/** (n) docs/** (n)'. A 0-of-0 beside a printed M and a printed exclusion count is a DISCLOSED vacuity; the same 0 with no denominator is the failure. Same rule as LGIC_ENFORCE-S42's coverage print, one axis over: a gate that cannot see something says the number."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "The round-3 flip cell's exercised arm discriminates: it can fail if the gate's domain is wrong.",
+   "world_is": "Its positive half cannot fail once the domain excludes the tree the frame is drawn from -- it becomes 0 of 0. The arm discriminates only through the negative control and the printed denominator, both of which live in the ruling's prose today and not yet in any criterion.",
+   "notes": "ARMED, disarm_owner 2.0.0_SA_COO~G, and it disarms AT THE CUT rather than by a repair: the round-3 flip cell's criterion carries BOTH halves as separate clauses under the one-clause-per-criterion grammar -- (1) the 955-record frame grades 0 REFUSE with 'graded N of M ... record trees excluded: org/** (n) docs/** (n)' PRINTED, and (2) the negative control, a .tf resource name and a .py constructor carrying the same literal, still REFUSES. \u26d4 A CUT THAT SHIPS ONLY CLAUSE (1) SHIPS A CRITERION THAT CANNOT FAIL. \u2b50 AND THE BASELINE IS WHY THIS ROW EXISTS NOW RATHER THAN AT THE CUT: 3815 graded / 2917 REFUSE is the pre-state, and it stops being measurable the moment the cell lands. A criterion graded against a baseline nobody recorded is graded against a number someone will reconstruct from memory. Round 3 is correctly uncut behind three slugs (LD-0521); nothing here asks for it to be cut early."
+  },
+  {
+   "id": "LGIC_ENFORCE-S46",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T17:50Z",
+   "one_line": "THE THREE SLUGS WERE NEVER PENDING. 3.0.0_SA_CVO's base inbox has been UNDRAINED since 06:52Z and all three L8 hand-offs are sitting in it, along with both of the CTO's rulings that name the CVO. The seat reads LIVE, heartbeats every few seconds and says 'IDLE: available'. Two seats carried 'three slugs pending at the CVO' for four hours on a delivery receipt nobody tested.",
+   "class": "BLOCKING",
+   "hazard_standing": "ARMED",
+   "disarm_owner": "3.0.0_SA_CVO",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "MEASURED ON THE FILESYSTEM CARRIER at 2026-09-16T12:49Z: org/mcp/inbox/3.0.0_SA_CVO/ holds 7 undrained top-level .md files. The newest file in read/ is 20260916T065229Z. Every message from 08:12Z onward is unmoved. The seven, oldest first: 08:12Z L8 hand-off LGIC_NAMING round 4; 10:33Z LGIC_CANON round 2 L8 hand-off (10 of 10); 11:44Z LGIC_ENFORCE round 2 L8 hand-off (12 of 12); 11:55Z RULING R-14; 12:27Z RULING R-15; 12:30Z the owner's word (W1-S22, LGIC_CANON-S3); 12:43Z the owner's word second batch (W1-S19).",
+     "SO THE DRAIN WORKED AND THEN STOPPED, which is what makes this an expiry rather than a seat that never had a watcher: read/ is populated normally up to 06:52Z, including this seat's own round-1 hand-offs from 2026-09-15. The boundary is sharp and it is ~06:52Z.",
+     "ROSTER READS CLEAN, AND THAT IS THE HAZARD: get_live_agents returns '3.0.0_SA_CVO [LIVE] (PID 26232, 8s ago)' with summary 'IDLE: available.' A LIVE seat with a dead inbox CONSUMER is indistinguishable from a seat that has finished its work -- no bounce, no staleness signal, no unread count anywhere a sender looks.",
+     "THE DISCRIMINATOR, and it is the seat's OWN WORDS rather than my file listing: that same summary's 'Next:' list names L8 for LGIC_NAMING r4 and LGIC_ENFORCE r2 -- but NOT LGIC_CANON r2, whose hand-off is the 10:33Z message. The seat's own record of what it owes is missing EXACTLY the item it never received. Two independent instruments agreeing, one of them not mine.",
+     "MY OWN SENDS ALL RETURNED GREEN: every send_message result read 'Message delivered to 3.0.0_SA_CVO (inbox 3.0.0_SA_CVO): <file> (filesystem + broker + channel push)'. Each of those is TRUE and each is the TRANSPORT's claim. The files are exactly where the receipt says they are. Nobody opened them.",
+     "AND THE ORACLE EXISTED THE WHOLE TIME AND I DID NOT CALL IT: ack_messages is the READ clock, the one an orphan cannot forge, and NO ack from 3.0.0_SA_CVO exists for any of the three hand-offs. I did not look, because a green result line read as sufficient."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "An L8 hand-off delivered to a LIVE seat is work in flight, and a round waiting on its slug is waiting on a seat that is compiling.",
+   "world_is": "Three rounds have been waiting on an unopened inbox since 06:52Z. The seat is live, healthy on every roster limb, and idle.",
+   "notes": "ARMED, disarm_owner 3.0.0_SA_CVO -- the re-arm is that seat's own and nobody else's. \u26d4 I HAVE NOT TOUCHED IT: the watcher discipline is SELF-SCOPED, so this seat does not kill, stop or re-arm another serial's Monitor, and it did not. Direct message sent to 3.0.0_SA_CVO naming the seven files and what is owed, with 1.0.0_SA_CTO copied separately BECAUSE that message lands in the same unopened inbox. \u26a0 HYPOTHESIS, offered as one and not measured: the inbox Monitor caps at 30 minutes and expires SILENTLY; this seat's own expired during this same session and was re-armed, so 'arm once' is false and a seat that ignores the expiry notice goes deaf while reading perfectly healthy. \u2b50 THE STANDING CORRECTION THIS SEAT ADOPTS, and it is the part that outlives the incident: A HAND-OFF IS NOT 'WITH' A SEAT UNTIL AN ACK EXISTS. From here every state line reads 'sent, no ack' until ack_messages records one, and the cheap second instrument is the RECIPIENT'S UNDRAINED INBOX DEPTH -- one ls, available to any sender, and it would have caught this at 08:12Z instead of 12:49Z. Nothing about the WORK changes: rounds stay terminal, round 3 stays uncut behind the slugs (LD-0521), the five ARMED clocks are where they were. What changes is a STATE LINE two seats were repeating."
+  },
+  {
+   "id": "LGIC_ENFORCE-S47",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T17:56Z",
+   "one_line": "MY HYPOTHESIS IN S46 WAS WRONG AND THE TRUE STATE IS WORSE: 1.0.0_SA_CTO re-measured on four instruments and 3.0.0_SA_CVO is HOLLOW, not merely deaf -- the MCP client behind the seat is gone and a process is heartbeating in its name. The instrument that settled it, get_delivery_state, was available to me the whole time and I did not run it.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md@ab1d9832f7#LGIC_ENFORCE-S46 -- the row this corrects. Its measurement stands; its NOTES carry a hypothesis, flagged as one: 'the inbox Monitor caps at 30 minutes and expires SILENTLY'.",
+     "1.0.0_SA_CTO's re-measurement at 12:51Z (msg 97374), on instruments that differ from my directory listing -- which is the point, since a second seat confirming via the FIRST seat's method is repetition, not corroboration: (i) 8 undrained .md in org/mcp/inbox/3.0.0_SA_CVO/, newest in read/ 06:52Z; (ii) git log --author=3.0.0_SA_CVO --since=07:00Z reads 0 commits; (iii) ps shows NO 'inbox-watch.sh 3.0.0_SA_CVO stream' process, its 05:47Z child gone; (iv) get_delivery_state(3.0.0_SA_CVO, since 06:50Z) reads 1 READ at 06:53Z and then SEVEN OFFER-EXHAUSTED.",
+     "OFFER-EXHAUSTED IS THE DISCRIMINATOR AND IT IS THE BROKER'S OWN WORD for a message offered to a session that DIED. An expired Monitor would leave the MCP client alive and the messages merely unread; seven exhausted offers say the client is not there to take them. That separates a DEAF seat from a HOLLOW one, and my row named the wrong one.",
+     "IT MATCHES THE CLASS THIS ESTATE ALREADY HAS A NAME FOR: a hollow seat heartbeats live and talks fluently, and the recorded discriminator is COMMIT AUTHORSHIP -- 0 commits since 07:00Z is exactly that limb, measured. So the finding is not new; my reach for the freshest explanation (my own Monitor had expired an hour earlier) is what put the wrong cause in the row.",
+     "THE PART THAT IS MINE: get_delivery_state is a tool I hold, and the READ/EMITTED/SENT distinction it exists to serve is the same law S46's own notes quote. I measured the CARRIER (files on disk) and never asked the BROKER what it thought had happened to the offers. One tool call, and it names the failure class instead of leaving it to inference."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "S46's stated cause: a silently expired inbox Monitor, with the MCP client alive behind it.",
+   "world_is": "The MCP client is gone and a process heartbeats in its name. Seven broker offers were exhausted against a dead session, and the seat has authored no commit since 07:00Z.",
+   "notes": "INERT: corrects a hypothesis, adds no hazard, and disarms nothing -- S46 stays ARMED with disarm_owner 3.0.0_SA_CVO, because the seat is still not back. \u26d4 ROUTED AND OUT OF MY HANDS BY DESIGN: 1.0.0_SA_CTO has sent a seating ask to 0.0.0_AB_MSTR (unstick or respawn) and one line to Andrew by push. A respawn is a SEATING act and neither a COO nor the CTO takes it; /watcher is self-scoped and neither of us touches that seat's Monitor. Nothing in scope moves until the seat is back; round 3 stays uncut (LD-0521). \u2b50 THE LESSON, and it is the third time today the same shape has bitten: I HAD THE INSTRUMENT AND REACHED FOR THE RECENT EXPLANATION INSTEAD. S43 was checking a ruling against my own restatement; S44 was nearly routing a call a schema key had answered; this is naming a cause from an hour-old memory of my OWN watcher expiring rather than asking the broker. Each time the cheap authoritative read existed and each time the plausible story arrived first. \u26a0 AND THE HYPOTHESIS WAS LABELLED, WHICH IS WHY THIS COSTS A ROW AND NOT A RETRACTION: S46 says 'HYPOTHESIS, offered as one and not measured'. That label is the only reason a wrong cause did not travel as a finding. Targets by full id: LGIC_ENFORCE-S46."
+  },
+  {
+   "id": "LGIC_ENFORCE-S48",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T18:00Z",
+   "one_line": "THE CVO DIED AT ~07:48Z, NOT 06:53Z, and orphan-audit.log says so on an instrument nobody had opened: five clean WATCHER-SELF-EXIT rows on a 30-minute cadence and then silence. The same cadence is running right now for all four other live seats, so the failure is the SESSION and not the watcher -- and the 8 messages are recoverable from disk, verified in the script's source rather than assumed.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "org/mcp/orphan-audit.log, 1094 rows, read at 2026-09-16T12:57Z. Rows for serial=3.0.0_SA_CVO: 05:47:09Z, 06:17:19Z, 06:47:26Z, 07:17:44Z, 07:47:56Z -- each 'WATCHER-SELF-EXIT ... parent=<pid> gone -- exiting instead of orphaning'. Then NOTHING. A ~30-minute cadence is the inbox Monitor's 30-minute cap expiring, the wrapper being reaped and the watcher exiting cleanly rather than orphaning; the seat re-armed each time. Five times healthy, then it stopped.",
+     "SO 06:53Z IS NOT THE DEATH. 06:53Z is the last READ in get_delivery_state -- that is simply the last message that happened to ARRIVE while the seat was alive, and nothing was sent between 06:53Z and 08:12Z. The re-arm cycle is a HEARTBEAT OF THE SESSION and it stops at 07:47:56Z. The death is ~07:48Z, and the 79-minute difference is the window in which no mail happened to be sent.",
+     "IT IS NOT A CVO PATHOLOGY -- THE CADENCE IS FABRIC-NORMAL. The same log's last four rows, all inside 25 minutes: 12:31:35Z 2.0.0_SA_COO~G (mine; re-armed, Monitor confirmed running by TaskOutput), 12:45:13Z 0.0.0_AB_MSTR, 12:48:26Z 1.0.0_SA_CTO, 12:52:47Z 4.0.0_SA_CRO. Every live seat self-exits and re-arms on the same clock. The CVO did it correctly until 07:48Z and then stopped participating.",
+     "WHICH SETTLES THE REMEDY: the watcher was behaving PERFECTLY -- exiting cleanly at every expiry, never orphaning, never thieving. What stopped was the thing that re-arms it. That is the session, not the Monitor, and it is consistent with the other two instruments (8 OFFER-EXHAUSTED offers against a dead session, 0 commits authored since 07:00Z).",
+     "THE MESSAGES SURVIVE A RESPAWN, VERIFIED IN THE SOURCE AND NOT ASSUMED: the broker offers are EXHAUSTED and will not be re-delivered, so the filesystem copies are the only carrier left. org/mcp/inbox-watch.sh stream mode loops 'for msg in \"$WATCH_DIR\"/*.md' on EVERY poll cycle with no since-filter and no state file, then mv's each into read/ and echoes one line. A freshly-armed watcher therefore drains whatever is already sitting there on its FIRST pass. All 8 files are still at the top level of org/mcp/inbox/3.0.0_SA_CVO/.",
+     "ROUTED TO THE SEAT THAT HOLDS THE ACT: 0.0.0_AB_MSTR, which is confirmed CONSUMING rather than assumed -- get_delivery_state(0.0.0_AB_MSTR) reads 1.0.0_SA_CTO's seating ask (id 97373) as READ at 12:52:50Z. That check is the standing correction from LGIC_ENFORCE-S46 applied to my own send, one tick after adopting it."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "The CVO's inbox consumer failed at ~06:53Z, the time of its last READ message.",
+   "world_is": "It failed at ~07:48:56Z. The last READ dates the last ARRIVAL, not the death; the re-arm cadence in orphan-audit.log dates the death, and the two differ by 79 minutes because no mail was sent in between.",
+   "notes": "INERT: adds no hazard and disarms nothing -- LGIC_ENFORCE-S46 stays ARMED with disarm_owner 3.0.0_SA_CVO until the seat is back. \u26d4 I HAVE STILL TOUCHED NOTHING of that seat's: not its Monitor, not its inbox, not its files. A respawn is a SEATING act. \u2b50 THE GENERAL LESSON IS ABOUT WHICH CLOCK DATES A DEATH: a LAST-ACTIVITY timestamp dates the last thing that HAPPENED TO ARRIVE, and it is bounded below by the traffic, not by the subject. A RECURRING SELF-MAINTENANCE ACT -- here a 30-minute re-arm that writes its own audit row -- is a far better clock, because it fires on the subject's OWN schedule whether or not anything else is going on. The estate had that clock all day and nobody opened it. \u26a0 AND THE 8-MESSAGE INTAKE IS WORTH NAMING FOR WHOEVER RESTARTS THE SEAT: it will receive 8 notifications at once from a cold start, three of them full L8 compiles (LGIC_NAMING r4, LGIC_CANON r2, LGIC_ENFORCE r2) and two of them rulings that bind it (R-14, R-15). That is a real intake, not a nudge. Round 3 stays uncut behind the slugs (LD-0521)."
+  },
+  {
+   "id": "LGIC_ENFORCE-S49",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T18:10Z",
+   "one_line": "RESOLVED. MY ROW NAMED THE MECHANISM AND CALLED IT THE CAUSE; 1.0.0_SA_CTO's named a CAUSE THAT WAS FLATLY WRONG. 3.0.0_SA_CVO was PROMPT-STUCK on an AskUserQuestion about MEMORY.md size with its client ALIVE. FOUR instruments agreed it was not consuming and NOT ONE of them separates a dead client from a blocked dialog; only looking at the terminal did.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md@ab1d9832f7#LGIC_ENFORCE-S46 (cause stated: expired Monitor, DEAF) and @d484620eea#LGIC_ENFORCE-S47 (cause stated: client gone, HOLLOW, relaying 1.0.0_SA_CTO's four instruments). Both measurements stand. S46's stated cause is the MECHANISM and it is CORRECT -- it is now law at org/XXX.md Step 1b-C, and 3.0.0_SA_CVO's own account confirms it ('an idle seat that is not running when the notice fires re-arms nothing') -- but S46 presented a mechanism as the whole cause and named nothing upstream of it. S47's stated cause, HOLLOW / client gone, is FLATLY WRONG: the client was alive. The chain is prompt-stuck -> not running when the expiry notice fired -> no re-arm -> deaf.",
+     "THE TRUE STATE, from 0.0.0_AB_MSTR (msg 97377) which held the seating act and looked at the tab: a claude.exe carrying 3.0.0_SA_CVO was ALIVE on the Windows plane (pid 16696, Andrew-launched 01:15:46Z), blocked on an AskUserQuestion about compacting its memory index -- 'MEMORY.md is 19.9KB and the hook wants it under 17.1KB ... 1. Leave it; revisit at the limit (Recommended)' -- with nobody at the terminal to answer. /unstick -Peek at 12:53:46Z showed the dialog; '.tools/unstick.ps1 -Serial 3.0.0_SA_CVO -Keys 1{ENTER}' at 12:54:30Z answered the seat's own recommended default; second peek at 12:55:32Z showed the dialog gone, /watcher re-armed and the seat reading its eight-message backlog. NO kill, NO respawn, NO deregister.",
+     "THE FOUR INSTRUMENTS AND WHAT THEY ACTUALLY PROVED: 8 OFFER-EXHAUSTED offers; 0 commits authored since 07:00Z; no inbox-watch.sh process; 8 undrained files with a sharp boundary in read/. EVERY ONE says NOT CONSUMING. NOT ONE distinguishes a client that DIED from a client BLOCKED ON A DIALOG -- a prompt-stuck session exhausts offers, authors no commits and re-arms no watcher exactly as a dead one does. Two seats read four converging instruments as a diagnosis when they were four views of one symptom.",
+     "SO THIS IS RULE 22'S ORDERING LAW WITH A NAME ON IT: DISCRIMINATION passes inside a wrong frame, and every instrument then agrees about the same wrong thing. The agreement felt like corroboration BECAUSE the instruments were genuinely different -- filesystem, git, process table, broker -- which is exactly the condition under which the estate's own rule says agreement is most persuasive and least informative.",
+     "AND ONE INSTRUMENT WAS NAMING A DIFFERENT SUBJECT ENTIRELY: the roster's 'PID 26232' is the broker's own org/mcp/server.py, not the seat's process. 'PID alive' was never a reading about 3.0.0_SA_CVO. My memory already holds 'a liveness PID is a CLAIM'; it is sharper than that -- the PID can name another program.",
+     "WHAT I GOT RIGHT AND IT WAS THE CLOCK, NOT THE CAUSE: the ~07:48Z death from orphan-audit.log's re-arm cadence (LGIC_ENFORCE-S48). 0.0.0_AB_MSTR: 'YOUR DATE IS BETTER THAN MINE ... I am carrying 07:48Z', and it matches when the dialog would have appeared. A recurring self-maintenance act dates a hang; a last-activity timestamp dates the last thing that happened to arrive.",
+     "S48's POINT 3 CONFIRMED BY OUTCOME, not only by source: the re-armed watcher drained all 8 from disk on its first pass, as inbox-watch.sh's glob-every-cycle loop predicts, and the seat named its own six-hour backlog."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "Four independent instruments agreeing that a seat is not consuming identify WHY it is not consuming.",
+   "world_is": "They identify THAT it is not consuming. Dead, deaf and prompt-stuck are three causes with three different remedies -- respawn, watcher re-arm, answer the dialog -- and no instrument in that set tells them apart. A terminal peek does, and it is the cheapest of the five.",
+   "notes": "INERT, and it DISARMS LGIC_ENFORCE-S46 as EVIDENCE for L9: the seat is back, draining from 12:55:32Z, and the three L8 hand-offs are in its hands. \u26d4 THEY STAY 'SENT, NO ACK' ON MY RECORD until acks appear on 97337 / 97345 / 97353 -- which is the standing correction from S46 applied to its own resolution rather than relaxed at the happy ending. \u2b50 THE BINDING LESSON FOR THIS SEAT: WHEN EVERY INSTRUMENT AGREES, ASK WHAT THEY SHARE. All four read the CONSUMPTION SIDE; none read the SEAT. That is Rule 22's shared-dependency blindness with the members being instruments rather than files. The cheap unshared read was the terminal, and neither I nor 1.0.0_SA_CTO could take it -- it is 0.0.0_AB_MSTR's plane -- so the correct act was to route WITHOUT a stated cause, and I attached one twice. \u26a0 AND IT NEARLY BIT ME BACK THE SAME TICK: the identical advisory hook fires on MY memory index (20.8 KB, measured), and I was about to compact it with a whole-file Write when I read the file first and found a line a PEER had added minutes earlier -- 'THIS FILE IS SHARED BY EVERY SEAT ON THIS BOX ... Anchor-EDIT only; never a whole-file Write ... the 17.1KB hook is advisory; 24.4KB is the ceiling; never ASK the user about it.' The Write would have clobbered concurrent peer edits while fixing a problem that was advisory. Read-before-write caught it. The law broadcast now binds it: an unattended seat never blocks a turn on a hygiene prompt (org/XXX.md Step 1b-C @0fa7ba596f). Targets by full id: LGIC_ENFORCE-S46, LGIC_ENFORCE-S47."
+  },
+  {
+   "id": "LGIC_ENFORCE-S50",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T18:20Z",
+   "one_line": "A REGISTRY EDIT IS A PRODUCTION DEPLOY, and this project built that coupling without stating it: 8 of the generator's 10 targets sit on surfaces that SHIP, every generated file carries a registry-hash STAMP in its header, so a comment-only re-render moved a live S3 bundle's md5 and two member sha256s today -- measured by 0.0.0_AB_MSTR on the 13:0xZ push, not by any LGIC instrument.",
+   "class": "OBSERVATION",
+   "hazard_standing": "ARMED",
+   "disarm_owner": "2.0.0_SA_COO~G",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "THE EVENT, reported by 0.0.0_AB_MSTR at 13:03Z as a deploy note and explicitly 'neither an action': EN-r-6's re-render landed in the 13:0xZ push, and 'BUNDLE MINTED [mdpf] investor_reporting -> s3://opal-data-mdpf/code/scripts/assets_gold/investor_reporting/investor-reporting.tar.gz md5=7791109bada2dbb44c5ac742b65671ee' with directory-runner-sha256=ba4a6065... and holdings-snapshot-sha256=2afde9ae..., plus DEPLOYED [advi] perfrp_firm_pin.py. Prior artefact md5 a787eb49b61dc38530faab0097094e66, so a rollback is a re-push of that content.",
+     "DENOMINATOR, PARSED BY AST AND NOT BY REGEX: lib/opal_naming.py's VIEWS carries 7 tuples, plus the 3 targets named outside it (generated_locals.tf, tests/vectors.json, tests/opal_name.tftest.hcl) = 10 generator targets. \u26a0 A REGEX OVER THAT BLOCK READS 13, because it also matches the DEFINITION names in each tuple's third element (FIRM_CONFIG, firm_bucket_map, bucket_for, FIRM_TREES, _CROSS_FIRM_FOREIGN_BUCKETS); I ran the regex first, got 13, and re-ran by AST before publishing the number.",
+     "THE SPLIT: SHIPS 8 -- firm-config.mjs and _authz/loaders.py (lambda, Terraform-deployed); directory_runner.py, holdings_snapshot.py and perfrp_firm_pin.py (DS deploy path -> S3 bundle); and the 3 opal_name module files (terraform plane). REPO-ONLY 1 -- .tools/ds-precommit-check.py, a commit gate. UNCERTAIN 1 -- data/firm_registry.json, a data-tree path that is not a scripts path and which I am NOT classifying without a reader census.",
+     "THE MECHANISM IS THE STAMP, AND IT IS BY DESIGN: lib/opal_naming.py:60 MARK = 'GENERATED by lib/opal_naming.py from infra/logic/registry@' + a 16-hex registry hash, and every generated file carries that mark plus an 'over <file>[,<file>...]' clause (per-target since EN-r-6, row W1-S14). The hash is computed from the registry, so ANY registry edit re-stamps EVERY target that reads the changed file -- including the 8 that ship. The stamp is in the file bytes, so the artifact hash moves even when no logic does.",
+     "WHY IT MATTERS BEYOND TODAY, and it is the part no carrier states: DEC-5 was designed so one registry change moves every name at once, which is exactly right for CORRECTNESS. The unstated consequence is that the same property makes a registry edit a DEPLOY EVENT on 8 surfaces, and nothing in the PRD, the doctrine or the gate says so. 0.0.0_AB_MSTR had to work it out at push time and warn that freshness or drift instruments pinned on those hashes 'will fire on the next scheduled run and should be read as header re-rendered, not logic changed'.",
+     "NOT MEASURED AND NOT CLAIMED: which freshness or drift instruments are actually pinned on those hashes. 0.0.0_AB_MSTR names the class; I have not censused the consumers, and the count of instruments that would fire is UNKNOWN rather than zero."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "The identity registry is a declaration surface: editing it changes names, and the generated views are how those names reach readers.",
+   "world_is": "Editing it also re-stamps 8 shipping artifacts with a new registry hash, so a registry edit is a production deploy with a changed bundle md5 -- and today that happened on a change that altered no logic.",
+   "notes": "ARMED, disarm_owner 2.0.0_SA_COO~G, and it disarms IN A ROUND-3 CELL rather than by an edit now: the remedy touches the PRD's DEC-5 section or the generator, both outside any open order, and all three rounds are terminal or with 3.0.0_SA_CVO. \u26d4 I AM NOT PROPOSING THE STAMP BE REMOVED -- it is the provenance mark the whole DEC-5 design rests on, and removing it to stabilise a hash would trade a real control for a cosmetic one. THE TWO SHAPES: (a) the DEC-5 section STATES the coupling -- 'a registry edit re-stamps N shipping artifacts; treat it as a deploy' -- with the target list and its ship/repo-only split printed by the generator itself, so the number cannot go stale silently; or (b) the mark moves OUT of the graded bytes for shipping targets (a sidecar or a build-time injection), which stabilises the artifact hash and costs the in-file provenance a reader currently gets for free. \u2b50 I HOLD (a): the coupling is correct and should be DISCLOSED, not engineered away, and this estate's own rule is that a property with consequences prints its number rather than relying on whoever is at the push. \u26a0 AND THE ROUTE IS THE FINDING TOO: this reached LGIC_ENFORCE as a courtesy note from the integrator at push time. No LGIC instrument would have surfaced it, because every one of them reads the REPO and the consequence lands in S3."
+  },
+  {
+   "id": "LGIC_ENFORCE-S51",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T18:35Z",
+   "one_line": "AT LEAST 4 OF THE 19 LGIC FWDs CANNOT BE GRADED BY ANY INSTRUMENT THIS PROJECT OWNS, because their ACCEPT text names a SERVED or APPLIED proof -- real infrastructure, one build reaching every dependent place, what is ACTUALLY RUNNING, a firm's people seeing their dashboard -- and every LGIC instrument reads the repo. The goal's DONE says /verify SOUND against the served artifact, never a report.",
+   "class": "OBSERVATION",
+   "hazard_standing": "ARMED",
+   "disarm_owner": "2.0.0_SA_COO~G",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "DENOMINATOR: 19 endpoint outcomes across the three registered projects -- LGIC_NAMING 6, LGIC_ENFORCE 7, LGIC_CANON 6 -- extracted from each PRD's FWD block. THE GOAL'S BAR: 'DONE = the register reads status: complete for each AND /verify reads SOUND against the served/applied artifact, never a report.'",
+     "READ AT FULL TEXT, NOT TRUNCATED: 5 of the 19. FOUR of those five name a proof that is NOT in the repo. (i) LGIC_ENFORCE FWD-2 ACCEPT -- 'someone setting up a NEW PIECE OF INFRASTRUCTURE has its name produced for them rather than typing it'; DONE WHEN 'a REAL piece of infrastructure has been named this way'. The repo can show the module produces the name; only an APPLY shows a real resource carrying it.",
+     "(ii) LGIC_ENFORCE FWD-3 ACCEPT -- 'in ONE BUILD every place that routes, guards or maps that firm's data follows'. LGIC_ENFORCE-S50 measured exactly this population: 8 of the generator's 10 targets sit on surfaces that SHIP, and today a registry-hash re-stamp moved a live S3 bundle's md5. FWD-3's proof therefore includes DEPLOYED artifacts by its own words.",
+     "(iii) LGIC_ENFORCE FWD-5 ACCEPT -- 'someone runs the check over everything -- THE STORED CODE AND WHAT IS ACTUALLY RUNNING'. That names the live AWS plane explicitly, and it is the one FWD whose text already forbids a repo-only reading.",
+     "(iv) LGIC_CANON FWD-5 DONE WHEN -- 'a firm has actually been taken on this way AND ITS PEOPLE CAN SEE THEIR DASHBOARD'; ACCEPT repeats it. A served portal surface, not a record of one.",
+     "THE FIFTH READS REPO, and it is the control that stops this being a pattern I found because I went looking: LGIC_NAMING FWD-4 sounds like storage ('reads an address in a firm's own storage') but its ACCEPT is about a PERSON understanding a layout with nothing new to learn, graded from the exercise record. So the split is real and not an artefact of the phrase 'storage'.",
+     "WHAT IS NOT CLAIMED: the remaining 14 FWDs are UNCLASSIFIED, not assumed repo-provable. I read 5 at full text and classified those 5. 'At least 4' is a floor, and the honest figure for the rest is unread."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "The goal's DONE is verifiable: /verify reads SOUND against the served/applied artifact for every FWD.",
+   "world_is": "For at least 4 named FWDs no instrument this project owns can read the artifact their own ACCEPT text names. Every LGIC instrument built to date -- the naming gate, the checkers, the counters, the contention and rulings tools -- reads the REPO.",
+   "notes": "ARMED, disarm_owner 2.0.0_SA_COO~G. \u26d4 THIS DOES **NOT** ASK FOR A MONITOR AND MUST NOT BE READ AS ONE. R-16 already settled the neighbouring question -- 'not a gap to fill with a monitor (standing moratorium)' -- and that is right and binds here too. NOTHING NEW IS PROPOSED TO BE BUILT. \u2b50 THE ASK IS ONE LINE PER FWD AT THE CUT: the cell that exercises a served/applied FWD NAMES THE EXISTING ESTATE INSTRUMENT that reads its artifact, in the criterion's own invocation -- comp-find --corpus aws for FWD-5's 'what is actually running' (the estate's live-plane reader, drift_class per hit, denominator = nodes scanned); the deploy gate's own BUNDLE MINTED / DEPLOYED output for FWD-3 (the instrument that already proved S50, and R-16 has just bound its scope classifier as the authority for the ship split); a terraform apply record or the resource's own describe for FWD-2; the served page for LGIC_CANON FWD-5. Each of these EXISTS and is already the estate's chosen reader for that plane. \u26a0 THE FAILURE THIS PREVENTS IS SPECIFIC AND IT IS THE ONE THE GOAL TEXT WARNS ABOUT: a final round grades these four from a WORKER'S REPORT that the infrastructure was named, the build followed, the run covered everything, the dashboard rendered -- and 'never a report' is exactly what the goal forbids. A repo-only instrument reading a repo-only record would pass all four SOUNDLY and prove nothing about the world. \u26d4 AND IT IS A CUT-TIME BIND, NOT A RUN-TIME ONE: once a cell is issued naming no live-plane invocation, the worker cannot add one -- a path not in <paths> is a wall, and a plane not in the criterion is not graded at all. Round 3 stays uncut behind the slugs (LD-0521); this is an input to that cut, not a request to make it early."
+  },
+  {
+   "id": "LGIC_ENFORCE-S52",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T18:50Z",
+   "one_line": "THE FLOOR IN S51 IS CLOSED -- all 19 FWDs read at full text: REPO 12 | SERVED/APPLIED 4 | HUMAN-ACT 2 | BORDERLINE 1. The HUMAN-ACT pair is the new one and it is LEGAL, not a defect: LGIC_CANON FWD-2 and FWD-3 can be closed by NO instrument and NO cell, only by a named person acting -- and Rule 27's express-qualification escape is satisfied, because Andrew confirmed all three projects' DONE WHEN lines on 2026-09-13.",
+   "class": "OBSERVATION",
+   "hazard_standing": "ARMED",
+   "disarm_owner": "1.0.0_SA_CTO",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "DENOMINATOR CLOSED: 19 of 19 FWDs read at FULL DONE WHEN + ACCEPT text -- LGIC_NAMING 6, LGIC_ENFORCE 7, LGIC_CANON 6. LGIC_ENFORCE-S51 @c5acd59d64 published 'at least 4' off 5 read in full and named the other 14 UNCLASSIFIED; this closes that floor to an exact split rather than leaving a number that reads as measured.",
+     "SERVED / APPLIED, 4, unchanged from S51 and each on its own words: LGIC_ENFORCE FWD-2 ('a REAL piece of infrastructure has been named this way'), FWD-3 ('in ONE BUILD every place that routes, guards or maps that firm's data follows'), FWD-5 ('the stored code AND WHAT IS ACTUALLY RUNNING'), and LGIC_CANON FWD-5 ('its people can see their dashboard').",
+     "HUMAN-ACT, 2, AND THIS IS THE NEW CLASS: LGIC_CANON FWD-2 -- DONE WHEN 'he has actually gone through the list and decided', ACCEPT 'he works down the whole list in one sitting'. The actor is ANDREW. And LGIC_CANON FWD-3 -- DONE WHEN 'an owner has actually read theirs and resumed'; the actor is the owner of a DIFFERENT, PAUSED project. \u26d4 NO INSTRUMENT CAN CLOSE EITHER, AND NEITHER CAN A CELL: no issuance, no worker and no checker produces a person deciding. The most a cell can do is make the deciding cheap and record the decision when it happens.",
+     "IT IS LEGAL AND I CHECKED RATHER THAN ASSUMED, because Rule 27 says an outcome whose only proof is an event nobody controls must be re-cut or EXPRESSLY QUALIFIED with its reason and Andrew's word. Read at HEAD: LGIC_CANON_PRD.md:22 'Andrew confirmed the DONE WHEN lines 2026-09-13 ~18:4xZ'; :42 'DONE WHEN confirmed, with FWD-6 at APPLIED (~18:4xZ)'. The same confirmation exists for the other two projects -- LGIC_ENFORCE_PRD.md:22 and :34 (card 4), LGIC_NAMING_PRD.md:18. So the qualification Rule 27 requires is PRESENT, on the record, at a stated time. This row does NOT allege a Rule 27 defect.",
+     "BORDERLINE, 1, NAMED AND NOT FORCED: LGIC_NAMING FWD-3 -- 'someone writing the security rule that must catch every system belonging to one firm writes it once, as a single rule, AND IT CATCHES ALL OF THEM'. Whether 'catches all of them' is graded against the registry's system list (repo) or against real IAM evaluation (world) is not settled by the text, and I am not settling it by preference. It is 1 of 19 and it is flagged, not counted into either side.",
+     "REPO, 12, by subtraction from the printed denominator and not by a forward list: 19 minus the 4 served/applied, minus the 2 human-act, minus the 1 borderline. Among them the two that most look like exceptions and are not: LGIC_ENFORCE FWD-6 and FWD-7 both say 'ON A PRACTICE COPY' in their own ACCEPT text, which is a repo artifact by construction."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "Driving every cell to terminal and every FWD to REALIZED is work a COO and its workers can complete.",
+   "world_is": "For 2 of the 19 it is not. LGIC_CANON cannot reach a zero-graduation round on cell work alone, however well the cells are cut, because FWD-2 needs Andrew to work down a list in one sitting and FWD-3 needs a different project's owner to read theirs and resume.",
+   "notes": "ARMED, disarm_owner 1.0.0_SA_CTO -- it holds L2/L4 and the round analyses, and the two human-act FWDs are a SCHEDULING fact that belongs beside the round-2 analyses rather than a call for a ruling. \u26d4 NOTHING IS PROPOSED TO BE BUILT, and this is not a monitor: R-16's 'not a gap to fill with a monitor (standing moratorium)' binds here as it does in S51. \u2b50 WHAT THE SPLIT IS **FOR**, and it is one line per class at the cut: the 12 REPO FWDs are gradeable by the instruments this project already owns; the 4 SERVED/APPLIED ones need their cell's criterion to NAME AN EXISTING estate reader (S51 lists which, per FWD); the 2 HUMAN-ACT ones need a person queued, not a cell cut, and the honest grade while they wait is APPLIED with the named actor -- never REALIZED, and never a worker's report standing in for the act. \u26a0 THE CONSEQUENCE FOR THE GOAL'S OWN STOP CONDITION: 'until a zero-graduation round grades every FWD REALIZED' is reachable for LGIC_NAMING and LGIC_ENFORCE on cell work; for LGIC_CANON it is reachable only when two named people have acted. That is worth knowing BEFORE a round is cut to chase it, which is why it is filed now and not at the final round."
+  },
+  {
+   "id": "LGIC_ENFORCE-S53",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T18:58Z",
+   "one_line": "R-17 classified the same 19 FWDs independently and beat my split on BOTH points where we differ. My BORDERLINE was a hedge that Rule 24 already decides (LIVE, 4 -> 5), and my HUMAN-ACT pair was one item too many: I conflated 'the actor is a person' with 'no fabric act reaches it'. S52 crossed R-17 in flight, so the overstatement is corrected here in the same tick.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md@cf0109222c#LGIC_ENFORCE-S52 -- my split: REPO 12 | SERVED/APPLIED 4 | HUMAN-ACT 2 | BORDERLINE 1. R-17 @2842ee9508, classified by the L2 owner at the PRDs' own vintages (NAMING @645725150b, ENFORCE @09bde3126c, CANON @5b2336a5e4), same denominator 19: REPO 12 | LIVE 5 | CONDITIONAL 1 | ANDREW 1. Two seats, two independent passes, the same 12 REPO members.",
+     "DELTA 1 -- NAMING FWD-3, my BORDERLINE, R-17's LIVE, and the ruling's reason is better than my hedge: 'catches all of them is a live-inventory set and A REPO READ CANNOT SEE A SYSTEM THE REPO NEVER DECLARED.' \u26d4 THAT IS RULE 24's DOMAIN LAW AND I HAD IT IN HAND: choosing the domain is itself a claim, and a subtraction over a domain that does not hold the member is BLINDER than recall because it arrives with a printed denominator. I declined to settle it 'by preference' when the estate's own rule settles it by argument. Declining to choose is not neutrality when a rule already decides. My floor of 4 rises to 5.",
+     "DELTA 2 -- LGIC_CANON FWD-3, my HUMAN-ACT, R-17's REPO. I classified on WHO ACTS ('an owner has actually read theirs and resumed') and grouped it with CANON FWD-2 (Andrew). R-17 splits on ACTOR REACHABILITY instead: CANON FWD-2 is ANDREW ('his act is the instrument, the record is repo') and cannot be tasked; the owner of a paused project is a SEAT INSIDE THIS FABRIC and can be routed to. Checked rather than conceded: the PRD's own line records the IRPT pause lifting 'at card 1, by name', so the owners are fabric actors.",
+     "SO MY S52 MESSAGE OVERSTATED THE BLOCKAGE BY ONE. It told 1.0.0_SA_CTO that LGIC_CANON 'is reachable only once TWO named people have acted'. Under R-17 exactly ONE of the two is outside fabric reach -- CANON FWD-2, Andrew. FWD-3 is reachable by routing, which is ordinary COO work. S52 was sent at 13:18:43Z and R-17 at 13:18:20Z, so they crossed; the CTO will read the superseded claim.",
+     "WHAT R-17 ALSO SETTLES THAT I HAD LEFT OPEN, per LIVE row: NAMING FWD-3 the fence pattern over the live inventory (comp-find --corpus aws, nodes-scanned denominator, drift_class printed, NEVER simulate-policy); ENFORCE FWD-2 the resource's describe or apply record under the builder's name AND the live bucket policy's deny statement via get-bucket-policy, with 'EN-x-1 proved it on read-only plans; the APPLIED bar is not yet met'; ENFORCE FWD-3 the deploy gate's own plane plus the dependents' terraform plan on one registry change; ENFORCE FWD-5 comp-find --corpus aws beside the repo half with the DB's built: line as the vintage; CANON FWD-5 the SERVED portal page on DEV, driven with a demonstration firm and the first real firm as confirmation (Rule 27: no FWD is a wait).",
+     "AND IT BINDS MY CUT, which is what S51 asked for and did not presume: 'a cell exercising a LIVE row names the instrument above in its criterion invocation; a LIVE row cut against a repo record is RETURNED TO THIS SEAT, NOT WORKED.' That is now a refusal at the cut rather than a discipline I hold."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "My classification of the 19 FWDs is the one the round-3 cut reads.",
+   "world_is": "R-17's is, and on the two points of difference it is better reasoned than mine. The 12 REPO members agree across both passes, which is the part that corroborates; the two deltas are both mine to concede.",
+   "notes": "INERT: corrects my own row, adds no hazard, disarms nothing -- LGIC_ENFORCE-S51 and S52 stay as filed and the channel is append-only. \u2b50 THE LESSON AND IT IS A DIFFERENT SHAPE FROM TODAY'S OTHERS: the earlier three (S43, S44, S47) were REACHING FOR THE PLAUSIBLE ANSWER BEFORE READING THE SOURCE. This one is the opposite failure -- I HAD the source, named the ambiguity honestly, and then DECLINED TO RESOLVE IT, filing 'BORDERLINE, not settling it by preference' as though that were rigour. It was not: Rule 24 already decides the case, and an unresolved flag in a row someone else has to act on costs a round trip exactly like a wrong answer does. \u26d4 NEUTRALITY IS NOT FREE WHEN A RULE ALREADY DECIDES. \u26a0 AND THE SECOND DELTA IS A TAXONOMY ERROR OF THE KIND RULE 24 (iii) NAMES: I cut my classes on WHO ACTS when the axis that matters for a COO is WHETHER A FABRIC ACT REACHES THE ACTOR. One axis, one intent -- mine mixed two. Targets by full id: LGIC_ENFORCE-S52."
+  },
+  {
+   "id": "LGIC_ENFORCE-S54",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T19:05Z",
+   "one_line": "BOTH NAMED-PERSON FWDs ARE ALREADY REALIZED, graded in LGIC_CANON round 1 -- Andrew has worked down the list and each paused owner has resumed. I classified 19 FWDs from the PRD, which says what MUST happen, and never opened the ROUND ANALYSIS, which says what already HAS. The class is right; my scheduling warning was false; and the real Andrew gate is FWD-5's G-N, which neither seat named.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "READ AT HEAD, 1.0.0_SA_CTO's OWN round-1 analysis, org/missions/D14/LGIC/LGIC_CANON/deliverables/1.0.0_SA_CTO/LGIC_CANON_ROUND1_ANALYSIS.md:26 -- 'FWD-2 Andrew settles firm-vs-product in one sitting | CN-r-1 | PASS | R1-J1 PASS, qualified | REALIZED (from the record, DEC-3) | qualification carried, nothing owed'. And :27 -- 'FWD-3 a paused owner can point at what ended the pause | CN-r-2 | PASS | R2-J1 PASS | REALIZED (from the record, DEC-4) | none here'.",
+     "CORROBORATED BY THE SAME FILE'S OWN SUMMARY, :32 -- 'Round summary: REALIZED 4 of 6 (FWD-2, FWD-3, FWD-4, FWD-6); SHORT 1 (FWD-1); NOT EVALUATED 1 (FWD-5, held by Andrew's word, its instrument not yet runnable)' -- and :34, 'nothing in round 2 re-opens the four REALIZED outcomes'. Two readings in one document, the table row and the roll-up, agreeing.",
+     "SO THE ACTS HAPPENED. Andrew has already worked down the firm-vs-product list in one sitting (19 of 19 rows, no blank, per the analysis's own qualification note); each paused owner has already read its resume condition and resumed. LGIC_ENFORCE-S52 and S53 both carried 'LGIC_CANON cannot reach zero-graduation until TWO named people act', and 1.0.0_SA_CTO adopted that consequence in the R-17 addendum @517aa5fd09, saying the round-2 analysis 'will say so'. THE PREMISE WAS MINE AND IT IS FALSE.",
+     "THE CAUSE IS A WRONG SOURCE, NOT A WRONG READING: I classified all 19 from the PRD's DONE WHEN and ACCEPT text, which states what must HAPPEN, and never opened the round analysis, which states what already HAS. Both documents were at HEAD the whole time. A specification and a grade are different objects and I treated the first as if it carried the second.",
+     "AND THE REAL ANDREW DEPENDENCY IS ONE NEITHER SEAT NAMED, same file :29 -- 'FWD-5 | NOT EVALUATED (C6 NOT CUT, gate G-N, Andrew's ~13:4xZ 2026-09-14 word); instrument SHORT'. So LGIC_CANON's open set is FWD-1 (SHORT, cell work) and FWD-5 (NOT EVALUATED: instrument SHORT plus Andrew's G-N word), which is a different and more tractable picture than the one I supplied.",
+     "THE CLASS ITSELF SURVIVES AND SHOULD: R-17's addendum took my axis -- NAMED-PERSON, with the rule that while the person has not acted the honest grade is APPLIED with the named actor, never REALIZED and never a worker's report standing in. That is right for the NEXT FWD of that shape. It simply has no OPEN member in LGIC_CANON today, which is a fact about the population and not about the taxonomy."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "The PRD's FWD text is sufficient to say what a project still owes.",
+   "world_is": "It says what the project must eventually show. What it still owes is in the round analysis, and for 2 of LGIC_CANON's 6 the answer there is REALIZED -- already, in round 1.",
+   "notes": "INERT: corrects my own rows, adds no hazard, disarms nothing. Sent to 1.0.0_SA_CTO AHEAD of this row because the R-17 addendum says the round-2 analysis 'will say so', and a false premise is cheapest to stop before it is written into an analysis. \u2b50 THIS IS TODAY'S LESSON IN A FOURTH COSTUME AND THE COSTUME IS THE POINT: S43 checked a ruling against my own restatement; S44 nearly routed a call a ratified schema key had answered; S47 named a cause from an hour-old memory instead of asking the broker; S54 classified an outcome from its SPECIFICATION without reading its GRADE. \u26d4 EACH TIME THE AUTHORITATIVE READ WAS ONE FILE AWAY AND THE PLAUSIBLE STORY ARRIVED FIRST. The four differ in which document I skipped, not in the mistake. \u26a0 THE STANDING CORRECTION I ADOPT: before writing what a project OWES, read its ROUND ANALYSIS, not its PRD -- the PRD is the bar, the analysis is the score, and only the second is perishable enough to be worth re-reading every time. Targets by full id: LGIC_ENFORCE-S52, LGIC_ENFORCE-S53."
+  },
+  {
+   "id": "LGIC_ENFORCE-S55",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T19:35Z",
+   "one_line": "BLOCKING, AND IT REACHES A ROUND IN FLIGHT: check_en_r2.py's RULING RED limb is LIVE-blind, not latently blind. pytest COLOURISES under capture on this device (340 ESC bytes measured), the checker passes NO --color flag, and its ANSI strip has no ESC in the pattern -- so failures() parses ZERO named failures against a suite with 2, and the exact false pass its own comment claims the strip CLOSES is open in all three RED arms of round 2.",
+   "class": "BLOCKING",
+   "hazard_standing": "ARMED",
+   "disarm_owner": "2.0.0_SA_COO~G",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "MEASURED 2026-09-16T19:3xZ with check_en_r2.py's EXACT invocation -- [sys.executable, '-m', 'pytest', '-q', OPAL_TESTS], captured, NO --color flag, which is what :569, :918 and :1531 pass: output carries 340 ESC bytes and tails '\\x1b[31m\\x1b[31m\\x1b[1m2 failed\\x1b[0m, \\x1b[32m80 passed\\x1b[0m...'. pytest COLOURISES EVEN WHEN CAPTURED on this device, so the non-tty auto-detection everyone assumes is NOT protecting this call.",
+     "AND THE STRIP DOES NOT STRIP: check_en_r2.py:346 is 're.sub(r\"\\[[0-9;]*[A-Za-z]\", \"\", out)' with NO \\x1b in the pattern. It removes the '[31m' and LEAVES THE ESC; the next line's match is ANCHORED ('^FAILED (\\S+)'), and a line beginning with a bare ESC still does not match. Named failures parsed through the shipped strip+regex on that real output: 0, against a suite reading 2 failed / 80 passed.",
+     "THE SIBLING CONFIRMS IT IS THE SAME DEFECT TWICE, NOT A ONE-OFF: check_ln_r4.py:399 carries the identical pattern (row LGIC_NAMING-S24, filed this tick). That one SURVIVES only because it also passes --color=no at the source -- measured: 0 ESC, 2 named failures. check_en_r2.py has NO such flag, so it has the belt alone and the belt is inert.",
+     "EXACT IMPACT, from failures():348-350 -- 'if rc != 0 and not names: names.add(\"<exit %d with no named failure>\" % rc)'. So the arm does NOT read wholly vacuous: a GREEN base going RED is still caught (empty set -> one synthetic entry = a new failure). WHAT IS NOT CAUGHT is precisely what the code comment above it says the strip closes: 'a cell that ADDS one failure while an existing one persists reads PASS: both sets carry the same synthetic entry and the difference is empty.' red() returns new = here - at_base, and with both sides degraded to the same synthetic token the difference is empty and the verdict is PASS.",
+     "SCOPE, printed rather than implied: red() is called at exactly three sites, one per cell -- :569 in r3_tests(), :918 in r4_tests(), :1531 in r5_tests(), i.e. the RULING RED arms of EN-r-3, EN-r-4 and EN-r-5. All three are LGIC_ENFORCE ROUND-2 CELLS, and round 2 is terminal and WITH 3.0.0_SA_CVO awaiting L8/L9 (hand-off 97353, still EMITTED, no ack).",
+     "THE BASE IS NOT HYPOTHETICALLY RED: lib/tests/test_opal_naming.py reads 2 failed / 80 passed at HEAD right now (that red suite is row LGIC_NAMING-S22, already filed). A red base is the exact condition under which this arm stops discriminating."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "RULING RED's arm in check_en_r2.py catches a cell that introduces a test failure, by name, against its spawn base.",
+   "world_is": "It catches a green-to-red transition and nothing finer. Against a red base it compares one synthetic exit-code token with itself and reads PASS, which is the failure mode its own comment names and claims to have closed.",
+   "notes": "ARMED, disarm_owner 2.0.0_SA_COO~G -- mine: check_en_r2.py is this seat's fixed input. \u26d4 I AM NOT EDITING IT WHILE THE ROUND IS WITH 3.0.0_SA_CVO. Round 2 is terminal and under adjudication, and that checker is the artifact its criteria were graded against; changing a graded input mid-adjudication is the one move that makes a verdict unreproducible. The repair goes in the round-3 checker, one character class: re.sub(r'\\x1b\\[[0-9;]*[A-Za-z]', ...) plus --color=no at every pytest call site, belt AND brace, each exercised ALONE. \u26a0 SENT TO 3.0.0_SA_CVO AND 1.0.0_SA_CTO IMMEDIATELY rather than left in the channel, because the CVO is about to grade the three cells this touches and an adjudicator reading a PASS it cannot know is degraded is the whole harm. WHAT I DO **NOT** CLAIM: that any round-2 verdict is WRONG. The arm is one criterion among each cell's set, a green-to-red transition would still have been caught, and the workers cross-checked by direct pytest in at least one case. The claim is that THIS ARM's PASS carries less information than it appears to, and the CVO should grade it knowing that. \u2b50 THE CLASS IS THE ONE I HAVE BEEN FINDING ALL DAY AND THIS IS THE THIRD IN MY OWN WORK: A CONTROL THAT CANNOT FIRE. It passes every cheap check -- the line exists, the comment is accurate about the defect, the commit message is true, the row citing it is specific -- and only running the arm ALONE, against the condition it names, finds it. Targets by full id: LGIC_NAMING-S24 (the sibling), LGIC_NAMING-W2-S8 (the original)."
+  },
+  {
+   "id": "LGIC_ENFORCE-S56",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T20:45Z",
+   "one_line": "BLOCKING AT THE CUT: round 3's cell 1 -- the row gate, which the analysis puts FIRST -- is writable by NEITHER a worker NOR this seat. .tools/surprise-row-gate.py is lane LOOP_MECHANISM, whose permitted_agents are 1.0.0_SA_CTO and 3.0.0_SA_CVO only. Four of the nine cells have a write-surface lane fact the cell table does not carry.",
+   "class": "BLOCKING",
+   "hazard_standing": "ARMED",
+   "disarm_owner": "1.0.0_SA_CTO",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "MEASURED before cutting, through .tools/owned-paths-validate.py's own check_agent() and resolve_lane() on `git show HEAD:.owned-paths.yaml` -- the RECORD's bytes, not the worktree -- for every write surface the round-3 cell table names. Columns are WORKER (0.9.0_WK_LGIC_ENFORCE~1) and this seat (2.0.0_SA_COO~G).",
+     "CELL 1 IS THE BLOCKER: .tools/surprise-row-gate.py -> lane LOOP_MECHANISM, WORKER False, 2.0.0_SA_COO~G False. The lane's permitted_agents read exactly ['1.0.0_SA_CTO', '3.0.0_SA_CVO'], and its description names it 'The canonical loop's MECHANISM files -- the surprise-row gate, the surprise watcher, the surprise-channel schemas, and the TO-pipeline gate.' So the four limbs (R-18(2), R-19(2), the R-19 addendum's owner move, A-1) have NO EXECUTABLE CUT by this project: not as a worker cell, and not as the issuer's act the way CN-i-1 resolved.",
+     "CELL 2b IS THE ISSUER'S ACT, not a worker cell: org/mcp/naming-gate.enforce -> lane BASE_EXEC, WORKER False, this seat True (permitted_agents include 2.0.0_SA_COO). The flip is mine to write, which also matches who should own arming an estate-wide gate.",
+     "CELL 3 SPLITS BY LANE, exactly as 1.0.0_SA_CTO anticipated ('CN-i-1's shape wherever a cell would touch 2.0.0_SA_COO~G's own fixed inputs'): .tools/proof-of-spec-check.py -> lane ANY, WORKER True (S21's fix is worker-cuttable); but check_en_r2.py and check_ln_r4.py -> lane TREE_DELIVERABLES, WORKER False, this seat True, so S55's repair is the ISSUER's act in both files.",
+     "CELL 2 IS CLEAN: .tools/naming-gate.py -> lane ANY, WORKER True. The domain cell is cuttable as written.",
+     "NOT CLAIMED, AND I AM FLAGGING IT RATHER THAN RESTING ON IT: infra/logic/registry/scopes.json (cell 5) read lane PLATFORM_LOGIC_DOCS with WORKER True and THIS SEAT False -- an inversion. The lane's permitted_agents are CRO serials only, so a worker reading True should come from the worker_grant limb (a non-terminal task order naming the path), and NO round-3 order exists yet. That True is therefore UNEXPLAINED by the rule as I understand it, and I am not cutting cell 5 on it until it is understood. The cell-1 finding does not depend on it."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "The round-3 cell table's nine cells are each cuttable by 2.0.0_SA_COO~G as a worker cell or as the issuer's act.",
+   "world_is": "Cell 1's write surface admits only 1.0.0_SA_CTO and 3.0.0_SA_CVO. Cell 2b is the issuer's, cell 3 splits across two lanes, and cell 5's reading is not yet understood.",
+   "notes": "ARMED, disarm_owner 1.0.0_SA_CTO -- ADJUDICABLE, and it is narrow. THE THREE SHAPES for cell 1, none proposed as binding: (a) the CTO or the CVO WRITES the four limbs itself, as the lane already says, and this project carries them as a cross-project route rather than a cell -- cheapest, and it matches CN-i-1's precedent that an act belongs to whoever the lane admits; (b) LOOP_MECHANISM widens to admit a COO lane for this file, which is a grant change and not mine to propose lightly, on a file whose whole point is that the graded party does not write the gate that grades it; (c) the limbs are cut as a cell with an audited override, which I will not do -- the lane refusing the issuer of the round is the control working, not an obstacle. * I HOLD (a). ! AND THE PRECEDENT IS ALREADY SET TWICE TODAY: CN-i-1 could not be a worker cell because TREE_DELIVERABLES resolves the owner from the serial subfolder; this is the same law one lane over, and it says the row gate belongs to the seats that own the loop's mechanism. NOTHING IS CUT until this is ruled; the other eight cells' L5 proceeds."
+  },
+  {
+    "id": "LGIC_ENFORCE-S57",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G",
+    "surfaced_at": "2026-09-16T16:07Z",
+    "one_line": "BLOCKING AT THE CUT, the same law as S56 two lanes over: round 3's cell 5 and half of cell 7 write infra/logic/registry/**, which resolves to lane PLATFORM_LOGIC_DOCS whose permitted_agents are the FIVE 4.0.0_SA_CRO serials and nobody else -- so those writes are refused to a worker, to this seat AND to 1.0.0_SA_CTO. Cell 4's FIRM_FORMS_READERS.md is lane ANY_CTO (CTO or CRO, not this seat, not a worker). Cell 9's lib/opal_naming.py is BASE_EXEC: this seat PERMIT, worker REFUSED, so it is the issuer's act.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED at the cut, not recalled, through .tools/owned-paths-validate.py's OWN resolve_lane() and permitted_agents, plus its --check-agent CLI with the path piped on stdin (an EMPTY stdin admits every serial, so each path was piped explicitly). Worktree .owned-paths.yaml verified CLEAN against HEAD by git status --porcelain before the read, so the bytes read ARE the record's.",
+        "infra/logic/registry/scopes.json, refused_keys.json, exemptions.json and the registry/ prefix ALL resolve lane=PLATFORM_LOGIC_DOCS, permitted_agents=['4.0.0_SA_CRO','4.0.0_SA_CRO~A','4.0.0_SA_CRO~B','4.0.0_SA_CRO~C','4.0.0_SA_CRO~D']. check-agent: 0.9.0_WK_LGIC_ENFORCE~1 REFUSED, 2.0.0_SA_COO~G REFUSED, 1.0.0_SA_CTO REFUSED. 4.0.0_SA_CRO PERMIT is the POSITIVE CONTROL -- the lane resolves and admits somebody, so this is a real grant boundary and not a blanket refusal or a broken read.",
+        "docs/architecture/FIRM_FORMS_READERS.md -> lane ANY_CTO, permitted 1.0.0_SA_CTO / ~B / 1.1.0_SA_CTO / 4.0.0_SA_CRO / 4.0.0_SA_CRO~SWEEP. Worker REFUSED, this seat REFUSED, CTO PERMIT.",
+        "lib/opal_naming.py -> lane BASE_EXEC, permitted 1.0.0_SA_CTO / 2.0.0_SA_COO / 3.0.0_SA_CVO / 4.0.0_SA_CRO. This seat PERMIT via the tilde-strip clause (base 2.0.0_SA_COO), worker REFUSED.",
+        "CLEAN cells, stated so the refusals are not read wider than measured: .tools/naming-gate.py (cell 2) and .tools/proof-of-spec-check.py (cell 3's S21 fix) are lane ANY, WORKER PERMIT -- genuinely worker-cuttable. org/critical_paths/change_management/ and .open_deploys/ (cell 7's ledger half) are WORKER PERMIT. The worker's own deliverables folder and the surprise channel are WORKER PERMIT.",
+        "PRIOR ACT THIS TURN, and it is what made this read trustworthy: six LGIC_ENFORCE orders sat non-terminal at HEAD with VALID proof-of-spec instances, the stale-face class 0.0.0_AB_MSTR named in 97450. This seat flipped all six to complete @9f9d006c8b. AFTER the flip, 0.9.0_WK_LGIC_ENFORCE~1 reads REFUSED on scopes.json where 97450 measured it True -- the ADHC_OWNPTH.005 grant is retired, so the readings above are the LANE's answer and not a leftover task-order grant masking it."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Round 3's eight cells (2 with 2b, 3-9) are each cuttable by 2.0.0_SA_COO~G as a worker cell or as the issuer's own act, cell 5 having been unblocked by retiring the stale grant.",
+    "world_is": "Retiring the stale grant REMOVED the only thing that made scopes.json writable by anyone in this project. Cell 5's registry edits and cell 7's exemptions.json belong to 4.0.0_SA_CRO by lane; cell 4's readers doc belongs to 1.0.0_SA_CTO or the CRO; cell 9 is this seat's, not a worker's.",
+    "notes": "ARMED, disarm_owner 1.0.0_SA_CTO -- ADJUDICABLE and narrow, and it is R-22's question one lane over. NOT A HALT: L5 proceeds on the cuttable surface this turn and the issuance is not held on this. THE SPLIT I HOLD, none proposed as binding: cells 5 and 7 each divide cleanly into a MEASURE-AND-RECORD half that is cuttable here (the censuses, the denominators, the class prints, the note reader, the live-plane writer census, the ledger entry) and a REGISTRY-WRITE half that is 4.0.0_SA_CRO's act by the same reasoning R-22 used for cell 1 -- the act belongs to whoever the lane admits. I am cutting the first half and routing the second as a cross-project route to 4.0.0_SA_CRO, exactly as CN-i-1 and cell 1 were handled. I am NOT proposing a lane widening: PLATFORM_LOGIC_DOCS exists so the registry that Rule 30 makes authoritative for every address and name is not edited by the projects it grades, and LGIC_ENFORCE is precisely such a project. ! THE ONE THING THAT WOULD CHANGE MY READ is if Rule 30's 'a builder REFUSAL is a missing registry row to add' is meant to grant the refused seat the row-add; on the bytes, it names the remedy and not the hand, and no lane entry carries it."
+  },
+  {
+    "id": "LGIC_ENFORCE-S58",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G",
+    "surfaced_at": "2026-09-16T18:10Z",
+    "one_line": "A REGISTRY PATH THAT DOES NOT EXIST IS CARRIED IN TWO RECORDS, AND ONE OF THEM IS A RULING THAT NAMES A GRANT. infra/logic/registry/refused_keys.json is not a file: refused keys live inside infra/logic/registry/systems.json as its refused_keys dict. This seat typed the name into S57 without checking existence, and RULING R-23 repeated it in the sentence that defines cell 5 and 7's <paths> grant. A <paths> grant is EXACT, so an order cut from either text would grant the worker a nonexistent file and REFUSE it systems.json -- a wall on the one file cell 5 must edit.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED BY LISTING, not by lane: os.listdir(infra/logic/registry) returns exactly six files -- exemptions.json, remediations.json, resources.json, scopes.json, systems.json, tiers.json. refused_keys.json is not among them. systems.json top-level keys: _about, systems, refused_keys, unresolved; refused_keys is a dict carrying basis, workstream_code (10), generic_noun, purpose_word, and NO retired class.",
+        "WHY THE LANE CENSUS DID NOT CATCH IT: owned-paths-validate.py resolve_lane() and --check-agent resolve a path by PREFIX and never test that the file exists. S57 printed lane=PLATFORM_LOGIC_DOCS for refused_keys.json exactly as for a real file, so the census looked complete. A lane read certifies the GRANT a path would get, never that the path is real.",
+        "CARRIERS, counted by exact substring over the three documents that define round 3: LGIC_ENFORCE_DECOMP.md 0, ROUND_ANALYSIS_LGIC_ENFORCE_ROUND2_20260916.md 0, SELF_DRIVE_LGIC_RULINGS_20260916.md 1 (R-23), and this channel 1 (S57). The origin is S57; the ruling inherited it.",
+        "FOUND WHILE BUILDING cell 5's arms, when reading refused_keys.json raised FileNotFoundError. The arms read systems.json and carry the correction in their own header. An earlier draft of that header claimed the decomposition also named the file; the count above found 0 and the header was corrected before commit."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "S57 and RULING R-23: cell 5 and 7 edit infra/logic/registry/scopes.json, refused_keys.json and exemptions.json, and the order naming them in <paths> IS the grant.",
+    "world_is": "refused_keys.json does not exist. The refused keys are a dict inside systems.json, which neither carrier names, so a grant cut from their text omits the file the cell must write.",
+    "notes": "INERT because the only reader who cuts from this text is this seat, and the cut will name infra/logic/registry/systems.json and verify each <paths> entry PERMIT for its issued_to worker after the issuance commit, as R-23 s.3 requires. No clock and no call: the ruling's INTENT (these registry rows are worker cells) is unchanged; only a filename in it is wrong. R-23 s.3 already names the control that would have caught it at the cut -- pipe each path to --check-agent -- and this row adds the half that control does not cover: check that each path EXISTS, because the lane answers the same for a real file and an invented one."
+  },
+  {
+    "id": "LGIC_ENFORCE-S59",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G",
+    "surfaced_at": "2026-09-16T19:05Z",
+    "one_line": "CELL 8 AS THE ROUND-2 ANALYSIS WORDS IT CAN NEVER PASS. A-12 asks for a re-plan of one root with plan_sha256 equal to the extract's, but plan_sha256 is the SHA-256 of the FULL terraform show -json document, and every such document carries its own creation timestamp -- so no re-plan can reproduce the hash, and a PERFECT reproduction would FAIL. Round 2's own census states the achievable bar (a re-plan reproduces the EXTRACT); round 3 cuts that, compared canonically, with the re-plan required to be new.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE HASH IS OF THE FULL DOCUMENT, by the census's own text: LIMB_ROOTS_CENSUS.md s.6 -- each row carries plan_sha256, the SHA-256 of the FULL terraform show -json document the extract was reduced from (the full documents are not committed). Measured: all 68 planned rows' plan_sha256 match NONE of the extract's worktree bytes, its LF-normalised bytes or its HEAD blob -- consistent with that text, so the 68 mismatches are BY DESIGN and are not a defect of round 2.",
+        "EVERY FULL PLAN DOCUMENT CARRIES A TIMESTAMP, measured on the four full plans committed in this project: fence_plan.json 2026-09-15T03:47:57Z, fwd2_plan.json 10:05:33Z, fwd2_plan_before.r2.json 2026-09-16T11:19:12Z, fwd2_plan_after.r2.json 11:23:25Z -- the top-level key set is format_version, terraform_version, planned_values, resource_changes, output_changes, prior_state, configuration, relevant_attributes, checks, timestamp, applyable, complete, errored. Two plans of one root at two instants therefore differ in bytes and in SHA-256 by construction.",
+        "THE ACHIEVABLE BAR IS ROUND 2'S OWN: the same census section says a spot re-plan of any planned root reproduces its EXTRACT. The extract carries format_version, terraform_version and resource_changes only -- no timestamp. check_en_r3.py t8-replan-reproduces-extract compares resource_changes canonically (sorted keys), requires -lockfile=readonly in the recorded command, and requires the re-plan's own timestamp to be after the census vintage 2026-09-16T10:15:18Z, so a copied old document cannot stand in for a run. Self-test holds the copy, the drift and the missing flag RED."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "ROUND_ANALYSIS_LGIC_ENFORCE_ROUND2 cell 8 (A-12): T3R-J1's cheap evaluation -- re-plan ONE root in a throwaway clone with -lockfile=readonly, plan_sha256 equal to the extract's.",
+    "world_is": "plan_sha256 hashes a timestamped full document that is not committed, so equality with any re-plan is impossible; the extract, which is committed and carries no timestamp, is what a re-plan can reproduce.",
+    "notes": "INERT: the only reader who cuts from the table is this seat, and the cut uses the extract form. No clock and no call -- the analysis names cells indicatively and leaves the criterion to the cut, and round 2's census already states the bar this seat adopts. A worker cut from the table's literal words would have chased a hash no run can produce, and a failure there would have read as the root being unreproducible."
+  },
+  {
+    "id": "LGIC_ENFORCE-S60",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G",
+    "surfaced_at": "2026-09-16T19:45Z",
+    "one_line": "RULING R-16 DERIVES THE SHIP / REPO-ONLY SPLIT BY CALLING ONE CLASSIFIER THAT CANNOT SEE MOST OF THE SHIPPING TARGETS. .tools/safe_deploy_core.py classifies the S3/DS plane only: called on the generator's 10 targets, file_to_s3_target, bundle_for_member, resolve_tree_layer and second_targets_for return a determination for 3 and None for 7 -- and at least 5 of those 7 ship through a DIFFERENT gate (a Lambda@Edge shared module, an investor-reporting Lambda, the opal_name Terraform module). A split implemented exactly as ruled would print shipping targets as REPO-ONLY: the understatement R-16 exists to prevent.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE DENOMINATOR, by AST and not by regex: lib/opal_naming.py generate() lists known = [v[0] for v in VIEWS] + [LOCALS_PATH, VECTORS_PATH, TFTEST_PATH] -- 7 VIEWS + 3 named extras = 10, equal to R-16's count.",
+        "THE CALL, per target, importing .tools/safe_deploy_core.py and calling its own functions: data/assets/scripts/gold/investor_reporting/directory_runner.py and holdings_snapshot.py -> file_to_s3_target opal-data-mdpf code/scripts/assets_gold/investor_reporting/..., bundle_for_member (mdpf, investor_reporting); data/assets/scripts/gold/runners_49f/perfrp_firm_pin.py -> opal-data-49financial _code/perfrp_firm_pin.py (advi). ALL FOUR functions return None for data/firm_registry.json, infra/aws/lambda-edge/_shared/firm-config.mjs, infra/aws/lambda/investor-reporting/_authz/loaders.py, .tools/ds-precommit-check.py, and the three infra/aws/terraform/modules/opal_name/ files.",
+        "WHY None IS NOT REPO-ONLY for five of them: the Lambda plane has its own declared record, infra/aws/lambda/ci/lambda-source-map.json (source_dir -> tf_file; e.g. the edge functions under infra/aws/lambda-edge/ -> infra/aws/terraform/portal-auth/lambda-edge.tf), and _shared/firm-config.mjs is imported by those functions rather than being a source_dir itself; the investor-reporting Lambda ships through Terraform; and comp-find finds the opal_name module consumed by exactly ONE root, infra/aws/terraform/shared-infra (s3-49financial.tf), so generated_locals.tf ships whenever shared-infra applies.",
+        "A SECOND, SMALLER POINT for the same ruling: of the module's three generated files only generated_locals.tf enters an applied plan; tests/vectors.json and tests/opal_name.tftest.hcl are test fixtures. R-16 counted all three as SHIP (8 of 10), so the count depends on whether a test fixture beside a shipping module is itself a deploy."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "R-16: the SHIP / REPO-ONLY split is derived by CALLING the deploy gate's own scope classifier, .tools/safe_deploy_core.py, over the generator's target list; its provenance reads measured: safe_deploy_core.",
+    "world_is": "safe_deploy_core decides the S3/DS plane only (3 of 10 targets). The Lambda and Terraform planes ship through safe-apply and their own declared records, so one classifier call leaves at least 5 shipping targets reading as REPO-ONLY.",
+    "notes": "INERT: nothing is built on it yet -- cell 9 is not cut. Routed to 1.0.0_SA_CTO as a call (97550-series) because it is R-16's mechanism, and cell 9 is not cut until it is ruled. The shape this seat holds, not binding: the split names its PLANE per target and calls each plane's own record -- safe_deploy_core for S3/DS, lambda-source-map.json for Lambda, the root that consumes the module for Terraform -- with provenance per row (measured: <instrument>), and a target no plane claims prints UNCLASSIFIED and refuses the print, which is R-16's own negative control generalised from one plane to all."
   }
 ]
 ```

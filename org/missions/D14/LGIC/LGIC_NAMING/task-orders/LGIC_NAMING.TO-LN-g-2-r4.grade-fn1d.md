@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_LGIC_NAMING~2</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-09-15</issued_date>
-<status>pending</status>
+<status>complete</status>
 
 **Directive:** D14 | **Fabric:** laptop | **PRD:** `../prd/LGIC_NAMING_PRD.md` v1.8 @2f554182b6 (ADMITTED; brief half signed @b136cdc308, review @02529e1bce) | **Decomp cell:** `LN-g-2` (round 4, new at v6) | **outcome_ref:** FWD-5 | **depends_on:** LN-g-1 (TO-LN-g-1-r4) and LGIC_ENFORCE EN-r-3 both merged into `lgic-v19-landing` (gate G-V19); spawned from that branch's tip | **slot:** ~2, queue position 1
 

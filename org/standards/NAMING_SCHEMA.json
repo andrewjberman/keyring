@@ -1,7 +1,7 @@
 {
  "title": "NAMING_SCHEMA -- the D14 Platform Logic naming schema's CLOSED ENUMERATIONS, as data",
- "version": "v1.8",
- "ratified_by": "org/missions/D14/LGIC/LGIC_NAMING/prd/LGIC_NAMING_PRD.md v1.8 (L4, 1.0.0_SA_CTO; v1.5 through v1.8 at L10). Spine L4: a decision that is an enumeration is closed as data in org/standards/ and cited.",
+ "version": "v1.10",
+ "ratified_by": "org/missions/D14/LGIC/LGIC_NAMING/prd/LGIC_NAMING_PRD.md v1.10 (L4, 1.0.0_SA_CTO; v1.5 through v1.10 at L10). Spine L4: a decision that is an enumeration is closed as data in org/standards/ and cited.",
  "changelog": [
   "v1.0 -- first issue with LGIC_NAMING_PRD v1.0 @c65a169ba0.",
   "v1.1 -- on 4.0.0_SA_CRO~D's REFUSED brief half (review @1e4e3e10fd): kind.by_type keys are the live plane's node_type strings (CODEBUILD -> CODEBUILD_PROJECT, ECS_TASK -> ECS_TASK_DEFINITION); every node type not graded by kind is enumerated by subtraction; lb and cluster added for the two minted types that had no kind.",
@@ -11,7 +11,9 @@
   "v1.5 -- at L10, on 1.0.0_SA_CTO's ROUND-1 ANALYSIS (org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_LGIC_NAMING_ROUND1_20260914.md), ruling the four slots round 1 measured as unruled (carrier C-S5) and two FWD-5 gaps (C-S8): resource.function (FN1), resource.qualifier (FN2, FN3), secret.purpose and iam_policy.purpose_slot (FN4), key.partition's {entity} (P1), key.scope_rule (SC1), system.vendor_through_tiers (SY1), grade.placeholder (PH1) and aws_fixed (AW1). The five ruled key segments are unchanged.",
   "v1.6 -- on 4.0.0_SA_CRO's refusal of PRD v1.5's brief half (@3a9a0c2f91, R3): key.scope_rule states the vendor MASTER case. A master keeps its own scope under doctrine R3 (two masters of one firm are two scopes, never commingled), and the audience rule decides FIRM or global for every other key. v1.5 had put a Schwab master under its firm.",
   "v1.7 -- at L10, on 1.0.0_SA_CTO's ROUND-2 ANALYSIS (org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_LGIC_NAMING_ROUND2_20260915.md): resource.function -- a noun-phrase function drops every token already written in the system or scope slot (FN1b, row C-S14), and only the resource's OWN kind is barred from its function (FN1c, row W4-S2); both bind the grade as well as the namer, while FN1's word-choice clauses bind the namer only. firm_forms.demo cites the registry row that defines it (RULING DM, row W6-S4). rows_owner: the registry now exists and governs where it and the seed differ. system.vendor_through_tiers' worked example is a name outside every naming-exercise item set (RULING EX1, row S15). The five ruled key segments, the grade signature and its verdicts are unchanged.",
-  "v1.8 -- at L10, on 1.0.0_SA_CTO's ROUND-3 ANALYSIS (org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_LGIC_NAMING_ROUND3_20260915.md): resource.function -- FN1b and FN1c are ONE subtraction, and a function it empties RAISES whichever rule removed the last token (FN1d, row W3-S5), so a grade never depends on the order of two steps. The five ruled key segments, the grade signature and its verdicts are unchanged."
+  "v1.8 -- at L10, on 1.0.0_SA_CTO's ROUND-3 ANALYSIS (org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_LGIC_NAMING_ROUND3_20260915.md): resource.function -- FN1b and FN1c are ONE subtraction, and a function it empties RAISES whichever rule removed the last token (FN1d, row W3-S5), so a grade never depends on the order of two steps. The five ruled key segments, the grade signature and its verdicts are unchanged.",
+  "v1.9 -- at L10, on 1.0.0_SA_CTO's LGIC_ENFORCE ROUND-1 ANALYSIS (org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_LGIC_ENFORCE_ROUND1_20260915.md @7b5331c8c0): firm_forms is REMOVED -- a firm's forms live only in the identity registry (scopes.json), which every reader reads (RULING ONE, rows W1-S19, W8-S2), and firm_forms_source says so; demo's tenancy is the registry's DEMO-TENANT (RULING DEMO); tf_type_map carries the Terraform-type to node_type map as data with each type's own-name attribute, and tf_unmapped_own_name the types that RAISE at G1.1 (C-S11, W3-S1). Landed on branch lgic-v19-landing with its readers (EN-r-3) and the rule (LN-g-1), reaching CLOUD in one merge. The five ruled key segments, the grade signature and its verdicts are unchanged.",
+  "v1.10 -- at L10, on 1.0.0_SA_CTO's ROUND-4 ANALYSIS (org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_LGIC_NAMING_ROUND4_20260916.md): alias_adjacency -- the bd reading is decided by ADJACENCY to a firm token, never by position (GRADING_RULE.md R3, rows LGIC_NAMING-W4-S1 and LGIC_CANON-W7-S2; ruling A-3 of the LGIC_CANON round-1 analysis), lifted from the grading rule into this file so the canon's generated section renders it and the two blind judges' split on bd-49f-runner-role has one authored answer. grade() already implements it (69 of 69 attributed forms equal grade() in round 4). The five ruled key segments, the grade signature and its verdicts are unchanged."
  ],
  "authority": [
   "SOURCE-FIRST key string -- Andrew-direct 2026-09-13 ~03:2xZ card 1, 'all recs approved' (relayed 4.0.0_SA_CRO~D 96332)",
@@ -110,16 +112,64 @@
  "secret": {"grammar": "{system}/{scope}/{purpose}", "scope_form": "SHORT", "case": "lowercase, ASCII, slash-separated", "purpose": "the credential's kind (credentials, token, key, password, certificate), preceded by the interface it opens when the item names one: api-credentials (FN4, v1.5)"},
  "log_group": {"grammar": "/aws/{service}/{resource-name}", "derived": true},
  "iam_policy": {"grammar": "{system}-{scope}-{purpose}-policy", "purpose_slot": "function -- FN1 and FN2 apply, written as one compound token (read-gold) (FN4, v1.5)", "duplicate_name": "REFUSED"},
- "firm_forms": [
-  {"key": "49financial", "short": "49f"},
-  {"key": "inflection", "short": "inf"},
-  {"key": "cottonwood", "short": "cot"},
-  {"key": "demo", "short": "demo", "note": "one token; the long and short forms are the same string. The identity registry defines it: infra/logic/registry/scopes.json row demo reads class FIRM, tenancy FIRM, tenant kind demo, so in every naming slot demo reads as a firm (RULING DM, row W6-S4, v1.7)"}
- ],
+ "firm_forms_source": "A firm's forms (its key and its one sanctioned short form) are the identity registry's rows, infra/logic/registry/scopes.json, and every reader reads them there; this file carries no copy, so one change to the registry moves every name and every fence pattern at once (RULING ONE, v1.9). demo reads as a firm in every naming slot (RULING DM, v1.7); its TENANCY is the registry's DEMO-TENANT class (RULING DEMO, v1.9; Andrew ~01:3xZ 09-13 card 8, R20 X6).",
+ "tf_type_map": {
+  "aws_lambda_function": {"node_type": "LAMBDA", "name_attribute": "function_name"},
+  "aws_iam_role": {"node_type": "IAM_ROLE", "name_attribute": "name"},
+  "aws_iam_policy": {"node_type": "IAM_POLICY", "name_attribute": "name"},
+  "aws_iam_role_policy": {"node_type": "IAM_POLICY", "name_attribute": "name"},
+  "aws_iam_user_policy": {"node_type": "IAM_POLICY", "name_attribute": "name"},
+  "aws_iam_instance_profile": {"node_type": "INSTANCE_PROFILE", "name_attribute": "name"},
+  "aws_security_group": {"node_type": "SECURITY_GROUP", "name_attribute": "name"},
+  "aws_api_gateway_rest_api": {"node_type": "API_GW", "name_attribute": "name"},
+  "aws_apigatewayv2_api": {"node_type": "API_GW", "name_attribute": "name"},
+  "aws_dynamodb_table": {"node_type": "DYNAMODB_TABLE", "name_attribute": "name"},
+  "aws_sqs_queue": {"node_type": "SQS_QUEUE", "name_attribute": "name"},
+  "aws_sns_topic": {"node_type": "SNS_TOPIC", "name_attribute": "name"},
+  "aws_cloudwatch_metric_alarm": {"node_type": "CW_ALARM", "name_attribute": "alarm_name"},
+  "aws_lambda_layer_version": {"node_type": "LAMBDA_LAYER", "name_attribute": "layer_name"},
+  "aws_instance": {"node_type": "EC2_INSTANCE", "name_attribute": "tags.Name"},
+  "aws_codebuild_project": {"node_type": "CODEBUILD_PROJECT", "name_attribute": "name"},
+  "aws_ssm_document": {"node_type": "SSM_DOCUMENT", "name_attribute": "name"},
+  "aws_ecs_task_definition": {"node_type": "ECS_TASK_DEFINITION", "name_attribute": "family"},
+  "aws_sfn_state_machine": {"node_type": "STATE_MACHINE", "name_attribute": "name"},
+  "aws_lb": {"node_type": "LOAD_BALANCER", "name_attribute": "name"},
+  "aws_ecs_cluster": {"node_type": "ECS_CLUSTER", "name_attribute": "name"},
+  "aws_cloudwatch_event_rule": {"node_type": "EVENT_RULE", "name_attribute": "name"},
+  "aws_scheduler_schedule": {"node_type": "SCHEDULE", "name_attribute": "name"},
+  "aws_cloudwatch_log_group": {"node_type": "LOG_GROUP", "name_attribute": "name"},
+  "aws_s3_bucket": {"node_type": "S3_BUCKET", "name_attribute": "bucket"},
+  "aws_s3_bucket_policy": {"node_type": "S3_BUCKET_POLICY", "name_attribute": "bucket"},
+  "aws_s3_object": {"node_type": "S3Key", "name_attribute": "key"},
+  "aws_secretsmanager_secret": {"node_type": "SECRET", "name_attribute": "name"},
+  "aws_iam_user": {"node_type": "IAM_USER", "name_attribute": "name"},
+  "aws_route53_record": {"node_type": "ROUTE53_RECORD", "name_attribute": "name"},
+  "aws_kms_key": {"node_type": "KMS_KEY", "name_attribute": null},
+  "aws_cloudfront_distribution": {"node_type": "CLOUDFRONT_DISTRIBUTION", "name_attribute": null},
+  "aws_vpc_endpoint": {"node_type": "VPC_ENDPOINT", "name_attribute": null},
+  "aws_apigatewayv2_route": {"node_type": "API_ROUTE", "name_attribute": null}
+ },
+ "tf_type_map_note": "Terraform resource type -> the node_type the grade takes, and the attribute that carries the resource's own name (null: the type carries none). Data, not a grader's private reading (C-S11, W3-S1, v1.9; seeded from LGIC_ENFORCE EN-t-1's census map).",
+ "tf_unmapped_own_name": {"aws_api_gateway_stage": "stage_name", "aws_apigatewayv2_authorizer": "name", "aws_apigatewayv2_stage": "name", "aws_athena_workgroup": "name", "aws_cloudfront_cache_policy": "name", "aws_cloudfront_function": "name", "aws_cloudtrail": "name", "aws_cloudwatch_dashboard": "dashboard_name", "aws_cloudwatch_log_delivery_destination": "name", "aws_cloudwatch_log_delivery_source": "name", "aws_cloudwatch_log_metric_filter": "name", "aws_cloudwatch_log_resource_policy": "policy_name", "aws_cloudwatch_log_subscription_filter": "name", "aws_cur_report_definition": "report_name", "aws_ecr_repository": "name", "aws_ecs_service": "name", "aws_glue_catalog_database": "name", "aws_glue_catalog_table": "name", "aws_kms_alias": "name", "aws_lb_target_group": "name", "aws_pipes_pipe": "name", "aws_s3_bucket_metric": "name", "aws_service_discovery_private_dns_namespace": "name", "aws_service_discovery_service": "name", "aws_ses_configuration_set": "name", "aws_ses_event_destination": "name", "aws_ssm_activation": "name", "aws_ssm_parameter": "name", "aws_wafv2_ip_set": "name", "aws_wafv2_web_acl": "name"},
+ "tf_unmapped_own_name_note": "Terraform types that carry their own name but map to no node_type: a grade of one RAISES at G1.1 until a node_type is added here (v1.9).",
  "global_scope": {"key": "global", "short": "global"},
  "refused_tokens": {
-  "bd": "refused in EVERY slot (Andrew ~03:5xZ card 2). The vendor is blackdiamond; the firm is 49financial.",
+  "bd": "refused in EVERY slot (Andrew ~03:5xZ card 2). The vendor is blackdiamond; the firm is 49financial. Which of the two a given name means is decided by alias_adjacency (v1.10).",
   "mockadv": "an alias only, recorded in the registry's alias rows as history; never minted"
+ },
+ "alias_adjacency": {
+  "bd": {
+   "reads_as": "VENDOR blackdiamond when a firm token (a registry firm key or its sanctioned short form) is ADJACENT to it, before or after; FIRM 49financial otherwise",
+   "test": "ADJACENCY to a firm token, never position in the name",
+   "examples": {
+    "bd-49f-session-trigger": "vendor -- 49f is adjacent",
+    "cot-bd-session-trigger-lambda-role": "vendor -- cot is adjacent, bd sits second",
+    "bd-49f-runner-role": "vendor -- the case that split two blind judges (LGIC_CANON-W7-S2); canonical blackdiamond-49f-runner-role, verdict ALIAS",
+    "bd-allocations": "firm -- no firm token adjacent; canonical spells 49financial's form for the slot"
+   },
+   "either_way": "bd is an ALIAS in every slot (refused_tokens.bd); the canonical form spells blackdiamond or the firm's form for the slot",
+   "source": "GRADING_RULE.md R3 (LGIC_NAMING round 4, coverage N of N); rows LGIC_NAMING-W4-S1, LGIC_CANON-W7-S2; A-3 (v1.10)"
+  }
  },
  "system": {
   "classes": ["PRODUCT", "PLATFORM_SUBSYSTEM", "VENDOR"],

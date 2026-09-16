@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_LGIC_ENFORCE~3</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-09-15</issued_date>
-<status>pending</status>
+<status>complete -- proof-of-spec VALID (rc=0) against org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~3/LGIC_ENFORCE.TO-EN-t-3-r2.roots-census.proof_of_spec.json, gate run 2026-09-16 by the issuer with --governing-order bound; the work drained in its round and only the status WORD was never flipped, leaving a live ADHC_OWNPTH.005 worker grant at HEAD (0.0.0_AB_MSTR 97450)</status>
 
 **Directive:** D14 | **Fabric:** laptop | **PRD:** `../prd/LGIC_ENFORCE_PRD.md` v1.2 @09bde3126c (ADMITTED; brief half re-signed by 4.0.0_SA_CRO @e848967b3f) | **Decomp cell:** `EN-t-3` (round 2) | **outcome_ref:** FWD-4 (G-F's prerequisite) | **depends_on:** EN-t-2 round 2 (merged) | **slot:** ~3, queue position 3
 
@@ -20,6 +20,11 @@
 1. **Plan every root.** A root is a directory under `infra/aws/terraform/` whose tracked `.tf` files declare a `backend` block; the checker enumerates them from `git ls-files`, 73 at the cut. For each one:
    - `terraform init` from the plugin cache (`TF_PLUGIN_CACHE_DIR` is set on this box), then a read-only `plan -lock=false -input=false -out`, then `show -json`. Use `C:/Users/AndrewBerman/Desktop/ajb_workspace/.tools/terraform.exe`, and export `OPAL_AGENT_SERIAL`.
    - Keep only `format_version`, `terraform_version`, and each resource change's `address`, `mode`, `type`, `name`, `change.actions`, and the own-name attribute of `change.before` and `change.after`. Write it to `org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/<your serial>/roots/<root path with / written as __>.r2.json`.
+   - ⛔ **ONE ROOT AT A TIME, AND DELETE THAT ROOT'S `.terraform` THE MOMENT ITS `show -json` IS CAPTURED.** Do not init the next root until the previous one's directory is gone. **This is not tidiness -- it is the only reason this cell can run at all**, and it is a CORRECTION to the cell made before any worker was spawned (row `LGIC_ENFORCE-S22`).
+     MEASURED on the one root already initialised in the main checkout: `du -sh infra/aws/terraform/portal-auth/.terraform` reads **686M**, of which **686M** is `providers/registry.terraform.io/hashicorp/aws` and 4.0K is state. `TF_PLUGIN_CACHE_DIR` **IS** set and populated (722M) and it does **NOT** spare this -- `ls -la` of that providers directory shows an ordinary copied tree, not a link. So the cache's existence is not mitigation on this filesystem.
+     **73 roots x 686 MB is about 50 GB. This box had 19 GB free when this cell was cut, with four other workers live.** Per-root cleanup caps the footprint at roughly ONE root; without it, this cell fills the volume and takes down every live worker and every other seat sharing the box -- **and you would have no way to know you were the cause.**
+     If a root's `.terraform` cannot be removed (a lock, a permission), that root is recorded NOT planned with that reason and **you stop initialising further roots and file a BLOCKING row** -- never continue and hope. Re-measure free space every ten roots, not only at the start and the end, and stop on **the 10 GB line this order's BOUNDS section already sets** -- that is the single stop line for this cell and this clause does not add a second one.
+     ⚠ This changes ONLY your housekeeping between roots. Every deliverable, every criterion, every `<paths>` entry and the NOT-planned rule are unchanged, and **a root you cannot plan is still recorded with its reason rather than skipped.**
    - A root that cannot init without fetching a provider from outside Opal infrastructure, or cannot plan, is recorded NOT planned with its reason. Never fetch off-box without the word.
 2. **Run the limbs.** `python .tools/naming-apply-gate.py --plan-json <extract> --enforce` on each extract, and the pre-plan limb (`naming-apply-gate.py <dir> --enforce`) on all 78 Terraform directories. The other 5 (4 under `modules/`, and `shared-infra/apigateway-portal`) have no backend and cannot plan alone.
 3. **Write `org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/LIMB_ROOTS_CENSUS.md`:** prose, then ONE fenced ```json block

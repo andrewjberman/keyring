@@ -1,11 +1,12 @@
 {
   "prd": "LGIC_NAMING_PRD.md",
-  "prd_version": "v1.8",
-  "prd_pin": "2f554182b688261ca3d296e12de43f9da75fa393",
+  "prd_version": "v1.10",
+  "prd_pin": "5a12d0b97c1b33d5939163715885e76b430aa7d2",
   "half": "brief",
-  "half_hash": "f8b0786d8242ca71f7a66528e7d087705f451b9e13d0d4f1407a1bd038c0ea9f",
+  "half_hash": "30bf11e4bdcd9caa22990ad2e267dc3ef199165a7bb8f9851899a0350170d792",
   "verdict": "SIGNED",
-  "review_ref": "docs/briefs/sources/LGIC_NAMING_L4_BRIEF_REVIEW_v1_8_20260915.md@02529e1bce9015372aafffeff71b175ecbf1c25c",
+  "review_ref": "docs/briefs/sources/LGIC_NAMING_L4_BRIEF_REVIEW_v1_10_20260916.md@e6fe2a9144",
   "signed_by": "4.0.0_SA_CRO",
-  "signed_at": "2026-09-15T15:57:23Z"
+  "signed_at": "2026-09-16T13:44:33Z",
+  "reason": "v1.10: alias_adjacency carries A-3 into the schema; ratified-text hash unchanged; refused_tokens.bd still refuses at mint; rest of the half byte-identical to v1.9"
 }
