@@ -147,7 +147,7 @@ never `git show :path`.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
-<status>pending</status>
+<status>complete</status>
 <round>12</round>
 <slot>~23</slot>
 <fabric>site-z</fabric>
