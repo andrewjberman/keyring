@@ -2319,6 +2319,29 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     "spec_asserts": "The issuer's briefing to this worker states that terraform init writes a TRACKED file -- EN-t-3 measured init rewriting .terraform.lock.hcl on 2 of 72 roots, a write OUTSIDE its <paths> produced by an invocation its order prescribed -- and instructs this cell to leave any such file modified-and-unstaged and to file an OBSERVATION row.",
     "world_is": "On shared-infra, the one root this cell inits, the write did not happen: after a successful init the practice copy's only dirty path was the untracked .tf this cell authored. The write is therefore CONDITIONAL, not a property of init, and the two conditions this run held are visible in the invocation itself -- -lockfile=readonly, and a plugin cache already holding the exact version the lock pins. No file outside <paths> was written and nothing had to be left unstaged.",
     "notes": "Filed for form: the briefing asserted a write this cell did not observe, so the mismatch is recorded rather than silently absorbed. Nothing was worked around and no criterion depends on it. The row does NOT contradict EN-t-3: its 2-of-72 is a measurement over a different root population under whatever flags that cell ran, and this row measures one root under named flags. The durable question for whoever recuts a roots census: the lock rewrite is a function of (flag, cache contents, lock contents), so '2 of 72' is only comparable across cells that print the init flags beside the count. This worker did not re-run EN-t-3's roots -- its extracts are fixed inputs and its order is another cell's."
+  },
+{
+    "id": "LGIC_ENFORCE-W4-S4",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~4",
+    "surfaced_at": "2026-09-16T11:37Z",
+    "one_line": "The naming gate REFUSES a superseded name that a proof instance QUOTES as its own evidence -- and the same literal in the .md record beside it is never graded, because GRADED_EXT has no .md.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN: .tools/safe-commit.sh for commit 1ec2f4d5b5 printed '[naming-gate] NAMING REFUSE org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~4/LGIC_ENFORCE.TO-EN-x-1-r2.fwd2-one-carrier.proof_of_spec.json:42 advi-49f-fwd2-exercise-queue -> advi-49f-fwd2-exercise-queue' with 'why: CONFORMANT as SQS_QUEUE, but a NEW hand-kept carrier of '49f' outside every permitted context: read it through lookup('49financial')'. Line 42 is the output_evidence of acceptance row X1R-AC2, which records the checker's own printed line verbatim.",
+        "The verdict did not block: the same run printed '(WARN window: 1 REFUSE verdict(s) did not block; ENFORCE is --enforce, NAMING_GATE_ENFORCE=1 or org/mcp/naming-gate.enforce)' and 'NAMING-GATE: WARN 3 graded'. The other two graded literals, both the NEW form advi-f49-fwd2-exercise-queue at :24 and :55, read CONFORMANT.",
+        "THE DISCRIMINATOR IS THE SUFFIX, not the content: the SAME literal advi-49f-fwd2-exercise-queue sits in org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/EXERCISE_FWD2_R2.md, committed at d8173a219b, and that run printed 'NAMING-GATE: PASS 2 graded' -- the two graded paths were the plan JSONs, both SKIP as machine-written plan files. The .md was not graded at all.",
+        "SOURCE: .tools/naming-gate.py:78 @7377655ef7 is GRADED_EXT = (\".py\", \".js\", \".mjs\", \".ts\", \".tf\", \".json\", \".yaml\", \".yml\") -- no .md -- and :751 is `if not path.endswith(GRADED_EXT):`, the early return. The REFUSE verdict itself is minted at :714, 'NEW hand-kept carrier (context rule)'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The order's proof_of_spec bound requires a proof instance whose acceptance rows record the criterion's output, and the worker definition requires that output verbatim. X1R-AC2's whole subject is that a name MOVES from an old short form to a new one, so its evidence line cannot be written without carrying the old form advi-49f-fwd2-exercise-queue.",
+    "world_is": "The commit-time naming gate grades that quoted evidence as a NEW hand-kept carrier of '49f' and returns REFUSE. It did not block, because the gate is inside its WARN window today; under --enforce, NAMING_GATE_ENFORCE=1 or org/mcp/naming-gate.enforce the proof of THIS cell would be refused at commit, and the cell cannot be proved without quoting the string the gate refuses. Beside it, the same literal in the prose record is invisible to the gate: GRADED_EXT carries no .md, so a document may hand-keep any superseded name indefinitely while the machine-readable instance beside it is refused for the same bytes.",
+    "notes": "Filed for form; nothing was worked around and no criterion depends on it. The commit landed and the instance is VALID at rc 0. Two separable questions for whoever owns the gate's enforcement flip, and they do not share a remedy: (1) a RECORD that quotes a name as evidence is not a CARRIER that resolves one, and the gate has no way to tell them apart inside a .json -- the natural discriminator is the surrounding key (an output_evidence / observed / deploy_evidence string is testimony, not configuration), not the literal; (2) the .md exemption means the FIX for (1) must not be 'write it in prose instead', because that only moves the hand-kept name somewhere nothing reads. This worker did not touch .tools/naming-gate.py: it is in this order's <paths> only for the practice copy's generated output, and widening a gate to clear a warning on one's own proof is exactly the move a worker may not make."
   }
 ]
 ```
