@@ -479,6 +479,57 @@ before it.
 view, disclosed by DEC-5 and printed by the gate; cell 7's change-management entry is the ledger half of the
 same cell.
 
+### v3.2 AMENDMENT (pre-issuance): THE WRITE SURFACES MEASURED, THE SLOT PLAN, AND CELL 9 BECOMES A WORKER CELL
+
+**Every write surface below was read from the code that produces it, not from the cell table.** The generator's
+per-target registry keys (`lib/opal_naming.py` `TARGET_REGISTRY_KEYS`) decide which generated files a registry
+edit re-stamps, so they decide which cells collide:
+
+| target | registry files it is stamped from |
+|---|---|
+| the 7 VIEWS (firm_registry.json, firm-config.mjs, the two investor_reporting scripts, loaders.py, perfrp_firm_pin.py, ds-precommit-check.py) | `scopes` (perfrp_firm_pin.py also `tiers`) |
+| `modules/opal_name/generated_locals.tf` | `scopes`, `exemptions` |
+| `modules/opal_name/tests/vectors.json`, `tests/opal_name.tftest.hcl` | `scopes`, `systems`, `exemptions`, `resources` |
+
+**So cells 5 and 7 COLLIDE on two files neither names in the analysis.** Cell 5 edits `systems.json`, which re-stamps
+`vectors.json` and `opal_name.tftest.hcl`; cell 7 edits `exemptions.json`, which re-stamps those same two AND
+`generated_locals.tf` -- and `generated_locals.tf` enters the `shared-infra` plan (the one root consuming the
+`opal_name` module), so cell 7's registry edit is a deploy on that root under R-16 and DEC-4's never-widen sign-off.
+**Cells 5 and 7 are therefore ONE worker's queue, 5 then 7**, which the edge 5 -> 7 already forces. Neither touches
+the 7 VIEWS (neither edits `scopes` or `tiers`), so neither re-mints the investor_reporting bundle.
+
+**CELL 9 IS A WORKER CELL.** R-23 s.3 kept it an issuer act "by the decomposition's own choice, not by refusal";
+this cut changes that choice. `lib/opal_naming.py` is admitted to the worker by the order's `<paths>` exactly as
+`systems.json` is (ADHC_OWNPTH.005), and cell 9 is a build with its own contract -- the target list by AST, the
+SHIP / REPO-ONLY split, the hash-pinned-consumer census -- which belongs under a worker's criteria and the CVO's
+grading, not under the issuer's own hand. **Its split is RULED by R-26 @`50f1786314` on `LGIC_ENFORCE-S60`:** R-16 named `safe_deploy_core.py` as the classifier, and called on the 10 targets it decides 3 and returns None for 7, at least 5 of which ship through other planes. So the split calls EACH PLANE'S OWN RECORD -- `safe_deploy_core.py` for S3/DS, `infra/aws/lambda/ci/lambda-source-map.json` for Lambda with a shared import resolved to every importing function, the consuming Terraform root measured by `comp-find` for Terraform -- with provenance per row naming the instrument and each plane's denominator printed. A target no plane claims prints UNCLASSIFIED and REFUSES the print. The two `opal_name` test fixtures are REPO-ONLY with the plane named. The ruling's own "8 of 10 SHIP" is withdrawn as a count by recall: the criterion prints what the three instruments return.
+
+**THE REMAINING ISSUER ACTS:** `2b` (the `naming-gate.enforce` flip, after cell 2 drains and the 78-root read) and
+`3b` (landed @`c8f9398b85`; the strip half needed no repair, only `--color=no`).
+
+**EDGES AND THE SLOT PLAN.** `5 -> 6`, `5 -> 7` (the census and the writer disposition read the registry cell 5
+lands); `3a -> 8` (the roots census is graded by the tooling cell 3a repairs); `6, 7, 8 -> 4` (cell 4 MOVES
+round-2 records that cells 6, 7 and 8 read at their flat paths, and re-points the three live readers, so it runs
+after them); `2` and `9` independent.
+
+```
+  slot ~1  EN-n-1-r3 (cell 2)                                   .tools/naming-gate.py
+  slot ~2  EN-r-5-r3 (cell 5) -> EN-w-7-r3 (cell 7)              systems.json -> exemptions.json + generated_locals.tf
+                                                                 + the two opal_name test fixtures + the shared-infra apply
+  slot ~3  EN-i-3-r3 (cell 3a) -> EN-t-8-r3 (cell 8)             .tools/proof-of-spec-check.py -> the roots census records
+  slot ~4  EN-s-6-r3 (cell 6)                                   the census report and comparison records
+  slot ~5  EN-g-9-r3 (cell 9)                                   lib/opal_naming.py
+  slot ~6  EN-p-4-r3 (cell 4)                                   the 18 moves, the 3 live readers, FIRM_FORMS_READERS.md
+```
+
+`fanout: 6 slots over 3 connected components, cap 8, reason: components {2}, {9} and {3a, 8, 5, 6, 7, 4};
+levels L0 = {2, 3a, 5, 9}, L1 = {6, 7, 8}, L2 = {4}; the big component is not one queue because 6, 7 and 8 run in
+parallel once their parents drain, so a worker per parallel branch buys wall-clock -- except 5 and 7, which share two
+regenerated fixtures and one queue; cell 4 is last because it moves what 6, 7 and 8 read.`
+
+> The first draft of this line read "6 of 4 chains", which the queue rule it cites forbids (N is bounded by M). By
+> the edges there are 3 components, not 4, and the parallelism is the level width inside the largest, stated above.
+
 ## 1. THE DOMAIN, BY SUBTRACTION (Rule 24(i))
 
 ```
