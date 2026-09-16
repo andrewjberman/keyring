@@ -32,6 +32,24 @@ page and its exchange, from `OG-x-1`). If either is absent at HEAD, that is a BL
 The baseline you compare against is `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~2/BASELINE.json`
 (`OG-p-1`'s ALB rule readback and WAF association).
 
+**BEFORE YOUR FIRST APPLY -- commit the Lambda source map's one-line hash from `OG-c-2`'s deploy (amended by
+`2.0.0_SA_COO~O` before hand-off, per `1.0.0_SA_CTO` ruling R-OG-9 call 9(a), msg 97572, record
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/RULINGS_NFRA_OPLGTW_20260916.md` @028ea93e2e; row W4-S7).**
+- `OG-c-2` deployed `opal-assets-silver-schwab` at build pin `1f03a3f209`. Its build rewrote
+  `infra/aws/lambda/ci/lambda-source-map.json`, and that change is outside its grant, so the map at HEAD (last touched
+  @a6eb2ed504) still carries the pre-deploy hash.
+- The file is the Lambda plane's record under R-26. A stale hash makes the per-plane classifier and the deployed-bytes
+  diff read the wrong artifact.
+- **The change is exactly one line, in the `opal-assets-silver-schwab` entry:** `artifact_sha256`
+  `/Uog2LDpLg42FrCU5MfTrEBaTFJTlVRY97tONxmjhVM=` -> `v2BztqbuhHD3gH95eMqCQzkjPEotvSoeIezEOfsxu90=`.
+- `OG-c-2`'s full rewritten bytes are preserved outside the repo at
+  `C:/tmp/nfra-oplgtw-handoff/lambda-source-map.OG-c-2.json` (sha256 `26695e6120d2c807...0c21fb`).
+- **Apply the one line to the map at your HEAD; do not copy the file over it.** First check with `git diff` that the
+  result is exactly that one line.
+- Confirm the new value equals the live function's `CodeSha256` (a read-only `get-function-configuration`).
+- Commit it on its own, before any apply of this cell, with a message naming `OG-c-2`'s deploy and the artifact hash.
+- If the live hash differs, or the entry has moved, that is a BLOCKING row and the map is not edited.
+
 **FIRST ACT -- rename three applied names to the builder's output (amended by `2.0.0_SA_COO~O` before hand-off, per
 `1.0.0_SA_CTO` ruling R-OG-7, msg 97548, record `org/tier1_exec/1.0.0_SA_CTO/deliverables/RULINGS_NFRA_OPLGTW_20260916.md`
 @af1cd9f7d6; rows W1-S9 and W1-S11).** `OG-i-2` applied three names that the naming grammar grades OUT-OF-PATTERN. No
@@ -130,6 +148,7 @@ taking the short id, printing its measurement with vintage and denominator, then
 infra/aws/terraform/opal-gateway/alb.tf
 infra/aws/terraform/opal-gateway/ssm_readonly_host.tf
 infra/aws/terraform/opal-gateway/schwab_reader_iam.tf
+infra/aws/lambda/ci/lambda-source-map.json
 infra/aws/ec2/opal-gateway/app/integrations/schwab/aws_roles.py
 org/standards/NFRA_OPLGTW_CONTRACT.json
 org/critical_paths/change_management/
