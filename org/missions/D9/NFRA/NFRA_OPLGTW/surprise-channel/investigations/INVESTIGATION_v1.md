@@ -1814,6 +1814,75 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "OGP1-AC11 (amended) asks for p95 latency from the ALB's TargetResponseTime over 'a stated window', with no width named -- any width the criterion states is legal on its face.",
     "world_is": "CloudWatch keeps 1-minute-resolution datapoints, which percentile (ExtendedStatistics) queries require, for 15 days; a single-period request whose span crosses that boundary is not clipped to the requested window -- it is silently answered with two datapoints that do not partition the window proportionally to time, and nothing in the response signals the split as an error. A caller that assumes 'one period, one datapoint' and reads Datapoints[0] gets a real AWS value that is nonetheless the wrong one for the claimed window, with no error, no denominator mismatch and no exception -- the exact 'clean metric with a wrong verdict' shape Rule 22 warns about. This cell caught it before recording by widening the control from a single dry run to a day-by-day bisection, fixed it by choosing a window under the retention boundary, and added a second, independent guard that refuses outright rather than mis-picking if the split ever recurs (a shorter window, a different metric, or a future retention-policy change).",
     "notes": "INERT: caught and fixed inside this same cell before any figure was recorded or committed; nothing downstream consumed the wrong 31 ms value. OBSERVATION, not ARMED: no other cell in this project currently issues a CloudWatch ExtendedStatistics query, so disarm_owner is not named; any FUTURE cell (in this or another project) that queries CloudWatch percentiles with a period longer than ~14 days should read this row first -- an estate-wide instrument-trap catalogue entry (CLAUDE.md 22a) is the issuer's or CTO's call, not this cell's to make."
+  },
+  {
+    "id": "NFRA_OPLGTW-W5-S4",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~5",
+    "surfaced_at": "2026-09-16T19:37:00Z",
+    "one_line": "OGQ2-AC26 cannot be met as written. It requires app/data_entitlement.py to differ from the cut base by exactly five added entries, one per Schwab tool, but the cut base already classifies all five: OG-z-1 added them. schwab_get_access also has no contract operation class. The worker added no entry, and the AC26 probe prints FAIL.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SOURCE: infra/aws/ec2/opal-gateway/app/data_entitlement.py:75-81 @0fc7c71160 -- SCHWAB_TOOLS already maps schwab_get_access: None, schwab_list_files: 'list', schwab_describe_dataset: 'describe', schwab_query: 'query', schwab_prepare_download: 'download_filtered'; :103 puts all five in TOOL_CLASSES as CLASS_SCHWAB; :279 allowed_tools grants an op=None tool to any active grant.",
+        "ORDER: org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-q-2.tools-and-validation.md:68 @85e35f511c -- 'So your five tools need entries in app/data_entitlement.py'; :72 'No entry widens an existing one, and none takes a permissive default'; :73 'A tool whose class is unclear is a surprise row, not an entry'.",
+        "PRIOR ROW: NFRA_OPLGTW-W3-S23 (this channel) already recorded that 'data_entitlement.py pre-classifies those five names and maps each to an operation'.",
+        "RUN: cd /c/tmp/wk-oplgtw-1-5d && timeout 120 .venv-og/Scripts/python org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~5/probes/og_q2.py AC26 -> 'diff 0fc7c71160..worktree: 0 added line(s), 0 removed line(s)', 'VERDICT: FAIL-OGQ2-AC26 0 added lines, expected exactly 5; 0 of 5 contract tools have an added entry', rc=1. The probe was checked with a synthetic diff: five well-formed entries print PASS (rc 0), and the same entries plus one removed line print FAIL (rc 1).",
+        "RUN: OGQ2-AC25, the guard module with the real schwab integration registered in the registry: '12 passed in 13.02s', rc=0; test_ogq2_ac01 asserts de.classify(t) == 'schwab' for all 5 registered tools."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-OG-q-2 (amended on 1.0.0_SA_CTO's ruling msg 97251), AC26: 'the diff of app/data_entitlement.py against your cut base is exactly five added entries, one per contract tool name, each with an operation class from the contract, and no other line'.",
+    "world_is": "At the cut base the file already classifies all five tools, so the classification the amendment wanted exists and the guard serves the real tools (AC1, AC25). Five more entries could only duplicate or override lines that already exist. schwab_get_access also has no contract operation: it is None, 'any active grant'. Giving it one of list/describe/query/download_filtered would change an existing entry, and the order routes an unclear class to a surprise row, not an entry. So app/data_entitlement.py is unchanged, AC26 is refused as written, and the order stays open.",
+    "notes": "BLOCKING on OGQ2-AC26 only. The other 25 criteria pass by output. INERT: nothing deploys, and the existing classification is what the guard enforces. Two ways out, both the issuer's: re-cut AC26 to certify that the file is unchanged and already classifies the five tools, or rule a contract class for schwab_get_access. The second would be a change to OG-z-1's entry, outside this order's 'entries only' grant."
+  },
+  {
+    "id": "NFRA_OPLGTW-W5-S5",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~5",
+    "surfaced_at": "2026-09-16T19:37:00Z",
+    "one_line": "schwab_query and schwab_prepare_download refuse dim_asset with UNAVAILABLE (asset_policy_selection_unavailable). The PRD's partial-account CUSIP restriction for dim_asset belongs to OG-q-3 and is not built yet. Without it, an asset read would ignore the account grant. The tool layer therefore takes an asset_policy hook, and until one is supplied it fails closed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "PRD: org/missions/D9/NFRA/NFRA_OPLGTW/prd/NFRA_OPLGTW_PRD.md @f0aa50dbc0 C3 -- 'For a partial-account grant restrict its CUSIPs to holdings of the authorized accounts for that same master/date ... absent qualification denies the asset read.'",
+        "ORDER: org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-q-3.snapshot-semantics.md -- OGQ3-AC11..AC13 assign that selection to OG-q-3 (semantics.py), which depends on OG-q-2.",
+        "SOURCE: infra/aws/ec2/opal-gateway/app/integrations/schwab/integration.py on branch wk-nfra_oplgtw-1-5d -- SchwabService(asset_policy=None) is the default, and query() and prepare_download() raise UNAVAILABLE 'asset_policy_selection_unavailable' for dim_asset while it is None.",
+        "SOURCE: the same branch's app/integrations/schwab/query.py DATASET_SCHEMAS -- field types copied from data/assets/scripts/silver/schwab_schemas.py @0fc7c71160 (dim_position quantities decimal(15,5), market_value_settled_unsettled decimal(17,4), closing_price decimal(16,5), dim_balance values decimal(15,2)); DATASET_GRAINS declares dim_position (account_id, cusip, l_s), dim_balance (account_id,) and dim_asset (cusip,), each validated per snapshot by a count-per-grain job before any page is cut."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-OG-q-2: 'schwab_query executes one master/dataset/date' over the contract's three datasets.",
+    "world_is": "schwab_query and schwab_prepare_download serve dim_position and dim_balance. dim_asset is listed and described but refuses data until OG-q-3 supplies the asset policy. The declared unique grains are unmeasured against real silver: a snapshot whose grain is not unique refuses paging (AC20) rather than paging wrongly.",
+    "notes": "INERT: fail-closed, nothing deploys, and no criterion of this order reads dim_asset data. OG-q-3 fills SchwabService(asset_policy=...) and owns the measured dataset descriptions."
+  },
+  {
+    "id": "NFRA_OPLGTW-W5-S6",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~5",
+    "surfaced_at": "2026-09-16T19:37:00Z",
+    "one_line": "The 500-row response cap is counted across every representation. Each result carries its rows twice, in structuredContent and in the duplicate JSON text block, so no single page returns more than 250 rows even though page_size accepts up to 500.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "PRD: org/missions/D9/NFRA/NFRA_OPLGTW/prd/NFRA_OPLGTW_PRD.md @f0aa50dbc0 C4 -- 'Limit the entire serialized MCP result to 500 rows, 100,000 Unicode codepoints and 131,072 UTF-8 bytes, including all content blocks, structuredContent and duplicated text.'",
+        "SOURCE: infra/aws/ec2/opal-gateway/app/integrations/schwab/envelope.py measure() on branch wk-nfra_oplgtw-1-5d -- rows = structuredContent rows plus the rows of each text block.",
+        "RUN: test_ogq2_ac16 -- 'page_size 500 over 700 matched -> returned 151, truncated True; measured rows 302 (structured 151 + text 151), codepoints 70340, utf-8 bytes 130740' (here the byte cap bound first)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD C4 names 500 rows and says the limit includes duplicated text, but not whether a duplicated row counts once or twice.",
+    "world_is": "The worker took the literal, conservative reading: a row counts once in each representation. A larger page is always truncated with explicit counts and a cursor, so no row is lost. The other reading, rows counted once, would let a page return up to 500.",
+    "notes": "INERT: the stricter reading only shortens pages. The spec owner can relax it by changing envelope.measure()."
   }
 ]
 ```
