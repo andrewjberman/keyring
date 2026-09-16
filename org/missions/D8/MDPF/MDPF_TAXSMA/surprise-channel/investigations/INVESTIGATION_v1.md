@@ -98,6 +98,98 @@ Worker rows carry their slot's coordinate, `MDPF_TAXSMA-W<n>-S<k>`; a seat's row
     "spec_asserts": "The order makes the contract's enumerations the only vocabulary, and PRD s.3.4 names the additional-candidate classification UNCONFIRMED.",
     "world_is": "The contract has no UNCONFIRMED member on any axis. TX-v-1's arm A02-09 therefore states the candidate's observable without a status label: not counted live, not in the dated expected population, listed once in protected candidate evidence, no workbook write. The label that S04 (TX-m-2) emits for a candidate is unfixed by the contract.",
     "notes": "INERT: the manifest's candidate expectation does not depend on the label. OBSERVATION: whether the contract gains a candidate value or the PRD word is dropped belongs to the contract owner (the PRD author), not to any worker cell."
+  },
+  {
+    "id": "MDPF_TAXSMA-W6-S1",
+    "project": "MDPF_TAXSMA",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_MDPF_TAXSMA~6",
+    "surfaced_at": "2026-09-15T21:39:18Z",
+    "one_line": "TX-p-1's AC7 (a read-only SSM census of the Gateway host) needs ssm:SendCommand, a Send verb, so AC10 (every AWS call is Describe/Get/List/Head) cannot pass in the same cell as written.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "TO: org/missions/D8/MDPF/MDPF_TAXSMA/task-orders/MDPF_TAXSMA.TO-TX-p-1.baseline.md@91b11ff0c9 :49 (TXP1-AC7, 'a read-only SSM census of the Gateway host's app source') and :58 (TXP1-AC10, 'every AWS call in the cell's command log is a read verb (Describe, Get, List, Head)'); decomposition org/missions/D8/MDPF/MDPF_TAXSMA/decompositions/MDPF_TAXSMA_DECOMP.md@7f65001ab3 s.3 :179 and :182 carry the same two lines.",
+        "RUN 2026-09-15T21:35:44Z, probe deliverables/0.9.0_WK_MDPF_TAXSMA~6/probes/tx_p_1.py AC7: ssm describe-instance-information (i-07dccb1615503ac99 Online), ssm send-command CommandId 686530ff-12ce-46ab-b5b2-d07ef6985eaa (AWS-RunShellScript, a 20-line script of find, grep, wc, md5sum and stat that writes nothing), ssm get-command-invocation Status=Success; VERDICT: PASS-TXP1-AC7.",
+        "RUN 2026-09-15T21:39:18Z, same probe AC10 over deliverables/0.9.0_WK_MDPF_TAXSMA~6/command_log.jsonl: 'READ-VERB CALLS: 42 of 43; NON-READ: 1 of 43', the one being 'ssm send-command (criterion TXP1-AC7)'; VERDICT: FAIL-TXP1-AC10.",
+        "The worker found no read-verb SSM route to host file content: DescribeInstanceInformation, GetCommandInvocation and ListCommandInvocations read only a command that SendCommand created, and inventory lists files without their content."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TX-p-1 is read only; AC7 asks for a read-only SSM census of the Gateway host's app source, and AC10 requires every AWS call in the cell's command log to be a Describe, Get, List or Head verb.",
+    "world_is": "The only SSM call that runs a census on the host is SendCommand, whose verb is Send. The command it ran was read-only and AC7 passed, but the log then carries 1 non-read call and AC10 prints FAIL, so the two criteria cannot both pass as written. The worker ran AC7 as named and left AC10 FAIL, so TO-TX-p-1 stays open; no criterion was reworded.",
+    "notes": "BLOCKING on TXP1-AC10 only: it holds this order's complete flip. INERT: nothing in normal operation is harmed if it is left alone. SendCommand also leaves an SSM command-history record and the SSM agent's own orchestration files on the host; the script itself wrote nothing. Whether AC10 is reworded or AC7 re-routed is the issuer's call, not the worker's."
+  },
+  {
+    "id": "MDPF_TAXSMA-W6-S2",
+    "project": "MDPF_TAXSMA",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_MDPF_TAXSMA~6",
+    "surfaced_at": "2026-09-15T21:41:00Z",
+    "one_line": "EC2_MANIFEST.json's opal-gateway file_checksums do not describe its own deployed_commit: app/server.py records a101f27e..., while the host file and the git blob at 7bd89b5d71 are both 370d5568....",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MANIFEST infra/aws/ec2/EC2_MANIFEST.json@91b11ff0c9: :505 deployed_commit 7bd89b5d71b8d488d9e8c4168513193c9d6a9ec2, :506 deployed_at 2026-09-09T19:08:11Z, :509 app/server.py a101f27ea37009d73cb19b247eef26e7, :511 app/config.py 20836f8aa54ee27ffb7209686fa27df7, :512 app/audit.py 5f8342859f23ad773b059c4030d4c402.",
+        "HOST (probe AC7, SSM CommandId 686530ff-12ce-46ab-b5b2-d07ef6985eaa, 2026-09-15T21:36Z): /opt/opal-gateway/app/server.py md5 370d55689b57c33221317271f10d7bd3, mtime 2026-09-09 18:43:58 +0000.",
+        "REPO: 'git show 7bd89b5d71:infra/aws/ec2/opal-gateway/app/server.py | md5sum' gives 370d55689b57c33221317271f10d7bd3, equal to the host; the CRLF rendering of the same blob gives 68b3b073721be878f5cf825af293e072; the blob at HEAD 91b11ff0c9 gives 552335bcbc6fdc45a0f2013a2296c4da. The recorded a101f27e... equals none of the three (positive control: 'git cat-file -t 7bd89b5d71' is commit).",
+        "DENOMINATOR: 6 of the 10 recorded app/*.py checksums compared with the blob at 7bd89b5d71. tools.py, tier.py and guard.py match; server.py, config.py (blob 881be540ca15f2cbeaa566bbee6e3ece) and audit.py (blob 7858f05f4b4d2fde48a88fa1866f5bc8) do not. The other 4 were not compared."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "infra/aws/ec2/EC2_MANIFEST.json, a read file named by TO-TX-p-1, records for opal-gateway a deployed_commit (7bd89b5d71) and per-file md5 checksums, which a reader takes as the fingerprint of the code on the host at that commit.",
+    "world_is": "The host's app/server.py is byte-identical to the git blob at 7bd89b5d71 (md5 370d5568...), but the manifest's recorded checksum for it (a101f27e...) matches neither that blob, its CRLF rendering nor HEAD. config.py and audit.py also differ from their blobs, while tools.py, tier.py and guard.py match. For three files the checksum field is not a measurement of what the host runs.",
+    "notes": "OBSERVATION found while grounding TXP1-AC7; TX-p-1 did not ask for it and relies on nothing in it. INERT as far as this cell can see. Whether infra/aws/ec2/safe-ec2-deploy.sh or TX-r-2 reads file_checksums is a question for the manifest's writer (the 7bd89b5d71 deploy is recorded as 0.7.0_AE_CloudOps~Z's). Separately, HEAD's server.py differs from the host's because NFRA_OPLGTW's OG-a-1..3 commits of 2026-09-15 are not deployed; that state belongs to gate G-O."
+  },
+  {
+    "id": "MDPF_TAXSMA-W6-S3",
+    "project": "MDPF_TAXSMA",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_MDPF_TAXSMA~6",
+    "surfaced_at": "2026-09-15T21:47:53Z",
+    "one_line": "The live opal-assets-mdpf-portal-publisher's MDPF_PUBLISHER_COMMIT stamp (c0902245b0, 2026-08-06) is not the pin its deployed code was built from (dc14d649bb, 2026-08-28).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "DECLARED: infra/aws/terraform/opal-assets/mdpf_portal_publisher.tf@91b11ff0c9 :155-156, 'The deploy pin, stamped into every D7 manifest (updated per deploy).' MDPF_PUBLISHER_COMMIT = 'c0902245b07438eb0be65cf5e28241d4be56aa38'.",
+        "LIVE (probe AC2, lambda get-function, 2026-09-15T21:47:53Z): env MDPF_PUBLISHER_COMMIT=c0902245b07438eb0be65cf5e28241d4be56aa38, LastModified 2026-08-29T01:01:04Z, CodeSha256 7X50uR1HrGyeEHZ4FWyHBNwTxt/XXJq5GNmR/eFfWE0=. The downloaded code's in-zip BUILD_MANIFEST source_vintage is pin and commit dc14d649bb3e8e7853ed9f648b08f7ca7017b7c8.",
+        "CONTROL: the existing builder run at --pin dc14d649bb3e8e7853ed9f648b08f7ca7017b7c8 reproduces the live CodeSha256 exactly (MATCH), so the deployed bytes are the dc14d649bb build.",
+        "REPO: 'git cat-file -t' is commit for both. c0902245b0 is 2026-08-06 ('TO(MDPF_CANPLAT cutover leg 3): P3-1 publisher rebuilt ...'); dc14d649bb is 2026-08-28 ('ledger(CATVP-c publisher): OPEN before the act ...')."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "mdpf_portal_publisher.tf, a read file named by TO-TX-p-1, declares MDPF_PUBLISHER_COMMIT as 'the deploy pin, stamped into every D7 manifest (updated per deploy)'.",
+    "world_is": "The live function carries the declared value c0902245b0 (2026-08-06), but the code it runs is the build at dc14d649bb (2026-08-28): its own BUILD_MANIFEST says so, and a rebuild at that pin matches CodeSha256. The stamp was not updated at the 2026-08-29 deploy, so by the file's own description each D7 manifest names a commit that is not the running code.",
+    "notes": "OBSERVATION found while grounding TXP1-AC2. It bears on TX-u-2 and TX-r-1, which re-package and release this function. The gold Lambda's MDPF_GOLD_COMMIT does equal its zip's commit (48b8671569). INERT as far as this cell can see; whether any served body carries the stamp was not read here."
+  },
+  {
+    "id": "MDPF_TAXSMA-W6-S4",
+    "project": "MDPF_TAXSMA",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_MDPF_TAXSMA~6",
+    "surfaced_at": "2026-09-15T23:08:00Z",
+    "one_line": "AC7's census script sends one redirect to /dev/null, and amended TXP1-AC10 condition (2) says 'no redirect or write to any path outside the SSM agent's own working directory'; the probe grades /dev/null as the null device, which is a reading of the frozen text.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "TO: org/missions/D8/MDPF/MDPF_TAXSMA/task-orders/MDPF_TAXSMA.TO-TX-p-1.baseline.md@6be05d277f, TXP1-AC10 as amended by 1.0.0_SA_CTO ruling 97255 option A: condition (2) 'it ONLY reads: no redirect or write to any path outside the SSM agent's own working directory, no sudo write, no package or service action, and no network call'.",
+        "SCRIPT: org/missions/D8/MDPF/MDPF_TAXSMA/deliverables/0.9.0_WK_MDPF_TAXSMA~6/probes/tx_p_1.py@b9a15838d7 :485 (CENSUS_TMPL), the GREP_ERRORS line '... xargs -0 -r grep -l -F 'taxsma-workbook' -- 2>&1 >/dev/null | wc -l'. It sends grep's stdout to /dev/null so that only error lines are counted. The script has 2 redirects: '2>&1' (a file-descriptor duplication, no path) and '>/dev/null'; 0 to any other path.",
+        "BYTES: the regenerated script's sha256 0892538431cbf66b9bc9ca8486745cce62ea6dce353e84c9288e7bde69ecfaad begins with the run-time value 'census script sha256=0892538431cbf66b' recorded in runs/AC7.txt@b9a15838d7 :5, and equals the untracked request file .scratch/tx_p_1/ssm_census_request.json that send-command read.",
+        "GRADE: the probe's AC10 (runs/AC10.txt, this commit) prints '1 to /dev/null (the null device: bytes discarded, no file created or modified), 0 to any other path' and a READING line saying that a literal reading of 'any path' would FAIL condition (2) on this 1 redirect; conditions (1), (3) and (4) are MET without it."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Amended TXP1-AC10 admits AC7's one send-command only if its script makes 'no redirect or write to any path outside the SSM agent's own working directory'.",
+    "world_is": "The script's only redirect to a path is '>/dev/null', which discards bytes and creates or modifies no file. /dev/null is still a path outside the agent's working directory, so the clause read literally is not met; read as 'the script only reads', it is. The worker's probe graded it as the null device, printed that reading in the evidence and filed this row rather than choosing silently. TXP1-AC10 prints PASS under that reading.",
+    "notes": "OBSERVATION: whether the literal or the purposive reading binds belongs to the L9 adjudicator (3.0.0_SA_CVO) and the ruling's author (1.0.0_SA_CTO, 97255), not to the worker. If the literal reading is ruled, TXP1-AC10 is FAIL and TO-TX-p-1's complete flip is withdrawn; no new AWS act would change the recorded script. INERT: the redirect wrote nothing on the Gateway host."
   }
 ]
 ```
