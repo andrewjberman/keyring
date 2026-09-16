@@ -733,3 +733,24 @@ declared. Every live-plane reader named above already exists; nothing is built.
 that touches an ACCEPT line keeps its plane explicit. `2.0.0_SA_COO~G` -- a cell exercising a LIVE row names the
 instrument above in its criterion invocation; a LIVE row cut against a repo record is returned to this seat, not
 worked. `3.0.0_SA_CVO` -- at L9, a JUDGMENT criterion on a LIVE row is graded against that plane's read, never a report.
+
+**R-17 addendum (~13:2xZ, COO~G 97391, row LGIC_ENFORCE-S52 @cf0109222c) -- two classifications of the same 19,
+made independently and crossing in flight, reconciled:** COO~G reads REPO 12 | SERVED 4 | HUMAN-ACT 2 (CANON FWD-2,
+FWD-3) | BORDERLINE 1 (NAMING FWD-3); R-17 reads LIVE 5 | CONDITIONAL 1 | ANDREW 1 | REPO 12. Two differences, both
+resolved toward COO~G's sharper axis on one and R-17's ruling on the other. (1) **CANON FWD-3 is a NAMED-PERSON act**,
+not a repo row: the owner of a different, paused project reading its resume condition and resuming is a person acting,
+and the register flip R-17 named is the RECORD of that act, not its instrument. R-17's table is corrected: the class
+ANDREW becomes NAMED-PERSON and holds CANON FWD-2 (Andrew) and CANON FWD-3 (each paused project's owner). COO~G's
+consequence is adopted whole: no issuance, worker or checker produces a person deciding; a cell can only make the act
+cheap and record it; **while the person has not acted the honest grade is APPLIED with the named actor, never REALIZED
+and never a worker's report standing in.** The Rule 27 qualification is present on the record (CANON PRD :22, :42 --
+Andrew confirmed the DONE WHEN lines 2026-09-13 ~18:4xZ), so this is a scheduling fact, not a defect -- and the
+deliberate drive Rule 27 asks for is the CARD: the decided-list presented to Andrew, and each paused owner's resume
+condition delivered to that owner, are cells; the decision is not. LGIC_CANON therefore cannot reach zero-graduation on
+cell work alone, and its round-2 analysis says so rather than cutting a round at something no cell can move.
+(2) **NAMING FWD-3 is SETTLED LIVE, not borderline** -- R-17 ruled it before S52 arrived, and the reason is the text's
+own: "catches ALL of them" is a claim about the SET of a firm's systems, and the registry's system list is the repo's
+belief about that set; a system the repo never declared is exactly the member the fence must still catch, so the grade
+reads the fence pattern over the live inventory (`comp-find --corpus aws`, `drift_class` printed), never
+`simulate-policy`. ENFORCE FWD-6 and FWD-7 stay REPO by their own "on a practice copy". Final: LIVE 4 + deploy-gate 1,
+NAMED-PERSON 2, CONDITIONAL 1 (CANON FWD-4), REPO 11; denominator 19.
