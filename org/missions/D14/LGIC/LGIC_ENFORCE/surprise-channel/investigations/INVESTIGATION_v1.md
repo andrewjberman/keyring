@@ -2296,6 +2296,31 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     "spec_asserts": "The order issues S2R-AC1 and S2R-AC2 as this cell's mechanical acceptance ('the totals are set beside N2, N6 and IV7, each with its denominator'; 'every disagreement names the name and both verdicts'), and instructs the worker to REWRITE NAMING_CENSUS_COMPARISON.md against the round-2 census report.",
     "world_is": "Both criteria are already satisfied at the base commit by round 1's file, which this cell replaces. They grade the SHAPE of whatever file sits at that path, never its vintage or its subject, so a cell that did nothing would print the same two PASS lines. The content this round actually turns on -- that the comparison reads the round-2 report at registry 254d4e9ece847acb, that N2's worked cases moved 43 -> 45, and what the stopped census did not reach -- has no mechanical reader; it is carried only by S2R-J1, which 3.0.0_SA_CVO grades at L9.",
     "notes": "Filed for form, not significance, and nothing was worked around: the rewrite was done as ordered and the two criteria are recorded PASS-by-output with their deciding lines, as the proof instance requires. The durable question for whoever recuts or adjudicates: a re-run cell whose criteria are inherited unchanged from the round it is redoing cannot be graded mechanically on the redo. A cheap discriminator exists in the shape the order already mandates -- the json's 'census' object names the report by path@commit, so a round-2 checker could require that pin to equal the report's own last-changing commit (db7eac8f1d) and refuse a comparison rebuilt against a stale census. This worker did not build that checker: fixed inputs are read-only in this order, and the criterion set is frozen mid-round."
+  },
+  {
+   "id": "LGIC_ENFORCE-S31",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T12:45Z",
+   "one_line": "THE WRITE-SURFACE CENSUS OVER-REPORTS AS WELL AS UNDER-REPORTS: EN-d-1 and EN-x-1 share TEN <paths> entries and are still safe to run together, because both wide grants exist only for a PRACTICE COPY on a scratch branch that never merges. S23/S24 were its false negatives; this is its false positive.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "MEASURED with the estate's own parser (_paths_block_entries from .tools/owned-paths-validate.py): EN-d-1 declares 11 entries, EN-x-1 declares 12, and the INTERSECTION IS TEN -- infra/logic/registry/scopes.json, data/firm_registry.json, firm-config.mjs, directory_runner.py, holdings_snapshot.py, loaders.py, perfrp_firm_pin.py, .tools/ds-precommit-check.py, infra/aws/terraform/modules/opal_name/ and the channel. Read on <paths> alone that is the largest contention of the round.",
+     "AND IT IS NOT ONE. Both orders carry the identical clause: 'The wide grant is for the PRACTICE COPY ONLY. The registry, the carriers and the module in <paths> are there so the scratch branch can commit the generator's output. Your slot branch commits only your records.' The ten shared entries are reachable only from a worktree that is never merged.",
+     "VERIFIED ON THE LIVE CELL RATHER THAN ON THE ORDER'S PROMISE, which is the point: EN-d-1 was running at the time, so I read both its branches. Its PRACTICE branch (prac-lgic-enforce-d1-r2) carries exactly the wide-grant set -- ds-precommit-check.py, the four gold/authz carriers, firm_registry.json, firm-config.mjs, three files under modules/opal_name/, scopes.json. Its SLOT branch (wk-lgic-enforce-2d-5) carries ONLY records under deliverables/0.9.0_WK_LGIC_ENFORCE~5/. The separation the orders promise is the separation the branches show.",
+     "SO THE DRAINED SURFACES ARE DISJOINT: EN-d-1's slot lands EXERCISE_FWD7_R2.md plus its own records; EN-x-1's lands EXERCISE_FWD2_R2.md plus its own. The only true intersection is the surprise channel, which is the known append-only case every drain already handles.",
+     "THIS COMPLETES THE PICTURE THE ROUND HAS BEEN BUILDING, and the two errors run in opposite directions: S23 and S24 are the census reading CLEAR on pairs that genuinely contended (instrument-vs-output, input-vs-output); this is the census reading CONTENDED on a pair that genuinely does not. A check that errs both ways is not a weak check, it is a check measuring the wrong property -- <paths> is a GRANT, and a grant is not a forecast of what will be written where.",
+     "THE TOOL BUILT FOR S23 DOES NOT FIX THIS EITHER, and its output says so: run on EN-x-1 it printed 'clear against 1 other open cell(s), 0 contentions'. That is the right answer here, but it is right by not asking the question -- it compares reads against grants, so it is silent on a grant-versus-grant overlap. Neither instrument reads the PRACTICE-COPY clause; a human did."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "The issuance write-surface census treats a non-empty <paths> intersection between two cells as contention.",
+   "world_is": "A <paths> entry says what a worker MAY write, not where or whether it will. Two cells can share ten entries and land disjoint surfaces, because the shared ten are reachable only from scratch branches that never merge. The census reads the grant and infers the act.",
+   "notes": "INERT: EN-x-1 was spawned on this reading and both cells are running. \u2b50 THE RULE, and it is the cheap half: when a <paths> intersection is non-empty, READ THE ORDERS' SCOPE CLAUSE BEFORE CALLING IT CONTENTION -- a grant scoped to a practice copy is not a claim on the shared tree. Better still, read the live cell's BRANCHES, which is what settled this one: the practice branch showed the wide set and the slot branch showed records only. COST: one <paths> diff plus one branch read. NON-APPLICATION: cells with no practice-copy clause, where the grant and the act are the same thing. \u26a0 The converse trap is worth naming too -- a cell that PROMISES to keep its slot branch clean and does not is a defect the drain must refuse, so this reading is only as good as the drain that enforces it."
   }
 ]
 ```
