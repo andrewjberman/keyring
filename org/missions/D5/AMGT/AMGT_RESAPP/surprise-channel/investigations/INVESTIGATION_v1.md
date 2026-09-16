@@ -6631,6 +6631,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "rk-1 AC1 expect: 'the SecurityAnalysis file count is 48 or more (it was 0 on DEV at the cut -- print the number, never a boolean)'.",
     "world_is": "The bar's 48 counted the page directory plus its endpoint file; the invocation's pathspec counts the directory only, which holds 47, so the literal bar reads short by the one file the pathspec excludes. The property (the whole page merged) is met by the worker's merge-stat evidence; the literal number is not.",
     "notes": "For 3.0.0_SA_CVO~Z at L9: the grade is 3.0.0_SA_CVO~Z's. The issuer's reading is that the bar was cut one higher than this pathspec can count, not that the merge is short; the order reads complete at HEAD b5882d4481. Filed so a self-graded reinterpretation reaches the grader as a row rather than only inside a worker report."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W25-S5",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~25",
+    "surfaced_at": "2026-09-16T14:44:02Z",
+    "one_line": "This order's <paths> grant names lib/research/universe/ and lib/research/scores/, but neither directory has ever existed in this repository (git log --all -- <path> returns nothing for either) -- 2 of the 8 grant lines named in section 3 fail the order's own pre-flight existence test.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "test -e lib/research/universe/ and test -e lib/research/scores/ both fail at HEAD de77282136; the other 6 grant lines in section 3 (lib/research/identity/, lib/research/peers/, lib/research/api/tests/, this cell's deliverables dir, INVESTIGATION_v1.md, this order's own file) all exist.",
+        "git log --all --oneline -- lib/research/universe/ lib/research/scores/ returns zero commits for either path in the whole repository history, and git log --oneline -1 -- lib/research/universe lib/research/scores likewise returns nothing -- these are not directories that were deleted, they were never created.",
+        "This cell's actual DELIVER (positioning_chain.py, build_universe.py, the universe object, coverage_pass.py, crosswalk.py) lives entirely under lib/research/identity/ and lib/research/peers/, which are both granted and present; no criterion in this order's proof-of-spec names universe/ or scores/ as a read or write target."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Worker-face preamble: 'Your first act prints git rev-parse --abbrev-ref HEAD and tests that org/, .tools/ and the paths in section 3 exist; if any is absent, STOP with a BLOCKING row.'",
+    "world_is": "2 of the 8 <paths> lines (lib/research/universe/, lib/research/scores/) are absent and have never existed in this repo; the other 6 are present. This cell's DELIVER does not require either absent path, so the run proceeded rather than treating the mismatch as a tree-integrity BLOCKING row -- the general worker bar's own language distinguishes 'the worktree does not carry the paths the task order names' (a broken/incomplete checkout, tested by org/ and .tools/ at the top) from a per-grant write surface that may legitimately be provisioned for work never exercised.",
+    "notes": "Not treated as BLOCKING: this is a write-grant surface (RULING 1: 'A SURFACE NOT NAMED IN <paths> IS A WALL... A READ needs no grant; this block governs WRITES'), no criterion in section 5 needs either path, and the substantive work this order names was already built and committed at 0a5064ded5 entirely inside the paths that DO exist. Recorded per the surprise-channel imperative (append and keep working) rather than halting the order."
   }
 ]
 ```
