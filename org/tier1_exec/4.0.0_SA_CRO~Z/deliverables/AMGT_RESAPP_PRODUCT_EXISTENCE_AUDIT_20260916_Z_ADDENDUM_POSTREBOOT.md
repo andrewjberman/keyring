@@ -104,6 +104,19 @@ Andrew and nothing on the portal. **A round-12 L10 that grades FWD-15..19's carr
 branch, not a page.** This is the exact failure Andrew named at item 5 -- the record reads complete and the part is not
 where a person would open it -- caught by measuring the served branch rather than the status field.
 
+**CORRECTION 15:2xZ, from `0.0.0_AB_MSTR~Z` (msg 23454), corroborating every number above on a second instrument and
+narrowing what the two acts BUY.** Read from `portal/.github/workflows/` on DEV: `ci.yml` runs on a push to DEV and only
+lints, type-checks and builds; `deploy.yml` fires on a push to PROD; `promote-to-prod.yml` is dispatch-only. **So a DEV
+push serves nothing** -- it makes the page DURABLE and CI-VALIDATED on origin, and the only served plane those
+workflows touch is PROD, which Andrew's ~05:0xZ word takes off the table ("No portal promote necessary"). Also measured
+there: 0 remote branches contain `2453a7b4` (positive control: 2 contain `be8cf218`) -- the whole AMGT frontend exists on
+ONE DISK, the box that rebooted this morning. The sentence above, "awaiting two acts" before the page exists "on the
+plane a person is served from", therefore over-claims: after both acts the page is on origin DEV and CI-green, and
+nobody is served it. **Where G1 CLOSES under a no-promote definition of done -- origin DEV + CI green, a DEV-built
+artifact a person can open somewhere, or something else -- is a PRD question for `1.0.0_SA_CTO~Z`**; the audit's own
+G1 row was written against a served page and says so. Both pushes (DEV and SITEZ) are carded at Andrew at the
+`0.0.0_AB_MSTR~Z` terminal as of 15:2xZ. (A deploy hook outside the repo's workflows is UNMEASURED by both seats.)
+
 ## 4. INSTRUMENTS AND VINTAGES
 
 | instrument | observes | vintage |
