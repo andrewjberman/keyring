@@ -1947,6 +1947,59 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     "spec_asserts": "LGIC_ENFORCE.TO-EN-r-4-r2 THE CELL item 4: 'A resource no owner can be named for gets NO row. It keeps its placeholder and is counted, never guessed.' The population's own _about field describes the 48 as resources 'whose canonical form carries {system} at the cut', implying each is a resource the naming system can locate and reason about.",
     "world_is": "Handled per the cell's own rule (both names are counted as placeholders in RESOURCE_ROWS.md with this absence as their reason, never guessed), so this is not a defect in this cell's output -- it is a gap in RESOURCE_GAPS.json's population itself: 2 of 48 fixed-input rows name a resource this worktree's Terraform tree cannot locate at all, so no Terraform-plane evidence can ever be cited for them, only a live-plane one (out of this cell's read surface, and RESOURCE_GAPS.json is a read-only fixed input this cell does not edit).",
     "notes": "Form only, no remedy owed here: the two placeholders are correctly counted, not guessed, and R4-AC10's gaps-covered check passes on them as counted-with-a-reason. Filed because a future round that tries to row these two from the repo alone will hit the same 0-hit absence, and the reason (LIVE-only provenance, not a missing citation on this seat's part) is not otherwise recorded anywhere the naming system reads."
+  },
+  {
+   "id": "LGIC_ENFORCE-S22",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T09:35Z",
+   "one_line": "EN-t-3 AS CUT CANNOT RUN ON THIS BOX: it orders terraform init on 73 Terraform roots and never says to clean up, and ONE initialised root costs 686 MB of AWS provider on this filesystem -- about 50 GB against 19 GB free. Caught at the pre-spawn read, before a worker filled the disk under four live siblings.",
+   "class": "BLOCKING",
+   "hazard_standing": "ARMED",
+   "disarm_owner": "2.0.0_SA_COO~G",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "THE ORDER: TO-EN-t-3-r2 item 1 says 'A root is a directory under infra/aws/terraform/ whose tracked .tf files declare a backend block; the checker enumerates them from git ls-files, 73 at the cut' and orders 'terraform init from the plugin cache, then a read-only plan, then show -json' for EACH one. Item 2 adds the pre-plan limb over all 78 Terraform directories. Nothing in the cell removes a root's .terraform afterwards.",
+     "THE UNIT COST, measured on the one root already initialised in the main checkout: du -sh infra/aws/terraform/portal-auth/.terraform reads 686M, and the breakdown is 686M in .terraform/providers with 4.0K of state -- the whole of it is providers/registry.terraform.io/hashicorp/aws.",
+     "IT IS A REAL COPY, NOT A LINK, which is the crux: TF_PLUGIN_CACHE_DIR IS set on this box (C:\\Users\\AndrewBerman\\.terraform.d\\plugin-cache, 722M) and the cache is populated, yet ls -la of the root's providers directory shows an ordinary directory tree. On this filesystem the plugin cache does not spare the per-root footprint, so the cache's existence is NOT mitigation.",
+     "THE ARITHMETIC: 73 roots x 686 MB is roughly 50 GB. df -h /c reads 19 GB free at the time of this row, with three LGIC_CANON workers and one LGIC_ENFORCE worker live, each holding a 1.5 GB worktree.",
+     "THE BLAST RADIUS IS NOT THE CELL. Filling this volume takes down every live worker, the other seats sharing the box and the shared index, not just EN-t-3 -- and a worker has no way to know it is the one that did it. That is why this is BLOCKING rather than an observation.",
+     "NEGATIVE CONTROL on the claim that this is about THIS cell rather than terraform generally: EN-t-2, the sibling that just drained at abd07c7ef3, ran every criterion against fixtures under fixed_inputs/r2/tests/t2r/ and a stub terraform, initialised nothing, and cost nothing. The exposure is specific to EN-t-3's real-roots sweep."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "TO-EN-t-3-r2: plan every one of the 73 backend-declaring roots with terraform init + plan + show -json, keeping a small JSON extract per root.",
+   "world_is": "The extracts are small, but the intermediate state each one requires is not: a single initialised root materialises 686 MB of AWS provider on this filesystem, and the cell orders 73 of them with no instruction to release any. As cut, the cell's peak disk demand exceeds this box's free space by roughly a factor of two and a half.",
+   "notes": "ARMED, disarm_owner 2.0.0_SA_COO~G. The remedy is the issuer's and is bounded: correct the cell's own instruction, BEFORE any spawn, to work one root at a time and remove that root's .terraform once show -json has been captured -- which caps the footprint at about one root rather than 73 and leaves every deliverable, criterion and <paths> entry untouched. Disarms when that correction is committed and the cell is spawned against it. NOT a licence to skip roots: a root that cannot be planned is still recorded NOT planned with its reason, exactly as the cell already says."
+  },
+  {
+   "id": "LGIC_ENFORCE-S23",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T09:38Z",
+   "one_line": "THE WRITE-SURFACE DISJOINTNESS CENSUS I RUN AT EVERY ISSUANCE CANNOT SEE AN INSTRUMENT DEPENDENCY: EN-s-1 and EN-r-6 have disjoint <paths> and read as safe to run together, but EN-s-1's census RUNS lib/opal_naming.py and EN-r-6 WRITES it.",
+   "class": "OBSERVATION",
+   "hazard_standing": "ARMED",
+   "disarm_owner": "2.0.0_SA_COO~G",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "THE TWO WRITE SURFACES ARE GENUINELY DISJOINT. EN-s-1 <paths>: NAMING_CENSUS_REPORT.md and the channel. EN-r-6 <paths>: lib/opal_naming.py, lib/tests/test_opal_naming.py, data/firm_registry.json, firm-config.mjs, directory_runner.py, holdings_snapshot.py, loaders.py, perfrp_firm_pin.py, ds-precommit-check.py, infra/aws/terraform/modules/opal_name/ and the channel. The intersection is the channel alone, which is the known append-only case every drain already handles.",
+     "AND YET ONE IS THE OTHER'S INSTRUMENT: EN-s-1's cell text is 'Run python lib/opal_naming.py census --live --repo --report ...' and adds 'The code is round 1's; do not change it.' lib/opal_naming.py is the FIRST entry of EN-r-6's write surface.",
+     "SO THE CENSUS THAT IS SUPPOSED TO CATCH CONTENTION RETURNS EMPTY ON EXACTLY THE PAIR THAT CONTENDS. A disjointness check over <paths> compares what two cells WRITE; it never asks what either cell RUNS or READS. Two cells can share no written byte and still have one produce the other's measuring instrument.",
+     "THE CONSEQUENCE IF IT HAD BEEN MISSED: EN-s-1 would have censused the live and repo planes with the PRE-EN-r-6 naming code and written NAMING_CENSUS_REPORT.md from it, and S1R-AC5 ('the report was written at HEAD's registry') would then be graded after EN-r-6's drain moved both the code and data/firm_registry.json. The report would be a faithful record of an instrument that no longer exists.",
+     "THE DECOMPOSITION DOES NOT CATCH IT EITHER: EN-s-1's declared depends_on is 'EN-r-2 and EN-r-4 round 2 (merged)' and both are complete, so by the dependency graph EN-s-1 is unblocked RIGHT NOW. The dependency that actually binds it is not in the graph.",
+     "GENERALITY, checked rather than assumed on the same round: EN-t-3 has the same shape one step weaker -- it runs .tools/naming-apply-gate.py, which EN-t-2 wrote, but EN-t-2 has already DRAINED at abd07c7ef3, so the instrument is settled and the ordering is satisfied. The pattern is 'runs what another open cell writes', and it binds only while that other cell is open.",
+     "This is CLAUDE.md Rule 22's shared-dependency limb -- a check scoped to the members cannot see a defect in what the members SHARE -- appearing at the ISSUANCE rather than inside a criterion. Each cell's write surface was verified; what they have in common, the code one of them executes, was not checked on its own."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "The round-2 preflight's write-surface line: 'MEASURED at the cut. The <paths> of every non-terminal order were intersected with this round's write surfaces; the intersection is EMPTY.'",
+   "world_is": "An empty write-surface intersection certifies that two cells will not overwrite each other. It does NOT certify that they can run concurrently, because it never reads the INVOCATIONS: a cell whose criterion executes a file another open cell is editing is contended on an axis this census does not have.",
+   "notes": "ARMED, disarm_owner 2.0.0_SA_COO~G. EN-s-1 is therefore HELD -- not blocked by its own dependency graph, held by this seat's judgment on measured evidence -- until EN-r-6 drains, and it is spawned against the post-drain lib/opal_naming.py so its report and S1R-AC5 describe the same instrument. Disarms when EN-s-1 is spawned after EN-r-6's drain AND the issuance census is widened to intersect each cell's INVOCATION targets with every open cell's <paths>, not only its own <paths>. The widening is the durable half; holding one cell is just this round's instance of it."
   }
 ]
 ```
