@@ -1235,6 +1235,54 @@ new row on 3.0.0_SA_CVO's ask 96495), both 1.0.0_SA_CTO; `LGIC_NAMING-S3`, `LGIC
     "spec_asserts": "check_ln_r4.py@bd0f5d2c6c:12: 'LN-g-2 grade() in lib/opal_naming.py implements FN1d; the rule and grade() cover each other (C-S11)'.",
     "world_is": "After this re-cut, grade() still cites K2, K3 and K4a, so a label-to-label check reads the two as covering each other. grade() still differs from the rule on all three steps: it returns OUT-OF-PATTERN with {tier} or {entity} where K3 and K4a RAISE, and CONFORMANT for mdpf/mdpf/... where K2 writes {scope}.",
     "notes": "INERT: no cell of either project renames a live name (PRD S13). grade() is LGIC_ENFORCE's code, held by 2.0.0_SA_COO~G; which round carries these three steps into it is that seat's cut. This worker did not run grade() on a K2, K3 or K4a key; the divergence is read from the code at the lines cited."
+  },
+  {
+    "id": "LGIC_NAMING-W2-S7",
+    "project": "LGIC_NAMING",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_NAMING~2",
+    "surfaced_at": "2026-09-16T06:39:26Z",
+    "one_line": "TO-LN-g-2-r4's base (CLOUD @ac82ad2331) read 4 failing tests before any edit -- test_grade_agrees_with_every_worked_case[mdpf-lambda-lambda|LAMBDA], [orion-orion-lambda-lambda|LAMBDA] and [default|SECURITY_GROUP], plus test_the_rule_has_its_worked_cases (45 worked cases, not the hard-coded 43) -- exactly the FN1d and G2 deltas this cell's items 1, 2 and 6 name, so RULING RED's 'file a BLOCKING row naming the failing tests' is filed here and disarmed in the same commit.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.9.0_WK_LGIC_NAMING~2 -- by implementing FN1d (item 1), G2's schema-driven NOT-GRADED (item 2) and updating the worked-case count from 43 to 45, all four named tests pass in the same commit that adds this row.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN in this worktree before any edit: python -m pytest -q -rf lib/tests/test_opal_naming.py -> '4 failed, 75 passed'; FAILED test_grade_agrees_with_every_worked_case[mdpf-lambda-lambda|LAMBDA] (Failed: DID NOT RAISE), [orion-orion-lambda-lambda|LAMBDA] (Failed: DID NOT RAISE), [default|SECURITY_GROUP] (RaiseDefect: G2.1 ... instead of NOT-GRADED), test_the_rule_has_its_worked_cases (AssertionError: assert 45 == 43).",
+        "org/missions/D14/LGIC/LGIC_NAMING/deliverables/2.0.0_SA_COO~G/fixed_inputs/r4/check_ln_r4.py@ac82ad2331 module docstring: 'BASE_FAILING = frozenset()  # lib/tests/test_opal_naming.py at 7b5331c8c0: 75 passed, 0 failed (RULING RED's base)' -- this worktree's base (CLOUD @ac82ad2331, which carries LN-g-1's round-4 GRADING_RULE.md and its two new FN1d specimen worked cases) is a LATER commit than 7b5331c8c0 and reads red where that pin read clean.",
+        "lib/opal_naming.py@ac82ad2331:1377-1382 (grade()): SECURITY_GROUP 'default' and the LOG_GROUP by-name checks RAISE; GRADING_RULE.md@ac82ad2331 G2 states NOT-GRADED. lib/opal_naming.py@ac82ad2331:1075-1084 (_grade_resource): no FN1d subtraction exists, so mdpf-lambda-lambda grades CONFORMANT.",
+        "task order LGIC_NAMING.TO-LN-g-2-r4 (this worker's WORKER FACE), item 6: 'RULING RED: the suite's failing set may not grow ... If your base is red before any edit, file a BLOCKING row naming the failing tests.'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-LN-g-2-r4 item 6: 'RULING RED: the suite's failing set may not grow. At 7b5331c8c0 it read 75 passed, 0 failed. If your base is red before any edit, file a BLOCKING row naming the failing tests.'",
+    "world_is": "This worker's base (CLOUD @ac82ad2331, the tip named in this order's BRANCH BASE clause) was already red: 4 of 79 tests failing before any edit, all four on exactly the FN1d/G2/worked-case-count deltas items 1, 2 and 6 of this same cell direct the worker to build. No test failed for an unrelated reason.",
+    "notes": "Filed and disarmed in the same commit: after implementing FN1d (R5's one subtraction), G2's schema-driven aws_fixed NOT-GRADED check, and updating test_the_rule_has_its_worked_cases' literal from 43 to 45, python -m pytest -q lib/tests/test_opal_naming.py reads 82 passed, 0 failed, and check_ln_r4.py g2-suite reads PASS-SUITE-NO-NEW-FAILURE (0 new failures against the 7b5331c8c0 base). class BLOCKING per the order's own instruction; the work proceeded because the fix was this cell's own deliverable, never a separate blocker on it."
+  },
+  {
+    "id": "LGIC_NAMING-W2-S8",
+    "project": "LGIC_NAMING",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_NAMING~2",
+    "surfaced_at": "2026-09-16T06:39:26Z",
+    "one_line": "check_ln_r4.py's g2_suite() greps pytest's captured stdout for a bare '^FAILED (\\S+)' line, but on this device pytest colours its output even under subprocess capture, so every FAILED line reads '\\x1b[31mFAILED\\x1b[0m ...' and the regex finds 0 matches whatever the true failure count is -- so 'NEW FAILURES AGAINST THE BASE' reads 0 on a tree with 18 genuine failures and g2-suite still prints PASS-SUITE-NO-NEW-FAILURE.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~G -- check_ln_r4.py is this seat's fixed input, outside this worker's write surface (BOUNDS: fixed inputs are read-only); the fix is a stripped-ANSI read (e.g. re.sub(r'\\x1b\\[[0-9;]*m', '', out) before the FAILED regex, or --color=no on the pytest invocation) in a later round's checker.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "DISCRIMINATING ARM (this worker's own mutant control): with 5 targeted mutations applied to a scratch copy of lib/opal_naming.py (backed up at .scratch/clean_opal_naming.py, restored byte-identical after, cmp confirmed), check_ln_r4.py g2-suite printed 'SUITE lib/tests/test_opal_naming.py: 64 passed, 0 failed ... NEW FAILURES AGAINST THE BASE: 0 [] ... VERDICT: PASS-SUITE-NO-NEW-FAILURE' while the SAME mutated tree run through python -m pytest -q -rf directly (no check_ln_r4.py in between) printed '18 failed, 64 passed'.",
+        "READ: check_ln_r4.py@ac82ad2331:390-404 g2_suite(): 'failed = set(re.findall(r\"^FAILED (\\\\S+)\", out, re.M))' over 'out = r.stdout + r.stderr' from subprocess.run([sys.executable, '-m', 'pytest', '-q', '-rf', '-p', 'no:cacheprovider', TESTS], capture_output=True, text=True) -- no --color=no and no ANSI strip.",
+        "MEASURED (this worker, same probe): subprocess.run of that exact pytest invocation returns stdout whose first FAILED line reads literally '\\x1b[31mFAILED\\x1b[0m lib/tests/test_opal_naming.py::\\x1b[1mtest_builder_outputs_grade_conformant ...' (repr'd), and re.findall(r'^FAILED (\\\\S+)', out, re.M) over that same stdout returns 0 matches.",
+        "NOT MEASURED: why this device's pytest colours a captured (non-tty) stream -- no PY_COLORS/FORCE_COLOR/pytest.ini --color=yes was read here; the cause is unconfirmed, only the effect."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "check_ln_r4.py@ac82ad2331:390-404, g2_suite()'s own comment and this order's G2R4-AC6: 'the suite, which carries the FN1d tests, fails nothing the base did not' -- implying a real failure on the graded tree would read FAIL-SUITE-RED-OR-NO-FN1D.",
+    "world_is": "On this device, g2-suite's FAIL branch is unreachable through its own instrument: a tree with 18 genuine new test failures (this worker's own mutant) still prints PASS-SUITE-NO-NEW-FAILURE, because the FAILED-line regex never matches pytest's ANSI-coloured captured output. This worker's own submission is unaffected (82 passed, 0 failed, confirmed by both check_ln_r4.py g2-suite AND a direct pytest run), so G2R4-AC6's PASS verdict for THIS instance is independently correct -- but a future worker's genuinely broken tree could read the same false PASS.",
+    "notes": "OBSERVATION, not BLOCKING: this worker's own AC6 evidence is corroborated by a second instrument (direct pytest, 82 passed/0 failed) that does not share the defect, so the deliverable's own acceptance row is sound. ARMED because nothing in the estate strips ANSI before the regex, and the next tree graded through g2-suite alone (no direct-pytest cross-check) would inherit the same false-PASS exposure."
   }
 ]
 ```

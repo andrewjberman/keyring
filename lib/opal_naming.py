@@ -836,7 +836,8 @@ _LOG_SERVICE = {"lambda": "LAMBDA", "codebuild": "CODEBUILD_PROJECT", "stepfunct
                 "vendedlogs/states": "STATE_MACHINE", "events": "EVENT_RULE", "ecs": "ECS_TASK_DEFINITION"}
 _CAMEL_RE = re.compile(r"(?<=[a-z0-9])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])")
 _RES_CHARS = re.compile(r"^[A-Za-z0-9._-]+$")
-_VAR_RE = re.compile(r"\{[^}]*\}|\*|%s")
+_VAR_RE = re.compile(r"\{[^}]*\}|\*|%s")  # N6: variable segments (S3Key) stand for any value of the part
+                                           # of a segment, or the whole segment, they occupy
 _KEBAB_JSON = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*\.json$")
 _SNAKE = re.compile(r"^[a-z0-9]+(_[a-z0-9]+)*$")
 _ENTITY = re.compile(r"^[^=]+=[^=]+$")
@@ -854,7 +855,7 @@ class _Vocab:
     """GRADING_RULE.md's vocabularies, read from the registry and NAMING_SCHEMA.json at run time.
 
     V1 is the systems.json keys and V2 its unresolved tokens: the rule calls its own V1 INTERIM and gives the
-    rows to this registry, which holds astn, trade and news unresolved (rows LGIC_ENFORCE-W1-S6, -W1-S11)."""
+    rows to this registry, which holds astn, trade and news unresolved (LGIC_ENFORCE-W1 rows 6 and 11)."""
 
     def __init__(self, reg, schema):
         systems = _systems(reg)
@@ -928,7 +929,7 @@ def _res_tokens(s, v, what):
 
     Pieces then rejoin into ONE token where they spell a vocabulary word: consecutive tokens joined by '-'
     (seeking-alpha, GRADING_RULE.md V1), or the camel pieces of one word joined whole (CloudWatch ->
-    cloudwatch, a V3 purpose word). Rule text does not state the second (row LGIC_ENFORCE-W1-S9)."""
+    cloudwatch, a V3 purpose word). Rule text does not state the second (LGIC_ENFORCE-W1 row 9)."""
     if not _RES_CHARS.match(s):
         raise RaiseDefect("G3: the tokeniser cannot place a character of %s %r" % (what, s))
     pieces = []
@@ -1051,6 +1052,29 @@ def _cadence_slot(func, v):
     return func, "{cadence}", True
 
 
+def _fn1d(func, sysv, scope_long, typ, v):
+    """R5's one subtraction (FN1d, NAMING_SCHEMA.json resource.function, v1.8), over the function slot R1
+    and R4 (and R6/R7's kept last-slot token) have already taken out: remove, in one pass, every token
+    written in the system or scope slot -- as the canonical form spells it (sysv; the scope's SHORT form) --
+    AND every token that is this type's own kind (any kind in DATA.kind.by_type for typ; a type with no
+    kind.by_type row, EVENT_RULE or SCHEDULE, has no own kind, so only system and scope tokens are removed).
+    A placeholder system ({system}) writes no token and removes nothing. A function empty BEFORE this
+    subtraction loses nothing to it (opal-gateway gives gateway-lb); a subtraction that empties a non-empty
+    function RAISES (grade.unplaceable), whichever rule removed the last token."""
+    if not func:
+        return func
+    drop = set()
+    if sysv and sysv != "{system}":
+        drop.add(sysv)
+    if scope_long:
+        drop.add(v.short[scope_long])
+    drop |= set(v.kinds_by_type.get(typ, ()))
+    out = [t for t in func if t not in drop]
+    if not out:
+        raise RaiseDefect("R5: the function subtraction (FN1d) leaves %r with no function token" % func)
+    return out
+
+
 def _grade_resource(nm, typ, v):
     if typ == "IAM_POLICY" and "#" in nm:  # R8: X#policy
         x, _, tail = nm.partition("#")
@@ -1071,17 +1095,18 @@ def _grade_resource(nm, typ, v):
     toks = _res_tokens(body, v, "a resource name")
     if not toks:
         raise RaiseDefect("G3: %r has no token" % nm)
-    sysv, out, scope_long, placeholder = _slots(toks, typ, v)
+    sysv, out, scope_long, placeholder = _slots(toks, typ, v)  # R1-R4
     func = [t for i, t in enumerate(toks) if i not in out]
     if typ in ("EVENT_RULE", "SCHEDULE"):
-        func, last, ph2 = _cadence_slot(func, v)
+        func, last, ph2 = _cadence_slot(func, v)  # R7
         placeholder = placeholder or ph2
     else:
         kinds = v.kinds_by_type[typ]
         last = func.pop() if func and func[-1] in kinds else kinds[0]  # R6
+    func = _fn1d(func, sysv, scope_long, typ, v)  # R5: the one subtraction (FN1d)
     parts = [sysv] + ([v.short[scope_long]] if scope_long else []) + func + [last]
     aliased = "-".join(_alias_spell(body.split("-"), v, "short")) + affix
-    return "-".join(parts) + affix, placeholder, aliased
+    return "-".join(parts) + affix, placeholder, aliased  # R9
 
 
 def _grade_secret(nm, v):
@@ -1096,11 +1121,14 @@ def _grade_secret(nm, v):
         for ti, t in enumerate(st):
             where.append(si)
             flat.append(t)
-    sysv, out, scope_long, placeholder = _slots(flat, "SECRET", v, first_of_segment=heads)
+    sysv, out, scope_long, placeholder = _slots(flat, "SECRET", v, first_of_segment=heads)  # S2 (system,
+    # segment 1's first token, R1-R3) and S3 (scope: segment 2 when it is a V4 token, SHORT form, else the
+    # secret is shared and the slot is omitted; a V4 token found anywhere else moves here) both reuse _slots.
     purpose = {}
     for i, t in enumerate(flat):
         if i not in out:
             purpose.setdefault(where[i], []).append(t)
+    # S4: the purpose is every remaining segment, each lowercase kebab, joined by /.
     parts = [sysv] + ([v.short[scope_long]] if scope_long else []) + ["-".join(purpose[k]) for k in sorted(purpose)]
     raw = [seg.split("-") for seg in nm.split("/")]
     spelled = _alias_spell([t for seg in raw for t in seg], v, "short")
@@ -1108,11 +1136,13 @@ def _grade_secret(nm, v):
     for seg in raw:
         rebuilt.append("-".join(spelled[k:k + len(seg)]))
         k += len(seg)
-    return "/".join(parts), placeholder, "/".join(rebuilt)
+    return "/".join(parts), placeholder, "/".join(rebuilt)  # S5: system/scope/purpose, scope dropped if none
 
 
 def _grade_log_group(nm, v):
-    """Section L: /aws/{service}/{resource-name}; G2.3 has already run."""
+    """Section L: /aws/{service}/{resource-name}; G2 (aws_fixed by-name) has already run."""
+    if not nm.startswith("/"):
+        raise RaiseDefect("L1: %r has no leading / and takes none of the three log-group shapes" % nm)
     parts = nm.split("/")
     l3 = len(parts) > 2 and parts[1] == "aws"
     if l3:
@@ -1138,7 +1168,8 @@ def _grade_log_group(nm, v):
 
 
 def _grade_bucket(nm, v):
-    """Section B: opal-data-{scope} and opal-{account-id}-{purpose}."""
+    """Section B: opal-data-{scope} and opal-{account-id}-{purpose}. An S3_BUCKET_POLICY takes this same
+    grammar: it carries its bucket's name exactly and is graded as that bucket (B5)."""
     if nm in v.standing:
         return nm, False, None  # B1
     if nm.startswith("opal-data-"):  # B2
@@ -1196,8 +1227,11 @@ def _on_list(entries, segs, prefix):
 
 
 def _new_served(rest, prefix):
-    """K4a's NEW served path forms, below the tier: (segments, placeholder)."""
-    out, placeholder = [], False
+    """K4a's NEW served path forms, below the tier: segments. A partition segment that is not an entity
+    partition {entity}={id} RAISES (grade.unplaceable) -- its entity is the key column's name, which the
+    name does not carry and no source outside it fills, so {entity} is never a placeholder (grade.placeholder
+    names the system, source, scope and cadence slots only): never a bare id, a literal or a variable."""
+    out = []
     leaf = None if prefix or not rest else len(rest) - 1
     if leaf == 0 and "." not in rest[0]:
         leaf = None
@@ -1210,9 +1244,8 @@ def _new_served(rest, prefix):
         elif _ENTITY.match(s):
             out.append(s)
         else:
-            out.append("{entity}={id}")
-            placeholder = True
-    return out, placeholder
+            raise RaiseDefect("K4a: %r is not an entity partition {entity}={id}" % s)
+    return out
 
 
 def _table(s):
@@ -1251,7 +1284,7 @@ def _grade_key(nm, v):
     if segs[0] in v.buckets:
         # A bucket is the key's container, never a segment of it (NAMING_SCHEMA.json key.container). A bucket
         # the registry knows is taken out, and it fills the slots it decides (K5.c): a firm's bucket, the scope.
-        # K1 as written RAISES here (row LGIC_ENFORCE-W1-S10).
+        # K1 as written RAISES here (LGIC_ENFORCE-W1 row 10).
         had_bucket, bucket_scope = True, v.bucket_firm.get(segs[0])
         segs = segs[1:]
         if not segs:
@@ -1272,8 +1305,7 @@ def _grade_key(nm, v):
                 if source is None and len(set(srcs)) == 1:
                     source = srcs[0]
             else:
-                tail, ph = _new_served(tail, prefix)
-                placeholder = placeholder or ph
+                tail = _new_served(tail, prefix)  # K4a
         if source is None:
             source, placeholder = "{source}", True
         if scope is None:
@@ -1305,16 +1337,15 @@ def _grade_key(nm, v):
                 out.append(s)
                 i += 1
             else:
-                out.append("{tier}")
-                placeholder = True
+                # K3: the name does not carry its tier and no source outside it fills one, so this is not a
+                # placeholder (grade.placeholder names the system, source, scope and cadence slots only).
+                raise RaiseDefect("K3: %r is not a tier (V7)" % s)
         rest = segs[i:]
         if tier == "platinum":
             if _on_list(_legacy_list(v), out + rest, prefix):
                 out += rest  # K4a: a legacy served path keeps its bytes
             else:
-                new, ph = _new_served(rest, prefix)
-                out += new
-                placeholder = placeholder or ph
+                out += _new_served(rest, prefix)  # K4a
         elif rest:
             out += ([rest[0]] if tier == "code" else [_table(rest[0])]) + rest[1:]  # K3, K4b
     else:
@@ -1333,28 +1364,30 @@ def grade(name, type):
     """(verdict, canonical_form) for a name of a node type, by LGIC_NAMING's GRADING_RULE.md.
 
     The verdict is CONFORMANT, ALIAS or OUT-OF-PATTERN, with the canonical form; NOT-GRADED (canonical None)
-    for a type outside the grade's domain (G1.2). A name the rule cannot place raises RaiseDefect, naming the
-    step. The canonical form fills every slot it can and carries a placeholder ({system}, {source}, {scope},
-    {tier}, {cadence}, {entity}) for each slot it cannot: it never guesses."""
+    for a type outside the grade's domain (G1.2) or a name NAMING_SCHEMA.json aws_fixed puts outside it
+    (G2.1 by name, read from the schema at run time; G2.2 by ARN is the caller's job -- grade(name, type)
+    never receives an ARN). A name the rule cannot place raises RaiseDefect, naming the step. The canonical
+    form fills every slot it can and carries a placeholder ({system}, {source}, {scope} or {cadence}, exactly
+    the set grade.placeholder allows) for each slot it cannot: it never guesses."""
     v = _vocab()
     if type not in v.types:
         raise RaiseDefect("G1.1: %r is not a node type of NAMING_SCHEMA.json" % (type,))
     if type in v.not_graded:
-        return "NOT-GRADED", None
+        return "NOT-GRADED", None  # G1.2
     if not isinstance(name, str) or not name or not name.isascii():
         raise RaiseDefect("G3: %r is not a non-empty ASCII name" % (name,))
-    if type == "SECURITY_GROUP" and name == "default":
-        raise RaiseDefect("G2.1: AWS names every VPC's default security group")
-    if type in ("IAM_POLICY", "IAM_ROLE") and name.startswith(("AWS", "Amazon")):
-        raise RaiseDefect("G2.2: %r is AWS-managed by its prefix" % name)
-    if type == "LOG_GROUP" and (not name.startswith("/") or name.startswith("/aws/ecs/containerinsights/")):
-        raise RaiseDefect("G2.3: %r is a log group AWS names" % name)
+    # G2.1: NAMING_SCHEMA.json aws_fixed.by_name, read at run time -- never hand-listed. G2.2 (by ARN) is
+    # outside grade()'s reach: grade(name, type) never receives an ARN, so the caller that holds the node's
+    # ARN applies that exclusion before it calls grade() and does not grade an AWS-managed IAM_POLICY here.
+    if _aws_fixed(type, name, None, _schema()):
+        return "NOT-GRADED", None
     grammar = "R" if type in v.kinds_by_type else _OTHER_GRAMMAR.get(type)
     if grammar is None:
         raise RaiseDefect("G1.3: %r takes no grammar in GRADING_RULE.md" % type)
-    canon, placeholder, aliased = _GRAMMARS[grammar](name, type, v)
+    canon, placeholder, aliased = _GRAMMARS[grammar](name, type, v)  # V-1: the canonical form, by the
+                                                                      # grammar of the type
     if placeholder:
-        return "OUT-OF-PATTERN", canon  # V-2
+        return "OUT-OF-PATTERN", canon  # G6; V-2
     if canon == name:
         return "CONFORMANT", canon  # V-3
     if aliased is not None and aliased == canon:
@@ -1530,36 +1563,19 @@ def generate(out_dir, targets=None):
 #         files and Lambda sources, each string literal the rule below places as a name (_census_classify).
 #         Vendored code (a package beside a *.dist-info, layers/, node_modules/, tests/) is not Opal's naming.
 
-CENSUS_TF_ATTR = {  # Terraform resource type -> (node type, the attribute carrying the resource's name)
-    "aws_lambda_function": ("LAMBDA", "function_name"),
-    "aws_iam_role": ("IAM_ROLE", "name"),
-    "aws_iam_policy": ("IAM_POLICY", "name"),
-    "aws_iam_role_policy": ("IAM_POLICY", "name"),
-    "aws_iam_user_policy": ("IAM_POLICY", "name"),
-    "aws_iam_instance_profile": ("INSTANCE_PROFILE", "name"),
-    "aws_security_group": ("SECURITY_GROUP", "name"),
-    "aws_api_gateway_rest_api": ("API_GW", "name"),
-    "aws_apigatewayv2_api": ("API_GW", "name"),
-    "aws_dynamodb_table": ("DYNAMODB_TABLE", "name"),
-    "aws_sqs_queue": ("SQS_QUEUE", "name"),
-    "aws_sns_topic": ("SNS_TOPIC", "name"),
-    "aws_cloudwatch_metric_alarm": ("CW_ALARM", "alarm_name"),
-    "aws_lambda_layer_version": ("LAMBDA_LAYER", "layer_name"),
-    "aws_instance": ("EC2_INSTANCE", "tags.Name"),
-    "aws_codebuild_project": ("CODEBUILD_PROJECT", "name"),
-    "aws_ssm_document": ("SSM_DOCUMENT", "name"),
-    "aws_ecs_task_definition": ("ECS_TASK_DEFINITION", "family"),
-    "aws_sfn_state_machine": ("STATE_MACHINE", "name"),
-    "aws_lb": ("LOAD_BALANCER", "name"),
-    "aws_ecs_cluster": ("ECS_CLUSTER", "name"),
-    "aws_cloudwatch_event_rule": ("EVENT_RULE", "name"),
-    "aws_scheduler_schedule": ("SCHEDULE", "name"),
-    "aws_cloudwatch_log_group": ("LOG_GROUP", "name"),
-    "aws_s3_bucket": ("S3_BUCKET", "bucket"),
-    "aws_s3_bucket_policy": ("S3_BUCKET_POLICY", "bucket"),
-    "aws_s3_object": ("S3Key", "key"),
-    "aws_secretsmanager_secret": ("SECRET", "name"),
-}
+_CENSUS_TF_ATTR_CACHE = {}
+
+
+def _census_tf_attr():
+    """Terraform resource type -> (node type, the attribute carrying the resource's name), read from
+    NAMING_SCHEMA.json tf_type_map (v1.9, C-S11) at run time -- never hand-listed. A Terraform type whose
+    tf_type_map name_attribute is null carries no name to census and is excluded."""
+    if "m" not in _CENSUS_TF_ATTR_CACHE:
+        _CENSUS_TF_ATTR_CACHE["m"] = {t: (e["node_type"], e["name_attribute"])
+                                       for t, e in _schema()["tf_type_map"].items() if e.get("name_attribute")}
+    return _CENSUS_TF_ATTR_CACHE["m"]
+
+
 CENSUS_LAMBDA_ROOT = "infra/aws/lambda/"
 CENSUS_TF_ROOT = "infra/aws/terraform/"
 CENSUS_SOURCE_EXT = (".py", ".mjs", ".js", ".cjs", ".ts")
@@ -1755,10 +1771,11 @@ def census_tf_names(path, text):
     literal; and each (node type, 'path:line') whose name is an expression, not a literal (not judged)."""
     text = text.replace("\r\n", "\n")
     names, exprs = [], []
+    attr_map = _census_tf_attr()
     for it in _tf_items(text, 0, len(text)):
-        if it[0] != "block" or it[1] != "resource" or len(it[2]) != 2 or it[2][0] not in CENSUS_TF_ATTR:
+        if it[0] != "block" or it[1] != "resource" or len(it[2]) != 2 or it[2][0] not in attr_map:
             continue
-        typ, attr = CENSUS_TF_ATTR[it[2][0]]
+        typ, attr = attr_map[it[2][0]]
         where = "%s:%d" % (path, _line_of(text, it[3]))
         attrs = {a[1]: a for a in _tf_items(text, it[4], it[5]) if a[0] == "attr"}
         raw = None
@@ -2101,7 +2118,7 @@ def _census_prose(doc, stats, ng_counts, fixed_counts):
         "## The repo plane",
         "",
         "- Terraform: %d tracked .tf files under `%s`; the name attribute of each resource of a graded type "
-        "(`CENSUS_TF_ATTR`), when it is ONE literal; %d name(s) that are expressions are not names and are not judged."
+        "(NAMING_SCHEMA.json tf_type_map), when it is ONE literal; %d name(s) that are expressions are not names and are not judged."
         % (stats.get("tf_files", 0), CENSUS_TF_ROOT, stats.get("tf_expressions", 0)),
         "- Sources: %d tracked files -- every config.py, and the Lambda sources under `%s` (%s) -- after %d vendored "
         "and test files were excluded; each string literal `_census_classify` places as a name; %d placed template(s) are not "
