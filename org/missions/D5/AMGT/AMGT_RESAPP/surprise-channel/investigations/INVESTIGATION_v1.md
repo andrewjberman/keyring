@@ -7004,6 +7004,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "AMGT-rk-2 AC7's own <expect> text: '/print 500 is AMGT-rk-6's gap' -- naming /print's remediation as AMGT-rk-6's remit, and citing only the matplotlib/pypdf packaging cause.",
     "world_is": "/print's 500 has (at least) TWO independent root causes on this cell's own redeployed adapter: the already-known missing matplotlib/pypdf packages, AND this hardcoded deliverables path absent from the Lambda package. Fixing only the first would still leave /print 500ing on this second cause for BA_US_Equity and every other covered key.",
     "notes": "lib/research/print/ sits inside AMGT-rk-2's own <paths> grant, but the task order's own text reserves /print's remediation to AMGT-rk-6 (this worker's queued next order in Chain B), and AC7's pre/post GET census treats /print as pre-existing-broken (not a route this cell's act may regress, since it never answered 200 to begin with). Not repaired here; disarm_owner set to this worker's own next-queued order (AMGT-rk-6) rather than a different seat, since Chain B gives it the one writer of lib/research/print/. Disposition at L9 is 3.0.0_SA_CVO~Z's."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S131",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-16T18:19:15Z",
+    "one_line": "AMGT-rk-8's AC1 named /security/{key}/posture as one of the five routes captured from the deployed adapter, and the adapter has no such route: the posture surface is served NESTED inside the /overlay body and the page's client never fetches a posture route. Both criteria PASSED as written because a 404 body is non-empty JSON, so the defect was silent and aimed at AC4's L9 judgment. ISSUER AMENDMENT 11 swaps the fifth route to /coverage and bars overlay-has-posture instead.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/research/api/scoped_amgt.py:2615 @c0131af3fe, scoped_amgt_route_table(): 11 entries, 8 GET, no posture leaf; the coverage entry is at :2627. Bytes at :2615 read 'def scoped_amgt_route_table() -> List[str]:'.",
+        "Deployed adapter, direct GET-only invoke of opal-amgt-scoped-api with the /api/scoped/amgt prefix and an x-firm-id header: /security/BA_US_Equity/posture returns 404 with body keys ['reason','refused'], 111 bytes, while /security/BA_US_Equity/coverage returns 200 with 18 body keys, 1455 bytes.",
+        "The /overlay body returns 200 at 45988 bytes with keys axis_reads, bloomberg_session_state, chatter, description, feed, header_figures, identity, peers, posture, price, security_key -- so the posture surface rides /overlay.",
+        "portal/src/api/endpoints/amgt-lead-panel.ts on wk-amgt_resapp-12-23-portal (AMGT-rk-1's integrated branch): the security fetches are overlay, peers, thesis, coverage and print, plus lead-panel/rankings and lead-panel/timeseries. Zero posture fetches across the page's 68 files on that branch.",
+        "Issuer dry run of the REPAIRED AC1 and AC2 end to end: all five routes 200 (overlay 50197, peers 19603, rankings 7319, thesis 221015, coverage 1696), captured 5, files 5, nonempty-bodies 5, overlay-has-description True, overlay-has-posture True, peers-has-members True."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT-rk-8's cell text DELIVER line and AC1 both name five routes captured from the DEPLOYED adapter, the fifth being /security/{key}/posture.",
+    "world_is": "The deployed adapter serves no /posture route and the page's client never calls one; posture is a nested object inside the /overlay body. The criterion's other four routes are all real and all serve 200.",
+    "notes": "The cell text is FROZEN and still reads /posture; the amendment corrects the OBJECT only, on AMENDMENT 2's precedent, and the count of five does not move. AC3 and AC4 are byte-identical. This row exists because the defect was SILENT -- both criteria were passable on a non-existent route -- and because AC4 is the JUDGMENT criterion 3.0.0_SA_CVO~Z grades at L9: without this row a grader reading a refused posture surface could grade the page unusable on a route the product does not have. No grant path, bound or cell text moves."
   }
 ]
 ```
