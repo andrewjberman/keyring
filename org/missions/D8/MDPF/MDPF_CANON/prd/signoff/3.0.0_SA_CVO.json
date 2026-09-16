@@ -1,11 +1,12 @@
 {
   "prd": "MDPF_CANON_PRD.md",
-  "prd_version": "v2.2",
-  "prd_pin": "ef21e346608974de3611bd69ee36a1a110a6b355",
+  "prd_version": "v2.4",
+  "prd_pin": "ef899e790f58345148027c7b71a5750ee300173d",
   "half": "ratified-text",
-  "half_hash": "d5177552975dceaaca733a6e8d5a790765891b9fcf7b6ef5e77ccece7b5e1fac",
-  "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/PRD_REVIEW_MDPF_CANON_v2.2_RATIFIED_TEXT_HALF_20260914.md@017638fd25",
+  "half_hash": "5c03134b9ddaf7c3bdf85e37438f3e25cebe88e9a07c73ebe58294654ee6af13",
+  "verdict": "REFUSED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/PRD_REVIEW_MDPF_CANON_v2.4_RATIFIED_TEXT_HALF_20260916.md@9bc1cac31a",
   "signed_by": "3.0.0_SA_CVO",
-  "signed_at": "2026-09-14T10:07:45Z"
+  "signed_at": "2026-09-16T18:46:49Z",
+  "reason": "gold fixed but the same row still types state at opal-data-mdpf, wrong for 4 of 5 scopes by address() and R21; plus revision history and a seat reference inside CONTRACTS"
 }
