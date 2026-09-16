@@ -1274,8 +1274,15 @@ def _worker_carrier_violations(rid, row):
     return out
 
 
-def _check_row(row, kind, schema):
-    """Complaints about ONE NEW row. Schema-required + closed enums + the step-7/10 fields."""
+def _check_row(row, kind, schema, carried=False):
+    """Complaints about ONE NEW row. Schema-required + closed enums + the step-7/10 fields.
+
+    `carried` (R-28, 1.0.0_SA_CTO 2026-09-16): True only for a row a MERGE CARRIED from a parent (`_row_was_carried`).
+    The OWNER-AND-CARRIER limbs (R-18(2), R-19(2), A-1) grade the AUTHORING act -- who a seat named as owner, which
+    fields a worker wrote -- so they bind where the row is minted, exactly as the two L10 precondition limbs do. Measured
+    on the CLOUD->SITEZ leg: SITEZ had never touched D14, so 9 LGIC rows minted 02:54-10:45 EDT, BEFORE these limbs
+    landed @9d10c4b796 (11:40 EDT), read as NEW there and refused a merge that has no override path -- rows the
+    mutation limb forbids editing, whose clocks were already DISARMED or INERT. Schema and enum limbs still grade."""
     out = []
     rid = row.get("id", "<no id>")
     props = schema.get("properties", {})
@@ -1342,11 +1349,12 @@ def _check_row(row, kind, schema):
         if row.get("hazard_standing") == "ARMED" and not str(row.get("disarm_owner", "")).strip():
             out.append("%s: hazard_standing=ARMED with no disarm_owner -- ARMED without an owner "
                        "is a hazard nobody has agreed to hold" % rid)
-        out += _owner_field_violations(rid, row.get("disarm_owner"), "disarm_owner")
-        out += _worker_carrier_violations(rid, row)
+        if not carried:
+            out += _owner_field_violations(rid, row.get("disarm_owner"), "disarm_owner")
+            out += _worker_carrier_violations(rid, row)
     else:
         dz = row.get("disarm")
-        if isinstance(dz, dict):
+        if isinstance(dz, dict) and not carried:
             out += _owner_field_violations(rid, dz.get("owner"), "disarm.owner")
         route, target = row.get("route"), row.get("loop_target")
         # REMEDIATED-IN-ROUND (2026-09-03, the gate-model fork between 1.0.0_SA_CTO and 1.0.0_SA_CTO~Z, ruled at the
@@ -1606,7 +1614,9 @@ def check_file(root, rel):
             v.append("%s: NEW row %s says project=%r but the file sits in %r's folder. The path is the "
                      "membership; a row filed under another project is an identity defect."
                      % (rel, rid, row["project"], folder_project))
-        v.extend(_check_row(row, kind, schema))
+        # R-28: a CARRIED row is not re-graded on the owner-and-carrier limbs; `_pids` None (no merge, or parents
+        # unreadable) carries nothing, so off a merge and fail-closed every limb grades.
+        v.extend(_check_row(row, kind, schema, carried=_mrg_now and _row_was_carried(row, _pids)))
         # GATE (iii), both limbs, both route shapes: a NEW tree row that carries a route waits for every TO under
         # the project to be terminal AND every investigation item under it to be dispositioned.
         # spine v3.0 L10 carrier 6: the precondition applies to EVERY new remediation row under a tree project (the slug
@@ -2059,6 +2069,19 @@ def _self_test(root):
              lambda: _none(_check_row(inv(surfaced_by="3.0.0_SA_CVO", disposition="GRADUATED", adjudicates=["X_PRJ-W2-S2"]), "INVESTIGATION", ischema))),
             ("A-1 CONTROL: a WORKER's row filed UNDER_INVESTIGATION with no adjudicates -> no carrier complaint",
              lambda: _none(_check_row(inv(surfaced_by="0.9.0_WK_X_PRJ~3", disposition="UNDER_INVESTIGATION"), "INVESTIGATION", ischema))),
+            # R-28: the owner-and-carrier limbs grade the AUTHORING act, so a row CARRIED by a merge is not re-graded.
+            ("R-28 CARRIED inv: CVO disarm_owner + a WORKER's GRADUATED/adjudicates on a carried row -> no owner/carrier complaint",
+             lambda: _none(_check_row(inv(surfaced_by="0.9.0_WK_X_PRJ~3", hazard_standing="ARMED", disarm_owner="3.0.0_SA_CVO",
+                                          disposition="GRADUATED", adjudicates=["X_PRJ-W2-S2"]), "INVESTIGATION", ischema, carried=True))),
+            ("R-28 NARROWNESS inv: the SAME row not carried (minted) -> still refused on the R-19 and A-1 limbs it trips",
+             lambda: all(_has(_check_row(inv(surfaced_by="0.9.0_WK_X_PRJ~3", hazard_standing="ARMED", disarm_owner="3.0.0_SA_CVO",
+                                             disposition="GRADUATED", adjudicates=["X_PRJ-W2-S2"]), "INVESTIGATION", ischema), t)
+                         for t in ("(R-19)", "C-S24"))),
+            ("R-28 NARROWNESS schema: a carried row is still graded on the schema (an enum outside the ratified set refuses)",
+             lambda: any("not in the ratified enum" in x for x in _check_row(inv(disposition="NOT_A_DISPOSITION"), "INVESTIGATION", ischema, carried=True))),
+            ("R-28 WIRING: check_file passes carried only as a merge AND a parent-carried id (fail-closed on None parents)",
+             lambda: "carried=_mrg_now and _row_was_carried(row, _pids)" in inspect.getsource(check_file)
+             and _row_was_carried({"id": "X_PRJ-S3"}, None) is False),
         ]
     if rschema is not None:
         arms += [
@@ -2068,6 +2091,8 @@ def _self_test(root):
              lambda: _has(_check_row(rem(hazard_standing="ARMED", disarm={"state": "ARMED", "owner": "3.0.0_SA_CVO", "at": None}), "REMEDIATION", rschema), "(R-19)")),
             ("owner CONTROL rem: disarm.owner names the CTO -> no owner complaint",
              lambda: _none(_check_row(rem(hazard_standing="ARMED", disarm={"state": "ARMED", "owner": "1.0.0_SA_CTO", "at": None}), "REMEDIATION", rschema))),
+            ("R-28 CARRIED rem: disarm.owner names a WORKER on a carried row -> no owner complaint",
+             lambda: _none(_check_row(rem(hazard_standing="ARMED", disarm={"state": "DISARMED", "owner": "0.9.0_WK_X_PRJ~2", "at": "2026-09-16T14:05Z"}), "REMEDIATION", rschema, carried=True))),
         ]
     # THE ITEM CENSUS and THE ALLOCATOR RACE (94007 / 94010, v3's first drain): items vs the CVO's rows; one id, two documents.
     ADJ = "org/missions/D11/NFRA/X_PRJ/surprise-channel/adjudications/ADJUDICATION_v1.md"

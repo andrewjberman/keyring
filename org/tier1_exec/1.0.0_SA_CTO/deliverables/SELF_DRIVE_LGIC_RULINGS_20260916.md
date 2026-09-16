@@ -1207,3 +1207,30 @@ checking it still existed -- the same class as R-23's file name (S58), and the s
 **Nothing else moves.** Round 3 is armed on every worker cell (2, 3a, 4, 5, 6, 7, 8, 9; self-test 74 of 74 @5fc05ba145; decomposition
 v3.2 @bea120f78c with six slots, cells 5 and 7 sharing a queue because both regenerate the two opal_name fixtures). The eight faces and
 the one issuance commit are next and nothing here holds them.
+
+### R-28 (~23:3xZ) -- the CLOUD->SITEZ merge's 9 refusals: NOT live violations; a GATE DEFECT in this seat's own R-22 limbs, fixed. A row a merge CARRIES is not re-graded on the owner-and-carrier limbs (R-18(2), R-19(2), A-1); a row MINTED in the merge still is
+
+**Call:** `0.0.0_AB_MSTR` 97584 (LD-0578), relaying `0.0.0_AB_MSTR~Z`'s held leg: safe-merge of CLOUD into SITEZ refused on 9 owner/carrier
+violations across LGIC_CANON-C-S20, -W5-S2, LGIC_ENFORCE-C-S17, -S46 (x2), -W3-S11 (x2), LGIC_NAMING-W2-S7 (x2). Two questions: are the rows
+wrong at source, and may a merge re-grade them.
+
+**1. The rows -- NOT live violations, and NOT editable.** Blame at 9d7cc9ae72: every one was minted 02:54-10:45 EDT on 2026-09-16; the
+limbs landed @9d10c4b796 at 11:40 EDT. They are the MEASURED cases those limbs were written from (W2-S7, W5-S2, the C-S24 class). Every
+clock they name is already closed: the remediation rows for W5-S2 (owner moved to `2.0.0_SA_COO~G` by the R-19 addendum's fourth move),
+S46 and W2-S7 read `disarm.state` DISARMED; W3-S11's item was dispositioned by the CVO's own INERT remediation row @82884cf465. The
+investigation and adjudication rows are append-only and the mutation limb forbids rewriting them. A "fix at source" would be revisionism
+of a record that was correct under the rules of its hour.
+
+**2. The gate -- DEFECT, OWNED.** `check_file` ran `_check_row` on every HEAD-relative NEW row, including on a merge, with no
+carried-vs-minted discriminator. SITEZ's D14 tree is byte-identical to the merge-base, so every LGIC row is "new" there. The two L10
+precondition limbs already exempt a CARRIED row (Andrew ~19:3xZ 2026-09-11, `_row_was_carried`); my R-22 limbs grade the same kind of
+thing -- an AUTHORING act -- and should have used the same test. **Ruling:** the three owner/carrier limbs skip a row the merge's parents
+carry; schema/enum limbs, the duplicate-id limb and the coordinate limb are unchanged; off a merge, or with parents unreadable, every limb
+grades (fail-closed).
+
+**Exercised, not asserted.** Self-test 136 of 136 (5 new arms: carried inv, carried rem, minted narrowness, schema still graded, wiring).
+Real reader on the real merge: a sparse worktree at origin/SITEZ @6f46ed0703, `git merge --no-commit 9d7cc9ae72` (the one expected
+lambda-source-map conflict), the 18 staged D14 channel files graded with MERGE_HEAD present -- OLD gate rc=1 with exactly the 9, NEW gate
+rc=0 with 0. Mutant: a copy of W2-S7 re-id'd W2-S999 and appended in the merge -> NEW gate rc=1, refused on the owner limb. Worktree removed.
+
+**The leg:** `0.0.0_AB_MSTR~Z` re-runs safe-merge against origin/CLOUD at or after the commit carrying this ruling. No override, no row edit.
