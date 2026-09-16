@@ -27,9 +27,9 @@ STATES: `closed` is false on every row. **19 ARMED**, and per R-14 that is a FIL
   "owner": "1.0.0_SA_CTO",
   "round": "v2",
   "disarm": {
-   "state": "ARMED",
+   "state": "DISARMED",
    "owner": "3.0.0_SA_CVO",
-   "at": null
+   "at": "2026-09-16T15:00Z"
   },
   "remediation": {
    "state": "OPEN",
@@ -758,9 +758,9 @@ STATES: `closed` is false on every row. **19 ARMED**, and per R-14 that is a FIL
   "owner": "1.0.0_SA_CTO",
   "round": "v2",
   "disarm": {
-   "state": "ARMED",
+   "state": "DISARMED",
    "owner": "1.0.0_SA_CTO",
-   "at": null
+   "at": "2026-09-16T15:00Z"
   },
   "remediation": {
    "state": "OPEN",
