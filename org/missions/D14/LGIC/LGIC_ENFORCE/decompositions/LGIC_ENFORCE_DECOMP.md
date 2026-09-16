@@ -421,6 +421,64 @@ read `complete` at HEAD (`EN-d-1`, `EN-g-1`, `EN-s-2`, `EN-t-2`), and NO task or
 the reader that matters -- `owned-paths-validate.py`'s `_TO_STATUS_RE` takes the FIRST word token and is
 line-anchored, and `EN-g-1-r2` already carries prose after its word at HEAD.
 
+### v3.1 AMENDMENT (pre-issuance): RULING R-23 @2a2d10acd8 -- THE THREE CROSS-PROJECT ROUTES COLLAPSE TO NONE
+
+`1.0.0_SA_CTO` ruled S57 before this round was issued, so this amends the cut rather than moving a frozen
+spec. **Cells 4, 5 and 7 are WORKER cells in full, registry half included.** The three routes s.0c sends to
+`4.0.0_SA_CRO` and to `1.0.0_SA_CTO` do not exist; nothing is owed at either seat, and no lane is widened.
+
+**THE MECHANISM THIS CUT MISSED, and it is the converse of the warning s.0c itself prints.** The act census
+above is a census of LANES and is correct as one -- the ruling says so in terms. But a worker's admission does
+not come only from a lane: `owned-paths-validate.py` `_owns_task_order_paths` (`:209-235`, ADHC_OWNPTH.005,
+Andrew-direct "recs approved" @`9ef9a40aae`) admits a `0.9.0_WK_<CODE>~<n>` on ANY path a NON-TERMINAL order
+issued to it names in `<paths>` -- exact, glob or `dir/` prefix (`_order_grants :162-173`) -- consulted after
+lane enumeration fails, **for every lane, `PLATFORM_LOGIC_DOCS` included.**
+
+```
+  s.0c's warning   a census run over a tree with STALE faces measures the FACES, not the lanes
+  its CONVERSE     a census run with NO face measures the LANES, not the GRANT THE ISSUANCE CREATES
+```
+
+Both are true, and this cut walked from the first straight into the second. Retiring the six stale faces
+@`9f9d006c8b` was right and the post-flip reading was right; what does not follow is "whose act", because the
+grant this round's own `<paths>` will mint had not been written yet. **The order IS the grant: created by the
+issuance, retired by the drain** (a terminal order grants nothing, `_worker_orders :176-178`). That is exactly
+why `0.9.0_WK_LGIC_ENFORCE~1` read PERMIT on `scopes.json` while the stale face was pending and REFUSED the
+moment it was retired -- the face went away, the mechanism did not.
+
+**THE CORROBORATING MEASUREMENT, on an instrument other than this seat's** (`git log -- infra/logic/registry/`):
+every commit that has ever written the registry in this project is a WORKER's -- EN-r-1 @`a925c8a642`, EN-f-1
+@`080e1b97c6`, EN-r-3-r2 @`22e86e55f5`, EN-r-2 @`72d636db4f`, EN-r-4 @`b15ed01ee6` (30 rows), all
+`0.9.0_WK_LGIC_ENFORCE~1`; EN-r-5 @`c19dcc8147`, `~6`. **Six of six, zero by a CRO serial.** `PLATFORM_LOGIC_DOCS`
+binds seats acting OUTSIDE an order, which is what its minting commit @`df27878bfe` was for; the CRO's hand is
+the PRD's ratified text and the brief half, not the rows.
+
+**CELL 4 IS A WORKER CELL TOO, and clause 5 admits the worker on BOTH sides of the `git mv`.** R-2 and R-12 are
+OWNED by the ruling for naming the cell without the mechanism that admits its mover: the lane genuinely admits
+nobody, and this seat was right about that -- but the order's `<paths>` is what moves the files. The cut names
+**each of the 18 source paths** (`git ls-tree HEAD`, blobs only, denominator printed at the cut) **and each
+destination `deliverables/<first-minting-author>/` folder** (`git log --diff-filter=A --format=%an`: 17 are
+workers' files; `FENCE_PROBES.md` @`d482e58ecf` is this seat's own and moves under clause 4). Citations
+re-pointed, the 62-entry `FIRM_FORMS_READERS.md` edit and S21's line applied in the same drain, S21 and S22
+disarmed there, and S35's undercount corrected on its disarm -- the 18-vs-17 correction above stands and is
+recorded there, as R-12 wrote.
+
+**WHAT STAYS AN ISSUER ACT, and why the reason now matters.** `2b`, `3b` and `9` remain this seat's **by the
+decomposition's own choice, not by a refusal** -- `3b` writes this seat's `fixed_inputs/`, which the spine
+reserves; `2b` is bound to cell 2's drain and to the 78-root read; `9`'s edit is one print in a file this round
+otherwise only reads. Cell 1's gate limbs stay `1.0.0_SA_CTO`'s under R-22, which the spine reserves.
+
+**SO THE ROUND IS: SEVEN WORKER CELLS (2, 3a, 4, 5, 6, 7, 8) AND THREE ISSUER ACTS (2b, 3b, 9).**
+
+**VERIFY AT THE CUT, with the instrument already used and a positive control** (R-23 s.3): stage the order,
+pipe each `<paths>` entry to `--check-agent` for that order's `issued_to` worker and read PERMIT; positive
+control EN-r-4 @`b15ed01ee6`. A grant census is run against the faces the cut WILL create, never the tree
+before it.
+
+**R-16 is unchanged and binds the registry half:** a registry edit is a deploy on every shipping generated
+view, disclosed by DEC-5 and printed by the gate; cell 7's change-management entry is the ledger half of the
+same cell.
+
 ## 1. THE DOMAIN, BY SUBTRACTION (Rule 24(i))
 
 ```
