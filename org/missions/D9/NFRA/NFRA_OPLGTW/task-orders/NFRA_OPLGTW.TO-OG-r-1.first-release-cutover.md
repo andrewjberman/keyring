@@ -32,7 +32,10 @@ The PRD, verbatim:
 The baselines you compare against are `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~2/BASELINE.json`
 (your own queue's first cell, `OG-p-1`: parity method, error baseline, client inventory). The table and the reader roles
 are live (`OG-i-1`, `OG-i-2`); `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~1/SCHWAB_IDENTITIES.json`
-names them. The runbook's rollback section (`infra/aws/ec2/opal-gateway/runbooks/SCHWAB_PILOT_RUNBOOK.md`, `OG-o-2`) is
+names them. `OG-r-1` also sets the environment variable `SCHWAB_ACCOUNT_REF_SECRET_ID` in the release configuration
+to that secret's name, read from `SCHWAB_IDENTITIES.json` and never typed (amended before hand-off by
+`2.0.0_SA_COO~O`, on row `NFRA_OPLGTW-W3-S25`). Unset, `OG-z-3`'s `app/account_ref.py` answers `UNAVAILABLE` for
+every account reference, so no Schwab account is presentable even under a later grant. The runbook's rollback section (`infra/aws/ec2/opal-gateway/runbooks/SCHWAB_PILOT_RUNBOOK.md`, `OG-o-2`) is
 what AC10 checks the recorded previous release against.
 
 **You do not enable anything.** No Schwab tool is reachable after this release, for any principal. Enabling a controlled

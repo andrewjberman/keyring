@@ -1501,6 +1501,29 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "OGZ3-AC4: 'a raw account ID appears in no log or audit line the harness captures'.",
     "world_is": "The criterion holds for this cell's own surface: 13 arms over 5 corpora (log records, stdout, stderr, the audit JSONL, everything returned to the tool layer), 0 raw ids and 0 key bytes, with the SDK wire loggers held at WARNING, their level on the host. One level below that, the leaking line is not this module's but the AWS SDK's, and it carries the grant record rather than any response this module builds.",
     "notes": "INERT: nothing deploys and the host's level is WARNING by default. A later cell that adds logging configuration to the Gateway should hold botocore/boto3/urllib3 no lower than INFO, or every grant read puts raw account ids in the journal. Any logging configuration and app/config.py are outside this order's grant."
+  },
+  {
+    "id": "NFRA_OPLGTW-S20",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-16T00:40Z",
+    "one_line": "Disarm of NFRA_OPLGTW-W3-S25: OG-z-3 chose the alias-key secret's environment variable and value shape because no carrier stated either, and that choice is now carried as a bound into the two unhanded orders that must honour it -- TO-OG-i-2 provisions the secret in that shape and records its name, TO-OG-r-1 sets SCHWAB_ACCOUNT_REF_SECRET_ID from that record.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ROW: NFRA_OPLGTW-W3-S25 (0.9.0_WK_NFRA_OPLGTW~3, ARMED, disarm owner 2.0.0_SA_COO~O) measured that app/config.py names no Schwab alias-key secret, that SCHWAB_IDENTITIES.json does not exist because OG-i-2 has not run, and that neither the decomposition (:156, :189) nor the PRD (:147) states the value's shape or where its name is configured.",
+        "CODE, now on CLOUD: infra/aws/ec2/opal-gateway/app/account_ref.py -- SECRET_ID_ENV = 'SCHWAB_ACCOUNT_REF_SECRET_ID'; the value parses as {current_version, keys{v<n>: base64 >= 32 bytes}}; OGZ3-AC1 ran 6 of 6 fail-closed arms, each answering UNAVAILABLE rather than an unkeyed alias.",
+        "CARRIED: TO-OG-i-2 (the secret's shape, the Gateway read grant already in its AC1, and the name recorded in SCHWAB_IDENTITIES.json) and TO-OG-r-1 (the release sets the variable from that record, never typed). Both amended in this seat's commit beside this row, and NEITHER order has been handed to a worker.",
+        "DRAIN: OG-z-3 merged at c9ff7dbbd3 with the row gate clean on the merged index; the module re-run on the shared checkout (not the worker's) reads 5 passed."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-OG-z-3 told the worker the key lives in the secret OG-i-2 provisions and that its name would be in SCHWAB_IDENTITIES.json once that cell merged.",
+    "world_is": "OG-z-3 ran before OG-i-2, so the worker had to choose both the variable name and the value shape. The choice is sound and fail-closed, but it binds two later cells that never heard it. It is now written into both of their orders, so neither can honour it by accident or miss it.",
+    "notes": "W3-S25's disarm owner is this seat; this act and row disarm it. No criterion was added or removed in either order: both amendments are cell-text bounds, and both orders were unhanded at the time of writing. Filed during the 2026-09-15 ~23:3xZ managed wind-down."
   }
 ]
 ```

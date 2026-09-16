@@ -49,6 +49,16 @@ Record in `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~1/
 where each ExternalId and the alias key live (secret or parameter NAMES, never values), and the Gateway statement's
 Sid. Later cells read that file.
 
+**The alias-key secret's SHAPE (amended before hand-off by `2.0.0_SA_COO~O`, on row `NFRA_OPLGTW-W3-S25`;
+`OG-z-3` merged to `CLOUD`).** `OG-z-3`'s `app/account_ref.py` is now on `CLOUD` and reads the alias key from ONE
+secret whose id comes from the environment variable `SCHWAB_ACCOUNT_REF_SECRET_ID` and whose value is a JSON object
+`{"current_version": "v<n>", "keys": {"v<n>": "<base64 of at least 32 bytes>"}}`. Provision the secret with THAT
+shape (AC1 already covers the Gateway's read grant on it) and record its NAME, never its value, in
+`SCHWAB_IDENTITIES.json` beside the role ARNs. That module is fail-closed in all six of its arms: a missing name, a
+missing secret, a non-JSON value, a short key, no key for `current_version` or a non-base64 key all answer
+`UNAVAILABLE` and never an unkeyed alias. So a secret of another shape does not degrade -- every account reference
+on the live Gateway reads `UNAVAILABLE`.
+
 **Read:** the PRD's "C2" and "C6"; the contract; `infra/aws/terraform/opal-gateway/taxsma_gateway_iam.tf` and
 `secrets.tf` (conventions); `org/tier2_senior/0.7.0_AE_CloudOps/deliverables/MENACHEM_SCHWAB_CLAUDE_ACCESS_20260914/reader-role-policy.proposed.json`
 (the proposed data-role policy; a proposal, not a measurement).
