@@ -7076,6 +7076,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "AMGT-rk-14's AC1 asserts that all FOUR ends of the fit appear in source -- codes named, values retained, horizons labelled, FX basis stated -- and bars each of the four as nonzero.",
     "world_is": "Four of those four bars read nonzero at the cut before any repair, because they are substring counts over concatenated module source rather than measurements of the property. The criterion could not fail on them.",
     "notes": "This is the third criterion defect of the same family found by issuer dry run today and the second where the defect was a SILENT PASS rather than a refusal: AMENDMENT 11 (rk-8's fifth route did not exist and both criteria passed on it) and AMENDMENT 12 (rk-6's AC2 permitted a layer its instrument could not see, the opposite sign). The four ends are NOT dropped -- they are graded on AC3's denominators, where they are measurable on served data. AC2, AC3 and AC4 are byte-identical; no grant, bound or cell text moves."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S134",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-16T19:04:10Z",
+    "one_line": "AMGT-rk-12's AC2 barred a PAGE-WIDE count of refusal strings to prove that a control which cannot act says why, and that count already read 7 across 19 components before any of the three new surfaces existed -- so the clause carrying contract C-ROUND12-SURFACED-OUTCOMES's requirement could not fail and could say nothing about the new controls. ISSUER AMENDMENT 14 scopes the measurement to the components that carry the surfaces and bars surfaces-with-reason EQUAL to surfaces-with-token.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AC2 as issued, computed on chain A's own portal branch wk-amgt_resapp-12-23-portal @2453a7b4 by reading the branch content through git show (the running worktree was not touched): components 19, freshness-hits 0, ledger-hits 0, rot-hits 0, control-refusal-reason 7. The one non-discriminating bar was already met; the three that matter read 0.",
+        "The 7 hits come from unrelated Security Analysis components that already handle their own absences; none of them is a freshness, ledger or rot-signal surface, which is measurable from the same read since those three token counts are 0.",
+        "The re-cut invocation's VALUES on the same branch: components 19, freshness/ledger/rot 0 / 0 / 0, surfaces-with-token 0, surfaces-with-reason 0, CONTEXT-page-wide-refusal-strings 7. Its literal SYNTAX was run whole in the shared tree's portal, rc=0 (components 0 there, because the shared portal is on DEV, which carries none of the 47 page files).",
+        "AC3 dry-run whole and SOUND: classes 6, stage-None 6, stage-bound 0 in lib/research/ledger/ledger.py's CLASSES block, exactly what its own expect records, with both of its branches reachable.",
+        "AC4 dry-run whole and SOUND on the same branch: requestRefresh-found 1, enqueue-route-refs 0, old-refresh-refs 1 over a 233-byte requestRefresh body -- failing today in the direction 1.0.0_SA_CTO~Z's S124 ruling intends."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT-rk-12's AC2 asserts that the three newly surfaced controls each state a reason when they cannot act, per contract C-ROUND12-SURFACED-OUTCOMES.",
+    "world_is": "The bar counted refusal strings across the WHOLE page, which already read 7 over 19 components with none of the three surfaces present, so it could not fail and did not measure the controls it names.",
+    "notes": "Fourth criterion defect of this family found by issuer dry run today, and the third that was a SILENT PASS: AMENDMENT 11 (rk-8's fifth route did not exist), AMENDMENT 13 (rk-14's four-ends guard, four of five bars unfailable) and this one; AMENDMENT 12 was the opposite sign, a correct fix that would have failed. The repair scopes the measurement to the object rather than weakening it: one component carrying all three surfaces with one reason reads 1 and 1, three components with one silent reads 3 and 2 and FAILS. AC3 and AC4 are byte-identical; no grant, bound or cell text moves."
   }
 ]
 ```
