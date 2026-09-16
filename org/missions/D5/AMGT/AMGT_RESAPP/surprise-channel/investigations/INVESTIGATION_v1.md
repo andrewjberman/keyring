@@ -7173,6 +7173,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "AMENDMENT 11 asserts overlay-has-posture exercises the posture surface where it is actually served, namely inside the /overlay body, and gives that as the reason the bar replaced the non-existent /posture route.",
     "world_is": "The bar is existential over all five captured bodies and posture rides two of them, so /thesis satisfies it independently of /overlay. The bar therefore cannot distinguish 'the /overlay body carries posture' from 'some captured body carries posture', which is the property the amendment says it tests.",
     "notes": "Filed as FORM only; significance is the issuer's and L9's, not this worker's. AC2 is recorded PASS-by-output because every bar it names was met on a truthful object: the /overlay capture exists, served 200 at 50630 bytes, and carries posture. RESIDUAL, named precisely and not adjudicated here: the sibling bar overlay-has-description IS discriminating for /overlay's presence (it fired False under the mutant), so an absent or empty /overlay is still caught by this same criterion; the narrow uncovered state is /overlay serving 200 while having LOST its posture object specifically, which would read green off /thesis. Hazard recorded INERT on that basis. This is ISSUER AMENDMENT 11's own class one level down -- the amendment corrected a bar that passed on a route that did not exist, and the replacement bar passes on a body it does not name. The one-line fix shape, offered as data and not taken here because this cell may not widen or repair a criterion: scope the check to the overlay capture's own body rather than any() over bods."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S135",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-16T19:25:00Z",
+    "one_line": "AMGT-rk-14's proof_of_spec block was MALFORMED: ISSUER AMENDMENT 6's re-cut of AC3 replaced only the head of a MULTI-LINE invocation and left a 937-byte orphan -- a for-loop tail plus a spare closing </invocation>, <expect>, </expect> and </criterion> -- sitting between AC3's real close and AC4's opener. No gate reads a MODIFIED order's criterion grammar, and the issuer's own controls compare per-criterion captures, which the orphan sat outside. Found by reading the worker face end to end before spawning. Censused across the round: 1 of 16 orders malformed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Tag counts on rk-14's proof_of_spec block BEFORE the repair: criterion openers 4, closers 5, <invocation> 4, </invocation> 5, <expect> 5, </expect> 5. AFTER: 4 / 4 / 4 / 4 / 4 / 4.",
+        "The orphan is 937 bytes, begins 'for d in res:' and ends '</expect></criterion>', and contains no <criterion opener -- it is the tail of AC3's PRE-AMENDMENT-6 multi-line invocation together with that clause's old closing tags.",
+        "Tag-balance census over all 16 round-12 task orders: rk-1 4/4, rk-2 8/8, rk-3 4/4, rk-4 4/4, rk-5 3/3, rk-6 5/5, rk-7 5/5, rk-8 4/4, rk-9 4/4, rk-10 3/3, rk-11 3/3, rk-12 3/3, rk-13 4/4, rk-14 4/5 MALFORMED, rk-15 2/2, rk-16 2/2. 1 of 16.",
+        ".tools/to-pipeline-gate.py's one-clause-per-criterion limb grades NEWLY ADDED tree orders only (CLAUDE.md Rule 27, the _newly_added set), and every issuer amendment stages the order as MODIFIED, so no gate read this block at any point.",
+        "The issuer's own amendment controls regex each criterion's invocation and expect with a non-greedy match that stops at the first closing tag, so the orphan fell outside every capture and every control passed on a broken block."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT-rk-14's worker face carries a proof_of_spec block of exactly four criteria, each one clause with one invocation and one expect, which is what the worker executes and what the proof checker grades.",
+    "world_is": "The block carried a 937-byte orphan between AC3 and AC4 with one spare </invocation>, one spare <expect>/</expect> pair and one spare </criterion>, so the block had 4 openers against 5 closers.",
+    "notes": "This is the issuer's own defect and the fifth criterion-level defect found by pre-spawn reading today. The repair DELETES the orphan and changes NO criterion: AC1 keeps AMENDMENT 13's re-cut and AC2, AC3 and AC4 are byte-identical. The rule it leaves behind: after re-cutting a MULTI-LINE invocation, count the BLOCK's tags rather than the criterion's captures, because a capture-scoped control cannot see a defect in the text the captures sit inside. Non-application: a single-line invocation replaced whole, where the closing tag is inside the replaced span."
   }
 ]
 ```
