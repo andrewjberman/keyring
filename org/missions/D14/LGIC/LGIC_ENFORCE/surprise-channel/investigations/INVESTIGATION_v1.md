@@ -2543,6 +2543,133 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
    "spec_asserts": "R-14: an issuer's disarm row is EVIDENCE for L9 and must carry a machine-readable citation to its target.",
    "world_is": "The five filed today named their targets in prose only and one used a short id, so this seat's own counter re-reported all five as open. These citations close that gap for the reader without changing what the rows claim.",
    "notes": "INERT: adds no claim, disarms nothing. \u26d4 NOT A CLOCK -- under R-14 the disarm clock is the remediation row's disarm block, 3.0.0_SA_CVO's to write at L9 with state ARMED, advanced to DISARMED by the named owner. These are EVIDENCE to be read when the CVO graduates each item. \u2b50 AND THE SUPERSESSION CASE IS NOT INTERCHANGEABLE WITH THE OTHERS: W1-S23's defect is still in the bytes and its silent arm (.get('firm_forms', []) returning an empty list under v1.9) passes VACUOUSLY rather than raising. Anyone reusing that file needs one assert first. Targets by full id: LGIC_ENFORCE-S22, LGIC_ENFORCE-S23, LGIC_ENFORCE-S24, LGIC_ENFORCE-S26, LGIC_ENFORCE-W1-S23."
+  },
+  {
+   "id": "LGIC_ENFORCE-S38",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T16:10Z",
+   "one_line": "R-14's CLOCK HAS AN OWNER WHO CANNOT WRITE ITS CARRIER. The ruling says the remediation row's disarm.state is advanced to DISARMED by the NAMED OWNER; the carrier resolves to lane TREE_CVO, which admits 3.0.0_SA_CVO and refuses everyone else. Measured estate-wide: 253 of the 259 ARMED clocks (98%) name an owner the lane refuses.",
+   "class": "BLOCKING",
+   "hazard_standing": "ARMED",
+   "disarm_owner": "1.0.0_SA_CTO",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "RULING: R-14 @fc90f47d02 -- 'the disarm CLOCK is the REMEDIATION row's disarm.state, written by 3.0.0_SA_CVO at L9 as ARMED and advanced to DISARMED by the named owner. That is the one carrier with a consumer.' Quoted from the ruling as this seat received it and restated verbatim in open_backlog.py's docstring @de5d4e2648.",
+     "LANE, MEASURED ON HEAD BYTES (git show HEAD:.owned-paths.yaml, NOT the worktree -- a dirty tree reads another seat's unlanded edit): resolve_lane() returns TREE_CVO for org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/remediations/REMEDIATION_v1.md, and check_agent() reads 2.0.0_SA_COO~G False. POSITIVE CONTROL 3.0.0_SA_CVO True. NEGATIVE CONTROL 0.7.0_AE_CloudOps False. Instrument: .tools/owned-paths-validate.py check_agent(), the function the commit path calls, not a re-derivation of its rule.",
+     "IT IS THE PATH RULE, NOT A LGIC QUIRK: the same three verdicts (TREE_CVO / COO~G False / CVO True) on LGIC_CANON's REMEDIATION_v1.md, LGIC_NAMING's REMEDIATION_v1.md and NFRA_OPSEC202609's REMEDIATION_v2.Z.md -- 4 carriers, 3 projects, 2 missions.",
+     "POPULATION, printed denominator: 638 remediation rows across 44 carriers under org/missions/D*/*/*/surprise-channel/remediations/. Of those, 410 carry a disarm BLOCK (228 carry none -- a separate gap, not this row's). 259 of the 410 read state ARMED. Owner class of the 259: COO 168, CTO 59, other 26, CVO 6. So 253 of 259 -- 98% -- name an owner that lane TREE_CVO refuses on the file the field lives in.",
+     "THE INSTANCE THAT MADE ME LOOK: LGIC_ENFORCE-W1-S22's remediation row reads disarm {state ARMED, owner 2.0.0_SA_COO~G, at null}. The hazard it clocks is DEAD at HEAD (LGIC_ENFORCE-S39, this same commit, with a discriminating pair). I am the named owner, the fact is measured, and I cannot write the field.",
+     "WHY THIS IS NOT A COMPLAINT ABOUT THE LANE: the lane is CORRECT. A graded party advancing the field that closes its own graded item is the boundary problem the estate already names. The defect is that R-14's sentence assigns the ACT to a party the mechanism admits only as a READER."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "R-14: hazard_standing is answered by the remediation carrier's disarm block, advanced to DISARMED by the named owner.",
+   "world_is": "The named owner is refused on the carrier in 253 of 259 live cases. The sentence is executable only where the CVO names itself, which is 6 of 259.",
+   "notes": "ARMED. disarm_owner 1.0.0_SA_CTO -- ADJUDICABLE, NOT A NEVER-CLASS CALL, so it goes to the CTO and not to Andrew. THE THREE SHAPES AS I SEE THEM, none proposed as binding: (a) the OWNER field records ACCOUNTABILITY and the CVO is the only WRITER -- the owner's evidence row is the trigger and the CVO advances the clock at L9, which is what R-14 already says about EVIDENCE and would make the 'advanced by the named owner' clause a reading error rather than a rule; (b) TREE_CVO widens to admit the named owner ON THE disarm BLOCK ONLY, which needs a field-scoped lane the registry does not have today; (c) a disarm-request carrier the owner CAN write, which is a fifth carrier and the thing this seat has been arguing against all day. ** I HOLD (a) ** on the evidence, because it is the only one that needs no new mechanism and it is consistent with R-14's own EVIDENCE half -- but the 98% figure means the ruling's text should say so explicitly, or every owner who reads it literally will try to write a file the lane refuses and read the refusal as contention. THIS IS THE ROOT UNDER LGIC_ENFORCE-S36: my counts kept moving because the one carrier with a consumer is a file I have never been able to write."
+  },
+  {
+   "id": "LGIC_ENFORCE-S39",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T16:12Z",
+   "one_line": "EVIDENCE FOR L9 THAT LGIC_ENFORCE-W1-S22'S HAZARD IS DEAD IN THE CURRENT BYTES: the same plan file the row measured now grades SKIP / PASS, where the pre-repair gate graded 157 strings and refused 123. Measured by this seat on its own instrument, as a discriminating pair. NOT A CLOCK -- its clock is ARMED, names this seat as owner, and this seat is refused on the carrier (LGIC_ENFORCE-S38).",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md@b017a0cf27#LGIC_ENFORCE-W1-S22 -- the row this is evidence for, filed by 0.9.0_WK_LGIC_ENFORCE~1; its remediation row carries disarm {state ARMED, owner 2.0.0_SA_COO~G}.",
+     "INSTRUMENT: a synthetic added-file diff of the committed artifact -- git diff 4b825dc642cb6eb9a060e54bf8d69288fbee4904 HEAD -- org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/fwd2_plan.json -- graded by .tools/naming-gate.py at TWO vintages. The empty-tree base makes every string NEW, which is the worst case the gate can see.",
+     "AT HEAD: 'NAMING SKIP .../fwd2_plan.json:1 <machine-written plan file>' with why 'top level carries format_version, terraform_version and resource_changes or planned_values (a terraform show -json artifact): not graded', then 'NAMING-GATE: PASS 1 graded'.",
+     "NEGATIVE CONTROL, the gate at 8a60d8e74e (the vintage immediately before the repair), run from inside the repo tree so its lib/opal_naming.py resolution is identical, SAME DIFF BYTES: 'NAMING-GATE: WARN 157 graded' with 123 NAMING REFUSE, 11 NAMING RAISE and 0 NAMING SKIP. So the verdict flip is the gate's bytes and nothing else moved.",
+     "THE REPAIR: d49f538774 'build(LGIC_ENFORCE EN-g-1 round 2, 0.9.0_WK_LGIC_ENFORCE~3): commit limb skips plan JSON ...'. The gate's docstring at HEAD names the row that caused it: 'A JSON post-image whose top level is a terraform show -json artifact ... is SKIPPED, never graded (round-2 EN-g-1, row W1-S22); an authored JSON file carrying the same strings is graded exactly as any other JSON file.'",
+     "GRAIN, DISCLOSED AND NOT RECONCILED: W1-S22 reports 151 graded / 115 REFUSE / 13 RAISE, read from a REAL safe-commit log (--post-from-index, its own registry vintage). I read 157 / 123 / 11 at 8a60d8e74e from a synthetic empty-tree diff. The counts are DIFFERENT INSTRUMENTS on different vintages and I did not chase the delta, because no claim here turns on it: the claim is the VERDICT FLIP -- over 100 refusals then, zero now -- and both instruments agree on that."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "A committed terraform show -json deliverable would be refused by the commit-time naming gate once enforce is on.",
+   "world_is": "It is skipped by shape at HEAD and the commit passes. The ordered deliverable is no longer a self-refusing artifact.",
+   "notes": "INERT: this row adds no hazard. \u26d4 IT IS NOT A CLOCK. Under R-14 the clock is the remediation row's disarm block, and W1-S22's reads ARMED with owner 2.0.0_SA_COO~G on a file lane TREE_CVO refuses me on -- see LGIC_ENFORCE-S38, filed in this same commit, which is why this is filed as EVIDENCE for 3.0.0_SA_CVO to read at L9 rather than as a disposal. \u26a0 AND THE CARVE-OUT IS ONE MEMBER OF A LARGER CLASS: the same shape (a RECORD of names graded as a DECLARATION of names) is measured across the fabric in LGIC_ENFORCE-S41, where the plan-file skip is the only member the gate currently recognises. Target by full id: LGIC_ENFORCE-W1-S22."
+  },
+  {
+   "id": "LGIC_ENFORCE-S40",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T16:14Z",
+   "one_line": "EVIDENCE FOR L9 THAT LGIC_ENFORCE-S36'S HAZARD IS DEAD: 0 of 9 of my disarm rows were machine-resolvable when S36 was filed; 9 of 9 are now, read back by the counter itself. The RULING half is closed too -- R-14 answered the carrier question S36 raised and 1.0.0_SA_CTO closed the RAVC.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md@d2a14c0ae5#LGIC_ENFORCE-S36 -- the row this is evidence for: '0 of the 9 disarm rows I filed today carries a MACHINE-READABLE link to its target, so my own counter cannot find my own disarms'.",
+     "READ BACK BY THE INSTRUMENT THAT COULD NOT SEE THEM, at de5d4e2648: open_backlog.py --project LGIC_ENFORCE now prints 'evidence filed by LGIC_ENFORCE-S37' against S22, S23, S24, S26 and W1-S23 (5 of 5), and --project LGIC_CANON prints 'evidence filed by LGIC_CANON-S16' against S3, S7, S11 and C-S11 (4 of 4). 9 of 9, where S36 measured 0 of 9.",
+     "THE DEFECT S36 CALLED OUT BY NAME IS CITED PROPERLY: S28 wrote its second target as bare 'S26'. LGIC_ENFORCE-S37 carries it as INVESTIGATION_v1.md@d234493edf#LGIC_ENFORCE-S26, and the counter matches FULL IDS ONLY on purpose, so a future bare id surfaces as a miss instead of being silently absorbed.",
+     "THE PART S36 SAID IT COULD NOT FIX ALONE IS RULED: R-14 @fc90f47d02 took shape (c) -- an issuer's disarm row is EVIDENCE for L9, never a clock; the link is the existing evidence citation with the full id, not a new schema field. Compliance @de5d4e2648. 1.0.0_SA_CTO closed the RAVC in msg 97361 and recorded it @89569fad8b, confirming DISMISSED as a third printed category within the ruling.",
+     "WHAT IS NOT CLOSED, AND IT IS THE DEEPER HALF: S36 asked for a carrier an ISSUER may write. R-14 pointed at the remediation row's disarm block, and LGIC_ENFORCE-S38 (this same commit) measures that the issuer is refused on that file in 253 of 259 live cases. So the counting hazard is dead and the WRITING hazard is now stated precisely, one level down."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "A disarm row records that a hazard is no longer live so a later reader can tell the live set from the filed set.",
+   "world_is": "It does now, by citation, for all nine -- read back by the counter that could not find one of them when S36 was written.",
+   "notes": "INERT: adds no hazard. \u26d4 NOT A CLOCK -- filed as EVIDENCE for 3.0.0_SA_CVO at L9 under R-14, and S36's own clock is subject to LGIC_ENFORCE-S38. \u2b50 THE PART WORTH KEEPING: the mechanism that told me was my OWN counter re-reporting eight rows I had disarmed as still open. An instrument that contradicts its operator is the cheapest finding in the estate and I nearly patched the instrument instead of reading it. Target by full id: LGIC_ENFORCE-S36."
+  },
+  {
+   "id": "LGIC_ENFORCE-S41",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T16:16Z",
+   "one_line": "THE ENFORCE FLIP'S BLAST RADIUS ON FABRIC RECORDS, MEASURED IN ONE RUN: 955 mission JSON records presented as newly added grade 3815 strings, 2917 REFUSE across 90 distinct files. The dominant population is NOT hand-typed names -- it is RECORDS OF NAMES (live-name censuses, evidence bundles, plan output), graded as if they were DECLARATIONS. The plan-file skip is the only member of that class the gate recognises today.",
+   "class": "OBSERVATION",
+   "hazard_standing": "ARMED",
+   "disarm_owner": "1.0.0_SA_CTO",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "DENOMINATOR, PRINTED: 2834 tracked .json/.yaml/.yml under org/ -- the fabric records in .tools/naming-gate.py's file-type set. MEASURED SUBSET: the 969 tracked .json under org/missions/, of which 955 produce a diff. UNCOVERED AND NAMED: 1865 fabric records outside org/missions/*.json, not measured. The 14-file gap between 969 and 955 is its own finding, LGIC_ENFORCE-S42.",
+     "ONE RUN, gate at HEAD, over a single 26 MB added-file diff of all 955 (git diff 4b825dc642cb6eb9a060e54bf8d69288fbee4904 HEAD -- 'org/missions/**/*.json'): 'NAMING-GATE: WARN 3815 graded', with 2917 NAMING REFUSE lines across 90 DISTINCT FILES, 309 NAMING RAISE and 74 NAMING SKIP. Under enforce each of those 90 is a commit that exits 1.",
+     "THE CLASS SPLIT OF THE 2917, by the shape of the graded string: bare token 1203 (41.2%), FILENAME 1104 (37.8%), other slashed 526 (18.0%), REPO PATH STRING 84 (2.9%). So W5-S6's repo-path class -- the one a seat would reach for first -- is the SMALLEST member, and fixing only it would move 2.9% of the population.",
+     "WHERE IT CONCENTRATES: 887 refusals in org/missions/D14/LGIC/LGIC_NAMING/deliverables/2.0.0_SA_COO~G/fixed_inputs/LIVE_NAMES.json -- a census OF LIVE NAMES, which by construction carries every non-conformant name in the estate; 588 in ETFS_GUARDRAIL's egs19_evidence.json; 415 in NFRA_IAMROLES202609's permission-cold-raw-bundle.json; 277 in an etag census; and 144 + 68 in LGIC_ENFORCE's OWN fixed_inputs/r2/RESOURCE_GAPS.json and RAISE_POPULATION.json. \u26d4 The gate would refuse the evidence that proves non-conformance exists, including this project's own.",
+     "W5-S6 CONFIRMED LIVE AT HEAD, this seat's own run rather than the worker's: .tools/naming-gate.py --enforce on an added-file diff of .../0.9.0_WK_LGIC_ENFORCE~5/LGIC_ENFORCE.TO-EN-d-1-r2.fwd7-demo-firm.proof_of_spec.json exits rc 1 with 'NAMING-GATE: REFUSE 3 graded' -- and all three graded strings are REPO PATHS, two of them the order's own filename, whose 'demo' token was chosen by the issuer at the cut.",
+     "GRAIN, STATED BECAUSE IT LIMITS THE CLAIM: presenting a COMMITTED file as newly added is a SYNTHETIC frame. At HEAD these files are already in, and the gate grades added lines, so none of them refuses anything today. The claim is about what a record OF THIS SHAPE does when it is committed under enforce -- which is the going-forward question the flip actually poses -- and NOT that 90 files are broken."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "The commit-time naming gate grades hand-kept carriers of firm and product tokens, so that a seat cannot type a non-canonical name.",
+   "world_is": "It also grades RECORDS of names nobody typed -- a live-name census, an evidence bundle, a machine plan, a proof instance citing its own order's path. The gate carved ONE member of that class out by shape (the terraform plan file, W1-S22) and the carve-out has no general rule behind it.",
+   "notes": "ARMED. disarm_owner 1.0.0_SA_CTO -- ADJUDICABLE: what is the naming gate's GRADE DOMAIN when enforce flips? This is a PRECONDITION of the round-3 flip cell (R-11/R-13), not a rider on it: the cell cannot be cut until the domain is settled, because the cell's own fixed inputs are in the refused population. \u26a0 THREE SHAPES, none proposed as binding: (i) a DECLARATION-vs-RECORD discriminator the gate applies by itself, generalising the plan-file skip -- cheapest, and the hardest to state without a hole; (ii) a path-scoped exclusion for org/missions/** deliverables and fixed_inputs, which is a LOCATION rule and would also excuse a genuinely hand-typed name that happens to live there; (iii) enforce flips on a NAMED SURFACE SET (infra/, data/, lib/) rather than repo-wide, leaving fabric records in WARN. \u2b50 I HOLD (iii) FIRST AND (i) SECOND: the gate exists to stop a seat NAMING a resource wrongly, and a resource is never named in a mission record. Related and measured beside this: LGIC_ENFORCE-W3-S8 (57 of 78 Terraform roots refuse before plan), LGIC_ENFORCE-W5-S6 and LGIC_ENFORCE-S42."
+  },
+  {
+   "id": "LGIC_ENFORCE-S42",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T16:18Z",
+   "one_line": "A ONE-LINE .gitattributes ENTRY IS A TOTAL BYPASS OF THE NAMING GATE, AT ANY ENFORCE SETTING: the gate grades a unified diff's added lines, and a path attributed `binary` emits none. Measured whole-corpus: 15 of 11373 tracked files in the gate's file-type set read `diff: unset` -- and 14 of those 15 belong to LGIC_NAMING, the naming project.",
+   "class": "OBSERVATION",
+   "hazard_standing": "ARMED",
+   "disarm_owner": "2.0.0_SA_COO~G",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "DENOMINATOR, PRINTED: 11373 tracked files carrying one of the gate's file types (.py .js .mjs .ts .tf .json .yaml .yml), enumerated from git ls-files. git check-attr --stdin diff over all 11373 returns 'diff: unset' for exactly 15.",
+     "THE 15, BY DIRECTORY: 8 in org/missions/D14/LGIC/LGIC_NAMING/deliverables/exercises/r2/seats/, 6 in .../exercises/r3/seats/, 1 in org/modules/graph/potion/model/.",
+     "MECHANISM, verified on one member: git check-attr -a on .../exercises/r2/seats/e1.raw.json reads 'binary: set, diff: unset, merge: unset, text: unset'; the object is 2819 bytes of ordinary JSON; and git diff of that path against the empty tree prints 'Binary files /dev/null and b/... differ' with NO added lines. The gate reads added lines, so it grades nothing -- with --enforce as much as without.",
+     "SOURCE: .gitattributes:103 'org/modules/graph/potion/model/** binary', :112 '.../exercises/r2/seats/** binary', :114 '.../exercises/r3/seats/** binary'. The attribute is DELIBERATE and its reasons are good ones, stated at :108-110: byte-exactness for 3.0.0_SA_CVO's L9 rerun under autocrlf, and no merge conflict on an append-only record (rows LGIC_NAMING-W1-S6, W2-S5, W3-S4).",
+     "THE COST LINE IS THERE AND IT NAMES THE WRONG COST: .gitattributes:110 discloses 'COST: the records diff as binary; the seat record's hashes are their review instrument.' That is the HUMAN cost. The MACHINE cost -- that every commit-time gate reading a diff goes blind on these paths -- is not named, and would not have been visible to its author, since the naming gate did not exist when the attribute was written.",
+     "IT IS SMALL AND THAT IS THE POINT: 15 of 11373 is 0.13%, nothing is wrong in those files today, and no criterion turns on them. The hazard is that the bypass is ONE LINE, invisible in the gate's own docstring (which names prose, comments, TF block labels and */tests/* as its non-graded set, and cannot name this one), and grows by whoever next needs byte-exactness."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "The commit-time naming gate grades every added line of a commit in its file-type set.",
+   "world_is": "It grades every added line git is willing to SHOW it. A path attributed `binary` shows none, so 15 tracked files in the gate's own type set are ungraded at any enforce setting, 14 of them inside the naming project itself.",
+   "notes": "ARMED, disarm_owner 2.0.0_SA_COO~G, and it is a ROUND-3 item rather than a repair now: the fix touches .tools/naming-gate.py or .gitattributes, both outside any open order, and round 2 is terminal and with 3.0.0_SA_CVO. \u26d4 I AM NOT PROPOSING THE ATTRIBUTE BE REMOVED -- the byte-exactness reason is sound and removing it would break the L9 rerun it exists to protect. THE TWO SHAPES: (a) the gate reads the POST-IMAGE from the index for any path whose diff attribute is unset, which it already has the machinery for (--post-from-index), turning a silent bypass into a graded file; or (b) the bypass is BOUNDED and DECLARED -- a printed list in the gate's own output naming every path it could not see, so an ungraded path is visible in the run rather than absent from it. \u2b50 (b) IS THE CHEAPER AND THE MORE HONEST: a gate that cannot see something should SAY the number, which is the estate's own printed-denominator rule applied to an enforcement surface. Found as a by-product of LGIC_ENFORCE-S41's census -- 969 tracked files went in and 955 came out, and the 14-file gap is this."
   }
 ]
 ```
