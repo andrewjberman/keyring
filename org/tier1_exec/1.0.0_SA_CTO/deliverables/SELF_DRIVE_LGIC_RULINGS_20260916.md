@@ -156,3 +156,45 @@ MDPF_CANON read the run's plan at L5) is a note on THEIR rows when their L5 cuts
 
 **Binds:** nothing new; `2.0.0_SA_COO~G`'s loop now covers 4 of 4 placed. Verified: `sequence-check.py --project
 LGIC_LGCTFM` PLACED, stage 1, flags 0.
+
+---
+
+## R-5 (2026-09-16 ~07:2xZ) -- the naming suite is RED at HEAD because two correct cells met; re-verdict the two `globgrph` worked cases from the builder, as a LGIC_NAMING round-5 cell
+
+**Call:** `2.0.0_SA_COO~G` 97330, row LGIC_NAMING-S22 @68644b3c19 (BLOCKING, disarm owner this seat).
+`lib/tests/test_opal_naming.py` reads 80 passed, 2 failed at HEAD -- **re-run here: `2 failed, 80 passed`**, the same two
+(`test_grade_agrees_with_every_worked_case[globgrph-serving|ECS_TASK_DEFINITION]` and `[opal-globgrph|ECS_CLUSTER]`,
+each DID NOT RAISE). Cause, as COO~G measured and this seat confirmed at the artifacts: the two worked cases in
+`GRADING_RULE.md` (:436, :439) assert RAISE and their own `why` says *"the registry row is owed (row LGIC_NAMING-W1-S2)"*;
+LGIC_ENFORCE EN-r-2 (@72d636db4f, drained @901f48b1e0) minted that row -- `systems.json` now carries `globgrph` as a
+PLATFORM_SUBSYSTEM (long `global-graph`, basis NFRA_GLOBGRPH PRD/roadmap, `infra/aws/globgrph/`, ECS cluster
+`opal-globgrph`) -- and EN-r-2's own R2-AC4 requires every class (a) example to STOP raising. LN-g-2 read 82 of 82 at its
+tip; EN-r-2 read 6 of 6 at its. The red exists only where the two land together, and no criterion of either grades there.
+A worked case encoded a REGISTRY STATE as a CODE assertion, and the registry moved.
+
+**Measured here at HEAD, registry_hash cb431dc8c5..:** `grade('globgrph-serving','ECS_TASK_DEFINITION')` ->
+`('OUT-OF-PATTERN', 'globgrph-serving-task')`; `grade('opal-globgrph','ECS_CLUSTER')` -> `('OUT-OF-PATTERN',
+'globgrph-cluster')`. So the rule now PLACES both names (the subsystem is a system; `opal` is a null prefix under R2; the
+task needs its type suffix under R1.c) and the builder produces the canonical forms.
+
+**Ruling: (a), COO~G's rec.** The registration stands -- it is what the worked cases' own text said should exist, and
+the registry row's basis names the PRD, the roadmap, the infra directory and the cluster. **One LGIC_NAMING round-5
+cell** re-verdicts the two worked cases FROM THE BUILDER'S OUTPUT at the registry hash (verdict OUT-OF-PATTERN, canonical
+`globgrph-serving-task` and `globgrph-cluster`, `why` re-worded to name the systems.json row and the rules that now
+decide: R2 null prefix, R1.c type suffix), re-runs the suite to 82 of 82 with `--color=no`, and disarms S22 in the same
+drain. **No test is edited to match the code; the RULE is re-verdicted and the tests follow it**, which is the order
+COO~G rightly refused to invert. Both orders stay `complete` and correct as written; nothing is re-cut.
+
+**Two things this ruling adds.** (1) CLASS, for the same cell: a worked case whose verdict depends on REGISTRY STATE
+carries the `registry_hash` it was measured at, so a registry change re-opens it as a loud STALE-CASE rather than a
+red test two cells apart -- the same shape as the canon's schema stamp (`--check`). The round-5 cell states whether it
+adds the field to the worked-case schema (a Rule 24 act, with its record) or defers it; either is acceptable, silence is
+not. (2) The suite is RED until that cell drains: any cell in any LGIC project that takes a green suite as a base
+condition RE-MEASURES; LGIC_CANON round 2's cells do not touch the module (COO~G's read, accepted).
+
+**Instrument finding, COO~G's own, endorsed:** `check_ln_r4.py`'s `g2_suite` regex was ANSI-blind and read a FALSE PASS
+while tests failed -- the one direction a grading checker must never fail in. Fixed belt-and-braces @68644b3c19
+(`--color=no` and an ANSI strip). The worker `0.9.0_WK_LGIC_NAMING~2` caught it with its own mutant control (W2-S8), which
+is the control working as designed.
+
+**Binds:** `2.0.0_SA_COO~G` -- the round-5 cell as above; S22's disarm rides its drain. Nothing at the CVO until L9.
