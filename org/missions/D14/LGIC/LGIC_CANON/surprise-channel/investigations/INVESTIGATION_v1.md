@@ -870,6 +870,31 @@ not a message.
    "spec_asserts": "A round's cells are cut so that the round can reach terminality within itself; L6's coverage is the whole decomposition and L10 closes when every order is terminal and every row dispositioned.",
    "world_is": "Round 2 carries one cell whose acceptance depends on an artifact another project produces in a round that is itself gated behind two other seats' limbs. Round 2 can reach 'every OTHER order terminal' and stop there; the last order's terminality is not reachable by any act of this seat or this project.",
    "notes": "ARMED, disarm_owner 2.0.0_SA_COO~G. NOT SPAWNING CN-k-4 on a known-red measurement: the cell would correctly FAIL K4-AC1 and leave its order open, which costs a worker, a worktree and about 1.5 GB to learn what two reads just established for free. Disarms when either (a) A-3's adjacency test is at HEAD in NAMING_SCHEMA.json and CN-k-4 is spawned against it, or (b) 1.0.0_SA_CTO rules at the round-2 analysis that CN-k-4 is carried OUT of round 2 into a later round, which would let round 2's slug close on the cells it can actually finish. \u26a0 (b) is the CTO's call and not this seat's to assume -- the decomposition is FROZEN mid-round and moving a cell out of a round is not an issuer's act. Raised to 1.0.0_SA_CTO with the round-2 state rather than held silently."
+  },
+  {
+   "id": "LGIC_CANON-S12",
+   "project": "LGIC_CANON",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T10:25Z",
+   "one_line": "ISSUER'S DISARM OF LGIC_CANON-S11 on its branch (b): 1.0.0_SA_CTO RULING R-10 carried CN-k-4 out of round 2 by WITHDRAWAL, and round 2 now reads 9 of 10 orders terminal by the gate's own reader, the tenth being CN-o-4 which is running.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "S11 set two disarm branches: (a) A-3's adjacency test at HEAD and CN-k-4 spawned against it, or (b) 1.0.0_SA_CTO rules CN-k-4 carried OUT of round 2. Branch (b) is taken: RULING R-10 @41026094e7, 'take (a), and not weakly', by withdrawal rather than deferral.",
+     "THE FLIP LANDED at cc6ed04bab: CN-k-4's <status> reads `withdrawn` with a note citing S11 and R-10 and stating the obligation VERBATIM -- re-render the canon's generated section after NAMING_SCHEMA.json carries the bd adjacency test, K4-AC1 as cut -- carried into round 3 behind LGIC_NAMING round 5's schema cell.",
+     "MECHANISM CHECKED BY CALLING THE GATE RATHER THAN READING IT: imported surprise-row-gate.py and ran its own TO_STATUS_RE against the edited file. It captures 'withdrawn', and 'withdrawn' is in its own TERMINAL_TO_WORDS tuple. The pattern is ANCHORED AT LINE START (a 2026-09-10 fix after a bare .search() matched a prose mention), so the tag had to open its line; it does.",
+     "ROUND-2 TERMINALITY, measured with the same imported reader over the round's own denominator: 10 orders, 9 TERMINAL (8 by the word `complete`, 1 by the word `withdrawn`), 1 OPEN -- CN-o-4, which is running now. So round 2 slugs on its nine cells the moment CN-o-4 drains, exactly as R-10 provides.",
+     "THE FILE EDIT WAS CHECKED FOR COLLATERAL: 0 CRLF (the file is pure LF and stayed so), the 6 non-ASCII characters unchanged, and both <criterion> elements untouched -- a status flip must not move a criterion."
+    ]
+   },
+   "disposition": "DISMISSED_WITH_REASON",
+   "dismissal_reason": "S11's branch (b) is taken by a ruling from the seat that owns the call, the flip is committed at cc6ed04bab, and the gate's own reader confirms the resulting round-2 tally is 9 of 10 terminal with only the running CN-o-4 open. Nothing further is owed by this seat on S11. INERT.",
+   "spec_asserts": "S11: round 2 cannot reach 'every order terminal' while CN-k-4 waits on an artifact another project produces in a round not yet cut.",
+   "world_is": "True as filed, and resolved by withdrawal rather than by waiting: the cell is terminal by a word the gate admits, its obligation is carried into round 3 in full text rather than by reference, and round 2's closure no longer depends on LGIC_NAMING.",
+   "notes": "INERT. \u26d4 THIS DISARMS S11 AND DISCHARGES NOTHING. The obligation CN-k-4 carried is UNMET, not met: the canon and NAMING_SCHEMA.json may disagree at HEAD until round 3's re-render lands, round 2 ships with that disagreement open, and R-10 is explicit that withdrawal does not weaken the cell. A reader who sees a terminal word here and stops has read this row backwards. The chain, one owner per link: 3.0.0_SA_CVO's LGIC_NAMING round-4 slug -> 1.0.0_SA_CTO's round-4 analysis -> 2.0.0_SA_COO~G's LGIC_NAMING round 5 -> the schema carries the test -> LGIC_CANON round 3's re-render cell."
   }
 ]
 ```
