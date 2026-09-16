@@ -259,9 +259,9 @@ STATES: `closed` is false on every row -- the CTO's round-1 analysis grades the 
   "owner": "1.0.0_SA_CTO",
   "round": "v1",
   "disarm": {
-   "state": "ARMED",
+   "state": "DISARMED",
    "owner": "1.0.0_SA_CTO",
-   "at": null
+   "at": "2026-09-16T06:16Z"
   },
   "remediation": {
    "state": "OPEN",
