@@ -2125,6 +2125,55 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
    "spec_asserts": "A cell whose declared dependencies are met and whose write surface is clear is ready to spawn.",
    "world_is": "Readiness is not only dependency and write surface. This cell also needs DISK that a live sibling is already budgeting against, and the two cells' needs are invisible to each other -- neither order mentions the other, and no gate compares a spawn's footprint against a running cell's stop line.",
    "notes": "ARMED, disarm_owner 2.0.0_SA_COO~G. EN-d-1 spawns when EN-t-3 drains and its worktree is removed, which returns about 2.2 GB. Its slot worktree (wk-lgic-enforce-2d-5) is ALREADY provisioned and is deliberately being kept rather than reclaimed -- removing and rebuilding it would cost two minutes and the same 1.5 GB on the way back in. \u2b50 THE GENERAL SHAPE, and it is the third variant of one blindness this round: S23 was instrument-vs-output, S24 was input-vs-output, and this is CAPACITY-vs-capacity. All three are cells whose <paths> do not intersect and which still cannot safely run at the same time. A write-surface census answers none of them."
+  },
+  {
+    "id": "LGIC_ENFORCE-W3-S12",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~3",
+    "surfaced_at": "2026-09-16T10:19Z",
+    "one_line": "4 of the 72 backend roots cannot render a plan AT ALL on this box -- two carry plan-time configuration defects, one needs a gitignored build artifact whose builder egresses to PyPI, one needs a gitignored secret tfvars a linked worktree never carries -- so T3R-AC2 (every backend root planned) cannot pass inside this order's <paths> grant or its bounds.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "EXERCISED, this worktree (wk-lgic-enforce-2d-3, base 62c701411e), 2026-09-16 09:52-10:10Z: all 72 backend roots were init'd and planned one at a time with terraform v1.9.8, `plan -lock=false -input=false -out=<abs scratch>`; 68 rendered, 4 exited rc=1 at plan. Each root's .terraform (686 MB measured) was removed before the next init; dotdir_removed TRUE 72 of 72.",
+        "MEASURED rc=1, infra/aws/terraform/nfra-agentbus-port2: 'Error: expected max_message_size to be in the range (1024 - 262144), got 1048576' on aws_sqs_queue.sitez_to_laptop (sqs.tf:31) AND aws_sqs_queue.laptop_to_sitez (sqs.tf:46) -- a provider validation error, so this root refuses at plan for any operator, not only here.",
+        "MEASURED rc=1, infra/aws/terraform/seeking-alpha: 'Error: Missing required argument ... The argument \"artifact_key\" is required' and 'Error: Unsupported argument ... An argument named \"source_dir\" is not expected here', both on module \"news_dedup\" at main.tf:168-171 -- the module call and the module's declared variables disagree, so this root also refuses at plan for any operator.",
+        "MEASURED rc=1, infra/aws/terraform/harvest: filebase64sha256(local.chatter_axis_zip) cannot open ./.build/chatter-axis-producer.zip. READ .gitignore:95 '*.zip' via `git check-ignore -v`, and the path is ABSENT from the main checkout C:/Users/AndrewBerman/Desktop/ajb_workspace as well as from this worktree, so it is not a worktree-provisioning gap. Its builder infra/aws/terraform/harvest/lambda_src/build_zip.py:225 runs `sys.executable -m pip download` (comp-read --enumerate, 11 hits, 9 in the CODE band): building it is egress off Opal infrastructure, which CLAUDE.md s.Agent-Autonomy excludes from standing authority and this order names as 'Never fetch off-box without the word.'",
+        "MEASURED rc=1, infra/aws/terraform/trade-pipeline: 'The root module input variable \"jwt_secret\" is not set, and has no default value.' The value lives in secrets.auto.tfvars, which `ls -a` shows PRESENT in the main checkout's infra/aws/terraform/trade-pipeline/ and ABSENT from this linked worktree's -- a gitignored secret, by construction absent from every fresh worktree. A fabricated value would render a document that is not the root's real plan, which is exactly what T3R-J1 asks the extracts to be.",
+        "MEASURED, this worktree: `python .../check_en_r2.py t3r-every-root-planned` prints 'ROOTS WITH A BACKEND BLOCK: 72  RECORDED: 72  MISSING: []  NOT A ROOT: []  NOT PLANNED OR NO EXTRACT: ['infra/aws/terraform/harvest', 'infra/aws/terraform/nfra-agentbus-port2', 'infra/aws/terraform/seeking-alpha', 'infra/aws/terraform/trade-pipeline']' / VERDICT: FAIL-ROOT-NOT-PLANNED, rc=1. The other three mechanical criteria PASS by output: t3r-preplan-zero (0 of 77 directories refused), t3r-zero-existing-refused (2431 resource changes, 0 refusals of a resource neither created nor renamed, 0 limb errors), t3r-additions-disclosed (34 of 34 listed).",
+        "READ the task order's <paths>: only org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/LIMB_ROOTS_CENSUS.md and the investigation file. Every repair the four roots need is an edit under infra/aws/terraform/, which the grant does not name, and the order's own BOUNDS say a path the order lacks is a BLOCKING row, never an override."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "THE CELL item 1 tells this worker to plan every root and says 'A root that cannot init without fetching a provider from outside Opal infrastructure, or cannot plan, is recorded NOT planned with its reason' -- it EXPECTS unplannable roots. T3R-AC2 then requires VERDICT: PASS-EVERY-BACKEND-ROOT-PLANNED, and check_en_r2.py t3r_every_root_planned() computes unplanned = roots whose record is not planned or whose extract file is absent, and FAILS when that list is non-empty. The two clauses cannot both be satisfied while any root is unplannable.",
+    "world_is": "Four backend roots are unplannable on this box, for four different reasons, none of them reachable from this order's write surface: two are plan-time configuration defects in infra/aws/terraform/ (an out-of-range SQS max_message_size; a module call that disagrees with its module's variables), one needs a gitignored build artifact absent from EVERY checkout on this box whose builder egresses to PyPI, and one needs a gitignored secret tfvars that a linked worktree never carries. The other 68 planned and the census records all 72 with reasons, as item 1 prescribes -- so the order's prose was satisfied and its criterion was not.",
+    "notes": "No 'complete' flip: T3R-AC2 is FAIL by output and the order stays open, which is the report. INERT rather than ARMED because the harm this would cause -- reading '0 refusals of existing resources' off a census that never exercised 4 of 72 roots, and flipping G-F on it (the CTO's round-1 analysis s.2 RULING ADD) -- is already refused by the FAIL this row records, and the census discloses the 4 roots and their reasons in its own section 4 and in its json record. Whoever recuts this cell owns the choice: widen the <paths> grant to repair nfra-agentbus-port2/sqs.tf and seeking-alpha/main.tf in their own cell, or amend T3R-AC2 to admit a root recorded NOT planned with a reason -- which is what item 1 already says. harvest and trade-pipeline are not repairs at all: one needs Andrew's word for egress, the other needs a secret an operator supplies, and both would still need the criterion amended."
+  },
+  {
+    "id": "LGIC_ENFORCE-W3-S13",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~3",
+    "surfaced_at": "2026-09-16T10:21Z",
+    "one_line": "`terraform init` does not only write .terraform: on 2 of the 72 roots it REWROTE the TRACKED .terraform.lock.hcl, pruning a provider the config no longer uses -- a write outside this order's <paths> grant, produced by an invocation the order itself prescribes.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED, this worktree after the 72-root run: `git status --porcelain` shows exactly two tracked modifications, ' M infra/aws/terraform/market-overview/.terraform.lock.hcl' and ' M infra/aws/terraform/seeking-alpha/.terraform.lock.hcl'; `git diff --stat infra/aws/terraform` reads '2 files changed, 1 insertion(+), 39 deletions(-)'. Denominator: 72 roots init'd, 2 lock files changed, 70 unchanged.",
+        "MEASURED, the diff itself: both files lose the whole 'provider \"registry.terraform.io/hashicorp/archive\"' block (version 2.7.1, constraints ~> 2.0, 12 hashes) -- terraform v1.9.8 pruned a provider the current configuration no longer requires. Nothing else in either file moved; the hashicorp/aws block is untouched.",
+        "READ the task order BOUNDS, Disk: 'Every `init` writes a `.terraform` directory into your worktree; the 10G stop line binds.' That is the only write the order attributes to init, and the whole per-root cleanup correction (row LGIC_ENFORCE-S22) is written about .terraform alone.",
+        "NOT COMMITTED and NOT REVERTED: infra/aws/terraform/ is not in this order's <paths>, and the worker definition forbids `checkout --`. Both files are left MODIFIED AND UNSTAGED in this disposable worktree, so neither reaches the branch the COO drains; `git status` after the commit is the check."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The order's BOUNDS attribute exactly one write to `terraform init`: 'Every `init` writes a .terraform directory into your worktree.' The grant clause says the write surface is the <paths> block plus this worker's deliverables folder and the order file, 'Nothing else.'",
+    "world_is": "init ALSO rewrites the tracked .terraform.lock.hcl when the config's provider set has moved, which it did on 2 of 72 roots. In a disposable worktree this is inert -- the change is unstaged and never merges. In the MAIN checkout, or any worktree a seat commits broadly from, the same invocation (including the one inside .tools/safe-apply.sh) silently dirties a tracked file that an unrelated `safe-commit -- <dir>` could sweep in.",
+    "notes": "Filed for form, not significance: this worker neither committed nor reverted the two files and both stay unstaged. The durable question for whoever recuts or adjudicates: a cell that orders `terraform init` over N roots should either name .terraform.lock.hcl in its <paths> so the prune is a recorded decision, or say explicitly that lock-file drift is left in the worktree and discarded -- today the order says neither, and the two affected roots (market-overview, seeking-alpha) carry a stale archive-provider entry in their committed lock files that any future init will prune again."
   }
 ]
 ```
