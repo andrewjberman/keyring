@@ -1,11 +1,11 @@
 {
   "prd": "LGIC_CANON_PRD.md",
-  "prd_version": "v1.3",
-  "prd_pin": "5b2336a5e40f165a916dabf68af8fc45def633bb",
+  "prd_version": "v1.5",
+  "prd_pin": "312400d7dfb16e7f2bcaa7290c1c7cd41e812736",
   "half": "brief",
-  "half_hash": "8336e1f07e9e93ffe0948442d4b27b749bbb37d7f5694136ba360c1de484a180",
+  "half_hash": "20b8a92523bfedfb4f11615a63e62ebba9ef1d32129d3d14e3b5b89cf75d789d",
   "verdict": "SIGNED",
-  "review_ref": "docs/briefs/sources/LGIC_CANON_L4_BRIEF_REVIEW_v1_3_20260914.md@57e35a8b93fb3b51895f058f5a4c40a0e638f142",
+  "review_ref": "docs/briefs/sources/LGIC_CANON_L4_BRIEF_REVIEW_v1_5_20260916.md@7b5981f989",
   "signed_by": "4.0.0_SA_CRO",
-  "signed_at": "2026-09-14T18:51:46Z"
+  "signed_at": "2026-09-16T19:09:14Z"
 }
