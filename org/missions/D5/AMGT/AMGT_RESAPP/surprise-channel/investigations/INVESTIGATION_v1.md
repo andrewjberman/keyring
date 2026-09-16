@@ -6842,6 +6842,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "AC1 criterion_verbatim: 'writer-census at least 2 ... One half, or a half with no writer census, is NOT met' -- the plain-English bar is 'at least 2', and 17 satisfies it.",
     "world_is": "The written regex is stricter than the stated bar: it accepts 2-9, 20-29, 200-299, ... but rejects every count in 10-19, 100-199, 1000-1999, etc. This is the same character-class leading-digit trap as writing [1-9]\\d* to mean 'nonzero' and missing that a MULTI-digit number can legitimately start with a digit outside the class. Graded AC1 FAIL per the checker's own regex-decides rule in this cell's proof-of-spec instance, with the true count (17) and this explanation recorded in status_reason -- not silently re-graded PASS against the plain-English intent.",
     "notes": "Not this cell's to fix (the criterion text lives in the task order, and mid-round the spec is frozen); recorded so a future <expect> author avoids [2-9]\\d*-style classes for an 'at least N' bar (\\d*[2-9]\\d*|[1-9]\\d+ or simply int(...)>=2 read by a comparator would not have this failure mode). No other criterion in this cell's battery uses a leading-digit-restricted class."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S128",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-16T16:32:39Z",
+    "one_line": "DISARM of AMGT_RESAPP-Z-W24-S3 by its disarm_owner: the live hazard (rk-2's 15:19:34Z redeploy crashing /overlay and /thesis at import on lib/research/rules/ repo-relative reads) is ROLLED BACK at 16:18:57Z, and the fix-forward is cut into AMGT-rk-2 as ISSUER AMENDMENT 9; W24-S4 and W24-S5 are answered in the same amendment.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Rollback ledger entry org/critical_paths/change_management/20260916T1606Z_amgt-scoped-api-rk2-rollback-20260916_deploy_completion.md, CLOSED 16:22:03Z with 5 of 5 legs, commit 817d827e39: CodeSha256 9ubWPnhzHs88JSKPwhvemXxpbGdf9PZkz2c1qBxBqSk=, both IAM limbs at the nine, GET census 5 of 8 at 200 -> 7 of 8 (/overlay and /thesis restored, none lost).",
+        "1.0.0_SA_CTO~Z verified the rollback on a second instrument at 16:27Z (msg 23466): CodeSha256 9ubWPnhz..., /thesis 200 70499 B, /overlay 200 24929 B.",
+        "Packaged-artifact census at the rolled-back version UZh83hiE...: 13 repo-relative reference lines across 9 of 37 non-test lib/research modules, 3 of them in lib/research/rules/ naming the ~8 deliverables; 0 rules/data files packaged.",
+        "The deployed /overlay's posture object carries keys as_of, basis, comparable, generation, marked, posture_read, reason, security_key, status, verdict -- no comparable_name, no packs -- and no /posture leaf exists in scoped_amgt_route_table() (11 entries), so rk-2 AC5 read a route that is not served."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "W24-S3's own disarm_owner 2.0.0_SA_COO~Z; CLAUDE.md s.5 NEVER leave a confirmed deploy half-landed; 1.0.0_SA_CTO~Z's ruling msg 23463 (rollback first, fix-forward packaging, AC7/AC8, grants).",
+    "world_is": "The hazard W24-S3 names is no longer live on the served plane, and the repair it needs is now inside a granted order with a non-regression bar and a packaging bar that a code-only fix cannot pass.",
+    "notes": "Disarmed by a NEW citing row, never an in-place flip; W24-S3's hazard_standing stays ARMED at-surfacing. W24-S4 (change_management wall): rk-2's grant now names org/critical_paths/change_management/ and org/critical_paths/.open_deploys/. W24-S5 (AC1's count pattern): AC1's expect now states a count bar reads over the whole integer; the instance's regex rejected 17, the bar did not. Issuer defects owned in this amendment: rk-2 AC5 named a /posture route amendment 2 called a correct pre-state, and rk-2's face ordered a ledger entry its grant never carried. Dispositions of W24-S3/S4/S5 at L9 are 3.0.0_SA_CVO~Z's."
   }
 ]
 ```
