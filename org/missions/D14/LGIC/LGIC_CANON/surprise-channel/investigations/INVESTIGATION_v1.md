@@ -482,6 +482,51 @@ not a message.
    "spec_asserts": "Round-1 analysis ruling A-13 and decomposition v4 s.0d: the judges are blind to each other and to CN-k-2's author; a scorer never scores its own work. Criterion J7-AC3 (j7-blind) is the round's only mechanical bar on that property.",
    "world_is": "A blindness bar that greps output files can only catch a judge careless enough to name the file it copied. The realistic leak -- reading a sibling's verdicts and writing your own prose -- leaves no trace in the artifact, so the criterion cannot go non-zero on it. The property is real and is genuinely enforced, just not by the thing that claims to enforce it: it is enforced by worktree isolation, which holds until the first judge drains.",
    "notes": "ARMED, disarm_owner 2.0.0_SA_COO~G, and the disarm is a SEQUENCING COMMITMENT rather than an edit, because the control is mine: the three judges CN-j-4, CN-j-5 and CN-j-6 are spawned from bases that predate ANY judge drain, and none of the three is drained until all three have produced their output. That keeps the blind structurally true for the whole arm. It disarms when all three have reported and the issuer records the three spawn bases and the drain order in the drain-end read. \u26a0 THE CRITERION IS NOT REMOVED and is not useless -- it still catches a copied filename, which is the careless case. It is re-read as what it is: a cheap bar on citation, not a measurement of blindness. For 3.0.0_SA_CVO at L9: J7-AC3 passing means no judge file names another, and nothing more; the blindness itself rests on the spawn bases recorded at the drain. Round 1's judges were run before this was noticed and their ordering is not re-litigated here."
+  },
+  {
+   "id": "LGIC_CANON-W1-S3",
+   "project": "LGIC_CANON",
+   "fabric": "laptop",
+   "surfaced_by": "0.9.0_WK_LGIC_CANON~1",
+   "surfaced_at": "2026-09-16T07:49Z",
+   "one_line": "The CN-k-2-r2 worker face's Read pointer 'org/tier1_exec/1.0.0_SA_CTO/deliverables/LGIC_CANON_ROUND1_ANALYSIS.md @26ae876d23' names a path that never existed; the commit that actually carries that file wrote it to a different directory.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "RUN (in this worktree, spawn base 68644b3c19): comp-read org/tier1_exec/1.0.0_SA_CTO/deliverables/LGIC_CANON_ROUND1_ANALYSIS.md --for ... -> 'comp-read: ERROR: not a file: org/tier1_exec/1.0.0_SA_CTO/deliverables/LGIC_CANON_ROUND1_ANALYSIS.md'.",
+     "RUN: git show --stat 26ae876d23 -- org/tier1_exec/1.0.0_SA_CTO/deliverables/LGIC_CANON_ROUND1_ANALYSIS.md -> only the commit header, no file stat line: that commit never touched that path.",
+     "RUN: git log --oneline -- org/tier1_exec/1.0.0_SA_CTO/deliverables/LGIC_CANON_ROUND1_ANALYSIS.md -> zero commits, whole history.",
+     "RUN: comp-find --name 'LGIC_CANON_ROUND1_ANALYSIS.md' --files -> exactly 1 hit: org/missions/D14/LGIC/LGIC_CANON/deliverables/1.0.0_SA_CTO/LGIC_CANON_ROUND1_ANALYSIS.md; git log -1 --format=%H on that path returns 26ae876d2380fee0de9b6deec55db3d972241a88, the exact commit the worker face cites."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "Worker face 'Read': the round-1 analysis s.2 rulings A-1, A-2, A-4 and A-9 (org/tier1_exec/1.0.0_SA_CTO/deliverables/LGIC_CANON_ROUND1_ANALYSIS.md @26ae876d23).",
+   "world_is": "No file exists or ever existed at org/tier1_exec/1.0.0_SA_CTO/deliverables/LGIC_CANON_ROUND1_ANALYSIS.md at that commit or any commit; the file the worker face means lives at org/missions/D14/LGIC/LGIC_CANON/deliverables/1.0.0_SA_CTO/LGIC_CANON_ROUND1_ANALYSIS.md, introduced by that same commit 26ae876d23. Not blocking -- comp-find located it and this cell's five acceptance criteria do not depend on the pointer resolving on the first try -- filed as FORM only.",
+   "notes": "INERT: worked around by comp-find within the same turn; nothing in this cell's acceptance criteria (K2-AC1..AC6, K2-J1) reads this path directly. Class is OBSERVATION per Rule 22a footnote (a citation ages separately from what it points at) and the general instruction that a path elsewhere is a surprise row, never a silent workaround."
+  },
+  {
+   "id": "LGIC_CANON-W1-S4",
+   "project": "LGIC_CANON",
+   "fabric": "laptop",
+   "surfaced_by": "0.9.0_WK_LGIC_CANON~1",
+   "surfaced_at": "2026-09-16T07:49Z",
+   "one_line": "The round-1 analysis's round-2 cell table scopes CN-k-2 to serve ruling A-4 (recount R1's census tag) alongside A-1/A-2/A-9, but this task order's WORKER FACE cell text (five numbered edit items) and its expected_criteria (K2-AC1..AC6, K2-J1) carry no item or criterion for R1's census tag, so this cell does not touch it.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "READ org/missions/D14/LGIC/LGIC_CANON/deliverables/1.0.0_SA_CTO/LGIC_CANON_ROUND1_ANALYSIS.md@26ae876d23, s.3 cell table, the CN-k-2 row: 'what' column includes \"R1's census tag\"; 'rulings' column lists 'A-1, A-2, A-4, A-9'.",
+     "READ this task order's WORKER FACE (LGIC_CANON.CN-k-2-r2, issued 2.0.0_SA_COO~G): the five numbered CN-k-2 edit items (axis vocabulary, SEVERITY ORDER, R20-on-every-axis, citation rule, pipeline-instance rule) name nothing about R1 or a census tag; <expected_criteria> lists only K2-AC1..AC6, K2-J1, none of which reads R1.",
+     "READ infra/logic/02_DOCTRINE.md R1's rule block (this cell's edit did not touch R1): its census line already carries a dated SUPERSEDED/source-first marker (2026-09-13) from round 1 (changelog v1.0, cell CN-k-1) -- so A-4's 'if the tag predates the source-first ruling, a vintage mark is the whole fix' may already be satisfied, or may simply have been left out of round 2's cut; the worker face does not say which and this cell has no grant or criterion to act on it either way."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "Decomp table (round-1 analysis s.3): CN-k-2 serves rulings A-1, A-2, A-4, A-9, including 'R1's census tag'.",
+   "world_is": "This cell's actual worker face narrows CN-k-2 to five items and six mechanical criteria plus one judgment criterion, none reading R1's census tag; A-4 is named only under 'Read' as background, not as an edit instruction or a tested criterion.",
+   "notes": "INERT: no criterion of this cell depends on R1's census tag, and R1 is outside this cell's five stated edit items, so this cell leaves it untouched by design rather than by oversight. Filed so the round's owner can confirm whether A-4 was deliberately dropped from round 2's issuance or is still owed by another cell."
   }
 ]
 ```
