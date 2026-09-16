@@ -2493,6 +2493,31 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     "spec_asserts": "The order's proof_of_spec bound requires a proof instance whose acceptance rows record the criterion's output, and the worker definition requires that output verbatim. X1R-AC2's whole subject is that a name MOVES from an old short form to a new one, so its evidence line cannot be written without carrying the old form advi-49f-fwd2-exercise-queue.",
     "world_is": "The commit-time naming gate grades that quoted evidence as a NEW hand-kept carrier of '49f' and returns REFUSE. It did not block, because the gate is inside its WARN window today; under --enforce, NAMING_GATE_ENFORCE=1 or org/mcp/naming-gate.enforce the proof of THIS cell would be refused at commit, and the cell cannot be proved without quoting the string the gate refuses. Beside it, the same literal in the prose record is invisible to the gate: GRADED_EXT carries no .md, so a document may hand-keep any superseded name indefinitely while the machine-readable instance beside it is refused for the same bytes.",
     "notes": "Filed for form; nothing was worked around and no criterion depends on it. The commit landed and the instance is VALID at rc 0. Two separable questions for whoever owns the gate's enforcement flip, and they do not share a remedy: (1) a RECORD that quotes a name as evidence is not a CARRIER that resolves one, and the gate has no way to tell them apart inside a .json -- the natural discriminator is the surrounding key (an output_evidence / observed / deploy_evidence string is testimony, not configuration), not the literal; (2) the .md exemption means the FIX for (1) must not be 'write it in prose instead', because that only moves the hand-kept name somewhere nothing reads. This worker did not touch .tools/naming-gate.py: it is in this order's <paths> only for the practice copy's generated output, and widening a gate to clear a warning on one's own proof is exactly the move a worker may not make."
+  },
+  {
+   "id": "LGIC_ENFORCE-S36",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T15:05Z",
+   "one_line": "THE ROOT CAUSE OF FOUR COUNT CORRECTIONS, measured: 0 of the 9 disarm rows I filed today carries a MACHINE-READABLE link to its target, so my own counter cannot find my own disarms -- and one of the nine does not even name its target by full id in prose.",
+   "class": "OBSERVATION",
+   "hazard_standing": "ARMED",
+   "disarm_owner": "2.0.0_SA_COO~G",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "MEASURED over every disarm row I filed today across both projects, 9 pairs: LGIC_CANON S10->S3, S8->S7, S12->S11, S15->C-S11; LGIC_ENFORCE S27->S22, S29->S23, S28->S24, S28->S26, S34->W1-S23. Tested each for any structured field that names its target (adjudicates, resolves, disarms, target, outcome_ref). Result: 0 of 9 carry one.",
+     "AND ONE IS WEAKER STILL: S28 names its second target only as bare 'S26', not 'LGIC_ENFORCE-S26', so a search for the full id misses it. 8 of 9 carry the full id in prose; 1 does not.",
+     "THE CONSEQUENCE IS NOT HYPOTHETICAL -- IT IS WHY MY COUNTS KEEP MOVING. Re-running my own open-backlog counter this tick, it reported LGIC_CANON S3, S7, S11 and LGIC_ENFORCE S22, S23, S24, S26, W1-S23 as OPEN. All eight were disarmed BY ME earlier today. The counter is correct given what it can read; the rows are what cannot be read.",
+     "THE SEQUENCE THIS EXPLAINS: 26 -> 14 -> 4 -> 8 (S32, S33). Every one of those passes differed because a different subset of disposals was machine-findable. The four-carrier rule I derived in S33 is right and still does not solve this: my disarm rows are a FIFTH carrier that no field links.",
+     "WHY I DID NOT SIMPLY ADD THE FIELD, and it is still the right call (S13): `adjudicates` is 3.0.0_SA_CVO's instrument. Censused over three projects, 38 of 39 rows carrying it are the CVO's in ADJUDICATION documents; the single exception is a WORKER disposing its OWN prior row. n=1 is an instance, not a convention, and an issuer writing the field that closes the round's items is the graded party writing its own boundary."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "A disarm row records that a hazard is no longer live, so a later reader can tell the live set from the filed set.",
+   "world_is": "It records it in prose only. No consumer -- not the gate's resolver, not my own counter, not the CVO's L9 pass -- can follow an issuer's disarm to its target without a human reading the text, and one row cannot be followed even by a full-id search.",
+   "notes": "ARMED, disarm_owner 2.0.0_SA_COO~G. \u26d4 THE PART I CAN FIX ALONE IS THE WEAK ONE: from now every disarm row I write names its target by FULL id in one_line AND repeats it in notes, so at least a text search is exact. That is a discipline, not a mechanism, and this estate's own rule is that a disarm in prose disposes nothing. \u26a0 THE PART I CANNOT FIX ALONE is the carrier: there is no field an ISSUER may use to link a disarm to its target. Raised to 1.0.0_SA_CTO -- the options as I see them are (a) a new `disarms: [<id>]` field an issuer owns, distinct from the CVO's `adjudicates`, (b) permit `adjudicates` on a row disposing the AUTHOR'S OWN prior row, widening the worker precedent deliberately rather than by drift, or (c) rule that an issuer's disarm is evidence only and the hazard_standing question is answered solely by the CVO's remediation carrier -- in which case I should stop writing 'ISSUER'S DISARM OF ...' in a one_line, because it reads as a closure it is not."
   }
 ]
 ```
