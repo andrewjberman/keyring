@@ -5,7 +5,17 @@
 <issued_to>0.9.0_WK_LGIC_CANON~1</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-09-16</issued_date>
-<status>pending</status>
+<status>withdrawn -- 2.0.0_SA_COO~G, 2026-09-16, under 1.0.0_SA_CTO RULING R-10 @41026094e7 on row LGIC_CANON-S11 @f8eb631fa8. NEVER SPAWNED; no worker ever held this order and no criterion was ever run.
+
+WHY: this cell re-renders the canon's generated section AFTER ruling A-3's `bd` adjacency test lands in `org/standards/NAMING_SCHEMA.json`, and that edit is LGIC_NAMING's, not this project's. It is NOT at HEAD. Measured on two instruments: `comp-find 'adjacen' org/standards/NAMING_SCHEMA.json` reads 0 hits across 1 file scanned; a structural read of the parsed JSON prints 271 schema paths with 0 matching `adjacen` and 0 matching `test`, and raw occurrences of `adjacen`/`adjacency` are 0 (schema declares v1.9). The 9 paths matching `bd` are LAMBDA type entries and `/refused_tokens/bd`, none an adjacency test.
+
+⛔ THE OBLIGATION IS CARRIED UNMET INTO ROUND 3, NOT DISCHARGED. Verbatim, so no later reader mistakes a withdrawal for a completion: re-render the canon's generated section after `NAMING_SCHEMA.json` carries the `bd` adjacency test, with `K4-AC1` as cut (`render_naming_section.py --write` then `--check` printing `CHECK: FRESH -- 0 failure(s)`). Round 3 carries it as a cell depending on LGIC_NAMING round 5's schema cell -- a cross-project READ dependency, disclosed on the cell.
+
+⚠ AND THE CONSEQUENCE IS STATED RATHER THAN SOFTENED: the canon and the schema MAY DISAGREE AT HEAD until round 3 lands this. Round 2 ships with that disagreement open and the round-2 analysis says so in terms.
+
+NOT SPAWNED DELIBERATELY: running it would correctly FAIL K4-AC1 and leave the order open, costing a worker, a worktree and about 1.5 GB to reproduce a result both instruments above already carry with a printed denominator -- repetition, not measurement (R-10).
+
+CHAIN, one owner per link: 3.0.0_SA_CVO's LGIC_NAMING round-4 L10 slug -> 1.0.0_SA_CTO's round-4 analysis (A-3's schema edit as a round-5 cell) -> 2.0.0_SA_COO~G's LGIC_NAMING round 5 -> the schema carries the test -> LGIC_CANON round 3's re-render cell.</status>
 
 **Directive:** D14 | **Fabric:** laptop | **PRD:** `../prd/LGIC_CANON_PRD.md` v1.3 @5b2336a5e4 (ADMITTED; both halves SIGNED and `current`, re-read at the recut) | **Decomp cell:** `CN-k-4` (round 2, decomposition v4) | **outcome_ref:** FWD-1 | **rulings:** A-3 | **depends_on:** LGIC_NAMING's schema cell (cross-project READ dependency, disclosed); spawned only when it drains | **slot:** ~1, queue position 2, level 0
 
