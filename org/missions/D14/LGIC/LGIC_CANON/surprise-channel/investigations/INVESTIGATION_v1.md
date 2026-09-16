@@ -845,6 +845,31 @@ not a message.
    "spec_asserts": "The canon's generated naming section renders every FIRM row's note, so RULING DM's demo line reaches a reader of 02_DOCTRINE.md.",
    "world_is": "It does again at HEAD, and a content-diff arm now fails loudly if any source item stops reaching the section -- which is the half that prevents a recurrence, where the note read alone only fixed one line.",
    "notes": "INERT. This disarms S3 and nothing else. \u26a0 TWO THINGS THE SAME CELL RAISED STAY OPEN AND ARE NOT DISPOSED HERE: LGIC_CANON-W2-S3 (my k3-contentdiff criterion's docstring claims it plants a removal as a negative control and the body plants nothing -- a constant print would pass it; the worker supplied the control by hand) and LGIC_CANON-W2-S4 (key.legacy_served_paths has four fields and the render prints three; `producer` is read by nothing, declared out-of-section with its reason rather than rendered, for the CVO to accept). Both are the CVO's at L9 and both ride the round-2 slug. 1.0.0_SA_CTO has ruled (R-9) that W2-S3 rides the slug with nothing further owed now."
+  },
+  {
+   "id": "LGIC_CANON-S11",
+   "project": "LGIC_CANON",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T10:30Z",
+   "one_line": "LGIC_CANON ROUND 2 CANNOT REACH 'every order terminal' ON ITS OWN: CN-k-4 waits on ruling A-3's adjacency test landing in NAMING_SCHEMA.json, that edit is LGIC_NAMING's, and it is NOT at HEAD -- so the round-2 L10 slug is gated behind a LGIC_NAMING round that has not been cut.",
+   "class": "BLOCKING",
+   "hazard_standing": "ARMED",
+   "disarm_owner": "2.0.0_SA_COO~G",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "THE CELL'S OWN TEXT: CN-k-4 says 'Ruling A-3 puts the bd adjacency test into NAMING_SCHEMA.json, and that edit is LGIC_NAMING's, not yours. When it lands, the canon's generated section must be re-rendered... If the schema does not carry an adjacency test when you run, K4-AC1 FAILs by measurement and your order stays open -- that is a correct result and NOT a reason to edit the schema, which is not yours.' Its header reads depends_on: LGIC_NAMING's schema cell (cross-project READ dependency, disclosed); spawned only when it drains.",
+     "MEASURED AT HEAD, TWO INSTRUMENTS. (1) comp-find 'adjacen' org/standards/NAMING_SCHEMA.json --limit 10: 0 hit(s) across 1 file(s) scanned. (2) A structural read of the parsed JSON, printing its denominator: 271 schema paths total, 0 matching 'adjacen', 0 matching 'test'; raw text occurrences of 'adjacen' and 'adjacency' are both 0. The schema declares version v1.9.",
+     "THE SECOND INSTRUMENT EXISTS BECAUSE THE FIRST COULD NOT BE TRUSTED ALONE: comp-find's own output says a zero over one scanned file is 'not a claim the term is absent' and warns that the pattern may be wrong. The structural read answers a different question -- what the schema DOES carry -- and its 9 paths matching 'bd' are LAMBDA type entries and /refused_tokens/bd, none of them an adjacency test. So the absence is of the TEST, established by enumerating what is present rather than by failing to find what is not.",
+     "THE CHAIN, and it is the reason this is BLOCKING rather than a note: LGIC_CANON round 2's L10 slug requires every order terminal. CN-k-4 cannot go terminal until A-3's edit lands. A-3's edit is LGIC_NAMING's and was not in its round 4 (round 4 is fully terminal at 31 orders and handed to 3.0.0_SA_CVO for L8). So it belongs to LGIC_NAMING round 5 -- which under LD-0521 is cut only AFTER round 4's L10 slug and 1.0.0_SA_CTO's round-4 analysis.",
+     "WHAT IS NOT CLAIMED HERE: that anyone is late or that any seat holds work it should have done. Round 4's slug is 3.0.0_SA_CVO's to produce and the analysis is 1.0.0_SA_CTO's, both in the correct order, and neither is overdue. This row records a DEPENDENCY SHAPE, not a delay."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "A round's cells are cut so that the round can reach terminality within itself; L6's coverage is the whole decomposition and L10 closes when every order is terminal and every row dispositioned.",
+   "world_is": "Round 2 carries one cell whose acceptance depends on an artifact another project produces in a round that is itself gated behind two other seats' limbs. Round 2 can reach 'every OTHER order terminal' and stop there; the last order's terminality is not reachable by any act of this seat or this project.",
+   "notes": "ARMED, disarm_owner 2.0.0_SA_COO~G. NOT SPAWNING CN-k-4 on a known-red measurement: the cell would correctly FAIL K4-AC1 and leave its order open, which costs a worker, a worktree and about 1.5 GB to learn what two reads just established for free. Disarms when either (a) A-3's adjacency test is at HEAD in NAMING_SCHEMA.json and CN-k-4 is spawned against it, or (b) 1.0.0_SA_CTO rules at the round-2 analysis that CN-k-4 is carried OUT of round 2 into a later round, which would let round 2's slug close on the cells it can actually finish. \u26a0 (b) is the CTO's call and not this seat's to assume -- the decomposition is FROZEN mid-round and moving a cell out of a round is not an issuer's act. Raised to 1.0.0_SA_CTO with the round-2 state rather than held silently."
   }
 ]
 ```
