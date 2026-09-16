@@ -5,7 +5,7 @@
  "project": "LGIC_CANON",
  "directive": "D14",
  "fabric": "laptop",
- "prd_version": "v1.3",
+ "prd_version": "v1.4",
  "step": 4,
  "brief_ref": "docs/briefs/d14-pipeline-canon-brief-20260912.md@a4cc0cb681",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6"],
@@ -108,15 +108,22 @@ proves nothing." v1.2 left CELL CANDIDATES C2's inputs column on the old wording
 
   FWD-5  Taking on a new firm is one checklist run end to end, with no step where
          somebody has to invent an answer
-         DONE WHEN  EXERCISED -- a firm has actually been taken on this way and its
-                    people can see their dashboard
-         ACCEPT     someone follows the checklist from start to finish, the new
-                    firm's people see their dashboard at the end, and nowhere in it
-                    did anyone have to make a judgement call the rules should
-                    already have made -- where today every firm has been a one-off
+         DONE WHEN  EXERCISED -- the checklist has been run end to end on a
+                    LGIC_LGCTFM practice wave over an existing firm's subject, and
+                    that firm's people can see their dashboard at the end
+         ACCEPT     someone follows the checklist from start to finish on the
+                    practice wave, the firm's people see their dashboard at the end
+                    exactly as before, and nowhere in it did anyone have to make a
+                    judgement call the rules should already have made -- where today
+                    every firm has been a one-off; no demonstration firm is made up
+                    for it, and the first genuinely new firm re-runs it as
+                    confirmation only
          SOURCE     brief v2 Part I O5; bar Part III O5; Andrew, "we're going to have
                     the same pattern over and over again as we take on more and
-                    more firms"
+                    more firms"; Andrew-direct 2026-09-16 ~18:2xZ, "Yes we can do
+                    something like this (b), but I think it would really be in a
+                    context of LGIC_LGCTFM, because we don't have a new firm to test
+                    and I don't feel like messing around making demo cruft"
 
   FWD-6  Every part of the estate has a decision recorded against it -- leave it,
          move it, retire it, or allow it as a stated exception
