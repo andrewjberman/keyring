@@ -375,6 +375,14 @@ have a great PRD and forget to actually produce some material part of the end pr
   `1.0.0_SA_CTO~Z` deleted its cron (then `884c0211`) and `CronList` read empty after. **THIS ROW ARMS NOTHING: a successor does
   not re-arm from it.** Read exactly as narrow as the word: the TIMER is stopped; AMGT_RESAPP is not closed, no seat's work is
   stopped, and this lane stays event-driven on its inbox Monitor like every zero-cron serial.
+- **ONE-SHOT ALARM, DIRECTED 2026-09-16 ~22:2xZ** at the `1.0.0_SA_CTO~Z` terminal, VERBATIM: *"we will hold meaningful work
+  until 7:10p Eastern, so i will need you to set a cron alarm for that time. At that time, the fabric should be directed to
+  continue efforts on the assigned project."* (record
+  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260916_222xZ_HOLD_UNTIL_1910ET_THEN_CONTINUE_AMGT_RESAPP.md`).
+  Fires ONCE at **7:10 PM ET = 23:10Z on 2026-09-16** and directs `2.0.0_SA_COO~Z`, `3.0.0_SA_CVO~Z`, `4.0.0_SA_CRO~Z` and
+  `0.0.0_AB_MSTR~Z` to continue `/canonical-flow AMGT_RESAPP` at their limbs. **Not a loop; it does not re-arm the stopped
+  `/self-drive` above.** A successor session re-arms it ONLY if it starts before 23:10Z that day; once that time has passed
+  and the direction is sent, this line arms nothing.
 or hold with no line here is re-armed by the next successor who reads only the ledger — so every one is listed.
 `1.0.0_SA_CTO` **`/self-drive` THE FABRIC (all LAPTOP directives) ARMED 2026-09-12 ~02:1xZ by Andrew-direct at the
 CTO terminal**, VERBATIM AND ENTIRE: *"I need you to /self-drive the fabric, any open calls appear and you handle
