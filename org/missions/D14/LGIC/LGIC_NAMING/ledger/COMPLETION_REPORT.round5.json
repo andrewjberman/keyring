@@ -1,0 +1,326 @@
+{
+ "kind": "COMPLETION_REPORT",
+ "schema_version": "1.0",
+ "project": "LGIC_NAMING",
+ "round": 5,
+ "written_by": "2.0.0_SA_COO~G",
+ "written_utc": "2026-09-16T16:35Z",
+ "decomposition_ref": "org/missions/D14/LGIC/LGIC_NAMING/decompositions/LGIC_NAMING_DECOMP.md@273d7061dd",
+ "denominators": {
+  "fwd_in_prd_header": 6,
+  "cells_in_decomposition": 16,
+  "task_orders": 34,
+  "task_orders_terminal_with_valid_proof": 34
+ },
+ "outcomes": [
+  {
+   "fwd_id": "FWD-1",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "EXERCISED -- two people have actually named the same new thing without conferring, and matched",
+   "cells": [
+    {
+     "cell_id": "LN-e-1",
+     "task_orders": [
+      {
+       "id": "LGIC_NAMING.TO-LN-e-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_NAMING/deliverables/0.9.0_WK_LGIC_NAMING~2/LGIC_NAMING.TO-LN-e-1.namer-a.proof_of_spec.json@254a310135"
+      },
+      {
+       "id": "LGIC_NAMING.TO-LN-e-1-r2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_NAMING/deliverables/0.9.0_WK_LGIC_NAMING~1/LGIC_NAMING.TO-LN-e-1-r2.namer-a.proof_of_spec.json@e8490dcbfb"
+      },
+      {
+       "id": "LGIC_NAMING.TO-LN-e-1-r3",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_NAMING/deliverables/0.9.0_WK_LGIC_NAMING~1/LGIC_NAMING.TO-LN-e-1-r3.namer-a.proof_of_spec.json@ef1c66bb7b"
+      }
+     ]
+    },
+    {
+     "cell_id": "LN-e-2",
+     "task_orders": [
+      {
+       "id": "LGIC_NAMING.TO-LN-e-2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_NAMING/deliverables/0.9.0_WK_LGIC_NAMING~3/LGIC_NAMING.TO-LN-e-2.namer-b.proof_of_spec.json@beaefc6cf5"
+      },
+      {
+       "id": "LGIC_NAMING.TO-LN-e-2-r2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_NAMING/deliverables/0.9.0_WK_LGIC_NAMING~2/LGIC_NAMING.TO-LN-e-2-r2.namer-b.proof_of_spec.json@df2108b14f"
+      },
+      {
+       "id": "LGIC_NAMING.TO-LN-e-2-r3",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_NAMING/deliverables/0.9.0_WK_LGIC_NAMING~2/LGIC_NAMING.TO-LN-e-2-r3.namer-b.proof_of_spec.json@908893edc8"
+      }
+     ]
+    },
+    {
+     "cell_id": "LN-e-3",
+     "task_orders": [
+      {
+       "id": "LGIC_NAMING.TO-LN-e-3",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_NAMING/deliverables/0.9.0_WK_LGIC_NAMING~5/LGIC_NAMING.TO-LN-e-3.namer-comparison.proof_of_spec.json@a39139aa81"
+      },
+      {
+       "id": "LGIC_NAMING.TO-LN-e-3-r2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_NAMING/deliverables/0.9.0_WK_LGIC_NAMING~6/LGIC_NAMING.TO-LN-e-3-r2.namer-comparison.proof_of_spec.json@ba8250b32a"
+      },
+      {
+       "id": "LGIC_NAMING.TO-LN-e-3-r3",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_NAMING/deliverables/0.9.0_WK_LGIC_NAMING~6/LGIC_NAMING.TO-LN-e-3-r3.namer-comparison.proof_of_spec.json@cd86d91a55"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "Two blind namers (LN-e-1, LN-e-2) and their comparison (LN-e-3). The EXERCISED bar needs the namers to be genuinely independent, so each re-run was a fresh clean-context seat and LN-e-3 checks that neither namer's recorded base commit contains the other's answer file -- the discriminator that a matching pair alone would not give."
+  },
+  {
+   "fwd_id": "FWD-2",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "EXERCISED -- someone new to the estate has read names and pointed at the firm in each, unaided",
+   "cells": [
+    {
+     "cell_id": "LN-e-4",
+     "task_orders": [
+      {
+       "id": "LGIC_NAMING.TO-LN-e-4",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_NAMING/deliverables/0.9.0_WK_LGIC_NAMING~6/LGIC_NAMING.TO-LN-e-4.blind-reader.proof_of_spec.json@3c2910ac09"
+      },
+      {
+       "id": "LGIC_NAMING.TO-LN-e-4-r2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_NAMING/deliverables/0.9.0_WK_LGIC_NAMING~5/LGIC_NAMING.TO-LN-e-4-r2.reader.proof_of_spec.json@9096ea3c49"
+      },
+      {
+       "id": "LGIC_NAMING.TO-LN-e-4-r3",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_NAMING/deliverables/0.9.0_WK_LGIC_NAMING~5/LGIC_NAMING.TO-LN-e-4-r3.reader.proof_of_spec.json@b6a992b84d"
+      }
+     ]
+    },
+    {
+     "cell_id": "LN-e-5",
+     "task_orders": [
+      {
+       "id": "LGIC_NAMING.TO-LN-e-5",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_NAMING/deliverables/0.9.0_WK_LGIC_NAMING~5/LGIC_NAMING.TO-LN-e-5.reader-scoring.proof_of_spec.json@d4536f1a7b"
+      },
+      {
+       "id": "LGIC_NAMING.TO-LN-e-5-r2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_NAMING/deliverables/0.9.0_WK_LGIC_NAMING~6/LGIC_NAMING.TO-LN-e-5-r2.reader-scoring.proof_of_spec.json@4c0866f468"
+      },
+      {
+       "id": "LGIC_NAMING.TO-LN-e-5-r3",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_NAMING/deliverables/0.9.0_WK_LGIC_NAMING~6/LGIC_NAMING.TO-LN-e-5-r3.reader-scoring.proof_of_spec.json@adfd5599f7"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "The blind reader (LN-e-4) and its scoring (LN-e-5). LN-e-4 spawns only after LN-e-1 and LN-e-2 prove the blind-seat method, so a reader failure is never confounded with a seat-briefing failure."
+  },
+  {
+   "fwd_id": "FWD-3",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "EXERCISED -- someone has written the rule that catches every system belonging to one firm, and it was a single rule",
+   "cells": [
+    {
+     "cell_id": "LN-f-1",
+     "task_orders": [
+      {
+       "id": "LGIC_NAMING.TO-LN-f-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_NAMING/deliverables/0.9.0_WK_LGIC_NAMING~1/LGIC_NAMING.TO-LN-f-1.firm-patterns.proof_of_spec.json@d9ccd9babd"
+      },
+      {
+       "id": "LGIC_NAMING.TO-LN-f-1-r2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_NAMING/deliverables/0.9.0_WK_LGIC_NAMING~4/LGIC_NAMING.TO-LN-f-1-r2.firm-patterns.proof_of_spec.json@a4480344e3"
+      }
+     ]
+    },
+    {
+     "cell_id": "LN-f-2",
+     "task_orders": [
+      {
+       "id": "LGIC_NAMING.TO-LN-f-2-r5",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_NAMING/deliverables/0.9.0_WK_LGIC_NAMING~4/LGIC_NAMING.TO-LN-f-2-r5.live-fence.proof_of_spec.json@59282b1126"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "LN-f-1 wrote one pattern per firm on the REPO plane; LN-f-2 (round 5, new in decomposition v7) read the LIVE plane under R-17 and R-20, naming its estate instrument in the invocation. Coverage on the live half is 0 of 4 and is DISCLOSED, not hidden: the four legacy-named IAM roles their own generated fence does not catch are named in the deliverable, with what a text read cannot see."
+  },
+  {
+   "fwd_id": "FWD-4",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "EXERCISED -- someone who knows one location's layout has read an address in another and understood it correctly",
+   "cells": [
+    {
+     "cell_id": "LN-l-1",
+     "task_orders": [
+      {
+       "id": "LGIC_NAMING.TO-LN-l-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_NAMING/deliverables/0.9.0_WK_LGIC_NAMING~2/LGIC_NAMING.TO-LN-l-1.template-notice.proof_of_spec.json@4f30c6e3a0"
+      }
+     ]
+    },
+    {
+     "cell_id": "LN-l-2",
+     "task_orders": [
+      {
+       "id": "LGIC_NAMING.TO-LN-l-2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_NAMING/deliverables/0.9.0_WK_LGIC_NAMING~4/LGIC_NAMING.TO-LN-l-2.cross-bucket-reader.proof_of_spec.json@15c38055ca"
+      },
+      {
+       "id": "LGIC_NAMING.TO-LN-l-2-r2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_NAMING/deliverables/0.9.0_WK_LGIC_NAMING~3/LGIC_NAMING.TO-LN-l-2-r2.layout-reader.proof_of_spec.json@3fecf3a37f"
+      }
+     ]
+    },
+    {
+     "cell_id": "LN-l-3",
+     "task_orders": [
+      {
+       "id": "LGIC_NAMING.TO-LN-l-3",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_NAMING/deliverables/0.9.0_WK_LGIC_NAMING~5/LGIC_NAMING.TO-LN-l-3.cross-bucket-scoring.proof_of_spec.json@cadd764b52"
+      },
+      {
+       "id": "LGIC_NAMING.TO-LN-l-3-r2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_NAMING/deliverables/0.9.0_WK_LGIC_NAMING~6/LGIC_NAMING.TO-LN-l-3-r2.layout-scoring.proof_of_spec.json@b9834f3b37"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "The template's replacement notice (LN-l-1) plus the cross-bucket reading exercise (LN-l-2) and its scoring (LN-l-3), including the legacy negative-control address the reader must mark as replaced."
+  },
+  {
+   "fwd_id": "FWD-5",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "EXERCISED -- two people have applied the written rule by hand to the same set of real names and compared",
+   "cells": [
+    {
+     "cell_id": "LN-g-1",
+     "task_orders": [
+      {
+       "id": "LGIC_NAMING.TO-LN-g-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_NAMING/deliverables/0.9.0_WK_LGIC_NAMING~1/LGIC_NAMING.TO-LN-g-1.grading-rule.proof_of_spec.json@51b0952d71"
+      },
+      {
+       "id": "LGIC_NAMING.TO-LN-g-1-r3",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_NAMING/deliverables/0.9.0_WK_LGIC_NAMING~3/LGIC_NAMING.TO-LN-g-1-r3.grading-rule.proof_of_spec.json@a945caca96"
+      },
+      {
+       "id": "LGIC_NAMING.TO-LN-g-1-r4",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_NAMING/deliverables/0.9.0_WK_LGIC_NAMING~3/LGIC_NAMING.TO-LN-g-1-r4.grading-rule.proof_of_spec.json@7dab42384c"
+      },
+      {
+       "id": "LGIC_NAMING.TO-LN-g-1-r5",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_NAMING/deliverables/0.9.0_WK_LGIC_NAMING~1/LGIC_NAMING.TO-LN-g-1-r5.rule-at-v110.proof_of_spec.json@9bff58525a"
+      }
+     ]
+    },
+    {
+     "cell_id": "LN-g-2",
+     "task_orders": [
+      {
+       "id": "LGIC_NAMING.TO-LN-g-2-r4",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_NAMING/deliverables/0.9.0_WK_LGIC_NAMING~2/LGIC_NAMING.TO-LN-g-2-r4.grade-fn1d.proof_of_spec.json@f015dff193"
+      }
+     ]
+    },
+    {
+     "cell_id": "LN-h-1",
+     "task_orders": [
+      {
+       "id": "LGIC_NAMING.TO-LN-h-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_NAMING/deliverables/0.9.0_WK_LGIC_NAMING~7/LGIC_NAMING.TO-LN-h-1.grader-a.proof_of_spec.json@388b07f486"
+      }
+     ]
+    },
+    {
+     "cell_id": "LN-h-2",
+     "task_orders": [
+      {
+       "id": "LGIC_NAMING.TO-LN-h-2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_NAMING/deliverables/0.9.0_WK_LGIC_NAMING~8/LGIC_NAMING.TO-LN-h-2.grader-b.proof_of_spec.json@40f445d92c"
+      }
+     ]
+    },
+    {
+     "cell_id": "LN-h-3",
+     "task_orders": [
+      {
+       "id": "LGIC_NAMING.TO-LN-h-3",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_NAMING/deliverables/0.9.0_WK_LGIC_NAMING~5/LGIC_NAMING.TO-LN-h-3.grading-agreement.proof_of_spec.json@f829fdb1fc"
+      }
+     ]
+    },
+    {
+     "cell_id": "LN-f-1",
+     "task_orders": [
+      {
+       "id": "LGIC_NAMING.TO-LN-f-1-r4",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_NAMING/deliverables/0.9.0_WK_LGIC_NAMING~4/LGIC_NAMING.TO-LN-f-1-r4.firm-patterns.proof_of_spec.json@e3a1035585"
+      },
+      {
+       "id": "LGIC_NAMING.TO-LN-f-1-r5",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_NAMING/deliverables/0.9.0_WK_LGIC_NAMING~3/LGIC_NAMING.TO-LN-f-1-r5.gaps-at-head.proof_of_spec.json@f49c697b41"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "The written rule (LN-g-1), its code implementation (LN-g-2), and two blind graders with their agreement (LN-h-1, LN-h-2, LN-h-3). LN-f-1 appears here as well as under FWD-3 because its round-4 and round-5 orders served FWD-5's completion -- the placeholder gaps -- while its round-1 and round-2 orders served FWD-3; the cell is listed under each outcome only for the rounds whose orders served it. The 19 remaining {system} gaps are LGIC_ENFORCE registry rows under R-6, not defects in the rule."
+  },
+  {
+   "fwd_id": "FWD-6",
+   "done_when_state": "APPLIED",
+   "done_when_text": "APPLIED -- the ranked list exists and every entry states its cost",
+   "cells": [
+    {
+     "cell_id": "LN-t-1",
+     "task_orders": [
+      {
+       "id": "LGIC_NAMING.TO-LN-t-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_NAMING/deliverables/0.9.0_WK_LGIC_NAMING~2/LGIC_NAMING.TO-LN-t-1.tension-ranking.proof_of_spec.json@36afc955ba"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "The ranked top-ten with a stated cost per entry. Graded at APPLIED by Andrew's own word at L2 (2026-09-13 ~18:4xZ, card 5), not at EXERCISED -- the card's state is the bar this row is measured against."
+  }
+ ]
+}
