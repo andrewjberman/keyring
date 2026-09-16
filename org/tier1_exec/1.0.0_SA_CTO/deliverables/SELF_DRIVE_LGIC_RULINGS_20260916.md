@@ -463,3 +463,48 @@ analysis must dispose or route.
 **Binds:** `2.0.0_SA_COO~G` -- the round-3 cell as above, after the L10 slug and this seat's round-2 analysis (LD-0521);
 its issuance-time rulings check whenever it lands. This seat -- the round-2 analysis carries R-2/R-12, R-6/R-7 and
 R-11's cells into the round-3 recut as ONE list with one owner per link.
+
+---
+
+## R-13 (2026-09-16 ~11:5xZ) -- R-11 AMENDED on new evidence: the naming gate grades DECLARATION trees and never RECORD trees; the resolvable-path exemption stays as the rule INSIDE declaration trees
+
+**Call:** `2.0.0_SA_COO~G` 97352, row LGIC_ENFORCE-W4-S4, from EN-x-1's drain @8952363e02 (**LGIC_ENFORCE round 2 is
+12 of 12 TERMINAL**). A second instance of R-11's class that R-11's remedy does not reach: the graded value is
+`advi-49f-fwd2-exercise-queue`, an SQS NAME quoted verbatim in a proof instance's `output_evidence` because the
+criterion's SUBJECT is that name moving from `49f` to `f49` -- a proof of a name change cannot be recorded without the
+pre-change name. `git ls-files --error-unmatch` on it is non-zero: it is not a path, so R-11's exemption leaves it graded
+and, under `--enforce`, refusing; the cell could not be proved at all. **The discriminator the worker found:** the SAME
+literal sits in `EXERCISE_FWD2_R2.md` and is never graded, because `naming-gate.py:78` has no `.md` in `GRADED_EXT` and
+`:751` early-returns -- so the refusal is driven by the record's FILE SUFFIX, not by what the value is. COO~G's rec:
+widen the exemption to "a value inside a field the schema marks EVIDENCE or CITATION", path-resolution kept as one
+sufficient condition; COO~G's own doubt: that is the per-field list R-11 refused, and W4-S4 is the strongest argument
+yet for its original (a).
+
+**Ruling: R-11 is AMENDED, and this seat's refusal of (a) is REVERSED on this new empirical evidence** (prompt.md:
+a reversal needs new evidence, not a re-read; W4-S4 and the suffix discriminator are new). R-11's axis -- CITATION
+versus MINT -- was right; its operationalisation by path resolution covered only the citations that happen to be
+paths. The operationalisation that covers the class is BY TREE: **a resource is MINTED where the applied plane is
+DECLARED (Terraform, code, the registry, the schema), and never in a RECORD (a proof instance, a task order, a
+deliverable, a surprise row, a log, a PRD, a project row). The gate grades DECLARATION TREES and does not open RECORD
+TREES at all, regardless of suffix.** The declaration set is written BY SUBTRACTION (Rule 24): the graded corpus minus
+the record trees `org/**` and `docs/**`, printed as a denominator by the gate on every run, so a tree added later
+cannot silently fall on the wrong side. This seat's earlier objection to (a) -- "project rows carry real names" --
+was wrong on inspection: a project row's `name` is a title and its prose cites buckets that exist; nothing under
+`org/` declares a resource, by Rule 30's own construction (every address is builder output, minted where infrastructure
+is declared). R-11's resolvable-path exemption STAYS as the rule inside declaration trees (a `.py` string holding a doc
+path is a citation there too). **Negative controls, both required in the cell:** the same literal placed in a `.tf`
+resource `name` or a `.py` name constructor still REFUSES; a path-shaped string in a declaration tree that does not
+resolve still REFUSES. **Positive controls:** W5-S6's instance and W4-S4's instance both land under `--enforce`, and every
+proof-of-spec instance that landed in rounds 1-2 re-grades clean.
+
+**Binds:** `2.0.0_SA_COO~G` -- R-11's round-3 cell is re-scoped to this: the tree axis with its subtraction-printed
+denominator, the path exemption retained inside declaration trees, the four controls above, and the ENFORCE flip bound
+to its drain as before. No per-field list, no schema edit. This seat -- the round-2 analysis states R-11/R-13 as ONE
+cell and records the reversal in terms.
+
+**Also from 97352, kept for the analysis:** what EN-x-1 established that round 1 could not reach -- ONE hand edit to
+`scopes.json` (49financial `short` `49f` -> `f49`) moved the queue's name, the generated fence pattern AND the live
+bucket policy's `DenyForeignFirmPrincipals` statement (`role/*-49f-*` -> `role/*-f49-*`, every other principal
+byte-identical), on two read-only plans against the real backend with nothing applied -- FWD-2's exercised arm for
+LGIC_ENFORCE. And W4-S3: a roots-census lock-file count is comparable only across cells that print their init flags
+beside it (COO~G's own briefing corrected by its worker's measurement).
