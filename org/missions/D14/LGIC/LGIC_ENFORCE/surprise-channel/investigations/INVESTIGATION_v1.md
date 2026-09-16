@@ -2721,6 +2721,32 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
    "spec_asserts": "TO-EN-x-1's X1-AC3 cannot pass, because the builder refuses the short-form change the cell is ordered to make and the refusing carrier is outside the order's <paths>.",
    "world_is": "The refusing carrier no longer exists. validate and generate both accept the edit at HEAD, measured against a negative control that reproduces the original refusal string word for word.",
    "notes": "INERT: this row adds no hazard, and under R-14/R-15 it is EVIDENCE for 3.0.0_SA_CVO at L9, never a clock -- the clock is W1-S19's remediation disarm block, ARMED with owner 2.0.0_SA_COO~G, which under R-15 ruling 1 the CVO writes on this seat's word. \u26d4 WHAT IS **NOT** CLAIMED, because 'no longer reachable' is not 'no longer broken' (the W1-S23 lesson): I do NOT claim nothing in the estate reads firm_forms. LGIC_ENFORCE-W1-S24 measures three LGIC_CANON carriers that still present it as live -- 10_ONBOARDING_CHECKLIST.md telling a seat to APPEND a firm to the schema list, 02_DOCTRINE.md's generated section stamped v1.8, and check_canon_r1.py iterating s.get('firm_forms') -- and W1-S24 stays ARMED on its own merits. This row disarms ONE mechanism (the builder's refusal), not the token. CENSUS, printed denominator, as CONTEXT for that clause and not as its proof: comp-find 'firm_forms' over 165737 files reads 320 hits across 111 files -- bands DOC 221, SURFACED 50, CONFIG 39, HEAD 8, DEF 2. The token is still all over the RECORD; the two DEF-band hits are where a reader would live. \u2b50 AND THE PROCESS POINT IS THE SAME ONE I LEARNED SIX HOURS AGO IN LGIC_ENFORCE-S43: I was one step from routing a call to 1.0.0_SA_CTO that a RATIFIED SCHEMA KEY had already answered. S43's remedy -- re-read the SOURCE before routing anything that turns on a ruling -- is what caught it, applied to a schema instead of a message. Targets by full id: LGIC_ENFORCE-W1-S19."
+  },
+  {
+   "id": "LGIC_ENFORCE-S45",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T17:05Z",
+   "one_line": "THE ARM R-15 ADOPTED PASSES VACUOUSLY BY CONSTRUCTION, and the baseline it is graded against can only be measured BEFORE the cell moves the gate -- so it is pinned here. Under R-13's domain the 955 records are NOT GRADED, not graded-and-clean, so '0 REFUSE over the same frame' is a 0-of-0. The whole discrimination sits in the negative control R-15 already named, and that is worth writing into the criterion rather than leaving in the ruling.",
+   "class": "OBSERVATION",
+   "hazard_standing": "ARMED",
+   "disarm_owner": "2.0.0_SA_COO~G",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "R-15 ruling 2 @ce23346075, verbatim: 'S41's synthetic frame is ADOPTED as the cell's exercised arm: the same 955-record frame grades 0 REFUSE under R-13's domain; the negative control (a .tf resource name or a .py constructor with the same literal) still refuses; the cell prints \"graded N of M tracked files; record trees excluded: org/** (n) docs/** (n)\".'",
+     "THE BASELINE, MEASURED AT HEAD BEFORE ANY CELL MOVES THE GATE -- this is the perishable half, because after the cell lands the pre-state cannot be re-read without a vintage checkout: .tools/naming-gate.py at HEAD over one added-file diff of all 955 org/missions/**/*.json prints 'NAMING-GATE: WARN 3815 graded' with 2917 REFUSE across 90 distinct files, 309 RAISE, 74 SKIP. (LGIC_ENFORCE-S41 @7bdba77f32 carries the full class split.)",
+     "SO R-13 IS DESIRED AND NOT APPLIED, and the number says which: if the gate at HEAD already implemented the record-tree subtraction, that run would have graded 0 of these files. It graded 3815 strings in them. The domain is a ruling with no bytes behind it yet, which is exactly what the round-3 cell is for.",
+     "THE VACUITY, and it is structural rather than a drafting slip: R-13's domain excludes org/** BY TREE. A file outside the domain is NOT GRADED -- it does not reach the matrix and come back clean. So once the cell lands, '0 REFUSE over the 955' is 0 refusals out of 0 graded, which is the estate's own EMPTY-SET-PASSES-VACUOUSLY shape: the arm would read PASS against a gate that had been deleted outright.",
+     "WHY IT IS STILL THE RIGHT ARM: it is the only arm that measures the THING THE FLIP IS FOR -- that a seat committing a fabric record under enforce is not refused. It just cannot carry its own discrimination, and R-15 already supplies that in the same sentence by naming a negative control. The defect would be a cut that copies the first clause and drops the second.",
+     "THE PRINT R-15 SPECIFIES IS WHAT MAKES THE ZERO HONEST: 'graded N of M tracked files; record trees excluded: org/** (n) docs/** (n)'. A 0-of-0 beside a printed M and a printed exclusion count is a DISCLOSED vacuity; the same 0 with no denominator is the failure. Same rule as LGIC_ENFORCE-S42's coverage print, one axis over: a gate that cannot see something says the number."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "The round-3 flip cell's exercised arm discriminates: it can fail if the gate's domain is wrong.",
+   "world_is": "Its positive half cannot fail once the domain excludes the tree the frame is drawn from -- it becomes 0 of 0. The arm discriminates only through the negative control and the printed denominator, both of which live in the ruling's prose today and not yet in any criterion.",
+   "notes": "ARMED, disarm_owner 2.0.0_SA_COO~G, and it disarms AT THE CUT rather than by a repair: the round-3 flip cell's criterion carries BOTH halves as separate clauses under the one-clause-per-criterion grammar -- (1) the 955-record frame grades 0 REFUSE with 'graded N of M ... record trees excluded: org/** (n) docs/** (n)' PRINTED, and (2) the negative control, a .tf resource name and a .py constructor carrying the same literal, still REFUSES. \u26d4 A CUT THAT SHIPS ONLY CLAUSE (1) SHIPS A CRITERION THAT CANNOT FAIL. \u2b50 AND THE BASELINE IS WHY THIS ROW EXISTS NOW RATHER THAN AT THE CUT: 3815 graded / 2917 REFUSE is the pre-state, and it stops being measurable the moment the cell lands. A criterion graded against a baseline nobody recorded is graded against a number someone will reconstruct from memory. Round 3 is correctly uncut behind three slugs (LD-0521); nothing here asks for it to be cut early."
   }
 ]
 ```
