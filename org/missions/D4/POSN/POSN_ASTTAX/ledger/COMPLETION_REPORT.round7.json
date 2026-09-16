@@ -1,0 +1,520 @@
+{
+ "kind": "COMPLETION_REPORT",
+ "schema_version": "1.0",
+ "project": "POSN_ASTTAX",
+ "round": 7,
+ "written_by": "2.0.0_SA_COO~Z",
+ "written_utc": "2026-09-15T15:14:47Z",
+ "decomposition_ref": "org/missions/D4/POSN/POSN_ASTTAX/decompositions/POSN_ASTTAX_DECOMP_round7.md@cd214384a6 (the last of seven: POSN_ASTTAX_DECOMP.md@9039bdd977 and _round1..._round6, every cell that reached an order listed under the outcome it serves)",
+ "denominators": {
+  "fwd_in_prd_header": 7,
+  "cells_in_decomposition": 38,
+  "task_orders": 32,
+  "task_orders_terminal_with_valid_proof": 28
+ },
+ "outcomes": [
+  {
+   "fwd_id": "FWD-1",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "EXERCISED -- real portfolios have been re-sorted under the five classes and every holding lands in exactly one, including the ones that used to be lumped together",
+   "cells": [
+    {
+     "cell_id": "AT2-s-1",
+     "task_orders": [
+      {
+       "id": "POSN_ASTTAX.TO-S1-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~6/POSN_ASTTAX.TO-S1-1.unknown-is-not-equity.proof_of_spec.json@c34eab85dc"
+      }
+     ]
+    },
+    {
+     "cell_id": "AT2-s-4",
+     "task_orders": [
+      {
+       "id": "POSN_ASTTAX.TO-S4-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~8/POSN_ASTTAX.TO-S4-1.blank-sub-asset-class-rows.proof_of_spec.json@95e59e1408"
+      }
+     ]
+    },
+    {
+     "cell_id": "AT2-s-5",
+     "task_orders": [
+      {
+       "id": "POSN_ASTTAX.TO-S5-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~3/POSN_ASTTAX.TO-S5-1.management-style-placeholder.proof_of_spec.json@eec92c9cf2"
+      }
+     ]
+    },
+    {
+     "cell_id": "AT2-s-6",
+     "task_orders": [
+      {
+       "id": "POSN_ASTTAX.TO-S6-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~2/POSN_ASTTAX.TO-S6-1.harden-the-generator.proof_of_spec.json@7f247caae0"
+      }
+     ]
+    },
+    {
+     "cell_id": "AT2-s-7",
+     "task_orders": [
+      {
+       "id": "POSN_ASTTAX.TO-S7-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~4/POSN_ASTTAX.TO-S7-1.verify-the-five-class-chain.proof_of_spec.json@8a911af2d7"
+      }
+     ]
+    },
+    {
+     "cell_id": "AT3-s-1",
+     "task_orders": [
+      {
+       "id": "POSN_ASTTAX.TO-T1-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~10/POSN_ASTTAX.TO-T1-1.carry-five-classes-through-the-generator.proof_of_spec.json@07c046fa63"
+      }
+     ]
+    },
+    {
+     "cell_id": "AT3-s-2",
+     "task_orders": [
+      {
+       "id": "POSN_ASTTAX.TO-T2-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~11/POSN_ASTTAX.TO-T2-1.measure-the-frontend-hop.proof_of_spec.json@bab2cf66a2"
+      }
+     ]
+    },
+    {
+     "cell_id": "AT3-s-3",
+     "task_orders": [
+      {
+       "id": "POSN_ASTTAX.TO-T3-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~12/POSN_ASTTAX.TO-T3-1.hop-test-the-two-sibling-consumers.proof_of_spec.json@5899484453"
+      }
+     ]
+    },
+    {
+     "cell_id": "AT3-s-4",
+     "task_orders": [
+      {
+       "id": "POSN_ASTTAX.TO-T4-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~13/POSN_ASTTAX.TO-T4-1.registry-durability-the-re-seed-revert.proof_of_spec.json@8adab5748d"
+      }
+     ]
+    },
+    {
+     "cell_id": "AT3-s-5",
+     "task_orders": [
+      {
+       "id": "POSN_ASTTAX.TO-T5-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~14/POSN_ASTTAX.TO-T5-1.the-bar-step-2-measured-against-the-served-artifact.proof_of_spec.json@063312e4f3"
+      }
+     ]
+    },
+    {
+     "cell_id": "AT4-s-3",
+     "task_orders": [
+      {
+       "id": "POSN_ASTTAX.TO-U3-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~16/POSN_ASTTAX.TO-U3-1.extend-preserve-dont-clobber-to-the-seed-script.proof_of_spec.json@a851d02645"
+      }
+     ]
+    },
+    {
+     "cell_id": "AT4-s-4",
+     "task_orders": [
+      {
+       "id": "POSN_ASTTAX.TO-U4-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~17/POSN_ASTTAX.TO-U4-1.settle-the-retag-member-set-at-eleven.proof_of_spec.json@f1d4e2efe7"
+      }
+     ]
+    },
+    {
+     "cell_id": "AT5-s-1",
+     "task_orders": [
+      {
+       "id": "POSN_ASTTAX.TO-V1-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~19/POSN_ASTTAX.TO-V1-1.deploy-the-two-positioning-generators-with-labelled-zero-benchmarks.proof_of_spec.json@4d396c1ef4"
+      }
+     ]
+    },
+    {
+     "cell_id": "AT5-s-2",
+     "task_orders": [
+      {
+       "id": "POSN_ASTTAX.TO-V2-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~20/POSN_ASTTAX.TO-V2-1.holdings-json-beside-registry-json.proof_of_spec.json@80a431c546"
+      }
+     ]
+    },
+    {
+     "cell_id": "AT5-s-4",
+     "task_orders": [
+      {
+       "id": "POSN_ASTTAX.TO-V4-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~20/POSN_ASTTAX.TO-V4-1.the-additional-characteristics-lambda.proof_of_spec.json@142a0a7164"
+      }
+     ]
+    },
+    {
+     "cell_id": "AT5-s-8",
+     "task_orders": [
+      {
+       "id": "POSN_ASTTAX.TO-V8-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~19/POSN_ASTTAX.TO-V8-1.the-retag-last-both-stores-both-levels.proof_of_spec.json@643c747ccb"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "The exercise is R1 (AT5-s-8, TO-V8-1): the retag of the twelve-member set on both stores at both levels, then the bar on the local build; the served positioning_data.json and holdings.json carry the five-class labels (the 07:00Z organic registry fire read them, Z-S165), and the page renders them on the promoted tree -- the portal PROMOTED with the round-6 head: origin refs/heads/PROD edf85ce503 contains ebbee2e61a (merge-base --is-ancestor, read from the plane 13:19Z; 0.0.0_AB_MSTR~Z msg 23124: Deploy to Production run 34967303352, live 12:12Z). NOT LISTED: TO-S2-1 and TO-S3-1 (SUPERSEDED by TO-T6-1 / TO-T7-1, both CANCELLED @9e6e72ea8b when the retag moved to round 5's R1 and the is_hedge reconciliation was absorbed by the generator hardening) carry no proof and are counted in task_orders, not in task_orders_terminal_with_valid_proof. The master decomposition's AT1-s-2..AT1-s-7 were never cut: the round-1 addendum re-planned them as the round-2 and round-3 cells listed here. AT2-s-5 is the management_style SAFETY cell (a page-down precondition), credited here because its write is on the same registry rows the classification exercise moved."
+  },
+  {
+   "fwd_id": "FWD-2",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "EXERCISED -- a portfolio that used to fold volatility or hedge into its equity total now shows it separately",
+   "cells": [
+    {
+     "cell_id": "AT2-s-7",
+     "task_orders": [
+      {
+       "id": "POSN_ASTTAX.TO-S7-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~4/POSN_ASTTAX.TO-S7-1.verify-the-five-class-chain.proof_of_spec.json@8a911af2d7"
+      }
+     ]
+    },
+    {
+     "cell_id": "AT3-s-1",
+     "task_orders": [
+      {
+       "id": "POSN_ASTTAX.TO-T1-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~10/POSN_ASTTAX.TO-T1-1.carry-five-classes-through-the-generator.proof_of_spec.json@07c046fa63"
+      }
+     ]
+    },
+    {
+     "cell_id": "AT3-s-5",
+     "task_orders": [
+      {
+       "id": "POSN_ASTTAX.TO-T5-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~14/POSN_ASTTAX.TO-T5-1.the-bar-step-2-measured-against-the-served-artifact.proof_of_spec.json@063312e4f3"
+      }
+     ]
+    },
+    {
+     "cell_id": "AT5-s-1",
+     "task_orders": [
+      {
+       "id": "POSN_ASTTAX.TO-V1-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~19/POSN_ASTTAX.TO-V1-1.deploy-the-two-positioning-generators-with-labelled-zero-benchmarks.proof_of_spec.json@4d396c1ef4"
+      }
+     ]
+    },
+    {
+     "cell_id": "AT5-s-2",
+     "task_orders": [
+      {
+       "id": "POSN_ASTTAX.TO-V2-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~20/POSN_ASTTAX.TO-V2-1.holdings-json-beside-registry-json.proof_of_spec.json@80a431c546"
+      }
+     ]
+    },
+    {
+     "cell_id": "AT5-s-4",
+     "task_orders": [
+      {
+       "id": "POSN_ASTTAX.TO-V4-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~20/POSN_ASTTAX.TO-V4-1.the-additional-characteristics-lambda.proof_of_spec.json@142a0a7164"
+      }
+     ]
+    },
+    {
+     "cell_id": "AT5-s-8",
+     "task_orders": [
+      {
+       "id": "POSN_ASTTAX.TO-V8-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~19/POSN_ASTTAX.TO-V8-1.the-retag-last-both-stores-both-levels.proof_of_spec.json@643c747ccb"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "Volatility (VXX) and the hedge/metals members left the equity total with R1's retag and the hardened generators (B1, AT5-s-1) that carry five classes to the served plane; the Satellites mode reads holdings.json (B2, AT5-s-2) and characteristics.json (B4, AT5-s-4). Read on the page at the promote -- the portal PROMOTED with the round-6 head: origin refs/heads/PROD edf85ce503 contains ebbee2e61a (merge-base --is-ancestor, read from the plane 13:19Z; 0.0.0_AB_MSTR~Z msg 23124: Deploy to Production run 34967303352, live 12:12Z)."
+  },
+  {
+   "fwd_id": "FWD-3",
+   "done_when_state": "APPLIED",
+   "done_when_text": "APPLIED -- every place that lists the classes renders them in the one agreed order",
+   "cells": [
+    {
+     "cell_id": "AT3-s-2",
+     "task_orders": [
+      {
+       "id": "POSN_ASTTAX.TO-T2-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~11/POSN_ASTTAX.TO-T2-1.measure-the-frontend-hop.proof_of_spec.json@bab2cf66a2"
+      }
+     ]
+    },
+    {
+     "cell_id": "AT5-s-5",
+     "task_orders": [
+      {
+       "id": "POSN_ASTTAX.TO-V5-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~22/POSN_ASTTAX.TO-V5-1.the-colour-registry.proof_of_spec.json@49fc6850f1"
+      }
+     ]
+    },
+    {
+     "cell_id": "AT5-s-6",
+     "task_orders": [
+      {
+       "id": "POSN_ASTTAX.TO-V6-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~22/POSN_ASTTAX.TO-V6-1.the-positioning-page-renders-five-classes.proof_of_spec.json@7072302729"
+      }
+     ]
+    },
+    {
+     "cell_id": "AT6-s-3",
+     "task_orders": [
+      {
+       "id": "POSN_ASTTAX.TO-W3-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~26/POSN_ASTTAX.TO-W3-1.positioning-summary-presence-rounding-footer-copy.proof_of_spec.json@70f8f6565c"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "APPLIED: the canonical order lives in the class registry (F1, AT5-s-5) and every Positioning render reads it (F2, AT5-s-6; F5's presence set over exactly the drawn columns, AT6-s-3, C-PRESENT-CLASSES). Served to users at the promote -- the portal PROMOTED with the round-6 head: origin refs/heads/PROD edf85ce503 contains ebbee2e61a (merge-base --is-ancestor, read from the plane 13:19Z; 0.0.0_AB_MSTR~Z msg 23124: Deploy to Production run 34967303352, live 12:12Z)."
+  },
+  {
+   "fwd_id": "FWD-4",
+   "done_when_state": "APPLIED",
+   "done_when_text": "APPLIED -- the agreed color for each class is used on every place that shows the classes",
+   "cells": [
+    {
+     "cell_id": "AT4-s-2",
+     "task_orders": [
+      {
+       "id": "POSN_ASTTAX.TO-U2-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~18/POSN_ASTTAX.TO-U2-1.one-colour-per-class-the-same-everywhere.proof_of_spec.json@8eff182563"
+      }
+     ]
+    },
+    {
+     "cell_id": "AT5-s-5",
+     "task_orders": [
+      {
+       "id": "POSN_ASTTAX.TO-V5-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~22/POSN_ASTTAX.TO-V5-1.the-colour-registry.proof_of_spec.json@49fc6850f1"
+      }
+     ]
+    },
+    {
+     "cell_id": "AT5-s-6",
+     "task_orders": [
+      {
+       "id": "POSN_ASTTAX.TO-V6-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~22/POSN_ASTTAX.TO-V6-1.the-positioning-page-renders-five-classes.proof_of_spec.json@7072302729"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "APPLIED: one colour per class in the registry (F1: pink, the NEW yellow, Metals/Hedge sub-colours) after U2-1's census of every reader U1-1 derived; F2 renders the colour map. Served at the promote -- the portal PROMOTED with the round-6 head: origin refs/heads/PROD edf85ce503 contains ebbee2e61a (merge-base --is-ancestor, read from the plane 13:19Z; 0.0.0_AB_MSTR~Z msg 23124: Deploy to Production run 34967303352, live 12:12Z). Cosmetic residue carried by the CTO's round-6 L10 (Z-S146, Z-S169, Z-S172) rides the next Positioning frontend cut when Andrew calls one."
+  },
+  {
+   "fwd_id": "FWD-5",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "EXERCISED -- someone changed where a class boundary sits in the single source, and every place reflected it without being edited itself",
+   "cells": [
+    {
+     "cell_id": "AT1-s-1",
+     "task_orders": [
+      {
+       "id": "POSN_ASTTAX.TO-S1A-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~1/POSN_ASTTAX.TO-S1A-1.which-one-place-survives-the-seed.proof_of_spec.json@6bed191b42"
+      }
+     ]
+    },
+    {
+     "cell_id": "AT4-s-3",
+     "task_orders": [
+      {
+       "id": "POSN_ASTTAX.TO-U3-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~16/POSN_ASTTAX.TO-U3-1.extend-preserve-dont-clobber-to-the-seed-script.proof_of_spec.json@a851d02645"
+      }
+     ]
+    },
+    {
+     "cell_id": "AT5-s-1",
+     "task_orders": [
+      {
+       "id": "POSN_ASTTAX.TO-V1-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~19/POSN_ASTTAX.TO-V1-1.deploy-the-two-positioning-generators-with-labelled-zero-benchmarks.proof_of_spec.json@4d396c1ef4"
+      }
+     ]
+    },
+    {
+     "cell_id": "AT5-s-3",
+     "task_orders": [
+      {
+       "id": "POSN_ASTTAX.TO-V3-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~21/POSN_ASTTAX.TO-V3-1.apply-the-seeder-guard.proof_of_spec.json@6c0d6e092f"
+      }
+     ]
+    },
+    {
+     "cell_id": "AT5-s-8",
+     "task_orders": [
+      {
+       "id": "POSN_ASTTAX.TO-V8-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~19/POSN_ASTTAX.TO-V8-1.the-retag-last-both-stores-both-levels.proof_of_spec.json@643c747ccb"
+      }
+     ]
+    },
+    {
+     "cell_id": "AT7-s-1",
+     "task_orders": [
+      {
+       "id": "POSN_ASTTAX.TO-X1-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~27/POSN_ASTTAX.TO-X1-1.seeder-guard-reconciled-with-the-retag-write-surface.proof_of_spec.json@2cdca2a27d"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "The one place is ETFClassifier (S1A-1, Andrew-direct 2026-09-11); the exercise is R1: one retag in the single source flowed to the two Positioning surfaces without either being edited (the F-cells read, never re-derive). Durability: the seeder's preserve-don't-clobber guard (B3, AT5-s-3; U3-1) and round 7's X1-1, which PROVED the guard's owned tuple equal to the seeder's write surface (3 of 3), management_style outside the seeder's SET clause, VNQ not a seeder record, asserted at import and exercised on the scratch harness with a negative control -- the answer to C-S177 (DECOMP_INVALIDATING, owner 1.0.0_SA_CTO~Z, disarm owed in the round-7 L10). CARRIED to that L10 from rows Z-S177..Z-S179: the assertion's audit-list seam (a closed-set form, one line) and R1's management_style write on VNQ, which was a hand CLI update-item with no guard script -- the next retag carries its own conditional guard in the retag script."
+  },
+  {
+   "fwd_id": "FWD-6",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "EXERCISED -- the Positioning page's Models, ETFs and Satellites modes have each been read; every class any mode shows is one of the five, a class shown in more than one mode has the same order and color in each, and a mode shows a class only when a book in its view holds some of it",
+   "cells": [
+    {
+     "cell_id": "AT4-s-1",
+     "task_orders": [
+      {
+       "id": "POSN_ASTTAX.TO-U1-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~15/POSN_ASTTAX.TO-U1-1.derive-the-readers-and-grade-the-five-class-bar.proof_of_spec.json@b07cacc813"
+      }
+     ]
+    },
+    {
+     "cell_id": "AT5-s-6",
+     "task_orders": [
+      {
+       "id": "POSN_ASTTAX.TO-V6-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~22/POSN_ASTTAX.TO-V6-1.the-positioning-page-renders-five-classes.proof_of_spec.json@7072302729"
+      }
+     ]
+    },
+    {
+     "cell_id": "AT5-s-7",
+     "task_orders": [
+      {
+       "id": "POSN_ASTTAX.TO-V7-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~22/POSN_ASTTAX.TO-V7-1.satellites-mode-reads-the-served-holdings.proof_of_spec.json@4cfe89f320"
+      }
+     ]
+    },
+    {
+     "cell_id": "AT5-s-8",
+     "task_orders": [
+      {
+       "id": "POSN_ASTTAX.TO-V8-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~19/POSN_ASTTAX.TO-V8-1.the-retag-last-both-stores-both-levels.proof_of_spec.json@643c747ccb"
+      }
+     ]
+    },
+    {
+     "cell_id": "AT5-s-9",
+     "task_orders": [
+      {
+       "id": "POSN_ASTTAX.TO-V9-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~23/POSN_ASTTAX.TO-V9-1.the-edge-router-admits-the-two-new-leaves.proof_of_spec.json@bcfc6483e1"
+      }
+     ]
+    },
+    {
+     "cell_id": "AT6-s-3",
+     "task_orders": [
+      {
+       "id": "POSN_ASTTAX.TO-W3-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~26/POSN_ASTTAX.TO-W3-1.positioning-summary-presence-rounding-footer-copy.proof_of_spec.json@70f8f6565c"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "The three modes were read on the drained head and on the promoted tree: 2.0.0_SA_COO~Z's presentation check 0 of 512 cells differing (deliverables/2.0.0_SA_COO~Z/present_20260915_0813Z @ad3a87b244, PNGs and DOM dumps) and 0.0.0_AB_MSTR~Z's independent read 544 of 544 cells, 24 of 24 sourced tickers at T-1 (msg 23124). The presence rule (v0.10 DONE WHEN) is F5's: a class is drawn only when a displayed book holds it (W2-AC8 per displayed book, W3-AC1 over exactly the drawn columns). B5 (AT5-s-9) is the read path -- the edge allowlist for registry/holdings/characteristics.json -- and serves no outcome of its own. the portal PROMOTED with the round-6 head: origin refs/heads/PROD edf85ce503 contains ebbee2e61a (merge-base --is-ancestor, read from the plane 13:19Z; 0.0.0_AB_MSTR~Z msg 23124: Deploy to Production run 34967303352, live 12:12Z)."
+  },
+  {
+   "fwd_id": "FWD-7",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "EXERCISED -- the Positioning page's Satellites mode has been read and every satellite's Holdings Breakdown rows carry the same characteristic and performance columns a Models row carries, from the served satellites data, with a value wherever a source carries that measure for that ticker",
+   "cells": [
+    {
+     "cell_id": "AT6-s-1",
+     "task_orders": [
+      {
+       "id": "POSN_ASTTAX.TO-W1-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~24/POSN_ASTTAX.TO-W1-1.characteristics-per-ticker-block-and-schedule.proof_of_spec.json@c871677ef4"
+      }
+     ]
+    },
+    {
+     "cell_id": "AT6-s-2",
+     "task_orders": [
+      {
+       "id": "POSN_ASTTAX.TO-W2-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~25/POSN_ASTTAX.TO-W2-1.satellites-adapter-attaches-per-ticker-measures.proof_of_spec.json@49c7ab1d16"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "B6 (AT6-s-1) serves the per-ticker block (measures + name/management_style from ETFClassifier, GLD's returns from the ETF gold rule) on cron(30 12 * * ? *): the 12:30:54Z scheduled fire served characteristics.json VersionId 02SGBCPDoeVPy7JBJcEHxUw4J0.nQneh with inputs 2026-09-15 / 2026-09-14 / 2026-09-14, 25 of 25 tickers with the identity pair (row Z-S175; deploy ledger posn-round6-b6-characteristics-tickers CLOSED 9 of 9 @22d075805f). F4 (AT6-s-2) attaches the served values to every Holdings Breakdown row (W2-AC7 cell compare on fixtures pinned by VersionId; the capture window corrected to measured mtimes @49c7ab1d16, Z-S180). The blank clause per measure is v0.10's. W1-AC15 (GLD's returns beside Yang's windows) is a JUDGMENT graded by 3.0.0_SA_CVO~Z at the round-6 L9 @3f527ce0dd. Read on the promoted tree -- the portal PROMOTED with the round-6 head: origin refs/heads/PROD edf85ce503 contains ebbee2e61a (merge-base --is-ancestor, read from the plane 13:19Z; 0.0.0_AB_MSTR~Z msg 23124: Deploy to Production run 34967303352, live 12:12Z)."
+  }
+ ]
+}

@@ -1,0 +1,2285 @@
+{
+  "author": "4.0.0_SA_CRO~W",
+  "compiled_at": "2026-09-15T01:18:51.855951+00:00",
+  "execution": "SiteZ Windows, local outputs; existing remote secret reads/proxy services used; no cloud data writes",
+  "universe": {
+    "path": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~4\\universe.json",
+    "sha256": "302287f515bad5ed2f07b0cc533f51674a828e8c5de8b4c13d372c03b6e50e54",
+    "count": 89
+  },
+  "batch": [
+    {
+      "folder": "Boeing BA",
+      "sa_symbol": "BA",
+      "original_sa_symbol_status": "INFERRED",
+      "bloomberg_ticker": "BA US"
+    },
+    {
+      "folder": "Costco COST",
+      "sa_symbol": "COST",
+      "original_sa_symbol_status": "INFERRED",
+      "bloomberg_ticker": "COST US"
+    },
+    {
+      "folder": "Home Depot HD",
+      "sa_symbol": "HD",
+      "original_sa_symbol_status": "INFERRED",
+      "bloomberg_ticker": "HD US"
+    },
+    {
+      "folder": "Intuit INTU",
+      "sa_symbol": "INTU",
+      "original_sa_symbol_status": "INFERRED",
+      "bloomberg_ticker": "INTU US"
+    },
+    {
+      "folder": "Valero Energy VLO",
+      "sa_symbol": "VLO",
+      "original_sa_symbol_status": "INFERRED",
+      "bloomberg_ticker": "VLO US"
+    }
+  ],
+  "source_hashes": {
+    "org\\tier1_exec\\4.0.0_SA_CRO\\scripts\\bloomberg_rest_fetch.py": "682cde064fc664e97331f57a531d882204b92f2a4e7016d3a84053d1ee1c6c87",
+    "org\\tier1_exec\\4.0.0_SA_CRO\\scripts\\ft_rest_fetch.py": "809acb0549d8366638fae34abdacceb35027f7d13f43a8440c57f3dc97c6655e",
+    "org\\tier1_exec\\4.0.0_SA_CRO\\scripts\\sa_rest_fetch.py": "d7958ac43589a88a852c48d0096bc9c301b197e95f318cfe26782b1bca669b8b",
+    "org\\tier1_exec\\4.0.0_SA_CRO\\scripts\\wsj_rest_fetch.py": "5a7d20edff7d41e6660e9a4a725136753309efc7034948a973f24653457ee37b",
+    "org\\tier1_exec\\4.0.0_SA_CRO\\scripts\\bloomberg_harvest_session.py": "7c5590c6f0ccd8fb78b62ba28507fd25ffe95297b05666efce91d40eed469696",
+    "org\\tier1_exec\\4.0.0_SA_CRO\\scripts\\ft_harvest_session.py": "cee50619f4670136389187c9027a9d35210b69726f0bbf48c10550ecb489d713",
+    "org\\tier1_exec\\4.0.0_SA_CRO\\scripts\\sa_harvest_session.py": "ea7a5eb039354f959f2b293627996171d23c7f6a0e1a284f45fd8a9ca77b327d"
+  },
+  "runs": {
+    "bbg-summary.json": {
+      "platform": "bbg",
+      "started_at": "2026-09-15T01:08:43.829536+00:00",
+      "script": "org\\tier1_exec\\4.0.0_SA_CRO\\scripts\\bloomberg_rest_fetch.py",
+      "script_sha256": "682cde064fc664e97331f57a531d882204b92f2a4e7016d3a84053d1ee1c6c87",
+      "batch": [
+        {
+          "ticker": "BA",
+          "company": "Boeing",
+          "ft_exchange_candidate": "NYQ"
+        },
+        {
+          "ticker": "COST",
+          "company": "Costco",
+          "ft_exchange_candidate": "NSQ"
+        },
+        {
+          "ticker": "HD",
+          "company": "Home Depot",
+          "ft_exchange_candidate": "NYQ"
+        },
+        {
+          "ticker": "INTU",
+          "company": "Intuit",
+          "ft_exchange_candidate": "NSQ"
+        },
+        {
+          "ticker": "VLO",
+          "company": "Valero Energy",
+          "ft_exchange_candidate": "NYQ"
+        }
+      ],
+      "calls": [
+        {
+          "label": "auth-check",
+          "started_at": "2026-09-15T01:08:44.632816+00:00",
+          "http": 200,
+          "bytes": 549,
+          "content_type": "application/json; charset=utf-8",
+          "valid_json": true,
+          "auth_result": {
+            "response_received": true
+          },
+          "outcome": "returned",
+          "seconds": 1.14
+        },
+        {
+          "label": "BA-ticker",
+          "started_at": "2026-09-15T01:08:47.785580+00:00",
+          "http": 403,
+          "bytes": 535,
+          "content_type": "application/json",
+          "valid_json": true,
+          "artifact": "bbg-BA-ticker.json",
+          "shape": {
+            "type": "dict",
+            "keys": [
+              "appId",
+              "jsClientSrc",
+              "firstPartyEnabled",
+              "vid",
+              "uuid",
+              "hostUrl",
+              "blockScript",
+              "altBlockScript",
+              "customLogo"
+            ]
+          },
+          "outcome": "returned",
+          "seconds": 0.12
+        }
+      ],
+      "finished_at": "2026-09-15T01:08:49.902104+00:00"
+    },
+    "ft-article-summary.json": {
+      "platform": "ft",
+      "script_sha256": "809acb0549d8366638fae34abdacceb35027f7d13f43a8440c57f3dc97c6655e",
+      "started_at": "2026-09-15T01:11:01.195960+00:00",
+      "rows": [
+        {
+          "ticker": "BA",
+          "company_page_article_links": [
+            "/content/5edad189-55c4-42a7-acd9-0fae494afb10",
+            "/content/eec09e7d-6dc0-48e2-a1db-e6de7d0b17b1",
+            "/content/ef34db40-6217-4cbb-9539-dd30c1d2664c",
+            "https://www.ft.com/content/2c71652b-8c56-4e53-81f4-a455845ee9d7",
+            "https://www.ft.com/content/2fe2913f-24b7-4074-9278-3253b5b8a61e",
+            "https://www.ft.com/content/6d6339d1-8fb7-4d5d-886f-6c856de42fb7",
+            "https://www.ft.com/content/6fc083c6-1ab2-42e7-b9ff-a65406144073",
+            "https://www.ft.com/content/8077447c-b7db-4854-ba42-d2fb0dc65c76",
+            "https://www.ft.com/content/9e1158f8-bf37-41cc-9db1-e3e79834b5d0",
+            "https://www.ft.com/content/ab05487c-72f9-4c1c-9acf-07768693b105",
+            "https://www.ft.com/content/b625e314-ecf9-4385-a687-7a8f8c1bec23",
+            "https://www.ft.com/content/b66ff736-528b-4e3e-a43a-f06749d01991"
+          ],
+          "url": "https://www.ft.com/content/5edad189-55c4-42a7-acd9-0fae494afb10",
+          "outcome": "error",
+          "exception_type": "RuntimeError",
+          "error": "GET https://www.ft.com/content/5edad189-55c4-42a7-acd9-0fae494afb10 -> 404 (1287 bytes)",
+          "seconds": 4.69
+        },
+        {
+          "ticker": "COST",
+          "company_page_article_links": [
+            "/content/98f59550-c442-4efb-acd1-bf35b1cc99f8",
+            "https://www.ft.com/content/30ac3572-06a9-4718-8043-60b1dee50c40",
+            "https://www.ft.com/content/59ed10fc-0e58-454c-9f93-d4d258ccfd9c",
+            "https://www.ft.com/content/5e6db1ad-6ea5-44db-80fd-fd7073d9e676",
+            "https://www.ft.com/content/77207b97-db2a-4f77-83a4-5479cea3b5e9",
+            "https://www.ft.com/content/79f1f638-1fd5-40e1-845b-b4a787a12883",
+            "https://www.ft.com/content/ab05487c-72f9-4c1c-9acf-07768693b105"
+          ],
+          "url": "https://www.ft.com/content/98f59550-c442-4efb-acd1-bf35b1cc99f8",
+          "outcome": "error",
+          "exception_type": "RuntimeError",
+          "error": "GET https://www.ft.com/content/98f59550-c442-4efb-acd1-bf35b1cc99f8 -> 404 (1287 bytes)",
+          "seconds": 2.45
+        },
+        {
+          "ticker": "HD",
+          "company_page_article_links": [
+            "/content/0fccb6f8-5836-425f-88b9-ba7f27db4b8c",
+            "/content/40a53747-cb87-4206-9c67-e3272a9c7ad1",
+            "/content/5676d9a3-40bf-48b6-b2e0-c05bd2009d9c",
+            "https://www.ft.com/content/5d48ac8a-8fd4-44ef-a65b-f8a42e9f24b3",
+            "https://www.ft.com/content/79f1f638-1fd5-40e1-845b-b4a787a12883",
+            "https://www.ft.com/content/9f446812-5dc9-4d25-9a4b-ac5162e62d81",
+            "https://www.ft.com/content/ab05487c-72f9-4c1c-9acf-07768693b105",
+            "https://www.ft.com/content/c5551f25-74d5-441f-8eb0-ef7ef20c7ec4",
+            "https://www.ft.com/content/d14b21c8-6a63-4593-b455-480b18792ac8",
+            "https://www.ft.com/content/fc8f86f2-96ad-4bfb-bba4-75326115aa24"
+          ],
+          "url": "https://www.ft.com/content/0fccb6f8-5836-425f-88b9-ba7f27db4b8c",
+          "outcome": "error",
+          "exception_type": "RuntimeError",
+          "error": "GET https://www.ft.com/content/0fccb6f8-5836-425f-88b9-ba7f27db4b8c -> 404 (1287 bytes)",
+          "seconds": 2.19
+        },
+        {
+          "ticker": "INTU",
+          "company_page_article_links": [
+            "https://www.ft.com/content/6aa04f24-c216-467e-834a-7b4af3ef660e",
+            "https://www.ft.com/content/86b5591a-9e62-4c3f-9e03-7d90d36ed068",
+            "https://www.ft.com/content/9876d74e-ab17-4b15-a129-2de0c030b1b7",
+            "https://www.ft.com/content/a31ee44a-a425-429c-bbba-c241dda79009",
+            "https://www.ft.com/content/ab05487c-72f9-4c1c-9acf-07768693b105",
+            "https://www.ft.com/content/b74b8227-d7cb-4976-ba95-a3a27b79cbdd",
+            "https://www.ft.com/content/bb8addc8-bd28-43ac-8dcd-b55c5f1f766c",
+            "https://www.ft.com/content/ec0583d8-dfe5-4f02-b330-86b6dd27e03d",
+            "https://www.ft.com/content/f1205b22-ad87-43bb-bc63-da5b69a942ef"
+          ],
+          "url": "https://www.ft.com/content/6aa04f24-c216-467e-834a-7b4af3ef660e",
+          "title": "A week of keynote speeches",
+          "published": "2026-08-23T17:15:11.097Z",
+          "text_chars": 15,
+          "paragraphs": 1,
+          "outcome": "returned",
+          "has_html_tags": false,
+          "seconds": 3.28
+        },
+        {
+          "ticker": "VLO",
+          "company_page_article_links": [
+            "https://www.ft.com/content/01b4ae28-0f13-4a32-90ef-afc4dc095cfc",
+            "https://www.ft.com/content/32d37b38-9585-487d-898e-337672d071da",
+            "https://www.ft.com/content/697253e0-01d3-44fe-85e5-d4d9af207a3c",
+            "https://www.ft.com/content/6d0f7c29-ee60-40d8-81bf-ce8af414aed7",
+            "https://www.ft.com/content/89382e17-17d4-476d-9551-3d1a45b72555",
+            "https://www.ft.com/content/aa2bacf1-4a2a-447b-b7fb-6620fab03cf1",
+            "https://www.ft.com/content/ab05487c-72f9-4c1c-9acf-07768693b105",
+            "https://www.ft.com/content/e7585052-7fd6-419a-9c6e-3c6984da0f3d",
+            "https://www.ft.com/content/ecf9967d-de7f-405f-b746-f09a26f3a86a"
+          ],
+          "url": "https://www.ft.com/content/01b4ae28-0f13-4a32-90ef-afc4dc095cfc",
+          "title": "California\u2019s fuel needs \u2018left in the lurch\u2019 by Iran war",
+          "published": "2026-04-01T04:00:27.442Z",
+          "text_chars": 118,
+          "paragraphs": 1,
+          "outcome": "returned",
+          "has_html_tags": false,
+          "seconds": 3.91
+        }
+      ]
+    },
+    "ft-followup-summary.json": {
+      "platform": "ft",
+      "script_sha256": "809acb0549d8366638fae34abdacceb35027f7d13f43a8440c57f3dc97c6655e",
+      "started_at": "2026-09-15T01:15:33.625611+00:00",
+      "rows": [
+        {
+          "ticker": "BA",
+          "ft_teaser_count": 8,
+          "url": "https://www.ft.com/content/b66ff736-528b-4e3e-a43a-f06749d01991",
+          "listing_title": "Thiel-backed start-up to mass-produce \u2018deep strike\u2019 missiles in Europe and US",
+          "dom_article_body_count": 1,
+          "dom_article_body_chars": [
+            6938
+          ],
+          "paywall_element_count": 0,
+          "outcome": "returned",
+          "title": "Thiel-backed start-up to mass-produce \u2018deep strike\u2019 missiles in Europe and US",
+          "text_chars": 21,
+          "css_markers": 0,
+          "replacement_chars": 0,
+          "seconds": 4.12
+        },
+        {
+          "ticker": "COST",
+          "ft_teaser_count": 8,
+          "url": "https://www.ft.com/content/30ac3572-06a9-4718-8043-60b1dee50c40",
+          "listing_title": "The cult $4.99 rotisserie chicken defying inflation",
+          "outcome": "error",
+          "exception_type": "Timeout",
+          "seconds": 70.03
+        },
+        {
+          "ticker": "HD",
+          "ft_teaser_count": 8,
+          "url": "https://www.ft.com/content/fc8f86f2-96ad-4bfb-bba4-75326115aa24",
+          "listing_title": "The rise of physical AI: can robots save US manufacturing?",
+          "dom_article_body_count": 1,
+          "dom_article_body_chars": [
+            17328
+          ],
+          "paywall_element_count": 0,
+          "outcome": "returned",
+          "title": "The rise of physical AI: can robots save US manufacturing?",
+          "text_chars": 38,
+          "css_markers": 0,
+          "replacement_chars": 0,
+          "seconds": 3.8
+        },
+        {
+          "ticker": "INTU",
+          "ft_teaser_count": 8,
+          "url": "https://www.ft.com/content/9876d74e-ab17-4b15-a129-2de0c030b1b7",
+          "listing_title": "The NBA drops the hammer on Steve Ballmer",
+          "dom_article_body_count": 0,
+          "dom_article_body_chars": [],
+          "paywall_element_count": 0,
+          "outcome": "returned",
+          "title": "Subscribe to read",
+          "text_chars": 29438,
+          "css_markers": 144,
+          "replacement_chars": 0,
+          "seconds": 2.49
+        },
+        {
+          "ticker": "VLO",
+          "ft_teaser_count": 8,
+          "url": "https://www.ft.com/content/697253e0-01d3-44fe-85e5-d4d9af207a3c",
+          "listing_title": "US diesel prices soar as Donald Trump hauls in refiners",
+          "dom_article_body_count": 1,
+          "dom_article_body_chars": [
+            5112
+          ],
+          "paywall_element_count": 0,
+          "outcome": "returned",
+          "title": "US diesel prices soar as Donald Trump hauls in refiners",
+          "text_chars": 84,
+          "css_markers": 0,
+          "replacement_chars": 0,
+          "seconds": 3.09
+        }
+      ],
+      "finished_at": "2026-09-15T01:17:09.270901+00:00"
+    },
+    "ft-summary.json": {
+      "platform": "ft",
+      "started_at": "2026-09-15T01:08:09.970083+00:00",
+      "script": "org\\tier1_exec\\4.0.0_SA_CRO\\scripts\\ft_rest_fetch.py",
+      "script_sha256": "809acb0549d8366638fae34abdacceb35027f7d13f43a8440c57f3dc97c6655e",
+      "batch": [
+        {
+          "ticker": "BA",
+          "company": "Boeing",
+          "ft_exchange_candidate": "NYQ"
+        },
+        {
+          "ticker": "COST",
+          "company": "Costco",
+          "ft_exchange_candidate": "NSQ"
+        },
+        {
+          "ticker": "HD",
+          "company": "Home Depot",
+          "ft_exchange_candidate": "NYQ"
+        },
+        {
+          "ticker": "INTU",
+          "company": "Intuit",
+          "ft_exchange_candidate": "NSQ"
+        },
+        {
+          "ticker": "VLO",
+          "company": "Valero Energy",
+          "ft_exchange_candidate": "NYQ"
+        }
+      ],
+      "calls": [
+        {
+          "label": "auth-check",
+          "started_at": "2026-09-15T01:08:11.241234+00:00",
+          "auth_result": {
+            "authorized": true
+          },
+          "outcome": "returned",
+          "seconds": 2.69
+        },
+        {
+          "label": "BA-quote",
+          "started_at": "2026-09-15T01:08:15.933239+00:00",
+          "artifact": "ft-BA-quote.json",
+          "shape": {
+            "type": "dict",
+            "keys": [
+              "ticker",
+              "exchange",
+              "key",
+              "summary",
+              "profile",
+              "news_tab"
+            ],
+            "ticker": "BA",
+            "news_tab": "NOT FOUND at this cut -- every /tearsheet/news?s=... shape tried returned an FT-side error page; not proven absent"
+          },
+          "outcome": "returned",
+          "seconds": 3.83
+        },
+        {
+          "label": "COST-quote",
+          "started_at": "2026-09-15T01:08:21.770397+00:00",
+          "artifact": "ft-COST-quote.json",
+          "shape": {
+            "type": "dict",
+            "keys": [
+              "ticker",
+              "exchange",
+              "key",
+              "summary",
+              "profile",
+              "news_tab"
+            ],
+            "ticker": "COST",
+            "news_tab": "NOT FOUND at this cut -- every /tearsheet/news?s=... shape tried returned an FT-side error page; not proven absent"
+          },
+          "outcome": "returned",
+          "seconds": 19.47
+        },
+        {
+          "label": "HD-quote",
+          "started_at": "2026-09-15T01:08:43.240078+00:00",
+          "artifact": "ft-HD-quote.json",
+          "shape": {
+            "type": "dict",
+            "keys": [
+              "ticker",
+              "exchange",
+              "key",
+              "summary",
+              "profile",
+              "news_tab"
+            ],
+            "ticker": "HD",
+            "news_tab": "NOT FOUND at this cut -- every /tearsheet/news?s=... shape tried returned an FT-side error page; not proven absent"
+          },
+          "outcome": "returned",
+          "seconds": 2.41
+        },
+        {
+          "label": "INTU-quote",
+          "started_at": "2026-09-15T01:08:47.636197+00:00",
+          "artifact": "ft-INTU-quote.json",
+          "shape": {
+            "type": "dict",
+            "keys": [
+              "ticker",
+              "exchange",
+              "key",
+              "summary",
+              "profile",
+              "news_tab"
+            ],
+            "ticker": "INTU",
+            "news_tab": "NOT FOUND at this cut -- every /tearsheet/news?s=... shape tried returned an FT-side error page; not proven absent"
+          },
+          "outcome": "returned",
+          "seconds": 2.03
+        },
+        {
+          "label": "VLO-quote",
+          "started_at": "2026-09-15T01:08:51.665086+00:00",
+          "artifact": "ft-VLO-quote.json",
+          "shape": {
+            "type": "dict",
+            "keys": [
+              "ticker",
+              "exchange",
+              "key",
+              "summary",
+              "profile",
+              "news_tab"
+            ],
+            "ticker": "VLO",
+            "news_tab": "NOT FOUND at this cut -- every /tearsheet/news?s=... shape tried returned an FT-side error page; not proven absent"
+          },
+          "outcome": "returned",
+          "seconds": 2.67
+        }
+      ],
+      "company_news": "The existing client has no working per-security news method; quote results are not articles.",
+      "finished_at": "2026-09-15T01:08:56.346240+00:00"
+    },
+    "sa-summary.json": {
+      "platform": "sa",
+      "started_at": "2026-09-15T01:07:22.908038+00:00",
+      "script": "org\\tier1_exec\\4.0.0_SA_CRO\\scripts\\sa_rest_fetch.py",
+      "script_sha256": "d7958ac43589a88a852c48d0096bc9c301b197e95f318cfe26782b1bca669b8b",
+      "batch": [
+        {
+          "ticker": "BA",
+          "company": "Boeing",
+          "ft_exchange_candidate": "NYQ"
+        },
+        {
+          "ticker": "COST",
+          "company": "Costco",
+          "ft_exchange_candidate": "NSQ"
+        },
+        {
+          "ticker": "HD",
+          "company": "Home Depot",
+          "ft_exchange_candidate": "NYQ"
+        },
+        {
+          "ticker": "INTU",
+          "company": "Intuit",
+          "ft_exchange_candidate": "NSQ"
+        },
+        {
+          "ticker": "VLO",
+          "company": "Valero Energy",
+          "ft_exchange_candidate": "NYQ"
+        }
+      ],
+      "calls": [
+        {
+          "label": "auth-check",
+          "started_at": "2026-09-15T01:07:24.209061+00:00",
+          "auth_result": {
+            "authorized": true
+          },
+          "outcome": "returned",
+          "seconds": 2.11
+        },
+        {
+          "label": "BA-symbol",
+          "started_at": "2026-09-15T01:07:28.306884+00:00",
+          "artifact": "sa-BA-symbol.json",
+          "shape": {
+            "type": "dict",
+            "keys": [
+              "ticker",
+              "sa_id",
+              "attributes"
+            ],
+            "ticker": "BA",
+            "attributes": {
+              "type": "dict",
+              "keys": [
+                "slug",
+                "name",
+                "companyName",
+                "equityType",
+                "indexGroup",
+                "currency",
+                "exchange",
+                "exchangeTitle",
+                "companyPrimaryCurrency",
+                "tradingViewSlug",
+                "exchangeDescription",
+                "company",
+                "isBdc",
+                "visible",
+                "searchable",
+                "private",
+                "pending",
+                "isDefunct",
+                "followersCount",
+                "fundTypeId",
+                "articleRtaCount",
+                "newsRtaCount",
+                "divYieldType",
+                "mergedOn",
+                "primaryEpsConsensusMeanType",
+                "mergedInto",
+                "mergedTickers",
+                "isReit",
+                "isEtn",
+                "tickerType",
+                "fundType",
+                "sectorDisplay",
+                "industryDisplay"
+              ],
+              "companyName": "The Boeing Company",
+              "name": "BA"
+            }
+          },
+          "outcome": "returned",
+          "seconds": 1.42
+        },
+        {
+          "label": "BA-report",
+          "started_at": "2026-09-15T01:07:31.741174+00:00",
+          "artifact": "sa-BA-report.json",
+          "shape": {
+            "type": "dict",
+            "keys": [
+              "ticker",
+              "sa_id",
+              "created_at",
+              "previous_report_date",
+              "enough_analysis",
+              "section_highlight",
+              "response_content",
+              "ratings_response",
+              "provenance"
+            ],
+            "ticker": "BA",
+            "created_at": "2026-09-08T00:24:33.381-04:00",
+            "enough_analysis": true,
+            "response_content": {
+              "chars": 5194,
+              "plain_chars": 5180,
+              "html_tags": false
+            }
+          },
+          "outcome": "returned",
+          "seconds": 0.8
+        },
+        {
+          "label": "BA-news",
+          "started_at": "2026-09-15T01:07:34.545397+00:00",
+          "artifact": "sa-BA-news.json",
+          "shape": {
+            "type": "dict",
+            "keys": [
+              "data",
+              "included",
+              "meta"
+            ],
+            "data_rows": 5
+          },
+          "outcome": "returned",
+          "seconds": 1.16
+        },
+        {
+          "label": "BA-analysis",
+          "started_at": "2026-09-15T01:07:37.695729+00:00",
+          "artifact": "sa-BA-analysis.json",
+          "shape": {
+            "type": "list",
+            "rows": 2,
+            "first": {
+              "type": "dict",
+              "keys": [
+                "id",
+                "title",
+                "published_on"
+              ],
+              "title": "Boeing And Airbus: A Surprisingly Close Race",
+              "published_on": "2026-09-07T03:54:49-04:00"
+            }
+          },
+          "outcome": "returned",
+          "seconds": 1.11
+        },
+        {
+          "label": "BA-article",
+          "started_at": "2026-09-15T01:07:40.807158+00:00",
+          "artifact": "sa-BA-article.json",
+          "shape": {
+            "type": "dict",
+            "keys": [
+              "id",
+              "title",
+              "published_on",
+              "is_paywalled",
+              "is_locked_pro",
+              "content"
+            ],
+            "title": "Boeing And Airbus: A Surprisingly Close Race",
+            "published_on": "2026-09-07T03:54:49-04:00",
+            "is_paywalled": false,
+            "is_locked_pro": false,
+            "content": {
+              "chars": 2054,
+              "plain_chars": 230,
+              "html_tags": true
+            }
+          },
+          "outcome": "returned",
+          "seconds": 0.88
+        },
+        {
+          "label": "COST-symbol",
+          "started_at": "2026-09-15T01:07:43.684702+00:00",
+          "artifact": "sa-COST-symbol.json",
+          "shape": {
+            "type": "dict",
+            "keys": [
+              "ticker",
+              "sa_id",
+              "attributes"
+            ],
+            "ticker": "COST",
+            "attributes": {
+              "type": "dict",
+              "keys": [
+                "slug",
+                "name",
+                "companyName",
+                "equityType",
+                "indexGroup",
+                "currency",
+                "exchange",
+                "exchangeTitle",
+                "companyPrimaryCurrency",
+                "tradingViewSlug",
+                "exchangeDescription",
+                "company",
+                "isBdc",
+                "visible",
+                "searchable",
+                "private",
+                "pending",
+                "isDefunct",
+                "followersCount",
+                "fundTypeId",
+                "articleRtaCount",
+                "newsRtaCount",
+                "divYieldType",
+                "mergedOn",
+                "primaryEpsConsensusMeanType",
+                "mergedInto",
+                "mergedTickers",
+                "isReit",
+                "isEtn",
+                "tickerType",
+                "fundType",
+                "sectorDisplay",
+                "industryDisplay"
+              ],
+              "companyName": "Costco Wholesale Corporation",
+              "name": "COST"
+            }
+          },
+          "outcome": "returned",
+          "seconds": 0.64
+        },
+        {
+          "label": "COST-report",
+          "started_at": "2026-09-15T01:07:46.335026+00:00",
+          "artifact": "sa-COST-report.json",
+          "shape": {
+            "type": "dict",
+            "keys": [
+              "ticker",
+              "sa_id",
+              "created_at",
+              "previous_report_date",
+              "enough_analysis",
+              "section_highlight",
+              "response_content",
+              "ratings_response",
+              "provenance"
+            ],
+            "ticker": "COST",
+            "created_at": "2026-09-10T00:02:47.501-04:00",
+            "enough_analysis": true,
+            "response_content": {
+              "chars": 5758,
+              "plain_chars": 5744,
+              "html_tags": false
+            }
+          },
+          "outcome": "returned",
+          "seconds": 0.84
+        },
+        {
+          "label": "COST-news",
+          "started_at": "2026-09-15T01:07:49.185527+00:00",
+          "artifact": "sa-COST-news.json",
+          "shape": {
+            "type": "dict",
+            "keys": [
+              "data",
+              "included",
+              "meta"
+            ],
+            "data_rows": 5
+          },
+          "outcome": "returned",
+          "seconds": 0.94
+        },
+        {
+          "label": "COST-analysis",
+          "started_at": "2026-09-15T01:07:52.117162+00:00",
+          "artifact": "sa-COST-analysis.json",
+          "shape": {
+            "type": "list",
+            "rows": 2,
+            "first": {
+              "type": "dict",
+              "keys": [
+                "id",
+                "title",
+                "published_on"
+              ],
+              "title": "Costco: The Valuation Re-Rating Is Just Getting Started (Q4 Earnings Preview)",
+              "published_on": "2026-09-11T07:30:42-04:00"
+            }
+          },
+          "outcome": "returned",
+          "seconds": 1.05
+        },
+        {
+          "label": "COST-article",
+          "started_at": "2026-09-15T01:07:55.170662+00:00",
+          "artifact": "sa-COST-article.json",
+          "shape": {
+            "type": "dict",
+            "keys": [
+              "id",
+              "title",
+              "published_on",
+              "is_paywalled",
+              "is_locked_pro",
+              "content"
+            ],
+            "title": "Costco: The Valuation Re-Rating Is Just Getting Started (Q4 Earnings Preview)",
+            "published_on": "2026-09-11T07:30:42-04:00",
+            "is_paywalled": false,
+            "is_locked_pro": false,
+            "content": {
+              "chars": 2159,
+              "plain_chars": 276,
+              "html_tags": true
+            }
+          },
+          "outcome": "returned",
+          "seconds": 1.78
+        },
+        {
+          "label": "HD-symbol",
+          "started_at": "2026-09-15T01:07:58.946563+00:00",
+          "artifact": "sa-HD-symbol.json",
+          "shape": {
+            "type": "dict",
+            "keys": [
+              "ticker",
+              "sa_id",
+              "attributes"
+            ],
+            "ticker": "HD",
+            "attributes": {
+              "type": "dict",
+              "keys": [
+                "slug",
+                "name",
+                "companyName",
+                "equityType",
+                "indexGroup",
+                "currency",
+                "exchange",
+                "exchangeTitle",
+                "companyPrimaryCurrency",
+                "tradingViewSlug",
+                "exchangeDescription",
+                "company",
+                "isBdc",
+                "visible",
+                "searchable",
+                "private",
+                "pending",
+                "isDefunct",
+                "followersCount",
+                "fundTypeId",
+                "articleRtaCount",
+                "newsRtaCount",
+                "divYieldType",
+                "mergedOn",
+                "primaryEpsConsensusMeanType",
+                "mergedInto",
+                "mergedTickers",
+                "isReit",
+                "isEtn",
+                "tickerType",
+                "fundType",
+                "sectorDisplay",
+                "industryDisplay"
+              ],
+              "companyName": "The Home Depot, Inc.",
+              "name": "HD"
+            }
+          },
+          "outcome": "returned",
+          "seconds": 0.86
+        },
+        {
+          "label": "HD-report",
+          "started_at": "2026-09-15T01:08:01.810180+00:00",
+          "artifact": "sa-HD-report.json",
+          "shape": {
+            "type": "dict",
+            "keys": [
+              "ticker",
+              "sa_id",
+              "created_at",
+              "previous_report_date",
+              "enough_analysis",
+              "section_highlight",
+              "response_content",
+              "ratings_response",
+              "provenance"
+            ],
+            "ticker": "HD",
+            "created_at": "2026-09-13T00:02:47.533-04:00",
+            "enough_analysis": true,
+            "response_content": {
+              "chars": 5852,
+              "plain_chars": 5836,
+              "html_tags": false
+            }
+          },
+          "outcome": "returned",
+          "seconds": 1.38
+        },
+        {
+          "label": "HD-news",
+          "started_at": "2026-09-15T01:08:05.194889+00:00",
+          "artifact": "sa-HD-news.json",
+          "shape": {
+            "type": "dict",
+            "keys": [
+              "data",
+              "included",
+              "meta"
+            ],
+            "data_rows": 5
+          },
+          "outcome": "returned",
+          "seconds": 0.98
+        },
+        {
+          "label": "HD-analysis",
+          "started_at": "2026-09-15T01:08:08.186779+00:00",
+          "artifact": "sa-HD-analysis.json",
+          "shape": {
+            "type": "list",
+            "rows": 2,
+            "first": {
+              "type": "dict",
+              "keys": [
+                "id",
+                "title",
+                "published_on"
+              ],
+              "title": "Home Depot Vs. Lowe's: Ex-Refund Metrics Tell Better The Story",
+              "published_on": "2026-08-20T06:22:35-04:00"
+            }
+          },
+          "outcome": "returned",
+          "seconds": 1.24
+        },
+        {
+          "label": "HD-article",
+          "started_at": "2026-09-15T01:08:11.420839+00:00",
+          "artifact": "sa-HD-article.json",
+          "shape": {
+            "type": "dict",
+            "keys": [
+              "id",
+              "title",
+              "published_on",
+              "is_paywalled",
+              "is_locked_pro",
+              "content"
+            ],
+            "title": "Home Depot Vs. Lowe's: Ex-Refund Metrics Tell Better The Story",
+            "published_on": "2026-08-20T06:22:35-04:00",
+            "is_paywalled": false,
+            "is_locked_pro": false,
+            "content": {
+              "chars": 1779,
+              "plain_chars": 225,
+              "html_tags": true
+            }
+          },
+          "outcome": "returned",
+          "seconds": 1.0
+        },
+        {
+          "label": "INTU-symbol",
+          "started_at": "2026-09-15T01:08:14.425781+00:00",
+          "artifact": "sa-INTU-symbol.json",
+          "shape": {
+            "type": "dict",
+            "keys": [
+              "ticker",
+              "sa_id",
+              "attributes"
+            ],
+            "ticker": "INTU",
+            "attributes": {
+              "type": "dict",
+              "keys": [
+                "slug",
+                "name",
+                "companyName",
+                "equityType",
+                "indexGroup",
+                "currency",
+                "exchange",
+                "exchangeTitle",
+                "companyPrimaryCurrency",
+                "tradingViewSlug",
+                "exchangeDescription",
+                "company",
+                "isBdc",
+                "visible",
+                "searchable",
+                "private",
+                "pending",
+                "isDefunct",
+                "followersCount",
+                "fundTypeId",
+                "articleRtaCount",
+                "newsRtaCount",
+                "divYieldType",
+                "mergedOn",
+                "primaryEpsConsensusMeanType",
+                "mergedInto",
+                "mergedTickers",
+                "isReit",
+                "isEtn",
+                "tickerType",
+                "fundType",
+                "sectorDisplay",
+                "industryDisplay"
+              ],
+              "companyName": "Intuit Inc.",
+              "name": "INTU"
+            }
+          },
+          "outcome": "returned",
+          "seconds": 0.72
+        },
+        {
+          "label": "INTU-report",
+          "started_at": "2026-09-15T01:08:17.141990+00:00",
+          "artifact": "sa-INTU-report.json",
+          "shape": {
+            "type": "dict",
+            "keys": [
+              "ticker",
+              "sa_id",
+              "created_at",
+              "previous_report_date",
+              "enough_analysis",
+              "section_highlight",
+              "response_content",
+              "ratings_response",
+              "provenance"
+            ],
+            "ticker": "INTU",
+            "created_at": "2026-09-10T00:01:32.751-04:00",
+            "enough_analysis": true,
+            "response_content": {
+              "chars": 5395,
+              "plain_chars": 5378,
+              "html_tags": false
+            }
+          },
+          "outcome": "returned",
+          "seconds": 1.88
+        },
+        {
+          "label": "INTU-news",
+          "started_at": "2026-09-15T01:08:21.012837+00:00",
+          "artifact": "sa-INTU-news.json",
+          "shape": {
+            "type": "dict",
+            "keys": [
+              "data",
+              "included",
+              "meta"
+            ],
+            "data_rows": 5
+          },
+          "outcome": "returned",
+          "seconds": 1.2
+        },
+        {
+          "label": "INTU-analysis",
+          "started_at": "2026-09-15T01:08:24.217102+00:00",
+          "artifact": "sa-INTU-analysis.json",
+          "shape": {
+            "type": "list",
+            "rows": 2,
+            "first": {
+              "type": "dict",
+              "keys": [
+                "id",
+                "title",
+                "published_on"
+              ],
+              "title": "Intuit: The Recovery Is Only Beginning",
+              "published_on": "2026-09-03T08:00:03-04:00"
+            }
+          },
+          "outcome": "returned",
+          "seconds": 1.26
+        },
+        {
+          "label": "INTU-article",
+          "started_at": "2026-09-15T01:08:27.485544+00:00",
+          "artifact": "sa-INTU-article.json",
+          "shape": {
+            "type": "dict",
+            "keys": [
+              "id",
+              "title",
+              "published_on",
+              "is_paywalled",
+              "is_locked_pro",
+              "content"
+            ],
+            "title": "Intuit: The Recovery Is Only Beginning",
+            "published_on": "2026-09-03T08:00:03-04:00",
+            "is_paywalled": false,
+            "is_locked_pro": false,
+            "content": {
+              "chars": 1893,
+              "plain_chars": 274,
+              "html_tags": true
+            }
+          },
+          "outcome": "returned",
+          "seconds": 1.38
+        },
+        {
+          "label": "VLO-symbol",
+          "started_at": "2026-09-15T01:08:30.854119+00:00",
+          "artifact": "sa-VLO-symbol.json",
+          "shape": {
+            "type": "dict",
+            "keys": [
+              "ticker",
+              "sa_id",
+              "attributes"
+            ],
+            "ticker": "VLO",
+            "attributes": {
+              "type": "dict",
+              "keys": [
+                "slug",
+                "name",
+                "companyName",
+                "equityType",
+                "indexGroup",
+                "currency",
+                "exchange",
+                "exchangeTitle",
+                "companyPrimaryCurrency",
+                "tradingViewSlug",
+                "exchangeDescription",
+                "company",
+                "isBdc",
+                "visible",
+                "searchable",
+                "private",
+                "pending",
+                "isDefunct",
+                "followersCount",
+                "fundTypeId",
+                "articleRtaCount",
+                "newsRtaCount",
+                "divYieldType",
+                "mergedOn",
+                "primaryEpsConsensusMeanType",
+                "mergedInto",
+                "mergedTickers",
+                "isReit",
+                "isEtn",
+                "tickerType",
+                "fundType",
+                "sectorDisplay",
+                "industryDisplay"
+              ],
+              "companyName": "Valero Energy Corporation",
+              "name": "VLO"
+            }
+          },
+          "outcome": "returned",
+          "seconds": 1.59
+        },
+        {
+          "label": "VLO-report",
+          "started_at": "2026-09-15T01:08:34.447694+00:00",
+          "artifact": "sa-VLO-report.json",
+          "shape": {
+            "type": "dict",
+            "keys": [
+              "ticker",
+              "sa_id",
+              "created_at",
+              "previous_report_date",
+              "enough_analysis",
+              "section_highlight",
+              "response_content",
+              "ratings_response",
+              "provenance"
+            ],
+            "ticker": "VLO",
+            "created_at": "2026-09-06T00:14:55.475-04:00",
+            "enough_analysis": true,
+            "response_content": {
+              "chars": 5367,
+              "plain_chars": 5352,
+              "html_tags": false
+            }
+          },
+          "outcome": "returned",
+          "seconds": 0.86
+        },
+        {
+          "label": "VLO-news",
+          "started_at": "2026-09-15T01:08:37.312838+00:00",
+          "artifact": "sa-VLO-news.json",
+          "shape": {
+            "type": "dict",
+            "keys": [
+              "data",
+              "included",
+              "meta"
+            ],
+            "data_rows": 5
+          },
+          "outcome": "returned",
+          "seconds": 1.03
+        },
+        {
+          "label": "VLO-analysis",
+          "started_at": "2026-09-15T01:08:40.348717+00:00",
+          "artifact": "sa-VLO-analysis.json",
+          "shape": {
+            "type": "list",
+            "rows": 2,
+            "first": {
+              "type": "dict",
+              "keys": [
+                "id",
+                "title",
+                "published_on"
+              ],
+              "title": "Valero Energy: Diesel Scarcity Lifted Q2, But The Rally Leaves Little Room For Error",
+              "published_on": "2026-09-05T05:08:55-04:00"
+            }
+          },
+          "outcome": "returned",
+          "seconds": 1.25
+        },
+        {
+          "label": "VLO-article",
+          "started_at": "2026-09-15T01:08:43.588217+00:00",
+          "artifact": "sa-VLO-article.json",
+          "shape": {
+            "type": "dict",
+            "keys": [
+              "id",
+              "title",
+              "published_on",
+              "is_paywalled",
+              "is_locked_pro",
+              "content"
+            ],
+            "title": "Valero Energy: Diesel Scarcity Lifted Q2, But The Rally Leaves Little Room For Error",
+            "published_on": "2026-09-05T05:08:55-04:00",
+            "is_paywalled": false,
+            "is_locked_pro": false,
+            "content": {
+              "chars": 1897,
+              "plain_chars": 310,
+              "html_tags": true
+            }
+          },
+          "outcome": "returned",
+          "seconds": 0.94
+        }
+      ],
+      "session_captured_at": "2026-09-11T02:13:39.705086Z",
+      "finished_at": "2026-09-15T01:08:46.538078+00:00"
+    },
+    "wsj-article-summary.json": {
+      "platform": "wsj",
+      "script_sha256": "5a7d20edff7d41e6660e9a4a725136753309efc7034948a973f24653457ee37b",
+      "started_at": "2026-09-15T01:10:50.975061+00:00",
+      "rows": [
+        {
+          "ticker": "BA",
+          "listing_count": 140,
+          "providers": [
+            "Barron's",
+            "Dow Jones Newswires",
+            "Investor's Business Daily",
+            "MarketWatch.com",
+            "The Wall Street Journal"
+          ],
+          "url": "https://www.wsj.com/business/airlines/miami-crash-puts-focus-on-houston-astros-owners-cargo-jet-business-a9e2eb31",
+          "provider": "The Wall Street Journal",
+          "title": "Miami Crash Puts Focus on Houston Astros Owner\u2019s Cargo-Jet Business",
+          "published": "2026-09-10T04:08:00Z",
+          "text_chars": 8478,
+          "paragraphs": 5,
+          "outcome": "returned",
+          "has_html_tags": false,
+          "seconds": 4.77
+        },
+        {
+          "ticker": "COST",
+          "listing_count": 107,
+          "providers": [
+            "Barron's",
+            "Dow Jones Newswires",
+            "Investor's Business Daily",
+            "MarketWatch.com",
+            "The Wall Street Journal"
+          ],
+          "url": "https://www.wsj.com/cmo-today/travis-kelce-teams-up-with-publicis-to-tame-the-college-nil-scramble-1c0985f9",
+          "provider": "The Wall Street Journal",
+          "title": "Travis Kelce Teams Up with Publicis to Tame the College NIL Scramble",
+          "published": "2026-08-18T12:42:00Z",
+          "text_chars": 6103,
+          "paragraphs": 3,
+          "outcome": "returned",
+          "has_html_tags": false,
+          "seconds": 3.03
+        },
+        {
+          "ticker": "HD",
+          "listing_count": 106,
+          "providers": [
+            "Barron's",
+            "Dow Jones Newswires",
+            "Investor's Business Daily",
+            "MarketWatch.com",
+            "The Wall Street Journal"
+          ],
+          "url": "https://www.wsj.com/business/retail/home-depot-posts-higher-sales-backs-outlook-339ed3fc",
+          "provider": "The Wall Street Journal",
+          "title": "Home Depot Posts Higher Sales, Backs Outlook",
+          "published": "2026-08-18T10:11:00Z",
+          "text_chars": 8328,
+          "paragraphs": 5,
+          "outcome": "returned",
+          "has_html_tags": false,
+          "seconds": 3.39
+        },
+        {
+          "ticker": "INTU",
+          "listing_count": 102,
+          "providers": [
+            "Barron's",
+            "Dow Jones Newswires",
+            "Investor's Business Daily",
+            "MarketWatch.com",
+            "The Wall Street Journal",
+            "WSJ Video"
+          ],
+          "url": "https://www.wsj.com/cfo-journal/intuits-cfo-on-the-tough-choice-to-lower-guidance-a01785b5",
+          "provider": "The Wall Street Journal",
+          "title": "Intuit\u2019s CFO on the Tough Choice to Lower Guidance",
+          "published": "2026-08-26T11:21:00Z",
+          "text_chars": 6406,
+          "paragraphs": 3,
+          "outcome": "returned",
+          "has_html_tags": false,
+          "seconds": 4.45
+        },
+        {
+          "ticker": "VLO",
+          "outcome": "error",
+          "exception_type": "FileNotFoundError",
+          "error": "FileNotFoundError",
+          "seconds": 0.0
+        }
+      ]
+    },
+    "wsj-followup-summary.json": {
+      "platform": "wsj",
+      "script_sha256": "5a7d20edff7d41e6660e9a4a725136753309efc7034948a973f24653457ee37b",
+      "started_at": "2026-09-15T01:15:43.814202+00:00",
+      "rows": [
+        {
+          "ticker": "VLO",
+          "operation": "quote_retry_once",
+          "outcome": "returned",
+          "found_on_attempt": 1,
+          "seconds": 92.41
+        },
+        {
+          "ticker": "VLO",
+          "operation": "article",
+          "listing_count": 49,
+          "url": "https://www.wsj.com/finance/stocks/big-oils-liabilities-are-shrinking-whats-next-c2242dbf",
+          "outcome": "returned",
+          "title": "Big Oil\u2019s Liabilities Are Shrinking. What\u2019s Next?",
+          "text_chars": 6304,
+          "css_markers": 105,
+          "replacement_chars": 0,
+          "seconds": 62.74
+        }
+      ],
+      "finished_at": "2026-09-15T01:18:18.972469+00:00"
+    },
+    "wsj-summary.json": {
+      "platform": "wsj",
+      "started_at": "2026-09-15T01:08:50.753980+00:00",
+      "script": "org\\tier1_exec\\4.0.0_SA_CRO\\scripts\\wsj_rest_fetch.py",
+      "script_sha256": "5a7d20edff7d41e6660e9a4a725136753309efc7034948a973f24653457ee37b",
+      "batch": [
+        {
+          "ticker": "BA",
+          "company": "Boeing",
+          "ft_exchange_candidate": "NYQ"
+        },
+        {
+          "ticker": "COST",
+          "company": "Costco",
+          "ft_exchange_candidate": "NSQ"
+        },
+        {
+          "ticker": "HD",
+          "company": "Home Depot",
+          "ft_exchange_candidate": "NYQ"
+        },
+        {
+          "ticker": "INTU",
+          "company": "Intuit",
+          "ft_exchange_candidate": "NSQ"
+        },
+        {
+          "ticker": "VLO",
+          "company": "Valero Energy",
+          "ft_exchange_candidate": "NYQ"
+        }
+      ],
+      "calls": [
+        {
+          "label": "BA-quote-news",
+          "started_at": "2026-09-15T01:08:50.754495+00:00",
+          "artifact": "wsj-BA-quote-news.json",
+          "shape": {
+            "type": "dict",
+            "keys": [
+              "ticker",
+              "url",
+              "title",
+              "bytes",
+              "publicly_readable_as_nonsubscriber",
+              "news"
+            ],
+            "ticker": "BA",
+            "title": "Boeing Co. (BA) Stock Price Today - WSJ",
+            "news": {
+              "type": "dict",
+              "keys": [
+                "ticker",
+                "url",
+                "found_on_attempt",
+                "attempts",
+                "state_key",
+                "news_node"
+              ],
+              "ticker": "BA",
+              "found_on_attempt": 1,
+              "attempts": 1
+            }
+          },
+          "outcome": "returned",
+          "seconds": 11.12
+        },
+        {
+          "label": "COST-quote-news",
+          "started_at": "2026-09-15T01:09:03.877184+00:00",
+          "artifact": "wsj-COST-quote-news.json",
+          "shape": {
+            "type": "dict",
+            "keys": [
+              "ticker",
+              "url",
+              "title",
+              "bytes",
+              "publicly_readable_as_nonsubscriber",
+              "news"
+            ],
+            "ticker": "COST",
+            "title": "Costco Wholesale Corp. (COST) Stock Price Today - WSJ",
+            "news": {
+              "type": "dict",
+              "keys": [
+                "ticker",
+                "url",
+                "found_on_attempt",
+                "attempts",
+                "state_key",
+                "news_node"
+              ],
+              "ticker": "COST",
+              "found_on_attempt": 1,
+              "attempts": 1
+            }
+          },
+          "outcome": "returned",
+          "seconds": 8.11
+        },
+        {
+          "label": "HD-quote-news",
+          "started_at": "2026-09-15T01:09:13.981478+00:00",
+          "artifact": "wsj-HD-quote-news.json",
+          "shape": {
+            "type": "dict",
+            "keys": [
+              "ticker",
+              "url",
+              "title",
+              "bytes",
+              "publicly_readable_as_nonsubscriber",
+              "news"
+            ],
+            "ticker": "HD",
+            "title": "Home Depot Inc. (HD) Stock Price Today - WSJ",
+            "news": {
+              "type": "dict",
+              "keys": [
+                "ticker",
+                "url",
+                "found_on_attempt",
+                "attempts",
+                "state_key",
+                "news_node"
+              ],
+              "ticker": "HD",
+              "found_on_attempt": 1,
+              "attempts": 1
+            }
+          },
+          "outcome": "returned",
+          "seconds": 7.94
+        },
+        {
+          "label": "INTU-quote-news",
+          "started_at": "2026-09-15T01:09:23.917868+00:00",
+          "artifact": "wsj-INTU-quote-news.json",
+          "shape": {
+            "type": "dict",
+            "keys": [
+              "ticker",
+              "url",
+              "title",
+              "bytes",
+              "publicly_readable_as_nonsubscriber",
+              "news"
+            ],
+            "ticker": "INTU",
+            "title": "Intuit Inc. (INTU) Stock Price Today - WSJ",
+            "news": {
+              "type": "dict",
+              "keys": [
+                "ticker",
+                "url",
+                "found_on_attempt",
+                "attempts",
+                "state_key",
+                "news_node"
+              ],
+              "ticker": "INTU",
+              "found_on_attempt": 1,
+              "attempts": 1
+            }
+          },
+          "outcome": "returned",
+          "seconds": 5.2
+        },
+        {
+          "label": "VLO-quote-news",
+          "started_at": "2026-09-15T01:09:31.121772+00:00",
+          "outcome": "error",
+          "exception_type": "RuntimeError",
+          "error": "RuntimeError",
+          "seconds": 23.26
+        }
+      ],
+      "finished_at": "2026-09-15T01:09:56.398035+00:00"
+    }
+  },
+  "sa_news_profiles": [
+    {
+      "ticker": "BA",
+      "id": "4642705",
+      "published": "2026-09-14T17:30:49-04:00",
+      "content_chars": 2313,
+      "visible_chars": 738,
+      "html_tags": true,
+      "css_markers": 0
+    },
+    {
+      "ticker": "BA",
+      "id": "4642258",
+      "published": "2026-09-12T00:07:03-04:00",
+      "content_chars": 2316,
+      "visible_chars": 1161,
+      "html_tags": true,
+      "css_markers": 0
+    },
+    {
+      "ticker": "BA",
+      "id": "4642245",
+      "published": "2026-09-11T17:21:24-04:00",
+      "content_chars": 2172,
+      "visible_chars": 858,
+      "html_tags": true,
+      "css_markers": 0
+    },
+    {
+      "ticker": "BA",
+      "id": "4641536",
+      "published": "2026-09-11T10:14:49-04:00",
+      "content_chars": 10422,
+      "visible_chars": 3872,
+      "html_tags": true,
+      "css_markers": 0
+    },
+    {
+      "ticker": "BA",
+      "id": "4640845",
+      "published": "2026-09-08T11:28:43-04:00",
+      "content_chars": 8986,
+      "visible_chars": 3284,
+      "html_tags": true,
+      "css_markers": 0
+    },
+    {
+      "ticker": "COST",
+      "id": "4642623",
+      "published": "2026-09-14T14:25:32-04:00",
+      "content_chars": 3524,
+      "visible_chars": 1614,
+      "html_tags": true,
+      "css_markers": 0
+    },
+    {
+      "ticker": "COST",
+      "id": "4641733",
+      "published": "2026-09-12T07:00:48-04:00",
+      "content_chars": 5179,
+      "visible_chars": 2377,
+      "html_tags": true,
+      "css_markers": 0
+    },
+    {
+      "ticker": "COST",
+      "id": "4641759",
+      "published": "2026-09-10T16:04:06-04:00",
+      "content_chars": 3643,
+      "visible_chars": 1808,
+      "html_tags": true,
+      "css_markers": 0
+    },
+    {
+      "ticker": "COST",
+      "id": "4641313",
+      "published": "2026-09-09T15:29:45-04:00",
+      "content_chars": 3057,
+      "visible_chars": 1511,
+      "html_tags": true,
+      "css_markers": 0
+    },
+    {
+      "ticker": "COST",
+      "id": "4639640",
+      "published": "2026-09-02T16:38:42-04:00",
+      "content_chars": 3629,
+      "visible_chars": 2070,
+      "html_tags": true,
+      "css_markers": 0
+    },
+    {
+      "ticker": "HD",
+      "id": "4639847",
+      "published": "2026-09-03T10:08:15-04:00",
+      "content_chars": 11939,
+      "visible_chars": 2500,
+      "html_tags": true,
+      "css_markers": 0
+    },
+    {
+      "ticker": "HD",
+      "id": "4638889",
+      "published": "2026-09-01T11:15:41-04:00",
+      "content_chars": 4744,
+      "visible_chars": 1095,
+      "html_tags": true,
+      "css_markers": 0
+    },
+    {
+      "ticker": "HD",
+      "id": "4638017",
+      "published": "2026-08-29T11:03:53-04:00",
+      "content_chars": 5821,
+      "visible_chars": 2461,
+      "html_tags": true,
+      "css_markers": 0
+    },
+    {
+      "ticker": "HD",
+      "id": "4635742",
+      "published": "2026-08-22T09:35:27-04:00",
+      "content_chars": 12246,
+      "visible_chars": 4987,
+      "html_tags": true,
+      "css_markers": 0
+    },
+    {
+      "ticker": "HD",
+      "id": "4635841",
+      "published": "2026-08-21T08:49:45-04:00",
+      "content_chars": 9576,
+      "visible_chars": 2376,
+      "html_tags": true,
+      "css_markers": 0
+    },
+    {
+      "ticker": "INTU",
+      "id": "4642514",
+      "published": "2026-09-14T10:17:41-04:00",
+      "content_chars": 4130,
+      "visible_chars": 928,
+      "html_tags": true,
+      "css_markers": 0
+    },
+    {
+      "ticker": "INTU",
+      "id": "4637773",
+      "published": "2026-08-29T10:30:49-04:00",
+      "content_chars": 10425,
+      "visible_chars": 3494,
+      "html_tags": true,
+      "css_markers": 0
+    },
+    {
+      "ticker": "INTU",
+      "id": "4636830",
+      "published": "2026-08-25T19:40:33-04:00",
+      "content_chars": 10850,
+      "visible_chars": 8575,
+      "html_tags": true,
+      "css_markers": 0
+    },
+    {
+      "ticker": "INTU",
+      "id": "4636795",
+      "published": "2026-08-25T16:27:18-04:00",
+      "content_chars": 1981,
+      "visible_chars": 273,
+      "html_tags": true,
+      "css_markers": 0
+    },
+    {
+      "ticker": "INTU",
+      "id": "4636754",
+      "published": "2026-08-25T16:25:31-04:00",
+      "content_chars": 4457,
+      "visible_chars": 2031,
+      "html_tags": true,
+      "css_markers": 0
+    },
+    {
+      "ticker": "VLO",
+      "id": "4642292",
+      "published": "2026-09-13T11:23:59-04:00",
+      "content_chars": 4083,
+      "visible_chars": 2232,
+      "html_tags": true,
+      "css_markers": 0
+    },
+    {
+      "ticker": "VLO",
+      "id": "4638047",
+      "published": "2026-08-29T20:45:15-04:00",
+      "content_chars": 5902,
+      "visible_chars": 2237,
+      "html_tags": true,
+      "css_markers": 0
+    },
+    {
+      "ticker": "VLO",
+      "id": "4635806",
+      "published": "2026-08-21T09:23:48-04:00",
+      "content_chars": 8482,
+      "visible_chars": 3064,
+      "html_tags": true,
+      "css_markers": 0
+    },
+    {
+      "ticker": "VLO",
+      "id": "4622429",
+      "published": "2026-07-31T02:34:19-04:00",
+      "content_chars": 11921,
+      "visible_chars": 9847,
+      "html_tags": true,
+      "css_markers": 0
+    },
+    {
+      "ticker": "VLO",
+      "id": "4622266",
+      "published": "2026-07-30T18:25:40-04:00",
+      "content_chars": 3511,
+      "visible_chars": 1733,
+      "html_tags": true,
+      "css_markers": 0
+    }
+  ],
+  "wsj_body_profiles": [
+    {
+      "artifact": "wsj-BA-article-sample.json",
+      "text_chars": 8478,
+      "css_markers": 117,
+      "replacement_chars": 0,
+      "paragraph_lengths": [
+        113,
+        5865,
+        1961,
+        219,
+        312
+      ]
+    },
+    {
+      "artifact": "wsj-COST-article-sample.json",
+      "text_chars": 6103,
+      "css_markers": 105,
+      "replacement_chars": 0,
+      "paragraph_lengths": [
+        107,
+        167,
+        5825
+      ]
+    },
+    {
+      "artifact": "wsj-HD-article-sample.json",
+      "text_chars": 8328,
+      "css_markers": 117,
+      "replacement_chars": 0,
+      "paragraph_lengths": [
+        88,
+        7661,
+        283,
+        153,
+        135
+      ]
+    },
+    {
+      "artifact": "wsj-INTU-article-sample.json",
+      "text_chars": 6406,
+      "css_markers": 105,
+      "replacement_chars": 0,
+      "paragraph_lengths": [
+        90,
+        368,
+        5944
+      ]
+    },
+    {
+      "artifact": "wsj-VLO-article-retry.json",
+      "text_chars": 6304,
+      "css_markers": 105,
+      "replacement_chars": 0,
+      "paragraph_lengths": [
+        89,
+        6105,
+        106
+      ]
+    }
+  ],
+  "ft_body_profiles": [
+    {
+      "artifact": "ft-BA-article-v2.html",
+      "title": "Thiel-backed start-up to mass-produce \u2018deep strike\u2019 missiles in Europe and US ",
+      "body_containers": 1,
+      "body_text_chars": 6938,
+      "paragraph_count": 32,
+      "contains_subscribe_to_read": false
+    },
+    {
+      "artifact": "ft-HD-article-v2.html",
+      "title": "The rise of physical AI: can robots save US manufacturing?",
+      "body_containers": 1,
+      "body_text_chars": 17328,
+      "paragraph_count": 62,
+      "contains_subscribe_to_read": false
+    },
+    {
+      "artifact": "ft-INTU-article-v2.html",
+      "title": "Subscribe to read",
+      "body_containers": 0,
+      "body_text_chars": 0,
+      "paragraph_count": 0,
+      "contains_subscribe_to_read": true
+    },
+    {
+      "artifact": "ft-VLO-article-v2.html",
+      "title": "US diesel prices soar as Donald Trump hauls in refiners",
+      "body_containers": 1,
+      "body_text_chars": 5112,
+      "paragraph_count": 29,
+      "contains_subscribe_to_read": false
+    }
+  ],
+  "local_artifacts": [
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\bbg-BA-ticker.json",
+      "bytes": 564,
+      "sha256": "07ff3ae59305f738b311e14318f6287885c06ba4b69a9e4012de68ffc0d21054"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\bbg-session-test\\bbg_harvest_20260915T010951Z_step0.png",
+      "bytes": 51172,
+      "sha256": "81fb60fe0f626020f9178b9655b4a73f85ce98d4d3d9707b8d32cd13abb47c62"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\bbg-session-test\\bbg_harvest_20260915T010951Z_step1.png",
+      "bytes": 47074,
+      "sha256": "070c321a3f8aaadd034f4b6a88a42b6241b9bdba1f94b2007abb3feeb777bde3"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\bbg-session-test\\bbg_harvest_20260915T010951Z_step2.png",
+      "bytes": 51172,
+      "sha256": "81fb60fe0f626020f9178b9655b4a73f85ce98d4d3d9707b8d32cd13abb47c62"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\bbg-session-test\\bbg_harvest_20260915T010951Z_step3.png",
+      "bytes": 47002,
+      "sha256": "26cca80017f58e50059eea202cf4716d47810ef23c733185e0d4ad0bfef71641"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\bbg-session-test\\bbg_harvest_20260915T010951Z_step4.png",
+      "bytes": 53269,
+      "sha256": "b7e33db5dd1838bdb1a56f5948078eeb77b2b996e5b474cff9004d358ec43cdd"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\bbg-session-test\\bbg_harvest_20260915T010951Z_step5.png",
+      "bytes": 47890,
+      "sha256": "38ef963a45ec2b5210bb0de066619e72f0884edb692c284285776308945a66d9"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\bbg-session-test\\bbg_harvest_20260915T010951Z_step6.png",
+      "bytes": 53269,
+      "sha256": "b7e33db5dd1838bdb1a56f5948078eeb77b2b996e5b474cff9004d358ec43cdd"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\bbg-session-test\\bbg_harvest_20260915T010951Z_step7.png",
+      "bytes": 47890,
+      "sha256": "38ef963a45ec2b5210bb0de066619e72f0884edb692c284285776308945a66d9"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\bbg-session-test\\bloomberg_harvest_session.py",
+      "bytes": 41443,
+      "sha256": "7c5590c6f0ccd8fb78b62ba28507fd25ffe95297b05666efce91d40eed469696"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\bbg-summary.json",
+      "bytes": 1831,
+      "sha256": "810a4ed6178f1bd2cb2dd7a5231744aef7bddaca075e66dbe128a80bf237ede4"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\ft-article-summary.json",
+      "bytes": 5564,
+      "sha256": "56e8eb3622021a75984d60533787bc6d9c6af023251253cad99f9918ef8ccb7e"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\ft-BA-article-v2.html",
+      "bytes": 172731,
+      "sha256": "c28f73a0276ee1926385fcceb1cd5e1f2556ca493939ab48d682bc6df977f280"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\ft-BA-article-v2.json",
+      "bytes": 343,
+      "sha256": "b6bd8427b2f6a2a3dd8f53416e27cca92ee8fd5287050fccac9bf93ccf28c5b1"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\ft-BA-quote.json",
+      "bytes": 547,
+      "sha256": "b254e572f27141a805e56cc38f3bd2392de49b1f0f3b8f104a4eb59c575f8024"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\ft-BA-summary.html",
+      "bytes": 121713,
+      "sha256": "9e10b22ba3393206671acd55e75b4b7871ef92ce2de1e63863efff788e30d263"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\ft-COST-quote.json",
+      "bytes": 583,
+      "sha256": "3a572df439e54746df5f593b71f21d7e6fff31101e914cf963425f249eee43d0"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\ft-COST-summary.html",
+      "bytes": 122163,
+      "sha256": "efff4610c57a7d2dd6e85163acc4f1e3a1f7a201ccfc627755a710b8cd4c2df4"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\ft-followup-summary.json",
+      "bytes": 2839,
+      "sha256": "b0a21726283d66fa05a06cb68015dbc00a49971da9935c1a91962ae371d15eb8"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\ft-HD-article-v2.html",
+      "bytes": 206774,
+      "sha256": "88c7aae092333b25eefa48adc3db5acb2acb532dae861a40db4420bdfc2cf245"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\ft-HD-article-v2.json",
+      "bytes": 331,
+      "sha256": "29d538615c2439078fbf5ec07c38efd55ad78c64fc5fd6d034193f2c00356e13"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\ft-HD-quote.json",
+      "bytes": 569,
+      "sha256": "3bdfe614f096281b717692386917c0e0f6f0e805f41c94bb711f9c6ea29d8b04"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\ft-HD-summary.html",
+      "bytes": 122756,
+      "sha256": "0abeb5f6b6daef2001fa390c34e9a93b6a0611482d72c24b11ecb198b3f27d81"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\ft-INTU-article-sample.json",
+      "bytes": 276,
+      "sha256": "fc283fcadf188f5634e3e4fa25a2f02bb9766932e342f6ba8d43860020f19425"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\ft-INTU-article-v2.html",
+      "bytes": 120746,
+      "sha256": "dac7508b34c85bd1045b2f0c1ef8c53a34ec7bbfd75d768ef648361cfb7adb26"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\ft-INTU-article-v2.json",
+      "bytes": 30672,
+      "sha256": "87ba30649391ba953264c052ea4a39ae46edfca10826d8a74f42e2d04320d776"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\ft-INTU-quote.json",
+      "bytes": 563,
+      "sha256": "765459bfec00952ebb800e1972e467c518c0eb5cd443331f205382b2c1639bde"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\ft-INTU-summary.html",
+      "bytes": 120821,
+      "sha256": "4c1d7316678a29c9d2541f4dc468d6c39829d84baba46ee3333d594342760a59"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\ft-summary.json",
+      "bytes": 4051,
+      "sha256": "91e983f944ea20c3d9b8cbaf32668afde19dce6aa896b509400483cb5fb39609"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\ft-VLO-article-sample.json",
+      "bytes": 424,
+      "sha256": "32ee4f1764cdc55b0f27c1eb64136fed16975b8352f1f52b95698fb6ed529e80"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\ft-VLO-article-v2.html",
+      "bytes": 164367,
+      "sha256": "572761c61e89a43de13bf261866bc9667fd7c52ffeb726026b04f55daa1aef4e"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\ft-VLO-article-v2.json",
+      "bytes": 374,
+      "sha256": "edc349bedf35e44475fd15854475da3fa79aaa644ec15b91d199cfb819458e30"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\ft-VLO-quote.json",
+      "bytes": 571,
+      "sha256": "0be765e8df5ddad738693705d1d8572c151401464337d8545c7219a8a566096a"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\ft-VLO-summary.html",
+      "bytes": 119170,
+      "sha256": "9e3aadb8519d25b65fc33f2842216e07b1c29d1f7a1092e1761936ae6547339e"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\sa-BA-analysis.json",
+      "bytes": 304,
+      "sha256": "b1444b302ae65aa571da274122581216c9d4859b61ca5075ace8b01417f891a7"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\sa-BA-article.json",
+      "bytes": 2300,
+      "sha256": "8afa87d143c96b740dc20ea9af80227e0eb675a417395d15ccf4a4e5344b3f62"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\sa-BA-news.json",
+      "bytes": 39186,
+      "sha256": "af5701f9a766f37b39a13eb1e9d57dd7867b47df4d9d730777dd1c99de8a0614"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\sa-BA-report.json",
+      "bytes": 7628,
+      "sha256": "7f2e9a0b40324ed4d628f36ca195f02ee878aa48300fbe347decb1c3504cefdc"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\sa-BA-symbol.json",
+      "bytes": 1027,
+      "sha256": "07f2e1b1317b116217a3564dcec463653d63440d8acb51de8f55291f140f03bb"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\sa-COST-analysis.json",
+      "bytes": 338,
+      "sha256": "c4fe5d71ba9b85e0c00ef2abad4e817302c4282673ef8355467a089572d47f4d"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\sa-COST-article.json",
+      "bytes": 2436,
+      "sha256": "0a3d9c35e381603bce602ae38688b574c43b18c4dbeb7dc9cab1826df8b8cd88"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\sa-COST-news.json",
+      "bytes": 30205,
+      "sha256": "0a60fc767ed548ae49ccecc0b58013995300b061731352b2f35fa9facd214d97"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\sa-COST-report.json",
+      "bytes": 8441,
+      "sha256": "93c0de0b1e659b7eaedd2b404c7af7fe6d65f9154c8da3f611a2ddb9471e15f5"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\sa-COST-symbol.json",
+      "bytes": 1059,
+      "sha256": "dbba4f22c8f1bc0df84b93d3d6d432d0f6ae2e5426af1ae948c3cea5790b59d2"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\sa-harness-preflight-error.json",
+      "bytes": 1065,
+      "sha256": "7d820d0d1db394ac941bbb1931b0aa4d80b9b534735fe636e4d1ad66ed6acb6e"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\sa-HD-analysis.json",
+      "bytes": 327,
+      "sha256": "c0143925b57239b0cc3392a42083f5d0ed010c2e865c9e0669a68a9f14ceeb6d"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\sa-HD-article.json",
+      "bytes": 2031,
+      "sha256": "4ee3d3ba1e6b8a19947433ee6c84ecc8f1a58495d44af171fecb92c964e3ddbc"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\sa-HD-news.json",
+      "bytes": 58982,
+      "sha256": "8ad58b75ab48b9e2e65ea554d268996c101fbb673902c3a3547cb15b96d644a0"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\sa-HD-report.json",
+      "bytes": 8516,
+      "sha256": "2931da6cde1de867cedd4104c172c01722ca70919c67072aee96530341f9fba8"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\sa-HD-symbol.json",
+      "bytes": 1043,
+      "sha256": "11752b065da53b7d75f83790347deaedb5acb193e56bc0231dea52e8fadcd08b"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\sa-INTU-analysis.json",
+      "bytes": 286,
+      "sha256": "a51b27cc9164fe9e5ee99f45f1a94b566eabb62aa605a32a9763885651257fae"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\sa-INTU-article.json",
+      "bytes": 2121,
+      "sha256": "92d970bbfddec759c7bcaf5129b261d5750f0b19cac8c7b49a625b150237b274"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\sa-INTU-news.json",
+      "bytes": 46164,
+      "sha256": "56b35af7a3b693af27864a378af0cea39ec03fde6d31f925dd96ecd5a5de592d"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\sa-INTU-report.json",
+      "bytes": 8099,
+      "sha256": "5736293392ba46f1e702b7683c4b28fd02d2e6d9cce6c0e3ecf473c572afddc0"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\sa-INTU-symbol.json",
+      "bytes": 1017,
+      "sha256": "c2f0cb3d0b44334c37c6cd345e1363feeb5dac1f1594ca64338c88710901e0d8"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\sa-summary.json",
+      "bytes": 20696,
+      "sha256": "338770a3265280bdfc5340cac4fe03fad9be2e335f4bf727c5bf0afa2626917e"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\sa-VLO-analysis.json",
+      "bytes": 358,
+      "sha256": "80af192295c2b95639d0b0bf3a8543327d4462be55885f6408baf5566a637a59"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\sa-VLO-article.json",
+      "bytes": 2169,
+      "sha256": "71d3fd0d01835a465060702ef59f58ca30e671a222491e64b87c701c03025722"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\sa-VLO-news.json",
+      "bytes": 46382,
+      "sha256": "96d2f41ce7d4fe06757bdf3317f60504d617d8fa3bf2dbc448b94a723bc90095"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\sa-VLO-report.json",
+      "bytes": 7986,
+      "sha256": "7394bd234ea4c0db6f38c6d6f193f6af6fb61248989f9a19c170ddaf0e104c6c"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\sa-VLO-symbol.json",
+      "bytes": 1032,
+      "sha256": "aa69fe52b47627000f04c0091685245bbff5a7da3a9760d4286de1055d7d0c27"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\wsj-article-summary.json",
+      "bytes": 3084,
+      "sha256": "f3eb7ba24faddeae9f625c0638c073321d842621f8eb676dc9fd16d174c5ae11"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\wsj-BA-article-sample.json",
+      "bytes": 8789,
+      "sha256": "176f4d4c1bb287d51656d8a3732afd1e4cb2455dec320344ef86a6f48ae8b961"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\wsj-BA-quote-news.json",
+      "bytes": 135343,
+      "sha256": "30bd1fd7dd317ce2b1eb2728364ce5906f3102931bf001dee371d6f544d1fc0d"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\wsj-COST-article-sample.json",
+      "bytes": 6400,
+      "sha256": "5517f854a32475b321d5db0d3d54c846d55a626ec58d55d3d0e9d6c219961ccf"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\wsj-COST-quote-news.json",
+      "bytes": 101542,
+      "sha256": "654cc76c5c4b0b3a7eecc90983968a8719b768b764604cce24f42a10bfc2e11c"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\wsj-followup-summary.json",
+      "bytes": 826,
+      "sha256": "e9da11a3ddfd8543c481ae2c00673e0e623385f62644cc7b7df51e51dd91d576"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\wsj-HD-article-sample.json",
+      "bytes": 8601,
+      "sha256": "b375fbfd199d16472b2c8b021eed4fccc0bb75592377e45adfaffc2febda1c41"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\wsj-HD-quote-news.json",
+      "bytes": 102235,
+      "sha256": "426e12be92da8f81830ab79f3d1bd4f3498f571a1f7b6d8667c9c057bdc77b3e"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\wsj-INTU-article-sample.json",
+      "bytes": 6698,
+      "sha256": "82f5cb59b6c9082d799b3c65fa435fb0728340e7bd7aee99f73fd70c6cd131be"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\wsj-INTU-quote-news.json",
+      "bytes": 97985,
+      "sha256": "fbdb761f2b8a4231b42fd6268fa28fd61eb831553dae1025246d42e65a9e7c75"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\wsj-summary.json",
+      "bytes": 4534,
+      "sha256": "80631278e5819bfbfc62bbbda648d15bfbe1f1f52cc2a9cfcdbaf6bfccb91964"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\wsj-VLO-article-retry.json",
+      "bytes": 6590,
+      "sha256": "f83b9a18c84e718120cd21056b93eba671e73145f99583eaaa47fab27c083f2a"
+    },
+    {
+      "path": ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest-live-batch-20260914\\wsj-VLO-quote-news-retry.json",
+      "bytes": 48060,
+      "sha256": "43e0e75e9fb4818a933046d301a6a1c31372845bbc1217dcdef5dcbe1ee43bd1"
+    }
+  ],
+  "harness_hashes": {
+    ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest_article_probe.py": "5f7b584cc5f5cf135dbd7e61282719d87de95d10fe0629525ecf2424d81595d5",
+    ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest_batch_probe.py": "8450b6b7593625b065bb345110b0633159b41e99913f641d2f914c2c5962089a",
+    ".runtime\\codex-seats\\4.0.0_SA_CRO~W\\harvest_followup_probe.py": "3a83988e6ba6c483ed42bc5bac7723e4b051c4f7c91e0236366dc20632e125f8"
+  },
+  "method_corrections": [
+    "Initial SA harness failed before any publisher call by not unpacking build_session tuple; corrected and excluded from publisher failure counts.",
+    "Initial FT harness truncated Investors Chronicle hrefs into FT UUID URLs, causing three artificial 404s; replaced with full-host .o-teaser__heading a selection. Initial samples retained but excluded from corrected FT five-article results.",
+    "WSJ VLO article in initial article loop was dependency-skipped after missing quote output, not a publisher article failure."
+  ],
+  "bloomberg_session_attempt": {
+    "script": "bloomberg_harvest_session.py",
+    "copy_sha256": "7c5590c6f0ccd8fb78b62ba28507fd25ffe95297b05666efce91d40eed469696",
+    "arguments": [
+      "--max-steps",
+      "8"
+    ],
+    "cloud_park": false,
+    "exit_code": 1,
+    "bot_wall_resolved": false,
+    "steps": 8,
+    "successful_session_bundle": false,
+    "evidence_basis": "Observed completed tool process and local step screenshots; network_auth_corroborated flag alone did not establish success.",
+    "default_control_query": "rtx (script default, outside five-security batch)"
+  },
+  "limitations": [
+    "Five selected US-listed names, not a representative test of foreign/ADR identifiers.",
+    "Current snapshots and one sampled article per available company feed, not historical coverage.",
+    "SA/FT session harvesters inspected but not rerun; existing parked sessions used.",
+    "No full-text completeness claim based solely on length, status200, or entitlement flags.",
+    "Runtime payloads remain local and may contain full fetched content or session-adjacent data; durable evidence contains metadata and hashes only."
+  ]
+}

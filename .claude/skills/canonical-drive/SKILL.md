@@ -41,22 +41,22 @@ terminal/total + assignee (`task-orders/*.md` faces); cells covered / cells serv
 more labor, or assess a dropped ball and nudge the responsible agent"*): **(1) DRIVE FORWARD** -- an unblocked
 act at the measured limb; fire it. **(2) PARALLELIZE MORE LABOR** -- an uncovered cell with no unmet
 dependency; cut and spawn it (obligation 2). **(3) ASSESS A DROPPED BALL AND NUDGE.** None applies -> NO-OP,
-and say which. ⛔ **(3) DOES NOT RUN NAKED: a nudge is authorized ONLY after `/canonical-flow`'s LIVE-PRODUCTION PROBE
-(v3 @`9e847ad661` -- READ IT AT HEAD, it was corrected three times in two hours) reports nothing moving across
-ALL FOUR planes:** (a) **COMMITS** `git log --author "<serial> <" --since=` -- cheapest and most reliable;
-(b) **DELIVERABLES, TWO HOMES** -- a WORKER's under `org/missions/D*/<MACRO>/<CODE>/deliverables/<serial>/`, a
-TIER-1 SEAT's under `org/tier1_exec/<BASE serial>/deliverables/`; ⛔ the wrong branch returns ABSENT RATHER
-THAN AN ERROR, failing silently in the exact direction the rung exists to prevent; (c) the seat's OWN worktree
--- ⛔ **A CODEX SEAT HAS NO WORKTREE**, so this plane is structurally blind to that whole seat class;
-(d) `.runtime/codex-seats/<serial>/` **ARTIFACTS ONLY** -- subtract the runtime logs (`turn-bridge.stdout.log`
-and friends): the `[HARD-NUDGE] [deduplicated]` loop SPINS ON ITS OWN and reports MOVING about a seat
-producing nothing, forever. ⛔ **Each plane reads MOVING | COLD | INCONCLUSIVE, and a DIRECTORY THAT IS ABSENT
-IS INCONCLUSIVE, NEVER COLD** -- an absent path and an idle seat are different answers and only one is
-evidence. ⭐ **"A PLANE THAT CAN BE WRONG IN BOTH DIRECTIONS IS NOT YET A DISCRIMINATOR"** (`2.0.0_SA_COO~ZZZ`,
-which found (b) and (d) by RUNNING the rung on a live seat, not by reading it). ⚠ **AND NOTHING MOVING IS NOT
-PROOF OF STALLED** -- it lowers confidence in IN-PROGRESS; it never licenses a ladder ending in a kill. A
-"dropped ball" verdict fired at `3.0.0_SA_CVO~Z` 2026-09-11 while it wrote 189 KB of L9 evidence.
-COST: one `git log` plus four stats per suspected seat. NON-APPLICATION: a seat that has answered this tick.
+and say which. ⛔ **(3) DOES NOT RUN NAKED: a nudge is authorized ONLY after `/canonical-flow`'s LIVE-PRODUCTION
+PROBE reports nothing moving.** Four planes -- COMMITS, DELIVERABLES, the seat's WORKTREE, the CODEX RUNTIME
+DIR -- each reading `MOVING | COLD | INCONCLUSIVE`. ⛔ **RUN IT FROM `.claude/skills/canonical-flow/SKILL.md`
+AT HEAD AND DO NOT RESTATE IT HERE.** Every control it needs lives there: the per-arm anchor for an author
+zero (`AMGT_RESAPP-Z-S84`/`Z-S85`), the author scoping for the SHARED tier-1 home (`Z-S82`), the artifacts-only
+filter, and why a codex seat's worktree plane is structurally blind. ⚠ **THIS BLOCK USED TO CARRY THAT TEXT AND
+DRIFTED AHEAD OF IT** -- a restatement stronger than its authority is unfalsifiable at a glance, because the
+pointer looks authoritative (`1.0.0_SA_CTO~Z`, `Z-S85`). ⚠ **AND NOTHING MOVING IS NOT PROOF OF STALLED**: it
+lowers confidence in IN-PROGRESS and never licenses a ladder ending in a kill. **A FIFTH PLANE ANSWERS WHAT ALL
+FOUR CANNOT -- LOOK AT THE SCREEN** (`/unstick <serial> --peek`): a seat idle at an empty composer is alive,
+bound, unblocked and doing nothing until prompted, and reads GREEN on every process-plane instrument.
+⛔ **AND A PEEK IS NOT DONE WHEN IT FINDS A COMPOSER -- ASK WHICH SURFACE HAS THE KEYBOARD.** Measured: the
+composer rendered EMPTY was SCROLLBACK and the tab's input went to a PowerShell prompt, so a 1360-char
+direction landed in the SHELL, unexecuted behind an unterminated quote. **A rendered composer is not a
+reachable one**, and prompting one that is not is how a correct text fails silently. COST: one pointer read
+plus asking where the keys go. NON-APPLICATION: a seat that has answered this tick.
 
 ## 2. The obligations, in this order, every tick
 

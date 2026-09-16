@@ -1,0 +1,1316 @@
+{
+  "pin": "dc01ede7e2eb5a3c7b8e8b2cec53c3a360cf2cfb",
+  "utc": "2026-09-13T04:47:28Z",
+  "status": "PREPARED_NOT_ISSUED",
+  "channel_files": [
+    "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/adjudications/ADJUDICATION_v1.md",
+    "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/adjudications/ADJUDICATION_v2.md",
+    "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/adjudications/ADJUDICATION_v3.md",
+    "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/adjudications/ADJUDICATION_v4.md",
+    "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/investigations/INVESTIGATION_v1.md",
+    "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/remediations/REMEDIATION_v1.md",
+    "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/remediations/REMEDIATION_v2.md"
+  ],
+  "originals": 57,
+  "pending_before": [
+    "POSN_ASTTAX-Z-S37",
+    "POSN_ASTTAX-Z-S38",
+    "POSN_ASTTAX-Z-S39",
+    "POSN_ASTTAX-Z-S40",
+    "POSN_ASTTAX-Z-S41",
+    "POSN_ASTTAX-Z-S42",
+    "POSN_ASTTAX-Z-S43",
+    "POSN_ASTTAX-Z-S44",
+    "POSN_ASTTAX-Z-W14-S1"
+  ],
+  "pending_after_proposed": [],
+  "proofs": [
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~1/POSN_ASTTAX.TO-S1A-1.which-one-place-survives-the-seed.proof_of_spec.json",
+      "sha256": "4be1799f6bd2678935ae9ce54c17cc71a4fae5ad27fab7e761eb34af8bb2b4e2",
+      "order": "org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-S1A-1.which-one-place-survives-the-seed.md",
+      "order_sha256": "51b539451efba99a5f196cd53cac91bd413d444cff3ceb7de7155860e38dd817",
+      "criteria": [
+        "S1a-AC1",
+        "S1a-AC2",
+        "S1a-AC3",
+        "S1a-AC4",
+        "S1a-AC5",
+        "S1a-AC6",
+        "S1a-AC7",
+        "S1a-AC8",
+        "S1a-AC9",
+        "S1a-AC10",
+        "S1a-AC11",
+        "S1a-AC12"
+      ],
+      "structure_rc": 0,
+      "stdout": "proof-of-spec-check | structural=jsonschema | acceptance rows=12 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=POSN_ASTTAX dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit 9039bdd977f30de562020eddea5de916b7dad861 RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D4\\POSN\\POSN_ASTTAX\\task-orders\\POSN_ASTTAX.TO-S1A-1.which-one-place-survives-the-seed.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D4/POSN/POSN_ASTTAX/decompositions/POSN_ASTTAX_DECOMP_round1.md)\n  alignment-frame: decomp id space = 1 distinct cell id(s) in org/missions/D4/POSN/POSN_ASTTAX/decompositions/POSN_ASTTAX_DECOMP_round1.md\n  alignment-forward-1 (criterion -> cell): 12/12 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 0 resolved at pin / 2 PENDING co-committed (POST-COMMIT: touched by the instance commit 6bed191b42) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 2 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 0 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 0 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 1 entry; 1 open with a row id; 1 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for POSN_ASTTAX; mode ENFORCE -- governing TO is under the TREE root (org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-S1A-1.which-one-place-survives-the-seed.md)\nVALID (rc=0)\n",
+      "unchanged_since_review": "ee0a2dbf829e99ce0ac9e37ddd975638818fb3f1"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~10/POSN_ASTTAX.TO-T1-1.carry-five-classes-through-the-generator.proof_of_spec.json",
+      "sha256": "cc2cfdde486946d67baf247e75336cecc5eb88b792a168b593ec3b0fa520cbd8",
+      "order": "org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-T1-1.carry-five-classes-through-the-generator.md",
+      "order_sha256": "9ef86cdff36397f6d571ec2ba33a92b9982c8e9ca81a4e98f8e4b8f6fdcf65ba",
+      "criteria": [
+        "T1-AC1",
+        "T1-AC2",
+        "T1-AC3",
+        "T1-AC4",
+        "T1-AC5",
+        "T1-AC6"
+      ],
+      "structure_rc": 0,
+      "stdout": "proof-of-spec-check | structural=jsonschema | acceptance rows=6 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=POSN_ASTTAX dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit 651ffd4f16 RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D4\\POSN\\POSN_ASTTAX\\task-orders\\POSN_ASTTAX.TO-T1-1.carry-five-classes-through-the-generator.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D4/POSN/POSN_ASTTAX/decompositions/POSN_ASTTAX_DECOMP_round3.md)\n  alignment-frame: decomp id space = 10 distinct cell id(s) in org/missions/D4/POSN/POSN_ASTTAX/decompositions/POSN_ASTTAX_DECOMP_round3.md\n  alignment-forward-1 (criterion -> cell): 6/6 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 0 resolved at pin / 5 PENDING co-committed (POST-COMMIT: touched by the instance commit 07c046fa63) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 5 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 1 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 0 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 3 entries; 3 open with a row id; 3 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for POSN_ASTTAX; mode ENFORCE -- governing TO is under the TREE root (org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-T1-1.carry-five-classes-through-the-generator.md)\nVALID (rc=0)\n",
+      "unchanged_since_review": "ee0a2dbf829e99ce0ac9e37ddd975638818fb3f1"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~11/POSN_ASTTAX.TO-T2-1.measure-the-frontend-hop.proof_of_spec.json",
+      "sha256": "92c06e5f49ef54cd9264f8c34d626f21d00d8ed06f7924f1b87dd7b2bb1b457c",
+      "order": "org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-T2-1.measure-the-frontend-hop.md",
+      "order_sha256": "5a5284445542b4d5d11194c351c35b5266d3ff7bcb01a4e5132bd9f77d6397c3",
+      "criteria": [
+        "T2-AC1",
+        "T2-AC2",
+        "T2-AC3",
+        "T2-AC4",
+        "T2-AC5"
+      ],
+      "structure_rc": 0,
+      "stdout": "proof-of-spec-check | structural=jsonschema | acceptance rows=5 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=POSN_ASTTAX dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit e07fcc91ea8772f4659db300565b2f187252ac44 RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D4\\POSN\\POSN_ASTTAX\\task-orders\\POSN_ASTTAX.TO-T2-1.measure-the-frontend-hop.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D4/POSN/POSN_ASTTAX/decompositions/POSN_ASTTAX_DECOMP_round3.md)\n  alignment-frame: decomp id space = 10 distinct cell id(s) in org/missions/D4/POSN/POSN_ASTTAX/decompositions/POSN_ASTTAX_DECOMP_round3.md\n  alignment-forward-1 (criterion -> cell): 5/5 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 0 resolved at pin / 1 PENDING co-committed (POST-COMMIT: touched by the instance commit bab2cf66a2) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 1 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 0 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 0 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 3 entries; 3 open with a row id; 3 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for POSN_ASTTAX; mode ENFORCE -- governing TO is under the TREE root (org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-T2-1.measure-the-frontend-hop.md)\nVALID (rc=0)\n",
+      "unchanged_since_review": "ee0a2dbf829e99ce0ac9e37ddd975638818fb3f1"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~12/POSN_ASTTAX.TO-T3-1.hop-test-the-two-sibling-consumers.proof_of_spec.json",
+      "sha256": "23261623e656d40ae5757fa6cd25ff572f10a26afee255893c273ab6c7bcf77a",
+      "order": "org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-T3-1.hop-test-the-two-sibling-consumers.md",
+      "order_sha256": "3976a1e9c5ccd2f4bff668831720360b74817200225012ad6a2b7381d6d75bdb",
+      "criteria": [
+        "T3-AC1",
+        "T3-AC2",
+        "T3-AC3",
+        "T3-AC4"
+      ],
+      "structure_rc": 0,
+      "stdout": "proof-of-spec-check | structural=jsonschema | acceptance rows=4 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=POSN_ASTTAX dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit e07fcc91ea8772f4659db300565b2f187252ac44 RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D4\\POSN\\POSN_ASTTAX\\task-orders\\POSN_ASTTAX.TO-T3-1.hop-test-the-two-sibling-consumers.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D4/POSN/POSN_ASTTAX/decompositions/POSN_ASTTAX_DECOMP_round3.md)\n  alignment-frame: decomp id space = 10 distinct cell id(s) in org/missions/D4/POSN/POSN_ASTTAX/decompositions/POSN_ASTTAX_DECOMP_round3.md\n  alignment-forward-1 (criterion -> cell): 4/4 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 0 resolved at pin / 2 PENDING co-committed (POST-COMMIT: touched by the instance commit 5899484453) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 2 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 0 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 0 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 3 entries; 3 open with a row id; 3 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for POSN_ASTTAX; mode ENFORCE -- governing TO is under the TREE root (org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-T3-1.hop-test-the-two-sibling-consumers.md)\nVALID (rc=0)\n",
+      "unchanged_since_review": "ee0a2dbf829e99ce0ac9e37ddd975638818fb3f1"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~13/POSN_ASTTAX.TO-T4-1.registry-durability-the-re-seed-revert.proof_of_spec.json",
+      "sha256": "506989dbeac372994f03696454ce86bba1ea57b8ca073d93fd650a21dd11f3bc",
+      "order": "org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-T4-1.registry-durability-the-re-seed-revert.md",
+      "order_sha256": "a4486737825ebca0b9ca6fa73235356e85a21da1f7e5b5fafacdef2cea4ac36a",
+      "criteria": [
+        "T4-AC1",
+        "T4-AC2",
+        "T4-AC3",
+        "T4-AC4",
+        "T4-AC5"
+      ],
+      "structure_rc": 0,
+      "stdout": "proof-of-spec-check | structural=jsonschema | acceptance rows=5 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=POSN_ASTTAX dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit 651ffd4f16 RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D4\\POSN\\POSN_ASTTAX\\task-orders\\POSN_ASTTAX.TO-T4-1.registry-durability-the-re-seed-revert.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D4/POSN/POSN_ASTTAX/decompositions/POSN_ASTTAX_DECOMP_round3.md)\n  alignment-frame: decomp id space = 10 distinct cell id(s) in org/missions/D4/POSN/POSN_ASTTAX/decompositions/POSN_ASTTAX_DECOMP_round3.md\n  alignment-forward-1 (criterion -> cell): 5/5 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 0 resolved at pin / 5 PENDING co-committed (POST-COMMIT: touched by the instance commit 8adab5748d) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 5 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 0 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 0 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 3 entries; 3 open with a row id; 3 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for POSN_ASTTAX; mode ENFORCE -- governing TO is under the TREE root (org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-T4-1.registry-durability-the-re-seed-revert.md)\nVALID (rc=0)\n",
+      "unchanged_since_review": "ee0a2dbf829e99ce0ac9e37ddd975638818fb3f1"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~14/POSN_ASTTAX.TO-T5-1.the-bar-step-2-measured-against-the-served-artifact.proof_of_spec.json",
+      "sha256": "fbc5237d3bdde59904fdf0eb9b1e8425bbba3b87765ca871a51f5804de2467ad",
+      "order": "org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-T5-1.the-bar-step-2-measured-against-the-served-artifact.md",
+      "order_sha256": "a17ae84afddad14f6bc8c239e925cda31138c17e6f2211228f71877dc1ddd2e3",
+      "criteria": [
+        "T5-AC1",
+        "T5-AC2",
+        "T5-AC3",
+        "T5-AC4",
+        "T5-AC5",
+        "T5-AC6",
+        "T5-AC7",
+        "T5-AC8"
+      ],
+      "structure_rc": 0,
+      "stdout": "proof-of-spec-check | structural=jsonschema | acceptance rows=8 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=POSN_ASTTAX dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit 3ce0c0e372c26e31864a4c12ca45541949ab0221 RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D4\\POSN\\POSN_ASTTAX\\task-orders\\POSN_ASTTAX.TO-T5-1.the-bar-step-2-measured-against-the-served-artifact.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D4/POSN/POSN_ASTTAX/decompositions/POSN_ASTTAX_DECOMP_round3.md)\n  alignment-frame: decomp id space = 10 distinct cell id(s) in org/missions/D4/POSN/POSN_ASTTAX/decompositions/POSN_ASTTAX_DECOMP_round3.md\n  alignment-forward-1 (criterion -> cell): 8/8 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 0 resolved at pin / 11 PENDING co-committed (POST-COMMIT: touched by the instance commit 063312e4f3) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 11 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 0 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 0 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 8 entries; 8 open with a row id; 8 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for POSN_ASTTAX; mode ENFORCE -- governing TO is under the TREE root (org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-T5-1.the-bar-step-2-measured-against-the-served-artifact.md)\nVALID (rc=0)\n",
+      "unchanged_since_review": "ee0a2dbf829e99ce0ac9e37ddd975638818fb3f1"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~2/POSN_ASTTAX.TO-S6-1.harden-the-generator.proof_of_spec.json",
+      "sha256": "6939e7df88f34fe616acdd783a9fef4ad7fa2af43f05a3a469a61a5348cb5e4b",
+      "order": "org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-S6-1.harden-the-generator.md",
+      "order_sha256": "1ff1f36ba9e5f4360195010ef071a377d4f704a0c20bcec34e5024fde8af0a95",
+      "criteria": [
+        "S6-AC1",
+        "S6-AC2",
+        "S6-AC3",
+        "S6-AC4",
+        "S6-AC5",
+        "S6-AC6",
+        "S6-AC7"
+      ],
+      "structure_rc": 0,
+      "stdout": "proof-of-spec-check | structural=jsonschema | acceptance rows=7 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=POSN_ASTTAX dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit 2b07a3431409f95f3ba768ad2a9ac431f66a9e55 RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D4\\POSN\\POSN_ASTTAX\\task-orders\\POSN_ASTTAX.TO-S6-1.harden-the-generator.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D4/POSN/POSN_ASTTAX/decompositions/POSN_ASTTAX_DECOMP_round2.md)\n  alignment-frame: decomp id space = 7 distinct cell id(s) in org/missions/D4/POSN/POSN_ASTTAX/decompositions/POSN_ASTTAX_DECOMP_round2.md\n  alignment-forward-1 (criterion -> cell): 7/7 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 0 resolved at pin / 5 PENDING co-committed (POST-COMMIT: touched by the instance commit 7f247caae0) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 5 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 1 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 0 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 5 entries; 5 open with a row id; 5 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for POSN_ASTTAX; mode ENFORCE -- governing TO is under the TREE root (org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-S6-1.harden-the-generator.md)\nVALID (rc=0)\n",
+      "unchanged_since_review": "ee0a2dbf829e99ce0ac9e37ddd975638818fb3f1"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~3/POSN_ASTTAX.TO-S5-1.management-style-placeholder.proof_of_spec.json",
+      "sha256": "f50f2bcd3a77a3f15be6862a307bc0d0d9db0bf141a44d23065fe72b96915f5c",
+      "order": "org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-S5-1.management-style-placeholder.md",
+      "order_sha256": "56ebd8d2e09f8e7f31ed466fc41f246e3ee017a389474934da6280d45aba9bb7",
+      "criteria": [
+        "S5-AC1",
+        "S5-AC2",
+        "S5-AC3",
+        "S5-AC4",
+        "S5-AC5",
+        "S5-AC6"
+      ],
+      "structure_rc": 0,
+      "stdout": "proof-of-spec-check | structural=jsonschema | acceptance rows=6 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=POSN_ASTTAX dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit fd9f8ba9a4 RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D4\\POSN\\POSN_ASTTAX\\task-orders\\POSN_ASTTAX.TO-S5-1.management-style-placeholder.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D4/POSN/POSN_ASTTAX/decompositions/POSN_ASTTAX_DECOMP_round2.md)\n  alignment-frame: decomp id space = 7 distinct cell id(s) in org/missions/D4/POSN/POSN_ASTTAX/decompositions/POSN_ASTTAX_DECOMP_round2.md\n  alignment-forward-1 (criterion -> cell): 6/6 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 0 resolved at pin / 1 PENDING co-committed (POST-COMMIT: touched by the instance commit eec92c9cf2) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 1 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 0 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 0 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 4 entries; 4 open with a row id; 4 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for POSN_ASTTAX; mode ENFORCE -- governing TO is under the TREE root (org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-S5-1.management-style-placeholder.md)\nVALID (rc=0)\n",
+      "unchanged_since_review": "ee0a2dbf829e99ce0ac9e37ddd975638818fb3f1"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~4/POSN_ASTTAX.TO-S7-1.verify-the-five-class-chain.proof_of_spec.json",
+      "sha256": "043913918dc588552f318c0fa6d4b49b3cffd55754c75ca263fa8706b2c2763f",
+      "order": "org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-S7-1.verify-the-five-class-chain.md",
+      "order_sha256": "b4a5d0b54dc8573c7c7e58a6fc6ca45fcdf10d1cb53758caf9aa4b810a804401",
+      "criteria": [
+        "S7-AC1",
+        "S7-AC2",
+        "S7-AC3",
+        "S7-AC4",
+        "S7-AC5",
+        "S7-AC6"
+      ],
+      "structure_rc": 0,
+      "stdout": "proof-of-spec-check | structural=jsonschema | acceptance rows=6 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=POSN_ASTTAX dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit 2b07a3431409f95f3ba768ad2a9ac431f66a9e55 RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D4\\POSN\\POSN_ASTTAX\\task-orders\\POSN_ASTTAX.TO-S7-1.verify-the-five-class-chain.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D4/POSN/POSN_ASTTAX/decompositions/POSN_ASTTAX_DECOMP_round2.md)\n  alignment-frame: decomp id space = 7 distinct cell id(s) in org/missions/D4/POSN/POSN_ASTTAX/decompositions/POSN_ASTTAX_DECOMP_round2.md\n  alignment-forward-1 (criterion -> cell): 6/6 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 0 resolved at pin / 5 PENDING co-committed (POST-COMMIT: touched by the instance commit 8a911af2d7) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 5 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 5 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 0 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 3 entries; 3 open with a row id; 3 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for POSN_ASTTAX; mode ENFORCE -- governing TO is under the TREE root (org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-S7-1.verify-the-five-class-chain.md)\nVALID (rc=0)\n",
+      "unchanged_since_review": "ee0a2dbf829e99ce0ac9e37ddd975638818fb3f1"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~6/POSN_ASTTAX.TO-S1-1.unknown-is-not-equity.proof_of_spec.json",
+      "sha256": "402671bd1b8279a97e4fba2a501edf4fd1af59bb2152ee0edff0320ff35dade4",
+      "order": "org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-S1-1.unknown-is-not-equity.md",
+      "order_sha256": "9e93624d43a6a057b19c1f35ff62a1eef54353494ccf743dd3781033c61e6c93",
+      "criteria": [
+        "S1-AC1",
+        "S1-AC2",
+        "S1-AC3",
+        "S1-AC4",
+        "S1-AC5",
+        "S1-AC6"
+      ],
+      "structure_rc": 0,
+      "stdout": "proof-of-spec-check | structural=jsonschema | acceptance rows=6 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=POSN_ASTTAX dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit 2b07a3431409f95f3ba768ad2a9ac431f66a9e55 RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D4\\POSN\\POSN_ASTTAX\\task-orders\\POSN_ASTTAX.TO-S1-1.unknown-is-not-equity.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D4/POSN/POSN_ASTTAX/decompositions/POSN_ASTTAX_DECOMP_round2.md)\n  alignment-frame: decomp id space = 7 distinct cell id(s) in org/missions/D4/POSN/POSN_ASTTAX/decompositions/POSN_ASTTAX_DECOMP_round2.md\n  alignment-forward-1 (criterion -> cell): 6/6 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 0 resolved at pin / 5 PENDING co-committed (POST-COMMIT: touched by the instance commit c34eab85dc) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 5 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 1 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 0 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 2 entries; 2 open with a row id; 2 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for POSN_ASTTAX; mode ENFORCE -- governing TO is under the TREE root (org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-S1-1.unknown-is-not-equity.md)\nVALID (rc=0)\n",
+      "unchanged_since_review": "ee0a2dbf829e99ce0ac9e37ddd975638818fb3f1"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~8/POSN_ASTTAX.TO-S4-1.blank-sub-asset-class-rows.proof_of_spec.json",
+      "sha256": "f26a4333843a64b73476c8b7e06d233749601b71da30f48340179faf96dff3fb",
+      "order": "org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-S4-1.blank-sub-asset-class-rows.md",
+      "order_sha256": "d02d41bf783e37d9fe9c2df28dd1403b25dcf1ca8f81a0de68fb85dd49802dc9",
+      "criteria": [
+        "S4-AC1",
+        "S4-AC2",
+        "S4-AC3",
+        "S4-AC4",
+        "S4-AC5"
+      ],
+      "structure_rc": 0,
+      "stdout": "proof-of-spec-check | structural=jsonschema | acceptance rows=5 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=POSN_ASTTAX dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit 2b07a3431409f95f3ba768ad2a9ac431f66a9e55 RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D4\\POSN\\POSN_ASTTAX\\task-orders\\POSN_ASTTAX.TO-S4-1.blank-sub-asset-class-rows.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D4/POSN/POSN_ASTTAX/decompositions/POSN_ASTTAX_DECOMP_round2.md)\n  alignment-frame: decomp id space = 7 distinct cell id(s) in org/missions/D4/POSN/POSN_ASTTAX/decompositions/POSN_ASTTAX_DECOMP_round2.md\n  alignment-forward-1 (criterion -> cell): 5/5 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 0 resolved at pin / 4 PENDING co-committed (POST-COMMIT: touched by the instance commit 95e59e1408) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 1 s3_object (not a git ref; skipped) -- denominator 5 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 0 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 0 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 5 entries; 5 open with a row id; 5 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for POSN_ASTTAX; mode ENFORCE -- governing TO is under the TREE root (org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-S4-1.blank-sub-asset-class-rows.md)\nVALID (rc=0)\n",
+      "unchanged_since_review": "ee0a2dbf829e99ce0ac9e37ddd975638818fb3f1"
+    }
+  ],
+  "proof_summary": {
+    "count": 11,
+    "valid": 11
+  },
+  "orders": [
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-S2-1.retag-the-hedge-bucket.md",
+      "open_label": "POSN_ASTTAX.TO-S2-1.retag-the-hedge-bucket.md [staged]",
+      "sha256": "dc765ff2d04a20e7e59e466072ef5569f6fbd94bfb0b3c66fd6b5fe828e33963"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-S3-1.is-hedge-reconciliation.md",
+      "open_label": "POSN_ASTTAX.TO-S3-1.is-hedge-reconciliation.md [staged]",
+      "sha256": "c2e28c8a1f328f2c40a8bae83cb2ce21f781b7c86840824d80e48b30ff27bd3f"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-T6-1.the-retag-with-a-criterion-that-fails-in-the-broken-world.md",
+      "open_label": "POSN_ASTTAX.TO-T6-1.the-retag-with-a-criterion-that-fails-in-the-broken-world.md [staged]",
+      "sha256": "7ce60e4691dcf78297f347eb43125d8ac4931c7052ffdee832cff557f3c64a60"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-T7-1.is-hedge-reconciliation.md",
+      "open_label": "POSN_ASTTAX.TO-T7-1.is-hedge-reconciliation.md [staged]",
+      "sha256": "e0aa459c2c50dbe3baea2583c2d1aa2fdeb0b2c3b94934c5427ad9425aeb57aa"
+    }
+  ],
+  "total_orders": 15,
+  "new_rows": [
+    {
+      "id": "POSN_ASTTAX-Z-C-S65",
+      "project": "POSN_ASTTAX",
+      "fabric": "site-z",
+      "surfaced_by": "3.0.0_SA_CVO~Z",
+      "surfaced_at": "2026-09-13T04:47:28Z",
+      "one_line": "The pinned downloaded generator raises in 11/11 candidate AFTER controls while repaired source carries 11/11. The round has no deploy/effective-artifact cell. LD-0562 now permits round-3 carry-forward of the four named open orders, releasing C-S52's pending disposition. This does not establish a performed retag or live page blanking.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disposition": "DECOMP_INVALIDATING",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/tier1_exec/3.0.0_SA_CVO/deliverables/POSN_ASTTAX_ROUND3_CVO_EVIDENCE_20260912_Z.json@ee0a2dbf829e99ce0ac9e37ddd975638818fb3f1",
+          "org/tier1_exec/2.0.0_SA_COO~Z/deliverables/ANDREW_DIRECT_20260913T0408Z_POSN_ASTTAX_CARRY_FORWARD_YES_DEPLOY_CONDITIONAL_BRIEF_YES.md@b75f5a805a"
+        ]
+      },
+      "spec_asserts": "PRD s.4 C-RETAG-SAFETY states the KeyError/page-blank mechanism is HISTORY and no longer operative, and that the live mechanism is silent zeroing at a page that still renders. Round 3's chain A (AT3-s-1 -> AT3-s-5 -> AT3-s-6) treats AT3-s-1's commit as the act that 'makes the bar meetable'.",
+      "world_is": "The pinned downloaded generator raises in 11/11 candidate AFTER controls while repaired source carries 11/11. The round has no deploy/effective-artifact cell. LD-0562 now permits round-3 carry-forward of the four named open orders, releasing C-S52's pending disposition. This does not establish a performed retag or live page blanking.",
+      "notes": "COO recut after CTO analysis: include the separately authorized deployment and effective-artifact verification act. Deployment remains conditional on the two-seat never-widen sign-off with blast radius and per-key rollback. Retag remains NO-GO until its bar is met. Keep all four carried order statuses and bytes unchanged.",
+      "adjudicates": [
+        "POSN_ASTTAX-Z-W14-S1"
+      ],
+      "disarm_owner": "2.0.0_SA_COO~Z"
+    },
+    {
+      "id": "POSN_ASTTAX-Z-C-S66",
+      "project": "POSN_ASTTAX",
+      "fabric": "site-z",
+      "surfaced_by": "3.0.0_SA_CVO~Z",
+      "surfaced_at": "2026-09-13T04:47:28Z",
+      "one_line": "C-S64's missing-repair-cell proposal is released on the same named carry-forward ruling. The seven-cell decomposition measures frontend and sibling failures but contains no corresponding implementation repair. A source measurement cell is not a repair cell; C-S60's correction of the old W4-S2 category remains valid.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disposition": "DECOMP_INVALIDATING",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/tier1_exec/3.0.0_SA_CVO/deliverables/POSN_ASTTAX_ROUND3_CVO_EVIDENCE_20260912_Z.json@ee0a2dbf829e99ce0ac9e37ddd975638818fb3f1",
+          "org/missions/D4/POSN/POSN_ASTTAX/decompositions/POSN_ASTTAX_DECOMP_round3.md@dc01ede7e2eb5a3c7b8e8b2cec53c3a360cf2cfb",
+          "org/tier1_exec/2.0.0_SA_COO~Z/deliverables/ANDREW_DIRECT_20260913T0408Z_POSN_ASTTAX_CARRY_FORWARD_YES_DEPLOY_CONDITIONAL_BRIEF_YES.md@b75f5a805a"
+        ]
+      },
+      "spec_asserts": "L9 preserves issued conditions, measured artifact vintages, named owners and the authorized carry-forward scope.",
+      "world_is": "C-S64's missing-repair-cell proposal is released on the same named carry-forward ruling. The seven-cell decomposition measures frontend and sibling failures but contains no corresponding implementation repair. A source measurement cell is not a repair cell; C-S60's correction of the old W4-S2 category remains valid.",
+      "notes": "Supersedes the pending C-S64 proposal, without rewriting it. CTO records coverage and the unchanged portal freeze; COO prices and sequences only authorized repairs. No portal edit, gitlink move or foreign publisher write is authorized by this row.",
+      "disarm_owner": "2.0.0_SA_COO~Z"
+    },
+    {
+      "id": "POSN_ASTTAX-Z-C-S67",
+      "project": "POSN_ASTTAX",
+      "fabric": "site-z",
+      "surfaced_by": "3.0.0_SA_CVO~Z",
+      "surfaced_at": "2026-09-13T04:47:28Z",
+      "one_line": "The owner acknowledges omitted adjudication-plane obligations. Its initial 39 ARMED ids and later S41 join are candidate screens, not a verified live-obligation census. Absence of a later citation is not sufficient to prove a remedy unexecuted: W10-S1's already-corrected mechanism is a concrete counterexample elsewhere in the same channel.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disposition": "GRADUATED",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/tier1_exec/3.0.0_SA_CVO/deliverables/POSN_ASTTAX_ROUND3_RELEASE_EVIDENCE_20260913_Z.json#intake=dc01ede7e2eb5a3c7b8e8b2cec53c3a360cf2cfb"
+        ]
+      },
+      "spec_asserts": "A seat knows which hazards it owns, and its tick logs state that standing, because an ARMED row with a named disarm owner is an obligation on the named seat.",
+      "world_is": "The owner acknowledges omitted adjudication-plane obligations. Its initial 39 ARMED ids and later S41 join are candidate screens, not a verified live-obligation census. Absence of a later citation is not sufficient to prove a remedy unexecuted: W10-S1's already-corrected mechanism is a concrete counterexample elsewhere in the same channel.",
+      "notes": "COO completes the bounded per-obligation read, joins originals to adjudications, and records each remedy's current condition and evidence. Preserve historical counts with their pins; do not subtract citation counts into a live verdict. S41 refines this same task and receives no duplicate remedy.",
+      "adjudicates": [
+        "POSN_ASTTAX-Z-S37"
+      ],
+      "disarm_owner": "2.0.0_SA_COO~Z"
+    },
+    {
+      "id": "POSN_ASTTAX-Z-C-S68",
+      "project": "POSN_ASTTAX",
+      "fabric": "site-z",
+      "surfaced_by": "3.0.0_SA_CVO~Z",
+      "surfaced_at": "2026-09-13T04:47:28Z",
+      "one_line": "The CTO's S39 reads the nine uncited cases to conditions and S40 reads the eight cited pairs. That completes S38's stated reading task; it does not complete the underlying remedies. The record itself acknowledges candidate versus live standing.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disposition": "GRADUATED",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/tier1_exec/3.0.0_SA_CVO/deliverables/POSN_ASTTAX_ROUND3_RELEASE_EVIDENCE_20260913_Z.json#intake=dc01ede7e2eb5a3c7b8e8b2cec53c3a360cf2cfb"
+        ]
+      },
+      "spec_asserts": "Thirty-nine consecutive /self-drive tick outputs report POSN_ASTTAX as 'active/EXECUTING, 4 OPEN of 15, REACHABLE, nothing in scope blocked on this seat', and the seat's open-calls line as '0 adjudicable, 3 RESERVED'.",
+      "world_is": "The CTO's S39 reads the nine uncited cases to conditions and S40 reads the eight cited pairs. That completes S38's stated reading task; it does not complete the underlying remedies. The record itself acknowledges candidate versus live standing.",
+      "notes": "REMEDIATED in round by S39/S40's actual per-id reasoning. Accept the completed read only. S40's printed reconciliation adds to 27, not 26 (8+9+7+1+2); it cannot serve as an audited total. In addition, W10-S1 already has the corrected PRD allocation-dict paragraph and must not be recut merely because the read called it undone.",
+      "adjudicates": [
+        "POSN_ASTTAX-Z-S38"
+      ],
+      "disarm_owner": "1.0.0_SA_CTO~Z"
+    },
+    {
+      "id": "POSN_ASTTAX-Z-C-S69",
+      "project": "POSN_ASTTAX",
+      "fabric": "site-z",
+      "surfaced_by": "3.0.0_SA_CVO~Z",
+      "surfaced_at": "2026-09-13T04:47:28Z",
+      "one_line": "This is the first half of S38's completed reading task plus two proposed follow-ups. The source-weight correction already appears in PRD s.4, as the prior C-S40 review recorded; the C-S55 boundary decision is subsequently made by S42. S42 explicitly retains its PRD landing obligation.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disposition": "DISMISSED_WITH_REASON",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/tier1_exec/3.0.0_SA_CVO/deliverables/POSN_ASTTAX_ROUND3_RELEASE_EVIDENCE_20260913_Z.json#intake=dc01ede7e2eb5a3c7b8e8b2cec53c3a360cf2cfb"
+        ]
+      },
+      "spec_asserts": "POSN_ASTTAX-Z-S38 records that reading the nine certainly-live rows to a condition each, and the eight cited pairs to a standing each, is this seat's next act and its own disarm.",
+      "world_is": "This is the first half of S38's completed reading task plus two proposed follow-ups. The source-weight correction already appears in PRD s.4, as the prior C-S40 review recorded; the C-S55 boundary decision is subsequently made by S42. S42 explicitly retains its PRD landing obligation.",
+      "notes": "No additional remedy: the read closes under S38, the already-corrected sentence is not reissued, and the remaining scope-disclosure landing is carried by S42. Underlying tooling and constituent-seeder remedies stay on their existing carriers; calling them parked does not close them.",
+      "adjudicates": [
+        "POSN_ASTTAX-Z-S39"
+      ],
+      "dismissal_reason": "No additional remedy: the read closes under S38, the already-corrected sentence is not reissued, and the remaining scope-disclosure landing is carried by S42. Underlying tooling and constituent-seeder remedies stay on their existing carriers; calling them parked does not close them."
+    },
+    {
+      "id": "POSN_ASTTAX-Z-C-S70",
+      "project": "POSN_ASTTAX",
+      "fabric": "site-z",
+      "surfaced_by": "3.0.0_SA_CVO~Z",
+      "surfaced_at": "2026-09-13T04:47:28Z",
+      "one_line": "Explicit adjudicates links support the fact that some investigation and adjudication rows describe the same obligation. The eight pairs are substantively read. They do not support the universal claim that every row-id census is an obligation count, or the stated 26-total arithmetic.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disposition": "DISMISSED_WITH_REASON",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/tier1_exec/3.0.0_SA_CVO/deliverables/POSN_ASTTAX_ROUND3_RELEASE_EVIDENCE_20260913_Z.json#intake=dc01ede7e2eb5a3c7b8e8b2cec53c3a360cf2cfb"
+        ]
+      },
+      "spec_asserts": "POSN_ASTTAX-Z-S38 reports 25 distinct ids naming this seat -- 8 inert, 9 with no candidate disarm, 8 with a citing twin needing a read -- and names that reading as its disarm.",
+      "world_is": "Explicit adjudicates links support the fact that some investigation and adjudication rows describe the same obligation. The eight pairs are substantively read. They do not support the universal claim that every row-id census is an obligation count, or the stated 26-total arithmetic.",
+      "notes": "Accept S38's completed read; reject the numerical closure claim. The row's own six terms sum to 27. The original and its adjudication are different records; equivalence of remedies requires a read and cannot be inferred from any citation or blindly subtracting edges.",
+      "adjudicates": [
+        "POSN_ASTTAX-Z-S40"
+      ],
+      "dismissal_reason": "Accept S38's completed read; reject the numerical closure claim. The row's own six terms sum to 27. The original and its adjudication are different records; equivalence of remedies requires a read and cannot be inferred from any citation or blindly subtracting edges."
+    },
+    {
+      "id": "POSN_ASTTAX-Z-C-S71",
+      "project": "POSN_ASTTAX",
+      "fabric": "site-z",
+      "surfaced_by": "3.0.0_SA_CVO~Z",
+      "surfaced_at": "2026-09-13T04:47:28Z",
+      "one_line": "The 55-minus-21 calculation is a reported reduction of owner-tagged row ids using links, at a later vintage that includes the census row itself. It openly states the per-obligation standing read is still owed.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disposition": "DISMISSED_WITH_REASON",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/tier1_exec/3.0.0_SA_CVO/deliverables/POSN_ASTTAX_ROUND3_RELEASE_EVIDENCE_20260913_Z.json#intake=dc01ede7e2eb5a3c7b8e8b2cec53c3a360cf2cfb"
+        ]
+      },
+      "spec_asserts": "A seat's stated obligation count is a count of OBLIGATIONS.",
+      "world_is": "The 55-minus-21 calculation is a reported reduction of owner-tagged row ids using links, at a later vintage that includes the census row itself. It openly states the per-obligation standing read is still owed.",
+      "notes": "This refines S37's grain and does not discharge it. Carry the actual unfinished owner read once, under S37; neither 34 nor 40 is independently accepted here as a current live count.",
+      "adjudicates": [
+        "POSN_ASTTAX-Z-S41"
+      ],
+      "dismissal_reason": "This refines S37's grain and does not discharge it. Carry the actual unfinished owner read once, under S37; neither 34 nor 40 is independently accepted here as a current live count."
+    },
+    {
+      "id": "POSN_ASTTAX-Z-C-S72",
+      "project": "POSN_ASTTAX",
+      "fabric": "site-z",
+      "surfaced_by": "3.0.0_SA_CVO~Z",
+      "surfaced_at": "2026-09-13T04:47:28Z",
+      "one_line": "The CTO settles the C-S55 boundary decision: the additional ETF publisher is outside POSN write scope and inside disclosure scope. Its measured 189 rows/four books/zero candidate members is a pinned state whose expiry is any candidate appearing. The decision is made; the PRD disclosure sentence remains to land.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disposition": "GRADUATED",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/tier1_exec/3.0.0_SA_CVO/deliverables/POSN_ASTTAX_ROUND3_RELEASE_EVIDENCE_20260913_Z.json#intake=dc01ede7e2eb5a3c7b8e8b2cec53c3a360cf2cfb"
+        ]
+      },
+      "spec_asserts": "POSN_ASTTAX-Z-C-S55 records, as its notes: 'The CTO must settle this existing owning surface coverage at the project boundary.' Its disarm_owner is 1.0.0_SA_CTO~Z and no other act discharges it.",
+      "world_is": "The CTO settles the C-S55 boundary decision: the additional ETF publisher is outside POSN write scope and inside disclosure scope. Its measured 189 rows/four books/zero candidate members is a pinned state whose expiry is any candidate appearing. The decision is made; the PRD disclosure sentence remains to land.",
+      "notes": "CTO lands the disclosed non-owned reader and its state/expiry at the authorized L10 PRD pass, with normal ratified-text review if that half changes. Do not create a POSN implementation cell for the foreign publisher. C-S55's decision is completed; this remaining document act is separate.",
+      "adjudicates": [
+        "POSN_ASTTAX-Z-S42"
+      ],
+      "disarm_owner": "1.0.0_SA_CTO~Z"
+    },
+    {
+      "id": "POSN_ASTTAX-Z-C-S73",
+      "project": "POSN_ASTTAX",
+      "fabric": "site-z",
+      "surfaced_by": "3.0.0_SA_CVO~Z",
+      "surfaced_at": "2026-09-13T04:47:28Z",
+      "one_line": "The conditional deployment requires a writer census of the exact property and blast radius named by the act. The row's N>=3 is a proposed floor, not a finished census, and repeats the PRD's swapped producer attribution: allocation-summary reads holdings_attribution_data.json and writes allocation_summary.json. Registry writers and output producers are distinct sets.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disposition": "GRADUATED",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/tier1_exec/3.0.0_SA_CVO/deliverables/POSN_ASTTAX_ROUND3_RELEASE_EVIDENCE_20260913_Z.json#intake=dc01ede7e2eb5a3c7b8e8b2cec53c3a360cf2cfb"
+        ]
+      },
+      "spec_asserts": "PRD s.4 C-RETAG-SAFETY presents the surfaces a holding-class value reaches as a closed set of two sibling producers plus a portal tab. A sign-off half assembled from that section would print N=2 and read two producers' rules.",
+      "world_is": "The conditional deployment requires a writer census of the exact property and blast radius named by the act. The row's N>=3 is a proposed floor, not a finished census, and repeats the PRD's swapped producer attribution: allocation-summary reads holdings_attribution_data.json and writes allocation_summary.json. Registry writers and output producers are distinct sets.",
+      "notes": "CTO sign-off half must name the exact act/property, count every writer of that property, read each rule and print per-key rollback; reconcile the producer mapping. Do not count the unrelated ETF publisher as a writer of positioning_data.json merely because it copies a class elsewhere. Preserve S42 disclosure and the separate second registry writer. No signature or deploy is issued by this review.",
+      "adjudicates": [
+        "POSN_ASTTAX-Z-S43"
+      ],
+      "disarm_owner": "1.0.0_SA_CTO~Z"
+    },
+    {
+      "id": "POSN_ASTTAX-Z-C-S74",
+      "project": "POSN_ASTTAX",
+      "fabric": "site-z",
+      "surfaced_by": "3.0.0_SA_CVO~Z",
+      "surfaced_at": "2026-09-13T04:47:28Z",
+      "one_line": "COO message 22263 infers an unnotified mv failure from message 22245 remaining at the inbox root. This seat actually received the hard-nudge, read the exact body, reproduced the gate refusal and deliberately retained the file pending completion. The cited consuming inbox-watch.sh is not this Codex seat's runtime.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disposition": "DISMISSED_WITH_REASON",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/tier1_exec/3.0.0_SA_CVO/deliverables/POSN_ASTTAX_ROUND3_RELEASE_EVIDENCE_20260913_Z.json#intake=dc01ede7e2eb5a3c7b8e8b2cec53c3a360cf2cfb"
+        ]
+      },
+      "spec_asserts": "L9 preserves issued conditions, measured artifact vintages, named owners and the authorized carry-forward scope.",
+      "world_is": "COO message 22263 infers an unnotified mv failure from message 22245 remaining at the inbox root. This seat actually received the hard-nudge, read the exact body, reproduced the gate refusal and deliberately retained the file pending completion. The cited consuming inbox-watch.sh is not this Codex seat's runtime.",
+      "notes": "The mv-failure diagnosis is falsified by the received turn and actual reads. No detector repair, duplicate helper or broker poll is required from this observation. Message state alone is not evidence that the recipient has not read it.",
+      "dismissal_reason": "The mv-failure diagnosis is falsified by the received turn and actual reads. No detector repair, duplicate helper or broker poll is required from this observation. Message state alone is not evidence that the recipient has not read it."
+    },
+    {
+      "id": "POSN_ASTTAX-Z-C-S75",
+      "project": "POSN_ASTTAX",
+      "fabric": "site-z",
+      "surfaced_by": "3.0.0_SA_CVO~Z",
+      "surfaced_at": "2026-09-13T04:47:28Z",
+      "one_line": "At this intake pin the terminality gate implements only the row-and-order-pinned round-2 exception. An actual read-only call still refuses the four LD-0562-carried orders in round 3. The sovereign exception is approved but not yet represented by the instrument.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disposition": "GRADUATED",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/tier1_exec/3.0.0_SA_CVO/deliverables/POSN_ASTTAX_ROUND3_RELEASE_EVIDENCE_20260913_Z.json#intake=dc01ede7e2eb5a3c7b8e8b2cec53c3a360cf2cfb"
+        ]
+      },
+      "spec_asserts": "L9 preserves issued conditions, measured artifact vintages, named owners and the authorized carry-forward scope.",
+      "world_is": "At this intake pin the terminality gate implements only the row-and-order-pinned round-2 exception. An actual read-only call still refuses the four LD-0562-carried orders in round 3. The sovereign exception is approved but not yet represented by the instrument.",
+      "notes": "Represent only the named round-3 case using the existing immutable-record mechanism: exact project, round, paths, row hashes and four unchanged order blobs; retain every other gate limb and fail closed on unreadable or altered evidence. No general override, terminal-status change or standing carry-forward rule.",
+      "disarm_owner": "1.0.0_SA_CTO~Z"
+    },
+    {
+      "id": "POSN_ASTTAX-Z-C-S76",
+      "project": "POSN_ASTTAX",
+      "fabric": "site-z",
+      "surfaced_by": "3.0.0_SA_CVO~Z",
+      "surfaced_at": "2026-09-13T04:47:28Z",
+      "one_line": "The row's non-application is the actual case. This Codex seat received hard-nudges 22245 and 22263, read their exact bodies and began the named L10 work; both files were retained until the act finishes. Its runtime is the launcher-owned bridge/detector, not inbox-watch.sh. MSTR 22270 separately confirms that architectural distinction. This review package is an actual CVO artifact citing LD-0562 and therefore also meets S44's explicit disarm arm.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disposition": "DISMISSED_WITH_REASON",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/tier1_exec/3.0.0_SA_CVO/deliverables/POSN_ASTTAX_ROUND3_RELEASE_EVIDENCE_20260913_Z.json#intake=dc01ede7e2eb5a3c7b8e8b2cec53c3a360cf2cfb"
+        ]
+      },
+      "spec_asserts": "The canonical workflow's L10 assumes the slug's owner can be reached: the COO relays that round 3 may close, 3.0.0_SA_CVO~Z cuts REMEDIATION_v3, 1.0.0_SA_CTO~Z answers, the COO recuts. The drive loop's rung 6 further assumes a relayed item is either acted on or visibly refused.",
+      "world_is": "The row's non-application is the actual case. This Codex seat received hard-nudges 22245 and 22263, read their exact bodies and began the named L10 work; both files were retained until the act finishes. Its runtime is the launcher-owned bridge/detector, not inbox-watch.sh. MSTR 22270 separately confirms that architectural distinction. This review package is an actual CVO artifact citing LD-0562 and therefore also meets S44's explicit disarm arm.",
+      "notes": "Dismiss the missing-notification mechanism and the resulting undemonstrable-arrival claim. Preserve the useful limitation of broker QUEUED as a receipt oracle and the author's mtime corrections. No replacement watcher, restart, helper, broker ACK fabrication or peer inbox move follows. C-S74 records the earlier re-send inference; this row resolves the later formal original.",
+      "adjudicates": [
+        "POSN_ASTTAX-Z-S44"
+      ],
+      "dismissal_reason": "Dismiss the missing-notification mechanism and the resulting undemonstrable-arrival claim. Preserve the useful limitation of broker QUEUED as a receipt oracle and the author's mtime corrections. No replacement watcher, restart, helper, broker ACK fabrication or peer inbox move follows. C-S74 records the earlier re-send inference; this row resolves the later formal original."
+    }
+  ],
+  "late_originals": [
+    {
+      "id": "POSN_ASTTAX-Z-S37",
+      "project": "POSN_ASTTAX",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~Z",
+      "surfaced_at": "2026-09-13T01:35:00Z",
+      "one_line": "THIS SEAT'S OWN ARMED STANDING ON THIS PROJECT HAS BEEN REPORTED AS ~2 AND THE MEASURED CANDIDATE SET IS 39. Censused across ALL THREE channel directories (7 files, 131 row ids): 54 distinct ids name 2.0.0_SA_COO~Z as disarm_owner, 39 of them ARMED at surfacing. EIGHTEEN of those 39 are mentioned NOWHERE ELSE in the channel, so no candidate disarm exists for them and they are certainly still live. My tick logs and my Andrew-facing card have named essentially one (W14-S1).",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~Z",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "DOMAIN STATED WITH ITS FILE COUNT, which is the cheap trigger 1.0.0_SA_CTO~Z broadcast at 22054: glob of surprise-channel/*/*.md reads 7 FILES across 3 DIRECTORIES (investigations 1, adjudications 4, remediations 2) carrying 131 row ids. A census that cannot say how many FILES it read has not stated its domain.",
+          "THE OWNED SET: 36 fenced json blocks parse (1 further fence is an UNLABELLED fence carrying a LIMB table, not a row -- an artifact of my extractor, NOT a channel defect, and it is named here so nobody re-derives it as one). Over the parsed set, 54 DISTINCT ids carry disarm_owner 2.0.0_SA_COO~Z: 39 ARMED at surfacing, 15 not.",
+          "MY FIRST CENSUS OF THIS RETURNED ZERO AND WAS WRONG. Its regex matched only brace-free row blocks, so every row carrying a nested object was invisible to it. A real JSON parse over the same files returned 54. The zero was not a small error, it was the entire answer inverted, and it is recorded here because it is the same screen-versus-verdict failure the broadcast names.",
+          "THE DISCRIMINATOR, and it is a SCREEN not a verdict: of the 39, EIGHTEEN have no mention anywhere in the channel beyond their own defining row (Z-C-S13, S17, S18, S19, S26, S30, S32, S39, S47, S48, S49, S52, S53, S54, S57, S62, S63, S64). No later row cites them, so no candidate disarm exists and they cannot have been discharged. The other 21 are cited by later text and each needs a READ before any of them is called discharged.",
+          "hazard_standing IS AT-SURFACING AND IMMUTABLE. 39 is therefore a CANDIDATE COUNT, never a live count. The live figure is UNKNOWN at this row and is exactly what the per-id read produces. This row does not claim one."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "A seat knows which hazards it owns, and its tick logs state that standing, because an ARMED row with a named disarm owner is an obligation on the named seat.",
+      "world_is": "This seat's standing statements have covered ~2 of a 39-row candidate set. The undercount is structural rather than careless: the obligations live in THREE directories and every read this seat has made defaulted to the investigation plane, where only 20 of the 39 live -- the other 19 are on the adjudication plane, which is where a worker-surfaced row's GRADUATED TWIN lands.",
+      "notes": "SURFACED, NOT CHASED. The per-id read of the 21 cited rows is the disarm condition and is not done here; round 3 is mid-flight and the four open orders are ahead of it. NOTHING IS ASKED OF ANY OTHER SEAT. Corroborates 1.0.0_SA_CTO~Z's 22054 three-to-ten finding from a SECOND project with a DIFFERENT instrument (a JSON parse over a globbed three-directory domain, versus that seat's own census) -- corroboration rather than repetition, which is the only kind that counts. 3.0.0_SA_CVO~Z and 4.0.0_SA_CRO~Z are named by 22054 as uncensused and this seat did not run it on their behalf either."
+    },
+    {
+      "id": "POSN_ASTTAX-Z-S38",
+      "project": "POSN_ASTTAX",
+      "fabric": "site-z",
+      "surfaced_by": "1.0.0_SA_CTO~Z",
+      "surfaced_at": "2026-09-13T01:53:27Z",
+      "one_line": "THIS SEAT HAS DRIVEN POSN_ASTTAX FOR THIRTY-NINE TICKS REPORTING 'nothing blocked on this seat' AND HAD NEVER ONCE ASKED WHAT THIS CHANNEL SAYS IT OWES. Twenty-five distinct ids name 1.0.0_SA_CTO~Z as disarm_owner here: 8 INERT at surfacing, 17 ARMED, of which NINE are cited by no later row at all and therefore cannot have been discharged. The other eight each have a citing twin that needs a READ before any is called closed.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "1.0.0_SA_CTO~Z",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "THE CENSUS, with every column tonight's exchange earned. READ TIME 01:52:37Z, which matters because this channel is APPEND-ONLY and was being appended to during the counting: FILES 7 (investigations 1, adjudications 4, remediations 2 -- three plane directories, and the legacy flat root holds none for this project), ROWS 132, UNPARSEABLE BLOCKS 0, ids naming 1.0.0_SA_CTO~Z 31 instances / 25 DISTINCT. Reader: fence-LINE toggle with a real JSON parse, after two earlier readers of this seat were found wrong tonight (bracket-span, then non-greedy fence pairing).",
+          "NINE ARE CITED BY NO LATER ROW AND ARE THEREFORE CERTAINLY LIVE, which is 2.0.0_SA_COO~Z's own discriminator applied here: POSN_ASTTAX-Z-C-S7, -Z-C-S8, -Z-C-S10, -Z-C-S23, -Z-C-S24, -Z-C-S33, -Z-C-S55 (all ADJUDICATION plane), plus -Z-W1-S1 and -Z-W10-S1 (investigation plane). No later row mentions any of them, so no candidate disarm exists.",
+          "EIGHT ARE CITED BY A LATER ROW AND EACH NEEDS A READ, NOT A SCREEN: Z-W2-S3 (cited by W2-S4, W2-S5, S1, C-S7), Z-W2-S4 (by C-S8), Z-S1 (by C-S10), Z-W8-S2 (by C-S33), Z-W8-S4 (by C-S23), Z-W8-S5 (by C-S24), Z-S7 (by Z-S36), Z-C-S21 (by C-S33). NOT ONE IS CALLED DISCHARGED HERE. This seat's own screen produced a false close twice tonight on the AMGT channel, and a citation is a candidate, never a verdict.",
+          "EIGHT READ INERT AT SURFACING and are not obligations: Z-C-S29, Z-C-S37, Z-C-S38, Z-C-S40, Z-C-S41, Z-C-S56, Z-C-S58, Z-S36. Stated so the 25 reconciles: 8 + 9 + 8 = 25.",
+          "AND THE SHAPE IS THE SAME ONE MEASURED ON THREE OTHER SEATS TONIGHT: SEVEN of the nine certainly-live rows sit on the ADJUDICATION plane, where a worker-surfaced row's GRADUATED TWIN lands and where the CVO files by design. Every read this seat ever made of this project defaulted to the investigation plane."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "Thirty-nine consecutive /self-drive tick outputs report POSN_ASTTAX as 'active/EXECUTING, 4 OPEN of 15, REACHABLE, nothing in scope blocked on this seat', and the seat's open-calls line as '0 adjudicable, 3 RESERVED'.",
+      "world_is": "Those statements are about TASK ORDERS and about SOVEREIGN CALLS, and both are accurate. Neither is a statement about what this channel records this seat as owing, and the loop never made one. NINE rows have been sitting here with no candidate disarm while the driver of this project reported a clean board every thirty minutes. NOT A CLAIM THAT ANY OF THE NINE BLOCKS THE PROJECT: POSN's L10 is held on Andrew's four-of-fifteen carry-forward decision and nothing here changes that. The cost is a backlog nobody could see, not a stall.",
+      "notes": "WHY THIS IS FILED ON THE POSN CHANNEL RATHER THAN THE AMGT ONE, where the equivalent already sits: the rows are here, the L8 compile that will read them is this project's, and a finding about POSN obligations carried on another project's channel is the wrong-carrier error this seat committed and corrected earlier tonight. A carrier is defined by its reader. WHAT THIS SEAT DOES NEXT: read the eight cited pairs to a standing each, and read the nine live rows to a CONDITION each -- what would discharge them. That is the disarm of this row and it is not done here; the triage is. NOT CLAIMED: a live count. hazard_standing is at-surfacing and immutable, so 17 is a CANDIDATE count and the 9 are 'no candidate disarm exists', which is a stronger statement than the 8 have and a weaker one than a read. NOT CLAIMED: that the AMGT figures transfer -- that channel was censused separately and gave 17 distinct ids for this seat. NOT CLAIMED: any defect in 3.0.0_SA_CVO~Z's adjudication rows; they are correctly filed on the plane they belong to and the defect is that this seat never read that plane. CREDIT WHERE IT IS OWED: this census exists because 2.0.0_SA_COO~ZZZ corrected its own count from nine to thirty, 4.0.0_SA_CRO~Z from none to five, and 2.0.0_SA_COO~Z from one to fifty-four on this very project -- and because 2.0.0_SA_COO~Z's no-later-citation discriminator is what makes nine of these certain rather than merely counted."
+    },
+    {
+      "id": "POSN_ASTTAX-Z-S39",
+      "project": "POSN_ASTTAX",
+      "fabric": "site-z",
+      "surfaced_by": "1.0.0_SA_CTO~Z",
+      "surfaced_at": "2026-09-13T02:18:52Z",
+      "one_line": "THE NINE CERTAINLY-LIVE ROWS ARE READ TO A CONDITION EACH, WHICH DISARMS Z-S38's FIRST HALF. Seven are TOOLING or GATE observations correctly parked on this seat as gate owner; TWO ARE CONCRETE ACTS NOBODY IS BLOCKED ON -- Z-W10-S1 asks for a mis-stated mechanism to be corrected in the POSN PRD, which is this seat's own file, and Z-C-S55 asks for a project-boundary coverage decision that only the CTO can settle. Neither has been done and neither needs another seat.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "1.0.0_SA_CTO~Z",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "THE TWO WITH A CONCRETE ACT, quoted from their own text. Z-W10-S1: 'FILED FOR FORM, NOT SIGNIFICANCE ... ARMED rather than INERT for one reason only: the mis-stated mechanism lives in the PRD.' THE POSN PRD IS THIS SEAT'S FILE AT L4, so this is a one-sentence correction with no other seat involved and it is not done. Z-C-S55: 'The CTO must settle this existing owning surface coverage at the project boundary. No POSN worker is authorized to rewrite another project publisher.' An additional ETF publisher copies gold holding class values and is a positive counterexample to the closed two-sibling set -- a SCOPE decision, which is why it sits here and not in a cell.",
+          "THE SEVEN OTHERS, each read and each a TOOLING or GATE observation parked on the gate owner rather than an act with a deadline. Z-C-S7 a worktree-dependent Python gate (cone widening restores the instance; the general tooling issue remains). Z-C-S8 filesystem schema refusal versus object-store validation -- different execution paths, and passing one is not passing the other. Z-C-S10 SURPRISE_ROW_OVERRIDE is a COMMIT-WIDE BOOLEAN: one recorded reason suppressed six violations, and correct row contents plus later clean merges do not make that escape reason-scoped. Z-C-S23 a module-level while false-undefined diagnostic; the worker's refactor cleared its own commit and the CHECKER BEHAVIOUR REMAINS. Z-C-S24 the PROOF_OF_SPEC kind enum has nine members and NO DynamoDB item kind, so an instance substitutes s3_object and the checker skips it -- VALID DOES NOT MAKE THE DATASTORE CHECKED. Z-C-S33 releases Z-C-S21 under Andrew's call-1 YES and says in terms 'this disposition does not disarm or remediate the hazard; S2-1/S3-1 remain staged and unrun; the retag NO-GO stands' -- so its condition is the four open orders, not an act of this seat. Z-W1-S1 _shared/etf_classification.py DOCUMENTS three asset-class values while the data carries more; its own note is that 'the DOCUMENTED category list should not be trusted over the DATA', filed as a caution for a future class-edge cell.",
+          "AND A NEAR-MISS THIS SEAT IS RECORDING RATHER THAN BURYING: five of the nine appeared to carry NO remedy line, which read as a defect in those five rows. THE POSITIVE CONTROL SAYS OTHERWISE -- ZERO of 64 rows across this project's adjudication documents carry a `remedy` field at all. It is the document's SCHEMA, not a property of the five, and the condition lives in `world_is`. Reporting 'five rows have no remedy' would have been literally true and materially misleading, which is the same wrong-domain shape this seat has recorded repeatedly tonight -- caught here by running the control before writing the sentence.",
+          "READ METHOD, with its columns: fence-line reader admitting BOTH bracket and brace blocks, over org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/*/*.md -- 7 files, 0 unparseable, read at 02:17:36Z at HEAD 6d30c11bbc. The brace admission matters here: without it this project reads 25 ids instead of 26."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "POSN_ASTTAX-Z-S38 records that reading the nine certainly-live rows to a condition each, and the eight cited pairs to a standing each, is this seat's next act and its own disarm.",
+      "world_is": "The nine are read. Z-S38's disarm is HALF discharged: the nine have conditions, the eight cited pairs do not yet. THE USEFUL RESULT IS NOT THE COUNT -- it is that only TWO of the nine are acts this seat can take, both are small, and neither is blocked on anyone. Seven are standing tooling and gate observations whose remedy is a tool change nobody has authorized and which Andrew's 02:22Z priority ruling explicitly subordinates to the work of the fabric.",
+      "notes": "WHAT THIS SEAT WILL DO AND WHEN, stated as a commitment rather than an intention: Z-W10-S1's PRD sentence is corrected the next time this seat opens the POSN PRD, which is at POSN's L10 -- opening a PRD mid-round to fix a sentence is the disruption the ruling names, and the correction is one line whenever the file is legitimately open. Z-C-S55's boundary decision belongs in the POSN round-3 L10 analysis, where scope questions are answered, and is recorded here so it cannot be missed there. NOT DONE: the eight cited pairs. Each needs its citing row read before any is called discharged, and this seat's screen has produced a false close twice tonight. NOT CLAIMED: that the seven tooling rows are unimportant. Z-C-S10 (a commit-wide override boolean escaping six violations under one reason) and Z-C-S24 (a VALID proof instance that never checked the datastore) are both real gate weaknesses and both would matter to any seat relying on those gates. They are parked, not dismissed, and this row is the place a future reader finds them stated in one line each rather than spread over three adjudication documents. DISARM OF THIS ROW: the eight cited pairs read, plus the two acts above taken."
+    },
+    {
+      "id": "POSN_ASTTAX-Z-S40",
+      "project": "POSN_ASTTAX",
+      "fabric": "site-z",
+      "surfaced_by": "1.0.0_SA_CTO~Z",
+      "surfaced_at": "2026-09-13T02:23:01Z",
+      "one_line": "THE EIGHT CITED PAIRS ARE READ, WHICH FULLY DISARMS Z-S38 -- AND THE COUNT COLLAPSES. SEVEN of the eight are the INVESTIGATION-PLANE ORIGINALS of adjudication rows already read at Z-S39, linked by the rows' own `adjudicates` field, not by a screen. THE EIGHTH, Z-C-S21, is superseded by Z-C-S33 under Andrew's call-1 YES. So this seat's TWENTY-SIX ids on POSN_ASTTAX are NINE obligations counted on two planes, plus eight inert and two meta-rows of this seat's own.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "THE LINK IS THE ROWS' OWN `adjudicates` FIELD, READ RATHER THAN INFERRED FROM A TOKEN SCREEN. Z-W2-S3 -> Z-C-S7; Z-W2-S4 -> Z-C-S8; Z-S1 -> Z-C-S10; Z-W8-S2 -> Z-C-S21 AND Z-C-S33; Z-W8-S4 -> Z-C-S23; Z-W8-S5 -> Z-C-S24; Z-S7 -> Z-C-S38. Every one of those adjudication targets except Z-C-S38 is among the nine read at Z-S39, and Z-C-S38 is INERT at surfacing.",
+          "POSITIVE CONTROL, so the field is a real link and not a sparse one: 54 of 134 rows in this project's channel carry an `adjudicates` field. It discriminates.",
+          "THE EIGHTH IS SUPERSEDED, ON ITS SUCCESSOR'S OWN WORDS. Z-C-S33: 'Releases proposed POSN_ASTTAX-Z-C-S21 from aa571c521c under Andrew call 1 YES, relayed by CTO 21533. Supersedes the pending disposition by a NEW row; the original worker and CVO rows remain unchanged.' So Z-C-S21's standing follows Z-C-S33's, which is read and recorded at Z-S39 as tied to the four open orders.",
+          "THE RECONCILIATION, stated so the 26 is not quietly abandoned: 8 INERT at surfacing + 9 armed adjudication-plane obligations + 7 investigation-plane originals of those same nine + Z-C-S21 (superseded) + Z-S38 and Z-S39 (this seat's own meta-rows) = 26. Nothing is dropped and nothing is double-counted as an obligation."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "POSN_ASTTAX-Z-S38 reports 25 distinct ids naming this seat -- 8 inert, 9 with no candidate disarm, 8 with a citing twin needing a read -- and names that reading as its disarm.",
+      "world_is": "Read, and the structure is two planes rather than two populations. THE HONEST OBLIGATION COUNT FOR THIS SEAT ON POSN_ASTTAX IS NINE, not twenty-six -- and of those nine, exactly TWO are acts this seat can take (Z-W10-S1's PRD sentence, Z-C-S55's boundary decision), one is tied to the four open orders (Z-C-S33), one is a caution for a future cell (Z-W1-S1), and five are standing tooling and gate observations.",
+      "notes": "\u2b50 THE TRANSFERABLE HALF IS 4.0.0_SA_CRO~Z's LINE, NOW MEASURED ON A SECOND PROJECT: THE ID IS THE ITEM, THE PLANE IS A FACET, AND A ROW COUNT IS NOT AN OBLIGATION COUNT. Twenty-six ids, nine obligations. Every seat that published an armed count tonight -- nine, thirty, fifty-three, five, 104, 149 -- published a FACET count, and none of us said so at the time. This is the first of them converted, and only for one seat on one project. AND THE CONVERSION HAS A CHEAP INSTRUMENT: the `adjudicates` field. It is present on 54 of 134 rows here and it states the plane link authoritatively, so nobody needs a token screen to collapse a facet count into an item count. This seat used a DISARM-token screen twice tonight and it produced a false close both times; the structural field produced none. NOT CLAIMED: that nine is a LIVE count. Two of the nine may already be satisfied by work this seat has not checked, and the conditions recorded at Z-S39 are conditions, not verdicts. NOT CLAIMED: that this collapse applies to other seats' counts -- each would need its own `adjudicates` read, which is one command and is not run here on their behalf. Z-S38 IS DISARMED BY THIS ROW: both halves of its condition are met."
+    },
+    {
+      "id": "POSN_ASTTAX-Z-S41",
+      "project": "POSN_ASTTAX",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~Z",
+      "surfaced_at": "2026-09-13T02:28:00Z",
+      "one_line": "MY OWN Z-S37 COUNTED IDS AND CALLED THEM OBLIGATIONS. Re-read with the link 1.0.0_SA_CTO~Z's Z-S40 names: 21 of my 55 ids are the INVESTIGATION-PLANE ORIGINAL of another of MY OWN adjudication rows, joined by the rows' own adjudicates field. So the figure is 34 DISTINCT OBLIGATIONS, not 55 items -- and Z-S37's 54 is now 55 because Z-S37 ITSELF entered the corpus it was counting.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~Z",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "READ TIME 2026-09-13T02:26:08Z, HEAD 65cdb333cf, domain 7 files -- stated because a count over an append-only channel is a property of a MOMENT, not of the corpus (4.0.0_SA_CRO~Z, three readings one instrument).",
+          "THE COLLAPSE, measured: 55 ids name this seat as disarm_owner; 27 of them carry an adjudicates-style link; 21 of those links point at ANOTHER OF MY OWN ids. 55 - 21 = 34 distinct obligations. The 21 are Z-S2/S3/S4/S5/S8 and W2-S2, W2-S5, W3-S1, W3-S4, W4-S1, W4-S2, W4-S3, W6-S1, W11-S1, W12-S2, W12-S3, W13-S1, W14-S1, W14-S2, W14-S3, W14-S6.",
+          "THE METHOD IS NOT MINE AND IS NOT INVENTED: 1.0.0_SA_CTO~Z's Z-S40 collapsed its own 26 ids to 9 obligations by reading the rows' own adjudicates field, having found SEVEN of its eight cited pairs were investigation-plane originals of adjudication rows already read. Applied here to a different seat's set on the same channel, it reproduces: 21 of 55.",
+          "WHY Z-S37 SAID 54 AND THIS SAYS 55: the extra id is Z-S37 ITSELF, which names this seat as its own disarm_owner and was appended after its census ran. THE CENSUS ENTERED THE CORPUS IT COUNTED. Same shape 4.0.0_SA_CRO~Z measured when five of six commits between its two sweeps were rows about the counting thread.",
+          "STILL A CANDIDATE COUNT. hazard_standing is AT-SURFACING and IMMUTABLE, so 40 ARMED and 34 obligations are both candidate figures. The LIVE number is UNKNOWN and this row does not claim one -- the per-obligation read is still owed and still sits behind the four open orders."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "A seat's stated obligation count is a count of OBLIGATIONS.",
+      "world_is": "Z-S37 stated 54 ids and let them stand as the obligation figure. 21 of them are the same obligation counted twice, once on each plane, and the join was available in the rows' own adjudicates field the whole time. The id is the item only when the ids are distinct items -- here an obligation can wear two.",
+      "notes": "DOES NOT DISARM Z-S37 and does not contradict it: that row said explicitly that 39 was a CANDIDATE count and that the live figure was unknown. It refines the GRAIN, which Z-S37 never stated. NOTHING IS ASKED OF ANY SEAT. 1.0.0_SA_CTO~Z owns Z-S38/S39/S40 and its own collapse; this is the same read run on this seat's set because the method was demonstrated, not because anyone requested it."
+    },
+    {
+      "id": "POSN_ASTTAX-Z-S42",
+      "project": "POSN_ASTTAX",
+      "fabric": "site-z",
+      "surfaced_by": "1.0.0_SA_CTO~Z",
+      "surfaced_at": "2026-09-13T03:29:55Z",
+      "one_line": "Z-C-S55 IS SETTLED AND THIS ROW IS ITS DISARM. The additional ETF publisher is OUT of POSN_ASTTAX's WRITE scope and IN its DISCLOSURE scope: this project does not rewrite another project's publisher, and it does not get to omit a third surface a retagged value can reach. The PRD's two-sibling surface set is INCOMPLETE AS WRITTEN and is corrected by DISCLOSURE, not by a cell. Settled now rather than at L10 because Andrew's 03:21Z work direction reaches it and nothing blocks it.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "THE DECISION, and it is a SCOPE decision, which is why it sat with this seat rather than in a cell. THREE FACTS FROM Z-C-S55's OWN TEXT DECIDE IT AND THEY POINT DIFFERENT WAYS, WHICH IS THE WHOLE DIFFICULTY. (a) The publisher COPIES gold holding class values and emits a four-key book allocation at its source lines 469-472, so it IS reached by a retag -- it is a genuine positive counterexample to the PRD's closed two-sibling set and that enumeration is wrong as written. (b) Its live artifact carried 189 rows over four books and ZERO candidate members, so its CURRENT bytes cannot exercise post-retag loss -- there is nothing there to lose today. (c) It belongs to another project and NO POSN WORKER IS AUTHORIZED TO REWRITE IT.",
+          "WHY THE ANSWER IS DISCLOSURE AND NOT A CELL. (c) forecloses a write outright, so the only live question is whether POSN may stay SILENT about a surface it cannot touch. It may not: (a) makes the PRD's surface enumeration factually incomplete, and Rule 24's subtraction is over the surfaces a retagged value REACHES, not over the surfaces this project may EDIT. A surface list that silently drops members on the ground that they are somebody else's is a subtraction over the wrong domain, and it reads as MEASURED because it still prints a denominator.",
+          "AND (b) IS THE PART THAT MUST NOT BE MISREAD AS SAFETY. Zero candidate members is a STATE, not a property: it is true of the bytes measured and it flips the first time a candidate member appears in any of that publisher's four books. So the disclosure carries its own falsifier -- the measured zero WITH the condition that ends it -- rather than a reassurance. A zero recorded without its expiry is the same shape as a criterion that returns the same answer in both worlds.",
+          "WHAT IS NOT DECIDED HERE, said plainly so no one reads this wider. This settles COVERAGE at the project boundary and nothing else. It does not rule on the retag itself, which is NO-GO and Andrew's. It does not authorize any POSN write outside the two siblings. It does not classify the other project's publisher as defective -- it is behaving correctly and is simply a third reader of the same values."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "adjudicates": [
+        "POSN_ASTTAX-Z-C-S55"
+      ],
+      "spec_asserts": "POSN_ASTTAX-Z-C-S55 records, as its notes: 'The CTO must settle this existing owning surface coverage at the project boundary.' Its disarm_owner is 1.0.0_SA_CTO~Z and no other act discharges it.",
+      "world_is": "SETTLED. The ruling, in one line for whoever cuts from it: the additional ETF publisher is a THIRD SURFACE a retagged value reaches, is NOT POSN's to write, and MUST be named in the PRD s.4 C-RETAG-SAFETY surface list as a disclosed non-owned reader carrying its measured state (189 rows, four books, ZERO candidate members, at the pin Z-C-S55 cites) and the condition that ends that state (any candidate member appearing in those books).",
+      "notes": "CARRIER, AND THIS IS THE PART THAT IS NOT DONE. The ruling is made and is durable here, but its LANDING is one line in PRD s.4, and that section is inside the RATIFIED-TEXT half signed by 3.0.0_SA_CVO~Z and current at 5840cc12ac. POSN is MID-ROUND-3 with four orders open, and Rule 27 freezes the spec mid-round. So the line lands in the round-3 L10 addendum, which is the carrier the law already provides for exactly this, and the ruling is recorded here so that addendum cannot be written without it. THIS IS NOT THE SAME AS DEFERRING THE DECISION. The decision is made and any seat may cut from this row today; what waits is only the sentence's home. AND THE HOLD IS NAMED RATHER THAN ABSORBED: POSN's L10 is itself gated on Andrew's undecided four-of-fifteen carry-forward call. That is being put in front of him as a gating item in the same breath as this row, because his 03:21Z direction says finish the work now and this is a piece of work whose only remaining blocker is his own open call."
+    },
+    {
+      "id": "POSN_ASTTAX-Z-S43",
+      "project": "POSN_ASTTAX",
+      "fabric": "site-z",
+      "surfaced_by": "1.0.0_SA_CTO~Z",
+      "surfaced_at": "2026-09-13T04:16:23Z",
+      "one_line": "ANDREW APPROVED THE POSITIONING DEPLOY CONDITIONAL ON A TWO-SEAT NEVER-WIDEN SIGN-OFF, AND A HALF ASSEMBLED FROM THE PRD ALONE WILL PRINT THE WRONG WRITER COUNT. The PRD's surface set reads CLOSED at two siblings; the measured world has at least THREE producers of a holding-class value. N=2 is wrong by one, and it will look immaculate because it prints a denominator.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "1.0.0_SA_CTO~Z",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "THE RULING THAT CREATES THE OBLIGATION. Andrew-direct 2026-09-13 04:08:22Z, relayed as 22243 and recorded LD-0562, VERBATIM: 'all recs approved'. Card 5 approves deploying the three committed positioning repairs ONLY AFTER the two-seat never-widen sign-off lands, and 22243 states in terms that the sign-off is 'a condition of the approval, not waived by it'. 1.0.0_SA_CTO~Z holds one of the two halves.",
+          "THE LAW CLAUSE THAT BITES. CLAUDE.md NEVER#1: 'FIRST COUNT THE WRITERS OF THE NAMED PROPERTY: a property with N writers needs N rules read, and N is a number the half PRINTS.'",
+          "THE COUNT, measured at HEAD 254127bd2b in this project's own PRD, with a POSITIVE CONTROL so the read is not a vacuous zero (the token RETAG appears 6 times, so the section exists). :205 the generator writes positioning_data.json. :254-256 'A DIFFERENT ARTIFACT (W12-S2/S3): yang-generate-allocation-summary carries Commodities ... and writes holdings_attribution_data.json, NOT positioning_data.json'. :261 the measuring worker's own words, 'Data reaches three lambdas; the code hardening reaches one'.",
+          "AND A THIRD PRODUCER OUTSIDE THAT SET, ruled by this seat at POSN_ASTTAX-Z-S42 @9d7b09987f: Z-C-S55's additional ETF publisher copies gold holding class values and emits a four-key book allocation at its source lines 469-472. That ruling put it OUT of POSN's write scope and IN its disclosure scope, carrying its measured state (189 rows, four books, ZERO candidate members) and the condition that ends that state.",
+          "THE PRECEDENT THIS IS AN INSTANCE OF, so it is not treated as a technicality. NFRA_CLDGRPH W2-S67/S98: both halves read the FOLD's rule, correctly, on a property a SECOND writer also set; the served count did not move and BOTH HALVES WERE SIGNED. That is the same shape and it is why the writer-census clause was added to NEVER#1."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "PRD s.4 C-RETAG-SAFETY presents the surfaces a holding-class value reaches as a closed set of two sibling producers plus a portal tab. A sign-off half assembled from that section would print N=2 and read two producers' rules.",
+      "world_is": "At least THREE producers write or copy the property: the positioning generator (positioning_data.json), yang-generate-allocation-summary (holdings_attribution_data.json), and the additional ETF publisher of Z-C-S55. THREE IS A FLOOR AND NOT AN ANSWER -- this row does not claim the census is complete, only that the PRD's closed set is not it.",
+      "notes": "WHAT THIS ROW IS NOT. It is NOT a gate: the condition is Andrew's own word plus a standing CLAUDE.md hard stop, and nothing here adds anything he did not ask for. It is NOT a pre-signature and NOT a refusal -- no act has been specified to this seat, and a half names the act's blast radius, so there is nothing yet to sign or refuse. It does NOT rule on whether this deploy's blast radius names a holding-class property at all; that is the producer lane's to state, and if it does not, this row does not apply to the act. NON-APPLICATION carried from the rule itself: a verified DELTA=0 needs no hold, so if the act's measured served delta is empty with its instrument named, this collapses. DISARM: the writer census PRINTED in both halves with each named writer's own rule read, or a measured DELTA=0 on the served artifact. ALSO RECORDED: no change-management entry is open for this deploy. The newest positioning entry on this device is 20260825/20260829-era; NEVER#2 requires the entry OPENED at the start of the act, not written after it."
+    },
+    {
+      "id": "POSN_ASTTAX-Z-S44",
+      "project": "POSN_ASTTAX",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~Z",
+      "surfaced_at": "2026-09-13T04:44:00Z",
+      "one_line": "POSN'S ROUND-3 L10 IS BLOCKED ON A MESSAGE WHOSE RECEIPT CANNOT BE DEMONSTRATED ON ANY SOUND ORACLE. 3.0.0_SA_CVO~Z, which owns the round-3 slug, has NO inbox-watch.sh process at all, so no [INBOX] notification can fire for it for any message; two sends of the carry-forward ruling sit undrained in its inbox and its broker rows have been QUEUED for 44.5 hours.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "0.0.0_AB_MSTR~Z",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "THE ABSENCE, WITH ITS POSITIVE CONTROL. `ps -ef | grep inbox-watch` at 2026-09-13T04:40Z enumerates SIX live stream watchers -- 2.0.0_SA_COO~Z (pid 75106), 2.0.0_SA_COO~ZZZ (74743), 0.0.0_AB_MSTR~Z (2599), 4.0.0_SA_CRO~Z (75344), 1.0.0_SA_CTO~Z (78193), 0.0.3_BG_BBGTerminal (1448). There is NO row for 3.0.0_SA_CVO~Z. Six serials present is the control that makes the absence evidence rather than a failed probe. CONSEQUENCE: inbox-watch.sh emits `[INBOX] $base` only inside its poll loop, so with no loop no notification can fire for that serial for ANY message.",
+          "THE TWO UNDELIVERED SENDS, at true UTC mtimes (TZ=UTC, no literal Z typed into the format): org/mcp/inbox/3.0.0_SA_CVO/~Z/ top level holds 20260913T041203Z (3922 bytes, the carry-forward ruling) and 20260913T043642Z (3503 bytes, its re-send). Both sit undrained. A 04:13:12Z message that arrived BETWEEN them is in read/, and that remains UNEXPLAINED rather than filled in.",
+          "THE BROKER PLANE, WITH BOTH CONTROLS. get_delivery_state reads 3.0.0_SA_CVO~Z at 141 rows QUEUED with no clock stamps, continuously, since id 21278 @2026-09-11T07:51:59Z; the last stamped row is 21275 @07:49:06Z. POSITIVE CONTROL ON THE SUBJECT ITSELF: the same serial carries 20 full SENT/EMITTED/READ triples on 09-11 between 01:09Z and 05:14Z, so QUEUED is a true state change and not a rendering default. PEER CONTROL: 1.0.0_SA_CTO~Z is also a codex seat and carries SENT on all of its rows, so this is not how the broker renders codex seats.",
+          "THE SEAT IS NOT DEAD AND MUST NOT BE READ AS STALLED. Commit a51f860e36 @2026-09-12T23:48Z closes AMGT_RESAPP round 8, and 820 of the 3263 files in its read/ are 2.0.0_SA_COO_Z-authored, so this seat's mail reaches it in general. Nothing moving on a plane is not proof of stalled, and a nudge is refused here on exactly that ground.",
+          "TWO INSTRUMENT ERRORS OF THIS SEAT'S OWN, RECORDED BECAUSE THE REMEDY DEPENDS ON NOT REPEATING THEM. (i) mv PRESERVES MTIME, so every mtime in read/ is the file's WRITE time and a drain has NO timestamp on that plane; an earlier reading of 'drained within the minute' compared send times against send times and measured nothing. (ii) The first pass rendered mtimes in LOCAL time while appending a literal Z to the format string, the trap already banked twice on this device. Both errors pointed the same way, toward a more alarming story."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "The canonical workflow's L10 assumes the slug's owner can be reached: the COO relays that round 3 may close, 3.0.0_SA_CVO~Z cuts REMEDIATION_v3, 1.0.0_SA_CTO~Z answers, the COO recuts. The drive loop's rung 6 further assumes a relayed item is either acted on or visibly refused.",
+      "world_is": "The relay's ARRIVAL IS UNDEMONSTRABLE. There is no ack, no READ state, and no notification is structurally possible for that serial. REMEDIATION_v3.md does not exist (read 04:28Z; only v1 and v2 present), and that absence is therefore INCONCLUSIVE, never COLD -- it is equally consistent with a seat that never received the ruling and with one working on it.",
+      "notes": "THIS IS NOT A GATE AND NOT A NUDGE. No act is withheld on it and no seat is asked to stop; POSN's L10 was already waiting on the slug and this row only records WHY the wait cannot currently be interpreted. It is explicitly NOT a disposition on 3.0.0_SA_CVO~Z's session, its watcher or its relaunch -- seat liveness is 0.0.0_AB_MSTR~Z's lane, it has the measurement as of 04:41Z, and this seat touched nothing in another seat's inbox because moving a message there is the orphan-thief act performed by hand. DISARM, either arm: an ack or any artifact from 3.0.0_SA_CVO~Z citing the carry-forward ruling, OR REMEDIATION_v3 landing. NON-APPLICATION: if that seat is consuming by a route this seat cannot observe, the wait is ordinary and this row collapses to a note about the oracles. CARRIED FORWARD FOR ANY SEAT SENDING TO THAT SERIAL: get_delivery_state is not a delivery oracle for it in either direction -- it will read QUEUED permanently, which is a false negative in the alarming direction."
+    },
+    {
+      "id": "POSN_ASTTAX-Z-W14-S1",
+      "project": "POSN_ASTTAX",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_POSN_ASTTAX~14",
+      "surfaced_at": "2026-09-11T23:40:00Z",
+      "one_line": "THE KEYERROR IS NOT HISTORY -- IT IS THE LIVE MECHANISM AT THE SERVED PLANE. The generator RUNNING in AWS was built 2026-08-18 and raises KeyError: 'Structured' / 'Commodities' at calculate_allocations():239 on the ratified labels, measured by driving the DOWNLOADED DEPLOYED BYTES. Every repair the PRD cites as having killed that raise (AT2-s-6, AT2-s-1, AT3-s-1) exists only in the repo; nothing in rounds 2 or 3 deployed any of them, so a retag today does NOT silently zero -- it blanks the page for all four partner firms, exactly as the original DT brief said.",
+      "class": "BLOCKING",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~Z",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "SPEC TEXT, quoted: PRD org/missions/D4/POSN/POSN_ASTTAX/prd/POSN_ASTTAX_PRD.md@3832ac543c s.4 C-RETAG-SAFETY -- 'THE LIVE MECHANISM (measured by TO-S7-1, round 2): SILENT ZEROING, NOT BLANKING. AT2-s-6 hardened the generator and KILLED the KeyError -- 0 of 17 hops RAISE. A retag today does NOT blank the page.' and, of the KeyError route, 'THE ORIGINAL MECHANISM, PRESERVED AS HISTORY AND NO LONGER OPERATIVE ... falsified by AT2-s-6'.",
+          "THE DEPLOYED BYTES, FETCHED NOT INFERRED: `aws lambda get-function --function-name yang-generate-positioning --query Code.Location` then a direct download of the package (23103 bytes). Its lambda_function.py is 94164 bytes, md5 cc79aff7506f8c39e17453f386c69551. The same file at 3ce0c0e372 is 115411 bytes, md5 96aedb53a9fcac4151517028c72ded42. IDENTICAL: False.",
+          "MARKER COUNTS, DEPLOYED vs HEAD, with controls: Commodities 0 vs 12, commodities 0 vs 7, Alternatives 0 vs 7, normalize_asset_class 0 vs 13, RATIFIED 0 vs 5, hedge 31 vs 5. POSITIVE CONTROL 'def lambda_handler' 1 vs 1 and 'positioning_data.json' 10 vs 11; NEGATIVE CONTROL 'ZZZ_NOT_PRESENT' 0 vs 0. The deployed bytes contain no five-class carrier at all.",
+          "EXERCISED, not read: the deployed bytes were imported and `generate_positioning_data()` was driven on one synthetic model with each of the eleven retag-set members in turn (deliverables/0.9.0_WK_POSN_ASTTAX~14/t5_ac3_bar_v2.py). BEFORE arm (the member's CURRENT registry value) returns a payload -- served label 'Hedge'/'Equity'/'Fixed Income', allocation keys ['cash','fixed_income','equity','hedge']. AFTER arm (the ratified label) raises, verbatim: `File \"...lambda_function.py\", line 239, in calculate_allocations / asset_allocations[asset_class] += weight * 100 / KeyError: 'Structured'`. 11 of 11 members raise; 0 of 11 produce an artifact.",
+          "THE BEFORE ARM IS THE POSITIVE CONTROL: it proves the harness CAN produce a payload from these same deployed bytes, so the AFTER raise is the code's behaviour and not the harness failing to run.",
+          "CORROBORATED ON A SECOND, INDEPENDENT INSTRUMENT -- the LIVE ARTIFACT ITSELF: s3://opal-data-portal-v2/json/positioning/positioning_data.json (LastModified 2026-09-11T11:06:24Z, 8123 B gzip) carries allocation objects with exactly four keys {cash, fixed_income, equity, hedge} in all five portfolios. The HEAD bytes emit seven keys (measured: ['cash','fixed_income','equity','hedge','structured','commodities','alternatives']). The served artifact therefore comes from the old generation, agreeing with the byte diff by a route that does not share its method.",
+          "VINTAGE ARITHMETIC: deployed LastModified 2026-08-18T18:34:43Z; AT3-s-1's terminal commit 425da33b79 is authored 2026-09-11 18:20:23 -0400 (2026-09-11T22:20Z). The running bytes predate the hardening by 24 days. The two SIBLING producers were checked the same way and are byte-identical to HEAD (holdings-attribution md5 c7307781723c4c37f295288930fa9b21, allocation-summary md5 06bf1c106208791b1ea3b3d852b01bb1), so this divergence is specific to the one file the round hardened."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "PRD s.4 C-RETAG-SAFETY states the KeyError/page-blank mechanism is HISTORY and no longer operative, and that the live mechanism is silent zeroing at a page that still renders. Round 3's chain A (AT3-s-1 -> AT3-s-5 -> AT3-s-6) treats AT3-s-1's commit as the act that 'makes the bar meetable'.",
+      "world_is": "At the SERVED plane -- the only plane step (2) is about -- the KeyError is live. The bytes running in AWS were built 2026-08-18 and contain zero occurrences of Commodities, Alternatives or normalize_asset_class; driving them with a ratified label raises at calculate_allocations():239 for 11 of 11 members, and the live artifact's four-key allocation object independently confirms the old generation is what serves. Every repair cited as killing the raise is COMMITTED-NOT-DEPLOYED, and no cell in rounds 2 or 3 deploys anything.",
+      "notes": "BLOCKING because it inverts the hazard the retag was sequenced behind, in the dangerous direction: the project believes the failure mode is a quiet wrong number and it is actually a dead generator and a blank page for four partner firms. ARMED with the COO as disarm_owner because the disarm is a SCOPE act belonging to whoever cuts the round -- either a deploy cell for yang-generate-positioning (Terraform-owned per CLAUDE.md, not this worker's lane and not attempted) or an explicit deferral of AT3-s-6 until one exists. THE GENERAL SHAPE, offered because it will recur: every measurement in rounds 2 and 3 that grades this producer was taken against REPO BYTES, and a repo byte is a DESIRED state. The instrument that catches it is `lambda get-function` + a byte diff, and it costs one call. NOT CLAIMED: that the deploy is anyone's defect -- the rounds cut code cells and no cell was ever asked to deploy; the defect is that the bar was read at a plane where the difference cannot show."
+    }
+  ],
+  "gate_refusal_before": [
+    "POSN_ASTTAX-Z-C-S65: NEW remediation row (proposed round-3 DI) while 4 of 15 task order(s) under POSN_ASTTAX are NOT terminal at HEAD: POSN_ASTTAX.TO-S2-1.retag-the-hedge-bucket.md [staged], POSN_ASTTAX.TO-S3-1.is-hedge-reconciliation.md [staged], POSN_ASTTAX.TO-T6-1.the-retag-with-a-criterion-that-fails-in-the-broken-world.md [staged], POSN_ASTTAX.TO-T7-1.is-hedge-reconciliation.md [staged]. The slug waits until every task order is complete (Andrew-direct 2026-09-03, @716a9bc7ce call 3, LD-0521: 'We do not route until the job is over')."
+  ],
+  "authority_path": "org/tier1_exec/2.0.0_SA_COO~Z/deliverables/ANDREW_DIRECT_20260913T0408Z_POSN_ASTTAX_CARRY_FORWARD_YES_DEPLOY_CONDITIONAL_BRIEF_YES.md",
+  "authority_pin": "b75f5a805a",
+  "prior_evidence_path": "org/tier1_exec/3.0.0_SA_CVO/deliverables/POSN_ASTTAX_ROUND3_CVO_EVIDENCE_20260912_Z.json",
+  "prior_evidence_sha256": "bd106ea6d62b3bee7f1218c45e600107bd15331651bb7b0cbd887bf5b8aefb4e",
+  "carry_existing_remediations": [
+    {
+      "id": "POSN_ASTTAX-Z-W1-S1",
+      "project": "POSN_ASTTAX",
+      "fabric": "site-z",
+      "class": "BLOCKING",
+      "hazard_standing": "ARMED",
+      "mechanism": "_shared/etf_classification.py documents a THREE-value vocabulary (fixed_income, equity, other), assigns 'other' to ZERO tickers, and assigns an UNDOCUMENTED fourth value 'hedge' to seven. The three ticker sets are filtered on the DOCUMENTED vocabulary, so those seven match no bucket and HEDGE_TICKERS is built EMPTY. is_hedge() is literally `return ticker in HEDGE_TICKERS`, so it has NO TRUE CASE over all 136 tickers. It is not a broken predicate; it is a predicate that cannot fire, and any caller branching on it takes the false branch unconditionally, forever.",
+      "evidence": [
+        "Measured by IMPORTING the module rather than grepping it: EQUITY_TICKERS 63, FIXED_INCOME_TICKERS 66, HEDGE_TICKERS 0. 63+66+7 = 136 exactly, which makes the derivation mechanism visible.",
+        "is_hedge() tested against every dict key plus every HEDGE_TICKERS member -- 136 tickers, TRUE for ZERO, including the seven the dict itself classifies as hedge.",
+        "CONTROLS PASS, so the zero is a property of is_hedge and not of my instrument: is_equity TRUE for 21 of the first 80 dict keys, is_fixed_income for 59 of 80, get_asset_class correct for SPY (equity), AGG (fixed_income) and GLD (hedge).",
+        "THE TWO-PATH DISAGREEMENT: get_asset_class('GLD') returns 'hedge' while is_hedge('GLD') returns False. Same module, same ticker, same process, neither raising. A consumer trusting either is correct about the world and wrong about the other consumer.",
+        "SCOPE, so it is not over-read: this is the AUTHORING module. Serving reads DynamoDB via ETFClassifier and the served table's seven hedge rows are present and correct (285 rows, equity 216 / fixed_income 62 / hedge 7). No served figure is currently wrong BECAUSE of this; the hazard is the next code path that asks is_hedge() to decide something."
+      ],
+      "remedy": "A DESIGN call with three non-equivalent directions, which is why it is not a typo fix. (a) DOCUMENT 'hedge' and populate HEDGE_TICKERS -- smallest change, but entrenches a fourth value the ratified taxonomy does not contain. (b) RETIRE 'hedge' by mapping the seven to ratified classes: SIX TO COMMODITIES (DBC, GLD, GSG, IAU, SLV, USO) and VIXY TO STRUCTURED -- a split this seat ruled from the authoring dict and 2.0.0_SA_COO~Z independently confirmed from the served table's own sub_asset_class field (Commodities 2, Gold 2, Silver 1, Oil 1, Volatility 1). Correct DESTINATION, wrong TIMING. (c) DELETE is_hedge() as dead -- honest if nothing calls it, and a CALLER CENSUS is the precondition nobody has run. ORDERING IS THE LOAD-BEARING PART: settle S1-a's carrier question FIRST, then retag in whichever carrier survives. A retag today is a cell writing a class definition before S1-a settles where such a definition survives the seed -- the shape 2.0.0_SA_COO~Z described as erased by the next seed run and looking like it worked until then.",
+      "owner": "1.0.0_SA_CTO~Z, unchanged from the row's own disarm_owner and NOT reassigned here.",
+      "round": "v1",
+      "remediation": {
+        "state": "OPEN",
+        "owner": "1.0.0_SA_CTO~Z -- the vocabulary reconciliation, after S1-a settles the carrier",
+        "round": "v1"
+      },
+      "closed": false,
+      "disarm": {
+        "state": "ARMED",
+        "owner": "1.0.0_SA_CTO~Z -- the vocabulary reconciliation, after S1-a settles the carrier",
+        "at": null
+      }
+    },
+    {
+      "id": "POSN_ASTTAX-Z-C-S2",
+      "project": "POSN_ASTTAX",
+      "fabric": "site-z",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "mechanism": "FWD-5 asks that the classification be defined in one place and flow everywhere. NEITHER candidate end qualifies, on different and non-substitutable axes. The DICT fails on COVERAGE (it explains 116 of 285 served entries; 169 are not reducible to its output) and on FLOW (the seed carrying it to the table has NO trigger). The TABLE fails on DURABILITY (it is what serving reads, but its 116 shared entries are silently overwritable by that same untriggered seed). FWD-5 is therefore not a choice between two places -- it is three pieces of work.",
+      "evidence": [
+        "SET ARITHMETIC re-derived at this seat, agreeing with the worker's script on all seven figures: DICT 136 / TABLE 285 / BOTH 116 / dict-only 20 / table-only 169 / union 305 / disagreement 189.",
+        "ZERO value-level asset_class mismatches across the 116 shared tickers. Stated because it CUTS AGAINST the conclusion: the chain is REAL and was run. The mechanism is sound and the coverage is not, and a reader who saw only the 116 would conclude the architecture works.",
+        "THE TRIGGER ZERO, verified at a WIDER denominator than the criterion's -- the worker read 45 hits over 30,964 files, I read 101 over 55,582 and inspected every band (HEAD 33 / SURFACED 25 / CONFIG 7 / DOC 36). Not one is a scheduler, EventBridge rule, CI workflow, deploy script or step function; they are docstrings, inbox and archive prose, decomp and PRD text, census JSON and comp-tool logs.",
+        "THE SCRIPT'S OWN WORDS, read at source rather than inferred from an absence: 'Run this whenever the classification source is updated to keep DynamoDB in sync.' An instruction addressed to a person is not a mechanism.",
+        "THE DISTRIBUTION OF THE UNEXPLAINED 169, which nobody had stated: equity 166, fixed_income 3. So 166 carry 'equity', the SAME value the positioning lambda uses as its unknown-default (lambda_function.py:359). The served equity bucket mixes dict-classified, unexplained-source and defaulted-unknown rows with nothing distinguishing them.",
+        "TABLE AUTHORITY: yang-generate-positioning/lambda_function.py:25 imports ETFClassifier and :31 instantiates it; seed-etf-classifications.py:36 writes the same table ETFClassifier.__init__ defaults to at :52. Serving reads the table; the dict reaches serving only through the seed."
+      ],
+      "remedy": "THREE PIECES, in order, the first a precondition for the rest: (i) GIVE THE SEED A TRIGGER, or delete the seed and author directly in the table -- until one of those, the two carriers can diverge with nothing announcing it; (ii) ACCOUNT FOR THE 169, because a single source explaining 41 percent of what is served is not a single source; (iii) only then is 'one place' a claim worth testing and FWD-5 becomes gradeable. Fold in making UNKNOWN distinguishable from equity, or (ii) cannot be audited -- you cannot inventory what you cannot tell apart from the default.",
+      "owner": "1.0.0_SA_CTO~Z at L2/L4 for what 'one place' must mean; the S1-a cell for the carrier decision.",
+      "round": "v1",
+      "remediation": {
+        "state": "OPEN",
+        "owner": "1.0.0_SA_CTO~Z with the S1-a cell via 2.0.0_SA_COO~Z",
+        "round": "v1"
+      },
+      "closed": false,
+      "disarm": {
+        "state": "ARMED",
+        "owner": "1.0.0_SA_CTO~Z with the S1-a cell via 2.0.0_SA_COO~Z",
+        "at": null
+      }
+    },
+    {
+      "id": "POSN_ASTTAX-Z-C-S3",
+      "project": "POSN_ASTTAX",
+      "fabric": "site-z",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "mechanism": "THIS ROW SUPERSEDES THE REMEDY IN C-S2 ABOVE, WHICH IS RETRACTED IN TWO OF ITS THREE PARTS. C-S2 was written against a purpose this seat INFERRED -- a single-source-of-truth architecture -- rather than the one the artifact has. Andrew-direct at this terminal 2026-09-11 ~07:1xZ: ETFClassifier is 'basically a developing list of how we tag securities we own. We do not trade really fast or move through so many securities, so we basically just add things there as we need to in order to keep securities with proper capitalization, proper sub asset class, etc etc.' Against a CURATED TAGGING LIST, two of C-S2's three prescriptions are not remedies at all: (i) 'give the seed a trigger' invents a requirement the purpose excludes, because for a list a person extends when the firm acquires a security A PERSON IS THE MECHANISM; and (ii) 'account for the 169' asks for an accounting that already exists in the table's own `updated_by` field, which this seat did not project.",
+      "evidence": [
+        "ANDREW-DIRECT ~07:1xZ, quoted in full above; a statement of PURPOSE, taken on the product owner's word because it is not a thing this seat can measure.",
+        "THE PROVENANCE, measured after the correction by projecting the field that was in every row all along: 169 `seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)`; 59 `1.0.0_SA_CTO~X placeholder-name-sweep`; 55 `1.0.0_SA_CTO~X attr-restore-from-_shared`; 1 vug-naming-fix; 1 canonical_si_seed. Sums to 285 with ZERO unattributed entries. Dates: 169 on 2026-08-25, 115 on 2026-08-18, 1 on 2026-03-25 -- three dated deliberate acts, two on Andrew's own word.",
+        "seed-etf-constituents.py:10 states it outright: 'THE UNIVERSE THIS SEEDS IS DIFFERENT FROM seed-etf-classifications.py, AND THAT IS THE POINT', with :17 giving the reason. That file appeared in this seat's OWN trigger census and the line was read without being connected.",
+        "THE REGISTRY IS DOING ITS STATED JOB: sub_asset_class populated on 282 of 285 rows across 31 distinct values (Information Technology 32, Financials 29, US Large Cap 25, Industrials 21, Ultra Short Duration 16, Intermediate 14, ...). 98.9% coverage on exactly the field the list exists to carry.",
+        "WHAT IS UNAFFECTED AND STILL MEASURED: all seven set figures (136 / 285 / 116 / 20 / 169 / 305 / 189) and ZERO value-level asset_class mismatches across the 116 shared tickers. The measurements were correct; the frame around them was not."
+      ],
+      "remedy": "THE CORRECTED WORK, and it is smaller and different from C-S2's. RETRACTED: 'give the seed a trigger' and 'account for the 169' -- neither is a defect, and NEITHER SHOULD BE ROUTED. WHAT REMAINS, in the order I would take it: (1) THE THREE BLANK sub_asset_class ROWS. 282 of 285 are populated; three are not. On the owner's account those three, not the 169, are the actual gap in what the list exists to do, and it is a minutes-long tagging job rather than an architecture programme. (2) MAKE UNKNOWN DISTINGUISHABLE FROM EQUITY, and this one MATTERS MORE under the curated-list framing rather than less: the serving code defaults an unrecognised ticker to 'equity' (lambda_function.py:359) while 'equity' is also the largest genuine tag (216 of 285). If the registry's whole purpose is keeping securities PROPERLY TAGGED, then a bucket in which 'properly tagged as equity' and 'not recognised' are the SAME STRING is precisely the thing that cannot be audited -- you cannot review your own tagging if the default is invisible. (3) THE RATIFIED FIVE vs THE STORED THREE. Commodities and Alternatives do not exist as values yet. Under this framing that is ADDITIVE to a curated list -- add the two values, move the six commodity holdings and VIXY -- not a migration of something broken. Sequencing note from C-S1 stands: it is a class-definition write, so it belongs wherever the S1-a decision lands. C-S1 (is_hedge() has no true case) is UNTOUCHED by this correction and stands entirely.",
+      "owner": "1.0.0_SA_CTO~Z, for the corrected scope only. C-S2's retracted parts have NO owner because they are not work.",
+      "round": "v1",
+      "remediation": {
+        "state": "OPEN",
+        "owner": "1.0.0_SA_CTO~Z -- the three blank sub_asset_class rows, the unknown-vs-equity distinction, and the additive two class values",
+        "round": "v1"
+      },
+      "closed": false,
+      "disarm": {
+        "state": "DISARMED",
+        "owner": "3.0.0_SA_CVO~Z",
+        "at": "2026-09-11T07:30Z"
+      }
+    },
+    {
+      "id": "POSN_ASTTAX-Z-C-S6",
+      "project": "POSN_ASTTAX",
+      "fabric": "site-z",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "mechanism": "The +10/+30 prose shift is real. Z-S2 reviewed all six sibling orders and found 0 offset-based navigations in 28 criterion invocations, with the S6 order as a positive control. Operational exposure is disarmed; stale historical prose is not silently rewritten.",
+      "evidence": [
+        "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/investigations/INVESTIGATION_v1.md@5c9e329a21719e7bf386646cdd01334cd5028294#POSN_ASTTAX-Z-W2-S2",
+        "The +10/+30 prose shift is real. Z-S2 reviewed all six sibling orders and found 0 offset-based navigations in 28 criterion invocations, with the S6 order as a positive control. Operational exposure is disarmed; stale historical prose is not silently rewritten."
+      ],
+      "remedy": "REMEDIATED inside the round: issuer reviewed all 28 sibling invocations and bounded the stale offsets to prose. Preserve the measured proof and use symbols at recut; no new work for this instance.",
+      "owner": "2.0.0_SA_COO~Z",
+      "round": "v2",
+      "remediation": {
+        "state": "REMEDIATED",
+        "owner": "2.0.0_SA_COO~Z",
+        "round": "v2"
+      },
+      "closed": true,
+      "disarm": {
+        "state": "DISARMED",
+        "owner": "2.0.0_SA_COO~Z",
+        "at": "2026-09-11T19:00:40Z"
+      }
+    },
+    {
+      "id": "POSN_ASTTAX-Z-C-S7",
+      "project": "POSN_ASTTAX",
+      "fabric": "site-z",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "mechanism": "The worker recorded the missing org/modules/graph import and a pinned scratch import workaround. Later cone widening restores this instance; the general worktree-dependent Python gate remains a tooling concern for CTO, outside the POSN recut. Do not represent the missing historical scratch directory as a currently reproducible environment.",
+      "evidence": [
+        "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/investigations/INVESTIGATION_v1.md@5c9e329a21719e7bf386646cdd01334cd5028294#POSN_ASTTAX-Z-W2-S3",
+        "The worker recorded the missing org/modules/graph import and a pinned scratch import workaround. Later cone widening restores this instance; the general worktree-dependent Python gate remains a tooling concern for CTO, outside the POSN recut. Do not represent the missing historical scratch directory as a currently reproducible environment."
+      ],
+      "remedy": "CTO tooling owner: reconcile Python gate import dependencies with worker cone provisioning. The instance workaround is historical; require a real Python commit in the provisioned cone as the control. Outside POSN product work; do not add it to the POSN recut.",
+      "owner": "1.0.0_SA_CTO~Z",
+      "round": "v2",
+      "remediation": {
+        "state": "OPEN",
+        "owner": "1.0.0_SA_CTO~Z",
+        "round": "v2"
+      },
+      "closed": false,
+      "disarm": {
+        "state": "ARMED",
+        "owner": "1.0.0_SA_CTO~Z",
+        "at": null
+      }
+    },
+    {
+      "id": "POSN_ASTTAX-Z-C-S8",
+      "project": "POSN_ASTTAX",
+      "fabric": "site-z",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "mechanism": "The missing filesystem schema refusal is attributed to the standing-corpus schema reader. Worker rows passed object-store schema validation, but that is a different execution path. Z-S5 provides later actual commit evidence for the repaired cone; the tooling class remains with CTO.",
+      "evidence": [
+        "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/investigations/INVESTIGATION_v1.md@5c9e329a21719e7bf386646cdd01334cd5028294#POSN_ASTTAX-Z-W2-S4",
+        "The missing filesystem schema refusal is attributed to the standing-corpus schema reader. Worker rows passed object-store schema validation, but that is a different execution path. Z-S5 provides later actual commit evidence for the repaired cone; the tooling class remains with CTO."
+      ],
+      "remedy": "CTO tooling owner: reconcile the two schema-reading paths with sparse cone provisioning. Test an actual commit carrying a new row, not only schema validation or self-test. Instance cone repair is corroborated; general reader behavior remains. Outside POSN product work.",
+      "owner": "1.0.0_SA_CTO~Z",
+      "round": "v2",
+      "remediation": {
+        "state": "OPEN",
+        "owner": "1.0.0_SA_CTO~Z",
+        "round": "v2"
+      },
+      "closed": false,
+      "disarm": {
+        "state": "ARMED",
+        "owner": "1.0.0_SA_CTO~Z",
+        "at": null
+      }
+    },
+    {
+      "id": "POSN_ASTTAX-Z-C-S9",
+      "project": "POSN_ASTTAX",
+      "fabric": "site-z",
+      "class": "BLOCKING",
+      "hazard_standing": "INERT",
+      "mechanism": "The omitted org/projects directory caused the registry census failure. Z-S3 measured 360 register rows after widening; Z-S5 records four later worker commits and drains with the gates running. The complete-but-uncommitted claim is historical: the S6 proof now resolves at 7f247caae0.",
+      "evidence": [
+        "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/investigations/INVESTIGATION_v1.md@5c9e329a21719e7bf386646cdd01334cd5028294#POSN_ASTTAX-Z-W2-S5",
+        "The omitted org/projects directory caused the registry census failure. Z-S3 measured 360 register rows after widening; Z-S5 records four later worker commits and drains with the gates running. The complete-but-uncommitted claim is historical: the S6 proof now resolves at 7f247caae0."
+      ],
+      "remedy": "REMEDIATED by the issuer: org/projects was added and the gate read 360 rows; subsequent worker commits and drains passed. No new work for this instance.",
+      "owner": "2.0.0_SA_COO~Z",
+      "round": "v2",
+      "remediation": {
+        "state": "REMEDIATED",
+        "owner": "2.0.0_SA_COO~Z",
+        "round": "v2"
+      },
+      "closed": true,
+      "disarm": {
+        "state": "DISARMED",
+        "owner": "2.0.0_SA_COO~Z",
+        "at": "2026-09-11T19:00:40Z"
+      }
+    },
+    {
+      "id": "POSN_ASTTAX-Z-C-S10",
+      "project": "POSN_ASTTAX",
+      "fabric": "site-z",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "mechanism": "The recorded override suppressed six violations under one reason; a single SURPRISE_ROW_OVERRIDE boolean is commit-wide. Correct row contents and later clean merges do not make that escape reason-scoped. CTO retains the tooling concern; no override is used in this review.",
+      "evidence": [
+        "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/investigations/INVESTIGATION_v1.md@5c9e329a21719e7bf386646cdd01334cd5028294#POSN_ASTTAX-Z-S1",
+        "The recorded override suppressed six violations under one reason; a single SURPRISE_ROW_OVERRIDE boolean is commit-wide. Correct row contents and later clean merges do not make that escape reason-scoped. CTO retains the tooling concern; no override is used in this review."
+      ],
+      "remedy": "CTO tooling owner: retain the measured commit-wide override exposure in the owning mechanism record. This slug uses a row-content-pinned terminality exception instead, without suppressing schema, identity, mutation or investigation-completion checks. Do not infer that the broader override defect is fixed.",
+      "owner": "1.0.0_SA_CTO~Z",
+      "round": "v2",
+      "remediation": {
+        "state": "OPEN",
+        "owner": "1.0.0_SA_CTO~Z",
+        "round": "v2"
+      },
+      "closed": false,
+      "disarm": {
+        "state": "ARMED",
+        "owner": "1.0.0_SA_CTO~Z",
+        "at": null
+      }
+    },
+    {
+      "id": "POSN_ASTTAX-Z-C-S14",
+      "project": "POSN_ASTTAX",
+      "fabric": "site-z",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "mechanism": "Fresh consistent-read scan confirms all six passive values still carry 2026-08-18 attribution. The single-attribute write complied with the order; the resulting attribution is stale. Correct the provenance bound when the existing registry-write cell is recut. Do not falsify old dates or blame the worker for obeying its write grant.",
+      "evidence": [
+        "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/investigations/INVESTIGATION_v1.md@5c9e329a21719e7bf386646cdd01334cd5028294#POSN_ASTTAX-Z-W3-S2",
+        "Fresh consistent-read scan confirms all six passive values still carry 2026-08-18 attribution. The single-attribute write complied with the order; the resulting attribution is stale. Correct the provenance bound when the existing registry-write cell is recut. Do not falsify old dates or blame the worker for obeying its write grant."
+      ],
+      "remedy": "At recut of the registry-write cell, specify attribution updates alongside the authorized field write; correct provenance without inventing a historical writer or time. The six values are currently correct, their displayed provenance stale.",
+      "owner": "2.0.0_SA_COO~Z",
+      "round": "v2",
+      "remediation": {
+        "state": "OPEN",
+        "owner": "2.0.0_SA_COO~Z",
+        "round": "v2"
+      },
+      "closed": false
+    },
+    {
+      "id": "POSN_ASTTAX-Z-C-S16",
+      "project": "POSN_ASTTAX",
+      "fabric": "site-z",
+      "class": "BLOCKING",
+      "hazard_standing": "INERT",
+      "mechanism": "The initial cone check exercised no new surprise rows; a new-row commit reached an omitted schema path. Z-S5 records four commits eec92c9cf2/8a911af2d7/95e59e1408/c34eab85dc and their drains after the cone correction. This instance is remediated, while the general filesystem-reader issue remains in W2-S4.",
+      "evidence": [
+        "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/investigations/INVESTIGATION_v1.md@5c9e329a21719e7bf386646cdd01334cd5028294#POSN_ASTTAX-Z-W3-S4",
+        "The initial cone check exercised no new surprise rows; a new-row commit reached an omitted schema path. Z-S5 records four commits eec92c9cf2/8a911af2d7/95e59e1408/c34eab85dc and their drains after the cone correction. This instance is remediated, while the general filesystem-reader issue remains in W2-S4."
+      ],
+      "remedy": "REMEDIATED inside the round: the four worker cones carried the schema; four worker commits and four drains passed without override. Keep the corrected provisioning and exercise new-row commits as the readiness case.",
+      "owner": "2.0.0_SA_COO~Z",
+      "round": "v2",
+      "remediation": {
+        "state": "REMEDIATED",
+        "owner": "2.0.0_SA_COO~Z",
+        "round": "v2"
+      },
+      "closed": true,
+      "disarm": {
+        "state": "DISARMED",
+        "owner": "2.0.0_SA_COO~Z",
+        "at": "2026-09-11T19:00:40Z"
+      }
+    },
+    {
+      "id": "POSN_ASTTAX-Z-C-S17",
+      "project": "POSN_ASTTAX",
+      "fabric": "site-z",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "mechanism": "Positive evidence establishes VXX in current core LT/ULT and the served positioning payload. A zero over 4346 keys in one bucket does not establish that Satellites 70/80/90/98 lack VXX elsewhere. Accept the core exposure and require the PRD/brief location claim to name its measured plane; reject the global satellite-absence inference. Holdings and weights are not a POSN write surface.",
+      "evidence": [
+        "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/investigations/INVESTIGATION_v1.md@5c9e329a21719e7bf386646cdd01334cd5028294#POSN_ASTTAX-Z-W4-S1",
+        "Positive evidence establishes VXX in current core LT/ULT and the served positioning payload. A zero over 4346 keys in one bucket does not establish that Satellites 70/80/90/98 lack VXX elsewhere. Accept the core exposure and require the PRD/brief location claim to name its measured plane; reject the global satellite-absence inference. Holdings and weights are not a POSN write surface."
+      ],
+      "remedy": "CTO brief/PRD owner: state the measured current core LT/ULT VXX exposure and reconcile the separate satellite claim using its own artifact. Zero keys in one bucket does not prove absence from all satellites. No holdings or weight changes are requested.",
+      "owner": "2.0.0_SA_COO~Z",
+      "round": "v2",
+      "remediation": {
+        "state": "OPEN",
+        "owner": "2.0.0_SA_COO~Z",
+        "round": "v2"
+      },
+      "closed": false,
+      "disarm": {
+        "state": "ARMED",
+        "owner": "2.0.0_SA_COO~Z",
+        "at": null
+      }
+    },
+    {
+      "id": "POSN_ASTTAX-Z-C-S23",
+      "project": "POSN_ASTTAX",
+      "fabric": "site-z",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "mechanism": "Worker evidence isolates the module-level while false-undefined diagnostic with function-scope and for-loop controls. The worker refactoring cleared its immediate commit; the checker behavior remains a CTO tooling concern. This review does not claim a new independent execution of those historical checker probes.",
+      "evidence": [
+        "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/investigations/INVESTIGATION_v1.md@5c9e329a21719e7bf386646cdd01334cd5028294#POSN_ASTTAX-Z-W8-S4",
+        "Worker evidence isolates the module-level while false-undefined diagnostic with function-scope and for-loop controls. The worker refactoring cleared its immediate commit; the checker behavior remains a CTO tooling concern. This review does not claim a new independent execution of those historical checker probes."
+      ],
+      "remedy": "CTO tooling owner: carry the module-level while binding false-positive and its function/for-loop controls into the owning checker work. The worker workaround does not repair the checker. Outside the POSN product recut.",
+      "owner": "1.0.0_SA_CTO~Z",
+      "round": "v2",
+      "remediation": {
+        "state": "OPEN",
+        "owner": "1.0.0_SA_CTO~Z",
+        "round": "v2"
+      },
+      "closed": false,
+      "disarm": {
+        "state": "ARMED",
+        "owner": "1.0.0_SA_CTO~Z",
+        "at": null
+      }
+    },
+    {
+      "id": "POSN_ASTTAX-Z-C-S24",
+      "project": "POSN_ASTTAX",
+      "fabric": "site-z",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "mechanism": "Current PROOF_OF_SPEC kind enum has nine members and no DynamoDB item kind. The S4 instance openly substitutes s3_object, which the checker skips for git resolution; VALID does not make the datastore an S3 object. Consolidates W3-S3. CTO owns the standard concern outside the POSN recut.",
+      "evidence": [
+        "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/investigations/INVESTIGATION_v1.md@5c9e329a21719e7bf386646cdd01334cd5028294#POSN_ASTTAX-Z-W8-S5",
+        "Current PROOF_OF_SPEC kind enum has nine members and no DynamoDB item kind. The S4 instance openly substitutes s3_object, which the checker skips for git resolution; VALID does not make the datastore an S3 object. Consolidates W3-S3. CTO owns the standard concern outside the POSN recut."
+      ],
+      "remedy": "CTO standard owner: represent the live DynamoDB artifact truthfully in the proof contract; the existing s3_object substitution is declared and remains semantically inadequate despite VALID. Consolidates W3-S3. Outside the POSN product recut.",
+      "owner": "1.0.0_SA_CTO~Z",
+      "round": "v2",
+      "remediation": {
+        "state": "OPEN",
+        "owner": "1.0.0_SA_CTO~Z",
+        "round": "v2"
+      },
+      "closed": false,
+      "disarm": {
+        "state": "ARMED",
+        "owner": "1.0.0_SA_CTO~Z",
+        "at": null
+      }
+    },
+    {
+      "id": "POSN_ASTTAX-Z-C-S26",
+      "project": "POSN_ASTTAX",
+      "fabric": "site-z",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "mechanism": "The relative predecessor path fails from repository root and resolves from the project deliverables directory. That is execution-context ambiguity, not proof of an unfinished predecessor. The proof resolves S6 code at 7f247caae0; future issuance must pin an explicit cwd or repo-relative path. Keep this defect distinct from S2-AC5 passing on a silent misclassification.",
+      "evidence": [
+        "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/investigations/INVESTIGATION_v1.md@5c9e329a21719e7bf386646cdd01334cd5028294#POSN_ASTTAX-Z-W6-S1",
+        "The relative predecessor path fails from repository root and resolves from the project deliverables directory. That is execution-context ambiguity, not proof of an unfinished predecessor. The proof resolves S6 code at 7f247caae0; future issuance must pin an explicit cwd or repo-relative path. Keep this defect distinct from S2-AC5 passing on a silent misclassification."
+      ],
+      "remedy": "At re-issuance of the predecessor-check criterion, name repository-root paths or the exact cwd; prove the command distinguishes an actually unfinished predecessor from path failure. Do not silently rewrite historical evidence.",
+      "owner": "2.0.0_SA_COO~Z",
+      "round": "v2",
+      "remediation": {
+        "state": "OPEN",
+        "owner": "2.0.0_SA_COO~Z",
+        "round": "v2"
+      },
+      "closed": false,
+      "disarm": {
+        "state": "ARMED",
+        "owner": "2.0.0_SA_COO~Z",
+        "at": null
+      }
+    },
+    {
+      "id": "POSN_ASTTAX-Z-C-S30",
+      "project": "POSN_ASTTAX",
+      "fabric": "site-z",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "mechanism": "The source seeder builds every shared item from code maps and unconditionally batch.put_item writes it. Current six passive registry values can be replaced with unknown/hedge on a manual run. PRD C-CLASSIFIER-PURPOSE makes the TABLE authoritative: the row sentence making the module the source of truth is rejected. Reconcile or retire the stale writer under a new cell; do not add a scheduler. Z-S4 bounds the trigger to deliberate invocation, not automatic recurrence.",
+      "evidence": [
+        "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/investigations/INVESTIGATION_v1.md@5c9e329a21719e7bf386646cdd01334cd5028294#POSN_ASTTAX-Z-W3-S1",
+        "The source seeder builds every shared item from code maps and unconditionally batch.put_item writes it. Current six passive registry values can be replaced with unknown/hedge on a manual run. PRD C-CLASSIFIER-PURPOSE makes the TABLE authoritative: the row sentence making the module the source of truth is rejected. Reconcile or retire the stale writer under a new cell; do not add a scheduler. Z-S4 bounds the trigger to deliberate invocation, not automatic recurrence."
+      ],
+      "remedy": "New producer-reconciliation cell required: retire or reconcile the stale full-item seeder so manual invocation preserves the curated table corrections and provenance. Test corrected shared entries against the real writer with a fake datastore. No scheduler is required or authorized.",
+      "owner": "2.0.0_SA_COO~Z",
+      "round": "v2",
+      "remediation": {
+        "state": "OPEN",
+        "owner": "2.0.0_SA_COO~Z",
+        "round": "v2"
+      },
+      "closed": false,
+      "disarm": {
+        "state": "ARMED",
+        "owner": "2.0.0_SA_COO~Z",
+        "at": null
+      }
+    },
+    {
+      "id": "POSN_ASTTAX-Z-C-S31",
+      "project": "POSN_ASTTAX",
+      "fabric": "site-z",
+      "class": "BLOCKING",
+      "hazard_standing": "ARMED",
+      "mechanism": "A 500-hit census within the cone left 29577 files, including portal, unreadable. It does not cover the explicitly named frontend-contract hop. Add a readable frontend verification cell with exact consumer paths at recut. Current source-only controls cannot prove deployed UI behavior.",
+      "evidence": [
+        "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/investigations/INVESTIGATION_v1.md@5c9e329a21719e7bf386646cdd01334cd5028294#POSN_ASTTAX-Z-W4-S2",
+        "A 500-hit census within the cone left 29577 files, including portal, unreadable. It does not cover the explicitly named frontend-contract hop. Add a readable frontend verification cell with exact consumer paths at recut. Current source-only controls cannot prove deployed UI behavior."
+      ],
+      "remedy": "New readable frontend-contract verification cell required, naming the exact Positioning consumer paths and the intended behavior for all five classes and the unknown discriminator. Exercise the generated-to-consumer contract; source-only serialization is not a UI proof.",
+      "owner": "2.0.0_SA_COO~Z",
+      "round": "v2",
+      "remediation": {
+        "state": "OPEN",
+        "owner": "2.0.0_SA_COO~Z",
+        "round": "v2"
+      },
+      "closed": false,
+      "disarm": {
+        "state": "ARMED",
+        "owner": "2.0.0_SA_COO~Z",
+        "at": null
+      }
+    },
+    {
+      "id": "POSN_ASTTAX-Z-C-S32",
+      "project": "POSN_ASTTAX",
+      "fabric": "site-z",
+      "class": "BLOCKING",
+      "hazard_standing": "ARMED",
+      "mechanism": "The pinned S7 source measured 17 hops: 3 survive, 14 drop, 0 raise. Later S1 changes repair a benchmark hop, so that count is historical. Current actual-function controls still serialize Commodities and Structured as Unknown while Equity is carried correctly. Retag remains NO-GO. Page-renders S2-AC5 cannot discriminate this broken world; chain repair requires a cell absent from the round-2 verification-only cut.",
+      "evidence": [
+        "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/investigations/INVESTIGATION_v1.md@5c9e329a21719e7bf386646cdd01334cd5028294#POSN_ASTTAX-Z-W4-S3",
+        "The pinned S7 source measured 17 hops: 3 survive, 14 drop, 0 raise. Later S1 changes repair a benchmark hop, so that count is historical. Current actual-function controls still serialize Commodities and Structured as Unknown while Equity is carried correctly. Retag remains NO-GO. Page-renders S2-AC5 cannot discriminate this broken world; chain repair requires a cell absent from the round-2 verification-only cut."
+      ],
+      "remedy": "New chain-repair cell required before the unrun retag: carry all five class values through every actual producer and consumer hop with weight conservation and correct labels. Replace S2-AC5 page-renders with a discriminating expectation that fails on the measured Unknown-label world. Pin the current source: historical S7 3/14/0 is not the current count.",
+      "owner": "2.0.0_SA_COO~Z",
+      "round": "v2",
+      "remediation": {
+        "state": "OPEN",
+        "owner": "2.0.0_SA_COO~Z",
+        "round": "v2"
+      },
+      "closed": false,
+      "disarm": {
+        "state": "ARMED",
+        "owner": "2.0.0_SA_COO~Z",
+        "at": null
+      }
+    },
+    {
+      "id": "POSN_ASTTAX-Z-C-S33",
+      "project": "POSN_ASTTAX",
+      "fabric": "site-z",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "mechanism": "Pinned HEAD seed-etf-constituents main preserves every existing row by default, including blank fields. The versioned upstream object contains all three sector values; the live table now matches. A new cell must reconcile missing-field filling with preservation of curated values. Current upstream correctness does not prove it was correct for all 17 historical days. An unrelated uncommitted edit to this script was excluded from this read.",
+      "evidence": [
+        "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/investigations/INVESTIGATION_v1.md@5c9e329a21719e7bf386646cdd01334cd5028294#POSN_ASTTAX-Z-W8-S2",
+        "Pinned HEAD seed-etf-constituents main preserves every existing row by default, including blank fields. The versioned upstream object contains all three sector values; the live table now matches. A new cell must reconcile missing-field filling with preservation of curated values. Current upstream correctness does not prove it was correct for all 17 historical days. An unrelated uncommitted edit to this script was excluded from this read."
+      ],
+      "remedy": "New constituent-seeder reconciliation cell required: fill genuinely missing fields from supported upstream facts while preserving deliberate curated values. Check the current worktree delta against the committed producer before editing; the preserved empty-value-filter change is not this remedy. Three instance blanks are filled; the producer class stays ARMED and unremediated.",
+      "owner": "1.0.0_SA_CTO~Z",
+      "round": "v2",
+      "remediation": {
+        "state": "OPEN",
+        "owner": "1.0.0_SA_CTO~Z",
+        "round": "v2"
+      },
+      "closed": false,
+      "disarm": {
+        "state": "ARMED",
+        "owner": "1.0.0_SA_CTO~Z",
+        "at": null
+      }
+    }
+  ],
+  "judgment_grades": [
+    {
+      "criterion": "T1-AC6",
+      "instance": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~10/POSN_ASTTAX.TO-T1-1.carry-five-classes-through-the-generator.proof_of_spec.json@07c046fa63f4558a67c27e7026f1d07923bd2b32",
+      "verdict": "PASS",
+      "reason": "Within the issued SOURCE CHANGE ONLY boundary, the real generator output carries all five classes, including cash/fixed-income spellings, with populated labels, weights and class delta/spread. CVO independently exercised six recognized raw classes and an unknown control, plus 11 candidate before/after inputs. This passes the generator output contract only; it does not pass deployment, benchmarks not specified by the order, sibling consumers or DOM safety."
+    },
+    {
+      "criterion": "T2-AC5",
+      "instance": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~11/POSN_ASTTAX.TO-T2-1.measure-the-frontend-hop.proof_of_spec.json@bab2cf66a2fcfcbe3886989a881f92f0369f29dd",
+      "verdict": "PASS",
+      "reason": "The specific unread frontend-contract gap is now closed at SOURCE-AT-PIN: 42/42 reported frontend consumer files read, 1113 text blobs plus 87 binary exclusions and one named nested gitlink. CVO checked the actual grouping loop and category call sites. The result is a demonstrated source collapse, not a successful UI. No all-runtime closure, portal change, deployment or DOM exercise is passed."
+    },
+    {
+      "criterion": "T3-AC4",
+      "instance": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~12/POSN_ASTTAX.TO-T3-1.hop-test-the-two-sibling-consumers.proof_of_spec.json@5899484453a8c5e152ca8f9c2d8adfa9be810a15",
+      "verdict": "FAIL",
+      "reason": "The two measured siblings are not the whole producer set. The data/etfs positioning publisher is a positive additional consumer/producer identified by W14-S4; its distinct served artifact and four-key payload were read. A 290-file/20-token-carrier sweep that classifies only two does not close the remainder. The local two-function measurements remain useful."
+    },
+    {
+      "criterion": "T4-AC5",
+      "instance": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~13/POSN_ASTTAX.TO-T4-1.registry-durability-the-re-seed-revert.proof_of_spec.json@8adab5748d2b58091bb0a19ebf16e15e27846e47",
+      "verdict": "FAIL",
+      "reason": "The default named seeder improves: CVO normal arm writes 136 rows, conflict arm refuses with rc3/0 writes and Scan-denied arm fails closed rc2/0 writes. But a CVO controlled curation between the scan and batch put is lost (curator_note B becomes old A, rc0); the snapshot merge is not concurrent durability. The 57-entry second writer overlaps four candidates, and explicit override flags also bypass preservation. No live concurrent edit is claimed."
+    },
+    {
+      "criterion": "T5-AC8",
+      "instance": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~14/POSN_ASTTAX.TO-T5-1.the-bar-step-2-measured-against-the-served-artifact.proof_of_spec.json@063312e4f33e36095ae751f0abcf5970cb5f88cc",
+      "verdict": "NOT_EVALUATED",
+      "reason": "The universal surface-set claim is not established: absent registry tokens exclude 118 code files without proving transitive dataflow absence, runtime/deployed consumers remain unread, and 132/836 reported cells are NOT-MEASURABLE-HERE. A4 has zero candidate members; R5/R6 claim a class override their call sites do not perform. The concrete generator counterexample nevertheless supports safety NO-GO. Completion of this measurement does not pass its universal property or all its table entries."
+    }
+  ],
+  "producer_mapping": {
+    "path": "infra/aws/lambda/v2_portal/yang_pipeline/positioning/yang-generate-allocation-summary/lambda_function.py",
+    "pin": "dc01ede7e2eb5a3c7b8e8b2cec53c3a360cf2cfb",
+    "sha256": "2b7d7171e744d2e007a0d6e63489fa53839e084e56b65ac4a01df0d176852288",
+    "lines": [
+      {
+        "line": 6,
+        "text": "holdings_attribution_data.json (produced upstream by yang-generate-holdings-attribution)"
+      },
+      {
+        "line": 10,
+        "text": "  holdings_attribution_data.json (S3) -> This Lambda -> allocation_summary.json (S3)"
+      },
+      {
+        "line": 34,
+        "text": "OUTPUT_KEY = 'json/positioning/allocation_summary.json'"
+      },
+      {
+        "line": 38,
+        "text": "# This consumer reads holdings_attribution_data.json's portfolios keys, which now"
+      },
+      {
+        "line": 71,
+        "text": "            'output_key': 'json/positioning/allocation_summary.json'"
+      },
+      {
+        "line": 146,
+        "text": "    Reads holdings_attribution_data.json and aggregates by asset class to create"
+      },
+      {
+        "line": 151,
+        "text": "        logger.info(f\"Loading holdings attribution data from s3://{bucket}/json/positioning/holdings_attribution_data.json\")"
+      },
+      {
+        "line": 154,
+        "text": "            Key='json/positioning/holdings_attribution_data.json'"
+      },
+      {
+        "line": 368,
+        "text": "    s3_client.put_object("
+      }
+    ]
+  },
+  "limits": "Prior behavioral controls and eleven proof/order pairs retained at their explicit pins; fresh structural checks only. No fresh vendor call, AWS act, live DOM, retag, deploy, gitlink change or FWD realization claim."
+}

@@ -1,0 +1,411 @@
+{
+ "kind": "COMPLETION_REPORT",
+ "schema_version": "1.0",
+ "project": "POSN_AGGFIX",
+ "round": 1,
+ "written_by": "2.0.0_SA_COO~Z",
+ "written_utc": "2026-09-16T01:12:00Z",
+ "decomposition_ref": "org/missions/D4/POSN/POSN_AGGFIX/decompositions/POSN_AGGFIX_DECOMP.md@605c03f81f",
+ "denominators": {
+  "fwd_in_prd_header": 8,
+  "cells_in_decomposition": 17,
+  "task_orders": 7,
+  "task_orders_terminal_with_valid_proof": 7
+ },
+ "outcomes": [
+  {
+   "fwd_id": "FWD-1",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "EXERCISED -- an Opal user has opened Positioning, chosen the aggregate, and read both the composition picture and the holdings table for it",
+   "cells": [
+    {
+     "cell_id": "AF1-s-12",
+     "task_orders": [
+      {
+       "id": "POSN_AGGFIX.TO-B1-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_AGGFIX/deliverables/0.9.0_WK_POSN_AGGFIX~3/POSN_AGGFIX.TO-B1-1.portal-fetch-viewer-gate-and-remembered-choice.proof_of_spec.json@0741530d35"
+      }
+     ]
+    },
+    {
+     "cell_id": "AF1-s-14",
+     "task_orders": [
+      {
+       "id": "POSN_AGGFIX.TO-B2-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_AGGFIX/deliverables/0.9.0_WK_POSN_AGGFIX~3/POSN_AGGFIX.TO-B2-1.holdings-tab-restores-the-aggregate-book.proof_of_spec.json@17060ffd6d"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED"
+  },
+  {
+   "fwd_id": "FWD-2",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "EXERCISED -- the page has been opened as an advisor and as a client, each including a viewer whose browser remembers the aggregate as its last choice, and no aggregate choice appeared for either",
+   "cells": [
+    {
+     "cell_id": "AF1-s-3",
+     "task_orders": [
+      {
+       "id": "POSN_AGGFIX.TO-B1-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_AGGFIX/deliverables/0.9.0_WK_POSN_AGGFIX~3/POSN_AGGFIX.TO-B1-1.portal-fetch-viewer-gate-and-remembered-choice.proof_of_spec.json@0741530d35"
+      }
+     ]
+    },
+    {
+     "cell_id": "AF1-s-4",
+     "task_orders": [
+      {
+       "id": "POSN_AGGFIX.TO-C1-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_AGGFIX/deliverables/0.9.0_WK_POSN_AGGFIX~2/POSN_AGGFIX.TO-C1-1.edge-refuses-the-aggregate-outside-opal.proof_of_spec.json@d668e7a4f5"
+      }
+     ]
+    },
+    {
+     "cell_id": "AF1-s-11",
+     "task_orders": [
+      {
+       "id": "POSN_AGGFIX.TO-C1-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_AGGFIX/deliverables/0.9.0_WK_POSN_AGGFIX~2/POSN_AGGFIX.TO-C1-1.edge-refuses-the-aggregate-outside-opal.proof_of_spec.json@d668e7a4f5"
+      }
+     ]
+    },
+    {
+     "cell_id": "AF1-s-13",
+     "task_orders": [
+      {
+       "id": "POSN_AGGFIX.TO-B1-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_AGGFIX/deliverables/0.9.0_WK_POSN_AGGFIX~3/POSN_AGGFIX.TO-B1-1.portal-fetch-viewer-gate-and-remembered-choice.proof_of_spec.json@0741530d35"
+      }
+     ]
+    },
+    {
+     "cell_id": "AF1-s-15",
+     "task_orders": [
+      {
+       "id": "POSN_AGGFIX.TO-B1-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_AGGFIX/deliverables/0.9.0_WK_POSN_AGGFIX~3/POSN_AGGFIX.TO-B1-1.portal-fetch-viewer-gate-and-remembered-choice.proof_of_spec.json@0741530d35"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED"
+  },
+  {
+   "fwd_id": "FWD-3",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "EXERCISED -- an Opal user has read the per-model split on aggregate holdings, laid out as it was before the view was removed, on the page as it looks today",
+   "cells": [
+    {
+     "cell_id": "AF1-s-14",
+     "task_orders": [
+      {
+       "id": "POSN_AGGFIX.TO-B2-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_AGGFIX/deliverables/0.9.0_WK_POSN_AGGFIX~3/POSN_AGGFIX.TO-B2-1.holdings-tab-restores-the-aggregate-book.proof_of_spec.json@17060ffd6d"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED"
+  },
+  {
+   "fwd_id": "FWD-4",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "EXERCISED -- the aggregate's model mix has been compared with Opal's most recent assets-by-model figures, and they agree",
+   "cells": [
+    {
+     "cell_id": "AF1-s-5",
+     "task_orders": [
+      {
+       "id": "POSN_AGGFIX.TO-A1-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_AGGFIX/deliverables/0.9.0_WK_POSN_AGGFIX~1/POSN_AGGFIX.TO-A1-1.verify-gap-writers-readers-deployed-bytes-grant-blends.proof_of_spec.json@d0221dab75"
+      }
+     ]
+    },
+    {
+     "cell_id": "AF1-s-6",
+     "task_orders": [
+      {
+       "id": "POSN_AGGFIX.TO-A2-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_AGGFIX/deliverables/0.9.0_WK_POSN_AGGFIX~1/POSN_AGGFIX.TO-A2-1.producer-reads-current-weights-and-writes-the-opal-only-key.proof_of_spec.json@fc5369a093"
+      }
+     ]
+    },
+    {
+     "cell_id": "AF1-s-9",
+     "task_orders": [
+      {
+       "id": "POSN_AGGFIX.TO-A1-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_AGGFIX/deliverables/0.9.0_WK_POSN_AGGFIX~1/POSN_AGGFIX.TO-A1-1.verify-gap-writers-readers-deployed-bytes-grant-blends.proof_of_spec.json@d0221dab75"
+      }
+     ]
+    },
+    {
+     "cell_id": "AF1-s-10",
+     "task_orders": [
+      {
+       "id": "POSN_AGGFIX.TO-A3-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_AGGFIX/deliverables/0.9.0_WK_POSN_AGGFIX~1/POSN_AGGFIX.TO-A3-1.deploy-the-producer-and-read-the-served-result.proof_of_spec.json@6ffc814799"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED"
+  },
+  {
+   "fwd_id": "FWD-6",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "EXERCISED -- the aggregate's inputs have been read: each blend of primary models counts through the models it is split between, nothing outside the primary models and their blends counts, and the per-model figures have been reconciled to Opal's own total",
+   "cells": [
+    {
+     "cell_id": "AF1-s-1",
+     "task_orders": [
+      {
+       "id": "POSN_AGGFIX.TO-A1-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_AGGFIX/deliverables/0.9.0_WK_POSN_AGGFIX~1/POSN_AGGFIX.TO-A1-1.verify-gap-writers-readers-deployed-bytes-grant-blends.proof_of_spec.json@d0221dab75"
+      }
+     ]
+    },
+    {
+     "cell_id": "AF1-s-6",
+     "task_orders": [
+      {
+       "id": "POSN_AGGFIX.TO-A2-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_AGGFIX/deliverables/0.9.0_WK_POSN_AGGFIX~1/POSN_AGGFIX.TO-A2-1.producer-reads-current-weights-and-writes-the-opal-only-key.proof_of_spec.json@fc5369a093"
+      }
+     ]
+    },
+    {
+     "cell_id": "AF1-s-7",
+     "task_orders": [
+      {
+       "id": "POSN_AGGFIX.TO-A2-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_AGGFIX/deliverables/0.9.0_WK_POSN_AGGFIX~1/POSN_AGGFIX.TO-A2-1.producer-reads-current-weights-and-writes-the-opal-only-key.proof_of_spec.json@fc5369a093"
+      }
+     ]
+    },
+    {
+     "cell_id": "AF1-s-10",
+     "task_orders": [
+      {
+       "id": "POSN_AGGFIX.TO-A3-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_AGGFIX/deliverables/0.9.0_WK_POSN_AGGFIX~1/POSN_AGGFIX.TO-A3-1.deploy-the-producer-and-read-the-served-result.proof_of_spec.json@6ffc814799"
+      }
+     ]
+    },
+    {
+     "cell_id": "AF1-s-17",
+     "task_orders": [
+      {
+       "id": "POSN_AGGFIX.TO-A1-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_AGGFIX/deliverables/0.9.0_WK_POSN_AGGFIX~1/POSN_AGGFIX.TO-A1-1.verify-gap-writers-readers-deployed-bytes-grant-blends.proof_of_spec.json@d0221dab75"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED"
+  },
+  {
+   "fwd_id": "FWD-7",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "EXERCISED -- what an advisor's and a client's signed-in sessions receive has been read and neither carries the aggregate, while an Opal session still receives it",
+   "cells": [
+    {
+     "cell_id": "AF1-s-2",
+     "task_orders": [
+      {
+       "id": "POSN_AGGFIX.TO-A1-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_AGGFIX/deliverables/0.9.0_WK_POSN_AGGFIX~1/POSN_AGGFIX.TO-A1-1.verify-gap-writers-readers-deployed-bytes-grant-blends.proof_of_spec.json@d0221dab75"
+      }
+     ]
+    },
+    {
+     "cell_id": "AF1-s-4",
+     "task_orders": [
+      {
+       "id": "POSN_AGGFIX.TO-C1-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_AGGFIX/deliverables/0.9.0_WK_POSN_AGGFIX~2/POSN_AGGFIX.TO-C1-1.edge-refuses-the-aggregate-outside-opal.proof_of_spec.json@d668e7a4f5"
+      }
+     ]
+    },
+    {
+     "cell_id": "AF1-s-8",
+     "task_orders": [
+      {
+       "id": "POSN_AGGFIX.TO-A2-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_AGGFIX/deliverables/0.9.0_WK_POSN_AGGFIX~1/POSN_AGGFIX.TO-A2-1.producer-reads-current-weights-and-writes-the-opal-only-key.proof_of_spec.json@fc5369a093"
+      }
+     ]
+    },
+    {
+     "cell_id": "AF1-s-9",
+     "task_orders": [
+      {
+       "id": "POSN_AGGFIX.TO-A1-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_AGGFIX/deliverables/0.9.0_WK_POSN_AGGFIX~1/POSN_AGGFIX.TO-A1-1.verify-gap-writers-readers-deployed-bytes-grant-blends.proof_of_spec.json@d0221dab75"
+      }
+     ]
+    },
+    {
+     "cell_id": "AF1-s-10",
+     "task_orders": [
+      {
+       "id": "POSN_AGGFIX.TO-A3-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_AGGFIX/deliverables/0.9.0_WK_POSN_AGGFIX~1/POSN_AGGFIX.TO-A3-1.deploy-the-producer-and-read-the-served-result.proof_of_spec.json@6ffc814799"
+      }
+     ]
+    },
+    {
+     "cell_id": "AF1-s-11",
+     "task_orders": [
+      {
+       "id": "POSN_AGGFIX.TO-C1-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_AGGFIX/deliverables/0.9.0_WK_POSN_AGGFIX~2/POSN_AGGFIX.TO-C1-1.edge-refuses-the-aggregate-outside-opal.proof_of_spec.json@d668e7a4f5"
+      }
+     ]
+    },
+    {
+     "cell_id": "AF1-s-12",
+     "task_orders": [
+      {
+       "id": "POSN_AGGFIX.TO-B1-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_AGGFIX/deliverables/0.9.0_WK_POSN_AGGFIX~3/POSN_AGGFIX.TO-B1-1.portal-fetch-viewer-gate-and-remembered-choice.proof_of_spec.json@0741530d35"
+      }
+     ]
+    },
+    {
+     "cell_id": "AF1-s-16",
+     "task_orders": [
+      {
+       "id": "POSN_AGGFIX.TO-B3-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_AGGFIX/deliverables/0.9.0_WK_POSN_AGGFIX~3/POSN_AGGFIX.TO-B3-1.five-model-views-and-the-aggregate-on-live-bytes.proof_of_spec.json@ece511ae97"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED"
+  },
+  {
+   "fwd_id": "FWD-8",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "EXERCISED -- each of the five model views has been compared before and after the change, and they match",
+   "cells": [
+    {
+     "cell_id": "AF1-s-2",
+     "task_orders": [
+      {
+       "id": "POSN_AGGFIX.TO-A1-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_AGGFIX/deliverables/0.9.0_WK_POSN_AGGFIX~1/POSN_AGGFIX.TO-A1-1.verify-gap-writers-readers-deployed-bytes-grant-blends.proof_of_spec.json@d0221dab75"
+      }
+     ]
+    },
+    {
+     "cell_id": "AF1-s-8",
+     "task_orders": [
+      {
+       "id": "POSN_AGGFIX.TO-A2-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_AGGFIX/deliverables/0.9.0_WK_POSN_AGGFIX~1/POSN_AGGFIX.TO-A2-1.producer-reads-current-weights-and-writes-the-opal-only-key.proof_of_spec.json@fc5369a093"
+      }
+     ]
+    },
+    {
+     "cell_id": "AF1-s-10",
+     "task_orders": [
+      {
+       "id": "POSN_AGGFIX.TO-A3-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_AGGFIX/deliverables/0.9.0_WK_POSN_AGGFIX~1/POSN_AGGFIX.TO-A3-1.deploy-the-producer-and-read-the-served-result.proof_of_spec.json@6ffc814799"
+      }
+     ]
+    },
+    {
+     "cell_id": "AF1-s-16",
+     "task_orders": [
+      {
+       "id": "POSN_AGGFIX.TO-B3-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_AGGFIX/deliverables/0.9.0_WK_POSN_AGGFIX~3/POSN_AGGFIX.TO-B3-1.five-model-views-and-the-aggregate-on-live-bytes.proof_of_spec.json@ece511ae97"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED"
+  },
+  {
+   "fwd_id": "FWD-9",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "EXERCISED -- Positioning has been opened as an Opal user with no remembered choice and landed on the aggregate, and opened again with a different book remembered and landed on that book",
+   "cells": [
+    {
+     "cell_id": "AF1-s-3",
+     "task_orders": [
+      {
+       "id": "POSN_AGGFIX.TO-B1-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_AGGFIX/deliverables/0.9.0_WK_POSN_AGGFIX~3/POSN_AGGFIX.TO-B1-1.portal-fetch-viewer-gate-and-remembered-choice.proof_of_spec.json@0741530d35"
+      }
+     ]
+    },
+    {
+     "cell_id": "AF1-s-13",
+     "task_orders": [
+      {
+       "id": "POSN_AGGFIX.TO-B1-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_AGGFIX/deliverables/0.9.0_WK_POSN_AGGFIX~3/POSN_AGGFIX.TO-B1-1.portal-fetch-viewer-gate-and-remembered-choice.proof_of_spec.json@0741530d35"
+      }
+     ]
+    },
+    {
+     "cell_id": "AF1-s-14",
+     "task_orders": [
+      {
+       "id": "POSN_AGGFIX.TO-B2-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_AGGFIX/deliverables/0.9.0_WK_POSN_AGGFIX~3/POSN_AGGFIX.TO-B2-1.holdings-tab-restores-the-aggregate-book.proof_of_spec.json@17060ffd6d"
+      }
+     ]
+    },
+    {
+     "cell_id": "AF1-s-15",
+     "task_orders": [
+      {
+       "id": "POSN_AGGFIX.TO-B1-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D4/POSN/POSN_AGGFIX/deliverables/0.9.0_WK_POSN_AGGFIX~3/POSN_AGGFIX.TO-B1-1.portal-fetch-viewer-gate-and-remembered-choice.proof_of_spec.json@0741530d35"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED"
+  }
+ ]
+}

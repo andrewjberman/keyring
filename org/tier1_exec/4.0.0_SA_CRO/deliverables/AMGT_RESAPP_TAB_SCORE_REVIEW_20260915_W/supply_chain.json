@@ -1,0 +1,897 @@
+{
+  "as_of": "2026-09-15T19:15:49.563272+00:00",
+  "kind": "ReferenceDataRequest",
+  "securities": [
+    "2317 TT Equity",
+    "9433 JP Equity",
+    "992 HK Equity",
+    "ASML NA Equity",
+    "BA US Equity",
+    "BABA US Equity",
+    "BBSE3 BZ Equity",
+    "BP/ LN Equity",
+    "COST US Equity",
+    "ENEL IM Equity",
+    "HAL US Equity",
+    "HD US Equity",
+    "HSBA LN Equity",
+    "ICICIBC IN Equity",
+    "IMB LN Equity",
+    "INTU US Equity",
+    "KMB US Equity",
+    "KPN NA Equity",
+    "NG/ LN Equity",
+    "NOVN SW Equity",
+    "NU US Equity",
+    "PBR US Equity",
+    "RKT LN Equity",
+    "RMS FP Equity",
+    "ROG SW Equity",
+    "RWE GR Equity",
+    "SAP GY Equity",
+    "SSE LN Equity",
+    "ST SP Equity",
+    "ULVR LN Equity",
+    "VLO US Equity",
+    "WALMEX* MM Equity",
+    "ZURN SW Equity"
+  ],
+  "fields": [
+    "NAME",
+    "SUPPLY_CHAIN_CUSTOMERS_ALL_DATA",
+    "SUPPLY_CHAIN_SUM_TOP_REVENUES"
+  ],
+  "overrides": {
+    "SUPPLY_CHAIN_SUM_COUNT_OVERRIDE": "1"
+  },
+  "parameters": {},
+  "responses": [
+    {
+      "securityData": [
+        {
+          "security": "VLO US Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 30,
+          "fieldData": {
+            "NAME": "VALERO ENERGY CORP",
+            "SUPPLY_CHAIN_CUSTOMERS_ALL_DATA": [
+              {
+                "Customer": "APC US Equity",
+                "Revenue Percentage": -2.4245362661989844e-14,
+                "Cost Type": "",
+                "Cost Percentage": -2.4245362661989844e-14,
+                "Relationship Period": "A",
+                "Relationship Year": "2025",
+                "Source of Relationship": "2025A CF (APC US)",
+                "Relationship As Of Date": "2026-03-30",
+                "Relationship Count": 1,
+                "Supply Chain Relationship Amount": -2.4245362661989844e-14,
+                "Company Identifier": 72800365,
+                "Long Company Name": "ARKO Petroleum Corp"
+              }
+            ]
+          }
+        },
+        {
+          "security": "WALMEX* MM Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 31,
+          "fieldData": {
+            "NAME": "WALMART DE MEXICO SAB DE CV",
+            "SUPPLY_CHAIN_CUSTOMERS_ALL_DATA": [
+              {
+                "Customer": "ALSEA* MM Equity",
+                "Revenue Percentage": -2.4245362661989844e-14,
+                "Cost Type": "",
+                "Cost Percentage": -2.4245362661989844e-14,
+                "Relationship Period": "Q2",
+                "Relationship Year": "2026",
+                "Source of Relationship": "2026Q2 CF (ALSEA* MM)",
+                "Relationship As Of Date": "2026-07-20",
+                "Relationship Count": 1,
+                "Supply Chain Relationship Amount": -2.4245362661989844e-14,
+                "Company Identifier": 815542,
+                "Long Company Name": "Alsea SAB de CV"
+              }
+            ]
+          }
+        },
+        {
+          "security": "ZURN SW Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 32,
+          "fieldData": {
+            "NAME": "ZURICH INSURANCE GROUP AG",
+            "SUPPLY_CHAIN_CUSTOMERS_ALL_DATA": [
+              {
+                "Customer": "ADES IJ Equity",
+                "Revenue Percentage": -2.4245362661989844e-14,
+                "Cost Type": "",
+                "Cost Percentage": -2.4245362661989844e-14,
+                "Relationship Period": "A",
+                "Relationship Year": "2025",
+                "Source of Relationship": "2025A CF (ADES IJ)",
+                "Relationship As Of Date": "2026-06-15",
+                "Relationship Count": 1,
+                "Supply Chain Relationship Amount": -2.4245362661989844e-14,
+                "Company Identifier": 151807,
+                "Long Company Name": "Akasha Wira International Tbk PT"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "securityData": [
+        {
+          "security": "2317 TT Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 0,
+          "fieldData": {
+            "NAME": "HON HAI PRECISION INDUSTRY",
+            "SUPPLY_CHAIN_CUSTOMERS_ALL_DATA": [
+              {
+                "Customer": "AAPL US Equity",
+                "Revenue Percentage": 27.27562,
+                "Cost Type": "COGS",
+                "Cost Percentage": 32.42923,
+                "Relationship Period": "Q1",
+                "Relationship Year": "2026",
+                "Source of Relationship": "Estimate (2317 TT)",
+                "Relationship As Of Date": "2026-07-22",
+                "Relationship Count": 1,
+                "Supply Chain Relationship Amount": 18280679209.29,
+                "Company Identifier": 101695,
+                "Long Company Name": "Apple Inc"
+              }
+            ],
+            "SUPPLY_CHAIN_SUM_TOP_REVENUES": 27.28
+          }
+        },
+        {
+          "security": "9433 JP Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 1,
+          "fieldData": {
+            "NAME": "KDDI CORP",
+            "SUPPLY_CHAIN_CUSTOMERS_ALL_DATA": [
+              {
+                "Customer": "9436 JP Equity",
+                "Revenue Percentage": 0.345212,
+                "Cost Type": "COGS",
+                "Cost Percentage": 30.982187,
+                "Relationship Period": "A",
+                "Relationship Year": "2026",
+                "Source of Relationship": "2026A CF (9436 JP)",
+                "Relationship As Of Date": "2026-06-09",
+                "Relationship Count": 1,
+                "Supply Chain Relationship Amount": 34813160.55,
+                "Company Identifier": 209701,
+                "Long Company Name": "Okinawa Cellular Telephone Co"
+              }
+            ],
+            "SUPPLY_CHAIN_SUM_TOP_REVENUES": 0.35
+          }
+        },
+        {
+          "security": "992 HK Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 2,
+          "fieldData": {
+            "NAME": "LENOVO GROUP LTD",
+            "SUPPLY_CHAIN_CUSTOMERS_ALL_DATA": [
+              {
+                "Customer": "AMZN US Equity",
+                "Revenue Percentage": 8.997751,
+                "Cost Type": "COGS",
+                "Cost Percentage": 1.816941,
+                "Relationship Period": "Q3",
+                "Relationship Year": "2026",
+                "Source of Relationship": "Estimate (992 HK)",
+                "Relationship As Of Date": "2026-03-31",
+                "Relationship Count": 1,
+                "Supply Chain Relationship Amount": 1997890688.0,
+                "Company Identifier": 216952,
+                "Long Company Name": "Amazon.com Inc"
+              }
+            ],
+            "SUPPLY_CHAIN_SUM_TOP_REVENUES": 9.0
+          }
+        },
+        {
+          "security": "ASML NA Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 3,
+          "fieldData": {
+            "NAME": "ASML HOLDING NV",
+            "SUPPLY_CHAIN_CUSTOMERS_ALL_DATA": [
+              {
+                "Customer": "2330 TT Equity",
+                "Revenue Percentage": 16.561428,
+                "Cost Type": "CAPEX",
+                "Cost Percentage": 15.322424,
+                "Relationship Period": "Q4",
+                "Relationship Year": "2025",
+                "Source of Relationship": "Estimate (ASML NA)",
+                "Relationship As Of Date": "2026-05-27",
+                "Relationship Count": 1,
+                "Supply Chain Relationship Amount": 1690474926.91,
+                "Company Identifier": 153737,
+                "Long Company Name": "Taiwan Semiconductor Manufacturing Co Ltd"
+              }
+            ],
+            "SUPPLY_CHAIN_SUM_TOP_REVENUES": 16.56
+          }
+        },
+        {
+          "security": "BA US Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 4,
+          "fieldData": {
+            "NAME": "BOEING CO/THE",
+            "SUPPLY_CHAIN_CUSTOMERS_ALL_DATA": [
+              {
+                "Customer": "3352Z US Equity",
+                "Revenue Percentage": 34.776058,
+                "Cost Type": "",
+                "Cost Percentage": -2.4245362661989844e-14,
+                "Relationship Period": "Q2",
+                "Relationship Year": "2026",
+                "Source of Relationship": "2026Q2 CF (BA US)",
+                "Relationship As Of Date": "2026-07-28",
+                "Relationship Count": 1,
+                "Supply Chain Relationship Amount": 8541000192.0,
+                "Company Identifier": 218252,
+                "Long Company Name": "United States of America"
+              }
+            ],
+            "SUPPLY_CHAIN_SUM_TOP_REVENUES": 34.78
+          }
+        },
+        {
+          "security": "BABA US Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 5,
+          "fieldData": {
+            "NAME": "ALIBABA GROUP HOLDING-SP ADR",
+            "SUPPLY_CHAIN_CUSTOMERS_ALL_DATA": [
+              {
+                "Customer": "688688 CH Equity",
+                "Revenue Percentage": 2.396796,
+                "Cost Type": "",
+                "Cost Percentage": -2.4245362661989844e-14,
+                "Relationship Period": "A",
+                "Relationship Year": "2026",
+                "Source of Relationship": "2026A CF (BABA US)",
+                "Relationship As Of Date": "2026-05-20",
+                "Relationship Count": 1,
+                "Supply Chain Relationship Amount": 863731192.54,
+                "Company Identifier": 41782818,
+                "Long Company Name": "Ant Group Co Ltd"
+              }
+            ],
+            "SUPPLY_CHAIN_SUM_TOP_REVENUES": 2.4
+          }
+        },
+        {
+          "security": "BBSE3 BZ Equity",
+          "eidData": [],
+          "fieldExceptions": [
+            {
+              "fieldId": "SUPPLY_CHAIN_SUM_TOP_REVENUES",
+              "errorInfo": {
+                "source": "24137:rsfrdsvc3",
+                "code": 9,
+                "category": "BAD_FLD",
+                "message": "Field not applicable to security",
+                "subcategory": "NOT_APPLICABLE_TO_REF_DATA"
+              }
+            }
+          ],
+          "sequenceNumber": 6,
+          "fieldData": {
+            "NAME": "BB SEGURIDADE PARTICIPACOES"
+          }
+        },
+        {
+          "security": "BP/ LN Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 7,
+          "fieldData": {
+            "NAME": "BP PLC",
+            "SUPPLY_CHAIN_CUSTOMERS_ALL_DATA": [
+              {
+                "Customer": "CA FP Equity",
+                "Revenue Percentage": 0.214562,
+                "Cost Type": "COGS",
+                "Cost Percentage": 0.54272,
+                "Relationship Period": "Q2",
+                "Relationship Year": "2025",
+                "Source of Relationship": "Estimate (CA FP)",
+                "Relationship As Of Date": "2025-09-19",
+                "Relationship Count": 1,
+                "Supply Chain Relationship Amount": 106341591.68,
+                "Company Identifier": 115268,
+                "Long Company Name": "Carrefour SA"
+              }
+            ],
+            "SUPPLY_CHAIN_SUM_TOP_REVENUES": 0.21
+          }
+        },
+        {
+          "security": "COST US Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 8,
+          "fieldData": {
+            "NAME": "COSTCO WHOLESALE CORP",
+            "SUPPLY_CHAIN_CUSTOMERS_ALL_DATA": [
+              {
+                "Customer": "013890 KS Equity",
+                "Revenue Percentage": -2.4245362661989844e-14,
+                "Cost Type": "",
+                "Cost Percentage": -2.4245362661989844e-14,
+                "Relationship Period": "C2",
+                "Relationship Year": "2026",
+                "Source of Relationship": "2026C2 CF (013890 KS)",
+                "Relationship As Of Date": "2026-08-13",
+                "Relationship Count": 1,
+                "Supply Chain Relationship Amount": -2.4245362661989844e-14,
+                "Company Identifier": 129161,
+                "Long Company Name": "Zinus Inc"
+              }
+            ]
+          }
+        },
+        {
+          "security": "ENEL IM Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 9,
+          "fieldData": {
+            "NAME": "ENEL SPA",
+            "SUPPLY_CHAIN_CUSTOMERS_ALL_DATA": [
+              {
+                "Customer": "ENI IM Equity",
+                "Revenue Percentage": 0.832725,
+                "Cost Type": "COGS",
+                "Cost Percentage": 0.826772,
+                "Relationship Period": "A",
+                "Relationship Year": "2025",
+                "Source of Relationship": "2025A CF (ENI IM)",
+                "Relationship As Of Date": "2026-03-23",
+                "Relationship Count": 1,
+                "Supply Chain Relationship Amount": 183625000.0,
+                "Company Identifier": 143031,
+                "Long Company Name": "Eni SpA"
+              }
+            ],
+            "SUPPLY_CHAIN_SUM_TOP_REVENUES": 0.83
+          }
+        }
+      ]
+    },
+    {
+      "securityData": [
+        {
+          "security": "HAL US Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 10,
+          "fieldData": {
+            "NAME": "HALLIBURTON CO",
+            "SUPPLY_CHAIN_CUSTOMERS_ALL_DATA": [
+              {
+                "Customer": "0318891D GR Equity",
+                "Revenue Percentage": -2.4245362661989844e-14,
+                "Cost Type": "",
+                "Cost Percentage": -2.4245362661989844e-14,
+                "Relationship Period": "A",
+                "Relationship Year": "2024",
+                "Source of Relationship": "Company News (HAL US)",
+                "Relationship As Of Date": "2024-05-21",
+                "Relationship Count": 1,
+                "Supply Chain Relationship Amount": -2.4245362661989844e-14,
+                "Company Identifier": 16893145,
+                "Long Company Name": "Wintershall Dea GmbH"
+              }
+            ]
+          }
+        },
+        {
+          "security": "HD US Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 11,
+          "fieldData": {
+            "NAME": "HOME DEPOT INC",
+            "SUPPLY_CHAIN_CUSTOMERS_ALL_DATA": [
+              {
+                "Customer": "1270468Z US Equity",
+                "Revenue Percentage": -2.4245362661989844e-14,
+                "Cost Type": "",
+                "Cost Percentage": -2.4245362661989844e-14,
+                "Relationship Period": "A",
+                "Relationship Year": "2026",
+                "Source of Relationship": "Company News (1270468Z US)",
+                "Relationship As Of Date": "2026-06-24",
+                "Relationship Count": 1,
+                "Supply Chain Relationship Amount": -2.4245362661989844e-14,
+                "Company Identifier": 7253320,
+                "Long Company Name": "David Weekley Homes Foundation"
+              }
+            ]
+          }
+        },
+        {
+          "security": "HSBA LN Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 12,
+          "fieldData": {
+            "NAME": "HSBC HOLDINGS PLC",
+            "SUPPLY_CHAIN_CUSTOMERS_ALL_DATA": [
+              {
+                "Customer": "778 HK Equity",
+                "Revenue Percentage": 0.000477,
+                "Cost Type": "COGS",
+                "Cost Percentage": 0.304603,
+                "Relationship Period": "A",
+                "Relationship Year": "2025",
+                "Source of Relationship": "2025A CF (778 HK)",
+                "Relationship As Of Date": "2026-04-24",
+                "Relationship Count": 1,
+                "Supply Chain Relationship Amount": 156498.39,
+                "Company Identifier": 8216503,
+                "Long Company Name": "Fortune Real Estate Investment Trust"
+              }
+            ],
+            "SUPPLY_CHAIN_SUM_TOP_REVENUES": 0.0
+          }
+        },
+        {
+          "security": "ICICIBC IN Equity",
+          "eidData": [],
+          "fieldExceptions": [
+            {
+              "fieldId": "SUPPLY_CHAIN_SUM_TOP_REVENUES",
+              "errorInfo": {
+                "source": "21930:rsfrdsvc3",
+                "code": 9,
+                "category": "BAD_FLD",
+                "message": "Field not applicable to security",
+                "subcategory": "NOT_APPLICABLE_TO_REF_DATA"
+              }
+            }
+          ],
+          "sequenceNumber": 13,
+          "fieldData": {
+            "NAME": "ICICI BANK LTD"
+          }
+        },
+        {
+          "security": "IMB LN Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 14,
+          "fieldData": {
+            "NAME": "IMPERIAL BRANDS PLC",
+            "SUPPLY_CHAIN_CUSTOMERS_ALL_DATA": [
+              {
+                "Customer": "LOG SM Equity",
+                "Revenue Percentage": 1.80119,
+                "Cost Type": "COGS",
+                "Cost Percentage": 5.842288,
+                "Relationship Period": "A",
+                "Relationship Year": "2025",
+                "Source of Relationship": "2025A CF (LOG SM)",
+                "Relationship As Of Date": "2025-11-06",
+                "Relationship Count": 1,
+                "Supply Chain Relationship Amount": 189411402.74,
+                "Company Identifier": 40798542,
+                "Long Company Name": "Logista Integral SA"
+              }
+            ],
+            "SUPPLY_CHAIN_SUM_TOP_REVENUES": 1.8
+          }
+        },
+        {
+          "security": "INTU US Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 15,
+          "fieldData": {
+            "NAME": "INTUIT INC",
+            "SUPPLY_CHAIN_CUSTOMERS_ALL_DATA": [
+              {
+                "Customer": "SNX US Equity",
+                "Revenue Percentage": 0.416849,
+                "Cost Type": "COGS",
+                "Cost Percentage": 0.100063,
+                "Relationship Period": "Q4",
+                "Relationship Year": "2025",
+                "Source of Relationship": "Estimate (SNX US)",
+                "Relationship As Of Date": "2026-02-03",
+                "Relationship Count": 1,
+                "Supply Chain Relationship Amount": 16194586.0,
+                "Company Identifier": 1499717,
+                "Long Company Name": "TD SYNNEX Corp"
+              }
+            ],
+            "SUPPLY_CHAIN_SUM_TOP_REVENUES": 0.42
+          }
+        },
+        {
+          "security": "KMB US Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 16,
+          "fieldData": {
+            "NAME": "KIMBERLY-CLARK CORP",
+            "SUPPLY_CHAIN_CUSTOMERS_ALL_DATA": [
+              {
+                "Customer": "WMT US Equity",
+                "Revenue Percentage": 16.0,
+                "Cost Type": "COGS",
+                "Cost Percentage": 0.49151,
+                "Relationship Period": "A",
+                "Relationship Year": "2025",
+                "Source of Relationship": "2025A CF (KMB US)",
+                "Relationship As Of Date": "2026-02-12",
+                "Relationship Count": 1,
+                "Supply Chain Relationship Amount": 657880000.0,
+                "Company Identifier": 101616,
+                "Long Company Name": "Walmart Inc"
+              }
+            ],
+            "SUPPLY_CHAIN_SUM_TOP_REVENUES": 16.0
+          }
+        },
+        {
+          "security": "KPN NA Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 17,
+          "fieldData": {
+            "NAME": "KONINKLIJKE KPN NV",
+            "SUPPLY_CHAIN_CUSTOMERS_ALL_DATA": [
+              {
+                "Customer": "CAN LN Equity",
+                "Revenue Percentage": -2.4245362661989844e-14,
+                "Cost Type": "",
+                "Cost Percentage": -2.4245362661989844e-14,
+                "Relationship Period": "S1",
+                "Relationship Year": "2024",
+                "Source of Relationship": "2024S1 CF (CAN LN)",
+                "Relationship As Of Date": "2024-12-16",
+                "Relationship Count": 1,
+                "Supply Chain Relationship Amount": -2.4245362661989844e-14,
+                "Company Identifier": 72096067,
+                "Long Company Name": "Canal+ SA"
+              }
+            ]
+          }
+        },
+        {
+          "security": "NG/ LN Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 18,
+          "fieldData": {
+            "NAME": "NATIONAL GRID PLC",
+            "SUPPLY_CHAIN_CUSTOMERS_ALL_DATA": [
+              {
+                "Customer": "2338544D LN Equity",
+                "Revenue Percentage": 0.062193,
+                "Cost Type": "COGS",
+                "Cost Percentage": 27.849724,
+                "Relationship Period": "A",
+                "Relationship Year": "2026",
+                "Source of Relationship": "2026A CF (NG/ LN)",
+                "Relationship As Of Date": "2026-06-03",
+                "Relationship Count": 1,
+                "Supply Chain Relationship Amount": 3685825.0,
+                "Company Identifier": 67012793,
+                "Long Company Name": "Nemo Link Ltd"
+              }
+            ],
+            "SUPPLY_CHAIN_SUM_TOP_REVENUES": 0.06
+          }
+        },
+        {
+          "security": "NOVN SW Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 19,
+          "fieldData": {
+            "NAME": "NOVARTIS AG-REG",
+            "SUPPLY_CHAIN_CUSTOMERS_ALL_DATA": [
+              {
+                "Customer": "7459 JP Equity",
+                "Revenue Percentage": 2.105105,
+                "Cost Type": "COGS",
+                "Cost Percentage": 5.053587,
+                "Relationship Period": "Q4",
+                "Relationship Year": "2026",
+                "Source of Relationship": "Estimate (7459 JP)",
+                "Relationship As Of Date": "2026-05-22",
+                "Relationship Count": 1,
+                "Supply Chain Relationship Amount": 284738749.44,
+                "Company Identifier": 169936,
+                "Long Company Name": "Medipal Holdings Corp"
+              }
+            ],
+            "SUPPLY_CHAIN_SUM_TOP_REVENUES": 2.11
+          }
+        }
+      ]
+    },
+    {
+      "securityData": [
+        {
+          "security": "NU US Equity",
+          "eidData": [],
+          "fieldExceptions": [
+            {
+              "fieldId": "SUPPLY_CHAIN_SUM_TOP_REVENUES",
+              "errorInfo": {
+                "source": "24198:rsfrdsvc1",
+                "code": 9,
+                "category": "BAD_FLD",
+                "message": "Field not applicable to security",
+                "subcategory": "NOT_APPLICABLE_TO_REF_DATA"
+              }
+            }
+          ],
+          "sequenceNumber": 20,
+          "fieldData": {
+            "NAME": "NU HOLDINGS LTD/CAYMAN ISL-A"
+          }
+        },
+        {
+          "security": "PBR US Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 21,
+          "fieldData": {
+            "NAME": "PETROLEO BRASILEIRO-SPON ADR",
+            "SUPPLY_CHAIN_CUSTOMERS_ALL_DATA": [
+              {
+                "Customer": "BRKM5 BZ Equity",
+                "Revenue Percentage": 1.858912,
+                "Cost Type": "COGS",
+                "Cost Percentage": 16.558399,
+                "Relationship Period": "C2",
+                "Relationship Year": "2026",
+                "Source of Relationship": "2026C2 CF (BRKM5 BZ)",
+                "Relationship As Of Date": "2026-08-14",
+                "Relationship Count": 1,
+                "Supply Chain Relationship Amount": 494731893.97,
+                "Company Identifier": 158477,
+                "Long Company Name": "Braskem SA"
+              }
+            ],
+            "SUPPLY_CHAIN_SUM_TOP_REVENUES": 1.86
+          }
+        },
+        {
+          "security": "RKT LN Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 22,
+          "fieldData": {
+            "NAME": "RECKITT BENCKISER GROUP PLC",
+            "SUPPLY_CHAIN_CUSTOMERS_ALL_DATA": [
+              {
+                "Customer": "WMT US Equity",
+                "Revenue Percentage": 4.31315,
+                "Cost Type": "COGS",
+                "Cost Percentage": 0.142472,
+                "Relationship Period": "Q1",
+                "Relationship Year": "2026",
+                "Source of Relationship": "Estimate (RKT LN)",
+                "Relationship As Of Date": "2026-05-05",
+                "Relationship Count": 1,
+                "Supply Chain Relationship Amount": 206458835.05,
+                "Company Identifier": 101616,
+                "Long Company Name": "Walmart Inc"
+              }
+            ],
+            "SUPPLY_CHAIN_SUM_TOP_REVENUES": 4.31
+          }
+        },
+        {
+          "security": "RMS FP Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 23,
+          "fieldData": {
+            "NAME": "HERMES INTERNATIONAL",
+            "SUPPLY_CHAIN_CUSTOMERS_ALL_DATA": [
+              {
+                "Customer": "1928 HK Equity",
+                "Revenue Percentage": -2.4245362661989844e-14,
+                "Cost Type": "",
+                "Cost Percentage": -2.4245362661989844e-14,
+                "Relationship Period": "A",
+                "Relationship Year": "2022",
+                "Source of Relationship": "2022A CF (1928 HK)",
+                "Relationship As Of Date": "2023-03-31",
+                "Relationship Count": 1,
+                "Supply Chain Relationship Amount": -2.4245362661989844e-14,
+                "Company Identifier": 17387973,
+                "Long Company Name": "Sands China Ltd"
+              }
+            ]
+          }
+        },
+        {
+          "security": "ROG SW Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 24,
+          "fieldData": {
+            "NAME": "ROCHE HOLDING AG-GENUSSCHEIN",
+            "SUPPLY_CHAIN_CUSTOMERS_ALL_DATA": [
+              {
+                "Customer": "MCK US Equity",
+                "Revenue Percentage": 14.63034,
+                "Cost Type": "COGS",
+                "Cost Percentage": 2.834514,
+                "Relationship Period": "A",
+                "Relationship Year": "2025",
+                "Source of Relationship": "2025A CF (ROP SW)",
+                "Relationship As Of Date": "2026-01-30",
+                "Relationship Count": 1,
+                "Supply Chain Relationship Amount": 2714808459.19,
+                "Company Identifier": 154936,
+                "Long Company Name": "McKesson Corp"
+              }
+            ],
+            "SUPPLY_CHAIN_SUM_TOP_REVENUES": 14.63
+          }
+        },
+        {
+          "security": "RWE GR Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 25,
+          "fieldData": {
+            "NAME": "RWE AG",
+            "SUPPLY_CHAIN_CUSTOMERS_ALL_DATA": [
+              {
+                "Customer": "0083767D LN Equity",
+                "Revenue Percentage": -2.4245362661989844e-14,
+                "Cost Type": "",
+                "Cost Percentage": -2.4245362661989844e-14,
+                "Relationship Period": "A",
+                "Relationship Year": "2026",
+                "Source of Relationship": "Company News (0083767D LN)",
+                "Relationship As Of Date": "2026-03-20",
+                "Relationship Count": 1,
+                "Supply Chain Relationship Amount": -2.4245362661989844e-14,
+                "Company Identifier": 23601310,
+                "Long Company Name": "ABP Jersey Ltd"
+              }
+            ]
+          }
+        },
+        {
+          "security": "SAP GY Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 26,
+          "fieldData": {
+            "NAME": "SAP SE",
+            "SUPPLY_CHAIN_CUSTOMERS_ALL_DATA": [
+              {
+                "Customer": "SNX US Equity",
+                "Revenue Percentage": 0.999125,
+                "Cost Type": "COGS",
+                "Cost Percentage": 0.695957,
+                "Relationship Period": "Q4",
+                "Relationship Year": "2025",
+                "Source of Relationship": "Estimate (SNX US)",
+                "Relationship As Of Date": "2026-02-03",
+                "Relationship Count": 1,
+                "Supply Chain Relationship Amount": 112636392.0,
+                "Company Identifier": 1499717,
+                "Long Company Name": "TD SYNNEX Corp"
+              }
+            ],
+            "SUPPLY_CHAIN_SUM_TOP_REVENUES": 1.0
+          }
+        },
+        {
+          "security": "SSE LN Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 27,
+          "fieldData": {
+            "NAME": "SSE PLC",
+            "SUPPLY_CHAIN_CUSTOMERS_ALL_DATA": [
+              {
+                "Customer": "1946942Z LN Equity",
+                "Revenue Percentage": 1.766063,
+                "Cost Type": "",
+                "Cost Percentage": -2.4245362661989844e-14,
+                "Relationship Period": "A",
+                "Relationship Year": "2026",
+                "Source of Relationship": "2026A CF (SSE LN)",
+                "Relationship As Of Date": "2026-06-12",
+                "Relationship Count": 1,
+                "Supply Chain Relationship Amount": 60279992.5,
+                "Company Identifier": 12871326,
+                "Long Company Name": "Marchwood Power Ltd"
+              }
+            ],
+            "SUPPLY_CHAIN_SUM_TOP_REVENUES": 1.77
+          }
+        },
+        {
+          "security": "ST SP Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 28,
+          "fieldData": {
+            "NAME": "SINGAPORE TELECOMMUNICATIONS",
+            "SUPPLY_CHAIN_CUSTOMERS_ALL_DATA": [
+              {
+                "Customer": "2412 TT Equity",
+                "Revenue Percentage": 1.379419,
+                "Cost Type": "COGS",
+                "Cost Percentage": 3.078048,
+                "Relationship Period": "Q3",
+                "Relationship Year": "2025",
+                "Source of Relationship": "Estimate (2412 TT)",
+                "Relationship As Of Date": "2025-11-20",
+                "Relationship Count": 1,
+                "Supply Chain Relationship Amount": 37458938.13,
+                "Company Identifier": 812360,
+                "Long Company Name": "Chunghwa Telecom Co Ltd"
+              }
+            ],
+            "SUPPLY_CHAIN_SUM_TOP_REVENUES": 1.38
+          }
+        },
+        {
+          "security": "ULVR LN Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 29,
+          "fieldData": {
+            "NAME": "UNILEVER PLC",
+            "SUPPLY_CHAIN_CUSTOMERS_ALL_DATA": [
+              {
+                "Customer": "WMT US Equity",
+                "Revenue Percentage": 7.226686,
+                "Cost Type": "COGS",
+                "Cost Percentage": 0.951294,
+                "Relationship Period": "Q3",
+                "Relationship Year": "2025",
+                "Source of Relationship": "Estimate (ULVR LN)",
+                "Relationship As Of Date": "2025-12-16",
+                "Relationship Count": 1,
+                "Supply Chain Relationship Amount": 1282942388.42,
+                "Company Identifier": 101616,
+                "Long Company Name": "Walmart Inc"
+              }
+            ],
+            "SUPPLY_CHAIN_SUM_TOP_REVENUES": 7.23
+          }
+        }
+      ]
+    }
+  ]
+}

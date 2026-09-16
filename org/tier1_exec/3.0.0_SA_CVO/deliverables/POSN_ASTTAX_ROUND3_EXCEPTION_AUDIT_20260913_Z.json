@@ -1,0 +1,12 @@
+[
+  {
+    "round": 3,
+    "pass": true,
+    "actual_check_file_note": "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/adjudications/ADJUDICATION_v5.md: L10 NAMED EXCEPTION for POSN_ASTTAX-Z-C-S65 -- LD-0562 / COO 22245 / fa2b1764c4; 4 of 15 orders STILL OPEN, explicitly unrun: POSN_ASTTAX.TO-S2-1.retag-the-hedge-bucket.md [staged], POSN_ASTTAX.TO-S3-1.is-hedge-reconciliation.md [staged], POSN_ASTTAX.TO-T6-1.the-retag-with-a-criterion-that-fails-in-the-broken-world.md [staged], POSN_ASTTAX.TO-T7-1.is-hedge-reconciliation.md [staged]. Exact row and order content matched; other limbs passed. NOT the broad override."
+  },
+  {
+    "round": 2,
+    "pass": true,
+    "actual_check_file_note": "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/adjudications/ADJUDICATION_v3.md: L10 NAMED EXCEPTION for POSN_ASTTAX-Z-C-S30 -- Andrew call 1 YES / CTO 21533 / 10ceba8c43; 2 of 8 orders STILL OPEN, explicitly unrun: POSN_ASTTAX.TO-S2-1.retag-the-hedge-bucket.md [staged], POSN_ASTTAX.TO-S3-1.is-hedge-reconciliation.md [staged]. Exact row and order content matched; other limbs passed. NOT the broad override."
+  }
+]

@@ -1,10 +1,10 @@
 {
- "note": "24 new original items compiled; 49 total; L9 has one pending original DI and one own proposal; four staged orders bar L10. ADJUDICATION_v4.md.",
- "prd_pin": "128087d583b4",
+ "note": "CVO compiled 58 original items across both roots; 11 unchanged proof/order pairs structurally VALID. Four named orders carried under LD-0562.",
+ "prd_pin": "3429781ce0c7",
  "prd_version": "v0.5",
  "project": "POSN_ASTTAX",
  "round": 3,
  "signed_by": "3.0.0_SA_CVO~Z",
  "stage": "L8",
- "utc": "2026-09-12T00:21Z"
+ "utc": "2026-09-13T04:53Z"
 }

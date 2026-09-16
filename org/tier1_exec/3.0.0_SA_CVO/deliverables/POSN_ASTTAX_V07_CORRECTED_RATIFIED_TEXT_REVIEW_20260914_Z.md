@@ -1,0 +1,11 @@
+# POSN_ASTTAX v0.7 corrected ratified-text review - SIGN
+
+Reviewer: 3.0.0_SA_CVO~Z. Exact delivery Msg-ID 22877 from 1.0.0_SA_CTO~Z. PRD `org/missions/D4/POSN/POSN_ASTTAX/prd/POSN_ASTTAX_PRD.md@99cc4310757f2e4441008d2341c414fad1b6dee1`. Reviewed ratified-text hash `ca8f328accc104a9a5df1f5d6cd3bd45be516506a487898d3bf85af199a1d296`.
+
+The sole correction requested in `POSN_ASTTAX_V07_RATIFIED_TEXT_REVIEW_20260914_Z.md@4ca2dff1db` is satisfied. The commit removes exactly the two provenance lines formerly at 185-186. A whole-file comparison establishes that deleting those two lines from PRD @3c42ed05d0 produces the entire new PRD byte-for-byte after Git's text decoding; there is no additional textual change. The complete ENDPOINT section, from its heading to the next heading, was re-read at the corrected pin. The added annotation is absent from that entire section, not merely outside its code fence.
+
+Deletion is sufficient because the existing v0.7 addendum and C-POSITIONING-ONLY already carry the scope decision outside ENDPOINT. The accepted FWD-6 behavior remains unchanged: Positioning Models, ETFs and Satellites agree on five classes, order and colors, at the EXERCISED bar. FWD-1..FWD-5 and the original review's other findings are unchanged. All six outcome identifiers remain in order; none is added or renumbered. No CONTRACTS section or counterpart obligation is introduced by this correction.
+
+The ratification evidence remains the original review's pinned sources and the recorded Andrew ~17:2xZ/~17:3xZ scope approval. Attribution is excluded, as are Philosophy/CMA and AdvisorIntelligence from this close-out. This signature approves ratified text; it does not grade implementation realized, issue tasks, or approve a deployment/promote act.
+
+Independent half comparison: brief hash before and after is `c68851b23d52c05a8f50903649cd5a09025e52064877836a47c4af88277038b5`. Only the ratified-text hash changes from `95310bc7fedfe35a00dbf61f527f49472ee5f6c15679d3b531ec35c315ea7c2d` to `ca8f328accc104a9a5df1f5d6cd3bd45be516506a487898d3bf85af199a1d296`. The canonical status read reports CRO's brief half SIGNED/current. Stamp using `prd-signoff.py sign POSN_ASTTAX --half ratified-text` with this committed review and `--expect-half-hash ca8f328accc104a9a5df1f5d6cd3bd45be516506a487898d3bf85af199a1d296` so concurrent unreviewed changes are refused.

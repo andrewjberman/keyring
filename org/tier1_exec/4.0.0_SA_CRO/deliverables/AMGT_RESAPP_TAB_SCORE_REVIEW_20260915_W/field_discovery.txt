@@ -1,0 +1,140 @@
+﻿=== free cash flow estimates     returned 7 field(s)
+   FREE_CASH_FLOW_YIELD               Free Cash Flow Yield                                                   Fundamentals/Bloomberg Fundamentals/Fina
+   BEST_ESTIMATE_FCF                  BEst Estimate Free Cash Flow                                           Earnings Estimates/BEst (Bloomberg Estim
+   HEADLINE_FCF                       Free Cash Flow - Headline                                              Fundamentals/Bloomberg Fundamentals/Esti
+   BEST_CALCULATED_FCF                BEst Calculated Free Cash Flow                                         Earnings Estimates/BEst (Bloomberg Estim
+   CASH_BURN                          Cash Burn                                                              Fundamentals/Bloomberg Fundamentals/Fina
+   MODEL_OAS                          Model OAS                                                              Analysis/Option Valuation/Specific Asset
+   ACTIVATE_MULTICALC_MODE            Activate MultiCalc Mode                                                Analysis/Option Valuation/Specific Asset
+=== cash flow standard deviation returned 4 field(s)
+   MTG_DSCR_SDEV                      DSCR Standard Deviation                                                Descriptive/Collateral/Coverage Ratio
+   BEST_ECPSPAR_CUR_YR_STDDEV         BEst Est CPS Par Co Curr Yr Std Dev                                    Earnings Estimates/BEst (EY/EZ)/Cash Flo
+   BEST_ECPSPAR_NXT_YR_STDDEV         BEst Est CPS Par Co Nxt Yr Std Dev                                     Earnings Estimates/BEst (EY/EZ)/Cash Flo
+   BEST_ECPSPAR_FY3_STDDEV            BEst Est CPS Par Co FY3 Std Dev                                        Earnings Estimates/BEst (EY/EZ)/Cash Flo
+=== broker estimates             returned 254 field(s)
+   BEST_EPS_BRK_GRID                  BEst EPS Adjusted Broker Estimates                                     Earnings Estimates/BEst (Bloomberg Estim
+   BEST_EBITDA_BRK_GRID               BEst EBITDA Broker Estimates                                           Earnings Estimates/BEst (Bloomberg Estim
+   BEST_SALES_BRK_GRID                BEst Sales Broker Estimates                                            Earnings Estimates/BEst (Bloomberg Estim
+   BEST_OP_INC_BRK_GRID               BEst Operating Income Broker Estimates                                 Earnings Estimates/BEst (Bloomberg Estim
+   BEST_NET_INCOME_BRK_GRID           BEst Net Income Broker Estimates                                       Earnings Estimates/BEst (Bloomberg Estim
+   BEST_EPS_GAAP_BRK_GRID             BEst EPS GAAP Broker Estimates                                         Earnings Estimates/BEst (Bloomberg Estim
+   BEST_DPS_BRK_GRID                  BEst Dividend Per Share Broker Estimates                               Earnings Estimates/BEst (Bloomberg Estim
+   BEST_NET_INC_GAAP_BRK_GRID         BEst Net Income GAAP Broker Estimates                                  Earnings Estimates/BEst (Bloomberg Estim
+   BEST_ROE_BRK_GRID                  BEst Return on Equity Broker Estimates                                 Earnings Estimates/BEst (Bloomberg Estim
+   BEST_CURRENT_PROFIT_BRK_GRID       BEst Current Profit Broker Estimates                                   Earnings Estimates/BEst (Bloomberg Estim
+   BEST_BPS_BRK_GRID                  BEst Book Value Per Share Broker Estimates                             Earnings Estimates/BEst (Bloomberg Estim
+   BEST_ROA_BRK_GRID                  BEst Return on Assets Broker Estimates                                 Earnings Estimates/BEst (Bloomberg Estim
+   BEST_CPS_BRK_GRID                  BEst Cashflow Per Share Broker Estimates                               Earnings Estimates/BEst (Bloomberg Estim
+   BEST_CAPEX_BROKER_GRID             BEst CAPEX Broker Estimates                                            Earnings Estimates/BEst (Bloomberg Estim
+   BEST_EBIT_BRK_GRID                 BEst EBIT Broker Estimates                                             Earnings Estimates/BEst (Bloomberg Estim
+   BEST_NET_DEBT_BRK_GRID             BEst Net Debt Broker Estimates                                         Earnings Estimates/BEst (Bloomberg Estim
+   BEST_PTP_BRK_GRID                  BEst Pre-Tax Profit Broker Estimates                                   Earnings Estimates/BEst (Bloomberg Estim
+   BEST_FFOPS_BRK_GRID                BEst Funds from Ops Per Share Broker Estimates                         Earnings Estimates/BEst (Bloomberg Estim
+   BEST_AFFOPS_BROKER_GRID            BEst AFFO Per Share Broker Estimates                                   Earnings Estimates/BEst (Bloomberg Estim
+   BEST_LTG_EPS_BRK_GRID              BEst LT Growth EPS Broker Estimates                                    Earnings Estimates/BEst (Bloomberg Estim
+   BEST_ESTIMATE_FCF                  BEst Estimate Free Cash Flow                                           Earnings Estimates/BEst (Bloomberg Estim
+   BEST_DCPU_BROKER_GRID              BEst DCPU Broker Estimates                                             Earnings Estimates/BEst (Bloomberg Estim
+   BEST_BROKER_NAME                   BEst Broker Name                                                       Earnings Estimates/BEst (Bloomberg Estim
+   BEST_NAV_BRK_GRID                  BEst Net Asset Value Broker Estimates                                  Earnings Estimates/BEst (Bloomberg Estim
+   BST_BRK_PD_OVR                     BEst Broker And Period Override                                        Earnings Estimates/BEst (Bloomberg Estim
+   IS_COMPARABLE_EBIT                 Comparable EBIT                                                        Fundamentals/Bloomberg Fundamentals/Inco
+   BEST_SALES                         BEst Sales                                                             Earnings Estimates/BEst (Bloomberg Estim
+   BEST_ANALYST_NAME                  BEst Analyst Name                                                      Earnings Estimates/BEst (Bloomberg Estim
+   BEST_EPS_GAAP                      BEst EPS GAAP                                                          Earnings Estimates/BEst (Bloomberg Estim
+   IS_COMPARABLE_EBITDA               Comparable EBITDA                                                      Fundamentals/Bloomberg Fundamentals/Inco
+   IS_COMP_GROSS_MARGIN_PERCENTAGE    Comp Gross Margin Percentage                                           Fundamentals/Bloomberg Fundamentals/Esti
+   BEST_EBITDA                        BEst EBITDA                                                            Earnings Estimates/BEst (Bloomberg Estim
+   BEST_NET_INCOME                    BEst Net Income                                                        Earnings Estimates/BEst (Bloomberg Estim
+   BEST_ANALYST_REC                   BEst Analyst Recommendation                                            Earnings Estimates/BEst (Bloomberg Estim
+   IS_COMP_PTP_EX_STK_BASED_COMP      Comparable PTP Excluding Stock Based Compensation                      Fundamentals/Bloomberg Fundamentals/Esti
+=== customer revenue percentage  returned 26 field(s)
+   SUPPLY_CHAIN_REVENUE_PERCENTAGE    Supply Chain Revenue Percentage                                        Supply Chain
+   SUPPLY_CHAIN_CUSTOMERS_ALL_DATA    Supply Chain Customers All Data                                        Supply Chain
+   NET_REV_RETENTION_RATE_PCT         Net Revenue Retention Rate Percentage                                  Fundamentals/Bloomberg Fundamentals/Indu
+   PG_AVG_SALES_PER_CUSTOMER_GROWTH   Product/Geographic Avg Sales per Customer Growth %                     Fundamentals/Segmentation/Bulk Data Fiel
+   SUPPLY_CHAIN_SUM_TOP_REVENUES      Supply Chain Sum of Top Revenues                                       Supply Chain
+   IS_TOP_10_ELEC_CSTMR_PCT_OF_REV    Top 10 Electric Customers Percentage of Revenue                        Fundamentals/Bloomberg Fundamentals/Inco
+   IS_TOP_10_GAS_CSTMR_PCT_OF_REV     Top 10 Gas Customers Percentage of Revenue                             Fundamentals/Bloomberg Fundamentals/Inco
+   REV_CUST_OPER_OIL_PCT              Revenue From Customers Operating in Oil Pct                            ESG/Environmental/Other
+   REV_CUST_OPER_COAL_PCT             Revenue From Customers Operating in Coal Pct                           ESG/Environmental/Other
+   REV_CUST_OPR_NAT_GAS_PCT           Revenue From Customers Oper in Naturl Gas Pct                          ESG/Environmental/Other
+   ENTERT_TABLE_WINNINGS              Entertainment-Table Winnings                                           Fundamentals/Bloomberg Fundamentals/Indu
+   ARDR_TOP_10_GAS_CSTMR_PCT_OF_REV   ARDR Top 10 Gas Customers Percentage of Revenue                        Fundamentals/Bloomberg Fundamentals/Stan
+   ARD_AVG_PROD_WTAGE_AS_%_GR_SALES   ARD Average Product Wastage As Percentage Gr Sales                     Fundamentals/Bloomberg Fundamentals/Stan
+   ARD_TOP_5_CLIENTS_CONTRIB_TO_REV   ARD Top 5 Clients Contributions to Revenues                            Fundamentals/Bloomberg Fundamentals/Stan
+   IS_WTR_NRM_T_EL_SA_GR_YY_PCT_RTL   Wthr Norm Tot Electric Sales Grwth YoY % Tot Rtl                       Fundamentals/Bloomberg Fundamentals/Indu
+   ARD_TOP_10_CLI_CONTRIB_TO_REV      ARD Top 10 Clients Contributions to Revenues                           Fundamentals/Bloomberg Fundamentals/Stan
+   IS_WTR_NRM_ELEC_SA_GR_YY_PCT_COM   Weather Norm Electric Sales Grwth YoY % Comml                          Fundamentals/Bloomberg Fundamentals/Indu
+   ARDR_BILLINGS_GROWTH               ARDR Billings Growth                                                   Fundamentals/Bloomberg Fundamentals/Stan
+   IS_WTR_NRM_ELEC_SA_GR_YY_PCT_RES   Weather Normalized Electric Sales Growth YoY % Res                     Fundamentals/Bloomberg Fundamentals/Indu
+   IS_WTR_NRM_ELEC_SA_GR_YY_PCT_IND   Weather Normalized Electric Sales Growth YoY % Ind                     Fundamentals/Bloomberg Fundamentals/Indu
+   IS_WTR_NRM_ELEC_SA_GR_YY_PCT_OTH   Weather Normalized Electric Sales Grwth YoY % Oth                      Fundamentals/Bloomberg Fundamentals/Indu
+   ARDR_BILLINGS_GROWTH_AT_CC         ARDR Billings Growth at Constant Currency                              Fundamentals/Bloomberg Fundamentals/Stan
+   BANKCARD_NET_INTERCHANGE_RT        Bankcard Net Interchange Rate                                          Fundamentals/Bloomberg Fundamentals/Indu
+   NET_PAYMENT_PROCESSING_RATE        Net Payment Processing Rate                                            Fundamentals/Bloomberg Fundamentals/Indu
+   TOT_REV_TO_CUST_ACCPT_LIAB         TotRev to CustAccept Liability                                         Fundamentals/Bloomberg Fundamentals/Fina
+   RAIL_PRICING_POWER                 Rail Pricing Power                                                     Fundamentals/Bloomberg Fundamentals/Indu
+=== company executive start date returned 1 field(s)
+   NO_ADVS_SRVD_AS_CEO_OR_EQ          Num of Advisers Who Served as CEO or Equiv                             ESG/Governance/Board
+=== company join date            returned 0 field(s)
+=== debt maturity                returned 160 field(s)
+   BI_COMP_CRED_DEBT_MATURTS_SNTMNT   BI Company Credit Debt Maturities Sentiment                            Fundamentals/Bloomberg Fundamentals/Bloo
+   FUND_MATURITY_BAND_FOCUS           Maturity Band Focus                                                    Descriptive/Issuance/Purpose/Objective/F
+   DDIS_AVG_MTY                       Debt Distribution Avg Maturity                                         Descriptive/Company/Issuer/Debt Distribu
+   DDIS_AVERAGE_YEARS_MATURITY        Debt Distribution Average Years to Maturity                            Descriptive/Company/Issuer/Debt Distribu
+   TOTAL_DEBT_WAVG_MATURITY           Total Debt Weighted Average Maturity                                   Fundamentals/Bloomberg Fundamentals/Indu
+   BS_INVEST_SECS_HELD_TO_MATURITY    Investment Securities Held to Maturity                                 Fundamentals/Bloomberg Fundamentals/Bala
+   BS_TOTL_DEBT_DEBT_SCHEDULE         Total Debt - Debt Schedule                                             Fundamentals/Bloomberg Fundamentals/Bala
+   ARD_INV_SEC_HELD_TO_MATURITY       ARD Investment Securities Held To Maturity                             Fundamentals/Bloomberg Fundamentals/Stan
+   UNSECURED_DEBT_WAVG_MATURITY       Unsecured Debt Weighted Average Maturity                               Fundamentals/Bloomberg Fundamentals/Indu
+   SECURED_DEBT_WAVG_MATURITY         Secured Debt Weighted Average Maturity                                 Fundamentals/Bloomberg Fundamentals/Indu
+   DDIS_AVG_MTY_ISSUER                Debt Distribution Average Maturity - Issuer                            Descriptive/Company/Issuer/Debt Distribu
+   CONS_DEBT_WAVG_MATURITY            Consolidated Debt Weighted Average Maturity                            Fundamentals/Bloomberg Fundamentals/Indu
+   BS_DEBT_SCHEDULE_YR_2_3            Debt Schedule - Years 2 - 3                                            Fundamentals/Bloomberg Fundamentals/Bala
+   BS_DEBT_SCHEDULE_YR_2_5            Debt Schedule - Years 2 - 5                                            Fundamentals/Bloomberg Fundamentals/Bala
+   BS_DEBT_SCHEDULE_YR_4_5            Debt Schedule - Years 4 - 5                                            Fundamentals/Bloomberg Fundamentals/Bala
+   IS_G_L_ON_EXT_DBT_OR_SETTLE_DBT    (Gain)/Loss on Early Extinguishment of Debt                            Fundamentals/Bloomberg Fundamentals/Inco
+   DDIS_AVG_MTY_ISSUER_SUBS           Debt Distribution Average Maturity - Issuer & Subs                     Descriptive/Company/Issuer/Debt Distribu
+   BS_INV_PORT_FIXED_MATURITIES       Investment Portfolio - Fixed Maturities                                Fundamentals/Bloomberg Fundamentals/Bala
+   BS_INVEST_PORT_FXD_MATURITIES_LF   Investment Portfolio Fixed Maturities Life                             Fundamentals/Bloomberg Fundamentals/Bala
+   ARD_FIXED_INC_HELD_TO_MATURITY     ARD Fixed Income Held To Maturity                                      Fundamentals/Bloomberg Fundamentals/Stan
+   IS_INTEREST_EXPENSE_LT_DEBT_CB     Interest Expense LT Debt - Company Basis                               Fundamentals/Bloomberg Fundamentals/Inco
+   ARD_TOTAL_DEBT_WAVG_MATURITY       ARD Total Debt Weighted Average Maturity                               Fundamentals/Bloomberg Fundamentals/Stan
+   CONS_SECURED_DEBT_WAVG_MATURITY    Consolidated Secured Debt WAvg Maturity                                Fundamentals/Bloomberg Fundamentals/Indu
+   BS_INVEST_PORT_FI_MATURITIES_P&C   Investment Portfolio Fixed Maturities P&C                              Fundamentals/Bloomberg Fundamentals/Bala
+   TAPPED_INDICATOR                   Tapped Indicator                                                       Descriptive/Security Type/Corporate
+   SECURITY_SHORT_DES                 Security Short Description                                             Descriptive/Identification/Name
+   FDIC_OUT_ELIGIBLE_LT_DEBT          FDIC Outstanding Eligible Long Term Debt                               Fundamentals/Third Party Data/FDIC/Balan
+   IS_CD                              Certificate of Deposit Indicator                                       Descriptive/Security Type/Multi-Product
+   BS_HTM_CORP_BONDS                  Corporate Bonds Held to Maturity                                       Fundamentals/Bloomberg Fundamentals/Bala
+   ARD_HELD_TO_MAT_DEBT_LESS_1YR      ARD Held-To-Maturity Debt - 1 Year Or Less                             Fundamentals/Bloomberg Fundamentals/Stan
+   BOND_CHAIN                         Bond Chain                                                             Descriptive/Chains/Lists
+   AMT_ISSUED                         Amount Issued                                                          Descriptive/Issuance/Amounts/Increments
+   SECURITY_TYP2                      Security Type 2                                                        Descriptive/Security Type/Multi-Product
+   BS_HTM_OTHER_FIXED_INC_INV         Other Fixed Income Investments Held to Maturity                        Fundamentals/Bloomberg Fundamentals/Bala
+   ARDR_INVEST_PORT_FIXED_MTY_LIFE    ARDR Investment Portfolio Fixed Maturities Life                        Fundamentals/Bloomberg Fundamentals/Stan
+=== best period end              returned 24 field(s)
+   BEST_PERIOD_END_DATE               BEst Period End Date                                                   Earnings Estimates/BEst (Bloomberg Estim
+   BEST_CUR_FISCAL_YEAR_PERIOD        BEst Current Fiscal Year Period Date                                   Earnings Estimates/BEst (Bloomberg Estim
+   BEST_CUR_FISCAL_QTR_PERIOD         BEst Current Fiscal Quarter Period D                                   Earnings Estimates/BEst (Bloomberg Estim
+   BEST_FPERIOD_OVERRIDE              BEst Fiscal Period Override                                            Earnings Estimates/BEst (Bloomberg Estim
+   BEST_PE_RATIO                      BEst P/E Ratio                                                         Earnings Estimates/BEst (Bloomberg Estim
+   BEST_CUR_FISCAL_SEMI_YEAR_PERIOD   BEst Current Fiscal Semi-Year Period                                   Earnings Estimates/BEst (Bloomberg Estim
+   BEST_PX_BPS_RATIO                  BEst P/Bk                                                              Earnings Estimates/BEst (Bloomberg Estim
+   BEST_ANALYST_RECS_BULK             BEst Analyst Recommendations Bulk                                      Earnings Estimates/BEst (Bloomberg Estim
+   BEST_PX_CPS_RATIO                  BEst P/CF                                                              Earnings Estimates/BEst (Bloomberg Estim
+   BEST_ANALYST_BY_ID_RECS_BULK       BEst Analyst by ID Recommendations Bulk                                Earnings Estimates/BEst (Bloomberg Estim
+   AMBEST_PERIOD_END_SURPLUS          A.M. Best Period End Surplus                                           Fundamentals/Third Party Data/A.M. Best
+   BEST_EEPS_NXT_QTR_DT               Est EPS Next Qtr Date                                                  Earnings Estimates/BEst (EY/EZ)/Income S
+   BEST_EEPS_CUR_QTR_DT               Est EPS Curr Qtr Date                                                  Earnings Estimates/BEst (EY/EZ)/Income S
+   AMBEST_CAPITAL_&_SURP_AT_END_PER   A.M. Best - Capital and Surplus at End of Period                       Fundamentals/Third Party Data/A.M. Best
+   EST_EV_NEXT_YR_EBITDA              EV/Next Yr Est EBITDA                                                  Fundamentals/Bloomberg Fundamentals/Fina
+   EST_EV_THIS_YR_EBITDA              EV/This Year Est EBITDA                                                Fundamentals/Bloomberg Fundamentals/Fina
+   EARN_ANN_DT_TIME_HIST_WITH_EPS     Earnings Announcement Date & Time History with EPS                     Earnings Estimates/Earnings Announcement
+   EXT_EV_NEXT_YR_EBIT                EV/Next Yr Est EBIT                                                    Fundamentals/Bloomberg Fundamentals/Fina
+   EST_EV_NEXT_YR_SALES               EV/Next Yr Est Sales                                                   Fundamentals/Bloomberg Fundamentals/Fina
+   EST_EV_THIS_YR_SALES               EV/This Year Est Sales                                                 Fundamentals/Bloomberg Fundamentals/Fina
+   EQY_SH_OUT_REAL                    Current Shares Outstanding Real Value                                  Security Specific/Share Data
+   EST_EV_THIS_YR_EBIT                EV/This Year Est EBIT                                                  Fundamentals/Bloomberg Fundamentals/Fina
+   BEST_EEPS_SEMI_DT                  Est EPS Semi-Annual Date                                               Earnings Estimates/BEst (EY/EZ)/Income S
+   EV_TO_2P_AND_2C_RESERVE            Enterprise Value to 2P and 2C Reserve                                  Fundamentals/Bloomberg Fundamentals/Fina

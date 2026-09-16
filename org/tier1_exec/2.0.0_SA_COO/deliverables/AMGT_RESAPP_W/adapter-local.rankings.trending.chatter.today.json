@@ -1,0 +1,24 @@
+{
+  "instrument": "lib/research/api/scoped_amgt.py handler, run LOCALLY at 2.0.0_SA_COO~W against the live table and bucket",
+  "route": "/api/scoped/amgt/lead-panel/rankings/trending/chatter",
+  "query": {
+    "limit": "10"
+  },
+  "statusCode": 200,
+  "body": {
+    "axis": "TRENDING_CHATTER",
+    "resolution": {
+      "requested_axis": "TRENDING_CHATTER",
+      "served_axis": "TRENDING_CHATTER",
+      "resolution": "CROSSED",
+      "movement_basis": "MEASURED",
+      "movement_measure": "ABSOLUTE_COUNT_ON_AS_OF_DAY",
+      "producer": "lib.research.metrics.chatter_axis",
+      "availability_basis": "PRODUCER_DECLARED"
+    },
+    "as_of_date": "2026-09-15",
+    "rows": [],
+    "row_count": 0,
+    "generated_at": "2026-09-15T01:43Z"
+  }
+}

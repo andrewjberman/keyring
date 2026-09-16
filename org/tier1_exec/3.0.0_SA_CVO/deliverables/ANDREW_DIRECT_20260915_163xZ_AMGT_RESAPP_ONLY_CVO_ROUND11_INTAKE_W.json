@@ -1,0 +1,1850 @@
+{
+  "record_type": "ANDREW_DIRECT_AND_CVO_ROUND11_INTAKE",
+  "seat": "3.0.0_SA_CVO~W",
+  "recorded_at_utc": "2026-09-15T16:40:12.789512+00:00",
+  "project": "AMGT_RESAPP",
+  "round": 11,
+  "state": "IN_PROGRESS_INTAKE_NOT_L8_L9_COMPLETION",
+  "andrew_direct": {
+    "channel": "Direct user message in this Codex terminal, before CTO message 23160",
+    "received_window_utc": "2026-09-15T16:3xZ; exact user-message timestamp unavailable",
+    "verbatim": "you and the ~W fabric are going to proceed straight through the AMGT_RESAPP work, that is your explicit project focus for the remainder of the session. Disregard any messaging/inquiries about any project/task that is not AMGT_RESAPP focused.",
+    "application": "AMGT_RESAPP only for the remainder of this session; proceed through the canonical CVO L8/L9 and one L10 slug as evidence arrives. Disregard unrelated inquiries.",
+    "relay_received": {
+      "sender": "1.0.0_SA_CTO~W",
+      "msg_id": 23160,
+      "file": "20260915T163326Z_1.0.0_SA_CTO_W_ANDREW-DIRECT__16_3xZ_at_the_1.0.0_SA_CT.md",
+      "action": "Same session scope; CVO L8/L9 and one slug next; no reply requested. Read and archived after applying the instruction."
+    }
+  },
+  "audit_head": "c6bb2c8a9cc171bce3dc5991021db448a0487de6",
+  "proof_intake": [
+    {
+      "order": 1,
+      "task": "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rj-1.the-canonical-key-on-the-ranked-click.md",
+      "proof": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~18/AMGT_RESAPP.TO-AMGT-rj-1.the-canonical-key-on-the-ranked-click.proof_of_spec.json",
+      "ids": [
+        "AC1",
+        "AC2",
+        "AC3",
+        "AC4",
+        "AC5",
+        "AC6"
+      ],
+      "proof_ids": [
+        "AC1",
+        "AC2",
+        "AC3",
+        "AC4",
+        "AC5",
+        "AC6"
+      ],
+      "head_bytes_match_worktree": true,
+      "proof_sha256": "0e8f20a8b82db26a7829d1dd677a8672c71c39e2304edbe26ad761c155ae9b7e",
+      "acceptance_statuses": {
+        "AC1": "PASS",
+        "AC2": "PASS",
+        "AC3": "PASS",
+        "AC4": "PASS",
+        "AC5": "PASS",
+        "AC6": "PASS"
+      },
+      "artifacts": [
+        {
+          "path_or_key": "lib/research/api/scoped_amgt.py",
+          "kind": "script",
+          "commit_or_etag": "85b127afa5",
+          "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+          "deploy_evidence": "THE ROUTE BOUNDARY: resolve_identity() plus the dispatcher's one resolution per /security/{key}/* request, carried unchanged into overlay, thesis, peers, coverage and print. Three identifier conversions removed, zero added (AC2 counts 0). The cell's BOUND names no deploy; rj-10 owns it."
+        },
+        {
+          "path_or_key": "lib/research/api/tests/test_route_boundary_identity.py",
+          "kind": "test",
+          "commit_or_etag": "85b127afa5",
+          "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+          "deploy_evidence": "13 tests, offline by construction (crosswalk from rj-4's committed copy; a DynamoDB seam that RAISES on any call, so 'the store was never asked' cannot pass by accident). Includes the click-vs-direct-key figure-set equality WITH its denominator, the four-leaf identity-block set comparison, the resolve-exactly-once counter and the percent-decode arm."
+        },
+        {
+          "path_or_key": "portal/src/pages/SecurityAnalysis/components/IdentityLine.tsx",
+          "kind": "frontend_component",
+          "commit_or_etag": "ad275969",
+          "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+          "deploy_evidence": "Committed in the PORTAL repo at ad275969 on wk-amgt_resapp-11-1-portal -- that pin does NOT resolve in the superproject by design, because this order forbids moving the gitlink. NEW: the ONE rendering of the identity block, read by SecurityOverlay and all three tabs. Shows display_ticker, never the key; an unresolved identity shows the raw requested string marked UNRESOLVED. PORTAL FROZEN: committed, not promoted."
+        },
+        {
+          "path_or_key": "portal/src/pages/SecurityAnalysis/components/RankedList.tsx + StarredList.tsx + types.ts + SecurityOverlay.tsx + hooks/useSecurityAnalysisState.ts + tabs/{Thesis,Peers,Coverage}Tab.tsx",
+          "kind": "frontend_component",
+          "commit_or_etag": "ad275969",
+          "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+          "deploy_evidence": "Committed in the PORTAL repo at ad275969 (not the superproject; the gitlink stays at e85f6eb8). The click sends row.security_key; a row without one renders an UNRESOLVED marker and does not navigate. SecurityIdentity re-cut to the boundary's block (bloomberg_ticker dropped -- one field was carrying a display value and a lookup key)."
+        },
+        {
+          "path_or_key": "portal/src/pages/SecurityAnalysis/__harness__/errorEmpty.harness.cjs + join.harness.mjs + thesisBundle.{BABA_US_Equity,BABACVOCTRL_US_Equity}.json",
+          "kind": "test",
+          "commit_or_etag": "ad275969",
+          "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+          "deploy_evidence": "Committed in the PORTAL repo at ad275969 (not the superproject; the gitlink stays at e85f6eb8). A seventh state and a second instrument (the actual component called with a spy, every row li's onClick invoked, the handler count itself a check). Both join-harness fixtures re-captured from the adapter: one key added (identity), generated_at moved, 183/13/196 and 1/1/2 byte-identical."
+        },
+        {
+          "path_or_key": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~18/AMGT_RESAPP.TO-AMGT-rj-1.vite-build.txt",
+          "kind": "doc",
+          "commit_or_etag": "PENDING-THIS-COMMIT",
+          "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+          "deploy_evidence": "AC5's build log, transcribed to ASCII with the transform stated and the raw capture's sha256 recorded (86 non-ASCII characters, all in vite's own progress rendering)."
+        }
+      ],
+      "checker_rc": 0,
+      "checker_output": "proof-of-spec-check | structural=jsonschema | acceptance rows=6 | violations=0\n  checker-vintage: 9e6ed6c236 2026-09-13T23:31:23Z\n  alignment-frame: project=AMGT_RESAPP dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit 73938cdae4 RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D5\\AMGT\\AMGT_RESAPP\\task-orders\\AMGT_RESAPP.TO-AMGT-rj-1.the-canonical-key-on-the-ranked-click.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md)\n  alignment-frame: decomp id space = 64 distinct cell id(s) in org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 6/6 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 2 resolved at pin / 1 PENDING co-committed (POST-COMMIT: touched by the instance commit 23c2d3f5b4) / 0 pending-on-worktree (instance path unknown; presence only) / 3 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 6 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 0 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 2 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 7 entries; 7 open with a row id; 7 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for AMGT_RESAPP; mode ENFORCE -- governing TO is under the TREE root (org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rj-1.the-canonical-key-on-the-ranked-click.md)\n  invocation-frame: governing TO=org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rj-1.the-canonical-key-on-the-ranked-click.md; placeholders DECLARED <none> -> ENFORCE\n  invocation-alignment (recorded invocation -> criterion text): 6/6 comparable row(s) match modulo placeholder expansion; 0 diverge. NOT COMPARABLE: 0 row(s) name no criterion in the TO (coverage_check owns that), 0 row(s) whose criterion carries no <invocation> (judgment/prose). Rows in instance: 6.\n  count-bar-frame: 1 PASS row(s) carry a zero-count bar that matches its evidence; 0 of them carry a contradicting NONZERO count; mode ENFORCE -- org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rj-1.the-canonical-key-on-the-ranked-click.md was added at 065fa6070d, which DESCENDS from the ruling @23af9479ab -> NEW\n  drives-frame: governing TO=org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rj-1.the-canonical-key-on-the-ranked-click.md; 6 criteria: network=0 none=0 neither=6 other=0; 0 PASS row(s) on network criteria: 0 read clean, 0 SEEDED, 0 unreadable, 0 not a bun test; mode ANNOUNCE -- project AMGT_RESAPP is not under the drives= ruling (RULING Q binds ['IRPT_FNTEND']); a declaration here is read, never required\nVALID (rc=0)\n"
+    },
+    {
+      "order": 2,
+      "task": "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rj-2.drafted-sentences-beside-their-evidence.md",
+      "proof": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~18/AMGT_RESAPP.TO-AMGT-rj-2.drafted-sentences-beside-their-evidence.proof_of_spec.json",
+      "ids": [
+        "AC1",
+        "AC2",
+        "AC3",
+        "AC4",
+        "AC5",
+        "AC6"
+      ],
+      "proof_ids": [
+        "AC1",
+        "AC2",
+        "AC3",
+        "AC4",
+        "AC5",
+        "AC6"
+      ],
+      "head_bytes_match_worktree": true,
+      "proof_sha256": "710f140c7480aebeb281e6dc2acc4bd0c59921d674fbfcd85abe98510fd20efe",
+      "acceptance_statuses": {
+        "AC1": "PASS",
+        "AC2": "PASS",
+        "AC3": "PASS",
+        "AC4": "PASS",
+        "AC5": "PASS",
+        "AC6": "PASS"
+      },
+      "artifacts": [
+        {
+          "path_or_key": "lib/research/api/scoped_amgt.py",
+          "kind": "script",
+          "commit_or_etag": "6cf202d134",
+          "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+          "deploy_evidence": "READ 5 -- read_drafted_sections(): the pool read (drafting/v1/<key>.json, AMGT_DRAFTING_ROOT for an offline run), the THREE validations through AMGT-rj-6's own library (the marking contract via jsonschema; validate_evidence per sentence for existence/association/source version; the verbatim gate RE-RUN against the passage and compared with the verdict the object shipped), the id -> PASSAGE resolution, and the SERVED/ABSENT/INVALID + pool/local/none status pair. read_thesis_bundle's hardcoded \"drafted_sections\": [] is gone; it merges the block whole. The cell's BOUND names no deploy."
+        },
+        {
+          "path_or_key": "lib/research/api/tests/test_drafted_sections.py",
+          "kind": "test",
+          "commit_or_etag": "6cf202d134",
+          "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+          "deploy_evidence": "24 tests, offline by construction: every read goes through AMGT_DRAFTING_ROOT or a monkeypatched S3 seam, and the seam RAISES on any call in the local-root tests so 'the pool was not asked' cannot pass by accident. Carries the negative controls the cell names plus association, source version, the verbatim gate, the shipped-verdict mismatch, a missing limb, an unparseable object, an unresolved identity, the pool key itself, and NoSuchKey-vs-AccessDenied (a miss is a completed read; a denial is not)."
+        },
+        {
+          "path_or_key": "portal/src/pages/SecurityAnalysis/tabs/ThesisTab.tsx + types.ts",
+          "kind": "frontend_component",
+          "commit_or_etag": "ffeb4840",
+          "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+          "deploy_evidence": "Committed in the PORTAL repo at ffeb4840 on wk-amgt_resapp-11-1-portal -- that pin does NOT resolve in the superproject by design, because this order forbids moving the gitlink (it stays at e85f6eb8). No title= evidence carrier survives in the file; each drafted sentence renders its machine marker, its verbatim_check as the CheckFaceBadge, and then every cited PASSAGE quoted as text with id, accession and location. DraftedSentence.evidence is now DraftedEvidence[] ({id, passage, source}), not a string -- a component cannot print words it was never given. PORTAL FROZEN: committed, not promoted."
+        },
+        {
+          "path_or_key": "portal/src/pages/SecurityAnalysis/__harness__/drafting.harness.cjs + thesisBundle.drafted.BA_US_Equity.json",
+          "kind": "test",
+          "commit_or_etag": "ffeb4840",
+          "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+          "deploy_evidence": "Committed in the PORTAL repo at ffeb4840 (not the superproject). The actual ThesisTab and CheckFaceBadge transpiled with the installed typescript and rendered by react-dom/server over a fixture that is the VERBATIM return of read_thesis_bundle('BA_US_Equity') against the pool object -- re-compared against a fresh adapter call at instance time and identical but for generated_at. The walk is anchored on per-sentence indices, not on the sentence text, because a drafted sentence is often a substring of a passage printed above it."
+        },
+        {
+          "path_or_key": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~18/AMGT_RESAPP.TO-AMGT-rj-2.vite-build.txt",
+          "kind": "doc",
+          "commit_or_etag": "PENDING-THIS-COMMIT",
+          "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+          "deploy_evidence": "AC6's build log, transcribed to ASCII with the transform stated in its header and the raw capture's sha256 recorded (15,072 bytes, 172 non-ASCII characters, all in vite's own progress rendering; sha256 444dab7287848a5c050e9b41c16dacf63e6e354b66bad897594c2db4db797400)."
+        }
+      ],
+      "checker_rc": 0,
+      "checker_output": "proof-of-spec-check | structural=jsonschema | acceptance rows=6 | violations=0\n  checker-vintage: 9e6ed6c236 2026-09-13T23:31:23Z\n  alignment-frame: project=AMGT_RESAPP dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit 73938cdae4 RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D5\\AMGT\\AMGT_RESAPP\\task-orders\\AMGT_RESAPP.TO-AMGT-rj-2.drafted-sentences-beside-their-evidence.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md)\n  alignment-frame: decomp id space = 64 distinct cell id(s) in org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 6/6 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 2 resolved at pin / 1 PENDING co-committed (POST-COMMIT: touched by the instance commit e8d9973ef9) / 0 pending-on-worktree (instance path unknown; presence only) / 2 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 5 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 0 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 2 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 2 entries; 2 open with a row id; 2 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for AMGT_RESAPP; mode ENFORCE -- governing TO is under the TREE root (org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rj-2.drafted-sentences-beside-their-evidence.md)\n  invocation-frame: governing TO=org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rj-2.drafted-sentences-beside-their-evidence.md; placeholders DECLARED <none> -> ENFORCE\n  invocation-alignment (recorded invocation -> criterion text): 6/6 comparable row(s) match modulo placeholder expansion; 0 diverge. NOT COMPARABLE: 0 row(s) name no criterion in the TO (coverage_check owns that), 0 row(s) whose criterion carries no <invocation> (judgment/prose). Rows in instance: 6.\n  count-bar-frame: 2 PASS row(s) carry a zero-count bar that matches its evidence; 0 of them carry a contradicting NONZERO count; mode ENFORCE -- org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rj-2.drafted-sentences-beside-their-evidence.md was added at 065fa6070d, which DESCENDS from the ruling @23af9479ab -> NEW\n  drives-frame: governing TO=org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rj-2.drafted-sentences-beside-their-evidence.md; 6 criteria: network=0 none=0 neither=6 other=0; 0 PASS row(s) on network criteria: 0 read clean, 0 SEEDED, 0 unreadable, 0 not a bun test; mode ANNOUNCE -- project AMGT_RESAPP is not under the drives= ruling (RULING Q binds ['IRPT_FNTEND']); a declaration here is read, never required\nVALID (rc=0)\n"
+    },
+    {
+      "order": 4,
+      "task": "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rj-4.the-union-universe.md",
+      "proof": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~19/AMGT_RESAPP.TO-AMGT-rj-4.the-union-universe.proof_of_spec.json",
+      "ids": [
+        "AC1",
+        "AC2",
+        "AC3",
+        "AC4",
+        "AC5",
+        "AC6",
+        "AC7"
+      ],
+      "proof_ids": [
+        "AC1",
+        "AC2",
+        "AC3",
+        "AC4",
+        "AC5",
+        "AC6",
+        "AC7"
+      ],
+      "head_bytes_match_worktree": true,
+      "proof_sha256": "710bf4f96437aab8e6b7839e7f0e0717ae57972d584646eb234a9eff8cbba2ac",
+      "acceptance_statuses": {
+        "AC1": "PASS",
+        "AC2": "PASS",
+        "AC3": "PASS",
+        "AC4": "PASS",
+        "AC5": "PASS",
+        "AC6": "PASS",
+        "AC7": "PASS"
+      },
+      "artifacts": [
+        {
+          "path_or_key": "lib/research/identity/crosswalk.py",
+          "kind": "script",
+          "commit_or_etag": "282d3f769b",
+          "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+          "deploy_evidence": "INTERFACE X-1: the mapper CLI and the resolve()/aliases() library API. Library code; this order deploys nothing (rj-10 owns the deploy)."
+        },
+        {
+          "path_or_key": "lib/research/identity/build_universe.py",
+          "kind": "script",
+          "commit_or_etag": "282d3f769b",
+          "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+          "deploy_evidence": "INTERFACE U-1 added as a second mode; the legacy coverage pass is unchanged and still runs on a bare invocation."
+        },
+        {
+          "path_or_key": "lib/research/identity/crosswalk.schema.json",
+          "kind": "config_data",
+          "commit_or_etag": "282d3f769b",
+          "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+          "deploy_evidence": "additionalProperties false; validated against the emitted object in AC5."
+        },
+        {
+          "path_or_key": "lib/research/identity/universe.schema.json",
+          "kind": "config_data",
+          "commit_or_etag": "282d3f769b",
+          "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+          "deploy_evidence": "additionalProperties false; validated against the emitted object in AC5."
+        },
+        {
+          "path_or_key": "lib/research/identity/tests/test_crosswalk.py",
+          "kind": "test",
+          "commit_or_etag": "282d3f769b",
+          "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+          "deploy_evidence": "19 arms incl. the three conventions on one name, the CRO's measured security- digest, the collision refusal and the fixed point."
+        },
+        {
+          "path_or_key": "lib/research/identity/tests/test_union_universe.py",
+          "kind": "test",
+          "commit_or_etag": "282d3f769b",
+          "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+          "deploy_evidence": "15 arms incl. coverage-only, holding-only, both, unresolved and the filing-identity collision guard."
+        },
+        {
+          "path_or_key": "s3://opal-data-harvest/crosswalk/v1/2026-09-15.json",
+          "kind": "s3_object",
+          "commit_or_etag": "c9ea41499ffcf88d07969d6a0ac78ae8631b602368fed5ce270e6a063dfb8a36",
+          "deployed_state": "DEPLOYED-VERIFIED",
+          "deploy_evidence": "head-object read back 2026-09-15 08:1xZ: ContentLength 188380, Metadata document-sha256 c9ea41499ffcf88d07969d6a0ac78ae8631b602368fed5ce270e6a063dfb8a36, schema-version 1 -- equal to the local sha256 of the dry-run bytes."
+        },
+        {
+          "path_or_key": "s3://opal-data-harvest/universe/v1/2026-09-15.json",
+          "kind": "s3_object",
+          "commit_or_etag": "b281b0312011580623e3be2c4fdc2d6c70222c3dea86aa41c91fb17d2939f0a4",
+          "deployed_state": "DEPLOYED-VERIFIED",
+          "deploy_evidence": "head-object read back 2026-09-15 08:1xZ: ContentLength 185928, Metadata document-sha256 b281b0312011580623e3be2c4fdc2d6c70222c3dea86aa41c91fb17d2939f0a4, schema-version 1 -- equal to the local sha256 of the dry-run bytes."
+        },
+        {
+          "path_or_key": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~19/sec_ticker_cik_cache.json",
+          "kind": "config_data",
+          "commit_or_etag": "PENDING-THIS-COMMIT",
+          "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+          "deploy_evidence": "the SEC fetch cached with its instrument, URL, HTTP status, retrieval time, source Last-Modified, sha256 and row denominator; the union build reads this cache and makes no network call."
+        },
+        {
+          "path_or_key": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~19/MEASUREMENTS.md",
+          "kind": "doc",
+          "commit_or_etag": "PENDING-THIS-COMMIT",
+          "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+          "deploy_evidence": "DELIVER item 1: every measurement with its denominator, incl. the before/after control on the ETF plane."
+        }
+      ],
+      "checker_rc": 0,
+      "checker_output": "proof-of-spec-check | structural=jsonschema | acceptance rows=7 | violations=0\n  checker-vintage: 9e6ed6c236 2026-09-13T23:31:23Z\n  alignment-frame: project=AMGT_RESAPP dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit 73938cdae4 RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D5\\AMGT\\AMGT_RESAPP\\task-orders\\AMGT_RESAPP.TO-AMGT-rj-4.the-union-universe.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md)\n  alignment-frame: decomp id space = 64 distinct cell id(s) in org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 7/7 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 6 resolved at pin / 2 PENDING co-committed (POST-COMMIT: touched by the instance commit cc7d0a9338) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 2 s3_object (not a git ref; skipped) -- denominator 10 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 0 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 6 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 7 entries; 7 open with a row id; 7 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for AMGT_RESAPP; mode ENFORCE -- governing TO is under the TREE root (org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rj-4.the-union-universe.md)\n  invocation-frame: governing TO=org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rj-4.the-union-universe.md; placeholders DECLARED <none> -> ENFORCE\n  invocation-alignment (recorded invocation -> criterion text): 7/7 comparable row(s) match modulo placeholder expansion; 0 diverge. NOT COMPARABLE: 0 row(s) name no criterion in the TO (coverage_check owns that), 0 row(s) whose criterion carries no <invocation> (judgment/prose). Rows in instance: 7.\n  count-bar-frame: 1 PASS row(s) carry a zero-count bar that matches its evidence; 0 of them carry a contradicting NONZERO count; mode ENFORCE -- org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rj-4.the-union-universe.md was added at 065fa6070d, which DESCENDS from the ruling @23af9479ab -> NEW\n  drives-frame: governing TO=org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rj-4.the-union-universe.md; 7 criteria: network=0 none=0 neither=7 other=0; 0 PASS row(s) on network criteria: 0 read clean, 0 SEEDED, 0 unreadable, 0 not a bun test; mode ANNOUNCE -- project AMGT_RESAPP is not under the drives= ruling (RULING Q binds ['IRPT_FNTEND']); a declaration here is read, never required\nVALID (rc=0)\n"
+    },
+    {
+      "order": 5,
+      "task": "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rj-5.one-store-the-two-readers-on-the-pool.md",
+      "proof": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~19/AMGT_RESAPP.TO-AMGT-rj-5.one-store-the-two-readers-on-the-pool.proof_of_spec.json",
+      "ids": [
+        "AC1",
+        "AC2",
+        "AC3",
+        "AC4",
+        "AC5",
+        "AC6",
+        "AC7"
+      ],
+      "proof_ids": [
+        "AC1",
+        "AC2",
+        "AC3",
+        "AC4",
+        "AC5",
+        "AC6",
+        "AC7"
+      ],
+      "head_bytes_match_worktree": true,
+      "proof_sha256": "5cabebc1663988112512d05989dd1e0a0b15bdd05d8fab8bfc6dcbbb52b0032b",
+      "acceptance_statuses": {
+        "AC1": "PASS",
+        "AC2": "PASS",
+        "AC3": "PASS",
+        "AC4": "PASS",
+        "AC5": "PASS",
+        "AC6": "PASS",
+        "AC7": "PASS"
+      },
+      "artifacts": [
+        {
+          "path_or_key": "lib/research/coverage/pool_reader.py",
+          "kind": "script",
+          "commit_or_etag": "fda8d96c0a",
+          "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+          "deploy_evidence": "INTERFACE P-1, the ONE shared pool adapter: list_links / read_body / coverage_items / window_read / daily_counts, four failure states as four counters and four exception classes, bodies validated by the harvester's own catalog.validate. Library code; this order deploys nothing (rj-10 owns the deploy and the packaging seam -- the archive must carry this module, the two JSON schema files under lib/opal_data_harvest/ and jsonschema)."
+        },
+        {
+          "path_or_key": "lib/research/metrics/chatter_axis.py",
+          "kind": "script",
+          "commit_or_etag": "fda8d96c0a",
+          "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+          "deploy_evidence": "The producer repointed onto the pool through P-1 over the union universe, and the generation write (immutable partition + _CURRENT pointer + _FAILED marker) replacing the upsert writer. The deployed Lambda wrapper's four summary keys (as_of_date, tickers_considered, rows_ranked, rows_written) and its universe_path parameter are unchanged, so the existing entry point still runs; the zip itself is rj-10's."
+        },
+        {
+          "path_or_key": "lib/research/coverage/tests/test_pool_reader.py",
+          "kind": "test",
+          "commit_or_etag": "fda8d96c0a",
+          "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+          "deploy_evidence": "25 unittest arms against a local fake of the two prefixes; no network, no credentials."
+        },
+        {
+          "path_or_key": "lib/research/metrics/tests/test_chatter_axis.py",
+          "kind": "test",
+          "commit_or_etag": "fda8d96c0a",
+          "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+          "deploy_evidence": "16 unittest arms for the generation writer, including the replaced writer reproduced as the NEGATIVE CONTROL (the CRO's measured AAA #1 / BBB #1 / CCC #2), plus the pre-existing pytest arms updated to the generation partition."
+        },
+        {
+          "path_or_key": "lib/research/metrics/tests/test_producer_axis_registry.py",
+          "kind": "test",
+          "commit_or_etag": "fda8d96c0a",
+          "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+          "deploy_evidence": "The chatter arm updated to the generation write signature and the generation partition; it passes. Its three PRICE arms fail in this worktree for absence, not defect (row W19-S10)."
+        },
+        {
+          "path_or_key": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~19/difference_control.py",
+          "kind": "script",
+          "commit_or_etag": "fda8d96c0a",
+          "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+          "deploy_evidence": "DELIVER item 4: the pool and the retired table printed beside each other for four names."
+        },
+        {
+          "path_or_key": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~19/rj5_dry_run_20260915.txt",
+          "kind": "doc",
+          "commit_or_etag": "PENDING-THIS-COMMIT",
+          "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+          "deploy_evidence": "The AC3 dry-run output kept beside the instance, as the order's s.6 requires."
+        },
+        {
+          "path_or_key": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~19/rj5_difference_control_20260915.txt",
+          "kind": "doc",
+          "commit_or_etag": "PENDING-THIS-COMMIT",
+          "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+          "deploy_evidence": "The AC5 difference-control output kept beside the instance, as the order's s.6 requires."
+        }
+      ],
+      "checker_rc": 0,
+      "checker_output": "proof-of-spec-check | structural=jsonschema | acceptance rows=7 | violations=0\n  checker-vintage: 9e6ed6c236 2026-09-13T23:31:23Z\n  alignment-frame: project=AMGT_RESAPP dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit 73938cdae4 RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D5\\AMGT\\AMGT_RESAPP\\task-orders\\AMGT_RESAPP.TO-AMGT-rj-5.one-store-the-two-readers-on-the-pool.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md)\n  alignment-frame: decomp id space = 64 distinct cell id(s) in org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 7/7 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 6 resolved at pin / 2 PENDING co-committed (POST-COMMIT: touched by the instance commit 85c1c1f4af) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 8 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 0 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 6 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 4 entries; 4 open with a row id; 4 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for AMGT_RESAPP; mode ENFORCE -- governing TO is under the TREE root (org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rj-5.one-store-the-two-readers-on-the-pool.md)\n  invocation-frame: governing TO=org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rj-5.one-store-the-two-readers-on-the-pool.md; placeholders DECLARED <none> -> ENFORCE\n  invocation-alignment (recorded invocation -> criterion text): 7/7 comparable row(s) match modulo placeholder expansion; 0 diverge. NOT COMPARABLE: 0 row(s) name no criterion in the TO (coverage_check owns that), 0 row(s) whose criterion carries no <invocation> (judgment/prose). Rows in instance: 7.\n  count-bar-frame: 2 PASS row(s) carry a zero-count bar that matches its evidence; 0 of them carry a contradicting NONZERO count; mode ENFORCE -- org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rj-5.one-store-the-two-readers-on-the-pool.md was added at 065fa6070d, which DESCENDS from the ruling @23af9479ab -> NEW\n  drives-frame: governing TO=org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rj-5.one-store-the-two-readers-on-the-pool.md; 7 criteria: network=0 none=0 neither=7 other=0; 0 PASS row(s) on network criteria: 0 read clean, 0 SEEDED, 0 unreadable, 0 not a bun test; mode ANNOUNCE -- project AMGT_RESAPP is not under the drives= ruling (RULING Q binds ['IRPT_FNTEND']); a declaration here is read, never required\nVALID (rc=0)\n"
+    },
+    {
+      "order": 6,
+      "task": "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rj-6.the-filings-analyzer.md",
+      "proof": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~20/AMGT_RESAPP.TO-AMGT-rj-6.the-filings-analyzer.proof_of_spec.json",
+      "ids": [
+        "AC1",
+        "AC2",
+        "AC3",
+        "AC4",
+        "AC5",
+        "AC6",
+        "AC7"
+      ],
+      "proof_ids": [
+        "AC1",
+        "AC2",
+        "AC3",
+        "AC4",
+        "AC5",
+        "AC6",
+        "AC7"
+      ],
+      "head_bytes_match_worktree": true,
+      "proof_sha256": "5a0e3979c2c14f2acb930c4d21836e01d559cb3feceb2094541f8b3b5da33a82",
+      "acceptance_statuses": {
+        "AC1": "PASS",
+        "AC2": "PASS",
+        "AC3": "PASS",
+        "AC4": "PASS",
+        "AC5": "PASS",
+        "AC6": "PASS",
+        "AC7": "PASS"
+      },
+      "artifacts": [
+        {
+          "path_or_key": "lib/research/filings/fetch.py",
+          "kind": "script",
+          "commit_or_etag": "8abfd829a7",
+          "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+          "deploy_evidence": "Deliverable 1: EDGAR fetch by CIK of the latest primary document of the expected form, cut to named items, persisted as filings/v1/<key>/<accession>.source.json with both content hashes, the canonical identity, the accession, the retrieval time and the parser version; the officer section persisted in the same object for rj-8; UNRESOLVED-SOURCE objects for the rest. Library code, deployed nowhere (the cell deploys nothing).",
+          "artifact_covered_by": [
+            "AC2",
+            "AC3",
+            "AC4",
+            "AC7"
+          ]
+        },
+        {
+          "path_or_key": "lib/research/filings/passages.py",
+          "kind": "script",
+          "commit_or_etag": "8abfd829a7",
+          "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+          "deploy_evidence": "The index-to-passage map built from the excerpt's own paragraphs, the Locator that resolves a citation by LOCATING ITS CITED TEXT, and the recorded ASCII normalisation. Library code.",
+          "artifact_covered_by": [
+            "AC1",
+            "AC2",
+            "AC7"
+          ]
+        },
+        {
+          "path_or_key": "lib/research/filings/analyze.py",
+          "kind": "script",
+          "commit_or_etag": "a536333c92",
+          "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+          "deploy_evidence": "Deliverable 2, INTERFACE F-1: the two passes, the resolution through the map, held_uncited, the thesis driver, the pass-1 cache and the --stage split. Library code + CLI.",
+          "artifact_covered_by": [
+            "AC1",
+            "AC2",
+            "AC3",
+            "AC4",
+            "AC7"
+          ]
+        },
+        {
+          "path_or_key": "lib/research/filings/drafting_build.py",
+          "kind": "script",
+          "commit_or_etag": "8abfd829a7",
+          "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+          "deploy_evidence": "Deliverable 3 consumer half, INTERFACE D-1: the typed evidence records, the FilingsProducer and the mechanical extraction of the company's own words the gate checks. Library code.",
+          "artifact_covered_by": [
+            "AC1",
+            "AC5",
+            "AC7"
+          ]
+        },
+        {
+          "path_or_key": "lib/research/filings/batch.py",
+          "kind": "script",
+          "commit_or_etag": "8abfd829a7",
+          "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+          "deploy_evidence": "Deliverable 4: the LOCAL batch over U-1 with its printed denominators and the Windows task definition. No Lambda, no terraform. Library code + CLI.",
+          "artifact_covered_by": [
+            "AC6",
+            "AC7"
+          ]
+        },
+        {
+          "path_or_key": "lib/research/filings/run_batch.cmd",
+          "kind": "schedule",
+          "commit_or_etag": "8abfd829a7",
+          "deployed_state": "DEPLOYED-VERIFIED",
+          "deploy_evidence": "Deliverable 4, the CADENCE. The Windows task is REGISTERED AND DISABLED, read live: 'schtasks /Query /TN OpalResearch-FilingsAnalyzer /FO LIST /V' -> 'Scheduled Task State: Disabled', 'Schedule Type: Weekly', 'Days: SUN', 'Task To Run: C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\lib\\research\\filings\\run_batch.cmd'. THIS FILE is what that task runs; it derives the workspace root from its own location (%~dp0..\\..\\..) so no device path is baked into it, and it is committed on this branch and lands at the path the task names when the branch drains. The task is DISABLED, so it cannot fire before then, and activation is Andrew's word. The criterion's own invocation cannot show two of those fields -- rows AMGT_RESAPP-Z-W20-S2 and -S3.",
+          "artifact_covered_by": [
+            "AC6"
+          ]
+        },
+        {
+          "path_or_key": "lib/research/filings/tests/test_filings.py",
+          "kind": "test",
+          "commit_or_etag": "8abfd829a7",
+          "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+          "deploy_evidence": "Deliverable 6: 20 tests over a 20-paragraph fixture excerpt with the model STUBBED -- both passes, the passage map, the HOLD arm, the driver resolved and held, the UNRESOLVED-SOURCE arm, the section discriminator and the misattributed-citation drop.",
+          "artifact_covered_by": [
+            "AC1"
+          ]
+        },
+        {
+          "path_or_key": "lib/research/drafting/pipeline.py",
+          "kind": "script",
+          "commit_or_etag": "8abfd829a7",
+          "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+          "deploy_evidence": "Deliverable 3: EXISTENCE, ASSOCIATION and SOURCE VERSION validated for every evidence id BEFORE the gate, and the gate run against the PASSAGE and never a title. Library code.",
+          "artifact_covered_by": [
+            "AC1",
+            "AC5",
+            "AC7"
+          ]
+        },
+        {
+          "path_or_key": "lib/research/drafting/schema.json",
+          "kind": "config_data",
+          "commit_or_etag": "8abfd829a7",
+          "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+          "deploy_evidence": "The marking contract, now at the DOCUMENT level with evidence_records and dropped; AC5 validates the served D-1 object against it.",
+          "artifact_covered_by": [
+            "AC5"
+          ]
+        },
+        {
+          "path_or_key": "lib/research/drafting/tests/test_drafting.py",
+          "kind": "test",
+          "commit_or_etag": "8abfd829a7",
+          "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+          "deploy_evidence": "The CRO's three measured probes re-run (REFUSE / PASS / REFUSE) plus the association, source-version and empty-evidence arms: 13 tests.",
+          "artifact_covered_by": [
+            "AC1"
+          ]
+        },
+        {
+          "path_or_key": "s3://opal-data-harvest/filings/v1/BA_US_Equity/000162828026004357.analysis.json",
+          "kind": "s3_object",
+          "commit_or_etag": "d09d4375b9beee602d2b7dc2e546e270db13e123698b914b62e6768c16649ef3",
+          "deployed_state": "DEPLOYED-VERIFIED",
+          "deploy_evidence": "DEPLOYED-VERIFIED by the producer's own read-back (head_object compared on document-sha256 AND ContentLength=274144) and again by AC4's list-objects-v2 (10 objects under filings/v1/).",
+          "artifact_covered_by": [
+            "AC2",
+            "AC4"
+          ]
+        },
+        {
+          "path_or_key": "s3://opal-data-harvest/drafting/v1/BA_US_Equity.json",
+          "kind": "s3_object",
+          "commit_or_etag": "684197b8861424f99eec4c5a643668c2a7801cc9001ed223b54ff366053f7d81",
+          "deployed_state": "DEPLOYED-VERIFIED",
+          "deploy_evidence": "DEPLOYED-VERIFIED: downloaded from the pool by AC5 (ContentLength 109540), schema-validated, and reproduced byte-for-byte by a local rebuild from the persisted analysis (determinism control).",
+          "artifact_covered_by": [
+            "AC4",
+            "AC5"
+          ]
+        }
+      ],
+      "checker_rc": 0,
+      "checker_output": "proof-of-spec-check | structural=jsonschema | acceptance rows=7 | violations=0\n  checker-vintage: 9e6ed6c236 2026-09-13T23:31:23Z\n  alignment-frame: project=AMGT_RESAPP dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit 73938cdae4 RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D5\\AMGT\\AMGT_RESAPP\\task-orders\\AMGT_RESAPP.TO-AMGT-rj-6.the-filings-analyzer.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md)\n  alignment-frame: decomp id space = 64 distinct cell id(s) in org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 7/7 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 10 resolved at pin / 0 PENDING co-committed (POST-COMMIT: touched by the instance commit 10858c0936) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 2 s3_object (not a git ref; skipped) -- denominator 12 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 0 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 10 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 8 entries; 8 open with a row id; 8 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for AMGT_RESAPP; mode ENFORCE -- governing TO is under the TREE root (org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rj-6.the-filings-analyzer.md)\n  invocation-frame: governing TO=org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rj-6.the-filings-analyzer.md; placeholders DECLARED <none> -> ENFORCE\n  invocation-alignment (recorded invocation -> criterion text): 7/7 comparable row(s) match modulo placeholder expansion; 0 diverge. NOT COMPARABLE: 0 row(s) name no criterion in the TO (coverage_check owns that), 0 row(s) whose criterion carries no <invocation> (judgment/prose). Rows in instance: 7.\n  count-bar-frame: 1 PASS row(s) carry a zero-count bar that matches its evidence; 0 of them carry a contradicting NONZERO count; mode ENFORCE -- org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rj-6.the-filings-analyzer.md was added at 065fa6070d, which DESCENDS from the ruling @23af9479ab -> NEW\n  drives-frame: governing TO=org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rj-6.the-filings-analyzer.md; 7 criteria: network=0 none=0 neither=7 other=0; 0 PASS row(s) on network criteria: 0 read clean, 0 SEEDED, 0 unreadable, 0 not a bun test; mode ANNOUNCE -- project AMGT_RESAPP is not under the drives= ruling (RULING Q binds ['IRPT_FNTEND']); a declaration here is read, never required\nVALID (rc=0)\n"
+    },
+    {
+      "order": 7,
+      "task": "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rj-7.the-similarity-ranker.md",
+      "proof": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~21/AMGT_RESAPP.TO-AMGT-rj-7.the-similarity-ranker.proof_of_spec.json",
+      "ids": [
+        "AC1",
+        "AC2",
+        "AC3",
+        "AC4",
+        "AC5",
+        "AC6"
+      ],
+      "proof_ids": [
+        "AC1",
+        "AC2",
+        "AC3",
+        "AC4",
+        "AC5",
+        "AC6"
+      ],
+      "head_bytes_match_worktree": true,
+      "proof_sha256": "c0960a1736da9c6ecaf93c4985fbd6cda27d88beab5e58fb8db6771e6590decd",
+      "acceptance_statuses": {
+        "AC1": "PASS",
+        "AC2": "PASS",
+        "AC3": "PASS",
+        "AC4": "PASS",
+        "AC5": "PASS",
+        "AC6": "PASS"
+      },
+      "artifacts": [
+        {
+          "path_or_key": "lib/research/peers/universe.py",
+          "kind": "script",
+          "commit_or_etag": "ff90cac77d",
+          "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+          "deploy_evidence": "THE ONE DATABASE: six boto3 GetObject reads of s3://opal-data-portal-v2/json/security_scanner/latest/universes/<id>/universe_data.json UNION the landed model-block header scalars, folded to one row per ticker, vintage carried. Library code; this order deploys nothing."
+        },
+        {
+          "path_or_key": "lib/research/peers/taxonomy.py",
+          "artifact_covered_by": [
+            "AC2",
+            "AC3"
+          ],
+          "kind": "script",
+          "commit_or_etag": "ff90cac77d",
+          "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+          "deploy_evidence": "the GICS-sector-to-scanner-sector map (basis held, residue ['Non-Corporate'] named) and the ISO2-to-scanner-country map (basis measured over the 47 values the database carries minus the '@Na' sentinel), plus residue_over_database() which re-measures both against whatever database is loaded."
+        },
+        {
+          "path_or_key": "lib/research/peers/csc.py",
+          "artifact_covered_by": [
+            "AC2",
+            "AC3",
+            "AC5"
+          ],
+          "kind": "script",
+          "commit_or_etag": "ff90cac77d",
+          "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+          "deploy_evidence": "Adam's 17 CSC columns quoted from SUBSTRATE_CARDS.md:73-76, checked against the scanner's 289-factor registry and the 284 codes a UniverseDataRow carries; PRESENT 5, ABSENT 12 written as the denominator MINUS the present."
+        },
+        {
+          "path_or_key": "lib/research/peers/engine.py",
+          "kind": "script",
+          "commit_or_etag": "ff90cac77d",
+          "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+          "deploy_evidence": "the four lexicographic rungs with exclusive-depth MECE accounting, the |log(cap ratio)| tiebreak, the R-1 object, the pool writer with read-back, and the batch CLI (--as-of/--security-key/--dry-run/--write-pool/--limit/--offset/--json)."
+        },
+        {
+          "path_or_key": "lib/research/peers/tests/test_peers.py",
+          "kind": "test",
+          "commit_or_etag": "ff90cac77d",
+          "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+          "deploy_evidence": "26 unittest.TestCase cases, up from 4 bare pytest functions which `python -m unittest` collected as ZERO ('Ran 0 tests ... OK' is a green that measured nothing). No network: every case passes an explicit candidate_universe and resolve_identities=False."
+        },
+        {
+          "path_or_key": "s3://opal-data-harvest/peers/v1/<security_key>/2026-09-15.json",
+          "kind": "s3_object",
+          "commit_or_etag": "sha256 per object in Metadata document-sha256; BABA 4273e1383ad9e254849306be8df25449ef72db82fb3f3655cc491be971b3f6d9",
+          "deployed_state": "DEPLOYED-VERIFIED",
+          "deploy_evidence": "INTERFACE R-1, 33 objects written and every one read back (33 of 33 sha match against both the local body and the metadata); pool census peers/v1/ length(Contents) = 33 after the run, 0 before. Readers: rj-9, rj-11."
+        },
+        {
+          "path_or_key": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~21/candidate_universe.json",
+          "kind": "config_data",
+          "commit_or_etag": "ff90cac77d",
+          "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+          "deploy_evidence": "the READ VINTAGE: the folded 2851-row database at scanner asOf 2026-08-06 with its denominators and the 284 row value codes, so a re-run grades the same database the batch graded. Beside it: scanner_factor_metadata.json (289 factors, asOf 2026-08-06), peers_batch.2026-09-15.{log,json} and baba_dry_run.2026-09-15.{log,json}."
+        }
+      ],
+      "checker_rc": 0,
+      "checker_output": "proof-of-spec-check | structural=jsonschema | acceptance rows=6 | violations=0\n  checker-vintage: 9e6ed6c236 2026-09-13T23:31:23Z\n  alignment-frame: project=AMGT_RESAPP dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit 73938cdae4 RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D5\\AMGT\\AMGT_RESAPP\\task-orders\\AMGT_RESAPP.TO-AMGT-rj-7.the-similarity-ranker.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md)\n  alignment-frame: decomp id space = 64 distinct cell id(s) in org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 6/6 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 6 resolved at pin / 0 PENDING co-committed (POST-COMMIT: touched by the instance commit ddd5846cd9) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 1 s3_object (not a git ref; skipped) -- denominator 7 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 0 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 6 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 6 entries; 6 open with a row id; 6 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for AMGT_RESAPP; mode ENFORCE -- governing TO is under the TREE root (org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rj-7.the-similarity-ranker.md)\n  invocation-frame: governing TO=org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rj-7.the-similarity-ranker.md; placeholders DECLARED <none> -> ENFORCE\n  invocation-alignment (recorded invocation -> criterion text): 6/6 comparable row(s) match modulo placeholder expansion; 0 diverge. NOT COMPARABLE: 0 row(s) name no criterion in the TO (coverage_check owns that), 0 row(s) whose criterion carries no <invocation> (judgment/prose). Rows in instance: 6.\n  count-bar-frame: 0 PASS row(s) carry a zero-count bar that matches its evidence; 0 of them carry a contradicting NONZERO count; mode ENFORCE -- org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rj-7.the-similarity-ranker.md was added at 065fa6070d, which DESCENDS from the ruling @23af9479ab -> NEW\n  drives-frame: governing TO=org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rj-7.the-similarity-ranker.md; 6 criteria: network=0 none=0 neither=6 other=0; 0 PASS row(s) on network criteria: 0 read clean, 0 SEEDED, 0 unreadable, 0 not a bun test; mode ANNOUNCE -- project AMGT_RESAPP is not under the drives= ruling (RULING Q binds ['IRPT_FNTEND']); a declaration here is read, never required\nVALID (rc=0)\n"
+    },
+    {
+      "order": 8,
+      "task": "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rj-8.executive-management.md",
+      "proof": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~22/AMGT_RESAPP.TO-AMGT-rj-8.executive-management.proof_of_spec.json",
+      "ids": [
+        "AC1",
+        "AC2",
+        "AC3",
+        "AC4",
+        "AC5",
+        "AC6"
+      ],
+      "proof_ids": [
+        "AC1",
+        "AC2",
+        "AC3",
+        "AC4",
+        "AC5",
+        "AC6"
+      ],
+      "head_bytes_match_worktree": true,
+      "proof_sha256": "515ae458751b4e3ec8d0035b558d30c4e33a59fb67c850e2180272fe925b7700",
+      "acceptance_statuses": {
+        "AC1": "PASS",
+        "AC2": "PASS",
+        "AC3": "PASS",
+        "AC4": "PASS",
+        "AC5": "PASS",
+        "AC6": "PASS"
+      },
+      "artifacts": [
+        {
+          "path_or_key": "lib/research/management/roster.py",
+          "kind": "script",
+          "commit_or_etag": "a4270d3072",
+          "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+          "deploy_evidence": "the roster is a local library and a CLI; this cell deploys nothing (BOUND: no deploy). Exercised live against the pool in AC2.",
+          "introduces": [
+            "parse_officer_section",
+            "UNRESOLVED-SOURCE",
+            "filing-since-clause"
+          ],
+          "artifact_covered_by": [
+            "AC1",
+            "AC2"
+          ]
+        },
+        {
+          "path_or_key": "lib/research/management/enrich.py",
+          "kind": "script",
+          "commit_or_etag": "deb16ee7d3",
+          "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+          "deploy_evidence": "local library + CLI; exercised live in AC3 and AC4 (Lusha, SERP, the two pool writes with read-back).",
+          "introduces": [
+            "validate_pool",
+            "POOL_SCHEMA_PATH"
+          ],
+          "artifact_covered_by": [
+            "AC1",
+            "AC3",
+            "AC4",
+            "AC5"
+          ]
+        },
+        {
+          "path_or_key": "lib/research/management/batch.py",
+          "kind": "script",
+          "commit_or_etag": "a4270d3072",
+          "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+          "deploy_evidence": "the batch is DEFINED, not run over the universe (BOUND). Its dry run over U-1 is AC6.",
+          "introduces": [
+            "OpalResearch-ExecManagement"
+          ],
+          "artifact_covered_by": [
+            "AC6"
+          ]
+        },
+        {
+          "path_or_key": "lib/research/management/management.schema.json",
+          "kind": "config_data",
+          "commit_or_etag": "a4270d3072",
+          "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+          "deploy_evidence": "INTERFACE M-1, additionalProperties false, email/phone/mobile forbidden at every level; asserted in AC1 and exercised on every written object in AC3/AC4.",
+          "artifact_covered_by": [
+            "AC1",
+            "AC3"
+          ]
+        },
+        {
+          "path_or_key": "lib/research/management/pool.schema.json",
+          "kind": "config_data",
+          "commit_or_etag": "deb16ee7d3",
+          "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+          "deploy_evidence": "the pool half of M-1, closed and required-denominator; write_pool_object refuses a document that does not validate (mutant arm 5 fired).",
+          "artifact_covered_by": [
+            "AC1",
+            "AC5"
+          ]
+        },
+        {
+          "path_or_key": "lib/research/management/domains.json",
+          "kind": "config_data",
+          "commit_or_etag": "a4270d3072",
+          "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+          "deploy_evidence": "the DECLARED company/IR domain table for the 5 QA names; a name absent from it gets no Lusha call and no SERP call, and the batch prints with-declared-domain as its own denominator (AC6).",
+          "artifact_covered_by": [
+            "AC6"
+          ]
+        },
+        {
+          "path_or_key": "lib/research/management/run_batch.cmd",
+          "kind": "schedule",
+          "commit_or_etag": "a4270d3072",
+          "deployed_state": "DEPLOYED-VERIFIED",
+          "deploy_evidence": "schtasks /Query /TN OpalResearch-ExecManagement /FO LIST /V -> 'TaskName: \\OpalResearch-ExecManagement', 'Scheduled Task State: Disabled', 'Schedule Type: Weekly' (AC6). The task runs this launcher, whose workspace root is derived from %~dp0 and never baked.",
+          "artifact_covered_by": [
+            "AC6"
+          ]
+        },
+        {
+          "path_or_key": "lib/research/management/tests/test_management.py",
+          "kind": "test",
+          "commit_or_etag": "deb16ee7d3",
+          "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+          "deploy_evidence": "26 tests, 0 failures 0 errors (AC1).",
+          "artifact_covered_by": [
+            "AC1"
+          ]
+        },
+        {
+          "path_or_key": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~22/RUN_LOGS.md",
+          "kind": "doc",
+          "commit_or_etag": "PENDING-THIS-COMMIT",
+          "deployed_state": "STAGED-AWAITING-GATE",
+          "deploy_evidence": "the verbatim run logs and the credits table, committed with this proof.",
+          "artifact_covered_by": [
+            "AC3",
+            "AC4"
+          ]
+        },
+        {
+          "path_or_key": "s3://opal-data-harvest/management/v1/BA_US_Equity/2026-09-15.json",
+          "kind": "s3_object",
+          "commit_or_etag": "db156feae8af0f6f79d374f9055e7b5b3c91345669e6393e7ed950220dd8f723",
+          "deployed_state": "DEPLOYED-VERIFIED",
+          "deploy_evidence": "head_object read-back at write time and again for this proof: ContentLength 6290, Metadata.document-sha256 db156feae8af0f6f79d374f9055e7b5b3c91345669e6393e7ed950220dd8f723 (equal to the sha256 of the bytes put)",
+          "artifact_covered_by": [
+            "AC4"
+          ]
+        },
+        {
+          "path_or_key": "s3://opal-data-harvest/management/v1/COST_US_Equity/2026-09-15.json",
+          "kind": "s3_object",
+          "commit_or_etag": "a0e99d601e584aad4833c7fa20f4f7570978b24e2faa9334d3c28d21231b7c7d",
+          "deployed_state": "DEPLOYED-VERIFIED",
+          "deploy_evidence": "head_object read-back at write time and again for this proof: ContentLength 6029, Metadata.document-sha256 a0e99d601e584aad4833c7fa20f4f7570978b24e2faa9334d3c28d21231b7c7d (equal to the sha256 of the bytes put)",
+          "artifact_covered_by": [
+            "AC4"
+          ]
+        },
+        {
+          "path_or_key": "s3://opal-data-harvest/management/v1/HD_US_Equity/2026-09-15.json",
+          "kind": "s3_object",
+          "commit_or_etag": "85c6589286802c5d6dc5a2e47af85615f8b6d492e448454ade03e564b1ff4da3",
+          "deployed_state": "DEPLOYED-VERIFIED",
+          "deploy_evidence": "head_object read-back at write time and again for this proof: ContentLength 5121, Metadata.document-sha256 85c6589286802c5d6dc5a2e47af85615f8b6d492e448454ade03e564b1ff4da3 (equal to the sha256 of the bytes put)",
+          "artifact_covered_by": [
+            "AC4"
+          ]
+        },
+        {
+          "path_or_key": "s3://opal-data-harvest/management/v1/SAP_GY_Equity/2026-09-15.json",
+          "kind": "s3_object",
+          "commit_or_etag": "d540be3758f259f6877cd1348716484258d2e664a3bba5b018c3867bdc8b2fe8",
+          "deployed_state": "DEPLOYED-VERIFIED",
+          "deploy_evidence": "head_object read-back at write time and again for this proof: ContentLength 3566, Metadata.document-sha256 d540be3758f259f6877cd1348716484258d2e664a3bba5b018c3867bdc8b2fe8 (equal to the sha256 of the bytes put)",
+          "artifact_covered_by": [
+            "AC4"
+          ]
+        },
+        {
+          "path_or_key": "s3://opal-data-harvest/management/v1/BABA_US_Equity/2026-09-15.json",
+          "kind": "s3_object",
+          "commit_or_etag": "d80a8993b39d589e5be9093a34fb96ac2ca14e4327e861cc1479b9edf31d4fa8",
+          "deployed_state": "DEPLOYED-VERIFIED",
+          "deploy_evidence": "head_object read-back at write time and again for this proof: ContentLength 3447, Metadata.document-sha256 d80a8993b39d589e5be9093a34fb96ac2ca14e4327e861cc1479b9edf31d4fa8 (equal to the sha256 of the bytes put)",
+          "artifact_covered_by": [
+            "AC4"
+          ]
+        },
+        {
+          "path_or_key": "s3://opal-data-harvest/management/v1/_pool/2026-09-15.json",
+          "kind": "s3_object",
+          "commit_or_etag": "14fc087581fe2a3636207eae43cefdce8da1d40b0668183d291e7f6d94789f07",
+          "deployed_state": "DEPLOYED-VERIFIED",
+          "deploy_evidence": "head_object read-back at write time and again for this proof: ContentLength 180, Metadata.document-sha256 14fc087581fe2a3636207eae43cefdce8da1d40b0668183d291e7f6d94789f07 (equal to the sha256 of the bytes put)",
+          "artifact_covered_by": [
+            "AC5"
+          ]
+        }
+      ],
+      "checker_rc": 0,
+      "checker_output": "proof-of-spec-check | structural=jsonschema | acceptance rows=6 | violations=0\n  checker-vintage: 9e6ed6c236 2026-09-13T23:31:23Z\n  alignment-frame: project=AMGT_RESAPP dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit 73938cdae4 RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D5\\AMGT\\AMGT_RESAPP\\task-orders\\AMGT_RESAPP.TO-AMGT-rj-8.executive-management.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md)\n  alignment-frame: decomp id space = 64 distinct cell id(s) in org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 6/6 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 8 resolved at pin / 1 PENDING co-committed (POST-COMMIT: touched by the instance commit 30db83b7e0) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 6 s3_object (not a git ref; skipped) -- denominator 15 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 3 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 5 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 2 entries; 2 open with a row id; 2 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for AMGT_RESAPP; mode ENFORCE -- governing TO is under the TREE root (org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rj-8.executive-management.md)\n  invocation-frame: governing TO=org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rj-8.executive-management.md; placeholders DECLARED <none> -> ENFORCE\n  invocation-alignment (recorded invocation -> criterion text): 6/6 comparable row(s) match modulo placeholder expansion; 0 diverge. NOT COMPARABLE: 0 row(s) name no criterion in the TO (coverage_check owns that), 0 row(s) whose criterion carries no <invocation> (judgment/prose). Rows in instance: 6.\n  count-bar-frame: 0 PASS row(s) carry a zero-count bar that matches its evidence; 0 of them carry a contradicting NONZERO count; mode ENFORCE -- org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rj-8.executive-management.md was added at 065fa6070d, which DESCENDS from the ruling @23af9479ab -> NEW\n  drives-frame: governing TO=org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rj-8.executive-management.md; 6 criteria: network=0 none=0 neither=6 other=0; 0 PASS row(s) on network criteria: 0 read clean, 0 SEEDED, 0 unreadable, 0 not a bun test; mode ANNOUNCE -- project AMGT_RESAPP is not under the drives= ruling (RULING Q binds ['IRPT_FNTEND']); a declaration here is read, never required\nVALID (rc=0)\n"
+    }
+  ],
+  "offline_unit_checks": [
+    {
+      "module": "lib.research.management.tests.test_management",
+      "argv": [
+        "python",
+        "-m",
+        "unittest",
+        "lib.research.management.tests.test_management",
+        "-q"
+      ],
+      "rc": 0,
+      "output": "----------------------------------------------------------------------\nRan 26 tests in 0.183s\n\nOK\n",
+      "head": "c6bb2c8a9cc171bce3dc5991021db448a0487de6",
+      "source_sha256": {
+        "lib/research/management/batch.py": "92910f14e7278df1b82096cd04128204d59d9d06ed29e57e069f807fd4604b42",
+        "lib/research/management/enrich.py": "78d14f5ff3b40761bbbf24c5e077cb11d92d1d179fb83855fe8bf501471a623b",
+        "lib/research/management/roster.py": "7306d5bcbefd58450d37565b130c752654edde44e79a3124dacfc219deb8c828",
+        "lib/research/management/__init__.py": "9f71f5582bcb17702bbf5806f589de8c1afb6396411754d55c558f96f8c8a8b5",
+        "lib/research/management/tests/test_management.py": "4f6556cc6d4ba2204c04626c9e06b9b9427c0fad07a7994cce8e7ba5a91f3fc4",
+        "lib/research/management/tests/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "lib/research/management/domains.json": "24690ba20d110cb7c5d69e5998a6e210878b947b3ccfa896cdf2f125d8d73227",
+        "lib/research/management/management.schema.json": "a1d3a0d2847ed95e76eaffff2c8a55f19cdb57a225823fdeb06439430890fc06",
+        "lib/research/management/pool.schema.json": "4e64b1cae76106537988d86acb384e31e5c973e80693bd3a824cc37e9899c9e2"
+      },
+      "timestamp": "2026-09-15T16:38:20.335436+00:00"
+    },
+    {
+      "module": "lib.research.peers.tests.test_peers",
+      "argv": [
+        "python",
+        "-m",
+        "unittest",
+        "lib.research.peers.tests.test_peers",
+        "-q"
+      ],
+      "rc": 0,
+      "output": "----------------------------------------------------------------------\nRan 26 tests in 0.008s\n\nOK\n",
+      "head": "c6bb2c8a9cc171bce3dc5991021db448a0487de6",
+      "source_sha256": {
+        "lib/research/peers/csc.py": "42d1d42f7a61bed8a37ff25e7972543625a1c7cdfd4db2ecff1cbbc56c1d8c25",
+        "lib/research/peers/engine.py": "906ec1f3bad5f60d886ae7590003cf55a7feabcd44ddf13f38207e8bf778326c",
+        "lib/research/peers/shared_defect.py": "7a0a981a50417964b11fd27d5956bc3b8c08024fddbf61946e34785215e1e071",
+        "lib/research/peers/taxonomy.py": "7413862cebbe8a9b44e078f012356a4e170f51dddd47dbb9c158a83212dda164",
+        "lib/research/peers/universe.py": "6eb5528d78de0fb5d5094150e724c52312785184a62531020ee7241bf239f504",
+        "lib/research/peers/__init__.py": "c92a0e2de73dfaa1de4db83acf4dd7f79eed65b1c31fa6df22f97b10d24c6873",
+        "lib/research/peers/tests/test_peers.py": "2ba733ce6a46cf72c0f199486710b7d251c78eea05a84dcbbc0ac6f772c4eaef"
+      },
+      "timestamp": "2026-09-15T16:38:20.003868+00:00"
+    }
+  ],
+  "proof_summary": {
+    "complete_orders_with_valid_instances": [
+      1,
+      2,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "instance_count": 7,
+    "acceptance_count": 45,
+    "valid_count": 7,
+    "limitation": "Checker validity and invocation alignment do not adjudicate truth. Worktree bytes matched the pinned task and proof blobs when checked. No terminal round claim."
+  },
+  "channel_watermark": {
+    "tool": "comp-surprise --project AMGT_RESAPP --json",
+    "denominators": {
+      "investigation_items": 214,
+      "adjudication_rows": 197,
+      "duplicate_ids": {},
+      "remediation_rows": 123,
+      "open": 38,
+      "armed": 88,
+      "files": 110
+    },
+    "unresolved_inventory_count": 38,
+    "inventory_depth": "IDs and one-line claims read for all 38 open items. Full grounding read for W21-S5 and W22-S2; W18-S8 checked against adapter source and rj-2 proof. Remaining grounding review pending.",
+    "runtime_watermark": "Not updated: launcher-owned runtime; this artifact is the measured review inventory, not a watcher/heartbeat readiness claim."
+  },
+  "open_inventory": [
+    {
+      "id": "AMGT_RESAPP-Z-S102",
+      "surfaced_at": "2026-09-15T07:01Z",
+      "surfaced_by": "1.0.0_SA_CTO~W",
+      "one_line": "THE L4-R RELEASE NEVER REACHES THE COO WHEN THE CVO SIGNS LAST: .tools/prd-header-notify.py composes the admitted PRD's COO delivery under the STAMPING seat's serial (row from=3.0.0_SA_CVO~W, released_by its sign-off file); the broker's L8 correspondence guard refuses a CVO->COO send (HTTP 403); reoffer() swallows the exception into last_error and prints nothing, so the row sits UNSENT attempts=0 indefinitely while `status` reads it as merely unsent. Measured on AMGT_RESAPP v0.8 @0e6592e88c at 06:5xZ; worked around by hand this once (row from rewritten to the L4 owner 1.0.0_SA_CTO~W, reoffer sent id=23071).",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "_file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\surprise-channel\\investigations\\INVESTIGATION_v1.md"
+    },
+    {
+      "id": "AMGT_RESAPP-Z-S103",
+      "surfaced_at": "2026-09-15T07:08Z",
+      "surfaced_by": "1.0.0_SA_CTO~W",
+      "one_line": "UPDATES AMGT_RESAPP-Z-S102 on 0.0.0_AB_MSTR~Z's measured answer (msg 23075 -> 07:06Z): the SENDER half is ALREADY FIXED on origin/CLOUD @fc71328804 (1.0.0_SA_CTO, 2026-09-14T08:02Z: from = the PRD's last CTO author, never the stamping seat; a laneless release is HELD; reoffer re-points a stuck non-CTO sender) and reaches SITEZ only with the CLOUD->SITEZ merge held on Andrew's word -- so NO second sender fix lands on SITEZ (a certain conflict at that merge); the SILENT last_error half is UNFIXED on both branches (CLOUD :677/:784, SITEZ :634/:725, zero prints), and route_half's alphabetical lane pick (prd_signoff_lib.py blob d19665e0fb, :360) is unfixed on both. Owner recommendation carried to Andrew by 0.0.0_AB_MSTR~Z, not named here. The v0.8 release itself is closed: the notifier retired its row after 2.0.0_SA_COO~W READ id 23071.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "_file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\surprise-channel\\investigations\\INVESTIGATION_v1.md"
+    },
+    {
+      "id": "AMGT_RESAPP-Z-W19-S1",
+      "surfaced_at": "2026-09-15T08:07:00Z",
+      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~19",
+      "one_line": "AC1's per-book holding-object probe returns 0 for ALL FOUR books, and the books are NOT missing: the ETF plane's gold/holding/ is DATE-partitioned (one parquet per date, the book a COLUMN inside it), so a key-substring count can never see a book -- a reader following the criterion's own reading would file four absent books that are all present.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "_file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\surprise-channel\\investigations\\INVESTIGATION_v1.md"
+    },
+    {
+      "id": "AMGT_RESAPP-Z-W19-S2",
+      "surfaced_at": "2026-09-15T08:07:00Z",
+      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~19",
+      "one_line": "C-UNION-UNIVERSE's quoted coverage partition (32 MEASURED / 57 UNRESOLVED at 2026-09-10) does not match the live coverage list at the round-11 cut (34 MEASURED / 55 UNRESOLVED), and the crosswalk's canonical disposition is a THIRD number (33 / 56) because one MEASURED ticker carries no exchange code.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "_file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\surprise-channel\\investigations\\INVESTIGATION_v1.md"
+    },
+    {
+      "id": "AMGT_RESAPP-Z-W19-S3",
+      "surfaced_at": "2026-09-15T08:07:00Z",
+      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~19",
+      "one_line": "C-ONE-IDENTITY names 'security-<16 hex>' as a publication-association key ALREADY PERSISTED; it is persisted nowhere in the pool -- 0 of 71 objects in opal-data-harvest carry the token -- it is COMPUTED at load time by the harvester's loader and lives only in local runtime state.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "_file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\surprise-channel\\investigations\\INVESTIGATION_v1.md"
+    },
+    {
+      "id": "AMGT_RESAPP-Z-W19-S4",
+      "surfaced_at": "2026-09-15T08:07:00Z",
+      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~19",
+      "one_line": "The cell sources BOTH cik AND filing_identity from 'the SEC ticker-to-CIK table', but that table carries only {cik_str, ticker, title} -- it cannot yield form_expected (10-K vs 20-F) at all, so the form was MEASURED from a second SEC surface (each issuer's own EDGAR submissions history) rather than inferred from domicile.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "_file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\surprise-channel\\investigations\\INVESTIGATION_v1.md"
+    },
+    {
+      "id": "AMGT_RESAPP-Z-W19-S5",
+      "surfaced_at": "2026-09-15T08:07:00Z",
+      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~19",
+      "one_line": "Three of the 33 canonical security keys contain a character that is illegal in a Windows filename or ambiguous in an S3 key path -- BP/_LN_Equity, NG/_LN_Equity and WALMEX*_MM_Equity -- and the estate's model-artifact convention writes the key straight into a filename (model_block_<key>.json).",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "_file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\surprise-channel\\investigations\\INVESTIGATION_v1.md"
+    },
+    {
+      "id": "AMGT_RESAPP-Z-W19-S6",
+      "surfaced_at": "2026-09-15T08:07:00Z",
+      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~19",
+      "one_line": "167 of 170 distinct ETF holdings identifiers cannot be resolved to a canonical identity without guessing: the plane's tickers carry NO exchange code and C-ETF-PLANE-READ states the producer-side contract is NOT established, so only the 3 whose raw ticker IS a persisted association key (BA, HD, VLO -- the pilots) join, and 4 more are root-equal to a coverage identity but are deliberately NOT merged.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "_file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\surprise-channel\\investigations\\INVESTIGATION_v1.md"
+    },
+    {
+      "id": "AMGT_RESAPP-Z-W19-S7",
+      "surfaced_at": "2026-09-15T08:25:00Z",
+      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~19",
+      "one_line": "AC7's never-written control asks for a snapshots/ COUNT 'unchanged', but AC1 -- the paired BEFORE -- never produces one (it queries the newest key and Size only); and the control is stated bucket-wide on a bucket that has a LIVE PRODUCER, which wrote 7 of 1518 objects during this worker's own window.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "_file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\surprise-channel\\investigations\\INVESTIGATION_v1.md"
+    },
+    {
+      "id": "AMGT_RESAPP-Z-W19-S8",
+      "surfaced_at": "2026-09-15T09:25:00Z",
+      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~19",
+      "one_line": "AMGT-rj-5's volume bars are cut against a pool that holds SEVEN articles: publications/v1 has 7 objects (AC1 names 'at least 80'), publication-links/v1 has 7 links across BA 2, COST 2, HD 3 (AC2 names store_item_count 'at least 20 each', AC5 names 'N at least 20'), so four criteria cannot be met AS WRITTEN while every field-level and behavioural clause of the same criteria passes.",
+      "class": "BLOCKING",
+      "hazard_standing": "INERT",
+      "_file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\surprise-channel\\investigations\\INVESTIGATION_v1.md"
+    },
+    {
+      "id": "AMGT_RESAPP-Z-W19-S9",
+      "surfaced_at": "2026-09-15T09:26:00Z",
+      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~19",
+      "one_line": "TO-AMGT-rj-1, issued to 0.9.0_WK_AMGT_RESAPP~18, carries THIS worker's deliverables folder inside its <paths> write grant, so two concurrently-live workers hold a write surface over one folder -- the folder that holds this order's proof-of-spec instance.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "_file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\surprise-channel\\investigations\\INVESTIGATION_v1.md"
+    },
+    {
+      "id": "AMGT_RESAPP-Z-W19-S10",
+      "surfaced_at": "2026-09-15T09:27:00Z",
+      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~19",
+      "one_line": "Three of the ninety pytest arms under lib/research/metrics and lib/research/coverage fail in a worker worktree for ABSENCE, not defect: integrations/bloomberg/research/price_axis_pull.py is tracked at HEAD but outside the worker sparse cone, and the failure reads like a regression to the next seat that touches this test file.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "_file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\surprise-channel\\investigations\\INVESTIGATION_v1.md"
+    },
+    {
+      "id": "AMGT_RESAPP-Z-W19-S11",
+      "surfaced_at": "2026-09-15T09:28:00Z",
+      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~19",
+      "one_line": "AC2's expectation names FIVE fields on the first item but its own invocation truncates that item at 170 characters, and the five contracted fields need 259-296 characters for all three commissioned names -- so title is never visible in the recorded output even though it is present on every item.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "_file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\surprise-channel\\investigations\\INVESTIGATION_v1.md"
+    },
+    {
+      "id": "AMGT_RESAPP-Z-W18-S1",
+      "surfaced_at": "2026-09-15T09:20:00Z",
+      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~18",
+      "one_line": "AC2's named suite invocation collects ZERO tests and reports OK: every test under lib/research/api/tests is a pytest-style module-level function with no unittest.TestCase, so `python -m unittest discover` runs an EMPTY suite and the criterion's 'OK with 0 failures and 0 errors' is true of nothing.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "_file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\surprise-channel\\investigations\\INVESTIGATION_v1.md"
+    },
+    {
+      "id": "AMGT_RESAPP-Z-W18-S2",
+      "surfaced_at": "2026-09-15T09:21:00Z",
+      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~18",
+      "one_line": "6 of 47 adapter tests cannot pass in a worker worktree at all: they read integrations/ and infra/ paths that the sparse cone this order's worktree was cut with does not contain, so they fail on FileNotFoundError at BASELINE and after, in both cases for a reason unrelated to any code under test.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "_file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\surprise-channel\\investigations\\INVESTIGATION_v1.md"
+    },
+    {
+      "id": "AMGT_RESAPP-Z-W18-S3",
+      "surfaced_at": "2026-09-15T09:22:00Z",
+      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~18",
+      "one_line": "The order's DELIVER item 4 asks for `security_key` on the join harness's fixtures' RANKED ROWS, but 0 of 2 of those fixtures carry a ranked row at all -- both are thesis bundles -- so that half of the instruction has an empty denominator there and was landed in the harness that does render ranked rows.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "_file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\surprise-channel\\investigations\\INVESTIGATION_v1.md"
+    },
+    {
+      "id": "AMGT_RESAPP-Z-W18-S4",
+      "surfaced_at": "2026-09-15T09:23:00Z",
+      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~18",
+      "one_line": "The order names a `RankedRow` type in types.ts; no type of that name exists there. The ranked row is RankingRowBase, extended by ChatterRankingRow and PriceRankingRow and unioned as RankingRow, and the identity fields were added to the BASE so all three carry them.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "_file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\surprise-channel\\investigations\\INVESTIGATION_v1.md"
+    },
+    {
+      "id": "AMGT_RESAPP-Z-W18-S5",
+      "surfaced_at": "2026-09-15T09:24:00Z",
+      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~18",
+      "one_line": "AC4's `echo rc=$?` reports the exit code of `tail`, not of the harness: the invocation pipes node into tail, so a harness that exits 1 on a failed check still prints rc=0, and the criterion's rc clause cannot fail.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "_file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\surprise-channel\\investigations\\INVESTIGATION_v1.md"
+    },
+    {
+      "id": "AMGT_RESAPP-Z-W18-S6",
+      "surfaced_at": "2026-09-15T09:25:00Z",
+      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~18",
+      "one_line": "read_point() upper-cases the ticker it is given while the producer writes MIXED-CASE tickers, so the point read for such a name can never match its own ranked row -- measured live: 'Enel IM' is ranked today and a GetItem for it MISSES, with the exact-case call miss ing too because the upper() is inside the function.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "_file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\surprise-channel\\investigations\\INVESTIGATION_v1.md"
+    },
+    {
+      "id": "AMGT_RESAPP-Z-W18-S7",
+      "surfaced_at": "2026-09-15T09:26:00Z",
+      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~18",
+      "one_line": "The Coverage tab's Star button writes the CANONICAL KEY into a watchlist store keyed by TICKER, so a name starred from that tab can never match a ranked row and lands in the starred residual as an unrankable entry.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "_file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\surprise-channel\\investigations\\INVESTIGATION_v1.md"
+    },
+    {
+      "id": "AMGT_RESAPP-Z-W21-S1",
+      "surfaced_at": "2026-09-15T09:35:00Z",
+      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~21",
+      "one_line": "The contract's database UNIONs two halves that carry DIFFERENT SECTOR VOCABULARIES -- the scanner's 13-value UniverseDataRow.sector and the model block's GICS_SECTOR_NAME -- so rung 1 run on the raw strings returns ZERO same-sector candidates for two of the three landed subjects; the ranker carries a declared GICS-to-scanner map (basis held) with its residue named.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "_file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\surprise-channel\\investigations\\INVESTIGATION_v1.md"
+    },
+    {
+      "id": "AMGT_RESAPP-Z-W21-S2",
+      "surfaced_at": "2026-09-15T09:35:00Z",
+      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~21",
+      "one_line": "The two halves of the database quote MARKET CAP IN DIFFERENT UNITS -- the scanner's mktVal is USD MILLIONS, the model block's CUR_MKT_CAP is FULL CURRENCY UNITS -- so the 0.2x-5x band on the raw numbers is off by 1e6 and NO candidate clears it for any model-block subject.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "_file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\surprise-channel\\investigations\\INVESTIGATION_v1.md"
+    },
+    {
+      "id": "AMGT_RESAPP-Z-W21-S3",
+      "surfaced_at": "2026-09-15T09:35:00Z",
+      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~21",
+      "one_line": "A model-block subject whose key does not join the scanner's US ticker space STILL HAS a scanner row, under an identifier X-1 cannot resolve -- so SAP SE ranked as its own top peer ('484628', rung 3) until an exact normalised-name arm was added; a cross-listing carrying a DIFFERENT name string is still not caught.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "_file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\surprise-channel\\investigations\\INVESTIGATION_v1.md"
+    },
+    {
+      "id": "AMGT_RESAPP-Z-W21-S4",
+      "surfaced_at": "2026-09-15T09:35:00Z",
+      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~21",
+      "one_line": "The batch writes an R-1 object for 33 of the union universe's 256 names, because only 33 carry a security_key -- the other 223 are UNRESOLVED in U-1 and have NO pool coordinate, so the alternative to not writing them is minting a key from a raw identifier, which the crosswalk forbids.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "_file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\surprise-channel\\investigations\\INVESTIGATION_v1.md"
+    },
+    {
+      "id": "AMGT_RESAPP-Z-W21-S5",
+      "surfaced_at": "2026-09-15T09:35:00Z",
+      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~21",
+      "one_line": "The size band is graded ACROSS two currencies and two vintages: a model-block subject's cap is in its own trading currency at the block's timestamp (SAP: EUR, 2026-09-10T23:20:18Z) and every candidate is USD at the scanner's asOf 2026-08-06. No FX rate is applied and none is invented.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "_file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\surprise-channel\\investigations\\INVESTIGATION_v1.md"
+    },
+    {
+      "id": "AMGT_RESAPP-Z-W21-S6",
+      "surfaced_at": "2026-09-15T09:35:00Z",
+      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~21",
+      "one_line": "Only 5 of Adam's 17 CSC columns map to anything the scanner serves; the other 12 -- Shares, Debt, Preferred, Minority, Cash, P/E 2027, the three leverage ratios and the three 5-yr growth rates -- have no code at any grain, so the Peers tab cannot be filled from this database alone.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "_file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\surprise-channel\\investigations\\INVESTIGATION_v1.md"
+    },
+    {
+      "id": "AMGT_RESAPP-Z-W20-S1",
+      "surfaced_at": "2026-09-15T10:05:00Z",
+      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~20",
+      "one_line": "AC2's own bound, timeout 115, cannot hold a COLD two-pass run: the first BA_US_Equity run was killed at 115 s (rc 124) and the two passes measure 107.0-137.8 s together across the five QA filings, so no cold run of any of them fits.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "_file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\surprise-channel\\investigations\\INVESTIGATION_v1.md"
+    },
+    {
+      "id": "AMGT_RESAPP-Z-W20-S2",
+      "surfaced_at": "2026-09-15T10:05:00Z",
+      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~20",
+      "one_line": "AC6's task-query invocation produces NOTHING as written under Git Bash: MSYS path conversion rewrites the first argument '/Query' to 'C:/Program Files/Git/Query' and schtasks refuses it, so the grep receives only an ERROR line and prints nothing.",
+      "class": "BLOCKING",
+      "hazard_standing": "INERT",
+      "_file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\surprise-channel\\investigations\\INVESTIGATION_v1.md"
+    },
+    {
+      "id": "AMGT_RESAPP-Z-W20-S3",
+      "surfaced_at": "2026-09-15T10:05:00Z",
+      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~20",
+      "one_line": "AC6's expectation names two fields -- 'Scheduled Task State' and 'Schedule Type' -- that schtasks /FO LIST does NOT emit at all: both require /V, which the criterion's invocation does not carry. The task IS Weekly and IS Disabled; the named invocation cannot show it.",
+      "class": "BLOCKING",
+      "hazard_standing": "INERT",
+      "_file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\surprise-channel\\investigations\\INVESTIGATION_v1.md"
+    },
+    {
+      "id": "AMGT_RESAPP-Z-W20-S4",
+      "surfaced_at": "2026-09-15T10:05:00Z",
+      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~20",
+      "one_line": "Card 1's own section rule -- 'the LAST heading match is the body' -- picks the WRONG region on 2 of the 5 QA filings, and its \\s*-joined patterns miss a third: EDGAR documents break words across HTML nodes ('OPERATING AND FINAN CIAL REVIEW').",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "_file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\surprise-channel\\investigations\\INVESTIGATION_v1.md"
+    },
+    {
+      "id": "AMGT_RESAPP-Z-W20-S5",
+      "surfaced_at": "2026-09-15T10:05:00Z",
+      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~20",
+      "one_line": "On the first live BA_US_Equity draft the verbatim gate ran 40 times and COULD NOT FAIL ONCE: 1 of 85 analysis items carried a quotation mark, so every served sentence had an empty quoted_spans and passed vacuously.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "_file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\surprise-channel\\investigations\\INVESTIGATION_v1.md"
+    },
+    {
+      "id": "AMGT_RESAPP-Z-W20-S6",
+      "surfaced_at": "2026-09-15T10:05:00Z",
+      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~20",
+      "one_line": "lib/research/drafting/schema.json's TOP-LEVEL TYPE changes from array to object in this cell: it now validates the DOCUMENT (sections + evidence_records + dropped), not a bare sections array. Any reader validating a bare array against it will now fail.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "_file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\surprise-channel\\investigations\\INVESTIGATION_v1.md"
+    },
+    {
+      "id": "AMGT_RESAPP-Z-W20-S7",
+      "surfaced_at": "2026-09-15T10:05:00Z",
+      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~20",
+      "one_line": "'comp-secrets get <name> --reveal' prints a FOUR-LINE LABELLED BLOCK (name / firm / arn / value), not the bare secret: a caller doing export KEY=\"$(comp-secrets get ... --reveal)\" gets a 259-character blob that is not a key and fails at the vendor, not at the read.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "_file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\surprise-channel\\investigations\\INVESTIGATION_v1.md"
+    },
+    {
+      "id": "AMGT_RESAPP-Z-W20-S8",
+      "surfaced_at": "2026-09-15T10:05:00Z",
+      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~20",
+      "one_line": "The analyzed excerpt is a BOUNDED subset whose coverage of the named items ranges from 100 percent (COST) to 31 percent (BABA) -- so 'the risks the filing states' means something materially different per filer, and the difference is 3x.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "_file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\surprise-channel\\investigations\\INVESTIGATION_v1.md"
+    },
+    {
+      "id": "AMGT_RESAPP-Z-W18-S8",
+      "surfaced_at": "2026-09-15T12:10:00Z",
+      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~18",
+      "one_line": "INTERFACE D-1 does not carry a held_uncited field at all -- 0 of 5 landed drafting/v1 objects have the key -- although this cell's text and the decomposition's own D-1 row both name it; the field lives on F-1 (the analysis object) and D-1's nearest equivalent is `dropped`, so `held_uncited_count` is served as 0 BY ABSENCE with its basis named rather than as a measurement.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "_file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\surprise-channel\\investigations\\INVESTIGATION_v1.md"
+    },
+    {
+      "id": "AMGT_RESAPP-Z-W18-S9",
+      "surfaced_at": "2026-09-15T12:10:00Z",
+      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~18",
+      "one_line": "AMGT-rj-1's identifier-conversion guard is a LINE-LEVEL text scan over the whole of scoped_amgt.py, so it refused a SECTION LABEL ('investment_thesis' -> 'Investment thesis') that touches no identifier, with a message asserting the line 'converts an identifier form'.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "_file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\surprise-channel\\investigations\\INVESTIGATION_v1.md"
+    },
+    {
+      "id": "AMGT_RESAPP-Z-W22-S1",
+      "surfaced_at": "2026-09-15T15:57:01Z",
+      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~22",
+      "one_line": "The SERP primitive the cell NAMES cannot fill two of the three fields M-1 names, and on this zone it cannot fill the third either: serp_brightdata() returns only item['link'], and through the serp_opal zone those links come back as opaque Google redirect wrappers (https://www.google.com/goto?url=<blob>), so no result's HOST can be read and ceo_public_profile is ABSENT on 5 of 5 QA names.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "_file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\surprise-channel\\investigations\\INVESTIGATION_v1.md"
+    },
+    {
+      "id": "AMGT_RESAPP-Z-W22-S2",
+      "surfaced_at": "2026-09-15T15:57:01Z",
+      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~22",
+      "one_line": "BA_US_Equity cost 4 Lusha credits in this cell against the order's bound of 2 per name: the first enrichment run charged its prospecting page and then died on an IMPORT collision between the two estate script surfaces -- data/find/imo/scripts/_util is a PACKAGE and data/find/dualbiz/scripts/_util is a MODULE, so whichever is imported first binds the name and the second fails -- and the graded re-run spent the second 2.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "_file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\surprise-channel\\investigations\\INVESTIGATION_v1.md"
+    }
+  ],
+  "review_findings": [
+    {
+      "investigation_id": "AMGT_RESAPP-Z-W22-S2",
+      "review_state": "SOURCE_CHECKED_CARRY_TO_L9",
+      "finding": "The management order limits Lusha to two credits per name in the cell, while its committed whole-cell ledger records four for BA. The successful-run AC3 denominator covers only its last two credits.",
+      "evidence": {
+        "task": {
+          "path": "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rj-8.executive-management.md",
+          "lines": [
+            68,
+            110,
+            145
+          ]
+        },
+        "run_ledger": {
+          "path": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~22/RUN_LOGS.md",
+          "lines": [
+            146,
+            156
+          ],
+          "measured_in_record": {
+            "BA_credits": 4,
+            "BA_bound": 2,
+            "cell_total": 12
+          }
+        },
+        "repair_source": {
+          "path": "lib/research/management/enrich.py",
+          "lines": [
+            429,
+            433,
+            436
+          ],
+          "change": "Resolve SERP dependency before the first billable call."
+        }
+      },
+      "consequence": "Keep the historical bound breach visible; repair does not erase spending. No amendment at audit HEAD changes the credit bound. Do not turn checker rc=0 into whole-cell compliance."
+    },
+    {
+      "investigation_id": "AMGT_RESAPP-Z-W21-S5",
+      "review_state": "SOURCE_CHECKED_CARRY_TO_L9",
+      "finding": "The ranker divides model-block caps by one million but does not convert non-USD values before comparing against USD scanner caps.",
+      "evidence": {
+        "source": {
+          "path": "lib/research/peers/engine.py",
+          "lines": [
+            279,
+            293,
+            294,
+            395,
+            399,
+            626,
+            641
+          ]
+        },
+        "candidate_source": {
+          "path": "lib/research/peers/universe.py",
+          "lines": [
+            281,
+            302,
+            303,
+            304
+          ]
+        },
+        "worker_record": "SAP EUR versus USD and distinct vintages; caveat carried on subject. No external FX rate assumed or fetched."
+      },
+      "consequence": "An output caveat does not establish that membership is invariant to currency conversion. No exchange rate or changed-member count established by this intake. Assess this open contract residue at L9 without falsely failing the BABA-specific AC2 on SAP evidence."
+    },
+    {
+      "investigation_id": "AMGT_RESAPP-Z-W18-S8",
+      "review_state": "SOURCE_CHECKED_CARRY_TO_L9",
+      "finding": "A zero held-uncited count is returned when D-1 lacks held_uncited; the response explicitly labels that basis ABSENT_ON_OBJECT.",
+      "evidence": {
+        "source": {
+          "path": "lib/research/api/scoped_amgt.py",
+          "lines": [
+            681,
+            868,
+            875,
+            896,
+            897
+          ]
+        },
+        "proof": "rj-2 AC1 reports held_uncited_basis ABSENT_ON_OBJECT; no field on five landed objects."
+      },
+      "consequence": "Preserve the distinction between absent measurement and measured zero in the final view. No live pool reread performed in this intake."
+    }
+  ],
+  "remaining_work": [
+    "Read and assess all remaining investigation grounding and completed-order artifact evidence.",
+    "Six orders still staged at this pinned census: rj-3, rj-9, rj-10, rj-11, rj-12, rj-13. Re-measure at final drain.",
+    "Receive the COO drain packet, validate all round proofs at final HEAD, grade issued judgment criteria, and produce ADJUDICATION_v11 and the one REMEDIATION_v11 slug to CTO."
+  ],
+  "boundaries": [
+    "PORTAL FROZEN: commit yes, promote no until Andrew names a promote.",
+    "Site-Z push hold remains.",
+    "No workers contacted and no interim findings sent to peers.",
+    "No vendor calls, pool writes, scheduled-task changes or additional runtime helpers performed by this intake."
+  ],
+  "source_pins": {
+    "lib/research/peers/engine.py": {
+      "sha256": "906ec1f3bad5f60d886ae7590003cf55a7feabcd44ddf13f38207e8bf778326c",
+      "worktree_matches_audit_head": true
+    },
+    "lib/research/peers/universe.py": {
+      "sha256": "6eb5528d78de0fb5d5094150e724c52312785184a62531020ee7241bf239f504",
+      "worktree_matches_audit_head": true
+    },
+    "lib/research/management/enrich.py": {
+      "sha256": "78d14f5ff3b40761bbbf24c5e077cb11d92d1d179fb83855fe8bf501471a623b",
+      "worktree_matches_audit_head": true
+    },
+    "lib/research/api/scoped_amgt.py": {
+      "sha256": "bfb827df796c116026affaada00c62c98142835af3d71abeabc08fbe8157894c",
+      "worktree_matches_audit_head": true
+    },
+    "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~22/RUN_LOGS.md": {
+      "sha256": "b3569d8cb5825bc164e2058173109a4916e687725962c0d793624149d6a8d908",
+      "worktree_matches_audit_head": true
+    },
+    "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md": {
+      "sha256": "ff8c46230fcac4a0b66d27de24adef46baeeafbcd05af00d634c846e794585c1",
+      "worktree_matches_audit_head": true
+    }
+  },
+  "task_census": [
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rj-1.the-canonical-key-on-the-ranked-click.md",
+      "status_field": "complete",
+      "sha256": "842c37d1ba4b3b49a33973a75b5f4093174cba358a691d8ee9fdfbf3e8d743ab"
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rj-10.the-deploy-and-the-live-read.md",
+      "status_field": "staged",
+      "sha256": "a4a0be3dbc58f26673d15e80a875935112bfe0fb01b51b37af643bf51a47a65e"
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rj-11.the-posture-call.md",
+      "status_field": "staged",
+      "sha256": "1e40541f633abaa26e61d114751f3645eaf90cc7aaa17a5e805b57aa45395700"
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rj-12.the-posture-tab-and-the-header-line.md",
+      "status_field": "staged",
+      "sha256": "9274fd4307c5e6453f2a85668c19cbecd14d4f33eb9c9a0e5b6cc64d577e4d93"
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rj-13.the-social-source-measured.md",
+      "status_field": "staged",
+      "sha256": "cba2ff7efbed4e7cf0c22dd951e0304db6eb6dc967f2023091981f04b858ebd0"
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rj-2.drafted-sentences-beside-their-evidence.md",
+      "status_field": "complete",
+      "sha256": "31b75a7fd0b24e04d56b12a494364966b1f5f95085f8123d1452372ee1fbeedb"
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rj-3.the-exact-input-exercise.md",
+      "status_field": "staged",
+      "sha256": "a0c1935d40e448e94f6700798d4826a1d6af4610e513dd3339f9eaf29b0bdf8a"
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rj-4.the-union-universe.md",
+      "status_field": "complete",
+      "sha256": "1a72a7db2e03c7842914e93cd87b5ac46956daa2d13f29a735395d6228c84208"
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rj-5.one-store-the-two-readers-on-the-pool.md",
+      "status_field": "complete",
+      "sha256": "603f94dfd5570649a1bc7bc3f8ca82529f39a4cb934397235086382326ee5393"
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rj-6.the-filings-analyzer.md",
+      "status_field": "complete",
+      "sha256": "08dc78b6908bbf0b9b00c285b34fb00106c4db84c9274d088375cd6ef6eb1ff5"
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rj-7.the-similarity-ranker.md",
+      "status_field": "complete",
+      "sha256": "2847ab7f7e10e62fa3d1bae95d6097e90232119f25a47a15c9d74c38f6273f40"
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rj-8.executive-management.md",
+      "status_field": "complete",
+      "sha256": "b06a2861673efb735b295933fbf1e1bb600aab8c7f1743ed9902bc7c7eb46be3"
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rj-9.the-header-and-the-five-tabs.md",
+      "status_field": "staged",
+      "sha256": "82002e80ed96ec0705e0d42ac7a377df1a76b140a9534329e98ce9d2e0043d59"
+    }
+  ],
+  "frame_updates": [
+    {
+      "message_id": 23185,
+      "sender": "1.0.0_SA_CTO~W",
+      "message_timestamp_utc": "2026-09-15T17:42:49Z",
+      "recorded_at_utc": "2026-09-15T17:44:11.167023+00:00",
+      "source_filename": "20260915T174249Z_1.0.0_SA_CTO_W_ANDREW-DIRECT__17_4x-17_5xZ_at_the_1.0.0.md",
+      "source_sha256": "41db5eafe17ae023e9a849d8279715c714e842416bafa07fdfe640163c75a626",
+      "message_body_verbatim": "# Message from 1.0.0_SA_CTO~W\r\n**To:** 3.0.0_SA_CVO~W\r\n**Date:** 20260915T174249Z\r\n**Msg-ID:** 23185\r\n**Subject:** ANDREW-DIRECT ~17:4x-17:5xZ at the 1.0.0_SA_CTO~W terminal, VERBATIM (four messages): one standardized metric per Security Analysis tab, an absolute figure plus a percentile within the pool of ANALYZED companies, stored in opal-data-harvest and appended over time; the jumpoff point for Posture's case\r\n\r\nFrom 1.0.0_SA_CTO~W. AMGT_RESAPP only. Andrew's words at this terminal, VERBATIM AND ENTIRE, in order:\r\n\r\n1 (~17:4xZ): \"Something id clarify here is that we need to standardize some kind of metric per tab. the metric will be an absolute figure but also a relative figure (percentile based in the pool). this gives a clear jumpoff point for the AI Rec in posture when it makes its case. I think average mgmt tenor (and maybe average tenor of mgmt at the co in general, even not in mgmt role) is a obvious one for mgmt tab. We dont necessarily need to know what all the others will be, but I think its important to design the tabs with that in mind, that they are going to center around a relative/absolute value on some standardized score, as that will inform frontend and probably also \"Posture\" wiring.\"\r\n\r\n2 (~17:5xZ): \"percentile is relative to the pool of analyzed companies in the Security Analysis database\"\r\n3: \"all of this stuff should be storeed in opal-data-harvest\"\r\n4: \"and essentially appended over time\"\r\n\r\nRecord: org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260915_174xZ_ONE_STANDARDIZED_METRIC_PER_TAB_ABSOLUTE_AND_POOL_PERCENTILE.md @1d9d8fd783 (LOCAL).\r\n\r\nREAD NARROWLY. Ruled: each tab centers on one standardized metric carried as an ABSOLUTE and a PERCENTILE; the pool is the companies ANALYZED in the Security Analysis database that carry the metric, growing as companies are analyzed; the store is s3://opal-data-harvest; records are APPENDED over time, never overwritten. Named: average management tenure for the Exec Management tab. Hedged (\"maybe\"): average tenure of the company's people in general. NOT ruled: the other tabs' metrics; the percentile method; whether Posture must consume the pair (his \"probably\"). \"all of this stuff\" is read as the metrics, percentiles and pools; the wider reading (every Security Analysis output appended over time) is recorded as plausible, not adjudicated.\r\n\r\nWHERE IT LANDS. The spec is frozen mid-round, so it enters at the round-11 L10 addendum as candidate 13, C-TAB-METRIC, in the CTO's pre-read (ledger/L10_PREREAD.round11.md @1d9d8fd783). The proposed shape: a metric record {metric_id, definition, unit, absolute, percentile, pool_n, pool_vintage, state, reason}, appended per company per analysis at metrics/v1/{metric_id}/{security_key}/{as_of}.json, plus a dated pool snapshot at metrics/v1/{metric_id}/_pool/{as_of}.json; a percentile below a declared pool floor is ABSENT with 'pool too small (N)' and the absolute still renders.\r\n\r\nMEASURED for the named metric: the absolute exists for 4 of 5 analyzed names (BA 2.58, COST 5.06, HD 4.68, SAP 4.04 years; BABA none -- its 20-F has no role-start column). The percentile does not: management/v1/_pool/2026-09-15.json stores only the average (4.08) over a denominator that says 5 names where 4 contribute. Employee-wide tenure is UNMEASURED -- it appears in 0 of the 5 saved filing excerpts, which exclude Item 1's human-capital section. Against \"appended over time\", the pool's product keys already append by date except drafting/v1/{key}.json (no date) and social/v1/_measurement/{as_of}.json (no security, W22-S6).\r\n\r\nPER SERIAL: 2.0.0_SA_COO~W -- no round-11 order change is asked by this seat; whether the unspawned rj-12 reserves a header slot for the pair is your call as issuer; the metric work is round-12 material. 3.0.0_SA_CVO~W -- for your L8/L9 frame of FWD-17 and FWD-19. 4.0.0_SA_CRO~W -- for the technical-spec discussion with Andrew. 0.0.0_AB_MSTR~Z -- for the record and the carry. No reply needed. Push state: LOCAL.\r\n",
+      "scope": "AMGT_RESAPP; FWD-17 and FWD-19 L8/L9 review frame; round-11 L10 addendum candidate C-TAB-METRIC for round 12.",
+      "authority_basis": "CTO relay of four Andrew-direct messages. This seat received the relay, not the original messages at the CTO terminal. Current direct user instruction independently authorizes AMGT_RESAPP focus.",
+      "requested_action": "Carry the metric direction into the CVO review frame. No reply requested; no current task-order edit requested.",
+      "explicit_direction_as_relayed": [
+        "Standardized tab metric has an absolute value and a percentile relative to the pool of analyzed companies in the Security Analysis database.",
+        "Store these records in opal-data-harvest and append them over time.",
+        "Average management tenure is the named management metric; broader company tenure remains hedged."
+      ],
+      "proposals_not_adopted_as_rulings": [
+        "Metrics for the other tabs are not specified.",
+        "Percentile algorithm, pool floor, exact schema and object-key layout are CTO proposals.",
+        "Mandatory Posture consumption is not established by the relayed wording.",
+        "Applying append-only to every Security Analysis output is a plausible broader reading, not adjudicated here."
+      ],
+      "review_checks_for_l9_l10": [
+        "Grade current round-11 work against its issued specification; do not retroactively fail an order against this future addendum.",
+        "Separate all analyzed companies from companies with a valid metric and from individual officers contributing to management tenure. The eligible pool denominator must be explicit.",
+        "Treat the reported four tenure values, missing BABA metric, existing pool average and missing percentile as CTO measurements at the message vintage, not as independently remeasured live facts in this update.",
+        "Check the proposed persistence key against multiple analyses on the same date: a dated key alone does not prove prior records cannot be overwritten. Preserve the analysis and pool vintages needed to interpret each historical percentile.",
+        "Carry C-TAB-METRIC to the one final round-11 submission with FWD-17/FWD-19; do not amend the PRD or worker orders from this seat."
+      ],
+      "workflow_action": "Applied review frame; no outbound reply. Archive only this exact notification after the record commits."
+    },
+    {
+      "message_id": 23191,
+      "sender": "1.0.0_SA_CTO~W",
+      "message_timestamp_utc": "2026-09-15T17:50:32Z",
+      "reported_original_window": "~18:0xZ as written in the body; retained separately from the message timestamp",
+      "recorded_at_utc": "2026-09-15T17:51:37.803276+00:00",
+      "source_filename": "20260915T175032Z_1.0.0_SA_CTO_W_ANDREW-DIRECT__18_0xZ__VERBATIM_--_CORRE.md",
+      "source_sha256": "86042d84cfb9d9e42f0cc86aae72c86b0f28943a85a8db6986b46a25669cb5a5",
+      "message_body_verbatim": "# Message from 1.0.0_SA_CTO~W\r\n**To:** 3.0.0_SA_CVO~W\r\n**Date:** 20260915T175032Z\r\n**Msg-ID:** 23191\r\n**Subject:** ANDREW-DIRECT ~18:0xZ, VERBATIM -- CORRECTION to 23184-23187: the second tenure metric is EXEC-MANAGEMENT specific (the executives' tenure at the company), not employee-wide; filings first, Lusha/LinkedIn also usable\r\n\r\nFrom 1.0.0_SA_CTO~W. AMGT_RESAPP only. Andrew at this terminal ~18:0xZ, VERBATIM AND ENTIRE:\r\n\r\n\"no its not employee wide its exec-mgmt specific. also we can use lusha/linkedin too for this, even though id prioritize the filings.\"\r\n\r\nIt corrects this seat's reading in 23184-23187, which called his \"maybe\" metric \"average tenure of the company's people in general\". That reading is SUPERSEDED. Record @4eef3ae75a (fourth clarification appended; the earlier reading kept visible, not rewritten); candidate 13 in ledger/L10_PREREAD.round11.md corrected in the same commit.\r\n\r\nREAD NARROWLY: the Exec Management tab carries TWO executive tenure measures over the same executives -- tenure in the current role, and tenure at the company including the years before the role. Nothing about the wider workforce. Sources in his precedence: the filings first; Lusha / LinkedIn usable where the filing is silent; each officer value carries its source.\r\n\r\nMEASURED ~18:0xZ: M-1's officer records carry role_start and tenure_years (role tenure) and NO company-join field. The persisted officer sections state a company-join year for BA in 6 of 12 bios (\"Amuluru joined Boeing in 2017\") and HD in 6 of 10 (\"Campbell began her career with the Company in 1985\") -- a lower-bound pattern count; COST 0 of 13 (a table of officer-since dates); BABA 0 of 7 (the 20-F lists age and position); SAP no officer text in the persisted object. About 12 of 48 officers today. The proxy statement (DEF 14A) is the first filing to add; the Lusha/LinkedIn employment-history route is UNMEASURED (the prospecting fields measured in card 2 carry no dates). Job history is not contact data; contact reveal stays off.\r\n\r\nPER SERIAL: 2.0.0_SA_COO~W -- round-12 material for the exec-management lane (a company-join field on M-1, the proxy fetch, the Lusha history measurement); no round-11 order change asked. 3.0.0_SA_CVO~W -- for your FWD-17 frame. 4.0.0_SA_CRO~W -- for the spec discussion. 0.0.0_AB_MSTR~Z -- the record and the carry. No reply needed. Push state: LOCAL.\r\n",
+      "authority_basis": "CTO relay of Andrew-direct correction; the original speech was at the CTO terminal.",
+      "quoted_correction": "no its not employee wide its exec-mgmt specific. also we can use lusha/linkedin too for this, even though id prioritize the filings.",
+      "supersedes": {
+        "message_id": 23185,
+        "reading": "average tenure of the company people in general / employee-wide tenure",
+        "replacement": "The same executives: current-role tenure and company tenure including years before the current role. Earlier entry remains historical and must not govern the scope."
+      },
+      "effective_fwd17_frame": [
+        "Executive-management population only; no wider-workforce metric.",
+        "Distinguish current-role start from company-join date; do not infer one from the other.",
+        "Prefer filings; Lusha/LinkedIn may supply evidence where filings are silent. Carry source on each officer value.",
+        "Contact reveal remains off. Employment history permission does not grant contact-data collection."
+      ],
+      "review_checks": [
+        "Preserve separate denominators for the two measures: same eligible executives does not imply the same count with observed start dates.",
+        "CTO reports no company-join field on M-1 and a lower-bound company-join pattern count in saved bios. These are relayed measurements, not new independent CVO measurements.",
+        "The CTO proposes a DEF 14A fetch, company-join field and employment-history measurement for round 12. No provider route is established as capable merely because its use is permitted.",
+        "Apply the correction to the FWD-17 review and C-TAB-METRIC addendum discussion. Do not retroactively change round-11 criteria or amend worker orders."
+      ],
+      "requested_action": "Update the CVO FWD-17 frame; no reply requested.",
+      "workflow_action": "Record correction, then archive only this exact notification. No outbound message."
+    },
+    {
+      "message_id": 23202,
+      "sender": "1.0.0_SA_CTO~W",
+      "message_timestamp_utc": "2026-09-15T18:20:42Z",
+      "recorded_at_utc": "2026-09-15T18:21:46.008671+00:00",
+      "source_filename": "20260915T182042Z_1.0.0_SA_CTO_W_ANDREW-DIRECT__18_1x-18_2xZ_at_the_1.0.0.md",
+      "source_sha256": "02207dde377c029145d78a8cedc6692d0b4e375d96ef062abe9cb66b46499cae",
+      "message_body_verbatim": "# Message from 1.0.0_SA_CTO~W\r\n**To:** 3.0.0_SA_CVO~W\r\n**Date:** 20260915T182042Z\r\n**Msg-ID:** 23202\r\n**Subject:** ANDREW-DIRECT ~18:1x-18:2xZ at the 1.0.0_SA_CTO~W terminal: the Thesis/Risk tab's universal score is ROBUSTNESS (his factor model, recorded verbatim); every Robustness input from BLOOMBERG; the Mgmt tab = average exec time WITH THE COMPANY, Bloomberg first, Lusha where Bloomberg lacks it; Lusha's reliability to be measured\r\n\r\nFrom 1.0.0_SA_CTO~W. AMGT_RESAPP only. Two Andrew words at this terminal, minutes apart; the full text of both is in the record, which preserves the model's layout exactly.\r\n\r\nRecord: org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260915_181xZ_THESIS_RISK_TAB_SCORE_IS_ROBUSTNESS_FACTOR_MODEL.md @3f9481ea12 (LOCAL).\r\n\r\n1 (~18:1xZ), his opening verbatim: \"I want to show you something, i am building out factor models/methodologies that we can use for the universal \"scores\" per tab. For Thesis/Risk, it should be Robustness, i have the information here for the related model:\" -- then the model: six universal constraints (EBIT/interest expense; net debt/EBITDA; (cash + revolver)/24m obligations; debt maturing <=24m/total debt; FCF/revenue TTM; largest customer/revenue), each with a sign, a transform (ln, logit, identity) and a threshold; per name 8 TTM observations, transformed and winsorized at sector p1/p99, sigma floored at the sector 20th percentile of sd, headroom h = s*(u_current - g(t))/sigma, weighted by lambda (1.0, 1.0, 0.9, 0.9, 1.0, 1.4); aggregate S = -tau*ln((1/n) sum exp(-h/tau)) with tau 0.5 (swept in a backtest); domain guards (EBITDA or EBIT <= 0 drops i=1,2; net debt < 0 floors x2 at 0.1; x <= 0 on a ln metric drops that i; n < 5 flags and excludes); cross-sectional P = sector percentile of S, R = residual of P on prior factors in orthogonalization order.\r\n\r\n2 (~18:2xZ), verbatim: \"This info should all come from Bloomberg for Robustness Score. Then for the \"MGMT\" tab, I need you to basically structure it as average exec management time with company which we get from Bloomberg as well but if BBG doesnt have it in the filings then we shoot a shot at doing it via Lusha. In any case, I'd be curious to see how reliable lusha is in getting exec manager info and if the information is parseable so we can attempt more scoped opinions, e.g. average time at company as a manager + average time at company in general, etc.\"\r\n\r\nREAD NARROWLY. Ruled: Robustness is the Thesis/Risk tab's score under the per-tab principle; every Robustness input comes from Bloomberg; the Mgmt tab's metric is average executive time with the company, Bloomberg first and Lusha where Bloomberg lacks it. Shown, not final: the model's parameters (he is still building it; tau to be swept). Not ruled: other tabs' models, the orthogonalization order, the calibration population for the sector statistics, which of P and R displays.\r\n\r\nWHERE IT LANDS: the round-11 L10 addendum -- candidate 14 (Robustness: data measured -- the Bloomberg model block is FISCAL-YEAR only and carries 2 of the 6 constraints' inputs, so 0 of 6 are computable at the 8-quarter TTM frequency today -- and the method reviewed for his ruling) and candidate 13's Mgmt source order, in ledger/L10_PREREAD.round11.md @3f9481ea12. This seat is now measuring (a) what Bloomberg's field dictionary carries for executive tenure and the Robustness inputs, and (b) Lusha's reliability: from rj-8's saved M-1 objects, Lusha matched 11 of 48 filing officers across the five names (BA 4/12, COST 1/13, HD 3/10, SAP 3/6, BABA 0/7), and prospecting returns no dates.\r\n\r\nPER SERIAL: 2.0.0_SA_COO~W -- round-12 material (a Bloomberg quarterly pull for the Robustness inputs; the Mgmt tenure sourcing); no round-11 order change asked. 3.0.0_SA_CVO~W -- for your FWD-17 and FWD-18 frames. 4.0.0_SA_CRO~W -- for the spec discussion. 0.0.0_AB_MSTR~Z -- the record and the carry. No reply needed. Push state: LOCAL.\r\n",
+      "authority_basis": "CTO relay of Andrew-direct messages. The full factor-model record at 3f9481ea12 is referenced in the message but has not been read in this notification turn. The summary here is not a substitute for that original model.",
+      "requested_action": "Carry the clarified Management metric and Robustness direction into FWD-17/FWD-18 and the round-11 L10 addendum review; round-12 material, no round-11 order change or reply requested.",
+      "effective_fwd17_frame": [
+        "Primary Management tab metric: average executive-management time with the company. The population remains executives, not the wider workforce.",
+        "Bloomberg first; Lusha where Bloomberg lacks the information. This newer source instruction governs over the earlier generic filings-first/Lusha-or-LinkedIn frame to the extent they differ.",
+        "Measure Lusha reliability and whether employment dates can be parsed before claiming support for more scoped tenure measures. A profile-name match is not evidence of a tenure date.",
+        "Role tenure and total company tenure remain distinct quantities; the newer word selects company tenure as the main metric without establishing that both measures are currently available."
+      ],
+      "effective_fwd18_frame": [
+        "Thesis/Risk tab score is Robustness. All Robustness inputs are to come from Bloomberg.",
+        "Preserve the full model record for later method review. Its draft status, calibration and unresolved display choice must be explicit."
+      ],
+      "not_settled_by_this_message": [
+        "Final model parameters and tau calibration.",
+        "Orthogonalization order and definitions of prior factors.",
+        "Calibration population for sector transformations, sigma floors and percentiles.",
+        "Whether P or R is displayed; reconcile the model sector percentile with the earlier analyzed-company-pool rule at addendum review.",
+        "Models for other tabs."
+      ],
+      "review_checks": [
+        "Do not grade round-11 issued criteria retroactively against these later model or sourcing requirements.",
+        "CTO reports annual-only model blocks and no constraint computable at the requested eight-observation TTM frequency. Treat these as relayed vintage-specific measurements until independently checked.",
+        "CTO reports Lusha matches 11 of 48 filing officers across five names and no dates in prospecting. Keep officer coverage, date availability and source accuracy as different measures.",
+        "Read the exact preserved full model before any mathematical implementation or model sign-off; do not infer missing thresholds, transformations or parameter usage from this abridged relay.",
+        "Carry candidate 14 and candidate 13 updates into the one final CVO submission. No PRD edit, worker-order edit, vendor call or pool write authorized by this review update alone."
+      ],
+      "workflow_action": "Append review frame while preserving prior history, then archive only this exact notification. No outbound reply."
+    },
+    {
+      "message_id": 23206,
+      "sender": "1.0.0_SA_CTO~W",
+      "message_timestamp_utc": "2026-09-15T18:30:39Z",
+      "recorded_at_utc": "2026-09-15T18:31:53.850820+00:00",
+      "source_filename": "20260915T183039Z_1.0.0_SA_CTO_W_AMGT_RESAPP_Andrew-direct__18_2xZ__the_P.md",
+      "source_sha256": "1d8820ba92074ea36aed0ccac829ecf7866d90e6f14375fbb474ace82ca9bb19",
+      "message_body_verbatim": "# Message from 1.0.0_SA_CTO~W\r\n**To:** 3.0.0_SA_CVO~W\r\n**Date:** 20260915T183039Z\r\n**Msg-ID:** 23206\r\n**Subject:** AMGT_RESAPP Andrew-direct ~18:2xZ: the Peers tab's score is V, a peer-relative valuation z-score (record @947b9793a1)\r\n\r\nAndrew-direct at the 1.0.0_SA_CTO~W terminal, ~18:2xZ, recorded verbatim and entire at org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260915_182xZ_PEERS_TAB_SCORE_IS_PEER_RELATIVE_VALUATION_Z_MODEL.md @947b9793a1.\r\n\r\nThe Peers tab's universal score is V: six yield-form measures at equal weight -- FCF/market cap, NTM E/P, (dividends+buybacks)/market cap, EBITDA/EV, sales/EV, NTM EPS growth / NTM P/E. Each measure is winsorized p5/p95 over the ranked peer set K (subject excluded, |K| >= 8), z = (subject - median) / sd, V = mean z over measures available for the subject and >= 6 peers (|M| >= 3). Guards: sd = 0 or fewer than 6 peers drops the measure; |M| < 3 or |K| < 8 suppresses V and shows the raw table only; EBITDA <= 0 drops EBITDA/EV; NTM EPS growth <= 0 drops the inverse PEG. Cross-section: P = percentile of V within sector; R = residual on prior factors.\r\n\r\nRead narrowly: the metric and its peer set are ruled. The source of the six measures is NOT named in this word; 1.0.0_SA_CTO~W is measuring Bloomberg first and does not widen the Robustness \"all from Bloomberg\" word to it. The \"| sector\" percentile beside the ~17:5xZ pool word (the analyzed companies) is one open question for both models. Lands as candidate 15 in the round-11 L10 addendum; the round-11 specification stays frozen. Push state: LOCAL (0.0.0_AB_MSTR~Z carries).\r\n",
+      "authority_basis": "CTO summary of Andrew-direct at its terminal. The full verbatim model at org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260915_182xZ_PEERS_TAB_SCORE_IS_PEER_RELATIVE_VALUATION_Z_MODEL.md @947b9793a1 is referenced but not read in this exact-notification turn.",
+      "requested_action": "Carry the named Peers score V as candidate 15 into the round-11 L10 addendum review. No present task-order or implementation change requested.",
+      "peers_review_frame": [
+        "Peers universal score is V, a valuation z-score relative to the ranked peer set K; subject excluded.",
+        "Six equal-weight yield measures as relayed: FCF/market cap; NTM E/P; (dividends+buybacks)/market cap; EBITDA/EV; sales/EV; NTM EPS growth / NTM P/E.",
+        "Per measure: winsorize at peer-set p5/p95; z = (subject - peer median) / peer sd. V averages available z values.",
+        "Require at least eight ranked peers and at least three available measures, with subject data and at least six peer observations per included measure.",
+        "Drop a measure for zero sd or fewer than six peers; EBITDA <= 0 drops EBITDA/EV; NTM EPS growth <= 0 drops inverse PEG.",
+        "Suppress V and retain the raw table when peer-set or measure-count floors fail.",
+        "Cross-sectional P is described as sector percentile of V; R as residual on prior factors. Preserve the unresolved population and prior-factor definitions."
+      ],
+      "source_scope": [
+        "The word does not name the data source for these six measures. CTO measuring Bloomberg first is an investigation choice, not a Bloomberg-only requirement.",
+        "The Robustness Bloomberg-only ruling must not be extended to V by inference."
+      ],
+      "review_checks": [
+        "Reconcile sector percentile with the earlier analyzed-company-pool direction for both V and Robustness; do not choose a denominator silently.",
+        "Keep peer-set size, per-measure eligible-peer count and included-measure count separate in evidence and UI suppression states.",
+        "Read the full verbatim model before mathematical implementation or sign-off; the abridged notification is not the final algorithm specification.",
+        "Do not grade the existing round-11 peer ranker against these newly introduced valuation-score requirements. Round-11 specification stays frozen.",
+        "Preserve prior ranker currency and identity findings: defining V on K does not independently certify K or its numeric comparability."
+      ],
+      "workflow_action": "Append review frame, then archive this exact notification. No outbound reply or interim finding message."
+    },
+    {
+      "message_id": 23210,
+      "sender": "1.0.0_SA_CTO~W",
+      "message_timestamp_utc": "2026-09-15T18:50:37Z",
+      "recorded_at_utc": "2026-09-15T18:51:41.050396+00:00",
+      "source_filename": "20260915T185037Z_1.0.0_SA_CTO_W_AMGT_RESAPP_Andrew-direct__18_3xZ__the_M.md",
+      "source_sha256": "bf32a83001b66ec56839e365ee24ad5d141c225c431cb8e69e465793d3b1b82c",
+      "message_body_verbatim": "# Message from 1.0.0_SA_CTO~W\r\n**To:** 3.0.0_SA_CVO~W\r\n**Date:** 20260915T185037Z\r\n**Msg-ID:** 23210\r\n**Subject:** AMGT_RESAPP Andrew-direct ~18:3xZ: the Model tab's score is Divergence D (record @287d2c2619); Peers re-sent identical\r\n\r\nAndrew-direct at the 1.0.0_SA_CTO~W terminal, ~18:3xZ, recorded verbatim at org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260915_183xZ_MODEL_TAB_SCORE_IS_DIVERGENCE_FROM_CONSENSUS_FCF_AND_PEERS_RESENT.md @287d2c2619.\r\n\r\nThe Model tab's universal score is D = (model NTM FCF - consensus NTM FCF) / sd of analyst NTM FCF estimates. Positive means the house model is above the street. Dispersion floor: s_cons = max(s_cons, psi * |F_cons|), psi the sector 20th percentile of s_cons/|F_cons|. Degenerate-consensus guard: when |F_cons| < 1% of NTM revenue, s_cons = max(s_cons, 1% of NTM revenue). D is suppressed below 4 estimates, without a model figure, or at zero dispersion after the floor; winsorized at universe p1/p99; P = sector percentile, R = residual. Model upside U and raw percent disagreement are REPORTED, never ranked -- valuation stays with the Peers tab.\r\n\r\nA ruled condition on the model producer: drivers must be seeded at least partly independently of consensus, and before deployment sd(D) across the universe below 0.25 means the factor is not measuring disagreement.\r\n\r\nThe Peers model in the same paste is byte-identical to the record @947b9793a1 (model block 1230 of 1230 characters; prose identical apart from that record's blockquote markers).\r\n\r\nLands as candidate 16 in the round-11 L10 addendum; the round-11 specification stays frozen. Push state: LOCAL (0.0.0_AB_MSTR~Z carries).\r\n",
+      "authority_basis": "CTO summary of Andrew-direct at its terminal. The full verbatim model at org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260915_183xZ_MODEL_TAB_SCORE_IS_DIVERGENCE_FROM_CONSENSUS_FCF_AND_PEERS_RESENT.md @287d2c2619 is referenced but not read in this exact-notification turn.",
+      "requested_action": "Carry Model Divergence D into round-11 L10 addendum candidate 16. No round-11 order or implementation change requested.",
+      "model_review_frame": [
+        "D = (model NTM FCF - consensus NTM FCF) / standard deviation of analyst NTM FCF estimates; positive means house model above consensus.",
+        "Dispersion floor: s_cons = max(s_cons, psi * abs(F_cons)), where psi is the sector 20th percentile of s_cons/abs(F_cons).",
+        "Degenerate consensus: if abs(F_cons) < 1% of NTM revenue, floor s_cons at 1% of NTM revenue.",
+        "Suppress D with fewer than four estimates, a missing model figure, or zero dispersion after flooring.",
+        "Winsorize D at universe p1/p99; P is sector percentile and R a residual. Existing calibration-population and residual-definition questions still require resolution.",
+        "Model upside U and raw percent disagreement are reported only, never ranked. Valuation ranking remains on Peers."
+      ],
+      "producer_condition": [
+        "Drivers must be seeded at least partly independently of consensus.",
+        "Before deployment, sd(D) below 0.25 across the universe means the factor is not measuring disagreement. Carry this as a prospective producer/measurement condition; no deployment authorization is implied."
+      ],
+      "peers_restatement": {
+        "state": "REPORTED_UNCHANGED_BY_CTO",
+        "comparison_claim": "Model block 1230 of 1230 characters byte-identical to 947b9793a1; prose differs only by blockquote markers.",
+        "review_action": "Retain candidate 15 rather than create a duplicate Peers model requirement. CVO has not independently compared those two source records in this notification turn."
+      },
+      "review_checks": [
+        "Read the full exact model before implementation or model sign-off; do not infer missing algorithm details from this abridged relay.",
+        "Require matched NTM horizons, compatible units and dated source evidence when reviewing model FCF, analyst observations and NTM revenue. Those are review checks, not invented source-vendor requirements.",
+        "Keep analyst-count coverage, raw dispersion, applied floors and score suppression visible in the evidence.",
+        "Evaluate driver independence and universe dispersion separately: one does not prove the other.",
+        "Resolve the universe/sector calibration population and percentile relation to the earlier analyzed-company-pool instruction at addendum review.",
+        "Do not retroactively grade current round-11 criteria against candidate 16. No PRD edit, worker-order edit, vendor call, pool write or deployment performed."
+      ],
+      "workflow_action": "Append review frame while preserving earlier audit and messages, then archive only this exact notification. No outbound reply."
+    },
+    {
+      "message_id": 23224,
+      "sender": "1.0.0_SA_CTO~W",
+      "message_timestamp_utc": "2026-09-15T19:11:10Z",
+      "recorded_at_utc": "2026-09-15T19:12:26.336421+00:00",
+      "source_filename": "20260915T191110Z_1.0.0_SA_CTO_W_AMGT_RESAPP_Andrew-direct__19_0xZ__the_f.md",
+      "source_sha256": "b468678ebc1ff1c96a9b670ccf1d7d6b4abe564ac7d42eaabc8b75da8041955b",
+      "message_body_verbatim": "# Message from 1.0.0_SA_CTO~W\r\n**To:** 3.0.0_SA_CVO~W\r\n**Date:** 20260915T191110Z\r\n**Msg-ID:** 23224\r\n**Subject:** AMGT_RESAPP Andrew-direct ~19:0xZ: the five tab-score calls answered; research brief to 4.0.0_SA_CRO~W; Seeking Alpha crawl to 4.0.0_SA_CRO~Z (record @a026de4004)\r\n\r\nAndrew-direct at the 1.0.0_SA_CTO~W terminal ~19:0xZ, verbatim: \"1.) Yes. 2.) CFPS or EPS is fine. 3.) Ask CRO~Z to explore Seeking Alpha with an authenticated crawl, they should have consensus figures. 4.) Make sure that in any of these cases that you have robust discovery mechanisms, want to make sure we aren't missing things because of how the data is pulled versus lack of coverage itself. In any case, we will have to reorient around data availability. 5.) Yeah sure. In fact, I would actually just make a structured brief on all 5 of these points covering my input and what you need, and issue that brief to CRO~W to go do the research and come back with a brief of their findings.\"\r\n\r\nRecord @a026de4004: org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260915_190xZ_FIVE_TAB_SCORE_CALLS_ANSWERED_BRIEF_TO_CRO_W_SEEKING_ALPHA_TO_CRO_Z.md. Brief, same commit: org/tier1_exec/1.0.0_SA_CTO/deliverables/AMGT_RESAPP_TAB_SCORE_DATA_RESEARCH_BRIEF_20260915_W.md.\r\n\r\nRead narrowly: (1) ONE bounded Lusha enrich authorized -- 11 matched officers, no emails or phones, reveal flag for that call only, contact data never stored; (2) CFPS or EPS estimate dispersion stands in for FCF dispersion; (3) 4.0.0_SA_CRO~Z runs the Seeking Alpha authenticated crawl by name -- the house-forecast question stays open as research; (4) every ABSENT is classed (source lacks it versus our pull missed it) before it counts, and the scores reorient around available data -- the sector-versus-pool percentile basis is not ruled; (5) the Peers subject cap at the peer bounds is ruled.\r\n\r\nNothing in round 11 moves; the addendum waits on the findings brief. Push state: LOCAL (0.0.0_AB_MSTR~Z carries).\r\n",
+      "authority_basis": "CTO relay quotes Andrew answering five questions, and supplies the context-specific narrow reading. The underlying questions and full research brief at a026de4004 have not been read in this exact-notification turn; the short yes answers must not be detached from that context.",
+      "requested_action": "Carry the answered tab-score research calls and findings-brief dependency into the CVO review. No round-11 change or CVO research execution is requested.",
+      "research_ownership": [
+        "Structured research brief issued to 4.0.0_SA_CRO~W to investigate the five points and return findings.",
+        "Seeking Alpha authenticated crawl assigned specifically to 4.0.0_SA_CRO~Z.",
+        "No delegation or research call initiated by this CVO seat."
+      ],
+      "effective_frame": [
+        "CTO contextualizes the first answer as ONE bounded Lusha enrich over 11 matched officers: no emails or phones, reveal flag for that call only, contact data never stored. This narrowly scoped exception does not authorize a standing reveal capability or a second call by this seat.",
+        "CFPS or EPS estimate dispersion may stand in for FCF dispersion. Preserve the chosen proxy and its basis in the later specification and evidence.",
+        "Seeking Alpha consensus availability and the house-forecast question remain research questions until the assigned crawl and findings establish support.",
+        "Classify each ABSENT as source coverage lacking versus data retrieval/discovery missing it before treating it as absence evidence. Reorient scores around demonstrated availability.",
+        "The Peers subject cap at peer bounds is reported ruled by CTO; read the contextual question and full brief before translating this phrase into an algorithm."
+      ],
+      "supersession": [
+        {
+          "prior_frame": "Contact reveal remains off (23191 and earlier).",
+          "effective_limit": "The one bounded Lusha research call described in 23224 is a scoped exception only; no email/phone collection or contact-data storage is authorized."
+        }
+      ],
+      "still_open": [
+        "Sector-versus-analyzed-pool percentile basis is not ruled.",
+        "House-forecast support and provider data availability await research."
+      ],
+      "review_checks": [
+        "Do not assume available CFPS/EPS dispersion is numerically interchangeable with FCF dispersion without the explicit proxy/unit treatment in the subsequent model specification. This is a review question, not a new ban on the authorized alternatives.",
+        "Require the findings brief to distinguish measured source coverage from incomplete discovery, and to state the population and attempted surfaces behind each absence claim.",
+        "Carry the addendum dependency on the CRO findings brief; keep round-11 grading tied to its issued criteria.",
+        "Read AMGT_RESAPP_TAB_SCORE_DATA_RESEARCH_BRIEF_20260915_W.md at a026de4004 and the resulting findings when reviewing the addendum; do not treat this abbreviated relay as the full research result."
+      ],
+      "workflow_action": "Append review frame while preserving the prior audit; archive only this exact notification after commit. No outbound message, reveal call or authenticated crawl by this seat."
+    },
+    {
+      "message_id": 23233,
+      "sender": "1.0.0_SA_CTO~W",
+      "message_timestamp_utc": "2026-09-15T19:41:47Z",
+      "recorded_at_utc": "2026-09-15T19:42:48.343396+00:00",
+      "source_filename": "20260915T194147Z_1.0.0_SA_CTO_W_AMGT_RESAPP_Andrew-direct__19_3xZ__goals.md",
+      "source_sha256": "a404bd5766ea61ec422db5c257fb66a918ae7bd6ec61bfb99256ba62bea282fe",
+      "message_body_verbatim": "# Message from 1.0.0_SA_CTO~W\r\n**To:** 3.0.0_SA_CVO~W\r\n**Date:** 20260915T194147Z\r\n**Msg-ID:** 23233\r\n**Subject:** AMGT_RESAPP Andrew-direct ~19:3xZ: goals for 1.0.0_SA_CTO~W and 2.0.0_SA_COO~W to see AMGT_RESAPP to CLOSED; /self-drive AMGT_RESAPP armed with 1.0.0_SA_CTO~W adjudicating; org/XXX.md carrier row (@2ac5611057)\r\n\r\nAndrew-direct at the 1.0.0_SA_CTO~W terminal ~19:3xZ, VERBATIM: \"I need you to write a /goal for yourself and COO~W to effectively see AMGT_RESAPP through to completion. Once those goals are written, both you and COO~W need to engage the /goal skill with that text. Once that is done, i need you to maintain a /self-drive loop so if any open calls come up in the process, you adjudicate and keep the fabric moving toward that goal. DO so now.\"\r\n\r\nRecord + carrier @2ac5611057: org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260915_193xZ_GOALS_CTO_W_AND_COO_W_SEE_AMGT_RESAPP_THROUGH_SELF_DRIVE_ADJUDICATE.md (the goal text is in it), and a new org/XXX.md Step 1b-F row for 1.0.0_SA_CTO~W (LAW-FILE EDIT -- this message is its same-turn broadcast).\r\n\r\nWhat it changes: (1) 1.0.0_SA_CTO~W and 2.0.0_SA_COO~W each engage /goal-set with one goal text -- AMGT_RESAPP CLOSED, every endpoint outcome REALIZED in matching COMPLETION_REPORT and COMPLETION_GRADES, missions-tree-index admitting CLOSED; HELD-AT-STOP where only a named Andrew hold can realize an outcome. (2) /self-drive AMGT_RESAPP runs at 1.0.0_SA_CTO~W every 30 minutes, and 1.0.0_SA_CTO~W ADJUDICATES every adjudicable open call in scope itself (his \"you adjudicate\") -- open calls on this project go to 1.0.0_SA_CTO~W; a call a NEVER line or a standing Andrew hold names stays a card at Andrew. (3) The Rule 27 steps are unchanged: 3.0.0_SA_CVO~W still owns L8 and L9, 4.0.0_SA_CRO~W the brief half and the research.\r\n\r\nFor 0.0.0_AB_MSTR~Z: for AMGT_RESAPP only, the new row supersedes the AMGT half of the older 1.0.0_SA_CTO~Z row (2026-09-11) in the same table; that row's other half is not this lane's to edit. Push state: LOCAL (0.0.0_AB_MSTR~Z carries).\r\n",
+      "authority_basis": "CTO relay of Andrew-direct at its terminal and same-turn notice of an org/XXX.md carrier edit at 2ac5611057. This notification establishes the relayed instruction, not independently measured goal engagement or loop liveness.",
+      "requested_action": "Apply the AMGT_RESAPP role and adjudication-routing update; preserve CVO L8/L9 ownership. Goal engagement and the loop are assigned to named other seats.",
+      "effective_workflow_frame": [
+        "CTO~W and COO~W are directed to engage completion goals for AMGT_RESAPP; the target is CLOSED with matching outcome evidence and an admitting missions-tree index, or HELD-AT-STOP for an outcome blocked solely by a named Andrew hold.",
+        "CTO~W is directed to run the 30-minute AMGT_RESAPP self-drive loop and adjudicate adjudicable open calls in scope.",
+        "A NEVER line or standing Andrew hold still reserves the call to Andrew; the CTO adjudication instruction does not lift such a restriction.",
+        "CVO~W retains canonical L8 compilation and L9 adjudication; CRO~W retains the brief half and research.",
+        "Carry adjudicable AMGT_RESAPP open calls to CTO~W through the canonical CVO submission. No instruction here changes the one-slug correspondence rule.",
+        "The reported replacement concerns only AMGT in the older CTO~Z loop row. Do not inspect or act on its unrelated project scope."
+      ],
+      "seat_action": [
+        "Continue the existing AMGT_RESAPP CVO work within its assigned limbs.",
+        "Do not create a goal or arm a loop for CVO from instructions addressed to CTO~W and COO~W.",
+        "Do not claim either goal is engaged or the CTO loop is live from the instruction alone."
+      ],
+      "workflow_action": "Append the routing and ownership frame; archive only this exact notification after commit. No reply, goal tool, scheduler change or additional helper initiated by this seat."
+    },
+    {
+      "message_id": 23237,
+      "sender": "1.0.0_SA_CTO~W",
+      "message_timestamp_utc": "2026-09-15T19:51:28Z",
+      "recorded_at_utc": "2026-09-15T19:53:29.917674+00:00",
+      "source_filename": "20260915T195128Z_1.0.0_SA_CTO_W__SELF-DRIVE_AMGT_RESAPP_tick_1__12_calls.md",
+      "source_sha256": "563b1b9e1f2f2e25b4ddb06671a01d2602ed2d69277819ed75a61334d25f322a",
+      "message_body_verbatim": "# Message from 1.0.0_SA_CTO~W\r\n**To:** 3.0.0_SA_CVO~W\r\n**Date:** 20260915T195128Z\r\n**Msg-ID:** 23237\r\n**Subject:** [SELF-DRIVE AMGT_RESAPP tick 1] 12 calls adjudicated by 1.0.0_SA_CTO~W, 2 RESERVED at Andrew (@1685652d6e)\r\n\r\n/self-drive AMGT_RESAPP tick 1 at 1.0.0_SA_CTO~W, adjudicating on Andrew-direct ~19:3xZ (@2ac5611057: \"you adjudicate and keep the fabric moving toward that goal\"). Record: org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ADJUDICATION_AMGT_RESAPP_20260915T195xZ.md; ledger: org/tier1_exec/1.0.0_SA_CTO/drive_pairs/ctoW_AMGT_RESAPP/VERDICTS.jsonl (12 rows, consumed empty). Main input: 4.0.0_SA_CRO~W's findings @7bad309f20.\r\n\r\nRULINGS (operative text in the record):\r\n1. Management headline = time in executive positions at the company (Bloomberg EXECUTIVE_AVERAGE_TENURE); company tenure in general and current-role tenure are companions with their own ids and roster coverage.\r\n2. The one Lusha enrich stays authorized and UNUSED until Lusha's v3 API reference documents a request returning positions without emails or phones; 4.0.0_SA_CRO~W reads that reference.\r\n3. Divergence dispersion: s_proxy = |F_cons| * sd(CFPS) / |mean(CFPS)| at 1FY, EPS in the same form where CFPS fails, dispersion_proxy recorded.\r\n4. FWD-20 appended at the L10 addendum: a house FCF forecast with drivers seeded from filings and history, never consensus; D ABSENT until it serves.\r\n5. Robustness eligibility only by a windowed instrument (latest 8 TTM points, FUND_PER=Q, guards); x6 = SUPPLY_CHAIN_REVENUE_PERCENTAGE latest point only; x3/x4 labelled debt principal due within 24 months; model parameters unchanged, a round-12 cell measures an annual variant.\r\n6. Displayed percentile = the analyzed pool, deduplicated by company FIGI, ABSENT below 5; a labelled sector figure only where a sector holds 5 or more.\r\n7. Peers: a missing dividend or buyback makes measure 3 ABSENT, the EBITDA guard reads the measure's period, NTM EPS growth is its own input, FIGI resolution first; a round-12 cell repairs the 23 empty subjects.\r\n8. 0.0.0_AB_MSTR~Z: 4.0.0_SA_CRO~W's launcher heartbeat fails (PermissionError replacing org/mcp/liveness.json, findings @7bad309f20 last section) so its sends are refused -- restoring that registration is routed to 0.0.0_AB_MSTR~Z; no alternate helper.\r\n9. ADR and home listing count once by company FIGI. 10. Filing text from filings; score inputs from Bloomberg. 11. No throttle; a 429 is logged with its reset time. 12. Adam's exercise of FWD-5/FWD-7 is asked of Andrew when the page is exercisable.\r\n\r\nRESERVED at Andrew: promoting the page (PORTAL FROZEN) and recurring harvest collection (PRD:831).\r\n\r\nFor 2.0.0_SA_COO~W: nothing here edits a live order -- round 11 finishes under its orders; rulings 4, 5 and 7 carry round-12 cells into your recut after the L10 answer. Push state: LOCAL (0.0.0_AB_MSTR~Z carries).\r\n",
+      "authority_basis": "CTO adjudications under the Andrew-delegated open-call authority relayed in 23233; these are CTO rulings, not twelve new direct Andrew quotes. Full operative record CTO_ADJUDICATION_AMGT_RESAPP_20260915T195xZ.md at 1685652d6e and CRO findings 7bad309f20 are referenced but not read in this exact-notification turn.",
+      "requested_action": "Carry the twelve rulings into the AMGT_RESAPP CVO review and eventual addendum. Live round-11 orders are unchanged.",
+      "rulings": [
+        {
+          "number": 1,
+          "review_effect": "Management headline: time in executive positions at the company, Bloomberg EXECUTIVE_AVERAGE_TENURE. General company tenure and current-role tenure are companion metrics with distinct IDs and roster coverage."
+        },
+        {
+          "number": 2,
+          "review_effect": "The one Lusha enrich remains authorized but unused until the v3 reference documents a positions request without email/phone fields; CRO~W owns the reference read."
+        },
+        {
+          "number": 3,
+          "review_effect": "Divergence uses s_proxy = abs(F_cons) * sd(CFPS) / abs(mean(CFPS)) at 1FY; EPS same form if CFPS fails; record dispersion_proxy."
+        },
+        {
+          "number": 4,
+          "review_effect": "Add FWD-20 at L10: a house FCF forecast with drivers seeded from filings and history, never consensus; D remains ABSENT until that producer serves."
+        },
+        {
+          "number": 5,
+          "review_effect": "Robustness eligibility requires the latest eight TTM points through FUND_PER=Q and guards; x6 is latest SUPPLY_CHAIN_REVENUE_PERCENTAGE only; x3/x4 labelled debt principal due within 24 months. Model parameters unchanged; annual-variant measurement belongs to a round-12 cell."
+        },
+        {
+          "number": 6,
+          "review_effect": "Displayed percentile uses the analyzed pool, deduplicated by company FIGI, and is ABSENT below five. A separate labelled sector figure requires at least five in the sector."
+        },
+        {
+          "number": 7,
+          "review_effect": "Peers measure 3 is ABSENT if dividend or buyback is missing; EBITDA guard uses the measure period; NTM EPS growth is a separate input; FIGI resolution first; a round-12 cell repairs the 23 empty subjects."
+        },
+        {
+          "number": 8,
+          "review_effect": "MSTR~Z owns restoring CRO~W launcher registration after the reported heartbeat PermissionError; no alternate helper. This is reported status, not a CVO liveness measurement."
+        },
+        {
+          "number": 9,
+          "review_effect": "ADR and home listing count once by company FIGI."
+        },
+        {
+          "number": 10,
+          "review_effect": "Filing text from filings; score inputs from Bloomberg."
+        },
+        {
+          "number": 11,
+          "review_effect": "No throttle; log each 429 with its reset time. No request traffic or retry behavior changed by this intake."
+        },
+        {
+          "number": 12,
+          "review_effect": "Ask Andrew for Adam to exercise FWD-5/FWD-7 once the page is exercisable; this notice does not establish that the exercise happened."
+        }
+      ],
+      "prior_questions_resolved_or_narrowed": [
+        {
+          "prior": "Displayed sector percentile versus analyzed-company pool and unspecified minimum pool.",
+          "now": "Ruling 6 chooses analyzed-company pool for display, company-FIGI deduplication and minimum five; sector figure is supplementary and labelled."
+        },
+        {
+          "prior": "Management main score framed as overall executive time with company.",
+          "now": "Ruling 1 selects time in executive positions at the company; broader company and current-role tenures become companions. Preserve original relayed Andrew words and this later CTO interpretation as separate authority records."
+        },
+        {
+          "prior": "CFPS/EPS permitted as a dispersion substitute without a scaling formula.",
+          "now": "Ruling 3 supplies a relative-dispersion scaling formula and 1FY horizon; retain source proxy label."
+        },
+        {
+          "prior": "Peer score input provider unspecified in 23206.",
+          "now": "Ruling 10 now says score inputs from Bloomberg. Do not erase the historical fact that the earlier Peers word itself did not name a provider."
+        },
+        {
+          "prior": "One Lusha exception authorized in 23224.",
+          "now": "Ruling 2 adds a documentation prerequisite and reports it unused; no independent second call authorized."
+        }
+      ],
+      "reserved_at_andrew": [
+        "Portal promotion: PORTAL FROZEN.",
+        "Recurring harvest collection: PRD:831."
+      ],
+      "review_checks": [
+        "Read the full operative CTO record and CRO findings before judging implementation or signing a changed PRD. Notification receipt is not proof the rulings have been implemented or consumed.",
+        "Keep the displayed-percentile pool floor separate from per-measure peer counts, Robustness eight-point eligibility and the Divergence analyst-count floor.",
+        "Do not treat the annual Robustness variant as approved to replace the unchanged model; only its measurement is assigned here.",
+        "Keep house forecast availability and consensus-independent driver evidence as actual requirements before treating D as served.",
+        "At addendum review, verify the scaled-dispersion proxy handles its stated 1FY horizon and missing/zero proxy means explicitly; do not silently substitute those for NTM observations.",
+        "Preserve canonical CVO L8/L9 ownership and deliver one final slug to CTO; no interim findings or live-order changes from this seat."
+      ],
+      "workflow_action": "Append review frame and preserve earlier history; archive only this exact notification after commit. No outbound reply, runtime repair, API call, deployment or recurring collection initiated."
+    },
+    {
+      "message_id": 23248,
+      "sender": "1.0.0_SA_CTO~W",
+      "message_timestamp_utc": "2026-09-15T20:20:55Z",
+      "recorded_at_utc": "2026-09-15T20:22:13.030952+00:00",
+      "source_filename": "20260915T202055Z_1.0.0_SA_CTO_W__SELF-DRIVE_AMGT_RESAPP_tick_2__card_15_.md",
+      "source_sha256": "d6bf4ce82cf29b8f011c320aee92bb0e39e7fa321b9a537882d7c3e4df3ae64d",
+      "message_body_verbatim": "# Message from 1.0.0_SA_CTO~W\r\n**To:** 3.0.0_SA_CVO~W\r\n**Date:** 20260915T202055Z\r\n**Msg-ID:** 23248\r\n**Subject:** [SELF-DRIVE AMGT_RESAPP tick 2] card 15: Lusha is not a tenure source; ruling 8 executed; CTO half s.8 corrected (@4be2f8be48)\r\n\r\n/self-drive AMGT_RESAPP tick 2 at 1.0.0_SA_CTO~W (adjudicating on Andrew ~19:3xZ @2ac5611057). Record: org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ADJUDICATION_AMGT_RESAPP_20260915T202xZ.md; ledger row 13.\r\n\r\nCARD 15, RULED on 4.0.0_SA_CRO~W's Lusha v3 reference review @ecfe46465e: the one Lusha enrich authorized ~19:0xZ is NOT run -- the documented request cannot exclude emails and phones (\"Omit reveal to get both by default\") and the documented response carries no employment dates. exec_company_tenure_avg_years and exec_role_tenure_avg_years come from filings only (proxy-statement biographies, 10-K/20-F officer sections), ABSENT with reason where the filing does not state a date. The Bloomberg headline is unaffected. No message to Lusha.\r\n\r\nRULING 8 EXECUTED: 0.0.0_AB_MSTR~Z restored 4.0.0_SA_CRO~W's heartbeat (msg 23242, GREEN, pid 23248); root cause as corrected in msg 23246 is the heartbeat helper's unguarded loop, fabric tooling outside AMGT.\r\n\r\nCORRECTION OF MY OWN RECORD, for 2.0.0_SA_COO~W: CTO half s.8 (@b360513e99) said it was written before rj-10's second-act ledger opened. Worker ~19 opened it at 19:56:43Z in its worktree, a minute before s.8 -- my read looked at the shared tree only. s.8 preceded the apply (20:00:21Z) but reached the worker after it (row W19-S19). The act stayed inside s.8's permitted set, its rollback is in the ledger @1e38dfcb7e, and the entry closed @8f05992ce9 with keyed rows. Correction appended to the half; lines 1-6 unchanged.\r\n\r\nState: round 11 at 11 of 13, rj-10's drain and rj-3 remaining; slug not cut; completion test NOT DONE. Push state: LOCAL (0.0.0_AB_MSTR~Z carries).\r\n",
+      "authority_basis": "CTO adjudication under delegated AMGT_RESAPP open-call authority. Operative tick-2 record at 4be2f8be48 and CRO reference review ecfe46465e are cited, not independently read in this exact-notification turn.",
+      "requested_action": "Apply card 15 sourcing decision and retain CTO rj-10 chronology correction for CVO review. No Lusha action requested; final slug remains pending.",
+      "effective_management_frame": [
+        "Do not run the one previously authorized Lusha enrich: CTO rules its documentation fails the no-email/no-phone prerequisite and supplies no employment dates.",
+        "exec_company_tenure_avg_years and exec_role_tenure_avg_years use filings only: proxy-statement biographies or 10-K/20-F officer sections.",
+        "Missing filing dates yield ABSENT with a reason; do not guess tenure from unrelated fields.",
+        "Bloomberg EXECUTIVE_AVERAGE_TENURE headline remains unchanged."
+      ],
+      "supersedes": [
+        {
+          "prior_message_ids": [
+            23191,
+            23202,
+            23224,
+            23237
+          ],
+          "prior_reading": "Lusha may be explored as a tenure fallback, with one bounded enrich pending documentation.",
+          "effective_reading": "Documentation review has resulted in NOT RUN. Companion tenure metrics are filings-only; prior authorization is not evidence of an executed call."
+        }
+      ],
+      "rj10_timeline_correction_as_reported": {
+        "order": "AMGT-rj-10",
+        "earlier_claim": "CTO half s.8 written before the second-act ledger opened.",
+        "corrected_sequence": [
+          "Worker opened ledger in its worktree at 2026-09-15T19:56:43Z, before s.8.",
+          "CTO shared-tree inspection missed that worktree state.",
+          "s.8 preceded apply at 2026-09-15T20:00:21Z, but reached the worker after apply (W19-S19)."
+        ],
+        "cto_assessment": "Act remained within s.8 permitted set; rollback ledger at 1e38dfcb7e; closed entry at 8f05992ce9 with keyed rows.",
+        "review_status": "Preserve as reported correction. Independently inspect source chronology, scope and rollback evidence when grading rj-10; do not equate issue time with worker receipt time."
+      },
+      "runtime_notice": {
+        "state": "CRO~W heartbeat reported restored by MSTR~Z; no independent CVO liveness probe performed.",
+        "scope": "Only retain relevance to AMGT research availability. Root-cause tooling work is outside AMGT and is not pursued."
+      },
+      "round_state_as_reported": {
+        "complete": 11,
+        "total": 13,
+        "remaining": [
+          "rj-10 drain",
+          "rj-3"
+        ],
+        "slug": "NOT_CUT",
+        "completion_test": "NOT_DONE",
+        "verification": "CTO report at message vintage, not a fresh CVO proof-instance census. Earlier seven-proof audit remains pinned to its original head."
+      },
+      "review_checks": [
+        "Read full CTO/CRO records when reviewing the corresponding addendum; do not reopen the disallowed Lusha attempt from an older frame.",
+        "Apply the rj-10 correction to the final evidence review without silently replacing the original historical claim.",
+        "Keep current round-11 grading tied to its issued criteria; do not issue terminal L8/L9/L10 outputs on the reported partial drain alone."
+      ],
+      "workflow_action": "Append current sourcing decision and chronology correction, preserve prior history, then archive only this exact notification. No outbound reply or provider call."
+    }
+  ]
+}

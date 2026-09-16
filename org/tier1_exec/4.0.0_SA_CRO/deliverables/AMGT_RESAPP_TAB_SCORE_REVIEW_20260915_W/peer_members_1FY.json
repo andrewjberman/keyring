@@ -1,0 +1,2058 @@
+{
+  "as_of": "2026-09-15T19:17:49.555683+00:00",
+  "kind": "ReferenceDataRequest",
+  "securities": [
+    "2454 TT Equity",
+    "406141 Equity",
+    "525397 Equity",
+    "653665 Equity",
+    "7203 JP Equity",
+    "9983 JP Equity",
+    "ACN Equity",
+    "ADBE Equity",
+    "ADM Equity",
+    "ANET Equity",
+    "APA Equity",
+    "APH Equity",
+    "APP Equity",
+    "AR Equity",
+    "BABA Equity",
+    "BAP Equity",
+    "BCRWZ1 Equity",
+    "BFZ7XB Equity",
+    "BGJW37 Equity",
+    "BK6YZP Equity",
+    "BKNG Equity",
+    "BKR Equity",
+    "BP9DL9 Equity",
+    "CDNS Equity",
+    "CFG Equity",
+    "CHD Equity",
+    "CL Equity",
+    "CLX Equity",
+    "COP Equity",
+    "CRWD Equity",
+    "CVNA Equity",
+    "CVS Equity",
+    "DDOG Equity",
+    "DE Equity",
+    "DIS Equity",
+    "DVN Equity",
+    "EL Equity",
+    "EOG Equity",
+    "EQT Equity",
+    "ETN Equity",
+    "EXE Equity",
+    "FANG Equity",
+    "FCNCA Equity",
+    "FITB Equity",
+    "FTI Equity",
+    "FTNT Equity",
+    "GD Equity",
+    "GEV Equity",
+    "GM Equity",
+    "HBAN Equity",
+    "HD Equity",
+    "HSY Equity",
+    "HWM Equity",
+    "IBM Equity",
+    "IFX GY Equity",
+    "KDP Equity",
+    "KEY Equity",
+    "KLAC Equity",
+    "KMI Equity",
+    "KO Equity",
+    "KR Equity",
+    "KVUE Equity",
+    "LMT Equity",
+    "LNG Equity",
+    "LOW Equity",
+    "MAS Equity",
+    "MCD Equity",
+    "MNST Equity",
+    "MO Equity",
+    "MPC Equity",
+    "MRVL Equity",
+    "MTB Equity",
+    "NESN SW Equity",
+    "NET Equity",
+    "NOW Equity",
+    "OKE Equity",
+    "ORLY Equity",
+    "OVV Equity",
+    "OXY Equity",
+    "PDD Equity",
+    "PEP Equity",
+    "PG Equity",
+    "PH Equity",
+    "PM Equity",
+    "PNC Equity",
+    "PR Equity",
+    "PSX Equity",
+    "PWR Equity",
+    "RF Equity",
+    "RKT Equity",
+    "SGI Equity",
+    "SLB Equity",
+    "SN Equity",
+    "SNDK Equity",
+    "SNOW Equity",
+    "SNPS Equity",
+    "SPGI Equity",
+    "SPOT Equity",
+    "STX Equity",
+    "TFC Equity",
+    "TJX Equity",
+    "TRGP Equity",
+    "TSLA Equity",
+    "TT Equity",
+    "TXN Equity",
+    "UBER Equity",
+    "UNP Equity",
+    "USB Equity",
+    "VRT Equity",
+    "WMB Equity",
+    "WMT Equity"
+  ],
+  "fields": [
+    "NAME",
+    "BEST_PERIOD_END_DATE",
+    "BEST_CPS",
+    "BEST_CPS_STDDEV",
+    "BEST_CPS_NUMEST",
+    "BEST_EPS",
+    "BEST_EPS_STDDEV",
+    "BEST_EPS_NUMEST",
+    "EQY_FUND_CRNCY"
+  ],
+  "overrides": {
+    "BEST_FPERIOD_OVERRIDE": "1FY"
+  },
+  "parameters": {},
+  "responses": [
+    {
+      "securityData": [
+        {
+          "security": "WMT Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 110,
+          "fieldData": {
+            "NAME": "WALMART INC",
+            "BEST_PERIOD_END_DATE": "2027-01-31",
+            "BEST_CPS": 5.00625,
+            "BEST_CPS_STDDEV": 0.28400000000000003,
+            "BEST_CPS_NUMEST": 8.0,
+            "BEST_EPS": 2.886,
+            "BEST_EPS_STDDEV": 0.031,
+            "BEST_EPS_NUMEST": 35.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        }
+      ]
+    },
+    {
+      "securityData": [
+        {
+          "security": "2454 TT Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 0,
+          "fieldData": {
+            "NAME": "MEDIATEK INC",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 51.251428571428576,
+            "BEST_CPS_STDDEV": 49.574,
+            "BEST_CPS_NUMEST": 7.0,
+            "BEST_EPS": 68.285,
+            "BEST_EPS_STDDEV": 3.224,
+            "BEST_EPS_NUMEST": 28.0,
+            "EQY_FUND_CRNCY": "TWD"
+          }
+        },
+        {
+          "security": "406141 Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 1,
+          "fieldData": {
+            "NAME": "LVMH MOET HENNESSY LOUIS VUI",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 32.53727272727272,
+            "BEST_CPS_STDDEV": 5.764,
+            "BEST_CPS_NUMEST": 11.0,
+            "BEST_EPS": 22.619,
+            "BEST_EPS_STDDEV": 0.875,
+            "BEST_EPS_NUMEST": 28.0,
+            "EQY_FUND_CRNCY": "EUR"
+          }
+        },
+        {
+          "security": "525397 Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 2,
+          "fieldData": {
+            "NAME": "HERMES INTERNATIONAL",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 49.3375,
+            "BEST_CPS_STDDEV": 6.208,
+            "BEST_CPS_NUMEST": 8.0,
+            "BEST_EPS": 44.474000000000004,
+            "BEST_EPS_STDDEV": 0.922,
+            "BEST_EPS_NUMEST": 23.0,
+            "EQY_FUND_CRNCY": "EUR"
+          }
+        },
+        {
+          "security": "653665 Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 3,
+          "fieldData": {
+            "NAME": "BYD CO LTD-H",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 17.458636363636366,
+            "BEST_CPS_STDDEV": 6.359,
+            "BEST_CPS_NUMEST": 22.0,
+            "BEST_EPS": 4.3020000000000005,
+            "BEST_EPS_STDDEV": 0.36,
+            "BEST_EPS_NUMEST": 45.0,
+            "EQY_FUND_CRNCY": "CNY"
+          }
+        },
+        {
+          "security": "7203 JP Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 4,
+          "fieldData": {
+            "NAME": "TOYOTA MOTOR CORP",
+            "BEST_PERIOD_END_DATE": "2027-03-31",
+            "BEST_CPS": 475.67,
+            "BEST_CPS_STDDEV": 50.723,
+            "BEST_CPS_NUMEST": 7.0,
+            "BEST_EPS": 309.226,
+            "BEST_EPS_STDDEV": 27.77,
+            "BEST_EPS_NUMEST": 24.0,
+            "EQY_FUND_CRNCY": "JPY"
+          }
+        },
+        {
+          "security": "9983 JP Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 5,
+          "fieldData": {
+            "NAME": "FAST RETAILING CO LTD",
+            "BEST_PERIOD_END_DATE": "2026-08-31",
+            "BEST_CPS": 2137.2999999999997,
+            "BEST_CPS_STDDEV": 652.6,
+            "BEST_CPS_NUMEST": 3.0,
+            "BEST_EPS": 1667.896,
+            "BEST_EPS_STDDEV": 59.096000000000004,
+            "BEST_EPS_NUMEST": 18.0,
+            "EQY_FUND_CRNCY": "JPY"
+          }
+        },
+        {
+          "security": "ACN Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 6,
+          "fieldData": {
+            "NAME": "ACCENTURE PLC-CL A",
+            "BEST_PERIOD_END_DATE": "2026-08-31",
+            "BEST_CPS": 19.996666666666666,
+            "BEST_CPS_STDDEV": 2.63,
+            "BEST_CPS_NUMEST": 9.0,
+            "BEST_EPS": 13.843,
+            "BEST_EPS_STDDEV": 0.112,
+            "BEST_EPS_NUMEST": 23.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "ADBE Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 7,
+          "fieldData": {
+            "NAME": "ADOBE INC",
+            "BEST_PERIOD_END_DATE": "2026-11-30",
+            "BEST_CPS": 26.769090909090906,
+            "BEST_CPS_STDDEV": 0.774,
+            "BEST_CPS_NUMEST": 11.0,
+            "BEST_EPS": 24.481,
+            "BEST_EPS_STDDEV": 0.031,
+            "BEST_EPS_NUMEST": 34.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "ADM Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 8,
+          "fieldData": {
+            "NAME": "ARCHER-DANIELS-MIDLAND CO",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 4.73,
+            "BEST_CPS_STDDEV": 3.577,
+            "BEST_CPS_NUMEST": 4.0,
+            "BEST_EPS": 5.471,
+            "BEST_EPS_STDDEV": 0.085,
+            "BEST_EPS_NUMEST": 10.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "ANET Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 9,
+          "fieldData": {
+            "NAME": "ARISTA NETWORKS INC",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 3.9585714285714286,
+            "BEST_CPS_STDDEV": 0.872,
+            "BEST_CPS_NUMEST": 7.0,
+            "BEST_EPS": 4.062,
+            "BEST_EPS_STDDEV": 0.112,
+            "BEST_EPS_NUMEST": 30.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        }
+      ]
+    },
+    {
+      "securityData": [
+        {
+          "security": "CVNA Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 30,
+          "fieldData": {
+            "NAME": "CARVANA CO",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 1.505,
+            "BEST_CPS_STDDEV": 0.35100000000000003,
+            "BEST_CPS_NUMEST": 4.0,
+            "BEST_EPS": 1.692,
+            "BEST_EPS_STDDEV": 0.307,
+            "BEST_EPS_NUMEST": 21.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "CVS Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 31,
+          "fieldData": {
+            "NAME": "CVS HEALTH CORP",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 8.413999999999998,
+            "BEST_CPS_STDDEV": 2.7880000000000003,
+            "BEST_CPS_NUMEST": 5.0,
+            "BEST_EPS": 8.027000000000001,
+            "BEST_EPS_STDDEV": 0.101,
+            "BEST_EPS_NUMEST": 25.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "DDOG Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 32,
+          "fieldData": {
+            "NAME": "DATADOG INC - CLASS A",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 3.3360869565217395,
+            "BEST_CPS_STDDEV": 0.277,
+            "BEST_CPS_NUMEST": 23.0,
+            "BEST_EPS": 2.5300000000000002,
+            "BEST_EPS_STDDEV": 0.032,
+            "BEST_EPS_NUMEST": 36.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "DE Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 33,
+          "fieldData": {
+            "NAME": "DEERE & CO",
+            "BEST_PERIOD_END_DATE": "2026-10-31",
+            "BEST_CPS": 21.48,
+            "BEST_CPS_STDDEV": 3.948,
+            "BEST_CPS_NUMEST": 4.0,
+            "BEST_EPS": 18.101,
+            "BEST_EPS_STDDEV": 0.163,
+            "BEST_EPS_NUMEST": 25.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "DIS Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 34,
+          "fieldData": {
+            "NAME": "WALT DISNEY CO/THE",
+            "BEST_PERIOD_END_DATE": "2026-09-30",
+            "BEST_CPS": 8.08,
+            "BEST_CPS_STDDEV": 2.579,
+            "BEST_CPS_NUMEST": 4.0,
+            "BEST_EPS": 6.94,
+            "BEST_EPS_STDDEV": 0.098,
+            "BEST_EPS_NUMEST": 27.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "DVN Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 35,
+          "fieldData": {
+            "NAME": "DEVON ENERGY CORP",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 12.161818181818182,
+            "BEST_CPS_STDDEV": 0.61,
+            "BEST_CPS_NUMEST": 22.0,
+            "BEST_EPS": 5.307,
+            "BEST_EPS_STDDEV": 0.53,
+            "BEST_EPS_NUMEST": 29.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "EL Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 36,
+          "fieldData": {
+            "NAME": "ESTEE LAUDER COMPANIES-CL A",
+            "BEST_PERIOD_END_DATE": "2027-06-30",
+            "BEST_CPS": 3.9912500000000004,
+            "BEST_CPS_STDDEV": 0.925,
+            "BEST_CPS_NUMEST": 8.0,
+            "BEST_EPS": 3.329,
+            "BEST_EPS_STDDEV": 0.084,
+            "BEST_EPS_NUMEST": 29.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "EOG Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 37,
+          "fieldData": {
+            "NAME": "EOG RESOURCES INC",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 28.564782608695648,
+            "BEST_CPS_STDDEV": 1.232,
+            "BEST_CPS_NUMEST": 23.0,
+            "BEST_EPS": 16.848,
+            "BEST_EPS_STDDEV": 1.077,
+            "BEST_EPS_NUMEST": 34.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "EQT Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 38,
+          "fieldData": {
+            "NAME": "EQT CORP",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 9.453157894736842,
+            "BEST_CPS_STDDEV": 0.553,
+            "BEST_CPS_NUMEST": 19.0,
+            "BEST_EPS": 4.0,
+            "BEST_EPS_STDDEV": 0.362,
+            "BEST_EPS_NUMEST": 27.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "ETN Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 39,
+          "fieldData": {
+            "NAME": "EATON CORP PLC",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 14.156363636363636,
+            "BEST_CPS_STDDEV": 1.097,
+            "BEST_CPS_NUMEST": 11.0,
+            "BEST_EPS": 13.530000000000001,
+            "BEST_EPS_STDDEV": 0.211,
+            "BEST_EPS_NUMEST": 25.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        }
+      ]
+    },
+    {
+      "securityData": [
+        {
+          "security": "MRVL Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 70,
+          "fieldData": {
+            "NAME": "MARVELL TECHNOLOGY INC",
+            "BEST_PERIOD_END_DATE": "2027-01-31",
+            "BEST_CPS": 3.7849999999999993,
+            "BEST_CPS_STDDEV": 0.837,
+            "BEST_CPS_NUMEST": 10.0,
+            "BEST_EPS": 4.1930000000000005,
+            "BEST_EPS_STDDEV": 0.112,
+            "BEST_EPS_NUMEST": 46.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "MTB Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 71,
+          "fieldData": {
+            "NAME": "M & T BANK CORP",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 19.66,
+            "BEST_CPS_NUMEST": 1.0,
+            "BEST_EPS": 19.36,
+            "BEST_EPS_STDDEV": 0.219,
+            "BEST_EPS_NUMEST": 23.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "NESN SW Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 72,
+          "fieldData": {
+            "NAME": "NESTLE SA-REG",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 5.338333333333334,
+            "BEST_CPS_STDDEV": 0.525,
+            "BEST_CPS_NUMEST": 6.0,
+            "BEST_EPS": 4.449,
+            "BEST_EPS_STDDEV": 0.251,
+            "BEST_EPS_NUMEST": 24.0,
+            "EQY_FUND_CRNCY": "CHF"
+          }
+        },
+        {
+          "security": "NET Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 73,
+          "fieldData": {
+            "NAME": "CLOUDFLARE INC - CLASS A",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 2.0883333333333334,
+            "BEST_CPS_STDDEV": 0.201,
+            "BEST_CPS_NUMEST": 6.0,
+            "BEST_EPS": 1.282,
+            "BEST_EPS_STDDEV": 0.105,
+            "BEST_EPS_NUMEST": 32.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "NOW Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 74,
+          "fieldData": {
+            "NAME": "SERVICENOW INC",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 5.491499999999999,
+            "BEST_CPS_STDDEV": 0.198,
+            "BEST_CPS_NUMEST": 20.0,
+            "BEST_EPS": 4.094,
+            "BEST_EPS_STDDEV": 0.1,
+            "BEST_EPS_NUMEST": 45.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "OKE Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 75,
+          "fieldData": {
+            "NAME": "ONEOK INC",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 9.703333333333333,
+            "BEST_CPS_STDDEV": 0.606,
+            "BEST_CPS_NUMEST": 6.0,
+            "BEST_EPS": 5.845,
+            "BEST_EPS_STDDEV": 0.36,
+            "BEST_EPS_NUMEST": 22.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "ORLY Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 76,
+          "fieldData": {
+            "NAME": "O'REILLY AUTOMOTIVE INC",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 4.21,
+            "BEST_CPS_STDDEV": 0.277,
+            "BEST_CPS_NUMEST": 3.0,
+            "BEST_EPS": 3.283,
+            "BEST_EPS_STDDEV": 0.025,
+            "BEST_EPS_NUMEST": 28.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "OVV Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 77,
+          "fieldData": {
+            "NAME": "OVINTIV INC",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 17.379565217391303,
+            "BEST_CPS_STDDEV": 1.3,
+            "BEST_CPS_NUMEST": 23.0,
+            "BEST_EPS": 7.712,
+            "BEST_EPS_STDDEV": 0.853,
+            "BEST_EPS_NUMEST": 24.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "OXY Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 78,
+          "fieldData": {
+            "NAME": "OCCIDENTAL PETROLEUM CORP",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 14.615500000000003,
+            "BEST_CPS_STDDEV": 1.698,
+            "BEST_CPS_NUMEST": 20.0,
+            "BEST_EPS": 6.355,
+            "BEST_EPS_STDDEV": 1.051,
+            "BEST_EPS_NUMEST": 26.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "PDD Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 79,
+          "fieldData": {
+            "NAME": "PDD HOLDINGS INC",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 71.13666666666667,
+            "BEST_CPS_STDDEV": 13.538,
+            "BEST_CPS_NUMEST": 6.0,
+            "BEST_EPS": 68.836,
+            "BEST_EPS_STDDEV": 3.6870000000000003,
+            "BEST_EPS_NUMEST": 30.0,
+            "EQY_FUND_CRNCY": "CNY"
+          }
+        }
+      ]
+    },
+    {
+      "securityData": [
+        {
+          "security": "SGI Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 90,
+          "fieldData": {
+            "NAME": "SOMNIGROUP INTERNATIONAL INC",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 4.6899999999999995,
+            "BEST_CPS_STDDEV": 0.368,
+            "BEST_CPS_NUMEST": 2.0,
+            "BEST_EPS": 3.101,
+            "BEST_EPS_STDDEV": 0.039,
+            "BEST_EPS_NUMEST": 12.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "SLB Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 91,
+          "fieldData": {
+            "NAME": "SLB LTD",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 4.455,
+            "BEST_CPS_STDDEV": 0.514,
+            "BEST_CPS_NUMEST": 12.0,
+            "BEST_EPS": 2.492,
+            "BEST_EPS_STDDEV": 0.076,
+            "BEST_EPS_NUMEST": 29.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "SN Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 92,
+          "fieldData": {
+            "NAME": "SHARKNINJA INC",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 7.876666666666666,
+            "BEST_CPS_STDDEV": 1.544,
+            "BEST_CPS_NUMEST": 3.0,
+            "BEST_EPS": 6.588,
+            "BEST_EPS_STDDEV": 0.094,
+            "BEST_EPS_NUMEST": 13.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "SNDK Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 93,
+          "fieldData": {
+            "NAME": "SANDISK CORP",
+            "BEST_PERIOD_END_DATE": "2027-06-30",
+            "BEST_CPS": 168.22,
+            "BEST_CPS_STDDEV": 48.601,
+            "BEST_CPS_NUMEST": 4.0,
+            "BEST_EPS": 212.506,
+            "BEST_EPS_STDDEV": 12.724,
+            "BEST_EPS_NUMEST": 27.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "SNOW Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 94,
+          "fieldData": {
+            "NAME": "SNOWFLAKE INC",
+            "BEST_PERIOD_END_DATE": "2027-01-31",
+            "BEST_CPS": 3.6875000000000004,
+            "BEST_CPS_STDDEV": 0.426,
+            "BEST_CPS_NUMEST": 12.0,
+            "BEST_EPS": 2.219,
+            "BEST_EPS_STDDEV": 0.108,
+            "BEST_EPS_NUMEST": 47.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "SNPS Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 95,
+          "fieldData": {
+            "NAME": "SYNOPSYS INC",
+            "BEST_PERIOD_END_DATE": "2026-10-31",
+            "BEST_CPS_NUMEST": 0.0,
+            "BEST_EPS": 15.123000000000001,
+            "BEST_EPS_STDDEV": 0.107,
+            "BEST_EPS_NUMEST": 18.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "SPGI Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 96,
+          "fieldData": {
+            "NAME": "S&P GLOBAL INC",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 18.392857142857142,
+            "BEST_CPS_STDDEV": 2.052,
+            "BEST_CPS_NUMEST": 7.0,
+            "BEST_EPS": 17.971,
+            "BEST_EPS_STDDEV": 0.47300000000000003,
+            "BEST_EPS_NUMEST": 26.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "SPOT Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 97,
+          "fieldData": {
+            "NAME": "SPOTIFY TECHNOLOGY SA",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 16.708571428571428,
+            "BEST_CPS_STDDEV": 2.291,
+            "BEST_CPS_NUMEST": 14.0,
+            "BEST_EPS": 12.301,
+            "BEST_EPS_STDDEV": 0.431,
+            "BEST_EPS_NUMEST": 36.0,
+            "EQY_FUND_CRNCY": "EUR"
+          }
+        },
+        {
+          "security": "STX Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 98,
+          "fieldData": {
+            "NAME": "SEAGATE TECHNOLOGY HOLDINGS",
+            "BEST_PERIOD_END_DATE": "2027-06-30",
+            "BEST_CPS": 33.836666666666666,
+            "BEST_CPS_STDDEV": 9.441,
+            "BEST_CPS_NUMEST": 6.0,
+            "BEST_EPS": 35.717,
+            "BEST_EPS_STDDEV": 3.714,
+            "BEST_EPS_NUMEST": 27.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "TFC Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 99,
+          "fieldData": {
+            "NAME": "TRUIST FINANCIAL CORP",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 4.76,
+            "BEST_CPS_STDDEV": 0.127,
+            "BEST_CPS_NUMEST": 2.0,
+            "BEST_EPS": 4.614,
+            "BEST_EPS_STDDEV": 0.046,
+            "BEST_EPS_NUMEST": 18.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        }
+      ]
+    },
+    {
+      "securityData": [
+        {
+          "security": "APA Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 10,
+          "fieldData": {
+            "NAME": "APA CORP",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 14.633809523809523,
+            "BEST_CPS_STDDEV": 1.159,
+            "BEST_CPS_NUMEST": 21.0,
+            "BEST_EPS": 5.883,
+            "BEST_EPS_STDDEV": 0.595,
+            "BEST_EPS_NUMEST": 27.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "APH Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 11,
+          "fieldData": {
+            "NAME": "AMPHENOL CORP-CL A",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 3.276,
+            "BEST_CPS_STDDEV": 0.182,
+            "BEST_CPS_NUMEST": 5.0,
+            "BEST_EPS": 2.668,
+            "BEST_EPS_STDDEV": 0.065,
+            "BEST_EPS_NUMEST": 17.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "APP Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 12,
+          "fieldData": {
+            "NAME": "APPLOVIN CORP-CLASS A",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 15.25,
+            "BEST_CPS_STDDEV": 0.705,
+            "BEST_CPS_NUMEST": 9.0,
+            "BEST_EPS": 15.691,
+            "BEST_EPS_STDDEV": 0.628,
+            "BEST_EPS_NUMEST": 30.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "AR Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 13,
+          "fieldData": {
+            "NAME": "ANTERO RESOURCES CORP",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 8.449444444444445,
+            "BEST_CPS_STDDEV": 0.586,
+            "BEST_CPS_NUMEST": 18.0,
+            "BEST_EPS": 4.265,
+            "BEST_EPS_STDDEV": 0.462,
+            "BEST_EPS_NUMEST": 22.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "BABA Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 14,
+          "fieldData": {
+            "NAME": "ALIBABA GROUP HOLDING-SP ADR",
+            "BEST_PERIOD_END_DATE": "2027-03-31",
+            "BEST_CPS": 64.6975,
+            "BEST_CPS_STDDEV": 18.488,
+            "BEST_CPS_NUMEST": 8.0,
+            "BEST_EPS": 43.236000000000004,
+            "BEST_EPS_STDDEV": 3.825,
+            "BEST_EPS_NUMEST": 30.0,
+            "EQY_FUND_CRNCY": "CNY"
+          }
+        },
+        {
+          "security": "BAP Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 15,
+          "fieldData": {
+            "NAME": "CREDICORP LTD",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 101.47,
+            "BEST_CPS_NUMEST": 1.0,
+            "BEST_EPS": 99.967,
+            "BEST_EPS_STDDEV": 2.6510000000000002,
+            "BEST_EPS_NUMEST": 7.0,
+            "EQY_FUND_CRNCY": "PEN"
+          }
+        },
+        {
+          "security": "BCRWZ1 Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 16,
+          "fieldData": {
+            "NAME": "CIE FINANCIERE RICHEMO-A REG",
+            "BEST_PERIOD_END_DATE": "2027-03-31",
+            "BEST_CPS": 10.035555555555556,
+            "BEST_CPS_STDDEV": 0.972,
+            "BEST_CPS_NUMEST": 9.0,
+            "BEST_EPS": 7.537,
+            "BEST_EPS_STDDEV": 0.41200000000000003,
+            "BEST_EPS_NUMEST": 27.0,
+            "EQY_FUND_CRNCY": "EUR"
+          }
+        },
+        {
+          "security": "BFZ7XB Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 17,
+          "fieldData": {
+            "NAME": "FOXCONN INDUSTRIAL INTERNE-A",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 0.4720000000000001,
+            "BEST_CPS_STDDEV": 1.756,
+            "BEST_CPS_NUMEST": 5.0,
+            "BEST_EPS": 2.984,
+            "BEST_EPS_STDDEV": 0.384,
+            "BEST_EPS_NUMEST": 17.0,
+            "EQY_FUND_CRNCY": "CNY"
+          }
+        },
+        {
+          "security": "BGJW37 Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 18,
+          "fieldData": {
+            "NAME": "MEITUAN-CLASS B",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 1.2965000000000002,
+            "BEST_CPS_STDDEV": 2.4290000000000003,
+            "BEST_CPS_NUMEST": 20.0,
+            "BEST_EPS": 0.20800000000000002,
+            "BEST_EPS_STDDEV": 0.62,
+            "BEST_EPS_NUMEST": 47.0,
+            "EQY_FUND_CRNCY": "CNY"
+          }
+        },
+        {
+          "security": "BK6YZP Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 19,
+          "fieldData": {
+            "NAME": "ALIBABA GROUP HOLDING LTD",
+            "BEST_PERIOD_END_DATE": "2027-03-31",
+            "BEST_CPS_STDDEV": 2.311,
+            "BEST_CPS_NUMEST": 8.0,
+            "BEST_EPS": 5.405,
+            "BEST_EPS_STDDEV": 0.47800000000000004,
+            "BEST_EPS_NUMEST": 30.0,
+            "EQY_FUND_CRNCY": "CNY"
+          }
+        }
+      ]
+    },
+    {
+      "securityData": [
+        {
+          "security": "KR Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 60,
+          "fieldData": {
+            "NAME": "KROGER CO",
+            "BEST_PERIOD_END_DATE": "2027-01-31",
+            "BEST_CPS": 10.75,
+            "BEST_CPS_STDDEV": 0.097,
+            "BEST_CPS_NUMEST": 4.0,
+            "BEST_EPS": 5.203,
+            "BEST_EPS_STDDEV": 0.08,
+            "BEST_EPS_NUMEST": 22.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "KVUE Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 61,
+          "fieldData": {
+            "NAME": "KENVUE INC",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 1.3199999999999998,
+            "BEST_CPS_STDDEV": 0.189,
+            "BEST_CPS_NUMEST": 5.0,
+            "BEST_EPS": 1.175,
+            "BEST_EPS_STDDEV": 0.039,
+            "BEST_EPS_NUMEST": 14.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "LMT Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 62,
+          "fieldData": {
+            "NAME": "LOCKHEED MARTIN CORP",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 38.20571428571429,
+            "BEST_CPS_STDDEV": 3.482,
+            "BEST_CPS_NUMEST": 7.0,
+            "BEST_EPS": 30.548000000000002,
+            "BEST_EPS_STDDEV": 0.28,
+            "BEST_EPS_NUMEST": 24.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "LNG Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 63,
+          "fieldData": {
+            "NAME": "CHENIERE ENERGY INC",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 26.745,
+            "BEST_CPS_STDDEV": 0.789,
+            "BEST_CPS_NUMEST": 6.0,
+            "BEST_EPS": 9.366,
+            "BEST_EPS_STDDEV": 6.035,
+            "BEST_EPS_NUMEST": 16.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "LOW Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 64,
+          "fieldData": {
+            "NAME": "LOWE'S COS INC",
+            "BEST_PERIOD_END_DATE": "2027-01-31",
+            "BEST_CPS": 15.94714285714286,
+            "BEST_CPS_STDDEV": 2.206,
+            "BEST_CPS_NUMEST": 7.0,
+            "BEST_EPS": 12.373000000000001,
+            "BEST_EPS_STDDEV": 0.312,
+            "BEST_EPS_NUMEST": 33.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "MAS Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 65,
+          "fieldData": {
+            "NAME": "MASCO CORP",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 5.615,
+            "BEST_CPS_STDDEV": 0.327,
+            "BEST_CPS_NUMEST": 4.0,
+            "BEST_EPS": 4.542,
+            "BEST_EPS_STDDEV": 0.042,
+            "BEST_EPS_NUMEST": 23.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "MCD Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 66,
+          "fieldData": {
+            "NAME": "MCDONALD'S CORP",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 16.172000000000004,
+            "BEST_CPS_STDDEV": 0.428,
+            "BEST_CPS_NUMEST": 5.0,
+            "BEST_EPS": 12.921000000000001,
+            "BEST_EPS_STDDEV": 0.14100000000000001,
+            "BEST_EPS_NUMEST": 35.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "MNST Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 67,
+          "fieldData": {
+            "NAME": "MONSTER BEVERAGE CORP",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 1.2014285714285715,
+            "BEST_CPS_STDDEV": 0.201,
+            "BEST_CPS_NUMEST": 7.0,
+            "BEST_EPS": 1.155,
+            "BEST_EPS_STDDEV": 0.033,
+            "BEST_EPS_NUMEST": 24.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "MO Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 68,
+          "fieldData": {
+            "NAME": "ALTRIA GROUP INC",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 5.657500000000001,
+            "BEST_CPS_STDDEV": 0.267,
+            "BEST_CPS_NUMEST": 4.0,
+            "BEST_EPS": 5.666,
+            "BEST_EPS_STDDEV": 0.059000000000000004,
+            "BEST_EPS_NUMEST": 14.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "MPC Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 69,
+          "fieldData": {
+            "NAME": "MARATHON PETROLEUM CORP",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 80.45444444444445,
+            "BEST_CPS_STDDEV": 15.505,
+            "BEST_CPS_NUMEST": 9.0,
+            "BEST_EPS": 54.371,
+            "BEST_EPS_STDDEV": 9.418000000000001,
+            "BEST_EPS_NUMEST": 19.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        }
+      ]
+    },
+    {
+      "securityData": [
+        {
+          "security": "PEP Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 80,
+          "fieldData": {
+            "NAME": "PEPSICO INC",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 10.102,
+            "BEST_CPS_STDDEV": 2.1630000000000003,
+            "BEST_CPS_NUMEST": 5.0,
+            "BEST_EPS": 8.564,
+            "BEST_EPS_STDDEV": 0.044,
+            "BEST_EPS_NUMEST": 22.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "PG Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 81,
+          "fieldData": {
+            "NAME": "PROCTER & GAMBLE CO/THE",
+            "BEST_PERIOD_END_DATE": "2027-06-30",
+            "BEST_CPS": 8.134,
+            "BEST_CPS_STDDEV": 0.381,
+            "BEST_CPS_NUMEST": 5.0,
+            "BEST_EPS": 6.969,
+            "BEST_EPS_STDDEV": 0.053,
+            "BEST_EPS_NUMEST": 27.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "PH Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 82,
+          "fieldData": {
+            "NAME": "PARKER HANNIFIN CORP",
+            "BEST_PERIOD_END_DATE": "2027-06-30",
+            "BEST_CPS": 36.346666666666664,
+            "BEST_CPS_STDDEV": 2.708,
+            "BEST_CPS_NUMEST": 3.0,
+            "BEST_EPS": 35.2,
+            "BEST_EPS_STDDEV": 0.446,
+            "BEST_EPS_NUMEST": 26.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "PM Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 83,
+          "fieldData": {
+            "NAME": "PHILIP MORRIS INTERNATIONAL",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 9.057500000000001,
+            "BEST_CPS_STDDEV": 0.357,
+            "BEST_CPS_NUMEST": 4.0,
+            "BEST_EPS": 8.394,
+            "BEST_EPS_STDDEV": 0.081,
+            "BEST_EPS_NUMEST": 15.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "PNC Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 84,
+          "fieldData": {
+            "NAME": "PNC FINANCIAL SERVICES GROUP",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 19.36,
+            "BEST_CPS_STDDEV": 0.297,
+            "BEST_CPS_NUMEST": 2.0,
+            "BEST_EPS": 19.274,
+            "BEST_EPS_STDDEV": 0.223,
+            "BEST_EPS_NUMEST": 15.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "PR Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 85,
+          "fieldData": {
+            "NAME": "PERMIAN RESOURCES CORP-CL A",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 5.537058823529414,
+            "BEST_CPS_STDDEV": 0.212,
+            "BEST_CPS_NUMEST": 17.0,
+            "BEST_EPS": 2.271,
+            "BEST_EPS_STDDEV": 0.166,
+            "BEST_EPS_NUMEST": 24.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "PSX Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 86,
+          "fieldData": {
+            "NAME": "PHILLIPS 66",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 36.55555555555556,
+            "BEST_CPS_STDDEV": 4.353,
+            "BEST_CPS_NUMEST": 9.0,
+            "BEST_EPS": 27.533,
+            "BEST_EPS_STDDEV": 4.735,
+            "BEST_EPS_NUMEST": 20.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "PWR Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 87,
+          "fieldData": {
+            "NAME": "QUANTA SERVICES INC",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 21.79,
+            "BEST_CPS_STDDEV": 2.0060000000000002,
+            "BEST_CPS_NUMEST": 4.0,
+            "BEST_EPS": 16.7,
+            "BEST_EPS_STDDEV": 0.193,
+            "BEST_EPS_NUMEST": 25.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "RF Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 88,
+          "fieldData": {
+            "NAME": "REGIONS FINANCIAL CORP",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 2.62,
+            "BEST_CPS_STDDEV": 0.026000000000000002,
+            "BEST_CPS_NUMEST": 3.0,
+            "BEST_EPS": 2.6390000000000002,
+            "BEST_EPS_STDDEV": 0.035,
+            "BEST_EPS_NUMEST": 23.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "RKT Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 89,
+          "fieldData": {
+            "NAME": "ROCKET COS INC-CLASS A",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS_NUMEST": 0.0,
+            "BEST_EPS": 0.608,
+            "BEST_EPS_STDDEV": 0.035,
+            "BEST_EPS_NUMEST": 17.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        }
+      ]
+    },
+    {
+      "securityData": [
+        {
+          "security": "TJX Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 100,
+          "fieldData": {
+            "NAME": "TJX COMPANIES INC",
+            "BEST_PERIOD_END_DATE": "2027-01-31",
+            "BEST_CPS": 7.0,
+            "BEST_CPS_STDDEV": 0.625,
+            "BEST_CPS_NUMEST": 5.0,
+            "BEST_EPS": 5.3260000000000005,
+            "BEST_EPS_STDDEV": 0.25,
+            "BEST_EPS_NUMEST": 23.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "TRGP Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 101,
+          "fieldData": {
+            "NAME": "TARGA RESOURCES CORP",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 21.30333333333333,
+            "BEST_CPS_STDDEV": 1.053,
+            "BEST_CPS_NUMEST": 3.0,
+            "BEST_EPS": 11.296,
+            "BEST_EPS_STDDEV": 0.34900000000000003,
+            "BEST_EPS_NUMEST": 20.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "TSLA Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 102,
+          "fieldData": {
+            "NAME": "TESLA INC",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 4.0375000000000005,
+            "BEST_CPS_STDDEV": 0.302,
+            "BEST_CPS_NUMEST": 4.0,
+            "BEST_EPS": 1.6560000000000001,
+            "BEST_EPS_STDDEV": 0.362,
+            "BEST_EPS_NUMEST": 48.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "TT Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 103,
+          "fieldData": {
+            "NAME": "TRANE TECHNOLOGIES PLC",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 18.141666666666662,
+            "BEST_CPS_STDDEV": 1.549,
+            "BEST_CPS_NUMEST": 6.0,
+            "BEST_EPS": 15.274000000000001,
+            "BEST_EPS_STDDEV": 0.032,
+            "BEST_EPS_NUMEST": 22.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "TXN Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 104,
+          "fieldData": {
+            "NAME": "TEXAS INSTRUMENTS INC",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 11.0775,
+            "BEST_CPS_STDDEV": 0.263,
+            "BEST_CPS_NUMEST": 4.0,
+            "BEST_EPS": 8.512,
+            "BEST_EPS_STDDEV": 0.47600000000000003,
+            "BEST_EPS_NUMEST": 24.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "UBER Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 105,
+          "fieldData": {
+            "NAME": "UBER TECHNOLOGIES INC",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 4.433333333333333,
+            "BEST_CPS_STDDEV": 0.866,
+            "BEST_CPS_NUMEST": 6.0,
+            "BEST_EPS": 3.322,
+            "BEST_EPS_STDDEV": 0.19,
+            "BEST_EPS_NUMEST": 39.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "UNP Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 106,
+          "fieldData": {
+            "NAME": "UNION PACIFIC CORP",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 17.911666666666665,
+            "BEST_CPS_STDDEV": 0.517,
+            "BEST_CPS_NUMEST": 6.0,
+            "BEST_EPS": 13.063,
+            "BEST_EPS_STDDEV": 0.17300000000000001,
+            "BEST_EPS_NUMEST": 25.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "USB Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 107,
+          "fieldData": {
+            "NAME": "US BANCORP",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 5.3149999999999995,
+            "BEST_CPS_STDDEV": 0.092,
+            "BEST_CPS_NUMEST": 2.0,
+            "BEST_EPS": 5.237,
+            "BEST_EPS_STDDEV": 0.088,
+            "BEST_EPS_NUMEST": 19.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "VRT Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 108,
+          "fieldData": {
+            "NAME": "VERTIV HOLDINGS CO-A",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 7.475,
+            "BEST_CPS_STDDEV": 0.529,
+            "BEST_CPS_NUMEST": 8.0,
+            "BEST_EPS": 6.687,
+            "BEST_EPS_STDDEV": 0.195,
+            "BEST_EPS_NUMEST": 31.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "WMB Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 109,
+          "fieldData": {
+            "NAME": "WILLIAMS COS INC",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 4.862222222222222,
+            "BEST_CPS_STDDEV": 0.457,
+            "BEST_CPS_NUMEST": 9.0,
+            "BEST_EPS": 2.424,
+            "BEST_EPS_STDDEV": 0.152,
+            "BEST_EPS_NUMEST": 21.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        }
+      ]
+    },
+    {
+      "securityData": [
+        {
+          "security": "HD Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 50,
+          "fieldData": {
+            "NAME": "HOME DEPOT INC",
+            "BEST_PERIOD_END_DATE": "2027-01-31",
+            "BEST_CPS": 19.976,
+            "BEST_CPS_STDDEV": 0.361,
+            "BEST_CPS_NUMEST": 5.0,
+            "BEST_EPS": 15.055,
+            "BEST_EPS_STDDEV": 0.241,
+            "BEST_EPS_NUMEST": 35.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "HSY Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 51,
+          "fieldData": {
+            "NAME": "HERSHEY CO/THE",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 12.488,
+            "BEST_CPS_STDDEV": 1.61,
+            "BEST_CPS_NUMEST": 5.0,
+            "BEST_EPS": 8.540000000000001,
+            "BEST_EPS_STDDEV": 0.249,
+            "BEST_EPS_NUMEST": 22.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "HWM Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 52,
+          "fieldData": {
+            "NAME": "HOWMET AEROSPACE INC",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 6.215,
+            "BEST_CPS_STDDEV": 0.159,
+            "BEST_CPS_NUMEST": 4.0,
+            "BEST_EPS": 5.32,
+            "BEST_EPS_STDDEV": 0.128,
+            "BEST_EPS_NUMEST": 24.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "IBM Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 53,
+          "fieldData": {
+            "NAME": "INTL BUSINESS MACHINES CORP",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 17.804000000000002,
+            "BEST_CPS_STDDEV": 1.164,
+            "BEST_CPS_NUMEST": 5.0,
+            "BEST_EPS": 12.3,
+            "BEST_EPS_STDDEV": 0.123,
+            "BEST_EPS_NUMEST": 26.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "IFX GY Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 54,
+          "fieldData": {
+            "NAME": "INFINEON TECHNOLOGIES AG",
+            "BEST_PERIOD_END_DATE": "2026-09-30",
+            "BEST_CPS": 2.486666666666667,
+            "BEST_CPS_STDDEV": 0.723,
+            "BEST_CPS_NUMEST": 6.0,
+            "BEST_EPS": 1.738,
+            "BEST_EPS_STDDEV": 0.057,
+            "BEST_EPS_NUMEST": 17.0,
+            "EQY_FUND_CRNCY": "EUR"
+          }
+        },
+        {
+          "security": "KDP Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 55,
+          "fieldData": {
+            "NAME": "KEURIG DR PEPPER INC",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 2.0940000000000003,
+            "BEST_CPS_STDDEV": 0.972,
+            "BEST_CPS_NUMEST": 5.0,
+            "BEST_EPS": 2.293,
+            "BEST_EPS_STDDEV": 0.02,
+            "BEST_EPS_NUMEST": 18.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "KEY Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 56,
+          "fieldData": {
+            "NAME": "KEYCORP",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 3.07,
+            "BEST_CPS_STDDEV": 1.683,
+            "BEST_CPS_NUMEST": 2.0,
+            "BEST_EPS": 1.827,
+            "BEST_EPS_STDDEV": 0.02,
+            "BEST_EPS_NUMEST": 22.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "KLAC Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 57,
+          "fieldData": {
+            "NAME": "KLA CORP",
+            "BEST_PERIOD_END_DATE": "2027-06-30",
+            "BEST_CPS": 5.954,
+            "BEST_CPS_STDDEV": 0.886,
+            "BEST_CPS_NUMEST": 5.0,
+            "BEST_EPS": 5.4750000000000005,
+            "BEST_EPS_STDDEV": 0.277,
+            "BEST_EPS_NUMEST": 19.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "KMI Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 58,
+          "fieldData": {
+            "NAME": "KINDER MORGAN INC",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 2.86,
+            "BEST_CPS_STDDEV": 0.151,
+            "BEST_CPS_NUMEST": 4.0,
+            "BEST_EPS": 1.487,
+            "BEST_EPS_STDDEV": 0.17200000000000001,
+            "BEST_EPS_NUMEST": 22.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "KO Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 59,
+          "fieldData": {
+            "NAME": "COCA-COLA CO/THE",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 3.2342857142857144,
+            "BEST_CPS_STDDEV": 0.513,
+            "BEST_CPS_NUMEST": 7.0,
+            "BEST_EPS": 3.299,
+            "BEST_EPS_STDDEV": 0.021,
+            "BEST_EPS_NUMEST": 27.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        }
+      ]
+    },
+    {
+      "securityData": [
+        {
+          "security": "EXE Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 40,
+          "fieldData": {
+            "NAME": "EXPAND ENERGY CORP",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 23.754545454545454,
+            "BEST_CPS_STDDEV": 1.25,
+            "BEST_CPS_NUMEST": 22.0,
+            "BEST_EPS": 8.98,
+            "BEST_EPS_STDDEV": 0.964,
+            "BEST_EPS_NUMEST": 24.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "FANG Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 41,
+          "fieldData": {
+            "NAME": "DIAMONDBACK ENERGY INC",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 41.99583333333333,
+            "BEST_CPS_STDDEV": 2.404,
+            "BEST_CPS_NUMEST": 24.0,
+            "BEST_EPS": 20.245,
+            "BEST_EPS_STDDEV": 2.1390000000000002,
+            "BEST_EPS_NUMEST": 30.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "FCNCA Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 42,
+          "fieldData": {
+            "NAME": "FIRST CITIZENS BCSHS  -CL A",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 201.5,
+            "BEST_CPS_NUMEST": 1.0,
+            "BEST_EPS": 193.567,
+            "BEST_EPS_STDDEV": 3.5020000000000002,
+            "BEST_EPS_NUMEST": 15.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "FITB Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 43,
+          "fieldData": {
+            "NAME": "FIFTH THIRD BANCORP",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 4.11,
+            "BEST_CPS_NUMEST": 1.0,
+            "BEST_EPS": 3.955,
+            "BEST_EPS_STDDEV": 0.427,
+            "BEST_EPS_NUMEST": 22.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "FTI Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 44,
+          "fieldData": {
+            "NAME": "TECHNIPFMC PLC",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 4.28,
+            "BEST_CPS_STDDEV": 0.523,
+            "BEST_CPS_NUMEST": 8.0,
+            "BEST_EPS": 3.093,
+            "BEST_EPS_STDDEV": 0.25,
+            "BEST_EPS_NUMEST": 19.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "FTNT Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 45,
+          "fieldData": {
+            "NAME": "FORTINET INC",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 5.0089999999999995,
+            "BEST_CPS_STDDEV": 0.894,
+            "BEST_CPS_NUMEST": 10.0,
+            "BEST_EPS": 3.452,
+            "BEST_EPS_STDDEV": 0.04,
+            "BEST_EPS_NUMEST": 39.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "GD Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 46,
+          "fieldData": {
+            "NAME": "GENERAL DYNAMICS CORP",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 23.135,
+            "BEST_CPS_STDDEV": 2.577,
+            "BEST_CPS_NUMEST": 6.0,
+            "BEST_EPS": 16.995,
+            "BEST_EPS_STDDEV": 0.14400000000000002,
+            "BEST_EPS_NUMEST": 24.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "GEV Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 47,
+          "fieldData": {
+            "NAME": "GE VERNOVA INC",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 34.824285714285715,
+            "BEST_CPS_STDDEV": 17.955000000000002,
+            "BEST_CPS_NUMEST": 7.0,
+            "BEST_EPS": 24.429000000000002,
+            "BEST_EPS_STDDEV": 7.644,
+            "BEST_EPS_NUMEST": 38.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "GM Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 48,
+          "fieldData": {
+            "NAME": "GENERAL MOTORS CO",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 21.46857142857143,
+            "BEST_CPS_STDDEV": 3.723,
+            "BEST_CPS_NUMEST": 7.0,
+            "BEST_EPS": 13.07,
+            "BEST_EPS_STDDEV": 1.166,
+            "BEST_EPS_NUMEST": 27.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "HBAN Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 49,
+          "fieldData": {
+            "NAME": "HUNTINGTON BANCSHARES INC",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 1.69,
+            "BEST_CPS_NUMEST": 1.0,
+            "BEST_EPS": 1.548,
+            "BEST_EPS_STDDEV": 0.1,
+            "BEST_EPS_NUMEST": 23.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        }
+      ]
+    },
+    {
+      "securityData": [
+        {
+          "security": "BKNG Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 20,
+          "fieldData": {
+            "NAME": "BOOKING HOLDINGS INC",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 12.457142857142856,
+            "BEST_CPS_STDDEV": 0.767,
+            "BEST_CPS_NUMEST": 14.0,
+            "BEST_EPS": 10.46,
+            "BEST_EPS_STDDEV": 0.195,
+            "BEST_EPS_NUMEST": 35.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "BKR Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 21,
+          "fieldData": {
+            "NAME": "BAKER HUGHES CO",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 3.866666666666667,
+            "BEST_CPS_STDDEV": 0.368,
+            "BEST_CPS_NUMEST": 6.0,
+            "BEST_EPS": 2.574,
+            "BEST_EPS_STDDEV": 0.193,
+            "BEST_EPS_NUMEST": 23.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "BP9DL9 Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 22,
+          "fieldData": {
+            "NAME": "INDUSTRIA DE DISENO TEXTIL",
+            "BEST_PERIOD_END_DATE": "2027-01-31",
+            "BEST_CPS": 3.1100000000000003,
+            "BEST_CPS_STDDEV": 0.316,
+            "BEST_CPS_NUMEST": 10.0,
+            "BEST_EPS": 2.184,
+            "BEST_EPS_STDDEV": 0.052000000000000005,
+            "BEST_EPS_NUMEST": 28.0,
+            "EQY_FUND_CRNCY": "EUR"
+          }
+        },
+        {
+          "security": "CDNS Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 23,
+          "fieldData": {
+            "NAME": "CADENCE DESIGN SYS INC",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 6.748,
+            "BEST_CPS_STDDEV": 0.546,
+            "BEST_CPS_NUMEST": 10.0,
+            "BEST_EPS": 8.146,
+            "BEST_EPS_STDDEV": 0.067,
+            "BEST_EPS_NUMEST": 21.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "CFG Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 24,
+          "fieldData": {
+            "NAME": "CITIZENS FINANCIAL GROUP",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 5.37,
+            "BEST_CPS_NUMEST": 1.0,
+            "BEST_EPS": 5.301,
+            "BEST_EPS_STDDEV": 0.035,
+            "BEST_EPS_NUMEST": 20.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "CHD Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 25,
+          "fieldData": {
+            "NAME": "CHURCH & DWIGHT CO INC",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 4.82,
+            "BEST_CPS_STDDEV": 0.577,
+            "BEST_CPS_NUMEST": 7.0,
+            "BEST_EPS": 3.778,
+            "BEST_EPS_STDDEV": 0.024,
+            "BEST_EPS_NUMEST": 21.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "CL Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 26,
+          "fieldData": {
+            "NAME": "COLGATE-PALMOLIVE CO",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 4.714285714285714,
+            "BEST_CPS_STDDEV": 0.14,
+            "BEST_CPS_NUMEST": 7.0,
+            "BEST_EPS": 3.874,
+            "BEST_EPS_STDDEV": 0.037,
+            "BEST_EPS_NUMEST": 22.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "CLX Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 27,
+          "fieldData": {
+            "NAME": "CLOROX COMPANY",
+            "BEST_PERIOD_END_DATE": "2027-06-30",
+            "BEST_CPS": 9.135,
+            "BEST_CPS_STDDEV": 1.291,
+            "BEST_CPS_NUMEST": 6.0,
+            "BEST_EPS": 5.793,
+            "BEST_EPS_STDDEV": 0.077,
+            "BEST_EPS_NUMEST": 20.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "COP Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 28,
+          "fieldData": {
+            "NAME": "CONOCOPHILLIPS",
+            "BEST_PERIOD_END_DATE": "2026-12-31",
+            "BEST_CPS": 21.134210526315783,
+            "BEST_CPS_STDDEV": 0.9470000000000001,
+            "BEST_CPS_NUMEST": 19.0,
+            "BEST_EPS": 10.46,
+            "BEST_EPS_STDDEV": 0.935,
+            "BEST_EPS_NUMEST": 29.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        },
+        {
+          "security": "CRWD Equity",
+          "eidData": [],
+          "fieldExceptions": [],
+          "sequenceNumber": 29,
+          "fieldData": {
+            "NAME": "CROWDSTRIKE HOLDINGS INC - A",
+            "BEST_PERIOD_END_DATE": "2027-01-31",
+            "BEST_CPS": 2.0709999999999997,
+            "BEST_CPS_STDDEV": 0.275,
+            "BEST_CPS_NUMEST": 10.0,
+            "BEST_EPS": 1.2550000000000001,
+            "BEST_EPS_STDDEV": 0.008,
+            "BEST_EPS_NUMEST": 49.0,
+            "EQY_FUND_CRNCY": "USD"
+          }
+        }
+      ]
+    }
+  ]
+}

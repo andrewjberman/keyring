@@ -1,0 +1,45 @@
+{
+  "instrument": "Playwright/Chromium against vite 7.3.5 on [::1]:5175 serving C:/tmp/portal-resapp-view at refs/drains/ri-1-portal @9aef3734; /auth/refresh stubbed at the browser transport with a Dev session; every /api/scoped/amgt/* response served from the adapter's OWN handler (lib/research/api/scoped_amgt.py) run LOCALLY at 2.0.0_SA_COO~W against the live table and bucket (files adapter-local.*.json beside this file); localStorage and sessionStorage cleared before the load",
+  "at": "2026-09-15T01:5xZ",
+  "populated": {
+    "url": "http://[::1]:5175/security-analysis",
+    "bodyBytes": 37015,
+    "listItems": 10,
+    "tickers": ["2317 TT", "9433 JP", "992 HK", "ASML NA", "BA US", "BABA US", "BBSE3 BZ", "BP/ LN", "COST US", "Enel IM"],
+    "metricsSample": ["chatter 0/100 (0 mentions)", "chatter 0/100 (0 mentions)", "chatter 0/100 (0 mentions)"],
+    "resolutionLine": ["Served by the producer partition"],
+    "payload": "adapter-local.rankings.trending.chatter.2026-09-12.json (row_count 10, resolution CROSSED, as_of 2026-09-12 -- the last day the deployed producer wrote; today's partition read 0 before ri-2)",
+    "note": "every score is 0/100 with 0 mentions: the all-zero degenerate case chatter_axis.normalize_scores documents (the article store is empty), rendered honestly"
+  },
+  "afterClick_BABA_US": {
+    "url": "http://[::1]:5175/security-analysis",
+    "bodyBytes": 25867,
+    "listItems": 0,
+    "identityLeaves": [],
+    "head": ["BABA US"],
+    "transport": ["GET /api/scoped/amgt/security/BABA%20US/overlay -> 200 adapter-local overlay BABA US (identity_status UNRESOLVED, 0 header figures)", "GET /api/scoped/amgt/security/BABA%20US/thesis -> 200 adapter-local thesis BABA US (0 fiscal figures, 0 header figures, 0 check_face)"],
+    "thesisTab": { "figures": [], "status": [], "bodyBytes": 25867 },
+    "finding": "the ranked row's click passes row.ticker ('BABA US', the producer's Bloomberg ticker) as the security key; the security routes resolve the CANONICAL key ('BABA_US_Equity'); the overlay comes back UNRESOLVED and the Thesis renders nothing -- navigation from the Lead Panel does not reach the figures"
+  },
+  "thesisResolved_BABA_US_Equity": {
+    "how": "the Lead Panel's own search box, 'BABA_US_Equity' + Enter, then the Thesis tab",
+    "url": "http://[::1]:5175/security-analysis",
+    "bodyBytes": 211179,
+    "identity": ["BABA US Equity", "ALIBABA GROUP HOLDING-SP ADR", "ALIBABA GROUP HOLDING-SP ADR"],
+    "figureSample": ["PX_LAST", "PX_LAST", "PX_LAST", "SALES_REV_TURN", "IS_EPS", "PX_LAST", "SALES_REV_TURN", "IS_EPS"],
+    "markerCounts": { "PROVISIONAL": 40 },
+    "markerTotal": 40,
+    "transport": ["GET /api/scoped/amgt/security/BABA_US_Equity/overlay -> 200 adapter-local overlay BABA_US_Equity (identity MEASURED, 13 header figures)", "GET /api/scoped/amgt/security/BABA_US_Equity/thesis -> 200 adapter-local thesis BABA_US_Equity (183 fiscal figures, 13 header figures, 196 check_face entries)"],
+    "note": "PASS markers render as a coloured icon without a text node (the check-face badge), so the text census counts only the PROVISIONAL markers; the screenshot carries both"
+  },
+  "transportLog": [
+    "GET /api/scoped/amgt/watchlist -> 200 watchlist []",
+    "GET /api/scoped/amgt/lead-panel/rankings/trending/chatter?limit=10 -> 200 adapter-local rankings as_of 2026-09-12 (10 rows)",
+    "GET /api/scoped/amgt/lead-panel/timeseries/trending/chatter?tickers=2317+TT%2C9433+JP%2C992+HK%2CASML+NA%2CBA+US&days=30 -> 200 timeseries stub (chart not exercised)",
+    "GET /api/scoped/amgt/security/BABA%20US/overlay -> 200 adapter-local overlay BABA US",
+    "GET /api/scoped/amgt/security/BABA%20US/thesis -> 200 adapter-local thesis BABA US",
+    "GET /api/scoped/amgt/security/BABA_US_Equity/overlay -> 200 adapter-local overlay BABA_US_Equity",
+    "GET /api/scoped/amgt/security/BABA_US_Equity/thesis -> 200 adapter-local thesis BABA_US_Equity"
+  ],
+  "screenshots": ["ROUND10_BROWSER_arm-populated.png", "ROUND10_BROWSER_arm-overlay-baba-us.png", "ROUND10_BROWSER_arm-thesis-baba-us.png", "ROUND10_BROWSER_arm-thesis-baba-us-equity.png"]
+}

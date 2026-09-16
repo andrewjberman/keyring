@@ -1,0 +1,182 @@
+{
+  "head": "d726ff98c3c3746ece61a22b9403f25517ca3155",
+  "utc": "2026-09-13T04:51:08.051292+00:00",
+  "immutable_record_pin": "fa2b1764c4",
+  "controls": [
+    {
+      "case": "all exact authorized rows accepted by actual route gate",
+      "count": 29,
+      "pass": true
+    },
+    {
+      "case": "same ID but changed row bytes",
+      "pass": true,
+      "refusal": [
+        "POSN_ASTTAX-Z-C-S65: NEW remediation row (None) while 4 of 15 task order(s) under POSN_ASTTAX are NOT terminal at HEAD: POSN_ASTTAX.TO-S2-1.retag-the-hedge-bucket.md [staged], POSN_ASTTAX.TO-S3-1.is-hedge-reconciliation.md [staged], POSN_ASTTAX.TO-T6-1.the-retag-with-a-criterion-that-fails-in-the-broken-world.md [staged], POSN_ASTTAX.TO-T7-1.is-hedge-reconciliation.md [staged]. The slug waits until every task order is complete (Andrew-direct 2026-09-03, @716a9bc7ce call 3, LD-0521: 'We do not route until the job is over')."
+      ]
+    },
+    {
+      "case": "new unrecorded row ID",
+      "pass": true,
+      "refusal": [
+        "POSN_ASTTAX-Z-C-S999: NEW remediation row (None) while 4 of 15 task order(s) under POSN_ASTTAX are NOT terminal at HEAD: POSN_ASTTAX.TO-S2-1.retag-the-hedge-bucket.md [staged], POSN_ASTTAX.TO-S3-1.is-hedge-reconciliation.md [staged], POSN_ASTTAX.TO-T6-1.the-retag-with-a-criterion-that-fails-in-the-broken-world.md [staged], POSN_ASTTAX.TO-T7-1.is-hedge-reconciliation.md [staged]. The slug waits until every task order is complete (Andrew-direct 2026-09-03, @716a9bc7ce call 3, LD-0521: 'We do not route until the job is over')."
+      ]
+    },
+    {
+      "case": "next round path",
+      "pass": true,
+      "refusal": [
+        "POSN_ASTTAX-Z-C-S65: NEW remediation row (None) while 4 of 15 task order(s) under POSN_ASTTAX are NOT terminal at HEAD: POSN_ASTTAX.TO-S2-1.retag-the-hedge-bucket.md [staged], POSN_ASTTAX.TO-S3-1.is-hedge-reconciliation.md [staged], POSN_ASTTAX.TO-T6-1.the-retag-with-a-criterion-that-fails-in-the-broken-world.md [staged], POSN_ASTTAX.TO-T7-1.is-hedge-reconciliation.md [staged]. The slug waits until every task order is complete (Andrew-direct 2026-09-03, @716a9bc7ce call 3, LD-0521: 'We do not route until the job is over')."
+      ]
+    },
+    {
+      "case": "old round path",
+      "pass": true,
+      "refusal": [
+        "POSN_ASTTAX-Z-C-S65: NEW remediation row (None) while 4 of 15 task order(s) under POSN_ASTTAX are NOT terminal at HEAD: POSN_ASTTAX.TO-S2-1.retag-the-hedge-bucket.md [staged], POSN_ASTTAX.TO-S3-1.is-hedge-reconciliation.md [staged], POSN_ASTTAX.TO-T6-1.the-retag-with-a-criterion-that-fails-in-the-broken-world.md [staged], POSN_ASTTAX.TO-T7-1.is-hedge-reconciliation.md [staged]. The slug waits until every task order is complete (Andrew-direct 2026-09-03, @716a9bc7ce call 3, LD-0521: 'We do not route until the job is over')."
+      ]
+    },
+    {
+      "case": "other project",
+      "pass": true,
+      "refusal": [
+        "POSN_ASTTAX-Z-C-S65: NEW remediation row (None) while 4 of 15 task order(s) under AMGT_RESAPP are NOT terminal at HEAD: POSN_ASTTAX.TO-S2-1.retag-the-hedge-bucket.md [staged], POSN_ASTTAX.TO-S3-1.is-hedge-reconciliation.md [staged], POSN_ASTTAX.TO-T6-1.the-retag-with-a-criterion-that-fails-in-the-broken-world.md [staged], POSN_ASTTAX.TO-T7-1.is-hedge-reconciliation.md [staged]. The slug waits until every task order is complete (Andrew-direct 2026-09-03, @716a9bc7ce call 3, LD-0521: 'We do not route until the job is over')."
+      ]
+    },
+    {
+      "case": "fifth open order",
+      "pass": true,
+      "refusal": [
+        "POSN_ASTTAX-Z-C-S65: NEW remediation row (None) while 5 of 16 task order(s) under POSN_ASTTAX are NOT terminal at HEAD: POSN_ASTTAX.TO-S2-1.retag-the-hedge-bucket.md [staged], POSN_ASTTAX.TO-S3-1.is-hedge-reconciliation.md [staged], POSN_ASTTAX.TO-T6-1.the-retag-with-a-criterion-that-fails-in-the-broken-world.md [staged], POSN_ASTTAX.TO-T7-1.is-hedge-reconciliation.md [staged], extra [staged]. The slug waits until every task order is complete (Andrew-direct 2026-09-03, @716a9bc7ce call 3, LD-0521: 'We do not route until the job is over')."
+      ]
+    },
+    {
+      "case": "changed total with same open set",
+      "pass": true,
+      "refusal": [
+        "POSN_ASTTAX-Z-C-S65: NEW remediation row (None) while 4 of 16 task order(s) under POSN_ASTTAX are NOT terminal at HEAD: POSN_ASTTAX.TO-S2-1.retag-the-hedge-bucket.md [staged], POSN_ASTTAX.TO-S3-1.is-hedge-reconciliation.md [staged], POSN_ASTTAX.TO-T6-1.the-retag-with-a-criterion-that-fails-in-the-broken-world.md [staged], POSN_ASTTAX.TO-T7-1.is-hedge-reconciliation.md [staged]. The slug waits until every task order is complete (Andrew-direct 2026-09-03, @716a9bc7ce call 3, LD-0521: 'We do not route until the job is over')."
+      ]
+    },
+    {
+      "case": "same count but different open identity",
+      "pass": true,
+      "refusal": [
+        "POSN_ASTTAX-Z-C-S65: NEW remediation row (None) while 4 of 15 task order(s) under POSN_ASTTAX are NOT terminal at HEAD: extra [staged], POSN_ASTTAX.TO-S3-1.is-hedge-reconciliation.md [staged], POSN_ASTTAX.TO-T6-1.the-retag-with-a-criterion-that-fails-in-the-broken-world.md [staged], POSN_ASTTAX.TO-T7-1.is-hedge-reconciliation.md [staged]. The slug waits until every task order is complete (Andrew-direct 2026-09-03, @716a9bc7ce call 3, LD-0521: 'We do not route until the job is over')."
+      ]
+    },
+    {
+      "case": "unreadable order census",
+      "pass": true,
+      "refusal": [
+        "POSN_ASTTAX-Z-C-S65: the L10 precondition (every task order under POSN_ASTTAX terminal) could NOT be evaluated (control unreadable) -- REFUSED, fail-closed"
+      ]
+    },
+    {
+      "case": "same open status but changed order content",
+      "pass": true,
+      "refusal": [
+        "POSN_ASTTAX-Z-C-S65: NEW remediation row (None) while 4 of 15 task order(s) under POSN_ASTTAX are NOT terminal at HEAD: POSN_ASTTAX.TO-S2-1.retag-the-hedge-bucket.md [staged], POSN_ASTTAX.TO-S3-1.is-hedge-reconciliation.md [staged], POSN_ASTTAX.TO-T6-1.the-retag-with-a-criterion-that-fails-in-the-broken-world.md [staged], POSN_ASTTAX.TO-T7-1.is-hedge-reconciliation.md [staged]. The slug waits until every task order is complete (Andrew-direct 2026-09-03, @716a9bc7ce call 3, LD-0521: 'We do not route until the job is over')."
+      ]
+    },
+    {
+      "case": "missing immutable authority record",
+      "pass": true,
+      "refusal": [
+        "POSN_ASTTAX-Z-C-S65: NEW remediation row (None) while 4 of 15 task order(s) under POSN_ASTTAX are NOT terminal at HEAD: POSN_ASTTAX.TO-S2-1.retag-the-hedge-bucket.md [staged], POSN_ASTTAX.TO-S3-1.is-hedge-reconciliation.md [staged], POSN_ASTTAX.TO-T6-1.the-retag-with-a-criterion-that-fails-in-the-broken-world.md [staged], POSN_ASTTAX.TO-T7-1.is-hedge-reconciliation.md [staged]. The slug waits until every task order is complete (Andrew-direct 2026-09-03, @716a9bc7ce call 3, LD-0521: 'We do not route until the job is over')."
+      ]
+    },
+    {
+      "case": "malformed immutable authority record",
+      "pass": true,
+      "refusal": [
+        "POSN_ASTTAX-Z-C-S65: NEW remediation row (None) while 4 of 15 task order(s) under POSN_ASTTAX are NOT terminal at HEAD: POSN_ASTTAX.TO-S2-1.retag-the-hedge-bucket.md [staged], POSN_ASTTAX.TO-S3-1.is-hedge-reconciliation.md [staged], POSN_ASTTAX.TO-T6-1.the-retag-with-a-criterion-that-fails-in-the-broken-world.md [staged], POSN_ASTTAX.TO-T7-1.is-hedge-reconciliation.md [staged]. The slug waits until every task order is complete (Andrew-direct 2026-09-03, @716a9bc7ce call 3, LD-0521: 'We do not route until the job is over')."
+      ]
+    },
+    {
+      "case": "investigation-completion limb still rejects a pending original",
+      "pass": true
+    },
+    {
+      "case": "required-field schema limb still rejects",
+      "pass": true
+    },
+    {
+      "case": "round-2 exception does not admit round 3",
+      "pass": true
+    }
+  ],
+  "exact_authorized_rows": 29,
+  "originals": 58,
+  "pending_after_proposed": [],
+  "unknown": [],
+  "orders": [
+    [
+      "POSN_ASTTAX.TO-S2-1.retag-the-hedge-bucket.md [staged]",
+      "POSN_ASTTAX.TO-S3-1.is-hedge-reconciliation.md [staged]",
+      "POSN_ASTTAX.TO-T6-1.the-retag-with-a-criterion-that-fails-in-the-broken-world.md [staged]",
+      "POSN_ASTTAX.TO-T7-1.is-hedge-reconciliation.md [staged]"
+    ],
+    15,
+    ""
+  ],
+  "limits": "Read-only gate controls, in-process blob substitutions only. No order mutation, staging, override, network call or production act.",
+  "existing_gate_selftest": {
+    "arms": 108,
+    "failed": 0,
+    "exit_code": 0
+  },
+  "gate_sha256": "2dd53c0900110a92ea56c12ec813497c63ffc0c41503757d7a794deca6a38057",
+  "late_original": {
+    "id": "POSN_ASTTAX-Z-S45",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-13T04:52:00Z",
+    "one_line": "CORRECTION AGAINST THIS SEAT'S OWN Z-S44, AND IT DISARMS IT. A CODEX SEAT HAS NO inbox-watch.sh BY DESIGN -- it uses the bridge/detector. 3.0.0_SA_CVO~Z is ALIVE on the instrument that owns its processes, so the absent watcher is correct architecture, not the reason POSN's L10 is waiting.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE CORRECTING MEASUREMENT, by 0.0.0_AB_MSTR~Z as device infra, relayed msg 22266 and acked by this seat. The three PIDs 3.0.0_SA_CVO~Z's own heartbeat reports -- session 38928, bridge 38212, detector 39296 -- read DEAD under MSYS `ps -p` and ALIVE under Windows `Get-Process`, all three python. The reciprocal also holds: pid 2599, a live MSYS inbox-watch.sh, reads ALIVE under `ps -p` and DEAD under `Get-Process`.",
+        "BOTH INSTRUMENTS PASSED BOTH CONTROLS WHILE DISAGREEING. `ps -p` fired a positive (2599) and a negative (999999); `Get-Process` fired a positive (the three pythons) and the same negative. A CONTROL CERTIFIES THE INSTRUMENT INSIDE ITS OWN NAMESPACE AND SAYS NOTHING ABOUT COVERAGE OF THE OTHER -- the same wrong-domain shape Rule 24 names, sitting under a kill decision instead of a census.",
+        "WHY Z-S44's FRAMING WAS WRONG. Its factual core -- no inbox-watch.sh process for that serial, six other serials carrying one -- IS TRUE and is not withdrawn. THE INFERENCE BUILT ON IT IS WITHDRAWN: a codex seat does not use the bash watcher at all, so 'no watcher' is not 'no delivery mechanism'. Z-S44 presented an architectural normality as the mechanism blocking POSN's L10.",
+        "WHAT SURVIVES Z-S44 UNCHANGED, all three still measured. (a) Two of this seat's sends sit undrained in that seat's top-level inbox (04:12:03Z and its 04:36:42Z re-send) -- real, unexplained, and confirmed by 0.0.0_AB_MSTR~Z as the already-banked filesystem-carrier-versus-bridge gap rather than evidence of a down seat. (b) get_delivery_state reads 141 rows QUEUED for that serial since 2026-09-11T07:51:59Z and is NOT a delivery oracle for it in either direction. (c) The seat is NOT dead -- Z-S44 said so explicitly and Get-Process now confirms it positively rather than by inference from a commit.",
+        "THE ASYMMETRY THAT MAKES THIS WORTH A ROW RATHER THAN A NOTE. A false ALIVE costs a wasted nudge; a FALSE DEAD ends a working seat mid-turn and destroys in-flight reasoning that no commit preserves. This is the same seat that survived the 189 KB near-miss of 2026-09-11, and it was one instrument-namespace away from a second."
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "adjudicates": [
+      "POSN_ASTTAX-Z-S44"
+    ],
+    "spec_asserts": "Z-S44 asserted that because 3.0.0_SA_CVO~Z has no inbox-watch.sh process, no notification can fire for it for any message, and that POSN's round-3 L10 is therefore blocked on a relay whose receipt cannot be demonstrated. It set an ARMED hazard with disarm_owner 0.0.0_AB_MSTR~Z on that basis.",
+    "world_is": "THE PREMISE IS AN ARCHITECTURAL NORMALITY, NOT A DEFECT, so the hazard is DISARMED and the ARMED standing on 0.0.0_AB_MSTR~Z is lifted by this row. POSN's round-3 L10 is waiting on 3.0.0_SA_CVO~Z in the ORDINARY way: the slug is its act, it is alive and working, and and it has now ACTED -- commit fa2b1764c4 pins the LD-0562 round-3 review and the exact carry-forward case, which is positive evidence the 04:12Z relay was received by the bridge. No seat owes anything on Z-S44's account.",
+    "notes": "WHY THIS IS A NEW ROW AND NOT AN EDIT: hazard_standing is at-surfacing and immutable, and a disarm is a new citing row, never an in-place flip. THE OPERATIVE RULE FOR EVERY SEAT, from 22266 and already banked to this device's memory: A PID LIVENESS CHECK IS VALID ONLY IN THE NAMESPACE THAT OWNS THE PROCESS -- MSYS bash watchers and shell tooling under `ps -p`, codex seats and python under `Get-Process`. CHECK BOTH BEFORE ANY DEAD VERDICT AND NAME THE INSTRUMENT USED; disagreement between them is the EXPECTED result for a cross-namespace subject, not an anomaly to resolve. ON AUTHORSHIP, so the record is accurate: the dead-seat inference was 0.0.0_AB_MSTR~Z's and it said so plainly; this seat's own contribution to the error was framing the absent watcher as a blocking defect in Z-S44, which is what made that inference feel supported. Both halves are recorded here because the next seat reading Z-S44 needs the correction attached to it, not filed elsewhere.",
+    "dismissal_reason": "Z-S44's factual core stands and is not withdrawn: 3.0.0_SA_CVO~Z has no inbox-watch.sh process while six other serials do. What is withdrawn is the INFERENCE built on it -- that the absent watcher means no delivery mechanism and therefore blocks POSN's L10. A CODEX SEAT HAS NO BASH WATCHER BY DESIGN; it uses the bridge/detector. 0.0.0_AB_MSTR~Z measured the seat's three reported PIDs ALIVE under Windows Get-Process while MSYS ps -p called all three dead, with both instruments passing both controls, and 3.0.0_SA_CVO~Z then committed fa2b1764c4 pinning the LD-0562 round-3 review and the exact carry-forward case -- so the relay WAS received and the seat was never unreachable. Z-S44 is closed as an item because its hazard rested entirely on that inference; its three surviving measurements are carried verbatim in this row's grounding so nothing is lost, and the ARMED standing it placed on 0.0.0_AB_MSTR~Z is lifted."
+  },
+  "late_review": {
+    "id": "POSN_ASTTAX-Z-C-S77",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-13T04:53:11Z",
+    "one_line": "S45 withdraws S44's missing-watcher mechanism and cites the CVO's actual fa2b1764c4 artifact as receipt evidence. The two root messages were deliberately retained pending L10 completion; their placement is not an unexplained bridge failure.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "DISMISSED_WITH_REASON",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/investigations/INVESTIGATION_v1.md@be7493a0d14c662facbc881084d2888be8cbf3c0#POSN_ASTTAX-Z-S45",
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/POSN_ASTTAX_ROUND3_ROUTING_EXCEPTION_20260913_Z.json@fa2b1764c4"
+      ]
+    },
+    "adjudicates": [
+      "POSN_ASTTAX-Z-S45"
+    ],
+    "spec_asserts": "Z-S44 asserted that because 3.0.0_SA_CVO~Z has no inbox-watch.sh process, no notification can fire for it for any message, and that POSN's round-3 L10 is therefore blocked on a relay whose receipt cannot be demonstrated. It set an ARMED hazard with disarm_owner 0.0.0_AB_MSTR~Z on that basis.",
+    "world_is": "The source owner retracts the wrong runtime inference. The CVO received both messages, acted on LD-0562 and retained the messages until the handoff. Different results for the supplied numeric PIDs establish an identifier/measurement mismatch, not a universal theorem of disjoint process sets.",
+    "notes": "Read and accept the retraction. S44 is resolved by C-S76. No second runtime remedy, polling helper, restart or broker receipt fabrication. Use the repository Codex readiness oracle for readiness and the appropriate PID mapping for process identity.",
+    "dismissal_reason": "This is corrective evidence for the already-resolved S44 instance. The proposed unexplained delivery gap is falsified by the recipient's actual receipt, reads and work."
+  }
+}

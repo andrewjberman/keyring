@@ -1,0 +1,3021 @@
+{
+  "as_of": "2026-09-15T19:18:01.368781+00:00",
+  "kind": "HistoricalDataRequest",
+  "securities": [
+    "2317 TT Equity",
+    "9433 JP Equity",
+    "992 HK Equity",
+    "ASML NA Equity",
+    "BA US Equity",
+    "BABA US Equity",
+    "BBSE3 BZ Equity",
+    "BP/ LN Equity",
+    "COST US Equity",
+    "ENEL IM Equity",
+    "HAL US Equity",
+    "HD US Equity",
+    "HSBA LN Equity",
+    "ICICIBC IN Equity",
+    "IMB LN Equity",
+    "INTU US Equity",
+    "KMB US Equity",
+    "KPN NA Equity",
+    "NG/ LN Equity",
+    "NOVN SW Equity",
+    "NU US Equity",
+    "PBR US Equity",
+    "RKT LN Equity",
+    "RMS FP Equity",
+    "ROG SW Equity",
+    "RWE GR Equity",
+    "SAP GY Equity",
+    "SSE LN Equity",
+    "ST SP Equity",
+    "ULVR LN Equity",
+    "VLO US Equity",
+    "WALMEX* MM Equity",
+    "ZURN SW Equity"
+  ],
+  "fields": [
+    "BS_YEAR_1_PRINCIPAL",
+    "BS_YEAR_2_PRINCIPAL",
+    "BS_CONTRACTUAL_OBLIG_YEAR_1",
+    "BS_CONTRACTUAL_OBLIG_YEAR_2",
+    "SUPPLY_CHAIN_SUM_TOP_REVENUES",
+    "EXECUTIVE_AVERAGE_TENURE",
+    "TOTAL_TENURE_OF_CEO_COMPANY"
+  ],
+  "overrides": {
+    "SUPPLY_CHAIN_SUM_COUNT_OVERRIDE": "1"
+  },
+  "parameters": {
+    "startDate": "20170101",
+    "endDate": "20260915",
+    "periodicitySelection": "YEARLY"
+  },
+  "responses": [
+    {
+      "securityData": {
+        "security": "ZURN SW Equity",
+        "eidData": [],
+        "sequenceNumber": 32,
+        "fieldExceptions": [
+          {
+            "fieldId": "BS_CONTRACTUAL_OBLIG_YEAR_2",
+            "errorInfo": {
+              "source": "51672:rsfhdsvc5",
+              "code": 1,
+              "category": "BAD_FLD",
+              "message": "Invalid field",
+              "subcategory": "NOT_APPLICABLE_TO_HIST_DATA"
+            }
+          }
+        ],
+        "fieldData": [
+          {
+            "date": "2017-12-29",
+            "EXECUTIVE_AVERAGE_TENURE": 5.68,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 7.5
+          },
+          {
+            "date": "2017-12-31",
+            "BS_YEAR_1_PRINCIPAL": 1369.0,
+            "BS_YEAR_2_PRINCIPAL": 262.0
+          },
+          {
+            "date": "2018-12-31",
+            "BS_YEAR_1_PRINCIPAL": 308.0,
+            "BS_YEAR_2_PRINCIPAL": 690.0,
+            "EXECUTIVE_AVERAGE_TENURE": 4.25,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 8.5
+          },
+          {
+            "date": "2019-12-31",
+            "BS_YEAR_1_PRINCIPAL": 9928.0,
+            "BS_YEAR_2_PRINCIPAL": 108.0,
+            "EXECUTIVE_AVERAGE_TENURE": 3.84,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 9.5
+          },
+          {
+            "date": "2020-12-31",
+            "BS_YEAR_1_PRINCIPAL": 11548.0,
+            "BS_YEAR_2_PRINCIPAL": 2370.0,
+            "EXECUTIVE_AVERAGE_TENURE": 4.19,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 10.5
+          },
+          {
+            "date": "2021-12-31",
+            "BS_YEAR_1_PRINCIPAL": 12625.0,
+            "BS_YEAR_2_PRINCIPAL": 1699.0,
+            "EXECUTIVE_AVERAGE_TENURE": 3.94,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 11.5
+          },
+          {
+            "date": "2022-12-30",
+            "EXECUTIVE_AVERAGE_TENURE": 4.58,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 12.5
+          },
+          {
+            "date": "2022-12-31",
+            "BS_YEAR_1_PRINCIPAL": 11286.0,
+            "BS_YEAR_2_PRINCIPAL": 963.0
+          },
+          {
+            "date": "2023-12-29",
+            "EXECUTIVE_AVERAGE_TENURE": 5.45,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 13.5
+          },
+          {
+            "date": "2023-12-31",
+            "BS_YEAR_1_PRINCIPAL": 11571.0,
+            "BS_YEAR_2_PRINCIPAL": 429.0
+          },
+          {
+            "date": "2024-12-31",
+            "BS_YEAR_1_PRINCIPAL": 10691.0,
+            "BS_YEAR_2_PRINCIPAL": 1945.0,
+            "EXECUTIVE_AVERAGE_TENURE": 5.59,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 14.5
+          },
+          {
+            "date": "2025-12-31",
+            "BS_YEAR_1_PRINCIPAL": 13491.0,
+            "BS_YEAR_2_PRINCIPAL": 411.0,
+            "EXECUTIVE_AVERAGE_TENURE": 6.59,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 15.5
+          }
+        ]
+      }
+    },
+    {
+      "securityData": {
+        "security": "COST US Equity",
+        "eidData": [],
+        "sequenceNumber": 8,
+        "fieldExceptions": [
+          {
+            "fieldId": "BS_CONTRACTUAL_OBLIG_YEAR_2",
+            "errorInfo": {
+              "source": "53646:rsfhdsvc5",
+              "code": 1,
+              "category": "BAD_FLD",
+              "message": "Invalid field",
+              "subcategory": "NOT_APPLICABLE_TO_HIST_DATA"
+            }
+          }
+        ],
+        "fieldData": [
+          {
+            "date": "2017-09-03",
+            "BS_YEAR_1_PRINCIPAL": 86.0,
+            "BS_YEAR_2_PRINCIPAL": 91.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 9670.0
+          },
+          {
+            "date": "2017-12-29",
+            "EXECUTIVE_AVERAGE_TENURE": 8.01,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 19.0
+          },
+          {
+            "date": "2018-09-02",
+            "BS_YEAR_1_PRINCIPAL": 90.0,
+            "BS_YEAR_2_PRINCIPAL": 1700.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 10862.0
+          },
+          {
+            "date": "2018-12-31",
+            "EXECUTIVE_AVERAGE_TENURE": 7.24,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 20.0
+          },
+          {
+            "date": "2019-09-01",
+            "BS_YEAR_1_PRINCIPAL": 1700.0,
+            "BS_YEAR_2_PRINCIPAL": 1094.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 12032.0
+          },
+          {
+            "date": "2019-12-31",
+            "EXECUTIVE_AVERAGE_TENURE": 7.62,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 21.0
+          },
+          {
+            "date": "2020-08-30",
+            "BS_YEAR_1_PRINCIPAL": 95.0,
+            "BS_YEAR_2_PRINCIPAL": 800.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 14863.0
+          },
+          {
+            "date": "2020-12-31",
+            "EXECUTIVE_AVERAGE_TENURE": 8.62,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 22.0
+          },
+          {
+            "date": "2021-08-29",
+            "BS_YEAR_1_PRINCIPAL": 800.0,
+            "BS_YEAR_2_PRINCIPAL": 91.0
+          },
+          {
+            "date": "2021-12-31",
+            "EXECUTIVE_AVERAGE_TENURE": 7.01,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 23.0
+          },
+          {
+            "date": "2022-08-28",
+            "BS_YEAR_1_PRINCIPAL": 73.0,
+            "BS_YEAR_2_PRINCIPAL": 1088.0
+          },
+          {
+            "date": "2022-12-30",
+            "EXECUTIVE_AVERAGE_TENURE": 6.73,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 24.0
+          },
+          {
+            "date": "2023-09-03",
+            "BS_YEAR_1_PRINCIPAL": 1081.0,
+            "BS_YEAR_2_PRINCIPAL": 103.0
+          },
+          {
+            "date": "2023-12-29",
+            "EXECUTIVE_AVERAGE_TENURE": 7.5,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 25.0
+          },
+          {
+            "date": "2024-09-01",
+            "BS_YEAR_1_PRINCIPAL": 103.0,
+            "BS_YEAR_2_PRINCIPAL": 76.0
+          },
+          {
+            "date": "2024-12-31",
+            "EXECUTIVE_AVERAGE_TENURE": 7.87,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 15.0
+          },
+          {
+            "date": "2025-08-31",
+            "BS_YEAR_1_PRINCIPAL": 75.0,
+            "BS_YEAR_2_PRINCIPAL": 2250.0
+          },
+          {
+            "date": "2025-12-31",
+            "EXECUTIVE_AVERAGE_TENURE": 7.58,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 16.0
+          }
+        ]
+      }
+    },
+    {
+      "securityData": {
+        "security": "ENEL IM Equity",
+        "eidData": [],
+        "sequenceNumber": 9,
+        "fieldExceptions": [
+          {
+            "fieldId": "BS_CONTRACTUAL_OBLIG_YEAR_2",
+            "errorInfo": {
+              "source": "53646:rsfhdsvc5",
+              "code": 1,
+              "category": "BAD_FLD",
+              "message": "Invalid field",
+              "subcategory": "NOT_APPLICABLE_TO_HIST_DATA"
+            }
+          }
+        ],
+        "fieldData": [
+          {
+            "date": "2017-12-29",
+            "EXECUTIVE_AVERAGE_TENURE": 3.7,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 3.67
+          },
+          {
+            "date": "2017-12-31",
+            "BS_YEAR_1_PRINCIPAL": 7000.0,
+            "BS_YEAR_2_PRINCIPAL": 3945.0
+          },
+          {
+            "date": "2018-12-31",
+            "BS_YEAR_1_PRINCIPAL": 3367.0,
+            "BS_YEAR_2_PRINCIPAL": 4302.0,
+            "EXECUTIVE_AVERAGE_TENURE": 4.49,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 4.67
+          },
+          {
+            "date": "2019-12-31",
+            "BS_YEAR_1_PRINCIPAL": 3409.0,
+            "BS_YEAR_2_PRINCIPAL": 3600.0,
+            "EXECUTIVE_AVERAGE_TENURE": 5.24,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 5.67
+          },
+          {
+            "date": "2020-12-31",
+            "EXECUTIVE_AVERAGE_TENURE": 6.22,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 6.67
+          },
+          {
+            "date": "2021-12-31",
+            "BS_YEAR_1_PRINCIPAL": 4031.0,
+            "BS_YEAR_2_PRINCIPAL": 3954.0,
+            "EXECUTIVE_AVERAGE_TENURE": 6.26,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 7.67
+          },
+          {
+            "date": "2022-12-30",
+            "EXECUTIVE_AVERAGE_TENURE": 7.26,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 8.67
+          },
+          {
+            "date": "2022-12-31",
+            "BS_YEAR_1_PRINCIPAL": 2835.0,
+            "BS_YEAR_2_PRINCIPAL": 10927.0
+          },
+          {
+            "date": "2023-12-29",
+            "EXECUTIVE_AVERAGE_TENURE": 5.73,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 0.67
+          },
+          {
+            "date": "2023-12-31",
+            "BS_YEAR_1_PRINCIPAL": 9086.0,
+            "BS_YEAR_2_PRINCIPAL": 7313.0
+          },
+          {
+            "date": "2024-12-31",
+            "BS_YEAR_1_PRINCIPAL": 11098.0,
+            "BS_YEAR_2_PRINCIPAL": 8928.0,
+            "EXECUTIVE_AVERAGE_TENURE": 4.4,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 1.67
+          },
+          {
+            "date": "2025-12-31",
+            "BS_YEAR_1_PRINCIPAL": 11778.0,
+            "BS_YEAR_2_PRINCIPAL": 8293.0,
+            "EXECUTIVE_AVERAGE_TENURE": 4.55,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 2.67
+          }
+        ]
+      }
+    },
+    {
+      "securityData": {
+        "security": "HAL US Equity",
+        "eidData": [],
+        "sequenceNumber": 10,
+        "fieldExceptions": [
+          {
+            "fieldId": "BS_CONTRACTUAL_OBLIG_YEAR_2",
+            "errorInfo": {
+              "source": "53646:rsfhdsvc5",
+              "code": 1,
+              "category": "BAD_FLD",
+              "message": "Invalid field",
+              "subcategory": "NOT_APPLICABLE_TO_HIST_DATA"
+            }
+          }
+        ],
+        "fieldData": [
+          {
+            "date": "2017-12-29",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 7.0
+          },
+          {
+            "date": "2017-12-31",
+            "BS_YEAR_1_PRINCIPAL": 440.0,
+            "BS_YEAR_2_PRINCIPAL": 30.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 1687.0
+          },
+          {
+            "date": "2018-12-31",
+            "BS_YEAR_1_PRINCIPAL": 34.0,
+            "BS_YEAR_2_PRINCIPAL": 27.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 1592.0,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 8.0
+          },
+          {
+            "date": "2019-12-31",
+            "BS_YEAR_1_PRINCIPAL": 11.0,
+            "BS_YEAR_2_PRINCIPAL": 697.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 1469.0,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 9.0
+          },
+          {
+            "date": "2020-12-31",
+            "BS_YEAR_1_PRINCIPAL": 695.0,
+            "BS_YEAR_2_PRINCIPAL": 9.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 1940.0,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 10.0
+          },
+          {
+            "date": "2021-12-31",
+            "BS_YEAR_1_PRINCIPAL": 7.0,
+            "BS_YEAR_2_PRINCIPAL": 600.0,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 11.0
+          },
+          {
+            "date": "2022-12-30",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 12.0
+          },
+          {
+            "date": "2022-12-31",
+            "BS_YEAR_1_PRINCIPAL": 0.0,
+            "BS_YEAR_2_PRINCIPAL": 0.0
+          },
+          {
+            "date": "2023-12-29",
+            "EXECUTIVE_AVERAGE_TENURE": 9.71,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 13.0
+          },
+          {
+            "date": "2023-12-31",
+            "BS_YEAR_1_PRINCIPAL": 0.0,
+            "BS_YEAR_2_PRINCIPAL": 382.0
+          },
+          {
+            "date": "2024-12-31",
+            "BS_YEAR_1_PRINCIPAL": 0.0,
+            "BS_YEAR_2_PRINCIPAL": 381.0,
+            "EXECUTIVE_AVERAGE_TENURE": 8.5,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 14.0
+          },
+          {
+            "date": "2025-12-31",
+            "BS_YEAR_1_PRINCIPAL": 0.0,
+            "BS_YEAR_2_PRINCIPAL": 0.0,
+            "EXECUTIVE_AVERAGE_TENURE": 8.71,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 15.0
+          }
+        ]
+      }
+    },
+    {
+      "securityData": {
+        "security": "HD US Equity",
+        "eidData": [],
+        "sequenceNumber": 11,
+        "fieldExceptions": [
+          {
+            "fieldId": "BS_CONTRACTUAL_OBLIG_YEAR_2",
+            "errorInfo": {
+              "source": "53646:rsfhdsvc5",
+              "code": 1,
+              "category": "BAD_FLD",
+              "message": "Invalid field",
+              "subcategory": "NOT_APPLICABLE_TO_HIST_DATA"
+            }
+          }
+        ],
+        "fieldData": [
+          {
+            "date": "2017-01-29",
+            "BS_YEAR_1_PRINCIPAL": 1210.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 4396.0
+          },
+          {
+            "date": "2017-12-29",
+            "EXECUTIVE_AVERAGE_TENURE": 7.85,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 21.0
+          },
+          {
+            "date": "2018-01-28",
+            "BS_YEAR_1_PRINCIPAL": 2709.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 6001.0
+          },
+          {
+            "date": "2018-12-31",
+            "EXECUTIVE_AVERAGE_TENURE": 5.95,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 22.0
+          },
+          {
+            "date": "2019-02-03",
+            "BS_YEAR_1_PRINCIPAL": 2339.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 5632.0
+          },
+          {
+            "date": "2019-12-31",
+            "EXECUTIVE_AVERAGE_TENURE": 5.89,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 23.0
+          },
+          {
+            "date": "2020-02-02",
+            "BS_YEAR_1_PRINCIPAL": 1750.0,
+            "BS_YEAR_2_PRINCIPAL": 2350.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 5930.0
+          },
+          {
+            "date": "2020-12-31",
+            "EXECUTIVE_AVERAGE_TENURE": 6.48,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 24.0
+          },
+          {
+            "date": "2021-01-31",
+            "BS_YEAR_1_PRINCIPAL": 1350.0,
+            "BS_YEAR_2_PRINCIPAL": 2250.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 6435.0
+          },
+          {
+            "date": "2021-12-31",
+            "EXECUTIVE_AVERAGE_TENURE": 6.54,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 25.0
+          },
+          {
+            "date": "2022-01-30",
+            "BS_YEAR_1_PRINCIPAL": 2250.0,
+            "BS_YEAR_2_PRINCIPAL": 1000.0
+          },
+          {
+            "date": "2022-12-30",
+            "EXECUTIVE_AVERAGE_TENURE": 5.5,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 23.0
+          },
+          {
+            "date": "2023-01-29",
+            "BS_YEAR_1_PRINCIPAL": 1000.0,
+            "BS_YEAR_2_PRINCIPAL": 1100.0
+          },
+          {
+            "date": "2023-12-29",
+            "EXECUTIVE_AVERAGE_TENURE": 6.24,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 24.0
+          },
+          {
+            "date": "2024-01-28",
+            "BS_YEAR_1_PRINCIPAL": 1100.0,
+            "BS_YEAR_2_PRINCIPAL": 2750.0
+          },
+          {
+            "date": "2024-12-31",
+            "EXECUTIVE_AVERAGE_TENURE": 7.19,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 25.0
+          },
+          {
+            "date": "2025-02-02",
+            "BS_YEAR_1_PRINCIPAL": 4315.0,
+            "BS_YEAR_2_PRINCIPAL": 4608.0
+          },
+          {
+            "date": "2025-12-31",
+            "EXECUTIVE_AVERAGE_TENURE": 7.79,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 26.0
+          },
+          {
+            "date": "2026-02-01",
+            "BS_YEAR_1_PRINCIPAL": 4684.0,
+            "BS_YEAR_2_PRINCIPAL": 3625.0
+          }
+        ]
+      }
+    },
+    {
+      "securityData": {
+        "security": "HSBA LN Equity",
+        "eidData": [],
+        "sequenceNumber": 12,
+        "fieldExceptions": [
+          {
+            "fieldId": "BS_CONTRACTUAL_OBLIG_YEAR_2",
+            "errorInfo": {
+              "source": "53646:rsfhdsvc5",
+              "code": 1,
+              "category": "BAD_FLD",
+              "message": "Invalid field",
+              "subcategory": "NOT_APPLICABLE_TO_HIST_DATA"
+            }
+          }
+        ],
+        "fieldData": [
+          {
+            "date": "2017-12-29",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 24.0
+          },
+          {
+            "date": "2018-12-31",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 7.0
+          },
+          {
+            "date": "2019-12-31",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 4.08
+          },
+          {
+            "date": "2020-12-31",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 5.08
+          },
+          {
+            "date": "2021-12-31",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 6.08
+          },
+          {
+            "date": "2022-12-30",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 7.08
+          },
+          {
+            "date": "2023-12-29",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 8.08
+          },
+          {
+            "date": "2024-12-31",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 2.0
+          },
+          {
+            "date": "2025-12-31",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 3.0
+          }
+        ]
+      }
+    },
+    {
+      "securityData": {
+        "security": "ICICIBC IN Equity",
+        "eidData": [],
+        "sequenceNumber": 13,
+        "fieldExceptions": [
+          {
+            "fieldId": "BS_CONTRACTUAL_OBLIG_YEAR_2",
+            "errorInfo": {
+              "source": "53646:rsfhdsvc5",
+              "code": 1,
+              "category": "BAD_FLD",
+              "message": "Invalid field",
+              "subcategory": "NOT_APPLICABLE_TO_HIST_DATA"
+            }
+          }
+        ],
+        "fieldData": [
+          {
+            "date": "2017-12-31",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 11.75
+          },
+          {
+            "date": "2018-12-31",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 0.58
+          },
+          {
+            "date": "2019-12-31",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 1.58
+          },
+          {
+            "date": "2020-12-31",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 2.58
+          },
+          {
+            "date": "2021-12-31",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 3.58
+          },
+          {
+            "date": "2022-12-31",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 4.58
+          },
+          {
+            "date": "2023-12-31",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 5.58
+          },
+          {
+            "date": "2024-12-31",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 6.58
+          },
+          {
+            "date": "2025-12-31",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 7.58
+          }
+        ]
+      }
+    },
+    {
+      "securityData": {
+        "security": "IMB LN Equity",
+        "eidData": [],
+        "sequenceNumber": 14,
+        "fieldExceptions": [
+          {
+            "fieldId": "BS_CONTRACTUAL_OBLIG_YEAR_2",
+            "errorInfo": {
+              "source": "53646:rsfhdsvc5",
+              "code": 1,
+              "category": "BAD_FLD",
+              "message": "Invalid field",
+              "subcategory": "NOT_APPLICABLE_TO_HIST_DATA"
+            }
+          }
+        ],
+        "fieldData": [
+          {
+            "date": "2017-09-30",
+            "BS_YEAR_1_PRINCIPAL": 2353.0,
+            "BS_YEAR_2_PRINCIPAL": 720.0
+          },
+          {
+            "date": "2017-12-29",
+            "EXECUTIVE_AVERAGE_TENURE": 5.9,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 10.5
+          },
+          {
+            "date": "2018-09-30",
+            "BS_YEAR_1_PRINCIPAL": 2397.0,
+            "BS_YEAR_2_PRINCIPAL": 1656.0
+          },
+          {
+            "date": "2018-12-31",
+            "EXECUTIVE_AVERAGE_TENURE": 5.84,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 11.5
+          },
+          {
+            "date": "2019-09-30",
+            "BS_YEAR_1_PRINCIPAL": 1937.0,
+            "BS_YEAR_2_PRINCIPAL": 1340.0
+          },
+          {
+            "date": "2019-12-31",
+            "EXECUTIVE_AVERAGE_TENURE": 6.84,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 12.5
+          },
+          {
+            "date": "2020-09-30",
+            "BS_YEAR_1_PRINCIPAL": 1442.0,
+            "BS_YEAR_2_PRINCIPAL": 2037.0
+          },
+          {
+            "date": "2020-12-31",
+            "EXECUTIVE_AVERAGE_TENURE": 4.55,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 0.5
+          },
+          {
+            "date": "2021-09-30",
+            "BS_YEAR_1_PRINCIPAL": 1107.0,
+            "BS_YEAR_2_PRINCIPAL": 1393.0
+          },
+          {
+            "date": "2021-12-31",
+            "EXECUTIVE_AVERAGE_TENURE": 3.59,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 1.5
+          },
+          {
+            "date": "2022-09-30",
+            "BS_YEAR_1_PRINCIPAL": 1011.0,
+            "BS_YEAR_2_PRINCIPAL": 1537.0
+          },
+          {
+            "date": "2022-12-30",
+            "EXECUTIVE_AVERAGE_TENURE": 3.85,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 2.5
+          },
+          {
+            "date": "2023-09-30",
+            "BS_YEAR_1_PRINCIPAL": 1499.0
+          },
+          {
+            "date": "2023-12-29",
+            "EXECUTIVE_AVERAGE_TENURE": 4.91,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 3.5
+          },
+          {
+            "date": "2024-09-30",
+            "BS_YEAR_1_PRINCIPAL": 1197.0
+          },
+          {
+            "date": "2024-12-31",
+            "EXECUTIVE_AVERAGE_TENURE": 4.82,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 4.5
+          },
+          {
+            "date": "2025-09-30",
+            "BS_YEAR_1_PRINCIPAL": 1070.0
+          },
+          {
+            "date": "2025-12-31",
+            "EXECUTIVE_AVERAGE_TENURE": 5.51,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 4.67
+          }
+        ]
+      }
+    },
+    {
+      "securityData": {
+        "security": "INTU US Equity",
+        "eidData": [],
+        "sequenceNumber": 15,
+        "fieldExceptions": [
+          {
+            "fieldId": "BS_CONTRACTUAL_OBLIG_YEAR_2",
+            "errorInfo": {
+              "source": "53646:rsfhdsvc5",
+              "code": 1,
+              "category": "BAD_FLD",
+              "message": "Invalid field",
+              "subcategory": "NOT_APPLICABLE_TO_HIST_DATA"
+            }
+          }
+        ],
+        "fieldData": [
+          {
+            "date": "2017-07-31",
+            "BS_YEAR_1_PRINCIPAL": 50.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 277.0
+          },
+          {
+            "date": "2017-12-29",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 14.92
+          },
+          {
+            "date": "2018-07-31",
+            "BS_YEAR_1_PRINCIPAL": 50.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 415.0
+          },
+          {
+            "date": "2018-12-31",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 15.92
+          },
+          {
+            "date": "2019-07-31",
+            "BS_YEAR_1_PRINCIPAL": 50.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 544.0
+          },
+          {
+            "date": "2019-12-31",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 3.67
+          },
+          {
+            "date": "2020-07-31",
+            "BS_YEAR_1_PRINCIPAL": 338.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 1678.0
+          },
+          {
+            "date": "2020-12-31",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 4.67
+          },
+          {
+            "date": "2021-07-31",
+            "BS_YEAR_1_PRINCIPAL": 325.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 459.0
+          },
+          {
+            "date": "2021-12-31",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 5.67
+          },
+          {
+            "date": "2022-07-31",
+            "BS_YEAR_1_PRINCIPAL": 0.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 1545.0
+          },
+          {
+            "date": "2022-12-30",
+            "EXECUTIVE_AVERAGE_TENURE": 9.68,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 6.67
+          },
+          {
+            "date": "2023-07-31",
+            "BS_YEAR_1_PRINCIPAL": 0.0,
+            "BS_YEAR_2_PRINCIPAL": 4700.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 1157.0
+          },
+          {
+            "date": "2023-12-29",
+            "EXECUTIVE_AVERAGE_TENURE": 9.35,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 7.67
+          },
+          {
+            "date": "2024-07-31",
+            "BS_YEAR_1_PRINCIPAL": 500.0,
+            "BS_YEAR_2_PRINCIPAL": 0.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 1741.0
+          },
+          {
+            "date": "2024-12-31",
+            "EXECUTIVE_AVERAGE_TENURE": 9.23,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 8.67
+          },
+          {
+            "date": "2025-07-31",
+            "BS_YEAR_1_PRINCIPAL": 0.0,
+            "BS_YEAR_2_PRINCIPAL": 1250.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 1418.0
+          },
+          {
+            "date": "2025-12-31",
+            "EXECUTIVE_AVERAGE_TENURE": 9.31,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 9.67
+          },
+          {
+            "date": "2026-07-31",
+            "BS_YEAR_1_PRINCIPAL": 1250.0,
+            "BS_YEAR_2_PRINCIPAL": 400.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 3181.0
+          }
+        ]
+      }
+    },
+    {
+      "securityData": {
+        "security": "2317 TT Equity",
+        "eidData": [],
+        "sequenceNumber": 0,
+        "fieldExceptions": [
+          {
+            "fieldId": "BS_CONTRACTUAL_OBLIG_YEAR_2",
+            "errorInfo": {
+              "source": "52865:rsfhdsvc4",
+              "code": 1,
+              "category": "BAD_FLD",
+              "message": "Invalid field",
+              "subcategory": "NOT_APPLICABLE_TO_HIST_DATA"
+            }
+          }
+        ],
+        "fieldData": [
+          {
+            "date": "2017-12-30",
+            "EXECUTIVE_AVERAGE_TENURE": 21.43,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 43.92
+          },
+          {
+            "date": "2018-12-31",
+            "EXECUTIVE_AVERAGE_TENURE": 22.43,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 44.92
+          },
+          {
+            "date": "2019-12-31",
+            "EXECUTIVE_AVERAGE_TENURE": 17.42,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 0.58
+          },
+          {
+            "date": "2020-12-31",
+            "EXECUTIVE_AVERAGE_TENURE": 8.14,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 1.58
+          },
+          {
+            "date": "2021-12-31",
+            "EXECUTIVE_AVERAGE_TENURE": 9.14,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 2.58
+          },
+          {
+            "date": "2022-12-31",
+            "EXECUTIVE_AVERAGE_TENURE": 7.93,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 3.58
+          },
+          {
+            "date": "2023-12-30",
+            "EXECUTIVE_AVERAGE_TENURE": 7.28,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 4.58
+          },
+          {
+            "date": "2024-12-31",
+            "EXECUTIVE_AVERAGE_TENURE": 9.04,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 5.58
+          },
+          {
+            "date": "2025-12-31",
+            "BS_YEAR_1_PRINCIPAL": 6.416,
+            "BS_YEAR_2_PRINCIPAL": 21632.773,
+            "EXECUTIVE_AVERAGE_TENURE": 9.85,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 6.58
+          }
+        ]
+      }
+    },
+    {
+      "securityData": {
+        "security": "9433 JP Equity",
+        "eidData": [],
+        "sequenceNumber": 1,
+        "fieldExceptions": [
+          {
+            "fieldId": "BS_CONTRACTUAL_OBLIG_YEAR_2",
+            "errorInfo": {
+              "source": "52865:rsfhdsvc4",
+              "code": 1,
+              "category": "BAD_FLD",
+              "message": "Invalid field",
+              "subcategory": "NOT_APPLICABLE_TO_HIST_DATA"
+            }
+          }
+        ],
+        "fieldData": [
+          {
+            "date": "2017-03-31",
+            "BS_YEAR_1_PRINCIPAL": 55922.0
+          },
+          {
+            "date": "2017-12-29",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 14.75
+          },
+          {
+            "date": "2018-03-31",
+            "BS_YEAR_1_PRINCIPAL": 300559.0
+          },
+          {
+            "date": "2018-12-31",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 15.75
+          },
+          {
+            "date": "2019-03-31",
+            "BS_YEAR_1_PRINCIPAL": 118574.0
+          },
+          {
+            "date": "2019-12-31",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 16.75
+          },
+          {
+            "date": "2020-03-31",
+            "BS_YEAR_1_PRINCIPAL": 153262.0
+          },
+          {
+            "date": "2020-12-31",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 17.75
+          },
+          {
+            "date": "2021-03-31",
+            "BS_YEAR_1_PRINCIPAL": 73375.0
+          },
+          {
+            "date": "2021-12-31",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 18.75
+          },
+          {
+            "date": "2022-03-31",
+            "BS_YEAR_1_PRINCIPAL": 230470.0
+          },
+          {
+            "date": "2022-12-30",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 19.75
+          },
+          {
+            "date": "2023-03-31",
+            "BS_YEAR_1_PRINCIPAL": 268444.0
+          },
+          {
+            "date": "2023-12-29",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 20.75
+          },
+          {
+            "date": "2024-03-31",
+            "BS_YEAR_1_PRINCIPAL": 213459.0
+          },
+          {
+            "date": "2024-12-31",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 21.75
+          },
+          {
+            "date": "2025-03-31",
+            "BS_YEAR_1_PRINCIPAL": 257943.0
+          },
+          {
+            "date": "2025-12-31",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 5.75
+          },
+          {
+            "date": "2026-03-31",
+            "BS_YEAR_1_PRINCIPAL": 352233.0
+          }
+        ]
+      }
+    },
+    {
+      "securityData": {
+        "security": "992 HK Equity",
+        "eidData": [],
+        "sequenceNumber": 2,
+        "fieldExceptions": [
+          {
+            "fieldId": "BS_CONTRACTUAL_OBLIG_YEAR_2",
+            "errorInfo": {
+              "source": "52865:rsfhdsvc4",
+              "code": 1,
+              "category": "BAD_FLD",
+              "message": "Invalid field",
+              "subcategory": "NOT_APPLICABLE_TO_HIST_DATA"
+            }
+          }
+        ],
+        "fieldData": [
+          {
+            "date": "2017-03-31",
+            "BS_YEAR_1_PRINCIPAL": 70.003
+          },
+          {
+            "date": "2017-12-29",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 8.92
+          },
+          {
+            "date": "2018-03-31",
+            "BS_YEAR_1_PRINCIPAL": 1166.692
+          },
+          {
+            "date": "2018-12-31",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 9.92
+          },
+          {
+            "date": "2019-03-31",
+            "BS_YEAR_1_PRINCIPAL": 1953.043
+          },
+          {
+            "date": "2019-12-31",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 10.92
+          },
+          {
+            "date": "2020-03-31",
+            "BS_YEAR_1_PRINCIPAL": 3294.98
+          },
+          {
+            "date": "2020-12-31",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 11.92
+          },
+          {
+            "date": "2021-03-31",
+            "BS_YEAR_1_PRINCIPAL": 698.271,
+            "BS_YEAR_2_PRINCIPAL": 685.008
+          },
+          {
+            "date": "2021-12-31",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 12.92
+          },
+          {
+            "date": "2022-03-31",
+            "BS_YEAR_1_PRINCIPAL": 787.922,
+            "BS_YEAR_2_PRINCIPAL": 642.46
+          },
+          {
+            "date": "2022-12-30",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 13.92
+          },
+          {
+            "date": "2023-03-31",
+            "BS_YEAR_1_PRINCIPAL": 271.616,
+            "BS_YEAR_2_PRINCIPAL": 0.0
+          },
+          {
+            "date": "2023-12-29",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 14.92
+          },
+          {
+            "date": "2024-03-31",
+            "BS_YEAR_1_PRINCIPAL": 50.431,
+            "BS_YEAR_2_PRINCIPAL": 964.798
+          },
+          {
+            "date": "2024-12-31",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 15.92
+          },
+          {
+            "date": "2025-03-31",
+            "BS_YEAR_1_PRINCIPAL": 1030.352,
+            "BS_YEAR_2_PRINCIPAL": 0.0
+          },
+          {
+            "date": "2025-12-31",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 16.92
+          },
+          {
+            "date": "2026-03-31",
+            "BS_YEAR_1_PRINCIPAL": 878.443,
+            "BS_YEAR_2_PRINCIPAL": 2407.514
+          }
+        ]
+      }
+    },
+    {
+      "securityData": {
+        "security": "ASML NA Equity",
+        "eidData": [],
+        "sequenceNumber": 3,
+        "fieldExceptions": [
+          {
+            "fieldId": "BS_CONTRACTUAL_OBLIG_YEAR_2",
+            "errorInfo": {
+              "source": "52865:rsfhdsvc4",
+              "code": 1,
+              "category": "BAD_FLD",
+              "message": "Invalid field",
+              "subcategory": "NOT_APPLICABLE_TO_HIST_DATA"
+            }
+          }
+        ],
+        "fieldData": [
+          {
+            "date": "2017-12-29",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 16.58
+          },
+          {
+            "date": "2017-12-31",
+            "BS_YEAR_1_PRINCIPAL": 28.0,
+            "BS_YEAR_2_PRINCIPAL": 1.8,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 3243.1
+          },
+          {
+            "date": "2018-12-31",
+            "BS_YEAR_1_PRINCIPAL": 1.8,
+            "BS_YEAR_2_PRINCIPAL": 1.8,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 3946.2,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 17.58
+          },
+          {
+            "date": "2019-12-31",
+            "BS_YEAR_1_PRINCIPAL": 2.8,
+            "BS_YEAR_2_PRINCIPAL": 2.8,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 4252.1,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 18.58
+          },
+          {
+            "date": "2020-12-31",
+            "BS_YEAR_1_PRINCIPAL": 15.4,
+            "BS_YEAR_2_PRINCIPAL": 512.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 4477.0,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 19.58
+          },
+          {
+            "date": "2021-12-31",
+            "BS_YEAR_1_PRINCIPAL": 508.6,
+            "BS_YEAR_2_PRINCIPAL": 755.9,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 6974.0,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 20.58
+          },
+          {
+            "date": "2022-12-30",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 21.58
+          },
+          {
+            "date": "2022-12-31",
+            "BS_YEAR_1_PRINCIPAL": 753.8,
+            "BS_YEAR_2_PRINCIPAL": 2.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 9703.9
+          },
+          {
+            "date": "2023-12-29",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 22.58
+          },
+          {
+            "date": "2023-12-31",
+            "BS_YEAR_1_PRINCIPAL": 0.1,
+            "BS_YEAR_2_PRINCIPAL": 1004.2,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 10700.0
+          },
+          {
+            "date": "2024-12-31",
+            "BS_YEAR_1_PRINCIPAL": 1001.8,
+            "BS_YEAR_2_PRINCIPAL": 1001.8,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 9900.0,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 17.0
+          },
+          {
+            "date": "2025-12-31",
+            "BS_YEAR_1_PRINCIPAL": 1694.8,
+            "BS_YEAR_2_PRINCIPAL": 751.8,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 9600.0,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 18.0
+          }
+        ]
+      }
+    },
+    {
+      "securityData": {
+        "security": "BA US Equity",
+        "eidData": [],
+        "sequenceNumber": 4,
+        "fieldExceptions": [
+          {
+            "fieldId": "BS_CONTRACTUAL_OBLIG_YEAR_2",
+            "errorInfo": {
+              "source": "52865:rsfhdsvc4",
+              "code": 1,
+              "category": "BAD_FLD",
+              "message": "Invalid field",
+              "subcategory": "NOT_APPLICABLE_TO_HIST_DATA"
+            }
+          }
+        ],
+        "fieldData": [
+          {
+            "date": "2017-12-29",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 9.92
+          },
+          {
+            "date": "2017-12-31",
+            "BS_YEAR_1_PRINCIPAL": 1285.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 69311.0
+          },
+          {
+            "date": "2018-12-31",
+            "BS_YEAR_1_PRINCIPAL": 3137.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 75462.0,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 10.92
+          },
+          {
+            "date": "2019-12-31",
+            "BS_YEAR_1_PRINCIPAL": 7306.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 86840.0,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 11.58
+          },
+          {
+            "date": "2020-12-31",
+            "BS_YEAR_1_PRINCIPAL": 1630.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 60928.0,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 1.0
+          },
+          {
+            "date": "2021-12-31",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 2.0
+          },
+          {
+            "date": "2022-12-30",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 3.0
+          },
+          {
+            "date": "2023-12-29",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 4.0
+          },
+          {
+            "date": "2024-12-31",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 0.42
+          },
+          {
+            "date": "2025-12-31",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 1.42
+          }
+        ]
+      }
+    },
+    {
+      "securityData": {
+        "security": "BABA US Equity",
+        "eidData": [],
+        "sequenceNumber": 5,
+        "fieldExceptions": [
+          {
+            "fieldId": "BS_CONTRACTUAL_OBLIG_YEAR_2",
+            "errorInfo": {
+              "source": "52865:rsfhdsvc4",
+              "code": 1,
+              "category": "BAD_FLD",
+              "message": "Invalid field",
+              "subcategory": "NOT_APPLICABLE_TO_HIST_DATA"
+            }
+          }
+        ],
+        "fieldData": [
+          {
+            "date": "2017-03-31",
+            "BS_YEAR_1_PRINCIPAL": 8957.0,
+            "BS_YEAR_2_PRINCIPAL": 0.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 44701.0
+          },
+          {
+            "date": "2017-12-29",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 2.33
+          },
+          {
+            "date": "2018-03-31",
+            "BS_YEAR_1_PRINCIPAL": 6031.0,
+            "BS_YEAR_2_PRINCIPAL": 17224.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 47826.0
+          },
+          {
+            "date": "2018-12-31",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 3.33
+          },
+          {
+            "date": "2019-03-31",
+            "BS_YEAR_1_PRINCIPAL": 22485.0,
+            "BS_YEAR_2_PRINCIPAL": 841.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 79873.0
+          },
+          {
+            "date": "2019-12-31",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 4.33
+          },
+          {
+            "date": "2020-03-31",
+            "BS_YEAR_1_PRINCIPAL": 5154.0,
+            "BS_YEAR_2_PRINCIPAL": 11512.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 65896.0
+          },
+          {
+            "date": "2020-12-31",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 5.33
+          },
+          {
+            "date": "2021-03-31",
+            "BS_YEAR_1_PRINCIPAL": 13451.0,
+            "BS_YEAR_2_PRINCIPAL": 1705.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 97229.0
+          },
+          {
+            "date": "2021-12-31",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 6.33
+          },
+          {
+            "date": "2022-03-31",
+            "BS_YEAR_1_PRINCIPAL": 8841.0,
+            "BS_YEAR_2_PRINCIPAL": 5177.0
+          },
+          {
+            "date": "2022-12-30",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 7.33
+          },
+          {
+            "date": "2023-03-31",
+            "BS_YEAR_1_PRINCIPAL": 12267.0,
+            "BS_YEAR_2_PRINCIPAL": 45488.0
+          },
+          {
+            "date": "2023-12-29",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 25.0
+          },
+          {
+            "date": "2024-03-31",
+            "BS_YEAR_1_PRINCIPAL": 29010.0,
+            "BS_YEAR_2_PRINCIPAL": 4807.0
+          },
+          {
+            "date": "2024-12-31",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 26.0
+          },
+          {
+            "date": "2025-03-31",
+            "BS_YEAR_1_PRINCIPAL": 25468.0,
+            "BS_YEAR_2_PRINCIPAL": 23590.0
+          },
+          {
+            "date": "2025-12-31",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 27.0
+          },
+          {
+            "date": "2026-03-31",
+            "BS_YEAR_1_PRINCIPAL": 47294.0,
+            "BS_YEAR_2_PRINCIPAL": 13249.0
+          }
+        ]
+      }
+    },
+    {
+      "securityData": {
+        "security": "BBSE3 BZ Equity",
+        "eidData": [],
+        "sequenceNumber": 6,
+        "fieldExceptions": [
+          {
+            "fieldId": "BS_CONTRACTUAL_OBLIG_YEAR_2",
+            "errorInfo": {
+              "source": "52865:rsfhdsvc4",
+              "code": 1,
+              "category": "BAD_FLD",
+              "message": "Invalid field",
+              "subcategory": "NOT_APPLICABLE_TO_HIST_DATA"
+            }
+          }
+        ],
+        "fieldData": [
+          {
+            "date": "2017-12-29",
+            "EXECUTIVE_AVERAGE_TENURE": 2.83,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 1.0
+          },
+          {
+            "date": "2018-12-31",
+            "EXECUTIVE_AVERAGE_TENURE": 5.67,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 5.67
+          },
+          {
+            "date": "2019-12-31",
+            "EXECUTIVE_AVERAGE_TENURE": 2.42,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 1.0
+          },
+          {
+            "date": "2020-12-31",
+            "EXECUTIVE_AVERAGE_TENURE": 1.42,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 0.25
+          },
+          {
+            "date": "2021-12-31",
+            "EXECUTIVE_AVERAGE_TENURE": 0.54,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 0.5
+          },
+          {
+            "date": "2022-12-30",
+            "EXECUTIVE_AVERAGE_TENURE": 1.54,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 1.5
+          },
+          {
+            "date": "2023-12-29",
+            "EXECUTIVE_AVERAGE_TENURE": 2.56,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 2.75
+          },
+          {
+            "date": "2024-12-31",
+            "EXECUTIVE_AVERAGE_TENURE": 2.47,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 0.92
+          },
+          {
+            "date": "2025-12-31",
+            "EXECUTIVE_AVERAGE_TENURE": 3.17,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 0.42
+          }
+        ]
+      }
+    },
+    {
+      "securityData": {
+        "security": "BP/ LN Equity",
+        "eidData": [],
+        "sequenceNumber": 7,
+        "fieldExceptions": [
+          {
+            "fieldId": "BS_CONTRACTUAL_OBLIG_YEAR_2",
+            "errorInfo": {
+              "source": "52865:rsfhdsvc4",
+              "code": 1,
+              "category": "BAD_FLD",
+              "message": "Invalid field",
+              "subcategory": "NOT_APPLICABLE_TO_HIST_DATA"
+            }
+          }
+        ],
+        "fieldData": [
+          {
+            "date": "2017-12-29",
+            "EXECUTIVE_AVERAGE_TENURE": 11.47,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 8.75
+          },
+          {
+            "date": "2017-12-31",
+            "BS_YEAR_1_PRINCIPAL": 9291.0,
+            "BS_YEAR_2_PRINCIPAL": 8766.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 13365.0
+          },
+          {
+            "date": "2018-12-31",
+            "BS_YEAR_1_PRINCIPAL": 11607.0,
+            "BS_YEAR_2_PRINCIPAL": 8646.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 15834.0,
+            "EXECUTIVE_AVERAGE_TENURE": 8.95,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 9.75
+          },
+          {
+            "date": "2019-12-31",
+            "BS_YEAR_1_PRINCIPAL": 10065.0,
+            "BS_YEAR_2_PRINCIPAL": 6726.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 20108.0,
+            "EXECUTIVE_AVERAGE_TENURE": 9.95,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 10.75
+          },
+          {
+            "date": "2020-12-31",
+            "BS_YEAR_1_PRINCIPAL": 9119.0,
+            "BS_YEAR_2_PRINCIPAL": 6292.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 19433.0,
+            "EXECUTIVE_AVERAGE_TENURE": 5.56,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 0.5
+          },
+          {
+            "date": "2021-12-31",
+            "BS_YEAR_1_PRINCIPAL": 5370.0,
+            "BS_YEAR_2_PRINCIPAL": 4425.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 11813.0,
+            "EXECUTIVE_AVERAGE_TENURE": 6.2,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 1.5
+          },
+          {
+            "date": "2022-12-30",
+            "EXECUTIVE_AVERAGE_TENURE": 5.7,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 2.5
+          },
+          {
+            "date": "2022-12-31",
+            "BS_YEAR_1_PRINCIPAL": 2978.0,
+            "BS_YEAR_2_PRINCIPAL": 2811.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 10243.0
+          },
+          {
+            "date": "2023-12-29",
+            "EXECUTIVE_AVERAGE_TENURE": 6.49,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 11.0
+          },
+          {
+            "date": "2023-12-31",
+            "BS_YEAR_1_PRINCIPAL": 3054.0,
+            "BS_YEAR_2_PRINCIPAL": 3820.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 11231.0
+          },
+          {
+            "date": "2024-12-31",
+            "BS_YEAR_1_PRINCIPAL": 4402.0,
+            "BS_YEAR_2_PRINCIPAL": 4716.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 12791.0,
+            "EXECUTIVE_AVERAGE_TENURE": 6.12,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 12.0
+          },
+          {
+            "date": "2025-12-31",
+            "BS_YEAR_1_PRINCIPAL": 3312.0,
+            "BS_YEAR_2_PRINCIPAL": 6628.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 12288.0,
+            "EXECUTIVE_AVERAGE_TENURE": 6.79,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 5.5
+          }
+        ]
+      }
+    },
+    {
+      "securityData": {
+        "security": "KMB US Equity",
+        "eidData": [],
+        "sequenceNumber": 16,
+        "fieldExceptions": [
+          {
+            "fieldId": "BS_CONTRACTUAL_OBLIG_YEAR_2",
+            "errorInfo": {
+              "source": "53359:rsfhdsvc3",
+              "code": 1,
+              "category": "BAD_FLD",
+              "message": "Invalid field",
+              "subcategory": "NOT_APPLICABLE_TO_HIST_DATA"
+            }
+          }
+        ],
+        "fieldData": [
+          {
+            "date": "2017-12-29",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 20.0
+          },
+          {
+            "date": "2017-12-31",
+            "BS_YEAR_1_PRINCIPAL": 407.0,
+            "BS_YEAR_2_PRINCIPAL": 714.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 3306.0
+          },
+          {
+            "date": "2018-12-31",
+            "BS_YEAR_1_PRINCIPAL": 716.0,
+            "BS_YEAR_2_PRINCIPAL": 758.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 3702.0,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 21.0
+          },
+          {
+            "date": "2019-12-31",
+            "BS_YEAR_1_PRINCIPAL": 761.0,
+            "BS_YEAR_2_PRINCIPAL": 258.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 4600.0,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 7.17
+          },
+          {
+            "date": "2020-12-31",
+            "BS_YEAR_1_PRINCIPAL": 265.0,
+            "BS_YEAR_2_PRINCIPAL": 314.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 4606.0,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 8.17
+          },
+          {
+            "date": "2021-12-31",
+            "BS_YEAR_1_PRINCIPAL": 317.0,
+            "BS_YEAR_2_PRINCIPAL": 473.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 4421.0,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 9.17
+          },
+          {
+            "date": "2022-12-30",
+            "EXECUTIVE_AVERAGE_TENURE": 3.31,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 10.17
+          },
+          {
+            "date": "2022-12-31",
+            "BS_YEAR_1_PRINCIPAL": 472.0,
+            "BS_YEAR_2_PRINCIPAL": 524.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 4449.0
+          },
+          {
+            "date": "2023-12-29",
+            "EXECUTIVE_AVERAGE_TENURE": 4.42,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 11.17
+          },
+          {
+            "date": "2023-12-31",
+            "BS_YEAR_1_PRINCIPAL": 566.0,
+            "BS_YEAR_2_PRINCIPAL": 559.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 3661.0
+          },
+          {
+            "date": "2024-12-31",
+            "BS_YEAR_1_PRINCIPAL": 566.0,
+            "BS_YEAR_2_PRINCIPAL": 410.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 4376.0,
+            "EXECUTIVE_AVERAGE_TENURE": 4.21,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 12.17
+          },
+          {
+            "date": "2025-12-31",
+            "BS_YEAR_1_PRINCIPAL": 413.0,
+            "BS_YEAR_2_PRINCIPAL": 608.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 4380.0,
+            "EXECUTIVE_AVERAGE_TENURE": 4.45,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 13.17
+          }
+        ]
+      }
+    },
+    {
+      "securityData": {
+        "security": "KPN NA Equity",
+        "eidData": [],
+        "sequenceNumber": 17,
+        "fieldExceptions": [
+          {
+            "fieldId": "BS_CONTRACTUAL_OBLIG_YEAR_2",
+            "errorInfo": {
+              "source": "53359:rsfhdsvc3",
+              "code": 1,
+              "category": "BAD_FLD",
+              "message": "Invalid field",
+              "subcategory": "NOT_APPLICABLE_TO_HIST_DATA"
+            }
+          }
+        ],
+        "fieldData": [
+          {
+            "date": "2017-12-29",
+            "EXECUTIVE_AVERAGE_TENURE": 8.65,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 7.25
+          },
+          {
+            "date": "2017-12-31",
+            "BS_YEAR_1_PRINCIPAL": 0.0,
+            "BS_YEAR_2_PRINCIPAL": 2264.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 848.0
+          },
+          {
+            "date": "2018-12-31",
+            "EXECUTIVE_AVERAGE_TENURE": 7.83,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 2.0
+          },
+          {
+            "date": "2019-12-31",
+            "BS_YEAR_1_PRINCIPAL": 931.0,
+            "BS_YEAR_2_PRINCIPAL": 613.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 829.0,
+            "EXECUTIVE_AVERAGE_TENURE": 5.39,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 26.0
+          },
+          {
+            "date": "2020-12-31",
+            "BS_YEAR_1_PRINCIPAL": 673.0,
+            "BS_YEAR_2_PRINCIPAL": 616.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 739.0,
+            "EXECUTIVE_AVERAGE_TENURE": 4.87,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 27.0
+          },
+          {
+            "date": "2021-12-31",
+            "BS_YEAR_1_PRINCIPAL": 676.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 948.0,
+            "EXECUTIVE_AVERAGE_TENURE": 5.87,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 28.0
+          },
+          {
+            "date": "2022-12-30",
+            "EXECUTIVE_AVERAGE_TENURE": 6.87,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 29.0
+          },
+          {
+            "date": "2022-12-31",
+            "BS_YEAR_1_PRINCIPAL": 196.0,
+            "BS_YEAR_2_PRINCIPAL": 431.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 802.0
+          },
+          {
+            "date": "2023-12-29",
+            "EXECUTIVE_AVERAGE_TENURE": 6.87,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 30.0
+          },
+          {
+            "date": "2023-12-31",
+            "BS_YEAR_1_PRINCIPAL": 431.0,
+            "BS_YEAR_2_PRINCIPAL": 625.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 1168.0
+          },
+          {
+            "date": "2024-12-31",
+            "BS_YEAR_1_PRINCIPAL": 844.0,
+            "BS_YEAR_2_PRINCIPAL": 302.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 1094.0,
+            "EXECUTIVE_AVERAGE_TENURE": 7.87,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 31.0
+          },
+          {
+            "date": "2025-12-31",
+            "BS_YEAR_1_PRINCIPAL": 287.0,
+            "BS_YEAR_2_PRINCIPAL": 300.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 878.0,
+            "EXECUTIVE_AVERAGE_TENURE": 8.87,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 32.0
+          }
+        ]
+      }
+    },
+    {
+      "securityData": {
+        "security": "NG/ LN Equity",
+        "eidData": [],
+        "sequenceNumber": 18,
+        "fieldExceptions": [
+          {
+            "fieldId": "BS_CONTRACTUAL_OBLIG_YEAR_2",
+            "errorInfo": {
+              "source": "53359:rsfhdsvc3",
+              "code": 1,
+              "category": "BAD_FLD",
+              "message": "Invalid field",
+              "subcategory": "NOT_APPLICABLE_TO_HIST_DATA"
+            }
+          }
+        ],
+        "fieldData": [
+          {
+            "date": "2017-03-31",
+            "BS_YEAR_1_PRINCIPAL": 5496.0,
+            "BS_YEAR_2_PRINCIPAL": 1941.0
+          },
+          {
+            "date": "2017-12-29",
+            "EXECUTIVE_AVERAGE_TENURE": 4.2,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 3.75
+          },
+          {
+            "date": "2018-03-31",
+            "BS_YEAR_1_PRINCIPAL": 4447.0,
+            "BS_YEAR_2_PRINCIPAL": 1694.0
+          },
+          {
+            "date": "2018-12-31",
+            "EXECUTIVE_AVERAGE_TENURE": 3.72,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 4.75
+          },
+          {
+            "date": "2019-03-31",
+            "BS_YEAR_1_PRINCIPAL": 4472.0,
+            "BS_YEAR_2_PRINCIPAL": 2393.0
+          },
+          {
+            "date": "2019-12-31",
+            "EXECUTIVE_AVERAGE_TENURE": 3.21,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 5.75
+          },
+          {
+            "date": "2020-03-31",
+            "BS_YEAR_1_PRINCIPAL": 4072.0,
+            "BS_YEAR_2_PRINCIPAL": 2212.0
+          },
+          {
+            "date": "2020-12-31",
+            "EXECUTIVE_AVERAGE_TENURE": 4.33,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 6.75
+          },
+          {
+            "date": "2021-03-31",
+            "BS_YEAR_1_PRINCIPAL": 3737.0,
+            "BS_YEAR_2_PRINCIPAL": 1745.0
+          },
+          {
+            "date": "2021-12-31",
+            "EXECUTIVE_AVERAGE_TENURE": 3.03,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 7.75
+          },
+          {
+            "date": "2022-03-31",
+            "BS_YEAR_1_PRINCIPAL": 12121.0,
+            "BS_YEAR_2_PRINCIPAL": 1410.0
+          },
+          {
+            "date": "2022-12-30",
+            "EXECUTIVE_AVERAGE_TENURE": 3.44,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 8.75
+          },
+          {
+            "date": "2023-03-31",
+            "BS_YEAR_1_PRINCIPAL": 2955.0,
+            "BS_YEAR_2_PRINCIPAL": 2799.0
+          },
+          {
+            "date": "2023-12-29",
+            "EXECUTIVE_AVERAGE_TENURE": 4.08,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 9.75
+          },
+          {
+            "date": "2024-03-31",
+            "BS_YEAR_1_PRINCIPAL": 4859.0,
+            "BS_YEAR_2_PRINCIPAL": 2706.0
+          },
+          {
+            "date": "2024-12-31",
+            "EXECUTIVE_AVERAGE_TENURE": 4.23,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 10.75
+          },
+          {
+            "date": "2025-03-31",
+            "BS_YEAR_1_PRINCIPAL": 4662.0,
+            "BS_YEAR_2_PRINCIPAL": 3283.0
+          },
+          {
+            "date": "2025-12-31",
+            "EXECUTIVE_AVERAGE_TENURE": 4.58,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 0.17
+          },
+          {
+            "date": "2026-03-31",
+            "BS_YEAR_1_PRINCIPAL": 3900.0,
+            "BS_YEAR_2_PRINCIPAL": 2513.0
+          }
+        ]
+      }
+    },
+    {
+      "securityData": {
+        "security": "NOVN SW Equity",
+        "eidData": [],
+        "sequenceNumber": 19,
+        "fieldExceptions": [
+          {
+            "fieldId": "BS_CONTRACTUAL_OBLIG_YEAR_2",
+            "errorInfo": {
+              "source": "53359:rsfhdsvc3",
+              "code": 1,
+              "category": "BAD_FLD",
+              "message": "Invalid field",
+              "subcategory": "NOT_APPLICABLE_TO_HIST_DATA"
+            }
+          }
+        ],
+        "fieldData": [
+          {
+            "date": "2017-12-29",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 7.92
+          },
+          {
+            "date": "2017-12-31",
+            "BS_YEAR_1_PRINCIPAL": 5308.0,
+            "BS_YEAR_2_PRINCIPAL": 359.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 6436.0
+          },
+          {
+            "date": "2018-12-31",
+            "BS_YEAR_1_PRINCIPAL": 9678.0,
+            "BS_YEAR_2_PRINCIPAL": 2006.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 4764.0,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 5.0
+          },
+          {
+            "date": "2019-12-31",
+            "BS_YEAR_1_PRINCIPAL": 7031.0,
+            "BS_YEAR_2_PRINCIPAL": 2002.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 14049.0,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 6.0
+          },
+          {
+            "date": "2020-12-31",
+            "BS_YEAR_1_PRINCIPAL": 9785.0,
+            "BS_YEAR_2_PRINCIPAL": 2272.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 4746.0,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 7.0
+          },
+          {
+            "date": "2021-12-31",
+            "BS_YEAR_1_PRINCIPAL": 6295.0,
+            "BS_YEAR_2_PRINCIPAL": 2621.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 5264.0,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 8.0
+          },
+          {
+            "date": "2022-12-30",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 9.0
+          },
+          {
+            "date": "2022-12-31",
+            "BS_YEAR_1_PRINCIPAL": 5931.0,
+            "BS_YEAR_2_PRINCIPAL": 2241.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 4131.0
+          },
+          {
+            "date": "2023-12-29",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 10.0
+          },
+          {
+            "date": "2023-12-31",
+            "BS_YEAR_1_PRINCIPAL": 6175.0
+          },
+          {
+            "date": "2024-12-31",
+            "BS_YEAR_1_PRINCIPAL": 8232.0,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 11.0
+          },
+          {
+            "date": "2025-12-31",
+            "BS_YEAR_1_PRINCIPAL": 5602.0,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 12.0
+          }
+        ]
+      }
+    },
+    {
+      "securityData": {
+        "security": "NU US Equity",
+        "eidData": [],
+        "sequenceNumber": 20,
+        "fieldExceptions": [
+          {
+            "fieldId": "BS_CONTRACTUAL_OBLIG_YEAR_2",
+            "errorInfo": {
+              "source": "53359:rsfhdsvc3",
+              "code": 1,
+              "category": "BAD_FLD",
+              "message": "Invalid field",
+              "subcategory": "NOT_APPLICABLE_TO_HIST_DATA"
+            }
+          }
+        ],
+        "fieldData": [
+          {
+            "date": "2017-12-29",
+            "EXECUTIVE_AVERAGE_TENURE": 4.83,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 4.83
+          },
+          {
+            "date": "2018-12-31",
+            "BS_YEAR_1_PRINCIPAL": 17.254,
+            "EXECUTIVE_AVERAGE_TENURE": 2.61,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 5.83
+          },
+          {
+            "date": "2019-12-31",
+            "BS_YEAR_1_PRINCIPAL": 101.491,
+            "EXECUTIVE_AVERAGE_TENURE": 3.56,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 6.83
+          },
+          {
+            "date": "2020-12-31",
+            "BS_YEAR_1_PRINCIPAL": 136.644,
+            "EXECUTIVE_AVERAGE_TENURE": 3.85,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 7.83
+          },
+          {
+            "date": "2021-12-31",
+            "BS_YEAR_1_PRINCIPAL": 23.577,
+            "EXECUTIVE_AVERAGE_TENURE": 4.2,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 8.83
+          },
+          {
+            "date": "2022-12-30",
+            "EXECUTIVE_AVERAGE_TENURE": 3.81,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 9.83
+          },
+          {
+            "date": "2022-12-31",
+            "BS_YEAR_1_PRINCIPAL": 38.329
+          },
+          {
+            "date": "2023-12-29",
+            "EXECUTIVE_AVERAGE_TENURE": 5.36,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 10.83
+          },
+          {
+            "date": "2023-12-31",
+            "BS_YEAR_1_PRINCIPAL": 113.595
+          },
+          {
+            "date": "2024-12-31",
+            "BS_YEAR_1_PRINCIPAL": 414.291,
+            "EXECUTIVE_AVERAGE_TENURE": 5.88,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 11.83
+          },
+          {
+            "date": "2025-12-31",
+            "BS_YEAR_1_PRINCIPAL": 2525.443,
+            "EXECUTIVE_AVERAGE_TENURE": 5.38,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 12.83
+          }
+        ]
+      }
+    },
+    {
+      "securityData": {
+        "security": "PBR US Equity",
+        "eidData": [],
+        "sequenceNumber": 21,
+        "fieldExceptions": [
+          {
+            "fieldId": "BS_CONTRACTUAL_OBLIG_YEAR_2",
+            "errorInfo": {
+              "source": "53359:rsfhdsvc3",
+              "code": 1,
+              "category": "BAD_FLD",
+              "message": "Invalid field",
+              "subcategory": "NOT_APPLICABLE_TO_HIST_DATA"
+            }
+          }
+        ],
+        "fieldData": [
+          {
+            "date": "2017-12-29",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 1.67
+          },
+          {
+            "date": "2017-12-31",
+            "BS_YEAR_1_PRINCIPAL": 23160.0,
+            "BS_YEAR_2_PRINCIPAL": 21423.0
+          },
+          {
+            "date": "2018-12-31",
+            "BS_YEAR_1_PRINCIPAL": 14207.0,
+            "BS_YEAR_2_PRINCIPAL": 15193.0,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 3.92
+          },
+          {
+            "date": "2019-12-31",
+            "BS_YEAR_1_PRINCIPAL": 18013.0,
+            "BS_YEAR_2_PRINCIPAL": 16002.0,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 1.0
+          },
+          {
+            "date": "2020-12-31",
+            "BS_YEAR_1_PRINCIPAL": 21751.0,
+            "BS_YEAR_2_PRINCIPAL": 17055.0,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 2.0
+          },
+          {
+            "date": "2021-12-31",
+            "BS_YEAR_1_PRINCIPAL": 20315.0,
+            "BS_YEAR_2_PRINCIPAL": 16591.0,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 0.75
+          },
+          {
+            "date": "2022-12-30",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 0.58
+          },
+          {
+            "date": "2022-12-31",
+            "BS_YEAR_1_PRINCIPAL": 18656.0,
+            "BS_YEAR_2_PRINCIPAL": 20577.0
+          },
+          {
+            "date": "2023-12-29",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 1.0
+          },
+          {
+            "date": "2023-12-31",
+            "BS_YEAR_1_PRINCIPAL": 20923.0,
+            "BS_YEAR_2_PRINCIPAL": 14844.0
+          },
+          {
+            "date": "2024-12-31",
+            "BS_YEAR_1_PRINCIPAL": 15887.0,
+            "BS_YEAR_2_PRINCIPAL": 11538.0,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 0.67
+          },
+          {
+            "date": "2025-12-31",
+            "BS_YEAR_1_PRINCIPAL": 12027.0,
+            "BS_YEAR_2_PRINCIPAL": 12026.0,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 1.67
+          }
+        ]
+      }
+    },
+    {
+      "securityData": {
+        "security": "RKT LN Equity",
+        "eidData": [],
+        "sequenceNumber": 22,
+        "fieldExceptions": [
+          {
+            "fieldId": "BS_CONTRACTUAL_OBLIG_YEAR_2",
+            "errorInfo": {
+              "source": "53359:rsfhdsvc3",
+              "code": 1,
+              "category": "BAD_FLD",
+              "message": "Invalid field",
+              "subcategory": "NOT_APPLICABLE_TO_HIST_DATA"
+            }
+          }
+        ],
+        "fieldData": [
+          {
+            "date": "2017-12-29",
+            "EXECUTIVE_AVERAGE_TENURE": 4.0,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 10.25
+          },
+          {
+            "date": "2017-12-31",
+            "BS_YEAR_1_PRINCIPAL": 1346.0
+          },
+          {
+            "date": "2018-12-31",
+            "BS_YEAR_1_PRINCIPAL": 1709.0,
+            "EXECUTIVE_AVERAGE_TENURE": 3.99,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 11.25
+          },
+          {
+            "date": "2019-12-31",
+            "BS_YEAR_1_PRINCIPAL": 3081.0,
+            "EXECUTIVE_AVERAGE_TENURE": 3.2,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 0.5
+          },
+          {
+            "date": "2020-12-31",
+            "BS_YEAR_1_PRINCIPAL": 763.0,
+            "EXECUTIVE_AVERAGE_TENURE": 2.45,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 1.5
+          },
+          {
+            "date": "2021-12-31",
+            "BS_YEAR_1_PRINCIPAL": 2485.0,
+            "EXECUTIVE_AVERAGE_TENURE": 2.29,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 2.5
+          },
+          {
+            "date": "2022-12-30",
+            "EXECUTIVE_AVERAGE_TENURE": 2.43,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 0.25
+          },
+          {
+            "date": "2022-12-31",
+            "BS_YEAR_1_PRINCIPAL": 1643.0
+          },
+          {
+            "date": "2023-12-29",
+            "EXECUTIVE_AVERAGE_TENURE": 3.04,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 4.17
+          },
+          {
+            "date": "2023-12-31",
+            "BS_YEAR_1_PRINCIPAL": 1601.0
+          },
+          {
+            "date": "2024-12-31",
+            "BS_YEAR_1_PRINCIPAL": 1344.0,
+            "EXECUTIVE_AVERAGE_TENURE": 3.32,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 5.17
+          },
+          {
+            "date": "2025-12-31",
+            "BS_YEAR_1_PRINCIPAL": 745.0,
+            "EXECUTIVE_AVERAGE_TENURE": 4.23,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 6.17
+          }
+        ]
+      }
+    },
+    {
+      "securityData": {
+        "security": "RMS FP Equity",
+        "eidData": [],
+        "sequenceNumber": 23,
+        "fieldExceptions": [
+          {
+            "fieldId": "BS_CONTRACTUAL_OBLIG_YEAR_2",
+            "errorInfo": {
+              "source": "53359:rsfhdsvc3",
+              "code": 1,
+              "category": "BAD_FLD",
+              "message": "Invalid field",
+              "subcategory": "NOT_APPLICABLE_TO_HIST_DATA"
+            }
+          }
+        ],
+        "fieldData": [
+          {
+            "date": "2017-12-29",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 12.0
+          },
+          {
+            "date": "2017-12-31",
+            "BS_YEAR_1_PRINCIPAL": 30.1
+          },
+          {
+            "date": "2018-12-31",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 13.0
+          },
+          {
+            "date": "2019-12-31",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 14.0
+          },
+          {
+            "date": "2020-12-31",
+            "BS_YEAR_1_PRINCIPAL": 24.5,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 15.0
+          },
+          {
+            "date": "2021-12-31",
+            "BS_YEAR_1_PRINCIPAL": 1.0,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 16.0
+          },
+          {
+            "date": "2022-12-30",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 17.0
+          },
+          {
+            "date": "2022-12-31",
+            "BS_YEAR_1_PRINCIPAL": 1.0
+          },
+          {
+            "date": "2023-12-29",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 18.0
+          },
+          {
+            "date": "2023-12-31",
+            "BS_YEAR_1_PRINCIPAL": 1.0
+          },
+          {
+            "date": "2024-12-31",
+            "BS_YEAR_1_PRINCIPAL": 0.0,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 19.0
+          },
+          {
+            "date": "2025-12-31",
+            "BS_YEAR_1_PRINCIPAL": 0.0,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 20.0
+          }
+        ]
+      }
+    },
+    {
+      "securityData": {
+        "security": "ROG SW Equity",
+        "eidData": [],
+        "sequenceNumber": 24,
+        "fieldExceptions": [
+          {
+            "fieldId": "BS_CONTRACTUAL_OBLIG_YEAR_2",
+            "errorInfo": {
+              "source": "53361:rsfhdsvc1",
+              "code": 1,
+              "category": "BAD_FLD",
+              "message": "Invalid field",
+              "subcategory": "NOT_APPLICABLE_TO_HIST_DATA"
+            }
+          }
+        ],
+        "fieldData": [
+          {
+            "date": "2017-12-29",
+            "EXECUTIVE_AVERAGE_TENURE": 6.32,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 14.0
+          },
+          {
+            "date": "2017-12-31",
+            "BS_YEAR_1_PRINCIPAL": 2167.0,
+            "BS_YEAR_2_PRINCIPAL": 1955.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 7363.0
+          },
+          {
+            "date": "2018-12-31",
+            "BS_YEAR_1_PRINCIPAL": 1959.0,
+            "BS_YEAR_2_PRINCIPAL": 583.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 6968.0,
+            "EXECUTIVE_AVERAGE_TENURE": 5.83,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 15.0
+          },
+          {
+            "date": "2019-12-31",
+            "BS_YEAR_1_PRINCIPAL": 0.0,
+            "BS_YEAR_2_PRINCIPAL": 1861.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 17698.0,
+            "EXECUTIVE_AVERAGE_TENURE": 4.05,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 16.0
+          },
+          {
+            "date": "2020-12-31",
+            "BS_YEAR_1_PRINCIPAL": 1804.0,
+            "BS_YEAR_2_PRINCIPAL": 1074.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 20319.0,
+            "EXECUTIVE_AVERAGE_TENURE": 4.55,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 17.0
+          },
+          {
+            "date": "2021-12-31",
+            "BS_YEAR_1_PRINCIPAL": 15495.0,
+            "BS_YEAR_2_PRINCIPAL": 1494.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 33274.0,
+            "EXECUTIVE_AVERAGE_TENURE": 5.55,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 18.0
+          },
+          {
+            "date": "2022-12-30",
+            "EXECUTIVE_AVERAGE_TENURE": 5.82,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 19.0
+          },
+          {
+            "date": "2022-12-31",
+            "BS_YEAR_1_PRINCIPAL": 4457.0,
+            "BS_YEAR_2_PRINCIPAL": 3671.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 22201.0
+          },
+          {
+            "date": "2023-12-29",
+            "EXECUTIVE_AVERAGE_TENURE": 4.64,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 6.0
+          },
+          {
+            "date": "2023-12-31",
+            "BS_YEAR_1_PRINCIPAL": 6013.0,
+            "BS_YEAR_2_PRINCIPAL": 4038.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 22460.0
+          },
+          {
+            "date": "2024-12-31",
+            "BS_YEAR_1_PRINCIPAL": 5473.0,
+            "BS_YEAR_2_PRINCIPAL": 4210.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 23940.0,
+            "EXECUTIVE_AVERAGE_TENURE": 4.78,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 7.0
+          },
+          {
+            "date": "2025-12-31",
+            "BS_YEAR_1_PRINCIPAL": 5158.0,
+            "BS_YEAR_2_PRINCIPAL": 3958.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 24396.0,
+            "EXECUTIVE_AVERAGE_TENURE": 5.17,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 8.0
+          }
+        ]
+      }
+    },
+    {
+      "securityData": {
+        "security": "RWE GR Equity",
+        "eidData": [],
+        "sequenceNumber": 25,
+        "fieldExceptions": [
+          {
+            "fieldId": "BS_CONTRACTUAL_OBLIG_YEAR_2",
+            "errorInfo": {
+              "source": "53361:rsfhdsvc1",
+              "code": 1,
+              "category": "BAD_FLD",
+              "message": "Invalid field",
+              "subcategory": "NOT_APPLICABLE_TO_HIST_DATA"
+            }
+          }
+        ],
+        "fieldData": [
+          {
+            "date": "2017-12-29",
+            "EXECUTIVE_AVERAGE_TENURE": 4.96,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 8.67
+          },
+          {
+            "date": "2018-12-31",
+            "EXECUTIVE_AVERAGE_TENURE": 5.96,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 9.67
+          },
+          {
+            "date": "2019-12-31",
+            "EXECUTIVE_AVERAGE_TENURE": 6.96,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 10.67
+          },
+          {
+            "date": "2020-12-31",
+            "EXECUTIVE_AVERAGE_TENURE": 5.36,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 11.67
+          },
+          {
+            "date": "2021-12-31",
+            "EXECUTIVE_AVERAGE_TENURE": 2.53,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 5.25
+          },
+          {
+            "date": "2022-12-30",
+            "EXECUTIVE_AVERAGE_TENURE": 3.53,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 6.25
+          },
+          {
+            "date": "2023-12-29",
+            "EXECUTIVE_AVERAGE_TENURE": 3.61,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 7.25
+          },
+          {
+            "date": "2024-12-31",
+            "EXECUTIVE_AVERAGE_TENURE": 4.61,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 8.25
+          },
+          {
+            "date": "2025-12-31",
+            "EXECUTIVE_AVERAGE_TENURE": 5.61,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 9.25
+          }
+        ]
+      }
+    },
+    {
+      "securityData": {
+        "security": "SAP GY Equity",
+        "eidData": [],
+        "sequenceNumber": 26,
+        "fieldExceptions": [
+          {
+            "fieldId": "BS_CONTRACTUAL_OBLIG_YEAR_2",
+            "errorInfo": {
+              "source": "53361:rsfhdsvc1",
+              "code": 1,
+              "category": "BAD_FLD",
+              "message": "Invalid field",
+              "subcategory": "NOT_APPLICABLE_TO_HIST_DATA"
+            }
+          }
+        ],
+        "fieldData": [
+          {
+            "date": "2017-12-29",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 16.0
+          },
+          {
+            "date": "2017-12-31",
+            "BS_YEAR_1_PRINCIPAL": 1298.0
+          },
+          {
+            "date": "2018-12-31",
+            "BS_YEAR_1_PRINCIPAL": 759.0,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 17.0
+          },
+          {
+            "date": "2019-12-31",
+            "BS_YEAR_1_PRINCIPAL": 2531.0,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 7.0
+          },
+          {
+            "date": "2020-12-31",
+            "BS_YEAR_1_PRINCIPAL": 1484.0,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 7.0
+          },
+          {
+            "date": "2021-12-31",
+            "BS_YEAR_1_PRINCIPAL": 4084.0,
+            "BS_YEAR_2_PRINCIPAL": 1695.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 1199.0,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 8.0
+          },
+          {
+            "date": "2022-12-30",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 9.0
+          },
+          {
+            "date": "2022-12-31",
+            "BS_YEAR_1_PRINCIPAL": 8210.0,
+            "BS_YEAR_2_PRINCIPAL": 1288.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 1682.0
+          },
+          {
+            "date": "2023-12-29",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 10.0
+          },
+          {
+            "date": "2023-12-31",
+            "BS_YEAR_1_PRINCIPAL": 4024.0,
+            "BS_YEAR_2_PRINCIPAL": 985.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 2286.0
+          },
+          {
+            "date": "2024-12-31",
+            "BS_YEAR_1_PRINCIPAL": 6150.0,
+            "BS_YEAR_2_PRINCIPAL": 1196.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 2870.0,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 11.0
+          },
+          {
+            "date": "2025-12-31",
+            "BS_YEAR_1_PRINCIPAL": 4798.0,
+            "BS_YEAR_2_PRINCIPAL": 1066.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 2574.0,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 12.0
+          }
+        ]
+      }
+    },
+    {
+      "securityData": {
+        "security": "SSE LN Equity",
+        "eidData": [],
+        "sequenceNumber": 27,
+        "fieldExceptions": [
+          {
+            "fieldId": "BS_CONTRACTUAL_OBLIG_YEAR_2",
+            "errorInfo": {
+              "source": "53361:rsfhdsvc1",
+              "code": 1,
+              "category": "BAD_FLD",
+              "message": "Invalid field",
+              "subcategory": "NOT_APPLICABLE_TO_HIST_DATA"
+            }
+          }
+        ],
+        "fieldData": [
+          {
+            "date": "2017-03-31",
+            "BS_YEAR_1_PRINCIPAL": 118.8
+          },
+          {
+            "date": "2017-12-29",
+            "EXECUTIVE_AVERAGE_TENURE": 7.61,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 16.0
+          },
+          {
+            "date": "2018-03-31",
+            "BS_YEAR_1_PRINCIPAL": 626.3
+          },
+          {
+            "date": "2018-12-31",
+            "EXECUTIVE_AVERAGE_TENURE": 7.21,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 17.0
+          },
+          {
+            "date": "2019-03-31",
+            "BS_YEAR_1_PRINCIPAL": 668.4
+          },
+          {
+            "date": "2019-12-31",
+            "EXECUTIVE_AVERAGE_TENURE": 7.58,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 18.0
+          },
+          {
+            "date": "2020-03-31",
+            "BS_YEAR_1_PRINCIPAL": 1893.8
+          },
+          {
+            "date": "2020-12-31",
+            "EXECUTIVE_AVERAGE_TENURE": 7.86,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 19.0
+          },
+          {
+            "date": "2021-03-31",
+            "BS_YEAR_1_PRINCIPAL": 864.7
+          },
+          {
+            "date": "2021-12-31",
+            "EXECUTIVE_AVERAGE_TENURE": 8.86,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 20.0
+          },
+          {
+            "date": "2022-03-31",
+            "BS_YEAR_1_PRINCIPAL": 1118.7
+          },
+          {
+            "date": "2022-12-30",
+            "EXECUTIVE_AVERAGE_TENURE": 8.98,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 21.0
+          },
+          {
+            "date": "2023-03-31",
+            "BS_YEAR_1_PRINCIPAL": 1738.5
+          },
+          {
+            "date": "2023-12-29",
+            "EXECUTIVE_AVERAGE_TENURE": 7.62,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 22.0
+          },
+          {
+            "date": "2024-03-31",
+            "BS_YEAR_1_PRINCIPAL": 1044.5
+          },
+          {
+            "date": "2024-12-31",
+            "EXECUTIVE_AVERAGE_TENURE": 9.39,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 23.0
+          },
+          {
+            "date": "2025-03-31",
+            "BS_YEAR_1_PRINCIPAL": 1895.5
+          },
+          {
+            "date": "2025-12-31",
+            "EXECUTIVE_AVERAGE_TENURE": 8.68,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 14.0
+          },
+          {
+            "date": "2026-03-31",
+            "BS_YEAR_1_PRINCIPAL": 1124.6
+          }
+        ]
+      }
+    },
+    {
+      "securityData": {
+        "security": "ST SP Equity",
+        "eidData": [],
+        "sequenceNumber": 28,
+        "fieldExceptions": [
+          {
+            "fieldId": "BS_CONTRACTUAL_OBLIG_YEAR_2",
+            "errorInfo": {
+              "source": "53361:rsfhdsvc1",
+              "code": 1,
+              "category": "BAD_FLD",
+              "message": "Invalid field",
+              "subcategory": "NOT_APPLICABLE_TO_HIST_DATA"
+            }
+          }
+        ],
+        "fieldData": [
+          {
+            "date": "2017-12-29",
+            "EXECUTIVE_AVERAGE_TENURE": 9.25,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 28.58
+          },
+          {
+            "date": "2018-12-31",
+            "EXECUTIVE_AVERAGE_TENURE": 9.07,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 29.58
+          },
+          {
+            "date": "2019-12-31",
+            "EXECUTIVE_AVERAGE_TENURE": 9.09,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 30.58
+          },
+          {
+            "date": "2020-12-31",
+            "EXECUTIVE_AVERAGE_TENURE": 10.0,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 31.58
+          },
+          {
+            "date": "2021-12-31",
+            "EXECUTIVE_AVERAGE_TENURE": 6.58,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 9.58
+          },
+          {
+            "date": "2022-12-30",
+            "EXECUTIVE_AVERAGE_TENURE": 7.58,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 10.58
+          },
+          {
+            "date": "2023-12-29",
+            "EXECUTIVE_AVERAGE_TENURE": 7.36,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 11.58
+          },
+          {
+            "date": "2024-12-31",
+            "EXECUTIVE_AVERAGE_TENURE": 7.73,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 12.58
+          },
+          {
+            "date": "2025-12-31",
+            "EXECUTIVE_AVERAGE_TENURE": 7.25,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 13.58
+          }
+        ]
+      }
+    },
+    {
+      "securityData": {
+        "security": "ULVR LN Equity",
+        "eidData": [],
+        "sequenceNumber": 29,
+        "fieldExceptions": [
+          {
+            "fieldId": "BS_CONTRACTUAL_OBLIG_YEAR_2",
+            "errorInfo": {
+              "source": "53361:rsfhdsvc1",
+              "code": 1,
+              "category": "BAD_FLD",
+              "message": "Invalid field",
+              "subcategory": "NOT_APPLICABLE_TO_HIST_DATA"
+            }
+          }
+        ],
+        "fieldData": [
+          {
+            "date": "2017-12-29",
+            "EXECUTIVE_AVERAGE_TENURE": 5.19,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 9.25
+          },
+          {
+            "date": "2017-12-31",
+            "BS_YEAR_1_PRINCIPAL": 7688.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 9969.0
+          },
+          {
+            "date": "2018-12-31",
+            "EXECUTIVE_AVERAGE_TENURE": 5.48,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 10.25
+          },
+          {
+            "date": "2019-12-31",
+            "BS_YEAR_1_PRINCIPAL": 4074.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 5985.0,
+            "EXECUTIVE_AVERAGE_TENURE": 5.89,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 25.0
+          },
+          {
+            "date": "2020-12-31",
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 5811.0,
+            "EXECUTIVE_AVERAGE_TENURE": 7.03,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 26.0
+          },
+          {
+            "date": "2021-12-31",
+            "EXECUTIVE_AVERAGE_TENURE": 7.51,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 27.0
+          },
+          {
+            "date": "2022-12-30",
+            "EXECUTIVE_AVERAGE_TENURE": 9.38,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 28.0
+          },
+          {
+            "date": "2022-12-31",
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 1870.0
+          },
+          {
+            "date": "2023-12-29",
+            "EXECUTIVE_AVERAGE_TENURE": 8.9,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 0.5
+          },
+          {
+            "date": "2023-12-31",
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 1574.0
+          },
+          {
+            "date": "2024-12-31",
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 1755.0,
+            "EXECUTIVE_AVERAGE_TENURE": 7.75,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 1.5
+          },
+          {
+            "date": "2025-12-31",
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 1460.0,
+            "EXECUTIVE_AVERAGE_TENURE": 9.18,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 31.0
+          }
+        ]
+      }
+    },
+    {
+      "securityData": {
+        "security": "VLO US Equity",
+        "eidData": [],
+        "sequenceNumber": 30,
+        "fieldExceptions": [
+          {
+            "fieldId": "BS_CONTRACTUAL_OBLIG_YEAR_2",
+            "errorInfo": {
+              "source": "53361:rsfhdsvc1",
+              "code": 1,
+              "category": "BAD_FLD",
+              "message": "Invalid field",
+              "subcategory": "NOT_APPLICABLE_TO_HIST_DATA"
+            }
+          }
+        ],
+        "fieldData": [
+          {
+            "date": "2017-12-29",
+            "EXECUTIVE_AVERAGE_TENURE": 14.18,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 14.42
+          },
+          {
+            "date": "2017-12-31",
+            "BS_YEAR_1_PRINCIPAL": 106.0,
+            "BS_YEAR_2_PRINCIPAL": 756.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 19102.0
+          },
+          {
+            "date": "2018-12-31",
+            "BS_YEAR_1_PRINCIPAL": 214.0,
+            "BS_YEAR_2_PRINCIPAL": 855.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 15495.0,
+            "EXECUTIVE_AVERAGE_TENURE": 12.85,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 15.42
+          },
+          {
+            "date": "2019-12-31",
+            "BS_YEAR_1_PRINCIPAL": 376.0,
+            "BS_YEAR_2_PRINCIPAL": 250.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 15665.0,
+            "EXECUTIVE_AVERAGE_TENURE": 11.41,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 16.42
+          },
+          {
+            "date": "2020-12-31",
+            "BS_YEAR_1_PRINCIPAL": 603.0,
+            "BS_YEAR_2_PRINCIPAL": 6.0,
+            "BS_CONTRACTUAL_OBLIG_YEAR_1": 16305.0,
+            "EXECUTIVE_AVERAGE_TENURE": 11.88,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 17.42
+          },
+          {
+            "date": "2021-12-31",
+            "BS_YEAR_1_PRINCIPAL": 1110.0,
+            "BS_YEAR_2_PRINCIPAL": 20.0,
+            "EXECUTIVE_AVERAGE_TENURE": 12.21,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 18.42
+          },
+          {
+            "date": "2022-12-30",
+            "EXECUTIVE_AVERAGE_TENURE": 13.75,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 19.42
+          },
+          {
+            "date": "2022-12-31",
+            "BS_YEAR_1_PRINCIPAL": 861.0,
+            "BS_YEAR_2_PRINCIPAL": 167.0
+          },
+          {
+            "date": "2023-12-29",
+            "EXECUTIVE_AVERAGE_TENURE": 14.3,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 13.0
+          },
+          {
+            "date": "2023-12-31",
+            "BS_YEAR_1_PRINCIPAL": 1197.0,
+            "BS_YEAR_2_PRINCIPAL": 441.0
+          },
+          {
+            "date": "2024-12-31",
+            "BS_YEAR_1_PRINCIPAL": 499.0,
+            "BS_YEAR_2_PRINCIPAL": 672.0,
+            "EXECUTIVE_AVERAGE_TENURE": 16.42,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 14.0
+          },
+          {
+            "date": "2025-12-31",
+            "BS_YEAR_1_PRINCIPAL": 695.0,
+            "BS_YEAR_2_PRINCIPAL": 564.0,
+            "EXECUTIVE_AVERAGE_TENURE": 17.13,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 15.0
+          }
+        ]
+      }
+    },
+    {
+      "securityData": {
+        "security": "WALMEX* MM Equity",
+        "eidData": [],
+        "sequenceNumber": 31,
+        "fieldExceptions": [
+          {
+            "fieldId": "BS_CONTRACTUAL_OBLIG_YEAR_2",
+            "errorInfo": {
+              "source": "53361:rsfhdsvc1",
+              "code": 1,
+              "category": "BAD_FLD",
+              "message": "Invalid field",
+              "subcategory": "NOT_APPLICABLE_TO_HIST_DATA"
+            }
+          }
+        ],
+        "fieldData": [
+          {
+            "date": "2017-12-29",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 1.92
+          },
+          {
+            "date": "2017-12-31",
+            "BS_YEAR_1_PRINCIPAL": 381.204,
+            "BS_YEAR_2_PRINCIPAL": 354.719
+          },
+          {
+            "date": "2018-12-31",
+            "BS_YEAR_1_PRINCIPAL": 308.352,
+            "BS_YEAR_2_PRINCIPAL": 319.446,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 2.92
+          },
+          {
+            "date": "2019-12-31",
+            "BS_YEAR_1_PRINCIPAL": 87115.823,
+            "BS_YEAR_2_PRINCIPAL": 0.0,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 3.92
+          },
+          {
+            "date": "2020-12-31",
+            "BS_YEAR_1_PRINCIPAL": 92356.297,
+            "BS_YEAR_2_PRINCIPAL": 0.0,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 4.92
+          },
+          {
+            "date": "2021-12-31",
+            "BS_YEAR_1_PRINCIPAL": 0.0,
+            "BS_YEAR_2_PRINCIPAL": 0.0,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 5.92
+          },
+          {
+            "date": "2022-12-30",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 6.92
+          },
+          {
+            "date": "2022-12-31",
+            "BS_YEAR_1_PRINCIPAL": 0.0,
+            "BS_YEAR_2_PRINCIPAL": 0.0
+          },
+          {
+            "date": "2023-12-29",
+            "TOTAL_TENURE_OF_CEO_COMPANY": 7.92
+          },
+          {
+            "date": "2023-12-31",
+            "BS_YEAR_1_PRINCIPAL": 0.0,
+            "BS_YEAR_2_PRINCIPAL": 0.0
+          },
+          {
+            "date": "2024-12-31",
+            "BS_YEAR_1_PRINCIPAL": 0.0,
+            "BS_YEAR_2_PRINCIPAL": 0.0,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 6.5
+          },
+          {
+            "date": "2025-12-31",
+            "BS_YEAR_1_PRINCIPAL": 0.0,
+            "BS_YEAR_2_PRINCIPAL": 0.0,
+            "TOTAL_TENURE_OF_CEO_COMPANY": 9.0
+          }
+        ]
+      }
+    }
+  ]
+}

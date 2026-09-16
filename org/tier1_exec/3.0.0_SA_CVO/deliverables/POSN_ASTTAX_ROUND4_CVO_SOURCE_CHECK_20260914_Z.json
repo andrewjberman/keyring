@@ -1,0 +1,490 @@
+{
+  "at": "2026-09-14T17:22:16Z",
+  "head": "8ba8fffd1657be9abed8573fc6ac0ba558885094",
+  "portal_pin": "e85f6eb84f3a1771a37011a7e77e372570bad02a",
+  "portal_checkout": "e85f6eb84f3a1771a37011a7e77e372570bad02a",
+  "probes": [
+    {
+      "source": "src/pages/AdvisorIntelligence/_shared/components/AdvisorAnalytics.tsx@e85f6eb84f3a1771a37011a7e77e372570bad02a",
+      "line_count": 780,
+      "lines": [
+        "650: ",
+        "651: function AuaMixChart({ data, fmtY }: {",
+        "652:   data: { label: string; total_aua: number; equity: number; fixed_income: number; alternatives: number; cash: number }[]",
+        "653:   fmtY: (v: number) => string",
+        "654: }) {",
+        "655:   if (data.length === 0) {",
+        "656:     return <div className=\"h-full flex items-center justify-center\"><p className=\"text-white/40 text-sm\">Mix data unavailable for this window.</p></div>",
+        "657:   }",
+        "658: ",
+        "659:   const segments: { key: keyof typeof MIX_PIE; label: string }[] = [",
+        "660:     { key: 'cash',         label: 'Cash' },",
+        "661:     { key: 'fixed_income', label: 'Fixed Income' },",
+        "662:     { key: 'equity',       label: 'Equity' },",
+        "663:     { key: 'alternatives', label: 'Alternatives' },",
+        "664:   ]",
+        "665: ",
+        "666:   return (",
+        "667:     <ResponsiveContainer width=\"100%\" height=\"100%\">",
+        "668:       <BarChart data={data} margin={{ top: 20, right: 30, left: 10, bottom: 30 }}>",
+        "669:         <CartesianGrid strokeDasharray=\"3 3\" stroke=\"rgba(255,255,255,0.04)\" vertical={false} />",
+        "670:         <XAxis",
+        "671:           dataKey=\"label\"",
+        "672:           stroke=\"rgba(255,255,255,0.2)\"",
+        "673:           tick={{ fill: 'rgba(255,255,255,0.45)', fontSize: 11 }}",
+        "674:           axisLine={false}",
+        "675:           tickLine={false}",
+        "676:         />",
+        "677:         <YAxis",
+        "678:           stroke=\"rgba(255,255,255,0.2)\"",
+        "679:           tick={{ fill: 'rgba(255,255,255,0.45)', fontSize: 11 }}",
+        "680:           axisLine={false}",
+        "681:           tickLine={false}",
+        "682:           tickFormatter={fmtY}",
+        "683:           width={68}",
+        "684:         />",
+        "685:         <RechartsTooltip",
+        "686:           cursor={{ fill: 'rgba(255,255,255,0.04)' }}",
+        "687:           content={({ active, payload, label }) => {",
+        "688:             if (!active || !payload?.length) return null",
+        "689:             const rows = payload.filter(p => Number(p.value) > 0)",
+        "690:             const total = rows.reduce((s, p) => s + Number(p.value || 0), 0)",
+        "691:             return (",
+        "692:               <ChartTooltip title={label}>",
+        "693:                 {rows.map((p, i) => (",
+        "694:                   <ChartTooltipRow",
+        "695:                     key={i}",
+        "696:                     bulletColor={p.color}",
+        "697:                     label={p.name}",
+        "698:                     value={formatCurrency(Number(p.value))}",
+        "699:                   />",
+        "700:                 ))}",
+        "701:                 {rows.length > 1 && (",
+        "702:                   <>",
+        "703:                     <ChartTooltipDivider />",
+        "704:                     <ChartTooltipRow label=\"Total\" value={formatCurrency(total)} emphasis />",
+        "705:                   </>",
+        "706:                 )}",
+        "707:               </ChartTooltip>",
+        "708:             )",
+        "709:           }}",
+        "710:         />",
+        "711:         {segments.map(s => (",
+        "712:           <Bar",
+        "713:             key={s.key}",
+        "714:             dataKey={s.key}",
+        "715:             stackId=\"a\"",
+        "716:             fill={MIX_PIE[s.key]}",
+        "717:             name={s.label}",
+        "718:             fillOpacity={0.85}",
+        "719:           />",
+        "720:         ))}",
+        "721:       </BarChart>",
+        "722:     </ResponsiveContainer>",
+        "723:   )",
+        "724: }",
+        "725: "
+      ]
+    },
+    {
+      "source": "src/pages/AdvisorIntelligence/_partners/inflection/InflectionInsightsPanel.tsx@e85f6eb84f3a1771a37011a7e77e372570bad02a",
+      "line_count": 1719,
+      "lines": [
+        "1008:           />",
+        "1009:         </ResponsiveContainer>",
+        "1010:       </div>",
+        "1011:       <div className=\"flex flex-col gap-1.5 mt-3 px-1\">",
+        "1012:         {/* Top line: drill hint + separator + legend (fully spelled out) */}",
+        "1013:         <div className=\"flex items-center gap-3 text-[10px] flex-wrap\">",
+        "1014:           <span className=\"text-white/30 italic\">",
+        "1015:             Click any tile to drill into its top holders",
+        "1016:           </span>",
+        "1017:           <span className=\"text-white/20\">|</span>",
+        "1018:           {filter === 'basket' ? (",
+        "1019:             <div className=\"flex items-center gap-3 text-white/45 flex-wrap\">",
+        "1020:               <span>Asset Class:</span>",
+        "1021:               <span className=\"inline-flex items-center gap-1.5\"><span className=\"w-2.5 h-2.5 rounded-sm\" style={{ background: MIX_PIE.equity }} />Equity</span>",
+        "1022:               <span className=\"inline-flex items-center gap-1.5\"><span className=\"w-2.5 h-2.5 rounded-sm\" style={{ background: MIX_PIE.fixed_income }} />Fixed Income</span>",
+        "1023:               <span className=\"inline-flex items-center gap-1.5\"><span className=\"w-2.5 h-2.5 rounded-sm\" style={{ background: MIX_PIE.alternatives }} />Alternatives</span>",
+        "1024:               <span className=\"inline-flex items-center gap-1.5\"><span className=\"w-2.5 h-2.5 rounded-sm\" style={{ background: MIX_PIE.cash }} />Cash</span>",
+        "1025:             </div>",
+        "1026:           ) : (",
+        "1027:             <div className=\"flex items-center gap-3 text-white/45 flex-wrap\">",
+        "1028:               <span>Average Household Concentration:</span>",
+        "1029:               <span className=\"inline-flex items-center gap-1.5\"><span className=\"w-2.5 h-2.5 rounded-sm\" style={{ background: '#22c55e' }} />Less than 4%</span>",
+        "1030:               <span className=\"inline-flex items-center gap-1.5\"><span className=\"w-2.5 h-2.5 rounded-sm\" style={{ background: '#a3e635' }} />4% to 6%</span>",
+        "1031:               <span className=\"inline-flex items-center gap-1.5\"><span className=\"w-2.5 h-2.5 rounded-sm\" style={{ background: '#eab308' }} />6% to 8%</span>",
+        "1032:               <span className=\"inline-flex items-center gap-1.5\"><span className=\"w-2.5 h-2.5 rounded-sm\" style={{ background: '#f97316' }} />8% to 10%</span>",
+        "1033:               <span className=\"inline-flex items-center gap-1.5\"><span className=\"w-2.5 h-2.5 rounded-sm\" style={{ background: '#ef4444' }} />10% or greater</span>"
+      ]
+    },
+    {
+      "source": "src/lib/chartColors.ts@e85f6eb84f3a1771a37011a7e77e372570bad02a",
+      "line_count": 536,
+      "lines": [
+        "365: /** Percentile band colors */",
+        "366: export const PERCENTILE = {",
+        "367:   p10: PALETTE.green500,",
+        "368:   p25: PALETTE.lime500,",
+        "369:   p50: PALETTE.amber500,",
+        "370:   p75: PALETTE.orange500,",
+        "371:   p90: PALETTE.red500,",
+        "372: } as const",
+        "373: ",
+        "374: /** CMA expectation category colors */",
+        "375: export const CMA_CATEGORY: Record<string, string> = {",
+        "376:   'US Equity':       PALETTE.blue500,",
+        "377:   'Intl Equity':     PALETTE.green500,",
+        "378:   'Fixed Income':    PALETTE.amber500,",
+        "379:   'Real Assets':     PALETTE.orange500,",
+        "380:   'Alternatives':    PALETTE.violet500,",
+        "381: }",
+        "382: ",
+        "383: /** Quartile colors (PeersTab ranking) */",
+        "384: export const QUARTILE_PALETTE = [",
+        "385:   PALETTE.green500,  // Q1 (best)"
+      ]
+    },
+    {
+      "source": "src/pages/CapitalMarketAssumptions/types.ts@e85f6eb84f3a1771a37011a7e77e372570bad02a",
+      "line_count": 46,
+      "lines": [
+        "1: /**",
+        "2:  * Capital Market Assumptions Types",
+        "3:  */",
+        "4: ",
+        "5: // Asset class assumption data",
+        "6: export interface AssetClassAssumption {",
+        "7:   assetClass: string",
+        "8:   expectedReturn: number | null  // 10-year expected return (%)",
+        "9:   expectedVolatility: number | null  // 10-year expected volatility (%)",
+        "10:   category?: 'Cash' | 'Fixed Income' | 'Equities' | 'Alternatives' | 'Commodities'",
+        "11: }",
+        "12: ",
+        "13: // Full CMA dataset",
+        "14: export interface CMADataset {",
+        "15:   assumptions: AssetClassAssumption[]",
+        "16:   asOfDate: string",
+        "17: }",
+        "18: ",
+        "19: // Allocation view (Strategic or Tactical)",
+        "20: export interface AllocationView {",
+        "21:   assetClass: string",
+        "22:   position: number  // -2 (Strong Underweight) to +2 (Strong Overweight), 0 = Neutral",
+        "23: }",
+        "24: "
+      ]
+    },
+    {
+      "source": "src/pages/CapitalMarketAssumptions/components/AssumptionsTable.tsx@e85f6eb84f3a1771a37011a7e77e372570bad02a",
+      "line_count": 154,
+      "lines": [
+        "125:                   </td>",
+        "126:                 </tr>",
+        "127: ",
+        "128:                 {/* Asset Class Data Rows - Content Panel (navy, dark) - Indented */}",
+        "129:                 {!isCollapsed && items.map((assumption) => {",
+        "130:                   return (",
+        "131:                     <tr",
+        "132:                       key={`asset-${assumption.assetClass}`}",
+        "133:                       className=\"border-t border-white/5\"",
+        "134:                     >",
+        "135:                       <td className=\"pl-16 pr-4 py-2.5 text-sm font-medium text-white bg-[hsl(var(--semantic-background-contentPanel))]\">",
+        "136:                         {assumption.assetClass}",
+        "137:                       </td>",
+        "138:                       <td className=\"px-4 py-2.5 text-sm font-medium text-white text-center font-mono bg-[hsl(var(--semantic-background-contentPanel))]\">",
+        "139:                         {formatPercentage(assumption.expectedReturn)}",
+        "140:                       </td>",
+        "141:                       <td className=\"px-4 py-2.5 text-sm font-medium text-white text-center font-mono bg-[hsl(var(--semantic-background-contentPanel))]\">",
+        "142:                         {formatPercentage(assumption.expectedVolatility)}",
+        "143:                       </td>",
+        "144:                     </tr>",
+        "145:                   )",
+        "146:                 })}",
+        "147:               </Fragment>",
+        "148:             )",
+        "149:           })}",
+        "150:         </tbody>",
+        "151:       </table>"
+      ]
+    },
+    {
+      "source": "src/pages/CapitalMarketAssumptions/tabs/ExpectationsTab.tsx@e85f6eb84f3a1771a37011a7e77e372570bad02a",
+      "line_count": 209,
+      "lines": [
+        "90:   return (",
+        "91:     <polygon points={points} fill={PALETTE.black} stroke={PALETTE.white} strokeWidth={1} />",
+        "92:   )",
+        "93: }",
+        "94: ",
+        "95: // Category-based color mapping",
+        "96: // Uses the `category` field from AssetClassAssumption instead of fragile name matching",
+        "97: const CATEGORY_COLORS: Record<string, string> = {",
+        "98:   'Cash': ASSET_CLASS.fixedIncome,",
+        "99:   'Fixed Income': ASSET_CLASS.fixedIncome,",
+        "100:   'Equities': ASSET_CLASS.equity,",
+        "101:   'Alternatives': ASSET_CLASS.alternatives,",
+        "102:   'Commodities': ASSET_CLASS.alternatives,",
+        "103: }",
+        "104: ",
+        "105: const DEFAULT_COLOR = ASSET_CLASS.alternatives",
+        "106: ",
+        "107: export function ExpectationsTab({ assumptions }: ExpectationsTabProps) {",
+        "108:   // Filter out category headers (null values) and prepare data for chart"
+      ]
+    },
+    {
+      "source": "data/etfs/scripts/gold/etf_positioning_publisher.py@8ba8fffd1657be9abed8573fc6ac0ba558885094",
+      "line_count": 707,
+      "lines": [
+        "450:         holdings.sort(key=lambda x: (x[\"weight\"] is None, -(x[\"weight\"] or 0.0)))",
+        "451: ",
+        "452:         as_of = _date_out(b[\"data_as_of\"])",
+        "453:         if as_of is not None:",
+        "454:             as_of_vals.add(as_of)",
+        "455:         portfolios[code] = {",
+        "456:             \"code\": code,",
+        "457:             \"name\": _n(b[\"name\"]),",
+        "458:             \"data_as_of\": as_of,",
+        "459:             # ETFS_POSITIONING.TO-7 AC7 -- \"as_of_basis propagates too\". It travels BESIDE the",
+        "460:             # date, never instead of it: the date says WHEN, the basis says WHERE IT CAME FROM,",
+        "461:             # and a null date is only interpretable with the basis that explains which of the",
+        "462:             # four reasons produced it.",
+        "463:             \"as_of_basis\": _n(b[\"as_of_basis\"]),",
+        "464:             \"prior_date\": _date_out(b[\"prior_date\"]),",
+        "465:             \"holdings_status\": _n(b[\"holdings_status\"]),",
+        "466:             \"num_holdings\": int(b[\"num_holdings\"]),",
+        "467:             \"aum\": _n(b[\"aum\"]),",
+        "468:             \"allocation\": {",
+        "469:                 \"cash\": _n(b[\"alloc_cash\"]),",
+        "470:                 \"fixed_income\": _n(b[\"alloc_fixed_income\"]),",
+        "471:                 \"equity\": _n(b[\"alloc_equity\"]),",
+        "472:                 \"hedge\": _n(b[\"alloc_hedge\"]),",
+        "473:             },",
+        "474:             \"management\": {\"active\": _n(b[\"mgmt_active\"]), \"passive\": _n(b[\"mgmt_passive\"])},",
+        "475:             \"characteristics\": {",
+        "476:                 \"yield\": _n(b[\"char_yield\"]),",
+        "477:                 \"cost\": _n(b[\"char_cost\"]),",
+        "478:                 \"duration\": _n(b[\"char_duration\"]),",
+        "479:                 \"beta\": _n(b[\"char_beta\"]),",
+        "480:             },"
+      ]
+    }
+  ],
+  "cma_category_consumers": {
+    "argv": [
+      "git",
+      "-C",
+      "portal",
+      "grep",
+      "-n",
+      "CMA_CATEGORY",
+      "e85f6eb84f3a1771a37011a7e77e372570bad02a",
+      "--",
+      "src"
+    ],
+    "rc": 0,
+    "output": "e85f6eb84f3a1771a37011a7e77e372570bad02a:src/lib/chartColors.ts:375:export const CMA_CATEGORY: Record<string, string> = {\n"
+  },
+  "reader_positive_control": {
+    "argv": [
+      "git",
+      "-C",
+      "portal",
+      "grep",
+      "-n",
+      "assetClass",
+      "e85f6eb84f",
+      "--",
+      "src/pages/Positioning/tabs/HoldingsTab.tsx"
+    ],
+    "rc": 0,
+    "output": "e85f6eb84f:src/pages/Positioning/tabs/HoldingsTab.tsx:173:  assetClass: string\ne85f6eb84f:src/pages/Positioning/tabs/HoldingsTab.tsx:225:function getAssetClassBgColor(assetClass: string, subAssetClass?: string): string {\ne85f6eb84f:src/pages/Positioning/tabs/HoldingsTab.tsx:231:  return ASSET_CLASS_COLORS[assetClass] || PALETTE.gray500\ne85f6eb84f:src/pages/Positioning/tabs/HoldingsTab.tsx:264:function subAssetBg(assetClass: string, subAssetClass?: string): string {\ne85f6eb84f:src/pages/Positioning/tabs/HoldingsTab.tsx:272:  return getAssetClassBgColor(assetClass, subAssetClass)\ne85f6eb84f:src/pages/Positioning/tabs/HoldingsTab.tsx:338:  payload?: Array<{ payload: { name: string; size: number; performance: number; fullName: string; assetClass: string } }>\ne85f6eb84f:src/pages/Positioning/tabs/HoldingsTab.tsx:356:      { label: 'Asset Class', value: data.assetClass },\ne85f6eb84f:src/pages/Positioning/tabs/HoldingsTab.tsx:376:  assetClass?: string\ne85f6eb84f:src/pages/Positioning/tabs/HoldingsTab.tsx:382:function HoldingsCustomTreemapContent({ x = 0, y = 0, width = 0, height = 0, name, size, assetClass, performance = 0, selectedPeriod }: CustomTreemapContentProps) {\ne85f6eb84f:src/pages/Positioning/tabs/HoldingsTab.tsx:388:  const cellColor = ASSET_CLASS_COLORS[assetClass || ''] || PALETTE.blue500\ne85f6eb84f:src/pages/Positioning/tabs/HoldingsTab.tsx:867:        assetClass: h.asset_class,\ne85f6eb84f:src/pages/Positioning/tabs/HoldingsTab.tsx:887:      assetClass: h.asset_class,\ne85f6eb84f:src/pages/Positioning/tabs/HoldingsTab.tsx:1023:    assetClass: holding.assetClass,\ne85f6eb84f:src/pages/Positioning/tabs/HoldingsTab.tsx:1392:                  const assetClassOrder = ['Fixed Income', 'Equity']\ne85f6eb84f:src/pages/Positioning/tabs/HoldingsTab.tsx:1393:                  const orderedGroups = assetClassOrder\ne85f6eb84f:src/pages/Positioning/tabs/HoldingsTab.tsx:1396:                      assetClass: ac,\ne85f6eb84f:src/pages/Positioning/tabs/HoldingsTab.tsx:1607:                        key={`subtotal-${group.assetClass}`}\ne85f6eb84f:src/pages/Positioning/tabs/HoldingsTab.tsx:1611:                          <span className=\"text-sm font-bold text-white/90 uppercase\">{group.assetClass} Total</span>\n"
+  },
+  "reader_negative_control": {
+    "argv": [
+      "git",
+      "-C",
+      "portal",
+      "grep",
+      "-n",
+      "CVO_POSN_ABSENT_20260914_99173",
+      "e85f6eb84f3a1771a37011a7e77e372570bad02a",
+      "--",
+      "src"
+    ],
+    "rc": 1,
+    "output": ""
+  },
+  "declared_proofs": [
+    {
+      "order": "org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-U1-1.derive-the-readers-and-grade-the-five-class-bar.md@8ba8fffd1657be9abed8573fc6ac0ba558885094",
+      "block_contents": [
+        "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~15/POSN_ASTTAX.TO-U1-1.proof_of_spec.json\n"
+      ]
+    },
+    {
+      "order": "org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-U2-1.one-colour-per-class-the-same-everywhere.md@8ba8fffd1657be9abed8573fc6ac0ba558885094",
+      "block_contents": [
+        "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~18/POSN_ASTTAX.TO-U2-1.one-colour-per-class-the-same-everywhere.proof_of_spec.json\n"
+      ]
+    },
+    {
+      "order": "org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-U3-1.extend-preserve-dont-clobber-to-the-seed-script.md@8ba8fffd1657be9abed8573fc6ac0ba558885094",
+      "block_contents": [
+        "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~16/POSN_ASTTAX.TO-U3-1.extend-preserve-dont-clobber-to-the-seed-script.proof_of_spec.json\n"
+      ]
+    },
+    {
+      "order": "org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-U4-1.settle-the-retag-member-set-at-eleven.md@8ba8fffd1657be9abed8573fc6ac0ba558885094",
+      "block_contents": [
+        "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~17/POSN_ASTTAX.TO-U4-1.proof_of_spec.json\n"
+      ]
+    }
+  ],
+  "terminal_census": {
+    "gate": ".tools/surprise-row-gate.py@8ba8fffd1657be9abed8573fc6ac0ba558885094",
+    "result": [
+      [
+        "POSN_ASTTAX.TO-S2-1.retag-the-hedge-bucket.md [staged]",
+        "POSN_ASTTAX.TO-S3-1.is-hedge-reconciliation.md [staged]",
+        "POSN_ASTTAX.TO-T6-1.the-retag-with-a-criterion-that-fails-in-the-broken-world.md [staged]",
+        "POSN_ASTTAX.TO-T7-1.is-hedge-reconciliation.md [staged]"
+      ],
+      19,
+      ""
+    ]
+  },
+  "patch_check": {
+    "argv": [
+      "git",
+      "apply",
+      "--check",
+      "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D4\\POSN\\POSN_ASTTAX\\deliverables\\0.9.0_WK_POSN_ASTTAX~16\\u3_proposed_patch.diff"
+    ],
+    "rc": 0,
+    "output": ""
+  },
+  "seeder": {
+    "path": "data/black_diamond/scripts/classification/seed_canonical_securities.py@8ba8fffd1657be9abed8573fc6ac0ba558885094",
+    "blob": "fbbc7165d33198789d3a7788a557ed3f5ce75614",
+    "before_sha256": "a67734e0cb7dd33cad28fe3ced3e0a99728fcc8603e6601181b6779f3c55d2b4",
+    "patched_sha256": "dde708491f6fa73db0f03136f4dec717ee9aeba4943ab4936b140aa7116d87b0",
+    "scope": "Only scratch bytes; executable AST excludes imports and __main__; fake tables only."
+  },
+  "seed_controls": {
+    "before": {
+      "return": null,
+      "desired": {
+        "VXX": "Structured",
+        "UVXY": "Structured",
+        "QBER": "Structured",
+        "PDBC": "Commodities"
+      },
+      "after": {
+        "VXX": "equity",
+        "UVXY": "equity",
+        "QBER": "fixed_income",
+        "PDBC": "equity"
+      },
+      "minted": 53,
+      "bd_after": {
+        "VXX": "equity",
+        "UVXY": "equity",
+        "QBER": "fixed_income",
+        "PDBC": "equity"
+      },
+      "writes": {
+        "bd-securities": 57,
+        "etf-classifications": 57
+      },
+      "nonowned_preserved": true,
+      "output": "Seeding 57 canonical securities\n  bd-securities: UPLOAD\n  etf-classifications: SYNC\n\n  [WRITE] CASH_USD   fixed_income    / Cash\n  [WRITE] CLIP       fixed_income    / Ultra Short Duration\n  [WRITE] BIL        fixed_income    / Ultra Short Duration\n  [WRITE] TBIL       fixed_income    / Ultra Short Duration\n  [WRITE] OBIL       fixed_income    / Ultra Short Duration\n  [WRITE] XBIL       fixed_income    / Ultra Short Duration\n  [WRITE] JPST       fixed_income    / Ultra Short Duration\n  [WRITE] MINT       fixed_income    / Ultra Short Duration\n  [WRITE] VUSB       fixed_income    / Ultra Short Duration\n  [WRITE] ICSH       fixed_income    / Ultra Short Duration\n  [WRITE] VGSH       fixed_income    / Short Duration\n  [WRITE] DFSD       fixed_income    / Short Duration\n  [WRITE] BSCR       fixed_income    / Short Duration\n  [WRITE] VNLA       fixed_income    / Short Duration\n  [WRITE] UTWO       fixed_income    / Short Duration\n  [WRITE] VCSH       fixed_income    / Short Duration\n  [WRITE] BSCQ       fixed_income    / Short Duration\n  [WRITE] DFCF       fixed_income    / Intermediate\n  [WRITE] BIV        fixed_income    / Intermediate\n  [WRITE] AGG        fixed_income    / Intermediate\n  [WRITE] UTEN       fixed_income    / Intermediate\n  [WRITE] VCIT       fixed_income    / Intermediate\n  [WRITE] VGIT       fixed_income    / Intermediate\n  [WRITE] BNDX       fixed_income    / Intermediate\n  [WRITE] IBTF       fixed_income    / Intermediate\n  [WRITE] VGLT       fixed_income    / Long Duration\n  [WRITE] JAAA       fixed_income    / Structured Credit\n  [WRITE] LONZ       fixed_income    / Structured Credit\n  [WRITE] PCHI       fixed_income    / High Yield\n  [WRITE] SPHY       fixed_income    / High Yield\n  [WRITE] SJNK       fixed_income    / High Yield\n  [WRITE] BSJQ       fixed_income    / High Yield\n  [WRITE] QBER       fixed_income    / Volatility\n  [WRITE] QUAL       equity          / US Large Cap\n  [WRITE] SPYM       equity          / US Large Cap\n  [WRITE] DIVZ       equity          / US Large Cap\n  [WRITE] VTV        equity          / US Large Cap\n  [WRITE] VUG        equity          / US Large Cap\n  [WRITE] COWZ       equity          / US Large Cap\n  [WRITE] PFDE       equity          / US Large Cap\n  [WRITE] PFOE       equity          / US Large Cap\n  [WRITE] QQQ        equity          / US Large Cap\n  [WRITE] SPMO       equity          / US Large Cap\n  [WRITE] JEPI       equity          / US Large Cap\n  [WRITE] XLU        equity          / US Large Cap\n  [WRITE] IJH        equity          / US Mid Cap\n  [WRITE] SPSM       equity          / US Small Cap\n  [WRITE] IWM        equity          / US Small Cap\n  [WRITE] IEFA       equity          / Developed\n  [WRITE] IDVZ       equity          / Developed\n  [WRITE] IQLT       equity          / Developed\n  [WRITE] VEA        equity          / Developed\n  [WRITE] VSS        equity          / International\n  [WRITE] IEMG       equity          / EM\n  [WRITE] VXX        equity          / Volatility\n  [WRITE] UVXY       equity          / Volatility\n  [WRITE] PDBC       equity          / Commodities\n\nSeeded 57 items to bd-securities.\nSeeded 57 items to etf-classifications.\n",
+      "preserved_count": 0
+    },
+    "patched": {
+      "return": 1,
+      "desired": {
+        "VXX": "Structured",
+        "UVXY": "Structured",
+        "QBER": "Structured",
+        "PDBC": "Commodities"
+      },
+      "after": {
+        "VXX": "Structured",
+        "UVXY": "Structured",
+        "QBER": "Structured",
+        "PDBC": "Commodities"
+      },
+      "minted": 53,
+      "bd_after": {
+        "VXX": "equity",
+        "UVXY": "equity",
+        "QBER": "fixed_income",
+        "PDBC": "equity"
+      },
+      "writes": {
+        "bd-securities": 57,
+        "etf-classifications": 53
+      },
+      "nonowned_preserved": true,
+      "output": "Seeding 57 canonical securities\n  bd-securities: UPLOAD\n  etf-classifications: SYNC\n\n  [WRITE] CASH_USD   fixed_income    / Cash\n  [WRITE] CLIP       fixed_income    / Ultra Short Duration\n  [WRITE] BIL        fixed_income    / Ultra Short Duration\n  [WRITE] TBIL       fixed_income    / Ultra Short Duration\n  [WRITE] OBIL       fixed_income    / Ultra Short Duration\n  [WRITE] XBIL       fixed_income    / Ultra Short Duration\n  [WRITE] JPST       fixed_income    / Ultra Short Duration\n  [WRITE] MINT       fixed_income    / Ultra Short Duration\n  [WRITE] VUSB       fixed_income    / Ultra Short Duration\n  [WRITE] ICSH       fixed_income    / Ultra Short Duration\n  [WRITE] VGSH       fixed_income    / Short Duration\n  [WRITE] DFSD       fixed_income    / Short Duration\n  [WRITE] BSCR       fixed_income    / Short Duration\n  [WRITE] VNLA       fixed_income    / Short Duration\n  [WRITE] UTWO       fixed_income    / Short Duration\n  [WRITE] VCSH       fixed_income    / Short Duration\n  [WRITE] BSCQ       fixed_income    / Short Duration\n  [WRITE] DFCF       fixed_income    / Intermediate\n  [WRITE] BIV        fixed_income    / Intermediate\n  [WRITE] AGG        fixed_income    / Intermediate\n  [WRITE] UTEN       fixed_income    / Intermediate\n  [WRITE] VCIT       fixed_income    / Intermediate\n  [WRITE] VGIT       fixed_income    / Intermediate\n  [WRITE] BNDX       fixed_income    / Intermediate\n  [WRITE] IBTF       fixed_income    / Intermediate\n  [WRITE] VGLT       fixed_income    / Long Duration\n  [WRITE] JAAA       fixed_income    / Structured Credit\n  [WRITE] LONZ       fixed_income    / Structured Credit\n  [WRITE] PCHI       fixed_income    / High Yield\n  [WRITE] SPHY       fixed_income    / High Yield\n  [WRITE] SJNK       fixed_income    / High Yield\n  [WRITE] BSJQ       fixed_income    / High Yield\n  [PRESERVED] QBER       asset_class: table serves 'Structured', seeder asserts 'fixed_income' -- table wins, pass --force to override\n  [WRITE] QUAL       equity          / US Large Cap\n  [WRITE] SPYM       equity          / US Large Cap\n  [WRITE] DIVZ       equity          / US Large Cap\n  [WRITE] VTV        equity          / US Large Cap\n  [WRITE] VUG        equity          / US Large Cap\n  [WRITE] COWZ       equity          / US Large Cap\n  [WRITE] PFDE       equity          / US Large Cap\n  [WRITE] PFOE       equity          / US Large Cap\n  [WRITE] QQQ        equity          / US Large Cap\n  [WRITE] SPMO       equity          / US Large Cap\n  [WRITE] JEPI       equity          / US Large Cap\n  [WRITE] XLU        equity          / US Large Cap\n  [WRITE] IJH        equity          / US Mid Cap\n  [WRITE] SPSM       equity          / US Small Cap\n  [WRITE] IWM        equity          / US Small Cap\n  [WRITE] IEFA       equity          / Developed\n  [WRITE] IDVZ       equity          / Developed\n  [WRITE] IQLT       equity          / Developed\n  [WRITE] VEA        equity          / Developed\n  [WRITE] VSS        equity          / International\n  [WRITE] IEMG       equity          / EM\n  [PRESERVED] VXX        asset_class: table serves 'Structured', seeder asserts 'equity' -- table wins, pass --force to override\n  [PRESERVED] UVXY       asset_class: table serves 'Structured', seeder asserts 'equity' -- table wins, pass --force to override\n  [PRESERVED] PDBC       asset_class: table serves 'Commodities', seeder asserts 'equity' -- table wins, pass --force to override\n\nSeeded 57 items to bd-securities.\nSeeded 53 items to etf-classifications.\n\nREFUSED 4 etf-classifications row(s): the table serves a value this seeder disagrees with.\nNothing was reverted. Re-run with --force to overwrite them.\n",
+      "preserved_count": 4
+    },
+    "force": {
+      "return": 0,
+      "desired": {
+        "VXX": "Structured",
+        "UVXY": "Structured",
+        "QBER": "Structured",
+        "PDBC": "Commodities"
+      },
+      "after": {
+        "VXX": "equity",
+        "UVXY": "equity",
+        "QBER": "fixed_income",
+        "PDBC": "equity"
+      },
+      "minted": 53,
+      "bd_after": {
+        "VXX": "equity",
+        "UVXY": "equity",
+        "QBER": "fixed_income",
+        "PDBC": "equity"
+      },
+      "writes": {
+        "bd-securities": 57,
+        "etf-classifications": 57
+      },
+      "nonowned_preserved": true,
+      "output": "Seeding 57 canonical securities\n  bd-securities: UPLOAD\n  etf-classifications: SYNC\n\n  [WRITE] CASH_USD   fixed_income    / Cash\n  [WRITE] CLIP       fixed_income    / Ultra Short Duration\n  [WRITE] BIL        fixed_income    / Ultra Short Duration\n  [WRITE] TBIL       fixed_income    / Ultra Short Duration\n  [WRITE] OBIL       fixed_income    / Ultra Short Duration\n  [WRITE] XBIL       fixed_income    / Ultra Short Duration\n  [WRITE] JPST       fixed_income    / Ultra Short Duration\n  [WRITE] MINT       fixed_income    / Ultra Short Duration\n  [WRITE] VUSB       fixed_income    / Ultra Short Duration\n  [WRITE] ICSH       fixed_income    / Ultra Short Duration\n  [WRITE] VGSH       fixed_income    / Short Duration\n  [WRITE] DFSD       fixed_income    / Short Duration\n  [WRITE] BSCR       fixed_income    / Short Duration\n  [WRITE] VNLA       fixed_income    / Short Duration\n  [WRITE] UTWO       fixed_income    / Short Duration\n  [WRITE] VCSH       fixed_income    / Short Duration\n  [WRITE] BSCQ       fixed_income    / Short Duration\n  [WRITE] DFCF       fixed_income    / Intermediate\n  [WRITE] BIV        fixed_income    / Intermediate\n  [WRITE] AGG        fixed_income    / Intermediate\n  [WRITE] UTEN       fixed_income    / Intermediate\n  [WRITE] VCIT       fixed_income    / Intermediate\n  [WRITE] VGIT       fixed_income    / Intermediate\n  [WRITE] BNDX       fixed_income    / Intermediate\n  [WRITE] IBTF       fixed_income    / Intermediate\n  [WRITE] VGLT       fixed_income    / Long Duration\n  [WRITE] JAAA       fixed_income    / Structured Credit\n  [WRITE] LONZ       fixed_income    / Structured Credit\n  [WRITE] PCHI       fixed_income    / High Yield\n  [WRITE] SPHY       fixed_income    / High Yield\n  [WRITE] SJNK       fixed_income    / High Yield\n  [WRITE] BSJQ       fixed_income    / High Yield\n  [WRITE] QBER       fixed_income    / Volatility\n  [WRITE] QUAL       equity          / US Large Cap\n  [WRITE] SPYM       equity          / US Large Cap\n  [WRITE] DIVZ       equity          / US Large Cap\n  [WRITE] VTV        equity          / US Large Cap\n  [WRITE] VUG        equity          / US Large Cap\n  [WRITE] COWZ       equity          / US Large Cap\n  [WRITE] PFDE       equity          / US Large Cap\n  [WRITE] PFOE       equity          / US Large Cap\n  [WRITE] QQQ        equity          / US Large Cap\n  [WRITE] SPMO       equity          / US Large Cap\n  [WRITE] JEPI       equity          / US Large Cap\n  [WRITE] XLU        equity          / US Large Cap\n  [WRITE] IJH        equity          / US Mid Cap\n  [WRITE] SPSM       equity          / US Small Cap\n  [WRITE] IWM        equity          / US Small Cap\n  [WRITE] IEFA       equity          / Developed\n  [WRITE] IDVZ       equity          / Developed\n  [WRITE] IQLT       equity          / Developed\n  [WRITE] VEA        equity          / Developed\n  [WRITE] VSS        equity          / International\n  [WRITE] IEMG       equity          / EM\n  [WRITE] VXX        equity          / Volatility\n  [WRITE] UVXY       equity          / Volatility\n  [WRITE] PDBC       equity          / Commodities\n\nSeeded 57 items to bd-securities.\nSeeded 57 items to etf-classifications.\n",
+      "preserved_count": 0
+    }
+  },
+  "replay_source": "import ast, copy, contextlib, hashlib, importlib.util, io, json, re, subprocess, types\nfrom datetime import datetime, timezone\nfrom decimal import Decimal\nfrom pathlib import Path\n\nROOT=Path.cwd()\nOUT=Path('org/tier1_exec/3.0.0_SA_CVO/deliverables/POSN_ASTTAX_ROUND4_CVO_SOURCE_CHECK_20260914_Z.json')\ndef run(*args, cwd=None):\n    p=subprocess.run(args,cwd=cwd,text=True,encoding='utf-8',errors='replace',capture_output=True)\n    return {'argv':list(args),'rc':p.returncode,'output':p.stdout+p.stderr}\ndef git(*args):\n    p=run('git',*args)\n    assert p['rc']==0,p\n    return p['output'].strip()\nhead=git('rev-parse','HEAD')\nportal='e85f6eb84f3a1771a37011a7e77e372570bad02a'\ne={'at':datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ'),'head':head,'portal_pin':portal,'portal_checkout':git('-C','portal','rev-parse','HEAD'),'probes':[]}\ndef excerpt(repo,pin,path,start,end):\n    argv=['git']+(['-C',repo] if repo else [])+['show',pin+':'+path]\n    p=run(*argv); assert p['rc']==0,p\n    lines=p['output'].splitlines()\n    e['probes'].append({'source':path+'@'+pin,'line_count':len(lines),'lines':[f'{i+1}: {lines[i]}' for i in range(start-1,min(end,len(lines)))]})\nexcerpt('portal',portal,'src/pages/AdvisorIntelligence/_shared/components/AdvisorAnalytics.tsx',650,725)\nexcerpt('portal',portal,'src/pages/AdvisorIntelligence/_partners/inflection/InflectionInsightsPanel.tsx',1008,1033)\nexcerpt('portal',portal,'src/lib/chartColors.ts',365,385)\nexcerpt('portal',portal,'src/pages/CapitalMarketAssumptions/types.ts',1,24)\nexcerpt('portal',portal,'src/pages/CapitalMarketAssumptions/components/AssumptionsTable.tsx',125,151)\nexcerpt('portal',portal,'src/pages/CapitalMarketAssumptions/tabs/ExpectationsTab.tsx',90,108)\nexcerpt('',head,'data/etfs/scripts/gold/etf_positioning_publisher.py',450,480)\ne['cma_category_consumers']=run('git','-C','portal','grep','-n','CMA_CATEGORY',portal,'--','src')\ne['reader_positive_control']=run('git','-C','portal','grep','-n','assetClass','e85f6eb84f','--','src/pages/Positioning/tabs/HoldingsTab.tsx')\ne['reader_negative_control']=run('git','-C','portal','grep','-n','CVO_POSN_ABSENT_20260914_99173',portal,'--','src')\norders=Path('org/missions/D4/POSN/POSN_ASTTAX/task-orders')\ne['declared_proofs']=[]\nfor p in sorted(orders.glob('*TO-U*.md')):\n    body=git('show',head+':'+p.as_posix())\n    blocks=re.findall(r'^<proof_of_spec>\\s*\\n(.*?)^</proof_of_spec>',body,re.M|re.S)\n    e['declared_proofs'].append({'order':p.as_posix()+'@'+head,'block_contents':blocks})\nspec=importlib.util.spec_from_file_location('posn_gate',ROOT/'.tools/surprise-row-gate.py')\ngate=importlib.util.module_from_spec(spec);spec.loader.exec_module(gate)\ne['terminal_census']={'gate':'.tools/surprise-row-gate.py@'+head,'result':gate._open_tos_for_project(str(ROOT),'POSN_ASTTAX')}\nsourcepath='data/black_diamond/scripts/classification/seed_canonical_securities.py'\nraw=subprocess.check_output(['git','show',head+':'+sourcepath])\nscratch=ROOT/'.scratch/posn-round4-verify'\nsubject=scratch/sourcepath;subject.parent.mkdir(parents=True,exist_ok=True);subject.write_bytes(raw)\npatch=ROOT/'org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~16/u3_proposed_patch.diff'\ne['patch_check']=run('git','apply','--check',str(patch),cwd=scratch)\nassert e['patch_check']['rc']==0,e['patch_check']\napplied=run('git','apply',str(patch),cwd=scratch);assert applied['rc']==0,applied\npatched=subject.read_bytes()\ne['seeder']={'path':sourcepath+'@'+head,'blob':git('rev-parse',head+':'+sourcepath),'before_sha256':hashlib.sha256(raw).hexdigest(),'patched_sha256':hashlib.sha256(patched).hexdigest(),'scope':'Only scratch bytes; executable AST excludes imports and __main__; fake tables only.'}\nclass Table:\n    def __init__(self,rows):self.rows=rows;self.writes=0\n    def get_item(self,Key):return {'Item':copy.deepcopy(self.rows.get(Key['ticker'],{}))}\n    def update_item(self,Key,UpdateExpression,ExpressionAttributeValues,ExpressionAttributeNames=None):\n        row=self.rows.setdefault(Key['ticker'],{'ticker':Key['ticker']});self.writes+=1\n        for term in UpdateExpression.removeprefix('SET ').split(','):\n            k,v=map(str.strip,term.split('='));k=(ExpressionAttributeNames or {}).get(k,k)\n            row[k]=ExpressionAttributeValues[v]\ndef arm(src,force=None):\n    desired={'VXX':'Structured','UVXY':'Structured','QBER':'Structured','PDBC':'Commodities'}\n    initial={k:{'ticker':k,'asset_class':v,'management_style':'passive'} for k,v in desired.items()}\n    tables={'bd-securities':Table(copy.deepcopy(initial)),'etf-classifications':Table(copy.deepcopy(initial))}\n    tree=ast.parse(src)\n    tree.body=[n for n in tree.body if isinstance(n,(ast.Assign,ast.AnnAssign,ast.FunctionDef))]\n    env={'boto3':types.SimpleNamespace(resource=lambda *a,**kw:types.SimpleNamespace(Table=lambda name:tables[name])),'datetime':datetime,'timezone':timezone,'Decimal':Decimal}\n    exec(compile(tree,'SCRATCH-ONLY-SEEDER','exec'),env)\n    output=io.StringIO()\n    with contextlib.redirect_stdout(output):\n        rc=env['seed'](upload=True,sync_yang=True,**({} if force is None else {'force':force}))\n    result={'return':rc,'desired':desired,'after':{k:tables['etf-classifications'].rows[k]['asset_class'] for k in desired},'minted':len(set(tables['etf-classifications'].rows)-set(initial)),'bd_after':{k:tables['bd-securities'].rows[k]['asset_class'] for k in desired},'writes':{k:t.writes for k,t in tables.items()},'nonowned_preserved':all(tables['etf-classifications'].rows[k]['management_style']=='passive' for k in desired),'output':output.getvalue()}\n    result['preserved_count']=sum(result['after'][k]==v for k,v in desired.items())\n    return result\ne['seed_controls']={'before':arm(raw),'patched':arm(patched,False),'force':arm(patched,True)}\nassert [e['seed_controls'][a]['preserved_count'] for a in ['before','patched','force']]==[0,4,0]\nassert all(e['seed_controls'][a]['minted']==53 for a in e['seed_controls'])\nassert e['seed_controls']['patched']['return']==1\nassert git('rev-parse',head+':'+sourcepath)==e['seeder']['blob']\nOUT.write_text(json.dumps(e,indent=2)+'\\n',encoding='utf-8')\nprint(json.dumps({'path':str(OUT),'head':head,'terminal':e['terminal_census'],'cma_category':e['cma_category_consumers'],'proof_declarations':e['declared_proofs'],'seed':{k:{a:v[a] for a in ['return','preserved_count','minted','bd_after']} for k,v in e['seed_controls'].items()}},indent=2))\n",
+  "disposition_resolution": {
+    "read": "worktree bytes; canonical resolver with investigation-first order matching _latest_dispositions; staged/index confirmation still required",
+    "original_count": 97,
+    "open": [],
+    "unknown": [],
+    "negative_control": "all paths lexically sorted, interleaving the two planes",
+    "control_open": [
+      "POSN_ASTTAX-Z-W10-S1",
+      "POSN_ASTTAX-Z-W17-S3",
+      "POSN_ASTTAX-Z-W16-S5",
+      "POSN_ASTTAX-Z-S51"
+    ],
+    "difference": "comp-surprise reports eight open originals; the canonical resolver with investigation-first order yields zero. Lexical plane interleaving reproduces four of the eight, not all eight; full compiler attribution is not established.",
+    "compiler_open": [
+      "POSN_ASTTAX-Z-W3-S1",
+      "POSN_ASTTAX-Z-W4-S3",
+      "POSN_ASTTAX-Z-W8-S2",
+      "POSN_ASTTAX-Z-W10-S1",
+      "POSN_ASTTAX-Z-W14-S1",
+      "POSN_ASTTAX-Z-W17-S3",
+      "POSN_ASTTAX-Z-W16-S5",
+      "POSN_ASTTAX-Z-S51"
+    ]
+  },
+  "resolution_replay_source": "import importlib.util,json,re\nfrom pathlib import Path\nspec=importlib.util.spec_from_file_location('gate',Path('.tools/surprise-row-gate.py'))\ng=importlib.util.module_from_spec(spec);spec.loader.exec_module(g)\nfiles=[];rem=[]\nfor base in [Path('org/missions/D4/POSN/POSN_ASTTAX/surprise-channel'),Path('org/surprise_channel/POSN_ASTTAX')]:\n    for p in sorted(base.rglob('*.md')):\n        if not re.match(r'(INVESTIGATION|ADJUDICATION|REMEDIATION)_v',p.name):continue\n        rows,bad=g._rows(p.read_text(encoding='utf-8-sig'),False);assert not bad\n        if p.name.startswith('REMEDIATION'):rem.extend(r['id'] for r in rows)\n        else:files.append((p.as_posix(),rows))\nordered=sorted(files,key=lambda item:(g._is_adjudication_doc(item[0]),item[0]))\nlatest,unknown=g._resolve_latest(ordered,rem)\nopenitems=[k for k,v in latest.items() if v in g.UNDISPOSITIONED]\ncontrol,unknown_control=g._resolve_latest(sorted(files),rem)\nopen_control=[k for k,v in control.items() if v in g.UNDISPOSITIONED]\nresult={'read':'worktree bytes; canonical resolver with investigation-first order matching _latest_dispositions; staged/index confirmation still required','original_count':len(latest),'open':openitems,'unknown':unknown,'negative_control':'all paths lexically sorted, interleaving the two planes','control_open':open_control,'difference':'The canonical resolver yields zero; the lexical-order control reproduces four of the compiler-reported eight. Full compiler attribution is not established.'}\nassert len(latest)==97 and not unknown and not openitems\nout=Path('org/tier1_exec/3.0.0_SA_CVO/deliverables/POSN_ASTTAX_ROUND4_CVO_SOURCE_CHECK_20260914_Z.json')\ne=json.loads(out.read_text());e['disposition_resolution']=result;e['resolution_replay_source']=Path(__file__).read_text()\nout.write_text(json.dumps(e,indent=2)+'\\n',encoding='utf-8')\nprint(json.dumps(result,indent=2))\n"
+}

@@ -38,9 +38,29 @@ stable, citations resolve there. DS/AE seats read their sections before touching
     `.tools/to-pipeline-gate.py` LIMB 6 REFUSES a **NEWLY-ADDED** task order against a PRD with a half
     not SIGNED. ⛔ **IT DOES NOT FIRE ON A MODIFICATION, AND THIS LINE USED TO SAY SO WITHOUT THE
     QUALIFIER -- SO THE LAW READ STRONGER THAN THE TOOL BEHAVES AND THREE SEATS INHERITED THE BELIEF
-    FROM IT IN ONE EVENING.** The gate's own docstring (`_newly_added`, `:1702-1710` @942e4ff992) is explicit: *"A
-    rename (R) counts as added at its new path ... A modification (M) does not: no limb that reads
-    THIS set refuses an existing TO."* It names its ONE exception, GATE (viii), stated below. Measured 2026-09-11 by `2.0.0_SA_COO~ZZZ` as a discriminating pair on
+    FROM IT IN ONE EVENING.** The gate's own docstring (`_newly_added`, `:1702-1710` @942e4ff992) is explicit, AND
+    IT NAMES THE EXCEPTION ITSELF: *"A rename (R) counts as added at its new path ... A
+    modification (M) does not: no limb that reads THIS set refuses an existing TO. The ONE limb
+    that grades a modification -- GATE (viii) ... -- reads its own set, `_staged_modified()`, so
+    this set's contract is unchanged."* ⚠ **THIS LINE QUOTED THAT DOCSTRING AS SAYING "this gate never
+    refuses an existing TO" UNTIL 2026-09-14 -- A CLAIM ABOUT THE WHOLE GATE, WHERE THE SOURCE
+    SCOPES IT TO THE LIMBS THAT READ ONE SET AND THEN NAMES (viii) AS THE EXCEPTION.** The line
+    number and the vintage were both CORRECT, so every citation test passed; only the QUOTED
+    BYTES were stale, and they denied an exception this same rule states four sentences later.
+    ⛔ **A CITATION AGES SEPARATELY FROM THE TEXT IT QUOTES** -- re-reading the rule catches
+    neither. ⛔ **AND SEARCHING FOR A QUOTE IS NOT CHECKING IT: PRINT THE BYTES AT THE CITED
+    LINE.** A rewritten passage does NOT delete its own old words from the file -- they survive
+    in the comment that quotes them. Measured at BOTH vintages: the superseded phrase *"this
+    gate never refuses an existing TO"* occurs exactly ONCE in `to-pipeline-gate.py`, at
+    `:374` of 2072 @`cd399d339d` and `:377` of 2764 at HEAD, **inside a comment quoting the old
+    docstring, closing quote mark and all** -- while the live text sits at `:1019` / `:1706`.
+    **So a reader who greps the file to verify this rule's quote gets ONE CLEAN HIT IN QUOTATION
+    MARKS and concludes the law quoted accurately.** The search confirms the wrong object.
+    Found by `2.0.0_SA_COO~Z`, which ran it as a NEGATIVE control expecting ABSENT and got
+    TRUE. COST: one `cat-file -p | sed -n '<line>p'` instead of a grep. NON-APPLICATION: a
+    citation with no quoted text -- there is nothing to stale. Found by `2.0.0_SA_COO~Z`
+    (`POSN_ASTTAX-Z-S61` @`2299206da6`) on the SAME class one level down, in a loop body citing
+    a bare `:809-831` that now lands on gate (viii)'s own self-test table. Measured 2026-09-11 by `2.0.0_SA_COO~ZZZ` as a discriminating pair on
     ONE project in ONE hour: the add path refused its new order **three times** (missing
     `<issued_by>`, missing `<preflight>`, then the preflight's line shapes) while **ten task-order
     MODIFICATIONS went ungraded.** ⚠ **SO ON A RE-CUT OR A MID-FLIGHT AMENDMENT, "do not cut against
@@ -224,6 +244,21 @@ another** — verbatim scope; relay, never adjudicate wider OR narrower; if wide
 `comp-which` for code, `comp-estate --layers/--definitions` for infra + ratified terms; (3) stdlib;
 (4) native platform feature; (5) already-installed dependency; (6) one line; (7) only then the MINIMUM
 code that works. **No non-ASCII in production code/logs/AWS** — use `OK:`/`WARN:`/`ERROR:`/`SKIP:`/`BLOCKED:`.
+⛔ **AND IN A FILE THAT ALREADY CARRIES MANY, DO NOT DELETE THE ONE GLYPH THAT MAKES A NAIVE READ
+RAISE — IT IS THE ONLY THING STOPPING SILENT CORRUPTION.** A default text-mode read on this device is
+cp1252, which raises ONLY on a byte undefined there (`0x81 0x8D 0x8F 0x90 0x9D`); every other
+non-ASCII character decodes to the WRONG character and reports success. Measured 2026-09-14 on the
+three files every seat reads at startup: `CLAUDE.md` 213 non-ASCII, `org/XXX.md` 138,
+`docs/doctrine/CLAUDE_ANNEX.md` 252 — **each raises because of a SINGLE `U+2B50`**, and removing just
+that glyph leaves 212 / 135 / 251 characters that decode CLEAN AND WRONG. **Deleting it converts a
+loud failure into silent mojibake, which is strictly worse and looks like compliance.** So the only
+two safe moves are ALL non-ASCII out, or every reader explicit (`encoding='utf-8'`) — **never a
+subset.** ⭐ Detector, one expression and zero cost: `len(b) - len(b.decode('utf-8'))` is 0 on a pure
+ASCII file. **COST: none — a do-not-do.** **NON-APPLICATION: a file that is ALREADY pure ASCII (keep
+it that way), and any file whose every reader is known explicit.** Measured beside it: 29 of 91
+`.tools/*.py` carry non-ASCII (8 raising, 21 silent) and `.owned-paths.yaml` — the LANE-GRANT file —
+is in the SILENT class at 204. `2.0.0_SA_COO~Z` / `2.0.0_SA_COO~ZZZ` / `0.0.0_AB_MSTR~Z`, corroborated
+on three instruments.
 
 ⛔ **A VALUE MUST CARRY ITS CLAIM — in a field a consumer can reject on** (`measured/inferred/held/absent`);
 no such field → you may NOT treat it as measured. **The consuming half is the whole mechanism** — an
@@ -260,7 +295,19 @@ unenforced provenance field drifts to unpopulated. `docs/doctrine/A_VALUE_MUST_C
     sound oracle; an orphaned watcher reads REACHABLE *because* the agent is deaf (anti-correlated).
     RETRIEVAL: a failed retrieval returns a VALUE; paginated `list-*` + `--query length()` returns the
     PAGE count and `--no-paginate` is the hazard; `aws s3 ls` renders LOCAL time, `s3api` UTC; never type
-    a literal `Z` into a `--date=format` (renders local, stamps UTC). IAM traps: `/cloud-ops`. Annex §22a.
+    a literal `Z` into a `--date=format` (renders local, stamps UTC). IAM traps: `/cloud-ops`.
+    **ROSTER: `get_agent_status(<serial>)` IS THREE LIMBS WITH DIFFERENT SCOPES.** Liveness / PID /
+    `Working on` are per-LANE; ⛔ **`Pending task orders` and `Latest logs`/`Blockers` are BASE-scoped
+    AND exact-string-match a FREE-TEXT `<status>`** -- so they are never a lane's orders and never a
+    count of what is open. To ask what a LANE owes, parse `<issued_to>` from the order files. ⚠ **The
+    one limb that needs no disclaimer carries one, and the two that do carry none**, so the careful
+    sentence certifies the silent limbs. Measured 2026-09-14: 6 of 6 orders reported for
+    `3.0.0_SA_CVO~Z` were lane `~Y`'s; across **2237** seat orders (88 folders, `.md` only -- a first
+    count said 2278 by admitting 41 `.gitkeep`) **679** carry prose `<status>` and **75** carry none,
+    leaving **31** open orders invisible -- exact-match PROVEN at
+    `0.7.0_AE_CloudOps` (3 reported, 5 genuinely pending). **COST: none -- a reading rule.**
+    **NON-APPLICATION:** the lane half does not bind a query on a BASE serial; the free-text half binds
+    every query, base or lane. `AMGT_RESAPP-Z-S79`/`Z-S80` @`e1a4e917f2`. Annex §22a.
 28. **THE SUBSTRATE TEST — before you BUILD ON a resource, card it: 7 questions, 3 grains** — PROCESS
     (1 methodology, 2 cadence/trigger DESIRED-vs-APPLIED), ARTIFACT (3 persistence/authority, 4 exact
     location), TRUST (5 coverage + denominator, 6 key/identity space, 7 failure mode distinguishable from

@@ -1,0 +1,2690 @@
+{
+  "artifact": "social_account PASS -- read from each company's OWN site",
+  "author": "4.0.0_SA_CRO~Z",
+  "generated_at": "2026-09-14T06:04Z",
+  "method": "scrape the registrable domain already resolved as this company's ir_domain, and collect links to known social platforms. NOT SERP: Bright Data's search_engine returns hostless Google redirect stubs (plan s.16).",
+  "evidence_model": "PRIMARY is structural -- the link was published on the company's own domain. The handle-carries-the-name check is a RECORDED FLAG, never a gate: a legitimate handle need not contain the name.",
+  "status_note": "INFERRED, not MEASURED: no account page was visited to confirm it is operated by this company.",
+  "known_limit": "a client-rendered footer is invisible to a markdown scrape, and such a site also exposes no nav path to follow. Records with zero links say so.",
+  "denominator": {
+    "universe": 89,
+    "with_held_ir_domain": 88,
+    "attempted": 88,
+    "resolved": 61,
+    "handles_captured": 263,
+    "no_links_client_rendered": 20,
+    "no_payload_stable": 7,
+    "partition_note": "NONE of the 27 is evidence that a company publishes no social accounts. Nike and Boeing plainly do. Every one is a limit of a markdown scraper against a client-rendered page."
+  },
+  "records": [
+    {
+      "folder": "ASML NA",
+      "company_name": "ASML",
+      "ir_domain": "asml.com",
+      "body_bytes": 13481,
+      "social_account": {
+        "value": {
+          "facebook": [
+            {
+              "handle": "asml",
+              "handle_carries_company_name": true
+            }
+          ],
+          "linkedin": [
+            {
+              "handle": "asml",
+              "handle_carries_company_name": true
+            }
+          ],
+          "x": [
+            {
+              "handle": "asmlcompany",
+              "handle_carries_company_name": true
+            }
+          ],
+          "youtube": [
+            {
+              "handle": "channel/UCIT9d3JjHEnsVi_w9guSXvA",
+              "handle_carries_company_name": false
+            }
+          ],
+          "instagram": [
+            {
+              "handle": "lifeatasml",
+              "handle_carries_company_name": true
+            }
+          ]
+        },
+        "status": "INFERRED",
+        "evidence": "ACCEPTED -- 5 platform(s) linked from the company's own domain asml.com: facebook, instagram, linkedin, x, youtube.",
+        "resolved_at": "2026-09-14T05:46Z"
+      }
+    },
+    {
+      "folder": "Air Liquide AI FP",
+      "company_name": "Air Liquide",
+      "ir_domain": "airliquide.com",
+      "body_bytes": 13808,
+      "social_account": {
+        "value": {
+          "facebook": [
+            {
+              "handle": "AirLiquide",
+              "handle_carries_company_name": true
+            }
+          ],
+          "x": [
+            {
+              "handle": "AirLiquideGroup",
+              "handle_carries_company_name": true
+            }
+          ],
+          "linkedin": [
+            {
+              "handle": "airliquide",
+              "handle_carries_company_name": true
+            }
+          ],
+          "instagram": [
+            {
+              "handle": "air_liquide_group",
+              "handle_carries_company_name": true
+            }
+          ],
+          "youtube": [
+            {
+              "handle": "@AirLiquideGroup",
+              "handle_carries_company_name": true
+            }
+          ]
+        },
+        "status": "INFERRED",
+        "evidence": "ACCEPTED -- 5 platform(s) linked from the company's own domain airliquide.com: facebook, instagram, linkedin, x, youtube.",
+        "resolved_at": "2026-09-14T05:46Z"
+      }
+    },
+    {
+      "folder": "Alibaba BABA",
+      "company_name": "Alibaba",
+      "ir_domain": "alibabagroup.com",
+      "body_bytes": 4666,
+      "social_account": {
+        "value": {
+          "facebook": [
+            {
+              "handle": "AlibabaGroupCorporate",
+              "handle_carries_company_name": true
+            }
+          ],
+          "linkedin": [
+            {
+              "handle": "\u963f\u91cc\u5df4\u5df4\u96c6\u5718",
+              "handle_carries_company_name": false
+            }
+          ],
+          "x": [
+            {
+              "handle": "AlibabaGroup",
+              "handle_carries_company_name": true
+            }
+          ],
+          "instagram": [
+            {
+              "handle": "alibabagroupcorporate",
+              "handle_carries_company_name": true
+            }
+          ],
+          "weibo": [
+            {
+              "handle": "aligroup",
+              "handle_carries_company_name": false
+            }
+          ],
+          "youtube": [
+            {
+              "handle": "channel/UCEiokk5vLBU6byHFbf9mbYA",
+              "handle_carries_company_name": false
+            }
+          ]
+        },
+        "status": "INFERRED",
+        "evidence": "ACCEPTED -- 6 platform(s) linked from the company's own domain alibabagroup.com: facebook, instagram, linkedin, weibo, x, youtube.",
+        "resolved_at": "2026-09-14T05:46Z"
+      }
+    },
+    {
+      "folder": "AstraZeneca AZN",
+      "company_name": "AstraZeneca",
+      "ir_domain": "astrazeneca.com",
+      "body_bytes": 13056,
+      "social_account": {
+        "value": {
+          "linkedin": [
+            {
+              "handle": "astrazeneca",
+              "handle_carries_company_name": true
+            }
+          ],
+          "instagram": [
+            {
+              "handle": "astrazeneca",
+              "handle_carries_company_name": true
+            }
+          ],
+          "facebook": [
+            {
+              "handle": "AstraZeneca",
+              "handle_carries_company_name": true
+            }
+          ],
+          "x": [
+            {
+              "handle": "AstraZeneca",
+              "handle_carries_company_name": true
+            }
+          ],
+          "youtube": [
+            {
+              "handle": "user/astrazeneca",
+              "handle_carries_company_name": true
+            }
+          ]
+        },
+        "status": "INFERRED",
+        "evidence": "ACCEPTED -- 5 platform(s) linked from the company's own domain astrazeneca.com: facebook, instagram, linkedin, x, youtube.",
+        "resolved_at": "2026-09-14T05:46Z"
+      }
+    },
+    {
+      "folder": "BB Seguridade BBSE3 BZ",
+      "company_name": "BB Seguridade",
+      "ir_domain": "bbseguridaderi.com.br",
+      "body_bytes": 20967,
+      "social_account": {
+        "value": {
+          "facebook": [
+            {
+              "handle": "BBSeguros",
+              "handle_carries_company_name": false
+            }
+          ],
+          "instagram": [
+            {
+              "handle": "bbseguros",
+              "handle_carries_company_name": false
+            }
+          ],
+          "linkedin": [
+            {
+              "handle": "bb-seguros",
+              "handle_carries_company_name": false
+            }
+          ],
+          "youtube": [
+            {
+              "handle": "user/bbseguros",
+              "handle_carries_company_name": false
+            }
+          ]
+        },
+        "status": "INFERRED",
+        "evidence": "ACCEPTED -- 4 platform(s) linked from the company's own domain bbseguridaderi.com.br: facebook, instagram, linkedin, youtube.",
+        "resolved_at": "2026-09-14T05:46Z"
+      }
+    },
+    {
+      "folder": "BP PLC",
+      "company_name": "BP",
+      "ir_domain": "bp.com",
+      "body_bytes": 4614,
+      "social_account": {
+        "value": {
+          "facebook": [
+            {
+              "handle": "bp",
+              "handle_carries_company_name": true
+            }
+          ],
+          "x": [
+            {
+              "handle": "bp_plc",
+              "handle_carries_company_name": true
+            }
+          ],
+          "linkedin": [
+            {
+              "handle": "bp",
+              "handle_carries_company_name": true
+            }
+          ],
+          "youtube": [
+            {
+              "handle": "bp",
+              "handle_carries_company_name": true
+            }
+          ],
+          "instagram": [
+            {
+              "handle": "bp_plc",
+              "handle_carries_company_name": true
+            }
+          ]
+        },
+        "status": "INFERRED",
+        "evidence": "ACCEPTED -- 5 platform(s) linked from the company's own domain bp.com: facebook, instagram, linkedin, x, youtube.",
+        "resolved_at": "2026-09-14T05:47Z"
+      }
+    },
+    {
+      "folder": "British American Tobacco",
+      "company_name": "British American Tobacco",
+      "ir_domain": "bat.com",
+      "body_bytes": 23251,
+      "social_account": {
+        "value": {
+          "x": [
+            {
+              "handle": "batplc",
+              "handle_carries_company_name": false
+            }
+          ],
+          "youtube": [
+            {
+              "handle": "user/WelcomeToBAT",
+              "handle_carries_company_name": false
+            }
+          ],
+          "linkedin": [
+            {
+              "handle": "british-american-tobacco",
+              "handle_carries_company_name": true
+            }
+          ]
+        },
+        "status": "INFERRED",
+        "evidence": "ACCEPTED -- 3 platform(s) linked from the company's own domain bat.com: linkedin, x, youtube.",
+        "resolved_at": "2026-09-14T05:47Z"
+      }
+    },
+    {
+      "folder": "Bunzl BNZL GB",
+      "company_name": "Bunzl",
+      "ir_domain": "bunzl.com",
+      "body_bytes": 14131,
+      "social_account": {
+        "value": {
+          "linkedin": [
+            {
+              "handle": "bunzl-plc",
+              "handle_carries_company_name": true
+            }
+          ]
+        },
+        "status": "INFERRED",
+        "evidence": "ACCEPTED -- 1 platform(s) linked from the company's own domain bunzl.com: linkedin.",
+        "resolved_at": "2026-09-14T05:47Z"
+      }
+    },
+    {
+      "folder": "Cadence CDNS US",
+      "company_name": "Cadence",
+      "ir_domain": "cadence.com",
+      "body_bytes": 35264,
+      "social_account": {
+        "value": {
+          "facebook": [
+            {
+              "handle": "CadenceDesign",
+              "handle_carries_company_name": true
+            }
+          ],
+          "x": [
+            {
+              "handle": "cadence",
+              "handle_carries_company_name": true
+            }
+          ],
+          "linkedin": [
+            {
+              "handle": "Cadence",
+              "handle_carries_company_name": true
+            }
+          ],
+          "youtube": [
+            {
+              "handle": "user/CadenceDesign",
+              "handle_carries_company_name": true
+            }
+          ]
+        },
+        "status": "INFERRED",
+        "evidence": "ACCEPTED -- 4 platform(s) linked from the company's own domain cadence.com: facebook, linkedin, x, youtube.",
+        "resolved_at": "2026-09-14T05:47Z"
+      }
+    },
+    {
+      "folder": "Celsius CELH",
+      "company_name": "Celsius",
+      "ir_domain": "celsiusholdingsinc.com",
+      "body_bytes": 2037,
+      "social_account": {
+        "value": {
+          "linkedin": [
+            {
+              "handle": "2471716",
+              "handle_carries_company_name": false
+            }
+          ]
+        },
+        "status": "INFERRED",
+        "evidence": "ACCEPTED -- 1 platform(s) linked from the company's own domain celsiusholdingsinc.com: linkedin.",
+        "resolved_at": "2026-09-14T05:47Z"
+      }
+    },
+    {
+      "folder": "Coca Cola Femsa",
+      "company_name": "Coca Cola Femsa",
+      "ir_domain": "coca-colafemsa.com",
+      "body_bytes": 12677,
+      "social_account": {
+        "value": {
+          "facebook": [
+            {
+              "handle": "cocacolafemsamexico",
+              "handle_carries_company_name": true
+            }
+          ],
+          "instagram": [
+            {
+              "handle": "cocacolafemsa_mx",
+              "handle_carries_company_name": true
+            }
+          ],
+          "linkedin": [
+            {
+              "handle": "coca-cola-femsa",
+              "handle_carries_company_name": true
+            }
+          ],
+          "tiktok": [
+            {
+              "handle": "@cocacola_femsa",
+              "handle_carries_company_name": true
+            }
+          ]
+        },
+        "status": "INFERRED",
+        "evidence": "ACCEPTED -- 4 platform(s) linked from the company's own domain coca-colafemsa.com: facebook, instagram, linkedin, tiktok.",
+        "resolved_at": "2026-09-14T05:47Z"
+      }
+    },
+    {
+      "folder": "Costco COST",
+      "company_name": "Costco",
+      "ir_domain": "costco.com",
+      "body_bytes": 14957,
+      "social_account": {
+        "value": {
+          "facebook": [
+            {
+              "handle": "costco",
+              "handle_carries_company_name": true
+            }
+          ],
+          "instagram": [
+            {
+              "handle": "Costco",
+              "handle_carries_company_name": true
+            }
+          ],
+          "tiktok": [
+            {
+              "handle": "@costco",
+              "handle_carries_company_name": true
+            }
+          ]
+        },
+        "status": "INFERRED",
+        "evidence": "ACCEPTED -- 3 platform(s) linked from the company's own domain costco.com: facebook, instagram, tiktok.",
+        "resolved_at": "2026-09-14T05:47Z"
+      }
+    },
+    {
+      "folder": "Enel SpA ENEL IM",
+      "company_name": "Enel SpA",
+      "ir_domain": "enel.com",
+      "body_bytes": 11139,
+      "social_account": {
+        "value": {
+          "facebook": [
+            {
+              "handle": "EnelGroup",
+              "handle_carries_company_name": true
+            },
+            {
+              "handle": "enelgroup",
+              "handle_carries_company_name": true
+            }
+          ],
+          "x": [
+            {
+              "handle": "EnelGroup",
+              "handle_carries_company_name": true
+            }
+          ],
+          "youtube": [
+            {
+              "handle": "@enelgroup",
+              "handle_carries_company_name": true
+            }
+          ],
+          "linkedin": [
+            {
+              "handle": "enelgroup",
+              "handle_carries_company_name": true
+            }
+          ],
+          "instagram": [
+            {
+              "handle": "enelgroup",
+              "handle_carries_company_name": true
+            }
+          ]
+        },
+        "status": "INFERRED",
+        "evidence": "ACCEPTED -- 5 platform(s) linked from the company's own domain enel.com: facebook, instagram, linkedin, x, youtube.",
+        "resolved_at": "2026-09-14T05:47Z"
+      }
+    },
+    {
+      "folder": "GSK LN",
+      "company_name": "GSK",
+      "ir_domain": "gsk.com",
+      "body_bytes": 23779,
+      "social_account": {
+        "value": {
+          "linkedin": [
+            {
+              "handle": "glaxosmithkline",
+              "handle_carries_company_name": false
+            }
+          ],
+          "x": [
+            {
+              "handle": "GSK",
+              "handle_carries_company_name": true
+            }
+          ],
+          "instagram": [
+            {
+              "handle": "gsk",
+              "handle_carries_company_name": true
+            }
+          ],
+          "facebook": [
+            {
+              "handle": "GSK",
+              "handle_carries_company_name": true
+            }
+          ],
+          "youtube": [
+            {
+              "handle": "GSK",
+              "handle_carries_company_name": true
+            }
+          ]
+        },
+        "status": "INFERRED",
+        "evidence": "ACCEPTED -- 5 platform(s) linked from the company's own domain gsk.com: facebook, instagram, linkedin, x, youtube.",
+        "resolved_at": "2026-09-14T05:47Z"
+      }
+    },
+    {
+      "folder": "Global Payments GPN",
+      "company_name": "Global Payments",
+      "ir_domain": "globalpayments.com",
+      "body_bytes": 19637,
+      "social_account": {
+        "value": {
+          "linkedin": [
+            {
+              "handle": "global-payments",
+              "handle_carries_company_name": true
+            }
+          ],
+          "x": [
+            {
+              "handle": "GlobalPayInc",
+              "handle_carries_company_name": false
+            }
+          ],
+          "facebook": [
+            {
+              "handle": "GlobalPaymentsInc",
+              "handle_carries_company_name": true
+            }
+          ],
+          "youtube": [
+            {
+              "handle": "channel/UCg9HiItBheBjWJcOBE8q9HQ",
+              "handle_carries_company_name": false
+            }
+          ]
+        },
+        "status": "INFERRED",
+        "evidence": "ACCEPTED -- 4 platform(s) linked from the company's own domain globalpayments.com: facebook, linkedin, x, youtube.",
+        "resolved_at": "2026-09-14T05:48Z"
+      }
+    },
+    {
+      "folder": "Grupo Aeroportuario del Centro OMAB MM",
+      "company_name": "Grupo Aeroportuario del Centro",
+      "ir_domain": "oma.aero",
+      "body_bytes": 37600,
+      "social_account": {
+        "value": {
+          "facebook": [
+            {
+              "handle": "pages/OMA/137924482889484",
+              "handle_carries_company_name": false
+            }
+          ],
+          "x": [
+            {
+              "handle": "omaeropuertos",
+              "handle_carries_company_name": false
+            }
+          ],
+          "linkedin": [
+            {
+              "handle": "1159881",
+              "handle_carries_company_name": false
+            }
+          ],
+          "instagram": [
+            {
+              "handle": "omaeropuertos",
+              "handle_carries_company_name": false
+            }
+          ]
+        },
+        "status": "INFERRED",
+        "evidence": "ACCEPTED -- 4 platform(s) linked from the company's own domain oma.aero: facebook, instagram, linkedin, x.",
+        "resolved_at": "2026-09-14T05:48Z"
+      }
+    },
+    {
+      "folder": "HEICO Corporation HEI US",
+      "company_name": "HEICO Corporation",
+      "ir_domain": "heico.com",
+      "body_bytes": 16075,
+      "social_account": {
+        "value": {
+          "facebook": [
+            {
+              "handle": "HEICOCORP",
+              "handle_carries_company_name": true
+            }
+          ],
+          "x": [
+            {
+              "handle": "HEICOCORP",
+              "handle_carries_company_name": true
+            }
+          ],
+          "linkedin": [
+            {
+              "handle": "heico-aerospace",
+              "handle_carries_company_name": true
+            }
+          ]
+        },
+        "status": "INFERRED",
+        "evidence": "ACCEPTED -- 3 platform(s) linked from the company's own domain heico.com: facebook, linkedin, x.",
+        "resolved_at": "2026-09-14T05:48Z"
+      }
+    },
+    {
+      "folder": "HSBC HSBA LN",
+      "company_name": "HSBC",
+      "ir_domain": "hsbc.com",
+      "body_bytes": 20038,
+      "social_account": {
+        "value": {
+          "linkedin": [
+            {
+              "handle": "hsbc",
+              "handle_carries_company_name": true
+            }
+          ],
+          "instagram": [
+            {
+              "handle": "hsbc",
+              "handle_carries_company_name": true
+            }
+          ],
+          "facebook": [
+            {
+              "handle": "HSBC",
+              "handle_carries_company_name": true
+            }
+          ],
+          "youtube": [
+            {
+              "handle": "HSBC",
+              "handle_carries_company_name": true
+            }
+          ]
+        },
+        "status": "INFERRED",
+        "evidence": "ACCEPTED -- 4 platform(s) linked from the company's own domain hsbc.com: facebook, instagram, linkedin, youtube.",
+        "resolved_at": "2026-09-14T05:48Z"
+      }
+    },
+    {
+      "folder": "Haliburton HAL",
+      "company_name": "Haliburton",
+      "ir_domain": "halliburton.com",
+      "body_bytes": 34808,
+      "social_account": {
+        "value": {
+          "linkedin": [
+            {
+              "handle": "halliburton",
+              "handle_carries_company_name": false
+            }
+          ],
+          "youtube": [
+            {
+              "handle": "halliburton",
+              "handle_carries_company_name": false
+            }
+          ],
+          "instagram": [
+            {
+              "handle": "halliburton",
+              "handle_carries_company_name": false
+            }
+          ],
+          "facebook": [
+            {
+              "handle": "halliburton",
+              "handle_carries_company_name": false
+            }
+          ]
+        },
+        "status": "INFERRED",
+        "evidence": "ACCEPTED -- 4 platform(s) linked from the company's own domain halliburton.com: facebook, instagram, linkedin, youtube.",
+        "resolved_at": "2026-09-14T05:48Z"
+      }
+    },
+    {
+      "folder": "Hermes RMS",
+      "company_name": "Hermes",
+      "ir_domain": "hermes.com",
+      "body_bytes": 19101,
+      "social_account": {
+        "value": {
+          "facebook": [
+            {
+              "handle": "hermes",
+              "handle_carries_company_name": true
+            }
+          ],
+          "instagram": [
+            {
+              "handle": "hermes",
+              "handle_carries_company_name": true
+            }
+          ],
+          "youtube": [
+            {
+              "handle": "user/hermes",
+              "handle_carries_company_name": true
+            }
+          ]
+        },
+        "status": "INFERRED",
+        "evidence": "ACCEPTED -- 3 platform(s) linked from the company's own domain hermes.com: facebook, instagram, youtube.",
+        "resolved_at": "2026-09-14T05:48Z"
+      }
+    },
+    {
+      "folder": "Home Depot HD",
+      "company_name": "Home Depot",
+      "ir_domain": "homedepot.com",
+      "body_bytes": 30201,
+      "social_account": {
+        "value": {
+          "youtube": [
+            {
+              "handle": "user/homedepot",
+              "handle_carries_company_name": true
+            }
+          ]
+        },
+        "status": "INFERRED",
+        "evidence": "ACCEPTED -- 1 platform(s) linked from the company's own domain homedepot.com: youtube.",
+        "resolved_at": "2026-09-14T05:48Z"
+      }
+    },
+    {
+      "folder": "Hon Hai 2317 TT",
+      "company_name": "Hon Hai",
+      "ir_domain": "honhai.com",
+      "body_bytes": 8537,
+      "social_account": {
+        "value": {
+          "facebook": [
+            {
+              "handle": "HonHai.Technology",
+              "handle_carries_company_name": true
+            },
+            {
+              "handle": "honhaifoxconn",
+              "handle_carries_company_name": true
+            },
+            {
+              "handle": "profile.php",
+              "handle_carries_company_name": false
+            }
+          ],
+          "x": [
+            {
+              "handle": "HonHai\\_Foxconn",
+              "handle_carries_company_name": true
+            },
+            {
+              "handle": "HonHai_Foxconn",
+              "handle_carries_company_name": true
+            }
+          ],
+          "linkedin": [
+            {
+              "handle": "hon-hai-m%C3%A9xico",
+              "handle_carries_company_name": true
+            }
+          ],
+          "instagram": [
+            {
+              "handle": "foxconn.tw",
+              "handle_carries_company_name": false
+            },
+            {
+              "handle": "honhaimexico",
+              "handle_carries_company_name": true
+            }
+          ],
+          "youtube": [
+            {
+              "handle": "@HonHaiMexico/videos",
+              "handle_carries_company_name": true
+            },
+            {
+              "handle": "channel/UC6WVXDQDbzMaM98itJH-vOw/feed",
+              "handle_carries_company_name": false
+            }
+          ]
+        },
+        "status": "INFERRED",
+        "evidence": "ACCEPTED -- 5 platform(s) linked from the company's own domain honhai.com: facebook, instagram, linkedin, x, youtube.",
+        "resolved_at": "2026-09-14T05:49Z"
+      }
+    },
+    {
+      "folder": "ICICI Bank ICICIBC IN",
+      "company_name": "ICICI Bank",
+      "ir_domain": "icici.bank.in",
+      "body_bytes": 33635,
+      "social_account": {
+        "value": {
+          "facebook": [
+            {
+              "handle": "icicibank",
+              "handle_carries_company_name": true
+            }
+          ],
+          "x": [
+            {
+              "handle": "icicibank",
+              "handle_carries_company_name": true
+            }
+          ],
+          "instagram": [
+            {
+              "handle": "icicibank",
+              "handle_carries_company_name": true
+            }
+          ],
+          "youtube": [
+            {
+              "handle": "user/icicibank",
+              "handle_carries_company_name": true
+            }
+          ]
+        },
+        "status": "INFERRED",
+        "evidence": "ACCEPTED -- 4 platform(s) linked from the company's own domain icici.bank.in: facebook, instagram, x, youtube.",
+        "resolved_at": "2026-09-14T05:49Z"
+      }
+    },
+    {
+      "folder": "Iberdrola IBE SM",
+      "company_name": "Iberdrola",
+      "ir_domain": "iberdrola.com",
+      "body_bytes": 43922,
+      "social_account": {
+        "value": {
+          "x": [
+            {
+              "handle": "iberdrola",
+              "handle_carries_company_name": true
+            }
+          ],
+          "facebook": [
+            {
+              "handle": "iberdrola",
+              "handle_carries_company_name": true
+            }
+          ],
+          "instagram": [
+            {
+              "handle": "iberdrola",
+              "handle_carries_company_name": true
+            }
+          ],
+          "youtube": [
+            {
+              "handle": "iberdrola",
+              "handle_carries_company_name": true
+            }
+          ]
+        },
+        "status": "INFERRED",
+        "evidence": "ACCEPTED -- 4 platform(s) linked from the company's own domain iberdrola.com: facebook, instagram, x, youtube.",
+        "resolved_at": "2026-09-14T05:49Z"
+      }
+    },
+    {
+      "folder": "Idexx IDXX",
+      "company_name": "Idexx",
+      "ir_domain": "idexx.com",
+      "body_bytes": 21333,
+      "social_account": {
+        "value": {
+          "facebook": [
+            {
+              "handle": "IDEXX",
+              "handle_carries_company_name": true
+            }
+          ],
+          "youtube": [
+            {
+              "handle": "user/idexxvideos",
+              "handle_carries_company_name": true
+            }
+          ],
+          "linkedin": [
+            {
+              "handle": "idexx-laboratories",
+              "handle_carries_company_name": true
+            }
+          ]
+        },
+        "status": "INFERRED",
+        "evidence": "ACCEPTED -- 3 platform(s) linked from the company's own domain idexx.com: facebook, linkedin, youtube.",
+        "resolved_at": "2026-09-14T05:49Z"
+      }
+    },
+    {
+      "folder": "Imperial Brands IMB LN",
+      "company_name": "Imperial Brands",
+      "ir_domain": "imperialbrandsplc.com",
+      "body_bytes": 16991,
+      "social_account": {
+        "value": {
+          "facebook": [
+            {
+              "handle": "LifeatImperial",
+              "handle_carries_company_name": true
+            }
+          ],
+          "instagram": [
+            {
+              "handle": "lifeatimperialbrands",
+              "handle_carries_company_name": true
+            }
+          ],
+          "x": [
+            {
+              "handle": "imperialbrands",
+              "handle_carries_company_name": true
+            }
+          ]
+        },
+        "status": "INFERRED",
+        "evidence": "ACCEPTED -- 3 platform(s) linked from the company's own domain imperialbrandsplc.com: facebook, instagram, x.",
+        "resolved_at": "2026-09-14T05:49Z"
+      }
+    },
+    {
+      "folder": "Intesa Sanpaolo ISP IM",
+      "company_name": "Intesa Sanpaolo",
+      "ir_domain": "intesasanpaolo.com",
+      "body_bytes": 39024,
+      "social_account": {
+        "value": {
+          "facebook": [
+            {
+              "handle": "intesasanpaolo",
+              "handle_carries_company_name": true
+            }
+          ],
+          "youtube": [
+            {
+              "handle": "user/intesasanpaolo",
+              "handle_carries_company_name": true
+            }
+          ],
+          "x": [
+            {
+              "handle": "intesasanpaolo",
+              "handle_carries_company_name": true
+            }
+          ],
+          "linkedin": [
+            {
+              "handle": "intesa-sanpaolo",
+              "handle_carries_company_name": true
+            }
+          ],
+          "tiktok": [
+            {
+              "handle": "@intesasanpaolo",
+              "handle_carries_company_name": true
+            }
+          ],
+          "instagram": [
+            {
+              "handle": "intesasanpaolo",
+              "handle_carries_company_name": true
+            }
+          ]
+        },
+        "status": "INFERRED",
+        "evidence": "ACCEPTED -- 6 platform(s) linked from the company's own domain intesasanpaolo.com: facebook, instagram, linkedin, tiktok, x, youtube.",
+        "resolved_at": "2026-09-14T05:49Z"
+      }
+    },
+    {
+      "folder": "Intuitive Surgical ISRG US",
+      "company_name": "Intuitive Surgical",
+      "ir_domain": "intuitive.com",
+      "body_bytes": 11173,
+      "social_account": {
+        "value": {
+          "linkedin": [
+            {
+              "handle": "intuitive-surgical",
+              "handle_carries_company_name": true
+            }
+          ],
+          "instagram": [
+            {
+              "handle": "intuitivesurgical",
+              "handle_carries_company_name": true
+            }
+          ],
+          "x": [
+            {
+              "handle": "IntuitiveSurg",
+              "handle_carries_company_name": true
+            }
+          ],
+          "facebook": [
+            {
+              "handle": "IntuitiveSurg",
+              "handle_carries_company_name": true
+            }
+          ],
+          "youtube": [
+            {
+              "handle": "@Intuitive",
+              "handle_carries_company_name": true
+            }
+          ]
+        },
+        "status": "INFERRED",
+        "evidence": "ACCEPTED -- 5 platform(s) linked from the company's own domain intuitive.com: facebook, instagram, linkedin, x, youtube.",
+        "resolved_at": "2026-09-14T05:49Z"
+      }
+    },
+    {
+      "folder": "Kimberly Clark KMB",
+      "company_name": "Kimberly Clark",
+      "ir_domain": "kimberly-clark.com",
+      "body_bytes": 25324,
+      "social_account": {
+        "value": {
+          "facebook": [
+            {
+              "handle": "KimberlyClarkCorp",
+              "handle_carries_company_name": true
+            }
+          ],
+          "linkedin": [
+            {
+              "handle": "kimberly-clark",
+              "handle_carries_company_name": true
+            }
+          ],
+          "instagram": [
+            {
+              "handle": "kccorp",
+              "handle_carries_company_name": false
+            }
+          ],
+          "youtube": [
+            {
+              "handle": "user/KimberlyClarkComms",
+              "handle_carries_company_name": true
+            }
+          ]
+        },
+        "status": "INFERRED",
+        "evidence": "ACCEPTED -- 4 platform(s) linked from the company's own domain kimberly-clark.com: facebook, instagram, linkedin, youtube.",
+        "resolved_at": "2026-09-14T05:50Z"
+      }
+    },
+    {
+      "folder": "Lenovo 992 HK",
+      "company_name": "Lenovo",
+      "ir_domain": "lenovo.com",
+      "body_bytes": 16876,
+      "social_account": {
+        "value": {
+          "facebook": [
+            {
+              "handle": "lenovo",
+              "handle_carries_company_name": true
+            }
+          ],
+          "x": [
+            {
+              "handle": "Lenovo",
+              "handle_carries_company_name": true
+            }
+          ],
+          "youtube": [
+            {
+              "handle": "channel/UCpvg0uZH-oxmCagOWJo9p9g",
+              "handle_carries_company_name": false
+            }
+          ],
+          "tiktok": [
+            {
+              "handle": "@lenovo",
+              "handle_carries_company_name": true
+            }
+          ],
+          "instagram": [
+            {
+              "handle": "lenovo",
+              "handle_carries_company_name": true
+            }
+          ]
+        },
+        "status": "INFERRED",
+        "evidence": "ACCEPTED -- 5 platform(s) linked from the company's own domain lenovo.com: facebook, instagram, tiktok, x, youtube.",
+        "resolved_at": "2026-09-14T05:50Z"
+      }
+    },
+    {
+      "folder": "MSCI Inc MSCI US",
+      "company_name": "MSCI Inc",
+      "ir_domain": "msci.com",
+      "body_bytes": 28500,
+      "social_account": {
+        "value": {
+          "x": [
+            {
+              "handle": "MSCI_Inc",
+              "handle_carries_company_name": true
+            }
+          ],
+          "linkedin": [
+            {
+              "handle": "msci-inc",
+              "handle_carries_company_name": true
+            }
+          ],
+          "youtube": [
+            {
+              "handle": "user/MSCIChannel",
+              "handle_carries_company_name": true
+            }
+          ]
+        },
+        "status": "INFERRED",
+        "evidence": "ACCEPTED -- 3 platform(s) linked from the company's own domain msci.com: linkedin, x, youtube.",
+        "resolved_at": "2026-09-14T05:50Z"
+      }
+    },
+    {
+      "folder": "Manila MER PER",
+      "company_name": "Manila Electric",
+      "ir_domain": "meralco.com.ph",
+      "body_bytes": 3016,
+      "social_account": {
+        "value": {
+          "facebook": [
+            {
+              "handle": "meralco",
+              "handle_carries_company_name": false
+            }
+          ],
+          "youtube": [
+            {
+              "handle": "user/meralcoph",
+              "handle_carries_company_name": false
+            }
+          ],
+          "instagram": [
+            {
+              "handle": "meralcoph",
+              "handle_carries_company_name": false
+            }
+          ]
+        },
+        "status": "INFERRED",
+        "evidence": "ACCEPTED -- 3 platform(s) linked from the company's own domain meralco.com.ph: facebook, instagram, youtube.",
+        "resolved_at": "2026-09-14T05:50Z"
+      }
+    },
+    {
+      "folder": "Mastercard MA",
+      "company_name": "Mastercard",
+      "ir_domain": "mastercard.com",
+      "body_bytes": 19069,
+      "social_account": {
+        "value": {
+          "linkedin": [
+            {
+              "handle": "mastercard",
+              "handle_carries_company_name": true
+            }
+          ],
+          "facebook": [
+            {
+              "handle": "MasterCardUS",
+              "handle_carries_company_name": true
+            }
+          ],
+          "x": [
+            {
+              "handle": "mastercardnews",
+              "handle_carries_company_name": true
+            }
+          ],
+          "youtube": [
+            {
+              "handle": "user/MasterC",
+              "handle_carries_company_name": false
+            }
+          ]
+        },
+        "status": "INFERRED",
+        "evidence": "ACCEPTED -- 4 platform(s) linked from the company's own domain mastercard.com: facebook, linkedin, x, youtube.",
+        "resolved_at": "2026-09-14T05:50Z"
+      }
+    },
+    {
+      "folder": "Michelin ML FP",
+      "company_name": "Michelin",
+      "ir_domain": "michelin.com",
+      "body_bytes": 12577,
+      "social_account": {
+        "value": {
+          "facebook": [
+            {
+              "handle": "MichelinFrance",
+              "handle_carries_company_name": true
+            }
+          ],
+          "youtube": [
+            {
+              "handle": "Michelin",
+              "handle_carries_company_name": true
+            }
+          ],
+          "linkedin": [
+            {
+              "handle": "4101",
+              "handle_carries_company_name": false
+            }
+          ],
+          "x": [
+            {
+              "handle": "michelin",
+              "handle_carries_company_name": true
+            }
+          ],
+          "instagram": [
+            {
+              "handle": "michelin",
+              "handle_carries_company_name": true
+            }
+          ],
+          "tiktok": [
+            {
+              "handle": "@themichelinman",
+              "handle_carries_company_name": true
+            }
+          ]
+        },
+        "status": "INFERRED",
+        "evidence": "ACCEPTED -- 6 platform(s) linked from the company's own domain michelin.com: facebook, instagram, linkedin, tiktok, x, youtube.",
+        "resolved_at": "2026-09-14T05:50Z"
+      }
+    },
+    {
+      "folder": "National Grid NG LN",
+      "company_name": "National Grid",
+      "ir_domain": "nationalgrid.com",
+      "body_bytes": 165767,
+      "social_account": {
+        "value": {
+          "x": [
+            {
+              "handle": "nationalgrid",
+              "handle_carries_company_name": true
+            }
+          ],
+          "facebook": [
+            {
+              "handle": "nationalgriduk",
+              "handle_carries_company_name": true
+            }
+          ],
+          "youtube": [
+            {
+              "handle": "user/uknationalgrid",
+              "handle_carries_company_name": true
+            }
+          ],
+          "instagram": [
+            {
+              "handle": "nationalgriduk",
+              "handle_carries_company_name": true
+            }
+          ]
+        },
+        "status": "INFERRED",
+        "evidence": "ACCEPTED -- 4 platform(s) linked from the company's own domain nationalgrid.com: facebook, instagram, x, youtube.",
+        "resolved_at": "2026-09-14T05:51Z"
+      }
+    },
+    {
+      "folder": "Nestle NESN SW",
+      "company_name": "Nestle",
+      "ir_domain": "nestle.com",
+      "body_bytes": 57153,
+      "social_account": {
+        "value": {
+          "linkedin": [
+            {
+              "handle": "nestle-s-a-",
+              "handle_carries_company_name": true
+            }
+          ],
+          "instagram": [
+            {
+              "handle": "nestle",
+              "handle_carries_company_name": true
+            },
+            {
+              "handle": "nestle.careers",
+              "handle_carries_company_name": true
+            }
+          ],
+          "tiktok": [
+            {
+              "handle": "@nestle",
+              "handle_carries_company_name": true
+            }
+          ],
+          "facebook": [
+            {
+              "handle": "Nestle",
+              "handle_carries_company_name": true
+            },
+            {
+              "handle": "NestleCareers",
+              "handle_carries_company_name": true
+            }
+          ],
+          "youtube": [
+            {
+              "handle": "user/NestleCorporate",
+              "handle_carries_company_name": true
+            }
+          ],
+          "x": [
+            {
+              "handle": "NestleCare",
+              "handle_carries_company_name": true
+            },
+            {
+              "handle": "NestleCareers",
+              "handle_carries_company_name": true
+            }
+          ]
+        },
+        "status": "INFERRED",
+        "evidence": "ACCEPTED -- 6 platform(s) linked from the company's own domain nestle.com: facebook, instagram, linkedin, tiktok, x, youtube.",
+        "resolved_at": "2026-09-14T05:51Z"
+      }
+    },
+    {
+      "folder": "Nokia FH",
+      "company_name": "Nokia",
+      "ir_domain": "nokia.com",
+      "body_bytes": 16867,
+      "social_account": {
+        "value": {
+          "instagram": [
+            {
+              "handle": "nokia",
+              "handle_carries_company_name": true
+            }
+          ],
+          "youtube": [
+            {
+              "handle": "user/nokia",
+              "handle_carries_company_name": true
+            }
+          ],
+          "x": [
+            {
+              "handle": "nokia",
+              "handle_carries_company_name": true
+            }
+          ],
+          "facebook": [
+            {
+              "handle": "nokia",
+              "handle_carries_company_name": true
+            }
+          ],
+          "linkedin": [
+            {
+              "handle": "nokia",
+              "handle_carries_company_name": true
+            }
+          ]
+        },
+        "status": "INFERRED",
+        "evidence": "ACCEPTED -- 5 platform(s) linked from the company's own domain nokia.com: facebook, instagram, linkedin, x, youtube.",
+        "resolved_at": "2026-09-14T05:52Z"
+      }
+    },
+    {
+      "folder": "Novartis NOVN SW",
+      "company_name": "Novartis",
+      "ir_domain": "novartis.com",
+      "body_bytes": 29979,
+      "social_account": {
+        "value": {
+          "linkedin": [
+            {
+              "handle": "novartis",
+              "handle_carries_company_name": true
+            }
+          ],
+          "facebook": [
+            {
+              "handle": "novartis",
+              "handle_carries_company_name": true
+            }
+          ],
+          "x": [
+            {
+              "handle": "novartis",
+              "handle_carries_company_name": true
+            }
+          ],
+          "instagram": [
+            {
+              "handle": "novartis",
+              "handle_carries_company_name": true
+            }
+          ],
+          "youtube": [
+            {
+              "handle": "user/novartis",
+              "handle_carries_company_name": true
+            }
+          ]
+        },
+        "status": "INFERRED",
+        "evidence": "ACCEPTED -- 5 platform(s) linked from the company's own domain novartis.com: facebook, instagram, linkedin, x, youtube.",
+        "resolved_at": "2026-09-14T05:52Z"
+      }
+    },
+    {
+      "folder": "Orange ORA FP",
+      "company_name": "Orange",
+      "ir_domain": "orange.com",
+      "body_bytes": 19932,
+      "social_account": {
+        "value": {
+          "linkedin": [
+            {
+              "handle": "1110",
+              "handle_carries_company_name": false
+            }
+          ],
+          "facebook": [
+            {
+              "handle": "orange",
+              "handle_carries_company_name": true
+            }
+          ],
+          "instagram": [
+            {
+              "handle": "orange",
+              "handle_carries_company_name": true
+            }
+          ],
+          "x": [
+            {
+              "handle": "orange",
+              "handle_carries_company_name": true
+            }
+          ],
+          "tiktok": [
+            {
+              "handle": "@orange",
+              "handle_carries_company_name": true
+            }
+          ]
+        },
+        "status": "INFERRED",
+        "evidence": "ACCEPTED -- 5 platform(s) linked from the company's own domain orange.com: facebook, instagram, linkedin, tiktok, x.",
+        "resolved_at": "2026-09-14T05:52Z"
+      }
+    },
+    {
+      "folder": "Petrobras PETR3 BZ",
+      "company_name": "Petrobras",
+      "ir_domain": "petrobras.com.br",
+      "body_bytes": 23134,
+      "social_account": {
+        "value": {
+          "facebook": [
+            {
+              "handle": "petrobras",
+              "handle_carries_company_name": true
+            }
+          ],
+          "instagram": [
+            {
+              "handle": "petrobras",
+              "handle_carries_company_name": true
+            }
+          ],
+          "youtube": [
+            {
+              "handle": "petrobras",
+              "handle_carries_company_name": true
+            }
+          ],
+          "tiktok": [
+            {
+              "handle": "@petrobras",
+              "handle_carries_company_name": true
+            }
+          ],
+          "linkedin": [
+            {
+              "handle": "petrobras",
+              "handle_carries_company_name": true
+            }
+          ]
+        },
+        "status": "INFERRED",
+        "evidence": "ACCEPTED -- 5 platform(s) linked from the company's own domain petrobras.com.br: facebook, instagram, linkedin, tiktok, youtube.",
+        "resolved_at": "2026-09-14T05:52Z"
+      }
+    },
+    {
+      "folder": "QXO",
+      "company_name": "QXO",
+      "ir_domain": "qxo.com",
+      "body_bytes": 15674,
+      "social_account": {
+        "value": {
+          "facebook": [
+            {
+              "handle": "QXOInc",
+              "handle_carries_company_name": true
+            }
+          ],
+          "x": [
+            {
+              "handle": "QXOInc",
+              "handle_carries_company_name": true
+            }
+          ],
+          "linkedin": [
+            {
+              "handle": "qxoinc",
+              "handle_carries_company_name": true
+            }
+          ],
+          "instagram": [
+            {
+              "handle": "qxoinc",
+              "handle_carries_company_name": true
+            }
+          ],
+          "youtube": [
+            {
+              "handle": "@QXOInc.",
+              "handle_carries_company_name": true
+            }
+          ]
+        },
+        "status": "INFERRED",
+        "evidence": "ACCEPTED -- 5 platform(s) linked from the company's own domain qxo.com: facebook, instagram, linkedin, x, youtube.",
+        "resolved_at": "2026-09-14T05:52Z"
+      }
+    },
+    {
+      "folder": "RWE AG RWE GY",
+      "company_name": "RWE",
+      "ir_domain": "rwe.com",
+      "body_bytes": 33711,
+      "social_account": {
+        "value": {
+          "linkedin": [
+            {
+              "handle": "rwe-",
+              "handle_carries_company_name": true
+            }
+          ],
+          "youtube": [
+            {
+              "handle": "@RWEKonzern",
+              "handle_carries_company_name": true
+            }
+          ],
+          "instagram": [
+            {
+              "handle": "rwe.global",
+              "handle_carries_company_name": true
+            },
+            {
+              "handle": "rwe_ausbildung",
+              "handle_carries_company_name": true
+            }
+          ]
+        },
+        "status": "INFERRED",
+        "evidence": "ACCEPTED -- 3 platform(s) linked from the company's own domain rwe.com: instagram, linkedin, youtube.",
+        "resolved_at": "2026-09-14T05:52Z"
+      }
+    },
+    {
+      "folder": "Reckitt Benckiser RKT LN",
+      "company_name": "Reckitt Benckiser",
+      "ir_domain": "reckitt.com",
+      "body_bytes": 10544,
+      "social_account": {
+        "value": {
+          "linkedin": [
+            {
+              "handle": "reckitt",
+              "handle_carries_company_name": true
+            }
+          ],
+          "instagram": [
+            {
+              "handle": "thisisreckitt",
+              "handle_carries_company_name": true
+            }
+          ],
+          "facebook": [
+            {
+              "handle": "ThisIsReckitt",
+              "handle_carries_company_name": true
+            }
+          ],
+          "x": [
+            {
+              "handle": "ThisIsReckitt",
+              "handle_carries_company_name": true
+            }
+          ]
+        },
+        "status": "INFERRED",
+        "evidence": "ACCEPTED -- 4 platform(s) linked from the company's own domain reckitt.com: facebook, instagram, linkedin, x.",
+        "resolved_at": "2026-09-14T05:52Z"
+      }
+    },
+    {
+      "folder": "Rio Tinto RIO LN",
+      "company_name": "Rio Tinto",
+      "ir_domain": "riotinto.com",
+      "body_bytes": 29034,
+      "social_account": {
+        "value": {
+          "x": [
+            {
+              "handle": "riotinto",
+              "handle_carries_company_name": true
+            }
+          ],
+          "facebook": [
+            {
+              "handle": "riotintogroup",
+              "handle_carries_company_name": true
+            }
+          ],
+          "instagram": [
+            {
+              "handle": "lifeatriotinto",
+              "handle_carries_company_name": true
+            }
+          ],
+          "youtube": [
+            {
+              "handle": "user/RioTintoVideos",
+              "handle_carries_company_name": true
+            }
+          ],
+          "linkedin": [
+            {
+              "handle": "rio-tinto",
+              "handle_carries_company_name": true
+            }
+          ]
+        },
+        "status": "INFERRED",
+        "evidence": "ACCEPTED -- 5 platform(s) linked from the company's own domain riotinto.com: facebook, instagram, linkedin, x, youtube.",
+        "resolved_at": "2026-09-14T05:52Z"
+      }
+    },
+    {
+      "folder": "Roche ROG SW",
+      "company_name": "Roche",
+      "ir_domain": "roche.com",
+      "body_bytes": 11823,
+      "social_account": {
+        "value": {
+          "linkedin": [
+            {
+              "handle": "roche",
+              "handle_carries_company_name": true
+            }
+          ],
+          "facebook": [
+            {
+              "handle": "roche",
+              "handle_carries_company_name": true
+            }
+          ],
+          "x": [
+            {
+              "handle": "roche",
+              "handle_carries_company_name": true
+            }
+          ],
+          "instagram": [
+            {
+              "handle": "roche",
+              "handle_carries_company_name": true
+            }
+          ],
+          "youtube": [
+            {
+              "handle": "roche",
+              "handle_carries_company_name": true
+            }
+          ]
+        },
+        "status": "INFERRED",
+        "evidence": "ACCEPTED -- 5 platform(s) linked from the company's own domain roche.com: facebook, instagram, linkedin, x, youtube.",
+        "resolved_at": "2026-09-14T05:52Z"
+      }
+    },
+    {
+      "folder": "SAP GY",
+      "company_name": "SAP",
+      "ir_domain": "sap.com",
+      "body_bytes": 3063,
+      "social_account": {
+        "value": {
+          "facebook": [
+            {
+              "handle": "SAP",
+              "handle_carries_company_name": true
+            }
+          ],
+          "youtube": [
+            {
+              "handle": "@SAP",
+              "handle_carries_company_name": true
+            }
+          ],
+          "linkedin": [
+            {
+              "handle": "sap",
+              "handle_carries_company_name": true
+            }
+          ],
+          "instagram": [
+            {
+              "handle": "sap",
+              "handle_carries_company_name": true
+            }
+          ]
+        },
+        "status": "INFERRED",
+        "evidence": "ACCEPTED -- 4 platform(s) linked from the company's own domain sap.com: facebook, instagram, linkedin, youtube.",
+        "resolved_at": "2026-09-14T05:52Z"
+      }
+    },
+    {
+      "folder": "SSE plc SSE LN",
+      "company_name": "SSE plc",
+      "ir_domain": "sse.com",
+      "body_bytes": 12639,
+      "social_account": {
+        "value": {
+          "youtube": [
+            {
+              "handle": "@sseplc",
+              "handle_carries_company_name": true
+            }
+          ]
+        },
+        "status": "INFERRED",
+        "evidence": "ACCEPTED -- 1 platform(s) linked from the company's own domain sse.com: youtube.",
+        "resolved_at": "2026-09-14T05:52Z"
+      }
+    },
+    {
+      "folder": "Sanofi SAN FP",
+      "company_name": "Sanofi",
+      "ir_domain": "sanofi.com",
+      "body_bytes": 13146,
+      "social_account": {
+        "value": {
+          "linkedin": [
+            {
+              "handle": "sanofi",
+              "handle_carries_company_name": true
+            }
+          ],
+          "x": [
+            {
+              "handle": "sanofi",
+              "handle_carries_company_name": true
+            }
+          ],
+          "instagram": [
+            {
+              "handle": "sanofi",
+              "handle_carries_company_name": true
+            }
+          ],
+          "facebook": [
+            {
+              "handle": "Sanofi",
+              "handle_carries_company_name": true
+            }
+          ],
+          "tiktok": [
+            {
+              "handle": "@sanofi",
+              "handle_carries_company_name": true
+            }
+          ],
+          "youtube": [
+            {
+              "handle": "@sanofi",
+              "handle_carries_company_name": true
+            }
+          ]
+        },
+        "status": "INFERRED",
+        "evidence": "ACCEPTED -- 6 platform(s) linked from the company's own domain sanofi.com: facebook, instagram, linkedin, tiktok, x, youtube.",
+        "resolved_at": "2026-09-14T05:52Z"
+      }
+    },
+    {
+      "folder": "Schlumberger SLB",
+      "company_name": "Schlumberger",
+      "ir_domain": "slb.com",
+      "body_bytes": 167123,
+      "social_account": {
+        "value": {
+          "linkedin": [
+            {
+              "handle": "slbglobal",
+              "handle_carries_company_name": false
+            }
+          ],
+          "youtube": [
+            {
+              "handle": "channel/UCzX5PhHCet4oAi_iTutUo5Q",
+              "handle_carries_company_name": false
+            }
+          ],
+          "facebook": [
+            {
+              "handle": "WeAreSLBGlobal",
+              "handle_carries_company_name": false
+            }
+          ],
+          "instagram": [
+            {
+              "handle": "slb_global",
+              "handle_carries_company_name": false
+            }
+          ]
+        },
+        "status": "INFERRED",
+        "evidence": "ACCEPTED -- 4 platform(s) linked from the company's own domain slb.com: facebook, instagram, linkedin, youtube.",
+        "resolved_at": "2026-09-14T05:53Z"
+      }
+    },
+    {
+      "folder": "ServiceNow NOW US",
+      "company_name": "ServiceNow",
+      "ir_domain": "servicenow.com",
+      "body_bytes": 37107,
+      "social_account": {
+        "value": {
+          "x": [
+            {
+              "handle": "servicenow",
+              "handle_carries_company_name": true
+            }
+          ],
+          "youtube": [
+            {
+              "handle": "user/servicenowinc",
+              "handle_carries_company_name": true
+            }
+          ],
+          "linkedin": [
+            {
+              "handle": "servicenow",
+              "handle_carries_company_name": true
+            }
+          ],
+          "facebook": [
+            {
+              "handle": "servicenow",
+              "handle_carries_company_name": true
+            }
+          ],
+          "instagram": [
+            {
+              "handle": "servicenow",
+              "handle_carries_company_name": true
+            }
+          ],
+          "tiktok": [
+            {
+              "handle": "@servicenow",
+              "handle_carries_company_name": true
+            }
+          ]
+        },
+        "status": "INFERRED",
+        "evidence": "ACCEPTED -- 6 platform(s) linked from the company's own domain servicenow.com: facebook, instagram, linkedin, tiktok, x, youtube.",
+        "resolved_at": "2026-09-14T05:53Z"
+      }
+    },
+    {
+      "folder": "Synopsys SNPS US",
+      "company_name": "Synopsys",
+      "ir_domain": "synopsys.com",
+      "body_bytes": 20598,
+      "social_account": {
+        "value": {
+          "x": [
+            {
+              "handle": "Synopsys",
+              "handle_carries_company_name": true
+            }
+          ],
+          "linkedin": [
+            {
+              "handle": "synopsys",
+              "handle_carries_company_name": true
+            }
+          ],
+          "facebook": [
+            {
+              "handle": "Synopsys",
+              "handle_carries_company_name": true
+            }
+          ],
+          "youtube": [
+            {
+              "handle": "user/synopsys",
+              "handle_carries_company_name": true
+            }
+          ],
+          "instagram": [
+            {
+              "handle": "synopsyslife",
+              "handle_carries_company_name": true
+            }
+          ]
+        },
+        "status": "INFERRED",
+        "evidence": "ACCEPTED -- 5 platform(s) linked from the company's own domain synopsys.com: facebook, instagram, linkedin, x, youtube.",
+        "resolved_at": "2026-09-14T05:53Z"
+      }
+    },
+    {
+      "folder": "Telefonica Brazil VIVT3 BZ",
+      "company_name": "Telefonica Brazil",
+      "ir_domain": "telefonica.com.br",
+      "body_bytes": 5287,
+      "social_account": {
+        "value": {
+          "youtube": [
+            {
+              "handle": "playlist",
+              "handle_carries_company_name": false
+            }
+          ]
+        },
+        "status": "INFERRED",
+        "evidence": "ACCEPTED -- 1 platform(s) linked from the company's own domain telefonica.com.br: youtube.",
+        "resolved_at": "2026-09-14T05:53Z"
+      }
+    },
+    {
+      "folder": "Tokyo Electron 8035 JP",
+      "company_name": "Tokyo Electron",
+      "ir_domain": "tel.com",
+      "body_bytes": 20606,
+      "social_account": {
+        "value": {
+          "x": [
+            {
+              "handle": "TokyoElectron_J",
+              "handle_carries_company_name": true
+            }
+          ],
+          "facebook": [
+            {
+              "handle": "TokyoElectron",
+              "handle_carries_company_name": true
+            }
+          ],
+          "youtube": [
+            {
+              "handle": "channel/UC1KPfiylA8OevAaPc2GHaYw",
+              "handle_carries_company_name": false
+            }
+          ],
+          "linkedin": [
+            {
+              "handle": "tokyoelectron",
+              "handle_carries_company_name": true
+            }
+          ]
+        },
+        "status": "INFERRED",
+        "evidence": "ACCEPTED -- 4 platform(s) linked from the company's own domain tel.com: facebook, linkedin, x, youtube.",
+        "resolved_at": "2026-09-14T05:53Z"
+      }
+    },
+    {
+      "folder": "Total Energies TTE FP",
+      "company_name": "Total Energies",
+      "ir_domain": "totalenergies.com",
+      "body_bytes": 20939,
+      "social_account": {
+        "value": {
+          "facebook": [
+            {
+              "handle": "TotalEnergies",
+              "handle_carries_company_name": true
+            }
+          ],
+          "x": [
+            {
+              "handle": "TotalEnergies",
+              "handle_carries_company_name": true
+            }
+          ],
+          "linkedin": [
+            {
+              "handle": "totalenergies",
+              "handle_carries_company_name": true
+            }
+          ],
+          "youtube": [
+            {
+              "handle": "TotalEnergies",
+              "handle_carries_company_name": true
+            }
+          ],
+          "instagram": [
+            {
+              "handle": "totalenergies",
+              "handle_carries_company_name": true
+            }
+          ]
+        },
+        "status": "INFERRED",
+        "evidence": "ACCEPTED -- 5 platform(s) linked from the company's own domain totalenergies.com: facebook, instagram, linkedin, x, youtube.",
+        "resolved_at": "2026-09-14T05:54Z"
+      }
+    },
+    {
+      "folder": "Uber Technologies UBER US",
+      "company_name": "Uber Technologies",
+      "ir_domain": "uber.com",
+      "body_bytes": 12772,
+      "social_account": {
+        "value": {
+          "linkedin": [
+            {
+              "handle": "1815218",
+              "handle_carries_company_name": false
+            }
+          ],
+          "youtube": [
+            {
+              "handle": "channel/UCgnxoUwDmmyzeigmmcf0hZA",
+              "handle_carries_company_name": false
+            }
+          ],
+          "instagram": [
+            {
+              "handle": "uber",
+              "handle_carries_company_name": true
+            }
+          ],
+          "x": [
+            {
+              "handle": "uber",
+              "handle_carries_company_name": true
+            }
+          ]
+        },
+        "status": "INFERRED",
+        "evidence": "ACCEPTED -- 4 platform(s) linked from the company's own domain uber.com: instagram, linkedin, x, youtube.",
+        "resolved_at": "2026-09-14T05:54Z"
+      }
+    },
+    {
+      "folder": "Universal Music Group UMG NL",
+      "company_name": "Universal Music Group",
+      "ir_domain": "universalmusic.com",
+      "body_bytes": 10807,
+      "social_account": {
+        "value": {
+          "facebook": [
+            {
+              "handle": "universalmusicgroup",
+              "handle_carries_company_name": true
+            }
+          ],
+          "x": [
+            {
+              "handle": "UMG",
+              "handle_carries_company_name": false
+            }
+          ],
+          "instagram": [
+            {
+              "handle": "universalmusicgroup",
+              "handle_carries_company_name": true
+            }
+          ]
+        },
+        "status": "INFERRED",
+        "evidence": "ACCEPTED -- 3 platform(s) linked from the company's own domain universalmusic.com: facebook, instagram, x.",
+        "resolved_at": "2026-09-14T05:54Z"
+      }
+    },
+    {
+      "folder": "Valero Energy VLO",
+      "company_name": "Valero Energy",
+      "ir_domain": "investorvalero.com",
+      "body_bytes": 7038,
+      "social_account": {
+        "value": {
+          "youtube": [
+            {
+              "handle": "user/ValeroEnergy1",
+              "handle_carries_company_name": true
+            }
+          ],
+          "instagram": [
+            {
+              "handle": "valeroenergy",
+              "handle_carries_company_name": true
+            }
+          ],
+          "linkedin": [
+            {
+              "handle": "valero-energy-corporation",
+              "handle_carries_company_name": true
+            }
+          ],
+          "facebook": [
+            {
+              "handle": "valeroenergy",
+              "handle_carries_company_name": true
+            }
+          ]
+        },
+        "status": "INFERRED",
+        "evidence": "ACCEPTED -- 4 platform(s) linked from the company's own domain investorvalero.com: facebook, instagram, linkedin, youtube.",
+        "resolved_at": "2026-09-14T05:54Z"
+      }
+    },
+    {
+      "folder": "Walmart de Mexico WALMEX MM",
+      "company_name": "Walmart de Mexico",
+      "ir_domain": "walmex.mx",
+      "body_bytes": 5144,
+      "social_account": {
+        "value": {
+          "youtube": [
+            {
+              "handle": "user/WalmartMexicoyCAM",
+              "handle_carries_company_name": true
+            }
+          ],
+          "linkedin": [
+            {
+              "handle": "wal-mart-mexico",
+              "handle_carries_company_name": true
+            }
+          ],
+          "x": [
+            {
+              "handle": "WalmartMXyCAM",
+              "handle_carries_company_name": true
+            }
+          ],
+          "facebook": [
+            {
+              "handle": "WalmartdeMexicoyCentroamerica",
+              "handle_carries_company_name": true
+            }
+          ]
+        },
+        "status": "INFERRED",
+        "evidence": "ACCEPTED -- 4 platform(s) linked from the company's own domain walmex.mx: facebook, linkedin, x, youtube.",
+        "resolved_at": "2026-09-14T05:54Z"
+      }
+    },
+    {
+      "folder": "Workday WDAY US",
+      "company_name": "Workday",
+      "ir_domain": "workday.com",
+      "body_bytes": 38003,
+      "social_account": {
+        "value": {
+          "x": [
+            {
+              "handle": "workday",
+              "handle_carries_company_name": true
+            }
+          ],
+          "linkedin": [
+            {
+              "handle": "workday",
+              "handle_carries_company_name": true
+            }
+          ],
+          "facebook": [
+            {
+              "handle": "workday",
+              "handle_carries_company_name": true
+            }
+          ],
+          "instagram": [
+            {
+              "handle": "workday",
+              "handle_carries_company_name": true
+            }
+          ],
+          "youtube": [
+            {
+              "handle": "t/terms",
+              "handle_carries_company_name": false
+            },
+            {
+              "handle": "user/workdayvideo",
+              "handle_carries_company_name": true
+            }
+          ]
+        },
+        "status": "INFERRED",
+        "evidence": "ACCEPTED -- 5 platform(s) linked from the company's own domain workday.com: facebook, instagram, linkedin, x, youtube.",
+        "resolved_at": "2026-09-14T05:54Z"
+      }
+    },
+    {
+      "folder": "Zoetis ZTS US",
+      "company_name": "Zoetis",
+      "ir_domain": "zoetis.com",
+      "body_bytes": 18486,
+      "social_account": {
+        "value": {
+          "facebook": [
+            {
+              "handle": "Zoetis",
+              "handle_carries_company_name": true
+            }
+          ],
+          "x": [
+            {
+              "handle": "zoetis",
+              "handle_carries_company_name": true
+            }
+          ],
+          "linkedin": [
+            {
+              "handle": "zoetis",
+              "handle_carries_company_name": true
+            }
+          ],
+          "youtube": [
+            {
+              "handle": "@ZoetisInc",
+              "handle_carries_company_name": true
+            }
+          ]
+        },
+        "status": "INFERRED",
+        "evidence": "ACCEPTED -- 4 platform(s) linked from the company's own domain zoetis.com: facebook, linkedin, x, youtube.",
+        "resolved_at": "2026-09-14T05:55Z"
+      }
+    },
+    {
+      "folder": "Zurich Insurance ZURN SW",
+      "company_name": "Zurich Insurance",
+      "ir_domain": "zurich.com",
+      "body_bytes": 18190,
+      "social_account": {
+        "value": {
+          "facebook": [
+            {
+              "handle": "zurich",
+              "handle_carries_company_name": true
+            }
+          ],
+          "linkedin": [
+            {
+              "handle": "zurich-insurance-company-ltd",
+              "handle_carries_company_name": true
+            }
+          ],
+          "x": [
+            {
+              "handle": "zurich",
+              "handle_carries_company_name": true
+            }
+          ],
+          "instagram": [
+            {
+              "handle": "zurichinsurance",
+              "handle_carries_company_name": true
+            }
+          ],
+          "youtube": [
+            {
+              "handle": "zurichglobal",
+              "handle_carries_company_name": true
+            }
+          ],
+          "tiktok": [
+            {
+              "handle": "@zurich",
+              "handle_carries_company_name": true
+            }
+          ]
+        },
+        "status": "INFERRED",
+        "evidence": "ACCEPTED -- 6 platform(s) linked from the company's own domain zurich.com: facebook, instagram, linkedin, tiktok, x, youtube.",
+        "resolved_at": "2026-09-14T05:55Z"
+      }
+    },
+    {
+      "folder": "Adobe ADBE US",
+      "company_name": "Adobe",
+      "ir_domain": "adobe.com",
+      "body_bytes": 8213,
+      "social_account": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "REFUSED -- the page at https://www.adobe.com/ returned 8213 bytes and carried NO social links. Measured cause for at least one company (Adobe): the navigation and footer are CLIENT-RENDERED, so a markdown scrape cannot see them and no fallback page can be followed either. THIS IS A LIMIT OF THE INSTRUMENT, not evidence the company has no accounts.",
+        "resolved_at": "2026-09-14T05:58Z"
+      }
+    },
+    {
+      "folder": "America Movil AXMB MM",
+      "company_name": "America Movil",
+      "ir_domain": "americamovil.com",
+      "body_bytes": 13093,
+      "social_account": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "REFUSED -- the page at https://www.americamovil.com/ returned 13093 bytes and carried NO social links. Measured cause for at least one company (Adobe): the navigation and footer are CLIENT-RENDERED, so a markdown scrape cannot see them and no fallback page can be followed either. THIS IS A LIMIT OF THE INSTRUMENT, not evidence the company has no accounts.",
+        "resolved_at": "2026-09-14T05:59Z"
+      }
+    },
+    {
+      "folder": "BNP Paribas BNP FP",
+      "company_name": "BNP Paribas",
+      "ir_domain": "invest.bnpparibas",
+      "body_bytes": 18111,
+      "social_account": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "REFUSED -- the page at https://www.invest.bnpparibas/ returned 18111 bytes and carried NO social links. Measured cause for at least one company (Adobe): the navigation and footer are CLIENT-RENDERED, so a markdown scrape cannot see them and no fallback page can be followed either. THIS IS A LIMIT OF THE INSTRUMENT, not evidence the company has no accounts.",
+        "resolved_at": "2026-09-14T05:59Z"
+      }
+    },
+    {
+      "folder": "Boeing BA",
+      "company_name": "Boeing",
+      "ir_domain": "boeing.com",
+      "body_bytes": 25329,
+      "social_account": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "REFUSED -- the page at https://www.boeing.com/ returned 25329 bytes and carried NO social links. Measured cause for at least one company (Adobe): the navigation and footer are CLIENT-RENDERED, so a markdown scrape cannot see them and no fallback page can be followed either. THIS IS A LIMIT OF THE INSTRUMENT, not evidence the company has no accounts.",
+        "resolved_at": "2026-09-14T05:59Z"
+      }
+    },
+    {
+      "folder": "Canadian National Railway CNR",
+      "company_name": "Canadian National Railway",
+      "ir_domain": "cn.ca",
+      "body_bytes": 30715,
+      "social_account": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "REFUSED -- the page at https://www.cn.ca/ returned 30715 bytes and carried NO social links. Measured cause for at least one company (Adobe): the navigation and footer are CLIENT-RENDERED, so a markdown scrape cannot see them and no fallback page can be followed either. THIS IS A LIMIT OF THE INSTRUMENT, not evidence the company has no accounts.",
+        "resolved_at": "2026-09-14T05:59Z"
+      }
+    },
+    {
+      "folder": "China Construction Bank",
+      "company_name": "China Construction Bank",
+      "ir_domain": "ccb.com",
+      "social_account": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED / NO PAYLOAD -- the fetch of https://www.ccb.com/ returned nothing. A transient failure and a dead host are byte-identical on this tool, so THIS IS NOT A FINDING that the company publishes no social accounts.",
+        "resolved_at": "2026-09-14T06:00Z"
+      }
+    },
+    {
+      "folder": "Clorox CLX",
+      "company_name": "Clorox",
+      "ir_domain": "thecloroxcompany.com",
+      "body_bytes": 11287,
+      "social_account": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "REFUSED -- the page at https://www.thecloroxcompany.com/ returned 11287 bytes and carried NO social links. Measured cause for at least one company (Adobe): the navigation and footer are CLIENT-RENDERED, so a markdown scrape cannot see them and no fallback page can be followed either. THIS IS A LIMIT OF THE INSTRUMENT, not evidence the company has no accounts.",
+        "resolved_at": "2026-09-14T06:00Z"
+      }
+    },
+    {
+      "folder": "Copa CPA",
+      "company_name": "Copa",
+      "ir_domain": "copaair.com",
+      "social_account": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED / NO PAYLOAD -- the fetch of https://www.copaair.com/ returned nothing. A transient failure and a dead host are byte-identical on this tool, so THIS IS NOT A FINDING that the company publishes no social accounts.",
+        "resolved_at": "2026-09-14T06:01Z"
+      }
+    },
+    {
+      "folder": "Intuit INTU",
+      "company_name": "Intuit",
+      "ir_domain": "intuit.com",
+      "body_bytes": 15100,
+      "social_account": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "REFUSED -- the page at https://www.intuit.com/ returned 15100 bytes and carried NO social links. Measured cause for at least one company (Adobe): the navigation and footer are CLIENT-RENDERED, so a markdown scrape cannot see them and no fallback page can be followed either. THIS IS A LIMIT OF THE INSTRUMENT, not evidence the company has no accounts.",
+        "resolved_at": "2026-09-14T06:01Z"
+      }
+    },
+    {
+      "folder": "JD.com 9618 HK",
+      "company_name": "JD.com",
+      "ir_domain": "jd.com",
+      "body_bytes": 1377,
+      "social_account": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "REFUSED -- the page at https://www.jd.com/ returned 1377 bytes and carried NO social links. Measured cause for at least one company (Adobe): the navigation and footer are CLIENT-RENDERED, so a markdown scrape cannot see them and no fallback page can be followed either. THIS IS A LIMIT OF THE INSTRUMENT, not evidence the company has no accounts.",
+        "resolved_at": "2026-09-14T06:01Z"
+      }
+    },
+    {
+      "folder": "KDDI",
+      "company_name": "KDDI",
+      "ir_domain": "kddi.com",
+      "body_bytes": 6983,
+      "social_account": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "REFUSED -- the page at https://www.kddi.com/ returned 6983 bytes and carried NO social links. Measured cause for at least one company (Adobe): the navigation and footer are CLIENT-RENDERED, so a markdown scrape cannot see them and no fallback page can be followed either. THIS IS A LIMIT OF THE INSTRUMENT, not evidence the company has no accounts.",
+        "resolved_at": "2026-09-14T06:01Z"
+      }
+    },
+    {
+      "folder": "Koninklijke KPN NA",
+      "company_name": "KPN",
+      "ir_domain": "kpn.com",
+      "social_account": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED / NO PAYLOAD -- the fetch of https://www.kpn.com/ returned nothing. A transient failure and a dead host are byte-identical on this tool, so THIS IS NOT A FINDING that the company publishes no social accounts.",
+        "resolved_at": "2026-09-14T06:01Z"
+      }
+    },
+    {
+      "folder": "MercadoLibre MELI US",
+      "company_name": "MercadoLibre",
+      "ir_domain": "mercadolibre.com",
+      "body_bytes": 1084,
+      "social_account": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "REFUSED -- the page at https://www.mercadolibre.com/ returned 1084 bytes and carried NO social links. Measured cause for at least one company (Adobe): the navigation and footer are CLIENT-RENDERED, so a markdown scrape cannot see them and no fallback page can be followed either. THIS IS A LIMIT OF THE INSTRUMENT, not evidence the company has no accounts.",
+        "resolved_at": "2026-09-14T06:01Z"
+      }
+    },
+    {
+      "folder": "Mitsubishi UFJ Financial Group 8306 JP",
+      "company_name": "Mitsubishi UFJ Financial Group",
+      "ir_domain": "mufg.jp",
+      "body_bytes": 9683,
+      "social_account": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "REFUSED -- the page at https://www.mufg.jp/ returned 9683 bytes and carried NO social links. Measured cause for at least one company (Adobe): the navigation and footer are CLIENT-RENDERED, so a markdown scrape cannot see them and no fallback page can be followed either. THIS IS A LIMIT OF THE INSTRUMENT, not evidence the company has no accounts.",
+        "resolved_at": "2026-09-14T06:01Z"
+      }
+    },
+    {
+      "folder": "Monster MNST",
+      "company_name": "Monster",
+      "ir_domain": "monsterbevcorp.com",
+      "body_bytes": 5220,
+      "social_account": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "REFUSED -- the page at https://www.monsterbevcorp.com/ returned 5220 bytes and carried NO social links. Measured cause for at least one company (Adobe): the navigation and footer are CLIENT-RENDERED, so a markdown scrape cannot see them and no fallback page can be followed either. THIS IS A LIMIT OF THE INSTRUMENT, not evidence the company has no accounts.",
+        "resolved_at": "2026-09-14T06:01Z"
+      }
+    },
+    {
+      "folder": "Netflix NFLX",
+      "company_name": "Netflix",
+      "ir_domain": "netflix.net",
+      "social_account": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED / NO PAYLOAD -- the fetch of https://www.netflix.net/ returned nothing. A transient failure and a dead host are byte-identical on this tool, so THIS IS NOT A FINDING that the company publishes no social accounts.",
+        "resolved_at": "2026-09-14T06:02Z"
+      }
+    },
+    {
+      "folder": "Nike NKE US",
+      "company_name": "Nike",
+      "ir_domain": "nike.com",
+      "body_bytes": 33138,
+      "social_account": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "REFUSED -- the page at https://www.nike.com/ returned 33138 bytes and carried NO social links. Measured cause for at least one company (Adobe): the navigation and footer are CLIENT-RENDERED, so a markdown scrape cannot see them and no fallback page can be followed either. THIS IS A LIMIT OF THE INSTRUMENT, not evidence the company has no accounts.",
+        "resolved_at": "2026-09-14T06:02Z"
+      }
+    },
+    {
+      "folder": "Nubank NU",
+      "company_name": "Nubank",
+      "ir_domain": "nubank.com.br",
+      "social_account": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED / NO PAYLOAD -- the fetch of https://www.nubank.com.br/ returned nothing. A transient failure and a dead host are byte-identical on this tool, so THIS IS NOT A FINDING that the company publishes no social accounts.",
+        "resolved_at": "2026-09-14T06:02Z"
+      }
+    },
+    {
+      "folder": "Shopify SHOP CA",
+      "company_name": "Shopify",
+      "ir_domain": "shopify.com",
+      "body_bytes": 17535,
+      "social_account": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "REFUSED -- the page at https://www.shopify.com/ returned 17535 bytes and carried NO social links. Measured cause for at least one company (Adobe): the navigation and footer are CLIENT-RENDERED, so a markdown scrape cannot see them and no fallback page can be followed either. THIS IS A LIMIT OF THE INSTRUMENT, not evidence the company has no accounts.",
+        "resolved_at": "2026-09-14T06:02Z"
+      }
+    },
+    {
+      "folder": "Singapore Telecom ST SP",
+      "company_name": "Singapore Telecom",
+      "ir_domain": "singtel.com",
+      "body_bytes": 1182,
+      "social_account": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "REFUSED -- the page at https://www.singtel.com/ returned 1182 bytes and carried NO social links. Measured cause for at least one company (Adobe): the navigation and footer are CLIENT-RENDERED, so a markdown scrape cannot see them and no fallback page can be followed either. THIS IS A LIMIT OF THE INSTRUMENT, not evidence the company has no accounts.",
+        "resolved_at": "2026-09-14T06:02Z"
+      }
+    },
+    {
+      "folder": "Spotify SPOT US",
+      "company_name": "Spotify",
+      "ir_domain": "spotify.com",
+      "social_account": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED / NO PAYLOAD -- the fetch of https://www.spotify.com/ returned nothing. A transient failure and a dead host are byte-identical on this tool, so THIS IS NOT A FINDING that the company publishes no social accounts.",
+        "resolved_at": "2026-09-14T06:02Z"
+      }
+    },
+    {
+      "folder": "Sumitomo Mitsui Financial Group 8316 JP",
+      "company_name": "Sumitomo Mitsui Financial Group",
+      "ir_domain": "smfg.co.jp",
+      "body_bytes": 3450,
+      "social_account": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "REFUSED -- the page at https://www.smfg.co.jp/ returned 3450 bytes and carried NO social links. Measured cause for at least one company (Adobe): the navigation and footer are CLIENT-RENDERED, so a markdown scrape cannot see them and no fallback page can be followed either. THIS IS A LIMIT OF THE INSTRUMENT, not evidence the company has no accounts.",
+        "resolved_at": "2026-09-14T06:02Z"
+      }
+    },
+    {
+      "folder": "Taiwan Semiconductor Manufacturing TSM US",
+      "company_name": "Taiwan Semiconductor Manufacturing",
+      "ir_domain": "tsmc.com",
+      "body_bytes": 26020,
+      "social_account": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "REFUSED -- the page at https://www.tsmc.com/ returned 26020 bytes and carried NO social links. Measured cause for at least one company (Adobe): the navigation and footer are CLIENT-RENDERED, so a markdown scrape cannot see them and no fallback page can be followed either. THIS IS A LIMIT OF THE INSTRUMENT, not evidence the company has no accounts.",
+        "resolved_at": "2026-09-14T06:02Z"
+      }
+    },
+    {
+      "folder": "Tokyo Marine 8766 JP",
+      "company_name": "Tokyo Marine",
+      "ir_domain": "tokiomarinehd.com",
+      "body_bytes": 814,
+      "social_account": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "REFUSED -- the page at https://www.tokiomarinehd.com/ returned 814 bytes and carried NO social links. Measured cause for at least one company (Adobe): the navigation and footer are CLIENT-RENDERED, so a markdown scrape cannot see them and no fallback page can be followed either. THIS IS A LIMIT OF THE INSTRUMENT, not evidence the company has no accounts.",
+        "resolved_at": "2026-09-14T06:02Z"
+      }
+    },
+    {
+      "folder": "UBS",
+      "company_name": "UBS",
+      "ir_domain": "ubs.com",
+      "body_bytes": 15090,
+      "social_account": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "REFUSED -- the page at https://www.ubs.com/ returned 15090 bytes and carried NO social links. Measured cause for at least one company (Adobe): the navigation and footer are CLIENT-RENDERED, so a markdown scrape cannot see them and no fallback page can be followed either. THIS IS A LIMIT OF THE INSTRUMENT, not evidence the company has no accounts.",
+        "resolved_at": "2026-09-14T06:02Z"
+      }
+    },
+    {
+      "folder": "Unilever ULVR LN",
+      "company_name": "Unilever",
+      "ir_domain": "unilever.com",
+      "social_account": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "NOT ASKED / NO PAYLOAD -- the fetch of https://www.unilever.com/ returned nothing. A transient failure and a dead host are byte-identical on this tool, so THIS IS NOT A FINDING that the company publishes no social accounts.",
+        "resolved_at": "2026-09-14T06:02Z"
+      }
+    },
+    {
+      "folder": "Visa V",
+      "company_name": "Visa",
+      "ir_domain": "visa.com",
+      "body_bytes": 2421,
+      "social_account": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "REFUSED -- the page at https://www.visa.com/ returned 2421 bytes and carried NO social links. Measured cause for at least one company (Adobe): the navigation and footer are CLIENT-RENDERED, so a markdown scrape cannot see them and no fallback page can be followed either. THIS IS A LIMIT OF THE INSTRUMENT, not evidence the company has no accounts.",
+        "resolved_at": "2026-09-14T06:02Z"
+      }
+    }
+  ],
+  "state": "COMPLETE for this instrument. 88 of 88 held domains attempted across two runs; the 27 unresolved are unresolvable BY THIS INSTRUMENT for a diagnosed reason, not un-attempted.",
+  "retry_finding": "THE RETRY RECOVERED ZERO, AND THE HYPOTHESIS IT TESTED WAS WRONG. It was added because six major companies came back empty and \"retry once before recording an absence\" is banked estate discipline. Re-running all 27 recovered NONE: the empty set is STABLE and REPRODUCIBLE, not transient. The guard was still right to add -- it is what made the negative result trustworthy instead of a guess.",
+  "diagnosis": "NIKE RETURNED 33,141 BYTES AND BOEING 25,332 WITH ZERO SOCIAL LINKS, which looked like an extractor bug. Tested rather than assumed: the words \"twitter\", \"x.com\", \"instagram\", \"facebook\", \"youtube\" and \"linkedin\" do not appear ANYWHERE in either body, in any form. SO THE EXTRACTOR IS NOT AT FAULT -- these pages do not carry the links in the fetched markdown at all. Modern corporate footers are client-rendered, and scrape_as_markdown returns pre-hydration content. That is the same structural limit first seen on Adobe, now confirmed on two more and stated as a property of the tool."
+}

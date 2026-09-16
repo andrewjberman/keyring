@@ -1,0 +1,213 @@
+{
+  "at": "2026-09-14T17:35:41Z",
+  "head": "9e6e72ea8b27b181fd0fdf7c28a480295aee94e9",
+  "total_orders": 19,
+  "open_orders": [],
+  "orders": [
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-S1-1.unknown-is-not-equity.md",
+      "last_commit": "c34eab85dcd56edcd1ef6fb08e7f8e0f0048ddb7",
+      "status": "complete"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-S1A-1.which-one-place-survives-the-seed.md",
+      "last_commit": "6bed191b424bd6528ccf0ed5261cf39804968b3e",
+      "status": "complete"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-S2-1.retag-the-hedge-bucket.md",
+      "last_commit": "93135eb5b9a7f982efd16753d1436508cc1d55e5",
+      "status": "superseded"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-S3-1.is-hedge-reconciliation.md",
+      "last_commit": "93135eb5b9a7f982efd16753d1436508cc1d55e5",
+      "status": "superseded"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-S4-1.blank-sub-asset-class-rows.md",
+      "last_commit": "95e59e1408c50a131924532491b21d8a2b2738e1",
+      "status": "complete"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-S5-1.management-style-placeholder.md",
+      "last_commit": "eec92c9cf29c574b7fa0c7ee912f69a041c4ce4b",
+      "status": "complete"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-S6-1.harden-the-generator.md",
+      "last_commit": "7f247caae00dac190c9f3b6668f9483c1e961bfc",
+      "status": "complete"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-S7-1.verify-the-five-class-chain.md",
+      "last_commit": "8a911af2d747a1a1793f07bd8883c99ecdd97bb4",
+      "status": "complete"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-T1-1.carry-five-classes-through-the-generator.md",
+      "last_commit": "07c046fa63f4558a67c27e7026f1d07923bd2b32",
+      "status": "complete"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-T2-1.measure-the-frontend-hop.md",
+      "last_commit": "bab2cf66a2fcfcbe3886989a881f92f0369f29dd",
+      "status": "complete"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-T3-1.hop-test-the-two-sibling-consumers.md",
+      "last_commit": "5899484453a8c5e152ca8f9c2d8adfa9be810a15",
+      "status": "complete"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-T4-1.registry-durability-the-re-seed-revert.md",
+      "last_commit": "8adab5748d2b58091bb0a19ebf16e15e27846e47",
+      "status": "complete"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-T5-1.the-bar-step-2-measured-against-the-served-artifact.md",
+      "last_commit": "063312e4f33e36095ae751f0abcf5970cb5f88cc",
+      "status": "complete"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-T6-1.the-retag-with-a-criterion-that-fails-in-the-broken-world.md",
+      "last_commit": "9e6e72ea8b27b181fd0fdf7c28a480295aee94e9",
+      "status": "cancelled"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-T7-1.is-hedge-reconciliation.md",
+      "last_commit": "9e6e72ea8b27b181fd0fdf7c28a480295aee94e9",
+      "status": "cancelled"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-U1-1.derive-the-readers-and-grade-the-five-class-bar.md",
+      "last_commit": "b07cacc813e41119b3df450bcc36935fe73dd93d",
+      "status": "complete"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-U2-1.one-colour-per-class-the-same-everywhere.md",
+      "last_commit": "8eff182563100c5214787efd9860f7a8c421db7a",
+      "status": "complete"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-U3-1.extend-preserve-dont-clobber-to-the-seed-script.md",
+      "last_commit": "baaf6407ed306cb0f155672df87e06d06877dbf7",
+      "status": "complete"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-U4-1.settle-the-retag-member-set-at-eleven.md",
+      "last_commit": "f1d4e2efe71fb88f05ff874f2d00d429d2f79d59",
+      "status": "complete"
+    }
+  ],
+  "originals": 97,
+  "open_originals": [],
+  "phantoms": [],
+  "channel_files": 10,
+  "dispositions": {
+    "POSN_ASTTAX-Z-W1-S1": "GRADUATED",
+    "POSN_ASTTAX-Z-W2-S1": "DISMISSED_WITH_REASON",
+    "POSN_ASTTAX-Z-W2-S2": "GRADUATED",
+    "POSN_ASTTAX-Z-W2-S3": "GRADUATED",
+    "POSN_ASTTAX-Z-W2-S4": "GRADUATED",
+    "POSN_ASTTAX-Z-W2-S5": "GRADUATED",
+    "POSN_ASTTAX-Z-S1": "GRADUATED",
+    "POSN_ASTTAX-Z-S2": "DISMISSED_WITH_REASON",
+    "POSN_ASTTAX-Z-S3": "DISMISSED_WITH_REASON",
+    "POSN_ASTTAX-Z-W3-S1": "DECOMP_INVALIDATING",
+    "POSN_ASTTAX-Z-W3-S2": "GRADUATED",
+    "POSN_ASTTAX-Z-W3-S3": "DISMISSED_WITH_REASON",
+    "POSN_ASTTAX-Z-W3-S4": "GRADUATED",
+    "POSN_ASTTAX-Z-W4-S1": "GRADUATED",
+    "POSN_ASTTAX-Z-W4-S2": "GRADUATED",
+    "POSN_ASTTAX-Z-W4-S3": "DECOMP_INVALIDATING",
+    "POSN_ASTTAX-Z-W8-S1": "DISMISSED_WITH_REASON",
+    "POSN_ASTTAX-Z-W8-S2": "DECOMP_INVALIDATING",
+    "POSN_ASTTAX-Z-W8-S3": "DISMISSED_WITH_REASON",
+    "POSN_ASTTAX-Z-W8-S4": "GRADUATED",
+    "POSN_ASTTAX-Z-W8-S5": "GRADUATED",
+    "POSN_ASTTAX-Z-S4": "DISMISSED_WITH_REASON",
+    "POSN_ASTTAX-Z-W6-S1": "GRADUATED",
+    "POSN_ASTTAX-Z-W6-S2": "DISMISSED_WITH_REASON",
+    "POSN_ASTTAX-Z-S5": "DISMISSED_WITH_REASON",
+    "POSN_ASTTAX-Z-W12-S1": "DISMISSED_WITH_REASON",
+    "POSN_ASTTAX-Z-W12-S2": "GRADUATED",
+    "POSN_ASTTAX-Z-W12-S3": "GRADUATED",
+    "POSN_ASTTAX-Z-W11-S1": "GRADUATED",
+    "POSN_ASTTAX-Z-W11-S2": "DISMISSED_WITH_REASON",
+    "POSN_ASTTAX-Z-W11-S3": "DISMISSED_WITH_REASON",
+    "POSN_ASTTAX-Z-S6": "GRADUATED",
+    "POSN_ASTTAX-Z-W13-S1": "GRADUATED",
+    "POSN_ASTTAX-Z-W13-S3": "DISMISSED_WITH_REASON",
+    "POSN_ASTTAX-Z-W13-S2": "GRADUATED",
+    "POSN_ASTTAX-Z-W10-S1": "GRADUATED",
+    "POSN_ASTTAX-Z-W10-S2": "GRADUATED",
+    "POSN_ASTTAX-Z-W10-S3": "GRADUATED",
+    "POSN_ASTTAX-Z-S7": "GRADUATED",
+    "POSN_ASTTAX-Z-S36": "DISMISSED_WITH_REASON",
+    "POSN_ASTTAX-Z-W14-S1": "DECOMP_INVALIDATING",
+    "POSN_ASTTAX-Z-W14-S2": "GRADUATED",
+    "POSN_ASTTAX-Z-W14-S3": "GRADUATED",
+    "POSN_ASTTAX-Z-W14-S4": "GRADUATED",
+    "POSN_ASTTAX-Z-W14-S5": "GRADUATED",
+    "POSN_ASTTAX-Z-W14-S6": "GRADUATED",
+    "POSN_ASTTAX-Z-W14-S7": "GRADUATED",
+    "POSN_ASTTAX-Z-W14-S8": "DISMISSED_WITH_REASON",
+    "POSN_ASTTAX-Z-S8": "GRADUATED",
+    "POSN_ASTTAX-Z-S37": "GRADUATED",
+    "POSN_ASTTAX-Z-S38": "GRADUATED",
+    "POSN_ASTTAX-Z-S39": "DISMISSED_WITH_REASON",
+    "POSN_ASTTAX-Z-S40": "DISMISSED_WITH_REASON",
+    "POSN_ASTTAX-Z-S41": "DISMISSED_WITH_REASON",
+    "POSN_ASTTAX-Z-S42": "GRADUATED",
+    "POSN_ASTTAX-Z-S43": "GRADUATED",
+    "POSN_ASTTAX-Z-S44": "DISMISSED_WITH_REASON",
+    "POSN_ASTTAX-Z-S45": "DISMISSED_WITH_REASON",
+    "POSN_ASTTAX-Z-S46": "GRADUATED",
+    "POSN_ASTTAX-Z-S47": "DISMISSED_WITH_REASON",
+    "POSN_ASTTAX-Z-W15-S1": "DISMISSED_WITH_REASON",
+    "POSN_ASTTAX-Z-W15-S2": "GRADUATED",
+    "POSN_ASTTAX-Z-W15-S3": "DISMISSED_WITH_REASON",
+    "POSN_ASTTAX-Z-W15-S4": "GRADUATED",
+    "POSN_ASTTAX-Z-W17-S1": "GRADUATED",
+    "POSN_ASTTAX-Z-W17-S2": "GRADUATED",
+    "POSN_ASTTAX-Z-W17-S3": "GRADUATED",
+    "POSN_ASTTAX-Z-W17-S4": "GRADUATED",
+    "POSN_ASTTAX-Z-S48": "GRADUATED",
+    "POSN_ASTTAX-Z-W16-S1": "DISMISSED_WITH_REASON",
+    "POSN_ASTTAX-Z-W16-S2": "DISMISSED_WITH_REASON",
+    "POSN_ASTTAX-Z-W16-S3": "DISMISSED_WITH_REASON",
+    "POSN_ASTTAX-Z-W16-S4": "GRADUATED",
+    "POSN_ASTTAX-Z-W16-S5": "GRADUATED",
+    "POSN_ASTTAX-Z-S49": "DISMISSED_WITH_REASON",
+    "POSN_ASTTAX-Z-S50": "DISMISSED_WITH_REASON",
+    "POSN_ASTTAX-Z-W18-S1": "GRADUATED",
+    "POSN_ASTTAX-Z-W18-S2": "GRADUATED",
+    "POSN_ASTTAX-Z-W18-S3": "DISMISSED_WITH_REASON",
+    "POSN_ASTTAX-Z-W18-S4": "DISMISSED_WITH_REASON",
+    "POSN_ASTTAX-Z-W18-S5": "GRADUATED",
+    "POSN_ASTTAX-Z-S51": "DISMISSED_WITH_REASON",
+    "POSN_ASTTAX-Z-W16-S6": "DISMISSED_WITH_REASON",
+    "POSN_ASTTAX-Z-S52": "DISMISSED_WITH_REASON",
+    "POSN_ASTTAX-Z-S53": "DISMISSED_WITH_REASON",
+    "POSN_ASTTAX-Z-S54": "GRADUATED",
+    "POSN_ASTTAX-Z-S55": "GRADUATED",
+    "POSN_ASTTAX-Z-S56": "GRADUATED",
+    "POSN_ASTTAX-Z-S57": "GRADUATED",
+    "POSN_ASTTAX-Z-S58": "DISMISSED_WITH_REASON",
+    "POSN_ASTTAX-Z-S59": "DISMISSED_WITH_REASON",
+    "POSN_ASTTAX-Z-S60": "DISMISSED_WITH_REASON",
+    "POSN_ASTTAX-Z-S61": "GRADUATED",
+    "POSN_ASTTAX-Z-S62": "GRADUATED",
+    "POSN_ASTTAX-Z-S63": "GRADUATED",
+    "POSN_ASTTAX-Z-S64": "DISMISSED_WITH_REASON",
+    "POSN_ASTTAX-Z-S65": "GRADUATED"
+  },
+  "proof_check": "POSN_ASTTAX_ROUND4_CVO_PROOF_CHECK_20260914_Z.json@e9216254ae",
+  "proof_validation": "17 of 17 valid; unchanged proof vintages; terminal superseded/cancelled orders require no invented execution proof",
+  "prior_commits": [
+    "e9216254ae",
+    "82e976b505"
+  ],
+  "replay_source": "import importlib.util,json,re,subprocess\nfrom datetime import datetime,timezone\nfrom pathlib import Path\nimport jsonschema\n\ndef git(*args):return subprocess.check_output(['git',*args],text=True,encoding='utf-8').strip()\nroot=Path.cwd();home=Path('org/missions/D4/POSN/POSN_ASTTAX');seat=Path('org/tier1_exec/3.0.0_SA_CVO/deliverables')\nsp=importlib.util.spec_from_file_location('g','.tools/surprise-row-gate.py');g=importlib.util.module_from_spec(sp);sp.loader.exec_module(g)\nopen_tos,total,note=g._open_tos_for_project(str(root),'POSN_ASTTAX')\nlatest,unknown,nfiles,dnote=g._latest_dispositions(str(root),'POSN_ASTTAX')\npending=None if latest is None else [k for k,v in latest.items() if v in g.UNDISPOSITIONED]\nassert open_tos==[] and total==19 and not note,('L10 BLOCKED',open_tos,total,note)\nassert latest is not None and pending==[] and not unknown and not dnote,('L10 BLOCKED',pending,unknown,dnote)\nhead=git('rev-parse','HEAD');now=datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')\nep=seat/'POSN_ASTTAX_ROUND4_CVO_RELEASE_CHECK_20260914_Z.json'\norders=[]\nfor p in sorted((home/'task-orders').glob('*.md')):\n    text=git('show',head+':'+p.as_posix())\n    status=g.TO_STATUS_RE.search(text).group(1)\n    orders.append({'path':p.as_posix(),'last_commit':git('log','-1','--format=%H','--',p.as_posix()),'status':status})\ne={'at':now,'head':head,'total_orders':total,'open_orders':open_tos,'orders':orders,'originals':len(latest),'open_originals':pending,'phantoms':unknown,'channel_files':nfiles,'dispositions':latest,'proof_check':'POSN_ASTTAX_ROUND4_CVO_PROOF_CHECK_20260914_Z.json@e9216254ae','proof_validation':'17 of 17 valid; unchanged proof vintages; terminal superseded/cancelled orders require no invented execution proof','prior_commits':['e9216254ae','82e976b505'],'replay_source':Path(__file__).read_text()}\nep.write_text(json.dumps(e,indent=2)+'\\n',encoding='utf-8')\nap=home/'surprise-channel/adjudications/ADJUDICATION_v6.Z.md'\nbody=ap.read_text();m=re.search(r'```json\\n(.*?)\\n```',body,re.S);adj=json.loads(m.group(1));assert adj[-1]['id']=='POSN_ASTTAX-Z-C-S120'\nrelease={'id':'POSN_ASTTAX-Z-C-S121','project':'POSN_ASTTAX','fabric':'site-z','surfaced_by':'3.0.0_SA_CVO~Z','surfaced_at':now,'one_line':'At the now-terminal round-4 boundary, measurement and a proposed seed patch remain insufficient for the issued applied/exercised endpoints. The decomposition lacks the implementation cells that would make those outcomes true.','class':'OBSERVATION','hazard_standing':'ARMED','disarm_owner':'2.0.0_SA_COO~Z','grounding':{'status':'GROUNDED','evidence':[ep.as_posix(),'org/tier1_exec/3.0.0_SA_CVO/deliverables/POSN_ASTTAX_ROUND4_CVO_SOURCE_CHECK_20260914_Z.json@e9216254ae','org/missions/D4/POSN/POSN_ASTTAX/ledger/ROUND4_PACKET.md@937e8f727debc8fd40ef44d60d80819666651af8']},'disposition':'DECOMP_INVALIDATING','adjudicates':['POSN_ASTTAX-Z-C-S118'],'spec_asserts':'Issued PRD v0.6 FWD-4 is applied class colors; FWD-6 is exercised agreement. The four U cells enumerate, price, record a proposed diff and measure a retag member set.','world_is':'All nineteen orders are now terminal, with the four carried orders ended by supersession/cancellation, not unperformed work marked complete. The four U cells leave source repairs unapplied, a source-only reader/color census, and no performed retag. The original round-3 count exception is unnecessary.','notes':'Release C-S118 into the one round-4 slug. The approved eight-cell plan is the next issuance basis after CTO analysis and signed v0.7; it explicitly excludes Attribution, CMA/Philosophy, AdvisorIntelligence, is_hedge and bd-securities reconciliation. Do not convert v0.6 failures into permission to edit those excluded surfaces. No endpoint is declared REALIZED.'}\nadj.append(release)\nischema=json.loads(Path('org/surprise_channel/schemas/investigation_item.schema.json').read_text())\nfor r in adj:jsonschema.validate(r,ischema)\nintro=body[:m.start()]+f'Final release check at `{head}` ({now}): **0 nonterminal of 19 orders, 0 undispositioned of {len(latest)} originals**. C-S121 releases the pending missing-cell finding and the round-4 slug. Earlier nonterminal counts above are historical measurements, not the release state.\\n\\n'\nap.write_text(intro+'```json\\n'+json.dumps(adj,indent=2)+'\\n```\\n',encoding='utf-8')\nclosed={\n 'POSN_ASTTAX-Z-C-S78':'REMEDIATED: all 19 project orders are terminal at the release pin, with S2/S3 superseded and T6/T7 cancelled under the named Andrew/CTO direction. No override used.',\n 'POSN_ASTTAX-Z-C-S97':'REMEDIATED BY EXPLICIT SCOPE WITHDRAWAL: Andrew forbids Attribution edits. Its second registry remains unchanged; no repair is requested for this excluded surface. The historical source counterexample remains valid at its issued vintage.',\n 'POSN_ASTTAX-Z-C-S100':'REMEDIATED DECISION: Andrew selects a new yellow token. The choice is no longer an open card; applying the approved color remains next-round implementation under C-S121.'\n}\nrem=[]\nfor r in adj:\n    if r['disposition'] not in ['GRADUATED','DECOMP_INVALIDATING']:continue\n    done=r['id'] in closed\n    remedy=closed.get(r['id'],r['notes'])\n    if r['id']=='POSN_ASTTAX-Z-C-S81':remedy+=' Forward action is the explicit Positioning-only v0.7 boundary; no Attribution/CMA/AdvisorIntelligence repair follows.'\n    if r['id'] in ['POSN_ASTTAX-Z-C-S86','POSN_ASTTAX-Z-C-S88']:remedy+=' Andrew now expressly excludes bd-securities reconciliation; next L4 wording must make that scope clear.'\n    if r['id']=='POSN_ASTTAX-Z-C-S113':remedy='Discard the stale worker-number ladder. Alignment is now approved, but allocate at actual L5/L6 issuance after round-4 analysis and both v0.7 signatures; the earlier no-workers hold is superseded.'\n    if r['id']=='POSN_ASTTAX-Z-C-S116':remedy='Land the confirmed BD-total/no-Yang-addition rule, per-level labels and additional characteristics Lambda in v0.7 and its aligned eight cells. The summation card is answered; no model rewrite or Attribution change.'\n    row={'id':r['id'],'project':'POSN_ASTTAX','fabric':'site-z','class':r['class'],'hazard_standing':r['hazard_standing'],'mechanism':r['one_line'],'evidence':r['grounding']['evidence']+[ep.as_posix(),'org/tier1_exec/3.0.0_SA_CVO/deliverables/ANDREW_DIRECT_20260914_POSN_BREAKDOWN_ALIGNED_RELAY_Z.md@82e976b505'],'remedy':remedy,'owner':r['disarm_owner'],'round':'v4','remediation':{'state':'REMEDIATED' if done else 'OPEN','owner':r['disarm_owner'],'round':'v4'},'closed':done,'disarm':{'state':'DISARMED' if done else 'ARMED','owner':r['disarm_owner'],'at':now if done else None}}\n    rem.append(row)\nschema=json.loads(Path('org/surprise_channel/schemas/remediation_row.schema.json').read_text())\nfor r in rem:jsonschema.validate(r,schema)\nrp=home/'surprise-channel/remediations/REMEDIATION_v4.Z.md';assert not rp.exists(),rp\nheader=f'''# POSN_ASTTAX round 4 - the single L10 slug\n\nFrom 3.0.0_SA_CVO~Z to 1.0.0_SA_CTO~Z. Release measured at {head}, {now}: **19/19 task orders terminal; {len(latest)}/{len(latest)} original investigation items dispositioned; 0 ambiguous/phantom targets**. The four carried orders ended by truthful supersession/cancellation. No terminality exception or override was used. All 17 retained proof instances validate structurally at their cited vintages.\n\nL9 is `surprise-channel/adjudications/ADJUDICATION_v6.Z.md`, initially committed e9216254ae and updated 82e976b505, with this release's append-only C-S121. Its two new judgment grades are FAIL (U1-AC6 census closure, U2-AC5 source-token sufficiency). U3-AC4 has no changed repository source subject and remains mechanically NOT_EVALUATED under the recut; scratch controls do not replace that missing subject. The seed patch preserves 4/4 classifications with 53 first mints in independent scratch controls, but is unapplied. No endpoint is declared REALIZED.\n\nThis slug carries {len(rem)} grounded remedies, three already closed by the measured terminality or explicit Andrew decisions, and the remaining remedies open. The pending C-S119 reporting discrepancy is not graduated: the canonical index resolver gives zero open originals while comp-surprise reports eight; a partial ordering control reproduces four. It is retained for scoped triage, with no compiler repair requested on an unproven mechanism.\n\nThe issued review basis remains v0.6. Forward authority is Andrew's amended eight cells **B1 B2 B3 B4 F1 F2 F3 R1**, confirmed by CTO Msg 22866: one BD total per ticker, never adding Yang's copy; Metals/Hedge and VNQ Real Estate at the sub-asset level; twelve retags, BIPC Equity; new yellow; models unchanged; additional weighted-characteristics Lambda. **No Attribution changes**. Its two-class grouping consequence is expressly accepted in that carrier. CMA/Philosophy, AdvisorIntelligence, is_hedge and bd-securities reconciliation are excluded. The earlier alignment hold is lifted; issuance still follows this slug -> CTO round-4 analysis -> signed v0.7 -> COO issuance. Frontend completion is built/committed behind the promote freeze; the deploy conditions and separate promote authorization remain.\n\nThe two Bloomberg carriers disagree on whether the conditional ad-hoc recommendation was already approved: CRO reads yes, CTO Msg 22866 explicitly seeks confirmation and checks same-date key overwrite. No per-use Bloomberg execution authority is inferred by this CVO slug; that live clarification stays with CTO/Andrew.\n\nPrices and counts retain their grain: 11 readers/55 cells is an incomplete source census, not a rendered-page denominator; retag membership is twelve in the settled 285-row registry, with BIPC separate; second-store agreement is 0/12 assessable comparisons plus one undecided target. The L8 source-write-freeze explanation is corrected by S54, while the actual U grants remain measurement-only. Older findings and closed slugs are not rewritten or duplicated here.\n\nThe CTO is the sole recipient and router. Named owners below identify remedy ownership, not direct dispatches by CVO. Evidence and exact replay sources are in the four round-4 CVO evidence JSONs plus `{ep.as_posix()}`. Shared-branch commits remain LOCAL; no push or portal gitlink move by this seat.\n\n'''\nrp.write_text(header+'```json\\n'+json.dumps(rem,indent=2)+'\\n```\\n',encoding='utf-8')\nprint(json.dumps({'release_head':head,'orders':total,'originals':len(latest),'rows':len(rem),'closed':len(closed),'slug':rp.as_posix()},indent=2))\n"
+}

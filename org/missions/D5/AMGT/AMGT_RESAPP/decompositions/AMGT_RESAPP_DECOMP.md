@@ -1,4 +1,4 @@
-# AMGT_RESAPP -- L5 decomposition (COO) -- v0.6
+# AMGT_RESAPP -- L5 decomposition (COO) -- v1.3 (s.18 = round 10; the header read v0.6 through v1.0 and is corrected here)
 
 **Seat:** `2.0.0_SA_COO~ZZZ`, spawned by Andrew 2026-09-10 ~17:4xZ at the `1.0.0_SA_CTO~Z` terminal for this
 project (seating brief msg 21003; `project.json` `seats.coo`). **Directive:** D5 Alternative Research.
@@ -1415,3 +1415,548 @@ stands unchanged: the portal evidence is reachable from **0 of 10** remote heads
 gitlink `e85f6eb84f` is reachable from 1. Every portal-dependent outcome grades **EXERCISED**, never
 REALIZED, until the gitlink lands -- and **a local dev render is not a publish**, which is precisely
 why this cell is cuttable under the freeze at all.
+
+
+## 18. ROUND 10 (v1.1) -- FROM THE L10 ROUND-9 ANALYSIS @`e9d1c6e6a5` (`1.0.0_SA_CTO~Z`), THE POPULATED-ROUTE ROUND
+
+**Cut by `2.0.0_SA_COO~W`** (the lane Andrew named for this project's round-10 recut, ~23:2xZ 2026-09-14 at
+the `1.0.0_SA_CTO~W` terminal, record `ANDREW_DIRECT_20260914_232xZ_W_LANES_FOR_AMGT_RESAPP_CANONICAL_FLOW_AND_COMP_STATE_SPAWN_VIA_MSTRZ.md`
+@`ce7371d0b3`), succeeding `2.0.0_SA_COO~ZZZ` (closed on his word 15:19Z). Sections 1-17 are FROZEN and
+unchanged. `receiving-check.py` on the round-9 analysis and on this decomposition both return **UNCHECKED**
+(no checker exists for either artifact type on this device); accepting both is this lane's JUDGMENT after a
+full read, and is stated as such.
+
+**The analysis's verdict, in its own words:** *"NO PRD ADDENDUM. The coverage subtraction is EMPTY -- 15
+declared outcomes, 0 unserved. The AC6 FAIL is ACCEPTED as graded ... Round 10 is authorized on the COO's
+recut, ONE issuance covering every cell."* And its s.6: *"The substance is `Z-C-S169` ... and `Z-S72` ...
+Together they close exactly the gap AC6 opened: a served route nobody has yet seen populated."*
+
+### 18a. The cell set by SUBTRACTION over a PRINTED denominator -- and two causes MEASURED on the live plane
+
+```
+ 8  OPEN remedy rows of REMEDIATION_v9 @1ae76e9c83
+      (17 rows total: 9 closed, 8 open, read from each row's own remediation.state; the file is
+       byte-identical at HEAD 5b45a17692 to the pin -- `git diff --stat 1ae76e9c83 HEAD` empty)
+-1  Z-S67       1.0.0_SA_CTO~Z's. DISCHARGED by the analysis s.1 (run-time negative controls, the
+                declared field). Its disarm row is the CTO's, not this cut's.
+-1  Z-S68       A PROPERTY OF THIS CUT, not a cell: "print plane, item/row grain and denominator
+                beside every armed count". Discharged in 18b below and by this lane's citing row.
+-1  Z-S69       A PROPERTY OF THE SPAWN, not a cell: "quote the channel header grammar, never invent
+                identity in a prompt". Every round-10 worker face quotes the channel's own id grammar
+                verbatim (18f); the spawn prompt adds only the serial and the worktree path.
+-1  Z-S70       A PROPERTY OF THE DRAIN CONTRACT, not a cell: the for-each-ref enumeration travels
+                (18e) and no drain moves the gitlink.
+-1  Z-S71       CARRIED by the analysis (s.7) as ONE READ this lane now takes: ROUND9_PACKET.md:138
+                records the union as "126 base + 4 issuer + 6 worker = 136"; the literal 134 was the
+                earlier 126+3+5 snapshot. Two vintages, no lost rows. Discharged by a citing row.
+-1  Z-S78       CARRIED, WITH THE REASON: its input is a NAME only Andrew gives (the row's own words:
+                "a named person, from Andrew, before FWD-14 can grade REALIZED"; C-NO-CONTACT fences
+                who may be approached). No cell can mint a name. It rides this lane's drain-end read
+                to the CTO as the one Andrew-reserved item; the alternative disarm the row itself
+                names ("the CTO records that FWD-14 grades on something other than the owner field")
+                is the CTO's at L10.
+-1  Z-S72       -> CELL AMGT-ri-3 (the exercise).
+-1  Z-C-S169    -> CELL AMGT-ri-1 (the error/empty boundary).
+=  2 CELLS FROM THE REMEDY ROWS.
+
++1  Z-S88       (1.0.0_SA_CTO~W, 23:21Z, disarm_owner 2.0.0_SA_COO~W) -- the producer. The empty page's
+                cause was NOT measured at round 9; it is now: the scheduled chatter-axis producer fires
+                daily and FAILS every fire on the DELETED articles table. RE-MEASURED at this cut
+                (00:0x-00:1xZ): live role policy names opal-amgt-articles and opal-amgt-security-metrics
+                (both deleted); deployed zip CodeSha256 TtTSpotkwWuVuMFbPv0RWTv2zqqifa/xfHQtBtuo924=,
+                13572 B, LastModified 2026-09-11T18:13:38Z; HEAD's chatter_axis.py already defaults to
+                the harvest names (:109/:111) -- the traceback's line numbers (153/168/304) do not exist
+                at HEAD (235/243/403), so the DEPLOYED BYTES predate the code flip; the six live
+                resources are tracked in amgt-resapp/rd-2-security-metrics/tfstate (serial 3) beside the
+                deleted table, and in NEITHER harvest/tfstate (serial 25) nor amgt-resapp/tfstate
+                (serial 1). -> CELL AMGT-ri-2, an EXISTING-cell recut of AMGT-rd-5. C-S49 stays at
+                4.0.0_SA_CRO~Z and is CITED, not re-filed (hand-over s.3, endorsed).
++1  Z-W11-S2    (round 7, OPEN at REMEDIATION_v7, carried at rounds 8 and 9 because its remedy is a DEPLOY
+                act) -- the mount. MEASURED at this cut, which no round had done: `aws lambda
+                get-function-configuration opal-amgt-scoped-api` -> ResourceNotFoundException;
+                `apigatewayv2 get-routes --api-id 7k3ed8px20` -> 25 routes, 0 naming amgt; harvest/tfstate
+                carries no scoped_amgt_api module. SO EVERY RANKED READ THE SERVED PAGE HAS EVER MADE
+                RETURNED AN EDGE ERROR, and the boundary defect (Z-C-S169) rendered that error as "the
+                daily job has not written a row". The page was empty for TWO independent reasons, and a
+                round cut on the producer alone would exercise a route that still cannot reach it.
+                -> CELL AMGT-ri-4, the deploy act of AMGT-rf-2, under the never-widen co-sign 16a named.
+=  4 CELLS. REMAINDER ZERO BY CONSTRUCTION over the eight, plus two cells from measured causes the
+   analysis authorized this lane to add ("adds or recuts task orders as its own judgment dictates",
+   spine L10; recorded here and in the issuance commit, never routed).
+```
+
+⚠ **THE DOMAIN WAS FALSIFIED BEFORE THE SUBTRACTION RAN.** The eight is L9's output for round 9 and is what
+the spine routes into the recut. The wider standing set is NOT this cut's domain and is carried; its numbers
+are printed in 18b so that carrying it is a measured act. Two members OUTSIDE the eight (Z-S88, Z-W11-S2)
+entered the cut only because each was RE-MEASURED on the live plane at this cut and each is a precondition
+of Z-S72's exercise -- an exercise against a producer that cannot write and a route that cannot be reached
+would be the round-9 empty render repeated with a different explanation.
+
+### 18b. The standing set, printed with PLANE, GRAIN and DENOMINATOR (Z-S68's condition)
+
+`comp-surprise --project AMGT_RESAPP --json` at HEAD `5b45a17692`, 2026-09-15 ~00:0xZ:
+
+| plane | grain | denominator | armed | open (undispositioned) |
+|---|---|---|---|---|
+| investigations/INVESTIGATION_v1.md | worker + seat rows (items) | **153** rows | -- | **1** (Z-S88, filed 23:21Z, not yet at L8) |
+| adjudications/ADJUDICATION_v1..v9.md | the CVO's rows | **171** rows | -- | -- |
+| remediations/REMEDIATION_v1..v9.md | remedy rows | **111** rows | -- | -- |
+| the three planes, by `_latest` citing row | items | 153 items | **88** ARMED | 1 |
+
+By `disarm_owner` over the rows still reading ARMED at their latest citing row: `2.0.0_SA_COO~ZZZ` 133 mentions
+across the three planes (the same item counted once per plane it appears on), `1.0.0_SA_CTO~Z` 48,
+`4.0.0_SA_CRO~Z` 7, `3.0.0_SA_CVO~Z` 4, `0.0.0_AB_MSTR~Z` 2, `2.0.0_SA_COO~W` 1 (Z-S88). **A `~ZZZ` row is a
+dead lane's row; the successor lane carries it by filing under its own serial** (hand-over s.5), and this
+cut files three: the Z-S68 and Z-S71 disarms and the s3.tf finding (18d).
+
+### 18c. The cells
+
+| cell | row / source | outcome | what it is |
+|---|---|---|---|
+| **`AMGT-ri-1`** | `Z-C-S169` | FWD-15, FWD-9 | **THE ERROR/EMPTY BOUNDARY.** At portal `a845a8be75` `LeadPanel` passes `isLoading` but no error to `RankedList`; `rows = rankingQuery.data?.rows ?? []` turns a settled request ERROR into an empty array, and `RankedList` renders the SAME 205-byte HTML for a failed read and for a successful empty day, asserting "the daily job has not written a row" about a request that never returned. Carry the settled error separately; render an explicit read-failure state that claims nothing about the producer; keep loading and populated as they are; `StarredList` (which composes `RankedList`) carries the same error. Proven on the ACTUAL components by a harness in the CVO's own method (transpile with the installed TypeScript, static-render, stub the query hook) -- run BEFORE the edit to REPRODUCE the collision and AFTER to show error != empty with populated still visible. |
+| **`AMGT-ri-2`** | `Z-S88`, citing `C-S49` and `Z-S12` | FWD-15 | **THE PRODUCER, CONSOLIDATED AND REPOINTED** -- an existing-cell recut of `AMGT-rd-5`. Move `chatter-axis-schedule.tf` + `lambda_src/` into `infra/aws/terraform/harvest/` (the module whose own header says *"ALL worker terraform consolidates into this one harvester tf"*, Andrew-direct 2026-09-11 ~17:3xZ), retire `amgt-resapp/main.tf` (precedent `dc868af89c`: a root whose state tracks a deleted table would RECREATE it), point the two IAM statements at `aws_dynamodb_table.harvest_articles` / `harvest_security_metrics` (resource references, never retyped ARNs), rebuild the zip from HEAD with `build_zip.py`, `terraform import` the six live resources into `harvest/tfstate` (non-destructive), plan with **0 to destroy**, `safe-apply` under a deploy-completion entry, and QA-invoke ONCE so today's rows land. The scheduled 10:00Z fire stays the acceptance and is read from its own log at L10. **AND THE s3.tf GUARD (18d):** `harvest/s3.tf` MUST read `opal-data-harvest` before any plan; the plan MUST print `0 to destroy`. |
+| **`AMGT-ri-4`** | `Z-W11-S2`, the deploy act of `AMGT-rf-2` | FWD-15 | **THE MOUNT, DEPLOYED.** Build and upload the `opal-amgt-scoped-api` artifact (vendoring `lib/research/{api,metrics,checkface,rules,watchlist}` beside the entrypoint, `content-sha256` metadata, the enqueue script's shape), plan the harvest root as a PURE ADD (**0 to change, 0 to destroy**; the add-set is exactly the module's Lambda + log group, the role, its attachment and policy, one integration, eleven routes, one permission, one `terraform_data`), `safe-apply` under a deploy-completion entry, verify the eleven routes live beside the 25 that were there and unchanged, and exercise the deployed adapter DIRECTLY (a synthetic HTTP API v2 event carrying `X-Firm-Id`) for the crossed ranked read with its 401 control. **GATED BY THE NEVER-WIDEN CO-SIGN** (16a's own reading of NEVER-1 for this act): both halves present as files in `ledger/` before the apply; absent, the order stays OPEN on a BLOCKING row. |
+| **`AMGT-ri-3`** | `Z-S72` | FWD-9, FWD-15 | **THE EXERCISE -- the assembled route against traceable actual input.** After ri-1, ri-2 and ri-4: today's rows exist in the live table (count + a failed-day control), the deployed adapter serves them (the exact payload saved as the traceable input, with the `as_of=2026-09-13` control reading 0), the served route on a local dev server discriminates on the MODULE plane with the REPAIRED components, the three harnesses re-run in the assembled checkout unchanged, the production build emits the route's chunk; and the BROWSER half -- populated output, navigation and FWD-9's marking, plus the error arm rendered distinct on the served route -- is the COO's own act with the instrument no worker holds, filed as a row and a deliverable and GRADED BY THE CVO as the cell's judgment criterion. No promote, no gitlink move. |
+
+⭐ **THE SHAPE THIS ROUND CORRECTS, named so the next reader sees it:** round 9 proved the components, the
+compile, the build and the serve, and the page still rendered empty -- and the reason was never on the
+frontend. Two silent failures sat one and two hops upstream (a producer failing inside its own log, a mount
+never applied), and the frontend's one real defect (Z-C-S169) is precisely that it rendered both as "no data
+today". **A round that repaired the boundary and re-rendered would have shown an honest error instead of an
+honest empty, which is better and still not populated.** So the cut goes to the causes.
+
+### 18d. The UNFINISHED-EDITS finding this lane inherited, and what became of it (a ROW, not a discard)
+
+`infra/aws/terraform/harvest/s3.tf` is MODIFIED and uncommitted in the shared tree (mtime 2026-09-11T19:17:02Z,
+two lines: `bucket`/`Name` `opal-data-research` -> `opal-data-harvest`, on NO ref). The hand-over REC'd DISCARD.
+**MEASURED at this cut with three instruments: the Terraform STATE object `s3://opal-313476888478-terraform-state/harvest/tfstate`
+(serial 25) tracks `aws_s3_bucket.harvest -> opal-data-harvest`; the live plane reads `opal-data-research` 404 /
+`opal-data-harvest` exists, versioning Enabled, `derived/model_block/` keys present, bogus name 404; the 1915Z
+migration ledger's own step 2 is "Point s3.tf at opal-data-harvest and apply -- CREATE ONLY -- DONE".** So HEAD's
+committed file names a DELETED bucket, `bucket` is ForceNew, and a plan against HEAD would propose DESTROYING the
+harvest bucket (53 objects, this project's `derived/model_block/`). The uncommitted edit is the migration's own
+step-2 source change, never committed, and it is the live guard. **DISCARD RETRACTED** by `1.0.0_SA_CTO~W` (22942)
+on this evidence; **CONFIRMED** by `4.0.0_SA_CRO~Z` on its own instruments (22945), whose commit of the two lines was
+REFUSED by the lane gate (`infra/aws/**` is `CLOUD_OPS_OR_ETL`, AE-only; its 09-11 commits rode the drain's merge
+exemption). CONVERGENCE, endorsed by both: **`AMGT-ri-2` names `harvest/s3.tf` in its `<paths>` with the guard
+(reads `opal-data-harvest` before any plan; plan prints `0 to destroy`); its branch carries the two lines; the
+drain merges identical content; `4.0.0_SA_CRO~Z` disarms the row when HEAD reads the harvest name.** Filed as
+row `AMGT_RESAPP-Z-S89` (ARMED, disarm_owner `4.0.0_SA_CRO~Z`). The saved patch:
+`org/tier1_exec/2.0.0_SA_COO/deliverables/AMGT_RESAPP_W/UNFINISHED_EDIT_harvest_s3_tf_20260914.patch`.
+
+### 18e. Dependency edges, M, fan-out, and the drain contract
+
+```
+CHAIN A (portal)   AMGT-ri-1  ->  AMGT-ri-3      one worker, one portal checkout (Z-S33: a gitlink has no
+                                                  sub-path grain; ri-3 must see ri-1's repaired components)
+CHAIN B (harvest)  AMGT-ri-2  ->  AMGT-ri-4      one worker, ONE terraform root and ONE state
+                                                  (harvest/tfstate) -- a shared write surface is one chain
+CROSS EDGE         AMGT-ri-4  ->  AMGT-ri-3      the exercise waits for the mount AND the producer;
+                                                  ri-3 is handed to slot ~16 only after ri-4 is terminal
+
+fanout: 2 of 2 chains, cap 8
+```
+
+**M is measured and it is 2**: two roots (ri-1, ri-2), two independent write surfaces (the portal submodule;
+the harvest root), converging at ri-3 exactly as round 5 converged at rd-8 (13g). N = 2. Slots `~16` (ri-1,
+then ri-3) and `~17` (ri-2, then ri-4).
+
+**THE DRAIN CONTRACT (16d/17e restated, Z-S70's enumeration carried):** the portal drain refs at this cut,
+from `git -C portal for-each-ref refs/drains/`: `posn-5-portal d93e7918`, `rg-1-portal 83995ea9`,
+`rg-2-portal a845a8be`. Slot ~16's portal branch is cut FROM `a845a8be75` inside its own worktree and drains
+into a NEW ref `refs/drains/ri-1-portal` (containing rg-2), fetched under a ref never `FETCH_HEAD`, read back
+with a bogus-hash negative control, `branch -r --contains` run with `e85f6eb84f` as the firing positive
+control; **no round-10 drain moves the gitlink** (`e85f6eb84f`, what `origin/SITEZ` publishes) and the shared
+portal checkout does not move. The integration plan `PORTAL_REPO_CROSS_FABRIC_INTEGRATION_PLAN_20260914.md`
+@`9e0c1080a0` orders site-Z AMGT after the laptop reconcile; round 10 lands on a ref that plan can name and
+changes nothing about the freeze. The superproject drain is `safe-merge.sh` per branch; a worker commits with
+`--only -- <paths>` so its `portal` gitlink is never staged.
+
+### 18f. BOUNDS carried onto every round-10 cell
+
+- **PORTAL FROZEN both fabrics, PROD and DEV: COMMIT YES / PROMOTE NO** until Andrew names it. No push, no
+  gitlink move, no portal deployment, no worktree release of `refs/drains/rg-2-portal`.
+- **LD-0521:** no round-11 issuance before the round-10 slug.
+- **`C-SERVER-SIDE-RANKING`**; the standing monitor/alarm moratorium (a scheduled producer is required, a
+  monitor is forbidden; ri-2 adds no alert, SNS, SES or freshness checker); `C-VENDOR-EGRESS` (no vendor call
+  from any cell; the scoped API makes none by construction); **no non-ASCII** in code, logs or AWS.
+- **No cell grades an EXERCISED outcome REALIZED on its own artifact.** Round 10 makes FWD-9 and FWD-15
+  REACHABLE on a populated page; a PERSON must still have used it, which is L9/L10's to grade.
+- **Every world act ORDERS itself** (spine L7, v3.9): open the deploy-completion entry AND commit its
+  `.open_deploys/<slug>.json` sentinel, act, close the entry and COMMIT it BEFORE the grading reads.
+- **The id grammar the workers quote, verbatim from the channel header:** *"a seat's row is
+  `AMGT_RESAPP-Z-S<k>`; a worker's row is `AMGT_RESAPP-Z-W<n>-S<k>` with `<n>` its slot; `<k>` restarts at 1 per
+  coordinate. `"project": "AMGT_RESAPP"` and `"fabric": "site-z"` on every new row."* (Z-S69.)
+- **The refusal clause (spine v3.11)** is on every face: a criterion that cannot be met as written is REFUSED
+  with its measurement, never repaired, widened or satisfied by a route the cut did not name.
+- **Every invocation is bounded** (`timeout`), and the toolchain is the provisioned one: no install.
+
+### 18g. Preflight -- the mandatory core battery, RE-RUN at this cut (2026-09-15 00:3x-00:4xZ)
+
+- `comp-schedule --drift` -- RUN. 5 of 5 carriers within budget (15.2 s of 90). REACHED-DENOMINATORS C1=23,
+  C2=9, C3=12, C4=21, C5=334. C2 reads **9 OPEN deploy-ledger entries = 9 ARMED gates**, none this
+  project's; ri-2 and ri-4 each add one and close it inside the round. C3's 12 standing NEVER clauses are
+  the source of 18f's no-monitor bound. BLIND: C4 (21 scope guards, SEMI-DECIDABLE) and C5 (334, NOT-DECIDABLE),
+  in the tool's own voice.
+- `comp-iam gaps` -- RUN. **838 call(s) verdicted across 98 mapped role(s)**; 629 UNRESOLVABLE-RESOURCE, 142
+  GRANTED, 51 GRANTED-BROAD (EXCLUDED, NOT CLEARED), 14 UNGRANTED, 2 GRANTED-ACTION/UNGRANTED-RESOURCE; totals
+  15 missing, 291 deny-present, 1 coverage-unknown, 2 resource-mismatch across 32 services. BLIND: 266 calls in
+  26 role-UNMAPPED services. **It names `opal-amgt-scoped-api` (role `opal-amgt-scoped-api-role`) at
+  `scoped_amgt.py:312/:334/:691` as UNRESOLVED-RESOURCE** -- the three DynamoDB reads ri-4 mounts; the grants
+  for them are the resource references in `scoped-amgt-api.tf`, and the instrument cannot resolve a table name
+  read from an env var. Stated, not cleared. The chatter-axis role is NOT in its denominator (its package is not
+  in the source map), so the repoint in ri-2 is verified on the LIVE policy, not by this lens.
+- `comp-adversary compose <this decomposition> --no-packet` -- RUN. 32 commit pins, 9 repo paths, 6 file:line
+  cites; 15 hex runs not parsed as pins (named, not dropped); T11 NOT RESOLVED (the artifact IS the
+  decomposition; directory adjacency stands, 236 uncited siblings, CAP 25 declared); stage 4 disabled by the
+  caller (pointers only); its freshness read `BEHIND` on a pinned source no round-10 cell consumes.
+- `comp-cache collisions` -- RUN. 481 of 481 portal files, 119 of 119 `useQuery` sites. ri-1 adds NO query
+  key (it changes props on two components); no AMGT key moves. `comp-blast` -- DECLARED-NOT-APPLICABLE with the
+  reason: ri-1 edits a page that exists on no DEV/PROD head; ri-2 imports and updates resources in place; ri-4
+  is a PURE ADD on the shared portal API whose blast radius is stated in the never-widen halves (the 25
+  existing routes are untouched by construction and the apply prints it).
+
+### 18h. Four-postulate record (Rule 24)
+
+- **(i) MECE over a DECLARED domain, BY SUBTRACTION:** 18a subtracts from the eight OPEN rows with a printed
+  denominator and a reason per exclusion (1 the CTO's, 3 properties of the cut/spawn/drain, 1 discharged by one
+  read, 1 carried with its reason, 2 cells), plus two cells from causes re-measured at the cut and named as
+  additions. The domain was falsified first: the slug's state field was re-read at HEAD and is unchanged.
+- **(ii) SAME GRAIN:** each cell is ONE repair of ONE measured cause on ONE surface -- the boundary (portal),
+  the producer (harvest root, six resources), the mount (harvest root, one module), the exercise (the route).
+  ri-2 and ri-4 share a root and are kept SEPARATE because they are different engines with different
+  acceptance (in-place update with 0 destroy; pure add with 0 change) and different ledger entries.
+- **(iii) INTENT COHERENCE, one axis:** *make the served route populate for a real reason, and make its
+  failure state say what it is.*
+- **(iv) STATE COHERENCE -- what these remedies do NOT move:** the portal gitlink and the shared checkout; any
+  DEV/PROD head; `C-S49`'s ownership (cited, not closed; the CRO adjudicates it against ri-2's outcome);
+  `Z-S78` (a name only Andrew gives); `Z-W11-S1` (the recorded-gitlink decision, still under the freeze); the
+  stale source states `amgt-resapp/tfstate` and `amgt-resapp/rd-2-security-metrics/tfstate` (inert after
+  ri-2, named in its ledger, cleaned up under the CRO's ledger); the standing 88 ARMED items, read one at a
+  time and never screened.
+
+⛔ **NO ROUND-10 ARTIFACT MAY GRADE A PORTAL-DEPENDENT OUTCOME `REALIZED`.** The portal evidence lives on
+drain refs contained by 0 of the portal remote's heads while the recorded gitlink `e85f6eb84f` is contained
+by `origin/DEV`. Every portal-dependent outcome grades **EXERCISED**, never REALIZED, until the gitlink lands --
+and a local dev render is not a publish.
+
+*(v1.1 cut 2026-09-15 by `2.0.0_SA_COO~W` -- the POPULATED-ROUTE round from @e9d1c6e6a5; sections 1-17
+unchanged and FROZEN.)*
+
+---
+
+## 19. ROUND 11 (v1.2, AMENDED at v1.3 before issuance) -- THE PAGE AS ANDREW DEFINED IT: one identity, one store, one header and five tabs, and the three AC6 limbs first
+
+**Cut by `2.0.0_SA_COO~W` 2026-09-15 ~06:5xZ; AMENDED ~07:0xZ before any issuance** on `4.0.0_SA_CRO~W`'s connection brief
+`org/tier1_exec/4.0.0_SA_CRO/deliverables/RESAPP_CONNECTION_BRIEF_ROUND11_CUT_20260915_W.md` @`0f9a04e81e` (eight seams
+against the provisional s.19 @`a0f08622ae`, every one carried below) and on **PRD v0.7 @`164ae74e06`** (TEN contracts:
+C-PAGE-LAYOUT, C-ONE-STORE, C-ONE-IDENTITY, C-RANKING-GENERATION, C-ETF-PLANE-READ, C-UNION-UNIVERSE, C-SIMILARITY-RANKER,
+C-POSTURE, C-FILINGS-ANALYZER, C-EXEC-MANAGEMENT; s.9f the supersession map; s.9a-2 the measurement limits). Sources of the
+cut: `1.0.0_SA_CTO~W`'s L10 round-10 analysis `ledger/ROUND_ANALYSIS.round10.md` @`8d5fe78265` s.6 and `3.0.0_SA_CVO~W`'s slug
+`surprise-channel/remediations/REMEDIATION_v10.md` @`e28f0b546c`. **PIN (re-pinned at 07:0xZ): PRD v0.8 @`1170b4da69`, ADMITTED** -- ratified-text half SIGNED by `3.0.0_SA_CVO~W` (stamp @`0e6592e88c`),
+brief half SIGNED by `4.0.0_SA_CRO~W` (stamp @`e1d8b2d643`); v0.8's only change from v0.7 is one paragraph moved out of the ENDPOINT,
+no contract changed in substance, so every cell below stands as cut. The seam map
+every cell cites was measured 2026-09-15 06:1x-06:3xZ over `C:/tmp/wk-amgt-10-1/portal` @`9aef3734` (the round-10 drain ref;
+the shared `portal/` checkout at `e85f6eb84f` does NOT carry the page) and the superproject at `82fab6ad44`.
+
+**THE BOX (s.9f, Andrew's later word of 2026-09-14 @`187f003998`, verbatim in the map): "the stable server is this box, and
+the lambda api calls are also this box ... local on this device with some kind of local cron job."** Every batch this round
+(the union universe, the ranker, the filings analyzer, executive management, Posture) is a LOCAL job on site-Z from the
+canonical library, scheduled as a Windows task DISABLED at creation; recurring activation is Andrew's word by name. NO new
+Lambda and NO new terraform resource is cut for a batch. The served read path (`opal-amgt-scoped-api`, mounted at ri-4) and the
+daily ranking producer (`amgt-resapp-chatter-axis`, repointed at ri-2) stay where they are and are REDEPLOYED once (rj-10).
+
+### 19a. THE SUBTRACTION (Rule 24; the population MINUS the excluded, denominator printed; the CRO's arithmetic finding carried)
+
+`comp-surprise --project AMGT_RESAPP --json` at HEAD `82fab6ad44`, 2026-09-15 06:3xZ: **176 investigation items, 197
+adjudication rows, 123 remediation rows across 104 files; 85 ARMED by latest citing row; 0 open items.** The remediation plane
+(the slug @`e28f0b546c`): 12 rows this round, 7 closed, 5 open; six earlier clocks preserved in prior slugs (S70, S72, S78 in v9;
+W11-S1 in v7; C-S49 in v5; S67 and S96 disarmed by the CTO @`008ca40b6c`).
+
+**THE POPULATION = the 5 open v10 remediation rows (S95, C-S196, S96, W17-S4, W17-S5) + the 1 carried clock the slug advanced (S72) +
+the 4 new outcomes + the 10 contracts = 20 members** (the CRO's follow-up @`865e4fc113` item 7: S72 is a carried clock, not a v10
+row, and W17-S4 / W17-S5 are two rows). Each is in exactly one line below; the lines are disjoint and sum to 20.
+
+| # | member | carried by | note |
+|---|---|---|---|
+| 1 | S95 the ranked-click identity (open) | **rj-1** (with rj-4's crosswalk) | -- |
+| 2 | C-S196 drafting paired with evidence (open) | **rj-2** (over rj-6's typed evidence) | -- |
+| 3 | S72 the exact-input exercise (a v9 clock the slug advanced) | **rj-3**, LAST | -- |
+| 4 | S96 the article-store contract (open; disarmed by C-ONE-STORE; the readers' repoint is the cell) | **rj-5** + **rj-9** (the route half) + **rj-10** (the package seam) | -- |
+| 5a | W17-S4 (a rerun criterion reading committed state) | the CUT's own discipline (19g) | folded, not a cell |
+| 5b | W17-S5 (a state census enumerating managed addresses) | the CUT's own discipline (19g) | folded, not a cell |
+| 6 | FWD-16 the header | **rj-9** | -- |
+| 7 | FWD-17 executive management | **rj-8** (objects) + **rj-9** (tab) | -- |
+| 8 | FWD-18 the filings analyzer + the one chart | **rj-6** (objects) + **rj-9** (chart) | -- |
+| 9 | FWD-19 Posture | **rj-11** (the call) + **rj-12** (tab + header line) | -- |
+| 10 | C-PAGE-LAYOUT | **rj-9** | -- |
+| 11 | C-ONE-STORE | **rj-5** (reader + producer) + **rj-9** (coverage route) + **rj-10** (the deployed archives carry the reader, its schema files and `jsonschema`) | -- |
+| 12 | C-ONE-IDENTITY | **rj-4** (the crosswalk `crosswalk/v1`) + **rj-1** (the route boundary) | -- |
+| 13 | C-RANKING-GENERATION | **rj-5** (the writer) + **rj-9** (the reader selects the committed generation) + **rj-10** (the live rerun proves it) | -- |
+| 14 | C-ETF-PLANE-READ | **rj-4** | -- |
+| 15 | C-UNION-UNIVERSE | **rj-4** | -- |
+| 16 | C-SIMILARITY-RANKER | **rj-7** (the set) + **rj-9** (the CSC table) | -- |
+| 17 | C-POSTURE | **rj-11** + **rj-12** | -- |
+| 18 | C-FILINGS-ANALYZER (v0.7: passage map, held uncited claims, typed evidence, the gate against the passage) | **rj-6** | -- |
+| 19 | C-EXEC-MANAGEMENT | **rj-8** | -- |
+
+**18 members covered by 13 cells (several shared), 2 folded into the cut; 18 + 2 = 20.** NOT IN THE POPULATION, named so nobody
+looks for them here: S70 / W11-S1 (the portal freeze; nothing promotes), S78 (Andrew-reserved owner), the harvest publication
+collection mechanism and cadence (reserved to Andrew @`9db2a36cdc`; rj-5 reads what the pool holds), the Bloomberg-terms
+question on filings (carded, open), and the recurring activation of any batch (Andrew's word). S13 is IN this round as a bounded
+measurement (**rj-13**, the CRO's eighth seam and s.9a-2's "measure, then build" row) -- one security, one declared method, a
+cap, a window; no feed is built.
+
+### 19b. PLANE, GRAIN, DENOMINATOR (the remediation-v9 condition, kept)
+
+| plane | grain | denominator at `82fab6ad44` | armed (latest citing row) | open |
+|---|---|---|---|---|
+| investigations (worker + seat rows) | item | 176 | -- | 0 |
+| adjudications (the CVO's rows) | row | 197 | -- | -- |
+| remediations (remedy rows) | row | 123 (12 new in v10) | -- | 5 (v10) + 6 preserved clocks |
+| union | item | 85 ARMED by latest citing row across planes | 85 | 0 |
+
+Per-owner ARMED figures are mentions across planes, not items, as in s.18b; none is read at a grain it does not have.
+
+### 19c. THE CELLS -- thirteen (ids `AMGT-rj-1` .. `AMGT-rj-13`, the grammar the L6 gate reads), five chains; rj-4 is the round's first act and every other chain starts after its drain
+
+Worker slots: `0.9.0_WK_AMGT_RESAPP~18` (A, the page: every portal edit and every edit of `lib/research/api/scoped_amgt.py`),
+`~19` (B, identity + store + the one terraform act), `~20` (C, the model-side calls: filings, then Posture), `~21` (D, the
+ranker), `~22` (E, executive management, then the social measurement). Every cell names its INTERFACE (19d) where another chain
+consumes it, so parallel workers converge on a pool key and a function signature, never on each other's files.
+
+**`AMGT-rj-4` THE CROSSWALK AND THE UNION UNIVERSE** (C-ONE-IDENTITY, C-UNION-UNIVERSE, C-ETF-PLANE-READ; interfaces X-1, U-1). Chain B,
+FIRST of the round. (i) `crosswalk/v1/<as_of>.json` in the pool: ONE canonical identity per economic security (`<TICKER>_<CC>_Equity`)
+mapped to its Bloomberg identifier (`BA US`), display ticker, model/pack key, and EVERY publication-association key already
+persisted (`BA`, `security-<16 hex>` -- measured by listing `publication-links/v1/` and the pack/model-block names), with the
+source universe row and each identifier's provenance; exchange and share-class preserved; an unresolved vendor identifier stays
+UNRESOLVED (never `US Equity` appended, never a suffix stripped); 89 input names, ONE disposition each; re-running the mapper
+mints no second record (a fixed-point test). A library `lib/research/identity/crosswalk.py` (`resolve(any_form) -> identity |
+UNRESOLVED`, `aliases(identity) -> [association keys]`) is the ONE resolver every other cell calls. (ii) `universe/v1/<as_of>.json`:
+the coverage list (`universe.json`, 89) UNION the four books' current holdings from `s3://opal-data-etfs` (`gold/holding/` at the
+newest `snapshots/snapshot_<date>.json` vintage; the holdings layout MEASURED first -- the snapshot itself is four ETF header
+objects, 2,879 bytes), one row per name `{security_key, ticker, name, source: coverage|holding|both, books, weight_by_book,
+resolution, cik, filing_identity: {source: edgar|none, cik, form_expected: 10-K|20-F|none}, snapshot_date}` -- `cik` and
+`filing_identity` are the CRO's second seam, produced here from the SEC ticker-to-CIK table (cached in the deliverables) and
+carried for rj-6; denominators printed. READ-ONLY on the ETF plane (the object count and newest `LastModified` before and after
+are the control); the counterpart contract is NOT established (v0.7's own words), so the read is one-sided and the snapshot and
+schema vintage are carried on every object.
+
+**`AMGT-rj-1` THE ROUTE BOUNDARY AND THE RANKED CLICK** (row Z-S95; C-ONE-IDENTITY; FWD-15). Chain A, after rj-4's drain. (The ranking
+row's `security_key` is emitted by `rj-5`, chain B -- the CRO's follow-up item 4: two chains never edit `chatter_axis.py`; rj-1
+consumes the row shape and renders a row without a key as UNRESOLVED.) The seam:
+`RankedList.tsx:138` passes `row.ticker` into a slot `useSecurityAnalysisState.ts:37-39` renames `securityKey` with no transform;
+`scoped_amgt.py:843-860` takes the path segment verbatim and `read_security_overlay:630` guesses `replace("_"," ")`; ranking rows
+carry `ticker` only. DELIVER: the identity resolved ONCE at the route boundary through `crosswalk.py` (X-1) and carried unchanged
+through overlay, thesis, peers, model, coverage, ranking and Posture; a Bloomberg form (`BA US`) or a canonical key both resolve;
+neither -> `identity_status: UNRESOLVED` with the requested string echoed, no guessing; the ranking rows carry `security_key`
+(the producer's `build_rows` resolves through X-1; the deploy is rj-10's); `RankedList`/`StarredList` pass `row.security_key`; a
+`null` key renders an UNRESOLVED marker and does not navigate; harness arms.
+
+**`AMGT-rj-2` DRAFTED SENTENCES BESIDE THEIR EVIDENCE** (row C-S196; FWD-9). Chain A, after rj-1 AND after rj-6's drain (its typed evidence
+is the input). The seam: `scoped_amgt.py:680` hardcodes `"drafted_sections": []`; `ThesisTab.tsx:52` hides evidence in a `title=`
+tooltip. DELIVER: `read_thesis_bundle` reads `drafting/v1/<key>.json` (D-1, typed evidence records with stable ids AND passage text)
+from the pool, validates every evidence id's existence, association and source version through rj-6's validator before serving,
+serves `drafting_status: SERVED | ABSENT | INVALID`; `ThesisTab.tsx` renders every sentence with its machine marker AND the passage
+text visibly beneath it (no `title=` carrier), the verbatim verdict as the `CheckFaceBadge`; a render check asserts the passage text
+sits after its sentence and before the next; the negative controls are the pipeline's (an unknown id, an empty evidence array).
+
+**`AMGT-rj-3` THE EXACT-INPUT EXERCISE** (row S72; FWD-15, FWD-9, FWD-10; the round's AC6 judgment). Chain A, LAST of all. ONE ranked payload
+and ONE thesis bundle captured from the DEPLOYED adapter (rj-10), each carrying its `generation_id`, coverage vintage and payload
+hash (C-RANKING-GENERATION: a date alone cannot tell two computations apart), sha256 printed at input and at output of the
+assembled page (five tabs, header, Posture line); the persisted cache (`OPAL_PORTAL_QUERY_CACHE_v1`, `staleTime: Infinity`)
+cleared per arm; error and empty controls DISTINCT; the browser half the issuer's with the same hashes; the judgment for
+`3.0.0_SA_CVO~W`. No live-edge or person-session claim.
+
+**`AMGT-rj-5` ONE STORE: THE READER, THE PRODUCER, THE GENERATION** (rows Z-S96 / Z-S101; C-ONE-STORE, C-RANKING-GENERATION; interfaces P-1,
+G-1). Chain B, after rj-4. DELIVER: (i) the ONE shared adapter `lib/research/coverage/pool_reader.py` (P-1) over
+`publication-links/v1/{security_key}/{publisher}/{digest}.json` and `publications/v1/{publisher}/{digest}.json`: `article_key =
+publisher + ':' + article_id`, `digest = sha256(article_key)`, the body's `published` mapped to the consumer's `published_at` at the
+boundary (never `fetched_at`, never `first_discovered_at`); one article counts ONCE per security however many links or aliases
+carry it (the legacy association aliases learned from X-1); a missing body, a malformed record, an access denial and a partial read
+are DISTINGUISHABLE states from a quiet day and from an empty feed; the field-level contract is the CRO's brief @`0e7de170e3`,
+read first. (ii) `chatter_axis.py` builds its 30-day histogram per `security_key` over U-1 from P-1 and its rows carry `security_key`
+through X-1 (the row-shape edit is THIS cell's); the DynamoDB articles read path and the `HARVEST_ARTICLES_TABLE` knob REMOVED. (iii) THE WRITER: a rerun publishes a COMPLETE GENERATION -- the cut names
+**an immutable generation partition plus a current pointer**: rows written under `axis_date = <AXIS>#<date>#<generation_id>`,
+then ONE pointer item `axis_date = <AXIS>#<date>, ticker = "_CURRENT"` carrying `generation_id`, `run_id`, `coverage_vintage`,
+`payload_hash`, `row_count`, `state: COMPLETE | EMPTY | FAILED`, written AFTER the rows; a successful empty product writes an EMPTY
+pointer (clears the membership from the reader's view); a failed run leaves the prior pointer and writes a FAILED marker beside it;
+no mixed generation is ever readable (G-1: the reader follows the pointer AND checks the rows it reads against the pointer's
+`row_count`, because a GSI read is eventually consistent -- a short read is retried, then refused, never served; the CRO's
+follow-up item 3). The existing all-zero-day semantics stand: TRENDING ranks ties, BREAKOUT empties (item 5), so the EMPTY arm is
+BREAKOUT on an all-zero day. The measured defect (`batch_writer(overwrite_by_pkeys)` never clearing
+rows; AAA#1, BBB#1, CCC#2 after a replacement run) is the negative control the tests reproduce and the new writer passes.
+(iv) the difference control (pool vs table for BA, COST, HD and a name with no links); unit tests with a local fake of the two
+prefixes covering every distinguishable state. The coverage ROUTE edit is rj-9's (chain A owns `scoped_amgt.py`).
+
+**`AMGT-rj-6` THE FILINGS ANALYZER, LOCAL** (FWD-18; C-FILINGS-ANALYZER v0.7; interfaces F-1, D-1). Chain C, after rj-4's drain (CIK and
+filing identity from U-1). Card 1 @`5007337353` is the working shape (read `measure_filings_analyzer.py` first; the SEC user-agent
+it sets is reused, never invented; the key through `comp-secrets get anthropic-api-key --reveal`). THE CUT NAMES TWO PASSES.
+DELIVER: `lib/research/filings/` -- `fetch.py` (the latest 10-K, or 20-F for a foreign private issuer, by CIK from U-1; the
+document persisted with its content hash, retrieval time and parser version; `UNRESOLVED-SOURCE` explicit), `analyze.py` (pass 1:
+citations on, prose per item class; pass 2: a JSON schema over pass-1 text; EVERY cited claim RESOLVES to an exact passage through
+an index-to-passage map persisted beside the rows; a claim whose tag resolves to nothing is HELD uncited -- never evidence, never a
+chart input), writing `filings/v1/{security_key}/{accession}.analysis.json` (F-1) and `drafting/v1/{security_key}.json` (D-1:
+TYPED evidence records `{id, passage, source: {accession, sha256, location}}` beside sentences whose `evidence[]` are those ids;
+`thesis_driver` EXERCISED on a real filing). The drafting library changes are THIS cell's (chain C is `lib/research/drafting/`'s
+one writer this round): the reader validates existence, association and source version for every evidence id BEFORE the verbatim
+gate, and the gate runs against the PASSAGE, not the title (the measured defect: the existing gate passed an unknown id with no
+quotation and refused a valid body passage, three probes ~06:2xZ). QA: at least THREE filings across TWO filers including ONE
+non-US name (BA and COST as 10-K filers; SAP_GY_Equity as a 20-F filer -- the measurement limit of s.9a-2), items / cited / uncited
+printed per filing; a `python -m lib.research.filings.batch --universe <U-1>` CLI over the union universe with a Windows task
+definition DISABLED (`schtasks /Create ... /SC WEEKLY` with the task left disabled; activation is Andrew's). NO Lambda, NO terraform.
+COST stated for Andrew: about USD 1.1 and 115 s per filing at card 1's size; a full weekly batch over ~150 names is on the order of
+USD 150.
+
+**`AMGT-rj-7` THE SIMILARITY RANKER** (FWD-8; C-SIMILARITY-RANKER; interface R-1). Chain D, after rj-4's drain. As the provisional cut, with
+the identity through X-1: the loader over the six scanner universe files (`s3://opal-data-portal-v2/json/security_scanner/latest/
+universes/*/universe_data.json`, asOf 2026-08-06 carried as the vintage) UNION the model-block headers; rungs sector -> size band
+(0.2x-5x, `engine.py`) -> country -> industry group, log-market-cap tiebreak; the Rule 24 subtraction per rung; `peers/v1/{key}/
+{as_of}.json` for every resolved name of U-1 (an `absent` object with its reason for the rest); the CSC-column map as present MINUS
+absent; a Seeking Alpha comparables list measured ONCE as an input candidate if reachable without the CRO's vault, else
+ABSENT-ACCESS. Local batch; no deploy.
+
+**`AMGT-rj-8` EXECUTIVE MANAGEMENT** (FWD-17; C-EXEC-MANAGEMENT; interface M-1). Chain E, after rj-4's drain AND after rj-6's drain (the
+filing rj-6 persists in the pool is its roster's source; the CRO's follow-up item 4). As the provisional cut with the identity
+through X-1 and the roster from the filing rj-6's fetcher persists (the executive-officer section; role start EXERCISED on a
+real filing; ex-US via the 20-F where it carries the section, else UNRESOLVED-SOURCE); Lusha enrichment through the estate's
+`LushaClient` (key via `comp-secrets`; profile link + title per CONFIRMED officer; no contact field stored -- the schema forbids
+`email` and `phone`); a targeted IR-domain search for the CEO via `serp_brightdata`; `management/v1/{key}/{as_of}.json` and the
+pool average over U-1 with its denominator. QA one-shot on BA, COST, HD and the two names rj-11 will compare. Local; no loop
+started (the production loop is the harvest estate's).
+
+**`AMGT-rj-13` THE SOCIAL SOURCE, MEASURED** (S13; s.9a-2's "measure, then build" row; C-LISTING-NOT-CAPABILITY). Chain E, after rj-8. ONE
+security, ONE declared SUPPORTED method per the CRO's social brief @`36a08d3d1a` (the CRO's follow-up item 1: NOT the old cashtag
+plan -- the X inventory has no keyword-post discovery): Reddit discussion search, dataset `gd_lvz8ah06191smkebj4`, `type=discover_new`,
+`discover_by=keyword`, inputs `keyword`, `date`, a bounded `num_of_posts`; the job identity persisted and retrieved through the
+documented delivery flow, never resubmitted per poll; a CAP (posts and USD) and a WINDOW, under the session egress word; the observables the plan names (cost, freshness, schema, latency, relevance) printed; the record filed as
+`social/v1/_measurement/<as_of>.json` and a row. NO feed is built; the header's social half renders "no source measured" until a
+later round cuts one from this measurement.
+
+**`AMGT-rj-9` THE HEADER AND THE FIVE TABS** (FWD-16; C-PAGE-LAYOUT; the rendering half of FWD-17, FWD-18, FWD-8; the route half of
+C-ONE-STORE and C-RANKING-GENERATION). Chain A, after rj-2 AND after the drains of rj-5, rj-6, rj-7, rj-8. Tabs = Thesis, Exec
+Management, Peers, Model, Posture; the Coverage tab retired into the header feed (P-1 items newest first; social: "no source
+measured (S13)"); a one-line description (a model-block header scalar if one exists, else D-1's `company_description` first
+sentence marked machine, else ABSENT); the Model tab = `fiscal_year_figures` in Adam's `Model` sheet shape; Thesis = the drafted
+sections (rj-2) + ONE chart of F-1's `thesis_driver` series; Peers = the CSC table over R-1; Exec Management = M-1; EVERY adapter
+route edit of the round lives here: `read_coverage_set` on P-1 (via X-1's aliases); EVERY reader of a ranking partition follows
+G-1's pointer and checks `row_count` -- the rankings list, the overlay's points (`scoped_amgt.py:329-338`) and the timeseries
+history (`:434-438`) alike (the CRO's follow-up item 2), never a bare date partition, never a mixed generation; `generation_id` and
+`payload_hash` on every ranking response; peers on R-1, management on M-1, posture on O-1 when present; ABSENT explicit everywhere;
+Print a header action. Harnesses per tab; the render check over the
+assembled page.
+
+**`AMGT-rj-10` THE DEPLOY AND THE LIVE READ** (the consumer cell; C-ONE-STORE's package seam; C-RANKING-GENERATION on the live plane). Chain B,
+after rj-5 AND after the drains of rj-1, rj-9 (and rj-6/7/8, whose objects the live reads exercise). ONE terraform act in the
+harvest root: rebuild the scoped API zip (the round-10 closure builder, now ALSO carrying the reader's schema files and a vendored
+`jsonschema` -- the package seam, exercised in an isolated runtime before upload) and the chatter-axis zip; IAM: `s3:GetObject` /
+`s3:ListBucket` on `opal-data-harvest` for the prefixes `publication-links/v1/`, `publications/v1/`, `universe/v1/`, `crosswalk/v1/`,
+`filings/v1/`, `drafting/v1/`, `peers/v1/`, `management/v1/`, `posture/v1/` (read) for the two roles; the DynamoDB articles table's
+grants REMOVED from both (retired as a source); NO new function, NO new schedule. The whole-root plan with the managed-address
+census enumerated APART from data-source entries (W17-S5), the co-sign (COO half at the cut, CTO half requested in the issuance)
+covering the served-output move (coverage, thesis, peers, management, posture and rankings now serve pool objects and committed
+generations), `safe-apply` with the ledger; LIVE READS: the producer's QA invoke writes a COMPLETE generation with its pointer
+(rows carry `security_key`; the pointer carries `generation_id`, `coverage_vintage`, `payload_hash`); the BREAKOUT partition on an
+all-zero day carries an EMPTY pointer while TRENDING keeps its tie-ranked rows (the existing semantics; the CRO's follow-up item 5),
+and a re-invoke replaces the whole generation (the changed-winner control); the deployed adapter's rankings follow the
+pointer; coverage for BA from the pool; thesis with N > 0 drafted sections with passages; peers derived; management for BA. The
+captured payloads (with `generation_id` and hash) are rj-3's inputs.
+
+**`AMGT-rj-11` THE POSTURE CALL** (FWD-19; C-POSTURE). Chain C, after rj-6 AND after the drains of rj-4, rj-7, rj-8. As the provisional cut:
+membership at the snapshot vintage (U-1 + the holdings read, one-sided), the comparable by R-1 restricted to the OTHER side, the
+judgment through the Claude API over the two evidence packs (D-1, M-1, R-1, the model block figures for BOTH names; the ETF preset
+fit scores) -> `posture/v1/{key}/{as_of}.json` (O-1) `{verdict: better|worse|hold|steer_clear|absent, comparable, basis:
+[{claim, cites}], as_of, generation, marked: "machine"}`; QA on BABA_US_Equity (not held) and on ONE held name from the holdings
+read, with D-1/M-1/R-1 landed for BOTH names of each pair by rj-6/7/8's QA lists (the CRO's seventh seam: the QA name lists are
+aligned in 19e); a subject with no comparable -> `absent` with the reason. Local; nothing trades; no schedule.
+
+**`AMGT-rj-12` THE POSTURE TAB AND THE HEADER LINE** (FWD-19; C-PAGE-LAYOUT). Chain A, after rj-9 AND after rj-11's drain. The tab over O-1
+(verdict, the comparable as a link into its own page, each basis claim with its cited pack element beside it, the machine marker,
+the snapshot date) and the header's one-line posture with the same marker; ABSENT explicit.
+
+### 19d. THE INTERFACES (what one chain writes and another reads; the pool prefixes are the contract)
+
+| id | writer | reader(s) | pool key / signature | shape (the fields a reader may rely on) |
+|---|---|---|---|---|
+| X-1 | rj-4 | every cell | `crosswalk/v1/{as_of}.json`; `lib/research/identity/crosswalk.py resolve(any_form)`, `aliases(identity)` | one record per canonical identity: `{security_key, bloomberg, display_ticker, model_key, association_keys: [...], exchange, share_class, source_row, provenance, resolution}`; UNRESOLVED records kept with their raw identifier |
+| U-1 | rj-4 | rj-1, rj-5, rj-6, rj-7, rj-8, rj-11, rj-13 | `universe/v1/{as_of}.json` | `{as_of, snapshot_date, schema_version, names: [{security_key, ticker, name, source, books, weight_by_book, resolution, cik, filing_identity}], denominators}` |
+| P-1 | rj-5 | rj-9, rj-10 | `lib/research/coverage/pool_reader.py coverage_items(identity, days)` | `{items: [{title, url, publisher, published_at, article_key}], store_item_count, states: {missing_body, malformed, denied, partial}, read_at}` -- one article once per security |
+| G-1 | rj-5 | rj-9, rj-10, rj-3 | DynamoDB `opal-harvest-security-metrics`: rows at `<AXIS>#<date>#<generation_id>`; pointer at `<AXIS>#<date>` / `_CURRENT` | pointer `{generation_id, run_id, coverage_vintage, payload_hash, row_count, state}`; rows carry `security_key`, `ticker`, `rank`, `score`, `generation_id` |
+| D-1 | rj-6 | rj-2, rj-9, rj-11 | `drafting/v1/{key}.json` | the drafting schema (typed): `evidence_records: [{id, passage, source}]`, sections x sentences `{text, generated: true, evidence: [ids], verbatim_check}`, `held_uncited: [...]`, `thesis_driver`, `dropped` |
+| F-1 | rj-6 | rj-9 | `filings/v1/{key}/{accession}.analysis.json` | `{source: {url, sha256, retrieved_at, parser_version}, excerpt_sha256, passage_map, items{...}, held_uncited, thesis_driver}` |
+| R-1 | rj-7 | rj-9, rj-11 | `peers/v1/{key}/{as_of}.json` | `{subject, basis, members[...], denominators, universe_vintage, csc_columns{present, absent}, sa_candidates}` |
+| M-1 | rj-8 | rj-9, rj-11 | `management/v1/{key}/{as_of}.json`, `management/v1/_pool/{as_of}.json` | officers[{name, role, role_start, tenure_years, profile_url, source, confirmed}], avg_tenure_years, pool_avg_tenure_years, pool_denominator; no contact fields |
+| O-1 | rj-11 | rj-12 | `posture/v1/{key}/{as_of}.json` | `{verdict, comparable, basis[{claim, cites}], as_of, generation, marked: "machine"}` |
+| S-1 | rj-13 | (a later round) | `social/v1/_measurement/{as_of}.json` | the measurement record: method, cap, window, cost, freshness, schema, latency, relevance |
+
+A reader treats an absent object as ABSENT explicit, never as an empty day. Every object carries `as_of` and the vintage of what it
+read. `security_key` is the canonical form everywhere in the pool; a Bloomberg ticker is a display field, never a key.
+
+### 19e. EDGES, FANOUT, THE DRAIN CONTRACT
+
+Edges: rj-4 -> {rj-1, rj-5, rj-6, rj-7, rj-8} (the round's first drain gates every chain); rj-1 -> rj-2 -> rj-9 -> rj-12 -> rj-3
+(chain A); rj-5 -> rj-10 (chain B); rj-6 -> rj-11 (chain C); rj-8 -> rj-13 (chain E); cross-chain: rj-6 -> rj-2; {rj-5, rj-6, rj-7,
+rj-8} -> rj-9; {rj-1, rj-9} -> rj-10; {rj-7, rj-8} -> rj-11; rj-10 -> rj-3; rj-11 -> rj-12.
+
+**M = 5 dependency-independent chains after rj-4 (A, B, C, D, E); N = 5 workers; K = 8.**
+`fanout: 5 of 5 chains, cap 8, reason: one worker per chain; rj-4 is spawned alone first and the other four chains spawn at its drain; chain A holds every portal and adapter-route edit, chain C every drafting-library edit, so each shared file has one writer; cross-chain cells are handed only after the cells they consume are DRAINED`
+
+QA name lists aligned (the CRO's seventh seam; follow-up item 6): rj-6, rj-7 and rj-8 each land objects for BA_US_Equity,
+COST_US_Equity, HD_US_Equity, SAP_GY_Equity (the non-US filer) and BABA_US_Equity; the held/non-held PAIR for rj-11 is chosen by
+the COO at rj-7's drain from R-1 and U-1 (a held name whose ranker comparable is one of the five, or the reverse) and named in
+the spawn prompts of rj-6, rj-7 and rj-8 as "up to two more QA names" BEFORE those cells drain, so rj-11 starts with both
+names' objects landed.
+
+Drain contract: every worker in a linked worktree cut from the CURRENT branch (`git worktree add -b wk-amgt_resapp-11-<n>
+C:/tmp/wk-amgt-11-<n> HEAD`, a sparse cone for chains B-E); chain A's portal checkout is cut from `refs/drains/ri-1-portal`
+@`9aef3734` on `wk-amgt_resapp-11-1-portal`, fetched at its drains into `refs/drains/rj-portal` (the gitlink `e85f6eb84f` NEVER
+moves); chains B-E touch no portal file. The superproject drains through `safe-merge.sh` with the channel union by row id.
+Hand-over order: rj-4 alone; at its drain rj-1, rj-5, rj-6, rj-7 together and rj-8 at rj-6's drain; rj-2 after rj-1 and rj-6's drain; rj-13 after
+rj-8; rj-9 after rj-2 and the drains of rj-5/6/7/8; rj-11 after rj-6 and the drains of rj-7/8; rj-10 after rj-5 and the drains
+of rj-1/9; rj-12 after rj-9 and rj-11's drain; rj-3 after rj-10 and rj-12.
+
+### 19f. BOUNDS (the round's, verbatim where they are Andrew's)
+
+PORTAL FROZEN both fabrics: COMMIT YES / PROMOTE NO; no push (site-Z hold); no gitlink move (`e85f6eb84f`); the page lives on
+drain refs. Egress: Andrew-direct ~05:42Z @`dfa63b6d92`, "The whole sitez fabric has free egress this session" -- a worker's egress
+is its issuer's, exercised through its order; every vendor call recorded with its instrument and vintage; secrets ONLY through
+`comp-secrets get <name> --reveal` (Andrew-direct ~05:4xZ @`a5c6a066de`). The box is site-Z (@`187f003998`): every batch is a local
+job, its task DISABLED at creation; the publication harvest's collection mechanism and cadence stay reserved to Andrew
+(@`9db2a36cdc`); no cell starts recurring collection. The ETF plane is READ-ONLY and its counterpart contract is unestablished. Nothing
+trades from Posture. No monitor, alarm, SNS or SES. No non-ASCII in anything that reaches AWS. LD-0521: no round-12 issuance
+before the round-11 slug and analysis. A criterion a worker cannot satisfy as written is REFUSED with a row, never repaired.
+
+### 19g. PREFLIGHT (RUN at the cut 2026-09-15 06:4xZ; the L6 gate reads the three lines)
+
+comp-schedule: RUN (--drift) -- 5 of 5 carriers within budget (16.0 s of 90); REACHED-DENOMINATORS C1=23, C2=8, C3=12, C4=21,
+C5=334; C2 = 8 OPEN deploy-ledger entries (none this project's; rj-10 opens one and closes it inside the round); C3 = 12 standing
+NEVER clauses (no monitor, no alarm); NO new scheduled producer is cut (every batch is a local task DISABLED at creation); BLIND on
+C4 and C5 in the tool's own voice.
+comp-iam: RUN (gaps) -- 838 call(s) verdicted across 98 mapped role(s) over 474 .tf files; 629 UNRESOLVABLE-RESOURCE, 142 GRANTED,
+51 GRANTED-BROAD (EXCLUDED, NOT CLEARED), 14 UNGRANTED, 2 GRANTED-ACTION / UNGRANTED-RESOURCE; 15 missing, 291 deny-present, 1
+coverage-unknown, 2 resource-mismatch across 32 services; BLIND on 266 calls in 26 role-UNMAPPED services. This round's IAM delta
+(rj-10): READ grants by prefix on one bucket for two roles; the DynamoDB articles grants REMOVED; no Scan, no wildcard resource.
+comp-adversary: RUN (compose on the decomposition, --no-packet) -- 48 commit pins, 13 repo paths, 17 file:line cites, 14 tool
+mentions; 23 hex runs not parsed (named); T11 NOT RESOLVED (293 uncited siblings, CAP 25 declared); stage 4 disabled by the caller.
+The round's adversarial surfaces: filing text and vendor responses are DATA inside a model prompt (rj-6, rj-11 state so in the
+prompt; the verbatim gate against the PASSAGE bounds fabrication; held-uncited claims never render); Posture is marked machine and
+read by no trade consumer; the Lusha response is scrubbed to name/title/link.
+comp-cache: RUN (collisions) -- 481 of 481 portal files, 119 of 119 useQuery sites; chain A adds keys under the `amgt-lead`
+namespace only and changes no existing key.
+comp-blast: DECLARED-NOT-APPLICABLE for every cell but rj-10; rj-10's blast is the two functions' code and IAM and the routes'
+served payloads, covered by the co-sign; the plan's 0-destroy line and the managed-address census are its criteria.
+Criteria discipline from W17-S4/W17-S5: every rerun-able criterion reads COMMITTED state (`git log` beside any `git status`);
+every state census enumerates managed addresses APART from data-source entries and never a literal total; every large-apply
+criterion greps tokens over the saved output rather than `tail`-ing a window; every expectation is a regex-safe pattern.
+
+### 19h. RULE 24 RECORD
+
+(i) MECE over the declared domain: 19 members (the 5 open v10 rows + the 4 new FWD cards + the 10 contracts the CVO enumerated),
+each in exactly one line of 19a, 18 covered + 1 folded = 19; the domain's own choice falsified by one unscoped read (the slug's
+carries, the ENDPOINT's cards, the CONTRACTS section's bold names). (ii) Same grain: every cell is one deliverable set with its own
+proof instance; the pool prefixes are one object per (key, as_of); a generation is one object per (axis, date, generation_id).
+(iii) One intent per cell: identity (rj-4, rj-1), evidence (rj-2), exercise (rj-3), store (rj-5), analysis (rj-6), similarity
+(rj-7), management (rj-8), social measurement (rj-13), page (rj-9), deploy (rj-10), posture (rj-11, rj-12). (iv) State coherence:
+rj-10 is the ONLY cell that moves the live plane; a cell's QA one-shot writes pool objects and nothing else; the values one remedy
+does not move are named in each cell (rj-1 does not deploy; rj-6 does not run the batch; rj-8 does not start the loop; rj-11 does
+not schedule; rj-13 builds no feed).

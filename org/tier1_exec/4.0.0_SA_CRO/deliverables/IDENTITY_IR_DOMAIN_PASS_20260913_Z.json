@@ -1,0 +1,4078 @@
+{
+  "artifact": "ir_domain RESOLUTION PASS -- Google Custom Search",
+  "author": "4.0.0_SA_CRO~Z",
+  "generated_at": "2026-09-14T05:38Z",
+  "authority": "Andrew-direct 2026-09-13 ~04:0xZ, card 4 of 'all recs approved': the Google Custom Search key for IR and blog search, SEARCH ONLY.",
+  "criterion": "HARVEST_BACKFILL_PLAN_20260911_Z.md s.13",
+  "provider": "googleapis.com/customsearch/v1 -- ONE provider, ONE purpose. No result page was fetched.",
+  "universe": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~4\\universe.json",
+  "name_derivation": "the company name is the folder name with its trailing Bloomberg-shaped tokens removed -- the complement of the identity fallback rule that reads those same tokens as a ticker.",
+  "name_overrides": {
+    "Koninklijke KPN NA": {
+      "name": "KPN",
+      "reason": "'Koninklijke' is a Dutch honorific shared by many listed companies; 'KPN' is the name"
+    },
+    "Manila MER PER": {
+      "name": "Manila Electric",
+      "reason": "'Manila' alone is a city; the company is Manila Electric (Meralco)"
+    }
+  },
+  "name_overrides_note": "found by the zero-call dry run over all 89 derived queries, not by recall: in two folders the stripped token WAS the company's identity and the residual was not a company name.",
+  "excluded_non_company_domains": [
+    "annualreports.com",
+    "barrons.com",
+    "bing.com",
+    "bloomberg.com",
+    "cnbc.com",
+    "companiesmarketcap.com",
+    "craft.co",
+    "crunchbase.com",
+    "facebook.com",
+    "finance.yahoo.com",
+    "fool.com",
+    "ft.com",
+    "glassdoor.com",
+    "google.com",
+    "gurufocus.com",
+    "hl.co.uk",
+    "ii.co.uk",
+    "indeed.com",
+    "instagram.com",
+    "investing.com",
+    "investor.gov",
+    "investorrelations.com",
+    "irmagazine.com",
+    "linkedin.com",
+    "londonstockexchange.com",
+    "macrotrends.net",
+    "marketscreener.com",
+    "morningstar.com",
+    "msn.com",
+    "nasdaq.com",
+    "notifyir.com",
+    "nyse.com",
+    "pitchbook.com",
+    "q4inc.com",
+    "quartr.com",
+    "reddit.com",
+    "reuters.com",
+    "sec.gov",
+    "seekingalpha.com",
+    "sharesmagazine.co.uk",
+    "simplywall.st",
+    "stockanalysis.com",
+    "tiktok.com",
+    "tipranks.com",
+    "twitter.com",
+    "wikipedia.org",
+    "wikiwand.com",
+    "wsj.com",
+    "x.com",
+    "yahoo.com",
+    "youtube.com",
+    "zacks.com"
+  ],
+  "excluded_note": "test (b) as written in s.13 says only 'two or more results share that same registrable domain'. Run literally it would elect linkedin.com for a company with three LinkedIn hits. Aggregators, exchanges, social networks and news are excluded before the tests run. THIS IS A CORRECTION TO THE CRITERION, disclosed rather than folded in.",
+  "denominator": {
+    "universe": 89,
+    "ir_domain_INFERRED": 88,
+    "ir_domain_UNRESOLVED": 1,
+    "prior_state": "0 of 89 -- ir_domain was UNRESOLVED for every name at this cut",
+    "calls_spent": 92,
+    "calls_breakdown": "1 shape probe + 12 adversarial batch + 77 remainder + 1 raw diagnostic (ICICI hostnames) + 1 ICICI re-run after the suffix repair",
+    "verdicts_re_derived_offline": "the wire-domain exclusions and this status correction were applied by re-running the rule over the STORED result domains -- ZERO additional calls, replay verified faithful by re-deriving the original verdicts under the original set (0 drift)",
+    "ties_closed_by_bloomberg_root": 3,
+    "ties_note": "s.14 called BP, Hermes and Telefonica Brazil 'the only three of 89 that need a human'. That was true about SEARCH and false about the evidence on hand: a company NAME is not a unique key, but a BLOOMBERG ROOT is, and the root was in the folder name the whole time.",
+    "conflicts_closed_by_bloomberg_root": 6,
+    "test_c_note": "s.14 recorded test (c) as contributing NOTHING, as a measured null, because no ir_domain was held. That was the wrong reading of the test: (c) says 'a value already held FROM ANOTHER KEY', and bloomberg_ticker is another key. Wiring it in closed 9 of the 10 refusals at ZERO call cost. The refusals were never wrong -- the criterion simply had a test it was not running."
+  },
+  "records": [
+    {
+      "folder": "ASML NA",
+      "company_name": "ASML",
+      "query": "ASML investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "asml.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'ASML investor relations', 10 result(s) returned of 145000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (a) AND (b) agreeing on asml.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:00Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "asml"
+        ],
+        "domains_ranked": [
+          "asml.com",
+          "asml.com",
+          "asml.com",
+          "asml.com",
+          "intc.com",
+          "asml.com",
+          "imec-int.com"
+        ],
+        "domain_counts": {
+          "asml.com": 5,
+          "intc.com": 1,
+          "imec-int.com": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "asml.com"
+        ],
+        "test_b_agreement": {
+          "asml.com": 5
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (a) AND (b) agreeing on asml.com"
+      }
+    },
+    {
+      "folder": "Adobe ADBE US",
+      "company_name": "Adobe",
+      "query": "Adobe investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "adobe.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Adobe investor relations', 10 result(s) returned of 14400000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (a) AND (b) agreeing on adobe.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:00Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "adobe"
+        ],
+        "domains_ranked": [
+          "adobe.com",
+          "adobe.com",
+          "adobe.com",
+          "adobe.com",
+          "adobe.com",
+          "adobe.com",
+          "alphaspread.com",
+          "adobe.com",
+          "thda.org"
+        ],
+        "domain_counts": {
+          "adobe.com": 7,
+          "alphaspread.com": 1,
+          "thda.org": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "adobe.com"
+        ],
+        "test_b_agreement": {
+          "adobe.com": 7
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (a) AND (b) agreeing on adobe.com"
+      }
+    },
+    {
+      "folder": "Air Liquide AI FP",
+      "company_name": "Air Liquide",
+      "query": "Air Liquide investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "airliquide.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Air Liquide investor relations', 10 result(s) returned of 112000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (a) AND (b) agreeing on airliquide.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:00Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "liquide",
+          "airliquide"
+        ],
+        "domains_ranked": [
+          "airliquide.com",
+          "airliquide.com",
+          "airliquide.com",
+          "euroclear.com",
+          "airliquide.com",
+          "totalenergies.com",
+          "airliquide.com",
+          "airliquide.com",
+          "airliquide.com"
+        ],
+        "domain_counts": {
+          "airliquide.com": 7,
+          "euroclear.com": 1,
+          "totalenergies.com": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "airliquide.com"
+        ],
+        "test_b_agreement": {
+          "airliquide.com": 7
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (a) AND (b) agreeing on airliquide.com"
+      }
+    },
+    {
+      "folder": "Alibaba BABA",
+      "company_name": "Alibaba",
+      "query": "Alibaba investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "alibabagroup.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Alibaba investor relations', 10 result(s) returned of 991000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (a) AND (b) agreeing on alibabagroup.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:00Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "alibaba"
+        ],
+        "domains_ranked": [
+          "alibabagroup.com",
+          "alibaba.com",
+          "alibabagroup.com",
+          "starbucks.com",
+          "alphaspread.com",
+          "gcs-web.com",
+          "nclhltd.com",
+          "mondelezinternational.com"
+        ],
+        "domain_counts": {
+          "alibabagroup.com": 2,
+          "alibaba.com": 1,
+          "starbucks.com": 1,
+          "alphaspread.com": 1,
+          "gcs-web.com": 1,
+          "nclhltd.com": 1,
+          "mondelezinternational.com": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "alibaba.com",
+          "alibabagroup.com"
+        ],
+        "test_b_agreement": {
+          "alibabagroup.com": 2
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (a) AND (b) agreeing on alibabagroup.com"
+      }
+    },
+    {
+      "folder": "America Movil AXMB MM",
+      "company_name": "America Movil",
+      "query": "America Movil investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "americamovil.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'America Movil investor relations', 10 result(s) returned of 67000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (a) AND (b) agreeing on americamovil.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:00Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "america",
+          "movil",
+          "americamovil"
+        ],
+        "domains_ranked": [
+          "americamovil.com",
+          "americamovil.com",
+          "americamovil.com",
+          "lla.com",
+          "americamovil.com",
+          "q4cdn.com",
+          "americamovil.com",
+          "americamovil.com"
+        ],
+        "domain_counts": {
+          "americamovil.com": 6,
+          "lla.com": 1,
+          "q4cdn.com": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "americamovil.com"
+        ],
+        "test_b_agreement": {
+          "americamovil.com": 6
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (a) AND (b) agreeing on americamovil.com"
+      }
+    },
+    {
+      "folder": "AstraZeneca AZN",
+      "company_name": "AstraZeneca",
+      "query": "AstraZeneca investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "astrazeneca.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'AstraZeneca investor relations', 10 result(s) returned of 302000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (a) AND (b) agreeing on astrazeneca.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T00:57Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "astrazeneca"
+        ],
+        "domains_ranked": [
+          "astrazeneca.com",
+          "astrazeneca.com",
+          "astrazeneca.com",
+          "astrazeneca.com",
+          "astrazeneca.com",
+          "astrazeneca.com",
+          "astrazeneca.com",
+          "astrazeneca.com",
+          "astrazeneca.com",
+          "astrazeneca.com"
+        ],
+        "domain_counts": {
+          "astrazeneca.com": 10
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "astrazeneca.com"
+        ],
+        "test_b_agreement": {
+          "astrazeneca.com": 10
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (a) AND (b) agreeing on astrazeneca.com"
+      }
+    },
+    {
+      "folder": "BB Seguridade BBSE3 BZ",
+      "company_name": "BB Seguridade",
+      "query": "BB Seguridade investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "bbseguridaderi.com.br",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'BB Seguridade investor relations', 10 result(s) returned of 3430 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (a) AND (b) agreeing on bbseguridaderi.com.br STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:00Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "seguridade",
+          "bbseguridade"
+        ],
+        "domains_ranked": [
+          "bbseguridaderi.com.br",
+          "bnamericas.com",
+          "bbseguridaderi.com.br",
+          "bbseguridaderi.com.br",
+          "dasa3.com.br",
+          "bbseguridaderi.com.br",
+          "bb.com.br",
+          "bbseguridaderi.com.br",
+          "mziq.com"
+        ],
+        "domain_counts": {
+          "bbseguridaderi.com.br": 5,
+          "bnamericas.com": 1,
+          "dasa3.com.br": 1,
+          "bb.com.br": 1,
+          "mziq.com": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "bbseguridaderi.com.br"
+        ],
+        "test_b_agreement": {
+          "bbseguridaderi.com.br": 5
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (a) AND (b) agreeing on bbseguridaderi.com.br"
+      }
+    },
+    {
+      "folder": "BNP Paribas BNP FP",
+      "company_name": "BNP Paribas",
+      "query": "BNP Paribas investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "invest.bnpparibas",
+        "status": "INFERRED",
+        "evidence": "CONFLICT BROKEN BY TEST (c), the key s.14 recorded as a measured NULL. The s.14 pass refused this name because test (a) named bnpparibas-am.com (BNP Paribas Asset Management -- a SUBSIDIARY, not a different firm; the group investor site on BNP's own brand gTLD is the one tied to the listed parent BNP FP) while test (b) named invest.bnpparibas -- two independent tests disagreeing, so it correctly took neither. THE TIEBREAK IS THE BLOOMBERG ROOT 'BNP' ALREADY HELD FOR THIS FOLDER: it does not match the company test (a) elected, so test (a)'s candidate is excluded on evidence rather than on preference, and test (b)'s stands. A company NAME is not a unique key; a BLOOMBERG ROOT is. STATUS IS INFERRED: the root is read off the research directory's own name under the basis Andrew approved for the identity fallback (card 6, 2026-09-13 ~04:0xZ), and no page was fetched to confirm the domain is operated by this company.",
+        "resolved_at": "2026-09-14T05:38Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "paribas",
+          "bnpparibas"
+        ],
+        "domains_ranked": [
+          "invest.bnpparibas",
+          "group.bnpparibas",
+          "invest.bnpparibas",
+          "cib.bnpparibas",
+          "invest.bnpparibas",
+          "bnpparibascardif.com",
+          "bnpparibas.pl",
+          "bnpparibascardif.com",
+          "usa.bnpparibas",
+          "bnpparibas-am.com"
+        ],
+        "domain_counts": {
+          "invest.bnpparibas": 3,
+          "group.bnpparibas": 1,
+          "cib.bnpparibas": 1,
+          "bnpparibascardif.com": 2,
+          "bnpparibas.pl": 1,
+          "usa.bnpparibas": 1,
+          "bnpparibas-am.com": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "bnpparibas-am.com",
+          "bnpparibas.pl",
+          "bnpparibascardif.com"
+        ],
+        "test_b_agreement": {
+          "bnpparibascardif.com": 2,
+          "invest.bnpparibas": 3
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "REFUSED -- test (a) named ['bnpparibas-am.com', 'bnpparibas.pl', 'bnpparibascardif.com'] and test (b) named invest.bnpparibas; the two independent tests disagree, so neither is taken.",
+        "conflict_broken_by": {
+          "bloomberg_root": "BNP",
+          "excluded_candidate": "bnpparibas-am.com",
+          "excluded_is": "BNP Paribas Asset Management -- a SUBSIDIARY, not a different firm; the group investor site on BNP's own brand gTLD is the one tied to the listed parent BNP FP"
+        }
+      }
+    },
+    {
+      "folder": "BP PLC",
+      "company_name": "BP",
+      "query": "BP investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "bp.com",
+        "status": "INFERRED",
+        "evidence": "TIE BROKEN BY THE BLOOMBERG ROOT, not by search. The s.14 pass refused this name on a dead tie with akerbp.com because no SEARCH signal separates two real companies sharing a name. the folder's Bloomberg root is 'BP' (BP p.l.c., BP/ LN). The tied candidate akerbp.com is Aker BP ASA, whose Bloomberg ticker is AKRBP NO -- a different root entirely. And the SA symbol pass independently resolved this folder to symbol 'BP', which Seeking Alpha's own records name 'BP p.l.c.' STATUS IS INFERRED: the root is read off the research directory's own name -- whoever named the directory's belief -- under the same basis Andrew approved for the identity fallback (card 6, 2026-09-13 ~04:0xZ, every inferred value MARKED AS INFERRED). It is not an independent confirmation that this company operates this domain.",
+        "resolved_at": "2026-09-14T05:37Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "bp"
+        ],
+        "domains_ranked": [
+          "bp.com",
+          "akerbp.com",
+          "bp.com",
+          "bp.com",
+          "akerbp.com",
+          "bp.com",
+          "akerbp.com",
+          "bpmarsh.co.uk",
+          "akerbp.com"
+        ],
+        "domain_counts": {
+          "bp.com": 4,
+          "akerbp.com": 4,
+          "bpmarsh.co.uk": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "akerbp.com",
+          "bp.com",
+          "bpmarsh.co.uk"
+        ],
+        "test_b_agreement": {
+          "akerbp.com": 4,
+          "bp.com": 4
+        },
+        "test_b_tie_unresolved": true,
+        "test_c_held_value": null,
+        "verdict": "REFUSED -- test (a) matched ['akerbp.com', 'bp.com'] with no result-count separation between them.",
+        "tie_broken_by": {
+          "bloomberg_root": "BP",
+          "rival_domain": "akerbp.com"
+        }
+      }
+    },
+    {
+      "folder": "Boeing BA",
+      "company_name": "Boeing",
+      "query": "Boeing investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "boeing.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Boeing investor relations', 10 result(s) returned of 3760000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (a) AND (b) agreeing on boeing.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:00Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "boeing"
+        ],
+        "domains_ranked": [
+          "boeing.com",
+          "boeing.com",
+          "boeing.com",
+          "mediaroom.com",
+          "boeing.com",
+          "boeing.com",
+          "boeing.com",
+          "mediaroom.com"
+        ],
+        "domain_counts": {
+          "boeing.com": 6,
+          "mediaroom.com": 2
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "boeing.com"
+        ],
+        "test_b_agreement": {
+          "boeing.com": 6,
+          "mediaroom.com": 2
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (a) AND (b) agreeing on boeing.com"
+      }
+    },
+    {
+      "folder": "British American Tobacco",
+      "company_name": "British American Tobacco",
+      "query": "British American Tobacco investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "bat.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'British American Tobacco investor relations', 10 result(s) returned of 823000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (b) agreement: 5 of 8 surviving results on bat.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:00Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "british",
+          "american",
+          "tobacco",
+          "britishamericantobacco"
+        ],
+        "domains_ranked": [
+          "bat.com",
+          "apple.com",
+          "bat.com",
+          "bat.com",
+          "bat.com",
+          "batbangladesh.com",
+          "bat.com",
+          "batbangladesh.com"
+        ],
+        "domain_counts": {
+          "bat.com": 5,
+          "apple.com": 1,
+          "batbangladesh.com": 2
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [],
+        "test_b_agreement": {
+          "bat.com": 5,
+          "batbangladesh.com": 2
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (b) agreement: 5 of 8 surviving results on bat.com"
+      }
+    },
+    {
+      "folder": "Bunzl BNZL GB",
+      "company_name": "Bunzl",
+      "query": "Bunzl investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "bunzl.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Bunzl investor relations', 10 result(s) returned of 16100 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (a) AND (b) agreeing on bunzl.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:00Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "bunzl"
+        ],
+        "domains_ranked": [
+          "bunzl.com",
+          "bunzl.com",
+          "bunzl.com",
+          "bunzldistribution.com",
+          "bunzl.com",
+          "tdrcapital.com",
+          "videosync.fi"
+        ],
+        "domain_counts": {
+          "bunzl.com": 4,
+          "bunzldistribution.com": 1,
+          "tdrcapital.com": 1,
+          "videosync.fi": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "bunzl.com",
+          "bunzldistribution.com"
+        ],
+        "test_b_agreement": {
+          "bunzl.com": 4
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (a) AND (b) agreeing on bunzl.com"
+      }
+    },
+    {
+      "folder": "Cadence CDNS US",
+      "company_name": "Cadence",
+      "query": "Cadence investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "cadence.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Cadence investor relations', 10 result(s) returned of 664000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (a) AND (b) agreeing on cadence.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:00Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "cadence"
+        ],
+        "domains_ranked": [
+          "cadence.com",
+          "huntington.com",
+          "cadence.com",
+          "cadence.com",
+          "cadence.com",
+          "cadence.com",
+          "cadencecapital.com.au"
+        ],
+        "domain_counts": {
+          "cadence.com": 5,
+          "huntington.com": 1,
+          "cadencecapital.com.au": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "cadence.com",
+          "cadencecapital.com.au"
+        ],
+        "test_b_agreement": {
+          "cadence.com": 5
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (a) AND (b) agreeing on cadence.com"
+      }
+    },
+    {
+      "folder": "Canadian National Railway CNR",
+      "company_name": "Canadian National Railway",
+      "query": "Canadian National Railway investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "cn.ca",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Canadian National Railway investor relations', 10 result(s) returned of 5850000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (b) agreement: 5 of 8 surviving results on cn.ca STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:00Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "canadian",
+          "railway",
+          "canadiannationalrailway"
+        ],
+        "domains_ranked": [
+          "cn.ca",
+          "cpkcr.com",
+          "cn.ca",
+          "cn.ca",
+          "progressrail.com",
+          "cn.ca",
+          "freightwaves.com",
+          "cn.ca"
+        ],
+        "domain_counts": {
+          "cn.ca": 5,
+          "cpkcr.com": 1,
+          "progressrail.com": 1,
+          "freightwaves.com": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [],
+        "test_b_agreement": {
+          "cn.ca": 5
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (b) agreement: 5 of 8 surviving results on cn.ca"
+      }
+    },
+    {
+      "folder": "Celsius CELH",
+      "company_name": "Celsius",
+      "query": "Celsius investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "celsiusholdingsinc.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Celsius investor relations', 10 result(s) returned of 954000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (a) AND (b) agreeing on celsiusholdingsinc.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:00Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "celsius"
+        ],
+        "domains_ranked": [
+          "celsiusholdingsinc.com",
+          "celsiusholdingsinc.com",
+          "alphaspread.com",
+          "celsiusholdingsinc.com",
+          "q4cdn.com",
+          "celsiusholdingsinc.com",
+          "celsiusresources.com",
+          "celsiusholdingsinc.com"
+        ],
+        "domain_counts": {
+          "celsiusholdingsinc.com": 5,
+          "alphaspread.com": 1,
+          "q4cdn.com": 1,
+          "celsiusresources.com": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "celsiusholdingsinc.com",
+          "celsiusresources.com"
+        ],
+        "test_b_agreement": {
+          "celsiusholdingsinc.com": 5
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (a) AND (b) agreeing on celsiusholdingsinc.com"
+      }
+    },
+    {
+      "folder": "China Construction Bank",
+      "company_name": "China Construction Bank",
+      "query": "China Construction Bank investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "ccb.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'China Construction Bank investor relations', 10 result(s) returned of 13000000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (b) agreement: 10 of 10 surviving results on ccb.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T00:57Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "china",
+          "construction",
+          "chinaconstructionbank"
+        ],
+        "domains_ranked": [
+          "ccb.com",
+          "ccb.com",
+          "ccb.com",
+          "ccb.com",
+          "ccb.com",
+          "ccb.com",
+          "ccb.com",
+          "ccb.com",
+          "ccb.com",
+          "ccb.com"
+        ],
+        "domain_counts": {
+          "ccb.com": 10
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [],
+        "test_b_agreement": {
+          "ccb.com": 10
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (b) agreement: 10 of 10 surviving results on ccb.com"
+      }
+    },
+    {
+      "folder": "Clorox CLX",
+      "company_name": "Clorox",
+      "query": "Clorox investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "thecloroxcompany.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Clorox investor relations', 10 result(s) returned of 83600 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (a) AND (b) agreeing on thecloroxcompany.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:00Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "clorox"
+        ],
+        "domains_ranked": [
+          "thecloroxcompany.com",
+          "thecloroxcompany.com",
+          "thecloroxcompany.com",
+          "thecloroxcompany.com",
+          "thecloroxcompany.com",
+          "thecloroxcompany.com",
+          "thecloroxcompany.com",
+          "thecloroxcompany.com"
+        ],
+        "domain_counts": {
+          "thecloroxcompany.com": 8
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "thecloroxcompany.com"
+        ],
+        "test_b_agreement": {
+          "thecloroxcompany.com": 8
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (a) AND (b) agreeing on thecloroxcompany.com"
+      }
+    },
+    {
+      "folder": "Coca Cola Femsa",
+      "company_name": "Coca Cola Femsa",
+      "query": "Coca Cola Femsa investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "coca-colafemsa.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Coca Cola Femsa investor relations', 10 result(s) returned of 13900 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (a) AND (b) agreeing on coca-colafemsa.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:00Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "coca",
+          "cola",
+          "femsa",
+          "cocacolafemsa"
+        ],
+        "domains_ranked": [
+          "coca-colafemsa.com",
+          "gcs-web.com",
+          "coca-colafemsa.com",
+          "femsa.com",
+          "coca-colafemsa.com",
+          "coca-colafemsa.com",
+          "femsa.com",
+          "femsa.com",
+          "coca-colafemsa.com"
+        ],
+        "domain_counts": {
+          "coca-colafemsa.com": 5,
+          "gcs-web.com": 1,
+          "femsa.com": 3
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "coca-colafemsa.com",
+          "femsa.com"
+        ],
+        "test_b_agreement": {
+          "coca-colafemsa.com": 5,
+          "femsa.com": 3
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (a) AND (b) agreeing on coca-colafemsa.com"
+      }
+    },
+    {
+      "folder": "Copa CPA",
+      "company_name": "Copa",
+      "query": "Copa investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "copaair.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Copa investor relations', 10 result(s) returned of 295000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (a) AND (b) agreeing on copaair.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T00:57Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "copa"
+        ],
+        "domains_ranked": [
+          "gcs-web.com",
+          "copaair.com",
+          "gcs-web.com",
+          "copaair.com",
+          "gcs-web.com",
+          "copaair.com",
+          "gcs-web.com",
+          "copaair.com",
+          "jpmorgan.com",
+          "copaair.com"
+        ],
+        "domain_counts": {
+          "gcs-web.com": 4,
+          "copaair.com": 5,
+          "jpmorgan.com": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "copaair.com"
+        ],
+        "test_b_agreement": {
+          "copaair.com": 5,
+          "gcs-web.com": 4
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (a) AND (b) agreeing on copaair.com"
+      }
+    },
+    {
+      "folder": "Costco COST",
+      "company_name": "Costco",
+      "query": "Costco investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "costco.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Costco investor relations', 10 result(s) returned of 6920000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (a) AND (b) agreeing on costco.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:00Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "costco"
+        ],
+        "domains_ranked": [
+          "costco.com",
+          "costco.com",
+          "costco.com",
+          "q4cdn.com",
+          "costco.com",
+          "q4cdn.com",
+          "costco.com",
+          "costco.com"
+        ],
+        "domain_counts": {
+          "costco.com": 6,
+          "q4cdn.com": 2
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "costco.com"
+        ],
+        "test_b_agreement": {
+          "costco.com": 6,
+          "q4cdn.com": 2
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (a) AND (b) agreeing on costco.com"
+      }
+    },
+    {
+      "folder": "Enel SpA ENEL IM",
+      "company_name": "Enel SpA",
+      "query": "Enel SpA investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "enel.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Enel SpA investor relations', 10 result(s) returned of 36000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (a) AND (b) agreeing on enel.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:00Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "enel",
+          "enelspa"
+        ],
+        "domains_ranked": [
+          "enel.com",
+          "enelamericas.com",
+          "enel.com",
+          "enel.com",
+          "enel.com.br",
+          "enel.com",
+          "eib.org",
+          "borsaitaliana.it"
+        ],
+        "domain_counts": {
+          "enel.com": 4,
+          "enelamericas.com": 1,
+          "enel.com.br": 1,
+          "eib.org": 1,
+          "borsaitaliana.it": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "enel.com",
+          "enel.com.br",
+          "enelamericas.com"
+        ],
+        "test_b_agreement": {
+          "enel.com": 4
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (a) AND (b) agreeing on enel.com"
+      }
+    },
+    {
+      "folder": "GSK LN",
+      "company_name": "GSK",
+      "query": "GSK investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "gsk.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'GSK investor relations', 10 result(s) returned of 214000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (a) AND (b) agreeing on gsk.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:00Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "gsk"
+        ],
+        "domains_ranked": [
+          "gsk.com",
+          "gsk.com",
+          "gsk.com",
+          "gsk.com",
+          "ideayabio.com",
+          "gsk.com",
+          "gsk.com",
+          "gsk.com",
+          "gsk.com"
+        ],
+        "domain_counts": {
+          "gsk.com": 8,
+          "ideayabio.com": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "gsk.com"
+        ],
+        "test_b_agreement": {
+          "gsk.com": 8
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (a) AND (b) agreeing on gsk.com"
+      }
+    },
+    {
+      "folder": "Global Payments GPN",
+      "company_name": "Global Payments",
+      "query": "Global Payments investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "globalpayments.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Global Payments investor relations', 10 result(s) returned of 82900000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (a) AND (b) agreeing on globalpayments.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:00Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "payments",
+          "globalpayments"
+        ],
+        "domains_ranked": [
+          "globalpayments.com",
+          "globalpayments.com",
+          "globalpayments.com",
+          "globalpayments.com",
+          "globalpayments.com",
+          "globalpayments.com",
+          "globalpayments.com",
+          "globalpayments.com",
+          "visa.com"
+        ],
+        "domain_counts": {
+          "globalpayments.com": 8,
+          "visa.com": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "globalpayments.com"
+        ],
+        "test_b_agreement": {
+          "globalpayments.com": 8
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (a) AND (b) agreeing on globalpayments.com"
+      }
+    },
+    {
+      "folder": "Grupo Aeroportuario del Centro OMAB MM",
+      "company_name": "Grupo Aeroportuario del Centro",
+      "query": "Grupo Aeroportuario del Centro investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "oma.aero",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Grupo Aeroportuario del Centro investor relations', 10 result(s) returned of 53800 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (b) agreement: 4 of 9 surviving results on oma.aero STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:00Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "grupo",
+          "aeroportuario",
+          "centro",
+          "grupoaeroportuariodelcentro"
+        ],
+        "domains_ranked": [
+          "oma.aero",
+          "oma.aero",
+          "oma.aero",
+          "alphaspread.com",
+          "oma.aero",
+          "bmv.com.mx",
+          "asur.com.mx",
+          "svencarlin.com",
+          "publicnow.com"
+        ],
+        "domain_counts": {
+          "oma.aero": 4,
+          "alphaspread.com": 1,
+          "bmv.com.mx": 1,
+          "asur.com.mx": 1,
+          "svencarlin.com": 1,
+          "publicnow.com": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [],
+        "test_b_agreement": {
+          "oma.aero": 4
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (b) agreement: 4 of 9 surviving results on oma.aero"
+      }
+    },
+    {
+      "folder": "HEICO Corporation HEI US",
+      "company_name": "HEICO Corporation",
+      "query": "HEICO Corporation investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "heico.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'HEICO Corporation investor relations', 10 result(s) returned of 11400 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (a) AND (b) agreeing on heico.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:00Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "heico",
+          "heicocorporation"
+        ],
+        "domains_ranked": [
+          "heico.com",
+          "gcs-web.com",
+          "heico.com",
+          "heico.com",
+          "gabelli.com",
+          "heico.com",
+          "alphaspread.com",
+          "hei.com",
+          "heicocompanies.com"
+        ],
+        "domain_counts": {
+          "heico.com": 4,
+          "gcs-web.com": 1,
+          "gabelli.com": 1,
+          "alphaspread.com": 1,
+          "hei.com": 1,
+          "heicocompanies.com": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "heico.com",
+          "heicocompanies.com"
+        ],
+        "test_b_agreement": {
+          "heico.com": 4
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (a) AND (b) agreeing on heico.com"
+      }
+    },
+    {
+      "folder": "HSBC HSBA LN",
+      "company_name": "HSBC",
+      "query": "HSBC investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "hsbc.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'HSBC investor relations', 10 result(s) returned of 5530000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (a) AND (b) agreeing on hsbc.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:00Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "hsbc"
+        ],
+        "domains_ranked": [
+          "hsbc.com",
+          "hsbc.com",
+          "hsbc.com",
+          "hsbc.com.hk",
+          "hsbc.com",
+          "hsbc.fr",
+          "hsbc.com",
+          "com.mt",
+          "hsbc.com",
+          "hsbc.com.mx"
+        ],
+        "domain_counts": {
+          "hsbc.com": 6,
+          "hsbc.com.hk": 1,
+          "hsbc.fr": 1,
+          "com.mt": 1,
+          "hsbc.com.mx": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "hsbc.com",
+          "hsbc.com.hk",
+          "hsbc.com.mx",
+          "hsbc.fr"
+        ],
+        "test_b_agreement": {
+          "hsbc.com": 6
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (a) AND (b) agreeing on hsbc.com"
+      }
+    },
+    {
+      "folder": "Haliburton HAL",
+      "company_name": "Haliburton",
+      "query": "Haliburton investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "halliburton.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Haliburton investor relations', 10 result(s) returned of 27500 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (b) agreement: 6 of 9 surviving results on halliburton.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T00:57Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "haliburton"
+        ],
+        "domains_ranked": [
+          "halliburton.com",
+          "halliburton.com",
+          "threepartadvisors.com",
+          "halliburton.com",
+          "blackstone.com",
+          "halliburton.com",
+          "halliburton.com",
+          "bakerhughes.com",
+          "halliburton.com"
+        ],
+        "domain_counts": {
+          "halliburton.com": 6,
+          "threepartadvisors.com": 1,
+          "blackstone.com": 1,
+          "bakerhughes.com": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [],
+        "test_b_agreement": {
+          "halliburton.com": 6
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (b) agreement: 6 of 9 surviving results on halliburton.com"
+      }
+    },
+    {
+      "folder": "Hermes RMS",
+      "company_name": "Hermes",
+      "query": "Hermes investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "hermes.com",
+        "status": "INFERRED",
+        "evidence": "TIE BROKEN BY THE BLOOMBERG ROOT, not by search. The s.14 pass refused this name on a dead tie with federatedhermes.com because no SEARCH signal separates two real companies sharing a name. the folder's Bloomberg root is 'RMS' (RMS FP, Hermes International, Euronext Paris). The tied candidate federatedhermes.com is Federated Hermes Inc, ticker FHI US. The roots do not collide even though the names do. STATUS IS INFERRED: the root is read off the research directory's own name -- whoever named the directory's belief -- under the same basis Andrew approved for the identity fallback (card 6, 2026-09-13 ~04:0xZ, every inferred value MARKED AS INFERRED). It is not an independent confirmation that this company operates this domain.",
+        "resolved_at": "2026-09-14T05:37Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "hermes"
+        ],
+        "domains_ranked": [
+          "hermes.com",
+          "federatedhermes.com",
+          "hermes.com",
+          "federatedhermes.com",
+          "hermes.com",
+          "federatedhermes.com",
+          "efgholding.com",
+          "hermes-investment.com",
+          "efgholding.com"
+        ],
+        "domain_counts": {
+          "hermes.com": 3,
+          "federatedhermes.com": 3,
+          "efgholding.com": 2,
+          "hermes-investment.com": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "federatedhermes.com",
+          "hermes-investment.com",
+          "hermes.com"
+        ],
+        "test_b_agreement": {
+          "efgholding.com": 2,
+          "federatedhermes.com": 3,
+          "hermes.com": 3
+        },
+        "test_b_tie_unresolved": true,
+        "test_c_held_value": null,
+        "verdict": "REFUSED -- test (a) matched ['federatedhermes.com', 'hermes.com'] with no result-count separation between them.",
+        "tie_broken_by": {
+          "bloomberg_root": "RMS",
+          "rival_domain": "federatedhermes.com"
+        }
+      }
+    },
+    {
+      "folder": "Home Depot HD",
+      "company_name": "Home Depot",
+      "query": "Home Depot investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "homedepot.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Home Depot investor relations', 10 result(s) returned of 28900000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (a) AND (b) agreeing on homedepot.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:00Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "home",
+          "depot",
+          "homedepot"
+        ],
+        "domains_ranked": [
+          "homedepot.com",
+          "homedepot.com",
+          "homedepot.com",
+          "homedepot.com",
+          "homedepot.com",
+          "homedepot.com",
+          "officedepot.com",
+          "homedepot.com",
+          "homedepot.com"
+        ],
+        "domain_counts": {
+          "homedepot.com": 8,
+          "officedepot.com": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "homedepot.com",
+          "officedepot.com"
+        ],
+        "test_b_agreement": {
+          "homedepot.com": 8
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (a) AND (b) agreeing on homedepot.com"
+      }
+    },
+    {
+      "folder": "Hon Hai 2317 TT",
+      "company_name": "Hon Hai",
+      "query": "Hon Hai investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "honhai.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Hon Hai investor relations', 10 result(s) returned of 223000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (a) AND (b) agreeing on honhai.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:00Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "honhai"
+        ],
+        "domains_ranked": [
+          "foxconn.com",
+          "honhai.com",
+          "foxconn.com",
+          "honhai.com",
+          "foxconn.com",
+          "honhai.com",
+          "alphaspread.com",
+          "honhai.com",
+          "global.sharp",
+          "ir-impact.com"
+        ],
+        "domain_counts": {
+          "foxconn.com": 3,
+          "honhai.com": 4,
+          "alphaspread.com": 1,
+          "global.sharp": 1,
+          "ir-impact.com": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "honhai.com"
+        ],
+        "test_b_agreement": {
+          "foxconn.com": 3,
+          "honhai.com": 4
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (a) AND (b) agreeing on honhai.com"
+      }
+    },
+    {
+      "folder": "ICICI Bank ICICIBC IN",
+      "company_name": "ICICI Bank",
+      "query": "ICICI Bank investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "icici.bank.in",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'ICICI Bank investor relations', 10 result(s) returned of 33500000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (a) AND (b) agreeing on icici.bank.in STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:04Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "icici",
+          "icicibank"
+        ],
+        "domains_ranked": [
+          "icici.bank.in",
+          "icici.bank.in",
+          "icici.bank.in",
+          "ibm.com",
+          "icici.bank.in",
+          "icicibank.com"
+        ],
+        "domain_counts": {
+          "icici.bank.in": 4,
+          "ibm.com": 1,
+          "icicibank.com": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "icici.bank.in",
+          "icicibank.com"
+        ],
+        "test_b_agreement": {
+          "icici.bank.in": 4
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (a) AND (b) agreeing on icici.bank.in"
+      }
+    },
+    {
+      "folder": "Iberdrola IBE SM",
+      "company_name": "Iberdrola",
+      "query": "Iberdrola investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "iberdrola.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Iberdrola investor relations', 10 result(s) returned of 75900 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (a) AND (b) agreeing on iberdrola.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:00Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "iberdrola"
+        ],
+        "domains_ranked": [
+          "iberdrola.com",
+          "iberdrola.com",
+          "apple.com",
+          "iberdrola.com",
+          "citigroup.com",
+          "iberdrola.com",
+          "grupocox.com",
+          "ir-impact.com",
+          "avangrid.com"
+        ],
+        "domain_counts": {
+          "iberdrola.com": 4,
+          "apple.com": 1,
+          "citigroup.com": 1,
+          "grupocox.com": 1,
+          "ir-impact.com": 1,
+          "avangrid.com": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "iberdrola.com"
+        ],
+        "test_b_agreement": {
+          "iberdrola.com": 4
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (a) AND (b) agreeing on iberdrola.com"
+      }
+    },
+    {
+      "folder": "Idexx IDXX",
+      "company_name": "Idexx",
+      "query": "Idexx investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "idexx.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Idexx investor relations', 10 result(s) returned of 21400 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (a) AND (b) agreeing on idexx.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:00Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "idexx"
+        ],
+        "domains_ranked": [
+          "idexx.com",
+          "idexx.com",
+          "idexx.com",
+          "idexx.com",
+          "idexx.com",
+          "idexx.com",
+          "idexx.com",
+          "idexx.com",
+          "idexx.com"
+        ],
+        "domain_counts": {
+          "idexx.com": 9
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "idexx.com"
+        ],
+        "test_b_agreement": {
+          "idexx.com": 9
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (a) AND (b) agreeing on idexx.com"
+      }
+    },
+    {
+      "folder": "Imperial Brands IMB LN",
+      "company_name": "Imperial Brands",
+      "query": "Imperial Brands investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "imperialbrandsplc.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Imperial Brands investor relations', 10 result(s) returned of 5970000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (a) AND (b) agreeing on imperialbrandsplc.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:00Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "imperial",
+          "imperialbrands"
+        ],
+        "domains_ranked": [
+          "imperialbrandsplc.com",
+          "imperialbrandsplc.com",
+          "imperialbrandsplc.com",
+          "imperialbrandsplc.com",
+          "nih.gov",
+          "fitchratings.com"
+        ],
+        "domain_counts": {
+          "imperialbrandsplc.com": 4,
+          "nih.gov": 1,
+          "fitchratings.com": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "imperialbrandsplc.com"
+        ],
+        "test_b_agreement": {
+          "imperialbrandsplc.com": 4
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (a) AND (b) agreeing on imperialbrandsplc.com"
+      }
+    },
+    {
+      "folder": "International Container Terminals",
+      "company_name": "International Container Terminals",
+      "query": "International Container Terminals investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'International Container Terminals investor relations', 10 result(s) returned of 6100000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. REFUSED -- test (a) named ['globalterminals.com'] and test (b) named ictsi.com; the two independent tests disagree, so neither is taken. STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:00Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "container",
+          "terminals",
+          "internationalcontainerterminals"
+        ],
+        "domains_ranked": [
+          "ictsi.com",
+          "ictsi.com",
+          "globalterminals.com",
+          "massport.com",
+          "portoflosangeles.org",
+          "kalmarglobal.com",
+          "maersk.com",
+          "peelports.com",
+          "otpp.com"
+        ],
+        "domain_counts": {
+          "ictsi.com": 2,
+          "globalterminals.com": 1,
+          "massport.com": 1,
+          "portoflosangeles.org": 1,
+          "kalmarglobal.com": 1,
+          "maersk.com": 1,
+          "peelports.com": 1,
+          "otpp.com": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "globalterminals.com"
+        ],
+        "test_b_agreement": {
+          "ictsi.com": 2
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "REFUSED -- test (a) named ['globalterminals.com'] and test (b) named ictsi.com; the two independent tests disagree, so neither is taken."
+      }
+    },
+    {
+      "folder": "Intesa Sanpaolo ISP IM",
+      "company_name": "Intesa Sanpaolo",
+      "query": "Intesa Sanpaolo investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "intesasanpaolo.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Intesa Sanpaolo investor relations', 10 result(s) returned of 104000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (a) AND (b) agreeing on intesasanpaolo.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:00Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "intesa",
+          "sanpaolo",
+          "intesasanpaolo"
+        ],
+        "domains_ranked": [
+          "intesasanpaolo.com",
+          "eib.org",
+          "intesasanpaolo.com",
+          "eib.org",
+          "intesasanpaolo.com",
+          "intesasanpaoloassicurazioni.com",
+          "intesasanpaolo.com",
+          "intesasanpaolo.com",
+          "intesasanpaolo.com",
+          "publicnow.com"
+        ],
+        "domain_counts": {
+          "intesasanpaolo.com": 6,
+          "eib.org": 2,
+          "intesasanpaoloassicurazioni.com": 1,
+          "publicnow.com": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "intesasanpaolo.com",
+          "intesasanpaoloassicurazioni.com"
+        ],
+        "test_b_agreement": {
+          "eib.org": 2,
+          "intesasanpaolo.com": 6
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (a) AND (b) agreeing on intesasanpaolo.com"
+      }
+    },
+    {
+      "folder": "Intuit INTU",
+      "company_name": "Intuit",
+      "query": "Intuit investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "intuit.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Intuit investor relations', 10 result(s) returned of 391000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (a) AND (b) agreeing on intuit.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:00Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "intuit"
+        ],
+        "domains_ranked": [
+          "intuit.com",
+          "intuit.com",
+          "intuit.com",
+          "intuit.com",
+          "intuit.com",
+          "intuit.com",
+          "intuit.com",
+          "alphaspread.com"
+        ],
+        "domain_counts": {
+          "intuit.com": 7,
+          "alphaspread.com": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "intuit.com"
+        ],
+        "test_b_agreement": {
+          "intuit.com": 7
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (a) AND (b) agreeing on intuit.com"
+      }
+    },
+    {
+      "folder": "Intuitive Surgical ISRG US",
+      "company_name": "Intuitive Surgical",
+      "query": "Intuitive Surgical investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "intuitive.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Intuitive Surgical investor relations', 10 result(s) returned of 147000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (a) AND (b) agreeing on intuitive.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:00Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "intuitive",
+          "surgical",
+          "intuitivesurgical"
+        ],
+        "domains_ranked": [
+          "intuitive.com",
+          "intuitive.com",
+          "intuitive.com",
+          "intuitive.com",
+          "intuitivesurgical.com",
+          "intuitive.com",
+          "surgicalscience.com",
+          "lunainc.com"
+        ],
+        "domain_counts": {
+          "intuitive.com": 5,
+          "intuitivesurgical.com": 1,
+          "surgicalscience.com": 1,
+          "lunainc.com": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "intuitive.com",
+          "intuitivesurgical.com",
+          "surgicalscience.com"
+        ],
+        "test_b_agreement": {
+          "intuitive.com": 5
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (a) AND (b) agreeing on intuitive.com"
+      }
+    },
+    {
+      "folder": "JD.com 9618 HK",
+      "company_name": "JD.com",
+      "query": "JD.com investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "jd.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'JD.com investor relations', 10 result(s) returned of 40200000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (b) agreement: 5 of 8 surviving results on jd.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:00Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "jdcom"
+        ],
+        "domains_ranked": [
+          "jd.com",
+          "jingdonglogistics.com",
+          "jd.com",
+          "ceconomy-mms.com",
+          "jd.com",
+          "jd.com",
+          "jd.com",
+          "publicnow.com"
+        ],
+        "domain_counts": {
+          "jd.com": 5,
+          "jingdonglogistics.com": 1,
+          "ceconomy-mms.com": 1,
+          "publicnow.com": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [],
+        "test_b_agreement": {
+          "jd.com": 5
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (b) agreement: 5 of 8 surviving results on jd.com"
+      }
+    },
+    {
+      "folder": "KDDI",
+      "company_name": "KDDI",
+      "query": "KDDI investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "kddi.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'KDDI investor relations', 10 result(s) returned of 48300 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (a) AND (b) agreeing on kddi.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:00Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "kddi"
+        ],
+        "domains_ranked": [
+          "kddi.com",
+          "kddi.com",
+          "kddi.com",
+          "kddi.com",
+          "kddi.com",
+          "myirapp.com",
+          "kddi.com",
+          "kddi.com",
+          "kddi.com"
+        ],
+        "domain_counts": {
+          "kddi.com": 8,
+          "myirapp.com": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "kddi.com"
+        ],
+        "test_b_agreement": {
+          "kddi.com": 8
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (a) AND (b) agreeing on kddi.com"
+      }
+    },
+    {
+      "folder": "Kimberly Clark KMB",
+      "company_name": "Kimberly Clark",
+      "query": "Kimberly Clark investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "kimberly-clark.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Kimberly Clark investor relations', 10 result(s) returned of 269000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (a) AND (b) agreeing on kimberly-clark.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:00Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "kimberly",
+          "clark",
+          "kimberlyclark"
+        ],
+        "domains_ranked": [
+          "kimberly-clark.com",
+          "kimberly-clark.com",
+          "kimberly-clark.com",
+          "kimberly-clark.com",
+          "kimberly-clark.com",
+          "kimberly-clark.com",
+          "kimberly-clark.com.mx",
+          "kenvue.com",
+          "ti.com"
+        ],
+        "domain_counts": {
+          "kimberly-clark.com": 6,
+          "kimberly-clark.com.mx": 1,
+          "kenvue.com": 1,
+          "ti.com": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "kimberly-clark.com",
+          "kimberly-clark.com.mx"
+        ],
+        "test_b_agreement": {
+          "kimberly-clark.com": 6
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (a) AND (b) agreeing on kimberly-clark.com"
+      }
+    },
+    {
+      "folder": "Koninklijke KPN NA",
+      "company_name": "KPN",
+      "query": "KPN investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "kpn.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'KPN investor relations', 10 result(s) returned of 303000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (a) AND (b) agreeing on kpn.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T00:57Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "kpn"
+        ],
+        "domains_ranked": [
+          "kpn.com",
+          "kpn.com",
+          "kpnreit.com",
+          "kpn.com",
+          "twilio.com",
+          "kpn.com",
+          "orlen.pl",
+          "alphaspread.com",
+          "q4cdn.com"
+        ],
+        "domain_counts": {
+          "kpn.com": 4,
+          "kpnreit.com": 1,
+          "twilio.com": 1,
+          "orlen.pl": 1,
+          "alphaspread.com": 1,
+          "q4cdn.com": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "kpn.com",
+          "kpnreit.com"
+        ],
+        "test_b_agreement": {
+          "kpn.com": 4
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (a) AND (b) agreeing on kpn.com"
+      }
+    },
+    {
+      "folder": "Lenovo 992 HK",
+      "company_name": "Lenovo",
+      "query": "Lenovo investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "lenovo.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Lenovo investor relations', 10 result(s) returned of 23200000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (a) AND (b) agreeing on lenovo.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:00Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "lenovo"
+        ],
+        "domains_ranked": [
+          "lenovo.com",
+          "lenovo.com",
+          "lenovo.com",
+          "lenovo.com",
+          "lenovo.com",
+          "gendigital.com",
+          "computershare.com"
+        ],
+        "domain_counts": {
+          "lenovo.com": 5,
+          "gendigital.com": 1,
+          "computershare.com": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "lenovo.com"
+        ],
+        "test_b_agreement": {
+          "lenovo.com": 5
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (a) AND (b) agreeing on lenovo.com"
+      }
+    },
+    {
+      "folder": "MSCI Inc MSCI US",
+      "company_name": "MSCI Inc",
+      "query": "MSCI Inc investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "msci.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'MSCI Inc investor relations', 10 result(s) returned of 442000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (a) AND (b) agreeing on msci.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:00Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "msci",
+          "msciinc"
+        ],
+        "domains_ranked": [
+          "msci.com",
+          "msci.com",
+          "msci.com",
+          "msci.com",
+          "msci.com",
+          "msci.com",
+          "resmed.com",
+          "msci.com",
+          "broadridge-ir.com"
+        ],
+        "domain_counts": {
+          "msci.com": 7,
+          "resmed.com": 1,
+          "broadridge-ir.com": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "msci.com"
+        ],
+        "test_b_agreement": {
+          "msci.com": 7
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (a) AND (b) agreeing on msci.com"
+      }
+    },
+    {
+      "folder": "Manila MER PER",
+      "company_name": "Manila Electric",
+      "query": "Manila Electric investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "meralco.com.ph",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Manila Electric investor relations', 10 result(s) returned of 393000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (b) agreement: 4 of 10 surviving results on meralco.com.ph STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T00:57Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "manila",
+          "electric",
+          "manilaelectric"
+        ],
+        "domains_ranked": [
+          "meralco.com.ph",
+          "pse.com.ph",
+          "meralco.com.ph",
+          "pse.com.ph",
+          "meralco.com.ph",
+          "bloomenergy.com",
+          "meralco.com.ph",
+          "jgsummit.com.ph",
+          "itron.com",
+          "evercore.com"
+        ],
+        "domain_counts": {
+          "meralco.com.ph": 4,
+          "pse.com.ph": 2,
+          "bloomenergy.com": 1,
+          "jgsummit.com.ph": 1,
+          "itron.com": 1,
+          "evercore.com": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [],
+        "test_b_agreement": {
+          "meralco.com.ph": 4,
+          "pse.com.ph": 2
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (b) agreement: 4 of 10 surviving results on meralco.com.ph"
+      }
+    },
+    {
+      "folder": "Mastercard MA",
+      "company_name": "Mastercard",
+      "query": "Mastercard investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "mastercard.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Mastercard investor relations', 10 result(s) returned of 27800000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (a) AND (b) agreeing on mastercard.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:00Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "mastercard"
+        ],
+        "domains_ranked": [
+          "mastercard.com",
+          "q4cdn.com",
+          "mastercard.com",
+          "mastercard.com",
+          "mastercard.com",
+          "mastercard.com",
+          "mastercard.com",
+          "mastercard.com",
+          "mastercard.com"
+        ],
+        "domain_counts": {
+          "mastercard.com": 8,
+          "q4cdn.com": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "mastercard.com"
+        ],
+        "test_b_agreement": {
+          "mastercard.com": 8
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (a) AND (b) agreeing on mastercard.com"
+      }
+    },
+    {
+      "folder": "MercadoLibre MELI US",
+      "company_name": "MercadoLibre",
+      "query": "MercadoLibre investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "mercadolibre.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'MercadoLibre investor relations', 10 result(s) returned of 201000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (a) AND (b) agreeing on mercadolibre.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:00Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "mercadolibre"
+        ],
+        "domains_ranked": [
+          "mercadolibre.com",
+          "spotify.com",
+          "mercadolibre.com",
+          "mercadolibre.com"
+        ],
+        "domain_counts": {
+          "mercadolibre.com": 3,
+          "spotify.com": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "mercadolibre.com"
+        ],
+        "test_b_agreement": {
+          "mercadolibre.com": 3
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (a) AND (b) agreeing on mercadolibre.com"
+      }
+    },
+    {
+      "folder": "Michelin ML FP",
+      "company_name": "Michelin",
+      "query": "Michelin investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "michelin.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Michelin investor relations', 10 result(s) returned of 4030000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (a) AND (b) agreeing on michelin.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:00Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "michelin"
+        ],
+        "domains_ranked": [
+          "michelin.com",
+          "alphaspread.com",
+          "michelin.com",
+          "corpay.com",
+          "michelin.com",
+          "velo3d.com",
+          "michelin.com",
+          "michelinmedia.com",
+          "michelin.com",
+          "publicnow.com"
+        ],
+        "domain_counts": {
+          "michelin.com": 5,
+          "alphaspread.com": 1,
+          "corpay.com": 1,
+          "velo3d.com": 1,
+          "michelinmedia.com": 1,
+          "publicnow.com": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "michelin.com",
+          "michelinmedia.com"
+        ],
+        "test_b_agreement": {
+          "michelin.com": 5
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (a) AND (b) agreeing on michelin.com"
+      }
+    },
+    {
+      "folder": "Mitsubishi UFJ Financial Group 8306 JP",
+      "company_name": "Mitsubishi UFJ Financial Group",
+      "query": "Mitsubishi UFJ Financial Group investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "mufg.jp",
+        "status": "INFERRED",
+        "evidence": "CONFLICT BROKEN BY TEST (c), the key s.14 recorded as a measured NULL. The s.14 pass refused this name because test (a) named mitsubishi-hc-capital.com (Mitsubishi HC Capital, Bloomberg root 8593 JP) while test (b) named mufg.jp -- two independent tests disagreeing, so it correctly took neither. THE TIEBREAK IS THE BLOOMBERG ROOT '8306' ALREADY HELD FOR THIS FOLDER: it does not match the company test (a) elected, so test (a)'s candidate is excluded on evidence rather than on preference, and test (b)'s stands. A company NAME is not a unique key; a BLOOMBERG ROOT is. STATUS IS INFERRED: the root is read off the research directory's own name under the basis Andrew approved for the identity fallback (card 6, 2026-09-13 ~04:0xZ), and no page was fetched to confirm the domain is operated by this company.",
+        "resolved_at": "2026-09-14T05:38Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "mitsubishi",
+          "mitsubishiufjfinancialgroup"
+        ],
+        "domains_ranked": [
+          "mufg.jp",
+          "mufg.com",
+          "mufg.jp",
+          "mitsubishi-hc-capital.com",
+          "mufg.jp",
+          "mufgamericas.com",
+          "mufg.jp",
+          "mitsubishi-hc-capital.com",
+          "mufg.jp",
+          "mufgamericas.com"
+        ],
+        "domain_counts": {
+          "mufg.jp": 5,
+          "mufg.com": 1,
+          "mitsubishi-hc-capital.com": 2,
+          "mufgamericas.com": 2
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "mitsubishi-hc-capital.com"
+        ],
+        "test_b_agreement": {
+          "mitsubishi-hc-capital.com": 2,
+          "mufg.jp": 5,
+          "mufgamericas.com": 2
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "REFUSED -- test (a) named ['mitsubishi-hc-capital.com'] and test (b) named mufg.jp; the two independent tests disagree, so neither is taken.",
+        "conflict_broken_by": {
+          "bloomberg_root": "8306",
+          "excluded_candidate": "mitsubishi-hc-capital.com",
+          "excluded_is": "Mitsubishi HC Capital, Bloomberg root 8593 JP"
+        }
+      }
+    },
+    {
+      "folder": "Monster MNST",
+      "company_name": "Monster",
+      "query": "Monster investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "monsterbevcorp.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Monster investor relations', 10 result(s) returned of 14600000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (a) AND (b) agreeing on monsterbevcorp.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T00:57Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "monster"
+        ],
+        "domains_ranked": [
+          "monsterbevcorp.com",
+          "monsterbevcorp.com",
+          "monsterbevcorp.com",
+          "capcom.co.jp",
+          "monsterbevcorp.com",
+          "capcom.co.jp",
+          "monsterbevcorp.com",
+          "capcom.co.jp",
+          "capcom.co.jp"
+        ],
+        "domain_counts": {
+          "monsterbevcorp.com": 5,
+          "capcom.co.jp": 4
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "monsterbevcorp.com"
+        ],
+        "test_b_agreement": {
+          "capcom.co.jp": 4,
+          "monsterbevcorp.com": 5
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (a) AND (b) agreeing on monsterbevcorp.com"
+      }
+    },
+    {
+      "folder": "National Grid NG LN",
+      "company_name": "National Grid",
+      "query": "National Grid investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "nationalgrid.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'National Grid investor relations', 10 result(s) returned of 13200000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (a) AND (b) agreeing on nationalgrid.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:00Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "grid",
+          "nationalgrid"
+        ],
+        "domains_ranked": [
+          "nationalgrid.com",
+          "nationalgridus.com",
+          "nationalgrid.com",
+          "sunrun.com",
+          "nationalgrid.com",
+          "publicnow.com",
+          "nationalgrid.com"
+        ],
+        "domain_counts": {
+          "nationalgrid.com": 4,
+          "nationalgridus.com": 1,
+          "sunrun.com": 1,
+          "publicnow.com": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "nationalgrid.com",
+          "nationalgridus.com"
+        ],
+        "test_b_agreement": {
+          "nationalgrid.com": 4
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (a) AND (b) agreeing on nationalgrid.com"
+      }
+    },
+    {
+      "folder": "Nestle NESN SW",
+      "company_name": "Nestle",
+      "query": "Nestle investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "nestle.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Nestle investor relations', 10 result(s) returned of 561000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (a) AND (b) agreeing on nestle.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:00Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "nestle"
+        ],
+        "domains_ranked": [
+          "nestle.com",
+          "nestleusa.com",
+          "nestle.com",
+          "nestle.in",
+          "nestle.com",
+          "nestle.com.my",
+          "nestle.com",
+          "starbucks.com",
+          "nestle-cwa.com"
+        ],
+        "domain_counts": {
+          "nestle.com": 4,
+          "nestleusa.com": 1,
+          "nestle.in": 1,
+          "nestle.com.my": 1,
+          "starbucks.com": 1,
+          "nestle-cwa.com": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "nestle-cwa.com",
+          "nestle.com",
+          "nestle.com.my",
+          "nestle.in",
+          "nestleusa.com"
+        ],
+        "test_b_agreement": {
+          "nestle.com": 4
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (a) AND (b) agreeing on nestle.com"
+      }
+    },
+    {
+      "folder": "Netflix NFLX",
+      "company_name": "Netflix",
+      "query": "Netflix investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "netflix.net",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Netflix investor relations', 10 result(s) returned of 16000000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (a) AND (b) agreeing on netflix.net STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:00Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "netflix"
+        ],
+        "domains_ranked": [
+          "netflix.net",
+          "netflix.com",
+          "netflix.net",
+          "wbd.com",
+          "netflix.net",
+          "netflix.net",
+          "q4cdn.com",
+          "netflix.net"
+        ],
+        "domain_counts": {
+          "netflix.net": 5,
+          "netflix.com": 1,
+          "wbd.com": 1,
+          "q4cdn.com": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "netflix.com",
+          "netflix.net"
+        ],
+        "test_b_agreement": {
+          "netflix.net": 5
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (a) AND (b) agreeing on netflix.net"
+      }
+    },
+    {
+      "folder": "Nike NKE US",
+      "company_name": "Nike",
+      "query": "Nike investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "nike.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Nike investor relations', 10 result(s) returned of 16600000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (a) AND (b) agreeing on nike.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:00Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "nike"
+        ],
+        "domains_ranked": [
+          "nike.com",
+          "nike.com",
+          "nike.com",
+          "nike.com",
+          "nike.com",
+          "nike.com",
+          "nike.com"
+        ],
+        "domain_counts": {
+          "nike.com": 7
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "nike.com"
+        ],
+        "test_b_agreement": {
+          "nike.com": 7
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (a) AND (b) agreeing on nike.com"
+      }
+    },
+    {
+      "folder": "Nokia FH",
+      "company_name": "Nokia",
+      "query": "Nokia investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "nokia.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Nokia investor relations', 10 result(s) returned of 5360000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (a) AND (b) agreeing on nokia.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:00Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "nokia"
+        ],
+        "domains_ranked": [
+          "nokia.com",
+          "nokia.com",
+          "nvidia.com",
+          "nokia.com",
+          "eib.org",
+          "nokia.com",
+          "gcs-web.com",
+          "nokia.com",
+          "nokiantyres.com"
+        ],
+        "domain_counts": {
+          "nokia.com": 5,
+          "nvidia.com": 1,
+          "eib.org": 1,
+          "gcs-web.com": 1,
+          "nokiantyres.com": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "nokia.com",
+          "nokiantyres.com"
+        ],
+        "test_b_agreement": {
+          "nokia.com": 5
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (a) AND (b) agreeing on nokia.com"
+      }
+    },
+    {
+      "folder": "Novartis NOVN SW",
+      "company_name": "Novartis",
+      "query": "Novartis investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "novartis.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Novartis investor relations', 10 result(s) returned of 279000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (a) AND (b) agreeing on novartis.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:00Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "novartis"
+        ],
+        "domains_ranked": [
+          "novartis.com",
+          "novartis.com",
+          "novartis.com",
+          "nektar.com",
+          "novartis.com",
+          "ideayabio.com",
+          "nektar.com"
+        ],
+        "domain_counts": {
+          "novartis.com": 4,
+          "nektar.com": 2,
+          "ideayabio.com": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "novartis.com"
+        ],
+        "test_b_agreement": {
+          "nektar.com": 2,
+          "novartis.com": 4
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (a) AND (b) agreeing on novartis.com"
+      }
+    },
+    {
+      "folder": "Nubank NU",
+      "company_name": "Nubank",
+      "query": "Nubank investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "nubank.com.br",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Nubank investor relations', 10 result(s) returned of 32200 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (a) AND (b) agreeing on nubank.com.br STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:00Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "nubank"
+        ],
+        "domains_ranked": [
+          "investidores.nu",
+          "nubank.com.br",
+          "investidores.nu",
+          "nubank.com.br",
+          "investidores.nu",
+          "nubank.com.br",
+          "nubank.com.br",
+          "nu.com",
+          "nubank.com.br"
+        ],
+        "domain_counts": {
+          "investidores.nu": 3,
+          "nubank.com.br": 5,
+          "nu.com": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "nubank.com.br"
+        ],
+        "test_b_agreement": {
+          "investidores.nu": 3,
+          "nubank.com.br": 5
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (a) AND (b) agreeing on nubank.com.br"
+      }
+    },
+    {
+      "folder": "Orange ORA FP",
+      "company_name": "Orange",
+      "query": "Orange investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "orange.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Orange investor relations', 10 result(s) returned of 189000000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (a) AND (b) agreeing on orange.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T00:57Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "orange"
+        ],
+        "domains_ranked": [
+          "orange.com",
+          "orangebanktrust.com",
+          "orange.com",
+          "orange-ir.pl",
+          "orange.com",
+          "ocair.com",
+          "orange.com",
+          "orangebanktrust.com",
+          "orange.jo",
+          "orangebanktrust.com"
+        ],
+        "domain_counts": {
+          "orange.com": 4,
+          "orangebanktrust.com": 3,
+          "orange-ir.pl": 1,
+          "ocair.com": 1,
+          "orange.jo": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "orange-ir.pl",
+          "orange.com",
+          "orange.jo",
+          "orangebanktrust.com"
+        ],
+        "test_b_agreement": {
+          "orange.com": 4,
+          "orangebanktrust.com": 3
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (a) AND (b) agreeing on orange.com"
+      }
+    },
+    {
+      "folder": "Petrobras PETR3 BZ",
+      "company_name": "Petrobras",
+      "query": "Petrobras investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "petrobras.com.br",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Petrobras investor relations', 10 result(s) returned of 138000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (a) AND (b) agreeing on petrobras.com.br STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:01Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "petrobras"
+        ],
+        "domains_ranked": [
+          "investidorpetrobras.com.br",
+          "petrobras.com.br",
+          "investidorpetrobras.com.br",
+          "petrobras.com.br",
+          "investidorpetrobras.com.br",
+          "petrobras.com.br",
+          "petrobras.com.br",
+          "petrobras.com.br",
+          "petrobras.com.br"
+        ],
+        "domain_counts": {
+          "investidorpetrobras.com.br": 3,
+          "petrobras.com.br": 6
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "investidorpetrobras.com.br",
+          "petrobras.com.br"
+        ],
+        "test_b_agreement": {
+          "investidorpetrobras.com.br": 3,
+          "petrobras.com.br": 6
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (a) AND (b) agreeing on petrobras.com.br"
+      }
+    },
+    {
+      "folder": "QXO",
+      "company_name": "QXO",
+      "query": "QXO investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "qxo.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'QXO investor relations', 10 result(s) returned of 53100 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (a) AND (b) agreeing on qxo.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:01Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "qxo"
+        ],
+        "domains_ranked": [
+          "qxo.com",
+          "qxo.com",
+          "qxo.com",
+          "q4cdn.com",
+          "qxo.com",
+          "q4cdn.com",
+          "qxo.com",
+          "roofingcontractor.com"
+        ],
+        "domain_counts": {
+          "qxo.com": 5,
+          "q4cdn.com": 2,
+          "roofingcontractor.com": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "qxo.com"
+        ],
+        "test_b_agreement": {
+          "q4cdn.com": 2,
+          "qxo.com": 5
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (a) AND (b) agreeing on qxo.com"
+      }
+    },
+    {
+      "folder": "RWE AG RWE GY",
+      "company_name": "RWE",
+      "query": "RWE investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "rwe.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'RWE investor relations', 10 result(s) returned of 146000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (a) AND (b) agreeing on rwe.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:01Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "rwe"
+        ],
+        "domains_ranked": [
+          "rwe.com",
+          "rwe.com",
+          "rwe.com",
+          "rwe.com",
+          "rwe.com",
+          "rwe.com",
+          "turcas.com.tr"
+        ],
+        "domain_counts": {
+          "rwe.com": 6,
+          "turcas.com.tr": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "rwe.com"
+        ],
+        "test_b_agreement": {
+          "rwe.com": 6
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (a) AND (b) agreeing on rwe.com"
+      }
+    },
+    {
+      "folder": "Reckitt Benckiser RKT LN",
+      "company_name": "Reckitt Benckiser",
+      "query": "Reckitt Benckiser investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "reckitt.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Reckitt Benckiser investor relations', 10 result(s) returned of 42300 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (a) AND (b) agreeing on reckitt.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:01Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "reckitt",
+          "benckiser",
+          "reckittbenckiser"
+        ],
+        "domains_ranked": [
+          "reckitt.com",
+          "apple.com",
+          "reckitt.com",
+          "reckitt.com",
+          "reckitt.com",
+          "fiercebiotech.com",
+          "prweek.com"
+        ],
+        "domain_counts": {
+          "reckitt.com": 4,
+          "apple.com": 1,
+          "fiercebiotech.com": 1,
+          "prweek.com": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "reckitt.com"
+        ],
+        "test_b_agreement": {
+          "reckitt.com": 4
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (a) AND (b) agreeing on reckitt.com"
+      }
+    },
+    {
+      "folder": "Rio Tinto RIO LN",
+      "company_name": "Rio Tinto",
+      "query": "Rio Tinto investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "riotinto.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Rio Tinto investor relations', 10 result(s) returned of 260000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (a) AND (b) agreeing on riotinto.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:01Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "tinto",
+          "riotinto"
+        ],
+        "domains_ranked": [
+          "riotinto.com",
+          "riotinto.com",
+          "riotinto.com",
+          "wabteccorp.com",
+          "riotinto.com",
+          "riotinto.com",
+          "glasslewis.com"
+        ],
+        "domain_counts": {
+          "riotinto.com": 5,
+          "wabteccorp.com": 1,
+          "glasslewis.com": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "riotinto.com"
+        ],
+        "test_b_agreement": {
+          "riotinto.com": 5
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (a) AND (b) agreeing on riotinto.com"
+      }
+    },
+    {
+      "folder": "Roche ROG SW",
+      "company_name": "Roche",
+      "query": "Roche investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "roche.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Roche investor relations', 10 result(s) returned of 2170000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (a) AND (b) agreeing on roche.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:01Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "roche"
+        ],
+        "domains_ranked": [
+          "roche.com",
+          "roche.com",
+          "roche.com",
+          "sarepta.com",
+          "roche.com",
+          "ideayabio.com",
+          "roche.com",
+          "roche.com",
+          "roche.com"
+        ],
+        "domain_counts": {
+          "roche.com": 7,
+          "sarepta.com": 1,
+          "ideayabio.com": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "roche.com"
+        ],
+        "test_b_agreement": {
+          "roche.com": 7
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (a) AND (b) agreeing on roche.com"
+      }
+    },
+    {
+      "folder": "SAP GY",
+      "company_name": "SAP",
+      "query": "SAP investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "sap.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'SAP investor relations', 10 result(s) returned of 13000000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (a) AND (b) agreeing on sap.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:01Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "sap"
+        ],
+        "domains_ranked": [
+          "sap.com",
+          "sap.com",
+          "sap.com",
+          "sap.com",
+          "sap.com",
+          "sap.com",
+          "sap.com",
+          "sap.com"
+        ],
+        "domain_counts": {
+          "sap.com": 8
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "sap.com"
+        ],
+        "test_b_agreement": {
+          "sap.com": 8
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (a) AND (b) agreeing on sap.com"
+      }
+    },
+    {
+      "folder": "SSE plc SSE LN",
+      "company_name": "SSE plc",
+      "query": "SSE plc investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "sse.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'SSE plc investor relations', 10 result(s) returned of 187000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (b) agreement: 3 of 6 surviving results on sse.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T00:57Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "sseplc"
+        ],
+        "domains_ranked": [
+          "sse.com",
+          "sse.com",
+          "sse.com",
+          "ssen-transmission.co.uk",
+          "computershare.com",
+          "brookfield.com"
+        ],
+        "domain_counts": {
+          "sse.com": 3,
+          "ssen-transmission.co.uk": 1,
+          "computershare.com": 1,
+          "brookfield.com": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [],
+        "test_b_agreement": {
+          "sse.com": 3
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (b) agreement: 3 of 6 surviving results on sse.com"
+      }
+    },
+    {
+      "folder": "Sanofi SAN FP",
+      "company_name": "Sanofi",
+      "query": "Sanofi investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "sanofi.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Sanofi investor relations', 10 result(s) returned of 203000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (a) AND (b) agreeing on sanofi.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:01Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "sanofi"
+        ],
+        "domains_ranked": [
+          "sanofi.com",
+          "sanofi.us",
+          "sanofi.com",
+          "regeneron.com",
+          "sanofi.com",
+          "sanofi.us",
+          "sanofi.com",
+          "oranomed.com",
+          "sanofi.com",
+          "tevapharm.com"
+        ],
+        "domain_counts": {
+          "sanofi.com": 5,
+          "sanofi.us": 2,
+          "regeneron.com": 1,
+          "oranomed.com": 1,
+          "tevapharm.com": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "sanofi.com",
+          "sanofi.us"
+        ],
+        "test_b_agreement": {
+          "sanofi.com": 5,
+          "sanofi.us": 2
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (a) AND (b) agreeing on sanofi.com"
+      }
+    },
+    {
+      "folder": "Schlumberger SLB",
+      "company_name": "Schlumberger",
+      "query": "Schlumberger investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "slb.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Schlumberger investor relations', 10 result(s) returned of 306000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (b) agreement: 8 of 9 surviving results on slb.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:01Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "schlumberger"
+        ],
+        "domains_ranked": [
+          "slb.com",
+          "slb.com",
+          "slb.com",
+          "slb.com",
+          "slb.com",
+          "slb.com",
+          "slb.com",
+          "slb.com",
+          "gcs-web.com"
+        ],
+        "domain_counts": {
+          "slb.com": 8,
+          "gcs-web.com": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [],
+        "test_b_agreement": {
+          "slb.com": 8
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (b) agreement: 8 of 9 surviving results on slb.com"
+      }
+    },
+    {
+      "folder": "ServiceNow NOW US",
+      "company_name": "ServiceNow",
+      "query": "ServiceNow investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "servicenow.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'ServiceNow investor relations', 10 result(s) returned of 254000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (a) AND (b) agreeing on servicenow.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:01Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "servicenow"
+        ],
+        "domains_ranked": [
+          "servicenow.com",
+          "servicenow.com",
+          "servicenow.com",
+          "servicenow.com",
+          "servicenow.com",
+          "servicenow.com",
+          "q4cdn.com",
+          "servicenow.com"
+        ],
+        "domain_counts": {
+          "servicenow.com": 7,
+          "q4cdn.com": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "servicenow.com"
+        ],
+        "test_b_agreement": {
+          "servicenow.com": 7
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (a) AND (b) agreeing on servicenow.com"
+      }
+    },
+    {
+      "folder": "Shopify SHOP CA",
+      "company_name": "Shopify",
+      "query": "Shopify investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "shopify.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Shopify investor relations', 10 result(s) returned of 4000000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (a) AND (b) agreeing on shopify.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:01Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "shopify"
+        ],
+        "domains_ranked": [
+          "shopify.com",
+          "q4ir.com",
+          "shopify.com",
+          "q4cdn.com",
+          "shopify.com",
+          "shopify.com",
+          "global-e.com"
+        ],
+        "domain_counts": {
+          "shopify.com": 4,
+          "q4ir.com": 1,
+          "q4cdn.com": 1,
+          "global-e.com": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "shopify.com"
+        ],
+        "test_b_agreement": {
+          "shopify.com": 4
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (a) AND (b) agreeing on shopify.com"
+      }
+    },
+    {
+      "folder": "Singapore Telecom ST SP",
+      "company_name": "Singapore Telecom",
+      "query": "Singapore Telecom investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "singtel.com",
+        "status": "INFERRED",
+        "evidence": "CONFLICT BROKEN BY TEST (c), the key s.14 recorded as a measured NULL. The s.14 pass refused this name because test (a) named tpgtelecom.com.au (TPG Telecom Ltd, Australia, Bloomberg root TPG AU) while test (b) named singtel.com -- two independent tests disagreeing, so it correctly took neither. THE TIEBREAK IS THE BLOOMBERG ROOT 'ST' ALREADY HELD FOR THIS FOLDER: it does not match the company test (a) elected, so test (a)'s candidate is excluded on evidence rather than on preference, and test (b)'s stands. A company NAME is not a unique key; a BLOOMBERG ROOT is. STATUS IS INFERRED: the root is read off the research directory's own name under the basis Andrew approved for the identity fallback (card 6, 2026-09-13 ~04:0xZ), and no page was fetched to confirm the domain is operated by this company.",
+        "resolved_at": "2026-09-14T05:38Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "singapore",
+          "telecom",
+          "singaporetelecom"
+        ],
+        "domains_ranked": [
+          "singtel.com",
+          "globalstar.com",
+          "singtel.com",
+          "singtel.com",
+          "singtel.com",
+          "digitalrealty.com",
+          "starhub.com",
+          "tpgtelecom.com.au"
+        ],
+        "domain_counts": {
+          "singtel.com": 4,
+          "globalstar.com": 1,
+          "digitalrealty.com": 1,
+          "starhub.com": 1,
+          "tpgtelecom.com.au": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "tpgtelecom.com.au"
+        ],
+        "test_b_agreement": {
+          "singtel.com": 4
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "REFUSED -- test (a) named ['tpgtelecom.com.au'] and test (b) named singtel.com; the two independent tests disagree, so neither is taken.",
+        "conflict_broken_by": {
+          "bloomberg_root": "ST",
+          "excluded_candidate": "tpgtelecom.com.au",
+          "excluded_is": "TPG Telecom Ltd, Australia, Bloomberg root TPG AU"
+        }
+      }
+    },
+    {
+      "folder": "Spotify SPOT US",
+      "company_name": "Spotify",
+      "query": "Spotify investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "spotify.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Spotify investor relations', 10 result(s) returned of 4060000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (a) AND (b) agreeing on spotify.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:01Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "spotify"
+        ],
+        "domains_ranked": [
+          "spotify.com",
+          "spotify.com",
+          "spotify.com",
+          "spotify.com",
+          "spotify.com",
+          "spotify.com",
+          "mercadolibre.com",
+          "chaptersgroup.com"
+        ],
+        "domain_counts": {
+          "spotify.com": 6,
+          "mercadolibre.com": 1,
+          "chaptersgroup.com": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "spotify.com"
+        ],
+        "test_b_agreement": {
+          "spotify.com": 6
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (a) AND (b) agreeing on spotify.com"
+      }
+    },
+    {
+      "folder": "Sumitomo Mitsui Financial Group 8316 JP",
+      "company_name": "Sumitomo Mitsui Financial Group",
+      "query": "Sumitomo Mitsui Financial Group investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "smfg.co.jp",
+        "status": "INFERRED",
+        "evidence": "CONFLICT BROKEN BY TEST (c), the key s.14 recorded as a measured NULL. The s.14 pass refused this name because test (a) named sumitomocorp.com (Sumitomo Corporation, Bloomberg root 8053 JP) while test (b) named smfg.co.jp -- two independent tests disagreeing, so it correctly took neither. THE TIEBREAK IS THE BLOOMBERG ROOT '8316' ALREADY HELD FOR THIS FOLDER: it does not match the company test (a) elected, so test (a)'s candidate is excluded on evidence rather than on preference, and test (b)'s stands. A company NAME is not a unique key; a BLOOMBERG ROOT is. STATUS IS INFERRED: the root is read off the research directory's own name under the basis Andrew approved for the identity fallback (card 6, 2026-09-13 ~04:0xZ), and no page was fetched to confirm the domain is operated by this company.",
+        "resolved_at": "2026-09-14T05:38Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "sumitomo",
+          "mitsui",
+          "sumitomomitsuifinancialgroup"
+        ],
+        "domains_ranked": [
+          "smfg.co.jp",
+          "smbcgroup.com",
+          "smfg.co.jp",
+          "smtg.jp",
+          "smfg.co.jp",
+          "smfg.co.jp",
+          "ms-ins.com",
+          "smbc.co.jp",
+          "sumitomocorp.com",
+          "goldmansachs.com"
+        ],
+        "domain_counts": {
+          "smfg.co.jp": 4,
+          "smbcgroup.com": 1,
+          "smtg.jp": 1,
+          "ms-ins.com": 1,
+          "smbc.co.jp": 1,
+          "sumitomocorp.com": 1,
+          "goldmansachs.com": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "sumitomocorp.com"
+        ],
+        "test_b_agreement": {
+          "smfg.co.jp": 4
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "REFUSED -- test (a) named ['sumitomocorp.com'] and test (b) named smfg.co.jp; the two independent tests disagree, so neither is taken.",
+        "conflict_broken_by": {
+          "bloomberg_root": "8316",
+          "excluded_candidate": "sumitomocorp.com",
+          "excluded_is": "Sumitomo Corporation, Bloomberg root 8053 JP"
+        }
+      }
+    },
+    {
+      "folder": "Synopsys SNPS US",
+      "company_name": "Synopsys",
+      "query": "Synopsys investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "synopsys.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Synopsys investor relations', 10 result(s) returned of 58700 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (a) AND (b) agreeing on synopsys.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:01Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "synopsys"
+        ],
+        "domains_ranked": [
+          "synopsys.com",
+          "ansys.com",
+          "synopsys.com",
+          "synopsys.com",
+          "synopsys.com",
+          "zetaglobal.com",
+          "synopsys.com"
+        ],
+        "domain_counts": {
+          "synopsys.com": 5,
+          "ansys.com": 1,
+          "zetaglobal.com": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "synopsys.com"
+        ],
+        "test_b_agreement": {
+          "synopsys.com": 5
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (a) AND (b) agreeing on synopsys.com"
+      }
+    },
+    {
+      "folder": "Taiwan Semiconductor Manufacturing TSM US",
+      "company_name": "Taiwan Semiconductor Manufacturing",
+      "query": "Taiwan Semiconductor Manufacturing investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "tsmc.com",
+        "status": "INFERRED",
+        "evidence": "CONFLICT BROKEN BY TEST (c), the key s.14 recorded as a measured NULL. The s.14 pass refused this name because test (a) named taiwansemi.com (Taiwan Semiconductor Co Ltd, a separate and much smaller firm) while test (b) named tsmc.com -- two independent tests disagreeing, so it correctly took neither. THE TIEBREAK IS THE BLOOMBERG ROOT 'TSM' ALREADY HELD FOR THIS FOLDER: it does not match the company test (a) elected, so test (a)'s candidate is excluded on evidence rather than on preference, and test (b)'s stands. A company NAME is not a unique key; a BLOOMBERG ROOT is. STATUS IS INFERRED: the root is read off the research directory's own name under the basis Andrew approved for the identity fallback (card 6, 2026-09-13 ~04:0xZ), and no page was fetched to confirm the domain is operated by this company.",
+        "resolved_at": "2026-09-14T05:38Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "taiwan",
+          "semiconductor",
+          "manufacturing",
+          "taiwansemiconductormanufacturing"
+        ],
+        "domains_ranked": [
+          "tsmc.com",
+          "tsmc.com",
+          "tsmc.com",
+          "taiwansemi.com",
+          "tsmc.com",
+          "taiwansemi.com",
+          "tsmc.com",
+          "tsmc.com",
+          "tsmc.com"
+        ],
+        "domain_counts": {
+          "tsmc.com": 7,
+          "taiwansemi.com": 2
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "taiwansemi.com"
+        ],
+        "test_b_agreement": {
+          "taiwansemi.com": 2,
+          "tsmc.com": 7
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "REFUSED -- test (a) named ['taiwansemi.com'] and test (b) named tsmc.com; the two independent tests disagree, so neither is taken.",
+        "conflict_broken_by": {
+          "bloomberg_root": "TSM",
+          "excluded_candidate": "taiwansemi.com",
+          "excluded_is": "Taiwan Semiconductor Co Ltd, a separate and much smaller firm"
+        }
+      }
+    },
+    {
+      "folder": "Telefonica Brazil VIVT3 BZ",
+      "company_name": "Telefonica Brazil",
+      "query": "Telefonica Brazil investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "telefonica.com.br",
+        "status": "INFERRED",
+        "evidence": "TIE BROKEN BY THE BLOOMBERG ROOT, not by search. The s.14 pass refused this name on a dead tie with telefonica.com because no SEARCH signal separates two real companies sharing a name. the folder's Bloomberg root is 'VIVT3' (VIVT3 BZ, Telefonica Brasil S.A., B3) and the folder name says 'Brazil'. The tied candidate telefonica.com is the Madrid parent, Telefonica S.A., ticker TEF SM. The holding named here is the Brazilian listco, so the .com.br domain is the one tied to it. STATUS IS INFERRED: the root is read off the research directory's own name -- whoever named the directory's belief -- under the same basis Andrew approved for the identity fallback (card 6, 2026-09-13 ~04:0xZ, every inferred value MARKED AS INFERRED). It is not an independent confirmation that this company operates this domain.",
+        "resolved_at": "2026-09-14T05:37Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "telefonica",
+          "brazil",
+          "telefonicabrazil"
+        ],
+        "domains_ranked": [
+          "telefonica.com.br",
+          "telefonica.com",
+          "telefonica.com.br",
+          "telefonica.com",
+          "mastercard.com",
+          "ericsson.com"
+        ],
+        "domain_counts": {
+          "telefonica.com.br": 2,
+          "telefonica.com": 2,
+          "mastercard.com": 1,
+          "ericsson.com": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "telefonica.com",
+          "telefonica.com.br"
+        ],
+        "test_b_agreement": {
+          "telefonica.com": 2,
+          "telefonica.com.br": 2
+        },
+        "test_b_tie_unresolved": true,
+        "test_c_held_value": null,
+        "verdict": "REFUSED -- test (a) matched ['telefonica.com', 'telefonica.com.br'] with no result-count separation between them.",
+        "tie_broken_by": {
+          "bloomberg_root": "VIVT3",
+          "rival_domain": "telefonica.com"
+        }
+      }
+    },
+    {
+      "folder": "Tokyo Electron 8035 JP",
+      "company_name": "Tokyo Electron",
+      "query": "Tokyo Electron investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "tel.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Tokyo Electron investor relations', 10 result(s) returned of 81200 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (b) agreement: 5 of 10 surviving results on tel.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:01Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "tokyo",
+          "electron",
+          "tokyoelectron"
+        ],
+        "domains_ranked": [
+          "tel.com",
+          "teldevice.co.jp",
+          "tel.com",
+          "teldevice.co.jp",
+          "tel.com",
+          "teldevice.co.jp",
+          "tel.com",
+          "appliedmaterials.com",
+          "tel.com",
+          "appliedmaterials.com"
+        ],
+        "domain_counts": {
+          "tel.com": 5,
+          "teldevice.co.jp": 3,
+          "appliedmaterials.com": 2
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [],
+        "test_b_agreement": {
+          "appliedmaterials.com": 2,
+          "tel.com": 5,
+          "teldevice.co.jp": 3
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (b) agreement: 5 of 10 surviving results on tel.com"
+      }
+    },
+    {
+      "folder": "Tokyo Marine 8766 JP",
+      "company_name": "Tokyo Marine",
+      "query": "Tokyo Marine investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "tokiomarinehd.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Tokyo Marine investor relations', 10 result(s) returned of 5470000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (a) AND (b) agreeing on tokiomarinehd.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:01Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "tokyo",
+          "marine",
+          "tokyomarine"
+        ],
+        "domains_ranked": [
+          "tokiomarinehd.com",
+          "tokiomarine.com",
+          "tokiomarinehd.com",
+          "tokiomarine-nichido.co.jp",
+          "tokiomarinehd.com",
+          "gcs-web.com",
+          "tokiomarinehd.com",
+          "reinsurancene.ws",
+          "tokiomarine-nichido.co.jp",
+          "global.honda"
+        ],
+        "domain_counts": {
+          "tokiomarinehd.com": 4,
+          "tokiomarine.com": 1,
+          "tokiomarine-nichido.co.jp": 2,
+          "gcs-web.com": 1,
+          "reinsurancene.ws": 1,
+          "global.honda": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "tokiomarine-nichido.co.jp",
+          "tokiomarine.com",
+          "tokiomarinehd.com"
+        ],
+        "test_b_agreement": {
+          "tokiomarine-nichido.co.jp": 2,
+          "tokiomarinehd.com": 4
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (a) AND (b) agreeing on tokiomarinehd.com"
+      }
+    },
+    {
+      "folder": "Total Energies TTE FP",
+      "company_name": "Total Energies",
+      "query": "Total Energies investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "totalenergies.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Total Energies investor relations', 10 result(s) returned of 65100000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (a) AND (b) agreeing on totalenergies.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:01Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "total",
+          "totalenergies"
+        ],
+        "domains_ranked": [
+          "totalenergies.com",
+          "totalenergies.us",
+          "totalenergies.com",
+          "totalenergies.us",
+          "totalenergies.com",
+          "allianzgi.com",
+          "totalenergies.com",
+          "totalenergies.us",
+          "clearwayenergy.com",
+          "slb.com"
+        ],
+        "domain_counts": {
+          "totalenergies.com": 4,
+          "totalenergies.us": 3,
+          "allianzgi.com": 1,
+          "clearwayenergy.com": 1,
+          "slb.com": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "totalenergies.com",
+          "totalenergies.us"
+        ],
+        "test_b_agreement": {
+          "totalenergies.com": 4,
+          "totalenergies.us": 3
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (a) AND (b) agreeing on totalenergies.com"
+      }
+    },
+    {
+      "folder": "UBS",
+      "company_name": "UBS",
+      "query": "UBS investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "ubs.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'UBS investor relations', 10 result(s) returned of 1760000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (a) AND (b) agreeing on ubs.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:01Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "ubs"
+        ],
+        "domains_ranked": [
+          "ubs.com",
+          "ubs.com",
+          "ubs.com",
+          "ti.com",
+          "ubs.com",
+          "intc.com",
+          "ubs.com",
+          "spglobal.com",
+          "ubs.com",
+          "spglobal.com"
+        ],
+        "domain_counts": {
+          "ubs.com": 6,
+          "ti.com": 1,
+          "intc.com": 1,
+          "spglobal.com": 2
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "ubs.com"
+        ],
+        "test_b_agreement": {
+          "spglobal.com": 2,
+          "ubs.com": 6
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (a) AND (b) agreeing on ubs.com"
+      }
+    },
+    {
+      "folder": "Uber Technologies UBER US",
+      "company_name": "Uber Technologies",
+      "query": "Uber Technologies investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "uber.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Uber Technologies investor relations', 10 result(s) returned of 5860000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (a) AND (b) agreeing on uber.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:01Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "uber",
+          "ubertechnologies"
+        ],
+        "domains_ranked": [
+          "uber.com",
+          "uber.com",
+          "uber.com",
+          "uber.com",
+          "uber.com",
+          "uber.com",
+          "uber.com",
+          "uber.com",
+          "uber.com"
+        ],
+        "domain_counts": {
+          "uber.com": 9
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "uber.com"
+        ],
+        "test_b_agreement": {
+          "uber.com": 9
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (a) AND (b) agreeing on uber.com"
+      }
+    },
+    {
+      "folder": "Unilever ULVR LN",
+      "company_name": "Unilever",
+      "query": "Unilever investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "unilever.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Unilever investor relations', 10 result(s) returned of 1190000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (a) AND (b) agreeing on unilever.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:01Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "unilever"
+        ],
+        "domains_ranked": [
+          "unilever.com",
+          "unileverconsumercarebd.com",
+          "unilever.com",
+          "co.id",
+          "unilever.com",
+          "unilever.com",
+          "mccormick.com",
+          "unilevernigeria.com",
+          "mccormick.com"
+        ],
+        "domain_counts": {
+          "unilever.com": 4,
+          "unileverconsumercarebd.com": 1,
+          "co.id": 1,
+          "mccormick.com": 2,
+          "unilevernigeria.com": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "unilever.com",
+          "unileverconsumercarebd.com",
+          "unilevernigeria.com"
+        ],
+        "test_b_agreement": {
+          "mccormick.com": 2,
+          "unilever.com": 4
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (a) AND (b) agreeing on unilever.com"
+      }
+    },
+    {
+      "folder": "Universal Music Group UMG NL",
+      "company_name": "Universal Music Group",
+      "query": "Universal Music Group investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "universalmusic.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Universal Music Group investor relations', 10 result(s) returned of 6640000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (a) AND (b) agreeing on universalmusic.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:01Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "universal",
+          "music",
+          "universalmusicgroup"
+        ],
+        "domains_ranked": [
+          "universalmusic.com",
+          "universalmusic.com",
+          "universalmusic.com",
+          "universalmusic.com",
+          "universalmusic.com",
+          "universalmusic.com",
+          "universalmusic.com",
+          "universalmusic.com"
+        ],
+        "domain_counts": {
+          "universalmusic.com": 8
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "universalmusic.com"
+        ],
+        "test_b_agreement": {
+          "universalmusic.com": 8
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (a) AND (b) agreeing on universalmusic.com"
+      }
+    },
+    {
+      "folder": "Valero Energy VLO",
+      "company_name": "Valero Energy",
+      "query": "Valero Energy investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "investorvalero.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Valero Energy investor relations', 10 result(s) returned of 85900 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (a) AND (b) agreeing on investorvalero.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:01Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "valero",
+          "valeroenergy"
+        ],
+        "domains_ranked": [
+          "investorvalero.com",
+          "valero.com",
+          "investorvalero.com",
+          "valero.com",
+          "investorvalero.com",
+          "valero.com",
+          "investorvalero.com",
+          "investorvalero.com",
+          "alphaspread.com"
+        ],
+        "domain_counts": {
+          "investorvalero.com": 5,
+          "valero.com": 3,
+          "alphaspread.com": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "investorvalero.com",
+          "valero.com"
+        ],
+        "test_b_agreement": {
+          "investorvalero.com": 5,
+          "valero.com": 3
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (a) AND (b) agreeing on investorvalero.com"
+      }
+    },
+    {
+      "folder": "Visa V",
+      "company_name": "Visa",
+      "query": "Visa investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "visa.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Visa investor relations', 10 result(s) returned of 58700000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (a) AND (b) agreeing on visa.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:01Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "visa"
+        ],
+        "domains_ranked": [
+          "visa.com",
+          "visa.com",
+          "visa.com",
+          "visa.com",
+          "visa.com",
+          "visa.com",
+          "simmonsbank.com",
+          "visa.com",
+          "visa.com"
+        ],
+        "domain_counts": {
+          "visa.com": 8,
+          "simmonsbank.com": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "visa.com"
+        ],
+        "test_b_agreement": {
+          "visa.com": 8
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (a) AND (b) agreeing on visa.com"
+      }
+    },
+    {
+      "folder": "Walmart de Mexico WALMEX MM",
+      "company_name": "Walmart de Mexico",
+      "query": "Walmart de Mexico investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "walmex.mx",
+        "status": "INFERRED",
+        "evidence": "CONFLICT BROKEN BY TEST (c), the key s.14 recorded as a measured NULL. The s.14 pass refused this name because test (a) named walmart.com (Walmart Inc, the US parent, Bloomberg root WMT US) while test (b) named walmex.mx -- two independent tests disagreeing, so it correctly took neither. THE TIEBREAK IS THE BLOOMBERG ROOT 'WALMEX' ALREADY HELD FOR THIS FOLDER: it does not match the company test (a) elected, so test (a)'s candidate is excluded on evidence rather than on preference, and test (b)'s stands. A company NAME is not a unique key; a BLOOMBERG ROOT is. STATUS IS INFERRED: the root is read off the research directory's own name under the basis Andrew approved for the identity fallback (card 6, 2026-09-13 ~04:0xZ), and no page was fetched to confirm the domain is operated by this company.",
+        "resolved_at": "2026-09-14T05:38Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "walmart",
+          "mexico",
+          "walmartdemexico"
+        ],
+        "domains_ranked": [
+          "walmex.mx",
+          "walmart.com",
+          "walmex.mx",
+          "walmart.com",
+          "alphaspread.com",
+          "walmex.mx",
+          "bmv.com.mx",
+          "walmex.mx",
+          "walmex.mx"
+        ],
+        "domain_counts": {
+          "walmex.mx": 5,
+          "walmart.com": 2,
+          "alphaspread.com": 1,
+          "bmv.com.mx": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "walmart.com"
+        ],
+        "test_b_agreement": {
+          "walmart.com": 2,
+          "walmex.mx": 5
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "REFUSED -- test (a) named ['walmart.com'] and test (b) named walmex.mx; the two independent tests disagree, so neither is taken.",
+        "conflict_broken_by": {
+          "bloomberg_root": "WALMEX",
+          "excluded_candidate": "walmart.com",
+          "excluded_is": "Walmart Inc, the US parent, Bloomberg root WMT US"
+        }
+      }
+    },
+    {
+      "folder": "Workday WDAY US",
+      "company_name": "Workday",
+      "query": "Workday investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "workday.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Workday investor relations', 10 result(s) returned of 978000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (a) AND (b) agreeing on workday.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:01Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "workday"
+        ],
+        "domains_ranked": [
+          "workday.com",
+          "workday.com",
+          "workday.com",
+          "workday.com",
+          "q4cdn.com",
+          "workday.com",
+          "workday.com",
+          "workday.com",
+          "workday.com"
+        ],
+        "domain_counts": {
+          "workday.com": 8,
+          "q4cdn.com": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "workday.com"
+        ],
+        "test_b_agreement": {
+          "workday.com": 8
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (a) AND (b) agreeing on workday.com"
+      }
+    },
+    {
+      "folder": "Zoetis ZTS US",
+      "company_name": "Zoetis",
+      "query": "Zoetis investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "zoetis.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Zoetis investor relations', 10 result(s) returned of 29500 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (a) AND (b) agreeing on zoetis.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:01Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "zoetis"
+        ],
+        "domains_ranked": [
+          "zoetis.com",
+          "zoetis.com",
+          "zoetis.com",
+          "zoetis.com",
+          "zoetis.com",
+          "zoetis.com",
+          "zoetis.com",
+          "neogen.com"
+        ],
+        "domain_counts": {
+          "zoetis.com": 7,
+          "neogen.com": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "zoetis.com"
+        ],
+        "test_b_agreement": {
+          "zoetis.com": 7
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (a) AND (b) agreeing on zoetis.com"
+      }
+    },
+    {
+      "folder": "Zurich Insurance ZURN SW",
+      "company_name": "Zurich Insurance",
+      "query": "Zurich Insurance investor relations",
+      "results_returned": 10,
+      "ir_domain": {
+        "value": "zurich.com",
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Zurich Insurance investor relations', 10 result(s) returned of 1120000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: a domain is accepted only if independently tied to the company, never by rank. ACCEPTED by (a) AND (b) agreeing on zurich.com STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act.",
+        "resolved_at": "2026-09-14T01:01Z"
+      },
+      "adjudication": {
+        "distinctive_tokens": [
+          "zurich",
+          "zurichinsurance"
+        ],
+        "domains_ranked": [
+          "zurich.com",
+          "zurichna.com",
+          "zurich.com",
+          "cognizant.com",
+          "zurich.com",
+          "zurich.com",
+          "zurich.com"
+        ],
+        "domain_counts": {
+          "zurich.com": 5,
+          "zurichna.com": 1,
+          "cognizant.com": 1
+        },
+        "excluded_non_company": [],
+        "test_a_name_token": [
+          "zurich.com",
+          "zurichna.com"
+        ],
+        "test_b_agreement": {
+          "zurich.com": 5
+        },
+        "test_b_tie_unresolved": false,
+        "test_c_held_value": null,
+        "verdict": "ACCEPTED by (a) AND (b) agreeing on zurich.com"
+      }
+    }
+  ],
+  "status_note": "STATUS IS INFERRED, NOT MEASURED: this value is derived from SEARCH METADATA (result URLs and titles returned by the index). NO RESULT PAGE WAS FETCHED -- card 4 scopes the Google key to SEARCH ONLY. Promotion to MEASURED requires reading the page itself and confirming it names this company; that is a scrape, and the route for it (Bright Data) is blocked on a key rotation that is the account owner's act."
+}

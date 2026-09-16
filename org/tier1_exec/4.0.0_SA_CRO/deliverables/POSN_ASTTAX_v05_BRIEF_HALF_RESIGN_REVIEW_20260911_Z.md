@@ -383,3 +383,104 @@ TIMES, AND THE BYTES CAN MOVE BETWEEN THEM.** The estate's own rule -- *a stalen
 fresh read at the moment of ACTING* -- is banked in this seat's memory, and I applied it to other
 seats' gate reports twice tonight before failing it on my own signature. **RE-READ THE HALF HASH
 IMMEDIATELY BEFORE THE STAMP, AND ABORT IF IT MOVED.**
+
+---
+
+## 11. TWELFTH REVIEW -- v0.6 ADDENDUM, brief half `7f815fff5` @`ae66157381`: SIGN
+
+**Verified first.** Ratified-text half UNCHANGED and still SIGNED/current -- `3.0.0_SA_CVO~Z` owes
+nothing. Diff v0.5 -> v0.6 is **50 insertions, 4 deletions, one file**, and touches **no ENDPOINT
+byte**, which is why only this half went STALE.
+
+### THE LOAD-BEARING CLAIM, RE-MEASURED INDEPENDENTLY RATHER THAN ACCEPTED
+
+Item 1 says `FWD-4` and `FWD-6` are served by ZERO cut orders across three rounds. **Measured here
+over the 15 order files directly:**
+```
+FWD-1  19      FWD-2   5      FWD-3   1
+FWD-4   0      FWD-5   7      FWD-6   0
+```
+**CONFIRMED, and the other four outcomes are the control** -- a sweep that returned zero for all six
+would indicate a broken matcher; four non-zero counts prove it discriminates. **`FWD-6` is the ASTTAX
+frontend outcome Andrew named by name at 03:21:46Z, and it has never been issued.**
+⭐ **AND THE DIAGNOSIS IS THE BETTER HALF OF THE ITEM:** the surface table's *"0 uncovered"* was true
+about ASSIGNMENT and silent about ISSUANCE. **An empty subtraction gets ACTED ON rather than argued
+with, and this one printed a denominator so it read as measured.** That is Rule 24's wrong-domain
+failure in the form the estate has now met five times tonight, and the CTO names it as its own.
+
+### ⛔ ONE DEFECT, AND IT IS INTERNAL TO THE ADDENDUM
+
+    line 43 (s.0)  "THIS BUMP RE-OPENS BOTH L4-R HALVES"
+    line 47 (vers) "THIS LINE USED TO READ 'Each bump re-opens the two L4-R sign-offs' AND THAT IS
+                    FALSE -- CORRECTED AT v0.6 ... only the half whose SECTION BYTES changed"
+**THE SAME COMMIT ASSERTS A RULE AND, FOUR LINES LATER, DECLARES THAT RULE FALSE.** The gate settles
+it in favour of line 47: ratified-text is SIGNED/current and untouched.
+⚠ **COST IF UNFIXED, stated small because it is small:** a reader of s.0 concludes `3.0.0_SA_CVO~Z`
+owes a re-sign it does not owe, and chases a signature that is not outstanding. **No constraint, bar,
+sequence or outcome is affected.**
+⭐ **AND IT IS THE v0.5 CHANGELOG SHAPE RECURRING ON THE SAME DOCUMENT** -- a summary line carrying a
+claim the authoritative section corrects. Last time the summary was stale by omission; this time the
+correction and the stale claim shipped **in one commit**, which is faster and harder to catch.
+
+### VERDICT: SIGN
+
+**The defect is one warning sentence inside an addendum whose four substantive items are correct and
+well-grounded.** Refusing would hold round 4's `FWD-4`/`FWD-6` cells -- the frontend Andrew ordered by
+name -- behind an internal inconsistency in a sentence about which signature is owed. Proportionality
+is the call, exactly as at the "three methods" label in section 9.
+**RESIDUAL for `1.0.0_SA_CTO~Z`, one line, at the next amendment:** strike or correct line 43 to match
+line 47. Header-only, re-opens nothing.
+
+### ON THE OTHER THREE ITEMS
+
+- **Item 3 is the one with teeth and it is correctly stated:** a bar written as *"confirm the weight
+  zeroes in the allocation dict"* **returns the same answer before and after a retag** and therefore
+  cannot gate it -- and `AT3-s-5`, the gating bar, reads that paragraph. That is the
+  cannot-discriminate criterion class caught in a live gating bar, which is where it matters most.
+- **Item 4's zero is recorded WITH ITS EXPIRY** -- 189 rows, zero candidate members, and the condition
+  that flips it. **A zero recorded without the condition that ends it is the same defect as a
+  criterion that cannot discriminate**, and the addendum says so itself.
+- **Item 2** is the qualification that prevents item 1 recurring.
+
+**Retag stays NO-GO. The positioning deploy stays conditional on a two-seat never-widen sign-off that
+has not landed. Portal frozen. Nothing here grades any outcome REALIZED.**
+
+---
+
+## 12. THIRTEENTH REVIEW -- v0.6 correction, brief half `fb858d401` @`ded02d9a9c`: SIGN
+
+**Scope:** section 11's residual, fixed. One warning line -- *"RE-OPENS BOTH L4-R HALVES"* -> *"RE-OPENS
+THE BRIEF HALF ONLY"* -- plus a note stating what the line used to say and why it was wrong. **No
+constraint, bar, sequence, surface or outcome moved.** `prd_version` deliberately stays v0.6: the
+signature binds to the HALF HASH, not the version string, which is the whole reason that guard exists.
+Ratified-text half untouched and still SIGNED/current.
+
+### ⛔ AND MY OWN CALL IN SECTION 11 WAS WRONG
+
+Section 11 said the fix was *"header-only, re-opens nothing."* **IT RE-OPENS THIS HALF, and
+`1.0.0_SA_CTO~Z` measured it before relying on it.** `s.0 ADDENDUM v0.6 ...` has a heading whose FIRST
+WORD is neither `ENDPOINT` nor `CONTRACTS`, so `half_of_section` maps it to the **BRIEF** half. The
+gate went STALE at `fb858d401` exactly as it should have.
+>> **THE ERROR WAS A WORD COLLISION AND IT IS WORTH NAMING: Rule 27's "a header-only bump re-opens
+   nothing" means the PRD_HEADER JSON BLOCK. I read "header" as "a section heading near the top of
+   the file." Two different objects, one word, and the sentence reads correctly under both.** <<
+⛔ **AND I HAD MEASURED THE CORRECT MAPPING MYSELF HOURS EARLIER** -- the section-to-half enumeration
+run for the FWD coverage check printed `0. THE VERSION HAZARD -> brief`, which is the same shape as
+`s.0 ADDENDUM`. **Having the measurement did not stop me asserting its opposite**, because the claim
+was made from a remembered RULE rather than from the measurement sitting in my own output.
+⭐ It is also the class this document keeps producing, now aimed at me: **a claim about what the gate
+will do, made without asking the gate.** The seat that has spent the night insisting on measured
+gate-states asserted an unmeasured one in a review.
+
+### VERDICT: SIGN
+
+The correction is right, it is scoped to one line, and it states its own history rather than editing
+the error away. **Timing is the cheap window and `1.0.0_SA_CTO~Z` named it:** round 4 is already CUT
+at 19 orders, so LIMB 6 has no pending newly-added order to refuse and this re-sign blocks nothing
+that exists today.
+⭐ **THE TRANSFERABLE LINE IS THE CTO's AND IT IS THE BEST STATEMENT OF TONIGHT'S MOST-REPEATED
+DEFECT:** *"Correcting a rule is not finished until every place that RESTATES it has been re-read -- a
+fix scoped to where the error was noticed leaves its own restatements standing."*
+
+Retag **NO-GO**; positioning deploy conditional on a two-seat never-widen sign-off that has not
+landed; **portal frozen**; nothing graded REALIZED.

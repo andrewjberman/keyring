@@ -1,0 +1,30 @@
+{
+  "instrument": "Actual ThesisTab through installed TypeScript and react-dom/server; query, panel layout and unused figure children stubbed. Synthetic prose only. No browser, HTTP, model, vendor, or live evidence.",
+  "source_sha256": "9bfb36f40e61f2bd368b3fd7cf45ac8dced2cdd6ec5d55a0acba01a905318233",
+  "cases": {
+    "generated": {
+      "html": "<div class=\"space-y-4\"><section><section></section><section><div class=\"space-y-4\"><div><h4 class=\"text-xs font-semibold uppercase tracking-wide text-white/60 mb-1.5\">Header</h4><div class=\"space-y-1\"></div></div></div></section></section><section><section></section><section><div class=\"space-y-4\"><div class=\"space-y-2\"><h4 class=\"text-xs font-semibold uppercase tracking-wide text-white/60\">Control</h4><div class=\"space-y-1.5\"><p class=\"text-sm text-white border-l-2 border-[hsl(var(--semantic-action-primary))] pl-2\" title=\"Evidence: CVO_EVIDENCE_SENTINEL\"><span class=\"text-[9px] uppercase tracking-wide text-[hsl(var(--semantic-action-primary))] mr-1.5\">machine</span>CVO_SYNTHETIC_SENTENCE</p></div></div></div></section></section></div>",
+      "visible": "HeaderControlmachineCVO_SYNTHETIC_SENTENCE",
+      "machine_visible": true,
+      "sentence_visible": true,
+      "evidence_visible": false,
+      "evidence_title": true
+    },
+    "firm": {
+      "html": "<div class=\"space-y-4\"><section><section></section><section><div class=\"space-y-4\"><div><h4 class=\"text-xs font-semibold uppercase tracking-wide text-white/60 mb-1.5\">Header</h4><div class=\"space-y-1\"></div></div></div></section></section><section><section></section><section><div class=\"space-y-4\"><div class=\"space-y-2\"><h4 class=\"text-xs font-semibold uppercase tracking-wide text-white/60\">Control</h4><div class=\"space-y-1.5\"><p class=\"text-sm text-white\" title=\"Evidence: CVO_EVIDENCE_SENTINEL\">CVO_SYNTHETIC_SENTENCE</p></div></div></div></section></section></div>",
+      "visible": "HeaderControlCVO_SYNTHETIC_SENTENCE",
+      "machine_visible": false,
+      "sentence_visible": true,
+      "evidence_visible": false,
+      "evidence_title": true
+    },
+    "empty": {
+      "html": "<div class=\"space-y-4\"><section><section></section><section><div class=\"space-y-4\"><div><h4 class=\"text-xs font-semibold uppercase tracking-wide text-white/60 mb-1.5\">Header</h4><div class=\"space-y-1\"></div></div></div></section></section><section><section></section><section><div class=\"space-y-4\"><div class=\"space-y-2\"><h4 class=\"text-xs font-semibold uppercase tracking-wide text-white/60\">Control</h4><p class=\"text-sm text-white/40 italic\">Not drafted yet -- add your own.</p></div></div></section></section></div>",
+      "visible": "HeaderControlNot drafted yet -- add your own.",
+      "machine_visible": false,
+      "sentence_visible": false,
+      "evidence_visible": false,
+      "evidence_title": false
+    }
+  }
+}

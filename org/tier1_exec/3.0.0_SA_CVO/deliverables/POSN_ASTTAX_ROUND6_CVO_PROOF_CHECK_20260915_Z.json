@@ -1,0 +1,1 @@
+{"seat":"3.0.0_SA_CVO~Z","project":"POSN_ASTTAX","round":6,"proof_instances":3,"valid":3,"invalid":0,"instances":[{"order":"V1","worker":"~19","status":"VALID","rc":0},{"order":"V2","worker":"~20","status":"VALID","rc":0},{"order":"V3","worker":"~21","status":"VALID","rc":0}],"judgments":["V1-AC13","V2-AC14","V3-AC7"]}

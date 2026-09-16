@@ -334,6 +334,7 @@ fault and no successor would have armed one;
 `1.0.0_SA_CTO` `/self-drive` D2 then D8 on Andrew's word via `0.0.0_AB_MSTR` (D2 under the pause above).
 `1.0.0_SA_CTO` **`/self-drive D9 IRPT` ARMED 2026-09-11 ~06:4xZ by Andrew-direct at the CTO terminal** ("run a /self-drive D9 IRPT, just checking in whats going on every 30 min, making sure that the ball isn't stuck in anybody's court ... Your loop is the only chance every 30m as an exogenous stimuli to get the fabric going if work is halted"): 30-minute ticks via ScheduleWakeup, scope IRPT_FNTEND + IRPT_BCKEND, WIDENED ~08:0xZ on his word ("you will need DSGN_REBRND ... included in your /self-drive loop for this session") to + DSGN_REBRND (D13; L4-R halves -> 2.0.0_SA_COO~D's L5/L6); each tick measures every scoped lane, the L4-R halves (`prd-signoff.py status`), the L10 slugs and the shared index, and clears a dead seat's index state; ends on both projects `status: complete` or his stand-down. A successor re-arms ONLY off this line.
 `1.0.0_SA_CTO~Z` **[FABRIC: SITE-Z -- arm ONLY on site z]** **`/self-drive AMGT_RESAPP & POSN_ASTTAX` ARMED 2026-09-11 ~08:2xZ by Andrew-direct at the `1.0.0_SA_CTO~Z` terminal** ("looping every 30 min to make sure no slug fell through the cracks, that no PRD is going unstamped and COOs are waiting, make sure nobody drops the ball and keep us on /canonical-flow"): 30-minute ticks via CronCreate `7,37 * * * *`; scope AMGT_RESAPP (D5) + POSN_ASTTAX (D4), both site-z; `paired_with: solo` -- both COOs already actively drive their rounds (`2.0.0_SA_COO~Z` holds POSN round 2, `2.0.0_SA_COO~ZZZ` drains AMGT round 2), so a paired `/drive` would collide with in-flight round work (the two-issuers-one-round collision); re-assess to paired if a COO goes idle with work waiting. Each tick measures both projects' L10 slug backlog, the L4-R halves (`prd-signoff.py status`), the stamp ladder and whether any COO is blocked waiting; pitches scope open-calls to `3.0.0_SA_CVO~Z` and surfaces reserved gates to Andrew. STOP-CONDITION = both projects `status: complete` per the register (§4) or Andrew's stand-down; a successor session RE-ARMS off THIS line while the scope is not DONE. A pause
+`1.0.0_SA_CTO~W` **[FABRIC: SITE-Z, lane ~W -- arm ONLY on site z, ONLY at this lane]** **`/self-drive AMGT_RESAPP` ARMED 2026-09-15 ~19:4xZ by Andrew-direct at the `1.0.0_SA_CTO~W` terminal**, VERBATIM: *"I need you to write a /goal for yourself and COO~W to effectively see AMGT_RESAPP through to completion. Once those goals are written, both you and COO~W need to engage the /goal skill with that text. Once that is done, i need you to maintain a /self-drive loop so if any open calls come up in the process, you adjudicate and keep the fabric moving toward that goal. DO so now."* Record: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260915_193xZ_GOALS_CTO_W_AND_COO_W_SEE_AMGT_RESAPP_THROUGH_SELF_DRIVE_ADJUDICATE.md` (committed with this row). Cadence 30 minutes, off-minute. ⛔ **THIS LANE IS THE ADJUDICATOR** (his "you adjudicate"): every adjudicable call in scope is ruled here, recorded and broadcast; only a call whose closure a NEVER law line or a verbatim standing Andrew hold names by decision class stays a card at Andrew, citation on the card. **THE TICK IS THE GOAL LOOP** -- the goal text in the record, engaged through `/goal-set` at this lane and at `2.0.0_SA_COO~W`; `paired_with: 2.0.0_SA_COO~W /goal-set loop on the same goal text` (his word, not `/drive`). STOP-CONDITION: AMGT_RESAPP CLOSED -- COMPLETION_REPORT and COMPLETION_GRADES covering the same outcomes, all REALIZED, `missions-tree-index.py check` admitting the CLOSED row -- with `/verify` SOUND; or HELD-AT-STOP per the skill's s.4 with the reserved card at Andrew; or his stand-down. A successor at THIS lane re-arms while not DONE and re-sends the goal text to `2.0.0_SA_COO~W` if that seat restarted. For AMGT_RESAPP only this supersedes the AMGT half of the `1.0.0_SA_CTO~Z` row above (the ~W fabric works AMGT_RESAPP, Andrew ~16:3xZ @`de60858372`); that row's other half is not this lane's to edit.
 or hold with no line here is re-armed by the next successor who reads only the ledger — so every one is listed.
 `1.0.0_SA_CTO` **`/self-drive` THE FABRIC (all LAPTOP directives) ARMED 2026-09-12 ~02:1xZ by Andrew-direct at the
 CTO terminal**, VERBATIM AND ENTIRE: *"I need you to /self-drive the fabric, any open calls appear and you handle
@@ -489,6 +490,29 @@ seat should not make about itself.
 **TO RESOLVE: whoever holds 21428 reads it out verbatim; the row then re-classes to DIRECTED or
 CHOSEN.** STOP-CONDITION as stated in the argument block: `AMGT_RESAPP` `status: complete`, or
 Andrew's stand-down.
+
+`4.0.0_SA_CRO~W` **[FABRIC: SITE-Z; the ~W fabric is AMGT_RESAPP ONLY, Andrew-direct 2026-09-15 ~03:5xZ]**
+**HARVEST REMEDIATION LOOP -- DIRECTED, ARMED 2026-09-15 ~04:3xZ by Andrew-direct at the `4.0.0_SA_CRO~W`
+terminal** (relayed to `1.0.0_SA_CTO~W` at 04:38Z; that lane's record
+`org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260915_HARVEST_REMEDIATION_LOOP_W.md`, in its working
+tree at this write, its commit that lane's), VERBATIM: *"Ok set a loop for yourself to remediate all these
+issues including validating Barron's end to end, then once they are completely done and validated and you are
+ready to set the loop, ping me, and we will decide the mechanism of how the data is pulled. I suspect it is A.)
+Too aggressive to pull 5+ articles from every single ticker from every single platform every single day, which
+means we will have to slowly and steadily build up the backfill over some amount of cycles. B.) Once we have a
+solid backfill then we need to figure out how to make sure we are not pulling the same articles multiple times,
+which means that articles have to be keyed on some kind of stable key so we dont keep pulling the same ones."*
+SCOPE: AMGT_RESAPP / D5 local harvest remediation and BOUNDED local validation, the Barron's click-and-drag
+verification included (his ~04:0xZ word at the same terminal: the 03:52Z Barron's pass was human-assisted and is
+NOT a pass). CADENCE of the remediation loop: the lane's own. **THE COLLECTION MECHANISM AND ITS CADENCE ARE
+RESERVED TO ANDREW, BY NAME:** no recurring collection is enabled and no backfill cadence is chosen until he
+decides after the validation report; the scheduled entrypoint stays DISABLED after a bounded one-shot test;
+five articles is a validation target, never a daily quota. STOP-CONDITION: every named issue remediated and
+validated end to end, then the ping to Andrew; or his stand-down. No cron id is recorded here (the table records
+authority, never the churning artifact). Landed by `1.0.0_SA_CTO~W` (the CTO lands rows; the lane did not write
+its own). POSN_ASTTAX is outside that lane's scope (record
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260915_035xZ_W_FABRIC_IS_AMGT_RESAPP_ONLY_Z_FABRIC_IS_POSN_ASTTAX.md`
+@9dfee40ce0).
 
 ⛔ **SET DOWN 2026-09-15 ~17:4xZ -- THE ROW BELOW IS HISTORY, NOT A LIVE ARM.** Andrew-direct at the
 `2.0.0_SA_COO~G` terminal, VERBATIM: *"Don't get involved in other COO work"* / *"you need to be focused on the LGIC

@@ -1699,3 +1699,6363 @@ all seven mechanical criteria were measured and the verdict is NO-GO.
   }
 ]
 ```
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-S44",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-13T04:44:00Z",
+    "one_line": "POSN'S ROUND-3 L10 IS BLOCKED ON A MESSAGE WHOSE RECEIPT CANNOT BE DEMONSTRATED ON ANY SOUND ORACLE. 3.0.0_SA_CVO~Z, which owns the round-3 slug, has NO inbox-watch.sh process at all, so no [INBOX] notification can fire for it for any message; two sends of the carry-forward ruling sit undrained in its inbox and its broker rows have been QUEUED for 44.5 hours.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.0.0_AB_MSTR~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE ABSENCE, WITH ITS POSITIVE CONTROL. `ps -ef | grep inbox-watch` at 2026-09-13T04:40Z enumerates SIX live stream watchers -- 2.0.0_SA_COO~Z (pid 75106), 2.0.0_SA_COO~ZZZ (74743), 0.0.0_AB_MSTR~Z (2599), 4.0.0_SA_CRO~Z (75344), 1.0.0_SA_CTO~Z (78193), 0.0.3_BG_BBGTerminal (1448). There is NO row for 3.0.0_SA_CVO~Z. Six serials present is the control that makes the absence evidence rather than a failed probe. CONSEQUENCE: inbox-watch.sh emits `[INBOX] $base` only inside its poll loop, so with no loop no notification can fire for that serial for ANY message.",
+        "THE TWO UNDELIVERED SENDS, at true UTC mtimes (TZ=UTC, no literal Z typed into the format): org/mcp/inbox/3.0.0_SA_CVO/~Z/ top level holds 20260913T041203Z (3922 bytes, the carry-forward ruling) and 20260913T043642Z (3503 bytes, its re-send). Both sit undrained. A 04:13:12Z message that arrived BETWEEN them is in read/, and that remains UNEXPLAINED rather than filled in.",
+        "THE BROKER PLANE, WITH BOTH CONTROLS. get_delivery_state reads 3.0.0_SA_CVO~Z at 141 rows QUEUED with no clock stamps, continuously, since id 21278 @2026-09-11T07:51:59Z; the last stamped row is 21275 @07:49:06Z. POSITIVE CONTROL ON THE SUBJECT ITSELF: the same serial carries 20 full SENT/EMITTED/READ triples on 09-11 between 01:09Z and 05:14Z, so QUEUED is a true state change and not a rendering default. PEER CONTROL: 1.0.0_SA_CTO~Z is also a codex seat and carries SENT on all of its rows, so this is not how the broker renders codex seats.",
+        "THE SEAT IS NOT DEAD AND MUST NOT BE READ AS STALLED. Commit a51f860e36 @2026-09-12T23:48Z closes AMGT_RESAPP round 8, and 820 of the 3263 files in its read/ are 2.0.0_SA_COO_Z-authored, so this seat's mail reaches it in general. Nothing moving on a plane is not proof of stalled, and a nudge is refused here on exactly that ground.",
+        "TWO INSTRUMENT ERRORS OF THIS SEAT'S OWN, RECORDED BECAUSE THE REMEDY DEPENDS ON NOT REPEATING THEM. (i) mv PRESERVES MTIME, so every mtime in read/ is the file's WRITE time and a drain has NO timestamp on that plane; an earlier reading of 'drained within the minute' compared send times against send times and measured nothing. (ii) The first pass rendered mtimes in LOCAL time while appending a literal Z to the format string, the trap already banked twice on this device. Both errors pointed the same way, toward a more alarming story."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The canonical workflow's L10 assumes the slug's owner can be reached: the COO relays that round 3 may close, 3.0.0_SA_CVO~Z cuts REMEDIATION_v3, 1.0.0_SA_CTO~Z answers, the COO recuts. The drive loop's rung 6 further assumes a relayed item is either acted on or visibly refused.",
+    "world_is": "The relay's ARRIVAL IS UNDEMONSTRABLE. There is no ack, no READ state, and no notification is structurally possible for that serial. REMEDIATION_v3.md does not exist (read 04:28Z; only v1 and v2 present), and that absence is therefore INCONCLUSIVE, never COLD -- it is equally consistent with a seat that never received the ruling and with one working on it.",
+    "notes": "THIS IS NOT A GATE AND NOT A NUDGE. No act is withheld on it and no seat is asked to stop; POSN's L10 was already waiting on the slug and this row only records WHY the wait cannot currently be interpreted. It is explicitly NOT a disposition on 3.0.0_SA_CVO~Z's session, its watcher or its relaunch -- seat liveness is 0.0.0_AB_MSTR~Z's lane, it has the measurement as of 04:41Z, and this seat touched nothing in another seat's inbox because moving a message there is the orphan-thief act performed by hand. DISARM, either arm: an ack or any artifact from 3.0.0_SA_CVO~Z citing the carry-forward ruling, OR REMEDIATION_v3 landing. NON-APPLICATION: if that seat is consuming by a route this seat cannot observe, the wait is ordinary and this row collapses to a note about the oracles. CARRIED FORWARD FOR ANY SEAT SENDING TO THAT SERIAL: get_delivery_state is not a delivery oracle for it in either direction -- it will read QUEUED permanently, which is a false negative in the alarming direction."
+  }
+]
+```
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-S45",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-13T04:52:00Z",
+    "one_line": "CORRECTION AGAINST THIS SEAT'S OWN Z-S44, AND IT DISARMS IT. A CODEX SEAT HAS NO inbox-watch.sh BY DESIGN -- it uses the bridge/detector. 3.0.0_SA_CVO~Z is ALIVE on the instrument that owns its processes, so the absent watcher is correct architecture, not the reason POSN's L10 is waiting.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE CORRECTING MEASUREMENT, by 0.0.0_AB_MSTR~Z as device infra, relayed msg 22266 and acked by this seat. The three PIDs 3.0.0_SA_CVO~Z's own heartbeat reports -- session 38928, bridge 38212, detector 39296 -- read DEAD under MSYS `ps -p` and ALIVE under Windows `Get-Process`, all three python. The reciprocal also holds: pid 2599, a live MSYS inbox-watch.sh, reads ALIVE under `ps -p` and DEAD under `Get-Process`.",
+        "BOTH INSTRUMENTS PASSED BOTH CONTROLS WHILE DISAGREEING. `ps -p` fired a positive (2599) and a negative (999999); `Get-Process` fired a positive (the three pythons) and the same negative. A CONTROL CERTIFIES THE INSTRUMENT INSIDE ITS OWN NAMESPACE AND SAYS NOTHING ABOUT COVERAGE OF THE OTHER -- the same wrong-domain shape Rule 24 names, sitting under a kill decision instead of a census.",
+        "WHY Z-S44's FRAMING WAS WRONG. Its factual core -- no inbox-watch.sh process for that serial, six other serials carrying one -- IS TRUE and is not withdrawn. THE INFERENCE BUILT ON IT IS WITHDRAWN: a codex seat does not use the bash watcher at all, so 'no watcher' is not 'no delivery mechanism'. Z-S44 presented an architectural normality as the mechanism blocking POSN's L10.",
+        "WHAT SURVIVES Z-S44 UNCHANGED, all three still measured. (a) Two of this seat's sends sit undrained in that seat's top-level inbox (04:12:03Z and its 04:36:42Z re-send) -- real, unexplained, and confirmed by 0.0.0_AB_MSTR~Z as the already-banked filesystem-carrier-versus-bridge gap rather than evidence of a down seat. (b) get_delivery_state reads 141 rows QUEUED for that serial since 2026-09-11T07:51:59Z and is NOT a delivery oracle for it in either direction. (c) The seat is NOT dead -- Z-S44 said so explicitly and Get-Process now confirms it positively rather than by inference from a commit.",
+        "THE ASYMMETRY THAT MAKES THIS WORTH A ROW RATHER THAN A NOTE. A false ALIVE costs a wasted nudge; a FALSE DEAD ends a working seat mid-turn and destroys in-flight reasoning that no commit preserves. This is the same seat that survived the 189 KB near-miss of 2026-09-11, and it was one instrument-namespace away from a second."
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "adjudicates": [
+      "POSN_ASTTAX-Z-S44"
+    ],
+    "spec_asserts": "Z-S44 asserted that because 3.0.0_SA_CVO~Z has no inbox-watch.sh process, no notification can fire for it for any message, and that POSN's round-3 L10 is therefore blocked on a relay whose receipt cannot be demonstrated. It set an ARMED hazard with disarm_owner 0.0.0_AB_MSTR~Z on that basis.",
+    "world_is": "THE PREMISE IS AN ARCHITECTURAL NORMALITY, NOT A DEFECT, so the hazard is DISARMED and the ARMED standing on 0.0.0_AB_MSTR~Z is lifted by this row. POSN's round-3 L10 is waiting on 3.0.0_SA_CVO~Z in the ORDINARY way: the slug is its act, it is alive and working, and and it has now ACTED -- commit fa2b1764c4 pins the LD-0562 round-3 review and the exact carry-forward case, which is positive evidence the 04:12Z relay was received by the bridge. No seat owes anything on Z-S44's account.",
+    "notes": "WHY THIS IS A NEW ROW AND NOT AN EDIT: hazard_standing is at-surfacing and immutable, and a disarm is a new citing row, never an in-place flip. THE OPERATIVE RULE FOR EVERY SEAT, from 22266 and already banked to this device's memory: A PID LIVENESS CHECK IS VALID ONLY IN THE NAMESPACE THAT OWNS THE PROCESS -- MSYS bash watchers and shell tooling under `ps -p`, codex seats and python under `Get-Process`. CHECK BOTH BEFORE ANY DEAD VERDICT AND NAME THE INSTRUMENT USED; disagreement between them is the EXPECTED result for a cross-namespace subject, not an anomaly to resolve. ON AUTHORSHIP, so the record is accurate: the dead-seat inference was 0.0.0_AB_MSTR~Z's and it said so plainly; this seat's own contribution to the error was framing the absent watcher as a blocking defect in Z-S44, which is what made that inference feel supported. Both halves are recorded here because the next seat reading Z-S44 needs the correction attached to it, not filed elsewhere.",
+    "dismissal_reason": "Z-S44's factual core stands and is not withdrawn: 3.0.0_SA_CVO~Z has no inbox-watch.sh process while six other serials do. What is withdrawn is the INFERENCE built on it -- that the absent watcher means no delivery mechanism and therefore blocks POSN's L10. A CODEX SEAT HAS NO BASH WATCHER BY DESIGN; it uses the bridge/detector. 0.0.0_AB_MSTR~Z measured the seat's three reported PIDs ALIVE under Windows Get-Process while MSYS ps -p called all three dead, with both instruments passing both controls, and 3.0.0_SA_CVO~Z then committed fa2b1764c4 pinning the LD-0562 round-3 review and the exact carry-forward case -- so the relay WAS received and the seat was never unreachable. Z-S44 is closed as an item because its hazard rested entirely on that inference; its three surviving measurements are carried verbatim in this row's grounding so nothing is lost, and the ARMED standing it placed on 0.0.0_AB_MSTR~Z is lifted."
+  }
+]
+```
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-S46",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-13T05:10:00Z",
+    "one_line": "ROUND 4 WOULD BE CUT AGAINST A CLOSE THAT IS NOT REACHABLE AT CUT TIME. The round-3 L10 exception is pinned to total==15, so the moment round 4 is cut it can never match again -- and at round 4's close the SAME four carried orders are still non-terminal, so the slug is refused by the same limb for the same reason.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE ORDER CENSUS AT HEAD, denominator printed. 15 task orders under org/missions/D4/POSN/POSN_ASTTAX/task-orders/, read via `git show HEAD:<path>` per file: ELEVEN <status>complete</status>, FOUR <status>staged</status> -- TO-S2-1, TO-S3-1, TO-T6-1, TO-T7-1. `staged` is NOT terminal, so _open_tos_for_project counts 4 open for this project.",
+        "THE GUARD, READ AT SOURCE in .tools/surprise-row-gate.py as landed by c89c0e45a2: `_posn_round3_terminal_exception` opens with `if code != \"POSN_ASTTAX\" or not open_ids or total != 15: return False`. `total` is the project's task-order count returned by _open_tos_for_project. CUTTING ROUND 4 RAISES total ABOVE 15, so the exception can never match again. That is FAIL-CLOSED and is the safe direction -- it is not a defect in the exception.",
+        "THE CONSEQUENCE, stated as a sequence rather than a prediction. At round 4's close, with every round-4 order terminal, the four carried orders are STILL non-terminal; _open_tos_for_project returns 4 open; the round-3 exception is dead by its own total guard; _route_precondition_violations therefore refuses the NEW remediation row. Round 4's slug is blocked by the same limb, on the same four orders, for the same reason round 3's was.",
+        "AND NOTHING INSIDE ROUND 4 TERMINATES THEM. TO-T6-1 is the retag and is held by a NO-GO that this loop forbids spawning against. TO-S2-1, TO-S3-1 and TO-T7-1 sit behind that same retag and the portal freeze, which Andrew has restated twice. So the four are not work round 4 can do; they are work round 4 inherits.",
+        "THE ROUND-3 EXCEPTION ITSELF IS CORRECT AND NARROW, recorded so this row is not mistaken for a complaint about it. It refuses a commit-wide override in its own comment, mirrors the established round-2 mechanism, and binds relief to an immutable record at pinned commit fa2b1764c4 requiring schema_version, project, round 3, authority_message_id 22245, authority_pin b75f5a805a, four orders whose open_labels match the live open set, the row's canonical hash, and a FRESH sha256 of each carried order's bytes at HEAD so an altered order stops being admitted. All other non-terminality limbs still run independently."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Rule 27's L10 order assumes a round that is cut can be closed: slug -> analysis -> recut. Obligation 1 binds this seat to cut round 4 in ONE issuance the same tick the round-3 analysis arrives.",
+    "world_is": "Round 4 can be CUT and cannot yet be CLOSED. The four carried orders are non-terminal, are not round 4's work, and are the exact set the L10 refuser counts -- and the relief that admitted round 3's slug is pinned to a total that cutting round 4 destroys.",
+    "notes": "THIS SEAT IS NOT PROPOSING A GATE CHANGE AND HAS NOT MADE ONE. The gate is 1.0.0_SA_CTO~Z's, and a COO engineering its own L10 relief is precisely the shape LD-0521 exists to prevent; this row names a premise before cutting on it, which is the measure-then-build failure already banked on this project (a dependent cell cut against a premise a later measurement kills). THREE READINGS EXIST AND THE CHOICE IS NOT THIS SEAT'S: (a) the four terminate first, which needs the retag or the freeze to move and is Andrew's; (b) round 4 is cut knowingly with its close carded as a KNOWN open item AT the issuance rather than discovered at L10; (c) the round-3 analysis re-grains the four so they are not carried into round 4's count. Mild preference for (b), because it costs nothing now and makes the block visible at the moment it is created. DISARM: any of the three, or a measurement showing the four terminal at HEAD. NON-APPLICATION: if round 4 is never cut, or if its orders are cut under a different project code, this does not apply. NOTHING IS BLOCKED ON THIS ROW -- obligation 1 still binds and round 4 is still cut in ONE issuance the tick the analysis lands; this exists so that issuance carries the item with it."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-S47",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-09-13T05:14:08Z",
+    "one_line": "DISARM OF Z-W10-S1 -- the mis-stated mechanism it named is CORRECTED in the PRD at v0.6 @ae66157381, which is the one act that row said would discharge it. Its disarm_owner was this seat because only the PRD's author could do it, and the correction waited for the round-3 L10 rather than opening a frozen spec mid-round.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE CONDITION, quoted from Z-W10-S1's own notes: 'ARMED rather than INERT for one reason only: the mis-stated mechanism lives in the PRD, which I may not edit (it is outside this order's <paths>) ... disarm_owner is the PRD's owner because amending that text is the only disarm.'",
+        "THE AMENDMENT, verified at HEAD rather than from the worktree: git show HEAD on the PRD returns exactly one occurrence of the corrected block's marker text. s.4 now reads that the weight is lost but NOT in the allocation dict, states in terms that the line USED TO READ 'and silently zeroes the weight', and records that AT2-s-1's else means a Commodities holding served allocation 2.5 and not 0.000 -- measured by Z-W10-S1 itself on the real generator at base commit 651ffd4f16 with a probe ticker at weight 0.025.",
+        "THE CONSUMER THE ROW WAS WORRIED ABOUT IS NAMED IN THE CORRECTION. Z-W10-S1's whole argument for being ARMED was that the next cell to read the sentence is AT3-s-5, the bar that GATES the retag, and that a bar built on 'confirm the weight zeroes in the allocation dict' would read the same in both worlds. The corrected paragraph says that explicitly, so a future cell writer meets the warning at the point of use rather than having to find this row.",
+        "AND THE HAZARD WAS ALREADY MITIGATED BEFORE THE TEXT MOVED: the corrected reading went to the round owner 2.0.0_SA_COO~Z at 22254, so AT3-s-5's bar is cut correctly whenever it is cut. The PRD edit is what stops the WRONG sentence being read again by anyone who never saw that message -- a message is not a carrier."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "POSN_ASTTAX-Z-W10-S1"
+    ],
+    "spec_asserts": "POSN_ASTTAX-Z-W10-S1 records that the PRD's s.4 statement of the live mechanism -- 'renders Unknown AND silently zeroes the weight' -- is half false at HEAD, and names amending that text as its only disarm, owned by the PRD's author.",
+    "world_is": "Corrected at PRD v0.6, landed with the round-3 L10 analysis at ae66157381. The label half of the mechanism stood and is unchanged; the weight half is replaced with where the loss actually sits -- the five-class served view and the delta/spread rows, which carried no row at all rather than a zero.",
+    "notes": "WHY IT WAITED, stated because a reader will otherwise see a two-tick-old row disarmed by a one-sentence edit and wonder why it took two ticks. Rule 27 freezes the spec mid-round, and POSN was mid-round-3 with four orders open. The correct carrier for a mid-round spec defect is the round's L10 addendum, which is exactly where it landed the moment that L10 existed. Opening a frozen PRD to fix a sentence would have been the disruption Andrew's 2026-09-13 02:22Z priority ruling names, and the hazard was separately mitigated in the meantime by routing the corrected reading to the round owner. NOT CLAIMED: that the retag is safe. It is NO-GO and that is unchanged by this row. NOT CLAIMED: that AT3-s-5 has been cut or that its bar is written; only that whoever writes it now meets the correct mechanism in the spec. SIBLING, DISCHARGED EARLIER: Z-C-S55's boundary decision, ruled at Z-S42 @9d7b09987f and landed in the same v0.6 addendum as a disclosed third surface. With this row, BOTH POSN acts this seat carried into the round-3 L10 are complete."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-W15-S1",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~15",
+    "surfaced_at": "2026-09-13T06:40:00Z",
+    "one_line": "The shared tree's portal checkout is 14 commits BEHIND the gitlink pin e85f6eb84f, so reading portal working-tree files and stamping them '@e85f6eb84f' -- which is what this worker was instructed to do -- produces a citation whose vintage is false by 8 days.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The TO's spawn instruction: 'READ portal source from the SHARED tree at C:/Users/Opal Bloomberg/Desktop/ajb_workspace/portal/ ... Record the portal gitlink pin e85f6eb84f as the VINTAGE of every portal citation.' The two halves are only jointly true if that checkout IS at the pin.",
+        "MEASURED in the portal repo: `git rev-parse HEAD` = 30ca034bbaa4b9d2864d3acce826e3c2fa59be0a on branch DEV, working tree clean (`git status --porcelain` empty). The worktree's gitlink `git ls-tree HEAD portal` = 160000 commit e85f6eb84f3a1771a37011a7e77e372570bad02a. The two are different objects.",
+        "DIRECTION AND SIZE, with a firing positive control: `git merge-base --is-ancestor e85f6eb84f HEAD` -> rc=1 (pin is NOT an ancestor of the checkout); `git merge-base --is-ancestor HEAD e85f6eb84f` -> rc=0; positive control `--is-ancestor HEAD HEAD` -> rc=0. `git rev-list --count HEAD..e85f6eb84f` = 14. The checkout is 14 commits BEHIND the pin. Checkout tip is 1.0.0_SA_CTO~Z 'fix(auth/MFA)...' dated Sep 2; pin is 0.9.0_WK_IRPT_FNTEND~1 'feat(irpt-fntend): FE-s-5 Reporting tab...' dated Sep 10.",
+        "SIZE OF THE INVISIBLE REGION: `git diff --stat 30ca034bba e85f6eb84f` = 126 files changed, 18600 insertions(+), 6 deletions(-), almost all of it a new src/pages/InvestorReporting/ page that DOES NOT EXIST in the checkout a working-tree read would have seen."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "That portal source may be read from the shared tree's working files and that the gitlink pin e85f6eb84f is the correct vintage to stamp on what is read there.",
+    "world_is": "The shared tree's portal checkout is at 30ca034bba, 14 commits behind e85f6eb84f. Working-tree bytes are NOT the pin's bytes and a citation stamped with the pin would be false. This worker did NOT read working-tree bytes: every citation in its deliverable was resolved by CONTENT with `git show e85f6eb84f:<path>` from that same repo, which does hold the pin's objects (`git cat-file -t e85f6eb84f` -> commit).",
+    "notes": "NO FINDING IN THIS CELL CHANGED, and that is measured rather than assumed: the set of src/ files matching the asset-class term is IDENTICAL at both commits -- 59 files at the pin, 59 at the checkout, `comm` on the two sorted lists returns EMPTY in both directions. So the 14-commit gap adds no reader and removes none, and the InvestorReporting page introduces no asset-class vocabulary. ARMED rather than INERT for one reason: the instruction is a SPAWN-PROMPT pattern, not a fact about this cell, so any sibling worker handed the same two sentences will stamp stale bytes with a fresh-looking pin and nothing in the tooling will say so. disarm_owner is the issuing seat because only the issuer can amend the spawn text; the disarm is one sentence -- read portal source with `git show <pin>:<path>`, not from the working tree. NOT CLAIMED: that any sibling actually made this error; this worker did not audit other deliverables. ID FORM, CORRECTED AFTER A REFUSAL, AND THE CORRECTION IS THE FINDING: this row and its three siblings were first minted as the bare POSN_ASTTAX-W15-S<k> form THE TASK ORDER AND THE SPAWN INSTRUCTION BOTH NAME, on a reading of .tools/surprise-row-gate.py:104 where ID_RE makes the Z- group optional. ID_RE does make it optional -- and a SEPARATE limb of the same gate then refused all four, in its words: fabric='site-z' but the id lacks the Z- infix, which means 'laptop'; site-z iff the id carries Z-. So on a site-z project the -Z- infix is not a convention, it is the only valid form, and the order names a form its own gate rejects. READING A PARSER AND CALLING IT THE RULE IS THE ERROR HERE: ID_RE certifies that a string is WELL-FORMED, never that it is ADMISSIBLE, and the admissibility limb lives elsewhere in the same file -- a two-limb guard where witnessing one limb teaches nothing about the other. The ids were re-minted as POSN_ASTTAX-Z-W15-S1..S4, matching 60 of 60 pre-existing rows in this channel. The order's text is left unedited, for the same reason as Z-W15-S4: the issuer decides whether the order or the gate is the defect."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-W15-S2",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~15",
+    "surfaced_at": "2026-09-13T06:40:00Z",
+    "one_line": "C-TWO-SURFACES asserts there are TWO surfaces that show asset classes and that FWD-6 is 'graded over the two'; a derived census at the pin finds ELEVEN renderers across FOUR surface families, and the two families the constraint does not name (Attribution, AdvisorIntelligence) hold 6 of the 11 and fail the five-class bar in 15 of their 30 cells.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE SPEC: PRD @ae66157381 s.4 C-TWO-SURFACES -- 'there are TWO surfaces that show asset classes: Positioning, and the combined Philosophy / Capital-Market-Assumptions view. ... Both must agree; FWD-6 is graded over the two.' Surface row S3 (s.7) says 'The two surfaces.' The v0.6 addendum widens this to 'at least three' by disclosing ONE additional non-owned ETF publisher, which is a data producer, not a renderer.",
+        "THE CENSUS, at portal pin e85f6eb84f with its denominator printed: 1201 files in the tree, 557 under src/, 484 src/ code files; 89 match the asset-class term OR one of the five ratified class literals; 46 of those carry a multi-class vocabulary within a 6-line window; the surviving RENDERER set after subtraction is 11 files across 4 families.",
+        "THE TWO UNNAMED FAMILIES ARE RENDERERS, NOT PRODUCERS. Attribution: SelectionTab.tsx:321 `const assetClassOrder = ['Fixed Income', 'Equity']` -- a byte-for-byte twin of the Positioning literal at HoldingsTab.tsx:1392 that round 2 already measured; AssetAllocationSummary.tsx:92 and StylePolicyComparison.tsx:156 each `const requiredAssetClasses = ['Fixed Income', 'Equity']` then .map over it. AdvisorIntelligence: ConsolidatedOverviewPanel.tsx:399 renders a hardcoded `['cash','fixed_income','equity','alternatives']`, PartnerAnalytics.tsx:1644-1645 a four-key label map fed by composition.ts:32 CANONICAL_CLASSES whose :100 `if (!classes.includes(item.asset_class)) continue` hard-drops any other class. All cited @e85f6eb84f.",
+        "WHY AN AGREEMENT BAR CANNOT SEE THIS: the four two-class literals above are IDENTICAL, so Positioning and Attribution AGREE today and will still agree after a retag -- both showing the same wrong two classes. The PRD's own FWD-6 ACCEPT ('an analyst ... cannot find a disagreement between them') reads SATISFIED on the broken system across all four sites."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "That the population FWD-6 is graded over is TWO surfaces (Positioning; Philosophy/CMA), widened at v0.6 to 'at least three' by one disclosed non-owned ETF publisher.",
+    "world_is": "Eleven renderers across four surface families render a portfolio asset-class label at the pin. Positioning holds 2, Philosophy/CMA holds 3, and two families the constraint never names -- Attribution (3) and AdvisorIntelligence (3, plus adjacent members not graded here) -- hold the remaining 6. Nine of the eleven cannot display all five ratified classes.",
+    "notes": "THIS IS THE CELL'S OWN QUESTION, SO WHY A ROW: AC1 ordered this worker to DERIVE the reader set and not inherit it, so finding more than two is the deliverable, not a surprise. What is off-cell is that C-TWO-SURFACES is a CONSTRAINT THAT BINDS THE DECOMPOSITION and is still written as a count -- so the next FWD-6 bar cut from it will again be scoped to two surfaces, and this worker may not edit the PRD. The PRD itself names this shape at s.7: 'a row scoped to two surfaces cannot generate a cell that checks three.' The same sentence now reads 'cannot generate a cell that checks eleven.' disarm_owner is the PRD's author because amending a binding constraint is the only disarm. NOT CLAIMED: that Attribution or AdvisorIntelligence are IN POSN's write scope -- this worker holds no view on scope and its <paths> grant contains no portal path. NOT CLAIMED: that the AdvisorIntelligence family renders the SAME taxonomy -- its data arrives from a different lineage (advisor-intelligence.ts:1536 names a '4-bucket from Orion native classifier'), and whether that makes it one population with Positioning or two is a judgment recorded under U1-AC6 and left to L9. NOT CLAIMED: that eleven is the complete set -- see the instrument limits recorded in the deliverable and under U1-AC6."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-W15-S3",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~15",
+    "surfaced_at": "2026-09-13T06:40:00Z",
+    "one_line": "The v0.6 addendum's disclosed non-owned ETF publisher is cited at 'source lines 469-472', but at this worktree's HEAD those lines are inside serve_s3_json_nocache(); the file's actual class vocabulary sits at :1012-1034 and :1491-1492, where it also declares 'structured_notes' as a SUB-CLASS OF ALTERNATIVES -- a placement the ratified taxonomy contradicts.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE SPEC: PRD @ae66157381 s.7 -- 'An ADDITIONAL ETF publisher outside this two-sibling set copies gold holding class values and emits a four-key book allocation at its source lines 469-472.'",
+        "AT THIS WORKTREE'S HEAD 72f241749946d2956d03bee23e917dfe2305fcd5, infra/aws/lambda/v2_portal/partners/lambdas/opal-partners-data/lambda_function.py is 1924 lines and :460-480 is the body and docstring of `serve_s3_json_nocache(bucket, key)` -- 'Structural copy of serve_s3_json -- only difference is all cors_response calls are replaced with cors_response_nocache.' No allocation dict, no class vocabulary.",
+        "WHERE THE VOCABULARY ACTUALLY IS at the same HEAD: :1012 '# Top-level: equity | fixed_income | alternatives | cash | hedge | other'; :1028 \"Returns: 'equity' | 'fixed_income' | 'alternatives' | 'other'\"; :1491-1492 the emitted shape '{advisor_id, data_as_of, data: [{date, total_aua, equity, fixed_income, structured_notes, cash, other}]}'.",
+        "THE TAXONOMY CONFLICT, verbatim at :1013 and :1018: ':1013 # structured_notes sits under alternatives (Halo Shield products, buffer ETFs,' and \":1018 'structured_notes': 'Structured Notes',  # sub-class of alternatives\". PRD @ae66157381 s.3 ratifies Structured as TOP-LEVEL class 3 of 5, colored pink, holding 'options, VIX futures, volatility overlays, VXX and the like'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "That the disclosed additional publisher emits its four-key book allocation at source lines 469-472, and that its measured state is 189 rows over four books with ZERO candidate members.",
+    "world_is": "At this worktree's HEAD the cited lines hold an unrelated S3 helper; the class vocabulary is 900+ lines further down. That vocabulary is six-valued (equity, fixed_income, alternatives, cash, hedge, other) and it explicitly nests structured_notes UNDER alternatives, so the ratified top-level class Structured has no representation in it even as a name.",
+    "notes": "INERT, and the reasons are stated rather than assumed. (1) The object is OUT of POSN's write scope by the CTO's own ruling POSN_ASTTAX-Z-S42 @9d7b09987f -- disclosure scope only -- and is outside this worker's <paths> grant entirely. (2) The PRD already carries the zero-candidate state AND the condition that ends it, so the state is not being reported as news. (3) The line drift is a navigation cost, not a wrong claim: the publisher does emit a fixed-key book allocation, exactly as disclosed, just not at those coordinates -- this worker did not establish WHICH pin the PRD's :469-472 was true at, only that it is not true at 72f2417499. NOT CLAIMED: that the vintage of the PRD's citation was wrong when written. NOT CLAIMED: that this publisher is a RENDERER -- it is a data producer and was subtracted from the reader set on exactly that proof, so it appears in no row of this cell's READER x CLASS table. The structured_notes-under-alternatives placement is recorded because it is a FIFTH distinct asset-class vocabulary in the estate and the only one that resolves Structured by nesting it, which is a merge hazard for any future single-source work under FWD-5."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-W15-S4",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~15",
+    "surfaced_at": "2026-09-13T07:05:00Z",
+    "one_line": "TO-U1-1's <proof_of_spec> block names an instance path the L6 pipeline gate cannot resolve: the gate derives the required filename from the FULL TO filename stem, so a TO whose filename carries a descriptive suffix after the TO id must name the LONG form -- and 11 of 11 pre-existing instances in this project do, while this order's block names the short form.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE SPEC: TO-U1-1's <proof_of_spec> block reads 'org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~15/POSN_ASTTAX.TO-U1-1.proof_of_spec.json', and the spawn instruction repeats that path.",
+        "THE REFUSAL, verbatim from the first safe-commit attempt with the instance present at exactly that path: '[to-pipeline-gate] REFUSED -- 1 violation(s) across 0 newly-added TO file(s): ...POSN_ASTTAX.TO-U1-1.derive-the-readers-and-grade-the-five-class-bar.md: flips to complete on PIPELINE-REGISTERED project POSN_ASTTAX, and NO proof-of-spec instance was found beside it. Layer 1: no VALID instance, no complete flip.'",
+        "THE MECHANISM, read at the gate rather than inferred from the message: .tools/to-pipeline-gate.py:1603 `stem = os.path.basename(rel).rsplit('.md', 1)[0]` then :1604 `names = (stem + '.proof_of_spec.json', stem + '_PROOF_OF_SPEC.json')`, globbed at :1607-1608 under deliverables/*/. The TO file is named POSN_ASTTAX.TO-U1-1.derive-the-readers-and-grade-the-five-class-bar.md, so the ONLY names the gate will accept carry the full descriptive suffix. The gate never reads the <proof_of_spec> block.",
+        "THE POPULATION, so this is not read as one order's typo: comp-find --name '*proof_of_spec.json' over org/missions/D4/POSN/POSN_ASTTAX/deliverables printed 'DENOMINATOR: 12 hit(s) across 46 file(s) scanned'. Of the 12, ELEVEN are pre-existing and ALL ELEVEN use the full stem (TO-S1A-1.which-one-place-survives-the-seed, TO-S6-1.harden-the-generator, TO-T1-1.carry-five-classes-through-the-generator, and so on). The twelfth was this worker's, and it was the only short-form name in the project."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "That the proof-of-spec instance for TO-U1-1 belongs at .../deliverables/0.9.0_WK_POSN_ASTTAX~15/POSN_ASTTAX.TO-U1-1.proof_of_spec.json.",
+    "world_is": "At that path the L6 gate refuses the complete flip, because it resolves the instance by the TO FILENAME STEM and not by the <proof_of_spec> block. The instance was renamed to POSN_ASTTAX.TO-U1-1.derive-the-readers-and-grade-the-five-class-bar.proof_of_spec.json, which is both what the gate requires and what 11 of 11 sibling instances in this project already use; the flip then passed.",
+    "notes": "WHAT WAS DONE AND WHAT WAS NOT. Done: ONE instance, renamed to the gate's and the project's convention. NOT done: a second copy at the order's named path -- two instances for one TO would distort any '*proof_of_spec.json' census by exactly the file this row is about, and the gate reads only one of them anyway. NOT done: editing the order's <proof_of_spec> block. That block is inside this cell's <paths> grant, but this order's only sanctioned edit to its own face is the status flip, and rewriting a spec field to match what a worker did is the wrong direction of repair -- the issuer decides whether the block or the gate is the defect. ARMED because it harms through FUTURE NORMAL operation and the harm is silent at cut time: any TO whose filename carries a descriptive suffix after the TO id, cut with a <proof_of_spec> block naming the short form, produces a worker who does exactly as instructed and is then refused at the last act of the order -- after every criterion is answered, which is the most expensive moment to discover it. The refusal text names the symptom ('no instance found beside it') and not the cause (a stem derivation that ignores the block), so the natural first reading is that the instance is missing or invalid rather than misnamed. disarm_owner is the issuing seat because the disarm is a one-line change at the CUT -- name the full-stem path in <proof_of_spec>, or name the TO file by its id alone. NOT CLAIMED: that the gate is wrong; its derivation is self-consistent and 11 of 11 instances already satisfy it, so on the measured evidence the ORDER is the outlier, not the tool. NOT CLAIMED: that any sibling worker in round 4 hit this; this worker did not audit the other round-4 orders' blocks."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-W17-S1",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~17",
+    "surfaced_at": "2026-09-13T06:25:43Z",
+    "one_line": "U4-AC1 and U4-AC4 both name `comp-find <term> --all --files` as the invocation that produces the denominator the retag member set is subtracted from. It cannot: it counts FILES THAT MENTION A TOKEN, while the members are ticker rows in a served store -- and in this sparse-cone worktree its own denominator line prints 30,426 of ~33,700 tracked paths as UNREADABLE, so it reads about 10 percent of the corpus while labelling the sweep `corpus=all`.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE NAMED INVOCATION, run verbatim, rc 0, output pasted: 'DENOMINATOR: 1885 hit(s) across 3272 file(s) scanned in scope [corpus=all] | 2 EPHEMERAL-FLOOR, NOT searched (--corpus raw reads these) | 30426 UNREADABLE, NOT searched | 35 BINARY, NOT searched'. The UNREADABLE figure is the sparse cone: `git sparse-checkout list` returns six directories (.tools, infra/aws/lambda/v2_portal, org/missions, org/projects, org/ref, org/standards) against a 33,731-entry HEAD tree.",
+        "THE OBJECT USED INSTEAD, with its own controls: dynamodb://etf-classifications, full scan at 2026-09-13T05:41:40Z, len(Items) == Count == ScannedCount == 285 and NO LastEvaluatedKey; corroborated by `scan --select COUNT` (285) and noted-but-not-relied-on `describe-table ItemCount` (285, a ~6-hourly cache).",
+        "THE SUBSTITUTE FOR THE CORPUS ARM, cone-independent: every blob reachable from HEAD read through `git cat-file --batch` (32,237 of 32,325 distinct blobs, 88 skipped as larger than 2 MB and counted), plus the portal clone at pin e85f6eb84f (1,191 of 1,191). 34,929 paths across two repos; 771 carry the term; all three gitlinks named rather than absorbed.",
+        "AND THE INSTRUMENT COUNTED THIS CELL'S OWN OUTPUT. The identical command at 06:19:36Z returned 'DENOMINATOR: 21249 hit(s) across 3289 file(s)' against 1885/3272 at 05:5xZ. The file-list diff names all 14 new paths and every one was written by this worker: eight .scratch/ outputs (including a 3.6 MB bd-securities projection whose 9,631 rows each carry the token), five deliverable scripts, and org/mcp/comp-which-rail.log. `--corpus all` includes untracked and gitignored files."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-U4-1 U4-AC1 <invocation> `timeout 300 comp-find <the classification term you choose> --all --files` with <expect> 'the DENOMINATOR you will subtract from'; U4-AC4 names the same invocation as the UNSCOPED read of the corpus.",
+    "world_is": "The invocation runs (rc 0) and returns a denominator, but it is a denominator of FILES MENTIONING A TOKEN, not of the population the member set is drawn from, and it is taken over roughly a tenth of the corpus because of the worktree's sparse cone while printing the label `corpus=all`. Both criteria were answered by running the named invocation verbatim AND recording what it actually counts, with a cone-independent object-store census beside it.",
+    "notes": "FILED AS FORM, NOT SIGNIFICANCE. Nothing was blocked: both criteria are answered and U4-AC2's arithmetic closes. The cell is not asking for the criterion to be rewritten -- the same shape is already on this project's record at W14-S6, which is why the substitute instrument was chosen rather than invented. NOT CLAIMED: that comp-find is wrong. Its denominator line disclosed the UNREADABLE count itself, which is how the gap was seen at all; the defect is in reading it as the subtraction's population."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-W17-S2",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~17",
+    "surfaced_at": "2026-09-13T06:25:43Z",
+    "one_line": "THE RETAG MEMBER SET DERIVES TO TWELVE, NOT ELEVEN. VNQ (Vanguard Real Estate ETF, served asset_class=equity, sector field reading the literal string 'Real Estate') is reached by PRD:134's own holds text for class 5 Alternatives. It is the ONLY row in the 285 that reaches Alternatives at all, and -- separately -- it is the ONLY member of the twelve whose management_style is the truthy 'unknown' placeholder that arms C-RETAG-SAFETY.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE SUBTRACTION, closing: START 285 rows (full scan, Count == ScannedCount == 285, no LastEvaluatedKey, read 2026-09-13T05:41:40Z) MINUS 212 served-equity rows no rule reaches MINUS 61 served-fixed_income rows no rule reaches MINUS 0 MINUS 0 = 12 survivors; 273 excluded + 12 members == 285. Per-rule tally R1 4 | R2 6 | R3 1 | R4 0 | R5 1 = 12.",
+        "THE DELTA, both directions: PRESENT-BUT-UNEXPECTED ['VNQ']; EXPECTED-BUT-ABSENT NONE; intersection 11. The standing eleven were loaded only after the derivation, purely to difference against.",
+        "THE RULE THAT REACHES IT IS THE SPEC'S OWN TEXT, not an edge call: PRD org/missions/D4/POSN/POSN_ASTTAX/prd/POSN_ASTTAX_PRD.md:134 @ae66157381 (blob bd9f9d1f93836878351540c53c20b84ec8dcb34b, byte-identical at HEAD 72f2417499) gives class 5 Alternatives as holding 'real assets (not commodities), private equity, private credit, real estate'. VNQ's own sector attribute reads the literal string 'Real Estate' (batch-get-item point read, UnprocessedKeys {}, 2026-09-13T06:01:08Z).",
+        "WHY ROUND 3 COULD NOT SEE IT: AT3-s-5 / TO-T5-1's derivation keyed only on sub_asset_class == 'Volatility', the hedge bucket, and non-hedge rows with a commodity sub. VNQ's sub_asset_class is 'US Large Cap', so no arm of that derivation could reach it. Nothing was done wrong there; the ladder was narrower than the taxonomy.",
+        "THE SECOND, INDEPENDENT REASON IT MATTERS: round 3's control 6 recorded 'all 11 members carry management_style=passive or active, so 0 of 11 trip the unknown placeholder guard'. Re-measured at 06:01:08Z over the twelve: VNQ's management_style is 'unknown'. 1 of 12 trips, and it is the twelfth -- so step (1) of C-RETAG-SAFETY's round-2 sequence ('set the affected tickers management_style to the factually-correct value') currently has an unnamed subject.",
+        "SAME STANDARD, STATED: round 3 counted UVXY, QBER and PDBC INTO its eleven while calling them 'DERIVED CANDIDATES, not a ruling'. VNQ is counted in on that same standard. A 13th candidate, BIPC (Brookfield Infrastructure Corp, equity/Utilities, management_style 'unknown'), is recorded UNDETERMINED and NOT counted, because 'infrastructure' appears in no class's holds text so deciding it would be an edge rule reserved to L5 by C-MEMBERSHIP-AT-L5 (PRD:332-334)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The decomp round-4 cell AT4-s-4 and TO-U4-1's own title say 'settle the retag member set at ELEVEN', and the order's preflight names ELEVEN as a standing figure carried from round 3 and offered as the thing to TEST. Round 3's AT3-s-5 recorded 11 members and '0 of 11' tripping the management_style guard.",
+    "world_is": "Derived by subtraction over a printed denominator of 285, the set is TWELVE. The twelfth is VNQ, reached by the ratified taxonomy's own 'real estate' holds text and by nothing else. Without it the class Alternatives has zero members anywhere in the registry. VNQ is also the only member carrying the truthy management_style='unknown' placeholder, so the count that trips C-RETAG-SAFETY's ARMED half is 1 of 12, not 0 of 11.",
+    "notes": "ARMED rather than INERT for one reason: LEFT ALONE, the retag -- whenever it is unblocked -- runs against the remembered eleven, VNQ stays served as Equity, and the FWD-1 defect this project exists to close survives the project that closed it. The disarm is a MEMBERSHIP RULING on VNQ (and, separately, on BIPC), which C-MEMBERSHIP-AT-L5 reserves to L5, hence disarm_owner 2.0.0_SA_COO~Z. NOTHING IS BLOCKED: U4-AC2 is answered, the set is recorded with both directions of the delta named, and this cell rules on nothing. NOT CLAIMED: that VNQ must be Alternatives. The counter-argument is recorded in the deliverable -- VNQ is a fund of listed REIT equities and class 2 holds 'equities only' -- and it is exactly the kind of edge the L5 ruling exists for. NOT CLAIMED: that the retag may run. It is NO-GO and this row does not touch that."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-W17-S3",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~17",
+    "surfaced_at": "2026-09-13T06:25:43Z",
+    "one_line": "C-ONE-SOURCE and C-CLASSIFIER-PURPOSE(a) settle that the classification has ONE place, the served table etf-classifications. The live account holds TWO ticker-keyed asset_class stores: etf-classifications (285 rows) and bd-securities (9,631 rows, same key schema, same attribute names, 9,364 tickers the first does not hold). All 13 POSN retag candidates exist in both and ZERO of the 13 agree -- and ten of the disagreements carry 'alternatives', a RATIFIED class label, so a check asking only 'is the value one of the five' reads PASS on every one.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE ENUMERATION: `dynamodb list-tables` in us-east-1 / 313476888478 returns 43 tables. Two carry a ticker-keyed asset_class. bd-securities: KeySchema ticker HASH, AttributeDefinitions asset_class / sub_asset_class / ticker -- the same key space and the same attribute names as the domain.",
+        "THE COUNTS, on the right instrument: `scan --select COUNT` on bd-securities returns Count 9631 ScannedCount 9631, while `describe-table` ItemCount reads 9578. ItemCount is a ~6-hourly cache and is 53 rows stale; the COUNT scan is the measurement. The projected full scan returned len(Items) 9631 with no LastEvaluatedKey.",
+        "THE VOCABULARIES DO NOT MATCH: domain {equity 216, fixed_income 62, hedge 7}; bd-securities {equity 5422, fixed_income 2598, alternatives 1596, cash 15}. bd-securities has an 'alternatives' the domain lacks and no 'hedge'. data/black_diamond/scripts/classification/seed_bd_securities.py@HEAD says why in its own docstring: \"asset_class 'hedge' remapped to 'alternatives'\". Its sibling seed_canonical_securities.py@HEAD writes BOTH tables (--upload --yang), so the second store is also a WRITER of the domain, not merely downstream of it.",
+        "THE KEY-SPACE GAP: 9,631 tickers in bd-securities, 267 also in the domain, 9,364 not; 18 domain tickers absent from bd-securities. Applying this cell's own ratified ladder to the second store: 595 of 9,631 rows are reached by a ratified rule and 584 of those carry a ticker the domain does not hold.",
+        "THE DISAGREEMENT, ROW BY ROW, on the 13 members and candidates: DBC GLD GSG IAU SLV USO all read 'alternatives' against a POSN target of Commodities; VXX VIXY UVXY QBER all read 'alternatives' against Structured; PDBC reads 'equity' against Commodities; VNQ reads 'equity'/'US Large Cap' against Alternatives; BIPC reads 'equity'/'Developed'. AGREEMENT 0 of 13, and all 13 are present in both stores.",
+        "THE VOID TEST IS SEPARATE AND IT PASSES: all 13 members and candidates are HELD BY THE DOMAIN, so no member lies outside it and U4-AC2's subtraction is not void. The satellite necessary-data population (C-SATELLITE-DATA, 228 component rows parsed, 25 distinct tickers) is 25 of 25 inside the domain. The 20 out-of-domain ticker bindings in the repo's seed dict are each bound 'equity' or 'fixed_income' and 0 of 20 is reached by any ratified rule, measured with a positive control that fires (12 in-domain hits)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD:140-146 C-ONE-SOURCE -- 'the classification originates in ONE place and flows to every surface; no surface re-implements it' -- settled at v0.4 by C-CLASSIFIER-PURPOSE(a), PRD:153-156: 'the ONE place is the served TABLE (DynamoDB etf-classifications, read via ETFClassifier by the positioning and CMA lambdas)', with the seed dict named as a superseded input rather than a competing source.",
+    "world_is": "There are two live ticker-keyed asset_class stores, not one. bd-securities carries 9,631 rows against the domain's 285, holds 9,364 tickers the domain does not, uses a different class vocabulary including a ratified 'alternatives' the domain lacks, is written by a seeder that also writes the domain, and disagrees with the POSN target for all 13 retag candidates. The spec's 'one place' is true of INTENT and false of the live plane.",
+    "notes": "ARMED because the failure is quiet in the worst way: ten of the thirteen disagreements are the string 'alternatives', which IS one of the five ratified classes, so any control shaped as 'is the served value one of the five ratified labels' reads PASS on every one of them -- the value is ratified AND wrong. Left alone, a retag of the domain alone leaves that second store contradicting it on 13 of 13 rows. disarm_owner is 1.0.0_SA_CTO~Z because what is falsified is PRD CONSTRAINT TEXT (C-ONE-SOURCE / C-CLASSIFIER-PURPOSE(a)) and only the PRD's author can amend it; whether the retag's SCOPE reaches the second store follows from that amendment and is then L5's to cut. NOT CLAIMED: that bd-securities is wrong and the domain is right, or the reverse -- only that they differ and that the spec says they cannot. NOT CLAIMED: that the 584 out-of-domain rule-reached rows are retag members; they are members only under a scope the spec does not currently grant. NOT CLAIMED: any reading of a served page or a partner-firm artifact -- nothing downstream of bd-securities was read, which is the same boundary W14's AC6 left at 132 NOT-MEASURABLE-HERE cells. NOT MOVED: no write of any kind was issued against either table by this cell."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-W17-S4",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~17",
+    "surfaced_at": "2026-09-13T06:43:10Z",
+    "one_line": "TO-U4-1's <proof_of_spec> block names a path the L6 pipeline gate CANNOT DISCOVER. The gate derives the instance filename from the task order file's FULL stem (to-pipeline-gate.py:1602-1608); the order names the short `<to_id>.proof_of_spec.json` form. Written at the order's path, the instance is VALID and the gate still REFUSES the complete flip with 'NO proof-of-spec instance was found beside it' -- a refusal whose text points at the instance rather than at the name.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE REFUSAL, verbatim, on a commit carrying a VALID instance at the order's own path: '[to-pipeline-gate] REFUSED -- 1 violation(s) across 0 newly-added TO file(s): org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-U4-1.settle-the-retag-member-set-at-eleven.md: flips to complete on PIPELINE-REGISTERED project POSN_ASTTAX, and NO proof-of-spec instance was found beside it. Layer 1: no VALID instance, no complete flip.' The instance was present and `python .tools/proof-of-spec-check.py <instance> U4-AC1,U4-AC2,U4-AC3,U4-AC4` returned rc=0 VALID with violations=0 at that same moment.",
+        "THE MECHANISM, at source: .tools/to-pipeline-gate.py:1602-1608 @72f241749946d2956d03bee23e917dfe2305fcd5 -- `stem = os.path.basename(rel).rsplit('.md', 1)[0]` then `names = (stem + '.proof_of_spec.json', stem + '_PROOF_OF_SPEC.json')` globbed under `<project>/deliverables/*/`. For this order that is POSN_ASTTAX.TO-U4-1.settle-the-retag-member-set-at-eleven.proof_of_spec.json.",
+        "WHAT THE ORDER NAMES, read out of its own <proof_of_spec> block: 'org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~17/POSN_ASTTAX.TO-U4-1.proof_of_spec.json' -- the to_id form, without the title slug.",
+        "THE CONVENTION AGREES WITH THE GATE, WITH ITS DENOMINATOR: 10 of the 10 proof-of-spec instances already committed under this project's deliverables/ carry the FULL-stem name (TO-S1-1.unknown-is-not-equity..., TO-T5-1.the-bar-step-2-measured-against-the-served-artifact..., and eight more). The order's line is the outlier, not the gate.",
+        "THE RESOLUTION TAKEN, and it is disclosed rather than silent: the instance is written at BOTH paths with BYTE-IDENTICAL content (md5 8e763a9d4b085a1ce042f61123b1cad7, 36,226 bytes, both), and `proof-of-spec-check.py` returns rc=0 on each. The order's pointer resolves for a human following the spec; the gate's glob resolves for the flip. Both are inside this order's <paths> grant, which names the whole deliverables/0.9.0_WK_POSN_ASTTAX~17/ directory."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-U4-1 <proof_of_spec> names exactly one path -- org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~17/POSN_ASTTAX.TO-U4-1.proof_of_spec.json -- and the worker bar reads 'rc 0 AND every mechanical criterion PASS-by-output, then flip the task order's <status> to complete and commit instance, deliverables and flip together'.",
+    "world_is": "An instance written at exactly that path is VALID (rc=0, violations=0) and is INVISIBLE to .tools/to-pipeline-gate.py, which derives the filename from the TO file's full stem and refuses the complete flip with a message that reads as 'you did not write one' rather than 'it is not where I look'. The flip could not land until a second copy existed at the gate-derived name.",
+    "notes": "BLOCKING because it did block: the commit carrying the flip was refused twice, and only a second copy at the gate-derived name let it land. ARMED because it is ORDER-SHAPED, not worker-shaped -- any future order whose <proof_of_spec> block is written in the to_id form hits the identical refusal, and the refusal's text sends the reader to look for a missing file rather than at the name, which is the expensive part. disarm_owner is 2.0.0_SA_COO~Z as the issuer of the <proof_of_spec> block; the cheap disarm is to write that block with the TO file's full stem, which is what 10 of 10 prior instances on this project already do. NOT CLAIMED: that the gate is wrong. It is fail-closed in the safe direction and its derivation is deterministic and documented at its own source line. NOT CLAIMED: that a pipeline-override was used -- it was not; the gate's own FIX line offers `# pipeline-override: <reason>` and that route was deliberately NOT taken, because routing around a gate that is correctly protecting a terminal flip is not a worker's act. NOT HIDDEN: the duplicate is a second carrier of one quantity, which is how drift starts; both copies are byte-identical at this commit, the md5 is recorded here and in the deliverable, and either one being edited alone is detectable by comparing them."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-S48",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-09-13T07:00:04Z",
+    "one_line": "RULING ON Z-W17-S3, the PRD author's call. C-ONE-SOURCE IS NOT FALSIFIED IN ITS SETTLED DOMAIN, AND ITS WORDING IS FALSE AS WRITTEN -- both at once. POSN's two surfaces do read the one settled table; but the constraint says 'flows to EVERY surface; no surface re-implements it' unqualified, and a surface outside POSN DOES re-implement ETFClassifier against a DIFFERENT table. The constraint gets SCOPED, the second store gets the Z-S42 disclosure treatment, and the non-discriminating check inside it gets named.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "WHAT C-ONE-SOURCE ACTUALLY SAYS, read at PRD s.4 :150-156 rather than from the routing message's paraphrase: 'the classification originates in ONE place and flows to every surface; no surface re-implements it', and then 'SETTLED at v0.4 by C-CLASSIFIER-PURPOSE: the ONE place is the served TABLE' -- DynamoDB etf-classifications, read via ETFClassifier by the positioning and CMA lambdas. POSITIVE CONTROL on the read: the token appears 4 times in the document, so the section exists and this is not a vacuous grep.",
+        "THE SECOND IMPLEMENTATION, measured in source rather than inferred from the table name. infra/aws/lambda/v2_portal/partners/lambdas/opal-partners-data/etf_classifier.py :36 defaults table_name='bd-securities' and :27 documents a FULL TABLE SCAN of it on first instantiation; the sibling lambda_function.py:1026 states 'Classify a holding via ETFClassifier (bd-securities DynamoDB table)'. SO IT IS NOT MERELY A SECOND STORE -- IT IS A SECOND MODULE NAMED ETFClassifier, RE-IMPLEMENTED, POINTED AT A DIFFERENT TABLE. That is the precise act C-ONE-SOURCE's second clause forbids.",
+        "THE DISAGREEMENT, as measured by 0.9.0_WK_POSN_ASTTAX~17 and reported at 22320: bd-securities holds 9,631 rows by server COUNT (its ItemCount cache reads 9,578 and was correctly NOT relied on -- that field is a ~6-hourly cache, already banked), same key schema, same attribute names, 9,364 tickers the POSN registry does not hold. ALL 13 POSN CANDIDATES EXIST IN BOTH STORES AND ZERO OF 13 AGREE.",
+        "AND THE TRAP INSIDE IT, WHICH IS THE PART THAT WOULD HAVE SURVIVED A CELL: TEN of the thirteen disagreements carry the value 'alternatives', WHICH IS ONE OF THE FIVE RATIFIED CLASSES. So a criterion shaped 'is the served value one of the five?' returns PASS on every one of them. That is a check that cannot fail in the broken world -- the same non-discriminating shape this project has now recorded three times -- and naming it is worth more than the ruling above it."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "POSN_ASTTAX-Z-W17-S3"
+    ],
+    "spec_asserts": "PRD s.4 C-ONE-SOURCE: 'the classification originates in ONE place and flows to every surface; no surface re-implements it', settled at v0.4 to mean the served table etf-classifications.",
+    "world_is": "BOTH HALVES OF THE ANSWER ARE TRUE AND THEY ARE NOT IN TENSION. (1) Within the domain C-ONE-SOURCE was settled over -- POSN's own surfaces, Positioning and Philosophy/CMA -- the constraint HOLDS: those read etf-classifications through the shared module, and nothing measured here contradicts that. (2) The SENTENCE, read literally and unqualified, is FALSE: a surface exists that re-implements ETFClassifier against bd-securities. The defect is the constraint's SCOPE, not its substance -- exactly the shape of the MECE check corrected at v0.6, where a true statement about one population was read as a claim about a wider one.",
+    "notes": "THE RULING, in the form whoever cuts from it needs. (a) C-ONE-SOURCE is SCOPED in the PRD to the surfaces this project owns, so 'every surface' stops meaning every surface in the estate. (b) bd-securities and the partners ETFClassifier are DISCLOSED on the Z-S42 pattern -- named as a non-owned second implementation, OUT of POSN's write scope, carrying the measured 0-of-13 agreement and the condition that would make it dangerous. (c) THE NON-DISCRIMINATING CHECK IS NAMED IN THE SAME BREATH so no cell writes it: a bar of the form 'the served value is one of the five ratified classes' PASSES on ten of the thirteen disagreeing rows and therefore cannot detect this. CARRIER: PRD s.4, which is mid-round-4 and therefore FROZEN -- so the text lands in the round-4 L10 addendum, same as Z-S42's line landed in v0.6. The RULING is made here and any seat may cut from it today. NOT RULED, AND DELIBERATELY: whether this is a CROSS-FIRM concern. 'bd' IS a firm token in this estate (opal-data-bd; the guard's own comments treat bd/cot/inf as firms), which is why the question was asked at all -- but .tools/ds-precommit-check.py's _CROSS_FIRM_FOREIGN_BUCKETS and _CROSS_FIRM_FOREIGN_KEY_PREFIXES enumerate BUCKETS and KEY PREFIXES and NOT DynamoDB TABLES, so a cross-firm read through a table is outside that guard's reach entirely. THIS SEAT HAS NO MEASURED BASIS TO ALLEGE A VIOLATION AND DOES NOT ALLEGE ONE. The guard's table-blindness is recorded as a fact, not as a finding against anyone, and it is the gate owner's to weigh. A NEAR-MISS RECORDED RATHER THAN BURIED: this seat first read the partners lambda as the SAME publisher Z-C-S55 named, which would have unified two findings neatly. Z-C-S55 describes a four-key book allocation at source lines 469-472; those lines in this file are a serve_s3_json_nocache helper. THE LINE NUMBERS REFUSED THE UNIFICATION and the claim was dropped. Whether the two are nonetheless related is NOT settled here. NOT TOUCHED: the retag, which is NO-GO; TO-T6-1, unspawned; and the twelve-member finding of 22320, which is a measurement this seat accepts and does not re-rule."
+  }
+]
+```
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-W16-S1",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~16",
+    "surfaced_at": "2026-09-13T05:52:35Z",
+    "one_line": "TO-U3-1's <paths> GRANT NAMES A FILE THAT HAS NEVER EXISTED ON ANY REF, AND THE FILE THE CELL IS ABOUT IS OUTSIDE THE GRANT: the order grants infra/aws/lambda/v2_portal/yang_pipeline/seed_canonical_securities.py (0 commits across --all; 0 entries in a 33,731-entry index), while the subject W14-S3 actually measured and cited is data/black_diamond/scripts/classification/seed_canonical_securities.py (4 commits, blob fbbc7165d3). The granted path is the round-3 subject's DIRECTORY joined to the round-4 subject's FILENAME. U3-AC1 is unaffected and was executed to completion; U3-AC2/AC3/AC4 cannot be executed without writing outside the grant, so they are BLOCKED and the order stays open.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE GRANT, verbatim, at org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-U3-1.extend-preserve-dont-clobber-to-the-seed-script.md@72f241749946d2956d03bee23e917dfe2305fcd5, <paths> line 4: `infra/aws/lambda/v2_portal/yang_pipeline/seed_canonical_securities.py`.",
+        "THE GRANTED PATH HAS NEVER EXISTED, with a firing positive control at 72f241749946d2956d03bee23e917dfe2305fcd5: `git log --all --oneline -- infra/aws/lambda/v2_portal/yang_pipeline/seed_canonical_securities.py` returns 0 commits; the SAME command over `data/black_diamond/scripts/classification/seed_canonical_securities.py` returns 4. `ls` of the granted directory lists seed-etf-classifications.py and seed-etf-constituents.py (hyphens) and no seed_canonical_securities.py.",
+        "THE FILENAME CENSUS IS OVER THE FULL INDEX, NOT THE SPARSE CONE: `git ls-files` reports 33,731 entries (the whole index; only ~3,270 are readable on disk in this cone-mode worktree, which is row Z-W14-S6's blindness). Exact-basename match on `seed_canonical_securities.py` over all 33,731 yields EXACTLY ONE path: data/black_diamond/scripts/classification/seed_canonical_securities.py. comp-find was NOT used for this census because its denominator here certifies a 3,270-file sweep, not the 33,731-file population.",
+        "THE ROW THE CELL IS BUILT ON NAMES THE OTHER PATH, AND NAMES IT THROUGHOUT: POSN_ASTTAX-Z-W14-S3 grounds every one of its line cites at 3ce0c0e372 against `data/black_diamond/scripts/classification/seed_canonical_securities.py` (:30 YANG_TABLE, :210 yang_table = dynamodb.Table(...), :262-272 the update_item), and its fourth evidence bullet says in terms that the round-3 subject was a DIFFERENT FILE: 'AT3-s-4 / TO-T4-1's grant and its measured subject are infra/aws/lambda/v2_portal/yang_pipeline/seed-etf-classifications.py'.",
+        "THE DECOMP DOES NOT SUPPLY A DIRECTORY, SO THE GRANT'S DIRECTORY WAS ADDED AT THE CUT: org/missions/D4/POSN/POSN_ASTTAX/decompositions/POSN_ASTTAX_DECOMP_round4.md@72f241749946d2956d03bee23e917dfe2305fcd5 has exactly 1 occurrence of the token (line 103, PROSE band): \"`AT4-s-3` | FWD-5, FWD-1 | durability: extend preserve-don't-clobber to `seed_canonical_securities.py` (`W14-S3`) | POSN-owned seed script |\" -- bare filename, no path.",
+        "WHAT IS STILL TRUE AND WAS MEASURED ANYWAY: U3-AC1 ran to completion against the REAL bytes (read from the git object store, blob sha asserted equal to HEAD:data/black_diamond/... before the run) on an in-process scratch target with boto3 replaced in sys.modules and boto3.client raising. 4 of 4 retag members present in the seeder were clobbered: VXX 'Structured'->'equity', UVXY 'Structured'->'equity', QBER 'Structured'->'fixed_income', PDBC 'Commodities'->'equity'; mint control CASH_USD absent->present, so the seeder was writing. Evidence: org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~16/u3_ac1_before_control.py and its recorded output.",
+        "NOT CLAIMED, and deliberately not done: this worker did NOT edit, check out or create data/black_diamond/scripts/classification/seed_canonical_securities.py, and did NOT create the granted path to make the order executable. The <paths> block IS the write grant; a path the order lacks is a blocking row, never an override. NOT CLAIMED: that the data/black_diamond path is POSN-owned -- the decomp calls the subject a 'POSN-owned seed script' and whether that file is in POSN's lane is the issuer's call, not this worker's."
+      ]
+    },
+    "spec_asserts": "TO-U3-1's <paths> block grants infra/aws/lambda/v2_portal/yang_pipeline/seed_canonical_securities.py and U3-AC2's named invocation is `git diff -- <that path>`, so the order asserts that the file the cell must patch exists at that path and is inside the worker's write surface.",
+    "world_is": "No file has ever existed at that path on any ref. The second registry writer the cell exists to harden is data/black_diamond/scripts/classification/seed_canonical_securities.py, which is outside the <paths> grant AND outside this worktree's sparse cone. U3-AC1 is executable without the grant (it only needs to READ the bytes, which the object store supplies) and was executed: the premise HOLDS, 4 of 4 present retag members clobbered. U3-AC2, U3-AC3 and U3-AC4 each require writing the out-of-grant file and are BLOCKED.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "THE FORM OF THE ID: the order's text says to mint `POSN_ASTTAX-W16-S<k>`. This row is filed as `POSN_ASTTAX-Z-W16-S1` because .tools/surprise-row-gate.py:100-101 rules that 'the fabric coordinate Z- stays and nests first', its _self_test:1964 refuses a Z- id carrying fabric 'laptop', this project's fabric is site-z, and 60 of 60 rows already in this channel carry the Z- segment. Both shapes satisfy the schema pattern; the fabric-composed one is the one the gate and the channel agree on. <k> restarts per coordinate, so S1. WHAT WOULD DISARM THIS: one issuer act -- re-cut U3-AC2's <paths> to the measured path (or confirm the intended subject is a different file), after which AC2/AC3/AC4 are straightforwardly executable; the AC1 measurement above already supplies the BEFORE arm and the AC3 negative-control arm, and the sibling's mechanism is read and documented in this worker's result.md, so no measurement is lost. NOTHING IS ASKED OF ANY OTHER SEAT."
+  }
+]
+```
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-W16-S2",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~16",
+    "surfaced_at": "2026-09-13T05:57:57Z",
+    "one_line": "THE COMMIT GATE CANNOT RUN IN THIS WORKTREE, SO IT REFUSES EVERY .py RATHER THAN GRADING ONE -- AND safe-commit.sh IS FAIL-CLOSED ON IT: .tools/commit_gate_runner.py:78 resolves GRAPH_DIR = <workspace>/org/modules/graph and :96 imports comp_constants_cli from it, but this worktree's sparse cone is {.tools, infra/aws/lambda/v2_portal, org/missions, org/projects, org/ref, org/standards} -- org/modules is NOT in it. `bash .tools/commit-gate.sh <any .py>` exits 1 with ModuleNotFoundError before any check runs, and safe-commit.sh:652-658 treats rc!=0 as BLOCKED and unstages. This is U3-AC4's named invocation, and it cannot produce the named result here.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE INVOCATION AND ITS VERBATIM OUTPUT at 72f241749946d2956d03bee23e917dfe2305fcd5, rc=1: `timeout 180 bash .tools/commit-gate.sh org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~16/u3_ac1_before_control.py` -> 'Traceback (most recent call last): File \"C:\\\\tmp\\\\wk-posn-u3\\\\.tools\\\\commit_gate_runner.py\", line 96, in <module> / import comp_constants_cli / ModuleNotFoundError: No module named comp_constants_cli'.",
+        "THE CAUSE, read from the gate's own source at .tools/commit_gate_runner.py@72f241749946d2956d03bee23e917dfe2305fcd5: ':78 GRAPH_DIR = WORKSPACE / \"org\" / \"modules\" / \"graph\"', then ':91-93' inserts GRAPH_DIR and GRAPH_DIR/compproof into sys.path, then ':96-100' imports comp_constants_cli, manifest_check_cli, shell_cli, log_open_lint and ses_sender_lint_cli from there. `git sparse-checkout list` in C:/tmp/wk-posn-u3 prints exactly six cones -- .tools, infra/aws/lambda/v2_portal, org/missions, org/projects, org/ref, org/standards -- and org/modules is not among them, so GRAPH_DIR does not exist on disk.",
+        "POSITIVE CONTROL, AND IT FIRES: the gate's IN-CONE dependency loaded fine. commit_gate_runner.py:87 loads ds-precommit-check.py from SCRIPT_DIR (.tools/, which IS in the cone) via importlib and did not raise -- the traceback's frame is line 96, nine lines LATER. So the failure is specific to the out-of-cone import and is not a broken gate, a broken python or a bad argument.",
+        "NEGATIVE CONTROL ON THE OBJECT, not just the disk: `ls .tools/comp_constants_cli.py` -> 'No such file or directory'; an exact-basename match for comp_constants_cli.py over all 33,731 `git ls-files` entries returns exactly ONE path, org/modules/graph/comp_constants_cli.py. The module exists in the repo and is absent from this checkout -- it is a CONE fact, not a missing file.",
+        "THE CONSEQUENCE IS A REFUSED COMMIT, NOT A WARNING: .tools/safe-commit.sh@72f241749946d2956d03bee23e917dfe2305fcd5 :652 runs `GATE_OUT=\"$(bash \"$SCRIPT_DIR/commit-gate.sh\" \"${GATE_FILES[@]}\" 2>&1)\" || GATE_RC=$?`, :653 tests `if [ \"$GATE_RC\" -ne 0 ]`, :656 unstages every gate file and :657 prints 'ERROR: BLOCKED -- commit-gate failed (py_compile / ruff / lint). Commit aborted; files unstaged.' The gate's rc=1 here means 'the gate could not evaluate itself', but safe-commit reads it as 'a check FAILED'.",
+        "IT IS A CONE DIFFERENCE FROM THE ROUND-3 WORKTREES, WHICH IS WHY NO PRIOR WORKER HIT IT: row POSN_ASTTAX-Z-W14-S6 records /c/tmp/wk-posn-t5's cone as EIGHT entries including org/modules and org/surprise_channel. This worktree has SIX and lacks both. 0.9.0_WK_POSN_ASTTAX~13 committed four .py deliverables under this same project, so the gate demonstrably ran for that worker.",
+        "NOT CLAIMED, and deliberately not done: this worker did NOT widen the sparse cone, did NOT set PYTHONPATH at another tree's org/modules/graph, and did NOT run the primary workspace's commit-gate.sh against this worktree's file. Each would make the order executable by reconstructing or importing across the tree, and grading THIS tree's bytes with ANOTHER tree's checks is a wrong-grain reading even when it returns clean. Whether this worktree's cone should be widened is the issuer's call."
+      ]
+    },
+    "spec_asserts": "U3-AC4 names `timeout 180 bash .tools/commit-gate.sh` as its invocation and expects 'clean on the changed .py, output cited', with both ASCII limbs checked -- i.e. it asserts the gate RUNS in the worker's worktree and returns a per-file check verdict.",
+    "world_is": "In this worktree the gate exits 1 from an ImportError raised at module scope, before any file is dispatched to any check. No limb runs: not py_compile, not ds-precommit, not ruff, and neither ASCII arm -- so the BLOCKING commit-MESSAGE arm and the WARN-ONLY staged-.py arm are both UNMEASURED here rather than clean. Because safe-commit.sh is fail-closed on the gate's rc, any commit whose file set includes a .py is refused in this worktree, independent of that .py's contents.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "SECOND ROW OF THIS COORDINATE; S1 is the <paths>-grant defect and is a DIFFERENT finding with a different remedy -- S1 is a defect in the ORDER's text, S2 is a defect in the WORKTREE's provisioning, and fixing either leaves the other standing. SCOPE: this row says nothing about whether the .py it was run on is clean; that is exactly what could not be measured. WHAT WOULD DISARM THIS: adding org/modules (at minimum org/modules/graph and org/modules/graph/compproof) to this worktree's sparse cone, which is a provisioning act the issuer owns. NOTHING IS ASKED OF ANY OTHER SEAT."
+  }
+]
+```
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-W16-S3",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~16",
+    "surfaced_at": "2026-09-13T06:20:03Z",
+    "one_line": "MY OWN W16-S2 UNDERSTATED ITS OWN BLAST RADIUS, AND THE UNDERSTATEMENT IS THE DANGEROUS DIRECTION: S2 says 'no .py can be committed from this worktree'. Measured since: .tools/commit-gate.sh is `exec python commit_gate_runner.py \"$@\"` with NO bash-side filtering (:59), and the runner raises at IMPORT scope, so the gate exits 1 on an .md-only file list AND on an EMPTY argument list. safe-commit.sh:640-657 has no rc=2 'gate is broken' branch and no audited override, so NOTHING CAN BE COMMITTED FROM THIS WORKTREE AT ALL. This worker's deliverables and both prior rows are LOCAL AND UNCOMMITTED as a result.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE DISCRIMINATING PAIR, at 72f241749946d2956d03bee23e917dfe2305fcd5. (a) `bash .tools/commit-gate.sh <a .md path>` -> same ModuleNotFoundError traceback, rc=1. (b) `bash .tools/commit-gate.sh` with NO ARGUMENTS AT ALL -> same traceback, rc=1. A gate that refuses an empty file list is not grading files; it is failing before it reaches them.",
+        "WHY THERE IS NO FILE-TYPE ESCAPE: .tools/commit-gate.sh@72f241749946d2956d03bee23e917dfe2305fcd5 is 59 lines and its last line is `exec python \"$SCRIPT_DIR_WIN/commit_gate_runner.py\" \"$@\"`. There is no extension filter in bash -- its own header says it 'delegates ALL files to ONE python process' (:8-9). The filtering the header describes (.py/.sh/.tf/org/projects/*.json) happens INSIDE the runner, which never starts.",
+        "WHY THERE IS NO rc ESCAPE: .tools/safe-commit.sh@72f241749946d2956d03bee23e917dfe2305fcd5 :652 captures the rc, :653 is `if [ \"$GATE_RC\" -ne 0 ]`, :656 unstages, :657-659 print and :660 `exit 1`. There is no rc=2 branch. The file DOES carry an 'UNVERIFIABLE (rc=2) = THE GATE ITSELF IS BROKEN' concept at :600, but that is the coverage-check limb, not this one -- so a gate that cannot evaluate itself is read here as 'a check FAILED'. An enumeration of SKIP/BYPASS/OVERRIDE over the file returns 21 hits and FOUR audited overrides -- SENSITIVE, LOG-SWEEP, SURPRISE-ROW, SYSTEM-CURRENT -- and NONE of them is a commit-gate override. The gate's own refusal text says so: '--force does NOT bypass a gate failure'.",
+        "MEASURED ON THE REAL DELIVERY, not on a probe: `bash .tools/safe-commit.sh --author \"0.9.0_WK_POSN_ASTTAX~16 <...>\" -F <msg> -- <deliverables dir> <channel>` -- a file set containing ZERO .py files (.md, .json, .diff, .txt only) -- returned SAFECOMMIT_RC=1 with 'ERROR: BLOCKED -- commit-gate failed'. `git log --oneline -1` unchanged at 72f241749946d2956d03bee23e917dfe2305fcd5.",
+        "WHAT IS THEREFORE AT RISK, stated plainly: this worker's result.md, proof-of-spec instance (proof-of-spec-check rc=0, VALID), proposed patch diff, two control outputs, AND rows W16-S1 and W16-S2 exist ONLY in C:/tmp/wk-posn-u3's working tree. They are not on any branch and no drain can see them. Site Z's own banked lesson is that a shared tree loses uncommitted work.",
+        "NOT CLAIMED: that S2 is wrong. S2's cause (org/modules outside the cone) and its disarm (widen the cone) are both unchanged and correct. This row refines S2's SCOPE only -- and it does not disarm it."
+      ]
+    },
+    "spec_asserts": "This worker's own row POSN_ASTTAX-Z-W16-S2 states 'any commit whose file set includes a .py is refused in this worktree, independent of that .py's contents' -- which implies, by contrast, that a commit WITHOUT a .py would land.",
+    "world_is": "The gate refuses independent of the file set, including an EMPTY one, because it fails at import scope before any filtering. So the contrast S2 invites is false: a .py-free commit is refused identically. The remedy is the same one S2 names (widen the cone), but the exposure is every commit from this worktree rather than every .py.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "FILED AGAINST MY OWN PRIOR ROW. The channel is append-only, so S2 is not edited and not disarmed; this row corrects its GRAIN, the way Z-S41 refined Z-S37. The direction matters: an understatement reads as all-clear for the case it excludes, and a reader of S2 alone would reasonably conclude that dropping the .py files was a sufficient workaround. It is not, and this worker tried it and was refused. NO WORKAROUND WAS MANUFACTURED: the cone was not widened, PYTHONPATH was not re-pointed, no bare `git commit` was used, and no gate was bypassed. NOTHING IS ASKED OF ANY OTHER SEAT; the disarm is the same provisioning act S2 names."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-W16-S4",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~16",
+    "surfaced_at": "2026-09-13T06:54:42Z",
+    "one_line": "THE COMMIT GATE'S NON-ASCII LIMB IS SCOPED TO infra/ AND .tools/ ONLY, SO IT CAN NEVER FIRE ON THIS CELL'S SUBJECT -- and its silence is indistinguishable from a clean pass. U3-AC4 tells the worker a staged .py arm is 'WARN-ONLY and ships', which reads as: it runs and may warn. On data/black_diamond/** it does not run at all. A probe .py carrying 5 non-ASCII bytes passed the gate rc=0 with 'All checks passed!' and zero WARN lines. The failure mode is a GREEN: a reader clears the limb and learns nothing, because a non-run and a clean verdict print identically.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/commit_gate_runner.py:427-429 @220d09901b67ab7e49ea321886ba3941c63868d6 -- _nonascii_lint_one() opens with `norm = f.replace(chr(92),'/')` then `if not (norm.startswith('infra/') or norm.startswith('.tools/')): return 0`. The early return is unconditional on path and precedes the byte read, so no file outside those two prefixes is ever scanned.",
+        "MEASURED PAIR, same gate, same invocation shape, at 220d09901b67ab7e49ea321886ba3941c63868d6: (a) `timeout 180 bash .tools/commit-gate.sh .scratch/run/u3_gate_ascii_probe.py` where the probe carries 5 bytes >127 (counted independently in python) -> 'All checks passed! / OK: pre-commit gate clean for 1 of 1 file(s)', rc=0, ZERO WARN lines. (b) the same gate on a deliberately broken .py -> 'BLOCKED: py_compile failed', rc=1. So the gate IS live and DOES refuse -- the ASCII silence in (a) is a NON-RUN, not a tolerant pass.",
+        "SCOPE OF THE CONSEQUENCE FOR THIS CELL: the subject is data/black_diamond/scripts/classification/seed_canonical_securities.py (blob fbbc7165d331 @220d09901b67ab7e49ea321886ba3941c63868d6), which starts with neither prefix. So when POD4 applies the handed-off patch under its own gate run, this limb will be silent there too. This worker therefore byte-scanned the patched bytes and every deliverable itself: 0 bytes >127."
+      ]
+    },
+    "spec_asserts": "U3-AC4 @8e67653049 instructs: 'Check BOTH ASCII limbs and say so: the commit-MESSAGE arm is BLOCKING while a staged .py arm is WARN-ONLY and ships, so clearing the one that stopped you teaches nothing about the other.' That presents the staged-.py arm as an arm that RUNS on the changed .py and whose verdict is merely non-blocking.",
+    "world_is": "The staged-.py arm runs on a PREFIX-SCOPED subset of files: infra/ and .tools/ only (commit_gate_runner.py:427-429). For every other path -- including this cell's entire subject tree data/black_diamond/** and including the scratch paths a worker would naturally probe with -- the function returns 0 before reading a single byte. 'WARN-ONLY' is accurate about its SEVERITY and silent about its COVERAGE, and the coverage is the half that decides whether checking it means anything. The order's own warning applies one level deeper than it was written: clearing the staged-.py limb on an out-of-scope path teaches nothing about that path either.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "NOT A DEFECT IN THE ORDER'S INSTRUCTION, which is correct as far as it goes, and not a request for any act. Filed because the instruction's purpose is to stop a worker citing one limb as evidence about another, and this worker could have cited a NON-RUN as a clean staged-.py limb with no way for a reader to tell. Nothing was widened to work around it: no probe file was written under infra/ or .tools/ (both outside this worker's <paths> grant), so the in-scope branch of this function is UNEXERCISED by this worker and is stated as such rather than assumed. The commit-MESSAGE limb is a separate mechanism entirely -- .tools/git-hooks/commit-msg-ascii-check.sh, installed at the shared git-common hooks/commit-msg and therefore APPLIED to this linked worktree -- and is graded separately in the proof instance."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-W16-S5",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~16",
+    "surfaced_at": "2026-09-13T06:54:42Z",
+    "one_line": "THE RE-CUT RETIRED U3-AC2's EDIT BUT LEFT U3-AC4 NAMING ITS OUTPUT: AC4 still expects the gate 'clean on the changed .py', and after the re-cut this cell changes NO .py in the repo by construction -- the patch is RECORDED, and the file it targets is POD4's. `git diff HEAD --name-only -- '*.py'` = 0. The clause has no repo-resident subject, so it was graded against the .py BYTES the cell actually produces (the patched seeder, materialized in scratch by applying the recorded diff), and that scoping is disclosed rather than passed over.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The order @8e67653049: U3-AC2's <expect> reads 'RECORDED as a unified diff in this cell's deliverables dir -- NOT applied to the file, which is POD4-owned', while U3-AC4's <expect> reads 'clean on the changed .py, output cited'. The first forbids the object the second names.",
+        "MEASURED at 220d09901b67ab7e49ea321886ba3941c63868d6: `git diff HEAD --name-only -- '*.py'` -> 0 line(s). `git status --porcelain -- data/black_diamond/` -> 0 line(s), against `git ls-files -- data/black_diamond/` = 176, so the empty status is CLEAN and not MATCHED-NOTHING.",
+        "HOW IT WAS GRADED INSTEAD: the recorded diff was applied to the HEAD blob in a scratch mirror (git apply rc=0; a one-line corruption of the same diff is REFUSED rc=1, so the check discriminates), the result reproduced the exact bytes U3-AC3 exercised (sha256 dde708491f6fa73d, both sides), and `timeout 180 bash .tools/commit-gate.sh` over those bytes returned 'OK: pre-commit gate clean for 1 of 1 file(s)', rc=0."
+      ]
+    },
+    "spec_asserts": "U3-AC4 @8e67653049 expects the commit gate 'clean on the changed .py', which presupposes that this cell leaves a changed .py somewhere the gate can be pointed at.",
+    "world_is": "Under the same order's U3-AC2, this cell changes no .py anywhere: the patch is a deliverable and the target file belongs to lane POD4 (.owned-paths.yaml:1712). The re-cut converted AT4-s-3 from EDIT to DISCLOSE-AND-HAND-OFF and updated AC2 and AC3 to match, but AC4's wording still describes the pre-re-cut world. The gate limb itself is in no way broken -- it runs and refuses -- there is simply no repo-resident object of the kind the clause names.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "NOT BLOCKING and no act is asked of any seat. Raised so the L9 grader sees exactly WHICH bytes carried the U3-AC4 verdict and can reject the scoping if it disagrees, rather than reading a bare PASS that silently re-defined 'the changed .py'. The alternative readings were considered and are recorded in the proof instance: grading the worker-authored control scripts instead would clear the clause on files the cell does not hand to anyone, which is weaker evidence about the thing being handed off. Note also that the path-keyed limbs of the gate are NOT exercised at the real path by this method -- see W16-S4 for one limb where that distinction is load-bearing."
+  }
+]
+```
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-S49",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-13T07:12:00Z",
+    "one_line": "DISARM of W16-S1, W16-S2 and W16-S3. All three named ISSUER defects of this seat's own making, all three are remedied at HEAD, and each remedy is measured rather than asserted.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "W16-S1 -- the <paths> grant named a file that has never existed on any ref. CONFIRMED independently by this seat: 0 of 33,731 index entries and 0 commits across --all for the granted path, against a firing positive control on the real file (exactly 1 of that basename in the repo). REMEDY LANDED: TO-U3-1 re-cut at 8e67653049, which also established that the real file is lane POD4 (.owned-paths.yaml:1712), so the cell became DISCLOSE-AND-HAND-OFF rather than an edit.",
+        "W16-S2 and W16-S3 -- the worktree cone omitted org/modules, so commit-gate.sh raised ModuleNotFoundError at IMPORT SCOPE and refused every commit rather than only .py ones; W16-S3 is that worker correcting its OWN W16-S2 for understating the blast radius, which is the more valuable of the two. REMEDY LANDED: org/modules AND org/surprise_channel added to ALL THREE round-4 worktree cones, not only the one that hit it. VERIFIED after the change: the gate runs and prints its ordinary WARN, and the worker's uncommitted work was intact.",
+        "PROOF THE REMEDIES HOLD, not merely that they were applied: the same worker, in a fresh session under the same serial, committed 220d09901b and a97b140b54 from that worktree and graded all four criteria. A cone that could not commit anything cannot produce two commits.",
+        "WHY GRADUATED AND NOT DISMISSED: none of the three was mistaken. Each named a real defect that really blocked the cell, and each produced a landed remedy. They are closed because they were ACTED ON."
+      ]
+    },
+    "disposition": "GRADUATED",
+    "adjudicates": [
+      "POSN_ASTTAX-Z-W16-S1",
+      "POSN_ASTTAX-Z-W16-S2",
+      "POSN_ASTTAX-Z-W16-S3"
+    ],
+    "spec_asserts": "Each row carried hazard_standing ARMED with disarm_owner 2.0.0_SA_COO~Z, so each stood open until this seat cited it.",
+    "world_is": "All three causes are remedied at HEAD and the remedies are exercised, not just applied. The rows are disarmed by this citing row; hazard_standing is at-surfacing and immutable, so this is a new row rather than an in-place flip.",
+    "notes": "RECORDED PLAINLY BECAUSE IT IS THE POINT: all three were ISSUER defects, authored by this seat, and all three were found by a WORKER rather than by the issuer. The first surfaced only because that worker ran a positive control instead of reading rc=0 / 0 bytes as a clean diff."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-S50",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-13T07:12:00Z",
+    "one_line": "RULING ON W16-S5, AND IT GOES AGAINST THE GENEROUS READING: U3-AC4 is UNCOMPUTABLE-BY-CONSTRUCTION, not PASS. The re-cut removed AC2's edit and left AC4 naming its output, so the clause has no subject in the repo -- and the defect is this seat's re-cut, not the worker's grading.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE WORKER HANDED THIS UP RATHER THAN TAKING IT, and printed the evidence to decide it: it graded U3-AC4 PASS against the .py bytes the hand-off delivers, stated that reading explicitly in its output and in W16-S5, and said that if the issuer rejects it the row should read UNCOMPUTABLE-BY-CONSTRUCTION rather than PASS.",
+        "THE MEASUREMENT THAT DECIDES IT: after the re-cut this cell changes ZERO .py files in the repo -- `git diff HEAD --name-only -- '*.py'` returns 0. U3-AC4 says 'pass the commit gate on your own bytes'. There are no own bytes in the repo to pass it on.",
+        "WHY THE GENEROUS READING IS REJECTED: grading a gate clause against bytes that never enter the repository is a check run on the NEAR SIDE of a boundary and claimed for the far side -- the exact failure this project's own explanation brief named as the reason two rounds passed while the page stayed wrong. A PASS here would be true about a scratch file and silent about the repo.",
+        "THE DEFECT IS THE ISSUER'S AND IS NAMED AS SUCH: the re-cut at 8e67653049 corrected U3-AC2 from EDIT to RECORD and did not revisit U3-AC4, which depended on AC2 producing a changed file. A fix scoped to where the error was noticed left its own dependent clause standing -- the same shape 1.0.0_SA_CTO~Z named at ded02d9a9c hours earlier, reproduced by this seat one clause over.",
+        "WHAT THIS DOES NOT DISTURB: U3-AC1, U3-AC2 and U3-AC3 are PASS on their own evidence and are not re-graded here. The hand-off packet and the proposed patch are delivered, and the patch is a true delta of the real bytes -- `git apply --check` rc=0 against the blob, a one-line corruption refused rc=1, so that control discriminates."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "POSN_ASTTAX-Z-W16-S5"
+    ],
+    "spec_asserts": "U3-AC4 as re-cut still reads 'pass the commit gate on your own bytes', inherited unchanged from the pre-re-cut order in which AC2 produced a changed .py.",
+    "world_is": "The cell produces no repo .py by construction after the re-cut, so AC4 has no subject. Graded UNCOMPUTABLE-BY-CONSTRUCTION. The cell is still TERMINAL: it answered every criterion it could and honestly reported the one it could not, which is what a completed cell means.",
+    "notes": "NOT A CRITICISM OF THE WORKER'S GRADE, which was defensible, disclosed and accompanied by the evidence to overturn it -- that is the behaviour this fabric wants and it is why the call could be made at all. CARRIED TO L9: 3.0.0_SA_CVO~Z should read this row beside the proof instance, which records AC4 as PASS; the instance is the worker's record and is NOT edited by this seat. ALSO CARRIED, from W16-S4 and separate from this ruling: the commit gate's non-ASCII limb returns 0 unless the path starts with infra/ or .tools/, so a probe .py carrying 5 non-ASCII bytes passed with zero WARN lines -- a NON-RUN prints identically to a clean pass, and data/black_diamond/** is outside both prefixes, so that limb is silent for POD4 too. That is the two-limb ASCII-gate lesson widened: the limb does not merely warn instead of blocking, it does not RUN at all outside two prefixes."
+  }
+]
+```
+
+## 0.9.0_WK_POSN_ASTTAX~18 -- POSN_ASTTAX.TO-U2-1 (cell AT4-s-2, outcome FWD-4)
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-W18-S1",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~18",
+    "surfaced_at": "2026-09-13T07:05:00Z",
+    "one_line": "THE ORDER'S OWN SURPRISE-ROW SECTION NAMES AN ID FORM THAT CANNOT BE FILED ON THIS FABRIC. TO-U2-1 says to mint rows as POSN_ASTTAX-W18-S<k> (no Z-); the gate derives fabric FROM the id and refuses any row whose fabric field disagrees, so a worker obeying the prose literally is refused at the last act of the order or files fabric=laptop on a site-z project.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE ORDER, verbatim. org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-U2-1.one-colour-per-class-the-same-everywhere.md @e622962cf5, section '## SURPRISE ROWS': \"Off-cell findings: ONE row as `POSN_ASTTAX-W18-S<k>`, then keep working.\" The Z- infix is absent from the named form.",
+        "THE GATE, READ AT SOURCE, three lines in one limb. .tools/surprise-row-gate.py @e622962cf5 :104 `ID_RE = re.compile(r\"^(?P<project>[A-Z0-9_]+)-(?P<z>Z-)?(?:W(?P<w>[0-9]+)-|(?P<c>C-))?S(?P<k>[0-9]+)$\")` -- the Z- group is OPTIONAL, so the bare id PARSES and no regex refuses it. :1162 `id_fabric = \"site-z\" if (m and m.group(\"z\")) else \"laptop\"` -- the FABRIC IS DERIVED FROM THE ID. :1171 `if row.get(\"fabric\") and row[\"fabric\"] != id_fabric:` appends the refusal \"fabric=%r but the id %s the Z- infix ... site-z iff the id carries Z-\".",
+        "SO THE TWO INSTRUCTIONS ARE JOINTLY UNSATISFIABLE on this project. The row must carry project+fabric (same limb, :1163-1167, both GATE-REQUIRED on new rows). The project is on site-z. A bare id forces id_fabric='laptop', which contradicts fabric='site-z' and is refused at :1171; declaring fabric='laptop' to match would file a site-z finding under the wrong fabric.",
+        "THE POPULATION, denominator printed. This channel file parsed with json.loads over its 32 fenced blocks yields 64 rows, 0 unparseable. 64 of 64 ids carry the Z- infix and 64 of 64 rows that declare a fabric declare 'site-z'. The convention is unanimous; the order's prose is the outlier.",
+        "IT ALREADY BIT ONCE, on the sibling order. This worker's spawn instruction records that 0.9.0_WK_POSN_ASTTAX~15 minted the bare form its order named and had all four rows refused. That is reported, not measured by this worker -- the four rows now IN the file carry the Z- form, which is consistent with a re-mint but does not by itself prove the refusal."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "POSN_ASTTAX.TO-U2-1's '## SURPRISE ROWS' section instructs the worker to file off-cell findings as `POSN_ASTTAX-W18-S<k>` -- the bare form, carrying no Z- fabric coordinate.",
+    "world_is": "On this fabric that id cannot be filed with a correct fabric field. surprise-row-gate.py:104 makes Z- optional so the bare id parses; :1162 DERIVES the fabric from the presence of Z-; :1171 refuses any row whose declared fabric disagrees with that derivation. All 64 rows already in this channel carry both the Z- infix and fabric='site-z'. This worker therefore used POSN_ASTTAX-Z-W18-S<k> and is recording the deviation rather than silently conforming.",
+    "notes": "NOT CLAIMED: that the gate is wrong -- its derivation is self-consistent, is documented in its own docstring at :693-708 as deliberately replacing a fabric constant, and 64 of 64 existing rows satisfy it. On the measured evidence the ORDER'S PROSE is the outlier. ARMED because the harm is silent and lands at the most expensive moment: the worker has answered every criterion before the row it was told to file is refused, and the refusal text names the fabric mismatch rather than the sentence that caused it. disarm_owner is the issuing seat because the disarm is a one-token edit at the cut. NOT AUDITED: whether TO-U3-1 and TO-U4-1 carry the same prose -- this worker does not read sibling orders."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-W18-S2",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~18",
+    "surfaced_at": "2026-09-13T07:05:00Z",
+    "one_line": "THE COLOUR LEVERAGE SITE IS NOT ONE FILE, IT IS TWO, AND THEY HAVE ALREADY DRIFTED. AT4-s-1's census names chartColors.ts as THE shared dependency; the three Attribution readers bind colour through a SECOND registry the census does not name, holdings-shared.tsx, whose sub-asset map disagrees with chartColors.ts on 1 of the 21 keys they share.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE PREMISE. AT4-s-1's result (deliverables/0.9.0_WK_POSN_ASTTAX~15/POSN_ASTTAX.TO-U1-1.result.md, 'The reader set' table) carries exactly ONE shared-dependency row: 'S* | SHARED DEPENDENCY beneath A1, A2, B2, C2, C3 | src/lib/chartColors.ts'. This order's spawn instruction repeats it: chartColors.ts 'is imported by 5 of the 11 readers -- which makes it the likely leverage site for colour and worth checking first.'",
+        "THE SECOND REGISTRY, read by content at the pin e85f6eb84f. src/pages/Attribution/constants/holdings-shared.tsx:67-71 defines its OWN `ASSET_CLASS_COLORS` ('Fixed Income', 'Equity', 'Cash') and :77-102 its OWN `SUB_ASSET_CLASS_COLORS` (21 keys), and :105-110 `getAssetClassBgColor`. C1 imports getAssetClassBgColor at SelectionTab.tsx:15 and calls it at :359 and :374; C2 imports ASSET_CLASS_COLORS at AssetAllocationSummary.tsx:17 and uses it at :206; C3 imports it at StylePolicyComparison.tsx:17 and uses it at :255.",
+        "IT IS REACHED, NOT MERELY DEFINED. C2:206 is `backgroundColor: ASSET_CLASS_COLORS[assetClass.name] || PALETTE.gray500` and C3:255 is the same expression -- both read at the pin and anchor-checked at run time.",
+        "THE DRIFT, with its denominator. Both sub-asset maps parsed at the pin and compared key by key: 21 keys compared, 1 DIFFERS -- 'International' is PALETTE.blue600 at holdings-shared.tsx:97 and PALETTE.blue700 at chartColors.ts:304. The other 20 agree, which is what makes the single divergence a drift rather than two independent designs.",
+        "WHY THE CENSUS COULD NOT SEE IT AND IS NOT AT FAULT. AT4-s-1's subtraction removed 23 files as 'not a renderer: no JSX and no value reaching the DOM (type unions, API contracts, config, COLOUR REGISTRIES, adapters)'. holdings-shared.tsx is a colour registry and was correctly excluded from the READER set by that rule. The rule is right for a reader census; it is exactly wrong for a COLOUR census, because the object being enumerated is the thing the rule discards.",
+        "A THIRD COPY EXISTS. HoldingsTab.tsx:225-232 defines its own `getAssetClassBgColor`, duplicating holdings-shared.tsx:105-110 -- in a file whose header at :1-4 states it was 'Extracted to eliminate ~400 lines of duplication between the two tabs'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AT4-s-1's census names ONE shared colour dependency beneath the reader set -- src/lib/chartColors.ts -- and this order inherits that census as its domain, naming chartColors.ts as the likely leverage site for colour.",
+    "world_is": "Three of the eleven readers (C1, C2, C3 -- the whole Attribution family) bind class colour through a SECOND registry the census does not name: src/pages/Attribution/constants/holdings-shared.tsx:67-110. It is a near-duplicate of chartColors.ts:113-120 and :284-309, and over the 21 sub-asset keys the two share, 1 has already drifted ('International' blue600 vs blue700). A colour remediation applied only at chartColors.ts would silently miss 3 of 11 readers.",
+    "notes": "ARMED because it harms through FUTURE NORMAL operation and the failure is a GREEN: a fix landed at the named leverage site, verified at that site, reads as complete while the Attribution family still renders the old colours -- the per-member check passes and the shared-dependency assumption is what is broken (CLAUDE.md Rule 22). disarm_owner is the seat that cuts the remediation cell, because the disarm is a scope edit on that cell's <paths>, not a code change; the portal is FROZEN and this worker wrote nothing. NOT CLAIMED: that holdings-shared.tsx is the LAST such registry -- this worker enumerated the import graph of the 11 census readers only, and did not widen the domain."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-W18-S3",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~18",
+    "surfaced_at": "2026-09-13T07:05:00Z",
+    "one_line": "A CLASS->COLOUR MAP INSIDE THE SHARED REGISTRY CONTRADICTS THE REGISTRY'S OWN ASSET_CLASS MAP, AND NO CENSUS READER IMPORTS IT. chartColors.ts:375-381 CMA_CATEGORY paints 'Fixed Income' amber500 (the Cash colour), 'Intl Equity' green500 (the Fixed Income colour) and 'Alternatives' violet500 -- so its consumers, wherever they are, already violate FWD-4.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE MAP, read by content at pin e85f6eb84f. src/lib/chartColors.ts:375-381 `export const CMA_CATEGORY: Record<string, string> = {` :376 `'US Equity': PALETTE.blue500,` :377 `'Intl Equity': PALETTE.green500,` :378 `'Fixed Income': PALETTE.amber500,` :379 `'Real Assets': PALETTE.orange500,` :380 `'Alternatives': PALETTE.violet500,`.",
+        "THE CONTRADICTION IS INTRA-FILE. The same file at :113-120 defines ASSET_CLASS with fixedIncome=green500, equity=blue500, cash=amber500, alternatives=orange500. So within ONE file, 'Fixed Income' is green500 at :114 and amber500 at :378; 'Alternatives' is orange500 at :117 and violet500 at :380; and green500 -- the Fixed Income colour -- is given to an EQUITY key at :377.",
+        "WHY IT IS NOT IN THIS CELL'S AC2/AC3 GRADES, stated rather than implied. The import line of all 11 census readers was read at the pin: 0 of 11 name CMA_CATEGORY. A1 imports {PALETTE, ASSET_CLASS, SUB_ASSET_COLORS, getSubAssetTextColor, PERF}; A2 {ASSET_CLASS, PALETTE}; B2 {PALETTE, ASSET_CLASS}; B3 {SURFACE}; C1/C2/C3 {PALETTE}; D2 {PALETTE, GRO, CATEGORY, SURFACE, NNA_BAR, MIX_PIE, withOpacity}; D3 {PALETTE, mixPieColor}; B1 and D1 import from chartColors at all. Counting it would have widened the inherited domain, which the order forbids.",
+        "THE SAME READ FOUND A SECOND UNCONSUMED MAP: FIRM_MIX at :151-156, also imported by 0 of 11. Unlike CMA_CATEGORY it AGREES with ASSET_CLASS on all three classes it holds, so it is recorded here for completeness and is not part of the contradiction.",
+        "WHAT IS NOT KNOWN, and why the standing is ARMED rather than INERT. A consumer census for CMA_CATEGORY over the whole portal repo was NOT run -- it is outside this cell's inherited domain. So this row cannot say whether the map is dead code or is serving a live surface. If it has any consumer, that surface renders Fixed Income in the Cash colour today."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "FWD-4, PRD v0.6 @ae66157381: 'Each class has one color, the same everywhere', over the ratified table binding Fixed Income/Cash to green, Equity to blue and Alternatives to orange (C-FIVE-CLASSES).",
+    "world_is": "src/lib/chartColors.ts:375-381 (CMA_CATEGORY) binds 'Fixed Income' to PALETTE.amber500 -- the colour the same file gives Cash at :116 -- 'Intl Equity' to PALETTE.green500 -- the colour it gives Fixed Income at :114 -- and 'Alternatives' to PALETTE.violet500 against orange500 at :117. No reader in AT4-s-1's census imports it (0 of 11, import lines read at the pin), so it is excluded from this cell's uniqueness and agreement grades; its consumers outside the census were NOT enumerated, because widening the inherited domain is forbidden by this order.",
+    "notes": "The disarm is ONE consumer census over the portal repo for CMA_CATEGORY and FIRM_MIX, which converts this row to either 'dead code, retire' or 'live surface, FWD-4 already violated there'. It belongs to whoever scopes the next colour cell, not to this worker -- running it here would be the wrong-domain widening the order explicitly forbids. NOT CLAIMED: that CMA_CATEGORY is dead. NOT CLAIMED: that it is live. The read that would settle it was deliberately not run, and this row says so rather than leaving the gap implicit."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-W18-S4",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~18",
+    "surfaced_at": "2026-09-13T07:05:00Z",
+    "one_line": "A QUALIFIER ON A NEIGHBOURING CELL'S GRADE, NOT A CONTRADICTION OF IT: B3 (CMA > Opal Views) is graded PASS on all five classes because it renders assetClass as free text, and it also carries a hardcoded THREE-OPTION view selector at OpalViewsTab.tsx:212-214 offering only 'overall', 'equity' and 'fixed-income'.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE GRADE BEING QUALIFIED. AT4-s-1's U1-AC3 table grades B3 PASS on all five ratified classes, and its control paragraph names why: 'READERS PASSING ALL FIVE: 2/11 -- B3 CMA > Opal Views and D1 AI > Perfrp allocation card ... they carry no vocabulary. B3 renders view.assetClass as free text'.",
+        "THE FREE-TEXT RENDER IS REAL, so the grade is not refuted. OpalViewsTab.tsx:136 at pin e85f6eb84f: `label={labelKey === 'pair' ? (view as { pair: string }).pair : (view as { assetClass: string }).assetClass}` -- whatever the payload carries is rendered.",
+        "THE SELECTOR, read at the same pin. :212 `<option value=\"overall\" ...>Overall</option>` :213 `<option value=\"equity\" ...>Equity</option>` :214 `<option value=\"fixed-income\" ...>Fixed Income</option>`. Three options, two of them ratified classes. There is no Structured, Commodities or Alternatives entry.",
+        "AND IT IS THE ONLY ENUMERATION IN THE FILE. Every colour-carrier line in OpalViewsTab.tsx was listed: colour there keys on Strategic (bg-blue-500, :99/:129) vs Tactical (bg-purple-500, :103/:148) vs Combined (bg-amber-400, :108), never on asset class, and all three <option> elements share `backgroundColor: SURFACE.dropdown`. So B3 binds NO colour to any class -- which is this cell's own finding about B3, recorded here only to show the file was read whole."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AT4-s-1's reader x class table grades B3 (CMA > Opal Views) PASS on all five ratified classes on the ground that it carries no class vocabulary and renders view.assetClass as free text.",
+    "world_is": "The free-text render is real at OpalViewsTab.tsx:136 and the PASS stands on it. The same file also carries a hardcoded view selector at :212-214 whose three options are 'overall', 'equity' and 'fixed-income' -- an enumeration of two of the five ratified classes, which the census does not name. A user cannot select a Structured, Commodities or Alternatives view on this reader even though a payload carrying one would render.",
+    "notes": "Filed as a QUALIFIER, explicitly not as a refutation: the FWD-6 bar AT4-s-1 graded is 'can that class reach the screen on that reader', and the free-text path means it can. Whether a selector that enumerates two classes is a separate FWD-3/FWD-6 defect is a judgment for the adjudicating seat, not for this worker, whose cell is colour. INERT: the state is static, nothing degrades through normal operation, and no act of this worker armed it."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-W18-S5",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~18",
+    "surfaced_at": "2026-09-13T07:05:00Z",
+    "one_line": "THE RATIFIED GOLD DOES NOT EXIST. PRD s.3 binds Commodities to gold; the portal palette holds 65 tokens and ZERO are gold, and the amber family's BASE token -- the only candidate anyone would reach for -- is already bound to Cash and reaches six readers. FWD-4 cannot be served for Commodities without a colour decision no cell in this project owns.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE SPEC. PRD v0.6 @ae66157381 s.3 'The five classes -- the ratified taxonomy (BINDS the decomposition)': row 4 is '| 4 | Commodities | gold | physical (gold, nickel, silver), crypto, and commodity indices (e.g. GSCI) |'. s.4 C-FIVE-CLASSES: 'the classes are exactly the five in s.3, in that canonical order, WITH THOSE COLORS. This is Andrew + Young's ruling (the brief), not a decomposition choice.'",
+        "THE PALETTE, enumerated at pin e85f6eb84f with its denominator. src/lib/chartColors.ts:16-106 PALETTE holds 65 named tokens. Tokens whose NAME is in the gold/amber/yellow family: 4 -- amber500 #f59e0b (:45), amber400 #fbbf24 (:46), amber600 #d97706 (:47), yellow500 #eab308 (:78). Tokens named literally 'gold': 0 of 65.",
+        "THE ONE OBVIOUS CANDIDATE IS TAKEN. amber500 is bound to Cash at :116 (ASSET_CLASS.cash) and at :408 (MIX_PIE.cash), and this cell measured that binding reaching six of the eleven readers: A1, C1, C2, C3, D2, D3. Pointing Commodities at amber500 would put two ratified classes on one pixel colour -- the exact second clause of FWD-4's ACCEPT ('no place shows a class in a color another uses for something else').",
+        "amber500 IS ALSO THE BUSIEST TOKEN IN THE FILE: 20 occurrences, including FLOW.net (:126), GRO.nna (:146), FACTOR_COLORS.volatility (:344), YIELD_CURVE.quarter (:352), PERCENTILE.p50 (:369) and CMA_CATEGORY['Fixed Income'] (:378).",
+        "THE CONTRAST THAT MAKES THIS SPECIFIC TO GOLD. Structured's ratified PINK does exist: PALETTE.pink500 #ec4899 at :61, bound to no ratified class. It is not free either -- it already carries GRO.total (:147) and FACTOR_COLORS.size (:343) -- but the TOKEN exists and needs no minting. Gold needs a token created or one of the three non-base ambers repurposed, and that is a design choice with no owner in this decomposition."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD v0.6 @ae66157381 s.3 ratifies one colour per class and C-FIVE-CLASSES binds the decomposition to those colours: Fixed Income/Cash green, Equity blue, Structured pink, Commodities GOLD, Alternatives orange.",
+    "world_is": "At pin e85f6eb84f the portal palette (chartColors.ts:16-106) holds 65 tokens and 0 are named gold. The nearest family is 4 tokens and its base, amber500 #f59e0b, is already bound to Cash at :116/:408 and reaches 6 of the 11 readers, so it cannot take Commodities without colliding with another ratified class. Realizing the ratified gold therefore requires minting a new palette token or repurposing amber400/amber600/yellow500 -- a colour decision, not a wiring change, and no cell in this decomposition owns it.",
+    "notes": "This is the reason the AC4 price for Commodities cannot be written as a one-line re-key: every other priced cell says 'point this key at the right token', and for Commodities there is no right token to point at. ARMED because a remediation cell cut without settling it will either stall at the edit or silently pick a colour, and a silently picked colour is a ratified-taxonomy change made by a worker. disarm_owner is the CTO as the PRD's owner -- the disarm is a named hex in s.3, or Andrew's word, before any FWD-4 remediation cell is cut. NOT CLAIMED: that amber400/amber600/yellow500 are free of other meanings -- this worker checked only that they are bound to no RATIFIED CLASS."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-S51",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-09-13T07:37:23Z",
+    "one_line": "UN-PARKING THE full-stem GATE ITEM. This seat parked it at 22321 on the stated ground that 'the workaround is sound'. THAT GROUND IS MEASURED FALSE: the same bytes are VALID at one path and INVALID at the other, and the two-path workaround works ONLY while an instance's artifacts are still uncommitted. It reproduces on every slugged TO filename, in any project, once the artifacts have landed. Converted from PARKED to an OWNED BLOCKING ITEM with a named trigger.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE THREE MECHANISMS, VERIFIED AT SOURCE BY THIS SEAT RATHER THAN RELAYED FROM 22323. (1) proof-of-spec-check.py:281-283, its own comment: 'POST-COMMIT ... the artifact must be TOUCHED by the instance's own commit (git diff-tree --name-only <c> -- <path> non-empty) -> CO-COMMITTED at <c>. Present at <c> but not touched by it -> the CCX violation.' IT GRADES ON COMMIT HISTORY, NOT CONTENT. (2) to-pipeline-gate.py:1602-1603: stem = os.path.basename(rel).rsplit('.md',1)[0]; names = (stem + '.proof_of_spec.json', ...) -- THE NAME IS DERIVED FROM THE FILENAME and the order's own <proof_of_spec> block is never consulted. (3) to-pipeline-gate.py:1629-1633 RUNS the validator and refuses on rc != 0 with 'its instance is NOT VALID' -- it is not a presence test.",
+        "WHY THAT MAKES THE WORKAROUND UNSOUND, which is the part this seat got wrong. Once an instance's PENDING artifacts are committed they are clean and therefore UNSTAGEABLE, so NO FUTURE COMMIT CAN EVER TOUCH THEM -- and a byte-identical copy placed at the gate-derived path afterwards can never be CO-COMMITTED. 0.9.0_WK_POSN_ASTTAX~16 proved identity on four instruments (md5 947606c9e5, sha256 4dd9ef7372, wc -c 37964 both sides, cmp rc=0) and the copy still graded INVALID with 2 CCX while the source graded VALID.",
+        "AND WHY THE EARLIER CASE LOOKED FINE: 0.9.0_WK_POSN_ASTTAX~17 could write both paths because ITS artifacts had not yet landed -- both copies rode the same commit as the artifacts. ~16's had already landed. A REMEDY THAT HOLDS BEFORE A COMMIT AND NOT AFTER IS NOT A WORKAROUND, and nothing in ~17's record says which case it was. This seat generalised from the one visible instance without asking which side of that line it sat on.",
+        "AND IT IS BLOCKING RATHER THAN COSMETIC: the two reachable states are 'NO proof-of-spec instance was found beside it' or 'its instance is NOT VALID', and once a copy exists at the derived name it is the ONLY candidate the glob can see -- so landing the workaround makes the order STRICTLY HARDER to close. TO-U3-1's complete flip was refused on the first branch."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "POSN_ASTTAX-Z-S48's routing message (22321) parked this item as tooling on the ground that 'the workaround is sound', citing Andrew's 2026-09-13 02:22Z ruling that tooling must not disrupt the work of the fabric.",
+    "world_is": "The workaround is not sound in the general case, and the defect BLOCKS the work of the fabric rather than merely sitting beside it. THAT INVERTS THE PARKING ARGUMENT ON ITS OWN TERMS: Andrew's ruling subordinates tooling to the fabric's work, and here the tooling defect IS what stops the work, so fixing it is the work rather than a disruption from it.",
+    "notes": "DISPOSITION: converted from PARKED to an OWNED BLOCKING ITEM of 1.0.0_SA_CTO~Z, with a TRIGGER rather than an intention. THE FIX, adopting 2.0.0_SA_COO~Z's REC because it removes the class rather than the instance: make the gate's derivation read the order's own <proof_of_spec> block instead of re-deriving from the filename stem. THE TRIGGER AND ITS TWO CONDITIONS, both required: (i) POSN round 4 is no longer mid-flight -- a gate change that alters which instance path is REQUIRED can refuse a worker's status flip mid-run, and workers are flipping right now; (ii) an estate-wide A/B against HEAD's copy of the gate, counting refusals both ways with a positive control, BEFORE anything lands. That is the same discipline that caught two wrong fixes to to-check.py earlier tonight, where the first two candidates would have reopened six closed projects and turned 130 active TOs into 144. NOT DONE AND NOT PROMISED TONIGHT: the edit itself. 22323 explicitly says it is not a proposal to act on tonight, TO-U3-1 is unblocked by the issuer's own in-lane re-cut, and no limb of this seat is owed on it. What changes here is the RECORD -- it is no longer filed under a false reason. CREDIT, AND IT IS THE MOST REUSABLE THING IN THIS EXCHANGE: 0.9.0_WK_POSN_ASTTAX~16 was INSTRUCTED BY ITS OWN ISSUER to place the copy, MEASURED why the instruction was wrong, and FILED A ROW INSTEAD OF COMPLYING. Had it obeyed, the order would have acquired a permanently-INVALID instance and the refusal text would have changed to something reading like a worse and different problem. A worker refusing a wrong instruction with a measurement is the control that no gate provides."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-W16-S6",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~16",
+    "surfaced_at": "2026-09-13T07:23:47Z",
+    "one_line": "The prescribed remedy for the Layer 1 filename mismatch -- copy the VALID proof instance to the gate-derived filename -- CANNOT produce a VALID instance at the new path, because proof-of-spec-check resolves PENDING artifact rows against the INSTANCE PATH'S OWN COMMIT, not against the file's bytes. The byte-identical copy grades INVALID rc=1 where its source grades VALID rc=0.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ACT PERFORMED AS ORDERED, byte-for-byte: cp of org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~16/POSN_ASTTAX.TO-U3-1.proof_of_spec.json to ...deliverables/0.9.0_WK_POSN_ASTTAX~16/POSN_ASTTAX.TO-U3-1.extend-preserve-dont-clobber-to-the-seed-script.proof_of_spec.json. IDENTITY CONFIRMED on four instruments: md5 947606c9e563c726551c16d4608a3a15 both sides; sha256 4dd9ef7372c0241d0def9ba45bcffda181b8d52b7c31d3e887339489ae47219f both sides; wc -c 37964 both sides; `cmp` rc=0. NOT ONE BYTE CHANGED.",
+        "THE TWO PATHS GRADE DIFFERENTLY. `timeout 120 python .tools/proof-of-spec-check.py <SOURCE short-name path>` -> 'VALID (rc=0)', exit 0. `timeout 120 python .tools/proof-of-spec-check.py <NEW derived-name path>` -> 'INVALID (rc=1)', exit 1, with 2 violations, both CCX class: \"'...POSN_ASTTAX.TO-U3-1.result.md' is PENDING-THIS-COMMIT but is ALREADY COMMITTED at HEAD and NOT staged -- it will not ride this commit; pin the row to the commit that carried it (CCX class)\" and the identical violation for '...u3_ac2_handoff.md'. Both runs from worktree C:/tmp/wk-posn-u3 (branch wk-posn_asttax-4-3, HEAD a97b140b54), checker-vintage 709b9556a3 printed by both runs. SAME BYTES, OPPOSITE VERDICTS -- the discriminator is the path, not the content.",
+        "MECHANISM, read at .tools/proof-of-spec-check.py:271-285 @a97b140b54 (the CO-COMMIT RESOLUTION OF PENDING ROWS comment block, AUTHORITATIVE): 'POST-COMMIT (the instance is tracked and unstaged; a certifier's re-run): the artifact must be TOUCHED by the instance's own commit (`git diff-tree --name-only <c> -- <path>` non-empty) -> CO-COMMITTED at <c>. Present at <c> but not touched by it -> the CCX violation.' The frame line printed by BOTH runs states the general rule: 'a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known' (:413).",
+        "WHY THE SOURCE PASSES AND NO NEW COMMIT CAN -- positive control: `git diff-tree --no-commit-id --name-only -r a97b140b54` returns 4 paths and INCLUDES both PENDING artifacts (POSN_ASTTAX.TO-U3-1.result.md and u3_ac2_handoff.md) alongside the instance, so the source resolves POST-COMMIT ('2 PENDING co-committed (POST-COMMIT: touched by the instance commit a97b140b54)'). Negative control on the same two paths NOW: `git status --porcelain` -> 0 lines against `git ls-files` -> 2 tracked, so the emptiness is CLEAN, not matched-nothing. Both artifacts are unmodified and therefore UNSTAGEABLE: no future commit can touch them without editing evidence, so no future commit carrying the derived-name copy can satisfy the POST-COMMIT rule.",
+        "THE COPY WOULD NOT HAVE UNBLOCKED THE FLIP EVEN SO. .tools/to-pipeline-gate.py check_complete_flip:1626-1634 @a97b140b54 does not test PRESENCE only -- having located the instance it runs `subprocess.run(['python', chk, inst], cwd=root, ...)` and returns a refusal whenever `r.returncode != 0`: \"flips to '%s' but its instance is NOT VALID (rc=%d)\". Its docstring is titled \"LAYER 1, half B -- 'No VALID instance -> no complete flip.'\" So landing the copy would have moved the refusal from 'NO proof-of-spec instance was found beside it' to 'its instance is NOT VALID (rc=1)' and the <status> flip would still have been refused.",
+        "THE ISSUER'S FILENAME DIAGNOSIS IS CONFIRMED CORRECT and is NOT the disputed part: to-pipeline-gate.py:1600-1609 derives `stem = os.path.basename(rel).rsplit('.md', 1)[0]`, builds `names = (stem + '.proof_of_spec.json', stem + '_PROOF_OF_SPEC.json')` and globs `<project>/deliverables/*/<name>`. The TO on disk is POSN_ASTTAX.TO-U3-1.extend-preserve-dont-clobber-to-the-seed-script.md, so the derived name named in the order is exactly right. The short-name instance matches NEITHER pattern, which is why the gate reports it absent."
+      ]
+    },
+    "spec_asserts": "The follow-up order issued to 0.9.0_WK_POSN_ASTTAX~16 asserts that copying the existing VALID instance byte-for-byte to the gate-derived filename makes it visible to to-pipeline-gate.py Layer 1, and instructs the worker to verify that `python .tools/proof-of-spec-check.py <the new path>` returns VALID rc=0 before committing -- citing 0.9.0_WK_POSN_ASTTAX~17 as having solved the same defect this way, with the two paths recorded as byte-identical by md5.",
+    "world_is": "Byte-identity is necessary but NOT sufficient: proof-of-spec-check grades a PENDING artifact row against the commit history OF THE INSTANCE PATH ITSELF, so the same bytes are VALID at a path whose commit co-carried the artifacts and INVALID at any path whose commit does not. This instance carries 2 PENDING rows whose artifacts landed in a97b140b54 together with the instance; a copy committed now would be the child of that commit and would touch only itself, leaving both rows 'present at <c> but not touched by it' -> CCX violation, permanently INVALID. The named verification therefore CANNOT pass, and the copy was NOT committed. The ~17 precedent does not transfer: ~17's two paths could ride the SAME commit as its artifacts because they were written before that commit existed; ~16's artifacts are already landed and unmodifiable. The only remedies that reach a VALID derived-name instance require editing the instance's 2 PENDING artifact rows to pin them to a97b140b54 (the checker's own prescribed remedy, 'pin the row to the commit that carried it') -- an edit this order expressly forbids -- or a tooling change to the gate/checker. Both are ISSUER/CTO calls, not the worker's.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "BLOCKING and ARMED: the hazard is that the order's premise reads as already-proven (a named precedent plus an md5 check that does pass), so the natural next act is to land the copy and expect the flip to clear. It will not, and the record would then carry a knowingly-INVALID second proof instance for one TO -- and it would be the ONLY candidate the gate's glob can see, since the short-name VALID instance matches neither derived pattern. DISARM (2.0.0_SA_COO~Z): choose one of (a) re-cut authorizing 0.9.0_WK_POSN_ASTTAX~16 to pin the 2 PENDING artifact rows in the copy to a97b140b54, which is the checker's own prescribed remedy and is what makes the derived-name instance VALID -- note this makes the two paths NO LONGER byte-identical, so the ~17 workaround's recorded shape does not survive it; or (b) route to 1.0.0_SA_CTO~Z with the parked tooling item, since a gate that derives the instance name from the TO stem while orders name the short <to_id> form will reproduce this on every TO whose filename carries a slug. The worker performed the copy on disk (UNTRACKED, uncommitted, byte-identical) and committed NOTHING but this row; the order file was not touched and <status> was not flipped."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-S52",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-09-13T07:55:45Z",
+    "one_line": "CONDITION (ii) RUN, AND IT SAYS DO NOT TOUCH THE GATE. The proposed fix has NO INPUT -- ZERO of 345 task orders carry any attribute on <proof_of_spec>, so there is nothing in that block to read a name from. The fallback of widening the glob to the short <to_id> form RECOVERS ZERO ORDERS. Z-S51's owned blocking item is CLOSED WITHOUT A GATE CHANGE, and this seat's acceptance of the class was itself unmeasured.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE PROPOSED FIX HAS NO INPUT. Censused every <proof_of_spec> element across the tree: DENOMINATOR 345 task orders, 357 occurrences of the element, and ZERO carry any attribute at all. The block contains criterion children only. So 'make the derivation read the order's own <proof_of_spec> block rather than re-deriving from the filename' cannot be implemented as worded -- there is no name in there to read. Implementing it would first require ADDING a declaration to the element, which is a schema change, not a gate change.",
+        "AND THE MINIMAL FALLBACK RECOVERS NOTHING. A/B over the same 345 orders, comparing the gate's current derivation (filename stem, both suffix forms) against the same plus the short <to_id> form: current finds an instance for 307; BOTH forms find one for 2; ONLY the short form finds one for ZERO; neither finds one for 38. WIDENING THE GLOB WOULD HELP NO ORDER IN THE ESTATE.",
+        "THE 38 WITH NO INSTANCE AT THE DERIVED NAME ARE NOT THE DEFECT EITHER, checked rather than assumed: 19 PENDING, 9 ACTIVE, 3 BLOCKED -- thirty-one that legitimately have no instance YET -- and 7 COMPLETE. Two of the seven are this fabric's own AMGT_RESAPP.TO-AMGT-rd-3 and rd-4, already established at the round-8 analysis as <status>superseded</status> carrying full pointers to the L4 addendum, so they are terminal by supersession and never had a proof instance to find. The remaining five sit in NFRA_COMPEFFICACY and NFRA_OPSEC202609 and are OUT OF THIS SEAT'S SCOPE -- recorded for their owners, not chased.",
+        "SO THE REAL SHAPE IS THE OPPOSITE OF THE ONE ACCEPTED. The gate is not deriving the wrong name; the estate writes instances at the full stem and always has (the issuer's own message said 10 of 10 prior instances on this project already do). What happened is that ONE ORDER DECLARED a name the gate never reads and nobody writes to, and a worker was then INSTRUCTED to write there. The declaration was the outlier, not the derivation -- and 2.0.0_SA_COO~Z had already fixed exactly that by re-cutting TO-U3-1 at 9d6cfe5dfe before this measurement ran."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "POSN_ASTTAX-Z-S51"
+    ],
+    "spec_asserts": "POSN_ASTTAX-Z-S51 converted the full-stem gate item to an OWNED BLOCKING ITEM of this seat with a two-condition trigger, adopting the REC to make the gate read the order's own <proof_of_spec> block, and accepted the class statement that it 'reproduces on every slugged TO filename, in any project, whenever the artifacts have already landed'.",
+    "world_is": "Condition (i) was met and verified independently (all four round-4 cells COMPLETE, the four carried round-3 orders still ACTIVE as a firing negative control). Condition (ii) then returned a result that closes the item instead of licensing the edit: NO GATE CHANGE IS WARRANTED. The incidence of the class in this estate is ZERO, the proposed fix has no input, and the minimal alternative recovers nothing.",
+    "notes": "THE SELF-CORRECTION, AND IT IS THE POINT OF THIS ROW. At Z-S51 this seat verified the three MECHANISMS at source -- correctly -- and then ACCEPTED THE SCOPE CLAIM 'reproduces on every slugged TO filename, in any project' WITHOUT MEASURING ITS INCIDENCE. That is the same defect Z-S51 was written to correct, running in the opposite direction and about fifteen minutes later: at the park this seat accepted 'the workaround is sound' unmeasured, and at the un-park it accepted 'it reproduces everywhere' unmeasured. VERIFYING A MECHANISM IS NOT VERIFYING A POPULATION, and this seat has now got that wrong in both directions on one item. WHAT THE TRIGGER WAS FOR, VINDICATED: condition (ii) existed precisely so an estate-wide gate edit could not land on an unmeasured premise. It fired, the measurement came back NEGATIVE, and the edit does not happen. An A/B that prevents a change is the A/B working, not a wasted one. WHAT IS NOT WITHDRAWN: the three mechanisms are real and remain true as read -- the checker does grade on commit history, the gate does derive from the filename, and it does run the validator rather than test presence. A future order that declares a short-form name and a worker that writes there WOULD hit this. The class is real and its incidence is zero, which is a different statement from 'the class does not exist'. AND THE CREDIT IS UNAFFECTED: 0.9.0_WK_POSN_ASTTAX~16's refusal was right on its own facts -- the copy it declined to commit genuinely could never have been VALID. Nothing here reduces that. DISPOSITION: Z-S51's owned blocking item is CLOSED, no gate edit, no trigger carried forward. Recorded for the gate's owner rather than acted on: the five COMPLETE orders in other projects with no instance at the derived name."
+  }
+]
+```
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-S53",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-13T07:58:00Z",
+    "one_line": "DISARM of FOUR round-4 rows whose remedies have LANDED and are exercised -- W15-S1, W15-S4, W16-S6, W17-S4. The other four this seat owns stay ARMED and this row says why each one does, so L9 is not handed a blanket.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "W15-S1 -- the spawn recipe told a worker to read portal from the shared TREE, which is 14 commits behind the gitlink pin; a working-tree read would stamp a vintage false by 8 days and 126 files. REMEDY LANDED AND EXERCISED: the corrected recipe (read by content at `git show e85f6eb84f:<path>`, record the pin as the vintage) was written into AT4-s-2's spawn, and that worker's 94 citations were re-read at the pin with 0 anchor mismatches. The remedy is not merely applied, it produced a clean measurement.",
+        "W15-S4 and W17-S4 -- the <proof_of_spec> block named the short <to_id> form while the gate derives the full TO stem, so a VALID instance is invisible to it. REMEDY LANDED TWICE OVER: both cells now carry an instance at the gate-derived name (VALID rc=0, verified at HEAD by this seat), and the underlying tooling defect was escalated with new measured evidence and is now 1.0.0_SA_CTO~Z's OWNED BLOCKING ITEM at Z-S51 with a two-condition trigger. These rows graduate INTO that item rather than sitting open against this seat.",
+        "W16-S6 -- the prescribed byte-identical copy could never be VALID, because proof-of-spec-check grades a PENDING artifact row against the COMMIT HISTORY of the instance path and those artifacts were already committed and unstageable. REMEDY LANDED: the re-cut at 9d6cfe5dfe authorised the checker's own fix, the worker pinned the two rows to a97b140b54, and BOTH paths now read VALID rc=0 by different resolution routes with the original unmodified. Nothing was traded away.",
+        "WHY GRADUATED AND NOT DISMISSED: none of the four was mistaken. Every one named a real defect that really blocked or really would have corrupted a reading, and every one produced a remedy that was then exercised. They close because they were ACTED ON.",
+        "AND THE AUTHORSHIP IS RECORDED RATHER THAN ELIDED: all four are ISSUER defects of this seat -- a wrong spawn recipe, a wrong path form in two orders, and an instruction that would have planted a permanently-INVALID instance. All four were found by WORKERS, and W16-S6 exists because a worker refused the instruction and measured why instead of complying."
+      ]
+    },
+    "disposition": "GRADUATED",
+    "adjudicates": [
+      "POSN_ASTTAX-Z-W15-S1",
+      "POSN_ASTTAX-Z-W15-S4",
+      "POSN_ASTTAX-Z-W16-S6",
+      "POSN_ASTTAX-Z-W17-S4"
+    ],
+    "spec_asserts": "Each of the four carried hazard_standing ARMED with disarm_owner 2.0.0_SA_COO~Z, so each stood open until this seat cited it. hazard_standing is at-surfacing and immutable, so a disarm is a new citing row and never an in-place flip.",
+    "world_is": "All four causes are remedied at HEAD and each remedy has been exercised rather than merely applied. Disarmed by this row.",
+    "notes": "ID COLLISION, RECORDED BECAUSE THE GATE CAUGHT IT AND A CENSUS WOULD NOT: this row was first minted as Z-S52 from a census taken at 07:50 that read the highest id as Z-S51. 1.0.0_SA_CTO~Z minted its OWN Z-S52 at 07:55:45Z and landed it first. TWO SEATS ALLOCATE FROM ONE CHANNEL ACROSS A READ-THEN-WRITE WINDOW, so an id taken from an earlier census is stale the moment a peer allocates -- allocate at the instant of writing, and let the duplicate-id limb be the backstop rather than the discovery. THE FOUR THIS SEAT STILL OWNS STAY ARMED, DELIBERATELY, AND EACH FOR ITS OWN REASON -- a blanket disarm would be the easy move and would mislead L9. (a) W17-S2, the retag set derives to TWELVE not eleven and VNQ is the only member arming C-RETAG-SAFETY: ACCEPTED AS MEASURED by 1.0.0_SA_CTO~Z and NOT re-ruled, but its landing is one line in the PRD and s.4 is frozen mid-round, so it rides the round-4 L10 addendum and stays open until it does. (b) W18-S2, the colour leverage site is TWO files and they have already drifted: no cell owns the second file and a fix landed only at the first would VERIFY CLEAN and miss 3 of 11 readers -- that is a live trap for whoever cuts the repair, and closing it now would hide it. (c) W18-S3, a class-to-colour map inside the shared registry contradicts the registry itself: unresolved and not this seat's to rule. (d) W18-S1, the order's own surprise-row section names an id form the gate refuses: the ORDERS STILL CARRY THE WRONG PROSE. Round 4 is terminal so no worker will read them again, but the next issuance must not be copied from them, and the row is the only thing that will say so. NOT DISARMED because the artifact is still wrong, not because the lesson is unlearned."
+  }
+]
+```
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-S54",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-14T03:10:00Z",
+    "one_line": "SELF-CORRECTION AGAINST A COMMITTED L8 ARTIFACT THE ADJUDICATOR IS READING RIGHT NOW: ROUND4_PACKET.md s.5 states 'FWD-4 and FWD-6 cannot be SERVED until [Andrew's 05:14Z card] is answered.' THAT IS FALSE AND WAS FALSE WHEN WRITTEN. Portal SOURCE WRITES were never frozen; the answer had been in this project's own ledger since 05:2xZ.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE FALSE STATEMENT: ledger/ROUND4_PACKET.md s.5, committed at 7a1a38fdbf and handed to 3.0.0_SA_CVO~Z, reads 'Andrew's RESERVED card is open (05:14Z via 0.0.0_AB_MSTR~Z): whether the freeze forbids portal SOURCE WRITES or only promote/gitlink/push. FWD-4 and FWD-6 cannot be SERVED until it is answered.' The second sentence does not follow and the first mis-states the card.",
+        "THE ANSWER, AND IT PREDATES THE PACKET BY TWO HOURS: ledger/ROUND_ANALYSIS.round3.md s.7 (line 128 of 215, landed @d7261cf29c, amended s.7a @29978b9399) states the operating boundary as a table -- 'write portal source YES / commit inside the submodule YES / MOVE THE SUPERPROJECT GITLINK NO / promote-push-DEV-PROD NO'. Read at source by this seat at 03:0xZ, path-qualified to org/missions/D4/POSN/POSN_ASTTAX/ledger/ because an identically-named ROUND_ANALYSIS.round3.md exists in AMGT_RESAPP and 3.0.0_SA_CVO~Z hit that wrong-object trap first.",
+        "THE DISCRIMINATOR IS A LIVE PRECEDENT, NOT A READING: AMGT_RESAPP.TO-AMGT-rh-1 was cut under this same freeze on the same night, granting portal/src/pages/SecurityAnalysis/ and portal/src/api/endpoints/amgt-lead-panel.ts as WRITE paths, its own text reading 'NO PROMOTE. NO GITLINK MOVE. NO REMOTE PUSH ... Commit yes, promote no', with an AC that mechanically verifies the gitlink still reads e85f6eb84f.",
+        "WHAT IS STILL OPEN, AND THE PACKET CONFLATED IT WITH THE ABOVE: s.7's own closing paragraph says 'THIS IS A READING OF WHAT THE FREEZE COVERS, NOT A LIFT OF IT, AND NOTHING HERE ANSWERS THE CARD 2.0.0_SA_COO~Z put to Andrew at 05:14Z. That card asks whether frontend ... done opens the promote; it does not, it stands, and it is his.' So the PROMOTE card is RESERVED and untouched; only the source-write question was ever settled. 0.0.0_AB_MSTR~Z's 22369 said 'the card is settled' and 1.0.0_SA_CTO~Z corrected that at 22381 against its own written refusal to close it.",
+        "HOW THE ERROR SURVIVED: this seat searched for the answer in its INBOX -- 55 message files from 09-13/09-14, 6 mentioning the freeze, negative control fired at 0 -- a well-controlled search of the WRONG CORPUS, because the answer lives in the project RECORD, not in mail. A denominator certifies the SWEEP, never the SET. Same class 1.0.0_SA_CTO~Z named against itself the same hour: not a missing instrument, a missing read."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "ROUND_ANALYSIS.round3 s.6 required round 4 to COVER FWD-4 and FWD-6, and s.7 -- answering this seat's own question at 22280 -- ruled that a measure-and-price reading 'reads narrower than intended', that both are EXERCISED bars measurement cannot approach, and that a round covering them with pricing cells would be 'covering without serving -- the exact failure s.2 exists to name'.",
+    "world_is": "Round 4 measured and priced both outcomes and served neither: FWD-6 PRICE 9 edit sites / 23 cells, FWD-4 PRICE 14 cells, FROZEN 37 / OWNED 0, and ROUND4_PACKET.md s.2 says in terms 'these cells COVER their outcomes and do not SERVE them'. The packet attributed that to the portal freeze. The freeze was never on writes.",
+    "notes": "THE FINDING ITSELF IS MEASURED AND CLOSED; WHAT REMAINS OPEN IS THE REMEDY, WHICH IS WHY THIS ROW IS ARMED RATHER THAN GRADUATED. DISARM CONDITION, STATED SO IT IS NOT A JUDGEMENT CALL LATER: this row disarms when a round-5 issuance cuts cells that WRITE portal source against FWD-4's 14 cells and FWD-6's 9 edit sites. It does NOT disarm on a further measurement round. THIS ROW CLAIMS NOTHING ABOUT ROUND 4's GRADE -- that is 3.0.0_SA_CVO~Z's at L9 and this seat does not pre-empt it; the row exists so the grader is not working from a false premise this seat put in front of it. AUTHORSHIP IS RECORDED RATHER THAN ELIDED: this is an ISSUER defect of 2.0.0_SA_COO~Z, in an artifact this seat wrote, about a question this seat itself asked and whose answer this seat did not read. NOT AN EDIT TO THE PACKET: the packet is a committed L8 artifact under active adjudication and is left byte-identical deliberately -- a correction that mutates the artifact under its reader is worse than one that sits beside it. AND THE FORWARD CONSTRAINT s.7a CARRIES: a portal commit must be reachable from a ref a peer's merge will TRAVERSE ('git branch --contains' returning 0 is the EXPECTED reading for real committed work on this submodule); the gitlink moves ONCE at promote after both lanes' commits are merged inside the submodule, never once per project; and round 5 in Positioning/Philosophy-CMA beside AMGT round 9 in SecurityAnalysis/ means TWO projects in ONE submodule with ONE HEAD -- disjoint paths, shared HEAD -- to be sequenced with 2.0.0_SA_COO~ZZZ before either writes."
+  }
+]
+```
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-S55",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-14T05:52:00Z",
+    "one_line": "The shared portal/ checkout is 14 commits BEHIND the pointer the superproject records, so any round-5 portal-source cell cut against it is written against a September 2 tree. Carried as a row because the remedy for the round-4 instance of this hazard (W15-S1) landed ONCE and does not carry itself into the next issuance.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED BY THIS SEAT, by ls-tree -r FILE COUNT at each tree-ish, reached while censusing portal readers for the two-lane coordination rather than while looking for this: gitlink pin e85f6eb84f = 1201 files; portal submodule HEAD = 1079 files, 122 FEWER; and for-each-ref shows that HEAD IS refs/heads/DEV at 30ca034b.",
+        "CORROBORATED BY A DIFFERENT INSTRUMENT, 0.0.0_AB_MSTR~Z at msg 22427: checkout 30ca034bba on branch DEV dated 2026-09-02; is-ancestor 30ca034bba -> e85f6eb84f TRUE and the reverse FALSE, so the direction is unambiguous and the NEGATIVE CONTROL FIRES; 14 commits missing, 0 commits ahead; ~140 files across seven merges, the IRPT_FNTEND frontend. Two instruments, different methods, same direction and consistent magnitude -- a file-COUNT delta and a CHANGED-file count are not the same number because modifications move no count.",
+        "THE RULING THIS ROW CARRIES: 1.0.0_SA_CTO~Z at msg 22433 -- NO PORTAL-SOURCE CELL IS CUT AGAINST THE SHARED CHECKOUT UNTIL IT IS ALIGNED TO THE RECORDED POINTER. Raised from a request to a PRECONDITION ON THE CUT so it does not depend on anyone remembering a thread. Landing in the record as ROUND_ANALYSIS.round3 s.7c, alongside s.7b @55a6a110b6.",
+        "WHY IT BITES A GRADE AND NOT JUST A MERGE: components, routes and a rendering package that ARE in the recorded pointer are ABSENT from the tree a worker would open. A cell written against that tree may duplicate them, conflict with them, or silently assume their absence -- and would then grade REALIZED against a surface that is not the served one.",
+        "AND THE MIRROR HAZARD, which is s.7a pointed the other way: a gitlink move FROM this checkout at promote would REWIND fourteen commits of another fabric's shipped frontend. `git diff --submodule=log` prints the word `rewind` itself. The one act s.7a permits -- the gitlink move at promote -- is the act that would do it, so `moves ONCE at promote` is safe only if the thing it moves TO is not behind.",
+        "NOTHING IS AT RISK AT SURFACING. Nothing staged, submodule worktree clean, no gitlink move, HEAD:portal e85f6eb84f on every tick tonight including after the cross-fabric merge, and nothing written or built under portal/ by this seat or its workers. This is a do-it-in-the-right-order finding caught in the one window where the order is still free."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "ROUND_ANALYSIS.round3 s.7a requires a portal commit to be reachable from a ref a peer's merge will TRAVERSE, and states that the gitlink moves ONCE at promote. Neither s.7a nor the decomposition says anything about the VINTAGE of the working copy a cell is cut against, and `git status` prints the gap as a bare `M portal` with NO DIRECTION -- so a one-direction read cannot distinguish behind from ahead, which is why it sat unremarked all night while it was harmless.",
+    "world_is": "The shared portal/ working copy is a 2026-09-02 tree (30ca034b, branch DEV) while the superproject records a tree fourteen commits newer (e85f6eb84f). It stops being harmless the moment a cell writes source into it.",
+    "notes": "THIS ROW EXISTS BECAUSE THE ROUND-4 INSTANCE OF THIS EXACT HAZARD ALREADY HAPPENED ONCE ON THIS PROJECT. W15-S1: the spawn recipe told a worker to read portal from the shared TREE, which was 14 commits behind the gitlink pin, and a working-tree read would have stamped a vintage false by 8 days and 126 files. That remedy LANDED AND WAS EXERCISED for AT4-s-2 -- and it landed in ONE SPAWN, not in a rule. A remedy applied once to one cell does not carry itself into the next issuance, which is the whole reason this is a row rather than a note. TWO THINGS DISARM IT, BOTH REQUIRED, AND NEITHER IS MET BY A MEASUREMENT ROUND: (a) at the moment round 5 is cut, the shared checkout resolves to the pointer the superproject then records, verified with is-ancestor run in BOTH DIRECTIONS and both printed -- a single-direction read is not evidence; (b) EVERY cell in that issuance whose <paths> grants anything under portal/ states IN ITS WORKER FACE that the worker verifies its OWN clone against the recorded pointer before writing, because each wk-*/portal is a separate checkout, aligning the shared tree aligns none of them, and A WORKER NEVER SEES THE THREAD THIS RULING WAS AGREED IN. The alignment act itself is 0.0.0_AB_MSTR~Z's as integrator and is NOT a fenced portal act: no promote, no push, no DEV/PROD merge, and it does not move the gitlink -- it moves the WORKING COPY to the commit the superproject already records. This seat gave its lane's green at msg 22437; 2.0.0_SA_COO~ZZZ's go is its own and is not assumed here."
+  },
+{
+    "id": "POSN_ASTTAX-Z-S56",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-09-14T08:45:00Z",
+    "one_line": "THE /self-drive COMPLETION TEST READS AN ORACLE THAT IS MEASURABLY SOFT. Step 4 ends the loop on org/projects/<CODE>.json status: complete, 'READ from the register, never declared by the driver'. A SIBLING PROJECT IN THIS SAME DIRECTIVE READS status complete WHILE dep_stage READS EXECUTING AND TWO OF ITS TASK ORDERS ARE NON-TERMINAL. So the one field that terminates this loop can be true while the project it describes is demonstrably not finished, and the loop would stop, strike its carrier clause and stand down its paired half on it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE INSTANCE, MEASURED AT HEAD, NOT REPORTED: org/projects/ETFS_POSITIONING.json reads status='complete' AND dep_stage='EXECUTING' in the same row, and carries no completed_at/closed_at field of any kind. It is a D4 member, the same directive as POSN_ASTTAX.",
+        "AND IT IS NOT MERELY A STALE LABEL -- TWO ORDERS ARE GENUINELY NON-TERMINAL. ETFS_POSITIONING.TO-13-DS.identifier-coercion-strips-leading-zeros.md (issued_to 0.4.0_DS_ClientPlatform~Y) and ETFS_POSITIONING.TO-14-AE.identifier-repair-apply.md (issued_to 0.7.0_AE_CloudOps~N) both read status_class ACTIVE. TO-14's own status text records 'POS-TO14-AC1 + AC2 + AC3 PASS -- 3 of 4', so a criterion is outstanding by the order's own account.",
+        "HOW IT SURFACED, WHICH IS THE PART THAT GENERALISES: the register reports D4 open_tos=6 while POSN_ASTTAX has 4 non-terminal. Rather than explain the gap, it was measured across all six D4 members: ETFS_CANON 0, ETFS_POSITIONING 2, ETFS_INGEST 0, ETFS_SATELLITES 0, POSN_TENANCY 0, POSN_ASTTAX 4 -- total 6. THE REGISTER'S OPEN-TO COUNT IS EXACTLY RIGHT AND RECONCILES. The two numbers were never in conflict; they measure different sets. The defect only appeared because the reconciliation was performed instead of narrated, and it appeared in the member nobody was looking at.",
+        "WHY THIS IS THIS LOOP'S PROBLEM AND NOT ONLY ETFS_POSITIONING'S: /self-drive Step 4 says DONE is READ from the register, never declared by the driver -- a rule written to stop a driver marking its own homework, and correct for that purpose. But it makes status: complete the SOLE terminal oracle, and on DONE the loop writes a final log, CronDeletes itself, STRIKES the org/XXX.md carrier clause and stands down its PAIRED /drive half. Every one of those is hard to reverse and the last two reach another seat.",
+        "TODAY'S ANSWER DOES NOT CHANGE AND THAT IS PRECISELY WHY THIS IS FILED NOW RATHER THAN AT THE FLIP: AMGT_RESAPP and POSN_ASTTAX both read status='active' this tick, so the completion test returns NOT DONE on either reading. The oracle's softness costs nothing until the tick where it would end the loop, which is the tick with the least appetite for a new question.",
+        "NEGATIVE CONTROL ON THE READING: the softness is not universal. AMGT_RESAPP reads status='active' with dep_stage='ROUND_CLOSE' and 0 of 47 non-terminal, and POSN_ASTTAX reads status='active' with dep_stage='EXECUTING' and 4 of 19 non-terminal -- both internally COHERENT. So a register row CAN be consistent, and the ETFS_POSITIONING row is a defect rather than the schema's normal state."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "/self-drive Step 4: 'DONE is READ from the register, never declared by the driver' and 'A loop that ends early on a declared-not-read DONE is the false-outage class. Read the register.' CLAUDE.md Rule 22 STATE: DESIRED is not APPLIED -- a status field is a DESCRIPTION of a project, and a description is never a state. Rule 22 DISCRIMINATION: could the evidence differ if the claim were false? A lone status field cannot differ.",
+    "world_is": "A REGISTER ROW CAN READ status: complete WHILE dep_stage READS EXECUTING AND NON-TERMINAL ORDERS REMAIN, AND NOTHING REFUSES IT. STAR: STEP 4 GUARDS AGAINST THE DRIVER DECLARING ITS OWN DONE AND NOT AGAINST THE FIELD BEING WRONG. Reading rather than declaring removes the driver's INCENTIVE to be wrong; it does not make the field TRUE, and a single-field oracle has no discrimination by construction. RULING FOR THIS LOOP, effective now and binding on both scoped projects: when either project's status first reads complete, THE LOOP DOES NOT TERMINATE ON THAT FIELD ALONE. It corroborates on two further planes that a false complete cannot fake -- dep_stage reads CLOSED (not EXECUTING, not ROUND_CLOSE), and the project's non-terminal order count is ZERO with the denominator printed -- and it records all three in the final log. A disagreement between the three is a finding raised to 0.0.0_AB_MSTR~Z as the register writer, and THE LOOP STAYS ARMED until it resolves. This adds no gate to any other seat and refuses no work: it constrains only this driver's own terminal act.",
+    "notes": "WHAT THIS ROW DOES NOT DO: it does not adjudicate ETFS_POSITIONING, which is NOT in this loop's scope -- no disposition is offered on that project, its two open orders, or its register row, and neither order is addressed to a serial this seat holds. It does not edit the register (org/projects/*.json is the register writer's) and it does not touch either open order. It does not amend /self-drive, whose Step 4 text is Andrew-anchored; this is a corroboration discipline the driver adopts for its OWN terminating act, which is the one act Step 4 leaves entirely to the driver's reading. It does not disarm Z-S55 or any other row. REPORTED SEPARATELY, UNWIDENED: the ETFS_POSITIONING row inconsistency is raised to 0.0.0_AB_MSTR~Z as register writer and to the two issuing lanes named in the orders, as an observation with its measurement, with no act requested and no disposition proposed -- a project outside this loop's scope is not this seat's to close or reopen."
+  },
+{
+    "id": "POSN_ASTTAX-Z-S57",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-09-14T09:05:00Z",
+    "one_line": "CITING AMENDMENT TO Z-S56, BY ITS DISARM OWNER: Z-S56's corroborator set HAS A HOLE, found by 2.0.0_SA_COO~Z. dep_stage CLOSED plus a zero non-terminal order count says NOTHING about whether the endpoint was met -- a project can have every order terminal and its FWDs ungraded or NOT_REALIZED. THE SET IS WIDENED TO INCLUDE THE L10 CLOSE ARTIFACTS, AND THE TEST ON THEM IS A PER-ROW VERDICT CENSUS, NOT A PRESENCE CHECK. This row carries NO independent disarm path: the live hazard remains Z-S56 and this row is INERT by construction.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "1.0.0_SA_CTO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE HOLE, AS 2.0.0_SA_COO~Z PUT IT IN msg 22580: a single-field oracle has no discrimination by construction, WHICHEVER FIELD IT IS. That seat's own loop stops on dep_stage rather than status, so Z-S56's instance reaches it through a field Z-S56 does not name -- and the same structural defect applies to the corroborators Z-S56 chose. Rule 27 closes a project when EVERY FWD GRADES REALIZED; neither dep_stage nor an order count observes a FWD.",
+        "THE CLOSE ARTIFACTS ARE REAL, USED, AND DISCRIMINATING -- MEASURED, NOT ASSUMED. COMPLETION_GRADES.round<N>.json exists at 10 files across 5 projects in the tree (NFRA_CLDGRPH 3, NFRA_COMPEFFICACY 3, NFRA_OUTSET 2, NFRA_OPSEC202609 1, ETFS_GUARDRAIL 1). NEGATIVE CONTROL: AMGT_RESAPP and POSN_ASTTAX have COMPLETION_REPORT 0 and COMPLETION_GRADES 0, correctly, neither having closed -- so the corroborator can return ABSENT and is not a read that passes for everything.",
+        "AND THE SHAPE OF THE FIX MUST NOT REPEAT THE DEFECT IT FIXES. Read at source, org/missions/D11/NFRA/NFRA_OUTSET/ledger/COMPLETION_GRADES.round2.json carries top-level keys kind, schema_version, project, round, graded_by, graded_utc, report_ref, analysis_ref, slug_ref and rows; rows is a list of 8 entries keyed fwd_id, verdict, artifact_ref, state_observed, state_observed_source, note. ITS OWN CONTENT INCLUDES verdict NOT_EVALUATED AND NOT_REALIZED. So 'COMPLETION_GRADES is PRESENT' WOULD ITSELF BE ANOTHER SINGLE-FIELD TEST, and a weaker one than the field it replaces. The corroborator is the PER-ROW VERDICT CENSUS with its denominator -- every row REALIZED, count printed -- never the file's existence.",
+        "THE ASYMMETRY THAT SETS THE COST, 2.0.0_SA_COO~Z's and adopted verbatim in substance: a false STOP is silent and expensive -- the loop simply is not there next tick, and two of its four consequences (striking the org/XXX.md carrier clause, standing down the paired /drive half) land on a seat that measured nothing. A false CONTINUE costs one wasted tick. THE CHEAP ERROR IS TO KEEP TICKING.",
+        "AND THE SPINE ALREADY LICENSED THIS READING, WHICH IS THE UNCOMFORTABLE PART: /canonical-flow Step 2 says dep_stage is read AS A CLAIM and that a disagreement with the measured limb 'is a finding of its own ... it never overrides the measurement.' Both loops held that sentence and both were still running a one-field stop. Reading a field as a claim everywhere EXCEPT the one place it ends the loop is not a reading -- it is an exception nobody wrote down."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CLAUDE.md Rule 27: a project 'reaches complete only through a zero-graduation round' and the round is CLOSED when every FWD grades REALIZED; the L10 close artifacts are COMPLETION_REPORT / COMPLETION_GRADES .round<N>.json in the project's ledger/. Rule 22 DISCRIMINATION: could the evidence differ if the claim were false? A presence check on a file whose own rows may read NOT_REALIZED cannot.",
+    "world_is": "Z-S56'S CORROBORATOR SET IS SUPERSEDED BY THIS ROW. BEFORE THIS LOOP TERMINATES ON EITHER SCOPED PROJECT, ALL OF THE FOLLOWING ARE MEASURED AND RECORDED IN THE FINAL LOG: (1) org/projects/<CODE>.json status reads complete; (2) dep_stage reads CLOSED; (3) the project's non-terminal task-order count is ZERO, whole-value <status> census with its denominator printed; (4) REMEDIATION_v<N> is CUT and ROUND_ANALYSIS.round<N> answers it; (5) COMPLETION_REPORT and COMPLETION_GRADES are present for that round AND EVERY ROW OF COMPLETION_GRADES READS verdict REALIZED, with the row count printed as the denominator. ANY DISAGREEMENT AMONG THE FIVE IS A FINDING RAISED TO 0.0.0_AB_MSTR~Z AS REGISTER WRITER AND THE LOOP STAYS ARMED. STAR: THE FIX TO A SINGLE-FIELD ORACLE MUST NOT BE ANOTHER SINGLE-FIELD ORACLE -- (5) is a census of verdicts, never a check that the file exists, because the one sample read at source carries NOT_EVALUATED and NOT_REALIZED rows in a file that is unambiguously PRESENT.",
+    "notes": "AUTHORSHIP: the hole is 2.0.0_SA_COO~Z's finding (msg 22580), reached by asking what Z-S56 meant for a loop whose stop condition reads a DIFFERENT FIELD -- dep_stage, not status -- rather than by re-reading the row it was sent. Its corroborator list (slug cut, orders terminal, completion report and grades) is adopted; the per-row-verdict precision in (5) and the tree-wide measurement of the close artifacts are this seat's. WHAT THIS ROW DOES NOT DO: it does not disarm Z-S56, which REMAINS ARMED; it creates no independent disarm path and is INERT by construction; it adds no gate to any other seat and refuses no work, constraining only this driver's own terminal act; it does not amend /self-drive Step 4, whose text is Andrew-anchored; it does not edit the COO loop's stop condition, which is that seat's and which 22580 states it is applying on its own reading; it offers no disposition on ETFS_POSITIONING, still outside this loop's scope. A SECOND CARRIER IS NOT CREATED: this row supersedes Z-S56's corroborator set in place of it, exactly as Z-S80 did for Z-S79, and a disarm of Z-S56 quotes THIS row's five-plane condition rather than Z-S56's own two-plane one."
+  },
+{
+    "id": "POSN_ASTTAX-Z-S58",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-09-14T09:25:00Z",
+    "one_line": "CORRECTION TO Z-S56'S EXHIBIT, BY ITS DISARM OWNER, AND IT RUNS AGAINST THIS SEAT: Z-S56 claims ETFS_POSITIONING's status field is 'measurably wrong'. IT IS NOT. status='complete' is CORRECT and is the best-grounded field on that record -- a sovereign closure on Andrew's verbatim word of 2026-09-01, recorded in the project's phase field. THE STALE FIELDS ARE dep_stage AND completed_at, and the two open orders are DOCUMENTED STALE FACES already surfaced to their issuers. Z-S56's RULING STANDS AND IS STRENGTHENED; only its exhibit is re-cut. This row also PRESERVES THE BEFORE-STATE so the register fields can be corrected without orphaning the citation. Z-S56 REMAINS ARMED.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE FIELD Z-S56 NEVER OPENED, read at source this tick: org/projects/ETFS_POSITIONING.json carries 17 top-level fields -- blocking, coo_lane, created, dep_stage, description, directive, macro_code, name, phase, pipeline, pods, prds, project_code, related, status, thread_counter, threads. Z-S56 read THREE of them (status, dep_stage, and a search for completed_at) and named one of them wrong. The field that ADJUDICATES all three is phase, and it was not read.",
+        "WHAT phase CARRIES, found and quoted by 0.0.0_AB_MSTR~Z as register writer in msg 22592: the project was 'CLOSED 2026-09-01 by 0.0.0_AB_MSTR (register owner) on ANDREW-DIRECT 2026-09-01 ~14:0xZ ... VERBATIM across three consecutive messages: D4 satellites is entirely done... / POSN TENANCY is done too / the entire opal satellites produc and all of these projects are done / literally all of these ar edone. HE IS THE AUTHORITY ON WHETHER THE WORK IS DONE; the register was carrying OPEN FACES OVER FINISHED WORK'. The same record disposes of the orders: 'ANY OPEN TASK ORDER ON THIS PROJECT IS NOW A STALE FACE over finished work -- closing a TO face is its ISSUER's act, not the register owner's, so those are SURFACED to their issuers rather than closed here.'",
+        "SO THE THREE SIGNALS RESOLVE THE OTHER WAY FROM Z-S56'S READING. status='complete' is CORRECT and is a sovereign word recorded with its date, terminal and circumstances. dep_stage='EXECUTING' is THE STALE FIELD, never advanced at the 2026-09-01 closure. completed_at is absent for the same reason. The two non-terminal orders are NOT evidence of live work; they are documented stale faces whose closure belongs to their issuers.",
+        "THE BEFORE-STATE, RECORDED HERE SO THE REGISTER CAN BE FIXED WITHOUT ORPHANING THIS CITATION: at the moment Z-S56 was filed and at the moment of this row, org/projects/ETFS_POSITIONING.json reads status='complete', dep_stage='EXECUTING', completed_at ABSENT, with ETFS_POSITIONING.TO-13-DS.identifier-coercion-strips-leading-zeros.md and ETFS_POSITIONING.TO-14-AE.identifier-repair-apply.md both status_class ACTIVE. 0.0.0_AB_MSTR~Z correctly declined to correct dep_stage and completed_at while those values were an ARMED row's cited evidence -- a silent fix would have left Z-S56 pointing at a state that no longer exists, which is the stale-citation class this fabric keeps catching. With the values recorded here, that constraint is discharged.",
+        "AND THE RULING SURVIVES THE EXHIBIT, WHICH IS THE TEST THAT MATTERS: Z-S57's five planes REFUSE ETFS_POSITIONING correctly and for the right reasons -- plane 2 fails (dep_stage is not CLOSED) and plane 5 fails (no COMPLETION_REPORT or COMPLETION_GRADES exist for it at all, against a tree-wide 10 files across 5 projects). A genuinely closed project is held OUT until its record is finished, which is the false-CONTINUE branch and the cheap error by the adopted asymmetry. THE ARGUMENT THAT A SINGLE-FIELD ORACLE HAS NO DISCRIMINATION BY CONSTRUCTION STANDS ON ITS OWN AND NEVER NEEDED A WRONG EXHIBIT."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CLAUDE.md Rule 22 COVERAGE: evidence spans the claimed set, PRINT THE DENOMINATOR -- the denominator of a project row's fields is 17, and a claim about which field is wrong is a claim over all of them. Rule 22 GRAIN and the ORDER clause: DISCRIMINATION passes inside a wrong GRAIN, so every instrument agrees about the same wrong thing. Rule 24: choosing the domain is itself a claim.",
+    "world_is": "STAR: I RECONCILED TWO FIELDS, NAMED ONE OF THEM WRONG, AND NEVER READ THE THIRD FIELD THAT ADJUDICATES THEM. A disagreement between two values is not resolved by picking the one that agrees with your other evidence -- that is an INFERENCE DRESSED AS A MEASUREMENT, and it arrives wearing the same formatting as the measured half of the same paragraph. Z-S56 even carried a NEGATIVE CONTROL (AMGT_RESAPP and POSN_ASTTAX rows both internally coherent) which proved the schema CAN be coherent and said NOTHING about which field was wrong in the incoherent case -- a control at the wrong grain, passing cleanly. 0.0.0_AB_MSTR~Z names the identical shape in its own confirmation an hour earlier: a varying control proved its read was not vacuous and was then let to read as corroborating the INTERPRETATION. TWO SEATS, ONE EXHIBIT, THE SAME WRONG GRAIN, BOTH WITH CONTROLS FIRING. AND THE CHEAPEST AVAILABLE DISCRIMINATOR WAS A FIELD SITTING IN THE SAME OBJECT BOTH SEATS HAD ALREADY PARSED.",
+    "notes": "WHAT CHANGES AND WHAT DOES NOT. Z-S56 REMAINS ARMED and its RULING is unchanged and unweakened; Z-S57's five-plane condition is unchanged and is the operative one. What is withdrawn is Z-S56's sentence that the field the completion test reads is measurably wrong ON THIS EXHIBIT -- it is right there, and its neighbours are stale. The hazard Z-S56 names is REAL and is now better stated: THE REGISTER'S FIELDS CAN DISAGREE AND THE ONE THAT IS STALE IS NOT PREDICTABLE FROM THE DISAGREEMENT ALONE, which is a stronger reason to corroborate before terminating than the original claim was. WHAT THIS ROW DOES NOT DO: it does not disarm Z-S56; it does not amend Z-S57; it offers no disposition on ETFS_POSITIONING's two stale faces, which belong to their issuers; and it does not fix dep_stage or completed_at, which is the register writer's lane and its bookkeeping, not this seat's adjudication. THE WORD 0.0.0_AB_MSTR~Z ASKED FOR IS GIVEN SEPARATELY AND IS RECORDED HERE: with the before-state preserved above, that seat may write dep_stage and completed_at in one commit stating before and after, and this row is the citation that keeps resolving afterwards. CREDIT: the finding, the phase read and the self-identified wrong-grain confirmation are all 0.0.0_AB_MSTR~Z's, raised against a row it had itself helped corroborate, under Z-S57's own clause routing disagreements to the register writer -- the clause worked, and it worked against its author."
+  },
+{
+    "id": "POSN_ASTTAX-Z-S59",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-09-14T09:35:00Z",
+    "one_line": "TWO FIELD-SPACE CORRECTIONS TO Z-S56 / Z-S57 / Z-S58, AND BOTH ARE THE SAME OMISSION: I CITED THREE REGISTER FIELDS AS SIGNALS AND PRINTED A DENOMINATOR FOR NONE OF THEM. (1) completed_at exists in ZERO of 366 project records -- so Z-S56 and Z-S58 both cited a VACUOUS field, and Z-S58's explanation of its absence is wrong. (2) dep_stage exists in only 50 of 366 -- so Z-S57's plane 2 is UNEVALUABLE for 86% of the register and its condition must say so. Both scoped projects DO carry dep_stage, so the operative ruling is sound where it binds.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE CENSUS, over the whole register with its denominator printed -- the read none of the three prior rows performed: 366 org/projects/*.json records, 0 unparseable. Key presence: completed_at 0 of 366; status 366 of 366 (CONTROL); phase 345 of 366 (CONTROL); dep_stage 50 of 366. Keys containing 'complet' at all: completed, completion_ship, phase1_completed, phase_0_completed_evidence, prior_completion -- and not one of them is completed_at.",
+        "CORRECTION 1, AND IT RUNS AGAINST TWO OF MY OWN ROWS. Z-S56's evidence cites ETFS_POSITIONING as carrying 'no completed_at field of any kind', offered as a signal that the row was never properly closed. A KEY PRESENT IN ZERO OF 366 RECORDS CANNOT DISCRIMINATE ANYTHING -- it reads the same for the project being indicted and for every project that is fine. Z-S58 then made it worse by EXPLAINING the absence ('completed_at is absent for the same reason', i.e. never set at the 2026-09-01 closure): that attributes a SCHEMA-WIDE absence to a PROJECT-SPECIFIC cause. 0.0.0_AB_MSTR~Z's own 22592 listed the same field and hedged it correctly -- 'Stated as an observation; I am not asserting the schema requires it' -- which is the hedge I did not write.",
+        "CORRECTION 2, AND IT QUALIFIES THE OPERATIVE RULING RATHER THAN A DEAD EXHIBIT. Z-S57's plane 2 is 'dep_stage reads CLOSED'. dep_stage exists in 50 of 366 records, so for 316 projects that plane is UNEVALUABLE -- which is a different verdict from FAILED, and the difference matters because Z-S57 says any disagreement among the five planes keeps the loop ARMED. A plane that is structurally absent is not a disagreement.",
+        "AND THE RULING SURVIVES WHERE IT ACTUALLY BINDS, MEASURED RATHER THAN ASSUMED: AMGT_RESAPP carries dep_stage='ROUND_CLOSE' and POSN_ASTTAX carries dep_stage='EXECUTING'. BOTH SCOPED PROJECTS CARRY THE FIELD, so all five planes are evaluable for the only two projects this loop can terminate on. The correction is to the condition's GENERALITY, not to its application here.",
+        "THE OMISSION IS ONE OMISSION, NOT THREE INCIDENTS. Z-S56 cited status, dep_stage and completed_at as signals and printed a denominator for NONE of them. Rule 22 COVERAGE says evidence spans the claimed set and the denominator is PRINTED; a claim that a field's value or absence is meaningful is a claim about that field's population, and the register's field space is NOT uniform -- 366 / 345 / 50 / 0 across four fields in one object type. 2.0.0_SA_COO~Z reports having printed the same vacuous field independently (msg 22608)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CLAUDE.md Rule 22 COVERAGE: 'evidence spans the claimed set; PRINT THE DENOMINATOR' and 'a denominator certifies the SWEEP, never the SET'. Rule 22 DISCRIMINATION: could the evidence differ if the claim were false? A key absent from every record could not. Rule 24: a taxonomy's domain is itself a claim, falsified before the subtraction runs.",
+    "world_is": "STAR: A FIELD'S ABSENCE MEANS NOTHING UNTIL THE KEY SPACE IS CENSUSED, AND A REGISTER'S FIELD SPACE IS NOT UNIFORM. Reading completed_at=None off one record and calling it a signal is the same error as reading a constant success flag and calling it a pass -- the value is identical for the indicted record and for every healthy one. AMENDMENTS, both operative from now: (i) completed_at is STRUCK as evidence from Z-S56 and from Z-S58's explanation of it -- neither the field's absence nor any account of that absence carries weight, and Z-S56's substantive claim does not depend on it; (ii) Z-S57's plane 2 reads 'dep_stage reads CLOSED, OR the project carries no dep_stage key at all, in which case plane 2 is UNEVALUABLE and is recorded as such rather than as a disagreement' -- with the key-presence denominator printed beside it, because UNEVALUABLE and FAILED are different verdicts and only one of them keeps a loop ARMED.",
+    "notes": "WHAT DOES NOT CHANGE: Z-S56 REMAINS ARMED and its ruling stands -- a single-field oracle has no discrimination by construction, an argument that never rested on completed_at. Z-S58's central correction stands: ETFS_POSITIONING's status='complete' is CORRECT, grounded in Andrew's verbatim word recorded in phase, and dep_stage is the stale field; only its sentence about completed_at is withdrawn. Z-S57's five planes remain the operative condition, with plane 2 qualified as above, and all five are evaluable for both scoped projects. WHAT THIS ROW DOES NOT DO: no disposition on ETFS_POSITIONING; no register edit; no disarm of anything. THE WORD TO 0.0.0_AB_MSTR~Z IS UNCHANGED AND IS NOW NARROWER: dep_stage is the field worth correcting on that record, and completed_at is NOT -- writing a key that exists in zero of 366 records onto one record would MINT A NEW FIELD in a schema nobody has ruled on, which is a register-schema question and not bookkeeping. That distinction was not in the word as first given and is stated here before the act rather than after it. CREDIT: the vacuous-field class was surfaced independently by 2.0.0_SA_COO~Z (22608) and is already banked in this device's memory as 'a guessed FIELD NAME returns a clean default that looks like a finding' -- the census that proves it here is this seat's, prompted by that entry."
+  },
+{
+    "id": "POSN_ASTTAX-Z-S60",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-09-14T09:40:00Z",
+    "one_line": "PLANE 1 OF Z-S57 HAS THE SAME DEFECT 2.0.0_SA_COO~Z FOUND IN ITS OWN TRIGGER, AND I ASSERTED THE OPPOSITE AN HOUR AGO. 'status reads complete' assumes ONE terminal token. THE REGISTER USES AT LEAST SIX: status carries 12 distinct values over 366 records, of which complete is 192 and closed is 104 -- and FIVE projects sit at dep_stage=CLOSED with status='closed' RIGHT NOW. A project closed under any token but 'complete' never fires plane 1, and this loop would never stop. THIS ROW CLOSES THE Z-S56 CORRECTION CHAIN.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE STATUS VALUE CENSUS, over the whole register with its denominator -- the read no row in this chain had performed: 366 records, 12 DISTINCT status values. complete 192 | closed 104 | active 47 | inactive 6 | merged 4 | dormant 3 | complete-as-superseded 3 | cancelled 2 | build-complete 2 | deprecated 1 | scoping 1 | superseded-into-OPAL_TAXONOMY 1. 'complete' IS 192 OF 366 -- IT IS THE PLURALITY, NOT THE VOCABULARY.",
+        "AND IT IS NOT THEORETICAL: FIVE PROJECTS CARRY dep_stage='CLOSED' WITH status NOT EQUAL TO 'complete' -- D1_NAMEDISCOVERY, NFRA_COMPTOOLS, NFRA_DEPLOYLEDGER and NFRA_TORECORD all at status='closed', plus NFRA_OPSEC202609 at status='active'. Four of those five are projects whose OWN dep_stage says CLOSED and whose status token plane 1 would reject. CONTROL: 6 records carry complete AND CLOSED together, so the conjunction CAN hold and the five mean something.",
+        "I ASSERTED THE OPPOSITE ONE HOUR AGO. Reasoning about 2.0.0_SA_COO~Z's trigger finding (msg 22595 -- a genuinely closed project kept dep_stage=EXECUTING, so a dep_stage trigger NEVER fires), this seat concluded that the two loops key on different fields and that status is 'reliably written at closure, so my trigger fires'. THE FIRST HALF IS TRUE AND THE SECOND DOES NOT FOLLOW: status is reliably WRITTEN, but not reliably written to THE TOKEN THE TEST MATCHES. The failure mode is identical to the one I was congratulating this loop for avoiding -- an invisible never-stop, where the loop keeps producing well-formed NO-OP ticks on finished work.",
+        "THE VINTAGE EVENT, DISCLOSED BECAUSE IT EXPLAINS A CENSUS DISAGREEMENT RATHER THAN BEING EXPLAINED AWAY: 0.0.0_AB_MSTR~Z's msg 22597 measured 6 records at status=complete with a non-CLOSED dep_stage. This seat's census minutes later found 1 (ETFS_INGEST). The difference is NOT method -- it is that the register write happened in between on the narrowed GO given at msg 22609, and ETFS_POSITIONING now reads dep_stage='CLOSED'. THE STALE-CITATION HAZARD 0.0.0_AB_MSTR~Z HELD FOR IS THEREFORE REALISED AND HARMLESS: Z-S58 recorded the before-state verbatim before the write, so Z-S56's citation resolves through the row rather than through the live file. The mechanism worked exactly as it was designed to.",
+        "A SECOND DISAGREEMENT IS ALSO RESOLVED AND IT IS NOT VINTAGE: 22597 reports 186 records at status=complete AND dep_stage=CLOSED. Only 50 of 366 records carry a dep_stage KEY AT ALL (measured in Z-S59; re-measured here: 316 have no such key, and the present values are EXECUTING 20, CLOSED 11, PRD 9, REGISTERED 6, DECOMP 2, ROUND_CLOSE 2). 186 cannot be drawn from a population of 50, so that figure counts something other than the flat register's dep_stage key. NOT RESOLVED FURTHER HERE and NOT explained away: it is another seat's instrument and this row states the arithmetic rather than a cause."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CLAUDE.md Rule 24 TAXONOMY LAW: MECE over a DECLARED domain, hunted BY SUBTRACTION from a printed denominator and never by a forward list of what the author had in mind -- 'status reads complete' is a forward list of one. Rule 22 DISCRIMINATION and COVERAGE: a predicate over a value space is a claim about that space, and the denominator is printed. /self-drive Step 4 reads org/projects/<CODE>.json status: complete.",
+    "world_is": "PLANE 1 OF Z-S57 IS AMENDED AND NOW READS: 'org/projects/<CODE>.json status is a TERMINAL value -- and the terminal set is derived BY SUBTRACTION from a printed census of that field over the whole register at the time of reading, never from a remembered list. It is NOT the single token complete.' STAR: A PREDICATE WRITTEN AS ONE EXPECTED VALUE IS A FORWARD LIST OF LENGTH ONE, AND RULE 24 FORBIDS EXACTLY THAT -- it omits silently, it cannot disagree with a count because no count was taken, and it fails toward NEVER-TERMINATING, which is the invisible direction. NOTE FOR THE SKILL AND NOT AN EDIT TO IT: /self-drive Step 4's own text reads 'status: complete', so this gap is in the skill as written and not only in this row. Step 4 is Andrew-anchored, this loop is scope-bound, and the driver constrains only its OWN terminal act -- so the correction is applied HERE, at the act, and the skill-level question is left named rather than taken.",
+    "notes": "THIS ROW CLOSES THE Z-S56 CORRECTION CHAIN (Z-S57 widened the corroborators, Z-S58 retired the exhibit, Z-S59 struck the vacuous field and qualified plane 2, Z-S60 corrects plane 1). FOUR ROWS, AND EVERY ONE OF THEM CORRECTED A DENOMINATOR THE PREVIOUS ROW HAD NOT PRINTED -- the field's presence (Z-S59), the field's value space (Z-S60), the exhibit's grounding (Z-S58). The chain ends here not because the subject is exhausted but because the marginal value of a fifth pass is negative, which is a judgment this seat is making explicitly rather than drifting into. WHAT REMAINS TRUE: Z-S56 REMAINS ARMED; its ruling that a single-field oracle has no discrimination by construction has now been demonstrated FOUR TIMES on the very rows written to fix it, which is better evidence for the rule than the original exhibit was. Z-S57's five planes stay operative with planes 1 and 2 as amended by Z-S60 and Z-S59. Both scoped projects currently read status='active' with dep_stage present, so all five planes remain evaluable for the only two projects this loop can terminate on. NO disposition on any project outside scope; no register edit by this seat; no skill edit. CREDIT: the trigger-versus-report distinction that made this findable is 2.0.0_SA_COO~Z's (msg 22595), and the six-record class and the register write are 0.0.0_AB_MSTR~Z's."
+  }
+]
+```
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-S61",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-14T09:55:00Z",
+    "one_line": "THIS LOOP'S OWN STANDING BODY CARRIES A STALE CITATION THAT NOW LANDS ON CONFIRMING-LOOKING TEXT. Its Z-S7 correction cites .tools/to-pipeline-gate.py:809-831 for 'LIMB 6 refuses only a NEWLY-ADDED task order, never a MODIFICATION, so there is NO mechanical backstop on a re-cut'. Measured at HEAD 5ef0f32832: the file is 2765 lines, _newly_added now sits at :1702, and lines 809-831 hold the PLACEHOLDERS MODIFY SELF-TEST TABLE. Andrew has since carded exactly ONE widening -- gate (viii) DOES grade a task order staged as MODIFIED, if and only if that order ALREADY DECLARES <placeholders> AT HEAD. POSN_ASTTAX declares <placeholders> in 0 of 19 orders, so gate (viii) is INERT for this project and Z-S7's operative conclusion still holds HERE -- now by measurement rather than by a blanket claim.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED BY THIS SEAT at HEAD 5ef0f32832, every figure re-derived inside the same call that wrote this row and the write REFUSED on any disagreement: .tools/to-pipeline-gate.py is 2765 lines (DENOMINATOR); 'def _newly_added' resolves to line 1702; the loop body's cited range 809-831 contains the strings 'placeholders MODIFY RED' / 'placeholders MODIFY GREEN' / 'placeholders MODIFY: an order that does NOT declare at HEAD is NOT graded', i.e. the gate's own self-test table for the widened limb.",
+        "THE WIDENING IS REAL AND IS READ FROM THE TOOL, NOT FROM THE LAW FILE: the gate's own text at :26, :147, :152 and :171 states that a <placeholders> declaration ALSO grades a TO staged as MODIFIED ONLY WHEN THE ORDER ALREADY DECLARES <placeholders> AT HEAD (Andrew-direct card 6, ~18:4xZ 2026-09-13, record @e2210bf34c, built as IRPT_FNTEND FE-s-29 limb 4, drained @cd399d339d). Nothing is back-filled and LIMB 6 itself stays NEWLY-ADDED only.",
+        "NEGATIVE CONTROL ON THE PROJECT ARM, AND IT IS THE ARM THAT DECIDES THE ACT: 0 of 19 POSN_ASTTAX task orders declare <placeholders> (DENOMINATOR 19, whole-element match). A zero here is EVIDENCE rather than an out-of-corpus read because this folder IS the population the gate reads for a tree project's TO -- unlike the earlier error in this same channel, where a clean read of this folder was offered against a claim about the BROKER's seat-folder population, which it could not express.",
+        "WHY THE STALE CITATION IS WORSE THAN AN ABSENT ONE: 809-831 no longer points at nothing, it points at the SELF-TEST TABLE FOR THE VERY EXCEPTION THE CLAIM DENIES. A reader who follows it finds text about modifications being graded and about an order that does NOT declare being NOT graded, in a file whose docstring they were told would say 'this gate never refuses an existing TO'. A citation that drifts onto TOPICALLY ADJACENT text reads as confirmation; one that drifts onto nothing reads as an error."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "This loop's standing body, Z-S7 @e68cf979b8, VERBATIM: 'to-pipeline-gate.py LIMB 6 refuses only NEWLY-ADDED (A/R) task orders, never a MODIFICATION (docstring :809-831)' and 'SO THERE IS NO MECHANICAL BACKSTOP ON A RE-CUT.' CLAUDE.md Rule 27 at HEAD carries the same LIMB 6 scoping and now cites the docstring at :1015 @cd399d339d. CLAUDE.md Rule 22 GRAIN: the object read IS the object claimed at the VINTAGE claimed, and 'a citation without a vintage is not a citation'. Rule 27: 'WHERE THIS RULE AND THE SPINE DIFFER, THE SPINE WINS AND THIS RULE IS THE DEFECT' -- Rule 27 is a REPRESENTATION of the tool, never an independent source, and the same subordination applies to this loop's body.",
+    "world_is": "BOTH HALVES OF THE LOOP BODY'S Z-S7 SENTENCE HAVE MOVED, IN OPPOSITE DIRECTIONS. (1) THE CITATION IS STALE: _newly_added is at :1702 of 2765, and :809-831 now holds the placeholders MODIFY self-test table. (2) THE CLAIM IS NOW OVERBROAD AS A GENERAL STATEMENT: gate (viii) grades a MODIFICATION of an order that already declares <placeholders> at HEAD, so 'there is no mechanical backstop on a re-cut' is FALSE fabric-wide as of card 6. (3) AND IT IS STILL TRUE FOR THIS PROJECT: 0 of 19 POSN_ASTTAX orders declare <placeholders>, so gate (viii) is INERT here and the only thing between a round-5 re-cut and a stale premise remains this seat's own fresh read of 'python .tools/prd-signoff.py status POSN_ASTTAX' at the moment of acting. STAR: A CITATION AND THE CLAIM IT SUPPORTS AGE SEPARATELY, AND NEITHER AGEING ANNOUNCES ITSELF. The line number decayed because the file grew; the claim decayed because Andrew widened the tool. A single re-read of the loop body would have caught neither -- only opening the tool at HEAD does, which is what Rule 27's own 'the spine wins and this rule is the defect' clause exists to force.",
+    "notes": "SCOPE AND WHAT IS NOT DONE: no edit to .claude/skills/, no edit to CLAUDE.md, no edit to the cron body -- the loop body is Andrew-anchored and this seat is scope-bound, so the correction is APPLIED AT THE ACT and the body-level question is NAMED, not taken, exactly as Z-S60 disposed of the /self-drive Step 4 gap. No task order is cut, modified or re-staged by this row. DISARM CONDITION, both limbs: (a) the round-5 issuance RE-MEASURES <placeholders> across its own cut orders at the moment of the cut rather than citing this row's zero, since a zero measured at 5ef0f32832 does not bind an order that does not exist yet; and (b) whatever restates Z-S7 for the next tick carries the gate (viii) exception and a line reference re-derived at HEAD, or no line reference at all. A count is re-derivable and a mechanism is not, so the mechanism is what this row asks a future reader to carry. WHY A ROW AND NOT A MESSAGE: the hazard is inherited by every tick of a standing loop, and a broker message is never the carrier for that -- Z-S7 itself is a row on this channel, so this is its citing successor. CREDIT: found while re-reading CLAUDE.md at HEAD after a compaction, not while looking for it; the gate (viii) widening and its card are 1.0.0_SA_CTO~Z's record and 2.0.0_SA_COO~ZZZ's measurement, neither of which this row re-litigates."
+  }
+]
+```
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-S62",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-14T12:48:00Z",
+    "one_line": "THIS LOOP'S LADDER NAMES TWO WORKER SERIALS THAT ARE ALREADY CONSUMED. Rung 3 reads SPAWN AT3-s-6 (TO-T6-1, worker ~15) and rung 4 reads SPAWN AT3-s-7 (TO-T7-1, ~16). Measured at HEAD a3036c7d66 on two independent instruments that agree exactly: ~15 and ~16 are BOTH ALLOCATED, to round-4 orders TO-U1-1 and TO-U3-1, with populated deliverables homes. Allocated set is ~1 ~2 ~3 ~4 ~6 ~8 ~10 ~11 ~12 ~13 ~14 ~15 ~16 ~17 ~18; NEXT FREE IS ~19. A serial is part of the <paths> grant, so spawning per the ladder's remembered number would point a new worker at a home already holding another order's proof instance and result.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED BY THIS SEAT at HEAD a3036c7d66, every figure re-derived inside the same call that wrote this row, the write refusing on any disagreement. INSTRUMENT A, deliverables homes on disk (the WORKER home is per-serial BY PATH): 15 homes -> ~1 ~2 ~3 ~4 ~6 ~8 ~10 ~11 ~12 ~13 ~14 ~15 ~16 ~17 ~18. INSTRUMENT B, git authorship over --all, a DIFFERENT plane rather than a re-run: the same set exactly. Two instruments, different methods, identical answer.",
+        "THE COLLISION IS CONCRETE, not nominal: deliverables/0.9.0_WK_POSN_ASTTAX~15/ holds POSN_ASTTAX.TO-U1-1.derive-the-readers-and-grade-the-five-class-bar.proof_of_spec.json, POSN_ASTTAX.TO-U1-1.result.md -- TO-U1-1's proof instance and result, a round-4 order that is complete. ~16 likewise holds TO-U3-1's artifacts, 4 commits under that serial.",
+        "NEGATIVE CONTROL, and it fires: ~99 is absent from the path plane AND from the author plane, so the census can return NOT-ALLOCATED and is not a detector that says yes to everything.",
+        "WHY THE LADDER'S NUMBERS WENT STALE WITHOUT ANYONE EDITING THEM: worker serials are allocated PER SPAWN, not per cell. The ladder's ~15 and ~16 were a PLAN made when round 3 was cut; the retag never spawned against its NO-GO, and rounds 4's spawns consumed those numbers in the meantime. Nothing was overwritten and no rule was broken -- the plan simply aged while the counter advanced, and a plan that names a mutable allocation ages silently.",
+        "AND THE BANKED RULE THIS WOULD BREACH IS EXPLICIT: a spawn prompt may restate a face but never invent an IDENTITY -- THE SERIAL IS PART OF THE <paths> GRANT. A worker spawned as ~15 would receive a grant naming a directory that is not empty and is not its own."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "This loop's standing ladder, rung 3: 'SPAWN AT3-s-6 (TO-T6-1, worker ~15) -- the RETAG, in a cone worktree from CURRENT HEAD'; rung 4: 'AT3-s-6 terminal? SPAWN AT3-s-7 (TO-T7-1, ~16).' Rule 27: a worker's write surface is exactly the <paths> its non-terminal order names, and its rows mint <CODE>-W<n>-S<k>. The spine's L7: WORKER SUBAGENTS 0.9.0_WK_<CODE>~<n>, one worktree each, deliverables at org/missions/D*/<MACRO>/<CODE>/deliverables/<serial>/.",
+    "world_is": "~15 AND ~16 ARE BOTH CONSUMED. ~15 = TO-U1-1 (AT4-s-1, the reader derivation, complete); ~16 = TO-U3-1 (AT4-s-3, complete, 4 commits). Allocated: ~1 ~2 ~3 ~4 ~6 ~8 ~10 ~11 ~12 ~13 ~14 ~15 ~16 ~17 ~18. NEXT FREE: ~19. STAR: A PLAN THAT NAMES A MUTABLE ALLOCATION AGES SILENTLY -- the ladder's numbers were correct when written and were invalidated by spawns the ladder itself does not mention, with no edit to the ladder and no error at any step. The failure needs no mistake; it needs only time and a counter that advances elsewhere. NOTE THE DIRECTION: this does not block a spawn, it makes a spawn SUCCEED against the wrong home, and the worker would find artifacts already present and could read them as its own predecessor state.",
+    "notes": "SCOPE AND WHAT IS NOT DONE: no spawn is made or planned -- the retag remains NO-GO, so rung 3's precondition is unmet and this row changes nothing that is happening now. No edit to .claude/skills/ or to the cron body (Andrew-anchored, scope-bound: applied AT THE ACT, the body-level question NAMED not taken, the same disposition Z-S60 and Z-S61 used). No task order cut, modified or re-staged; no deliverables directory touched or created. DISARM CONDITION, single limb and falsifiable: the NEXT spawn on this project RE-MEASURES the allocated set at the moment of spawning -- both instruments, negative control printed -- and takes the next free serial from that measurement, never a number carried in the ladder or in this row. A count measured at a3036c7d66 does not bind a spawn that has not happened; ~19 is this row's reading, not a reservation. HOW IT SURFACED: running 2.0.0_SA_COO~ZZZ's PER-ARM control test from msg 22732 against this loop's own instrument. That test's answer here was clean -- this loop's subject line has ONE arm, a pathspec, so one anchor certifies it and there is no uncertified author arm. The collision was found by the boundary probe run alongside it, asking which serials have no commit in history. CREDIT: the per-arm test is 2.0.0_SA_COO~ZZZ's (Z-S84) built on the ancestor test, and neither was looking for this."
+  }
+]
+```
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-S63",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-14T14:34:11Z",
+    "one_line": "THIS LOOP'S PROBE HAD ZERO COVERAGE OF THE ONE DIRECTORY WHERE THE L9 ARTIFACT IS STAGED FIRST. The authority's plane (b) names TWO HOMES -- the worker's under the project tree AND the tier-1 seat's under org/tier1_exec/<BASE serial>/deliverables/ -- and this loop implemented only the first. Measured at HEAD 7f60616602: the CVO's tier-1 home holds 625 entries of which 29 are POSN-named, and NONE of this loop's six planes read it. POSN round-4 work in progress there would have been INVISIBLE, and this loop would have reported no movement during exactly the period POSN was worked.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED AT HEAD 7f60616602, every figure re-derived inside the same call that wrote this row, the write refusing on any disagreement. org/tier1_exec/3.0.0_SA_CVO/deliverables: 625 entries (DENOMINATOR) | POSN-named 29 | AMGT-named 56. Read BY FILENAME with mtime and NO author filter: an untracked file carries no git author and that home is shared by the base serial and every lane, so subject-by-filename is the only read that works there.",
+        "THE FIX IS NOT MERELY A CLOSED BLIND SPOT, IT IS A DISCRIMINATOR WITH A LIVE CONTROL. The two arms sit on ONE surface, ONE instrument, ONE read, and they disagree by 33.4 hours: newest AMGT-named AMGT_RESAPP_ROUND9_CVO_VERIFY_20260914_Z.json at 0.2 h (MOVING), newest POSN-named posn_round3_exception_audit_test.py at 33.6 h (COLD). Because the arm that proves this read CAN see live work is firing at the same moment, POSN's zero reads COLD rather than INCONCLUSIVE -- which is the whole difference the authority's plane grammar turns on.",
+        "POSN round-4 / adjudication-named artifacts in that home: 0 of 29 POSN-named.",
+        "AND THE POSN SIDE OF THE APERTURE WAS CHECKED TOO, because the same question runs in both directions: this loop's project-home planes use os.listdir, i.e. the WORKING TREE, so they DO see untracked files. adjudications 5 disk / 5 tracked, remediations 3/3, ledger 5/5, on-disk-only none, with 36 untracked files whole-tree proving the detector is alive. So this loop does NOT carry the committed-only defect msg 22770 found in plane (b); it carried the other half -- a home it never looked at at all."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "canonical-drive SKILL.md, the LIVE-PRODUCTION PROBE, plane (b): 'DELIVERABLES, TWO HOMES -- a WORKER's under org/missions/D*/<MACRO>/<CODE>/deliverables/<serial>/, a TIER-1 SEAT's under org/tier1_exec/<BASE serial>/deliverables/; the wrong branch returns ABSENT RATHER THAN AN ERROR.' And the plane grammar: 'Each plane reads MOVING | COLD | INCONCLUSIVE, and a DIRECTORY THAT IS ABSENT IS INCONCLUSIVE, NEVER COLD.'",
+    "world_is": "THE TIER-1 BRANCH OF PLANE (b) WAS NEVER IMPLEMENTED IN THIS LOOP'S TICK. Six planes ran for ~295 ticks and none of them read org/tier1_exec/3.0.0_SA_CVO/deliverables/, where 29 POSN-named artifacts from earlier rounds already sit. STAR: AN INSTRUMENT CAN BE ARGUED ABOUT AT LENGTH ALONG ITS PREDICATE WHILE NOBODY ASKS WHAT IT CAN SEE AT ALL. This seat reviewed the plane-(b) amendment closely -- the ancestor test, the per-arm control, the zero-commit boundary -- and every one of those questions was about WHICH ROWS THE FILTER MATCHES. Not one was about the APERTURE. A review that is thorough in the direction the author was already looking is thorough in the least useful direction available to it. NOTE THE DIRECTION OF THE FAILURE: an unwatched home produces no error and no ABSENT verdict, it produces a CONFIDENT 'nothing moving' assembled from planes that were each individually correct.",
+    "notes": "REMEDY, APPLIED AT THE ACT AND LIVE FROM TICK 296: plane 7 reads that home by FILENAME with mtime, READ ONLY -- it sends nothing, steals no foreground, and touches, stages or cleans nothing in another seat's live work (the probe's own standing rule, and a STOP from 1.0.0_SA_CTO~Z msg 22769 is in force on that seat). No edit to .claude/skills/ or to the cron body: Andrew-anchored and this seat is scope-bound, so the correction is applied AT THE ACT and the body-level question is NAMED, not taken -- the same disposition Z-S60, Z-S61 and Z-S62 used. CREDIT: the aperture finding is 1.0.0_SA_CTO~Z's (msg 22770), made against its own amendment, and the read that works on an untracked file is the one 0.0.0_AB_MSTR~Z and 1.0.0_SA_CTO~Z used to find the three round-9 files. This row carries that finding onto this loop's own instrument. SCOPE AND WHAT IS NOT CLAIMED: this attributes nothing to any serial (untracked files in a shared home carry no author -- Z-S82's own defect), and it is NOT a dropped-ball verdict. A seat working the AMGT half is not a seat that dropped POSN. The reading is exactly: POSN round 4 is not being written on the plane it would land on, at the moment measured. DISARM, single limb and falsifiable: this row disarms when a POSN round-4 adjudication artifact appears in EITHER home and plane 7 is the instrument that sees it first, printed with its control arm beside it -- OR when the tier-1 branch is measured ABSENT for a seat class where it cannot apply, which must then read INCONCLUSIVE and never COLD. A count measured at 7f60616602 binds nothing later; plane 7 re-measures both arms every tick."
+  }
+]
+```
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-S64",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-14T15:11:50Z",
+    "one_line": "THE TWO ARTIFACTS THIS ROUND IS WAITING ON WILL PROBABLY LAND AS WHOLE-FILE DIFFS, AND THE REAL CHANGE WILL BE INVISIBLE IN THEM. Measured at HEAD e9d1c6e6a5: 6 of 44 tracked .md under POSN are CRLF in the blob, and ALL SIX are record-class files (ADJUDICATION_v2..v5, REMEDIATION_v2..v3) written by ONE author, 3.0.0_SA_CVO~Z -- whose v1 pair is LF and who, on AMGT_RESAPP four hours ago, wrote a round-9 cut that flipped REMEDIATION_v8 from CRLF to LF and rendered 504 of 504 lines changed when FOURTEEN had. POSN's round-4 close is the same author, the same document class and the same shape.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED AT HEAD e9d1c6e6a5 on the BLOB (git show HEAD:<path>), not the working tree, every figure re-derived inside the call that wrote this row and the write refusing on any disagreement. POSN_ASTTAX tracked .md: 44 (DENOMINATOR). CRLF in the blob: 6. LF-only: 38.",
+        "THE SPLIT IS NOT SCATTERED, IT IS EXACTLY ONE DOCUMENT CLASS: every CRLF file under this project is an adjudication or a remediation -- ADJUDICATION_v2.md, ADJUDICATION_v3.md, ADJUDICATION_v4.md, ADJUDICATION_v5.md, REMEDIATION_v2.md, REMEDIATION_v3.md -- and no other .md under POSN is CRLF at all. The record class is 8 files; the 2 LF members are ADJUDICATION_v1.md, REMEDIATION_v1.md.",
+        "ONE AUTHOR, AND THE FLIP IS INSIDE ITS OWN SEQUENCE: all 8 record files were first committed by 3.0.0_SA_CVO~Z. v1 of each is LF; v2 onward are CRLF. So the same serial's writer changed line endings between v1 and v2 and held CRLF through v5/v3 -- and on AMGT_RESAPP at 14:47Z today the same serial wrote LF, flipping that project's REMEDIATION_v8 the other way. The behaviour is not stable across time and is invisible at every step.",
+        "THIS SEAT CHECKED ITSELF FIRST, because a finding about another writer needs it: the investigations channel this seat appends to has 62 commits in its history and ZERO of them carry a CR. This seat's appenders pass newline='\\n' explicitly. The outlier is not this loop, and that was measured rather than assumed.",
+        "THE ROOT IS REPO CONFIG AND IT IS ALREADY WRITTEN DOWN FOR A DIFFERENT FILE TYPE, found by 0.0.0_AB_MSTR~Z (msg 22802): .gitattributes rules *.tf, *.tfvars, *.tf.json, *.hcl and some *.js -- after false drift STOPPED TWO ETFS_GUARDRAIL ORDERS -- and its own comment states the principle 'THE DOMAIN IS DECLARED RATHER THAN THE ONE MEMBER THAT BIT US'. *.md is not covered, and core.autocrlf is false on this device, so whichever writer last touched a record decides its endings."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Rule 27: the three tracks share FILES, never messages -- the CVO's one send is the slug and the CTO's one send is the analysis, so a remediation/adjudication FILE is the carrier a human and a gate both read. .gitattributes at the repo root, written 2026-09-05 by 1.0.0_SA_CTO on 3.0.0_SA_CVO's ETFS_GUARDRAIL-S2: an eol rule exists precisely so a file does not 'read as MODIFIED against an LF index -- FALSE DRIFT that is indistinguishable from a real edit', and the domain is declared rather than the one member that bit us.",
+    "world_is": "THE DECLARED DOMAIN STOPS AT TERRAFORM AND THE RECORD CLASS IS *.md. Under POSN_ASTTAX the record class is split 6 CRLF / 2 LF by one author across six months of rounds. STAR: A WHOLE-FILE DIFF ON A RECORD IS INDISTINGUISHABLE AT --stat FROM A RE-ADJUDICATION, AND BOTH WRONG READINGS ARE CONFIDENT -- 'the whole slug was re-adjudicated' and 'noise, skip it'. On AMGT_RESAPP today the second reading would have skipped a round's closure: fourteen lines, OPEN->REMEDIATED, ARMED->DISARMED, closed false->true, at null->timestamp, buried in 1008. NOTE THE DIRECTION: nothing fails, no gate fires, the commit is correct, and the only casualty is the reviewability of the one document class this workflow reads to decide anything.",
+    "notes": "THE PREDICTION, STATED BEFORE THE FACT SO IT CAN BE WRONG: POSN's round-4 close is written by 3.0.0_SA_CVO~Z, and a round-N cut on this project has historically touched the previous round's rows (that is exactly what AMGT's round-9 commit did to REMEDIATION_v8). If ADJUDICATION_v6 lands LF while ADJUDICATION_v5 (324 lines, CRLF) or REMEDIATION_v3 (681 lines, CRLF) is modified in the same commit, those render 324/324 and 681/681 and this loop's L10 read is a wall of noise with the closure inside it. WHAT THIS LOOP DOES ABOUT IT, AT ZERO COST AND WITH NO INTERVENTION: when round 4's artifacts land, read the diff with --ignore-all-space and record BOTH numbers, the plain and the whitespace-insensitive, before forming any view of what changed. WHAT IS NOT DONE AND WILL NOT BE: no .gitattributes edit -- it is 1.0.0_SA_CTO's file and a law-adjacent surface, and 0.0.0_AB_MSTR~Z has already surfaced the *.md gap with its blast radius (adding an eol rule rewrites endings across a large share of the tree on next touch, which is the same reviewability cost paid deliberately instead of accidentally -- that needs an owner, a window and a decision). No normalising of any file, here or anywhere. No disposition on 3.0.0_SA_CVO~Z, whose commits are correct: this is about what the NEXT READER sees, not about the writer. No round cut, no status flip. The STOP on that seat is untouched. DISARM, single limb and falsifiable: POSN's round-4 artifacts land, and this seat records the plain and the -w diff numbers for every record-class file the commit touches. If they agree, the prediction was wrong and the row says so."
+  }
+]
+```
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-S65",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "4.0.0_SA_CRO~Z",
+    "surfaced_at": "2026-09-14T16:47:55Z",
+    "one_line": "THE SATELLITES TOGGLE BLENDS THE WRONG VERSION OF THE MODELS. Black Diamond's five Opal models and Yang's five served books are TWO OBJECTS WITH ONE NAME: BD's carry GLD (ST 8.34%, INT 3.99%, LT 2.11%), VXX (INT 1.40%, LT 1.87%, ULT 1.87%) and a CASH line in every book; Yang's carry no GLD, VXX only in LT 1.50% / ULT 2.00%, no CASH, and ICSH in 5 of 5 books that 0 of 5 BD models hold. Every Opal Satellite in the rebalancer is a pure blend of BD's models (0 root securities on 9 of 9; 13 of 13 sleeve ids resolve to the standalone BD model ids), and the portal builds satellites by blending YANG's. Measured today: the served satellites toggle is wrong on gold for 7 of 9 books and on VXX for 6 of 9, in both directions.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RAW REBALANCER, s3://opal-data-assets/blackdiamond/cottonwood/bronze/rebalancer_model_detail/2026-09-14/ (81 files, landed 06:00:54Z), parsed at hierarchy grain: every 'Opal Satellite N' is rebalanceModelType=Strategy with root components=0 and children[] of type Model; the child ids equal the standalone model ids on 13 of 13 satellite legs. GLD/VXX/CASH sit ONLY on the Model nodes (components[], metadata.symbol) and at the same relativeAllocation on the standalone node and inside every satellite that references it.",
+        "SERVED MODELS, s3://opal-data-portal-v2/json/positioning/positioning_data.json data_as_of 2026-09-11 generated 2026-09-12T11:05Z: GLD in 0 of 5 books; VXX in LT 0.015 and ULT 0.020 only; CASH line in 0 of 5; ICSH in 5 of 5 (UST 0.0092, ST 0.0146, INT 0.0081, LT 0.0142, ULT 0.0116) where BD holds it in 0 of 5.",
+        "PER-BOOK WEIGHT DIFFERENCES beyond the overlay, Yang vs BD as fraction of book: ST BIV 0.1903 vs 0.1118; INT BIV 0.0843 vs 0.0423; LT BIV 0.0207 vs absent; INT SPYM not compared (the known duplicate-row defect, DT brief 2026-09-11). Denominators: BD leaves UST 14 / ST 16 / INT 20 / LT 16 / ULT 16; Yang holdings 14 / 15 / 19 / 16 / 16.",
+        "PER-SATELLITE, registry as_of 2026-09-14 (s3://opal-data-cot/platinum/satellites/registry.json, 9 books) blended from the served Yang books vs the same legs blended from BD: GLD portal 0.00% on all 9 vs BD 8.34 / 7.25 / 6.17 / 5.08 / 3.99 / 3.05 / 2.11 / 0 / 0 (Sat 15..98); VXX portal 0 / 0 / 0 / 0 / 0 / 0.75 / 1.50 / 2.00 / 2.00 vs BD 0 / 0.35 / 0.70 / 1.05 / 1.40 / 1.64 / 1.87 / 1.87 / 1.87.",
+        "CONTROLS: the leaf reader returned symbols on every Model node and none on every Strategy node (the schema's own children-vs-components split, rebalancer_schemas.py); the name-to-book map is the ruled one in data/assets/scripts/gold/satellites_weights.py NAME_TO_BOOK; the Yang-blend arm reproduces the DT brief's VXX figures for Sat 70/80/90/98 (0.75 / 1.50 / 2.00 / 2.00), so the instrument agrees with a prior independent read where the two overlap."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD v0.6 @ae66157381 s.4 C-SATELLITE-DATA: the Cottonwood satellite components (228 rows) are the classifier's NECESSARY DATA input and 'every one of the 228 components MUST sort into exactly one of the five classes (FWD-1) and be VISIBLE as such on the surfaces (FWD-6)'; and, same section: 'VXX is ALREADY correctly flowing into Satellites 70/80/90/98 via the MODELS path (LT 1.5% / ULT 2.0%, sub_asset_class Volatility); POSN only retags VXX's served top-level asset_class, and touches NO holding, weight or satellite placement.'",
+    "world_is": "THE MODELS PATH CANNOT MAKE THE 228 COMPONENTS VISIBLE, because the components are BD's model sleeves and the path blends Yang's. GLD is in 0 of 5 Yang books, so no retag of any registry row puts a gram of gold on a satellite column; VXX 'already flowing' is true of the models toggle and false on 6 of 9 satellites. The constraint's visibility requirement and its 'touches no holding, weight or placement' clause cannot both hold under the current satellite path -- that is a SCOPE gap at L4, not a code defect in any cell. STAR: two objects with one name, measured on two planes that never disagree with themselves -- the DT brief measured the blend and was right about the blend; the satellite is not the blend.",
+    "notes": "REMEDY PROPOSED, NOT APPLIED: org/tier1_exec/4.0.0_SA_CRO~Z/briefs/POSN_ASTTAX_COMPLETION_BRIEF_20260914_Z.md s.2 -- source the Satellites toggle from Black Diamond's flattened holdings coalesced by ticker (group by metadata.symbol, sum absoluteAllocation), keep the Models toggle on Yang, disclose the per-ticker overlay (BD minus Yang-blend) and NEVER sum the two sources (LT VXX 1.87 vs 1.50 is one holding on two planes, not two holdings); classify every coalesced ticker through ETFClassifier. Extends the existing cot-satellites-registry-producer and satelliteAdapter.ts; no new pipeline. Pitched to Andrew at this seat's terminal 2026-09-14 ~17:0xZ on his ~16:34Z word that the GLD/VXX 'outside the models' question is the primary challenge. WHAT IS NOT CLAIMED: no ruling on which version of a model is 'right' -- that is Yang's and Andrew's; the ICSH / BIV drift is surfaced for that reconciliation and is NOT a POSN cell; no cell is cut, no PRD byte is changed, no retag is admitted. DISARM, one limb: the PRD carries a satellite-source constraint (or Andrew rules the satellites toggle stays on the Yang blend with the gap disclosed on the surface) -- either lands as an L4 act by the disarm owner and this row is disarmed by a citing row."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-W23-S1",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~23",
+    "surfaced_at": "2026-09-14T18:59:18Z",
+    "one_line": "EVERY COMMITTED PORTAL CREDENTIAL FIXTURE IS MFA-GATED, 3 of 3, SO NO AGENT CAN RUN AN UNATTENDED AUTHENTICATED PROBE OF ANY SCOPED ROUTE -- and the two fixture homes' OWN documentation still routes a reader to a no-second-factor identity that does not exist. TO-V9-1's V9-AC11 asks for an AUTHENTICATED five-path verify; its authenticated half is therefore RECORDED PARTIAL, never faked, exactly as TO-7-AE's was, and the cell substitutes a DEPLOYED-BYTES direct-invoke arm that answers the same question one rung lower.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED 2026-09-14T18:5xZ by this cell, 3 of 3, denominator = every credential in both committed homes. POST https://opalinvest.dev/auth/login with each fixture's own email+password returns HTTP 200 and body keys ['challengeId','channel','mfaRequired','ttlSec'] with mfaRequired=true, channel=email, ttlSec=1800, and NO accessToken -- for internal_admin (michael@opalinvest.com), firm_49financial (alex.bright@49financial.com) and firm_49financial_alt (greg.rosner@49financial.com). A 200-with-challenge (not a 401) is itself the control that the PASSWORDS ARE CORRECT: this is a second factor, not a stale credential.",
+        "HOME 1, .claude/skills/frontend-dev/portal-test-login.env, read at HEAD 945d1ddd95 via `git show` (the file is TRACKED but not materialised in this worker's sparse cone). Its own text says, VERBATIM: 'FOR A PROBE NEEDING A COMPLETED LOGIN, prefer a fixture with no second factor (the demo identity reads mfaEnabled FALSE on the same query shape)' and 'SATISFYING THE SECOND FACTOR FOR THIS ADMIN IDENTITY IS CREDENTIAL-EQUIVALENT AND IS NOT AUTHORIZED BY ANY STANDING RULING -- it goes to Andrew as a card if it is ever genuinely needed.'",
+        "HOME 2, portal/.frontend-dev/auth/credentials.json, read from the portal submodule's object DB at the pinned gitlink e85f6eb84f3a1771a37011a7e77e372570bad02a (file last moved 03d719d404, 2026-06-08). It documents firm_49financial's use_for as 'ADVI auth-path smokes (proves the firm-entitled JWT reaches /advisor-intelligence without auth-bounce)'. THAT DOCUMENTED PURPOSE IS NOW UNACHIEVABLE UNATTENDED: the same identity returns mfaRequired=true. This home is 3 months older than the MFA rollout and nothing re-read it.",
+        "THE DISCRIMINATING POINT, and why this is not merely a restatement of NFRA_OPSEC202609-Z-S51: that row measured the SANCTIONED FIXTURE (home 1) and concluded it 'cannot complete an unattended login'. This measurement extends the finding to HOME 2's THREE FIRM-ENTITLED identities, which Z-S51 did not test and which home 1's own remedy text points at as the escape hatch. The escape hatch is closed. 0 of 3, not 0 of 1.",
+        "WHY IT REACHES PAST THIS CELL: shared-advisor-router is an ORIGIN-REQUEST function and auth-validator-edge is a VIEWER-REQUEST function on the same five behaviors, so an UNAUTHENTICATED probe is refused BEFORE the router runs. Measured this turn, before the apply: all 8 scoped probes return 401/application/json/51B and a no-behavior control returns 403/application/xml/111B. The envelope arm therefore discriminates a LIVE BEHAVIOR from a MISSING one and says NOTHING WHATSOEVER about any rewrite. Any edge deploy on these behaviors whose verify rests on unauthenticated probes is grading a plane its change cannot reach.",
+        "WHAT THE CELL DID INSTEAD, named as a SUBSTITUTE and not as the criterion: `aws lambda invoke` against the PUBLISHED version with a synthetic CloudFront origin-request event carrying the headers auth-validator-edge injects, run against BOTH the prior and the new version with byte-identical payloads. It grades DEPLOYED BYTES at a named version. It is weaker than a bearer in one direction (it bypasses the auth gate, so it proves nothing about authorization) and stronger in another (a named version, not a session's luck). Instrument committed at org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~23/five_path_verify.py."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-V9-1 V9-AC11 requires an authenticated five-path verify: 'for EACH of the four Advisor Intelligence behaviors one request, same firm, same key, status + body hash IDENTICAL before/after', and registry.json '200 with body hash IDENTICAL before/after'. The TO's own comp-adversary preflight (3) anticipates the gap: 'the issuer does not hold an authenticated session for the five-path verify -- if the ui-smoke auth stub cannot reach the scoped behaviors, that is a row naming the credential gap, and the verify is recorded PARTIAL as TO-7-AE's was, never faked.' Both fixture homes document an identity that can complete a login.",
+    "world_is": "No committed credential on this device can complete a login unattended, 3 of 3, and the one authorized remedy named in the fixture file (pick an identity with no second factor) has no surviving referent. So the criterion's authenticated arm is not merely unavailable to THIS worker -- it is unavailable to ANY agent on this fabric, for EVERY scoped behavior, until a probe identity exists or Andrew rules. The cell proceeds and records V9-AC11 PARTIAL with the substitute arm's output; it does not fake the arm and does not satisfy a second factor.",
+    "notes": "DISARM, one limb, owner 1.0.0_SA_CTO~Z: either a designated MFA-exempt probe identity exists (Andrew's card -- the fixture file itself says this 'goes to Andrew as a card if it is ever genuinely needed'), or the estate rules that scoped-route deploys are verified at the deployed-bytes rung and the two fixture homes' documentation is corrected to stop promising a login that cannot happen. THIS WORKER PROPOSES NEITHER AND RULES NOTHING -- it did not attempt the second factor, did not look for signing-key material, and did not read a credential value into any committed artifact. NOT CLAIMED: that MFA is wrong, that it should be relaxed, or that TO-7-AE's or TO-8-DE's historical authenticated evidence was invalid when taken (it was taken 2026-08-28, before the MFA rollout recorded at org/critical_paths/change_management/20260901T0003Z_d12-w1-mfa-email-otp_deploy.md)."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-W23-S2",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~23",
+    "surfaced_at": "2026-09-14T19:02:10Z",
+    "one_line": "TO-V9-1's <paths> DOES NOT NAME org/critical_paths/.open_deploys/<slug>.json, BUT THE TOOL ITS OWN V9-AC2 INVOKES CREATES AND STAGES THAT FILE AND ITS SOURCE SAYS THE L6 CUT MUST NAME IT. The worker therefore holds a staged, TRACKED path it has no write grant for. Resolved WITHOUT an override and WITHOUT widening: the sentinel is not committed, because `close` unlinks it (deploy_ledger.py:440) and this cell opens and closes in-session, so the net repo effect is zero.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE GRANT, read from the order at HEAD 945d1ddd95 (blob 4e3f0559dc): the <paths> block names org/critical_paths/change_management/ and NOT org/critical_paths/.open_deploys/. The sentinel is not under change_management/, so it is outside the grant.",
+        "THE TOOL SAYS SO ITSELF, .tools/deploy_ledger.py:213-216 @945d1ddd95, VERBATIM: 'THE HALF THAT ACTUALLY SURVIVES A FORCED REMOVAL is committing the sentinel, and the receipt below names it as a REQUIRED commit pathspec because a worker committing with `--only -- <paths>` takes its pathspec from the ORDER, not from the index -- so the L6 cut naming org/critical_paths/.open_deploys/<slug>.json in the order's <paths> block is the other carrier'. The open run printed that same REQUIRED COMMIT PATHSPEC receipt naming both files.",
+        "THE PATH IS TRACKED-CLASS, NOT IGNORED, so it is a real write: `git check-ignore -v` returns rc=1 (not ignored) and `git ls-files -- org/critical_paths/.open_deploys/` counts 9 tracked files. deploy_ledger.py:227 `git add`s it, so it arrives STAGED without the worker choosing it.",
+        "WHY THE RESOLUTION IS NET-ZERO AND NOT AN OVERRIDE: deploy_ledger.py:440 `_state_path(args.slug).unlink()` -- `close` deletes the sentinel, restated at :248 and :811-812 ('the sentinel is the gate's only input, and `close` unlinks it'). This cell's V9-AC12 closes the entry in the same session that opened it, so the file exists only between open and close and never needs to cross a commit boundary. Committing it would have been a write outside the grant; committing the change_management/*.md alone is inside it.",
+        "THE RESIDUAL, NAMED RATHER THAN DISMISSED: the tool's :205-211 measurement is that staging makes an UNFORCED `git worktree remove` refuse but a FORCED one still deletes. So if this cell died between open and close AND the worktree were force-removed, the sentinel would vanish uncommitted and the committed .md would be an unindexed OPEN ledger entry -- the exact failure :213 exists to prevent. That residual is carried for the duration of this cell only."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The task order's <paths> block is the worker's write grant and names org/critical_paths/change_management/ as the only critical_paths surface; V9-AC2 instructs the worker to run `python .tools/deploy_ledger.py open --slug posn-round5-b5-satellites-router-leaves ...`.",
+    "world_is": "That invocation writes and stages a SECOND tracked file, org/critical_paths/.open_deploys/posn-round5-b5-satellites-router-leaves.json, which the grant does not name and which the tool's own source declares a REQUIRED commit pathspec that the L6 cut should have placed in <paths>. The order's named act and the order's write grant disagree by one path.",
+    "notes": "FOR THE CUT, NOT A REMEDY THIS WORKER APPLIES: future L6 cuts that name deploy_ledger.py open in a criterion should add org/critical_paths/.open_deploys/<slug>.json to <paths> alongside change_management/, per the tool's :215. NOT CLAIMED: that the omission harmed this cell (it did not -- open and close are in-session), that any other order carries the same omission (not censused), or that the worker may commit outside its grant on a tool's say-so. NO OVERRIDE WAS USED and no GIT_COMMIT_AUTHOR_OVERRIDE was set."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-W23-S3",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~23",
+    "surfaced_at": "2026-09-14T19:12:40Z",
+    "one_line": "V9-AC7's VERBATIM INVOCATION CANNOT PRODUCE ITS NAMED RESULT: `terraform -chdir=<stack> plan -out=.scratch/b5.tfplan` exits rc=1 with 'Failed to write plan file ... The system cannot find the path specified' because -chdir RE-BASES every relative path onto the STACK directory, so -out resolves to infra/aws/terraform/portal-auth/.scratch/ which does not exist -- and creating it would be a write OUTSIDE the order's <paths> grant, which names only that directory's CHANGELOG.json. The plan itself computed fine; only the write failed. Repaired WITHOUT widening by -out=../../../../.scratch/b5.tfplan, which lands in the worker's granted worktree scratch.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED 2026-09-14T19:1xZ. The criterion's invocation run verbatim: rc=1, stderr 'Error: Failed to write plan file / The plan file could not be written: open .scratch/b5.tfplan: The system cannot find the path specified..'. The refresh phase completed normally first (every resource Refreshing state...), so the FAILURE IS THE WRITE, not the plan -- nothing about the change was mis-planned and no work was lost.",
+        "THE CAUSE IS -chdir's DOCUMENTED SEMANTICS, not a device quirk: terraform -chdir switches the working directory before running, so relative -out paths resolve under the stack dir. The worker's scratch is /c/tmp/wk-posn-5-23/.scratch/ (its spawn prompt names it), four levels up from infra/aws/terraform/portal-auth.",
+        "THE GRANT FORBIDS THE OBVIOUS REPAIR: the order's <paths> names infra/aws/terraform/portal-auth/CHANGELOG.json -- a single FILE, not the directory -- so `mkdir infra/aws/terraform/portal-auth/.scratch` would be an ungranted write into a live terraform stack. The chosen repair writes only inside the worker's own scratch.",
+        "RE-RUN WITH -out=../../../../.scratch/b5.tfplan: rc=0, plan file written at .scratch/b5.tfplan, 125620 bytes, and terraform's own closing line reads 'Saved the plan to: ../../../../.scratch/b5.tfplan'. The planned content is the bounded one V9-AC7 requires: Plan: 0 to add, 3 to change, 0 to destroy.",
+        "THE CLASS REACHES TWO MORE CRITERIA, stated so the next reader is not surprised twice: V9-AC8 names `.tools/safe-apply.sh -chdir=infra/aws/terraform/portal-auth apply .scratch/b5.tfplan` and V9-AC12 names `--plan .scratch/b5.tfplan`. Any of those that passes the path THROUGH a -chdir invocation needs the same four-level prefix; one that does not use -chdir takes the plain path. Each was resolved by running it and reading the result, never by assuming."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "V9-AC7: <invocation>timeout 900 terraform -chdir=infra/aws/terraform/portal-auth plan -out=.scratch/b5.tfplan</invocation>, expecting a saved plan file that V9-AC8 then applies and V9-AC12 records.",
+    "world_is": "That exact string exits rc=1 and writes no plan file. The order's cell text is otherwise correct and the bound it specifies is exactly what the corrected invocation produced; only the -out path is wrong, and it is wrong for a reason that would repeat on any -chdir stack whose plan is directed at a worktree-root scratch dir.",
+    "notes": "FOR THE CUT, NOT A REMEDY THIS WORKER APPLIES: a criterion combining terraform -chdir with a worktree-relative -out should either use an absolute path or the ../ prefix that matches the stack's depth, or grant the stack directory. NOT CLAIMED: that the plan's CONTENT was affected (it was not -- the same bounded plan was produced on the corrected run), that safe-apply is broken, or that any other project's orders carry the same shape (not censused). The deviation is recorded here because the order's invocation did not produce its named result, which is a surprise by form regardless of how small the repair was."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-W23-S4",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~23",
+    "surfaced_at": "2026-09-14T19:34:50Z",
+    "one_line": "record-terraform-deploy.sh CARRIES THREE INDEPENDENT DEFECTS THAT EACH BLOCK OR SILENTLY TRUNCATE IT ON THIS DEVICE, AND THE THIRD ONE EXITS 0 WHILE PRINTING A SUCCESS BANNER FOR WORK IT DID NOT DO: it hardcodes another user's bun path (/c/Users/AndrewBerman/.bun/bin/bun), falls through to python3, then runs a JAVASCRIPT helper with python3 -- so CHANGELOG.json is NEVER written on any device where that literal path is absent, while the script prints 'Source map + CHANGELOG.json committed with [skip ci]' and returns rc=0.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.7.0_AE_CloudOps",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "DEFECT 3, THE FALSE SUCCESS -- the load-bearing one. record-terraform-deploy.sh:218 tests `[ -x \"/c/Users/AndrewBerman/.bun/bin/bun\" ]`. On this device `ls -d /c/Users/AndrewBerman` returns 'No such file or directory' (the user is 'Opal Bloomberg'), so JSON_TOOL falls to :220-221 python3. :540 then creates TMPJS_CHANGELOG=$(mktemp /tmp/rdeploy-changelog-XXXXXX.js) -- a JAVASCRIPT file written as a JS heredoc -- and :735 runs `\"$JSON_TOOL\" \"$TMPJS_CHANGELOG\"`, i.e. python3 on .js. OBSERVED: 'SyntaxError: unterminated string literal (detected at line 18)' then 'Note: CHANGELOG.json write failed - source map update still committed'. THE SCRIPT THEN EXITS 0 AND PRINTS 'Source map + CHANGELOG.json committed with [skip ci]'. MEASURED CONSEQUENCE: git status on infra/aws/terraform/portal-auth/CHANGELOG.json is EMPTY (untouched) and the record commit 7403e8c0e9 contains '1 file changed' -- lambda-source-map.json alone. The banner names a file the commit does not contain.",
+        "DEFECT 1, cp1252: the first invocation, verbatim as V9-AC12 names it, died with 'UnicodeDecodeError: charmap codec can't decode byte 0x9d in position 31939' from a json.load(open(...)) in text mode. The file is infra/aws/terraform/portal-auth/CHANGELOG.json, which is VALID UTF-8 (101786 bytes, 47 non-ASCII, decodes clean as UTF-8); byte 0x9d is one of the five cp1252-UNDEFINED bytes, so it RAISES rather than silently mis-decoding -- CLAUDE.md s.4's exact mechanism. Worked around with PYTHONUTF8=1, an ENVIRONMENT setting, because the script is outside this worker's <paths> grant.",
+        "DEFECT 2, the unquoted interpreter: :493 SCOPE_PY=\"$(command -v python3 || command -v python)\" and :511 expands it UNQUOTED. On this device `command -v python3` returns '/c/Users/Opal Bloomberg/bin/python3' -- a path WITH A SPACE -- so it word-splits and the run died with 'record-terraform-deploy.sh: line 511: /c/Users/Opal: Is a directory'. Worked around by prepending a space-free python3 shim directory (/c/tmp/wk-posn-5-23/.scratch/bin) to PATH, again ENVIRONMENT only, no edit to the script. NOTE the same line also expands $SCOPE_ARGS unquoted, so any argument containing a space would split the same way.",
+        "A FOURTH, cwd-class and already recorded as W23-S3's sibling: record-deploy-scope.py runs `terraform show -json <plan>` with the STACK as cwd, so the relative --plan .scratch/b5.tfplan that V9-AC12 names resolved to nothing ('Failed to read the given file as a state or plan file'). Passing C:/tmp/wk-posn-5-23/.scratch/b5.tfplan absolute cleared it.",
+        "THE SHIM IS NOT THE CAUSE OF DEFECT 3, checked rather than assumed: :220 selects python3 whenever `command -v python3` succeeds, which it did on this device BEFORE the shim existed (it resolved to /c/Users/Opal Bloomberg/bin/python3). The shim changed WHICH python3 answers, never WHETHER python3 was selected, so the JS-run-by-python path was reached identically with or without it. The only thing the shim changed is that defect 2 stopped aborting the run before defect 3 could be observed."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "V9-AC12: <invocation>timeout 300 bash infra/aws/lambda/ci/record-terraform-deploy.sh portal-auth --plan .scratch/b5.tfplan --author \"...\"</invocation> <expect>recorded (commit hash printed); legs L1-L8 closed with proofs; the entry closed.</expect> The script's own closing banner asserts 'Source map + CHANGELOG.json committed with [skip ci]'.",
+    "world_is": "The criterion's three NAMED expectations are all met (commit 7403e8c0e9 printed, all 8 legs closed with proofs, the ledger entry CLOSED and its sentinel unlinked), so V9-AC12 is graded on what it asked for. But the script's banner asserts a FOURTH thing that did not happen: CHANGELOG.json was not written and is not in the commit. Any seat reading that banner as evidence the CHANGELOG carries this deploy would be wrong, and the deploy history for portal-auth is missing an entry for shared-advisor-router v25->v26.",
+    "notes": "DISARM, owner 0.7.0_AE_CloudOps (the lane that owns infra/aws/lambda/ci/): derive the bun path instead of hardcoding it (CLAUDE.md's DERIVE-don't-hardcode; LD-0405 is the portal-scoped sibling of the same class), select the JSON tool by the HELPER'S LANGUAGE rather than by availability order, quote $SCOPE_PY and $SCOPE_ARGS at :511, open JSON with encoding='utf-8', and make the CHANGELOG failure NON-ZERO or drop it from the success banner. THIS WORKER APPLIED NONE OF THESE -- infra/aws/lambda/ci/record-terraform-deploy.sh is OUTSIDE its <paths> grant, which names only infra/aws/lambda/ci/lambda-source-map.json; every workaround used was environment-only (PYTHONUTF8, PATH, an absolute --plan) and no byte of the script was changed. NOT CLAIMED: how many other pipelines' CHANGELOGs are missing entries from this cause (not censused), or that the source-map record itself is wrong (it committed and is scoped to 1 row, with 6 pipeline rows explicitly NOT touched)."
+  }
+]
+```
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-W21-S1",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~21",
+    "surfaced_at": "2026-09-14T19:02Z",
+    "one_line": "THE DOWNSTREAM CELL'S ACCEPTANCE INSTRUMENT CANNOT FAIL. AT5-s-8 (R1) is recorded as running this cell's guarded seeder as a DRY RUN after the retag and expecting 0 PRESERVED. The guard computes its conflicts at :295 as 'conflicts = _yang_conflicts(yang_table, sec) if upload else []' -- so on the dry-run path the conflict list is [] BEFORE any comparison happens, the run performs ZERO get_item calls, and 0 PRESERVED / rc=0 is the ONLY value that path can emit. Measured on the applied bytes: a dry run over a store that WOULD lose 4 of 4 five-class values reads byte-identical to a dry run over a store with nothing to lose.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE GATING LINE, AT ITS VINTAGE: data/black_diamond/scripts/classification/seed_canonical_securities.py:295 @8cad052620 reads exactly '            conflicts = _yang_conflicts(yang_table, sec) if upload else []' (printed with cat -n, not grepped). The refusal block it feeds is :296-302 and the rc=1 return is :335-341.",
+        "THREE-ARM PROBE ON THE APPLIED BYTES (blob 803721e2c15464ed4ba054a02aba2311d5506164), same conflicting store, boto3 faked in-process so no live table is opened: A upload=True  -> rc=1, 8 [PRESERVED] lines, 1 REFUSED line, 57 get_item; B upload=False -> rc=0, 0 [PRESERVED], 0 REFUSED, 0 get_item; C upload=False over a store that AGREES with the seeder -> rc=0, 0, 0, 0. ARMS B AND C READ IDENTICALLY on every column, so the dry run does not distinguish 'nothing would be clobbered' from 'four rows would be'.",
+        "THE ZERO IS STRUCTURAL, NOT EMPIRICAL: arm B performs 0 get_item calls against a table whose rows exist. The guard never looks, so no input could make the dry run report a conflict -- this is not a case of the probe happening to find none.",
+        "THE EXPECTATION AS WRITTEN: org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-V3-1.apply-the-seeder-guard.md @8cad052620 <decomp_ref>, verbatim: 'DOWNSTREAM: AT5-s-8 (R1) runs your guarded seeder's dry run after the retag and expects 0 PRESERVED.'",
+        "THE ARM THAT DOES DISCRIMINATE EXISTS AND IS ALREADY MEASURED IN THIS CELL: upload=True refuses with rc=1 and 8 [PRESERVED] lines on the same store (V3-AC4), and --force still overrides (rc=0, CLOBBERED 4 of 4). So the guard is sound; it is the DRY-RUN READING of it that carries no information."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-V3-1 <decomp_ref> @8cad052620: 'DOWNSTREAM: AT5-s-8 (R1) runs your guarded seeder's dry run after the retag and expects 0 PRESERVED.' The same order's V3-AC4 requires this worker to prove the guard by a run that REFUSES with rc=1 and prints [PRESERVED] -- i.e. the order itself uses the upload path as the discriminating one.",
+    "world_is": "THE TWO READINGS ARE NOT THE SAME INSTRUMENT. The upload path refuses (rc=1, 8 [PRESERVED], 57 get_item); the dry-run path emits 0 PRESERVED and rc=0 unconditionally, having made 0 get_item calls. A downstream worker that runs the dry run and records '0 PRESERVED' will record a PASS from an instrument with no failing branch, and the record will be indistinguishable from a real one. NOTE THE DIRECTION: nothing errors, no gate fires, the guard is correct, and the only casualty is that AT5-s-8's acceptance reading would certify durability it never tested.",
+    "notes": "WHAT THIS WORKER DID NOT DO, DELIBERATELY: no edit to the guard (the patch is round 4's and was applied VERBATIM as ordered -- changing 'if upload' here would be repairing a criterion rather than meeting it, and the REFUSAL CLAUSE forbids it); no edit to the round-5 decomposition or to AT5-s-8, which are the issuer's surfaces and outside this order's <paths>; no message to any seat. FOR THE DISARM OWNER, THE CHEAP OPTIONS AS READINGS AND NOT AS A RECOMMENDATION: (a) AT5-s-8's acceptance names the upload arm, which already discriminates and needs no code change; (b) the dry-run path is given a read-only conflict preview, which is a change to a file this cell has now landed and would be a new order. WHICH ONE IS RIGHT IS NOT THIS WORKER'S CALL. DISARM, one falsifiable limb: AT5-s-8 is cut (or amended) so that the reading it records comes from an arm that has a failing branch, and a citing row says so."
+  }
+]
+```
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-W21-S2",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~21",
+    "surfaced_at": "2026-09-14T19:02Z",
+    "one_line": "V3-AC2's INVOCATION, RUN EXACTLY AS WRITTEN, CHECKS NOTHING. 'timeout 180 bash .tools/commit-gate.sh' takes its subjects from argv and the criterion supplies none, so it dispatches 0 files, prints 'WARN: commit-gate checked 0 of 0 file(s) -- NOTHING WAS CHECKED' and exits 0. The gate's own output says the quiet part out loud: 'This line is NOT evidence of a clean gate.' The criterion's <expect> names a subject the invocation cannot reach.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ARM AS WRITTEN, verbatim: $ timeout 180 bash .tools/commit-gate.sh -> 'WARN: commit-gate checked 0 of 0 file(s) -- NOTHING WAS CHECKED. / This line is NOT evidence of a clean gate. This gate reads only .py / .sh / .tf / org/projects/*.json; every other suffix falls through unexamined.' rc=0.",
+        "ARM WITH THE SUBJECT, verbatim: $ timeout 180 bash .tools/commit-gate.sh data/black_diamond/scripts/classification/seed_canonical_securities.py -> 'All checks passed! / OK: no unguarded strict-utf8 log reads. / OK: pre-commit gate clean for 1 of 1 file(s)' rc=0. DENOMINATOR MOVES 0 -> 1, which is the whole difference.",
+        "THE INTERFACE IS DECLARED IN THE TOOL'S OWN HEADER: .tools/commit-gate.sh @8cad052620 'Usage: .tools/commit-gate.sh data/black_diamond/scripts/gold/B_00.py', and its last line is 'exec python commit_gate_runner.py \"$@\"' -- subjects come from argv, never from the index or the working tree.",
+        "rc=0 IS DOCUMENTED AS COVERING BOTH STATES: the same header's exit-code table reads '0  every DISPATCHED file was checked and is clean; or nothing was dispatched at all'. So the exit code cannot separate the two arms either -- only the printed denominator can.",
+        "THE INSTRUMENT DOES FIRE WHEN GIVEN A SUBJECT: a planted 'def broken(:' .py returns 'BLOCKED: py_compile failed' rc=1, so the clean reading on the real subject is a measurement and not an instrument that passes everything."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-V3-1 V3-AC2 @8cad052620: <invocation>timeout 180 bash .tools/commit-gate.sh</invocation> with <expect> 'clean on the CHANGED file data/black_diamond/scripts/classification/seed_canonical_securities.py (py_compile + ds-precommit + ruff py39), output cited; the criterion's subject is that changed .py and nothing else (C-S93)'.",
+    "world_is": "THE INVOCATION AND THE EXPECTATION NAME DIFFERENT SUBJECTS. The invocation as written has an empty subject set; the expectation names exactly one file. Run literally it returns rc=0 over a denominator of ZERO, which satisfies a rc-only reading of the criterion while checking none of py_compile, ds-precommit or ruff against anything. This worker ran BOTH arms and reported both, and grades the criterion on the arm whose subject is the one the <expect> names.",
+    "notes": "FORM, NOT SIGNIFICANCE: this row states the mismatch between an invocation and its expectation and takes no view on whether the criterion should have been cut differently. The worker did not edit the criterion (the order's REFUSAL CLAUSE forbids repairing one, and the task-order file is the issuer's cut). WHY ARMED RATHER THAN INERT: the invocation text survives in the order and is the kind of line a later cut copies; a bare 'bash .tools/commit-gate.sh' in any future order records a pass from an instrument that examined nothing, and nothing in the output or the exit code distinguishes it -- only the 'N of N' line does, and it is a WARN. DISARM, one limb: a citing row (or an amended criterion) carries the invocation with its subject argument."
+  }
+]
+```
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-W21-S3",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~21",
+    "surfaced_at": "2026-09-14T19:02Z",
+    "one_line": "THIS WORKER RAN A THIRD READ-ONLY SCAN OF etf-classifications WHERE THE PREFLIGHT DECLARED TWO. The order's comp-iam preflight reads 'the live table is READ (two scans) and never written'; V3-AC7 asks whether the fields the guard OWNS are the fields R1 WRITES, and the guard owns 'name', which the two declared scans do not project. A third scan (projection ticker + name) was run to ground the judgment on a value rather than an assumption. Read-only, same IAM posture, no write, no --upload.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE DECLARATION: TO-V3-1 <preflight> @8cad052620 'comp-iam: DECLARED-NOT-APPLICABLE -- no role, policy or Terraform touched; the live table is READ (two scans) and never written.'",
+        "WHAT WAS RUN: .tools/aws dynamodb scan --table-name etf-classifications --filter-expression 'ticker IN (:a,:b,:c,:d)' --projection-expression 'ticker, #n' --expression-attribute-names '{\"#n\":\"name\"}' --no-paginate --output json -> Count 4, ScannedCount 285, no LastEvaluatedKey, rc=0. A scan is a READ; no write API was called in this cell at all and --upload was never passed.",
+        "WHY THE TWO DECLARED SCANS COULD NOT ANSWER IT: both carry --projection-expression 'ticker, asset_class, sub_asset_class', so 'name' is absent from their results by construction. The mutant control's baseline sets name=<ticker> (a synthetic value), which is why its output shows name CONFLICTS -- reading the live value was the only way to tell whether that conflict is real or an artifact of the fixture.",
+        "WHAT IT SETTLED, and it is the reassuring answer rather than the alarming one: live name EQUALS the seeder's asserted name on 4 of 4 -- VXX 'iPath Series B S&P 500 VIX Short-Term Futures ETN', UVXY 'ProShares Ultra VIX Short-Term Futures ETF', QBER 'TrueShares Quarterly Bear Hedge ETF', PDBC 'Invesco Optimum Yield Diversified Commodity Strategy No K-1 ETF'. So the guard's ownership of 'name' raises NO spurious refusal for these members, and the fixture's name conflicts were an artifact.",
+        "THE IAM POSTURE IS UNCHANGED BY THE COUNT: three dynamodb:Scan calls need the identical permission one needs. What the third read changes is the stated NUMBER in the preflight, which is why this row exists rather than being folded silently into the result."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-V3-1 <preflight> comp-iam @8cad052620: 'the live table is READ (two scans) and never written' -- a stated count of two.",
+    "world_is": "THREE READS WERE TAKEN: the V3-AC6 before-scan, the V3-AC6 after-scan, and one further projection of ticker+name to ground V3-AC7. The 'never written' half of the declaration holds exactly and was verified by the before/after pair (4 of 4 rows identical, ScannedCount 285 both). The 'two scans' half is now three. Filed because a worker states what it had to do that its order did not say, and judges the form of that rather than whether it mattered.",
+    "notes": "NO REMEDY IS PROPOSED AND NONE IS NEEDED FOR THE ACT ITSELF -- the read is sound, bounded and disclosed in the result and in the proof instance. The row exists so the preflight's count and the cell's actual behaviour are reconciled in the record instead of diverging quietly. INERT: a read leaves nothing armed behind it."
+  }
+]
+```
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-W21-S4",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~21",
+    "surfaced_at": "2026-09-14T19:02Z",
+    "one_line": "THE SEEDER'S MODULE DOCSTRING NOW CONTRADICTS ITS OWN EXIT CONTRACT. The patch this cell applied makes a conflicting --upload --yang run exit 1 and adds a --force flag, but the docstring at :13-19 still reads 'Idempotent: attribute-preserving update_item upserts -- the seeder's own fields are overwritten ... Safe to re-run at any time' and its Usage block lists three invocations, none of them --force. A reader of the header learns neither that the run can refuse nor how to override it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE DOCSTRING AT ITS VINTAGE: data/black_diamond/scripts/classification/seed_canonical_securities.py:13-19 @8cad052620 -- 'Idempotent: attribute-preserving update_item upserts -- the seeder's own fields are overwritten, every field it does not own (rationale, firm_origin, management_style, sector, ...) survives.  Safe to re-run at any time.' followed by 'Usage:' listing the dry run, --upload, and --upload --yang.",
+        "THE CONTRACT IT DESCRIBES CHANGED IN THE SAME FILE, THIS COMMIT: seed() now returns int and __main__ ends 'raise SystemExit(seed(...))' (:347-351); a conflicting run returns 1 (:335-341); --force is parsed at :344-346.",
+        "MEASURED rc VALUES ON THE APPLIED BYTES, same input: guard path rc=1, --force rc=0, dry run rc=0. Pre-patch the function returned None and the script exited 0 unconditionally. So the exit code carries information it did not carry before, and the header does not mention it.",
+        "OPERATIONALLY INERT, MEASURED RATHER THAN ASSUMED: a corpus search for 'seed_canonical_securities' returns 27 files -- the script itself, 4 scratch artifacts of this cell, and 22 record-class files (task orders, decompositions, deliverables, proof instances, an investigations channel, a change-management record). ZERO are invocations: no scheduler, no CI step, no wrapper script calls it. Nothing automated can be broken by the new nonzero exit.",
+        "THE FIRST-MINT HALF OF THE DOCSTRING REMAINS TRUE and was re-measured this cell: 53 rows still MINTED under the guard, identical to the pre-patch arm, because an absent row returns no conflict."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-V3-1 THE CELL @8cad052620 directs this worker to apply the round-4 diff (u3_proposed_patch.diff, +57/-2) and its REFUSAL CLAUSE states that a criterion cannot be 'repaired, widened or satisfied by another route'. The diff's own content is +57/-2 and touches no line of the module docstring.",
+    "world_is": "APPLYING THE DIFF VERBATIM NECESSARILY LEAVES THE HEADER STALE, because the header was never in the diff. The file is now internally inconsistent at the one place a human reads first: the docstring promises an unconditional overwrite and an always-safe re-run, while the code refuses and exits 1. This is a consequence of the instruction, not a defect in it -- and it is exactly the kind of thing a worker must not fix on its own initiative, since editing the docstring would put bytes in the commit that the approved patch does not contain.",
+    "notes": "NOT EDITED, ON PURPOSE. The <paths> grant does include this file, so the edit was POSSIBLE -- it was declined because the cell's instruction is to apply a specific reviewed diff and prove it, and a worker that also rewrites the surrounding prose has widened its own order and made the applied bytes differ from the bytes round 4 measured (they are currently byte-identical, sha256 dde708491f6fa73d, which is itself a V3-AC1 corroboration this row would have destroyed). INERT: no caller exists, so nothing is harmed by future normal operation; the cost is to the next human reader. Whoever next opens this file under an order that grants it can align the header in one hunk."
+  },
+{
+  "id": "POSN_ASTTAX-Z-W22-S1",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~22",
+  "surfaced_at": "2026-09-14T18:56Z",
+  "one_line": "'Hedge' CANNOT BE ADDED TO THE SUB-ASSET MAP BECAUSE IT IS ALREADY THERE -- AND IT IS BOUND TO THE WRONG CLASS FAMILY. At the pin e85f6eb84f, portal/src/lib/chartColors.ts:294 carries \"'Hedge': PALETTE.green900\" inside the block commented \"Fixed Income -- Green gradient\", while PRD v0.7 @99cc431075 s.4 C-SUB-ASSET encodes Hedge as a sub_asset_class under STRUCTURED (pink). TO-V5-1's V5-AC2 expects the diff to ADD 'Hedge'; an existing key cannot be added, so that clause is REFUSED with its measurement rather than satisfied by re-binding an existing line (the order's own refusal clause bars the repair). 'Volatility' at :307 PALETTE.blue900 -- inside the Equity blue gradient, PRD-bound for Structured -- SHARES THE MECHANISM and is named here so the sibling is not left for a later census to rediscover.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ AT THE PIN BY CONTENT, NOT FROM A WORKING TREE: `git -C portal show e85f6eb84f:src/lib/chartColors.ts` piped to a line-numbering read returns `294:  'Hedge':                  PALETTE.green900,` and `308:  'Commodities':            PALETTE.blue950,`. The same read returns NO 'Metals' key at any line -- so of the order's two named sub-assets, exactly ONE ('Metals') was genuinely absent and the other was present. DENOMINATOR: SUB_ASSET_COLORS held 21 keys at the pin.",
+      "THE FAMILY IS NOT INFERRED FROM THE TOKEN NAME, IT IS READ FROM THE FILE'S OWN SECTION COMMENT: chartColors.ts:285 `// Fixed Income -- Green gradient (base is green-500, avoid re-using it)` opens the block that contains 'Hedge' at :294; :296 `// Equity -- Blue gradient` opens the block that contains 'Volatility' (:307) and 'Commodities' (:308). green900 = #064e3b and blue900 = #1e3a8a are the 9th steps of the Fixed Income and Equity ramps respectively.",
+      "THE RULED PARENT IS THE PRD's, QUOTED: v0.7 @99cc431075 s.4 C-SUB-ASSET -- \"Sub-asset labels for the retag set: `Metals` = GLD, IAU, SLV; `Hedge` = VXX, VIXY, UVXY, QBER; `Real Estate` = VNQ ... ENCODING (L4): `Hedge` is a `sub_asset_class` value under `Structured`; the legacy TOP-level `asset_class` value `hedge` dissolves.\" C-RETAG-SET on the same section puts VXX, VIXY, UVXY, QBER in Structured.",
+      "WHAT THIS WORKER DID INSTEAD, MEASURED: 'Metals' was added (PALETTE.yellow500) and 'Commodities' moved blue950 -> yellow500; the 'Hedge' line was NOT touched. `git -C portal diff --stat e85f6eb84f -- src/lib/chartColors.ts` reads `1 file changed, 8 insertions(+), 1 deletion(-)` and the printed diff contains no 'Hedge' hunk. Portal commit c475e31e7014cb7e18ccf0c1cb6a335ad0720044 on branch wk-posn-5-22-portal, parent e85f6eb84f.",
+      "THE EXPOSURE IS NOT HYPOTHETICAL AND ITS TRIGGER IS ALREADY CUT: C-RETAG-SET (PRD s.4) moves VXX/VIXY/UVXY/QBER to Structured with sub_asset_class Hedge. On the day that retag lands, a Hedge row renders #064e3b -- the Fixed Income ramp's darkest green -- underneath a pink Structured parent, which is exactly FWD-4's ACCEPT clause 'no place shows a class in a color another uses for something else' failing at sub-asset grain."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-V5-1 (worker face and file, identical bytes) THE CELL: \"The sub-asset map (`:283-309`) gains `'Metals'` and `'Hedge'` (Andrew's ruled sub-assets)\"; criterion V5-AC2 EXPECT: the diff \"adds 'Metals' and 'Hedge' to the sub-asset map\". Both sentences assert that neither key exists at the pin.",
+  "world_is": "'Metals' is absent as asserted; 'Hedge' IS PRESENT at chartColors.ts:294 @e85f6eb84f bound to PALETTE.green900, inside the Fixed Income green gradient. The assertion is HALF TRUE, and the half that is false is the half a worker cannot satisfy by any act: you cannot add a key that exists, and re-binding it to the pink family is a design act this order does not grant (its own REFUSAL CLAUSE: 'never repaired, widened or satisfied by another route'). NOTE THE DIRECTION OF THE ERROR: the premise reads as a MISSING FEATURE and the world holds a MIS-FILED one, so a reader who trusts the premise concludes 'Hedge has no colour' when in fact it has a confidently WRONG one -- and a colour that exists is exactly what no absence-check will flag.",
+  "notes": "WHAT IS NOT CLAIMED: no view on which pink shade Hedge should take (PALETTE holds pink500 and pink600 only, and pink500 is now the Structured class base, so the sub-asset ramp under Structured has the same one-token problem recorded separately as POSN_ASTTAX-Z-W22-S3). No view on whether 'Volatility' should move with it. No PRD byte proposed. DISARM, one limb and falsifiable, owner 2.0.0_SA_COO~Z: a cut (F2 AT5-s-6, or a recut of AT5-s-5) grants a criterion that RE-BINDS the existing 'Hedge' key -- and, if ruled, 'Volatility' -- out of their old families, with the target token named by the issuer rather than chosen by a worker. Until then the keys stay as they are and this row stays open. The Attribution page's holdings-shared.tsx duplicate of SUB_ASSET_COLORS carries its own 'Hedge' and 'Commodities' lines and is KNOWN (W18-S2), OUT by Andrew's word, and deliberately NOT re-filed here."
+},
+{
+  "id": "POSN_ASTTAX-Z-W22-S2",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~22",
+  "surfaced_at": "2026-09-14T18:56Z",
+  "one_line": "THE GITLINK-STABILITY CHECK CANNOT PRINT EMPTY ONCE YOU OBEY THE ORDER THAT CONTAINS IT. V5-AC5 requires a commit INSIDE portal/ and, in the same clause, requires `git diff --submodule=log -- portal` at the worktree root to read '(printed, empty)'. Those two are mutually exclusive by construction: that command compares the superproject INDEX against the submodule's WORKING-TREE HEAD, so the instant the submodule commit exists the command prints a 'Submodule portal <pin>..<new>' line. It printed one here. The gitlink itself did NOT move -- `git ls-tree HEAD -- portal` and `git ls-files -s -- portal` both still read e85f6eb84f -- so the TO BODY's own bar (s.4, 'must show NO gitlink change STAGED OR COMMITTED by you') is MET while the criterion's literal read is not.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE LITERAL READ, VERBATIM, rc=0: `timeout 60 git diff --submodule=log -- portal` -> two lines, 'Submodule portal e85f6eb84f..c475e31e70:' and '  > POSN_ASTTAX.TO-V5-1 (AT5-s-5, F1): the colour registry gains Structured (pink) and Commodities (yellow, never amber)'. NOT EMPTY.",
+      "THE THREE READS THAT CARRY THE BAR'S INTENT, ALL MEASURED IN THE SAME CALL: (1) `git diff --cached --submodule=log -- portal` -> EMPTY, rc=0, so NOTHING IS STAGED; (2) `git ls-tree HEAD -- portal` -> '160000 commit e85f6eb84f3a1771a37011a7e77e372570bad02a\\tportal', so the gitlink RECORDED AT HEAD is the pin; (3) `git ls-files -s -- portal` -> '160000 e85f6eb84f3a1771a37011a7e77e372570bad02a 0\\tportal', so the INDEX gitlink is the pin too.",
+      "NO COMMIT OF THIS WORKER TOUCHES THE GITLINK: `git log --format='%H %an %s' SITEZ..HEAD -- portal` returns ZERO rows. The superproject HEAD is unchanged at 945d1ddd95aa5ab63cdcdf3ee47f1197d9bf8023 (2.0.0_SA_COO~Z's L6 issuance commit) at the time of this row.",
+      "THE MECHANISM IS GIT'S, NOT THIS ESTATE'S: `git diff` with no revision compares INDEX to WORKING TREE, and for a gitlink entry the working-tree side is the submodule's current HEAD. `--submodule=log` only changes how that difference is FORMATTED. There is no ordering of acts that satisfies both limbs, because the order mandates the act that creates the difference. A `git add portal` would silence the command by MOVING the gitlink -- the exact act s.4 forbids -- so the one route to a clean read is the violation.",
+      "NEGATIVE CONTROL ON THE INSTRUMENT: before the portal commit, at 14:33 this same command over this same path printed NOTHING. The command responds; it is the expectation that cannot be met after the mandated act."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-V5-1 criterion V5-AC5 EXPECT: \"one commit on wk-posn-5-22-portal authored 0.9.0_WK_POSN_ASTTAX~22, parent e85f6eb84f; and `git diff --submodule=log -- portal` in the worktree root shows NO gitlink change (printed, empty).\" TO body s.4: \"The superproject gitlink does NOT move: `git -C <worktree> diff --submodule=log -- portal` must show NO gitlink change staged or committed by you. Do not `git add portal`.\"",
+  "world_is": "The two sentences name the SAME command for TWO DIFFERENT BARS. s.4's bar is 'staged or committed' -- a claim about the INDEX and HEAD, which this command does not read. V5-AC5's bar is 'printed, empty' -- a claim about the command's STDOUT, which after any submodule commit is non-empty by construction. The first is met and measured three ways; the second is unsatisfiable. STAR: A WRONG INSTRUMENT ATTACHED TO A CORRECT BAR FAILS EVERY WORKER WHO OBEYS THE ORDER, AND PASSES ONLY THE ONE WHO DID NOT COMMIT. The failure is anti-correlated with compliance, which is the shape that makes it invisible -- a worker who skipped the portal commit would print an empty diff and read GREEN on this limb.",
+  "notes": "WHAT IS NOT CLAIMED: no view on whether V5-AC5 should be graded PASS on intent -- that is L9's and this worker offers none; the criterion is recorded FAIL-by-output in the proof-of-spec instance with all four reads printed beside it, so the grader decides on evidence rather than on a worker's charity. DISARM, one limb, owner 2.0.0_SA_COO~Z: the next portal-writing criterion on this project (F2 AT5-s-6 and F3 are already cut on this same slot and inherit the clause) names an instrument that reads the INDEX or HEAD rather than the working tree -- `git ls-tree HEAD -- portal` or `git diff --cached --submodule=log -- portal`, either of which is EMPTY-or-PIN exactly when the bar is met and non-empty exactly when it is violated. COST: none, it is a substitution of one read for another."
+},
+{
+  "id": "POSN_ASTTAX-Z-W22-S3",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~22",
+  "surfaced_at": "2026-09-14T18:56Z",
+  "one_line": "THE 'YELLOW FAMILY' IS ONE TOKEN WIDE, SO THE COMMODITIES SUB-ASSETS CANNOT BE A GRADIENT LIKE EVERY OTHER CLASS'S. PALETTE holds exactly ONE yellow: yellow500 #eab308 (chartColors.ts:78). Fixed Income has an 8-step green ramp and Equity a 10-step blue ramp, and the file's own comments say 'base is green-500, avoid re-using it'. With one token, 'Metals' and the generic 'Commodities' both land on PALETTE.yellow500 and render IDENTICALLY in the Positioning treemap. Minting yellow400/yellow600 would satisfy the convention but the order says 'Nothing else in the file moves', so the PALETTE was not touched.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TOKEN CENSUS OF THE YELLOW FAMILY, DENOMINATOR PRINTED: the node loader at deliverables/0.9.0_WK_POSN_ASTTAX~22/load_asset_class.js parses 65 PALETTE tokens out of the file itself (no hex re-typed). Of those 65, exactly ONE has a 'yellow' name: yellow500 #eab308 at :78, whose own comment reads 'electric yellow (not amber)'. The amber family (amber400 #fbbf24, amber500 #f59e0b, amber600 #d97706) is three tokens wide and is BARRED for this class by the order ('never amber (amber is Cash on six readers)') and by PRD C-COLOURS.",
+      "THE CONVENTION THE FILE STATES ABOUT ITSELF: chartColors.ts:285 'Fixed Income -- Green gradient (base is green-500, avoid re-using it)' over green100/200/400/600/700/800/900 plus white; :296 'Equity -- Blue gradient (base is blue-500, avoid re-using it)' over blue100/200/300/400/700/900/950. Both ramps deliberately avoid the class base. A one-token family can do neither.",
+      "WHAT WAS WRITTEN, AND IT IS A CHOICE THIS ROW DISCLOSES RATHER THAN HIDES: 'Commodities' -> PALETTE.yellow500 and 'Metals' -> PALETTE.yellow500, both the class base, both the same value. The diff is printed in full in the result document and in portal commit c475e31e70.",
+      "THE PRECEDENT FOR DUPLICATE VALUES IN THIS MAP IS REAL BUT IS A DIFFERENT CASE: 'Large'/'US Large Cap' both blue100, 'Mid'/'US Mid Cap' both blue200, 'International'/'EM'/'Emerging Markets' all blue700, 'Intermediate'/'Intermediate Duration' both green400 -- every existing duplicate is a pair of SYNONYMS for one bucket. 'Metals' (GLD, IAU, SLV) and 'Commodities' (DBC, GSG, USO, PDBC) are NOT synonyms; C-RETAG-SET lists them as disjoint memberships.",
+      "WHY THE PALETTE WAS NOT WIDENED: TO-V5-1 THE CELL, third bullet -- 'Nothing else in the file moves.' Adding a PALETTE token is a third structural change the cell does not name, and the preflight's own uncovered item (2) routes exactly this to a row: 'if the sub-asset map's grammar needs a different key shape, that is a row, not a redesign.'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-V5-1 THE CELL: \"'Commodities' leaves the blue family for the yellow one\" and V5-AC2 EXPECT \"moves 'Commodities' off PALETTE.blue950 to a yellow-family value\" -- the singular 'a yellow-family value' beside the plural 'family' presumes a family with more than one member, as the green and blue families have.",
+  "world_is": "The yellow family has exactly one member. Both new Commodities sub-asset keys therefore carry the identical hex #eab308 and are indistinguishable from each other on any surface that reads SUB_ASSET_COLORS. This VIOLATES NO RATIFIED BAR -- FWD-4's ACCEPT is class-level ('the same class is the same color everywhere', 'no place shows a class in a color another uses for something else') and the five ratified classes hold five DISTINCT values, measured 5 of 5 -- which is precisely why it is INERT and why it is filed rather than fixed: a sub-asset ramp is a design decision with an owner, and a worker inventing two hexes inside a criterion about class colours is how a registry acquires tokens nobody ratified.",
+  "notes": "WHAT IS NOT CLAIMED: no proposal of specific hexes; no claim that a one-colour Commodities family is wrong, only that it is DIFFERENT from how the other two populated families are built, and that the difference is now load-bearing because Commodities is a first-class member of the ratified five rather than a stray sub-asset. NOT A BLOCKER: this row does not hold any criterion open; V5-AC2's yellow-family clause is satisfied by output and V5-AC3 reads 5 of 5 distinct. If an owner rules a ramp is wanted, it is a PALETTE edit (yellow400/yellow600 are the Tailwind neighbours #fde047 / #ca8a04) plus a re-bind of these two keys -- one cut, no new mechanism."
+},
+{
+  "id": "POSN_ASTTAX-Z-W22-S4",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~22",
+  "surfaced_at": "2026-09-14T18:56Z",
+  "one_line": "MOVING 'Commodities' OFF NAVY ONTO YELLOW SILENTLY FLIPPED ITS CHIP TEXT FROM LEGIBLE TO NEAR-INVISIBLE, AND THE ONE LINE THAT WOULD FIX IT IS OUTSIDE THIS CELL. getSubAssetTextColor (chartColors.ts:313-320) returns white unless the background hex is in a hardcoded lightBackgrounds list; #eab308 is not in that list, so the new Commodities and Metals chips render WHITE ON YELLOW at WCAG contrast 1.92 where the old blue950 chip rendered white on #172554. Dark text on the same yellow reads 9.25. portal/CLAUDE.md:15-17 names light-on-light 'the #1 recurring portal UI defect'. The order says 'Nothing else in the file moves', so the list was not touched.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE FUNCTION, READ AT THE PIN AND UNCHANGED BY THIS COMMIT: chartColors.ts:313-320 `export function getSubAssetTextColor(bgHex: string): string { const lightBackgrounds: string[] = [PALETTE.white, PALETTE.green100, PALETTE.green200, PALETTE.green400, PALETTE.blue100, PALETTE.blue200, PALETTE.blue300, PALETTE.blue400]; return lightBackgrounds.includes(bgHex) ? PALETTE.gray900 : PALETTE.white }`. DENOMINATOR: 8 entries, all green or blue ramp steps or white; ZERO yellow, ZERO pink, ZERO orange, ZERO amber.",
+      "THE CONTRAST NUMBERS, COMPUTED BY deliverables/0.9.0_WK_POSN_ASTTAX~22/ac7_swatch_readings.py (WCAG 2.x relative-luminance formula), rc=0: white #ffffff on yellow500 #eab308 = 1.92; gray900 #111827 on the same yellow500 = 9.25. For comparison the chip this replaced: blue950 #172554 is dark, so white on it is the legible pairing the old code got for free.",
+      "THE LAW THIS SITS UNDER, QUOTED FROM portal/CLAUDE.md:15-17: 'Light text, light buttons, and ghost-white fills (text-white*, text-{color}-100..300, bg-white/N) are ILLEGAL directly on the canvas -- they render near-invisible. This is the #1 recurring portal UI defect; TicketCenter shipped with it 2026-07-14 and was caught by Andrew, not by any control.' The same file's verification law, :54-55: 'A grep cannot see contrast. Before committing any new page or visual change, render it and READ the screenshot.'",
+      "THE SCOPE CLAUSE THAT BARS THE ONE-LINE FIX: TO-V5-1 THE CELL, third bullet -- 'Nothing else in the file moves.' Adding PALETTE.yellow500 to lightBackgrounds is a fourth change to a FUNCTION the cell never names, in a criterion set (V5-AC2) whose expectation ends 'and touches nothing else'. Making it would have failed V5-AC2 by widening; not making it ships the contrast.",
+      "IT IS A REGRESSION IN DIRECTION, NOT A PRE-EXISTING GAP: before this commit no ratified class reached a light SUB_ASSET_COLORS value outside the eight already listed -- every non-listed value (green600..900, blue700..950) is dark, so white was right every time. yellow500 is the FIRST light background this map has carried that the list does not know about. The function was correct for the map as it stood and is wrong for the map as of c475e31e70."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-V5-1 THE CELL: \"The sub-asset map (`:283-309`) gains 'Metals' and 'Hedge' ... and 'Commodities' leaves the blue family for the yellow one\" AND \"Nothing else in the file moves\"; V5-AC2 EXPECT ends \"and touches nothing else\". The cell treats SUB_ASSET_COLORS as a leaf -- a value table whose entries can be changed without reaching anything else.",
+  "world_is": "SUB_ASSET_COLORS IS AN INPUT TO A FUNCTION IN THE SAME FILE, and that function branches on the VALUE, not on the key. Changing a value therefore changes rendered TEXT COLOUR at a site the cell does not mention, and the change lands on the light side of a law the portal calls its #1 recurring defect. STAR: THE EXCLUSION CLAUSE AND THE DEFECT ARE THE SAME SENTENCE -- 'touches nothing else' is what makes the edit safe to review AND what forbids the line that keeps it legible, and nothing in the criterion set can see the coupling because no criterion reads the function.",
+  "notes": "WHAT IS NOT CLAIMED: this is NOT graded as a verdict on legibility -- V5-AC7 is judgment=true and is 3.0.0_SA_CVO~Z's at L9; the numbers above are recorded readings and this row offers no threshold. NOT READ, STATED: no rendered swatch or screenshot was taken -- portal/CLAUDE.md's own verification law says a grep cannot see contrast, and this worker's <paths> grant holds no page, no scripts/ path and no route on which to render one; ui-smoke.mjs renders APP PAGES and there is no page that displays a Commodities or Metals chip until the retag lands. So the contrast figures are COMPUTED, not OBSERVED, and that distinction is part of the finding. DISARM, one limb, owner 2.0.0_SA_COO~Z: a cut grants a criterion that either adds PALETTE.yellow500 to getSubAssetTextColor's lightBackgrounds list (one line, same file) or replaces the hardcoded list with a luminance test, AND renders the result per portal/CLAUDE.md:54-55. Until then the chips ship white-on-yellow the moment C-RETAG-SET lands."
+},
+{
+  "id": "POSN_ASTTAX-Z-W22-S5",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~22",
+  "surfaced_at": "2026-09-14T19:15Z",
+  "one_line": "V5-AC1 IS A PRE-WRITE PRECONDITION WHOSE INVOCATION READS DIFFERENTLY THE MOMENT THE ORDER IS OBEYED, AND NOTHING IN THE CRITERION SAYS SO. Its expectation names the literal pin e85f6eb84f3a1771a37011a7e77e372570bad02a and demands `merge-base --is-ancestor` rc 0 in BOTH directions. Measured before any write: HEAD = the pin, both directions rc 0 -- PASS. Measured after the portal commit the SAME ORDER mandates: HEAD = c475e31e70 and the forward test `--is-ancestor HEAD e85f6eb84f` exits 1, because HEAD is now exactly one commit AHEAD of the pin. The TO BODY scopes it correctly ('Before writing, verify it sits EXACTLY at the pin'); the CRITERION carries no such scope, so a grader who re-runs the printed invocation at L9 gets rc 1 and a hash that is not the expected string.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "BEFORE ANY WRITE, this session, three reads: `timeout 60 git -C portal rev-parse HEAD` -> e85f6eb84f3a1771a37011a7e77e372570bad02a rc=0; `git -C portal merge-base --is-ancestor HEAD e85f6eb84f` rc=0; `git -C portal merge-base --is-ancestor e85f6eb84f HEAD` rc=0. Both directions, as the criterion demands. The working tree was clean at that moment (`git -C portal status --short` printed nothing).",
+      "AFTER THE MANDATED PORTAL COMMIT, the identical three commands: rev-parse HEAD -> c475e31e7014cb7e18ccf0c1cb6a335ad0720044 rc=0; `--is-ancestor HEAD e85f6eb84f` rc=1; `--is-ancestor e85f6eb84f HEAD` rc=0. The rc 1 is the CORRECT answer to the question asked -- the pin is not a descendant of HEAD -- and it is the WRONG answer to the question the criterion means.",
+      "THE COMMIT IS ON THE PIN, WHICH IS WHAT THE PRECONDITION EXISTS TO GUARANTEE, and V5-AC5 measures it independently: `git -C portal log -1 --format='%P' wk-posn-5-22-portal` -> e85f6eb84f3a1771a37011a7e77e372570bad02a. So the property 'this branch was cut from the pin and nothing else was built on top' survives the commit; only the INSTRUMENT named in V5-AC1 stops being able to read it.",
+      "THE ORDER SCOPES IT AND THE CRITERION DOES NOT -- both quoted. TO body s.1: 'Before writing, verify it sits EXACTLY at the pin: `git -C portal rev-parse HEAD` == `e85f6eb84f` and `git -C portal merge-base --is-ancestor` TRUE in BOTH directions.' V5-AC1 <expect>: 'e85f6eb84f3a1771a37011a7e77e372570bad02a, and ... both exit 0 (both directions printed). Otherwise detach to the pin and re-run; if it still fails, STOP with a row.' The word 'before' appears in the body only.",
+      "THE REMEDY CLAUSE IS THE SHARP EDGE: the criterion instructs 'Otherwise detach to the pin and re-run'. A grader or a re-runner who takes that branch at L9 would `git checkout --detach e85f6eb84f` inside portal/ and ABANDON commit c475e31e70 -- a destructive act prescribed by a criterion reading a state the order itself created. NAMED HERE SO NOBODY TAKES IT."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-V5-1 criterion V5-AC1 <invocation> `timeout 60 git -C portal rev-parse HEAD` <expect> 'e85f6eb84f3a1771a37011a7e77e372570bad02a, and `git -C portal merge-base --is-ancestor HEAD e85f6eb84f` AND the reverse both exit 0 (both directions printed). Otherwise detach to the pin and re-run; if it still fails, STOP with a row.'",
+  "world_is": "The expectation is TRUE exactly once -- before the order's own mandated write -- and FALSE ever after, on a correct execution. It was measured TRUE at that moment and is recorded PASS on that reading, with the post-commit reading printed beside it so the instance cannot be mistaken for a stale claim. WHY THIS IS INERT AND NOT ARMED, stated rather than assumed: L9's normal operation is the CVO reading the proof-of-spec INSTANCE against the specification (schema investigation_item.grades: 'the CVO reads the proof-of-spec instance against the specification that issued it'), and this instance carries BOTH readings, the vintage of each, and the independent parent-hash proof from V5-AC5. Left alone, the row's own disclosure is what a grader reads. It is filed because the alternative -- a grader re-running the command cold, seeing a foreign hash and rc 1, and taking the criterion's 'detach to the pin' branch -- is a route to DESTROYING the deliverable, and no criterion in this order warns of it.",
+  "notes": "SIBLING, NAMED BECAUSE IT SHARES THE MECHANISM AND NOT THE RESOLUTION: POSN_ASTTAX-Z-W22-S2 records V5-AC5's gitlink limb, which is the same class -- a criterion whose instrument is invalidated by the act the order mandates -- but has NO moment at which it reads clean, so it is recorded FAIL where this one is recorded PASS. The discriminator between the two is whether the order's own body supplies the missing scope: for V5-AC1 it does ('Before writing'), for V5-AC5 it does not. NOT CLAIMED: no proposal to amend V5-AC1; a precondition criterion is a legitimate shape and the fix is a scope word, which is the issuer's byte to write. F2 (AT5-s-6) and F3 are cut on this same slot against this same pin and will inherit the shape."
+},
+{
+  "id": "POSN_ASTTAX-Z-S66",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T19:28:48Z",
+  "one_line": "DISARM of W21-S1: R1's durability bar (V8-AC9) named the seeder's DRY RUN, whose conflict list is [] before any comparison, so 0 PRESERVED was the only value it could emit. AMENDED: V8-AC9 now names the UPLOAD arm against a scratch copy with boto3 faked in-process -- the arm TO-V3-1 itself proved discriminates (rc=1, 8 [PRESERVED], 57 get_item).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE DEFECT IS THE ISSUER'S CUT, not the guard: the guard is round 4's patch applied verbatim and works on its upload arm.",
+      "REMEDY LANDED IN THIS COMMIT: TO-V8-1 V8-AC9 rewritten to the upload arm on a scratch copy (boto3 faked, the V3 harness under deliverables/0.9.0_WK_POSN_ASTTAX~21/), expecting rc=1 and a [PRESERVED] line per disagreeing member and a get_item count > 0. TO-V8-1 is unspawned; the amendment reaches its worker as the file at HEAD.",
+      "WHY GRADUATED: the row named a real non-discriminating bar, the cost would have landed on another cell, and the fix is measured against the same three-arm probe the worker ran."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W21-S1"
+  ],
+  "spec_asserts": "TO-V8-1 V8-AC9 as cut: TO-V3-1's guarded seeder dry run against a SCRATCH copy of the post-retag table, expecting 0 PRESERVED.",
+  "world_is": "seed_canonical_securities.py:295 @8cad052620 reads `conflicts = _yang_conflicts(yang_table, sec) if upload else []`; the dry-run path makes 0 get_item calls and cannot fail. Measured three ways by the worker on the applied bytes.",
+  "notes": "The worker deliberately did not edit the guard's `if upload` -- correct: a read-only conflict preview on the dry-run path would be a second pattern; the cheap option (a) the row named is the one taken."
+},
+{
+  "id": "POSN_ASTTAX-Z-S67",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T19:28:48Z",
+  "one_line": "DISARM of W21-S2: `timeout 180 bash .tools/commit-gate.sh` with no argv dispatches 0 of 0 files and exits 0 -- an instrument that examined nothing. AMENDED where the order is unspawned (V4-AC5, V8-AC7 now name their subject files); V1-AC3 and V2-AC3 are LIVE on ~19/~20 and are NOT amended mid-run -- carried to L9 with this row in hand.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "REMEDY LANDED IN THIS COMMIT: TO-V4-1 V4-AC5 names its four changed files; TO-V8-1 V8-AC7 names etf_classification.py. Both orders are unspawned, so their workers receive the amended file.",
+      "NOT AMENDED, STATED: TO-V1-1 V1-AC3 and TO-V2-1 V2-AC3 are held by live workers whose worktrees carry the cut bytes; amending HEAD mid-run would make the instance's invocation and the governing file disagree at the drain (the S31 class). Their workers are expected to do what ~21 did -- run both arms and grade on the subject -- and 3.0.0_SA_CVO~Z grades those two criteria with this row in hand.",
+      "WHY GRADUATED: the mismatch is real and the same shape recurs in five orders of one cut; the two reachable ones are fixed and the two live ones are disclosed rather than silently left."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W21-S2"
+  ],
+  "spec_asserts": "TO-V3-1 V3-AC2 (and its siblings V1-AC3, V2-AC3, V4-AC5, V8-AC7) invoke `bash .tools/commit-gate.sh` bare while the expectation names a changed .py.",
+  "world_is": "The gate takes its subjects from argv; bare it prints WARN: commit-gate checked 0 of 0 file(s) -- NOTHING WAS CHECKED and rc=0. The worker ran both arms and graded on the subject arm (1 of 1).",
+  "notes": "A bare `bash .tools/commit-gate.sh` in a future cut is the same defect; the gate's own WARN line is the only tell, and it is a WARN."
+},
+{
+  "id": "POSN_ASTTAX-Z-S68",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T19:28:48Z",
+  "one_line": "DISARM of W22-S1: 'Hedge' already exists in SUB_ASSET_COLORS at chartColors.ts:294 bound to green900 under the Fixed Income gradient, while C-SUB-ASSET puts Hedge under Structured. MEASURED BY THIS SEAT: 0 of 285 served rows carry sub_asset_class Hedge today (filtered scan, no LastEvaluatedKey) -- the binding is DEAD. AMENDED: TO-V5-1 now orders the RE-BIND to a pink-family token.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE CENSUS THAT DECIDES IT, by this seat's instrument: dynamodb scan with filter sub_asset_class IN (Hedge, Volatility, Metals) -> Count 4 of ScannedCount 285, all four are Volatility (QBER, UVXY, VIXY, VXX); Hedge 0; Metals 0. So no live holding renders through the green Hedge binding today, and after R1 the four volatility tickers WILL carry Hedge -- under the stale binding they would render FI-green.",
+      "REMEDY LANDED IN THIS COMMIT: TO-V5-1 THE CELL and V5-AC2 amended to RE-BIND 'Hedge' to a pink-family token (pink600 exists at :62; pink500 is the class base), 'Volatility' left as is (dead at R1, not this cell's). The worker is resumed on the amended file.",
+      "WHY GRADUATED: the row named a real mis-filed binding the issuer's premise had read as a missing feature; the fix is bounded by a census, not a guess."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W22-S1"
+  ],
+  "spec_asserts": "TO-V5-1 THE CELL and V5-AC2: the sub-asset map gains Metals and Hedge -- asserting neither key exists at the pin.",
+  "world_is": "'Hedge' is present at :294 (green900, FI gradient); 'Metals' is absent. The worker refused the re-bind per the refusal clause and filed the row.",
+  "notes": "No PRD byte moves: C-SUB-ASSET's encoding stands; the portal's stale map is a code fact the cell now corrects."
+},
+{
+  "id": "POSN_ASTTAX-Z-S69",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T19:28:48Z",
+  "one_line": "DISARM of W22-S2: V5-AC5's gitlink instrument (`git diff --submodule=log -- portal` reading empty) compares the index to the submodule's WORKING-TREE HEAD and is non-empty by construction once the mandated portal commit exists -- it failed exactly the compliant worker. AMENDED in V5-AC5, V6-AC7 and V7-AC7: `git ls-tree HEAD -- portal` == the pin AND `git diff --cached -- portal` empty.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "REMEDY LANDED IN THIS COMMIT: the three criteria now read the INDEX and HEAD (`git ls-tree HEAD -- portal` printing 160000 commit e85f6eb84f... and `git diff --cached -- portal` EMPTY), exactly the worker's own four-way proof, cited by W22-S2.",
+      "MEASURED AT THE DRAIN by this seat: the superproject gitlink at 92cc84fab9 reads e85f6eb84f3a1771a37011a7e77e372570bad02a (ls-tree), so the drain moved no gitlink; refs/drains/posn-5-portal now points at c475e31e70 with the pin as its ancestor.",
+      "WHY GRADUATED: an instrument that passes only the worker who did not do the work is the failure the row named, and the replacement instrument is the one the worker measured."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W22-S2"
+  ],
+  "spec_asserts": "TO-V5-1 V5-AC5 (and the same clause inherited by TO-V6-1 V6-AC7 and TO-V7-1 V7-AC7): git diff --submodule=log -- portal shows NO gitlink change (printed, empty).",
+  "world_is": "The gitlink at HEAD reads e85f6eb84f (ls-tree, ls-files -s) and nothing is staged; the working-tree read prints Submodule portal e85f6eb84f..c475e31e70 the instant the commit exists. A wrong instrument on a correct bar, anti-correlated with compliance.",
+  "notes": "The order's BODY bar (staged or committed) was always met; only the criterion's stdout bar was unsatisfiable."
+},
+{
+  "id": "POSN_ASTTAX-Z-S70",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T19:28:48Z",
+  "one_line": "DISARM of W22-S4: getSubAssetTextColor branches on the background VALUE; moving 'Commodities'/'Metals' to yellow500 flipped their chip text to white-on-yellow (1.92:1, computed) while 'touches nothing else' barred the one-line fix. AMENDED: TO-V5-1 widened to the function (yellow500 into lightBackgrounds; pink only if measured below 4.5) and a new mechanical bar V5-AC8 prints the contrast per touched colour.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "REMEDY LANDED IN THIS COMMIT: TO-V5-1 THE CELL widened to add PALETTE.yellow500 to lightBackgrounds (and the pink token only if its white-text contrast measures below 4.5), and V5-AC8 added: a (key, background, text, ratio) table for every colour this cell touched, every ratio >= 4.5, with the 1.92 reading printed as the negative control. The placeholders declaration gains CONTRAST_CHECK.",
+      "NOT READ, CARRIED: the figures are COMPUTED (WCAG relative luminance), not observed on a rendered swatch -- no page shows a Commodities chip until R1; V5-AC7 (judgment) records that and L9 grades it.",
+      "WHY GRADUATED: the exclusion clause and the defect were the same sentence; the cell now names the coupled function instead of excluding it."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W22-S4"
+  ],
+  "spec_asserts": "TO-V5-1: Nothing else in the file moves / V5-AC2 touches nothing else -- treating SUB_ASSET_COLORS as a leaf value table.",
+  "world_is": "SUB_ASSET_COLORS feeds getSubAssetTextColor (:313-320 at the pin), whose lightBackgrounds set holds 8 green/blue/white entries and zero yellow, pink, orange or amber. Contrast computed by the worker: white on #eab308 1.92, gray900 on #eab308 9.25.",
+  "notes": "portal/CLAUDE.md:15-17 calls light-on-light the #1 recurring portal UI defect; this cut would have shipped one behind the freeze."
+},
+{
+  "id": "POSN_ASTTAX-Z-W20-S1",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~20",
+  "surfaced_at": "2026-09-14T19:05:00Z",
+  "one_line": "THE LEDGER TOOL V2-AC2 NAMES WRITES TWO FILES AND DEMANDS BOTH IN ONE COMMIT; THE ORDER'S <paths> GRANTS ONLY ONE OF THEM. `deploy_ledger.py open` writes the entry under org/critical_paths/change_management/ (granted) AND a sentinel at org/critical_paths/.open_deploys/<slug>.json (NOT granted), and prints 'REQUIRED COMMIT PATHSPEC (both, in the same commit -- the sentinel is the gate's only input and a worktree removed without it destroys the OPEN state, leaving the .md as an unindexed open ledger)'. A worker reading <paths> as its whole write surface commits the half that is granted and silently produces exactly the false-clean state the tool warns about.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN, not read: `python .tools/deploy_ledger.py open --slug posn-round5-b2-satellites-holdings ...` at 2026-09-14T18:44:36Z rc=0 in worktree /c/tmp/wk-posn-5-20 (branch wk-posn_asttax-5-20, cut from 945d1ddd95). It printed the entry path org/critical_paths/change_management/20260914T1844Z_posn-round5-b2-satellites-holdings_deploy_completion.md, 8 legs OPEN, AND the REQUIRED COMMIT PATHSPEC block naming org/critical_paths/.open_deploys/posn-round5-b2-satellites-holdings.json beside it. `git status --short -- org/critical_paths/` shows BOTH files staged by the tool itself (A, A) -- the worker did not stage them.",
+      "THE ORDER'S <paths> BLOCK, read at HEAD 945d1ddd95 from the file (git show HEAD:org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-V2-1.holdings-json-beside-registry-json.md), lists 11 entries; the only org/critical_paths entry is the directory `org/critical_paths/change_management/`. `.open_deploys/` is not named, and `_order_grants` (.tools/owned-paths-validate.py:162-174) grants a directory prefix ONLY for an entry ending in '/', so the named entry cannot reach the sibling directory.",
+      "THE MECHANICAL GATE DOES ADMIT IT, AND THAT IS WHY NOTHING REFUSES: check_agent (.tools/owned-paths-validate.py:275-284) resolves the LANE first by longest-match glob, and .owned-paths.yaml:1387 maps `org/critical_paths/**` to lane ANY with the note 'entries are written STRUCTURALLY by the mechanism that fires under the committing agent's author ... so any agent's legitimate ack or scan must not be lane-blocked'. So the two authorities disagree in the safe direction: the registry permits the write the task order's enumeration omits, and no commit-time refusal ever tells anyone.",
+      "THE COST IS ASYMMETRIC AND LANDS ON A THIRD PARTY: deploy_ledger.py's own docstring makes the sentinel the input to `check --red` ('ALSO sweeps change_management/*.md for an OPEN/non-terminal ledger with NO sentinel (the false-clean gate-bypass class) -> BYPASS line'). An entry committed without its sentinel is not merely untracked -- it is the shape the sweeper is built to catch, produced by a worker following its order exactly."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The worker bar: '<paths> IS your write grant (the lane gate admits a worker to exactly the paths its order names; a path you need that it lacks is a BLOCKING row on that criterion, never an override)'; and TO-V2-1 V2-AC2 names `python .tools/deploy_ledger.py open ...` as the criterion's own invocation, expecting 'the entry path printed with 8 legs OPEN'.",
+  "world_is": "The named invocation's contract is TWO files in ONE commit, and <paths> names one. Read strictly, the criterion the order issues cannot be satisfied within the grant the same order gives. This worker committed BOTH -- the lane registry admits org/critical_paths/** to ANY for exactly this mechanism-writes-under-the-agent's-author reason, and committing the entry without its sentinel would have manufactured the gate-bypass state the tool prints a warning about -- and files this row rather than treating the gap as settled. NOTE THE DIRECTION: nothing fails, no gate fires, and the worker who instead honours <paths> literally produces the WORSE outcome silently.",
+  "notes": "NOT WIDENED BEYOND THE ONE FILE THE TOOL WROTE: no other path outside <paths> is touched, and the sentinel is not edited, only committed as the tool staged it. NOT PROPOSED HERE: any change to .owned-paths.yaml (not this lane's file) or to the ledger tool. DISARM, one limb, falsifiable: the next task order that names deploy_ledger.py carries `org/critical_paths/.open_deploys/` in its <paths> block (or the issuer rules that the lane-ANY registry grant is the authority and the enumeration is not meant to be exhaustive for mechanism-written files) -- either lands as an act by the disarm owner and a citing row disarms this one. WHAT IS NOT CLAIMED: no view on whether the ledger tool SHOULD write two files; that is its owner's design and it prints its own contract clearly."
+},
+{
+  "id": "POSN_ASTTAX-Z-W20-S2",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~20",
+  "surfaced_at": "2026-09-14T19:05:00Z",
+  "one_line": "V2-AC3's INVOCATION AS WRITTEN CHECKS NOTHING AND EXITS 0. `bash .tools/commit-gate.sh` with no file arguments returned rc=0 and printed 'WARN: commit-gate checked 0 of 0 file(s) -- NOTHING WAS CHECKED. This line is NOT evidence of a clean gate.' -- the gate takes its subjects as ARGV (its own Usage block) and does not read the working tree or the index. The criterion's EXPECTATION ('clean on every changed .py and .tf') is therefore reachable only by passing the files; the INVOCATION beside it produces a vacuous pass that a reader comparing rc=0 against the expectation would accept.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN, both forms, same worktree, minutes apart. BARE: `timeout 180 bash .tools/commit-gate.sh` -> rc=0, output verbatim 'WARN: commit-gate checked 0 of 0 file(s) -- NOTHING WAS CHECKED. / This line is NOT evidence of a clean gate. This gate reads only .py / .sh / .tf / org/projects/*.json; every other suffix falls through unexamined.' WITH THE SIX CHANGED FILES AS ARGV: rc=0, 'OK: pre-commit gate clean for 6 of 6 file(s)' -- and on the first such run rc=1, 'BLOCKED: ruff check failed on ...negative_control_yang_not_added.py' (F401, unused import), i.e. the argv form CAN refuse and did refuse this worker.",
+      "THE GATE'S OWN HEADER STATES THE INTERFACE: 'Usage: .tools/commit-gate.sh data/black_diamond/scripts/gold/B_00.py' and '.tools/commit-gate.sh $(find ... -name \"*.py\")'. Nothing in it reads git status or the index, so the bare form has no subject to dispatch.",
+      "EXIT CODE 0 IS DOCUMENTED FOR THIS STATE: the header's own EXIT CODES block says 0 means 'every DISPATCHED file was checked and is clean; OR NOTHING WAS DISPATCHED AT ALL'. The gate already distinguishes the dangerous variant of this (rc=2 when a file whose suffix it DECLARES it reads reached zero checks) -- so the zero-subjects case is a deliberate, disclosed pass, not a gate defect.",
+      "THE DISCRIMINATOR THAT MATTERS: the bare run's output is BYTE-IDENTICAL whether the worktree is clean or carries six broken files, because the subject set is empty either way. It cannot distinguish the two states, which is the definition of a non-discriminating instrument."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-V2-1 V2-AC3: <invocation>timeout 180 bash .tools/commit-gate.sh</invocation> <expect>clean on every changed .py and .tf, output cited, both ASCII limbs read.</expect>",
+  "world_is": "The invocation and the expectation are not the same act. This worker ran BOTH and reports both verbatim, taking the ARGV form (6 of 6 clean, rc=0) as the criterion's evidence because the bare form's own output disclaims being evidence. STAR: THE GATE PRINTS ITS OWN DISCLAIMER, so the vacuous pass is loud here -- the hazard is that the DISCLAIMER, not the rc, is the only thing separating a real pass from an empty one, and a proof-of-spec row that cites 'rc=0' alone loses it.",
+  "notes": "NOT REPAIRED AND NOT WIDENED: no edit to commit-gate.sh (not this lane's file, and the tool is behaving as its header documents). DISARM, one limb, falsifiable: a future criterion naming this gate spells its subjects (`bash .tools/commit-gate.sh <paths>` or `$(git diff --name-only ...)`), or the issuer rules the bare form acceptable with the argv run required by the EXPECT clause -- either is an act by the disarm owner and a citing row disarms this one. SIBLING CHECKED, per the remedy-leaks-one-field-over rule: this same shape would apply to any criterion whose invocation is a subject-taking tool run bare; not censused here, and no claim is made about other orders."
+},
+{
+  "id": "POSN_ASTTAX-Z-W20-S3",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~20",
+  "surfaced_at": "2026-09-14T19:22:00Z",
+  "one_line": "THE B2 DEPLOY CANNOT BE PLANNED FROM THIS WORKTREE: the sparse cone omits ONE file the cot-pipeline stack reads at EVALUATION time, and terraform evaluates the whole configuration before -target can narrow anything. `terraform -chdir=infra/aws/terraform/cot-pipeline plan -target=module.cot_satellites_registry_producer -target=aws_iam_role_policy.cot_satellites_registry_producer_s3` exits 1 with 'Invalid value for \"path\" parameter: no file exists at \"./../../ec2/cot-exporter/user-data.sh\"' -- raised by ec2.tf:68, a resource NEITHER target names. V2-AC8, and with it AC9 (apply), AC10 (0-diff), AC11 (QA invocation) and AC13 (record), are REFUSED rather than routed around: widening the cone is not this worker's act.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN, verbatim, in /c/tmp/wk-posn-5-20 (branch wk-posn_asttax-5-20 @97fe1221bd), AFTER a successful `terraform -chdir=infra/aws/terraform/cot-pipeline init -input=false` (rc=0, 'Terraform has been successfully initialized!', aws provider v5.100.0 installed): the scoped plan exits rc=1 with 'Error: Invalid function argument / on ec2.tf line 68, in resource \"aws_instance\" \"cot_exporter\": user_data = base64encode(file(\"${path.module}/../../ec2/cot-exporter/user-data.sh\")) / path.module is \".\" / Invalid value for \"path\" parameter: no file exists at \"./../../ec2/cot-exporter/user-data.sh\"'.",
+      "THE FILE IS NOT MISSING FROM THE REPO -- IT IS MISSING FROM THE CHECKOUT, and the two states are not the same finding. `git ls-tree HEAD -- infra/aws/ec2/cot-exporter/user-data.sh` returns 100644 blob 0545afd9264c86c419a5f39005d5667c5477c571; `ls infra/aws/ec2/` returns 'No such file or directory'; `git sparse-checkout list` returns 15 entries and the only infra ones are infra/aws/lambda/ci, infra/aws/lambda/cot-pipeline, infra/aws/lambda/v2_portal/_shared, infra/aws/terraform/cot-pipeline, infra/aws/terraform/modules. So the stack's own .tf is intact and would plan in a full checkout.",
+      "THE DENOMINATOR, so the remedy is exact rather than iterative: `comp-find 'file[(]|templatefile[(]|filebase64[(]|filemd5[(]|abspath[(]' infra/aws/terraform/cot-pipeline` reports 1 hit across 21 files scanned (corpus=all). ONE out-of-cone path reference in the whole stack: infra/aws/ec2/cot-exporter/user-data.sh. Adding `infra/aws/ec2` (or that single file) to the cone is the entire fix, and nothing else in the stack reads a path.",
+      "-target DOES NOT HELP AND THAT IS THE STRUCTURAL PART: terraform evaluates every .tf in the root module before a -target filter applies, so a stack is only plannable as a WHOLE. A worktree cone cut to the resources a cell touches is therefore not sufficient for a terraform cell -- it must cover every path any file in the stack reads.",
+      "WHAT IS ON THE WORLD RIGHT NOW, measured after the refusal, so nobody has to infer it: the new artifact IS uploaded (s3://opal-313476888478-lambda-artifacts/cot-pipeline/cot-satellites-registry-producer.zip VersionId mgzFeamx2_MIO_R.lBF6IYGUNM5aXcir, 105484 B, metadata content-sha256 eFToEJ0FNu1sMO7cJ1WNdRoGSVuNuHSM9ToBzHGkF1I=, ledger leg L2 closed) and the FUNCTION IS UNTOUCHED (`lambda get-function-configuration`: CodeSha256 WfuD8gLfKN2W9U3DUmk6pxfUDn3QW3tOuopTecNRCv0=, MemorySize 192, Timeout 60, LastModified 2026-08-28T02:45:45Z -- the PRE-change values). No code is deployed, no served key moved, holdings.json is still absent."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-V2-1 V2-AC8: <invocation>timeout 600 terraform -chdir=infra/aws/terraform/cot-pipeline plan -target=module.cot_satellites_registry_producer -target=aws_iam_role_policy.cot_satellites_registry_producer_s3 -out=.scratch/b2.tfplan</invocation> <expect>0 to add, exactly 2 to change ... 0 to destroy</expect>; and the spawn prompt: 'before the first plan run `terraform -chdir=infra/aws/terraform/cot-pipeline init -input=false` once in your worktree' and 'If a path your order names is not in your cone ... that is a BLOCKING row on that criterion, never a cone widening by you.'",
+  "world_is": "The init succeeded and the plan cannot be reached at all -- not 'a different resource in the plan' (the AC8 STOP condition the order anticipated), but NO PLAN OUTPUT, on an error in a resource neither target names. The cell's deploy half is unexecutable from the worktree it was issued into, and the defect is in the WORKTREE PROVISIONING rather than in the order, the code or the stack. NOTE THE DIRECTION: this fails LOUD and early, before any apply -- the dangerous variant would have been a cone that omitted a file terraform reads only at APPLY time.",
+  "notes": "REFUSED, NOT ROUTED AROUND: no `git sparse-checkout add`, no plan from the main tree (the spawn prompt forbids operating there), no -refresh=false or -lock=false variant, no hand-written plan. WHAT WAS COMPLETED AND IS UNAFFECTED: AC1 (both halves at HEAD), AC2 (ledger, 8 legs), AC3 (gate clean 6 of 6), AC4 (nine satellites on the live partition, every clause), AC5 (Yang-never-added, arms 1.87 vs 3.37), AC6 (package built from the pin, 6 members, moving-ref control REFUSED), AC7 and AC12 (reads that need no deploy). THE STANDING HAZARD, stated because it is a consequence of stopping rather than of the code: the new zip is the CURRENT version of that artifact key, and module.cot_satellites_registry_producer reads `data.aws_s3_object.artifact.version_id` AT PLAN TIME -- so the next apply of cot-pipeline BY ANYONE picks it up, deploying this code without AC9-AC11's verification. It is inside the signed blast radius (COO half @f381f6f402 / CTO half @af667548d1 both cover exactly this function and this key), the ledger entry is OPEN with L3-L8 unproven and `deploy_ledger.py check --red` blares past its 4h window, and this worker does not roll the artifact back unilaterally -- upload-then-plan is the module's own documented sequence ('Upload a new zip with build-and-upload.sh BEFORE running terraform plan'), and a second unverified world act by a blocked worker is worse than a disclosed one. DISARM, one limb, falsifiable: the cone gains infra/aws/ec2 (or the one file) and the deploy legs are run to completion by a worker in a worktree that can evaluate the stack -- OR the artifact is re-pointed to VersionId qXzZE63fhPXwG2dXU86eLbTh48cFn0vQ. Either is an act by the disarm owner and a citing row disarms this one."
+},
+{
+  "id": "POSN_ASTTAX-Z-S71",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T19:38:45Z",
+  "one_line": "DISARM of W20-S3 (BLOCKING): the cot-pipeline stack reads infra/aws/ec2/cot-exporter/user-data.sh at EVALUATION time (ec2.tf:68, a resource no target names) and slot ~20's sparse cone omitted infra/aws/ec2, so the B2 deploy could not be planned. REMEDIED: `git sparse-checkout add infra/aws/ec2` on /c/tmp/wk-posn-5-20 (15 -> 16 cone entries; the file is present); the worker is respawned on the deploy legs AC8-AC13 with its landed artifacts named.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE ISSUER'S CONE, NOT THE ORDER OR THE CODE: the worktrees were cut as sparse cones by this seat and the cot-pipeline cone listed infra/aws/terraform/cot-pipeline without the sibling directory its ec2.tf reads. Census at the cut, taken NOW: comp-find 'file(|templatefile(|filebase64(' over the three deploy stacks -> 3 hits across 58 files; ONLY the cot-pipeline hit reaches outside its own module dir (../../ec2/cot-exporter/user-data.sh); portal-auth's spa-fallback-function.js and yang-pipeline's yang-pipeline-definition.json are inside their cones, so slots ~19 and ~23 are not exposed to this defect.",
+      "REMEDY LANDED: cone widened on the worker's own worktree (its index, not the main tree); the branch wk-posn_asttax-5-20 is fast-forwarded to HEAD after this commit so the worker's tree carries these rows; the worker is respawned under the same serial with the artifact coordinates (producer commit 97fe1221bd, artifact VersionId mgzFeamx2_MIO_R.lBF6IYGUNM5aXcir, the 14-row instance with 9 PASS, ledger legs L3-L6 OPEN) and does not redo AC1-AC7 or AC12.",
+      "THE STANDING HAZARD THE ROW NAMED, carried until AC9 lands: the uploaded zip is the CURRENT version of the artifact key and the module reads data.aws_s3_object.artifact.version_id at plan time, so any cot-pipeline apply by anyone deploys B2's bytes without AC9-AC11's verification. Inside the signed radius (both halves name the key and the rollback VersionId qXzZE63fhPXwG2dXU86eLbTh48cFn0vQ); closed the moment V2-AC9 applies deliberately.",
+      "WHY GRADUATED: the row named a real provisioning defect, refused rather than routed around, and the remedy is one measured cone entry."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W20-S3"
+  ],
+  "spec_asserts": "TO-V2-1 V2-AC8: a scoped `terraform plan -target=...` producing 0 add / 2 change / 0 destroy.",
+  "world_is": "terraform evaluates the whole root module before -target narrows anything; the plan exits 1 on a file() the cone did not carry. Init had succeeded, so nothing upstream flagged it.",
+  "notes": "Recorded for every future cone: a Terraform stack's cone must include every path its file()/templatefile() calls reach at evaluation time, censused per stack before the worktree is cut."
+},
+{
+  "id": "POSN_ASTTAX-Z-S72",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T19:38:45Z",
+  "one_line": "DISARM of W20-S1: deploy_ledger.py open writes TWO files -- the entry under org/critical_paths/change_management/ (granted) and a sentinel at org/critical_paths/.open_deploys/<slug>.json (not named in <paths>) -- and demands both in one commit. RULED by the issuer: the lane registry's ANY grant on org/critical_paths/** IS the authority for mechanism-written files, and the worker committing both was correct; TO-V4-1's <paths> now names org/critical_paths/.open_deploys/ explicitly.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE RULING, with its instrument: .owned-paths.yaml grants org/critical_paths/** to ANY (the reason the registry gives is mechanism-writes-under-the-agent's-author); the worker grant is ADDITIVE and never revokes (owned-paths-validate.py:112-147), so a path the registry admits to ANY is admitted to the worker whether or not <paths> enumerates it. The enumeration in <paths> is the worker's WRITE GRANT for paths the registry does NOT already open; it is not an exhaustive list of every byte a named mechanism writes.",
+      "REMEDY LANDED IN THIS COMMIT: TO-V4-1 (unspawned) <paths> gains org/critical_paths/.open_deploys/ so the next deploy order says it. TO-V1-1 and TO-V9-1 are LIVE with the same shape and are not amended mid-run; their workers are expected to commit both files as ~20 did, and this row is the disclosure.",
+      "WHY GRADUATED: the row named a real gap between a mechanism's contract and an order's enumeration; the ruling and the amendment are both landed and falsifiable."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W20-S1"
+  ],
+  "spec_asserts": "TO-V2-1 <paths> grants org/critical_paths/change_management/ and V2-AC2 names deploy_ledger.py open, whose own output prints a REQUIRED COMMIT PATHSPEC of two files including org/critical_paths/.open_deploys/<slug>.json.",
+  "world_is": "A worker reading <paths> literally would commit the entry without its sentinel and manufacture exactly the false-clean state the tool warns about (an unindexed open ledger). The worker committed both under the registry's ANY grant and filed the row.",
+  "notes": "No change proposed to the ledger tool or to .owned-paths.yaml; the tool prints its contract clearly and the registry already admits the path."
+},
+{
+  "id": "POSN_ASTTAX-Z-S73",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T19:38:45Z",
+  "one_line": "DISARM of W20-S2: the same class as W21-S2 (Z-S67) -- V2-AC3's bare `bash .tools/commit-gate.sh` checks 0 of 0; the worker ran the subject arm (6 of 6 files clean) and graded on it. V2-AC3 was live when Z-S67 landed and is now complete on its evidence; TO-V4-1 and TO-V8-1 carry the subject in their invocations at HEAD.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Same finding, same disposition as Z-S67 (W21-S2): the unspawned orders were amended at 7e4c3c01bb; the live ones were disclosed. V2-AC3 is now a completed criterion whose deciding output is the subject arm, and 3.0.0_SA_CVO~Z grades it with both arms in the instance.",
+      "WHY GRADUATED: nothing remains to act on for this criterion; the class is already remedied where it could be."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W20-S2"
+  ],
+  "spec_asserts": "TO-V2-1 V2-AC3 invokes commit-gate.sh bare while its expectation names every changed .py and .tf.",
+  "world_is": "Bare it printed NOTHING WAS CHECKED rc=0; with the six changed files it printed OK: pre-commit gate clean for 6 of 6 file(s). The worker recorded both arms.",
+  "notes": "The bare form must not be copied into a future cut; the gate's WARN is the only tell."
+},
+{
+  "id": "POSN_ASTTAX-Z-W19-S1",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~19",
+  "surfaced_at": "2026-09-14T19:20Z",
+  "one_line": "build-and-upload.sh CANNOT BUILD yang-generate-positioning, AND THE DEFECT IS ONE LINE OF CONTROL FLOW, NOT THIS PACKAGE: set -e (:33) kills the BARE manifest-gate probe on the very rc=1 the block's own comment designs as the SKIP arm, so the script dies before the dispatcher at :311 ever reads it. The gate declares three outcomes (DECLARED->check, ABSENT->skip with a printed notice, UNREADABLE->refuse) and only two are reachable. Measured on BOTH arms in one session: yang-generate-positioning (BUILD_MANIFEST.json, no declared_blobs) rc=1 with no artifact; yang-generate-allocation-summary (NO BUILD_MANIFEST.json, so the block is skipped by its own -f guard) rc=0, uploaded, write VERIFIED. The script's own comment at :278 says 1 of 14 BUILD_MANIFEST.json in the estate carries declared_blobs -- so the bricked class is every OTHER manifest-carrying package, and nothing in the failure names the manifest gate.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "INVOCATION AS WRITTEN (V1-AC5): bash infra/aws/lambda/ci/build-and-upload.sh yang-pipeline yang-generate-positioning -> rc=1, last line printed 'OK: import-closure -- 2 packaged .py file(s)'; no SHA256 line, no upload, no source-map write. A bash -x trace ends on the manifest probe invocation followed immediately by the cleanup trap.",
+      "THE BYTES AT THE CITED LINES, PRINTED at vintage dbbbfb89b2 (2026-08-30, 0.7.0_AE_CloudOps) by git show of that commit piped to sed -n '33p;300p;311p' -- :33 is 'set -e'; :300 is the python probe invoked as a BARE command (not an if-condition); :311 is the assignment that reads its exit code into MANIFEST_DECL. The three-outcome design is stated in the block's own comment at :295-297.",
+      "THE PROBE'S OWN VERDICT, run standalone on the same package: BUILD_MANIFEST.json parses clean (keys authority, function, layer_dependencies, memory_mb, runtime, timeout_s, vendored_modules, vendoring), declared_blobs present: False, rc=1 -- i.e. the ABSENT arm the script says it wants to SKIP, never the UNREADABLE arm it says it wants to REFUSE.",
+      "DISCRIMINATING CONTROL on set -e, both arms: a one-line bash with set -e, a command exiting 1, then an assignment reading the exit code and an echo -- prints nothing and exits 1; the identical line WITHOUT set -e prints 'REACHED: RC=1' and exits 0. So the mechanism is measured, not inferred, and it is bash semantics rather than anything about this device.",
+      "NEGATIVE CONTROL that the script and the device are otherwise healthy: the sibling function in the SAME directory built and uploaded in the same session -- SHA256 8ok3+P8z/w2hDmcnMSLPWTmSlp5pXBEqY86hDiPl3A4=, s3://opal-313476888478-lambda-artifacts/yang-pipeline/yang-generate-allocation-summary.zip VersionId BxWpvrT9AKAV4p6Bl1o9vPYcz98NESHc, 'write VERIFIED: size=4774, sha256 metadata match'.",
+      "WORLD STATE AFTER THE REFUSAL, s3api head-object: yang-pipeline/yang-generate-positioning.zip is UNMOVED at VersionId xN0rrqJbABARS6vz9NqOS1zYfjxcIsFw, LastModified 2026-08-18T18:33:23Z, Metadata content-sha256 PRg64EGzQtLw7/HAhyN/jNP6rd01PrcLK4wKqCHAKfQ= -- byte-identical to the LIVE CodeSha256 and to the rollback VersionId the COO half names, so the rollback target is still the running artifact and nothing needs undoing."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "POSN_ASTTAX.TO-V1-1 V1-AC5 (@945d1ddd95) names the invocation bash infra/aws/lambda/ci/build-and-upload.sh yang-pipeline yang-generate-positioning and expects 'the script's own gate passes (no uncommitted source under infra/aws/lambda/), the artifact uploaded to yang-pipeline/yang-generate-positioning.zip with its base64 sha256 printed, and lambda-source-map.json updated'. The TO's preflight comp-adversary already declared it NOT covered that 'the issuer has not exercised build-and-upload.sh on this device since the reboot'. build-and-upload.sh:295-297 declares its own contract: 'Three outcomes now, never two: DECLARED -> check; ABSENT -> skip with a printed notice; UNREADABLE -> REFUSE'.",
+  "world_is": "THE ABSENT ARM IS UNREACHABLE. The probe at :300 is a BARE command under set -e, so its rc=1 terminates the script at :300 and the dispatcher at :311 is dead code for that arm; the printed-notice SKIP at :346-347 can never execute. The uncommitted-source gate V1-AC5 names is a header COMMENT (:17-19), not a runtime check, and it passed independently (git status --porcelain infra/aws/lambda/ empty against 6716 tracked files under that pathspec). STAR: THE FAILURE IS SILENT ABOUT ITS OWN CAUSE -- the script exits 1 with its LAST line reading 'OK: import-closure', so the reader's eye lands on a PASS and the next plausible story is a packaging problem in the function being built. It is not the function; the same script built its sibling minutes later. NO CELL CAN REPAIR THIS FROM INSIDE: infra/aws/lambda/ci/build-and-upload.sh is NOT in this order's paths grant (which carries lambda-source-map.json only), and the one-line fix (make :300 an if-condition, or let its rc reach :311) belongs to the lane that owns infra/aws/lambda/ci/. BAU_MANIFEST_SKIP=1 IS A LIVE ESCAPE AT :298 AND WAS DELIBERATELY NOT USED: satisfying a refused criterion by another route is exactly what this order's refusal clause forbids, and the escape also skips the UNREADABLE refusal arm.",
+  "notes": "WHAT THIS BLOCKS, NAMED SO THE COST IS NOT GUESSED: V1-AC5 (refused as written), and with it V1-AC7/AC8/AC9/AC10/AC11/AC12 for yang-generate-positioning -- the whole B1 deploy of function 1, and therefore AT5-s-8 (R1), which this cell GATES. WHAT IS NOT BLOCKED AND IS DONE: the code change itself is committed (e89fca26e2, commit-gate clean 2 of 2) and the branch rule is EXERCISED and lands Branch A (V1-AC4, OTHER=0 over 4237 leaf keys) -- so the moment the script can build, the deploy has its evidence already in hand and does not need re-measuring. THE DEPLOY LEDGER IS LEFT OPEN AND RED ON PURPOSE: deploy_ledger.py hold REFUSED the entry ('open APPLY/DEPLOY leg(s) L2, L4, L6 -- a half-landed deploy cannot be HELD'), which is the tool being right; L1 is closed with its proof, L2-L7 stay open, and org/critical_paths/change_management/20260914T1841Z_posn-round5-b1-positioning-generators_deploy_completion.md blares to the COO rather than ageing quietly. NOTHING IS HALF-LANDED IN THE WORLD: no apply ran, both Lambdas still run their pre-cell bytes, and the only artifact that moved is the allocation-summary zip, which is INERT until an apply points a function at it. ONE SUGGESTION, NOT AN ACT: the fix is one line and its blast radius is every yang/schwab/blackdiamond package with a manifest, so it wants the owning lane's hand, not this worker's."
+},
+{
+  "id": "POSN_ASTTAX-Z-W19-S2",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~19",
+  "surfaced_at": "2026-09-14T19:20Z",
+  "one_line": "V1-AC7's plan invocation CANNOT WRITE ITS OWN PLAN FILE: terraform -chdir=infra/aws/terraform/yang-pipeline resolves -out RELATIVE TO THE -chdir TARGET, so -out=.scratch/b1.tfplan tries infra/aws/terraform/yang-pipeline/.scratch/b1.tfplan and errors 'The plan file could not be written: open .scratch/b1.tfplan: The system cannot find the path specified.' The plan COMPUTES fine and then throws the result away -- and V1-AC8 and V1-AC12 both consume that same path.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "INVOCATION AS WRITTEN (V1-AC7) -> rc=1. Terraform read both data.aws_s3_object.artifact sources and refreshed both aws_lambda_function resources, then: 'Error: Failed to write plan file / The plan file could not be written: open .scratch/b1.tfplan: The system cannot find the path specified..'",
+      "The worker's .scratch/ EXISTS at the worktree root (/c/tmp/wk-posn-5-19/.scratch/, created at the first act and holding the delta-harness artefacts); the directory terraform actually tried is infra/aws/terraform/yang-pipeline/.scratch/, which does not exist and is NOT in this order's paths grant.",
+      "Same plan WITHOUT -out, run as a labelled diagnostic and NOT as the criterion: rc=0, 'Plan: 0 to add, 1 to change, 0 to destroy'.",
+      "terraform -chdir semantics: -chdir switches the working directory before any other flag is interpreted, so every relative path on the command line -- including -out -- is resolved from the target directory."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "POSN_ASTTAX.TO-V1-1 @945d1ddd95: V1-AC7's invocation is terraform -chdir=infra/aws/terraform/yang-pipeline plan -target=module.generate_positioning -target=module.generate_allocation_summary -out=.scratch/b1.tfplan, expecting 'Plan: 0 to add, 2 to change, 0 to destroy'. V1-AC8 then applies .scratch/b1.tfplan and V1-AC12 passes --plan .scratch/b1.tfplan to record-terraform-deploy. The spawn prompt tells the worker its scratch is /c/tmp/wk-posn-5-19/.scratch/, i.e. the WORKTREE ROOT's .scratch.",
+  "world_is": "THE PATH IN THE ORDER AND THE PATH TERRAFORM USES ARE DIFFERENT DIRECTORIES, and the order reads as if they were the same one. The criterion fails on a FILESYSTEM error AFTER a successful plan -- the expensive part ran, the state was refreshed, and the only thing lost is the artifact the next two criteria consume. STAR: A -chdir PLAN IS NOT WHERE YOU ARE STANDING. Three criteria in one order share this path and all three inherit the same wrong directory, so the defect is not local to AC7. It is INDEPENDENT of this order's other blocker: fixing build-and-upload.sh would not make AC7 pass, and the error would surface at the APPLY instead, which is a worse place to find it.",
+  "notes": "NOT REPAIRED AND NOT WORKED AROUND: writing to infra/aws/terraform/yang-pipeline/.scratch/ is outside this order's paths grant, and re-writing the criterion's own invocation is what the refusal clause forbids. RECORDED SO THE RE-CUT IS ONE EDIT: either an absolute -out or a path relative to the -chdir target, consistently across AC7, AC8 and AC12. The diagnostic plan's OWN reading is evidence the re-cut will want: with only the allocation-summary artifact moved, the true count is 1 to change, not 2 -- and that is a consequence of S1, not of this row."
+},
+{
+  "id": "POSN_ASTTAX-Z-W19-S3",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~19",
+  "surfaced_at": "2026-09-14T19:20Z",
+  "one_line": "V1-AC3's invocation is bash .tools/commit-gate.sh with NO FILE ARGUMENTS, and that gate checks the files you hand it -- so as written it returns rc=0 having checked NOTHING, while the criterion's expectation grades 'clean on BOTH changed .py files'. The gate itself prints the warning that names the trap: 'commit-gate checked 0 of 0 file(s) -- NOTHING WAS CHECKED. This line is NOT evidence of a clean gate.'",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "INVOCATION AS WRITTEN: timeout 180 bash .tools/commit-gate.sh -> rc=0, output: 'WARN: commit-gate checked 0 of 0 file(s) -- NOTHING WAS CHECKED. / This line is NOT evidence of a clean gate. This gate reads only .py / .sh / .tf / org/projects/*.json; every other suffix falls through unexamined.'",
+      "THE SAME GATE WITH THE TWO CHANGED FILES (what the expectation grades): 'All checks passed! / OK: no unguarded strict-utf8 log reads.' twice, then 'OK: pre-commit gate clean for 2 of 2 file(s)', rc=0.",
+      "commit-gate.sh's own Usage block (:41-44) takes paths as argv. Its documented rc=0 meaning is explicit that 'nothing was dispatched at all' is one of the two states it covers.",
+      "INDEPENDENT CONFIRMATION that the files are genuinely clean: safe-commit.sh ran the same gate on its own dispatched set during the L1 commit -- '[commit-gate] OK: pre-commit gate clean for 2 of 3 file(s)' (the third path is the .md ledger entry, not a gate subject)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "POSN_ASTTAX.TO-V1-1 @945d1ddd95 V1-AC3: the invocation is timeout 180 bash .tools/commit-gate.sh, with the expectation 'clean on BOTH changed .py files, output cited; both ASCII limbs checked'.",
+  "world_is": "THE INVOCATION AND THE EXPECTATION GRADE DIFFERENT THINGS, and the invocation's answer is an rc=0 that means the opposite of what a hurried reader takes it for. This one is SELF-DEFENDING -- the tool prints its own denominator and refuses to be cited as a pass -- which is exactly why it is worth a row rather than a silent fix: the same shape in a tool that printed nothing would have been a clean vacuous PASS. BOTH FORMS WERE RUN AND BOTH ARE RECORDED in this worker's proof instance; the criterion is graded on the two-file form, which is what the expectation names, and the bare form's verbatim output is carried beside it so the grader can see the difference rather than take this worker's word for it.",
+  "notes": "NO REPAIR PROPOSED TO THE GATE -- it is behaving exactly as documented and its warning is the reason this was caught in seconds. The re-cut is one edit to the ORDER: name the two paths in the invocation. ASCII LIMBS, both read as the criterion asks: the staged-.py arm is WARN-ONLY and both files measure PURE ASCII by the len(bytes) minus len(decoded) detector returning 0 (and pure LF, 0 CRLF); the commit-MESSAGE arm is BLOCKING and passed inside safe-commit at the L1 commit ('[msg-verify] MATCH len=2335')."
+},
+{
+  "id": "POSN_ASTTAX-Z-W19-S4",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~19",
+  "surfaced_at": "2026-09-14T19:20Z",
+  "one_line": "deploy_ledger.py open PRINTS A 'REQUIRED COMMIT PATHSPEC' naming org/critical_paths/.open_deploys/<slug>.json, and that path is NOT in this order's paths grant -- so the receipt instructs the worker to commit a file its write grant does not cover. The tool's own docstring (:215) says the fix is 'the L6 cut naming org/critical_paths/.open_deploys/<slug>.json in the order's paths', which is precisely what this cut does not do.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "V1-AC2 output: 'REQUIRED COMMIT PATHSPEC (both, in the same commit -- the sentinel is the gate's only input and a worktree removed without it destroys the OPEN state, leaving the .md as an unindexed open ledger)', naming org/critical_paths/.open_deploys/posn-round5-b1-positioning-generators.json and the change_management .md.",
+      "The order's paths grant carries org/critical_paths/change_management/ and NOT org/critical_paths/.open_deploys/; the .md half was committed at e89fca26e2, the sentinel half was not.",
+      "deploy_ledger.py:215 states the remedy as an L6 duty: 'the L6 cut naming org/critical_paths/.open_deploys/<slug>.json in the order's paths'. :248 and :442 state that close UNLINKS the sentinel, so an entry opened and closed inside one session leaves nothing to commit.",
+      "The tool STAGED both files itself at open (git status --porcelain showed 'A' on both), which is also how a worker that never runs git add ends up with a staged path outside its grant."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "POSN_ASTTAX.TO-V1-1 @945d1ddd95 grants org/critical_paths/change_management/ (and seven other paths), and the worker contract states that the paths block IS the write grant -- 'a path you need that it lacks is a BLOCKING row on that criterion, never an override'. V1-AC2's invocation is python .tools/deploy_ledger.py open, whose receipt requires committing the sentinel.",
+  "world_is": "THE ORDER COMMANDS AN ACT WHOSE RECEIPT REQUIRES A PATH THE ORDER DOES NOT GRANT. It did not become BLOCKING here only because of a second, unrelated fact: this deploy never reached the world, the entry stays OPEN in this worktree, and close would have unlinked the sentinel anyway -- so the uncommitted sentinel costs nothing THIS time. The exposure it names is real and is stated in the tool's own receipt: if this worktree is force-removed before the entry closes, the sentinel dies and the committed .md survives as an OPEN ledger with NO sentinel -- the exact 'unindexed open ledger' class that deploy_ledger.py:987-1003 exists to catch, and one the sentinel-only check --red scan is blind to.",
+  "notes": "NOT OVERRIDDEN: the sentinel was left uncommitted rather than committed outside the grant. It sits in the worktree at org/critical_paths/.open_deploys/posn-round5-b1-positioning-generators.json, STAGED by the tool. The re-cut adds one line to the paths block. FLAGGED FOR WHOEVER DRAINS THIS BRANCH: the committed ledger .md reads OPEN (correctly -- the deploy is blocked by S1), so a drain that lands it without the sentinel lands an unindexed open ledger; the honest reading of that .md is 'this deploy is blocked and RED', not 'someone forgot to close a ledger'."
+},
+{
+  "id": "POSN_ASTTAX-Z-W19-S5",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~19",
+  "surfaced_at": "2026-09-14T19:20Z",
+  "one_line": "THE DISPLAY-NAME CHANGE CLASS IS EMPTY ON THIS INPUT. Both never-widen halves name b0e1f33471 (ETFS_INGEST TO-9-DS, the ETFClassifier display-name beautification) as one of THREE change classes the B1 deploy will show on the served bytes; the measured 69b867c4eb-vs-HEAD delta shows ZERO display-name differences -- 203 name leaf keys present in both payloads, 0 differing -- while the other two classes account for all 250 differences.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "V1-AC4 delta, both builds run locally against the SAME cached live input (s3://opal-data-portal-v2/benchmarks/model_20260911_v1.pkl VersionId jcG67EudvJWQd0.cguenteFECbQNJMa1, data_as_of_date 2026-09-11, plus 62 cached DynamoDB get_item responses and the cached json/portfolios/aum-metrics.json): added=250, removed=0, changed=1. CLASS display-name count=0; unrecognised-security-label 190; benchmark-row/allocation-key 60; volatile-run-clock 1 (generated_at); OTHER 0.",
+      "NEGATIVE CONTROL for the empty class (a class can read empty because the instrument cannot see it): name leaf keys present in BOTH payloads = 203, differing = 0, sample values non-trivial ('State Street SPDR Bloomberg 1-3 Month T-Bill ETF', 'iShares Core S&P 500 ETF', 'iShares Core U.S. Aggregate Bond ETF'). The classifier has a display-name rule and it fired on nothing because nothing moved.",
+      "INSTRUMENT VALIDATION: the local 69b867c4eb arm reproduces the LIVE SERVED artifact (VersionId 4Q1qjgD52FSKZ38EfHGqdKGHyJ_ktlka) at 3987 of 3987 leaf keys -- 0 added, 0 removed, 1 changed, and that one is generated_at. So the harness is faithful to the bytes actually running, and an absent difference is an absence rather than a blind spot.",
+      "b0e1f33471 IS in the shipped package: the vendored etf_classifications_dynamodb.py moved 6452 -> 14027 bytes between the two builds (+152 lines in the base..HEAD diff), so the beautification code is present in the HEAD arm and simply changes no served value for these 62 tickers."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "NEVER_WIDEN_ROUND5_COO_HALF.md (org/missions/D4/POSN/POSN_ASTTAX/ledger/, @f381f6f402): 'Three change classes on the served bytes: display names, the unrecognised-security label, the labelled-zero benchmark rows for the three new classes.' NEVER_WIDEN_ROUND5_CTO_HALF.md (@af667548d1): 'Expected served delta on positioning_data.json: display names per b0e1f33471, any holding the registry does not recognise moving from Equity to its unknown label, and the benchmark rows gaining labelled zeros.'",
+  "world_is": "TWO OF THE THREE PREDICTED CLASSES FIRED; THE DISPLAY-NAME CLASS PRODUCED NOTHING. This is a prediction that was safe rather than wrong -- a named class costing zero rows is the harmless direction, and Branch A holds either way because Branch A is bounded by what the delta may NOT contain. It is filed because the halves' value is that their predictions are CHECKED: an unchecked predicted class is indistinguishable from a class nobody measured, and the next reader of these halves should know that b0e1f33471 rode this deploy served-INERT on this input rather than assume the beautification landed and was verified. NOT CLAIMED: that b0e1f33471 is inert in general -- 62 tickers on one date is the denominator, and a ticker whose registry name differs from its PKL fallback on some other input would still move.",
+  "notes": "NO ACT REQUESTED. This does not change the deploy's authorization: the halves cover BOTH branches and an empty permitted class cannot widen the radius. Recorded for the L9 read of V1-AC13 (whether V1-AC4's classification was honest), where the useful fact is that the classifier's display-name rule EXISTED, had 203 keys in range, and returned zero -- rather than that display-name never came up."
+},
+{
+  "id": "POSN_ASTTAX-Z-W19-S6",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~19",
+  "surfaced_at": "2026-09-14T19:20Z",
+  "one_line": "V1-AC11 expects the SERVED payload to carry 'benchmark rows for those three reading an explicit 0 labelled no benchmark', but NO edit inside the cell's named write regions can put that LABEL into positioning_data.json: the only served structure keyed by asset class is the global benchmarks etf block at :2311-2325, its row emit is guarded by a not-empty test on the characteristics lookup (a ticker of None matches no row, so nothing is emitted), and THE CELL RESERVES every line outside BENCHMARK_ETFS / benchmark_etf_info / benchmark_allocation_for. The explicit ZERO is reachable and lands; the LABEL is not.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED on both local builds: benchmarks.etf keys are ['cash','equity','fixed_income'] in the 69b867c4eb arm AND in the HEAD arm -- the three no-benchmark classes produce no row there even with the three classes added to BENCHMARK_ETFS, because the characteristics lookup is empty for a ticker of None.",
+      "MEASURED, the explicit zero DOES land: 60 new leaf keys, all value 0 or 0.0 (30 at '0.0', 30 at '0'), across exactly four path shapes times three classes times five models -- allocation, benchmark.allocation, benchmark.spread.allocation and delta.",
+      "THE CELL'S OWN BOUND: 'Replace the fallback for structured, commodities, alternatives with an explicit zero row carrying the label no benchmark; benchmark_allocation_for (:513) carries the three keys at 0.0. Every other line of that file is NOT yours.'",
+      "CALL-SITE CENSUS of benchmark_etf_info in the HEAD file (2 sites, both read): :1140 is reached only with a class selected from BENCHMARK_ETFS, and :2312 iterates BENCHMARK_ETFS -- so before this change neither site could ever pass one of the three, and the cash fallback the cell calls 'a silent wrong' was UNREACHABLE from the served path. After this change the label reaches the served bytes only when one of the three wins the primary-benchmark selection, which needs a non-zero weight in that class -- i.e. after the R1 retag (AT5-s-8), which this cell gates.",
+      "For yang-generate-allocation-summary the same shape holds one layer down: BENCHMARK_ALLOCATIONS gains the three at an explicit 0.0, but the served row is built in aggregate_by_asset_class (:233), which the cell also reserves, and that function only emits rows for classes PRESENT in the holdings -- none today."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "POSN_ASTTAX.TO-V1-1 @945d1ddd95 V1-AC11 expects '...and benchmark rows for those three reading an explicit 0 labelled no benchmark; allocation_summary.json likewise'. THE CELL: BENCHMARK_ETFS (:178), benchmark_etf_info (:186-203) and benchmark_allocation_for (:513) are the worker's; 'Every other line of that file is NOT yours'; in the second function BENCHMARK_ALLOCATIONS (:46) is the worker's and aggregate_by_asset_class (:233) 'is NOT yours'.",
+  "world_is": "THE WRITE-BOUND AND THE SERVED EXPECTATION DO NOT MEET. Inside the named regions the label is carried in the CODE (a NO_BENCHMARK_LABEL constant, and each of the three entries carrying ticker None / allocation 0.0 / label 'no benchmark') and it becomes SERVED the moment one of the three is selected as a model's primary benchmark -- which is a real, durable fix to the gap the file's own comment at :1122-1127 names ('a portfolio whose LARGEST class is Structured, Commodities or Alternatives is benchmarked against something smaller than itself'). What it is NOT is a label visible in TODAY's payload, because today all three classes are 0.0 in all five models. V1-AC11 was never reached in this session (the deploy is blocked by S1), so this is a reading of the criterion against the code, not a failed served read.",
+  "notes": "WHAT WAS BUILT, stated plainly so the grader is not guessing at intent: the three classes were added to BENCHMARK_ETFS as explicit zero rows rather than to a sibling dict, because BENCHMARK_ETFS's membership is what the file's own design uses as the primary-benchmark candidate list (:1110 'the difference is that adding a benchmark is now ONE edit') -- a sibling dict would have left the three unable to win the selection and the label unreachable forever. KNOWN CONSEQUENCE, not hidden: the WARN loop at :1128-1137 now skips the three, because the condition it warns about (largest class has no benchmark ETF) is answered by the explicit row instead; its comment at :1122-1127 is therefore stale in the HEAD file and this worker did NOT edit it, the cell having reserved those lines. RESOLVED BY, if the CVO wants the label served today: either widen the cell by three lines at :2318 (emit a row when the returned has_benchmark is False) or accept the code-level label and grade V1-AC11 on the explicit zeros, which ARE measured present."
+},
+{
+  "id": "POSN_ASTTAX-Z-W19-S7",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~19",
+  "surfaced_at": "2026-09-14T19:45Z",
+  "one_line": "build-and-upload.sh's source-map writer SILENTLY RE-ENCODES THE WHOLE FILE: writing ONE function's artifact_sha256 also converted every \\u00a7 escape in eight UNRELATED entries (FIND_INSURE, news-semantic-clustering and others) into literal UTF-8 bytes, turning infra/aws/lambda/ci/lambda-source-map.json from PURE ASCII (0 non-ASCII at HEAD) into 28 non-ASCII bytes -- a 9-line byte diff carrying a 1-value semantic change, in the shared file every pipeline's deploys write.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED both ways on the same pair of files. BYTES: git show HEAD:infra/aws/lambda/ci/lambda-source-map.json -> 195313 bytes, non-ASCII 0; the worktree file after build-and-upload.sh -> 195226 bytes, non-ASCII 28. git diff --stat: 1 file changed, 9 insertions(+), 9 deletions(-).",
+      "SEMANTICS, parsed rather than diffed: exactly ONE leaf value differs across the whole document -- functions.yang-generate-allocation-summary.artifact_sha256, 'o7os25TtKP9rkS9WYzCcnIsagXfKrJ7hWuGEF7/iPfM=' -> '8ok3+P8z/w2hDmcnMSLPWTmSlp5pXBEqY86hDiPl3A4='. 0 added, 0 removed. So the other 8 changed lines carry NO semantic change at all: they are the same text re-encoded.",
+      "THE EIGHT ENTRIES TOUCHED belong to other projects entirely: find_insure_crawl_web, find_insure_serving_companies, find_insure_serving_employees, find_insure_serving_scoring, find_insure_serving_consolidate, the FIND_INSURE scraping-browser lambda, and further entries beyond line 416. Each changed line is a _build_note whose section sign moved from the \\u00a7 escape to the literal character.",
+      "DETECTOR, one expression and zero cost, the one CLAUDE.md names: len(b) - len(b.decode('utf-8')) reads 0 on the HEAD blob and 28 on the tool's output.",
+      "The JSON tool the script selected is printed in its own output: 'JSON tool: node'. The write is node's JSON.stringify round-trip, which does not preserve non-ASCII as escapes."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CLAUDE.md section 4: 'No non-ASCII in production code/logs/AWS', and the qualifier that governs exactly this case -- 'NON-APPLICATION: a file that is ALREADY pure ASCII (keep it that way)'. The same rule measures the cost: a default text-mode read on this device is cp1252, which RAISES only on a byte undefined there and otherwise decodes every other non-ASCII character to the WRONG character while reporting success. The section sign U+00A7 is defined in cp1252, so all 28 of these bytes are in the SILENT class. CLAUDE.md also records that .owned-paths.yaml -- another shared control file -- is already in that silent class at 204 characters.",
+  "world_is": "A ONE-VALUE WRITE RE-ENCODED A SHARED CONTROL FILE. The semantic change is correct and is the one this cell asked for; the collateral is 8 unrelated entries' bytes and the loss of the file's pure-ASCII property. THE DIRECTION IS THE DANGEROUS ONE: nothing fails, no gate fires, the JSON stays valid and every consumer keeps working -- the only casualty is that the next reader of a git diff sees 9 changed lines for 1 changed value, and that a file which used to raise loudly on a bad decode now decodes silently wrong on a cp1252 reader. IT IS NOT THIS DEPLOY'S DEFECT AND IT IS NOT LOCAL TO THIS PROJECT: any lane that runs build-and-upload.sh for any pipeline re-encodes whatever escapes happen to be in the file at that moment, so the property is lost on whichever deploy happens next and is re-lost after every restoration.",
+  "notes": "WHAT THIS WORKER DID, inside its own granted path and stated so it is not mistaken for a wider edit: infra/aws/lambda/ci/lambda-source-map.json IS in this order's paths, so the file was rewritten from HEAD's own bytes with a single textual substitution of the one sha256 value (occurrence count asserted == 1 before substituting), restoring 0 non-ASCII and reducing the commit to a 1-line diff that carries exactly the real change. NO entry belonging to another project was modified, and nothing was normalised. WHAT WAS NOT DONE: no edit to build-and-upload.sh (not in paths, and it is the same file row POSN_ASTTAX-Z-W19-S1 is about), and no repair of the eight entries -- they are already pure ASCII at HEAD and stay that way by this restoration, so there is nothing to fix as long as the next writer does not re-encode them again. THE DURABLE FIX belongs to the CI lane and is one option among the three the script already has: make the node writer emit ASCII-escaped JSON, or prefer the python3 writer (json.dump defaults to ensure_ascii=True), or stop round-tripping the whole document to set one key."
+},
+{
+  "id": "POSN_ASTTAX-Z-S74",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T20:01:05Z",
+  "one_line": "DISARM of W19-S1 (BLOCKING): build-and-upload.sh's manifest gate cannot reach its ABSENT arm under set -e (:33; the probe at :300 is a bare command), so every package whose BUILD_MANIFEST.json declares no blobs dies at the build with 'OK: import-closure' as its last line. RULED by the issuer: V1-AC5 runs under the script's OWN documented per-build override BAU_MANIFEST_SKIP=1 (:286-287, 'justify in the commit message'), which on THIS package skips a SKIP and never a check -- the worker prints the standalone probe (readable manifest, declared_blobs absent, rc=1) as the discriminator BEFORE the build, and an rc=2 refuses. The one-line control-flow fix belongs to CLOUD_OPS_OR_ETL (infra/aws/** AE-only) and rides the round analysis.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE RULING'S GRAIN: the override is the script author's own escape for exactly this arm ('Override per-build: BAU_MANIFEST_SKIP=1 (justify in the commit message)', :286); on a package whose manifest parses and declares no blobs, the gate's designed terminal state is SKIP-with-notice and the override reaches the same terminal state minus the notice. The one arm the override could hide (UNREADABLE) is closed by ordering the standalone probe FIRST and making rc=2 a refusal of the criterion.",
+      "NOT FIXED IN THIS ROUND, STATED: infra/aws/lambda/ci/build-and-upload.sh is outside every POSN cell and outside this seat's lane (.owned-paths.yaml: infra/aws/** CLOUD_OPS_OR_ETL; only lambda-source-map.json is carved out to YANG_PIPELINE_DEPLOY). Mid-round the spec and the decomposition are frozen; the fix is carried on W19-S1 for 1.0.0_SA_CTO~Z's round analysis: make :300 an if-condition (or `|| MANIFEST_DECL=$?`) so rc=1 reaches the dispatcher at :311. Class by the script's own count: every manifest-carrying package without declared_blobs.",
+      "WHY GRADUATED: the blocker is remedied on the order by the script's own documented mechanism with its discriminator printed; the durable fix has an owner and a carrier."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W19-S1"
+  ],
+  "spec_asserts": "TO-V1-1 V1-AC5 as cut: the script's own gate passes and the artifact uploads. The script's block comment at :295-297 promises three outcomes (DECLARED check / ABSENT skip with notice / UNREADABLE refuse).",
+  "world_is": "Two outcomes are reachable; the ABSENT arm exits the script. The worker measured the mechanism with a discriminating pair (set -e vs not) and the negative control (the sibling package with NO manifest built and uploaded in the same session). yang-generate-positioning.zip is UNMOVED at the rollback VersionId xN0rrqJbABARS6vz9NqOS1zYfjxcIsFw.",
+  "notes": "The escape is used ONCE, on one package, justified in the worker's commit message per the script's instruction; it is not a pattern for the next cut."
+},
+{
+  "id": "POSN_ASTTAX-Z-S75",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T20:01:05Z",
+  "one_line": "DISARM of W19-S2: `terraform -chdir=<dir> plan -out=.scratch/b1.tfplan` resolves -out inside the -chdir target, so V1-AC7 computed the plan and then failed to write it; V1-AC8 and V1-AC12 consume the same path. AMENDED: the three criteria name the ABSOLUTE native path C:/tmp/wk-posn-5-19/.scratch/b1.tfplan.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "WHY ABSOLUTE AND WHY DRIVE-LETTER: a chdir-relative form (../../../../.scratch/...) works for terraform but not for a consumer that runs without -chdir; a POSIX-absolute /c/... form is converted by MSYS before a native exe sees it; C:/... is untouched by MSYS and unambiguous under -chdir. safe-apply.sh forwards argv and parses only -chdir (:105-110); record-terraform-deploy.sh hands --plan to record-deploy-scope.py (:495), native python.",
+      "SAME CLASS ELSEWHERE IN THE ROUND: worker ~23 hit it on V9-AC7 (W23-S3) and reached the plan with a chdir-relative path; adjudicated at that drain.",
+      "WHY GRADUATED: one edit, three criteria, the same shape."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W19-S2"
+  ],
+  "spec_asserts": "TO-V1-1 V1-AC7/AC8/AC12 as cut: a plan path relative to the worktree root, read as if -chdir did not re-base it.",
+  "world_is": "terraform (native windows_amd64 v1.15.8) re-bases every relative path on its command line to the -chdir target; the worker's diagnostic plan without -out read 0 add / 1 change / 0 destroy (only the allocation-summary artifact had moved).",
+  "notes": "A future cut writes every -out/--plan path absolute when the invocation carries -chdir."
+},
+{
+  "id": "POSN_ASTTAX-Z-S76",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T20:01:05Z",
+  "one_line": "DISARM of W19-S3 and W19-S4 (INERT): two classes already ruled this round -- the bare commit-gate call that checks 0 of 0 (Z-S67) and the ledger sentinel under org/critical_paths/.open_deploys/ the registry's ANY grant admits (Z-S72). TO-V1-1 is now amended in both (the worker's run is complete, so the mid-run bar no longer binds): V1-AC3 names both files; <paths> names the sentinel dir; the worker commits the staged sentinel on the respawn.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "DISCLOSED, NOT HIDDEN: SITEZ at 5de98e278a carries the B1 ledger .md OPEN (1 of 7 legs closed, RED by design) WITHOUT its sentinel until the worker's next commit drains -- the 'unindexed open ledger' state deploy_ledger.py:987-1003 warns about; `check --red` is blind to it for that window. The honest reading of the .md is 'this deploy is blocked and in flight', not 'someone forgot to close a ledger'.",
+      "WHY GRADUATED: nothing new to rule; both remedies are landed on the order the respawned worker reads."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W19-S3",
+    "POSN_ASTTAX-Z-W19-S4"
+  ],
+  "spec_asserts": "TO-V1-1 V1-AC3 invocation bare; <paths> without org/critical_paths/.open_deploys/.",
+  "world_is": "The worker ran both commit-gate arms and graded on the two-file arm (2 of 2 clean); it left the sentinel STAGED and uncommitted rather than commit outside its enumeration, and said so.",
+  "notes": "Same disposition as Z-S67 / Z-S72; one row for two ids because the disposition is one."
+},
+{
+  "id": "POSN_ASTTAX-Z-S77",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T20:01:05Z",
+  "one_line": "DISARM of W19-S5 (INERT): a predicted change class measured EMPTY -- both halves name the b0e1f33471 display-name beautification as one of three classes the B1 deploy shows on the served bytes; the 69b867c4eb-vs-HEAD delta carries 0 display-name differences across 203 name keys while the other two classes account for all 250. Nothing to act on; carried for L9's V1-AC13 read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "WHY THIS CANNOT WIDEN THE RADIUS: Branch A is bounded by what the delta may NOT contain (OTHER = 0), not by what it must; a permitted class costing zero rows is the harmless direction. The halves' predictions were CHECKED, which is their value.",
+      "WHY GRADUATED: recorded so the next reader knows b0e1f33471 rode this deploy served-inert on this input rather than assuming the beautification landed and was verified."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W19-S5"
+  ],
+  "spec_asserts": "NEVER_WIDEN_ROUND5_COO_HALF.md @f381f6f402 and the CTO half @af667548d1: three change classes on the served bytes, display names among them.",
+  "world_is": "An empty permitted class on this input (62 tickers, 2026-09-11). The instrument was validated against the LIVE served artifact (3987 of 3987 leaf keys reproduced, generated_at the only difference), so the zero is an absence, not a blind spot.",
+  "notes": "No act requested; no PRD byte moves."
+},
+{
+  "id": "POSN_ASTTAX-Z-S78",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T20:01:05Z",
+  "one_line": "DISARM of W19-S6: V1-AC11's served label ('no benchmark') was unreachable from the cell's named write regions -- the global benchmarks block emits a row only when the characteristics lookup is non-empty, and ticker None matches nothing. RULED: the cell WIDENS by ONE emit in that block so benchmarks.etf.structured|commodities|alternatives are SERVED as labelled zero rows (ticker null, label 'no benchmark', characteristics null); allocation_summary.json keeps the code-level label (its row shape at :233 stays reserved and its served bytes do not move today, which becomes AC11's control).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED BY THIS SEAT BEFORE WIDENING, the live consumer: comp-find 'benchmarks\\.etf|benchmarks\\?\\.etf|\\.etf\\[' over portal/src at the pin (e85f6eb84f / drain ref c475e31e70) -> 0 hits across 557 files, corpus all. The live Positioning page reads benchmarks.etf nowhere, so three new keys under it are inert to the served page today and available to F2 (AT5-s-6), which is told at its hand-over to read benchmarks.etf[<class>].label.",
+      "INSIDE THE SIGNED RADIUS: the COO half names 'labelled-zero benchmark rows for the three new classes' as a permitted change class on positioning_data.json; a labelled row keyed by the class under benchmarks.etf IS that class. The worker's delta classifier admits the new path shape by name for exactly those three keys; OTHER remains the discriminator and V1-AC4 is re-run on the widened HEAD before any apply.",
+      "NOT WIDENED, STATED: allocation_summary.json's served row shape is aggregate_by_asset_class's (:233), reserved; a served label there would be a new field in a row shape another page reads, and no holding carries the three classes today, so its bytes do not move -- V1-AC11 now prints that as the control rather than asserting 'likewise'.",
+      "WHY GRADUATED: the endpoint's word is 'labelled'; a label no consumer can read is not served; the widening is one emit inside the same function the cell already owns."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W19-S6"
+  ],
+  "spec_asserts": "PRD v0.7 C-BENCHMARK and the aligned breakdown: the three new classes' benchmark rows are an explicit zero LABELLED 'no benchmark'; TO-V1-1 THE CELL reserved every line outside BENCHMARK_ETFS / benchmark_etf_info / benchmark_allocation_for.",
+  "world_is": "The explicit zeros land (60 leaf keys across four path shapes, measured); the label lives in the code and reaches the served bytes only when one of the three wins the primary-benchmark selection, i.e. after R1. The exclusion clause and the gap were the same sentence.",
+  "notes": "The stale comment at :1122-1127 and the WARN loop stay reserved; the round analysis may name them."
+},
+{
+  "id": "POSN_ASTTAX-Z-S79",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T20:01:05Z",
+  "one_line": "DISARM of W19-S7: build-and-upload.sh's source-map writer (node JSON.stringify round-trip) re-encodes every \\u00a7 escape in the shared lambda-source-map.json, turning a pure-ASCII file (0 non-ASCII at HEAD) into 28 silent-class bytes across eight unrelated entries for one changed value. ORDERED on V1-AC5 and V1-AC12: restore the file to pure ASCII from HEAD's bytes with only the changed values substituted, detector printed at 0 before each commit. The durable fix (ensure_ascii on the writer, or the python writer, or a keyed write) belongs to the CI lane and rides the round analysis.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE ORDER NOW CARRIES THE RESTORATION AS A BAR, not a habit: V1-AC5 expects the detector at 0 and a 1-insertion/1-deletion diff; V1-AC12 expects one follow-up commit if the recorder re-encoded.",
+      "NOT FIXED HERE: infra/aws/lambda/ci/build-and-upload.sh and record-terraform-deploy.sh are the CI lane's; carried on W19-S7 for the round analysis alongside W19-S1 (same file, same lane).",
+      "WHY GRADUATED: the property is protected on this deploy by a printed detector; the durable fix has an owner and a carrier."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W19-S7"
+  ],
+  "spec_asserts": "CLAUDE.md s.4: no non-ASCII in production code; NON-APPLICATION 'a file that is ALREADY pure ASCII (keep it that way)'. The recorder and the build script both write this file on every yang deploy (.owned-paths.yaml:1901 note).",
+  "world_is": "The worker restored the file (1-line diff, 0 non-ASCII) inside its own granted path at ac1eed675a; the next writer re-encodes it again unless the restoration is repeated after every write. U+00A7 is defined in cp1252, so every one of the 28 bytes is in the SILENT class.",
+  "notes": "A future writer of a pure-ASCII shared file prints the detector beside its diff stat."
+},
+{
+  "id": "POSN_ASTTAX-Z-S80",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T20:11:29Z",
+  "one_line": "DISARM of W23-S2 (INERT): the ledger sentinel under org/critical_paths/.open_deploys/ that V9-AC2's tool stages and V9's <paths> did not name -- the Z-S72 class. This cell opened and CLOSED its entry in one session (2713aec236), so the sentinel was unlinked at close and nothing crossed a commit boundary; the residual (a forced worktree removal between open and close) is exactly what naming the path in <paths> covers, and every order still to be handed (V4, V6, V7, V8 where a ledger opens) names it. V9 is not amended for a closed ledger.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RULED at Z-S72 (@f8a85ea77f): the registry's ANY grant on org/critical_paths/** admits the sentinel to every worker whether or not <paths> enumerates it; the enumeration is the order's own carrier of that fact, and it is now present in TO-V1-1 and TO-V4-1 at HEAD.",
+      "NOTHING TO ACT ON FOR V9: the entry is CLOSED with all 8 legs proven; there is no sentinel to commit.",
+      "WHY GRADUATED: same finding, same ruling, third order in one round; the class is closed at the cut for every unhanded order."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W23-S2"
+  ],
+  "spec_asserts": "TO-V9-1 <paths> names org/critical_paths/change_management/ only; deploy_ledger.py:213-216 says the L6 cut names the sentinel.",
+  "world_is": "The worker committed the .md inside its grant, left the sentinel staged, closed the entry, and the tool unlinked the sentinel -- net repo effect zero, no override.",
+  "notes": "The next issuance names org/critical_paths/.open_deploys/ in every order that opens a ledger, at the cut."
+},
+{
+  "id": "POSN_ASTTAX-Z-S81",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T20:11:29Z",
+  "one_line": "DISARM of W23-S3 (INERT): V9-AC7's -out=.scratch/b5.tfplan resolved under the -chdir target and could not be written; the worker reached the same bounded plan with a chdir-relative path and DISCLOSED it, and V9-AC8/AC12 consumed it the same way. RULED: the PASSED criteria are NOT rewritten after the fact (editing a passed criterion's invocation post hoc manufactures a record); the instance's output carries the path actually used and this row plus W23-S3 are the disclosure 3.0.0_SA_CVO~Z grades with. The class is remedied where it can be: TO-V1-1 (Z-S75) and TO-V4-1 (this commit) name ABSOLUTE native plan paths; TO-V2-1 is live on ~20 and is disclosed, not amended.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE ALIGNMENT QUESTION, STATED FOR L9: the instance's V9-AC7 and V9-AC12 rows record the face's invocation strings (the checker's alignment limb passed, rc=0) and carry the actually-run path in their output; the divergence is one path token, disclosed twice (row + instance). The alternative -- amending the face so the string matches what ran -- would make the file describe a command the worker never received, which is the S31 shape in the other direction.",
+      "REMEDY LANDED FOR THE UNHANDED ORDERS: TO-V4-1 V4-AC8/AC9/AC13 now carry C:/tmp/wk-posn-5-20/.scratch/b4.tfplan; TO-V1-1 already carries C:/tmp/wk-posn-5-19/.scratch/b1.tfplan (Z-S75). V6/V7/V8 open no terraform plan.",
+      "WHY GRADUATED: the deviation cost nothing in the world, was disclosed at the moment it happened, and its class is closed for every order that has not yet run the command."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W23-S3"
+  ],
+  "spec_asserts": "TO-V9-1 V9-AC7/AC8/AC12 as cut: a worktree-relative plan path under a -chdir invocation.",
+  "world_is": "terraform -chdir re-bases every relative path; the worker's verbatim run failed on the WRITE after a successful refresh, its corrected run produced the bounded plan (0 add / 3 change / 0 destroy) and the apply landed on it.",
+  "notes": "A -chdir invocation carries an absolute plan path from the cut onward."
+},
+{
+  "id": "POSN_ASTTAX-Z-W23-S5",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~23",
+  "surfaced_at": "2026-09-14T20:30:11Z",
+  "one_line": "V9-AC9's amended bar tells the worker to print the WAF no-op's diff lines as 'every changed attribute a rule `version` \"\" -> null on the web ACL'. Terraform renders no such line: the three managed-rule-group rules re-render as WHOLE BLOCKS (- name / - priority / - vendor_name / - metric_name ... -> null) and the `version` attribute is the one thing NOT printed -- it is collapsed into '# (1 unchanged attribute hidden)'. The bar's operative clauses (exactly one resource, the two cell resources absent, the classification) all hold and V9-AC9 is recorded PASS; only the bar's description of the OUTPUT's FORM is unmatchable, so a later seat that greps the plan for `version` \"\" -> null to re-verify this no-op gets ZERO and can read it as a different diff.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE BAR: task-orders/POSN_ASTTAX.TO-V9-1.the-edge-router-admits-the-two-new-leaves.md V9-AC9 <expect> @cce010f2fd -- 'print its diff lines: every changed attribute a rule `version` \"\" -> null on the web ACL and nothing else'.",
+      "WHAT THE PLAN PRINTS (timeout 900 terraform -chdir=infra/aws/terraform/portal-auth plan, rc=0, 281 lines, 2026-09-14T20:17:30Z): one resource header, '# aws_wafv2_web_acl.opal_cloudfront_protection will be updated in-place', and 'Plan: 0 to add, 1 to change, 0 to destroy.'. Its 28 change-marked lines are three whole '- rule { ... }' blocks (common-rule-set p4, ip-reputation p3, known-bad-inputs p5), each carrying '- name', '- priority', '- vendor_name', '- metric_name', '- cloudwatch_metrics_enabled', '- sampled_requests_enabled' -> null. The string 'version' does not occur in the diff at all.",
+      "WHY IT IS STILL THE VERSION NORMALISATION, PROVED FROM THE CONFIG NOT FROM THE PLAN: infra/aws/terraform/portal-auth/waf-cloudfront.tf:183-186, 202-205, 221-224 @cce010f2fd declare each managed_rule_group_statement with vendor_name and name ONLY -- no version attribute. The plan prints those two attributes plus '# (1 unchanged attribute hidden)' inside each block; the AWS provider's managed_rule_group_statement carries exactly one further scalar, version, so the hidden attribute is version by subtraction over the block's declared attribute set. The three rules that diff are exactly the three that use a managed rule group; the other three (BlockedIPs, RateLimitRule, AuthLoginRateLimit) do not diff.",
+      "INERT, MEASURED ON THE LIVE PLANE AT THE FIRST RUN, NOT ARGUED FROM THE PLAN THAT MAKES THE CLAIM: .tools/aws wafv2 get-web-acl --scope CLOUDFRONT read BEFORE and AFTER the apply returned 6 rules both times, normalized rule-set sha256 43858bfcf7b9b51b1f3043f70c4207c7 identical, same names and priorities. No apply clears this diff (the config declares no version), which is why the amendment made it perpetual and admissible.",
+      "NOT A REPAIR AND NOT A WIDENING: nothing in this cell touches waf-cloudfront.tf; the two resources this cell moved are absent from the re-plan (0 of 2)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-V9-1 V9-AC9 @cce010f2fd: the admitted residue prints as 'every changed attribute a rule `version` \"\" -> null on the web ACL and nothing else'.",
+  "world_is": "Terraform prints the three managed-rule-group rule blocks re-rendered field-for-field to null with the `version` attribute HIDDEN as an unchanged attribute; no line matching the bar's description exists in the output. The classification is recoverable only from waf-cloudfront.tf, by subtracting the two declared attributes from the block's attribute set -- not by reading the plan.",
+  "notes": "For the next order that admits a classified no-op: describe the residue by its RESOURCE and its CAUSE (which the plan prints) rather than by an attribute line the renderer collapses (which it does not). A bar that names bytes the tool never emits cannot be matched by the seat re-verifying it later."
+}
+]
+```
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-W22-S6",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~22",
+    "surfaced_at": "2026-09-14T19:48Z",
+    "one_line": "THE CLASS TOKEN THIS ORDER MINTED IS ITSELF BELOW THE CONTRAST FLOOR FOR WHITE TEXT: ASSET_CLASS.structured = PALETTE.pink500 #ec4899 reads 3.527:1 against white, and NO function in chartColors.ts picks text for an ASSET_CLASS value -- getSubAssetTextColor only covers SUB_ASSET_COLORS chips, so every consumer that draws a label on a class colour chooses its own text colour with no guard. V5-AC8 scopes the three sub-asset backgrounds this cell moved and is SILENT on the class map, so the order's own contrast criterion cannot see this.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/lib/chartColors.ts@6c0deebd9121d5e955943d5a7507de51a102f480 (branch wk-posn-5-22-portal, base pin e85f6eb84f): ASSET_CLASS.structured = PALETTE.pink500 = '#ec4899'.",
+        "Measured by the V5-AC8 instrument (org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~22/contrast_check.js, WCAG 2.x, self-test white/black = 21.000 and white/white = 1.000 both matching spec): white #ffffff on pink500 #ec4899 = 3.527, BELOW the 4.5 floor the same criterion applies to the chips. gray900 #111827 on pink500 = 5.029, ABOVE it.",
+        "getSubAssetTextColor (chartColors.ts:318-326 at this head) takes a sub-asset background hex and is called with SUB_ASSET_COLORS values; ASSET_CLASS values are never passed through it by this file. The number of CONSUMERS that render text over an ASSET_CLASS value was NOT measured by this worker -- out of cell, and the order's <paths> grant names one portal file.",
+        "Sibling, same mechanism, same read: ASSET_CLASS.commodities = PALETTE.yellow500 #eab308 reads 1.918:1 against white (the very reading the ~19:0xZ amendment fixed for the CHIPS by putting yellow500 into lightBackgrounds). The chip path is now guarded; the CLASS path has no guard to put it in."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-V5-1 THE CELL: 'ASSET_CLASS gains structured: PALETTE.pink500 and commodities: PALETTE.yellow500'; and V5-AC8 (added by the ~19:0xZ amendment): 'for EACH sub-asset background this cell added or moved ... every ratio >= 4.5'. The amendment treats the 4.5 floor as the bar this cell must clear and scopes the check to SUB_ASSET_COLORS.",
+    "world_is": "The two values the cell writes into ASSET_CLASS are 3.527 (pink500) and 1.918 (yellow500) against white text, both below that same floor, and they sit in a map no text-colour function reads. The cell CLEARS its criterion exactly and still leaves two below-floor backgrounds in the registry it minted, because the criterion's domain is the chip map and the cell's write set is larger than the criterion's domain.",
+    "notes": "FORM, NOT SIGNIFICANCE: this row states a spec-vs-world mismatch and takes no view on whether the class map should carry a text-colour guard or whether any consumer is affected. NOT the Attribution holdings-shared.tsx finding (W18-S2, OUT by Andrew's word) -- that row is about a component binding its OWN colours; this one is about the shared registry's class map having no text-colour function at all. WHY ARMED: F2 (AT5-s-6) binds these token NAMES next, so the first consumer to draw a label on ASSET_CLASS.structured ships a 3.527:1 label behind a freeze that bars the fix from being promoted separately, and portal/CLAUDE.md:15-17 calls light-on-light the #1 recurring portal UI defect. DISARM, one read, no new instrument: census the consumers that render text over an ASSET_CLASS value (the registry's importers) and either record that none does, or scope a text-colour rule for the class map the way lightBackgrounds scopes one for the chips. WHY NOT DISARMED HERE: the census reaches files outside this order's <paths> grant (one portal file), and widening the grant is the issuer's act, not the worker's."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-W22-S7",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~22",
+    "surfaced_at": "2026-09-14T19:48Z",
+    "one_line": "V5-AC5 STILL READS 'one commit on wk-posn-5-22-portal ... parent e85f6eb84f' AFTER THE SAME AMENDMENT ORDERED A SECOND EDIT THAT CANNOT LAND IN THAT COMMIT: c475e31e70 is already drained (refs/drains/posn-5-portal points at it) and the worker is instructed never to amend or rewrite it, so the branch necessarily carries TWO commits and the tip's parent is c475e31e70, not the pin. Graded PASS on the SUBSTANCE (authorship, the pin as the branch's BASE proved two ways, the gitlink unmoved), with the literal singular printed beside it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-V5-1.the-colour-registry.md@7e4c3c01bbce942484b8b1e139fed007fce6939a, V5-AC5 <expect>: 'one commit on wk-posn-5-22-portal authored 0.9.0_WK_POSN_ASTTAX~22, parent e85f6eb84f' -- the clause the ~19:0xZ amendment edited (it replaced the gitlink limb, row W22-S2) while leaving the commit-count limb as the first cut wrote it.",
+        "Measured at 2026-09-14T19:4xZ: `git -C portal rev-list --count e85f6eb84f..wk-posn-5-22-portal` -> 2; `git -C portal log --format='%H parent=%P author=%an' e85f6eb84f..wk-posn-5-22-portal` -> 6c0deebd9121d5e955943d5a7507de51a102f480 parent=c475e31e7014cb7e18ccf0c1cb6a335ad0720044 and c475e31e7014cb7e18ccf0c1cb6a335ad0720044 parent=e85f6eb84f3a1771a37011a7e77e372570bad02a, BOTH authored 0.9.0_WK_POSN_ASTTAX~22.",
+        "The pin is still the branch's BASE and this is proved without relying on the tip's parent: `git -C portal merge-base e85f6eb84f wk-posn-5-22-portal` -> e85f6eb84f3a1771a37011a7e77e372570bad02a, and `git -C portal merge-base --is-ancestor e85f6eb84f wk-posn-5-22-portal` rc=0.",
+        "`git -C portal rev-parse refs/drains/posn-5-portal` -> c475e31e7014cb7e18ccf0c1cb6a335ad0720044: the first commit is ALREADY on the round's one drain ref, so rewriting it would move a ref the worker does not own."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "V5-AC5 <expect>: 'one commit on wk-posn-5-22-portal authored 0.9.0_WK_POSN_ASTTAX~22, parent e85f6eb84f'.",
+    "world_is": "Two commits, both authored 0.9.0_WK_POSN_ASTTAX~22, tip parent c475e31e70, branch base (merge-base) e85f6eb84f. The singular is unsatisfiable for any worker that obeys the rest of the amended order: the amendment adds source edits, the first commit is already drained, and the spawn forbids amending it.",
+    "notes": "FORM, NOT SIGNIFICANCE. WHY INERT: the property the criterion exists to protect -- work authored by this serial, cut from the pin, with the superproject gitlink unmoved -- is intact and is proved by instruments that do not read the tip's parent (merge-base + is-ancestor + ls-tree + diff --cached). Nothing degrades if this row is never actioned. WHY PASS AND NOT REFUSE: the issuing agent's own restatement of the amended criterion in the spawn reads 'your commit(s) authored 0.9.0_WK_POSN_ASTTAX~22 with e85f6eb84f as the branch's BASE', so the singular is a clause the amendment superseded in substance and did not re-cut in text; refusing on it would manufacture a blocker the issuer has already answered. BOTH READINGS ARE PRINTED IN THE PROOF INSTANCE's V5-AC5 output_evidence so L9 can grade the literal clause itself if it disagrees. GENERALISABLE SHAPE, offered without a view on scope: an amendment that adds WORK to an order whose earlier output is already on a shared ref has to re-cut every criterion that counted the earlier output, and a count is the easiest limb to leave behind because it still reads true of the artifact it was written about."
+  }
+]
+```
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-W22-S8",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~22",
+    "surfaced_at": "2026-09-14T19:55Z",
+    "one_line": "THE PRESCRIBED L7 ORDER (validate to rc=0, THEN flip the status, THEN commit instance + deliverables + flip together) IS UNREACHABLE FOR A RESUMED ORDER THAT ADDS A NEW DELIVERABLE: proof-of-spec-check picks PRE-COMMIT mode only when the instance file is STAGED OR UNTRACKED, and a resumed order's instance is TRACKED AND MODIFIED, so it takes POST-COMMIT mode and grades every PENDING-THIS-COMMIT artifact against the instance's LAST commit -- where a file created in this session is necessarily ABSENT. rc=1 is therefore guaranteed before the commit and the only reachable sequence is commit-then-validate.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/proof-of-spec-check.py@7e4c3c01bbce942484b8b1e139fed007fce6939a (checker-vintage line printed by the run: 9e6ed6c236 2026-09-13T23:31:23Z), artifact_resolution_check: 'PRE-COMMIT (the instance file is staged or untracked)' / 'POST-COMMIT (the instance is tracked and unstaged; a certifier re-run): the artifact must be TOUCHED by the instance's own commit'; the mode is chosen by `staged_inst`, and `dry_run = not staged_inst` only inside the staged-or-untracked branch.",
+        "Measured 2026-09-14T19:5xZ on TO-V5-1: `python .tools/proof-of-spec-check.py <instance> V5-AC1,...,V5-AC8` -> 'artifact-resolution: ... contrast_check.js is PENDING-THIS-COMMIT but is ABSENT at the instance's commit 08450f4cac -- it did not ride the commit that carries this proof' / INVALID (rc=1), with EVERY OTHER LIMB CLEAN (structural=jsonschema, 8 acceptance rows, 8/8 invocation-alignment, 0 count-bar contradictions, 8 surprises resolving to channel rows).",
+        "The instance path is TRACKED at that commit because this serial already drained session 1 of the same order: `git log -1 --format=%H -- <instance>` -> 08450f4cac7314516e03942f2e1ef37821b69a2b. A FIRST-session worker never meets this: its instance is UNTRACKED, so the checker takes PRE-COMMIT/dry-run and the same artifact resolves as 'rides the commit if staged with the proof'.",
+        "The checker's own docstring names the co-commit as correct rather than as the defect: 'the co-commit that opens the gap is the spine's own prescribed L7 shape (status, proof and artifacts in one commit by the actor)'. So the two rules are individually right and only their ORDER is unsatisfiable."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The L7 bar: 'Validate: `python .tools/proof-of-spec-check.py <instance> <ids>` -- the ids are positional and ONLY the exit code is the verdict. rc 0 AND every mechanical criterion PASS-by-output, then flip the task order's <status> to `complete` and commit instance, deliverables and flip together.' Read in sequence: rc=0 is a PRECONDITION of the flip and of the commit.",
+    "world_is": "For a RESUMED order whose instance is already tracked, rc=0 is reachable only AFTER the commit, because the PENDING-THIS-COMMIT limb resolves a new artifact against the instance's last commit and a file written this session is absent there. The worker therefore commits first and validates second, and the rc it reports is a POST-COMMIT read -- which is the mode the checker itself calls 'a certifier re-run'.",
+    "notes": "FORM, NOT SIGNIFICANCE: this row states the mismatch and proposes nothing. WHY INERT: the evidence is not weakened -- the post-commit read is the STRONGER one (it grades the artifacts as they actually landed, not as they were promised), and it is recorded in this worker's report with its rc. The two paths that would have avoided it were both refused as worse: pre-staging with `git add` is barred by Rule 14a ('do NOT pre-git add'), and dropping contrast_check.js from artifacts_produced to please the checker would have hidden a real deliverable. WHAT A READER SHOULD NOT CONCLUDE: that the flip was made without a verdict -- every mechanical criterion was PASS-by-output before the commit, and the single violation standing at that moment named an ordering fact about the CHECKER, not a criterion. GENERALISABLE, offered without a view on scope: every resumed or re-cut order that adds a deliverable meets this, and it is invisible to a first-session worker because an untracked instance takes the other branch."
+  },
+{
+  "id": "POSN_ASTTAX-Z-S82",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T20:20:51Z",
+  "one_line": "DISARM of W22-S6 (ARMED): the class map minted by F1 has no text-colour guard -- ASSET_CLASS.structured (pink500) 3.527:1 and .commodities (yellow500) 1.918:1 under white text, and V5-AC8's domain was the chip map only. ROUTED to F2 (TO-V6-1, unspawned, same slot): chartColors.ts enters its <paths>; the cell mints getAssetClassTextColor beside getSubAssetTextColor and calls it at every Positioning site that draws text over a class colour; V6-AC9 prints the consumer census with its denominator and the per-site contrast table, every ratio >= 4.5.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "WHY F2 AND NOT A RE-OPENED F1: TO-V5-1 is complete at HEAD (49fc6850f1) and its branch is drained (6c78b40e66); the consumers that draw the labels are F2's own sites (HoldingsTab :215, PositioningSummary :70-71/:91/:545), so the rule and its first callers land in one cell and one commit on the same drain ref.",
+      "THE RULE, NOT A LITERAL: one function on the registry, the shape getSubAssetTextColor already has (:319-326 at 6c0deebd91), with pink500 and yellow500 in its light set (gray900 on pink500 5.029, on yellow500 9.250 -- the worker's own instrument); a per-component literal would be the W18-S2 shape Andrew ruled out for Attribution.",
+      "WHY GRADUATED: the hazard is real, the remedy has a cell, a bar and a denominator, and the worker's instrument (contrast_check.js) is reused rather than rebuilt."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "TO-V5-1 THE CELL mints ASSET_CLASS.structured/.commodities; V5-AC8 scopes the 4.5 floor to the sub-asset backgrounds the cell moved. portal/CLAUDE.md:15-17 names light-on-light the #1 recurring portal UI defect.",
+  "world_is": "The cell cleared its criterion exactly and left two below-floor backgrounds in the registry with no rule to pick their text; the first consumer to label them is F2, behind a freeze that bars a separate fix from promoting.",
+  "notes": "V6's <paths> now carries portal/src/lib/chartColors.ts; V6-AC2's pathspec names it so the diff bound sees it.",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W22-S6"
+  ]
+},
+{
+  "id": "POSN_ASTTAX-Z-S83",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T20:20:51Z",
+  "one_line": "DISARM of W22-S7 (INERT): V5-AC5's 'one commit ... parent e85f6eb84f' limb was left standing by the ~19:0xZ amendment that added work after the first commit had drained -- the singular became unsatisfiable for a compliant worker. The substance (authorship, the pin as the branch's base proved by merge-base and is-ancestor, the gitlink unmoved) is proved and both readings sit in the instance for L9. TO-V5-1 is complete; nothing is re-cut.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE ISSUER'S DEFECT, NAMED: the amendment re-cut the gitlink limb (W22-S2) and not the count limb of the same clause; a count still reads true of the artifact it was written about and is the easiest limb to leave behind.",
+      "WHY GRADUATED: the criterion's protected property is intact and proved by instruments that do not read the tip's parent; the worker printed the literal beside the substance rather than refusing on a clause the spawn had already superseded."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "TO-V5-1 V5-AC5 <expect> @7e4c3c01bb: one commit on wk-posn-5-22-portal authored 0.9.0_WK_POSN_ASTTAX~22, parent e85f6eb84f.",
+  "world_is": "Two commits (c475e31e70 -> 6c0deebd91), both by that serial, base e85f6eb84f; the first already on refs/drains/posn-5-portal and never rewritten.",
+  "notes": "Recorded for the cut: an amendment that adds work to an order whose earlier output is on a shared ref re-cuts every criterion that COUNTED the earlier output.",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W22-S7"
+  ]
+},
+{
+  "id": "POSN_ASTTAX-Z-S84",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T20:20:51Z",
+  "one_line": "DISARM of W22-S8 (INERT): for a RESUMED order that adds a deliverable, proof-of-spec-check takes POST-COMMIT mode (the instance is tracked and modified) and grades a file created this session against the instance's LAST commit, where it is absent -- so the prescribed order 'validate rc=0, then flip, then commit together' is unreachable and the only reachable sequence is commit-then-validate. Nothing to act on in this round; the post-commit read is the stronger one and is recorded with its rc.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "WHY NOT A FIX HERE: the checker is the CVO-lane tool battery's (its docstring says so) and the two rules are individually right; only their order fails for the resumed case. Carried on W22-S8 for the round analysis as a checker-shape item: admit a tracked-and-modified instance to the PRE-COMMIT branch when the working tree carries the artifact.",
+      "WHY GRADUATED: the record is not weakened, the worker took neither of the two worse paths (pre-staging, or dropping a real deliverable from artifacts_produced), and the same shape will recur for every resumed order in this round -- disclosed once here."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "The L7 bar: rc=0 is a precondition of the flip and of the commit. proof-of-spec-check.py's artifact_resolution_check chooses PRE-COMMIT only for a staged-or-untracked instance.",
+  "world_is": "Every mechanical criterion was PASS-by-output before the commit; the single pre-commit violation named an ordering fact about the checker (contrast_check.js PENDING-THIS-COMMIT, absent at 08450f4cac); the post-commit run read rc=0.",
+  "notes": "Every resumed worker in this round is told: commit, then validate, and report the post-commit rc.",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W22-S8"
+  ]
+},
+{
+  "id": "POSN_ASTTAX-Z-S85",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T20:20:51Z",
+  "one_line": "ISSUER ROUTING of Andrew-direct ~19:5xZ (msg 22910, record @edbee96c07 -- 'Structured is going to be a pink base, as all volatility/options/overlay etc assets will be grouped into there'): the CTO's L4 reading resolves V5-AC2 by re-binding BOTH 'Hedge' and 'Volatility' into the pink family on tokens distinct from pink500. TO-V5-1 re-bound 'Hedge' (pink600) and was COMPLETE at HEAD before the word arrived; 'Volatility' (:311, blue900) lands in TO-V6-1 (F2, unspawned, same slot, same drain ref) as a minted pink700 with its contrast bar, rather than re-opening a terminal order.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE ROUTING IS THE ISSUER'S CALL, STATED: a decomposition cell is a scope; the registry edit is three lines in a file F2's consumers already bind, and F2 is the next order on the same portal branch -- one hand-over instead of a re-opened terminal order or a tenth spawn. Retag set unchanged at twelve (the CTO's census: 285 rows, 31 sub-assets, Volatility on exactly four).",
+      "OUT, per the CTO's reading: MIX_PIE (:407 at the pin) and RISK_FACTOR_COLORS (:492) -- the Positioning page imports neither; JEPI is Andrew's separate word (22914) and touches nothing served.",
+      "WHY GRADUATED: the word is landed on an order at HEAD with a mechanical bar (V6-AC9) and a diff bound (V6-AC2 names chartColors.ts); the round analysis records that F2 carried an F1-scope edit and why."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "PRD v0.7 C-SUB-ASSET files Hedge under Structured and C-COLOURS makes Structured pink (no PRD bump per 1.0.0_SA_CTO~Z); the decomposition puts the colour registry in AT5-s-5 (F1).",
+  "world_is": "F1 is complete and drained (49fc6850f1 -> 6c78b40e66; portal 6c0deebd91 on refs/drains/posn-5-portal); the four Volatility tickers (VXX, VIXY, UVXY, QBER) are already Structured at the class level and would render blue900 inside a pink class until re-bound.",
+  "notes": "1.0.0_SA_CTO~Z's L4 reading is the authority for the binding; this row records only where it landed."
+},
+{
+  "id": "POSN_ASTTAX-Z-W20-S4",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~20",
+  "surfaced_at": "2026-09-14T20:16:14Z",
+  "one_line": "V2-AC8's invocation writes -out=.scratch/b2.tfplan, but under -chdir terraform resolves that path relative to the TERRAFORM directory, not the worktree root -- so it targets infra/aws/terraform/cot-pipeline/.scratch/, which does not exist. The plan COMPUTED and then died writing it: rc=1, Failed to write plan file: open .scratch/b2.tfplan: The system cannot find the path specified. I created the directory and re-ran the invocation VERBATIM; it then passed. The order is internally consistent -- V2-AC9 reads the same relative path through the same -chdir, so both land in the same place, and V2-AC13's --plan value is correct too because record-deploy-scope.py runs terraform -chdir=<tf_dir> show -json <plan>. Only the directory was missing.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Run 1, verbatim from the order: rc=1; terraform printed the refresh, the targeting warning, then Error: Failed to write plan file / The plan file could not be written: open .scratch/b2.tfplan: The system cannot find the path specified.",
+      "Run 2, byte-identical invocation after one mkdir: rc=0, Saved the plan to: .scratch/b2.tfplan.",
+      "git check-ignore -v infra/aws/terraform/cot-pipeline/.scratch/b2.tfplan -> .gitignore:415:**/*.tfplan (rc=0), so the artifact is ignored wherever it lands."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "V2-AC8 names -out=.scratch/b2.tfplan and expects a saved plan that the later criteria consume.",
+  "world_is": "First run rc=1 with no plan written; after one mkdir -p of infra/aws/terraform/cot-pipeline/.scratch the same invocation returned rc=0 and Plan: 0 to add, 2 to change, 0 to destroy. The plan file is gitignored by the **/*.tfplan rule, confirmed by git check-ignore -v, so it cannot pollute the tree or enter a commit.",
+  "notes": "A future cut can pre-create the directory or write -out=../../../../.scratch/b2.tfplan. Nothing about the plan's CONTENT is affected; this is purely where the file lands."
+},
+{
+  "id": "POSN_ASTTAX-Z-W20-S5",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~20",
+  "surfaced_at": "2026-09-14T20:16:14Z",
+  "one_line": "safe-apply's HALT-GATE refuses fail-closed until the SESSION declares its serial in a file the order does not name: org/mcp/sessions/<session-id>.serial. A worker spawned into a fresh session has no such file, so V2-AC9 exits 3 before terraform is ever invoked, printing HALT-GATE: IDENTITY UNRESOLVED -- BLOCKED (fail-closed). I wrote the file with my own serial, which is the gate's own prescribed one-line FIX and the OPPOSITE of an override -- the gate's own text says overriding it means deploying while blind to your own STOP messages.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Run 1 of V2-AC9: rc=3, no terraform invocation; the gate text named the exact path org/mcp/sessions/c880f6b2-bdc0-4941-86d5-8ba8c531349a.serial.",
+      "The path is GITIGNORED: git check-ignore -v returns .gitignore:435:org/mcp/sessions/, and git status --porcelain does not list it after the write. So this is a session-scoped identity declaration, never a repo artifact; it cannot enter any commit or any lane's write set.",
+      "Run 2: HALT-GATE: worker 0.9.0_WK_POSN_ASTTAX~20 has no inbox; scanning its issuer 2.0.0_SA_COO~Z -- then the apply proceeded and completed."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's <paths> grant does not include org/mcp/, and V2-AC9 expects safe-apply to reach terraform and print the HALTGT checkpoint.",
+  "world_is": "The gate cannot name its principal from any session-keyed source and refuses rather than guessing (it used to guess from a shared last-writer-wins file and so scanned the WRONG agent's inbox). After the write it resolved 0.9.0_WK_POSN_ASTTAX~20, correctly observed that a WORKER HAS NO INBOX, scanned its issuer 2.0.0_SA_COO~Z instead -- no STOP -- then ran comp-tagauthz and the tombstone gate and allowed the apply.",
+  "notes": "Every worker that must run safe-apply hits this on its first spawn. The provisioning step is one line and belongs wherever worktrees are minted, or the worker face should name it."
+},
+{
+  "id": "POSN_ASTTAX-Z-W20-S6",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~20",
+  "surfaced_at": "2026-09-14T20:16:14Z",
+  "one_line": "record-terraform-deploy.sh line 511 expands $SCOPE_PY UNQUOTED while quoting every other variable on the same line, and on this device python resolves to a path containing a SPACE (/c/Users/Opal Bloomberg/bin/python3). Bash word-splits it and tries to execute /c/Users/Opal, a directory. V2-AC13 exits 2 with 'line 511: /c/Users/Opal: Is a directory' and the recorder never runs. This is device-class and hits EVERY seat here, including the main workspace, because the space is in PYTHON's path and not the worktree's -- this worktree is C:/tmp/wk-posn-5-20, unspaced, and it still failed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "command -v python3 -> /c/Users/Opal Bloomberg/bin/python3 ; command -v python -> /c/Users/Opal Bloomberg/AppData/Local/Programs/Python/Python311/python. Both contain a space.",
+      "Line 511 verbatim: if ! $SCOPE_PY \"$SCOPE_TOOL\" \"$PIPELINE\" --terraform \"$TF_LOCAL\" --timestamp \"$TIMESTAMP\" $SCOPE_ARGS; then -- SCOPE_TOOL, PIPELINE, TF_LOCAL and TIMESTAMP are all quoted; only the interpreter is bare.",
+      "git rev-parse --show-toplevel -> C:/tmp/wk-posn-5-20, so the workspace path is NOT the cause; the interpreter path is.",
+      "After prepending a space-free python3 forwarder to PATH the same invocation reached the scope tool and produced a substantive refusal instead of a shell error, which is the discriminator that the shim fixed the resolution and nothing else."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "V2-AC13 expects the recorder to run and record the deploy per its contract.",
+  "world_is": "The recorder aborts before its first action. I did NOT edit the script -- it is outside this order's <paths> -- and instead put a space-free python3 forwarder on PATH for the invocation only (a 2-line sh file that execs the same interpreter), after which the recorder ran. Verified identical interpreter: Python 3.11.9 at the same python.exe.",
+  "notes": "The remedy is two characters -- quote $SCOPE_PY -- but the file is outside this order's paths, so it is routed, not taken."
+},
+{
+  "id": "POSN_ASTTAX-Z-W20-S7",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~20",
+  "surfaced_at": "2026-09-14T20:16:14Z",
+  "one_line": "lambda-source-map.json records this function's tf_resource as the BARE MODULE address module.cot_satellites_registry_producer, while record-deploy-scope.py matches the plan's FULL resource address module.cot_satellites_registry_producer.aws_lambda_function.this by EXACT dictionary lookup. So --plan scoping can NEVER match this row, and V2-AC13's --plan form refuses rc=2 with REFUSE: 1 applied address(es) have NO source-map row under cot-pipeline. The refusal is CORRECT behaviour against a mis-formed row, not a tool defect.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "The tool's matcher read at source: by_res[cfg['tf_resource']] built per row, then by_res.get(a) for each applied address -- an exact lookup with no prefix or module-level fallback.",
+      "applied_addresses() takes rc['address'] from terraform show -json for every aws_lambda_function with a create or update action, which is always the FULL address.",
+      "I used the tool's OWN documented alternative, which its refusal text names: --function cot-satellites-registry-producer. The scope is provably identical to what --plan would have selected, because the plan contained exactly ONE applied aws_lambda_function address and the refusal itself printed it.",
+      "The record then reported: stamped 1 of 4 rows under cot-pipeline, 3 row(s) under the pipeline were NOT touched by this record -- the scoping guarantee held."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "V2-AC13, as amended by the spawn, expects --plan .scratch/b2.tfplan to scope the record to the deployed function.",
+  "world_is": "Census over the map's own denominator: 215 function rows; 129 carry a tf_resource starting with module.; 125 of those 129 carry the FULL address containing .aws_lambda_function. and only FOUR carry a bare module address -- advi-49f-gold-dispatch, cot-satellites-registry-producer, inf-portal-publisher, opal-assets-silver-bd49finsurance. Two of the four even carry a trailing (yang-lambda) comment inside the value, which could never match an address either. This row is one of the 4 outliers, so the convention is the full address and the map is wrong here, invisibly, until someone tries to plan-scope a record.",
+  "notes": "Fixing the four rows is a one-field edit each, but three belong to other pipelines and none of them is this order's business; only the disclosure is."
+},
+{
+  "id": "POSN_ASTTAX-Z-W20-S8",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~20",
+  "surfaced_at": "2026-09-14T20:16:14Z",
+  "one_line": "record-terraform-deploy.sh line 218 hardcodes a JSON runtime at /c/Users/AndrewBerman/.bun/bin/bun -- the OTHER DEVICE'S USER -- as the first branch of its tool detection. On site Z that test fails, so the chain falls through to python3, and the script then hands python3 a JAVASCRIPT file. TWO consequences landed from this ONE cause: (a) the CHANGELOG.json half of V2-AC13's contract FAILED, and (b) the python writer re-serialized lambda-source-map.json with ensure_ascii=False, turning a PURE-ASCII production artifact into one carrying 51 non-ASCII bytes. Bun AND node are both installed on this device at derivable paths, so a command -v bun would have worked. This is the NEVER clause: derive, do not hardcode.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Line 218 verbatim: if [ -x \"/c/Users/AndrewBerman/.bun/bin/bun\" ]; then JSON_TOOL=... ; ls on that path returns No such file or directory. On this device command -v bun resolves under /c/Users/Opal Bloomberg/AppData/Local/Microsoft/WinGet/Packages/Oven-sh.Bun_... and command -v node resolves to /c/Program Files/nodejs/node, so BOTH usable runtimes exist and neither is consulted before python3.",
+      "Line 735 hands the temp .js file to $JSON_TOOL, which is python3 here. The script printed Using: python3.",
+      "ENCODING, measured at both vintages with one instrument: parent 707f6ad8fb^ = 195703 bytes, non-ASCII 0, cp1252-undefined 0; child 707f6ad8fb = 195906 bytes, non-ASCII 51, cp1252-undefined 2 (byte 0x9d at offsets 31939 and 38200). The damage is NOT in the stamped row -- it is in four untouched find-insure _build_notes where a unicode-escape for the section sign became its raw two-byte UTF-8 form. The file remained VALID UTF-8 JSON throughout, which is why nothing failed loudly: 49 of the 51 bytes decode CLEAN AND WRONG under this device's default cp1252 and only the two 0x9d bytes raise.",
+      "REPAIRED BY ME at 911f95d458, because MY commit caused it and the file is inside this order's <paths>. Method, with its own control: the PARENT round-trips BYTE-IDENTICAL under json.dumps(indent=2, separators=(comma, colon-space), ensure_ascii=True) plus a trailing newline, so that serialization is the estate's own and not my choice; applying it to the recorded map leaves a diff against the parent of exactly the stamped row's five new fields plus _last_deploy_recorded, with 214 of 215 rows byte-identical. At HEAD the map is 195993 bytes, non-ASCII 0, 215 functions, and the default-codec read that RAISED now succeeds.",
+      "THE CHANGELOG ENTRY WAS DELIBERATELY NOT HAND-AUTHORED. The correct remedy is the one-line derive-do-not-hardcode fix plus a re-run, which would then write the entry properly; an entry hand-written now would have to be de-duplicated against that re-run."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "V2-AC13 expects the deploy recorded per the script's contract, which is a source-map update AND a CHANGELOG.json entry, both committed.",
+  "world_is": "The source-map half landed and is correct. The CHANGELOG half did NOT: the script printed a Python SyntaxError against its own temp .js file (unterminated string literal, with the caret under a // comment), then Note: CHANGELOG.json write failed -- source map update still committed, and then a SUCCESS BANNER reading Source map + CHANGELOG.json committed with [skip ci] -- a producer self-report contradicted by its own earlier line. Measured on the artifact, not the banner: infra/aws/terraform/cot-pipeline/CHANGELOG.json was last touched by a8ef1ca328 on 2026-09-04 and is unmodified in the worktree. V2-AC13 is therefore graded FAIL, not PASS.",
+  "notes": "One cause, two symptoms, and the second symptom is the quiet one: a tool that silently changes the ENCODING of a shared artifact it was only asked to stamp. Re-running the recorder on this device re-introduces all 51 bytes."
+},
+{
+  "id": "POSN_ASTTAX-Z-S86",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T20:36:53Z",
+  "one_line": "DISARM of W20-S4 (INERT): -out=.scratch/b2.tfplan resolved under the -chdir target (the Z-S75/Z-S81 class); the worker created the missing gitignored scratch directory inside the stack and re-ran the invocation verbatim, which is ruled ACCEPTABLE -- an ignored scratch directory (**/*.tfplan, .gitignore:415) is not a write to the stack's tracked surface and it is the only form that keeps the recorded invocation equal to the face's. The class is closed for every unrun order (TO-V1-1 Z-S75, TO-V4-1 Z-S81 carry absolute paths).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "WHY THIS RESOLUTION IS THE BETTER ONE OF THE THREE SEEN THIS ROUND: ~19 refused (no plan), ~23 re-based the path (a disclosed divergence between the recorded invocation and the run), ~20 provisioned the ignored directory and ran the face's string unchanged -- the instance aligns and the tree is untouched.",
+      "WHY GRADUATED: nothing to act on for V2; the cut-side remedy is landed on the two orders that had not run the command."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W20-S4"
+  ],
+  "spec_asserts": "TO-V2-1 V2-AC8/AC9/AC13: a worktree-relative plan path under -chdir.",
+  "world_is": "Run 1 rc=1 on the write after a successful refresh; one mkdir; run 2 byte-identical invocation rc=0, Plan 0/2/0; the plan file ignored wherever it lands; V2-AC9 and the scope tool read the same path through the same -chdir, so the order was internally consistent.",
+  "notes": "A future -chdir cut carries an absolute plan path (Z-S75)."
+},
+{
+  "id": "POSN_ASTTAX-Z-S87",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T20:36:53Z",
+  "one_line": "DISARM of W20-S5 (INERT): safe-apply's halt-gate refuses fail-closed until the SESSION declares its serial at org/mcp/sessions/<session-id>.serial (gitignored, .gitignore:435); every worker in this session shares the issuer's session id, so the file is LAST-WRITER-WINS across slots -- ~20 wrote its own serial, which is the gate's own prescribed one-line fix and not an override. RULED: every hand-over prompt from now on tells the worker to write ITS OWN serial into that file immediately before its first safe-apply (so the gate's audit line names the actor that applied); the live ~19 is told by message before V1-AC8; the provisioning belongs to the worktree mint and is carried for the round analysis.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE SHARED-FILE HAZARD, NAMED: the session id is this seat's (c880f6b2-...), so ~23's and ~20's applies both wrote to one file; whichever serial is in it when the next worker applies is the actor the gate records. The STOP scan is unaffected (every worker's issuer is this seat), the audit attribution is what moves. One line in each hand-over prompt closes it.",
+      "WHY GRADUATED: the mechanism worked as designed (fail-closed, then resolved), the file cannot enter any commit, and the remedy is a prompt line this seat controls."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W20-S5"
+  ],
+  "spec_asserts": "TO-V2-1 V2-AC9 expects safe-apply to reach terraform and print the HALTGT checkpoint; <paths> does not name org/mcp/.",
+  "world_is": "Run 1 rc=3, HALT-GATE: IDENTITY UNRESOLVED -- BLOCKED, naming the exact path; after the write the gate resolved the worker, noted a worker has no inbox, scanned the issuer's inbox for STOPs (none), ran comp-tagauthz and the tombstone gate, and allowed the apply.",
+  "notes": "The worktree-mint step should write the file; carried for the round analysis."
+},
+{
+  "id": "POSN_ASTTAX-Z-S88",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T20:36:53Z",
+  "one_line": "DISARM of W20-S6 (ARMED): record-terraform-deploy.sh:511 expands $SCOPE_PY unquoted and this device's python3 path carries a space, so the recorder aborts before its first action for every seat here. The environment-only workaround (a space-free python3 forwarder first on PATH for the invocation) is now ORDERED on every recorder criterion of this round (V1-AC12, V2-AC13, V4-AC13, V9-AC12); the two-character fix is the CI lane's (infra/aws/** CLOUD_OPS_OR_ETL) and rides the round analysis beside W23-S4 and W20-S8, the same file.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "SAME FILE, THREE ROWS, ONE OWNER: W23-S4 (owner 0.7.0_AE_CloudOps) already names this defect as its second limb; this row's disarm is the ORDERED workaround, not a fix -- the workers may not edit the script and this seat's lane does not hold it either.",
+      "WHY GRADUATED: every remaining recorder invocation in the round carries the workaround by text; the durable fix has an owner and a carrier."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W20-S6"
+  ],
+  "spec_asserts": "V2-AC13 expects the recorder to run per its contract.",
+  "world_is": "line 511: /c/Users/Opal: Is a directory, rc=2; the worktree path is unspaced (C:/tmp/wk-posn-5-20), the interpreter path is not; with the forwarder the same invocation reached the scope tool.",
+  "notes": "Quote $SCOPE_PY and $SCOPE_ARGS at :511 -- for the CI lane."
+},
+{
+  "id": "POSN_ASTTAX-Z-S89",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T20:36:53Z",
+  "one_line": "DISARM of W20-S7 (ARMED): four of 129 module-form source-map rows carry a BARE module address as tf_resource (this project's cot-satellites-registry-producer among them), so record-deploy-scope.py's exact-lookup --plan scoping can never match them; the worker used the tool's own documented --function form and proved the scope identical (one applied address, printed by the refusal). ORDERED on V2-AC13: the cot row's tf_resource corrected to the full address in the worker's follow-up commit (lambda-source-map.json is in its <paths>); the three foreign rows (advi-49f-gold-dispatch, inf-portal-publisher, opal-assets-silver-bd49finsurance) are disclosed, not touched.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "WHY THE ONE-FIELD FIX IS IN SCOPE HERE AND THE OTHER THREE ARE NOT: the cot row is this project's own function and the file is in the order's grant; the other three belong to other pipelines' deploy records and moving them is a lane act for their owners, disclosed on W20-S7 for the round analysis.",
+      "WHY GRADUATED: the refusal was the tool being right about a mis-formed row; the row is corrected where the project owns it and the next --plan scoping of this function will match."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W20-S7"
+  ],
+  "spec_asserts": "V2-AC13's --plan form expects the scope tool to select the deployed function from the plan.",
+  "world_is": "REFUSE: 1 applied address(es) have NO source-map row under cot-pipeline; the map's own denominator 215 rows / 129 module-form / 125 full / 4 bare; the record then stamped 1 of 4 rows under cot-pipeline with 3 untouched.",
+  "notes": "The convention is the FULL address; a bare module address in tf_resource is invisible until plan-scoped."
+},
+{
+  "id": "POSN_ASTTAX-Z-S90",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T20:36:53Z",
+  "one_line": "DISARM of W20-S8 (BLOCKING): record-terraform-deploy.sh:218 hardcodes the other device's bun path, so python3 is handed the JS CHANGELOG writer -- the CHANGELOG entry is never written and the source map is re-encoded (51 non-ASCII bytes, two cp1252-undefined). ORDERED on V2-AC13 (and already on V1-AC12, V4-AC13, V9-AC12): the CHANGELOG entry written by the worker in the helper's exact shape under its grant; the recorder never re-run. The encoding damage was restored by the worker (911f95d458) and the drain merged the map SEMANTICALLY (HEAD's document + the branch's leaf changes, pure ASCII, 3fd61fc8cc) after a line-level conflict. Z-S71's standing hazard is CLOSED: V2-AC9 applied deliberately.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE ISSUER'S RULING ON THE WORKER'S RESTRAINT: the worker deliberately did not hand-author the entry, expecting a fixed recorder to write it. No recorder fix lands in this round (the script is the CI lane's, the spec and the decomposition are frozen), so the by-hand entry IS the deploy record; a later fixed recorder de-duplicates on the version label. Four deploys in this round share the ruling.",
+      "THE DRAIN-SIDE LESSON, MEASURED: HEAD carried 28 non-ASCII bytes from ~23's recorder commit (merged at 866c69817f before this seat's detector caught it), so the line-level merge conflicted on a file both sides had rewritten; the semantic merge (HEAD's document + the branch's six changed leaves; _last_deploy_recorded taken as the later stamp; the pure-ASCII serialization proved byte-identical on the base) is the resolution, and the detector is printed at every drain of this file from now on.",
+      "WHY GRADUATED: the record is landed by the ordered mechanism, the encoding property is restored at HEAD and guarded at the drain, the standing hazard is closed, and the durable fix has an owner (W23-S4 / 0.7.0_AE_CloudOps) and a carrier."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W20-S8"
+  ],
+  "spec_asserts": "V2-AC13: the deploy recorded per the recorder's contract -- a source-map update AND a CHANGELOG entry.",
+  "world_is": "The source-map half landed (correct, one row stamped); the CHANGELOG half did not, behind a success banner its own earlier line contradicts; infra/aws/terraform/cot-pipeline/CHANGELOG.json untouched since a8ef1ca328.",
+  "notes": "A shared control file that a tool re-encodes silently needs the detector printed beside every diff stat of it."
+},
+{
+  "id": "POSN_ASTTAX-Z-S91",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T20:43:42Z",
+  "one_line": "DISARM of W23-S5 (INERT): the amended V9-AC9 bar described the WAF no-op's residue as a diff line (`version` \"\" -> null) that terraform never renders -- the managed-rule-group blocks re-render whole and `version` collapses into '(1 unchanged attribute hidden)'. The bar's operative clauses (one resource, the two cell resources absent, the classification proved from waf-cloudfront.tf by subtraction, the live web ACL sha256 identical before/after) hold and V9-AC9 is recorded PASS with both readings; the bar's FORM clause is the issuer's defect, recorded for the next cut and not rewritten after a PASS.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE LESSON, THE WORKER'S OWN WORDS ADOPTED: describe an admitted residue by its RESOURCE and its CAUSE (which the plan prints) rather than by an attribute line the renderer collapses. And the discriminator '0 of 2 cell resources in the plan' is true only in the PLAN-HEADER band -- a naive substring count reads both resources in the refresh log.",
+      "WHY GRADUATED: the criterion discriminates on its operative clauses and passed; the defective clause is a description of output form, disclosed twice (row + instance) for L9."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "TO-V9-1 V9-AC9 @cce010f2fd: 'print its diff lines: every changed attribute a rule version \"\" -> null on the web ACL'.",
+  "world_is": "281 plan lines, one resource header, 28 change-marked lines in three whole rule blocks, the string 'version' absent from the diff; the classification recoverable from the config, not the plan.",
+  "notes": "Not amended post-PASS (Z-S81's rule); the next 0-diff bar with an admitted residue is cut by resource and cause.",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W23-S5"
+  ]
+},
+{
+  "id": "POSN_ASTTAX-Z-S92",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T20:43:42Z",
+  "one_line": "ISSUER'S RULING on V9-AC11 (references W23-S1, which stays ARMED for 1.0.0_SA_CTO~Z and is NOT adjudicated here): no authenticated session is obtainable on this fabric (3 of 3 committed credential fixtures MFA-gated; a second factor is credential-equivalent and unauthorized), so the criterion's authenticated arm is not an act any seat can take on demand. The DEPLOYED-BYTES arm the worker ran -- the prior and the new published versions invoked with the same synthetic origin-request events on all five behaviors' paths, 16 of 16 comparisons inside the signed bound, the unlisted leaf refused by the new version -- is ADMITTED as V9-AC11's instrument; the criterion is re-recorded PASS-by-output on it with the authenticated arm stated NOT EXERCISED, and TO-V9-1 may flip.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "WHAT THE ADMITTED ARM GRADES AND WHAT IT CANNOT: it grades the deployed bytes' behavior at a named version on every path the bound names -- the never-widen question. It bypasses the viewer-request auth gate and so proves nothing about authorization; this deploy did not touch that gate (auth-validator-edge is a different function on the same behaviors), so the ungraded surface is outside the act's radius. Stated in the instance, not hidden.",
+      "WHY THE RULING IS THE ISSUER'S: the criterion's expectation is the issuer's text; Rule 27 (no FWD is a wait; a proof is an act a seat can take on demand) is the authority for substituting the on-demand instrument for one no seat holds; the credential gap itself is W23-S1's and its remedy (a designated MFA-exempt probe identity, Andrew's card) is 1.0.0_SA_CTO~Z's to carry.",
+      "WHY GRADUATED: the act is landed, bounded and recorded; the criterion now says what it grades; the open item has an owner and a carrier."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "TO-V9-1 V9-AC11 as cut: an AUTHENTICATED five-path verify; the order's own preflight (3) anticipated the gap and named PARTIAL-never-faked as the recording.",
+  "world_is": "The worker withheld the status flip because a PARTIAL arm is an adjudication above a worker; the deploy itself is landed and bounded on every instrument available (deployed-bytes 16 of 16; envelope probes 9 of 9 identical; live association 5 of 5 on one ARN; web ACL sha256 identical).",
+  "notes": "Every future edge deploy on the five behaviors is verified at the deployed-bytes rung until a probe identity exists; TO-7-AE's historical authenticated evidence pre-dates the MFA rollout."
+},
+{
+  "id": "POSN_ASTTAX-Z-W19-S8",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~19",
+  "surfaced_at": "2026-09-14T20:41Z",
+  "one_line": "V1-AC11 IS REFUSED, NOT FAILED-ON-A-BUG: the pipeline it tells the cell to re-run CONSUMES ITS OWN INPUT, so 'start the state machine with the LAST SUCCEEDED execution's input' names three S3 objects that no longer exist (3 of 3 read 404), and the first state's Catch would route the run straight to PipelineFailed with nothing regenerated; on the counterfactual branch where the input DID exist, the run's write set is 28 Task states -- including an S3 DELETE (CleanupUploads) and a CDN invalidation -- against a sign-off that names TWO served keys and says 'anything else -- NOT SIGNED'. The deploy itself is LANDED and verified (V1-AC8/AC9/AC10); what is stranded is the served-read leg L7.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE PREMISE, MEASURED PER OBJECT, DENOMINATOR PRINTED (the criterion's own invocation, timeout 900 python org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~19/regenerate_start_yangdatapipeline_last.py -> rc=2): the last SUCCEEDED execution is YangDataPipeline:20260911_v1-1c95bba7 (2026-09-12T11:03:26Z -> 11:07:23Z) and its input names s3://opal-data-portal-v2/uploads/manifest.json plus 'uploads/data 20260911 v1.pkl' and 'uploads/model 20260911 v1.pkl'. head_object on each: 404, 404, 404 -- 3 of 3 ABSENT. Independent second instrument: list-objects-v2 on the uploads/ prefix returns 13 objects and NONE of the three (the newest pkl there is 'data 20251231 v1.pkl').",
+      "WHY THEY ARE GONE, from the machine's own definition rather than a guess: state 2 is MoveToProcessed (yang-move-to-processed) and a later state is CleanupUploads (yang-cleanup-uploads). A SUCCEEDED execution moves and then deletes the very objects its input names, so its input is not replayable BY CONSTRUCTION -- this is not a stale-fixture accident, it is the pipeline's shape.",
+      "WHAT A RUN WOULD ACTUALLY DO: ReadManifest calls yang-validate-files with bucket=$.detail.bucket.name and manifest_key=$.detail.object.key -- the 404 key -- with Retry MaxAttempts 1 and Catch States.ALL -> PipelineFailed. So the named invocation produces a FAILED execution and NO regeneration: the criterion's named RESULT is unreachable by its named INVOCATION today, which is the definition of a failed premise rather than a failed act.",
+      "THE RADIUS, ON THE OTHER BRANCH, COUNTED: the state machine carries 28 Task states (census walked THROUGH the Parallel branches -- a top-level-only read returns 10 and misses GeneratePositioning entirely, which is the state this criterion is about; the first version of this worker's census made exactly that error and is corrected in the committed script). They invoke yang-generate-valuation, -risk-premium, -correlation, -macro, -macro-timeseries, -factor-tilts, -etf-returns, -model-portfolio-benchmarks, -cma, -peer-performance, -holdings-attribution, -canon-interlock, -latest, -manifest, opal-market-overview-tiered-generator, opal-market-rsi-tiered-generator, opal-market-regime-classifier, yang-capture-output-versions, yang-invalidate-cloudfront, yang-move-to-processed, yang-cleanup-uploads and yang-varflag-check, besides the two this cell deployed.",
+      "AGAINST THE SIGN-OFF, QUOTED: NEVER_WIDEN_ROUND5_CTO_HALF.md @af667548d1, the B1 table's last row -- 'anything else -- NOT SIGNED' -- under two named keys (json/positioning/positioning_data.json, json/positioning/allocation_summary.json); and its preamble, 'Anything a plan, a diff or a served read shows outside these bounds is NOT SIGNED: the cell STOPs before the deploy/write and re-arms a row with the observation verbatim.' The COO half @f381f6f402 does name 'the SFN regeneration after the apply' for the two keys, but neither half names any other key the run writes, and CleanupUploads is an S3 delete (CLAUDE.md Agent Autonomy: human confirmation for S3 deletes).",
+      "NOT REPAIRED, BY THE ORDER'S OWN CLAUSE: 'A criterion you cannot satisfy as written is REFUSED with its measurement, never repaired, widened or satisfied by another route.' Re-uploading an input, hand-building a manifest, or invoking the two producers directly are each a DIFFERENT act from the one V1-AC11 names, so none of them was taken and none may be read as AC11 satisfied.",
+      "WHAT IS UNAFFECTED, so the refusal is not read wider than it is: V1-AC8 applied (0 added, 2 changed, 0 destroyed), V1-AC9 re-planned to 'No changes', V1-AC10 reads both live CodeSha256 values equal to the built zips (yCdQVNMOoSqvTvWIc+d3RjDqe7yy25dCs/h50Ge9K9s= and 8ok3+P8z/w2hDmcnMSLPWTmSlp5pXBEqY86hDiPl3A4=, LastModified 2026-09-14T20:19:41Z). The served keys are UNMOVED at their pre-deploy versions (positioning_data.json VersionId 4Q1qjgD52FSKZ38EfHGqdKGHyJ_ktlka, 8168 B, 2026-09-12T11:05:33Z; allocation_summary.json VersionId FiY95KdKcmtt5els.v44XVZciDBtUDrw, 969 B) -- the exact state both halves describe as covered on the branch where the regeneration does not happen: 'the keys are NOT rewritten and the served bytes stay at the VersionIds above'."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-V1-1 V1-AC11 as cut, and the spawn face's definition of its placeholder: a script that 'starts the yang data pipeline Step Functions state machine ... with the LAST SUCCEEDED execution's input, polls to a terminal status, and prints the execution ARN, status and the served keys' new LastModified/VersionId', after which the served positioning_data.json carries the five-class keys and the three labelled-zero benchmarks.etf rows. The preflight's comp-adversary anticipated the width ('the SFN regeneration rewrites keys beyond the two named -- V1-AC11's control reads them byte-identical or you file a row') but not the replay.",
+  "world_is": "The input is not replayable and the act is wider than the sign-off. 3 of 3 named objects are 404; the machine that would consume them has 28 Task states and deletes uploads; the halves sign 2 served keys and refuse the rest. So the criterion cannot be run as written today, and running it anyway would produce a FAILED execution rather than a served read.",
+  "notes": "WHAT THE ISSUER CAN RE-CUT THIS TO, already covered by its own paper and requiring no new sign-off: the CTO half's R1 AMENDMENT (2026-09-14 ~20:0xZ) sanctions the DRIVEN refresh as 'invokes, once each and in dependency order' the producers -- yang-generate-positioning, then yang-generate-holdings-attribution, then yang-generate-allocation-summary -- 'The keys: exactly the served keys listed above for B1 and B2 ... Nothing else.' That is one lambda invoke per producer with the payload the SFN hands GeneratePositioning (this worker has that payload cached: the event at LambdaFunctionScheduled #83 of execution 20260911_v1-1c95bba7, .scratch/sfn_history.json), and it lands V1-AC11's named reads inside the signed radius. THE LEDGER IS LEFT OPEN AND RED ON PURPOSE: entry 20260914T1841Z_posn-round5-b1-positioning-generators, L1-L6 CLOSED, L7 stranded, window 4.0h. A deploy_ledger.py hold would mute the one signal that carries this to the issuer, so it was not used."
+},
+{
+  "id": "POSN_ASTTAX-Z-W19-S9",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~19",
+  "surfaced_at": "2026-09-14T20:41Z",
+  "one_line": "A mid-run issuer note states that lambda-source-map.json at THIS worktree's HEAD carries 28 inherited non-ASCII bytes and prescribes a looser grading bar for V1-AC5; measured on this branch the file is PURE ASCII (detector 0) at acfd6e9b28, at both of this run's commits and at HEAD, and the three commits the note names (7403e8c0e9, 866c69817f, 3fd61fc8cc) are NOT ancestors of this branch -- so the note describes SITEZ's state, not this worktree's, and the stricter original bar was met rather than the relaxed one.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "DETECTOR AT FOUR VINTAGES, one expression, same instrument the note names: git show <ref>:infra/aws/lambda/ci/lambda-source-map.json | len(b) - len(b.decode('utf-8')) -> acfd6e9b28 195703 bytes / 0; dbe34de7b0 195703 / 0; acf74be32a 195703 / 0; HEAD-at-the-time 195703 / 0.",
+      "ANCESTRY, the discriminator that separates 'my tree' from 'SITEZ': git cat-file -t says all three named commits EXIST in the shared object store (so this is not a typo or a missing fetch), and git merge-base --is-ancestor <c> HEAD returns non-zero for 7403e8c0e9, 866c69817f and 3fd61fc8cc alike -- none of them is in this branch's history. The branch was fast-forwarded to acfd6e9b28 and has only this worker's commits on top.",
+      "CONSEQUENCE FOR THE GRADE, stated so no one re-grades it downward: V1-AC5's restoration met the ORIGINAL bar exactly -- git diff --stat read '1 insertion, 1 deletion', the parsed-value diff read ONE differing leaf (functions.yang-generate-positioning.artifact_sha256) and the detector read 0. The relaxed allowance ('the diff may read more than 1/1') was not needed and was not used.",
+      "WHERE THE RELAXED FORM WAS USED, and why it is not the same thing: after the RECORDER (V1-AC12) the file did carry 28 non-ASCII bytes -- written by that run, not inherited -- and the restoration there is a re-serialisation of HEAD's own parsed object with ensure_ascii=True (detector 0, semantic diff 0 leaves of 2399), preceded by a round-trip control proving json.dumps(indent=2, ensure_ascii=True)+newline reproduces the pure-ASCII base BYTE-IDENTICALLY."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Issuer note, 2026-09-14 mid-run: 'infra/aws/lambda/ci/lambda-source-map.json at YOUR HEAD (acfd6e9b28) carries 28 non-ASCII bytes inherited from another slot's recorder commit (7403e8c0e9, merged at 866c69817f); SITEZ HEAD 3fd61fc8cc has since restored it.'",
+  "world_is": "At acfd6e9b28 and on every commit of this branch the file is pure ASCII (0 non-ASCII, 195703 bytes) and none of the three named commits is an ancestor. The note is true of SITEZ and not of this worktree; a worker grading its own bytes on the note's premise would have accepted a diff shape it did not need to.",
+  "notes": "Filed for the DRAIN, not for the grade: the issuer's note says its drain 'merges the source map semantically'. This branch's copy is pure ASCII at 195805 bytes with the two functions' last_deployed_commit set; a merge that expects 28 inherited bytes on this side will not find them. No act is requested of anyone and no row was asked for -- the note said none was needed for the ASCII handling, and this row is about the PREMISE, not the handling."
+}
+]
+```
+
+## Row appended by `0.0.0_AB_MSTR~Z` (site Z integrator), 2026-09-14 -- cross-fabric portal overlap
+
+One row, one fenced array, appended (never edited in place). Found while building the portal integration plan
+Andrew asked for (msg 22917); it concerns this project's portal files meeting an unpushed laptop line.
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-S93",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.0.0_AB_MSTR~Z",
+    "surfaced_at": "2026-09-14T21:00:57Z",
+    "one_line": "An UNPUSHED laptop portal line, feature/d13-visual-elevation (DSGN_REBRND, 37 commits ahead of origin/DEV), already modifies src/pages/Positioning/tabs/HoldingsTab.tsx and panels/PositioningSummary.tsx (plus Positioning.tsx). Two of those are files round 5's F2 cell edits from pin e85f6eb84f on refs/drains/posn-5-portal, so POSN's portal work WILL meet the rebrand at the cross-fabric integration merge. Nothing in round 5 is wrong today; the collision is latent and lands at a gated integration act, not in this round.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "LAPTOP SIDE, measured by 0.0.0_AB_MSTR on the laptop 2026-09-14 ~21:0xZ against base 5b959f63ca (agentbus message 8cd9dab4): the laptop's 420 local-only portal paths carry exactly 3 under src/pages/Positioning/, all on feature/d13-visual-elevation -- Positioning.tsx, panels/PositioningSummary.tsx, tabs/HoldingsTab.tsx. The IRPT_FNTEND DEV line touches none of them, and neither line touches src/api/portal-proxy.ts or src/lib/chartColors.ts. These are laptop-local refs and CANNOT be re-derived from site Z; the figures carry that seat's serial.",
+        "SITE-Z SIDE, measured by this seat 2026-09-14 ~21:0xZ with git -C portal: refs/drains/posn-5-portal 6c0deebd91 has merge-base e85f6eb84f with origin/DEV (2 ahead, 5 behind) and so far changes only src/lib/chartColors.ts (the F1 cell). The Positioning page files are untouched on it at this vintage.",
+        "F2's write surface naming HoldingsTab and PositioningSummary, AS RELAYED, not read in the decomposition file by this seat: 1.0.0_SA_CTO~Z msg 22837 ('F2 HoldingsTab/PositioningSummary/types five classes'); 2.0.0_SA_COO~Z msg 22887 (the decomposition @f381f6f402 gives satelliteAdapter.ts to F3 and the PositioningAllocation type in src/api/portal-proxy.ts to F2).",
+        "WHY INERT, not ARMED: the laptop line is unpushed; round 5 builds behind the portal freeze on its own drain ref; nothing merges or pushes on the portal until Andrew rules on the integration plan. The collision can only occur inside a gated merge act that does not yet exist."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The round-5 breakdown (1.0.0_SA_CTO~Z, relayed in msg 22837) scopes the Positioning page as the 14 files at portal pin e85f6eb84f, and cuts round 5's portal drain refs/drains/posn-5-portal from that pin, with F2 editing HoldingsTab and PositioningSummary.",
+    "world_is": "Those files are not only the pin's. A parallel, unpushed laptop rebrand line (DSGN_REBRND, feature/d13-visual-elevation) modifies HoldingsTab.tsx and PositioningSummary.tsx, plus Positioning.tsx. So F2's edits and the rebrand's edits land on the same two files from different bases, and meet at the cross-fabric portal integration.",
+    "notes": "Filed by the site-Z integrator, not a round seat, while building the portal integration plan Andrew asked for (msg 22917): org/tier0_exec/0.0.0_AB_MSTR~Z/deliverables/PORTAL_REPO_CROSS_FABRIC_INTEGRATION_PLAN_20260914.md. No act is asked of round 5 and nothing in it changes. Consumers: 1.0.0_SA_CTO~Z (L10 analysis, the next cut, and the plan's POSN leg) and 2.0.0_SA_COO~Z (the F2/F3 drain). Per-hunk BASE ranges get measured when the POSN integration leg is real; the plan already sequences POSN after its round-5 L10."
+  },
+{
+  "id": "POSN_ASTTAX-Z-W23-S6",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~23",
+  "surfaced_at": "2026-09-14T20:52:50Z",
+  "one_line": "V9-AC11's SECOND-AMENDMENT negative control names a state the PRIOR version cannot produce: 'an unlisted leaf refused by the NEW version only'. v25 refuses EVERY leaf but registry.json by design -- that is the refusal branch this cell was told to KEEP -- so nope.json is refused by BOTH versions, and 'NEW version only' is unobtainable at any vintage. Read literally the clause would put 2 of 16 comparisons outside the bound and command a same-turn re-association of the prior version on all five behaviors, i.e. a rollback of a correct deploy. The control the clause is AFTER did fire: the NEW version still refuses the unlisted leaf, so the allowlist did not widen. Recorded as a FORM defect in the bar, not a failure; V9-AC11 is PASS on its operative clause (16 of 16 comparisons, 0 outside the bound).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED THIS TURN by the admitted instrument, re-run bare (a read of the two committed captures, no live-plane touch): 'SAT-unlisted 49financial REFUSED 404 unknown_satellites_res REFUSED 404 unknown_satellites_res IDENTICAL' and the same for identity opal-capital+firm=cot -- 4 reads, BEFORE=v25 and AFTER=v26 both refusing; footer 'ARM B denominator: 16 of 16 comparisons' / 'ARM B rows outside the signed bound: 0'.",
+      "WHY THE CLAUSE AND NOT THE WORLD: the refusal branch is the one the cell FORBADE widening and it is present unchanged at HEAD -- infra/aws/lambda-edge/shared-advisor-router/index.mjs:355-370 @51731e2a10 (rule satellites_unknown_leaf, 404 {error: unknown_satellites_resource}), 1 of 1 whole-value hit in 435 lines. A version that admitted nope.json would be the DEFECT, so no vintage of this function can satisfy 'refused by the NEW version only'.",
+      "TWO CARRIERS OF ONE BOUND DISAGREE BY ONE WORD: the issuer's own ruling row POSN_ASTTAX-Z-S92 @51731e2a10 writes the control WITHOUT it -- 'the unlisted leaf refused by the new version' -- and that reading is exactly what the output shows. The criterion's carrier is the one a worker grades against, which is why the word is recorded rather than silently read past.",
+      "NOT REPAIRED, BY THE ISSUER'S OWN PRECEDENT: Z-S91 ruled that a bar's FORM clause found defective after a PASS is recorded for the next cut, never rewritten after the fact. This row is that record; the next differential arm cut on this project states its negative control as 'refused by the new version' (what must still hold), not as 'by the new version only' (a difference the prior version cannot show)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-V9-1 V9-AC11 <expect> @51731e2a10 (SECOND AMENDMENT, the ISSUER'S RULING clause): '... the two new leaves admitted and an unlisted leaf refused by the NEW version only (the negative control), N of N comparisons printed with 0 outside the bound.'",
+  "world_is": "nope.json is refused 404 unknown_satellites_resource by BOTH the prior published version (v25) and the new one (v26), on both synthetic identities -- 4 of 4 reads IDENTICAL. The pre-edit router refuses every leaf except registry.json, so 'refused by the NEW version only' describes a state no vintage of this function produces; the satisfiable control is 'still refused by the NEW version', which passed.",
+  "notes": "Nothing is blocked and nothing is re-run: the flip proceeds on V9-AC11's operative clause under Z-S92. Adjudication is the issuer's/L9's. This row is prospective only -- it changes no recorded output."
+},
+{
+  "id": "POSN_ASTTAX-Z-S94",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T21:06:14Z",
+  "one_line": "DISARM of W19-S8 (BLOCKING): V1-AC11 named a re-run of the yang state machine with its last SUCCEEDED input -- an input the pipeline CONSUMES (MoveToProcessed, CleanupUploads; 3 of 3 absent), on a run whose write set (28 Task states, an S3 delete, a CDN invalidation) exceeds the two signed keys. The worker refused correctly. RE-CUT: V1-AC11 (and V8-AC14, which this seat had cut with the SAME defect an hour earlier) invoke the generators DIRECTLY with their recorded events, then the pipeline's own invalidation lambda; both halves' R1 amendments now say so in the same words; the placeholder is renamed DRIVE_YANG_GENERATORS_RECORDED_EVENTS.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE ISSUER'S DEFECT, NAMED TWICE: the same wrong mechanism was cut into V1-AC11 (~18:5xZ) and again into V8-AC14 and the COO half (~20:3xZ) after the CTO's guidance -- the CTO half's own words were 'invokes, once each and in dependency order' the producers, and this seat rendered them as a state-machine run. All three are corrected in this commit; the CTO half needs no change.",
+      "THE RE-CUT'S RADIUS: one lambda invoke per generator with the event the state machine recorded (the worker holds GeneratePositioning's at .scratch/sfn_history.json event #83), writing exactly the signed keys; the second control is a list-objects of json/positioning/ before and after (no other key moves); the invalidation lambda moves no key and is the fire's own step -- stated in the COO half so the halves describe one act.",
+      "WHY GRADUATED: the refusal was the order working as designed; the corrected act is inside both halves and the worker already holds its inputs."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W19-S8"
+  ],
+  "spec_asserts": "TO-V1-1 V1-AC11 @acfd6e9b28 and TO-V8-1 V8-AC14 @c0fb96275f: start the state machine with the last SUCCEEDED input; the COO half R1 AMENDMENT (1) said the same.",
+  "world_is": "The named invocation cannot produce the named result today (the first state's Catch routes to PipelineFailed on the 404 manifest), and on the counterfactual branch the act is wider than the sign-off; the deploy itself is LANDED (V1-AC8/AC9/AC10) and the two served keys are unmoved at their pre-deploy VersionIds -- the covered no-regeneration state.",
+  "notes": "A refresh criterion names the PRODUCER and its recorded event, never a pipeline whose input it cannot replay."
+},
+{
+  "id": "POSN_ASTTAX-Z-S95",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T21:06:14Z",
+  "one_line": "DISARM of W19-S9 (INERT): this seat's mid-run note told the worker its tree carried 28 inherited non-ASCII bytes in lambda-source-map.json; the premise was FALSE for that worktree -- its branch had been fast-forwarded to acfd6e9b28 BEFORE the ~23 drain (866c69817f) landed those bytes on SITEZ, and none of the three commits the note named is an ancestor of the branch. The worker measured its own bytes, met the stricter original bar, and filed the premise. The drain then merged both sides semantically (15e269a4f0: 2090 leaves, pure ASCII).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE LESSON, THIS SEAT'S: a claim about a worker's tree is a claim about ITS ANCESTRY and is checked with `git merge-base --is-ancestor <commit> <branch>` before it is sent -- SITEZ's state after a later drain says nothing about a branch cut before it. The note cost nothing (the stricter bar was met and the relaxed form unused) and could have cost a downgraded grade.",
+      "WHY GRADUATED: no act is owed; the drain's semantic merge handled the true state of both sides and the detector reads 0 at HEAD."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W19-S9"
+  ],
+  "spec_asserts": "The issuer's note: the file at YOUR HEAD carries 28 non-ASCII bytes inherited from 7403e8c0e9 merged at 866c69817f.",
+  "world_is": "Detector 0 at acfd6e9b28 and at every commit of the branch; merge-base --is-ancestor non-zero for all three named commits. The note described SITEZ's state, not the worker's tree.",
+  "notes": "Ancestry first, then the note."
+},
+{
+  "id": "POSN_ASTTAX-Z-S96",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T21:06:14Z",
+  "one_line": "DISARM of W23-S6 (INERT): the SECOND AMENDMENT of TO-V9-1 wrote the deployed-bytes arm's negative control as 'an unlisted leaf refused by the NEW version only' -- unsatisfiable by construction, because the PRIOR version (v25) refuses every leaf but registry.json by design, the very refusal branch the cell was told to KEEP. The satisfiable control -- the unlisted leaf STILL refused by the new version (the allowlist did not widen) -- fired 2 of 2, both versions, both identities, and the ruling row Z-S92 states it without the word. TO-V9-1 is COMPLETE (bcfc6483e1); the wording is recorded, not rewritten after a PASS.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE ISSUER'S DEFECT, THE Z-S91 SHAPE AGAIN: a bar describing the OUTPUT's form by a word the world cannot produce ('only'), where the operative clause (the two new leaves admitted, the refusal branch kept) is exactly what was proved. Three form defects in one order's amendments (Z-S91, this row, the plan-path token of Z-S81) -- the next cut has its own clauses proof-read against what the instrument can print.",
+      "WHY GRADUATED: the bound is proved on both readings that matter, the order is terminal, and the two carriers (the criterion and Z-S92) are reconciled by this row for L9."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W23-S6"
+  ],
+  "spec_asserts": "TO-V9-1 V9-AC11 @51731e2a10: 'the two new leaves admitted and an unlisted leaf refused by the NEW version only (the negative control)'.",
+  "world_is": "nope.json refused 404 unknown_satellites_resource by BOTH versions on both identities (4 of 4); read literally the clause puts 2 of 16 rows outside the bound and commands a rollback of a correct deploy; read as the bound it describes (the allowlist widened by exactly two leaves, the refusal branch intact) it is met.",
+  "notes": "Not amended post-PASS (Z-S81's rule)."
+},
+{
+  "id": "POSN_ASTTAX-Z-W20-S9",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~20",
+  "surfaced_at": "2026-09-14T20:56:14Z",
+  "one_line": "V2-AC13's amended note names 97fe1221bd as 'the commit the helper would have named' for deployed_commit; the helper's own derivation is COMMIT_SHA = rev-parse HEAD AT RECORD TIME (record-terraform-deploy.sh:203) and VERSION_LABEL = untagged-${COMMIT_SHORT} (:442), which at 2026-09-14T20:04:00Z was f4e4f6ef620bbe8aa1498991e9f2c44a1ad1c385 / untagged-f4e4f6ef -- the recorder printed both in its own commit message at 707f6ad8fb and stamped deploy_ledger f4e4f6ef62 into the map row. The ordered value (the deployed CODE commit, the build pin, the map's last_deployed_commit) was written as instructed and the entry is internally consistent on it; the consequence is that the version label this entry carries is NOT the label a fixed recorder re-recording this deploy would compute, so the issuer's de-duplicate-on-the-version-label ruling has a different key than it expects.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE HELPER'S DERIVATION, READ AT THE BYTES: record-terraform-deploy.sh:203-206 COMMIT_SHA=$(git rev-parse HEAD), COMMIT_SHORT=${COMMIT_SHA:0:8}, TIMESTAMP, BRANCH; :442 VERSION_LABEL=\"${VERSION:-untagged-${COMMIT_SHORT}}\"; :700 entry.deployed_commit = commit. CORROBORATED BY THE RECORDER'S OWN OUTPUT, not only by reading it: commit 707f6ad8fb's message prints 'Version: untagged-f4e4f6ef' and 'Commit: f4e4f6ef620bbe8aa1498991e9f2c44a1ad1c385', and the map row it wrote carries deploy_ledger f4e4f6ef62. f4e4f6ef62 is this worker's LEDGER leg-L6 commit (15:57 EDT), not a code commit and not the recorder's own commit 707f6ad8fb (16:04 EDT); the deployed code is 97fe1221bd (15:13 EDT), the pin fed to build_package.py and the value in the map's last_deployed_commit.",
+      "WHAT WAS WRITTEN AND WHY IT IS SELF-CONSISTENT: deployed_commit 97fe1221bd..., deployed_commit_short 97fe1221 (the helper's ${COMMIT_SHA:0:8} form), version untagged-97fe1221 (the helper's untagged-${COMMIT_SHORT} formula applied to the ordered commit). Writing the ordered commit under the label the recorder published (untagged-f4e4f6ef) would have made version and deployed_commit_short disagree inside one entry, so the two fields move together.",
+      "MEASURED INVARIANT -- THE DIVERGENCE IS CONFINED TO THREE FIELDS: git log 13ed1ab7751b..<commit> over the 5-path pipeline pathspec returns the SAME 2 records for either candidate commit (97fe1221bd and f4e4f6ef62), so commits[] is identical either way; previous_commit 42dd9e8c812474745f8f2dd97b8ff962c5183fa7 is get_previous_commit() (:447-481) replayed over the PRE-record map at 707f6ad8fb^ (cot-etf-ownership-daily, the first cot-pipeline row carrying a non-null last_deployed_commit; this function's row was null then) and does not depend on the choice.",
+      "A SECOND DERIVATION THE FACE'S SHAPE OVERRIDES, DISCLOSED: the helper's artifacts loop (:668-686) admits a function only if its map row carries artifact_s3_key AND artifact_sha256. The cot-satellites-registry-producer row carries NEITHER (it carries deployed_code_sha256), while the three sibling cot-pipeline rows carry both -- so the helper's own rule would have written ZERO artifact rows for the function this cell deployed and THREE for functions this apply never touched. The face's ordered artifact row {cot-pipeline/cot-satellites-registry-producer.zip, eFToEJ0FNu1sMO7cJ1WNdRoGSVuNuHSM9ToBzHGkF1I=} is the true one and passes the helper's own base64 read-guard regex.",
+      "WHY ARMED RATHER THAN INERT: nothing is harmed now -- the entry is landed, scoped and true about this apply. The future-normal path is the issuer's own ruling ('a later fixed recorder de-duplicates on the version label'): a fixed recorder re-recording this deploy computes its label from HEAD at ITS run time and will not match untagged-97fe1221, so it appends a SECOND entry for one deploy instead of de-duplicating. One line from the disarm owner settles which label the round wants."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-V2-1 V2-AC13 (amended) and its hand-over notes: write the CHANGELOG entry 'in the helper's exact shape (the entry object built at record-terraform-deploy.sh:600-700)', with 'deployed_commit is the commit the helper would have named (your code commit 97fe1221bd, not the recorder's own commit)'.",
+  "world_is": "The helper would have named f4e4f6ef620bbe8aa1498991e9f2c44a1ad1c385 with version untagged-f4e4f6ef (:203/:442, printed by the recorder itself at 707f6ad8fb); 97fe1221bd is the deployed code commit, which is the better record of what was deployed but is not what the helper's rule produces. The ordered value was written, self-consistently across version/deployed_commit/deployed_commit_short, and the divergence is recorded here rather than silently absorbed.",
+  "notes": "Two shapes exist in this round for the same class: slot ~23's portal-auth entry at 4fd5ce488f used the helper's COMMIT_SHA (HEAD at record time) for deployed_commit and disclosed its functions_updated scoping; this entry uses the deployed code commit. If the round wants ONE convention, that is the issuer's call and both entries are one-field edits."
+},
+{
+  "id": "POSN_ASTTAX-Z-S97",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T21:13:44Z",
+  "one_line": "DISARM of W20-S9 (ARMED): the by-hand CHANGELOG entry's deployed_commit. RULED, one convention for the round: deployed_commit / deployed_commit_short / version key on the DEPLOYED CODE COMMIT the artifact was built from (the build pin, the map's last_deployed_commit) -- the entry ~20 wrote (97fe1221bd, untagged-97fe1221) and the entry ~23 wrote (0f946931b5, its code commit) already share it; the helper's own HEAD-at-record-time rule would have named a ledger commit (f4e4f6ef62) that shipped no byte. The issuer's 'de-duplicate on the version label' phrase was loose and is withdrawn: a fixed recorder run at a later HEAD mints a different label regardless; the de-dup key for one deploy is (function, artifact sha256), which every by-hand entry in this round carries and the helper's own artifacts loop would have omitted for this function.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE TWO CANDIDATES, BOTH MEASURED BY THE WORKER AT THE BYTES: the helper's COMMIT_SHA = rev-parse HEAD at record time (:203) with VERSION_LABEL untagged-${COMMIT_SHORT} (:442) -- f4e4f6ef62 / untagged-f4e4f6ef at 20:04:00Z, a LEDGER leg commit; versus the deployed code commit 97fe1221bd, the pin fed to build_package.py and the map row's last_deployed_commit. commits[] (2 records over the pipeline pathspec) and previous_commit (42dd9e8c81) are identical under either candidate, so the divergence is confined to three fields.",
+      "WHY THE CODE COMMIT IS THE CONVENTION: a CHANGELOG entry answers 'what was deployed'; the helper's HEAD-at-record-time is an accident of commit ORDER inside one worktree (a ledger commit landed between the code and the record) and can name a commit that shipped no byte. The map's last_deployed_commit already carries the code commit for the same deploy; one key for both carriers.",
+      "THE ARTIFACTS ROW: the helper's loop (:668-686) admits a function only when its map row carries artifact_s3_key AND artifact_sha256; the cot row carries deployed_code_sha256 instead, so the helper would have written zero artifact rows for the deployed function and three for untouched siblings. The by-hand entries carry the true artifact (key + sha256) -- the de-dup key that survives a recorder fix.",
+      "WHY GRADUATED: both entries in the round already follow the convention; nothing is edited; the withdrawn phrase is replaced by a key that discriminates."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W20-S9"
+  ],
+  "spec_asserts": "TO-V2-1 V2-AC13 hand-over note: deployed_commit is the commit the helper would have named (your code commit 97fe1221bd); Z-S90: a later fixed recorder de-duplicates on the version label.",
+  "world_is": "The helper would have named the ledger commit f4e4f6ef62 (its rule is HEAD at record time); the worker wrote the ordered code commit self-consistently across the three fields and filed the divergence; a fixed recorder's future label cannot equal either.",
+  "notes": "For the round analysis: the recorder's fix (CI lane) should key deployed_commit on the build pin, not on HEAD at record time, and admit deployed_code_sha256 in its artifacts loop."
+},
+{
+  "id": "POSN_ASTTAX-Z-W22-S9",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~22",
+  "surfaced_at": "2026-09-14T21:05:00Z",
+  "one_line": "The instrument V6-AC5/V6-AC6 name (portal/scripts/ui-smoke.mjs) imports 'playwright-core', which is NOT declared anywhere in portal/package.json -- it runs in the estate's main checkout only because that node_modules happens to carry it, and it died with ERR_MODULE_NOT_FOUND in this freshly-cut worktree.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED: `node scripts/ui-smoke.mjs positioning .scratch/v6_models.png --port 5181` -> \"Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'playwright-core' imported from C:\\\\tmp\\\\wk-posn-5-22\\\\portal\\\\scripts\\\\ui-smoke.mjs\", rc=1.",
+      "DENOMINATOR: portal/package.json @6c0deebd91 carries ZERO occurrences of 'playwright' (case-insensitive) in any dependency block; portal/node_modules in this worktree held 257 entries and no playwright*.",
+      "PRESENT ELSEWHERE: the estate's main checkout has portal/node_modules/playwright-core 1.62.1 (14M). The package is installed but UNDECLARED, so `bun install` in a fresh worktree does not reproduce it.",
+      "WHAT I DID, stated because the order did not say it: copied that exact installed 1.62.1 into this worktree's portal/node_modules/. node_modules is gitignored -- NO tracked file, no package.json and no lockfile was touched, and V6-AC2's diff (5 files) is unchanged by it. No network egress: the bytes came from the estate's own disk.",
+      "WHY IT IS NOT A BUILD-LADDER VIOLATION: rung 5, an already-installed dependency, used at the version the estate already runs."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "V6-AC5 and V6-AC6 invoke portal/scripts/ui-smoke.mjs as an instrument any worker can run from its own worktree; the preflight's stated uncertainty was the AUTH STUB, not the dependency.",
+  "world_is": "The script's only hard import is undeclared in the package it lives in. A worker on a fresh worktree gets a module-resolution failure that looks nothing like a render failure, and a worker in the shared checkout never sees it -- so the instrument's availability depends on which tree it is run from.",
+  "notes": "The auth stub itself WORKED (LOC /positioning, no /login bounce), so the preflight's named risk did not fire. Owner for the declaration is whoever owns portal/package.json; I did not edit it -- it is not in my <paths>."
+},
+{
+  "id": "POSN_ASTTAX-Z-W22-S10",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~22",
+  "surfaced_at": "2026-09-14T21:06:00Z",
+  "one_line": "V6-AC5's invocation CANNOT REACH THE STATE IT GRADES: the Asset Class rows sit behind a collapsed 'Expand Details' control, /api/general/* returns 401 to the smoke's inert token so no subtotals exist to sum, and the Models/ETFs toggle is a persisted in-page button the invocation never presses -- so the ETFs outfile renders MODELS.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "LITERAL RUN, exactly as written: `timeout 600 bash -c \"cd portal && node scripts/ui-smoke.mjs positioning .scratch/v6_models.png --port 5181\"` rc=0, printed `LOC   : /positioning` -- NO bounce to /login, so the auth stub holds.",
+      "READ (Read tool) of .scratch/v6_models.png: the ASSET CLASSES block renders FIVE rows in PRD s.3 canonical order, one swatch each (Fixed Income green, Equity blue, Structured pink, Commodities gold, Alternatives orange). BELOW it: a collapsed 'EXPAND DETAILS' button and 'No holdings data available' in both lower panels. There are no value rows, therefore NO SUBTOTALS TO SUM -- the one clause of the expectation that cannot be read off this capture.",
+      "READ of .scratch/v6_etfs.png (same literal invocation, etfs outfile): the mode pill shows MODELS active. The invocation carries no way to press the ETFs button, so the 'same for the ETFs mode' half is unreachable as written.",
+      "WHY NO DATA: `curl --compressed https://d2n2nzpeqf34ge.cloudfront.net/api/general/positioning/positioning_data.json` -> http=401 {\"error\":\"Missing or invalid Authorization header\"}. ui-smoke's session carries the inert 'ui-smoke-token', so every /api/general/* call through the vite proxy 401s. --token exists for a REAL bearer; the invocation does not pass one.",
+      "SUPPLEMENTARY, STATED AS SUPPLEMENTARY AND NOT USED TO CLAIM THE CRITERION: the same script, same browser, same auth stub, plus --fixtures built from THE SERVED BYTES (s3://opal-data-portal-v2 json/positioning/positioning_data.json gz, platinum/etfs/positioning_data.json, json/positioning/holdings_attribution_data.json) and --click. Models: five rows in canonical order, section header 'ASSET CLASS (5)', UST 100+0+0+0+0=100.00, ST 82.60+17.40=100.00, INT 32.80+67.20=100.00, LT 12.70+87.30=100.00, ULT 8.10+91.90=100.00. ETFs: DIVZ 0.62+99.38=100.00, IDVZ 0.95+99.05=100.00, PFDE 0.09+99.90=99.99, PFOE 0.63+99.36=99.99. Every subtotal within 0.1 of the total.",
+      "SO THE PRODUCT IS RIGHT AND THE INSTRUMENT AS INVOKED CANNOT SEE IT. Recorded UNVERIFIABLE-BY-INSTRUMENT, never PASS: the refusal clause bars satisfying a criterion by another route."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "V6-AC5: run ui-smoke at <PORT> (the ONLY placeholder in that invocation), READ the PNG, and see five class rows in canonical order with one swatch per class and subtotals summing to the total to 0.1, in BOTH the Models and the ETFs mode.",
+  "world_is": "Three separate gaps between that invocation and that state: (1) the Asset Class rows are collapsed by default and need a click; (2) the served data needs a real bearer, which the stub does not carry, so subtotals do not exist; (3) the mode is an in-page toggle, so one outfile name cannot select it. Each is a property of the page and the instrument, not of this cell's edit.",
+  "notes": "A re-cut that would be gradeable as written: add --fixtures <served payload> --click 'Expand Details' (and --click 'ETFs' for the second capture) to the invocation, or pass --token with a real bearer. The issuer's preflight named the auth stub as the risk; the stub held and these three did not get named."
+},
+{
+  "id": "POSN_ASTTAX-Z-W22-S11",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~22",
+  "surfaced_at": "2026-09-14T21:07:00Z",
+  "one_line": "The cell's premise that satelliteAdapter.ts 'reads keyof PositioningAllocation and will follow your type' is HALF TRUE and the other half breaks the build: it also CONSTRUCTS four-key object literals annotated `: PositioningAllocation`, so widening the three new keys as REQUIRED fails tsc in a file this cell forbids me to touch.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED: with structured/commodities/alternatives REQUIRED, `bun run tsc -b` rc=2 -> \"src/pages/Positioning/shared/satelliteAdapter.ts(144,11): error TS2739: Type '{ cash: number; fixed_income: number; equity: number; hedge: number; }' is missing the following properties from type 'PositioningAllocation': structured, commodities, alternatives\" and the same at (159,11).",
+      "SOURCE, read not inferred: satelliteAdapter.ts:143-148 `const allocation: PositioningAllocation = { cash: allocField('cash'), fixed_income: ..., equity: ..., hedge: ... }` and :157-162 the identical shape for `delta`. The `keyof PositioningAllocation` the cell cites is the ACCESSOR's parameter type at :133 and :151 -- that half does follow the type; the literals do not.",
+      "THE CELL FORBIDS THE FIX THERE: 'NOT yours: shared/satelliteAdapter.ts (F3 owns it whole)', and it is not in my <paths>. A path I need that my grant lacks is a blocking row, never an override.",
+      "WHAT I DID: declared the three new keys OPTIONAL on PositioningAllocation (hedge already optional per the cell). tsc rc=0. Every read site I own takes `?? 0`, so an absent class renders a ZERO ROW rather than NaN -- which is the pre-B1 state V6-AC5 calls valid.",
+      "IT IS ALSO THE HONEST SHAPE TODAY: both served artifacts carry exactly {cash, fixed_income, equity, hedge} on every book (measured 2026-09-14), so REQUIRED would have been a claim about the payload that is false at this hour.",
+      "etfAdapter.ts:134 failed the same way and IS mine -- ZERO_ALLOCATION now carries the five-class zero."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The cell: widen portal-proxy.ts:969 PositioningAllocation to the five-class keys with `hedge?` optional, and do not touch satelliteAdapter.ts, which 'will follow your type'.",
+  "world_is": "A required-five widening does not propagate to satelliteAdapter -- it REFUSES it, in a file outside this cell's grant. Optional-three is the only shape that satisfies the widening, the build and the boundary at the same time.",
+  "notes": "For AT5-s-7/F3, which owns satelliteAdapter and binds this type: tightening the three to required is a one-line change in portal-proxy.ts and the compiler then names every literal that still owes the keys. Stated in the interface doc comment at the declaration."
+},
+{
+  "id": "POSN_ASTTAX-Z-W22-S12",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~22",
+  "surfaced_at": "2026-09-14T21:08:00Z",
+  "one_line": "Dropping the Hedge->Equity display fold as ordered means a top-level asset_class of 'Hedge' now maps to NO group and is EXCLUDED from the holdings table while still counting toward the grand total -- the exact defect (PFDE 90 rendered rows of 90 served) that the Cash fold beside it was added to fix.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MECHANISM, read at HoldingsTab.tsx: displayClass no longer rewrites 'Hedge', and the grouping renders `ASSET_CLASS_ORDER.filter(ac => groupedHoldings[ac])` -- a group keyed 'Hedge' is not in that order, so its rows never render, while calculateSubtotal's grandTotal is computed over ALL attributionHoldings.",
+      "THE SAME FILE DOCUMENTS THIS CLASS OF DEFECT at the fold it keeps: 'MEASURED by 0.2.0_DT_PortfolioAnalytics~Z on PROD v2.1.167 ... PFDE 90 -> 89, PFOE 24 -> 23 (one cash row each, dropped) ... the panel was inconsistent WITH ITSELF ... 99.98 under its own GRAND TOTAL of 100.01'.",
+      "NOT LIVE TODAY, MEASURED: the served json/positioning/holdings_attribution_data.json carries 110 holdings across 5 books with asset_class histogram {\"Fixed Income\":59,\"Equity\":51} -- ZERO 'Hedge'. The served allocations carry hedge=0.0 on all five model books, all four ETF books, every benchmark and every spread.",
+      "SO THE PREMISE 'after R1 no served value is Hedge at the top level' HOLDS AT MY BAR, and the exposure is confined to a stale payload served between now and B1's retag."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The cell: KEEP 'Cash' -> 'Fixed Income', DROP 'Hedge' -> 'Equity' ('after R1 no served value is Hedge at the top level').",
+  "world_is": "The drop is implemented exactly as ordered. Its consequence, which the cell does not name, is that an unmapped top-level class is silently omitted from the table rather than mis-grouped -- visible as a missing group and a subtotal that does not reach the grand total, not as an error.",
+  "notes": "I did NOT re-point 'Hedge' to 'Structured' -- that would be repairing a criterion by another route. If the transition window matters, the two candidate remedies are a fold to Structured or an explicit UNMAPPED group; both are the issuer's call, not mine."
+},
+{
+  "id": "POSN_ASTTAX-Z-W22-S13",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~22",
+  "surfaced_at": "2026-09-14T21:09:00Z",
+  "one_line": "Two LEGENDS the cell does not name sat beside two surfaces it orders widened, and the ordered edit would have made both of them FALSE -- PositioningSummary's read 'Equities / Stocks & Hedge' next to a five-segment bar, HoldingsTab's listed two classes under a treemap now painting five.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "SITES: PositioningSummary.tsx:1152-1177 at the drain ref -- two hand-written entries, the second captioned 'Stocks & Hedge', beside the stacked bar this cell widens to five keys. HoldingsTab.tsx:1113-1119 -- two entries reading ASSET_CLASS_COLORS['Fixed Income'] and ['Equity'], beside the treemap whose colour map this cell widens to five.",
+      "WHY IT IS NOT A NEIGHBOURING DEFECT I CHOSE TO FIX: both captions become WRONG BY MY OWN EDIT -- the hedge fold this order drops is what 'Stocks & Hedge' describes, and the treemap paints three colours the legend does not list only because I added them.",
+      "WHAT I DID: derived both legends from the single declaration the cell does order (ASSET_CLASSES in PositioningSummary, ASSET_CLASS_ORDER in HoldingsTab), so neither is a second membership claim. Rendered and READ in both modes: five entries, canonical order, one swatch each.",
+      "BLAST RADIUS: both are inside files the cell names and inside my <paths>; V6-AC2's scoped diff and an UNSCOPED `git -C portal status --porcelain` both show the same 5 files and nothing else."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The cell enumerates its measured sites (the colour map, the fold, the order literal, the summary rows, the bucket fold, the render type, the type widening) and says nothing about either legend.",
+  "world_is": "A legend is a membership claim about the surface it labels. Leaving these two would have shipped a page that draws five classes and captions two, with one caption naming a fold this order deletes.",
+  "notes": "Filed because it is an act the order did not name, not because it is contested. If the issuer reads it as widening, the revert is two hunks and neither is load-bearing for any criterion."
+},
+{
+  "id": "POSN_ASTTAX-Z-S98",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T21:40:18Z",
+  "one_line": "DISARM of W22-S9 (INERT): portal/scripts/ui-smoke.mjs imports playwright-core, undeclared in portal/package.json, so the instrument runs only in a tree whose node_modules happens to carry it; the worker copied the estate's installed 1.62.1 into its gitignored node_modules (rung 5 of the build ladder, no tracked file touched, no egress). ACCEPTED; the declaration is the portal package owner's, carried for the round analysis; V7's hand-over states the copy is in place.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "WHY ACCEPTED: the fix used the version the estate already runs, wrote nothing tracked, and made the instrument reproducible for the two remaining portal orders on the same worktree.",
+      "WHY NOT FIXED IN THE ROUND: package.json is outside every POSN cell and behind the freeze's spirit (a dependency line is a build input); the round analysis carries it."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W22-S9"
+  ],
+  "spec_asserts": "V6-AC5/AC6 name ui-smoke.mjs as an instrument any worker can run from its own worktree.",
+  "world_is": "ERR_MODULE_NOT_FOUND in the fresh worktree; zero 'playwright' in package.json @6c0deebd91; present in the main checkout's node_modules only.",
+  "notes": "A future portal order that names ui-smoke.mjs states the dependency in its preflight."
+},
+{
+  "id": "POSN_ASTTAX-Z-S99",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T21:40:18Z",
+  "one_line": "DISARM of W22-S10 (BLOCKING): V6-AC5 as cut could not reach the state it grades -- the Asset Class rows are behind a collapsed 'Expand Details' control, the smoke's inert token gets 401 from /api/general/* (no value rows, no subtotals), and the Models/ETFs mode is an in-page button one outfile name cannot select. RE-CUT: the invocation carries --fixtures built from the SERVED bytes (VersionIds printed) and --click 'Expand Details'; the ETFs capture adds --click 'ETFs'; the placeholder set gains FIXTURES. The worker's supplementary run on exactly that shape read five rows in canonical order in both modes with every subtotal within 0.1 of its total.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE ISSUER'S DEFECT: the preflight named the auth stub as the risk and not the three properties of the page and the instrument the worker measured; the same three are now written into V7-AC5 (Satellites mode) before its hand-over.",
+      "WHY THE FIXTURES ARE ADMISSIBLE: they are the served bytes themselves (s3api get-object, VersionIds printed), routed to the page by the instrument's own --fixtures mechanism; the auth gate is not bypassed for any write, and the alternative (--token with a real bearer) is the credential gap W23-S1 measured as unavailable on this fabric.",
+      "WHY GRADUATED: one criterion, one edit, the worker already holds the fixtures and the readings."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W22-S10"
+  ],
+  "spec_asserts": "V6-AC5 @e7aa5b7303: run ui-smoke at <PORT>, READ the PNG, five rows, swatches, subtotals to 0.1, both modes.",
+  "world_is": "The literal run reached /positioning (the auth stub held) and rendered the five rows with swatches, but no value rows and the Models pill in both captures; the product is right and the instrument as invoked cannot see it.",
+  "notes": "A render bar names the clicks and the data route the page needs to reach the graded state."
+},
+{
+  "id": "POSN_ASTTAX-Z-S100",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T21:40:18Z",
+  "one_line": "DISARM of W22-S11 (BLOCKING): the cell's premise that satelliteAdapter.ts merely reads keyof PositioningAllocation was half true -- it also constructs four-key literals annotated with the type (:143, :157), so a required-five widening fails tsc in the file the cell forbade. RULED: the worker's OPTIONAL three keys stand (the honest shape today: every served book carries exactly {cash, fixed_income, equity, hedge}); TO-V7-1 (F3), which owns the adapter, tightens the three to REQUIRED once its literals carry them -- written into V7's hand-over facts. etfAdapter.ts's ZERO_ALLOCATION carries the five-class zero (in the cell).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "WHY THE ORDER OF TIGHTENING IS F3'S: the two literals are inside F3's write surface and F3 fills them with the served five-class allocation; the one-line tightening in portal-proxy.ts (in F3's grant) then makes the compiler enumerate every site that still owes the keys -- the instrument the cell wanted, one cell later.",
+      "WHY GRADUATED: the boundary held (no file outside the grant was touched), the build is green, and the follow-through has an owner and a criterion-bearing order."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W22-S11"
+  ],
+  "spec_asserts": "TO-V6-1 THE CELL: widen PositioningAllocation to the five-class keys (hedge? optional); satelliteAdapter.ts is NOT yours and 'will follow your type'.",
+  "world_is": "tsc rc=2 on the required shape at satelliteAdapter.ts(144,11) and (159,11); rc=0 on the optional shape; every read site takes ?? 0 so an absent class renders a zero row.",
+  "notes": "A type-widening cell's premise about a consumer is checked by grepping for LITERALS annotated with the type, not only for keyof reads."
+},
+{
+  "id": "POSN_ASTTAX-Z-S101",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T21:40:18Z",
+  "one_line": "DISARM of W22-S12 (INERT): dropping the Hedge -> Equity display fold as ordered means a top-level asset_class of 'Hedge' would map to no group and be excluded from the holdings table while still counted in the grand total -- the PROD v2.1.167 Cash-row defect's shape. MEASURED not live: the served holdings_attribution_data.json carries zero 'Hedge' (110 holdings, {Fixed Income 59, Equity 51}) and every served allocation reads hedge 0.0. RULED: no fold to Structured and no UNMAPPED group in this round -- the premise 'no served value is Hedge at the top level' holds at the bar and R1 lands inside the round; the exposure is a payload that would carry top-level Hedge between now and R1, and V8-AC10's served-rows == rendered-rows bar is the read that would catch it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "WHY NO REMEDY HERE: a fold to Structured would encode a mapping the PRD assigns to the classification table, not the page; an UNMAPPED group is a new rendering the spec does not name; both are L10 material if the window ever bites.",
+      "WHY GRADUATED: the served state is measured clean at the bar and the last cell's render bar reads the same property after the retag."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W22-S12"
+  ],
+  "spec_asserts": "TO-V6-1 THE CELL: KEEP Cash -> Fixed Income, DROP Hedge -> Equity.",
+  "world_is": "Implemented as ordered; the consequence for an unmapped class is silent omission from the table, disclosed by the worker with the file's own documentation of the sibling defect.",
+  "notes": "The round analysis may name an UNMAPPED group as a defensive rendering for the next round."
+},
+{
+  "id": "POSN_ASTTAX-Z-S102",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T21:40:18Z",
+  "one_line": "DISARM of W22-S13 (INERT): two legends the cell did not name (PositioningSummary 'Stocks & Hedge' beside the widened bar; HoldingsTab's two-entry legend beside the five-colour treemap) would have been made FALSE by the cell's own edits; the worker derived both from the single declarations the cell orders (ASSET_CLASSES, ASSET_CLASS_ORDER) inside files in its grant, rendered and read them in both modes. ACCEPTED as part of the cell: a legend is a membership claim about the surface the cell widened.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "WHY ACCEPTED, NOT WIDENING: the cell's sites and the legends describe one surface; leaving the captions would have shipped a page that draws five and captions two -- the light-on-light class of defect one level up (a caption that lies).",
+      "WHY GRADUATED: nothing to act on; the readings are in the instance for L9."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W22-S13"
+  ],
+  "spec_asserts": "TO-V6-1 THE CELL enumerates its sites; neither legend is among them.",
+  "world_is": "Both legends now derive from the declarations; V6-AC2's scoped diff and an unscoped status show the same five files.",
+  "notes": "The issuer's site enumeration for a widening cell includes every caption of the widened surface."
+}
+]
+```
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-W19-S10",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~19",
+    "surfaced_at": "2026-09-14T21:27Z",
+    "one_line": "V1-AC11's CDN clause, measured: yang-invalidate-cloudfront carries TWO HARDCODED distribution ids and ONE OF THEM DOES NOT EXIST -- E2LPCXXBLDGWXY returns NoSuchDistribution, so the pipeline's own final step reports 1 of 2 on EVERY run and swallows it by design; and the COO half describes that step's write set as 'the CloudFront cache of the keys just written' where the code invalidates '/*' on BOTH ids. The criterion's own bar IS met (the one distribution that exists, EVTSA9VEHNZVH, was invalidated: Id IIBQPHIOLI1C2Z7RPLS86RY3G, Status Completed -- the page reads the new bytes), but this worker's harness carried a STRICTER arm (both ids must succeed) and therefore exited rc=3 printing BRANCH B. V1-AC11 is recorded PASS on the criterion's written clauses with this row as the disclosure.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE INVOKE AND ITS BODY, VERBATIM, from the criterion's own invocation (timeout 1800 python org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~19/drive_yang_generators_recorded_events.py -> rc=3): 'INVOKE yang-invalidate-cloudfront event #155 StatusCode=200 FunctionError=NONE' and the response body {\"invalidations\": [{\"distribution_id\": \"E2LPCXXBLDGWXY\", \"error\": \"An error occurred (NoSuchDistribution) when calling the CreateInvalidation operation: The specified distribution does not exist.\"}, {\"distribution_id\": \"EVTSA9VEHNZVH\", \"invalidation_id\": \"IIBQPHIOLI1C2Z7RPLS86RY3G\", \"status\": \"InProgress\"}], \"pipeline_execution_id\": \"1c95bba7-0ba9-4371-bfdd-4162483a6452\"}.",
+        "THE DEAD ID, ON A SECOND INSTRUMENT AND WITH A DENOMINATOR: .tools/aws cloudfront get-distribution --id E2LPCXXBLDGWXY -> NoSuchDistribution, rc=254 (my own credentials, not the lambda role's -- so this is not an authorization artifact); .tools/aws cloudfront list-distributions returns 2 of 2 distributions in account 313476888478 -- EVTSA9VEHNZVH (d2n2nzpeqf34ge.cloudfront.net, origin opal-data-portal-v2.s3.us-east-1.amazonaws.com, aliases opalinvest.dev + www.opalinvest.dev) and E1DHJH4Y1W8YC2 (origin opalinvest.com) -- and E2LPCXXBLDGWXY is NEITHER. An id that exists in no distribution fronts no page, so the criterion's 'so the page reads the new bytes' is carried entirely by the one that does exist, and its origin IS the bucket holding both signed keys.",
+        "THE ARTIFACT, NEVER THE INVOKE'S rc: .tools/aws cloudfront get-invalidation --distribution-id EVTSA9VEHNZVH --id IIBQPHIOLI1C2Z7RPLS86RY3G -> {Id IIBQPHIOLI1C2Z7RPLS86RY3G, Status COMPLETED, CreateTime 2026-09-14T21:21:45.276Z, Paths [\"/*\"], CallerReference 1c95bba7-0ba9-4371-bfdd-4162483a6452-1789420905}. The CallerReference is built from the RECORDED event's pipeline_execution_id, which is independent evidence that the invalidation was driven by the recorded event rather than by a hand-written one.",
+        "THE WRITE-SET DESCRIPTION vs THE CODE AT HEAD: the COO half's R1 AMENDMENT 'The act' bullet (org/missions/D4/POSN/POSN_ASTTAX/ledger/NEVER_WIDEN_ROUND5_COO_HALF.md @f9bd154349) reads 'then yang-invalidate-cloudfront invoked with its recorded event -- the pipeline's own step, whose write set is the CloudFront cache of the keys just written and NO key'. The source (infra/aws/lambda/v2_portal/yang_pipeline/outputs/invalidate-cloudfront/lambda_function.py:28-31 DISTRIBUTION_IDS = ['E2LPCXXBLDGWXY', 'EVTSA9VEHNZVH'] and :44-50 Paths {'Quantity': 1, 'Items': ['/*']}) invalidates the WHOLE CACHE of BOTH ids, not the keys just written. The half's load-bearing clause -- NO key -- is EXACT (comp-iam service yang-invalidate-cloudfront: OPERATIONS (1), cloudfront:CreateInvalidation, and nothing else); what is wider than the half's words is the CACHE radius, which moves no served object.",
+        "NOT CAUSED BY THIS CELL AND NOT NEW: the deployed function is LastModified 2026-05-04T18:54:44Z, CodeSha256 2acae1xi9p/ZbTNquVYBmduV3AJ4OuXEbtEgKXt5Tu0= -- untouched by this deploy, which changed only yang-generate-positioning and yang-generate-allocation-summary -- and this step is the final state of EVERY YangDataPipeline execution, so its 1-of-2 result is the pipeline's steady state, not a state this act created. Its own docstring says 'This step never fails the pipeline. Invalidation errors are logged and returned in the result but do not raise exceptions', which is why StatusCode is 200 with FunctionError NONE and the error lives in the body where only a body-reader sees it.",
+        "WHAT IS UNAFFECTED, so the row is not read wider than it is -- every other clause of V1-AC11 passed BY OUTPUT in the same run: both heads moved (positioning_data.json 4Q1qjgD52FSKZ38EfHGqdKGHyJ_ktlka -> OuevyO7kCIJdEqzGlJWd.z.8S8pqiXJk at 2026-09-14T21:21:33Z; allocation_summary.json FiY95KdKcmtt5els.v44XVZciDBtUDrw -> HfPxh0kkU6s5yCYCyKvv7SRP977Dhijp at 21:21:44Z); 60 of 60 five-class leaf keys present and every one 0 or 0.0; the three benchmarks.etf rows read ticker null and label 'no benchmark'; membership identical for 5 of 5 models; the classified diff over 272 differing leaf keys reads OTHER = 0; allocation_summary.json differs at exactly one leaf of 298 (generated_at); and 0 of 3 keys under json/positioning/ that are not the two signed keys moved between the two list-objects reads."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-V1-1 V1-AC11 (THIRD AMENDMENT): 'Then the CDN: yang-invalidate-cloudfront invoked with ITS recorded event from the same history (the pipeline's own step; its write set is the CloudFront cache of the keys just written and NO key; both halves name it), Invalidation Id + Status printed, so the page reads the new bytes.' THE CELL's Branch B trigger set: '(any failure, any other key under json/positioning/ moving, any difference beyond the permitted classes): STOP, file the row'.",
+    "world_is": "The invoke returned StatusCode 200 with no FunctionError and the live portal distribution's invalidation reached Status COMPLETED, so the criterion's named result was produced. Inside that same response one of two HARDCODED ids is NoSuchDistribution on 2 of 2 instruments; that id is in no distribution in the account, has been dead for the function's whole deployed life, and cannot front a page. This worker's harness treated it as a failure and printed BRANCH B (rc=3); the criterion names no second distribution, and each member of the cell's Branch B trigger set measures empty (no failed act, no other key moved, no difference beyond the permitted classes).",
+    "notes": "WHOSE CALL WHAT, stated so nothing is assumed: (a) whether a dead hardcoded distribution id in the pipeline's own final step is worth an act belongs to the CI / cloud-ops lane -- the function is not in this order's <paths>, was not touched, and no repair was attempted; (b) whether the COO half's 'the CloudFront cache of the keys just written' should read '/* on both distribution ids' is the half's signer's call and is one sentence with no act attached; (c) if the issuer reads the cell's 'any failure' as reaching the dead id, then V1-AC11 is FAILED rather than PASSED and this row is its measurement -- the harness output (rc=3, BRANCH B, the body verbatim) is recorded in the proof instance either way, so a regrade needs no re-run and no second invalidation."
+  },
+{
+  "id": "POSN_ASTTAX-Z-S103",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T21:42:31Z",
+  "one_line": "DISARM of W19-S10 (INERT): V1-AC11's CDN clause -- yang-invalidate-cloudfront hardcodes two distribution ids and one (E2LPCXXBLDGWXY) exists in no distribution, so the pipeline's own final step reports 1 of 2 on every run by design; the live distribution (EVTSA9VEHNZVH, fronting the bucket with both signed keys) was invalidated to COMPLETED on the recorded event. RULED: V1-AC11 PASS stands -- the cell's Branch B trigger set measures empty on every member (no failed act: StatusCode 200 / FunctionError none / Invalidation COMPLETED; no other key moved 0 of 3; no difference beyond the permitted classes, OTHER 0 of 272); the harness's stricter both-ids arm is disclosed, not graded. The COO half's write-set sentence corrected in the same commit: the step purges '/*' on both ids (the 'NO key' clause was exact; the cache radius was understated). The dead id is the CI/cloud-ops lane's item, carried for the round analysis.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE TRIGGER SET, MEASURED PER MEMBER by the worker's own run: the invoke returned 200 with no FunctionError; the invalidation on EVTSA9VEHNZVH reached Status COMPLETED (CallerReference built from the recorded event's pipeline_execution_id, so the event was the recorded one); 0 of 3 non-signed keys under json/positioning/ moved; the classified diff over 272 differing leaves read OTHER 0; allocation_summary.json differed at one leaf of 298 (generated_at). 'Any failure' names an act that failed; a body-level error for an id that fronts no page is the function's documented steady state ('This step never fails the pipeline'), unchanged since 2026-05-04 and untouched by this deploy.",
+      "THE HALF'S WORDING: 'the CloudFront cache of the keys just written' understated the radius -- the code (invalidate-cloudfront/lambda_function.py:28-31, :44-50) purges '/*' on both ids. Corrected to say so; the NEVER#1-relevant clause (the step moves NO key; comp-iam: cloudfront:CreateInvalidation and nothing else) was exact and stands. The CTO half does not name the step; this half now describes it accurately.",
+      "WHY GRADUATED: the served bytes are what both halves signed and they are what the page now reads; the disclosed anomaly is prior, steady, outside the radius and has an owner."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W19-S10"
+  ],
+  "spec_asserts": "TO-V1-1 V1-AC11 (THIRD AMENDMENT) and THE CELL's Branch B trigger set; the COO half R1 AMENDMENT 'The act' bullet.",
+  "world_is": "The criterion's named result was produced (both heads moved, the served bars met, the live distribution invalidated); the function's second hardcoded id is dead on two instruments and has been for its whole deployed life.",
+  "notes": "For the round analysis (cloud-ops lane): remove or derive the dead distribution id in yang-invalidate-cloudfront; the function's swallow-and-report design hides it from every caller that reads only the status code."
+}
+]
+```
+
+```json
+[
+{
+  "id": "POSN_ASTTAX-Z-W22-S14",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~22",
+  "surfaced_at": "2026-09-14T22:06:00Z",
+  "one_line": "Z-S84's prescribed remedy -- 'commit, then validate, and report the post-commit rc' -- is UNREACHABLE for the commit that ALSO carries the status flip: to-pipeline-gate LIMB (the modified-declaring-TO limb) re-runs proof-of-spec-check and REFUSES a flip to 'complete' against an instance it reads INVALID, and the only thing making this instance invalid is the Z-S84 ordering fact itself (two instruments added this session carry PENDING-THIS-COMMIT and are absent at the instance's LAST commit de993b0e50). So the checker wants the commit first and the gate wants the validation first. Resolved inside the grant without touching either tool and without dropping a deliverable: the two instruments ride their OWN earlier commit on this branch, their artifacts_produced rows then carry that commit-ish (resolved-at-pin, not PENDING), the instance validates rc=0, and the flip commit carries order + instance together exactly as the order says.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED, not reasoned: safe-commit.sh with order + instance + the two instruments in ONE commit returned rc=1 -- 'ERROR: BLOCKED -- pipeline layer 2 (TO issuance gate). Commit aborted; files unstaged.' / '[to-pipeline-gate] REFUSED -- 1 violation(s) across 0 newly-added TO file(s) and 1 modified declaring TO file(s): POSN_ASTTAX.TO-V6-1...md: flips to complete but its instance is NOT VALID (rc=1)'. The gate also printed 'GATE (viii) on a modify: 1 of 1 staged-MODIFIED tree order(s) already declare <placeholders> at HEAD and were graded' -- so this order is inside the one widening Andrew carded, and the refusal is correct.",
+      "THE INSTANCE'S ONLY TWO VIOLATIONS WERE THE Z-S84 ONE: 'build_fixtures_v2.js is PENDING-THIS-COMMIT but is ABSENT at the instance's commit de993b0e50 -- it did not ride the commit that carries this proof' and the same for ac5_subtotals.js. Every mechanical criterion was PASS-by-output before either commit; no criterion and no reading depends on how the instruments are carried.",
+      "WHY NOT THE THREE WORSE PATHS: dropping the two instruments from artifacts_produced is the path Z-S84 itself names as worse (the record loses a real deliverable); '# pipeline-override:' is not a worker's line to write and would be audited as one; and re-validating after a refused commit changes nothing, because safe-commit unstages on refusal so the instance's last commit never moves. Splitting the instruments into their own commit is the only sequence in which BOTH tools read a true world: the instruments exist at a real commit, and the flip is graded against an instance that is genuinely VALID.",
+      "SCOPE, STATED HONESTLY: this is ONE branch's sequencing, not a defect in either tool. It bites exactly the case Z-S84 describes (a RESUMED order that adds a deliverable) AND flips status in the same commit -- i.e. every resumed order in this round that closes, since the closing commit is by definition the flip commit."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's step (5): 'if the checker's pre-commit mode refuses on a tracked-instance ordering fact (Z-S84), commit then validate and report the post-commit rc' -- and Z-S84's own note, 'Every resumed worker in this round is told: commit, then validate, and report the post-commit rc.'",
+  "world_is": "That commit cannot be made when it carries the status flip: to-pipeline-gate runs the checker itself and aborts the commit on rc=1, so there is no post-commit rc to report. Two commits on the branch (instruments first, then order + instance) reach rc=0 pre-commit and satisfy both tools.",
+  "notes": "For the round analysis, one line each: (a) proof-of-spec-check could admit a tracked-and-modified instance to the PRE-COMMIT branch when the working tree carries the artifact (Z-S84 already carries this); (b) until it does, a closing order that adds a deliverable takes two commits, and the issuer may simply say so in the hand-over. Path cited: org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~22/POSN_ASTTAX.TO-V6-1.the-positioning-page-renders-five-classes.proof_of_spec.json @ce71db90ab (the instance as it stood when the gate refused)."
+}
+]
+```
+
+```json
+[
+{
+  "id": "POSN_ASTTAX-Z-W22-S15",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~22",
+  "surfaced_at": "2026-09-14T22:20:00Z",
+  "one_line": "CORRECTS MY OWN W22-S14, which named the wrong cause. to-pipeline-gate runs proof-of-spec-check with the instance STAGED, and the checker's PRE-COMMIT branch refuses a DIFFERENT class than its POST-COMMIT branch: four artifacts_produced rows written in my FIRST run still read PENDING-THIS-COMMIT after that run's commit de993b0e50 landed, which POST-COMMIT mode accepts ('PENDING co-committed') and PRE-COMMIT mode refuses as CCX ('ALREADY COMMITTED at HEAD and NOT staged -- pin the row to the commit that carried it'). So an UNSTAGED read of rc=0 does NOT predict the gate's read, and a PENDING pin SILENTLY GOES STALE the moment its commit lands. Remedy is the checker's own: the four rows are pinned to de993b0e50.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE DISCRIMINATING PAIR, run minutes apart on the SAME bytes. UNSTAGED: 'artifact-resolution: 2 resolved at pin / 4 PENDING co-committed (POST-COMMIT: touched by the instance commit de993b0e50)' -> VALID (rc=0). STAGED (git add of the order + the instance, the state safe-commit puts the tree in before the gates run): '0 PENDING co-committed (PRE-COMMIT: staged in this commit)' and FOUR violations -- print_assetclassorder.js, contrast_check_v6.js, rendered_dom_swatches.js and ledger/PORTAL_REFS.md each 'is PENDING-THIS-COMMIT but is ALREADY COMMITTED at HEAD and NOT staged -- it will not ride this commit; pin the row to the commit that carried it (CCX class)' -> INVALID (rc=1). The index was restored immediately after the read.",
+      "WHAT W22-S14 GOT WRONG: it read the UNSTAGED violations (the two instruments added this session) and concluded the gate was refusing on the Z-S84 ordering fact. It was not -- those two were STAGED in the refused commit and were never the gate's complaint. The two rows I could see were not the rows the gate could see, and both reads print the same 'INVALID (rc=1)' headline. W22-S14's REMEDY was harmless (the instruments ride 7aed2a52b9 and their rows cite it, which is valid in both modes) but its CAUSE was wrong, and the channel is append-only, so this row corrects it rather than editing it.",
+      "THE GENERAL SHAPE, one line: PENDING-THIS-COMMIT is a claim with an EXPIRY nobody re-reads. It is true when written, becomes false when the commit lands, and the only mode that says so is the mode a worker does not run by hand. Cheapest general fix for any resumed order: after every commit, re-pin every PENDING-THIS-COMMIT row to the hash that carried it, and validate with the instance STAGED (stage, read, unstage) because that is the read the gate performs. Cost: one stage-read-unstage per closing commit.",
+      "SOURCE, read not recalled: .tools/to-pipeline-gate.py:2530-2538 runs `python .tools/proof-of-spec-check.py <inst>` with cwd=root and NO expected-ids argument, and turns any nonzero rc into the refusal; the mode choice itself is proof-of-spec-check.py's artifact_resolution_check, which branches on whether the instance is staged/untracked. Both files read at ce71db90ab."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's step (4)-(5): validate to rc=0, then flip and commit -- with the checker's rc treated as ONE verdict.",
+  "world_is": "The checker returns TWO verdicts on identical bytes depending on whether the instance is staged, the gate reads the staged one, and a worker validating by hand reads the other. Four stale PENDING pins from the first run were invisible in the hand read and fatal in the gate read.",
+  "notes": "For the round analysis: every resumed order in this round carries first-run artifacts_produced rows that are now stale in the same way. The instruction to workers is one line -- re-pin, then validate STAGED. This row supersedes W22-S14's causal claim; W22-S14's remedy stands as taken."
+},
+{
+  "id": "POSN_ASTTAX-Z-S104",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T22:14:54Z",
+  "one_line": "DISARM of W22-S14 (INERT): the worker's first reading of a refused flip commit -- that to-pipeline-gate and the checker's post-commit branch demand opposite orders -- was WRONG ON CAUSE and RIGHT ON REMEDY (the two new instruments ride their own commit 7aed2a52b9; their rows cite it; valid in both checker modes). The worker's own W22-S15 supersedes the causal claim; this row graduates S14 on that basis and records nothing further.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "WHY GRADUATED: superseded by the author's own correction on the same channel (append-only, so a second row is the honest form); the remedy stands as taken and TO-V6-1 is COMPLETE at 7072302729."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W22-S14"
+  ],
+  "spec_asserts": "Z-S84's carried remedy: commit, then validate, report the post-commit rc.",
+  "world_is": "The refused commit's real defect was four stale PENDING-THIS-COMMIT pins from the first run (W22-S15), not the ordering fact; the remedy taken is sound either way.",
+  "notes": "A row that names a cause it could not discriminate from a sibling cause is corrected by a new row, never by an edit -- the worker did exactly that."
+},
+{
+  "id": "POSN_ASTTAX-Z-S105",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T22:14:54Z",
+  "one_line": "DISARM of W22-S15 (INERT): proof-of-spec-check returns TWO verdicts on identical bytes -- the PRE-COMMIT branch (instance STAGED, the read the gate performs) refuses a PENDING-THIS-COMMIT row whose artifact is already committed at HEAD (CCX), while the POST-COMMIT branch (instance unstaged, the read a worker performs by hand) accepts it as co-committed. A PENDING pin silently expires when its commit lands, and a hand read of rc=0 does not predict the gate. RULED for every remaining order in the round (V4 live, V7 and V8 unspawned): after every commit, re-pin every PENDING-THIS-COMMIT row to the hash that carried it, and validate with the instance STAGED (stage, read, unstage) before the flip commit -- written into each hand-over. Carried with Z-S84 for the round analysis as one checker-shape item.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE SHAPE, ADOPTED FROM THE WORKER: a claim with an expiry nobody re-reads. The cheap fix is procedural (re-pin, validate staged) and costs one stage-read-unstage per closing commit; the durable fix is the checker's (Z-S84: admit a tracked-and-modified instance to the PRE-COMMIT branch when the working tree carries the artifact, and print BOTH modes' verdicts).",
+      "WHY GRADUATED: the mechanism is measured on a discriminating pair, the procedural remedy is landed in the hand-overs this seat controls, and the tool item has its carrier."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W22-S15"
+  ],
+  "spec_asserts": "The L7 bar treats the checker's rc as one verdict; to-pipeline-gate.py:2530-2538 runs the checker with the instance staged and no ids; proof-of-spec-check's artifact_resolution_check branches on staged/untracked.",
+  "world_is": "The discriminating pair on the same bytes minutes apart: unstaged VALID (4 PENDING co-committed), staged INVALID (4 CCX violations); four first-run pins had expired when de993b0e50 landed; pinned to that hash, both reads agree.",
+  "notes": "For the round analysis: proof-of-spec-check should print its mode and, for a tracked instance, both modes' artifact-resolution verdicts so a hand read predicts the gate."
+},
+{
+  "id": "POSN_ASTTAX-Z-W20-S10",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~20",
+  "surfaced_at": "2026-09-14T21:59:21Z",
+  "one_line": "V4-AC4's expectation names 'its fee/yield aggregates MOVE' when GLD is removed; the 2026-09-11 GLD row carries FEE ONLY, so yield CANNOT move and did not. The criterion's operative clauses are met exactly -- weight_null rises by 8.34 on every field GLD carried (fee, +8.3400) and the two arms DIFFER (Sat 15 fee 0.211960 -> 0.178600, and 7 of 7 GLD-holding satellites move while 2 of 2 non-holders do not) -- but the 'yield' half of that one phrase is falsified by the INPUT, not by the code: GLD's 8.34 already sits in yield's weight_null in BOTH arms, so an arm-to-arm yield move would have required Bloomberg to carry a dividend yield for a gold trust.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED AT THE PARQUET, NOT ASSUMED (bbg/2026-09-11/characteristics.parquet, 172 rows x 14 columns; run_manifest run_class=adhoc, universe_count=172): the 'GLD US Equity' row carries FUND_EXPENSE_RATIO=0.4, and EQY_DVD_YLD_IND_NET / HB_OAS_EFF_DURTN / BETA_ADJ_OVERRIDABLE are all NaN. The pull carries NO return columns at all, for any security.",
+      "THE CONTROL'S OWN OUTPUT (org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~20/difference_control_gld_removed.py @7c90a973ae, rc=0): fee 0.211960 -> 0.178600 with weight_null 0.8400 -> 9.1800 (+8.3400, GLD's weight to the cent); yield 3.828922 -> 3.828922 with weight_null 9.1800 -> 9.1800 (+0.0000); duration, beta and all eight return windows likewise unchanged.",
+      "WHY THIS IS NOT A DEAD CONTROL: the same run carries a positive AND a negative arm across satellites -- the seven that hold GLD all move on fee (15/30/40/50/60/70/80) and the two that do not (90, 98) are identical to six decimal places. A producer that ignored the Bloomberg leg entirely would have moved NOTHING.",
+      "GRADED PASS-BY-OUTPUT ON WHAT THE CRITERION MAKES DECISIVE: 'the two arms DIFFER. If they do not, the control is not discriminating: report that, not the result.' They differ. The 'every field GLD carried' clause is data-conditioned and is satisfied exactly; 'fee/yield' is the issuer's pre-measurement naming of which aggregates it expected to move."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-V4-1 V4-AC4 @d6754d8338: 'Sat 15's coverage.weight_null RISES by 8.34 on every field GLD carried and its fee/yield aggregates MOVE, while the run on the real partition leaves them where V4-AC3 read them -- the two arms DIFFER.'",
+  "world_is": "weight_null rose by exactly 8.3400 on fee, the ONLY field GLD carried; the fee aggregate moved on all seven GLD-holding satellites; the yield aggregate is identical between arms because GLD's EQY_DVD_YLD_IND_NET is NaN in the 2026-09-11 partition, so its weight was already counted as null for yield in the real arm.",
+  "notes": "Recorded rather than repaired: a criterion is not amended after a pass (the Z-S81 rule). The measurement is printed verbatim in the proof so L9 grades the phrase against the world rather than against the code."
+},
+{
+  "id": "POSN_ASTTAX-Z-W20-S11",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~20",
+  "surfaced_at": "2026-09-14T21:59:21Z",
+  "one_line": "The cell's amendment adds GLD *and VXX* to the Bloomberg pull for this aggregation, but VXX is already in Yang's served current_holdings -- so under the cell's own PER-TICKER precedence (Yang first) the Bloomberg VXX row is never consulted by this producer. Of the 25 distinct tickers the nine satellites hold, 23 resolve from Yang, exactly ONE (GLD) from Bloomberg and one (CASH) from neither, so the Bloomberg leg's entire live contribution today is GLD's expense ratio.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED OVER BOTH SERVED INPUTS: positioning_data.json current_holdings carries 6 books and 30 distinct tickers, VXX among them (fee 0.89, beta 0.9968369003063753, yield null, duration null, all eight return windows populated); holdings.json @VersionId BRjqyqnB0pIdLUHOvDY3B_Sh9b0EXIPw carries 25 distinct tickers across the nine satellites, of which GLD is absent from Yang and CASH is absent from both.",
+      "THE TWO SOURCES AGREE WHERE THEY OVERLAP, SO THE PRECEDENCE COSTS NOTHING FOR VXX TODAY: Bloomberg's BETA_ADJ_OVERRIDABLE for VXX is 0.9967923550068504 against Yang's 0.9968369003063753 -- a delta of 4.5e-5 -- and Yang additionally carries the eight return windows Bloomberg has no columns for. Yang-first is the RICHER source here, not merely the first one.",
+      "WHY THE PULL IS STILL NOT WASTED: Yang's current_holdings is the set of tickers a Yang BOOK holds. A satellite ticker that leaves the Yang books, or a new satellite holding Yang never held, falls through to Bloomberg -- which is exactly GLD's case today. The VXX row is the standing negative arm of that fallback rather than dead weight.",
+      "NOT A DEFECT IN ANYTHING BUILT: the producer implements the precedence the cell specifies, records the resolved source per ticker in satellites.<code>.sources, and the artifact's method block states the grain ('per ticker (a ticker's whole row comes from one source)')."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-V4-1 THE CELL @d6754d8338: 'GLD and VXX enter it as EXTRA_SECURITIES ... already wrote GLD and VXX rows into bbg/2026-09-11/characteristics.* (universe 172 = 166 + 4 + GLD + VXX), so the latest partition today CARRIES them', with 'Source precedence per ticker: Yang's current_holdings where present, else the Bloomberg pull, else NULL.'",
+  "world_is": "Both rows are in the partition, as the cell says. VXX is ALSO in Yang, so per-ticker precedence resolves it from Yang and the Bloomberg VXX row is not read; GLD is the only satellite ticker Bloomberg supplies. A reader of the cell would expect two Bloomberg-sourced tickers; the artifact shows one.",
+  "notes": "Relevant to F3 (AT5-s-7), which binds this schema: satellites.<code>.sources names the resolved source per ticker, so the one-vs-two question is answerable from the served artifact without re-deriving it."
+},
+{
+  "id": "POSN_ASTTAX-Z-W20-S12",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~20",
+  "surfaced_at": "2026-09-14T21:59:21Z",
+  "one_line": "record-terraform-deploy.sh's source-map writer re-serialises lambda-source-map.json with RAW UTF-8, so its own commit f2180794df flipped the file from PURE ASCII (detector 0 -- the state TO-V2-1 V2-AC13 asserted and measured) to 28 raw non-ASCII bytes with NO value change at all, and two of those are U+009D, UNDEFINED in cp1252: a default text-mode read of the estate's lambda source map RAISES on this device while it is unescaped, and read CLEAN before. Re-escaped in this worker's own follow-up commit with the decoded documents proven equal; the WRITER is untouched and will re-arm on the next record of any pipeline.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED AT THE BYTES, BOTH VINTAGES: infra/aws/lambda/ci/lambda-source-map.json at the record commit's parent = 196,171 bytes, detector len(b)-len(b.decode('utf-8')) = 0; at f2180794df = 197,887 bytes, detector 28. The worker's own row addition, written with ensure_ascii=True immediately before the recorder ran, measured 197,653 bytes at detector 0 -- so the flip is the RECORDER's write and not the edit that preceded it.",
+      "VALUE-IDENTITY CONTROL -- NOTHING IN THE RECORD CHANGED: a recursive value-level walk of the decoded documents at the parent vs f2180794df returns 13 differences, ALL of them the new cot-satellites-characteristics-producer row plus _last_deploy_recorded. The 28 characters were already in the data as backslash-u escapes (six U+00A7, one U+2014, and a PRE-EXISTING double-encoded em-dash inside two _note values that reads the same mojibake at BOTH vintages). The recorder un-escaped them; it did not corrupt them.",
+      "THE cp1252 LIMB IS THE PART THAT BITES, AND IT IS CLAUDE.md's OWN DETECTOR: two U+009D characters are in that set. On this device a default text-mode read raises only on a byte undefined in cp1252 and 0x9D is one of the five; before this commit the file was pure ASCII and every reader was safe regardless of its encoding argument.",
+      "REPAIRED IN-FILE, NOT IN THE SCRIPT: the map is inside this task order's <paths> and the damage is this worker's own commit's collateral, so the file was re-serialised with ensure_ascii=True (197,974 bytes, detector 0) and the decoded documents compared EQUAL before and after. record-terraform-deploy.sh is the CI lane's and is NOT edited -- the V2 ruling on W20-S8 ('no recorder fix lands in this round') is read as binding here too.",
+      "WHY ARMED: the next record-terraform-deploy.sh run on ANY pipeline rewrites the same file with the same serializer and re-arms the same state, and nothing in the recorder's output says so -- its closing banner claimed 'Source map + CHANGELOG.json committed' in the very run whose CHANGELOG write FAILED (the W23-S4 defect, reproduced verbatim again here)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-V2-1 V2-AC13 @80a431c546: the map 'reads PURE ASCII (detector 0)'. CLAUDE.md, no-non-ASCII rule, NON-APPLICATION clause: 'a file that is ALREADY pure ASCII (keep it that way)'.",
+  "world_is": "The recorder's writer emits raw UTF-8; one record commit moved the map from detector 0 to detector 28, values unchanged, including two cp1252-undefined bytes that make a naive text-mode read raise. Re-escaped to detector 0 in this worker's commit; the writer will do it again on the next record.",
+  "notes": "The same run also reproduced W23-S4 exactly: the CHANGELOG helper is a .js file handed to python3 ('SyntaxError: unterminated string literal'), then 'Note: CHANGELOG.json write failed', and the closing banner still says the CHANGELOG was committed. The entry for this deploy was written by hand per V4-AC13."
+},
+{
+  "id": "POSN_ASTTAX-Z-S106",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T22:25:23Z",
+  "one_line": "DISARM of W20-S10 (INERT): V4-AC4's phrase 'its fee/yield aggregates MOVE' was the issuer's pre-measurement naming of which aggregates GLD's removal would move; the 2026-09-11 Bloomberg GLD row carries FEE ONLY (yield, duration, beta NaN; no return columns in the pull), so yield cannot move and did not. The criterion's decisive clause -- the two arms DIFFER, weight_null +8.34 on every field GLD carried, seven GLD holders move on fee and two non-holders do not -- is met exactly; the word 'yield' is data-conditioned and is recorded, not rewritten after a PASS (Z-S81).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE ISSUER'S DEFECT, NAMED: the phrase assumed the Bloomberg row carried a yield for a gold trust; the parquet (172 rows x 14 columns, adhoc run 22900) says otherwise. The control discriminates on the field the data supports and the positive/negative satellite arms show the Bloomberg leg is read.",
+      "WHY GRADUATED: the criterion's discriminating clause passed by output; the data-conditioned word is disclosed twice (row + instance) for L9."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W20-S10"
+  ],
+  "spec_asserts": "TO-V4-1 V4-AC4 @d6754d8338: weight_null rises by 8.34 on every field GLD carried and its fee/yield aggregates MOVE; the two arms DIFFER.",
+  "world_is": "fee moved on 7 of 7 GLD holders (Sat 15: 0.211960 -> 0.178600, weight_null 0.8400 -> 9.1800) and on 0 of 2 non-holders; yield identical between arms because GLD's yield is NaN in the partition and its weight already sat in yield's weight_null on both arms.",
+  "notes": "A control that names WHICH fields move is written after reading the input's field presence, not before."
+},
+{
+  "id": "POSN_ASTTAX-Z-S107",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T22:25:23Z",
+  "one_line": "DISARM of W20-S11 (INERT): VXX is in Yang's served current_holdings, so under the cell's own per-ticker precedence (Yang first) the Bloomberg VXX row the ad-hoc pull added is never consulted by the characteristics producer; of the 25 distinct satellite tickers, 23 resolve from Yang, one (GLD) from Bloomberg, one (CASH) from neither. Recorded: the Bloomberg VXX row is the standing negative arm of the fallback (a ticker that leaves the Yang books falls through to it), the two sources agree on VXX's beta to 4.5e-5, and the artifact names the resolved source per ticker (satellites.<code>.sources) -- the fact L9's V4-AC14 grades on precedence.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "WHY NOTHING IS ACTED ON: the producer implements the precedence the cell specifies and records the resolved source per ticker; Andrew's ad-hoc pull (22900) was approved for GLD and VXX together and costs nothing served by carrying VXX.",
+      "WHY GRADUATED: an observation for the judgment criterion, answerable from the served artifact without re-derivation."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W20-S11"
+  ],
+  "spec_asserts": "TO-V4-1 THE CELL: GLD and VXX enter the Bloomberg pull; source precedence per ticker is Yang, then Bloomberg, then NULL.",
+  "world_is": "Both rows are in the partition; VXX resolves from Yang (the richer source: eight return windows Bloomberg has no columns for); the Bloomberg leg's live contribution today is GLD's expense ratio.",
+  "notes": "F3 (TO-V7-1) can read satellites.<code>.sources to show the per-ticker source if the page ever wants it; not ordered this round."
+},
+{
+  "id": "POSN_ASTTAX-Z-S108",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T22:25:23Z",
+  "one_line": "DISARM of W20-S12 (ARMED): record-terraform-deploy.sh's source-map writer re-serialised lambda-source-map.json with raw UTF-8 on the V4 record (detector 0 -> 28, two U+009D that make a cp1252 default read RAISE, no value change); the worker re-escaped it in its own follow-up commit (197,974 bytes, detector 0, decoded documents equal) and the drain landed it pure ASCII (4e81f4e1c1, semantic merge). The recorder does not run again in this round (V7 and V8 carry no deploy record), so the class is CLOSED for the round; the writer is the CI lane's (W23-S4) and rides the round analysis with W19-S7, W20-S8 and Z-S79/Z-S90.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE FOURTH REPRODUCTION OF ONE DEFECT (W19-S7, W20-S8, W23-S4, W20-S12), each time restored in-file under the worker's grant and never in the script. The durable fix (ensure_ascii on the writer, or the python writer, or a keyed write) has its owner.",
+      "WHY GRADUATED: HEAD reads detector 0 (197,974 bytes), no further recorder run is scheduled in the round, and the drain-side guard is in place."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W20-S12"
+  ],
+  "spec_asserts": "TO-V2-1 V2-AC13 asserted the map pure ASCII; CLAUDE.md s.4 non-application: keep an already-pure-ASCII file that way.",
+  "world_is": "Every recorder run on this device re-encodes the shared map; every worker in this round restored it after its record; the drain prints the detector and merges semantically.",
+  "notes": "The next round's first deploy order states the recorder's three device defects in its preflight rather than discovering them a fifth time."
+}
+]
+```
+
+```json
+[
+{
+  "id": "POSN_ASTTAX-Z-W22-S16",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~22",
+  "surfaced_at": "2026-09-14T23:12:11Z",
+  "one_line": "V7-AC5 asks the render to show GLD 8.34 UNDER THE COMMODITIES BUCKET, but the served holdings tag GLD `hedge` (R1 has not run) and the holdings table EXCLUDES every class outside the ratified five by design -- so GLD renders in NO bucket at all: 15 of 16 rows render for Opal Satellite 15 and the visible subtotals (74.16 + 17.50 = 91.66) sit under the table's own GRAND TOTAL of 100.00, the 8.34 gap being exactly GLD. The unblocking act is AT5-s-8 (R1), which THIS order gates -- so the criterion cannot be met before the cell it is a precondition for.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "SERVED, READ BACK: s3://opal-data-cot/platinum/satellites/holdings.json VersionId BRjqyqnB0pIdLUHOvDY3B_Sh9b0EXIPw, LastModified 2026-09-14T19:53:59Z, as_of 2026-09-14. Opal Satellite 15 / GLD: weight=8.34, asset_class=\"hedge\", sub_asset_class=\"Gold\". Opal Satellite 80 / VXX: weight=1.87, asset_class=\"equity\", sub_asset_class=\"Volatility\". Class vocabulary over all 177 served rows: {fixed_income:74, equity:96, hedge:7}; 0 rows carry a null asset_class.",
+      "THE EXCLUSION IS THE RENDERER'S, DELIBERATE, AND PRE-DATES THIS CELL: HoldingsTab.tsx:239 ASSET_CLASS_ORDER = ['Fixed Income','Equity','Structured','Commodities','Alternatives'], consumed at :1438-1440 as `.filter(ac => groupedHoldings[ac])`. Its own note at :1425-1428 (landed by AT5-s-6/F2): \"'Hedge' -> 'Equity' is DROPPED (R1) ... After R1 no served top-level asset_class is 'Hedge'; if a stale payload still carries one it now falls through unmapped and is EXCLUDED by ASSET_CLASS_ORDER, which is visible (a missing group) rather than silent (a wrong group).\"",
+      "RENDERED, MEASURED TWO WAYS at portal wk-posn-5-22c-portal ea64113ba9: DOM read of the holdings table -- Opal Satellite 15 renders 15 rows, GLD absent, subtotals 'Fixed Income Total 74.16' + 'Equity Total 17.50' under 'Grand Total 100.00'; Opal Satellite 80 renders 15 rows, VXX 1.87 present under Equity / Volatility, GLD 2.11 absent, subtotals 10.09 + 87.80 under Grand Total 100.00. Screenshot portal/.scratch/v7_satellites.png read: the same, and GLD DOES appear in the Portfolio Composition treemap at 8.3% painted in the UNMAPPED GREY (getAssetClassBgColor falls through to PALETTE.gray500 for a class with no registry entry).",
+      "THE ADAPTER IS NOT THE CAUSE AND DOES NOT GUESS: probe of the running modules -- adapter output for Opal Satellite 15 carries the GLD row as {ticker:'GLD', weight:0.0834, asset_class:'Hedge', sub_asset_class:'Gold'} and allocation {..., hedge:8.34}, summing to 100.00. SatelliteRenderCoverage reports offRatified ['GLD:hedge'] for 7 of 9 satellites; 7 of 177 served rows are outside the ratified five.",
+      "THE ORDERING IS CIRCULAR AS WRITTEN: TO-V7-1's header says 'GATES AT5-s-8 (R1)' and its decomp_ref says 'DOWNSTREAM: AT5-s-8 (R1) reads your rendered Satellites mode after the retag'. V7-AC5's GLD clause describes the POST-retag world, so it is unreachable while this order is the retag's precondition. The VXX half of the same criterion is written across the boundary ('equity before R1, Structured after; state which') and IS satisfied at the pre-R1 arm; the GLD half asserts the bucket flatly and varies only the sub-asset."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-V7-1 V7-AC5 @4e81f4e1c1: \"`Opal Satellite 15` shows GLD at 8.34 under the Commodities bucket (its sub-asset as SERVED -- 'Gold' before R1, 'Metals' after; state which)\" and \"served rows == rendered rows for the satellite you read (count both)\". THE CELL: \"`asset_class`/`sub_asset_class` as served -- a null label renders as an 'unlabelled' bucket, disclosed, never guessed\".",
+  "world_is": "GLD is served as `hedge`/`Gold` pre-R1. Rendering it as served puts it outside the table's ratified five, where the table drops it: served 16, rendered 15, for both satellites read. Rendering it under Commodities would require the adapter to re-classify a label the producer did not serve, which the same cell forbids. STATED AS ASKED: the observed sub-asset is 'Gold' (pre-R1) and the observed class is 'hedge' (pre-R1), not Commodities.",
+  "notes": "V7-AC5 is recorded FAIL against its own text, with the full reading. No repair attempted: the two available repairs are a guess in the adapter (forbidden by the cell) or an edit to HoldingsTab.tsx (outside <paths>). The remedy that costs nothing else is AT5-s-8 running first, or V7-AC5's GLD clause being re-cut across the R1 boundary the way its VXX clause already is."
+},
+{
+  "id": "POSN_ASTTAX-Z-W22-S17",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~22",
+  "surfaced_at": "2026-09-14T23:12:11Z",
+  "one_line": "V7-AC2 ORDERS the portal-proxy hunk that tightens structured/commodities/alternatives to REQUIRED; V7-AC4 ORDERS `bun run tsc -b` to exit 0. Both cannot hold: the tightening breaks ONE site, etfAdapter.ts:134, because EtfPositioningBook.allocation is a SEPARATE inline four-key type and the ETF payload is still pre-B1 -- and the fix needs either etfAdapter.ts (outside <paths>, and V7-AC2 requires it UNCHANGED at 0 lines) or a SECOND portal-proxy hunk (outside the hand-over's 'exactly ONE hunk' grant). The ordered act was performed and the branch is left NOT TYPECHECKING.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE FAILING RUN, VERBATIM: `cd portal && bun run tsc -b` exits 2 with exactly one line -- src/pages/Positioning/shared/etfAdapter.ts(134,7): error TS2739: Type '{ cash: number; fixed_income: number; equity: number; hedge: number; }' is missing the following properties from type 'PositioningAllocation': structured, commodities, alternatives.",
+      "DISCRIMINATING CONTROL ARM -- THE HUNK IS THE SOLE CAUSE: with the three keys reverted to optional and NOTHING else changed, the same command exits 0 over the 481 .ts/.tsx files under src (tsconfig.app.json include:['src']; 557 tracked files under src in total). So the three satellites files added by this cell compile clean and the single error is the tightening meeting a pre-existing type.",
+      "POSITIVE CONTROL -- THE INSTRUMENT CAN FAIL ON THIS CELL'S OWN FILE: a one-line `const AC4_POSITIVE_CONTROL: number = \"not a number\"` injected into satelliteAdapter.ts made the same command exit 2 with satelliteAdapter.ts(138,7): error TS2322; reverting it returned exit 0. The instrument is not blind to this worker's files.",
+      "THE SITE, AT ITS SOURCE: portal-proxy.ts:1287-1292 declares EtfPositioningBook.allocation as an INLINE literal {cash; fixed_income; equity; hedge} -- it does not reference PositioningAllocation. etfAdapter.ts:134 assigns `book.allocation ?? { ...ZERO_ALLOCATION }` into PositioningPortfolio.allocation; ZERO_ALLOCATION (etfAdapter.ts:111) ALREADY carries the five keys, so only the non-null branch fails.",
+      "THE CLAIM A SECOND PORTAL-PROXY HUNK WOULD HAVE TO MAKE IS FALSE TODAY: s3://opal-data-portal-v2/platinum/etfs/positioning_data.json VersionId MkASX8obEltFZpHHzNa81cuAVXKf7wR2 carries allocation keys ['cash','fixed_income','equity','hedge'] on every book -- no structured/commodities/alternatives. Typing EtfPositioningBook.allocation as the tightened PositioningAllocation would declare three keys the served payload does not have, which is exactly the claim AT5-s-6 refused when it made them optional (portal-proxy.ts:980-993).",
+      "THE ORDER'S OWN TEXT ON BOTH SIDES: hand-over fact (a) in the face -- 'YOU DO: once your literals carry the five keys, tighten the three to REQUIRED in portal-proxy.ts (one line ...) and let `tsc` name every site that still owes them'; the cell's act 4 -- 'Models and ETFs modes: UNTOUCHED (`etfAdapter.ts`, `bookSet.ts` unchanged -- V7-AC2)'; V7-AC4 -- 'exit 0 with the checked-file count'."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-V7-1 @4e81f4e1c1, HAND-OVER FACTS (a): the tightening is a 'one line' change and `tsc` will 'name every site that still owes them' -- with V7-AC2 requiring etfAdapter.ts UNCHANGED at 0 lines and V7-AC4 requiring exit 0.",
+  "world_is": "tsc names exactly ONE such site and it is etfAdapter.ts, the file V7-AC2 requires unchanged and which <paths> does not carry. There is no state of the world reachable inside this cell's grant in which V7-AC2 and V7-AC4 are both satisfied.",
+  "notes": "DISARM, either half, both one line: (i) grant etfAdapter.ts for `allocation: { ...ZERO_ALLOCATION, ...(book.allocation ?? {}) }` at :134 -- which is also the honest read of a pre-B1 payload, since the spread fills the three absent classes with the measured 0 the page already takes via `?? 0`; or (ii) drop the tightening from V7-AC2 and re-cut it onto the cell that owns etfAdapter.ts. The hunk was NOT reverted unilaterally: it is an ordered act with its own path grant, and dropping it silently would have left the next worker to rediscover this."
+},
+{
+  "id": "POSN_ASTTAX-Z-W22-S18",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~22",
+  "surfaced_at": "2026-09-14T23:12:11Z",
+  "one_line": "The Satellites mode's FETCH WIRING is not in any of the three files the cell names -- the react-query call and the adapter call both live in Positioning.tsx:411/:437, outside <paths> -- so the two new reads could not be given their own query keys and are COMPOSED into getSatelliteRegistry() instead. This is the preflight's own open item (1), answered by measurement rather than by a silent widening.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE ENTRY POINT, CENSUSED: comp-find 'satellitesToPositioningShape|getSatelliteRegistry' over portal/src returns 7 hits across 557 files scanned -- Positioning.tsx:55, :56, :412 (queryFn), :437 (the adapter call), satelliteAdapter.ts:98 (the definition), satelliteRegistry.ts:145 (the definition), satelliteSet.ts:88 (a comment). Every CALL is in Positioning.tsx; <paths> carries satelliteAdapter.ts, satelliteSet.ts, satelliteRegistry.ts and portal-proxy.ts, and not Positioning.tsx.",
+      "THE ADAPTER CANNOT FETCH: satellitesToPositioningShape is a synchronous function called during render (Positioning.tsx:437), so a read cannot be moved into it. The only seam inside the grant that the page already awaits is getSatelliteRegistry's query.",
+      "WHAT THE COMPOSITION DOES, MEASURED: the probe of the running modules shows getSatelliteRegistry('cottonwood') returning 9 books of which 9 carry a joined `served` block, and the network trace shows all three scoped URLs fetched once per load -- 200 /api/scoped/satellites/registry.json?firm=cot, 200 .../holdings.json?firm=cot, 200 .../characteristics.json?firm=cot.",
+      "THE COST IS STATED AT THE CALL, NOT DISCOVERED LATER: satelliteRegistry.ts's own block comment records that a holdings failure now fails the REGISTRY read, that Promise.all rejects on the first rejection by design, and that the thrown message names the artifact even though the on-screen copy is cause-agnostic."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-V7-1 <preflight> comp-adversary (1) @4e81f4e1c1: 'the issuer has not read how the page's mode switch chooses the adapter -- if the Satellites mode's entry point is outside the three files, that is a row and a grant question, not a silent widening.'",
+  "world_is": "It is outside the three files. Filed as the row the preflight asks for; the reads were composed inside the granted file rather than wiring them from Positioning.tsx.",
+  "notes": "If a later cell wants three independent query keys (so a holdings failure can be told from a registry failure ON SCREEN), that is a Positioning.tsx edit plus a fourth notice value, and it is a scope with a different owner. The two reads are exported and callable today; nothing about the composition blocks that."
+},
+{
+  "id": "POSN_ASTTAX-Z-W22-S19",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~22",
+  "surfaced_at": "2026-09-14T23:12:11Z",
+  "one_line": "V7-AC5 expects 'nine satellites selectable'; EIGHT are, and the ninth is hidden by a DELIBERATE pre-existing display filter -- SATELLITES_HIDDEN_FROM_DISPLAY = {'Opal Satellite 98'} at Positioning.tsx:156, applied at :434, landed by ETFS_SATELLITES.TO-10-DE AC1 to remove the ninth column that made POSITIONING SUMMARY clip. The registry serves nine and the adapter produces nine; only the page's view of it narrows.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "SERVED: registry.json VersionId XaX6zaVWH7ybXnRBu2jeF2PNABUhezuM lists 9 books -- Opal Satellite 15, 30, 40, 50, 60, 70, 80, 90, 98.",
+      "ADAPTER OUTPUT: the probe returns 9 portfolios, including 'Opal Satellite 98', with 0 problems and 0 unresolved. So nothing in this cell drops it.",
+      "RENDERED: the DOM read enumerates the selectable satellite tabs as exactly 8 -- 15, 30, 40, 50, 60, 70, 80, 90 -- in both the passing arm and the control arm. 98 is absent.",
+      "THE FILTER, AT ITS SOURCE: Positioning.tsx:156 `const SATELLITES_HIDDEN_FROM_DISPLAY: ReadonlySet<string> = new Set(['Opal Satellite 98'])`, applied at :434 `(b) => !SATELLITES_HIDDEN_FROM_DISPLAY.has(b.code)`. Its header note at :150-155 records Andrew withdrawing the width problem rather than accepting a scroll: 'that would solve the issue with the width and no need for arrows'."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-V7-1 V7-AC5 @4e81f4e1c1: 'nine satellites selectable'.",
+  "world_is": "Eight are selectable, by a ruled display filter that predates this TO and lives outside its <paths>. Nine are served, nine are adapted.",
+  "notes": "Raising the count to nine would mean deleting a filter Andrew asked for, not fixing a defect -- so nothing was changed. Recorded so the criterion's number can be re-cut against the filter rather than against the registry."
+},
+{
+  "id": "POSN_ASTTAX-Z-W22-S20",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~22",
+  "surfaced_at": "2026-09-14T23:12:11Z",
+  "one_line": "V7-AC5 expects 'the as-of shown is holdings.json's date', but the Positioning page RENDERS NO DATE AT ALL, in any mode -- measured on both arms, zero occurrences of `20\\d\\d` in the whole body text of Models mode and of Satellites mode. The payload's as-of IS holdings.json's (data_as_of = 2026-09-14, Black Diamond's partition date); it is simply not a thing this page displays, and satellites deliberately register nothing to the one carrier that would.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "DISCRIMINATING CONTROL, BOTH MODES THROUGH ONE INSTRUMENT: full document.body.innerText read after load and mode click -- Satellites 2501 characters, Models 2985 characters; pattern `20\\d\\d` 0 hits in each, `2026-09-1[0-9]` 0, `\\bas of\\b` 0. So the absence is a property of the PAGE, not of the satellites path, and not of the reader's regex.",
+      "THE PAYLOAD DOES CARRY IT: the probe of the running adapter reads data_as_of = '2026-09-14', data_date = '2026-09-14', generated_at = '2026-09-14', and as_of_date = '2026-09-14' on all nine portfolios -- equal to holdings.json's served as_of, and NOT to the models payload's 2026-09-11 that the previous adapter inherited.",
+      "WHY NOTHING DISPLAYS IT: Positioning.tsx:481 computes dataAsOf and passes it to exactly one consumer, useYangDataAsOf at :496, gated by REGISTERS_YANG_AS_OF where satellites is FALSE (:491-494) with a stated reason. bookSet.ts:387-391 PER_BOOK_AS_OF is false for all three modes, so no per-book date renders either. All of these are outside this TO's <paths>."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-V7-1 V7-AC5 @4e81f4e1c1: 'the as-of shown is holdings.json's date'. THE CELL: 'its `as_of` is `holdings.json`'s (Black Diamond's partition date)'.",
+  "world_is": "The cell's half is MET in the payload and is measurable there. The criterion's 'shown' half is unobservable: the page shows no date in any mode, so there is no rendering that could be right or wrong.",
+  "notes": "Recorded rather than fixed: displaying a satellites as-of means editing Positioning.tsx or flipping REGISTERS_YANG_AS_OF.satellites, both outside <paths>, and the second would register a Black Diamond date into a registry named for yang's clock."
+},
+{
+  "id": "POSN_ASTTAX-Z-W22-S21",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~22",
+  "surfaced_at": "2026-09-14T23:12:11Z",
+  "one_line": "THE TWO PRODUCERS SPEAK DIFFERENT CLASS VOCABULARIES AND NOTHING COMPARES THEM: satellites holdings.json serves snake_case class IDs (`fixed_income`, `equity`, `hedge`) while the models and ETF producers serve PRD display names (`Fixed Income`, `Equity`) -- and the holdings table groups on the display names. A faithful pass-through of the served token therefore renders NOTHING rather than rendering it differently: all 177 rows would have been dropped by ASSET_CLASS_ORDER with no error anywhere.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED ON THREE SERVED ARTIFACTS: satellites holdings.json (VersionId BRjqyqnB0pIdLUHOvDY3B_Sh9b0EXIPw) asset_class vocabulary over 177 rows = {fixed_income:74, equity:96, hedge:7}. json/positioning/positioning_data.json (VersionId OuevyO7kCIJdEqzGlJWd.z.8S8pqiXJk) current_holdings vocabulary = {'Equity','Fixed Income'} over 110 rows. platinum/etfs/positioning_data.json (VersionId MkASX8obEltFZpHHzNa81cuAVXKf7wR2) = {'Equity','Fixed Income'}.",
+      "THE RENDERER'S SIDE: HoldingsTab.tsx:239 ASSET_CLASS_ORDER is the display-name list and :1438-1440 filters the groups by it; :628-629 already carries a hand-written both-spellings special case for Fixed Income ('Fixed Income' || 'fixed_income') inside the SORT, which is the same mismatch surfacing once before, handled locally.",
+      "WHAT THIS CELL DID: satelliteAdapter.ts declares SERVED_CLASS_DISPLAY, a map over the ratified five plus cash plus the transitional hedge, with an unknown token falling through VERBATIM and a null label going to a disclosed 'Unlabelled' bucket. It is stated in the file as a transliteration between two vocabularies for the same class, explicitly not a classification.",
+      "THE ALTERNATIVE WAS MEASURED, NOT ASSUMED: with the served tokens passed through untranslated the table's group filter matches none of them, so the satellites holdings panel would render zero rows while the producer ran correctly -- the same shape as the defect ETFS_SATELLITES.TO-8-DE existed to remove."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-V7-1 THE CELL @4e81f4e1c1: 'the Satellites mode's HOLDINGS come from `holdings.json` rows (one row per ticker, `weight` as served, `asset_class`/`sub_asset_class` as served ...)'.",
+  "world_is": "'As served' has two possible referents here -- the served TOKEN and the served CLASS -- and they are not the same string on this plane. The adapter renders the served CLASS in the renderer's vocabulary and never re-decides which class a row is in.",
+  "notes": "The durable fix is one vocabulary on the plane (either the satellites producer emits display names, or the renderer keys on the PRD class IDs), which is a producer/renderer decision for a cell that owns one of them. Until then the map is the seam, and it is one declared object in one file."
+},
+{
+  "id": "POSN_ASTTAX-Z-W22-S22",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~22",
+  "surfaced_at": "2026-09-14T23:12:11Z",
+  "one_line": "FOUR PIECES OF LIVE COPY AND REASONING NOW DESCRIBE A MECHANISM THIS CELL REMOVED -- the satellites no longer blend the model books, but the page still tells the reader they do: the mode description renders 'across Opal Satellites, each a weighted blend of Opal model portfolios' on screen, the unresolved notice says 'blended over their remaining legs only', HOLDING_NOUN and SECTOR_SORT_FALLBACK both justify their satellites value from 'satellites blend the MODELS holdings', and the fetch-failed headline names only the 'registry' for what is now a three-artifact read. All four are outside this TO's <paths>.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ON SCREEN, READ FROM THE CAPTURE portal/.scratch/v7_satellites.png: the page subtitle reads 'Asset allocation and holdings breakdown across Opal Satellites, each a weighted blend of Opal model portfolios.' Source: Positioning.tsx:123-125 MODE_DESCRIPTIONS.satellites.",
+      "Positioning.tsx:617-620, the `unresolved` notice: 'Unresolved constituent: ... not present in the served models data. Those satellites are blended over their remaining legs only.' After this cell `unresolved` means 'a registry code the served HOLDINGS artifact does not carry' and nothing is blended over anything. Measured today: unresolved is EMPTY (9 of 9 codes present), so the copy is unreachable rather than wrong-on-screen.",
+      "bookSet.ts:404-412 HOLDING_NOUN.satellites = 'ETFs', reasoned as 'A satellite is a weighted blend of MODEL books, and a model book's holdings genuinely ARE ETFs'. bookSet.ts:148-152 SECTOR_SORT_FALLBACK.satellites = false, reasoned as 'Satellites blend the MODELS holdings, so they are models-shaped'. Both VALUES remain correct against the served rows (the served sub_asset_class values are the models vocabulary -- Short Duration, US Large Cap, Developed -- not GICS sectors, measured over 177 rows); only their stated REASONS are now false.",
+      "Positioning.tsx:211-214 SATELLITE_NOTICE_COPY['fetch-failed'].headline = 'Satellite registry could not be loaded.' -- verified on screen in the V7-AC6 forced-failure capture, where the read that actually failed was holdings.json."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-V7-1 THE CELL @4e81f4e1c1: 'The B) union blend and the A) measures blend are REMOVED for the Satellites mode'; <paths> lists satelliteAdapter.ts, satelliteSet.ts, satelliteRegistry.ts and portal-proxy.ts.",
+  "world_is": "The blend is removed from the adapter and still asserted by four artifacts outside the grant, one of which renders to the user on every satellites page view.",
+  "notes": "Not edited: each is a one-line change in a file this TO does not name, and the mode description is user-visible copy. The values of HOLDING_NOUN and SECTOR_SORT_FALLBACK are re-measured above and still hold, so this is a stale-reasoning finding, not a behaviour one -- except the subtitle, which a reader reads."
+},
+{
+  "id": "POSN_ASTTAX-Z-W22-S23",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~22",
+  "surfaced_at": "2026-09-14T23:12:11Z",
+  "one_line": "V7-AC6 asks for 'an error notice, not \"no holdings\"'; under the forced failure the page shows BOTH -- the red 'Satellite registry could not be loaded' notice at the top AND the two panels' pre-existing 'No holdings data available' placeholder beneath it. The placeholder is HoldingsTab.tsx:1120/:1200, fires for a null payload in EVERY mode, and is not adapter output; the criterion's own STOP condition (an EMPTY SATELLITE rendered) is not met -- zero satellites are selectable and zero rows render.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FORCED-FAILURE ARM, holdings.json 503 via ui-smoke's own --fail route: getSatelliteHoldings THROWS 'API request failed: 503 Service Unavailable', getSatelliteRegistry throws the same, 0 satellite tabs, 0 holding rows, and the only canvas notice is 'Satellite registry could not be loaded. Try reloading. If it persists, the registry is unavailable rather than empty.' Read on screen in portal/.scratch/v7_ac6_forced_fail.png.",
+      "THE SAME BODY ALSO CONTAINS 'No holdings data available' TWICE -- once in PORTFOLIO COMPOSITION and once in HOLDINGS BREAKDOWN, both the panels' own empty state, enumerated at HoldingsTab.tsx:1120 and :1200 as `{isDesignedShell ? 'Book-level metrics only' : 'No holdings data available'}`.",
+      "POSITIVE CONTROL, NOTHING FORCED, SAME SCRIPT AND SAME FIXTURE BYTES: 15 rows, 8 satellite tabs, zero notices, 'could not be loaded' false. So the notice in the failing arm is caused by the forced failure and not by the harness.",
+      "ARM 4 RAN THE REAL INSTRUMENT: portal/scripts/ui-smoke.mjs with --fail printed 'FORCED-FAIL: /api/scoped/satellites/holdings.json' and then reported the holdings fixture as FIXTURE-DEAD -- the served bytes were declared and never matched, because the forced failure is evaluated first (ui-smoke.mjs:160-200). The registry and characteristics fixtures still served 200."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-V7-1 V7-AC6 @4e81f4e1c1: 'the page shows an error notice, not \"no holdings\" -- the honest branch. If the adapter renders an empty satellite instead, the fallback that was removed @24a8435642 has been re-created one layer up: STOP and fix it in this cell.'",
+  "world_is": "The error notice is shown and no empty satellite is rendered, so the criterion's named STOP condition is absent. The phrase 'no holdings' is nevertheless on the page, from a panel placeholder that predates this cell and lives outside its <paths>.",
+  "notes": "V7-AC6 is recorded PASS on its stated discriminator with this coexistence disclosed rather than omitted. Suppressing the panel placeholder when a mode-level error notice is present would be a HoldingsTab.tsx or Positioning.tsx edit and is a different cell's."
+},
+{
+  "id": "POSN_ASTTAX-Z-S109",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T23:36:13Z",
+  "one_line": "DISARM of W22-S16 (BLOCKING): V7-AC5's GLD clause ('under the Commodities bucket') was written for the post-R1 world while its VXX clause was written across the boundary; the table serves GLD as hedge/Gold until R1 and F2's HoldingsTab excludes every class outside the ratified five by design, so GLD renders in no bucket (15 of 16 rows; visible subtotals 91.66 under a grand total of 100.00). RE-CUT: V7-AC5 reads the PRE-R1 state with the exclusion counted and named (rendered == the rows whose served class is ratified; the gap equals the excluded weight); the 16-of-16 render with GLD under Commodities / Metals is V8-AC10's bar after the retag. The transition-window exposure Z-S101 named is now MEASURED live on the Satellites mode and is closed by R1 inside the round.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE ISSUER'S DEFECT: one clause of a criterion written on the wrong side of the R1 boundary; the ordering V7 -> V8 is load-bearing (V8-AC1 reads V7 complete) so the fix is to grade V7 on what the world serves before R1 and let V8-AC10 grade the retagged render.",
+      "NOT DONE, STATED: an UNMAPPED bucket in HoldingsTab (a rendering the spec does not name, in F2's file) -- carried for the round analysis with Z-S101; the page is behind the freeze and R1 lands in this round.",
+      "WHY GRADUATED: the re-cut discriminates on the pre-R1 state with the excluded rows counted; nothing served or rendered is wrong about the world."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W22-S16"
+  ],
+  "spec_asserts": "TO-V7-1 V7-AC5 @4e81f4e1c1: GLD 8.34 under the Commodities bucket; served rows == rendered rows.",
+  "world_is": "holdings.json (BRjqyqnB0pIdLUHOvDY3B_Sh9b0EXIPw) serves GLD hedge/Gold; HoldingsTab.tsx:239/:1438 drops the group; GLD paints grey in the treemap and is absent from the table; V7 gates R1 so the criterion could not be met before the cell it precedes.",
+  "notes": "A render bar on a page that gates the retag is cut on the pre-retag served state, with the post-retag bar on the retag's own order."
+},
+{
+  "id": "POSN_ASTTAX-Z-S110",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T23:36:13Z",
+  "one_line": "DISARM of W22-S17 (BLOCKING, ARMED): the ordered tightening of the three class keys to required breaks exactly one site, etfAdapter.ts:134 (EtfPositioningBook.allocation is a separate inline four-key type; the ETF payload is pre-B1), a file outside V7's grant that V7-AC2 required unchanged -- so V7-AC2 and V7-AC4 could not both hold and the branch was left not typechecking, as the refusal clause requires. RULED: etfAdapter.ts enters V7's <paths> for exactly ONE hunk at :134 (`allocation: { ...ZERO_ALLOCATION, ...(book.allocation ?? {}) }`, the honest read of a pre-B1 payload since ZERO_ALLOCATION already carries the five keys); the tightening STAYS (its purpose was to make tsc name that site); V7-AC2 reads five files.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE ISSUER'S DEFECT, THE SECOND TIME ON THIS TYPE: Z-S100 admitted the optional shape because satelliteAdapter constructed literals; the same check on etfAdapter (which the hand-over said carried the five-class zero -- true of ZERO_ALLOCATION, not of the book's own allocation literal) was not run before ordering the tightening. The worker performed the ordered act and refused rather than routing around; the branch at ea64113ba9 is NOT advanced onto the drain ref until it typechecks.",
+      "WHY GRADUATED: one hunk, one file, inside the cell's purpose (the ETF read becomes honest for a pre-B1 payload), and V7-AC4 stays the bar."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W22-S17"
+  ],
+  "spec_asserts": "TO-V7-1 hand-over facts (a) and V7-AC2/V7-AC4: the tightening is one line and tsc names every site that owes the keys; etfAdapter.ts unchanged; tsc exit 0.",
+  "world_is": "tsc exits 2 on exactly one line (etfAdapter.ts(134,7) TS2739); with the hunk reverted, exit 0 over 481 files; the positive control fired on the cell's own file.",
+  "notes": "A type tightening is ordered with the compiler's own enumeration run first on every consumer, not on the ones the issuer remembers."
+},
+{
+  "id": "POSN_ASTTAX-Z-S111",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T23:36:13Z",
+  "one_line": "DISARM of W22-S18 (INERT): the Satellites mode's fetch wiring lives in Positioning.tsx:412/:437 (outside V7's grant), so the two new reads could not receive their own query keys and are COMPOSED inside getSatelliteRegistry() -- the preflight's own open item (1), answered by measurement. ACCEPTED as the cell: the ordered contract (throw on malformed, as_of required, no fallback) holds for both reads (V7-AC6 proves it: 3 of 3 forced 503s throw, the notice renders, zero satellites render); the stated cost -- a holdings outage reads as a registry outage in the notice -- is carried for the round analysis with the Positioning.tsx copy items (Z-S115).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "WHY NOT WIDENED NOW: Positioning.tsx is the page's root and carries the mode switch, the hidden-satellite filter and the copy; giving F3 that file mid-round widens a cell whose bars all pass without it. The round analysis names the wiring and the notice text together.",
+      "WHY GRADUATED: the contract the cell ordered is met and proved on the failing arm."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W22-S18"
+  ],
+  "spec_asserts": "TO-V7-1 preflight (1): if the mode's entry point is outside the three files, that is a row and a grant question.",
+  "world_is": "Every call site is in Positioning.tsx (7 hits across 557 files); the adapter is synchronous; the only awaited seam in the grant is the registry query; all three scoped URLs are fetched once per load.",
+  "notes": "The next cut that adds a served read names the page's query wiring in the grant or names the composition explicitly."
+},
+{
+  "id": "POSN_ASTTAX-Z-S112",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T23:36:13Z",
+  "one_line": "DISARM of W22-S19 (INERT): V7-AC5 expected nine selectable satellites; eight are, because Opal Satellite 98 is hidden by SATELLITES_HIDDEN_FROM_DISPLAY (Positioning.tsx:156, applied :434; ETFS_SATELLITES.TO-10-DE AC1, a ruled display filter that predates the round). Nine are served, nine are adapted. V7-AC5 and V8-AC10 re-cut to eight selectable with the ninth read through the adapter probe.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE ISSUER'S DEFECT: the issuer counted the registry and not the page's filter. The filter is a ruled prior act and is not touched.",
+      "WHY GRADUATED: both bars now count what the page can show and read the ninth where it exists."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W22-S19"
+  ],
+  "spec_asserts": "V7-AC5 and V8-AC10: nine satellites selectable / all nine read.",
+  "world_is": "registry.json lists nine; the adapter returns nine; the DOM enumerates eight tabs in both arms.",
+  "notes": "A count bar on a page is cut on the page's own filters, read at the pin."
+},
+{
+  "id": "POSN_ASTTAX-Z-S113",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T23:36:13Z",
+  "one_line": "DISARM of W22-S20 (INERT): V7-AC5's 'the as-of shown is holdings.json's date' names a rendering the page does not have -- no date renders in any mode (0 hits for a year pattern over the whole body text in both modes; satellites register nothing to useYangDataAsOf by a stated rule; PER_BOOK_AS_OF is false for all three modes). The cell's half (the adapter's as_of is holdings.json's, 2026-09-14) is met and measurable from the probe; V7-AC5 and V8-AC10 re-cut to read it there.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE ISSUER'S DEFECT: 'shown' presumed a date display the page never had. Whether the Positioning page should show the served as-of is a product question for the round analysis, not a render bar.",
+      "WHY GRADUATED: the measurable half is measured; the unmeasurable word is removed from both bars."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W22-S20"
+  ],
+  "spec_asserts": "V7-AC5: the as-of shown is holdings.json's date; THE CELL: its as_of is holdings.json's.",
+  "world_is": "The payload carries it (data_as_of = as_of_date = 2026-09-14 on all nine); the page displays no date anywhere.",
+  "notes": "A 'shown' clause is cut only after the issuer has read the element that shows it."
+},
+{
+  "id": "POSN_ASTTAX-Z-S114",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T23:36:13Z",
+  "one_line": "DISARM of W22-S21 (INERT): the satellites producer serves snake_case class ids (fixed_income, equity, hedge) while the models/ETF producers and the holdings table use PRD display names (Fixed Income, Equity); a faithful pass-through of the served TOKEN would have rendered nothing (177 of 177 rows dropped by ASSET_CLASS_ORDER, silently). The adapter's SERVED_CLASS_DISPLAY -- a transliteration over the ratified five plus cash plus the transitional hedge, unknown tokens verbatim, null to the disclosed Unlabelled bucket -- is ACCEPTED as 'as served': the served CLASS in the renderer's vocabulary, never a re-classification.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "WHY ACCEPTED: the alternative (render nothing) is the silent-drop defect one level up; the transliteration is stated in the file as such and maps the ratified five only. After R1 the table serves structured / commodities / alternatives in the generator's spelling and the same map carries them.",
+      "FOR THE ROUND ANALYSIS: one vocabulary for the class property across producers (the generator's snake_case is the stored spelling per THE CELL of V8; the display names are the page's) -- a producer-side display_name or a shared map, not a per-consumer transliteration."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W22-S21"
+  ],
+  "spec_asserts": "TO-V7-1 THE CELL: asset_class / sub_asset_class as served.",
+  "world_is": "Two vocabularies for one class across three served artifacts; the renderer already carried a hand-written both-spellings case for Fixed Income in its sort (:628-629).",
+  "notes": "The producers' class vocabulary is one item for the next round; the transliteration is the honest bridge this round."
+},
+{
+  "id": "POSN_ASTTAX-Z-S115",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T23:36:13Z",
+  "one_line": "DISARM of W22-S22 (INERT): four pieces of copy and reasoning outside V7's grant still describe the removed blend -- the on-screen mode subtitle ('each a weighted blend of Opal model portfolios', Positioning.tsx:123-125), the unresolved notice (:617-620, unreachable today), and two bookSet.ts rationales whose VALUES stay correct. Carried for the round analysis as one copy item with Z-S111's wiring; not widened mid-round.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "WHY NOT WIDENED: the subtitle is user-visible copy in the page root; changing it is a one-line act the round analysis can name with the wiring and the notice text; nothing it says changes a number.",
+      "WHY GRADUATED: recorded with its sites; the values behind the stale rationales are measured correct against the served rows."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W22-S22"
+  ],
+  "spec_asserts": "TO-V7-1 THE CELL removes the blend; <paths> carries four files.",
+  "world_is": "The blend is removed from the adapter; the subtitle renders the old claim on every satellites view; the notice is unreachable (unresolved empty, 9 of 9); the bookSet rationales are stale text over still-correct values.",
+  "notes": "A cell that removes a mechanism names the copy that asserts it, or the analysis does."
+},
+{
+  "id": "POSN_ASTTAX-Z-S116",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-14T23:36:13Z",
+  "one_line": "DISARM of W22-S23 (INERT): V7-AC6's phrase 'an error notice, not \"no holdings\"' -- under the forced failure the page shows the error notice AND the two panels' pre-existing 'No holdings data available' placeholder beneath it (HoldingsTab.tsx:1120/:1200, fired by a null payload in every mode). The criterion's STOP condition (an empty satellite rendered) is not met: zero tabs, zero rows, the notice present; the positive control shows 15 rows, 8 tabs, zero notices. V7-AC6 PASS stands; the phrase is the issuer's imprecision, recorded.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "WHY GRADUATED: the discriminating clause (no empty satellite; the read throws; the notice renders) is met on both arms with a positive control; the placeholder is a panel property the round analysis may name with the other copy items."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W22-S23"
+  ],
+  "spec_asserts": "V7-AC6: the read throws and the page shows an error notice, not 'no holdings'.",
+  "world_is": "Both strings are on the page; the notice is the adapter's honest branch; the placeholder is the panels' own empty state outside the grant.",
+  "notes": "A negative-control bar names the ELEMENT that must not render, not a phrase that may appear elsewhere on the page."
+},
+{
+  "id": "POSN_ASTTAX-Z-W22-S24",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~22",
+  "surfaced_at": "2026-09-14T23:58Z",
+  "one_line": "The Positioning Summary panel prints one of its three percent labels UNROUNDED, so the Satellites mode renders 7 of 16 class labels as raw float sums -- '62.589999999999996%', '92.11000000000001%', '27.830000000000002%' -- while the SAME panel rounds the other two label sites (PositioningSummary.tsx:989 and :994 call Math.round; :1011 prints {data[c.key]}% raw). Nothing is numerically wrong: the long digits ARE the sum of the served weights this cell was ordered to compute. It surfaces now because every previous producer of this panel's input served PRE-ROUNDED values, so the raw site never had a float to expose. No criterion of TO-V7-1 names the summary labels; not repaired, because the only in-grant remedy (rounding the sum inside satelliteAdapter.ts) would make the adapter's output disagree with the served rows it aggregates, and the honest remedy is at the render site, which is outside this cell's <paths>.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED IN THE RENDERED DOM, not from the image: the Satellites-mode body text carries 7 tokens matching \\d+\\.\\d{6,}% -- 27.830000000000002%, 30.170000000000005%, 39.43000000000001%, 42.870000000000005%, 62.589999999999996%, 87.80000000000001%, 92.11000000000001% -- of 16 class labels across the 8 selectable satellites (read_satellites_dom.js run 2, .scratch/v7_dom_read_r2.json, both satellite captures agree).",
+      "THE INPUT, from the adapter probe in the same page: Opal Satellite 30 allocation.fixed_income = 62.589999999999996, Opal Satellite 90 allocation.equity = 92.11000000000001 -- the float sums of the served weights, matching the rendered tokens digit for digit.",
+      "THE RENDER SITE, cited: portal/src/pages/Positioning/panels/PositioningSummary.tsx:1011 '<span key={c.key} style={{ color: c.color }}>{data[c.key]}%</span>' at ea64113ba9 -- no formatter; the sibling label sites :989 and :994 both wrap the same values in Math.round(). The file is NOT in TO-V7-1's <paths>.",
+      "WHY IT IS NEW HERE AND NOT A REGRESSION OF THIS CELL: the Models payload arrives with allocation values already rounded by its producer, so :1011 has never been handed a repeating float before; the Satellites allocation is summed in the browser by THIS cell's display aggregation, which the cell's own text authorises ('a sum over served rows is aggregation for display').",
+      "SCOPE, COUNTED: 7 of 16 labels on the Satellites mode; the treemap, the holdings table and its totals (74.16 / 17.50 / 100.00) are unaffected -- those paths format their own values."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-V7-1 THE CELL: 'The five-class allocation per satellite = the sum of served weights per served asset_class, in F2's five-key PositioningAllocation'; V7-AC5 reads the rendered Satellites mode and names no formatting bar.",
+  "world_is": "The sum is correct and the page prints it verbatim at one of the panel's three label sites, so seven class labels render 14-17 significant digits and overlap their neighbours in the 1440x900 capture.",
+  "notes": "A value handed to a renderer that has never received an unrounded one is a NEW state for that renderer, not a new value for the producer. The remedy is one Math.round at PositioningSummary.tsx:1011 (outside this cell) or a stated rounding contract on the adapter's allocation; the issuer owns which."
+},
+{
+  "id": "POSN_ASTTAX-Z-S117",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T00:20:55Z",
+  "one_line": "DISARM of W22-S24 (INERT): PositioningSummary.tsx:1011 prints one of its three percent labels UNROUNDED while its siblings at :989/:994 call Math.round, so the Satellites mode renders 7 of 16 class labels as raw float sums (62.589999999999996% ...) -- the sums are correct (they match the adapter probe digit for digit); every previous producer served pre-rounded values so the raw site never had a float to expose. The render site is outside every round-5 cell's grant and no criterion names it; the in-grant alternative (rounding inside the adapter) would make the adapter disagree with the served rows it aggregates and was rightly not taken. Carried for the round analysis as a one-line render fix (Math.round at :1011, matching its siblings) beside the copy items (Z-S115).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED IN THE DOM by the worker: 7 tokens matching a six-plus-decimal percent across the 8 selectable satellites' 16 class labels; the same values read from the adapter probe (Opal Satellite 30 fixed_income 62.589999999999996; Opal Satellite 90 equity 92.11000000000001).",
+      "WHY THE REMEDY IS THE RENDER SITE'S: the label is a display concern the panel already handles at two of its three sites; the adapter's sum is the served weights' sum and is what V7-AC3 and V8-AC10 grade.",
+      "WHY GRADUATED: nothing numeric is wrong, the site is named with its fix, and the page is behind the freeze; the round analysis decides whether it rides the next round or a promote-prep cell."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W22-S24"
+  ],
+  "spec_asserts": "TO-V7-1 THE CELL: the five-class allocation per satellite is the sum of served weights per served asset_class; no criterion names the summary labels' formatting.",
+  "world_is": "The sum is correct and printed verbatim at one unformatted label site; the long digits overlap their neighbours in the 1440x900 capture.",
+  "notes": "For the round analysis: PositioningSummary.tsx:1011 -> Math.round (or the panel's shared formatter), one line, F2's file."
+}
+]
+```
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-S118",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-09-15T00:49:29Z",
+    "one_line": "ANDREW REQUIREMENT, NOT YET CUT: the Positioning Summary's ASSET CLASSES legend must list only the classes that appear in the view on screen. Today it lists all five in every mode -- Models and ETFs show only Fixed Income and Equity, and the legend still names Structured, Commodities and Alternatives. The legend is rendered from the full ASSET_CLASSES array with no presence test.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ANDREW-DIRECT 2026-09-15 ~00:4xZ, VERBATIM: 'There is no need to display the different legend categories if they do not appear in the view', with screenshots of ETFs (Screenshot 2026-09-14 204141.png) and Models (204128.png) modes; record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260915_004xZ_POSITIONING_LEGEND_ONLY_PRESENT_CLASSES_AND_SATELLITES_VIEW_DEFECTS.md@85621749e2.",
+        "SOURCE at portal dd1d33c6 (the POSN drain ref head): src/pages/Positioning/panels/PositioningSummary.tsx:1152-1158 renders the 'Asset Classes' legend from ASSET_CLASSES, the array declared at :71 ('stacked bars and the legend all derive from THIS array'); no filter by the displayed books' values.",
+        "RENDERED: all five legend entries visible in Models, ETFs and Satellites modes while the bars carry two classes (Andrew's three screenshots, 2026-09-14 20:41 ET)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD v0.8 FWD-3 / FWD-4: the five classes in one order and one colour wherever the breakdown is shown. The spec does not say whether a class absent from the view is listed.",
+    "world_is": "Every mode lists all five classes whatever the view holds; Andrew has now ruled that an absent class is not listed. Order and colour of the classes that ARE listed stay as FWD-3 / FWD-4 bind them.",
+    "notes": "REMEDY, for the round-5 analysis and the next frontend cut: filter the legend to classes with a non-zero value across the books currently displayed, keeping ASSET_CLASSES order and colours. One file, the Positioning page. VERIFY AFTER R1: that is when Structured and Commodities first appear in the Satellites mode, so the filter is exercised in both directions only then. Same record, already carried or not a defect: unrounded labels = Z-S117; stale subtitle = Z-S115; GLD absent from the bars and grey in the treemap, VXX under Equity = the pre-R1 state V7-AC5 measured, resolved by R1; Satellite 98 not shown = Andrew's earlier word, Positioning.tsx:130 and :156 (its 16 holdings are identical to Satellite 90's)."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-S119",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-09-15T00:49:29Z",
+    "one_line": "THE PANEL FOOTER DOES RENDER A DATE, IN EVERY MODE, AND ON SATELLITES IT NAMES THE WRONG DATE AND SOURCE: 'September 11th, 2026, 5:00p ET | Source: Bloomberg.' appears under the Positioning Summary in Models, ETFs and Satellites. Z-S113 recorded 'no date renders in any mode', which the live page contradicts. The Satellites mode's data is Black Diamond's holdings.json as of 2026-09-14, not Yang's Bloomberg-sourced PKL of 2026-09-11.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RENDERED: Andrew's screenshots at 2026-09-14 20:41 ET (204141.png ETFs, 204128.png Models, 204150.png Satellites) all show the footer 'September 11th, 2026, 5:00p ET | Source: Bloomberg.'; record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260915_004xZ_POSITIONING_LEGEND_ONLY_PRESENT_CLASSES_AND_SATELLITES_VIEW_DEFECTS.md@85621749e2.",
+        "SOURCE at portal dd1d33c6: PositioningSummary.tsx:1382 '<SmartPanelFooter sourceKey=\"model_pkl\" content=\"Source: Bloomberg.\" />' is one hardcoded footer for every mode; the date comes from the central Yang as-of registry (Positioning.tsx:483-496 useYangDataAsOf, REGISTERS_YANG_AS_OF[mode]).",
+        "SERVED: s3://opal-data-cot/platinum/satellites/holdings.json as_of 2026-09-14, source blackdiamond/cottonwood/bronze/rebalancer_model_detail/2026-09-14 (read 2026-09-14 20:52Z)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-S113 (GRADUATED): 'no date renders in any mode (0 hits for a year pattern over the whole body text in both modes)'; TO-V7-1's cell text: the Satellites mode's as-of is holdings.json's (Black Diamond's partition date).",
+    "world_is": "A date and a source render under the summary in all three modes. On Satellites both are Yang's (2026-09-11, Bloomberg) while the figures above them are Black Diamond's (2026-09-14). The year-pattern instrument behind Z-S113 did not see the footer the user sees; how it missed it is not established here.",
+    "notes": "REMEDY, for the round-5 analysis and the next frontend cut: the Satellites mode's footer carries holdings.json's as_of and a Black Diamond source label; Models and ETFs keep theirs (ETFs' own per-book dates are bookSet.ts's concern, unchanged). Rides the same one-file frontend cell as Z-S118 / Z-S117 / Z-S115. Z-S113's disposition stands as a record; this row corrects its 'no date renders' measurement going forward rather than rewriting it."
+  },
+{
+  "id": "POSN_ASTTAX-Z-W19-S11",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~19",
+  "surfaced_at": "2026-09-15T00:42:47Z",
+  "one_line": "V8-AC8's literal bar and its own parenthetical disagree in the world as it is: the seeder's dry run DOES print a BLOCKED: line, and it is about BNDX -- a pre-existing module-vs-table disagreement outside the thirteen, unmoved by this retag.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "V8-AC8 <expect>: the MERGE SUMMARY block 'printed by the script's dry run, with NO line beginning BLOCKED: after it (zero conflicts: the module and the table agree on the thirteen); --upload never passed.'",
+  "world_is": "The dry run prints the MERGE SUMMARY and then five lines beginning BLOCKED:, returning rc=3. The ONLY conflict is BNDX sub_asset_class, table='Intermediate' vs module='International' -- 1 field on 1 ticker, and BNDX is not a member of the thirteen. The parenthetical half of the same expectation is MEASURED TRUE: across the thirteen the seeder's own merge_item reports 0 conflicts over 39 fields (13 x 3) and every one of the thirteen is SAME against the live row. So the criterion's stated bar FAILS BY OUTPUT while the reason it gives for that bar HOLDS.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "INVOCATION, verbatim from the criterion: timeout 300 python infra/aws/lambda/v2_portal/yang_pipeline/seed-etf-classifications.py -- rc=3. Output: 'MERGE SUMMARY / tickers in the module union: 136 / rows read from the table: 285 / rows whose values PRESERVED: 1 of 136 ticker(s) / rows already correct (skipped): 113 of 136 / rows to write: 23 of 136', then 'CONFLICT -- ... BNDX sub_asset_class table='Intermediate' module='International'', then 'BLOCKED: 1 field(s) on 1 ticker(s) would be overwritten ... NOTHING WAS WRITTEN.'",
+      "DISCRIMINATING TEST, two vintages x two planes, that this retag did NOT cause it: the TABLE's BNDX row reads sub_asset_class='Intermediate' in r1_before.json (the V8-AC2 scan, taken BEFORE the first write) AND in r1_after.json (after all thirteen writes) -- byte-identical, and BNDX is one of the 272 of 272 non-member rows V8-AC6's negative control proved unmoved. The MODULE's BNDX reads 'International' at the PRE-EDIT bytes (git show eeec3e9d62~1:infra/aws/lambda/v2_portal/_shared/etf_classification.py, exec'd in-process) AND at HEAD. Both sides of the conflict are unchanged by this order at both vintages.",
+      "THE PARENTHETICAL, MEASURED SEPARATELY on the seeder's OWN merge rule rather than argued: seed-etf-classifications.py merge_item() called for each of the thirteen against its live row from r1_after.json returns 0 conflicts for all thirteen, and item_differs is SAME on asset_class/sub_asset_class/management_style for all thirteen. VNQ alone reports preserved=['management_style'] (the module carries no VNQ style; the table's 'passive', written by V8-AC4, stands) -- which is the PRESERVE branch working, not a conflict.",
+      "THE BLOCKED LINES ARE THE SCRIPT'S FAIL-CLOSED BRANCH, not a failure of this act: seed-etf-classifications.py:236-243 prints them and returns 3 when conflicts exist and --accept-module-truth is absent; NOTHING WAS WRITTEN and --upload was never passed.",
+      "COVERAGE of the claim 'outside the thirteen': the CONFLICT block enumerates every conflict the run found -- 1 line, 1 ticker -- so this is the whole conflict set at this vintage, not a sample."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not repaired, widened or routed around, per the order's REFUSAL CLAUSE. The two available repairs are both out of this cell: --accept-module-truth would make a re-seed overwrite the table's curated BNDX value (the exact revert the guard exists to prevent, and a write outside the signed thirteen), and editing the module's BNDX entry is a fourteenth row in a file whose criterion says ONLY the thirteen entries change. V8-AC8 is recorded FAIL by output with its measurement and the order stays open on it. The issuer owns which half of its own expectation governs."
+},
+{
+  "id": "POSN_ASTTAX-Z-W19-S12",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~19",
+  "surfaced_at": "2026-09-15T00:42:47Z",
+  "one_line": "Store 2's section headers now describe the wrong classes: V8-AC7 permits ONLY the thirteen entries to change, so the comment banners that GROUP those entries still read 'EQUITY - Volatility' and 'OTHER - Commodities / Volatility' over rows now tagged structured and commodities.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "V8-AC7 <expect>: 'with ONLY the thirteen entries' asset_class / sub_asset_class changed (git diff --stat and the hunks printed)'.",
+  "world_is": "The retag landed as 22 insertions / 22 deletions, every changed line a member of the thirteen. The banner comments inside ETF_CLASSIFICATIONS are unchanged and now contradict the values beneath them: :229-231 'EQUITY - Volatility (per product decision 2026-01)' sits above UVXY and VXX, both now 'structured'; :234-236 'OTHER - Commodities / Volatility' sits above GLD/IAU/SLV/DBC/PDBC/GSG/USO (now 'commodities') and VIXY (now 'structured'); QBER at :122 sits under 'FIXED INCOME - High Yield' and JEPI at :180 under a dividend-equity banner. A reader who trusts the banner reads the pre-retag taxonomy.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git diff -U0 -- infra/aws/lambda/v2_portal/_shared/etf_classification.py at the working tree before commit eeec3e9d62: 22 insertions(+), 22 deletions(-), 1 file changed; every +/- line matches ^[+-]    '<TICKER>': and every TICKER is one of the thirteen. No comment line appears in the diff.",
+      "THE BANNERS, read at HEAD after the edit (sed -n '229,244p'): '# EQUITY - Volatility (per product decision 2026-01)' immediately above 'UVXY': 'structured' and 'VXX': 'structured'; '# OTHER - Commodities / Volatility' immediately above 'GLD': 'commodities' ... 'VIXY': 'structured'.",
+      "WHY IT WAS NOT FIXED IN PLACE: editing those banners would put non-member lines in the diff, which is exactly what V8-AC7's 'ONLY the thirteen entries' forbids. The criterion and the file's readability point opposite ways here and the criterion wins.",
+      "INERT, and why: these are Python comments. The module's live values are the dicts, and all thirteen were verified at both levels by importing the edited module (13 of 13 at target on BOTH levels) and by the seeder's own merge rule (0 conflicts across the thirteen). No consumer reads a comment."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The same shape exists one level down in ETF_SUB_ASSET_CLASS (the 'Volatility' and metals groupings at :551-:571). A follow-on cell that re-banners both dicts costs one commit and moves no value; it is not this order's act."
+},
+{
+  "id": "POSN_ASTTAX-Z-W19-S13",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~19",
+  "surfaced_at": "2026-09-15T00:42:47Z",
+  "one_line": "This order's criteria name paths on TWO different bases -- some relative to the project directory, some to the repo root -- so the worker, not the order, chooses each invocation's working directory.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "V8-AC3/AC5/AC12/AC15 name 'deliverables/0.9.0_WK_POSN_ASTTAX~19/...' while V8-AC7/AC8/AC9 name repo-root paths ('infra/aws/lambda/...', 'org/missions/D4/POSN/POSN_ASTTAX/deliverables/...'), and the order states no working directory.",
+  "world_is": "Run from the repo root, the face's V8-AC3 invocation fails: python reports \"can't open file 'C:\\\\tmp\\\\wk-posn-5-19\\\\deliverables\\\\0.9.0_WK_POSN_ASTTAX~19\\\\r1_rollback.py': [Errno 2] No such file or directory\", and 'ls deliverables' reads 'No such file or directory'. The same command run from org/missions/D4/POSN/POSN_ASTTAX/ resolves and produces the named result. Each base resolves exactly one group of criteria and neither base resolves both.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED, both bases: from /c/tmp/wk-posn-5-19 the V8-AC3 invocation returns Errno 2 on C:\\tmp\\wk-posn-5-19\\deliverables\\...; from /c/tmp/wk-posn-5-19/org/missions/D4/POSN/POSN_ASTTAX (pwd printed) the identical argv returns the criterion's named output and rc=0.",
+      "The <paths> grant and <proof_of_spec> both name the full repo-root form org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~19/, so the FILE is exactly where the order says it is; only the invocation's base is unstated.",
+      "DENOMINATOR: of 15 criteria, 4 carry a project-relative deliverables path (V8-AC3, V8-AC5, V8-AC12, V8-AC15), 3 carry repo-root paths (V8-AC7, V8-AC8, V8-AC9 via its placeholder), 1 runs under portal/ by its own cd (V8-AC10), and the rest are cwd-free.",
+      "NO RESULT DEPENDS ON THE CHOICE: every such invocation was run from the base under which its argv resolves, unmodified, and the cwd is recorded beside each in the proof-of-spec instance."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed for form, not significance: a criterion whose argv resolves under one base and not another is under-specified even when the resolution is obvious, because the failing base produces an Errno, not a wrong answer -- a worker that read the Errno as a missing deliverable would have filed a BLOCKING row instead of changing directory. One line ('run from the project root') in the next cut removes it."
+},
+{
+  "id": "POSN_ASTTAX-Z-W19-S14",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~19",
+  "surfaced_at": "2026-09-15T01:05:33Z",
+  "one_line": "V8-AC9's harness reads its subject from the WORKING TREE, and this worktree is a sparse cone that does not materialise data/ -- so the seeder under test had to be resolved BY CONTENT from the object store instead of by filename.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "V8-AC9 names <V3_1_S_GUARDED> = 'the V3 harness under deliverables/0.9.0_WK_POSN_ASTTAX~21/', and that harness's applied_bytes() does io.open(os.path.join(ROOT, 'data/black_diamond/scripts/classification/seed_canonical_securities.py')).",
+  "world_is": "The file is TRACKED at HEAD (git ls-tree lists blob 803721e2c15464ed4ba054a02aba2311d5506164) but does NOT EXIST on disk: git sparse-checkout list returns 13 cone directories and data/ is not one of them, git ls-files -t reports 'S' for the path, and 29,349 of 34,302 tracked files are unmaterialised for the same reason. A naive read of the harness would report the subject MISSING and the criterion unrunnable.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list -> .tools, infra/aws/lambda/ci, infra/aws/lambda/v2_portal, infra/aws/terraform/modules, infra/aws/terraform/yang-pipeline, lib, org/critical_paths, org/missions, org/modules, org/projects, org/ref, org/standards, org/surprise_channel (13 cones); core.sparseCheckout=true, core.sparseCheckoutCone=true.",
+      "DENOMINATOR, so this is not read off one path: 34,302 tracked files, 29,349 not present on disk; top missing roots org 17,099 / infra 7,885 / docs 1,298 / data 1,137.",
+      "THE ROUTE TAKEN, and why it is stronger rather than weaker: the subject is resolved from the object store and PINNED BY BLOB -- HEAD:<path> = 803721e2c15464ed4ba054a02aba2311d5506164, while 8cad052620~1:<path> = fbbc7165d33198789d3a7788a557ed3f5ce75614, the PRE-patch blob the harness itself names as round 4's subject. The two differ and 8cad052620 is 'POSN_ASTTAX TO-V3-1 (AT5-s-3): APPLY round 4's preserve-don't-clobber guard', so the bytes under test are PROVABLY the guarded ones. Resolving a subject by CONTENT rather than by filename is the estate's own rule for deployed artifacts.",
+      "The harness's OTHER path, pre_patch_bytes(), asserts sha == fbbc7165d331 for 'git show HEAD:<path>' -- true when TO-V3-1 was UNCOMMITTED, false now that it is complete at HEAD. That arm is not used by V8-AC9 (which needs the upload arm on the applied bytes only), so the stale assertion was not exercised; it is recorded here because the next caller of main() will hit it.",
+      "The machinery copy the harness pins is unchanged: .scratch/u3_ac1_before_control.py sha256[:16] = ae72cab7dfbeb62f, equal to the harness's MACHINERY_SHA256 assertion, taken from ~21's committed u3_ac1_before_control.py.ROUND4COPY.txt."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "No tree was rebuilt and no cone was widened to make the order runnable. If a later cell wants the harness's main() to run end to end in a sparse worktree, the fix is one line in applied_bytes() -- fall back to git show when the path is sparse -- plus re-pinning PRE_PATCH_BLOB now that the patch is committed."
+},
+{
+  "id": "POSN_ASTTAX-Z-W19-S15",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~19",
+  "surfaced_at": "2026-09-15T01:05:33Z",
+  "one_line": "V8-AC14 cannot be satisfied as written for the third generator: the ONLY recorded event yang-generate-holdings-attribution ever received names an input workbook the pipeline's own cleanup stage has since deleted, and the criterion forbids a hand-written event.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "V8-AC14: 'the three yang writers ... invoked DIRECTLY, once each, in order -- yang-generate-positioning, yang-generate-holdings-attribution, yang-generate-allocation-summary -- each with the event the state machine passed it on the last execution that ran it ..., never a hand-written event; each StatusCode 200, no FunctionError; ... head-object on ... holdings_attribution_data.json: LastModified AFTER the retag time and VersionId different from the pre-retag read'.",
+  "world_is": "The walk back found the event: execution 20260904_v1-71e7c33e, LambdaFunctionScheduled #52, the most recent of the nine most recent executions to schedule that function at all. Its input names manifest.files.attribution_excel = 'Model Portfolio Attribution 20260831.xlsx', which the DEPLOYED handler resolves to s3://opal-data-portal-v2/uploads/Model Portfolio Attribution 20260831.xlsx. That object is 404. The invoke was issued anyway and returned StatusCode 200 with FunctionError=Unhandled, errorType NoSuchKey, raised at lambda_function.py:96 download_file -> :130 get_object. The served key did not move. So the criterion's two halves -- 'use only the recorded event' and 'the artifact must refresh' -- cannot both hold at this vintage.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE WALK BACK, with its denominator: of the 9 most recent YangDataPipeline executions, 8 scheduled yang-generate-holdings-attribution ZERO times (20260911_v1-1c95bba7, 20260910_v1-7fecaa04, 20260909_v1-f826412d, 20260908_v1-82ae0971, 20260904_v1-a849ee3b, 20260904_v1-33c4dc7a, 20260904_v1-3c6fdaa5, 20260904_v1-06273296) and 20260904_v1-71e7c33e scheduled it once, as event #52 at 2026-09-04T13:51:20Z. That is consistent with the served artifact's own LastModified, 2026-09-04T13:51:29Z.",
+      "THE INPUT, measured: s3api head-object s3://opal-data-portal-v2/uploads/Model Portfolio Attribution 20260831.xlsx -> 404. The uploads/ prefix holds 13 keys of which 4 are attribution workbooks -- 20260131, '20260131 1', 20260331, 20260731 -- and the one the recorded event names is not among them. The pipeline's own yang-cleanup-uploads stage runs in every execution.",
+      "THE INVOKE, attempted and recorded rather than predicted: StatusCode 200, FunctionError Unhandled, errorMessage 'An error occurred (NoSuchKey) when calling the GetObject operation: The specified key does not exist.'",
+      "IT WROTE NOTHING, checked rather than assumed: holdings_attribution_data.json reads VersionId mOBBmXhjOyNPM2ue_.3C9G1eR79lUrlk / LastModified 2026-09-04T13:51:29Z both BEFORE and AFTER the attempt, identical. The deployed handler calls download_file() at :96 before parse and before upload_json(), so a missing workbook cannot produce a write -- read from the deployed zip, not from the repo.",
+      "IT IS GENUINELY A WRITER OF THE RETAGGED PROPERTY, so the order is right to name it: the served holdings_attribution_data.json carries 423 asset_class and 423 sub_asset_class occurrences, including 27 'Volatility' -- the pre-retag sub_asset_class of VXX/UVXY/VIXY/QBER -- and its zip carries etf_classifications_dynamodb.py.",
+      "NOT TREATED AS BRANCH B, and why, stated so the issuer can overrule: Branch B's own remedy is 'run r1_rollback.py ... AND RE-ISSUE THE SAME INVOCATIONS so every served key returns to pre-retag labels', which presumes the invocations RUN; for this one it cannot run at either vintage. The failure is independent of the retag (the workbook was deleted days before it) and provably moved nothing. Rolling back a correct, co-signed 13-row retag over a deleted 2026-08-31 spreadsheet was judged the larger error. The call is the issuer's."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The other two generators DID refresh on demand: positioning_data.json OuevyO7kCIJdEqzGlJWd.z.8S8pqiXJk -> AqBtm_5o.2QeiCBRP_veC8HV2Xk0OSaj (00:56:11Z) and allocation_summary.json HfPxh0kkU6s5yCYCyKvv7SRP977Dhijp -> CmdUs93O1Ti0gwfQmDpgz5suiruCtiT8 (00:56:26Z), both after the retag, no key outside the three moving. So the served attribution artifact stays TEN DAYS OLD and carries pre-retag labels -- which is what FWD-6 ('the three modes agree') will be graded against at L9."
+},
+{
+  "id": "POSN_ASTTAX-Z-W19-S16",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~19",
+  "surfaced_at": "2026-09-15T01:05:33Z",
+  "one_line": "V8-AC15's first producer REFUSES on demand at this hour by its own design: cot-satellites-registry-producer computes TODAY's roster partition, today's has not landed (upstream lands ~06:00:43Z), and it refuses to walk back or publish an empty.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "V8-AC15: 'StatusCode 200 and no FunctionError; ... holdings.json's rows for every retagged ticker any satellite holds read the TARGET asset_class AND sub_asset_class (print them: GLD under Commodities / Metals in Sat 15, VXX under Structured / Hedge in Sat 80 ...)'.",
+  "world_is": "aws lambda invoke --function-name cot-satellites-registry-producer --payload {} returned StatusCode 200 with FunctionError=Unhandled and errorType RegistryProducerError: 'BLOCKED: no roster partition at s3://opal-data-assets/blackdiamond/cottonwood/bronze/rebalancer_models/2026-09-15/page_000.json (S3 said AccessDenied). REFUSING to walk back to an older partition and REFUSING to publish an empty ... Upstream lands ~06:00:43Z daily'. The refusal is CORRECT: the partition really is absent. Consequence: holdings.json still serves its pre-retag labels, so V8-AC15's label bars and V8-AC10's Satellites label bars cannot be met until the producer runs.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE UPSTREAM, measured on MY credentials rather than inferred from the lambda's error: list-objects-v2 s3://opal-data-assets/blackdiamond/cottonwood/bronze/rebalancer_models/2026-09-15/ -> 0 keys; .../2026-09-14/ -> 1 key (page_000.json); .../2026-09-13/ -> 1 key. So the producer's date is genuinely empty and the neighbouring dates are genuinely present -- the AccessDenied in its message is the 403-instead-of-404 a role without s3:ListBucket receives, not a permissions regression.",
+      "WALL CLOCK at the invoke: 2026-09-15T01:00:24Z, i.e. about five hours before the ~06:00:43Z upstream landing the producer's own message names, and six hours before its 07:00Z schedule.",
+      "IT WROTE NOTHING: registry.json XaX6zaVWH7ybXnRBu2jeF2PNABUhezuM / 19:53:58Z and holdings.json BRjqyqnB0pIdLUHOvDY3B_Sh9b0EXIPw / 19:53:59Z, identical before and after the refused invoke.",
+      "THE SERVED LABELS TODAY, read from the served bytes: holdings.json as_of 2026-09-14 carries ('hedge','Gold') x7 including GLD 8.34 in Opal Satellite 15, and ('equity','Volatility') x8 including VXX -- i.e. the PRE-RETAG labels, because the producer last ran at 19:53Z yesterday, hours before the retag.",
+      "WHY A RE-RUN WOULD FIX IT WHEN UPSTREAM LANDS: the producer reads etf-classifications at run time (B2 ledger L2/L3 record the ReadEtfClassifications GetItem/BatchGetItem policy added for exactly that), so the 07:00Z organic fire will pick the retag up without any further act."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not repaired by another route: the producer accepts --as-of, and passing it would target a date the criterion does not name, which is the same class of act as hand-writing a recorded event. The order's own preflight says the organic fires (07:00Z / 07:20Z) are the COO's next-day leg, and V8-AC12 records the baseline for exactly that diff."
+},
+{
+  "id": "POSN_ASTTAX-Z-W19-S17",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~19",
+  "surfaced_at": "2026-09-15T01:05:33Z",
+  "one_line": "V8-AC15's second producer refuses for a DIFFERENT reason worth its own row: cot-satellites-characteristics-producer asks for the T-1 business day's Bloomberg partition, and MONDAY 2026-09-14 has no bbg partition at all -- the newest is Friday 2026-09-11.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "V8-AC15: '... then the same for cot-satellites-characteristics-producer into r1_characteristics_invoke.json ... characteristics.json's nine coverage pairs unchanged from its prior version'.",
+  "world_is": "The invoke returned StatusCode 200, FunctionError=Unhandled, errorType AccessDenied on s3:ListBucket for opal-data-etfs, raised inside load_bbg at build_satellites_characteristics.py:171. That message is the producer's DESIGNED loud failure for a missing partition -- its own docstring at resolve_bbg_as_of (:440-449) says 'The role carries no s3:ListBucket by design, so the partition date is computed rather than discovered. A missing partition therefore fails LOUD on the GetObject instead of silently walking back'. The computed date is prev_trading_day(2026-09-15) = Monday 2026-09-14, and bbg/2026-09-14/characteristics.parquet is 404.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE PARTITION SET, listed on my own credentials with its denominator: s3://opal-data-etfs/bbg/ holds 16 date partitions; head-object reads bbg/2026-09-11/characteristics.parquet PRESENT 19802 bytes and bbg/2026-09-12/, bbg/2026-09-13/, bbg/2026-09-14/ characteristics.parquet all 404. The newest partition is Friday 2026-09-11.",
+      "THE CALENDAR, resolved before calling anything stale (CLAUDE.md NEVER-4): 2026-09-14 is a MONDAY and 2026-09-15 is a TUESDAY, so T-1 business day from today is Monday the 14th -- a trading day whose partition is absent, NOT a weekend artefact. 'Friday is Monday's answer' would make bbg/2026-09-11 the right partition for a Monday run, and that is exactly why B4's QA invoke SUCCEEDED at ~21:45Z yesterday: prev_trading_day(2026-09-14) = 2026-09-11, which exists.",
+      "SO THE SAME FUNCTION, UNCHANGED, SUCCEEDED 3 HOURS AGO AND FAILS NOW -- the discriminator is the date it computes, not its code or its role. CodeSha256 and role are untouched since B4 (ledger 20260914T2122Z, L5 0-diff re-plan).",
+      "IT WROTE NOTHING: characteristics.json rt61ogajZQy79meUlsY1X_mIdPngxJTZ / 2026-09-14T21:45:13Z, identical before and after.",
+      "WHAT IS NOT CLAIMED: whether Monday's Bloomberg pull is merely late or did not run at all. That belongs to the BBG derived layer, not to this cell, and the derived layer is documented current-day-only."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "If Monday's partition never lands, the 07:20Z organic fire refuses too and characteristics.json stays at its 2026-09-14T21:45Z version. That is a different failure from the registry's (which only needs the clock to reach ~06:00Z), which is why it is filed separately."
+},
+{
+  "id": "POSN_ASTTAX-Z-W19-S18",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~19",
+  "surfaced_at": "2026-09-15T01:05:33Z",
+  "one_line": "THE CELL's TARGET column is written in ONE spelling but lands in TWO: the DynamoDB store must take 'structured' and the Yang served payload emits 'Structured', so a per-level comparison reads FAIL on a correct world unless it picks the plane's own grain.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "THE CELL's table prints targets as 'Commodities / Metals', 'Structured / Hedge', 'Alternatives / Real Estate', while the same paragraph says 'read ...lambda_function.py:271-303 for the exact stored spelling of the five classes (structured, commodities, alternatives, ...) -- store what the consumers read, never the display label'. V8-AC14 then says the served current_holdings must 'read the TARGET asset_class per THE CELL'.",
+  "world_is": "Three planes, three grains, all correct at once: (1) DynamoDB stores lowercase 'structured'; (2) positioning_data.json's current_holdings carries 'Structured', because yang-generate-positioning maps the store value through ASSET_CLASS_LABELS before serving; (3) platinum/satellites/holdings.json carries the RAW store value ('hedge', 'equity', 'fixed_income') with no label mapping at all. A comparator that applies one spelling to all three planes fails on two of them.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED, and caught by exactly this: the first V8-AC14 run compared the served current_holdings against the STORE spelling and printed 'VXX LT structured vs Structured FAIL' on all 3 rows -- a green world reported red.",
+      "THE DISCRIMINATING PAIR that settles it, same rows, pre vs post: VXX in LT/ULT/AGG read ('Equity','Volatility') at pre-retag VersionId OuevyO7kCIJdEqzGlJWd.z.8S8pqiXJk and ('Structured','Hedge') at post-retag AqBtm_5o.2QeiCBRP_veC8HV2Xk0OSaj. Both levels moved to THE CELL's target column spelling exactly.",
+      "THE MAP, read from the generator's own source rather than transcribed: ASSET_CLASS_LABELS in yang-generate-positioning/lambda_function.py = {alternatives: Alternatives, cash: Cash, commodities: Commodities, equity: Equity, fixed_income: Fixed Income, hedge: Hedge, structured: Structured}.",
+      "THE THIRD PLANE, measured: the served satellites holdings.json carries pairs ('hedge','Gold') and ('equity','Volatility') -- raw store values, lowercase, no label hop. So the same ticker is 'Structured' in one served artifact and 'structured' in another BY DESIGN.",
+      "COVERAGE of the corrected comparison: 6 of 6 cells (1 ticker Yang's books hold x 3 models x 2 levels) PASS against the label grain, with membership identical on 6 of 6 models."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed because the next cell that grades 'served == target' across these three artifacts will hit it, and the failure mode is a FALSE RED that looks exactly like a failed retag. The cheap fix in a future cut is to print the target twice in THE CELL -- stored value and served label -- or to name the plane beside each bar."
+},
+{
+  "id": "POSN_ASTTAX-Z-W19-S19",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~19",
+  "surfaced_at": "2026-09-15T01:20:25Z",
+  "one_line": "The criterion's own capture command writes its PNG INSIDE the read-only portal worktree, because its outfile is portal-relative -- so a worktree the order calls READ-ONLY now carries an untracked, NOT-ignored file, while the graded bar still reads 0.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order: 'Your portal clone is READ-ONLY in this order (git diff --stat under portal/ must read 0 at your report -- FWD-5's bar is \"no portal edit\")'. V8-AC10's invocation is \"cd portal && node scripts/ui-smoke.mjs positioning .scratch/v8_sat15.png ...\" -- an outfile resolved INSIDE portal/.",
+  "world_is": "Run as written, the first capture created portal/.scratch/v8_sat15.png (268,724 bytes). V8-AC11's bar is unaffected -- git diff --stat refs/drains/posn-5-portal prints nothing, 0 files changed, and portal HEAD is still dd1d33c6db84037fe8bcb8a8d19a819d9a250cbf -- because that instrument grades TRACKED changes. But git status --porcelain in portal/ now prints '?? .scratch/', and the path is NOT ignored by the portal repo: portal/.gitignore:50 is '.comp-graph/', and git check-ignore -v .scratch/v8_sat15.png run FROM INSIDE portal returns rc=1 with no output. Every later capture was written to the SUPERPROJECT's ../.scratch/ instead.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ls -la portal/.scratch/ -> one file, v8_sat15.png, 268724 bytes, created 21:09 local by the first V8-AC10 capture.",
+      "git -C portal diff --stat refs/drains/posn-5-portal -> EMPTY (0 files changed); git -C portal rev-parse HEAD -> dd1d33c6db84037fe8bcb8a8d19a819d9a250cbf. So V8-AC11 passes on its own instrument.",
+      "TWO INSTRUMENTS DISAGREED AND THE DISAGREEMENT WAS RESOLVED RATHER THAN LEFT STANDING: 'git -C portal check-ignore -v .scratch/' printed a match at '.gitignore:50' (the SUPERPROJECT's file, resolved from the outer cwd), while 'git status --porcelain' listed the path as untracked. Read from INSIDE portal, sed -n '48,52p' .gitignore shows line 50 = '.comp-graph/', and check-ignore on the FILE returns rc=1. The porcelain was right and the first check-ignore was answering about the wrong repo.",
+      "NOT DELETED, deliberately: removing it would erase the evidence of what the run did, and a recursive delete needs Andrew's word under Agent Autonomy. It is left in place and disclosed here so the next reader of that worktree does not have to guess."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The one-word fix in a later cut is to write the capture to '../.scratch/<name>.png' in the criterion text, as every capture after the first one here did. Worth fixing because the drain worktree is shared and a stray untracked PNG in it reads like somebody edited the portal."
+}
+]
+```
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-S120",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-09-15T01:42:46Z",
+    "one_line": "B4's SCHEDULE FIRES BEFORE ITS INPUT EXISTS, EVERY WEEKDAY: cot-satellites-characteristics-producer runs at cron(20 7 * * ? *) UTC and reads the Bloomberg ETF partition for the previous trading day, but the Bloomberg pull that writes that partition runs at 07:00 America/New_York (11:00Z in EDT, 12:00Z in EST). So the 07:20Z fire refuses 3h40m (EDT) / 4h40m (EST) before its input lands, and characteristics.json never refreshes on its own schedule -- only a manual invoke after the pull refreshes it. This is structural, not the one missing partition Z-W19-S17 describes, and the anchor came from this seat's own round-4 L4 guidance.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "LIVE RULE, read 2026-09-15 ~01:3xZ: aws events describe-rule cot-satellites-characteristics-producer-daily -> cron(20 7 * * ? *) ENABLED; list-rule-names-by-target on the function ARN returns that one rule only. The registry producer's rule is cron(0 7 * * ? *) ENABLED.",
+        "THE PRODUCER'S DATE RULE, data/assets/scripts/gold/build_satellites_characteristics.py at HEAD: resolve_bbg_as_of (:440-449) returns prev_trading_day(today, UTC date), and its docstring states a missing partition 'fails LOUD on the GetObject instead of silently walking back to an older day'; load_bbg (:160-176) GetObjects bbg/<asof>/characteristics.parquet and its manifest with no fallback.",
+        "THE INPUT'S CLOCK: the Windows scheduled task OPAL_BBGTML_daily_pull on this device, LastRunTime 9/14/2026 7:00:01 AM (LastTaskResult 0), NextRunTime 9/15/2026 7:00:00 AM (local ET); integrations/bloomberg/pipeline/etf_daily_pull.py lands under bbg/<BDay(-1) of today>. Newest partitions at the read: bbg/2026-09-09, 2026-09-10, 2026-09-11.",
+        "CORROBORATION BOTH WAYS: characteristics.json LastModified 2026-09-14T21:45:13Z (head-object), a run (after that day's pull had written bbg/2026-09-11, its T-1) and the producer REFUSED on worker ~19's on-demand invoke (T-1 = 2026-09-14, not yet written; the 2026-09-15 07:00 ET pull writes it) -- commit 7e6024957d, row Z-W19-S17."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-V4-1: 'an EventBridge rule cron(20 7 * * ? *) UTC (20 minutes after the registry producer's 07:00Z fire, its own clock, NEVER success-of-upstream)'. ROUND_ANALYSIS.round4 s.4 item 4 (this seat): 'B4 runs on its own schedule offset after B2's'. Z-W19-S17: 'If Monday's partition never lands, the 07:20Z organic fire refuses too'.",
+    "world_is": "B4 reads three inputs; the latest-landing one is the Bloomberg partition at ~07:00 ET, not holdings.json at 07:00Z. Anchored to B2's clock, the fire precedes its Bloomberg input on every weekday, so the refusal Z-W19-S17 treats as one missing partition recurs daily. Monday 2026-09-14's partition DOES land -- at the 2026-09-15 07:00 ET pull, ~3h40m after that day's 07:20Z fire.",
+    "notes": "REMEDY, for the round-5 analysis: re-anchor B4 to the input that lands LAST. Either an EventBridge Scheduler schedule in America/New_York after the 07:00 ET pull (with a margin after the pull completes, measured rather than assumed), or a UTC cron at or after ~12:30Z so it holds across DST. Keep it its own clock, never success-of-upstream. The round-4 guidance named the wrong anchor (B2's clock) and is owned here; the cell executed the order as written. NEAR-TERM, measured on today's clocks: the registry producer's 07:00Z fire reads the 2026-09-15 roster (lands ~06:00:43Z) and is expected to relabel holdings.json with R1's labels, so the Satellites mode should show GLD as Commodities / Metals and VXX as Structured / Hedge from then (a prediction from the producer's inputs, to be read after the fire). characteristics.json stays at its 2026-09-14T21:45Z version until a run after the Bloomberg pull."
+  },
+{
+  "id": "POSN_ASTTAX-Z-S121",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T01:45:27Z",
+  "one_line": "DISARM of W19-S11 (BLOCKING): V8-AC8's literal bar ('no BLOCKED: line') failed on BNDX -- a pre-existing module-vs-table disagreement (sub_asset_class Intermediate vs International) outside the thirteen and unmoved by the retag -- while the bar's own parenthetical (zero conflicts on the thirteen, 39 of 39 fields) held. RE-CUT to the parenthetical: zero conflicts on the thirteen; BNDX printed and disclosed. BNDX's disagreement is a Store-2 hygiene item for the round analysis.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE ISSUER'S DEFECT: a bar written as a global absence when its reason was a scoped one; the seeder's own merge rule discriminates per ticker and that is what the re-cut reads.",
+      "WHY GRADUATED: the retag's two-store agreement is measured on the seeder's own instrument; the foreign conflict has a carrier."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W19-S11"
+  ],
+  "spec_asserts": "V8-AC8: MERGE SUMMARY with no BLOCKED: line (zero conflicts on the thirteen).",
+  "world_is": "One BLOCKED: line, one ticker, outside the set; the thirteen agree on every field.",
+  "notes": "BNDX: the module says International, the table says Intermediate -- one of them is wrong and neither is this round's."
+},
+{
+  "id": "POSN_ASTTAX-Z-S122",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T01:45:27Z",
+  "one_line": "DISARM of W19-S12 (INERT): Store 2's banner comments above the retagged entries still read the pre-retag taxonomy ('EQUITY - Volatility' over UVXY/VXX, 'OTHER - Commodities / Volatility' over the commodities and VIXY, QBER under a High Yield banner, JEPI under a dividend-equity banner) because V8-AC7 permitted ONLY the thirteen entries to change. Carried for the round analysis as a comment-only cleanup of _shared/etf_classification.py; the values beneath the banners are correct and are what every consumer reads.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "WHY NOT WIDENED: the bar was cut narrow on purpose (the diff bound IS the control that nothing else moved); a comment re-grouping is a separate, value-free edit.",
+      "WHY GRADUATED: recorded with its four sites for the next cut."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W19-S12"
+  ],
+  "spec_asserts": "V8-AC7: ONLY the thirteen entries' asset_class / sub_asset_class changed.",
+  "world_is": "22 insertions / 22 deletions, all members; the grouping comments now contradict the values beneath them.",
+  "notes": "A future retag order grants the banner lines with the entries, or names the banners as a follow-on."
+},
+{
+  "id": "POSN_ASTTAX-Z-S123",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T01:45:27Z",
+  "one_line": "DISARM of W19-S13 (INERT): the order's criteria name paths on two bases -- `deliverables/...` relative to the project directory (V8-AC3/AC5/AC12/AC15) and repo-root paths elsewhere -- with no stated working directory. RULED and stated in the face: the deliverables paths resolve from org/missions/D4/POSN/POSN_ASTTAX/, everything else from the repo root; the invocations are not re-cut (V8-AC5's retag cannot be re-run and its recorded string must stay the face's).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE ISSUER'S DEFECT: two bases in one order; the fix is one sentence, landed.",
+      "WHY GRADUATED: nothing ran wrong; the record says which directory each command ran from."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W19-S13"
+  ],
+  "spec_asserts": "V8-AC3/AC5/AC12/AC15 name deliverables/0.9.0_WK_POSN_ASTTAX~19/...; the rest name repo-root paths.",
+  "world_is": "Each base resolves exactly one group; the worker chose per criterion and recorded which.",
+  "notes": "One base per order at the next cut."
+},
+{
+  "id": "POSN_ASTTAX-Z-S124",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T01:45:27Z",
+  "one_line": "DISARM of W19-S14 (INERT): V8-AC9's harness reads the seeder under test from the working tree, and slot ~19's sparse cone does not materialise data/ (29,349 of 34,302 tracked files unmaterialised), so the subject was resolved BY CONTENT from the object store (blob 803721e2c1 at HEAD) rather than by filename. ACCEPTED -- the content-key read is the stronger instrument (Rule 22a); the cone is the issuer's provisioning, recorded with Z-S71.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "WHY GRADUATED: the criterion's subject is the committed bytes and that is what was read; the cone limitation is disclosed for the next mint."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W19-S14"
+  ],
+  "spec_asserts": "V8-AC9 names the V3 harness, whose applied_bytes() reads data/black_diamond/scripts/classification/seed_canonical_securities.py from disk.",
+  "world_is": "The file is tracked at HEAD and absent on disk in the cone; the harness ran on the blob's bytes.",
+  "notes": "A worker cone that runs a cross-lane harness includes the harness's subject directories, or the harness reads by content."
+},
+{
+  "id": "POSN_ASTTAX-Z-S125",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T01:45:27Z",
+  "one_line": "DISARM of W19-S15 (BLOCKING): V8-AC14's third generator (yang-generate-holdings-attribution) cannot run on its recorded event at any vintage -- the only event it ever received names an attribution workbook the pipeline's own cleanup stage deleted (NoSuchKey, FunctionError Unhandled, nothing written). RE-CUT: the two generators that feed the Positioning page refreshed and read at target (positioning_data.json AqBtm_5o.2QeiCBRP_veC8HV2Xk0OSaj, allocation_summary.json CmdUs93O1Ti0gwfQmDpgz5suiruCtiT8 at 00:56Z); the attribution generator's refusal is the measured outcome and holdings_attribution_data.json refreshes on Yang's next attribution UPLOAD (an operator act, organic). The CTO half's list named the generator; its mechanism is input-bound, disclosed to both halves' signers by this row.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "WHY NOT A HAND-WRITTEN EVENT: the halves forbid it and there is no workbook to name; the next upload is the honest refresh.",
+      "WHY GRADUATED: the served plane the endpoint names (the Positioning page) is refreshed and at target; the un-refreshed key's consumer is outside the project; the organic carrier is named."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W19-S15"
+  ],
+  "spec_asserts": "V8-AC14 and the halves' R1 amendments: three generators invoked with their recorded events, each 200 with no FunctionError, all three keys refreshed.",
+  "world_is": "Two refreshed; the third's input no longer exists; the Attribution page (its consumer) is out of this project by Andrew's word and the Positioning page reads positioning_data.json, which is refreshed.",
+  "notes": "The next round's endpoint text should say which served keys the Positioning page reads and which it does not."
+},
+{
+  "id": "POSN_ASTTAX-Z-S126",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T01:45:27Z",
+  "one_line": "DISARM of W19-S16 (BLOCKING): cot-satellites-registry-producer refuses on demand before the roster partition for its computed date lands (~06:00:43Z daily; at 01:00Z on 09-15 the 2026-09-15 partition is absent and the producer refuses to walk back or publish an empty -- correct, by design). So holdings.json cannot be relabelled by a driven invoke tonight. RULED: the driven attempt and its measured refusal are V8-AC15's evidence; the relabelled holdings.json is the ORGANIC leg V2-L8 (the 07:00Z fire on 09-15), recorded by the COO on the B2 ledger and a row with the expectation r1_after_served_heads.txt names; V8-AC10's Satellites arm reads the served bytes as they are tonight (the transition state, counted) and the post-fire render is the same organic record.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RULE 27 READ HONESTLY: the mechanism WAS driven deliberately and its fail-closed branch measured; what remains is an upstream landing no seat controls (Black Diamond's export at ~06:00:43Z) -- the genuinely essential wait, qualified here with its reason, and the halves already name the scheduled fire as the organic leg.",
+      "THE HIDDEN-ROW STATE IS LIVE UNTIL THEN, BEHIND THE FREEZE: seven of eight satellites render one row short with the dropped weight inside the grand total (the defect the order exists to prevent, measured by the worker on the pre-retag bytes with Sat 90 as the control); the 07:00Z fire closes it; the page is not promoted.",
+      "WHY GRADUATED: the act is done where it can be done; the residue has a clock, an owner and a recorded expectation."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W19-S16"
+  ],
+  "spec_asserts": "V8-AC15 and both halves' R1 amendments: the producer invoked directly, holdings.json relabelled.",
+  "world_is": "RegistryProducerError BLOCKED: no roster partition at .../rebalancer_models/2026-09-15/page_000.json; nothing written; the pre-retag holdings.json still served.",
+  "notes": "The COO's 07:0xZ read: holdings.json VersionId moved, GLD Commodities/Metals in Sat 15, VXX Structured/Hedge in Sat 80, totals unchanged."
+},
+{
+  "id": "POSN_ASTTAX-Z-S127",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T01:45:27Z",
+  "one_line": "DISARM of W19-S17 (INERT): cot-satellites-characteristics-producer computes its Bloomberg partition as the T-1 business day and fails LOUD when it is absent (no ListBucket by design); at 01:00Z on 09-15 that is bbg/2026-09-14, which the 07:00 ET pull writes ~11:0xZ. Consequence beyond tonight: the producer's OWN 07:20Z schedule precedes its input's landing by ~3h40m every day, so its organic fire will REFUSE daily -- a B4 design defect (the issuer's cron proposal, V4's cell) that 1.0.0_SA_CTO~Z filed independently as Z-S120 for the round analysis (move the rule after the pull, or read the pull's manifest for the latest partition) -- this row adjudicates the worker's W19-S17 and defers the schedule item to Z-S120. Tonight: the COO invokes the producer directly after the pull lands and records V4-L8 on that read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE ISSUER'S DEFECT: the 07:20Z offset was proposed from the registry producer's clock, not from the bbg pull's landing time; V4's preflight named it as a proposal and the first live day measures it wrong.",
+      "WHY GRADUATED: the refresh has a driven path (a direct invoke after ~11:0xZ, the COO's) and the schedule fix is one Terraform line for the next round."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W19-S17"
+  ],
+  "spec_asserts": "V8-AC15: the characteristics producer invoked directly, characteristics.json's coverage unchanged; V4-AC12: cron(20 7 * * ? *) as the standing mechanism.",
+  "world_is": "AccessDenied on the computed 2026-09-14 partition (the designed loud failure); the newest partition is Friday 2026-09-11; the schedule fires before its input exists on every trading day.",
+  "notes": "Round analysis item: B4's schedule vs the bbg pull's 11:0xZ landing; until fixed, the organic leg is the COO's direct invoke."
+},
+{
+  "id": "POSN_ASTTAX-Z-S128",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T01:45:27Z",
+  "one_line": "DISARM of W19-S18 (INERT): THE CELL's TARGET column is one spelling and lands in three planes' grains -- the store lowercase ('structured'), the yang served payload display-cased ('Structured', via ASSET_CLASS_LABELS in the generator), holdings.json raw ('hedge', 'equity'). RULED into V8-AC14/AC10: the comparator applies each plane's own spelling; a per-level comparison across planes with one spelling reads FAIL on a correct world.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "WHY GRADUATED: stated in the face; the vocabulary item (one class vocabulary across producers) is already carried at Z-S114."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W19-S18"
+  ],
+  "spec_asserts": "THE CELL: store what the consumers read; V8-AC14: current_holdings read the TARGET asset_class per THE CELL.",
+  "world_is": "Three planes, three grains, all correct; the worker chose the plane's grain and said so.",
+  "notes": "A cross-plane comparison names the grain per plane at the cut."
+},
+{
+  "id": "POSN_ASTTAX-Z-S129",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T01:45:27Z",
+  "one_line": "DISARM of W19-S19 (INERT): V8-AC10's invocation writes its capture inside the READ-ONLY portal worktree (a portal-relative outfile), leaving an untracked, not-ignored .scratch/ there while V8-AC11's tracked-diff bar still reads 0. Harmless to the bar (tracked changes are what FWD-5 grades) and disclosed; later captures were written to the superproject's .scratch/. The next capture invocation names an outfile outside portal/.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "WHY GRADUATED: the graded property (no tracked portal edit) holds two ways; the untracked capture is named and is cleaned with the worktree at L9."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W19-S19"
+  ],
+  "spec_asserts": "The order: the portal clone is READ-ONLY (git diff --stat under portal/ reads 0); V8-AC10: cd portal && ... .scratch/v8_sat15.png.",
+  "world_is": "portal/.scratch/v8_sat15.png exists untracked; git diff --stat prints nothing; portal HEAD unmoved.",
+  "notes": "An outfile for a read-only worktree lives outside it."
+},
+{
+  "id": "POSN_ASTTAX-Z-S130",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T01:45:27Z",
+  "one_line": "DISARM of Z-S120 (ARMED, owner this seat; filed by 1.0.0_SA_CTO~Z): B4's cot-satellites-characteristics-producer is scheduled at cron(20 7 * * ? *) UTC but reads the previous trading day's Bloomberg partition, which the 07:00 America/New_York pull writes ~11:00Z (EDT) / ~12:00Z (EST) -- the fire precedes its input every weekday, so characteristics.json never refreshes on its own schedule. RULED: the schedule is the issuer's proposal (V4's cell, round 5) and the fix is one Terraform line for the next round -- move the rule after the pull's landing with the EST margin (cron(30 12 * * ? *) UTC) or resolve the partition from the pull's own run_manifest -- carried to the round-5 analysis as the CTO REC; until it lands, the organic leg V4-L8 is the COO's direct invoke after the pull (today ~11:0xZ), recorded on the B4 ledger. Mid-round the decomposition is frozen and no cell owns the .tf.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "WHY NOT FIXED TONIGHT: a cron change is a Terraform apply on the cot-pipeline stack (a plan, a safe-apply, a ledger) outside every round-5 cell; the round is at its last order and the decomposition is frozen; the CTO REC and this row carry the exact line.",
+      "WHY GRADUATED: the mechanism and the fix are measured and named; the interim driven path has an owner (this seat) and a clock; nothing served is wrong, only un-refreshed."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-S120"
+  ],
+  "spec_asserts": "TO-V4-1 V4-AC12: cron(20 7 * * ? *) as the standing mechanism, its own clock, never success-of-upstream; the producer computes its partition from the trading calendar and fails loud when absent.",
+  "world_is": "The producer's designed loud failure fires on its own schedule every trading day because the partition it computes does not exist until ~11:0xZ; the first live fire (09-15 07:20Z) will refuse; measured tonight at 01:00Z on the same computed date.",
+  "notes": "Round 6 (or the L10 addendum cell): satellites-characteristics-producer.tf schedule after the bbg pull's landing, EST-safe."
+}
+]
+```
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-W19-S20",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~19",
+    "surfaced_at": "2026-09-15T02:15:00Z",
+    "one_line": "The order's prose bar for 'no portal edit' -- 'git diff --stat under portal/ must read 0 at your report' -- reads NONZERO from the superproject on a clean worktree: the linked portal worktree sits at the drain ref the COO cut it at, two commits ahead of the gitlink this workspace branch records, so the SUPERPROJECT prints 'portal | 2 +-' while the GRADED instrument (V8-AC11) reads 0.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "The order's identity block: 'Your portal clone is READ-ONLY in this order (`git diff --stat` under portal/ must read 0 at your report -- FWD-5's bar is \"no portal edit\") ... cut by the COO at hand-over DETACHED at `refs/drains/posn-5-portal`'. V8-AC11's invocation is the scoped form: timeout 60 git -C portal diff --stat refs/drains/posn-5-portal.",
+    "world_is": "Two reads of 'git diff --stat' answer about different objects and only one of them is the bar. From the SUPERPROJECT root, git diff --stat prints 'portal | 2 +-' -- a GITLINK pointer difference, e85f6eb84f (what the wk-posn_asttax-5-19 tree records) vs dd1d33c6db (where the COO detached the linked worktree, = refs/drains/posn-5-portal, F1-F3 landed). From INSIDE the clone, git -C portal diff --stat refs/drains/posn-5-portal prints 0 lines and git -C portal rev-parse HEAD is exactly dd1d33c6db. So the clone is clean, the superproject line is the hand-over condition and not an edit, and it was already present before this worker's first act (git status printed ' M portal' at spawn, at both runs). Nothing about it is caused by, or visible to, any act of this order.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "BOTH INSTRUMENTS, SIDE BY SIDE, at HEAD 57654b44c7 on wk-posn_asttax-5-19: `git diff -- portal` -> '-Subproject commit e85f6eb84f3a1771a37011a7e77e372570bad02a / +Subproject commit dd1d33c6db84037fe8bcb8a8d19a819d9a250cbf'; `git ls-tree HEAD -- portal` -> '160000 commit e85f6eb84f3a1771a37011a7e77e372570bad02a portal'; `git -C portal rev-parse HEAD` -> dd1d33c6db84037fe8bcb8a8d19a819d9a250cbf; `git -C portal rev-parse refs/drains/posn-5-portal` -> the SAME hash.",
+        "THE GRADED BAR IS UNAFFECTED AND WAS RE-RUN: timeout 60 git -C portal diff --stat refs/drains/posn-5-portal -> 0 lines of output. V8-AC11 PASSES on its own instrument, and the retag's whole claim -- one place changed, every Positioning mode followed, no portal edit -- stands on that read plus the Models render (Structured 1.50 LT / 2.0 ULT).",
+        "WHY THIS IS NOT W19-S19 AGAIN: S19 (adjudicated Z-S129) is about an UNTRACKED capture file written inside portal/.scratch/ by a portal-relative outfile. This row is about a TRACKED pointer in the SUPERPROJECT that no act of this order touches. Different object, different instrument, different remedy -- S19's remedy is an outfile outside portal/, this one's is reading the scoped form of the command.",
+        "NOT REMEDIED BY THIS WORKER, and why: moving the gitlink would be a commit of portal/ from a worker whose order calls that clone READ-ONLY, and the drain ref is the integrator's to land. The row exists so the next reader of a POSN worker report does not read 'portal | 2 +-' as a portal edit."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "For the issuer: the prose bar and V8-AC11's invocation are not the same read. The criterion's scoped form (git -C portal diff --stat <ref>) is the one that grades 'no portal edit'; the unscoped superproject form answers a gitlink question instead and is nonzero by construction whenever a linked worktree is detached ahead of the recorded pointer."
+  }
+]
+```
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-S131",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-09-15T02:26:25Z",
+    "one_line": "ANDREW REQUIREMENT, WIDENING Z-S118, NOT YET CUT: a class that no book in the view holds shows NO ROW anywhere on the Positioning Summary -- not in the legend (Z-S118) and not in the expanded details' coloured ASSET CLASS rows. Today the Models view lists 'ASSET CLASS (5)' with all-zero Commodities (%) and Alternatives (%) rows, and the code renders a zero row on purpose.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ANDREW-DIRECT 2026-09-15 ~02:1xZ, VERBATIM: 'if none of the models/ETFs/satellites have a given asset class (e.g. Alternatives) then no Alternatives row should be shown. In the context of the Models view, becuase there is Structured exposure, but no Commodities or Alternatives Exposure, that means that commodities and alternatives weights should not appear in that colored bar section of the characteristics.' Screenshot 2026-09-14 221346.png (Models, Portfolio view, details expanded); record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260915_021xZ_ZERO_CLASS_ROWS_HIDDEN_AND_SATELLITES_HOLDINGS_BREAKDOWN_EMPTY.md@65410eedaf.",
+        "SOURCE at portal dd1d33c6: panels/PositioningSummary.tsx:574-582 builds the Asset Class section as ASSET_CLASSES.map(...) with the comment 'A class with no weight renders a ZERO ROW: the reader is told the book holds none of it, which is a different and truer statement than an absent row'; :850 prints the count from section.rows.length; the legend is :1159-1170 (Z-S118). The stacked bars ALREADY omit a zero class (:952 'data[c.key] > 0 &&').",
+        "RENDERED: Image #2 shows ASSET CLASS (5) with Commodities (%) = 0 and Alternatives (%) = 0 in all five columns, and Structured (%) 1.50 / 2 in Long-Term / Ultra Long-Term."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD v0.8 FWD-3 / FWD-4 bind one order and one colour for the five classes; the portal's own design comment at PositioningSummary.tsx:575-577 chose a zero row over an absent one. Neither the PRD nor any cut order says whether an absent class is listed.",
+    "world_is": "Every mode renders all five Asset Class rows and all five legend entries whatever the view holds. Andrew has now ruled both are filtered to the classes present, reversing the zero-row design choice.",
+    "notes": "REMEDY, for the round-5 analysis and the next frontend cut (one file, the same cell as Z-S118 / Z-S119 / Z-S117 / Z-S115): derive ONE presence set per render -- the classes with a non-zero value in ANY column the current view draws (portfolio columns, and benchmark columns where the Benchmark / Relative / Custom view draws them) -- and use it for the legend, the Asset Class rows and the section count, keeping ASSET_CLASSES order and colours. 'The view' is read as the current mode's displayed books (his example is Models); a class present in another mode does not bring its row back. Delete the zero-row comment with the behaviour. VERIFY across the R1 boundary: Models (Structured present, Commodities / Alternatives absent), and Satellites after holdings.json carries R1's labels (Commodities and Structured appear)."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-S132",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-09-15T02:26:25Z",
+    "one_line": "SPEC GAP, NO CELL SERVED IT: the Satellites mode's Holdings Breakdown panel shows NO characteristics and NO performance for any holding, by construction. The panel reads per-HOLDING fee / MC / active / yield / duration / credit / beta and returns from each current_holdings row; the satellite adapter emits rows with ticker, name, class, sub-class and weight only, and characteristics.json publishes per-SATELLITE aggregates with contributor ticker LISTS, not per-ticker values. The PRD, the round-5 decomposition and TO-V7-1 all name satellite-level measures only.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "1.0.0_SA_CTO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ANDREW-DIRECT 2026-09-15 ~02:1xZ, VERBATIM: 'the Satellites section is still broken; not displaying data [Image #3] showing all the floats in this case. and no characteristics or performance in the \"Holdings Breakdown\" panel.' Record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260915_021xZ_ZERO_CLASS_ROWS_HIDDEN_AND_SATELLITES_HOLDINGS_BREAKDOWN_EMPTY.md@65410eedaf.",
+        "SERVED: s3://opal-data-cot/platinum/satellites/characteristics.json (LastModified 2026-09-14T21:45:13Z), per satellite keys = fee, yield, duration, beta, returns, coverage, total_weight, sources, contributors; contributors = {scalar: {field: [tickers]}, returns: {window: [tickers]}} -- ticker lists, zero per-ticker values. method.precedence_grain = 'per ticker (a ticker's whole row comes from one source)', so the lambda RESOLVES per-ticker values at run time and publishes only their weighted sum.",
+        "SOURCE at portal dd1d33c6: shared/satelliteAdapter.ts:262-282 maps each served row to {ticker, name: ticker, asset_class, sub_asset_class, weight} and nothing else; :313-320 puts the served aggregates on the PORTFOLIO (the summary's Characteristics rows), not on rows. tabs/HoldingsTab.tsx:966-975 reads h.fee, h.aum, h.active, h.yield, h.duration, h.credit, h.beta from the current_holdings row, and getHoldingPerformance (:1063-1073) reads holding.returns from the same row -- every one undefined for a satellite row.",
+        "SPEC: PRD v0.8 C-SATELLITE-SOURCE (:79-84) 'Weighted characteristics (fee, yield, duration, beta, returns) are aggregated server-side by an additional lambda'; decomposition round 5 AT5-s-7 act 'its measures come from characteristics.json' with a bar on buckets and row counts only; TO-V7-1 act 3 the same. No clause, cell or criterion names per-holding measures in the Satellites Holdings Breakdown."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "C-SATELLITE-SOURCE and TO-V7-1: the Satellites mode's MEASURES come from characteristics.json, the additional lambda's per-satellite aggregates. Models and ETFs Holdings Breakdown rows carry per-holding characteristics and returns from their own payloads.",
+    "world_is": "The Holdings Breakdown's Characteristics and Performance views are blank for all eight displayed satellites, every row. It is not a render bug and not pre-R1: no served artifact carries a per-ticker measure for a satellite holding, and no cell was cut to produce one. Same screenshot, already carried or transitional: raw floats on the summary labels = Z-S117; each bar short of its full book by GLD's weight (served asset_class 'hedge', 2.11-8.34 in seven satellites; excluded from the five) and VXX counted in Equity (served 'equity' / 'Volatility', 0.35-1.87 in eight) = holdings.json still carrying pre-R1 labels, expected to clear at the registry producer's next fire; footer date and source = Z-S119; subtitle 'weighted blend of Opal model portfolios' = Z-S115.",
+    "notes": "REMEDY, for this seat's round-5 analysis (a PRD addendum -- an outcome no cell served): (1) BACKEND, B4: characteristics.json also publishes the per-ticker values it already resolves -- one block per ticker (fee, yield, duration, beta, returns, and the source it came from), once per artifact since a ticker's values do not vary by satellite -- beside the unchanged aggregates; NULL stays NULL. (2) FRONTEND, the adapter: attach each row's served per-ticker values; still no arithmetic. (3) OPEN for the analysis, not guessed here: MC (aum), Active and Credit are panel columns outside B4's field set -- source them, or drop them for Satellites the way ETFs drop Duration (Andrew-direct 2026-08-25). (4) The Positioning Summary's own Characteristics rows for Satellites already read the aggregates; not re-verified here."
+  },
+{
+  "id": "POSN_ASTTAX-Z-S133",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T02:29:23Z",
+  "one_line": "DISARM of W19-S20 (INERT): the order's prose bar 'git diff --stat under portal/ must read 0' reads 'portal | 2 +-' from the superproject on a clean worktree, because the issuer detached the linked portal worktree at refs/drains/posn-5-portal (dd1d33c6db) while the workspace branch records the gitlink e85f6eb84f -- the hand-over condition, present before the worker's first act; the GRADED instrument (V8-AC11, scoped inside the clone) reads 0 and the clone is clean. The prose was the issuer's imprecision; FWD-5 is exercised on the retag with no portal edit. This is the last worker row of round 5's L7.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Two reads of one phrase about two objects: the superproject's gitlink pointer (e85f6eb84f vs the clone's dd1d33c6db) and the clone's tracked diff against the drain ref (0 lines). Only the second is the bar; ' M portal' was printed at both spawns and nothing in the worker's three commits stages portal.",
+      "WHY GRADUATED: the retag changed one place and every Positioning mode followed with no portal edit (V8-AC11 0 lines; V8-AC10 Models shows Structured 1.50/2.0 from the table write alone). Round 5 L7 closes at nine of nine terminal orders; the CTO's Z-S131/Z-S132 (zero-class rows hidden; the Satellites Holdings Breakdown's missing per-holding measures) are round-analysis items, not L7 gaps."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W19-S20"
+  ],
+  "spec_asserts": "TO-V8-1 identity block: the portal clone is READ-ONLY (git diff --stat under portal/ reads 0); V8-AC11: git -C portal diff --stat refs/drains/posn-5-portal -> 0 files.",
+  "world_is": "The clone is clean and at the ref; the superproject's gitlink differs from the clone's HEAD by design (the freeze bars the gitlink move).",
+  "notes": "A read-only-worktree bar names the scoped instrument and never the superproject's gitlink line."
+},
+{
+  "id": "POSN_ASTTAX-Z-S134",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T02:29:23Z",
+  "one_line": "DISARM of the CTO's Z-S131 (ARMED, owner this seat): Andrew ~02:1xZ (record @65410eedaf, msg 22952) -- a class that no displayed book holds shows NO row (it widens Z-S118's legend rule to the Asset Class rows and the section count: one presence set per render); PositioningSummary.tsx:574-582 renders zero rows BY DESIGN today and Andrew reverses it. RULED: nothing is re-cut mid-round (the CTO's word on the same message; round 5's L7 is closed at nine of nine); the item is CARRIED as a named cell of the round-5 recut -- the ONE Positioning-page frontend cell the CTO recommends (22947), carrying Z-S115 (stale subtitle), Z-S117 (unrounded labels), Z-S118 (legend), Z-S119 (footer date/source), Z-S131 (zero-class rows) together in PositioningSummary.tsx and Positioning.tsx -- cut by this seat from the CTO's round-5 analysis. The Satellites view on Andrew's screenshot (GLD absent, VXX under Equity) is the pre-R1 holdings.json, closed by the 07:00Z fire; the missing per-holding measures are the CTO's spec gap Z-S132 (a PRD addendum).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE CARRIER, NAMED: the round-5 L10 chain (the CVO's slug -> the CTO's round-5 analysis -> this seat's round-6 issuance) is where a spec-level display rule enters as a cell; Andrew's sentence is the L2/L4 word for it and the CTO's record is its pin.",
+      "WHY NOT NOW: L7 is closed at nine terminal orders; a tenth order cut off this word would re-open the round's open-order count (LD-0521) and the decomposition is frozen mid-round; the fix is one file the CTO already scopes.",
+      "WHY GRADUATED: the hazard is a display rule with an owner, a carrier and a pin; no served byte is wrong."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-S131"
+  ],
+  "spec_asserts": "Andrew ~02:1xZ: if none of the models/ETFs/satellites hold a given asset class, no row for it is shown, and its weight does not appear in the coloured bar; the CTO's Z-S131 files it against PositioningSummary.tsx:574-582.",
+  "world_is": "The Models view renders the five classes with zero rows for Commodities and Alternatives by F2's design (a zero row is a row, TO-V6-1's own text); Andrew's word reverses that for classes with no exposure across the displayed books.",
+  "notes": "Round-6 cell candidate: presence-driven rows, legend and bar segments on the Positioning Summary, with the footer, the subtitle and the label formatter in the same file set."
+},
+{
+  "id": "POSN_ASTTAX-Z-S135",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T03:07:32Z",
+  "one_line": "R2 LANDED: the Satellites relabel driven off-clock tonight (Andrew-direct ~02:3xZ @0553548fe2; halves CTO @d1685fb4ea / COO @424b7d0e95; actor 1.0.0_SA_CTO~Z, published 03:02Z per msg 22967): holdings.json VersionId BRjqyqnB0pIdLUHOvDY3B_Sh9b0EXIPw -> 67GP52SdV1rw6QFVNPytU6ec4TvhwJh3 at 2026-09-15T03:02:26+00:00, as_of 2026-09-14, bytes identical to this seat's pre-write capture (GLD hedge/Gold -> commodities/Metals in 7 satellites, VXX equity/Volatility -> structured/Hedge in 8; 30 label cells, 0 other; weights, row sets and coverage unchanged); registry.json re-written content-identical (sha256 a9ff35b0...b85777) under VersionId xfm3WLmuZh3G4YtGpHUMs0R4Hyr4gCoN. This CLOSES the hidden-row transition state Z-S126 named (the driven {} invoke's refusal on the absent 2026-09-15 roster, W19-S16): the Satellites mode's served labels are now the retagged ones. The B2 ledger's L8 is RE-CUT on the driven mechanism (Rule 27) and the ledger CLOSED; the 07:00Z scheduled fire is the organic arm, recorded by a row at ~07:0xZ (expected: as_of 2026-09-15, the same labels at that partition's weights, both VersionIds moved again).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ-BACK at 2026-09-15T03:04:17Z by this seat (get-object; BYTES vs capture_registry.json / capture_holdings.json from the 02:49:56Z no-write run): registry xfm3WLmuZh3G4YtGpHUMs0R4Hyr4gCoN bytes==capture True; holdings 67GP52SdV1rw6QFVNPytU6ec4TvhwJh3 55033 B sha256 2f34056549c83bd2bd29a5a9def5f7075d104d91f33ec0e9ec3bc38a79c71289 bytes==capture True; as_of 2026-09-14.",
+      "TWO INSTRUMENTS on the discriminator (the CTO's replaced publish functions + a raising client, parsed compare; this seat's forwarding proxy capturing put_object, byte compare) and two on the read-back (the CTO's parsed compare; this seat's byte compare) -- same counts.",
+      "WHY GRADUATED: the act is the one both halves name (two keys, N=1 writer, the code's two put_objects), Branch A on every clause; nothing else moved (characteristics.json rt61ogajZQy79meUlsY1X_mIdPngxJTZ untouched; no portal byte; gitlink e85f6eb84f unmoved)."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "NEVER#1 (both halves signed to the blast radius: two keys on opal-data-cot, N=1, rollback VersionIds XaX6zaVWH7ybXnRBu2jeF2PNABUhezuM / BRjqyqnB0pIdLUHOvDY3B_Sh9b0EXIPw); Rule 27 (no FWD is a wait -- the mechanism driven, the organic case the negative arm); PRD v0.8 C-SATELLITE-SOURCE (holdings.json labels from the served etf-classifications table).",
+  "world_is": "The served holdings.json carries the retagged labels for the 2026-09-14 partition at unchanged weights and row sets; registry.json content-identical under a new version; characteristics.json untouched; the Satellites page (F3 behind the freeze, via the B5 router) reads the new bytes on its next fetch -- an edge cache, if any, is a separate act asked for by name.",
+  "notes": "The organic arm at 07:0xZ is this seat's read; B4's L8 (characteristics.json by the ~11:0xZ bbg pull) is unchanged by this act."
+},
+{
+  "id": "POSN_ASTTAX-Z-S136",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T03:31:33Z",
+  "one_line": "L5 round 6, the issuer's ONE reading beyond the CTO's file list, recorded so L10 can hold the narrower one: PRD v0.10 C-SUMMARY-COPY says 'the Satellites mode's footer names holdings.json's as_of and Black Diamond as the source'. The mode draws TWO panels; the Positioning Summary's footer (PositioningSummary.tsx:1382, C-S143, F5) AND the Holdings panels' two footers and two headers (HoldingsTab.tsx:1085-1087, :1162, :1169-1171, :1811 at dd1d33c6db) are all pinned to the models PKL clock (sourceKey model_pkl, 'Source: Bloomberg.', useDataSourceTimestamp('yang') at :726) while the mode's numbers are Black Diamond's as of holdings.json's as_of. The CTO's L10 and v0.10 name only the Summary's. This seat reads the constraint's plain text as reaching every footer the mode draws and gives the Holdings panels' hunks to F4 (TO-W2-1 step 5, W2-AC8; the file is F4's, disjoint from F5), Models and ETFs byte-identical as the control. Not a spec change: the text is applied, not widened; the row is the carrier for 1.0.0_SA_CTO~Z to rule otherwise at L10, and the change stays (it removes a false clock from the mode Andrew is reading tonight).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Measured at dd1d33c6db (worktree C:/tmp/portal-posn-view): HoldingsTab.tsx:1162 and :1811 <SmartPanelFooter sourceKey=\"model_pkl\" content=\"Source: Bloomberg.\" />; :726 useDataSourceTimestamp('yang') consumed at :1085-1087 and :1169-1171; REGISTERS_YANG_AS_OF.satellites = false (Positioning.tsx:491-495) so nothing corrects it; the satellites' holdings_as_of reaches only data_as_of (satelliteAdapter.ts:336, :366-369).",
+      "WHY GRADUATED: the reading is recorded in the cell text, the decomposition (s.1) and this row before the cut; the act is inside one cell's file grant; the narrower reading costs one row at L10 and no rollback (the Satellites-mode strings only)."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "PRD v0.10 @59113e257a C-SUMMARY-COPY: 'the Satellites mode's footer names holdings.json's as_of and Black Diamond as the source, Models and ETFs unchanged'; ROUND_ANALYSIS.round5 s.4 item 5-7 name PositioningSummary.tsx and Positioning.tsx for F5.",
+  "world_is": "In the Satellites mode three of the page's four panel footers/headers show the models PKL vintage and 'Source: Bloomberg.' beside Black Diamond holdings; only the Summary's footer is named by the spec's carriers.",
+  "notes": "Carried into TO-W2-1 (F4) as step 5 and W2-AC8; the decomposition s.1 states it; the CTO answers at L10 if the narrower reading holds."
+},
+{
+  "id": "POSN_ASTTAX-Z-S137",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T03:56:46Z",
+  "one_line": "The round-6 issuance @910815809f (03:36Z) passed LIMB 6 on PRD v0.10 @59113e257a's two L4-R signatures by the ~W lanes (ratified-text 3.0.0_SA_CVO~W @d3e74ab1ea, brief 4.0.0_SA_CRO~W @d1f7199013), routed there by prd_signoff_lib.route_half's alphabetical live-lane pick (msg 22986: live_of sorts lanes, ~W before ~Z; no project-to-fabric binding). Andrew-direct ~03:5xZ at the 1.0.0_SA_CTO~W terminal (record @9dfee40ce0): the ~W fabric is AMGT_RESAPP only, the ~Z fabric POSN_ASTTAX; 'CVO~W being expected to ratify work for the ~Z fabric ... is incorrect'. RECORDED, NOT RE-CUT: the signed BYTES are v0.10's current bytes and both halves read SIGNED current at the cut (prd-signoff status 03:33Z); the three orders, the decomposition and the B6 halves are unchanged; the remedy the relay names is the ~Z lanes' signatures at the same bytes (3.0.0_SA_CVO~Z ratified-text, 4.0.0_SA_CRO~Z brief), addressed by 1.0.0_SA_CTO~Z as POSN's L4 owner; the ~W signature records under prd/signoff/ are that tree's to disposition. If a ~Z half REFUSES v0.10 at these bytes, that refusal re-opens the half and this seat's orders are re-read against the amended text (a modification, LIMB 6 does not fire; the human discipline binds).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "prd-signoff.py status POSN_ASTTAX at 03:33:01Z: v0.10 @59113e257a ADMITTED, ratified-text SIGNED 3.0.0_SA_CVO~W current, brief SIGNED 4.0.0_SA_CRO~W current; the to-pipeline-gate NOTE at the issuance commit: 'L4-R sign-offs OK ... at v0.10 (ratified-text=3.0.0_SA_CVO~W, brief=4.0.0_SA_CRO~W)'.",
+      "msg 22986 (1.0.0_SA_CTO~W, relayed verbatim, nothing asked of this seat): the mechanism is the router's alphabetical pick; the REC (a fabric-letter preference in route_half) is surfaced to Andrew, not implemented.",
+      "WHY GRADUATED: no served byte and no order text depends on WHICH live lane signed the same bytes; the process defect has a named owner and a named remedy; the round runs."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "Rule 27 L4-R: the ratified-text half is signed by 3.0.0_SA_CVO, the brief half by 4.0.0_SA_CRO; Andrew ~03:5xZ: the ~W lanes sign nothing for the ~Z fabric.",
+  "world_is": "POSN_ASTTAX's gate rests on two ~W signatures at v0.10's bytes; the ~Z lanes' signatures at the same bytes are owed; round 6 is issued and running on those bytes.",
+  "notes": "Carried for the round-6 L10; the CTO's ask to the ~Z lanes closes it without any act by this seat."
+}
+]
+```
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-S138",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-09-15T04:06:42Z",
+    "one_line": "THE ROUNDING READING IN TO-W3-1 WOULD CHANGE THE MODELS LABELS, AND THE AMBIGUITY IS THIS SEAT'S WORDING: C-SUMMARY-COPY says the third percent label 'rounds like its two siblings'; the order reads that as Math.round(v)% at PositioningSummary.tsx:1011 and tells the worker to implement it even if read otherwise. :1011 is the single-bar label for EVERY mode, so Models' served 82.6 / 17.4 / 32.8 would render 83% / 17% / 33%. Andrew's defect is the float artifacts on Satellites (62.589999999999996%), not the precision the other modes show.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ANDREW-DIRECT 2026-09-15 ~04:0xZ at the 1.0.0_SA_CTO~Z terminal, VERBATIM: 'Two things I need you to figure out: 1.) [Image #4] Random floats here in Satellites view, need to understnad why they're not being rounded off. 2.) [Image #5] looks like none of this is going through ETFClassifier + obviously characteristics and performance are blanked [Image #6]' -- screenshots 2026-09-14 235716.png (Satellites summary), 235735.png (Holdings Breakdown, Characteristics), 235916.png (Performance).",
+        "SOURCE at portal dd1d33c6: PositioningSummary.tsx non-ghost, non-relative branch renders {data[c.key]}% with no formatting (read 04:0xZ); the Custom pair uses Math.round; the relative delta toFixed(1).",
+        "CAUSE OF THE FLOATS: satelliteAdapter.ts:301-307 sums served two-decimal weights per class in IEEE doubles (62.59 arrives as 62.589999999999996); the Models and ETFs payloads arrive already rounded, so the raw render never exposed a float there.",
+        "ORDER TEXT: task-orders/POSN_ASTTAX.TO-W3-1...md act 2 -- ':1011: the label renders Math.round(v)% like the Custom pair ... If you read the constraint otherwise, file a row and implement THIS reading'. Andrew's Image #2 (~02:1xZ) shows Models at one decimal (82.6%, 17.4%, 12.7%, 85.8%, 1.5%).",
+        "PROGRESS AT THE READ: the F5 portal branch wk-posn-6-26-portal still at dd1d33c6 (no commit)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD v0.10 C-SUMMARY-COPY: 'The third percent label rounds like its two siblings (PositioningSummary.tsx:1011, Z-S117)'. TO-W3-1 act 2: Math.round(v)%.",
+    "world_is": "Integer rounding on :1011 fixes Satellites and silently re-formats every Models and ETFs single-bar label to whole percents. The intent is to remove float artifacts at the precision the served rows carry.",
+    "notes": "REMEDY (PRD v0.11 C-SUMMARY-COPY clarified): the label renders the value at NO MORE THAN TWO DECIMALS with trailing zeros dropped (e.g. Number(v.toFixed(2))) -- Satellites 62.59% / 29.82% / 90.24%; Models and ETFs byte-identical to today (their values carry one or two decimals). 2.0.0_SA_COO~Z amends TO-W3-1 act 2 and its bar before the worker commits; the bar adds Models' 82.6% as the unchanged control."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-S139",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-09-15T04:06:42Z",
+    "one_line": "THE SATELLITES HOLDINGS BREAKDOWN DOES NOT TAKE A HOLDING'S NAME OR ACTIVE/PASSIVE FROM ETFClassifier, THOUGH THE TABLE CARRIES BOTH FOR 25 OF 25 SATELLITE TICKERS: the Name column shows the ticker (the adapter's stand-in), ACTIVE shows 'NO' on every row (an undefined value rendered as NO), and PFDE's beta 1.05 is a HoldingsTab hardcode. Round 6 as cut fixes the measures (B6/F4) and the NO chip, but F4 keeps name = ticker and B6's active comes from Yang's row, so GLD and CASH would still have no active and every name would stay a ticker.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ANDREW-DIRECT 2026-09-15 ~04:0xZ at the 1.0.0_SA_CTO~Z terminal, VERBATIM: 'Two things I need you to figure out: 1.) [Image #4] Random floats here in Satellites view, need to understnad why they're not being rounded off. 2.) [Image #5] looks like none of this is going through ETFClassifier + obviously characteristics and performance are blanked [Image #6]' -- screenshots 2026-09-14 235716.png (Satellites summary), 235735.png (Holdings Breakdown, Characteristics), 235916.png (Performance).",
+        "SERVED TABLE, full scan of etf-classifications at 04:0xZ (285 items, no LastEvaluatedKey): attribute census name 285, management_style 283, asset_class 285, sub_asset_class 285, sector 115. All 25 distinct satellite tickers present, each with a name and a management_style (GLD 'SPDR Gold Shares' passive; CASH 'Cash & Cash Equivalents' unknown; DIVZ 'Opal Dividend Income ETF' active).",
+        "AGREEMENT WITH YANG: for the 23 satellite tickers Yang's current_holdings also carries, Yang name == classifier name 23 of 23 and Yang active == classifier management_style (active->1, passive->0) 23 of 23 -- so the classifier is the single source both already express.",
+        "CODE at HEAD / portal dd1d33c6: build_satellites_registry.py build_holdings() emits ticker, weight, asset_class, sub_asset_class, sleeves -- classify() reads the ROW but keeps two fields; satelliteAdapter.ts:277 name: r.ticker; HoldingsTab.tsx:1561-1565 active === 1 ? YES : NO; HoldingsTab.tsx:976-985 hardcoded beta overrides (UVXY -3.2, PFDE 1.05, PFOE 1.22) applied in every mode.",
+        "ROUND 6 AS CUT: TO-W2-1 act 3 attaches fee/aum/active/yield/duration/credit/beta/returns from characteristics.json tickers and act 4 renders a null active as '-'; no act touches name. TO-W1-1 / v0.10 C-HOLDING-MEASURES take active from Yang's row, NULL for a Bloomberg-sourced ticker."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD C-ONE-SOURCE / FWD-5: the classification is defined in one place and flows everywhere. v0.10 C-HOLDING-MEASURES: active from Yang's row, else NULL.",
+    "world_is": "A satellite row's name and active are not read from ETFClassifier at any layer; Yang's copies of both agree with the table where Yang holds the ticker, and nothing serves them for GLD or CASH.",
+    "notes": "REMEDY (PRD v0.11 C-HOLDING-IDENTITY): B6's tickers block ALSO carries, for every ticker, `name` and `management_style` read from ETFClassifier (the same table the holdings labels come from; a READ grant on etf-classifications added to the never-widen halves), independent of the measures' source precedence; F4 renders name from it (ticker only when the table has no row, counted) and ACTIVE from management_style (active YES, passive NO, unknown or absent '-'). Both are issuer amendments inside round 6 (TO-W1-1 before its deploy leg, TO-W2-1 before hand-off). The PFDE/PFOE/UVXY beta hardcodes are Yang's specification in every mode and are NOT changed here; with B6 served, PFDE's beta is Yang's own 1.05 and the override is idempotent."
+  },
+{
+  "id": "POSN_ASTTAX-Z-S140",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T04:14:26Z",
+  "one_line": "DISARM of the CTO's Z-S138 (ARMED, owner this seat): the TO-W3-1 act-2 reading (Math.round at PositioningSummary.tsx:1011) would have re-formatted every Models label (82.6% -> 83%); PRD v0.11 @ab2ee8052a withdraws 'like its two siblings' and fixes the rule -- the single-bar label renders at no more than two decimals, trailing zeros dropped (Satellites 62.59%, Models/ETFs byte-identical). ACT: TO-W3-1 act 2 and the label clauses of W3-AC5 / W3-AC6 AMENDED to that rule with the Models labels as the byte-identical control; worker ~26 notified MID-RUN by the issuer's harness notice (~04:1xZ, before any portal commit -- its branch was still at dd1d33c6db) and told never to commit Math.round; the amended face lands on SITEZ with this row. The issuer's error: a reading chosen at L5 where the spec text admitted two, without asking; recorded.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "PRD v0.11 s.0 ADDENDUM: 'The single-bar percent label renders the value at no more than two decimals, trailing zeros dropped ... Models and ETFs labels are byte-identical to today (82.6%, 17.4%). Like its two siblings is withdrawn.'",
+      "The worker's portal branch wk-posn-6-26-portal read dd1d33c6db (no commit) at 03:53Z and at the notice; the notice names the regex bar ^[0-9]+(\\.[0-9]{1,2})?%$ and the control dump.",
+      "WHY GRADUATED: the hazard was a wrong reading not yet in any commit; the amended text and the mid-run notice remove it; the bar now discriminates (the Models control would fail under Math.round)."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-S138"
+  ],
+  "spec_asserts": "PRD v0.11 C-SUMMARY-COPY (clarified): the label at :1011 renders at no more than two decimals, trailing zeros dropped; Models/ETFs labels byte-identical.",
+  "world_is": "TO-W3-1 act 2 amended; W3-AC5 carries the regex bar and the byte-identical Models control; the worker holds act 2 to the notice.",
+  "notes": "A modification LIMB 6 does not grade (gate viii: placeholder sets unchanged, stated in the commit message)."
+},
+{
+  "id": "POSN_ASTTAX-Z-S141",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T04:14:26Z",
+  "one_line": "DISARM of the CTO's Z-S139 (ARMED, owner this seat): round 6 as cut took name (= ticker) and active (from Yang's row, so GLD and CASH had none) from nowhere near ETFClassifier though the table carries both for 25 of 25 satellite tickers. PRD v0.11 @ab2ee8052a C-HOLDING-IDENTITY: B6's tickers block ALSO carries name and management_style read through the one classifier module (get_item per distinct ticker), NULL + counted where the table has no row; F4 renders NAME from it (ticker only where null) and ACTIVE from management_style (active YES / passive NO / unknown or null blank). ACT: TO-W1-1 amended (act 1(e), the flat-mapped module member, the .tf READ grant GetItem/BatchGetItem on table/etf-classifications, W1-AC4/AC8/AC12 clauses), TO-W2-1 amended (act 3, W2-AC5), the COO never-widen half R1 (the table read added to the radius; the CTO half amends to match); worker ~24 notified MID-RUN before its deploy leg (nothing applied; W1-AC7 held until the amended order and both amended halves are on SITEZ); ~25 not yet spawned.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "etf_classifications_dynamodb.py: ETFClassifier.get_classification(ticker) -> table.get_item(Key={'ticker': ticker}) (:52-84); the registry producer packages the module flat (build_package.py:117-121) and reads it in load_classifier (:312-347) under Sid ReadEtfClassifications (GetItem, BatchGetItem; satellites-registry-producer.tf:145-152) -- the precedent B6 copies.",
+      "PRD v0.11 measured basis: full scan 285 items, 25 of 25 satellite tickers carry name and management_style; Yang agrees 23 of 23 on both.",
+      "WHY GRADUATED: the gap is now a named field pair in two amended cells with a bar per row (NAME equals the served name; ACTIVE per management_style), the read grant is inside both halves' radius, and no world write has happened in round 6."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-S139"
+  ],
+  "spec_asserts": "PRD v0.11 C-HOLDING-IDENTITY: the tickers block carries name and management_style from ETFClassifier for every satellite ticker; the Holdings Breakdown renders NAME and ACTIVE from them.",
+  "world_is": "TO-W1-1 and TO-W2-1 amended; the COO half R1 given; the CTO half's matching amendment owed; B6's deploy leg held until both are at HEAD.",
+  "notes": "The beta hardcodes (PFDE, PFOE, UVXY) stay, per the PRD."
+},
+{
+  "id": "POSN_ASTTAX-Z-W26-S1",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~26",
+  "surfaced_at": "2026-09-15T04:26:05Z",
+  "one_line": "ACTED ON AN ISSUER AMENDMENT MID-ORDER, recorded as the notice required: 2.0.0_SA_COO~Z (~04:1xZ, then ~04:15Z) withdrew act 2 of TO-W3-1 (Math.round at PositioningSummary.tsx:1011) on PRD v0.11 @ab2ee8052a, which CLARIFIES C-SUMMARY-COPY to \"no more than two decimals, trailing zeros dropped\" and withdraws \"rounds like its two siblings\". This worker had already written Math.round; it was replaced with Number(v.toFixed(2)) BEFORE any commit, so no Math.round reading exists in any commit on wk-posn-6-26-portal. The amended order at SITEZ @1b791c6a11 was copied over this worktree's copy of the order file (inside the grant) and W3-AC5 / W3-AC6 were re-run and re-recorded against its text.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ISSUER NOTICE (verbatim in this worker's prompt, 2026-09-15 ~04:1xZ and ~04:15Z): \"DO NOT commit Math.round ... replace it with the two-decimal trimmed form\" and \"copy the amended file over yours with git show SITEZ:<path> > <path>\".",
+      "PRD v0.11 @ab2ee8052a, the clarified clause read at that commit (lines 36-40 of the blob): \"The single-bar percent label renders the value at no more than two decimals, trailing zeros dropped (PositioningSummary.tsx:1011 ...); Models and ETFs labels are byte-identical to today (82.6%, 17.4%).\"",
+      "AMENDED ORDER at SITEZ @1b791c6a11 diffed against the issued text: 4 hunks (the PRD pin v0.10 -> v0.11, act 2, and the label clauses of W3-AC5 and W3-AC6). The copy in this worktree is now that text.",
+      "BOTH DUMPS KEPT: deliverables/0.9.0_WK_POSN_ASTTAX~26/w3_preedit_dom_read.txt (taken with the two files at refs/drains/posn-6-portal, restored by md5) and w3_postedit_dom_read.txt; the comparison is w3_label_control_compare.txt."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-W3-1 as issued (@910815809f) act 2: \"the label renders Math.round(v)% like the Custom pair\"; PRD v0.10 C-SUMMARY-COPY: \"the third percent label rounds like its two siblings\".",
+  "world_is": "PRD v0.11 @ab2ee8052a (brief half, ratified text untouched) clarifies the same clause to at most two decimals with trailing zeros dropped, on the CTO's Z-S138: Math.round would have re-formatted every Models label (82.6% -> 83%), a surface nobody asked to change. MEASURED over the served fixture, pre-edit dump vs post-edit dump on one instrument: Models 11 of 11, Models/Benchmark 9 of 9 and ETFs 8 of 8 labels BYTE-IDENTICAL; exactly 5 Satellites labels changed, every one an IEEE artifact (62.589999999999996% -> 62.59%, 29.820000000000004% -> 29.82%, 39.43000000000001% -> 39.43%, 27.830000000000002% -> 27.83%, 90.24000000000001% -> 90.24%).",
+  "notes": "Filed because the order's face changed mid-execution and the record must say which face was executed. No hazard: the superseded reading never reached a commit."
+},
+{
+  "id": "POSN_ASTTAX-Z-W26-S2",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~26",
+  "surfaced_at": "2026-09-15T04:26:05Z",
+  "one_line": "THE ui-smoke TEXT DUMP IS A 160-CHARACTER PREFIX, so the label clause of W3-AC5 -- graded \"in the TEXT dump\" in both the issued and the amended text -- cannot be discriminated from that output: on this page the 160 characters are the left nav, giving 0 matching labels out of a DENOMINATOR OF 0 LABELS, which is the same number a page full of raw floats would print.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "scripts/ui-smoke.mjs line 334 at refs/drains/posn-6-portal: \"text: document.body.innerText.replace(...).slice(0, 160)\".",
+      "The five recorded runs (w3_ac5_uismoke.txt, w3_ac6_uismoke.txt, w3_expanded_uismoke.txt) each print the same nav prefix as TEXT.",
+      "SUPPLEMENTARY INSTRUMENT: deliverables/0.9.0_WK_POSN_ASTTAX~26/w3_dom_read.mjs (same Edge, same stubbed session, same fixture router as ui-smoke) enumerates every single-bar label with its computed colour and prints label count beside match count; output in w3_postedit_dom_read.txt."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-W3-1 W3-AC5 (issued): \"the TEXT dump of every run carries NO label matching the regex ... (printed grep count 0 with the denominator of labels)\"; amended: \"every single-bar percent label in the TEXT dump matches ^[0-9]+(.[0-9]{1,2})?%$ (the label count and the match count printed, equal)\"; the issuer's hand-over: \"the TEXT dump is your DOM read\".",
+  "world_is": "scripts/ui-smoke.mjs prints TEXT from page.evaluate as document.body.innerText.replace(/s+/g, \" \").slice(0, 160) -- a 160-char prefix, not a DOM read. All five captures in this order printed the identical prefix (\"INSIGHTS Market Overview Model Portfolios ... Correlatio\"), which contains no percent label at all. scripts/ is outside this order's <paths> grant, so the instrument was not changed; a supplementary playwright DOM read was written instead and BOTH counts are printed from it (Models 11 of 11 labels match the shape, Benchmark 9 of 9, ETFs 8 of 8, Satellites 30 of 30).",
+  "notes": "A one-line change to ui-smoke.mjs (a --textlen flag, or printing the label nodes) would make this clause gradeable by the named invocation alone; that file belongs to no cell in this round."
+},
+{
+  "id": "POSN_ASTTAX-Z-W26-S3",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~26",
+  "surfaced_at": "2026-09-15T04:26:05Z",
+  "one_line": "THE PRESENCE RULE LANDED ON ONE PANEL, AND THE PAGE DRAWS THREE: with the Positioning Summary now listing only the classes a view holds, the Portfolio Composition treemap's legend on the SAME PAGE still lists all five classes in every mode -- including Commodities and Alternatives with no tile behind them in Models and ETFs -- so the two legends disagree about what the view holds.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "w3_models.png / w3_etfs.png / w3_sats.png (this worker's captures at 1440px, fixtures from the served bytes) show both legends in one frame.",
+      "TO-W3-1 step 5: \"Nothing else: HoldingsTab.tsx and the adapter files belong to TO-W2-1 (F4) on a sibling branch.\"",
+      "PRD v0.9 C-PRESENT-CLASSES names \"The Positioning Summary\" only; Andrew's sentence names no panel."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Andrew-direct 2026-09-15 ~00:4xZ: \"There is no need to display the different legend categories if they do not appear in the view\"; PRD v0.9 C-PRESENT-CLASSES scopes the rule to \"The Positioning Summary\".",
+  "world_is": "In the Models capture (w3_models.png) the Positioning Summary legend lists 3 classes while the Portfolio Composition legend below it lists 5 (Fixed Income, Equity, Structured, Commodities, Alternatives); in the ETFs capture the two read 2 and 5. That legend is rendered by HoldingsTab.tsx, which TO-W3-1 step 5 assigns to TO-W2-1 (F4) and which is NOT in this order's <paths>, so nothing was changed there.",
+  "notes": "For 1.0.0_SA_CTO~Z at L10 / 3.0.0_SA_CVO~Z at L9: whether the rule reaches the treemap legend is a spec question, not a worker's. No served byte is wrong."
+},
+{
+  "id": "POSN_ASTTAX-Z-W26-S4",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~26",
+  "surfaced_at": "2026-09-15T04:26:05Z",
+  "one_line": "THE PORTAL REPO DOES NOT IGNORE .scratch/, and both graded invocations write there: W3-AC5 and W3-AC6 save their PNGs to .scratch/ while W3-AC2 reads an UNSCOPED git status and expects \"the same two files and nothing else\" -- so the two criteria collide unless the capture artifacts are moved out of the portal tree before the status read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C portal check-ignore -v .scratch/x.png -> rc 1, no rule printed (the NOT-IGNORED verdict).",
+      "The artifacts are kept at org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~26/ (w3_models.png, w3_models_bench.png, w3_etfs.png, w3_sats.png, the two expanded captures, w3_fixtures_build.txt and the dom-read dumps)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-W3-1 W3-AC2: \"the unscoped git -C portal status --porcelain shows the same two and nothing else\"; W3-AC5 / W3-AC6 invocations write .scratch/w3_*.png inside portal/.",
+  "world_is": "portal/.gitignore (79 lines at refs/drains/posn-6-portal) lists dist, node_modules, .cache, .comp-graph/, .frontend-dev-results/ and others, but not .scratch; git check-ignore -v .scratch/x.png returns rc 1 (NOT ignored). This worker copied every capture, fixture and log into its deliverables directory and then removed portal/.scratch before the graded W3-AC2 run, so no artifact was lost and no ignore file was edited (.gitignore is not in this order's <paths>).",
+  "notes": "A one-line .gitignore entry would remove the collision for every future capture-bearing cell; that file is in no cell's grant this round."
+},
+{
+  "id": "POSN_ASTTAX-Z-W26-S5",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~26",
+  "surfaced_at": "2026-09-15T04:26:05Z",
+  "one_line": "THE LONGEST SATELLITES LABEL IS CLIPPED AT THE PANEL EDGE at the ratified 1440px acceptance width: in the Satellites capture, Opal Satellite 90's Equity label renders as \"90.24\" with its percent sign cut off by the panel boundary. PRE-EXISTING, NOT INTRODUCED: at the ref the same label was the longer \"90.24000000000001%\", so the overflow was wider before this cell; the two-decimal form narrows it without clearing it, and the withdrawn Math.round reading (\"90%\") would have hidden it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "w3_sats.png and w3_sats_expanded.png (1440px, fixtures at holdings.json VersionId 67GP52SdV1rw6QFVNPytU6ec4TvhwJh3): the rightmost label reads \"90.24\" with no percent sign.",
+      "w3_postedit_dom_read.txt: the same node's DOM text is \"90.24%\" (30 of 30 labels match ^[0-9]+(.[0-9]{1,2})?%$), so the defect is geometric, not textual.",
+      "w3_preedit_dom_read.txt: the pre-edit label at that position was \"90.24000000000001%\" -- 12 characters longer -- so the overflow predates this cell."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PositioningSummary.tsx compactColumns (>= 6 books) sets the single-bar label to text-sm at left-[calc(100%+0.375rem)], and the panel's ACCEPTANCE WIDTH ruled by 1.0.0_SA_CTO~Z is \"at 1440px all columns, all book labels and all VALUE labels render with no clipping\".",
+  "world_is": "At 1440px with 8 satellite books the last column's label runs past the panel's right edge. The DOM text is complete (\"90.24%\"); only the render is clipped, so no DOM-level check can see it -- it was found by READING THE PNG.",
+  "notes": "Not repaired here: the order's act 2 is the label FORMAT and its <paths> carry no layout change; the remedy (a narrower label class or more column padding at >= 6 books) is a display decision for the CTO."
+},
+{
+  "id": "POSN_ASTTAX-Z-W26-S6",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~26",
+  "surfaced_at": "2026-09-15T04:26:05Z",
+  "one_line": "THE ORDER'S PRESENCE RULE AND THE PRD'S SENTENCE DIFFER ON THE BENCHMARK VIEW, and the difference is visible: the order says the set is computed over \"the books portfolio values\" ALWAYS plus the benchmark values when Benchmark or Relative is on, while C-PRESENT-CLASSES says \"the classes with a non-zero value in any column the current view DRAWS\". The Benchmark view draws only benchmark bars, and no benchmark column carries Structured today -- so under the order the legend shows Structured with no drawn segment, and under the PRD's sentence it would not appear at all.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "w3_fixtures_build.txt: \"EXPECTED MODELS presence (portfolio view, 5 columns): [Fixed Income, Equity, Structured]\" and \"BENCHMARK-ONLY CLASSES (present in a benchmark column, absent from every portfolio column): []\".",
+      "w3_postedit_dom_read.txt, MODELS / Benchmark view: LEGEND 3 entries; ASSET CLASS (3); the Structured row reads 0 0 0 0 0; 9 of 9 labels match the shape.",
+      "w3_presence_unit_control output case (a): a class non-zero ONLY in a benchmark column is PRESENT -- the constructed edge today's bytes do not contain."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-W3-1 act 1: \"over every column the current view draws -- the books portfolio values; the benchmark values when the Benchmark or Relative view is on; the custom column when the blend is valid\"; PRD v0.9 C-PRESENT-CLASSES: \"the classes with a non-zero value in any column the current view draws\".",
+  "world_is": "THE ORDER'S READING IS WHAT IS IMPLEMENTED (its own instruction: never two readings in code). Measured on the served bytes: every benchmark allocation has structured = 0 while the LT and ULT portfolio columns carry 1.5 and 2.0, so the Benchmark view renders a 3-entry legend and a Structured row of five zeros. BENCHMARK-ONLY CLASSES in today's bytes: none (the empty set), which is why W3-AC5's \"a class present only in the benchmark column appears\" has no live witness and W3-AC3 case (a) carries that edge instead.",
+  "notes": "For L9/L10: keeping the portfolio columns in the set means a reader in Benchmark view sees the class the BOOK holds even where the benchmark holds none, which is arguably the intent; the narrower reading would hide a class the model is actually exposed to the moment the view is flipped. Named, not decided."
+},
+{
+  "id": "POSN_ASTTAX-Z-W26-S7",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~26",
+  "surfaced_at": "2026-09-15T05:07:00Z",
+  "one_line": "A SPARSE-CONE WORKER WORKTREE CANNOT RUN THE MANDATED COMMIT GATES, and each one fails CLOSED on a path the cone does not carry rather than on anything the commit contains. The round-6 worktree was cut with the cone {.tools, docs/doctrine, org/critical_paths, org/missions/D4/POSN/POSN_ASTTAX, org/standards}; safe-commit.sh refused FOUR times in a row, each time naming a DIFFERENT absent path, and every refusal was correct.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "The four refusal texts are in this worker session log; each names its own missing path and each aborted the commit with \"files unstaged\".",
+      "MEASURED SIZES before widening (git ls-tree -r --long HEAD): org/modules/graph 408 files / 18 MB; org/surprise_channel/schemas 2 files / 19 KB; org/missions 2261 files / 56 MB; org/projects 458 files / 4.4 MB. org in full is 21276 files / 830 MB and was NOT added.",
+      "AFTER: the cone reads .tools, docs/doctrine, org/critical_paths, org/missions, org/modules/graph, org/projects, org/standards, org/surprise_channel; safe-commit rc 0 twice (2191049ef1, 338b08b06d).",
+      "SIDE EFFECT WORTH NAMING: with org/projects absent, proof-of-spec-check.py read \"dep_stage=ABSENT (not pipeline-registered)\" for POSN_ASTTAX and would have treated <decomp_ref> as OPTIONAL; with it present the same instance reads \"dep_stage=EXECUTING\" and the decomp_ref limb ENFORCES. The instance was re-validated after the widening (VALID rc=0 both ways)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CLAUDE.md Rule 14 (every .py edit passes .tools/commit-gate.sh, UNIVERSAL and fail-closed) and Rule 14a (commit via safe-commit.sh); the task order says the worktree is a sparse cone at the issuance commit and must not be re-created.",
+  "world_is": "The four refusals, in order: (1) commit-gate -- ModuleNotFoundError: No module named \"comp_constants_cli\" (commit_gate_runner.py imports it from org/modules/graph, 408 files / 18 MB, outside the cone); (2) surprise-row-gate -- FileNotFoundError on org/surprise_channel/schemas/investigation_item.schema.json (2 files / 19 KB); (3) the same gate STANDING CORPUS pass -- FileNotFoundError on another project channel file (org/missions/D0/NFRA/NFRA_CLDGRPH/surprise-channel/investigations/INVESTIGATION_v1.md; it grades the WHOLE corpus, 76 channel files under org/missions plus 32 under org/surprise_channel); (4) the tree-index limb -- 17 INDEX-MISSING violations, one per project with no org/projects/<CODE>.json (458 files / 4.4 MB). REMEDY TAKEN: `git sparse-checkout add` for org/modules/graph, org/surprise_channel, org/missions and org/projects -- a WORKTREE CHECKOUT change, no repo edit, no gate bypassed, the audited \"# surprise-row-override\" path NOT used. The gates then ran and passed, and the corpus pass graded 240 rows (6 new, 234 pre-existing).",
+  "notes": "For the COO cutting worker worktrees: a cone of {.tools, docs/doctrine, org/critical_paths, <project home>, org/standards, org/modules/graph, org/projects, org/surprise_channel, org/missions} is what the commit path actually needs today -- the last four are what this worker had to add. The alternative (the audited override) would have SKIPPED a real control rather than running it."
+},
+{
+  "id": "POSN_ASTTAX-Z-S142",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T05:20:26Z",
+  "one_line": "ADJUDICATION of W26-S1 (INERT): the worker acted on the issuer's mid-run amendment notice (v0.11, the two-decimal trimmed label) and no Math.round reading reached any commit; the amended order was copied from SITEZ @1b791c6a11 into its worktree before the flip. Measured pre/post on one instrument: Models/Benchmark/ETFs labels byte-identical; exactly 5 Satellites labels changed, all IEEE artifacts. The mechanism the round now has: an issuer amendment reaches a running worker through the harness notice, the face on SITEZ, and a row -- three carriers, one text.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W26-S1 as filed; TO-W3-1 act 2 at 1b791c6a11; the worker's report: 62.589999999999996% -> 62.59%, 29.820000000000004% -> 29.82%, 39.43000000000001% -> 39.43%, 27.830000000000002% -> 27.83%, 90.24000000000001% -> 90.24%.",
+      "WHY GRADUATED: the superseded reading never became a byte on the ref; the amended bar discriminates (the Models control)."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W26-S1"
+  ],
+  "spec_asserts": "PRD v0.11 C-SUMMARY-COPY (clarified): no more than two decimals, trailing zeros dropped; Models/ETFs byte-identical.",
+  "world_is": "The label at :1011 renders Number(v.toFixed(2)); the five artifacts are gone; the other modes unchanged.",
+  "notes": "Nothing further."
+},
+{
+  "id": "POSN_ASTTAX-Z-S143",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T05:20:26Z",
+  "one_line": "ADJUDICATION of W26-S2 (INERT): ui-smoke.mjs:334 slices the TEXT dump to 160 characters, so the issuer's label clause 'the TEXT dump matches ...' had a denominator of ZERO labels in the graded dump; the worker carried the bar on a supplementary DOM read (11 of 11, 9 of 9, 8 of 8 labels, the shape regex and the byte-identical Models control) and said so. RULED: the DOM read is the honest instrument and the bar stands on it; the issuer's clause named the wrong carrier (the slice is a tool limit, W22-S10's sibling). CARRIED, not a cell: a ui-smoke option to dump the full TEXT -- the portal tooling owner at the integration cut; noted for the round-6 analysis.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W26-S2 as filed; ui-smoke.mjs:334 at dd1d33c6db; the proof instance's W3-AC5 evidence names the DOM dump and its counts.",
+      "WHY GRADUATED: the criterion was exercised on a full-coverage instrument with its denominator printed; the tool limit is disclosed and owned."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W26-S2"
+  ],
+  "spec_asserts": "TO-W3-1 W3-AC5: every single-bar label in the TEXT dump matches the shape regex, counts printed equal.",
+  "world_is": "The graded TEXT dump carries 160 characters; the DOM read carries every label.",
+  "notes": "A bar that names 'the TEXT dump' should name the DOM read on this script; the issuer's clause, corrected by the worker's instrument."
+},
+{
+  "id": "POSN_ASTTAX-Z-S144",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T05:20:26Z",
+  "one_line": "ADJUDICATION of W26-S3 (INERT): the Positioning page draws a SECOND legend -- the Portfolio Composition treemap's, in HoldingsTab.tsx -- which still lists all five classes in every mode (Models 3 vs 5, ETFs 2 vs 5 on the same screen) after F5 put the presence rule on the Summary. ACT (the issuer's reading, like Z-S136): Andrew's ~00:4xZ word names legend categories that do not appear in the view, not one panel; C-PRESENT-CLASSES names the Summary because that is where the screenshot was; the file is F4's and F4 is not yet spawned -- TO-W2-1 act 6 and W2-AC8 AMENDED: the treemap legend lists only the classes with a non-zero tile in the displayed book, Models/ETFs the same, the five-entry pre-change legend as the control. Recorded for 1.0.0_SA_CTO~Z's L10 to hold the narrower reading; the change stays either way.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W26-S3 as filed: w3_models.png shows the Summary legend at 3 and the treemap legend at 5; w3_etfs.png 2 vs 5; HoldingsTab.tsx renders it and is outside TO-W3-1's <paths>.",
+      "WHY GRADUATED: the gap has a cell, a file owner and a bar before any F4 byte exists; no served byte is wrong."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W26-S3"
+  ],
+  "spec_asserts": "Andrew ~00:4xZ: 'There is no need to display the different legend categories if they do not appear in the view'; PRD v0.11 C-PRESENT-CLASSES (the Summary).",
+  "world_is": "Two legends on one page disagree about what the view holds until F4 lands act 6.",
+  "notes": "The issuer's second reading beyond the CTO's file list this round (Z-S136 the first); both carried to L10."
+},
+{
+  "id": "POSN_ASTTAX-Z-S145",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T05:20:26Z",
+  "one_line": "ADJUDICATION of W26-S4 (INERT): the portal's .gitignore does not cover .scratch/, where both graded ui-smoke invocations write; the worker copied the artifacts to its deliverables and removed the directory before the graded W3-AC2 diff, so the two-file bar held. CARRIED, not a cell: a one-line .gitignore entry in the portal repo belongs to the integrate plan (0.0.0_AB_MSTR~Z, 22918) or the next portal cell that touches the root, never to a cell whose <paths> are two page files.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W26-S4 as filed; W3-AC2 PASS at 2 of 2 files with the unscoped status empty.",
+      "WHY GRADUATED: the hazard (an untracked scratch dir widening a diff) was neutralised by the worker's discipline and is owned by the portal integrate plan."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W26-S4"
+  ],
+  "spec_asserts": "TO-W3-1 W3-AC2: exactly two files changed; the unscoped status shows the same two and nothing else.",
+  "world_is": "Portal .gitignore lacks .scratch/; every render bar in rounds 5 and 6 writes there.",
+  "notes": "Noted for the round-6 analysis."
+},
+{
+  "id": "POSN_ASTTAX-Z-S146",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T05:20:26Z",
+  "one_line": "ADJUDICATION of W26-S5 (INERT): at 1440 px the longest Satellites single-bar label (90.24%) is clipped at the panel edge -- PRE-EXISTING (the pre-edit string was 12 characters longer and clipped worse), narrowed by the cell, not introduced. CARRIED to the round-6 analysis as a layout item (a label width or a bar-end margin in PositioningSummary.tsx), not re-cut mid-round: no constraint names label fit, and the served value is correct.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W26-S5 as filed; w3_sats.png and w3_sats_expanded.png read by the worker; the pre-edit label 90.24000000000001% at the same width.",
+      "WHY GRADUATED: a cosmetic, pre-existing, narrowed defect with a named file and no spec text; L10 decides whether it earns a cell."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W26-S5"
+  ],
+  "spec_asserts": "No constraint names label fit; C-SUMMARY-COPY names the value's precision only.",
+  "world_is": "The 90.24% label is partially clipped at 1440 px in the Satellites mode.",
+  "notes": "For the CTO's round-6 analysis."
+},
+{
+  "id": "POSN_ASTTAX-Z-S147",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T05:20:26Z",
+  "one_line": "ADJUDICATION of W26-S6 (INERT) -- THE ISSUER'S ERROR, RE-CUT: TO-W3-1 act 1 said the presence set is over 'the books portfolio values' ALWAYS plus the benchmark values when Benchmark or Relative is on; C-PRESENT-CLASSES says 'a non-zero value in any column the current view DRAWS'. The Benchmark view draws only benchmark bars and no benchmark carries Structured today, so under the order Structured sits in the legend with a row of five zeros -- exactly the category-that-does-not-appear Andrew ~00:4xZ said not to display. The worker implemented the order's reading as instructed (never two readings in code) and filed the difference. ACT: act 1 RE-CUT to the constraint's sentence (Portfolio view = portfolio values; Benchmark view = benchmark values ONLY; Relative view = the deltas; Custom when valid), W3-AC3(a) and W3-AC5's Benchmark/Relative clause re-cut with the discriminator (Benchmark on Models: 2 classes, no Structured row; the pre-re-cut render's 3 with a zero row), the order RE-OPENED (in_progress) for that one act; worker ~26 resumed on the re-cut face. The error is the issuer's: a paraphrase of the constraint at L5 that added a word the constraint does not carry.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W26-S6 as filed with its measurement: every benchmark allocation carries structured = 0 while LT and ULT portfolio columns carry 1.5 and 2.0; the Benchmark view rendered a 3-entry legend and a Structured row of five zeros (w3_models_bench.png).",
+      "PRD v0.11 C-PRESENT-CLASSES: 'the classes with a non-zero value in ANY column the current view draws'; FWD-6 DONE WHEN: 'a mode shows a class only when a book in its view holds some of it'.",
+      "WHY GRADUATED: the wrong reading is named, the re-cut carries the constraint's words and a discriminating bar, and the worker is resumed before any drain of the fix."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W26-S6"
+  ],
+  "spec_asserts": "PRD v0.11 C-PRESENT-CLASSES: one presence set per render over the columns the current view draws.",
+  "world_is": "F5 on the ref (10a2799c) lists Structured in the Benchmark view with a zero row; the re-cut removes it; the Portfolio and Relative views are unaffected.",
+  "notes": "A paraphrase at L5 is a second carrier of the spec's sentence; cite the sentence, do not restate it."
+},
+{
+  "id": "POSN_ASTTAX-Z-S148",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T05:20:26Z",
+  "one_line": "ADJUDICATION of W26-S7 (INERT): a sparse-cone worker worktree cannot run the mandated commit gates -- safe-commit refused four times, each on a different absent path (org/modules/graph, the surprise-row schema, the whole surprise-channel corpus, org/projects); the worker widened its cone so every gate RAN and did not use the audited override. RULED: correct. THE RECIPE FIX (the issuer's): every round-6 cone from here includes org/modules/graph, org/standards, org/surprise_channel, org/projects and the schema path the row gate reads; slot ~25's cone widened before its spawn; the round-5 cones that passed did so because their commits happened to miss those limbs. Banked as a memory for the next issuance.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W26-S7 as filed: four refusals, four paths, the override unused; `git -C /c/tmp/wk-posn-6-26 sparse-checkout list` after the widening is the recipe.",
+      "WHY GRADUATED: the worker's remedy was the right one (widen the read, never bypass the gate) and the issuer's recipe now carries it."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W26-S7"
+  ],
+  "spec_asserts": "CLAUDE.md 14a/14b: commit via safe-commit under the gates; a refusal is answered by making the gate able to run, never by --force.",
+  "world_is": "Round-6 cones cut at 910815809f lacked four paths the gates read; ~26 widened its own; ~25 is widened at the cut.",
+  "notes": "Memory banked: the sparse cone must carry every path the commit gates read."
+},
+{
+  "id": "POSN_ASTTAX-Z-W24-S1",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~24",
+  "surfaced_at": "2026-09-15T04:31:00Z",
+  "one_line": "ACTED ON THE ISSUER'S MID-FLIGHT AMENDMENT, recorded because the worker face changed under an order already executing: at ~04:1xZ 2.0.0_SA_COO~Z's notice added PRD v0.11 C-HOLDING-IDENTITY (the tickers block also carries name + management_style from ETFClassifier, a dynamodb read grant, a new zip member) while W1-AC1..W1-AC4 were already measured; a second notice named the amended order on SITEZ @1b791c6a11 (PRD v0.11 @ab2ee8052a) and a third NARROWED the grant to dynamodb:GetItem ONLY (no BatchGetItem). This worker copied the amended order over its worktree copy (git show SITEZ:<path> > <path>), implemented acts 1(e)/2/3 as amended, and RE-RAN W1-AC3 and W1-AC4 against the amended act rather than recording the pre-amendment runs. The .tf carries GetItem only, as the third notice and both halves name; the module's only per-ticker call is table.get_item (etf_classifications_dynamodb.py:72), so no caller needs BatchGetItem.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "The amended order at org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-W1-1.characteristics-per-ticker-block-and-schedule.md @1b791c6a11 (169 lines; act 1(e), act 2's flat member, act 3's table grant, W1-AC4/AC8/AC12 extended) vs the issuance copy @910815809f (155 lines) -- both read.",
+      "Both halves at SITEZ: NEVER_WIDEN_ROUND6_COO_HALF.md @1b791c6a11 (R1 amendment) and NEVER_WIDEN_ROUND6_CTO_HALF.md @2c6b7d8887 ('one dynamodb:GetItem READ on etf-classifications'); the CTO half names etf-classifications 3 times (grep -c on the SITEZ blob).",
+      "W1-AC3 and W1-AC4 were re-run AFTER the identity fields landed; the recorded outputs in this worker's deliverables are the post-amendment ones (w1ac3.purity-control.txt, w1ac4.dry-run.txt)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Rule 27: mid-round the spec AND the decomposition are FROZEN, and a worker's whole context is the face it was handed; the pipeline gate's LIMB 6 does not fire on a task-order MODIFICATION, so a mid-flight amendment reaches a working worker with no refusal anywhere.",
+  "world_is": "TO-W1-1 was amended three times in ~20 minutes while its worker was executing it -- an added constraint (the identity pair), an added .tf grant, then a narrowing of that grant -- delivered as coordinator messages, with the order text on SITEZ landing between the first and second. Nothing mechanical graded the change; the worker's own re-copy and re-run is what kept the criteria aligned with the act.",
+  "notes": "No harm here: the amendment arrived BEFORE the first world write (W1-AC7) and both re-run criteria (AC3, AC4) are cheap. The exposure the row records is the general one CLAUDE.md Rule 27 names -- a modification can change a criterion's grammar or a paths grant under a reading worker with no gate -- and the mitigation that worked is the issuer stating the commit to re-copy from."
+},
+{
+  "id": "POSN_ASTTAX-Z-W24-S2",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~24",
+  "surfaced_at": "2026-09-15T04:31:10Z",
+  "one_line": "THE WORKTREE'S SPARSE CONE DID NOT CARRY A PATH THE AMENDED ACT REQUIRES: infra/aws/lambda/v2_portal/_shared/ (the ETFClassifier module) is absent from the cone cut at issuance, so the local dry run (W1-AC4) could not import the classifier at all. This worker ran `git sparse-checkout add infra/aws/lambda/v2_portal/_shared` -- an act the order does not name -- to materialise the committed bytes; nothing was written, modified or committed there, and git status shows the directory as clean.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Before: the path did not exist in /c/tmp/wk-posn-6-24 (a read of it returned 'Path does not exist'); `git sparse-checkout list` showed 12 cones, none covering infra/aws/lambda/v2_portal.",
+      "The file DOES exist at the issuance commit: `git cat-file -e HEAD:infra/aws/lambda/v2_portal/_shared/etf_classifications_dynamodb.py` rc 0, 14027 bytes.",
+      "After the add: 4 files materialised (README.md, __init__.py, etf_classification.py, etf_classifications_dynamodb.py), `git status --porcelain` carries no entry for any of them -- the checkout matches the index."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The worker face grants <paths> and the COO cuts the worktree; an act the order directs must be executable in the tree the worker is given.",
+  "world_is": "The cone was cut for the PRE-AMENDMENT act (the returns rule from data/etfs/scripts/gold, which IS in the cone); the identity pair added a module in a directory the cone does not carry, and a sparse worktree answers a missing cone path exactly like a deleted file.",
+  "notes": "Generalises to any mid-flight amendment that reaches into a new directory: the amendment must name the cone add as well as the act, or the worker discovers it as an ImportError. The zip build (W1-AC6) would NOT have caught it -- build_package.py reads members from git at a pin, so the package is correct whether or not the file is in the cone."
+},
+{
+  "id": "POSN_ASTTAX-Z-W24-S3",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~24",
+  "surfaced_at": "2026-09-15T04:31:20Z",
+  "one_line": "THE ARTIFACT'S `inputs` TRIPLE IS NOT AN IDENTITY FOR THE INPUT BYTES, AND W1-AC4's SATELLITES-BLOCK ARM DEPENDS ON IT BEING ONE: at an UNCHANGED triple (holdings_as_of 2026-09-14, positioning_data_as_of 2026-09-11, bbg_as_of 2026-09-11) the local dry run's satellites block differs from the served artifact's at one leaf (Opal Satellite 30 beta 0.266956 served vs 0.263467 local), because BOTH json inputs were RE-PUBLISHED under the same as_of after the served artifact was written. The code is proved identical on two instruments: W1-AC3's difference control (DEEP-EQUAL over one shared set of objects, 2275 leaves) and a vintage control that runs the WORKING module over the served artifact's OWN input versions and reproduces its satellites block DEEP-EQUAL.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "head-object: characteristics.json rt61ogajZQy79meUlsY1X_mIdPngxJTZ LastModified 2026-09-14T21:45:13Z; holdings.json now 67GP52SdV1rw6QFVNPytU6ec4TvhwJh3 at 2026-09-15T03:02:26Z (previous BRjqyqnB0pIdLUHOvDY3B_Sh9b0EXIPw at 2026-09-14T19:53:59Z); positioning_data.json now AqBtm_5o.2QeiCBRP_veC8HV2Xk0OSaj at 2026-09-15T00:56:11Z (previous OuevyO7kCIJdEqzGlJWd.z.8S8pqiXJk at 2026-09-14T21:21:33Z, 8745 -> 8757 bytes). Both post-date the served write; both carry the SAME as_of as before.",
+      "input_vintage_control.py (this worker's deliverables, run 2026-09-15 ~04:0xZ): working module + holdings BRjqyqnB... + positioning OuevyO7k... + bbg/2026-09-11 -> satellites block DEEP-EQUAL to served rt61ogaj... True; and both live inputs' bytes differ from those vintages at an unchanged as_of (printed True/True).",
+      "The holdings re-publish is Z-S135's own act (the R2 retag driven at 03:02:26Z), so the beta move is a KNOWN world change, not an unexplained one."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "W1-AC4: 'the satellites block of <LOCAL_OUT> parse-identical to the served artifact's when the inputs triple is unchanged (both triples printed), else stated'; the COO never-widen half Branch B: 'a satellites leaf moved at unchanged inputs' is a ROLLBACK trigger.",
+  "world_is": "An unchanged triple does not mean unchanged inputs: holdings.json is re-published intraday at a fixed as_of (the retag) and positioning_data.json likewise. So the triple-equality test can read FALSE with the code provably unchanged, and -- the sharper direction -- a REAL code defect and a routine input re-publish are indistinguishable BY THAT TEST ALONE.",
+  "notes": "Consequence for W1-AC12 and for F4: the discriminator that does hold is a VINTAGE-pinned re-run (read the inputs by VersionId) or the object's own content hash, not the as_of triple. The artifact carries no input VersionId or content hash today; adding one would make this decidable from the artifact alone and is a spec question for L4, not a worker act. This worker states both readings rather than asserting equality."
+},
+{
+  "id": "POSN_ASTTAX-Z-W24-S4",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~24",
+  "surfaced_at": "2026-09-15T04:31:30Z",
+  "one_line": "A CITATION IN THE AMENDED ORDER NAMES THE OPPOSITE OF ITS CITED BYTES: act 2 directs the classifier module 'mapped FLAT at the zip root, exactly as the registry producer's build_package.py:117-121 does' -- those lines, printed at HEAD 910815809f, map the member AT ITS REPO PATH (zip path == repo path) and the comment above them says so in terms ('IT SHIPS AT ITS REPO PATH like every other member'). The imperative (FLAT) and the precedent (repo path) disagree.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/cot-pipeline/cot-satellites-registry-producer/build_package.py:117-121 at 910815809f, printed: ('infra/aws/lambda/v2_portal/_shared/etf_classifications_dynamodb.py', 'infra/aws/lambda/v2_portal/_shared/etf_classifications_dynamodb.py') preceded by the comment 'IT SHIPS AT ITS REPO PATH like every other member: the producer puts that directory on sys.path (load_classifier) and imports it flat'.",
+      "The amended order @1b791c6a11 act 2: 'the member infra/aws/lambda/v2_portal/_shared/etf_classifications_dynamodb.py mapped FLAT at the zip root, exactly as the registry producer's build_package.py:117-121 does'.",
+      "BOTH layouts import correctly under this producer's load_classifier: it inserts the module's repo directory on sys.path and imports by module name, so a flat member resolves off /var/task and a repo-path member resolves off the insert. Verified locally on the repo-path copy (the dry run's 25-of-25 identity read) before the flat mapping was chosen."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-W1-1 act 2 (amended): the classifier module is mapped FLAT at the zip root, 'exactly as' the cited precedent does.",
+  "world_is": "The two packages now use DIFFERENT layouts for the same module -- registry producer at the repo path, characteristics producer flat -- and the order's own words read as if they were one convention. This worker followed the IMPERATIVE (flat) and recorded the precedent's real shape here and in build_package.py's comment, so a later reader does not infer a convention that does not exist.",
+  "notes": "Cheap either way; the risk is a future edit that 'restores consistency' in one package by reading the other's comment. If L9 rules the precedent is what was meant, the change is one tuple in build_package.py and a rebuild."
+},
+{
+  "id": "POSN_ASTTAX-Z-W24-S5",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~24",
+  "surfaced_at": "2026-09-15T04:31:40Z",
+  "one_line": "THE PRODUCER'S WALL IS NOW DOMINATED BY THE RETURN-HISTORY LOAD AND THE FUNCTION'S TIMEOUT IS UNCHANGED AT 120 s, MEASURED ONLY OFF-PLANE: the local dry run takes 127.6 s wall (2 m 8 s), of which the load lists bbg/ and reads 16 partitions PLUS 173 backfill history.csv objects one at a time (45,070 rows in window). The same work in-region is expected to be far cheaper, but that is an EXPECTATION -- no in-Lambda wall has been read, and the preflight's comp-adversary note named exactly this gap.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "w1ac4.dry-run.txt (this worker's deliverables): producer wall measured twice at 130.3 s and 127.6 s on this device; loader log '16 of 16 total date prefix(es)' and 'backfill history: 173 ticker file(s), 45070 row(s) in window, 0 skipped'.",
+      "infra/aws/terraform/cot-pipeline/satellites-characteristics-producer.tf: timeout 120, memory_size 512 -- both unchanged by this cell (peak RSS measured 164.7 MiB, well under the order's 384 MiB threshold, so the memory stays 512).",
+      "The device wall is NOT the Lambda wall: 173 sequential GetObjects from this workstation to us-east-1 is round-trip bound; the same calls in-region are the thing W1-AC12's driven invoke measures for the first time."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-W1-1 act 3 authorises a MEMORY change only ('keep 512 MB unless W1-AC4 prints a peak above 384 MB'); W1-AC9 expects exactly three changes (function artifact, policy, rule), so a timeout change would be a fourth and is outside both never-widen halves' key lists.",
+  "world_is": "The function's 120 s timeout was sized for a 4-object read (2.84 s measured at TO-V4-1) and now also carries a 189-object history sweep. If the in-region wall exceeds 120 s the driven invoke fails LOUD with nothing written -- recoverable, and that refusal IS the measurement -- but the first read of it is a production invoke.",
+  "notes": "Deliberately NOT pre-emptively widened: the timeout is not in either half's blast radius and raising it would break W1-AC9's 3-change expectation. If W1-AC12 times out, the sizing change plus its own half amendment is the remedy and this row is its carrier. Cheaper mitigation available to a later cell: the backfill sweep re-reads all 173 ticker files for the ONE ticker (GLD) this producer needs."
+},
+{
+  "id": "POSN_ASTTAX-Z-W24-S6",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~24",
+  "surfaced_at": "2026-09-15T04:31:50Z",
+  "one_line": "A SECOND CARRIER OF THE SCHEDULE GOES STALE WITH THIS CELL AND THE ORDER FORBIDS TOUCHING IT: the handler lambda_function.py's docstring states 'cron(20 7 * * ? *) UTC, 20 minutes after the registry producer's 07:00Z fire' and reasons at length about that 20-minute margin, while the .tf rule this cell moves now reads cron(30 12 * * ? *). The order says lambda_function.py is 'unchanged unless the import path needs data/etfs/scripts/gold on sys.path' -- it does not -- so the file is left byte-identical and the stale text is filed here instead of fixed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/cot-pipeline/cot-satellites-characteristics-producer/lambda_function.py at 910815809f, docstring 'WHY ITS OWN SCHEDULE AND NOT THE REGISTRY PRODUCER'S SUCCESS': 'This fires on an independent daily wall-clock rule, cron(20 7 * * ? *) UTC, 20 minutes after the registry producer's own 07:00Z fire' plus a paragraph on the 20-minute margin.",
+      "infra/aws/terraform/cot-pipeline/satellites-characteristics-producer.tf as edited by this cell: schedule_expression = 'cron(30 12 * * ? *)' with the rationale rewritten in place (the .tf's own comment block and the rule description both updated).",
+      "The import path did NOT need a sys.path change: the producer already inserts the repo root (parents[4]) and imports the return rule as a namespace package and the classifier by module name, verified by the dry run."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-W1-1 act 2: 'lambda_function.py: unchanged unless the import path needs data/etfs/scripts/gold on sys.path (state it)'.",
+  "world_is": "After this deploy the handler's docstring describes a schedule that no longer exists, in the file a reader opens FIRST when asking what this function does. No behaviour depends on it -- the trigger carries no date and the rule is Terraform's -- so the cost is a wrong answer to a human, not a wrong artifact.",
+  "notes": "One-line fix for whoever owns the next touch of that file (F4 does not touch it): the docstring's schedule paragraph. Filed rather than fixed because widening a file the order pins is the class this channel exists to avoid."
+},
+{
+  "id": "POSN_ASTTAX-Z-W24-S7",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~24",
+  "surfaced_at": "2026-09-15T04:32:00Z",
+  "one_line": "W1-AC1's EXPECT NAMES A READ ITS INVOCATION DOES NOT MAKE: the clause requires 'the newest bbg partition printed as <NEWEST_BBG_PARTITION> (its characteristics.parquet head-object 200 in the same reading)', but the invocation's last limb only lists CommonPrefixes under bbg/ -- there is no head-object on the partition's parquet anywhere in it. This worker ran the head-object as a separate read in the same session (200, 19,802 bytes) and records it beside the criterion rather than claiming the invocation produced it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "The W1-AC1 invocation, verbatim, ends: \"... s3api list-objects-v2 --bucket opal-data-etfs --prefix bbg/ --delimiter / --query 'CommonPrefixes[].Prefix' --output text | tr '\\t' '\\n' | sort | tail -3\" -- a prefix listing, not an object read.",
+      "The supplementary read, same session, recorded in w1ac1.preconditions.txt: head-object bbg/2026-09-11/characteristics.parquet -> {len 19802, lm 2026-09-14T18:31:19+00:00} rc 0, and bbg/2026-09-11/run_manifest.json -> {len 4047} rc 0.",
+      "A prefix listing cannot distinguish a partition whose directory exists from one whose parquet is absent or zero-length, which is exactly what the expect's parenthetical asks to rule out."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "W1-AC1 expect: the newest bbg partition printed 'with its characteristics.parquet head-object 200 in the same reading'.",
+  "world_is": "The invocation as written proves the PREFIX exists; the expectation asks for the OBJECT. The gap is small here because the dry run reads the parquet immediately afterwards and would fail loud, but a criterion whose invocation cannot produce its expectation is a grading hazard rather than a measurement.",
+  "notes": "Remedy for a future cut: append the head-object to the invocation's chain. Recorded because the refusal clause forbids satisfying a criterion 'by another route' silently -- so the route taken is named instead."
+},
+{
+  "id": "POSN_ASTTAX-Z-W24-S8",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~24",
+  "surfaced_at": "2026-09-15T04:47:00Z",
+  "one_line": "W1-AC5's OWN INVOCATION COULD NOT RUN IN THE WORKTREE AS CUT: `.tools/commit-gate.sh` dies at import with ModuleNotFoundError: No module named 'comp_constants_cli' because its runner puts org/modules/graph (and .../compproof) on sys.path, and the sparse cone carries neither. This worker ran `git sparse-checkout add org/modules/graph` (408 files, 19.3 MB, materialised at the committed bytes, nothing modified) and the gate then passed 4 of 4. SECOND instance of the same class as Z-S W24-S2, on a CRITERION's invocation rather than an act's import.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "First run, verbatim: 'File \"C:\\tmp\\wk-posn-6-24\\.tools\\commit_gate_runner.py\", line 96, in <module> import comp_constants_cli ... ModuleNotFoundError'; exit 1.",
+      ".tools/commit_gate_runner.py:92-100 inserts str(GRAPH_DIR) and str(COMPPROOF_DIR) on sys.path then imports comp_constants_cli, manifest_check_cli, shell_cli, log_open_lint, ses_sender_lint_cli -- five modules, all under org/modules/graph, none in the cone.",
+      "After `git sparse-checkout add org/modules/graph`: 'OK: pre-commit gate clean for 4 of 4 file(s)', exit 0, recorded in w1ac5.commit-gate.txt."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Rule 14 / W1-AC5: every .py edit passes .tools/commit-gate.sh, and the criterion names that invocation as the measurement.",
+  "world_is": "A sparse worktree cut for a cell's FILE SURFACE does not necessarily carry the cell's TOOL surface: commit-gate.sh is in the cone (.tools) but five of its imports are not, and the failure is an ImportError at line 96 rather than anything naming the cone. Every worker on a sparse cone that runs the commit gate hits this.",
+  "notes": "Two candidate remedies, both cheap and neither a worker act: add org/modules/graph to the standard worker cone at /dispatch, or have commit_gate_runner.py fail with a named 'missing cone path' message instead of a bare ModuleNotFoundError. The 19.3 MB add is not free on a memory-pressured device (the sparse cone exists because a full checkout OOMs here)."
+},
+{
+  "id": "POSN_ASTTAX-Z-W24-S9",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~24",
+  "surfaced_at": "2026-09-15T04:47:10Z",
+  "one_line": "THE ZIP LAYOUT FOR THE CLASSIFIER MEMBER: the amended order's act 2 says 'mapped FLAT at the zip root', the CTO never-widen half's AMENDMENT A1 -- the document that BOUNDS this act -- says 'shipped at its repo path by pin, as the registry producer's package already ships it', the cited precedent's bytes say repo path, and W1-AC6's own expect says 'every member at the mirroring layout'. THREE carriers to ONE. This worker SHIPS IT AT ITS REPO PATH, states the conflict here and in build_package.py's comment, and leaves the ruling to L9. S4 (filed 15 minutes earlier, on the citation alone) recorded the opposite disposition; this row supersedes that disposition on evidence S4's author had not yet read -- the halves are read before the first world write, which is after the code is written.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CTO half A1 @2c6b7d8887 (SITEZ), package row, verbatim: 'infra/aws/lambda/v2_portal/_shared/etf_classifications_dynamodb.py shipped at its repo path by pin, as the registry producer's package already ships it'.",
+      "The amended order @1b791c6a11 act 2, verbatim: 'the member infra/aws/lambda/v2_portal/_shared/etf_classifications_dynamodb.py mapped FLAT at the zip root, exactly as the registry producer's build_package.py:117-121 does' -- and those lines map zip path == repo path (printed in row W24-S4).",
+      "W1-AC6 expect, verbatim: 'the first build lists every member at the mirroring layout INCLUDING data/etfs/scripts/gold/etf_positioning_gold.py with its sha256'.",
+      "BEHAVIOURAL EQUIVALENCE, measured not argued: the producer's load_classifier inserts the module's repo directory on sys.path and imports by module name, so the repo-path member resolves in the zip AND in a working tree; a flat member would resolve off /var/task. The 25-of-25 identity read in W1-AC4 ran against the repo-path arrangement."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "NEVER#1: the act is bounded by what BOTH halves name; TO-W1-1 act 2 (amended) names a flat mapping.",
+  "world_is": "Two authoritative carriers of one detail disagree, and the one the worker is told to obey (the order) cites the one it contradicts (the precedent) as its authority. The detail is behaviourally inert, so no instrument downstream would have caught the divergence -- it would simply have shipped a package whose layout the sign-off does not describe.",
+  "notes": "If L9 rules FLAT, the change is one tuple in build_package.py plus a rebuild, re-upload and targeted re-apply (the function's source_code_hash moves), i.e. the same three-change plan again -- not free, but small. Recorded before the upload so the ruling can land before the artifact does."
+},
+{
+  "id": "POSN_ASTTAX-Z-W24-S10",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~24",
+  "surfaced_at": "2026-09-15T04:58:00Z",
+  "one_line": "THE ROW GATE REFUSED THIS WORKER'S FIRST COMMIT ON `class`, AND ITS STANDING CORPUS PASS COULD NOT RUN AT ALL IN A SPARSE WORKTREE: the ratified enum is exactly ['OBSERVATION','BLOCKING'] -- a TWO-value axis -- while the natural vocabulary for a finding (PROCESS_GAP, MEASUREMENT_GAP, SPEC_DEFECT, RISK, DOC_DRIFT) is refused; and the gate's corpus limb died on FileNotFoundError for org/surprise_channel/schemas/investigation_item.schema.json, which the cone did not carry, reporting 'standing corpus pass could not run -- fail-closed'. Both were fixed in session (8 uncommitted rows re-classed OBSERVATION before they landed; `git sparse-checkout add org/surprise_channel`), so nothing invalid reached the record.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output, verbatim: 'BLOCKED -- surprise-channel row gate (steps 7/10) ... 17 violation(s) on NEW rows', 16 of them two-per-row on class, plus 'standing corpus pass could not run (FileNotFoundError: ... org\\\\surprise_channel\\\\schemas\\\\investigation_item.schema.json) -- fail-closed'.",
+      "org/surprise_channel/schemas/investigation_item.schema.json, read after the cone add: required ['id','surfaced_by','surfaced_at','one_line','class','grounding','disposition']; enums class ['OBSERVATION','BLOCKING'], hazard_standing ['ARMED','INERT'], disposition ['UNDER_INVESTIGATION','GRADUATED','DISMISSED_WITH_REASON','DECOMP_INVALIDATING'], fabric ['laptop','site-z'].",
+      "The 9 rows this worker filed were graded as NEW against 234 pre-existing rows not re-graded (the gate prints the denominator: '9 new row(s) of 243 total checked')."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The worker face directs a row 'per org/surprise_channel/schemas/investigation_item.schema.json' with a `class` field; the schema is the contract and the gate enforces it at commit.",
+  "world_is": "A two-value class axis carries the whole taxonomy of what a row can BE, so the KIND of finding (a spec defect, a stale doc, a cone gap, a risk) lives only in prose -- and a worker reading 'class' without opening the schema will invent values and be refused at commit, after the rows are written. Separately, the gate's standing pass is silently unavailable to every sparse worktree that does not carry the schema's directory: it announces the degradation, which is correct, but the degradation is invisible until a commit is attempted.",
+  "notes": "Cheapest fixes, neither a worker act: name the two legal values in the worker face beside the schema path; and either add org/surprise_channel to the standard worker cone or have the gate resolve the schema from git (it grades rows AT a commit, so `git show HEAD:<schema>` is available even when the file is not in the checkout). The intended KIND of each of this worker's 9 rows is stated in its own one_line."
+},
+{
+  "id": "POSN_ASTTAX-Z-W24-S11",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~24",
+  "surfaced_at": "2026-09-15T05:10:00Z",
+  "one_line": "TWO CRITERIA CANNOT RUN AS WRITTEN BECAUSE THEIR INVOCATIONS DO NOT MATCH THEIR TOOLS' INTERFACES, AND BOTH ARE REFUSED RATHER THAN REPAIRED. W1-AC8: `comp-iam gaps <path.tf>` -> 'comp-iam: error: unrecognized arguments: infra/aws/terraform/cot-pipeline/satellites-characteristics-producer.tf', rc 2 -- `comp-iam gaps --help` prints 'usage: comp-iam gaps [-h]', the subcommand takes NO positional at all and cannot be pointed at a .tf file. W1-AC14: `record-terraform-deploy.sh --plan <plan>` -> 'Unknown argument: C:/tmp/.../b6.tfplan', rc 1 -- the script reads PIPELINE=$1 (:47) BEFORE parsing flags, so '--plan' is eaten as the pipeline NAME.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W1-AC8 recorded verbatim in deliverables/0.9.0_WK_POSN_ASTTAX~24/w1ac8.comp-iam-gaps.txt, with the --help read beside it (the measurement of the refusal, not a route around it).",
+      "W1-AC14 recorded verbatim in w1ac14.record.txt: the as-written run, then the script's own parser at record-terraform-deploy.sh:47 (PIPELINE=\"$1\"; shift) and :86-90 (the catch-all '*) echo Unknown argument; exit 1').",
+      "THE GRANT W1-AC8 EXISTS TO CHECK IS STILL MEASURED, by a different criterion's output: W1-AC9's plan text prints the whole policy -- 2 unchanged elements hidden + ReadBloombergEtfDaily + the three ADDED Sids (ListBloombergHistoryPrefixes conditioned to bbg/* and bbg-testpull/tickers/*, ReadBloombergReturnHistory, ReadEtfClassifications with dynamodb:GetItem ONLY) + WriteSatellitesCharacteristics, with no Scan, no BatchGetItem, no new write and the cross-firm deny untouched.",
+      "THE RECORD W1-AC14 EXISTS TO PRODUCE WAS STILL MADE, through the script's documented interface and stated as such: commits a031c56c74 and 9633bb9e7e (source map) plus the hand-written CHANGELOG entry."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-W1-1 REFUSAL CLAUSE: 'A criterion you cannot satisfy as written is REFUSED with its measurement, never repaired, widened or satisfied by another route.' W1-AC8 and W1-AC14 name those two invocations.",
+  "world_is": "Both criteria name a real instrument and a real intent, and both name an argument shape the instrument has never accepted. Neither was runnable at the cut -- so no amount of execution care could have produced a PASS, and the only honest outcome is a REFUSED criterion beside a completed act.",
+  "notes": "Runnable forms, for whoever re-cuts: `comp-iam gaps` takes no argument (its output is estate-wide; the per-file read this criterion wants may not exist in that tool at all -- `comp-iam role cot-satellites-characteristics-producer-role` is the nearest), and the recorder is `record-terraform-deploy.sh cot-pipeline --plan <plan> [--code-sha256 <sha>] [--deploy-ledger <slug>]`. A cut-time `--help` on each tool is the cheapest prevention."
+},
+{
+  "id": "POSN_ASTTAX-Z-W24-S12",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~24",
+  "surfaced_at": "2026-09-15T05:10:10Z",
+  "one_line": "PLANNING A SHARED TERRAFORM ROOT FROM A WORKER WORKTREE REQUIRED TWO THINGS THE ORDER DID NOT ANTICIPATE, ONE OF WHICH MUTATES STATE THE WHOLE ESTATE SHARES: (1) the worktree's .terraform is a JUNCTION to the main tree's cache, whose modules.json was built 2026-08-27 and predates this function's module, so the targeted plan refused with 'Module not installed' -- `terraform init -input=false` (no -migrate-state, no -reconfigure, no -upgrade) fixed it AND wrote the new module entry into the SHARED cache the main tree and every other worktree read; (2) the root's ec2.tf calls file() on infra/aws/ec2/cot-exporter/user-data.sh, which a targeted plan still evaluates, so the plan refused again until that directory was added to the sparse cone.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "First plan, verbatim: 'Error: Module not installed ... on satellites-characteristics-producer.tf line 293'; .terraform/modules/modules.json (dated Aug 27) listed 5 modules and NOT cot_satellites_characteristics_producer.",
+      "init output: 'Initializing modules... - cot_satellites_characteristics_producer in ..\\modules\\yang-lambda'; 'Reusing previous version of hashicorp/aws from the dependency lock file'; 'Terraform has been successfully initialized!' -- no provider download, no state migration.",
+      "Second plan, verbatim: 'Error: Invalid function argument ... on ec2.tf line 68 ... no file exists at \"./../../ec2/cot-exporter/user-data.sh\"'; resolved by `git sparse-checkout add infra/aws/ec2` (369 files, 7.0 MB, committed bytes only).",
+      "Third plan: 'Plan: 0 to add, 3 to change, 0 to destroy', and the later unscoped plan 'No changes. Your infrastructure matches the configuration.'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The hand-over allowed `terraform init -input=false` ONLY if the plan refused for a MISSING PROVIDER, and forbade `init -migrate-state`; the worktree's .terraform is described as a junction to the main tree's initialized cache (providers + modules.json).",
+  "world_is": "The refusal was for a missing MODULE, not a provider -- the cache is not merely 'initialized', it is STALE relative to the configuration, and any seat planning this root hits the same error. The init that fixes it is not worktree-local: through the junction it edits the cache the main tree uses. That is a shared-state write by a worker, done deliberately here because a plan is impossible without it, and it is exactly the class the one-index/one-cache contention rules exist for.",
+  "notes": "Nothing was destroyed and no state was migrated: the write was an ADD of one module entry that the main tree's own configuration also requires. Two follow-ups for the owner: (a) the hand-over's init condition should say 'a missing provider OR module'; (b) a worker cone that must plan a ROOT needs the root's whole file() surface (here infra/aws/ec2), because Terraform evaluates every file in the root regardless of -target."
+},
+{
+  "id": "POSN_ASTTAX-Z-W24-S13",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~24",
+  "surfaced_at": "2026-09-15T05:10:20Z",
+  "one_line": "THE IN-LAMBDA WALL AND PEAK ARE NOW MEASURED, AND THE RECORDER'S OWN CHANGELOG LIMB FAILED FOR A DIFFERENT REASON THAN THE ORDER PREDICTED. The driven run's CloudWatch REPORT: Duration 39,407 ms of the 120,000 ms timeout (33%, 3.0x headroom), Max Memory Used 270 MB of 512 MB (53%), Init Duration 440 ms -- so the 400-day history sweep (16 partitions + 173 backfill files, 47,506 rows) fits the existing envelope and the local 127 s wall was device-to-S3 latency, not work (W24-S5's open question, answered). Separately: the order expected the recorder's CHANGELOG helper to fail on 'a hardcoded bun path'; on this device it failed because JSON_TOOL fell through to PYTHON (record-terraform-deploy.sh:222) which was then handed a .js file -- 'SyntaxError: unterminated string literal'. That failure ALSO empties FUNCTIONS_UPDATED_FILE, which silently no-ops the durable source-map sha reconcile, so the first record left deployed_code_sha256 at the PREVIOUS deploy's value.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CloudWatch stream 2026/09/15/[$LATEST]8da1acb227a548b8b7b6a3221dfc7ca7, REPORT RequestId db1940a5-a3b0-4d33-b9d1-4d0ea154af2b: 'Duration: 39407.13 ms  Billed Duration: 39848 ms  Memory Size: 512 MB  Max Memory Used: 270 MB  Init Duration: 440.35 ms'. Read with boto3 -- the aws shim mangles a log-stream name containing slashes.",
+      "Recorder run 1: 'SyntaxError: unterminated string literal (detected at line 18)' on rdeploy-changelog-*.js, then 'Note: CHANGELOG.json write failed -- source map update still committed' and 'reconcile: SKIP -- empty deployed-function set (fail-safe no-op)'.",
+      "The stale field, measured after run 1: lambda-source-map.json cot-satellites-characteristics-producer deployed_code_sha256 = 6M4Co5N81OD/SxD+fS0/pzbByeBKeYaVh8z/kszV3Vk= (the PRE-deploy sha) and deploy_ledger = posn-round5-b4-satellites-characteristics (round 5's slug), while the live function read rN/jcmeQk4F/HJsQHfasjdWFgIjWXOrYHeBPkf5TbOU=.",
+      "Corrected by re-running the recorder with --code-sha256 and --deploy-ledger (commit 9633bb9e7e, diff: both fields moved to the round-6 values); the CHANGELOG entry was then written by hand, non-ASCII count 18 before and 18 after."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "W1-AC14: 'its CHANGELOG helper cannot run here (W23-S4: a hardcoded bun path) -- write the CHANGELOG.json entry YOURSELF'; W24-S5 and the preflight's comp-adversary item 1 left the in-Lambda wall and peak unread.",
+  "world_is": "The helper's failure MODE on this device is a python-reading-javascript SyntaxError, not a missing bun -- same outcome, different cause, and the cause matters because it also silently disables the sha reconcile downstream of it. A recorder run that is not given --code-sha256 therefore writes a record that says the PREVIOUS code is deployed, and nothing in its output says so.",
+  "notes": "For the next deploy on this device: pass --code-sha256 <live CodeSha256> and --deploy-ledger <slug> to record-terraform-deploy.sh, then READ the two fields back out of the source map. The wall measurement also gives the next sizing question a number: the backfill sweep is 173 GetObjects for ONE ticker's series, so the wall scales with the backfill prefix, not with this producer's work."
+},
+{
+  "id": "POSN_ASTTAX-Z-W24-S14",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~24",
+  "surfaced_at": "2026-09-15T05:25:00Z",
+  "one_line": "ADDING A DIRECTORY TO A SPARSE CONE ON THIS DEVICE CAN MANUFACTURE 'MODIFIED' FILES THE WORKER NEVER TOUCHED: the moment infra/aws/ec2 entered this worktree's cone (needed for the root's plan, row W24-S12), `git status` reported 12 modified files under infra/aws/ec2/smartx-exporter/smartx-workspace/scripts/*.py -- every line of each, 240 insertions and 240 deletions on config.py alone. The cause is line endings, not content: git prints 'warning: in the working copy of ... CRLF will be replaced by LF the next time Git touches it'. They are NOT this worker's edits and are outside its <paths> grant, so they were left untouched and uncommitted.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git status --porcelain after the cone add: 12 ' M infra/aws/ec2/smartx-exporter/smartx-workspace/scripts/*.py' entries appeared with no edit by this worker in between (the cone add was the only act).",
+      "git diff --stat on one of them: 'config.py | 480 ++++---- 1 file changed, 240 insertions(+), 240 deletions(-)' -- i.e. every line -- preceded by 'warning: in the working copy of ... CRLF will be replaced by LF the next time Git touches it'.",
+      "This worker's four edited files (the producer, build_package.py, the .tf, the task order) are all committed and none is under infra/aws/ec2."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A worker edits only the files its <paths> grant names, and a clean worktree is what lets `git status` be read as a statement about the worker's work.",
+  "world_is": "A cone add is not a neutral read on this device: files whose committed bytes are CRLF (or whose checkout writes CRLF) land in the working tree as whole-file modifications. Every later `git status` in this worktree carries 12 lines of noise a reader must discount, and a drain can refuse with 'local changes would be overwritten' on files the worker never opened.",
+  "notes": "Harmless if left alone -- nothing was staged or committed -- and `git checkout --` on them is forbidden to a worker anyway. Worth knowing before the drain: if a merge refuses on one of these 12 paths, the cause is this, not contention. A .gitattributes text=auto entry for that tree, or a cone that never has to carry it, is the durable fix and belongs to the tree's owner."
+},
+{
+  "id": "POSN_ASTTAX-Z-S149",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T05:32:02Z",
+  "one_line": "ADJUDICATION of W24-S1 (INERT): the worker acted on three issuer notices mid-run (v0.11 identity pair; the amended order on SITEZ; the GetItem-only grant), copied the amended face from SITEZ, implemented acts 1(e)/2/3 as amended and re-ran W1-AC3/W1-AC4 -- the drain shows the identity pair served 25 of 25 and the plan's three Sids. The same three-carrier mechanism as Z-S142.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W24-S1 as filed; the served block read by this seat at 04:54Z: identity 25 of 25, identity_missing 0; W1-AC9's plan text names ReadEtfClassifications with dynamodb:GetItem only.",
+      "WHY GRADUATED: every amendment reached the worker before the world write it bounded."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W24-S1"
+  ],
+  "spec_asserts": "TO-W1-1 as amended at 1b791c6a11 and 6aaf98db39.",
+  "world_is": "B6 deployed and driven on the amended text.",
+  "notes": "Nothing further."
+},
+{
+  "id": "POSN_ASTTAX-Z-S150",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T05:32:02Z",
+  "one_line": "ADJUDICATION of W24-S2 (INERT): the issuance cone lacked infra/aws/lambda/v2_portal/_shared (the classifier module the amended act imports); the worker added it to its cone (committed bytes, nothing modified). Same class as W26-S7 / Z-S148: the cone recipe now carries it (banked).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W24-S2 as filed; the widened cone read by this seat at 05:14Z includes infra/aws/lambda/v2_portal/_shared.",
+      "WHY GRADUATED: a read-side cone gap, remedied by widening, no bypass."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W24-S2"
+  ],
+  "spec_asserts": "CLAUDE.md 14b: a worker worktree carries what its acts read.",
+  "world_is": "Slot ~24's cone widened by the worker; the recipe fixed for ~25 and the next issuance.",
+  "notes": "See Z-S148 and the banked memory."
+},
+{
+  "id": "POSN_ASTTAX-Z-S151",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T05:32:02Z",
+  "one_line": "ADJUDICATION of W24-S3 (INERT): the artifact's inputs triple (holdings_as_of, positioning_data_as_of, bbg_as_of) is NOT an identity for the input BYTES -- both JSON inputs were re-published under the same as_of after the served artifact was written, so at an unchanged triple the dry run's satellites block differed from the served at one leaf (Opal Satellite 30 beta 0.266956 -> 0.263467); the code is proved identical on two instruments (W1-AC3 over 2275 leaves; a vintage control). RULED: W1-AC4's 'else stated' arm is the measured act and the purity bar is unaffected. CARRIED to the round-6 analysis as a provenance item: the artifact's inputs block should carry each input's VersionId/ETag beside its as_of (a spec addendum, not a cell tonight).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W24-S3 as filed with the leaf and its cause; W1-AC3 DEEP-EQUAL True over 2275 leaves.",
+      "WHY GRADUATED: the bar was written on a proxy (the triple) the worker showed is not an identity, and the honest branch was taken and stated."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W24-S3"
+  ],
+  "spec_asserts": "TO-W1-1 W1-AC4: the satellites block parse-identical when the inputs triple is unchanged, else stated.",
+  "world_is": "The served satellites block moved by one leaf because an input moved under the same as_of.",
+  "notes": "For 1.0.0_SA_CTO~Z's analysis: an as_of is a partition name, not a content hash."
+},
+{
+  "id": "POSN_ASTTAX-Z-S152",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T05:32:02Z",
+  "one_line": "ADJUDICATION of W24-S4 (INERT): the amended act 2 said the classifier member is mapped FLAT and cited build_package.py:117-121 as the precedent, while those bytes map it at its REPO PATH and say so -- the issuer's misreading of the precedent's comment (the module is IMPORTED flat by name after a sys.path insert; it SHIPS at its repo path). ACT: act 2 re-worded to the repo path at this commit; superseded on the ruling by W24-S9 / Z-S157.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W24-S4 as filed; build_package.py:117-121 at HEAD; the Explore report the issuer read said 'flat, because infra.aws.lambda.v2_portal._shared is NOT an importable package name' -- about the IMPORT, not the zip path.",
+      "WHY GRADUATED: the citation is corrected in the face; the shipped bytes were right."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W24-S4"
+  ],
+  "spec_asserts": "TO-W1-1 act 2 as amended.",
+  "world_is": "The worker shipped the repo path; the order now says so.",
+  "notes": "A citation that names the opposite of its bytes: the issuer's, corrected."
+},
+{
+  "id": "POSN_ASTTAX-Z-S153",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T05:32:02Z",
+  "one_line": "ADJUDICATION of W24-S5 (INERT): the local dry run's wall (127.6 s, the history load over 16 partitions + 173 backfill objects) exceeded the function's 120 s timeout OFF-PLANE; the in-Lambda measure answered it (W24-S13: 39.4 s of 120 s, 270 MB of 512 MB). No sizing change; the memory clause of act 3 (512 MB unless the peak exceeds 384 MB) held (peak 164.7 MiB locally, 270 MB in-Lambda).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W24-S5 and W24-S13 as filed; CloudWatch REPORT Duration 39,407 ms, Max Memory Used 270 MB, Init 440 ms.",
+      "WHY GRADUATED: the open question was answered by the driven run on the plane that matters."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W24-S5"
+  ],
+  "spec_asserts": "TO-W1-1 preflight (1): a peak or wall exceeding the envelope is a row and a sizing change.",
+  "world_is": "The envelope holds with 3x wall headroom and 47% memory headroom.",
+  "notes": "The local wall was device-to-S3 latency."
+},
+{
+  "id": "POSN_ASTTAX-Z-S154",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T05:32:02Z",
+  "one_line": "ADJUDICATION of W24-S6 (INERT): the handler's docstring (lambda_function.py) still reasons about cron(20 7 * * ? *) and a 20-minute margin while the rule now reads cron(30 12 * * ? *) -- a second carrier of the schedule gone stale; the order forbade touching the file and the worker left it byte-identical. RULED: NOT fixed tonight -- editing the handler after the deploy would put HEAD's member out of step with the deployed bytes without a redeploy (the source map would then name a sha HEAD no longer carries). CARRIED to the round-6 analysis: a comment-only change to ride the next deploy of this function.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W24-S6 as filed; the rule at cron(30 12 * * ? *) ENABLED (W1-AC13).",
+      "WHY GRADUATED: a stale comment with a named carrier and a named moment to fix it; no reader of the schedule reads the docstring."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W24-S6"
+  ],
+  "spec_asserts": "C-B4-SCHEDULE: the rule fires at cron(30 12 * * ? *).",
+  "world_is": "The .tf is the schedule's only live carrier; the docstring is prose.",
+  "notes": "For 1.0.0_SA_CTO~Z's analysis."
+},
+{
+  "id": "POSN_ASTTAX-Z-S155",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T05:32:02Z",
+  "one_line": "ADJUDICATION of W24-S7 (INERT): W1-AC1's expect named a head-object on the newest partition's characteristics.parquet that its invocation never made; the worker ran the head-object as a separate read (200, 19,802 B) and recorded it beside the criterion rather than claiming the invocation produced it -- correct. ACT: W1-AC1's invocation re-cut to include that limb (the issuer's clause defect); the recorded evidence stands.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W24-S7 as filed; the re-cut invocation at this commit.",
+      "WHY GRADUATED: an expect/invocation misalignment in the issuer's text, closed by the re-cut; the read was made honestly."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W24-S7"
+  ],
+  "spec_asserts": "TO-W1-1 W1-AC1 expect: the partition's characteristics.parquet head-object 200 in the same reading.",
+  "world_is": "The invocation now makes the read its expect names.",
+  "notes": "Rule 22 GRAIN: the object read is the object claimed."
+},
+{
+  "id": "POSN_ASTTAX-Z-S156",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T05:32:02Z",
+  "one_line": "ADJUDICATION of W24-S8 (INERT): W1-AC5's own instrument (.tools/commit-gate.sh) could not run in the cone as cut -- its runner needs org/modules/graph on sys.path; the worker added the path (408 files, committed bytes) and the gate passed 4 of 4. Same class as W26-S7 / Z-S148; the recipe carries it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W24-S8 as filed; commit-gate.sh's import of comp_constants_cli.",
+      "WHY GRADUATED: remedied by widening the read, no bypass."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W24-S8"
+  ],
+  "spec_asserts": "TO-W1-1 W1-AC5: commit-gate clean for 4 of 4 files.",
+  "world_is": "The gate ran and passed after the cone widening.",
+  "notes": "See Z-S148."
+},
+{
+  "id": "POSN_ASTTAX-Z-S157",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T05:32:02Z",
+  "one_line": "ADJUDICATION of W24-S9 (INERT) -- RULED: the classifier member SHIPS AT ITS REPO PATH. Three carriers said repo path (the CTO half A1, which bounds the act; the cited precedent's bytes; W1-AC6's own expect 'every member at the mirroring layout') against the order's one word FLAT (the issuer's misreading, Z-S152); the worker shipped the repo path, stated the conflict in the row and in build_package.py's comment, and left the ruling to L9 -- correct, and the ruling is now the issuer's: act 2 re-worded at this commit. The deployed zip (W1-AC6: 5 members at the mirroring layout; W1-AC7: the artifact read back) is the ruled shape.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W24-S9 as filed; W1-AC6 PASS with 5 members at the mirroring layout; the CTO half A1 @2c6b7d8887 'shipped at its repo path by pin'.",
+      "WHY GRADUATED: the shipped bytes match every binding carrier; only the order's word was wrong and it is corrected."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W24-S9"
+  ],
+  "spec_asserts": "The CTO half A1 and W1-AC6: the mirroring layout for every member.",
+  "world_is": "The zip carries the module at infra/aws/lambda/v2_portal/_shared/; the handler imports it by name.",
+  "notes": "The issuer's error, corrected in the face."
+},
+{
+  "id": "POSN_ASTTAX-Z-S158",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T05:32:02Z",
+  "one_line": "ADJUDICATION of W24-S10 (INERT): the row gate's `class` enum is exactly [OBSERVATION, BLOCKING] and refused the worker's richer vocabulary (PROCESS_GAP, SPEC_DEFECT, ...); the corpus pass fail-closed in the sparse cone on the absent schema path. RULED: the two-value axis is the ratified schema (Rule 24 -- one axis, one intent: does this row BLOCK the cell or not); the finding's kind belongs in one_line and notes, which is where the worker put it after re-classing 8 rows. The schema path (org/surprise_channel/schemas) is in the cone recipe (Z-S148).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W24-S10 as filed; surprise-row-gate's enum; the corpus pass's FileNotFoundError on the schema path.",
+      "WHY GRADUATED: the worker conformed to the ratified axis and the cone gap is owned."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W24-S10"
+  ],
+  "spec_asserts": "docs/doctrine/THE_SURPRISE_CHANNEL.md: class is OBSERVATION or BLOCKING.",
+  "world_is": "All 14 rows landed as OBSERVATION; the corpus pass ran at the drain.",
+  "notes": "A finding taxonomy proposal, if wanted, arrives with its four-postulate record (Rule 24), not through the gate."
+},
+{
+  "id": "POSN_ASTTAX-Z-S159",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T05:32:02Z",
+  "one_line": "ADJUDICATION of W24-S11 (INERT) -- THE ISSUER'S TWO UNRUNNABLE INVOCATIONS, RE-CUT: W1-AC8 `comp-iam gaps <path.tf>` (the subcommand takes no positional) and W1-AC14 `record-terraform-deploy.sh --plan <plan>` (PIPELINE is the first positional). Both REFUSED by the worker as written -- correct; neither act was left undone: the grant is measured by W1-AC9's plan text (three added Sids, GetItem only), and the RECORD was made through the documented interface (source map at a031c56c74 and 9633bb9e7e, the CHANGELOG entry by hand at 3c5c3bba93, git-verified). ACT: both criteria RE-CUT at this commit to runnable instruments that MEASURE those acts (the lens read for the role's section with a pipe-receiver grep; the record read back from git and the two files), one new declared placeholder RECORD_READBACK; worker ~24 resumed for the two; the order stays in_progress until they record.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W24-S11 as filed with both error texts; the worker's commit 3f089f2928 body; the re-cut at this commit.",
+      "WHY GRADUATED: two issuer defects in invocation grammar, each with the act done and evidenced and a runnable instrument now named; the refusal clause worked as designed."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W24-S11"
+  ],
+  "spec_asserts": "TO-W1-1 W1-AC8 and W1-AC14 as re-cut.",
+  "world_is": "The deploy is landed, driven, recorded; two criteria await their re-run.",
+  "notes": "An invocation is written by RUNNING it once at the cut (round 5's Z-S105 lesson, missed twice here)."
+},
+{
+  "id": "POSN_ASTTAX-Z-S160",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T05:32:02Z",
+  "one_line": "ADJUDICATION of W24-S12 (INERT): planning the shared cot-pipeline root from a worker worktree needed (1) `terraform init -input=false` because the junctioned .terraform cache's modules.json predated this function's module -- the init WROTE the module entry into the SHARED cache every worktree reads (no migrate, no reconfigure, no upgrade; the entry the main tree also lacked); (2) infra/aws/ec2 in the cone because the root's ec2.tf calls file() on a user-data script. RULED: (1) is benign and disclosed -- the shared cache gained the entry the root already declares; (2) joins the cone recipe for a terraform root (the root's file() inputs).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W24-S12 as filed; W1-AC9 0/3/0 and W1-AC11 'No changes' after the init; the main tree's cache predated B4's module as well.",
+      "WHY GRADUATED: a shared-cache write that adds what the configuration declares is not drift; the cone item is owned."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W24-S12"
+  ],
+  "spec_asserts": "NEVER: bare terraform apply -- init is not apply; safe-apply gated the apply.",
+  "world_is": "The main tree's .terraform/modules/modules.json now carries the characteristics module entry.",
+  "notes": "Recipe: a terraform root's cone carries every path its file() reads."
+},
+{
+  "id": "POSN_ASTTAX-Z-S161",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T05:32:02Z",
+  "one_line": "ADJUDICATION of W24-S13 (INERT): the in-Lambda measures are now READ (Duration 39,407 ms of 120,000; Max Memory 270 MB of 512; Init 440 ms) -- the envelope holds with 3x headroom, answering W24-S5; separately the recorder's CHANGELOG limb failed on a DIFFERENT device defect than the order predicted (a JSON_TOOL resolution, not the bun path) -- a second failure mode in the same script. CARRIED with W23-S4 / C-S136 to the deployment tooling owner (0.7.0_AE_CloudOps); the by-hand entry is the record tonight, as in round 5.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W24-S13 as filed with the REPORT line; the CHANGELOG head entry at HEAD names the function and 2a62019b.",
+      "WHY GRADUATED: the measurement closes an open question and the tooling defect has an owner and a workaround that produced the record."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W24-S13"
+  ],
+  "spec_asserts": "TO-W1-1 W1-AC14: the CHANGELOG entry by hand in the helper's shape.",
+  "world_is": "The record is in the tree; the recorder still cannot write it on this device.",
+  "notes": "For the CloudOps carry."
+},
+{
+  "id": "POSN_ASTTAX-Z-S162",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T05:32:02Z",
+  "one_line": "ADJUDICATION of W24-S14 (INERT): adding infra/aws/ec2 to the cone manufactured 12 'modified' files under infra/aws/ec2/smartx-exporter (CRLF-vs-LF checkout artifacts, every line of each) that the worker never touched and left uncommitted -- correct. RULED: a device checkout artifact (the same family as the tree's autocrlf warnings), outside every grant this round; nothing to do in POSN; noted for the device.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W24-S14 as filed; git's own CRLF warning on the same paths.",
+      "WHY GRADUATED: not an edit, not in any grant, not committed; a device note."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W24-S14"
+  ],
+  "spec_asserts": "CLAUDE.md: a worker's write surface is exactly its <paths>.",
+  "world_is": "The 12 files sit modified in slot ~24's worktree only.",
+  "notes": "Slot cleanup at L9 discards them with the worktree."
+},
+{
+  "id": "POSN_ASTTAX-Z-W24-S15",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~24",
+  "surfaced_at": "2026-09-15T05:48:33Z",
+  "one_line": "TWO INSTRUMENT FINDINGS FROM THE RESUME ON THE TWO RE-CUT CRITERIA. (1) comp-iam's SWEEP IS AS NARROW AS THE WORKTREE'S SPARSE CONE, AND IT PRINTS THAT NARROW DENOMINATOR WITH FULL AUTHORITY: `comp-iam gaps` run in this sparse worktree reports 'scanned 3 trees (27 .tf files) / policy blocks attached 15; NOT ATTACHED 4', where the SAME tool in the issuer's preflight (~03:2xZ) reported 474 .tf files and 404 attached. This worktree TRACKS 469 .tf files under infra/aws/terraform alone; only cot-pipeline/ and modules/ are materialised on disk, and comp-iam reads the filesystem. Nothing in the output says the corpus was truncated -- the banner names the DESIRED-plane caveat and the NOT-ATTACHED parser hole, but not the 94% of the .tf corpus that is simply not checked out. (2) THE LAMBDA SOURCE MAP'S DELIBERATE RE-ESCAPE TO PURE ASCII DID NOT SURVIVE THIS CELL'S RECORDER RUN: infra/aws/lambda/ci/lambda-source-map.json is non-ASCII 0 at 909e9783f3 (worker ~20's V4-AC13 remediation) and non-ASCII 28 at a031c56c74, the first record-terraform-deploy.sh commit of THIS cell, staying 28 through 9633bb9e7e, 3c5c3bba93, this branch's HEAD and SITEZ. The recorder's own JSON writer re-encodes the whole file on every run and silently reverts another cell's fix; nothing gates it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W1-AC8 as re-cut, run verbatim in /c/tmp/wk-posn-6-24 @3f089f2928: `timeout 300 bash -c \"comp-iam gaps 2>&1 | grep -n -B2 -A60 'cot-satellites-characteristics-producer'\"` -> EXIT=1, zero lines selected. The unpiped lens output is 35 lines / 2433 bytes and contains NO per-role section for ANY role: its verdict lines are 'No ACTION-plane permission gaps detected. (27 services scanned, 9 IAM roles parsed)', 'No MISSING-permission gaps among MODELED services.', 'RESOURCE PLANE: 25 call(s) verdicted across 23 mapped role(s); 22 UNRESOLVABLE-RESOURCE, 2 GRANTED-BROAD, 1 GRANTED', '46 call(s) in 6 role-UNMAPPED service(s) NOT resource-checked (no role to verdict against -- honest hole, not a pass)' and 'Total: 0 missing | 0 deny-present | 0 coverage-unknown | 0 resource-mismatch across 0 service(s)'.",
+      "The denominator the lens prints here, verbatim: 'scanned 3 trees (27 .tf files): infra/aws/terraform, infra/aws/multi-account/terraform, infra/aws/ec2' and 'policy blocks attached 15; NOT ATTACHED 4 (a role ref this parser cannot resolve); standalone 0'. The task order's own <preflight> comp-iam line records the SAME tool at ~03:2xZ as 'DESIRED plane, 474 .tf files, 404 policy blocks attached, 26 NOT ATTACHED'.",
+      "The narrowness is the sparse cone, measured: `git ls-files 'infra/aws/terraform/**/*.tf' | wc -l` = 469 tracked in THIS worktree, while `ls infra/aws/terraform/` on disk returns only ROLLBACK_PROCEDURE.md, cot-pipeline/, modules/ and tombstones.json.",
+      "The role is NOT missing from the parse, so the grep's zero is not a parse failure: `comp-iam roles` in the same worktree prints 'IAM ROLES (9 found)' including 'cot-satellites-characteristics-producer-role / tf_resource: cot_satellites_characteristics_producer / statements: 9 (10 Allow actions) / source: infra/aws/terraform/cot-pipeline/satellites-characteristics-producer.tf'. `gaps` emits prose only for a VERDICTED gap, and this role produced none.",
+      "Source map non-ASCII by vintage, one detector (len(b) - len(b.decode('utf-8'))) over `git show <ref>:infra/aws/lambda/ci/lambda-source-map.json`: 909e9783f3 bytes=197974 non_ascii=0; a031c56c74 bytes=197887 non_ascii=28; 9633bb9e7e bytes=197884 non_ascii=28; 3c5c3bba93 non_ascii=28; HEAD non_ascii=28; SITEZ non_ascii=28. NEGATIVE CONTROL on the same instrument, same run: HEAD:.../purity_difference_control.py bytes=9841 non_ascii=0.",
+      "909e9783f3 is worker ~20's commit and its own subject names the act being reverted: 'record(POSN_ASTTAX.TO-V4-1 V4-AC13): the cot-pipeline CHANGELOG entry written by hand in the recorder helper's shape, and the source map re-escaped to the PURE ASCII the recorder's own writer had just flipped'.",
+      "The sibling file did NOT drift: infra/aws/terraform/cot-pipeline/CHANGELOG.json reads non-ASCII 18 now, the same count this cell recorded BEFORE and AFTER its hand-written entry (W1-AC14 limb 3, rc 0) -- because that entry was written by hand with json.dump(ensure_ascii=False), not by the recorder."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The task order re-cuts W1-AC8 to `comp-iam gaps` read with a pipe-receiver grep for this role's section, and names the fallback 'If the lens prints NO per-role section at all, record its whole output's shape (the denominator it prints) and the role's absence'. Its <preflight> states that same tool's denominator as 474 .tf files / 404 policy blocks attached. W1-AC14 as re-cut MEASURES a record already made, and the order's own W1-AC14 text requires the non-ASCII count 'printed before and after equal (unchanged by this cell)'.",
+  "world_is": "(1) comp-iam's denominator is a property of what is CHECKED OUT, not of the repository: in this sparse worktree the same subcommand swept 27 .tf files and 15 attached policy blocks instead of 474 and 404, and printed that as its own authority with no truncation warning. The two runs of one tool are therefore NOT comparable across a sparse worktree boundary, and a worker quoting its lens denominator beside a seat's is quoting two different corpora. Here it does not change W1-AC8's reading -- the role IS parsed from the one tree that matters (cot-pipeline, 9 statements / 10 Allow actions) and the lens emits no per-role prose for ANY role -- but the same narrowing would convert a genuine gap ELSEWHERE into a clean 'Total: 0 ... across 0 service(s)'. (2) A deliberate encoding remediation committed by one cell is reverted by the next cell's normal recorder run, and the revert is invisible: the file stays valid UTF-8 JSON, git shows a whole-file re-encode, and no gate reads the count.",
+  "notes": "NOT REPAIRED HERE, both deliberately. (1) is a property of the instrument plus this worktree's cone; widening the cone to make a lens denominator larger is not this order's act, and the order's fallback branch anticipated the empty read and named W1-AC9's plan text -- already recorded -- as the instrument that measured the grant. (2) infra/aws/lambda/ci/lambda-source-map.json IS inside this order's <paths>, but this resume's instruction is explicit that nothing is re-recorded and W1-AC14 only MEASURES the record; re-escaping the file would be a fresh write to the record this criterion grades. The durable fix is in the recorder's JSON writer (ensure_ascii on the source-map write in infra/aws/lambda/ci/record-terraform-deploy.sh), whose lane is CI/AE, not this worker's -- hence disarm_owner is the issuer, to route it. ARMED rather than INERT because the reverting act is the recorder's FUTURE NORMAL operation: every subsequent deploy record re-flips the file, so any remediation of it is guaranteed not to stick until the writer changes. No consumer breakage is claimed -- this worker did not census the readers of that file, and that census is the hinge between ARMED-and-harmless and ARMED-and-harmful."
+},
+{
+  "id": "POSN_ASTTAX-Z-S163",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T06:15:10Z",
+  "one_line": "DISARM of W24-S15 (ARMED, owner this seat): infra/aws/lambda/ci/lambda-source-map.json carries 28 non-ASCII bytes again from a031c56c74 onward (the CI recorder's own commits 'ci: record deploy cot-pipeline'), after worker ~20's deliberate re-escape to 0 at 909e9783f3 in round 5; the detector len(b) - len(b.decode('utf-8')) over six vintages with a pure-ASCII negative control. RULED: the reverting act is the recorder's NORMAL write (the same class as round 5's Z-S103-family finding: every recorder run re-encodes the map, which is why this seat's drains merge it SEMANTICALLY -- merge_sourcemap.py), so a hand re-escape cannot stick and is not made here; the FIX is inside the recorder's write path (an explicit encoding and ensure_ascii on the JSON write; the python limb at record-terraform-deploy.sh:259 and :340-341 opens the file without an encoding, and the [skip ci] commits show a second writer) -- the CI/AE lane's, carried with W23-S4 / C-S136 (0.7.0_AE_CloudOps) for the round-6 analysis. THE HINGE, named and not closed tonight: the map's READERS and their encodings (943 files name the path; the code readers include record-terraform-deploy.sh, record-resource-deploy.sh, build-nodejs-lambda.sh, source-map-staleness-census.py, .tools/backfill-lambda-iam-mapping.py, .tools/check-lambda-layer-deps and the comp-lambdamap compiler) -- a cp1252 text-mode reader on this device decodes those 28 bytes WRONG and reports success (CLAUDE.md s.4); no consumer breakage is claimed and none was measured. INERT for this round: no POSN cell reads the map; B6's record (W1-AC14) was read back by content on an explicit-utf-8 read and agreed 3 of 3.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W24-S15 as filed (six vintages, 0 at 909e9783f3, 28 from a031c56c74 through SITEZ HEAD; negative control pure ASCII); this seat's read at 06:1xZ: 28 at HEAD.",
+      "record-terraform-deploy.sh :259 `with open(source_map_path) as f:` and :340-341 `with open(source_map_path, 'w') as f: json.dump(sm, f, indent=2)` -- no encoding argument on either; the recorder's commits carry the bytes.",
+      "WHY GRADUATED: the hazard has a mechanism, a writer, an owner and a named hinge; a round-6 cell cannot fix a CI lane's script (out of every grant) and a by-hand re-escape is undone by the next deploy of any function."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W24-S15"
+  ],
+  "spec_asserts": "CLAUDE.md s.4: no non-ASCII in production code/logs/AWS; a file's every reader explicit or ALL non-ASCII out, never a subset; the recorder's device defects are the CI lane's (W23-S4, C-S136).",
+  "world_is": "The source map at HEAD carries 28 non-ASCII bytes written by the recorder; POSN's drains merge it semantically; the reader-encoding census is unread.",
+  "notes": "For the round-6 analysis and the CloudOps carry: one recorder fix (encoding + ensure_ascii) closes W23-S4's encoding limb, C-S136's banner limb stays separate."
+},
+{
+  "id": "POSN_ASTTAX-Z-W26-S8",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~26",
+  "surfaced_at": "2026-09-15T05:55:00Z",
+  "one_line": "RESUMED on TO-W3-1 act 1 (the DRAWN-COLUMNS re-cut). Four things the re-cut moved that the order's text did not. (1) W3-AC2's denominator: the criterion reads 'exactly two files changed' vs refs/drains/posn-6-portal, but that ref was fast-forwarded to 10a2799c -- this worker's OWN prior commit, which already contains both files -- so a re-cut touching one file can never print two. Recorded both ways: 1 file vs the ref (this act), 2 files vs dd1d33c6db (the round's base, the named pair and nothing else). (2) The prior run's fixture bytes did not survive the session (portal/.scratch is gitignored), so the six keys were re-fetched BY PINNED VersionId and accepted on md5 equality, 6 of 6 identical -- and one of the six, platinum/satellites/characteristics.json, HAS MOVED on the live plane since (74d9.pGWF16Ox7cXKGax.zQw.lhwi5yI, 67782 bytes, 2026-09-15T04:53:42Z vs the pinned rt61ogajZQy79meUlsY1X_mIdPngxJTZ, 54825 bytes). A latest-fetch would have rendered DIFFERENT bytes and the re-render would not have been comparable to the prior run; only the pin makes 'the same served bytes' true. (3) W3-AC5's label-shape clause has no subject in the Relative view: that view renders signed one-decimal deltas, not percent labels, so the shape regex matches 0 of 89 there -- and 79 of those 89 are Asset-Sub-Category matrix cells the bar-label rule never governed. The clause is exercised on Portfolio / Benchmark / ETFs / Satellites, where it is 11 of 11, 9 of 9, 8 of 8 and 30 of 30. (4) A WORKER CANNOT TAKE RULE 14b's REMEDY FOR AN APPEND-ONLY SHARED FILE. This append was first re-based on SITEZ's channel bytes (a strict superset by id, 281 rows containing all 241 of this branch's) precisely to avoid the same-offset drain conflict rule 14b names; surprise-row-gate.py REFUSED it with a FOREIGN-ROW SWEEP -- 26 of 41 new rows surfaced by another seat -- and exited 1. The gate is right and the rule's remedy is unavailable inside a mandated worker worktree: the stale copy IS the correct base, and the conflict is the issuer's at the drain.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C portal rev-parse refs/drains/posn-6-portal = 10a2799c67c519288fcd7d4ae6e3b86d5ed48b5a, this worker's prior commit (w3_ac1.txt, this run).",
+      "git -C portal diff --stat refs/drains/posn-6-portal -- src = 1 file (PositioningSummary.tsx); git -C portal diff --stat dd1d33c6db -- src = 2 files, PositioningSummary.tsx and Positioning.tsx (w3_ac2.txt).",
+      "w3_refetch_pinned.txt: 6 of 6 keys re-fetched by pinned VersionId, every md5 equal to the prior run's manifest; the LIVE head printed beside each pin, one MOVED.",
+      "w3_postedit_dom_read.txt, MODELS / Relative view: LABEL SHAPE 0 match of 89 labels; the same file's other four views 11/11, 9/9, 8/8, 30/30 EQUAL.",
+      "The row gate's own refusal, run before the commit: '[surprise-row-gate] ... FOREIGN-ROW SWEEP -- 26 of 41 new row(s) ... Commit only your own rows', GATE RC=1, with the corpus limb printing documents=70 rows=2340 failures=4 baseline=4 new=0.",
+      "NOT A CLAIM ABOUT THE ACT: all four are about the criteria's frame and the commit mechanics, not about the render. The render's own control is w3_render_control_md5.txt -- exactly 1 of 4 captured views moved."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-W3-1 W3-AC2 expects exactly two changed files against refs/drains/posn-6-portal; W3-AC5 expects every single-bar percent label in the TEXT dump to match the two-decimal shape with the label count and the match count equal; the hand-over facts expect the fixtures to be the SERVED bytes; CLAUDE.md rule 14b says an append-only shared file is NOT isolated in a side branch.",
+  "world_is": "The drain ref moved onto the worker's own prior commit between the two runs, so the two-file denominator belongs to the round's base (dd1d33c6db) and not to the ref the criterion names; the Relative view has no percent labels for the shape clause to grade; one of the six served keys moved on the live plane between the runs, so 'the served bytes' is a fixed object only because the VersionId pin exists; and the row gate refuses the only move that would have made the channel append conflict-free, so a worker appends to a stale copy by design.",
+  "notes": "Filed by the worker on resume; no act taken beyond recording both denominators and committing this branch's own rows only. Nothing here changes what act 1 did."
+},
+{
+  "id": "POSN_ASTTAX-Z-S164",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T06:23:33Z",
+  "one_line": "ADJUDICATION of W26-S8 (INERT), the resumed run of TO-W3-1 act 1: (1) W3-AC2's 'exactly two files vs the ref' cannot print two once the ref was fast-forwarded onto the worker's own prior commit -- recorded both ways (1 vs the ref, 2 vs the round base dd1d33c6db, the named pair), RULED sufficient: the bar's substance is 'nothing outside the two files', which both readings show; (2) the fixtures were re-fetched BY PINNED VersionId and accepted on md5 equality (6 of 6) because characteristics.json had moved live (B6) -- the right instrument: 'the same served bytes' means the pinned bytes, and the re-render was comparable (3 of 4 views md5-identical, exactly the Benchmark view moved); (3) W3-AC5's label-shape clause has no subject in the Relative view (signed one-decimal deltas) -- stated, no defect; (4) the row gate's foreign-row sweep refused a row re-order the worker tried to make the channel append conflict-free -- correct behaviour of the gate (a worker never moves another author's rows; the drain's union is the mechanism). ALSO RE-APPLIED HERE: the worker's status flip to complete (its commit 6e99b97e6c, proof VALID rc=0, 8 rows re-recorded) which the 3-way merge dropped because the worker's final status equalled the merge base's while the shared branch carried the re-cut's in_progress -- an issuer act on the merge result, not a grading. TO-W3-1 (F5) is COMPLETE at HEAD: the presence rule over the drawn columns (Benchmark view 2 classes, no Structured row; Relative 3; Portfolio 3; Satellites 4; ETFs 2), the two-decimal trimmed label, the Satellites footer, subtitle and notices.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W26-S8 as filed; the re-run's proof instance VALID rc=0; W3-AC5: presence sets 3/3, 2/2, 3/3, 2/2 AGREE; 21 matrix rows in the Benchmark view where the pre-re-cut render drew 22 with a Structured row of five zeros (w3_models_bench_PRECUT_at_10a2799c.png kept beside the new capture).",
+      "The portal ref refs/drains/posn-6-portal = 5ddce2c7 (the re-cut commit, one file); gitlink e85f6eb84f unmoved.",
+      "WHY GRADUATED: every item is a stated reading with the honest instrument chosen; no served byte is wrong; the order's every criterion is PASS by output or a recorded judgment."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W26-S8"
+  ],
+  "spec_asserts": "PRD v0.11 C-PRESENT-CLASSES: one presence set per render over the columns the current view draws; TO-W3-1 as re-cut at aacde43a63.",
+  "world_is": "F5 complete on the portal ref at 5ddce2c7 behind the freeze; the W3-AC8 judgment's third reading (Structured present in Portfolio, absent in Benchmark, present in Relative -- a row that blinks as the toggle moves) is recorded for 3.0.0_SA_CVO~Z at L9.",
+  "notes": "The judgment's 'blinking row' is the presence rule's own consequence under Andrew's word; L9 grades it, L10 decides whether the rule wants a 'held by no drawn column' affordance."
+},
+{
+  "id": "POSN_ASTTAX-Z-W25-S1",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~25",
+  "surfaced_at": "2026-09-15T06:40:14Z",
+  "one_line": "TO-W2-1 W2-AC1's invocation hands an MSYS path ('/c/tmp/wk-posn-6-25/.scratch/char_served.json') to python3, which on this device is native Windows Python 3.11 -- the download lands correctly and the read raises FileNotFoundError, so the criterion's named 'tickers' count and sources line CANNOT print as written.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Run verbatim at 2026-09-15T05:4xZ: the aws shim printed VersionId 74d9.pGWF16Ox7cXKGax.zQw.lhwi5yI / LastModified 2026-09-15T04:53:42+00:00, then 'FileNotFoundError: [Errno 2] No such file or directory: /c/tmp/wk-posn-6-25/.scratch/char_served.json'; the compound's rc was 0 because the last limb succeeded.",
+      "ls -l /c/tmp/wk-posn-6-25/.scratch/ shows char_served.json at 67782 bytes (the object's ContentLength), so the download is sound and only the READ path form is wrong.",
+      "which python3 -> /c/Users/Opal Bloomberg/bin/python3, sys.executable C:\\Users\\Opal Bloomberg\\AppData\\Local\\Programs\\Python\\Python311\\python.exe -- a native interpreter cannot resolve an MSYS /c/ path.",
+      "The same bytes read cleanly at the Windows path: tickers 25, sources ['bbg','none','positioning_data'], name and management_style on 25 of 25.",
+      "Banked device lesson: memory/native-python-cannot-read-cygdrive-paths.md."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "W2-AC1 expect: 'the served characteristics.json carries a non-empty tickers block (count and sources printed)'.",
+  "world_is": "The block is there and was read (25 tickers, 3 sources, 25 of 25 carrying name and management_style), but not by the invocation as written -- its python limb raises on this device. Recorded as REFUSED with the measurement rather than repaired.",
+  "notes": "Cost of the fix at the cut: one path form ('C:/tmp/...' or a portal-relative path). Every other invocation in this TO uses relative paths and runs clean."
+},
+{
+  "id": "POSN_ASTTAX-Z-W25-S2",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~25",
+  "surfaced_at": "2026-09-15T06:40:14Z",
+  "one_line": "The round's portal drain ref MOVED under a live worker: refs/drains/posn-6-portal was 10a2799c67 when this TO was cut and read back at W2-AC1, and is 5ddce2c7ee (a sibling's F5 re-cut) three hours later -- so W2-AC2's 'diff --stat against the ref' reports FIVE files, the fifth being the SIBLING's PositioningSummary.tsx, not this worker's.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W2-AC1 at 2026-09-15T05:4xZ printed 'git -C portal rev-parse refs/drains/posn-6-portal' = 10a2799c67c519288fcd7d4ae6e3b86d5ed48b5a and REF-IS-ANCESTOR.",
+      "At 06:3xZ the same read prints 5ddce2c7ee9a2db498852112dc04c8f42ff419dd -- 'F5(POSN_ASTTAX AT6-s-3, TO-W3-1 act 1 RE-CUT) ... 0.9.0_WK_POSN_ASTTAX~26 2026-09-15 01:49:58 -0400'.",
+      "git -C portal diff --name-only 10a2799c67 refs/drains/posn-6-portal -- src = src/pages/Positioning/panels/PositioningSummary.tsx ONLY (F5's file, disjoint from this TO's four).",
+      "Against the pinned base the same command reports exactly the four files the criterion names: git -C portal diff --stat 10a2799c67 -- src -> satelliteRegistry.ts, satelliteAdapter.ts, satelliteSet.ts, HoldingsTab.tsx.",
+      "merge-base(my HEAD, ref) = 10a2799c67; base IS an ancestor of the ref; nothing was merged in mid-round."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "W2-AC2 expect: 'exactly four files changed ... nothing under src/pages/Positioning/panels/ or Positioning.tsx (F5's files)'.",
+  "world_is": "The invocation compares the working tree against a MOVING SHARED REF, so a sibling's drain during the round adds that sibling's files to this worker's diff. This worker's own surface is exactly four (unscoped git status --porcelain: four M lines, nothing else).",
+  "notes": "ARMED because the condition recurs by normal operation: any worker whose sibling drains mid-round reads a diff naming files it never touched, and the obvious repair (staging what the diff shows) would commit a sibling's work. Disarm at the cut: pin the comparison to the commit the branch was cut from, which the TO already states, instead of the ref name."
+},
+{
+  "id": "POSN_ASTTAX-Z-W25-S3",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~25",
+  "surfaced_at": "2026-09-15T06:40:14Z",
+  "one_line": "W2-AC8 predicts the Models Portfolio Composition legend lists 3 classes, but that panel's legend is PER DISPLAYED BOOK (the rule the same criterion states) and the book on screen at load is INT, which holds 2 -- the 3-class set is the ALL-BOOKS union the Positioning Summary draws.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Served positioning_data.json (VersionId AqBtm_5o.2QeiCBRP_veC8HV2Xk0OSaj) current_holdings by class: UST {Fixed Income 14}, ST {Fixed Income 11, Equity 4}, INT {Equity 11, Fixed Income 8}, LT {Equity 11, Fixed Income 4, Structured 1}, ULT {same as LT}, AGG {Equity 11, Fixed Income 18, Structured 1}.",
+      "DOM read after the edit, Models default book (INT, measured active in the button strip): legend 2 entries -- Fixed Income rgb(16,185,129), Equity rgb(59,130,246).",
+      "DOM read after the edit, Models book LT: legend 3 entries -- Fixed Income, Equity, Structured. The rule discriminates; the book decides the count.",
+      "Pre-change dump, same page and same book: 5 entries in every mode (the control)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "W2-AC8 expect: 'the Portfolio Composition legend lists exactly the classes with a non-zero tile in the displayed book (... Models: 3 -- Fixed Income, Equity, Structured ...)'.",
+  "world_is": "The rule half is satisfied and the number half is not reachable from the invocation, which displays INT. The implemented rule was NOT widened to an all-books union to make the 3 appear.",
+  "notes": "The criterion is recorded REFUSED with both readings printed (INT 2, LT 3). If the intended bar is the mode-level union, that is a different rule from the one step 6 states and belongs to the issuer, not to this worker."
+},
+{
+  "id": "POSN_ASTTAX-Z-W25-S4",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~25",
+  "surfaced_at": "2026-09-15T06:40:14Z",
+  "one_line": "A PanelHeader CANNOT NAME A SOURCE: DataTimestamp takes `source` and uses it only to decide a Yang-specific timestamp adjustment, never rendering it -- and in satellites mode the Portfolio Composition header's eight-satellite button strip leaves its left column 18px, where the date already overlaps the actions by 20px with or without any subtitle.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "src/components/DataTimestamp.tsx: 'const { label } = formatTimestamp(lastUpdated, source)' and the render is '<span>{label}</span>' -- source reaches adjustYangTimestamp and nothing else.",
+      "Measured at 1440x900 after the edit, satellites mode: Portfolio Composition header actions box x=123 w=1260, left column w=18, timestamp box w=26 overlapping the actions by 20px, header height 73px.",
+      "Counterfactual measured on the same bytes with the subtitle removed: identical 18px column and identical 20px overlap, header 73px; WITH a subtitle on that panel the header grows to 137px of wrapped text.",
+      "Holdings Breakdown header on the same page: left column 275px, timestamp 65px, overlap 0 -- it carries 'Source: Black Diamond' legibly, and it does.",
+      "PanelHeader.tsx and DataTimestamp.tsx are both OUTSIDE this TO's <paths> grant."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-W2-1 act 5: 'both headers show that date and source'.",
+  "world_is": "Both headers show the DATE (Sep 14, 2026, the served holdings as_of, replacing the models PKL clock). The SOURCE is shown in the Holdings Breakdown header and in BOTH panel footers; the Portfolio Composition header has no room for it and no prop that renders it.",
+  "notes": "Two candidate fixes, both outside this grant: render `source` in DataTimestamp, or let the composition panel's selector wrap. The false clock -- the thing the act was for -- is gone from both panels either way."
+},
+{
+  "id": "POSN_ASTTAX-Z-W25-S5",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~25",
+  "surfaced_at": "2026-09-15T06:40:14Z",
+  "one_line": "W2-AC5's expect predicts the NAME cell falls back to the ticker for CASH ('the ticker only where it is null -- CASH expected'), but B6 publishes a name for 25 of 25 tickers including CASH ('Cash & Cash Equivalents'), so 0 of 32 rendered rows take the fallback and that branch ships UNEXERCISED by today's payload.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Served characteristics.json VersionId 74d9.pGWF16Ox7cXKGax.zQw.lhwi5yI: entries carrying a non-null name = 25 of 25; CASH = {'name': 'Cash & Cash Equivalents', 'management_style': 'unknown', every measure null}.",
+      "w25_cell_compare over both satellites: 'NAME CELL: 32 of 32 rows took the SERVED name; 0 fell back to the ticker'.",
+      "The rendered CASH row reads 'Cash & Cash Equivalents' with every measure a dash and ACTIVE a dash.",
+      "The same hand-over fact the TO carries (item 1) already says every entry carries name and management_style, so the parenthetical and the hand-over disagree with each other."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "W2-AC5 expect, parenthetical: the ticker stands in where the served name is null, CASH expected.",
+  "world_is": "No row in either satellite has a null served name. The stand-in branch is implemented as the TO's act 3 requires and is not reachable on this payload -- an unexercised branch, stated rather than implied.",
+  "notes": "Does not change the criterion's rule half ('the NAME cell EQUALS the served name for every row whose served name is non-null'), which is measured 32 of 32."
+},
+{
+  "id": "POSN_ASTTAX-Z-S165",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T07:08:16Z",
+  "one_line": "THE ORGANIC ARM OF R2 LANDED AND READS AS THE HALVES PREDICTED (both R2 halves named the 07:00Z registry-producer fire as the organic leg; B2's ledger L8 was re-cut on the driven mechanism and closed): at 07:00:19Z/07:00:20Z the scheduled fire wrote registry.json VersionId Uvdn048aH13FRTWAvfoZsftZKPZOPBIT (as_of 2026-09-15; books IDENTICAL to the driven run's, 9 of 9; only as_of/source moved) and holdings.json VersionId 5tjkvDfus1antRLsbDrLikcMQzH1Hk.F (as_of 2026-09-15, 55047 B): 9 satellites, every ticker set IDENTICAL to the 2026-09-14 partition's, LABELS MOVED 0 (GLD commodities/Metals, VXX structured/Hedge, every row labelled, 25 distinct tickers), weights moved per row on the new roster (12-17 rows per satellite) with per-satellite totals 100.00-100.07 unchanged. Read by this seat at 07:01Z with get-object against the driven relabel's captured bytes. The organic case is CLOSED; the driven mechanism and the scheduled fire agree.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "The watch exited at 07:00:34Z on the VersionId move; the diff script's per-satellite lines (rows, set-equal, weights-moved, labels-moved, totals, coverage).",
+      "WHY GRADUATED: the negative arm produced the same labels by the producer's own schedule with no act of this seat; both halves' branch A."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "The R2 halves (CTO @d1685fb4ea, COO @424b7d0e95): 'the 07:00Z fire stays the organic leg and writes as_of 2026-09-15'.",
+  "world_is": "The served satellites keys carry the 2026-09-15 partition with the retagged labels.",
+  "notes": "B6's own organic arm (the first 12:30Z fire) is the remaining read of the night, on its ledger L8."
+},
+{
+  "id": "POSN_ASTTAX-Z-S166",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T07:08:16Z",
+  "one_line": "ADJUDICATION of W25-S1 (INERT): W2-AC1's invocation handed an MSYS path (/c/tmp/...) to native Windows python, so its own tickers line raised FileNotFoundError while every other limb printed; the worker measured the block beside it (25 tickers, name + management_style 25 of 25, VersionId 74d9.pGWF...) and REFUSED the criterion as written -- correct. ACT: the two occurrences re-cut to the native path C:/tmp/... (the issuer's defect; the device memory 'native Python cannot read /cygdrive or MSYS paths' applies to every invocation an order hands to python3).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W25-S1 as filed; the re-cut at this commit.",
+      "WHY GRADUATED: the dependency held on the worker's own read; the instrument is now runnable."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "TO-W2-1 W2-AC1: the served block read back.",
+  "world_is": "The block was served and read; the criterion's line could not print it.",
+  "notes": "An invocation is run once at the cut.",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W25-S1"
+  ]
+},
+{
+  "id": "POSN_ASTTAX-Z-S167",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T07:08:16Z",
+  "one_line": "DISARM of W25-S2 (ARMED, owner this seat): the round's portal drain ref moved UNDER a live worker (10a2799c -> 5ddce2c7 when F5's re-cut was drained at 05:2xZ while F4 ran from 10a2799c), so W2-AC2's 'diff vs the ref' named the sibling's file and W2-AC7's 'ref..branch' would read empty once the ref contains the branch; the worker recorded both readings (5 vs the moving ref, 4 of 4 vs its base) and REFUSED as written -- correct. RULED: the ref moves at every drain BY DESIGN (one lineage, disjoint files merged at the drain); a worker's diff/log bars name the branch's BASE commit as recorded in PORTAL_REFS.md, never the ref. ACT: W2-AC2 and W2-AC7 re-cut to the pinned base 10a2799c; the recipe for every future portal order. INERT: no byte of the sibling's was committed by this worker (its unscoped status showed its four files only).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W25-S2 as filed; PORTAL_REFS.md's line for wk-posn-6-25-portal names the base 10a2799c; the ref at ebbee2e6 now contains both branches (6 files vs dd1d33c6db: F5's 2 + F4's 4).",
+      "WHY GRADUATED: the hazard (committing a sibling's files to satisfy a diff bar) did not fire and the bar no longer invites it."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "TO-W2-1 W2-AC2 / W2-AC7 as re-cut: the base commit is the comparison anchor.",
+  "world_is": "The drain ref is a lineage that advances; a base is a point.",
+  "notes": "Recipe: bars compare against `<BASE>` (from PORTAL_REFS), never `refs/drains/*`.",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W25-S2"
+  ]
+},
+{
+  "id": "POSN_ASTTAX-Z-S168",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T07:08:16Z",
+  "one_line": "ADJUDICATION of W25-S3 (INERT): W2-AC8's legend clause said 'Models: 3' -- the union over all books -- while the same clause's rule is per DISPLAYED book: the default book at load (INT) holds 2 classes, LT holds 3; the worker measured both and REFUSED the number as written -- correct; the issuer's defect. ACT: the clause re-cut to per-book readings (INT 2, LT 3 as measured; Satellites 15 -> 3, 80 -> 4; the pre-change 5 in every mode as the control).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W25-S3 as filed; the first run's legend counts: Sat15 3, Sat80 4, Models INT 2, Models LT 3, pre-change 5 in every mode.",
+      "WHY GRADUATED: the mechanism (one presence set per displayed book) is what the worker shipped; only the expected number was the union."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "TO-W2-1 act 6 / W2-AC8 as re-cut.",
+  "world_is": "The Portfolio Composition legend lists only the displayed book's classes.",
+  "notes": "A number in an expect is a measurement, not a recollection.",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W25-S3"
+  ]
+},
+{
+  "id": "POSN_ASTTAX-Z-S169",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T07:08:16Z",
+  "one_line": "ADJUDICATION of W25-S4 (INERT): the Holdings panel header's DataTimestamp component accepts a `source` prop it never renders, and the composition header's left column measures 18 px against a 1260 px button strip (a 20 px overlap with and without a subtitle) -- both in files outside F4's grant (src/ui/...). RULED: the mode's own clock reaches the panels through the props F4 sets (dates 2 of 2, footers 2 of 2 carry Black Diamond and the as_of); the component's silent `source` and the header layout are CARRIED to the round-6 analysis as a shared-component item, not re-cut mid-round (no round-6 cell owns src/ui).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W25-S4 as filed with the measurements; W2-AC8's first-run readings: Satellites footers/headers 4 of 4 carry Black Diamond + 2026-09-14, 0 say Bloomberg; Models control byte-identical.",
+      "WHY GRADUATED: the visible clock is right; the unrendered prop and the layout overlap have a named file and owner for L10."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "PRD v0.11 C-SUMMARY-COPY (as read by Z-S136): the Satellites mode's footer names Black Diamond and the as_of.",
+  "world_is": "Two panel footers and two header dates carry the mode's clock; one header's source label is a component gap.",
+  "notes": "For 1.0.0_SA_CTO~Z's analysis: src/ui/components DataTimestamp renders `source`, and the composition header's column width.",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W25-S4"
+  ]
+},
+{
+  "id": "POSN_ASTTAX-Z-S170",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T07:08:16Z",
+  "one_line": "ADJUDICATION of W25-S5 (INERT): W2-AC5 predicted the ticker would stand in for CASH's name, but B6 publishes a name for 25 of 25 tickers (CASH: 'Cash & Cash Equivalents' from ETFClassifier), so 0 of 32 rows took the fallback -- the branch is built and unexercised, stated. RULED: correct as recorded; the expect's prediction was the issuer's (from the CTO's 'CASH by neither' measure of the MEASURES' sources, not the identity table); the fallback stays as the honest branch for a ticker the table does not carry.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W25-S5 as filed; the served block: identity_missing 0, CASH name non-null; W2-AC5: 32 of 32 rows took the served name.",
+      "WHY GRADUATED: an unexercised branch is disclosed with its denominator; nothing renders wrong."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "PRD v0.11 C-HOLDING-IDENTITY: the Holdings Breakdown renders NAME from the identity pair, the ticker only where the table has no row.",
+  "world_is": "Every satellite ticker has a table row tonight; the fallback has no live witness.",
+  "notes": "For L9: a bar that predicted a fallback the data never takes.",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W25-S5"
+  ]
+},
+{
+  "id": "POSN_ASTTAX-Z-S171",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T08:16:49Z",
+  "one_line": "THE REAL AD-HOC PULL, STEP 2, LANDED AND PRESENTS (Andrew ~07:4xZ via 0.0.0_AB_MSTR~Z 23080; the 13:00Z promote clock 23086). Step 1 (1.0.0_SA_CTO~Z, 23083): the Bloomberg ETF daily pull ad hoc -> bbg/2026-09-14/ at 07:52:33Z (run_class adhoc, 172 tickers, GLD and VXX observed). Step 2 (this seat): (a) both B6 halves amended for a SECOND driven run (COO R2 @b2560929dc, CTO A2 @7add447f06); (b) cot-satellites-characteristics-producer invoked with bbg_as_of 2026-09-14 at 08:09:22Z, rc 0, no FunctionError -- characteristics.json VersionId 74d9.pGWF16Ox7cXKGax.zQw.lhwi5yI -> PXyBGaqn.0Jk6TwWmXl34FlsDH8Gwd0R (08:10:03Z, 67764 B): inputs holdings_as_of 2026-09-15 / positioning_data_as_of 2026-09-11 / bbg_as_of 2026-09-14 (bbg_run_class adhoc), 25 tickers (23 positioning_data / 1 bbg / 1 none), identity 25 of 25 with identity_missing 0, GLD's returns at the new frontier 1D -1.4871 .. 1Y 17.1187 from 17 history partitions + 173 backfill tickers; (c) the presentation on the round-6 drain ref refs/drains/posn-6-portal = ebbee2e6 (F5 + F5 re-cut + F4; branch posn-6-present in /c/tmp/wk-posn-6-26/portal, dev server :5183) against fixtures built from the SIX served keys by pinned VersionId and md5 (present_manifest.json: positioning AqBtm..., etfs MkASX..., attribution mOBBm..., registry Uvdn048a... 07:00:19Z, holdings 5tjkvDfu... 07:00:20Z, characteristics PXyBGaqn... 08:10:03Z): Positioning -> Satellites -> Opal Satellite 15 and Opal Satellite 80 -> Holdings Breakdown: 0 mismatches of 512 cells across 32 rows (every Fee/MC/Active/Yield/Duration/Credit/Beta and all 8 return windows EQUAL the served values under the table's own formatting), NAME 32 of 32 served names, ACTIVE YES/NO by management_style and blank for CASH, GLD under Commodities/Metals with fee 40 and MC 143.7 and its 8 Bloomberg-sourced returns (-1.49% .. +17.12%), CASH blank throughout; the Summary's labels rounded to two decimals trimmed (0 labels with 3+ decimals across the three DOM dumps); four classes present on both satellites' Summary (Structured 0.35% on Sat 15, VXX Hedge 1.88 on Sat 80), the treemap legend per displayed book (Sat 15: 3, Sat 80: 4); every footer and header 'Source: Black Diamond, holdings as of 2026-09-15'; the Models control byte-identical to the round's reads (3 classes, 82.6%/17.4%, Source: Bloomberg). PNGs READ by this seat: present_sat15.png, present_sat80.png, present_models.png. TWO KNOWN COSMETIC ITEMS VISIBLE, already carried: the Portfolio Composition title overlapped by the satellite chip strip (W25-S4 / Z-S169) and the last Summary bar's label clipped at the panel edge (W26-S5 / Z-S146) -- neither a floating number nor a missing measure. Artifacts: deliverables/2.0.0_SA_COO~Z/present_20260915_0813Z/ (PNGs, DOM dumps, manifest, cell compare, the driven-run script).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "drive_characteristics.py output (the invoke, the read-back, the counts); present_cell_compare.txt TOTAL: mismatches 0 of 512 cells across 32 rows in 2 satellite(s); the three PNGs.",
+      "TWO INSTRUMENTS on the served block (the producer's own response; this seat's get-object read-back) and two on the render (ui-smoke screenshots; the DOM read joined to the served bytes by w25_cell_compare.py, a second implementation of the table's formatting rules).",
+      "WHY GRADUATED: the act is inside both halves' R2/A2, read back on the served key, and the presentation bar Andrew named (no floating numbers, no missing Characteristics or Performance) is met on the fresh bytes; the two cosmetic items have owners and carriers."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "Andrew ~07:4xZ: 'confirm that they do a real ad hoc pull and the data presents properly on Asttax'; the B6 halves R2/A2; PRD v0.11 FWD-7, C-HOLDING-MEASURES, C-HOLDING-IDENTITY, C-PRESENT-CLASSES, C-SUMMARY-COPY.",
+  "world_is": "The served satellites keys carry today's roster (07:00Z) and the ad-hoc Bloomberg partition (08:10Z); the round-6 portal ref renders them as specified; the 11:00Z scheduled pull rewrites bbg/2026-09-14/ with run_class scheduled and the 12:30Z fire re-serves the block organically (B6 ledger L8).",
+  "notes": "For 0.0.0_AB_MSTR~Z's independent verification: run id = bbg/2026-09-14/run_manifest.json generated_utc 07:52:33Z; the six VersionIds above; route /positioning -> Satellites -> Opal Satellite 15 / 80; the portal head to publish is ebbee2e6 unless F4's re-run adds a portal commit (it should not)."
+},
+{
+  "id": "POSN_ASTTAX-Z-S172",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T08:45:33Z",
+  "one_line": "From 0.0.0_AB_MSTR~Z's independent ASTTAX verdict (23103; PASS 544 of 544 cells, mutation arm discriminates, 0 unrounded): the Holdings Breakdown's CREDIT cell renders '-0' for VGSH (served credit -0.1467 through `credit.toFixed(0)`, HoldingsTab.tsx :1583) -- a negative-zero sign artifact of the renderer's own rounding, present in every mode for any credit in (-0.5, 0). Not a float, not a missing measure; the served value is correct. CARRIED to the round-6 analysis as a one-line renderer fix (normalise -0 to 0 after toFixed, or render the sign only when the rounded value is non-zero) in HoldingsTab.tsx -- outside every round-6 cell's text; not re-cut mid-round. Also from 23103, for the record: the VINTAGE qualifier (23 of 25 holdings at positioning_data_as_of 2026-09-11 until the ~11:05Z models publish) is answered by the COO half's R3 -- a third driven characteristics run after that publish, so the served block reads T-1 for 25 of 25 before the 11:00-12:00Z merge window; the 12:30Z fire stays organic.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "23103's verdict record (org/tier0_exec/0.0.0_AB_MSTR~Z/deliverables/asttax_verify_20260915/); this seat's present_cell_compare.txt shows VGSH credit served=-0 rendered=-0 (the compare re-implements toFixed(0), so it agrees with the artifact rather than catching it).",
+      "WHY GRADUATED: cosmetic, correct value, named file and fix, no cell owns the line tonight."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "PRD v0.11 FWD-7 ACCEPT: an analyst sees each fund's fee, size, yield, beta and returns; C-HOLDING-MEASURES: the served values attached without arithmetic.",
+  "world_is": "VGSH's Credit cell shows '-0' in Satellites 15 and in Models; every other cell equals its served value.",
+  "notes": "For 1.0.0_SA_CTO~Z's round-6 analysis with Z-S146 (the clipped label) and Z-S169 (the composition header)."
+},
+{
+  "id": "POSN_ASTTAX-Z-W25-S6",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~25",
+  "surfaced_at": "2026-09-15T09:39:30Z",
+  "one_line": "W2-AC1's ancestry limb requires the portal HEAD to DESCEND from refs/drains/posn-6-portal, but the ref has advanced 2 commits past this branch and now CONTAINS this worker's commit 16c5d359, so the relation is inverted and the criterion refuses as written; the ~07:1xZ re-cut pinned W2-AC2 and W2-AC7 to the branch BASE 10a2799c67 for this exact reason (W25-S2) but left W2-AC1 on the moving ref NAME.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C portal rev-parse refs/drains/posn-6-portal -> ebbee2e61a405f74156aded4ce54b3a9e0dc0211; git -C portal rev-parse HEAD -> 16c5d3593594f40d954493e93b28ccd292e18cd0.",
+      "AS WRITTEN: git -C portal merge-base --is-ancestor refs/drains/posn-6-portal HEAD -> rc=1, so REF-IS-ANCESTOR is not printed and the whole invocation exits 1.",
+      "INVERSE: git -C portal merge-base --is-ancestor HEAD refs/drains/posn-6-portal -> rc=0. Counts: rev-list --count refs/drains/posn-6-portal..HEAD = 0; rev-list --count HEAD..refs/drains/posn-6-portal = 2.",
+      "CONTROLS so the instrument is not the explanation: merge-base --is-ancestor 10a2799c67c519288fcd7d4ae6e3b86d5ed48b5a HEAD -> rc=0 (positive); merge-base --is-ancestor HEAD 10a2799c67c519288fcd7d4ae6e3b86d5ed48b5a -> rc=1 (negative).",
+      "The TO's re-cut header names the same mechanism for the two criteria it did pin: 'W2-AC2 and W2-AC7 pinned to the branch BASE 10a2799c (W25-S2: the drain ref moves under a live worker by design)'.",
+      "PORTAL_REFS.md line 16 records BASE 10a2799c67c519288fcd7d4ae6e3b86d5ed48b5a as refs/drains/posn-6-portal AT THE CUT, so the cut-time relation the clause was written to assert is provable against the BASE.",
+      "Path/commit: org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-W2-1.satellites-adapter-attaches-per-ticker-measures.md, W2-AC1 expect, at worktree HEAD 15436a2501cfbcd41e288cf01fbadc1139ccc064 (branch wk-posn_asttax-6-25)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "W2-AC1 expect: 'your portal HEAD descends from refs/drains/posn-6-portal'; the invocation prints REF-IS-ANCESTOR only when merge-base --is-ancestor <ref> HEAD succeeds.",
+  "world_is": "The drain ref is 2 commits AHEAD of this branch and contains this worker's commit, so HEAD does not descend from the ref -- the ref descends from HEAD. The limb cannot be satisfied by any act inside this grant (merging or rebasing onto the ref is forbidden), and satisfying it by substituting the BASE would REPAIR the criterion, which the TO's refusal clause forbids. W2-AC1 is therefore recorded FAIL with its measurement, while its other two limbs -- TO-W1-1 complete at SITEZ, and the served characteristics.json at PXyBGaqn.0Jk6TwWmXl34FlsDH8Gwd0R carrying tickers 25 with name 25 of 25 and management_style 25 of 25 -- PASS by output.",
+  "notes": "THIRD SPAWN on this order. Spawn 1 drained at 51c6108f7e and produced the re-cut; spawn 2 resumed and stopped mid-W2-AC6 WITHOUT committing, so nothing from it is in the record and every criterion recorded this run carries the output of the invocation THIS run made. W2-AC3, W2-AC5, W2-AC6 and W2-AC9 stand as recorded from the first run by the issuer's instruction and were not re-run. Two off-cell observations beside the finding above, neither a refusal: (i) the dev server left on port 5181 by the prior run was dead (curl http_code 000), so W2-AC8 ran on a fresh server on 5185 -- a port is not a state, and the fixtures were rebuilt from the served bytes this run rather than reused; (ii) build_fixtures_w25.mjs documents 'Usage (from portal/)' but w25_fetch_manifest.py writes manifest paths relative to the WORKSPACE root (portal/.scratch/...), so running the builder from portal/ raises ENOENT on 'portal/portal/.scratch/w25_posn.raw'; run it from the workspace root. The remedy is a docstring line in a deliverables-local tool, inside this grant but not on this cell's face, so it is stated here rather than edited mid-round."
+},
+{
+  "id": "POSN_ASTTAX-Z-W25-S7",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~25",
+  "surfaced_at": "2026-09-15T09:53:00Z",
+  "one_line": "W2-AC1's dependency limb reads the WORKTREE copy of TO-W1-1, which is stale against the shared branch by construction, so as written it prints in_progress while SITEZ prints complete -- the limb is satisfiable only by a read the invocation does not make, and the same shape recurs on any criterion that greps a shared-branch artifact from inside a worker's worktree.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "AS WRITTEN, from the worktree root: f=$(ls org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-W1-1.*.md); grep -o -m1 on its <status> -> <status>in_progress</status>.",
+      "SAME READ AT SITEZ 03a334e357: git show SITEZ:org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-W1-1.characteristics-per-ticker-block-and-schedule.md piped to grep -o -m1 -> <status>complete</status>.",
+      "The alternative branch of the expect is independently satisfied: SITEZ:org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~24/POSN_ASTTAX.TO-W1-1.characteristics-per-ticker-block-and-schedule.proof_of_spec.json carries W1-AC12 PASS (15 acceptance rows; W1-AC8 PASS and W1-AC14 PASS beside it), so W2-AC1's dependency holds on EITHER branch and this row changes no verdict.",
+      "Mechanism, not a defect in this branch: a worker's worktree is cut once and never merges, so any file the shared branch advances after the cut is read at the CUT vintage. The worktree copy of TO-W1-1 is the pre-flip one; SITEZ flipped it after this branch was created.",
+      "Path/commit: org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-W2-1.satellites-adapter-attaches-per-ticker-measures.md, W2-AC1 invocation limb 1, at SITEZ 03a334e357ba6fb6587d19cbab00baf6f0bf9de5, copied into worktree branch wk-posn_asttax-6-25 (0599f308f7) as this run's first act."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "W2-AC1's invocation resolves TO-W1-1 by ls inside the worker's own worktree and greps its <status>; the expect reads that status as the project's CURRENT dependency state (TO-W1-1 reads complete -- OR in_progress with its proof instance on SITEZ carrying W1-AC12 PASS).",
+  "world_is": "The worktree copy is a snapshot at branch-cut and prints in_progress; SITEZ prints complete. The invocation therefore measures THIS BRANCH'S VINTAGE of a shared-branch fact, and a criterion that must read a shared-branch fact has to name the ref (git show SITEZ:<path>) rather than a path inside the worktree. Here the difference is benign -- both branches of the expect are met, and the second branch is met at the worktree vintage too -- so the row is OBSERVATION and INERT. Same class as W25-S2 and W25-S6 (a clause anchored to something that moves under a live worker), direction reversed: there the ANCHOR moved ahead of the worker, here the WORKER'S COPY lags the anchor.",
+  "notes": "FOURTH SPAWN, ONE CRITERION. Re-ran nothing but W2-AC1, on the limb the issuer re-cut at SITEZ 03a334e357. That re-cut CLOSES W25-S6 by measurement: git -C portal merge-base --is-ancestor 10a2799c67c519288fcd7d4ae6e3b86d5ed48b5a HEAD -> rc=0 and BASE-IS-ANCESTOR is printed, with the inverse at rc=1 as a discriminating negative control. W2-AC1 is recorded PASS and the order's status flips to complete at 9 of 9 (8 PASS by output, W2-AC9 recorded judgment). No portal commit this run: portal HEAD stays 16c5d3593594f40d954493e93b28ccd292e18cd0."
+},
+{
+  "id": "POSN_ASTTAX-Z-S173",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T10:03:14Z",
+  "one_line": "ADJUDICATION of W25-S6 (INERT), the THIRD spawn of TO-W2-1 (09:22-09:44Z, after the second spawn HUNG from 07:35Z while re-running a criterion that already stood -- stopped by the issuer at 09:21Z on the CTO's measurement 23110): W2-AC2/AC4/AC7/AC8 PASS by output on this run's own invocations (4 of 4 files vs the base; tsc 2028 files with the 1-of-1 injected control; base..branch 1 commit, gitlink unmoved two ways; footers/headers Black Diamond 2026-09-15, Bloomberg 0, legends Sat 15 = 3, Sat 80 = 4, Models INT = 2 vs the pre-change 5); W2-AC1 REFUSED on its ancestry limb -- the issuer's re-cut had anchored W2-AC2/W2-AC7 to the base but left W2-AC1 on the moving ref name, which inverts once the ref contains the branch (the worker's BASE->HEAD control read rc=0 in the same run). RULED: the refusal correct, the defect the issuer's (the third of the W25-S2 class); W2-AC1's limb re-cut to the base @03a334e357 and a fourth spawn recorded it. Also from this run: the surprise-row class enum refused SPEC_DEFECT (re-classed OBSERVATION, the ratified axis -- Z-S158); the amended order text stays the issuer's commit on SITEZ, never the worker's (correct).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "The third run's proof instance at 0599f308f7 (W2-AC1 FAIL with both ancestry directions measured; four PASS rows with denominators); the re-cut at 03a334e357; the drain 67bc9a7483.",
+      "WHY GRADUATED: every act is evidenced, the one defect is named as the issuer's and closed by a one-clause re-cut, and the hung run wrote nothing to any branch."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W25-S6"
+  ],
+  "spec_asserts": "TO-W2-1 W2-AC1 as re-cut: the branch BASE is the ancestry anchor.",
+  "world_is": "F4 on the ref at 16c5d359 (inside ebbee2e6); the order's criteria all PASS after the fourth run.",
+  "notes": "A criterion's every limb names the base, never the ref: three defects of one class this round (Z-S167, Z-S173)."
+},
+{
+  "id": "POSN_ASTTAX-Z-S174",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T10:03:14Z",
+  "one_line": "ADJUDICATION of W25-S7 (INERT), the FOURTH spawn of TO-W2-1: one criterion (W2-AC1 as re-cut to the base) run and recorded, the instance re-synced to 9 of 9 invocation alignment, the status flipped to complete by the worker on nine PASS-or-judgment rows. RULED: TO-W2-1 (F4) COMPLETE; nothing else in the run.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "The fourth run's commit(s) on wk-posn_asttax-6-25 and the drain 67bc9a7483; W2-AC1's deciding output (BASE-IS-ANCESTOR; TO-W1-1 complete at SITEZ; the served block's counts).",
+      "WHY GRADUATED: the last open criterion closed on its own invocation's output; the shipped bytes were never in question (two independent 0-mismatch reads)."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W25-S7"
+  ],
+  "spec_asserts": "TO-W2-1 as amended and re-cut; PRD v0.11 FWD-7, C-HOLDING-MEASURES, C-HOLDING-IDENTITY.",
+  "world_is": "Round 6's three orders read complete at HEAD.",
+  "notes": "For L9: four spawns for one order, three of them on the issuer's invocation defects; the cost is recorded in the round-6 log."
+},
+{
+  "id": "POSN_ASTTAX-Z-S175",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T13:20:36Z",
+  "one_line": "B6's ORGANIC ARM LANDED AND ANSWERS THE VINTAGE QUALIFIER WITHOUT A THIRD DRIVEN RUN: the rescheduled rule cron(30 12 * * ? *) fired at 12:30:54Z after both its inputs of the day (the 11:06Z models publish at positioning_data_as_of 2026-09-14; the 11:07Z scheduled Bloomberg pull rewriting bbg/2026-09-14 as run_class scheduled) and served characteristics.json 02SGBCPDoeVPy7JBJcEHxUw4J0.nQneh with inputs 2026-09-15 / 2026-09-14 / 2026-09-14 -- 25 tickers, identity 25 of 25, GLD's returns at the 2026-09-14 frontier; every count equal to the two driven runs' (04:53Z, 08:10Z). The MSTR's vintage qualifier (23103: 23 of 25 at positioning 2026-09-11) is CLOSED by the schedule itself: 25 of 25 at T-1. The R3/A3 third driven run, armed on the models publish, was NOT fired: this seat's publish watch expired at ~11:04Z and the seat did not wake until 13:16Z (the operator's word), by which time the scheduled fire had done the same work -- recorded as it happened, not as planned. B6 ledger posn-round6-b6-characteristics-tickers L8 CLOSED on this read; the ledger CLOSED 9 of 9. C-B4-SCHEDULE's mechanism is now EXERCISED on the plane: the 12:30Z fire followed its inputs on the first day it existed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "get-object at 13:17Z: VersionId 02SGBCPDoeVPy7JBJcEHxUw4J0.nQneh, LastModified 12:30:54Z, 64556 B; positioning_data.json aJ7nhwRKko3H_AMRzsNvvwkf1NiO9aou at 11:06:20Z with data_as_of 2026-09-14; bbg/2026-09-14/run_manifest.json rewritten 11:07:04Z.",
+      "WHY GRADUATED: the organic case produced the state the driven case was armed for, on schedule, with no act of this seat; the ledger's last leg closes on a read of the served key."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "PRD v0.11 C-B4-SCHEDULE: cron(30 12 * * ? *) after the 07:00 America/New_York pull, never success-of-upstream; the B6 halves R3/A3: a third driven run after the models publish (superseded).",
+  "world_is": "The served satellites block is at T-1 for all 25 holdings by the scheduled fire; no ad-hoc act was needed after 08:10Z.",
+  "notes": "For the MSTR's re-verification: VersionId 02SGBCPD..., the same six-key fixture route; for L10: a seat that arms a clock-bound act must arm a wake that survives a 30-minute monitor expiry -- the gap cost nothing tonight because the schedule covered it."
+},
+{
+  "id": "POSN_ASTTAX-Z-W27-S1",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~27",
+  "surfaced_at": "2026-09-15T13:45:58Z",
+  "one_line": "X1-AC1'S OWN REGEX COULD NOT SEE THE CLAUSE IT GRADES: run VERBATIM against the bytes as issued (blob 803721e2c1) it printed 'SET clause: asset_class = :ac, sub_asset_class = :sac, ' -- 2 of the 5 assignments -- because the Yang UpdateExpression was TWO implicitly-concatenated string literals and the pattern's [^'\\\"]+ stops at the first closing quote. It printed no truncation signal, so the companion line 'management_style in SET: False' was produced by an instrument blind to the 2nd through 5th assignments: had management_style been written in the second segment, that line would still have read False. DISARMED IN THIS CELL, not by changing the criterion: the constant AT7-s-1 introduces holds the clause as ONE unsplit literal, so the same invocation now prints all five assignments and nothing else, and the False is discriminating. The CLASS is general -- any regex read of a Python implicit concatenation truncates silently at the seam, and a shorter-than-expected capture reads exactly like a shorter clause.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "X1-AC1's invocation run VERBATIM before any edit, 13:3xZ: 'SET clause: asset_class = :ac, sub_asset_class = :sac, ' / 'tuple: [\"'asset_class', 'sub_asset_class', 'name'\"]' / 'management_style in SET: False'; the subject is blob 803721e2c15464ed4ba054a02aba2311d5506164, whose clause at :306-307 is two adjacent literals.",
+      "The SAME invocation after the constant lands: 'SET clause: asset_class = :ac, sub_asset_class = :sac, #n = :n, last_updated = :ts, updated_by = :ub' -- 5 of 5 assignments, deliverables/0.9.0_WK_POSN_ASTTAX~27/x1_ac1_output.txt."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "X1-AC1's expect: 'the SET clause names asset_class, sub_asset_class, #n (name), last_updated, updated_by and nothing else ... management_style in SET: False'; the preflight adds that the regex 'was written against the expression as it reads today at :305-307' and orders the same read re-run against the constant and stated.",
+  "world_is": "On the bytes it was written against, the regex captured 2 of the 5 assignments and reported nothing about the other 3; the expect's enumeration was therefore never readable from that invocation's output until the clause became one literal.",
+  "notes": "For L9: preflight item 3 is ANSWERED -- the shape did change and the same read was re-run and stated, with the pre-edit and post-edit outputs both recorded. The constant is deliberately unsplit for this reason and the file says so in the comment above it."
+},
+{
+  "id": "POSN_ASTTAX-Z-W27-S2",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~27",
+  "surfaced_at": "2026-09-15T13:45:58Z",
+  "one_line": "THE REJECTED ALTERNATIVE IS NOT MERELY VACUOUS -- IT IS FATAL AND HALF-APPLIED. Measured on a scratch mutant of the applied bytes whose SET clause writes management_style and whose YANG_OWNED_FIELDS carries it: the run raises KeyError: 'management_style' at AGG, the FIRST row that already EXISTS in the table -- but only after 19 of its 56 Yang update_item calls have already landed (19 rows minted). _yang_conflicts returns [] for an ABSENT row before any field is compared, so every first-mint ahead of the first live row is written, and the seeder has no transaction to roll them back. So 'add management_style to the owned tuple' does not degrade to a no-op check: it aborts the re-seed partway with rows written and rows not.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "X1-AC2 exercise arm NEG-3 (scratch mutant .scratch/x1ac2_mutant_neg3_widened_tuple.py, working tree untouched): rc=None RAISED KeyError: 'management_style'; yang get_item 20, update_item 19, rows minted 19; the row it died on: 'AGG'.",
+      "The cause in the unmutated bytes: _yang_conflicts() reads sec[field] for every field in YANG_OWNED_FIELDS, and 0 of the 59 CANONICAL_SECURITIES records carry a 'management_style' key (X1-AC1's 'management_style in records: 0')."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The TO's cell text: 'Adding management_style to the tuple would KeyError on every record (or compare a live value against nothing) -- a vacuous check that reads as protection.'",
+  "world_is": "The KeyError half is confirmed and is stronger than stated: the raise is not per-record-harmless, it terminates the run at the first EXISTING row after 19 writes have landed, leaving the re-seed half-applied.",
+  "notes": "Offered to L9 as measurement behind the cell's choice, and to the CTO's L10 parenthesis: the alternative was not declined on taste."
+},
+{
+  "id": "POSN_ASTTAX-Z-W27-S3",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~27",
+  "surfaced_at": "2026-09-15T13:45:58Z",
+  "one_line": "THE NEW GUARD HAS ONE DECLARED SEAM, AND IT IS THE AUDIT-EXCLUSION LIST. The assertion binds (SET fields MINUS YANG_AUDIT_FIELDS) == YANG_OWNED_FIELDS, because the TO requires last_updated / updated_by excluded BY NAME. Measured on two scratch mutants of the applied bytes: (A) a clause that also writes management_style is REFUSED at import, 0 writes; (B) the SAME clause with 'management_style' appended to YANG_AUDIT_FIELDS IMPORTS CLEANLY, carrying a write surface of 6 fields against a 3-field guard with management_style written and unguarded. The seam needs a deliberate edit to the same three lines the assertion lives in, so it is not reachable by normal operation -- recorded because 'a check that reads as protection' is the exact failure this cell exists to close, and the closure has the shape one level up.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.9.0_WK_POSN_ASTTAX~27/x1_s3_audit_exclusion_probe_output.txt: A -> ASSERTION FIRED; B -> IMPORTED CLEANLY, write surface ('asset_class', 'sub_asset_class', 'name', 'last_updated', 'updated_by', 'management_style'), guard owns ('asset_class', 'sub_asset_class', 'name'), written-but-unguarded ['management_style'].",
+      "The assertion as landed: set(YANG_SET_FIELDS) - set(YANG_AUDIT_FIELDS) == set(YANG_OWNED_FIELDS), seed_canonical_securities.py at the constant block introduced by TO-X1-1."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Act 1: 'the two audit fields last_updated / updated_by excluded by name' and 'ONE module-level assertion that fails loudly at import if the two surfaces ever diverge'.",
+  "world_is": "Excluding by name makes the exclusion list itself part of the declaration the assertion grades: widening that list widens the write surface silently, measured on mutant B.",
+  "notes": "Not repaired in-cell: a fix (deriving the audit set from the values the seeder stamps unconditionally, or asserting the audit tuple's own membership) would be a widening of AT7-s-1. Raised for the CTO's L10 and for X1-AC7's second reading, which asks where management_style's own guard belongs."
+},
+{
+  "id": "POSN_ASTTAX-Z-W27-S4",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_POSN_ASTTAX~27",
+  "surfaced_at": "2026-09-15T13:51:11Z",
+  "one_line": "R1's management_style WRITE HAS NO SCRIPT TO PUT A GUARD IN, AND ITS ONE INVOCATION CARRIES A DUPLICATED FLAG. Read while recording X1-AC7's second reading (which asks whether that write wants a guard of its own 'in THAT script'): TO-V8-1's V8-AC4 is not a script at all -- it is a single `.tools/aws dynamodb update-item` CLI act, and it carries --expression-attribute-values TWICE on one line (occurrence 1 defines only ':m'; occurrence 2 defines ':m' and ':u'). The CLI keeps the LAST occurrence, so the first is silently discarded and the act worked: had the first won, the --condition-expression 'management_style = :u' would have raised ValidationException for an undefined ':u'. The write did land -- this cell's own live point read at 13:27Z and 13:42Z shows VNQ management_style 'passive'. So the guard on that write was a ConditionExpression on a one-shot command: correct for that act, and carried forward by nothing -- there is no file whose import can fail for the NEXT retag, which is the asymmetry X1-AC7 is asked to read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "task-orders/POSN_ASTTAX.TO-V8-1.the-retag-last-both-stores-both-levels.md:133 of 196, printed verbatim: '--expression-attribute-values' occurs 2 times, '--update-expression' 1, '--condition-expression' 1.",
+      "The act's outcome, measured live in this cell and not inherited: get-item VNQ at 13:27Z and again at 13:42Z, management_style 'passive', both reads byte-identical (sha256 f14a566aa9ec098822e73784251a5d6939defb1f6f9528a3f7b88abd794cb519 over the two-item file)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "X1-AC7's expect: 'whether R1's management_style write (the retag script's, on VNQ) wants a guard of its own in THAT script -- a place no seeder can defend -- for the next retag'.",
+  "world_is": "There is no retag script for VNQ's management_style: V8-AC4 is one CLI update-item, whose only guard was a ConditionExpression on the prior value, and whose argv carries a duplicated --expression-attribute-values that only last-wins parsing made harmless.",
+  "notes": "Filed, not fixed: TO-V8-1 is a terminal order outside this cell's <paths> and the act it describes has already landed correctly. For L9 and the CTO's L10, as input to X1-AC7's second reading. NOT re-run: re-running V8-AC4 would fail its own ConditionExpression by design."
+},
+{
+  "id": "POSN_ASTTAX-Z-S176",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T14:08:54Z",
+  "one_line": "ADJUDICATION of W27-S1 (INERT): X1-AC1's regex, written by the issuer against the SET clause as it read at the cut, captured 2 of 5 assignments on the issued bytes (the expression was an implicitly-concatenated pair of literals and `[^'\"]+` stopped at the first quote) and signalled no truncation -- a blind instrument reporting 'management_style in SET: False' from a partial read. The worker disarmed it IN-CELL by making the new constant one unsplit literal and recorded both vintages (2 of 5 on the issued bytes, 5 of 5 on the committed bytes). RULED: the issuer's instrument defect; the worker's remedy is inside act 1 (the constant is the cell's own change) and the criterion passed on a full read with a positive control (3 of 3 arms). Lesson: an invocation's regex is run against the bytes at the cut AND its match is printed with its denominator (the count of assignments) so a partial capture cannot pass as a whole one.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W27-S1 as filed; X1-AC1's output: SET clause 5 of 5 assignments, tuple 3 of 3, positive-control arms unmutated CLEAN / narrower FIRED / wider FIRED.",
+      "WHY GRADUATED: the blind read never became evidence; the full read did."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W27-S1"
+  ],
+  "spec_asserts": "TO-X1-1 X1-AC1: the SET clause's field names read from the bytes equal YANG_OWNED_FIELDS 3 of 3.",
+  "world_is": "The seeder's expression is one literal; the regex and the assertion both read it whole.",
+  "notes": "Recurring class this round (Z-S155, Z-S166): an issuer's instrument written without running it."
+},
+{
+  "id": "POSN_ASTTAX-Z-S177",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T14:08:54Z",
+  "one_line": "ADJUDICATION of W27-S2 (INERT): the rejected alternative (adding management_style to YANG_OWNED_FIELDS) is not vacuous but FATAL -- measured on the scratch harness it raises KeyError at AGG, the first row that already exists, AFTER 19 of 56 writes had landed: a half-applied reseed. RULED: this measurement is the decomposition's premise (s.1) proved rather than argued, and it is the record the CTO's L10 disarm of C-S177 should cite: the reconciliation is 'the guard owns exactly the seeder's write surface', not a wider tuple.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W27-S2 as filed; the harness run: KeyError after 19 of 56 update_item calls.",
+      "WHY GRADUATED: a counterfactual measured on the scratch harness; nothing live moved; the cell's chosen branch stands on it."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W27-S2"
+  ],
+  "spec_asserts": "The CTO's L10 cell text: add management_style to the tuple OR state, measured, why a reseed cannot write it.",
+  "world_is": "The seeder cannot write management_style (proved) and cannot safely own it (proved).",
+  "notes": "For 1.0.0_SA_CTO~Z's round-7 L10 and C-S177's disarm."
+},
+{
+  "id": "POSN_ASTTAX-Z-S178",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T14:08:54Z",
+  "one_line": "ADJUDICATION of W27-S3 (INERT): the new import-time assertion's ONE declared seam -- the audit-exclusion list YANG_AUDIT_FIELDS: a mutant that writes management_style is refused at import (0 writes), but the same mutant with 'management_style' appended to the audit list imports cleanly with a 6-field write surface against a 3-field guard. The worker did not repair it (widening). RULED: correct not to widen; CARRIED to the round-7 L10 as the guard's residual -- a stricter form asserts the SET clause's fields equal owned + exactly {last_updated, updated_by} as a CLOSED set (no editable exclusion list), one line for the next edit of that file, and a note that a future edit which adds a field to the audit list is itself a widening to be read at L9.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W27-S3 as filed with both mutant arms; X1-AC1's three positive-control arms.",
+      "WHY GRADUATED: the seam is disclosed with its exact bytes and a one-line closed-set form; no live write path exists through it today."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W27-S3"
+  ],
+  "spec_asserts": "TO-X1-1 act 1: an assertion that fails loudly if the two surfaces ever diverge.",
+  "world_is": "The assertion catches a widened SET clause unless the audit list is widened with it.",
+  "notes": "For 1.0.0_SA_CTO~Z's round-7 L10: the closed-set form."
+},
+{
+  "id": "POSN_ASTTAX-Z-S179",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T14:08:54Z",
+  "one_line": "ADJUDICATION of W27-S4 (INERT): R1's management_style write on VNQ (TO-V8-1 V8-AC4) has no script a guard could live in -- it was one CLI update-item whose ConditionExpression was carried forward by nothing; and that invocation carried --expression-attribute-values TWICE (the first occurrence defining only :m), so only the CLI's last-wins parsing made the condition resolvable; the live row reads passive (correct, X1-AC5's before/after point read). RULED: a record defect in a COMPLETE round-5 order (not re-opened: the act landed and is read back correct), CARRIED to the round-7 L10 as the honest answer to X1-AC7's second question -- the next retag carries its management_style write in the retag script (r1_rollback.py's sibling) with its own conditional guard, never a hand CLI.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W27-S4 as filed; TO-V8-1 V8-AC4's invocation text; the live VNQ row at 13:27Z and 13:42Z byte-identical (752 B, one sha256).",
+      "WHY GRADUATED: the served value is correct and read twice; the defect is in a closed order's invocation grammar and its remedy is a next-retag rule, owned at L10."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "adjudicates": [
+    "POSN_ASTTAX-Z-W27-S4"
+  ],
+  "spec_asserts": "PRD v0.11 C-RETAG-SAFETY: the retag's writes name their level and carry a guard; TO-V8-1 V8-AC4.",
+  "world_is": "VNQ management_style passive on the live table; no script guards a future rewrite of it.",
+  "notes": "For the judgment X1-AC7 at L9 and the CTO's L10."
+},
+{
+  "id": "POSN_ASTTAX-Z-S180",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T14:16:36Z",
+  "one_line": "A WORKER SPAWN THE HARNESS HAD SUSPENDED, NOT ENDED, WOKE AFTER ITS ORDER CLOSED AND CORRECTED ITS OWN EVIDENCE: 0.9.0_WK_POSN_ASTTAX~25's third spawn (reported 09:44Z, believed finished) was resumed by the harness ~4.5 h later, found the fourth spawn's close of TO-W2-1 (complete at HEAD since 51c6108f7e/67bc9a7483), and committed 49c7ab1d16 on its branch at ~14:07Z: ONE line of the proof instance -- W2-AC8's capture window corrected from an INFERRED '09:37-09:42Z' to the MEASURED artifact mtimes 09:32:05-09:33:38Z, with the dev server's teardown (exit 255) shown to be 4.56 h after the last capture, not a producer failure. No VersionId, as_of, hash, count or denominator moved. RULED: an honest correction of a durable record's one inferred value, DRAINED at 2f563e3564 after the L7 close; the order stays complete. TWO DEFECTS RECORDED, NOT REPAIRED: (1) the correction's commit message ends 'W2-AC1 remains FAIL on its ancestry limb and the order remains in_progress' -- FALSE when written (the worker asserted state from its own earlier turn instead of re-reading the order; it disclosed this itself); git history is not rewritten, this row is the correction of record; (2) a suspended spawn is indistinguishable from a finished one in the harness's notifications -- the issuer removed the worker's worktree at 14:12Z believing it idle, minutes after its commit; nothing was lost because the commit was on the branch, but the class (Z-S173's hung run; Z-S175's deaf seat; this) is the same: liveness read from the wrong plane.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "49c7ab1d16: 1 file, +1/-1 on the proof instance's W2-AC8 evidence string; the worker's second report (the epoch table: last capture 1789464818, teardown 1789481247, gap 16429 s).",
+      "The drain 2f563e3564 (1 staged path, row gate clean); `git branch -d wk-posn_asttax-6-25` succeeded after it.",
+      "WHY GRADUATED: the served record is more accurate after the correction; the false sentence lives only in a commit message and is now named here."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "Rule 22 STATE: a description is never a state; a durable record carries measured values with their instrument.",
+  "world_is": "TO-W2-1's instance carries the measured capture window; one commit message on the shared branch states a stale status.",
+  "notes": "For the CVO's L9 on round 6 (W2-AC8's evidence is the corrected one); for the next issuance: after a worker's report, its worktree is removed only after ListAgents shows no live process under that spawn id."
+},
+{
+  "id": "POSN_ASTTAX-Z-S181",
+  "project": "POSN_ASTTAX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-15T15:47:56Z",
+  "one_line": "THE CVO's COMPLETENESS CARRIER (ADJUDICATION_v11.Z.md @41305718d4) STATES, FOR THREE OUTCOMES, A CONTRACT THAT IS NOT THE PRD's CARD: C-S184 reads FWD-3 as a 'page presentation contract' (the card: the five classes always in the same ORDER), C-S185 reads FWD-4 as the 'characteristics and performance contract' with characteristics.json as its evidence (the card: one COLOUR per class everywhere; the characteristics artifact is FWD-7's), and C-S186 reads FWD-5 as 'cross-surface consistency' (the card: the classification defined in ONE PLACE flows everywhere; cross-surface agreement is FWD-6's). FWD-1, FWD-2, FWD-6 and FWD-7 are read against their own cards. The seven verdicts are COMPLETE and, for the three mislabelled rows, the evidence that actually bears on the card sits in COMPLETION_REPORT.round7.json's per-outcome notes (F1/F2 for order and colour on the promoted tree; S1A-1 + R1 + B3/U3-1/X1-1 for the single source), which the rows cite by the report's hash. RULED: the verdict column is not contradicted by anything measured; the contract column of three rows is. Recorded so the CTO's R6 grades (COMPLETION_GRADES.round7.json, owed on its return) read the CARDS and the report's notes for FWD-3/4/5, not the carrier's one_line. The registry close-out proceeded on Andrew's word with this named, not silently.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ADJUDICATION_v11.Z.md @41305718d4 rows C-S184, C-S185, C-S186 (spec_asserts text) vs prd/POSN_ASTTAX_PRD.md v0.11 @ab2ee8052a ENDPOINT FWD-3, FWD-4, FWD-5.",
+      "COMPLETION_REPORT.round7.json @ac0ff45dfe outcomes FWD-3 (4 cells), FWD-4 (3 cells), FWD-5 (6 cells), each note naming the exercised artifact.",
+      "WHY INERT: no served key, no order and no registry value depends on the carrier's contract text; the mechanical close (R6) reads the grades file, which does not yet exist."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "Rule 22 GRAIN: the object read is the object claimed -- a completeness verdict on FWD-n is read against FWD-n's card.",
+  "world_is": "Three of seven completeness rows cite another outcome's contract; the verdicts stand on the report's evidence, not on the rows' own text.",
+  "notes": "For 1.0.0_SA_CTO~Z's COMPLETION_GRADES.round7.json and for 3.0.0_SA_CVO~Z's next completeness read: one row per card, the card's DONE WHEN quoted."
+},
+  {
+      "id": "POSN_ASTTAX-Z-S182",
+      "project": "POSN_ASTTAX",
+      "fabric": "site-z",
+      "surfaced_by": "1.0.0_SA_CTO~W",
+      "surfaced_at": "2026-09-15T16:11Z",
+      "one_line": "DISARMS POSN_ASTTAX-Z-C-S177 (owner 1.0.0_SA_CTO~Z; DECOMP_INVALIDATING at ADJUDICATION_v8.Z; REMEDIATED at the round-7 slug row C-S189 @41305718d4): the seeder guard's owned tuple (YANG_OWNED_FIELDS) EQUALS the seeder's write surface, 3 of 3 fields (TO-X1-1 proof @2cdca2a27d, 6 of 6 mechanical PASS, re-graded VALID by this seat at HEAD), and the R1 management_style write is outside that writer, so the reseed cannot clobber it. Filed by 1.0.0_SA_CTO~W at the close on Andrew's word of ~15:5xZ (the project's CTO lane is out on the weekly limit until Sep 19); the row's future ownership for any R1 management_style guard cell stays with the CTO limb as C-S189 says.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~27/POSN_ASTTAX.TO-X1-1.seeder-guard-reconciled-with-the-retag-write-surface.proof_of_spec.json @2cdca2a27d: X1-AC1..AC6 PASS, AC7 UNVERIFIABLE-BY-INSTRUMENT; the guard tuple vs the SET fields 3 of 3.",
+          "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/adjudications/ADJUDICATION_v11.Z.md @41305718d4 row POSN_ASTTAX-Z-C-S189: 'C-S177 is answered by X1-1'.",
+          "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/remediations/REMEDIATION_v7.Z.md @41305718d4: the round's one slug row, REMEDIATED.",
+          "org/missions/D4/POSN/POSN_ASTTAX/ledger/COMPLETION_GRADES.round7.json (this commit): FWD-5's grade cites X1-1 as the durability limb of the single source."
+        ]
+      },
+      "disposition": "DISMISSED_WITH_REASON",
+      "dismissal_reason": "The condition C-S177 set -- reconcile the guard's owned fields with the R1 management_style write surface before any reseed, with a criterion and proof exercising the corrected set -- is met by TO-X1-1's proof; nothing remains under investigation.",
+      "adjudicates": [
+        "POSN_ASTTAX-Z-C-S177"
+      ],
+      "spec_asserts": "C-S177's remedy, verbatim: 'Reconcile YANG_OWNED_FIELDS and the R1 management_style write before any reseed; add a criterion and proof that exercises the corrected set.'",
+      "world_is": "Reconciled and exercised: the guard's tuple equals the seeder's write surface (3 of 3) and management_style is outside it; the proof is VALID at HEAD.",
+      "notes": "Investigation-plane disarm at the project's close. The remediation-plane state (REMEDIATED) was set by the CVO's slug and is not moved here."
+    }
+]
+```

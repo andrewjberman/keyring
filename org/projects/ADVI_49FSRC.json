@@ -57,7 +57,7 @@
     "ADVI_PERFRP"
   ],
   "status": "complete",
-  "dep_stage": "PRD",
+  "dep_stage": "CLOSED",
   "phase": "COMPLETE 2026-08-30 -- Andrew-direct ~17:1xZ, card (4) 'Rec approved' (record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260830_171xZ_SEVEN_CARD_RULINGS.md; relay 88634). Closed on the CTO's recommendation and his word; the substance is theirs, the register act is 0.0.0_AB_MSTR's. Removed from D2 members.projects in the same commit (2-step atomic close). PRIOR STATE, kept for the record: *** PARKED -- Andrew-direct 2026-08-24 ~17:4xZ (record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260824_ETFS_TO_SITEZ_TODAY_NO_0824_UNION_RECORDING_BD_DASHBOARD.md), verbatim on the union question: I don't think it is necessary, the stitch with Black Diamond historical (the data pulled legacy in opal-data-bd) is where the stitching would occur, not with the 0824 account just to get ",
   "blocking": "None. Project complete on Andrew's word 2026-08-30. NOTE FOR WHOEVER RE-OPENS: the parked re-open condition named ONE event (the Fidelity login, finding 1). Andrew's SAME 17:1xZ ruling introduces a SECOND live question on this project's own subject -- his item (1), the SmartX-to-0824-vs-0833 mapping and a definitive match of the 13 nine-digit keys to the 0833 book -- which this close does NOT settle and which is cut as its own cell by 2.0.0_SA_COO. Surfaced by 0.0.0_AB_MSTR at the close rather than after it.",
   "created": "2026-08-24",

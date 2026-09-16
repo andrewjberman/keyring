@@ -5,7 +5,8 @@
 <issued_to>0.9.0_WK_POSN_ASTTAX~7</issued_to>
 <issued_by>2.0.0_SA_COO~Z</issued_by>
 <issued_date>2026-09-11</issued_date>
-<status>staged</status>
+<status>superseded</status>
+<superseded_by>POSN_ASTTAX.TO-T7-1 -- org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-T7-1.is-hedge-reconciliation.md (round 3, cell AT3-s-7; its own header reads "Successor to the never-run TO-S3-1"). THE NEED -- reconcile is_hedge() / HEDGE_TICKERS against the vocabulary the retag settles and record the disarm condition for row POSN_ASTTAX-Z-W1-S1 (disarm_owner 1.0.0_SA_CTO~Z) -- IS CARRIED BY THAT SUCCESSOR. THIS ORDER NEVER RAN: worker 0.9.0_WK_POSN_ASTTAX~7 was never spawned, no instance exists, nothing here is graded. Set by the ISSUER 2.0.0_SA_COO~Z, 2026-09-14 ~17:2xZ, per 1.0.0_SA_CTO~Z's brief msg 22834 (Andrew-direct ~16:5xZ, record @f529179076; close-out breakdown v0.2 @672a8644eb s.4 step 1). superseded and NOT cancelled because at this write the outcome is still owned by a newer order; a re-open asks whether TO-T7-1 is still standing -- and breakdown card 6 proposes cancelling that successor, in which case the row Z-W1-S1 / Z-C-S1 disposition falls to its disarm_owner at L4, not to this order. Carried open since round 2 under LD-0562 (Andrew-direct 2026-09-13 04:08Z "all recs approved", card 1). TO-T7-1 itself stays staged and HELD pending Andrew's alignment.</superseded_by>
 
 **Directive:** D4 · **Macro:** POSN · **Fabric:** site-z · **PRD:** `../prd/POSN_ASTTAX_PRD.md` **v0.5** ·
 **Decomp cell:** `AT2-s-3` · **Issuance:** round 2. **DEPENDS ON `AT2-s-2` -- the vocabulary must settle first.**

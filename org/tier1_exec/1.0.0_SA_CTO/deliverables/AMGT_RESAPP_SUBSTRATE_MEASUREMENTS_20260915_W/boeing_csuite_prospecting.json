@@ -1,0 +1,1061 @@
+{
+  "measured_at": "2026-09-15T05:41:27Z",
+  "company_domain": "boeing.com",
+  "usage_before": {
+    "credits": {
+      "total": 1200,
+      "used": 171,
+      "remaining": 1029
+    },
+    "rateLimits": {
+      "daily": {
+        "limit": 2000,
+        "used": 1,
+        "remaining": 1999,
+        "resetsAt": "2026-09-16T05:41:28.791Z"
+      },
+      "hourly": {
+        "limit": 400,
+        "used": 1,
+        "remaining": 399,
+        "resetsAt": "2026-09-15T06:41:28.792Z"
+      },
+      "minute": {
+        "limit": 200,
+        "used": 1,
+        "remaining": 199,
+        "resetsAt": "2026-09-15T05:42:28.793Z"
+      }
+    },
+    "plan": {
+      "category": "premium",
+      "renewalType": "month",
+      "startDate": "2026-09-07T08:32:26.290Z",
+      "endDate": "2026-10-07T08:32:26.290Z"
+    },
+    "pricing": {
+      "companySearch": {
+        "credits": 1,
+        "perQuantity": 25
+      },
+      "contactSearch": {
+        "credits": 1,
+        "perQuantity": 25
+      },
+      "revealCompany": {
+        "credits": 1,
+        "perQuantity": 1
+      },
+      "revealCompanyPremiumData": {
+        "credits": 1,
+        "perQuantity": 1
+      },
+      "revealEmail": {
+        "credits": 1,
+        "perQuantity": 1
+      },
+      "revealPhone": {
+        "credits": 5,
+        "perQuantity": 1
+      },
+      "lookalikeCompany": {
+        "credits": 1,
+        "perQuantity": 5
+      },
+      "lookalikeContact": {
+        "credits": 1,
+        "perQuantity": 5
+      },
+      "contactRecommendationsReveal": {
+        "credits": 1,
+        "perQuantity": 1
+      },
+      "companyRecommendationsReveal": {
+        "credits": 1,
+        "perQuantity": 1
+      },
+      "showSignalsCompany": {
+        "credits": 1,
+        "perQuantity": 1
+      },
+      "showSignalsContact": {
+        "credits": 1,
+        "perQuantity": 1
+      },
+      "signalScoreCompany": {
+        "credits": 1,
+        "perQuantity": 1
+      },
+      "signalScoreContact": {
+        "credits": 1,
+        "perQuantity": 1
+      },
+      "tableRead": {
+        "credits": 1,
+        "perQuantity": 25
+      },
+      "buyingGroupReveal": {
+        "credits": 1,
+        "perQuantity": 1
+      },
+      "conversationsSearch": {
+        "credits": 1,
+        "perQuantity": 25
+      },
+      "conversationsTranscript": {
+        "credits": 1,
+        "perQuantity": 1
+      }
+    }
+  },
+  "seniority_values": {
+    "values": [
+      {
+        "id": 10,
+        "name": "founder"
+      },
+      {
+        "id": 7,
+        "name": "partner"
+      },
+      {
+        "id": 9,
+        "name": "c-suite"
+      },
+      {
+        "id": 8,
+        "name": "vice president"
+      },
+      {
+        "id": 6,
+        "name": "director"
+      },
+      {
+        "id": 5,
+        "name": "manager"
+      },
+      {
+        "id": 4,
+        "name": "senior"
+      },
+      {
+        "id": 3,
+        "name": "entry"
+      },
+      {
+        "id": 2,
+        "name": "intern"
+      },
+      {
+        "id": 1,
+        "name": "other"
+      }
+    ]
+  },
+  "prospecting_meta": {
+    "endpoint": "contacts_prospecting",
+    "endpoint_class": "api_search",
+    "status_code": 200,
+    "credits_charged": 2,
+    "request_id": null,
+    "retry_count": 0,
+    "stub_mode": false,
+    "rate_limit": {
+      "x-rate-limit-daily": 2000,
+      "x-daily-requests-left": 1997,
+      "x-daily-usage": 3,
+      "x-rate-limit-hourly": 400,
+      "x-hourly-requests-left": 397,
+      "x-hourly-usage": 3,
+      "x-rate-limit-minute": 200,
+      "x-minute-requests-left": 197,
+      "x-minute-usage": 3
+    }
+  },
+  "prospecting_response": {
+    "requestId": "518112a1-02c4-45f2-98ed-3233b872a6c4",
+    "pagination": {
+      "page": 0,
+      "size": 50,
+      "total": 103753
+    },
+    "results": [
+      {
+        "id": "v1.CXtAd8tUN0v5IV8Fsxgrk2YC_4RLuP0xOg",
+        "firstName": "Sarma",
+        "lastName": "Chillara",
+        "jobTitle": {
+          "title": "Executive Director of Human Resources",
+          "departments": [
+            "Human Resources"
+          ],
+          "seniority": "c-suite"
+        },
+        "socialLinks": {
+          "linkedin": "https://www.linkedin.com/in/sarma-chillara-13449b7"
+        }
+      },
+      {
+        "id": "v1.SIKPeBRUUU9DpMNBWzEbrp6yi9CerSRahg",
+        "firstName": "Tristan",
+        "lastName": "Perez",
+        "jobTitle": {
+          "title": "Chief Scientist of Autonomy",
+          "departments": [
+            "Research & Analytics"
+          ],
+          "seniority": "c-suite"
+        },
+        "socialLinks": {
+          "linkedin": "https://www.linkedin.com/in/tristan-perez-phd-technical-fellow-b463584"
+        }
+      },
+      {
+        "id": "v1.9pJtoNWYfTfaLzYV9hjzdZRU7t3JFt0-Sw",
+        "firstName": "Andrew",
+        "lastName": "Whiting",
+        "jobTitle": {
+          "title": "Lead Information Technology Business Partner",
+          "departments": [
+            "Information Technology"
+          ],
+          "seniority": "manager"
+        },
+        "socialLinks": {
+          "linkedin": "https://www.linkedin.com/in/andrew-whiting-658658a"
+        }
+      },
+      {
+        "id": "v1.HAKfVxZrgWe6mKPsy2NwojUiVWntyryqMQ",
+        "firstName": "Troy",
+        "lastName": "Ede",
+        "jobTitle": {
+          "title": "IT Operations Manager",
+          "departments": [
+            "Information Technology",
+            "Operations"
+          ],
+          "seniority": "manager"
+        },
+        "socialLinks": {
+          "linkedin": "https://www.linkedin.com/in/troy-ede-7018a3164"
+        }
+      },
+      {
+        "id": "v1.MMLZyjcPCxNhsy_ePuw0znTu8WoUIVcWDTk",
+        "firstName": "Hugh",
+        "lastName": "Webster",
+        "jobTitle": {
+          "title": "Chief Technology Officer",
+          "departments": [
+            "Information Technology"
+          ],
+          "seniority": "c-suite"
+        },
+        "socialLinks": {
+          "linkedin": "https://www.linkedin.com/in/hugh-webster-8a87692a9"
+        }
+      },
+      {
+        "id": "v1.EnUMTgy21fFVsZtW-sQZj0GIEJv7xI0wgQ",
+        "firstName": "Sumit",
+        "lastName": "Yadav",
+        "jobTitle": {
+          "title": "Head of Technology and ERP Systems",
+          "departments": [
+            "Information Technology"
+          ],
+          "seniority": "director"
+        },
+        "socialLinks": {
+          "linkedin": "https://www.linkedin.com/in/sumityadav-tech"
+        }
+      },
+      {
+        "id": "v1.sd2or3Kwhoe5mvYJZMQKy-74UXMBCQ",
+        "firstName": "Joe",
+        "lastName": "Touey",
+        "jobTitle": {
+          "title": "Vice President of Enterprise Business Systems",
+          "departments": [
+            "Information Technology"
+          ],
+          "seniority": "vice president"
+        },
+        "socialLinks": {
+          "linkedin": "https://www.linkedin.com/in/joetoueygsk"
+        }
+      },
+      {
+        "id": "v1.pFUtPN6O6Tu-lUa5mW8UEFk-eaLAHios3A",
+        "firstName": "Thomas",
+        "lastName": "Breckenridge",
+        "jobTitle": {
+          "title": "Managing Director",
+          "departments": [
+            "General Management"
+          ],
+          "seniority": "director"
+        },
+        "socialLinks": {
+          "linkedin": "https://www.linkedin.com/in/thom-breckenridge-23ba101"
+        }
+      },
+      {
+        "id": "v1.XpsqtQxvgQb08CnyOL3NdlFUoa8D6OawtA",
+        "firstName": "David",
+        "lastName": "Batrouney",
+        "jobTitle": {
+          "title": "Program Manager",
+          "departments": [
+            "Operations"
+          ],
+          "seniority": "manager"
+        },
+        "socialLinks": {
+          "linkedin": "https://www.linkedin.com/in/david-batrouney-19594b1"
+        }
+      },
+      {
+        "id": "v1.gb7Pm86gE7C9gDKUfeMGF5b0iB0FdHVGTg",
+        "firstName": "Stephanie",
+        "lastName": "Pope",
+        "jobTitle": {
+          "title": "President and Chief Executive Officer",
+          "departments": [
+            "General Management"
+          ],
+          "seniority": "c-suite"
+        },
+        "socialLinks": {
+          "linkedin": "https://www.linkedin.com/in/stephaniefpope"
+        }
+      },
+      {
+        "id": "v1.h2G4mIDNiWZdgjSGFIP_EwQGYPCHp_C99Q",
+        "firstName": "Praema",
+        "lastName": "Ranga",
+        "jobTitle": {
+          "title": "Product Services Manager",
+          "departments": [
+            "Product"
+          ],
+          "seniority": "manager"
+        },
+        "socialLinks": {
+          "linkedin": "https://www.linkedin.com/in/praema-ranga-3335684"
+        }
+      },
+      {
+        "id": "v1.DTsVfubq5U9LRAcjyGM_4Mf4ioj8Zq8k",
+        "firstName": "Greg",
+        "lastName": "Nathan",
+        "jobTitle": {
+          "title": "Maintenance Operations Manager",
+          "departments": [
+            "Operations"
+          ],
+          "seniority": "manager"
+        },
+        "socialLinks": {
+          "linkedin": "https://www.linkedin.com/in/greg-n-56639b86"
+        }
+      },
+      {
+        "id": "v1.38aRTBDFFZMGTvXSaYtmtOXqpYx5Un2uyw",
+        "firstName": "Salil",
+        "lastName": "Gupte",
+        "jobTitle": {
+          "title": "President",
+          "departments": [
+            "General Management"
+          ],
+          "seniority": "c-suite"
+        },
+        "socialLinks": {
+          "linkedin": "https://www.linkedin.com/in/salil-gupte-0a7bb86"
+        }
+      },
+      {
+        "id": "v1.B2bVVBEXMPxUASLei5nspvU-kyxoNUaJsg",
+        "firstName": "Darren",
+        "lastName": "Moulding",
+        "jobTitle": {
+          "title": "Infrastructure Manager",
+          "departments": [
+            "Information Technology"
+          ],
+          "seniority": "manager"
+        },
+        "socialLinks": {
+          "linkedin": "https://www.linkedin.com/in/darren-moulding-32b33959"
+        }
+      },
+      {
+        "id": "v1.kHCBvGfA6re8ZOJAST0w_lqJIsAb3jlfs_o",
+        "firstName": "Matt",
+        "lastName": "Cowles",
+        "jobTitle": {
+          "title": "Senior Executive Director of AI Strategy, Software Development and Architecture",
+          "departments": [
+            "Information Technology",
+            "Engineering & Technical"
+          ],
+          "seniority": "director"
+        },
+        "socialLinks": {
+          "linkedin": "https://www.linkedin.com/in/matt-cowles-6b09813ba"
+        }
+      },
+      {
+        "id": "v1.qmYW7GnBgHynoM9M0poNzsyVINcvqARvAA",
+        "firstName": "Zarir",
+        "lastName": "Pastakia",
+        "jobTitle": {
+          "title": "Head of Engineering and Product Development",
+          "departments": [
+            "Engineering & Technical",
+            "Product"
+          ],
+          "seniority": "director"
+        },
+        "socialLinks": {
+          "linkedin": "https://www.linkedin.com/in/zarir-pastakia-a9b31613"
+        }
+      },
+      {
+        "id": "v1.nXjO1VtJ3Q0PgysutrRX0XMIRUKCAJxXKA",
+        "firstName": "Jamie",
+        "lastName": "Gooding",
+        "jobTitle": {
+          "title": "Chief of Staff, Director, Chief Engineer",
+          "departments": [
+            "Engineering & Technical",
+            "General Management"
+          ],
+          "seniority": "c-suite"
+        },
+        "socialLinks": {
+          "linkedin": "https://www.linkedin.com/in/jamiergooding"
+        }
+      },
+      {
+        "id": "v1.d-tthwbUWnuG5UTAfLEBhTV76dwPhm0L2g",
+        "firstName": "Paul",
+        "lastName": "Reynolds",
+        "jobTitle": {
+          "title": "Program Security Manager",
+          "departments": [
+            "Information Technology"
+          ],
+          "seniority": "manager"
+        },
+        "socialLinks": {
+          "linkedin": "https://www.linkedin.com/in/paul-reynolds-790070162"
+        }
+      },
+      {
+        "id": "v1.3wj1bx7ZBlRB5uwT94jt541c8liFNiW9ww",
+        "firstName": "Anya",
+        "lastName": "Getman",
+        "jobTitle": {
+          "title": "Project Manager, Equipment Engineer",
+          "departments": [
+            "Operations",
+            "Engineering & Technical"
+          ],
+          "seniority": "manager"
+        },
+        "socialLinks": {
+          "linkedin": "https://www.linkedin.com/in/anyagetman"
+        }
+      },
+      {
+        "id": "v1.3KCkthArGvCN6unTpbkdzghLs6lhauGu",
+        "firstName": "Kristin",
+        "lastName": "Culler",
+        "jobTitle": {
+          "title": "Vice President of Engineering",
+          "departments": [
+            "Engineering & Technical"
+          ],
+          "seniority": "vice president"
+        },
+        "socialLinks": {
+          "linkedin": "https://www.linkedin.com/in/kristin-culler-560953"
+        }
+      },
+      {
+        "id": "v1.CFaKyZYsGvw4QGSQ-Oh6ttCs1gtlezpaZg",
+        "firstName": "Mohemmed",
+        "lastName": "Ansari",
+        "jobTitle": {
+          "title": "Head of Information Technology and Program Development",
+          "departments": [
+            "Information Technology",
+            "Operations"
+          ],
+          "seniority": "director"
+        },
+        "socialLinks": {
+          "linkedin": "https://www.linkedin.com/in/mohemmed-ansari-45572427"
+        }
+      },
+      {
+        "id": "v1.7NkvI7BzFdNKyzfN-YbnOBrbI72kRNa9NA",
+        "firstName": "Avik",
+        "lastName": "Bhattacharyya",
+        "jobTitle": {
+          "title": "Executive Director, Head of Global Strategy and Market Development",
+          "departments": [
+            "General Management",
+            "Business Development"
+          ],
+          "seniority": "director"
+        },
+        "socialLinks": {
+          "linkedin": "https://www.linkedin.com/in/avik-bhattacharyya-8713a34"
+        }
+      },
+      {
+        "id": "v1.NLXKXQ1-D4qC7SsELai-qGVJOXEcHJBB",
+        "firstName": "Cara",
+        "lastName": "Mcdonald",
+        "jobTitle": {
+          "title": "Senior Manager of Phantom Works Portfolio Strategy and Integration",
+          "departments": [
+            "Other"
+          ],
+          "seniority": "manager"
+        },
+        "socialLinks": {
+          "linkedin": "https://www.linkedin.com/in/cara-m-a9a4085a"
+        }
+      },
+      {
+        "id": "v1.cuCru1GA_S2XywoIyw92tVuT_X4a_sIzMA",
+        "firstName": "Shiraz",
+        "lastName": "Hussain",
+        "jobTitle": {
+          "title": "Manager",
+          "departments": [
+            "Other"
+          ],
+          "seniority": "manager"
+        },
+        "socialLinks": {
+          "linkedin": "https://www.linkedin.com/in/shiraz-munavar-hussain-90602a16"
+        }
+      },
+      {
+        "id": "v1.eh-zOgSpSvPXGKphem6yeu4yCg73rQA6rQ",
+        "firstName": "Paulo",
+        "lastName": "Gomes",
+        "jobTitle": {
+          "title": "EHS Systems and Assurance Lead",
+          "departments": [
+            "Operations"
+          ],
+          "seniority": "manager"
+        },
+        "socialLinks": {
+          "linkedin": "https://www.linkedin.com/in/paulo-gomes-87b2a727"
+        }
+      },
+      {
+        "id": "v1.aRjj0b5jVEekUu2HBh7H_Fx3BWdkeY7kqQ",
+        "firstName": "Eugenio",
+        "lastName": "Baldi",
+        "jobTitle": {
+          "title": "Information Systems Security Manager",
+          "departments": [
+            "Information Technology"
+          ],
+          "seniority": "manager"
+        },
+        "socialLinks": {
+          "linkedin": "https://www.linkedin.com/in/eugenio-baldi-5353a420"
+        }
+      },
+      {
+        "id": "v1.FtMWBIkJmT4cP7jvWBCclJeYySqI_-gspw",
+        "firstName": "Richard",
+        "lastName": "Chalker",
+        "jobTitle": {
+          "title": "Head of Global Real Estate, Planning and Strategy",
+          "departments": [
+            "Operations"
+          ],
+          "seniority": "director"
+        },
+        "socialLinks": {
+          "linkedin": "https://www.linkedin.com/in/richard-chalker-a4a0b84"
+        }
+      },
+      {
+        "id": "v1.Tn3hWNgNUKn6-7OhYGyQ5GTOy1oj7ocz8g",
+        "firstName": "Lance",
+        "lastName": "Perry",
+        "jobTitle": {
+          "title": "Senior Manager of Global Information Technology",
+          "departments": [
+            "Information Technology"
+          ],
+          "seniority": "manager"
+        },
+        "socialLinks": {
+          "linkedin": "https://www.linkedin.com/in/lance-perry-4b0bb680"
+        }
+      },
+      {
+        "id": "v1.OWDVsakmXLGrePcVLIjhbzkqDIRjlziFxA",
+        "firstName": "Casey",
+        "lastName": "Byron",
+        "jobTitle": {
+          "title": "Other",
+          "departments": [
+            "Other"
+          ],
+          "seniority": "non-manager"
+        },
+        "socialLinks": {
+          "linkedin": "https://www.linkedin.com/in/casey-b-2861b1120"
+        }
+      },
+      {
+        "id": "v1.pf2oreRWm9YsOtyQtIyDtWGAkNU9MDCB",
+        "firstName": "Ashwani",
+        "lastName": "Bhargava",
+        "jobTitle": {
+          "title": "Senior Director of Supply Chain",
+          "departments": [
+            "Operations"
+          ],
+          "seniority": "director"
+        },
+        "socialLinks": {
+          "linkedin": "https://www.linkedin.com/in/ashwani-bhargava-40975990"
+        }
+      },
+      {
+        "id": "v1.Nts6IZq63YfJwOWDQ_VuH0-wPKWMdJcsOw",
+        "firstName": "Kelly",
+        "lastName": "Hardy",
+        "jobTitle": {
+          "title": "Procurement Officer",
+          "departments": [
+            "Operations"
+          ],
+          "seniority": "non-manager"
+        },
+        "socialLinks": {
+          "linkedin": "https://www.linkedin.com/in/kelly-hardy-344965a2"
+        }
+      },
+      {
+        "id": "v1.VF69HbXJCyVKWkE4KUlD5agne8mLKe2VTg",
+        "firstName": "Vishwajeet",
+        "lastName": "Uddanwadiker",
+        "jobTitle": {
+          "title": "Chief AI and Autonomy Officer, Engineering Test and Technology",
+          "departments": [
+            "Engineering & Technical",
+            "Information Technology"
+          ],
+          "seniority": "c-suite"
+        },
+        "socialLinks": {
+          "linkedin": "https://www.linkedin.com/in/vishwajeet-uddanwadiker-236757"
+        }
+      },
+      {
+        "id": "v1.ApkwmfVKAhqrPVcd8iQzQNfZhZDFeoNJ0g",
+        "firstName": "Sally",
+        "lastName": "Heckenberg",
+        "jobTitle": {
+          "title": "Regional Human Resources Director",
+          "departments": [
+            "Human Resources"
+          ],
+          "seniority": "director"
+        },
+        "socialLinks": {
+          "linkedin": "https://www.linkedin.com/in/sally-heckenberg-40b129b1"
+        }
+      },
+      {
+        "id": "v1.QwpiOvD-fUNHW_DHNDTTmiGEYw0vF1RCcA",
+        "firstName": "Joaquin",
+        "lastName": "De Leon",
+        "jobTitle": {
+          "title": "Regional Business Information Security Officer",
+          "departments": [
+            "Information Technology"
+          ],
+          "seniority": "non-manager"
+        },
+        "socialLinks": {
+          "linkedin": "https://www.linkedin.com/in/joaquin-de-leon-1347614"
+        }
+      },
+      {
+        "id": "v1.y4wx-Xf_grDrLRegYiSr2KTQSNM7zZeeeNE",
+        "firstName": "Elizabeth",
+        "lastName": "Paine",
+        "jobTitle": {
+          "title": "Senior Manager of Total Rewards",
+          "departments": [
+            "Human Resources"
+          ],
+          "seniority": "manager"
+        },
+        "socialLinks": {
+          "linkedin": "https://www.linkedin.com/in/elizabeth-p-53754119"
+        }
+      },
+      {
+        "id": "v1.ploUtRwa3vnPvc5PEGc2VAkP-7qF_ZB2mw",
+        "firstName": "Nikhil",
+        "lastName": "Rao",
+        "jobTitle": {
+          "title": "Director of Airplane Systems, Production Engineering, Systems and Digital Engineering",
+          "departments": [
+            "Engineering & Technical",
+            "Operations"
+          ],
+          "seniority": "director"
+        },
+        "socialLinks": {
+          "linkedin": "https://www.linkedin.com/in/nikhilkrao"
+        }
+      },
+      {
+        "id": "v1.oF8Z6i_FqH-2bz2uznuFfJbkYL2BTJnd",
+        "firstName": "Adam",
+        "lastName": "Heppe",
+        "jobTitle": {
+          "title": "Director of Data Analytics and Audit Operations",
+          "departments": [
+            "Research & Analytics",
+            "Operations"
+          ],
+          "seniority": "director"
+        },
+        "socialLinks": {
+          "linkedin": "https://www.linkedin.com/in/adam-heppe-3a74129"
+        }
+      },
+      {
+        "id": "v1.jK-2NIxrsGjcDJJjcipSD-ytVJ2gcqN9Gw",
+        "firstName": "Kareem",
+        "lastName": "Muhammad",
+        "jobTitle": {
+          "title": "Director of Customer Engineering",
+          "departments": [
+            "Engineering & Technical"
+          ],
+          "seniority": "director"
+        },
+        "socialLinks": {
+          "linkedin": "https://www.linkedin.com/in/kareemmuhammad"
+        }
+      },
+      {
+        "id": "v1.oDuRWOBiUBkMKe5JJc3U4QLE22wWJAnrEA",
+        "firstName": "Noor",
+        "lastName": "Al Yafei",
+        "jobTitle": {
+          "title": "Human Resources Executive Director",
+          "departments": [
+            "Human Resources"
+          ],
+          "seniority": "director"
+        },
+        "socialLinks": {
+          "linkedin": "https://www.linkedin.com/in/noor-al-yafei-0b93088"
+        }
+      },
+      {
+        "id": "v1.mar1I8kvo7OPslmZzQ2C8m9yJSNNCsA",
+        "firstName": "Naresh",
+        "lastName": "Bhardwaj",
+        "jobTitle": {
+          "title": "Head of Security, India and South Asia Region",
+          "departments": [
+            "Information Technology"
+          ],
+          "seniority": "director"
+        },
+        "socialLinks": {
+          "linkedin": "https://www.linkedin.com/in/naresh-bhardwaj-6p"
+        }
+      },
+      {
+        "id": "v1.WwlqhVXQGWJcK5Ed9Fei6OpYfJa7C05vtg",
+        "firstName": "Murray",
+        "lastName": "Brabrook",
+        "jobTitle": {
+          "title": "(Interim) Director of Operations",
+          "departments": [
+            "Operations"
+          ],
+          "seniority": "director"
+        },
+        "socialLinks": {
+          "linkedin": "https://www.linkedin.com/in/murray-brabrook-7035692a"
+        }
+      },
+      {
+        "id": "v1.h5_-Qo3GTRpqi3CCujKBuGhbynZaufeWPA",
+        "firstName": "Nicholas",
+        "lastName": "Mule\u0301",
+        "jobTitle": {
+          "title": "Director of Additive Manufacturing",
+          "departments": [
+            "Engineering & Technical"
+          ],
+          "seniority": "director"
+        },
+        "socialLinks": {
+          "linkedin": "https://www.linkedin.com/in/nickmule"
+        }
+      },
+      {
+        "id": "v1.tEZYK9W-pwi_VJVeSyFzxMXdB5iObmQXnw",
+        "firstName": "Satish",
+        "lastName": "Kesari",
+        "jobTitle": {
+          "title": "Chief Financial Officer",
+          "departments": [
+            "Finance"
+          ],
+          "seniority": "c-suite"
+        },
+        "socialLinks": {
+          "linkedin": "https://www.linkedin.com/in/satishkesari"
+        }
+      },
+      {
+        "id": "v1.z8RO0k1MsnXBsZ-qIB3CdE8YrUZuG25YvQ",
+        "firstName": "Vivian",
+        "lastName": "Culverwell",
+        "jobTitle": {
+          "title": "Communications and Branding Specialist",
+          "departments": [
+            "Marketing"
+          ],
+          "seniority": "non-manager"
+        },
+        "socialLinks": {
+          "linkedin": "https://www.linkedin.com/in/viv-culverwell-9290882a"
+        }
+      },
+      {
+        "id": "v1.6d63TQsaozmyYtjLVbkbC9C4tfJtQFoMIQ",
+        "firstName": "Shashank",
+        "lastName": "Jha",
+        "jobTitle": {
+          "title": "Chief Information Officer, Executive Director of PLM",
+          "departments": [
+            "Information Technology",
+            "General Management"
+          ],
+          "seniority": "c-suite"
+        },
+        "socialLinks": {
+          "linkedin": "https://www.linkedin.com/in/shashankajha"
+        }
+      },
+      {
+        "id": "v1.8luMdBaQDYeE6KgId7BlGRKhLeHSUDJXLg",
+        "firstName": "Ian",
+        "lastName": "Ollier",
+        "jobTitle": {
+          "title": "Cyber Security and IT Manager",
+          "departments": [
+            "Information Technology"
+          ],
+          "seniority": "manager"
+        },
+        "socialLinks": {
+          "linkedin": "https://www.linkedin.com/in/ianollier"
+        }
+      },
+      {
+        "id": "v1.35QK6YH6HvRwsfZbQe3g7zItsnYKAfKNNw",
+        "firstName": "Emil",
+        "lastName": "Ramirez",
+        "jobTitle": {
+          "title": "Director of Data and AI Platform, Digital Services",
+          "departments": [
+            "Research & Analytics",
+            "Information Technology"
+          ],
+          "seniority": "director"
+        },
+        "socialLinks": {
+          "linkedin": "https://www.linkedin.com/in/emil-ramirez-4047b5aa"
+        }
+      },
+      {
+        "id": "v1._OOM0iIvl8rSR5gsJISVnYzuy_KV6PTxZQ",
+        "firstName": "Richard",
+        "lastName": "Ault",
+        "jobTitle": {
+          "title": "Chief Architect of Defense and Security",
+          "departments": [
+            "Engineering & Technical"
+          ],
+          "seniority": "c-suite"
+        },
+        "socialLinks": {
+          "linkedin": "https://www.linkedin.com/in/richard-ault-"
+        }
+      },
+      {
+        "id": "v1.-kSALQnLJMcQnB87q7TQJjZBe5S-MaGiET8",
+        "firstName": "Cece",
+        "lastName": "Wysong",
+        "jobTitle": {
+          "title": "Executive Director of Information Digital Technology and Security, Business Operations",
+          "departments": [
+            "Information Technology",
+            "Operations"
+          ],
+          "seniority": "director"
+        },
+        "socialLinks": {
+          "linkedin": "https://www.linkedin.com/in/cece-bains-wysong"
+        }
+      },
+      {
+        "id": "v1.GUelekaaF9g_j9Bzfu7ReLvuvc4hVwVopw",
+        "firstName": "Dana",
+        "lastName": "Deasy",
+        "jobTitle": {
+          "title": "Chief Information Digital Officer and Senior Vice President",
+          "departments": [
+            "Information Technology",
+            "General Management"
+          ],
+          "seniority": "c-suite"
+        },
+        "socialLinks": {
+          "linkedin": "https://www.linkedin.com/in/honorable-dana-deasy-0312985"
+        }
+      }
+    ],
+    "billing": {
+      "creditsCharged": 2,
+      "resultsReturned": 50,
+      "lowBalance": false
+    }
+  },
+  "usage_after": {
+    "credits": {
+      "total": 1200,
+      "used": 173,
+      "remaining": 1027
+    },
+    "rateLimits": {
+      "daily": {
+        "limit": 2000,
+        "used": 4,
+        "remaining": 1996,
+        "resetsAt": "2026-09-16T05:41:28.792Z"
+      },
+      "hourly": {
+        "limit": 400,
+        "used": 4,
+        "remaining": 396,
+        "resetsAt": "2026-09-15T06:41:28.793Z"
+      },
+      "minute": {
+        "limit": 200,
+        "used": 4,
+        "remaining": 196,
+        "resetsAt": "2026-09-15T05:42:28.793Z"
+      }
+    },
+    "plan": {
+      "category": "premium",
+      "renewalType": "month",
+      "startDate": "2026-09-07T08:32:26.290Z",
+      "endDate": "2026-10-07T08:32:26.290Z"
+    },
+    "pricing": {
+      "companySearch": {
+        "credits": 1,
+        "perQuantity": 25
+      },
+      "contactSearch": {
+        "credits": 1,
+        "perQuantity": 25
+      },
+      "revealCompany": {
+        "credits": 1,
+        "perQuantity": 1
+      },
+      "revealCompanyPremiumData": {
+        "credits": 1,
+        "perQuantity": 1
+      },
+      "revealEmail": {
+        "credits": 1,
+        "perQuantity": 1
+      },
+      "revealPhone": {
+        "credits": 5,
+        "perQuantity": 1
+      },
+      "lookalikeCompany": {
+        "credits": 1,
+        "perQuantity": 5
+      },
+      "lookalikeContact": {
+        "credits": 1,
+        "perQuantity": 5
+      },
+      "contactRecommendationsReveal": {
+        "credits": 1,
+        "perQuantity": 1
+      },
+      "companyRecommendationsReveal": {
+        "credits": 1,
+        "perQuantity": 1
+      },
+      "showSignalsCompany": {
+        "credits": 1,
+        "perQuantity": 1
+      },
+      "showSignalsContact": {
+        "credits": 1,
+        "perQuantity": 1
+      },
+      "signalScoreCompany": {
+        "credits": 1,
+        "perQuantity": 1
+      },
+      "signalScoreContact": {
+        "credits": 1,
+        "perQuantity": 1
+      },
+      "tableRead": {
+        "credits": 1,
+        "perQuantity": 25
+      },
+      "buyingGroupReveal": {
+        "credits": 1,
+        "perQuantity": 1
+      },
+      "conversationsSearch": {
+        "credits": 1,
+        "perQuantity": 25
+      },
+      "conversationsTranscript": {
+        "credits": 1,
+        "perQuantity": 1
+      }
+    }
+  }
+}

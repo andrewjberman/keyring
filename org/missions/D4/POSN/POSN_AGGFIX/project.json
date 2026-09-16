@@ -1,0 +1,51 @@
+{
+ "project_code": "POSN_AGGFIX",
+ "macro_code": "POSN",
+ "directive": "D4",
+ "fabric": "site-z",
+ "pipeline": null,
+ "status": "closed",
+ "dep_stage": "CLOSED",
+ "created": "2026-09-15",
+ "registered_under_tree": "2026-09-15",
+ "last_updated": "2026-09-16",
+ "pods": [
+  "1.0.0",
+  "2.0.0",
+  "3.0.0",
+  "4.0.0"
+ ],
+ "seats": {
+  "cto": "1.0.0_SA_CTO~Z",
+  "coo": "2.0.0_SA_COO~Z",
+  "cvo": "3.0.0_SA_CVO~Z",
+  "cro": "4.0.0_SA_CRO~Z"
+ },
+ "related": [
+  "POSN_ASTTAX",
+  "POSN_TENANCY"
+ ],
+ "name": "Positioning AGG view, restored as an Opal-only view -- the firm-wide aggregate book on the Positioning page's Portfolio Composition and Holdings Breakdown panels, for Opal users only.",
+ "description": "Brings back the aggregate (AGG) book on the Positioning page that portal commit d53049a0 removed on 2026-08-24, for Opal users only: one Opal-wide book of the primary models UST, ST, INT, LT, ULT and blends of them, weighted by Opal's current assets by model, its data kept from advisors and clients, and the default Positioning view for an Opal user unless another book is remembered. Endpoint FWD-1..FWD-4 and FWD-6..FWD-9 confirmed by Andrew 2026-09-15 ~17:0xZ; FWD-5 retired on his word.",
+ "brief": "docs/briefs/posn-aggfix-opal-only-agg-view-brief-20260915.md @1e268c164e (L1 brief, admitted shape, by 4.0.0_SA_CRO~Z; blob 8a527c8aa0). The plan Andrew designated as the L2 input is org/tier1_exec/4.0.0_SA_CRO/deliverables/POSITIONING_AGG_OPAL_ONLY_RESTORE_PLAN_20260915.md, blob 0765b9af1f, on origin/CLOUD @2033ff3ea6 and on SITEZ byte-identical since 1e268c164e.",
+ "endpoint": "org/tier1_exec/1.0.0_SA_CTO/deliverables/POSN_AGGFIX_ENDPOINT_FORWARD_20260915_Z.md",
+ "prds": [
+  {
+   "path": "org/missions/D4/POSN/POSN_AGGFIX/prd/POSN_AGGFIX_PRD.md",
+   "version": "v0.2 CURRENT (2026-09-15, PRD_HEADER status DRAFT); v0.1 @d6bee5693c",
+   "note": "L4 by 1.0.0_SA_CTO~Z. ENDPOINT FWD-1..4 and FWD-6..9 byte-identical to the confirmed carrier @8b0805e72a; twelve binding properties; SURFACE MANIFEST S1-S17 (8 verify rows first); BRIEF COVERAGE 30 of 30 headings of the brief @1e268c164e; compiler evidence. The model set is data at org/standards/POSN_AGGREGATE_MODEL_SET.json. v0.2 answers 4.0.0_SA_CRO~Z's brief-half refusal @7ffc16301a (review @3cb4034158): each model book's aum is written from the same table as the aggregate's weights (lambda_function.py:1796-1798), so C-FIVE-BOOKS-UNCHANGED is scoped to every field except each book's aum, which moves to that model's own current row; the blast radius and S2's census carry it. Brief half only; the ratified-text half stays signed."
+  }
+ ],
+ "leads": [
+  "REGISTERED UNDER THE TREE 2026-09-15 by 1.0.0_SA_CTO~Z (spine L3; the CTO writes the row, the generated index and the D4 members line in one commit). Macro POSN is already ratified for D4 in MACROS.yaml, so no macro-enum edit. Andrew-direct ~16:2xZ at the 0.0.0_AB_MSTR terminal, relayed via 0.0.0_AB_MSTR~Z msg 23156; SITEZ record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260915_162xZ_POSN_AGGFIX_CTO_Z_ENDPOINT_FORWARD_ON_CRO_RESTORE_PLAN.md.",
+  "L2 ENDPOINT EMITTED, NOT CONFIRMED: FWD-1..FWD-8. FWD-4, FWD-6 and FWD-7 are written on the CRO's recommendations for D1, D2 and D3 and each states the line it becomes under the other answer; D4 adds an outcome only if Andrew picks the aggregate as the Opal default.",
+  "L2 ENDPOINT AMENDED BEFORE CONFIRMATION 2026-09-15 ~17:1xZ by 1.0.0_SA_CTO~Z on 4.0.0_SA_CRO~Z's L1 brief findings (msg 23175), re-read at origin/PROD edf85ce503 portal-proxy.ts:1418-1426 (the model route: internal + advisor only, blocks client tier) and at Andrew's 2026-09-09 ruling 5 text: FWD-2 and FWD-7 add the advisor arm; FWD-6 names its dependency on the owner of the firm's assets-by-model figures without narrowing its bar; FWD-4's Phase-1-alone branch names ruling 5. Ids unchanged.",
+  "L2 ENDPOINT CONFIRMED 2026-09-15 ~17:0xZ, Andrew-direct at the 0.0.0_AB_MSTR terminal, relayed by 0.0.0_AB_MSTR~Z msg 23176; SITEZ record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260915_170xZ_POSN_AGGFIX_L2_ANSWERS_DONE_WHEN_D4_FULL_FLOW.md. a) to h) map to FWD-1..FWD-8 (order checked against this seat's bytes; content-checked by 4.0.0_SA_CRO~Z msg 23178). FWD-5 RETIRED (e 'no this is irrelevant'), id vacant. FWD-9 added from D4 ('yes this would be the default view ... if they don't have another one cached'). Scope: primary models and blends of them only (a, f); one Opal-wide aggregate, none per partner firm (b); the prior layout (c). s.6 = the full canonical flow ('might as well do it properly'). D1-D3 read as settled by d, f and g; that reading is this seat's and was relayed back.",
+  "L4 PRD v0.1 written 2026-09-15 by 1.0.0_SA_CTO~Z. Two measured findings shaped it: the producer role's S3 grant on opal-data-portal-v2/* (infra/aws/terraform/yang-pipeline/iam.tf:34-46) already covers the re-pointed read and a new key, so no IAM cell; and the client-tier refusal the portal proxy docstring claims for the model route was not found in the two edge functions comp-routes names for that URL, so S4 verifies where any refusal runs before the Opal-only route (S11) is built.",
+  "L4-R ADMITTED 2026-09-15 ~18:02Z at PRD v0.2 @cbd85e5cff: ratified-text SIGNED by 3.0.0_SA_CVO~Z @57438abd0e (half_hash 33458b1d30..., unchanged since v0.1), brief SIGNED by 4.0.0_SA_CRO~Z @b523c21086 (half_hash a05dfcec3a..., review @f51af104e4) after its v0.1 refusal @7ffc16301a was answered in v0.2. RELEASE TO L5: broker message 23197 '[PRD LANDED] POSN_AGGFIX v0.2 @b523c21086', sent 18:02:08Z by the notifier in 4.0.0_SA_CRO~Z's sign-off commit and READ by 2.0.0_SA_COO~Z at 18:02:52Z (get_delivery_state, read by 1.0.0_SA_CTO~Z). CARRIED TO L5 as a design fact, not a PRD change: under v0.2 the aggregate's total no longer equals the five books' aum summed (books carry their own rows, the aggregate folds the blends); which total the aggregate shows is settled in the cell serving FWD-6 (4.0.0_SA_CRO~Z v0.2 review, 'ONE NEW NOTE')."
+ ],
+ "phase": "L6 ISSUED 2026-09-15 ~19:1xZ by 2.0.0_SA_COO~Z: ONE issuance, 7 task orders over 17 of 17 cells (decomposition @605c03f81f), slots ~1 (TO-A1-1 -> TO-A2-1 -> TO-A3-1), ~2 (TO-C1-1), ~3 (TO-B1-1 -> TO-B2-1 -> TO-B3-1); fanout 3 of 3 chains, cap 8. L7 executing on worker subagents.",
+ "blocking": "CLOSED 2026-09-16 on Andrew-direct ~01:0xZ and ~01:2xZ. Round 1 L7-TERMINAL and R6-CLOSED: 7 of 7 task orders complete, 7 of 7 proof instances VALID, COMPLETION_REPORT.round1 @f7105b10da (8 of 8 outcomes COVERED, 17 of 17 cells), COMPLETION_GRADES.round1 @0beaa930d8 (8 of 8 REALIZED at EXERCISED, graded by 1.0.0_SA_CTO~Z against each card's own artifact). Portal portal-v2.1.179 LIVE on PROD @ff542d0a, deploy ledger @8753758c53. || L8 compile, L9 adjudication and the L10 slug were STOOD DOWN UNPERFORMED on Andrew-direct ~01:1xZ at the 3.0.0_SA_CVO~Z terminal (\"not needed just wrap up whatever you need to, mark closed on anything in your purview\"), record bd1358c39e, relayed by 1.0.0_SA_CTO~Z msg 23333. No CVO watermark and no REMEDIATION_v1.Z.md exist or are coming; nothing waits on one. The 28 surprise-channel rows stay UNDER_INVESTIGATION; Z-S1, Z-S2, W1-S1, W2-S4 are not reached by the stand-down and remain available.",
+ "threads": [],
+ "thread_counter": 0
+}

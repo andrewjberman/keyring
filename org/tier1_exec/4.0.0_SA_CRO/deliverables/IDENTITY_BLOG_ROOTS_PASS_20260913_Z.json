@@ -1,0 +1,2567 @@
+{
+  "artifact": "blog_roots DISCOVERY PASS -- Google Custom Search",
+  "author": "4.0.0_SA_CRO~Z",
+  "generated_at": "2026-09-14T07:10Z",
+  "authority": "Andrew-direct 2026-09-13 ~04:0xZ, card 4 of 'all recs approved': the Google Custom Search key for IR and blog search, SEARCH ONLY.",
+  "criterion": "HARVEST_BACKFILL_PLAN_20260911_Z.md s.13",
+  "provider": "googleapis.com/customsearch/v1 -- ONE provider, ONE purpose. No result page was fetched.",
+  "universe": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~4\\universe.json",
+  "name_derivation": "the company name is the folder name with its trailing Bloomberg-shaped tokens removed -- the complement of the identity fallback rule that reads those same tokens as a ticker.",
+  "name_overrides": {
+    "Koninklijke KPN NA": {
+      "name": "KPN",
+      "reason": "'Koninklijke' is a Dutch honorific shared by many listed companies; 'KPN' is the name"
+    },
+    "Manila MER PER": {
+      "name": "Manila Electric",
+      "reason": "'Manila' alone is a city; the company is Manila Electric (Meralco)"
+    }
+  },
+  "name_overrides_note": "found by the zero-call dry run over all 89 derived queries, not by recall: in two folders the stripped token WAS the company's identity and the residual was not a company name.",
+  "excluded_non_company_domains": [
+    "accesswire.com",
+    "annualreports.com",
+    "barrons.com",
+    "bing.com",
+    "bloomberg.com",
+    "businesswire.com",
+    "cnbc.com",
+    "companiesmarketcap.com",
+    "craft.co",
+    "crunchbase.com",
+    "einpresswire.com",
+    "facebook.com",
+    "finance.yahoo.com",
+    "fool.com",
+    "ft.com",
+    "glassdoor.com",
+    "globenewswire.com",
+    "google.com",
+    "gurufocus.com",
+    "hl.co.uk",
+    "ii.co.uk",
+    "indeed.com",
+    "instagram.com",
+    "investing.com",
+    "investor.gov",
+    "investorrelations.com",
+    "irmagazine.com",
+    "linkedin.com",
+    "londonstockexchange.com",
+    "macrotrends.net",
+    "marketscreener.com",
+    "morningstar.com",
+    "msn.com",
+    "nasdaq.com",
+    "newsfilecorp.com",
+    "notifyir.com",
+    "nyse.com",
+    "pitchbook.com",
+    "prnewswire.co.uk",
+    "prnewswire.com",
+    "q4inc.com",
+    "quartr.com",
+    "reddit.com",
+    "reuters.com",
+    "sec.gov",
+    "sec.report",
+    "seekingalpha.com",
+    "sharesmagazine.co.uk",
+    "simplywall.st",
+    "stockanalysis.com",
+    "tiktok.com",
+    "tipranks.com",
+    "twitter.com",
+    "wikipedia.org",
+    "wikiwand.com",
+    "wsj.com",
+    "x.com",
+    "yahoo.com",
+    "youtube.com",
+    "zacks.com"
+  ],
+  "excluded_note": "test (b) as written in s.13 says only 'two or more results share that same registrable domain'. Run literally it would elect linkedin.com for a company with three LinkedIn hits. Aggregators, exchanges, social networks and news are excluded before the tests run. THIS IS A CORRECTION TO THE CRITERION, disclosed rather than folded in.",
+  "denominator": {
+    "universe": 89,
+    "eligible_with_held_ir_domain": 88,
+    "ASKED": 88,
+    "blog_roots_INFERRED": 52,
+    "REFUSED_on_evidence": 36,
+    "calls_spent_total": 88,
+    "recruiting_roots_excluded": 7,
+    "recruiting_note": "a careers/jobs blog is real company content of the WRONG KIND for a chatter axis -- employee stories do not move a security. Excluded AFTER the fact, re-adjudicated OFFLINE from the stored on_domain_links at ZERO call cost, which is exactly what storing a rule INPUT buys. IR paths are deliberately kept: a press release is market-relevant."
+  },
+  "records": [
+    {
+      "folder": "ASML NA",
+      "company_name": "ASML",
+      "query": "ASML blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": [
+          "www.asml.com/en/company/stories",
+          "www.asml.com/en/news"
+        ],
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'ASML blog', 10 result(s) returned of 1280000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. ACCEPTED -- 2 blog root(s) on the held domain asml.com, out of 2 result(s) that were on it at all.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "asml.com",
+        "results_on_held_domain": 2,
+        "results_off_held_domain": [],
+        "on_domain_links": [
+          "https://www.asml.com/en/company/stories",
+          "https://www.asml.com/en/news"
+        ],
+        "excluded_recruiting": [],
+        "blog_roots": [
+          "www.asml.com/en/company/stories",
+          "www.asml.com/en/news"
+        ],
+        "verdict": "ACCEPTED -- 2 blog root(s) on the held domain asml.com, out of 2 result(s) that were on it at all."
+      }
+    },
+    {
+      "folder": "Adobe ADBE US",
+      "company_name": "Adobe",
+      "query": "Adobe blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": [
+          "blog.adobe.com",
+          "business.adobe.com/blog",
+          "news.adobe.com",
+          "www.adobe.com/uk/express/learn/blog",
+          "coldfusion.adobe.com/blogs"
+        ],
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Adobe blog', 10 result(s) returned of 271000000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. ACCEPTED -- 5 blog root(s) on the held domain adobe.com, out of 9 result(s) that were on it at all.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "adobe.com",
+        "results_on_held_domain": 9,
+        "results_off_held_domain": [],
+        "on_domain_links": [
+          "https://blog.adobe.com/",
+          "https://business.adobe.com/blog/",
+          "https://blog.adobe.com/en/publish/2025/04/09/our-vision-for-accelerating-creativity-productivity-with-agentic-ai",
+          "https://news.adobe.com/",
+          "https://blog.adobe.com/en/publish/2026/04/15/introducing-firefly-ai-assistant-new-way-create-with-our-creative-agent",
+          "https://www.adobe.com/uk/express/learn/blog",
+          "https://blog.adobe.com/en/publish/2025/09/04/adobe-premiere-bringing-pro-quality-video-editing-to-your-iphone",
+          "https://coldfusion.adobe.com/blogs/",
+          "https://helpx.adobe.com/adobe-connect/using/webinar/get-started-with-ai-generated-blogs.html"
+        ],
+        "excluded_recruiting": [],
+        "blog_roots": [
+          "blog.adobe.com",
+          "business.adobe.com/blog",
+          "news.adobe.com",
+          "www.adobe.com/uk/express/learn/blog",
+          "coldfusion.adobe.com/blogs"
+        ],
+        "verdict": "ACCEPTED -- 5 blog root(s) on the held domain adobe.com, out of 9 result(s) that were on it at all."
+      }
+    },
+    {
+      "folder": "Air Liquide AI FP",
+      "company_name": "Air Liquide",
+      "query": "Air Liquide blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": [
+          "www.airliquide.com/group/press-releases-news",
+          "www.airliquide.com/stories"
+        ],
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Air Liquide blog', 10 result(s) returned of 14800000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. ACCEPTED -- 2 blog root(s) on the held domain airliquide.com, out of 7 result(s) that were on it at all.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "airliquide.com",
+        "results_on_held_domain": 7,
+        "results_off_held_domain": [],
+        "on_domain_links": [
+          "https://www.airliquide.com/group/press-releases-news/2026-07-28/h1-2026-results-acceleration-second-quarter-air-liquide-combines-growth-continuous-performance",
+          "https://usa.airliquide.com/",
+          "https://www.airliquide.com/group/press-releases-news/2026-04-16/air-liquide-invests-200-million-euros-japan-support-leading-semiconductor-manufacturer-production",
+          "https://ca.healthcare.airliquide.com/academy",
+          "https://www.airliquide.com/stories/industry/renewable-electricity-boosting-power-supply",
+          "https://ca.healthcare.airliquide.com/solutions/equipment/medical-gas-systems/pipeline-equipment/gas-outlets",
+          "https://eg.airliquide.com/Superior-Liquid-Nitrogen-Supplies"
+        ],
+        "excluded_recruiting": [],
+        "blog_roots": [
+          "www.airliquide.com/group/press-releases-news",
+          "www.airliquide.com/stories"
+        ],
+        "verdict": "ACCEPTED -- 2 blog root(s) on the held domain airliquide.com, out of 7 result(s) that were on it at all."
+      }
+    },
+    {
+      "folder": "Alibaba BABA",
+      "company_name": "Alibaba",
+      "query": "Alibaba blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Alibaba blog', 10 result(s) returned of 35800000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. REFUSED -- 0 result(s) landed on the held domain alibabagroup.com but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "alibabagroup.com",
+        "results_on_held_domain": 0,
+        "results_off_held_domain": [],
+        "on_domain_links": [],
+        "excluded_recruiting": [],
+        "blog_roots": [],
+        "verdict": "REFUSED -- 0 result(s) landed on the held domain alibabagroup.com but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap."
+      }
+    },
+    {
+      "folder": "America Movil AXMB MM",
+      "company_name": "America Movil",
+      "query": "America Movil blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'America Movil blog', 10 result(s) returned of 25800000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. REFUSED -- 1 result(s) landed on the held domain americamovil.com but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "americamovil.com",
+        "results_on_held_domain": 1,
+        "results_off_held_domain": [],
+        "on_domain_links": [
+          "https://www.americamovil.com/Spanish/overview/"
+        ],
+        "excluded_recruiting": [],
+        "blog_roots": [],
+        "verdict": "REFUSED -- 1 result(s) landed on the held domain americamovil.com but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap."
+      }
+    },
+    {
+      "folder": "AstraZeneca AZN",
+      "company_name": "AstraZeneca",
+      "query": "AstraZeneca blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": [
+          "www.astrazeneca.com/content/az-us/media",
+          "www.astrazeneca.com/media-centre"
+        ],
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'AstraZeneca blog', 10 result(s) returned of 4220000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. ACCEPTED -- 2 blog root(s) on the held domain astrazeneca.com, out of 2 result(s) that were on it at all.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "astrazeneca.com",
+        "results_on_held_domain": 2,
+        "results_off_held_domain": [],
+        "on_domain_links": [
+          "https://www.astrazeneca.com/content/az-us/media/astrazeneca-us-blog.html",
+          "https://www.astrazeneca.com/media-centre/articles.html"
+        ],
+        "excluded_recruiting": [],
+        "blog_roots": [
+          "www.astrazeneca.com/content/az-us/media",
+          "www.astrazeneca.com/media-centre"
+        ],
+        "verdict": "ACCEPTED -- 2 blog root(s) on the held domain astrazeneca.com, out of 2 result(s) that were on it at all."
+      }
+    },
+    {
+      "folder": "BB Seguridade BBSE3 BZ",
+      "company_name": "BB Seguridade",
+      "query": "BB Seguridade blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'BB Seguridade blog', 10 result(s) returned of 45000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. REFUSED -- 0 result(s) landed on the held domain bbseguridaderi.com.br but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "bbseguridaderi.com.br",
+        "results_on_held_domain": 0,
+        "results_off_held_domain": [],
+        "on_domain_links": [],
+        "excluded_recruiting": [],
+        "blog_roots": [],
+        "verdict": "REFUSED -- 0 result(s) landed on the held domain bbseguridaderi.com.br but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap."
+      }
+    },
+    {
+      "folder": "Boeing BA",
+      "company_name": "Boeing",
+      "query": "Boeing blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": [
+          "services.boeing.com/resources/insights",
+          "services.boeing.com/news"
+        ],
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Boeing blog', 10 result(s) returned of 28800000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. ACCEPTED -- 2 blog root(s) on the held domain boeing.com, out of 2 result(s) that were on it at all.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "boeing.com",
+        "results_on_held_domain": 2,
+        "results_off_held_domain": [],
+        "on_domain_links": [
+          "https://services.boeing.com/resources/insights",
+          "https://services.boeing.com/news"
+        ],
+        "excluded_recruiting": [],
+        "blog_roots": [
+          "services.boeing.com/resources/insights",
+          "services.boeing.com/news"
+        ],
+        "verdict": "ACCEPTED -- 2 blog root(s) on the held domain boeing.com, out of 2 result(s) that were on it at all."
+      }
+    },
+    {
+      "folder": "British American Tobacco",
+      "company_name": "British American Tobacco",
+      "query": "British American Tobacco blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": [
+          "www.bat.com/media"
+        ],
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'British American Tobacco blog', 10 result(s) returned of 6060000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. ACCEPTED -- 1 blog root(s) on the held domain bat.com, out of 1 result(s) that were on it at all.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "bat.com",
+        "results_on_held_domain": 1,
+        "results_off_held_domain": [],
+        "on_domain_links": [
+          "https://www.bat.com/media/news-and-stories"
+        ],
+        "excluded_recruiting": [],
+        "blog_roots": [
+          "www.bat.com/media"
+        ],
+        "verdict": "ACCEPTED -- 1 blog root(s) on the held domain bat.com, out of 1 result(s) that were on it at all."
+      }
+    },
+    {
+      "folder": "Bunzl BNZL GB",
+      "company_name": "Bunzl",
+      "query": "Bunzl blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Bunzl blog', 10 result(s) returned of 82300 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. REFUSED -- 0 result(s) landed on the held domain bunzl.com but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "bunzl.com",
+        "results_on_held_domain": 0,
+        "results_off_held_domain": [],
+        "on_domain_links": [],
+        "excluded_recruiting": [],
+        "blog_roots": [],
+        "verdict": "REFUSED -- 0 result(s) landed on the held domain bunzl.com but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap."
+      }
+    },
+    {
+      "folder": "Cadence CDNS US",
+      "company_name": "Cadence",
+      "query": "Cadence blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": [
+          "resources.pcb.cadence.com/blog",
+          "community.cadence.com/cadence_blogs_8"
+        ],
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Cadence blog', 10 result(s) returned of 23300000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. ACCEPTED -- 2 blog root(s) on the held domain cadence.com, out of 4 result(s) that were on it at all.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "cadence.com",
+        "results_on_held_domain": 4,
+        "results_off_held_domain": [],
+        "on_domain_links": [
+          "https://community.cadence.com/",
+          "https://resources.pcb.cadence.com/blog/col/blog/km-why-high-current-pcbs-overheat-at-the-narrowest-point",
+          "https://community.cadence.com/cadence_blogs_8/b/cic",
+          "https://www.cadence.com/en_US/home/training/training-blogs.html"
+        ],
+        "excluded_recruiting": [],
+        "blog_roots": [
+          "resources.pcb.cadence.com/blog",
+          "community.cadence.com/cadence_blogs_8"
+        ],
+        "verdict": "ACCEPTED -- 2 blog root(s) on the held domain cadence.com, out of 4 result(s) that were on it at all."
+      }
+    },
+    {
+      "folder": "Canadian National Railway CNR",
+      "company_name": "Canadian National Railway",
+      "query": "Canadian National Railway blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": [
+          "www.cn.ca/en/media"
+        ],
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Canadian National Railway blog', 10 result(s) returned of 21500000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. ACCEPTED -- 1 blog root(s) on the held domain cn.ca, out of 1 result(s) that were on it at all.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "cn.ca",
+        "results_on_held_domain": 1,
+        "results_off_held_domain": [],
+        "on_domain_links": [
+          "https://www.cn.ca/en/media/stories/"
+        ],
+        "excluded_recruiting": [],
+        "blog_roots": [
+          "www.cn.ca/en/media"
+        ],
+        "verdict": "ACCEPTED -- 1 blog root(s) on the held domain cn.ca, out of 1 result(s) that were on it at all."
+      }
+    },
+    {
+      "folder": "BNP Paribas BNP FP",
+      "company_name": "BNP Paribas",
+      "query": "BNP Paribas blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'BNP Paribas blog', 10 result(s) returned of 9890000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. REFUSED -- 0 result(s) landed on the held domain invest.bnpparibas but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "invest.bnpparibas",
+        "results_on_held_domain": 0,
+        "results_off_held_domain": [],
+        "on_domain_links": [],
+        "excluded_recruiting": [],
+        "blog_roots": [],
+        "verdict": "REFUSED -- 0 result(s) landed on the held domain invest.bnpparibas but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap."
+      }
+    },
+    {
+      "folder": "BP PLC",
+      "company_name": "BP",
+      "query": "BP blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'BP blog', 10 result(s) returned of 510000000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. REFUSED -- 0 result(s) landed on the held domain bp.com but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "bp.com",
+        "results_on_held_domain": 0,
+        "results_off_held_domain": [],
+        "on_domain_links": [],
+        "excluded_recruiting": [],
+        "blog_roots": [],
+        "verdict": "REFUSED -- 0 result(s) landed on the held domain bp.com but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap."
+      }
+    },
+    {
+      "folder": "Celsius CELH",
+      "company_name": "Celsius",
+      "query": "Celsius blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Celsius blog', 10 result(s) returned of 32900000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. REFUSED -- 0 result(s) landed on the held domain celsiusholdingsinc.com but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "celsiusholdingsinc.com",
+        "results_on_held_domain": 0,
+        "results_off_held_domain": [],
+        "on_domain_links": [],
+        "excluded_recruiting": [],
+        "blog_roots": [],
+        "verdict": "REFUSED -- 0 result(s) landed on the held domain celsiusholdingsinc.com but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap."
+      }
+    },
+    {
+      "folder": "China Construction Bank",
+      "company_name": "China Construction Bank",
+      "query": "China Construction Bank blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'China Construction Bank blog', 10 result(s) returned of 21700000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. REFUSED -- 0 result(s) landed on the held domain ccb.com but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "ccb.com",
+        "results_on_held_domain": 0,
+        "results_off_held_domain": [],
+        "on_domain_links": [],
+        "excluded_recruiting": [],
+        "blog_roots": [],
+        "verdict": "REFUSED -- 0 result(s) landed on the held domain ccb.com but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap."
+      }
+    },
+    {
+      "folder": "Clorox CLX",
+      "company_name": "Clorox",
+      "query": "Clorox blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": [
+          "www.thecloroxcompany.com/blog"
+        ],
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Clorox blog', 10 result(s) returned of 1290000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. ACCEPTED -- 1 blog root(s) on the held domain thecloroxcompany.com, out of 2 result(s) that were on it at all.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "thecloroxcompany.com",
+        "results_on_held_domain": 2,
+        "results_off_held_domain": [],
+        "on_domain_links": [
+          "https://www.thecloroxcompany.com/blog/tag/clorox/",
+          "https://www.thecloroxcompany.com/blog/a-personal-update-from-linda-rendle-and-the-path-forward-for-clorox/"
+        ],
+        "excluded_recruiting": [],
+        "blog_roots": [
+          "www.thecloroxcompany.com/blog"
+        ],
+        "verdict": "ACCEPTED -- 1 blog root(s) on the held domain thecloroxcompany.com, out of 2 result(s) that were on it at all."
+      }
+    },
+    {
+      "folder": "Coca Cola Femsa",
+      "company_name": "Coca Cola Femsa",
+      "query": "Coca Cola Femsa blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Coca Cola Femsa blog', 10 result(s) returned of 104000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. REFUSED -- 0 result(s) landed on the held domain coca-colafemsa.com but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "coca-colafemsa.com",
+        "results_on_held_domain": 0,
+        "results_off_held_domain": [],
+        "on_domain_links": [],
+        "excluded_recruiting": [],
+        "blog_roots": [],
+        "verdict": "REFUSED -- 0 result(s) landed on the held domain coca-colafemsa.com but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap."
+      }
+    },
+    {
+      "folder": "Copa CPA",
+      "company_name": "Copa",
+      "query": "Copa blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Copa blog', 10 result(s) returned of 123000000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. REFUSED -- 0 result(s) landed on the held domain copaair.com but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "copaair.com",
+        "results_on_held_domain": 0,
+        "results_off_held_domain": [],
+        "on_domain_links": [],
+        "excluded_recruiting": [],
+        "blog_roots": [],
+        "verdict": "REFUSED -- 0 result(s) landed on the held domain copaair.com but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap."
+      }
+    },
+    {
+      "folder": "Costco COST",
+      "company_name": "Costco",
+      "query": "Costco blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Costco blog', 10 result(s) returned of 39300000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. REFUSED -- 1 result(s) landed on the held domain costco.com but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "costco.com",
+        "results_on_held_domain": 1,
+        "results_off_held_domain": [],
+        "on_domain_links": [
+          "https://www.costco.com/life-insurance-services.html"
+        ],
+        "excluded_recruiting": [],
+        "blog_roots": [],
+        "verdict": "REFUSED -- 1 result(s) landed on the held domain costco.com but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap."
+      }
+    },
+    {
+      "folder": "Enel SpA ENEL IM",
+      "company_name": "Enel SpA",
+      "query": "Enel SpA blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Enel SpA blog', 10 result(s) returned of 168000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. REFUSED -- 0 result(s) landed on the held domain enel.com but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "enel.com",
+        "results_on_held_domain": 0,
+        "results_off_held_domain": [],
+        "on_domain_links": [],
+        "excluded_recruiting": [],
+        "blog_roots": [],
+        "verdict": "REFUSED -- 0 result(s) landed on the held domain enel.com but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap."
+      }
+    },
+    {
+      "folder": "GSK LN",
+      "company_name": "GSK",
+      "query": "GSK blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'GSK blog', 10 result(s) returned of 4900000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. REFUSED -- 2 result(s) landed on the held domain gsk.com but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "gsk.com",
+        "results_on_held_domain": 2,
+        "results_off_held_domain": [],
+        "on_domain_links": [
+          "https://www.gsk.com/en-gb/behind-the-science-magazine/",
+          "https://us.gsk.com/en-us/behind-the-science-us-edition/"
+        ],
+        "excluded_recruiting": [],
+        "blog_roots": [],
+        "verdict": "REFUSED -- 2 result(s) landed on the held domain gsk.com but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap."
+      }
+    },
+    {
+      "folder": "Global Payments GPN",
+      "company_name": "Global Payments",
+      "query": "Global Payments blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": [
+          "www.globalpayments.com/insights",
+          "developer.globalpayments.com/blog",
+          "www.globalpayments.com/en-gb/insights",
+          "www.globalpayments.com/en-ca/insights",
+          "help.globalpayments.com/en-us/blog"
+        ],
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Global Payments blog', 10 result(s) returned of 367000000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. ACCEPTED -- 5 blog root(s) on the held domain globalpayments.com, out of 5 result(s) that were on it at all.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "globalpayments.com",
+        "results_on_held_domain": 5,
+        "results_off_held_domain": [],
+        "on_domain_links": [
+          "https://www.globalpayments.com/insights",
+          "https://developer.globalpayments.com/blog/overview",
+          "https://www.globalpayments.com/en-gb/insights",
+          "https://www.globalpayments.com/en-ca/insights",
+          "https://help.globalpayments.com/en-US/blog/virtual-terminal-how-we-built-it"
+        ],
+        "excluded_recruiting": [],
+        "blog_roots": [
+          "www.globalpayments.com/insights",
+          "developer.globalpayments.com/blog",
+          "www.globalpayments.com/en-gb/insights",
+          "www.globalpayments.com/en-ca/insights",
+          "help.globalpayments.com/en-us/blog"
+        ],
+        "verdict": "ACCEPTED -- 5 blog root(s) on the held domain globalpayments.com, out of 5 result(s) that were on it at all."
+      }
+    },
+    {
+      "folder": "Grupo Aeroportuario del Centro OMAB MM",
+      "company_name": "Grupo Aeroportuario del Centro",
+      "query": "Grupo Aeroportuario del Centro blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Grupo Aeroportuario del Centro blog', 10 result(s) returned of 56400 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. REFUSED -- 0 result(s) landed on the held domain oma.aero but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "oma.aero",
+        "results_on_held_domain": 0,
+        "results_off_held_domain": [],
+        "on_domain_links": [],
+        "excluded_recruiting": [],
+        "blog_roots": [],
+        "verdict": "REFUSED -- 0 result(s) landed on the held domain oma.aero but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap."
+      }
+    },
+    {
+      "folder": "HEICO Corporation HEI US",
+      "company_name": "HEICO Corporation",
+      "query": "HEICO Corporation blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'HEICO Corporation blog', 10 result(s) returned of 20600 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. REFUSED -- 0 result(s) landed on the held domain heico.com but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "heico.com",
+        "results_on_held_domain": 0,
+        "results_off_held_domain": [],
+        "on_domain_links": [],
+        "excluded_recruiting": [],
+        "blog_roots": [],
+        "verdict": "REFUSED -- 0 result(s) landed on the held domain heico.com but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap."
+      }
+    },
+    {
+      "folder": "HSBC HSBA LN",
+      "company_name": "HSBC",
+      "query": "HSBC blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": [
+          "www.hsbc.com/news-and-views",
+          "www.business.us.hsbc.com/en/insights",
+          "www.business.hsbc.com/en-gb/insights"
+        ],
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'HSBC blog', 10 result(s) returned of 16800000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. ACCEPTED -- 3 blog root(s) on the held domain hsbc.com, out of 3 result(s) that were on it at all.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "hsbc.com",
+        "results_on_held_domain": 3,
+        "results_off_held_domain": [],
+        "on_domain_links": [
+          "https://www.hsbc.com/news-and-views/views",
+          "https://www.business.us.hsbc.com/en/insights",
+          "https://www.business.hsbc.com/en-gb/insights/parentinc"
+        ],
+        "excluded_recruiting": [],
+        "blog_roots": [
+          "www.hsbc.com/news-and-views",
+          "www.business.us.hsbc.com/en/insights",
+          "www.business.hsbc.com/en-gb/insights"
+        ],
+        "verdict": "ACCEPTED -- 3 blog root(s) on the held domain hsbc.com, out of 3 result(s) that were on it at all."
+      }
+    },
+    {
+      "folder": "Haliburton HAL",
+      "company_name": "Haliburton",
+      "query": "Haliburton blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Haliburton blog', 10 result(s) returned of 550000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. REFUSED -- 1 result(s) landed on the held domain halliburton.com but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "halliburton.com",
+        "results_on_held_domain": 1,
+        "results_off_held_domain": [],
+        "on_domain_links": [
+          "https://www.halliburton.com/en/energy-pulse"
+        ],
+        "excluded_recruiting": [],
+        "blog_roots": [],
+        "verdict": "REFUSED -- 1 result(s) landed on the held domain halliburton.com but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap."
+      }
+    },
+    {
+      "folder": "Hermes RMS",
+      "company_name": "Hermes",
+      "query": "Hermes blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Hermes blog', 10 result(s) returned of 38300000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. REFUSED -- 1 result(s) landed on the held domain hermes.com but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "hermes.com",
+        "results_on_held_domain": 1,
+        "results_off_held_domain": [],
+        "on_domain_links": [
+          "https://www.hermes.com/us/en/content/235056-six-generations-of-artisans/"
+        ],
+        "excluded_recruiting": [],
+        "blog_roots": [],
+        "verdict": "REFUSED -- 1 result(s) landed on the held domain hermes.com but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap."
+      }
+    },
+    {
+      "folder": "Home Depot HD",
+      "company_name": "Home Depot",
+      "query": "Home Depot blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": [
+          "ecoactions.homedepot.com/blog",
+          "corporate.homedepot.com/page/newsroom"
+        ],
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Home Depot blog', 10 result(s) returned of 68000000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. ACCEPTED -- 2 blog root(s) on the held domain homedepot.com, out of 5 result(s) that were on it at all.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "homedepot.com",
+        "results_on_held_domain": 5,
+        "results_off_held_domain": [],
+        "on_domain_links": [
+          "https://www.homedepot.com/c/diy_projects_and_ideas",
+          "https://ecoactions.homedepot.com/blog/category/blog/",
+          "https://www.homedepot.com/c/alp/diy-projects-and-ideas/azzz-ap",
+          "https://corporate.homedepot.com/page/newsroom",
+          "https://videos.homedepot.com/category/videos/diy-projects-ideas"
+        ],
+        "excluded_recruiting": [],
+        "blog_roots": [
+          "ecoactions.homedepot.com/blog",
+          "corporate.homedepot.com/page/newsroom"
+        ],
+        "verdict": "ACCEPTED -- 2 blog root(s) on the held domain homedepot.com, out of 5 result(s) that were on it at all."
+      }
+    },
+    {
+      "folder": "Hon Hai 2317 TT",
+      "company_name": "Hon Hai",
+      "query": "Hon Hai blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Hon Hai blog', 10 result(s) returned of 7820000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. REFUSED -- 0 result(s) landed on the held domain honhai.com but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "honhai.com",
+        "results_on_held_domain": 0,
+        "results_off_held_domain": [],
+        "on_domain_links": [],
+        "excluded_recruiting": [],
+        "blog_roots": [],
+        "verdict": "REFUSED -- 0 result(s) landed on the held domain honhai.com but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap."
+      }
+    },
+    {
+      "folder": "ICICI Bank ICICIBC IN",
+      "company_name": "ICICI Bank",
+      "query": "ICICI Bank blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": [
+          "www.icici.bank.in/blogs",
+          "www.icici.bank.in/nri-banking/blogs"
+        ],
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'ICICI Bank blog', 10 result(s) returned of 20200000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. ACCEPTED -- 2 blog root(s) on the held domain icici.bank.in, out of 5 result(s) that were on it at all.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "icici.bank.in",
+        "results_on_held_domain": 5,
+        "results_off_held_domain": [],
+        "on_domain_links": [
+          "https://www.icici.bank.in/blogs",
+          "https://www.icici.bank.in/nri-banking/blogs",
+          "https://www.icici.bank.in/blogs/vacations-newsletter",
+          "https://www.icici.bank.in/blogs/personal-finance",
+          "https://www.icici.bank.in/blogs/mobile-banking/what-is-imobile-and-how-to-use"
+        ],
+        "excluded_recruiting": [],
+        "blog_roots": [
+          "www.icici.bank.in/blogs",
+          "www.icici.bank.in/nri-banking/blogs"
+        ],
+        "verdict": "ACCEPTED -- 2 blog root(s) on the held domain icici.bank.in, out of 5 result(s) that were on it at all."
+      }
+    },
+    {
+      "folder": "Iberdrola IBE SM",
+      "company_name": "Iberdrola",
+      "query": "Iberdrola blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": [
+          "www.iberdrola.com/trabaja-con-nosotros/nuestros-equipos/nuestros-blogs"
+        ],
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Iberdrola blog', 10 result(s) returned of 1560000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. ACCEPTED -- 1 blog root(s) on the held domain iberdrola.com, out of 2 result(s) that were on it at all.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "iberdrola.com",
+        "results_on_held_domain": 2,
+        "results_off_held_domain": [],
+        "on_domain_links": [
+          "https://www.iberdrola.com/talent/alpha-generation",
+          "https://www.iberdrola.com/trabaja-con-nosotros/nuestros-equipos/nuestros-blogs"
+        ],
+        "excluded_recruiting": [
+          "https://www.iberdrola.com/talent/alpha-generation"
+        ],
+        "blog_roots": [
+          "www.iberdrola.com/trabaja-con-nosotros/nuestros-equipos/nuestros-blogs"
+        ],
+        "verdict": "ACCEPTED -- 1 blog root(s) on the held domain iberdrola.com, out of 2 result(s) that were on it at all."
+      }
+    },
+    {
+      "folder": "Idexx IDXX",
+      "company_name": "Idexx",
+      "query": "Idexx blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": [
+          "www.idexx.com/en/blogs",
+          "software.idexx.com/resources/blog-posts"
+        ],
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Idexx blog', 10 result(s) returned of 110000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. ACCEPTED -- 2 blog root(s) on the held domain idexx.com, out of 5 result(s) that were on it at all.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "idexx.com",
+        "results_on_held_domain": 5,
+        "results_off_held_domain": [],
+        "on_domain_links": [
+          "https://www.idexx.com/en/blogs/",
+          "https://software.idexx.com/resources/blog-posts",
+          "https://careers.idexx.com/us/en/pathology",
+          "https://help.vello.idexx.com/en",
+          "https://ca.idexx.com/en-ca/veterinary/software-services/neo/"
+        ],
+        "excluded_recruiting": [
+          "https://careers.idexx.com/us/en/pathology"
+        ],
+        "blog_roots": [
+          "www.idexx.com/en/blogs",
+          "software.idexx.com/resources/blog-posts"
+        ],
+        "verdict": "ACCEPTED -- 2 blog root(s) on the held domain idexx.com, out of 5 result(s) that were on it at all."
+      }
+    },
+    {
+      "folder": "Imperial Brands IMB LN",
+      "company_name": "Imperial Brands",
+      "query": "Imperial Brands blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Imperial Brands blog', 10 result(s) returned of 27700000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. REFUSED -- 2 result(s) landed on the held domain imperialbrandsplc.com but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "imperialbrandsplc.com",
+        "results_on_held_domain": 2,
+        "results_off_held_domain": [],
+        "on_domain_links": [
+          "https://www.imperialbrandsplc.com/",
+          "https://www.imperialbrandsplc.com/people-and-planet/healthier-futures/the-role-of-flavours-in-tobacco-harm-reduction"
+        ],
+        "excluded_recruiting": [],
+        "blog_roots": [],
+        "verdict": "REFUSED -- 2 result(s) landed on the held domain imperialbrandsplc.com but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap."
+      }
+    },
+    {
+      "folder": "Intesa Sanpaolo ISP IM",
+      "company_name": "Intesa Sanpaolo",
+      "query": "Intesa Sanpaolo blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Intesa Sanpaolo blog', 10 result(s) returned of 379000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. REFUSED -- 1 result(s) landed on the held domain intesasanpaolo.com but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "intesasanpaolo.com",
+        "results_on_held_domain": 1,
+        "results_off_held_domain": [],
+        "on_domain_links": [
+          "https://group.intesasanpaolo.com/content/dam/portalgroup/repository-documenti/sostenibilt%C3%A0/dcnf/dcnf-2023/eng/CNFS_2023.pdf"
+        ],
+        "excluded_recruiting": [],
+        "blog_roots": [],
+        "verdict": "REFUSED -- 1 result(s) landed on the held domain intesasanpaolo.com but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap."
+      }
+    },
+    {
+      "folder": "Intuit INTU",
+      "company_name": "Intuit",
+      "query": "Intuit blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": [
+          "www.intuit.com/blog",
+          "blog.turbotax.intuit.com",
+          "investors.intuit.com/news-events",
+          "design.intuit.com/blog",
+          "contentdesign.intuit.com/marketing/blog-posts"
+        ],
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Intuit blog', 10 result(s) returned of 6650000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. ACCEPTED -- 5 blog root(s) on the held domain intuit.com, out of 8 result(s) that were on it at all.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "intuit.com",
+        "results_on_held_domain": 8,
+        "results_off_held_domain": [],
+        "on_domain_links": [
+          "https://www.intuit.com/blog/",
+          "https://blog.turbotax.intuit.com/",
+          "https://www.intuit.com/blog/all-posts/",
+          "https://quickbooks.intuit.com/r/",
+          "https://www.intuit.com/blog/news-social/architecting-intuit-for-a-new-chapter-of-growth/",
+          "https://investors.intuit.com/news-events/press-releases",
+          "https://design.intuit.com/blog/",
+          "https://contentdesign.intuit.com/marketing/blog-posts/"
+        ],
+        "excluded_recruiting": [],
+        "blog_roots": [
+          "www.intuit.com/blog",
+          "blog.turbotax.intuit.com",
+          "investors.intuit.com/news-events",
+          "design.intuit.com/blog",
+          "contentdesign.intuit.com/marketing/blog-posts"
+        ],
+        "verdict": "ACCEPTED -- 5 blog root(s) on the held domain intuit.com, out of 8 result(s) that were on it at all."
+      }
+    },
+    {
+      "folder": "Intuitive Surgical ISRG US",
+      "company_name": "Intuitive Surgical",
+      "query": "Intuitive Surgical blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": [
+          "www.intuitive.com/en-us/about-us/newsroom"
+        ],
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Intuitive Surgical blog', 10 result(s) returned of 4420000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. ACCEPTED -- 1 blog root(s) on the held domain intuitive.com, out of 3 result(s) that were on it at all.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "intuitive.com",
+        "results_on_held_domain": 3,
+        "results_off_held_domain": [],
+        "on_domain_links": [
+          "https://www.intuitive.com/en-us/about-us/newsroom",
+          "https://careers.intuitive.com/en/employee-stories/",
+          "https://careers.intuitive.com/en/get-to-know-engineering-at-intuitive/"
+        ],
+        "excluded_recruiting": [
+          "https://careers.intuitive.com/en/employee-stories/",
+          "https://careers.intuitive.com/en/get-to-know-engineering-at-intuitive/"
+        ],
+        "blog_roots": [
+          "www.intuitive.com/en-us/about-us/newsroom"
+        ],
+        "verdict": "ACCEPTED -- 1 blog root(s) on the held domain intuitive.com, out of 3 result(s) that were on it at all."
+      }
+    },
+    {
+      "folder": "JD.com 9618 HK",
+      "company_name": "JD.com",
+      "query": "JD.com blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'JD.com blog', 10 result(s) returned of 170000000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. REFUSED -- 2 result(s) landed on the held domain jd.com but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "jd.com",
+        "results_on_held_domain": 2,
+        "results_off_held_domain": [],
+        "on_domain_links": [
+          "https://corporate.jd.com/whatIsNew?pagePath=inTheNews",
+          "https://ir.jd.com/"
+        ],
+        "excluded_recruiting": [],
+        "blog_roots": [],
+        "verdict": "REFUSED -- 2 result(s) landed on the held domain jd.com but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap."
+      }
+    },
+    {
+      "folder": "KDDI",
+      "company_name": "KDDI",
+      "query": "KDDI blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'KDDI blog', 10 result(s) returned of 867000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. REFUSED -- 1 result(s) landed on the held domain kddi.com but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "kddi.com",
+        "results_on_held_domain": 1,
+        "results_off_held_domain": [],
+        "on_domain_links": [
+          "https://tech-note.kddi.com/"
+        ],
+        "excluded_recruiting": [],
+        "blog_roots": [],
+        "verdict": "REFUSED -- 1 result(s) landed on the held domain kddi.com but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap."
+      }
+    },
+    {
+      "folder": "Kimberly Clark KMB",
+      "company_name": "Kimberly Clark",
+      "query": "Kimberly Clark blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": [
+          "www.investor.kimberly-clark.com/news-releases"
+        ],
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Kimberly Clark blog', 10 result(s) returned of 8560000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. ACCEPTED -- 1 blog root(s) on the held domain kimberly-clark.com, out of 3 result(s) that were on it at all.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "kimberly-clark.com",
+        "results_on_held_domain": 3,
+        "results_off_held_domain": [],
+        "on_domain_links": [
+          "https://careers.kimberly-clark.com/en/blog",
+          "https://careers.kimberly-clark.com/en/blog?category=Todos&sort=Mostrecent&tag=Formas&page=1",
+          "https://www.investor.kimberly-clark.com/news-releases/news-release-details/kimberly-clark-announces-post-closing-organizational-structure"
+        ],
+        "excluded_recruiting": [
+          "https://careers.kimberly-clark.com/en/blog",
+          "https://careers.kimberly-clark.com/en/blog?category=Todos&sort=Mostrecent&tag=Formas&page=1"
+        ],
+        "blog_roots": [
+          "www.investor.kimberly-clark.com/news-releases"
+        ],
+        "verdict": "ACCEPTED -- 1 blog root(s) on the held domain kimberly-clark.com, out of 3 result(s) that were on it at all."
+      }
+    },
+    {
+      "folder": "Koninklijke KPN NA",
+      "company_name": "KPN",
+      "query": "KPN blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": [
+          "m2m.kpn.com/en/blog",
+          "www.kpn.com/beleef/blog"
+        ],
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'KPN blog', 10 result(s) returned of 1110000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. ACCEPTED -- 2 blog root(s) on the held domain kpn.com, out of 3 result(s) that were on it at all.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "kpn.com",
+        "results_on_held_domain": 3,
+        "results_off_held_domain": [],
+        "on_domain_links": [
+          "https://m2m.kpn.com/en/blog",
+          "https://www.kpn.com/beleef/blog",
+          "https://www.kpn.com/zakelijk/thedigitaldutch"
+        ],
+        "excluded_recruiting": [],
+        "blog_roots": [
+          "m2m.kpn.com/en/blog",
+          "www.kpn.com/beleef/blog"
+        ],
+        "verdict": "ACCEPTED -- 2 blog root(s) on the held domain kpn.com, out of 3 result(s) that were on it at all."
+      }
+    },
+    {
+      "folder": "Lenovo 992 HK",
+      "company_name": "Lenovo",
+      "query": "Lenovo blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": [
+          "news.lenovo.com",
+          "forums.lenovo.com/t5/blog"
+        ],
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Lenovo blog', 10 result(s) returned of 60300000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. ACCEPTED -- 2 blog root(s) on the held domain lenovo.com, out of 5 result(s) that were on it at all.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "lenovo.com",
+        "results_on_held_domain": 5,
+        "results_off_held_domain": [],
+        "on_domain_links": [
+          "https://news.lenovo.com/",
+          "https://forums.lenovo.com/t5/Blog/bg-p/Lenovo_Blog-EN",
+          "https://support.lenovo.com/us/en/solutions/ht104232-think-deployment-resource-center",
+          "https://forums.lenovo.com/",
+          "https://www.lenovo.com/in/en/glossary/blogger/"
+        ],
+        "excluded_recruiting": [],
+        "blog_roots": [
+          "news.lenovo.com",
+          "forums.lenovo.com/t5/blog"
+        ],
+        "verdict": "ACCEPTED -- 2 blog root(s) on the held domain lenovo.com, out of 5 result(s) that were on it at all."
+      }
+    },
+    {
+      "folder": "MSCI Inc MSCI US",
+      "company_name": "MSCI Inc",
+      "query": "MSCI Inc blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": [
+          "www.msci.com/research-and-insights"
+        ],
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'MSCI Inc blog', 10 result(s) returned of 5080000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. ACCEPTED -- 1 blog root(s) on the held domain msci.com, out of 6 result(s) that were on it at all.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "msci.com",
+        "results_on_held_domain": 6,
+        "results_off_held_domain": [],
+        "on_domain_links": [
+          "https://www.msci.com/research-and-insights/in-focus",
+          "https://www.msci.com/research-and-insights/blog-post/the-tipping-point-women-on-boards-and-financial-performance",
+          "https://www.msci.com/research-and-insights/blog-post/esg-and-the-cost-of-capital",
+          "https://www.msci.com/research-and-insights/blog-post/when-ai-meets-water-scarcity-data-centers-in-a-thirsty-world",
+          "https://www.msci.com/research-and-insights/blog-post/how-ownership-can-shape-outcomes",
+          "https://careers.msci.com/articles/technology-recruitment-process"
+        ],
+        "excluded_recruiting": [
+          "https://careers.msci.com/articles/technology-recruitment-process"
+        ],
+        "blog_roots": [
+          "www.msci.com/research-and-insights"
+        ],
+        "verdict": "ACCEPTED -- 1 blog root(s) on the held domain msci.com, out of 6 result(s) that were on it at all."
+      }
+    },
+    {
+      "folder": "Manila MER PER",
+      "company_name": "Manila Electric",
+      "query": "Manila Electric blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Manila Electric blog', 10 result(s) returned of 11100000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. REFUSED -- 0 result(s) landed on the held domain meralco.com.ph but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "meralco.com.ph",
+        "results_on_held_domain": 0,
+        "results_off_held_domain": [],
+        "on_domain_links": [],
+        "excluded_recruiting": [],
+        "blog_roots": [],
+        "verdict": "REFUSED -- 0 result(s) landed on the held domain meralco.com.ph but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap."
+      }
+    },
+    {
+      "folder": "Mastercard MA",
+      "company_name": "Mastercard",
+      "query": "Mastercard blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": [
+          "www.mastercard.com/news",
+          "developer.mastercard.com/blog",
+          "www.mastercard.com/us/en/news-and-trends"
+        ],
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Mastercard blog', 10 result(s) returned of 256000000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. ACCEPTED -- 3 blog root(s) on the held domain mastercard.com, out of 5 result(s) that were on it at all.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "mastercard.com",
+        "results_on_held_domain": 5,
+        "results_off_held_domain": [],
+        "on_domain_links": [
+          "https://www.mastercard.com/news/perspectives/",
+          "https://developer.mastercard.com/blog",
+          "https://www.mastercard.com/us/en/news-and-trends/featured-topic/cybersecurity-featured-topic.html",
+          "https://careers.mastercard.com/us/en/blog",
+          "https://developer.mastercard.com/blog/maximize-developer-experience/"
+        ],
+        "excluded_recruiting": [
+          "https://careers.mastercard.com/us/en/blog"
+        ],
+        "blog_roots": [
+          "www.mastercard.com/news",
+          "developer.mastercard.com/blog",
+          "www.mastercard.com/us/en/news-and-trends"
+        ],
+        "verdict": "ACCEPTED -- 3 blog root(s) on the held domain mastercard.com, out of 5 result(s) that were on it at all."
+      }
+    },
+    {
+      "folder": "MercadoLibre MELI US",
+      "company_name": "MercadoLibre",
+      "query": "MercadoLibre blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'MercadoLibre blog', 10 result(s) returned of 43500000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. REFUSED -- 0 result(s) landed on the held domain mercadolibre.com but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "mercadolibre.com",
+        "results_on_held_domain": 0,
+        "results_off_held_domain": [],
+        "on_domain_links": [],
+        "excluded_recruiting": [],
+        "blog_roots": [],
+        "verdict": "REFUSED -- 0 result(s) landed on the held domain mercadolibre.com but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap."
+      }
+    },
+    {
+      "folder": "Michelin ML FP",
+      "company_name": "Michelin",
+      "query": "Michelin blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": [
+          "connectedfleet.michelin.com/blog"
+        ],
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Michelin blog', 10 result(s) returned of 51200000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. ACCEPTED -- 1 blog root(s) on the held domain michelin.com, out of 1 result(s) that were on it at all.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "michelin.com",
+        "results_on_held_domain": 1,
+        "results_off_held_domain": [],
+        "on_domain_links": [
+          "https://connectedfleet.michelin.com/blog"
+        ],
+        "excluded_recruiting": [],
+        "blog_roots": [
+          "connectedfleet.michelin.com/blog"
+        ],
+        "verdict": "ACCEPTED -- 1 blog root(s) on the held domain michelin.com, out of 1 result(s) that were on it at all."
+      }
+    },
+    {
+      "folder": "Mitsubishi UFJ Financial Group 8306 JP",
+      "company_name": "Mitsubishi UFJ Financial Group",
+      "query": "Mitsubishi UFJ Financial Group blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Mitsubishi UFJ Financial Group blog', 10 result(s) returned of 4310000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. REFUSED -- 0 result(s) landed on the held domain mufg.jp but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "mufg.jp",
+        "results_on_held_domain": 0,
+        "results_off_held_domain": [],
+        "on_domain_links": [],
+        "excluded_recruiting": [],
+        "blog_roots": [],
+        "verdict": "REFUSED -- 0 result(s) landed on the held domain mufg.jp but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap."
+      }
+    },
+    {
+      "folder": "Monster MNST",
+      "company_name": "Monster",
+      "query": "Monster blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Monster blog', 10 result(s) returned of 524000000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. REFUSED -- 0 result(s) landed on the held domain monsterbevcorp.com but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "monsterbevcorp.com",
+        "results_on_held_domain": 0,
+        "results_off_held_domain": [],
+        "on_domain_links": [],
+        "excluded_recruiting": [],
+        "blog_roots": [],
+        "verdict": "REFUSED -- 0 result(s) landed on the held domain monsterbevcorp.com but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap."
+      }
+    },
+    {
+      "folder": "National Grid NG LN",
+      "company_name": "National Grid",
+      "query": "National Grid blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": [
+          "www.nationalgrid.com/stories"
+        ],
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'National Grid blog', 10 result(s) returned of 43000000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. ACCEPTED -- 1 blog root(s) on the held domain nationalgrid.com, out of 1 result(s) that were on it at all.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "nationalgrid.com",
+        "results_on_held_domain": 1,
+        "results_off_held_domain": [],
+        "on_domain_links": [
+          "https://www.nationalgrid.com/stories"
+        ],
+        "excluded_recruiting": [],
+        "blog_roots": [
+          "www.nationalgrid.com/stories"
+        ],
+        "verdict": "ACCEPTED -- 1 blog root(s) on the held domain nationalgrid.com, out of 1 result(s) that were on it at all."
+      }
+    },
+    {
+      "folder": "Nestle NESN SW",
+      "company_name": "Nestle",
+      "query": "Nestle blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": [
+          "www.nestle.com/stories",
+          "www.nestle.com/media"
+        ],
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Nestle blog', 10 result(s) returned of 28700000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. ACCEPTED -- 2 blog root(s) on the held domain nestle.com, out of 2 result(s) that were on it at all.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "nestle.com",
+        "results_on_held_domain": 2,
+        "results_off_held_domain": [],
+        "on_domain_links": [
+          "https://www.nestle.com/stories",
+          "https://www.nestle.com/media/news/water-challenge-blog-ten-facts-water-energy"
+        ],
+        "excluded_recruiting": [],
+        "blog_roots": [
+          "www.nestle.com/stories",
+          "www.nestle.com/media"
+        ],
+        "verdict": "ACCEPTED -- 2 blog root(s) on the held domain nestle.com, out of 2 result(s) that were on it at all."
+      }
+    },
+    {
+      "folder": "Netflix NFLX",
+      "company_name": "Netflix",
+      "query": "Netflix blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Netflix blog', 10 result(s) returned of 218000000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. REFUSED -- 0 result(s) landed on the held domain netflix.net but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "netflix.net",
+        "results_on_held_domain": 0,
+        "results_off_held_domain": [],
+        "on_domain_links": [],
+        "excluded_recruiting": [],
+        "blog_roots": [],
+        "verdict": "REFUSED -- 0 result(s) landed on the held domain netflix.net but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap."
+      }
+    },
+    {
+      "folder": "Nike NKE US",
+      "company_name": "Nike",
+      "query": "Nike blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": [
+          "www.nike.com/stories",
+          "about.nike.com/en/newsroom"
+        ],
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Nike blog', 10 result(s) returned of 125000000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. ACCEPTED -- 2 blog root(s) on the held domain nike.com, out of 5 result(s) that were on it at all.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "nike.com",
+        "results_on_held_domain": 5,
+        "results_off_held_domain": [],
+        "on_domain_links": [
+          "https://www.nike.com/stories",
+          "https://about.nike.com/en/newsroom",
+          "https://www.nike.com/stories/all",
+          "https://about.nike.com/en/magazine/elliott-hill-nike-interview",
+          "https://engineering.nike.com/"
+        ],
+        "excluded_recruiting": [],
+        "blog_roots": [
+          "www.nike.com/stories",
+          "about.nike.com/en/newsroom"
+        ],
+        "verdict": "ACCEPTED -- 2 blog root(s) on the held domain nike.com, out of 5 result(s) that were on it at all."
+      }
+    },
+    {
+      "folder": "Nokia FH",
+      "company_name": "Nokia",
+      "query": "Nokia blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": [
+          "www.nokia.com/blog",
+          "www.nokia.com/bell-labs/publications-and-media",
+          "www.nokia.com/optical-networks/blogs"
+        ],
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Nokia blog', 10 result(s) returned of 29100000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. ACCEPTED -- 3 blog root(s) on the held domain nokia.com, out of 5 result(s) that were on it at all.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "nokia.com",
+        "results_on_held_domain": 5,
+        "results_off_held_domain": [],
+        "on_domain_links": [
+          "https://www.nokia.com/blog/",
+          "https://www.nokia.com/blog/all-posts/",
+          "https://www.nokia.com/bell-labs/publications-and-media/blog/",
+          "https://www.nokia.com/blog/physical-ai-redefining-ran-and-telco-monetization/",
+          "https://www.nokia.com/optical-networks/blogs/"
+        ],
+        "excluded_recruiting": [],
+        "blog_roots": [
+          "www.nokia.com/blog",
+          "www.nokia.com/bell-labs/publications-and-media",
+          "www.nokia.com/optical-networks/blogs"
+        ],
+        "verdict": "ACCEPTED -- 3 blog root(s) on the held domain nokia.com, out of 5 result(s) that were on it at all."
+      }
+    },
+    {
+      "folder": "Novartis NOVN SW",
+      "company_name": "Novartis",
+      "query": "Novartis blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": [
+          "www.novartis.com/stories",
+          "www.novartis.com/us-en/stories"
+        ],
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Novartis blog', 10 result(s) returned of 4710000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. ACCEPTED -- 2 blog root(s) on the held domain novartis.com, out of 3 result(s) that were on it at all.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "novartis.com",
+        "results_on_held_domain": 3,
+        "results_off_held_domain": [],
+        "on_domain_links": [
+          "https://www.novartis.com/stories",
+          "https://www.novartis.com/stories/collaboration-strengthening-care-chronic-illness-ethiopia",
+          "https://www.novartis.com/us-en/stories"
+        ],
+        "excluded_recruiting": [],
+        "blog_roots": [
+          "www.novartis.com/stories",
+          "www.novartis.com/us-en/stories"
+        ],
+        "verdict": "ACCEPTED -- 2 blog root(s) on the held domain novartis.com, out of 3 result(s) that were on it at all."
+      }
+    },
+    {
+      "folder": "Nubank NU",
+      "company_name": "Nubank",
+      "query": "Nubank blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": [
+          "blog.nubank.com.br"
+        ],
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Nubank blog', 10 result(s) returned of 11800000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. ACCEPTED -- 1 blog root(s) on the held domain nubank.com.br, out of 1 result(s) that were on it at all.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "nubank.com.br",
+        "results_on_held_domain": 1,
+        "results_off_held_domain": [],
+        "on_domain_links": [
+          "https://blog.nubank.com.br/"
+        ],
+        "excluded_recruiting": [],
+        "blog_roots": [
+          "blog.nubank.com.br"
+        ],
+        "verdict": "ACCEPTED -- 1 blog root(s) on the held domain nubank.com.br, out of 1 result(s) that were on it at all."
+      }
+    },
+    {
+      "folder": "Orange ORA FP",
+      "company_name": "Orange",
+      "query": "Orange blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Orange blog', 10 result(s) returned of 3690000000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. REFUSED -- 0 result(s) landed on the held domain orange.com but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "orange.com",
+        "results_on_held_domain": 0,
+        "results_off_held_domain": [],
+        "on_domain_links": [],
+        "excluded_recruiting": [],
+        "blog_roots": [],
+        "verdict": "REFUSED -- 0 result(s) landed on the held domain orange.com but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap."
+      }
+    },
+    {
+      "folder": "Petrobras PETR3 BZ",
+      "company_name": "Petrobras",
+      "query": "Petrobras blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": [
+          "petrobras.com.br/en/redirecionamento/canais-blog"
+        ],
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Petrobras blog', 10 result(s) returned of 6630000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. ACCEPTED -- 1 blog root(s) on the held domain petrobras.com.br, out of 1 result(s) that were on it at all.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "petrobras.com.br",
+        "results_on_held_domain": 1,
+        "results_off_held_domain": [],
+        "on_domain_links": [
+          "https://petrobras.com.br/en/redirecionamento/canais-blog"
+        ],
+        "excluded_recruiting": [],
+        "blog_roots": [
+          "petrobras.com.br/en/redirecionamento/canais-blog"
+        ],
+        "verdict": "ACCEPTED -- 1 blog root(s) on the held domain petrobras.com.br, out of 1 result(s) that were on it at all."
+      }
+    },
+    {
+      "folder": "QXO",
+      "company_name": "QXO",
+      "query": "QXO blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": [
+          "www.qxo.com/qxo-blog",
+          "www.qxo.com/qxo-in-the-news"
+        ],
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'QXO blog', 10 result(s) returned of 122000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. ACCEPTED -- 2 blog root(s) on the held domain qxo.com, out of 8 result(s) that were on it at all.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "qxo.com",
+        "results_on_held_domain": 8,
+        "results_off_held_domain": [],
+        "on_domain_links": [
+          "https://www.qxo.com/qxo-blog",
+          "https://locations.qxo.com/IN/Fort-Wayne/Fort-Wayne-IN-46808/274?utm_sounce=becn&utm_medium=web&utm_term=na&utm_content=becn-Fort%20Wayne-IN-274&utm_campaign=locations",
+          "https://www.qxo.com/qxo-blog/roofing-industry-trends/roofing-trends-to-watch-in-2025",
+          "https://locations.qxo.com/SC/Columbia/Columbia-SC-29072/407/Commercial-Products",
+          "https://www.qxo.com/qxo-in-the-news",
+          "https://locations.qxo.com/KY/Louisville/Louisville-KY-40213/257/Commercial-Products?utm_source=Web&utm_medium=Profile&utm_term=na&utm_content=Commercial-Louisville-KY-257&utm_campaign=Locations",
+          "https://go.qxo.com/open-an-account",
+          "https://locations.qxo.com/NC/Charlotte/Charlotte-28269/402/Commercial-Products"
+        ],
+        "excluded_recruiting": [],
+        "blog_roots": [
+          "www.qxo.com/qxo-blog",
+          "www.qxo.com/qxo-in-the-news"
+        ],
+        "verdict": "ACCEPTED -- 2 blog root(s) on the held domain qxo.com, out of 8 result(s) that were on it at all."
+      }
+    },
+    {
+      "folder": "RWE AG RWE GY",
+      "company_name": "RWE",
+      "query": "RWE blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": [
+          "uk.rwe.com/press-and-news"
+        ],
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'RWE blog', 10 result(s) returned of 843000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. ACCEPTED -- 1 blog root(s) on the held domain rwe.com, out of 2 result(s) that were on it at all.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "rwe.com",
+        "results_on_held_domain": 2,
+        "results_off_held_domain": [],
+        "on_domain_links": [
+          "https://www.rwe.com/en/rwe-careers-portal/why-rwe/meet-the-team/meet-our-professionals/",
+          "https://uk.rwe.com/press-and-news/uk-statements-and-opinion/"
+        ],
+        "excluded_recruiting": [
+          "https://www.rwe.com/en/rwe-careers-portal/why-rwe/meet-the-team/meet-our-professionals/"
+        ],
+        "blog_roots": [
+          "uk.rwe.com/press-and-news"
+        ],
+        "verdict": "ACCEPTED -- 1 blog root(s) on the held domain rwe.com, out of 2 result(s) that were on it at all."
+      }
+    },
+    {
+      "folder": "Reckitt Benckiser RKT LN",
+      "company_name": "Reckitt Benckiser",
+      "query": "Reckitt Benckiser blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Reckitt Benckiser blog', 10 result(s) returned of 453000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. REFUSED -- 0 result(s) landed on the held domain reckitt.com but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "reckitt.com",
+        "results_on_held_domain": 0,
+        "results_off_held_domain": [],
+        "on_domain_links": [],
+        "excluded_recruiting": [],
+        "blog_roots": [],
+        "verdict": "REFUSED -- 0 result(s) landed on the held domain reckitt.com but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap."
+      }
+    },
+    {
+      "folder": "Rio Tinto RIO LN",
+      "company_name": "Rio Tinto",
+      "query": "Rio Tinto blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": [
+          "www.riotinto.com/en/news"
+        ],
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Rio Tinto blog', 10 result(s) returned of 4560000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. ACCEPTED -- 1 blog root(s) on the held domain riotinto.com, out of 1 result(s) that were on it at all.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "riotinto.com",
+        "results_on_held_domain": 1,
+        "results_off_held_domain": [],
+        "on_domain_links": [
+          "https://www.riotinto.com/en/news/stories"
+        ],
+        "excluded_recruiting": [],
+        "blog_roots": [
+          "www.riotinto.com/en/news"
+        ],
+        "verdict": "ACCEPTED -- 1 blog root(s) on the held domain riotinto.com, out of 1 result(s) that were on it at all."
+      }
+    },
+    {
+      "folder": "Roche ROG SW",
+      "company_name": "Roche",
+      "query": "Roche blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": [
+          "www.roche.com/stories"
+        ],
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Roche blog', 10 result(s) returned of 52900000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. ACCEPTED -- 1 blog root(s) on the held domain roche.com, out of 3 result(s) that were on it at all.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "roche.com",
+        "results_on_held_domain": 3,
+        "results_off_held_domain": [],
+        "on_domain_links": [
+          "https://www.roche.com/stories/voices",
+          "https://www.roche.com/stories",
+          "https://careers.roche.com/global/en/we-are-roche"
+        ],
+        "excluded_recruiting": [
+          "https://careers.roche.com/global/en/we-are-roche"
+        ],
+        "blog_roots": [
+          "www.roche.com/stories"
+        ],
+        "verdict": "ACCEPTED -- 1 blog root(s) on the held domain roche.com, out of 3 result(s) that were on it at all."
+      }
+    },
+    {
+      "folder": "SAP GY",
+      "company_name": "SAP",
+      "query": "SAP blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": [
+          "community.sap.com/t5/all-sap-community-blogs",
+          "www.sap.com/topics/blogs",
+          "store.sap.com/news-blogs",
+          "news.sap.com"
+        ],
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'SAP blog', 10 result(s) returned of 83500000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. ACCEPTED -- 4 blog root(s) on the held domain sap.com, out of 7 result(s) that were on it at all.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "sap.com",
+        "results_on_held_domain": 7,
+        "results_off_held_domain": [],
+        "on_domain_links": [
+          "https://community.sap.com/t5/all-sap-community-blogs/ct-p/all-blogs",
+          "https://www.sap.com/topics/blogs",
+          "https://store.sap.com/news-blogs/blogs",
+          "https://community.sap.com/",
+          "https://news.sap.com/blog/",
+          "https://news.sap.com/2026/03/sap-to-acquire-reltio/",
+          "https://pages.community.sap.com/topics/rise"
+        ],
+        "excluded_recruiting": [],
+        "blog_roots": [
+          "community.sap.com/t5/all-sap-community-blogs",
+          "www.sap.com/topics/blogs",
+          "store.sap.com/news-blogs",
+          "news.sap.com"
+        ],
+        "verdict": "ACCEPTED -- 4 blog root(s) on the held domain sap.com, out of 7 result(s) that were on it at all."
+      }
+    },
+    {
+      "folder": "SSE plc SSE LN",
+      "company_name": "SSE plc",
+      "query": "SSE plc blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": [
+          "www.sse.com/news-and-views"
+        ],
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'SSE plc blog', 10 result(s) returned of 81500 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. ACCEPTED -- 1 blog root(s) on the held domain sse.com, out of 5 result(s) that were on it at all.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "sse.com",
+        "results_on_held_domain": 5,
+        "results_off_held_domain": [],
+        "on_domain_links": [
+          "https://www.sse.com/news-and-views/customers/",
+          "https://www.sse.com/news-and-views/",
+          "https://www.sse.com/news-and-views/2025/07/chief-executive-perspective-partnering-to-deliver-net-zero/",
+          "https://careers.sse.com/blogs/sse-careers-news-views/from-oil-gas-to-low-carbon-leadership-ian-s-story",
+          "https://careers.sse.com/blogs/recruiter-advice/interviews-at-sse"
+        ],
+        "excluded_recruiting": [
+          "https://careers.sse.com/blogs/sse-careers-news-views/from-oil-gas-to-low-carbon-leadership-ian-s-story",
+          "https://careers.sse.com/blogs/recruiter-advice/interviews-at-sse"
+        ],
+        "blog_roots": [
+          "www.sse.com/news-and-views"
+        ],
+        "verdict": "ACCEPTED -- 1 blog root(s) on the held domain sse.com, out of 5 result(s) that were on it at all."
+      }
+    },
+    {
+      "folder": "Sanofi SAN FP",
+      "company_name": "Sanofi",
+      "query": "Sanofi blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": [
+          "www.sanofi.com/en/india/consumer-healthcare/consumer-healthcare-products/dulcoflex/blog"
+        ],
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Sanofi blog', 10 result(s) returned of 5100000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. ACCEPTED -- 1 blog root(s) on the held domain sanofi.com, out of 3 result(s) that were on it at all.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "sanofi.com",
+        "results_on_held_domain": 3,
+        "results_off_held_domain": [],
+        "on_domain_links": [
+          "https://www.sanofi.com/en/india/consumer-healthcare/consumer-healthcare-products/dulcoflex/blog",
+          "https://www.sanofi.com/en/magazine",
+          "https://jobs.sanofi.com/en/julien-guyomard"
+        ],
+        "excluded_recruiting": [
+          "https://jobs.sanofi.com/en/julien-guyomard"
+        ],
+        "blog_roots": [
+          "www.sanofi.com/en/india/consumer-healthcare/consumer-healthcare-products/dulcoflex/blog"
+        ],
+        "verdict": "ACCEPTED -- 1 blog root(s) on the held domain sanofi.com, out of 3 result(s) that were on it at all."
+      }
+    },
+    {
+      "folder": "Schlumberger SLB",
+      "company_name": "Schlumberger",
+      "query": "Schlumberger blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": [
+          "www.slb.com/insights"
+        ],
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Schlumberger blog', 10 result(s) returned of 561000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. ACCEPTED -- 1 blog root(s) on the held domain slb.com, out of 3 result(s) that were on it at all.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "slb.com",
+        "results_on_held_domain": 3,
+        "results_off_held_domain": [],
+        "on_domain_links": [
+          "https://www.slb.com/insights",
+          "https://www.slb.com/products-and-services/delivering-digital-at-scale/artificial-intelligence-solutions",
+          "https://ai.slb.com/"
+        ],
+        "excluded_recruiting": [],
+        "blog_roots": [
+          "www.slb.com/insights"
+        ],
+        "verdict": "ACCEPTED -- 1 blog root(s) on the held domain slb.com, out of 3 result(s) that were on it at all."
+      }
+    },
+    {
+      "folder": "ServiceNow NOW US",
+      "company_name": "ServiceNow",
+      "query": "ServiceNow blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": [
+          "www.servicenow.com/community/blogs",
+          "www.servicenow.com/blogs",
+          "www.servicenow.com/community/servicenow-ai-platform-blog",
+          "horizon.servicenow.com/blog"
+        ],
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'ServiceNow blog', 10 result(s) returned of 7880000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. ACCEPTED -- 4 blog root(s) on the held domain servicenow.com, out of 6 result(s) that were on it at all.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "servicenow.com",
+        "results_on_held_domain": 6,
+        "results_off_held_domain": [],
+        "on_domain_links": [
+          "https://www.servicenow.com/workflow.html",
+          "https://developer.servicenow.com/blog.do",
+          "https://www.servicenow.com/community/blogs/ct-p/blogs",
+          "https://www.servicenow.com/blogs/2026",
+          "https://www.servicenow.com/community/servicenow-ai-platform-blog/bg-p/now-platform-blog",
+          "https://horizon.servicenow.com/blog"
+        ],
+        "excluded_recruiting": [],
+        "blog_roots": [
+          "www.servicenow.com/community/blogs",
+          "www.servicenow.com/blogs",
+          "www.servicenow.com/community/servicenow-ai-platform-blog",
+          "horizon.servicenow.com/blog"
+        ],
+        "verdict": "ACCEPTED -- 4 blog root(s) on the held domain servicenow.com, out of 6 result(s) that were on it at all."
+      }
+    },
+    {
+      "folder": "Shopify SHOP CA",
+      "company_name": "Shopify",
+      "query": "Shopify blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": [
+          "www.shopify.com/blog",
+          "help.shopify.com/en/manual/online-store/blogs",
+          "community.shopify.com/t/how-do-i-change-the-author-name-on-my-blog",
+          "community.shopify.com/t/rearranging-blog-posts-in-a-blog-brooklyn",
+          "community.shopify.com/t/is-it-possible-to-organize-my-blog-posts-in-the-order-i-want-them-to-appear",
+          "apps.shopify.com/dropinblog-seo-friendly-blog"
+        ],
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Shopify blog', 10 result(s) returned of 167000000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. ACCEPTED -- 6 blog root(s) on the held domain shopify.com, out of 7 result(s) that were on it at all.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "shopify.com",
+        "results_on_held_domain": 7,
+        "results_off_held_domain": [],
+        "on_domain_links": [
+          "https://www.shopify.com/blog",
+          "https://help.shopify.com/en/manual/online-store/blogs",
+          "https://help.shopify.com/en/manual/online-store/blogs/adding-a-blog",
+          "https://community.shopify.com/t/how-do-i-change-the-author-name-on-my-blog/1500",
+          "https://community.shopify.com/t/rearranging-blog-posts-in-a-blog-brooklyn/6437",
+          "https://community.shopify.com/t/is-it-possible-to-organize-my-blog-posts-in-the-order-i-want-them-to-appear/7075",
+          "https://apps.shopify.com/dropinblog-seo-friendly-blog"
+        ],
+        "excluded_recruiting": [],
+        "blog_roots": [
+          "www.shopify.com/blog",
+          "help.shopify.com/en/manual/online-store/blogs",
+          "community.shopify.com/t/how-do-i-change-the-author-name-on-my-blog",
+          "community.shopify.com/t/rearranging-blog-posts-in-a-blog-brooklyn",
+          "community.shopify.com/t/is-it-possible-to-organize-my-blog-posts-in-the-order-i-want-them-to-appear",
+          "apps.shopify.com/dropinblog-seo-friendly-blog"
+        ],
+        "verdict": "ACCEPTED -- 6 blog root(s) on the held domain shopify.com, out of 7 result(s) that were on it at all."
+      }
+    },
+    {
+      "folder": "Singapore Telecom ST SP",
+      "company_name": "Singapore Telecom",
+      "query": "Singapore Telecom blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": [
+          "www.singtel.com/personal/singtel-blog"
+        ],
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Singapore Telecom blog', 10 result(s) returned of 23200000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. ACCEPTED -- 1 blog root(s) on the held domain singtel.com, out of 1 result(s) that were on it at all.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "singtel.com",
+        "results_on_held_domain": 1,
+        "results_off_held_domain": [],
+        "on_domain_links": [
+          "https://www.singtel.com/personal/singtel-blog"
+        ],
+        "excluded_recruiting": [],
+        "blog_roots": [
+          "www.singtel.com/personal/singtel-blog"
+        ],
+        "verdict": "ACCEPTED -- 1 blog root(s) on the held domain singtel.com, out of 1 result(s) that were on it at all."
+      }
+    },
+    {
+      "folder": "Spotify SPOT US",
+      "company_name": "Spotify",
+      "query": "Spotify blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": [
+          "newsroom.spotify.com",
+          "community.spotify.com/t5/community-blog",
+          "artists.spotify.com/en/blog",
+          "confidence.spotify.com/blog",
+          "developer.spotify.com/blog"
+        ],
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Spotify blog', 10 result(s) returned of 179000000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. ACCEPTED -- 5 blog root(s) on the held domain spotify.com, out of 8 result(s) that were on it at all.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "spotify.com",
+        "results_on_held_domain": 8,
+        "results_off_held_domain": [],
+        "on_domain_links": [
+          "https://newsroom.spotify.com/",
+          "https://community.spotify.com/t5/Community-Blog/bg-p/spotifyct",
+          "https://artists.spotify.com/en/blog",
+          "https://open.spotify.com/show/5sJAE024O5VeuM83gCFjGp",
+          "https://open.spotify.com/show/73RjxuFF54Mr7yAATBarOC",
+          "https://confidence.spotify.com/blog",
+          "https://open.spotify.com/album/0luMDIjG1HiinBas3na7vc",
+          "https://developer.spotify.com/blog/2026-02-06-update-on-developer-access-and-platform-security"
+        ],
+        "excluded_recruiting": [],
+        "blog_roots": [
+          "newsroom.spotify.com",
+          "community.spotify.com/t5/community-blog",
+          "artists.spotify.com/en/blog",
+          "confidence.spotify.com/blog",
+          "developer.spotify.com/blog"
+        ],
+        "verdict": "ACCEPTED -- 5 blog root(s) on the held domain spotify.com, out of 8 result(s) that were on it at all."
+      }
+    },
+    {
+      "folder": "Sumitomo Mitsui Financial Group 8316 JP",
+      "company_name": "Sumitomo Mitsui Financial Group",
+      "query": "Sumitomo Mitsui Financial Group blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Sumitomo Mitsui Financial Group blog', 10 result(s) returned of 141000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. REFUSED -- 1 result(s) landed on the held domain smfg.co.jp but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "smfg.co.jp",
+        "results_on_held_domain": 1,
+        "results_off_held_domain": [],
+        "on_domain_links": [
+          "https://www.smfg.co.jp/english/"
+        ],
+        "excluded_recruiting": [],
+        "blog_roots": [],
+        "verdict": "REFUSED -- 1 result(s) landed on the held domain smfg.co.jp but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap."
+      }
+    },
+    {
+      "folder": "Synopsys SNPS US",
+      "company_name": "Synopsys",
+      "query": "Synopsys blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": [
+          "ansys.synopsys.com/blog",
+          "www.synopsys.com/blogs"
+        ],
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Synopsys blog', 10 result(s) returned of 300000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. ACCEPTED -- 2 blog root(s) on the held domain synopsys.com, out of 6 result(s) that were on it at all.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "synopsys.com",
+        "results_on_held_domain": 6,
+        "results_off_held_domain": [],
+        "on_domain_links": [
+          "https://www.synopsys.com/blogs.html",
+          "https://ansys.synopsys.com/blog",
+          "https://www.synopsys.com/blogs/chip-design.html",
+          "https://www.synopsys.com/blogs/chip-design/category.cloud.html",
+          "https://www.synopsys.com/blogs/chip-design/soc-physical-verification-tool-achronix.html",
+          "https://www.synopsys.com/blogs/chip-design/eda-tools-dso-ai-100-tapeouts.html"
+        ],
+        "excluded_recruiting": [],
+        "blog_roots": [
+          "ansys.synopsys.com/blog",
+          "www.synopsys.com/blogs"
+        ],
+        "verdict": "ACCEPTED -- 2 blog root(s) on the held domain synopsys.com, out of 6 result(s) that were on it at all."
+      }
+    },
+    {
+      "folder": "Taiwan Semiconductor Manufacturing TSM US",
+      "company_name": "Taiwan Semiconductor Manufacturing",
+      "query": "Taiwan Semiconductor Manufacturing blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": [
+          "www.tsmc.com/english/news-events"
+        ],
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Taiwan Semiconductor Manufacturing blog', 10 result(s) returned of 8180000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. ACCEPTED -- 1 blog root(s) on the held domain tsmc.com, out of 3 result(s) that were on it at all.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "tsmc.com",
+        "results_on_held_domain": 3,
+        "results_off_held_domain": [],
+        "on_domain_links": [
+          "https://www.tsmc.com/english/news-events/blog-article-20211216",
+          "https://www.tsmc.com/english/node/233",
+          "https://www.tsmc.com/english/news-events/blog-article-20240926"
+        ],
+        "excluded_recruiting": [],
+        "blog_roots": [
+          "www.tsmc.com/english/news-events"
+        ],
+        "verdict": "ACCEPTED -- 1 blog root(s) on the held domain tsmc.com, out of 3 result(s) that were on it at all."
+      }
+    },
+    {
+      "folder": "Telefonica Brazil VIVT3 BZ",
+      "company_name": "Telefonica Brazil",
+      "query": "Telefonica Brazil blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Telefonica Brazil blog', 10 result(s) returned of 112000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. REFUSED -- 0 result(s) landed on the held domain telefonica.com.br but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "telefonica.com.br",
+        "results_on_held_domain": 0,
+        "results_off_held_domain": [],
+        "on_domain_links": [],
+        "excluded_recruiting": [],
+        "blog_roots": [],
+        "verdict": "REFUSED -- 0 result(s) landed on the held domain telefonica.com.br but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap."
+      }
+    },
+    {
+      "folder": "Tokyo Electron 8035 JP",
+      "company_name": "Tokyo Electron",
+      "query": "Tokyo Electron blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": [
+          "www.tel.com/blog"
+        ],
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Tokyo Electron blog', 10 result(s) returned of 289000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. ACCEPTED -- 1 blog root(s) on the held domain tel.com, out of 5 result(s) that were on it at all.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "tel.com",
+        "results_on_held_domain": 5,
+        "results_off_held_domain": [],
+        "on_domain_links": [
+          "https://www.tel.com/blog/",
+          "https://www.tel.com/blog/all/20251125_001.html",
+          "https://www.tel.com/blog/all/20250930_001.html",
+          "https://www.tel.com/blog/all/20250623_001.html",
+          "https://www.tel.com/blog/all/20260723_001.html"
+        ],
+        "excluded_recruiting": [],
+        "blog_roots": [
+          "www.tel.com/blog"
+        ],
+        "verdict": "ACCEPTED -- 1 blog root(s) on the held domain tel.com, out of 5 result(s) that were on it at all."
+      }
+    },
+    {
+      "folder": "Tokyo Marine 8766 JP",
+      "company_name": "Tokyo Marine",
+      "query": "Tokyo Marine blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Tokyo Marine blog', 10 result(s) returned of 15700000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. REFUSED -- 0 result(s) landed on the held domain tokiomarinehd.com but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "tokiomarinehd.com",
+        "results_on_held_domain": 0,
+        "results_off_held_domain": [],
+        "on_domain_links": [],
+        "excluded_recruiting": [],
+        "blog_roots": [],
+        "verdict": "REFUSED -- 0 result(s) landed on the held domain tokiomarinehd.com but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap."
+      }
+    },
+    {
+      "folder": "Total Energies TTE FP",
+      "company_name": "Total Energies",
+      "query": "Total Energies blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": [
+          "aviation.totalenergies.com/en/blog-flying-news",
+          "lubmarine.totalenergies.com/blog",
+          "marinefuels.totalenergies.com/news"
+        ],
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Total Energies blog', 10 result(s) returned of 644000000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. ACCEPTED -- 3 blog root(s) on the held domain totalenergies.com, out of 5 result(s) that were on it at all.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "totalenergies.com",
+        "results_on_held_domain": 5,
+        "results_off_held_domain": [],
+        "on_domain_links": [
+          "https://aviation.totalenergies.com/en/blog-flying-news",
+          "https://lubmarine.totalenergies.com/blog",
+          "https://marinefuels.totalenergies.com/news/blog-list",
+          "https://marinefuels.totalenergies.com/news/blog/totalenergies-marine-fuels-completes-first-biofuel-bunkering-trials-in-france",
+          "https://marinefuels.totalenergies.com/news/blog/how-to-advance-ammonia-as-a-marine-fuel-charting-a-path-towards-decarbonized-shipping"
+        ],
+        "excluded_recruiting": [],
+        "blog_roots": [
+          "aviation.totalenergies.com/en/blog-flying-news",
+          "lubmarine.totalenergies.com/blog",
+          "marinefuels.totalenergies.com/news"
+        ],
+        "verdict": "ACCEPTED -- 3 blog root(s) on the held domain totalenergies.com, out of 5 result(s) that were on it at all."
+      }
+    },
+    {
+      "folder": "UBS",
+      "company_name": "UBS",
+      "query": "UBS blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": [
+          "www.ubs.com/global/en/sustainability-impact/our-insights"
+        ],
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'UBS blog', 10 result(s) returned of 11900000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. ACCEPTED -- 1 blog root(s) on the held domain ubs.com, out of 3 result(s) that were on it at all.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "ubs.com",
+        "results_on_held_domain": 3,
+        "results_off_held_domain": [],
+        "on_domain_links": [
+          "https://www.ubs.com/global/en/careers/about-us/stories.html",
+          "https://www.ubs.com/global/en/careers/about-us/stories/2025/tech-blog-story.html",
+          "https://www.ubs.com/global/en/sustainability-impact/our-insights/viewpoints.html"
+        ],
+        "excluded_recruiting": [
+          "https://www.ubs.com/global/en/careers/about-us/stories.html",
+          "https://www.ubs.com/global/en/careers/about-us/stories/2025/tech-blog-story.html"
+        ],
+        "blog_roots": [
+          "www.ubs.com/global/en/sustainability-impact/our-insights"
+        ],
+        "verdict": "ACCEPTED -- 1 blog root(s) on the held domain ubs.com, out of 3 result(s) that were on it at all."
+      }
+    },
+    {
+      "folder": "Uber Technologies UBER US",
+      "company_name": "Uber Technologies",
+      "query": "Uber Technologies blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": [
+          "www.uber.com/us/en/blog"
+        ],
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Uber Technologies blog', 10 result(s) returned of 34700000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. ACCEPTED -- 1 blog root(s) on the held domain uber.com, out of 3 result(s) that were on it at all.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "uber.com",
+        "results_on_held_domain": 3,
+        "results_off_held_domain": [],
+        "on_domain_links": [
+          "https://www.uber.com/us/en/blog/engineering/",
+          "https://eng.uber.com/",
+          "https://jobs.uber.com/en/people-stories/"
+        ],
+        "excluded_recruiting": [
+          "https://jobs.uber.com/en/people-stories/"
+        ],
+        "blog_roots": [
+          "www.uber.com/us/en/blog"
+        ],
+        "verdict": "ACCEPTED -- 1 blog root(s) on the held domain uber.com, out of 3 result(s) that were on it at all."
+      }
+    },
+    {
+      "folder": "Unilever ULVR LN",
+      "company_name": "Unilever",
+      "query": "Unilever blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": [
+          "www.unilever.com/news"
+        ],
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Unilever blog', 10 result(s) returned of 10900000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. ACCEPTED -- 1 blog root(s) on the held domain unilever.com, out of 2 result(s) that were on it at all.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "unilever.com",
+        "results_on_held_domain": 2,
+        "results_off_held_domain": [],
+        "on_domain_links": [
+          "https://www.unilever.com/news/",
+          "https://www.unilever.com/news/news-search/2024/unilever-calls-on-industry-associations-to-step-up-climate-efforts/"
+        ],
+        "excluded_recruiting": [],
+        "blog_roots": [
+          "www.unilever.com/news"
+        ],
+        "verdict": "ACCEPTED -- 1 blog root(s) on the held domain unilever.com, out of 2 result(s) that were on it at all."
+      }
+    },
+    {
+      "folder": "Universal Music Group UMG NL",
+      "company_name": "Universal Music Group",
+      "query": "Universal Music Group blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Universal Music Group blog', 10 result(s) returned of 27300000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. REFUSED -- 2 result(s) landed on the held domain universalmusic.com but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "universalmusic.com",
+        "results_on_held_domain": 2,
+        "results_off_held_domain": [],
+        "on_domain_links": [
+          "https://www.universalmusic.com/youtube-announces-ai-music-principles-and-launches-youtube-music-ai-incubator-with-artists-songwriters-and-producers-from-universal-music-group/",
+          "https://www.universalmusic.com/universal-music-group-and-tiktok-announce-new-licensing-agreement/"
+        ],
+        "excluded_recruiting": [],
+        "blog_roots": [],
+        "verdict": "REFUSED -- 2 result(s) landed on the held domain universalmusic.com but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap."
+      }
+    },
+    {
+      "folder": "Valero Energy VLO",
+      "company_name": "Valero Energy",
+      "query": "Valero Energy blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Valero Energy blog', 10 result(s) returned of 302000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. REFUSED -- 0 result(s) landed on the held domain investorvalero.com but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "investorvalero.com",
+        "results_on_held_domain": 0,
+        "results_off_held_domain": [],
+        "on_domain_links": [],
+        "excluded_recruiting": [],
+        "blog_roots": [],
+        "verdict": "REFUSED -- 0 result(s) landed on the held domain investorvalero.com but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap."
+      }
+    },
+    {
+      "folder": "Visa V",
+      "company_name": "Visa",
+      "query": "Visa blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Visa blog', 10 result(s) returned of 605000000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. REFUSED -- 2 result(s) landed on the held domain visa.com but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "visa.com",
+        "results_on_held_domain": 2,
+        "results_off_held_domain": [],
+        "on_domain_links": [
+          "https://corporate.visa.com/en/sites/visa-perspectives.html",
+          "https://www.visa.com/en-us/thought-leadership/visa-direct"
+        ],
+        "excluded_recruiting": [],
+        "blog_roots": [],
+        "verdict": "REFUSED -- 2 result(s) landed on the held domain visa.com but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap."
+      }
+    },
+    {
+      "folder": "Walmart de Mexico WALMEX MM",
+      "company_name": "Walmart de Mexico",
+      "query": "Walmart de Mexico blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": null,
+        "status": "UNRESOLVED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Walmart de Mexico blog', 10 result(s) returned of 15600000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. REFUSED -- 0 result(s) landed on the held domain walmex.mx but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "walmex.mx",
+        "results_on_held_domain": 0,
+        "results_off_held_domain": [],
+        "on_domain_links": [],
+        "excluded_recruiting": [],
+        "blog_roots": [],
+        "verdict": "REFUSED -- 0 result(s) landed on the held domain walmex.mx but none carried a blog/news/press marker in its host or path. A company may simply not run a public editorial feed; that is a finding, not a gap."
+      }
+    },
+    {
+      "folder": "Workday WDAY US",
+      "company_name": "Workday",
+      "query": "Workday blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": [
+          "blog.workday.com",
+          "newsroom.workday.com"
+        ],
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Workday blog', 10 result(s) returned of 16400000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. ACCEPTED -- 2 blog root(s) on the held domain workday.com, out of 7 result(s) that were on it at all.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "workday.com",
+        "results_on_held_domain": 7,
+        "results_off_held_domain": [],
+        "on_domain_links": [
+          "https://blog.workday.com/en-us/homepage.html",
+          "https://blog.workday.com/en-us/workday-delivers-next-wave-agentic-ai-power-new-work-day.html",
+          "https://www.workday.com/en-us/perspectives/hr/ways-improve-workplace-communication.html",
+          "https://blog.workday.com/en-us/adaptive-decision-intelligence-analysis-across-data-set.html",
+          "https://newsroom.workday.com/2025-10-15-Workdays-Higher-Education-Momentum-Accelerates-as-Over-650-Institutions-Worldwide-Turn-to-AI-to-Navigate-Uncertainty-and-Transform-the-Student-Experience",
+          "https://www.workday.com/en-us/perspectives/ai/top-small-business-technology-trends.html",
+          "https://www.workday.com/en-us/perspectives/finance/2025-financial-planning-trends-every-cfo-should-know.html"
+        ],
+        "excluded_recruiting": [],
+        "blog_roots": [
+          "blog.workday.com",
+          "newsroom.workday.com"
+        ],
+        "verdict": "ACCEPTED -- 2 blog root(s) on the held domain workday.com, out of 7 result(s) that were on it at all."
+      }
+    },
+    {
+      "folder": "Zoetis ZTS US",
+      "company_name": "Zoetis",
+      "query": "Zoetis blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": [
+          "www.zoetis.com/news-and-insights",
+          "news.zoetis.com"
+        ],
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Zoetis blog', 10 result(s) returned of 700000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. ACCEPTED -- 2 blog root(s) on the held domain zoetis.com, out of 4 result(s) that were on it at all.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "zoetis.com",
+        "results_on_held_domain": 4,
+        "results_off_held_domain": [],
+        "on_domain_links": [
+          "https://www.zoetis.com/news-and-insights/news-insights",
+          "https://www.zoetis.com/news-and-insights/innovators-for-animals",
+          "https://www.zoetis.com/news-and-insights/blog/science-that-matters",
+          "https://news.zoetis.com/press-releases/press-release-details/2026/Zoetis-to-Host-Webcast-and-Conference-Call-on-Second-Quarter-2026-Financial-Results/default.aspx"
+        ],
+        "excluded_recruiting": [],
+        "blog_roots": [
+          "www.zoetis.com/news-and-insights",
+          "news.zoetis.com"
+        ],
+        "verdict": "ACCEPTED -- 2 blog root(s) on the held domain zoetis.com, out of 4 result(s) that were on it at all."
+      }
+    },
+    {
+      "folder": "Zurich Insurance ZURN SW",
+      "company_name": "Zurich Insurance",
+      "query": "Zurich Insurance blog",
+      "results_returned": 10,
+      "blog_roots": {
+        "value": [
+          "www.zurich.com/insights"
+        ],
+        "status": "INFERRED",
+        "evidence": "Google Custom Search (customsearch/v1), SEARCH ONLY, under Andrew-direct 2026-09-13 ~04:0xZ card 4. Query 'Zurich Insurance blog', 10 result(s) returned of 4360000 reported. Acceptance criterion HARVEST_BACKFILL_PLAN_20260911_Z.md s.13: the blog root's registrable domain must EQUAL the ir_domain already held for this company -- test (c) of s.13, which the IR pass could not use and this pass can. ACCEPTED -- 1 blog root(s) on the held domain zurich.com, out of 2 result(s) that were on it at all.",
+        "resolved_at": "2026-09-14T07:10Z"
+      },
+      "adjudication": {
+        "held_domain": "zurich.com",
+        "results_on_held_domain": 2,
+        "results_off_held_domain": [],
+        "on_domain_links": [
+          "https://www.zurich.com/insights/business/why-critical-infrastructure-is-a-ticking-time-bomb",
+          "https://www.zurich.com/insights/business/the-future-of-construction"
+        ],
+        "excluded_recruiting": [],
+        "blog_roots": [
+          "www.zurich.com/insights"
+        ],
+        "verdict": "ACCEPTED -- 1 blog root(s) on the held domain zurich.com, out of 2 result(s) that were on it at all."
+      }
+    }
+  ],
+  "state": "COMPLETE -- all 88 held domains asked."
+}

@@ -962,6 +962,51 @@ def _posn_round2_terminal_exception(root, rel, row, code, open_ids, total):
     return True
 
 
+# LD-0562, relay 22245: round 3 ONLY carries S2/S3/T6/T7 unrun. Use the
+# already-established immutable-record mechanism, never the round-2 exception
+# or a commit-wide override. All non-terminality limbs still run independently.
+POSN_R3_EXCEPTION_PIN = "fa2b1764c4"
+POSN_R3_EXCEPTION_PATH = (
+    "org/tier1_exec/3.0.0_SA_CVO/deliverables/"
+    "POSN_ASTTAX_ROUND3_ROUTING_EXCEPTION_20260913_Z.json")
+
+
+def _posn_round3_terminal_exception(root, rel, row, code, open_ids, total):
+    """Admit only LD-0562's exact recorded round-3 rows and unchanged orders."""
+    if code != "POSN_ASTTAX" or not open_ids or total != 15:
+        return False
+    allowed_paths = (
+        "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/adjudications/ADJUDICATION_v5.md",
+        "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/remediations/REMEDIATION_v3.md")
+    rel = rel.replace("\\", "/")
+    if rel not in allowed_paths:
+        return False
+    status, text = _blob(root, POSN_R3_EXCEPTION_PIN, POSN_R3_EXCEPTION_PATH)
+    if status != "OK":
+        return False
+    try:
+        record = json.loads(text)
+        if (record["schema_version"] != 1 or record["project"] != code
+                or record["round"] != 3 or record["authority_message_id"] != 22245
+                or record["authority_pin"] != "b75f5a805a"
+                or record["expected_total_orders"] != total):
+            return False
+        orders = record["orders"]
+        if len(orders) != 4 or sorted(open_ids) != sorted(o["open_label"] for o in orders):
+            return False
+        if not any(r["path"] == rel and r["id"] == row.get("id")
+                   and r["sha256"] == _canon_hash(row) for r in record["rows"]):
+            return False
+        import hashlib
+        for order in orders:
+            state, body = _blob(root, "HEAD", order["path"])
+            if state != "OK" or hashlib.sha256(body.encode("utf-8")).hexdigest() != order["sha256"]:
+                return False
+    except (KeyError, TypeError, ValueError):
+        return False
+    return True
+
+
 def _route_precondition_violations(root, rel, row, code, open_tos=None, route_word=None, merging=False,
                                    parent_ids=None):
     """GATE (iii) first limb for ONE new tree row carrying a route. `open_tos` is injectable for the
@@ -991,6 +1036,8 @@ def _route_precondition_violations(root, rel, row, code, open_tos=None, route_wo
                 "-- REFUSED, fail-closed" % (rid, code, note)]
     if open_ids:
         if _posn_round2_terminal_exception(root, rel, row, code, open_ids, total):
+            return []
+        if _posn_round3_terminal_exception(root, rel, row, code, open_ids, total):
             return []
         return ["%s: NEW remediation row (%s) while %d of %d task order(s) under %s are NOT "
                 "terminal at HEAD: %s. The slug waits until every task order is complete "
@@ -1528,10 +1575,13 @@ def check_file(root, rel):
                 _o, _t, _n = _open_tos_for_project(root, folder_project)
                 _l, _u, _nf, _ = _latest_dispositions(root, folder_project)
                 if _o:
-                    notes.append("%s: L10 NAMED EXCEPTION for %s -- Andrew call 1 YES / CTO 21533 / %s; "
+                    _basis = ("LD-0562 / COO 22245 / " + POSN_R3_EXCEPTION_PIN
+                              if _posn_round3_terminal_exception(root, rel, row, folder_project, _o, _t)
+                              else "Andrew call 1 YES / CTO 21533 / " + POSN_R2_EXCEPTION_PIN)
+                    notes.append("%s: L10 NAMED EXCEPTION for %s -- %s; "
                                  "%d of %d orders STILL OPEN, explicitly unrun: %s. Exact row and order "
                                  "content matched; other limbs passed. NOT the broad override."
-                                 % (rel, rid, POSN_R2_EXCEPTION_PIN, len(_o), _t, ", ".join(_o)))
+                                 % (rel, rid, _basis, len(_o), _t, ", ".join(_o)))
                 else:
                     notes.append("%s: L10 precondition for %s -- %d task order(s) at HEAD on both roots, 0 open; %d "
                              "investigation item(s) across %d channel file(s) in the index, 0 undispositioned; "

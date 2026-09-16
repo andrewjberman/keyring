@@ -5,15 +5,309 @@
  "project": "POSN_ASTTAX",
  "directive": "D4",
  "fabric": "site-z",
- "prd_version": "v0.5",
+ "prd_version": "v0.11",
  "step": 4,
  "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260911_ASSET_CLASS_TAXONOMY_BRIEF.md@03f1d00ec4",
- "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6"],
+ "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7"],
  "status": "DRAFT"
 }
 ```
 
-**Version:** v0.5, 2026-09-11 -- v0.1 first PRD; v0.2 folded in Andrew's Cottonwood satellite components (s.4 C-SATELLITE-DATA), on his direct "read the satellite file and fold it in as its necessary data for POSN_ASTTAX"; **v0.3 disambiguates C-VOL-HEDGE-STRUCTURED's "hedge products" from the legacy served value `asset_class=hedge`** -- a latent defect where the constraint, read against the live data, said the whole `hedge` bucket goes to Structured (found by 2.0.0_SA_COO~Z + 3.0.0_SA_CVO~Z); **v0.4 folds in Andrew's ETFClassifier PURPOSE ruling as C-CLASSIFIER-PURPOSE (s.4)** -- the registry is a curated tagging list, so the served TABLE is the one place, the dict a retired seed input, and equity-as-class must be distinguishable from equity-as-unknown-default (carried via 3.0.0_SA_CVO~Z C-S3 @`4275402ec2`); **v0.5 folds in the `0.4.0_DT_ClientPlatform` GLD/VXX positioning brief as C-RETAG-SAFETY (s.4)** -- the retag of the commodity/hedge tickers is a production landmine (a fixed-key allocation dict KeyErrors in the DEPLOYED generator, establishing an UNSAFE GENERATION PRECONDITION -- page-blanking is the brief's PREDICTED consequence and is NOT measured; see s.4) until the positioning generator is hardened; Andrew-direct 2026-09-11 ~07:2xZ to fold it into POSN_ASTTAX. Each bump re-opens the two L4-R sign-offs. **Author** `1.0.0_SA_CTO~Z` (L4). **Brief:** the nomenclature
+## s.0 ADDENDUM v0.11 -- A SATELLITE HOLDING'S NAME AND ACTIVE COME FROM ETFClassifier; THE LABEL KEEPS ITS SERVED PRECISION
+
+**Author** `1.0.0_SA_CTO~Z` (L4), 2026-09-15. **Carries** one Andrew-direct word at the `1.0.0_SA_CTO~Z` terminal, VERBATIM:
+- ~04:0xZ: *"Two things I need you to figure out: 1.) [Image #4] Random floats here in Satellites view, need to understnad why
+  they're not being rounded off. 2.) [Image #5] looks like none of this is going through ETFClassifier + obviously characteristics and
+  performance are blanked [Image #6]"* (screenshots 2026-09-14 235716 / 235735 / 235916). Rows `POSN_ASTTAX-Z-S138`, `POSN_ASTTAX-Z-S139`.
+
+**NEW CONSTRAINT:**
+
+- **C-HOLDING-IDENTITY** (FWD-5, FWD-7; disarm route for `POSN_ASTTAX-Z-S139`). B6's `characteristics.json` `tickers` block ALSO carries, for every
+  ticker any satellite holds, `name` and `management_style` read from ETFClassifier (DynamoDB `etf-classifications`, through its one
+  module) -- independent of the measures' source precedence, which is unchanged. A ticker the table does not carry publishes both NULL,
+  counted. The Satellites Holdings Breakdown renders NAME from it (the ticker only where the table has no row) and ACTIVE from
+  `management_style` (`active` -> YES, `passive` -> NO, `unknown` or NULL -> blank). **Measured basis (~04:0xZ):** full scan, 285 items;
+  all 25 satellite tickers carry `name` and `management_style`; for the 23 Yang also holds, Yang's `name` equals the table's 23 of 23 and
+  Yang's `active` equals the table's style 23 of 23 -- one source, already agreed. The HoldingsTab beta overrides (PFDE, PFOE, UVXY) are
+  Yang's specification in every mode and stay.
+
+**CLARIFIES, in s.0 ADDENDUM v0.9 `C-SUMMARY-COPY`, exactly the rounding clause; everything else in it stands:**
+
+- **The single-bar percent label renders the value at no more than two decimals, trailing zeros dropped** (`PositioningSummary.tsx:1011`;
+  disarm route for `Z-S117` and `POSN_ASTTAX-Z-S138`). The defect is the IEEE float artifact of summing served two-decimal weights
+  (`62.589999999999996%`); the fix keeps the precision the served rows carry. Satellites render `62.59%`, `29.82%`, `90.24%`; Models and
+  ETFs labels are byte-identical to today (`82.6%`, `17.4%`). "Rounds like its two siblings" is withdrawn: the siblings round to whole
+  percents, which would re-format every Models label.
+
+**WHAT THIS ADDENDUM CHANGES:** brief half only -- `4.0.0_SA_CRO~Z` re-signs; `ENDPOINT` untouched, so the ratified-text signature stands.
+It cuts no order: `TO-W1-1` (B6 identity fields and a READ grant on `etf-classifications`, before its deploy leg), `TO-W2-1` (F4 name and
+ACTIVE, before hand-off) and `TO-W3-1` (F5 act 2) are amended by their issuer.
+
+## s.0 ADDENDUM v0.10 -- THE v0.9 REFUSALS ADOPTED; GLD'S RETURNS SERVED; THE BRIEF COVERAGE MAP
+
+**Author** `1.0.0_SA_CTO~Z` (L4), 2026-09-15. **Carries** one Andrew-direct word at the `1.0.0_SA_CTO~Z` terminal, VERBATIM:
+- ~03:0xZ: *"vendor change approved go get it"* (record
+  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260915_030xZ_BBG_ETF_PULL_RETURN_FIELDS_VENDOR_CHANGE_APPROVED.md` @`365580f244`),
+  answering this seat's report that GLD's Satellites performance cells stay blank because the Bloomberg ETF pull carries no
+  per-window returns.
+
+**ADOPTS TWO v0.9 REFUSALS IN FULL** (v0.9 read ADMITTED only because a second lane of each reviewer signed concurrently; the
+defects are real):
+- `3.0.0_SA_CVO~W` @`27a54b7550` (review `POSN_ASTTAX_V09_RATIFIED_TEXT_REVIEW_20260915_W.md` @`654fac2062`): (1) the provenance
+  line inside `ENDPOINT` is REMOVED; (2) FWD-6's DONE WHEN required "the same five classes" in every mode, contradicting
+  `C-PRESENT-CLASSES` -- the DONE WHEN is AMENDED in `ENDPOINT` to Andrew's presence rule (~02:1xZ, record @`65410eedaf`), and
+  v0.9's "FWD-6 READS THROUGH THIS ... the ratified text is not edited" gloss is SUPERSEDED by that amendment; (3) FWD-7's blank
+  clause allowed blanks only for unpriced holdings while the constraint allowed a NULL GLD return -- the clause is AMENDED to a
+  per-measure rule and the GLD return gap is closed below.
+- `4.0.0_SA_CRO~W` @`fcb3b55f19` (review `POSN_ASTTAX_L4R_V09_REVIEW_20260915_W.md` @`a397859`): the BRIEF COVERAGE map below.
+
+**SUPERSEDES, in s.0 ADDENDUM v0.9 `C-HOLDING-MEASURES`, exactly the DISCLOSED GAP sentence; everything else in it stands:**
+
+- **A Bloomberg-sourced ticker's `returns`** are the estate's own ETF return rule, not a new one: `compute_returns(ticker, bbg_as_of,
+  load_history(bbg_as_of))` in `data/etfs/scripts/gold/etf_positioning_gold.py` (`:855`, loader `:731`) -- the rule the ETFs mode
+  already serves -- which compounds `DAY_TO_DAY_TOT_RETURN_GROSS_DVDS` over the daily `bbg/{date}/history_topup` partitions plus
+  the per-ticker backfill `bbg-testpull/tickers/{TICKER}/history.csv`. **The missing history is landed** under ledger
+  `posn-bbg-gld-vxx-return-history-backfill` (script `integrations/bloomberg/pipeline/backfill_extra_securities_history.py`
+  @`3cb95a7074`): GLD and VXX, `PX_LAST` + the daily total return, 2021-01-04..2026-09-11, NEW keys only. GLD and VXX are outside the
+  ETF universe (172 = 166 constituents + 4 funds + 2 extras), so no ETFs-mode figure moves. **METHOD DIFFERENCE, DISCLOSED:** Yang's
+  rule (`yang-generate-positioning` `:1845-1853`) compounds days strictly AFTER the window start and uses 90 days for 1Q; the estate
+  ETF rule includes the start day and uses 91. One satellite ticker (GLD) takes the second rule; the other 23 priced tickers take
+  Yang's. `active` and `credit` stay NULL for a Bloomberg-sourced ticker (no Bloomberg column); CASH stays NULL throughout.
+- **B6 guidance, added:** the characteristics producer imports the two functions from their home rather than copying them (one
+  rule, one place); its package must carry that module the way `build_package.py` already mirrors repo paths.
+
+### BRIEF COVERAGE -- the six headings of `ANDREW_DIRECT_20260911_ASSET_CLASS_TAXONOMY_BRIEF.md` @`03f1d00ec4`
+
+DENOMINATOR: 6 non-title headings in the brief. COVERED: 6. Each row names the heading's substance and where it is consumed.
+
+| # | brief heading | substance | consumed by |
+|---|---|---|---|
+| 1 | WHAT THIS IS, AND WHY IT EXISTS | provenance: Andrew's 2026-09-01 assignment to site Z, the whisper transcript as primary source, the TAX SMA Teams thread deferred | **CONTEXT, no requirement** -- it records where the brief came from; the requirements it carries are rows 2-4. Owner of any refinement from the deferred thread: L4 by addendum |
+| 2 | THE SUBSTANCE THE TRANSCRIPT ESTABLISHES | Cottonwood's ask to break volatility products and gold out of Equity; FIVE classes REPLACING the old scheme; one central origin | `FWD-1`, `FWD-2`, `FWD-5`; `C-FIVE-CLASSES`, `C-VOL-HEDGE-STRUCTURED`, `C-ONE-SOURCE`; round 5 cells B1 (`TO-V1-1`), R1 (`TO-V8-1`) |
+| 3 | The five classes -- canonical order, colors, and what each holds | order Fixed Income/Cash, Equity, Structured, Commodities, Alternatives; colors green, blue, pink, gold, orange; membership examples (VXX to Structured; gold, silver, commodity indices to Commodities; real estate, private assets to Alternatives) | order and identity: s.3 and `FWD-3`, F2 (`TO-V6-1`). Colors: `FWD-4` and `C-COLOURS` -- the brief's "gold" is rendered as the new yellow token and Structured as the pink FAMILY (Andrew 2026-09-14, v0.7 / v0.8), F1 (`TO-V5-1`). Membership examples: `C-RETAG-SET` (thirteen) and `C-SUB-ASSET` (Metals = GLD, IAU, SLV; Hedge = VXX, VIXY, UVXY, QBER; Options Income = JEPI; Real Estate = VNQ), R1 (`TO-V8-1`) |
+| 4 | Where it must appear, and how it must be sourced | THREE surfaces agreeing (Positioning, Philosophy, Capital Market Assumptions); ONE central source flowing to every surface | three surfaces: `C-TWO-SURFACES` (v0.1; Philosophy and CMA are one page), **SUPERSEDED** by `C-POSITIONING-ONLY` (v0.7, Andrew 2026-09-14 ~16:5xZ: the Positioning page's three modes; Attribution untouched, Philosophy/CMA later) -- `FWD-6` narrowed accordingly; F2, F3 (`TO-V7-1`), round 6 F4 / F5. One source: `C-ONE-SOURCE`, `C-CLASSIFIER-PURPOSE`, `C-CUTS`; B3 seeder guard (`TO-V3-1`); `FWD-5` |
+| 5 | WHAT THIS BRIEF DELIBERATELY DOES NOT DECIDE (left to L4/L5) | (a) the membership RULES; (b) where the nomenclature ORIGINATES in code | (a) `C-MEMBERSHIP-AT-L5`, **RESOLVED** by `C-RETAG-SET` on Andrew's approval of the U4 derivation (`TO-U4-1`), with `C-RETAG-SAFETY`. (b) **RESOLVED BY MEASUREMENT**: two stores -- DynamoDB `etf-classifications` and the `ETF_CLASSIFICATIONS` module -- both written by R1; the seeder is guarded (B3); `bd-securities` is out by `C-CUTS` |
+| 6 | THE ENDPOINT DERIVED FROM THIS BRIEF | six outcomes emitted by `/endpoint --forward`, awaiting Andrew's confirmation | **CONTEXT, carried whole** -- the outcomes live in `ENDPOINT` (FWD-1..FWD-6 confirmed 2026-09-11; FWD-6 narrowed v0.7 and amended v0.10; FWD-7 appended v0.9 on Andrew's word) |
+
+**WHAT THIS ADDENDUM CHANGES:** `ENDPOINT` (FWD-6 DONE WHEN, FWD-7 DONE WHEN and ACCEPT, one line removed) -- `3.0.0_SA_CVO` re-signs
+the ratified-text half; the brief half (this addendum) -- `4.0.0_SA_CRO` re-signs. It cuts no order; round 6 stays B6, F4, F5.
+
+## s.0 ADDENDUM v0.9 -- THE SATELLITES MODE, COMPLETE: EACH HOLDING'S MEASURES (FWD-7), ONLY THE CLASSES A VIEW HOLDS, THE SUMMARY'S OWN DATE
+
+**Author** `1.0.0_SA_CTO~Z` (L4, as the L10 answer to `3.0.0_SA_CVO~Z`'s round-5 slug `surprise-channel/remediations/REMEDIATION_v5.Z.md` @`1edf35dbc3`; L9 `ADJUDICATION_v7.Z.md`), 2026-09-15. **Carries** three
+Andrew-direct words at the `1.0.0_SA_CTO~Z` terminal, VERBATIM:
+- ~00:4xZ: *"There is no need to display the different legend categories if they do not appear in the view"* (record
+  `ANDREW_DIRECT_20260915_004xZ_POSITIONING_LEGEND_ONLY_PRESENT_CLASSES_AND_SATELLITES_VIEW_DEFECTS.md` @`85621749e2`)
+- ~02:1xZ: *"if none of the models/ETFs/satellites have a given asset class (e.g. Alternatives) then no Alternatives row should be
+  shown ... the Satellites section is still broken; not displaying data [Image #3] showing all the floats in this case. and no
+  characteristics or performance in the "Holdings Breakdown" panel."* (record `ANDREW_DIRECT_20260915_021xZ_...` @`65410eedaf`)
+- ~02:3xZ: *"i want to do an ad hoc pul on this and just fix it completely, we're not waiting for the next day to deal with ths."*
+  (record `ANDREW_DIRECT_20260915_023xZ_ADHOC_FIX_SATELLITES_TONIGHT_NO_WAITING.md` @`0553548fe2`)
+
+**WHAT THIS ADDENDUM CHANGES:** `ENDPOINT` gains `FWD-7` (appended at the next unused number; nothing renumbered) and the header's
+`endpoint_outcomes` gains it, so `3.0.0_SA_CVO~Z` re-signs the ratified-text half. Four constraints are added below, so
+`4.0.0_SA_CRO~Z` re-signs the brief half. Everything in v0.6 / v0.7 / v0.8 stands.
+
+**THE NEW OUTCOME (appended to ENDPOINT):**
+```
+  FWD-7  The Satellites mode shows each holding's characteristics and performance
+         DONE WHEN  EXERCISED -- the Positioning page's Satellites mode has been read
+                    and every satellite's Holdings Breakdown rows carry the same
+                    characteristic and performance columns a Models row carries,
+                    from the served satellites data, with a value wherever a source
+                    prices the ticker
+         ACCEPT     An analyst opens a satellite's Holdings Breakdown and sees each
+                    fund's fee, size, yield, beta and returns the way a model shows
+                    them -- blank only where nothing prices that holding, never a
+                    blank column.
+```
+
+**NEW CONSTRAINTS:**
+
+- **C-HOLDING-MEASURES** (FWD-7; disarm route for `Z-S132`). B4's `characteristics.json` ALSO publishes, once per artifact, a
+  `tickers` block keyed by ticker for every ticker any satellite holds: `fee`, `aum`, `active`, `yield`, `duration`, `credit`,
+  `beta`, `returns` (the input's windows) and `source`. Precedence is B4's existing per-ticker rule, unchanged: Yang's
+  `current_holdings` row, else the Bloomberg partition, else none (all NULL). Every existing field of the artifact is unchanged
+  for the same inputs. The satellite adapter attaches each row's served values to that row -- no arithmetic, no borrowing from
+  another artifact. **Measured basis (2026-09-15 ~02:5xZ):** 25 distinct tickers across the nine satellites; 23 priced by
+  Yang (all seven panel fields and returns ride its rows), GLD by Bloomberg only, CASH by neither. On the 5 tickers both sources
+  carry (DIVZ, IDVZ, PFDE, PFOE, VXX) Yang's `aum` EQUALS Bloomberg `FUND_TOTAL_ASSETS` and `fee` EQUALS `FUND_EXPENSE_RATIO`,
+  5 of 5, so the Bloomberg fallback maps `aum <- FUND_TOTAL_ASSETS` in the same unit. `active` and `credit` have no Bloomberg
+  column and publish NULL for a Bloomberg-sourced ticker. **DISCLOSED GAP:** B4's `bbg_return_columns` is `{}` -- the ETF pull
+  carries no return field -- so GLD's performance cells publish NULL; closing that is a vendor-pull change and Andrew's word.
+- **C-PRESENT-CLASSES** (FWD-3, FWD-6; disarm route for `Z-S118`, `Z-S131`). The Positioning Summary derives ONE presence set per
+  render -- the classes with a non-zero value in any column the current view draws -- and the legend, the Asset Class rows and
+  the section count list exactly that set, in `ASSET_CLASSES` order and colours. The zero-row design comment goes with the
+  behaviour. Colours stay keyed by class name, so hiding a class shifts no other colour (compatible with the laptop name-keyed
+  colour rule relayed in msg 22957). **FWD-6 READS THROUGH THIS:** its "all show the same five classes" is graded as "no mode
+  shows a class outside the five, and a class shown in two modes has the same order and colour in both"; a class no book in a
+  view holds is not shown in that view, by Andrew's word ~02:1xZ. The ratified text is not edited; this is the grading rule.
+- **C-SUMMARY-COPY** (FWD-6; disarm route for `Z-S115`, `Z-S117`, `Z-S119`). The third percent label rounds like its two siblings
+  (`PositioningSummary.tsx:1011`, `Z-S117`); the Satellites mode's footer names `holdings.json`'s `as_of` and Black Diamond as the
+  source, Models and ETFs unchanged (`Z-S119`); the Satellites subtitle and unresolved notice stop describing the removed blend
+  (`Z-S115`).
+- **C-B4-SCHEDULE** (FWD-7 on schedule; disarm route for `Z-S120` / `Z-S130`). B4's rule fires on its own clock AFTER the
+  07:00 America/New_York Bloomberg pull in both DST states -- `cron(30 12 * * ? *)` UTC (08:30 EDT / 07:30 EST) -- never
+  success-of-upstream. Andrew-direct 2026-09-10's no-wait rule applies: the deploy is followed by a driven run with an explicit
+  `bbg_as_of`, covered by its own never-widen halves; the scheduled fire is the organic leg.
+
+**THE CELLS THIS IMPLIES (guidance for `2.0.0_SA_COO~Z`'s decomposition, not a dispatch):**
+- **B6** -- `data/assets/scripts/gold/build_satellites_characteristics.py` (+ its tests) and the rule in its Terraform: the
+  `tickers` block and the schedule. Deploy through Terraform, then a driven run. Bar: every satellite ticker appears once with its
+  `source`; the prior fields parse-identical on the same inputs; the rule reads `cron(30 12 * * ? *)`.
+- **F4** -- `satelliteAdapter.ts` (+ the served-characteristics type in `satelliteSet.ts` / `satelliteRegistry.ts`): attach the
+  per-ticker values. Bar: in every displayed satellite, every Holdings Breakdown row's Characteristics and Performance cells equal
+  that ticker's served `tickers` values, a NULL rendering blank; CASH blank throughout, GLD's returns blank (the disclosed gap).
+  Depends on B6 DEPLOYED.
+- **F5** -- `PositioningSummary.tsx` and `Positioning.tsx`: C-PRESENT-CLASSES and C-SUMMARY-COPY. Bar: Models lists 3 classes
+  (Fixed Income, Equity, Structured) in the legend and the Asset Class rows; Satellites after the relabel lists 4 (Fixed Income,
+  Equity, Structured, Commodities); no raw float; the Satellites footer reads `2026-09-14` and Black Diamond.
+F4 and F5 are disjoint files and may run in parallel; B6 precedes F4's bar. Portal commits land on the round's own drain ref;
+no promote, push or gitlink move (the freeze).
+
+## s.0 ADDENDUM v0.8 -- JEPI IS THE THIRTEENTH MEMBER (Structured / Options Income); STRUCTURED IS THE PINK FAMILY
+
+**Author** `1.0.0_SA_CTO~Z` (L4), 2026-09-14. **Carries** three Andrew-direct words at the `1.0.0_SA_CTO~Z` terminal, VERBATIM:
+- ~19:5xZ: *"Yeah "Structured" is going to be a pink base, as all volatility/options/overlay etc assets will be grouped into
+  there, regardless if its a Fixed Income or an Equity Hedge or etc."* (record
+  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_195xZ_STRUCTURED_IS_PINK_ALL_VOL_OPTIONS_OVERLAY.md` @`edbee96c07`)
+- ~20:0xZ: *"Also JEPI I would put in Structured, yes."* (record `ANDREW_DIRECT_20260914_200xZ_JEPI_TO_STRUCTURED_AND_FRONTEND_VIEW_ON_5173.md`
+  @`114a697fca`)
+- ~20:2xZ: *"b, Options Income"* (record `ANDREW_DIRECT_20260914_202xZ_JEPI_SUB_ASSET_OPTIONS_INCOME.md`)
+
+**SUPERSEDES, in s.0 ADDENDUM v0.7, exactly these three constraints; everything else in v0.7 stands:**
+
+- **C-RETAG-SET is THIRTEEN:** Commodities -- DBC, GLD, GSG, IAU, SLV, USO, PDBC; Structured -- VXX, VIXY, UVXY, QBER,
+  **JEPI**; Alternatives -- VNQ. BIPC stays Equity. Both stores, LAST, and `C-RETAG-SAFETY`'s bar binds unchanged.
+- **C-SUB-ASSET:** `Metals` = GLD, IAU, SLV; `Hedge` = VXX, VIXY, UVXY, QBER; **`Options Income` = JEPI**; `Real Estate` = VNQ;
+  DBC, GSG, USO, PDBC keep their current sub-asset. The encoding rule is unchanged: sub-asset values sit in
+  `sub_asset_class`, the legacy top-level `hedge` dissolves, and every write names its level.
+- **C-COLOURS:** Structured is the PINK family. Every Structured sub-asset (`Hedge`, `Options Income`, and the existing
+  `Volatility` key) renders on a pink token DISTINCT from the class base `pink500`, minted where the palette lacks one. The
+  portal's existing `SUB_ASSET_COLORS` keys `Hedge` (green900, Fixed Income block) and `Volatility` (blue900, Equity block)
+  RE-BIND to that family. Commodities stays the new yellow; amber stays Cash.
+
+**Basis for membership, measured so it is not re-derived:** `etf-classifications` scanned whole (285 rows, one page, 31
+distinct `sub_asset_class`). The only volatility-shaped sub-asset is `Volatility`, on exactly the four `Hedge` members. JEPI is
+the one options-overlay name. `Structured Credit` (JAAA, LONZ) is Fixed Income credit and stays there despite the shared word.
+JEPI is held by no Cottonwood satellite component and no Yang served book, so its retag moves no served Positioning figure today.
+
+**WHAT THIS ADDENDUM CHANGES:** brief half only -- `4.0.0_SA_CRO~Z` re-signs. The `ENDPOINT` section is untouched, so
+`3.0.0_SA_CVO~Z`'s ratified-text signature stands. It cuts no order: `TO-V8-1` (member table) and `TO-V5-1` (the pink
+sub-asset keys) are amended by their issuer before hand-off.
+
+## s.0 ADDENDUM v0.7 -- ANDREW'S CLOSE-OUT RULINGS (2026-09-14): POSITIONING PAGE ONLY, SATELLITES FROM BLACK DIAMOND
+
+**Author** `1.0.0_SA_CTO~Z` (L4), 2026-09-14. **Carries** Andrew's words of ~16:5xZ (record
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_165xZ_SITEZ_POSN_ASTTAX_ONLY_BREAKDOWN_BEFORE_WORKERS.md`
+@`f529179076`), ~16:34Z, ~17:2xZ and ~17:3xZ (records by `4.0.0_SA_CRO~Z` under
+`org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/ANDREW_DIRECT_20260914_1634Z_*`, `_172xZ_*`, `_173xZ_*`), and the aligned
+breakdown `org/tier1_exec/1.0.0_SA_CTO/deliverables/POSN_ASTTAX_CLOSEOUT_BREAKDOWN_20260914_Z.md` (v0.5), which is the
+CELL-LEVEL authority for round 5. The measured premise is `4.0.0_SA_CRO~Z` brief
+`org/tier1_exec/4.0.0_SA_CRO~Z/briefs/POSN_ASTTAX_COMPLETION_BRIEF_20260914_Z.md` and row `POSN_ASTTAX-Z-S65`.
+
+**HIS WORDS, VERBATIM:**
+- ~17:2xZ: *"Call 1, they should be summed because the goal is not to see what's yangs models versus what's external
+  residuual in the satellite; it is to see total GLD listed as Commodity Asset, Metals Sub-Asset, and to see Total VXX
+  (or whatever hedge securities) as Structured Asset, Hedge Sub-Asset. Call 2 Yes. Call 3, mint some yellow color, yes.
+  Call 4 Yes. Call 5 Yes. Call 6, definitely B, models do not get updated because they are not changing, Satellites
+  simply need to have an additional lambda to do weighted characteristics aggregates ."*
+- ~17:3xZ: *"All recs approved. Keep in mind that attribution, for now at least, is staying to just Equities and Fixed
+  Income on asset classes, because those are the only ones Yang uses, and we stick to his layout. Eventually that may
+  change, but need to keep in mind that the work we're doing here is very much contained to "Positioning", we do not
+  touch "Attribution""*
+
+**CONSTRAINTS THIS ADDENDUM ADDS -- they BIND round 5 and SUPERSEDE the named s.4 text where they differ:**
+
+- **C-POSITIONING-ONLY** (supersedes `C-TWO-SURFACES`). The surfaces are the Positioning page only -- 14 files at portal
+  pin `e85f6eb84f` (`src/pages/Positioning/`) plus the shared colour registry `src/lib/chartColors.ts` it imports, in
+  all three modes (Models, ETFs, Satellites). **The Attribution page is NOT touched** (two classes, Yang's layout);
+  Philosophy/CMA is not a focus (Yang's sheet, later); AdvisorIntelligence is out. ACCEPTED CONSEQUENCE, not a defect:
+  after the retag, a retagged ticker that Yang's models hold (VXX) drops out of Attribution's per-class groups while
+  its weight stays in Attribution's totals. This settles `Z-W15-S2` (eleven readers, four families): the domain is
+  declared as the Positioning page, and the other families are out of scope by Andrew's word, not by omission.
+- **C-SATELLITE-SOURCE** (new; disarm route for `Z-S65`; supersedes the "touches NO holding, weight or satellite
+  placement" clause of `C-SATELLITE-DATA` for the Satellites mode). The Satellites mode shows, per satellite, ONE total
+  weight per ticker from Black Diamond's rebalancer holdings, summed across the satellite's sleeves; **Yang's copy of a
+  model is never added** (LT VXX: BD 1.87, not 1.87 + 1.50). Each ticker carries `asset_class` and `sub_asset_class`
+  from the served ETFClassifier table. Weighted characteristics (fee, yield, duration, beta, returns) are aggregated
+  server-side by **an additional lambda**; per-ticker inputs from Yang's `current_holdings` where a Yang book holds the
+  ticker, from the Bloomberg ETF pull where it does not, NULL otherwise with the null-weight share disclosed. **The
+  Models mode and Yang's model data are unchanged.**
+- **C-SUB-ASSET** (new). Sub-asset labels for the retag set: `Metals` = GLD, IAU, SLV; `Hedge` = VXX, VIXY, UVXY, QBER;
+  `Real Estate` = VNQ; DBC, GSG, USO, PDBC keep their current sub-asset. **ENCODING (L4):** `Hedge` is a
+  `sub_asset_class` value under `Structured`; the legacy TOP-level `asset_class` value `hedge` dissolves. The two never
+  share a field, and every retag write names its level.
+- **C-RETAG-SET** (settles `C-MEMBERSHIP-AT-L5` for this project, on Andrew's approval of the U4 derivation). The retag
+  set is TWELVE: Commodities -- DBC, GLD, GSG, IAU, SLV, USO, PDBC; Structured -- VXX, VIXY, UVXY, QBER; Alternatives --
+  VNQ. BIPC stays Equity. The retag lands in BOTH stores (DynamoDB `etf-classifications` and `ETF_CLASSIFICATIONS`) and
+  runs LAST, after the generator deploy, the seeder guard, the satellite artifacts and the Positioning frontend are in
+  place (`C-RETAG-SAFETY`'s bar still binds).
+- **C-COLOURS** (refines s.3's colour column; no s.3 byte changes). Commodities' gold is rendered by a NEW yellow token,
+  never amber (amber is Cash); Structured is pink; sub-asset colours exist for `Metals` and `Hedge`.
+- **C-BENCHMARK** (new). The three new classes' benchmark rows are an explicit zero labelled "no benchmark", in both
+  `yang-generate-positioning` and `yang-generate-allocation-summary`, under ONE never-widen sign-off naming both
+  functions and both served artifacts (this widens the 2026-09-13 deploy approval to the second function, by Andrew's
+  "Call 5 Yes" / "All recs approved").
+- **C-CUTS** (new). Not in this project: reconciling the dormant `is_hedge()` / `HEDGE_TICKERS` helper -- row
+  `Z-W1-S1` / `Z-C-S1` is dispositioned CARRIED-OUT-OF-SCOPE (no live caller; the helper keys on `asset_class`, which
+  `C-SUB-ASSET` keeps apart from the `Hedge` sub-asset) -- and reconciling the second store `bd-securities` (`Z-W17-S3`
+  settled the same way: the one place stays the served `etf-classifications` table; only the seeder that writes both
+  gets the preserve-don't-clobber guard).
+- **C-DONE** (new). The project is DONE when the backend is deployed and the Positioning frontend is built and committed
+  behind the freeze (Andrew 2026-09-14 05:31Z); the portal promote is Andrew's separate word and is not a bar here.
+
+**SURFACE MANIFEST, as amended:** S1 now includes the satellite holdings producer and the characteristics lambda that
+apply the classification to satellites (they carry FWD-1 / FWD-2 on the Satellites mode; no new outcome); S3 is the
+Positioning page's three modes. MECE unchanged: 6 outcomes, each carried by exactly one row -- and, per the v0.6
+qualifier, that is ASSIGNMENT; round 5's eight cells are what serve them.
+
+**WHAT THIS ADDENDUM CHANGES IN RATIFIED TEXT:** `ENDPOINT` FWD-6 only (narrowed to the Positioning page), so
+`3.0.0_SA_CVO~Z`'s half re-signs; this addendum re-opens `4.0.0_SA_CRO~Z`'s brief half. **WHAT IT DOES NOT DO:** it
+cuts no order, grades no outcome REALIZED, and authorizes no promote.
+
+## s.0 ADDENDUM v0.6 -- THE ROUND-3 L10 ANSWER
+
+**Author** `1.0.0_SA_CTO~Z`, 2026-09-13, answering `3.0.0_SA_CVO~Z`'s round-3 slug
+`surprise-channel/remediations/REMEDIATION_v3.md` @`c89c0e45a2`. Full reasoning and denominators:
+`ledger/ROUND_ANALYSIS.round3.md`.
+
+**FOUR CHANGES, AND EVERY ONE IS A DEFECT IN TEXT THIS SEAT AUTHORED AT L4.**
+
+1. ⛔ **TWO DECLARED OUTCOMES HAVE BEEN SERVED BY ZERO CUT ORDERS ACROSS THREE ROUNDS.** Measured
+   over the 15 cut orders: declared 6, covered 4, **UNCOVERED = { `FWD-4`, `FWD-6` }**, with a
+   run-time-generated synthetic control verified absent from the corpus before use. `FWD-4` is
+   *"each class has one color, the same everywhere"*; `FWD-6` is *"the places that show asset classes
+   agree with each other"* -- **which is the ASTTAX frontend outcome Andrew named on 2026-09-13
+   03:21:46Z.** Not deprioritised and not blocked: never issued. **Round 4 must cover both.**
+2. **The MECE check's "0 uncovered" is qualified** where it appears -- it is about ASSIGNMENT to a
+   surface row, never about issuance, and reading it as coverage is what hid item 1 for three rounds.
+3. **s.4's live-mechanism sentence is corrected** -- the weight is lost at the served view and the
+   delta/spread rows, NOT in the allocation dict, which serves 2.5. The line states what it used to
+   say. Its consumer is `AT3-s-5`, the bar that gates the retag.
+4. **The surface list discloses a third, non-owned reader** of class values, with its measured
+   zero-candidate state and the condition that ends it.
+
+**WHAT THIS ADDENDUM DOES NOT DO:** it does not change the endpoint -- the outcome set is still
+FWD-1..FWD-6 and no bar is weakened, added or renumbered. It does not authorize the retag (NO-GO), the
+positioning deploy (approved 2026-09-13 04:08:22Z LD-0562 **conditional on a two-seat never-widen
+sign-off that has not landed**), or any portal act (**frozen**). It grades no outcome REALIZED.
+
+⚠ **THIS BUMP RE-OPENS THE BRIEF HALF ONLY**, and LIMB 6 refuses a newly-added task order against a
+half not SIGNED at current bytes -- so that ONE re-sign sits in front of round 4's FWD-4/FWD-6 cells.
+> ⛔ **CORRECTED 05:4xZ. THIS LINE SHIPPED SAYING "BOTH L4-R HALVES" IN THE SAME COMMIT AS THE
+> VERSION-LINE CORRECTION THAT CALLS THAT CLAIM FALSE** -- the two statements sat four lines apart and
+> contradicted each other. Found by `4.0.0_SA_CRO~Z` on review. **The gate settles it:** only the
+> brief half went STALE; `3.0.0_SA_CVO~Z`'s ratified-text half was never touched and owes nothing.
+> The cost of the contradiction was precise and worth naming -- a reader of this section chases a
+> signature that is not outstanding.
+> ⭐ **AND IT IS THE SHARPEST FORM OF A SHAPE THIS DOCUMENT HAS NOW PRODUCED TWICE:** the v0.5
+> changelog went stale by omission across five amendments; this one shipped the correction and the
+> stale claim **in one diff.** Correcting a rule is not finished until every place that RESTATES it
+> has been re-read -- a fix scoped to where the error was noticed leaves its own restatements
+> standing.
+
+**Version:** v0.5, 2026-09-11 -- v0.1 first PRD; v0.2 folded in Andrew's Cottonwood satellite components (s.4 C-SATELLITE-DATA), on his direct "read the satellite file and fold it in as its necessary data for POSN_ASTTAX"; **v0.3 disambiguates C-VOL-HEDGE-STRUCTURED's "hedge products" from the legacy served value `asset_class=hedge`** -- a latent defect where the constraint, read against the live data, said the whole `hedge` bucket goes to Structured (found by 2.0.0_SA_COO~Z + 3.0.0_SA_CVO~Z); **v0.4 folds in Andrew's ETFClassifier PURPOSE ruling as C-CLASSIFIER-PURPOSE (s.4)** -- the registry is a curated tagging list, so the served TABLE is the one place, the dict a retired seed input, and equity-as-class must be distinguishable from equity-as-unknown-default (carried via 3.0.0_SA_CVO~Z C-S3 @`4275402ec2`); **v0.5 folds in the `0.4.0_DT_ClientPlatform` GLD/VXX positioning brief as C-RETAG-SAFETY (s.4)** -- the retag of the commodity/hedge tickers is a production landmine (a fixed-key allocation dict KeyErrors in the DEPLOYED generator, establishing an UNSAFE GENERATION PRECONDITION -- page-blanking is the brief's PREDICTED consequence and is NOT measured; see s.4) until the positioning generator is hardened; Andrew-direct 2026-09-11 ~07:2xZ to fold it into POSN_ASTTAX. **v0.6 is the round-3 L10 ADDENDUM (`ledger/ROUND_ANALYSIS.round3.md`) -- see s.0 ADDENDUM below.** ⛔ **THIS LINE USED TO READ "Each bump re-opens the two L4-R sign-offs" AND THAT IS FALSE -- CORRECTED AT v0.6.** A bump re-opens ONLY the half whose SECTION BYTES changed. `prd_signoff_lib.RATIFIED_SECTIONS` is `("ENDPOINT", "CONTRACTS")` matched on a heading's FIRST WORD, so in THIS document exactly one section -- `ENDPOINT` -- is ratified-text and everything else, s.4 included, is the brief half. The library's own self-test asserts it: *"an ENDPOINT edit re-opens the CVO half only"*. Measured at v0.6: these edits touched no ENDPOINT byte, so `3.0.0_SA_CVO~Z`'s half stayed SIGNED/current and only `4.0.0_SA_CRO~Z`'s went STALE. ⚠ **The old wording stated a rule STRONGER than the tool behaves, and this seat quoted it as authority in its own round-3 analysis before the gate contradicted it** -- the same shape CLAUDE.md Rule 27 records against LIMB 6. **Author** `1.0.0_SA_CTO~Z` (L4). **Brief:** the nomenclature
 transcript's substance, `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260911_ASSET_CLASS_TAXONOMY_BRIEF.md@03f1d00ec4`.
 **Endpoint confirmed by Andrew** 2026-09-11 (see s.5). **Home note:** tree-homed at
 `org/missions/D4/POSN/POSN_ASTTAX/prd/` as `POSN_ASTTAX` (macro POSN), renamed from
@@ -63,13 +357,27 @@ ENDPOINT -- POSN_ASTTAX (confirmed by Andrew 2026-09-11)
                     and everywhere that shows asset classes updates on its own --
                     nobody edits each place by hand.
 
-  FWD-6  The places that show asset classes agree with each other
-         DONE WHEN  EXERCISED -- the Positioning view and the combined Philosophy /
-                    Capital-Market-Assumptions view have each been read and both show
-                    the same classes, in the same order and colors
-         ACCEPT     An analyst opens both views and cannot find a disagreement
-                    between them about what the asset classes are, what order they
-                    come in, or what color each one is.
+  FWD-6  The places on the Positioning page that show asset classes agree
+         with each other
+         DONE WHEN  EXERCISED -- the Positioning page's Models, ETFs and Satellites
+                    modes have each been read; every class any mode shows is one of
+                    the five, a class shown in more than one mode has the same order
+                    and color in each, and a mode shows a class only when a book in
+                    its view holds some of it
+         ACCEPT     An analyst switches between the three Positioning modes and
+                    cannot find a disagreement about what the asset classes are,
+                    what order they come in, or what color each one is.
+
+  FWD-7  The Satellites mode shows each holding's characteristics and performance
+         DONE WHEN  EXERCISED -- the Positioning page's Satellites mode has been read
+                    and every satellite's Holdings Breakdown rows carry the same
+                    characteristic and performance columns a Models row carries,
+                    from the served satellites data, with a value wherever a source
+                    carries that measure for that ticker
+         ACCEPT     An analyst opens a satellite's Holdings Breakdown and sees each
+                    fund's fee, size, yield, beta and returns the way a model shows
+                    them -- a cell blank only where no source carries that measure
+                    for that holding, never a blank column.
 ```
 
 ---
@@ -188,7 +496,17 @@ changes WHERE a holding is classified and HOW that flows, not what the holdings 
   **THE LIVE MECHANISM (measured by `TO-S7-1`, round 2): SILENT ZEROING, NOT BLANKING.**
   `AT2-s-6` hardened the generator and KILLED the KeyError -- **0 of 17 hops RAISE**. A retag today
   does NOT blank the page. It renders `Commodities`/`Structured` as the literal string `'Unknown'`
-  **and silently zeroes the weight.** ⛔ **THE HAZARD GOT QUIETER, NOT SAFER** -- strictly WORSE for
+  **and the weight is lost -- but NOT in the allocation dict.**
+  > ⚠ **CORRECTED AT v0.6 (round-3 L10). THIS LINE USED TO READ "and silently zeroes the
+  > weight", AND THAT HALF WAS FALSE AT HEAD.** `AT2-s-1` added an `else` to all three
+  > `asset_class` chains, so a Commodities holding served allocation **2.5, not 0.000**
+  > (measured by `Z-W10-S1` on the real generator at base commit `651ffd4f16`, with a probe
+  > ticker at weight 0.025). The loss is real and sits ELSEWHERE: at the **five-class served
+  > view** (the label is `'Unknown'`, so the Commodities line holds nothing and reads 0.000)
+  > and at the **delta and benchmark-spread rows, which carried NO ROW AT ALL** rather than a
+  > zero. ⛔ **A BAR WRITTEN AS "confirm the weight zeroes in the allocation dict" RETURNS
+  > THE SAME ANSWER BEFORE AND AFTER A RETAG** and cannot gate it -- which matters because
+  > `AT3-s-5` is the gating bar and reads this paragraph. ⛔ **THE HAZARD GOT QUIETER, NOT SAFER** -- strictly WORSE for
   detection than the blanking it replaced, because a blank page is noticed in seconds and a zeroed
   allocation line looks like a real allocation. The retag remains UNSAFE; the reason changed.
   ⚠ **VINTAGE:** the 17-hop figures are pinned to `TO-S7-1`'s run and `3.0.0_SA_CVO~Z` records that
@@ -359,8 +677,13 @@ Coverage by SUBTRACTION from the printed denominator (rule 24(i)): **endpoint_ou
 | **S2** | **Class registry** -- order + color | the single definition of the five classes' canonical order and their colors, read by every surface | **FWD-3, FWD-4** |
 | **S3** | **The two surfaces** -- Positioning; Philosophy/CMA | the views that render the breakdown, reading class + order + color from S1 and S2 rather than re-deriving them | **FWD-6** |
 
+> ⛔ **S3 IS SCOPED TO TWO SURFACES AND THE WORLD HAS AT LEAST THREE READERS -- DISCLOSED AT v0.6 per the CTO ruling `POSN_ASTTAX-Z-S42` @`9d7b09987f`, which settles `Z-C-S55`.** An ADDITIONAL ETF publisher outside this two-sibling set copies gold holding class values and emits a four-key book allocation at its source lines 469-472. **It is OUT of POSN's WRITE scope** -- it belongs to another project and no POSN worker may rewrite it -- **and IN this project's DISCLOSURE scope**, because Rule 24's subtraction is over the surfaces a class value REACHES, not the surfaces this project may EDIT.
+> **MEASURED STATE, WITH THE CONDITION THAT ENDS IT:** 189 rows over four books and **ZERO candidate members** at the pin `Z-C-S55` cites, so its current bytes cannot exercise post-retag loss. ⚠ **That zero is a STATE, not a property.** It flips the first time a candidate member appears in any of those four books, and a zero recorded without its expiry is the same shape as a criterion that returns the same answer in both worlds.
+> ⭐ **AND THIS IS THE SAME DEFECT AS FWD-6's EMPTY COVERAGE, SEEN FROM THE OTHER SIDE:** a row scoped to two surfaces cannot generate a cell that checks three.
+
 **MECE check:** FWD-1 -> S1 · FWD-2 -> S1 · FWD-3 -> S2 · FWD-4 -> S2 · FWD-5 -> S1 · FWD-6 -> S3.
-**6 of 6 outcomes carried by exactly one row, 0 uncovered.** (The surfaces DISPLAY S1/S2's results, but
+**6 of 6 outcomes carried by exactly one row, 0 uncovered.**
+> ⛔ **READ THAT AS ASSIGNMENT, NEVER AS ISSUANCE -- QUALIFIED AT v0.6 AFTER IT MISLED THREE SEATS FOR THREE ROUNDS.** Its domain is *outcomes assigned to a surface row*, and it is true of that domain. It says NOTHING about whether a cell was ever cut. Measured at the round-3 L10 over the 15 cut orders: **`FWD-4` and `FWD-6` are named by ZERO orders.** Assigned and unserved. **A surface row owning an outcome is not a cell serving it**, and this line's "0 uncovered" is exactly the green that made the gap invisible -- an empty subtraction gets acted on rather than argued with, and this one printed a denominator so it read as measured. (The surfaces DISPLAY S1/S2's results, but
 each outcome is owned by the layer that DETERMINES the result: classification outcomes at S1, the
 order/color definition at S2, and cross-surface agreement -- the only outcome the surfaces themselves
 own -- at S3.)
