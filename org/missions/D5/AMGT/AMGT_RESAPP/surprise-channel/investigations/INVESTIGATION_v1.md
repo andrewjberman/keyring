@@ -6050,6 +6050,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "Section 6: 'flip <status> to complete; commit with --only -- <paths>. Report once.'",
     "world_is": "The order's own <paths> grant (section 3) does not name org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rk-10.the-social-source-classified.md, so a commit touching that file is outside the write surface this order names. The worker edited the <status> line locally to verify the gap, then reverted it byte-for-byte (confirmed by an empty git diff) rather than commit outside the grant.",
     "notes": "All three mechanical criteria (AC1, AC2, AC3) PASS-by-output and the committed proof-of-spec instance (org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~28/AMGT_RESAPP.TO-AMGT-rk-10.the-social-source-classified.proof_of_spec.json) is VALID (rc=0) against .tools/proof-of-spec-check.py. Only the terminal <status> flip is blocked by the missing write grant. The order is left at status=pending pending either an amendment to its <paths> (adding its own task-orders path, as rj-13's carries) or a direct flip by 2.0.0_SA_COO~Z/1.0.0_SA_CTO~Z."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W23-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~23",
+    "surfaced_at": "2026-09-16T06:48Z",
+    "one_line": "AMGT-rk-1's AC4 <expect> names a STALE gitlink hash: 'the superproject gitlink still reads e85f6eb8' -- the measured, unchanged, correct value at the round-12 cut is be8cf218 (the SAME value this order's own section 1 names as the current DEV tip), and e85f6eb8 is a distinct commit 217 commits behind DEV's tip.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AC4's literal invocation run in this worktree ('echo \"gitlink: $(git ls-tree HEAD portal | cut -c13-22)\"; git status --porcelain | cat; cd portal && git status --porcelain | cat; git rev-parse --abbrev-ref HEAD; git ls-remote origin DEV 2>&1 | cut -f1') printed 'gitlink: t be8cf218' -- the superproject gitlink was never touched by this cell (no merge, no commit, no add against the superproject 'portal' path) and still reads exactly what it read at the cut.",
+        "The SAME task order's section 1 (worker-face text, above the RECORD FACE marker) states: 'Portal DEV @`be8cf218` carries 0 of 48 and no route line' -- i.e. the order's OWN current measured-state prose names be8cf218 as DEV's tip, one paragraph away from AC4's e85f6eb8.",
+        "git -C portal log --oneline -1 e85f6eb8 resolves to a real, distinct commit: 'feat(irpt-fntend): FE-s-5 Reporting tab -- performance components mounted with period controls'. git -C portal merge-base --is-ancestor e85f6eb8 DEV succeeds and git -C portal rev-list --count e85f6eb8..DEV reads 217 -- e85f6eb8 is 217 commits behind DEV's current tip, not DEV's current tip.",
+        "e85f6eb8 WAS the correct value one round earlier: org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~18/AMGT_RESAPP.TO-AMGT-rj-1.the-canonical-key-on-the-ranked-click.proof_of_spec.json@23c2d3f5b4 carries AC6 with criterion_verbatim 'gitlink e85f6eb8 unchanged' and output_evidence 'gitlink: t e85f6eb8', graded PASS. Between round 11 and round 12 the superproject's recorded portal gitlink legitimately advanced (DEV moved forward under the reserved push authority, e.g. Andrew-direct 2026-09-15 positioning fix at be8cf218), and AC4's literal hash in this round's order was not refreshed to match -- a citation aged past the text quoting it, same class as CLAUDE.md Rule 27's L4-R docstring finding."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT_RESAPP.TO-AMGT-rk-1 criterion AC4 <expect>: 'the superproject gitlink still reads e85f6eb8 and the superproject status stages NO portal entry; the portal working tree is clean and HEAD is your own branch, never DEV; the ls-remote line is printed so your push state is MEASURED and reported as LOCAL. A moved gitlink is a hard stop and a BLOCKING row.'",
+    "world_is": "The superproject gitlink reads be8cf218, not e85f6eb8, and this is the CORRECT unmoved value (matching the order's own section 1 and matching the value present before this cell touched anything) -- the gitlink did not move; the number named in AC4 is simply stale. All of AC4's OTHER literal clauses hold: no staged portal entry, clean portal working tree, HEAD is the worker's own branch wk-amgt_resapp-12-23-portal (never DEV), and origin/DEV was read via ls-remote (be8cf218743af0c04a4d57b908b28cf7435e119d).",
+    "notes": "REFUSAL, not repair: per the worker face's REFUSAL CLAUSE this criterion is graded FAIL as literally written (the named hash does not match reality) rather than silently substituted with be8cf218, even though be8cf218 is plainly the intended/correct baseline per the order's own section 1 and per the substantive rule it exists to enforce ('the gitlink NEVER moves'). The task order AMGT_RESAPP.TO-AMGT-rk-1 is left OPEN on this account per the worker-face instruction 'If a criterion cannot be met, leave the order OPEN and file a row'; AC1-AC3 are otherwise met and recorded PASS in this worker's proof_of_spec instance at org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~23/AMGT_RESAPP.TO-AMGT-rk-1.the-dev-integration-of-the-page.proof_of_spec.json. RECOMMENDED REMEDY for the issuer (2.0.0_SA_COO~Z), not taken here: an amendment/recut of AC4's <expect> to name be8cf218 (or the current DEV tip read fresh at the amendment's own cut), matching section 1's own value."
   }
 ]
 ```
