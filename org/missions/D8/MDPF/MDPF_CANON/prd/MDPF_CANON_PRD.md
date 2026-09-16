@@ -5,7 +5,7 @@
  "project": "MDPF_CANON",
  "directive": "D8",
  "fabric": "laptop",
- "prd_version": "v2.5",
+ "prd_version": "v2.6",
  "step": 4,
  "brief_ref": "docs/briefs/d8-mdpf-canon-migration-brief-20260913.md@fd579d3caf",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8"],
@@ -19,7 +19,7 @@ and were never decomposed because the project was never registered. That path no
 stale items are amended here (DEC-1), and its founding content -- A-1 to A-3, rows B1 and B2, and the three
 final-step obligations -- is carried forward below.
 
-**v2.4 and v2.5 (2026-09-16 ~18:3xZ and ~18:5xZ, `1.0.0_SA_CTO`) -- every typed data home became the builder's address.** Andrew's call 3
+**v2.4, v2.5 and v2.6 (2026-09-16 ~18:3xZ to ~19:1xZ, `1.0.0_SA_CTO`) -- every typed data home became the builder's address, and every restatement of the old single-bucket bar followed it (v2.6: the two DEFINED OUTCOME lines the CVO's unscoped re-read found after its own census missed them).** Andrew's call 3
 (~18:2xZ, record @50d1b9403e: *"(a), yes. Should be using LGIC_NAMING patterns in both cases"*) decided gold's home per R7 through
 `address()`; v2.4 restated CONTRACTS :177's gold instance and M2, which had typed the product bucket for every scope against the same
 sentence's builder mandate (the CVO's 97324 finding, its own disclosure that it signed v2.2 without catching it). v2.5 finished the job
@@ -328,9 +328,9 @@ CONTRACTS changed, so both halves are owed again.
 ## PROJECT ARC AND DEFINED OUTCOME
 
 **Defined outcome:**
-- Every MDPF figure is dated parquet in one bucket.
+- Every MDPF figure is dated parquet where the one naming rule puts it: a firm's figures in that firm's own bucket, the cross-firm composite in the product bucket.
 - Each firm's served slice is in that firm's own bucket, behind a route that asserts the tenant.
-- One publisher reads only that bucket, and what people see did not change.
+- One publisher reads only the buckets the rule names for the figures it serves, and what people see did not change.
 - A dedicated runner writes each firm's slice with the fence untouched.
 - The bronze is in the shared intake.
 - The two legacy trees are gone, on proof, and the hold is true.
