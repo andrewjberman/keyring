@@ -111,7 +111,16 @@ sign-in plane gets an LGIC_ENFORCE contract and an R20 entry X8 by the CRO (A-7)
 Step 10's STOP names ADVI_FIRMBKTS (A-8); one pipeline-instance rule makes four steps MECHANICAL (A-9). W8-S1's disarm
 clock: the two-line advance was made here, passed the row gate, and was REFUSED by lane (TREE_CVO admits the CVO
 only) -- no override; reverted; `3.0.0_SA_CVO` lands it on this ruling (A-15), and the disarm-owner-vs-lane mismatch is
-a class finding beside R-2's. Round 2 is ONE issuance by `2.0.0_SA_COO~G` over the cell table in s.3 of the
+a class finding beside R-2's.
+
+**R-3 addendum (~06:3xZ): W8-S1 DISARMED @12eb376681** (`3.0.0_SA_CVO`, lane TREE_CVO, on this seat's act; verified here by
+`git diff -U0` on the carrier: exactly two changed lines, owner untouched). **The class finding's mechanical shape, the
+CVO's point adopted:** a correctly-routed disarm now has a different author and committer by design, so "who disarmed"
+is read ONLY from the row's `disarm.owner` field and never from commit history (the same trap the estate already knows
+one level up: author and committer lines cannot say who pushed). Any check that verifies a disarm against commit
+authorship reads a mismatch on every correctly-routed disarm. The remedy worth having is a FILING-TIME refusal when a
+row's `disarm.owner` names a serial the carrier's lane does not admit -- cheap, at the row gate -- never a widened
+grant that lets any disarm owner write any lane's carrier. Routed to the tooling owner with R-2's finding; not built here. Round 2 is ONE issuance by `2.0.0_SA_COO~G` over the cell table in s.3 of the
 analysis; C6 stays NOT CUT.
 
 **Binds:** `2.0.0_SA_COO~G` (the recut); `4.0.0_SA_CRO` (X8); LGIC_NAMING and LGIC_ENFORCE rounds (routes named in the
