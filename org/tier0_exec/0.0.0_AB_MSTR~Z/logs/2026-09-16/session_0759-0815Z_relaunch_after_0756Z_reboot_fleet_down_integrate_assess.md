@@ -41,10 +41,13 @@ prompt). Assessment disclosed to the laptop over the bus in one frame (MessageId
 - `org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md` +50 lines: rows
   **AMGT_RESAPP-Z-S111 / S112** by `2.0.0_SA_COO~Z`, both DISARM rows on W24-S1 / W24-S2, complete JSON,
   uncommitted. ⛔ The ROW gate reads staged bytes, but the standing SURPRISE-CORPUS pass hashes the WORKING
-  TREE estate-wide and fail-closed (banked 2026-09-10, `2.0.0_SA_COO~ZI`), so these two rows refuse EVERY
-  seat's commit on this clone until landed. Measured below on this seat's own log commit. They are the COO
-  lane's first act on relaunch; the override is not the remedy (it asserts a spurious refusal, and this one
-  is correct).
+  TREE estate-wide and fail-closed (banked 2026-09-10, `2.0.0_SA_COO~ZI`: a peer's UNRELATED commits refused
+  three times). ⚠ **MEASURED HERE, ONE ARM ONLY:** this seat's log commit `c9918a39b7` -- one file, no
+  `org/missions/` or channel path staged -- PASSED with both rows still uncommitted; `missions-tree-check`
+  printed SKIP for lack of a missions path. So the pass did NOT fire on a commit of this shape; whether it
+  fires on a commit that stages a missions or channel path is UNMEASURED this session, and the 09-10 instance
+  says it does. The rows are the COO lane's first act on relaunch either way; the override is not the remedy
+  (it asserts a spurious refusal).
 - `infra/aws/lambda/v2_portal/yang_pipeline/seed-etf-constituents.py` 19 lines (two hunks), unattributed in
   the tree; `0.1.0_DS_MarketIntelligence` has 11 commits in the 78 and is the likely author. Not touched.
 - `org/modules/graph/nerves-risk-edges.json` 54,660 lines churned -- a graph re-encode, not a finding.
