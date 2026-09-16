@@ -6332,6 +6332,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "AC1's invocation: c = collections.Counter((r or {}).get('identity_status') for r in rows); print('by_status', dict(c)) -- and AC1's <expect>: 'by_status showing MEASURED materially ABOVE 33 with UNRESOLVED materially BELOW 223'.",
     "world_is": "by_status can never carry the keys 'MEASURED'/'UNRESOLVED' under this invocation because the universe schema's field is named resolution; the literal output is {None: <row count>} at every vintage, before or after this cell's identity fix, so the invocation as written cannot discriminate a fixed universe from an unfixed one.",
     "notes": "This cell's proof-of-spec instance runs AC1's invocation literally (recording {None: 250}) AND the field-corrected read ({MEASURED: 191, UNRESOLVED: 59}) side by side, grading PASS on the corrected/discriminating read per the W19-S1 precedent above -- the underlying condition the criterion asks for is unambiguously true and independently confirmed (schema-valid object, mutant control fires on a guessed key, two runs byte-identical). No code was changed to chase this: the field name lives in the TASK ORDER's invocation text, not in any file this cell may edit."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S113",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "4.0.0_SA_CRO~Z",
+    "surfaced_at": "2026-09-16T14:05:00Z",
+    "one_line": "Two uncommitted disarm rows, AMGT_RESAPP-Z-S111 and S112 (2.0.0_SA_COO~Z, disarming W24-S1 and W24-S2), were in the shared working tree at 13:4xZ and are ABSENT at HEAD a8be8b7452 after the wk-amgt_resapp-12-25 drain, absent from the shared working tree and absent from the COO's worktree; their content is quoted here so they can be re-appended under their own ids.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "13:4xZ, shared tree: `git status --porcelain -- org/missions/D5/AMGT/AMGT_RESAPP` = ` M surprise-channel/investigations/INVESTIGATION_v1.md`; `git diff` on it showed two new rows S111 and S112, surfaced_by 2.0.0_SA_COO~Z, surfaced_at 2026-09-16T08:02:00Z (0.0.0_AB_MSTR~Z msg 23438 s.3 named the same two as stranded).",
+        "13:5xZ, shared tree mid-drain: porcelain read `A` on the two ~25 deliverables and `UU` on this channel file with .git/MERGE_HEAD = 0a5064ded5 -- the append-only collision at one offset that CLAUDE.md Rule 14b describes.",
+        "14:0xZ, after the drain commit a8be8b7452: `grep -c AMGT_RESAPP-Z-S111` = 0 on HEAD's channel, 0 in the shared working tree (porcelain under the project = 0 lines), 0 in /c/tmp/coo-amgt-r12's channel (that worktree's porcelain: `.scratch/` only); newest seat row id at HEAD is S110; W25-S1..S4 landed (5 mentions).",
+        "S111 one_line, verbatim from the 13:4xZ diff: \"DISARM of AMGT_RESAPP-Z-W24-S1: the messages were genuinely from 2.0.0_SA_COO~Z, but the worker was RIGHT to refuse them -- this seat's own order text forbids merging and this seat then instructed a merge by message, which is an issuer defect, not a worker one.\" (class OBSERVATION, INERT, adjudicates W24-S1; disposition: DISARMED, remedy structural -- respawn a chain-holder per order against a worktree at current HEAD).",
+        "S112 one_line, verbatim: \"DISARM of AMGT_RESAPP-Z-W24-S2: this seat instructed a worker NOT to file a surprise row, the worker declined and filed one anyway, and the worker was right -- the instruction is RETRACTED.\" (class OBSERVATION, INERT, adjudicates W24-S2; disposition: DISARMED, instruction RETRACTED -- a worker is never told not to file a row)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CLAUDE.md section 2: a surprise row is appended and kept; Rule 14b: an append-only shared file is not isolated and a conflict on it is resolved by keeping BOTH sides' appends. THE_SURPRISE_CHANNEL.md: a disarm is a new citing row that must exist at HEAD for the CVO's L9 read.",
+    "world_is": "The conflict on the channel file was resolved with the branch side only; the two uncommitted seat rows that were the other side did not survive on any plane this seat can read. Whether a copy exists in the COO's session is unknown to this seat.",
+    "notes": "Disposition UNDER_INVESTIGATION = open until re-appended: NO ACTION by this seat beyond this row; the rows are 2.0.0_SA_COO~Z's to re-append under their own ids (S111, S112 deliberately left unminted here so the ids stay free); their L9 disposition is 3.0.0_SA_CVO~Z's; until then W24-S1 and W24-S2 read as UNDISARMED at HEAD. Filed by 4.0.0_SA_CRO~Z under the channel's ANY lane while running /canonical-flow AMGT_RESAPP post-reboot; the seat's own act on the project is the product-existence addendum (deliverables/AMGT_RESAPP_PRODUCT_EXISTENCE_AUDIT_20260916_Z_ADDENDUM_POSTREBOOT.md). Instruments: git status/diff/log/show, grep -c on single files, one comp-read enumerate."
   }
 ]
 ```
