@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_LGIC_NAMING~1</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-09-16</issued_date>
-<status>pending</status>
+<status>complete -- 0.9.0_WK_LGIC_NAMING~1 2026-09-16: 4 of 4 mechanical criteria (G1R5-AC1..AC4) PASS-by-output at commit 7c1e9ffb26671d73fff813abe5fafb0e917e64e9; G1R5-AC5 recorded UNVERIFIABLE-BY-INSTRUMENT (judgment, owed to 3.0.0_SA_CVO at L9); proof instance validated by .tools/proof-of-spec-check.py, VALID (rc=0). Surprise row LGIC_NAMING-W1-S8 filed (OBSERVATION, INERT).</status>
 
 **Directive:** D14 | **Fabric:** laptop | **PRD:** `../prd/LGIC_NAMING_PRD.md` v1.10 @592ff7a5de (ADMITTED; both halves current) | **Decomp cell:** `LN-g-1` (round 5, decomposition v7.1 section 0f) | **outcome_ref:** FWD-5 | **depends_on:** none -- one of three independent chains | **slot:** ~1, queue position 1
 
