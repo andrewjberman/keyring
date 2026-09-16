@@ -20,7 +20,11 @@ The page was blank because the browser's own JavaScript threw on ONE field at vi
 generator expects three-field rows, and every section after the headline never rendered. The render-time contract
 checked that the field was PRESENT, never its TYPE, and had skipped positional rows by design.
 
-The same defect is in the committed 2026-09-11 report (two items), the cloud's last published page before this one.
+The same defect is in the committed 2026-09-11 report's DATA (two items), the cloud's last published page before
+this one. **Correction, same seat, 17:5xZ:** an earlier line here said that served page "is blank the same way";
+that was inferred, not measured. Opened headless, the served 2026-09-11 page has 0 JavaScript errors and its
+projects, process and blocked sections filled (3 diagrams). It does not go blank. The "still owed" item below is
+withdrawn accordingly.
 
 ## WHAT CHANGED (repo-side; no image, no model, no token knobs)
 
@@ -49,7 +53,6 @@ read/write budget env vars would be a one-line image change plus a rebuild; offe
 
 ## STILL OWED (named, not done)
 
-- The served 2026-09-11 page is blank the same way. Repairing it means a cloud backfill for that day (a new
-  report) or a hand edit of two footers; either is Andrew's call.
+- (withdrawn -- see the correction above: the served 2026-09-11 page renders.)
 - The image-side belt from LD-0574 (forbid the screenshot diagram in the cloud prompt) still stands; both cloud runs
   today needed the repair pass for it.
