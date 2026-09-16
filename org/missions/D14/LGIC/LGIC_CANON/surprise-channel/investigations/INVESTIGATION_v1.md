@@ -431,6 +431,32 @@ not a message.
    "spec_asserts": "CLAUDE.md Rule 24: write the enumeration as the printed denominator MINUS what you exclude, never as a forward list of what you thought of. Spine L6: the fan-out is derived from the decomposition's dependency chains; two task orders on one chain belong to ONE worker's queue.",
    "world_is": "A forward list covers what its author had in mind and omits silently. This one omitted a surface the author himself added to the order twenty minutes later, in the same sitting. \u26a0 AND IT READ AS MEASURED: the paragraph prints a denominator -- 15 sibling orders -- for the half that WAS a subtraction, and the printed number lends its authority to the sentence beside it, which was recall. A denominator certifies the sweep it came from and nothing else in the paragraph.",
    "notes": "INERT: no worker was harmed. CN-k-2 is the only canon writer spawned; CN-k-3 and CN-k-4 are HELD and will be handed to the same slot in sequence after CN-k-2 drains, which is the queue rule the spine already states for two orders on one chain. NOT AN EDIT TO THE DECOMPOSITION: the spec is frozen mid-round and a cell that looks wrong is a row, never an edit -- the sequencing is the issuer's to control at spawn, and it is controlled. For the round-2 analysis: s.0d's contention sentence is wrong by one cell and should be re-cut from the orders' own <paths>, which is the only carrier that IS the grant. For 3.0.0_SA_CVO at L9: the orders themselves are correct and no criterion changes."
+  },
+  {
+   "id": "LGIC_CANON-S6",
+   "project": "LGIC_CANON",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T08:02Z",
+   "one_line": "ISSUER'S CUT DEFECT, caught before spawn. CN-j-6 is the negative arm and must judge WITHOUT the severity order, but it depends on CN-k-2, whose whole job is to PUT the severity order INTO infra/logic/02_DOCTRINE.md -- which is CN-j-6's named rule source, with no vintage pin. So judge E reads the canon after CN-k-2 lands and meets the severity order there. The order's own warning makes it worse: it says to file a row on finding a severity order 'in a file this order does not name', and the canon IS a named file.",
+   "class": "BLOCKING",
+   "hazard_standing": "ARMED",
+   "disarm_owner": "1.0.0_SA_CTO",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "READ the issued order LGIC_CANON.CN-j-6-r2.judge-e-negative-arm.md at CLOUD ccb69f3ef3: 'depends_on: CN-k-2'; 'Your rule source is infra/logic/02_DOCTRINE.md' with NO commit pin and no instruction to read it at a vintage.",
+     "READ the issued order LGIC_CANON.CN-k-2-r2.canon-edit.md, item 2: 'State them ORDERED, least severe to most, in a passage the canon names SEVERITY ORDER'. Its criterion K2-AC2 calls check_canon_r2.py k2-severity, which PASSES only when that passage exists in infra/logic/02_DOCTRINE.md.",
+     "SO THE TWO ORDERS ARE JOINTLY UNSATISFIABLE AS I READ THEM: CN-k-2 passes only if the canon carries the severity order; CN-j-6 is briefed 'WITHOUT the severity order' and reads the canon after CN-k-2.",
+     "THE ORDER'S GUARD DOES NOT CATCH IT: 'If you find one in a file this order does not name, stop and file a surprise row'. The canon IS named in its Read list, so the guard is silent on exactly the leak that will occur.",
+     "AND MY OWN CRITERION WOULD HAVE READ PASS OVER IT: j6-noseverity greps CN-j-6's ORDER FILE for the vocabulary and the phrase SEVERITY ORDER. The order file is clean. The check never looks at the canon, so it certifies the arm intact while the arm is compromised.",
+     "NOTHING IS MID-FLIGHT: CN-j-6 is HELD and unspawned; the four running cells are CN-k-2, CN-l-2, LN-f-1 and EN-r-4. Caught by re-running the write-surface census over the running and held sets, not by re-reading the order."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "Round-1 analysis ruling A-1 and the s.3 cell table: 'CN-j-6 judge E: the MDPF tree again, briefed WITHOUT the severity order -- the negative arm', depends_on CN-k-2. The CVO's C-S9: round 1's five-of-five agreement may have come from a scale THE CANON DID NOT CARRY.",
+   "world_is": "There are TWO coherent readings of what the arm measures and the cut does not choose between them. READING ONE, the arm as I wrote its prose: E must meet no severity order at all, so it has to judge a canon from BEFORE CN-k-2 -- and then its dependency is backwards and the cell should be pinned to a pre-CN-k-2 vintage or run first. READING TWO, and the one the dependency actually implies: what is withheld from E is a BRIEF stating the scale, while the CANON is exactly where E is supposed to find it -- and if E then agrees with C and D, that is the direct evidence that CN-k-2 made the canon carry what the brief used to supply, which answers C-S9 better than reading one does. Under reading two the cell is sound and only its warning text is wrong.",
+   "notes": "ARMED, disarm_owner 1.0.0_SA_CTO: choosing between the two readings is a ruling about what A-1's arm measures, not a measurement I can take, and it decides whether the fix is a vintage pin plus a re-ordered dependency or a two-sentence correction to the warning. I have NOT edited the order -- R-7 ruled an hour ago that adding new work to an unspawned order cuts a cell the decomposition does not name, and while I read this as correcting an instruction that contradicts its own cell rather than as new work, that distinction is the one R-7 just drew and it is the CTO's to draw again. CN-j-6 stays HELD either way; it was held on CN-k-2 already, so this costs no time. MY REC: reading two, and correct CN-j-6's warning to say the canon is where the scale legitimately lives and what is withheld is a brief -- plus widen j6-noseverity, or accept that it grades the brief and not the arm, and say which."
   }
 ]
 ```
