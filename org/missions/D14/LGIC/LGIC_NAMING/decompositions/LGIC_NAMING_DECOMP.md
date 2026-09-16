@@ -564,7 +564,33 @@ resolution in `proof-of-spec-check.py`; R-16's generator target-list print with 
 classification. This seat also carries into that round, from its own channel: `LGIC_ENFORCE-S55` (the RULING
 RED arm's inert ANSI strip) and `LGIC_NAMING-S24` (its sibling).
 
-**DEPENDENCY EDGES: none. M = 4 independent chains, one cell each.** LN-g-1 writes `GRADING_RULE.md`;
+**AMENDED BEFORE THE ISSUANCE -- v7.1: the cells are THREE, not four, because two of them wrote the
+same file.** The split above put item 1 (the two globgrph worked cases, S22/R-5) in `LN-g-2` and item 3
+(the `alias_adjacency` step) in `LN-g-1`, on round 4's rule-versus-code principle. **MEASURED before
+cutting: item 1 is a RULE edit, not a code edit.** `lib/tests/test_opal_naming.py:25` pins
+`_RULE = .../deliverables/GRADING_RULE.md` and `:28-31` parses the worked cases out of that file's json
+fence, so the two failing parametrised cases are assertions about GRADING_RULE.md's own text. And
+`grade()` at HEAD already returns `('OUT-OF-PATTERN', 'globgrph-serving-task')` and
+`('OUT-OF-PATTERN', 'globgrph-cluster')` -- **the builder is already right; only the worked cases
+disagree**, so nothing in `lib/` changes for item 1 at all.
+
+Two cells writing `GRADING_RULE.md` in one round is the collision `/dispatch` names, and it would have
+been issued had the test's source not been read at the cut. So items 1, 3 and 5 are ONE cell:
+
+```
+  cells round 5 runs ................................................ 3
+      LN-g-1   items 1 + 3 + 5   GRADING_RULE.md, ONE writer
+      LN-f-1   item 2            the gaps re-run           -- REPO plane
+      LN-f-2   item 4            FWD-3's live half (R-20)  -- LIVE plane
+```
+
+**AND THE RULE-VERSUS-CODE SEPARATION IS KEPT, BY THE PATHS RATHER THAN BY THE WORKER SPLIT.** The point
+of round 4's principle is that a worker who writes both a rule and its implementation can make them agree
+by construction. Here `LN-g-1`'s `<paths>` DO NOT INCLUDE `lib/`: the worker re-verdicts the worked cases
+to whatever `grade()` returns and cannot touch `grade()`. The constraint is mechanical, not a convention
+about who holds which slot -- which is stronger than the arrangement it replaces.
+
+**DEPENDENCY EDGES: none. M = 3 independent chains, one cell each (v7.1).** LN-g-1 writes `GRADING_RULE.md`;
 LN-g-2 writes `lib/opal_naming.py` and its tests; LN-f-1 writes the gaps exercise; LN-f-2 writes the live
 census. No cell reads another's output: item 2 runs `f1-gaps` at **its own base**, so it does not wait on
 LN-g-2's `grade()` edit, and that independence is a choice this cut makes explicit rather than a coincidence.
