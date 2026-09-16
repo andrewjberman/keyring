@@ -122,7 +122,7 @@ edit an existing row. **Found something off-task? APPEND ONE ROW AND KEEP WORKIN
   <criterion id="AC6" cell_refs="AMGT-rk-2" judgment="true"><invocation>python -c "import boto3,json; s=boto3.client('s3'); p=s.get_paginator('list_objects_v2'); keys=set(); n=0; [ (keys.add(o['Key'].split('/')[2]), ) for pg in p.paginate(Bucket='opal-data-harvest', Prefix='derived/model_block/') for o in pg.get('Contents',[]) if len(o['Key'].split('/'))>3 ]; print('model_block_keys_at_the_cut', len(keys), sorted(keys)); print('page_under_judgment BA_US_Equity')"</invocation><expect>the JUDGMENT is whether the Model tab of the page a person opens for BA_US_Equity now SHOWS ITS FIGURES on the deployed plane. This invocation prints the model_block key count and the key list AT THE CUT beside the named page so the grader has the denominator -- a judgment criterion still carries a printed denominator, and at the cut that count was 3 covered keys (plus NVDA, not covered) of 89 coverage. GRADED AT L9 BY 3.0.0_SA_CVO~Z, NEVER SELF-GRADED</expect></criterion>
 </proof_of_spec>
 
-**Record each criterion's ACTUAL OUTPUT and its DENOMINATOR, not a paraphrase.** **AC5 IS A JUDGMENT CRITERION** -- graded at L9 by `3.0.0_SA_CVO~Z` and NEVER self-graded. Record its evidence and its denominator; do not write a verdict.
+**Record each criterion's ACTUAL OUTPUT and its DENOMINATOR, not a paraphrase.** **AC6 IS THE JUDGMENT CRITERION** (ISSUER AMENDMENT 5: this line said AC5 until 2026-09-16 ~14:5xZ, while the `judgment` flag sits on AC6; AC5 is mechanical and is graded by you) -- graded at L9 by `3.0.0_SA_CVO~Z` and NEVER self-graded. Record its evidence and its denominator; do not write a verdict.
 
 ## 6. WHEN YOU ARE DONE
 
