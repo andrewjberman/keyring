@@ -3078,6 +3078,28 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     "spec_asserts": "S57 and RULING R-23: cell 5 and 7 edit infra/logic/registry/scopes.json, refused_keys.json and exemptions.json, and the order naming them in <paths> IS the grant.",
     "world_is": "refused_keys.json does not exist. The refused keys are a dict inside systems.json, which neither carrier names, so a grant cut from their text omits the file the cell must write.",
     "notes": "INERT because the only reader who cuts from this text is this seat, and the cut will name infra/logic/registry/systems.json and verify each <paths> entry PERMIT for its issued_to worker after the issuance commit, as R-23 s.3 requires. No clock and no call: the ruling's INTENT (these registry rows are worker cells) is unchanged; only a filename in it is wrong. R-23 s.3 already names the control that would have caught it at the cut -- pipe each path to --check-agent -- and this row adds the half that control does not cover: check that each path EXISTS, because the lane answers the same for a real file and an invented one."
+  },
+  {
+    "id": "LGIC_ENFORCE-S59",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G",
+    "surfaced_at": "2026-09-16T19:05Z",
+    "one_line": "CELL 8 AS THE ROUND-2 ANALYSIS WORDS IT CAN NEVER PASS. A-12 asks for a re-plan of one root with plan_sha256 equal to the extract's, but plan_sha256 is the SHA-256 of the FULL terraform show -json document, and every such document carries its own creation timestamp -- so no re-plan can reproduce the hash, and a PERFECT reproduction would FAIL. Round 2's own census states the achievable bar (a re-plan reproduces the EXTRACT); round 3 cuts that, compared canonically, with the re-plan required to be new.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE HASH IS OF THE FULL DOCUMENT, by the census's own text: LIMB_ROOTS_CENSUS.md s.6 -- each row carries plan_sha256, the SHA-256 of the FULL terraform show -json document the extract was reduced from (the full documents are not committed). Measured: all 68 planned rows' plan_sha256 match NONE of the extract's worktree bytes, its LF-normalised bytes or its HEAD blob -- consistent with that text, so the 68 mismatches are BY DESIGN and are not a defect of round 2.",
+        "EVERY FULL PLAN DOCUMENT CARRIES A TIMESTAMP, measured on the four full plans committed in this project: fence_plan.json 2026-09-15T03:47:57Z, fwd2_plan.json 10:05:33Z, fwd2_plan_before.r2.json 2026-09-16T11:19:12Z, fwd2_plan_after.r2.json 11:23:25Z -- the top-level key set is format_version, terraform_version, planned_values, resource_changes, output_changes, prior_state, configuration, relevant_attributes, checks, timestamp, applyable, complete, errored. Two plans of one root at two instants therefore differ in bytes and in SHA-256 by construction.",
+        "THE ACHIEVABLE BAR IS ROUND 2'S OWN: the same census section says a spot re-plan of any planned root reproduces its EXTRACT. The extract carries format_version, terraform_version and resource_changes only -- no timestamp. check_en_r3.py t8-replan-reproduces-extract compares resource_changes canonically (sorted keys), requires -lockfile=readonly in the recorded command, and requires the re-plan's own timestamp to be after the census vintage 2026-09-16T10:15:18Z, so a copied old document cannot stand in for a run. Self-test holds the copy, the drift and the missing flag RED."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "ROUND_ANALYSIS_LGIC_ENFORCE_ROUND2 cell 8 (A-12): T3R-J1's cheap evaluation -- re-plan ONE root in a throwaway clone with -lockfile=readonly, plan_sha256 equal to the extract's.",
+    "world_is": "plan_sha256 hashes a timestamped full document that is not committed, so equality with any re-plan is impossible; the extract, which is committed and carries no timestamp, is what a re-plan can reproduce.",
+    "notes": "INERT: the only reader who cuts from the table is this seat, and the cut uses the extract form. No clock and no call -- the analysis names cells indicatively and leaves the criterion to the cut, and round 2's census already states the bar this seat adopts. A worker cut from the table's literal words would have chased a hash no run can produce, and a failure there would have read as the root being unreproducible."
   }
 ]
 ```
