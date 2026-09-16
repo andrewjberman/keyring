@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_LGIC_ENFORCE~3</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-09-15</issued_date>
-<status>pending</status>
+<status>complete -- 4/4 mechanical criteria PASS by output (G1R-AC1 re-graded PASS after the issuer's fixture fix @6f640ead30, drained @4f7f050f2c; proof-of-spec VALID rc=0); LGIC_ENFORCE-W3-S10 disposed by LGIC_ENFORCE-W3-S11 (GRADUATED)</status>
 
 **Directive:** D14 | **Fabric:** laptop | **PRD:** `../prd/LGIC_ENFORCE_PRD.md` v1.2 @09bde3126c (ADMITTED; brief half re-signed by 4.0.0_SA_CRO @e848967b3f) | **Decomp cell:** `EN-g-1` (round 2) | **outcome_ref:** FWD-4 | **depends_on:** gate G-V19b (the one-carrier group, with NAMING_SCHEMA.json v1.9's map, on CLOUD) | **slot:** ~3, queue position 1
 

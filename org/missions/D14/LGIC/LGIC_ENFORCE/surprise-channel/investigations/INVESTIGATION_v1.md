@@ -1879,6 +1879,30 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     "spec_asserts": "G1R-AC1 names invocation 'cd <WS> && timeout 120 python .../check_en_r2.py g1r-plan-not-graded', expecting 'VERDICT: PASS-PLAN-FILE-NOT-GRADED'. THE CELL, item 1: 'A JSON file whose top level carries format_version, terraform_version, and resource_changes or planned_values ... is skipped, and the limb prints that it skipped it.' BOUNDS: 'Fixed inputs are read-only ... Never edit any of them.'",
     "world_is": "The fixture the criterion names to prove itself against is a corrupt unified diff: its hunk header overcounts the added lines by 1, so both the pre-edit and the edited naming-gate.py's own parse_diff() -- and real git via 'git apply --check' -- refuse it as unparseable, before the SKIP-a-plan-file logic this cell adds ever runs. The stated invocation therefore reads FAIL-PLAN-FILE-GRADED regardless of the commit limb's correctness. A byte-identical, header-corrected copy run outside the fixed-input path (a scratch file, never committed) confirms the edited gate's behavior matches the cell exactly: the plan file is SKIPped and the authored-JSON control is still REFUSEd with its canonical form.",
     "notes": "BLOCKING because G1R-AC1's named invocation cannot reach PASS while this fixture stands, through no defect in .tools/naming-gate.py. Filed for the issuer, 2.0.0_SA_COO~G, which owns fixed_inputs/r2/; the fixture is outside this order's <paths> and a path this order does not name is a row, never an override. Disarms with a one-line header fix (@@ -0,0 +1,12 @@) or a 13th content line, re-cut by the issuer. The proof-of-spec instance for G1R-AC1 records this row's id and the FAIL-by-output verdict the named invocation actually produced."
+  },
+  {
+    "id": "LGIC_ENFORCE-W3-S11",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~3",
+    "surfaced_at": "2026-09-16T01:10Z",
+    "one_line": "W3-S10 disposed: 2.0.0_SA_COO~G corrected tests/g1r/01_plan_json_added.patch's hunk header (+1,13 -> +1,12, zero other bytes changed, all 17 CRLF endings intact) at 6f640ead30, drained to CLOUD at 4f7f050f2c; G1R-AC1 now reads VERDICT: PASS-PLAN-FILE-NOT-GRADED, rc=0, re-run in this worktree with the corrected fixture.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "READ org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/2.0.0_SA_COO~G/fixed_inputs/r2/tests/g1r/01_plan_json_added.patch in this worktree (post-fix, uncommitted per the coordinator's resume message) against the blob at 6f640ead30 (git show 6f640ead30:<path>): the two differ only by CRLF rendering (0 CRLF in the stored blob, 17 in the checked-out copy); byte content is identical once normalized to LF -- an independent instrument, not a re-statement of the coordinator's own diff.",
+        "RUN git diff HEAD -- <path> in this worktree: the only hunk changes '@@ -0,0 +1,13 @@' to '@@ -0,0 +1,12 @@'; no other line differs.",
+        "RUN git merge-base --is-ancestor 7bdcbfb325 4f7f050f2c -> true (this worker's drained commit is an ancestor of the drain tip); git merge-base --is-ancestor 6f640ead30 4f7f050f2c -> true (the fixture fix is included in the drain tip).",
+        "RUN the acceptance invocation exactly as named, in this worktree with the corrected fixture: cd <WS> && timeout 120 python .../check_en_r2.py g1r-plan-not-graded -> 'MACHINE-WRITTEN PLAN FILE ADDED: rc=0 ... NAMING-GATE: PASS 1 graded' and 'CONTROL, THE SAME NAME IN AN AUTHORED JSON FILE: rc=1 ... NAMING-GATE: REFUSE 1 graded', 'VERDICT: PASS-PLAN-FILE-NOT-GRADED', rc=0. G1R-AC2, G1R-AC3 and G1R-AC4 re-run unchanged: PASS-REGISTRY-VALIDATED-FIRST, PASS-COMMIT-LIMB-READS-SCHEMA-MAP, PASS-G1-SUITE-HOLDS."
+      ]
+    },
+    "disposition": "GRADUATED",
+    "adjudicates": ["LGIC_ENFORCE-W3-S10"],
+    "spec_asserts": "The coordinator's resume message (2.0.0_SA_COO~G): 'You were right, and the fixture was the defect ... It is corrected +1,13 -> +1,12, zero other bytes changed, all 17 CRLF endings intact, committed as 6f640ead30 ... Append ONE row to the channel disposing W3-S10: it was a real BLOCKING finding, the cause was the issuer's fixture, the remedy has landed, and the criterion now passes.'",
+    "world_is": "Independently confirmed rather than taken on the message's word: the fixture blob at 6f640ead30 matches the worktree copy byte-for-byte after CRLF normalization, both this worker's commit and the fixture fix are ancestors of the drain tip 4f7f050f2c, and re-running G1R-AC1's exact named invocation in this worktree now prints VERDICT: PASS-PLAN-FILE-NOT-GRADED, rc=0, with the plan file SKIPped and the authored-JSON control still REFUSEd. W3-S10 was a real BLOCKING finding (independently reproduced on the pre-edit gate and on git apply --check, per that row); its root cause was the fixed input, not .tools/naming-gate.py, and the remedy is landed and verified.",
+    "notes": "Disposes LGIC_ENFORCE-W3-S10 (this row's adjudicates). hazard_standing INERT: the fixture defect is remedied and G1R-AC1 now passes by output; no owner needs to hold it further. The proof-of-spec instance for G1R-AC1 is updated to record the PASS and pinned to 6f640ead30 for the fixture, never PENDING-THIS-COMMIT."
   }
 ]
 ```
