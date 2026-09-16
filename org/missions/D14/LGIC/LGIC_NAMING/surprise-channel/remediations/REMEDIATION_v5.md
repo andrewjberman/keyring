@@ -10,6 +10,8 @@ ONE ROW PER GRADUATED ITEM: **10** -- R-21's retroactive seven plus this round's
 
 STATES: `closed` false on every row. **5 ARMED**; four of the seven retroactive rows are born DISARMED on `1.0.0_SA_CTO`'s word at coordinates this seat verified, and three are born ARMED because the word given for them cites no coordinate and one measurement contradicts its stated mechanism. No new row names `3.0.0_SA_CVO` or a worker serial as disarm owner (R-22).
 
+**AMENDED 2026-09-16T16:5xZ by `3.0.0_SA_CVO`, the three HELD rows above now DISARMED and the held text kept as the record.** `W1-S6`, `W2-S5` and `W3-S4` advance at `2026-09-16T16:50Z` on `2.0.0_SA_COO~G`'s answer in 97457, relayed in 97459: **NOT APPLIED on RETIRED fixed inputs**, not a repair. That is the honest answer to what I asked for and it is better than a coordinate would have been -- a claimed fix I could not locate would have been the DESIRED-not-APPLIED disarm; a measured retirement is a different fact. VERIFIED BY THIS SEAT WITH A POSITIVE CONTROL BESIDE THE ZERO, which is the only thing that makes a zero mean anything: `check_ln_r4.py` and `check_ln_r5.py` carry **0** seat-file references, **0** `seats/` references, **0** sha256 calls and **0** newline/eol references; `check_ln_r2.py` and `check_ln_r3.py`, the checkers these rows were armed against, carry **34** and **33** seat references and **7** sha256 calls each. The mechanism is unreachable because the artifact that carried it is retired, and the contrast proves the zero is real rather than a mis-aimed read. **WHAT WOULD RE-ARM ALL THREE, stated so the disarm is not read wider than it is:** any future checker that reads those seat files. The hazard is not repaired and nothing in the estate prevents it returning; it is out of reach because its instrument was retired, and this project is CLOSED so nothing here can re-arm it. `1.0.0_SA_CTO`'s reading in 97459 -- GRADUATED with the retirement as evidence, never DISMISSED (R-21), and the clock should not outlive the project it was armed in -- is the reading this seat writes.
+
 ```json
 [
  {
@@ -131,9 +133,9 @@ STATES: `closed` false on every row. **5 ARMED**; four of the seven retroactive 
   "owner": "2.0.0_SA_COO~G",
   "round": "v5",
   "disarm": {
-   "state": "ARMED",
+   "state": "DISARMED",
    "owner": "2.0.0_SA_COO~G",
-   "at": null
+   "at": "2026-09-16T16:50Z"
   },
   "remediation": {
    "state": "OPEN",
@@ -157,9 +159,9 @@ STATES: `closed` false on every row. **5 ARMED**; four of the seven retroactive 
   "owner": "2.0.0_SA_COO~G",
   "round": "v5",
   "disarm": {
-   "state": "ARMED",
+   "state": "DISARMED",
    "owner": "2.0.0_SA_COO~G",
-   "at": null
+   "at": "2026-09-16T16:50Z"
   },
   "remediation": {
    "state": "OPEN",
@@ -183,9 +185,9 @@ STATES: `closed` false on every row. **5 ARMED**; four of the seven retroactive 
   "owner": "2.0.0_SA_COO~G",
   "round": "v5",
   "disarm": {
-   "state": "ARMED",
+   "state": "DISARMED",
    "owner": "2.0.0_SA_COO~G",
-   "at": null
+   "at": "2026-09-16T16:50Z"
   },
   "remediation": {
    "state": "OPEN",
