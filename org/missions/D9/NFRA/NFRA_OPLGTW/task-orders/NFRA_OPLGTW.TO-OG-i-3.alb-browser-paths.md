@@ -47,8 +47,9 @@ binds an ARN.
 - **Move every consumer in this order, with no occurrence left behind.** At the ruling's measurement those are:
   - `infra/aws/terraform/opal-gateway/schwab_reader_iam.tf` (6 occurrences);
   - `infra/aws/ec2/opal-gateway/app/integrations/schwab/aws_roles.py` (1);
-  - `org/standards/NFRA_OPLGTW_CONTRACT.json` (2), bumped to version 1.1 with `reader_role`, `catalog_role` and the
-    policy name as builder output;
+  - `org/standards/NFRA_OPLGTW_CONTRACT.json` (2): `reader_role`, `catalog_role` and the policy name as builder output,
+    under version 1.1. `OG-i-5`, earlier in your queue, bumps the version with the table name (ruling R-OG-8), so this
+    cell adds its three names to that version.
   - `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~1/SCHWAB_IDENTITIES.json`, rewritten with the new ARNs.
   - Re-count at your HEAD with an unscoped search of the three old strings, and print the denominator. Every hit outside
     this project's historical records (evidence, result files, rows, rulings, logs) is moved here or filed as a BLOCKING row.
