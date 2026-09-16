@@ -820,6 +820,28 @@ not a message.
    "spec_asserts": "O3-AC4's clause: 'the INPUTS section marks its SOVEREIGN inputs', graded by check_canon_r2.py o3-sovereign, whose printed line offers a count of SOVEREIGN inputs.",
    "world_is": "The printed count is of token occurrences in the section blob, not of marked inputs. A reader quoting '9 SOVEREIGN inputs' from this run would be quoting a number that certifies the sweep and not the set: the checklist marks 5 of 9 input rows SOVEREIGN and 4 GIVEN.",
    "notes": "INERT: the criterion's verdict stands and nothing downstream reads the count. Filed rather than worked around -- the fixed inputs are read-only by this order's own bound, and the count that belongs in the record is the one stated here: 5 SOVEREIGN of 9 input rows."
+  },
+  {
+   "id": "LGIC_CANON-W9-S1",
+   "project": "LGIC_CANON",
+   "fabric": "laptop",
+   "surfaced_by": "0.9.0_WK_LGIC_CANON~9",
+   "surfaced_at": "2026-09-16T10:12Z",
+   "one_line": "The canon's own header is stale against its body: infra/logic/02_DOCTRINE.md's title line still reads v1.0 and section 0's census line still reads 'RULES CARRYING ALL THREE PARTS: 21 of 21', while the file carries 22 rule blocks (R22, inserted between R13 and R14) and its change log's last row reads v1.1. R22 itself carries all three parts, so the shortfall is in the count and the version stamp, not in the rule.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "COUNT: infra/logic/02_DOCTRINE.md@d173e700f7 (blob last touched @4ee952a3e4; unmodified in worktree wk-lgic-canon-2-10, `git status --porcelain` empty on the path). `re.findall(r'^\\*\\*(R\\d+)\b', text, re.M)` returns 22 ids in file order: R1..R13, R22, R14..R21. The same expression is the one section 0 names for its own recount ('a line opening **R<n> to the next rule, heading or rule line').",
+     "HEADER: the same file's line 1 reads '# 02 -- THE PLATFORM LOGIC CANON (the doctrine) -- v1.0' and section 0 carries the single line 'RULES CARRYING ALL THREE PARTS: 21 of 21'. The change log's last row reads '| v1.1 | 2026-09-16 | round 2 (0.9.0_WK_LGIC_CANON~1, cell CN-k-2) ...', so the version is stamped in the log and not in the title.",
+     "RULE IS COMPLETE: R22 at :459-468 carries plane (compute), authority (LGIC_CANON_ROUND1_ANALYSIS.md ruling A-9, W7-S3), census (n/a, a definitional rule) and non-application (the FIRST pipeline of a new vendor) -- so 22 of 22 would be the true reading of that line, not 21 of 22."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "02_DOCTRINE.md section 0 states its rule count as a recounted census line ('RULES CARRYING ALL THREE PARTS: 21 of 21') and the document stamps its version in its title line; the canon is the one document a seat answers conformance from without opening a second.",
+   "world_is": "The body carries 22 rules and the change log carries v1.1, while both header carriers still read the v1.0 values. A reader who takes the census line at face value reads a canon of 21 rules and can conclude R22 is not canon text -- which is exactly the rule four onboarding-checklist steps (3, 7, 8, 9) now rest on.",
+   "notes": "Off-task for CN-o-4: found while grounding R22 for the checklist review, and it belongs to CN-k-2's artifact, which is not in this order's <paths>. Not touched. No mark in CHECKLIST_REVIEW_R2.md depends on the count -- R22's own text was read in full at :459-468. INERT: nothing reads the census line mechanically (render_naming_section.py --check stamps the GENERATED section, not this line)."
   }
 ]
 ```
