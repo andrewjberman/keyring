@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_LGIC_CANON~7</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-09-16</issued_date>
-<status>pending</status>
+<status>complete -- 0.9.0_WK_LGIC_CANON~7, 2026-09-16: J7-AC1/AC2/AC3/AC4 PASS-by-output (proof_of_spec.json validated rc=0); J7-J1 recorded UNVERIFIABLE-BY-INSTRUMENT for 3.0.0_SA_CVO at L9. Artifact org/missions/D14/LGIC/LGIC_CANON/deliverables/exercises/r2/judge-compare-r2.md committed fe4cf74eb662e64a99cf42775bbf33c05edcf247. Rows LGIC_CANON-W7-S4 and LGIC_CANON-W7-S5 filed, both OBSERVATION and INERT.</status>
 
 **Directive:** D14 | **Fabric:** laptop | **PRD:** `../prd/LGIC_CANON_PRD.md` v1.3 @5b2336a5e4 (ADMITTED; both halves SIGNED and `current`, re-read at the recut) | **Decomp cell:** `CN-j-7` (round 2, decomposition v4) | **outcome_ref:** FWD-1 | **rulings:** A-13 | **depends_on:** CN-j-4, CN-j-5, CN-j-6 | **slot:** ~7, queue position 1, level 2
 

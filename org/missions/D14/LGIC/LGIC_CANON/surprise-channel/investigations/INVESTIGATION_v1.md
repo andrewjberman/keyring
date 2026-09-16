@@ -700,6 +700,58 @@ not a message.
    "spec_asserts": "The cell: 'A FIRM row's note renders exactly as the schema path rendered it, so the demo bullet returns. No other output moves.' -- and row LGIC_CANON-S3 frames the loss as the schema-to-registry move costing ONE line.",
    "world_is": "The demo note is not the only source content the section drops. key.legacy_served_paths.producer is dropped the same way and for the same reason -- a field no code path reads -- and no criterion in this cell names it. Restoring it would have moved output the cell froze, so the arm declares and prints it as out-of-section instead, which keeps the fact visible without widening the order.",
    "notes": "INERT: nothing is broken by the exclusion and no criterion turns on it. Filed so that the arm's domain is the CVO's to accept or reject at L9 rather than this worker's quiet choice -- an exclusion that nobody reviews is how a content check becomes a constant. Judged the row's form, not its significance."
+  },
+  {
+   "id": "LGIC_CANON-W7-S4",
+   "project": "LGIC_CANON",
+   "fabric": "laptop",
+   "surfaced_by": "0.9.0_WK_LGIC_CANON~7",
+   "surfaced_at": "2026-09-16T12:05Z",
+   "one_line": "CN-j-7's cell text asks whether judge E's verdicts diverge from judges C's and D's, but C and D judged the INFLECTION tree (13 planes) and E judged the MDPF tree (7 planes) by their own orders, so the two populations share no plane and no per-plane divergence is computable; the fixed input CN_SEVERITY.md names the intended comparator itself -- round 1's judges on the same tree -- and the comparison was run that way and labelled.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "THE ORDER'S OWN WORDS, at this worktree's base 7db18a4464: org/missions/D14/LGIC/LGIC_CANON/task-orders/LGIC_CANON.CN-j-7-r2.judge-comparison.md item 3, 'C and D had the severity order; E did not. State whether E's verdicts diverge from C's and D's in the way the severity order would predict.'",
+     "C's AND D's TREE: LGIC_CANON.CN-j-4-r2.judge-c.md:37 and LGIC_CANON.CN-j-5-r2.judge-d.md:36 both name fixed_inputs/r2/CN_TREE_INFLECTION.md as the tree to judge; judge-c.tsv and judge-d.tsv each carry 13 plane rows whose names are that file's planes.",
+     "E's TREE: LGIC_CANON.CN-j-6-r2.judge-e-negative-arm.md, 'Your tree is round 1's MDPF tree, org/missions/D14/LGIC/LGIC_CANON/deliverables/2.0.0_SA_COO~G/fixed_inputs/r1/CN_TREE_MDPF.md, unchanged'; judge-e.tsv carries 7 plane rows, P1..P7, all MDPF addresses.",
+     "THE FIXED INPUT SAYS SO FROM BOTH SIDES: CN_TREE_INFLECTION.md, 'CN-j-6 (judge E) does NOT read this file -- its tree is round 1's MDPF tree, unchanged, as the negative arm'; CN_SEVERITY.md, 'Judge E judges the same tree round 1's judges did, with the same canon, and WITHOUT this file.'",
+     "INTERSECTION, measured: the set of plane strings in judge-c.tsv/judge-d.tsv and the set in judge-e.tsv share ZERO members (13 and 7, union 20). A per-plane-per-axis divergence between E and C/D therefore has an empty denominator.",
+     "WHAT WAS DONE INSTEAD, and it is printed in full in the deliverable rather than worked around: section 3a compares E against round 1's judge-a.tsv and judge-b.tsv on the SAME MDPF tree (the population CN_SEVERITY.md names), disclosing that E's 7 planes had to be rolled up per axis with the canon's most-severe rule (02_DOCTRINE.md:130) because E emitted no tree-level verdict; section 3b reports E against C and D at the only grain that population supports, vocabulary and decision discipline, and says so on the section.",
+     "NEITHER PART OF THE CELL WAS DROPPED: J7-AC1 (6 disagreement rows, 0 untraced) and J7-AC2 (7 of 7 rules named, NOT REACHED printed) both PASS by output on the delivered file."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "TO LGIC_CANON.CN-j-7-r2, THE CELL item 3: 'C and D had the severity order; E did not. State whether E's verdicts diverge from C's and D's in the way the severity order would predict.' -- and item 1, 'Agreement and disagreement, per plane per axis' over judge-c.tsv, judge-d.tsv and judge-e.tsv together.",
+   "world_is": "C and D judged CN_TREE_INFLECTION (13 planes) and E judged CN_TREE_MDPF (7 planes); the two plane sets intersect in zero members, so 'per plane per axis' has a common denominator for C-versus-D (65 axis cells) and none for E-versus-C/D. The with-scale/without-scale contrast the cell exists to read has shared planes only against round 1's judges A and B, which is the comparator CN_SEVERITY.md itself names. Both comparisons are delivered and each is labelled with the population it rests on.",
+   "notes": "Filed by 0.9.0_WK_LGIC_CANON~7 on LGIC_CANON.CN-j-7-r2; kept working, nothing edited outside the grant, no fixed input touched. This worker judges the row's FORM, not its significance -- whether the cut intended the cross-tree reading is the issuer's call and whether the substituted comparison answers A-1 is 3.0.0_SA_CVO's at L9."
+  },
+  {
+   "id": "LGIC_CANON-W7-S5",
+   "project": "LGIC_CANON",
+   "fabric": "laptop",
+   "surfaced_by": "0.9.0_WK_LGIC_CANON~7",
+   "surfaced_at": "2026-09-16T12:07Z",
+   "one_line": "CN_SEVERITY.md claims it is 'the only thing that separates the two arms', but measured on the three round-2 judge outputs the severity ORDER was exercised by NEITHER arm: zero severity-ranking statements in judge C, D or E, where round 1's A and B produced three between them -- because round 2 changed the output grain to per-plane-per-axis, which never forces the most-severe roll-up the order exists to decide.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "THE CLAIM: CN_SEVERITY.md, 'If E's verdicts move toward C's and D's anyway, the agreement round 1 measured was agreement on the canon; if they do not, round 1's five-of-five agreement was partly an artifact of a shared scale that the canon did not carry. That is ruling A-1's question and this file is the only thing that separates the two arms.'",
+     "RANKING-LANGUAGE CENSUS, case-insensitive whole-phrase over 'severity | most severe | more severe | less severe', per file, run at base 7db18a4464: judge-c.tsv 0, judge-d.tsv 0, judge-e.tsv 0. ROUND 1, same census, same command: judge-a.tsv 1 ('less severe than UNDETERMINED'), judge-b.tsv 2 ('UNDETERMINED is the more severe finding', 'VIOLATES is the most severe finding').",
+     "WHY THE GRAIN AND NOT THE BRIEF EXPLAINS IT: round 1's judges emitted ONE verdict per axis for a whole tree (judge-a.tsv and judge-b.tsv carry 5 axis rows plus 3 naming cases), so two facts on one axis had to be RANKED and both judges said so in prose. Round 2's judges emit one verdict per plane per axis (13 x 5 for C and D, 7 x 5 for E), and a per-plane verdict never forces a roll-up, so the order has no cell to decide.",
+     "C AND D HELD THE FILE: LGIC_CANON.CN-j-4-r2.judge-c.md:28 and :37, LGIC_CANON.CN-j-5-r2.judge-d.md:27 and :36 each name fixed_inputs/r2/CN_SEVERITY.md in the Read list. They used it for the VOCABULARY (the five closed values) and, on the evidence of their own text, never for the ORDER.",
+     "THE SECOND HALF OF THE SEPARATION IS ALSO GONE, and this is design rather than defect: the canon E read CARRIES the withheld content verbatim -- infra/logic/02_DOCTRINE.md:105-130 (v1.1, landed by CN-k-2 this round) holds the five-value vocabulary, the order CONFORMS < DECLARED-EXCEPTION < DEPARTS-RECOMMENDED < UNDETERMINED < VIOLATES, both non-obvious placements and the most-severe roll-up rule. check_canon_r2.py k2-severity prints '5 of 5 axis verdicts, in this order' and k2-vocab '5 present, absent: none'. RULING R-8 (row LGIC_CANON-S6) states this is intended: what is withheld is a BRIEF, not the canon.",
+     "CONSEQUENCE, stated in the deliverable section 3c rather than hidden: the arm as run can answer 'does the canon supply the classification vocabulary' (it does -- j7-e-vocab, denominator 4, absent 0) and cannot answer 'would a judge with no scale at all agree', because no round-2 output contains a place where the ORDER would show.",
+     "AND THE MATCH IS A WEAK DISCRIMINATOR INDEPENDENTLY: E's rolled-up axis verdicts (computed by this comparer with the canon's own max rule, since E printed none) tolerate 2 plane-verdict flips on A3 and A5, 4 on A2, 6 on A1 and 7 on A4 before the roll-up moves, so 5-of-5 agreement with round 1's A and B survives several independent reading errors."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "CN_SEVERITY.md: 'THIS FILE IS GIVEN TO CN-j-4 AND CN-j-5 AND IS WITHHELD FROM CN-j-6. THE WITHHOLDING IS THE MEASUREMENT' and 'this file is the only thing that separates the two arms'; TO LGIC_CANON.CN-j-7-r2 item 3, that E's divergence or non-divergence answers C-S9.",
+   "world_is": "Measured on the outputs, the file separated nothing observable: 0 severity-ranking statements in the with-scale judges C and D and 0 in the without-scale judge E, against 3 in round 1's two with-scale judges. The severity ORDER is load-bearing only where a roll-up is demanded, and round 2's per-plane grain demands none from any arm. Separately, the canon E read now carries the withheld text verbatim at 02_DOCTRINE.md:105-130, so the without-scale condition no longer exists in this estate even in principle. A no-divergence finding therefore supports 'the canon carries the classification vocabulary' and does not support 'the canon carries the scale that produced round 1's agreement'.",
+   "notes": "Filed by 0.9.0_WK_LGIC_CANON~7 on LGIC_CANON.CN-j-7-r2, from the three judge files, round 1's two, the two orders and the canon -- no fixed input edited and nothing outside the grant touched. INERT: nothing degrades by being left alone; it bounds how a PASS on this cell may be read. This worker judges the row's FORM, not its significance: whether the arm should be re-cut to demand a roll-up is the issuer's call and how much the non-divergence proves is 3.0.0_SA_CVO's at L9, which J7-J1 already names."
   }
 ]
 ```
