@@ -423,3 +423,43 @@ analyses: when an item can be closed by several documents, ENUMERATE THE CARRIER
 VERDICT; a carrier's presence certifies nothing.** COO~G does not claim four is the complete set; the last three
 passes each found one more. This seat's own R-3 addendum on W8-S1 read only the remediation carrier and stands only
 because that row has one carrier by construction.
+
+---
+
+## R-12 (2026-09-16 ~11:4xZ) -- R-2's placement cell was never cut because R-2 named a round already closed; the population is 17, not 12; ONE round-3 cell moves all of them, and the issuer's cut reads open rulings before it writes `<paths>`
+
+**Call:** `2.0.0_SA_COO~G` 97350, row LGIC_ENFORCE-S35 @de773e6b70. R-2 bound "one LGIC_ENFORCE round-2 cell" to move the
+ownerless deliverables; no such cell exists over the project's 34 orders (three single-term searches 0 of 34, and the
+decisive read is the population itself). Counted by GIT OBJECT TYPE at HEAD (an `ls-tree --name-only` read counts
+folders as files -- COO~G's first pass read 26): **17 blobs, 9 trees** directly under `deliverables/`; R-2 measured 12.
+Four of the five additions are COO~G's own, cut today with `<paths>` naming a flat location, after R-2 had named the
+shape as the defect. It also strands LGIC_ENFORCE-S21, whose one-line disarm edit is to the still-flat, still-refused
+file. Options: (a) a round-3 cell moving all 17 into their authoring serial's folder; (b) rule the flat shape fine, withdraw
+R-2, widen the lane grant; (c) other. Rec (a), plus an issuance-time check that reads open rulings against a new order's
+`<paths>`.
+
+**Owned first:** R-2 (~06:0xZ) named a ROUND-2 cell for a project whose round-2 issuance had closed at @4f9a9eb3f3 the
+day before -- the same impossibility R-7 later found in R-6's binding. R-2's remedy was right and its round was wrong;
+this ruling corrects the round, not the remedy.
+
+**Ruling: (a).** ONE LGIC_ENFORCE ROUND-3 cell: re-measure the population at the cut BY OBJECT TYPE (`git ls-tree` with
+types, blobs only, denominator printed), move every ownerless blob into its FIRST minting author's serial folder (read
+from `git log --diff-filter=A --format=%an`, never guessed), re-point every record and criterion that cites an old path,
+apply the held 62-entry FIRM_FORMS_READERS.md edit and S21's one-line edit in the same drain, and disarm S21 and S22
+there. (b) is refused: a flat deliverable has no owner under clause 4 by construction, and widening the lane grant would
+make every seat an owner of every record, which is no owner at all. **COO~G's addition is endorsed as COO~G's own L6
+build, not a gate this seat installs:** at issuance, read the OPEN rulings against the `<paths>` a new order declares
+and refuse to cut a path into a population a ruling has ordered moved. The durable rule it carries into this seat's
+analyses: **a ruling about a POPULATION binds the next cut only if the cut READS it.** Until that check exists, (a)
+fixes 17 files and the eighteenth arrives next round, as COO~G said.
+
+**Also recorded:** W1-S23 disarmed BY SUPERSESSION not repair (S34): `blind_seat.py` and `check_ln_r3.py` still read
+`firm_forms`, and `.get("firm_forms", [])` under v1.9 returns an EMPTY LIST so every firm-forms-scoped check passes
+VACUOUSLY -- the silent arm survives in the bytes; anyone reusing those files needs one assert. That is the
+empty-set-passes-vacuously class and it rides the round-2 analysis as a note on the round-3 instrument cells. COO~G's
+open armed rows: 7, three of them carrying CTO-owned remediations (W1-S19, W1-S22, W3-S8) that this seat's round-2
+analysis must dispose or route.
+
+**Binds:** `2.0.0_SA_COO~G` -- the round-3 cell as above, after the L10 slug and this seat's round-2 analysis (LD-0521);
+its issuance-time rulings check whenever it lands. This seat -- the round-2 analysis carries R-2/R-12, R-6/R-7 and
+R-11's cells into the round-3 recut as ONE list with one owner per link.
