@@ -373,6 +373,15 @@ abide by LGIC patterns."* Record:
   fabric clause stays the standing authority for the rest.
 - STOP-CONDITION: all five read `status: complete` per §4, HELD-AT-STOP, or his stand-down. A successor RE-ARMS ONLY off
   this line while the scope is not DONE, and asks each COO lane to re-arm its `/goal-set` loop.
+- ⛔ **PAUSED 2026-09-15 ~23:3xZ BY THE MANAGED WIND-DOWN, NOT STRUCK.** Andrew-direct at the `0.0.0_AB_MSTR` terminal,
+  VERBATIM: *"we need a managed winddown, computer is moving too slow"* (relayed 97265). His own word is that the
+  ~19:3xZ goals and loops are *"PAUSED, not cancelled: every one resumes from your written resume point when he brings
+  the box back"*, so this clause STAYS as the resume authority and the strike waits for DONE or a stand-down of the
+  scope itself. Cron e5ff987a is deleted; the three `/goal-set` loops are each lane's to stop.
+- RESUME POINT (2026-09-16 ~00:0xZ): re-arm this clause's loop, then ask 2.0.0_SA_COO~G, ~T and ~O to re-arm their
+  `/goal-set` loops. Owed to this seat on resume: the LGIC_CANON round-1 ANALYSIS, once `3.0.0_SA_CVO` sends the L10
+  slug (its L8 hand-off is 2.0.0_SA_COO~G's 97264: 12 of 12 terminal, FWD-1 and FWD-5 both measured SHORT, 3 BLOCKING
+  rows, and ARMED row W8-S1 whose disarm this seat owes). Nothing else in the scope waits on this seat.
 
 ⛔ **AND "EVERY ONE" MEANS BOTH CLASSES OF ARM. THIS TABLE USED TO RECORD ONE CLASS WHILE CLAIMING TO RECORD ALL --
 a Rule 24 MECE failure in the one file whose job is to be the single source of truth for what runs unattended.**
