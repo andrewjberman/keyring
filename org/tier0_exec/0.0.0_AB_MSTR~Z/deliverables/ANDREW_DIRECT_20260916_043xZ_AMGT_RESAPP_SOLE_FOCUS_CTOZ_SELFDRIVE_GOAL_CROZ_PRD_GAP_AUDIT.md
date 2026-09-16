@@ -82,3 +82,52 @@ initiative would have been the wrong act an hour ago and is the right act now on
 - Round 11 reached L9/L10 at `~W`; `3.0.0_SA_CVO~W`'s slug landed. Round 12 was NOT cut.
 - The portal is at **v2.1.179** on PROD; POSN_AGGFIX is CLOSED; the fabrics were at parity at
   `585d8b4e23` and CLOUD has since advanced (his "no need to merge right now" governs this seat).
+
+---
+
+## ADDENDUM 1 -- 2026-09-16 ~04:5xZ: FULL TIER-1 on the project
+
+**HIS WORDS, VERBATIM AND ENTIRE**, at the same terminal, minutes after the above:
+
+> yeah we also need COO~Z and CVO~Z for full tier1 on this project
+
+**EXECUTED:** `2.0.0_SA_COO~Z` and `3.0.0_SA_CVO~Z` spawned by `0.0.0_AB_MSTR~Z`. Pre-flight per
+`/mstr-spawn` on each -- 1pt process truth with the positive control firing (the scan resolved all
+three already-live serials), 1b marker scan on the full tilde serial, 1c concurrency 2 of 20 at
+source, and **1d encumbrance** on the COO because Rule 27 names the COO as the **TIER-2 SEAT** the
+`ONE PROJECT PER TIER-2 SEAT INSTANCE` constraint binds: every `to-check --all` row for
+`2.0.0_SA_COO~Z` **and for the bare base serial** reads `[complete]`. No open TO on any other
+project, so seating it on AMGT_RESAPP creates no collision.
+
+## WHY THIS COMPLETES A MECHANISM RATHER THAN ADDING TWO SEATS
+
+His first message asked for `/canonical-flow` to be proceeded. **The four Tier-1 seats ARE that
+workflow's limbs**, and until this addendum two of them were absent:
+
+| limb | seat | was |
+|---|---|---|
+| L1 brief | `4.0.0_SA_CRO~Z` | live (audit role, ~04:3xZ) |
+| L2 endpoint, L3 register, L4 PRD, L10 analysis | `1.0.0_SA_CTO~Z` | live (~04:3xZ) |
+| **L5 decomp, L6 issuance, L7 workers** | **`2.0.0_SA_COO~Z`** | **ABSENT** |
+| **L8 compile, L9 adjudicate** | **`3.0.0_SA_CVO~Z`** | **ABSENT** |
+
+⭐ **AND THE REGISTER SAYS THE SAME THING INDEPENDENTLY.** Measured at HEAD:
+`org/missions/D5/AMGT/AMGT_RESAPP/project.json` reads **`status: active`, `dep_stage: ROUND_CLOSE`**
+-- round 11 closed, **round 12 NOT cut**. `ROUND_CLOSE` is precisely the state whose next act is the
+COO's re-cut at L5/L6, gated on the CTO's round-N analysis. So the missing limb was the binding one,
+and his instruction and the artifact agree without either being derived from the other.
+
+## SCOPE -- UNCHANGED, AND STILL NOT ADJUDICATED HERE
+
+This addendum adds **seats**, not instructions. `0.0.0_AB_MSTR~Z` is NOT issuing a round, NOT cutting
+a decomposition, NOT setting a cadence for either new seat, and NOT ruling how his ~04:3xZ
+`/self-drive` and `/goal` items (which he addressed to `1.0.0_SA_CTO~Z` BY NAME) bear on the COO or
+the CVO. He named those two items for the CTO and named these two seats for presence. **Spawn is not
+dispatch** (Constitution Art. VI), and the L6 `ONE ISSUER PER ROUND` neck is the COO's own.
+
+⚠ **THE `~W` QUESTION FROM THE PARENT RECORD IS UNCHANGED AND NOW MATTERS MORE**, because the seats
+that would act on it are present: AMGT_RESAPP's round 11 was held by `2.0.0_SA_COO~W` and its slug by
+`3.0.0_SA_CVO~W`, and **those `~W` lanes are not live**. A `~Z` COO cutting round 12 on a project
+whose round 11 was issued by a `~W` COO is a continuity question -- not obviously wrong, not obviously
+right, and **not this seat's to answer**. `1.0.0_SA_CTO~Z` holds the L10/round-N analysis that governs
+the re-cut and reads it at HEAD.
