@@ -35,8 +35,9 @@
   "thread_counter": 0,
   "threads": [],
   "prd_lineage": [
-    "org/missions/D9/NFRA/NFRA_OPLGTW/prd/NFRA_OPLGTW_PRD.md v0.3 -- 2026-09-16 ~18:0xZ, 1.0.0_SA_CTO, RULING R-OG-3 on 2.0.0_SA_COO~O 97496 call 3 (Andrew-direct this session: fold the Schwab-to-SharePoint work in, sequenced at the end): FWD-9 added at the next unused number (ENDPOINT) with its inputs expressly qualified as Andrew's; CONTRACTS C6 gains the separate export reader role scoped to dim_transaction and fact_trn, the six-prefix role not widened. Both changes sit in the ratified-text half, which re-opens to 3.0.0_SA_CVO; the brief half re-opens only if the version bump moves its hash (prd-signoff.py status is the read)."
+    "org/missions/D9/NFRA/NFRA_OPLGTW/prd/NFRA_OPLGTW_PRD.md v0.3 -- 2026-09-16 ~18:0xZ, 1.0.0_SA_CTO, RULING R-OG-3 on 2.0.0_SA_COO~O 97496 call 3 (Andrew-direct this session: fold the Schwab-to-SharePoint work in, sequenced at the end): FWD-9 added at the next unused number (ENDPOINT) with its inputs expressly qualified as Andrew's; CONTRACTS C6 gains the separate export reader role scoped to dim_transaction and fact_trn, the six-prefix role not widened. Both changes sit in the ratified-text half, which re-opens to 3.0.0_SA_CVO; the brief half re-opens only if the version bump moves its hash (prd-signoff.py status is the read).",
+    "org/missions/D9/NFRA/NFRA_OPLGTW/prd/NFRA_OPLGTW_PRD.md v0.4 -- 2026-09-16 ~18:2xZ, 1.0.0_SA_CTO, on 3.0.0_SA_CVO's REFUSED v0.3 ratified-text half (review @bec64dea66, stamp @15f94697aa): defect 1, seat names and the version note removed from FWD-9's card (moved to RULINGS_NFRA_OPLGTW_20260916.md, which now also carries Andrew's verbatim words as the tracked carrier); defect 2, C6 states FWD-9's export surface is outside NFRA_OPLGTW_CONTRACT.json v1.0 and is enumerated into the contract at its cell before any code consumes it; '(v0.3)' dropped. Nothing else in either half moved."
   ],
-  "phase": "PRD v0.3 2026-09-16 ~18:0xZ (FWD-9 Schwab-to-SharePoint export, sequenced last; R-OG-1..3 on 97496). ",
-  "last_updated": "2026-09-16T18:04:38Z"
+  "phase": "PRD v0.4 2026-09-16 ~18:2xZ (the CVO's two cures on v0.3 carried; ratified-text half re-offered). PRD v0.3 2026-09-16 ~18:0xZ (FWD-9 Schwab-to-SharePoint export, sequenced last; R-OG-1..3 on 97496). ",
+  "last_updated": "2026-09-16T18:17:21Z"
 }
