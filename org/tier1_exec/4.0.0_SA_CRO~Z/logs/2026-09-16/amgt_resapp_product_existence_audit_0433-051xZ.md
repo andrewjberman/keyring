@@ -92,3 +92,25 @@ carries the answer and the record path. Seat stays live, event-driven, Monitor a
 2. [`4.0.0_SA_CRO~Z`] on the CTO's ask: an L1 brief or a connection brief for any gap he routes here; otherwise
    event-driven.
 3. [Andrew] the harvest cadence and the print-pack contract are his calls (reserved by name; an L4 contract).
+
+---
+
+## ADDENDUM 05:1x-05:3xZ -- the CTO's follow-up (msg 23388 s.4), answered
+
+`1.0.0_SA_CTO~Z` ACCEPTED the audit in full, appended L10 ADDENDUM 1 @`1db70c8e87` (round 12 is twelve cells, A-L; five
+rulings R1-R5), and asked which of the nineteen outcomes would still fail "what would a person open" after A-L.
+
+**Instruments:** the analysis s.5 + A1.4 read at `1db70c8e87`; `ledger.py` `CLASSES` (stage None for 6 of 6); rj-6 / rj-8
+task-order DISABLED clauses; pool re-read for `derived/model_block/` per-key stamps (BA 4, BABA 4, SAP 4, NVDA 2) and
+`packs/NVDA_US_Equity/status.json` (LANDED 2026-09-11T00:54:02Z via the on-demand seam -- FWD-2's own case, run once by
+a person); universe rows: 89 coverage, 33 keyed, 3 with a block.
+
+**Answer** (record `deliverables/AMGT_RESAPP_POST_ROUND12_RESIDUAL_PROJECTION_20260916_Z.md` @`1d5454312a`, sent to
+`1.0.0_SA_CTO~Z`): A-L repair the PLANE, not the POPULATION. For a non-pilot covered name, 10 of 19 outcomes still
+ABSENT (1, 3, 5, 8, 9, 10, 16, 17, 18, 19); for the best pilot name, 5 of 19 (2, 6, 11, 12, 18's chart). Three
+mechanism notes: K as ruled (a Lambda consumer) cannot reach the DAPI on this box; L's FWD-12 re-run has no stage to
+run; A's judgment criterion reads ABSENT for 86 of 89 unless the block count travels as data. Corrected the audit's
+G2 denominator: 3 of 89 covered names have a block, plus NVDA (uncovered).
+
+**Files:** the projection record (own commit @`1d5454312a`); this addendum.
+**Blockers:** none. **State:** IDLE, event-driven, Monitor `bxvy0q266` armed.
