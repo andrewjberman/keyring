@@ -65,6 +65,17 @@ orders carried the defect and 0 of 13 round-11 orders did** -- the issuer's gene
 it was built from already had. The own-file entry is ADDED above. **NOTHING ELSE IN THE GRANT MOVES:** no new
 surface, no widened directory, no change to any criterion, bound or cell text.
 
+
+**ISSUER AMENDMENT 2 (2026-09-16 ~07:4xZ, `2.0.0_SA_COO~Z`, issuer) -- THE ROUTE SHAPE WAS WRONG AND THE
+CRITERION COULD NOT PASS.** The invocation named a bare `rawPath` with no `/api/scoped/amgt` prefix and no
+edge header, so the deployed router refused it **404 "not an /api/scoped/amgt route"** BEFORE ANY CELL LOGIC
+RAN. Adding the prefix alone returns **401 "missing edge-injected X-Firm-Id"**. Measured at this cut, the
+shape that actually reaches the route is **the prefix PLUS an `x-firm-id` header -> 200**. ⛔ **A criterion
+that 404s before the logic runs cannot discriminate a working route from a broken one -- it is the mirror of
+a criterion that cannot fail: THIS ONE COULD NOT PASS.** The property asserted is UNCHANGED; only the object
+it is asserted against is corrected. Found by the issuer's dry run after `0.9.0_WK_AMGT_RESAPP~24` and `~26`
+each refused their own as written and filed rows (`W24-*`, `W26-S3`).
+
 ## 4. BOUNDS
 
 PORTAL FROZEN both fabrics: COMMIT YES / PROMOTE NO. Andrew's "No portal promote necessary" removes the PROD promote from the
@@ -87,7 +98,7 @@ edit an existing row. **Found something off-task? APPEND ONE ROW AND KEEP WORKIN
 ## 5. PROOF OF SPEC -- one clause per criterion (every invocation is LITERAL; record it byte-for-byte; each runs under timeout 120)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="AMGT-rk-15"><invocation>python -c "import boto3,json; c=boto3.client('lambda'); r=c.invoke(FunctionName='opal-amgt-scoped-api', Payload=json.dumps({'rawPath':'/security/BA_US_Equity/thesis','requestContext':{'http':{'method':'GET'}}}).encode()); b=json.loads(r['Payload'].read()); d=json.loads(b.get('body') or '{}'); dr=d.get('thesis_driver') or {}; pts=dr.get('points') or []; print('status', b.get('statusCode')); print('driver_name', repr(dr.get('name'))); print('point_count', len(pts)); print('units', repr(dr.get('units'))); print('absent_reason', repr(dr.get('absent_reason')))"</invocation><expect>status 200 and point_count NONZERO for BA_US_Equity with units named -- OR, if BA's filing genuinely carries no series, absent_reason is a CLASSED string and point_count 0 is then correct for that name. A driver_name present with point_count 0 and NO absent_reason is NOT met: that is exactly the named-series-with-no-points shape this cell exists to remove</expect></criterion>
+  <criterion id="AC1" cell_refs="AMGT-rk-15"><invocation>python -c "import boto3,json; c=boto3.client('lambda'); r=c.invoke(FunctionName='opal-amgt-scoped-api', Payload=json.dumps({'rawPath':'/api/scoped/amgt/security/BA_US_Equity/thesis','headers':{'x-firm-id':'bd'},'requestContext':{'http':{'method':'GET'}}}).encode()); b=json.loads(r['Payload'].read()); d=json.loads(b.get('body') or '{}'); dr=d.get('thesis_driver') or {}; pts=dr.get('points') or []; print('status', b.get('statusCode')); print('driver_name', repr(dr.get('name'))); print('point_count', len(pts)); print('units', repr(dr.get('units'))); print('absent_reason', repr(dr.get('absent_reason')))"</invocation><expect>status 200 and point_count NONZERO for BA_US_Equity with units named -- OR, if BA's filing genuinely carries no series, absent_reason is a CLASSED string and point_count 0 is then correct for that name. A driver_name present with point_count 0 and NO absent_reason is NOT met: that is exactly the named-series-with-no-points shape this cell exists to remove</expect></criterion>
   <criterion id="AC2" cell_refs="AMGT-rk-15"><invocation>cd portal && python -c "import io,glob; fs=glob.glob('src/pages/SecurityAnalysis/**/*.tsx', recursive=True); j=''.join(io.open(f,encoding='utf-8',errors='replace').read() for f in fs); print('components', len(fs)); print('driver-chart-refs', j.count('ThesisDriverChart')); print('points-consumed', j.count('thesis_driver') + j.count('driver.points')); print('absent-reason-rendered', j.count('absent_reason'))"</invocation><expect>driver-chart-refs at least 1, points-consumed at least 1 and absent-reason-rendered at least 1 against a printed component denominator -- the tab draws the numeric series AND renders the classed reason where there is none. A chart component that reads only the series NAME is NOT met</expect></criterion>
   <criterion id="AC3" cell_refs="AMGT-rk-15"><invocation>python -c "import io,glob; fs=sorted(glob.glob('lib/research/filings/*.py')); j=''.join(io.open(f,encoding='utf-8',errors='replace').read() for f in fs); print('filings-modules', len(fs)); print('points-emitted', j.count('\"points\"') + j.count("'points'")); print('units-emitted', j.count('\"units\"') + j.count("'units'")); print('absent-reason-emitted', j.count('absent_reason'))"</invocation><expect>points-emitted, units-emitted and absent-reason-emitted each at least 1 against a printed module denominator -- the PRODUCER emits the numeric series, its units and the classed absence. Repairing only the page while the producer still emits a bare name would move the chart for no name and is NOT met</expect></criterion>
 </proof_of_spec>
