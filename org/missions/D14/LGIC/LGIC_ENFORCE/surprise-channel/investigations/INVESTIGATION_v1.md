@@ -2174,6 +2174,54 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     "spec_asserts": "The order's BOUNDS attribute exactly one write to `terraform init`: 'Every `init` writes a .terraform directory into your worktree.' The grant clause says the write surface is the <paths> block plus this worker's deliverables folder and the order file, 'Nothing else.'",
     "world_is": "init ALSO rewrites the tracked .terraform.lock.hcl when the config's provider set has moved, which it did on 2 of 72 roots. In a disposable worktree this is inert -- the change is unstaged and never merges. In the MAIN checkout, or any worktree a seat commits broadly from, the same invocation (including the one inside .tools/safe-apply.sh) silently dirties a tracked file that an unrelated `safe-commit -- <dir>` could sweep in.",
     "notes": "Filed for form, not significance: this worker neither committed nor reverted the two files and both stay unstaged. The durable question for whoever recuts or adjudicates: a cell that orders `terraform init` over N roots should either name .terraform.lock.hcl in its <paths> so the prune is a recorded decision, or say explicitly that lock-file drift is left in the worktree and discarded -- today the order says neither, and the two affected roots (market-overview, seeking-alpha) carry a stale archive-provider entry in their committed lock files that any future init will prune again."
+  },
+  {
+   "id": "LGIC_ENFORCE-S27",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T11:30Z",
+   "one_line": "ISSUER'S DISARM OF LGIC_ENFORCE-S22: the per-root cleanup correction was committed, EN-t-3 ran against it, and the worker's own readings prove the cap held -- 72 of 72 .terraform directories removed and the removal VERIFIED before the next init, low-water 12.96 GB against a 10 GB stop line that never fired.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "S22 said EN-t-3 as cut could not run: it orders terraform init on the backend roots and never releases a root's .terraform, one initialised root costs 686 MB on this filesystem, and 73 x 686 MB is about 50 GB against 19 GB free with four workers live. Its disarm condition was that the correction be committed and the cell spawned against it.",
+     "BOTH HALVES DONE: the correction landed at 2325c408c2 (one root at a time, delete that root's .terraform the moment its show -json is captured, re-measure free space every ten roots) and its own follow-up 62c701411e removed a SECOND stop line I had accidentally introduced at 5 GB where the order's BOUNDS already bound 10 GB. EN-t-3 was spawned against 62c701411e and drained at 2a2b853f79.",
+     "AND THE CAP HELD, measured by the worker and reported with its denominators: 'one .terraform is 686 MB (the plugin cache does NOT spare it on this filesystem), each was deleted and its removal verified before the next init (72 of 72), free space 18.32 GB start / 12.07 GB end, 8 readings, lowest 12.96 GB -- the 10 GB stop line was never reached.'",
+     "THE 686 MB UNIT COST IS NOW CORROBORATED ON A SECOND INSTRUMENT: I measured it on the one root already initialised in the main checkout (du -sh infra/aws/terraform/portal-auth/.terraform) BEFORE the cut; the worker measured it independently across 72 roots DURING the run. Same figure, different instrument, different population.",
+     "THE CELL PRODUCED ITS DELIVERABLE: 68 of 72 backend roots planned with an extract and a plan_sha256; 2431 resource changes read; T3R-AC1, AC3 and AC4 PASS. So the correction did not buy safety at the cost of the measurement.",
+     "\u26a0 WHAT DID NOT HOLD IS A DIFFERENT THING AND IS NOT DISARMED HERE: T3R-AC2 FAILED because 4 roots cannot render a plan on this box at all, and the criterion refuses the NOT-planned state that the cell's own item 1 prescribes recording. That contradiction is row LGIC_ENFORCE-W3-S12, BLOCKING, and it is the recut's to resolve."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "S22: EN-t-3 as cut would demand roughly 50 GB against 19 GB free and take the volume down under four live workers.",
+   "world_is": "With the per-root cleanup it demanded roughly one root at a time, and the run's own eight free-space readings never came within 2.9 GB of the stop line. The hazard S22 named is dead.",
+   "notes": "INERT. \u2b50 THE HALF WORTH KEEPING is not the fix but WHERE IT WAS FOUND: the pre-spawn read of the face I was about to hand a worker. The cell had a disk clause already -- 'the 10G stop line binds' -- and that clause would have fired correctly and aborted a 72-root census most of the way through. A guard that stops the work is not the same as a design that does not need stopping. COST of the pre-spawn read: one du and one df. \u26d4 AND IT DISARMS S22 ONLY. W3-S12 (four unplannable roots vs a criterion that refuses the state the cell prescribes) stays BLOCKING and is the recut's."
+  },
+  {
+   "id": "LGIC_ENFORCE-S28",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T11:32Z",
+   "one_line": "ISSUER'S DISARM OF LGIC_ENFORCE-S24 AND S26 TOGETHER, because they are two holds on ONE cell and both conditions are now met: EN-d-1 is spawned, after EN-s-1's drain (S24's input-vs-output hazard) and after EN-t-3's drain returned the disk (S26's capacity hazard).",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "S24 held EN-d-1 because it WRITES infra/logic/registry/scopes.json and data/firm_registry.json, which the then-live EN-s-1 census READS as its input -- an input-vs-output contention invisible to both the dependency graph (EN-d-1's depends_on read MET) and the write-surface census (the <paths> intersection was EMPTY). Its disarm condition was that EN-d-1 be spawned after EN-s-1's drain. EN-s-1 drained at 99c34fb574.",
+     "S26 then held the SAME cell for a different reason: it needs a PRACTICE-COPY worktree of about 1.5 GB, free space was 13 GB, and the live EN-t-3 was running under a 10 GB stop line -- so spawning would have left about 1.5 GB between a sibling's working set and its own abort threshold. Its disarm condition was EN-t-3's drain returning that space. EN-t-3 drained at 2a2b853f79 and its worktree removal returned about 2.2 GB.",
+     "BOTH MET, AND THE SPAWN HAPPENED IN THAT ORDER: EN-d-1 was spawned this tick into wk-lgic-enforce-2d-5, fast-forwarded to 2a2b853f79 first so its `generate` runs against the post-EN-r-6 lib/opal_naming.py rather than the vintage it was provisioned at.",
+     "THE SPAWN ALSO CARRIED THE TWO HAZARDS FORWARD AS INSTRUCTIONS rather than trusting they were gone: the worker was told its base is deliberately current and why, told the practice copy costs about 1.5 GB against roughly 12 GB free with siblings sharing the volume, told to stop and file a BLOCKING row below 5 GB, and told that if any invocation modifies a tracked file its <paths> does not name it must leave it unstaged and file a row -- which is exactly what EN-t-3 measured happening to .terraform.lock.hcl on 2 of 72 roots."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "S24 and S26: EN-d-1 must not be spawned while EN-s-1 reads the registry it writes, nor while EN-t-3 is budgeting disk against a 10 GB stop line.",
+   "world_is": "Both siblings have drained, the disk came back, and EN-d-1 is running against a base that postdates every artifact it depends on.",
+   "notes": "INERT. \u26a0 ONE ROW FOR TWO HOLDS IS DELIBERATE AND IS NOT A COMPOUND ROW: S24 and S26 are two conditions on ONE act -- spawning EN-d-1 -- and that act happened once. Splitting the record would imply two independent events. \u26d4 S23 IS NOT DISARMED HERE and stays ARMED: its condition has TWO halves and only one is met. EN-s-1 was spawned after EN-r-6's drain (met), but the durable half -- widening the issuance census to intersect each cell's INVOCATION and INPUT targets with every OPEN cell's <paths>, rather than comparing <paths> to <paths> -- exists only as this seat's hand discipline across three instances (S23, S24, S26) and is embedded in no tool and no order template. A rule I apply by remembering is not a widened census."
   }
 ]
 ```
