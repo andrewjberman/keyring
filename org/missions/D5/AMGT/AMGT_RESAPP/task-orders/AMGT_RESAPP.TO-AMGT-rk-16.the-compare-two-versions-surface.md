@@ -44,7 +44,6 @@ portal/src/api/endpoints/amgt-lead-panel.ts
 portal/src/App.tsx
 org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~23/
 org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md
-lib/research/api/scoped_amgt.py
 org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rk-16.the-compare-two-versions-surface.md
 </paths>
 
@@ -90,9 +89,12 @@ edit an existing row. **Found something off-task? APPEND ONE ROW AND KEEP WORKIN
   so half of the bar could not fail. It now reads the served route table: 11 entries, 0 and 0 today.
 Found by running the queued orders' criteria before any worker reached them (row `AMGT_RESAPP-Z-S121`).
 
+**ISSUER AMENDMENT 8 (2026-09-16 ~15:5xZ, 2.0.0_SA_COO~Z).** AC2 is MOVED to `AMGT-rk-6` AC5 (it keeps `cell_refs="AMGT-rk-16"`), and the grant NARROWS: `lib/research/api/scoped_amgt.py` is removed. AC1 and AC3 are UNCHANGED.
+- The versions and compare routes are adapter code plus a deploy, and both are chain B's. Your half is the page's
+  compare-two-versions surface, naming the earlier version (AC3). Row `AMGT_RESAPP-Z-S127`, under ruling row `AMGT_RESAPP-Z-S124`.
+
 <proof_of_spec>
   <criterion id="AC1" cell_refs="AMGT-rk-16"><invocation>python -c "import boto3; s=boto3.client('s3'); p=s.get_paginator('list_objects_v2'); st={}; [st.setdefault(o['Key'].split('/')[2], set()).add(o['Key'].split('/')[3]) for pg in p.paginate(Bucket='opal-data-harvest', Prefix='derived/model_block/') for o in pg.get('Contents',[]) if len(o['Key'].split('/'))>4]; print('keys', len(st)); [print('  ', k, 'stamps', len(v)) for k,v in sorted(st.items())]; print('keys_with_2plus_stamps', sum(1 for v in st.values() if len(v)>=2))"</invocation><expect>keys_with_2plus_stamps at least 1, with the per-key stamp counts printed -- the compare surface is only exercisable on a key that HAS two versions, and at the cut BA carried four stamps. This bar reads the LIVE STORE AT THE CUT and prints its denominator rather than assuming a population</expect></criterion>
-  <criterion id="AC2" cell_refs="AMGT-rk-16"><invocation>python -c "import sys,io; sys.path.insert(0,'.'); from lib.research.api import scoped_amgt as m; r=m.scoped_amgt_route_table(); print('route-table-entries', len(r)); print('versions-route', sum(1 for x in r if 'versions' in x)); print('compare-route', sum(1 for x in r if 'compare' in x)); s=io.open('lib/research/api/scoped_amgt.py',encoding='utf-8').read(); print('stamp-listing', s.count('list_objects_v2') + s.count('get_paginator'))"</invocation><expect>route-table-entries printed, read by calling scoped_amgt_route_table() itself. MET when versions-route and compare-route are each at least 1 -- a served route exists that can list a key's stamps and return two of them for comparison. stamp-listing is printed as context and is not a bar. A surface built entirely client-side against a route that cannot list stamps is NOT met. ISSUER AMENDMENT 6 (2026-09-16 ~15:2xZ, 2.0.0_SA_COO~Z) re-cut this clause: the old invocation counted the words versions and compare anywhere in the adapter module, and compare already read 3 before the cell did anything, so half of its bar could not fail. At this amendment: 11 entries, versions-route 0, compare-route 0</expect></criterion>
   <criterion id="AC3" cell_refs="AMGT-rk-16"><invocation>cd portal && python -c "import io,glob; fs=glob.glob('src/pages/SecurityAnalysis/**/*.tsx', recursive=True); j=''.join(io.open(f,encoding='utf-8',errors='replace').read() for f in fs); print('components', len(fs)); [print(t, j.lower().count(t)) for t in ('version','earlier','compare','what moved')]"</invocation><expect>the counts for version, earlier and compare are each at least 1 against a printed component denominator -- all three read 0 at the cut, which is what made FWD-6 invisible to every producer census. A surface that shows two versions WITHOUT NAMING the earlier one is NOT met: FWD-6's own words are 'naming the earlier version that shows it'</expect></criterion>
 </proof_of_spec>
 
@@ -103,7 +105,7 @@ Found by running the queued orders' criteria before any worker reached them (row
 Write your instance to
 `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~23/AMGT_RESAPP.TO-AMGT-rk-16.the-compare-two-versions-surface.proof_of_spec.json`
 per `org/standards/PROOF_OF_SPEC.schema.json` (the checker compiles `expect` as a REGEX over the evidence), graded by YOUR
-WORKTREE'S OWN `python .tools/proof-of-spec-check.py <instance> AC1,AC2,AC3` (rc 0 is the verdict); flip `<status>` to `complete`;
+WORKTREE'S OWN `python .tools/proof-of-spec-check.py <instance> AC1,AC3` (rc 0 is the verdict); flip `<status>` to `complete`;
 commit with `--only -- <paths>`. Report once. **If a criterion cannot be met, leave the order OPEN and file a row.**
 
 **MUTATION DISCIPLINE:** snapshot WORKING-TREE BYTES to `.scratch/` before editing. Never `git checkout --`, never `git stash`,

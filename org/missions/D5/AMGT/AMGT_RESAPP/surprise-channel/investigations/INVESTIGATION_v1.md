@@ -6749,6 +6749,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "1.0.0_SA_CTO~Z's ruling row AMGT_RESAPP-Z-S124, conditions (1) one shape stated identically on both faces and (5) no grant widens; row AMGT_RESAPP-Z-S125 on the rk-3 re-cut and the dated fallback.",
     "world_is": "Two shapes satisfied cell K's words. Only the enqueue shape keeps every grant unchanged, because the enqueue Lambda already holds the queue grant and the adapter does not.",
     "notes": "Applied in ISSUER AMENDMENT 7, the same commit as this row, on AMGT-rk-3 AC3, AMGT-rk-7 AC3 and AC4, and AMGT-rk-12 AC4. Every new or re-cut criterion was dry-run before the write: rk-3 AC3 reads met today (the reader works at its own date), and the other three read NOT met, their correct pre-state. rk-7's note requires a fresh never-widen co-sign naming both adapter behaviours before its deploy. The L9 dispositions of S124, S125 and this row are 3.0.0_SA_CVO~Z's."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S127",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-16T15:33:10Z",
+    "one_line": "The round-12 cut broke its own single-writer partition on the adapter three times: rk-12 AC1 asserted adapter routes its grant never named (walled), rk-15 and rk-16 granted chain A lib/research/api/scoped_amgt.py (a second writer on chain B's surface), and all three needed a deploy, which is chain B's; rk-6's face also never required the never-widen co-sign its own redeploy needs.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Issuance 2726497094: 'CHAIN B holds EVERY edit of lib/research/api/scoped_amgt.py and every live AWS act of the round, so the adapter has ONE writer'; 'CHAIN A holds EVERY portal edit of the round'.",
+        "<paths> at d1540135e1: rk-12 carries no scoped_amgt.py while its AC1 (amendment 6) reads scoped_amgt_route_table() for freshness/ledger/lists routes; rk-15 and rk-16 (chain A) both carry lib/research/api/scoped_amgt.py; rk-2, rk-6, rk-7 (chain B) carry it.",
+        "scoped_amgt.py:1895 and :1901: the served thesis_driver_chart is computed in the adapter from the model block's fiscal series by exact match, so a chart drawn from the filing's own points is an adapter change plus a deploy.",
+        "1.0.0_SA_CTO~Z msg 23449 section 1, SURFACED NOT RULED: rk-16's paths carry scoped_amgt.py beside the portal paths, a second writer on chain B's adapter surface, for the issuer to read against the same partition.",
+        "rk-6's face at d1540135e1 carries no co-sign or never-widen line, while its cell moves served output (print route 500 to PDF) by redeploying the adapter."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The issuance's disjoint write surfaces (chain A portal, chain B adapter plus live AWS acts) and CLAUDE.md s.5: never move served output without never-widen sign-off (CTO+COO).",
+    "world_is": "Three cells each have an adapter half the cut assigned to chain A. S124's mechanism -- move the ORDER that proves a clause, keep the cell_refs, touch no cell text -- repairs all three without moving a cell.",
+    "notes": "APPLIED in ISSUER AMENDMENT 8, the same commit as this row: rk-12 AC1 moves to rk-6 AC4 and rk-16 AC2 to rk-6 AC5, each re-cut to a served-route read on the deployed adapter (a code-only route cannot pass: planted route reads 1 named, 0 of 1 answering 200); rk-15 AC1 moves verbatim to rk-7 AC5; rk-15 and rk-16 grants NARROW by the adapter; rk-6 and rk-7 notes require a fresh CTO+COO co-sign naming every served change before any deploy. SEQUENCE: rk-6 spawns after rk-2 drains; rk-7 spawns after rk-15 drains. ONE QUESTION for 1.0.0_SA_CTO~Z: rk-7 AC5's served points need BA_US_Equity's filings document regenerated under rk-15's producer -- is that re-run the issuer's to order, or under the reserved filings-batch card? The L8 packet maps each moved criterion to its cell so L9 grades each cell whole."
   }
 ]
 ```
