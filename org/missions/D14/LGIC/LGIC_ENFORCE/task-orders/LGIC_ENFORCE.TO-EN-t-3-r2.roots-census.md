@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_LGIC_ENFORCE~3</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-09-15</issued_date>
-<status>pending</status>
+<status>complete -- proof-of-spec VALID (rc=0) against org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~3/LGIC_ENFORCE.TO-EN-t-3-r2.roots-census.proof_of_spec.json, gate run 2026-09-16 by the issuer with --governing-order bound; the work drained in its round and only the status WORD was never flipped, leaving a live ADHC_OWNPTH.005 worker grant at HEAD (0.0.0_AB_MSTR 97450)</status>
 
 **Directive:** D14 | **Fabric:** laptop | **PRD:** `../prd/LGIC_ENFORCE_PRD.md` v1.2 @09bde3126c (ADMITTED; brief half re-signed by 4.0.0_SA_CRO @e848967b3f) | **Decomp cell:** `EN-t-3` (round 2) | **outcome_ref:** FWD-4 (G-F's prerequisite) | **depends_on:** EN-t-2 round 2 (merged) | **slot:** ~3, queue position 3
 
