@@ -1,12 +1,12 @@
 {
   "prd": "LGIC_LGCTFM_PRD.md",
-  "prd_version": "v1.2",
-  "prd_pin": "53654598b0e39132a5d1ef9964dd05e0cdfb4efb",
+  "prd_version": "v1.3",
+  "prd_pin": "2f3930b666cd3a98625e4b74103b37e0f98cfbcf",
   "half": "brief",
-  "half_hash": "87c4598f7a3cb758b6625d38cceac502049ebe2643b3070ee09ccfee8d15db9b",
-  "verdict": "REFUSED",
-  "review_ref": "docs/briefs/sources/LGIC_LGCTFM_L4_BRIEF_REVIEW_v1_2_20260916.md@510a4c89ab",
+  "half_hash": "74503809b044a7eac08d989230950ccbce059a4a3ac33518f814985493bb1776",
+  "verdict": "SIGNED",
+  "review_ref": "docs/briefs/sources/LGIC_LGCTFM_L4_BRIEF_REVIEW_v1_3_20260916.md@77e9c73706",
   "signed_by": "4.0.0_SA_CRO",
-  "signed_at": "2026-09-16T17:31:45Z",
-  "reason": "R1: DEC-5 :219-221 still forward-lists FOUR positive controls (member 4, opal-data-bd/canonical/schwab beside the monolith's schwab plane, omitted) while T4 now carries IV.5's FIVE per R-24; state DEC-5's controls by reference to IV.5's carrier; one line"
+  "signed_at": "2026-09-16T17:37:29Z",
+  "reason": "v1.3: R1 carried exactly -- DEC-5 states its positive controls by reference to IV.5's carrier and T4's fixture, no member named by hand; ratified-text hash unchanged; nothing else moved"
 }
