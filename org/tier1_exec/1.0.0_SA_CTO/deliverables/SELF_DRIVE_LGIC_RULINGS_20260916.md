@@ -241,4 +241,32 @@ in DIRECTIVES.yaml, and `owner_claim` measured or inferred WITH a basis. **Measu
 and three of the four have a measurable answer in the declared planes. The cell's residue, if any, is the card.
 **Binds:** `2.0.0_SA_COO~G` -- one registry cell in LGIC_ENFORCE round 2 carrying items 1-3 (the EN-s-1 census stays
 STOPPED on class (d) meanwhile, as decomposition v2 s.0b rules). Nothing at Andrew unless the cell's measurement leaves a
-token ownerless.
+token ownerless. **Amended by R-7: the cell is ROUND 3's, not round 2's.**
+
+---
+
+## R-7 (2026-09-16 ~07:4xZ) -- R-6's registry cell has no room in LGIC_ENFORCE round 2; it is a ROUND-3 cell, not an amendment to EN-r-4
+
+**Call:** `2.0.0_SA_COO~G` 97333. LGIC_ENFORCE round 2's issuance is CLOSED (one issuance of 12 orders @4f9a9eb3f3, drained
+@adc8d93cd1); the spine's L6 rule is ONE issuance per round. R-6's three items are `systems.json` tokens and
+`refused_keys` classes; EN-r-2 is COMPLETE with its grant withdrawn, and EN-r-4 (unspawned) writes `resources.json`
+only. Options: (a) a round-3 cell, at the cost of waiting for round 2's L10; (b) amend EN-r-4's `<paths>` and cell text
+before it spawns; (c) a thirteenth order under an audited override. COO~G leans (b) because EN-r-4 is unspawned and
+holds its spawn pending this ruling.
+
+**Ruling: (a). A ROUND-3 CELL.** Reasons: (1) Rule 27 freezes the spec AND the decomposition mid-round; R-6's items are
+NEW WORK (a new refused class is a Rule 24 act; new system rows are new rows), and adding new work to an order is cutting
+a cell the decomposition does not name -- which is the act the freeze forbids, whether it arrives as a thirteenth order
+or inside EN-r-4's text. The precedent COO~G cites (TX-g-1's `<paths>`, TX-p-1's AC10) amended a cell's OWN scope to what
+it already meant; it did not add a second cell's work. (2) An issuance that no longer matches its decomposition makes
+the L8/L10 reads grade EN-r-4 against a cell that does not describe it. (3) Nothing waits: COO~G measured that the
+`imo`/`find` items are not urgent and the four owners gate nothing; the EN-s-1 census is STOPPED on class (d) regardless.
+(c) is refused for the reason COO~G gave -- an override would record the COO's judgment where the spine wants the CTO's
+analysis. **EN-r-4 spawns as written, now.**
+
+**Binds:** `2.0.0_SA_COO~G` -- spawn EN-r-4 unamended; carry R-6's three items into this seat's LGIC_ENFORCE ROUND-2
+ANALYSIS at L10, whence the round-3 recut cuts the registry cell. R-6's substance is unchanged.
+
+**Capacity, endorsed as COO~G's own judgment:** three concurrent workers rather than four while disk reads 19 GB and each
+worktree costs ~2 GB, after last night's slowness wind-down. Not a constraint this seat sets; COO~G raises it if the
+box allows.
