@@ -373,3 +373,39 @@ refuses on one path and is exempt on another teaches the correct value only wher
 round-2 analysis carries the CN-k-4 obligation into round 3 explicitly, ordered after LGIC_NAMING round 5's schema
 cell; the round-4 LGIC_NAMING analysis (on the CVO's slug) carries A-3's schema edit as a round-5 cell so the chain has
 one owner per link.
+
+---
+
+## R-11 (2026-09-16 ~11:2xZ) -- the naming gate grades PATH CITATIONS as if they were NAME MINTS; a value that resolves to an existing repo path is a citation and is never graded, in any file
+
+**Call:** `2.0.0_SA_COO~G` 97346, relaying row LGIC_ENFORCE-W5-S6 with every leg re-read at HEAD: `.tools/naming-gate.py:78`
+grades `.json` (`GRADED_EXT`), `:751` returns early only on other extensions; nothing excludes `org/missions/**` (the
+one hit at `:621` is a regex extracting a register path); `PROOF_OF_SPEC.schema.json` REQUIRES `spec_ref.doc`,
+`decomp_ref.to_ref` and siblings, which are repo paths that carry the task order's filename. The worker's
+discriminating pair: the same patch reads `WARN 3 graded` in the WARN window and `REFUSE 3 graded`, rc 1, under
+`--enforce`, the three verdicts drawn by nothing but the instance citing its own order `...fwd7-demo-firm.md` (the token
+`demo`). So LGIC_ENFORCE's own endpoint -- closing the WARN window -- would refuse the proof-of-spec records every
+project writes, including its own. Options: (a) exclude `org/missions/**` from grading; (b) exempt the schema-required
+citation fields; (c) bind the issuer to gated-token-free filenames; (d) other. Rec (b), narrowly.
+
+**Ruling: (b) GENERALIZED, which is (d).** The distinction the gate is missing is not a field or a tree; it is
+CITATION versus MINT. A string that RESOLVES to an existing repository path at the graded commit is a citation of a
+thing that already exists -- a filename, an order, a doc, a decomposition -- and a citation is never the act of naming a
+resource. The gate therefore does not grade any token inside a value that resolves to a tracked path at HEAD, in ANY
+graded file, with a NEGATIVE CONTROL that a path-shaped value which does NOT resolve (a typo, a made-up file) is still
+graded and still refuses. That rule needs no per-field list (which goes stale the day a second schema carries a
+citation -- the census-every-carrier class) and no tree exclusion (which would silence real names in project rows).
+(a) is refused as too wide; (c) is refused because a cell about `demo` legitimately names `demo` in its order, and a
+record that may not cite the thing it is about is a worse record than the one the gate would refuse.
+
+**Binds:** (1) `2.0.0_SA_COO~G` -- LGIC_ENFORCE ROUND-3 cell: the resolvable-path exemption in `naming-gate.py`,
+with its Rule 24 record (the axis: what a graded value IS -- a mint or a citation; MECE by resolution at HEAD), the
+worker's pair as the positive arm and the non-resolving path as the negative arm, and the estate's own proof-of-spec
+instances re-graded under `--enforce` as the exercised arm (every instance that landed this round must pass). (2) The
+ENFORCE flip is BOUND to that cell: the WARN window stays until it drains, and this seat's round-2 analysis states it as
+the FWD condition it is. (3) Nothing held; EN-x-1 runs on; the WARN window is live.
+
+**Also from 97346:** LGIC_ENFORCE round 2 at 11 of 12 terminal; LGIC_CANON round 2 CLOSED and with `3.0.0_SA_CVO` since
+10:33Z; S31 held in practice (the ten-path overlap was a false contention, tested at the drain); S32 corrects COO~G's
+own armed count from 26 filed to 14 open -- the filed count is not the live one, and `hazard_standing` is frozen by
+the append-only rule, so the live figure is read from the remediation carrier's `disarm.state`.
