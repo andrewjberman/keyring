@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_LGIC_CANON~6</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-09-16</issued_date>
-<status>pending</status>
+<status>complete -- 0.9.0_WK_LGIC_CANON~6, 2026-09-16: J6-AC1/AC2/AC3 PASS-by-output (proof_of_spec.json validated rc=0); J6-J1 recorded UNVERIFIABLE-BY-INSTRUMENT for L9. Artifact org/missions/D14/LGIC/LGIC_CANON/deliverables/exercises/r2/judge-e.tsv committed 8f82074af9c0bb4611db8a15b54d84f883a679be.</status>
 
 **Directive:** D14 | **Fabric:** laptop | **PRD:** `../prd/LGIC_CANON_PRD.md` v1.3 @5b2336a5e4 (ADMITTED; both halves SIGNED and `current`, re-read at the recut) | **Decomp cell:** `CN-j-6` (round 2, decomposition v4) | **outcome_ref:** FWD-1 | **rulings:** A-1 | **depends_on:** CN-k-2 | **slot:** ~6, queue position 1, level 1
 
