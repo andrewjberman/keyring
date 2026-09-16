@@ -1,11 +1,12 @@
 {
   "prd": "NFRA_OPLGTW_PRD.md",
-  "prd_version": "v0.5",
-  "prd_pin": "f81896bae3caac9ce1dfd0ccf8ea95faad78bd51",
+  "prd_version": "v0.6",
+  "prd_pin": "af1cd9f7d697ec1ae4450f57135b5b3b5912f138",
   "half": "ratified-text",
-  "half_hash": "908c9e9460c1cdbb3cf4fa111d5946461c1dfc074963022b3b5e43d6c00233f9",
-  "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/PRD_REVIEW_NFRA_OPLGTW_v0.5_RATIFIED_TEXT_HALF_20260916.md@9bc1cac31a",
+  "half_hash": "9c6fa0750697c4d8cadebd2320a132fd9fa7475849c01bd87ec1624721a378f8",
+  "verdict": "REFUSED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/PRD_REVIEW_NFRA_OPLGTW_v0.6_RATIFIED_TEXT_HALF_20260916.md@d7faaaab7d",
   "signed_by": "3.0.0_SA_CVO",
-  "signed_at": "2026-09-16T18:46:04Z"
+  "signed_at": "2026-09-16T19:26:31Z",
+  "reason": "CONTRACTS cites contract JSON v1.1, still 1.0 with the old names at the pin; opal-gateway-access-state grades OUT-OF-PATTERN beside three names renamed on that ground, with no stated call"
 }
