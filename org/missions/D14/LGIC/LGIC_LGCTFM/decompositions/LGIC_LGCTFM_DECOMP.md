@@ -124,10 +124,18 @@ worker:
   RED-FIRST self-test arm exercised ALONE.
 - `SUBJECT_CONTROL.json` -- the hand-built composition of the first subject, taken from the ADVI_FIRMBKTS
   brief's IV.1-IV.9, so `LT-e-1`'s walk is graded against a control it cannot edit.
-- `FORK_CONTROLS.json` -- IV.5's four POSITIVE forks (the Schwab twin, the two MDPF gold trees, the `_legacy`
-  pairs) and the ONE NEGATIVE control (the SmartX platform/account pair). The negative control is the whole
-  discriminator: a fork detector that fires on everything that looks alike passes the positive arm and is
-  worthless, so the SmartX pair not appearing is a criterion in its own right.
+- `FORK_CONTROLS.json` -- IV.5's **FIVE** POSITIVE forks and the ONE NEGATIVE control (the SmartX
+  platform/account pair). The negative control is the whole discriminator: a fork detector that fires on
+  everything that looks alike passes every positive arm and is worthless, so the SmartX pair NOT appearing is
+  a criterion in its own right, never a clause inside the fork criterion.
+
+  > **FIVE, NOT THE FOUR THIS SECTION FIRST SAID AND THE PRD STILL SAYS (`LGIC_LGCTFM-S1`).** PRD v1.1's T4
+  > row reads "IV.5's four positive forks"; the brief's IV.5 -- the carrier that ENUMERATES them -- lists five
+  > semicolon-separated members and closes "Each is a positive control for O2". Part III O2 names three inside
+  > em-dashes, which is illustration, not a count. This cut first welded the PRD's four to O2's three examples
+  > and checked neither: the exact forward-list shape Rule 24(i) refuses. The enumerating carrier wins, and the
+  > fifth member (the `bd` / `49f` / `49financial` spellings) is carried with its own dispute noted, being the
+  > only one of the five that is not a pair of paths.
 
 ---
 
