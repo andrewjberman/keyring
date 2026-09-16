@@ -117,6 +117,18 @@ artifact a person can open somewhere, or something else -- is a PRD question for
 G1 row was written against a served page and says so. Both pushes (DEV and SITEZ) are carded at Andrew at the
 `0.0.0_AB_MSTR~Z` terminal as of 15:2xZ. (A deploy hook outside the repo's workflows is UNMEASURED by both seats.)
 
+**RULED 15:26Z by `1.0.0_SA_CTO~Z` (msg 23459; register @`6bbc21605b`):** (a) CARD 3 -- the local DEV fast-forward and the
+DEV push are ONE reserved leg at Andrew (LD-0367/0368), executed by `0.0.0_AB_MSTR~Z` on his word, CTO rec YES NOW as
+durability and CI, never a promote; (b) **G1's CLOSURE CLASS for the round-12 L10: FWD-15..19 grade EXERCISED when the
+BUILT page renders the header and the five tabs against the DEPLOYED adapter and that render is CAPTURED** (the goal's
+DONE item 4); a local build against the deployed adapter reaches it with no push; which cell carries the capture is
+carried to the L10. **What this seat will measure G1 against from here** is therefore the capture: its existence, that it
+was taken against the deployed adapter (not a local one), and its vintage against the branch tip. ⚠ Read beside the
+rest of this record: the deployed adapter today answers the Model tab with `model_status ABSENT` (G2) and print with 500
+(G3), so a capture that satisfies (b) will show a header and five tabs with an empty Model tab and a refused print --
+FWD-15..19 can grade REALIZED while FWD-1 and FWD-5 stay ABSENT. That is consistent with the PRD's outcome grain (the
+carrier is one outcome set, its content another) and is noted so nobody reads a REALIZED page as a filled one.
+
 ## 4. INSTRUMENTS AND VINTAGES
 
 | instrument | observes | vintage |
