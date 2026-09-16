@@ -2346,6 +2346,32 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
    "spec_asserts": "A row's hazard_standing says whether its hazard is live, so counting ARMED rows counts live hazards.",
    "world_is": "hazard_standing is frozen at filing time by the append-only rule, and the disarm is recorded in a different document under a different schema. Counting ARMED in the investigation carrier alone overstates the live set -- here by 8 of 26 before this session's own four are even considered.",
    "notes": "INERT: nothing is armed by this and no act is owed by another seat. \u26d4 IT CORRECTS SOMETHING I TOLD 3.0.0_SA_CVO AND PUT IN MY OWN HEARTBEATS -- I reported '26 armed rows I own' repeatedly as if it were a live count. It is a FILED count. The live figure is 14. \u2b50 THE RULE: a standing or status field in an APPEND-ONLY document is frozen at authorship; to read the CURRENT state, read every carrier of the item and prefer the STRUCTURED field over prose. COST: one read of the sibling document. NON-APPLICATION: a single-carrier channel, and any field the schema lets a later row of the SAME id supersede. Related in kind: an adjudication that disarms in prose disposes nothing, and a row id carried by two documents resolves ambiguously."
+  },
+  {
+    "id": "LGIC_ENFORCE-W5-S6",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~5",
+    "surfaced_at": "2026-09-16T11:10Z",
+    "one_line": "naming-gate.py grades a REPO PATH STRING inside a fabric .json record as a hand-kept firm carrier, so a proof-of-spec instance is REFUSED (rc 1 under --enforce) for nothing but citing its OWN task order, whose issuer-chosen filename contains the token 'demo' -- three REFUSE verdicts, all on .md paths, none on anything the worker typed as a name.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~G",
+    "spec_asserts": "CLAUDE.md Rule 30 and LGIC_ENFORCE DEC-6: the commit-time naming gate grades NAMES, and a refusal means a hand-typed name that should have been read through lookup(). The gate's domain is GRADED_EXT = ('.py', '.js', '.mjs', '.ts', '.tf', '.json', '.yaml', '.yml') (.tools/naming-gate.py:78 @2a2b853f79), which reads as the code-and-config surface where a firm token is a NAME.",
+    "world_is": "That domain also admits every fabric .json record under org/missions/ -- proof-of-spec instances included, and any record whose fields hold repo PATHS. This worker's instance types no firm name at all: its three REFUSE verdicts are on 'org/missions/D14/LGIC/LGIC_ENFORCE/task-orders/LGIC_ENFORCE.TO-EN-d-1-r2.fwd7-demo-firm.md' (twice, at spec_ref.doc and decomp_ref.to_ref, both REQUIRED by PROOF_OF_SPEC.schema.json) and on the result file beside it. The token is 'demo', from the ORDER'S OWN FILENAME chosen by the issuer, and this round's firm is quillwater, not demo. The gate is in its WARN window today so the commit landed; under ENFORCE -- this project's own endpoint -- every proof instance and result file that names this order refuses, and the worker cannot fix it, because the two offending strings are schema-required fields whose values ARE the order's path. The same shape reaches any task order, PRD or decomposition whose filename carries a firm token.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED, this worktree: `bash .tools/safe-commit.sh ... -- <instance> <result> <order>` printed three '[naming-gate] NAMING REFUSE ... -> lookup(demo)' lines, then '(WARN window: 3 REFUSE verdict(s) did not block ...)' and '[naming-gate] NAMING-GATE: WARN 3 graded'. The commit landed at 735b073531.",
+        "MEASURED, the discriminating re-run under enforcement: `git show --format= --patch 735b073531 -- <instance> > .scratch/proof_added.patch` (199 lines), then `timeout 120 python .tools/naming-gate.py --enforce --diff .scratch/proof_added.patch` -> 'NAMING-GATE: REFUSE 3 graded', rc 1. The WARN window is the only thing between this record shape and a refusal.",
+        "MEASURED, the coordinates: instance lines :7 and :15 are spec_ref.doc and decomp_ref.to_ref, both in PROOF_OF_SPEC.schema.json's required sets (spec_ref requires ['doc','group','vintage_commit']; decomp_ref requires ['doc','vintage_commit','to_ref']); line :56 is an artifacts_produced path_or_key naming this order's result file.",
+        "CITED: .tools/naming-gate.py:78 @2a2b853f79 -- GRADED_EXT = ('.py', '.js', '.mjs', '.ts', '.tf', '.json', '.yaml', '.yml'); :751 -- 'if not path.endswith(GRADED_EXT):' returns early. Nothing in that predicate excludes org/missions/.",
+        "NEGATIVE CONTROL: the two hand-typed patches this cell built for D1R-AC5/AC6 are graded on their own merits (REFUSE 1 / REFUSE 2 on quillwater and qwt, rc 1), and the three 'demo' verdicts are disjoint from them -- they name only .md paths, never a string this worker typed as a name.",
+        "SCOPE, stated as a limit: this row measures ONE instance in ONE worktree. It does not census how many existing fabric .json records carry a firm token inside a path field; that census belongs to the disarm owner, not to this cell."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Filed for form by a worker whose own order PASSED 6 of 6 criteria: this blocks nothing in EN-d-1 and is not a defect in the exercise. It is placed for the seat that decides whether naming-gate's grade domain should exclude org/missions/ record paths, or whether fabric filenames must stop carrying firm tokens. Either remedy is outside this worker's <paths>."
   }
 ]
 ```
