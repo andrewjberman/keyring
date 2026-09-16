@@ -6562,6 +6562,75 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "S117 spec_asserts, quoting msg 23440 condition 3: 'population outcome for the N names with no landed block: HELD on CARD 1' -- which presumed one held population and one card.",
     "world_is": "The held population is 70, not 23; 47 of them are holdings that no card names; and the peers engine reads model blocks from a repo directory the model-block pull never writes, so CARD 1 landing alone populates no peer set. Two readers of one store, one of them repointed by rk-2 and the other not.",
     "notes": "Mid-round the specification and the decomposition are FROZEN, so this row cuts no cell and tasks no worker: (2) lands as an issuer criterion on an UNSPAWNED order whose <paths> already carry the engine (2.0.0_SA_COO~Z's act, before the rk-13 spawn); (1)'s partition census is this seat's own L10 pre-read act; the round-13 cut candidate and the CARD 1 restatement land in ROUND_ANALYSIS.round12. The disposition of S117 and of this row is 3.0.0_SA_CVO~Z's at L9. Broadcast: 2.0.0_SA_COO~Z and 3.0.0_SA_CVO~Z, same turn."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S121",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-16T14:56:50Z",
+    "one_line": "ISSUER DEFECTS in the round-12 cut, found by running every QUEUED order's criteria before any worker reached them: seven criteria across five orders could not pass or could not fail as written, and rk-14's grant walled the presets its cell must edit.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "rk-12 AC1: route-table-entries 0 on a table of 11 (the regex looked for slash-leading quoted strings; entries are METHOD-prefixed format strings); lists-route read 8 before any work (substrings lists and rot anywhere).",
+        "rk-12 AC3: stage-None 12 against 6 classes (every None in 2500 bytes counted, source fields included), so the READ-ONLY branch could never read true. Re-cut live 6 / 6 / 0; planted bound stage 6 / 5 / 1.",
+        "rk-15 AC1: read name, units, points, absent_reason under thesis_driver; the served body carries series and unit there and status and reason in thesis_driver_chart. rk-15 AC3: NameError: name 'points' is not defined, a shell-quoting break.",
+        "rk-16 AC2: compare-route read 3 before any work (the word compare anywhere in the adapter). Re-cut reads the served route table: versions 0, compare 0.",
+        "rk-14: PRESETS live in lib/research/posture/fit.py (DIVZ declared 13 named 7; PFOE declared 16 named 0); no round-12 order granted lib/research/posture/ (census over 16 orders: 0); AC2 globbed preset files and found 0; AC3 read the first 40 sorted peer keys, which go stale once rk-13 writes new dates.",
+        "rk-13 AC4 added on 1.0.0_SA_CTO~Z's ruling row AMGT_RESAPP-Z-S120: pool 4 blocks, directory 4, pool_blocks_classified_by_block 3 of 4, NVDA_US_Equity (pool only) classifies through scanner_row."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Decomposition s.20b and 1.0.0_SA_CTO~Z's ruling at msg 23432: a criterion is established only by RUNNING it against the live world, and a repair asserts the same property against the right object.",
+    "world_is": "Amendment 2's dry run covered the orders refused at that moment and the route shapes; the queued orders' parses, regexes, quoting and grants had never been executed, so their defects were waiting for workers.",
+    "notes": "REMEDIATED at the issuer in ISSUER AMENDMENT 6, the same commit as this row. Every re-cut was dry-run with its output read field by field against its expect, and a mutant or natural pre-state failure shows each one discriminates. NOT REPAIRED, disclosed for L9 because each conjunction still fails on another term: pre-met word counts in rk-8 AC1 (captured 5 with posture at 404), rk-12 AC2 (control-refusal-reason 7), rk-13 AC2 (reads-crosswalk 5), rk-14 AC1 (DIVZ, PFOE, horizon, fx), rk-15 AC2 (driver-chart-refs 8, points-consumed 7) and rk-16 AC3 (version 1, compare 1), the page-side counts read on chain A's merged portal branch 2453a7b4."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S122",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-16T14:56:50Z",
+    "one_line": "rk-7 AC3 cannot be met by chain B on EITHER of its branches: its page branch is a portal edit, which only chain A may make, and its adapter branch needs the page to already call /refresh, which the merged page calls 0 times.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "rk-7 <paths> (chain B): lib/research/api/scoped_amgt.py, lib/research/api/tests/, lib/research/print/, infra/aws/terraform/harvest/, the ledger, deliverables ~24, the channel, its own order. No portal path. The round-12 issuance states chain A holds EVERY portal edit.",
+        "rk-7 AC3 run on chain A's merged portal branch wk-amgt_resapp-12-23-portal @2453a7b4 (the page's only home): enqueue-route-refs 0, old-refresh-refs 0. On portal DEV be8cf218 the file src/api/endpoints/amgt-lead-panel.ts does not exist (FileNotFoundError), and DEV is what chain B's worktree checks out.",
+        "rk-7 AC3 expect: 'enqueue-route-refs at least 1 ... If the wiring is instead done by giving /refresh a carrier, old-refresh-refs stays at least 1 and AC1's queue-carrier-declared is the bar that matters'.",
+        "1.0.0_SA_CTO~Z ADDENDUM 2 C1: 'K wires the page to the enqueue route and declares the queue carrier, THE CONSUMER STAYS ON THE BOX'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Cell AMGT-rk-7 (K) wires the page to the enqueue route and declares the queue carrier.",
+    "world_is": "The cell has two halves on two single-writer surfaces: the carrier is chain B's adapter, the page call is chain A's portal. The cut gave both to chain B, whose grant reaches only the first.",
+    "notes": "OPEN, a call at 1.0.0_SA_CTO~Z, because moving a half of a cell between chains changes cell text and the decomposition is frozen mid-round. COO recommendation (a): rk-7 keeps the adapter half and AC3 is re-cut to the adapter-side property, and the page half joins chain A as a criterion on AMGT-rk-12 or AMGT-rk-16, both chain A portal orders not yet reached. Alternative (b): widen rk-7's grant by portal/src/api/endpoints/amgt-lead-panel.ts, which breaks the single-portal-writer boundary the issuance states. No worker is near rk-7 yet: chain B is on rk-2, and rk-6 comes next."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S123",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-16T14:56:50Z",
+    "one_line": "rk-1 AC1 printed 47 SecurityAnalysis files against a bar of '48 or more', and worker 0.9.0_WK_AMGT_RESAPP~23 graded it PASS-by-output by counting a sibling endpoint file outside the criterion's pathspec.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Worker ~23's report on AMGT-rk-1 (commit 3938b5809f, drained b5882d4481): AC1 output CONTAINS_DRAIN=yes / 47 / route-lines 3, graded PASS, reasoning '48 = 47 + sibling amgt-lead-panel.ts outside this pathspec, confirmed via merge stat (49 changed = 47 new + 1 new + 1 modified)'.",
+        "rk-1 AC1 invocation counts git ls-tree -r --name-only HEAD -- src/pages/SecurityAnalysis; expect: 'the SecurityAnalysis file count is 48 or more'. The cell text's own source line reads 'the 48 SecurityAnalysis files ... exist ONLY at portal refs/drains/rj-portal', and that 48 was not produced by this invocation's pathspec; where the 48 came from is not re-measured here."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "rk-1 AC1 expect: 'the SecurityAnalysis file count is 48 or more (it was 0 on DEV at the cut -- print the number, never a boolean)'.",
+    "world_is": "The bar's 48 counted the page directory plus its endpoint file; the invocation's pathspec counts the directory only, which holds 47, so the literal bar reads short by the one file the pathspec excludes. The property (the whole page merged) is met by the worker's merge-stat evidence; the literal number is not.",
+    "notes": "For 3.0.0_SA_CVO~Z at L9: the grade is 3.0.0_SA_CVO~Z's. The issuer's reading is that the bar was cut one higher than this pathspec can count, not that the merge is short; the order reads complete at HEAD b5882d4481. Filed so a self-graded reinterpretation reaches the grader as a row rather than only inside a worker report."
   }
 ]
 ```
