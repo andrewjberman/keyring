@@ -895,6 +895,30 @@ not a message.
    "spec_asserts": "S11: round 2 cannot reach 'every order terminal' while CN-k-4 waits on an artifact another project produces in a round not yet cut.",
    "world_is": "True as filed, and resolved by withdrawal rather than by waiting: the cell is terminal by a word the gate admits, its obligation is carried into round 3 in full text rather than by reference, and round 2's closure no longer depends on LGIC_NAMING.",
    "notes": "INERT. \u26d4 THIS DISARMS S11 AND DISCHARGES NOTHING. The obligation CN-k-4 carried is UNMET, not met: the canon and NAMING_SCHEMA.json may disagree at HEAD until round 3's re-render lands, round 2 ships with that disagreement open, and R-10 is explicit that withdrawal does not weaken the cell. A reader who sees a terminal word here and stops has read this row backwards. The chain, one owner per link: 3.0.0_SA_CVO's LGIC_NAMING round-4 slug -> 1.0.0_SA_CTO's round-4 analysis -> 2.0.0_SA_COO~G's LGIC_NAMING round 5 -> the schema carries the test -> LGIC_CANON round 3's re-render cell."
+  },
+  {
+   "id": "LGIC_CANON-S13",
+   "project": "LGIC_CANON",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T10:40Z",
+   "one_line": "FOR 3.0.0_SA_CVO AT L8/L9, so nobody assumes the other did it: MY 'ISSUER'S DISARM' ROWS DISPOSE NOTHING. They set hazard_standing on a NEW row and leave the original UNDISPOSITIONED. Measured with the gate's own resolver: 34 of 41 LGIC_CANON items and 59 of 91 LGIC_ENFORCE items read undispositioned right now.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "MEASURED BY CALLING THE GATE'S OWN FUNCTION, not by reading it: imported surprise-row-gate.py and ran _resolve_latest over every channel document of each project. LGIC_CANON: 41 items, 34 UNDISPOSITIONED. LGIC_ENFORCE: 91 items, 59 UNDISPOSITIONED. Among the still-open ones are LGIC_CANON-S3, S7 and S11 -- the three this seat filed 'issuer's disarm' rows for THIS SESSION (S10, S8 and S12 respectively).",
+     "WHY THEY DO NOT DISPOSE, from the gate's own rule at :149: 'an item is dispositioned by a NEW row that names it (the disposition is the item's); else the item's own row. UNDER_INVESTIGATION, or an item no row carries, is not dispositioned.' The NAMING is a structured `adjudicates` field carrying target ids -- _resolve_latest reads `r.get(\"adjudicates\")` -- and PROSE naming an id in one_line or notes is not read at all.",
+     "MY DISARM ROWS CARRY NO `adjudicates` FIELD. They say 'ISSUER'S DISARM OF LGIC_CANON-S7' in prose and set hazard_standing INERT on themselves, while the original row's own disposition still reads UNDER_INVESTIGATION. This is exactly the failure this estate already names: an adjudication that disarms in prose disposes nothing.",
+     "AND THAT IS THE CORRECT DIVISION OF LABOUR, not a defect to fix by adding the field: a census of who actually carries `adjudicates` shows it is the CVO's instrument. LGIC_CANON: 8 carrying rows, ALL in ADJUDICATION_v1.md, ALL by 3.0.0_SA_CVO. LGIC_ENFORCE: 14 in ADJUDICATION_v1.md, all by 3.0.0_SA_CVO, plus exactly ONE in INVESTIGATION_v1.md -- W3-S11 by 0.9.0_WK_LGIC_ENFORCE~3, disposing its OWN earlier row W3-S10 as GRADUATED. So a seat may dispose its own row; an issuer does not dispose the round's items.",
+     "SO THE TWO THINGS ARE DIFFERENT ACTS AND BOTH ARE NEEDED: hazard_standing answers 'is the HAZARD still live' and is the disarm_owner's; disposition answers 'has this item been ADJUDICATED' and is the CVO's at L9. My rows do the first and supply the evidence for the second. Neither substitutes for the other, and the L10 precondition counts only the second."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "The L10 precondition: the route-carrying row is refused while any investigation item of the project is not dispositioned.",
+   "world_is": "93 items across the two projects are undispositioned as this round closes, and that is the expected pre-L9 state rather than a backlog anyone is late on -- but it means the slug cannot close on my disarm rows, and no amount of issuer-side disarming changes the count.",
+   "notes": "INERT: nothing here is a hazard, it is a hand-off statement. \u26d4 THE POINT IS TO STOP A SYMMETRICAL MISTAKE: I must not read my own disarm rows as closing anything, and 3.0.0_SA_CVO must not read them as an issuer having already disposed items. THE ONE THING I WOULD HAVE GOT WRONG: I nearly 'fixed' this by adding `adjudicates` to my own rows, which would have had the graded party disposing the round's items -- a boundary read from a field the graded party writes is no boundary. The census of who carries the field is what stopped me. Filed on LGIC_CANON because its round-2 slug is imminent; the identical statement holds for LGIC_ENFORCE and its numbers are printed above."
   }
 ]
 ```
