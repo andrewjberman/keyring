@@ -6050,6 +6050,50 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "Section 6: 'flip <status> to complete; commit with --only -- <paths>. Report once.'",
     "world_is": "The order's own <paths> grant (section 3) does not name org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rk-10.the-social-source-classified.md, so a commit touching that file is outside the write surface this order names. The worker edited the <status> line locally to verify the gap, then reverted it byte-for-byte (confirmed by an empty git diff) rather than commit outside the grant.",
     "notes": "All three mechanical criteria (AC1, AC2, AC3) PASS-by-output and the committed proof-of-spec instance (org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~28/AMGT_RESAPP.TO-AMGT-rk-10.the-social-source-classified.proof_of_spec.json) is VALID (rc=0) against .tools/proof-of-spec-check.py. Only the terminal <status> flip is blocked by the missing write grant. The order is left at status=pending pending either an amendment to its <paths> (adding its own task-orders path, as rj-13's carries) or a direct flip by 2.0.0_SA_COO~Z/1.0.0_SA_CTO~Z."
+  },
+  {
+      "id": "AMGT_RESAPP-Z-W27-S1",
+      "project": "AMGT_RESAPP",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~27",
+      "surfaced_at": "2026-09-16T06:30Z",
+      "one_line": "AC3's own literal invocation never reaches this round's sixteen rk-* orders: sorted(os.listdir(t))[:40] takes the first 40 files alphabetically from the WHOLE 80-file task-orders directory and stops at rj-13, so 0 of 16 round-12 orders are in the scanned set.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "Measured: org/missions/D5/AMGT/AMGT_RESAPP/task-orders/ carries 80 .md files total; sorted(os.listdir(t))[:40] (AC3's own invocation, byte-for-byte) yields exactly 40 entries, all .md, the last being AMGT_RESAPP.TO-AMGT-rj-13.the-social-source-measured.md; a direct membership check found 0 of the round's 16 AMGT-rk-* order files inside that 40-file slice.",
+          "AC3's expect text, quoted verbatim from AMGT_RESAPP.TO-AMGT-rk-9.criteria-repair-at-the-issuer.md: 'Run against THIS round's own sixteen orders it either admits them or names the criterion it refuses' -- the invocation's own cap does not deliver that population.",
+          "The literal invocation was still run exactly as written (this order's AC3 record carries its full output: orders-scanned 40, rc 0, verdicts printed per file) and is not the row this observation revises. A SUPPLEMENTARY run of the same checker directly against org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rk-*.md (16 of 16 files) was executed to discharge the expect prose's stated intent and is recorded in the same AC3 acceptance row: 16 of 16 round-12 orders REFUSED, 53 of 56 criteria flagged NO-TIMEOUT and 2 flagged INEXACT-CAPTURE (rk-8 AC4, rk-9 AC2/AC3)."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "AMGT_RESAPP.TO-AMGT-rk-9 AC3 expect, verbatim: 'Run against THIS round's own sixteen orders it either admits them or names the criterion it refuses -- and a refusal here is a USEFUL result the worker reports rather than suppresses, because it means the issuer cut a bar that cannot fail'.",
+      "world_is": "AC3's invocation resolves its population by sorted(os.listdir(t))[:40] over the WHOLE task-orders directory (80 .md files across every round of this project), not by any round-12-specific filter. Alphabetical sort places every r-/rb-/rc-/rd-/re-/rf-/rg-/rh-/ri-/rj- order before any rk- order, so the first-40 slice is entirely OTHER rounds' orders and never reaches AMGT-rk-1..rk-16. The criterion's own NONZERO-denominator bar is still met (orders-scanned 40), so AC3 is not FAILED by this -- but the population it actually grades is not the one its own prose names.",
+      "notes": "Filed as an OBSERVATION, not a defect in this cell's deliverable: the checker built for AMGT-rk-9 is exercised against BOTH populations (the literal 40-file slice, per the invocation as written, and the actual 16 rk-* orders, as a supplement) and both runs are recorded verbatim in this order's own AC3 acceptance row. No criterion here is repaired, widened or satisfied by a route the order did not name; the literal invocation ran unchanged. This is a targeting mismatch inside a criterion the round-12 issuer (2.0.0_SA_COO~Z) itself cut, in the one cell whose subject is exactly this class of defect -- surfaced, not chased, per this worker's bounds."
+  },
+  {
+      "id": "AMGT_RESAPP-Z-W27-S2",
+      "project": "AMGT_RESAPP",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~27",
+      "surfaced_at": "2026-09-16T07:15Z",
+      "one_line": "CANDIDATE SIXTH SHAPE FOR ROUND 13, NOT BUILT HERE ON ISSUER INSTRUCTION: an order whose mandated final act (flipping <status> to complete, a write to the order's own file) is a write OUTSIDE its own <paths> grant. Positive control measured: 0 of 16 round-12 orders named their own file at the issuance pin 2726497094; 16 of 16 do at HEAD after ISSUER AMENDMENT 1 (6f433fc2a8, drained f94429b776).",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "Measured directly (not read from a claim): for each of the 16 AMGT-rk-1..rk-16 order files, `git show 2726497094:<path>` was parsed for its <paths> block and checked for the file's own basename -- 0 of 16 present. The identical check against HEAD (post-amendment) -> 16 of 16 present. This is the before/after specimen the issuer named.",
+          "Cause, read from the issuer's own message to this worker: 'every round-12 order's <paths> omitted the order's own task-orders file, so the final step (flipping <status> to complete, a write to the order file itself) was outside the granted surface on 16 of 16 orders. Control: 13 of 13 round-11 orders DID name their own file.' Found by 0.9.0_WK_AMGT_RESAPP~28 on AMGT-rk-10, which reverted its own confirming edit byte-for-byte and filed AMGT_RESAPP-Z-W28-S1 rather than overriding its <paths>.",
+          "Fix commits, read from git log: 6f433fc2a8 ('fix(AMGT_RESAPP round 12, 2.0.0_SA_COO~Z): ISSUER AMENDMENT 1 -- all SIXTEEN orders now grant their own file, so the status flip is executable'), drained as f94429b776, both ancestors of HEAD at this row's writing (this worker's own worktree fast-forwarded onto e125b855e8, which contains f94429b776)."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "The issuer's own message to this worker, quoted: 'IF YOUR CHECKER CAN CHEAPLY DETECT IT -- an order whose mandated final write target is absent from its own <paths> -- that is a worthwhile sixth arm ... BUT DO NOT LET IT DISPLACE YOUR FIVE NAMED SHAPES, and do not treat this as an instruction to widen your cell's scope -- if adding it would push you past your criteria as written, file a row naming it for round 13 instead.'",
+      "world_is": "AMGT-rk-9's own criteria (AC1-AC4, unchanged by ISSUER AMENDMENT 1) name exactly FIVE shapes and grade the checker's self-test against exactly those five (AC2's expect: 'for EACH of the five shapes ... five refusals and at least one admission'). Adding a sixth arm to the shipped checker would exceed what this order's criteria ask for and risks reading as scope creep on the very cell whose subject is disciplined criteria. This row carries the specimen and the proposed detection shape forward instead of building it now.",
+      "notes": "PROPOSED SHAPE for a round-13 sixth arm, recorded so it is not re-discovered from scratch: parse an order's own <paths> block (the fenced text between <paths> and </paths>) and check whether the order's OWN FILENAME (the basename of the .md file being scanned) appears inside it; ABSENT is the refusal, matching this row's own positive control (2726497094 REFUSE 16 of 16, HEAD ADMIT 16 of 16). This is a STRUCTURAL check (grant-vs-mandated-final-write-target), a different axis from the five textual shapes AMGT-rk-9 built (which all look at an <invocation>/<expect> pair, never at the <paths> block), so it would be a genuinely new arm, not a variant of an existing one. NOT BUILT in .tools/criteria_quality_checker.py per the issuer's explicit bound; the checker as shipped still discriminates 5 of 5 planted mutants plus 1 of 1 control (AC2) unchanged by this row."
   }
 ]
 ```
