@@ -527,6 +527,31 @@ not a message.
    "spec_asserts": "Decomp table (round-1 analysis s.3): CN-k-2 serves rulings A-1, A-2, A-4, A-9, including 'R1's census tag'.",
    "world_is": "This cell's actual worker face narrows CN-k-2 to five items and six mechanical criteria plus one judgment criterion, none reading R1's census tag; A-4 is named only under 'Read' as background, not as an edit instruction or a tested criterion.",
    "notes": "INERT: no criterion of this cell depends on R1's census tag, and R1 is outside this cell's five stated edit items, so this cell leaves it untouched by design rather than by oversight. Filed so the round's owner can confirm whether A-4 was deliberately dropped from round 2's issuance or is still owed by another cell."
+  },
+  {
+   "id": "LGIC_CANON-W3-S2",
+   "project": "LGIC_CANON",
+   "fabric": "laptop",
+   "surfaced_by": "0.9.0_WK_LGIC_CANON~3",
+   "surfaced_at": "2026-09-16T09:05Z",
+   "one_line": "check_canon_r2.py's l2_recount() parses ledger_recount.py's SECTION/TOTAL lines with \\S+ single-token regexes, so it cannot read the multi-word disposition-class and register labels (MIGRATE (home), AWAITING a word, PLANE ROWS (the denominator), ...) that round 1's OWN checker (a non-greedy .+?: regex) reads correctly on the SAME script's SAME output; L2-AC4 therefore reads FAIL-L2-COUNTS-REPRODUCED no matter what the ledger's true counts are.",
+   "class": "BLOCKING",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "CHECKER (defect): org/missions/D14/LGIC/LGIC_CANON/deliverables/2.0.0_SA_COO~G/fixed_inputs/r2/check_canon_r2.py@1416c279781615087e1d53cbe628782c6b6c1a50:550-551 'sec = re.findall(r\"^SECTION\\s+(\\S+)\\s+(\\d+)\", o, re.M)' / 'tot = re.findall(r\"^TOTAL\\s+(\\S+)\\s+(\\d+)\", o, re.M)' -- a single non-whitespace token for the label, then digits as the immediately next whitespace-separated token; :557 'ok = bool(sec) and bool(tot) and not mismatch'.",
+     "COMPARISON (same artifact, a working parser): fixed_inputs/r1/check_canon_r1.py@4058a566067c2b6b9bbb66b6f351cd338d0069af:781-782 'totals = {k.strip().lower(): int(v) for k, v in re.findall(r\"^TOTAL (.+?): (\\d+)\\s*$\", out or \"\", re.M)}' and 'sections = re.findall(r\"^SECTION .+: \\d+ rows \\(instrument: .+\\)\\s*$\", out or \"\", re.M)' -- non-greedy, colon-aware, multi-word-safe; this is round 1's OWN validated reader of the SAME script.",
+     "SOURCE (unchanged by CN-l-2's own three items -- X6's axis, utf-8, the header revert -- none of which touch these lines): ledger_recount.py:189 'print(\"SECTION %s: %d rows (instrument: %s)\" % (s[\"heading\"], n, instr))' prints the full section heading (spaces included) before the row count; :300 'print(\"TOTAL %s: %d\" % (label, mine))' glues the label to a colon with no separating space, and most section-7 labels are multi-word (MIGRATE (home), MIGRATE (format only), MIGRATE (grammar), AWAITING a word, OUT OF SCOPE, DECLARED EXCEPTION, PLANE ROWS (the denominator), REGISTER ENTRIES (the denominator)) -- none is a single \\S+ token.",
+     "RUN, round 1 PASSES on this exact script: timeout 120 python fixed_inputs/r1/check_canon_r1.py l1-recount printed 'script rc: 0  SECTION LINES: 10  COUNT ROWS COMPARED: 14  DIFFERING: 0  RE-DERIVED BY HAND STILL PRINTED: False' and 'VERDICT: PASS-L1-RECOUNT-AGREES', rc=0.",
+     "RUN, round 2 FAILS on the same script, same run: timeout 120 python fixed_inputs/r2/check_canon_r2.py l2-recount printed 'SECTION lines: 0 ; TOTAL lines: 6' and \"TOTAL rows the ledger's own table does not carry at the counted value, denominator 6: 6 ['CONFORMANT:', 'RETIRE:', 'GRANTED:', 'OWED:', 'DECIDED:']\" and 'VERDICT: FAIL-L2-COUNTS-REPRODUCED', rc=0 -- the 6 captured TOTAL labels are exactly the single-word disposition/register classes, each mismatched only because \\S+ glues the trailing colon onto the label (e.g. 'CONFORMANT:' vs the ledger's own cell 'CONFORMANT'); the 8 multi-word labels are never even captured, and no SECTION line matches at all since the heading's second word is never digits.",
+     "NEGATIVE CONTROL: a \\S+ regex requiring the token immediately after the label to be pure digits is structurally unable to match a label containing an internal space -- no edit to ledger_recount.py's label TEXT can satisfy it without breaking round 1's own already-PASSING l1-recount (which requires the descriptive multi-word format), so the fix is not reachable inside CN-l-2's grant without regressing a drained round-1 criterion."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "LGIC_CANON.CN-l-2-r2 criterion L2-AC4 expects 'VERDICT: PASS-L2-COUNTS-REPRODUCED' from check_canon_r2.py l2-recount: section 7's totals, run through ledger_recount.py, are reproduced by the instrument.",
+   "world_is": "check_canon_r2.py's l2_recount() cannot parse ledger_recount.py's SECTION/TOTAL lines for any multi-word label, and even its single-word matches fail on a glued trailing colon; round 1's own checker parses the identical script's identical output correctly with a non-greedy regex. The criterion is unsatisfiable from CN-l-2's grant without either (a) editing the read-only fixed checker, which BOUNDS forbids, or (b) collapsing ledger_recount.py's section-7 labels to single tokens, which would regress round 1's already-PASSING l1-recount and misstate the ledger's own multi-word class names. L2-AC1, L2-AC2 and L2-AC3 PASS by output at this commit; L2-AC4 is recorded FAIL by output, per BOUNDS' 'fixed input is itself DEFECTIVE ... keep your hands off it.'",
+   "notes": "Filed by 0.9.0_WK_LGIC_CANON~3 on LGIC_CANON.CN-l-2-r2; kept working, ran the remaining criteria, and recorded this proof_of_spec row as FAIL rather than editing check_canon_r2.py or degrading ledger_recount.py's round-1-validated print format. This worker judges the row's form, not its significance: whether check_canon_r2.py's l2-recount regex is repaired, replaced, or the criterion is re-cut is for 3.0.0_SA_CVO at L9 / 2.0.0_SA_COO~G's recut to decide."
   }
 ]
 ```
