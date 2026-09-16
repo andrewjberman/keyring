@@ -2233,3 +2233,71 @@ not EXERCISED, and this round's bars are exercised on the deployed plane. The sa
 **ROUND 12 IS SIXTEEN CELLS: `AMGT-rk-1` .. `AMGT-rk-16`.** s.20a's uncovered partition is now EMPTY --
 U1 -> `AMGT-rk-15`, U2 -> `AMGT-rk-16`, U3 -> `AMGT-rk-14` (the fit half at v1.5, the remainder here.)
 Every other clause of s.20 stands, including the bounds in s.20f and the battery in s.20g.
+
+### 20j. AMENDMENT v1.6 -> v1.7 -- CELLS `AMGT-rk-17` and `AMGT-rk-18`, from ANDREW-DIRECT 2026-09-16 ~19:2xZ
+
+⛔ **THIS ONE IS DIFFERENT FROM 20h AND 20i AND THE DIFFERENCE IS STATED RATHER THAN GLOSSED.** Both earlier
+amendments say *"amended BEFORE issuance, so nothing is frozen and no order is re-cut."* **THIS AMENDMENT IS
+AFTER ISSUANCE.** Round 12 is at L7 with ten of sixteen orders terminal and three workers live. The
+mid-round freeze on the decomposition is real and it binds a SEAT'S OWN JUDGMENT; it is moved here by the
+only two things above it: **Andrew's own word, and the adjudicator's routing of that word.**
+
+**THE AUTHORITY, VERBATIM AND ENTIRE.** Andrew, 2026-09-16 ~19:2xZ at the `1.0.0_SA_CTO~Z` terminal, first
+*"Give me the reserved calls"*, then, after the four cards were presented: **"Yes on all four, execute
+them."** Record: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260916_192xZ_YES_ON_ALL_FOUR_RESERVED_CARDS_EXECUTE.md`
+@`0d780cf6f8`. `1.0.0_SA_CTO~Z`, as adjudicator (msg 23473), routed the two COO items and ruled that both
+**enter as PRODUCER ORDERS by ONE issuer amendment to round 12 now, or as round 13's first cells -- the
+issuer's call, stated in the amendment.**
+
+**THE ISSUER'S CALL, AND ITS REASON: ROUND 12, NOW.** Round 13 was rejected on a MECHANISM, not a
+preference. **LD-0521: a round N+1 issuance cut before round N's slug DEADLOCKS round N's L10 until N+1
+fully drains**, because the refuser counts open orders PER PROJECT and never per round. Cutting these as
+round 13 cells today would therefore stall the round-12 L10 behind two Bloomberg-gated producer runs. The
+opposite reason points the same way: the three partitions these runs resolve -- `S120` (the names with no
+landed block), `S125` (the today-dated Price list) and the filings population -- are **named in the
+round-12 L8 packet**, so resolving them inside round 12 is what lets L9 and L10 grade the outcomes against
+a populated store instead of carrying three HELD halves forward.
+
+| id | letter | what it must cover | closes | chained after |
+|---|---|---|---|---|
+| **`AMGT-rk-17`** | **Q** | **THE TWO BUDGETED PULLS.** ONE run of the model-block pull over the **33 KEYED COVERAGE NAMES** and ONE run of the price-axis pull, both on the budgeted two-phase Bloomberg sign-in, box-side. Measured pre-state: `derived/model_block/` **4 keys** of which only **3 are in the 33**, `raw/bloomberg/` **4 keys**, and `TRENDING_PRICE` **one axis date, 2026-09-10**. ⛔ **ITS BAR IS LANDED-AGAINST-ATTEMPTED WITH THE REFUSAL LIST PRINTED** -- 33 attempted and 20 landed with no list of the 13 is the one result this cell exists to make impossible | `S120`, `S125` | nothing -- it is a ROOT |
+| **`AMGT-rk-18`** | **R** | **THE FILINGS AND DRAFTING BATCH** over the same 33, at approximately USD 36. Measured pre-state: `filings/v1/` **5 names, 10 objects**; `drafting/v1/` **5 names**. ⛔ **THE EGRESS IS BOUNDED AND MEASURED, NOT ASSERTED:** the analyzer calls Anthropic and the fetcher calls SEC EDGAR (censused: anthropic 14, edgar 12, sec.gov 2 across 11 modules), and **every other vendor token reads 0** -- a RECORD, not a gate: Andrew authorized egress as needed on 2026-09-16, so a further vendor the run needs is allowed and NAMED | the filings population | nothing -- it is a ROOT |
+
+⛔ **NEITHER CELL TOUCHES A SURFACE AN OPEN ORDER HOLDS, AND THAT WAS CHECKED RATHER THAN ASSUMED.**
+`AMGT-rk-17` writes only `raw/bloomberg/`, `derived/model_block/` and the price axis table; `AMGT-rk-18`
+writes only `filings/v1/` and `drafting/v1/`. Chain A holds the portal, chain B the adapter and every live
+AWS act on the Lambda, chain C the identity set and `peers/v1/`. **The one overlap is a REPO path, not a
+world one:** `lib/research/filings/` is also `AMGT-rk-15`'s surface, and `AMGT-rk-15` is CUT BUT UNSPAWNED,
+so the file has one writer at a time and the order says so in its own bounds.
+
+⭐ **AND ONE THING IS DELIBERATELY NOT IN EITHER CELL.** The `BA_US_Equity` pilot re-run (`S127`) regenerates
+BA's filings document **under `AMGT-rk-15`'s producer change**, so running it from `AMGT-rk-18` would spend
+the vendor call and produce the OLD shape. It stays with chain A and is added to `AMGT-rk-15` by issuer
+amendment before that order spawns. **A cell that can run something at the wrong time is told not to, in
+its own text, rather than being trusted to notice.**
+
+**FAN-OUT, RESTATED WITH ALL EIGHTEEN (this supersedes s.20i):**
+
+```
+fanout:
+  cap: 8                      # the default; still not raised
+  waves: 4
+  wave_1_roots: [AMGT-rk-1, AMGT-rk-2, AMGT-rk-3, AMGT-rk-4, AMGT-rk-9, AMGT-rk-10, AMGT-rk-11]   # 7
+  wave_2:       [AMGT-rk-5, AMGT-rk-6, AMGT-rk-7, AMGT-rk-12, AMGT-rk-13]                          # 5
+  wave_3:       [AMGT-rk-8, AMGT-rk-14, AMGT-rk-15, AMGT-rk-16]                                    # 4
+  wave_4_roots: [AMGT-rk-17, AMGT-rk-18]                                                           # 2, ANDREW-DIRECT
+  max_open_width: 7           # UNCHANGED across four amendments -- wave 1 is still the widest
+  deferred_for_width: []      # EMPTY. Nothing moves to round 13.
+```
+
+⛔ **THE TWO NEW CELLS ARE ROOTS AND THEY DO NOT WIDEN THE ROUND PAST ITS CAP, WHICH IS A MEASUREMENT.**
+They depend on no cell, so they could have gone in wave 1; they are wave 4 only because Andrew's word
+arrived at 19:2xZ. **Concurrent width at the moment they are issued: three live workers (`~23` on
+`AMGT-rk-12`, `~24` on `AMGT-rk-6`, `~25` on `AMGT-rk-14`) plus these two is FIVE, against a cap of 8.**
+Nothing is deferred and nothing is dropped.
+
+**ROUND 12 IS EIGHTEEN CELLS: `AMGT-rk-1` .. `AMGT-rk-18`.** Every other clause of s.20 stands, including
+the bounds in s.20f and the battery in s.20g -- and s.20f's COLLECTION-STAYS-OFF clause binds these two
+cells hardest, because they are the only cells of the round that call a vendor at all: **Andrew's word
+authorizes the RUNS and says nothing about their recurrence, so a cadence for either pull remains
+RESERVED and neither order arms a schedule.**
