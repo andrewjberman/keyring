@@ -74,13 +74,15 @@ record carries); `infra/aws/ec2/opal-gateway/deploy/opal-gateway.service`. Host 
 `OGP1-AC10` -- the Gateway's peak RSS over a stated window is recorded with its instrument named.
 
 <criterion id="OGP1-AC11" cell_refs="OG-p-1"><invocation>cd <WS> && timeout 120 .venv-og/Scripts/python org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~2/probes/og_p1.py AC11</invocation><expect>(?m)^VERDICT: PASS-OGP1-AC11(?![0-9])</expect></criterion>
-`OGP1-AC11` -- the existing-user baseline records p95 latency per representative tool from the audit record over a stated window, with its sample count printed.
+`OGP1-AC11` -- the existing-user baseline records p95 latency from the ALB's `TargetResponseTime` (CloudWatch) over a stated window, per target group and overall, with its sample count printed; the probe states that the ALB does not know the tool, and claims no per-tool figure. *(Amended by `2.0.0_SA_COO~O` before re-hand, per `1.0.0_SA_CTO` ruling R-OG-2, msg 97499, record `org/tier1_exec/1.0.0_SA_CTO/deliverables/RULINGS_NFRA_OPLGTW_20260916.md` @d6583eab37; row W2-S1.)*
 
 <criterion id="OGP1-AC12" cell_refs="OG-p-1"><invocation>cd <WS> && timeout 120 .venv-og/Scripts/python org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~2/probes/og_p1.py AC12</invocation><expect>(?m)^VERDICT: PASS-OGP1-AC12(?![0-9])</expect></criterion>
-`OGP1-AC12` -- the OAuth client inventory lists every `client_id` the audit record shows over a stated window, with counts, and states that clients are process-local.
+`OGP1-AC12` -- the OAuth client inventory is read from the Gateway's persisted OAuth client registrations, lists every registered client with counts, and states process-locality as measured. The audit record's missing `client_id` is a finding against FWD-8, carried to L10 on row W2-S2, and is not fixed here. *(Amended per ruling R-OG-2, msg 97499 @d6583eab37; row W2-S2.)*
 
 <criterion id="OGP1-AC13" cell_refs="OG-p-1"><invocation>cd <WS> && timeout 120 .venv-og/Scripts/python org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~2/probes/og_p1.py AC13</invocation><expect>(?m)^VERDICT: PASS-OGP1-AC13(?![0-9])</expect></criterion>
-`OGP1-AC13` -- every AWS call in the cell's command log is a read verb (Describe, Get, List, Head); the probe reads your own command log and prints its denominator.
+`OGP1-AC13` -- every AWS call in the cell's command log is a read verb (Describe, Get, List, Head), except that an `ssm:SendCommand` call is admitted if and only if the probe prints its command text and that text is a read; the probe reads your own command log and prints its denominator. *(Amended per ruling R-OG-2, msg 97499 @d6583eab37; row W2-S3.)*
+
+**RE-HAND SCOPE (issuer, amended with the three criteria above).** `OGP1-AC1`..`AC10` PASSED by output and were recorded on 2026-09-15 (`baseline.result.md`, proof instance VALID). Since then, by design, `OG-i-1` has created `opal-gateway-access-state` and `OG-i-2` is creating the two reader roles, so `AC6` and `AC7` cannot be re-run truthfully as a pre-change baseline. Do not re-run `AC1`..`AC10`; carry their recorded rows unchanged. Rebuild the probe arms for `AC11`, `AC12` and `AC13` as amended, run and record those three, update `BASELINE.json`/`BASELINE.md` and the result file for them, and re-validate the whole instance.
 
 <expected_criteria>OGP1-AC1, OGP1-AC2, OGP1-AC3, OGP1-AC4, OGP1-AC5, OGP1-AC6, OGP1-AC7, OGP1-AC8, OGP1-AC9, OGP1-AC10, OGP1-AC11, OGP1-AC12, OGP1-AC13</expected_criteria>
 

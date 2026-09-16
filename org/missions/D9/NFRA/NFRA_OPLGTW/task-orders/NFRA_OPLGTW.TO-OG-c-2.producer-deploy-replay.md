@@ -45,6 +45,26 @@ binds: before either act, the sign-off record
 The baseline for the bucket settings is `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~2/BASELINE.json`
 (`OG-p-1`); the record schema is `OG-c-1`'s (its result file in this slot's deliverables).
 
+**The un-staging, before any plan (amended by `2.0.0_SA_COO~O` before re-hand, per `1.0.0_SA_CTO` ruling R-OG-1, msg
+97499, record `org/tier1_exec/1.0.0_SA_CTO/deliverables/RULINGS_NFRA_OPLGTW_20260916.md` @d6583eab37; row W4-S5).** The
+`opal-assets` root carries a staged-and-never-applied change to `opal-assets-daily-emitter` (commit `2740e4de8f`) that
+repoints it at `portal/gold/mdpf/_staging/aggregate_aua/`, an empty tree whose producer `mdpf-daily-trigger` has been
+destroyed. It is WITHDRAWN from this root, not admitted. As your first act, restore that file to its parent's bytes in
+its OWN commit: `git checkout 2740e4de8f^ -- infra/aws/terraform/opal-assets/emitter.tf`. The commit message records that
+X-ii-a's AE half is withdrawn from the root because its producer was destroyed and its target tree is empty, and that a
+re-home re-lands through its own act under MDPF_CANON. Touch no other file in that commit and nothing in the
+`mdpf-pipeline` root. No ledger entry is opened for the un-staging (nothing was ever applied). The discriminator is
+`OGC2-AC3`: the plan then reads only the schwab family's rows. Gate G-B stands with no re-read.
+
+**The replay is HELD at this hand-off (issuer, 2026-09-16).** Two rows the previous worker filed are still open and
+routed to `1.0.0_SA_CTO`. Row W4-S8: the sign-off's conditions 4, 5 and 7 read `s3://opal-data-49financial/gold/advi/`,
+while this order's cross-firm bound names only the two Schwab prefixes. Row W4-S9: an event replay writes 2 run manifests
+under `meta/conversions/` beside the 2 markers, and the sign-off's write set names only the markers. So run the
+un-staging, the vendoring, the pin, the plan, the apply and the deploy readbacks (`OGC2-AC1`..`AC6`), and read nothing in
+any other firm's bucket. Before `AC7`, check this order's text at CLOUD HEAD in the shared tree,
+`/c/Users/AndrewBerman/Desktop/ajb_workspace`. If this hold paragraph is still present, run no replay: refuse `AC7`..`AC11`
+with that measurement, file no new row for it, and report.
+
 **Read:** the PRD's "C3" and "C6"; `infra/aws/terraform/opal-assets/silver.tf`; `infra/aws/terraform/modules/yang-lambda/`;
 `OG-c-1`'s result file; the sign-off record above.
 
@@ -117,6 +137,7 @@ infra/aws/lambda/opal-assets/opal-assets-silver-schwab/conversion_manifest.py
 infra/aws/lambda/opal-assets/opal-assets-silver-schwab/schwab_runtime.py
 infra/aws/lambda/opal-assets/opal-assets-silver-schwab/BUILD_MANIFEST.json
 infra/aws/terraform/opal-assets/silver.tf
+infra/aws/terraform/opal-assets/emitter.tf
 org/critical_paths/change_management/
 org/critical_paths/.open_deploys/nfra-oplgtw-og-c-2-producer.json
 org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v1.md
