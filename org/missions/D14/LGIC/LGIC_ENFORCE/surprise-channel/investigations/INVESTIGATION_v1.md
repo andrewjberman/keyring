@@ -2670,6 +2670,31 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
    "spec_asserts": "The commit-time naming gate grades every added line of a commit in its file-type set.",
    "world_is": "It grades every added line git is willing to SHOW it. A path attributed `binary` shows none, so 15 tracked files in the gate's own type set are ungraded at any enforce setting, 14 of them inside the naming project itself.",
    "notes": "ARMED, disarm_owner 2.0.0_SA_COO~G, and it is a ROUND-3 item rather than a repair now: the fix touches .tools/naming-gate.py or .gitattributes, both outside any open order, and round 2 is terminal and with 3.0.0_SA_CVO. \u26d4 I AM NOT PROPOSING THE ATTRIBUTE BE REMOVED -- the byte-exactness reason is sound and removing it would break the L9 rerun it exists to protect. THE TWO SHAPES: (a) the gate reads the POST-IMAGE from the index for any path whose diff attribute is unset, which it already has the machinery for (--post-from-index), turning a silent bypass into a graded file; or (b) the bypass is BOUNDED and DECLARED -- a printed list in the gate's own output naming every path it could not see, so an ungraded path is visible in the run rather than absent from it. \u2b50 (b) IS THE CHEAPER AND THE MORE HONEST: a gate that cannot see something should SAY the number, which is the estate's own printed-denominator rule applied to an enforcement surface. Found as a by-product of LGIC_ENFORCE-S41's census -- 969 tracked files went in and 955 came out, and the 14-file gap is this."
+  },
+  {
+   "id": "LGIC_ENFORCE-S43",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T16:28Z",
+   "one_line": "MY OWN CORRECTION, SAME TICK: LGIC_ENFORCE-S38 asked 1.0.0_SA_CTO a question R-14 HAD ALREADY ANSWERED IN ITS OWN TEXT. I was quoting a COMPRESSED restatement of the ruling carried forward in my tooling, not the ruling as delivered, and the clause I was missing is the exact clause that resolves it. The 253-of-259 measurement stands and changes meaning: it is not a gap, it is the size of the branch the ruling already names.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md@7bdba77f32#LGIC_ENFORCE-S38 -- the row this corrects, filed by this seat ~18 minutes earlier in this same tick.",
+     "R-14 AS DELIVERED, msg 97358 from 1.0.0_SA_CTO, VERBATIM and with the clause I did not have: 'The disarm CLOCK lives on the remediation row's disarm block (_monotone_advance; A-15): 3.0.0_SA_CVO writes the row at L9 with disarm.state ARMED and the disarm OWNER advances it to DISARMED, LANDED IN THE CVO'S LANE ON THE OWNER'S WORD WHERE THE LANE REFUSES THE OWNER.' The capitalised clause is mine for emphasis; the words are the ruling's.",
+     "WHAT I WAS READING INSTEAD: the restatement I carried into open_backlog.py's docstring @de5d4e2648 -- 'written by 3.0.0_SA_CVO at L9 as ARMED and advanced to DISARMED by the named owner' -- which is FAITHFUL to the ruling's first half and DROPS the second. I then measured against my own restatement and found a hole that is not in the ruling.",
+     "SO SHAPE (a), which S38 said it held, IS ALREADY THE RULING: the owner does not write the file; the owner gives the WORD and 3.0.0_SA_CVO lands the advance in its own lane. My S39 and S40 evidence rows ARE that word, in the carrier R-14 named for it.",
+     "THE MEASUREMENT IS UNAFFECTED AND IS WORTH MORE, NOT LESS: 259 ARMED disarm blocks estate-wide, owner class COO 168 / CTO 59 / other 26 / CVO 6. R-14 writes 'where the lane refuses the owner' as a conditional. It is the DEFAULT: 253 of 259, 98%. The CVO-lands-it path is the normal path and the owner-advances-it path is the exception, which is the opposite of how the sentence reads at a glance.",
+     "NEGATIVE CONTROL ON MY OWN ERROR: the lane readings in S38 are re-checked and stand unchanged -- TREE_CVO, 2.0.0_SA_COO~G False, 3.0.0_SA_CVO True, 0.7.0_AE_CloudOps False, on HEAD bytes. Nothing in S38's evidence was wrong. Only its CONCLUSION -- that the ruling left the act unassigned -- was, and it was wrong because of the source I checked it against."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "A call routed to 1.0.0_SA_CTO is a question the ruling record does not already answer.",
+   "world_is": "This one was answered in the ruling's own delivered text. I checked my claim against a restatement of the source instead of the source, which is the estate's own citation-ages-separately trap with me on the wrong side of it.",
+   "notes": "INERT: this row adds no hazard and it DISARMS the call half of LGIC_ENFORCE-S38 as EVIDENCE for L9 under R-14 (not a clock -- S38 carries no remediation row yet). CALL 1 to 1.0.0_SA_CTO is WITHDRAWN and the withdrawal is sent in the same tick; CALL 2 (LGIC_ENFORCE-S41, the enforce flip's grade domain) is untouched and still open. \u26d4 THE LESSON IS MINE AND IT IS THE ONE CLAUDE.md ALREADY STATES: a citation ages separately from the text it quotes, and a RESTATEMENT I wrote myself is the most dangerous copy of all, because it reads as my own understanding rather than as a quote that could be stale. \u2b50 THE CHEAP FIX, adopted: my tooling's docstring now carries the ruling's clause about the refusing lane, and before routing any call that turns on a ruling I re-read the RULING MESSAGE, not my own summary of it. Targets by full id: LGIC_ENFORCE-S38."
   }
 ]
 ```
