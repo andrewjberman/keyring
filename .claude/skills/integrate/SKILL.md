@@ -282,6 +282,26 @@ LOCALLY TRUE AND GLOBALLY WRONG: neither paragraph is wrong alone, the defect ex
 composition, it is CREATED BY THE FIX, and it is invisible to the author because the author only
 diffs what they wrote.
 
+#### ⛔⛔ A VINTAGE MOVE CAN ADD A CONFLICTED PATH, NOT ONLY CHANGE THE CONTENT OF KNOWN ONES — SO RE-RUN THE WHOLE ASSESSMENT, NEVER THE CHEAP PARTIAL
+
+**THE INTUITION THAT A RE-BASE "PROBABLY HOLDS" IS AN INTUITION ABOUT THE FILES ALREADY IN THE
+OVERLAP SET. IT IS SILENT ABOUT MEMBERSHIP.** Re-checking only the known conflicts is the obvious
+economy and it is the one that fails: **the cheap partial re-run returns CLEAN and is WRONG**, because
+the set itself grew while you were not looking.
+
+*Measured 2026-09-16, CLOUD<->SITEZ, and it is the reason this block exists. `0.0.0_AB_MSTR` pushed
+220 commits, disclosed the vintage move per the step below, and said in terms "I do not expect the
+SHAPE to change" — correctly labelled as expectation, not measurement. `0.0.0_AB_MSTR~Z` re-ran the
+WHOLE assessment at the new head and the shape HAD changed: overlap 6 of 2281 -> **7 of 2567**,
+conflicts **two became three**, and the new member was the **`portal` GITLINK** — whose pointer had
+moved during a DEV->PROD promote entirely inside the window between the two measurements. The overlap
+set gained the one member whose type has its own failure mode: **a gitlink is where a merge reads
+clean and moves nothing real.*** (`is-ancestor` settled it as a fast-forward, and it was still left
+to the pointer's owner.)
+
+COST: one full re-run instead of a targeted re-check. NON-APPLICATION: none on a live fabric — if
+neither side has committed since the assessment, there is no vintage move to re-run against.
+
 #### ⛔ WHAT TRIGGERS THAT AUDIT: **DISCLOSE A VINTAGE MOVE. IT IS NOT COURTESY.**
 
 The step above says to audit the loser. It does not, on its own, say what makes you *go back* — and
