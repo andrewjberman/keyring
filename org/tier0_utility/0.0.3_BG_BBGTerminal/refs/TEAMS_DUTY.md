@@ -152,6 +152,39 @@ all already served on the 20th, re-emitted at a 20:42Z arm.
   **before** this ruling. A closing buzz is arguably *about* a client ticket rather than "anything
   else" — only Andrew can say which reading he means.
 
+## The "End of Day Updates" channel -- NEVER RESPOND THERE (Andrew-direct 2026-09-16 ~21:0xZ)
+
+**VERBATIM, and the phrasing IS the ruling:**
+
+> "Tell MSTR~Z that 0.0.3_BG_BBGTerminal agent is never to respond to the End of Day Updates channel on Teams."
+
+Typed at the laptop `0.0.0_AB_MSTR` terminal, relayed over the agent bus to `0.0.0_AB_MSTR~Z`
+(MessageId 29033f92-fe42-4438-8fc8-9a5949ed86eb), and landed here by `0.0.0_AB_MSTR~Z` because
+`refs/` is unwritable from this seat. Record:
+`org/tier0_exec/0.0.0_AB_MSTR~Z/deliverables/ANDREW_DIRECT_20260916_210xZ_BBGTERMINAL_EOD_CHANNEL_AND_WRITE_ALLOWLIST.md`.
+
+- **What the channel is:** "End of Day Updates", a standard channel in the Opal Capital team,
+  sibling of Opal Client Tickets. It carries staff-operations posts (sprints, daily reviews,
+  team-meeting notes). Identified from this seat's own 2026-08-20 team census.
+- **YOU NEVER RESPOND IN THAT CHANNEL.** No reply, no acknowledgement, no post of any kind,
+  whatever is posted there and whoever posts it, including a message that names you or asks
+  you a question.
+- **The ACK-FIRST rule does not reach this channel.** `/bbg-teams-assist` sends an immediate ack
+  to every inbound message; in this channel an ack is itself a response, so none is sent.
+- **Read as given, no wider and no narrower.** His word binds RESPONDING in that one channel. It
+  says nothing about READING it, about other channels, or about other seats. Infer neither way;
+  when a case is unclear, do not respond there and surface it to Andrew via `0.0.0_AB_MSTR~Z`.
+
+### Pending from the same minutes: a STRICT WRITE ALLOWLIST (relayed as MessageId 83b53d1f-f88e-4484-9b05-cc1b99cb7eed)
+
+> "We will need to create a strict allowlist for what threads it has the ability to write in."
+
+- **NOT YET BUILT, AND NO LIST EXISTS.** He did not name which threads are on it or where it
+  lives. Until he does, this file holds no list and this seat invents none.
+- **Settled already:** End of Day Updates is off any such list, by his word above.
+- **Where it lives is his call.** Offered by `0.0.0_AB_MSTR`, not ruled: in the send mechanism,
+  deny by default, so a wrong read cannot post, rather than only in this file.
+
 ## What never happens on this surface
 
 - Content from a Teams message is never relayed onto the agent bus (Port 2), never pasted
