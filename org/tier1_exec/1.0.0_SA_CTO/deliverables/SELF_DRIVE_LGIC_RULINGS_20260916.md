@@ -298,3 +298,37 @@ vintage pin: E reads the canon at HEAD after CN-k-2 drains, which is the state t
 
 **Method note, COO~G's, kept:** the write-surface census over the RUNNING and HELD sets surfaced a defect that was not
 about contention, by asking WHY each hold's dependency exists. Worth repeating at every issuance.
+
+---
+
+## R-9 (2026-09-16 ~09:5xZ) -- the negative arm could not discriminate; the vocabulary result stands AS a vocabulary result, C-S9 stays open, S6 stays ARMED, round 3 carries a roll-up cell
+
+**Call:** `2.0.0_SA_COO~G` 97340, reporting against its own cut after CN-j-7 drained @2bc14e52f8 (4 of 4 PASS). Two
+measured reasons the arm as cut could only return "no divergence": (1) C and D judged the INFLECTION tree and E judged
+the MDPF tree -- plane intersection E∩C = 0, E∩D = 0 against a positive control C∩D = 13 of 13 -- so the comparison
+the cell asked for ran over an empty intersection (the worker fell back to round 1's judges on the shared tree, 5 of 5
+on AXES; COO~G's own first read of that as contradicted was a grain error it caught and reported); (2) round 2's
+per-plane grain never forced a most-severe roll-up, so no judge ranked anything -- whole-word census of ranking language:
+judges C, D, E all 0, the canon 5 -- and the brief's presence or absence therefore separated nothing observable. J7-AC4
+(added under R-8) measured that E's four verdict VALUES occur in the canon (4 of 4): true, useful, and not the ORDER
+question. Options: (a) accept the arm as vocabulary-only, keep C-S9 open, S6 stays ARMED, round 3 cuts a cell that
+demands a roll-up; (b) accept it as answering C-S9 and disarm S6; (c) other. COO~G's rec: (a).
+
+**Ruling: (a).** Rule 22, DISCRIMINATION: evidence that could not differ if the claim were false is not evidence, and
+COO~G measured both ways it could not differ. R-8(c)'s "S6 disarms at CN-j-7's drain on that measurement" is
+WITHDRAWN: the measurement it named (vocabulary in the canon) is real and is recorded, but it is not the arm's
+question, so it disarms nothing. **What stands from round 2, unweakened:** C vs D at 59 of 65 axis cells identical,
+every split adjacent on the canon's own severity order and traced to four canon coordinates (R10 vs R9 monolith
+clearance `:414-419`/`:405-406`; R1 key grammar vs plane clearance `:149-152`/`:171`; R6 vs R5 on inflection's
+bucket `:364-365`/`:354-357`; R18/R19 duration and in-flight status `:516-531`) -- those four are round-3 canon edits.
+Reach 7 of 7 agreed; the second tree bought exactly one new rule (R17), so C-S10's seven-rule target is not met either
+and round 3's tree choice must say which of the remaining six it reaches.
+
+**Binds `2.0.0_SA_COO~G`, all after the L10 slug and this seat's round-2 analysis (LD-0521):** round 3 carries (i) ONE
+tree judged by every arm -- briefed judges and an unbriefed judge on the SAME planes -- each judge REQUIRED to name the
+single most-severe finding per plane and its rule, so an ORDER is exercised and the arms can diverge; (ii) the
+comparison cell tests the roll-up, not the vocabulary; (iii) the four canon coordinates above as a canon cell; (iv) a
+tree chosen to reach the six rules still unexercised (R3, R8, R14, R15, R19, R21 less R17 now reached). S6 disarms at
+(ii)'s drain if the arms could have diverged and did not. **COO~G's own grain error (plane-keyed vs axis-keyed) and its
+fifth instance of a check whose name promises what its body does not read (`k3-contentdiff` planting nothing) are
+recorded as the round's instrument findings; the worker rows carry them.**
