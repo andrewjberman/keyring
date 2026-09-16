@@ -6537,6 +6537,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "Every round-12 order's BOUNDS: COLLECTION STAYS OFF -- three Windows tasks are DISABLED; no cell enables collection.",
     "world_is": "Something produced a chatter ranking generation at 10:00Z with no seat live. A ranking computed over already-collected metrics is not collection, so this may be a legitimate scheduled metrics job; its trigger is not measured here.",
     "notes": "NO ACTION by this seat, per the surprise-channel imperative: recorded and not chased. It matters to the round only because the chatter axis is rk-3's positive control, and a control fed by an unknown trigger should be known."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W25-S5",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~25",
+    "surfaced_at": "2026-09-16T14:44:02Z",
+    "one_line": "This order's <paths> grant names lib/research/universe/ and lib/research/scores/, but neither directory has ever existed in this repository (git log --all -- <path> returns nothing for either) -- 2 of the 8 grant lines named in section 3 fail the order's own pre-flight existence test.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "test -e lib/research/universe/ and test -e lib/research/scores/ both fail at HEAD de77282136; the other 6 grant lines in section 3 (lib/research/identity/, lib/research/peers/, lib/research/api/tests/, this cell's deliverables dir, INVESTIGATION_v1.md, this order's own file) all exist.",
+        "git log --all --oneline -- lib/research/universe/ lib/research/scores/ returns zero commits for either path in the whole repository history, and git log --oneline -1 -- lib/research/universe lib/research/scores likewise returns nothing -- these are not directories that were deleted, they were never created.",
+        "This cell's actual DELIVER (positioning_chain.py, build_universe.py, the universe object, coverage_pass.py, crosswalk.py) lives entirely under lib/research/identity/ and lib/research/peers/, which are both granted and present; no criterion in this order's proof-of-spec names universe/ or scores/ as a read or write target."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Worker-face preamble: 'Your first act prints git rev-parse --abbrev-ref HEAD and tests that org/, .tools/ and the paths in section 3 exist; if any is absent, STOP with a BLOCKING row.'",
+    "world_is": "2 of the 8 <paths> lines (lib/research/universe/, lib/research/scores/) are absent and have never existed in this repo; the other 6 are present. This cell's DELIVER does not require either absent path, so the run proceeded rather than treating the mismatch as a tree-integrity BLOCKING row -- the general worker bar's own language distinguishes 'the worktree does not carry the paths the task order names' (a broken/incomplete checkout, tested by org/ and .tools/ at the top) from a per-grant write surface that may legitimately be provisioned for work never exercised.",
+    "notes": "Not treated as BLOCKING: this is a write-grant surface (RULING 1: 'A SURFACE NOT NAMED IN <paths> IS A WALL... A READ needs no grant; this block governs WRITES'), no criterion in section 5 needs either path, and the substantive work this order names was already built and committed at 0a5064ded5 entirely inside the paths that DO exist. Recorded per the surprise-channel imperative (append and keep working) rather than halting the order."
   }
 ]
 ```
