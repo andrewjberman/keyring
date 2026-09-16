@@ -1,4 +1,4 @@
-# AMGT_RESAPP -- L5 decomposition (COO) -- v1.3 (s.18 = round 10; the header read v0.6 through v1.0 and is corrected here)
+# AMGT_RESAPP -- L5 decomposition (COO) -- v1.4 (s.20 = round 12; s.18 = round 10; the header read v0.6 through v1.0 and is corrected here)
 
 **Seat:** `2.0.0_SA_COO~ZZZ`, spawned by Andrew 2026-09-10 ~17:4xZ at the `1.0.0_SA_CTO~Z` terminal for this
 project (seating brief msg 21003; `project.json` `seats.coo`). **Directive:** D5 Alternative Research.
@@ -1960,3 +1960,168 @@ proof instance; the pool prefixes are one object per (key, as_of); a generation 
 rj-10 is the ONLY cell that moves the live plane; a cell's QA one-shot writes pool objects and nothing else; the values one remedy
 does not move are named in each cell (rj-1 does not deploy; rj-6 does not run the batch; rj-8 does not start the loop; rj-11 does
 not schedule; rj-13 builds no feed).
+---
+
+## 20. ROUND 12 (v1.4) -- FROM THE L10 ROUND-11 ANALYSIS @`c708914c50`, ADDENDUM 1 @`1db70c8e87` AND ADDENDUM 2 @`06378dd3bd`
+
+**Cut by `2.0.0_SA_COO~Z`**, the first round this lane holds. Continuity ruled by `1.0.0_SA_CTO~Z` (msg 23365) on
+Andrew-direct ~04:5xZ, *"yeah we also need COO~Z and CVO~Z for full tier1 on this project"* (record `c05a41c0f4`).
+**Rounds 1-11 are FROZEN and unchanged**; rounds 10-11 were held by `2.0.0_SA_COO~W` and that record stands.
+
+**THIRTEEN cells, ids `AMGT-rk-1` .. `AMGT-rk-13`** -- the analysis's A-M, remapped into dependency order. The letters
+are the CTO's (WHAT); the ids, chains and fan-out are this seat's (HOW), per s.5's own division.
+
+### 20a. THE SUBTRACTION (Rule 24) -- over the PRD's OUTCOMES against the SERVED PLANE
+
+⛔ **THE DOMAIN IS THE PRD'S OUTCOMES, NOT THE PREVIOUS ROUND'S FINDINGS.** This is the standing instruction
+Addendum 1 A1.1 minted for every later round of this project, and it exists because this seat got the domain wrong
+first: at msg 23371 it differenced the packet's section 5 against the slug's six obligations, got 24 ids each with 15
+shared, and reported the agreement as corroboration. ⛔ **IT WAS NOT.** Both are round-11 artifacts and round 11 never
+looked at the DEV branch or invoked the print route, so the two instruments were blind in the same place and agreed
+*because* they were blind in the same place -- Rule 22's shared-dependency blindness, which this seat named in its own
+message and then did not apply to its own pair. What caught it was a SEPARATE SEAT pointed at the product
+(`4.0.0_SA_CRO~Z` @`a10eece02e`). **The instrument correction is recorded rather than quietly dropped.**
+
+**DENOMINATOR: 20 outcomes**, `FWD-1..FWD-20`, PRD **v0.9 @`44269d0515`** (FWD-20 appended at v0.9; ids permanent,
+never reused). **SERVED-PLANE STATE** from `4.0.0_SA_CRO~Z`'s product-existence audit @`a10eece02e` -- an independent
+seat on a different instrument (direct Lambda invoke, zip listing, `git ls-tree` on the portal, Task Scheduler, boto3
+pool inventory), never this lane's own read.
+
+**THE SUBTRACTION = 20 outcomes MINUS those a cell in `A`..`M` covers = the UNCOVERED PARTITION.** Written as a
+subtraction from the printed denominator, never as a forward list of what was thought of.
+
+⛔ **AND THE ANSWER IS NOT ZERO. THREE ITEMS SURVIVE THE SUBTRACTION, AND THIS SEAT IS SURFACING THEM, NOT CUTTING
+THEM** -- adding a cell the analysis did not name would be this lane re-scoping WHAT, which is the CTO's. Each is an
+OPEN CALL routed to `1.0.0_SA_CTO~Z`:
+
+| # | uncovered | measured | instrument |
+|---|---|---|---|
+| U1 | **`FWD-18`'s one chart** -- *"the one chart that matters is drawn from them"* | the thesis driver chart is **ABSENT 5 of 5**; no numeric driver series exists, segments are prose. `W18-S12` occurs **ONCE** in the whole 400-line analysis -- in s.3's "what does not serve today" table -- and **ZERO times** in the cell text of s.5 A-H or either addendum | count over the analysis text, cell-section scoped and then unscoped |
+| U2 | **`FWD-6`'s compare surface** -- *"naming the earlier version that shows it"* | the version STORE exists (bucket versioning Enabled, timestamped `derived/model_block/<key>/<stamp>/`); the **compare-two-versions surface is ABSENT**, 0 hits for version / earlier / compare in the page components. `FWD-6` occurs **ZERO** times in the analysis | CRO audit s.1 row S6; count over the analysis |
+| U3 | **the slug's obligation-2 residue** | `W18-S13` / `W21-S6` (CSC values and horizons), `W21-S5` (currency and vintage comparability), `W20-S10` (fit inputs) are named in the round-11 slug's obligation 2 and in **no** cell's text. `W20-S9` is `1.0.0_SA_CTO~Z`'s own row | the same count, run over each id |
+
+⚠ **U1 AND U2 ARE THE SAME CLASS ADDENDUM 1 ALREADY CAUGHT ONE LEVEL DOWN** -- an outcome whose *record* is healthy and
+whose *surface* was never built. They are offered in exactly that spirit and with no claim that the cell set is
+otherwise incomplete: `FWD-3`, `FWD-10` and `FWD-11` also occur zero times in the analysis, and each is correctly
+covered anyway -- provenance and the check face ride the page cell, and the social source is `G`'s classify-only
+mandate by ruling. **Absence from the analysis text is not by itself a gap; U1-U3 are named because their SURFACE is
+absent on the served plane as well.**
+
+⭐ **AND ONE AXIS SITS ABOVE ALL THIRTEEN CELLS**, found by `1.0.0_SA_CTO~Z` from `4.0.0_SA_CRO~Z`'s projection and
+recorded here because it governs how this round's bars are written: **cells A-M repair the PLANE, never the
+POPULATION.** 10 of 19 outcomes stay ABSENT for a non-pilot covered name after every cell lands. **No count bar in
+this round may be cut as though the population were the coverage list.** The two cards that would move it (the
+model-block pull over the 33 keyed names; the filings batch) are **RESERVED at Andrew** and are not cells.
+
+### 20b. PLANE, GRAIN, DENOMINATOR -- the three that decide whether a criterion can fail
+
+1. **EVERY BAR READS THE DEPLOYED PLANE, NEVER HEAD.** Round 11 passed 83 of 83 explicit criteria while the product's
+   central page served zero model figures; the one JUDGMENT criterion is what caught it. A capture from source is not
+   evidence about what a person opens.
+2. **THE HONEST DENOMINATORS, READ AT THE CUT AND NOT ASSUMED** (Addendum 1 R5, and `W19-S8` is the round-11 row filed
+   for exactly this): the article pool is **7 bodies over 3 names**; `derived/model_block/` holds **3 covered keys of
+   89 coverage / 256 universe** plus NVDA, which is not covered (`4.0.0_SA_CRO~Z`'s own correction against its first
+   figure of 4); filings and drafting are **5 pilot names**; `peers/v1` is 33 objects with **10** carrying members;
+   `posture/v1` is **2** keys. ⛔ **A cell that writes a count bar re-reads its store AT THE CUT and PRINTS the
+   denominator beside the number** -- a bar of "80% of covered names" against a 3-key store is a refused criterion.
+3. **GRAIN:** a criterion names the exact route, the exact capture filename, and the exact key. `W20-S1`'s defect was a
+   grain mismatch between a pre-census and a post-census; `F` is the cell that repairs the class at the issuer.
+
+### 20c. THE CELLS -- thirteen, ids `AMGT-rk-1` .. `AMGT-rk-13`
+
+⛔ **THE FULL ID IS WRITTEN IN EVERY HEADING AND IN EVERY TASK ORDER.** The L6 gate resolves cell ids by REGEX over
+this file's text (`CELL_ID_RE`, `to-pipeline-gate.py:262`), so a bare `rk-1` in the decomposition against `AMGT-rk-1`
+in the order is a refusal. Validated at the cut with controls: `AMGT-rk-1`, `AMGT-rk-9`, `AMGT-rk-12` and
+`AMGT-rk-13` all fullmatch; `rk-1`, `AMGT-rk1`, `amgt-rk-1`, `AMGT-RK-1` and `AMGT-rkkkkk-1` are all refused.
+
+| id | letter | what it must cover | closes | chained after |
+|---|---|---|---|---|
+| **`AMGT-rk-1`** | **I** | **FIRST.** Merge the page into portal **DEV** and read a render. 48 SecurityAnalysis files and the `/security-analysis` route exist only at `refs/drains/rj-portal` `b616b759`; DEV `be8cf218` carries 0 of 48. COMMIT-class, freeze reads COMMIT YES / PROMOTE NO. ⛔ **The DEV PUSH is RESERVED (LD-0367/0368) and no cell takes it** -- the cell commits LOCALLY and states push state LOCAL. `merge-tree` measures conflicts, not TypeScript: DEV is 212 commits past the merge-base, so the cell runs `tsc -b` on the merged tree | G1 | root |
+| **`AMGT-rk-2`** | **A** | Redeploy the adapter from HEAD and grant the adapter role `derived/model_block/` READ under a **FRESH never-widen co-sign** (CTO half + COO half, each naming blast radius and per-key rollback, each COUNTING THE WRITERS of every named property). Assert from a **deployed-plane capture**: nonzero model figures, `packs` present, `comparable_name` present, classed ABSENT reasons elsewhere. **JUDGMENT CRITERION, as corrected by Addendum 2 C3:** it names the page (`BA_US_Equity`) and prints the `derived/model_block/` key count at the cut beside the verdict -- a judgment criterion still carries a printed denominator | W19-S13, Z-S107; moves FWD-8, FWD-19 | root |
+| **`AMGT-rk-3`** | **B** | Build the Price generation writer. Every Price list today is ABSENT **by absence, not by measurement** -- the producer has never written a generation | W18-S11 (ARMED), Z-S105 | root |
+| **`AMGT-rk-4`** | **C** | Resolve holdings **without converting unknown to false** (167 of 170 unresolved because the plane carries a bare ticker and the contract rightly forbids guessing `US`). The Positioning chain already resolves **164 of 164** by CUSIP/FIGI/SEDOL/Bloomberg security -- **that chain is the input, never a bare-ticker join.** Repair company-FIGI deduplication and the 23 empty peer subjects | W19-S6, W20-S13, W21-S3 (ARMED), W21-S4 | root |
+| **`AMGT-rk-5`** | **D** | Tab scores: a Bloomberg **quarterly** pull for Robustness's six inputs on the 8-point TTM window at `FUND_PER=Q`; Peers V with subject cap and member guards; Divergence D on the ruled CFPS/EPS dispersion proxy. **Every ABSENT CLASSED before it counts.** ⛔ `integrations/bloomberg/READ_HERE.md` is read FIRST; `BEST_*` defaults to the next QUARTER and a bare identifier resolves to the WRONG security, so `BEST_FPERIOD_OVERRIDE` is set and `NAME` is checked before any measure is read | FWD-17, FWD-20's reporting side | `AMGT-rk-4` |
+| **`AMGT-rk-6`** | **J** | Package the print pack **server-side** so `FWD-5` serves. Today the route returns **500**: the deployed archive (747,396 B, 183 entries) carries no matplotlib, no pypdf, no numpy, `render_pack.py` imports matplotlib at module level and reads a worker-local deliverables folder plus a OneDrive template path. Ruled NOT a browser act -- the displacement test is that a person forwards the output AS PRODUCED | G3, FWD-5 | `AMGT-rk-2` |
+| **`AMGT-rk-7`** | **K** | Wire the on-demand pull: the adapter declares the queue carrier (today `/refresh` answers **501**) and the page calls the enqueue route it never calls today. ⛔ **CORRECTED BY ADDENDUM 2 C1 -- THE CONSUMER STAYS ON THE BOX AND NO LAMBDA CONSUMER IS BUILT:** `pull_consumer.py` calls the Bloomberg DAPI at `127.0.0.1:8194`, so a Lambda would drain the queue and fail every message at `bloomberg_health`. FWD-2 has already worked end to end once (`packs/NVDA_US_Equity/status.json` LANDED). Cadence is a card, not a cell. ⛔ No alarm, monitor or freshness machinery rides along | G4, FWD-2 | `AMGT-rk-2` |
+| **`AMGT-rk-8`** | **E** | Both the mechanical and the browser exercise take the **same five routes** captured from the deployed adapter (`/overlay`, `/peers`, rankings, thesis, posture). Round 11 captured two, so the header description, the feed and the whole Peers panel were outside what could be exercised at all. ⭐ Chained after `AMGT-rk-1` because round 11's browser half exercised a LOCAL vite serve -- only after the DEV integration do the front-end and the deployed adapter meet on the plane a person would use | W18-S20, W18-S5 | `AMGT-rk-1`, `AMGT-rk-2` |
+| **`AMGT-rk-9`** | **F** | **Criteria repair AT THE ISSUER.** Every test criterion asserts a **nonzero collected denominator**; upstream exit status is read; pre/post censuses use an identical grain; capture filenames are exact; staged and cold timeout bounds are stated. ⭐ **A criterion that cannot fail is not a criterion** -- round 11 shipped two (a suite over an empty collection, a verbatim gate over input carrying no quotation marks) | W18-S1, W20-S1 | root |
+| **`AMGT-rk-10`** | **G** | **NOT a build cell.** Classify the social source -- source absence versus failed primitive -- and report: 48 records, 0 admitted, a 713-second job, cost unmeasurable with that key. ⛔ **Recurring collection stays RESERVED to Andrew by name (@`9db2a36cdc`) and nothing here enables it** | W22-S3/S6/S7/S8 | root |
+| **`AMGT-rk-11`** | **H** | **Record the preserved breaches, do NOT replay them:** BA's 4-versus-2 Lusha credits, ten off-order legacy writes after a blocked deploy, the late per-act rollback receipt, two Posture writes under a one-write bound. Future cells carry cumulative budget checks and fail-closed sequencing. ⛔ **Do NOT replay world acts or restore unknown prior contents to improve a receipt** | W22-S2, W19-S16, W19-S19, W20-S14 | root |
+| **`AMGT-rk-12`** | **L** | Served route + page surface for `FWD-7`, `FWD-12`, `FWD-14` -- each today a Python module a person runs by hand, 0 of 11 mounted routes, 0 page components. ⛔ **CORRECTED BY ADDENDUM 2 C2:** `ledger.py`'s CLASSES carries `stage: None` for 6 of 6, so a re-run control over it records SKIPPED every time. The control **REFUSES WITH A NAMED REASON** where activation is reserved, or ships READ-ONLY with the re-run stated as round 13 **in the issuance data**. ⛔ **Never a button that does nothing** | FWD-7, FWD-12, FWD-14 | `AMGT-rk-1`, `AMGT-rk-2` |
+| **`AMGT-rk-13`** | **M** | Re-run the **similarity ranker** over the names `AMGT-rk-4` newly resolves. Without it `C` yields a better crosswalk feeding the same ten populated peer sets | FWD-8's population | `AMGT-rk-4` |
+
+### 20d. INTERFACES -- what one chain writes and another reads
+
+- `AMGT-rk-2` publishes the **deployed adapter vintage**; `AMGT-rk-6`, `AMGT-rk-7`, `AMGT-rk-8` and `AMGT-rk-12` all
+  read a capture from THAT deployment. A cell that captures before `AMGT-rk-2` lands is capturing the old bytes --
+  which is precisely `Z-S107`, the defect round 11 shipped.
+- `AMGT-rk-4` publishes the **resolved identity set**; `AMGT-rk-5` and `AMGT-rk-13` read it. The pool prefixes are the
+  contract: `crosswalk/v1/`, `universe/v1/`, `peers/v1/`.
+- `AMGT-rk-1` publishes the **portal DEV branch state**; `AMGT-rk-8` and `AMGT-rk-12` render against it.
+- `AMGT-rk-9` publishes the **criteria shape** the drain grades every other cell against; it is a root so that its
+  output exists before the first proof instance is graded.
+
+### 20e. EDGES, FAN-OUT, AND THE DRAIN CONTRACT
+
+**FAN-OUT, STATED AS DATA (it goes into the L6 issuance commit verbatim):**
+
+```
+fanout:
+  cap: 8                      # the default; not raised
+  waves: 3
+  wave_1_roots: [AMGT-rk-1, AMGT-rk-2, AMGT-rk-3, AMGT-rk-4, AMGT-rk-9, AMGT-rk-10, AMGT-rk-11]   # 7
+  wave_2:       [AMGT-rk-5, AMGT-rk-6, AMGT-rk-7, AMGT-rk-12, AMGT-rk-13]                          # 5
+  wave_3:       [AMGT-rk-8]                                                                        # 1
+  max_open_width: 7           # 7 <= 8, so NOTHING is deferred for width
+  deferred_for_width: []      # empty, and stated rather than omitted
+```
+
+⭐ **THE WHOLE ROUND FITS INSIDE THE DEFAULT CAP.** Addendum 1 R4 said that if fan-out could not carry `L`, `L` moves
+to round 13 **stated as data rather than taken by omission**. Measured here: max open width is **7 against a cap of
+8**, so `AMGT-rk-12` is carried in round 12 and `deferred_for_width` is **empty**. The empty list is written down
+precisely so a later reader can tell "nothing was deferred" from "nobody looked".
+
+**WORKER SLOTS.** Branches are `wk-amgt_resapp-12-<n>`, directories `/c/tmp/wk-amgt-12-<n>`. ⛔ **THE DIRECTORY NAME
+AND THE BRANCH NAME DIFFER AND ALWAYS HAVE** -- `git branch --list 'wk-amgt-*'` returns ZERO and reads exactly like
+"no branches exist". Measured at the cut: 0 `wk-amgt_resapp-12-*` branches and 0 `/c/tmp/wk-amgt-12-*` directories,
+so round 12's names are free. The 13 round-11 worktrees stay in place -- removal is on Andrew's word
+(ROUND11_PACKET.md s.6).
+
+**DRAIN CONTRACT.** Every order drains with its proof instance graded at HEAD; a JUDGMENT criterion is graded at L9
+and never self-graded; a compound criterion is refused at the cut, one clause per criterion with its invocation and
+its expectation. **At least one judgment criterion per chain**, because round 11's single judgment clause is the only
+thing that caught a page serving nothing behind 83 passing mechanical criteria.
+
+### 20f. BOUNDS -- the round's, verbatim where they are Andrew's
+
+- **PORTAL: COMMIT YES / PROMOTE NO.** *"No portal promote necessary"* (~04:3xZ) removes the PROD promote from the
+  goal's definition of done. ⛔ It does **not** license a promote, does **not** lift the freeze, and says nothing
+  about committing portal code. The portal DEV **push** is RESERVED under LD-0367/0368 and is a card at Andrew.
+- **COLLECTION STAYS OFF.** Three Windows tasks DISABLED over a seven-body pool is the **measured consequence of a
+  RESERVED decision, not a defect to fix**. The harvest mechanism and cadence are Andrew's by name (@`9db2a36cdc`).
+- **THE TWO CARDS ARE ANDREW'S AND ARE NOT CELLS:** the model-block pull over the 33 keyed names, and the filings
+  batch (~USD 1.1 per filing). ⛔ **Vendor use is never authorized by availability.** Without them the finished
+  product is FIVE NAMES, and the completion report must say so rather than let the register imply otherwise.
+- **NO ALARM, MONITOR, SNS/SES-SEND, NOTIFICATION OR FRESHNESS CHECKER** -- standing moratorium. A wired queue is not
+  a monitor.
+- **THE ETF PLANE IS READ-ONLY.** Secrets through `comp-secrets` only. **Lusha: the one authorized enrich stays
+  UNUSED** under the documented contract (the endpoint returns emails and phones when `reveal` is omitted and carries
+  no dates), and contact data is never stored.
+- **MID-ROUND THE SPEC AND THIS DECOMPOSITION ARE FROZEN.** The only off-spec act is a surprise ROW appended to
+  `surprise-channel/investigations/INVESTIGATION_v{N}.md`, and the worker keeps working.
+- **PUSH:** LOCAL on SITEZ for every act in this round; LD-0522 puts the push with `0.0.0_AB_MSTR~Z`.
+
+### 20g. BATTERY DISPOSITION -- mandatory core ALL THREE RUN, plus the COO minimum, denominators printed
+
+| lens | verdict | denominator measured at this cut |
+|---|---|---|
+| `comp-schedule` | **RUN** | 5 of 5 carriers scanned in 16.25 s of a 90 s budget; **0 gates ARMED** for this scope. C1 sentinel 23, C2 deploy-ledger 7 open, C3 moratoria **12 standing NEVER clauses**, C4 scope-guard 21 (SEMI-DECIDABLE, listed never counted), C5 project-blocking 334 (NOT-DECIDABLE, a reading list). The 12 moratoria are what s.20f binds onto cells |
+| `comp-iam` | **RUN** | 214 roles, 190 services, 1114 operations, **321 permission gaps**; 3 trees / 478 `.tf`; 407 policy blocks attached, **27 NOT ATTACHED**, 13 standalone. ⛔ **AND THE INSTRUMENT IS BLIND WHERE `AMGT-rk-2` NEEDS IT:** `comp-iam service opal-amgt-scoped-api` returns **3 operations, all `UNRESOLVED-RESOURCE`** (DynamoDB `Table()` via an untraced helper) and **no S3 row at all**. Its own banner says the list is a FLOOR and never a deletion warrant. **So the never-widen co-sign for `derived/model_block/` reads the Terraform directly and does not rest on this tool's silence**, and the DESIRED plane is not the APPLIED one |
+| `comp-adversary` | **RUN** | declaration carried in the L5 commit message |
+| `comp-routes` (COO minimum) | **RUN** | 7 origins, 29 behaviors, 14 rewrites, 22 API GW routes, 163 frontend endpoints (66 with URLs), **24 component bindings**, 66 resolved routes; 50 of 66 edge-auth, 24 of 66 API-GW auth. ⭐ **AN INDEPENDENT CORROBORATION OF G1 ON A DIFFERENT INSTRUMENT:** this tool parses `portal/src` at the working tree, which is DEV -- and **none of the 24 component bindings is a SecurityAnalysis component.** `4.0.0_SA_CRO~Z` reached the same conclusion by `git ls-tree` and `merge-tree` on the portal repo. Two instruments, two seats, one answer: the page is not on the branch a person is served from |
+| `comp-cache` (COO minimum) | **RUN** | 646 of 646 portal source files scanned, 120 of 120 `useQuery` call sites captured, 0 unparseable; **17 shared keys, 0 with a TYPE MISMATCH** (the bug class). No round-12 cell inherits a cache-key collision |
+| `comp-blast` | **DNA** | no served-output MOVE in this round's cells; `AMGT-rk-2`'s deploy is covered by the never-widen co-sign, which is the narrower and correct instrument |
+
+⚠ **THE BATTERY'S OWN LIMIT, STATED:** `comp-iam` and `comp-routes` are **DESIRED-plane** (parsed Terraform and
+committed source). Neither can tell a declared grant or behavior from a deployed one. Every bar in this round that
+asserts a grant or a route is therefore graded on a **live read or an invoke**, never on a battery figure.
