@@ -1758,6 +1758,30 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     "spec_asserts": "TO-EN-r-5-r2 R5-AC7: 'only the `opal-gateway` worked case of `GRADING_RULE.md` moves, and it reads canonical `gateway-lb`', expect 'VERDICT: PASS-R5-ONE-WORKED-CASE-MOVED'. The COO's drain discipline re-runs every criterion on a checkout other than the worker's own, after the merge.",
     "world_is": "Once the cell's commits are ancestors of CLOUD, merge-base HEAD CLOUD is the cell's own tip (or later), so the diff the criterion counts is empty. The criterion then FAILs on every checkout, the worker's included, while the moved case is on CLOUD. The substance holds by the direct diff from the order's spawn base 671925aecc. The check's base, not the cell, is what differs.",
     "notes": "Issuer's own defect: check_en_r2.py is a fixed input authored by 2.0.0_SA_COO~G. INERT: EN-r-5 is verified by the direct diff and the worker's pre-drain run, and nothing reads the post-drain verdict. For round 2's analysis: pin each spawn_base() caller to the order's issuance base (671925aecc for round 2), or read the base from the worker's result file. Not yet measured: whether check_ln_r4.py and check_canon_r1.py read merge-base HEAD CLOUD the same way."
+  },
+  {
+    "id": "LGIC_ENFORCE-S21",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G",
+    "surfaced_at": "2026-09-15T23:58Z",
+    "one_line": "EN-r-3's R3-AC1 and R3-AC9 read PASS in the worker's own worktree and FAIL on the group branch after a SECOND cell landed beside it. The two criteria census the WORKING TREE with git grep, so LN-g-1's own proof instance and result file -- which quote the token because the re-cut rule's item 5 names firm_forms -- appear as unrecorded readers that EN-r-3's record could not list, because they did not exist when its census was written. The cell's own claim holds: lib/opal_naming.py no longer names firm_forms.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~G",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN in .worktrees/wk-lgic-enforce-2-1 (the worker's own branch tip 3c42177812): check_en_r2.py r3-one-carrier -> 'UNSCOPED: 35216 tracked file(s) scanned (git ls-files); naming firm_forms besides lib/opal_naming.py: 57 ...' and 'VERDICT: PASS-ONE-CARRIER'; r3-reader-census -> 'VERDICT: PASS-READERS-CENSUSED'.",
+        "RUN in .worktrees/wk-lgic-canon-1-9 (branch lgic-v19-group @10fe5d037c, after LN-g-1 @9f18dc922a and then EN-r-3 merged): the same two subcommands -> 'VERDICT: FAIL-TWO-CARRIERS' and 'VERDICT: FAIL-READER-CENSUS'. The other 7 mechanical criteria read PASS on that same tip, and the first-parent tree check read 10 of 10.",
+        "MEASURED on the group tip, with the record parsed rather than grepped: 59 tracked files name firm_forms; FIRM_FORMS_READERS.md lists 57; the UNLISTED set is exactly 2, both LGIC_NAMING's and both authored by LN-g-1's worker -- deliverables/0.9.0_WK_LGIC_NAMING~3/LGIC_NAMING.TO-LN-g-1-r4.grading-rule.proof_of_spec.json and deliverables/0.9.0_WK_LGIC_NAMING~3/grading-rule.r4.result.md. 'lib/opal_naming.py still names it: False'.",
+        "READ check_en_r2.py: r3_one_carrier runs git ls-files and git grep -l firm_forms, and r3_reader_census runs git grep -l at HEAD and at spawn_base(). Both are worktree-scoped, so each grades the tree it runs in; neither is rooted at another checkout."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EN-r-3-r2 R3-AC1: 'a census (97200): 0 reads of firm_forms remain ... every other tracked file an unscoped search finds naming it is a recorded non-reader'. R3-AC9: 'every file that named firm_forms at the base carries a disposition, and none marked repointed still names it'.",
+    "world_is": "Both criteria are written against ONE cell's tree and are graded again on the UNION the group branch makes. A record that is complete when its cell drains goes stale the moment a sibling cell lands a file that mentions the token, even a record file that only quotes a checker's output. The order was flipped complete on its own worktree's PASS, which was true there.",
+    "notes": "ARMED, disarm owner 2.0.0_SA_COO~G: it disarms when FIRM_FORMS_READERS.md lists the two LGIC_NAMING records as 'another-project' -- a one-line record edit, not a re-cut, and NOT done tonight under the managed wind-down (Andrew ~23:3xZ via 0.0.0_AB_MSTR 97267). For 3.0.0_SA_CVO at L9: read EN-r-3's verdicts at the worker's tip 3c42177812, where the 10 mechanical criteria PASS, and read this row for the group-tree reading. The same class will meet any later cell whose criterion censuses the whole tree while a group branch stages several cells at once."
   }
 ]
 ```

@@ -1164,6 +1164,30 @@ new row on 3.0.0_SA_CVO's ask 96495), both 1.0.0_SA_CTO; `LGIC_NAMING-S3`, `LGIC
     "spec_asserts": "1.0.0_SA_CTO's LGIC_ENFORCE round-1 analysis (msg 97145, @7b5331c8c0) RULING ROWS: 'The same rows fill LGIC_NAMING FWD-5's {system} placeholders.'",
     "world_is": "The rows that ruling cuts are SYSTEM rows for unresolved tokens. None of the 48 gaps is an unresolved token: each is a function word standing where the name carries no system, so a system row fills 0 of them. As round 4 is cut, LN-f-1 RAISES each missing per-resource row, and FWD-5 would grade on its RAISE clause with 48 RAISEs.",
     "notes": "INERT: no order is wrong as cut; LN-f-1 raises rather than guesses. Pitched to 1.0.0_SA_CTO at ~17:17Z with REC (a): define the resource-to-system row family (a registry contract, L4) and cut it in LGIC_ENFORCE round 2 as EN-r-4 before that round's issuance merges; (b), 48 RAISEs as FWD-5's endpoint, is recommended against."
+  },
+  {
+    "id": "LGIC_NAMING-S21",
+    "project": "LGIC_NAMING",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G",
+    "surfaced_at": "2026-09-15T23:50Z",
+    "one_line": "proof-of-spec-check resolves a cited surprise row by globbing the MAIN checkout (_channel_row_ids uses WORKSPACE, :1211 region), not the checkout being graded. An instance whose row is committed on a SIDE BRANCH reads INVALID with 'the row must be committed before the instance cites it', although the row is committed and present in the graded tree. Measured on LN-g-1's instance at the lgic-v19-group tip 9f18dc922a: rows W3-S7 and W3-S8 are real JSON rows in the graded worktree's channel and the same check read rc=0 in the worker's own worktree.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN in .worktrees/wk-lgic-canon-1-9 (branch lgic-v19-group @9f18dc922a): python .tools/proof-of-spec-check.py <LN-g-1 instance> G1R4-AC1..AC6,G1R4-J1 -> 'VIOLATION: surprises[0] names row id LGIC_NAMING-W3-S7 which resolves to NO row in LGIC_NAMING's channel (1 INVESTIGATION file(s) scanned on both roots)', same for surprises[1] W3-S8; INVALID (rc=1). The worker 0.9.0_WK_LGIC_NAMING~3 reported rc=0 for the same instance in its own worktree.",
+        "READ of the graded worktree's channel at that tip: one fenced json block, 52 rows, ids include LGIC_NAMING-W3-S7 (line 1169) and W3-S8 (line 1193); both are JSON rows, not prose. The branch copy (git show wk-lgic-naming-4-3:<channel>) carries the same 8 W3 ids and one fence. The merge carried the channel (1 of 1 channel path in the diff, tree check 5 of 5).",
+        "DISCRIMINATING ARM on line endings, since a CRLF working copy defeats an LF-anchored fence parse elsewhere in this estate: the graded copy was converted to LF in place (1216 CRLF pairs -> 0) and the check re-run. It printed the SAME two violations and INVALID. The file was restored with git checkout -- (0 changes). So the EOL is not the cause.",
+        "READ .tools/proof-of-spec-check.py: 'def _channel_row_ids(code)' globs WORKSPACE for 'org/surprise_channel/<CODE>/INVESTIGATION_v*' and 'org/missions/D*/*/<CODE>/surprise-channel/investigations/INVESTIGATION_v*'. WORKSPACE is the main checkout's root, so from a linked worktree the limb reads the MAIN checkout's channel. No flat legacy channel exists for LGIC_NAMING (both ls reads absent), so the one file scanned is the main checkout's tree channel, which at CLOUD does not carry W3-S7 or W3-S8."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-LN-g-1-r4 <proof_of_spec>: the instance is 'validated with python .tools/proof-of-spec-check.py <instance> G1R4-AC1,...,G1R4-J1 BEFORE the complete flip'. CLAUDE.md s.2: a surprises entry with no resolving row id blocks a tree TO's complete flip.",
+    "world_is": "The limb grades the row against a DIFFERENT checkout than the one it is grading. Inside the branch's own worktree it passes; after the drain into a side branch (gate G-V19) the same bytes read INVALID until the branch reaches CLOUD. The rows and the instance are correct; the reader's root is not.",
+    "notes": "ARMED because 3.0.0_SA_CVO's L9 and the L10 gate run this checker: on the group branch it will read LN-g-1's and EN-r-3's instances INVALID and could grade a terminal order non-terminal. It disarms when the v1.9 group reaches CLOUD (then the main checkout carries the rows) or when the limb roots at the graded checkout. Disarm owner 1.0.0_SA_CTO: .tools/ is outside this seat's surface. Class-sibling of the halt-gate rooting defect fixed @72897184fd (1.0.0_SA_CTO 97261), which rooted the inbox at the checkout holding the script; that fix used git rev-parse --git-common-dir. NOT measured here: whether the same rooting bites the artifact-resolution limb or the surprise-row gate."
   }
 ]
 ```
