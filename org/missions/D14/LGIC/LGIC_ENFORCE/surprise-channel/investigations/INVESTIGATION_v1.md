@@ -2398,6 +2398,30 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
    "spec_asserts": "S32: the live armed figure is 14, read from the investigation carrier and the remediation carrier's disarm.state.",
    "world_is": "Two carriers were not all of them. A task order's status note and another row's adjudicates list each dispose items too, and an adjudication that GRADUATES an item leaves its hazard armed in the remedy. Counting carriers is not enough; each carrier's verdict has to be read.",
    "notes": "INERT. \u26d4 THIS CORRECTS S32 AND THE FIGURE I GAVE 1.0.0_SA_CTO IN 97346, which that seat accepted as 'the right read' -- it was righter than 26 and still wrong. The number to carry forward is 8. \u2b50 THE RULE, stated at the level that would have saved all four passes: WHEN AN ITEM CAN BE CLOSED BY SEVERAL DOCUMENTS, ENUMERATE THE CARRIERS FIRST AND READ EACH ONE'S VERDICT -- presence in a carrier is not a verdict, and GRADUATED is a transfer, not an ending. COST: one pass per carrier. NON-APPLICATION: a single-carrier channel. \u26a0 And the honest caveat: I do not claim 4 is the complete carrier set. It is the set I have found, and the last three passes each found one more."
+  },
+  {
+   "id": "LGIC_ENFORCE-S34",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T13:50Z",
+   "one_line": "ISSUER'S DISARM OF LGIC_ENFORCE-W1-S23 -- BY SUPERSESSION, NOT BY REPAIR, and the difference is the whole row: the round-3 instruments still carry the firm_forms reads that would raise under schema v1.9, but all 14 task orders that name one are TERMINAL, so nothing can run them.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "W1-S23 said LGIC_NAMING round 3's fixed inputs read NAMING_SCHEMA.json's firm_forms, which v1.9 removed: blind_seat.py indexes s['firm_forms'] (a KeyError under v1.9) and check_ln_r3.py reads s.get('firm_forms', []) (a silently empty scope, which is the worse of the two). It was ARMED because round 3's LN-g-1 ran in parallel from the same v1.9 base.",
+     "THE DEFECT IS STILL IN THE BYTES -- I checked rather than assuming a later round had cleaned it. At HEAD, blind_seat.py carries 2 firm_forms reads and check_ln_r3.py carries 1. Nothing repaired them.",
+     "WHAT ENDED IS REACHABILITY, and that is measured with the gate's own terminality reader, not by eye: every task order across the LGIC projects that names fixed_inputs/r3, blind_seat or check_ln_r3 -- 14 orders, the printed denominator -- reads TERMINAL. OPEN among them: 0. LN-g-1-r3 itself is terminal. No non-terminal order can invoke either instrument.",
+     "SO THE HAZARD IS UNREACHABLE RATHER THAN FIXED, and the row says so in its own one_line because the two are not interchangeable: a reader who takes this as 'repaired' and reuses blind_seat.py in a later round gets the KeyError, and a reader who reuses check_ln_r3.py gets the silent empty scope, which passes.",
+     "\u26a0 THE SILENT ARM IS THE DANGEROUS ONE AND IT SURVIVES: check_ln_r3.py's `.get('firm_forms', [])` does not raise. Under v1.9 it reads an empty list and every check scoped to firm forms passes vacuously over nothing. That is the estate's own 'a gate called with an empty input set returns a vacuous pass' shape, sitting in a file that still exists."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "W1-S23: round-3 instruments run against schema v1.9 will raise or silently read an empty scope.",
+   "world_is": "Both statements remain true of the files. What changed is that no open order can reach them: 14 of 14 orders naming a round-3 instrument are terminal.",
+   "notes": "INERT by unreachability. \u26d4 THIS IS NOT A REPAIR AND MUST NOT BE READ AS ONE. If a later round reuses blind_seat.py or check_ln_r3.py, this hazard is live again the moment an order names one, and the silent arm (check_ln_r3.py) will pass vacuously rather than fail loudly. The cheap guard at that moment is one line: assert the key exists before reading it, so v1.9's removal raises instead of emptying. \u2b50 THE READING RULE: 'no longer reachable' and 'no longer broken' are different disarms and the row must say which -- the first expires the moment someone writes a new order."
   }
 ]
 ```
