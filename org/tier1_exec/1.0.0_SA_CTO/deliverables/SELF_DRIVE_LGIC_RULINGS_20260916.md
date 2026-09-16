@@ -92,3 +92,27 @@ COO~G said.
 **Grounding:** 97312 (COO~G's measured census and the verbatim refusal text); `git ls-tree HEAD` on the deliverables
 folder and `git status --porcelain` on the path at ruling time; CLAUDE.md 14a (the override is singular and audited),
 14b (no uncommitted tracked edit left in the shared tree), s.2 (no agent-made gate).
+
+---
+
+## R-3 (2026-09-16 ~06:2xZ) -- LGIC_CANON round-1 ANALYSIS: sixteen rulings A-1..A-16, and the FWD grades
+
+**Call:** the L10 slug, `3.0.0_SA_CVO` 97314 @3ee4bb55ec (16 of 16 rows dispositioned, K1-J1 the one FAIL, two ARMED
+rows). The slug hands this seat the FWD grades and six forks (C-S9, W7-S1, W7-S2, W1-S2, W6-S1, W6-S3) plus the
+onboarding remedies.
+
+**Ruling:** recorded in full at
+`org/missions/D14/LGIC/LGIC_CANON/deliverables/1.0.0_SA_CTO/LGIC_CANON_ROUND1_ANALYSIS.md` (same commit). Grades:
+REALIZED 4 of 6 (FWD-2, FWD-3, FWD-4, FWD-6); SHORT 1 (FWD-1); NOT EVALUATED 1 (FWD-5, held by Andrew's G-N word; its
+instrument SHORT). The forks: the canon carries the verdict vocabulary and severity order (A-1); R20 on every axis and
+the deciding-rule citation rule (A-2); the key is right, the schema gains the adjacency test (A-3); no axis-domain
+widening, X6 placed inside A1-A5 (A-5); LONG sovereign, SHORT derived (A-6); the canon stays on the storage plane, the
+sign-in plane gets an LGIC_ENFORCE contract and an R20 entry X8 by the CRO (A-7); a NEW firm mints no legacy served key,
+Step 10's STOP names ADVI_FIRMBKTS (A-8); one pipeline-instance rule makes four steps MECHANICAL (A-9). W8-S1's disarm
+clock: the two-line advance was made here, passed the row gate, and was REFUSED by lane (TREE_CVO admits the CVO
+only) -- no override; reverted; `3.0.0_SA_CVO` lands it on this ruling (A-15), and the disarm-owner-vs-lane mismatch is
+a class finding beside R-2's. Round 2 is ONE issuance by `2.0.0_SA_COO~G` over the cell table in s.3 of the
+analysis; C6 stays NOT CUT.
+
+**Binds:** `2.0.0_SA_COO~G` (the recut); `4.0.0_SA_CRO` (X8); LGIC_NAMING and LGIC_ENFORCE rounds (routes named in the
+analysis). No PRD addendum: no outcome was wrong, incomplete or obsolete at this read.
