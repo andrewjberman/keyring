@@ -7125,6 +7125,54 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "world_is": "The repair is built and proved: a share-class-marker-stripping self-exclusion arm, narrower than the reverted token-overlap attempt (W25-S3), removes ONLY the GOOGL/GOOG pair from each other's served membership across the whole live population, with the over-exclusion control above showing zero collateral removals. AC3 now reads self_match_suspects 0. W25-S6's own routing to 3.0.0_SA_CVO~Z at L9 is superseded, on this specific residual, by the issuer's own amendment putting the fix inside this cell's grant; the wider ADR/cross-listing question W21-S3 originally raised (a subject resolvable only under a scanner identifier carrying a DIFFERENT name string with no share-class marker at all, e.g. a SEDOL) is a DIFFERENT mechanism from a share-class suffix match, is NOT addressed by this rule, and stays routed to 3.0.0_SA_CVO~Z at L9 exactly as W21-S3 and W25-S3 left it -- though the same generic token-based detector this order's AC3 uses covers both mechanisms at once and currently finds neither live.",
     "disarm_owner": "0.9.0_WK_AMGT_RESAPP~25 (this repair and its over-exclusion control)",
     "notes": "This row does not flip W25-S6's own hazard_standing field (append-only, immutable at surfacing per the surprise-channel schema); it disarms the ARMED condition going forward by satisfying the disarm_owner's own text via the route ISSUER AMENDMENT 10 (row S130) named. AC3's proof-of-spec instance is updated to PASS with this evidence, superseding the prior instance's FAIL-as-written grading at 33304ed32c."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W23-S2",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~23",
+    "surfaced_at": "2026-09-16T18:47:58Z",
+    "one_line": "AMGT-rk-8's AC4 -- the JUDGMENT criterion graded at L9 -- names TWO results, the captured-route denominator and the branch under judgment, and its invocation can only ever produce the FIRST one in this worktree: it reads 'portal/.git/HEAD', but portal is a LINKED WORKTREE whose .git is a FILE (a gitdir pointer), not a directory, so os.path.exists is False and the invocation takes its own fallback and prints 'branch_under_judgment see AC3 evidence'. AC3's evidence is the harness output, which names no branch either, so the branch reaches the grader from NEITHER named source. Measured and supplied in this worker's AC4 output_evidence instead.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AC4's expect, verbatim: 'This invocation prints the captured-route denominator (5) and the branch so the grader has the evidence' -- two named results on a criterion whose whole function is to carry evidence to 3.0.0_SA_CVO~Z at L9.",
+        "AC4's invocation run LITERALLY under timeout 120 at 2026-09-16T18:4xZ in worktree C:/tmp/wk-amgt-12-23, rc=0: it printed 'routes_captured 5 of 5', the five filenames with byte counts, and 'branch_under_judgment see AC3 evidence' -- the fallback arm, not the branch.",
+        "'cat portal/.git' in this worktree returns the single line 'gitdir: C:/Users/Opal Bloomberg/Desktop/ajb_workspace/portal/.git/worktrees/portal1' and 'cat portal/.git/HEAD' returns no such file -- portal/.git is a REGULAR FILE, so the path portal/.git/HEAD does not exist and os.path.exists() is correctly False.",
+        "The branch actually under judgment, measured directly with git in the portal worktree: branch wk-amgt_resapp-12-23-portal, HEAD 2453a7b4c6b7ff91ea89db499890a9486265d1a0 -- AMGT-rk-1's DEV-integrated branch. This value is recorded in this cell's proof-of-spec AC4 output_evidence so the L9 grader is served.",
+        "AC3's invocation output carries no branch token at all: its 16 recorded lines are the fixture JSON tail and twelve 'CHECK <name> = <value> (expected <value>)' lines followed by 'CHECKS-OK 12 of 12'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT-rk-8 AC4 asserts its invocation prints the captured-route denominator AND the branch under judgment, so that the L9 grader has both; it names AC3's evidence as the fallback carrier of the branch.",
+    "world_is": "In a linked worktree portal/.git is a FILE, not a directory, so the invocation's os.path.exists('portal/.git/HEAD') guard is False by construction and the branch half is never printed; the named fallback, AC3's evidence, contains no branch either. The denominator half printed correctly as 'routes_captured 5 of 5'.",
+    "notes": "Filed as FORM only, not significance. The criterion was run LITERALLY and is recorded verbatim with its fallback output; nothing was repaired, widened or substituted, and AC4 carries NO self-verdict (judgment=true, graded at L9 by 3.0.0_SA_CVO~Z). Hazard is INERT because the missing value is supplied MEASURED in the same instance's AC4 output_evidence and in this row's grounding, so no grader is left without it. Same class as the banked linked-worktree finding that 'test -f .git/MERGE_HEAD' reads vacuously CLEAR in a linked worktree: a path-existence guard written for a normal clone silently takes its negative arm under spine v3, where EVERY worker runs in a linked worktree. The generalisable form, for the issuer and not adjudicated here: a worktree-plane guard of the shape os.path.exists('<repo>/.git/<x>') is False for every spine-v3 worker by construction, so any criterion guarded that way prints its fallback rather than its result, and the fallback reads exactly like a deliberate choice."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W23-S3",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~23",
+    "surfaced_at": "2026-09-16T18:55:10Z",
+    "one_line": "AMGT-rk-8 AC2's bar 'overlay-has-posture' is an any() across ALL FIVE captured bodies, and posture rides TWO of them -- /overlay AND /thesis -- so the bar reads True from /thesis alone even when the /overlay capture is absent entirely. Proven by this cell's own mutant control: with the /overlay capture removed, overlay-has-description flipped to False (it discriminates) while overlay-has-posture stayed True (it does not). The criterion is MET truthfully at this cut -- /overlay was captured, served 200 and does carry posture -- so this is a bar-discrimination finding, not a failed criterion.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ISSUER AMENDMENT 11's stated intent for the swapped bar: 'AC2 now bars overlay-has-posture True, which exercises the posture surface WHERE IT IS ACTUALLY SERVED' and 'the posture surface has NO route of its own and rides the /overlay body, so this is where it is exercised'.",
+        "AC2's invocation as issued: print('overlay-has-posture', any('posture' in (b or {}) for b in bods)) -- bods is every captured body, so the bar is existential over the whole set of five and is not scoped to the overlay capture.",
+        "Key census over this cell's own five captures, denominator 5 captured bodies, all statusCode 200: posture is present in exactly TWO -- api_scoped_amgt_security_BA_US_Equity_overlay.json (keys axis_reads, bloomberg_session_state, chatter, description, feed, header_figures, identity, peers, posture, price, security_key) and api_scoped_amgt_security_BA_US_Equity_thesis.json (keys include header_figures, model_status, posture, thesis_driver). description is present in exactly ONE, the overlay capture.",
+        "MUTANT CONTROL, this cell's own, run by moving the /overlay capture aside and re-running AC2's invocation BYTE-UNCHANGED, then restoring: files 4, nonempty-bodies 4, overlay-has-description False, overlay-has-posture True, peers-has-members True. Restored run matched the baseline byte-for-byte (restored_matches_baseline True).",
+        "Baseline AC2 at this cut, all bars met: files 5, nonempty-bodies 5, overlay-has-description True, overlay-has-posture True, peers-has-members True."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMENDMENT 11 asserts overlay-has-posture exercises the posture surface where it is actually served, namely inside the /overlay body, and gives that as the reason the bar replaced the non-existent /posture route.",
+    "world_is": "The bar is existential over all five captured bodies and posture rides two of them, so /thesis satisfies it independently of /overlay. The bar therefore cannot distinguish 'the /overlay body carries posture' from 'some captured body carries posture', which is the property the amendment says it tests.",
+    "notes": "Filed as FORM only; significance is the issuer's and L9's, not this worker's. AC2 is recorded PASS-by-output because every bar it names was met on a truthful object: the /overlay capture exists, served 200 at 50630 bytes, and carries posture. RESIDUAL, named precisely and not adjudicated here: the sibling bar overlay-has-description IS discriminating for /overlay's presence (it fired False under the mutant), so an absent or empty /overlay is still caught by this same criterion; the narrow uncovered state is /overlay serving 200 while having LOST its posture object specifically, which would read green off /thesis. Hazard recorded INERT on that basis. This is ISSUER AMENDMENT 11's own class one level down -- the amendment corrected a bar that passed on a route that did not exist, and the replacement bar passes on a body it does not name. The one-line fix shape, offered as data and not taken here because this cell may not widen or repair a criterion: scope the check to the overlay capture's own body rather than any() over bods."
   }
 ]
 ```
