@@ -7028,6 +7028,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "AMGT-rk-8's cell text DELIVER line and AC1 both name five routes captured from the DEPLOYED adapter, the fifth being /security/{key}/posture.",
     "world_is": "The deployed adapter serves no /posture route and the page's client never calls one; posture is a nested object inside the /overlay body. The criterion's other four routes are all real and all serve 200.",
     "notes": "The cell text is FROZEN and still reads /posture; the amendment corrects the OBJECT only, on AMENDMENT 2's precedent, and the count of five does not move. AC3 and AC4 are byte-identical. This row exists because the defect was SILENT -- both criteria were passable on a non-existent route -- and because AC4 is the JUDGMENT criterion 3.0.0_SA_CVO~Z grades at L9: without this row a grader reading a refused posture surface could grade the page unusable on a route the product does not have. No grant path, bound or cell text moves."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S132",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-16T18:30:01Z",
+    "one_line": "AMGT-rk-6's AC2 permitted a Lambda LAYER as the packaging remedy but its invocation read only the function's own zip, so a layer-based fix -- the standard remedy for matplotlib on Lambda -- would have printed PKG matplotlib 0 and graded as a FAILURE. ISSUER AMENDMENT 12 makes the invocation enumerate and list the layers, counting the three packages summed across the zip and every layer.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AC2's expect as issued: 'each of PKG matplotlib, PKG pypdf and PKG numpy is NONZERO in the DEPLOYED archive (or, if a layer is used, the layer is listed and its contents printed by the same invocation)' -- while the invocation's only source was f['Code']['Location'], the function zip.",
+        "opal-amgt-scoped-api at this amendment: Layers [] (none attached), CodeSize 754470, runtime python3.11, memory 512 MB, timeout 29 s, ephemeral storage 512 MB, CodeSha256 x3KrEBvZVFmZqZ1KLsuzu6A7fedugZoxfS7+eoJiMUw=, LastModified 2026-09-16T17:23:29Z.",
+        "The REPAIRED invocation, run whole by the issuer: layers 0; SRC zip bytes 754470 entries 185; total-entries 185; PKG matplotlib 0, PKG pypdf 0, PKG numpy 0, rc=0. The cut's 183 entries / 747,396 B moved because AMGT-rk-2's fix-forward redeployed the adapter at 17:23:29Z.",
+        "The other four criteria dry-run whole at the same amendment, all rc=0 and all discriminating at the cut: AC1 module-level-matplotlib 2 / onedrive-path 2 / worker-deliverables 1; AC3 status 500, body-bytes 127; AC4 11 entries, 0/0/0, 0 of 0; AC5 11 entries, 0/0, 0 of 0.",
+        "lib/research/print/render_pack.py:40-44 carries a module-level 'import matplotlib' with matplotlib.use('Agg') and the pyplot and PdfPages imports; :53-57 carries the DELIVERABLES path under 0.9.0_WK_AMGT_RESAPP~1 and a OneDrive template path."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT-rk-6's AC2 asserts the deployed artifact carries matplotlib, pypdf and numpy, and its expect explicitly permits a layer as the carrier.",
+    "world_is": "The invocation could only ever see the function's own zip, so the layer branch it permitted was unmeasurable by the instrument the criterion names; a correct layer-based fix would have graded as a failure.",
+    "notes": "This is ISSUER AMENDMENT 11's defect with the sign flipped -- there a wrong object PASSED silently, here a right answer would have FAILED silently. The repair adds layer enumeration to the one invocation the grammar allows; no bar, grant, bound or cell text moves, and AC1, AC3, AC4 and AC5 are byte-identical. Recorded separately: the function's memory 512 MB, timeout 29 s and ephemeral 512 MB are small for matplotlib, and the note now says that raising any of them is a served-plane change belonging in the never-widen co-sign's blast radius with its own rollback value."
   }
 ]
 ```
