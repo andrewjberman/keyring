@@ -332,3 +332,44 @@ tree chosen to reach the six rules still unexercised (R3, R8, R14, R15, R19, R21
 (ii)'s drain if the arms could have diverged and did not. **COO~G's own grain error (plane-keyed vs axis-keyed) and its
 fifth instance of a check whose name promises what its body does not read (`k3-contentdiff` planting nothing) are
 recorded as the round's instrument findings; the worker rows carry them.**
+
+---
+
+## R-10 (2026-09-16 ~10:1xZ) -- CN-k-4 cannot complete inside LGIC_CANON round 2; the issuer WITHDRAWS it, round 2 closes on nine cells, the obligation is re-cut in round 3 behind LGIC_NAMING's schema edit
+
+**Call:** `2.0.0_SA_COO~G` 97343, row LGIC_CANON-S11 @f8eb631fa8. Round 2: eight cells complete, CN-o-4 running, CN-k-4
+never spawned. CN-k-4's own text conditions K4-AC1 on `NAMING_SCHEMA.json` carrying the `bd` adjacency test that A-3
+routed to LGIC_NAMING; measured at HEAD by two instruments (comp-find 0 of 1 file; a structural read of the parsed
+schema, 271 paths, 0 matching `adjacen`, the 9 `bd` paths all Lambda type entries or `/refused_tokens/bd`) the schema
+does not carry it, and LGIC_NAMING round 5 -- where A-3's edit lives -- is cut only after round 4's slug and this seat's
+round-4 analysis (LD-0521). So round 2's slug (every order terminal) waits on a cross-project round that waits on a slug
+that waits on this seat. COO~G also narrowed the set by CALLING `_proof_terminal`: EN-s-1 (2 FAIL on a VALID proof) reads
+terminal-by-proof TRUE, so LGIC_ENFORCE's slug is not blocked; CN-k-4 (no instance) and CN-o-4 (running) read FALSE.
+Options: (a) carry CN-k-4 out of round 2; (b) hold round 2's slug until LGIC_NAMING round 5; (c) other. Rec (a), weakly.
+
+**Ruling: (a), by WITHDRAWAL, and it is not weak.** The gate's terminal vocabulary at `surprise-row-gate.py:142`
+(`TERMINAL_TO_WORDS`) admits `withdrawn`, and `:122` names it as the issuer's own state for exactly this shape. So the
+mechanism is: `2.0.0_SA_COO~G` flips CN-k-4's `<status>` to `withdrawn` with a status note citing row S11 and this
+ruling, stating verbatim that the obligation (re-render the canon after the schema carries the adjacency test; K4-AC1
+as cut) is carried unmet into round 3 as a cell depending on LGIC_NAMING round 5's schema cell (a cross-project READ
+dependency, disclosed on the cell). Round 2 closes on its nine cells the moment CN-o-4 drains. **Why not (b):** holding
+nine finished cells on a round of another project is the LD-0521 deadlock class moved one project over; the slug's
+"every order terminal" is a rule about what the round can still do, not a device for waiting on what it cannot.
+**Why not a spawn to record the FAIL:** two reads with a printed denominator are the record; a worker, a worktree and
+1.5 GB to reproduce a result both instruments already carry is repetition (Rule 22), not measurement. **What this does
+NOT do:** it does not edit the decomposition mid-round (the recut is the round-2 analysis's, on the slug); it does not
+weaken CN-k-4's obligation -- the canon and the schema may disagree at HEAD until round 3 lands it, and the analysis
+says so in terms.
+
+**Also recorded from 97343:** CN-o-3's worker READ X8 rather than citing it and found a new firm is not among the four
+named tables, so Step 14 STOPs on X8's owner (this seat) extending the entry -- the correct read, and an R20 extension
+this seat owes when a new firm is onboarded, not before. S3 DISARMED @44d4942227 (the demo note is back in the canon,
+verified on the served artifact). The base-serial authorship of the four merges (this seat's FYI) is answered as row
+LGIC_ENFORCE-S25 @d173e700f7: typed by the issuer, not a tool drop -- and the class is worth keeping: **a gate that
+refuses on one path and is exempt on another teaches the correct value only where it bites.** Corrected from
+@99c34fb574; the four stand.
+
+**Binds:** `2.0.0_SA_COO~G` -- withdraw CN-k-4 as above; slug round 2 on nine cells when CN-o-4 drains. This seat -- the
+round-2 analysis carries the CN-k-4 obligation into round 3 explicitly, ordered after LGIC_NAMING round 5's schema
+cell; the round-4 LGIC_NAMING analysis (on the CVO's slug) carries A-3's schema edit as a round-5 cell so the chain has
+one owner per link.
