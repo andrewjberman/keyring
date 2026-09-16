@@ -2222,6 +2222,32 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
    "spec_asserts": "S24 and S26: EN-d-1 must not be spawned while EN-s-1 reads the registry it writes, nor while EN-t-3 is budgeting disk against a 10 GB stop line.",
    "world_is": "Both siblings have drained, the disk came back, and EN-d-1 is running against a base that postdates every artifact it depends on.",
    "notes": "INERT. \u26a0 ONE ROW FOR TWO HOLDS IS DELIBERATE AND IS NOT A COMPOUND ROW: S24 and S26 are two conditions on ONE act -- spawning EN-d-1 -- and that act happened once. Splitting the record would imply two independent events. \u26d4 S23 IS NOT DISARMED HERE and stays ARMED: its condition has TWO halves and only one is met. EN-s-1 was spawned after EN-r-6's drain (met), but the durable half -- widening the issuance census to intersect each cell's INVOCATION and INPUT targets with every OPEN cell's <paths>, rather than comparing <paths> to <paths> -- exists only as this seat's hand discipline across three instances (S23, S24, S26) and is embedded in no tool and no order template. A rule I apply by remembering is not a widened census."
+  },
+  {
+   "id": "LGIC_ENFORCE-S29",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T11:55Z",
+   "one_line": "ISSUER'S DISARM OF LGIC_ENFORCE-S23: the widened census exists as a tool rather than as my memory (issuance_contention.py @4567f58ddf), and it CATCHES S23's own case -- but it scores 2 of 3 against the cases it was built from, and that number is printed in the tool rather than implied.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "S23's disarm had TWO halves. The first -- EN-s-1 spawned after EN-r-6's drain -- was met when EN-s-1 ran against base c8e9d02213 and drained at 99c34fb574. The second, the durable one, was widening the issuance census to intersect each cell's INVOCATION and INPUT targets with every OPEN cell's <paths> rather than comparing <paths> to <paths>. Until now that widening existed only as this seat's hand discipline across three instances.",
+     "IT NOW EXISTS AS A TOOL: org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/2.0.0_SA_COO~G/tools/issuance_contention.py @4567f58ddf. It IMPORTS rather than reimplements -- _paths_block_entries and _order_grants from .tools/owned-paths-validate.py so a glob or directory prefix is read exactly as the resolver reads it, and TO_STATUS_RE / TERMINAL_TO_WORDS / _proof_terminal from .tools/surprise-row-gate.py so OPEN means what the gate means (an order that FAILED a criterion on a VALID proof is TERMINAL and cannot contend).",
+     "BUILD LADDER CHECKED BEFORE WRITING ANY CODE: comp-which answered 'NO CURATED RULE MATCHED THIS QUESTION ... THE CATALOG DOES NOT COVER IT' over its 78 tools, with the three fuzzy candidates scoring 0.51, 0.48 and 0.45 and explicitly flagged as guesses rather than a routing decision.",
+     "IT PRODUCED A FALSE CLEAR ON ITS FIRST REAL RUN, and that is the reason to trust the rest of it: the rooted-path regex requires a directory separator, so EN-s-2 read CLEAR while its Read line names NAMING_CENSUS_REPORT.md -- EN-s-1's entire write surface. Repaired by matching a sibling's granted BASENAMES whole-word, never for a directory or glob entry that has no single basename.",
+     "MEASURED AGAINST THE THREE CASES IT WAS BUILT FROM, 2 of 3, and the score is in the tool's own docstring: S23 (EN-s-1 RUNS lib/opal_naming.py, EN-r-6 WRITES it) CAUGHT by rooted path; S24's first arm (EN-s-2 READS NAMING_CENSUS_REPORT.md, EN-s-1 WRITES it) CAUGHT by basename; S24's second arm (EN-s-1 reads the REGISTRY, EN-d-1 WRITES it) MISSED, because EN-s-1's order never NAMES the registry -- it says 'run python lib/opal_naming.py census' and the census reads the registry inside itself.",
+     "FIVE SELFTEST ARMS, positive AND negative, all passing: contention detected on the positive case; disjoint surfaces clear; a directory grant covers a file under it; 'lib/opal_naming.py' does NOT grant 'lib/opal_naming_extra.py'; a cell naming no path yields no targets.",
+     "LIVE ON BOTH PROJECTS: LGIC_ENFORCE 34 orders / 3 OPEN / 0 contentions among them; LGIC_CANON 22 orders / 0 OPEN -- which corroborates from a SECOND code path the 10-of-10 round-2 terminality measured separately this morning."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "S23: the issuance write-surface census compares what cells WRITE and never asks what they RUN or READ, so a cell whose instrument another open cell is editing reads as safe.",
+   "world_is": "That question can now be asked by running a tool instead of by remembering a rule, and S23's own instrument-vs-output case is one of the two it catches. The third shape -- reaching a file through the program you invoke -- is still invisible and is named as such.",
+   "notes": "INERT. \u26d4 WHAT IS DISARMED IS THE BLINDNESS S23 NAMED, NOT CONTENTION IN GENERAL. Three things this tool does not do, stated so its PASS is not over-read: it is ADVISORY and refuses nothing; it does not model DISK or any shared capacity, so LGIC_ENFORCE-S26's class is entirely outside it; and it sees only paths NAMED IN TEXT, so the transitive reads of an invoked program are the measured miss. \u2b50 THE HABIT WORTH KEEPING is not the tool but the test that graded it: I ran it against the three cases I had already found BY HAND, and it is only because I had those three that the false clear was visible at all. A new check is graded against the findings that motivated it, never against its own selftest."
   }
 ]
 ```
