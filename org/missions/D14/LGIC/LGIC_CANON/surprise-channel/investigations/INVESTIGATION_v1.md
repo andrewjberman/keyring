@@ -941,6 +941,32 @@ not a message.
    "spec_asserts": "02_DOCTRINE.md section 0 states its rule count as a recounted census line ('RULES CARRYING ALL THREE PARTS: 21 of 21') and the document stamps its version in its title line; the canon is the one document a seat answers conformance from without opening a second.",
    "world_is": "The body carries 22 rules and the change log carries v1.1, while both header carriers still read the v1.0 values. A reader who takes the census line at face value reads a canon of 21 rules and can conclude R22 is not canon text -- which is exactly the rule four onboarding-checklist steps (3, 7, 8, 9) now rest on.",
    "notes": "Off-task for CN-o-4: found while grounding R22 for the checklist review, and it belongs to CN-k-2's artifact, which is not in this order's <paths>. Not touched. No mark in CHECKLIST_REVIEW_R2.md depends on the count -- R22's own text was read in full at :459-468. INERT: nothing reads the census line mechanically (render_naming_section.py --check stamps the GENERATED section, not this line)."
+  },
+  {
+   "id": "LGIC_CANON-S14",
+   "project": "LGIC_CANON",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T11:05Z",
+   "one_line": "A WORKER'S FRESH WORKTREE COMMITS THE SURPRISE CHANNEL BACK AS CRLF ON THIS AUTOCRLF BOX, so at the drain EVERY shared row differs in BYTES while NONE differs in CONTENT -- my union resolver refused the whole merge on it, correctly, and would have refused every future drain the same way.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "MEASURED ON THE RECORD, not the worktree -- git show <ref>:<path> at five successive commits of this channel: 68cf37aa3d, 44d4942227, f8eb631fa8, 0e309c0834 and a2ac9030d1 all read CRLF=0 with 825..924 bare LF. The record is pure LF and has been throughout.",
+     "AND THE WORKER'S BRANCH BLOB IS NOT: wk-lgic-canon-2-10 reads CRLF=846, bareLF=1 -- MIXED, and overwhelmingly CRLF. The worker did nothing wrong; its fresh worktree checked the tracked LF file out as CRLF (core.autocrlf on this box), it appended its row, and the CRLF checkout went back in as the committed bytes.",
+     "THE CONSEQUENCE AT THE DRAIN: my union resolver asserts every row id the two sides SHARE is byte-identical before splicing. With one side CRLF and the other LF, all 34 shared rows differ in bytes, so it raised REFUSED and named all 34. That refusal is the tool working -- had it spliced, it would have rewritten 34 untouched rows' bytes on an APPEND-ONLY channel.",
+     "THE DISCRIMINATOR THAT SETTLED IT, and it is the whole point: I compared the PARSED objects instead of the bytes. A JSON parse cannot carry a line ending. Result: ours 38 rows, theirs 35, shared 34, and shared rows differing AFTER PARSE = 0. So EOL was the ONLY difference and normalising loses nothing; had even one row differed after parse, that would have been a real conflict and the refusal would have stood.",
+     "THE REPAIR, in the resolver: the shared-row check now takes an EOL-immune second opinion. A byte difference is re-tested by json.loads on both sides; equal parses are reported as 'BYTES ONLY (line endings), content identical' and accepted, an unequal parse REFUSES naming the rows, and an unparseable row REFUSES rather than being silently accepted.",
+     "AND THE SPLICE STILL NEEDED A SECOND PASS: taking the new row's bytes verbatim from the branch brought its CRLF with it, leaving the merged file MIXED at CRLF=21 / bareLF=925. Normalised CRLF->LF only; verified 39 rows before and after with identical id order, 0 duplicates, and a byte delta of exactly 21 -- the CR characters and nothing else. The diff against HEAD stayed 22 insertions / 0 deletions.",
+     "MY OWN ERROR IN THE SAME EPISODE, recorded because it is the dangerous half: my drain script ran `git add` on the conflicted file UNCONDITIONALLY, so when the resolver REFUSED and wrote nothing, I staged the file with its conflict markers still in it and called --continue. safe-merge refused that too and ABORTED. Checked afterwards: no MERGE_HEAD, no conflict markers, clean porcelain, and `git merge-base --is-ancestor` says the branch was NOT merged. Nothing landed."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "A drain merges a worker's branch into the shared channel by splicing its new rows beside the existing ones, which are unchanged.",
+   "world_is": "On this box the existing rows are not unchanged in BYTES after a worker commits from a fresh worktree -- they are the same content with different line endings -- so any byte-level equality check over a channel across a worker boundary reads a difference that is not there.",
+   "notes": "INERT: the resolver is repaired and exercised on the real case, the merge landed at 8e02a704c0, and the record is back to pure LF. \u26a0 THE RESIDUE IS THAT THE REPAIR LIVES IN A SESSION SCRATCHPAD TOOL, NOT IN THE ESTATE. Any seat draining a worker branch on an autocrlf box meets this and has no tool to meet it with; the estate's own guidance already carries the neighbouring facts (a fresh linked worktree renders a pinned text asset CRLF; a worktree sha256 hashes the checkout, not the record) but nothing names the APPEND-ONLY CHANNEL case. \u2b50 THE READING RULE THAT GENERALISES: compare the PARSED OBJECT, never the bytes, whenever a comparison crosses a worktree boundary -- and when the bytes and the parse disagree, the parse is the question you meant to ask."
   }
 ]
 ```
