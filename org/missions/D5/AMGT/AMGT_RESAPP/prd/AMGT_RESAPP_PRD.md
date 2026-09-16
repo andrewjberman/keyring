@@ -5,7 +5,7 @@
   "project": "AMGT_RESAPP",
   "directive": "D5",
   "fabric": "site-z",
-  "prd_version": "v0.8",
+  "prd_version": "v0.9",
   "step": 4,
   "brief_ref": "docs/briefs/amgt-resapp-security-analysis-20260910.md@19ce7d5b4d",
   "endpoint_outcomes": [
@@ -27,7 +27,8 @@
     "FWD-16",
     "FWD-17",
     "FWD-18",
-    "FWD-19"
+    "FWD-19",
+    "FWD-20"
   ],
   "status": "RATIFIED"
 }
@@ -129,6 +130,51 @@ refused `2.0.0_SA_COO~ZZZ` on the lists themselves, and back-filling a ROUND-2 w
 a fact Andrew supplied **two rounds later** would make that file assert a provenance it does not
 have. ⚠ The cost is DISCOVERABILITY: a reader who opens `:353` alone does not see this note. That is
 accepted deliberately, and it is why the note names the contract rather than the reverse.
+---
+
+### v0.9 -- WHAT CHANGED AND WHICH HALF IT MOVES (recorded HERE, in the preamble, deliberately)
+
+**Author:** `1.0.0_SA_CTO~Z`, 2026-09-16, at L10 of round 11. **Answers:** the round-11 CVO slug
+`REMEDIATION_v11.md` @`5d3a04cab6` ("Append FWD-20") and `ROUND_ANALYSIS.round11.md` s.4 and A1.3
+@`1db70c8e87`.
+
+**THE HALVES, MEASURED BEFORE THE EDIT WAS WRITTEN AND AGAIN AFTER, not assumed:**
+
+| half | v0.8 | v0.9 | signer owed |
+|---|---|---|---|
+| ratified-text | `cc038187d71c` | `88e330dea809` | **`3.0.0_SA_CVO~Z` -- MOVED, a signature IS owed** |
+| brief | `0455fc3d1e95` | `0455fc3d1e95` | **`4.0.0_SA_CRO~Z` -- UNCHANGED, nothing is owed** |
+
+⭐ **WHY THIS TABLE IS HERE RATHER THAN IN A MESSAGE.** A half binds to the HASH of its sections and
+never to `prd_version`, so "what does this bump re-open" is a MEASUREMENT, and a reviewer should not
+have to re-derive it. `2.0.0_SA_COO~Z` asked for exactly this read before the addendum was written
+rather than after (msg 23370), and it was run that way.
+
+⚠ **AND THIS SECTION IS A `###`, NOT A `##`, FOR A MEASURED REASON: the first draft of it used a
+`##` heading, which made it a TOP-LEVEL SECTION rather than preamble and MOVED THE BRIEF HALF
+(`0455fc3d1e95` -> `379799cfc644`) for a note that changes no requirement -- the exact trap described in
+the next sentence, committed while writing the warning about it. Caught by re-reading the half hashes
+AFTER the edit instead of trusting the intent. ⭐ MEASURE THE HALVES AFTER THE WRITE, NEVER ONLY BEFORE.**
+
+⛔ **AND IT IS WHY THIS SECTION SITS IN THE PREAMBLE.** The pre-heading preamble belongs to NEITHER
+half (`prd_signoff_lib.half_of_section`, title `None` -> `None`), so recording the change costs no
+reviewer a re-read. Writing this same paragraph into a `##` section would have moved a half for a
+note that changes no requirement -- the trap this PRD already records one screen above.
+
+**WHAT MOVED THE RATIFIED-TEXT HALF, itemised so the reviewer can diff by intent:**
+1. **`FWD-20` appended to the ENDPOINT** -- a filings-and-history-seeded house free-cash-flow
+   forecast, seeded independently of consensus, with Divergence shown on the Model tab and ABSENT
+   with a reason wherever the house forecast does not serve. Bar `EXERCISED`.
+2. **The BAR DISTRIBUTION line** reads 19 of 20 `EXERCISED` (was 18 of 19), and the warning beneath
+   it reads NINETEEN outcomes that no build can close (was Eighteen).
+3. **Five contract rulings appended to CONTRACTS** as `C-ROUND12-*`, each carrying the call it
+   settles and the row it answers.
+
+**WHAT DID NOT CHANGE:** no existing `FWD-n` text, no existing contract, no constraint, no surface
+manifest row, and nothing in the brief half. `FWD-n` ids remain permanent and never reused;
+`FWD-20` takes the next unused number.
+
+
 ---
 
 ## 0. THE VERSION HAZARD -- BINDING ON EVERY READER OF THIS PRD
@@ -346,9 +392,29 @@ disputable, by rule, and carry no technical language.*
          SOURCE     Andrew-direct 2026-09-15 ~05:1x-05:2xZ (Posture, the
                     union universe, the symmetric comparable), the voice
                     memo of ~05:5xZ (part five)
+
+  FWD-20 The house has its own forward view, and the page can say where it
+         differs from the street
+         DONE WHEN  EXERCISED -- an analyst has read a Divergence figure on
+                    the page and traced it to the house forecast behind it
+         ACCEPT     A forward free-cash-flow forecast is produced for a
+                    covered name from the company's own filings and its
+                    history, seeded independently of consensus. The Model
+                    tab shows Divergence -- how far the house view sits from
+                    the street's, scaled by how much the street disagrees
+                    with itself -- and states ABSENT, with the reason, for
+                    every name where the house forecast does not yet serve.
+                    Model upside and the raw percentage disagreement are
+                    REPORTED beside it and are never ranked on.
+         SOURCE     CVO round-11 slug REMEDIATION_v11.md @5d3a04cab6 ("Append
+                    FWD-20 for a filings/history-seeded house FCF forecast
+                    independent of consensus"); 1.0.0_SA_CTO~W's ruling 4 at
+                    CTO_ADJUDICATION_AMGT_RESAPP_20260915T195xZ.md @1685652d6e;
+                    carried at L10 by 1.0.0_SA_CTO~Z, ROUND_ANALYSIS.round11.md
+                    s.4 item 3 @c708914c50
 ```
 
-**BAR DISTRIBUTION: 18 of 19 are `EXERCISED`; only `FWD-9` is `APPLIED`.**
+**BAR DISTRIBUTION: 19 of 20 are `EXERCISED`; only `FWD-9` is `APPLIED`.**
 
 ⚠ **THIS IS THE MOST IMPORTANT SINGLE FACT FOR L5. Eighteen outcomes cannot be closed by any
 build.** **No cell may claim an `EXERCISED` outcome REALIZED on the strength of its own artifact.**
@@ -498,6 +564,40 @@ universe from the same filing field. No contact data point is stored. Owner of t
 harvest estate under the same loop discipline Andrew set at ~04:3xZ.
 
 ---
+
+**C-ROUND12-COMPARABLE-COVERAGE (settles W20-S11, routed by Z-S104).** A Posture verdict STATES what its
+comparable lacks and is STILL ISSUED; the verdict carries the comparable's evidence coverage beside it. A
+comparable with no pack is NAMED as such. ⛔ Ordering is NOT restricted to complete packs and the comparable is
+NOT drafted: restricting the ordering silently changes WHICH comparable is chosen, and drafting one manufactures
+evidence. A stated gap is honest; a narrowed universe is a hidden decision nobody can see afterwards. Ruled
+`1.0.0_SA_CTO~Z`, `ROUND_ANALYSIS.round11.md` s.4 item 1.
+
+**C-ROUND12-THESIS-ASOF (settles W18-S19).** The thesis bundle CARRIES ITS OWN `as_of_date`, sourced from the
+FILING the drafting derives from, and ABSENT-explicit where no filing date resolves. ⛔ NOT `generated_at`, which
+is the serve time, and NOT `identity.crosswalk_vintage`, which is an identity vintage. A reader asking "as of when
+is this thesis true" is asking about the EVIDENCE, not about the request. Ruled `1.0.0_SA_CTO~Z`, s.4 item 2.
+
+**C-ROUND12-PRINT-SERVER-SIDE (settles the print route's 500; `FWD-5`'s producer).** The print pack is rendered
+SERVER-SIDE: matplotlib, pypdf and numpy ship in the deployed archive or a layer, the template lives in the pool
+rather than on a OneDrive path, and the renderer reads no worker-local deliverables folder and imports no plotting
+library at module level. ⛔ NOT ruled a browser act: `FWD-5`'s displacement test is that a person forwards the
+output AS PRODUCED, and a browser-rendered print is the analyst's own reformatting under another name. Measured
+absent by `4.0.0_SA_CRO~Z` @`a10eece02e` (direct GET -> 500; the 747,396 B archive carries none of the three).
+Ruled `1.0.0_SA_CTO~Z`, `ROUND_ANALYSIS.round11.md` A1.3 R2.
+
+**C-ROUND12-PULL-WIRED (settles the 501 on refresh; `FWD-2`'s carrier).** The on-demand pull is WIRED, not
+retired: the adapter DECLARES its queue carrier, the enqueue route is the one the page actually calls, and the
+consumer is an EVENT-SOURCE-MAPPED Lambda rather than a poller a person starts. ⛔ No alarm, monitor, freshness
+checker or notification rides along -- the standing moratorium binds, and a wired queue is not a monitor. Ruled
+`1.0.0_SA_CTO~Z`, A1.3 R3.
+
+**C-ROUND12-SURFACED-OUTCOMES (settles the three no-surface outcomes).** `FWD-7`, `FWD-12` and `FWD-14` each get a
+SERVED ROUTE and a PAGE SURFACE. Today each is a Python module a person runs by hand: 0 of the 11 mounted routes,
+0 page components and 0 adapter references, against a positive control that fired. ⛔ An outcome whose only
+implementation is a hand-run module is NOT REALIZED, whatever its rows say. If a round's fan-out cannot carry
+them, they move to the NEXT round as data stated in the issuance -- never by omission. Ruled `1.0.0_SA_CTO~Z`,
+A1.3 R4.
+
 
 ## 2. THE BOUNDARY
 
