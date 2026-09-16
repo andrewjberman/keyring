@@ -1,4 +1,4 @@
-# AMGT_RESAPP -- L5 decomposition (COO) -- v1.5 (s.20 = round 12, amended s.20h; s.18 = round 10; the header read v0.6 through v1.0 and is corrected here)
+# AMGT_RESAPP -- L5 decomposition (COO) -- v1.6 (s.20 = round 12, amended s.20h + s.20i; s.18 = round 10; the header read v0.6 through v1.0 and is corrected here)
 
 **Seat:** `2.0.0_SA_COO~ZZZ`, spawned by Andrew 2026-09-10 ~17:4xZ at the `1.0.0_SA_CTO~Z` terminal for this
 project (seating brief msg 21003; `project.json` `seats.coo`). **Directive:** D5 Alternative Research.
@@ -1968,7 +1968,7 @@ not schedule; rj-13 builds no feed).
 Andrew-direct ~04:5xZ, *"yeah we also need COO~Z and CVO~Z for full tier1 on this project"* (record `c05a41c0f4`).
 **Rounds 1-11 are FROZEN and unchanged**; rounds 10-11 were held by `2.0.0_SA_COO~W` and that record stands.
 
-**FOURTEEN cells, ids `AMGT-rk-1` .. `AMGT-rk-14`** (thirteen at v1.4; `AMGT-rk-14` added at v1.5, s.20h) -- the analysis's A-M, remapped into dependency order. The letters
+**SIXTEEN cells, ids `AMGT-rk-1` .. `AMGT-rk-16`** (thirteen at v1.4; `AMGT-rk-14` at v1.5 s.20h; `AMGT-rk-15` and `AMGT-rk-16` at v1.6 s.20i) -- the analysis's A-M, remapped into dependency order. The letters
 are the CTO's (WHAT); the ids, chains and fan-out are this seat's (HOW), per s.5's own division.
 
 ### 20a. THE SUBTRACTION (Rule 24) -- over the PRD's OUTCOMES against the SERVED PLANE
@@ -2172,3 +2172,64 @@ kind of claim that should carry its arithmetic.
 **ROUND 12 IS FOURTEEN CELLS: `AMGT-rk-1` .. `AMGT-rk-14`.** Every other clause of s.20 stands unchanged,
 including the bounds in s.20f and the battery in s.20g -- the battery was run against the cut and adding a
 cell that reads existing pool prefixes moves none of its denominators.
+### 20i. AMENDMENT v1.5 -> v1.6 -- CELLS `AMGT-rk-15` and `AMGT-rk-16`, and `AMGT-rk-14` EXTENDED, from ADDENDUM 4 @`4055200e2f`
+
+**Amended BEFORE issuance again, so nothing is frozen and no order is re-cut.** These are the three open
+calls s.20a raised (U1, U2, the U3 remainder), ruled by `1.0.0_SA_CTO~Z`. **Two became cells; one was
+folded into an existing cell rather than given its own**, and the folding argument is the interesting half.
+
+| id | letter | what it must cover | closes | chained after |
+|---|---|---|---|---|
+| **`AMGT-rk-15`** | **O** | **`FWD-18`'s ONE CHART.** The ACCEPT promises "one chart, chosen for that company, of the thing it lives or dies on". Measured: the driver chart is ABSENT 5 of 5 and `thesis_driver` is a **NAMED SERIES WITH NO NUMERIC POINTS**. Ruled: the filings analyzer emits the driver as a **numeric series with its points and their units**, not only a name; the Thesis tab draws that one chart; ABSENT-explicit with a classed reason where the filing carries no series. ⛔ **THE CRITERION ASSERTS A NONZERO POINT COUNT ON A REAL NAME, never the presence of the field** -- a named series with no points is the same shape as a control that cannot act: it satisfies "the field is populated" and renders nothing | W18-S12, FWD-18 | `AMGT-rk-1`, `AMGT-rk-2` |
+| **`AMGT-rk-16`** | **P** | **`FWD-6`'s COMPARE SURFACE.** The outcome promises an analyst can say what changed, **NAMING the earlier version**. Measured: the STORE EXISTS (versioning Enabled, four timestamped stamps for BA) and the SURFACE IS ABSENT (0 hits for version / earlier / compare in the page components). Ruled: the page gets a compare-two-versions surface reading the store that already serves -- current beside earlier, what moved, the earlier version NAMED | FWD-6 | `AMGT-rk-1`, `AMGT-rk-2` |
+
+**`AMGT-rk-14` (N) IS EXTENDED, NOT SPLIT.** It now also carries the CSC columns carrying values **with
+their horizon labelled** (trailing vs NTM, never a fiscal-year label over an NTM figure) and the size band
+**comparable across currencies and vintages** with the FX basis and vintage named, or ABSENT with that
+reason. ⛔ **ITS CRITERION PRINTS FOUR DENOMINATORS PER NAME** -- codes named, values present, horizons
+labelled, FX basis stated -- **and is not a boolean.**
+
+⭐ **WHY THE U3 REMAINDER FOLDED INSTEAD OF BECOMING ITS OWN CELL, kept because it is a CUTTING RULE:**
+`W18-S13` / `W21-S6` / `W21-S5` are **the same rows, the same loader and the same property** as the fit --
+a value that is present AND comparable. Giving them their own cell would repeat, one layer up, the exact
+both-ends error `AMGT-rk-14` was created to prevent: **a cell could retain values that are not comparable
+and still pass its criterion.** The fold is the same argument as the cell, applied to the cell's own scope.
+
+⚠ **AND `AMGT-rk-16` IS THE ONE TO NOTICE:** the hard half -- immutable versioned history -- is already
+built and serving; only the reading surface is missing. **That is exactly why it went unnoticed, because
+every PRODUCER census says this outcome is fine.** An outcome can be complete at the producer and absent
+at the person.
+
+**FAN-OUT, RESTATED WITH ALL SIXTEEN (this supersedes s.20e and s.20h):**
+
+```
+fanout:
+  cap: 8                      # the default; still not raised
+  waves: 3
+  wave_1_roots: [AMGT-rk-1, AMGT-rk-2, AMGT-rk-3, AMGT-rk-4, AMGT-rk-9, AMGT-rk-10, AMGT-rk-11]   # 7
+  wave_2:       [AMGT-rk-5, AMGT-rk-6, AMGT-rk-7, AMGT-rk-12, AMGT-rk-13]                          # 5
+  wave_3:       [AMGT-rk-8, AMGT-rk-14, AMGT-rk-15, AMGT-rk-16]                                    # 4
+  max_open_width: 7           # UNCHANGED across three amendments -- wave 1 is still the widest
+  deferred_for_width: []      # EMPTY. Nothing moves to round 13.
+```
+
+⛔ **NEITHER NEW CELL IS DEFERRED, AND THAT IS A MEASUREMENT RATHER THAN A PREFERENCE.** Addendum 1 R4 and
+Addendum 4 s.6 both require that a cell which does not fit the cap move to round 13 **as data stated in the
+issuance, never by omission**. Measured: `AMGT-rk-15` and `AMGT-rk-16` both chain after `AMGT-rk-1` and
+`AMGT-rk-2`, so they land in **wave 3**, which was the narrowest wave at 1. Wave 3 goes 1 -> 4 and
+**max_open_width stays 7 of 8** because wave 1 is and remains the binding wave. `deferred_for_width` stays
+EMPTY, written down rather than omitted, so a later reader can tell "nothing was deferred" from "nobody
+looked".
+
+**CHAINING NOTE, BECAUSE IT DEPARTS FROM THE ANALYSIS'S WORD AND THE DEPARTURE IS THIS SEAT'S TO MAKE.**
+Addendum 4 calls `AMGT-rk-16` "independent". Chaining is the COO's (s.5's own division, restated at
+Addendum 4 s.6), and this seat chains it after `AMGT-rk-1` and `AMGT-rk-2` because **a page surface needs a
+page to sit on and a deployed adapter to read through**: the compare surface is a page component, and until
+`AMGT-rk-1` puts the page on DEV there is no branch to add a component to, and until `AMGT-rk-2` redeploys
+there is no served route for it to read. Cutting it as a root would produce a cell that can be BUILT but
+not EXERCISED, and this round's bars are exercised on the deployed plane. The same reasoning places
+`AMGT-rk-15`. **It costs nothing: neither is deferred and the width does not move.**
+
+**ROUND 12 IS SIXTEEN CELLS: `AMGT-rk-1` .. `AMGT-rk-16`.** s.20a's uncovered partition is now EMPTY --
+U1 -> `AMGT-rk-15`, U2 -> `AMGT-rk-16`, U3 -> `AMGT-rk-14` (the fit half at v1.5, the remainder here.)
+Every other clause of s.20 stands, including the bounds in s.20f and the battery in s.20g.
