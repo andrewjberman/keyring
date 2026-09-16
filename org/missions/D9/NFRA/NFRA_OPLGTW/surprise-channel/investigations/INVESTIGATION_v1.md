@@ -1636,6 +1636,28 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "Validate the instance, then flip <status> and commit the instance, the deliverables and the flip together.",
     "world_is": "The two acts cannot both hold for an artifact the RUN creates: the checker resolves PENDING against the instance's LAST commit, so a file first written after that commit reads ABSENT and the instance is INVALID until the file is committed separately. Splitting the evidence file into its own prior commit is what makes the validation the bound requires possible at all; the flip still rides one commit with the instance and the deliverables.",
     "notes": "INERT and FORM ONLY. It costs one extra commit per run-created evidence file and nothing else; no criterion's measurement changes. The general shape is the known PENDING one-shot: the sentinel names 'this commit' but is read against the commit the instance already has."
+  },
+  {
+    "id": "NFRA_OPLGTW-W5-S3",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~5",
+    "surfaced_at": "2026-09-16T18:13:06Z",
+    "one_line": "TO-OG-k-1's hand-off names tests/test_identity_scope.py::test_scoped_deny_by_default as 'the known red test' that 'fails at the cut base', with an instruction never to edit it or identity_tool_allowlist.txt. Neither file carries any change in this worktree (both clean at HEAD f4c7184f6d), and the test PASSES.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN: cd /c/tmp/wk-oplgtw-1-5c && .venv-og/Scripts/python -m pytest infra/aws/ec2/opal-gateway/tests/test_identity_scope.py::test_scoped_deny_by_default -v -p no:cacheprovider --color=no -> '1 passed in 0.07s', at HEAD f4c7184f6d.",
+        "git status --short infra/aws/ec2/opal-gateway/tests/test_identity_scope.py -> no output (clean, unmodified by this worker or any predecessor in this worktree).",
+        "git log -1 -- infra/aws/ec2/opal-gateway/identity_tool_allowlist.txt -> 2781aac326 (LD-0415 repo rename), no commit since; the file is clean in this worktree's git status."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-OG-k-1 hand-off: 'tests/test_identity_scope.py::test_scoped_deny_by_default fails at the cut base (row NFRA_OPLGTW-S1). Never edit it or identity_tool_allowlist.txt.'",
+    "world_is": "The test passes at this worktree's base, unmodified. Either row S1's finding was already remediated upstream of this cut by a change outside this cell's <paths> (so the hand-off's premise is stale), or the failure is state-dependent (test order / fixture interaction) and does not reproduce standalone -- this row does not adjudicate which. This cell's own 17 criteria (OGK1-AC1..17) are unaffected: none of them names or depends on this test, and neither identity_tool_allowlist.txt nor test_identity_scope.py is in this cell's <paths>, so no action was taken beyond this observation.",
+    "notes": "INERT: no criterion of this order reads this test, and the worker made no edit to either named file. Filed on the bounded sanity check this order itself invited ('Existing AuthKind values and their integrations keep their behaviour'), not as a hunt."
   }
 ]
 ```
