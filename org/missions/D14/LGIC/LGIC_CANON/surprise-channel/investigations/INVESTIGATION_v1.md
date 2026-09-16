@@ -653,6 +653,53 @@ not a message.
    "spec_asserts": "j_reach's docstring: 'A-13: the cell PRINTS which of the seven rules the tree reaches. A printed NOT REACHED is a legitimate outcome.'",
    "world_is": "Until this repair the printed partition was not a reading of what any judge determined -- it was a reading of which rule ids happened to appear anywhere in the judge's row text, including inside prose arguing the opposite. It now reads the judge's own reach column and discloses where the old reading differed.",
    "notes": "INERT: the instrument is fixed and exercised both ways, and no drained cell's verdict moves. THIS DOES NOT DISPOSE W5-S2 -- that row's disarm_owner is 3.0.0_SA_CVO and its disposition is the CVO's at L9, not this seat's; an issuer cannot close a worker's row by repairing the thing it reported. FOURTH defect of mine in a fixed input this session, and the fourth found by a worker rather than by me: 0.9.0_WK_LGIC_CANON~5 filed it, left its order on the evidence, and did not degrade its own file to fit my checker. A worker's measured claim that disagrees with my instrument is evidence about my instrument."
+  },
+  {
+   "id": "LGIC_CANON-W2-S3",
+   "project": "LGIC_CANON",
+   "fabric": "laptop",
+   "surfaced_by": "0.9.0_WK_LGIC_CANON~2",
+   "surfaced_at": "2026-09-16T09:34Z",
+   "one_line": "The fixed input's k3-contentdiff DOCSTRING says the content-diff arm 'is exercised against a planted removal, which is this criterion's negative control' -- the subcommand plants nothing and runs no control: it reads the flag string out of the renderer's source, runs --content-diff once on the true tree and passes on 'CONTENT-DIFF: 0'. A criterion that only ever sees the zero case cannot distinguish a working arm from a `print(\"CONTENT-DIFF: 0\")`.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "THE CITED BYTES, printed not grepped: check_canon_r2.py:245-260 @7db18a4464 (the file's own last commit is df30196cc1). Line 246-247 is the docstring quoted above; lines 248-260 are the whole body -- read(RENDER), '--content-diff' in src, one subprocess.run of the renderer with --content-diff, clean = 'CONTENT-DIFF: 0' in o, out(PASS/FAIL). There is no copy, no edit, no removal and no second run anywhere in the subcommand.",
+     "WHY IT MATTERS HERE RATHER THAN GENERALLY: K3-J1 asks the CVO whether the arm 'would have caught the lost note, rather than re-implementing the freshness check under a new name'. A constant-emitting stub passes K3-AC2 exactly as a real arm does, so the mechanical criterion carries none of that weight and the judgment criterion carries all of it.",
+     "THE CONTROL THE DOCSTRING DESCRIBES, SUPPLIED BY HAND INSTEAD, and it is in this cell's result file: a copy of the renderer with the registry path's note read reverted to the pre-fix '' was run from .scratch/ctl/ (two levels deep so Path(__file__).resolve().parents[2] still resolves to the worktree root) against the section as it then stood. --check printed 'CHECK: FRESH -- 0 failure(s)' and --content-diff printed 'CONTENT-DIFF: 1' naming scopes[demo]/note. Same tree, same moment, two instruments, opposite readings.",
+     "NOT ACTED ON: the fixed inputs are read-only to this worker by the order's own BOUNDS, and this row is filed instead of a hand-edit precisely because LGIC_ENFORCE round 2 lost an hour to a corrupt fixture that was papered over in the code."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "check_canon_r2.py k3_contentdiff's docstring @7db18a4464: 'A-11: the renderer gains a content-diff arm -- it must REPORT a dropped line, not pass over it. The arm is exercised against a planted removal, which is this criterion's negative control.'",
+   "world_is": "The subcommand's thirteen lines contain no planted removal and no negative control. It checks that the flag string occurs in the renderer's source and that one run on the true tree prints CONTENT-DIFF: 0 -- both of which a constant would satisfy. The criterion is a positive-case bar only, and the arm's discrimination is evidence the worker must supply, which this cell did.",
+   "notes": "INERT: the criterion under-tests, it does not mis-test -- nothing it PASSES is false, and this cell's arm does report the dropped note (measured above). Judged the row's FORM, not its significance: whether K3-AC2 should be re-cut with the planted-removal arm its docstring describes is the issuer's call at L9, not this worker's."
+  },
+  {
+   "id": "LGIC_CANON-W2-S4",
+   "project": "LGIC_CANON",
+   "fabric": "laptop",
+   "surfaced_by": "0.9.0_WK_LGIC_CANON~2",
+   "surfaced_at": "2026-09-16T09:34Z",
+   "one_line": "Building the content-diff arm surfaced a SECOND source item the generated section does not carry, of the same shape as the demo note S3 names: NAMING_SCHEMA.json key.legacy_served_paths has FOUR fields and the renderer's one-line render prints THREE -- home, claim, until_present -- and never `producer`. The arm declares it out-of-section rather than rendering it, because rendering it would move output this order held fixed.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "THE SOURCE: infra/logic/render_naming_section.py:157-160 @7db18a4464 (pre-edit bytes) renders legacy_served_paths as one line, '- **legacy served paths list:** home %s; claim: %s; until present: %s', from lsp.get('home'), lsp.get('claim') and lsp.get('until_present'). The fourth key, producer ('LGIC_NAMING cell LN-g-1: every served path below {source}/{scope}/platinum/ ...'), is read by nothing and appears nowhere between the section markers.",
+     "MEASURED, not inferred: with producer left IN the arm's domain the run prints 'CONTENT-DIFF: 1' naming /key/legacy_served_paths/producer on a tree whose --check reads FRESH -- the same silent-drop shape as the demo note. The arm sees it; the freshness check cannot, by construction.",
+     "WHY IT IS DECLARED OUT rather than rendered: the cell's item 1 says 'No other output moves', and the only way to make this item CARRIED is to add a field to the render, which moves the section beyond the restored note. So it is named in SCHEMA_OUT_OF_SECTION with its reason ('names the cell that will mint the list; provenance, not content'), and every exclusion is PRINTED on every --content-diff run rather than being a silent filter -- a reader who disagrees can see it and argue.",
+     "THE EXCLUSION SET IS SMALL AND PRINTED, and the domain is a subtraction from a denominator, not a forward list: 17 schema paths and 4 registry FIRM-row fields are declared out, and anything NOT named is in the domain by default, so a newly added and unrendered source field is LOUD. After the note fix the run reads 'items carried by the section: 198 of 198'.",
+     "This is a pre-existing property of the renderer at its CN-k-1 vintage, not something this cell's edit introduced: the render line predates round 2 and is unchanged by this commit."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "The cell: 'A FIRM row's note renders exactly as the schema path rendered it, so the demo bullet returns. No other output moves.' -- and row LGIC_CANON-S3 frames the loss as the schema-to-registry move costing ONE line.",
+   "world_is": "The demo note is not the only source content the section drops. key.legacy_served_paths.producer is dropped the same way and for the same reason -- a field no code path reads -- and no criterion in this cell names it. Restoring it would have moved output the cell froze, so the arm declares and prints it as out-of-section instead, which keeps the fact visible without widening the order.",
+   "notes": "INERT: nothing is broken by the exclusion and no criterion turns on it. Filed so that the arm's domain is the CVO's to accept or reject at L9 rather than this worker's quiet choice -- an exclusion that nobody reviews is how a content check becomes a constant. Judged the row's form, not its significance."
   }
 ]
 ```
