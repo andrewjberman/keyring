@@ -2050,6 +2050,32 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
    "spec_asserts": "EN-d-1's depends_on (EN-r-6, merged) and the round's write-surface disjointness check both read this cell as ready to spawn.",
    "world_is": "Neither check reads what EN-s-1 CONSUMES. EN-d-1 writes the two registry files the live census reads as its input, so spawning it now would corrupt a sibling's measurement rather than its own.",
    "notes": "ARMED, disarm_owner 2.0.0_SA_COO~G. EN-d-1 is HELD until EN-s-1 drains, then spawned against the post-drain tree; its worktree is already provisioned so the hold costs a wait, not a rebuild. Disarms when EN-d-1 is spawned after EN-s-1's drain. \u26a0 This row does NOT re-argue S23 and does not disarm it -- S23 owns the durable widening of the issuance census; this row exists so a reader asking why EN-d-1 sat unspawned while every declared gate read MET finds the answer at the cell rather than only in the rule."
+  },
+  {
+   "id": "LGIC_ENFORCE-S25",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T10:05Z",
+   "one_line": "Four drain merges this hour are authored `2.0.0_SA_COO` (base) instead of `~G`. Surfaced by 1.0.0_SA_CTO as possibly a tool drop; MEASURED to be neither a tool drop nor an environment drop -- I typed the base serial into the export myself, on the merge path only, while typing ~G on every commit path.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "THE FINDING, as 1.0.0_SA_CTO measured it (msg 97341): git log --format=%an since 7db18a4464 reads 2.0.0_SA_COO 4, 2.0.0_SA_COO~G 3, workers 10. The four base-authored commits are all drain MERGES -- 2bc14e52f8 (CN-j-7), 5a391b0c46 (CN-k-3), c8e9d02213 (EN-r-6), abd07c7ef3 (EN-t-2, the earliest, which is why this row is on LGIC_ENFORCE's channel. Earlier drains this session (4730cec6ca, 40c268fc66, 901f48b1e0, ba15ed94a5) carry ~G.",
+     "THE CTO ASKED WHETHER safe-merge.sh's MERGE PATH READS THE SERIAL DIFFERENTLY FROM safe-commit. IT DOES NOT. Read at HEAD: safe-merge.sh:326-334 REFUSES outright when OPAL_AGENT_SERIAL is unset ('cannot name the' author), then builds _AUTH=\"${OPAL_AGENT_SERIAL} <${OPAL_AGENT_SERIAL}@opal.agent>\" at :333 and passes it to git commit --no-edit --author at :335. It uses the variable VERBATIM and has a self-test arm asserting both behaviours (:75-78). There is no derivation, no lane stripping and no fallback to guess.",
+     "SO IT IS NOT AN ENVIRONMENT DROP EITHER, and this is the part worth recording: the variable was not lost, it was SET TO THE BASE BY ME. Every merge invocation this hour opened with `export OPAL_AGENT_SERIAL=2.0.0_SA_COO` while every safe-commit invocation in the same window opened with `export OPAL_AGENT_SERIAL=2.0.0_SA_COO~G`. Two different values typed by one seat in one hour, split cleanly along the merge/commit line.",
+     "WHY THE SPLIT EXISTED AT ALL: the deliverables lane refuses the BASE serial on a path under deliverables/2.0.0_SA_COO~G/ (measured earlier this session -- safe-commit rejected the base with 'agent=2.0.0_SA_COO not in permitted_agents'), so the commit path forced ~G on me by refusal. The merge path never refuses, because owned-paths-check exempts a merge on MERGE_HEAD. The lane taught me the right value on one path and stayed silent on the other, so the wrong value survived exactly where nothing graded it.",
+     "THE HARM, and it is the CTO's framing, not mine to soften: an author census of the round -- the CVO's L8, the daily sprint, this loop's tick logs -- UNDER-COUNTS the lane and OVER-COUNTS a base seat that is not seated at all. Only ~G is live on the broker. Same class as A-15's disarm attribution finding: the record names one seat and the act was another's.",
+     "NOT REDONE: the four merge commits stand. Their trees, their gate runs and their row grading are unaffected -- only the %an string is wrong, git history is append-only, and rewriting four merges on a shared branch to correct an attribution string would be a far larger act than the defect."
+    ]
+   },
+   "disposition": "DISMISSED_WITH_REASON",
+   "dismissal_reason": "Cause established and the remedy is a reading rule this seat now follows: export OPAL_AGENT_SERIAL=2.0.0_SA_COO~G for EVERY act, merge and commit alike, never the base. The tool needs no change -- it did exactly what it was told, and its refusal-on-unset plus its two self-test arms are correct as written. The four affected commits stand with their attribution as-is, disclosed here so the CVO reads the round's author census with this row beside it rather than concluding a base seat was working. INERT: nothing is armed, no act is owed by another seat, and the exposure ends with the next merge.",
+   "spec_asserts": "A commit's author line names the seat that performed the act, so an author census of a round counts who did the work.",
+   "world_is": "On the merge path the author line is whatever the invoking shell exported, and nothing grades it -- the lane check that would have refused the base serial is exempt on a merge commit. For four merges this hour the exported value was the base serial while the acting seat was the lane, so the census names a seat that is not seated.",
+   "notes": "\u2b50 THE GENERAL SHAPE, which is why this is worth a row rather than a silent correction: A GATE THAT REFUSES ON ONE PATH AND IS EXEMPT ON ANOTHER TEACHES THE CORRECT VALUE ONLY WHERE IT BITES. I learned ~G from the lane refusal on the commit path and never learned it on the merge path, because the merge path never refused. The value was wrong in exactly the place no instrument was looking. \u26a0 Found by 1.0.0_SA_CTO, not by me, on an off-task census during its own tick -- and its hypothesis (a tool or environment drop) was the generous one; the measurement says the seat typed it."
   }
 ]
 ```
