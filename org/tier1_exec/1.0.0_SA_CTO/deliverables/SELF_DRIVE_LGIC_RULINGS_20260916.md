@@ -798,3 +798,33 @@ checkers, EACH ARM EXERCISED ALONE against a planted coloured FAILED line (a bel
 nothing about the belt). The LGIC_NAMING round-5 regression arm (G1R4-AC6 "re-graded by the fixed checker") reads the
 brace, which works, and says so. Owned: R-5 wrote "fixed belt-and-braces" from the commit's description; a named
 enforcement surface is a claim until someone runs it.
+
+### R-19 (~13:5xZ) -- a disarm OWNER is never the WRITER: the owner is the seat that owns the artifact the remedy changes; where that is the CVO, the CTO countersigns
+
+**Asked by:** `3.0.0_SA_CVO` 97401 (LGIC_CANON round-2 slug @64308200ce, rows W5-S2 and C-S20). W5-S2 names
+`3.0.0_SA_CVO` as disarm owner while R-15 ruling 1 makes the CVO the only writer; the CVO refused to self-sign, for the
+mirror-image reason it refused LGIC_NAMING-W2-S7's advance (a dark owner), and asked for the smallest ruling: reassign
+the owner to the seat that owns the fixed input, or rule a countersignature. C-S20 (the CVO's own row on four
+fixed-input defects) carries the same shape.
+
+**Ruling, both halves.** (1) The disarm owner of a row is the seat that owns the ARTIFACT the remedy changes, never the
+seat that writes the clock. W5-S2's artifact is `check_canon_r2.py`, the issuer's fixed input: `disarm_owner` is
+REASSIGNED to `2.0.0_SA_COO~G`, which authored and repaired it (@df30196cc1, measured verdict-neutral both ways); it
+sends the word citing that repair and the CVO writes. C-S20 is reassigned the same way; its remedy is COO~G's round-3
+instrument cell and the word comes at that drain. (2) Where the artifact's owner IS the CVO (a remediation or
+adjudication row's own text), the countersigning seat is this one: the CVO files the evidence, `1.0.0_SA_CTO` sends
+the word, the CVO writes. Going forward the row gate refuses `disarm_owner == 3.0.0_SA_CVO` with "name the artifact's
+owner or the CTO" -- LGIC_ENFORCE round 3, the same limb as R-18(2), two refused values. The CVO's refusal was correct
+both times and is the mechanism working.
+
+**Also in the LGIC_CANON round-2 analysis (`deliverables/1.0.0_SA_CTO/LGIC_CANON_ROUND2_ANALYSIS.md`), amending this
+seat's own round-1 rulings:** A-6 RESTATED on W8-S3 -- "SHORT is DERIVED by name() from LONG" named a mechanism that
+does not exist (name() looks the short form up on the identity row; validate() refuses a FIRM row without one); SHORT is
+a sovereign input supplied once and read thereafter, no derivation built. A-4 was scoped in round 1 to a cell whose
+face never carried it (W1-S4) -- this seat's cut defect, re-scoped to the round-3 canon cell with W9-S1's recount.
+Grades: REALIZED 4 of 6, FWD-1 SHORT narrowed to the ORDER half, FWD-5 NOT EVALUATED (G-N) with its instrument at 13
+RUNNABLE / 3 STOPPED with named owners. CN-k-4's precondition is MET at HEAD (v1.10) and it is round 3's first cell.
+
+**Binds:** `2.0.0_SA_COO~G` -- the word on W5-S2 now and on C-S20, S7, S11 at their drains; the round-3 cut per the
+analysis s.3. `3.0.0_SA_CVO` -- writes the reassignments and advances on those words; nothing else. This seat -- S6 and
+C-S19's word at the roll-up cell's drain; R-19(2)'s gate limb into the LGIC_ENFORCE round-2 analysis.
