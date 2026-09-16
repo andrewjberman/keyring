@@ -7221,6 +7221,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "AMGT-rk-17's AC2 and AC3 count landed keys against the 33 keyed crosswalk names.",
     "world_is": "Two keyed names contain a slash, so a split on '/' mis-reads them; the landing itself was complete.",
     "notes": "The pulls were run by the issuer directly on Andrew's word at the 2.0.0_SA_COO~Z terminal ('do the pulls', 2026-09-16 ~20:2xZ), not by a worker slot; the order's proof instance and status flip are still owed. Two price-axis tickers carry no ranking at 2026-09-15 (Enel IM, ROG SW); whether 'Enel IM' is a casing defect in the price axis's own universe file is recorded, not measured."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S137",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-16T23:27Z",
+    "one_line": "AMGT-rk-17's price-axis pull wrote its 2026-09-15 Price rows through the LEGACY bare-partition writer, not through AMGT-rk-3's generation writer: TRENDING_PRICE#2026-09-15 and BREAKOUT_PRICE#2026-09-15 each hold 32 ranked rows with no generation id and no pointer, so the DEPLOYED adapter -- which since rk-3 follows only the _CURRENT pointer -- reads ABSENT for 2026-09-15, and rk-17 AC4 as cut (a newer TRENDING_PRICE axis_date exists in the store) will read PASS while no Lead Panel request can serve those rows.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "STORE, full scan at 23:2xZ (opal-harvest-security-metrics, 194 rows over 15 distinct axis_date values): PRICE partitions are BREAKOUT_PRICE#2026-09-10 1, BREAKOUT_PRICE#2026-09-15 32, PRICE#2026-09-10 32, TRENDING_PRICE#2026-09-10 1, TRENDING_PRICE#2026-09-10#20260916T065448Z-9b7ffda3dcdc 32, TRENDING_PRICE#2026-09-15 32. The 2026-09-10 generation has its pointer item (the 1-row TRENDING_PRICE#2026-09-10) beside its generation partition; 2026-09-15 has NEITHER a generation-suffixed partition NOR a pointer item: every item in the 09-15 partitions carries a rank_sort (0 pointer-shaped items), and computed_at reads 2026-09-16T20:20Z, inside rk-17's run window (20:18-20:20Z per row AMGT_RESAPP-Z-S136).",
+        "SERVED ROUTE, a different instrument, read-only GET direct invoke of opal-amgt-scoped-api (LastModified 2026-09-16T17:23:29Z, CodeSha256 x3KrEBvZ..., 0 layers) at 23:18Z: /api/scoped/amgt/lead-panel/rankings/trending/price default -> 200 ABSENT rows 0 as_of 2026-09-16; as_of=2026-09-15 -> 200 ABSENT rows 0, reason 'no generation pointer at TRENDING_PRICE#2026-09-15 / _CURRENT: no committed ranking exists for this date'; as_of=2026-09-10 -> 200 SERVED rows 32, keyed 31, generation 20260916T065448Z-9b7ffda3dcdc. CONTROL chatter -> 200 SERVED rows 10.",
+        "SOURCE, read by bytes: integrations/bloomberg/research/price_axis_pull.py (353 lines) builds the key at :198 as \"axis_date\": f\"{axis}#{as_of_key}\" and writes at :342 with table.put_item -- no generation id, no pointer, and no call into lib/research/price/generation.py (comp-read --enumerate over generation|put_item|batch_write|axis_date|_CURRENT|pointer|write_generation: 7 hits, 2 in CODE, both the bare-key write).",
+        "CRITERION, read at HEAD: AMGT_RESAPP.TO-AMGT-rk-17.the-two-budgeted-pulls.md (status pending, last touched 8f17896f99) AC4 expects 'every TRENDING_PRICE axis_date value PRINTED with the scan denominator, and newest_axis_date LATER than 2026-09-10' -- a store-existence bar that TRENDING_PRICE#2026-09-15 already satisfies, with no clause reading the served route or the pointer."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Ruling AMGT_RESAPP-Z-S125 (1.0.0_SA_CTO~Z): the Price axis serves 'through the same pointer and reader at the LATEST COMMITTED price generation', and the held today-dated Price list resolves on this pull (msg 23474: 'the held partitions ... S125 (the today-dated Price list) ... all resolve on exactly these runs'). The spine's L6 handoff clause: 'A SEAM PROVED TO DELIVER ITS INPUT IS NOT A SEAM PROVED TO HAVE AN EFFECT. A criterion NAMES THE OUTCOME, never only the mechanism.'",
+    "world_is": "The pull landed real 2026-09-15 Price rows, but in the pre-rk-3 shape the deployed reader no longer follows, so the outcome the pull was authorized to resolve -- a served Price ranking newer than 2026-09-10 -- is not reached: the Lead Panel still serves only 2026-09-10, and the dated fallback ruled onto AMGT-rk-7 would serve that 2026-09-10 generation as 'latest' while fresher rows sit unreadable beside it. Nothing wrong is served (every ABSENT carries its classed reason); the gap is between a world write and the served plane, and the one criterion that grades the pull cannot see it.",
+    "notes": "Filed by 3.0.0_SA_CVO~Z under the channel's ANY lane at L8 intake, before AMGT-rk-17's proof instance lands, so its issuer can read it first. NOT RULED HERE, named for the owners: whether the 2026-09-15 rows are committed as a generation (the rk-3 writer over the landed rows) or the pull re-routed through that writer is the issuer's cut (2.0.0_SA_COO~Z) and, if it moves a served surface, the CTO's never-widen half; whether rk-17 AC4 is re-cut to the served route is the issuer's under the repair test at 23434 (same property, right object). Bears on this seat's L9 grade of AMGT-rk-3 AC4, which stays NOT MET at this vintage. Instruments: boto3 dynamodb scan (full, denominator printed), boto3 lambda invoke GET-only on three dates plus a control, comp-read --enumerate on the pull's source, python over the order text. HEAD at filing @7e84705c7a."
   }
 ]
 ```
