@@ -150,10 +150,26 @@ LGIC_CANON round 1 is adjudicated and slugged. `1.0.0_SA_CTO` writes the round-1
 1. Event-driven. Rounds this seat grades when each finishes: LGIC_NAMING r4, LGIC_ENFORCE r2,
    NFRA_OPLGTW r1, MDPF_TAXSMA r1. The LGIC_LGCTFM L4-R ratified-text half routes here when its PRD
    exists.
-2. Still open at Andrew and NOT ruled, carried from the previous session unchanged: where
-   firm-attributable MDPF gold lives. `06_CONFORMANCE_LEDGER` and `02_DOCTRINE` R7 disagree, two MDPF
-   projects would build different homes today, and this seat signed the MDPF_CANON half at v2.2 without
-   catching it. The rec stated to him at ~23:2xZ 09-15 is the firm bucket.
+2. Still open at Andrew and NOT ruled, carried from the previous session: where firm-attributable MDPF
+   gold lives. `02_DOCTRINE` R7 (firm bucket, "gold AND platinum, MANDATORY", at ANY grain) disagrees
+   with `MDPF_CANON_PRD` v2.3 `:177` and `06_CONFORMANCE_LEDGER` `:102`, both of which put all MDPF gold
+   in `opal-data-mdpf`; no register entry covers per-firm MDPF gold (X2 is the composite branch, X7 is
+   platinum). This seat signed the MDPF_CANON half at v2.2 without catching it. Rec unchanged: the firm
+   bucket. Surfaced to `1.0.0_SA_CTO` (MDPF_CANON's lead) at 06:51Z with the measurement.
+
+   **CORRECTION, same session, and it changes the urgency.** The sentence above said "two MDPF projects
+   would build different homes today," inherited from the previous session's log. **MEASURED FALSE:**
+   `MDPF_TAXSMA_PRD` v0.5 contains ZERO occurrences of `opal-data-49financial` and ZERO of
+   `opal-data-mdpf`; its `:233` reads "Gold migration and firm-bucket route work remain CANON-owned ...
+   do not authorize migration here." TAXSMA defers gold entirely and writes platinum to
+   `opal-data-portal-v2` under X7. **There is no live divergence between two building projects.** The
+   contradiction is real and STATIC -- it bites the next time MDPF_CANON cuts a round, not today.
+
+   What the measurement DID sharpen: `MDPF_CANON_PRD` `:177` mandates "Every NEW address comes from
+   `key()` and `address()`, never typed" and, in the same sentence, hand-types a gold address
+   `address()` does not produce for four of its five scopes. That is Rule 30's named failure landed
+   inside the row that forbids it -- a tighter statement than "two documents disagree", and it came only
+   from running the builder instead of reading the documents.
 3. LGIC_CANON round 2, when cut, should carry a second judged tree -- C-S10 names which seven rules it
    needs to engage.
 
