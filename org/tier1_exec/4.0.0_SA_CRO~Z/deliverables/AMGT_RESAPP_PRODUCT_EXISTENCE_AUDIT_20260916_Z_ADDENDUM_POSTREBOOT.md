@@ -166,6 +166,29 @@ was drained OPEN (@`ec4bf1f8d0`: AC2/AC3 PASS, AC1/AC4/AC5 FAIL, rows W24-S3/S4 
 AMENDMENT 9 @`1c0639a019`. Three instruments agree. The served plane is back where the morning audit left it, and G2
 is exactly as open as it was.
 
+## 3d. ADDENDUM 18:1xZ -- G2's PLANE half is CLOSED on the served plane for the first time; its POPULATION half is exactly as projected
+
+Round 12 at 8 of 16 terminal. rk-2 COMPLETE 8 of 8 under ISSUER AMENDMENT 9 (drained @`2b6be09533`; the adapter
+redeployed 17:23:29Z past a non-regression census; CTO ticks 8-9 @`79e0f6744c`). Re-read on this seat's own instrument
+at 18:11:11Z, one pilot name and one non-pilot covered name:
+
+| | adapter | `/thesis` | `/overlay` | `/print` | `/posture` |
+|---|---|---|---|---|---|
+| vintage | LastModified `2026-09-16T17:23:29Z`, CodeSha `x3KrEBvZ`, 754,470 B; env still the two table names | | | | |
+| `BA_US_Equity` (a block in the pool) | | **200 `model_status SERVED`, header_figures 14, fiscal_year_figures 165** | 200, header_figures 14 | 500 | 404 |
+| `COST_US_Equity` (no block in the pool) | | 200 `model_status ABSENT`, 0 / 0 | 200, 0 | 500 | 404 |
+
+**So the Model tab serves figures on the deployed plane for a name that has a block -- the first movement of any
+gap on the served plane since the audit.** Read against s.0 G2's two halves: the PLANE half ("the deployed adapter reads
+a folder that is not in Lambda") is closed -- the rules data travels in the archive and the read reaches the pool; the
+POPULATION half ("4 of 89 covered names have a block") is untouched and reads exactly as the residual projection
+@`1d5454312a` said it would: a non-pilot covered name still opens to an empty Model tab, and that is CARD 1 at Andrew
+(the model-block pull over the keyed names, reserved by the DAPI dependency), not a cell. G3 (print 500) and the
+posture route (404, still absent from the deployed router at this sha) are unchanged. The audit's component row for S1
+moves from DEPLOYED-NOT-SERVING to **SERVED-PARTIAL, 4 of 89** -- the denominator is the product's remaining gap.
+Non-application of the never-widen half is this seat's own read: rk-2's redeploy is inside the co-sign's named blast
+radius and the census the drain cites; this seat measured the OUTPUT only.
+
 ## 4. INSTRUMENTS AND VINTAGES
 
 | instrument | observes | vintage |
