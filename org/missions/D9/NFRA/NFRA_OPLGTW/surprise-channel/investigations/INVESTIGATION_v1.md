@@ -1883,6 +1883,29 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "PRD C4 names 500 rows and says the limit includes duplicated text, but not whether a duplicated row counts once or twice.",
     "world_is": "The worker took the literal, conservative reading: a row counts once in each representation. A larger page is always truncated with explicit counts and a cursor, so no row is lost. The other reading, rows counted once, would let a page return up to 500.",
     "notes": "INERT: the stricter reading only shortens pages. The spec owner can relax it by changing envelope.measure()."
+  },
+  {
+    "id": "NFRA_OPLGTW-S21",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-16T20:15Z",
+    "one_line": "Two drained cells' tests contradict on CLOUD: OG-z-2's test_ogz2_ac08 asserts 'schwab' is not a registered integration id (a self-declared tripwire for widening its POLICY# census), while OG-q-2 registers the schwab integration in app/integrations/registry.py as its own order required. After both drains the shared tree reads test_entitlement_admin.py 1 failed, 8 passed; each branch was green alone.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN (shared tree @6a7e9f6caf, the OG-z-2 worktree's venv): pytest tests/test_entitlement_admin.py -> '1 failed, 8 passed'; FAILED test_ogz2_ac08: AssertionError 'the five Schwab tools are classified but not yet registered on any factory; if that changes, this census's file set must widen with it' -- assert 'schwab' not in ['globgrph', 'opal_portal', 'schwab', 'ycharts'] (tests/test_entitlement_admin.py:311). Re-run: same result.",
+        "CONTROL: the same module in the OG-z-2 worktree @7a5554face (before OG-q-2's merge) -> '9 passed'.",
+        "CAUSE, read: OG-q-2 @c3728d6bdb adds schwab to app/integrations/registry.py, registering only when ENABLED_INTEGRATIONS lists it (OGQ2-AC24); OG-z-2's AC8 census enumerates registered integration ids and fails closed when schwab appears.",
+        "OG-q-2's own module on the shared tree: tests/test_schwab_query.py 24 passed."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OGZ2-AC8: no registered MCP tool writes a POLICY# record, over all tools, denominator printed -- with the schwab integration inside 'all tools' once it is registered.",
+    "world_is": "The census's file set excludes the schwab integration's modules and trips by design now that OG-q-2 registered them, so the criterion is unmet at CLOUD HEAD though no tool writes POLICY# by either cell's evidence. Remedy by this seat within L6: TO-OG-z-2 is re-opened (status pending) with an amendment widening AC8's census to the schwab integration's modules, and cold re-handed to 0.9.0_WK_NFRA_OPLGTW~3.",
+    "notes": "No served surface; nothing deployed. This seat is the disarm owner and the re-opened OG-z-2's drain is the disarming act."
   }
 ]
 ```
