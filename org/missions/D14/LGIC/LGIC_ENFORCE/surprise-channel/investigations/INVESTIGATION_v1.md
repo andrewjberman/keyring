@@ -1854,6 +1854,31 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     "spec_asserts": "TO-EN-r-3-r2 THE CELL item 3: 'a scope row carries the REQUIRED fields `validate` names, and a further field only if a generator or `validate` reads it. Remove any field nothing reads (row W1-S8).' Item 4: 'Demo's note no longer says the doctrine does not define the class; it cites X6.'",
     "world_is": "The two items are jointly satisfiable only by making note read or by deleting a field the same order requires content in. The read was added rather than the field removed. bucket_basis (global) and label (both MASTER rows), which nothing reads, were removed as the order says.",
     "notes": "Form only: the choice is recorded here because the order does not name it, and R3-J1 grades at L9 whether DEC-1's required list is the one validate enforces. INERT: nothing is left armed either way."
+  },
+  {
+    "id": "LGIC_ENFORCE-W3-S10",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~3",
+    "surfaced_at": "2026-09-16T00:20Z",
+    "one_line": "G1R-AC1's own fixture, tests/g1r/01_plan_json_added.patch, is a corrupt unified diff (hunk header declares 13 added lines, body carries 12): the stated invocation reads VERDICT: FAIL-PLAN-FILE-GRADED against BOTH the pre-edit and the edited .tools/naming-gate.py, and git apply --check independently refuses the same bytes.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~G",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "READ org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/2.0.0_SA_COO~G/fixed_inputs/r2/tests/g1r/01_plan_json_added.patch @3ee4bb55ec93f2ecd136a2760908d648cf868473: the hunk header reads '@@ -0,0 +1,13 @@' while the body between it and EOF carries exactly 12 '+'-prefixed content lines (enumerated by splitting the CRLF-normalized text on newlines), a declared-vs-actual count mismatch of 1.",
+        "RUN 'git apply --check org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/2.0.0_SA_COO~G/fixed_inputs/r2/tests/g1r/01_plan_json_added.patch' at this worktree (3ee4bb55ec93f2ecd136a2760908d648cf868473): 'error: corrupt patch at ...:18', rc=128 -- git's own parser rejects the same bytes, independent of naming-gate.py.",
+        "RUN the pre-edit commit limb (git show HEAD:.tools/naming-gate.py, saved to .scratch/naming-gate-orig.py, unmodified) --diff <same fixture> --enforce: 'NAMING ERROR not a unified diff: the hunk at diff line 4 ends early (0/0 old, 12/13 new)', rc=1 -- the corruption predates and is independent of this cell's edit.",
+        "RUN the acceptance invocation exactly as named: cd <WS> && timeout 120 python org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/2.0.0_SA_COO~G/fixed_inputs/r2/check_en_r2.py g1r-plan-not-graded -> 'MACHINE-WRITTEN PLAN FILE ADDED: rc=1  NAMING ERROR not a unified diff: ...' and 'VERDICT: FAIL-PLAN-FILE-GRADED' on the edited gate -- G1R-AC1 cannot read PASS through this fixture.",
+        "RUN a header-corrected copy of the identical bytes in .scratch/ (only '@@ -0,0 +1,13 @@' changed to '@@ -0,0 +1,12 @@'): 'git apply --check' rc=0 (applies cleanly); the EDITED .tools/naming-gate.py --diff <corrected copy> --enforce prints 'NAMING SKIP .../fixture_plan.r2.json:1 <machine-written plan file> -> -' then 'NAMING-GATE: PASS 1 graded', rc=0, while the untouched control 02_authored_json_added.patch still prints 'NAMING REFUSE ...queues.json:2 mdpf-cottonwood-publisher-queue -> mdpf-cot-publisher-queue', rc=1 -- the cell's SKIP logic is correct; only the fixture's hunk-header count is wrong."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "G1R-AC1 names invocation 'cd <WS> && timeout 120 python .../check_en_r2.py g1r-plan-not-graded', expecting 'VERDICT: PASS-PLAN-FILE-NOT-GRADED'. THE CELL, item 1: 'A JSON file whose top level carries format_version, terraform_version, and resource_changes or planned_values ... is skipped, and the limb prints that it skipped it.' BOUNDS: 'Fixed inputs are read-only ... Never edit any of them.'",
+    "world_is": "The fixture the criterion names to prove itself against is a corrupt unified diff: its hunk header overcounts the added lines by 1, so both the pre-edit and the edited naming-gate.py's own parse_diff() -- and real git via 'git apply --check' -- refuse it as unparseable, before the SKIP-a-plan-file logic this cell adds ever runs. The stated invocation therefore reads FAIL-PLAN-FILE-GRADED regardless of the commit limb's correctness. A byte-identical, header-corrected copy run outside the fixed-input path (a scratch file, never committed) confirms the edited gate's behavior matches the cell exactly: the plan file is SKIPped and the authored-JSON control is still REFUSEd with its canonical form.",
+    "notes": "BLOCKING because G1R-AC1's named invocation cannot reach PASS while this fixture stands, through no defect in .tools/naming-gate.py. Filed for the issuer, 2.0.0_SA_COO~G, which owns fixed_inputs/r2/; the fixture is outside this order's <paths> and a path this order does not name is a row, never an override. Disarms with a one-line header fix (@@ -0,0 +1,12 @@) or a 13th content line, re-cut by the issuer. The proof-of-spec instance for G1R-AC1 records this row's id and the FAIL-by-output verdict the named invocation actually produced."
   }
 ]
 ```

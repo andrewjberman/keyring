@@ -26,7 +26,17 @@ lookup that replaces it; an EXISTING one warns. NOT graded: prose (a string with
 comments, Terraform block labels, and anything under */tests/* (the generated-file check still runs there).
 
 Inputs: S3 key and bucket literals, resource-name literals, secret paths, log groups, and firm and product
-tokens as whole segments. File types: .py .js .mjs .ts .tf .json .yaml .yml.
+tokens as whole segments. File types: .py .js .mjs .ts .tf .json .yaml .yml. A JSON post-image whose top
+level is a `terraform show -json` artifact (format_version and terraform_version present, with
+resource_changes or planned_values) is SKIPPED, never graded (round-2 EN-g-1, row W1-S22); an authored JSON
+file carrying the same strings is graded exactly as any other JSON file.
+
+BEFORE any grading, the registry is validated (lib/opal_naming.py's validate()): a registry that loads but
+that validate refuses is a `NAMING ERROR` naming the refusal, grading nothing (row W2-S9) -- enforcing this
+exits 1, WARN mode exits 0, same as any other internal error.
+
+THE TERRAFORM-TYPE MAP (TF_NODE: resource type -> (node type, own-name attribute)) is read from
+org/standards/NAMING_SCHEMA.json's tf_type_map (C-S11, v1.9) at import; the limb keeps no map of its own.
 
 Usage:
     python .tools/naming-gate.py --diff FILE [--enforce] [--post-from-index]
@@ -37,8 +47,9 @@ then exits 1. Otherwise it is WARN mode and exits 0, on an internal error too (`
 without it the post-image is the pre-image with the diff's hunks applied.
 
 Output: one `NAMING <verdict> <file>:<line> <string> -> <canonical>` line per graded string (<verdict> is the
-grade, RAISE, or REFUSE), an indented `why:` line under each, then `NAMING-GATE: <PASS|WARN|REFUSE> <n> graded`.
-Every verdict line is appended to org/mcp/naming-gate-verdicts.log (runtime state; gitignored; never committed).
+grade, RAISE, REFUSE, or SKIP for a plan file), an indented `why:` line under each, then
+`NAMING-GATE: <PASS|WARN|REFUSE> <n> graded`. Every verdict line is appended to
+org/mcp/naming-gate-verdicts.log (runtime state; gitignored; never committed).
 
 Standard library only. ASCII only.
 """
@@ -60,6 +71,7 @@ import tempfile
 TOOLS_DIR = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.dirname(TOOLS_DIR)
 OPAL_PATH = os.path.join(REPO, "lib", "opal_naming.py")
+SCHEMA_PATH = os.path.join(REPO, "org", "standards", "NAMING_SCHEMA.json")
 ENFORCE_FILE = os.path.join(REPO, "org", "mcp", "naming-gate.enforce")
 VERDICT_LOG = os.path.join(REPO, "org", "mcp", "naming-gate-verdicts.log")
 REGISTRY_PREFIX = "infra/logic/registry/"
@@ -70,38 +82,29 @@ NAMING_MODULE_NAMES = {"opal_naming"}
 EXEMPT_CALLS = {"float"}
 CLOSED_STATUSES = {"closed", "complete", "completed", "cancelled", "canceled", "superseded", "retired", "archived"}
 
-# Terraform resource type -> (node type, own-name attribute path). The same reading as the EN-t-1 census
-# (deliverables/0.9.0_WK_LGIC_ENFORCE~3/instrument/census.py TF_NODE), restricted to the graded types.
-TF_NODE = {
-    "aws_lambda_function": ("LAMBDA", "function_name"),
-    "aws_iam_role": ("IAM_ROLE", "name"),
-    "aws_iam_policy": ("IAM_POLICY", "name"),
-    "aws_iam_role_policy": ("IAM_POLICY", "name"),
-    "aws_iam_user_policy": ("IAM_POLICY", "name"),
-    "aws_iam_instance_profile": ("INSTANCE_PROFILE", "name"),
-    "aws_security_group": ("SECURITY_GROUP", "name"),
-    "aws_api_gateway_rest_api": ("API_GW", "name"),
-    "aws_apigatewayv2_api": ("API_GW", "name"),
-    "aws_dynamodb_table": ("DYNAMODB_TABLE", "name"),
-    "aws_sqs_queue": ("SQS_QUEUE", "name"),
-    "aws_sns_topic": ("SNS_TOPIC", "name"),
-    "aws_cloudwatch_metric_alarm": ("CW_ALARM", "alarm_name"),
-    "aws_lambda_layer_version": ("LAMBDA_LAYER", "layer_name"),
-    "aws_instance": ("EC2_INSTANCE", "tags.Name"),
-    "aws_codebuild_project": ("CODEBUILD_PROJECT", "name"),
-    "aws_ssm_document": ("SSM_DOCUMENT", "name"),
-    "aws_ecs_task_definition": ("ECS_TASK_DEFINITION", "family"),
-    "aws_sfn_state_machine": ("STATE_MACHINE", "name"),
-    "aws_lb": ("LOAD_BALANCER", "name"),
-    "aws_ecs_cluster": ("ECS_CLUSTER", "name"),
-    "aws_cloudwatch_event_rule": ("EVENT_RULE", "name"),
-    "aws_scheduler_schedule": ("SCHEDULE", "name"),
-    "aws_cloudwatch_log_group": ("LOG_GROUP", "name"),
-    "aws_s3_bucket": ("S3_BUCKET", "bucket"),
-    "aws_s3_bucket_policy": ("S3_BUCKET_POLICY", "bucket"),
-    "aws_s3_object": ("S3Key", "key"),
-    "aws_secretsmanager_secret": ("SECRET", "name"),
-}
+
+def _load_tf_node():
+    """Terraform resource type -> (node type, own-name attribute path). Read from NAMING_SCHEMA.json's
+    tf_type_map (C-S11, v1.9): the schema is the one home for this data and the commit limb keeps no map
+    of its own (round-2 EN-g-1). A schema that cannot be read or carries no tf_type_map yields an empty
+    map: every literal then falls back to classify()'s generic reading, exactly as an unlisted Terraform
+    type already does today."""
+    try:
+        with open(SCHEMA_PATH, "rb") as fh:
+            schema = json.loads(fh.read().decode("utf-8"))
+    except (OSError, ValueError):
+        return {}
+    raw = schema.get("tf_type_map")
+    if not isinstance(raw, dict):
+        return {}
+    out = {}
+    for tf_type, spec in raw.items():
+        if isinstance(spec, dict) and isinstance(spec.get("node_type"), str) and spec["node_type"]:
+            out[tf_type] = (spec["node_type"], spec.get("name_attribute"))
+    return out
+
+
+TF_NODE = _load_tf_node()
 
 HUNK_RE = re.compile(r"^@@ -(\d+)(?:,(\d+))? \+(\d+)(?:,(\d+))? @@")
 DIFF_HEADERS = ("diff --git ", "index ", "new file mode", "deleted file mode", "old mode", "new mode",
@@ -456,6 +459,21 @@ def _tf_hint(blocks, attr):
 
 _JSON_STR = re.compile(r'"((?:[^"\\]|\\.)*)"')
 _YAML_QUOTED = re.compile(r'"((?:[^"\\]|\\.)*)"|\'((?:[^\']|\'\')*)\'')
+PLAN_KEYS = ("format_version", "terraform_version")
+
+
+def is_plan_artifact(post_text):
+    """True when a JSON post-image is a `terraform show -json` artifact: its top level carries
+    format_version and terraform_version, with resource_changes or planned_values (round-2 EN-g-1,
+    row W1-S22: a machine-written plan file is not graded at commit -- an authored JSON file carrying
+    the same string is graded exactly as today)."""
+    try:
+        obj = json.loads(post_text)
+    except ValueError:
+        return False
+    if not isinstance(obj, dict) or any(k not in obj for k in PLAN_KEYS):
+        return False
+    return "resource_changes" in obj or "planned_values" in obj
 
 
 def json_literals(added):
@@ -798,6 +816,10 @@ def grade_file(nm, f, post_from_index):
     elif path.endswith(".tf"):
         lits = tf_literals(post_text, added)
     elif path.endswith(".json"):
+        if is_plan_artifact(post_text):
+            return [("SKIP", path, first_added, "<machine-written plan file>", "-",
+                     "top level carries format_version, terraform_version and resource_changes or"
+                     " planned_values (a terraform show -json artifact): not graded", "PASS")]
         lits = json_literals(added)
     else:
         lits = yaml_literals(added)
@@ -844,7 +866,18 @@ def run(args):
         raise GateError("cannot read the diff %s: %s" % (args.diff, exc)) from None
     files = parse_diff(diff_text)
     try:
-        nm = Naming(load_opal())
+        mod = load_opal()
+        refusals, _warnings = mod.validate()
+    except GateError:
+        raise
+    except Exception as exc:
+        raise GateError("lib/opal_naming.py or the registry cannot be loaded: %s: %s" % (type(exc).__name__, exc)) from None
+    if refusals:
+        where, field, reason = refusals[0]
+        raise GateError("the registry is refused by validate (%d refusal(s)): %s.%s: %s"
+                         % (len(refusals), where, field, reason))
+    try:
+        nm = Naming(mod)
     except GateError:
         raise
     except Exception as exc:
