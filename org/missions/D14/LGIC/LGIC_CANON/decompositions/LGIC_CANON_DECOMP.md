@@ -6,16 +6,16 @@
  "directive": "D14",
  "macro": "LGIC",
  "fabric": "laptop",
- "decomp_version": "v3",
+ "decomp_version": "v4",
  "step": 5,
  "prd_ref": "org/missions/D14/LGIC/LGIC_CANON/prd/LGIC_CANON_PRD.md@5b2336a5e4",
  "prd_half_hashes": {"brief": "SIGNED 4.0.0_SA_CRO, current at v1.3 (prd-signoff.py status, read at the L6 cut 2026-09-15)", "ratified-text": "SIGNED 3.0.0_SA_CVO, current at v1.3 (ENDPOINT and CONTRACTS unchanged)"},
  "author": "2.0.0_SA_COO~G",
- "cells": 12,
- "slots": 9,
+ "cells": 12, "round2_cells": 10,
+ "slots": 9, "round2_slots": 7,
  "candidates_not_cut": ["C6 -- FWD-5 held on Andrew's ~13:4xZ word"],
- "dag_levels": 3,
- "frozen": true
+ "dag_levels": 3, "round2_dag_levels": 3,
+ "frozen": false, "frozen_note": "round 1 CLOSED at L10; the freeze lifted at v4 s.0d and re-arms at the round-2 issuance"
 }
 ```
 
@@ -181,6 +181,104 @@ per-slot firm form); `CN_JUDGE_NAMING_KEY.json`; `CN_NAMING_JOB.json` (6 items: 
 
 **Unchanged from section 5:** blindness to the estate is NOT-EVALUATED for the judges and the naming workers (the preloaded
 context). **L4-R at the cut:** ADMITTED at v1.3.
+
+---
+
+## 0d. v4 -- THE ROUND-2 RECUT (2026-09-16), ON THE CTO's ROUND-1 ANALYSIS
+
+**Authority.** `1.0.0_SA_CTO`'s LGIC_CANON round-1 ANALYSIS @`26ae876d23` (msg 97317), the CTO's one send at L10, on
+`3.0.0_SA_CVO`'s slug. Round 1 is CLOSED at L10 and the freeze lifts HERE: the decomposition was frozen from the round-1
+issuance @`4058a56606` until this section. Recut base CLOUD @`14936be222`.
+
+**The round-1 grade this recut answers (analysis s.1):** FWD-2, FWD-3, FWD-4 and FWD-6 REALIZED; **FWD-1 SHORT**
+(K1-J1 FAIL, J3-AC2 and J3-AC3 FAIL, bounded by rows C-S9 and C-S10); **FWD-5 NOT EVALUATED**, because C6 stays NOT CUT
+on Andrew's G-N word and its instrument reads SHORT. Not CLOSED. **No PRD addendum:** the analysis found no outcome
+wrong, incomplete or obsolete, so `/endpoint` F0 is not re-entered and the PRD stays v1.3.
+
+**The PRD halves were re-read at this cut, not carried forward.** `prd-signoff.py status LGIC_CANON` reads
+`v1.3 @5b2336a5e4 dep_stage=EXECUTING -> ADMITTED`, ratified-text SIGNED by `3.0.0_SA_CVO` and brief SIGNED by
+`4.0.0_SA_CRO`, **both `current`**. The halves bind to the sections' HASH and not to `prd_version`, so a re-read is the
+only thing that says `current`; the version being unchanged says nothing.
+
+### What moved since v3, measured
+
+1. **Gate G-V19 is MET @`4730cec6ca` and G-V19R @`783e2f3887`.** `NAMING_SCHEMA.json` is v1.9 at HEAD, `firm_forms` is
+   gone from it, and the scope registry's FIRM rows are the one carrier. The canon's generated section was re-rendered
+   in the commit immediately after the merge, in the lane that owns the path, under RULING R-1. `--check` reads
+   `FRESH -- 0 failure(s)` at HEAD, read by three seats on three checkouts.
+   - ⛔ **G-V19R's wording in this file is a DEFECT and R-1 corrects it.** `:125` said the render runs *"in that same
+     merge"*. No seat can do that: `safe-merge.sh --continue` REFUSES any path the merge itself did not stage, which is
+     the guard that stops another seat's work riding a drain, and the canon is not in a group merge's staged set. The
+     rule reads **"in the merge, or in the commit immediately following it, in the lane that owns the path."**
+2. **Round 1's channel closed at 16 rows, not the 15 the hand-off named.** `2.0.0_SA_COO~G` appended `LGIC_CANON-S3` at
+   05:52Z (@`5bdaa031c0`) while the L8 was being written, and `3.0.0_SA_CVO` caught it by counting the fence again at
+   write time rather than trusting the handed figure. L9 dispositioned 16 of 16: **10 GRADUATED, 3 DISMISSED_WITH_REASON**
+   in the adjudication, and `REMEDIATION_v1.md` carries 16 rows.
+   - **Verified here by a different instrument** (the issuer's own cross-read, not the CVO's run): every one of the 10
+     GRADUATED ids is named in the remediation file, 0 missing, and the remediation's own id list carries no duplicate.
+     A graduated row with no remediation row is the failure this check exists for and there is none.
+3. **Two ARMED rows stand into round 2, with different disarm owners.** `LGIC_CANON-W8-S1` is `1.0.0_SA_CTO`'s and its
+   clock advance is `3.0.0_SA_CVO`'s one act in lane `TREE_CVO`. **`LGIC_CANON-S3` is this seat's** and it is what
+   CN-k-3 disarms: `render_naming_section.py` reads a FIRM row's `long` and `short` on its registry path and never its
+   `note`, so v1.9's move cost the canon the `demo` note carrying RULING DM. ⚠ `--check` reads FRESH over that loss,
+   because the section IS a faithful render of what the renderer chose to read. **A freshness check cannot see a line no
+   render produces.**
+4. **`LGIC_LGCTFM` is now a D14 member and PLACED** in `SEQUENCE.yaml` stage 1 @`14936be222` (RULING R-4), fourth of the
+   Platform Logic projects, `waits_on` this project's PRD among the three. Nothing of this recut waits on it.
+
+### The cells -- 10, one issuance, C6 still NOT CUT
+
+Ids per `org/standards/DECOMP_CELL_ID_CONVENTION.md` shape 1, prefix `CN`, continuing round 1's axes.
+
+| cell | what it is | rulings | serves | writes | depends on |
+|---|---|---|---|---|---|
+| `CN-k-2` | the canon edit: A1's rule set and R20 on every axis, the citation rule, the verdict vocabulary and severity order, the pipeline-instance rule, R1's census tag | A-1, A-2, A-4, A-9 | FWD-1, FWD-5 instrument | `infra/logic/02_DOCTRINE.md` | nothing |
+| `CN-k-3` | the renderer: the FIRM-row `note` read (row `LGIC_CANON-S3`, this seat's disarm) plus the content-diff arm | A-11 | FWD-1 | `infra/logic/render_naming_section.py` | nothing |
+| `CN-k-4` | the re-render once the schema carries the `bd` adjacency test | A-3 | FWD-1 | `infra/logic/02_DOCTRINE.md` | LGIC_NAMING's schema cell, a cross-project READ dependency, disclosed |
+| `CN-j-4` | judge C, blind, on the SECOND tree, the canon alone, NO verdict scale in the order | A-1, A-13 | FWD-1 | deliverables only | `CN-k-2` |
+| `CN-j-5` | judge D, blind, same brief, blind to C | A-1, A-13 | FWD-1 | deliverables only | `CN-k-2` |
+| `CN-j-6` | judge E: the MDPF tree again, briefed WITHOUT the severity order -- the NEGATIVE arm | A-1 | FWD-1 | deliverables only | `CN-k-2` |
+| `CN-j-7` | the comparison over C, D and E; every disagreement traced to a canon coordinate; the seven-rule reach printed | A-13 | FWD-1 | deliverables only | `CN-j-4`, `CN-j-5`, `CN-j-6` |
+| `CN-o-3` | the checklist edit: sovereign inputs named; Step 6's second block; Step 10's STOP names ADVI_FIRMBKTS; Step 14's STOP names X8; steps 3, 7, 8 and 9 take the family | A-6, A-7, A-8, A-9, A-10 | FWD-5 instrument | `infra/logic/10_ONBOARDING_CHECKLIST.md` | `CN-k-2` for the instance rule |
+| `CN-o-4` | the review, by a worker who did not write it: TWO bars, both printed -- zero JUDGEMENT marks, AND every MECHANICAL step either runnable today or STOPped with a named owner | the CVO's sequencing point | FWD-5 instrument | deliverables only | `CN-o-3` |
+| `CN-l-2` | the ledger: X6 on its own axis; the checker scoped by section with `encoding='utf-8'` reads; the section-7 header workaround reverted | A-5, A-12 | FWD-6 hygiene | `infra/logic/06_CONFORMANCE_LEDGER.md` | nothing |
+| `C6` | **STAYS NOT CUT** | -- | FWD-5 | -- | Andrew's G-N word AND, by A-8, ADVI_FIRMBKTS's router repoint |
+
+**COVERAGE, and the gate does NOT grade it here.** `to-pipeline-gate.py`'s coverage limb grades the staged orders
+against the cell set only at `dep_stage=DECOMP`; this project reads `EXECUTING`, so on a RECUT coverage is **NOTED, not
+GRADED**. The denominator is therefore read by hand and printed: the analysis s.3 names **10 cells plus C6 held**, and
+this issuance cuts **10**, C6 held for the same two reasons the analysis gives. A dropped cell here is nobody's refusal
+but this seat's to catch.
+
+### Levels, slots, and the two disjointness constraints
+
+- **Level 0:** `CN-k-2`, `CN-k-3`, `CN-l-2`. **Level 1:** `CN-o-3`, `CN-j-4`, `CN-j-5`, `CN-j-6`. **Level 2:** `CN-j-7`,
+  `CN-o-4`. **`CN-k-4`** is level 0 by its own edges but gated on another project's drain, so it spawns when
+  LGIC_NAMING's schema cell lands, not at issuance.
+- **WRITE-SURFACE DISJOINTNESS, MEASURED AT THIS CUT, not asserted.** The `<paths>` block of every NON-TERMINAL order of
+  `LGIC_NAMING` and `LGIC_ENFORCE` was parsed -- **15 orders, the printed denominator** -- and intersected with this
+  round's four write surfaces. **The intersection is EMPTY.** So no cell of this round contends with a live sibling cell.
+- **INTERNAL contention, the one this round has:** `CN-k-2` and `CN-k-4` both write `infra/logic/02_DOCTRINE.md`. They
+  take **ONE slot, sequenced**, never two. That is the queue rule, not a fan-out loss: the second depends on the first.
+- **Distinct-worker constraints, as v3:** a scorer never scores its own work; `CN-j-7` is not written by any of C, D or
+  E; the three judges are blind to each other and to `CN-k-2`'s author; `CN-o-4`'s worker did not write `CN-o-3`.
+
+### The fixed inputs L6 cuts into round 2's faces
+
+1. **`check_canon_r2.py`**, round 2's checker, under
+   `org/missions/D14/LGIC/LGIC_CANON/deliverables/2.0.0_SA_COO~G/fixed_inputs/r2/`, committed WITH the issuance and
+   read-only to every worker. Every mechanical criterion of this round calls one of its subcommands.
+   - ⛔ **Its `spawn_base()` must be PINNED to the issuance base, never `git merge-base HEAD CLOUD`** -- row
+     `LGIC_ENFORCE-S20` measured that a moving base makes every diff-counting criterion read 0 changed lines once the
+     cell is on CLOUD, so the criterion cannot be re-graded after its own drain and FAILs on every checkout.
+2. **The SECOND tree** for `CN-j-4` and `CN-j-5`, named by path at the cut and read at the issuance HEAD, chosen so it
+   engages the seven canon rules the MDPF tree never reached (A-13). The MDPF tree stays `CN-j-6`'s, unchanged, as the
+   negative arm.
+3. **The judges' brief** carries the canon alone. ⛔ **The verdict vocabulary and severity order go into `CN-j-4` and
+   `CN-j-5`'s faces and are WITHHELD from `CN-j-6`'s** -- that withholding IS the negative arm, and a face that leaks it
+   destroys the measurement.
+4. **Row `LGIC_CANON-S3`** is inlined into `CN-k-3`'s face, with the measured fact that the registry's `demo` row is the
+   one FIRM row of four whose key list includes `note`.
 
 ---
 
