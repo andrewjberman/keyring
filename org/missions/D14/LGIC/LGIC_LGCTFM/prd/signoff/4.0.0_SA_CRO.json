@@ -1,0 +1,12 @@
+{
+  "prd": "LGIC_LGCTFM_PRD.md",
+  "prd_version": "v1.0",
+  "prd_pin": "e996f463bbbe636316f915b29115fdc0934b8b4f",
+  "half": "brief",
+  "half_hash": "04b3c4c1821017ca937cb19ad7db671cdcd84a53106825f99ef8b03a0a2a120a",
+  "verdict": "REFUSED",
+  "review_ref": "docs/briefs/sources/LGIC_LGCTFM_L4_BRIEF_REVIEW_v1_0_20260916.md@8ae73f6b31",
+  "signed_by": "4.0.0_SA_CRO",
+  "signed_at": "2026-09-16T14:17:19Z",
+  "reason": "R1: DEC-6 :219-221 and DEC-4 :210 use enum tokens (orphan, unresolved; fork as a tension kind) that the absorbed Rule 24 record @a71a2406be did not mint; align to its section 4 kinds and RAISE; four word-level edits"
+}
