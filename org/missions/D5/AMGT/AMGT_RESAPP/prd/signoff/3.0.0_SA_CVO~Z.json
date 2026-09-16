@@ -1,12 +1,12 @@
 {
   "prd": "AMGT_RESAPP_PRD.md",
-  "prd_version": "v0.9",
-  "prd_pin": "44269d05157fb53b3440aa7930016fd7908f7bbb",
+  "prd_version": "v0.10",
+  "prd_pin": "49aedcf88be8f29903a716218a83031c468d0b88",
   "half": "ratified-text",
-  "half_hash": "88e330dea809d3961a7dec34d07557cca9c0bcab8dba162b74b892eee3c90cfa",
-  "verdict": "REFUSED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_RESAPP_V09_RATIFIED_TEXT_REVIEW_20260916_Z.md@eeddafa99f1c85962acb9eeddf32f9e2dea04f2f",
+  "half_hash": "1246a6ea32fc58476be826b638dc9a583df1266129e03041f068014f400138ec",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_RESAPP_V10_RATIFIED_TEXT_REVIEW_20260916_Z.md@aa961e99b43416154c7a1486e5582aabd778797c",
   "signed_by": "3.0.0_SA_CVO~Z",
-  "signed_at": "2026-09-16T05:29:24Z",
-  "reason": "FWD-20 ACCEPT omits two operative constraints of its pins (stored-with-source-and-time; sd(D)<0.25 pre-deployment check), SOURCE omits pin 287d2c2619 and carries the ENDPOINT's only two seat serials (:411,:413), and C-ROUND12-PULL-WIRED :590 ratifies the Lambda consumer ADDENDUM 2 06378dd3bd C1 found impossible -- four corrections by pinned line in the review"
+  "signed_at": "2026-09-16T05:38:41Z",
+  "reason": "All four v0.9 grounds fixed and measured at 49aedcf88b: both FWD-20 constraints on the card, pin 287d2c2619 cited, 0 seat serials in ENDPOINT, PULL-WIRED agrees with ADDENDUM 2 C1; new DIVERGENCE-DEGENERACY contract verbatim to the record"
 }
