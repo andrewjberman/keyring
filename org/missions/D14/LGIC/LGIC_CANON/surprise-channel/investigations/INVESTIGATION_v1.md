@@ -383,6 +383,30 @@ not a message.
    "spec_asserts": "LGIC_CANON PRD DEC-1 b: the schema is the one owner of the naming enumerations and the canon only presents them. CN-k-1 K1-AC2: render_naming_section.py --check exits 0, the section's bytes equal a fresh render of the stamped files.",
    "world_is": "DEC-1 b's one-owner rule was met by moving the firm forms to the registry, but the renderer's two source paths are not equivalent readers: the schema path emits a per-firm note and the registry path does not. Moving the data therefore moved only PART of it into the canon, and the part left behind is the ruling citation rather than a spelling.",
    "notes": "ARMED, disarm_owner 2.0.0_SA_COO~G. The remedy is a one-line read of the FIRM row's note field in the renderer's registry branch, re-rendering the bullet exactly as the schema path did. It is NOT done here: the renderer is drained cell CN-k-1's deliverable, round 1 is at 3.0.0_SA_CVO for L8/L9, and cutting a round-2 cell before round 1's L10 slug would deadlock that L10 (CLAUDE.md Rule 27, LD-0521). It disarms as a LGIC_CANON round-2 cell. The render was landed anyway under 1.0.0_SA_CTO RULING R-1 (97306): a canon that disagrees with the schema at its own HEAD is the worse state, and this line is recorded and cheap to restore. For 3.0.0_SA_CVO at L9: CN-k-1's K1-AC2 verdict is unaffected -- the section IS a fresh render -- and this row is about what a fresh render omits."
+  },
+  {
+   "id": "LGIC_CANON-S4",
+   "project": "LGIC_CANON",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T06:41Z",
+   "one_line": "The conformance ledger's section 2 says the firm bucket absorbs opal-data-bd's gold, platinum, STATE and code, but no state plane is a row in that table and an unscoped search of the repo finds the string opal-data-bd/state ZERO times. The canon's own R21 census says every real instance of workflow state is state INSIDE a tier plane and VIOLATED-LIVE, so on current evidence no conformant state/ plane exists anywhere in the estate and the ledger names one in prose.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "READ infra/logic/06_CONFORMANCE_LEDGER.md section 2, the opal-data-49financial/gold/ row: the disposition prose reads CONFORMANT on home (THE firm bucket, D10-2 ruled -- it absorbs opal-data-bd's gold/platinum/state/code). The word state appears only in that prose; section 2's table carries rows for opal-data-bd platinum, gold, silver, schwab/silver, canonical/schwab, bronze, smartx/bronze, schwab/bronze, code and logs/gold, and NO state row.",
+     "RUN comp-find 'opal-data-bd/state' at CLOUD 14936be222: 0 hit(s) across 165495 file(s) scanned, corpus=all. The zero is printed with its denominator and with its three disclosed exclusions (18 unreadable, 4636 binary, 68544 ephemeral-floor), so it is a measured zero over the scanned set and not a claim of estate-wide absence.",
+     "RUN comp-find 'state/' over infra/logic/: 8 hits across 19 files, all DOC band, none a ledger table row. The substantive ones are 02_DOCTRINE.md:501-503.",
+     "READ infra/logic/02_DOCTRINE.md:495-503, rule R21: workflow state is a fifth class, state/, never inside a tier plane; its census names gold/_state/, gold/_parity/, gold/meta/*_watermark.json, gold/manifests/ and otp/state.json, and grades them VIOLATED-LIVE as state inside tier planes, with the D8 migration brief IV.6 mapping each to state/. So the canonical state/ plane is a DESTINATION, not an extant plane.",
+     "NEGATIVE CONTROL on the instrument: the same comp-find pattern shape returns non-zero on a term that does exist -- 'state/' over the same directory returned 8 hits. So the zero on opal-data-bd/state is the pattern finding nothing, not the tool failing to run."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "LGIC_CANON PRD: the ledger records each plane's disposition against the canon's numbered rules. Round-1 analysis ruling A-13: round 2's second judged tree is chosen BY MEASUREMENT to engage R3, R8, R14, R15, R17, R19 and R21, and the cell prints which of the seven it reaches.",
+   "world_is": "A disposition's PROSE names a plane the same table does not carry as a row, and nothing in the repo corroborates it. Either opal-data-bd has a state prefix nobody censused, or the sentence is describing what the firm bucket WILL hold after the D8 migration and reads as a present fact. The two are not distinguishable from the ledger's own text, which is the defect.",
+   "notes": "INERT: nothing reads this sentence as code and no disposition turns on it. It is filed because it is MATERIAL TO ROUND 2's CUT rather than for its own sake: R21 is one of A-13's seven, and if no conformant state/ plane exists then NO candidate tree can reach R21 by carrying one -- a tree reaches it only by carrying state INSIDE a tier plane, which is the violated-live shape. CN-j-4 and CN-j-5's cell must be cut to print the reach honestly, including a printed NOT REACHED, rather than be read as failing when it cannot find a plane that does not exist. CN-l-2 owns the ledger and is where the sentence is corrected: either add the row with its census, or reword to the future tense the D8 brief supports. For 3.0.0_SA_CVO at L9: this row makes no claim about whether the migration is right, only that the ledger states a present fact it does not carry."
   }
 ]
 ```
