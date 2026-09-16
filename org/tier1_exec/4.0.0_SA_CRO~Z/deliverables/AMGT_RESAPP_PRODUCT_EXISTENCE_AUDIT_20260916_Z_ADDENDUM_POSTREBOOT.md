@@ -81,6 +81,29 @@ read as "3 of 16 gaps closed" -- **0 of the audit's gaps are closed at HEAD.**
 - The residue the reboot left in the shared tree (a merge in progress on `wk-amgt_resapp-12-25` with the channel file
   in conflict, the stranded rows S111/S112) is the COO's; this seat read it and touched nothing.
 
+## 3b. ADDENDUM 15:1xZ -- rk-1 is COMPLETE and the page is STILL NOT ON DEV; G1 changed class, not state
+
+Round 12 moved to 5 of 16 terminal (rk-1, rk-4 added; rk-3 drained with AC3 FAIL-by-output). rk-1, the G1 cell, reads
+`complete` with a VALID proof instance, 4 of 4 criteria PASS (`deliverables/0.9.0_WK_AMGT_RESAPP~23/...rk-1...proof_of_spec.json`,
+drained @`b5882d4481`). Re-measured at 15:1xZ on the served plane:
+
+| what | value |
+|---|---|
+| portal `DEV` local = `origin/DEV` | `be8cf218` -- **0 of 47** page files, **0** route lines, unchanged since the audit |
+| the worker's branch `wk-amgt_resapp-12-23-portal` | tip `2453a7b4` (merge of the drain `b616b759`); contains DEV (`be8cf218` is its ancestor); 47 page files; 3 route lines; 16 commits DEV lacks; `merge-tree` against DEV = 0 conflicts |
+| what rk-1 proved | AC1 the branch contains the drain and the files; AC2 `tsc -b` rc 0, 0 errors; AC3 `vite build` rc 0, 53 js assets, page token present, control absent; AC4 the gitlink and `origin/DEV` are UNCHANGED at `be8cf218` |
+
+**So rk-1 is correctly complete AND the frontend still does not exist on the plane a person is served from.** The
+order's own text reserves the DEV push (LD-0367/0368; the LD-0522 hold at `0.0.0_AB_MSTR~Z` on Andrew's word), and
+AC4 asserts that DEV did NOT move. G1 moved one class: from CODE-ONLY on a drain ref to **BUILT, TYPE-CLEAN AND
+INTEGRATED ON A BRANCH CUT FROM DEV, AWAITING TWO ACTS** -- (1) the merge of `wk-amgt_resapp-12-23-portal` into
+local `DEV` (a COMMIT-class act under the freeze's COMMIT YES / PROMOTE NO; the earlier page-onto-DEV merge on this
+box was `0.0.0_AB_MSTR`'s, `a4ef8853`), then (2) the reserved push of `DEV`. Neither is carded anywhere this seat
+read: `2.0.0_SA_COO~Z`'s 13:37-15:05Z log names CARD 1 (model-block pull) and CARD 2 (filings batch) as the calls at
+Andrew and nothing on the portal. **A round-12 L10 that grades FWD-15..19's carrier on rk-1's `complete` would grade a
+branch, not a page.** This is the exact failure Andrew named at item 5 -- the record reads complete and the part is not
+where a person would open it -- caught by measuring the served branch rather than the status field.
+
 ## 4. INSTRUMENTS AND VINTAGES
 
 | instrument | observes | vintage |
