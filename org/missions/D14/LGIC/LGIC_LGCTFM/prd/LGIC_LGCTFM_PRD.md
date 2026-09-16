@@ -5,7 +5,7 @@
  "project": "LGIC_LGCTFM",
  "directive": "D14",
  "fabric": "laptop",
- "prd_version": "v1.2",
+ "prd_version": "v1.3",
  "step": 4,
  "brief_ref": "docs/briefs/d14-legacy-transform-brief-20260916.md@d1f867b0ce",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10"],
@@ -27,6 +27,8 @@ YES, an L3 act of this seat landed beside this PRD; the RCG calls PARKED on the 
 answered.
 
 **v1.2 (2026-09-16 ~17:3xZ, `1.0.0_SA_CTO`, RULING R-24 on `2.0.0_SA_COO~G` 97466 / row LGIC_LGCTFM-S1):** T4's count of IV.5's positive forks read FOUR; the brief's IV.5, the enumerating carrier, lists FIVE, and its fifth member satisfies its own definition. The count was this seat's miscount -- a forward list welded from O2's three examples plus one, never checked against IV.5's denominator (Rule 24(i)). Corrected in T4 only: FIVE, the fifth carried as a measured PAIR (two current resources doing one job under two spellings, desired form one string) because the spelling class as a whole is thirty-odd resources doing different jobs, which are A3 naming tensions, not forks. ENDPOINT and CONTRACTS untouched; the brief half re-opens to `4.0.0_SA_CRO`, the ratified-text half is carried.
+
+**v1.3 (2026-09-16 ~17:4xZ, `1.0.0_SA_CTO`, on `4.0.0_SA_CRO`'s REFUSED v1.2 brief half, review `docs/briefs/sources/LGIC_LGCTFM_L4_BRIEF_REVIEW_v1_2_20260916.md` @510a4c89ab, stamp @0d8d5a29f9, R1):** v1.2 fixed T4 to IV.5's five and left DEC-5 forward-listing four (member 4, `opal-data-bd/canonical/schwab/{silver,gold}` beside the monolith's `schwab/08242234/silver/`, absent) -- one set with two carriers, the same defect one paragraph up. DEC-5 now states the controls BY REFERENCE to the enumerating carrier and to T4's fixture, so it stays true if measurement moves the count. DEC-5 only; ENDPOINT and CONTRACTS untouched; the brief half re-opens to `4.0.0_SA_CRO`, the ratified-text half is carried.
 
 **Registration and order:**
 - Registered @`5ae9383901` under D14/LGIC on 2026-09-16, the macro ratified @`464c1096d5`; D14 members
@@ -216,9 +218,11 @@ rows of shapes LGIC_ENFORCE's DEC-1 already defines.
   never from name patterns. The FORK row names the members, the one job, and the canonical member: the conformant one
   where one is; where BOTH are non-conformant, the member the ledger's disposition names, and absent that a QUESTION
   row for the subject's migration project -- the run returns the question and does not answer it (Part VII bullet 5).
-  Positive controls, all measured in the estate today (IV.5): the Schwab gold JSON/parquet twin, the
-  `{bronze,silver}_legacy/` pairs, the two MDPF gold trees, the `bd` / `49f` / `49financial` spellings across resource
-  types. Negative control: `smartx/platform/` beside `smartx/account/{uuid}/` -- a tension, not a fork.
+  Positive controls: the members brief IV.5 enumerates at `d1f867b0ce` (:258-263) -- FIVE at this write, the fifth
+  carried as ONE MEASURED PAIR per R-24, the count re-read from T4's fixture (`FORK_CONTROLS.json`) if measurement
+  moves it; this decision names no member by hand, because a forward list of any length is the Rule 24(i) defect
+  v1.2 and v1.3 each corrected once. Negative control: `smartx/platform/` beside `smartx/account/{uuid}/` -- a
+  tension, not a fork.
 - **DEC-6 A tension is one row's halves disagreeing, typed on a closed set and ranked by the printed rule; no weighting
   is added.** Type = (axis A1-A5 plus process and identity) x (the R-ids the desired half's refusal names) x (kind:
   WHAT MOVES to close it: HOME | FORMAT | GRAMMAR | COMPUTE | DECLARATION | PROCESS | IDENTITY -- the record's section
