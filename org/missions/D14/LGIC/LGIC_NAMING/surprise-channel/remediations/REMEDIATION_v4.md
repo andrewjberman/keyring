@@ -53,9 +53,9 @@ STATES: `closed` is false on every row. **FOUR rows are ARMED** and their disarm
   "owner": "1.0.0_SA_CTO",
   "round": "v4",
   "disarm": {
-   "state": "ARMED",
+   "state": "DISARMED",
    "owner": "0.9.0_WK_LGIC_NAMING~2",
-   "at": null
+   "at": "2026-09-16T14:05Z"
   },
   "remediation": {
    "state": "OPEN",
