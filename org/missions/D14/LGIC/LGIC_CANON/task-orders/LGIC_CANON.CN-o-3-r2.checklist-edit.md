@@ -39,7 +39,10 @@ checklist that marks itself proves nothing.
 
 **Read:** `infra/logic/10_ONBOARDING_CHECKLIST.md`; `infra/logic/02_DOCTRINE.md` (the pipeline-instance rule
 `CN-k-2` adds); `org/missions/D14/LGIC/LGIC_CANON/deliverables/CHECKLIST_REVIEW.md` (round 1's review, for the five JUDGEMENT steps and their reasons);
-the round-1 analysis s.2 rulings A-6, A-7, A-8, A-9 and A-10 (`org/tier1_exec/1.0.0_SA_CTO/deliverables/LGIC_CANON_ROUND1_ANALYSIS.md @26ae876d23`).
+the round-1 analysis s.2 rulings A-6, A-7, A-8, A-9 and A-10 (`org/tier1_exec/1.0.0_SA_CTO/deliverables/LGIC_CANON_ROUND1_ANALYSIS.md @26ae876d23`);
+`infra/logic/06_CONFORMANCE_LEDGER.md` -- **this is where register entry X8 lives**, and item 4 above tells you to cite it without saying where to find it. It is PRESENT: `4.0.0_SA_CRO` added it at v1.1 on 2026-09-16 (ledger changelog), it names `1.0.0_SA_CTO` as its conditional owner, and the register's own denominator line reads 8 entries X1-X8. Read the entry and cite what it actually says.
+
+⚠ **CORRECTION TO ITEM 4, made before this order was ever spawned and stated here rather than left to be discovered.** Item 4 says that if X8 does not exist, `O3-AC3` "FAILs by measurement". **That is not what `O3-AC3` measures.** `o3-step14-stop` reads STEP 14 of the checklist and tests that its text contains `STOP` and `X8`; it never opens the register. So the criterion cannot tell a true citation from a fabricated one -- **only you can.** X8 does exist, so the question is moot for this run, but do not treat the criterion's PASS as evidence that your citation is accurate. Verify it against the ledger and say in your result file that you did.
 
 ### ACCEPTANCE
 
