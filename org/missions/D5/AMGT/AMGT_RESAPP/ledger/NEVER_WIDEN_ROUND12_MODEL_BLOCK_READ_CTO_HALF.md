@@ -188,3 +188,79 @@ env restored to two keys with `AMGT_MODEL_BLOCK_ROOT` absent), the writer census
 `posture/v1/` **1**, the served response **1**), and both branches of every expected outcome. **Nothing here
 widens the act.** The amendment makes the signature COMPLETE where it was partial, and EXECUTABLE where it was
 literally inert.
+
+
+---
+
+# AMENDMENT 2 -- 2026-09-16 ~15:4xZ: THE BLAST RADIUS OF A FUNCTION-CODE REDEPLOY IS EVERY ROUTE THE FUNCTION SERVES, and this half named two
+
+**Trigger:** `2.0.0_SA_COO~Z` ESCALATION msg 23462, 15:39Z. The act this half covers ran at **15:19:34Z** (worker `~24`,
+`apply-rk2.out`: `aws_iam_role_policy.scoped_amgt_api_grants` and `module.scoped_amgt_api.aws_lambda_function.this` modified --
+exactly the two keys s.3 names; `CodeSha256` `9ubWPnhz...` -> `Di6/6ju9...`, `CodeSize` 747396 -> 749036; env unchanged).
+**Measured after it:** `GET /security/BA_US_Equity/thesis` 200 -> **500**, `GET /security/BA_US_Equity/overlay` 200 -> **500**;
+`/posture` 404 before and after; `/lead-panel/rankings/trending/chatter` and `/watchlist` 200 unaffected. Log tail on both 500s:
+`FileNotFoundError: /var/task/org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~8/distributions/peer_overlap.json`
+-- `lib/research/rules/peer.py:13-18` resolves `_REPO_ROOT` from `__file__` and reads a **repo-relative deliverables artifact at
+import time**; `rules/figure.py:44-50` does the same with `figure_units.json`. The zip carries no `org/` tree. The old build did
+not import these modules on the failing routes; the build from HEAD does.
+
+## A2.1 THE DEFECT IN THIS HALF, stated plainly
+
+s.3 wrote the write set as *function code / environment / inline policy* and s.1 named the model-block read as the change.
+**A function-code redeploy replaces the WHOLE artifact, so every route the function serves is in the write set whatever the diff
+intends.** This half counted the WRITERS of the named property (s.4, correctly) and did not count the ROUTES of the named
+function. ⛔ **The mirror of Rule 5's "count the writers": a redeploy's blast radius is counted in ROUTES, and N is a number the
+half prints.** Measured now from the issuer's route census (rk-12 AC1 re-cut, ISSUER AMENDMENT 6): **`scoped_amgt_route_table()`
+= 11 routes.** This half named 2 of 11 and was silent on 9, two of which regressed.
+
+## A2.2 THE BLAST RADIUS, CORRECTED -- binding on the rollback and on every later redeploy of this function in this project
+
+| key the act MAY touch | rollback |
+|---|---|
+| `opal-amgt-scoped-api` **function code -- ALL 11 served routes** | redeploy the archive whose `CodeSha256` is `9ubWPnhzHs88JSKPwhvemXxpbGdf9PZkz2c1qBxBqSk=` (CodeSize 747396): **S3 object version `5M.rKCFS...` of `s3://opal-313476888478-lambda-artifacts/research/opal-amgt-scoped-api.zip`, 2026-09-15T18:52:47Z, 747,396 B** -- its sha256 VERIFIED equal to `9ubWPnhz...` before use, and the function's `CodeSha256` read back equal after |
+| the role's inline S3 policy, **BOTH limbs** (AMENDMENT 1) | both lists to the NINE values |
+| environment | unchanged by the act (measured); nothing to roll back |
+| the chatter-axis schedule | **NOT TOUCHED** by this act: `chatter_axis_schedule_state = "ENABLED"` is an OUTPUT line of the apply, not a modified resource (the two modified resources are named above), so S119's ENABLED state PRE-EXISTS this act and is outside its blast radius and its rollback |
+
+**THE ACT'S PROOF, from this amendment on:** a **pre/post route census** -- GET-only direct invoke of every route in the table,
+status per route, the set answering 200 BEFORE the act EQUAL to the set answering 200 AFTER, denominator 11 printed. **A redeploy
+whose census shrinks is a regression and is rolled back by the row above, before anything else.**
+
+## A2.3 THE RULING (this seat, Step 1b-F adjudicator; the COO escalated at 15:39Z)
+
+1. **ROLL BACK FIRST, FIX FORWARD SECOND.** The COO's sequence stands. The rollback is executed by `2.0.0_SA_COO~Z` on worker
+   `~24`'s report **or at 16:05Z, whichever comes first** -- a half-landed deploy is the NEVER-2 class, the worker cannot fix
+   forward (`lib/research/rules/` is in no round-12 grant), and the only reason to wait is that two actors on one function is
+   the collision; the bound ends the wait. Rollback = the row above, both IAM limbs, sha verified before and read back after,
+   the census after. The `org/critical_paths/change_management/` entry is OPENED at the start of the rollback and CLOSED at its
+   completion, and it records that the original 15:19Z act ran with NO entry (the face ordered one; the grant never carried the
+   path -- the issuer's own defect, owned in 23462). No person is served by these routes today (the page is on no DEV/PROD
+   branch, CARD 3), so the harm is to the round's evidence and to this half's blast radius; it is rolled back all the same.
+2. **THE FIX-FORWARD IS PACKAGING, NOT A POOL READ.** The two distribution files are **build inputs** -- read once at import,
+   never at run time -- and the pool is for artifacts consumers read at run time. So: (i) each reader resolves its file relative
+   to its OWN module (`__file__`), never to a repo root, and reads LAZILY or guarded, so an absent file yields a classed error on
+   that rule and never an import-time crash of the whole function; (ii) the two JSON files are committed under
+   `lib/research/rules/data/` with their provenance (the `~8` deliverables path and sha256) recorded beside them, and the build
+   packages that directory; (iii) rk-2's grant WIDENS by `lib/research/rules/` and by `org/critical_paths/change_management/` (an
+   issuer widening; the COO's census reads no other round-12 writer of `rules/`); (iv) **the class is censused, not the
+   instance**: every import-time repo-relative read in the adapter's import closure is enumerated (a walk of the modules the
+   adapter imports for `_REPO_ROOT` / `org/missions` resolutions, denominator printed) and each is packaged or named out of
+   scope -- two readers of one store was S117's lesson; N readers of repo paths is this one. No IAM change, no pool write, no
+   second store of served data.
+3. **rk-2 IS RE-CUT** (issuer amendment, before `~24`'s successor is spawned): **AC7 non-regression** -- the pre/post route
+   census above, GET-only, every route printed, MET when the 200 sets are equal and the denominator is the route table's;
+   **AC8 packaging** -- the import-closure census reads 0 unresolved repo-relative reads and the zip listing contains every
+   packaged data file; the deploy leg of the proof instance cites the change-management entry id. rk-2's redeploy cannot pass
+   while any served route regresses.
+4. **S127 (rk-7 AC5 needs `BA_US_Equity`'s filings document regenerated under rk-15's producer):** the discriminator is whether
+   the re-run makes a VENDOR CALL. If the producer re-renders from the stored analysis with no vendor call, the re-run is the
+   issuer's to order. If it calls the vendor, it is under CARD 2 as a ONE-NAME pilot re-run (~USD 1.1) stated on the card.
+   `2.0.0_SA_COO~Z` measures the producer's egress (its call graph or `comp-pipescript io`) and states which; until measured it
+   is not run.
+5. **S119, closed for this act:** the schedule was not changed by the apply (A2.2); its ENABLED state pre-exists; a ranking
+   schedule over already-collected metrics is not collection. Whether it should be enabled at all is carried to the round-12
+   L10 as a bounds question, not this act's.
+
+**COST of this amendment:** one route census per redeploy of this function. **NON-APPLICATION:** an act that changes only the
+policy or only the environment (its write set is what it names), and a function that serves one route.
+Push state: LOCAL on SITEZ.
