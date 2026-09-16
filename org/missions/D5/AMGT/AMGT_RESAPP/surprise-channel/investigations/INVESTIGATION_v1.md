@@ -6980,6 +6980,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "AMGT-rk-13 AC3: self_match_suspects 0, with the escape clause reading 'a suspect that is genuinely a different company is refused as written'.",
     "world_is": "The worker refused rather than widen an exclusion rule on its own reading, which is what the refusal clause asks for. The issuer's reading is that the escape does not cover a same-issuer share class, and the mechanism is already named in the chain's own cell text.",
     "notes": "NO criterion moves; the amendment is a note plus one grant path, so nothing already proven is re-opened. rk-13 stays OPEN for a respawn that repairs the exclusion and re-proves AC3 only; AC1, AC2 and AC4 carry forward from the instance at 33304ed32c. W25-S6 stays ARMED with its own disarm_owner at L9 -- this row does not disarm it, it directs the repair. W25-S8 is recorded and needs no act: the non-existent grant path blocks no write this cell makes."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W24-S6",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~24",
+    "surfaced_at": "2026-09-16T17:05:00Z",
+    "one_line": "The GET /security/{security_key}/print route carries a SECOND, independent hardcoded-deliverables defect beyond the missing-matplotlib/pypdf packaging gap already named as AMGT-rk-6's remit: lib/research/print/render_pack.py's DELIVERABLES constant resolves to org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~1, a path build-and-upload-scoped-amgt.sh packages nowhere.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.9.0_WK_AMGT_RESAPP~26",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/research/print/render_pack.py:53 (this cell's own <paths>): 'DELIVERABLES = Path(\"org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~1\")'; load_model_block() (render_pack.py:103) reads DELIVERABLES / f'model_block_{sec_key}.json' and DELIVERABLES / f'pack_{sec_key}.pdf' / f'pack_{sec_key}.txt' (render_pack.py:176-177).",
+        "lib/research/api/scoped_amgt.py:2590: 'from lib.research.print.render_pack import build_pack' inside the GET .../security/{security_key}/print route handler (deferred import), scoped_amgt.py:2628 route table entry -- so this read IS on a served route's import path, not dead code.",
+        "infra/aws/terraform/harvest/build-and-upload-scoped-amgt.sh's SEED_PKG_DIRS (lib/research/{api,metrics,checkface,rules,watchlist}) and DATA_MEMBERS list carry no entry for org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~1/ -- confirmed by reading the script directly at this cell's HEAD.",
+        "Built into lib/research/rules/data/REPO_RELATIVE_CENSUS.json (this cell's AC8 deliverable) as the ONE entry classed PACKAGED rather than NOT-A-READ or OUT-OF-SCOPE, per ISSUER AMENDMENT 9's own instruction that a classification is evidence, never a way past a real read on a served route."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT-rk-2 AC7's own <expect> text: '/print 500 is AMGT-rk-6's gap' -- naming /print's remediation as AMGT-rk-6's remit, and citing only the matplotlib/pypdf packaging cause.",
+    "world_is": "/print's 500 has (at least) TWO independent root causes on this cell's own redeployed adapter: the already-known missing matplotlib/pypdf packages, AND this hardcoded deliverables path absent from the Lambda package. Fixing only the first would still leave /print 500ing on this second cause for BA_US_Equity and every other covered key.",
+    "notes": "lib/research/print/ sits inside AMGT-rk-2's own <paths> grant, but the task order's own text reserves /print's remediation to AMGT-rk-6 (this worker's queued next order in Chain B), and AC7's pre/post GET census treats /print as pre-existing-broken (not a route this cell's act may regress, since it never answered 200 to begin with). Not repaired here; disarm_owner set to this worker's own next-queued order (AMGT-rk-6) rather than a different seat, since Chain B gives it the one writer of lib/research/print/. Disposition at L9 is 3.0.0_SA_CVO~Z's."
   }
 ]
 ```
