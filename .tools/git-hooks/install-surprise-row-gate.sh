@@ -38,7 +38,7 @@ cat >> "$HOOK" <<'EOF_STAGE'
 # legacy rows across 18 files are never re-graded.
 # FAIL-CLOSED on the sentinel: a staged channel file with the checker missing = DENY.
 if [ -f "$ROOT/.tools/surprise-row-gate.py" ]; then
-    python "$ROOT/.tools/surprise-row-gate.py" $STAGED || exit 1
+    ROOT="$ROOT" STAGED="$STAGED" python "$ROOT/.tools/surprise-row-gate.py" || exit 1
 elif git diff --cached --name-only 2>/dev/null | grep -qE '(org/surprise_channel/[^/]+|/surprise-channel/(investigations|adjudications|remediations))/(INVESTIGATION|ADJUDICATION|REMEDIATION)_v'; then
     echo "BLOCKED: a surprise-channel row file is staged but .tools/surprise-row-gate.py is missing." >&2
     exit 1
