@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_LGIC_NAMING~4</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-09-16</issued_date>
-<status>pending</status>
+<status>complete -- F2R5-AC1..AC4 PASS-by-output (0.9.0_WK_LGIC_NAMING~4); F2R5-AC5 UNVERIFIABLE-BY-INSTRUMENT, owed to 3.0.0_SA_CVO at L9; proof org/missions/D14/LGIC/LGIC_NAMING/deliverables/0.9.0_WK_LGIC_NAMING~4/LGIC_NAMING.TO-LN-f-2-r5.live-fence.proof_of_spec.json rc=0</status>
 
 **Directive:** D14 | **Fabric:** laptop | **PRD:** `../prd/LGIC_NAMING_PRD.md` v1.10 @592ff7a5de (ADMITTED; both halves current) | **Decomp cell:** `LN-f-2` (round 5, NEW at decomposition v7 section 0f) | **outcome_ref:** FWD-3 (its LIVE half) | **depends_on:** none -- one of three independent chains | **slot:** ~4, queue position 1
 
