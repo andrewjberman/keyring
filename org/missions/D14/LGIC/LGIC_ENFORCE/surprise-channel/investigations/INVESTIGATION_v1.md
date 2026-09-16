@@ -3029,6 +3029,32 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
    "spec_asserts": "The round-3 cell table's nine cells are each cuttable by 2.0.0_SA_COO~G as a worker cell or as the issuer's act.",
    "world_is": "Cell 1's write surface admits only 1.0.0_SA_CTO and 3.0.0_SA_CVO. Cell 2b is the issuer's, cell 3 splits across two lanes, and cell 5's reading is not yet understood.",
    "notes": "ARMED, disarm_owner 1.0.0_SA_CTO -- ADJUDICABLE, and it is narrow. THE THREE SHAPES for cell 1, none proposed as binding: (a) the CTO or the CVO WRITES the four limbs itself, as the lane already says, and this project carries them as a cross-project route rather than a cell -- cheapest, and it matches CN-i-1's precedent that an act belongs to whoever the lane admits; (b) LOOP_MECHANISM widens to admit a COO lane for this file, which is a grant change and not mine to propose lightly, on a file whose whole point is that the graded party does not write the gate that grades it; (c) the limbs are cut as a cell with an audited override, which I will not do -- the lane refusing the issuer of the round is the control working, not an obstacle. * I HOLD (a). ! AND THE PRECEDENT IS ALREADY SET TWICE TODAY: CN-i-1 could not be a worker cell because TREE_DELIVERABLES resolves the owner from the serial subfolder; this is the same law one lane over, and it says the row gate belongs to the seats that own the loop's mechanism. NOTHING IS CUT until this is ruled; the other eight cells' L5 proceeds."
+  },
+  {
+    "id": "LGIC_ENFORCE-S57",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G",
+    "surfaced_at": "2026-09-16T16:07Z",
+    "one_line": "BLOCKING AT THE CUT, the same law as S56 two lanes over: round 3's cell 5 and half of cell 7 write infra/logic/registry/**, which resolves to lane PLATFORM_LOGIC_DOCS whose permitted_agents are the FIVE 4.0.0_SA_CRO serials and nobody else -- so those writes are refused to a worker, to this seat AND to 1.0.0_SA_CTO. Cell 4's FIRM_FORMS_READERS.md is lane ANY_CTO (CTO or CRO, not this seat, not a worker). Cell 9's lib/opal_naming.py is BASE_EXEC: this seat PERMIT, worker REFUSED, so it is the issuer's act.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED at the cut, not recalled, through .tools/owned-paths-validate.py's OWN resolve_lane() and permitted_agents, plus its --check-agent CLI with the path piped on stdin (an EMPTY stdin admits every serial, so each path was piped explicitly). Worktree .owned-paths.yaml verified CLEAN against HEAD by git status --porcelain before the read, so the bytes read ARE the record's.",
+        "infra/logic/registry/scopes.json, refused_keys.json, exemptions.json and the registry/ prefix ALL resolve lane=PLATFORM_LOGIC_DOCS, permitted_agents=['4.0.0_SA_CRO','4.0.0_SA_CRO~A','4.0.0_SA_CRO~B','4.0.0_SA_CRO~C','4.0.0_SA_CRO~D']. check-agent: 0.9.0_WK_LGIC_ENFORCE~1 REFUSED, 2.0.0_SA_COO~G REFUSED, 1.0.0_SA_CTO REFUSED. 4.0.0_SA_CRO PERMIT is the POSITIVE CONTROL -- the lane resolves and admits somebody, so this is a real grant boundary and not a blanket refusal or a broken read.",
+        "docs/architecture/FIRM_FORMS_READERS.md -> lane ANY_CTO, permitted 1.0.0_SA_CTO / ~B / 1.1.0_SA_CTO / 4.0.0_SA_CRO / 4.0.0_SA_CRO~SWEEP. Worker REFUSED, this seat REFUSED, CTO PERMIT.",
+        "lib/opal_naming.py -> lane BASE_EXEC, permitted 1.0.0_SA_CTO / 2.0.0_SA_COO / 3.0.0_SA_CVO / 4.0.0_SA_CRO. This seat PERMIT via the tilde-strip clause (base 2.0.0_SA_COO), worker REFUSED.",
+        "CLEAN cells, stated so the refusals are not read wider than measured: .tools/naming-gate.py (cell 2) and .tools/proof-of-spec-check.py (cell 3's S21 fix) are lane ANY, WORKER PERMIT -- genuinely worker-cuttable. org/critical_paths/change_management/ and .open_deploys/ (cell 7's ledger half) are WORKER PERMIT. The worker's own deliverables folder and the surprise channel are WORKER PERMIT.",
+        "PRIOR ACT THIS TURN, and it is what made this read trustworthy: six LGIC_ENFORCE orders sat non-terminal at HEAD with VALID proof-of-spec instances, the stale-face class 0.0.0_AB_MSTR named in 97450. This seat flipped all six to complete @9f9d006c8b. AFTER the flip, 0.9.0_WK_LGIC_ENFORCE~1 reads REFUSED on scopes.json where 97450 measured it True -- the ADHC_OWNPTH.005 grant is retired, so the readings above are the LANE's answer and not a leftover task-order grant masking it."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Round 3's eight cells (2 with 2b, 3-9) are each cuttable by 2.0.0_SA_COO~G as a worker cell or as the issuer's own act, cell 5 having been unblocked by retiring the stale grant.",
+    "world_is": "Retiring the stale grant REMOVED the only thing that made scopes.json writable by anyone in this project. Cell 5's registry edits and cell 7's exemptions.json belong to 4.0.0_SA_CRO by lane; cell 4's readers doc belongs to 1.0.0_SA_CTO or the CRO; cell 9 is this seat's, not a worker's.",
+    "notes": "ARMED, disarm_owner 1.0.0_SA_CTO -- ADJUDICABLE and narrow, and it is R-22's question one lane over. NOT A HALT: L5 proceeds on the cuttable surface this turn and the issuance is not held on this. THE SPLIT I HOLD, none proposed as binding: cells 5 and 7 each divide cleanly into a MEASURE-AND-RECORD half that is cuttable here (the censuses, the denominators, the class prints, the note reader, the live-plane writer census, the ledger entry) and a REGISTRY-WRITE half that is 4.0.0_SA_CRO's act by the same reasoning R-22 used for cell 1 -- the act belongs to whoever the lane admits. I am cutting the first half and routing the second as a cross-project route to 4.0.0_SA_CRO, exactly as CN-i-1 and cell 1 were handled. I am NOT proposing a lane widening: PLATFORM_LOGIC_DOCS exists so the registry that Rule 30 makes authoritative for every address and name is not edited by the projects it grades, and LGIC_ENFORCE is precisely such a project. ! THE ONE THING THAT WOULD CHANGE MY READ is if Rule 30's 'a builder REFUSAL is a missing registry row to add' is meant to grant the refused seat the row-add; on the bytes, it names the remedy and not the hand, and no lane entry carries it."
   }
 ]
 ```
