@@ -190,6 +190,39 @@ else.
 | `/daily-sprint` | packet + scaffold/rewrite today's file + print |
 | `/daily-sprint --date YYYY-MM-DD` | same for a named day |
 | `/daily-sprint --packet` | `daily-sprint.py --packet-only` — grounding only, no file |
+| `/daily-sprint stitch <DAY> "<what to change>"` | targeted edits to the FINISHED page, off the served copy; never a regeneration (below) |
+
+## Stitch — targeted edits off the finished copy (Andrew-direct 2026-09-16 ~18:1xZ)
+
+VERBATIM: *"the automatic process will run, but i may want to add some targeted little updates without changing
+the shape of the thing as a whole, maybe it'll be an additional sprint, maybe it'll be changing out a diagram with
+a screenshot, maybe it'll be some adjustment of the headline copy, etc. I want to be able to have you adjust these
+off the finished copy, rather than having to regenerate it all again from scratch."*
+
+**The finished copy is the SERVED page.** The cloud run keeps no JSON; its report lives only in the `const DATA=`
+block of the published HTML. So a stitch is: pull that block back out, edit it in place, re-render through the same
+renderer, republish through the same publisher. Engine: `daily_reports/scripts/stitch_daily_report.py`.
+
+1. `python daily_reports/scripts/stitch_daily_report.py pull --date <DAY>` — reads the served Desktop page from S3,
+   extracts the report JSON into `daily_reports/data/DAILY_REPORT_<DAY>.json` (the served edition REPLACES a
+   differing local one; git keeps the old bytes) and snapshots it as `data/stitch/DAILY_REPORT_<DAY>.base.json`.
+2. **Edit the data JSON with the Edit tool, minimally, exactly what he asked** — a headline sentence, a chip, a new
+   sprint item in its category's place (the renderer enforces live → build → fix → verify → scope), a diagram swapped
+   for a screenshot (`capture_screens.py --date <DAY> --route ... --name ... --emit-json` and paste ITS shots entry;
+   the shot must be captured, never hand-typed). Every line stays in the FIRST–FOURTH RULES' register.
+   ⛔ Never touch `date`, `display_date` or `team_activity` — `apply` refuses (machine-owned; the renderer derives
+   or asserts them).
+3. `... diff --date <DAY>` — prints every leaf that moved and the SHAPE before/after (sprint categories, row
+   counts, headline). Read it against what he asked: anything he did not ask for is a defect, revert it.
+4. `... apply --date <DAY> --note "<what changed>" [--presign]` — refuses an empty diff or a machine-owned field;
+   stamps `source` with ` | stitched <UTC> by <serial>: <note>` (the footer discloses it); renders (every gate
+   the automatic run passed, including the derived viz contract's type half); publishes with read-back; appends
+   `data/stitch/DAILY_REPORT_<DAY>.stitch.log`. `--dry-run` renders and prints the plan, uploads nothing.
+5. Open both rendered pages (or the served ones) and look; then `safe-commit` the data JSON, the base snapshot, the
+   log and any shots under your author line.
+
+Not a stitch: a different day's report, a re-run of the censuses, a change to the template or schema (CTO surface),
+or a rewrite that leaves nothing of the finished copy — that is `/daily-sprint --date <DAY>` again.
 
 ## Discipline
 
