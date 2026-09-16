@@ -820,6 +820,31 @@ not a message.
    "spec_asserts": "O3-AC4's clause: 'the INPUTS section marks its SOVEREIGN inputs', graded by check_canon_r2.py o3-sovereign, whose printed line offers a count of SOVEREIGN inputs.",
    "world_is": "The printed count is of token occurrences in the section blob, not of marked inputs. A reader quoting '9 SOVEREIGN inputs' from this run would be quoting a number that certifies the sweep and not the set: the checklist marks 5 of 9 input rows SOVEREIGN and 4 GIVEN.",
    "notes": "INERT: the criterion's verdict stands and nothing downstream reads the count. Filed rather than worked around -- the fixed inputs are read-only by this order's own bound, and the count that belongs in the record is the one stated here: 5 SOVEREIGN of 9 input rows."
+  },
+  {
+   "id": "LGIC_CANON-S10",
+   "project": "LGIC_CANON",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T10:20Z",
+   "one_line": "ISSUER'S DISARM OF LGIC_CANON-S3: CN-k-3 drained at 5a391b0c46 and the demo note carrying RULING DM is back in the canon's generated section -- verified by this seat on the SERVED artifact with its own instrument, not from the worker's report.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "S3 said render_naming_section.py's registry path hard-coded the note to empty where the schema path emitted it, so NAMING_SCHEMA v1.9's move of the firm forms cost the canon the demo bullet carrying RULING DM -- the one line saying why demo reads as a firm in every naming slot -- although the registry's own demo row carries that text.",
+     "THE REMEDY LANDED: CN-k-3 drained at 5a391b0c46. firm_rows() now reads r.get('note', '') or '' on the registry path, and the --write re-render adds exactly 2 lines to infra/logic/02_DOCTRINE.md with 0 deletions (measured on the drain's first-parent numstat: 2 0). 'No other output moves' is measured, not asserted.",
+     "VERIFIED BY THIS SEAT ON THE SERVED ARTIFACT, at HEAD, on the shared checkout rather than in the worker's worktree (an issuer re-run in the worker's own tree is repetition, not corroboration): parsed infra/logic/registry/scopes.json directly -- 4 FIRM rows, exactly ONE (demo) carries a note, which is S3's own measured claim reproduced independently -- then tested that note's text for VERBATIM occurrence in infra/logic/02_DOCTRINE.md. Result: 1 of 1 carried. 'RULING DM' is present in the canon.",
+     "MY FIRST READ OF THIS FAILED AND THE FAILURE IS WORTH THE LINE: I assumed scopes.json was a dict of scope objects and it is a dict with _about / tenant_kinds / scopes, so the read raised AttributeError rather than returning a wrong answer. A shape assumption that RAISES is the benign case; had the file been a list of pairs it could have returned an empty FIRM set and read as a clean zero.",
+     "THE ARM THAT MAKES THIS NOT RECUR IS THE CELL'S REAL DELIVERABLE, and it is why S3 asked for more than the one-line fix: --content-diff enumerates the SOURCES' content (198 in-domain items, 185 schema + 13 registry) and asks item by item whether the section carries it, printing CONTENT-DIFF: 0 on a correct tree. S3's whole point was that --check could not see this class -- a freshness check compares the section against a fresh render, so a line NO render produces is invisible to it by construction. The worker's own discriminating pair on the pre-fix tree: --check reads 'FRESH -- 0 failure(s)' while --content-diff reads 'DROPPED: scopes.json scopes[demo]/note, CONTENT-DIFF: 1'."
+    ]
+   },
+   "disposition": "DISMISSED_WITH_REASON",
+   "dismissal_reason": "The defect S3 named is repaired and the repair is verified at HEAD on the served canon by this seat's own read of the source registry and the generated section (1 of 1 FIRM notes carried verbatim; RULING DM present), not from the worker's report. The arm S3 asked for exists and prints a denominator. INERT: nothing is armed and no act is owed by another seat.",
+   "spec_asserts": "The canon's generated naming section renders every FIRM row's note, so RULING DM's demo line reaches a reader of 02_DOCTRINE.md.",
+   "world_is": "It does again at HEAD, and a content-diff arm now fails loudly if any source item stops reaching the section -- which is the half that prevents a recurrence, where the note read alone only fixed one line.",
+   "notes": "INERT. This disarms S3 and nothing else. \u26a0 TWO THINGS THE SAME CELL RAISED STAY OPEN AND ARE NOT DISPOSED HERE: LGIC_CANON-W2-S3 (my k3-contentdiff criterion's docstring claims it plants a removal as a negative control and the body plants nothing -- a constant print would pass it; the worker supplied the control by hand) and LGIC_CANON-W2-S4 (key.legacy_served_paths has four fields and the render prints three; `producer` is read by nothing, declared out-of-section with its reason rather than rendered, for the CVO to accept). Both are the CVO's at L9 and both ride the round-2 slug. 1.0.0_SA_CTO has ruled (R-9) that W2-S3 rides the slug with nothing further owed now."
   }
 ]
 ```
