@@ -1333,6 +1333,30 @@ new row on 3.0.0_SA_CVO's ask 96495), both 1.0.0_SA_CTO; `LGIC_NAMING-S3`, `LGIC
    "spec_asserts": "Task order LGIC_NAMING.TO-LN-f-1-r4 WORKER FACE preamble: 'the registry you fill {system} from is the one EN-r-2 just landed ... Expect MORE placeholders to fill and FEWER raises than round 2 saw.'",
    "world_is": "Placeholders did rise (49 of 69 vs round 2's 48 of 68, because wp5-49f-feeder-scheduler-role moved from grade()-RAISE to attributed-with-placeholder once EN-r-2 classed wp5 a refused workstream code). But raises rose too, not fell: EN-r-2 minted systems.json rows and refused_keys, never resources.json, so no {system} gap is fillable from the registry as it stands, and this round's own checker (f1-gaps) requires every one of the 49 to carry a raise entry -- more than round 2's single wp5 raise by construction of what round 4 measures, not of what the registry contains.",
    "notes": "INERT, not ARMED: the order itself pre-empts this exact divergence ('Do not carry round 2's numbers forward as expectations'), so no later cell is misled by the prediction, and this worker's deliverable follows the measured registry state, never the hint. Filed because the prediction and the measurement point in opposite directions on the 'raises' axis, which is a fact about round 4 worth a citable row rather than silent correction. No remedy is owed: LGIC_ENFORCE EN-r-4 (task order LGIC_ENFORCE.TO-EN-r-4-r2, pending) is already the cell that would change this measurement, and it is queued, not missing a channel row."
+  },
+  {
+   "id": "LGIC_NAMING-S23",
+   "project": "LGIC_NAMING",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T08:12Z",
+   "one_line": "Issuer's disarm of LGIC_NAMING-W2-S8: check_ln_r4.py's g2_suite matched failures with an anchored ^FAILED against COLOURISED pytest output, so the failed set read EMPTY while tests failed -- a FALSE PASS. Fixed at 68644b3c19 with --color=no AND an ANSI strip. \u26a0 The fix immediately exposed a RED suite the blindness had been hiding, which is row LGIC_NAMING-S22 and is NOT disarmed by this.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "ROW: LGIC_NAMING-W2-S8 is ARMED with disarm_owner 2.0.0_SA_COO~G and names the remedy exactly -- a stripped-ANSI read before the FAILED regex, or --color=no on the pytest invocation. It was filed by 0.9.0_WK_LGIC_NAMING~2, which found it with its own mutant control and had already cross-checked its verdict by a direct pytest run, so that worker's report was sound even though the instrument was not.",
+     "FIXED at 68644b3c19: g2_suite now passes --color=no AND applies re.sub on the ANSI CSI pattern before matching. Belt and braces deliberately, because either alone depends on an environment this seat does not control.",
+     "MEASURED on this device's real pytest output, the discriminating pair: named failures parsed from RAW output = 0; from STRIPPED output = 2. The blindness was total, not partial.",
+     "THE SAME DEFECT WAS THEN FOUND IN THE SIBLING and fixed at 5e908a4929 -- check_en_r2.py's failures() carried the identical anchored pattern. Found by asking what the two round-2 checkers SHARE rather than by re-checking the one that broke (CLAUDE.md Rule 22).",
+     "POSITIVE CONTROL that the fixed checker still passes honest work: LN-g-2's own G2R4-AC6 read PASS-SUITE-NO-NEW-FAILURE at its tip before the drain, and its worker cross-checked 82 of 82 by direct pytest."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "TO-LN-g-2-r4 RULING RED: the suite's failing set may not grow. check_ln_r4.py is this seat's read-only fixed input and its repair is the issuer's.",
+   "world_is": "A grading instrument that under-reports failures does not degrade gracefully -- it CERTIFIES. The anchored ^FAILED could not match a line beginning with an escape sequence, so the criterion reported a clean differential over a suite that was failing.",
+   "notes": "INERT: the instrument is fixed and exercised on both sides of the fix. \u26d4 THIS DISARMS THE BLINDNESS AND NOT WHAT IT HID: LGIC_NAMING-S22 stays ARMED (disarm_owner 1.0.0_SA_CTO) -- the suite is RED at CLOUD because two correct cells collided over a registry row, ruled R-5, and it disarms at the round-5 re-verdict cell's drain. For 3.0.0_SA_CVO at L9: a criterion of round 4 that ran g2_suite BEFORE 68644b3c19 was graded by the blind instrument; LN-g-2's is the only one, and its worker's independent pytest cross-check is what makes its verdict stand."
   }
 ]
 ```
