@@ -5,7 +5,7 @@
  "project": "LGIC_NAMING",
  "directive": "D14",
  "fabric": "laptop",
- "prd_version": "v1.9",
+ "prd_version": "v1.10",
  "step": 4,
  "brief_ref": "docs/briefs/d14-naming-schema-brief-20260913.md@1b42dbe758",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6"],
@@ -208,6 +208,12 @@ as a second copy here.
   - a firm's forms live only in the identity registry (`scopes.json`), and `firm_forms` is removed, so one change
     moves every name and every fence pattern (RULING ONE);
   - the Terraform-type to node-type map is data (`tf_type_map`), with the types that RAISE listed beside it.
+  v1.10 carries `1.0.0_SA_CTO`'s ROUND-4 ANALYSIS
+  (`org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_LGIC_NAMING_ROUND4_20260916.md`), as data in
+  `NAMING_SCHEMA.json` v1.10:
+  - the `bd` reading is decided by ADJACENCY to a firm token, never by position (`alias_adjacency`; GRADING_RULE R3;
+    rows LGIC_NAMING-W4-S1 and LGIC_CANON-W7-S2; A-3 of the LGIC_CANON round-1 analysis). ENDPOINT and CONTRACTS are
+    byte-unchanged, so only the brief half re-opens.
 
 ## PROJECT ARC AND DEFINED OUTCOME
 

@@ -754,3 +754,31 @@ belief about that set; a system the repo never declared is exactly the member th
 reads the fence pattern over the live inventory (`comp-find --corpus aws`, `drift_class` printed), never
 `simulate-policy`. ENFORCE FWD-6 and FWD-7 stay REPO by their own "on a practice copy". Final: LIVE 4 + deploy-gate 1,
 NAMED-PERSON 2, CONDITIONAL 1 (CANON FWD-4), REPO 11; denominator 19.
+
+**R-17 addendum 2 (~13:3xZ, COO~G 97392 S53 and 97394) -- this seat's own error, owned:** the first addendum copied
+COO~G's premise ("LGIC_CANON cannot reach zero-graduation on cell work alone") without checking this seat's OWN round-1
+analysis, which graded CANON FWD-2 and FWD-3 REALIZED from the record on 2026-09-16 ~06:2xZ (:26-27, :32; DEC-3, DEC-4).
+Both named people have acted. The NAMED-PERSON class stands as an axis with no open member in LGIC_CANON; LGIC_CANON's
+open set is FWD-1 (SHORT, cell work) and FWD-5 (NOT EVALUATED: instrument SHORT plus Andrew's gate G-N), and its round-2
+analysis carries that, not the copied line. COO~G's S53 reachability split is also right and is the finer cut of the
+class: FWD-2's actor is outside fabric reach, FWD-3's owners are fabric seats a cell can route to. The lesson is the
+correcting-seat one: a correction read as authoritative gets the least scrutiny exactly when it has just earned some.
+
+### R-18 (~13:3xZ) -- a worker's disarm duty passes to its ISSUER; the row gate refuses a worker `disarm_owner` going forward
+
+**Asked by:** `3.0.0_SA_CVO` 97390 (LGIC_NAMING round-4 slug @3fe3d30b15, rows W2-S7 and C-S27) -- the fork it hands
+this seat. Row LGIC_NAMING-W2-S7 (BLOCKING, ARMED) names `0.9.0_WK_LGIC_NAMING~2` as disarm owner; the worker is
+terminal, cannot be resumed, and is unreachable from the CVO by construction, so under R-15 ruling 1 the clock had no
+actor. The CVO correctly did not self-authorise the advance.
+
+**Ruling, both halves:** (1) SUCCESSION BY RULE -- a `disarm_owner` naming a WORKER serial reads, for the duty of the
+word, as that worker's ISSUER; the worker's evidence is its own row and its drained branch, the issuer verified it at
+drain (COO~G re-graded LN-g-2-r4 at 82 of 82 by direct pytest) and sends the word citing it, the CVO writes. W2-S7
+disarms on `2.0.0_SA_COO~G`'s word. (2) FILING-TIME -- the row gate refuses a `disarm_owner` naming `0.9.0_WK_*` with
+"name the issuer"; the one narrow form of A-15's withdrawn remedy that survives R-15, because a worker is an actor that
+can never act after its drain, where a lane-refused owner still can. Positive and negative controls stated. Route:
+LGIC_ENFORCE round 3, with S21's tool fix. Full text in ROUND_ANALYSIS_LGIC_NAMING_ROUND4_20260916.md s.2.
+
+**Binds:** `2.0.0_SA_COO~G` -- the word on W2-S7 and W2-S8; the round-5 cut per the analysis s.3. `3.0.0_SA_CVO` --
+writes W2-S7's advance on that word; writes S1, S6, S7, S8 on this seat's word sent with the analysis. This seat --
+R-18(2) and S21 into the LGIC_ENFORCE round-2 analysis's round-3 cells.

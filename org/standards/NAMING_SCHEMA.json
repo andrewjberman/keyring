@@ -1,7 +1,7 @@
 {
  "title": "NAMING_SCHEMA -- the D14 Platform Logic naming schema's CLOSED ENUMERATIONS, as data",
- "version": "v1.9",
- "ratified_by": "org/missions/D14/LGIC/LGIC_NAMING/prd/LGIC_NAMING_PRD.md v1.9 (L4, 1.0.0_SA_CTO; v1.5 through v1.9 at L10). Spine L4: a decision that is an enumeration is closed as data in org/standards/ and cited.",
+ "version": "v1.10",
+ "ratified_by": "org/missions/D14/LGIC/LGIC_NAMING/prd/LGIC_NAMING_PRD.md v1.10 (L4, 1.0.0_SA_CTO; v1.5 through v1.10 at L10). Spine L4: a decision that is an enumeration is closed as data in org/standards/ and cited.",
  "changelog": [
   "v1.0 -- first issue with LGIC_NAMING_PRD v1.0 @c65a169ba0.",
   "v1.1 -- on 4.0.0_SA_CRO~D's REFUSED brief half (review @1e4e3e10fd): kind.by_type keys are the live plane's node_type strings (CODEBUILD -> CODEBUILD_PROJECT, ECS_TASK -> ECS_TASK_DEFINITION); every node type not graded by kind is enumerated by subtraction; lb and cluster added for the two minted types that had no kind.",
@@ -12,7 +12,8 @@
   "v1.6 -- on 4.0.0_SA_CRO's refusal of PRD v1.5's brief half (@3a9a0c2f91, R3): key.scope_rule states the vendor MASTER case. A master keeps its own scope under doctrine R3 (two masters of one firm are two scopes, never commingled), and the audience rule decides FIRM or global for every other key. v1.5 had put a Schwab master under its firm.",
   "v1.7 -- at L10, on 1.0.0_SA_CTO's ROUND-2 ANALYSIS (org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_LGIC_NAMING_ROUND2_20260915.md): resource.function -- a noun-phrase function drops every token already written in the system or scope slot (FN1b, row C-S14), and only the resource's OWN kind is barred from its function (FN1c, row W4-S2); both bind the grade as well as the namer, while FN1's word-choice clauses bind the namer only. firm_forms.demo cites the registry row that defines it (RULING DM, row W6-S4). rows_owner: the registry now exists and governs where it and the seed differ. system.vendor_through_tiers' worked example is a name outside every naming-exercise item set (RULING EX1, row S15). The five ruled key segments, the grade signature and its verdicts are unchanged.",
   "v1.8 -- at L10, on 1.0.0_SA_CTO's ROUND-3 ANALYSIS (org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_LGIC_NAMING_ROUND3_20260915.md): resource.function -- FN1b and FN1c are ONE subtraction, and a function it empties RAISES whichever rule removed the last token (FN1d, row W3-S5), so a grade never depends on the order of two steps. The five ruled key segments, the grade signature and its verdicts are unchanged.",
-  "v1.9 -- at L10, on 1.0.0_SA_CTO's LGIC_ENFORCE ROUND-1 ANALYSIS (org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_LGIC_ENFORCE_ROUND1_20260915.md @7b5331c8c0): firm_forms is REMOVED -- a firm's forms live only in the identity registry (scopes.json), which every reader reads (RULING ONE, rows W1-S19, W8-S2), and firm_forms_source says so; demo's tenancy is the registry's DEMO-TENANT (RULING DEMO); tf_type_map carries the Terraform-type to node_type map as data with each type's own-name attribute, and tf_unmapped_own_name the types that RAISE at G1.1 (C-S11, W3-S1). Landed on branch lgic-v19-landing with its readers (EN-r-3) and the rule (LN-g-1), reaching CLOUD in one merge. The five ruled key segments, the grade signature and its verdicts are unchanged."
+  "v1.9 -- at L10, on 1.0.0_SA_CTO's LGIC_ENFORCE ROUND-1 ANALYSIS (org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_LGIC_ENFORCE_ROUND1_20260915.md @7b5331c8c0): firm_forms is REMOVED -- a firm's forms live only in the identity registry (scopes.json), which every reader reads (RULING ONE, rows W1-S19, W8-S2), and firm_forms_source says so; demo's tenancy is the registry's DEMO-TENANT (RULING DEMO); tf_type_map carries the Terraform-type to node_type map as data with each type's own-name attribute, and tf_unmapped_own_name the types that RAISE at G1.1 (C-S11, W3-S1). Landed on branch lgic-v19-landing with its readers (EN-r-3) and the rule (LN-g-1), reaching CLOUD in one merge. The five ruled key segments, the grade signature and its verdicts are unchanged.",
+  "v1.10 -- at L10, on 1.0.0_SA_CTO's ROUND-4 ANALYSIS (org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_LGIC_NAMING_ROUND4_20260916.md): alias_adjacency -- the bd reading is decided by ADJACENCY to a firm token, never by position (GRADING_RULE.md R3, rows LGIC_NAMING-W4-S1 and LGIC_CANON-W7-S2; ruling A-3 of the LGIC_CANON round-1 analysis), lifted from the grading rule into this file so the canon's generated section renders it and the two blind judges' split on bd-49f-runner-role has one authored answer. grade() already implements it (69 of 69 attributed forms equal grade() in round 4). The five ruled key segments, the grade signature and its verdicts are unchanged."
  ],
  "authority": [
   "SOURCE-FIRST key string -- Andrew-direct 2026-09-13 ~03:2xZ card 1, 'all recs approved' (relayed 4.0.0_SA_CRO~D 96332)",
@@ -153,8 +154,22 @@
  "tf_unmapped_own_name_note": "Terraform types that carry their own name but map to no node_type: a grade of one RAISES at G1.1 until a node_type is added here (v1.9).",
  "global_scope": {"key": "global", "short": "global"},
  "refused_tokens": {
-  "bd": "refused in EVERY slot (Andrew ~03:5xZ card 2). The vendor is blackdiamond; the firm is 49financial.",
+  "bd": "refused in EVERY slot (Andrew ~03:5xZ card 2). The vendor is blackdiamond; the firm is 49financial. Which of the two a given name means is decided by alias_adjacency (v1.10).",
   "mockadv": "an alias only, recorded in the registry's alias rows as history; never minted"
+ },
+ "alias_adjacency": {
+  "bd": {
+   "reads_as": "VENDOR blackdiamond when a firm token (a registry firm key or its sanctioned short form) is ADJACENT to it, before or after; FIRM 49financial otherwise",
+   "test": "ADJACENCY to a firm token, never position in the name",
+   "examples": {
+    "bd-49f-session-trigger": "vendor -- 49f is adjacent",
+    "cot-bd-session-trigger-lambda-role": "vendor -- cot is adjacent, bd sits second",
+    "bd-49f-runner-role": "vendor -- the case that split two blind judges (LGIC_CANON-W7-S2); canonical blackdiamond-49f-runner-role, verdict ALIAS",
+    "bd-allocations": "firm -- no firm token adjacent; canonical spells 49financial's form for the slot"
+   },
+   "either_way": "bd is an ALIAS in every slot (refused_tokens.bd); the canonical form spells blackdiamond or the firm's form for the slot",
+   "source": "GRADING_RULE.md R3 (LGIC_NAMING round 4, coverage N of N); rows LGIC_NAMING-W4-S1, LGIC_CANON-W7-S2; A-3 (v1.10)"
+  }
  },
  "system": {
   "classes": ["PRODUCT", "PLATFORM_SUBSYSTEM", "VENDOR"],
