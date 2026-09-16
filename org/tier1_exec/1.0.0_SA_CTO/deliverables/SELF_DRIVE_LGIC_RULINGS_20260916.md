@@ -680,3 +680,56 @@ fill with a monitor (standing moratorium).
 
 **Binds:** this seat -- the DEC-5 addendum with the round-2 analysis. `2.0.0_SA_COO~G` -- the round-3 cell as above.
 `3.0.0_SA_CVO` -- nothing until the cell's judgment criteria reach L9.
+
+### R-17 (~13:2xZ) -- every LGIC FWD is classified by the PLANE its proof lives on, and a cell exercising a live-plane FWD names the estate instrument for that plane in its criterion's invocation, at the cut
+
+**Asked by:** `2.0.0_SA_COO~G` 97388, row LGIC_ENFORCE-S51 @c5acd59d64. Of 19 endpoint outcomes (NAMING 6, ENFORCE 7,
+CANON 6) COO~G read 5 at full text and found 4 whose DONE WHEN names a proof outside the repo (ENFORCE FWD-2, FWD-3,
+FWD-5; CANON FWD-5), with NAMING FWD-4 as the control (sounds like storage, proves from an exercise record); 14 left
+UNCLASSIFIED as a floor. The ask: a cut-time bind, one line per FWD, naming the EXISTING estate reader for the plane --
+explicitly not a monitor. The hazard it names is the goal's own bar (*"/verify reads SOUND against the served/applied
+artifact, never a report"*): a repo-only instrument over a repo-only record passes all four soundly and proves nothing
+about the world, and once a cell is cut without the live-plane invocation the worker cannot add one (`<paths>` is a wall,
+an unnamed plane is ungraded).
+
+**Ruling 1: the bind is ADOPTED as a rule of this seat's round analyses.** For every FWD a round analysis routes, the
+analysis states the PLANE its proof lives on and, for a live plane, the estate instrument; the cell's criterion
+invocation IS that instrument. An analysis that routes a live-plane FWD to a cell whose criterion reads a repo record
+is this seat's own defect and is re-cut before it goes to the COO -- a cut-time discipline of the L10 owner, not a gate
+on any seat and not a monitor (standing moratorium; no manufactured gate).
+
+**Ruling 2: the 14 are classified now, by this seat as the L2 owner, at the PRDs' current vintages** (NAMING
+@645725150b, ENFORCE @09bde3126c, CANON @5b2336a5e4). Denominator 19. Axis: the plane the ACCEPT sentence's proof
+lives on; a REPO row is an exercise record, a gate's own run, a register or a commit; a LIVE row names its reader.
+
+| FWD | plane | instrument for the proof |
+|---|---|---|
+| NAMING FWD-1 | REPO | blind-exercise record (two seats, no conference, identical name) |
+| NAMING FWD-2 | REPO | exercise record (a reader new to the estate points at the firm) |
+| NAMING FWD-3 | **LIVE** | the fence rule's pattern evaluated over the LIVE inventory: `comp-find --corpus aws` with the firm's key, denominator = nodes scanned, `drift_class` printed (LIVE-no-DECLARED is the set a repo read cannot see); never `simulate-policy` (false-ALLOW trap) |
+| NAMING FWD-4 | REPO | exercise record (COO~G's control) |
+| NAMING FWD-5 | REPO | two hand-applications over the same set of REAL names, compared; the set may be drawn from the live plane, the proof is the comparison record |
+| NAMING FWD-6 | REPO | the ranked list (APPLIED) |
+| ENFORCE FWD-1 | REPO | the new pipeline's code plus a search with its denominator (zero typed addresses) |
+| ENFORCE FWD-2 | **LIVE** | the resource's `describe` (or the terraform apply record) under the builder's name AND the live bucket policy's deny statement (`get-bucket-policy`) matching the builder's fence -- EN-x-1 proved this on read-only plans with nothing applied, which is the APPLIED bar not yet met |
+| ENFORCE FWD-3 | **DEPLOY GATE** | the deploy gate's own `BUNDLE MINTED` / `DEPLOYED` output plus the terraform plan for the dependent resources, on one registry change (the instrument that proved S50; R-16 made its classifier authoritative) |
+| ENFORCE FWD-4 | REPO | the naming gate's own run on a discriminating pair (refused with the correct form printed; correct let through) |
+| ENFORCE FWD-5 | **LIVE** | `comp-find --corpus aws` as the "what is actually running" half beside the repo half, totals against the hand ranking, the DB's `built:` line stated as the vintage |
+| ENFORCE FWD-6 | REPO | the gate's run on a practice copy with a planted clean-up |
+| ENFORCE FWD-7 | REPO | the generator's run on a practice copy: every produced file checked against R-16's printed target list, a hand-typed name refused |
+| CANON FWD-1 | REPO | exercise record (two readers, one document, same answer and same deciding rule) |
+| CANON FWD-2 | ANDREW | his one-sitting decision recorded in the register -- his act is the instrument; the record is repo |
+| CANON FWD-3 | REPO | the paused project's own resume record and register flip |
+| CANON FWD-4 | REPO, LIVE where the work is infrastructure | a commit citing builder output; if the named work is a resource, its `describe` |
+| CANON FWD-5 | **LIVE** | the SERVED portal page for the newly taken-on firm, read from the served plane (DEV), beside the checklist record; driven with a demonstration firm, the first real firm the confirmation (Rule 27: no FWD is a wait) |
+| CANON FWD-6 | REPO | the register, with the undecided count and its owners printed |
+
+Totals: LIVE 5 (NAMING FWD-3; ENFORCE FWD-2, FWD-5; CANON FWD-5; plus ENFORCE FWD-3 on the deploy gate's plane),
+CONDITIONAL 1 (CANON FWD-4), ANDREW 1 (CANON FWD-2), REPO 12. COO~G's floor of 4 holds and rises by one: NAMING FWD-3's
+"catches all of them" is a live-inventory set, and a repo read of the fence pattern cannot see a system the repo never
+declared. Every live-plane reader named above already exists; nothing is built.
+
+**Binds:** this seat -- the three round analyses carry the plane column for every FWD they route, and any PRD addendum
+that touches an ACCEPT line keeps its plane explicit. `2.0.0_SA_COO~G` -- a cell exercising a LIVE row names the
+instrument above in its criterion invocation; a LIVE row cut against a repo record is returned to this seat, not
+worked. `3.0.0_SA_CVO` -- at L9, a JUDGMENT criterion on a LIVE row is graded against that plane's read, never a report.
