@@ -6980,6 +6980,31 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "AMGT-rk-13 AC3: self_match_suspects 0, with the escape clause reading 'a suspect that is genuinely a different company is refused as written'.",
     "world_is": "The worker refused rather than widen an exclusion rule on its own reading, which is what the refusal clause asks for. The issuer's reading is that the escape does not cover a same-issuer share class, and the mechanism is already named in the chain's own cell text.",
     "notes": "NO criterion moves; the amendment is a note plus one grant path, so nothing already proven is re-opened. rk-13 stays OPEN for a respawn that repairs the exclusion and re-proves AC3 only; AC1, AC2 and AC4 carry forward from the instance at 33304ed32c. W25-S6 stays ARMED with its own disarm_owner at L9 -- this row does not disarm it, it directs the repair. W25-S8 is recorded and needs no act: the non-existent grant path blocks no write this cell makes."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W25-S9",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~25",
+    "surfaced_at": "2026-09-16T18:35:00Z",
+    "one_line": "DISARMING AMGT_RESAPP-Z-W25-S6 per ISSUER AMENDMENT 10 (row AMGT_RESAPP-Z-S130): a share-class-sibling self-exclusion arm added to lib/research/peers/engine.py's self-exclusion block (strip ONLY a trailing 'Class <X>'/'Cl <X>' marker and require the remainder to match exactly) catches GOOGL_US_Equity/GOOG_US_Equity without the token-overlap over-exclusion reverted at W25-S3; the batch re-wrote all 191 peers/v1 objects under a new dated partition (peers/v1/<key>/2026-09-16T1930Z.json, never overwriting the existing 2026-09-16.json objects) and AC3 now reads self_match_suspects 0, mutant_suspects 2.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/research/peers/engine.py (this commit): strip_share_class_suffix()/share_class_base_name() strip ONLY a trailing 'Class <X>'/'Cl <X>' marker; the self-exclusion loop's new arm fires when the stripped, normalised name of a candidate equals the subject's stripped, normalised name, with the marker present on at least one side.",
+        "Over-exclusion census (org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~25/AMGT-rk-13.over_exclusion_control.txt): comparing all 191 subjects' peers/v1/<key>/2026-09-16.json (pre-fix) against .../2026-09-16T1930Z.json (post-fix) -- exactly 2 subjects changed (GOOGL_US_Equity, GOOG_US_Equity), each lost exactly 1 member (the other), 0 members added anywhere, 0 over-exclusion violations (every removed member's stripped name equals its own subject's stripped name).",
+        "Static census over the live 2851-row scanner database (candidate_universe.json): the share-class-marker grouping yields 59 groups of size 2 and none larger; manual review of all 59 shows every pair is the SAME issuer's two share classes (e.g. Fox Corporation Class A/B, Brown-Forman Corporation Class A/B, Agricultural Bank of China Class A/H) -- no group merges two different companies.",
+        "AC3 re-run after the corrected batch (AMGT-rk-13.AC3.after.txt, same invocation as W25-S6's): self_match_suspects 0 [], mutant_suspects 2 -- the two known positive-control cases (Alibaba, SAP) still flag under the test script's OWN token heuristic (a control on the grading script itself, not a read of served data).",
+        "AC1/AC2/AC4 re-run unaffected by this fix: populated_subjects 121 of 121 populatable_expected (AC1, AMGT-rk-13.AC1.after.txt); reads-crosswalk 11 / figi-dedup 5 over 6 modules unchanged (AC2, AMGT-rk-13.AC2.after.txt); pool_blocks_classified_by_block 4 of 4 with NVDA_US_Equity through model_block_header (AC4, AMGT-rk-13.AC4.after.txt)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "W25-S6's disarm_owner: '3.0.0_SA_CVO~Z at L9 (INTERFACE X-1's owner) -- a share-class/cross-listing-aware self-exclusion or identity join for the peers engine; until then, GOOGL_US_Equity and GOOG_US_Equity's served peer sets each name the other as a comparable.' ISSUER AMENDMENT 10 (row AMGT_RESAPP-Z-S130) redirected: 'The repair is inside lib/research/peers/, which this order already grants ... AC3 stands as written.'",
+    "world_is": "The repair is built and proved: a share-class-marker-stripping self-exclusion arm, narrower than the reverted token-overlap attempt (W25-S3), removes ONLY the GOOGL/GOOG pair from each other's served membership across the whole live population, with the over-exclusion control above showing zero collateral removals. AC3 now reads self_match_suspects 0. W25-S6's own routing to 3.0.0_SA_CVO~Z at L9 is superseded, on this specific residual, by the issuer's own amendment putting the fix inside this cell's grant; the wider ADR/cross-listing question W21-S3 originally raised (a subject resolvable only under a scanner identifier carrying a DIFFERENT name string with no share-class marker at all, e.g. a SEDOL) is a DIFFERENT mechanism from a share-class suffix match, is NOT addressed by this rule, and stays routed to 3.0.0_SA_CVO~Z at L9 exactly as W21-S3 and W25-S3 left it -- though the same generic token-based detector this order's AC3 uses covers both mechanisms at once and currently finds neither live.",
+    "disarm_owner": "0.9.0_WK_AMGT_RESAPP~25 (this repair and its over-exclusion control)",
+    "notes": "This row does not flip W25-S6's own hazard_standing field (append-only, immutable at surfacing per the surprise-channel schema); it disarms the ARMED condition going forward by satisfying the disarm_owner's own text via the route ISSUER AMENDMENT 10 (row S130) named. AC3's proof-of-spec instance is updated to PASS with this evidence, superseding the prior instance's FAIL-as-written grading at 33304ed32c."
   }
 ]
 ```
