@@ -282,6 +282,89 @@ but this seat's to catch.
 
 ---
 
+## 0e. v5 -- THE ROUND-3 RECUT (2026-09-16), ON THE CTO's ROUND-2 ANALYSIS
+
+**Authority.** `1.0.0_SA_CTO`'s LGIC_CANON round-2 ANALYSIS @`4a55888962` (msg 97406), on `3.0.0_SA_CVO`'s slug 97401
+@`64308200ce`. Round 2 is CLOSED at L10 and the freeze lifts HERE.
+
+**The round-2 grade this recut answers (analysis s.1).** FWD-2, 3, 4, 6 REALIZED, unchanged. **FWD-1 SHORT and
+NARROWED** -- C-S9's VOCABULARY half is CLOSED by CN-k-2 (K2-J1); the ORDER half is untested (J6-J1 FAIL on the cut,
+R-9). **FWD-5 NOT EVALUATED** on Andrew's G-N word, instrument 16 MECHANICAL / 0 JUDGEMENT / 13 RUNNABLE / 3 STOPPED
+with named owners. **No PRD addendum**, so the PRD stays v1.3.
+
+**The PRD halves were re-read at this cut, not carried forward.** `prd-signoff.py status LGIC_CANON` reads
+`v1.3 @5b2336a5e4 dep_stage=EXECUTING -> ADMITTED`, ratified-text SIGNED by `3.0.0_SA_CVO` and brief SIGNED by
+`4.0.0_SA_CRO`, **both `current`**.
+
+### THE ONE PLACE THIS CUT DEPARTS FROM THE ANALYSIS, AND IT IS A LANE FACT, NOT A PREFERENCE
+
+The analysis lists **`CN-i-1`** -- the round-3 fixed inputs -- as a CELL, with C-S20 disarming "at its drain".
+**MEASURED at the cut: a worker cannot write that path at all.**
+
+```
+path  org/missions/D14/LGIC/LGIC_CANON/deliverables/2.0.0_SA_COO~G/fixed_inputs/r3/check_canon_r3.py
+lane  TREE_DELIVERABLES        (owner resolved from the SERIAL SUBFOLDER)
+      2.0.0_SA_COO~G        True
+      0.9.0_WK_LGIC_CANON~1 False      <- a worker is REFUSED, not merely unlisted
+      3.0.0_SA_CVO          False
+```
+
+Read through `.tools/owned-paths-validate.py`'s own `check_agent()` on `git show HEAD:.owned-paths.yaml` -- the
+function the commit path calls, on the RECORD's bytes, with a positive and a negative control. A `<paths>` entry
+cannot lift it: the lane refuses the serial, and the grant is read per-lane before the block is consulted.
+
+**So `CN-i-1` is the ISSUER'S ACT AT THE CUT, not a cell**, and that is the same shape LGIC_NAMING round 5 used for
+its checker (`check_ln_r5.py`, built and self-tested before the issuance). Consequences, stated rather than left
+implicit:
+
+- The four instrument defects the slug names -- **W2-S3** (a docstring CLAIMED a negative control the subcommand
+  never planted), **W3-S2** (`\S+` regexes blind to the multi-word labels round 1 read fine), **W8-S4** (token
+  OCCURRENCES standing in for marked ROWS, 9 vs 5 of 9) and **W5-S2** (a blob scan that could not tell REACHED from
+  NOT REACHED) -- are repairs to THIS SEAT'S OWN artifact and are this seat's to make.
+- **C-S20's disarm lands at the ISSUANCE commit, not at a drain**, because there is no drain for an act with no cell.
+- A-23 binds the build: a negative self-test per subcommand, **each arm exercised ALONE**. That is not boilerplate --
+  `LGIC_ENFORCE-S55` measured a belt-and-braces pair in this seat's own checkers where the belt was inert and only
+  the brace was holding, and it was invisible precisely because the two were only ever run together.
+
+### THE CELLS THIS ROUND RUNS -- 6, by subtraction
+
+```
+  cells at v4 ...................................................... 12
+  minus cells serving an outcome REALIZED and re-opened by no item ... -5
+  minus C6, which STAYS NOT CUT (G-N + ADVI_FIRMBKTS's repoint) ...... -1
+  ------------------------------------------------------------
+  cells round 3 runs ................................................ 6
+      CN-k-4-r3   re-render after alias_adjacency (AT HEAD now); content-diff with a PLANTED
+                  removal as the checker's own negative control; the producer exclusion carrying
+                  its no-consumer predicate           A-18, A-20   FWD-1   S11 disarms at its drain
+      CN-k-5      the canon: R-9's four coordinates; title v1.1 and the section-0 census 22 of 22
+                  BY RECOUNT; A-4 re-scoped with its own criterion; A-6 RESTATED -- SHORT is a
+                  sovereign input read thereafter, no derivation built    A-19, A-6, W1-S4, W8-S3
+      CN-j-8/9/10 three judges on ONE tree chosen to reach R3, R8, R14, R15, R19, R21; each names
+                  the most-severe finding per plane and its rule; TWO briefed, ONE unbriefed; blind
+                  asserted on the sibling file NOT EXISTING at the judge's base commit   A-22, A-13
+      CN-j-11     the comparison: the plane intersection with its POSITIVE CONTROL printed BEFORE
+                  comparing, the ROLL-UP compared rather than the vocabulary, every divergence
+                  traced to a canon coordinate, the reach printed              A-17 (= R-9)
+```
+
+**LEVELS AND EDGES.** Level 0: `CN-k-4-r3`, `CN-k-5`, `CN-l-3`. Level 1: the three judges, which depend on `CN-k-5`
+(they judge against the canon it writes). Level 2: `CN-j-11`, which depends on all three. `CN-l-3` (the ledger's
+state-plane row, or the narrowed sentence, stated which -- A-21, S4) is independent of everything.
+
+**M = 3 independent chains**: `{CN-k-5 -> CN-j-8/9/10 -> CN-j-11}`, `{CN-k-4-r3}`, `{CN-l-3}`. N is bounded above by
+M for the ROOTS, but the judge level needs THREE DISTINCT WORKERS at once, so the fan-out peaks at 3 inside one chain.
+
+**THE DISTINCT-WORKER CONSTRAINT IS THE POINT OF THE JUDGE CELLS AND IT IS MECHANICAL, NOT A CONVENTION.** The three
+judges must be blind to each other AND to `CN-k-5`'s author: a judge who wrote the canon judges its own text, and two
+judges sharing a worktree share an answer file. Round 1's form is the one that held -- blindness ASSERTED on the
+sibling file NOT EXISTING at the judge's own base commit, which is a fact about the tree rather than a promise.
+
+**WHAT THIS ROUND DOES NOT CARRY.** `C6` stays NOT CUT (Andrew's G-N word and ADVI_FIRMBKTS's router repoint, A-8);
+when it is cut it is driven with a DEMONSTRATION firm on the served DEV plane under R-17, never waited for. Three
+items route to **LGIC_ENFORCE round 3** and are not cells of this project: R-19's gate limb, R-18(2), and W8-S1's
+`grade()` fix.
+
 ## 1. THE DOMAIN, BY SUBTRACTION (Rule 24(i))
 
 ```
