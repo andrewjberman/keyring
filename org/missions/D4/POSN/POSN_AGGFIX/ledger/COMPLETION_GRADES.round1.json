@@ -1,0 +1,67 @@
+{
+  "kind": "COMPLETION_GRADES",
+  "schema_version": "1.0",
+  "project": "POSN_AGGFIX",
+  "round": 1,
+  "graded_by": "1.0.0_SA_CTO~Z",
+  "graded_utc": "2026-09-16T01:30Z",
+  "report_ref": "org/missions/D4/POSN/POSN_AGGFIX/ledger/COMPLETION_REPORT.round1.json@f7105b10da",
+  "rows": [
+    {
+      "fwd_id": "FWD-1",
+      "verdict": "REALIZED",
+      "state_observed": "EXERCISED",
+      "artifact_ref": "org/missions/D4/POSN/POSN_AGGFIX/deliverables/0.9.0_WK_POSN_AGGFIX~3/POSN_AGGFIX.TO-B2-1.holdings-tab-restores-the-aggregate-book.proof_of_spec.json@8753758c53",
+      "note": "B2-AC2 (PASS, method=command) is the card's exercise: an Opal-staff viewer with no remembered choice lands on the aggregate, the selector's first entry is the aggregate, and BOTH panels render it -- Portfolio Composition entries and Holdings Breakdown rows each counted equal to the fixture's AGG holdings. The fetch half is B1-AC5/B2-AC11 (Opal staff exactly 1 request to opal_aggregate.json). DRIFT DISCLOSED, and it is this grader's own doing: B2-AC2's expect string says 'the selector's FIRST entry reads Aggregate', and at production ff542d0a that entry reads AGG, because Andrew-direct 2026-09-15 ordered the label changed after the criterion was proven (commit be8cf218). FWD-1's own ACCEPT clause names no label text -- it requires that staff can pick the aggregate and read both panels -- so the CARD is met and the TO criterion's wording is what aged. Anyone re-reading B2-AC2 against production must expect AGG."
+    },
+    {
+      "fwd_id": "FWD-2",
+      "verdict": "REALIZED",
+      "state_observed": "EXERCISED",
+      "artifact_ref": "org/missions/D4/POSN/POSN_AGGFIX/deliverables/0.9.0_WK_POSN_AGGFIX~3/POSN_AGGFIX.TO-B2-1.holdings-tab-restores-the-aggregate-book.proof_of_spec.json@8753758c53",
+      "note": "Both ACCEPT limbs are exercised by a test that TRIES to make the negative property fail, not by a window in which it happened not to occur. B2-AC4 (PASS) loads the page as an advisor AND as a client with 'AGG' hand-set as the remembered book before load: no Aggregate entry in the selector (entries printed), the landing on the ordinary default model, 0 requests to opal_aggregate.json, no Model Breakdown group in the DOM. B2-AC7 (PASS) adds the UNAVAILABLE-payload arm. The hand-set remembered choice is the discriminating limb -- it is the exact case the card names."
+    },
+    {
+      "fwd_id": "FWD-3",
+      "verdict": "REALIZED",
+      "state_observed": "EXERCISED",
+      "artifact_ref": "org/missions/D4/POSN/POSN_AGGFIX/deliverables/0.9.0_WK_POSN_AGGFIX~3/POSN_AGGFIX.TO-B2-1.holdings-tab-restores-the-aggregate-book.proof_of_spec.json@8753758c53",
+      "note": "Every ACCEPT limb has its own exercised artifact. Per-model split readable: B2-AC2 prints the Model Breakdown group's five columns UST ST INT LT ULT placed FIRST among the column groups, with cell text for three sampled tickers equal to model_breakdown x 100 at one decimal. Prior layout: B2-AC1 (PASS) prints each element d53049a0 removed beside its restored counterpart with RESTORED n of n and the four forbidden legacy classes counted at 0. Marked as all of Opal: the 'All of Opal' label asserted present in B2-AC2. As easy to read as the columns beside it: B2-AC6 (PASS) prints the computed WCAG contrast ratio for five header cells and one body cell per column, every ratio at least 4.5, with an existing column measured as the reference. NOT DISCHARGED BY THIS ROW: B2-AC10 is a judgment criterion, owed to 3.0.0_SA_CVO~Z at L9 and never self-graded here (Rule 27). It asks whether the restored selector and Model Breakdown group READ as 'how it was before' on today's canvas. Round 1's L8/L9/L10 were STOOD DOWN by Andrew-direct ~01:1xZ 2026-09-16, verbatim 'not needed just wrap up whatever you need to, mark closed on anything in your purview' (3.0.0_SA_CVO~Z, record bd1358c39e), so that read will NOT happen -- it is closed unperformed, not pending. Across all 7 task orders the same shape holds: 7 of 81 criteria are judgment, one per TO, each status UNVERIFIABLE-BY-INSTRUMENT; the other 74 are PASS. This REALIZED rests on the 74 and claims nothing about the 7."
+    },
+    {
+      "fwd_id": "FWD-4",
+      "verdict": "REALIZED",
+      "state_observed": "EXERCISED",
+      "artifact_ref": "org/missions/D4/POSN/POSN_AGGFIX/deliverables/0.9.0_WK_POSN_AGGFIX~1/POSN_AGGFIX.TO-A3-1.deploy-the-producer-and-read-the-served-result.proof_of_spec.json@8753758c53",
+      "note": "The card's DONE WHEN is a COMPARISON that has been made, not a deployment that has happened, so the grading artifact is the served-result read rather than the apply. TO-A3-1 (12 PASS) deploys the producer and reads the SERVED artifact back; TO-A2-1 (12 PASS) is the producer harness proving the aggregate is built from the current per-model weights rather than a stale mix. Deployed bytes were compared against the build input, not by file name (A1-AC5, deployed_vs_source)."
+    },
+    {
+      "fwd_id": "FWD-6",
+      "verdict": "REALIZED",
+      "state_observed": "EXERCISED",
+      "artifact_ref": "org/missions/D4/POSN/POSN_AGGFIX/deliverables/0.9.0_WK_POSN_AGGFIX~1/POSN_AGGFIX.TO-A1-1.verify-gap-writers-readers-deployed-bytes-grant-blends.proof_of_spec.json@8753758c53",
+      "note": "Three ACCEPT limbs, three artifacts. Nothing left out: the blend-definition census (a1_ac8_blend_definition_census.out.txt) against org/standards/POSN_AGGREGATE_MODEL_SET.json, each blend counting through the models it is split between. Nothing let in: the same census reports 5 primary and 2 blend rows with 0 outside. The gap EXPLAINED rather than silently dropped: AF1_S1_GAP_EXPLANATION.md with the gap 8,324,465.16 present in both gold and platinum and the legacy file tied within 0.01. TO-A2-1 carries the per-holding re-derivation. The card asks only that the gap be explained; its remediation is the producer owner's and was correctly left as a surprise row, not absorbed here."
+    },
+    {
+      "fwd_id": "FWD-7",
+      "verdict": "REALIZED",
+      "state_observed": "EXERCISED",
+      "artifact_ref": "org/missions/D4/POSN/POSN_AGGFIX/deliverables/0.9.0_WK_POSN_AGGFIX~2/POSN_AGGFIX.TO-C1-1.edge-refuses-the-aggregate-outside-opal.proof_of_spec.json@8753758c53",
+      "note": "Graded on the LIVE arms, not the unit harness, because the card says what a signed-in session RECEIVES. C1-AC13 (PASS, method=live_read) after the distribution reached Deployed: advisor-class and client-class tokens on both aggregate URLs return 401 carrying the gate's message; Opal-staff and Dev tokens on the same URLs return NOT 401; all four classes return 200 on the control URL; the encoded, query-string and double-slash forms each return 401 or a forwarded URI that cannot resolve to the key. C1-AC12 (PASS, live_read) is the only proof the edge actually moved -- AUTH-VALIDATOR ASSOCIATIONS 25 of 25 at the version C1-AC10 published, 0 at any other. C1-AC4's negative control (a scratch index.mjs without the gate call, letting advisor and client through) is what shows the harness CAN fail. Blast radius held: C1-AC17/AC13 re-read three other behaviour families before and after, FAMILIES UNMOVED 6 of 6, and C1-AC19/AC20 show the WAF rules unchanged. NOTE: this leg is in the WORKSPACE repo and was NOT carried by the portal v2.1.179 promote; it was already applied and live-verified under its own deploy ledger, slug posn-aggfix-r1-edge-gate. NOT DISCHARGED BY THIS ROW: C1-AC16 is a judgment criterion owed to 3.0.0_SA_CVO~Z at L9 and never self-graded here -- whether the gate's admit predicate matches the page's isInternal() || isDev() for a Dev user outside Opal, and whether a route to the key exists that C1-AC1 did not list. Round 1's L8/L9/L10 were STOOD DOWN by Andrew-direct ~01:1xZ 2026-09-16 (record bd1358c39e), so this read is closed unperformed rather than pending."
+    },
+    {
+      "fwd_id": "FWD-8",
+      "verdict": "REALIZED",
+      "state_observed": "EXERCISED",
+      "artifact_ref": "org/missions/D4/POSN/POSN_AGGFIX/deliverables/0.9.0_WK_POSN_AGGFIX~3/POSN_AGGFIX.TO-B2-1.holdings-tab-restores-the-aggregate-book.proof_of_spec.json@8753758c53",
+      "note": "B2-AC5 (PASS) compares the 10 advisor and client captures against B_DOM_BEFORE.json and reports IDENTICAL 10 of 10 -- a before/after equality over the five model views, exactly the card's DONE WHEN. The mutated-weight control is reported as a DIFFERENCE, so the comparator is shown able to detect change; an equality claim without that control would be the weaker instrument. TO-B3-1 (5 PASS) repeats the five model views on LIVE bytes rather than fixtures. Re-checked by this grader against the promote: the only portal deltas after these captures are be8cf218's two display-only lines, neither of which touches book resolution, holdings, weights or the five-book payload."
+    },
+    {
+      "fwd_id": "FWD-9",
+      "verdict": "REALIZED",
+      "state_observed": "EXERCISED",
+      "artifact_ref": "org/missions/D4/POSN/POSN_AGGFIX/deliverables/0.9.0_WK_POSN_AGGFIX~3/POSN_AGGFIX.TO-B2-1.holdings-tab-restores-the-aggregate-book.proof_of_spec.json@8753758c53",
+      "note": "The card has two arms and both were run. B2-AC2 (PASS): Opal staff, no remembered choice, lands ON the aggregate. B2-AC3 (PASS): Opal staff with ST remembered lands on ST, and selecting the aggregate afterwards renders both panels on it with the row count printed equal to the fixture's. Unaffected by this grader's label change at be8cf218: the remembered value and the book key are the string 'AGG' either way, and only the rendered chip text moved, so the landing logic B2-AC2/AC3 exercised is byte-identical at ff542d0a."
+    }
+  ]
+}
