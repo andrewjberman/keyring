@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_LGIC_NAMING~4</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-09-15</issued_date>
-<status>pending</status>
+<status>complete -- 0.9.0_WK_LGIC_NAMING~4 @6ed5fe6493 (deliverable), proof-of-spec instance at org/missions/D14/LGIC/LGIC_NAMING/deliverables/0.9.0_WK_LGIC_NAMING~4/LGIC_NAMING.TO-LN-f-1-r4.firm-patterns.proof_of_spec.json validated rc=0; F1R4-AC1..AC5 PASS-by-output, F1R4-J1 RECORDED for 3.0.0_SA_CVO at L9; row LGIC_NAMING-W4-S3 filed (OBSERVATION, INERT)</status>
 
 **Directive:** D14 | **Fabric:** laptop | **PRD:** `../prd/LGIC_NAMING_PRD.md` v1.8 @2f554182b6 (ADMITTED; brief half signed @b136cdc308, review @02529e1bce) | **Decomp cell:** `LN-f-1` (round 4) | **outcome_ref:** FWD-5, FWD-3 | **depends_on:** LGIC_ENFORCE EN-r-2 (the registry rows for the 115 tokens) merged to CLOUD, AND the G-V19 group (LN-g-1, LN-g-2, EN-r-3, NAMING_SCHEMA v1.9) merged to CLOUD | **slot:** ~4, queue position 1
 
