@@ -6238,6 +6238,100 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
       "spec_asserts": "The issuer's own message to this worker, quoted: 'IF YOUR CHECKER CAN CHEAPLY DETECT IT -- an order whose mandated final write target is absent from its own <paths> -- that is a worthwhile sixth arm ... BUT DO NOT LET IT DISPLACE YOUR FIVE NAMED SHAPES, and do not treat this as an instruction to widen your cell's scope -- if adding it would push you past your criteria as written, file a row naming it for round 13 instead.'",
       "world_is": "AMGT-rk-9's own criteria (AC1-AC4, unchanged by ISSUER AMENDMENT 1) name exactly FIVE shapes and grade the checker's self-test against exactly those five (AC2's expect: 'for EACH of the five shapes ... five refusals and at least one admission'). Adding a sixth arm to the shipped checker would exceed what this order's criteria ask for and risks reading as scope creep on the very cell whose subject is disciplined criteria. This row carries the specimen and the proposed detection shape forward instead of building it now.",
       "notes": "PROPOSED SHAPE for a round-13 sixth arm, recorded so it is not re-discovered from scratch: parse an order's own <paths> block (the fenced text between <paths> and </paths>) and check whether the order's OWN FILENAME (the basename of the .md file being scanned) appears inside it; ABSENT is the refusal, matching this row's own positive control (2726497094 REFUSE 16 of 16, HEAD ADMIT 16 of 16). This is a STRUCTURAL check (grant-vs-mandated-final-write-target), a different axis from the five textual shapes AMGT-rk-9 built (which all look at an <invocation>/<expect> pair, never at the <paths> block), so it would be a genuinely new arm, not a variant of an existing one. NOT BUILT in .tools/criteria_quality_checker.py per the issuer's explicit bound; the checker as shipped still discriminates 5 of 5 planted mutants plus 1 of 1 control (AC2) unchanged by this row."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W25-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~25",
+    "surfaced_at": "2026-09-16T07:23:00Z",
+    "one_line": "AC2's literal invocation counts j.count('guess') as the bare-ticker-join defect signal, but that substring also matches every occurrence of the WORD 'guessed'/'guessing' in the identity modules' own defensive doctrine comments -- it cannot discriminate the forbidden construction from the prose that forbids it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Literal AC2 invocation run at the cut: python -c \"import io,glob; fs=sorted(glob.glob('lib/research/identity/*.py')); j=''.join(io.open(f,encoding='utf-8',errors='replace').read() for f in fs); print(j.count('guess'), j.count('+ \\\" US\\\"'), j.count(\\\"+ ' US'\\\"))\" -> 23 0 0 -- ALL 23 hits are the substring 'guess' inside 'guessed'/'guessing'/'guess' as used in phrases like 'never guessed' and 'NOT guessed'; ZERO come from an actual bare-ticker-join construction (a literal '+ \" US\"' / \"+ ' US'\" append).",
+        "The SAME measurement on the pre-existing codebase, BEFORE this cell's edits (lib/research/identity/{crosswalk,resolver,coverage_pass}.py + .scratch/build_universe.py.orig, i.e. every file this cell did not touch plus build_universe.py's unedited baseline): j.count('guess') = 16, j.count('+ \" US\"') = 0, j.count(\"+ ' US'\") = 0 -- the collision PRE-DATES this cell's work; it is not introduced by it.",
+        "This cell's own new module (lib/research/identity/positioning_chain.py) and its edits to build_universe.py ADD MORE defensive 'never guessed'/'NOT guessed' language (the exact doctrine CLAUDE.md Rule requires: 'never converts unknown to false'), which is why the count rose from 16 to 23 -- the rise is the doctrine being followed more, not the defect being introduced.",
+        "grep -c for the literal append patterns across the same 7 files independently confirms zero matches of '+ \" US\"' or \"+ ' US'\" both before and after this cell's edits -- the semantic bar the criterion's own prose states ('Any surviving construction that appends a country code to a bare ticker is NOT met') is satisfied; only the numeric literal '0' bar on the conflated sum is not."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC2's <expect>: 'bare-ticker-join 0 ... Any surviving construction that appends a country code to a bare ticker is NOT met', graded against the literal invocation's printed 'bare-ticker-join' value.",
+    "world_is": "The invocation's own arithmetic (j.count('guess') plus two literal-append counts) makes 'bare-ticker-join' a WORD-SUBSTRING census of 'guess' fused with a real construction census -- Rule 21's own warning (a count is not a reason to reach for grep / WHOLE-VALUE vs SUBSTRING) applied one level up: the criterion counts a DEFENSIVE WORD as if it were the DEFECT it forbids, so the bar of exactly 0 is unreachable by any file that documents the contract it follows, and was already unreachable (16) before this cell touched anything.",
+    "notes": "This cell ran AC2 AS WRITTEN and records its literal output (23) rather than silently substituting a corrected count -- the REFUSAL CLAUSE forbids repairing the criterion. AC2 is graded FAIL on the literal numeric bar in this cell's proof-of-spec instance, with this row as its citation; the semantic bar (no actual bare-ticker-join construction survives) is separately measured TRUE (0 of 0 real constructs, both before and after). No code change is proposed to reduce the count: stripping 'guessed'/'never guessed' language to chase a lower number would be gaming the instrument, not fixing a defect, and would regress the codebase's own established doctrine-compliant commenting convention."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W25-S2",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~25",
+    "surfaced_at": "2026-09-16T07:23:00Z",
+    "one_line": "All 23 of the 33 live peers/v1 objects' empty subjects trace to a MISSING model_block_<key>.json for a non-US coverage name (CRO's case 'a' -- missing subject header/classification), not to an identity-join defect (case 'b') this cell's identity work can repair -- fixing case 'a' needs either a new Bloomberg call (forbidden, G-24/BOUNDS) or a guessed ADR-to-home-line join (explicitly ruled 'stays open, not guessed' by the CTO's own L10 pre-read measurement).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Live read at the cut: listed all 33 objects under s3://opal-data-harvest/peers/v1/, loaded each, and printed every empty one's subject/reason. 23 of 33 carry members=[] and EVERY ONE of the 23 reads 'no landed model_block_<KEY>.json (AMGT-s-1's record is the only permitted subject read -- F2/G-24 ...)' -- e.g. ASML_NA_Equity, HSBA_LN_Equity, ROG_SW_Equity, ZURN_SW_Equity, PBR_US_Equity, and 18 more, verbatim reason string per object, denominator 23 of 23.",
+        "lib/research/peers/engine.py resolve_subject(): the scanner-row fallback ONLY fires when exchange == 'US' (ticker_root(security_key)); 22 of the 23 empty keys are non-US exchange codes (NA, LN, SW, GY, BZ, IM, IN, FP, SP, JP, TT, HK, MM) so that fallback structurally cannot fire for them regardless of any identity/crosswalk fix; the 23rd (PBR_US_Equity) IS a US key but the scanner carries no row for ticker 'PBR' at all -- a scanner-coverage gap, not an identity-join gap.",
+        "org/missions/D5/AMGT/AMGT_RESAPP/ledger/L10_PREREAD.round11.md addendum candidate 3 (@8ac5ff6a57, the SAME analysis rk-4 is cut from): 'the ONE seam the compile does not bridge is an ADR Opal holds vs a HOME listing on the coverage list (AMX US Equity held; AXMB MM covered) -- same issuer, different lines, and neither CUSIP nor ISIN links them; that bridge needs a Bloomberg underlying-ticker field and stays open, not guessed.' This is the ONLY documented mechanism by which a non-US coverage subject could borrow a US-listed scanner row, and it is explicitly ruled not-to-be-guessed at this cut.",
+        "AMGT_RESAPP-Z-W21-S3's own disarm_owner field routes exactly this class of join ('the residual cross-listing join belongs to INTERFACE X-1's owner ... routed to 3.0.0_SA_CVO~Z at L9'), corroborating that minting this join is an X-1-owner decision, not a route this task order names."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC3's <expect> and the cell's DELIVER: 'the 23 empty peer subjects repaired (4.0.0_SA_CRO~W traced every one to a missing subject header/classification or an identity join)' -- implying an identity-side fix in this cell's scope could move empty_subjects materially below 23.",
+    "world_is": "Measured, all 23 of 23 are the 'missing subject header/classification' branch (no landed model block), not the 'identity join' branch this cell's crosswalk/Positioning-chain work could repair; the one candidate identity-join repair (an ADR-to-home-line bridge) is explicitly ruled un-guessable at this cut by the CTO's own prior measurement, and a new Bloomberg pull to backfill the missing model blocks is forbidden by BOUNDS ('No vendor call beyond what this order names').",
+    "notes": "AC3 is REFUSED as written in this cell's proof-of-spec instance: empty_subjects cannot be moved materially below 23 through any route this order authorizes. Distinguished from AMGT_RESAPP-Z-W25-S3 (the W21-S3 disarm, a self-match/dedup question over the ALREADY-populated 10 objects): this row is about the 23 EMPTY objects specifically, a disjoint population and a disjoint cause."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W25-S3",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~25",
+    "surfaced_at": "2026-09-16T07:23:00Z",
+    "one_line": "DISARMING AMGT_RESAPP-Z-W21-S3 by its named alternative ('re-measures this before the batch writes peers for the new names'): a token-overlap self-exclusion fix was attempted, found to introduce a NEW over-exclusion defect on generic corporate-suffix words, reverted byte-for-byte, and the residual was instead RE-MEASURED across all 10 currently-populated peers/v1 objects -- no live self-match instance exists in any served member list today.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ATTEMPTED FIX: extended lib/research/peers/engine.py's self-exclusion arm with a significant-token-overlap check (corporate boilerplate stripped, >=3 chars), mirroring build_universe.py's existing _significant_tokens/_CORPORATE_TOKENS pattern (build ladder step 2, reuse before invention). It correctly caught W21-S3's own named residual: BABA_US_Equity's subject 'ALIBABA GROUP HOLDING-SP ADR' now excludes scanner row BK6YZP 'Alibaba Group Holding Limited' (shared token 'alibaba') via self_excluded_by_token_overlap.",
+        "DISCOVERED DEFECT, same instrument, wider run: over ALL 33 live security_keys, the SAME arm excluded UNRELATED companies sharing only a generic corporate-suffix word absent from the boilerplate strip list -- e.g. COST_US_Equity ('Costco Wholesale Corporation') excluded 'Barrick Mining Corporation', 'Brookfield Corporation', 'TC Energy Corporation' and a dozen more on the single shared token 'corporation' (missing from _CORPORATE_TOKENS, which carries the abbreviation 'corp' but not the unabbreviated word) -- and this ACTUALLY CHANGED COST's served top-12 membership (CVS Health Corporation and Monster Beverage Corporation dropped from members, replaced by two Canadian-scanner rows), a real regression on live output, not a bookkeeping change.",
+        "REVERTED: lib/research/peers/engine.py restored to its pre-edit bytes (diff .scratch/engine.py.orig lib/research/peers/engine.py -> IDENTICAL; git diff --stat -- lib/research/peers/engine.py -> empty). No engine.py change ships from this cell.",
+        "RE-MEASUREMENT (the disarm note's named alternative): read all 33 live peers/v1 objects; 10 carry members. For EACH of the 10, printed the subject's own name beside every member's name and inspected for a same-company-different-name-string self-match (W21-S3's exact defect shape). Zero of 10 show one: BABA's own members (BYD, Meituan, LVMH, Toyota, Inditex, Home Depot, Hermes, McDonald's, Disney, Fast Retailing, Booking, Richemont) contain no Alibaba entity under any name; SAP's exact-name arm already excludes '484628'/'SAP SE'; the other 8 populated subjects (BA, COST, HAL, HD, INTU, KMB, NU, VLO) show no candidate whose name plausibly denotes the subject company itself.",
+        "AMGT_RESAPP-Z-W21-S3's own text: 'No live instance exists at this vintage' (pre-existing finding) -- this row's re-measurement, run AFTER this cell's AC1 identity widening (universe MEASURED 33->191), CONFIRMS the same holds at the current vintage, over the SAME 33-key peers population (the batch has not yet been re-run over the newly-resolved holdings; that re-run is AMGT-rk-13's, chained after this cell)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The task order: 'YOUR ROW AMGT_RESAPP-Z-W21-S3 IS ARMED. Read its disarm_owner and disarm it in the SAME TURN you satisfy it, by a NEW row that CITES the original.' W21-S3's own disarm_owner text names the alternative satisfied here verbatim: 'the round-12 cut that widens the universe carries the ADR-to-home-line join or re-measures this before the batch writes peers for the new names.'",
+    "world_is": "The ADR-to-home-line join (the first alternative) is NOT built here: it is explicitly ruled 'X-1's decision and not this cell's to invent' by W21-S3 itself, and this cell's own attempt at a narrower dedup improvement (token overlap) proved unsafe on the live 2851-row scanner database, reinforcing that a careless identity-adjacent fix here would trade one defect for a worse, silent one. The SECOND alternative -- re-measuring before the batch writes peers for the new names -- IS satisfied: measured here, no live self-match instance exists in the 10 currently-populated objects.",
+    "disarm_owner": "0.9.0_WK_AMGT_RESAPP~25 (this re-measurement); the ADR-to-home-line join itself remains INTERFACE X-1's owner's decision, routed to 3.0.0_SA_CVO~Z at L9 exactly as W21-S3 states -- AND the same re-measurement must be repeated by AMGT-rk-13 (or whichever cell re-runs the peers batch over the widened universe) BEFORE that batch writes peers/v1 objects for the newly-resolved holdings, because a self-match residual could still surface among the ~158 new holding-source names this cell's AC1 work newly resolves and this row's re-measurement covers ONLY the pre-existing 33.",
+    "notes": "This row does NOT flip W21-S3's own hazard_standing (append-only; that field is at-surfacing and immutable per the surprise-channel schema). It brings the residual to rest FOR THIS ROUND's rk-4 cell only, on the alternative W21-S3 itself named; the re-arm condition is explicit above and is NOT this row's to close -- it belongs to whichever cell next writes peers/v1 objects for the widened universe (AMGT-rk-13 per the decomposition table's chain)."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W25-S4",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~25",
+    "surfaced_at": "2026-09-16T07:24:00Z",
+    "one_line": "AC1's literal invocation groups universe rows by a field named identity_status, but the universe.json schema (universe.schema.json, this project's own INTERFACE U-1) names that field resolution -- the literal query returns by_status={None: N} on every run regardless of the true MEASURED/UNRESOLVED split, discriminating nothing.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Literal AC1 invocation run at the cut against the freshly written s3://opal-data-harvest/universe/v1/2026-09-16.json: universe_key universe/v1/2026-09-16.json / universe_rows 250 / by_status {None: 250} -- every row's (r or {}).get('identity_status') is None because no row in this schema carries that key.",
+        "lib/research/identity/universe.schema.json properties.names.items.required includes resolution (enum MEASURED|UNRESOLVED), not identity_status; build_universe.py writes resolution on every entry (coverage, holding and both arms) -- confirmed by direct inspection of the uploaded object.",
+        "THE SAME invocation with the one field name corrected (resolution in place of identity_status), run against the SAME object at the SAME vintage: universe_rows 250, by_status_CORRECTED_FIELD_resolution {MEASURED: 191, UNRESOLVED: 59} -- MEASURED materially above 33 (191) and UNRESOLVED materially below 223 (59), exactly the bar AC1 states.",
+        "Precedent for this exact remedy inside this same project: AMGT_RESAPP-Z-W19-S1 (rj-4's own AC1) found its own per-book holding-object probe returning 0 for all four books by construction (a date-partitioned key, not a book column) and graded PASS on 'the stronger control ... run instead' rather than on the broken literal probe."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC1's invocation: c = collections.Counter((r or {}).get('identity_status') for r in rows); print('by_status', dict(c)) -- and AC1's <expect>: 'by_status showing MEASURED materially ABOVE 33 with UNRESOLVED materially BELOW 223'.",
+    "world_is": "by_status can never carry the keys 'MEASURED'/'UNRESOLVED' under this invocation because the universe schema's field is named resolution; the literal output is {None: <row count>} at every vintage, before or after this cell's identity fix, so the invocation as written cannot discriminate a fixed universe from an unfixed one.",
+    "notes": "This cell's proof-of-spec instance runs AC1's invocation literally (recording {None: 250}) AND the field-corrected read ({MEASURED: 191, UNRESOLVED: 59}) side by side, grading PASS on the corrected/discriminating read per the W19-S1 precedent above -- the underlying condition the criterion asks for is unambiguously true and independently confirmed (schema-valid object, mutant control fires on a guessed key, two runs byte-identical). No code was changed to chase this: the field name lives in the TASK ORDER's invocation text, not in any file this cell may edit."
   }
 ]
 ```
