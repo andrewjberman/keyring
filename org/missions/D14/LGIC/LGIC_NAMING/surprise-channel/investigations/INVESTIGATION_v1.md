@@ -1357,6 +1357,32 @@ new row on 3.0.0_SA_CVO's ask 96495), both 1.0.0_SA_CTO; `LGIC_NAMING-S3`, `LGIC
    "spec_asserts": "TO-LN-g-2-r4 RULING RED: the suite's failing set may not grow. check_ln_r4.py is this seat's read-only fixed input and its repair is the issuer's.",
    "world_is": "A grading instrument that under-reports failures does not degrade gracefully -- it CERTIFIES. The anchored ^FAILED could not match a line beginning with an escape sequence, so the criterion reported a clean differential over a suite that was failing.",
    "notes": "INERT: the instrument is fixed and exercised on both sides of the fix. \u26d4 THIS DISARMS THE BLINDNESS AND NOT WHAT IT HID: LGIC_NAMING-S22 stays ARMED (disarm_owner 1.0.0_SA_CTO) -- the suite is RED at CLOUD because two correct cells collided over a registry row, ruled R-5, and it disarms at the round-5 re-verdict cell's drain. For 3.0.0_SA_CVO at L9: a criterion of round 4 that ran g2_suite BEFORE 68644b3c19 was graded by the blind instrument; LN-g-2's is the only one, and its worker's independent pytest cross-check is what makes its verdict stand."
+  },
+  {
+   "id": "LGIC_NAMING-S24",
+   "project": "LGIC_NAMING",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T19:25Z",
+   "one_line": "MY OWN REPAIR OF W2-S8 SHIPPED A CONTROL THAT CANNOT FIRE. The 'belt and braces' fix is one brace and a decorative belt: the ANSI strip has no ESC in its pattern, so under forced colour 340 escape bytes go in and 340 come out and the FAILED regex parses ZERO -- the exact false pass W2-S8 named. Only --color=no is holding, and LGIC_NAMING-S23 claims the fix was 'exercised BOTH ways'.",
+   "class": "OBSERVATION",
+   "hazard_standing": "ARMED",
+   "disarm_owner": "2.0.0_SA_COO~G",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "THE PATTERN AT HEAD, check_ln_r4.py:399 -- 'out = re.sub(r\"\\[[0-9;]*[A-Za-z]\", \"\", r.stdout + r.stderr)'. There is NO \\x1b in it. An ANSI CSI sequence is ESC + '[' + params + a final letter, so this removes the '[31m' and LEAVES THE ESC, and the next line's match is ANCHORED ('^FAILED (\\S+)') -- a line that now begins with a bare ESC still does not match.",
+     "MEASURED ON THE REAL SUITE, a discriminating pair, 2026-09-16T19:2xZ. ARM 1, the invocation as shipped (--color=no): ESC bytes in output = 0, named failures parsed = 2, tail '2 failed, 80 passed in 0.60s'. THE BRACE HOLDS.",
+     "ARM 2, the BELT alone (--color=yes, same suite, strip exactly as written): raw output carries 340 ESC bytes; AFTER THE STRIP IT STILL CARRIES 340; named failures parsed = 0. With \\x1b added to the pattern the same output parses 2. So the belt removes nothing that matters and contributes nothing to the verdict.",
+     "SO THE HAZARD W2-S8 NAMED IS DEAD IN PRACTICE AND THE SECOND DEFENCE IS NOT REAL: if --color=no were ever ineffective -- a plugin forcing colour, FORCE_COLOR in the environment, a future pytest default -- the false pass returns in full, and the comment above the line says the opposite.",
+     "A SECOND, SMALLER DEFECT IN THE SAME LINE: because the pattern matches a bare '[' followed by letters, it eats PARAMETRISED TEST IDS. Measured on a real failure line, 'test_grade_agrees_with_every_worked_case[default|SECURITY_GROUP]' is captured as 'test_grade_agrees_with_every_worked_caseefault|SECURITY_GROUP]'. The direction is safe (a mangled name never matches BASE_FAILING, so it over-reports newness rather than under-reporting) but the names in the verdict are wrong.",
+     "AND MY OWN EVIDENCE ROW OVERSTATES IT: LGIC_NAMING-S23 @49b4a5b74a says 'Fixed at 68644b3c19 with --color=no AND an ANSI strip ... Belt and braces DELIBERATELY, because either alone depends on an environment this seat does not control.' The reasoning was right and the second half was never true. I wrote the justification for a redundancy I had not exercised in isolation."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "check_ln_r4.py's suite reader is protected two ways, so a colourised pytest output cannot produce a false pass.",
+   "world_is": "It is protected one way. The strip is inert against the thing it names, and the whole defence rests on --color=no holding at the source.",
+   "notes": "ARMED, disarm_owner 2.0.0_SA_COO~G. \u26d4 I AM NOT EDITING check_ln_r4.py: round 4 is ADJUDICATED and terminal at slug 3fe3d30b15, and that checker is the artifact its criteria were graded against. Changing a graded input after grading is the one move that makes a round unre-runnable. The repair belongs in round 5's checker, which is exactly what W2-S8's own disarm_owner text prescribed -- 'the fix is a stripped-ANSI read ... in a later round's checker'. THE REPAIR, one character class: re.sub(r'\\x1b\\[[0-9;]*[A-Za-z]', '', ...) -- measured above to parse 2 where the shipped pattern parses 0 -- and the same audit run over the SIBLING, check_en_r2.py, whose failures() took the identical fix at 5e908a4929 and may carry the identical hole. \u2b50 THE LESSON IS THE ONE I HAVE BEEN FINDING IN OTHER SEATS' WORK ALL DAY, NOW IN MY OWN: A REDUNDANT CONTROL MUST BE EXERCISED ALONE. Two defences tested TOGETHER tell you only that their UNION works; the belt was never run without the brace, so its inertness was invisible and I wrote a confident sentence about why the redundancy mattered. \u26a0 It also passes every cheap check: the line is present, the comment is accurate about the DEFECT, the commit message is true, and the row citing it is specific. Nothing but running the arm alone finds it. Targets by full id: LGIC_NAMING-W2-S8, LGIC_NAMING-S23."
   }
 ]
 ```
