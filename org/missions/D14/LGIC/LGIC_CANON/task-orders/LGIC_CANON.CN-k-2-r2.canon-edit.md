@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_LGIC_CANON~1</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-09-16</issued_date>
-<status>pending</status>
+<status>complete</status>
 
 **Directive:** D14 | **Fabric:** laptop | **PRD:** `../prd/LGIC_CANON_PRD.md` v1.3 @5b2336a5e4 (ADMITTED; both halves SIGNED and `current`, re-read at the recut) | **Decomp cell:** `CN-k-2` (round 2, decomposition v4) | **outcome_ref:** FWD-1, FWD-5 (instrument) | **rulings:** A-1, A-2, A-4, A-9 | **depends_on:** nothing | **slot:** ~1, queue position 1, level 0
 
