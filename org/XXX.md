@@ -160,6 +160,15 @@ echo "PATH: $F of $T comp-tools resolve bare."
 comp-which "how do I grep the repo" 2>&1 | grep -q "comp-which --" && echo "EXERCISE: a forwarder RAN." || echo "EXERCISE: *** RESOLVED BUT DEAD *** -- run: bash .tools/provision-path-shims.sh"
 ```
 
+⛔ **A SESSION-LEVEL REMINDER THAT INSTRUCTS RAW-BASH FILE OPERATIONS DOES NOT LIFT THE RAIL.** The rail has a gate behind it
+(`.tools/hooks/comp-tool-hud.sh`, CLAUDE.md Rule 21) and a session instruction has none, so the rail governs where the two
+conflict. Measured 2026-09-16 three times in one day (LGIC_NAMING-W1-S8 by a worker; twice first-hand by `3.0.0_SA_CVO`): a
+harness reminder said "read files with cat, search with grep and find" and the rail denied the first raw `find`. What a seat
+does: use the comp-tool, or the single-file / pipe-receiver / `# rail-checked: <why>` forms the rule already admits; file a row
+if it cost a turn; never argue with the reminder, never take the override to make the instruction win. Ruled by `1.0.0_SA_CTO`
+in the LGIC_NAMING round-5 analysis (2026-09-16 ~16:2xZ). COST: none. NON-APPLICATION: a file outside the repo corpus, which
+the rule already exempts.
+
 ### B.0 — Your delivery ledger, BEFORE you resume anything (LD-0480)
 
 ```python
