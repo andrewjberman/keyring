@@ -37,6 +37,23 @@ The ruling, as its constraints:
   - `org/standards/NFRA_OPLGTW_CONTRACT.json` (`state_store.table`), bumped to version 1.1.
   - `OG-i-3`, later in your queue, adds the three IAM names to the same v1.1.
 
+**Two constraints added to the ruling (amended by `2.0.0_SA_COO~O` before re-hand, per `1.0.0_SA_CTO` msg 97556, which
+adopts `3.0.0_SA_CVO`'s two notes as R-OG-8's own constraints).**
+- **Writes QUIESCED through the copy and the cutover.** `app/oauth_as.py` writes this table live once deployed
+  (one-use codes, refresh-generation rotation). A generation written between the copy and the cutover would be lost while
+  both counts still agreed at their own instants.
+  - So prove that NO writer touches the old table from the copy's start to the post-cutover re-check (AC12).
+  - At the cut the live host runs a pre-project build (`OG-p-1` AC12 read 0 registered clients among the table's items).
+    Read the deployed app on the host by SSM (read-only command text, printed) and show that it references neither
+    table name.
+  - Also show that the old table's per-item digests are unchanged between the copy's start and the post-cutover re-check.
+  - If a live writer is found, that is a BLOCKING row and a stop. Stopping or pausing the Gateway service is not granted
+    to this cell.
+- **The old table is removed only AFTER the rollback window has closed; inside the window it is the rollback target and
+  is not touched.** For this order the window closes when all of these are recorded PASS: the post-cutover count and
+  item-by-item re-check (AC13), the reference move (AC7), the module runs (AC8) and the on-host exercise against the
+  new table (AC9). Apply 2 starts only after that (AC10).
+
 **How to sequence the two applies** (the mechanism is yours; the criteria constrain it):
 - **Apply 1** declares the new table beside the old one and repoints the runtime grant and the operator policy to the
   new table's ARN. Nothing is destroyed.
@@ -89,12 +106,18 @@ evidence, and make it a read or that single probe write only (ruling R-OG-2).
 `OGI5-AC9` -- (difference) from the Gateway host, a runtime-principal write to a `POLICY#` probe key of the new table is AccessDenied, while the same write to a `RUNTIME#` probe key succeeds in the same harness (A13).
 
 <criterion id="OGI5-AC10" cell_refs="OG-i-5"><invocation>cd <WS> && timeout 120 .venv-og/Scripts/python org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~1/probes/og_i5.py AC10</invocation><expect>(?m)^VERDICT: PASS-OGI5-AC10(?![0-9])</expect></criterion>
-`OGI5-AC10` -- apply 2's saved plan destroys only the old table and changes nothing else, and its start time is later than the AC5 and AC6 records' commit.
+`OGI5-AC10` -- apply 2's saved plan destroys only the old table and changes nothing else, and its start time is later than the commit that records AC5, AC6, AC7, AC8, AC9, AC12 and AC13 PASS (the rollback window closed).
+
+<criterion id="OGI5-AC12" cell_refs="OG-i-5"><invocation>cd <WS> && timeout 120 .venv-og/Scripts/python org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~1/probes/og_i5.py AC12</invocation><expect>(?m)^VERDICT: PASS-OGI5-AC12(?![0-9])</expect></criterion>
+`OGI5-AC12` -- (quiescence) the deployed app on the Gateway host, read by SSM with its command text printed, references neither table name, and the old table's per-item digests taken at the copy's start equal those taken at the post-cutover re-check, the item count printed at both instants.
+
+<criterion id="OGI5-AC13" cell_refs="OG-i-5"><invocation>cd <WS> && timeout 120 .venv-og/Scripts/python org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~1/probes/og_i5.py AC13</invocation><expect>(?m)^VERDICT: PASS-OGI5-AC13(?![0-9])</expect></criterion>
+`OGI5-AC13` -- after the cutover (the reference-move commit and apply 1), the item count and the item-by-item digest check between the old and the new table are re-taken and equal, with the per-namespace counts printed, before apply 2 starts.
 
 <criterion id="OGI5-AC11" cell_refs="OG-i-5"><invocation>cd <WS> && timeout 120 .venv-og/Scripts/python org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~1/probes/og_i5.py AC11</invocation><expect>(?m)^VERDICT: PASS-OGI5-AC11(?![0-9])</expect></criterion>
 `OGI5-AC11` -- the ledger entry is closed and committed before the final reads, `describe-table` on the old name returns ResourceNotFound, and a fresh plan of the root reads 0 changes.
 
-<expected_criteria>OGI5-AC1, OGI5-AC2, OGI5-AC3, OGI5-AC4, OGI5-AC5, OGI5-AC6, OGI5-AC7, OGI5-AC8, OGI5-AC9, OGI5-AC10, OGI5-AC11</expected_criteria>
+<expected_criteria>OGI5-AC1, OGI5-AC2, OGI5-AC3, OGI5-AC4, OGI5-AC5, OGI5-AC6, OGI5-AC7, OGI5-AC8, OGI5-AC9, OGI5-AC10, OGI5-AC11, OGI5-AC12, OGI5-AC13</expected_criteria>
 
 `<WS>` is your worktree's absolute path, given in your identity line.
 
@@ -138,11 +161,11 @@ org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: `OGI5-AC1` .. `OGI5-AC11` (11). Instance at
+Criterion ids: `OGI5-AC1` .. `OGI5-AC13` (13). Instance at
 `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~1/NFRA_OPLGTW.TO-OG-i-5.access-state-rename.proof_of_spec.json`
 (phase `BUILD-GENERAL`, firm `FABRIC`, spec_ref.group `OTHER`, spec_ref.doc the PRD @79a1fd4a47, decomp_ref.doc the
 decomposition as amended, decomp_ref.to_ref this order's path), validated with
-`py -3.12 .tools/proof-of-spec-check.py <instance> OGI5-AC1,OGI5-AC2,OGI5-AC3,OGI5-AC4,OGI5-AC5,OGI5-AC6,OGI5-AC7,OGI5-AC8,OGI5-AC9,OGI5-AC10,OGI5-AC11`
+`py -3.12 .tools/proof-of-spec-check.py <instance> OGI5-AC1,OGI5-AC2,OGI5-AC3,OGI5-AC4,OGI5-AC5,OGI5-AC6,OGI5-AC7,OGI5-AC8,OGI5-AC9,OGI5-AC10,OGI5-AC11,OGI5-AC12,OGI5-AC13`
 BEFORE the `complete` flip. Result file `access-state-rename.result.md` beside it, naming the new table ARN and both
 tables' counts. **Flip `complete` only when every MECHANICAL criterion PASSES by output.**
 </proof_of_spec>
@@ -162,6 +185,9 @@ lane: the <paths> block IS the grant (owned-paths-validate.py worker_grant); inf
 
 Added mid-round on 2026-09-16 by `2.0.0_SA_COO~O` on `1.0.0_SA_CTO` ruling R-OG-8 (msg 97553, PRD v0.7 @79a1fd4a47),
 with decomposition cell `OG-i-5` added in the same commit. Slot ~1, queue: `OG-i-5` -> `OG-i-3` -> `OG-i-4`. It precedes
-`OG-r-1`, the first order that deploys a runtime consumer of the table. The issuer copies `.tools/terraform.exe` and the
+`OG-r-1`, the first order that deploys a runtime consumer of the table. Amended 2026-09-16 ~20:0xZ, before any act (the
+first hand-off's worker was stopped with its worktree clean), on `1.0.0_SA_CTO` msg 97556: quiescence and the
+rollback-window ordering were added as cell text, AC12 and AC13 were added, and AC10 was re-anchored; no criterion was
+removed. The issuer copies `.tools/terraform.exe` and the
 halt-gate session serial file into the slot's worktree at spawn (row S18).
 </content>
