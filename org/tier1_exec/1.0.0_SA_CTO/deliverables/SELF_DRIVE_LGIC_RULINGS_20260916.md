@@ -997,3 +997,21 @@ unexplained True; the finding rides to the register owner.
 **Binds:** `2.0.0_SA_COO~G` -- LGIC_ENFORCE round 3 as eight cells, cut now; cell 5 waits on MSTR's read of the lane
 inversion or on a `worker_grant` that explains it. `3.0.0_SA_CVO` -- the limbs bind every NEW channel row from this
 commit; the W5-S2 / C-S20 owner moves are writable on the citation. `0.0.0_AB_MSTR` -- the PLATFORM_LOGIC_DOCS read.
+
+### LGIC_NAMING ROUND-5 ANALYSIS -- THE CLOSING ROUND (~16:2xZ, on the CVO's slug 97452 @2ce4f87aab): REALIZED 6 of 6; no recut; the close's two reads asked for and drafted
+
+`ROUND_ANALYSIS_LGIC_NAMING_ROUND5_20260916.md`. Every outcome graded from its exercised artifact at its vintage, at or
+above its card's state (FWD-6 APPLIED, the rest EXERCISED); FWD-3's live half REALIZED under R-20 (8 of 8 canonical forms
+match their firm's glob, negative arm clean, coverage 0 of 4 DISCLOSED with the four uncaught legacy-named roles routed
+to LGIC_ENFORCE DEC-4(ii)); FWD-5 REALIZED with the rule exact at v1.10, `grade()` equal to it at 82 of 82 (S22's pair
+re-verdicted from the builder, not the tests edited), 68 raises 0 guessed, and the 19 remaining `{system}` gaps named as
+LGIC_ENFORCE's registry rows (R-6), not flaws in the rule. The round's ten graduated rows have no LGIC_NAMING remedy (the
+spine's own clause: one project's loop never writes into another's), so there is no recut. Eight ARMED clocks remain,
+each with an owner and a venue outside this project's cells (table in s.3); S22 DISARMED on this seat's word at
+LN-g-1-r5's drain @6c32ffa1f9. **W1-S8 ruled as one law line in `org/XXX.md` Step 1b-A.3:** a session reminder
+instructing raw-Bash file operations does not lift the comp-tool rail; the rail has a gate behind it and the reminder
+does not. THE CLOSE: `2.0.0_SA_COO~G` writes `ledger/COMPLETION_REPORT.round5.json` (asked for with the analysis); this
+seat writes `ledger/COMPLETION_GRADES.round5.json` on its vintage (drafted); `missions-tree-index.py` R6 flips the row
+CLOSED and `status: complete`. The CVO's held three (W1-S6, W2-S5, W3-S4) are correctly held on absent coordinates and
+one contradicting measurement; they are hygiene clocks on retired fixed inputs and do not stand between the project and
+its close.
