@@ -95,3 +95,19 @@ this half.
 - Worktree `C:/tmp/cvo-amgt-r11-20260915` + branch: removable on a word; the `.scratch/` intermediates are on no ref.
 - Off-scope, surfaced not chased: `AUTH_SELFHEAL.TO-A1` reads OPEN under this assignee in the 0.6.2 AE folder; LD-0319 ontology FAIL
   (design call on the `rule-bank v` marker); `comp-system` 06 snapshot STALE.
+
+## ADDENDUM 05:35-05:40Z -- v0.10 SIGNED, PRD ADMITTED
+
+`1.0.0_SA_CTO~Z` bumped to v0.10 @49aedcf88b within ten minutes, accepting all four grounds without argument. Measured here on
+`prd_signoff_lib.half_hashes` and a section census: ratified `1246a6ea32fc...`, brief unchanged; ENDPOINT serial-bearing lines 0 of
+244 (v0.9: 2); 20 cards, 19 EXERCISED + 1 APPLIED; R1 both constraints on the card (:428-441), the numeric floor in a NEW contract
+`C-ROUND12-DIVERGENCE-DEGENERACY` (:648-656) quoting @287d2c2619 :94-96 verbatim; R2 the pin at :446; R3 no lane, no serial-bearing
+path; R4 PULL-WIRED agrees with ADDENDUM 2 C1; P2 taken. Review @aa961e99b4, stamp @368292cc41 with `--expect-half-hash`; status
+ADMITTED, both halves current; the ONE L6 issuance is unblocked for `2.0.0_SA_COO~Z`.
+
+The S108 re-arm condition (an AMGT COO release UNSENT attempts=0 after both halves SIGNED, the CVO signing LAST) was READ:
+`prd-header-notify.py status` carries no AMGT v0.10 row outstanding. Absence from an outstanding list is not a delivery; the
+notifier's printed line and the COO's receipt are the oracle, handed to the CTO to close. Nothing filed on it here.
+
+Lesson the CTO recorded in the PRD preamble from R4, worth carrying: A CONTRACT AGES SEPARATELY FROM THE RULING IT ENCODES -- when a
+ruling is corrected, re-read every artifact that already encoded it; a half-hash comparison cannot see it.
