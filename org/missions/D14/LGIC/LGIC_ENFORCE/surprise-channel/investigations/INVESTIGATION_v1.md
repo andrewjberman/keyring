@@ -2248,6 +2248,30 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
    "spec_asserts": "S23: the issuance write-surface census compares what cells WRITE and never asks what they RUN or READ, so a cell whose instrument another open cell is editing reads as safe.",
    "world_is": "That question can now be asked by running a tool instead of by remembering a rule, and S23's own instrument-vs-output case is one of the two it catches. The third shape -- reaching a file through the program you invoke -- is still invisible and is named as such.",
    "notes": "INERT. \u26d4 WHAT IS DISARMED IS THE BLINDNESS S23 NAMED, NOT CONTENTION IN GENERAL. Three things this tool does not do, stated so its PASS is not over-read: it is ADVISORY and refuses nothing; it does not model DISK or any shared capacity, so LGIC_ENFORCE-S26's class is entirely outside it; and it sees only paths NAMED IN TEXT, so the transitive reads of an invoked program are the measured miss. \u2b50 THE HABIT WORTH KEEPING is not the tool but the test that graded it: I ran it against the three cases I had already found BY HAND, and it is only because I had those three that the false clear was visible at all. A new check is graded against the findings that motivated it, never against its own selftest."
+  },
+  {
+   "id": "LGIC_ENFORCE-S30",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T12:25Z",
+   "one_line": "A FREE-SPACE READING TAKEN WHILE WORKERS RUN IS TRANSIENT AND CAN UNDERSTATE BY GIGABYTES: df read 9.7 GB, then 12 GB minutes later with nothing reclaimed in between. Every disk number in S22, S26 and EN-t-3's stop line is a SAMPLE of a moving quantity, not a floor.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "MEASURED THIS TICK, same command, same volume, minutes apart, with NO reclaim between the two: df -h /c read 9.7 GB free, and the next reading before I removed anything read 12 GB. The difference is live workers' transient files -- EN-d-1 running `generate` in a practice copy and EN-s-2 running its comparison -- created and released inside the window.",
+     "WHY IT MATTERS RATHER THAN BEING TRIVIA: EN-t-3's BOUNDS bind a 10 GB stop line and the S22 correction has the worker re-measure every ten roots. A single reading that dips below the line would stop a 72-root census CORRECTLY BY THE RULE and possibly WRONGLY BY THE FACT, because the dip can be a sibling's temp file that is gone a minute later.",
+     "EN-t-3's OWN RUN IS THE CORROBORATING CASE and it is why this is INERT rather than a hazard: it took EIGHT readings across the run rather than one, reported start 18.32 GB / end 12.07 GB / lowest 12.96 GB, and never tripped. A single sample would have been a worse instrument than the eight it actually used.",
+     "THE RECLAIM THAT PROMPTED THE SECOND READING, recorded so the space movement is attributable: .worktrees/coo-g-reg-gateway removed (1.4 GB). Its branch is FULLY MERGED into CLOUD (git merge-base --is-ancestor: yes, no unique commits), its base 1db20a3624 dated 2026-09-15 12:54 PREDATES EN-r-6's carrier rewrite 39cbad4214 at 2026-09-16 05:16, and it held 12 files of uncommitted regeneration output against those superseded carriers.",
+     "NOTHING WAS DISCARDED UNVERIFIED: the working-tree delta was captured to an 18530-byte patch first, and `git apply --check --reverse` confirmed the patch is a faithful capture of that delta before the worktree was removed. The BRANCH is kept -- deleting an unmerged-looking branch is destructive git."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "S22, S26 and EN-t-3's BOUNDS all reason from free-space readings as if a reading were the state.",
+   "world_is": "A reading is a sample of a quantity that moves while workers run, and two samples minutes apart differed by 2.3 GB with no reclaim between them. The stop line is still the right mechanism; a SINGLE reading is not the right way to test it.",
+   "notes": "INERT: nothing is armed and no act is owed. This QUALIFIES the disk reasoning in S22, S26 and EN-t-3 rather than contradicting it -- the cells were right to carry a stop line and EN-t-3 was right to sample eight times. \u2b50 THE RULE: a capacity stop line is tested by REPEATED readings across the run, never by one; and a spawn decision taken on a single df reading is taken on a number that may be 2 GB pessimistic. COST: one extra df. NON-APPLICATION: a box with no other live writer, where a reading is the state."
   }
 ]
 ```
