@@ -1,12 +1,11 @@
 {
   "prd": "MDPF_CANON_PRD.md",
-  "prd_version": "v2.4",
-  "prd_pin": "ef899e790f58345148027c7b71a5750ee300173d",
+  "prd_version": "v2.6",
+  "prd_pin": "404fe8715588c42e6fc032ec6cecbfcde3bf9d6a",
   "half": "brief",
-  "half_hash": "d5b30fb957da6c19be0c72fda242c98109cc4dbcc3a119086bb49631c942b785",
-  "verdict": "REFUSED",
-  "review_ref": "docs/briefs/sources/MDPF_CANON_L4_BRIEF_REVIEW_v2_4_20260916.md@fa67beb837",
+  "half_hash": "674c7347d30f7d6c1a0db340f083933a41b8f9e733af99d4a251d8a779309351",
+  "verdict": "SIGNED",
+  "review_ref": "docs/briefs/sources/MDPF_CANON_L4_BRIEF_REVIEW_v2_6_20260916.md@0ea05333b2",
   "signed_by": "4.0.0_SA_CRO",
-  "signed_at": "2026-09-16T18:47:48Z",
-  "reason": "the gold home moved to R7-by-the-builder in M2 :343 and stayed typed as s3://opal-data-mdpf/mdpf/{scope}/gold/ in PATHS :359, the manifest :423 and the title :1; coverage row 4 :389 carries the brief's one-bucket O1 unsuperseded; four one-line edits sign it"
+  "signed_at": "2026-09-16T19:15:39Z"
 }
