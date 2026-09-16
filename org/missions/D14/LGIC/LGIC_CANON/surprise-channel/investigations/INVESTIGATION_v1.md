@@ -653,6 +653,74 @@ not a message.
    "spec_asserts": "j_reach's docstring: 'A-13: the cell PRINTS which of the seven rules the tree reaches. A printed NOT REACHED is a legitimate outcome.'",
    "world_is": "Until this repair the printed partition was not a reading of what any judge determined -- it was a reading of which rule ids happened to appear anywhere in the judge's row text, including inside prose arguing the opposite. It now reads the judge's own reach column and discloses where the old reading differed.",
    "notes": "INERT: the instrument is fixed and exercised both ways, and no drained cell's verdict moves. THIS DOES NOT DISPOSE W5-S2 -- that row's disarm_owner is 3.0.0_SA_CVO and its disposition is the CVO's at L9, not this seat's; an issuer cannot close a worker's row by repairing the thing it reported. FOURTH defect of mine in a fixed input this session, and the fourth found by a worker rather than by me: 0.9.0_WK_LGIC_CANON~5 filed it, left its order on the evidence, and did not degrade its own file to fit my checker. A worker's measured claim that disagrees with my instrument is evidence about my instrument."
+  },
+  {
+   "id": "LGIC_CANON-W8-S2",
+   "project": "LGIC_CANON",
+   "fabric": "laptop",
+   "surfaced_by": "0.9.0_WK_LGIC_CANON~8",
+   "surfaced_at": "2026-09-16T09:39Z",
+   "one_line": "The CN-o-3-r2 worker face swaps the ruling labels on two of its five items: item 2 cites A-10 for 'the sovereign inputs are named where the inputs are given' and item 5 cites A-6 for \"Step 6's second block\", while the round-1 analysis has A-6 = the sovereign inputs and A-10 = Step 6's second comment block. Item 5 then describes A-6's CONTENT (LONG sovereign, SHORT derived) as the thing Step 6 must say once -- which item 2 forbids, since it requires a sovereign mark to live in the INPUTS section and NOT in a step. Worked both elements to the analysis's own CN-o-3 cell row instead of to either label.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "ORDER: org/missions/D14/LGIC/LGIC_CANON/task-orders/LGIC_CANON.CN-o-3-r2.checklist-edit.md @7db18a4464 -- item 2 'The sovereign inputs are named where the inputs are given (A-10)'; item 5 \"Step 6's second block (A-6): LONG is sovereign and SHORT is derived by name(); the step says so once.\"",
+     "ANALYSIS: org/missions/D14/LGIC/LGIC_CANON/deliverables/1.0.0_SA_CTO/LGIC_CANON_ROUND1_ANALYSIS.md @26ae876d23 :73-76 -- 'A-6 (W6-S1) LONG is a sovereign input; SHORT is DERIVED by name() from LONG ... the checklist's INPUTS table names each sovereign input AS a sovereign input'; :95-96 -- 'A-10 (C-S13) Step 6 names the second comment block and keeps it verbatim; the replace-all is scoped to the header.'",
+     "CELL ROW: the same analysis's decomposition table, the CN-o-3 line -- 'the checklist edit: sovereign inputs named; Step 6 second block; Step 10's STOP names ADVI_FIRMBKTS; Step 14's STOP names X8; steps 3, 7, 8, 9 take the family | A-6, A-7, A-8, A-9, A-10'. The five ELEMENTS are unambiguous whichever way the two labels are read, so both were built: the INPUTS table gained the SOVEREIGN marks (A-6) and Step 6 gained the second-comment-block clause (A-10).",
+     "PATH: the same order names that analysis at org/tier1_exec/1.0.0_SA_CTO/deliverables/LGIC_CANON_ROUND1_ANALYSIS.md@26ae876d23; `git show` there is fatal/does-not-exist, and `git ls-tree -r --name-only 26ae876d23` finds exactly one carrier, the deliverables path above. Same commit, different directory; read at the path that resolves."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "The order's item 2 attributes the sovereign-inputs element to ruling A-10 and item 5 attributes Step 6's second block to ruling A-6; item 5 also says Step 6 must state that LONG is sovereign and SHORT is derived.",
+   "world_is": "The round-1 analysis @26ae876d23 assigns those the other way round, and item 5's stated content belongs to A-6, whose own text places it in the INPUTS table rather than in a step. Both elements were implemented per the analysis: SOVEREIGN marks in the INPUTS section only (item 2's own instruction), and the second-comment-block clause in Step 6 (A-10's text).",
+   "notes": "INERT: no criterion reads a ruling label, and the five elements the cell row names are built. Filed so that CN-o-4's reviewer and the L9 grade read the checklist against A-6 and A-10 as the analysis states them, not as this order's labels do. The order's citation of the analysis path is also stale in its directory (see evidence PATH), corrected in the same read."
+  },
+  {
+   "id": "LGIC_CANON-W8-S3",
+   "project": "LGIC_CANON",
+   "fabric": "laptop",
+   "surfaced_by": "0.9.0_WK_LGIC_CANON~8",
+   "surfaced_at": "2026-09-16T09:39Z",
+   "one_line": "Ruling A-6's clause 'SHORT is DERIVED by name() from LONG' does not hold at HEAD: nothing in lib/opal_naming.py derives a short form from a long one. name() LOOKS THE SHORT FORM UP on the identity row, and validate() REFUSES a scopes.json row whose `short` is missing or empty -- so a new firm's SHORT is still a value somebody supplies once, into Step 1's row; only its re-use is derived. The checklist was written to the measurement, not to the clause.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "LOOKUP, NOT DERIVATION: lib/opal_naming.py:1552 @7db18a4464 -- inside name(), `body.append(_long_scope(reg, scope, NAME_SCOPE_CLASSES)[\"short\"])`. The value comes out of the registry row; no function in the file computes a short form from a long one.",
+     "REQUIRED FIELD: lib/opal_naming.py:279-281 @7db18a4464 -- for every scopes.json row, `for f in (\"key\", \"class\", \"long\", \"short\", \"tenancy\", \"bucket\"): if not isinstance(row.get(f), str) or not row.get(f): refuse(where, f, \"missing or empty\")`. A FIRM row with no `short` is REFUSED, so Step 1 cannot be completed without the value.",
+     "RULING: org/missions/D14/LGIC/LGIC_CANON/deliverables/1.0.0_SA_CTO/LGIC_CANON_ROUND1_ANALYSIS.md@26ae876d23 :73-74 -- 'A-6 (W6-S1) LONG is a sovereign input; SHORT is DERIVED by name() from LONG unless Andrew supplies one'.",
+     "PRIOR ROW: LGIC_CANON-W6-S1 (this channel) measured the same thing from the other side at @671925aecc -- NAMING_SCHEMA.json:113 firm_forms is a closed list of four ruled pairs and 'mints no row'; 02_DOCTRINE.md:123-125 R1 says each firm has ONE sanctioned LONG and ONE sanctioned SHORT form, and no canon rule derives either."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "The order's item 5, carrying A-6, states as fact that SHORT 'is derived by name()' and asks the checklist to say so.",
+   "world_is": "name() reads `short` off the identity row and validate() refuses a row that lacks it, so the value is supplied, not derived. The checklist's INPUTS table therefore marks `<SHORT>` SOVEREIGN where Andrew gives one and DERIVED otherwise, and states precisely what is derived: the run types it ONCE into Step 1's row, and every later name and generated view reads it from there (name() :1552, Step 4's scope_short and fence patterns).",
+   "notes": "INERT: nothing live depends on the clause, and the checklist as written is true of the code. Left for 1.0.0_SA_CTO, A-6's author, if the ruling's wording is to be corrected; a worker judges the form of a surprise, never its significance."
+  },
+  {
+   "id": "LGIC_CANON-W8-S4",
+   "project": "LGIC_CANON",
+   "fabric": "laptop",
+   "surfaced_by": "0.9.0_WK_LGIC_CANON~8",
+   "surfaced_at": "2026-09-16T09:39Z",
+   "one_line": "check_canon_r2.py o3-sovereign prints 'the INPUTS section names 9 SOVEREIGN input(s)' where 9 is the number of OCCURRENCES of the token SOVEREIGN anywhere in the section -- definition list, prose and table cells alike -- not the number of inputs marked SOVEREIGN, which is 5 of 9 rows. The VERDICT is sound (the token's presence is all the criterion claims to test); only the evidence line mis-describes the set it counted. Not touched: a fixed input is read-only.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "CHECKER: org/missions/D14/LGIC/LGIC_CANON/deliverables/2.0.0_SA_COO~G/fixed_inputs/r2/check_canon_r2.py @7db18a4464, o3_sovereign() -- `marked = re.findall(r\"SOVEREIGN\", blob)` then `print(\"the INPUTS section names %d SOVEREIGN input(s)\" % len(marked))`. findall over a bare token counts occurrences, and the pass test is `if marked`, i.e. presence.",
+     "RUN: `timeout 120 python <that file> o3-sovereign` in worktree wk-lgic-canon-2-8 printed 'the INPUTS section names 9 SOVEREIGN input(s)' and 'VERDICT: PASS-O3-SOVEREIGN-INPUTS-NAMED', rc 0, against a table of 9 input rows of which 5 carry the SOVEREIGN mark (4 GIVEN). The two 9s are a coincidence of this edit, which is exactly why the line reads as though it had counted the rows.",
+     "BASELINE: the same subcommand on the unedited checklist printed 'the INPUTS section names 0 SOVEREIGN input(s)' / 'VERDICT: FAIL-O3-SOVEREIGN-INPUTS-NAMED', so the criterion does discriminate; the defect is in the evidence line's denominator, not in the verdict."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "O3-AC4's clause: 'the INPUTS section marks its SOVEREIGN inputs', graded by check_canon_r2.py o3-sovereign, whose printed line offers a count of SOVEREIGN inputs.",
+   "world_is": "The printed count is of token occurrences in the section blob, not of marked inputs. A reader quoting '9 SOVEREIGN inputs' from this run would be quoting a number that certifies the sweep and not the set: the checklist marks 5 of 9 input rows SOVEREIGN and 4 GIVEN.",
+   "notes": "INERT: the criterion's verdict stands and nothing downstream reads the count. Filed rather than worked around -- the fixed inputs are read-only by this order's own bound, and the count that belongs in the record is the one stated here: 5 SOVEREIGN of 9 input rows."
   }
-]
+ ]
 ```
