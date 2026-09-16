@@ -5,7 +5,7 @@
  "project": "LGIC_NAMING",
  "directive": "D14",
  "fabric": "laptop",
- "prd_version": "v1.8",
+ "prd_version": "v1.9",
  "step": 4,
  "brief_ref": "docs/briefs/d14-naming-schema-brief-20260913.md@1b42dbe758",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6"],
@@ -202,6 +202,12 @@ as a second copy here.
   `NAMING_SCHEMA.json` v1.8:
   - FN1b and FN1c are one subtraction, and a function it empties RAISES whichever rule removed the last token, so a
     grade does not depend on the order of two steps (FN1d, row W3-S5).
+  v1.9 carries `1.0.0_SA_CTO`'s LGIC_ENFORCE ROUND-1 ANALYSIS
+  (`org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_LGIC_ENFORCE_ROUND1_20260915.md`), as data in
+  `NAMING_SCHEMA.json` v1.9:
+  - a firm's forms live only in the identity registry (`scopes.json`), and `firm_forms` is removed, so one change
+    moves every name and every fence pattern (RULING ONE);
+  - the Terraform-type to node-type map is data (`tf_type_map`), with the types that RAISE listed beside it.
 
 ## PROJECT ARC AND DEFINED OUTCOME
 
