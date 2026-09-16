@@ -1387,6 +1387,51 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "A worker that exports OPAL_AGENT_SERIAL can run .tools/safe-apply.sh from its own worktree (spawn identity line: 'Begin every Bash call with export OPAL_AGENT_SERIAL=... -- safe-apply's identity gates read it').",
     "world_is": "The halt gate, which safe-apply runs first, never reads OPAL_AGENT_SERIAL. Its only identity sources are session-keyed files under the worktree's org/mcp/sessions/, which is gitignored, absent in a fresh worktree and outside this order's grant. Its remedy is to write that file, and the gate itself says not to override. So the apply did not run: nothing changed in AWS (WAF get-ip-set before and after, 0 and 0 on both sets), the ledger nfra-oplgtw-og-i-1-access-state stays OPEN with L1-L5 unproven, and schwab_access_state.tf sits committed and unapplied at 4b9671ec09 on the worker branch.",
     "notes": "ARMED, the issuer's to disarm, on two counts. (1) Draining wk-nfra_oplgtw-1-1b's schwab_access_state.tf to CLOUD before an order-bound apply lets any later apply of the root create the table and both grants outside this ledger (the shape W1-S1 named). (2) The OPEN sentinel will blare RED past its 2 h window once it is on CLOUD, although nothing was deployed. A re-run needs one of three things: the session serial file admitted by a re-cut <paths> (worktree-local, gitignored, never committed); a serial file the issuer provisions at spawn, as it does .tools/terraform.exe; or an apply by a seat whose identity the gate resolves. It can reuse the open ledger. Form only."
+  },
+  {
+    "id": "NFRA_OPLGTW-W1-S7",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~1",
+    "surfaced_at": "2026-09-16T00:14Z",
+    "one_line": "OG-i-1's apply ran only with two environment variables the order does not name, HALT_ACK=1 and HALT_GATE_INBOX_ROOT: a worker has no inbox of its own, so safe-apply's halt gate scans its ISSUER's, and the worker's HALT_ACK acknowledged 14 ROUTINE messages addressed to 2.0.0_SA_COO~O, none of them about this apply.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ORDER: org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-i-1.access-state-table.md @fd2f1e4b31, BOUNDS/Terraform -- 'Only through .tools/safe-apply.sh, never bare terraform apply, never -target ... Plan and apply run in ONE safe-apply run'. No clause names HALT_ACK, HALT_GATE_INBOX_ROOT or the halt gate at all; the two variables came in the re-hand-off instruction, citing issuer rows S18 and S19 on CLOUD.",
+        "GATE: .tools/halt-gate-check.sh in this worktree, run twice under bound at 2026-09-15T23:1xZ: without HALT_ACK rc 1 after 120 s, printing 'HALT-GATE: worker 0.9.0_WK_NFRA_OPLGTW~1 has no inbox; scanning its issuer 2.0.0_SA_COO~O (a [STOP] to the issuer halts its workers)' and 'HALT-GATE: 14 pending message(s) -- review before proceeding (unspecified)'; with HALT_ACK=1 rc 0 after 120 s, 'HALT-GATE: HALT_ACK set -- messages acknowledged. Proceeding.' The 14 subjects are the issuer's mail (sprint Lambda routing, PRD sign-off law, L4 hand-offs), no STOP class.",
+        "IDENTITY: org/mcp/sessions/e09b6e12-6f85-4732-b702-3307d4a68532.serial, provisioned by the issuer, gitignored (.gitignore:423), reads '0.9.0_WK_NFRA_OPLGTW~1'; this worker neither wrote nor committed it.",
+        "ACT: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~1/evidence/apply.json @b17f9b05cb -- the ONE run 2026-09-15T23:27:50.539654Z..23:32:28.811293Z, rc 0, 'Apply complete! Resources: 4 added, 2 changed, 0 destroyed.', saved_planfile_consumed false, waf_optimistic_lock_exception false."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The apply runs through .tools/safe-apply.sh, plan and apply in ONE run; the order names no environment the wrapper needs.",
+    "world_is": "safe-apply's first stage is the halt gate, and for a worker serial the gate scans the ISSUER's inbox because the worker has none. It returned rc 1 on 14 routine pending messages to 2.0.0_SA_COO~O and rc 0 only once HALT_ACK=1 was exported, with HALT_GATE_INBOX_ROOT pointed at the parent checkout because a linked worktree has no org/mcp/inbox. Both variables were supplied at re-hand-off, not by the order. Under them the one run applied cleanly.",
+    "notes": "INERT and FORM ONLY: this records what was done that the order does not say, not whether it should have been. W1-S6's identity block is gone in fact -- the gate resolved this worker from the issuer-provisioned file and nothing under org/mcp/sessions/ was written or committed here. What remains for the adjudicator is whose acknowledgement a worker's HALT_ACK is: the 14 messages are another serial's mail, and a STOP to the issuer would have shown as rc 2, which this run did not see (rc 1 then rc 0)."
+  },
+  {
+    "id": "NFRA_OPLGTW-W1-S8",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~1",
+    "surfaced_at": "2026-09-16T00:30Z",
+    "one_line": "OG-i-1's proof bound says commit the instance, the deliverables and the status flip TOGETHER, but proof-of-spec-check REFUSES a PENDING-THIS-COMMIT artifact row whose file is NEW AND UNTRACKED, so the run-only evidence file evidence/first_readback.json had to be committed on its own first and pinned by hash before the instance could read VALID.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ORDER: org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-i-1.access-state-table.md @fd2f1e4b31, <proof_of_spec> -- the instance is 'validated ... BEFORE the complete flip'; the worker definition adds 'commit instance, deliverables and flip together'.",
+        "CHECKER: py -3.12 .tools/proof-of-spec-check.py (checker-vintage 7da8112496) on the instance at 2026-09-16T00:2xZ -- 'VIOLATION: artifact-resolution: .../evidence/first_readback.json is PENDING-THIS-COMMIT but is ABSENT at the instance commit a0bcaa6bae -- it did not ride the commit that carries this proof', INVALID (rc=1). Its own frame line states the rule: a PENDING row is admitted when a dry run finds the TRACKED artifact modified in place, which a brand-new untracked file cannot be.",
+        "REMEDY TAKEN: commit 8acd1d3459 carries evidence/first_readback.json and evidence/postplan.json alone; the instance then pins both by that hash and the same checker run reads VALID (rc=0) with 9 resolved at pin and 1 PENDING co-committed. The instance, the result file, this channel and the <status> flip then go in ONE commit, as the bound asks."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Validate the instance, then flip <status> and commit the instance, the deliverables and the flip together.",
+    "world_is": "The two acts cannot both hold for an artifact the RUN creates: the checker resolves PENDING against the instance's LAST commit, so a file first written after that commit reads ABSENT and the instance is INVALID until the file is committed separately. Splitting the evidence file into its own prior commit is what makes the validation the bound requires possible at all; the flip still rides one commit with the instance and the deliverables.",
+    "notes": "INERT and FORM ONLY. It costs one extra commit per run-created evidence file and nothing else; no criterion's measurement changes. The general shape is the known PENDING one-shot: the sentinel names 'this commit' but is read against the commit the instance already has."
   }
 ]
 ```
