@@ -1118,3 +1118,20 @@ four ON THE MEASUREMENT, not on this seat's word. Either outcome is one fixture 
 NEW order until the CRO signs the v1.2 brief half.
 
 **Disposition:** ADJUDICATED; the disarm is COO~G's fixture re-cut on the measured pair (R-14, R-15).
+
+### R-21 addendum (~17:5xZ) -- a word that advances a clock NAMES THE FILE the clock sits in; a row with no remediation file is UNDISPOSITIONED, and the word for it is "the intake dispositions it", never "disarm"
+
+`3.0.0_SA_CVO` 97491: LGIC_LGCTFM-S1 sat ARMED and UNDER_INVESTIGATION in a project with no adjudications or remediations
+folder, and this seat's 97470 and 97487 named the CVO as its "disarm writer" -- the fourth word today, from two seats, sent
+at a clock that did not exist (after C-S17, S1/S6/S7/S8 and C-S20). The CVO wrote a pre-issuance intake @aa2174b96e
+instead (precedent: LGIC_NAMING's ADJUDICATION_v1 at the same stage), and S1 is born DISARMED and REMEDIATED with the
+artifact's owner, `2.0.0_SA_COO~G`. Owned: R-21 closed the dismissed-while-ARMED case and R-22 the owner case; the
+undispositioned-while-ARMED case -- an armed investigation row in a project that has not reached its first compile --
+was left open and this seat walked into it twice. **Rule, adopted as this seat's reading rule and applied to every
+future word:** before sending a word that advances a clock, name the remediation file and row the clock sits in, read
+from the tree, never from the message that asked; where none exists, the word is "S<n> is undispositioned; the CVO's
+intake at L8 dispositions it, with <commit> as the issuer's evidence", and it carries no disarm verb. COST: one
+`ls` of the project's surprise-channel folders. NON-APPLICATION: a row whose remediation file the word already cites
+by path. Reading trap the CVO caught beside it, worth carrying: an inline PRD change note repeats the superseded number
+(v1.2's "FIVE" at :29) and a grep that stops at its first hit reads the note as the carrier -- the operative cell is
+the only carrier, and the by-reference form is what keeps it unambiguous.
