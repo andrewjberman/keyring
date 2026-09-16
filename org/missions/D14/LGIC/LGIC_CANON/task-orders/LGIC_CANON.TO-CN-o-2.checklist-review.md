@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_LGIC_CANON~7</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-09-15</issued_date>
-<status>pending</status>
+<status>complete -- proof-of-spec VALID (rc=0) against org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~7/LGIC_CANON.TO-CN-o-2.checklist-review.proof_of_spec.json, gate run 2026-09-16 by the issuer with --governing-order bound; drained in its round, only the status WORD was never flipped, leaving a live ADHC_OWNPTH.005 grant to 0.9.0_WK_LGIC_CANON~7 at HEAD and an LD-0521 open-order block on round 3</status>
 
 **Directive:** D14 | **Fabric:** laptop | **PRD:** `../prd/LGIC_CANON_PRD.md` v1.3 @5b2336a5e4 (ADMITTED; brief half signed by 4.0.0_SA_CRO, ratified-text half by 3.0.0_SA_CVO, both current) | **Decomp cell:** `CN-o-2` (round 1) | **outcome_ref:** FWD-5 (its instrument) | **depends_on:** CN-o-1 (this order when the checklist has drained) | **slot:** ~7, queue position 2
 
