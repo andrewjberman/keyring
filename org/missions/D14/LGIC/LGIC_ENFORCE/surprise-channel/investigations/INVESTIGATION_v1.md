@@ -1735,6 +1735,78 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     "spec_asserts": "TO-EN-r-5-r2 THE CELL: 'In your worktree, run `git apply <that path>`. If it no longer applies, re-make its four parts by hand from the patch's own text, and never widen it'. SPAWN NOTES: 'apply YOUR worktree's copy (`git -C <WS> apply --check` first)'.",
     "world_is": "The worktree's copy, read by path, is the patch with a CR on every line, and git apply refuses its hunks against LF working files. The patch's own text still applies whole: the committed blob, byte-identical by hash to what the issuer committed, applied 12 of 12 with no hand edit and no widening. The failure comes from the checkout's line endings, not from drift in the target files.",
     "notes": "Form only. Neither branch the order names fits. The patch does apply, but not from the path the order names. It was applied from its blob, not re-made by hand, because the blob IS 'the patch's own text' and a hand re-make adds a transcription step. Any fixed-input .patch read by path from a checkout on this box (autocrlf, no *.patch eol attribute) meets the same refusal. INERT: this order is the patch's only consumer, and it is spent once applied."
+  },
+  {
+    "id": "LGIC_ENFORCE-W1-S23",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~1",
+    "surfaced_at": "2026-09-15T23:16Z",
+    "one_line": "LGIC_NAMING round 3's fixed inputs read NAMING_SCHEMA.json firm_forms, which v1.9 removed on this branch: blind_seat.py indexes s[\"firm_forms\"] (a KeyError under v1.9) and check_ln_r3.py reads s.get(\"firm_forms\", []) (a silently empty scope set), and the three r3 seat prompts carry a snapshot of the schema list and of the scopes.json fields bucket_basis and the demo note that this cell removes.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~G",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "READ org/missions/D14/LGIC/LGIC_NAMING/deliverables/2.0.0_SA_COO~G/fixed_inputs/r3/blind_seat.py:109 @bd0f5d2c6c: 'return lines + \"\\\\nThe firm spellings, long and short (firm_forms):\\\\n\" + json.dumps(s[\"firm_forms\"], indent=1, ensure_ascii=True)' -- a direct index, so a KeyError on a schema with no firm_forms key.",
+        "READ org/missions/D14/LGIC/LGIC_NAMING/deliverables/2.0.0_SA_COO~G/fixed_inputs/r3/check_ln_r3.py:281 @bd0f5d2c6c: 'scopes = set(f[\"short\"] for f in s.get(\"firm_forms\", [])) | {s.get(\"global_scope\", {}).get(\"short\", \"global\")}' -- the default [] makes the firm half of that set empty, with no error.",
+        "READ org/standards/NAMING_SCHEMA.json @bd0f5d2c6c: the top-level keys carry firm_forms_source and no firm_forms ('python lib/opal_naming.py validate' at this tip reads 0 refusals; the v1.9 removal is 1.0.0_SA_CTO's commit 645725150b, 'NAMING_SCHEMA v1.9 on lgic-v19-landing -- firm_forms removed').",
+        "READ org/missions/D14/LGIC/LGIC_NAMING/deliverables/exercises/r3/seats/e1.prompt.txt:120, :168, :374, :393 @bd0f5d2c6c (e2.prompt.txt at the same four lines; e4.prompt.txt at :13, :38, :244, :263): each prompt embeds '\"firm_forms\": [', scopes.json's _about.row_fields naming it, the demo note naming it, and the bucket_basis field, all as the seat's given text.",
+        "WORLD: this cell removes bucket_basis and rewrites _about.row_fields and the demo note in infra/logic/registry/scopes.json (DEC-1, RULING DEMO), so the prompts' snapshot is a vintage the registry no longer matches once this branch drains."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EN-r-3-r2 THE CELL item 5: 'LGIC_NAMING's round-3 fixed inputs read it for their seats: row that for the issuer, and do not edit them.' BOUNDS: 'Fixed inputs are read-only.'",
+    "world_is": "Two of LGIC_NAMING round 3's instruments read the removed field as CODE, not as text: one raises, one degrades silently to an empty firm set. Neither is in this order's paths and neither is edited here. The three seat prompts additionally carry a registry snapshot this cell moves.",
+    "notes": "Filed for the issuer, 2.0.0_SA_COO~G, which owns both projects' fixed inputs. ARMED because LGIC_NAMING's LN-g-1 runs in parallel from the same v1.9 base: an r3 instrument run against this schema meets the KeyError or the empty set. Not a claim about LGIC_NAMING's round; only about what these files read."
+  },
+  {
+    "id": "LGIC_ENFORCE-W1-S24",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~1",
+    "surfaced_at": "2026-09-15T23:16Z",
+    "one_line": "LGIC_CANON's carriers still present NAMING_SCHEMA.json firm_forms as live: 10_ONBOARDING_CHECKLIST.md tells a seat to APPEND a new firm to the schema list and quotes the validate warning this cell removes, 02_DOCTRINE.md's generated naming section is stamped v1.8 and says the forms are read from the list, and check_canon_r1.py iterates s.get(\"firm_forms\").",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~G",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "READ infra/logic/10_ONBOARDING_CHECKLIST.md:72, :75, :77 @bd0f5d2c6c: 'builder: `org/standards/NAMING_SCHEMA.json` (`firm_forms`)'; \"`WARN scopes.json[<i>].key: firm '<LONG>' is not in NAMING_SCHEMA.json firm_forms`. This is the line\"; '- **If the line is printed:** append `{\"key\": \"<LONG>\", \"short\": \"<SHORT>\"}` to `firm_forms` in'. That WARN is the warning this cell removes from validate.",
+        "READ infra/logic/02_DOCTRINE.md:163 and :190 @bd0f5d2c6c: 'stamp: org/standards/NAMING_SCHEMA.json v1.8 sha256:4ff4e61930b3c8cdcd767ba660e32d0e37e527196a340cec3c94e27f1dd9b8c0' and 'Firm forms read from `firm_forms` in the schema: 4 firms.' -- inside the GENERATED naming section markers.",
+        "READ infra/logic/render_naming_section.py:98-107 @bd0f5d2c6c: 'forms = schema.get(\"firm_forms\")' returns '`firm_forms` in the schema' while the field exists, and otherwise the FIRM rows of the scope registry, so a re-render under v1.9 takes the registry branch with no code edit.",
+        "READ org/missions/D14/LGIC/LGIC_CANON/deliverables/2.0.0_SA_COO~G/fixed_inputs/r1/check_canon_r1.py:226 @bd0f5d2c6c: 'for f in s.get(\"firm_forms\") or []:' -- LGIC_CANON round 1's issuer instrument, empty under v1.9.",
+        "RUN: python lib/opal_naming.py validate at this worktree reads 'VALIDATE: OK 17 system row(s), 9 scope row(s), 9 warning(s)', all nine the inferred-owner warning; no firm-forms warning can be printed any more."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EN-r-3-r2 THE CELL item 5: 'A file you did not repoint that still names it is a historical record (a round's record, a review, an adjudication) or another project's.' The order's <paths> do not admit infra/logic/ outside the registry.",
+    "world_is": "Three LGIC_CANON carriers outside this order's paths still teach the removed field. The checklist is the sharp one: followed as written, it re-adds firm_forms to NAMING_SCHEMA.json and so re-creates the second carrier RULING ONE removed; the warning it tells the seat to wait for can no longer print. The doctrine's line is generated and moves on a re-render of render_naming_section.py.",
+    "notes": "Filed, not fixed: infra/logic/10_ONBOARDING_CHECKLIST.md, infra/logic/02_DOCTRINE.md and infra/logic/render_naming_section.py are outside this order's <paths>, and a path this order does not name is a row, never an override. Each is recorded 'another-project' in FIRM_FORMS_READERS.md."
+  },
+  {
+    "id": "LGIC_ENFORCE-W1-S25",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~1",
+    "surfaced_at": "2026-09-15T23:16Z",
+    "one_line": "DEC-1 (remove any scope-row field nothing reads) and RULING DEMO (demo's note must cite X6) meet on the field 'note', which no generator and no validate limb read: to keep both, validate now READS note, refusing one that is present and not a non-empty string. The order names neither the read nor the removal of note.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "READ infra/logic/registry/scopes.json @bd0f5d2c6c: 'note' appears on the demo scope row only; the other 'note' the module reads is the GLOBAL row's tenant.note (lib/opal_naming.py _firm_registry_rows), a different field.",
+        "RUN at this worktree: 'python org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/2.0.0_SA_COO~G/fixed_inputs/r2/check_en_r2.py r3-dec1-fields' on the pre-edit tree printed 'SCOPE-ROW FIELDS: 18  NAMED BY NO STRING IN lib/opal_naming.py: ['bucket_basis', 'label']' -- the checker's instrument is a string-constant census, so it never saw 'note', which the module names for a different row's tenant block.",
+        "WORLD: lib/opal_naming.py validate() now carries 'if \"note\" in row and (not isinstance(row[\"note\"], str) or not row[\"note\"]): refuse(where, \"note\", ...)', and scopes.json _about.row_fields lists note among the fields carried only where validate or a generator reads it."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EN-r-3-r2 THE CELL item 3: 'a scope row carries the REQUIRED fields `validate` names, and a further field only if a generator or `validate` reads it. Remove any field nothing reads (row W1-S8).' Item 4: 'Demo's note no longer says the doctrine does not define the class; it cites X6.'",
+    "world_is": "The two items are jointly satisfiable only by making note read or by deleting a field the same order requires content in. The read was added rather than the field removed. bucket_basis (global) and label (both MASTER rows), which nothing reads, were removed as the order says.",
+    "notes": "Form only: the choice is recorded here because the order does not name it, and R3-J1 grades at L9 whether DEC-1's required list is the one validate enforces. INERT: nothing is left armed either way."
   }
 ]
 ```
