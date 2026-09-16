@@ -113,6 +113,40 @@ elif [ -n "$NAPPLY_OUT" ]; then
 fi
 
 # -----------------------------------------------------------------------------
+# THE NAMING LIMB, apply side, PLAN MODE (LGIC_ENFORCE cell EN-t-2, round 2; DEC-6; row W3-S8).
+# The pre-plan stage above cannot tell an ADDITION from an existing resource -- an apply has no diff, and that
+# distinction lives only in a plan. This stage renders the SAME plan safe-apply is about to run (plan, then
+# show -json) and grades it with naming-apply-gate.py --plan-json, BEFORE any other plan-reading gate
+# (tag-authz, tombstone below) and before terraform apply itself -- so a REFUSE here means NOTHING further is
+# planned or applied. Same WARN/ENFORCE switch as the commit limb and the pre-plan stage (NAPPLY_ENFORCE, set
+# above). In WARN mode this stage never changes this script's exit code, exactly as the pre-plan stage above.
+NPLAN_TMP="$(mktemp 2>/dev/null || echo "${TMPDIR:-/tmp}/safe-apply-naming-plan.$$")"
+NPLAN_BLOCKED=0
+if "$TERRAFORM" ${NAPPLY_TREE:+-chdir="$NAPPLY_TREE"} plan -input=false -lock=false -out="$NPLAN_TMP.bin" >/dev/null 2>"$NPLAN_TMP.err" \
+   && "$TERRAFORM" ${NAPPLY_TREE:+-chdir="$NAPPLY_TREE"} show -json "$NPLAN_TMP.bin" > "$NPLAN_TMP.json" 2>>"$NPLAN_TMP.err"; then
+  if [ -f "$NAPPLY_GATE" ]; then
+    NPLAN_OUT="$(python "$NAPPLY_GATE" --plan-json "$NPLAN_TMP.json" 2>&1)"; NPLAN_RC=$?
+  else
+    NPLAN_OUT="NAMING ERROR the safe-apply naming plan limb is absent at $NAPPLY_GATE"; NPLAN_RC=2
+  fi
+  printf '%s\n' "$NPLAN_OUT" | sed 's/^/  [naming-plan-gate] /' >&2
+  if [ "$NAPPLY_ENFORCE" -eq 1 ] && [ "$NPLAN_RC" -ne 0 ]; then
+    NPLAN_BLOCKED=1
+  fi
+else
+  echo "safe-apply: WARN -- the naming plan limb could NOT render a plan for $NAPPLY_TREE, so it checked NOTHING." >&2
+  echo "            This is a GAP, not a pass; the pre-plan stage above still ran on the tree's literals." >&2
+  if [ -s "$NPLAN_TMP.err" ]; then
+    sed -e 's/^/  [naming-plan-gate] terraform: /' "$NPLAN_TMP.err" >&2
+  fi
+fi
+rm -f "$NPLAN_TMP" "$NPLAN_TMP.bin" "$NPLAN_TMP.json" "$NPLAN_TMP.err" 2>/dev/null
+if [ "$NPLAN_BLOCKED" -eq 1 ]; then
+  echo "safe-apply: BLOCKED by the naming plan limb (LGIC_ENFORCE DEC-6, ENFORCE mode, rc=$NPLAN_RC). Nothing was planned further or applied." >&2
+  exit 7
+fi
+
+# -----------------------------------------------------------------------------
 # TAG-AUTHORIZATION pre-apply gate (comp-tagauthz), fail-closed.
 # CTO 20260709T203543Z: "a tree that sets default_tags must gate imports on comp-tagauthz, wired into
 # safe-apply, deriving its candidate set FROM THE PLAN." In this account tags ARE authorization
