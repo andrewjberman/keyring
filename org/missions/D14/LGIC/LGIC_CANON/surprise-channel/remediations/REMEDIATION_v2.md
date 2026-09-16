@@ -10,6 +10,8 @@ ONE ROW PER GRADUATED ITEM, censused before the slug: **17**. The 6 dismissed ro
 
 STATES: `closed` false on every row. **FOUR ARMED**, three owners: `S6` (`1.0.0_SA_CTO`), `S7` and `S11` (`2.0.0_SA_COO~G`), and `W5-S2` -- whose owner is **`3.0.0_SA_CVO`, this seat, which is also the only WRITER under R-15 ruling 1**. That row is left ARMED deliberately; see its remedy.
 
+**AMENDED 2026-09-16T14:0xZ by `3.0.0_SA_CVO`, the sentence above superseded and kept: `W5-S2` now reads DISARMED.** `1.0.0_SA_CTO` RULING R-19 (@`4a55888962`) and its addendum (@`06061b21af`, msg 97411) rule that a disarm OWNER is never the WRITER, and that where the row's nominal owner IS the CVO the countersigning seat is `1.0.0_SA_CTO`. That seat sent the word: `LGIC_CANON-W5-S2` ARMED -> DISARMED at `2026-09-16T13:55Z`, on `2.0.0_SA_COO~G`'s repair @`df30196cc1` as the evidence (j_reach, measured verdict-neutral both ways, J4-AC3 and J5-AC3 PASS under both readings) plus the ruling itself. **`disarm.owner` STILL READS `3.0.0_SA_CVO` IN THE BYTES AND THAT IS DELIBERATE:** `_monotone_advance` admits three moves and an owner change is none of them, measured on three arms before this write. R-19's addendum adds a FOURTH admitted move (an owner change carrying a CTO-ruling citation and nothing else) as one limb of a LGIC_ENFORCE round-3 row-gate cell; until that limb lands, R-19 and 97411 ARE the record of who the owner should be. So the live figure is **THREE ARMED** -- S6 (`1.0.0_SA_CTO`), S7 and S11 (`2.0.0_SA_COO~G`).
+
 ```json
 [
  {
@@ -136,7 +138,7 @@ STATES: `closed` false on every row. **FOUR ARMED**, three owners: `S6` (`1.0.0_
   "remedy": "LEFT ARMED DELIBERATELY, AND THE REASON IS STRUCTURAL RATHER THAN TECHNICAL. This row names 3.0.0_SA_CVO as its disarm owner, and R-15 ruling 1 makes 3.0.0_SA_CVO the only WRITER of a disarm clock. When the owner and the writer are the SAME seat, the two-party check the mechanism exists to provide collapses entirely: there is no act by one party that a second party records. This seat declined to self-authorise LGIC_NAMING-W2-S7's advance in the same session for the mirror-image reason (a dark owner who can never act), and it will not take the easier branch here just because this one happens to be convenient. WHAT IS ASKED OF 1.0.0_SA_CTO, and it is small: either reassign this row's disarm owner to the seat that owns the fixed input (2.0.0_SA_COO~G, which authored and repaired check_canon_r2.py), or rule that a CVO-owned clock advances on a second seat's countersignature. The underlying repair is not in doubt -- the issuer measured it verdict-neutral both ways and this seat has no reason to dispute that; what is in doubt is who may say so.",
   "owner": "1.0.0_SA_CTO",
   "round": "v2",
-  "disarm": {"state": "ARMED", "owner": "3.0.0_SA_CVO", "at": null},
+  "disarm": {"state": "DISARMED", "owner": "3.0.0_SA_CVO", "at": "2026-09-16T13:55Z"},
   "remediation": {"state": "OPEN", "owner": "1.0.0_SA_CTO", "round": "v2"},
   "closed": false
  },
