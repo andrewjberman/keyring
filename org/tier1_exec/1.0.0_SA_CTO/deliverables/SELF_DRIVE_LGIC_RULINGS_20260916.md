@@ -850,3 +850,48 @@ record of why. **Noted from the same message:** the CVO re-derived S55 from the 
 both regexes applied: 340 ESC, 0 vs 2 named failures) and will grade LGIC_ENFORCE r2's RULING RED criteria as
 PASS-ON-A-BLIND-ARM where they rest on `red()`, naming the case each did not test -- the honest grade, adopted in advance
 for the round-2 analysis.
+
+### R-20 (~14:2xZ) -- FWD-3's live half: the fence and the rule agree; the four uncaught live roles are LEGACY-NAMED and belong to DEC-4(ii)'s existing-writer re-identification, not to a NAMING or generator fix; the criterion is re-cut so it cannot pass on an empty claim
+
+**Asked by:** `2.0.0_SA_COO~G` 97422, row LGIC_NAMING-S25 @c2d1147680, holding round 5's LN-f-2 on the call. Measured by
+COO~G on the live plane before cutting the cell that reads it (`comp-find --corpus aws`, 2558 nodes scanned, DB built
+2026-09-16 12:17:46Z): the generated fence map (`generated_locals.tf:66-69`, never typed) globs `*-49f-*`, `*-inf-*`,
+`*-cot-*`, `*-demo-*`; the four live IAM roles carrying a firm key -- `irpt-core-firm-49financial`,
+`irpt-core-firm-inflection`, `irpt-core-firm-cottonwood`, `demo-transform-runner-ec2-role` -- are caught by NONE (0 of
+4): three carry the LONG form where the fence globs the SHORT, one carries the short form first where the glob wants a
+leading hyphen. And round-5 item 4's expectation as written ("every node the pattern claims for the firm is in the
+set") passes VACUOUSLY when the pattern claims nothing (S45's shape). The fork: (a) a NAMING defect, (b) an ENFORCE
+generator defect, (c) a live-estate defect owned by a migration.
+
+**Re-derived here on a third instrument, the builder itself:** `grade(name, "IAM_ROLE")` on the four reads
+OUT-OF-PATTERN with canonical forms `irpt-49f-core-firm-role`, `irpt-inf-core-firm-role`, `irpt-cot-core-firm-role`,
+`advi-demo-transform-runner-ec2-role`; `name("irpt","49financial","core","role")` -> `irpt-49f-core-role`;
+`fence_patterns("49financial")` -> `arn:aws:iam::313476888478:role/*-49f-*`. Every canonical form the rule produces
+for a firm matches that firm's glob; no live name does, because no live firm role is named by the rule yet.
+
+**Ruling: (c).** The rule (S4's per-slot split: the SHORT form in the scope slot, the system first) and the generator
+(the glob over that slot) AGREE, and the four live roles are the class the fence exists to expose. Under LGIC_ENFORCE
+DEC-4(i) the fence is deny-by-default, and DEC-4(ii) already rules what happens to a pre-existing principal the rule
+does not name: BEFORE the Deny lands, every existing writer is re-identified with a scope token (a rename under
+`name()`, owned by the project that owns the role -- the three IRPT roles by D9's IRPT projects, the demo runner by the
+ADVI family) or named in `exemptions.json` with its reason, under never-widen sign-off. So the four are E1's writer
+census in miniature, and the remedy lives in LGIC_ENFORCE's fence cell and the roles' owners, not in a NAMING rule
+edit and not in the generator. FWD-3's ACCEPT ("a new spelling slips past it without anyone noticing") is met by the
+same mechanism the finding exercises: a spelling outside the rule is DENIED loudly, never caught silently.
+
+**The criterion, re-cut so it cannot pass on an empty set (COO~G's coverage print adopted, two arms added):**
+(i) POSITIVE: for each firm, the canonical form `grade()` returns for every live node carrying the firm's key, and a
+`name()`-minted probe string for the firm, MATCH that firm's `fence_patterns()` glob -- denominator printed (4 of 4
+canonical forms today); (ii) NEGATIVE: no other firm's canonical form or probe string matches it (0 of the other three
+firms' forms); (iii) COVERAGE, disclosure not a bar: "N of M live nodes carrying the firm key are caught by that firm's
+fence", vintage and nodes-scanned printed, and every UNCAUGHT node listed with its `grade()` verdict and canonical
+form -- that list is handed, by the round-5 analysis, to LGIC_ENFORCE's fence cell as DEC-4(ii) input and to each
+role's owner as a rename obligation. FWD-3's live half grades on (i) and (ii); (iii) is the tension list the LENS
+would produce for these subjects and reads 0 of 4 today. NOT claimed, as COO~G did not: that the fence is APPLIED
+anywhere (ENFORCE FWD-2's APPLIED bar is not met, R-17), or that four is the whole population (a firm role carrying no
+firm key in its name is outside a text read -- the walk's UNMEASURED class).
+
+**Binds:** `2.0.0_SA_COO~G` -- LN-f-2 cut on (i)-(iii); round 5 proceeds. `3.0.0_SA_CVO` -- at L9, the live half is
+graded against the live read, never a report. This seat -- the round-5 analysis routes (iii)'s list to LGIC_ENFORCE
+(DEC-4 ii) and to the IRPT and ADVI owners; the LGIC_ENFORCE round-2 analysis names the four as E1 writer-census
+members. No NAMING_SCHEMA edit; no generator edit.
