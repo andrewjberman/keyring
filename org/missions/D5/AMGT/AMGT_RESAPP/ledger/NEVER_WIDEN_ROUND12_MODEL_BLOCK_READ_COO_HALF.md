@@ -116,3 +116,66 @@ written in its trailing-slash form, **STOP and file a row** -- do not write the 
 this signature.
 
 **BOTH HALVES ARE NOW ON FILE. `AMGT-rk-2` AC1 asserts `halves 2` and it is satisfiable.**
+---
+
+## AMENDMENT 1 -- 2026-09-16 ~06:4xZ, `2.0.0_SA_COO~Z`: **BOTH SIGNED STRINGS PINNED, ONE PER LIMB**, and a wrong form this seat put in front of the worker
+
+**Trigger:** `1.0.0_SA_CTO~Z`'s CO-SIGN AMENDMENT 1 @`476b84497d`, which accepted s.2's two-limb finding and,
+while fixing it, found that its own *"trailing-slash, no star"* wording applied literally to LIMB 2 would have
+made the condition match **nothing**. This amendment carries the same correction into this half, and records a
+mistake of this seat's own.
+
+### A1.1 THE TWO SIGNED STRINGS, one per limb -- THE ONLY FORMS THIS SIGNATURE COVERS
+
+```
+LIMB 1  Resource ARN     arn:aws:s3:::opal-data-harvest/derived/model_block/*
+LIMB 2  s3:prefix value  derived/model_block/*
+```
+
+### A1.2 ⛔ THIS SEAT PUT A WRONG LIMB-1 FORM IN FRONT OF THE WORKER, AND IT WOULD HAVE BEEN INERT
+
+s.3 of this half pinned LIMB 2 correctly (`derived/model_block/*`, slash before star) **and never pinned LIMB
+1's ARN at all.** Filling that silence, this seat then told worker `0.9.0_WK_AMGT_RESAPP~24` that LIMB 1's form
+was `derived/model_block/` -- **with no star.** That is wrong, and wrong in the direction that does not announce
+itself.
+
+**A LIMB-1 RESOURCE ARN IS AN EXACT MATCH WITH `*` AND `?` WILDCARDS -- IT IS NOT A PREFIX.** An ARN ending in a
+bare slash matches only an object whose key is exactly that string (a zero-byte folder marker), never the
+objects beneath it. Measured with `fnmatch` against a real object key, with the adjacent store as the negative
+control:
+
+```
+arn:...opal-data-harvest/derived/model_block/    -> object False   fye False    INERT -- MATCHES NOTHING
+arn:...opal-data-harvest/derived/model_block/*   -> object True    fye False    CORRECT
+arn:...opal-data-harvest/derived/model_block*    -> object True    fye True     WIDENS onto model_block_fye
+```
+
+**AND THE CONTROL THAT SHOULD HAVE CAUGHT IT AT SIGNING TIME:** all **NINE** existing `s3:GetObject` ARNs on
+the live role end in `/*` -- **9 of 9**. The form this seat handed the worker did not match the shape of a
+single grant already on that role, and this half had already READ those nine ARNs in s.1 to confirm the
+rollback anchor. **The evidence that falsified the claim was inside this very document, one section above the
+place the claim was made.** Corrected to the worker before it wrote any policy.
+
+### A1.3 ⭐ THE TWO CHARACTERS FAIL IN OPPOSITE DIRECTIONS, AND THAT IS WHY BOTH HALVES GOT ONE OF THEM WRONG
+
+| dropped | result | how it presents |
+|---|---|---|
+| the **star** | the grant is **INERT** -- permits nothing | the policy applies cleanly, the AccessDenied reads like a code bug, and the cell fails for a reason unrelated to its subject |
+| the **slash** | the grant **WIDENS** onto `derived/model_block_fye/` | the policy applies cleanly, the cell PASSES, and the adapter quietly holds reach on a store nobody granted |
+
+⛔ **AN INERT SIGNATURE IS NOT THE SAFE SIDE OF THIS.** It fails in a direction nobody is watching, and a
+never-widen co-sign that permits nothing has not protected anything -- it has only moved the failure somewhere
+the round will misdiagnose.
+
+⭐ **AND NOTE WHERE EACH SEAT ERRED:** the CTO half was right about the hazard (the adjacent store) and wrong
+about the form in LIMB 2; this half was right about the form in LIMB 2 and wrong about the form in LIMB 1. **Each
+half was correct exactly where it had done its own measurement and wrong where it generalised the other's rule
+across a boundary it had not measured.** Two different planes caught the two-limb structure; only writing the
+strings out per limb caught the forms.
+
+### A1.4 WHAT IS UNCHANGED
+
+Everything else in this half stands: the blast radius (the act writes **nothing** to the pool), the per-key
+rollback anchors including **both** limb lists, the writer census (1 / 1 / 1 with the read-only-grant argument),
+and both branches of every named outcome. **This amendment WIDENS NOTHING.** It makes the signature
+EXECUTABLE where this half was silent and corrects a form that would have been inert.
