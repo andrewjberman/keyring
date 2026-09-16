@@ -291,3 +291,110 @@ SERVED, on `4.0.0_SA_CRO~Z`'s own GET invoke. The daily chatter ranking serves k
 crosswalk, the union universe (256 names), filings 5, drafting 5, peers 33, management 5, posture 2. **The page code is
 whole** -- header, five tabs, print action, harnesses -- **and merges into DEV with zero conflicts.** The distance from
 here to a product a person opens is real work, and it is a great deal less than the distance already travelled.
+
+---
+
+# ADDENDUM 2 -- 2026-09-16 ~05:2xZ: A-L REPAIR THE PLANE, NOT THE POPULATION. Three rulings corrected, one cell added, two cards to Andrew.
+
+**Author:** `1.0.0_SA_CTO~Z`. **Trigger:** `4.0.0_SA_CRO~Z`'s residual projection (msg 23389), record
+`org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/AMGT_RESAPP_POST_ROUND12_RESIDUAL_PROJECTION_20260916_Z.md`
+**@`1d5454312a`**, answering this seat's own question at msg 23388 s.4.
+
+## A2.1 THE FINDING, AND IT IS THE ONE THAT DECIDES WHETHER THIS IS A PRODUCT
+
+**Cells A-L repair the PLANE -- deploy, wiring, surfaces. NOT ONE OF THEM RUNS A PRODUCER OVER THE COVERAGE
+LIST.** After all twelve land, a person opening a **pilot** name (BA, BABA, COST, HD, SAP) gets a page whose
+tabs answer. A person opening **any other covered name** gets tabs that each say ABSENT -- honestly, correctly,
+and uselessly.
+
+**Measured: 10 of 19 outcomes still ABSENT for a non-pilot covered name after A-L** (`FWD-1, 3, 5, 8, 9, 10,
+16, 17, 18, 19`). And 2 of the 5 pilots fail four more, because COST and HD have no model block at all.
+
+⭐ **THAT IS ONE AXIS ACROSS TEN OUTCOMES, NOT TEN DEFECTS** -- and it is invisible to every per-outcome check,
+because each outcome's own cell is correctly built. It is Rule 22's shared-dependency blindness one level above
+the cells: **A-L share a dependency they do not name, which is that somebody has run the producers.**
+
+The producer census, read from the pool rather than from any status:
+
+| producer | has run over | schedule | in A-L? |
+|---|---|---|---|
+| model block | **3 covered names** (BA, BABA, SAP) + NVDA, which is NOT covered | none; terminal `ok:false` | **NO** -- A reads what exists; D pulls SCORE inputs, not the block |
+| filings analyzer + drafting | 5 names | task DISABLED | RESERVED |
+| exec management | 5 names | task DISABLED | RESERVED |
+| posture | 2 names | none | **NO** -- A redeploys the READ |
+| similarity ranker | 33 (10 with members) | none | C repairs the empties but does not say the ranker RE-RUNS |
+| harvest | 7 bodies / 3 names | DISABLED | RESERVED (A1.3 R5) |
+| Price | **never** | -- | B |
+
+**`4.0.0_SA_CRO~Z`'s correction to its own earlier audit is accepted and recorded:** G2's "4 of 89 covered
+names" should read **3 of 89 plus NVDA, which is not covered**. The key count was right and its denominator was
+not -- the exact shape Rule 22 reserves the word COVERAGE for.
+
+## A2.2 THREE RULINGS CORRECTED -- each was wrong as written, and the correction is this seat's
+
+**C1. R3 (cell K) WAS WRONG. An event-source-mapped Lambda CANNOT reach the terminal.** `pull_consumer.py`
+calls `model_block_pull.stage_pull`, which is the Bloomberg DAPI at `127.0.0.1:8194` **on this box**. A Lambda
+consumer would drain the queue and fail every message at `bloomberg_health`. The seam is **box-side by its own
+design** and the code says so (`sqs.tf` header; the poller is "never a persistent service").
+⭐ **AND IT HAS WORKED ONCE, END TO END:** `packs/NVDA_US_Equity/status.json` reads `LANDED`, requested
+2026-09-11T00:53:58Z, landed 00:54:02Z, with its raw and derived keys named. `FWD-2`'s own case, exercised by a
+person running the poller. **The outcome is not unbuilt; it is unwired at the page and unactivated at the
+cadence.**
+**CORRECTED RULING:** cell K wires the page's Refresh to the enqueue route so the 501 disappears, and the
+adapter declares its queue carrier. **The consumer STAYS ON THE BOX.** Its cadence is the same reserved-class
+activation as the harvest -- Andrew's word, "local on this device with some kind of local cron job"
+(`@187f003998`) -- and is **a card, not a cell**. ⛔ No Lambda consumer is built.
+
+**C2. R4 (cell L) FOR `FWD-12` WAS INCOMPLETE.** `ledger.py`'s `CLASSES` carries `stage: None` for **6 of 6**
+classes, so a surface over it would record SKIPPED for every re-run and the button would be a decoration.
+**CORRECTED RULING:** cell L **binds the stages that exist** -- `market_data` to the block pull, `filings` to
+the analyzer, `news` to the harvest worker -- and the re-run control **refuses with a NAMED REASON** where
+activation is reserved, rather than silently recording SKIPPED. A control that cannot act says why. If the
+binding cannot be cut inside round 12's fan-out, the surface ships as **READ-ONLY with the re-run stated as
+round 13 in the issuance data** -- never as a button that does nothing.
+
+**C3. A's JUDGMENT CRITERION WAS UNGRADEABLE AS WRITTEN.** "Does the page a person opens now show the figures"
+reads ABSENT for **86 of 89** covered names, so a grader could call it PASS or FAIL honestly.
+**CORRECTED:** the criterion **names the page (`BA_US_Equity`)** and **prints the block count from
+`derived/model_block/` at the cut beside it**, so "3 of 89" travels as data with the grade instead of being
+discovered later. ⭐ A judgment criterion still needs a printed denominator; judgment is about the verdict, not
+about the evidence being vague.
+
+## A2.3 ONE CELL ADDED
+
+**M. THE RANKER RE-RUNS OVER THE NAMES CELL C NEWLY RESOLVES.** C repairs 23 empty peer sets and the
+company-FIGI dedup, but nothing in its text says the similarity ranker runs again over the identities C
+creates. Without that, C's own output is a better crosswalk feeding the same 10 populated peer sets. **Cell M
+is a re-run, not a rebuild**, and it is chained after C.
+
+## A2.4 TWO CARDS AT ANDREW -- RESERVED, AND NOT SELF-ADJUDICATED
+
+Both move the POPULATION, both are his by a named class, and **this seat is not taking either**. Each carries
+this seat's recommendation, which is what a card owes him.
+
+**CARD 1 -- THE MODEL-BLOCK PULL OVER THE 33 KEYED COVERAGE NAMES.** Today: 3. Gate: a signed-in terminal, the
+two-phase budgeted sign-in (`integrations/bloomberg/READ_HERE.md`), and **the Bloomberg-terms question this PRD
+itself holds OPEN**. Class: **vendor use** -- `CLAUDE.md` is explicit that availability is not authorization and
+that an external vendor call needs his per-use word. **RECOMMENDATION: YES, and it is the single highest-value
+act available to this project** -- it converts the Model tab, the thesis figures and the Posture comparables
+from "correct and empty" to populated across the coverage list, and it moves the most outcomes per unit of
+work of anything in round 12. The terms question is his to close and it is the reason this is a card.
+
+**CARD 2 -- THE FILINGS AND DRAFTING BATCH OVER THE UNION UNIVERSE.** Today: 5 names. Gate: his word
+(`rj-6 AC4`, "activation is Andrew's word") and **cost, roughly USD 100 for the 89** at the measured
+~USD 1.1 per filing. Class: **reserved by name, and money**. **RECOMMENDATION: YES for the 33 keyed names
+first, not the 89** -- the unkeyed names cannot render an identity-joined page anyway, so spending on them buys
+nothing until cell C widens resolution. That is roughly USD 36 for the population that can actually display.
+
+⚠ **WHAT HAPPENS IF NEITHER CARD IS ANSWERED, stated plainly so nobody discovers it at the close: the product
+is FIVE NAMES.** Round 12 would land twelve cells, every criterion could pass, and the
+`COMPLETION_REPORT` would have to say that a person opening the 84 other covered names sees an honest ABSENT on
+every tab. ⛔ **That sentence is the one this project must not write by accident**, and it is exactly the class
+of thing Andrew asked `4.0.0_SA_CRO~Z` to catch.
+
+## A2.5 WHAT IS NOT CHANGED BY THIS ADDENDUM
+
+Cells A, B, D, E, F, G, H, I and J stand as written in s.5 and A1.4. The v0.9 PRD (`@44269d0515`) is untouched:
+none of these corrections changes ratified text -- K, L and M are **cut-level shape**, and the two cards are
+decisions that belong to Andrew rather than to the PRD. `3.0.0_SA_CVO~Z`'s pending ratified-text signature is
+**not re-opened by this file** and the half hash `88e330dea809` still stands.
