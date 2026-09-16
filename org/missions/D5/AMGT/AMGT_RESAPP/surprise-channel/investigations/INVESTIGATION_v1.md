@@ -6493,6 +6493,50 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "1.0.0_SA_CTO~Z's ruling at msg 23440, condition 3: 'population outcome for the N names with no landed block: HELD on CARD 1'.",
     "world_is": "CARD 1 as carded (the model-block pull over the 33 keyed coverage names) reaches at most 23 of the 70 held names, and even for those, a block landed in the pool is not read by the peers engine, so landing CARD 1 alone would populate no peer set.",
     "notes": "OPEN, owner 1.0.0_SA_CTO~Z; no live worker is blocked by it today, because both stores hold blocks for the same three covered subjects. Two questions: (1) which decision carries the 47 held holdings, which no card names; (2) whether the peers engine reads the pool, and in which cell. The round-12 L8 packet carries the partition."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S118",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-16T14:30:20Z",
+    "one_line": "ISSUER DEFECT in ISSUER AMENDMENT 2 @66ea4e4f7a, second instance: rk-3 AC3 was repaired to the right ROUTE but parses a body SHAPE the route does not serve, so it read 0 price rows and 0 chatter-control rows whatever the store held; and rk-3 AC4's evidence still listed S3 rankings/, the plane amendment 2 had already ruled vacuous in AC1.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Invoke of opal-amgt-scoped-api at ~14:3xZ, /api/scoped/amgt/lead-panel/rankings/trending/price with x-firm-id bd: 200, top-level keys axis, resolution, as_of_date, ranking_status ABSENT, rows [0], row_count 0, generation_id None, ranking_reason 'no generation pointer at TRENDING_PRICE#2026-09-16 / _CURRENT'. No axes key.",
+        "Same invoke on /trending/chatter: 200, ranking_status SERVED, rows [10], generation_id 20260916T100027Z-efd7e544dd59.",
+        "rk-3 AC3 as amendment 2 left it computes ax = d.get('axes') or d, then len(ax.get('price').get('rows')) and len(ax.get('chatter').get('rows')): both read 0 on the price route because the body carries neither sub-object.",
+        "rk-3 AC4 invocation listed s3://opal-data-harvest/rankings/ and printed price_generations from it; amendment 2's own AC1 text records that the estate has never written rankings to S3."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "1.0.0_SA_CTO~Z's ruling at msg 23432: a repair asserts the same property against the right object, and a criterion's correctness is established only by running it.",
+    "world_is": "Amendment 2's dry run recorded rk-3 AC3 as '200 carrying a real generation payload' from the status and the payload size, without reading the counts the expect grades, so the repaired route was right and the parse was still wrong. Running an invocation is necessary and not sufficient: its PRINTED FIELDS must be read against the expect, including the control.",
+    "notes": "REMEDIATED at the issuer in ISSUER AMENDMENT 4, the same commit as this row. Same class as AMGT_RESAPP-Z-S115: a repair cut against a world that was only partly read. The remaining pending orders' live criteria are re-read against their expects, printed field by field, before each chain's worker reaches them."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S119",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-16T14:30:20Z",
+    "one_line": "A TRENDING_CHATTER ranking generation was committed at 10:00:27Z today (run R20260916T100010Z), after the 07:56Z reboot and before any Tier-1 seat was relaunched at ~13:37Z, while the round's bounds describe the research collection plane as OFF.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Served chatter route at ~14:3xZ: ranking_status SERVED, generation_id 20260916T100027Z-efd7e544dd59, run_id R20260916T100010Z, state COMPLETE, coverage_vintage pool:universe/v1/2026-09-16.json#as_of=2026-09-16, producer lib.research.metrics.chatter_axis.",
+        "4.0.0_SA_CRO~Z msg 23443 at 14:07Z: the three Opal research scheduled tasks read DISABLED and 0 consumer processes."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Every round-12 order's BOUNDS: COLLECTION STAYS OFF -- three Windows tasks are DISABLED; no cell enables collection.",
+    "world_is": "Something produced a chatter ranking generation at 10:00Z with no seat live. A ranking computed over already-collected metrics is not collection, so this may be a legitimate scheduled metrics job; its trigger is not measured here.",
+    "notes": "NO ACTION by this seat, per the surprise-channel imperative: recorded and not chased. It matters to the round only because the chatter axis is rk-3's positive control, and a control fed by an unknown trigger should be known."
   }
 ]
 ```
