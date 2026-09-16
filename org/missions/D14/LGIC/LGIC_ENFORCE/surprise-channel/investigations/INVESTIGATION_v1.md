@@ -1903,6 +1903,28 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     "spec_asserts": "The coordinator's resume message (2.0.0_SA_COO~G): 'You were right, and the fixture was the defect ... It is corrected +1,13 -> +1,12, zero other bytes changed, all 17 CRLF endings intact, committed as 6f640ead30 ... Append ONE row to the channel disposing W3-S10: it was a real BLOCKING finding, the cause was the issuer's fixture, the remedy has landed, and the criterion now passes.'",
     "world_is": "Independently confirmed rather than taken on the message's word: the fixture blob at 6f640ead30 matches the worktree copy byte-for-byte after CRLF normalization, both this worker's commit and the fixture fix are ancestors of the drain tip 4f7f050f2c, and re-running G1R-AC1's exact named invocation in this worktree now prints VERDICT: PASS-PLAN-FILE-NOT-GRADED, rc=0, with the plan file SKIPped and the authored-JSON control still REFUSEd. W3-S10 was a real BLOCKING finding (independently reproduced on the pre-edit gate and on git apply --check, per that row); its root cause was the fixed input, not .tools/naming-gate.py, and the remedy is landed and verified.",
     "notes": "Disposes LGIC_ENFORCE-W3-S10 (this row's adjudicates). hazard_standing INERT: the fixture defect is remedied and G1R-AC1 now passes by output; no owner needs to hold it further. The proof-of-spec instance for G1R-AC1 is updated to record the PASS and pinned to 6f640ead30 for the fixture, never PENDING-THIS-COMMIT."
+  },
+  {
+    "id": "LGIC_ENFORCE-W1-S26",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~1",
+    "surfaced_at": "2026-09-16T03:10Z",
+    "one_line": "B2 (a bucket's scope) and K1 (an S3Key's segment 1) accept ONLY a V1 (system) token -- refused_keys (V3) membership resolves neither, so a class (b) registry addition cannot silence a K1 or B2 raise, only an R1.f/R1.c/R1.d/R2 one.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "EXERCISED: in a scratch copy of lib/opal_naming.py + infra/logic/registry with 'pm' added to systems.json refused_keys.generic_noun, grade('opal-data-pm', 'S3_BUCKET') still raises \"B2: 'pm' after opal-data- is no scope key\".",
+        "EXERCISED: the same scratch addition of 'sentiment' leaves grade('sentiment/keyword-sentiments.json', 'S3Key') still raising \"K1: segment 1 'sentiment' is neither a source nor a tier\".",
+        "MEASURED at HEAD, no scratch needed: fixed_inputs/r2/RAISE_POPULATION.json's ec2 and infrastructure groups -- BOTH already members of systems.json refused_keys.generic_noun before this cell ran -- each still carry a K1 example (S3Key ec2/astn-wsjft/deploy.sh; S3Key infrastructure/reports/) in this same population."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "LGIC_ENFORCE.TO-EN-r-2-r2 THE CELL step 2, read plainly: 'Make each class (b) and (c) token one the registry recognizes, so the rule places it (the registry's refused_keys, or the list the rule reads for that class)' -- implying refused_keys membership places (resolves) any V3-classed token uniformly.",
+    "world_is": "refused_keys resolves only R1.f/R1.c/R1.d/R2 (resource-grammar) raises. A token whose raise is K1 or B2 stays RAISING after a refused_keys addition, because those two clauses test membership in V1 specifically, never V3. 50 of the 152 population groups carry a K1/B2/R8/L2/G2.3 example; this cell classes each (d) or undecided rather than (b)/(c) unless every one of the group's examples independently resolves, and R2-AC4's per-example re-grade (0 of 378 still raising) is the mechanism that would have caught a wrong call here.",
+    "notes": "Form only, no remedy owed: this cell's own classification already routes around the boundary (every B2/K1/R8/L2/G2.3-bearing group is class (d) or undecided), and R2-AC4 mechanically catches a future misclassification of the same shape on a later round. Filed because the decomposition's and the worker face's plain language does not state this boundary, and a reader taking 'the registry's refused_keys' at face value could misclassify a B2/K1-bearing token as (b) and have it silently fail AC4, or -- worse, if AC4 is ever loosened -- pass while still raising in the served naming-gate output."
   }
 ]
 ```
