@@ -407,6 +407,30 @@ not a message.
    "spec_asserts": "LGIC_CANON PRD: the ledger records each plane's disposition against the canon's numbered rules. Round-1 analysis ruling A-13: round 2's second judged tree is chosen BY MEASUREMENT to engage R3, R8, R14, R15, R17, R19 and R21, and the cell prints which of the seven it reaches.",
    "world_is": "A disposition's PROSE names a plane the same table does not carry as a row, and nothing in the repo corroborates it. Either opal-data-bd has a state prefix nobody censused, or the sentence is describing what the firm bucket WILL hold after the D8 migration and reads as a present fact. The two are not distinguishable from the ledger's own text, which is the defect.",
    "notes": "INERT: nothing reads this sentence as code and no disposition turns on it. It is filed because it is MATERIAL TO ROUND 2's CUT rather than for its own sake: R21 is one of A-13's seven, and if no conformant state/ plane exists then NO candidate tree can reach R21 by carrying one -- a tree reaches it only by carrying state INSIDE a tier plane, which is the violated-live shape. CN-j-4 and CN-j-5's cell must be cut to print the reach honestly, including a printed NOT REACHED, rather than be read as failing when it cannot find a plane that does not exist. CN-l-2 owns the ledger and is where the sentence is corrected: either add the row with its census, or reword to the future tense the D8 brief supports. For 3.0.0_SA_CVO at L9: this row makes no claim about whether the migration is right, only that the ledger states a present fact it does not carry."
+  },
+  {
+   "id": "LGIC_CANON-S5",
+   "project": "LGIC_CANON",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T07:35Z",
+   "one_line": "ISSUER'S CUT DEFECT. Decomposition v4 s.0d states the round's only internal write contention is CN-k-2 and CN-k-4 on infra/logic/02_DOCTRINE.md. Measured from the ten ISSUED orders' own <paths> blocks, THREE cells write it: CN-k-2, CN-k-3 and CN-k-4. CN-k-3 re-renders the generated section with --write, so the canon is necessarily in its grant. Spawning CN-k-3 beside CN-k-2, which the level-0 grouping invited, would have put two workers on one file in two worktrees.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "RUN at CLOUD 68644b3c19: the <paths> block of all ten round-2 orders parsed and inverted to path -> cells. infra/logic/02_DOCTRINE.md maps to ['CN-k-2','CN-k-3','CN-k-4']; every other write surface of the round maps to exactly one cell. Contended paths: 1 of 10.",
+     "READ the CN-k-3 order's own cell text item 3: 'Re-render with --write so the section carries the restored note, and leave --check reading FRESH.' The canon is in its <paths> because the cell cannot do its work without writing it. The order is CORRECT; the decomposition's description of it is not.",
+     "READ decomposition v4 s.0d: 'INTERNAL contention, the one this round has: CN-k-2 and CN-k-4 both write infra/logic/02_DOCTRINE.md. They take ONE slot, sequenced.' Two cells named where three write.",
+     "CAUSE, traced rather than guessed: the disjointness census in s.0d was computed BEFORE the orders existed, from a hand-written per-cell surface list in the issuer's cut script -- a forward list of what the issuer had in mind. CN-k-3's entry in that list named only the renderer. When the order was written, the canon was added to its <paths> correctly, and the decomposition was never re-measured against the orders.",
+     "NEGATIVE CONTROL on the same act: the SIBLING-project half of that census WAS a subtraction, over the parsed <paths> of all 15 non-terminal LGIC_NAMING and LGIC_ENFORCE orders, and it is correct -- the intersection with this round is genuinely empty, re-verified here. So the method was right in one half of the same paragraph and recall in the other."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "CLAUDE.md Rule 24: write the enumeration as the printed denominator MINUS what you exclude, never as a forward list of what you thought of. Spine L6: the fan-out is derived from the decomposition's dependency chains; two task orders on one chain belong to ONE worker's queue.",
+   "world_is": "A forward list covers what its author had in mind and omits silently. This one omitted a surface the author himself added to the order twenty minutes later, in the same sitting. \u26a0 AND IT READ AS MEASURED: the paragraph prints a denominator -- 15 sibling orders -- for the half that WAS a subtraction, and the printed number lends its authority to the sentence beside it, which was recall. A denominator certifies the sweep it came from and nothing else in the paragraph.",
+   "notes": "INERT: no worker was harmed. CN-k-2 is the only canon writer spawned; CN-k-3 and CN-k-4 are HELD and will be handed to the same slot in sequence after CN-k-2 drains, which is the queue rule the spine already states for two orders on one chain. NOT AN EDIT TO THE DECOMPOSITION: the spec is frozen mid-round and a cell that looks wrong is a row, never an edit -- the sequencing is the issuer's to control at spawn, and it is controlled. For the round-2 analysis: s.0d's contention sentence is wrong by one cell and should be re-cut from the orders' own <paths>, which is the only carrier that IS the grant. For 3.0.0_SA_CVO at L9: the orders themselves are correct and no criterion changes."
   }
 ]
 ```
