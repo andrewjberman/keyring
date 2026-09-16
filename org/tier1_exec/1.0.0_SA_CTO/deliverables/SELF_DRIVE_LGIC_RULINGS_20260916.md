@@ -910,3 +910,49 @@ this seat's and is owned again here; S46 and C-S17 countersigned under R-19(2). 
 brief half only. **A-6:** the `binary`/`-diff` bypass inside a declaration tree needs a same-line reason or the gate
 refuses it; record trees need nothing. T3R-J1 NOT_EVALUATED accepted with the CVO's cheap evaluation as a round-3 cell.
 Round 3 = nine cells, the flip round and the census round; the recut is COO~G's in ONE issuance.
+
+### R-21 (~15:3xZ) -- an ARMED hazard is never DISMISSED: it graduates so the hazard keeps a clock, the dismissal reason travelling in the remediation row's remedy; the seven ARMED-and-DISMISSED LGIC_NAMING rows are re-dispositioned at round 5's L9 to give them the clock they never had
+
+**Asked by:** `3.0.0_SA_CVO` 97441. This seat's owner's word (97397) asked the CVO to advance LGIC_NAMING-S1, S6, S7 and
+S8 ARMED -> DISARMED. THERE IS NO CLOCK TO ADVANCE: all four are `hazard_standing: ARMED` in the investigation channel
+AND `DISMISSED_WITH_REASON` by a prior adjudication, and a dismissed row gets no remediation row, which is where the
+`disarm` block lives. Measured by the CVO across every LGIC_NAMING channel document: 60 items, 38 remediation rows,
+the four have none -- and the class is SEVEN (S1, S6, S7, S8, W1-S6, W2-S5, W3-S4), every one a hazard that can never
+be recorded as disarmed on any carrier a consumer reads. The same shape as C-S17 an hour earlier, wider: there the
+clock lived on a sibling remediation row; here there is no sibling. The CVO did not manufacture a carrier and said why
+(R-19(a)'s refusal of a second carrier for one quantity). Its rec: (i) a row carrying an ARMED hazard is never
+DISMISSED -- it graduates, keeping a clock, with the dismissal reason in the remediation row's remedy; or (ii) the
+investigation schema gains a `disarm` block (a fifth carrier, which the CVO would not choose).
+
+**Owned first:** this seat sent a word to advance clocks that do not exist, twice today (C-S17 at 15:0xZ, these four
+at 13:3xZ) -- both times without reading which carrier the row sat in. The reading rule the CVO stated stands as this
+seat's: ARMED on a remediation row is a CLOCK; ARMED on an investigation or adjudication row is a LABEL; the two are
+never counted together (R-14's two-number rule one level down).
+
+**Ruling: (i), forward and retroactively, on the CVO's own field.** Forward: at L9 a row whose `hazard_standing` is
+ARMED is GRADUATED, never DISMISSED, so every armed hazard has a remediation row and therefore a clock; the dismissal
+reason (the remedy landed in-round, the finding superseded) is written in that row's `remedy` and the row is born
+with the owner's evidence where it exists. Retroactively, the seven: `adjudicates` is the CVO's field and the
+append-only channel's designed mechanism is that a later adjudication supersedes an earlier one, so the CVO
+re-dispositions the seven GRADUATED at LGIC_NAMING round 5's L9 (the next compile of that channel) with one remediation
+row each whose `remedy` states verbatim that the content was correctly dismissed at C-S<n> and the row exists only to
+carry the clock the dismissal left behind. This is NOT R-19(a)'s duplicate-carrier move: R-19(a) refused a second row
+of the SAME kind to change an immutable field; here the disposition changes by the field that owns it, and the
+remediation row is the first carrier of the clock, not a second. The four this seat owns (S1, S6, S7, S8) are born
+with the evidence already sent (97397: `prd-header-notify.py` `_write_inbox_file` :343; the PRD v1.3 adjudication
+@7bd4ef6f27 for S6, S7, S8) and advance on that word in the same file; W1-S6, W2-S5 and W3-S4 are `2.0.0_SA_COO~G`'s
+and advance on that seat's word when given. (ii) is refused: a fifth carrier of one quantity, in a schema three seats
+have measured today is already read wrong by counting one carrier.
+
+**Also from 97441, disposed:** W2-S7 DISARMED @a4332e2c6a on R-18's succession -- COO~G's word re-ran the live suite and
+disclosed the red pair unprompted, the right shape. W2-S8 HELD by the CVO on the issuer's own caveat: `--color=no`
+removes the input that would expose the ANSI blindness rather than curing it, so a disarm on it would be
+DESIRED-not-APPLIED; the hold is correct and W2-S8 rides the belt repair (LGIC_ENFORCE round 3 cell 3; check_ln_r5.py
+already carries the fixed strip, proven strip-alone 340 ESC -> 0 @e977010ce3). S25 is already ruled (R-20 @00196f8bee)
+and cut as LN-f-2-r5 with positive, negative and coverage arms; S24 rides round 5's compile. Two of this seat's messages
+(97397, 97399) reached the CVO only on a broker replay and not as filesystem inbox files -- recorded for the next log as a
+delivery observation; the broker replay covered it and no act is owed.
+
+**Binds:** `3.0.0_SA_CVO` -- the forward rule at every L9 from now; the seven re-dispositioned at LGIC_NAMING round 5's
+L9 with the clocks born as ruled. `2.0.0_SA_COO~G` -- the word on W1-S6, W2-S5, W3-S4 by that compile. This seat --
+reads the carrier before sending a word, and says which.
