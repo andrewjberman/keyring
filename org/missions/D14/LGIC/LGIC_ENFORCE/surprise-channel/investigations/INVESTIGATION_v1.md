@@ -3100,6 +3100,29 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     "spec_asserts": "ROUND_ANALYSIS_LGIC_ENFORCE_ROUND2 cell 8 (A-12): T3R-J1's cheap evaluation -- re-plan ONE root in a throwaway clone with -lockfile=readonly, plan_sha256 equal to the extract's.",
     "world_is": "plan_sha256 hashes a timestamped full document that is not committed, so equality with any re-plan is impossible; the extract, which is committed and carries no timestamp, is what a re-plan can reproduce.",
     "notes": "INERT: the only reader who cuts from the table is this seat, and the cut uses the extract form. No clock and no call -- the analysis names cells indicatively and leaves the criterion to the cut, and round 2's census already states the bar this seat adopts. A worker cut from the table's literal words would have chased a hash no run can produce, and a failure there would have read as the root being unreproducible."
+  },
+  {
+    "id": "LGIC_ENFORCE-S60",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G",
+    "surfaced_at": "2026-09-16T19:45Z",
+    "one_line": "RULING R-16 DERIVES THE SHIP / REPO-ONLY SPLIT BY CALLING ONE CLASSIFIER THAT CANNOT SEE MOST OF THE SHIPPING TARGETS. .tools/safe_deploy_core.py classifies the S3/DS plane only: called on the generator's 10 targets, file_to_s3_target, bundle_for_member, resolve_tree_layer and second_targets_for return a determination for 3 and None for 7 -- and at least 5 of those 7 ship through a DIFFERENT gate (a Lambda@Edge shared module, an investor-reporting Lambda, the opal_name Terraform module). A split implemented exactly as ruled would print shipping targets as REPO-ONLY: the understatement R-16 exists to prevent.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE DENOMINATOR, by AST and not by regex: lib/opal_naming.py generate() lists known = [v[0] for v in VIEWS] + [LOCALS_PATH, VECTORS_PATH, TFTEST_PATH] -- 7 VIEWS + 3 named extras = 10, equal to R-16's count.",
+        "THE CALL, per target, importing .tools/safe_deploy_core.py and calling its own functions: data/assets/scripts/gold/investor_reporting/directory_runner.py and holdings_snapshot.py -> file_to_s3_target opal-data-mdpf code/scripts/assets_gold/investor_reporting/..., bundle_for_member (mdpf, investor_reporting); data/assets/scripts/gold/runners_49f/perfrp_firm_pin.py -> opal-data-49financial _code/perfrp_firm_pin.py (advi). ALL FOUR functions return None for data/firm_registry.json, infra/aws/lambda-edge/_shared/firm-config.mjs, infra/aws/lambda/investor-reporting/_authz/loaders.py, .tools/ds-precommit-check.py, and the three infra/aws/terraform/modules/opal_name/ files.",
+        "WHY None IS NOT REPO-ONLY for five of them: the Lambda plane has its own declared record, infra/aws/lambda/ci/lambda-source-map.json (source_dir -> tf_file; e.g. the edge functions under infra/aws/lambda-edge/ -> infra/aws/terraform/portal-auth/lambda-edge.tf), and _shared/firm-config.mjs is imported by those functions rather than being a source_dir itself; the investor-reporting Lambda ships through Terraform; and comp-find finds the opal_name module consumed by exactly ONE root, infra/aws/terraform/shared-infra (s3-49financial.tf), so generated_locals.tf ships whenever shared-infra applies.",
+        "A SECOND, SMALLER POINT for the same ruling: of the module's three generated files only generated_locals.tf enters an applied plan; tests/vectors.json and tests/opal_name.tftest.hcl are test fixtures. R-16 counted all three as SHIP (8 of 10), so the count depends on whether a test fixture beside a shipping module is itself a deploy."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "R-16: the SHIP / REPO-ONLY split is derived by CALLING the deploy gate's own scope classifier, .tools/safe_deploy_core.py, over the generator's target list; its provenance reads measured: safe_deploy_core.",
+    "world_is": "safe_deploy_core decides the S3/DS plane only (3 of 10 targets). The Lambda and Terraform planes ship through safe-apply and their own declared records, so one classifier call leaves at least 5 shipping targets reading as REPO-ONLY.",
+    "notes": "INERT: nothing is built on it yet -- cell 9 is not cut. Routed to 1.0.0_SA_CTO as a call (97550-series) because it is R-16's mechanism, and cell 9 is not cut until it is ruled. The shape this seat holds, not binding: the split names its PLANE per target and calls each plane's own record -- safe_deploy_core for S3/DS, lambda-source-map.json for Lambda, the root that consumes the module for Terraform -- with provenance per row (measured: <instrument>), and a target no plane claims prints UNCLASSIFIED and refuses the print, which is R-16's own negative control generalised from one plane to all."
   }
 ]
 ```
