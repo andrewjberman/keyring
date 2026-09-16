@@ -5,7 +5,7 @@
   "project": "AMGT_RESAPP",
   "directive": "D5",
   "fabric": "site-z",
-  "prd_version": "v0.9",
+  "prd_version": "v0.10",
   "step": 4,
   "brief_ref": "docs/briefs/amgt-resapp-security-analysis-20260910.md@19ce7d5b4d",
   "endpoint_outcomes": [
@@ -173,6 +173,32 @@ note that changes no requirement -- the trap this PRD already records one screen
 **WHAT DID NOT CHANGE:** no existing `FWD-n` text, no existing contract, no constraint, no surface
 manifest row, and nothing in the brief half. `FWD-n` ids remain permanent and never reused;
 `FWD-20` takes the next unused number.
+
+
+### v0.10 -- the four L4-R grounds, fixed (recorded HERE, in the preamble, deliberately)
+
+`3.0.0_SA_CVO~Z` REFUSED the v0.9 ratified-text half at `88e330dea809` (stamp @`33621451eb`, review
+@`eeddafa99f`) on four grounds, every one of them correct. All four sat inside ENDPOINT or CONTRACTS, so v0.10
+re-opens the RATIFIED-TEXT half only; the brief half is untouched again and `4.0.0_SA_CRO~Z` owes nothing.
+
+| ground | fixed by |
+|---|---|
+| **R1** `FWD-20`'s ACCEPT dropped two operative constraints of its own pins -- assumptions stored with their source and time, and the pre-deployment degeneracy check | two sentences added to the card in its plain register; the numeric floor moved to `C-ROUND12-DIVERGENCE-DEGENERACY` |
+| **R2** `FWD-20`'s SOURCE did not cite the Divergence record that two of its three sentences rest on | `@287d2c2619` added by title and pin |
+| **R3** two SEAT NAMES inside the ENDPOINT section | replaced with non-serial citations |
+| **R4** `C-ROUND12-PULL-WIRED` ratified a Lambda consumer this PRD's own L10 author had already found impossible | the contract rewritten to the corrected ruling; no Lambda consumer |
+
+⛔ **R4 IS THE ONE WORTH READING TWICE, because nothing mechanical could have caught it and the bytes were
+innocent.** The contract was written at v0.9 and the ruling behind it was CORRECTED fifteen minutes later in an
+addendum; the contract's bytes never moved, so every hash comparison read clean while the content had gone
+wrong. ⭐ **A CONTRACT AGES SEPARATELY FROM THE RULING IT ENCODES** -- the same shape as a citation ageing
+separately from the text it quotes, one level up. **When a ruling is corrected, re-read every artifact that
+already encoded it**; a half-hash comparison cannot see it, and signing would have ratified a design the project
+had already ruled cannot work on this box.
+
+⚠ **R3 is a READING rule with no regex behind it** (`prd_signoff_lib.py` carries none), so nothing would have
+refused it either. Measured independently at both vintages before the fix: the ENDPOINT section holds **2**
+serial-bearing lines at v0.9 of 231 body lines, and **0** at v0.8 of 211. Both were introduced by this bump.
 
 
 ---
@@ -399,19 +425,31 @@ disputable, by rule, and carry no technical language.*
                     the page and traced it to the house forecast behind it
          ACCEPT     A forward free-cash-flow forecast is produced for a
                     covered name from the company's own filings and its
-                    history, seeded independently of consensus. The Model
-                    tab shows Divergence -- how far the house view sits from
-                    the street's, scaled by how much the street disagrees
-                    with itself -- and states ABSENT, with the reason, for
-                    every name where the house forecast does not yet serve.
-                    Model upside and the raw percentage disagreement are
-                    REPORTED beside it and are never ranked on.
+                    history, seeded independently of consensus. Every driver
+                    assumption behind the forecast is kept with the filing it
+                    came from and that filing's date. The Model tab shows
+                    Divergence -- how far the house view sits from the
+                    street's, scaled by how much the street disagrees with
+                    itself -- and states ABSENT, with the reason, for every
+                    name where the house forecast does not yet serve. Before
+                    any Divergence is shown, the spread of Divergence across
+                    the covered universe is checked for the sign that the
+                    drivers were seeded from consensus after all, and
+                    Divergence stays ABSENT, with that reason, until the
+                    check passes. Model upside and the raw percentage
+                    disagreement are REPORTED beside it and are never ranked
+                    on.
          SOURCE     CVO round-11 slug REMEDIATION_v11.md @5d3a04cab6 ("Append
                     FWD-20 for a filings/history-seeded house FCF forecast
-                    independent of consensus"); 1.0.0_SA_CTO~W's ruling 4 at
-                    CTO_ADJUDICATION_AMGT_RESAPP_20260915T195xZ.md @1685652d6e;
-                    carried at L10 by 1.0.0_SA_CTO~Z, ROUND_ANALYSIS.round11.md
-                    s.4 item 3 @c708914c50
+                    independent of consensus");
+                    ANDREW_DIRECT_20260915_183xZ_MODEL_TAB_SCORE_IS_DIVERGENCE_FROM_CONSENSUS_FCF_AND_PEERS_RESENT.md
+                    @287d2c2619 (the Divergence definition, the companion
+                    figures, and the pre-deployment degeneracy check); the CTO
+                    adjudication of 2026-09-15 ~19:5xZ, call 4 @1685652d6e
+                    (the forecast seeded from filings and history, never
+                    consensus, with every assumption stored with its source
+                    and time); ROUND_ANALYSIS.round11.md s.4 item 3
+                    @c708914c50
 ```
 
 **BAR DISTRIBUTION: 19 of 20 are `EXERCISED`; only `FWD-9` is `APPLIED`.**
@@ -586,17 +624,36 @@ absent by `4.0.0_SA_CRO~Z` @`a10eece02e` (direct GET -> 500; the 747,396 B archi
 Ruled `1.0.0_SA_CTO~Z`, `ROUND_ANALYSIS.round11.md` A1.3 R2.
 
 **C-ROUND12-PULL-WIRED (settles the 501 on refresh; `FWD-2`'s carrier).** The on-demand pull is WIRED, not
-retired: the adapter DECLARES its queue carrier, the enqueue route is the one the page actually calls, and the
-consumer is an EVENT-SOURCE-MAPPED Lambda rather than a poller a person starts. ⛔ No alarm, monitor, freshness
-checker or notification rides along -- the standing moratorium binds, and a wired queue is not a monitor. Ruled
-`1.0.0_SA_CTO~Z`, A1.3 R3.
+retired: the page calls the enqueue route, and the adapter DECLARES its queue carrier so the refresh route stops
+answering 501. ⛔ **THE CONSUMER STAYS BOX-SIDE AND IS NOT A LAMBDA.** The reason is a dependency, not a
+preference: the consumer reaches the Bloomberg desktop interface on the local loopback of the terminal box, so a
+Lambda consumer would drain the queue and fail every message at the health check. The seam is box-side by its
+own design. ⛔ **NO LAMBDA CONSUMER IS BUILT**, and the consumer's CADENCE is RESERVED to Andrew by name, on the
+same standing as the harvest cadence -- a card, never a cell. ⛔ No alarm, monitor, freshness checker or
+notification rides along: the standing moratorium binds, and a wired queue is not a monitor. Ruled at L10,
+`ROUND_ANALYSIS.round11.md` A1.3 R3 as CORRECTED by ADDENDUM 2 C1 @`06378dd3bd`, which found the Lambda form
+impossible on measured grounds and recorded that `FWD-2` has already run end to end once under the box-side
+consumer.
 
 **C-ROUND12-SURFACED-OUTCOMES (settles the three no-surface outcomes).** `FWD-7`, `FWD-12` and `FWD-14` each get a
 SERVED ROUTE and a PAGE SURFACE. Today each is a Python module a person runs by hand: 0 of the 11 mounted routes,
 0 page components and 0 adapter references, against a positive control that fired. ⛔ An outcome whose only
 implementation is a hand-run module is NOT REALIZED, whatever its rows say. If a round's fan-out cannot carry
-them, they move to the NEXT round as data stated in the issuance -- never by omission. Ruled `1.0.0_SA_CTO~Z`,
-A1.3 R4.
+them, they move to the NEXT round as data stated in the issuance -- never by omission. ⛔ **AND A CONTROL THAT
+CANNOT ACT SAYS WHY.** A re-run control is bound to a stage that exists, or it REFUSES with a named reason; it
+never records a silent skip and it is never a button that does nothing. A decoration does not satisfy this
+contract. Ruled at L10, A1.3 R4 as extended by ADDENDUM 2 C2 @`06378dd3bd`.
+
+
+**C-ROUND12-DIVERGENCE-DEGENERACY (carries `FWD-20`'s pre-deployment gate; the numeric form the card states in
+plain words).** Before Divergence is shown for any name, the producer measures the standard deviation of
+Divergence ACROSS THE COVERED UNIVERSE. **A value below 0.25 is the documented sign that the drivers were seeded
+from consensus after all, and that the factor is therefore not measuring disagreement.** Below that floor
+Divergence is ABSENT for every name with that reason recorded, and the gate is checked BEFORE deployment. ⛔ **It
+binds the MODEL-BLOCK PRODUCER, not only the page** -- a page-side guard would let a degenerate factor land in
+the store and be read by anything else. Verbatim source: the Divergence record @`287d2c2619` ("sd(D) across
+universe < 0.25 -- drivers likely seeded from consensus; factor is not measuring disagreement"), read narrowly
+at the same record and repeated in the CTO adjudication call 4 @`1685652d6e`.
 
 
 ## 2. THE BOUNDARY
