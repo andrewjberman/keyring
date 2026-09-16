@@ -1309,6 +1309,30 @@ new row on 3.0.0_SA_CVO's ask 96495), both 1.0.0_SA_CTO; `LGIC_NAMING-S3`, `LGIC
    "spec_asserts": "LGIC_NAMING GRADING_RULE.md's worked cases are the rule's own examples and lib/tests/test_opal_naming.py asserts every one of them. LGIC_ENFORCE TO-EN-r-2-r2 R2-AC4: every example of a class (a), (b) or (c) group no longer raises on that group.",
    "world_is": "A worked case encoded a fact about the ESTATE -- that no registry row existed for globgrph -- as an assertion about the CODE. When the estate changed, by another project's cell doing precisely its job, the assertion became false while the code stayed correct. Two criteria that each grade their own branch cannot see this; only the union can, and nothing grades the union.",
    "notes": "ARMED, disarm_owner 1.0.0_SA_CTO, because the fix is a SPEC question across two projects and is not this seat's to take: either GRADING_RULE.md's two globgrph worked cases are re-verdicted now that the row exists (LGIC_NAMING's artifact, LN-g-1's), or the registration is wrong (LGIC_ENFORCE's). This seat has NOT edited either, and has not touched the failing tests -- editing a test to match the code is how a real regression would be buried, and the discriminator between the two is a ruling rather than a measurement. NOT A RE-CUT: both orders are complete and correct as written. For 3.0.0_SA_CVO at L9: both cells' verdicts stand at their own tips. \u26a0 The suite is RED at HEAD in the meantime, so any later cell taking a green suite as its base condition must re-measure rather than assume. The general class is LGIC_ENFORCE-S21 one level up: a criterion scoped to its own branch cannot see a defect that only the union creates."
+  },
+  {
+   "id": "LGIC_NAMING-W4-S3",
+   "project": "LGIC_NAMING",
+   "fabric": "laptop",
+   "surfaced_by": "0.9.0_WK_LGIC_NAMING~4",
+   "surfaced_at": "2026-09-16T07:53:30Z",
+   "one_line": "Round 4's LN-f-1 order predicted 'MORE placeholders to fill and FEWER raises than round 2 saw'; measured, placeholders did rise (49 of 69 attributed forms carry {system}, vs round 2's 48 of 68) but raises rose too (49, one per placeholder, vs round 2's 1), because infra/logic/registry/resources.json -- the resource-to-system row file LGIC_ENFORCE EN-r-4 mints -- does not exist at this order's base and EN-r-4 is not among the order's named dependencies.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "git ls-tree -r HEAD --name-only over infra/logic/registry/ at this worker's base 5e908a4929: exemptions.json, remediations.json, scopes.json, systems.json, tiers.json -- no resources.json.",
+     "org/missions/D14/LGIC/LGIC_ENFORCE/task-orders/LGIC_ENFORCE.TO-EN-r-4-r2.resource-rows.md@5e908a4929: <status>pending</status>; the file name carries no -r1 sibling, so this is the cell's first cut, never yet executed.",
+     "This worker's own WORKER FACE (task order LGIC_NAMING.TO-LN-f-1-r4) names the two landed dependencies explicitly as 'LGIC_ENFORCE EN-r-2 (the registry rows) and the G-V19 group (LN-g-1, LN-g-2, EN-r-3, NAMING_SCHEMA v1.9)' -- EN-r-4 is not named.",
+     "GRADING_RULE.md@5e908a4929:176-177 (R1.d): '{system}, because the name does not carry its system (DATA.grade.placeholder: the registry's resource-to-system rows fill it; row LGIC_NAMING-W1-S3)' -- the only fill mechanism the rule names, and it is the file measured absent above.",
+     "MEASURED (this worker, grade() over the 69-role population at this tree): 25 attributed 49financial, 31 inflection, 12 cottonwood, 1 demo = 69 attributed, 0 excluded, 0 grade()-RAISE (wp5/wsb/wsd resolve via V3 workstream_code, infra/logic/registry/systems.json refused_keys.workstream_code, added by EN-r-2 commit 72d636db4f); 49 of the 69 canonical forms carry {system} and each is listed under this deliverable's raise array per the order's own f1-gaps criterion (F1R4-AC3), which requires every placeholder-carrying attributed form to be raised with a step and a missing_row."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "Task order LGIC_NAMING.TO-LN-f-1-r4 WORKER FACE preamble: 'the registry you fill {system} from is the one EN-r-2 just landed ... Expect MORE placeholders to fill and FEWER raises than round 2 saw.'",
+   "world_is": "Placeholders did rise (49 of 69 vs round 2's 48 of 68, because wp5-49f-feeder-scheduler-role moved from grade()-RAISE to attributed-with-placeholder once EN-r-2 classed wp5 a refused workstream code). But raises rose too, not fell: EN-r-2 minted systems.json rows and refused_keys, never resources.json, so no {system} gap is fillable from the registry as it stands, and this round's own checker (f1-gaps) requires every one of the 49 to carry a raise entry -- more than round 2's single wp5 raise by construction of what round 4 measures, not of what the registry contains.",
+   "notes": "INERT, not ARMED: the order itself pre-empts this exact divergence ('Do not carry round 2's numbers forward as expectations'), so no later cell is misled by the prediction, and this worker's deliverable follows the measured registry state, never the hint. Filed because the prediction and the measurement point in opposite directions on the 'raises' axis, which is a fact about round 4 worth a citable row rather than silent correction. No remedy is owed: LGIC_ENFORCE EN-r-4 (task order LGIC_ENFORCE.TO-EN-r-4-r2, pending) is already the cell that would change this measurement, and it is queued, not missing a channel row."
   }
 ]
 ```
