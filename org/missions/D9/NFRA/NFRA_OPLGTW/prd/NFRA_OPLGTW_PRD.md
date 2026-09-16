@@ -3,7 +3,7 @@
   "project": "NFRA_OPLGTW",
   "directive": "D9",
   "fabric": "laptop",
-  "prd_version": "v0.5",
+  "prd_version": "v0.6",
   "step": 4,
   "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_1511ET_NFRA_OPLGTW_D9_REGISTRATION_AND_PRD.md@45ce4e5b73",
   "endpoint_outcomes": [
@@ -124,7 +124,7 @@ SOURCE: supplied brief lines 149–179, 181–219.
 
 ## CONTRACTS
 
-The enumeration authority is `org/standards/NFRA_OPLGTW_CONTRACT.json`, version 1.0. All tools, fields, states, error codes, limits and surface IDs are closed there as data. Its `activation=DESIGN_ONLY_NOT_A_GRANT` is intentional: implementations consume its contract, never treat the proposed profile as an authorization record. Unknown enum values and extra request properties fail closed. No counterpart PRD exists; all interfaces below have one owner in this project.
+The enumeration authority is `org/standards/NFRA_OPLGTW_CONTRACT.json`, version 1.1 (1.0 plus the three role and policy names restated as builder output, below). All tools, fields, states, error codes, limits and surface IDs are closed there as data. Its `activation=DESIGN_ONLY_NOT_A_GRANT` is intentional: implementations consume its contract, never treat the proposed profile as an authorization record. Unknown enum values and extra request properties fail closed. No counterpart PRD exists; all interfaces below have one owner in this project.
 
 ### C1 - identity, OAuth and migration
 
@@ -182,9 +182,9 @@ Run the same projection/filter/decimal rules as the query. Generate and validate
 
 ### C6 - AWS boundaries, state and rollback
 
-All silver reads use the dedicated assumed role `opal-mcp-emp-menachem-schwab-read` with trust restricted to opal-gateway-role plus its dedicated ExternalId. Allow GetObject/GetObjectVersion on the six exact prefixes and ListBucket only for those approved prefix forms. Attach explicit denies for other data paths/actions to this reader, not to the operational Gateway role. No fallback to Gateway instance credentials, broad opal-assets-read role, role selected by model, or role chaining. Application policy enforces the narrower dates/accounts/fields because IAM's prefix scope admits more.
+All silver reads use a dedicated Gateway-assumable Schwab reader role, named by the builder for its data scope (`name("gateway", None, "schwab-read", "role")`, today `gateway-schwab-read-role`; never typed here), with trust restricted to opal-gateway-role plus a dedicated ExternalId per approved principal. The person a grant belongs to lives in the trust policy's ExternalId, the application's entitlement record and the role's tags, never in the role's name; a later principal whose approved prefixes differ gets a role named by that scope (a tier or table qualifier), never by the person. Allow GetObject/GetObjectVersion on the six exact prefixes and ListBucket only for those approved prefix forms. Attach explicit denies for other data paths/actions to this reader, not to the operational Gateway role. No fallback to Gateway instance credentials, broad opal-assets-read role, role selected by model, or role chaining. Application policy enforces the narrower dates/accounts/fields because IAM's prefix scope admits more.
 
-Use a separate Gateway-assumable `opal-mcp-schwab-catalog-read` role for the two exact completion prefixes, with its own exact trust/ExternalId and deny-outside policy. Catalog metadata remains server-side. The data role does not gain metadata access. Current AES256 observations do not justify a new KMS grant; if deployment discovers another encryption mode, prove an exact-key permission and return the changed condition through the normal workflow. Existing wildcard employee-role trust uses the Tax SMA ExternalId and must not be broadened or reused.
+Use a separate Gateway-assumable catalog reader role, named by the builder (`name("gateway", None, "schwab-catalog-read", "role")`, today `gateway-schwab-catalog-read-role`), for the two exact completion prefixes, with its own exact trust/ExternalId and deny-outside policy. The Gateway role's inline assume policy is likewise builder-named (`gateway-assume-schwab-readers-policy`). The three resources OG-i-2 applied under the earlier typed names are renamed to the builder's names in the next apply of the same root, before any runtime consumer binds to an ARN, with the contract JSON, the application's role reference and the Terraform declarations moved together (RULING R-OG-7). Catalog metadata remains server-side. The data role does not gain metadata access. Current AES256 observations do not justify a new KMS grant; if deployment discovers another encryption mode, prove an exact-key permission and return the changed condition through the normal workflow. Existing wildcard employee-role trust uses the Tax SMA ExternalId and must not be broadened or reused.
 
 The one new DynamoDB table uses encryption, point-in-time recovery, on-demand capacity, logical expiry and conditional transactions. Its operational role grant is limited to needed Get/Put/Update/TransactWrite operations on that exact table; operator administration has separate authorization. Never grant source writes to either new reader. Pin Terraform, dependency lock and EC2 release artifacts using the existing Gateway release manifest/process. Measure declared/deployed parity on-instance via the normal SSM inspection before code absence becomes an implementation expected-value. Validate live trust/resource policies/SCP boundaries with safe read-only probes and isolated negative fixtures; the supplied 41 policy simulations do not replace that proof.
 
