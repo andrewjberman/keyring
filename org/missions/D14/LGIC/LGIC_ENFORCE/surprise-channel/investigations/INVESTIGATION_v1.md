@@ -3055,6 +3055,29 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     "spec_asserts": "Round 3's eight cells (2 with 2b, 3-9) are each cuttable by 2.0.0_SA_COO~G as a worker cell or as the issuer's own act, cell 5 having been unblocked by retiring the stale grant.",
     "world_is": "Retiring the stale grant REMOVED the only thing that made scopes.json writable by anyone in this project. Cell 5's registry edits and cell 7's exemptions.json belong to 4.0.0_SA_CRO by lane; cell 4's readers doc belongs to 1.0.0_SA_CTO or the CRO; cell 9 is this seat's, not a worker's.",
     "notes": "ARMED, disarm_owner 1.0.0_SA_CTO -- ADJUDICABLE and narrow, and it is R-22's question one lane over. NOT A HALT: L5 proceeds on the cuttable surface this turn and the issuance is not held on this. THE SPLIT I HOLD, none proposed as binding: cells 5 and 7 each divide cleanly into a MEASURE-AND-RECORD half that is cuttable here (the censuses, the denominators, the class prints, the note reader, the live-plane writer census, the ledger entry) and a REGISTRY-WRITE half that is 4.0.0_SA_CRO's act by the same reasoning R-22 used for cell 1 -- the act belongs to whoever the lane admits. I am cutting the first half and routing the second as a cross-project route to 4.0.0_SA_CRO, exactly as CN-i-1 and cell 1 were handled. I am NOT proposing a lane widening: PLATFORM_LOGIC_DOCS exists so the registry that Rule 30 makes authoritative for every address and name is not edited by the projects it grades, and LGIC_ENFORCE is precisely such a project. ! THE ONE THING THAT WOULD CHANGE MY READ is if Rule 30's 'a builder REFUSAL is a missing registry row to add' is meant to grant the refused seat the row-add; on the bytes, it names the remedy and not the hand, and no lane entry carries it."
+  },
+  {
+    "id": "LGIC_ENFORCE-S58",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G",
+    "surfaced_at": "2026-09-16T18:10Z",
+    "one_line": "A REGISTRY PATH THAT DOES NOT EXIST IS CARRIED IN TWO RECORDS, AND ONE OF THEM IS A RULING THAT NAMES A GRANT. infra/logic/registry/refused_keys.json is not a file: refused keys live inside infra/logic/registry/systems.json as its refused_keys dict. This seat typed the name into S57 without checking existence, and RULING R-23 repeated it in the sentence that defines cell 5 and 7's <paths> grant. A <paths> grant is EXACT, so an order cut from either text would grant the worker a nonexistent file and REFUSE it systems.json -- a wall on the one file cell 5 must edit.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED BY LISTING, not by lane: os.listdir(infra/logic/registry) returns exactly six files -- exemptions.json, remediations.json, resources.json, scopes.json, systems.json, tiers.json. refused_keys.json is not among them. systems.json top-level keys: _about, systems, refused_keys, unresolved; refused_keys is a dict carrying basis, workstream_code (10), generic_noun, purpose_word, and NO retired class.",
+        "WHY THE LANE CENSUS DID NOT CATCH IT: owned-paths-validate.py resolve_lane() and --check-agent resolve a path by PREFIX and never test that the file exists. S57 printed lane=PLATFORM_LOGIC_DOCS for refused_keys.json exactly as for a real file, so the census looked complete. A lane read certifies the GRANT a path would get, never that the path is real.",
+        "CARRIERS, counted by exact substring over the three documents that define round 3: LGIC_ENFORCE_DECOMP.md 0, ROUND_ANALYSIS_LGIC_ENFORCE_ROUND2_20260916.md 0, SELF_DRIVE_LGIC_RULINGS_20260916.md 1 (R-23), and this channel 1 (S57). The origin is S57; the ruling inherited it.",
+        "FOUND WHILE BUILDING cell 5's arms, when reading refused_keys.json raised FileNotFoundError. The arms read systems.json and carry the correction in their own header. An earlier draft of that header claimed the decomposition also named the file; the count above found 0 and the header was corrected before commit."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "S57 and RULING R-23: cell 5 and 7 edit infra/logic/registry/scopes.json, refused_keys.json and exemptions.json, and the order naming them in <paths> IS the grant.",
+    "world_is": "refused_keys.json does not exist. The refused keys are a dict inside systems.json, which neither carrier names, so a grant cut from their text omits the file the cell must write.",
+    "notes": "INERT because the only reader who cuts from this text is this seat, and the cut will name infra/logic/registry/systems.json and verify each <paths> entry PERMIT for its issued_to worker after the issuance commit, as R-23 s.3 requires. No clock and no call: the ruling's INTENT (these registry rows are worker cells) is unchanged; only a filename in it is wrong. R-23 s.3 already names the control that would have caught it at the cut -- pipe each path to --check-agent -- and this row adds the half that control does not cover: check that each path EXISTS, because the lane answers the same for a real file and an invented one."
   }
 ]
 ```
